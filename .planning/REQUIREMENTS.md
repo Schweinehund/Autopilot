@@ -98,48 +98,48 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | — | Pending |
-| FOUND-02 | — | Pending |
-| FOUND-03 | — | Pending |
-| FOUND-04 | — | Pending |
-| FOUND-05 | — | Pending |
-| FOUND-06 | — | Pending |
-| LIFE-01 | — | Pending |
-| LIFE-02 | — | Pending |
-| LIFE-03 | — | Pending |
-| LIFE-04 | — | Pending |
-| LIFE-05 | — | Pending |
-| LIFE-06 | — | Pending |
-| ERRC-01 | — | Pending |
-| ERRC-02 | — | Pending |
-| ERRC-03 | — | Pending |
-| ERRC-04 | — | Pending |
-| ERRC-05 | — | Pending |
-| ERRC-06 | — | Pending |
-| L1DT-01 | — | Pending |
-| L1DT-02 | — | Pending |
-| L1DT-03 | — | Pending |
-| L1DT-04 | — | Pending |
-| L1RB-01 | — | Pending |
-| L1RB-02 | — | Pending |
-| L1RB-03 | — | Pending |
-| L1RB-04 | — | Pending |
-| L1RB-05 | — | Pending |
-| L2RB-01 | — | Pending |
-| L2RB-02 | — | Pending |
-| L2RB-03 | — | Pending |
-| L2RB-04 | — | Pending |
-| L2RB-05 | — | Pending |
-| NAV-01 | — | Pending |
-| NAV-02 | — | Pending |
-| NAV-03 | — | Pending |
-| NAV-04 | — | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Pending |
+| FOUND-06 | Phase 1 | Pending |
+| LIFE-01 | Phase 2 | Pending |
+| LIFE-02 | Phase 2 | Pending |
+| LIFE-03 | Phase 2 | Pending |
+| LIFE-04 | Phase 2 | Pending |
+| LIFE-05 | Phase 2 | Pending |
+| LIFE-06 | Phase 2 | Pending |
+| ERRC-01 | Phase 3 | Pending |
+| ERRC-02 | Phase 3 | Pending |
+| ERRC-03 | Phase 3 | Pending |
+| ERRC-04 | Phase 3 | Pending |
+| ERRC-05 | Phase 3 | Pending |
+| ERRC-06 | Phase 3 | Pending |
+| L1DT-01 | Phase 4 | Pending |
+| L1DT-02 | Phase 4 | Pending |
+| L1DT-03 | Phase 4 | Pending |
+| L1DT-04 | Phase 4 | Pending |
+| L1RB-01 | Phase 5 | Pending |
+| L1RB-02 | Phase 5 | Pending |
+| L1RB-03 | Phase 5 | Pending |
+| L1RB-04 | Phase 5 | Pending |
+| L1RB-05 | Phase 5 | Pending |
+| L2RB-01 | Phase 6 | Pending |
+| L2RB-02 | Phase 6 | Pending |
+| L2RB-03 | Phase 6 | Pending |
+| L2RB-04 | Phase 6 | Pending |
+| L2RB-05 | Phase 6 | Pending |
+| NAV-01 | Phase 7 | Pending |
+| NAV-02 | Phase 7 | Pending |
+| NAV-03 | Phase 7 | Pending |
+| NAV-04 | Phase 7 | Pending |
 
 **Coverage:**
 - v1 requirements: 36 total
-- Mapped to phases: 0
-- Unmapped: 36 ⚠️
+- Mapped to phases: 36
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-10*
-*Last updated: 2026-03-10 after initial definition*
+*Last updated: 2026-03-10 — traceability populated after roadmap creation*
