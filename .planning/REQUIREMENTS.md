@@ -10,9 +10,9 @@ Requirements for milestone v1.0. Each maps to roadmap phases.
 ### Foundation
 
 - [x] **FOUND-01**: Glossary of Autopilot terminology (OOBE, ESP, TPM, ZTD, APv1, APv2) accessible to both L1 and L2
-- [ ] **FOUND-02**: Registry path reference documenting all Autopilot-relevant registry locations
-- [ ] **FOUND-03**: Network endpoints reference with full URL list and test commands
-- [ ] **FOUND-04**: PowerShell function reference for all 12 exported diagnostic/remediation functions
+- [x] **FOUND-02**: Registry path reference documenting all Autopilot-relevant registry locations
+- [x] **FOUND-03**: Network endpoints reference with full URL list and test commands
+- [x] **FOUND-04**: PowerShell function reference for all 12 exported diagnostic/remediation functions
 - [x] **FOUND-05**: L1 and L2 document templates with "Last verified" / "Review by" frontmatter
 - [x] **FOUND-06**: APv1 vs APv2 disambiguation page clarifying which docs apply to which mode
 
@@ -99,9 +99,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 | Phase 1 | Complete |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Complete |
+| FOUND-03 | Phase 1 | Complete |
+| FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Complete |
 | FOUND-06 | Phase 1 | Complete |
 | LIFE-01 | Phase 2 | Pending |
