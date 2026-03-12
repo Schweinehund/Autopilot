@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-03-12T03:45:18.718Z"
+stopped_at: Completed 01-foundation-02-PLAN.md
+last_updated: "2026-03-12T03:47:02.298Z"
 last_activity: 2026-03-10 — Roadmap created; 36 requirements mapped across 7 phases
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 3
   percent: 33
 ---
 
@@ -51,6 +51,8 @@ Progress: [███░░░░░░░] 33%
 
 *Updated after each plan completion*
 | Phase 01-foundation P03 | 1 | 1 tasks | 2 files |
+| Phase 01-foundation P01 | 2 | 2 tasks | 2 files |
+| Phase 01-foundation P02 | 3 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -63,6 +65,11 @@ Recent decisions affecting current work:
 - [Roadmap]: L1 and L2 runbooks are physically separate files; never mixed into shared content
 - [Roadmap]: Navigation (Phase 7) written last because it links to everything else
 - [Phase 01-foundation]: L1 templates forbid PowerShell/registry references; L2 templates link to canonical reference files rather than defining content inline
+- [Phase 01-foundation]: Pre-provisioning is the primary glossary term; White glove entry is deprecated redirect
+- [Phase 01-foundation]: APv1 vs APv2 disambiguation page is the canonical source for framework selection decisions; referenced from glossary APv1/APv2 entries
+- [Phase 01-foundation]: 8 registry paths documented: 5 HIGH confidence from .psm1 source and 3 MEDIUM from Microsoft Learn
+- [Phase 01-foundation]: 13 endpoints in endpoints.md (not just the 5 in Test-AutopilotConnectivity) — full list covers self-deploy, pre-provision, and TPM-vendor scenarios
+- [Phase 01-foundation]: Repair-AutopilotConnectivity documented as not supporting -WhatIf — exception to the general remediation pattern
 
 ### Pending Todos
 
@@ -76,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-12T03:45:02.849Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-03-12T03:47:02.292Z
+Stopped at: Completed 01-foundation-02-PLAN.md
 Resume file: None

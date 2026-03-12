@@ -12,7 +12,7 @@ Seven phases build the documentation suite in strict dependency order: shared fo
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Shared terminology, reference tables, document templates, and APv1/APv2 disambiguation
+- [x] **Phase 1: Foundation** - Shared terminology, reference tables, document templates, and APv1/APv2 disambiguation (completed 2026-03-12)
 - [ ] **Phase 2: Lifecycle** - End-to-end Autopilot lifecycle documentation across all six deployment stages
 - [ ] **Phase 3: Error Codes** - Master error code lookup tables with deployment-mode tagging and multi-cause structure
 - [ ] **Phase 4: L1 Decision Trees** - Mermaid flowcharts for structured L1 triage with explicit terminal states
@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Any doc referencing a registry path links to a single canonical registry-paths.md rather than defining the path inline
   4. Any doc referencing a network endpoint links to a single canonical endpoints.md that includes test commands
   5. Any doc mentioning a PowerShell function links to powershell-ref.md where all 12 exported functions are documented
-**Plans:** 1/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [ ] 01-01-PLAN.md — Glossary and APv1 vs APv2 disambiguation page
@@ -114,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/3 | In Progress|  |
+| 1. Foundation | 3/3 | Complete   | 2026-03-12 |
 | 2. Lifecycle | 0/TBD | Not started | - |
 | 3. Error Codes | 0/TBD | Not started | - |
 | 4. L1 Decision Trees | 0/TBD | Not started | - |
