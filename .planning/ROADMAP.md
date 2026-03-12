@@ -32,7 +32,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Any doc referencing a registry path links to a single canonical registry-paths.md rather than defining the path inline
   4. Any doc referencing a network endpoint links to a single canonical endpoints.md that includes test commands
   5. Any doc mentioning a PowerShell function links to powershell-ref.md where all 12 exported functions are documented
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Glossary and APv1 vs APv2 disambiguation page
+- [ ] 01-02-PLAN.md — Registry paths, network endpoints, and PowerShell function reference
+- [ ] 01-03-PLAN.md — L1 and L2 document templates
 
 ### Phase 2: Lifecycle
 **Goal**: Both L1 and L2 audiences share a complete mental model of the Autopilot deployment sequence before any troubleshooting content is written
@@ -109,7 +114,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/3 | Planned | - |
 | 2. Lifecycle | 0/TBD | Not started | - |
 | 3. Error Codes | 0/TBD | Not started | - |
 | 4. L1 Decision Trees | 0/TBD | Not started | - |
