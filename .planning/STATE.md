@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-lifecycle-02-PLAN.md
-last_updated: "2026-03-14T12:32:05.065Z"
+stopped_at: Completed 02-lifecycle-01-PLAN.md
+last_updated: "2026-03-14T12:33:36.813Z"
 last_activity: 2026-03-10 — Roadmap created; 36 requirements mapped across 7 phases
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
   percent: 33
 ---
 
@@ -54,6 +54,7 @@ Progress: [███░░░░░░░] 33%
 | Phase 01-foundation P01 | 2 | 2 tasks | 2 files |
 | Phase 01-foundation P02 | 3 | 2 tasks | 3 files |
 | Phase 02-lifecycle P02 | 172 | 2 tasks | 2 files |
+| Phase 02-lifecycle P01 | 4m | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Repair-AutopilotConnectivity documented as not supporting -WhatIf — exception to the general remediation pattern
 - [Phase 02-lifecycle]: ESP guide includes device/user phase breakdown and app type tracking table as primary L1 knowledge gap content
 - [Phase 02-lifecycle]: Post-enrollment guide has no APv2 callout per CONTEXT.md - behavior similar enough
+- [Phase 02-lifecycle]: Stage 3 covers all 3 deployment modes in one file per locked CONTEXT.md decision; TPM requirements table and Mermaid LR diagram included
+- [Phase 02-lifecycle]: All 4 hash import methods in Stage 1 table; dynamic vs static group timing table in Stage 2
 
 ### Pending Todos
 
@@ -86,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-14T12:32:05.060Z
-Stopped at: Completed 02-lifecycle-02-PLAN.md
+Last session: 2026-03-14T12:33:36.807Z
+Stopped at: Completed 02-lifecycle-01-PLAN.md
 Resume file: None
