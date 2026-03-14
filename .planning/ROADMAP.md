@@ -65,7 +65,12 @@ Plans:
   3. TPM attestation errors include hardware-specific notes (ST Micro, Nuvoton RSA-3072, Infineon, AMD fTPM, Intel Tiger Lake)
   4. Hybrid join errors include event ID mappings (807, 809, 815, 908, 171, 172) alongside hex codes
   5. Every error row specifies escalation conditions (when L1 should stop and call L2)
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — MDM enrollment and TPM attestation error code tables
+- [ ] 03-02-PLAN.md — ESP, pre-provisioning/self-deploying, and hybrid join error code tables
+- [ ] 03-03-PLAN.md — Master error code index and human verification
 
 ### Phase 4: L1 Decision Trees
 **Goal**: Service Desk agents have structured triage flowcharts that route them to a resolution or explicit escalation point without ambiguity
@@ -115,13 +120,13 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete   | 2026-03-12 |
 | 2. Lifecycle | 3/3 | Complete   | 2026-03-14 |
-| 3. Error Codes | 0/TBD | Not started | - |
+| 3. Error Codes | 0/3 | Planning complete | - |
 | 4. L1 Decision Trees | 0/TBD | Not started | - |
 | 5. L1 Runbooks | 0/TBD | Not started | - |
 | 6. L2 Runbooks | 0/TBD | Not started | - |
