@@ -18,7 +18,7 @@ Requirements for milestone v1.0. Each maps to roadmap phases.
 
 ### Lifecycle
 
-- [ ] **LIFE-01**: End-to-end Autopilot lifecycle overview with flow diagram (hardware hash → desktop)
+- [x] **LIFE-01**: End-to-end Autopilot lifecycle overview with flow diagram (hardware hash → desktop)
 - [x] **LIFE-02**: Hardware hash import and device registration stage guide
 - [x] **LIFE-03**: Autopilot profile assignment stage guide
 - [x] **LIFE-04**: OOBE and deployment mode selection stage guide (user-driven + pre-provisioning)
@@ -104,7 +104,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FOUND-04 | Phase 1 | Complete |
 | FOUND-05 | Phase 1 | Complete |
 | FOUND-06 | Phase 1 | Complete |
-| LIFE-01 | Phase 2 | Pending |
+| LIFE-01 | Phase 2 | Complete |
 | LIFE-02 | Phase 2 | Complete |
 | LIFE-03 | Phase 2 | Complete |
 | LIFE-04 | Phase 2 | Complete |
