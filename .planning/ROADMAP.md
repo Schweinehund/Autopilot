@@ -48,7 +48,7 @@ Plans:
   2. The lifecycle overview contains a Mermaid flow diagram that shows user-driven and pre-provisioning as distinct paths
   3. Each of the six stages has a standalone guide covering what happens, what success looks like, and what failure looks like
   4. The pre-provisioning (technician) flow is documented as a first-class path, not a subsection of another mode
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 - [ ] 02-01-PLAN.md — Stage guides 1-3 (hardware hash, profile assignment, OOBE)
@@ -120,7 +120,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete   | 2026-03-12 |
-| 2. Lifecycle | 0/3 | Planning complete | - |
+| 2. Lifecycle | 1/3 | In Progress|  |
 | 3. Error Codes | 0/TBD | Not started | - |
 | 4. L1 Decision Trees | 0/TBD | Not started | - |
 | 5. L1 Runbooks | 0/TBD | Not started | - |
