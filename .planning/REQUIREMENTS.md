@@ -28,8 +28,8 @@ Requirements for milestone v1.0. Each maps to roadmap phases.
 ### Error Codes
 
 - [ ] **ERRC-01**: Master error code lookup table with deployment-mode tagging and phase-of-failure grouping
-- [ ] **ERRC-02**: MDM enrollment errors section (0x8018xxxx series) with multi-cause handling
-- [ ] **ERRC-03**: TPM attestation errors section with hardware-specific notes
+- [x] **ERRC-02**: MDM enrollment errors section (0x8018xxxx series) with multi-cause handling
+- [x] **ERRC-03**: TPM attestation errors section with hardware-specific notes
 - [ ] **ERRC-04**: ESP and enrollment errors section
 - [ ] **ERRC-05**: Pre-provisioning and self-deploying mode errors section
 - [ ] **ERRC-06**: Hybrid join and device registration errors section with event ID mapping
@@ -111,8 +111,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | LIFE-05 | Phase 2 | Complete |
 | LIFE-06 | Phase 2 | Complete |
 | ERRC-01 | Phase 3 | Pending |
-| ERRC-02 | Phase 3 | Pending |
-| ERRC-03 | Phase 3 | Pending |
+| ERRC-02 | Phase 3 | Complete |
+| ERRC-03 | Phase 3 | Complete |
 | ERRC-04 | Phase 3 | Pending |
 | ERRC-05 | Phase 3 | Pending |
 | ERRC-06 | Phase 3 | Pending |

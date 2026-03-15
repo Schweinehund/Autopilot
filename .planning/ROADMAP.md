@@ -65,7 +65,7 @@ Plans:
   3. TPM attestation errors include hardware-specific notes (ST Micro, Nuvoton RSA-3072, Infineon, AMD fTPM, Intel Tiger Lake)
   4. Hybrid join errors include event ID mappings (807, 809, 815, 908, 171, 172) alongside hex codes
   5. Every error row specifies escalation conditions (when L1 should stop and call L2)
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
 - [ ] 03-01-PLAN.md — MDM enrollment and TPM attestation error code tables
@@ -126,7 +126,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 |-------|----------------|--------|-----------|
 | 1. Foundation | 3/3 | Complete   | 2026-03-12 |
 | 2. Lifecycle | 3/3 | Complete   | 2026-03-14 |
-| 3. Error Codes | 0/3 | Planning complete | - |
+| 3. Error Codes | 2/3 | In Progress|  |
 | 4. L1 Decision Trees | 0/TBD | Not started | - |
 | 5. L1 Runbooks | 0/TBD | Not started | - |
 | 6. L2 Runbooks | 0/TBD | Not started | - |
