@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 03-error-codes-01-PLAN.md
-last_updated: "2026-03-15T02:33:55.266Z"
+stopped_at: Completed 03-error-codes 03-02-PLAN.md
+last_updated: "2026-03-15T02:34:16.050Z"
 last_activity: 2026-03-10 — Roadmap created; 36 requirements mapped across 7 phases
 progress:
   total_phases: 7
@@ -84,6 +84,9 @@ Recent decisions affecting current work:
 - [Phase 03-error-codes]: 0x80180014 two-row pattern: cause 1 portal Unblock device (L1 actionable), cause 2 immediate escalate (MDM blocked in tenant)
 - [Phase 03-error-codes]: Hardware-Specific Known Issues section in 02-tpm-attestation.md is factual/descriptive only - not investigation procedures (Phase 6 scope)
 - [Phase 03-error-codes]: APv2 Notes sections conservative: only Microsoft-confirmed APv2 codes tagged; TPM attestation not used in APv2 Device Preparation
+- [Phase 03-error-codes]: ESP policy conflicts documented in 4-column table separate from 7-column coded error table — no Code or # attributes to populate
+- [Phase 03-error-codes]: 04-pre-provisioning.md uses cross-reference row pattern for shared TPM codes — primary entries stay in 02-tpm-attestation.md to avoid duplication
+- [Phase 03-error-codes]: ODJ Connector current log path documented as Microsoft > Intune > ODJConnectorService with explicit legacy path do-not-use guidance
 
 ### Pending Todos
 
@@ -97,6 +100,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T02:33:38.629Z
-Stopped at: Completed 03-error-codes-01-PLAN.md
+Last session: 2026-03-15T02:34:16.044Z
+Stopped at: Completed 03-error-codes 03-02-PLAN.md
 Resume file: None
