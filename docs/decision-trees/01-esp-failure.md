@@ -80,11 +80,11 @@ graph TD
 
 | ID | Resolution | Next Steps |
 |----|-----------|------------|
-| ESR1 | Error code found in ESP error table — follow the L1 Action for that code | See [ESP error table](../error-codes/03-esp-enrollment.md) for the specific action. See [L1 ESP Runbook](../l1-runbooks/) (available after Phase 5) for step-by-step procedure. |
-| ESR2 | ESP proceeded after reboot during device phase | Monitor device until provisioning completes. If it sticks again, collect data and escalate. See [L1 ESP Runbook](../l1-runbooks/) (available after Phase 5). |
-| ESR3 | ESP proceeded after reboot during user phase | Monitor device until provisioning completes and user reaches desktop. If it sticks again, collect data and escalate. See [L1 ESP Runbook](../l1-runbooks/) (available after Phase 5). |
-| ESR4 | Still within expected user phase window | Check back in 15-minute intervals. User phase duration depends on the number of required apps assigned. If still not complete after configured timeout, escalate. See [L1 ESP Runbook](../l1-runbooks/) (available after Phase 5). |
-| ESR5 | Still within expected device phase window | Check back in 10-minute intervals. If still not complete after 30 minutes, return to ESD5 and follow the reboot path. See [L1 ESP Runbook](../l1-runbooks/) (available after Phase 5). |
+| ESR1 | Error code found in ESP error table — follow the L1 Action for that code | See [ESP error table](../error-codes/03-esp-enrollment.md) for the specific action. See [L1 ESP Runbook](../l1-runbooks/02-esp-stuck-or-failed.md#error-code-steps) for step-by-step procedure. |
+| ESR2 | ESP proceeded after reboot during device phase | Monitor device until provisioning completes. If it sticks again, collect data and escalate. See [L1 ESP Runbook](../l1-runbooks/02-esp-stuck-or-failed.md#device-phase-steps). |
+| ESR3 | ESP proceeded after reboot during user phase | Monitor device until provisioning completes and user reaches desktop. If it sticks again, collect data and escalate. See [L1 ESP Runbook](../l1-runbooks/02-esp-stuck-or-failed.md#user-phase-steps). |
+| ESR4 | Still within expected user phase window | Check back in 15-minute intervals. User phase duration depends on the number of required apps assigned. If still not complete after configured timeout, escalate. See [L1 ESP Runbook](../l1-runbooks/02-esp-stuck-or-failed.md#user-phase-steps). |
+| ESR5 | Still within expected device phase window | Check back in 10-minute intervals. If still not complete after 30 minutes, return to ESD5 and follow the reboot path. See [L1 ESP Runbook](../l1-runbooks/02-esp-stuck-or-failed.md#device-phase-steps). |
 
 ---
 

@@ -105,7 +105,7 @@ graph TD
 
 | ID | Resolution | Next Steps |
 |----|-----------|------------|
-| TRR1 | Error code found in error table — follow the L1 Action column for that code | See [Master Error Code Index](../error-codes/00-index.md) and navigate to the category file linked for your error code. See [L1 Runbooks](../l1-runbooks/) (available after Phase 5) for step-by-step procedures. |
+| TRR1 | Error code found in error table — follow the L1 Action column for that code | See [Master Error Code Index](../error-codes/00-index.md) and navigate to the category file linked for your error code. See [L1 Runbooks](../l1-runbooks/00-index.md) for step-by-step procedures. |
 
 ---
 

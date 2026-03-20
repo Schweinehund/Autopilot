@@ -69,9 +69,9 @@ graph TD
 
 | ID | Resolution | Next Steps |
 |----|-----------|------------|
-| TPR1 | TPM was disabled in BIOS — enabled and provisioning completed | Confirm the device has finished provisioning and is enrolled in Intune. Document the BIOS change in the ticket for asset records. See [L1 TPM Runbook](../l1-runbooks/) (available after Phase 5). |
-| TPR2 | Error code found in TPM error table — follow the L1 Action for that code | See [TPM error table](../error-codes/02-tpm-attestation.md) for the specific action. Some codes may require a retry after a firmware update; follow the table instructions. See [L1 TPM Runbook](../l1-runbooks/) (available after Phase 5). |
-| TPR3 | Provisioning succeeded after power-off and retry | Confirm the device has fully completed provisioning. Intermittent TPM attestation failures can occur on first attempt; a clean retry commonly resolves them. See [L1 TPM Runbook](../l1-runbooks/) (available after Phase 5). |
+| TPR1 | TPM was disabled in BIOS — enabled and provisioning completed | Confirm the device has finished provisioning and is enrolled in Intune. Document the BIOS change in the ticket for asset records. See [L1 Runbook Index](../l1-runbooks/00-index.md) — TPM scenarios not resolved by BIOS changes escalate to L2. |
+| TPR2 | Error code found in TPM error table — follow the L1 Action for that code | See [TPM error table](../error-codes/02-tpm-attestation.md) for the specific action. Some codes may require a retry after a firmware update; follow the table instructions. See [L1 Runbook Index](../l1-runbooks/00-index.md) — TPM scenarios not resolved by error table actions escalate to L2. |
+| TPR3 | Provisioning succeeded after power-off and retry | Confirm the device has fully completed provisioning. Intermittent TPM attestation failures can occur on first attempt; a clean retry commonly resolves them. See [L1 Runbook Index](../l1-runbooks/00-index.md) — if issue recurs, escalate to L2. |
 
 ---
 

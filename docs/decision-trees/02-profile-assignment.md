@@ -72,9 +72,9 @@ graph TD
 
 | ID | Resolution | Next Steps |
 |----|-----------|------------|
-| PRR1 | Profile assigned after adding device to correct group | Proceed with OOBE or retry enrollment. Monitor in Intune portal to confirm profile applies during provisioning. See [L1 Profile Runbook](../l1-runbooks/) (available after Phase 5). |
-| PRR2 | Profile applied after device sync | Proceed with OOBE or retry enrollment. Confirm the correct profile name is shown as Applied before proceeding. See [L1 Profile Runbook](../l1-runbooks/) (available after Phase 5). |
-| PRR3 | Profile correctly assigned and applied | No further action required for profile. If device still fails provisioning, return to initial triage to identify the new failure mode. See [L1 Profile Runbook](../l1-runbooks/) (available after Phase 5). |
+| PRR1 | Profile assigned after adding device to correct group | Proceed with OOBE or retry enrollment. Monitor in Intune portal to confirm profile applies during provisioning. See [L1 Profile Runbook](../l1-runbooks/03-profile-not-assigned.md). |
+| PRR2 | Profile applied after device sync | Proceed with OOBE or retry enrollment. Confirm the correct profile name is shown as Applied before proceeding. See [L1 Profile Runbook](../l1-runbooks/03-profile-not-assigned.md). |
+| PRR3 | Profile correctly assigned and applied | No further action required for profile. If device still fails provisioning, return to initial triage to identify the new failure mode. See [L1 Profile Runbook](../l1-runbooks/03-profile-not-assigned.md). |
 
 ---
 
