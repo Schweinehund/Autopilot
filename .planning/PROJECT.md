@@ -42,6 +42,7 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 - [ ] Error code lookup tables
 - [ ] Scenario runbooks (TPM, ESP, network, hybrid join, profile assignment)
 - [x] L1 Service Desk decision trees — Validated in Phase 04: l1-decision-trees
+- [x] L1 scenario runbooks (top 5 failures) — Validated in Phase 05: l1-runbooks
 - [ ] L2 Desktop team technical guides
 
 ### Out of Scope
@@ -78,4 +79,4 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 | Markdown in docs/ | Version-controlled, exportable to any wiki platform | — Pending |
 
 ---
-*Last updated: 2026-03-20 after Phase 04 (L1 Decision Trees) completion*
+*Last updated: 2026-03-20 after Phase 05 (L1 Runbooks) completion*
