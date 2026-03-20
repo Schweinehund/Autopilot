@@ -37,9 +37,9 @@ Requirements for milestone v1.0. Each maps to roadmap phases.
 ### L1 Decision Trees
 
 - [ ] **L1DT-01**: Initial triage decision tree (Mermaid) with network reachability gate
-- [ ] **L1DT-02**: ESP failure decision tree with device vs user phase branching
-- [ ] **L1DT-03**: Profile assignment failure decision tree
-- [ ] **L1DT-04**: TPM attestation failure decision tree for pre-provisioning
+- [x] **L1DT-02**: ESP failure decision tree with device vs user phase branching
+- [x] **L1DT-03**: Profile assignment failure decision tree
+- [x] **L1DT-04**: TPM attestation failure decision tree for pre-provisioning
 
 ### L1 Runbooks
 
@@ -117,9 +117,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ERRC-05 | Phase 3 | Complete |
 | ERRC-06 | Phase 3 | Complete |
 | L1DT-01 | Phase 4 | Pending |
-| L1DT-02 | Phase 4 | Pending |
-| L1DT-03 | Phase 4 | Pending |
-| L1DT-04 | Phase 4 | Pending |
+| L1DT-02 | Phase 4 | Complete |
+| L1DT-03 | Phase 4 | Complete |
+| L1DT-04 | Phase 4 | Complete |
 | L1RB-01 | Phase 5 | Pending |
 | L1RB-02 | Phase 5 | Pending |
 | L1RB-03 | Phase 5 | Pending |
