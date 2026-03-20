@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Lifecycle** - End-to-end Autopilot lifecycle documentation across all six deployment stages (completed 2026-03-14)
 - [x] **Phase 3: Error Codes** - Master error code lookup tables with deployment-mode tagging and multi-cause structure (completed 2026-03-15)
 - [x] **Phase 4: L1 Decision Trees** - Mermaid flowcharts for structured L1 triage with explicit terminal states (completed 2026-03-20)
-- [ ] **Phase 5: L1 Runbooks** - Scripted Service Desk procedures with no registry or PowerShell access required
+- [x] **Phase 5: L1 Runbooks** - Scripted Service Desk procedures with no registry or PowerShell access required (completed 2026-03-20)
 - [ ] **Phase 6: L2 Runbooks** - Technical investigation guides with registry paths, event IDs, and PowerShell invocations
 - [ ] **Phase 7: Navigation** - Master index, quick-reference cards, and navigation indexes written after all content exists
 
@@ -96,12 +96,12 @@ Plans:
   2. No runbook contains a PowerShell command, registry path, or log file reference
   3. Every runbook includes explicit escalation criteria specifying what data to collect before calling L2
   4. An L1 agent can complete any runbook without needing to interpret ambiguous branching — every branch has a stated outcome
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 05-01-PLAN.md — Device not registered, profile not assigned, and network connectivity runbooks
 - [x] 05-02-PLAN.md — ESP stuck/failed runbook (with sub-sections) and OOBE failure runbook
-- [ ] 05-03-PLAN.md — Runbook index and Phase 4 forward-link updates
+- [x] 05-03-PLAN.md — Runbook index and Phase 4 forward-link updates
 
 ### Phase 6: L2 Runbooks
 **Goal**: Desktop Engineers have technical investigation guides that cover the five most complex Autopilot failure modes with registry paths, event IDs, and PowerShell function references sourced from the Phase 1 canonical references
@@ -137,6 +137,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 2. Lifecycle | 3/3 | Complete   | 2026-03-14 |
 | 3. Error Codes | 3/3 | Complete   | 2026-03-15 |
 | 4. L1 Decision Trees | 2/2 | Complete   | 2026-03-20 |
-| 5. L1 Runbooks | 2/3 | In Progress|  |
+| 5. L1 Runbooks | 3/3 | Complete   | 2026-03-20 |
 | 6. L2 Runbooks | 0/TBD | Not started | - |
 | 7. Navigation | 0/TBD | Not started | - |

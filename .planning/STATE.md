@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 05-l1-runbooks-01-PLAN.md
-last_updated: "2026-03-20T21:45:03.499Z"
+stopped_at: Completed 05-l1-runbooks-03-PLAN.md
+last_updated: "2026-03-20T21:47:26.918Z"
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 14
-  completed_plans: 13
+  completed_plans: 14
 ---
 
 # Project State
@@ -59,6 +59,7 @@ Plan: 3 of 3
 | Phase 04-l1-decision-trees P02 | 2min | 1 tasks | 1 files |
 | Phase 05-l1-runbooks P02 | 8min | 2 tasks | 2 files |
 | Phase 05-l1-runbooks P01 | 4min | 2 tasks | 3 files |
+| Phase 05-l1-runbooks P03 | 5min | 1 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -98,6 +99,9 @@ Recent decisions affecting current work:
 - [Phase 05-l1-runbooks]: OOBE runbook is intentionally thin with misroute detection cross-linking to device, profile, and network runbooks
 - [Phase 05-l1-runbooks]: Network connectivity runbook escalates to Infrastructure/Network team, not L2 — per TRE1/TRE2 routing in initial triage tree
 - [Phase 05-l1-runbooks]: L1 runbook pattern established: Prerequisites + numbered Steps + Escalation Criteria with collect list; no PowerShell/registry in L1 files
+- [Phase 05-l1-runbooks]: Index uses table format with When-to-Use column as primary navigation aid for L1 agents
+- [Phase 05-l1-runbooks]: TPM tree terminals redirect to index with explicit L2 escalation guidance — no dedicated L1 TPM runbook
+- [Phase 05-l1-runbooks]: ESP tree uses anchor deep-links (#error-code-steps, #device-phase-steps, #user-phase-steps) per D-08
 
 ### Pending Todos
 
@@ -111,6 +115,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-20T21:45:03.491Z
-Stopped at: Completed 05-l1-runbooks-01-PLAN.md
+Last session: 2026-03-20T21:47:26.911Z
+Stopped at: Completed 05-l1-runbooks-03-PLAN.md
 Resume file: None
