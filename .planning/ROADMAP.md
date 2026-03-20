@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Foundation** - Shared terminology, reference tables, document templates, and APv1/APv2 disambiguation (completed 2026-03-12)
 - [x] **Phase 2: Lifecycle** - End-to-end Autopilot lifecycle documentation across all six deployment stages (completed 2026-03-14)
 - [x] **Phase 3: Error Codes** - Master error code lookup tables with deployment-mode tagging and multi-cause structure (completed 2026-03-15)
-- [ ] **Phase 4: L1 Decision Trees** - Mermaid flowcharts for structured L1 triage with explicit terminal states
+- [x] **Phase 4: L1 Decision Trees** - Mermaid flowcharts for structured L1 triage with explicit terminal states (completed 2026-03-20)
 - [ ] **Phase 5: L1 Runbooks** - Scripted Service Desk procedures with no registry or PowerShell access required
 - [ ] **Phase 6: L2 Runbooks** - Technical investigation guides with registry paths, event IDs, and PowerShell invocations
 - [ ] **Phase 7: Navigation** - Master index, quick-reference cards, and navigation indexes written after all content exists
@@ -81,11 +81,11 @@ Plans:
   2. Every flowchart has three and only three terminal categories: Resolved, Escalate to L2 (with data collection checklist), Escalate to infrastructure/network
   3. An L1 agent following the ESP failure tree can distinguish device phase from user phase failures without registry access
   4. All flowcharts are Mermaid source (not images) and render correctly in GitHub Markdown
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 04-01-PLAN.md — ESP, Profile assignment, and TPM attestation scenario decision trees
-- [ ] 04-02-PLAN.md — Initial triage hub decision tree with network gate and scenario routing
+- [x] 04-02-PLAN.md — Initial triage hub decision tree with network gate and scenario routing
 
 ### Phase 5: L1 Runbooks
 **Goal**: Service Desk agents can resolve the five highest-volume Autopilot failure scenarios by following scripted steps with no registry access, no PowerShell execution, and clear escalation triggers
@@ -131,7 +131,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundation | 3/3 | Complete   | 2026-03-12 |
 | 2. Lifecycle | 3/3 | Complete   | 2026-03-14 |
 | 3. Error Codes | 3/3 | Complete   | 2026-03-15 |
-| 4. L1 Decision Trees | 1/2 | In Progress|  |
+| 4. L1 Decision Trees | 2/2 | Complete   | 2026-03-20 |
 | 5. L1 Runbooks | 0/TBD | Not started | - |
 | 6. L2 Runbooks | 0/TBD | Not started | - |
 | 7. Navigation | 0/TBD | Not started | - |
