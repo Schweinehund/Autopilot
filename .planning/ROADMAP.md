@@ -81,7 +81,11 @@ Plans:
   2. Every flowchart has three and only three terminal categories: Resolved, Escalate to L2 (with data collection checklist), Escalate to infrastructure/network
   3. An L1 agent following the ESP failure tree can distinguish device phase from user phase failures without registry access
   4. All flowcharts are Mermaid source (not images) and render correctly in GitHub Markdown
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 04-01-PLAN.md — ESP, Profile assignment, and TPM attestation scenario decision trees
+- [ ] 04-02-PLAN.md — Initial triage hub decision tree with network gate and scenario routing
 
 ### Phase 5: L1 Runbooks
 **Goal**: Service Desk agents can resolve the five highest-volume Autopilot failure scenarios by following scripted steps with no registry access, no PowerShell execution, and clear escalation triggers
@@ -127,7 +131,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 1. Foundation | 3/3 | Complete   | 2026-03-12 |
 | 2. Lifecycle | 3/3 | Complete   | 2026-03-14 |
 | 3. Error Codes | 3/3 | Complete   | 2026-03-15 |
-| 4. L1 Decision Trees | 0/TBD | Not started | - |
+| 4. L1 Decision Trees | 0/2 | Planning | - |
 | 5. L1 Runbooks | 0/TBD | Not started | - |
 | 6. L2 Runbooks | 0/TBD | Not started | - |
 | 7. Navigation | 0/TBD | Not started | - |
