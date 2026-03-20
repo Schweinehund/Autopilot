@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 04-l1-decision-trees-02-PLAN.md
-last_updated: "2026-03-20T20:24:10.957Z"
+stopped_at: Completed 05-l1-runbooks-01-PLAN.md
+last_updated: "2026-03-20T21:45:03.499Z"
 progress:
   total_phases: 7
   completed_phases: 4
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 14
+  completed_plans: 13
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-10)
 
 **Core value:** IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering
-**Current focus:** Phase 04 — l1-decision-trees
+**Current focus:** Phase 05 — l1-runbooks
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (l1-runbooks) — EXECUTING
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -57,6 +57,8 @@ Plan: Not started
 | Phase 03-error-codes P03 | 10min | 2 tasks | 1 files |
 | Phase 04-l1-decision-trees P01 | 5min | 2 tasks | 3 files |
 | Phase 04-l1-decision-trees P02 | 2min | 1 tasks | 1 files |
+| Phase 05-l1-runbooks P02 | 8min | 2 tasks | 2 files |
+| Phase 05-l1-runbooks P01 | 4min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -92,6 +94,10 @@ Recent decisions affecting current work:
 - [Phase 04-l1-decision-trees]: TPM tree uses escalateL2 for hardware replacement (TPE2) - hardware replacement is L2/procurement not infrastructure
 - [Phase 04-l1-decision-trees]: Duration thresholds: 30 min device phase, 60 min user phase - industry convention, flagged for review
 - [Phase 04-l1-decision-trees]: Triage hub uses TR-prefix node IDs globally unique from ES/PR/TP; two-step network gate gates all scenario routing; TRD5 six-option symptom branch covers all 7 CONTEXT.md routing paths
+- [Phase 05-l1-runbooks]: ESP runbook uses three anchored sub-sections with separate numbered step sequences; timing thresholds 30 min device, 60 min user phase matching Phase 4 decision tree
+- [Phase 05-l1-runbooks]: OOBE runbook is intentionally thin with misroute detection cross-linking to device, profile, and network runbooks
+- [Phase 05-l1-runbooks]: Network connectivity runbook escalates to Infrastructure/Network team, not L2 — per TRE1/TRE2 routing in initial triage tree
+- [Phase 05-l1-runbooks]: L1 runbook pattern established: Prerequisites + numbered Steps + Escalation Criteria with collect list; no PowerShell/registry in L1 files
 
 ### Pending Todos
 
@@ -105,6 +111,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-20T20:18:50.122Z
-Stopped at: Completed 04-l1-decision-trees-02-PLAN.md
+Last session: 2026-03-20T21:45:03.491Z
+Stopped at: Completed 05-l1-runbooks-01-PLAN.md
 Resume file: None

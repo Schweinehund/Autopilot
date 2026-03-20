@@ -44,10 +44,10 @@ Requirements for milestone v1.0. Each maps to roadmap phases.
 ### L1 Runbooks
 
 - [ ] **L1RB-01**: Device not in Autopilot runbook (scripted, no registry/PowerShell)
-- [ ] **L1RB-02**: ESP stuck or failed runbook with explicit escalation criteria
+- [x] **L1RB-02**: ESP stuck or failed runbook with explicit escalation criteria
 - [ ] **L1RB-03**: Profile not assigned runbook
 - [ ] **L1RB-04**: Network connectivity failure runbook
-- [ ] **L1RB-05**: OOBE fails immediately runbook
+- [x] **L1RB-05**: OOBE fails immediately runbook
 
 ### L2 Runbooks
 
@@ -121,10 +121,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | L1DT-03 | Phase 4 | Complete |
 | L1DT-04 | Phase 4 | Complete |
 | L1RB-01 | Phase 5 | Pending |
-| L1RB-02 | Phase 5 | Pending |
+| L1RB-02 | Phase 5 | Complete |
 | L1RB-03 | Phase 5 | Pending |
 | L1RB-04 | Phase 5 | Pending |
-| L1RB-05 | Phase 5 | Pending |
+| L1RB-05 | Phase 5 | Complete |
 | L2RB-01 | Phase 6 | Pending |
 | L2RB-02 | Phase 6 | Pending |
 | L2RB-03 | Phase 6 | Pending |
