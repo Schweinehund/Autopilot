@@ -52,10 +52,10 @@ Requirements for milestone v1.0. Each maps to roadmap phases.
 ### L2 Runbooks
 
 - [x] **L2RB-01**: Log collection guide (mdmdiagnosticstool.exe, Event Viewer paths, PowerShell tools)
-- [ ] **L2RB-02**: ESP deep-dive (registry structure, device vs user phase, LOB+Win32 conflicts)
-- [ ] **L2RB-03**: TPM attestation failure investigation (hardware-specific codes, firmware paths)
-- [ ] **L2RB-04**: Hybrid join failure investigation (ODJ connector, domain replication, 0x80070774)
-- [ ] **L2RB-05**: Policy conflict analysis (AppLocker CSP, DeviceLock, Security Baseline, GPO conflicts)
+- [x] **L2RB-02**: ESP deep-dive (registry structure, device vs user phase, LOB+Win32 conflicts)
+- [x] **L2RB-03**: TPM attestation failure investigation (hardware-specific codes, firmware paths)
+- [x] **L2RB-04**: Hybrid join failure investigation (ODJ connector, domain replication, 0x80070774)
+- [x] **L2RB-05**: Policy conflict analysis (AppLocker CSP, DeviceLock, Security Baseline, GPO conflicts)
 
 ### Navigation
 
@@ -126,10 +126,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | L1RB-04 | Phase 5 | Complete |
 | L1RB-05 | Phase 5 | Complete |
 | L2RB-01 | Phase 6 | Complete |
-| L2RB-02 | Phase 6 | Pending |
-| L2RB-03 | Phase 6 | Pending |
-| L2RB-04 | Phase 6 | Pending |
-| L2RB-05 | Phase 6 | Pending |
+| L2RB-02 | Phase 6 | Complete |
+| L2RB-03 | Phase 6 | Complete |
+| L2RB-04 | Phase 6 | Complete |
+| L2RB-05 | Phase 6 | Complete |
 | NAV-01 | Phase 7 | Pending |
 | NAV-02 | Phase 7 | Pending |
 | NAV-03 | Phase 7 | Pending |

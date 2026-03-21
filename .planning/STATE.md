@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 06-l2-runbooks-01-PLAN.md
-last_updated: "2026-03-21T14:01:00.349Z"
+stopped_at: Completed 06-l2-runbooks-02-PLAN.md
+last_updated: "2026-03-21T14:08:15.963Z"
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 18
-  completed_plans: 15
+  completed_plans: 17
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-10)
 ## Current Position
 
 Phase: 06 (l2-runbooks) — EXECUTING
-Plan: 2 of 4
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -61,6 +61,8 @@ Plan: 2 of 4
 | Phase 05-l1-runbooks P01 | 4min | 2 tasks | 3 files |
 | Phase 05-l1-runbooks P03 | 5min | 1 tasks | 5 files |
 | Phase 06-l2-runbooks P01 | 3min | 2 tasks | 2 files |
+| Phase 06-l2-runbooks P03 | 7min | 2 tasks | 2 files |
+| Phase 06-l2-runbooks P02 | 4min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -106,6 +108,12 @@ Recent decisions affecting current work:
 - [Phase 06-l2-runbooks]: Log collection guide is standalone prerequisite (D-04): every other L2 runbook references it for gather-first workflow
 - [Phase 06-l2-runbooks]: Artifact naming convention uses YYYY-MM-DD_SerialNumber prefix pattern for Microsoft Premier Support sharing
 - [Phase 06-l2-runbooks]: L2 index escalation mapping table explicitly routes L1 node IDs (ESE, TPE, PRE, TRE) to correct L2 runbooks
+- [Phase 06-l2-runbooks]: TPM runbook escalates at firmware update boundary: L2 identifies chipset and error code; OEM/vendor handles firmware update
+- [Phase 06-l2-runbooks]: Hybrid join runbook documents current ODJ Connector log path (Microsoft > Intune > ODJConnectorService) with explicit legacy path do-not-use guidance
+- [Phase 06-l2-runbooks]: 0x80070774 split into three distinct scenarios: profile misconfiguration (Scenario A), wrong domain (Scenario B), OU permissions (Scenario C)
+- [Phase 06-l2-runbooks]: ESP deep-dive covers device and user phase separation via FirstSync IsServerProvisioningDone value; 0 = device phase incomplete, 1 = device phase done
+- [Phase 06-l2-runbooks]: AppWorkload.log documented as primary app install log replacing IntuneManagementExtension.log (changed August 2024)
+- [Phase 06-l2-runbooks]: Policy conflict guide covers all 6 patterns from error-codes/03-esp-enrollment.md including Interactive Logon Message banner as 6th pattern
 
 ### Pending Todos
 
@@ -119,6 +127,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-21T14:01:00.341Z
-Stopped at: Completed 06-l2-runbooks-01-PLAN.md
+Last session: 2026-03-21T14:08:15.954Z
+Stopped at: Completed 06-l2-runbooks-02-PLAN.md
 Resume file: None
