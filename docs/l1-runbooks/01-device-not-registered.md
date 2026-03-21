@@ -55,7 +55,7 @@ Escalate to L2 if:
 - Timestamp of the search
 - Screenshot of the Autopilot devices search page showing no results
 
-See [L2 Runbooks](../l2-runbooks/) (available after Phase 6) for hardware hash re-import procedures.
+See [L2 Runbooks](../l2-runbooks/00-index.md) for hardware hash re-import procedures.
 
 For related error codes, see [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md).
 

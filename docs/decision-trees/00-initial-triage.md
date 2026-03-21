@@ -96,10 +96,10 @@ graph TD
 |----|----------|---------|----------|
 | TRE1 | No network connectivity | Device IP address and subnet, whether Wi-Fi or ethernet is in use, proxy configured (yes/no), browser error message shown, physical location of device | Network team / infrastructure support |
 | TRE2 | Autopilot endpoints blocked by firewall or proxy | Device IP address and subnet, proxy configured (yes/no), which endpoint failed (login.microsoftonline.com), browser error message, Wi-Fi or ethernet, physical location | Network team / infrastructure support — firewall rule review needed |
-| TRE3 | Device not registered in Autopilot | Device serial number, device make and model, deployment mode, whether hardware hash was previously imported (yes/no/unknown), timestamp, screenshot of Autopilot devices search showing no results | [L2 Runbooks](../l2-runbooks/) (available after Phase 6) |
-| TRE4 | Unknown error code | Device serial number, full error code (0x...), deployment mode, timestamp, screenshot of error screen | [Master Error Code Index](../error-codes/00-index.md); [L2 Runbooks](../l2-runbooks/) (available after Phase 6) |
-| TRE5 | OOBE crash or non-standard failure | Device serial number, deployment mode, timestamp, detailed description of what appeared on screen, sequence of events leading to the failure, screenshot if available | [L2 Runbooks](../l2-runbooks/) (available after Phase 6) |
-| TRE6 | Unclear symptom | Device serial number, deployment mode, timestamp, all available screenshots, description of everything observed on the device screen | [L2 Runbooks](../l2-runbooks/) (available after Phase 6) |
+| TRE3 | Device not registered in Autopilot | Device serial number, device make and model, deployment mode, whether hardware hash was previously imported (yes/no/unknown), timestamp, screenshot of Autopilot devices search showing no results | [L2 Runbooks](../l2-runbooks/00-index.md) |
+| TRE4 | Unknown error code | Device serial number, full error code (0x...), deployment mode, timestamp, screenshot of error screen | [Master Error Code Index](../error-codes/00-index.md); [L2 Runbooks](../l2-runbooks/00-index.md) |
+| TRE5 | OOBE crash or non-standard failure | Device serial number, deployment mode, timestamp, detailed description of what appeared on screen, sequence of events leading to the failure, screenshot if available | [L2 Runbooks](../l2-runbooks/00-index.md) |
+| TRE6 | Unclear symptom | Device serial number, deployment mode, timestamp, all available screenshots, description of everything observed on the device screen | [L2 Runbooks](../l2-runbooks/00-index.md) |
 
 ## Resolution & Next Steps
 

@@ -27,7 +27,7 @@ These runbooks cover [Windows Autopilot](../_glossary.md#autopilot) classic (APv
 
 ## TPM Attestation Note
 
-> **Note:** There is no L1 runbook for TPM attestation failures. TPM issues that are not resolved by enabling TPM in BIOS require L2 investigation. See [L2 Runbooks](../l2-runbooks/) (available after Phase 6).
+> **Note:** There is no L1 runbook for TPM attestation failures. TPM issues that are not resolved by enabling TPM in BIOS require L2 investigation. See [L2 Runbooks](../l2-runbooks/00-index.md).
 
 ## Related Resources
 

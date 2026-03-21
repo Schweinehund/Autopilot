@@ -59,11 +59,11 @@ graph TD
 
 | ID | Scenario | Collect | See Also |
 |----|----------|---------|----------|
-| TPE1 | TPM issue persists after enabling in BIOS | Device serial number, device make and model, BIOS version, TPM manufacturer (shown in BIOS), deployment mode (pre-provisioning or self-deploying), timestamp, screenshot of error screen | [L2 TPM Investigation](../l2-runbooks/) (available after Phase 6) |
-| TPE2 | TPM version too old (1.2 or below) | Device serial number, device make and model, BIOS version, TPM version confirmed in BIOS, deployment mode, timestamp | [L2 TPM Investigation](../l2-runbooks/) (available after Phase 6) |
-| TPE3 | TPM error code not found in table | Device serial number, full error code (0x...), device make and model, BIOS version, TPM manufacturer, deployment mode, timestamp, screenshot of error screen | [L2 TPM Investigation](../l2-runbooks/) (available after Phase 6) |
-| TPE4 | TPM attestation fails without error code | Device serial number, device make and model, BIOS version, TPM manufacturer, deployment mode, timestamp, description of what appears on screen when provisioning fails | [L2 TPM Investigation](../l2-runbooks/) (available after Phase 6) |
-| TPE5 | Cannot verify BIOS TPM settings | Device serial number, device make and model, reason BIOS could not be accessed, deployment mode, timestamp | [L2 TPM Investigation](../l2-runbooks/) (available after Phase 6) |
+| TPE1 | TPM issue persists after enabling in BIOS | Device serial number, device make and model, BIOS version, TPM manufacturer (shown in BIOS), deployment mode (pre-provisioning or self-deploying), timestamp, screenshot of error screen | [L2 TPM Investigation](../l2-runbooks/03-tpm-attestation.md) |
+| TPE2 | TPM version too old (1.2 or below) | Device serial number, device make and model, BIOS version, TPM version confirmed in BIOS, deployment mode, timestamp | [L2 TPM Investigation](../l2-runbooks/03-tpm-attestation.md) |
+| TPE3 | TPM error code not found in table | Device serial number, full error code (0x...), device make and model, BIOS version, TPM manufacturer, deployment mode, timestamp, screenshot of error screen | [L2 TPM Investigation](../l2-runbooks/03-tpm-attestation.md) |
+| TPE4 | TPM attestation fails without error code | Device serial number, device make and model, BIOS version, TPM manufacturer, deployment mode, timestamp, description of what appears on screen when provisioning fails | [L2 TPM Investigation](../l2-runbooks/03-tpm-attestation.md) |
+| TPE5 | Cannot verify BIOS TPM settings | Device serial number, device make and model, reason BIOS could not be accessed, deployment mode, timestamp | [L2 TPM Investigation](../l2-runbooks/03-tpm-attestation.md) |
 
 ## Resolution & Next Steps
 

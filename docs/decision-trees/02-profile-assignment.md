@@ -61,12 +61,12 @@ graph TD
 
 | ID | Scenario | Collect | See Also |
 |----|----------|---------|----------|
-| PRE1 | Profile still not assigned after adding to correct group | Device serial number, group name the device was added to, timestamp of group change, deployment mode, current profile status in portal | [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md) (see 0x80180005 — DeviceNotSupported); [L2 Profile Investigation](../l2-runbooks/) (available after Phase 6) |
-| PRE2 | Device in correct group but profile not assigning | Device serial number, group name, profile name expected, timestamp, deployment mode | [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md); [L2 Profile Investigation](../l2-runbooks/) (available after Phase 6) |
-| PRE3 | Cannot verify group membership | Device serial number, profile name shown (if any), deployment mode, timestamp | [L2 Profile Investigation](../l2-runbooks/) (available after Phase 6) |
-| PRE4 | Wrong profile assigned to device | Device serial number, profile name currently assigned, expected profile name, deployment mode, timestamp | [L2 Profile Investigation](../l2-runbooks/) (available after Phase 6) |
-| PRE5 | Profile assigned but not applying to device | Device serial number, profile name assigned, current profile status (Pending/Failed), deployment mode, timestamp | [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md); [L2 Profile Investigation](../l2-runbooks/) (available after Phase 6) |
-| PRE6 | Cannot verify correct profile | Device serial number, profile name currently assigned, deployment mode, device type or role (laptop/kiosk/shared), timestamp | [L2 Profile Investigation](../l2-runbooks/) (available after Phase 6) |
+| PRE1 | Profile still not assigned after adding to correct group | Device serial number, group name the device was added to, timestamp of group change, deployment mode, current profile status in portal | [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md) (see 0x80180005 — DeviceNotSupported); [L2 Runbooks](../l2-runbooks/00-index.md) |
+| PRE2 | Device in correct group but profile not assigning | Device serial number, group name, profile name expected, timestamp, deployment mode | [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md); [L2 Runbooks](../l2-runbooks/00-index.md) |
+| PRE3 | Cannot verify group membership | Device serial number, profile name shown (if any), deployment mode, timestamp | [L2 Runbooks](../l2-runbooks/00-index.md) |
+| PRE4 | Wrong profile assigned to device | Device serial number, profile name currently assigned, expected profile name, deployment mode, timestamp | [L2 Runbooks](../l2-runbooks/00-index.md) |
+| PRE5 | Profile assigned but not applying to device | Device serial number, profile name assigned, current profile status (Pending/Failed), deployment mode, timestamp | [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md); [L2 Runbooks](../l2-runbooks/00-index.md) |
+| PRE6 | Cannot verify correct profile | Device serial number, profile name currently assigned, deployment mode, device type or role (laptop/kiosk/shared), timestamp | [L2 Runbooks](../l2-runbooks/00-index.md) |
 
 ## Resolution & Next Steps
 

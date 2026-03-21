@@ -73,7 +73,7 @@ Escalate to L2 if:
 - Current profile status shown in the Autopilot device record (screenshot if possible)
 - Any error messages visible in the portal
 
-See [L2 Runbooks](../l2-runbooks/) (available after Phase 6) for assignment filter and Graph API investigation.
+See [L2 Runbooks](../l2-runbooks/00-index.md) for assignment filter and Graph API investigation.
 
 ---
 

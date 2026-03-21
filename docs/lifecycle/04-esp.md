@@ -114,7 +114,7 @@ flowchart LR
 - Policy application error with partial completion
 - "Something went wrong" message with error code
 
-Forward-links: see [Phase 3 error codes](../error-codes/) *(available after Phase 3)*, [L1 ESP runbook](../l1-runbooks/) *(available after Phase 5)*, [L2 ESP deep-dive](../l2-runbooks/) *(available after Phase 6)*
+Forward-links: see [Phase 3 error codes](../error-codes/00-index.md), [L1 ESP runbook](../l1-runbooks/02-esp-stuck-or-failed.md), [L2 ESP deep-dive](../l2-runbooks/02-esp-deep-dive.md)
 
 ---
 
@@ -144,7 +144,7 @@ Timeline variability increases significantly with large Win32 app counts or slow
 ## Tool References
 
 - [`Get-AutopilotDeviceStatus`](../reference/powershell-ref.md#get-autopilotdevicestatus) — captures a comprehensive device state snapshot including ESP tracking state and enrollment GUID
-- [`Restart-EnrollmentStatusPage`](../reference/powershell-ref.md#restart-enrollmentstatuspage) — remediation function that restarts the ESP process and clears ESP state; see Phase 6 for usage guidance *(available after Phase 6)*
+- [`Restart-EnrollmentStatusPage`](../reference/powershell-ref.md#restart-enrollmentstatuspage) — remediation function that restarts the ESP process and clears ESP state; see [L2 ESP deep-dive](../l2-runbooks/02-esp-deep-dive.md) for usage guidance
 - [`Get-AutopilotLogs`](../reference/powershell-ref.md#get-autopilotlogs) — collects MDM diagnostic logs and Event Viewer channels relevant to ESP failures
 
 **Further Reading:**

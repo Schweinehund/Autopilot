@@ -66,7 +66,7 @@ Escalate to L2 if:
 
 **See also:** For initial triage context, see [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md).
 
-> **L2 forward-link:** See [L2 Runbooks](../l2-runbooks/) (available after Phase 6) for OOBE log analysis and provisioning investigation.
+> **L2 forward-link:** See [L2 Runbooks](../l2-runbooks/00-index.md) for OOBE log analysis and provisioning investigation.
 
 ---
 

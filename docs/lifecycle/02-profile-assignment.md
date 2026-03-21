@@ -87,7 +87,7 @@ Once created, profiles appear in the list with columns for Name, Deployment Mode
 
 Error code reference: (available after Phase 3)
 Remediation runbooks: (available after Phase 5)
-Hybrid join deep-dive: (available after Phase 6)
+Hybrid join deep-dive: [Hybrid join deep-dive](../l2-runbooks/04-hybrid-join.md)
 
 ---
 

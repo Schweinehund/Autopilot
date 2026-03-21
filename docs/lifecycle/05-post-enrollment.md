@@ -82,7 +82,7 @@ Locally on the device, PowerShell functions from the AutopilotDiagnostics module
 - Critical events present in `Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Admin` or `Microsoft-Windows-Provisioning-Diagnostics-Provider/Admin`
 - Serial number mismatch between device and Autopilot registration record
 
-Forward-links: see [Phase 3 error codes](../error-codes/) *(available after Phase 3)*, [L1 post-enrollment runbook](../l1-runbooks/) *(available after Phase 5)*, [L2 post-enrollment deep-dive](../l2-runbooks/) *(available after Phase 6)*
+Forward-links: see [Phase 3 error codes](../error-codes/00-index.md), [L1 post-enrollment runbook](../l1-runbooks/00-index.md), [L2 Runbooks](../l2-runbooks/00-index.md)
 
 ---
 

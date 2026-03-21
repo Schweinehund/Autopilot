@@ -70,11 +70,11 @@ graph TD
 
 | ID | Scenario | Collect | See Also |
 |----|----------|---------|----------|
-| ESE1 | Error code not found in ESP table | Device serial number, full error code (0x...), deployment mode (user-driven / pre-provisioning / self-deploying), timestamp, screenshot of ESP screen | [L2 ESP Deep-Dive](../l2-runbooks/) (available after Phase 6) |
-| ESE2 | Error code visible but unreadable | Device serial number, deployment mode, timestamp, screenshot of ESP screen (capture even if text is small) | [L2 ESP Deep-Dive](../l2-runbooks/) (available after Phase 6) |
-| ESE3 | Cannot identify ESP phase | Device serial number, deployment mode, timestamp, screenshot of ESP screen showing current message | [L2 ESP Deep-Dive](../l2-runbooks/) (available after Phase 6) |
-| ESE4 | Device phase timeout after reboot | Device serial number, deployment mode, timestamp, ESP phase (device), time spent on ESP before and after reboot | [L2 ESP Deep-Dive](../l2-runbooks/) (available after Phase 6) |
-| ESE5 | User phase timeout after reboot | Device serial number, deployment mode, timestamp, ESP phase (user), time spent on ESP before and after reboot, username used during enrollment | [L2 ESP Deep-Dive](../l2-runbooks/) (available after Phase 6) |
+| ESE1 | Error code not found in ESP table | Device serial number, full error code (0x...), deployment mode (user-driven / pre-provisioning / self-deploying), timestamp, screenshot of ESP screen | [L2 ESP Deep-Dive](../l2-runbooks/02-esp-deep-dive.md) |
+| ESE2 | Error code visible but unreadable | Device serial number, deployment mode, timestamp, screenshot of ESP screen (capture even if text is small) | [L2 ESP Deep-Dive](../l2-runbooks/02-esp-deep-dive.md) |
+| ESE3 | Cannot identify ESP phase | Device serial number, deployment mode, timestamp, screenshot of ESP screen showing current message | [L2 ESP Deep-Dive](../l2-runbooks/02-esp-deep-dive.md) |
+| ESE4 | Device phase timeout after reboot | Device serial number, deployment mode, timestamp, ESP phase (device), time spent on ESP before and after reboot | [L2 ESP Deep-Dive](../l2-runbooks/02-esp-deep-dive.md) |
+| ESE5 | User phase timeout after reboot | Device serial number, deployment mode, timestamp, ESP phase (user), time spent on ESP before and after reboot, username used during enrollment | [L2 ESP Deep-Dive](../l2-runbooks/02-esp-deep-dive.md) |
 
 ## Resolution & Next Steps
 
