@@ -113,7 +113,13 @@ Plans:
   3. The hybrid join runbook covers the ODJ Connector prerequisites and failure modes including 0x80070774 with the current connector version noted
   4. The TPM attestation runbook documents hardware-specific error codes with firmware update paths for each affected chipset
   5. Every L2 runbook links to phase 1 reference files for registry paths, PowerShell functions, and network endpoints rather than duplicating them inline
-**Plans**: TBD
+**Plans:** 4 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Log collection prerequisite guide and L2 runbook index
+- [ ] 06-02-PLAN.md — ESP deep-dive and policy conflict analysis guides
+- [ ] 06-03-PLAN.md — TPM attestation and hybrid join investigation guides
+- [ ] 06-04-PLAN.md — Forward-link resolution in all upstream files
 
 ### Phase 7: Navigation
 **Goal**: Both L1 and L2 audiences can reach all documentation from role-specific entry points without traversing content intended for the other audience
@@ -138,5 +144,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Error Codes | 3/3 | Complete   | 2026-03-15 |
 | 4. L1 Decision Trees | 2/2 | Complete   | 2026-03-20 |
 | 5. L1 Runbooks | 3/3 | Complete   | 2026-03-20 |
-| 6. L2 Runbooks | 0/TBD | Not started | - |
+| 6. L2 Runbooks | 0/4 | Not started | - |
 | 7. Navigation | 0/TBD | Not started | - |
