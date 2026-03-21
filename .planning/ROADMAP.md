@@ -119,7 +119,7 @@ Plans:
 - [x] 06-01-PLAN.md — Log collection prerequisite guide and L2 runbook index
 - [x] 06-02-PLAN.md — ESP deep-dive and policy conflict analysis guides
 - [x] 06-03-PLAN.md — TPM attestation and hybrid join investigation guides
-- [ ] 06-04-PLAN.md — Forward-link resolution in all upstream files
+- [x] 06-04-PLAN.md — Forward-link resolution in all upstream files
 
 ### Phase 7: Navigation
 **Goal**: Both L1 and L2 audiences can reach all documentation from role-specific entry points without traversing content intended for the other audience
