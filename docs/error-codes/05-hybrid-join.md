@@ -49,7 +49,7 @@ The Intune Connector for Active Directory (ODJ Connector) log location changed w
 
 **Minimum version:** 6.2501.2000.5 or later. Earlier connector versions cause enrollment failures independent of configuration. Verify connector version before investigating hybrid join failures.
 
-For detailed ODJ Connector investigation steps, see [L2 Hybrid Join runbook](../l2-runbooks/hybrid-join.md) (available after Phase 6).
+For detailed ODJ Connector investigation steps, see [L2 Hybrid Join runbook](../l2-runbooks/04-hybrid-join.md).
 
 ---
 
