@@ -130,7 +130,11 @@ Plans:
   2. An L2 engineer opening the master index reaches their runbooks, reference tables, and PowerShell tools without passing through scripted L1 steps
   3. The L1 quick-reference card fits on one screen and contains the top checks and escalation triggers without any prose context
   4. The existing common-issues.md becomes a navigation index with links to the appropriate runbooks rather than standalone content
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 07-01-PLAN.md — Master documentation index and common-issues.md navigation transformation
+- [ ] 07-02-PLAN.md — L1 and L2 quick-reference cards
 
 ## Progress
 
@@ -145,4 +149,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 4. L1 Decision Trees | 2/2 | Complete   | 2026-03-20 |
 | 5. L1 Runbooks | 3/3 | Complete   | 2026-03-20 |
 | 6. L2 Runbooks | 3/4 | In Progress|  |
-| 7. Navigation | 0/TBD | Not started | - |
+| 7. Navigation | 0/2 | Not started | - |
