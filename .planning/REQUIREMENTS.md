@@ -59,10 +59,10 @@ Requirements for milestone v1.0. Each maps to roadmap phases.
 
 ### Navigation
 
-- [ ] **NAV-01**: Master index with role-based entry points (L1 path / L2 path)
+- [x] **NAV-01**: Master index with role-based entry points (L1 path / L2 path)
 - [x] **NAV-02**: L1 quick-reference card (top checks, escalation triggers)
 - [x] **NAV-03**: L2 quick-reference card (PowerShell commands, log paths, event IDs)
-- [ ] **NAV-04**: Updated common-issues.md as navigation index linking to runbooks
+- [x] **NAV-04**: Updated common-issues.md as navigation index linking to runbooks
 
 ## v2 Requirements
 
@@ -130,10 +130,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | L2RB-03 | Phase 6 | Complete |
 | L2RB-04 | Phase 6 | Complete |
 | L2RB-05 | Phase 6 | Complete |
-| NAV-01 | Phase 7 | Pending |
+| NAV-01 | Phase 7 | Complete |
 | NAV-02 | Phase 7 | Complete |
 | NAV-03 | Phase 7 | Complete |
-| NAV-04 | Phase 7 | Pending |
+| NAV-04 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 36 total
