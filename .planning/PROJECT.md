@@ -36,14 +36,15 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 <!-- Current scope. Building toward these. -->
 
-- [ ] End-to-end Autopilot lifecycle documentation
-- [ ] Pre-provisioning flow troubleshooting guides
-- [ ] User-driven flow troubleshooting guides
-- [ ] Error code lookup tables
-- [ ] Scenario runbooks (TPM, ESP, network, hybrid join, profile assignment)
+- [x] End-to-end Autopilot lifecycle documentation — Validated in Phase 02: lifecycle
+- [x] Pre-provisioning flow troubleshooting guides — Validated in Phase 02/05/06
+- [x] User-driven flow troubleshooting guides — Validated in Phase 02/05/06
+- [x] Error code lookup tables — Validated in Phase 03: error-codes
+- [x] Scenario runbooks (TPM, ESP, network, hybrid join, profile assignment) — Validated in Phase 05/06
 - [x] L1 Service Desk decision trees — Validated in Phase 04: l1-decision-trees
 - [x] L1 scenario runbooks (top 5 failures) — Validated in Phase 05: l1-runbooks
 - [x] L2 Desktop team technical guides — Validated in Phase 06: l2-runbooks
+- [x] Navigation indexes and quick-reference cards — Validated in Phase 07: navigation
 
 ### Out of Scope
 
@@ -73,10 +74,10 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | — Pending |
-| Tiered doc structure (L1/L2) | Different skill levels need different formats | — Pending |
-| Generic over environment-specific | Broader applicability, teams add local details | — Pending |
-| Markdown in docs/ | Version-controlled, exportable to any wiki platform | — Pending |
+| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | Delivered — all 7 phases complete |
+| Tiered doc structure (L1/L2) | Different skill levels need different formats | Delivered — role-based navigation via docs/index.md |
+| Generic over environment-specific | Broader applicability, teams add local details | Delivered — no tenant-specific content |
+| Markdown in docs/ | Version-controlled, exportable to any wiki platform | Delivered — 35+ markdown files in docs/ |
 
 ---
-*Last updated: 2026-03-20 after Phase 05 (L1 Runbooks) completion*
+*Last updated: 2026-03-23 after Phase 07 (Navigation) completion — v1.0 milestone complete*
