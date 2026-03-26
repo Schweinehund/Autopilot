@@ -1,0 +1,29 @@
+{
+  "cloudId": "a04fcb6a-ae5a-4f81-95e7-83941226b47b",
+  "projectKey": "RTS",
+  "epicIssueTypeId": "10000",
+  "labels": ["autopilot-docs", "v1"],
+  "requiredFields": {
+    "duedate": "YYYY-MM-DD (system field)",
+    "customfield_10553": "Epic start date (YYYY-MM-DD)",
+    "customfield_10224": "Account ID - integer only (4=New Dev, 5=Maintenance, 6=Small)"
+  },
+  "transitions": {
+    "done": { "id": "41", "name": "Done" },
+    "inProgress": { "id": "31", "name": "In Progress" },
+    "toDo": { "id": "2", "name": "To Do" },
+    "canceled": { "id": "7", "name": "Canceled" },
+    "backlog": { "id": "11", "name": "Backlog" }
+  },
+  "phases": {
+    "1": { "epicKey": "RTS-425", "name": "Foundation", "status": "completed", "completedDate": "2026-03-12" },
+    "2": { "epicKey": "RTS-426", "name": "Lifecycle", "status": "completed", "completedDate": "2026-03-14" },
+    "3": { "epicKey": "RTS-427", "name": "Error Codes", "status": "completed", "completedDate": "2026-03-15" },
+    "4": { "epicKey": "RTS-428", "name": "L1 Decision Trees", "status": "completed", "completedDate": "2026-03-20" },
+    "5": { "epicKey": "RTS-429", "name": "L1 Runbooks", "status": "completed", "completedDate": "2026-03-20" },
+    "6": { "epicKey": "RTS-430", "name": "L2 Runbooks", "status": "pending" },
+    "7": { "epicKey": "RTS-431", "name": "Navigation", "status": "pending" }
+  },
+  "lastUpdated": "2026-03-20",
+  "notes": "All 7 epics created and synced. Phases 1-5 transitioned to Done, phases 6-7 in Backlog. Labels: autopilot-docs/v1."
+}

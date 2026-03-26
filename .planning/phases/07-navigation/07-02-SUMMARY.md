@@ -67,7 +67,7 @@ completed: 2026-03-23
 1. **Task 1: Create L1 quick-reference card** - `7d016c2` (feat)
 2. **Task 2: Create L2 quick-reference card** - `b592190` (feat)
 
-**Plan metadata:** _(see final commit)_
+**Plan metadata:** `a6066b2` (docs: complete plan)
 
 ## Files Created/Modified
 

@@ -1,0 +1,24 @@
+{
+  "name": "autopilot-suite",
+  "version": "1.0.0",
+  "description": "Windows Autopilot Troubleshooter & Improvement Suite",
+  "scripts": {
+    "dev": "npm run dev --prefix src/frontend",
+    "build": "npm run build --prefix src/frontend",
+    "test": "npm run test --prefix src/frontend",
+    "lint": "npm run lint --prefix src/frontend",
+    "backend:dev": "cd src/backend && uvicorn main:app --reload",
+    "backend:test": "cd src/backend && pytest",
+    "setup": "npm run setup:frontend && npm run setup:backend",
+    "setup:frontend": "cd src/frontend && npm install",
+    "setup:backend": "cd src/backend && python -m venv venv && .\\venv\\Scripts\\activate && pip install -r requirements.txt"
+  },
+  "keywords": [
+    "windows-autopilot",
+    "intune",
+    "troubleshooting",
+    "diagnostics"
+  ],
+  "author": "",
+  "license": "MIT"
+}
