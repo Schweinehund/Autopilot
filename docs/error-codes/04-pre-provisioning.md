@@ -27,7 +27,7 @@ Errors whose primary entry is in another category file are listed as cross-refer
 | 0x81039001 | — | → See [TPM Attestation Errors](02-tpm-attestation.md#0x81039001) | — | PP, SD | Cross-category: intermittent TPM attestation retry limit exceeded. Primary entry in 02-tpm-attestation.md | — | — |
 | 0x81039023 | — | → See [TPM Attestation Errors](02-tpm-attestation.md#0x81039023) | — | PP, SD | Cross-category: Windows 11 PP/SD TPM attestation failure. Primary entry in 02-tpm-attestation.md | — | — |
 | 0x81039024 | — | → See [TPM Attestation Errors](02-tpm-attestation.md#0x81039024) | — | PP, SD | Cross-category: known TPM firmware vulnerability. Primary entry in 02-tpm-attestation.md | — | — |
-| 0xc1036501 | 1 | MultiMDM (SD) | [OOBE](../lifecycle/03-oobe.md) | SD | Multiple MDM configurations active in Azure AD; self-deploying mode requires exactly one MDM configuration | Verify single MDM configuration in Azure AD admin center (Mobility > MDM and MAM); **Escalate** — collect: serial, error code, mode, timestamp | [Intune](../_glossary.md#intune) admin center: remove duplicate MDM application registrations; see [L2 ESP deep-dive](../l2-runbooks/02-esp-deep-dive.md) |
+| <a id="0xc1036501"></a>0xc1036501 | 1 | MultiMDM (SD) | [OOBE](../lifecycle/03-oobe.md) | SD | Multiple MDM configurations active in Azure AD; self-deploying mode requires exactly one MDM configuration | Verify single MDM configuration in Azure AD admin center (Mobility > MDM and MAM); **Escalate** — collect: serial, error code, mode, timestamp | [Intune](../_glossary.md#intune) admin center: remove duplicate MDM application registrations; see [L2 ESP deep-dive](../l2-runbooks/02-esp-deep-dive.md) |
 
 ## Pre-Provisioning Specific Notes
 
