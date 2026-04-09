@@ -136,8 +136,8 @@ Plans:
 **Plans:** 2/2 plans complete
 
 Plans:
-- [ ] 08-01-PLAN.md — Foundation reference anchors (registry-paths.md Winlogon entry + anchors, glossary Entra/Intune headings)
-- [ ] 08-02-PLAN.md — Error-code index fragment anchors (inline HTML id anchors in 5 category files)
+- [x] 08-01-PLAN.md — Foundation reference anchors (registry-paths.md Winlogon entry + anchors, glossary Entra/Intune headings)
+- [x] 08-02-PLAN.md — Error-code index fragment anchors (inline HTML id anchors in 5 category files)
 
 ### Phase 9: Navigation Wiring Fixes
 **Goal**: Close navigation and cross-phase wiring gaps identified by v1.0 milestone audit so that L2 runbook footer navigation works, OOBE failure is reachable from common-issues.md, and architecture.md is discoverable from Phase 7 navigation entry points
