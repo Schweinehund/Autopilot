@@ -171,7 +171,7 @@ Escalate when a firmware update is needed. L2 identifies the chipset and error c
 
 ---
 
-Prev: [02-device-registration.md](02-device-registration.md) | Next: [04-hybrid-join.md](04-hybrid-join.md)
+Prev: [02-esp-deep-dive.md](02-esp-deep-dive.md) | Next: [04-hybrid-join.md](04-hybrid-join.md)
 
 ## Version History
 
