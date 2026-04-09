@@ -26,6 +26,13 @@ Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) po
 - **L1:** [ESP Stuck or Failed](l1-runbooks/02-esp-stuck-or-failed.md)
 - **L2:** [ESP Deep-Dive](l2-runbooks/02-esp-deep-dive.md)
 
+## OOBE Failures
+
+Device stuck on [OOBE](_glossary.md#oobe) screen, blank screen during setup, or setup loops back to the beginning.
+
+- **L1:** [OOBE Failure](l1-runbooks/05-oobe-failure.md)
+- **L2:** [L2 Runbook Index](l2-runbooks/00-index.md) — select runbook based on escalation checklist
+
 ## Profile Assignment Issues
 
 Device goes through manual setup instead of Autopilot, or wrong profile assigned.
