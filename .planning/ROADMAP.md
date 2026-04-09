@@ -133,7 +133,11 @@ Plans:
   2. `reference/registry-paths.md` has heading-level anchors for `#autopilotsettings`, `#provisioning-diagnostics`, and `#winlogon` so inbound fragment links from error-code files resolve
   3. `_glossary.md` has `### Entra` and `### Intune` defined-term headings so 6 inbound `#entra`/`#intune` links from error-code files resolve
   4. `error-codes/00-index.md` fragment IDs (`#0x...`, `#event-...`) resolve to the specific error row — either via heading anchors, an alternative index structure, or equivalent GFM-compatible anchoring
-**Plans:** 0/0 plans complete
+**Plans:** 2/2 plans complete
+
+Plans:
+- [ ] 08-01-PLAN.md — Foundation reference anchors (registry-paths.md Winlogon entry + anchors, glossary Entra/Intune headings)
+- [ ] 08-02-PLAN.md — Error-code index fragment anchors (inline HTML id anchors in 5 category files)
 
 ### Phase 9: Navigation Wiring Fixes
 **Goal**: Close navigation and cross-phase wiring gaps identified by v1.0 milestone audit so that L2 runbook footer navigation works, OOBE failure is reachable from common-issues.md, and architecture.md is discoverable from Phase 7 navigation entry points
