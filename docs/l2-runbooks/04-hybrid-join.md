@@ -158,7 +158,7 @@ Escalate when domain controller or AD Connect issues are confirmed. These are in
 
 ---
 
-Prev: [03-tpm-attestation.md](03-tpm-attestation.md) | Next: [05-policy-conflict.md](05-policy-conflict.md)
+Prev: [03-tpm-attestation.md](03-tpm-attestation.md) | Next: [05-policy-conflicts.md](05-policy-conflicts.md)
 
 ## Version History
 
