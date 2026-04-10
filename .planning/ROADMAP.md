@@ -19,8 +19,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: L1 Runbooks** - Scripted Service Desk procedures with no registry or PowerShell access required (completed 2026-03-20)
 - [x] **Phase 6: L2 Runbooks** - Technical investigation guides with registry paths, event IDs, and PowerShell invocations (completed 2026-03-21)
 - [x] **Phase 7: Navigation** - Master index, quick-reference cards, and navigation indexes written after all content exists (completed 2026-03-23)
-- [ ] **Phase 8: Reference & Index Anchor Completeness** - Gap closure: registry-paths.md Winlogon entry + anchors, glossary Entra/Intune headings, error-code index heading anchors
-- [ ] **Phase 9: Navigation Wiring Fixes** - Gap closure: broken L2 runbook nav footers, missing OOBE entry in common-issues, orphaned architecture.md
+- [x] **Phase 8: Reference & Index Anchor Completeness** - Gap closure: registry-paths.md Winlogon entry + anchors, glossary Entra/Intune headings, error-code index heading anchors (completed 2026-04-08)
+- [x] **Phase 9: Navigation Wiring Fixes** - Gap closure: broken L2 runbook nav footers, missing OOBE entry in common-issues, orphaned architecture.md (completed 2026-04-09)
+- [ ] **Phase 10: Navigation Polish & Cross-Linking** - Tech debt closure: L1 escalation specificity, quick-ref cross-linking, hardware hash entry, log-collection error-code ref
 
 ## Phase Details
 
@@ -151,6 +152,20 @@ Plans:
   4. `docs/architecture.md` is linked from at least one Phase 7 navigation entry point (`index.md` Shared References)
 **Plans:** 0/0 plans complete
 
+### Phase 10: Navigation Polish & Cross-Linking
+**Goal**: Close all tech-debt items from the v1.0 re-audit so that L1 runbook escalations route to specific L2 targets, quick-reference cards are discoverable from within runbooks, and common-issues.md covers hardware hash as a standalone scenario
+**Depends on**: Phase 5, Phase 6, Phase 7
+**Requirements**: (Tech debt closure — no new requirements; polishes existing L1RB-01, L1RB-03, L1RB-05, L2RB-01, NAV-02, NAV-04 artifacts)
+**Gap Closure**: Closes tech debt from `.planning/v1.0-MILESTONE-AUDIT.md` (re-audit 2026-04-09)
+**Success Criteria** (what must be TRUE):
+  1. `l1-runbooks/01-device-not-registered.md` escalation section links to a specific L2 runbook (not just `l2-runbooks/00-index.md`)
+  2. `l1-runbooks/03-profile-not-assigned.md` escalation section routes to `02-esp-deep-dive.md` or `05-policy-conflicts.md` based on symptom
+  3. `l1-runbooks/05-oobe-failure.md` escalation section mentions `l2-runbooks/01-log-collection.md` as mandatory first step
+  4. `l2-runbooks/01-log-collection.md` contains at least one link to an `error-codes/` file
+  5. `common-issues.md` has a standalone "Hardware Hash" scenario entry (not just subsumed under Device Registration)
+  6. At least 3 of the 5 L1 runbooks contain a footer link to `quick-ref-l1.md`; at least 3 of the 5 L2 runbooks contain a footer link to `quick-ref-l2.md`
+**Plans:** 0/0 plans complete
+
 ### Phase 7: Navigation
 **Goal**: Both L1 and L2 audiences can reach all documentation from role-specific entry points without traversing content intended for the other audience
 **Depends on**: Phase 5, Phase 6
@@ -180,5 +195,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 5. L1 Runbooks | 3/3 | Complete   | 2026-03-20 |
 | 6. L2 Runbooks | 4/4 | Complete   | 2026-03-21 |
 | 7. Navigation | 2/2 | Complete   | 2026-03-23 |
-| 8. Reference & Index Anchor Completeness | 0/0 | Not started | - |
-| 9. Navigation Wiring Fixes | 0/0 | Not started | - |
+| 8. Reference & Index Anchor Completeness | 2/2 | Complete | 2026-04-08 |
+| 9. Navigation Wiring Fixes | 1/1 | Complete | 2026-04-09 |
+| 10. Navigation Polish & Cross-Linking | 0/0 | Not started | - |
