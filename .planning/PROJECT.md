@@ -8,6 +8,17 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering — covering both pre-provisioning (white glove) and user-driven modes.
 
+## Current Milestone: v1.1 APv2 Documentation & Admin Setup Guides
+
+**Goal:** Expand the documentation suite with full APv2 (Device Preparation) coverage and admin-facing setup/configuration guides for both APv1 and APv2.
+
+**Target features:**
+- APv2 (Device Preparation) lifecycle documentation — stages, flows, differences from APv1
+- APv2 error codes, decision trees, and L1/L2 runbooks
+- Admin setup guides for APv1 — profile configuration, ESP policies, dynamic groups, OOBE, deployment modes
+- Admin setup guides for APv2 — Device Preparation profiles, app assignment, security policies
+- Setup troubleshooting content where configuration mistakes cause downstream failures
+
 ## Current State
 
 **v1.0 shipped 2026-04-10.** 10 phases, 26 plans, 36 requirements — all verified.
@@ -43,7 +54,11 @@ Delivered:
 
 ### Active
 
-<!-- Next milestone scope — define with /gsd-new-milestone -->
+- [ ] APv2 (Device Preparation) lifecycle documentation
+- [ ] APv2 error codes, decision trees, and L1/L2 runbooks
+- [ ] Admin setup guides for APv1 configuration
+- [ ] Admin setup guides for APv2 configuration
+- [ ] Setup troubleshooting for configuration-caused failures
 
 ### Out of Scope
 
@@ -58,7 +73,8 @@ Delivered:
 - Project has existing code scaffolding across all three tiers (PowerShell, Python, React)
 - Docs live in `docs/` as markdown, structured for easy export to SharePoint/Confluence
 - Tech stack for tooling (future): PowerShell 5.1+, Python 3.10+ (FastAPI), React 18+ (Vite)
-- v2 candidates: interactive web decision trees, MkDocs site generation, APv2 full docs
+- v1.1: APv2 docs + admin setup guides; v1.2 planned for macOS + Linux provisioning (full L1/L2 parity)
+- v2 candidates: interactive web decision trees, MkDocs site generation
 
 ## Constraints
 
@@ -78,5 +94,22 @@ Delivered:
 | Gap closure via audit cycles | Catch cross-phase wiring issues after initial content | ✓ Delivered — 3 audits, 3 closure phases (8-10) |
 | Pre-provisioning as primary term | "White glove" deprecated by Microsoft | ✓ Delivered — consistent terminology throughout |
 
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
 ---
-*Last updated: 2026-04-10 after v1.0 milestone shipped*
+*Last updated: 2026-04-10 after v1.1 milestone started*
