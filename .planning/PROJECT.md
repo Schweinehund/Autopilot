@@ -8,47 +8,44 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering — covering both pre-provisioning (white glove) and user-driven modes.
 
-## Current Milestone: v1.0 Autopilot Documentation & Troubleshooting Guides
+## Current State
 
-**Goal:** Deliver end-to-end documentation covering the full Autopilot lifecycle with integrated troubleshooting, tiered for L1 Service Desk and L2 Desktop teams.
+**v1.0 shipped 2026-04-10.** 10 phases, 26 plans, 36 requirements — all verified.
 
-**Target features:**
-- Full lifecycle documentation (hardware hash import → profile assignment → OOBE → ESP → working desktop)
-- Pre-provisioning (white glove/technician) flow documentation and troubleshooting
-- User-driven flow documentation and troubleshooting
-- Error code lookup tables (searchable: error → cause → fix)
-- Scenario runbooks for complex issues (TPM Attestation, ESP failures, network, hybrid join)
-- L1 decision trees and flowcharts for Service Desk
-- L2 deep-dive technical guides for Desktop teams (registry, logs, PowerShell)
+Delivered:
+- 40+ markdown documentation files in `docs/`
+- 4,238 lines of structured troubleshooting content
+- Full Autopilot lifecycle documentation (6 stages, 3 deployment modes)
+- Master error code index (29 entries across 5 category files)
+- 4 L1 Mermaid decision trees with network reachability gates
+- 5 L1 scripted runbooks (zero PowerShell/registry — Service Desk safe)
+- 5 L2 technical investigation guides (registry, event IDs, PowerShell refs)
+- Role-based navigation (index.md, quick-ref cards, common-issues index)
+- Full cross-phase wiring verified (8/8 integration checks, 80/80 must-haves)
 
 ## Requirements
 
 ### Validated
 
-<!-- Shipped and confirmed valuable. -->
-
 - ✓ PowerShell diagnostic module (AutopilotDiagnostics.psm1) — scaffolded
 - ✓ PowerShell remediation module (AutopilotRemediation.psm1) — scaffolded
 - ✓ FastAPI backend skeleton — scaffolded
 - ✓ React frontend scaffold — scaffolded
+- ✓ End-to-end Autopilot lifecycle documentation — v1.0
+- ✓ Pre-provisioning flow troubleshooting guides — v1.0
+- ✓ User-driven flow troubleshooting guides — v1.0
+- ✓ Error code lookup tables — v1.0
+- ✓ Scenario runbooks (TPM, ESP, network, hybrid join, profile assignment) — v1.0
+- ✓ L1 Service Desk decision trees — v1.0
+- ✓ L1 scenario runbooks (top 5 failures) — v1.0
+- ✓ L2 Desktop team technical guides — v1.0
+- ✓ Navigation indexes and quick-reference cards — v1.0
 
 ### Active
 
-<!-- Current scope. Building toward these. -->
-
-- [x] End-to-end Autopilot lifecycle documentation — Validated in Phase 02: lifecycle
-- [x] Pre-provisioning flow troubleshooting guides — Validated in Phase 02/05/06
-- [x] User-driven flow troubleshooting guides — Validated in Phase 02/05/06
-- [x] Error code lookup tables — Validated in Phase 03: error-codes
-- [x] Scenario runbooks (TPM, ESP, network, hybrid join, profile assignment) — Validated in Phase 05/06
-- [x] L1 Service Desk decision trees — Validated in Phase 04: l1-decision-trees
-- [x] L1 scenario runbooks (top 5 failures) — Validated in Phase 05: l1-runbooks
-- [x] L2 Desktop team technical guides — Validated in Phase 06: l2-runbooks
-- [x] Navigation indexes and quick-reference cards — Validated in Phase 07: navigation
+<!-- Next milestone scope — define with /gsd-new-milestone -->
 
 ### Out of Scope
-
-<!-- Explicit boundaries. Includes reasoning to prevent re-adding. -->
 
 - Environment-specific configurations — docs are generic, teams customize locally
 - Frontend UI implementation — deferred to future milestone
@@ -57,11 +54,11 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 ## Context
 
+- v1.0 milestone complete — full documentation suite shipped
 - Project has existing code scaffolding across all three tiers (PowerShell, Python, React)
-- Documentation is the immediate priority because IT teams need it now
-- Both pre-provisioning (technician/white glove) and user-driven deployment modes in use
-- Docs will live in `docs/` as markdown, structured for easy export to SharePoint/Confluence
-- Common pain points: TPM Attestation failures, ESP timeouts, network connectivity, hybrid join issues
+- Docs live in `docs/` as markdown, structured for easy export to SharePoint/Confluence
+- Tech stack for tooling (future): PowerShell 5.1+, Python 3.10+ (FastAPI), React 18+ (Vite)
+- v2 candidates: interactive web decision trees, MkDocs site generation, APv2 full docs
 
 ## Constraints
 
@@ -74,10 +71,12 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | Delivered — all 7 phases complete |
-| Tiered doc structure (L1/L2) | Different skill levels need different formats | Delivered — role-based navigation via docs/index.md |
-| Generic over environment-specific | Broader applicability, teams add local details | Delivered — no tenant-specific content |
-| Markdown in docs/ | Version-controlled, exportable to any wiki platform | Delivered — 35+ markdown files in docs/ |
+| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | ✓ Delivered — 10 phases, 36 requirements |
+| Tiered doc structure (L1/L2) | Different skill levels need different formats | ✓ Delivered — role-based navigation via docs/index.md |
+| Generic over environment-specific | Broader applicability, teams add local details | ✓ Delivered — no tenant-specific content |
+| Markdown in docs/ | Version-controlled, exportable to any wiki platform | ✓ Delivered — 40+ markdown files |
+| Gap closure via audit cycles | Catch cross-phase wiring issues after initial content | ✓ Delivered — 3 audits, 3 closure phases (8-10) |
+| Pre-provisioning as primary term | "White glove" deprecated by Microsoft | ✓ Delivered — consistent terminology throughout |
 
 ---
-*Last updated: 2026-03-23 after Phase 07 (Navigation) completion — v1.0 milestone complete*
+*Last updated: 2026-04-10 after v1.0 milestone shipped*
