@@ -59,6 +59,8 @@ Escalate to L2 if:
 
 For related error codes, see [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md).
 
+**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
+
 ---
 
 [Back to Initial Triage](../decision-trees/00-initial-triage.md)

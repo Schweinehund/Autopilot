@@ -193,6 +193,8 @@ At this point, collect the full diagnostic package from Step 1, document all reg
 - [ESP Error Codes](../error-codes/03-esp-enrollment.md) — coded ESP error lookup table and policy conflicts table with multi-cause handling
 - [Policy Conflict Analysis](05-policy-conflicts.md) — for policy-related ESP failures including AutoAdminLogon, AppLocker CSP, and Security Baseline conflicts
 
+**Quick Reference:** [L2 Quick-Reference Card](../quick-ref-l2.md)
+
 ---
 
 ## Version History

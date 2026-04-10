@@ -215,6 +215,8 @@ At this point, collect the full diagnostic package from Step 1, document all reg
 - [ESP Error Codes](../error-codes/03-esp-enrollment.md) — policy conflicts table with six no-code failure patterns and their L1/L2 actions
 - [ESP Deep-Dive](02-esp-deep-dive.md) — for ESP-specific registry investigation (FirstSync, ExpectedPolicies, Sidecar) when a policy conflict is confirmed and you need to correlate with app install status
 
+**Quick Reference:** [L2 Quick-Reference Card](../quick-ref-l2.md)
+
 ---
 
 ## Version History

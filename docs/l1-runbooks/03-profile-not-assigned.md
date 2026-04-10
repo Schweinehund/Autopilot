@@ -78,6 +78,8 @@ Escalate to L2 if:
 - If policies show as pending or conflicting in the portal: [Policy Conflict Analysis](../l2-runbooks/05-policy-conflicts.md)
 - For all other profile assignment issues: [L2 Runbook Index](../l2-runbooks/00-index.md)
 
+**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
+
 ---
 
 [Back to Profile Assignment Tree](../decision-trees/02-profile-assignment.md) | [Back to Initial Triage](../decision-trees/00-initial-triage.md)

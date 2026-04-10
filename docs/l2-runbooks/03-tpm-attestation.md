@@ -169,6 +169,8 @@ Escalate when a firmware update is needed. L2 identifies the chipset and error c
 - [Registry Paths](../reference/registry-paths.md) — Autopilot registration state paths
 - [TPM Attestation Error Codes](../error-codes/02-tpm-attestation.md) — error code lookup with hardware-specific notes
 
+**Quick Reference:** [L2 Quick-Reference Card](../quick-ref-l2.md)
+
 ---
 
 Prev: [02-device-registration.md](02-device-registration.md) | Next: [04-hybrid-join.md](04-hybrid-join.md)

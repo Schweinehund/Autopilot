@@ -68,6 +68,8 @@ Escalate to L2 if:
 
 > **L2 forward-link:** L2 must run the [Log Collection Guide](../l2-runbooks/01-log-collection.md) first to gather a diagnostic package, then investigate via the [L2 Runbook Index](../l2-runbooks/00-index.md) based on collected evidence.
 
+**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
+
 ---
 
 ## Version History
