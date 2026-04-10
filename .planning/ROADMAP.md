@@ -164,7 +164,10 @@ Plans:
   4. `l2-runbooks/01-log-collection.md` contains at least one link to an `error-codes/` file
   5. `common-issues.md` has a standalone "Hardware Hash" scenario entry (not just subsumed under Device Registration)
   6. At least 3 of the 5 L1 runbooks contain a footer link to `quick-ref-l1.md`; at least 3 of the 5 L2 runbooks contain a footer link to `quick-ref-l2.md`
-**Plans:** 0/0 plans complete
+**Plans:** 1 plan
+
+Plans:
+- [ ] 10-01-navigation-polish-PLAN.md — L1 escalation specificity, quick-ref cross-linking, hardware hash entry, log-collection error-code ref
 
 ### Phase 7: Navigation
 **Goal**: Both L1 and L2 audiences can reach all documentation from role-specific entry points without traversing content intended for the other audience
@@ -197,4 +200,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 7. Navigation | 2/2 | Complete   | 2026-03-23 |
 | 8. Reference & Index Anchor Completeness | 2/2 | Complete | 2026-04-08 |
 | 9. Navigation Wiring Fixes | 1/1 | Complete | 2026-04-09 |
-| 10. Navigation Polish & Cross-Linking | 0/0 | Not started | - |
+| 10. Navigation Polish & Cross-Linking | 0/1 | Not started | - |
