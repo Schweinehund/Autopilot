@@ -81,37 +81,37 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LIFE-01 | — | Pending |
-| LIFE-02 | — | Pending |
-| LIFE-03 | — | Pending |
-| LIFE-04 | — | Pending |
-| TROU-01 | — | Pending |
-| TROU-02 | — | Pending |
-| TROU-03 | — | Pending |
-| TROU-04 | — | Pending |
-| TROU-05 | — | Pending |
-| ASET-01 | — | Pending |
-| ASET-02 | — | Pending |
-| ASET-03 | — | Pending |
-| ASET-04 | — | Pending |
-| ASET-05 | — | Pending |
-| ADMN-01 | — | Pending |
-| ADMN-02 | — | Pending |
-| ADMN-03 | — | Pending |
-| ADMN-04 | — | Pending |
-| ADMN-05 | — | Pending |
-| ADMN-06 | — | Pending |
-| ADMN-07 | — | Pending |
-| NAVG-01 | — | Pending |
-| NAVG-02 | — | Pending |
-| NAVG-03 | — | Pending |
-| NAVG-04 | — | Pending |
+| LIFE-01 | Phase 11 | Pending |
+| LIFE-02 | Phase 11 | Pending |
+| LIFE-03 | Phase 11 | Pending |
+| LIFE-04 | Phase 11 | Pending |
+| TROU-01 | Phase 12 | Pending |
+| TROU-02 | Phase 13 | Pending |
+| TROU-03 | Phase 13 | Pending |
+| TROU-04 | Phase 14 | Pending |
+| TROU-05 | Phase 14 | Pending |
+| ASET-01 | Phase 15 | Pending |
+| ASET-02 | Phase 15 | Pending |
+| ASET-03 | Phase 15 | Pending |
+| ASET-04 | Phase 15 | Pending |
+| ASET-05 | Phase 15 | Pending |
+| ADMN-01 | Phase 16 | Pending |
+| ADMN-02 | Phase 16 | Pending |
+| ADMN-03 | Phase 16 | Pending |
+| ADMN-04 | Phase 16 | Pending |
+| ADMN-05 | Phase 16 | Pending |
+| ADMN-06 | Phase 16 | Pending |
+| ADMN-07 | Phase 16 | Pending |
+| NAVG-01 | Phase 17 | Pending |
+| NAVG-02 | Phase 12 | Pending |
+| NAVG-03 | Phase 17 | Pending |
+| NAVG-04 | Phase 17 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 25 total
-- Mapped to phases: 0
-- Unmapped: 25
+- Mapped to phases: 25
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-10*
-*Last updated: 2026-04-10 after initial definition*
+*Last updated: 2026-04-10 after roadmap creation — all 25 requirements mapped to phases 11-17*
