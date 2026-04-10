@@ -43,7 +43,6 @@ Troubleshooting and investigation guides for [Windows Autopilot](_glossary.md#au
 | [Lifecycle Overview](lifecycle/00-overview.md) | End-to-end deployment sequence with flow diagrams |
 | [APv1 vs APv2](apv1-vs-apv2.md) | Framework selection — which docs apply to which mode |
 | [Common Issues Index](common-issues.md) | Symptom-based router to L1 and L2 runbooks |
-| [System Architecture](architecture.md) | Three-tier design overview (PowerShell modules, FastAPI backend, React frontend) |
 
 ## Version History
 

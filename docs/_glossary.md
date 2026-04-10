@@ -11,7 +11,7 @@ audience: both
 
 ## Alphabetical Index
 
-[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [Device phase](#device-phase) | [Entra](#entra) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune](#intune) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Self-deploying mode](#self-deploying-mode) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
+[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [Device phase](#device-phase) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Self-deploying mode](#self-deploying-mode) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
 
 ---
 
@@ -30,10 +30,6 @@ Enrollment Status Page — the progress screen during Autopilot provisioning tha
 ### MDM
 
 Mobile Device Management — the protocol and service (Intune) used to push policies, apps, and configuration to enrolled devices.
-
-### Intune
-
-Microsoft Intune — Microsoft's cloud MDM service and the concrete implementation of MDM used by Windows Autopilot to deliver policies, apps, and configuration profiles to enrolled devices.
 
 ### MDM enrollment
 
@@ -140,10 +136,6 @@ An APv1 deployment mode (formerly "white glove") where a technician or OEM pre-s
 ### White glove
 
 The deprecated name for pre-provisioning; renamed in 2021. See [Pre-provisioning](#pre-provisioning).
-
-### Entra
-
-Microsoft Entra ID — the current product name for Azure Active Directory (renamed July 2023). The identity service that authenticates users and devices during Autopilot enrollment and stores device objects created by hybrid join and Autopilot registration.
 
 ### Hybrid join
 

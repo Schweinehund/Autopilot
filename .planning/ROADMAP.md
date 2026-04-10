@@ -17,11 +17,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Error Codes** - Master error code lookup tables with deployment-mode tagging and multi-cause structure (completed 2026-03-15)
 - [x] **Phase 4: L1 Decision Trees** - Mermaid flowcharts for structured L1 triage with explicit terminal states (completed 2026-03-20)
 - [x] **Phase 5: L1 Runbooks** - Scripted Service Desk procedures with no registry or PowerShell access required (completed 2026-03-20)
-- [x] **Phase 6: L2 Runbooks** - Technical investigation guides with registry paths, event IDs, and PowerShell invocations (completed 2026-03-21)
+- [ ] **Phase 6: L2 Runbooks** - Technical investigation guides with registry paths, event IDs, and PowerShell invocations
 - [x] **Phase 7: Navigation** - Master index, quick-reference cards, and navigation indexes written after all content exists (completed 2026-03-23)
-- [x] **Phase 8: Reference & Index Anchor Completeness** - Gap closure: registry-paths.md Winlogon entry + anchors, glossary Entra/Intune headings, error-code index heading anchors (completed 2026-04-08)
-- [x] **Phase 9: Navigation Wiring Fixes** - Gap closure: broken L2 runbook nav footers, missing OOBE entry in common-issues, orphaned architecture.md (completed 2026-04-09)
-- [ ] **Phase 10: Navigation Polish & Cross-Linking** - Tech debt closure: L1 escalation specificity, quick-ref cross-linking, hardware hash entry, log-collection error-code ref
 
 ## Phase Details
 
@@ -124,51 +121,6 @@ Plans:
 - [x] 06-03-PLAN.md — TPM attestation and hybrid join investigation guides
 - [x] 06-04-PLAN.md — Forward-link resolution in all upstream files
 
-### Phase 8: Reference & Index Anchor Completeness
-**Goal**: Close foundation reference and error-code index anchor gaps identified by v1.0 milestone audit so that inbound anchor links from error codes, L2 runbooks, and the master error-code index resolve to their intended targets rather than falling back to file-top
-**Depends on**: Phase 1, Phase 3
-**Requirements**: (Gap closure — no new requirements; fixes existing FOUND-01, FOUND-02, ERRC-01 artifacts)
-**Gap Closure**: Closes tech debt items from `.planning/v1.0-MILESTONE-AUDIT.md`
-**Success Criteria** (what must be TRUE):
-  1. `reference/registry-paths.md` contains an entry for `HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon` with the same columns as existing rows
-  2. `reference/registry-paths.md` has heading-level anchors for `#autopilotsettings`, `#provisioning-diagnostics`, and `#winlogon` so inbound fragment links from error-code files resolve
-  3. `_glossary.md` has `### Entra` and `### Intune` defined-term headings so 6 inbound `#entra`/`#intune` links from error-code files resolve
-  4. `error-codes/00-index.md` fragment IDs (`#0x...`, `#event-...`) resolve to the specific error row — either via heading anchors, an alternative index structure, or equivalent GFM-compatible anchoring
-**Plans:** 2/2 plans complete
-
-Plans:
-- [x] 08-01-PLAN.md — Foundation reference anchors (registry-paths.md Winlogon entry + anchors, glossary Entra/Intune headings)
-- [x] 08-02-PLAN.md — Error-code index fragment anchors (inline HTML id anchors in 5 category files)
-
-### Phase 9: Navigation Wiring Fixes
-**Goal**: Close navigation and cross-phase wiring gaps identified by v1.0 milestone audit so that L2 runbook footer navigation works, OOBE failure is reachable from common-issues.md, and architecture.md is discoverable from Phase 7 navigation entry points
-**Depends on**: Phase 5, Phase 6, Phase 7
-**Requirements**: (Gap closure — no new requirements; fixes existing L2RB-03, L2RB-04, NAV-02, NAV-01 artifacts)
-**Gap Closure**: Closes high-severity and medium-severity integration gaps from `.planning/v1.0-MILESTONE-AUDIT.md`
-**Success Criteria** (what must be TRUE):
-  1. `l2-runbooks/03-tpm-attestation.md` Prev nav link points to an existing file (`02-esp-deep-dive.md`, not `02-device-registration.md`)
-  2. `l2-runbooks/04-hybrid-join.md` Next nav link points to `05-policy-conflicts.md` (not `05-policy-conflict.md`)
-  3. `common-issues.md` has an OOBE failure entry routing to `l1-runbooks/05-oobe-failure.md`
-  4. `docs/architecture.md` is linked from at least one Phase 7 navigation entry point (`index.md` Shared References)
-**Plans:** 0/0 plans complete
-
-### Phase 10: Navigation Polish & Cross-Linking
-**Goal**: Close all tech-debt items from the v1.0 re-audit so that L1 runbook escalations route to specific L2 targets, quick-reference cards are discoverable from within runbooks, and common-issues.md covers hardware hash as a standalone scenario
-**Depends on**: Phase 5, Phase 6, Phase 7
-**Requirements**: (Tech debt closure — no new requirements; polishes existing L1RB-01, L1RB-03, L1RB-05, L2RB-01, NAV-02, NAV-04 artifacts)
-**Gap Closure**: Closes tech debt from `.planning/v1.0-MILESTONE-AUDIT.md` (re-audit 2026-04-09)
-**Success Criteria** (what must be TRUE):
-  1. `l1-runbooks/01-device-not-registered.md` escalation section links to a specific L2 runbook (not just `l2-runbooks/00-index.md`)
-  2. `l1-runbooks/03-profile-not-assigned.md` escalation section routes to `02-esp-deep-dive.md` or `05-policy-conflicts.md` based on symptom
-  3. `l1-runbooks/05-oobe-failure.md` escalation section mentions `l2-runbooks/01-log-collection.md` as mandatory first step
-  4. `l2-runbooks/01-log-collection.md` contains at least one link to an `error-codes/` file
-  5. `common-issues.md` has a standalone "Hardware Hash" scenario entry (not just subsumed under Device Registration)
-  6. At least 3 of the 5 L1 runbooks contain a footer link to `quick-ref-l1.md`; at least 3 of the 5 L2 runbooks contain a footer link to `quick-ref-l2.md`
-**Plans:** 1 plan
-
-Plans:
-- [ ] 10-01-navigation-polish-PLAN.md — L1 escalation specificity, quick-ref cross-linking, hardware hash entry, log-collection error-code ref
-
 ### Phase 7: Navigation
 **Goal**: Both L1 and L2 audiences can reach all documentation from role-specific entry points without traversing content intended for the other audience
 **Depends on**: Phase 5, Phase 6
@@ -196,8 +148,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 | 3. Error Codes | 3/3 | Complete   | 2026-03-15 |
 | 4. L1 Decision Trees | 2/2 | Complete   | 2026-03-20 |
 | 5. L1 Runbooks | 3/3 | Complete   | 2026-03-20 |
-| 6. L2 Runbooks | 4/4 | Complete   | 2026-03-21 |
+| 6. L2 Runbooks | 3/4 | In Progress|  |
 | 7. Navigation | 2/2 | Complete   | 2026-03-23 |
-| 8. Reference & Index Anchor Completeness | 2/2 | Complete | 2026-04-08 |
-| 9. Navigation Wiring Fixes | 1/1 | Complete | 2026-04-09 |
-| 10. Navigation Polish & Cross-Linking | 0/1 | Not started | - |
