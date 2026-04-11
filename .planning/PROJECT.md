@@ -22,6 +22,7 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 ## Current State
 
 **v1.0 shipped 2026-04-10.** 10 phases, 26 plans, 36 requirements — all verified.
+**Phase 11 complete 2026-04-11.** APv2 lifecycle foundation — overview, prerequisites, deployment flow, automatic mode, comparison extension, admin template.
 
 Delivered:
 - 40+ markdown documentation files in `docs/`
@@ -33,6 +34,8 @@ Delivered:
 - 5 L2 technical investigation guides (registry, event IDs, PowerShell refs)
 - Role-based navigation (index.md, quick-ref cards, common-issues index)
 - Full cross-phase wiring verified (8/8 integration checks, 80/80 must-haves)
+- APv2 lifecycle documentation: overview with ETG, 10-step deployment flow, prerequisites checklist, automatic mode (Windows 365), decision flowchart + migration guidance in APv1 vs APv2 comparison
+- Admin guide template with "what breaks if misconfigured" callout pattern
 
 ## Requirements
 
@@ -54,7 +57,7 @@ Delivered:
 
 ### Active
 
-- [ ] APv2 (Device Preparation) lifecycle documentation
+- [x] APv2 (Device Preparation) lifecycle documentation — Phase 11 (overview, prerequisites, deployment flow, automatic mode, comparison)
 - [ ] APv2 error codes, decision trees, and L1/L2 runbooks
 - [ ] Admin setup guides for APv1 configuration
 - [ ] Admin setup guides for APv2 configuration
