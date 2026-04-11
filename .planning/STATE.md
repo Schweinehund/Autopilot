@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: APv2 Documentation & Admin Setup Guides
-status: executing
-stopped_at: Completed 11-01-PLAN.md
-last_updated: "2026-04-11T14:33:10.617Z"
+status: verifying
+stopped_at: Completed 11-02-PLAN.md
+last_updated: "2026-04-11T14:41:15.004Z"
 last_activity: 2026-04-11
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 50
+  completed_plans: 2
+  percent: 100
 ---
 
 # Project State
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-04-10)
 
 Phase: 11 (apv2-lifecycle-foundation) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-04-11
 
 ```
@@ -61,6 +61,7 @@ v1.1 Progress: [░░░░░░░░░░░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 11 P01 | 3min | 3 tasks | 3 files |
+| Phase 11 P02 | 5min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,9 @@ Recent decisions affecting current work:
 - [Phase 11]: ETG explanation structured as two-phase model (admin prep + enrollment time)
 - [Phase 11]: Prerequisites use consequence-driven format (what happens if missing) for every item
 - [Phase 11]: Admin template includes Configuration-Caused Failures reverse-lookup table for Phase 15-16
+- [Phase 11]: ETG shown as distinct labeled node in Level 1 Mermaid diagram for visual prominence
+- [Phase 11]: Preview double coverage pattern: top banner + inline callouts ensures readers who jump via anchor links still see warnings
+- [Phase 11]: Decision flowchart uses 8 sequential questions covering all APv1-only requirements before recommending APv2 for new deployments
 
 ### Pending Todos
 
@@ -103,7 +107,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-04-11T14:33:10.609Z
-Stopped at: Completed 11-01-PLAN.md
+Last session: 2026-04-11T14:41:14.997Z
+Stopped at: Completed 11-02-PLAN.md
 Resume file: None
 Next action: Run `/gsd:plan-phase 11`

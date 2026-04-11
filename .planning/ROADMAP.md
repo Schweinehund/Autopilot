@@ -27,7 +27,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 
 ### v1.1 APv2 Documentation & Admin Setup Guides
 
-- [ ] **Phase 11: APv2 Lifecycle Foundation** — APv2 deployment flow, prerequisites, comparison with APv1, and automatic mode
+- [x] **Phase 11: APv2 Lifecycle Foundation** — APv2 deployment flow, prerequisites, comparison with APv1, and automatic mode (completed 2026-04-11)
 - [ ] **Phase 12: APv2 Failure Index** — Scenario-based failure catalog and updated master error code index with APv2 section
 - [ ] **Phase 13: APv2 L1 Decision Trees & Runbooks** — Initial triage tree and scripted L1 runbooks for top APv2 failure scenarios
 - [ ] **Phase 14: APv2 L2 Runbooks** — BootstrapperAgent log collection and Intune deployment report analysis guides
@@ -46,10 +46,10 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
   2. Admin can find and apply the APv2 prerequisites checklist (OS version gate, licensing, auto-enrollment, APv1 deregistration requirement) before attempting any configuration
   3. Admin can consult an updated APv1 vs APv2 comparison document to select the right framework and understand migration implications
   4. Admin can find APv2 automatic mode (Windows 365) documentation with preview-status caveats clearly stated
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 11-01-PLAN.md — APv2 overview, prerequisites checklist, and admin guide template
-- [ ] 11-02-PLAN.md — Deployment flow with Mermaid diagrams, automatic mode, and comparison page extension
+- [x] 11-02-PLAN.md — Deployment flow with Mermaid diagrams, automatic mode, and comparison page extension
 
 ### Phase 12: APv2 Failure Index
 **Goal**: Technicians have a scenario-based APv2 failure catalog they can search by symptom, and the master error index acknowledges the APv2 framework
@@ -133,7 +133,7 @@ Plans:
 | 8. Reference Anchors | v1.0 | 2/2 | Complete | 2026-04-08 |
 | 9. Navigation Wiring | v1.0 | 1/1 | Complete | 2026-04-09 |
 | 10. Navigation Polish | v1.0 | 1/1 | Complete | 2026-04-10 |
-| 11. APv2 Lifecycle Foundation | v1.1 | 1/2 | In Progress|  |
+| 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete   | 2026-04-11 |
 | 12. APv2 Failure Index | v1.1 | 0/? | Not started | - |
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/? | Not started | - |
 | 14. APv2 L2 Runbooks | v1.1 | 0/? | Not started | - |

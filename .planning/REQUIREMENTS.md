@@ -11,8 +11,8 @@ Requirements for milestone v1.1: APv2 Documentation & Admin Setup Guides. Each m
 
 - [x] **LIFE-01**: Admin can find a complete APv2 deployment flow overview (10-step process, how it differs from APv1)
 - [x] **LIFE-02**: Admin can verify APv2 prerequisites (OS version, licensing, Intune config, networking)
-- [ ] **LIFE-03**: Admin can use updated APv1 vs APv2 comparison with actionable guidance (when to use which, migration steps)
-- [ ] **LIFE-04**: Admin can find APv2 automatic mode documentation (Windows 365 deployment, preview status noted)
+- [x] **LIFE-03**: Admin can use updated APv1 vs APv2 comparison with actionable guidance (when to use which, migration steps)
+- [x] **LIFE-04**: Admin can find APv2 automatic mode documentation (Windows 365 deployment, preview status noted)
 
 ### APv2 Troubleshooting
 
@@ -83,8 +83,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | LIFE-01 | Phase 11 | Complete |
 | LIFE-02 | Phase 11 | Complete |
-| LIFE-03 | Phase 11 | Pending |
-| LIFE-04 | Phase 11 | Pending |
+| LIFE-03 | Phase 11 | Complete |
+| LIFE-04 | Phase 11 | Complete |
 | TROU-01 | Phase 12 | Pending |
 | TROU-02 | Phase 13 | Pending |
 | TROU-03 | Phase 13 | Pending |
