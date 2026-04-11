@@ -133,7 +133,7 @@ Plans:
 | 8. Reference Anchors | v1.0 | 2/2 | Complete | 2026-04-08 |
 | 9. Navigation Wiring | v1.0 | 1/1 | Complete | 2026-04-09 |
 | 10. Navigation Polish | v1.0 | 1/1 | Complete | 2026-04-10 |
-| 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete   | 2026-04-11 |
+| 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete    | 2026-04-11 |
 | 12. APv2 Failure Index | v1.1 | 0/? | Not started | - |
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/? | Not started | - |
 | 14. APv2 L2 Runbooks | v1.1 | 0/? | Not started | - |
