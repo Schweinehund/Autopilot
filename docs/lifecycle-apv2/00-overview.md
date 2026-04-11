@@ -87,7 +87,7 @@ For full details, see [APv2 Automatic Mode (Windows 365)](03-automatic-mode.md).
 
 Event log: `Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Admin`
 
-The BootstrapperAgent process manages the APv2 deployment flow on-device. Event IDs are documented in the [L2 APv2 Log Collection Guide](../runbooks-l2/apv2-log-collection.md) (Phase 14).
+The BootstrapperAgent process manages the APv2 deployment flow on-device. Event IDs are documented in the [L2 APv2 Log Collection Guide](../l2-runbooks/apv2-log-collection.md) (Phase 14).
 
 </details>
 
