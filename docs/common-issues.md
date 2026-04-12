@@ -19,13 +19,6 @@ Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) po
 - **L1:** [Device Not Registered](l1-runbooks/01-device-not-registered.md)
 - **L2:** [L2 Runbook Index](l2-runbooks/00-index.md) — select runbook based on escalation checklist
 
-## Hardware Hash Issues
-
-[Hardware hash](_glossary.md#hardware-hash) not available, import failed, or hash mismatch preventing device registration.
-
-- **L1:** [Device Not Registered](l1-runbooks/01-device-not-registered.md) — step 7 covers checking hardware hash import history
-- **L2:** [L2 Runbook Index](l2-runbooks/00-index.md) — for hash re-collection using [Get-AutopilotHardwareHash](reference/powershell-ref.md#get-autopilothardwarehash)
-
 ## Enrollment Status Page (ESP) Failures
 
 [ESP](_glossary.md#esp) stuck, timed out, or displaying "Something went wrong" error.

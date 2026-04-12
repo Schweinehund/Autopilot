@@ -66,9 +66,7 @@ Escalate to L2 if:
 
 **See also:** For initial triage context, see [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md).
 
-> **L2 forward-link:** L2 must run the [Log Collection Guide](../l2-runbooks/01-log-collection.md) first to gather a diagnostic package, then investigate via the [L2 Runbook Index](../l2-runbooks/00-index.md) based on collected evidence.
-
-**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
+> **L2 forward-link:** See [L2 Runbooks](../l2-runbooks/00-index.md) for OOBE log analysis and provisioning investigation.
 
 ---
 

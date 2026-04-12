@@ -156,8 +156,6 @@ Escalate when domain controller or AD Connect issues are confirmed. These are in
 - [Hybrid Join Error Codes](../error-codes/05-hybrid-join.md) — event ID and error code lookup including all three 0x80070774 causes and ODJ Connector version notes
 - [Network Endpoints](../reference/endpoints.md) — if connectivity verification between connector and Microsoft cloud is needed
 
-**Quick Reference:** [L2 Quick-Reference Card](../quick-ref-l2.md)
-
 ---
 
 Prev: [03-tpm-attestation.md](03-tpm-attestation.md) | Next: [05-policy-conflict.md](05-policy-conflict.md)

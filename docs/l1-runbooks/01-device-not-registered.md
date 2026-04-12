@@ -55,11 +55,9 @@ Escalate to L2 if:
 - Timestamp of the search
 - Screenshot of the Autopilot devices search page showing no results
 
-**L2 escalation path:** Start with the [Log Collection Guide](../l2-runbooks/01-log-collection.md) to gather a diagnostic package, then proceed to the [Hybrid Join Investigation](../l2-runbooks/04-hybrid-join.md) if the device is hybrid Azure AD joined. For all other cases, see the [L2 Runbook Index](../l2-runbooks/00-index.md) to select the appropriate investigation runbook.
+See [L2 Runbooks](../l2-runbooks/00-index.md) for hardware hash re-import procedures.
 
 For related error codes, see [MDM Enrollment Errors](../error-codes/01-mdm-enrollment.md).
-
-**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
 
 ---
 

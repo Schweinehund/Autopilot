@@ -1,289 +1,267 @@
 # Pitfalls Research
 
-**Domain:** IT Documentation — APv2 (Device Preparation) Docs + Admin Setup Guides for APv1/APv2
-**Researched:** 2026-04-10
-**Confidence:** HIGH (Microsoft Learn official docs April 2026 + community validation + existing v1.0 pitfall base)
-
----
-
-## Scope Note
-
-This file covers pitfalls for the v1.1 milestone: adding APv2 (Device Preparation) documentation and admin setup guides for both APv1 and APv2 to the existing v1.0 documentation suite. Pitfalls from v1.0 research that remain relevant are retained; new pitfalls specific to APv2 integration and admin setup guide content are added and marked.
+**Domain:** IT Documentation — Windows Autopilot Troubleshooting Guides (L1/L2)
+**Researched:** 2026-03-10
+**Confidence:** HIGH (Microsoft Learn official docs + community validation, February 2026 updates confirmed)
 
 ---
 
 ## Critical Pitfalls
 
-### Pitfall 1: APv1 Profile Takes Precedence — Undocumented in Coexistence Content [NEW — v1.1]
+### Pitfall 1: Treating Autopilot as a Single Product When It Is Now Two
 
 **What goes wrong:**
-Documentation describes APv1 and APv2 as two parallel options admins can use side-by-side, without clearly stating that any device with an APv1 Autopilot profile registered will never see an APv2 policy, regardless of how the APv2 policy is configured. If an admin registers a device's hardware hash (APv1), that device will always follow the APv1 profile — the APv2 Device Preparation policy is silently bypassed. The troubleshooting symptom is that the APv2 OOBE experience never launches and the ESP shows instead, which L1 agents interpret as an ESP failure rather than a coexistence conflict. Official Microsoft docs confirm: "Windows Autopilot profiles take precedence over Windows Autopilot device preparation policies."
+Documentation written as if "Windows Autopilot" is one thing. As of 2024-2025, Microsoft shipped "Windows Autopilot device preparation" (APv2/Device Preparation), which is architecturally different from classic Autopilot (APv1). Docs that conflate them produce L1 agents giving wrong instructions — APv2 has no hardware hash registration, no ESP, no hybrid join support, no pre-provisioning, and no self-deploying mode. An L1 agent following a classic Autopilot runbook on an APv2 deployment will chase phantom problems.
 
 **Why it happens:**
-Writers document the two frameworks correctly in isolation but gloss over coexistence behavior in admin setup guides. The natural assumption is "assign the right profile to the right device group" — the pre-registration requirement for APv1 is not treated as a conflict blocker for APv2.
+The Microsoft branding keeps both under the "Windows Autopilot" umbrella. Most community content, blog posts, and even older Microsoft Learn pages refer to classic Autopilot. Writers assume continuity that does not exist.
 
 **How to avoid:**
-- Every APv2 admin setup guide must include an explicit prerequisite: "Verify the device is NOT registered as a Windows Autopilot (APv1) device. Use Intune > Devices > Enroll Devices > Windows Autopilot Devices to check. If registered, deregister before proceeding."
-- The coexistence section of `apv1-vs-apv2.md` (which already exists) must be expanded with the deregistration procedure and a clear warning that profile precedence is silent — no error is thrown, the wrong flow simply runs
-- Every APv2 troubleshooting guide must include "ESP appears during deployment" as a diagnostic symptom pointing to an APv1 registration conflict, not an ESP configuration problem
-- Admin setup guides for APv2 must state upfront: APv2 does not use hardware hash registration, and if hardware hash was previously imported for a device, that import must be removed
+- Open every guide with an explicit version gate: "This guide applies to: [  ] Windows Autopilot (classic/v1) | [  ] Windows Autopilot Device Preparation (v2/APv2)"
+- Create a single disambiguation page that explains the difference (no hardware hash in v2, no pre-provisioning in v2, Entra join only in v2) and links to the correct guide for each
+- Never write shared error code tables without tagging which product each code applies to — some codes only surface in one version
 
 **Warning signs:**
-- APv2 OOBE (Device Preparation page) never appears; ESP shows instead
-- Admin setup guide describes APv1 and APv2 as interchangeable "options" without noting the precedence rule
-- Coexistence section says "both can be used" without specifying that one device can only run one at a time
-- No mention of the deregistration step in the APv2 setup procedure
+- A guide mentions "hardware hash upload" and "Enrollment Status Page" in the same section without a version qualifier
+- A guide describes pre-provisioning but does not note that APv2 does not support it
+- Error code 0x80180014 is described only as "delete the Intune device record" without noting its meaning differs between v1 self-deployment and v2 enrollment scenarios
 
-**Phase to address:** Phase 1 (APv2 Lifecycle Foundation) — must be the opening prerequisite of every APv2 setup guide
+**Phase to address:** Phase 1 (Lifecycle Documentation Foundation) — establish version taxonomy before any troubleshooting content is written
 
 ---
 
-### Pitfall 2: APv2 Security Group Configuration Errors — Four Distinct Failure Modes Conflated [NEW — v1.1]
+### Pitfall 2: Error Code Tables Without Context Columns
 
 **What goes wrong:**
-APv2 requires a static assigned device security group with the Intune Provisioning Client service principal (AppID: f1346770-5b25-470b-88bd-d5744ab7952c) as the group owner. Documentation that fails to cover all four failure modes sends admins into loops: (1) Intune Provisioning Client not set as group owner — policy saves but devices never join the group, (2) group changed from static to dynamic after configuration — causes ongoing membership update failures, (3) Intune Provisioning Client service principal displays as "Intune Autopilot ConfidentialClient" in some tenants — admin assumes it is the wrong service principal and skips the owner assignment, (4) the "Microsoft Entra roles can be assigned to the group" setting must be No — if Yes, the policy cannot be saved. Each failure mode produces a different symptom and a different error message, but all result in the same outcome: devices are not added to the group and policy is not applied.
+Error code tables list code + one-line fix. L1 agents attempt the fix, it fails because the same code has multiple root causes depending on deployment mode. Classic example: 0x80180014 means "delete Intune device record" in self-deploying/pre-provisioning reuse, but also means "MDM enrollment is blocked by a device restriction policy" — two completely different fixes. 0x80070774 means "Intune Connector domain mismatch" in hybrid join ESP but appears unrelated to connectors in other contexts.
 
 **Why it happens:**
-The group configuration step is documented on Microsoft Learn but spread across multiple articles. Admin setup guides that summarize the procedure compress it into "create a group and add the service principal" without capturing the exact requirements for each of the four conditions. The service principal naming inconsistency across tenants ("Intune Provisioning Client" vs. "Intune Autopilot ConfidentialClient") is a known issue that is not prominently disclosed.
+Error code tables are usually created by taking notes from incident tickets. Each incident captured one cause. The table writer assumes the code is unambiguous. Microsoft's own documentation does not always foreground the multi-cause nature of codes.
 
 **How to avoid:**
-- Admin setup guides for APv2 must include a group configuration checklist covering all four conditions in sequence: (a) group type is Assigned (not Dynamic), (b) "Microsoft Entra roles can be assigned to the group" is No, (c) Intune Provisioning Client (or Intune Autopilot ConfidentialClient) with AppID f1346770-5b25-470b-88bd-d5744ab7952c is set as owner, (d) the service principal exists in the tenant (instructions to add via PowerShell if missing)
-- Document the service principal naming ambiguity explicitly: "The service principal may appear as either 'Intune Provisioning Client' or 'Intune Autopilot ConfidentialClient' — both are correct as long as the AppID is f1346770-5b25-470b-88bd-d5744ab7952c"
-- Include the policy UI bug warning: during editing, the Applications and Scripts tabs may display incorrect content (a known issue documented April 2026) — the view is incorrect, the configuration applied to devices is not affected
-- Static vs. dynamic group change is destructive — admin setup guides must warn that changing group type after initial configuration can cause deployment failures
+- Every error code entry must include: Code | Deployment Mode(s) where seen | Symptom at screen | Root cause(s) (numbered if multiple) | Fix for each cause | Escalate if (condition)
+- Group codes by the phase where they surface (hardware hash import, OOBE, ESP device phase, ESP user phase, post-enrollment) rather than numeric order — L1 agents know what phase is failing, not the hex code
+- For codes with multiple causes, use an inline decision branch: "If you see 0x80180014 AND the device was previously enrolled: do X. If the device is brand new: check MDM restriction policy."
+- Validate every code against the current Microsoft Learn known issues page (last updated February 2026) before publishing
 
 **Warning signs:**
-- Admin setup guide describes group creation without specifying Assigned (not Dynamic) type
-- Service principal AppID is not included — only the display name "Intune Provisioning Client"
-- Policy saves but shows "0 groups assigned" (symptom of owner not set correctly)
-- No mention of the service principal naming inconsistency across tenants
+- Error table has a single "Fix" column with no conditions
+- Error table is sorted numerically rather than by deployment phase
+- Table was built from a single source (one blog post, one internal incident)
 
-**Phase to address:** Phase 2 (APv2 Admin Setup Guide) — group configuration must be a checklist, not a narrative paragraph
+**Phase to address:** Phase 3 (Error Code Lookup Tables) — entire phase should be built around this constraint
 
 ---
 
-### Pitfall 3: APv2 App Deployment Requirements Understated — System Context and App Limit Are Non-Obvious [NEW — v1.1]
+### Pitfall 3: Pre-Provisioning (White Glove) Treated as an Edge Case
 
 **What goes wrong:**
-APv2 supports up to 25 apps during OOBE (increased from 10 in January 2026). All apps must be assigned in System context — if any app is configured for User context, it will be skipped during OOBE with no error visible to the admin, and the deployment report shows them as "Skipped." The Managed Installer policy adds another silent failure mode: when active for a tenant (always active for Education/Windows 11 SE), Win32, Microsoft Store, and Enterprise App Catalog apps are not delivered during OOBE — they install post-desktop. This was a known issue from October 2024 through April 2026, when it was resolved. Documentation written before April 2026 describing this as a known limitation is now out of date.
+Pre-provisioning (technician flow + user flow) is documented as a footnote or a single-page addendum. In practice, organizations using pre-provisioning hit distinct failure modes that do not appear in user-driven or self-deploying docs: TPM attestation failures specific to the technician flow (0x81039023, 0x81039024, 0x81039001), LAPS policies not applying until user phase, password/logon GPO conflicts that break the autologon at the seam between technician and user phases, LOB/Win32 app mixing failures in ESP that only manifest in pre-provisioning timing, and region/keyboard autoconfiguration bugs (required KB5072033).
 
-A further accuracy risk: the Managed Installer issue was listed as unresolved on the known issues page until April 10, 2026. Any documentation written before that date that describes Managed Installer policy as blocking OOBE app delivery is now incorrect for current tenants.
+L1 agents without a dedicated pre-provisioning guide escalate everything to L2, or worse, attempt user-driven remediation steps that damage the pre-provisioned state.
 
 **Why it happens:**
-System context requirement is easily missed because most app deployments default to User context in Intune. The 25-app limit increase was silent to many admins who never subscribed to the What's New RSS feed. Managed Installer policy is an obscure tenant-wide setting many admins did not know they had enabled.
+Pre-provisioning is a smaller share of total deployments. Writers prioritize user-driven documentation first, then run out of time. Pre-provisioning appears to share the same infrastructure as self-deploying, so writers assume the same troubleshooting applies. It does not — the two-phase (technician + user) nature creates unique failure seams.
 
 **How to avoid:**
-- Admin setup guides for APv2 app assignment must include a callout: "All apps assigned in the Device Preparation policy must be configured for System context. Apps configured for User context are silently skipped during OOBE."
-- Include verification steps: how to check the app context setting in Intune for Win32 apps (detection rules > install behavior > System)
-- Document the 25-app limit (current as of January 2026) and note that exceeding it silently drops additional apps
-- Add a Managed Installer policy note: if the tenant is Education or uses Windows 11 SE, Managed Installer is active — verify this is no longer blocking OOBE delivery (resolved April 2026) and upgrade note: check KB/IME version before trusting this resolution
-- For all "Skipped" app reports, include a diagnosis flowchart: (1) Is app assigned to the device group? (2) Is app set to System context? (3) Is Managed Installer policy active?
+- Pre-provisioning gets its own top-level section, not a subsection of self-deploying
+- Document the two-phase flow explicitly: technician phase ends at green screen / resealing → user phase begins at first login. Every error must be tagged to which phase surfaced it
+- Include the specific known issues: keyboard language autoconfiguration failure, LAPS policy timing, TPM attestation retry codes (0x81039001 specifically described as "intermittent retry exceeded"), security baseline password policy breaking autologon
+- Include the GPO conflict table from Microsoft's troubleshooting FAQ — four specific GPO settings that silently break pre-provisioning are documented but rarely appear in third-party guides
+- Note that APv2 does not support pre-provisioning at all — this must be stated explicitly so L1 does not attempt the pre-provisioning troubleshooting flow on an APv2 device
 
 **Warning signs:**
-- Admin setup guide shows app assignment steps without mentioning install context
-- App limit documented as 10 (pre-January 2026 content that has not been updated)
-- Managed Installer policy interaction not documented in APv2 app troubleshooting
+- Pre-provisioning troubleshooting is a subsection of "self-deploying mode"
+- No mention of the technician flow vs. user flow distinction
+- No coverage of the autologon failure caused by password/security baseline policies
+- TPM attestation codes listed without noting which apply exclusively to pre-provisioning and self-deploying (vs. user-driven)
 
-**Phase to address:** Phase 2 (APv2 Admin Setup Guide) and Phase 3 (APv2 Error Codes and Runbooks)
+**Phase to address:** Phase 2 (Deployment Mode Guides) — pre-provisioning must be a first-class deliverable, not deferred
 
 ---
 
-### Pitfall 4: APv2 OS Version Gating Is Stricter Than APv1 — Frequently Omitted in Setup Guides [NEW — v1.1]
+### Pitfall 4: Documentation Written at One Cognitive Level for Both L1 and L2
 
 **What goes wrong:**
-APv2 requires Windows 11 22H2 or later, with a specific KB prerequisite (KB5035942) for 22H2 and 23H2. Windows 10 is not supported. Devices shipped by OEMs may not have the required KB applied if the OEM's image was built before April 2024. Installation media dated before April 2024 also lacks the required KB. Admin setup guides that omit this prerequisite cause admins to configure APv2 policies, ship devices, and then experience deployments where the APv2 OOBE never launches — because the device does not meet the software prerequisite. The symptom is indistinguishable from the APv1 precedence conflict (Pitfall 1) without examining the OS version and KB state.
+A single guide is written and handed to both L1 Service Desk and L2 Desktop Engineering. L1 agents skip the registry inspection steps because they have no permissions or context; L2 engineers find the scripted decision trees patronizing and ignore the guide entirely, going off-script. Result: L1 escalates everything they should handle, L2 does not follow safe remediation sequences.
 
 **Why it happens:**
-APv1 was historically much more permissive about OS version requirements. Writers carry over the assumption that "any recent Windows" works. The KB prerequisite is a non-obvious requirement — it is documented but not prominent.
+It is faster to write one document. Writers default to their own technical level (usually L2), then add a note at the top saying "simplified version for helpdesk." The note does not make the content usable for L1.
 
 **How to avoid:**
-- Every APv2 admin setup guide must open with a software prerequisites section: Windows 11 22H2 or later, with KB5035942 for 22H2/23H2 builds
-- Include a practical verification step for OEM-shipped devices: check build number and KB state via Settings > Windows Update > Update History before attempting APv2 deployment
-- Note that Windows 365 Cloud PC images in the gallery include the required updates, but custom images require explicit verification
-- Explicitly state Windows 10 is not supported and will not receive the Device Preparation experience — even if the device is assigned to an APv2 policy
+- Maintain physically separate files: `L1-user-driven-troubleshooting.md` and `L2-user-driven-deep-dive.md` — not headings within a shared file
+- L1 format: decision tree with explicit binary branches (Yes/No), screenshot references, exact error message text to match, escalation trigger with what information to collect before escalating (event log export, serial number, deployment mode, error code from screen)
+- L2 format: registry paths to inspect, PowerShell commands with expected output, ETW tracing setup, log file locations and what to look for, causal chain analysis
+- Define an explicit escalation handoff checklist at the bottom of every L1 guide — what L1 must have captured before L2 accepts the ticket
+- L1 guides must never require registry access, PowerShell execution, or Intune admin portal access — if a fix requires those, it is an L2 action and the L1 guide should say "escalate with [info]"
 
 **Warning signs:**
-- APv2 setup guide has no OS version prerequisites section
-- Prerequisites section mentions "Windows 11" without specifying the 22H2 minimum and KB5035942 requirement
-- Guide does not address OEM-shipped device KB verification
+- A guide for the same scenario exists in one file with both registry paths and "call the user" instructions
+- L1 guide refers to "running Get-AutopilotDiagnostics" — that is an L2 tool
+- L2 guide says "ask the user if they saw an error message" — that is an L1 step that should have happened before escalation
+- Guides use the same template/format for both audiences
 
-**Phase to address:** Phase 1 (APv2 Lifecycle Foundation) — prerequisites must gate all subsequent setup and troubleshooting content
+**Phase to address:** Phase 1 (Lifecycle Documentation Foundation) — establish the two-file convention and templates before any scenario content is written
 
 ---
 
-### Pitfall 5: Entra Local Administrator Setting Conflict — Silent Provisioning Skip [NEW — v1.1]
+### Pitfall 5: Network Prerequisite Checks Buried or Absent
 
 **What goes wrong:**
-There is a documented conflict between the APv2 policy "User account type" setting and the Microsoft Entra ID "Local administrator settings" (under Entra ID > Devices > Devices settings). Specific combinations cause provisioning to be silently skipped — the user reaches the desktop without any apps or scripts installed, with no error displayed. The conflict is not surfaced in the Intune admin center. Admin setup guides that do not document the correct setting combinations leave admins unable to diagnose why devices are reaching the desktop without completing provisioning.
+Troubleshooting guides jump straight to Intune configuration checks and error code lookups. L1 agents spend 30-60 minutes in Intune before anyone verifies basic network reachability. In practice, a large share of Autopilot failures in corporate environments are network-related: proxy blocking `ztd.dds.microsoft.com` or `cs.dds.microsoft.com`, captive portals intercepting the profile download, TLS inspection stripping certificates, or VPN required for hybrid join but not connected during OOBE.
 
-The three safe configurations for "standard user" outcome and two for "administrator user" outcome are documented in Microsoft's known issues page, but the interaction between two independent settings (one in Entra ID, one in Intune) is not obvious and is frequently missed during setup.
+The Microsoft troubleshooting FAQ lists network connectivity as the first check but this ordering is rarely preserved in derived documentation.
 
 **Why it happens:**
-The two settings live in different admin portals (Entra ID admin center vs. Intune admin center). Admins configuring APv2 focus on the Intune policy and do not examine the Entra ID device settings. The conflict is only documented in the APv2 known issues page, not in the setup tutorial itself.
+Writers derive from internal incident tickets where network was already ruled out by infrastructure teams. The documentation therefore skips straight to the application-layer. L1 agents, who have no infrastructure context, inherit the same ordering.
 
 **How to avoid:**
-- Admin setup guides for APv2 must include a cross-portal settings table showing the three valid standard-user combinations and two valid administrator combinations
-- Include the diagnostic: if devices reach desktop without installing assigned apps, check Entra ID > Devices > Devices settings > Local administrator settings — this interaction is the most likely cause of a "provisioning skipped" failure with no error
-- Add a "before you deploy" verification step: confirm Entra ID Local administrator settings match your APv2 policy intent
-- APv2 troubleshooting runbooks must include "provisioning skipped with no error" as a symptom with this as the primary differential diagnosis
+- Every L1 decision tree must open with a network reachability gate before any other branch — "Can the device reach login.microsoftonline.com? If no: stop here, this is a network issue, escalate to network team with [specific info]"
+- Include the full required endpoint list in a single reference table: `ztd.dds.microsoft.com`, `cs.dds.microsoft.com`, `login.microsoftonline.com`, `graph.microsoft.com`, `enrollment.manage.microsoft.com`, `lgmsapeweu.blob.core.windows.net` (required for diagnostic upload), and the Intune core service endpoints
+- Document the Shift+F10 → command prompt → `Test-NetConnection` sequence for L1 OOBE-stage verification
+- Call out proxy and TLS inspection as common corporate network failure modes with a specific note: "If your organization uses a web proxy or TLS inspection, verify these endpoints are excluded before beginning Autopilot troubleshooting"
+- Hybrid join adds an additional requirement: the device must reach a domain controller on the internal network — document this as a separate pre-check for hybrid join scenarios
 
 **Warning signs:**
-- APv2 admin setup guide focuses only on Intune policy settings, with no Entra ID portal configuration steps
-- Troubleshooting content for "device reaches desktop without completing setup" does not exist or sends admins to check app assignments first
-- No cross-portal settings table in the setup guide
+- Decision tree branches into "check Autopilot profile assignment" before any network check
+- Required endpoint list is absent or only partially listed
+- No mention of proxy/TLS inspection as a potential blocker
+- Hybrid join guide does not mention domain controller reachability as step 1
 
-**Phase to address:** Phase 2 (APv2 Admin Setup Guide) and Phase 3 (APv2 Error Codes)
+**Phase to address:** Phase 2 (Deployment Mode Guides) — each mode guide must open with a network pre-check section
 
 ---
 
-### Pitfall 6: Admin Setup Guides for APv1 Omit the Configuration-Caused Failure Chain [NEW — v1.1]
+### Pitfall 6: Flowcharts Without Explicit Terminal States and Escalation Triggers
 
 **What goes wrong:**
-Admin setup guides document how to configure Autopilot profiles, ESP, and dynamic groups in Intune. They do not document what downstream failures specific configuration choices cause. Examples: (1) ESP timeout set too low causes deployment failures that L1 diagnoses as app install failures — the real cause is the timeout, and it is configurable, (2) APv1 profile assigned to All Devices group instead of a targeted Autopilot Devices dynamic group causes every device in the tenant to receive Autopilot behavior, breaking standard OOBE for non-Autopilot devices, (3) "Skip AD connectivity check" enabled in the Autopilot profile breaks hybrid join deployments that require domain controller reachability, (4) multiple Autopilot profiles with conflicting settings assigned to overlapping groups — Microsoft resolves conflicts by assigning the oldest-created profile, which is non-obvious and produces unpredictable results.
+Decision trees are drawn with branches that loop back to earlier steps ("try again") or end with vague leaves ("contact Microsoft support"). L1 agents do not know when to stop and escalate. They re-run the same steps in a loop, wasting time and potentially making the device state worse (repeated failed enrollments can trigger the 0x80180014 "one time limit" block).
 
 **Why it happens:**
-Admin setup guides are written from the "happy path" perspective. Each setting is explained in isolation. The downstream failure modes are documented only in troubleshooting guides — which are separate documents. Admins configuring a new environment follow the setup guide, not the troubleshooting guide, so they miss the warnings.
+Flowchart authors focus on the happy path and one or two common failure branches. Edge cases and terminal "we cannot fix this at L1" states are left as implicit knowledge.
 
 **How to avoid:**
-- Every admin setup guide must include a "Configuration choices that cause downstream failures" section, not just a "how to configure" section
-- For each major setting (ESP timeout, group assignment scope, profile conflict resolution, "skip AD connectivity check"), document: what happens if misconfigured, what the symptom looks like to L1, and how to verify the setting is correct before deployment
-- APv1 admin setup guide must include an explicit warning: assign Autopilot profiles to a targeted Autopilot Devices dynamic group (using the `(device.devicePhysicalIds -any _ -eq "[ZTDId]")` dynamic rule), never to All Devices
-- ESP timeout guidance must include a minimum recommended timeout with the rationale: "40-60 minutes is a common baseline; adjust upward if your required app list includes Microsoft 365 or large Win32 apps"
-- Profile conflict resolution must be documented: oldest-created profile wins; the admin must verify priority order in Intune to avoid unintended profile assignment
+- Every flowchart must have explicit terminal states in three categories: (a) Resolved — device enrolled successfully, (b) Escalate to L2 — with a mandatory data collection checklist, (c) Escalate to infrastructure/network team — with specific evidence required
+- Never draw a "retry" branch without a retry limit — "Retry once. If the same error persists, escalate."
+- Include a "device state is now worse" recovery note for each destructive action (delete device record, reset TPM, wipe device) — L1 should not perform these without explicit L2 authorization
+- The escalation trigger must specify exactly what information L1 hands off: serial number, hardware hash (if registered), deployment mode, error code seen, screenshot of the error screen, MDM diagnostic log export path if accessible
 
 **Warning signs:**
-- Admin setup guide has no section on what goes wrong when settings are misconfigured
-- Group assignment section shows "All Devices" as the assignment target without a warning
-- ESP timeout section does not provide a recommended range
-- No mention of profile conflict resolution behavior
+- Flowchart has a "try again" node with no loop limit
+- Terminal leaves say "contact support" without specifying which team or what to provide
+- No "stop" terminal for scenarios that require L2 authorization before proceeding
+- Destructive actions (device record deletion, TPM reset) appear in L1 flowcharts
 
-**Phase to address:** Phase 4 (APv1 Admin Setup Guides) — configuration-caused failures are the defining content difference between a setup guide and a marketing tutorial
+**Phase to address:** Phase 4 (L1 Decision Trees) — this is the defining constraint of the entire L1 artifact
 
 ---
 
-### Pitfall 7: APv2 Accuracy Risk from Rapid Feature Evolution [NEW — v1.1]
+### Pitfall 7: Windows Version Differences Undocumented
 
 **What goes wrong:**
-APv2 launched in June 2024 and has changed substantially in 22 months. Features added, limits changed, known issues resolved, and behaviors modified without a traditional version release:
-- App limit: 10 apps at launch → 25 apps (January 2026)
-- Enterprise App Catalog apps: not supported at launch → supported (June 2025)
-- Automatic mode for Windows 365: not available at launch → added (April 2025 for shared mode, November 2025 for dedicated mode)
-- Managed Installer policy blocking OOBE app delivery: known issue October 2024 → resolved April 2026
-- Monthly security update installation during OOBE: announced September 2025, immediately delayed, still no timeline as of April 2026
-- Windows quality updates section in ESP troubleshooting docs explicitly notes it does NOT apply to APv2 (APv2 doesn't use ESP) — this cross-contamination from APv1 docs is an active accuracy risk
-
-Documentation written at any point in this timeline may be obsolete. There is no stable APv2 feature set to write to — the Intune service changes the behavior of APv2 without any admin action or device update.
+Troubleshooting steps work on Windows 11 but not Windows 10 (or vice versa), and the guide does not say which. Key differences that bite teams: the Autopilot diagnostics page (CTRL+SHIFT+D / "View Diagnostics" button) is Windows 11 only — on Windows 10, agents must use MDM diagnostic tool instead. Specific KB prerequisites differ by version (KB5028244 for Windows 10 vs. KB5028245 for Windows 11 for increased Autopilot policy retry attempts; KB5023773 vs. KB5023778 for device rename during pre-provisioning). TPM attestation failure behavior differs between Windows 10 and Windows 11 for certain TPM vendors (AMD ASP firmware TPM).
 
 **Why it happens:**
-Cloud-native service means Microsoft can change APv2 behavior server-side. There is no "APv2 version 1.3 release notes" — changes appear in the Intune monthly release notes and the What's New page, but the APv2 docs on Learn are updated asynchronously and sometimes lag the actual behavior change.
+Most documentation is written on Windows 11 test hardware. The author sees the diagnostics page and documents it. Windows 10 testers are rarer. The assumption is "same Autopilot, just older OS."
 
 **How to avoid:**
-- Every APv2 document must have a "Last verified" date in frontmatter and a "Review by" date no more than 90 days out (shorter than APv1's 6-month cycle, because APv2 is changing faster)
-- Subscribe to the APv2 What's New RSS feed (`https://learn.microsoft.com/api/search/rss?search=%22News+and+resources+about+the+latest+updates+of+Windows+Autopilot+device+preparation%22&locale=en-us`) and the Known Issues RSS feed — link both in the docs repo README as required review sources
-- For facts with a known change history (app limit, supported modes, known issues), link to the Microsoft Learn page rather than stating the value inline — this defers to an authoritative live source rather than creating a second source that will drift
-- Call out features announced but not yet delivered: as of April 2026, monthly security update installation during OOBE was announced in September 2025 and then delayed with no revised timeline — documents describing this as available are wrong
-- Flag APv1 docs that reference ESP settings applicable to "Autopilot" generically — verify each one does not bleed into APv2 troubleshooting where ESP does not exist
+- Every step that differs by OS version must be tagged with an inline OS version note: `[Windows 11 only]` or `[Windows 10: use MDM Diagnostic Tool instead]`
+- Include a version-specific prerequisites table at the top of each guide covering: minimum KB required, diagnostic tools available, known version-specific bugs
+- Test guides on both Windows 10 21H2+ and Windows 11 23H2+ before publishing — behavior differences surface in testing, not review
+- Maintain a dedicated "Windows version differences" reference page that other guides can link to rather than repeating the same caveats inline
 
 **Warning signs:**
-- APv2 document states app limit of 10 (pre-January 2026 content)
-- APv2 document describes monthly security update OOBE installation as available (announced but not delivered as of April 2026)
-- No "Last verified" date on any APv2 document
-- APv2 troubleshooting guide references ESP settings
+- Guide instructs L1 to press CTRL+SHIFT+D without noting Windows 11 requirement
+- No KB prerequisites mentioned for any steps
+- No OS version tags on any steps
+- Guide was written and tested only on Windows 11
 
-**Phase to address:** Phase 1 (APv2 Lifecycle Foundation) — accuracy metadata and review cadence must be established before any APv2 content is written
+**Phase to address:** Phase 3 (Error Code Lookup Tables) and Phase 5 (Scenario Runbooks) — version tags must be added during initial content creation, not retrofitted
 
 ---
 
-### Pitfall 8: Treating APv1 Treating "White Glove" as Deprecated When the Term Alone Was Deprecated [EXISTING — v1.0, refined]
+### Pitfall 8: Documentation That Does Not Match Actual Autopilot Behavior Due to Post-Publication Microsoft Changes
 
 **What goes wrong:**
-Microsoft deprecated the term "white glove" in favor of "pre-provisioning." The feature itself is not deprecated — pre-provisioning (APv1 technician flow) is still fully supported and remains the only option for pre-staged device preparation in APv1. Documentation that says "white glove is deprecated" without the qualifier that only the name changed confuses admins who need to use pre-provisioning and cannot find documentation for it. The APv2 addition amplifies this: APv2 does not support pre-provisioning at all. An admin reading "white glove is deprecated" may incorrectly conclude that they should switch to APv2 for pre-provisioning scenarios — APv2 cannot meet this need.
+Autopilot behavior changes without the documentation changing. Documented as breaking changes since 2024-2025:
+- The Intune Connector for Active Directory moved its Event Viewer log path — guides pointing to the old path ("ODJ Connector Service" directly under Applications and Services Logs) send L2 engineers to an empty log
+- The Intune Connector minimum version changed to 6.2501.2000.5; older connector versions silently stop processing enrollment requests — guides that do not mention version checking cause L2 engineers to spend hours in the wrong layer
+- The `enrollmentProfileName` property behavior changed, breaking Entra dynamic groups using that field — guides documenting group-based profile assignment need to flag this
+- Quality updates during OOBE were delayed and re-enabled in a changed form — guides about OOBE behavior written in mid-2025 may describe a temporary state
+- The ODJ Connector now uses a low-privilege MSA account (changed June 2025) — guides documenting the old connector installation process are incorrect for new deployments
+
+**Why it happens:**
+Microsoft releases Intune service updates monthly and Autopilot behavior updates on an irregular cadence. There is no stable release model — the cloud service changes without a version number the documentation can pin to.
 
 **How to avoid:**
-- Admin setup guides must use "pre-provisioning" exclusively, with a footnote: "Previously called 'white glove' — the term was deprecated but the feature remains supported in APv1"
-- Explicitly document that APv2 does not support pre-provisioning — this must appear in the APv2 admin setup guide as a scope limitation, not a footnote
-- In the `apv1-vs-apv2.md` disambiguation page (already exists), verify the pre-provisioning row is clear: APv1 Yes, APv2 No
+- Every guide must include a "Last verified against:" field with the Intune service version or date, and a "Review by:" date no more than 6 months out
+- Guides must link to the Microsoft Learn "What's new in Windows Autopilot" and "Known issues" pages as authoritative live sources rather than duplicating content that will drift
+- Establish a review calendar: quarterly review of all guides against the Microsoft Learn changelog
+- For connector-specific steps, always include: minimum version check before any connector troubleshooting steps, and the correct log path verified against current documentation
+- Flag sections that are most likely to change: connector installation, profile assignment behavior, MDM enrollment restrictions
 
 **Warning signs:**
-- Admin setup guide for APv2 implies pre-provisioning can be configured
-- APv1 pre-provisioning guide uses "white glove" as the primary term
-- Disambiguation page does not explicitly state APv2 has no pre-provisioning support
+- A guide describes the ODJ Connector log as being at "Applications and Services Logs > ODJ Connector Service" (old path — now at `Applications and Services Logs > Microsoft > Intune > ODJConnectorService`)
+- A guide does not specify minimum Intune Connector version
+- No "last reviewed" date on the guide
+- Guide content duplicates Microsoft Learn rather than linking to it
 
-**Phase to address:** Phase 1 (APv2 Lifecycle Foundation) and Phase 4 (APv1 Admin Setup Guides)
+**Phase to address:** Phase 1 (Lifecycle Documentation Foundation) — establish the review cadence and metadata standards before content is written; apply to all subsequent phases
 
 ---
 
-### Pitfall 9: RBAC Requirements for APv2 Different from APv1 — Admin Setup Guides Assume Same Role [NEW — v1.1]
+### Pitfall 9: Hybrid Join Complexity Underestimated and Understated
 
 **What goes wrong:**
-APv2 requires a specific custom RBAC role with five permission categories: Device configurations (Read, Delete, Assign, Create, Update), Enrollment programs (Enrollment time device membership assignment), Managed apps (Read), Mobile apps (Read), Organization (Read). The "Intune Administrator" built-in role does not automatically include "Enrollment time device membership assignment" for APv2 policy assignment. Admins following APv1 setup conventions (where the Intune Administrator role suffices for most operations) find they cannot assign APv2 policies to user groups — the error message is "You do not have permission to save these assignments." Admin setup guides that do not specify the exact RBAC requirements upfront cause admins to escalate what is a simple permissions issue.
+Hybrid join documentation presents it as a straightforward configuration alongside Entra-only join. In practice, hybrid join is the most failure-prone Autopilot scenario with the most prerequisites. Failures stem from: Intune Connector not on the corporate network during provisioning, ODJ blob timeout when no domain join profile is targeted to the device, domain controller not reachable from the device during OOBE, Intune Connector installed in wrong domain (0x80070774), connector version below 6.2501.2000.5, TLS 1.0/1.1 still enabled on the connector server blocking PKCS cryptography.
 
-There was also a temporary known issue (resolved July 2024) requiring "Device configurations — Assign" as an additional permission. Documentation written during that period that was never updated may still describe this temporary workaround as a requirement.
+Microsoft's own documentation now recommends against new hybrid join deployments: "deploying new devices as Microsoft Entra hybrid join devices isn't recommended." This carries documentation implications — guides should flag hybrid join as the legacy path and note Entra-only join as the current recommendation.
+
+**Why it happens:**
+Hybrid join is extremely common in existing environments (many organizations have not completed cloud-native migration). Documentation writers feel obligated to fully support it. The complexity is not visible until a deployment fails.
 
 **How to avoid:**
-- Every APv2 admin setup guide must include a prerequisites section with the exact RBAC permissions required, listing all five permission categories
-- Provide step-by-step instructions for creating the custom role (the Microsoft Learn tutorial covers this and should be linked, not duplicated)
-- Note that built-in roles (Intune Administrator) may not suffice for APv2 policy assignment — custom role creation may be required
-- Check for outdated content referencing the temporary "Device configurations — Assign" workaround (resolved July 2024) and remove it
+- Open every hybrid join guide with a prerequisites checklist that must be completed before any device is deployed: connector version, connector server network access, OU permissions, domain controller reachability from deployment network, ODJ profile targeting verified
+- The connector version check must be explicit: "Verify connector version is 6.2501.2000.5 or later. Connectors below this version will not process enrollment requests and will fail silently."
+- Include the PKCS/TLS fix in the connector troubleshooting section (the registry key deletion for `HKLM\System\CurrentControlSet\Control\SecurityProviders\SCHANNEL\KeyExchangeAlgorithms\PKCS`) — this is a documented cause of connector navigation failures
+- Add a note that hybrid join requires the device to be on the corporate LAN during OOBE — VPN during OOBE is the only off-premises option, and this must be configured before the device ships to the user
+- Include Microsoft's current guidance that new deployments should prefer Entra-only join
 
 **Warning signs:**
-- APv2 admin setup guide says "requires Intune Administrator role" without specifying the custom role requirements
-- Admin cannot save APv2 policy group assignments — RBAC error is the most common cause
-- RBAC section references the temporary July 2024 workaround
+- Hybrid join guide omits a prerequisites checklist
+- Connector version is not mentioned
+- Guide does not distinguish between on-premises and off-premises deployment scenarios
+- No mention of the domain controller reachability requirement
+- 0x80070774 is not in the hybrid join error section
 
-**Phase to address:** Phase 2 (APv2 Admin Setup Guide) — RBAC is a Day 1 prerequisite for the admin
+**Phase to address:** Phase 5 (Scenario Runbooks) — hybrid join is a full standalone runbook, not a variation of the user-driven guide
 
 ---
 
-### Pitfall 10: APv2 Progress UI Accuracy — Documentation Should Not Reproduce Misleading Behavior [NEW — v1.1]
+### Pitfall 10: ESP Troubleshooting Conflates Device Phase and User Phase
 
 **What goes wrong:**
-APv2's device preparation OOBE page shows a progress percentage. The percentage does not reflect actual progress — it marks the passage of time, not the completion of specific provisioning steps. If documentation describes or implies the percentage as a meaningful progress indicator (e.g., "when the progress reaches 100%, deployment is complete"), it misleads admins and L1 agents who use it for deployment monitoring. There is a known issue where devices get stuck at 100% and require a manual restart — a documented known issue that must appear in troubleshooting content. Community sources confirm: "the percentages only mark the passage of time and the UI went from providing too much information in the older ESP to not enough useful information in APv2."
+The Enrollment Status Page has two distinct phases: device setup (apps and policies applied before the user signs in) and user setup (apps and policies applied after the user signs in). Troubleshooting steps for failures in each phase are different. Mixing them causes L1 agents to apply the wrong fix: a device-phase app failure requires checking the Intune device assignment and Win32 app detection rules; a user-phase failure requires checking user-targeted policies and license assignments.
+
+An additional documented trap: mixing LOB (line-of-business) and Win32 apps in the device phase causes random failures because both use TrustedInstaller which does not allow concurrent installs. This is a known issue with a documented error message ("Another installation is in progress, please try again later") but it is widely omitted from L1 troubleshooting guides.
+
+**Why it happens:**
+The ESP looks like one screen. Writers document it as one phase. The distinction between device and user setup is an implementation detail that is not visible in the UI.
 
 **How to avoid:**
-- Lifecycle documentation describing the APv2 OOBE experience must explicitly note: "The progress percentage shown during device preparation does not reflect specific installation milestones — it is time-based"
-- Include the "stuck at 100%" known issue in troubleshooting content: if the screen is frozen at 100% with no activity, the user must manually restart the device
-- Do not draw decision trees that branch based on progress percentage values — use observable events (screen transitions, error messages, timeout messages) instead
-- Compare explicitly to APv1 ESP: APv1 ESP showed discrete stages (Device setup, Account setup) with specific app names — APv2 does not provide this granularity. This is a documented difference, not a bug to be resolved.
+- ESP troubleshooting must always distinguish phase: "Is the failure occurring before the user is prompted to sign in (device phase) or after (user phase)?"
+- Device phase failures: check device-targeted app assignments, check Win32 app detection rules, check for LOB+Win32 mixing (use the specific error message as a matching criterion)
+- User phase failures: check user-targeted app assignments, verify user license, check for policy conflicts
+- Include the Teams Machine-Wide Installer MSI conflict scenario explicitly — it is a specific, documented cause of random device-phase failures that L1 teams frequently encounter and cannot diagnose without this knowledge
+- For APv2 (Device Preparation): note that it does not use ESP, so ESP troubleshooting guides do not apply
 
 **Warning signs:**
-- Lifecycle documentation calls the APv2 progress percentage "real-time progress"
-- Troubleshooting guide does not include "stuck at 100%" as a known issue
-- Decision tree branches on percentage values rather than visible events
+- ESP troubleshooting guide has no distinction between device phase and user phase steps
+- LOB + Win32 app mixing is not mentioned
+- Teams installation conflict is not documented
+- ESP troubleshooting guide does not note it does not apply to APv2
 
-**Phase to address:** Phase 1 (APv2 Lifecycle Foundation) and Phase 3 (APv2 Runbooks)
-
----
-
-### Pitfall 11: Treating APv1 as a Single Product When It Is Now Two [EXISTING — v1.0, retained]
-
-**What goes wrong:**
-Documentation written as if "Windows Autopilot" is one thing. APv2 has no hardware hash registration, no ESP, no hybrid join support, no pre-provisioning, and no self-deploying mode. An L1 agent following a classic Autopilot runbook on an APv2 deployment will chase phantom problems.
-
-**How to avoid:**
-- Open every guide with an explicit version gate
-- Use the existing `apv1-vs-apv2.md` disambiguation page as the canonical routing document — update it with any new v1.1 content additions
-- Never write shared error code tables without tagging which product each code applies to
-
-**Warning signs:**
-- Guide mentions "hardware hash upload" and "Enrollment Status Page" without a version qualifier
-- APv2 error codes appear in the existing APv1 error code tables without tagging
-
-**Phase to address:** Phase 1 (APv2 Lifecycle Foundation)
-
----
-
-### Pitfall 12: Error Code Tables Without Context Columns [EXISTING — v1.0, retained for APv2 extension]
-
-**What goes wrong:**
-Same-code, multiple-cause problems. In APv2, new error codes appear in the bootstrapper/IME event log that do not exist in APv1 sources. If APv2 error codes are added to the existing APv1 error code tables without context tagging, the tables become unusable — L1 cannot determine if a code applies to their deployment mode.
-
-**How to avoid:**
-- Extend the existing error code tables with APv2-specific codes, adding a "Framework" column (APv1 / APv2 / Both)
-- APv2 error codes surface in the Bootstrapper event log (not the standard Windows event log or the MDM Diagnostic Tool) — this is a fundamentally different diagnostic source that must be documented before L2 can use it
-- The deployment status report in Intune is near-real-time for APv2 — for APv2 failures, admins should consult the report before examining event logs
-
-**Phase to address:** Phase 3 (APv2 Error Codes)
+**Phase to address:** Phase 5 (Scenario Runbooks) — ESP failure is a standalone runbook requiring the device/user phase distinction as its primary organizing principle
 
 ---
 
@@ -293,46 +271,85 @@ Shortcuts that seem reasonable but create long-term documentation problems.
 
 | Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
 |----------|-------------------|----------------|-----------------|
-| Single shared doc for L1 and L2 | Faster to write one document | L1 skips technical steps, L2 ignores scripted flows | Never |
-| Copy APv2 behavior from blog posts without verifying against Microsoft Learn | Fast content | APv2 is evolving rapidly — blog posts written at launch are frequently wrong today | Never — always verify against current Learn docs |
-| Write APv2 app limit as a fixed number inline | Simple | Limit increased from 10 to 25 in January 2026 and may change again — inline numbers drift | Acceptable only if paired with a "Last verified" date |
-| Omit "Last verified" dates | Saves time | APv2 docs are especially vulnerable to staleness — 90-day review cycle is required | Never for APv2 content |
-| Write admin setup guides as step-by-step without configuration-caused failure warnings | Simpler to write | Admins follow steps, make silent misconfigurations, and cannot diagnose the downstream failures | Never — failure chains are the difference between setup docs and useful setup docs |
-| Add APv2 error codes to existing APv1 tables without framework tagging | Faster to populate | L1 cannot determine if a code applies to their deployment mode | Never |
-| Use the term "white glove" | Familiar to some admins | Deprecated term; causes confusion with APv2 scope when readers conclude "white glove is gone" | Never — use "pre-provisioning" |
+| Single shared doc for L1 and L2 | Faster to write one document | L1 skips technical steps, L2 ignores scripted flows, neither audience uses it effectively | Never — audience mismatch is fatal to usability |
+| Copy error codes from blog posts without verifying against Microsoft Learn | Fast table population | Incorrect or outdated resolution steps, multi-cause codes documented with single fix | Never — always verify against current Microsoft Learn known issues |
+| Write pre-provisioning as a subsection of self-deploying | Reduces page count | Pre-provisioning failures are mis-diagnosed using self-deploying steps; unique failure modes go undocumented | Never — treat as a separate deployment mode |
+| Omit "last reviewed" dates | Saves time during authoring | Team does not know which guides are stale; guides accumulate incorrect information silently | Never for any Autopilot content — Microsoft changes Intune monthly |
+| Write hybrid join guide assuming corporate LAN | Covers the majority case | Off-premises deployments fail with no guidance; VPN-during-OOBE scenario is undocumented | Acceptable only if the org has explicitly confirmed 100% LAN deployment |
+| Single error code table for all deployment modes | One place to look | Codes that have different causes in different modes mislead L1 into wrong fixes | Acceptable only if every code row is tagged with applicable deployment mode |
 
 ---
 
 ## Integration Gotchas
 
-Common mistakes when integrating APv2 documentation with existing APv1 content and external systems.
+Common mistakes when integrating documentation with external systems and tools.
 
 | Integration | Common Mistake | Correct Approach |
 |-------------|----------------|------------------|
-| Existing `apv1-vs-apv2.md` page | Adding new APv2 features without updating the comparison table | Review the comparison table against Microsoft Learn compare page (updated April 2026) after every phase of APv2 content is written |
-| Existing APv1 error code tables | Adding APv2 codes to the same table without a framework column | Add "Framework" column (APv1 / APv2 / Both) before any APv2 codes are entered |
-| Existing L1 runbooks | Failing to add "Does Not Apply to APv2" notes to APv1-specific steps | Audit every existing L1 runbook for ESP-specific steps and add scope notes |
-| Intune deployment status report | Pointing APv2 troubleshooting at MDM Diagnostic Tool (APv1 tool) | APv2 troubleshooting goes to the Intune deployment status report first, then Bootstrapper event log — MDM Diagnostic Tool is APv1 |
-| SharePoint/Confluence export | Mermaid decision trees not rendering | Test export format for target wiki before creating new Mermaid diagrams in APv2 content |
-| Microsoft Learn APv2 What's New RSS | Not subscribing | The What's New RSS feed is the only reliable way to catch APv2 behavior changes — include it in the docs repo README as a required review source |
-| Entra ID admin center cross-references | Documenting only Intune admin center steps for APv2 setup | APv2 requires configuration in both portals — Entra ID (local administrator settings, automatic enrollment) and Intune (policy, group) — both must be covered |
+| Microsoft Graph / Intune Admin Portal | Documenting portal navigation paths that change with UI updates | Document the logical action ("navigate to Devices > Enrollment > Windows > Autopilot Devices") alongside the URL path, so updates are easier to apply |
+| MDM Diagnostic Tool | Documenting the old portal export path without noting it moved | Always reference `mdmdiagnosticstool.exe -out <path>` command rather than portal navigation, which is more stable |
+| Intune Connector Event Log | Documenting the old log path "ODJ Connector Service" at the root level | Always specify the current path: `Applications and Services Logs > Microsoft > Intune > ODJConnectorService` |
+| Get-AutopilotDiagnostics script | Treating it as an L1 tool | This is an L2 tool requiring PowerShell access and often Intune admin rights; L1 guides must not reference it |
+| SharePoint/Confluence export | Markdown tables and flowcharts not rendering correctly after export | Test export format before publishing; use simple table syntax; consider Mermaid diagrams only if target wiki supports them |
+| Microsoft Learn cross-links | Linking to Microsoft Learn pages at a specific article URL that later changes | Link to the stable section anchor (e.g., `/autopilot/troubleshooting-faq`) rather than deep sub-anchors; note last verified date on external links |
+
+---
+
+## Performance Traps
+
+In the documentation domain, "performance" means usability at scale — how docs hold up as the team grows, device fleet grows, and time passes.
+
+| Trap | Symptoms | Prevention | When It Breaks |
+|------|----------|------------|----------------|
+| No version control or review cadence | L1 agents report guide steps not working; no one knows which version is current | Git-tracked markdown with explicit review dates in frontmatter | Within 6 months of first Microsoft Intune monthly update post-publication |
+| Error tables sorted numerically | L1 agent has a hex code, must scan entire table to find it; frequently gives up | Tag codes by deployment phase and surface them via a phase-first lookup structure | Any table over 20 entries |
+| Decision trees as embedded images | Cannot be updated without re-exporting from diagramming tool; links to step numbers go stale | Mermaid or text-based flowcharts in markdown; or if image, store source file alongside image in repo | Every time Autopilot behavior changes |
+| Scenario runbooks with no "applies to" header | L1 spends 10 minutes reading wrong runbook before realizing it does not apply | Every runbook opens with: Deployment Mode | OS Version | Applies to APv1/APv2 | Prerequisites | First 30 seconds of use |
+| Duplicate content across L1 and L2 guides | When Microsoft changes behavior, only one copy gets updated | Single source of truth for factual content (endpoint lists, error codes, registry paths); L1 and L2 guides reference it, they do not duplicate it | First quarterly review cycle |
+
+---
+
+## Security Mistakes
+
+Documentation-specific security issues for this domain.
+
+| Mistake | Risk | Prevention |
+|---------|------|------------|
+| Including tenant-specific IDs, client secrets, or app registration details in example commands | If guides are exported to public SharePoint or shared externally, credentials are exposed | Use placeholder values (`<YOUR-TENANT-ID>`, `<CLIENT-ID>`) with a callout box explaining where to find the real value |
+| Documenting remediation steps that require Global Admin without noting the privilege level required | L1 agents attempt steps they cannot complete, or worse, elevate their own access | Every step must be tagged with the minimum Intune role required: Intune Administrator, Help Desk Operator, or Global Admin |
+| L1 guides that include device record deletion steps | Deleting the Intune device record is a destructive action; wrong device deletion causes re-enrollment cycles | Device record deletion must be gated behind L2 authorization; L1 guides must say "do not delete — escalate" |
+| Guides that omit the ShouldProcess note for PowerShell remediation commands | L2 engineers run remediation scripts without `-WhatIf` testing first | Every PowerShell remediation command must include a `-WhatIf` example and a note that all remediation functions support `-ShouldProcess` |
+| Publishing full audit logs or MDM diagnostic exports as examples | Diagnostic exports can contain device identifiers, user UPNs, and tenant information | Use sanitized/anonymized examples; add a warning that diagnostic exports must be handled per data retention policy |
+
+---
+
+## UX Pitfalls
+
+User experience of the documentation itself.
+
+| Pitfall | User Impact | Better Approach |
+|---------|-------------|-----------------|
+| Decision trees embedded as large images with no alt text | L1 agents cannot zoom into step detail; screen reader users cannot use the guide; printing degrades quality | Text-based flowcharts (Mermaid in supported wikis) or high-resolution SVG with accompanying text description of each branch |
+| Error codes in guides without the exact text shown on the device screen | L1 agent sees "Something went wrong" and a hex code; guide shows only the hex code; no match found | Always pair the hex code with the exact error message string as it appears on screen, in the same row |
+| Runbooks that begin with background context before the diagnostic steps | L1 agent in a live deployment failure must scroll past two paragraphs of Autopilot history to reach the first action | L1 guides: first visible content must be "Start here: check X first" — background context goes in a collapsible section or at the end |
+| Prerequisite lists at the end of guides | L1 agent attempts steps, fails, then discovers the prerequisite they missed | Prerequisites checklist is always the first section after the "Applies to" header |
+| No "what to tell the user" script for L1 | L1 agent goes silent during troubleshooting; user experience degrades | Include a one-line user communication script at each major step: "Tell the user: 'I am checking the device enrollment status, please hold'" |
 
 ---
 
 ## "Looks Done But Isn't" Checklist
 
-- [ ] **APv2 Admin Setup Guide:** Often missing the APv1 deregistration prerequisite — verify "device must not be registered as an APv1 device" appears before any APv2 configuration steps
-- [ ] **APv2 Group Configuration:** Often missing AppID for Intune Provisioning Client (f1346770-5b25-470b-88bd-d5744ab7952c) — verify AppID appears alongside display name to handle the naming inconsistency across tenants
-- [ ] **APv2 App Assignment:** Often missing System context requirement — verify every app assignment step includes the install context setting and its implications
-- [ ] **APv2 OS Prerequisites:** Often missing KB5035942 requirement for 22H2/23H2 — verify prerequisites section includes build-specific KB requirements
-- [ ] **APv2 RBAC:** Often missing "Enrollment time device membership assignment" permission — verify the five-category custom role requirements are listed, not just "Intune Administrator"
-- [ ] **Entra ID Local Admin Setting:** Often absent from APv2 setup guide — verify cross-portal settings table appears with the five valid configuration combinations
-- [ ] **APv2 Documents:** Often missing "Last verified" date — verify 90-day review cycle metadata is in every APv2 document's frontmatter
-- [ ] **APv1 Admin Setup Guides:** Often missing configuration-caused failure chain — verify each major configurable setting has a "what goes wrong if misconfigured" note
-- [ ] **APv1 Pre-provisioning Guide:** Often using "white glove" as primary term — verify "pre-provisioning" is used throughout with a footnote only for the deprecated term
-- [ ] **APv2 Troubleshooting Runbooks:** Often missing "provisioning skipped with no error" symptom — verify Entra ID local admin setting conflict appears in the differential diagnosis
-- [ ] **APv2 Progress UI:** Often described as real-time progress — verify lifecycle docs call out the time-based (not milestone-based) nature of the percentage
-- [ ] **APv2 vs. APv1 Disambiguation Page:** Often not updated when new APv2 features ship — verify `apv1-vs-apv2.md` is updated after each documentation phase closes
+Things that appear complete but are missing critical pieces.
+
+- [ ] **Error Code Table:** Often missing the deployment mode column — verify every row has an applicable deployment mode tag (user-driven / self-deploying / pre-provisioning / APv2)
+- [ ] **Pre-Provisioning Guide:** Often missing the GPO conflict table — verify the four specific GPO settings that break pre-provisioning are documented (interactive logon message, smart card required, UAC prompt on secure desktop)
+- [ ] **L1 Decision Tree:** Often missing the escalation data collection checklist — verify L1 knows exactly what to capture before escalating (serial, error code, deployment mode, event log, screenshot)
+- [ ] **Hybrid Join Guide:** Often missing the connector version check — verify "minimum connector version 6.2501.2000.5" appears in the prerequisites
+- [ ] **Network Prerequisites Section:** Often missing `lgmsapeweu.blob.core.windows.net` (required for Autopilot diagnostic upload) — verify the full endpoint list, not just the commonly cited five
+- [ ] **ESP Troubleshooting:** Often missing the LOB+Win32 app mixing failure mode — verify the "Another installation is in progress" error and the Teams Machine-Wide Installer conflict are documented
+- [ ] **Version Gates:** Often missing OS version tags on Windows 11-only steps — verify every reference to the diagnostics page (CTRL+SHIFT+D) is tagged `[Windows 11 only]`
+- [ ] **APv2 vs. APv1 Disambiguation:** Often missing the "this guide does not apply to APv2" note — verify every classic Autopilot guide states its scope explicitly
+- [ ] **Last Reviewed Date:** Often absent — verify every guide has a "Last verified:" date and a "Review by:" date in the frontmatter
 
 ---
 
@@ -342,50 +359,51 @@ When pitfalls occur despite prevention, how to recover.
 
 | Pitfall | Recovery Cost | Recovery Steps |
 |---------|---------------|----------------|
-| APv1 precedence conflict undocumented — admins report APv2 never launches | MEDIUM | Add prerequisite to APv2 setup guide, add "ESP appears unexpectedly" symptom to APv2 troubleshooting, notify L1 teams |
-| APv2 group configuration failures undocumented | MEDIUM | Add checklist to setup guide, audit existing group configuration content for the four failure modes |
-| App context requirement missing from setup guide | LOW | Add System context callout to app assignment section; add "Skipped" diagnostic flowchart to troubleshooting |
-| APv2 docs written with wrong app limit (10 instead of 25) | LOW | Point fix: update count, update "Last verified" date |
-| Managed Installer policy described as still blocking OOBE delivery | LOW | Point fix: update to "resolved April 2026", add IME version check note |
-| Entra ID local admin conflict not in troubleshooting | MEDIUM | Add "provisioning skipped, no error" symptom tree with cross-portal settings table |
-| APv2 accuracy drift — features described incorrectly | HIGH if widespread, LOW if isolated | Establish 90-day review cycle, subscribe to RSS feeds, run quarterly audit against Learn changelog |
-| Admin setup guides document steps without failure chain warnings | MEDIUM | Add "configuration-caused failures" section to each setup guide — additive, does not invalidate existing content |
+| Version conflation (APv1/APv2 mixed) discovered after publishing | HIGH | Audit all guides, add version gates; create disambiguation landing page; notify L1 team of change; re-test all flowcharts against each version |
+| Error code table has single-cause entries for multi-cause codes | MEDIUM | Add "Root cause" and "Deployment Mode" columns; re-research each code against current Microsoft Learn FAQ; publish corrected table with change note |
+| Pre-provisioning not documented as first-class mode | HIGH | Create dedicated pre-provisioning section from scratch; do not retrofit existing self-deploying guide; requires dedicated testing on pre-provisioning hardware |
+| L1/L2 audience conflation in guides | MEDIUM | Split guides by audience; establish the two-file naming convention; communicate to both teams which file they should use; archive the merged guide |
+| Stale guide with outdated connector log path or behavior | LOW | Point fix: update affected steps, update "Last verified" date, add a change note at top of guide explaining what changed and when |
+| Missing network pre-check in flowchart | LOW | Insert network gate at the top of each affected decision tree; this is an additive change that does not invalidate existing branches |
+| Hybrid join guide missing connector version prerequisite | LOW | Add prerequisites checklist at top of guide; single-line addition but requires communicating to L1/L2 that guides were updated |
 
 ---
 
 ## Pitfall-to-Phase Mapping
 
+How roadmap phases should address these pitfalls.
+
 | Pitfall | Prevention Phase | Verification |
 |---------|------------------|--------------|
-| APv1 precedence conflict undocumented | Phase 1: APv2 Lifecycle Foundation | Every APv2 setup guide opens with APv1 deregistration prerequisite |
-| APv2 group security configuration errors | Phase 2: APv2 Admin Setup Guide | Group configuration is a checklist with all four failure modes covered |
-| APv2 app system context and limit accuracy | Phase 2: APv2 Admin Setup Guide + Phase 3: APv2 Runbooks | App assignment steps include context requirement; "Skipped" diagnostic is documented |
-| APv2 OS version gating omitted | Phase 1: APv2 Lifecycle Foundation | Prerequisites section in all APv2 docs includes 22H2 minimum and KB5035942 |
-| Entra ID local admin conflict undocumented | Phase 2: APv2 Admin Setup Guide | Cross-portal settings table appears in setup guide; "no error, reached desktop" symptom in runbooks |
-| APv1 admin setup guides missing failure chains | Phase 4: APv1 Admin Setup Guides | Each setup guide has a "configuration-caused failures" section |
-| APv2 accuracy risk from rapid evolution | Phase 1: APv2 Lifecycle Foundation | 90-day review cadence, RSS subscriptions, and "Last verified" metadata established before any APv2 content is written |
-| "White glove" vs. "pre-provisioning" confusion | Phase 1: APv2 Lifecycle Foundation + Phase 4: APv1 Admin Setup Guides | "Pre-provisioning" used throughout; disambiguation page updated |
-| APv2 RBAC requirements omitted | Phase 2: APv2 Admin Setup Guide | Five-category custom role requirements listed as Day 1 prerequisite |
-| APv2 progress UI misrepresented | Phase 1: APv2 Lifecycle Foundation | Lifecycle docs explicitly note time-based progress percentage |
-| APv2 codes added to APv1 error tables without tagging | Phase 3: APv2 Error Codes | Framework column added to error tables before any APv2 codes are entered |
-| `apv1-vs-apv2.md` not updated with new features | End of each documentation phase | Comparison table audited against Learn docs before each phase closes |
+| APv1 vs. APv2 conflation | Phase 1: Lifecycle Documentation Foundation | Every guide reviewed for version scope statement before phase closes |
+| Error code tables without context columns | Phase 3: Error Code Lookup Tables | Each code row has: mode tag, multi-cause handling, phase-of-failure grouping |
+| Pre-provisioning treated as edge case | Phase 2: Deployment Mode Guides | Pre-provisioning is a top-level section with technician/user phase distinction |
+| Single-audience docs for L1 and L2 | Phase 1: Lifecycle Documentation Foundation | Two-file convention enforced from first deliverable; templates finalized before writing begins |
+| Missing network pre-checks | Phase 2: Deployment Mode Guides | Every mode guide opens with network gate; full endpoint list included |
+| Flowcharts without terminal states | Phase 4: L1 Decision Trees | Every flowchart reviewed for terminal states (resolved / escalate L2 / escalate network) before phase closes |
+| Windows version differences undocumented | Phase 3 and Phase 5 | Version tag audit run on all content; spot-check on Windows 10 21H2 |
+| Stale documentation / no review cadence | Phase 1: Lifecycle Documentation Foundation | Review cadence and "Last verified" metadata standard established in first template |
+| Hybrid join complexity underestimated | Phase 5: Scenario Runbooks | Hybrid join is a standalone runbook with prerequisites checklist; connector version check is step 1 |
+| ESP device/user phase conflation | Phase 5: Scenario Runbooks | ESP runbook reviewed for explicit device/user phase branching; LOB+Win32 conflict documented |
 
 ---
 
 ## Sources
 
-- [Compare Windows Autopilot device preparation and Windows Autopilot — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/compare) (updated April 2026)
-- [Windows Autopilot device preparation known issues — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/known-issues) (updated April 10, 2026)
-- [Windows Autopilot device preparation requirements — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/requirements)
-- [What's new in Windows Autopilot device preparation — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/whats-new) (updated April 10, 2026)
-- [Windows Autopilot device preparation troubleshooting FAQ — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/troubleshooting-faq)
-- [Windows Autopilot troubleshooting FAQ — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/troubleshooting-faq)
-- [Windows Autopilot v2: Is it faster? It depends — Out of Office Hours](https://oofhours.com/2025/02/10/windows-autopilot-v2-is-it-faster-it-depends/) (February 2025)
-- [Autopilot Device Preparation — APv2 — Call4Cloud](https://call4cloud.nl/autopilot-device-preparation-v2-apv2/)
-- [Windows Autopilot V1 vs. V2 differences — SoftTailor](https://www.softtailor.de/en/blog/windows-autopilot-v1-vs-v2)
-- [Deep dive into Windows Autopilot device preparation — Microsoft Tech Community](https://techcommunity.microsoft.com/blog/intunecustomersuccess/deep-dive-into-windows-autopilot-device-preparation-how-to-deploy-and-when-to-us/4455341)
-- [Troubleshooting Autopilot Device Preparation — Patch My PC](https://patchmypc.com/blog/ultimate-guide-troubleshoot-windows-autopilot/)
+- [Windows Autopilot troubleshooting FAQ — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/troubleshooting-faq) (last updated February 2026)
+- [Windows Autopilot known issues — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/known-issues) (active February 2026 entries)
+- [Windows Autopilot device preparation known issues — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/known-issues)
+- [Compare Windows Autopilot device preparation and Windows Autopilot — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/compare)
+- [Troubleshoot the Enrollment Status Page — Microsoft Learn](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/understand-troubleshoot-esp)
+- [Windows Autopilot for pre-provisioned deployment — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/pre-provision)
+- [What's new in Windows Autopilot — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/whats-new)
+- [Enrollment for Microsoft Entra hybrid joined devices — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/windows-autopilot-hybrid)
+- [Tiered Support Structures: Designing L1, L2, and L3 Handoffs — Supportbench](https://www.supportbench.com/tiered-support-structures-designing-l1-l2-l3-handoffs/)
+- [Autopilot Hybrid Azure AD Join Breakpoints — MDM Tech Space](https://joymalya.com/autopilot-hybrid-azure-ad-join-breakpoints/)
+- [APv2 and pre-provisioning: We can do that too — Out of Office Hours](https://oofhours.com/2025/05/30/apv2-and-pre-provisioning-we-can-do-that-too/)
+- [A Tale of Two Autopilots — FlowDevs](https://www.flowdevs.io/post/a-tale-of-two-autopilots)
+- Community-validated issue: White Glove pre-provisioning failing with region/keyboard preset — [GitHub MicrosoftDocs/memdocs issue #1285](https://github.com/MicrosoftDocs/memdocs/issues/1285)
 
 ---
-*Pitfalls research for: APv2 Documentation + Admin Setup Guides (v1.1 milestone)*
-*Researched: 2026-04-10*
+*Pitfalls research for: Windows Autopilot IT Documentation — L1/L2 Troubleshooting Guides*
+*Researched: 2026-03-10*

@@ -1,205 +1,258 @@
 # Project Research Summary
 
-**Project:** Windows Autopilot Troubleshooter -- v1.1 APv2 Documentation and Admin Setup Guides
-**Domain:** IT Operations Documentation -- Windows Autopilot Device Preparation (APv2) and admin setup guides for APv1 and APv2
-**Researched:** 2026-04-10
+**Project:** Windows Autopilot Troubleshooting & Improvement Suite — Documentation Milestone
+**Domain:** IT Operations Documentation (L1/L2 Tiered Technical Documentation, Markdown-first)
+**Researched:** 2026-03-10
 **Confidence:** HIGH
 
 ## Executive Summary
 
-v1.1 is an additive milestone extending the v1.0 documentation suite in two directions: adding Windows Autopilot Device Preparation (APv2) troubleshooting coverage and adding admin setup guides for both APv1 and APv2. APv2 is architecturally distinct from APv1 -- no hardware hash registration, no Enrollment Status Page, no pre-provisioning, no hybrid join. The two frameworks coexist in the same tenant but a device runs only one, and APv1 silently wins when both apply. This coexistence behavior is the most misunderstood aspect of APv2 adoption and must be the leading prerequisite in all APv2 setup and troubleshooting content.
+This milestone delivers a structured Markdown documentation suite for Windows Autopilot troubleshooting, targeting two distinct audiences: L1 Service Desk agents who follow scripted decision trees, and L2 Desktop Engineers who conduct deep technical investigation. Research confirms that the correct approach is strict physical separation of content by audience tier — not sections within a shared file — combined with a scenario-anchored information architecture rather than feature-organized documentation. The tooling stack is lightweight: Markdown (CommonMark) as the canonical source, Mermaid for embedded decision tree flowcharts, MkDocs Material for local documentation site rendering, and Pandoc for DOCX export to SharePoint. All tooling aligns with the existing Python backend environment and requires no new runtime dependencies on the production system.
 
-The recommended approach is parallel documentation: new APv2 directories alongside existing APv1 directories, with strict version gate banners on every file. Integrating APv2 content into existing APv1 files would violate the version gate metadata pattern established across 40+ v1.0 files and produce hollow content because APv2 has no 1:1 equivalent for ESP, TPM attestation, hardware hash, or hybrid join. Admin setup guides are a new content type distinct from L1 runbooks and L2 investigation guides -- they serve Intune admins with configuration authority, not Service Desk agents -- and belong in a dedicated admin-guides/ directory with apv1/ and apv2/ subdirectories.
+The recommended build sequence establishes a shared foundation first (glossary, reference tables, PowerShell function reference), builds lifecycle content second to give both audiences a shared mental model, then constructs L1 and L2 content in parallel phases using that foundation. This ordering is dictated by feature dependencies: L1 decision trees cannot be authored until the lifecycle overview and error code lookup table exist, and L2 deep-dive guides require registry paths and log collection references to be canonical before scenario runbooks reference them.
 
-The primary risk is documentation drift: APv2 launched June 2024 and has changed substantially in 22 months without traditional versioned releases. App limits, supported modes, and known issue resolutions change server-side without admin action. Every APv2 document requires a 90-day review cycle with explicit last_verified frontmatter. The secondary risk is accuracy by assumption: authors familiar with APv1 will apply APv1 logic to APv2 failures, recommend diagnostic tools Microsoft explicitly states do not apply to APv2, and structure APv2 error coverage as a hex code table when APv2 failures are scenario-based.
+The two critical risks are documentation drift and audience conflation. Autopilot behavior changes monthly via Microsoft Intune service updates — guides written today without explicit "Last verified" dates and review cadences will silently become incorrect within a quarter. Audience conflation (writing one document for both L1 and L2) is the single most common failure mode in IT operations documentation: it renders guides unusable for both groups. Both risks must be addressed in Phase 1 by establishing templates, metadata standards, and the two-file naming convention before any scenario content is written.
 
 ## Key Findings
 
 ### Recommended Stack
 
-Documentation tooling is unchanged from v1.0 (Markdown, Mermaid, MkDocs, Pandoc, markdownlint-cli2). No tooling changes are required for v1.1. The primary new research output is the authoritative source layer: Microsoft Learn pages verified 2026-04-10. Critical pages include APv2 Troubleshooting FAQ, Known Issues (updated 2026-04-10), Requirements, and the Compare page. Community sources -- Michael Niehaus (oofhours.com, Microsoft Autopilot PM) and Call4Cloud -- are the only sources covering BootstrapperAgent event IDs at L2 depth. These are MEDIUM confidence and must be cited explicitly.
+The stack is dominated by existing tooling. Markdown with Mermaid is the clear choice because it renders natively in GitHub, GitLab, and most modern wikis without a build step, and diagrams are text-based and therefore diffable. MkDocs Material (9.7.2) integrates natively with the existing Python environment and enables local site rendering with search, tabs, and native Mermaid support — no separate Mermaid npm install required. Pandoc (3.9) provides the SharePoint export path for organizations that cannot or will not access a docs site. The full stack requires zero new production dependencies; all tooling is dev-time only.
 
-**Core source authorities:**
-- APv2 Troubleshooting FAQ (Microsoft Learn, 2026-04-07) -- official failure scenario catalog; basis for L1 runbooks
-- APv2 Known Issues (Microsoft Learn, 2026-04-10) -- active bugs with workarounds; link to live page, do not copy inline
-- APv2 User-Driven Workflow Tutorial (Microsoft Learn) -- 7-step admin setup; basis for APv2 admin guides
-- APv2 Compare page (Microsoft Learn, 2026-04-07) -- definitive APv1/APv2 feature matrix; audit after each phase
-- oofhours.com APv2 troubleshooting (Michael Niehaus, May 2025) -- BootstrapperAgent log guidance; MEDIUM confidence, cite explicitly
+**Core technologies:**
+- Markdown (CommonMark): Source format for all documentation — version-controlled, platform-agnostic, exportable
+- Mermaid 11.x: Decision tree flowcharts embedded in Markdown — native GitHub/GitLab rendering, text-based and diffable
+- MkDocs Material 9.7.2: Local documentation site with search and navigation — Python-based, aligns with existing backend venv
+- Pandoc 3.9: DOCX/PDF export for SharePoint distribution — de-facto standard for document format conversion
+- markdownlint-cli2 0.21.0: Markdown linting in CI and pre-commit — catches structural errors before merge
+
+**What to skip:** GitBook (vendor lock-in), Sphinx (RST syntax, wrong for operational docs), draw.io/Lucidchart (binary formats, cannot be diffed), heavy CI pipeline for the first milestone.
+
+**Key decision:** If only Markdown in `docs/` is the goal for the first milestone, MkDocs can be deferred — Mermaid renders natively in GitHub and Azure DevOps wikis without a build step. Add MkDocs when a browsable site is needed.
 
 ### Expected Features
 
-**Must have (table stakes) -- APv2 troubleshooting:**
-- APv2 lifecycle overview with Mermaid flow diagram (Enrollment Time Grouping as core mechanism; no ESP, no hardware hash)
-- APv2 initial triage decision tree (gate: Did ESP display? Yes = APv1 mode, wrong doc)
-- APv2 L1 runbook: deployment experience never launches (highest-volume APv2 failure)
-- APv2 L1 runbook: apps and scripts not installed (second-highest-volume)
-- APv2 L2 guide: log collection (Bootstrapper event log + Intune deployment report; MDM Diagnostic Tool does NOT apply to APv2)
-- APv2 failure index organized by symptom, not hex code (APv2 has no hex code catalog)
-- APv2 known issues and workarounds reference
+Content research is sourced directly from Microsoft Learn official documentation (HIGH confidence, verified against the known issues page updated 2026-02-10). The feature set is well-defined and scoped to three primary deployment modes: user-driven, pre-provisioning (white glove), and hybrid Azure AD join.
 
-**Must have (table stakes) -- admin setup guides:**
-- APv2 prerequisites and tenant configuration guide (OS version gates, auto-enrollment, APv1 deregistration requirement)
-- APv2 device group setup guide: Enrollment Time Grouping (assigned group type + Intune Provisioning Client as owner, AppID f1346770-5b25-470b-88bd-d5744ab7952c)
-- APv2 Device Preparation policy creation guide
-- APv2 app and script configuration guide (System context requirement, 25-app limit)
-- APv2 RBAC permissions guide (5-category custom role; built-in Intune Administrator insufficient)
-- APv1 deployment profile configuration guide (settings, values, misconfiguration traps)
-- APv1 ESP configuration guide (timeout values, app tracking, Windows update setting)
-- APv1 hardware hash registration guide (3 paths: OEM, CSP, admin manual)
-- APv1 dynamic group configuration guide (ZTDId rule, sync delay, profile conflict resolution)
-- APv1 deployment mode setup guides (user-driven, pre-provisioning, self-deploying)
+**Must have (table stakes — v1):**
+- Lifecycle overview (hardware hash import through post-enrollment) — shared vocabulary without which no runbook works
+- Error code lookup table covering MDM enrollment (0x8018xxxx), TPM attestation, ESP, self-deploying, pre-provisioning, hybrid join, and device registration event IDs — the highest-leverage single document
+- Pre-provisioning runbook (L1 + L2 sections) — highest-escalation scenario with hardware-specific edge cases
+- User-driven deployment runbook (L1 + L2 sections) — highest-volume deployment mode
+- ESP troubleshooting guide (L1 decision tree + L2 registry/log detail) — appears in every deployment mode failure
+- Log collection reference (mdmdiagnosticstool.exe commands, Event Viewer paths, registry paths)
+- Required network endpoints reference (full list including lgmsapeweu.blob.core.windows.net)
+- L1 decision trees (Mermaid flowcharts with explicit terminal states)
+- L2 technical deep-dive guides (registry paths, event IDs, PowerShell function references)
 
-**Should have (differentiators):**
-- Side-by-side APv1/APv2 admin action mapping (hardware hash to no equivalent; ESP to Device Preparation policy)
-- APv2 failure mode to config check reverse-lookup table
-- Embedded if-this-step-fails callouts in admin setup guides linking to relevant runbooks
-- Explicit PowerShell procedure for adding Intune Provisioning Client service principal to device group
-- Cross-reference from APv1 admin setup mistakes to existing v1.0 troubleshooting runbooks
+**Should have (v1.x, after validation):**
+- Hybrid Azure AD join runbook — distinct failure modes (ODJ connector, domain replication, 0x80070774) that warrant standalone treatment
+- Policy conflict reference table — AppLocker CSP, DeviceLock, Security Baseline UAC, PreferredAadTenantDomainName, Conditional Access blocking enrollment
+- Hardware-specific TPM compatibility reference — ST Micro, Nuvoton RSA-3072, Infineon SLB9672, AMD fTPM, Intel Tiger Lake fTPM known issues
+- Self-deployment mode failure matrix
 
-**Defer (explicitly out of scope):**
-- APv2 pre-provisioning runbook -- feature does not exist in APv2
-- APv2 hybrid join guide -- feature does not exist in APv2 (Entra join only)
-- APv2 self-deploying mode for physical devices -- feature does not exist in APv2
-- APv2 hex error code table -- APv2 uses scenario-based failures, not hex codes
-- Windows 10 APv2 guide -- APv2 requires Windows 11; Windows 10 is explicitly unsupported
-- APv2 quick-reference card -- defer until runbooks establish most common admin actions
+**Defer (v2+):**
+- Interactive web-based decision trees — requires frontend milestone (explicitly deferred per PROJECT.md)
+- Full PowerShell tool integration into runbooks — belongs in tooling milestone
+- Windows Autopilot Device Preparation (APv2) coverage — defer until APv2 adoption is confirmed in target environment
+
+**Anti-features to avoid:** environment-specific screenshots (stale within weeks), automated remediation scripts in L1 guides (dangerous without L2 oversight), complete replication of Microsoft Known Issues page content (creates maintenance burden and version drift).
 
 ### Architecture Approach
 
-The v1.0 docs/ tree established parallel-directory structure with version gate banners on every file. v1.1 extends this pattern strictly. New APv2 content goes into new parallel directories (apv2-lifecycle/, apv2-decision-trees/, apv2-l1-runbooks/, apv2-l2-runbooks/). Admin setup guides go into admin-guides/ with apv1/ and apv2/ subdirectories. Six existing files require selective modification: index.md, apv1-vs-apv2.md, common-issues.md, _glossary.md, error-codes/00-index.md, reference/endpoints.md.
+The documentation structure is organized into three top-level directories under `docs/`: `lifecycle/` for the end-to-end Autopilot flow narrative, `troubleshooting/` containing separate `l1-runbooks/`, `l2-runbooks/`, and `decision-trees/` subdirectories, and `reference/` for lookup tables (error codes, PowerShell functions, registry paths, network endpoints, quick-reference sheets). A shared foundation layer (`_index.md`, `_glossary.md`) provides entry points and shared terminology. Existing files (`docs/common-issues.md`, `docs/architecture.md`) are converted to navigation indexes rather than replaced.
 
 **Major components:**
-1. apv2-lifecycle/ (5 files) -- APv2 stages, prerequisites, Enrollment Time Grouping, OOBE experience, post-enrollment; foundation all subsequent APv2 content depends on
-2. apv2-decision-trees/ + apv2-l1-runbooks/ + apv2-l2-runbooks/ (9 files) -- self-contained APv2 troubleshooting layer; escalation path must not cross into APv1 L2 content
-3. error-codes/06-apv2-device-preparation.md -- scenario-based failure catalog, no hex table; one file added to existing directory
-4. admin-guides/ (14 files: 1 index, 6 APv1 guides, 6 APv2 guides, plus admin-template.md in _templates/) -- new content type for Intune admins
-5. Navigation hub updates (4 modified files) -- written last after all content they link to exists
+1. `docs/lifecycle/` (6 files) — End-to-end Autopilot flow; L2 mental model, L1 context; everything else depends on this
+2. `docs/troubleshooting/l1-runbooks/` (5 files) — Scripted steps for Service Desk; no registry or PowerShell access required
+3. `docs/troubleshooting/l2-runbooks/` (5 files) — Technical investigation guides; registry paths, event IDs, PowerShell invocations
+4. `docs/troubleshooting/decision-trees/` (4 files) — Mermaid flowcharts for structured L1 triage; standalone canonical files, also embedded in L1 runbooks
+5. `docs/reference/` (7+ files) — Lookup tables for error codes, PowerShell functions, registry paths, endpoints, quick-reference sheets
+6. `docs/_index.md` + `docs/_glossary.md` — Role-based entry points; written last (links to everything)
+
+**Key patterns:**
+- Tiered entry points: L1 and L2 reach their content without navigating through the other tier
+- Scenario-anchored cross-references: all links go to specific sections (`file.md#section`), never to file tops
+- PowerShell function linking convention: every function mention links to `reference/powershell-ref.md#function-name`
+- Mermaid for any decision with more than two branches; prose for L2 background context
 
 ### Critical Pitfalls
 
-1. **APv1 profile takes precedence over APv2 policy, silently, with no error thrown** -- Any device with APv1 hardware hash registration always runs APv1 ESP flow. APv2 OOBE page never appears. Every APv2 admin setup guide must open with a deregistration prerequisite; every APv2 runbook must include ESP-appears-unexpectedly as differential diagnosis for APv1 registration conflict.
+1. **APv1 vs. APv2 conflation** — Windows Autopilot Device Preparation (APv2) has no hardware hash, no ESP, no pre-provisioning, and no hybrid join. Every guide must open with an explicit version gate. Create a disambiguation page before any scenario content is written. Failure to do this produces L1 agents following inapplicable runbooks. Address in Phase 1.
 
-2. **APv2 device group has four distinct failure modes that appear identical** -- (1) group type Dynamic not Assigned, (2) role-assignable group setting Yes, (3) Intune Provisioning Client not set as group owner, (4) service principal displays as Intune Autopilot ConfidentialClient in some tenants (same AppID: f1346770-5b25-470b-88bd-d5744ab7952c, different display name). All four produce 0-groups-assigned symptom. Admin setup guide must be a 4-item checklist with AppID stated explicitly.
+2. **Single-audience documentation for both L1 and L2** — Writing one document with both registry paths and "call the user" instructions means neither audience uses it. Physical file separation by audience tier is non-negotiable. L1 guides must never reference PowerShell execution or registry access. L2 guides must not contain steps that should have happened before escalation. Address in Phase 1 by establishing the two-file convention and templates.
 
-3. **APv2 app deployment has three simultaneous requirements that fail silently** -- Apps must be (1) assigned to device group, (2) configured for System context, and (3) selected in Device Preparation policy. Any one missing causes Skipped in deployment report with no user-facing error. Troubleshooting content needs a diagnostic flowchart checking all three conditions in order.
+3. **Error code tables without deployment-mode context** — The same error code (e.g., 0x80180014) has different root causes and fixes depending on deployment mode. Tables with a single "Fix" column sorted numerically produce wrong L1 actions. Every code row must include: deployment mode, failure phase, root cause(s) with conditions, and per-cause fix. Address in Phase 3 (Error Code Lookup Tables).
 
-4. **APv2 RBAC differs from APv1 -- built-in Intune Administrator is insufficient** -- Enrollment time device membership assignment permission is APv2-unique. List all five custom role permission categories as first prerequisite in every APv2 admin setup guide.
+4. **Network prerequisite checks buried or absent** — A large share of Autopilot failures are network-related (proxy, TLS inspection, captive portal, domain controller unreachable for hybrid join). Every L1 decision tree must open with a network reachability gate before any other branch. The full endpoint list must be a standalone reference document. Address in Phase 2.
 
-5. **APv2 documentation accuracy degrades rapidly without a review cadence** -- App limit changed 10 to 25 (January 2026); Managed Installer blocking resolved (April 2026); Enterprise App Catalog added (June 2025). Enforce 90-day review cycle, last_verified frontmatter, link to live Microsoft Learn pages for volatile facts.
+5. **No review cadence or "Last verified" metadata** — Microsoft changes Intune monthly. Guides without explicit review dates silently become incorrect. Every guide must include "Last verified:" and "Review by:" dates in frontmatter. Establish this standard in Phase 1 templates; it cannot be retrofitted cheaply.
+
+6. **Pre-provisioning treated as an edge case** — Pre-provisioning has distinct failure modes at the technician-to-user phase seam (TPM attestation codes 0x81039001/0x81039023/0x81039024, LAPS policy timing, autologon GPO conflicts, LOB+Win32 app mixing in ESP). It must be a first-class deliverable with its own runbook, not a subsection of self-deploying. Address in Phase 2.
+
+7. **Flowcharts without explicit terminal states** — Decision trees with "retry" loops and "contact support" leaf nodes cause L1 agents to loop indefinitely and potentially worsen device state with repeated destructive actions. Every flowchart must have three terminal categories: Resolved, Escalate to L2 (with data collection checklist), Escalate to infrastructure/network. Address in Phase 4.
 
 ## Implications for Roadmap
 
-The ARCHITECTURE.md build order maps directly to documentation phases. Each layer depends on the previous. APv1 admin guides can be authored in parallel with APv2 admin guides once the admin template exists.
+Based on the dependency graph from FEATURES.md and the build order from ARCHITECTURE.md, combined with pitfall-to-phase mapping from PITFALLS.md, the following phase structure is recommended:
 
-### Phase 1: APv2 Lifecycle Foundation
-**Rationale:** All APv2 troubleshooting content depends on lifecycle docs. Pitfalls 1, 4, 5, 7, 8, and 10 (from PITFALLS.md) must be addressed here to prevent propagation into all subsequent phases.
-**Delivers:** 5 lifecycle docs (apv2-lifecycle/), admin template (_templates/admin-template.md), APv2 glossary terms, OS version prerequisites with KB5035942 requirement, APv1 deregistration prerequisite, 90-day review cadence metadata
-**Addresses:** APv2 lifecycle overview, APv2 prerequisites checklist, APv2 deployment modes
-**Avoids:** APv1 precedence conflict undocumented, OS version gating omitted, accuracy drift, progress UI percentage misrepresented as milestone-based
-**Research flag:** Standard patterns -- APv2 lifecycle stages fully documented in Microsoft Learn; no phase research needed
+### Phase 1: Foundation and Standards
 
-### Phase 2: APv2 Error Codes and Failure Index
-**Rationale:** Failure index must exist before decision trees and runbooks can link to it. APv2 error content is scenario-based -- one new file in existing error-codes/ directory plus Framework column added to master index.
-**Delivers:** error-codes/06-apv2-device-preparation.md (scenario-based failure catalog), updated error-codes/00-index.md with APv2 section and Framework column
-**Addresses:** APv2 failure index (must-have); hex code table for APv2 explicitly avoided
-**Avoids:** APv2 codes added to APv1 tables without framework tagging
-**Research flag:** Standard patterns -- failure modes fully documented in Microsoft Learn troubleshooting FAQ
+**Rationale:** All other content depends on shared terminology, templates, and reference tables sourced directly from the existing PowerShell modules. The two-file audience convention and metadata standards must be established before any scenario content is written — retrofitting these is high-cost. APv1/APv2 version taxonomy must be established before any troubleshooting content references a deployment mode.
 
-### Phase 3: APv2 Decision Trees and L1 Runbooks
-**Rationale:** Decision trees depend on lifecycle (Phase 1) and error codes (Phase 2). L1 runbooks depend on decision trees. APv2 L1 escalation must never cross into APv1 L2 content.
-**Delivers:** 2 decision trees (apv2-decision-trees/), 4 L1 runbook files (apv2-l1-runbooks/)
-**Addresses:** APv2 initial triage decision tree, APv2 L1 deployment never launches runbook, APv2 L1 apps not installed runbook
-**Avoids:** APv1 diagnostic tools referenced in APv2 content, APv1 decision trees used for APv2 triage
-**Research flag:** Standard patterns -- L1 check sequences directly derivable from Microsoft Learn troubleshooting FAQ
+**Delivers:**
+- `docs/_glossary.md` — shared terminology (OOBE, ESP, TPM, ZTD, APv1, APv2)
+- `docs/reference/registry-paths.md` — all paths from AutopilotDiagnostics.psm1 and AutopilotRemediation.psm1
+- `docs/reference/endpoints.md` — full network endpoint list (including lgmsapeweu.blob.core.windows.net)
+- `docs/reference/powershell-ref.md` — all 12 exported functions (7 diagnostic, 5 remediation) with ShouldProcess notes
+- L1/L2 document templates with "Last verified" / "Review by" frontmatter and version gate header
+- APv1 vs. APv2 disambiguation page
 
-### Phase 4: APv2 L2 Runbooks
-**Rationale:** APv2 L2 covers Bootstrapper event log, Intune deployment report, and USB log export. BootstrapperAgent event ID coverage requires community sources -- the one MEDIUM confidence area. Can be authored in parallel with Phase 3 after Phase 2 completes.
-**Delivers:** 3 L2 guide files (apv2-l2-runbooks/)
-**Addresses:** APv2 L2 log collection guide, APv2 L2 deployment report analysis guide
-**Avoids:** MDM Diagnostic Tool referenced as applicable to APv2 (explicitly documented by Microsoft as not applicable)
-**Research flag:** Needs attention -- BootstrapperAgent event ID catalog has no official Microsoft reference; cite oofhours.com and Call4Cloud as MEDIUM confidence
+**Features addressed:** Log collection reference, required network endpoints reference (foundational), PowerShell function reference
+**Pitfalls addressed:** APv1/APv2 conflation (Pitfall 1), audience conflation (Pitfall 4), no review cadence (Pitfall 8)
 
-### Phase 5: APv2 Admin Setup Guides
-**Rationale:** Admin guides reference lifecycle docs and forward-reference L1 runbooks. Group configuration (Enrollment Time Grouping) is highest-complexity step with four distinct failure modes. Prerequisites and RBAC must be covered before group and policy creation steps.
-**Delivers:** 6 APv2 admin guides (admin-guides/apv2/) covering prerequisites, device group, user group, app/script assignment, policy creation, and setup troubleshooting
-**Addresses:** All APv2 admin setup must-have features; differentiators: embedded failure callouts, explicit Intune Provisioning Client PowerShell procedure
-**Avoids:** RBAC omitted, group configuration failure modes conflated, app system context understated, Entra ID local admin conflict undocumented
-**Research flag:** Mostly standard patterns; Entra ID Local administrator settings conflict valid combinations must be re-verified against live known issues page at authoring time
+### Phase 2: Lifecycle Documentation
 
-### Phase 6: APv1 Admin Setup Guides
-**Rationale:** Independent of APv2 phases 3-5; can be authored in parallel with Phase 5 after Phase 1 establishes the admin template. Configuration-caused failure chains are the primary differentiator.
-**Delivers:** 6 APv1 admin guides (admin-guides/apv1/) covering profile configuration, ESP policies, dynamic groups, OOBE customization, deployment modes, setup troubleshooting
-**Addresses:** All APv1 admin setup must-have features; differentiator: configuration-caused failure chain in every guide
-**Avoids:** Admin guides missing failure chains, white glove as primary term instead of pre-provisioning, ESP timeout without recommended range
-**Research flag:** Standard patterns -- APv1 profile and ESP settings complete in Microsoft Learn; no phase research needed
+**Rationale:** Lifecycle docs provide the mental model that makes troubleshooting logical. L1 decision trees cannot be written until the lifecycle flow is documented — L1 agents cannot use a decision tree that branches on "ESP failure" if they do not know what ESP is. L2 engineers need the lifecycle to understand what should happen before diagnosing why it did not.
 
-### Phase 7: Navigation and Hub Updates
-**Rationale:** Hub files written last after all content they link to exists. Established v1.0 pattern.
-**Delivers:** 4 modified existing files (index.md, apv1-vs-apv2.md, common-issues.md, _glossary.md)
-**Avoids:** apv1-vs-apv2.md not updated with new features (documented integration gotcha from PITFALLS.md)
-**Research flag:** No research needed -- structural linking only
+**Delivers:**
+- `docs/lifecycle/00-overview.md` — full Autopilot flow diagram (Mermaid) + narrative
+- `docs/lifecycle/01-hardware-hash-import.md` through `05-post-enrollment.md`
+
+**Features addressed:** End-to-end lifecycle overview (table stakes)
+**Pitfalls addressed:** Audience conflation (narrative tone differs per section); pre-provisioning treated as edge case (lifecycle explicitly shows technician flow as a distinct path)
+
+### Phase 3: Error Code Reference
+
+**Rationale:** The error code lookup table is the single highest-leverage document. Every scenario runbook references it. It must exist before L1 and L2 runbooks are written, so runbooks can link to specific error sections rather than explaining codes inline. The full error inventory is already researched (FEATURES.md) — this phase executes it with correct multi-cause, phase-grouped structure.
+
+**Delivers:**
+- `docs/reference/error-codes.md` — master error lookup table with deployment mode, failure phase, multi-cause entries, per-cause fixes, and escalation conditions
+- Covers: MDM enrollment (0x8018xxxx), TPM attestation, ESP, self-deploying, pre-provisioning, hybrid join, device registration event IDs (807, 809, 815, 908, 171, 172)
+
+**Features addressed:** Error code lookup table (P1), self-deployment failure matrix subset, event ID reference
+**Pitfalls addressed:** Error code tables without context columns (Pitfall 2), Windows version differences (codes tagged with applicable OS versions)
+
+### Phase 4: L1 Decision Trees
+
+**Rationale:** L1 decision trees are the primary usability deliverable for Service Desk. They depend on the lifecycle overview (Phase 2) and the error code table (Phase 3). They must be built before L1 runbooks because runbooks embed or link to the trees. Network reachability gates must open every tree (addressing Pitfall 5). Terminal states (Resolved / Escalate L2 / Escalate Network) must be explicit in every tree (addressing Pitfall 6).
+
+**Delivers:**
+- `docs/troubleshooting/decision-trees/l1-initial-triage.md` — first call: registered? connectivity? profile?
+- `docs/troubleshooting/decision-trees/esp-failure-tree.md` — device phase vs. user phase branching
+- `docs/troubleshooting/decision-trees/profile-assignment-tree.md` — group? sync? tenant? profile config?
+- `docs/troubleshooting/decision-trees/tpm-attestation-tree.md` — BIOS? firmware? ownership? Secure Boot?
+
+**Features addressed:** L1 decision trees (P1)
+**Pitfalls addressed:** Flowcharts without terminal states (Pitfall 6), network pre-checks absent (Pitfall 5), destructive actions in L1 flowcharts (Security Pitfalls)
+
+### Phase 5: L1 Scenario Runbooks
+
+**Rationale:** L1 runbooks are the scripted procedure layer for Service Desk. They depend on the decision trees (Phase 4) and the error code table (Phase 3). They must be strictly L1-scoped: no registry access, no PowerShell execution, escalation triggers with explicit data collection checklists. Each runbook starts with "Start here: check X first" — no background context before the first action.
+
+**Delivers:**
+- `docs/troubleshooting/l1-runbooks/device-not-in-autopilot.md`
+- `docs/troubleshooting/l1-runbooks/esp-stuck-or-failed.md`
+- `docs/troubleshooting/l1-runbooks/profile-not-assigned.md`
+- `docs/troubleshooting/l1-runbooks/network-connectivity.md`
+- `docs/troubleshooting/l1-runbooks/oobe-fails-immediately.md`
+
+**Features addressed:** User-driven deployment runbook (L1 section), ESP troubleshooting guide (L1 section), pre-provisioning runbook (L1 section)
+**Pitfalls addressed:** Single-audience docs (L1-only content), no prerequisite checklists (every runbook starts with prerequisites)
+
+### Phase 6: L2 Deep-Dive Runbooks
+
+**Rationale:** L2 runbooks require the full foundation (Phases 1-3) and the PowerShell function reference. They are independent of the L1 runbooks but must exist before the documentation suite is complete. Pre-provisioning and hybrid join receive first-class standalone treatment here — not subsections of other modes.
+
+**Delivers:**
+- `docs/troubleshooting/l2-runbooks/log-collection-guide.md` — mdmdiagnosticstool.exe, Get-AutopilotLogs, Event Viewer paths
+- `docs/troubleshooting/l2-runbooks/esp-deep-dive.md` — ESP registry structure, device vs. user phase investigation, LOB+Win32 conflict, Teams MSI conflict
+- `docs/troubleshooting/l2-runbooks/tpm-attestation-failure.md` — hardware-specific codes, firmware update paths
+- `docs/troubleshooting/l2-runbooks/hybrid-join-failure.md` — connector prerequisites, ODJ blob flow, 0x80070774, connector version 6.2501.2000.5+
+- `docs/troubleshooting/l2-runbooks/policy-conflict-analysis.md` — AppLocker CSP, DeviceLock, Security Baseline UAC, GPO conflicts
+
+**Features addressed:** Pre-provisioning runbook (L2 section), ESP troubleshooting guide (L2 section), L2 technical deep-dive guides (P1), hybrid join runbook (P2), policy conflict reference (P2)
+**Pitfalls addressed:** Pre-provisioning treated as edge case (Pitfall 3), ESP device/user phase conflation (Pitfall 10), hybrid join complexity underestimated (Pitfall 9)
+
+### Phase 7: Entry Points and Navigation Completion
+
+**Rationale:** The master index and quick-reference sheets are written last because they link to everything else. Writing them before content exists produces placeholder-filled indexes that never get updated. Converting existing files (common-issues.md, architecture.md) to navigation indexes completes the migration.
+
+**Delivers:**
+- `docs/_index.md` — role-based entry point (L1 path / L2 path)
+- `docs/reference/quick-ref/l1-quick-ref.md` — top 5 checks, top 3 escalation triggers
+- `docs/reference/quick-ref/l2-quick-ref.md` — PowerShell commands, log paths, event IDs
+- `docs/reference/quick-ref/log-locations.md` — all log locations in one place
+- Updated `docs/common-issues.md` — navigation index (content migrated to runbooks)
+- Updated `docs/architecture.md` — add cross-links to reference/ and L2 runbooks
+
+**Features addressed:** All navigation and discoverability; quick-reference cheat sheets
+**Pitfalls addressed:** Orphaned content without navigation (scenario-anchored cross-references throughout)
 
 ### Phase Ordering Rationale
 
-- APv2 lifecycle foundation must be Phase 1 because every subsequent APv2 document references it for baseline behavior
-- Error codes must precede decision trees and runbooks because runbooks link to specific failure scenarios
-- Decision trees must precede L1 runbooks because L1 runbooks embed or link to tree sections
-- APv1 admin guides (Phase 6) are independent of APv2 phases 3-5 and can be parallelized with Phase 5 once admin template from Phase 1 exists
-- Hub updates are always last
+- **Foundation before content:** Reference tables (registry paths, endpoints, PowerShell functions) are sourced directly from the existing codebase — they require no research, only transcription. Building them first means every subsequent phase can link to canonical references rather than repeating information inline.
+- **Lifecycle before troubleshooting:** The lifecycle overview is the prerequisite for L1 decision trees. L1 agents cannot triage "ESP failure" without knowing what ESP is. L2 engineers cannot diagnose deviation without knowing the expected path.
+- **Error codes before runbooks:** Runbooks that cannot link to the error code table must define errors inline, creating duplicate content that drifts out of sync. Error codes as a standalone reference is the single-source-of-truth pattern from ARCHITECTURE.md.
+- **Decision trees before L1 runbooks:** L1 runbooks embed or link to decision trees. Authoring the tree structure first ensures runbooks reference consistent triage logic.
+- **L1 and L2 runbooks sequenced separately:** L1 runbooks (Phase 5) and L2 runbooks (Phase 6) are independent once the foundation is established. They can be parallelized if authoring resources allow.
+- **Index last:** `_index.md` links to everything. It cannot be authoritative until every file it links to exists.
 
 ### Research Flags
 
-Phases needing additional research or careful sourcing during execution:
-- **Phase 4 (APv2 L2 Runbooks):** BootstrapperAgent event ID catalog has no official Microsoft reference. Must cite oofhours.com (Michael Niehaus) and Call4Cloud as MEDIUM confidence. Check for any Microsoft event ID guidance published after 2026-04-10.
-- **Phase 5 (APv2 Admin Setup):** Entra ID Local administrator settings conflict valid combinations must be re-verified against live known issues page at authoring time.
+Phases likely needing deeper research or validation during planning:
 
-Phases with established patterns (no phase research needed):
-- **Phase 1:** APv2 lifecycle stages, prerequisites, and deployment modes fully documented in Microsoft Learn
-- **Phase 2:** APv2 failure scenarios fully documented in Microsoft Learn troubleshooting FAQ
-- **Phase 3:** L1 check sequences derivable directly from troubleshooting FAQ
-- **Phase 6:** APv1 profile and ESP settings complete in Microsoft Learn
-- **Phase 7:** Structural linking only
+- **Phase 6 (L2 Hybrid Join Runbook):** The ODJ Connector behavior changed in June 2025 (new MSA-based service account). Connector log paths changed. The current correct path and version 6.2501.2000.5 behavior should be validated against the live Microsoft Learn connector documentation before the runbook is written.
+- **Phase 6 (L2 Policy Conflict Analysis):** The full policy conflict matrix requires validation against current Microsoft 365 Security Baseline versions. Policy names and registry keys may have changed since the research date.
+- **Phase 3 (Error Codes — APv2 tagging):** Windows Autopilot Device Preparation error behavior is less thoroughly documented in public sources. Codes that appear in both APv1 and APv2 need verification before tagging.
+
+Phases with standard patterns (research-phase not required):
+
+- **Phase 1 (Foundation):** Reference content sourced directly from existing codebase files — no external research needed, direct transcription.
+- **Phase 2 (Lifecycle):** Microsoft Learn lifecycle documentation is comprehensive and HIGH confidence. Standard narrative documentation task.
+- **Phase 4 (L1 Decision Trees):** Mermaid flowchart authoring is well-understood. Decision logic comes from researched runbook content. No external research needed.
+- **Phase 7 (Entry Points):** Pure navigation and cross-linking. No domain research needed.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Documentation tooling unchanged from v1.0; all source authorities verified against live Microsoft Learn pages 2026-04-10 |
-| Features | HIGH | Must-have and defer lists derived directly from what Microsoft Learn documents APv2 supports and explicitly does not support |
-| Architecture | HIGH | Existing 40+ file v1.0 structure directly inspected; structural decisions derive from version gate semantics validated against real content |
-| Pitfalls | HIGH | 11 of 12 pitfalls from Microsoft Learn official docs; BootstrapperAgent event ID coverage is the one MEDIUM area |
+| Stack | HIGH | All tool versions verified against official package registries as of 2026-03-10. MkDocs Material 9.7.2, Mermaid 11.13.0, Pandoc 3.9, markdownlint-cli2 0.21.0 all confirmed current. |
+| Features | HIGH | Primary source is Microsoft Learn official documentation verified against the known issues page updated 2026-02-10. Error code inventory is comprehensive and verified. |
+| Architecture | HIGH | Derived from direct inspection of existing codebase (docs/, src/powershell/) and established documentation architecture patterns. No inference required. |
+| Pitfalls | HIGH | Sourced from Microsoft Learn official FAQ and known issues (updated February 2026), community validation from multiple independent sources. Breaking changes confirmed against What's New changelog. |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **BootstrapperAgent event ID catalog:** No official Microsoft reference exists. Phase 4 must use oofhours.com and Call4Cloud with explicit MEDIUM confidence attribution. If Microsoft publishes an official reference before Phase 4, substitute it.
-- **Entra ID Local administrator settings conflict -- valid combinations table:** Known issues page (2026-04-10) documents the conflict but valid combinations must be re-pulled from the live page at Phase 5 authoring time, as the page is actively maintained.
-- **APv2 Windows 365 automatic deployment mode scope:** Two sub-modes (shared, dedicated) are in preview. Confirm before Phase 1 whether W365 Frontline is in target customer scope; if not, scope Phase 1 to user-driven only.
-- **APv2 What's New RSS subscription:** Must be established in project README before any APv2 content is authored, as capability changes may occur during the authoring window.
+- **APv2 error behavior documentation:** Windows Autopilot Device Preparation error codes and behavior are less thoroughly documented than classic Autopilot. During Phase 3 (error codes), verify each code's applicability to APv2 against the Microsoft Learn Device Preparation known issues page before tagging rows.
+- **Policy conflict baseline versions:** The policy conflict table in FEATURES.md is comprehensive but not pinned to a specific Microsoft 365 Security Baseline version. During Phase 6 authoring, verify current Security Baseline settings against the Intune Security Baseline release notes.
+- **ODJ Connector current log path:** PITFALLS.md notes the log path changed in a recent update. The correct current path (`Applications and Services Logs > Microsoft > Intune > ODJConnectorService`) is documented but should be re-verified at Phase 6 authoring time against the live Microsoft Learn connector troubleshooting page.
+- **Pandoc export testing:** The stack recommends Pandoc for SharePoint DOCX export. If SharePoint is a target distribution channel, test the Mermaid → DOCX export pipeline before committing to it — Mermaid diagrams in DOCX require manual PNG export as Pandoc cannot render Mermaid to DOCX natively.
 
 ## Sources
 
-### Primary (HIGH confidence -- verified 2026-04-10)
-- https://learn.microsoft.com/en-us/autopilot/device-preparation/overview -- updated 2026-04-07
-- https://learn.microsoft.com/en-us/autopilot/device-preparation/requirements -- updated 2026-04-07
-- https://learn.microsoft.com/en-us/autopilot/device-preparation/troubleshooting-faq -- updated 2026-04-07; primary basis for L1 runbooks and failure index
-- https://learn.microsoft.com/en-us/autopilot/device-preparation/known-issues -- updated 2026-04-10; active bugs and workarounds
-- https://learn.microsoft.com/en-us/autopilot/device-preparation/compare -- updated 2026-04-07; definitive APv1/APv2 feature matrix
-- https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/user-driven/entra-join-workflow -- 7-step admin setup basis
-- https://learn.microsoft.com/en-us/autopilot/device-preparation/reporting-monitoring -- updated 2026-02-05
-- https://learn.microsoft.com/en-us/autopilot/profiles -- complete APv1 profile settings reference
-- https://learn.microsoft.com/en-us/intune/intune-service/enrollment/windows-enrollment-status -- updated 2026-04-09
-- Existing codebase: docs/ directory -- all 40+ v1.0 files directly inspected (2026-04-10)
+### Primary (HIGH confidence)
+- [Windows Autopilot troubleshooting FAQ — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/troubleshooting-faq) — Updated 2026-02-05. Error codes, event IDs, registry paths.
+- [Windows Autopilot known issues — Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/known-issues) — Updated 2026-02-10. TPM attestation codes, hybrid join timeout, self-deployment errors.
+- [Troubleshoot the Enrollment Status Page — Microsoft Learn](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/understand-troubleshoot-esp) — Updated 2025-07-14. ESP registry structure, log collection.
+- [mkdocs-material PyPI](https://pypi.org/project/mkdocs-material/) — Version 9.7.2, Insiders features now free.
+- [mermaid npm page](https://www.npmjs.com/package/mermaid) — Version 11.13.0 confirmed current.
+- [Pandoc releases](https://pandoc.org/releases.html) — Version 3.9 confirmed current.
+- Existing codebase: `src/powershell/AutopilotDiagnostics.psm1`, `src/powershell/AutopilotRemediation.psm1` — All 12 exported functions catalogued.
 
-### Secondary (MEDIUM confidence -- community-authored, credible sources)
-- https://oofhours.com/2025/05/01/next-generation-autopilot-troubleshooting/ -- Michael Niehaus (Microsoft Autopilot PM); primary source for BootstrapperAgent log guidance
-- https://call4cloud.nl/autopilot-device-preparation-flow-apv2/ -- BootstrapperAgent diagrams and event log references
-- https://patchmypc.com/blog/ultimate-guide-troubleshoot-windows-autopilot/ -- BootstrapperAgent log locations
+### Secondary (MEDIUM confidence)
+- [TPM Attestation Failures — Patch My PC blog](https://patchmypc.com/blog/tpm-attestation-failures-windows-autopilot/) — 0x800705b4 timeout context in pre-provisioning.
+- [TPM Attestation EKRSA3072 failure — Patch Tuesday blog](https://patchtuesday.com/blog/tech-blog/tpm-attestation-ekrsa3072-windows-autopilot-0x81039001/) — ST Micro / Nuvoton RSA-3072 hardware-specific context.
+- [Autopilot Hybrid Azure AD Join Breakpoints — MDM Tech Space](https://joymalya.com/autopilot-hybrid-azure-ad-join-breakpoints/) — Hybrid join failure analysis.
+- [A Tale of Two Autopilots — FlowDevs](https://www.flowdevs.io/post/a-tale-of-two-autopilots) — APv1 vs. APv2 architecture comparison.
+- [mark (kovetskiy/mark) GitHub](https://github.com/kovetskiy/mark) — Confluence sync tool, community-supported.
 
-### Tertiary (verify at authoring time)
-- APv2 What's New RSS: https://learn.microsoft.com/api/search/rss?search=Windows+Autopilot+device+preparation&locale=en-us -- subscribe before Phase 1 authoring begins
+### Tertiary (LOW confidence / single source)
+- [APv2 and pre-provisioning — Out of Office Hours](https://oofhours.com/2025/05/30/apv2-and-pre-provisioning-we-can-do-that-too/) — APv2 pre-provisioning status (not officially documented by Microsoft).
+- Community-validated issue: White Glove keyboard language preset failure — [GitHub MicrosoftDocs/memdocs issue #1285](https://github.com/MicrosoftDocs/memdocs/issues/1285).
 
 ---
-*Research completed: 2026-04-10*
+*Research completed: 2026-03-10*
 *Ready for roadmap: yes*
