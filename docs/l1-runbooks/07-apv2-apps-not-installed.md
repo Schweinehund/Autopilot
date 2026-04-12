@@ -66,7 +66,7 @@ Escalate to L2 if:
 - Managed Installer policy status (active / not active / not applicable)
 - Screenshot of the deployment report Apps and Scripts tabs
 
-**L2 escalation path:** L2 runbooks index (Phase 14 -- to be created)
+**L2 escalation path:** [APv2 L2 Runbooks](../l2-runbooks/00-index.md#apv2-autopilot-device-preparation-runbooks)
 
 ---
 

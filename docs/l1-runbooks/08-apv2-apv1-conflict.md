@@ -49,7 +49,7 @@ Escalate to L2 if:
 - Assigned APv1 deployment profile name (if found)
 - Screenshot of the screen the user saw (ESP vs Device Preparation)
 
-**L2 escalation path:** L2 runbooks index (Phase 14 -- to be created)
+**L2 escalation path:** [APv2 L2 Runbooks](../l2-runbooks/00-index.md#apv2-autopilot-device-preparation-runbooks)
 
 ---
 

@@ -67,7 +67,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Quick Check:** Intune admin center > Devices > Monitor > Windows Autopilot device preparation deployments -- select the deployment record and check the Phase column and error details. Entra admin center > Devices > Device settings -- verify "Users may join devices to Microsoft Entra" includes the signing-in user. Verify ETG group ownership includes Intune Provisioning Client.
 
-**Runbook:** L2 investigation required -- Entra join failures require infrastructure-level diagnosis. See L2 runbooks (Phase 14).
+**Runbook:** L2 investigation required -- Entra join failures require infrastructure-level diagnosis. See [APv2 Log Collection](../l2-runbooks/06-apv2-log-collection.md) and [APv2 Deployment Report](../l2-runbooks/08-apv2-deployment-report.md).
 
 ---
 
@@ -82,7 +82,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Quick Check:** Entra admin center > Mobility (MDM and WIP) > Microsoft Intune -- check MDM user scope. If set to None, automatic MDM enrollment is disabled for all users. Microsoft 365 admin center > Active users > select the signing-in user > Licenses -- verify an Intune-capable license is assigned.
 
-**Runbook:** L2 investigation required -- Enrollment failures require license and MDM scope verification beyond L1 scope. See L2 runbooks (Phase 14).
+**Runbook:** L2 investigation required -- Enrollment failures require license and MDM scope verification beyond L1 scope. See [APv2 Log Collection](../l2-runbooks/06-apv2-log-collection.md) and [APv2 Deployment Report](../l2-runbooks/08-apv2-deployment-report.md).
 
 ---
 
@@ -98,7 +98,7 @@ The Intune Management Extension (IME) must install before any Win32 apps or Powe
 
 **Quick Check:** Intune admin center > Devices > Monitor > Windows Autopilot device preparation deployments > select the device record > deployment details. Check the Phase column -- if the failure is recorded at "Policy installation" with no entries in the Apps or Scripts tabs, IME failed before app delivery could begin. Verify network access to Intune service endpoints from the deployment network.
 
-**Runbook:** L2 runbook: APv2 IME installation failure investigation (Phase 14)
+**Runbook:** [APv2 Deployment Report](../l2-runbooks/08-apv2-deployment-report.md)
 
 ---
 
@@ -173,7 +173,7 @@ PowerShell scripts run at Step 8 of the deployment flow, between LOB/M365 app in
 
 **Quick Check:** Intune admin center > Devices > Monitor > Windows Autopilot device preparation deployments > select device > Scripts tab -- review individual script status: Installed / In progress / Skipped / Failed. For Failed scripts: check the script's run-as-account setting (System vs User context). For Skipped scripts: verify the script is assigned to the ETG device group. Script output and exit codes require L2 log analysis.
 
-**Runbook:** L2 runbook: APv2 PowerShell script failure investigation (Phase 14)
+**Runbook:** [APv2 Event IDs](../l2-runbooks/07-apv2-event-ids.md) and [APv2 Deployment Report](../l2-runbooks/08-apv2-deployment-report.md)
 
 ---
 
@@ -194,7 +194,7 @@ These scenarios occur after the user reaches the desktop -- the APv2 deployment 
 
 **Quick Check:** Intune admin center > Devices > Windows > Enrollment > Device preparation policies -- verify policy priority order and confirm only one policy matches the user. Entra admin center > Devices > Device settings > Local administrator settings -- verify the configuration against known valid combinations. Intune admin center > deployment details for the specific device -- check which policy version was applied and review the Apps and Scripts tabs for OOBE vs post-desktop distinction.
 
-**Runbook:** L2 runbook: APv2 post-deployment configuration analysis (Phase 14)
+**Runbook:** [APv2 Deployment Report](../l2-runbooks/08-apv2-deployment-report.md)
 
 ---
 
