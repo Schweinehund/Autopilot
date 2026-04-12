@@ -72,7 +72,10 @@ Plans:
   2. L1 agent can follow a scripted runbook for "deployment experience never launched" using only Intune portal actions, with zero PowerShell or registry steps
   3. L1 agent can follow a scripted runbook for "apps and scripts not installed" using only Intune portal actions, with zero PowerShell or registry steps
   4. L1 agent can identify when an APv2 symptom is actually an APv1 registration conflict (ESP appeared unexpectedly) and route to the APv1 doc set
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 13-01-PLAN.md — APv2 triage decision tree, APv1 conflict runbook, and existing file updates (initial triage cross-ref, L1 index, Phase 12 forward references)
+- [ ] 13-02-PLAN.md — Deployment not launched, apps not installed, and deployment timeout L1 runbooks
 
 ### Phase 14: APv2 L2 Runbooks
 **Goal**: L2 Desktop Engineers can collect APv2-specific logs and interpret the Intune deployment report to diagnose failures that L1 cannot resolve
@@ -137,7 +140,7 @@ Plans:
 | 10. Navigation Polish | v1.0 | 1/1 | Complete | 2026-04-10 |
 | 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete    | 2026-04-11 |
 | 12. APv2 Failure Index | v1.1 | 1/1 | Complete    | 2026-04-12 |
-| 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/? | Not started | - |
+| 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/2 | Planned | - |
 | 14. APv2 L2 Runbooks | v1.1 | 0/? | Not started | - |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 0/? | Not started | - |
