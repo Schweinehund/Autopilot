@@ -72,9 +72,9 @@ graph TD
 
 | ID | Scenario | Collect Before Escalating | See Also |
 |----|----------|---------------------------|----------|
-| APE1 | Entra join failed | Deployment report (screenshot or export), Entra join error details from deployment record Phase column, device serial number, signing-in user UPN, Entra device settings screenshot | L2 runbooks (Phase 14) |
-| APE2 | Enrollment failed | Intune device enrollment status, signing-in user UPN and license assignment screenshot, MDM scope configuration screenshot, device serial number | L2 runbooks (Phase 14) |
-| APE3 | IME or infrastructure failure | Full deployment report with phase breakdown (screenshot or export), device serial number, network information (Wi-Fi/ethernet, proxy), timestamp of failure | L2 runbooks (Phase 14) |
+| APE1 | Entra join failed | Deployment report (screenshot or export), Entra join error details from deployment record Phase column, device serial number, signing-in user UPN, Entra device settings screenshot | [APv2 Deployment Report Guide](../l2-runbooks/08-apv2-deployment-report.md) |
+| APE2 | Enrollment failed | Intune device enrollment status, signing-in user UPN and license assignment screenshot, MDM scope configuration screenshot, device serial number | [APv2 Deployment Report Guide](../l2-runbooks/08-apv2-deployment-report.md) |
+| APE3 | IME or infrastructure failure | Full deployment report with phase breakdown (screenshot or export), device serial number, network information (Wi-Fi/ethernet, proxy), timestamp of failure | [APv2 Deployment Report Guide](../l2-runbooks/08-apv2-deployment-report.md), [APv2 Event ID Reference](../l2-runbooks/07-apv2-event-ids.md) |
 
 ## See Also
 
