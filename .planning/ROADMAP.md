@@ -28,7 +28,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 ### v1.1 APv2 Documentation & Admin Setup Guides
 
 - [x] **Phase 11: APv2 Lifecycle Foundation** — APv2 deployment flow, prerequisites, comparison with APv1, and automatic mode (completed 2026-04-11)
-- [ ] **Phase 12: APv2 Failure Index** — Scenario-based failure catalog and updated master error code index with APv2 section
+- [x] **Phase 12: APv2 Failure Index** — Scenario-based failure catalog and updated master error code index with APv2 section (completed 2026-04-12)
 - [ ] **Phase 13: APv2 L1 Decision Trees & Runbooks** — Initial triage tree and scripted L1 runbooks for top APv2 failure scenarios
 - [ ] **Phase 14: APv2 L2 Runbooks** — BootstrapperAgent log collection and Intune deployment report analysis guides
 - [ ] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy
@@ -59,9 +59,9 @@ Plans:
   1. Technician can look up any APv2 failure scenario by symptom description (e.g. "deployment experience never launched", "apps not installed") without needing a hex error code
   2. The master error code index (error-codes/00-index.md) has an APv2 section with a Framework column distinguishing APv1 and APv2 entries
   3. The APv2 failure catalog file (error-codes/06-apv2-device-preparation.md) contains no hex code tables — all failures are organized by symptom and scenario
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
-- [ ] 12-01-PLAN.md — APv2 failure catalog (10 scenarios) and master index APv2 section
+- [x] 12-01-PLAN.md — APv2 failure catalog (10 scenarios) and master index APv2 section
 
 ### Phase 13: APv2 L1 Decision Trees & Runbooks
 **Goal**: L1 Service Desk agents can independently triage and handle the most common APv2 deployment failures using only browser/portal actions
@@ -136,7 +136,7 @@ Plans:
 | 9. Navigation Wiring | v1.0 | 1/1 | Complete | 2026-04-09 |
 | 10. Navigation Polish | v1.0 | 1/1 | Complete | 2026-04-10 |
 | 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete    | 2026-04-11 |
-| 12. APv2 Failure Index | v1.1 | 0/1 | Not started | - |
+| 12. APv2 Failure Index | v1.1 | 1/1 | Complete    | 2026-04-12 |
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/? | Not started | - |
 | 14. APv2 L2 Runbooks | v1.1 | 0/? | Not started | - |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/? | Not started | - |
