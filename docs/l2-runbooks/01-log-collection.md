@@ -122,3 +122,4 @@ if ($cabSource) {
 - [Get-AutopilotLogs](../reference/powershell-ref.md#get-autopilotlogs) — one-command collection of MDM diagnostic report and four event log exports
 - [Registry Paths](../reference/registry-paths.md) — ESP tracking keys (`EnrollmentStatusTracking`, `ExpectedPolicies`, `Sidecar`) and enrollment state paths
 - [Network Endpoints](../reference/endpoints.md) — for connectivity verification if endpoints are unreachable during diagnostic collection
+- [Error Code Index](../error-codes/00-index.md) — cross-reference collected error codes from event logs and ESP screens against the master lookup table for root cause and L1/L2 actions

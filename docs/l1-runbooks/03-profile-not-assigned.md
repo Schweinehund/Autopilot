@@ -73,7 +73,12 @@ Escalate to L2 if:
 - Current profile status shown in the Autopilot device record (screenshot if possible)
 - Any error messages visible in the portal
 
-See [L2 Runbooks](../l2-runbooks/00-index.md) for assignment filter and Graph API investigation.
+**L2 escalation path — route by symptom:**
+- If ESP hangs or times out after profile is assigned: [ESP Deep-Dive](../l2-runbooks/02-esp-deep-dive.md)
+- If policies show as pending or conflicting in the portal: [Policy Conflict Analysis](../l2-runbooks/05-policy-conflicts.md)
+- For all other profile assignment issues: [L2 Runbook Index](../l2-runbooks/00-index.md)
+
+**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
 
 ---
 

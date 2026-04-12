@@ -1,7 +1,7 @@
 ---
-last_verified: 2026-03-14
-review_by: 2026-06-12
-applies_to: APv1
+last_verified: 2026-04-11
+review_by: 2026-07-10
+applies_to: both
 audience: both
 ---
 
@@ -18,8 +18,11 @@ This is the master lookup table for all Windows [Autopilot](../_glossary.md#auto
 - [ESP and Enrollment Errors](03-esp-enrollment.md) — Enrollment Status Page failures and policy conflicts
 - [Pre-Provisioning and Self-Deploying Errors](04-pre-provisioning.md) — Technician flow and kiosk deployment failures
 - [Hybrid Join and Device Registration Errors](05-hybrid-join.md) — Hybrid Entra join failures and event ID mapping
+- [APv2 Device Preparation Failures](06-apv2-device-preparation.md) -- Symptom-based failure catalog for APv2 deployments
 
-## Quick Lookup
+## Quick Lookup (APv1)
+
+**Framework:** APv1 (classic)
 
 **Mode:** UD=User-Driven · PP=Pre-Provisioning · SD=Self-Deploying · All=All modes
 
@@ -59,16 +62,33 @@ This is the master lookup table for all Windows [Autopilot](../_glossary.md#auto
 
 Some ESP failures show "Something went wrong" without a specific error code. See [ESP and Enrollment Errors — Policy Conflicts](03-esp-enrollment.md#policy-conflicts-no-discrete-error-code) for these scenarios.
 
+## APv2 Failure Scenarios
+
+**Framework:** APv2 (Device Preparation)
+
+Failures in APv2 are identified by symptom and deployment phase -- not hex error codes.
+Full catalog: [APv2 Device Preparation Failures](06-apv2-device-preparation.md)
+
+| Scenario | Symptom | Phase | Category |
+|----------|---------|-------|----------|
+| Deployment experience never launched | APv2 progress screen never appeared; standard OOBE or ESP showed instead | Steps 2-3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#deployment-experience-never-launched) |
+| APv1 profile took precedence | ESP screen appeared during OOBE; no APv2 progress screen | Step 3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#apv1-profile-took-precedence) |
+| Entra join failed | Deployment failed during Entra join; portal shows failed status | Step 3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#entra-join-failed) |
+| Intune enrollment failed | Device joined Entra but not visible in Intune | Step 3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#intune-enrollment-failed) |
+| IME install failed | Deployment fails before any apps install | Step 4 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#ime-install-failed) |
+| LOB or M365 app install failed | App shows Failed in deployment report Apps tab | Step 7 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#lob-or-m365-app-install-failed) |
+| PowerShell script execution failed | Script shows Failed in deployment report Scripts tab | Step 8 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#powershell-script-execution-failed) |
+| Win32, Store, or EAC app install failed | App shows Failed or Skipped in deployment report | Step 9 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#win32-store-or-eac-app-install-failed) |
+| Deployment timed out | Deployment fails with timeout; portal shows Failed status | Steps 7-9 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#deployment-timed-out) |
+| Wrong apps or policies applied | User reaches desktop but expected apps missing or wrong policies | Step 10+ | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#wrong-apps-or-policies-applied) |
+
 ---
 
-> **APv2 Note:** For APv2 (Device Preparation) error coverage, check the APv2 Notes section at the bottom of each category page. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
-
----
-
-Select a category above or use Ctrl+F to find your error code in the Quick Lookup table.
+Select a category above, browse the APv2 scenario table, or use Ctrl+F to find your error code in the Quick Lookup table.
 
 ## Version History
 
 | Date | Change |
 |------|--------|
+| 2026-04-11 | Added APv2 Failure Scenarios section, 06-apv2-device-preparation.md category, relabeled Quick Lookup as APv1 |
 | 2026-03-14 | Initial creation — 23 hex codes and 6 event IDs indexed across 5 category files |

@@ -1,96 +1,79 @@
-# Requirements: Windows Autopilot Documentation Suite
+# Requirements: Windows Autopilot Troubleshooter & Documentation Suite
 
-**Defined:** 2026-03-10
-**Core Value:** IT teams can independently diagnose and resolve Autopilot deployment failures
+**Defined:** 2026-04-10
+**Core Value:** IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering
 
-## v1 Requirements
+## v1.1 Requirements
 
-Requirements for milestone v1.0. Each maps to roadmap phases.
+Requirements for milestone v1.1: APv2 Documentation & Admin Setup Guides. Each maps to roadmap phases.
 
-### Foundation
+### APv2 Lifecycle
 
-- [x] **FOUND-01**: Glossary of Autopilot terminology (OOBE, ESP, TPM, ZTD, APv1, APv2) accessible to both L1 and L2
-- [x] **FOUND-02**: Registry path reference documenting all Autopilot-relevant registry locations
-- [x] **FOUND-03**: Network endpoints reference with full URL list and test commands
-- [x] **FOUND-04**: PowerShell function reference for all 12 exported diagnostic/remediation functions
-- [x] **FOUND-05**: L1 and L2 document templates with "Last verified" / "Review by" frontmatter
-- [x] **FOUND-06**: APv1 vs APv2 disambiguation page clarifying which docs apply to which mode
+- [x] **LIFE-01**: Admin can find a complete APv2 deployment flow overview (10-step process, how it differs from APv1)
+- [x] **LIFE-02**: Admin can verify APv2 prerequisites (OS version, licensing, Intune config, networking)
+- [x] **LIFE-03**: Admin can use updated APv1 vs APv2 comparison with actionable guidance (when to use which, migration steps)
+- [x] **LIFE-04**: Admin can find APv2 automatic mode documentation (Windows 365 deployment, preview status noted)
 
-### Lifecycle
+### APv2 Troubleshooting
 
-- [x] **LIFE-01**: End-to-end Autopilot lifecycle overview with flow diagram (hardware hash → desktop)
-- [x] **LIFE-02**: Hardware hash import and device registration stage guide
-- [x] **LIFE-03**: Autopilot profile assignment stage guide
-- [x] **LIFE-04**: OOBE and deployment mode selection stage guide (user-driven + pre-provisioning)
-- [x] **LIFE-05**: Enrollment Status Page (ESP) stage guide covering device and user phases
-- [x] **LIFE-06**: Post-enrollment verification and handoff stage guide
+- [ ] **TROU-01**: Technician can look up APv2 failure scenarios by symptom (scenario-based index, not hex codes)
+- [ ] **TROU-02**: L1 agent can follow APv2 decision tree to identify failure type and route to correct runbook
+- [ ] **TROU-03**: L1 agent can follow scripted APv2 runbooks (zero PowerShell, portal-only actions)
+- [ ] **TROU-04**: L2 engineer can investigate APv2 failures using BootstrapperAgent logs and deployment reports
+- [ ] **TROU-05**: L2 engineer can interpret the Intune APv2 deployment report (status meanings, failure indicators)
 
-### Error Codes
+### APv2 Admin Setup
 
-- [x] **ERRC-01**: Master error code lookup table with deployment-mode tagging and phase-of-failure grouping
-- [x] **ERRC-02**: MDM enrollment errors section (0x8018xxxx series) with multi-cause handling
-- [x] **ERRC-03**: TPM attestation errors section with hardware-specific notes
-- [x] **ERRC-04**: ESP and enrollment errors section
-- [x] **ERRC-05**: Pre-provisioning and self-deploying mode errors section
-- [x] **ERRC-06**: Hybrid join and device registration errors section with event ID mapping
+- [ ] **ASET-01**: Admin can follow step-by-step APv2 setup guide (prerequisites through Device Preparation policy)
+- [ ] **ASET-02**: Admin can configure Enrollment Time Grouping device group with correct Intune Provisioning Client ownership
+- [ ] **ASET-03**: Admin can diagnose APv2 setup mistakes using per-setting troubleshooting guidance
+- [ ] **ASET-04**: Admin can create custom RBAC role for APv2 administration
+- [ ] **ASET-05**: Admin can configure corporate identifiers for enrollment restriction scenarios
 
-### L1 Decision Trees
+### APv1 Admin Setup
 
-- [x] **L1DT-01**: Initial triage decision tree (Mermaid) with network reachability gate
-- [x] **L1DT-02**: ESP failure decision tree with device vs user phase branching
-- [x] **L1DT-03**: Profile assignment failure decision tree
-- [x] **L1DT-04**: TPM attestation failure decision tree for pre-provisioning
+- [ ] **ADMN-01**: Admin can follow step-by-step hardware hash upload process (OEM, CSV, PowerShell script)
+- [ ] **ADMN-02**: Admin can configure Autopilot deployment profiles (OOBE settings, deployment modes)
+- [ ] **ADMN-03**: Admin can configure ESP policies (app/policy tracking, timeout settings, error handling)
+- [ ] **ADMN-04**: Admin can create dynamic device groups for Autopilot targeting
+- [ ] **ADMN-05**: Admin can select and configure deployment modes (user-driven, pre-provisioning, self-deploying)
+- [ ] **ADMN-06**: Admin can identify configuration-caused failures from per-setting "what breaks" warnings
+- [ ] **ADMN-07**: Admin can set up Intune Connector for AD for hybrid join deployments
 
-### L1 Runbooks
+### Navigation & Integration
 
-- [x] **L1RB-01**: Device not in Autopilot runbook (scripted, no registry/PowerShell)
-- [x] **L1RB-02**: ESP stuck or failed runbook with explicit escalation criteria
-- [x] **L1RB-03**: Profile not assigned runbook
-- [x] **L1RB-04**: Network connectivity failure runbook
-- [x] **L1RB-05**: OOBE fails immediately runbook
+- [ ] **NAVG-01**: All audiences can navigate to APv2 content from updated index.md hub
+- [ ] **NAVG-02**: Error code master index includes APv2 failure scenarios section
+- [ ] **NAVG-03**: Glossary and common-issues.md updated with APv2 terminology and routing
+- [ ] **NAVG-04**: Cross-references between APv2 and APv1 content are bidirectional and accurate
 
-### L2 Runbooks
+## Future Requirements (v1.2)
 
-- [x] **L2RB-01**: Log collection guide (mdmdiagnosticstool.exe, Event Viewer paths, PowerShell tools)
-- [x] **L2RB-02**: ESP deep-dive (registry structure, device vs user phase, LOB+Win32 conflicts)
-- [x] **L2RB-03**: TPM attestation failure investigation (hardware-specific codes, firmware paths)
-- [x] **L2RB-04**: Hybrid join failure investigation (ODJ connector, domain replication, 0x80070774)
-- [x] **L2RB-05**: Policy conflict analysis (AppLocker CSP, DeviceLock, Security Baseline, GPO conflicts)
+### macOS Provisioning
 
-### Navigation
+- **MCOS-01**: Full macOS provisioning lifecycle documentation (Apple ADE/ABM via Intune)
+- **MCOS-02**: macOS L1/L2 tiered troubleshooting runbooks
+- **MCOS-03**: macOS admin setup guides
+- **MCOS-04**: Intune gap analysis for macOS with platform tool recommendations
 
-- [x] **NAV-01**: Master index with role-based entry points (L1 path / L2 path)
-- [x] **NAV-02**: L1 quick-reference card (top checks, escalation triggers)
-- [x] **NAV-03**: L2 quick-reference card (PowerShell commands, log paths, event IDs)
-- [x] **NAV-04**: Updated common-issues.md as navigation index linking to runbooks
+### Linux Provisioning
 
-## v2 Requirements
-
-Deferred to future release. Tracked but not in current roadmap.
-
-### Tooling Integration
-
-- **TOOL-01**: Interactive web-based decision trees (requires frontend milestone)
-- **TOOL-02**: Full PowerShell tool integration into runbooks with executable examples
-- **TOOL-03**: MkDocs site generation with search and tabbed content
-
-### Extended Coverage
-
-- **EXT-01**: Windows Autopilot Device Preparation (APv2) full documentation
-- **EXT-02**: Self-deploying mode detailed runbook (standalone)
-- **EXT-03**: Hardware-specific TPM compatibility matrix with firmware versions
+- **LINX-01**: Full Linux provisioning lifecycle documentation (Intune enrollment)
+- **LINX-02**: Linux L1/L2 tiered troubleshooting runbooks
+- **LINX-03**: Linux admin setup guides
+- **LINX-04**: Intune gap analysis for Linux with platform tool recommendations
 
 ## Out of Scope
 
-Explicitly excluded. Documented to prevent scope creep.
-
 | Feature | Reason |
 |---------|--------|
-| Environment-specific screenshots | Stale within weeks of Microsoft UI updates; use text descriptions with element names |
-| Automated remediation scripts in L1 guides | L1 running PowerShell against production devices without L2 oversight causes data loss and re-registration loops |
-| Complete replication of Microsoft Known Issues page | Creates maintenance burden and version drift; reference by URL instead |
-| Tenant-specific configuration docs | Violates generic constraint; teams customize locally via "Customization Notes" sections |
-| Real-time error dashboards | Frontend UI deferred to future milestone |
+| APv2 pre-provisioning | Experimental/unconfirmed in official Microsoft Learn docs; defer until GA |
+| Frontend UI implementation | Deferred to future tooling milestone |
+| Backend API integration | Deferred to future tooling milestone |
+| Automated remediation workflows | Deferred to future tooling milestone |
+| MkDocs site generation | Deferred to future milestone |
+| Interactive web decision trees | Deferred to future milestone |
+| Environment-specific configurations | Docs are generic; teams customize locally |
 
 ## Traceability
 
@@ -98,48 +81,37 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Complete |
-| FOUND-02 | Phase 1 | Complete |
-| FOUND-03 | Phase 1 | Complete |
-| FOUND-04 | Phase 1 | Complete |
-| FOUND-05 | Phase 1 | Complete |
-| FOUND-06 | Phase 1 | Complete |
-| LIFE-01 | Phase 2 | Complete |
-| LIFE-02 | Phase 2 | Complete |
-| LIFE-03 | Phase 2 | Complete |
-| LIFE-04 | Phase 2 | Complete |
-| LIFE-05 | Phase 2 | Complete |
-| LIFE-06 | Phase 2 | Complete |
-| ERRC-01 | Phase 3 | Complete |
-| ERRC-02 | Phase 3 | Complete |
-| ERRC-03 | Phase 3 | Complete |
-| ERRC-04 | Phase 3 | Complete |
-| ERRC-05 | Phase 3 | Complete |
-| ERRC-06 | Phase 3 | Complete |
-| L1DT-01 | Phase 4 | Complete |
-| L1DT-02 | Phase 4 | Complete |
-| L1DT-03 | Phase 4 | Complete |
-| L1DT-04 | Phase 4 | Complete |
-| L1RB-01 | Phase 5 | Complete |
-| L1RB-02 | Phase 5 | Complete |
-| L1RB-03 | Phase 5 | Complete |
-| L1RB-04 | Phase 5 | Complete |
-| L1RB-05 | Phase 5 | Complete |
-| L2RB-01 | Phase 6 | Complete |
-| L2RB-02 | Phase 6 | Complete |
-| L2RB-03 | Phase 6 | Complete |
-| L2RB-04 | Phase 6 | Complete |
-| L2RB-05 | Phase 6 | Complete |
-| NAV-01 | Phase 7 | Complete |
-| NAV-02 | Phase 7 | Complete |
-| NAV-03 | Phase 7 | Complete |
-| NAV-04 | Phase 7 | Complete |
+| LIFE-01 | Phase 11 | Complete |
+| LIFE-02 | Phase 11 | Complete |
+| LIFE-03 | Phase 11 | Complete |
+| LIFE-04 | Phase 11 | Complete |
+| TROU-01 | Phase 12 | Pending |
+| TROU-02 | Phase 13 | Pending |
+| TROU-03 | Phase 13 | Pending |
+| TROU-04 | Phase 14 | Pending |
+| TROU-05 | Phase 14 | Pending |
+| ASET-01 | Phase 15 | Pending |
+| ASET-02 | Phase 15 | Pending |
+| ASET-03 | Phase 15 | Pending |
+| ASET-04 | Phase 15 | Pending |
+| ASET-05 | Phase 15 | Pending |
+| ADMN-01 | Phase 16 | Pending |
+| ADMN-02 | Phase 16 | Pending |
+| ADMN-03 | Phase 16 | Pending |
+| ADMN-04 | Phase 16 | Pending |
+| ADMN-05 | Phase 16 | Pending |
+| ADMN-06 | Phase 16 | Pending |
+| ADMN-07 | Phase 16 | Pending |
+| NAVG-01 | Phase 17 | Pending |
+| NAVG-02 | Phase 12 | Pending |
+| NAVG-03 | Phase 17 | Pending |
+| NAVG-04 | Phase 17 | Pending |
 
 **Coverage:**
-- v1 requirements: 36 total
-- Mapped to phases: 36
+- v1.1 requirements: 25 total
+- Mapped to phases: 25
 - Unmapped: 0
 
 ---
-*Requirements defined: 2026-03-10*
-*Last updated: 2026-03-10 — traceability populated after roadmap creation*
+*Requirements defined: 2026-04-10*
+*Last updated: 2026-04-10 after roadmap creation — all 25 requirements mapped to phases 11-17*

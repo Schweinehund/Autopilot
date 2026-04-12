@@ -69,6 +69,8 @@ Escalate to Infrastructure/Network if:
 
 For endpoint-specific firewall rule requirements, see [Autopilot Network Endpoints](../reference/endpoints.md).
 
+**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
+
 ---
 
 [Back to Initial Triage](../decision-trees/00-initial-triage.md)
