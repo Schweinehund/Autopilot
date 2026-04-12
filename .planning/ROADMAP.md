@@ -85,7 +85,10 @@ Plans:
   1. L2 engineer can follow a step-by-step log collection guide for APv2 failures that explicitly states MDM Diagnostic Tool does not apply to APv2 and directs to BootstrapperAgent event log instead
   2. L2 engineer can look up BootstrapperAgent event IDs with confidence-attributed source citations (MEDIUM confidence — oofhours.com, Call4Cloud) for any entries lacking an official Microsoft reference
   3. L2 engineer can read the Intune APv2 deployment report, interpret each status value, and identify which status indicates a failure requiring investigation
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 14-01-PLAN.md — APv2 log collection guide, BootstrapperAgent event ID reference, and deployment report interpretation guide
+- [ ] 14-02-PLAN.md — L2 index APv2 section, forward reference updates (failure catalog + L1 runbooks), L2 template triage block
 
 ### Phase 15: APv2 Admin Setup Guides
 **Goal**: Intune admins can configure a complete APv2 deployment from scratch, including the Enrollment Time Grouping device group, Device Preparation policy, RBAC role, and corporate identifiers
@@ -141,7 +144,7 @@ Plans:
 | 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete    | 2026-04-11 |
 | 12. APv2 Failure Index | v1.1 | 1/1 | Complete    | 2026-04-12 |
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/2 | Planned | - |
-| 14. APv2 L2 Runbooks | v1.1 | 0/? | Not started | - |
+| 14. APv2 L2 Runbooks | v1.1 | 0/2 | Planned | - |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 17. Navigation & Hub Updates | v1.1 | 0/? | Not started | - |
