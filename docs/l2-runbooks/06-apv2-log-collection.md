@@ -63,7 +63,7 @@ The BootstrapperAgent event log is the primary APv2 investigation source. It cap
 First, build a standard filename prefix using the device serial number and date:
 
 ```powershell
-$serial = (Get-WmiObject -Class Win32_BIOS).SerialNumber
+$serial = (Get-CimInstance -ClassName Win32_BIOS).SerialNumber
 $date = Get-Date -Format "yyyy-MM-dd"
 $prefix = "$date`_$serial"
 ```

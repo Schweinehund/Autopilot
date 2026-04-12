@@ -18,8 +18,8 @@ applies_to: APv1 | APv2 | both
 audience: L2
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **Version gate:** [This guide applies to Windows Autopilot (classic). | This guide covers Autopilot Device Preparation (APv2).] _Remove inapplicable variant._
+> For [APv2 Device Preparation | APv1 (classic Autopilot)], see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 # [Issue Title]
 
