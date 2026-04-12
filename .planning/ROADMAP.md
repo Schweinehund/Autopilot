@@ -145,7 +145,7 @@ Plans:
 | 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete    | 2026-04-11 |
 | 12. APv2 Failure Index | v1.1 | 1/1 | Complete    | 2026-04-12 |
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/2 | Planned | - |
-| 14. APv2 L2 Runbooks | v1.1 | 3/3 | Complete   | 2026-04-12 |
+| 14. APv2 L2 Runbooks | v1.1 | 3/3 | Complete    | 2026-04-12 |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 17. Navigation & Hub Updates | v1.1 | 0/? | Not started | - |
