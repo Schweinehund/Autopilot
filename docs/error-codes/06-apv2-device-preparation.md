@@ -122,7 +122,7 @@ These scenarios occur during the app installation phases of the deployment. LOB 
 
 ---
 
-### Win32, Store, or Enterprise App Catalog app install failed
+### Win32, Store, or EAC app install failed
 
 **Symptom:** A Win32 app, Microsoft Store app, or Enterprise App Catalog (EAC) app shows a Failed or Skipped status in the deployment report Apps tab at Step 9.
 

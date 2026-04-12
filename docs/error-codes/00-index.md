@@ -71,7 +71,7 @@ Full catalog: [APv2 Device Preparation Failures](06-apv2-device-preparation.md)
 
 | Scenario | Symptom | Phase | Category |
 |----------|---------|-------|----------|
-| Deployment experience never launched | APv2 progress screen never appeared; standard OOBE or ESP showed instead | Steps 1-2 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#deployment-experience-never-launched) |
+| Deployment experience never launched | APv2 progress screen never appeared; standard OOBE or ESP showed instead | Steps 2-3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#deployment-experience-never-launched) |
 | APv1 profile took precedence | ESP screen appeared during OOBE; no APv2 progress screen | Step 3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#apv1-profile-took-precedence) |
 | Entra join failed | Deployment failed during Entra join; portal shows failed status | Step 3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#entra-join-failed) |
 | Intune enrollment failed | Device joined Entra but not visible in Intune | Step 3 | [APv2 Device Preparation Failures](06-apv2-device-preparation.md#intune-enrollment-failed) |
