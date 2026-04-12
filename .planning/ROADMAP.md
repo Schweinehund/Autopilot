@@ -30,7 +30,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - [x] **Phase 11: APv2 Lifecycle Foundation** — APv2 deployment flow, prerequisites, comparison with APv1, and automatic mode (completed 2026-04-11)
 - [x] **Phase 12: APv2 Failure Index** — Scenario-based failure catalog and updated master error code index with APv2 section (completed 2026-04-12)
 - [ ] **Phase 13: APv2 L1 Decision Trees & Runbooks** — Initial triage tree and scripted L1 runbooks for top APv2 failure scenarios
-- [ ] **Phase 14: APv2 L2 Runbooks** — BootstrapperAgent log collection and Intune deployment report analysis guides
+- [x] **Phase 14: APv2 L2 Runbooks** — BootstrapperAgent log collection and Intune deployment report analysis guides (completed 2026-04-12)
 - [ ] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy
 - [ ] **Phase 16: APv1 Admin Setup Guides** — Hardware hash upload, profile, ESP, dynamic groups, and deployment mode configuration
 - [ ] **Phase 17: Navigation & Hub Updates** — Updated index, error index, glossary, common-issues, and cross-references
@@ -85,10 +85,11 @@ Plans:
   1. L2 engineer can follow a step-by-step log collection guide for APv2 failures that explicitly states MDM Diagnostic Tool does not apply to APv2 and directs to BootstrapperAgent event log instead
   2. L2 engineer can look up BootstrapperAgent event IDs with confidence-attributed source citations (MEDIUM confidence — oofhours.com, Call4Cloud) for any entries lacking an official Microsoft reference
   3. L2 engineer can read the Intune APv2 deployment report, interpret each status value, and identify which status indicates a failure requiring investigation
-**Plans:** 2 plans
+**Plans:** 3 plans (2 complete + 1 gap closure)
 Plans:
-- [ ] 14-01-PLAN.md — APv2 log collection guide, BootstrapperAgent event ID reference, and deployment report interpretation guide
-- [ ] 14-02-PLAN.md — L2 index APv2 section, forward reference updates (failure catalog + L1 runbooks), L2 template triage block
+- [x] 14-01-PLAN.md — APv2 log collection guide, BootstrapperAgent event ID reference, and deployment report interpretation guide
+- [x] 14-02-PLAN.md — L2 index APv2 section, forward reference updates (failure catalog + L1 runbooks), L2 template triage block
+- [ ] 14-03-PLAN.md — Gap closure: forward reference placeholders, template version gate, stale metadata, deprecated cmdlet
 
 ### Phase 15: APv2 Admin Setup Guides
 **Goal**: Intune admins can configure a complete APv2 deployment from scratch, including the Enrollment Time Grouping device group, Device Preparation policy, RBAC role, and corporate identifiers
@@ -144,7 +145,7 @@ Plans:
 | 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete    | 2026-04-11 |
 | 12. APv2 Failure Index | v1.1 | 1/1 | Complete    | 2026-04-12 |
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/2 | Planned | - |
-| 14. APv2 L2 Runbooks | v1.1 | 0/2 | Planned | - |
+| 14. APv2 L2 Runbooks | v1.1 | 2/3 | Gap closure | - |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 17. Navigation & Hub Updates | v1.1 | 0/? | Not started | - |
