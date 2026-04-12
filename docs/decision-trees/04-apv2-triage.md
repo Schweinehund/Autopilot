@@ -11,7 +11,7 @@ audience: L1
 
 ## How to Use This Tree
 
-Start here when a user reports an issue with a device that was expected to go through [APv2 Device Preparation](../_glossary.md#autopilot-device-preparation). This tree begins after the user has authenticated during OOBE -- it covers portal-observable symptoms for APv2 Device Preparation deployments. No network reachability gate is included because successful OOBE authentication already verifies network connectivity. If the user cannot reach any website or sign in at all, use the [APv1 initial triage tree](00-initial-triage.md) network gates instead (those network checks apply regardless of deployment framework).
+Start here when a user reports an issue with a device that was expected to go through [APv2 Device Preparation](../_glossary.md#apv2). This tree begins after the user has authenticated during OOBE -- it covers portal-observable symptoms for APv2 Device Preparation deployments. No network reachability gate is included because successful OOBE authentication already verifies network connectivity. If the user cannot reach any website or sign in at all, use the [APv1 initial triage tree](00-initial-triage.md) network gates instead (those network checks apply regardless of deployment framework).
 
 Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree will route you to a specific L1 runbook or to an L2 escalation point with data collection instructions.
 

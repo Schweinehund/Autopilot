@@ -209,5 +209,5 @@ These scenarios occur after the user reaches the desktop -- the APv2 deployment 
 
 | Date | Change |
 |------|--------|
-| 2026-04-12 | Updated forward references to real runbook links | -- |
+| 2026-04-12 | Updated forward references to real runbook links |
 | 2026-04-11 | Initial creation -- 10 failure scenarios across 5 deployment phase sections |
