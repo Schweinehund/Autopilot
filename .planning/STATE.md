@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: APv2 Documentation & Admin Setup Guides
-status: verifying
-stopped_at: Phase 14 context gathered
-last_updated: "2026-04-12T17:31:21.901Z"
+status: executing
+stopped_at: Completed 14-03-PLAN.md
+last_updated: "2026-04-12T19:04:58.819Z"
 last_activity: 2026-04-12
 progress:
   total_phases: 7
-  completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
+  completed_phases: 4
+  total_plans: 8
+  completed_plans: 8
   percent: 100
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-10)
 
 **Core value:** IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering
-**Current focus:** Phase 13 complete — ready for Phase 14
+**Current focus:** Phase 14 — apv2-l2-runbooks
 
 ## Current Position
 
-Phase: 13
-Plan: Not started
-Status: Phase 13 complete — verified
+Phase: 14 (apv2-l2-runbooks) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
 Last activity: 2026-04-12
 
 ```
@@ -64,6 +64,7 @@ v1.1 Progress: [░░░░░░░░░░░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 11 P01 | 3min | 3 tasks | 3 files |
 | Phase 11 P02 | 5min | 3 tasks | 3 files |
+| Phase 14 P03 | 2min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -95,6 +96,7 @@ Recent decisions affecting current work:
 - [Phase 11]: ETG shown as distinct labeled node in Level 1 Mermaid diagram for visual prominence
 - [Phase 11]: Preview double coverage pattern: top banner + inline callouts ensures readers who jump via anchor links still see warnings
 - [Phase 11]: Decision flowchart uses 8 sequential questions covering all APv1-only requirements before recommending APv2 for new deployments
+- [Phase 14]: L2 template version gate uses bracketed variant choice with italic authoring instruction for APv1/APv2 selection
 
 ### Pending Todos
 
@@ -109,7 +111,7 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-04-12T17:31:21.892Z
-Stopped at: Phase 14 context gathered
-Resume file: .planning/phases/14-apv2-l2-runbooks/14-CONTEXT.md
+Last session: 2026-04-12T19:04:58.808Z
+Stopped at: Completed 14-03-PLAN.md
+Resume file: None
 Next action: Run `/gsd-discuss-phase 14`

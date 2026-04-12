@@ -19,8 +19,8 @@ Requirements for milestone v1.1: APv2 Documentation & Admin Setup Guides. Each m
 - [ ] **TROU-01**: Technician can look up APv2 failure scenarios by symptom (scenario-based index, not hex codes)
 - [ ] **TROU-02**: L1 agent can follow APv2 decision tree to identify failure type and route to correct runbook
 - [ ] **TROU-03**: L1 agent can follow scripted APv2 runbooks (zero PowerShell, portal-only actions)
-- [ ] **TROU-04**: L2 engineer can investigate APv2 failures using BootstrapperAgent logs and deployment reports
-- [ ] **TROU-05**: L2 engineer can interpret the Intune APv2 deployment report (status meanings, failure indicators)
+- [x] **TROU-04**: L2 engineer can investigate APv2 failures using BootstrapperAgent logs and deployment reports
+- [x] **TROU-05**: L2 engineer can interpret the Intune APv2 deployment report (status meanings, failure indicators)
 
 ### APv2 Admin Setup
 
@@ -88,8 +88,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TROU-01 | Phase 12 | Pending |
 | TROU-02 | Phase 13 | Pending |
 | TROU-03 | Phase 13 | Pending |
-| TROU-04 | Phase 14 | Pending |
-| TROU-05 | Phase 14 | Pending |
+| TROU-04 | Phase 14 | Complete |
+| TROU-05 | Phase 14 | Complete |
 | ASET-01 | Phase 15 | Pending |
 | ASET-02 | Phase 15 | Pending |
 | ASET-03 | Phase 15 | Pending |
