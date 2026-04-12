@@ -8,6 +8,7 @@
        Do NOT define paths or function signatures inline
      - Include actual PowerShell commands and registry paths in investigation steps
      - Document multiple resolution scenarios where applicable
+     - Include Triage block in every L2 guide — route L1 escalation data to skip initial collection
      Reviewer: L2 Desktop Lead (role, not person name)
 -->
 ---
@@ -21,6 +22,14 @@ audience: L2
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 # [Issue Title]
+
+## Triage
+
+**From L1 escalation ([NODE_ID](../decision-trees/TREE_FILE.md))?**
+L1 collected: [list data items from L1 runbook escalation criteria].
+Skip to Step 2.
+
+**Starting fresh?** Begin at Step 1.
 
 ## Context
 
