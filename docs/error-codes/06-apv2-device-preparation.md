@@ -37,7 +37,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Quick Check:** Intune admin center > Devices > Windows > Enrollment > Device preparation policies -- verify the policy exists, has a user group assigned, and has a device group selected. Confirm the signing-in user is a member of the assigned user group. Verify OS version meets minimum requirements (Windows 11 22H2 + KB5035942).
 
-**Runbook:** L1 runbook: APv2 deployment experience never launched (Phase 13)
+**Runbook:** [APv2 Deployment Not Launched](../l1-runbooks/06-apv2-deployment-not-launched.md)
 
 ---
 
@@ -51,7 +51,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Quick Check:** Intune admin center > Devices > Windows > Windows enrollment > Devices -- search by device serial number. If the device appears in this list, it is registered as an APv1 Autopilot device. Also check Autopilot Deployment Profiles for any profile assigned to this device or a group containing this device.
 
-**Runbook:** L1 runbook: APv1 profile took precedence over APv2 (Phase 13)
+**Runbook:** [APv1 Registration Conflict](../l1-runbooks/08-apv2-apv1-conflict.md)
 
 ---
 
@@ -67,7 +67,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Quick Check:** Intune admin center > Devices > Monitor > Windows Autopilot device preparation deployments -- select the deployment record and check the Phase column and error details. Entra admin center > Devices > Device settings -- verify "Users may join devices to Microsoft Entra" includes the signing-in user. Verify ETG group ownership includes Intune Provisioning Client.
 
-**Runbook:** L1 runbook: APv2 Entra join failed (Phase 13)
+**Runbook:** L2 investigation required -- Entra join failures require infrastructure-level diagnosis. See L2 runbooks (Phase 14).
 
 ---
 
@@ -82,7 +82,7 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Quick Check:** Entra admin center > Mobility (MDM and WIP) > Microsoft Intune -- check MDM user scope. If set to None, automatic MDM enrollment is disabled for all users. Microsoft 365 admin center > Active users > select the signing-in user > Licenses -- verify an Intune-capable license is assigned.
 
-**Runbook:** L1 runbook: APv2 Intune enrollment failed (Phase 13)
+**Runbook:** L2 investigation required -- Enrollment failures require license and MDM scope verification beyond L1 scope. See L2 runbooks (Phase 14).
 
 ---
 
@@ -118,7 +118,7 @@ These scenarios occur during the app installation phases of the deployment. LOB 
 
 **Quick Check:** Intune admin center > Devices > Monitor > Windows Autopilot device preparation deployments > select device > Apps tab. Review individual app status: Installed / In progress / Skipped / Failed. For Failed apps: check app installation context (System vs User) in the app assignment. For Skipped apps: Intune admin center > Apps > select the app > Assignments -- verify the app is assigned to the ETG device group.
 
-**Runbook:** L1 runbook: APv2 LOB or M365 app install failed (Phase 13)
+**Runbook:** [APv2 Apps Not Installed](../l1-runbooks/07-apv2-apps-not-installed.md)
 
 ---
 
@@ -135,7 +135,7 @@ These scenarios occur during the app installation phases of the deployment. LOB 
 
 **Quick Check:** Intune admin center > Devices > Monitor > Windows Autopilot device preparation deployments > select device > Apps tab -- review app status. For Skipped apps: first verify app is assigned to the ETG device group (Intune admin center > Apps > select app > Assignments). If ETG assignment is correct and status is still Skipped: Intune admin center > Endpoint security > App control for business -- check whether a Managed Installer policy is active for the tenant.
 
-**Runbook:** L1 runbook: APv2 Win32, Store, or EAC app install failed (Phase 13)
+**Runbook:** [APv2 Apps Not Installed](../l1-runbooks/07-apv2-apps-not-installed.md)
 
 ---
 
@@ -151,7 +151,7 @@ These scenarios occur during the app installation phases of the deployment. LOB 
 
 **Quick Check:** Intune admin center > Devices > Windows > Enrollment > Device preparation policies > select the policy -- check the "Minutes allowed before device preparation fails" setting. Review the total number of apps and scripts assigned and estimate expected install times. For Windows 365 deployments, verify the current service version post-February 2026 fix.
 
-**Runbook:** L1 runbook: APv2 deployment timed out (Phase 13)
+**Runbook:** [APv2 Deployment Timeout](../l1-runbooks/09-apv2-deployment-timeout.md)
 
 ---
 
@@ -209,4 +209,5 @@ These scenarios occur after the user reaches the desktop -- the APv2 deployment 
 
 | Date | Change |
 |------|--------|
+| 2026-04-12 | Updated forward references to real runbook links | -- |
 | 2026-04-11 | Initial creation -- 10 failure scenarios across 5 deployment phase sections |

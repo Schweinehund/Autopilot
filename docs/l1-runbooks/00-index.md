@@ -1,17 +1,17 @@
 ---
-last_verified: 2026-03-20
-review_by: 2026-06-18
-applies_to: APv1
+last_verified: 2026-04-12
+review_by: 2026-07-11
+applies_to: both
 audience: L1
 ---
 
-> **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **Version gate:** This index covers L1 runbooks for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
 
 # L1 Runbooks
 
 Scripted procedures for the five highest-volume [Autopilot](../_glossary.md#autopilot) failure scenarios. Each runbook provides step-by-step instructions for Service Desk agents with no registry access, no PowerShell execution, and no log file analysis required. Start with the [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) to identify which runbook applies, or select directly from the list below.
 
-## Runbooks
+## APv1 Runbooks
 
 | # | Runbook | When to Use |
 |---|---------|-------------|
@@ -21,9 +21,20 @@ Scripted procedures for the five highest-volume [Autopilot](../_glossary.md#auto
 | 4 | [Network Connectivity Failure](04-network-connectivity.md) | Device cannot reach required Autopilot endpoints |
 | 5 | [OOBE Fails Immediately](05-oobe-failure.md) | Device crashes, freezes, or fails before reaching ESP |
 
+## APv2 Runbooks
+
+Scripted procedures for APv2 Device Preparation failure scenarios. Each runbook provides portal-only instructions. Start with the [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) to identify which runbook applies.
+
+| # | Runbook | When to Use |
+|---|---------|-------------|
+| 6 | [Deployment Not Launched](06-apv2-deployment-not-launched.md) | Device completed OOBE but Device Preparation screen never appeared |
+| 7 | [Apps Not Installed](07-apv2-apps-not-installed.md) | Device Preparation completed but apps or scripts are missing or failed |
+| 8 | [APv1 Registration Conflict](08-apv2-apv1-conflict.md) | ESP appeared instead of Device Preparation screen |
+| 9 | [Deployment Timeout](09-apv2-deployment-timeout.md) | Device Preparation deployment timed out before completing |
+
 ## Scope
 
-These runbooks cover [Windows Autopilot](../_glossary.md#autopilot) classic (APv1) deployments only. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
+This index covers L1 runbooks for both APv1 (classic Autopilot) and APv2 (Device Preparation) deployments. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
 
 ## TPM Attestation Note
 
@@ -36,6 +47,7 @@ These runbooks cover [Windows Autopilot](../_glossary.md#autopilot) classic (APv
 - [Profile Assignment Decision Tree](../decision-trees/02-profile-assignment.md) — Profile assignment triage flowchart
 - [Master Error Code Index](../error-codes/00-index.md) — Look up any error code
 - [Autopilot Glossary](../_glossary.md) — Term definitions
+- [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) -- APv2 failure routing
 
 ---
 
@@ -43,4 +55,5 @@ These runbooks cover [Windows Autopilot](../_glossary.md#autopilot) classic (APv
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-12 | Added APv2 runbook section | -- |
 | 2026-03-20 | Initial version | — |
