@@ -24,6 +24,8 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 **v1.0 shipped 2026-04-10.** 10 phases, 26 plans, 36 requirements — all verified.
 **Phase 11 complete 2026-04-11.** APv2 lifecycle foundation — overview, prerequisites, deployment flow, automatic mode, comparison extension, admin template.
 **Phase 12 complete 2026-04-12.** APv2 failure index — 10-scenario failure catalog organized by symptom, master error index updated with APv2 section.
+**Phase 13 complete 2026-04-12.** APv2 L1 decision trees and runbooks — triage tree with APE1/APE2/APE3 escalation nodes, 4 scripted L1 runbooks.
+**Phase 14 complete 2026-04-12.** APv2 L2 runbooks — log collection guide, BootstrapperAgent event ID reference, deployment report interpretation guide, all forward references wired.
 
 Delivered:
 - 40+ markdown documentation files in `docs/`
@@ -60,7 +62,7 @@ Delivered:
 
 - [x] APv2 (Device Preparation) lifecycle documentation — Phase 11 (overview, prerequisites, deployment flow, automatic mode, comparison)
 - [x] APv2 failure catalog and error index integration — Phase 12 (10 scenarios, master index APv2 section)
-- [ ] APv2 decision trees and L1/L2 runbooks
+- [x] APv2 decision trees and L1/L2 runbooks — Phase 13 (L1 triage tree + 4 runbooks), Phase 14 (3 L2 investigation guides)
 - [ ] Admin setup guides for APv1 configuration
 - [ ] Admin setup guides for APv2 configuration
 - [ ] Setup troubleshooting for configuration-caused failures
@@ -117,4 +119,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-12 after Phase 12 complete*
+*Last updated: 2026-04-12 after Phase 14 complete*
