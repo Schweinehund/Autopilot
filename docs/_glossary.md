@@ -2,7 +2,8 @@
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
-audience: both
+audience: all
+platform: all
 ---
 
 > **Framework coverage:** This glossary covers terminology for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).

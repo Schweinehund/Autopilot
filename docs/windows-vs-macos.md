@@ -7,7 +7,7 @@ platform: all
 ---
 
 > **Platform coverage:** This page maps Windows Autopilot concepts to macOS ADE equivalents.
-> It covers terminology and enrollment mechanisms, not Intune feature parity (see [Capability Matrix](TBD - Phase 23)).
+> It covers terminology and enrollment mechanisms, not Intune feature parity (see Capability Matrix -- Phase 23).
 
 # Windows Autopilot vs macOS ADE: Concept Comparison
 
@@ -64,7 +64,7 @@ Return to [Documentation Hub](index.md) to find your platform and role.
 - [Autopilot Glossary](_glossary.md) — Windows Autopilot terminology
 - [macOS Provisioning Glossary](_glossary-macos.md) — macOS ADE terminology
 - [APv1 vs APv2](apv1-vs-apv2.md) — Windows framework selection
-- [Capability Matrix](TBD - Phase 23) — Intune feature parity comparison
+- Capability Matrix (TBD - Phase 23) — Intune feature parity comparison
 
 ---
 
