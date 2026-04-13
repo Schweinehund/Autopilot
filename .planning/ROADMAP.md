@@ -133,7 +133,11 @@ Plans:
   2. Glossary (_glossary.md) contains APv2-specific terms (Enrollment Time Grouping, BootstrapperAgent, Device Preparation policy) with bidirectional cross-references to APv1 equivalents where they exist
   3. common-issues.md routes APv2 failure scenarios to APv2 runbooks and APv1 failure scenarios to APv1 runbooks without cross-contamination
   4. Every APv2 document that references an APv1 concept links back to the APv1 document, and every APv1 document that has an APv2 equivalent references it — bidirectional cross-referencing verified
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 17-01-PLAN.md — Hub file restructures (index.md, common-issues.md, error-codes index) with APv2 sections and Admin audience
+- [ ] 17-02-PLAN.md — Glossary APv2 terms with bidirectional cross-references, plus APv1 file back-link restoration
+- [ ] 17-03-PLAN.md — Quick-reference card APv2 sections for L1 and L2
 
 ## Progress
 
@@ -155,4 +159,4 @@ Plans:
 | 14. APv2 L2 Runbooks | v1.1 | 3/3 | Complete    | 2026-04-12 |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/2 | Planned | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 3/3 | Complete    | 2026-04-13 |
-| 17. Navigation & Hub Updates | v1.1 | 0/? | Not started | - |
+| 17. Navigation & Hub Updates | v1.1 | 0/3 | Planned | - |
