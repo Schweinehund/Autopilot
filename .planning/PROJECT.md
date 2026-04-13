@@ -2,28 +2,40 @@
 
 ## What This Is
 
-A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot deployments. Combines PowerShell modules for local diagnostics, a Python FastAPI backend for orchestration, a React frontend for visualization, and — critically — tiered operational documentation that IT Service Desk (L1) and Desktop Engineering (L2) teams can use to troubleshoot Autopilot failures from device registration through to user desktop.
+A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot deployments. Combines PowerShell modules for local diagnostics, a Python FastAPI backend for orchestration, a React frontend for visualization, and — critically — tiered operational documentation that IT Service Desk (L1), Desktop Engineering (L2), and Intune Admin teams can use to troubleshoot and configure Autopilot deployments covering both APv1 and APv2 frameworks.
 
 ## Core Value
 
-IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering — covering both pre-provisioning (white glove) and user-driven modes.
+IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering — covering both APv1 (pre-provisioning, user-driven, self-deploying) and APv2 (Device Preparation) modes. Admins can configure deployments end-to-end using step-by-step setup guides with embedded misconfiguration warnings.
 
-## Current Milestone: v1.1 APv2 Documentation & Admin Setup Guides
+## Current State
 
-**All v1.1 phases complete (2026-04-13).** Phases 11-17 delivered APv2 lifecycle, failure index, L1/L2 decision trees and runbooks, APv2 and APv1 admin setup guides, and navigation updates. Phase 18 closed integration gaps (stale cross-references). Phase 19 completed tracking hygiene — all ROADMAP checkboxes reconciled and every phase has a formal VERIFICATION.md artifact.
+**v1.1 shipped 2026-04-13.** Both documentation milestones complete. 70 markdown files, 8,023 lines in `docs/`. No active milestone — planning next milestone.
 
-## Previous Milestone: v1.0 Autopilot Documentation & Troubleshooting Guides
+### What's been built
+- Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
+- APv2 lifecycle, failure catalog, L1/L2 decision trees and runbooks (v1.1)
+- APv1 and APv2 admin setup guides with per-setting "what breaks" callouts (v1.1)
+- Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1)
+- Error code lookup tables with framework tagging (APv1/APv2) (v1.0 + v1.1)
 
-**Goal:** Deliver end-to-end documentation covering the full Autopilot lifecycle with integrated troubleshooting, tiered for L1 Service Desk and L2 Desktop teams.
+<details>
+<summary>Previous Milestone: v1.1 APv2 Documentation & Admin Setup Guides</summary>
 
-**Target features:**
-- Full lifecycle documentation (hardware hash import → profile assignment → OOBE → ESP → working desktop)
-- Pre-provisioning (white glove/technician) flow documentation and troubleshooting
-- User-driven flow documentation and troubleshooting
-- Error code lookup tables (searchable: error → cause → fix)
-- Scenario runbooks for complex issues (TPM Attestation, ESP failures, network, hybrid join)
-- L1 decision trees and flowcharts for Service Desk
-- L2 deep-dive technical guides for Desktop teams (registry, logs, PowerShell)
+**Shipped:** 2026-04-13 | **Phases:** 11-19 | **Plans:** 18
+
+Delivered APv2 lifecycle documentation, scenario-based failure catalog, L1/L2 decision trees and runbooks, complete APv2 and APv1 admin setup guides, navigation hub updates with APv2 terminology, and cross-reference cleanup.
+
+</details>
+
+<details>
+<summary>Previous Milestone: v1.0 Autopilot Documentation & Troubleshooting Guides</summary>
+
+**Shipped:** 2026-04-10 | **Phases:** 1-10 | **Plans:** 24
+
+Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 decision trees and runbooks, L2 technical guides, and navigation indexes.
+
+</details>
 
 ## Requirements
 
@@ -35,20 +47,28 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 - ✓ PowerShell remediation module (AutopilotRemediation.psm1) — scaffolded
 - ✓ FastAPI backend skeleton — scaffolded
 - ✓ React frontend scaffold — scaffolded
+- ✓ End-to-end Autopilot lifecycle documentation — v1.0
+- ✓ Pre-provisioning flow troubleshooting guides — v1.0
+- ✓ User-driven flow troubleshooting guides — v1.0
+- ✓ Error code lookup tables — v1.0
+- ✓ Scenario runbooks (TPM, ESP, network, hybrid join, profile assignment) — v1.0
+- ✓ L1 Service Desk decision trees — v1.0
+- ✓ L1 scenario runbooks (top 5 failures) — v1.0
+- ✓ L2 Desktop team technical guides — v1.0
+- ✓ Navigation indexes and quick-reference cards — v1.0
+- ✓ APv2 lifecycle and prerequisites documentation — v1.1
+- ✓ APv2 failure catalog (scenario-based, symptom-searchable) — v1.1
+- ✓ APv2 L1 triage decision tree and portal-only runbooks — v1.1
+- ✓ APv2 L2 log collection and deployment report interpretation — v1.1
+- ✓ APv2 admin setup guides (ETG, Device Preparation, RBAC, corporate identifiers) — v1.1
+- ✓ APv1 admin setup guides (hardware hash, profiles, ESP, groups, deployment modes) — v1.1
+- ✓ Bidirectional APv1/APv2 cross-referencing and glossary — v1.1
 
 ### Active
 
-<!-- Current scope. Building toward these. -->
+<!-- Next milestone scope — to be defined via /gsd-new-milestone -->
 
-- [x] End-to-end Autopilot lifecycle documentation — Validated in Phase 02: lifecycle
-- [x] Pre-provisioning flow troubleshooting guides — Validated in Phase 02/05/06
-- [x] User-driven flow troubleshooting guides — Validated in Phase 02/05/06
-- [x] Error code lookup tables — Validated in Phase 03: error-codes
-- [x] Scenario runbooks (TPM, ESP, network, hybrid join, profile assignment) — Validated in Phase 05/06
-- [x] L1 Service Desk decision trees — Validated in Phase 04: l1-decision-trees
-- [x] L1 scenario runbooks (top 5 failures) — Validated in Phase 05: l1-runbooks
-- [x] L2 Desktop team technical guides — Validated in Phase 06: l2-runbooks
-- [x] Navigation indexes and quick-reference cards — Validated in Phase 07: navigation
+(None — next milestone not yet planned)
 
 ### Out of Scope
 
@@ -61,16 +81,15 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 ## Context
 
-- Project has existing code scaffolding across all three tiers (PowerShell, Python, React)
-- Documentation is the immediate priority because IT teams need it now
-- Both pre-provisioning (technician/white glove) and user-driven deployment modes in use
-- Docs will live in `docs/` as markdown, structured for easy export to SharePoint/Confluence
-- Common pain points: TPM Attestation failures, ESP timeouts, network connectivity, hybrid join issues
+- 70 markdown files in `docs/` covering both APv1 and APv2 frameworks
+- Three audiences served: L1 Service Desk (scripted), L2 Desktop Engineering (technical), Intune Admins (configuration)
+- Code scaffolding exists across all three tiers (PowerShell, Python, React) but is not yet integrated
+- Docs structured for easy export to SharePoint/Confluence
 
 ## Constraints
 
 - **Format**: Markdown files suitable for git versioning and wiki export
-- **Audience**: Must be usable by L1 (scripted, decision-tree) and L2 (technical, investigative) separately
+- **Audience**: Must be usable by L1 (scripted, decision-tree), L2 (technical, investigative), and Admins (step-by-step) separately
 - **Coverage**: Generic Microsoft Autopilot guidance — not tied to a specific tenant or environment
 - **Accuracy**: Must reflect current Windows Autopilot behavior (Windows 10/11, Intune)
 
@@ -78,10 +97,13 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | Delivered — all 7 phases complete |
-| Tiered doc structure (L1/L2) | Different skill levels need different formats | Delivered — role-based navigation via docs/index.md |
+| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | Delivered — v1.0 complete |
+| Tiered doc structure (L1/L2/Admin) | Different skill levels need different formats | Delivered — role-based navigation via docs/index.md |
 | Generic over environment-specific | Broader applicability, teams add local details | Delivered — no tenant-specific content |
-| Markdown in docs/ | Version-controlled, exportable to any wiki platform | Delivered — 35+ markdown files in docs/ |
+| Markdown in docs/ | Version-controlled, exportable to any wiki platform | Delivered — 70 markdown files in docs/ |
+| Scenario-based APv2 failure catalog | APv2 has no hex error codes; symptom-based lookup is more useful | Delivered — 10 scenarios in v1.1 |
+| Per-setting "what breaks" callouts | Admins need to understand misconfiguration consequences at config time | Delivered — embedded in all admin setup guides |
+| Confidence-attributed citations | Community sources (oofhours, Call4Cloud) used where Microsoft docs lack coverage | Delivered — MEDIUM confidence clearly labeled |
 
 ---
-*Last updated: 2026-04-13 after Phase 19 (Tracking & Verification Hygiene) completion — v1.1 milestone complete*
+*Last updated: 2026-04-13 after v1.1 milestone completion*
