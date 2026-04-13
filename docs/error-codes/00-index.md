@@ -62,7 +62,7 @@ Some ESP failures show "Something went wrong" without a specific error code. See
 
 ---
 
-> **APv2 Note:** For APv2 (Device Preparation) error coverage, check the APv2 Notes section at the bottom of each category page. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **APv2 Note:** For APv2 (Device Preparation) error coverage, see the [APv2 Device Preparation Failure Catalog](06-apv2-device-preparation.md). APv2 failures are symptom-based rather than hex-code-based. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ---
 
