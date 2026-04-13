@@ -10,9 +10,9 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 ## Current Milestone: v1.1 APv2 Documentation & Admin Setup Guides
 
-**Phase 17 complete (2026-04-13):** Navigation & Hub Updates — All hub files (index.md, common-issues.md, error-codes index), glossary, runbook indexes, decision tree, lifecycle overview, and quick-ref cards updated with APv2 sections, framework labels, and bidirectional cross-references. Milestone v1.1 complete.
+**Phase 18 complete (2026-04-13):** Stale Cross-Reference Cleanup — Fixed all broken/stale links across APv2 admin, lifecycle, error-codes, and index files. 10 edits across 9 files; zero stale placeholders remain.
 
-**All v1.1 phases complete.** Seven phases delivered APv2 lifecycle, failure index, L1/L2 decision trees and runbooks, APv2 and APv1 admin setup guides, and navigation updates.
+**All v1.1 content phases complete.** Phases 11-17 delivered APv2 lifecycle, failure index, L1/L2 decision trees and runbooks, APv2 and APv1 admin setup guides, and navigation updates. Phase 18 closed integration gaps (stale cross-references). Phase 19 (tracking & verification hygiene) remains.
 
 ## Previous Milestone: v1.0 Autopilot Documentation & Troubleshooting Guides
 
