@@ -8,6 +8,7 @@
      - Use imperative voice for steps ("Navigate to...", "Select...", "Enter...")
      - Include full Intune portal navigation paths (e.g., Intune admin center > Devices > ...)
      - Link to relevant troubleshooting runbooks from "what breaks" callouts
+     - Set platform to Windows, macOS, or all
      Reviewer: Intune Admin Lead (role, not person name)
 -->
 ---
@@ -15,6 +16,7 @@ last_verified: YYYY-MM-DD
 review_by: YYYY-MM-DD
 applies_to: APv1 | APv2 | both
 audience: admin
+platform: Windows | macOS | all
 ---
 
 > **Version gate:** [This guide covers Windows Autopilot (classic) | This guide covers Windows Autopilot Device Preparation (APv2)].
