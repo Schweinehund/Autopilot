@@ -32,7 +32,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - [ ] **Phase 13: APv2 L1 Decision Trees & Runbooks** — Initial triage tree and scripted L1 runbooks for top APv2 failure scenarios
 - [x] **Phase 14: APv2 L2 Runbooks** — BootstrapperAgent log collection and Intune deployment report analysis guides (completed 2026-04-12)
 - [ ] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy
-- [ ] **Phase 16: APv1 Admin Setup Guides** — Hardware hash upload, profile, ESP, dynamic groups, and deployment mode configuration
+- [x] **Phase 16: APv1 Admin Setup Guides** — Hardware hash upload, profile, ESP, dynamic groups, and deployment mode configuration (completed 2026-04-13)
 - [ ] **Phase 17: Navigation & Hub Updates** — Updated index, error index, glossary, common-issues, and cross-references
 
 ## Phase Details
@@ -118,11 +118,11 @@ Plans:
   5. Admin can select and configure any of the three APv1 deployment modes (user-driven, pre-provisioning, self-deploying) with mode-specific prerequisites and known limitations documented
   6. Admin can look up any configuration mistake from a "configuration-caused failures" reverse-lookup table that links to the relevant v1.0 troubleshooting runbook
   7. Admin can set up the Intune Connector for AD for hybrid join deployments with connector version gate and current log path documented
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 Plans:
-- [ ] 16-01-PLAN.md — Overview index, hardware hash upload, deployment profile, and ESP policy guides
-- [ ] 16-02-PLAN.md — Dynamic groups, deployment modes overview, and all three mode-specific configuration guides
-- [ ] 16-03-PLAN.md — Intune Connector for AD guide and consolidated configuration-caused failures reverse-lookup table
+- [x] 16-01-PLAN.md — Overview index, hardware hash upload, deployment profile, and ESP policy guides
+- [x] 16-02-PLAN.md — Dynamic groups, deployment modes overview, and all three mode-specific configuration guides
+- [x] 16-03-PLAN.md — Intune Connector for AD guide and consolidated configuration-caused failures reverse-lookup table
 
 ### Phase 17: Navigation & Hub Updates
 **Goal**: All audiences can discover and navigate the full v1.1 content set from the documentation hub, with APv2 terminology integrated into shared reference files
@@ -154,5 +154,5 @@ Plans:
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/2 | Planned | - |
 | 14. APv2 L2 Runbooks | v1.1 | 3/3 | Complete    | 2026-04-12 |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/2 | Planned | - |
-| 16. APv1 Admin Setup Guides | v1.1 | 0/3 | Planned | - |
+| 16. APv1 Admin Setup Guides | v1.1 | 3/3 | Complete    | 2026-04-13 |
 | 17. Navigation & Hub Updates | v1.1 | 0/? | Not started | - |
