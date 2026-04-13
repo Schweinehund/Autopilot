@@ -1,16 +1,20 @@
 ---
-last_verified: 2026-03-23
-review_by: 2026-06-21
-applies_to: APv1
+last_verified: 2026-04-13
+review_by: 2026-07-12
+applies_to: both
 audience: all
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](apv1-vs-apv2.md).
+> **Framework coverage:** This guide covers both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2) issues.
+> APv1 and APv2 sections are labeled separately. Not sure which applies? See [APv1 vs APv2](apv1-vs-apv2.md).
 
 # Common Windows Autopilot Issues
 
+> **Not sure which framework?** If you don't know whether the device is using APv1 (classic) or APv2 (Device Preparation), see [APv1 vs APv2](apv1-vs-apv2.md) to identify the framework before selecting a runbook.
+
 Symptom-based index routing to the appropriate L1 and L2 runbooks.
+
+**Framework:** APv1 (classic)
 
 ## Device Registration Issues
 
@@ -67,8 +71,43 @@ Old device name shows in Intune or Azure AD after Autopilot rename.
 
 > **Tip:** This is typically a sync delay — allow up to 24 hours for the name to propagate through Azure AD Connect and Intune. If the naming template in the Autopilot profile is correct and 24 hours have passed, force a device sync from the Intune portal.
 
+---
+
+## APv2 Failure Scenarios
+
+**Framework:** APv2 (Device Preparation)
+
+### Deployment Experience Never Launched
+
+Device completed OOBE and reached the desktop, but the APv2 Device Preparation deployment experience never appeared.
+
+- **L1:** [Deployment Not Launched](l1-runbooks/06-apv2-deployment-not-launched.md)
+- **L2:** [APv2 Log Collection](l2-runbooks/06-apv2-log-collection.md) + [APv2 Deployment Report](l2-runbooks/08-apv2-deployment-report.md)
+
+### Apps or Scripts Not Installed
+
+Device Preparation deployment completed but required apps or scripts are missing, failed to install, or were skipped.
+
+- **L1:** [Apps Not Installed](l1-runbooks/07-apv2-apps-not-installed.md)
+- **L2:** [APv2 Log Collection](l2-runbooks/06-apv2-log-collection.md) + [APv2 Event ID Reference](l2-runbooks/07-apv2-event-ids.md)
+
+### ESP Appeared Instead of Device Preparation
+
+The Enrollment Status Page (ESP) appeared during OOBE instead of the APv2 Device Preparation experience, indicating an APv1 registration conflict.
+
+- **L1:** [APv1 Registration Conflict](l1-runbooks/08-apv2-apv1-conflict.md)
+- **L2:** [APv2 Log Collection](l2-runbooks/06-apv2-log-collection.md) + [APv2 Deployment Report](l2-runbooks/08-apv2-deployment-report.md)
+
+### Deployment Timed Out
+
+Device Preparation deployment started but timed out before all apps and scripts completed installation.
+
+- **L1:** [Deployment Timeout](l1-runbooks/09-apv2-deployment-timeout.md)
+- **L2:** [APv2 Log Collection](l2-runbooks/06-apv2-log-collection.md) + [APv2 Event ID Reference](l2-runbooks/07-apv2-event-ids.md)
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-13 | Added APv2 Failure Scenarios section with framework labels | — |
 | 2026-03-23 | Transformed from inline troubleshooting guide to navigation index | — |
