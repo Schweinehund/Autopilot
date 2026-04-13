@@ -1,378 +1,526 @@
 # Architecture Research
 
-**Domain:** Documentation suite — Windows Autopilot troubleshooting and lifecycle guides
-**Researched:** 2026-03-10
-**Confidence:** HIGH (existing project structure is concrete, patterns are well-established for technical documentation)
+**Domain:** Cross-platform provisioning documentation — macOS ABM/ADE integration + Windows Autopilot operational gap closure
+**Researched:** 2026-04-13
+**Confidence:** HIGH (existing architecture is well-established; macOS structure follows proven patterns; Microsoft Learn docs confirm feature scope)
 
-## Standard Architecture
+## Architectural Decision: Parallel Platform Directories, Not Integrated
 
-### System Overview
+### The Core Question
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        docs/ (Content Layer)                         │
-├───────────────────┬─────────────────────┬───────────────────────────┤
-│   lifecycle/      │   troubleshooting/  │   reference/              │
-│  ┌─────────────┐  │  ┌───────────────┐  │  ┌─────────────────────┐  │
-│  │ overview.md │  │  │ l1-runbooks/  │  │  │ error-codes.md      │  │
-│  │ hardware-   │  │  │ l2-runbooks/  │  │  │ powershell-ref.md   │  │
-│  │   hash.md   │  │  │ decision-     │  │  │ registry-paths.md   │  │
-│  │ profile-    │  │  │   trees/      │  │  │ endpoints.md        │  │
-│  │   assign.md │  │  └───────────────┘  │  │ quick-ref/          │  │
-│  │ oobe.md     │  │                     │  └─────────────────────┘  │
-│  │ esp.md      │  │                     │                           │
-│  └─────────────┘  │                     │                           │
-├───────────────────┴─────────────────────┴───────────────────────────┤
-│                     Shared Foundation                                │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐   │
-│  │  _glossary.md    │  │  _templates/     │  │  _index.md       │   │
-│  │  (shared terms)  │  │  (doc standards) │  │  (entry point)   │   │
-│  └──────────────────┘  └──────────────────┘  └──────────────────┘   │
-└─────────────────────────────────────────────────────────────────────┘
-         │                       │                      │
-         ▼                       ▼                      ▼
-  src/powershell/         src/backend/           src/frontend/
-  (linked by function      (linked by             (future: renders
-   name in docs)            API endpoint)          docs inline)
-```
+Should macOS content be woven into the existing Windows directories (e.g., a macOS section inside `lifecycle/`) or structured as parallel peer directories (e.g., `lifecycle-macos/` alongside `lifecycle/` and `lifecycle-apv2/`)?
 
-### Component Responsibilities
+**Recommendation: Parallel platform directories.** The existing architecture already uses this pattern — `lifecycle/` and `lifecycle-apv2/` are siblings, not nested. macOS follows the same convention. The provisioning workflows are fundamentally different technologies (Windows Autopilot vs. Apple ADE/ABM through Intune), sharing almost no diagnostic steps, registry paths, or tooling. Integrated files would violate the established anti-pattern of audience mixing, except applied to platforms instead of roles.
 
-| Component | Responsibility | Integration Point |
-|-----------|----------------|-------------------|
-| `docs/lifecycle/` | End-to-end Autopilot flow narrative — what happens, in order | Links to troubleshooting/ at each failure point |
-| `docs/troubleshooting/l1-runbooks/` | Scripted steps for Service Desk — no deep technical knowledge required | Links to decision-trees/ for branching logic |
-| `docs/troubleshooting/l2-runbooks/` | Deep technical investigation — registry, logs, PowerShell | Links to reference/ for function signatures |
-| `docs/troubleshooting/decision-trees/` | Mermaid flowcharts — structured L1 triage | Embedded in L1 runbooks; standalone per scenario |
-| `docs/reference/error-codes.md` | Searchable error → cause → fix table | Linked from every runbook that may surface the error |
-| `docs/reference/powershell-ref.md` | Function signatures, parameters, examples | Linked from L2 runbooks and lifecycle docs |
-| `docs/reference/quick-ref/` | One-page cheat sheets for common actions | Standalone; designed for print/pinning |
-| `docs/common-issues.md` | **EXISTING** — currently ungrouped scenarios | Migrate content into the new structure; file becomes an index |
-| `docs/architecture.md` | **EXISTING** — system architecture | Repurpose as L2 reference; keep file, update links |
+### Why Not Integrated
 
-## Recommended Project Structure
+1. **Different tooling ecosystems.** Windows troubleshooting uses PowerShell, registry inspection, Event Viewer, and MDMDiagnosticsTool. macOS troubleshooting uses Terminal, syslog, `/Library/Logs/Microsoft/Intune/`, and the Company Portal diagnostic export. Zero overlap in commands.
+
+2. **Different enrollment models.** Windows Autopilot uses hardware hash pre-staging (APv1) or ETG (APv2). macOS uses Apple Business Manager device assignment with enrollment program tokens and Setup Assistant. The admin setup sequences share no portal paths.
+
+3. **Different failure modes.** Windows failures surface as ESP timeouts, TPM attestation errors, and hybrid join failures. macOS failures surface as expired Apple MDM push certificates, profile installation failures, keychain errors, and Setup Assistant completion issues. No shared error codes.
+
+4. **Proven pattern.** The APv1/APv2 split already validates that separate-but-linked directories work for this doc suite. The navigation hub (`index.md`) handles routing. Readers self-select by platform before diving in.
+
+## System Overview: v1.2 Target State
 
 ```
 docs/
-├── _index.md                          # Master entry point — "start here"
-├── _glossary.md                       # Shared terminology (OOBE, ESP, TPM, ZTD, etc.)
+├── index.md                          # Cross-platform hub — Windows + macOS entry points
+├── _glossary.md                      # Expanded: macOS terms (ABM, ADE, Setup Assistant, APNS)
+├── _templates/
+│   ├── admin-template.md             # Existing — Windows admin guides
+│   ├── admin-template-macos.md       # NEW — macOS admin guides (adapted)
+│   ├── l1-template.md                # Existing — reusable for macOS L1
+│   └── l2-template.md                # Existing — adapted version for macOS L2
 │
-├── lifecycle/                         # What Autopilot does, step by step
-│   ├── 00-overview.md                 # Full flow diagram + narrative
-│   ├── 01-hardware-hash-import.md     # Hash collection, OEM upload, CSV upload
-│   ├── 02-profile-assignment.md       # Intune groups, profile sync, timing
-│   ├── 03-oobe-flow.md                # User-driven vs pre-provisioning branching
-│   ├── 04-esp-phases.md               # Device prep, device setup, account setup
-│   └── 05-post-enrollment.md          # Rename, policy application, state verification
+├── apv1-vs-apv2.md                   # Existing — unchanged
+├── platform-comparison.md            # NEW — "Windows Autopilot vs macOS ADE: which docs?"
 │
-├── troubleshooting/
-│   ├── l1-runbooks/                   # Service Desk — scripted, low-skill required
-│   │   ├── device-not-in-autopilot.md
-│   │   ├── esp-stuck-or-failed.md
-│   │   ├── profile-not-assigned.md
-│   │   ├── network-connectivity.md
-│   │   └── oobe-fails-immediately.md
-│   │
-│   ├── l2-runbooks/                   # Desktop Engineering — technical, investigative
-│   │   ├── tpm-attestation-failure.md
-│   │   ├── hybrid-join-failure.md
-│   │   ├── policy-conflict-analysis.md
-│   │   ├── esp-deep-dive.md           # Log paths, event IDs, WMI queries
-│   │   └── log-collection-guide.md    # Get-AutopilotLogs, MDMDiagnosticsTool
-│   │
-│   └── decision-trees/                # Mermaid diagrams — structured triage
-│       ├── l1-initial-triage.md       # First call: is it registered? is it connectivity?
-│       ├── esp-failure-tree.md        # ESP stuck → app? policy? network? timeout?
-│       ├── profile-assignment-tree.md # No profile → group? sync? tenant? profile config?
-│       └── tpm-attestation-tree.md    # TPM fail → BIOS? firmware? ownership? Secure Boot?
+│ ── WINDOWS CONTENT (existing + operational gap fills) ──
+│
+├── lifecycle/                         # Existing — APv1 lifecycle
+├── lifecycle-apv2/                    # Existing — APv2 lifecycle
+├── admin-setup-apv1/                  # Existing — APv1 admin setup
+├── admin-setup-apv2/                  # Existing — APv2 admin setup
+├── decision-trees/                    # Existing — L1 triage (APv1 + APv2)
+├── l1-runbooks/                       # Existing — L1 runbooks (APv1 + APv2)
+├── l2-runbooks/                       # Existing — L2 investigation (APv1 + APv2)
+├── error-codes/                       # Existing — error code lookup
+├── reference/                         # Existing — PowerShell, registry, endpoints
+│
+│ ── WINDOWS OPERATIONAL GAP CONTENT (new, in existing dirs) ──
+│
+├── lifecycle/
+│   ├── 06-autopilot-reset.md          # NEW — local reset, remote reset, re-provisioning
+│   ├── 07-device-retirement.md        # NEW — retirement, wipe, tenant migration
+│   └── 08-infrastructure.md           # NEW — network rules, Entra prereqs, licensing matrix
+│
+├── admin-setup-apv1/
+│   ├── 11-app-deployment-esp.md       # NEW — Win32 packaging, install order, timeout tuning
+│   ├── 12-security-compliance.md      # NEW — Conditional Access, baselines, compliance timing
+│   └── 13-migration-scenarios.md      # NEW — APv1->APv2, imaging->Autopilot, GPO->Intune
+│
+├── l2-runbooks/
+│   └── 09-monitoring-operations.md    # NEW — deployment reporting, drift detection, batch workflow
+│
+│ ── macOS CONTENT (all new) ──
+│
+├── lifecycle-macos/                   # NEW — macOS ADE lifecycle
+│   ├── 00-overview.md                 # macOS provisioning overview + flow diagram
+│   ├── 01-abm-device-assignment.md    # ABM setup, device assignment to MDM server
+│   ├── 02-enrollment-profile.md       # ADE enrollment profile configuration
+│   ├── 03-setup-assistant.md          # Setup Assistant flow, screen configuration
+│   ├── 04-post-enrollment.md          # Profile delivery, app installation, compliance
+│   └── 05-device-management.md        # Ongoing management, updates, retirement
+│
+├── admin-setup-macos/                 # NEW — macOS admin configuration
+│   ├── 00-overview.md                 # Setup sequence overview
+│   ├── 01-apple-mdm-push-cert.md      # APNS certificate setup + renewal
+│   ├── 02-abm-integration.md          # ABM token, MDM server assignment
+│   ├── 03-enrollment-profile.md       # ADE enrollment profile + Setup Assistant screens
+│   ├── 04-configuration-profiles.md   # Device restrictions, Wi-Fi, VPN, certificates
+│   ├── 05-app-deployment.md           # DMG, PKG, VPP, managed apps
+│   ├── 06-compliance-security.md      # Compliance policies, FileVault, firewall, Gatekeeper
+│   └── 07-config-failures.md          # Configuration-caused failures reference
+│
+├── decision-trees/
+│   └── 05-macos-triage.md             # NEW — macOS L1 triage decision tree
+│
+├── l1-runbooks/
+│   ├── 10-macos-enrollment-failure.md  # NEW — enrollment fails, profile not installing
+│   ├── 11-macos-app-not-installed.md   # NEW — apps missing after enrollment
+│   └── 12-macos-compliance-issue.md    # NEW — device non-compliant
+│
+├── l2-runbooks/
+│   ├── 10-macos-log-collection.md     # NEW — Intune agent logs, syslog, diagnostic export
+│   ├── 11-macos-enrollment-deep.md    # NEW — certificate issues, token expiry, ADE debugging
+│   └── 12-macos-profile-delivery.md   # NEW — configuration profile analysis
 │
 ├── reference/
-│   ├── error-codes.md                 # Master error lookup table
-│   ├── powershell-ref.md              # All exported functions — AutopilotDiagnostics + Remediation
-│   ├── registry-paths.md              # All documented registry paths with purpose
-│   ├── endpoints.md                   # Required network endpoints + what each does
-│   │
-│   └── quick-ref/                     # One-page cheat sheets
-│       ├── l1-quick-ref.md            # L1: top 5 checks, top 3 escalation triggers
-│       ├── l2-quick-ref.md            # L2: PowerShell commands, log paths, event IDs
-│       └── log-locations.md           # Where every relevant log lives
+│   ├── endpoints.md                   # MODIFIED — add macOS-specific endpoints section
+│   ├── macos-log-paths.md             # NEW — all macOS log file locations
+│   └── macos-commands.md              # NEW — Terminal diagnostic commands (macOS equivalent of powershell-ref.md)
 │
-├── architecture.md                    # EXISTING — keep, update cross-links
-└── common-issues.md                   # EXISTING — becomes navigation index, content migrates
+├── quick-ref-l1.md                    # MODIFIED — add macOS section
+├── quick-ref-l2.md                    # MODIFIED — add macOS section
+├── common-issues.md                   # MODIFIED — add macOS symptom routing
+│
+└── architecture.md                    # Existing — unchanged
 ```
 
-### Structure Rationale
+## Component Responsibilities
 
-- **lifecycle/ before troubleshooting/:** Lifecycle docs provide the mental model that makes troubleshooting logical. L2 engineers need the lifecycle to understand what should happen before diagnosing why it didn't. L1 engineers can skip lifecycle and go straight to runbooks.
+### New Components
 
-- **l1-runbooks/ and l2-runbooks/ are separate directories, not sections in one file:** Different audiences will bookmark different directories. L1 staff should never need to navigate through L2 content to find their guide. Separation prevents confusion and reduces cognitive overhead for both groups.
+| Component | Responsibility | Communicates With |
+|-----------|----------------|-------------------|
+| `lifecycle-macos/` | End-to-end macOS provisioning narrative — ABM through ongoing management | Links to `admin-setup-macos/` for configuration steps; links to decision trees at failure points |
+| `admin-setup-macos/` | Step-by-step macOS Intune configuration for admins | Links to `lifecycle-macos/` for context; links to L1/L2 runbooks from "what breaks" callouts |
+| `decision-trees/05-macos-triage.md` | Mermaid flowchart for macOS enrollment triage | Routes to macOS L1 runbooks |
+| `l1-runbooks/10-12` (macOS) | Scripted macOS troubleshooting for Service Desk | Links to macOS decision tree; escalates to macOS L2 runbooks |
+| `l2-runbooks/10-12` (macOS) | Technical macOS investigation with Terminal commands | Links to `reference/macos-log-paths.md` and `reference/macos-commands.md` |
+| `reference/macos-log-paths.md` | Canonical macOS log file location reference | Linked from all macOS L2 runbooks |
+| `reference/macos-commands.md` | Terminal diagnostic commands for macOS | macOS equivalent of `powershell-ref.md`; linked from L2 runbooks |
+| `platform-comparison.md` | "Which platform docs do I need?" router | Parallel to `apv1-vs-apv2.md`; linked from `index.md` |
 
-- **decision-trees/ as standalone files, not embedded only in runbooks:** Mermaid diagrams embedded in runbooks are useful for reading. Decision trees as standalone files can also be exported, printed, or displayed on a second screen during a call. Both are valid; standalone is the canonical version.
+### Modified Components
 
-- **reference/ is lookup, not narrative:** Reference content has no linear reading order. It is optimized for Ctrl+F or browser search. Error codes especially must be in a flat table, not nested under scenarios.
+| Component | Modification | Rationale |
+|-----------|-------------|-----------|
+| `index.md` | Add macOS sections for L1, L2, Admin; restructure from framework-split to platform+framework-split | Single entry point must route to all content |
+| `_glossary.md` | Add macOS terms: ABM, ADE, APNS, Setup Assistant, VPP, FileVault, Gatekeeper, Company Portal (macOS), Intune MDM Agent | Shared glossary serves all platforms |
+| `reference/endpoints.md` | Add macOS section with Apple push notification, Intune, and Apple services URLs | Keeps endpoint reference consolidated |
+| `quick-ref-l1.md` | Add macOS quick checks section | L1 staff may handle both platforms |
+| `quick-ref-l2.md` | Add macOS commands and log paths section | L2 staff handle both platforms |
+| `common-issues.md` | Add macOS symptom routing section | Symptom-based entry for macOS issues |
 
-- **quick-ref/ is for humans under pressure:** During a live incident, a one-page reference prevents errors. These files are deliberately short, link out rather than repeat, and use tables over prose.
+### Windows Operational Gap Components
 
-- **_index.md and _glossary.md with underscore prefix:** Underscores sort first alphabetically in most file browsers and wikis. These shared files should be immediately visible and not buried.
+| Component | Responsibility | Where It Fits |
+|-----------|----------------|---------------|
+| `lifecycle/06-autopilot-reset.md` | Local reset, remote reset, re-provisioning, retirement | Extends existing lifecycle sequence — next logical stage after post-enrollment |
+| `lifecycle/07-device-retirement.md` | Wipe, selective wipe, Autopilot deregistration, tenant migration | Completes the device lifecycle end-to-end |
+| `lifecycle/08-infrastructure.md` | Network/firewall deep-dive, Entra ID prerequisites, licensing matrix | Pre-provisioning infrastructure that lifecycle/00-overview.md references but doesn't detail |
+| `admin-setup-apv1/11-app-deployment-esp.md` | Win32 packaging for ESP, install order dependencies, timeout tuning | Admin configuration that affects ESP behavior — extends the admin setup sequence |
+| `admin-setup-apv1/12-security-compliance.md` | Conditional Access during enrollment, security baselines, compliance timing | Security configuration timed to enrollment phases |
+| `admin-setup-apv1/13-migration-scenarios.md` | APv1 to APv2 migration, imaging to Autopilot, GPO to Intune mapping | Transition guides for admins changing deployment models |
+| `l2-runbooks/09-monitoring-operations.md` | Deployment success reporting, registration drift detection, new-batch onboarding workflow | Operational readiness for L2/admin teams |
 
 ## Architectural Patterns
 
-### Pattern 1: Tiered Entry Points
+### Pattern 1: Platform-Gated Entry Points
 
-**What:** Each audience (L1, L2) has a designated entry path that never requires navigating the other tier's content to reach what they need.
+**What:** The navigation hub (`index.md`) gains a top-level platform selector before the role-based (L1/L2/Admin) routing. Users choose platform first, then role.
 
-**When to use:** Always. Every L1 runbook starts from the L1 decision tree or `_index.md → troubleshooting/l1-runbooks/`. Every L2 guide starts from `_index.md → troubleshooting/l2-runbooks/` or `reference/`.
+**Structure:**
 
-**Trade-offs:** Requires some deliberate duplication (e.g., "what is ESP" defined briefly in an L1 runbook, fully in lifecycle/). This is intentional — do not refactor it out. Cross-references to lifecycle are for readers who want depth, not for making L1 content depend on L2 content.
-
-**Example entry point structure in `_index.md`:**
 ```markdown
-## I am Service Desk (L1)
-→ Start here: [L1 Initial Triage Decision Tree](troubleshooting/decision-trees/l1-initial-triage.md)
-→ Runbooks: [L1 Runbooks Index](troubleshooting/l1-runbooks/)
+## Choose Your Platform
 
-## I am Desktop Engineering (L2)
-→ Start here: [Autopilot Lifecycle Overview](lifecycle/00-overview.md)
-→ Deep dives: [L2 Runbooks Index](troubleshooting/l2-runbooks/)
-→ References: [PowerShell Reference](reference/powershell-ref.md)
+| [Windows Autopilot](#windows-autopilot) | [macOS (ABM/ADE)](#macos-provisioning) |
+
+## Windows Autopilot
+### Service Desk (L1) -- APv1
+### Service Desk (L1) -- APv2
+### Desktop Engineering (L2) -- APv1
+### Desktop Engineering (L2) -- APv2
+### Admin Setup
+
+## macOS Provisioning (ABM/ADE through Intune)
+### Service Desk (L1) -- macOS
+### Desktop Engineering (L2) -- macOS
+### Admin Setup -- macOS
 ```
 
-### Pattern 2: Scenario-Anchored Cross-References
+**Why:** Platform selection is binary and fast. Nobody troubleshooting a Mac needs to scroll past Windows content. This extends the existing APv1/APv2 role-routing pattern to a higher level.
 
-**What:** Every cross-reference is anchored to a specific scenario or action, not a general page. Use fragment links (`file.md#section`) rather than linking to a top-level file.
+### Pattern 2: Shared References, Platform-Specific Sections
 
-**When to use:** Any time a doc references another doc. Avoid "see also: common-issues.md" — instead write "see [ESP stuck: app install timeout](troubleshooting/l2-runbooks/esp-deep-dive.md#app-install-timeout)."
+**What:** Reference files that serve both platforms (glossary, endpoints) add clearly labeled platform sections rather than creating separate files. Reference files that are entirely platform-specific (macOS log paths, macOS commands) are separate files.
 
-**Trade-offs:** More maintenance when headings change. Worth it — vague cross-references are unused cross-references.
+**Decision rule:**
+- If the reference concept applies to both platforms (e.g., network endpoints, glossary terms) → **one file, platform-labeled sections**
+- If the reference is entirely platform-specific (e.g., PowerShell functions for Windows, Terminal commands for macOS) → **separate files**
 
-### Pattern 3: PowerShell Function Linking Convention
+**Why:** Readers looking up a network endpoint should not need to know which file to open. Readers looking up a macOS Terminal command should not need to scroll past 12 PowerShell functions.
 
-**What:** Every mention of a PowerShell function in documentation links to the corresponding entry in `reference/powershell-ref.md` using a consistent anchor format: `#function-name-lowercase`.
+**Example in `reference/endpoints.md`:**
 
-**When to use:** All diagnostic and remediation function mentions in lifecycle docs, runbooks, and decision trees.
-
-**Trade-offs:** None meaningful. Functions are stable exports; links will remain valid.
-
-**Example:**
 ```markdown
-Run [`Get-AutopilotDeviceStatus`](../reference/powershell-ref.md#get-autopilotdevicestatus)
-to capture a full snapshot before attempting remediation.
+## Windows Autopilot Endpoints
+[existing content unchanged]
+
+## macOS Enrollment Endpoints
+
+| URL / Pattern | Service | Purpose | Criticality |
+|---------------|---------|---------|-------------|
+| `https://identity.apple.com` | Apple Identity | ABM/ADE device assignment | Critical |
+| `https://mdmenrollment.apple.com` | Apple MDM | Enrollment protocol | Critical |
+| `https://iprofiles.apple.com` | Apple Profiles | ADE profile delivery | Critical |
+| `https://albert.apple.com` | Apple Activation | Device activation check | Critical |
+| `https://gateway.push.apple.com` | APNS | Push notification delivery | Critical |
+| `*.push.apple.com` (TCP 5223) | APNS | Device push channel | Critical |
+| `https://login.microsoftonline.com` | Microsoft Entra ID | User authentication | Critical (shared) |
+| `https://graph.microsoft.com` | Microsoft Graph | Intune management | Critical (shared) |
+| `https://manage.microsoft.com` | Intune | MDM commands | Critical |
 ```
 
-**Functions to document in `reference/powershell-ref.md`:**
+### Pattern 3: macOS Admin Template Adaptation
 
-From `AutopilotDiagnostics.psm1` (7 exported functions):
-- `Get-AutopilotDeviceStatus` — full device snapshot
-- `Get-AutopilotHardwareHash` — hardware hash via CIM
-- `Get-AutopilotRegistrationState` — registry-based registration check
-- `Get-AutopilotProfileAssignment` — assigned profile details
-- `Get-TPMStatus` — TPM readiness flags
-- `Test-AutopilotConnectivity` — endpoint reachability tests
-- `Get-AutopilotLogs` — MDM diagnostics + event log collection
+**What:** Create `_templates/admin-template-macos.md` by adapting the existing `admin-template.md` with macOS-specific conventions.
 
-From `AutopilotRemediation.psm1` (5 exported functions):
-- `Reset-AutopilotRegistration` — clears local Autopilot state (ShouldProcess)
-- `Reset-TPMForAutopilot` — clears TPM for re-attestation (ShouldProcess)
-- `Repair-AutopilotConnectivity` — resets WinHTTP, DNS, Winsock
-- `Restart-EnrollmentStatusPage` — kills ESP process, clears state (ShouldProcess)
-- `Remove-AutopilotDevice` — full device removal for re-imaging (ShouldProcess)
+**Key differences from Windows admin template:**
+- Version gate references "macOS ABM/ADE" instead of "APv1/APv2"
+- Portal paths reference both Intune admin center and Apple Business Manager portal
+- "What breaks if misconfigured" callouts include Apple-side consequences (e.g., "devices will not appear in ABM if the MDM server assignment is incorrect")
+- Prerequisites include Apple Managed Apple ID, APNS certificate, and ABM enrollment
+- No registry paths; instead reference macOS configuration profile payloads
 
-### Pattern 4: Mermaid for Decision Trees
+**L1 and L2 templates** can be reused directly — the structure (prerequisites, steps, escalation criteria) is platform-agnostic. The only change is the version gate banner text and the specific commands/paths used in steps.
 
-**What:** L1 decision trees use Mermaid flowchart syntax embedded directly in Markdown. GitHub, GitLab, Confluence, and most modern wikis render Mermaid natively.
+### Pattern 4: Cross-Platform Glossary Sections
 
-**When to use:** Every scenario with more than two branching conditions. L2 guides can use prose with numbered steps instead — their value is depth, not speed.
+**What:** The glossary (`_glossary.md`) adds macOS terms in a new "macOS / Apple" section, with cross-references to equivalent Windows concepts where applicable.
 
-**Trade-offs:** Mermaid diagrams are not universally rendered (some SharePoint configurations require plugins). Export each decision tree as a PNG as a companion artifact for environments that can't render Mermaid.
+**Example entries:**
 
-**Example structure for `troubleshooting/decision-trees/l1-initial-triage.md`:**
 ```markdown
-## L1 Initial Triage
+## macOS / Apple
 
-```mermaid
-flowchart TD
-    A[User reports Autopilot failure] --> B{Device visible in Intune?}
-    B -->|No| C[Go to: device-not-in-autopilot runbook]
-    B -->|Yes| D{Profile assigned?}
-    D -->|No| E[Go to: profile-not-assigned runbook]
-    D -->|Yes| F{Error during OOBE or ESP?}
-    F -->|OOBE| G[Go to: oobe-fails-immediately runbook]
-    F -->|ESP| H[Go to: esp-stuck-or-failed runbook]
+### ABM
+
+Apple Business Manager — Apple's portal for purchasing, managing, and assigning devices to an MDM server. The macOS equivalent of Windows Autopilot hardware hash registration for device pre-staging.
+
+> **Windows equivalent:** [Hardware hash](#hardware-hash) (device identity) + Intune portal (management assignment).
+
+### ADE
+
+Automated Device Enrollment — Apple's zero-touch provisioning protocol. Devices assigned in ABM receive MDM enrollment profiles over the air at first boot, similar to Windows Autopilot profile assignment.
+
+> **Windows equivalent:** [ZTD](#ztd) / Autopilot deployment profile assignment.
+
+### APNS
+
+Apple Push Notification Service — the push infrastructure Apple devices use to receive MDM commands. The APNS certificate must be renewed annually; expiry causes complete loss of device management.
+
+> **No direct Windows equivalent.** Windows Autopilot uses WNS (Windows Notification Service) for push, but it requires no manual certificate management.
 ```
-```
+
+### Pattern 5: Numbering Continuation
+
+**What:** New files in existing directories continue the existing numbering sequence. macOS content in shared directories (l1-runbooks, l2-runbooks, decision-trees) uses numbers that follow the last Windows entry.
+
+**Rationale:** The existing convention uses sequential numbers (`00-index.md`, `01-...`, `02-...`). macOS content starting at 10 in l1-runbooks and l2-runbooks leaves room for future Windows additions (which could take 10-19 range in l1 if needed, though this is unlikely to be a real constraint).
+
+**Numbering plan:**
+| Directory | Last Windows file | macOS starts at |
+|-----------|-------------------|-----------------|
+| `decision-trees/` | `04-apv2-triage.md` | `05-macos-triage.md` |
+| `l1-runbooks/` | `09-apv2-deployment-timeout.md` | `10-macos-enrollment-failure.md` |
+| `l2-runbooks/` | `08-apv2-deployment-report.md` | Windows gaps: `09-monitoring-operations.md`; macOS: `10-macos-log-collection.md` |
+| `lifecycle/` | `05-post-enrollment.md` | Windows gaps: `06-`, `07-`, `08-` |
 
 ## Data Flow
 
-### Documentation Navigation Flow
+### Cross-Platform Navigation Flow
 
 ```
 User arrives with a problem
-    ↓
-_index.md (role-based entry)
-    ↓
-L1 → decision-trees/ → l1-runbooks/ → reference/error-codes.md
-    ↓                                         ↓
-    Resolve OR escalate to L2             PowerShell command
-                                          from reference/powershell-ref.md
-
-L2 → lifecycle/ (understand expected) → l2-runbooks/ (investigate actual)
-    ↓                                         ↓
-    reference/registry-paths.md          reference/powershell-ref.md
-    reference/endpoints.md               (remediation functions)
+    │
+    ▼
+index.md (platform selector)
+    │
+    ├─ Windows ──→ APv1/APv2 selector ──→ Role-based routing (existing flow)
+    │
+    └─ macOS ──→ Role-based routing
+                    │
+                    ├─ L1 → decision-trees/05-macos-triage.md → l1-runbooks/10-12
+                    │                                              │
+                    │                                              └─ Resolve OR escalate
+                    │
+                    ├─ L2 → lifecycle-macos/ → l2-runbooks/10-12
+                    │           │                    │
+                    │           │                    └─ reference/macos-log-paths.md
+                    │           │                       reference/macos-commands.md
+                    │           │                       reference/endpoints.md#macos
+                    │
+                    └─ Admin → admin-setup-macos/00-overview.md → 01-07 guides
+                                                                    │
+                                                                    └─ "What breaks" → l1-runbooks/10-12
 ```
 
-### Cross-Reference Flow
+### Windows Operational Gap Integration Flow
 
 ```
-lifecycle/04-esp-phases.md
-    → troubleshooting/l1-runbooks/esp-stuck-or-failed.md (at each failure point)
-    → troubleshooting/l2-runbooks/esp-deep-dive.md (for deep analysis)
-    → reference/error-codes.md#esp-errors (specific error codes)
+lifecycle/00-overview.md
+    │
+    ├─ (existing stages 1-5) ──→ existing troubleshooting docs
+    │
+    └─ (new stages 6-8) ──→ lifecycle/06-autopilot-reset.md
+                              lifecycle/07-device-retirement.md
+                              lifecycle/08-infrastructure.md
+                                    │
+                                    └─ reference/endpoints.md (expanded)
 
-troubleshooting/l1-runbooks/esp-stuck-or-failed.md
-    → troubleshooting/decision-trees/esp-failure-tree.md (triage flowchart)
-    → troubleshooting/l2-runbooks/esp-deep-dive.md (escalation path)
-
-troubleshooting/l2-runbooks/esp-deep-dive.md
-    → reference/powershell-ref.md#get-autopilotlogs (log collection)
-    → reference/powershell-ref.md#restart-enrollmentstatuspage (remediation)
-    → reference/registry-paths.md#enrollments (registry path for ESP state)
+admin-setup-apv1/00-overview.md
+    │
+    ├─ (existing guides 01-10) ──→ existing error-codes, l1/l2 runbooks
+    │
+    └─ (new guides 11-13) ──→ admin-setup-apv1/11-app-deployment-esp.md
+                                admin-setup-apv1/12-security-compliance.md
+                                admin-setup-apv1/13-migration-scenarios.md
+                                    │
+                                    └─ lifecycle-apv2/ (for APv1→APv2 migration)
 ```
 
-### Key Data Flows
+### Cross-Platform Reference Flow
 
-1. **Error lookup:** User has an error code → `reference/error-codes.md` → cause column → fix column → linked runbook for steps
-2. **Escalation:** L1 runbook reaches escalation trigger → links directly to corresponding L2 runbook section, not to the top of the L2 file
-3. **PowerShell invocation:** L2 runbook mentions a function → links to `reference/powershell-ref.md` entry → entry includes copy-paste syntax, parameters, and expected output
+```
+_glossary.md ──→ All files (both platforms link to shared glossary)
+    │
+    └─ macOS terms cross-reference Windows equivalents
+
+reference/endpoints.md ──→ Both platform troubleshooting flows
+    │
+    ├─ Windows section (existing)
+    └─ macOS section (new)
+
+platform-comparison.md ──→ index.md (linked for platform selection help)
+    │
+    └─ "macOS ADE is not Windows Autopilot — different tools, different issues"
+```
 
 ## Integration Points
 
-### Existing Files (Modify, Don't Replace)
+### Existing Files to Modify
 
-| Existing File | Current State | Action Required |
-|---------------|---------------|-----------------|
-| `docs/common-issues.md` | Flat list of 7 scenarios with PowerShell snippets | Convert to navigation index. Migrate each scenario to the appropriate l1 or l2 runbook. Add links to new locations. Keep file as redirect/index. |
-| `docs/architecture.md` | System architecture for the three-tier tool | Repurpose as L2 reference. Add a section linking to `reference/powershell-ref.md`. Add cross-link from `_index.md → L2 path`. No content deletion needed. |
+| File | Modification | Priority |
+|------|-------------|----------|
+| `docs/index.md` | Add platform selector; add macOS L1/L2/Admin sections | HIGH — gatekeeper for all navigation |
+| `docs/_glossary.md` | Add macOS/Apple terminology section (~15 terms) | HIGH — referenced by all new content |
+| `docs/reference/endpoints.md` | Add macOS endpoints section | MEDIUM — needed by macOS L2 content |
+| `docs/quick-ref-l1.md` | Add "macOS Quick Checks" section | MEDIUM — L1 convenience |
+| `docs/quick-ref-l2.md` | Add "macOS Commands & Logs" section | MEDIUM — L2 convenience |
+| `docs/common-issues.md` | Add macOS symptom routing section | MEDIUM — entry point for some users |
+| `docs/lifecycle/00-overview.md` | Add links to new lifecycle stages (06-08) | LOW — minor update |
+| `docs/admin-setup-apv1/00-overview.md` | Add links to new admin guides (11-13) | LOW — minor update |
+| `docs/l2-runbooks/00-index.md` | Add monitoring/operations entry and macOS entries | LOW — minor update |
+| `docs/l1-runbooks/00-index.md` | Add macOS runbook section | LOW — minor update |
 
 ### New Files to Create
 
-All files under the structure defined in "Recommended Project Structure" above that do not currently exist. Priority build order (see below).
+**Total new files: ~28**
+
+| Category | Files | Count |
+|----------|-------|-------|
+| macOS lifecycle | `lifecycle-macos/00-05` | 6 |
+| macOS admin setup | `admin-setup-macos/00-07` | 8 |
+| macOS troubleshooting (L1) | `l1-runbooks/10-12`, `decision-trees/05` | 4 |
+| macOS troubleshooting (L2) | `l2-runbooks/10-12` | 3 |
+| macOS reference | `reference/macos-log-paths.md`, `reference/macos-commands.md` | 2 |
+| Cross-platform | `platform-comparison.md` | 1 |
+| Templates | `_templates/admin-template-macos.md` | 1 |
+| Windows operational gaps (lifecycle) | `lifecycle/06-08` | 3 |
+| Windows operational gaps (admin) | `admin-setup-apv1/11-13` | 3 |
+| Windows operational gaps (L2) | `l2-runbooks/09` | 1 |
 
 ### Codebase Integration Points
 
 | Doc Location | Links To | Notes |
 |--------------|----------|-------|
-| `reference/powershell-ref.md` | `src/powershell/AutopilotDiagnostics.psm1`, `src/powershell/AutopilotRemediation.psm1` | Link to specific line ranges if hosting on GitHub; use function names as anchors if not |
-| `l2-runbooks/log-collection-guide.md` | `src/powershell/AutopilotDiagnostics.psm1` `Get-AutopilotLogs` | Document the OutputPath parameter and what each collected file contains |
-| `reference/endpoints.md` | `src/powershell/AutopilotDiagnostics.psm1` `Test-AutopilotConnectivity` | Document which endpoints `Test-AutopilotConnectivity` checks; note the 5-second timeout |
-| `reference/registry-paths.md` | `src/powershell/AutopilotDiagnostics.psm1`, `AutopilotRemediation.psm1` | All registry paths referenced in module code; `HKLM:\SOFTWARE\Microsoft\Provisioning\Diagnostics\Autopilot`, `AutopilotSettings`, `Enrollments` |
-| Future: `src/frontend/` | `docs/` | Frontend may render docs inline; flat markdown with relative links is forward-compatible |
-
-### External Services Referenced in Docs
-
-| Service | Doc Location | Notes |
-|---------|--------------|-------|
-| Microsoft Intune portal | All L1 runbooks | Link to `intune.microsoft.com` for portal steps |
-| Microsoft Graph API | `docs/architecture.md`, `l2-runbooks/` | L2 reference only; not L1 content |
-| MDMDiagnosticsTool.exe | `reference/powershell-ref.md`, `l2-runbooks/log-collection-guide.md` | Ships with Windows; no installation required |
-| Event Viewer paths | `l2-runbooks/esp-deep-dive.md`, `reference/quick-ref/log-locations.md` | Exact event log names from AutopilotDiagnostics.psm1 lines 162-166 |
-
-## Build Order for Documentation
-
-Build in this sequence — each phase's output is referenced by the next:
-
-**Phase 1 — Foundation (everything depends on this):**
-1. `docs/_glossary.md` — defines terms used everywhere
-2. `docs/reference/registry-paths.md` — sourced from PowerShell modules directly
-3. `docs/reference/endpoints.md` — sourced from `Test-AutopilotConnectivity` and CLAUDE.md
-4. `docs/reference/powershell-ref.md` — all 12 exported functions
-
-**Phase 2 — Lifecycle (L2 mental model, L1 context):**
-5. `docs/lifecycle/00-overview.md` — the full Autopilot flow diagram
-6. `docs/lifecycle/01-hardware-hash-import.md` through `05-post-enrollment.md`
-
-**Phase 3 — L1 Runbooks and Decision Trees (depend on lifecycle and reference):**
-7. `docs/troubleshooting/decision-trees/l1-initial-triage.md`
-8. `docs/troubleshooting/l1-runbooks/` — all 5 scenarios
-9. Remaining decision trees (esp-failure-tree, profile-assignment-tree, tpm-attestation-tree)
-
-**Phase 4 — L2 Deep Dives (depend on lifecycle and reference):**
-10. `docs/troubleshooting/l2-runbooks/log-collection-guide.md`
-11. `docs/troubleshooting/l2-runbooks/esp-deep-dive.md`
-12. `docs/troubleshooting/l2-runbooks/tpm-attestation-failure.md`
-13. `docs/troubleshooting/l2-runbooks/hybrid-join-failure.md`
-14. `docs/troubleshooting/l2-runbooks/policy-conflict-analysis.md`
-
-**Phase 5 — Reference Completion and Entry Points:**
-15. `docs/reference/error-codes.md`
-16. `docs/reference/quick-ref/` (3 files)
-17. `docs/_index.md` — written last because it links to everything
-18. Update `docs/common-issues.md` to redirect/index
-19. Update `docs/architecture.md` to add cross-links
+| `reference/macos-commands.md` | No codebase link | macOS management uses standard Terminal + Intune agent; no custom module exists |
+| `reference/macos-log-paths.md` | No codebase link | Log paths are OS-level, not project code |
+| `admin-setup-macos/` | Apple Business Manager portal, Intune admin center | External portal links only |
+| `lifecycle/06-autopilot-reset.md` | `src/powershell/AutopilotRemediation.psm1` `Reset-AutopilotRegistration` | Links to existing PowerShell reference |
+| `admin-setup-apv1/11-app-deployment-esp.md` | `src/powershell/AutopilotDiagnostics.psm1` `Get-AutopilotLogs` | App install debugging uses existing log collection |
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Audience Mixing in a Single File
+### Anti-Pattern 1: Platform Mixing Within Files
 
-**What people do:** Create one giant `troubleshooting.md` with L1 and L2 content intermixed, separated by headers.
+**What:** Creating lifecycle files that alternate between "on Windows, do X... on macOS, do Y..." throughout the document.
 
-**Why it's wrong:** L1 staff have to scroll past registry paths and PowerShell scripts to find their scripted steps. L2 engineers have to read through "ask the user to restart" steps before reaching technical content. Both groups stop using the doc.
+**Why bad:** Windows Autopilot and macOS ADE share almost no procedural steps. Interleaving them creates long, unfocused documents where readers must constantly filter out irrelevant content. The existing APv1/APv2 split already validates separation.
 
-**Do this instead:** Strict directory separation by audience tier. Cross-reference between tiers at escalation boundaries only.
+**Instead:** Platform-specific directories. Cross-reference at the conceptual level only (e.g., "the macOS equivalent of hardware hash registration is ABM device assignment — see [ABM Device Assignment](lifecycle-macos/01-abm-device-assignment.md)").
 
-### Anti-Pattern 2: Orphaned Error Codes
+### Anti-Pattern 2: Separate Glossaries Per Platform
 
-**What people do:** Scatter error codes and messages inside individual runbooks without a central lookup table.
+**What:** Creating `_glossary-macos.md` alongside `_glossary.md`.
 
-**Why it's wrong:** A user with an error code they don't recognize cannot find which runbook applies. The single most common first step in troubleshooting is "I have this error, what does it mean?" — this must be answerable without knowing which runbook to read.
+**Why bad:** When a reader encounters "OOBE" in a macOS doc, they should not need to know which glossary to check. A single glossary with platform-labeled sections handles both. The glossary is already organized by topic (Enrollment, Hardware, Network, Security), and a new "macOS / Apple" section fits naturally.
 
-**Do this instead:** All error codes go in `reference/error-codes.md` first, with a link to the runbook. Runbooks may also mention the error in context, but the canonical definition lives in the table.
+**Instead:** One `_glossary.md`, expanded with platform labels on platform-specific terms.
 
-### Anti-Pattern 3: Prose-Only Decision Logic
+### Anti-Pattern 3: Duplicating Shared Endpoints
 
-**What people do:** Write L1 decision logic as "If X, then Y. If not X, check Z. If Z is true and Y is false, escalate."
+**What:** Creating `reference/macos-endpoints.md` that duplicates the Entra ID and Graph API endpoints already in `reference/endpoints.md`.
 
-**Why it's wrong:** Under call pressure, L1 staff lose their place in prose logic. Decision trees (Mermaid flowcharts) are processable in one visual scan.
+**Why bad:** Shared endpoints (login.microsoftonline.com, graph.microsoft.com) are used by both platforms. Two files means two places to update when Microsoft changes something.
 
-**Do this instead:** Mermaid flowchart for any decision with more than two branches. Prose is for background context, not branching logic.
+**Instead:** One `reference/endpoints.md` with platform-labeled sections. Shared endpoints appear once with a "(shared)" label in both sections' tables.
 
-### Anti-Pattern 4: Linking to File Tops Instead of Sections
+### Anti-Pattern 4: Windows Gaps as Separate Directories
 
-**What people do:** `See [L2 ESP guide](troubleshooting/l2-runbooks/esp-deep-dive.md) for more detail.`
+**What:** Creating `docs/operational/` or `docs/advanced/` directories for the Windows operational gap content.
 
-**Why it's wrong:** The L2 ESP guide may be 500 lines. "More detail" sends the reader to a wall of text with no navigation hint.
+**Why bad:** The content logically extends existing directories. Autopilot Reset is a lifecycle stage. App deployment for ESP is admin setup configuration. Creating new top-level directories fragments the reader's mental model and breaks the established navigation pattern.
 
-**Do this instead:** Always link to the specific section: `See [ESP: App Install Timeout](troubleshooting/l2-runbooks/esp-deep-dive.md#app-install-timeout) for log analysis steps.`
+**Instead:** Add numbered files to existing directories (`lifecycle/06-...`, `admin-setup-apv1/11-...`). Update the overview/index files in those directories to include the new entries.
 
-### Anti-Pattern 5: Duplicating PowerShell Function Documentation
+### Anti-Pattern 5: macOS Content Using Windows Terminology
 
-**What people do:** Copy-paste function descriptions and parameters into each runbook where the function is mentioned.
+**What:** Referring to macOS Setup Assistant as "OOBE" or calling configuration profiles "policies" without distinction.
 
-**Why it's wrong:** When a function signature changes, every runbook with the copy needs updating. They will fall out of sync.
+**Why bad:** macOS and Windows use different terminology for analogous concepts. Using Windows terminology in macOS content creates confusion, especially for admins managing both platforms. Readers familiar with macOS will not find "OOBE" intuitive.
 
-**Do this instead:** One canonical entry per function in `reference/powershell-ref.md`. Runbooks link to it. The only PowerShell content in a runbook is the specific invocation pattern for that scenario.
+**Instead:** Use correct Apple terminology (Setup Assistant, configuration profiles, managed preferences) with cross-references to Windows equivalents in the glossary. The `platform-comparison.md` file exists specifically to map concepts across platforms.
+
+## Build Order
+
+Build in this sequence — each phase's output is referenced by the next.
+
+### Phase 1: Shared Foundation Updates
+
+Dependencies: None. Everything else depends on this.
+
+1. `_glossary.md` — add macOS terms (ABM, ADE, APNS, Setup Assistant, VPP, FileVault, Gatekeeper, Company Portal macOS, Intune MDM Agent, Managed Apple ID, configuration profile, enrollment program token, MDM server assignment, Setup Assistant screens, Await Final Configuration)
+2. `platform-comparison.md` — "Windows Autopilot vs macOS ADE" router
+3. `_templates/admin-template-macos.md` — macOS admin guide template
+4. `reference/endpoints.md` — add macOS endpoints section
+
+### Phase 2: Windows Operational Gap Content
+
+Dependencies: Phase 1 (glossary terms). Can run in parallel with Phase 3 since the two platform tracks are independent.
+
+5. `lifecycle/06-autopilot-reset.md` — local reset, remote reset, re-provisioning
+6. `lifecycle/07-device-retirement.md` — retirement, wipe, tenant migration
+7. `lifecycle/08-infrastructure.md` — network deep-dive, Entra prereqs, licensing matrix
+8. `admin-setup-apv1/11-app-deployment-esp.md` — Win32 for ESP
+9. `admin-setup-apv1/12-security-compliance.md` — Conditional Access, baselines
+10. `admin-setup-apv1/13-migration-scenarios.md` — APv1->APv2, imaging->AP, GPO->Intune
+11. `l2-runbooks/09-monitoring-operations.md` — deployment reporting, drift, batch workflow
+12. Update `lifecycle/00-overview.md`, `admin-setup-apv1/00-overview.md`, `l2-runbooks/00-index.md` with new entries
+
+### Phase 3: macOS Foundation
+
+Dependencies: Phase 1 (glossary, endpoints, template).
+
+13. `lifecycle-macos/00-overview.md` — macOS provisioning overview + flow diagram
+14. `lifecycle-macos/01-abm-device-assignment.md` — ABM setup, device assignment
+15. `lifecycle-macos/02-enrollment-profile.md` — ADE enrollment profile
+16. `lifecycle-macos/03-setup-assistant.md` — Setup Assistant flow
+17. `lifecycle-macos/04-post-enrollment.md` — profile delivery, app install, compliance
+18. `lifecycle-macos/05-device-management.md` — ongoing management, updates, retirement
+19. `reference/macos-log-paths.md` — canonical macOS log locations
+20. `reference/macos-commands.md` — Terminal diagnostic commands
+
+### Phase 4: macOS Admin Setup
+
+Dependencies: Phase 3 (lifecycle provides context for admin guides' "what breaks" links).
+
+21. `admin-setup-macos/00-overview.md` — setup sequence overview
+22. `admin-setup-macos/01-apple-mdm-push-cert.md` — APNS certificate
+23. `admin-setup-macos/02-abm-integration.md` — ABM token, MDM server
+24. `admin-setup-macos/03-enrollment-profile.md` — ADE profile + Setup Assistant
+25. `admin-setup-macos/04-configuration-profiles.md` — restrictions, Wi-Fi, VPN
+26. `admin-setup-macos/05-app-deployment.md` — DMG, PKG, VPP
+27. `admin-setup-macos/06-compliance-security.md` — compliance, FileVault, firewall
+28. `admin-setup-macos/07-config-failures.md` — configuration-caused failures
+
+### Phase 5: macOS Troubleshooting
+
+Dependencies: Phase 3 (lifecycle) and Phase 4 (admin setup — "what breaks" callouts feed runbook scenarios).
+
+29. `decision-trees/05-macos-triage.md` — L1 triage flowchart
+30. `l1-runbooks/10-macos-enrollment-failure.md`
+31. `l1-runbooks/11-macos-app-not-installed.md`
+32. `l1-runbooks/12-macos-compliance-issue.md`
+33. `l2-runbooks/10-macos-log-collection.md`
+34. `l2-runbooks/11-macos-enrollment-deep.md`
+35. `l2-runbooks/12-macos-profile-delivery.md`
+
+### Phase 6: Navigation and Cross-Platform Integration
+
+Dependencies: All previous phases (needs all content to exist for linking).
+
+36. `index.md` — restructure with platform selector and full macOS sections
+37. `quick-ref-l1.md` — add macOS section
+38. `quick-ref-l2.md` — add macOS section
+39. `common-issues.md` — add macOS symptom routing
+40. `l1-runbooks/00-index.md` — add macOS section
+41. `l2-runbooks/00-index.md` — add macOS and monitoring entries
+
+### Parallelism Opportunity
+
+Phases 2 and 3 can execute in parallel since Windows operational gap content and macOS lifecycle content have no cross-dependencies. This is the most significant time-saving opportunity in the build order.
 
 ## Scaling Considerations
 
-| Scale | Documentation Adjustments |
-|-------|--------------------------|
-| 1-3 engineers using docs | Current structure — markdown files in git, local rendering |
-| 5-20 engineers, multi-team | Export to SharePoint/Confluence using the markdown-as-source workflow. Add a CI step to validate internal links. |
-| Enterprise, multiple tenants | Add a `tenants/` directory alongside `docs/` for environment-specific overlays. Core docs remain generic per the project constraint. |
+| Scale | Adjustment |
+|-------|------------|
+| Two platforms (current) | Platform selector in `index.md`; separate directories per platform; shared references |
+| Three platforms (future — e.g., ChromeOS, Linux) | Same pattern extends: `lifecycle-chromeos/`, `admin-setup-chromeos/`, numbered macOS runbooks continue from 13+ in shared dirs |
+| Multi-language docs | Directory structure already uses English slugs; translation would add `docs-es/`, `docs-fr/` as peer directories, not nest under `docs/` |
 
-### Scaling Priorities
-
-1. **First maintenance burden:** Internal links breaking when files are renamed. Mitigation: use a link checker in CI (e.g., `markdown-link-check`) from the start.
-2. **Second maintenance burden:** Error codes table becoming stale. Mitigation: error codes table should be the first doc updated when a new scenario is documented.
+The parallel-directory pattern scales linearly. Each new platform adds a fixed set of directories and extends shared references. The navigation hub (`index.md`) grows by one section. No existing content requires refactoring.
 
 ## Sources
 
-- Existing codebase: `docs/architecture.md`, `docs/common-issues.md` (direct inspection)
-- Existing codebase: `src/powershell/AutopilotDiagnostics.psm1`, `src/powershell/AutopilotRemediation.psm1` (direct inspection — all exported functions catalogued)
-- Project constraints: `.planning/PROJECT.md` (markdown-in-git, L1/L2 separation, generic guidance)
-- Project constraints: `CLAUDE.md` (three-tier architecture, docs/ as documentation home)
-- Mermaid diagram rendering: supported natively in GitHub, GitLab, Obsidian, Confluence (with plugin), and most modern wikis as of 2026
+- Existing codebase: All files in `docs/` (direct inspection of 70 files, 8,023 lines)
+- Existing architecture: `.planning/research/ARCHITECTURE.md` from v1.0/v1.1 milestone (pattern continuity)
+- [Set up ADE for macOS - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment-program-enroll-macos) — enrollment program token, profile configuration, Setup Assistant screens
+- [macOS device enrollment guide - Microsoft Learn](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/guide-macos) — enrollment method selection
+- [Get started with macOS endpoints - Microsoft Learn](https://learn.microsoft.com/en-us/intune/solutions/end-to-end-guides/macos-endpoints-get-started) — end-to-end macOS management overview
+- [macOS compliance settings - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/protect/compliance-policy-create-mac-os) — device health, properties, system security
+- [Apple MDM Push certificate - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/apple-mdm-push-certificate-get) — APNS setup and renewal
+- [Network endpoints for Intune - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/intune-endpoints) — all required URLs
+- [Add macOS DMG app - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-macos-dmg) — DMG deployment
+- [Add unmanaged macOS PKG - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/apps/macos-unmanaged-pkg) — PKG deployment
+- [Troubleshooting Intune management agent on macOS - Microsoft Community Hub](https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-troubleshooting-microsoft-intune-management-agent-on-macos/4431810) — log locations, diagnostic commands
+- Community sources (MEDIUM confidence): [IntuneMacAdmins](https://www.intunemacadmins.com/troubleshooting/enrollment_error/), [IntuneBrew docs](https://docs.intunebrew.com/docs/Troubleshooting-Common-macOS-App-Deployment-Issues-in-Intune), [allthingscloud.blog](https://allthingscloud.blog/macos-app-deployment-with-microsoft-intune/)
 
 ---
-*Architecture research for: Windows Autopilot documentation suite — docs/ directory structure and cross-referencing*
-*Researched: 2026-03-10*
+*Architecture research for: v1.2 Cross-Platform Provisioning — macOS ABM/ADE integration + Windows operational gaps*
+*Researched: 2026-04-13*
