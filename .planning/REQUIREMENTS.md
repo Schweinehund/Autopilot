@@ -113,12 +113,50 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| XPLAT-01 | Phase 20 | Pending |
+| XPLAT-02 | Phase 20 | Pending |
+| XPLAT-03 | Phase 20 | Pending |
+| XPLAT-04 | Phase 20 | Pending |
+| NAVX-01 | Phase 20 | Pending |
+| WDLC-01 | Phase 21 | Pending |
+| WDLC-02 | Phase 21 | Pending |
+| WDLC-03 | Phase 21 | Pending |
+| WDLC-04 | Phase 21 | Pending |
+| WINF-01 | Phase 21 | Pending |
+| WINF-02 | Phase 21 | Pending |
+| WINF-03 | Phase 21 | Pending |
+| WINF-04 | Phase 21 | Pending |
+| WINF-05 | Phase 21 | Pending |
+| WSEC-01 | Phase 21 | Pending |
+| WSEC-02 | Phase 21 | Pending |
+| WSEC-03 | Phase 21 | Pending |
+| WMIG-01 | Phase 21 | Pending |
+| WMIG-02 | Phase 21 | Pending |
+| WMIG-03 | Phase 21 | Pending |
+| WMON-01 | Phase 21 | Pending |
+| WMON-02 | Phase 21 | Pending |
+| WMON-03 | Phase 21 | Pending |
+| MLIF-01 | Phase 22 | Pending |
+| MLIF-02 | Phase 22 | Pending |
+| MLIF-03 | Phase 22 | Pending |
+| MADM-01 | Phase 23 | Pending |
+| MADM-02 | Phase 23 | Pending |
+| MADM-03 | Phase 23 | Pending |
+| MADM-04 | Phase 23 | Pending |
+| MADM-05 | Phase 23 | Pending |
+| MADM-06 | Phase 23 | Pending |
+| MTRO-01 | Phase 24 | Pending |
+| MTRO-02 | Phase 24 | Pending |
+| MTRO-03 | Phase 24 | Pending |
+| MTRO-04 | Phase 24 | Pending |
+| NAVX-02 | Phase 25 | Pending |
+| NAVX-03 | Phase 25 | Pending |
 
 **Coverage:**
-- v1.2 requirements: 37 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 37
+- v1.2 requirements: 38 total
+- Mapped to phases: 38
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-13*
-*Last updated: 2026-04-13*
+*Last updated: 2026-04-13 — traceability populated after roadmap creation*
