@@ -1,30 +1,23 @@
 ---
 phase: 16-apv1-admin-setup-guides
 plan: "02"
-subsystem: documentation
-tags: [autopilot, apv1, admin-guide, dynamic-groups, deployment-modes, user-driven, pre-provisioning, self-deploying, intune, entra-id]
+subsystem: docs
+tags: [autopilot, apv1, admin-guide, dynamic-groups, deployment-modes, user-driven, pre-provisioning, self-deploying]
 
-# Dependency graph
 requires:
-  - phase: 16-apv1-admin-setup-guides plan 01
-    provides: docs/admin-setup-apv1/00-03 (overview, hardware hash, deployment profile, ESP policy)
-  - phase: 11-apv2-lifecycle
-    provides: admin-template.md pattern and frontmatter conventions
+  - phase: 16-apv1-admin-setup-guides
+    provides: overview and core setup guides (Plan 01)
 provides:
-  - docs/admin-setup-apv1/04-dynamic-groups.md — ZTDId membership rule, group tag targeting, sync delay callouts, profile conflict resolution
-  - docs/admin-setup-apv1/05-deployment-modes-overview.md — three-mode comparison table, mode selection guidance, next step navigation
-  - docs/admin-setup-apv1/06-user-driven.md — full user-driven admin guide with Entra/hybrid join paths and end-user OOBE walkthrough
-  - docs/admin-setup-apv1/07-pre-provisioning.md — full pre-provisioning guide with TPM 2.0, Win+F12, Reseal workflow, 0x80180005 error
-  - docs/admin-setup-apv1/08-self-deploying.md — full self-deploying guide with no-user-affinity and device-group assignment requirements
-affects: [16-apv1-admin-setup-guides plan 03, 17-navigation]
+  - Dynamic groups guide with ZTDId membership rule and sync delay expectations
+  - Deployment modes comparison table with selection guidance
+  - User-driven mode guide with hybrid join cross-reference
+  - Pre-provisioning mode guide with TPM 2.0 and Win+F12 documentation
+  - Self-deploying mode guide with no user affinity callout
+affects: [16-03, 17-navigation]
 
-# Tech tracking
 tech-stack:
   added: []
-  patterns:
-    - "Two-phase pre-provisioning walkthrough pattern: technician flow (staging) + user flow (post-reseal)"
-    - "No-user-affinity self-deploying pattern with device-group-only app assignment guidance"
-    - "Hybrid join cross-reference pattern: 06 and 07 reference 09-intune-connector-ad; 08 does not (per D-10)"
+  patterns: [mode-comparison-table, hybrid-join-cross-reference]
 
 key-files:
   created:
@@ -36,79 +29,73 @@ key-files:
   modified: []
 
 key-decisions:
-  - "05-deployment-modes-overview.md has no Configuration-Caused Failures table — it is a comparison/index page, not a step-by-step config guide (per D-08)"
-  - "08-self-deploying.md Next step footer links to 09-intune-connector-ad.md for sequential navigation but contains no hybrid join cross-reference body content (per D-10)"
-  - "Connector version gate 6.2501.2000.5 documented in both 06 and 07 hybrid join sections as a 'What breaks' callout"
+  - "Modes overview is comparison/index only - no Configuration-Caused Failures table per D-08"
+  - "Each mode guide cross-references Intune Connector (09) for hybrid join scenarios"
+  - "L2 details blocks: hybrid join for user-driven, TPM attestation for pre-provisioning and self-deploying"
 
 patterns-established:
-  - "Mode-specific prerequisites prominent pattern: TPM 2.0 and wired ethernet called out as MANDATORY with bold text in Prerequisites section headers"
-  - "L2 supplementary details block pattern: <details> blocks used only for L2 runbook cross-references, not for primary admin procedures"
+  - "Mode guide pattern: mode-specific prerequisites prominent, end-user/technician experience walkthrough, L2 details block"
 
 requirements-completed: [ADMN-04, ADMN-05]
 
-# Metrics
-duration: 8min
+duration: 6min
 completed: 2026-04-13
 ---
 
-# Phase 16 Plan 02: Dynamic Groups, Deployment Modes Overview, and All Three Deployment Mode Admin Guides Summary
+# Plan 16-02: Dynamic Groups + Deployment Mode Guides Summary
 
-**Five APv1 admin guides covering dynamic device group creation with ZTDId rules, a three-mode comparison table, and full configuration guides for User-Driven (with hybrid join), Pre-Provisioning (Win+F12/Reseal/TPM 2.0), and Self-Deploying (no user affinity, device-group-only) modes**
+**Dynamic groups with ZTDId rule and sync delays, 3-mode comparison table, and full admin guides for user-driven (hybrid join), pre-provisioning (TPM 2.0/Win+F12/reseal), and self-deploying (no user affinity)**
 
 ## Performance
 
-- **Duration:** 8 min
-- **Started:** 2026-04-13T12:51:27Z
-- **Completed:** 2026-04-13T12:59:30Z
+- **Duration:** 6 min
+- **Started:** 2026-04-13
+- **Completed:** 2026-04-13
 - **Tasks:** 3
-- **Files modified:** 5 created
+- **Files created:** 5
 
 ## Accomplishments
 
-- Dynamic groups guide with ZTDId and group tag membership rules, sync delay callouts (5-15 min / up to 24 hours), and "oldest-created profile wins" conflict resolution
-- Deployment modes overview with three-mode comparison table covering TPM, ethernet, user credentials, hybrid support, ESP phases, and Win+F12 trigger
-- User-driven guide with Entra join and Hybrid Entra join paths, 7-step end-user OOBE walkthrough, connector version gate callout (≥ 6.2501.2000.5), and L2 hybrid join details block
-- Pre-provisioning guide with TPM 2.0/wired ethernet mandatory prerequisites, Win+F12 technician flow, 7-step staging walkthrough, Reseal step, error 0x80180005, and L2 TPM attestation details block
-- Self-deploying guide with no-user-affinity callout, device-group-only app assignment guidance, 6-step automated deployment flow, hybrid join NOT supported, and L2 TPM attestation details block
+- Dynamic groups guide with ZTDId membership rule, group tag targeting, sync delay expectations (5-15 min to 24 hours), and 5-entry config failures table
+- Deployment modes overview with comparison table covering TPM, ethernet, credentials, hybrid join, and best-for scenarios
+- User-driven guide with hybrid join cross-reference, 7-step end user walkthrough, and L2 hybrid join details block
+- Pre-provisioning guide with TPM 2.0/wired ethernet requirements, Win+F12 trigger, reseal workflow, and L2 TPM details block
+- Self-deploying guide with no user affinity callout, device-based licensing guidance, and L2 TPM details block
 
 ## Task Commits
 
-Each task was committed atomically:
-
-1. **Task 1: Create dynamic groups guide and deployment modes overview** - `f145c28` (feat)
-2. **Task 2: Create user-driven and pre-provisioning mode guides** - `609a5f7` (feat)
-3. **Task 3: Create self-deploying mode guide** - `7f412ef` (feat)
+1. **Task 1: Dynamic groups + modes overview** - `9c33593`
+2. **Task 2: User-driven + pre-provisioning** - `fe23fc4`
+3. **Task 3: Self-deploying** - `b3e0e6f`
 
 ## Files Created/Modified
 
-- `docs/admin-setup-apv1/04-dynamic-groups.md` — ZTDId and group tag membership rules, sync delay expectations, profile conflict resolution (oldest-created wins), Configuration-Caused Failures table
-- `docs/admin-setup-apv1/05-deployment-modes-overview.md` — three-mode comparison table (8 feature rows), mode selection guidance, common OOBE profile settings, links to mode-specific guides
-- `docs/admin-setup-apv1/06-user-driven.md` — Entra join and Hybrid Entra join paths, 7-step user OOBE walkthrough, connector version gate, Configuration-Caused Failures table, L2 details block
-- `docs/admin-setup-apv1/07-pre-provisioning.md` — TPM 2.0 and wired ethernet prerequisites, Win+F12 technician flow, 7-step staging walkthrough with Reseal, 0x80180005 error documented, Configuration-Caused Failures table, L2 TPM details block
-- `docs/admin-setup-apv1/08-self-deploying.md` — TPM-only authentication, no user affinity, wired ethernet mandatory, hybrid join NOT supported, 6-step automated flow, device-group assignment guidance, Configuration-Caused Failures table, L2 TPM details block
+- `docs/admin-setup-apv1/04-dynamic-groups.md` - Dynamic device groups with ZTDId rule
+- `docs/admin-setup-apv1/05-deployment-modes-overview.md` - 3-mode comparison table and selection guidance
+- `docs/admin-setup-apv1/06-user-driven.md` - User-driven mode with hybrid join subsection
+- `docs/admin-setup-apv1/07-pre-provisioning.md` - Pre-provisioning with technician flow and reseal
+- `docs/admin-setup-apv1/08-self-deploying.md` - Self-deploying with no user affinity
 
 ## Decisions Made
 
-- `05-deployment-modes-overview.md` has no Configuration-Caused Failures table — it is a comparison/index page, not a step-by-step configuration guide (per D-08). Individual mode guides carry their own tables.
-- `08-self-deploying.md` Next step footer links to `09-intune-connector-ad.md` for sequential navigation (required by D-02) but the file body contains no hybrid join cross-reference content (per D-10, hybrid cross-reference is from 06 and 07 only).
-- All three mode guides include `<details>` L2 supplementary blocks: 06 links to L2 hybrid join runbook; 07 and 08 link to L2 TPM attestation runbook.
+None - followed plan as specified.
 
 ## Deviations from Plan
 
-None — plan executed exactly as written. Files written to correct location at `docs/admin-setup-apv1/` in main repository after discovering worktree working directory was an empty placeholder.
+None - plan executed exactly as written.
 
 ## Issues Encountered
 
-- Working directory `D:\claude\Autopilot\.claude\worktrees\agent-af330ef5` was an empty placeholder directory. First Write tool calls attempted to create files there (failed silently). Identified correct target as main repo `D:\claude\Autopilot\docs\admin-setup-apv1\` and wrote files there successfully. All git commits used the main repo (`/d/claude/Autopilot`).
+None.
 
-## Known Stubs
+## User Setup Required
 
-None — all five files contain substantive content wired to correct cross-references. No placeholder text, hardcoded empty values, or TODO markers.
+None - no external service configuration required.
 
 ## Next Phase Readiness
 
-- Plan 02 files (04-08) complete and committed. Plan 03 can proceed to create `09-intune-connector-ad.md` and `10-config-failures.md` which are the final two files in this phase.
-- All cross-reference targets in this plan's files have been verified to exist: `docs/l1-runbooks/03-profile-not-assigned.md`, `docs/l1-runbooks/04-network-connectivity.md`, `docs/l1-runbooks/05-oobe-failure.md`, `docs/l2-runbooks/03-tpm-attestation.md`, `docs/l2-runbooks/04-hybrid-join.md`.
+- Files 04-08 complete; Plan 16-03 creates final files 09-10
+- Sequential navigation chain: 03 -> 04 -> 05 -> 06 -> 07 -> 08 -> 09 (next plan)
 
 ---
 *Phase: 16-apv1-admin-setup-guides*

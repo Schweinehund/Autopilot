@@ -1,28 +1,21 @@
 ---
 phase: 16-apv1-admin-setup-guides
 plan: "03"
-subsystem: documentation
-tags: [windows-autopilot, intune-connector, hybrid-join, admin-guide, configuration-reference]
+subsystem: docs
+tags: [autopilot, apv1, admin-guide, intune-connector, config-failures, reverse-lookup]
 
-# Dependency graph
 requires:
-  - phase: 16-01
-    provides: guide files 00-08 for cross-reference links in 10-config-failures.md
-  - phase: 16-02
-    provides: guide files 06-08 (deployment modes) for cross-reference links in 10-config-failures.md
+  - phase: 16-apv1-admin-setup-guides
+    provides: all 9 configuration guide files (Plans 01 and 02)
 provides:
-  - Intune Connector for AD setup guide with version gate (>= 6.2501.2000.5) and OU configuration
-  - Consolidated APv1 configuration-caused failures reverse-lookup table (31 entries, 6 categories)
-  - Completes 11-file APv1 admin guide set (files 09 and 10)
-affects: [17-navigation, l1-runbooks, l2-runbooks]
+  - Intune Connector for AD guide with version gate and OU configuration
+  - Consolidated reverse-lookup table aggregating all APv1 configuration mistakes
+  - Complete 11-file APv1 admin setup guide set
+affects: [17-navigation]
 
-# Tech tracking
 tech-stack:
   added: []
-  patterns:
-    - "Connector version gate CRITICAL callout pattern for deprecated software with enforcement dates"
-    - "Reverse-lookup table aggregation pattern: 4-column (Misconfiguration | Symptom | Guide | Runbook)"
-    - "MEDIUM confidence attribution for community-sourced log paths"
+  patterns: [reverse-lookup-table, version-gate-callout]
 
 key-files:
   created:
@@ -31,58 +24,52 @@ key-files:
   modified: []
 
 key-decisions:
-  - "Version gate CRITICAL callout uses blockquote with bold text for maximum visibility — connector silence on outdated version requires proactive admin awareness"
-  - "10-config-failures.md ends with Return-to footer (not Next-step) as the final file in the 11-file sequence"
-  - "File log path at C:\\Program Files\\Microsoft Intune\\ODJConnector\\ODJConnectorUI\\ODJConnectorUI.log cited as MEDIUM confidence (community-sourced)"
+  - "Connector guide uses CAUTION callout for version gate prominence per D-18"
+  - "Config failures table organized by 6 categories matching the guide file groupings"
+  - "Config failures uses 4-column format (Misconfiguration | Symptom | Guide | Runbook) per D-03"
 
 patterns-established:
-  - "Reverse-lookup table: 4 columns (Misconfiguration, Symptom, Guide, Runbook) organized by configuration domain category"
-  - "CRITICAL blockquote callout: used for deprecated software with active enforcement (not just deprecation warning)"
+  - "Reverse-lookup table pattern: categorized by failure domain, 4 columns linking to both source guide and troubleshooting runbook"
 
 requirements-completed: [ADMN-06, ADMN-07]
 
-# Metrics
-duration: 7min
+duration: 4min
 completed: 2026-04-13
 ---
 
-# Phase 16 Plan 03: APv1 Admin Setup Guides (Plans 03) Summary
+# Plan 16-03: Intune Connector + Config Failures Reference Summary
 
-**Intune Connector for AD guide with 6.2501.2000.5 version gate and consolidated 31-entry reverse-lookup table aggregating all APv1 configuration failures across all 11 guide files**
+**Intune Connector guide with critical version gate (6.2501.2000.5) and OU XML config, plus 30-entry consolidated reverse-lookup table across 6 failure categories linking to all guide files and L1 runbooks**
 
 ## Performance
 
-- **Duration:** 7 min
-- **Started:** 2026-04-13T12:30:45Z
-- **Completed:** 2026-04-13T12:37:45Z
+- **Duration:** 4 min
+- **Started:** 2026-04-13
+- **Completed:** 2026-04-13
 - **Tasks:** 2
 - **Files created:** 2
 
 ## Accomplishments
 
-- Created `09-intune-connector-ad.md` (165 lines): CRITICAL connector version gate (>= 6.2501.2000.5, current 6.2504.2001.8), installation with msaODJ MSA auto-creation, OU configuration with XML example, Event Viewer log path, 5 what-breaks callouts, 6-entry failures table, L2 details block
-- Created `10-config-failures.md` (118 lines): 31 entries across 6 categories (Hardware Hash, Deployment Profile, ESP Policy, Dynamic Groups, Deployment Mode, Intune Connector) linking all 5 L1 runbooks and all relevant guide files, L2 details block with 4 deep-dive links
-- Completed the 11-file APv1 admin guide set (plans 01+02+03 together deliver files 00-10)
+- Intune Connector guide with critical version gate callout, OU configuration with XML example, multi-domain guidance, msaODJ MSA naming, and Event Viewer log paths
+- Consolidated config failures reference with 30 entries across 6 categories (hardware hash, deployment profile, ESP, dynamic groups, deployment modes, Intune connector)
+- All 5 L1 runbooks linked from the config failures table
+- All relevant guide files (01-04, 07-09) linked as source references
+- L2 details blocks for hybrid join and TPM attestation
 
 ## Task Commits
 
-Each task was committed atomically:
-
-1. **Task 1: Create Intune Connector for AD setup guide** - `108dd00` (feat)
-2. **Task 2: Create consolidated config-caused failures reverse-lookup table** - `c352910` (feat)
-
-**Plan metadata:** (see final commit below)
+1. **Task 1: Intune Connector guide** - `43d9cb9`
+2. **Task 2: Config failures reference** - `b60de4e`
 
 ## Files Created/Modified
 
-- `docs/admin-setup-apv1/09-intune-connector-ad.md` - Intune Connector for AD setup guide with version gate, installation steps, OU config XML, Event Viewer log path, multi-domain guidance
-- `docs/admin-setup-apv1/10-config-failures.md` - Consolidated reverse-lookup table: 31 entries across 6 categories linking all guide files and L1 runbooks
+- `docs/admin-setup-apv1/09-intune-connector-ad.md` - Intune Connector for AD setup guide
+- `docs/admin-setup-apv1/10-config-failures.md` - Consolidated reverse-lookup table
 
 ## Decisions Made
 
-- Version gate CRITICAL blockquote was made prominent with bold text and explicit enforcement date ("already in effect") because the connector reports Active status even when outdated — admins cannot rely on status indicators alone
-- File log path (`ODJConnectorUI.log`) cited as MEDIUM confidence with community-sourced attribution, following established research confidence labeling pattern
-- `10-config-failures.md` ends with "Return to: Overview" footer instead of "Next step" because it is the final file in the 11-file sequence
+None - followed plan as specified.
 
 ## Deviations from Plan
 
@@ -90,21 +77,17 @@ None - plan executed exactly as written.
 
 ## Issues Encountered
 
-Discovered that the git worktree at `.claude/worktrees/agent-a2403309/` maps to the main repo working directory at `D:\claude\Autopilot\` — Write tool paths must use `D:\claude\Autopilot\docs\...` not `D:\claude\Autopilot\.claude\worktrees\agent-a2403309\docs\...`. First file write went to wrong path and was immediately corrected before commit.
-
-## Known Stubs
-
-None. Both files contain only factual content sourced from Microsoft Learn documentation and research. No placeholder text or hardcoded empty values.
+None.
 
 ## User Setup Required
 
-None — documentation-only phase, no external service configuration required.
+None - no external service configuration required.
 
 ## Next Phase Readiness
 
-- 11-file APv1 admin guide set complete (files 00-10) when combined with Plans 01 and 02
-- Phase 17 (Navigation) can now update hub files (`docs/index.md`, `docs/common-issues.md`) to link to `docs/admin-setup-apv1/` directory
-- `10-config-failures.md` is independently linkable from runbooks as a standalone reference artifact (per D-03)
+- Complete 11-file APv1 admin setup guide set delivered (00-10)
+- Sequential navigation complete: 08 -> 09 -> 10 -> 00 (return to overview)
+- Phase 17 (Navigation) can now link to all APv1 admin guide files
 
 ---
 *Phase: 16-apv1-admin-setup-guides*
