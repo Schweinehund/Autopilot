@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 Autopilot Documentation & Troubleshooting Guides** — Phases 1-10 (shipped 2026-04-10)
-- **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-17 (in progress)
+- **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-19 (in progress)
 
 ## Phases
 
@@ -34,6 +34,8 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - [ ] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy
 - [x] **Phase 16: APv1 Admin Setup Guides** — Hardware hash upload, profile, ESP, dynamic groups, and deployment mode configuration (completed 2026-04-13)
 - [x] **Phase 17: Navigation & Hub Updates** — Updated index, error index, glossary, common-issues, and cross-references (completed 2026-04-13)
+- [ ] **Phase 18: Stale Cross-Reference Cleanup** — Fix broken/stale links across APv2 admin, lifecycle, error-codes, and index files (gap closure)
+- [ ] **Phase 19: Tracking & Verification Hygiene** — Update ROADMAP tracking for Phases 13/15, create Phase 15 formal VERIFICATION.md (gap closure)
 
 ## Phase Details
 
@@ -139,6 +141,34 @@ Plans:
 - [x] 17-02-PLAN.md — Glossary APv2 terms with bidirectional cross-references, plus APv1 file back-link restoration
 - [x] 17-03-PLAN.md — Quick-reference card APv2 sections for L1 and L2
 
+### Phase 18: Stale Cross-Reference Cleanup
+**Goal**: All cross-references added during v1.1 phases resolve to correct targets with no stale placeholders or broken anchors remaining
+**Depends on**: Phase 17 (navigation hub must be final before fixing links into it)
+**Requirements**: TROU-01, NAVG-02 (integration/flow gap closure)
+**Gap Closure**: Closes integration gap (error-codes index → APv2 failure catalog), flow gap (error lookup path), and 5 tech debt items from milestone audit
+**Success Criteria** (what must be TRUE):
+  1. `error-codes/00-index.md` APv2 Note contains a direct navigable link to `error-codes/06-apv2-device-preparation.md`
+  2. All 5 APv2 admin files (`admin-setup-apv2/00-04`) link to `admin-setup-apv1/00-overview.md` instead of "coming in Phase 16" placeholder
+  3. `lifecycle-apv2/03-automatic-mode.md` links to `admin-setup-apv2/00-overview.md` instead of stale "Phase 15" planning references
+  4. `admin-setup-apv1/00-overview.md` anchor link to `apv1-vs-apv2.md` resolves correctly (broken `#decision-flowchart` fixed)
+  5. `index.md` Shared References section includes an entry for `lifecycle-apv2/00-overview.md`
+**Plans:** 0/1 plans
+Plans:
+- [ ] 18-01-PLAN.md — Fix all stale cross-references, broken anchors, and missing navigation links
+
+### Phase 19: Tracking & Verification Hygiene
+**Goal**: ROADMAP.md accurately reflects completed work for all v1.1 phases, and every phase has a formal VERIFICATION.md artifact
+**Depends on**: Phase 18 (cross-references must be fixed before verification can confirm them)
+**Requirements**: None (tracking hygiene, no user-facing requirements)
+**Gap Closure**: Closes tech debt items #4 (stale ROADMAP checkboxes) and #5 (missing VERIFICATION.md) from milestone audit
+**Success Criteria** (what must be TRUE):
+  1. ROADMAP.md Phase 13 checkbox is checked, progress shows 2/2 Complete with completion date
+  2. ROADMAP.md Phase 15 checkbox is checked, progress shows 2/2 Complete with completion date
+  3. Phase 15 has a formal VERIFICATION.md artifact in `.planning/phases/15-apv2-admin-setup-guides/`
+**Plans:** 0/1 plans
+Plans:
+- [ ] 19-01-PLAN.md — Update ROADMAP tracking for Phases 13/15, create Phase 15 VERIFICATION.md
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -160,3 +190,5 @@ Plans:
 | 15. APv2 Admin Setup Guides | v1.1 | 0/2 | Planned | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 3/3 | Complete    | 2026-04-13 |
 | 17. Navigation & Hub Updates | v1.1 | 3/3 | Complete    | 2026-04-13 |
+| 18. Stale Cross-Reference Cleanup | v1.1 | 0/1 | Planned | - |
+| 19. Tracking & Verification Hygiene | v1.1 | 0/1 | Planned | - |
