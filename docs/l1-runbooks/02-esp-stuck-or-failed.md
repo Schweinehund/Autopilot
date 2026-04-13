@@ -132,8 +132,6 @@ Escalate to L2 if:
 
 > **L2 forward-link:** See [L2 ESP Deep-Dive](../l2-runbooks/02-esp-deep-dive.md) for ESP registry analysis and app conflict investigation.
 
-**Quick Reference:** [L1 Quick-Reference Card](../quick-ref-l1.md)
-
 ---
 
 ## Version History

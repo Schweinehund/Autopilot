@@ -1,13 +1,11 @@
 ---
-last_verified: 2026-04-11
-review_by: 2026-07-10
+last_verified: 2026-03-11
+review_by: 2026-06-09
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide compares both Autopilot frameworks.
-> For APv2 (Device Preparation), see [APv2 Lifecycle Overview](lifecycle-apv2/00-overview.md).
-> For APv1 (classic), see [APv1 Lifecycle Overview](lifecycle/00-overview.md).
+> **Version gate:** This guide applies to Windows Autopilot (classic). For Autopilot Device Preparation, see below.
 
 # APv1 vs APv2: Which Autopilot Are You Troubleshooting?
 
@@ -63,48 +61,6 @@ Microsoft now maintains two distinct Autopilot frameworks: Windows Autopilot (AP
 - APv1 blocks the Windows desktop until device-targeted configuration is fully applied; APv2 does not block desktop access in the same way.
 - This documentation suite primarily covers APv1 (classic). APv2-specific content is noted where applicable and will be expanded in a future documentation phase.
 
-## Decision Flowchart
-
-Use this flowchart to determine which Autopilot framework fits your deployment scenario.
-
-```mermaid
-graph TD
-    Q1{Need Windows 10 support?} -->|Yes| APv1[Use APv1]
-    Q1 -->|No| Q2{Need hybrid Entra join?}
-    Q2 -->|Yes| APv1
-    Q2 -->|No| Q3{Need pre-provisioning / white glove?}
-    Q3 -->|Yes| APv1
-    Q3 -->|No| Q4{Need Autopilot Reset?}
-    Q4 -->|Yes| APv1
-    Q4 -->|No| Q5{Deploying HoloLens or Teams Rooms?}
-    Q5 -->|Yes| APv1
-    Q5 -->|No| Q6{Need more than 25 apps during OOBE?}
-    Q6 -->|Yes| APv1
-    Q6 -->|No| Q7{GCCH or DoD environment?}
-    Q7 -->|Yes| APv2[Use APv2]
-    Q7 -->|No| Q8{Cloud PC / Windows 365 automatic provisioning?}
-    Q8 -->|Yes| APv2
-    Q8 -->|No| APv2_REC[APv2 recommended for new deployments]
-```
-
-If none of the APv1-only requirements apply, APv2 is recommended for new deployments due to simpler administration and no hardware hash pre-staging requirement.
-
-## Migration Guidance (APv1 to APv2)
-
-The following are high-level considerations for migrating devices from APv1 to APv2. This section orients administrators on what is involved — for step-by-step configuration, see the APv2 Admin Setup Guide (planned for Phase 15).
-
-1. **No in-place migration exists.** A device currently deployed via APv1 cannot be switched to APv2 without re-enrollment. The device must go through OOBE again to pick up the APv2 Device Preparation policy.
-
-2. **Deregister from Autopilot first.** The device must be removed from the Autopilot devices list (Intune admin center > Devices > Windows > Windows enrollment > Devices > select device > Delete). If the device is not deregistered, the APv1 profile silently takes precedence over the APv2 policy — no error is shown.
-
-3. **APv1 and APv2 can coexist in a tenant.** Different devices can use different frameworks simultaneously. A gradual migration is possible: new devices use APv2 while existing devices remain on APv1 until they are refreshed or replaced.
-
-4. **Plan the Enrollment Time Grouping (ETG) device group** before migrating any devices. The ETG security group must be pre-configured with the Intune Provisioning Client (AppID `f1346770-5b25-470b-88bd-d5744ab7952c`) as owner. Without this, devices will not be added to the group at enrollment time.
-
-5. **Re-enroll devices through OOBE** after deregistration. The device will pick up the APv2 Device Preparation policy at next enrollment. Apps and scripts assigned to the ETG device group deploy during the OOBE experience.
-
-For step-by-step APv2 configuration, see the APv2 Admin Setup Guide (planned for Phase 15). For APv2 prerequisites, see [APv2 Prerequisites](lifecycle-apv2/01-prerequisites.md).
-
 ---
 
-*Feature comparison sourced from [Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/compare), verified April 2026. Decision flowchart derived from official comparison criteria.*
+*Feature comparison sourced from [Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/compare), updated April 2025.*

@@ -13,7 +13,7 @@ audience: L1
 
 Start here when a user reports an [Autopilot](../_glossary.md#autopilot) deployment issue. Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree will route you to a specific scenario tree or to an escalation point with data collection instructions.
 
-> **Note:** These decision trees cover Autopilot (classic / APv1). For Device Preparation (APv2) issues, see the [APv2 Device Preparation Triage Tree](04-apv2-triage.md).
+> **Note:** These decision trees cover Autopilot (classic / APv1). For Device Preparation (APv2) issues, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Legend
 
@@ -114,13 +114,8 @@ graph TD
 - [Profile Assignment Tree](02-profile-assignment.md)
 - [TPM Attestation Tree](03-tpm-attestation.md)
 
-## See Also
-
-- [APv2 Device Preparation Triage](04-apv2-triage.md) -- For APv2 (Device Preparation) deployment failures
-
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-04-12 | Added APv2 triage tree cross-reference | -- |
 | 2026-03-20 | Initial version | — |
