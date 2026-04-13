@@ -101,7 +101,10 @@ Plans:
   3. Admin can diagnose any APv2 setup mistake using per-setting "what breaks if misconfigured" callouts embedded in the setup guide itself, with links to the relevant L1 runbook
   4. Admin can create a custom RBAC role for APv2 administration with all five required permission categories listed as a prerequisite before any setup step
   5. Admin can configure corporate identifiers for enrollment restriction scenarios with enrollment restriction conflict behavior explicitly documented
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 15-01-PLAN.md — Overview index, prerequisites/RBAC guide, and ETG device group guide
+- [ ] 15-02-PLAN.md — Device Preparation policy guide and corporate identifiers guide
 
 ### Phase 16: APv1 Admin Setup Guides
 **Goal**: Intune admins can configure a complete APv1 deployment — hardware hash registration, deployment profiles, ESP policies, dynamic groups, and deployment modes — with configuration-caused failure chains documented at each step
@@ -146,6 +149,6 @@ Plans:
 | 12. APv2 Failure Index | v1.1 | 1/1 | Complete    | 2026-04-12 |
 | 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/2 | Planned | - |
 | 14. APv2 L2 Runbooks | v1.1 | 3/3 | Complete    | 2026-04-12 |
-| 15. APv2 Admin Setup Guides | v1.1 | 0/? | Not started | - |
+| 15. APv2 Admin Setup Guides | v1.1 | 0/2 | Planned | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 0/? | Not started | - |
 | 17. Navigation & Hub Updates | v1.1 | 0/? | Not started | - |
