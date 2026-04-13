@@ -45,7 +45,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 
 ### v1.2 Cross-Platform Provisioning & Operational Gaps
 
-- [ ] **Phase 20: Cross-Platform Foundation** — Shared glossary, terminology standards, macOS template, platform taxonomy, and navigation structure design
+- [ ] **Phase 20: Cross-Platform Foundation** (3 plans) — Shared glossary, terminology standards, macOS template, platform taxonomy, and navigation structure design
 - [ ] **Phase 21: Windows Operational Gaps** — Device lifecycle, infrastructure prerequisites, ESP app strategy, security/compliance, migration scenarios, and monitoring (parallelizable with Phase 22)
 - [ ] **Phase 22: macOS Lifecycle Foundation** — ADE lifecycle overview, reference files, and network endpoints (parallelizable with Phase 21)
 - [ ] **Phase 23: macOS Admin Setup** — ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance, and capability matrix
@@ -64,7 +64,11 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   3. The docs hub (index.md) presents a platform selector above role-based routing so users choose Windows or macOS before choosing their role, without breaking existing Windows navigation paths
   4. Every new macOS document uses the macOS admin template with dual-portal references (ABM + Intune admin center) and Setup Assistant replacing ESP terminology
   5. All documentation files support a `platform:` frontmatter field (Windows/macOS/all) for filtering, with existing docs defaulting to Windows without retroactive edits
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 20-01-PLAN.md — Platform frontmatter taxonomy + Windows vs macOS comparison page (XPLAT-04, XPLAT-01)
+- [ ] 20-02-PLAN.md — macOS glossary + macOS admin template (XPLAT-02, XPLAT-03)
+- [ ] 20-03-PLAN.md — Navigation hub restructure with platform selector (NAVX-01)
 
 ### Phase 21: Windows Operational Gaps
 **Goal**: Admins can manage the complete Windows device lifecycle beyond initial provisioning, configure infrastructure prerequisites correctly, deploy apps through ESP reliably, apply security policies without breaking enrollment, plan migrations between frameworks, and monitor deployment health proactively
@@ -144,7 +148,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 | 17. Navigation & Hub Updates | v1.1 | 3/3 | Complete | 2026-04-13 |
 | 18. Stale Cross-Reference Cleanup | v1.1 | 1/1 | Complete | 2026-04-13 |
 | 19. Tracking & Verification Hygiene | v1.1 | 1/1 | Complete | 2026-04-13 |
-| 20. Cross-Platform Foundation | v1.2 | 0/? | Not started | - |
+| 20. Cross-Platform Foundation | v1.2 | 0/3 | Not started | - |
 | 21. Windows Operational Gaps | v1.2 | 0/? | Not started | - |
 | 22. macOS Lifecycle Foundation | v1.2 | 0/? | Not started | - |
 | 23. macOS Admin Setup | v1.2 | 0/? | Not started | - |
