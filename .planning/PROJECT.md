@@ -10,9 +10,9 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 ## Current Milestone: v1.1 APv2 Documentation & Admin Setup Guides
 
-**Phase 16 complete (2026-04-13):** APv1 Admin Setup Guides — 11-file guide set covering hardware hash upload, deployment profile, ESP policy, dynamic groups, deployment modes (user-driven, pre-provisioning, self-deploying), Intune Connector, and consolidated config failures reference.
+**Phase 17 complete (2026-04-13):** Navigation & Hub Updates — All hub files (index.md, common-issues.md, error-codes index), glossary, runbook indexes, decision tree, lifecycle overview, and quick-ref cards updated with APv2 sections, framework labels, and bidirectional cross-references. Milestone v1.1 complete.
 
-**Next:** Phase 17 — Navigation & Hub Updates
+**All v1.1 phases complete.** Seven phases delivered APv2 lifecycle, failure index, L1/L2 decision trees and runbooks, APv2 and APv1 admin setup guides, and navigation updates.
 
 ## Previous Milestone: v1.0 Autopilot Documentation & Troubleshooting Guides
 
