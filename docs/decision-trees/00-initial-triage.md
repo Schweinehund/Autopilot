@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-03-20
-review_by: 2026-06-18
+last_verified: 2026-04-13
+review_by: 2026-07-12
 applies_to: APv1
 audience: L1
 ---
@@ -13,7 +13,7 @@ audience: L1
 
 Start here when a user reports an [Autopilot](../_glossary.md#autopilot) deployment issue. Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree will route you to a specific scenario tree or to an escalation point with data collection instructions.
 
-> **Note:** These decision trees cover Autopilot (classic / APv1). For Device Preparation (APv2) issues, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **Note:** These decision trees cover Autopilot (classic / APv1). For Device Preparation (APv2) issues, see the [APv2 Device Preparation Triage Tree](04-apv2-triage.md).
 
 ## Legend
 
@@ -32,6 +32,7 @@ Use these links after this triage tree routes you to a specific scenario:
 - [ESP Failure Tree](01-esp-failure.md) — [ESP](../_glossary.md#esp) (Enrollment Status Page) stuck or showing errors
 - [Profile Assignment Tree](02-profile-assignment.md) — No profile assigned or wrong profile applied to device
 - [TPM Attestation Tree](03-tpm-attestation.md) — [TPM](../_glossary.md#tpm) errors during pre-provisioning or self-deploying mode
+- [APv2 Device Preparation Triage](04-apv2-triage.md) — APv2 (Device Preparation) deployment failure routing
 
 ## Decision Tree
 
@@ -109,13 +110,21 @@ graph TD
 
 ---
 
+## See Also
+
+- [APv2 Device Preparation Triage](04-apv2-triage.md) -- For APv2 (Device Preparation) deployment failures
+
+---
+
 **Scenario Trees:**
 - [ESP Failure Tree](01-esp-failure.md)
 - [Profile Assignment Tree](02-profile-assignment.md)
 - [TPM Attestation Tree](03-tpm-attestation.md)
+- [APv2 Device Preparation Triage](04-apv2-triage.md)
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-13 | Added APv2 triage tree cross-reference (restored after accidental revert) | -- |
 | 2026-03-20 | Initial version | — |
