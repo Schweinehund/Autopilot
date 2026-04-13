@@ -1,12 +1,13 @@
 ---
-last_verified: 2026-03-21
-review_by: 2026-06-19
-applies_to: APv1
+last_verified: 2026-04-13
+review_by: 2026-07-12
+applies_to: both
 audience: L2
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **Version gate:** This index covers both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2) L2 runbooks.
+> APv1 runbooks are listed first, followed by APv2 runbooks.
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 # L2 Investigation Runbooks
 
@@ -37,11 +38,40 @@ L2 runbooks receive escalations from L1 decision trees. Each L1 escalation termi
 
 > **Note:** When a ticket arrives via L1 escalation, the escalation checklist from the L1 runbook specifies which data was collected. Each L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
+---
+
+## APv2 (Autopilot Device Preparation) Runbooks
+
+> **Version gate:** The runbooks below cover Windows Autopilot Device Preparation (APv2).
+> For APv1 (classic Autopilot) runbooks, see the tables above.
+
+The [APv2 Log Collection Guide](06-apv2-log-collection.md) is a **prerequisite for all APv2 investigation runbooks** -- collect BootstrapperAgent event log and IME logs before beginning any investigation. The deployment report in the Intune admin center is the APv2 equivalent of registry-based ESP investigation.
+
+### When to Use
+
+| Runbook | When to Use | Prerequisite |
+|---------|-------------|--------------|
+| [APv2 Log Collection Guide](06-apv2-log-collection.md) | Before starting any APv2 L2 investigation -- collect BootstrapperAgent log and IME logs | None |
+| [APv2 Event ID Reference](07-apv2-event-ids.md) | Looking up BootstrapperAgent event IDs to identify failure type | [APv2 Log Collection](06-apv2-log-collection.md) |
+| [APv2 Deployment Report Guide](08-apv2-deployment-report.md) | Interpreting the Intune APv2 deployment report -- status values, phase breakdown, failure identification | [APv2 Log Collection](06-apv2-log-collection.md) |
+
+### APv2 L1 Escalation Mapping
+
+| L1 Escalation Node IDs | Source Scenario | L2 Runbook |
+|------------------------|-----------------|------------|
+| APE1 | Entra join failed | [APv2 Deployment Report Guide](08-apv2-deployment-report.md) |
+| APE2 | Enrollment failed | [APv2 Deployment Report Guide](08-apv2-deployment-report.md) |
+| APE3 | IME or infrastructure failure | [APv2 Deployment Report Guide](08-apv2-deployment-report.md) + [APv2 Event ID Reference](07-apv2-event-ids.md) |
+
+> **Note:** When a ticket arrives via L1 escalation, the escalation checklist from the L1 runbook specifies which data was collected. Each APv2 L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
+
 ## Related Resources
 
 - [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
 - [Error Code Index](../error-codes/00-index.md) — master error code lookup covering ESP, TPM, hybrid join, pre-provisioning, and profile assignment errors
 - [Decision Trees](../decision-trees/00-initial-triage.md) — L1 triage flowcharts; escalation terminal IDs in these trees map to L2 runbooks above
+- [APv2 Failure Catalog](../error-codes/06-apv2-device-preparation.md) — symptom-based APv2 failure index organized by deployment phase
+- [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) — APv2 L1 triage flowchart; APE1/APE2/APE3 escalation nodes map to APv2 L2 runbooks above
 
 ---
 
@@ -49,4 +79,5 @@ L2 runbooks receive escalations from L1 decision trees. Each L1 escalation termi
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-13 | Added APv2 runbook section (restored after accidental revert) | -- |
 | 2026-03-21 | Initial version | — |

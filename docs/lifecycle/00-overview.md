@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-03-14
-review_by: 2026-06-12
+last_verified: 2026-04-13
+review_by: 2026-07-12
 applies_to: both
 audience: both
 ---
@@ -87,6 +87,7 @@ All prerequisites must be met before Stage 1. Missing any prerequisite causes fa
 ## Related Documentation
 
 - [Glossary](../_glossary.md) — Autopilot terminology reference
+- [APv2 Lifecycle Overview](../lifecycle-apv2/00-overview.md) — APv2 deployment flow, prerequisites, and automatic mode
 - [APv1 vs APv2 Disambiguation](../apv1-vs-apv2.md) — Framework comparison
 - [Registry Paths Reference](../reference/registry-paths.md) — All Autopilot registry locations
 - [Network Endpoints Reference](../reference/endpoints.md) — Required URLs and test commands
@@ -97,4 +98,5 @@ All prerequisites must be met before Stage 1. Missing any prerequisite causes fa
 
 | Date | Change |
 |------|--------|
+| 2026-04-13 | Added APv2 lifecycle overview cross-reference | -- |
 | 2026-03-14 | Initial version |
