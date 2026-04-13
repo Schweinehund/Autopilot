@@ -29,9 +29,9 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 
 - [x] **Phase 11: APv2 Lifecycle Foundation** — APv2 deployment flow, prerequisites, comparison with APv1, and automatic mode (completed 2026-04-11)
 - [x] **Phase 12: APv2 Failure Index** — Scenario-based failure catalog and updated master error code index with APv2 section (completed 2026-04-12)
-- [ ] **Phase 13: APv2 L1 Decision Trees & Runbooks** — Initial triage tree and scripted L1 runbooks for top APv2 failure scenarios
+- [x] **Phase 13: APv2 L1 Decision Trees & Runbooks** — Initial triage tree and scripted L1 runbooks for top APv2 failure scenarios (completed 2026-04-12)
 - [x] **Phase 14: APv2 L2 Runbooks** — BootstrapperAgent log collection and Intune deployment report analysis guides (completed 2026-04-12)
-- [ ] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy
+- [x] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy (completed 2026-04-12)
 - [x] **Phase 16: APv1 Admin Setup Guides** — Hardware hash upload, profile, ESP, dynamic groups, and deployment mode configuration (completed 2026-04-13)
 - [x] **Phase 17: Navigation & Hub Updates** — Updated index, error index, glossary, common-issues, and cross-references (completed 2026-04-13)
 - [x] **Phase 18: Stale Cross-Reference Cleanup** — Fix broken/stale links across APv2 admin, lifecycle, error-codes, and index files (gap closure) (completed 2026-04-13)
@@ -74,10 +74,10 @@ Plans:
   2. L1 agent can follow a scripted runbook for "deployment experience never launched" using only Intune portal actions, with zero PowerShell or registry steps
   3. L1 agent can follow a scripted runbook for "apps and scripts not installed" using only Intune portal actions, with zero PowerShell or registry steps
   4. L1 agent can identify when an APv2 symptom is actually an APv1 registration conflict (ESP appeared unexpectedly) and route to the APv1 doc set
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 Plans:
-- [ ] 13-01-PLAN.md — APv2 triage decision tree, APv1 conflict runbook, and existing file updates (initial triage cross-ref, L1 index, Phase 12 forward references)
-- [ ] 13-02-PLAN.md — Deployment not launched, apps not installed, and deployment timeout L1 runbooks
+- [x] 13-01-PLAN.md — APv2 triage decision tree, APv1 conflict runbook, and existing file updates (initial triage cross-ref, L1 index, Phase 12 forward references)
+- [x] 13-02-PLAN.md — Deployment not launched, apps not installed, and deployment timeout L1 runbooks
 
 ### Phase 14: APv2 L2 Runbooks
 **Goal**: L2 Desktop Engineers can collect APv2-specific logs and interpret the Intune deployment report to diagnose failures that L1 cannot resolve
@@ -103,10 +103,10 @@ Plans:
   3. Admin can diagnose any APv2 setup mistake using per-setting "what breaks if misconfigured" callouts embedded in the setup guide itself, with links to the relevant L1 runbook
   4. Admin can create a custom RBAC role for APv2 administration with all five required permission categories listed as a prerequisite before any setup step
   5. Admin can configure corporate identifiers for enrollment restriction scenarios with enrollment restriction conflict behavior explicitly documented
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 Plans:
-- [ ] 15-01-PLAN.md — Overview index, prerequisites/RBAC guide, and ETG device group guide
-- [ ] 15-02-PLAN.md — Device Preparation policy guide and corporate identifiers guide
+- [x] 15-01-PLAN.md — Overview index, prerequisites/RBAC guide, and ETG device group guide
+- [x] 15-02-PLAN.md — Device Preparation policy guide and corporate identifiers guide
 
 ### Phase 16: APv1 Admin Setup Guides
 **Goal**: Intune admins can configure a complete APv1 deployment — hardware hash registration, deployment profiles, ESP policies, dynamic groups, and deployment modes — with configuration-caused failure chains documented at each step
@@ -185,9 +185,9 @@ Plans:
 | 10. Navigation Polish | v1.0 | 1/1 | Complete | 2026-04-10 |
 | 11. APv2 Lifecycle Foundation | v1.1 | 2/2 | Complete    | 2026-04-11 |
 | 12. APv2 Failure Index | v1.1 | 1/1 | Complete    | 2026-04-12 |
-| 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 0/2 | Planned | - |
+| 13. APv2 L1 Decision Trees & Runbooks | v1.1 | 2/2 | Complete    | 2026-04-12 |
 | 14. APv2 L2 Runbooks | v1.1 | 3/3 | Complete    | 2026-04-12 |
-| 15. APv2 Admin Setup Guides | v1.1 | 0/2 | Planned | - |
+| 15. APv2 Admin Setup Guides | v1.1 | 2/2 | Complete    | 2026-04-12 |
 | 16. APv1 Admin Setup Guides | v1.1 | 3/3 | Complete    | 2026-04-13 |
 | 17. Navigation & Hub Updates | v1.1 | 3/3 | Complete    | 2026-04-13 |
 | 18. Stale Cross-Reference Cleanup | v1.1 | 1/1 | Complete    | 2026-04-13 |
