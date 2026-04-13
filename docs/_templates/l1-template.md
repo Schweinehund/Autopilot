@@ -7,6 +7,7 @@
      - Do NOT include PowerShell commands, registry paths, or log file references
      - Do NOT link to L2-audience content from within steps
      - Link to the glossary for any Autopilot-specific terms
+     - Set platform to Windows, macOS, or all
      Reviewer: L1 Team Lead (role, not person name)
 -->
 ---
@@ -14,6 +15,7 @@ last_verified: YYYY-MM-DD
 review_by: YYYY-MM-DD
 applies_to: APv1 | APv2 | both
 audience: L1
+platform: Windows | macOS | all
 ---
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
