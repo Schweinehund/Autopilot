@@ -69,7 +69,7 @@ In automatic mode, the Windows 365 Cloud PC agent triggers enrollment — no use
 
 ## Admin Setup Workflow (6 Steps)
 
-The following is a high-level orientation of the admin setup process. For detailed configuration steps, see the APv2 Admin Setup Guide (Phase 15).
+The following is a high-level orientation of the admin setup process. For detailed configuration steps, see the [APv2 Admin Setup Guide](../admin-setup-apv2/00-overview.md).
 
 1. **Set up Windows automatic Intune enrollment** — configure MDM scope in Microsoft Entra.
 2. **Create an assigned device group** — this group receives apps, scripts, and policies.
@@ -78,7 +78,7 @@ The following is a high-level orientation of the admin setup process. For detail
 5. **Create a Cloud PC provisioning policy** — link the Device Preparation policy to the Windows 365 provisioning policy.
 6. **Monitor the deployment** — track provisioning status in the Intune admin center (Provisioning -> Preparing -> Provisioned).
 
-> For detailed configuration steps, see the APv2 Admin Setup Guide (planned for Phase 15).
+> For detailed configuration steps, see the [APv2 Admin Setup Guide](../admin-setup-apv2/00-overview.md).
 
 ## See Also
 
