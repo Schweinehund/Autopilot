@@ -34,7 +34,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - [ ] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy
 - [x] **Phase 16: APv1 Admin Setup Guides** — Hardware hash upload, profile, ESP, dynamic groups, and deployment mode configuration (completed 2026-04-13)
 - [x] **Phase 17: Navigation & Hub Updates** — Updated index, error index, glossary, common-issues, and cross-references (completed 2026-04-13)
-- [ ] **Phase 18: Stale Cross-Reference Cleanup** — Fix broken/stale links across APv2 admin, lifecycle, error-codes, and index files (gap closure)
+- [x] **Phase 18: Stale Cross-Reference Cleanup** — Fix broken/stale links across APv2 admin, lifecycle, error-codes, and index files (gap closure) (completed 2026-04-13)
 - [ ] **Phase 19: Tracking & Verification Hygiene** — Update ROADMAP tracking for Phases 13/15, create Phase 15 formal VERIFICATION.md (gap closure)
 
 ## Phase Details
@@ -152,9 +152,9 @@ Plans:
   3. `lifecycle-apv2/03-automatic-mode.md` links to `admin-setup-apv2/00-overview.md` instead of stale "Phase 15" planning references
   4. `admin-setup-apv1/00-overview.md` anchor link to `apv1-vs-apv2.md` resolves correctly (broken `#decision-flowchart` fixed)
   5. `index.md` Shared References section includes an entry for `lifecycle-apv2/00-overview.md`
-**Plans:** 0/1 plans
+**Plans:** 1/1 plans complete
 Plans:
-- [ ] 18-01-PLAN.md — Fix all stale cross-references, broken anchors, and missing navigation links
+- [x] 18-01-PLAN.md — Fix all stale cross-references, broken anchors, and missing navigation links
 
 ### Phase 19: Tracking & Verification Hygiene
 **Goal**: ROADMAP.md accurately reflects completed work for all v1.1 phases, and every phase has a formal VERIFICATION.md artifact
@@ -190,5 +190,5 @@ Plans:
 | 15. APv2 Admin Setup Guides | v1.1 | 0/2 | Planned | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 3/3 | Complete    | 2026-04-13 |
 | 17. Navigation & Hub Updates | v1.1 | 3/3 | Complete    | 2026-04-13 |
-| 18. Stale Cross-Reference Cleanup | v1.1 | 0/1 | Planned | - |
+| 18. Stale Cross-Reference Cleanup | v1.1 | 1/1 | Complete    | 2026-04-13 |
 | 19. Tracking & Verification Hygiene | v1.1 | 0/1 | Planned | - |
