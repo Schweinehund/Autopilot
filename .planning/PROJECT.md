@@ -8,7 +8,13 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering — covering both pre-provisioning (white glove) and user-driven modes.
 
-## Current Milestone: v1.0 Autopilot Documentation & Troubleshooting Guides
+## Current Milestone: v1.1 APv2 Documentation & Admin Setup Guides
+
+**Phase 16 complete (2026-04-13):** APv1 Admin Setup Guides — 11-file guide set covering hardware hash upload, deployment profile, ESP policy, dynamic groups, deployment modes (user-driven, pre-provisioning, self-deploying), Intune Connector, and consolidated config failures reference.
+
+**Next:** Phase 17 — Navigation & Hub Updates
+
+## Previous Milestone: v1.0 Autopilot Documentation & Troubleshooting Guides
 
 **Goal:** Deliver end-to-end documentation covering the full Autopilot lifecycle with integrated troubleshooting, tiered for L1 Service Desk and L2 Desktop teams.
 
