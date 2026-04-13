@@ -11,7 +11,7 @@ audience: admin
 
 # APv1 Admin Setup: Complete Configuration Guide
 
-This guide walks Intune administrators through configuring a complete Windows Autopilot (classic) deployment from scratch. The setup must be completed in order -- each step depends on the previous one being correct. If you are starting a new deployment and are unsure which framework to use, see the decision flowchart below before proceeding.
+This guide walks Intune administrators through configuring a complete Windows Autopilot (classic) deployment from scratch. The setup must be completed in order -- each step depends on the previous one being correct. If you are starting a new deployment and are unsure which framework to use, see the [APv1 vs APv2 decision flowchart](../apv1-vs-apv2.md#which-guide-do-i-use) before proceeding.
 
 > **Consider APv2:** Microsoft recommends Autopilot Device Preparation (APv2) for new deployments when requirements are met. See [APv1 vs APv2 Comparison](../apv1-vs-apv2.md) and the [decision flowchart](../apv1-vs-apv2.md#which-guide-do-i-use) to determine if APv2 fits your scenario. **Important:** If a device has both APv1 and APv2 registrations, APv1 silently wins -- the device enters the APv1 ESP flow with no error shown.
 
