@@ -33,7 +33,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - [x] **Phase 14: APv2 L2 Runbooks** — BootstrapperAgent log collection and Intune deployment report analysis guides (completed 2026-04-12)
 - [ ] **Phase 15: APv2 Admin Setup Guides** — Step-by-step APv2 configuration from prerequisites through Device Preparation policy
 - [x] **Phase 16: APv1 Admin Setup Guides** — Hardware hash upload, profile, ESP, dynamic groups, and deployment mode configuration (completed 2026-04-13)
-- [ ] **Phase 17: Navigation & Hub Updates** — Updated index, error index, glossary, common-issues, and cross-references
+- [x] **Phase 17: Navigation & Hub Updates** — Updated index, error index, glossary, common-issues, and cross-references (completed 2026-04-13)
 
 ## Phase Details
 
@@ -133,11 +133,11 @@ Plans:
   2. Glossary (_glossary.md) contains APv2-specific terms (Enrollment Time Grouping, BootstrapperAgent, Device Preparation policy) with bidirectional cross-references to APv1 equivalents where they exist
   3. common-issues.md routes APv2 failure scenarios to APv2 runbooks and APv1 failure scenarios to APv1 runbooks without cross-contamination
   4. Every APv2 document that references an APv1 concept links back to the APv1 document, and every APv1 document that has an APv2 equivalent references it — bidirectional cross-referencing verified
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 Plans:
-- [ ] 17-01-PLAN.md — Hub file restructures (index.md, common-issues.md, error-codes index) with APv2 sections and Admin audience
-- [ ] 17-02-PLAN.md — Glossary APv2 terms with bidirectional cross-references, plus APv1 file back-link restoration
-- [ ] 17-03-PLAN.md — Quick-reference card APv2 sections for L1 and L2
+- [x] 17-01-PLAN.md — Hub file restructures (index.md, common-issues.md, error-codes index) with APv2 sections and Admin audience
+- [x] 17-02-PLAN.md — Glossary APv2 terms with bidirectional cross-references, plus APv1 file back-link restoration
+- [x] 17-03-PLAN.md — Quick-reference card APv2 sections for L1 and L2
 
 ## Progress
 
@@ -159,4 +159,4 @@ Plans:
 | 14. APv2 L2 Runbooks | v1.1 | 3/3 | Complete    | 2026-04-12 |
 | 15. APv2 Admin Setup Guides | v1.1 | 0/2 | Planned | - |
 | 16. APv1 Admin Setup Guides | v1.1 | 3/3 | Complete    | 2026-04-13 |
-| 17. Navigation & Hub Updates | v1.1 | 0/3 | Planned | - |
+| 17. Navigation & Hub Updates | v1.1 | 3/3 | Complete    | 2026-04-13 |
