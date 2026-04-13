@@ -1,121 +1,65 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: APv2 Documentation & Admin Setup Guides
-status: executing
-stopped_at: Phase 19 context gathered
-last_updated: "2026-04-13T18:21:05.714Z"
+milestone: v1.2
+milestone_name: Cross-Platform Provisioning & Operational Gaps
+status: defining_requirements
+stopped_at: Milestone v1.2 started
+last_updated: "2026-04-13"
 last_activity: 2026-04-13
 progress:
-  total_phases: 9
-  completed_phases: 9
-  total_plans: 18
-  completed_plans: 18
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-10)
+See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering
-**Current focus:** Phase 17 — navigation-hub-updates
+**Current focus:** Defining requirements for v1.2
 
 ## Current Position
 
-Phase: 19
-Plan: Not started
-Status: Executing Phase 17
-Last activity: 2026-04-13
-
-```
-v1.1 Progress: [░░░░░░░░░░░░░░░░░░░░] 0% (0/7 phases)
-```
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-13 — Milestone v1.2 started
 
 ## Performance Metrics
 
-**Velocity (v1.0 reference):**
+**Velocity (v1.0 + v1.1 reference):**
 
-- Total plans completed: 40
-- Average duration: ~4 min/plan
-- Total execution time: ~96 min across 10 phases
-
-**By Phase (v1.0):**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01-foundation | 3 | ~6 min | ~2 min |
-| 02-lifecycle | 3 | ~180 min | ~60 min |
-| 03-error-codes | 3 | ~16 min | ~5 min |
-| 04-l1-decision-trees | 2 | ~7 min | ~3.5 min |
-| 05-l1-runbooks | 3 | ~17 min | ~5.7 min |
-| 06-l2-runbooks | 4 | ~19 min | ~4.75 min |
-| 07-navigation | 2 | ~5 min | ~2.5 min |
-| 08-reference-anchors | 2 | — | — |
-| 09-navigation-wiring | 1 | — | — |
-| 10-navigation-polish | 1 | — | — |
-| 11 | 2 | - | - |
-| 12 | 1 | - | - |
-| 14 | 3 | - | - |
-| 16 | 3 | - | - |
-| 18 | 1 | - | - |
-| 19 | 1 | - | - |
-
-**v1.1 Trend:** Not started
-
-*Updated after each plan completion*
-| Phase 11 P01 | 3min | 3 tasks | 3 files |
-| Phase 11 P02 | 5min | 3 tasks | 3 files |
-| Phase 14 P03 | 2min | 2 tasks | 5 files |
+- v1.0: 10 phases, 24 plans — shipped 2026-04-10
+- v1.1: 9 phases, 18 plans — shipped 2026-04-13
 
 ## Accumulated Context
 
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
 
-- [Roadmap v1.1]: Seven phases (11-17) derived from content dependency graph — APv2 Lifecycle → Failure Index → L1 Trees/Runbooks → L2 Runbooks → APv2 Admin Setup → APv1 Admin Setup → Navigation
-- [Roadmap v1.1]: NAVG-02 (error index APv2 section) assigned to Phase 12 (Failure Index) because the error index update is structurally part of creating the APv2 failure catalog, not a nav-only task
-- [Roadmap v1.1]: APv1 admin guides (Phase 16) depend only on Phase 11 (admin template); independent of APv2 phases 13-15 and could parallel-track with Phase 15 if needed
-- [Roadmap v1.1]: Phase 17 (Navigation) written last — established v1.0 pattern; hub files must link to content that already exists
-- [Roadmap v1.1]: APv2 admin setup guide must open with APv1 precedence deregistration prerequisite — APv1 silently wins when both apply
-- [Research]: BootstrapperAgent event IDs have no official Microsoft reference; Phase 14 must cite oofhours.com and Call4Cloud as MEDIUM confidence with explicit attribution
-- [Research]: Entra ID Local administrator settings conflict valid combinations must be re-verified against live known issues page at Phase 15 authoring time
-- [Research]: APv2 What's New RSS subscription should be established before Phase 11 authoring begins
-- [Research]: APv2 documentation requires 90-day review cycle with last_verified frontmatter on every file
-- [Phase 01-foundation]: L1 templates forbid PowerShell/registry references; L2 templates link to canonical reference files rather than defining content inline
-- [Phase 01-foundation]: Pre-provisioning is the primary glossary term; White glove entry is deprecated redirect
-- [Phase 01-foundation]: APv1 vs APv2 disambiguation page is the canonical source for framework selection decisions
-- [Phase 02-lifecycle]: Two-level Mermaid diagram pattern established: Level 1 happy path with deployment mode branches + Level 2 color-coded failure points
-- [Phase 03-error-codes]: Each error code appears exactly once in index pointing to primary category file
-- [Phase 05-l1-runbooks]: L1 runbook pattern established: Prerequisites + numbered Steps + Escalation Criteria with collect list; no PowerShell/registry in L1 files
-- [Phase 06-l2-runbooks]: Log collection guide is standalone prerequisite: every other L2 runbook references it for gather-first workflow
-- [Phase 07-navigation]: Navigation (hub files) written last because they link to everything else
-- [Phase 11]: ETG explanation structured as two-phase model (admin prep + enrollment time)
-- [Phase 11]: Prerequisites use consequence-driven format (what happens if missing) for every item
-- [Phase 11]: Admin template includes Configuration-Caused Failures reverse-lookup table for Phase 15-16
-- [Phase 11]: ETG shown as distinct labeled node in Level 1 Mermaid diagram for visual prominence
-- [Phase 11]: Preview double coverage pattern: top banner + inline callouts ensures readers who jump via anchor links still see warnings
-- [Phase 11]: Decision flowchart uses 8 sequential questions covering all APv1-only requirements before recommending APv2 for new deployments
-- [Phase 14]: L2 template version gate uses bracketed variant choice with italic authoring instruction for APv1/APv2 selection
+- [v1.0/v1.1]: Tiered doc structure (L1/L2/Admin) with role-based navigation via docs/index.md
+- [v1.0/v1.1]: L1 templates forbid PowerShell/registry; L2 templates link to canonical reference files
+- [v1.0/v1.1]: Navigation hub files written last — they link to content that already exists
+- [v1.1]: Per-setting "what breaks" callouts in all admin setup guides
+- [v1.1]: Confidence-attributed citations for community sources (MEDIUM confidence labeled)
+- [v1.1]: Admin template includes Configuration-Caused Failures reverse-lookup table
 
 ### Pending Todos
 
-- Establish APv2 What's New RSS subscription before Phase 11 authoring begins
-- Re-verify Entra ID Local administrator settings conflict valid combinations at Phase 15 authoring time (live known issues page)
-- Check for any Microsoft BootstrapperAgent event ID guidance published after 2026-04-10 before Phase 14 authoring
+(Cleared for new milestone — previous items resolved in v1.1)
 
 ### Blockers/Concerns
 
-- [Phase 14 — APv2 L2 Runbooks]: BootstrapperAgent event ID catalog has no official Microsoft reference; MEDIUM confidence attribution required (oofhours.com, Call4Cloud)
-- [Phase 15 — APv2 Admin Setup]: Entra ID Local administrator settings conflict — valid combinations table must be re-pulled from live known issues page at authoring time
+(None — fresh milestone)
 
 ## Session Continuity
 
-Last session: 2026-04-13T17:17:09.658Z
-Stopped at: Phase 19 context gathered
-Resume file: .planning/phases/19-tracking-verification-hygiene/19-CONTEXT.md
-Next action: Run `/gsd-discuss-phase 14`
+Last session: 2026-04-13
+Stopped at: Milestone v1.2 started — defining requirements
+Next action: Complete requirements definition, then roadmap creation

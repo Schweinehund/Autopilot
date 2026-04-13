@@ -8,9 +8,24 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering — covering both APv1 (pre-provisioning, user-driven, self-deploying) and APv2 (Device Preparation) modes. Admins can configure deployments end-to-end using step-by-step setup guides with embedded misconfiguration warnings.
 
+## Current Milestone: v1.2 Cross-Platform Provisioning & Operational Gaps
+
+**Goal:** Extend the documentation suite to cover macOS provisioning via ABM/ADE through Intune, and close all significant Windows Autopilot documentation gaps from device lifecycle through operational readiness.
+
+**Target features:**
+- Device lifecycle beyond initial provisioning (Autopilot Reset, re-provisioning, retirement, tenant migration)
+- Pre-provisioning infrastructure deep-dive (network rules, Entra ID prereqs, licensing matrix)
+- App deployment integration (Win32 packaging for ESP, install order, timeout tuning)
+- Security & compliance during enrollment (Conditional Access, security baselines, compliance timing)
+- Migration scenarios (APv1→APv2, on-prem imaging transition, GPO→Intune mapping)
+- Monitoring & operational readiness (deployment reporting, registration drift, new-batch workflow)
+- macOS provisioning via Apple Business Manager / Automated Device Enrollment through Intune
+- macOS admin setup, app deployment, compliance, and L1/L2 troubleshooting
+- Cross-platform navigation updates (docs hub restructured for Windows + macOS)
+
 ## Current State
 
-**v1.1 shipped 2026-04-13.** Both documentation milestones complete. 70 markdown files, 8,023 lines in `docs/`. No active milestone — planning next milestone.
+**v1.1 shipped 2026-04-13.** 70 markdown files, 8,023 lines in `docs/`.
 
 ### What's been built
 - Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
@@ -66,9 +81,20 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 ### Active
 
-<!-- Next milestone scope — to be defined via /gsd-new-milestone -->
+<!-- v1.2 scope -->
 
-(None — next milestone not yet planned)
+- [ ] Windows Autopilot Reset documentation (local and remote reset, re-provisioning, retirement)
+- [ ] Pre-provisioning infrastructure deep-dive (network/firewall rules, Entra ID prereqs, licensing matrix)
+- [ ] App deployment integration with ESP (Win32 packaging, install order, timeout tuning)
+- [ ] Security & compliance during enrollment (Conditional Access, baselines, compliance timing)
+- [ ] Migration scenarios (APv1→APv2, on-prem imaging→Autopilot, GPO→Intune mapping)
+- [ ] Monitoring & operational readiness (deployment reporting, drift detection, new-batch workflow)
+- [ ] macOS ABM/ADE lifecycle documentation through Intune
+- [ ] macOS admin setup guides (ABM configuration, enrollment profiles, configuration profiles)
+- [ ] macOS app deployment (DMG, PKG, VPP/Apps and Books)
+- [ ] macOS compliance and security policies
+- [ ] macOS L1/L2 troubleshooting (enrollment failures, profile delivery, app install issues)
+- [ ] Cross-platform navigation hub restructure (Windows + macOS)
 
 ### Out of Scope
 
@@ -90,8 +116,8 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 - **Format**: Markdown files suitable for git versioning and wiki export
 - **Audience**: Must be usable by L1 (scripted, decision-tree), L2 (technical, investigative), and Admins (step-by-step) separately
-- **Coverage**: Generic Microsoft Autopilot guidance — not tied to a specific tenant or environment
-- **Accuracy**: Must reflect current Windows Autopilot behavior (Windows 10/11, Intune)
+- **Coverage**: Generic Microsoft Intune provisioning guidance (Windows + macOS) — not tied to a specific tenant or environment
+- **Accuracy**: Must reflect current Windows Autopilot (Windows 10/11) and macOS ADE behavior through Intune
 
 ## Key Decisions
 
@@ -106,4 +132,4 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 | Confidence-attributed citations | Community sources (oofhours, Call4Cloud) used where Microsoft docs lack coverage | Delivered — MEDIUM confidence clearly labeled |
 
 ---
-*Last updated: 2026-04-13 after v1.1 milestone completion*
+*Last updated: 2026-04-13 after v1.2 milestone started*
