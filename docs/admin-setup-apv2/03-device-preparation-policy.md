@@ -6,7 +6,7 @@ audience: admin
 ---
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
-> For Windows Autopilot (classic), see [APv1 Admin Setup Guides -- coming in Phase 16].
+> For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 # APv2 Setup Step 3: Device Preparation Policy

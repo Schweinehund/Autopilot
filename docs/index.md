@@ -77,6 +77,7 @@ Troubleshooting, investigation, and setup guides for [Windows Autopilot](_glossa
 | [Error Code Index](error-codes/00-index.md) | Master error code lookup with deployment-mode tagging |
 | [Lifecycle Overview](lifecycle/00-overview.md) | End-to-end deployment sequence with flow diagrams |
 | [APv1 vs APv2](apv1-vs-apv2.md) | Framework selection — which docs apply to which mode |
+| [APv2 Lifecycle Overview](lifecycle-apv2/00-overview.md) | APv2 deployment model, Enrollment Time Grouping mechanism, and automatic mode |
 | [Common Issues Index](common-issues.md) | Symptom-based router to L1 and L2 runbooks |
 
 ## Version History
