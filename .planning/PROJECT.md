@@ -25,7 +25,7 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 ## Current State
 
-**v1.1 shipped 2026-04-13.** 70 markdown files, 8,023 lines in `docs/`.
+**Phase 20 complete 2026-04-13.** Cross-platform foundation established.
 
 ### What's been built
 - Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
@@ -33,6 +33,7 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 - APv1 and APv2 admin setup guides with per-setting "what breaks" callouts (v1.1)
 - Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1)
 - Error code lookup tables with framework tagging (APv1/APv2) (v1.0 + v1.1)
+- Cross-platform foundation: platform frontmatter taxonomy, Windows vs macOS comparison page, macOS glossary with bidirectional cross-references, macOS admin template with dual-portal structure, navigation hub restructured with platform selector (v1.2 Phase 20)
 
 <details>
 <summary>Previous Milestone: v1.1 APv2 Documentation & Admin Setup Guides</summary>
