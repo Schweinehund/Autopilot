@@ -29,6 +29,7 @@ This is the consolidated reverse-lookup table for all Windows Autopilot (classic
 | Hash captured before hardware/BIOS change | Stale hash; device not recognized at OOBE | [Hardware Hash Upload](01-hardware-hash-upload.md) | [Device Not Registered](../l1-runbooks/01-device-not-registered.md) |
 | Device hash registered in another tenant | ZtdDeviceAssignedToAnotherTenant error | [Hardware Hash Upload](01-hardware-hash-upload.md) | [Device Not Registered](../l1-runbooks/01-device-not-registered.md) |
 | TLS 1.2 not set before Install-Script | NuGet provider "no match found" error | [Hardware Hash Upload](01-hardware-hash-upload.md) | [Device Not Registered](../l1-runbooks/01-device-not-registered.md) |
+| Missing OEM registration in purchase order | Device not in Autopilot list; standard OOBE runs | [Hardware Hash Upload](01-hardware-hash-upload.md) | [Device Not Registered](../l1-runbooks/01-device-not-registered.md) |
 
 ## Deployment Profile Failures
 
@@ -37,8 +38,9 @@ This is the consolidated reverse-lookup table for all Windows Autopilot (classic
 | Wrong deployment mode selected | OOBE flow doesn't match expectations | [Deployment Profile](02-deployment-profile.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | Hybrid join without Intune Connector | Join fails silently during OOBE | [Deployment Profile](02-deployment-profile.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | "Allow pre-provisioned deployment" = No | Win+F12 triggers error 0x80180005 | [Deployment Profile](02-deployment-profile.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
-| Device name template > 15 characters | Enrollment fails with naming error | [Deployment Profile](02-deployment-profile.md) | [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md) |
+| Device name template > 15 characters | Enrollment fails with naming error | [Deployment Profile](02-deployment-profile.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | "All Devices" profile + targeted profiles | Oldest profile wins; unexpected settings applied | [Deployment Profile](02-deployment-profile.md) | [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md) |
+| Convert all targeted devices = Yes on broad group | Unexpected device registrations after 48-hour delay | [Deployment Profile](02-deployment-profile.md) | [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md) |
 
 ## ESP Policy Failures
 
@@ -78,6 +80,7 @@ This is the consolidated reverse-lookup table for all Windows Autopilot (classic
 | Old connector not uninstalled before upgrade | Undefined behavior; enrollment may fail | [Intune Connector](09-intune-connector-ad.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | OU not configured in connector | Computer objects land in default Computers container | [Intune Connector](09-intune-connector-ad.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | Connector on wrong domain server | Requests for other domains not processed | [Intune Connector](09-intune-connector-ad.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
+| IE Enhanced Security Config enabled (connector < 6.2504.2001.8) | Connector sign-in fails during installation | [Intune Connector](09-intune-connector-ad.md) | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 
 ## See Also
 

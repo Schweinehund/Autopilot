@@ -50,7 +50,7 @@ Configure each setting below. Every setting includes a what-breaks callout docum
 
 5. **Hide change account options**: Show or Hide.
 
-   > **What breaks if misconfigured:** Requires company branding configured in Entra ID. Without branding configured, this setting is silently ignored and the change account option remains visible. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+   > **What breaks if misconfigured:** Requires company branding configured in Entra ID. Without branding configured, this setting is silently ignored and the change account option remains visible. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 6. **User account type**: Administrator or Standard User.
 
@@ -70,7 +70,7 @@ Configure each setting below. Every setting includes a what-breaks callout docum
 
 10. **Apply device name template**: Yes or No. Supports `%SERIAL%` and `%RAND:x%` macros.
 
-    > **What breaks if misconfigured:** Names must be 15 characters or fewer (NetBIOS limit). Names exceeding 15 characters cause enrollment failure. Only works with Entra join (not hybrid). See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+    > **What breaks if misconfigured:** Names must be 15 characters or fewer (NetBIOS limit). Names exceeding 15 characters cause enrollment failure. Only works with Entra join (not hybrid). See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 11. **Convert all targeted devices to Autopilot**: Yes or No.
 
@@ -103,7 +103,7 @@ Assign the profile to the dynamic device group created in [Dynamic Groups](04-dy
 | Wrong deployment mode selected | OOBE flow doesn't match expectations | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | Hybrid join without Intune Connector | Join fails silently during OOBE | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | "Allow pre-provisioned deployment" = No | Win+F12 triggers error 0x80180005 | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
-| Device name template > 15 characters | Enrollment fails with naming error | [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md) |
+| Device name template > 15 characters | Enrollment fails with naming error | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | "All Devices" profile + targeted profiles | Oldest profile wins; unexpected settings applied | [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md) |
 | Convert all devices = Yes on broad group | Unexpected device registrations after 48-hour delay | [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md) |
 
