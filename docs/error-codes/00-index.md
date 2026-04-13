@@ -1,11 +1,12 @@
 ---
-last_verified: 2026-03-14
-review_by: 2026-06-12
-applies_to: APv1
+last_verified: 2026-04-13
+review_by: 2026-07-12
+applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **Framework coverage:** This index primarily covers Windows Autopilot (classic/APv1) error codes. APv2 (Device Preparation) failures are symptom-based rather than code-based -- see the APv2 Note at the bottom of this page.
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 # Error Code Index
 
@@ -71,4 +72,5 @@ Select a category above or use Ctrl+F to find your error code in the Quick Looku
 
 | Date | Change |
 |------|--------|
+| 2026-04-13 | Updated frontmatter and version gate for dual-framework coverage |
 | 2026-03-14 | Initial creation — 23 hex codes and 6 event IDs indexed across 5 category files |
