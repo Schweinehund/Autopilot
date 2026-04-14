@@ -47,7 +47,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 
 - [x] **Phase 20: Cross-Platform Foundation** (3 plans) — Shared glossary, terminology standards, macOS template, platform taxonomy, and navigation structure design (completed 2026-04-13)
 - [ ] **Phase 21: Windows Operational Gaps** (6 plans) — Device lifecycle, infrastructure prerequisites, ESP app strategy, security/compliance, migration scenarios, and monitoring (parallelizable with Phase 22)
-- [ ] **Phase 22: macOS Lifecycle Foundation** — ADE lifecycle overview, reference files, and network endpoints (parallelizable with Phase 21)
+- [ ] **Phase 22: macOS Lifecycle Foundation** (2 plans) — ADE lifecycle overview, reference files, and network endpoints (parallelizable with Phase 21)
 - [ ] **Phase 23: macOS Admin Setup** — ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance, and capability matrix
 - [ ] **Phase 24: macOS Troubleshooting** — L1 decision tree and runbooks, L2 log collection and diagnostic runbooks
 - [ ] **Phase 25: Navigation Integration & Polish** — Cross-platform common-issues routing, quick-reference card updates, and final link population
@@ -97,7 +97,10 @@ Plans:
   1. Admin can read a complete macOS ADE lifecycle narrative covering all 7 stages (ABM registration, ADE token sync, enrollment profile assignment, Setup Assistant, Await Configuration, Company Portal, desktop) with a flow diagram using macOS-native terminology throughout
   2. Technician can look up macOS log paths, Terminal diagnostic commands, and key configuration profile locations in a dedicated reference file (the macOS equivalent of the Windows PowerShell/registry reference)
   3. Admin can find all Apple and Microsoft network endpoints required for ADE enrollment in a single reference with test commands for each endpoint
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 22-01-PLAN.md — macOS ADE lifecycle narrative with 7-stage pipeline and Mermaid diagram (MLIF-01)
+- [ ] 22-02-PLAN.md — macOS reference files (commands, log paths), endpoints extension, and navigation updates (MLIF-02, MLIF-03)
 
 ### Phase 23: macOS Admin Setup
 **Goal**: Admins can configure macOS device management end-to-end through Intune and ABM using step-by-step guides with per-setting misconfiguration callouts, and understand where macOS capabilities differ from Windows
@@ -157,7 +160,7 @@ Plans:
 | 19. Tracking & Verification Hygiene | v1.1 | 1/1 | Complete | 2026-04-13 |
 | 20. Cross-Platform Foundation | v1.2 | 3/3 | Complete    | 2026-04-13 |
 | 21. Windows Operational Gaps | v1.2 | 0/6 | Not started | - |
-| 22. macOS Lifecycle Foundation | v1.2 | 0/? | Not started | - |
+| 22. macOS Lifecycle Foundation | v1.2 | 0/2 | Not started | - |
 | 23. macOS Admin Setup | v1.2 | 0/? | Not started | - |
 | 24. macOS Troubleshooting | v1.2 | 0/? | Not started | - |
 | 25. Navigation Integration & Polish | v1.2 | 0/? | Not started | - |
