@@ -93,12 +93,13 @@ Post-enrollment device management: reset, retire, wipe, re-provisioning, and ten
 
 ## macOS Provisioning
 
-Troubleshooting, investigation, and setup guides for macOS Automated Device Enrollment (ADE) through Apple Business Manager. For terminology, see the [macOS Provisioning Glossary](_glossary-macos.md).
+Troubleshooting, investigation, and setup guides for macOS Automated Device Enrollment (ADE) through Apple Business Manager. For terminology, see the [macOS Provisioning Glossary](_glossary-macos.md). For the complete enrollment pipeline, see the [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md).
 
 ### Service Desk (L1)
 
 | Resource | When to Use |
 |----------|-------------|
+| [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | Understand the 7-stage macOS enrollment pipeline from ABM registration through desktop |
 | macOS Triage Decision Tree | Start here -- identifies the macOS failure scenario (TBD - Phase 24) |
 | macOS L1 Runbooks | Scripted procedures for top macOS enrollment failures (TBD - Phase 24) |
 
@@ -106,6 +107,10 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 
 | Resource | When to Use |
 |----------|-------------|
+| [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | End-to-end enrollment stages with behind-the-scenes technical detail |
+| [macOS Terminal Commands Reference](reference/macos-commands.md) | Look up diagnostic commands (profiles, log show, system_profiler, IntuneMacODC) |
+| [macOS Log Paths Reference](reference/macos-log-paths.md) | Find log file locations, unified log subsystems, and configuration profile paths |
+| [Network Endpoints Reference](reference/endpoints.md#macos-ade-endpoints) | Required Apple and Microsoft URLs for ADE enrollment with test commands |
 | macOS Log Collection Guide | Collect macOS diagnostic logs using IntuneMacODC (TBD - Phase 24) |
 | macOS L2 Runbooks | Investigation guides for profile, app, and compliance failures (TBD - Phase 24) |
 
@@ -113,6 +118,8 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 
 | Resource | When to Use |
 |----------|-------------|
+| [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | Review the enrollment pipeline before configuring ABM and Intune |
+| [Network Endpoints Reference](reference/endpoints.md#macos-ade-endpoints) | Verify firewall rules for all required ADE endpoints |
 | macOS Admin Setup Guides | ABM configuration, enrollment profiles, apps, compliance (TBD - Phase 23) |
 
 ---
