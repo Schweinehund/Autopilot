@@ -46,7 +46,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 ### v1.2 Cross-Platform Provisioning & Operational Gaps
 
 - [x] **Phase 20: Cross-Platform Foundation** (3 plans) — Shared glossary, terminology standards, macOS template, platform taxonomy, and navigation structure design (completed 2026-04-13)
-- [ ] **Phase 21: Windows Operational Gaps** — Device lifecycle, infrastructure prerequisites, ESP app strategy, security/compliance, migration scenarios, and monitoring (parallelizable with Phase 22)
+- [ ] **Phase 21: Windows Operational Gaps** (6 plans) — Device lifecycle, infrastructure prerequisites, ESP app strategy, security/compliance, migration scenarios, and monitoring (parallelizable with Phase 22)
 - [ ] **Phase 22: macOS Lifecycle Foundation** — ADE lifecycle overview, reference files, and network endpoints (parallelizable with Phase 21)
 - [ ] **Phase 23: macOS Admin Setup** — ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance, and capability matrix
 - [ ] **Phase 24: macOS Troubleshooting** — L1 decision tree and runbooks, L2 log collection and diagnostic runbooks
@@ -80,7 +80,14 @@ Plans:
   3. Admin can package Win32 apps for ESP reliability with documented detection rules and install order dependencies, and tune ESP timeouts using recommended values by scenario with misconfiguration consequences documented
   4. Admin can configure Conditional Access and compliance policies during enrollment without causing enrollment loops, with the chicken-and-egg compliance timing problem explained and resolved for Windows
   5. Admin can plan an APv1-to-APv2 parallel deployment using a readiness checklist with blockers identified, migrate from on-prem imaging to Autopilot with app packaging guidance, and translate GPO policies to Intune using outcome-based mapping (not 1:1)
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [ ] 21-01-PLAN.md — Device lifecycle operations: reset, retire/wipe, re-provisioning, tenant migration + decision tree (WDLC-01, WDLC-02, WDLC-03, WDLC-04)
+- [ ] 21-02-PLAN.md — Infrastructure prerequisites: network, Entra ID, licensing, Win32 apps, ESP timeout (WINF-01, WINF-02, WINF-03, WINF-04, WINF-05)
+- [ ] 21-03-PLAN.md — Security and compliance: CA enrollment timing, baseline conflicts, compliance timing (WSEC-01, WSEC-02, WSEC-03)
+- [ ] 21-04-PLAN.md — Migration scenarios: APv1-to-APv2, imaging-to-Autopilot, GPO-to-Intune (WMIG-01, WMIG-02, WMIG-03)
+- [ ] 21-05-PLAN.md — Monitoring and operations: deployment reporting, drift detection, new-batch workflow (WMON-01, WMON-02, WMON-03)
+- [ ] 21-06-PLAN.md — Navigation integration: reference index, docs hub, common-issues, lifecycle link, glossary (all requirements)
 
 ### Phase 22: macOS Lifecycle Foundation
 **Goal**: Admins and technicians understand the complete macOS ADE enrollment journey from ABM registration through desktop delivery, and have reference materials for macOS-native diagnostics
@@ -149,7 +156,7 @@ Plans:
 | 18. Stale Cross-Reference Cleanup | v1.1 | 1/1 | Complete | 2026-04-13 |
 | 19. Tracking & Verification Hygiene | v1.1 | 1/1 | Complete | 2026-04-13 |
 | 20. Cross-Platform Foundation | v1.2 | 3/3 | Complete    | 2026-04-13 |
-| 21. Windows Operational Gaps | v1.2 | 0/? | Not started | - |
+| 21. Windows Operational Gaps | v1.2 | 0/6 | Not started | - |
 | 22. macOS Lifecycle Foundation | v1.2 | 0/? | Not started | - |
 | 23. macOS Admin Setup | v1.2 | 0/? | Not started | - |
 | 24. macOS Troubleshooting | v1.2 | 0/? | Not started | - |
