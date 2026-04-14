@@ -3,18 +3,23 @@ last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
 audience: all
-platform: Windows
+platform: all
 ---
 
 # Reference Documentation
 
-Technical reference documents for Windows Autopilot configuration, security, migration, and monitoring. For the deployment pipeline, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For post-deployment operations, see [Device Operations](../device-operations/00-overview.md).
+Technical reference documents for Windows Autopilot and macOS ADE configuration, security, migration, and monitoring. For the deployment pipeline, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For post-deployment operations, see [Device Operations](../device-operations/00-overview.md).
 
 ## Existing References
 
-- [Network Endpoints](endpoints.md) — Required URLs for Autopilot connectivity with test commands
+- [Network Endpoints](endpoints.md) — Required URLs for Windows Autopilot and macOS ADE connectivity with test commands
 - [PowerShell Reference](powershell-ref.md) — PowerShell cmdlets for Autopilot diagnostics and remediation
 - [Registry Paths](registry-paths.md) — Key registry locations for Autopilot state inspection
+
+## macOS References
+
+- [macOS Terminal Commands](macos-commands.md) — Terminal diagnostic commands for Intune and ADE (profiles, log show, system_profiler, IntuneMacODC)
+- [macOS Log Paths](macos-log-paths.md) — Log file locations, configuration profile paths, and unified log subsystems
 
 ## Infrastructure Prerequisites
 
