@@ -178,15 +178,15 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
 ### Behind the Scenes
 
 - The enrollment profile is an Intune-side configuration that maps to Apple's MDM enrollment profile specification. When the device checks in during Setup Assistant, Intune generates the MDM enrollment payload based on these profile settings.
-- "Setup Assistant with modern authentication" uses the Microsoft Authenticator library embedded in Setup Assistant (macOS 14+) or a web view to collect Entra credentials during the first-run experience. This is the recommended method as of late 2024.
+- "Setup Assistant with modern authentication" presents an Entra credential prompt within a Setup Assistant web view to collect user credentials during the first-run experience. This method is supported on macOS 10.15 and later and is the recommended authentication method as of late 2024. On macOS 14 and later, Platform SSO can extend this authentication for single sign-on after enrollment, but the ADE enrollment authentication step itself uses the same web-based credential prompt on all supported OS versions.
 - A default profile assigned to the token ensures that any newly synced device automatically receives a profile without manual per-device assignment. This is the recommended approach for fleet-scale deployments.
 - Profile assignment must occur before the device is powered on for the first time (or after a wipe). If the device reaches Setup Assistant before a profile is assigned, it will proceed through standard (non-managed) Setup Assistant without MDM enrollment.
 - The enrollment profile settings map to Apple's MDM enrollment profile specification as follows:
 
 | Intune Setting | Apple MDM Equivalent | Effect |
 |---------------|---------------------|--------|
-| User Affinity: With | `is_multi_user: false` | Device associated with signing-in user |
-| User Affinity: Without | `is_multi_user: true` | Shared/kiosk device, no user association |
+| User Affinity: With | *(Intune-side setting; no direct Apple protocol key)* | Device associated with signing-in user; Company Portal sign-in required |
+| User Affinity: Without | *(Intune-side setting; no direct Apple protocol key)* | Shared/kiosk device, no user association |
 | Await Configuration: Yes | `await_device_configured: true` | Device pauses after Setup Assistant (Stage 5) |
 | Modern Authentication | OAuth2 flow during Setup Assistant | Entra credential prompt in first-run |
 | Locked Enrollment | `is_mdm_removable: false` | Management profile cannot be removed by user |
@@ -364,7 +364,7 @@ The user reaches the standard macOS desktop. In the background, Intune continues
 - **APNs certificate renewal missed.** The Apple Push Notification certificate in Intune expires annually. If it lapses, all MDM communication to all macOS (and iOS) devices stops -- not just new enrollments. Renew at **Tenant administration > Connectors and tokens > Apple push notification certificate**. This is separate from the ADE token renewal (Stage 2).
 - **IME agent not installed or not running.** Shell scripts and certain app deployments fail if the Intune Management Extension agent at `/Library/Intune/Microsoft Intune Agent.app` is not installed or not running. Check with:
   ```bash
-  pgrep -fl "Intune"
+  pgrep -il "^IntuneMdm"
   ```
 - **Confusion between MDM and IME channels.** Configuration profiles (Wi-Fi, VPN, restrictions) are delivered via the MDM channel (APNs). Shell scripts and DMG/PKG apps are delivered via the IME channel. Troubleshooting the wrong channel for the wrong payload type leads to dead ends.
 - **FileVault not enabled.** If FileVault was not enforced during Await Configuration (Stage 5) and the compliance policy requires it, the device may be marked non-compliant after reaching the desktop. Users will see a prompt to enable FileVault.
