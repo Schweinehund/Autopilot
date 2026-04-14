@@ -7,11 +7,11 @@ platform: all
 ---
 
 > **Platform coverage:** This page maps Windows Autopilot concepts to macOS ADE equivalents.
-> It covers terminology and enrollment mechanisms, not Intune feature parity (see Capability Matrix -- Phase 23).
+> It covers terminology and enrollment mechanisms, not Intune feature parity (see [Capability Matrix](reference/macos-capability-matrix.md)).
 
 # Windows Autopilot vs macOS ADE: Concept Comparison
 
-Microsoft Intune manages both Windows devices through Windows Autopilot and macOS devices through Apple's Automated Device Enrollment (ADE). While both platforms achieve zero-touch provisioning via Intune, they use fundamentally different mechanisms, terminology, and portals. This page maps the key concepts between them to help admins who manage both platforms navigate the differences. This is a terminology and workflow comparison, not a feature parity analysis — for Intune capability gaps between platforms, see the Capability Matrix (Phase 23).
+Microsoft Intune manages both Windows devices through Windows Autopilot and macOS devices through Apple's Automated Device Enrollment (ADE). While both platforms achieve zero-touch provisioning via Intune, they use fundamentally different mechanisms, terminology, and portals. This page maps the key concepts between them to help admins who manage both platforms navigate the differences. This is a terminology and workflow comparison, not a feature parity analysis — for Intune capability gaps between platforms, see the [Capability Matrix](reference/macos-capability-matrix.md).
 
 ## Concept Comparison
 
@@ -64,10 +64,11 @@ Return to [Documentation Hub](index.md) to find your platform and role.
 - [Autopilot Glossary](_glossary.md) — Windows Autopilot terminology
 - [macOS Provisioning Glossary](_glossary-macos.md) — macOS ADE terminology
 - [APv1 vs APv2](apv1-vs-apv2.md) — Windows framework selection
-- Capability Matrix (TBD - Phase 23) — Intune feature parity comparison
+- [Capability Matrix](reference/macos-capability-matrix.md) — Intune feature parity comparison
 
 ---
 
 | Version | Change | Author |
 |---------|--------|--------|
+| 2026-04-14 | Resolved capability matrix forward references to reference/macos-capability-matrix.md | -- |
 | 2026-04-13 | Initial version | -- |

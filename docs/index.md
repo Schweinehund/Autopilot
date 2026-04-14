@@ -120,7 +120,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 |----------|-------------|
 | [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | Review the enrollment pipeline before configuring ABM and Intune |
 | [Network Endpoints Reference](reference/endpoints.md#macos-ade-endpoints) | Verify firewall rules for all required ADE endpoints |
-| macOS Admin Setup Guides | ABM configuration, enrollment profiles, apps, compliance (TBD - Phase 23) |
+| [macOS Admin Setup Guides](admin-setup-macos/00-overview.md) | ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance policies |
 
 ---
 
@@ -139,11 +139,13 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [Reference Index](reference/00-index.md) | Infrastructure, security, migration, and monitoring references organized by sub-domain |
 | [Migration Guides](reference/00-index.md#migration-guides) | APv1-to-APv2, Imaging-to-Autopilot, GPO-to-Intune migration playbooks |
 | [Monitoring and Operations](reference/00-index.md#monitoring-and-operations) | Deployment reporting, drift detection, new-batch device onboarding workflow |
+| [macOS Capability Matrix](reference/macos-capability-matrix.md) | Intune feature parity comparison between Windows and macOS across enrollment, configuration, apps, compliance, and updates |
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Added macOS Admin Setup links and macOS Capability Matrix to Cross-Platform References | -- |
 | 2026-04-13 | Restructured for cross-platform support: added platform selector, Windows and macOS headings, macOS placeholder sections, Cross-Platform References | -- |
 | 2026-04-13 | Added APv2 sections for L1 and L2, added Admin Setup section | -- |
 | 2026-03-23 | Initial version | -- |
