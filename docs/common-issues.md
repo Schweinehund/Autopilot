@@ -105,9 +105,34 @@ Device Preparation deployment started but timed out before all apps and scripts 
 - **L1:** [Deployment Timeout](l1-runbooks/09-apv2-deployment-timeout.md)
 - **L2:** [APv2 Log Collection](l2-runbooks/06-apv2-log-collection.md) + [APv2 Event ID Reference](l2-runbooks/07-apv2-event-ids.md)
 
+## Device Reset and Lifecycle Issues
+
+Device won't reset, retire action failed, or re-provisioning not working as expected.
+
+- **L1:** [Device Operations Overview](device-operations/00-overview.md) — find the correct procedure
+- **Decision Tree:** [Device Lifecycle Decision Tree](decision-trees/05-device-lifecycle.md) — "What do you want to preserve?"
+- **L2:** [Autopilot Reset Guide](device-operations/01-autopilot-reset.md) — local vs remote reset procedures
+
+## Migration Issues
+
+Problems during APv1-to-APv2 migration, imaging-to-Autopilot transition, or GPO-to-Intune policy migration.
+
+- **Admin:** [APv1-to-APv2 Migration](reference/apv1-apv2-migration.md) — coexistence playbook
+- **Admin:** [Imaging to Autopilot](reference/imaging-to-autopilot.md) — MDT/SCCM replacement
+- **Admin:** [GPO to Intune](reference/gpo-to-intune.md) — Group Policy Analytics workflow
+
+## Security and Enrollment Issues
+
+Conditional Access blocking enrollment, compliance not evaluating, or security baseline conflicts.
+
+- **Admin:** [CA Enrollment Timing](reference/ca-enrollment-timing.md) — the compliance chicken-and-egg problem
+- **Admin:** [Compliance Policy Timing](reference/compliance-timing.md) — "Not evaluated" vs "Non-compliant"
+- **Admin:** [Security Baseline Conflicts](reference/security-baseline-conflicts.md) — BitLocker, WDAC, reboot conflicts
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-13 | Added Device Reset, Migration, and Security routing sections for Phase 21 content | — |
 | 2026-04-13 | Added APv2 Failure Scenarios section with framework labels | — |
 | 2026-03-23 | Transformed from inline troubleshooting guide to navigation index | — |

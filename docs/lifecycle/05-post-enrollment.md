@@ -16,6 +16,8 @@ Stage 5 of 5. The final stage of the Autopilot lifecycle. The user has reached t
 **Depends on:** ESP (Stage 4)
 **Feeds into:** Ongoing device management (outside lifecycle scope)
 
+> For post-enrollment device management procedures (reset, retire, wipe, re-provisioning, tenant migration), see [Device Operations](../device-operations/00-overview.md).
+
 ---
 
 ## What the Admin Sees
@@ -120,6 +122,14 @@ Rushing the checklist before the compliance evaluation window closes leads to fa
 
 ---
 
+## See Also
+
+- [Device Operations](../device-operations/00-overview.md) — Post-enrollment device management: reset, retire, wipe, re-provisioning, and tenant migration
+- [Autopilot Reset Guide](../device-operations/01-autopilot-reset.md) — Return a device to business-ready state without re-imaging
+- [Retire, Wipe, and Removal Actions](../device-operations/02-retire-wipe.md) — Choose the right action based on what you want to preserve
+
+---
+
 ## Navigation
 
 Previous: [Stage 4: ESP](04-esp.md) | Next: [Lifecycle Overview](00-overview.md)
@@ -130,4 +140,5 @@ Previous: [Stage 4: ESP](04-esp.md) | Next: [Lifecycle Overview](00-overview.md)
 
 | Date | Change |
 |------|--------|
+| 2026-04-13 | Added device-operations See Also section per D-09 |
 | 2026-03-14 | Initial version |

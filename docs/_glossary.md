@@ -14,7 +14,7 @@ platform: all
 
 ## Alphabetical Index
 
-[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BootstrapperAgent](#bootstrapperagent) | [Corporate identifiers](#corporate-identifiers) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Self-deploying mode](#self-deploying-mode) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
+[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Tenant migration](#tenant-migration) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
 
 ---
 
@@ -44,7 +44,7 @@ The ESP device-phase checkpoint tracked at `HKLM:\SOFTWARE\Microsoft\Enrollments
 
 ### Autopilot Reset
 
-An APv1 feature that re-runs the OOBE provisioning flow on an already-deployed device without re-imaging.
+A device action (APv1 only) that returns a device to a business-ready state without re-imaging. Removes personal files and user profile but preserves Wi-Fi, MDM enrollment, Entra membership, and SCEP certificates. Not supported for hybrid Entra joined devices. See [Autopilot Reset Guide](device-operations/01-autopilot-reset.md).
 
 ### BootstrapperAgent
 
@@ -74,6 +74,10 @@ The Entra service principal (AppID: `f1346770-5b25-470b-88bd-d5744ab7952c`) that
 
 ## Hardware
 
+### Group Policy Analytics
+
+An Intune tool that imports GPO XML exports and reports MDM support percentage, enabling migration from Group Policy to Intune Settings Catalog. See [GPO to Intune](reference/gpo-to-intune.md).
+
 ### Hardware hash
 
 A 4K-byte device fingerprint derived from hardware identifiers, used by APv1 to match a physical device to its Autopilot profile before OOBE.
@@ -96,9 +100,17 @@ Trusted Platform Module — the hardware security chip that stores cryptographic
 
 The process by which a device proves its TPM identity to Microsoft's attestation service during pre-provisioning.
 
+### Tenant migration
+
+The process of moving Autopilot-registered devices from one Microsoft tenant to another. Requires deregistration from source tenant, hardware hash re-import to target tenant, and device reset (NOT Autopilot Reset). See [Tenant Migration](device-operations/04-tenant-migration.md).
+
 ### Firmware TPM (fTPM)
 
 A TPM implemented in processor firmware (Intel, AMD, Qualcomm) rather than a discrete chip; requires manufacturer certificate retrieval on first use.
+
+### Compliance grace period
+
+The minimum time (0.25 days / 6 hours) after a device is first evaluated as non-compliant before enforcement actions (email notification, block access, retire) trigger. Prevents premature enforcement on newly enrolled devices. See [Compliance Timing](reference/compliance-timing.md).
 
 ### Corporate identifiers
 
@@ -129,6 +141,10 @@ A UEFI firmware feature that verifies the bootloader's digital signature, requir
 ### SCP
 
 Service Connection Point — an Active Directory object that tells Azure AD Connect which tenant to use for hybrid join.
+
+### Selective wipe
+
+See [Device retirement](#device-retirement). The term "selective wipe" is sometimes used interchangeably with Retire in older documentation.
 
 ---
 
@@ -179,6 +195,14 @@ Offline Domain Join — the mechanism used during hybrid Autopilot to join a dev
 ### Device phase
 
 The first half of ESP that applies device-targeted apps and policies before any user logs in.
+
+### Device retirement
+
+An Intune remote action that removes organizational data, apps, and policies from a managed device while preserving personal data. Used for BYOD offboarding. See [Retire and Wipe](device-operations/02-retire-wipe.md).
+
+### Device wipe
+
+An Intune remote action that factory-resets a device, removing all data and returning it to out-of-box state. See [Retire and Wipe](device-operations/02-retire-wipe.md).
 
 ### User phase
 
