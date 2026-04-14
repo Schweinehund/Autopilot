@@ -65,7 +65,7 @@ Network endpoints required for macOS Automated Device Enrollment (ADE) via Apple
 | `https://deviceenrollment.apple.com` | Apple DEP | ADE provisional enrollment -- initial device discovery | Critical |
 | `https://iprofiles.apple.com` | Apple Enrollment Profiles | Enrollment profile download for ADE via ABM/ASM | Critical |
 | `https://mdmenrollment.apple.com` | Apple MDM Enrollment | Profile uploads and device/account lookups for ADE | Critical |
-| `https://*.push.apple.com` (port 443, 5223) | Apple Push Notification Service (APNs) | MDM push notifications for all ongoing management commands | Critical |
+| `https://*.push.apple.com` (port 443, 2197, 5223) | Apple Push Notification Service (APNs) | MDM push notifications for all ongoing management commands | Critical |
 | `https://*.business.apple.com` | Apple Business Manager | Admin portal access for device assignment and token management | Required for admin |
 | `https://gdmf.apple.com` | Apple Software Updates | MDM server identification of available software updates | Required for updates |
 | `https://identity.apple.com` | Apple Identity | APNs certificate request portal | Required for cert renewal |
