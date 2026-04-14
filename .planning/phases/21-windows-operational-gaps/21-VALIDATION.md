@@ -1,9 +1,9 @@
 ---
 phase: 21
 slug: windows-operational-gaps
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: approved
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-13
 ---
 
@@ -39,23 +39,23 @@ created: 2026-04-13
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
 | 21-01-01 | 01 | 1 | WDLC-01 | — | N/A | file-check | `test -f docs/device-operations/01-autopilot-reset.md` | ❌ W0 | ⬜ pending |
-| 21-01-02 | 01 | 1 | WDLC-02 | — | N/A | file-check | `test -f docs/device-operations/02-device-retirement.md` | ❌ W0 | ⬜ pending |
+| 21-01-02 | 01 | 1 | WDLC-02 | — | N/A | file-check | `test -f docs/device-operations/02-retire-wipe.md` | ❌ W0 | ⬜ pending |
 | 21-01-03 | 01 | 1 | WDLC-03 | — | N/A | file-check | `test -f docs/device-operations/03-re-provisioning.md` | ❌ W0 | ⬜ pending |
 | 21-01-04 | 01 | 1 | WDLC-04 | — | N/A | file-check | `test -f docs/device-operations/04-tenant-migration.md` | ❌ W0 | ⬜ pending |
-| 21-02-01 | 02 | 1 | WINF-01 | — | N/A | grep | `grep -l "platform: Windows" docs/reference/network-firewall-deep-dive.md` | ❌ W0 | ⬜ pending |
-| 21-02-02 | 02 | 1 | WINF-02 | — | N/A | grep | `grep -l "Entra ID" docs/reference/entra-id-prerequisites.md` | ❌ W0 | ⬜ pending |
+| 21-02-01 | 02 | 1 | WINF-01 | — | N/A | grep | `grep -l "platform: Windows" docs/reference/network-infrastructure.md` | ❌ W0 | ⬜ pending |
+| 21-02-02 | 02 | 1 | WINF-02 | — | N/A | grep | `grep -l "Entra ID" docs/reference/entra-prerequisites.md` | ❌ W0 | ⬜ pending |
 | 21-02-03 | 02 | 1 | WINF-03 | — | N/A | grep | `grep -l "licensing" docs/reference/licensing-matrix.md` | ❌ W0 | ⬜ pending |
 | 21-02-04 | 02 | 1 | WINF-04 | — | N/A | grep | `grep -l "Win32" docs/reference/win32-app-packaging.md` | ❌ W0 | ⬜ pending |
 | 21-02-05 | 02 | 1 | WINF-05 | — | N/A | grep | `grep -l "ESP" docs/reference/esp-timeout-tuning.md` | ❌ W0 | ⬜ pending |
-| 21-03-01 | 03 | 2 | WSEC-01 | — | N/A | grep | `grep -l "Conditional Access" docs/reference/conditional-access-enrollment.md` | ❌ W0 | ⬜ pending |
-| 21-03-02 | 03 | 2 | WSEC-02 | — | N/A | grep | `grep -l "security baseline" docs/reference/security-baselines-enrollment.md` | ❌ W0 | ⬜ pending |
-| 21-03-03 | 03 | 2 | WSEC-03 | — | N/A | grep | `grep -l "compliance" docs/reference/compliance-timing.md` | ❌ W0 | ⬜ pending |
-| 21-04-01 | 04 | 2 | WMIG-01 | — | N/A | grep | `grep -l "APv1" docs/reference/apv1-to-apv2-migration.md` | ❌ W0 | ⬜ pending |
-| 21-04-02 | 04 | 2 | WMIG-02 | — | N/A | grep | `grep -l "imaging" docs/reference/imaging-to-autopilot.md` | ❌ W0 | ⬜ pending |
-| 21-04-03 | 04 | 2 | WMIG-03 | — | N/A | grep | `grep -l "GPO" docs/reference/gpo-to-intune-mapping.md` | ❌ W0 | ⬜ pending |
-| 21-05-01 | 05 | 3 | WMON-01 | — | N/A | grep | `grep -l "deployment report" docs/reference/deployment-reporting.md` | ❌ W0 | ⬜ pending |
-| 21-05-02 | 05 | 3 | WMON-02 | — | N/A | grep | `grep -l "drift" docs/reference/registration-drift.md` | ❌ W0 | ⬜ pending |
-| 21-05-03 | 05 | 3 | WMON-03 | — | N/A | grep | `grep -l "new batch" docs/reference/new-batch-workflow.md` | ❌ W0 | ⬜ pending |
+| 21-03-01 | 03 | 1 | WSEC-01 | — | N/A | grep | `grep -l "Conditional Access" docs/reference/ca-enrollment-timing.md` | ❌ W0 | ⬜ pending |
+| 21-03-02 | 03 | 1 | WSEC-02 | — | N/A | grep | `grep -l "security baseline" docs/reference/security-baseline-conflicts.md` | ❌ W0 | ⬜ pending |
+| 21-03-03 | 03 | 1 | WSEC-03 | — | N/A | grep | `grep -l "compliance" docs/reference/compliance-timing.md` | ❌ W0 | ⬜ pending |
+| 21-04-01 | 04 | 1 | WMIG-01 | — | N/A | grep | `grep -l "APv1" docs/reference/apv1-apv2-migration.md` | ❌ W0 | ⬜ pending |
+| 21-04-02 | 04 | 1 | WMIG-02 | — | N/A | grep | `grep -l "imaging" docs/reference/imaging-to-autopilot.md` | ❌ W0 | ⬜ pending |
+| 21-04-03 | 04 | 1 | WMIG-03 | — | N/A | grep | `grep -l "GPO" docs/reference/gpo-to-intune.md` | ❌ W0 | ⬜ pending |
+| 21-05-01 | 05 | 1 | WMON-01 | — | N/A | grep | `grep -l "deployment report" docs/reference/deployment-reporting.md` | ❌ W0 | ⬜ pending |
+| 21-05-02 | 05 | 1 | WMON-02 | — | N/A | grep | `grep -l "drift" docs/reference/drift-detection.md` | ❌ W0 | ⬜ pending |
+| 21-05-03 | 05 | 1 | WMON-03 | — | N/A | grep | `grep -l "new batch" docs/reference/new-batch-workflow.md` | ❌ W0 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -89,4 +89,4 @@ created: 2026-04-13
 - [ ] Feedback latency < 5s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-04-13
