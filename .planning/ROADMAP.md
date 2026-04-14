@@ -48,7 +48,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 - [x] **Phase 20: Cross-Platform Foundation** (3 plans) — Shared glossary, terminology standards, macOS template, platform taxonomy, and navigation structure design (completed 2026-04-13)
 - [ ] **Phase 21: Windows Operational Gaps** (6 plans) — Device lifecycle, infrastructure prerequisites, ESP app strategy, security/compliance, migration scenarios, and monitoring (parallelizable with Phase 22)
 - [x] **Phase 22: macOS Lifecycle Foundation** (2 plans) — ADE lifecycle overview, reference files, and network endpoints (parallelizable with Phase 21) (completed 2026-04-14)
-- [ ] **Phase 23: macOS Admin Setup** (4 plans) — ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance, and capability matrix
+- [x] **Phase 23: macOS Admin Setup** (4 plans) — ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance, and capability matrix (completed 2026-04-14)
 - [ ] **Phase 24: macOS Troubleshooting** — L1 decision tree and runbooks, L2 log collection and diagnostic runbooks
 - [ ] **Phase 25: Navigation Integration & Polish** — Cross-platform common-issues routing, quick-reference card updates, and final link population
 
@@ -114,10 +114,10 @@ Plans:
   5. Admin can consult a capability matrix showing feature parity gaps between macOS and Windows across enrollment, configuration, app deployment, compliance, and updates
 **Plans**: 4 plans
 Plans:
-- [ ] 23-01-PLAN.md — ABM configuration guide and enrollment profile guide (MADM-01, MADM-02)
-- [ ] 23-02-PLAN.md — Configuration profiles guide and compliance policy guide (MADM-03, MADM-05)
-- [ ] 23-03-PLAN.md — App deployment guide and capability matrix (MADM-04, MADM-06)
-- [ ] 23-04-PLAN.md — Overview, config-failures reference, and navigation updates (all requirements)
+- [x] 23-01-PLAN.md — ABM configuration guide and enrollment profile guide (MADM-01, MADM-02)
+- [x] 23-02-PLAN.md — Configuration profiles guide and compliance policy guide (MADM-03, MADM-05)
+- [x] 23-03-PLAN.md — App deployment guide and capability matrix (MADM-04, MADM-06)
+- [x] 23-04-PLAN.md — Overview, config-failures reference, and navigation updates (all requirements)
 
 ### Phase 24: macOS Troubleshooting
 **Goal**: L1 and L2 support staff can independently triage and resolve macOS enrollment and management failures using platform-appropriate tools (portal actions for L1, Terminal diagnostics for L2)
@@ -166,6 +166,6 @@ Plans:
 | 20. Cross-Platform Foundation | v1.2 | 3/3 | Complete    | 2026-04-13 |
 | 21. Windows Operational Gaps | v1.2 | 0/6 | Not started | - |
 | 22. macOS Lifecycle Foundation | v1.2 | 2/2 | Complete    | 2026-04-14 |
-| 23. macOS Admin Setup | v1.2 | 0/4 | Not started | - |
+| 23. macOS Admin Setup | v1.2 | 4/4 | Complete    | 2026-04-14 |
 | 24. macOS Troubleshooting | v1.2 | 0/? | Not started | - |
 | 25. Navigation Integration & Polish | v1.2 | 0/? | Not started | - |
