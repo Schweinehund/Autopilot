@@ -80,6 +80,15 @@ Troubleshooting, investigation, and setup guides for Windows Autopilot and macOS
 | [APv1 Admin Setup Guides](admin-setup-apv1/00-overview.md) | APv1 (classic) | Hardware hash upload, deployment profiles, ESP, dynamic groups, deployment modes, Intune Connector |
 | [APv2 Admin Setup Guides](admin-setup-apv2/00-overview.md) | APv2 (Device Preparation) | Prerequisites, RBAC, Enrollment Time Grouping, Device Preparation policy, corporate identifiers |
 
+### Device Operations
+
+Post-enrollment device management: reset, retire, wipe, re-provisioning, and tenant migration.
+
+| Resource | Description |
+|----------|-------------|
+| [Device Operations Overview](device-operations/00-overview.md) | All post-enrollment device actions — reset, retire, wipe, re-provision, tenant migration |
+| [Device Lifecycle Decision Tree](decision-trees/05-device-lifecycle.md) | "What do you want to preserve?" — routes to the correct device action in three steps or fewer |
+
 ---
 
 ## macOS Provisioning
@@ -120,6 +129,9 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [APv1 vs APv2](apv1-vs-apv2.md) | Windows framework selection -- which docs apply to which mode |
 | [APv2 Lifecycle Overview](lifecycle-apv2/00-overview.md) | APv2 deployment model, Enrollment Time Grouping mechanism, and automatic mode |
 | [Common Issues Index](common-issues.md) | Symptom-based router to L1 and L2 runbooks |
+| [Reference Index](reference/00-index.md) | Infrastructure, security, migration, and monitoring references organized by sub-domain |
+| [Migration Guides](reference/00-index.md#migration-guides) | APv1-to-APv2, Imaging-to-Autopilot, GPO-to-Intune migration playbooks |
+| [Monitoring and Operations](reference/00-index.md#monitoring-and-operations) | Deployment reporting, drift detection, new-batch device onboarding workflow |
 
 ## Version History
 
