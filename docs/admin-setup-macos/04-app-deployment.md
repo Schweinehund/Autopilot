@@ -95,7 +95,7 @@ This guide covers deploying macOS applications through Intune using three method
 
 Supported scenarios beyond managed LOB: non-flat packages, component packages, unsigned packages, packages without payload, packages installing outside `/Applications/`, custom packages with scripts.
 
-> **What breaks if misconfigured:** Uninstall assignment type is not available for unmanaged PKG (Known Issue in Intune). If uninstall is required, use DMG or managed LOB PKG type. Symptom: Uninstall option missing from assignment type dropdown.
+> **What breaks if misconfigured:** Uninstall assignment type is not available for unmanaged PKG (Known Issue in Intune). If uninstall is required, use DMG or managed LOB PKG type. Symptom appears in: Intune admin center (Uninstall option missing from assignment type dropdown).
 > See: [Troubleshooting Runbook](TBD - Phase 24)
 
 ## VPP / Apps and Books

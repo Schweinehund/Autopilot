@@ -22,7 +22,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 - Apple Business Manager account with verified organization
 - Managed Apple ID (NOT personal Apple ID)
 
-> **What breaks if misconfigured:** Using a personal Apple ID means the [ABM token](../_glossary-macos.md#abm-token) cannot be renewed if that employee leaves the organization. All new device syncing stops when the token expires.
+> **What breaks if misconfigured:** Using a personal Apple ID means the [ABM token](../_glossary-macos.md#abm-token) cannot be renewed if that employee leaves the organization. All new device syncing stops when the token expires. Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop syncing after token expires).
 > See: [Troubleshooting Runbook](TBD - Phase 24)
 
 ## Steps
@@ -76,7 +76,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 > **What breaks if misconfigured:** Device must be assigned BEFORE first power-on. If powered on without assignment, device proceeds through non-managed [Setup Assistant](../_glossary-macos.md#setup-assistant) and requires factory wipe to fix. Symptom appears in: the device itself (standard macOS setup, no MDM enrollment).
 > See: [Troubleshooting Runbook](TBD - Phase 24)
 
-> **What breaks if misconfigured:** Wrong MDM server selected in multi-server organizations (test vs production). Verify assignment at **Devices** > **[serial]** > **Edit MDM Server**. Symptom appears in: wrong Intune tenant or enrollment profile applied.
+> **What breaks if misconfigured:** Wrong MDM server selected in multi-server organizations (test vs production). Verify assignment at **Devices** > **[serial]** > **Edit MDM Server**. Symptom appears in: Intune admin center (device enrolled to wrong tenant or incorrect enrollment profile applied) or device (unexpected branding or configuration at first boot).
 > See: [Troubleshooting Runbook](TBD - Phase 24)
 
 > **What breaks if misconfigured:** Device enrolled in another MDM -- previous organization must release device in ABM before reassignment. Symptom appears in: ABM (device cannot be assigned to new MDM server).
