@@ -3,6 +3,7 @@ last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
 audience: L2
+platform: all
 ---
 
 > **Version gate:** This index covers both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2) L2 runbooks.
@@ -65,6 +66,36 @@ The [APv2 Log Collection Guide](06-apv2-log-collection.md) is a **prerequisite f
 
 > **Note:** When a ticket arrives via L1 escalation, the escalation checklist from the L1 runbook specifies which data was collected. Each APv2 L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
+---
+
+## macOS ADE Runbooks
+
+> **Version gate:** The runbooks below cover macOS Automated Device Enrollment (ADE) via Intune.
+> For Windows Autopilot runbooks, see the tables above.
+
+The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite for all macOS L2 investigation runbooks** -- collect IntuneMacODC diagnostic package and targeted Terminal artifacts before beginning any investigation.
+
+### When to Use
+
+| Runbook | When to Use | Prerequisite |
+|---------|-------------|--------------|
+| [macOS Log Collection Guide](10-macos-log-collection.md) | Before starting any macOS L2 investigation -- collect IntuneMacODC zip and Terminal diagnostic outputs | None |
+| [Profile Delivery Investigation](11-macos-profile-delivery.md) | Configuration profile not delivered, showing error/conflict, or not taking effect on device | [macOS Log Collection](10-macos-log-collection.md) |
+| [App Install Failure Diagnosis](12-macos-app-install.md) | DMG, PKG, or VPP app not installing, showing failed status, or continuous reinstall loop | [macOS Log Collection](10-macos-log-collection.md) |
+| [Compliance Evaluation Investigation](13-macos-compliance.md) | Device non-compliant, compliance not evaluating, or Conditional Access blocking despite compliance | [macOS Log Collection](10-macos-log-collection.md) |
+
+### macOS L1 Escalation Mapping
+
+| L1 Runbook Source | L2 Runbook |
+|-------------------|------------|
+| Setup Assistant / Enrollment issues | [Profile Delivery Investigation](11-macos-profile-delivery.md) for profile-related escalation; general enrollment issues reviewed case-by-case |
+| Configuration profile not applied | [Profile Delivery Investigation](11-macos-profile-delivery.md) |
+| App not installed | [App Install Failure Diagnosis](12-macos-app-install.md) |
+| Compliance / access blocked | [Compliance Evaluation Investigation](13-macos-compliance.md) |
+| Company Portal sign-in failure | [Compliance Evaluation Investigation](13-macos-compliance.md) for Entra registration issues |
+
+> **Note:** When a ticket arrives via macOS L1 escalation, the escalation checklist from the L1 runbook specifies: serial number, macOS version, Intune device status screenshot, and description of steps attempted. Each macOS L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
+
 ## Related Resources
 
 - [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
@@ -72,6 +103,9 @@ The [APv2 Log Collection Guide](06-apv2-log-collection.md) is a **prerequisite f
 - [Decision Trees](../decision-trees/00-initial-triage.md) — L1 triage flowcharts; escalation terminal IDs in these trees map to L2 runbooks above
 - [APv2 Failure Catalog](../error-codes/06-apv2-device-preparation.md) — symptom-based APv2 failure index organized by deployment phase
 - [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) — APv2 L1 triage flowchart; APE1/APE2/APE3 escalation nodes map to APv2 L2 runbooks above
+- [macOS ADE Triage Decision Tree](../decision-trees/06-macos-triage.md) -- macOS L1 triage flowchart
+- [macOS Terminal Commands Reference](../reference/macos-commands.md) -- canonical macOS diagnostic command reference
+- [macOS Log Paths Reference](../reference/macos-log-paths.md) -- macOS log path and configuration profile locations
 
 ---
 
@@ -79,5 +113,6 @@ The [APv2 Log Collection Guide](06-apv2-log-collection.md) is a **prerequisite f
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Added macOS ADE runbook section | -- |
 | 2026-04-13 | Added APv2 runbook section (restored after accidental revert) | -- |
 | 2026-03-21 | Initial version | — |

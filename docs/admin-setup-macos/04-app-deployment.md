@@ -59,10 +59,10 @@ This guide covers deploying macOS applications through Intune using three method
 6. Configure assignments: Required, Available, or Uninstall.
 
 > **What breaks if misconfigured:** Adding non-application files to the Included apps list causes Intune to report installation failure because listed items are not `.app` bundles installed to `/Applications/`. Symptom appears in: Intune admin center (app install status shows "Failed").
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 > **What breaks if misconfigured:** When using Uninstall assignment with `Ignore app version: No`, both bundle ID AND version must match the installed app for removal. Stale version deployments silently fail to uninstall. Symptom appears in: Intune admin center (uninstall status "Pending" indefinitely).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 **Limitation:** App is NOT automatically removed from device on device retirement -- must be explicitly uninstalled first.
 
@@ -78,10 +78,10 @@ This guide covers deploying macOS applications through Intune using three method
 6. Assign to groups.
 
 > **What breaks if misconfigured:** Using managed LOB for a PKG > 2 GB causes upload failure. Use unmanaged PKG type (8 GB limit) instead, but note that Uninstall assignment is not available for unmanaged PKG. Symptom appears in: Intune admin center (upload error).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 > **What breaks if misconfigured:** PKG without payload (e.g., script-only packages) continuously reinstalls. Symptom appears in: Intune admin center (perpetual "Installing" status) and on device (repeated installation prompts).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 ## PKG Apps (Unmanaged)
 
@@ -96,7 +96,7 @@ This guide covers deploying macOS applications through Intune using three method
 Supported scenarios beyond managed LOB: non-flat packages, component packages, unsigned packages, packages without payload, packages installing outside `/Applications/`, custom packages with scripts.
 
 > **What breaks if misconfigured:** Uninstall assignment type is not available for unmanaged PKG (Known Issue in Intune). If uninstall is required, use DMG or managed LOB PKG type. Symptom appears in: Intune admin center (Uninstall option missing from assignment type dropdown).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 ## VPP / Apps and Books
 
@@ -116,10 +116,10 @@ Supported scenarios beyond managed LOB: non-flat packages, component packages, u
 5. Assign as Required (device or user groups) or Available for enrolled devices (user groups only).
 
 > **What breaks if misconfigured:** VPP app assigned as Available to a device group will not appear in Company Portal. Available deployment intent for VPP works only with user groups. Use Required for device groups. Symptom appears in: Intune admin center (assignment shows succeeded) but device (Company Portal does not list the app).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 > **What breaks if misconfigured:** Revoking a VPP license without Uninstall intent leaves the app installed on the device. The revoked license remains usable for a 30-day grace period (Apple policy). To fully remove: assign with Uninstall intent, which removes the app AND revokes the license. Symptom appears in: ABM (license shows revoked) but device (app still installed and usable for up to 30 days).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 ## Verification
 
@@ -133,13 +133,13 @@ Supported scenarios beyond managed LOB: non-flat packages, component packages, u
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Non-app file in DMG Included apps list | Intune | Installation reported as failed | [TBD - Phase 24] |
-| Managed PKG > 2 GB | Intune | Upload fails | [TBD - Phase 24] |
-| PKG without payload (managed LOB) | Intune | Continuous reinstallation | [TBD - Phase 24] |
-| VPP Available assigned to device group | Intune | App not visible in Company Portal | [TBD - Phase 24] |
-| Uninstall on unmanaged PKG | Intune | Uninstall option not available (Known Issue) | [TBD - Phase 24] |
-| VPP license revoked without Uninstall intent | ABM | App remains installed for 30-day grace period | [TBD - Phase 24] |
-| Expired VPP token | Intune | VPP apps stop syncing; existing installs unaffected | [TBD - Phase 24] |
+| Non-app file in DMG Included apps list | Intune | Installation reported as failed | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
+| Managed PKG > 2 GB | Intune | Upload fails | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
+| PKG without payload (managed LOB) | Intune | Continuous reinstallation | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
+| VPP Available assigned to device group | Intune | App not visible in Company Portal | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
+| Uninstall on unmanaged PKG | Intune | Uninstall option not available (Known Issue) | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
+| VPP license revoked without Uninstall intent | ABM | App remains installed for 30-day grace period | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
+| Expired VPP token | Intune | VPP apps stop syncing; existing installs unaffected | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
 
 ## Renewal / Maintenance
 
@@ -161,4 +161,5 @@ Up to 3,000 VPP tokens supported per Intune tenant. One VPP token cannot be shar
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- DMG, PKG (managed/unmanaged), VPP with comparison table, per-type prerequisites, VPP renewal | -- |

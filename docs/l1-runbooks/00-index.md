@@ -1,8 +1,9 @@
 ---
 last_verified: 2026-04-13
 review_by: 2026-07-12
-applies_to: both
+applies_to: all
 audience: L1
+platform: all
 ---
 
 > **Version gate:** This index covers L1 runbooks for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
@@ -32,9 +33,22 @@ Scripted procedures for APv2 Device Preparation failure scenarios. Each runbook 
 | 8 | [APv1 Registration Conflict](08-apv2-apv1-conflict.md) | ESP appeared instead of Device Preparation screen |
 | 9 | [Deployment Timeout](09-apv2-deployment-timeout.md) | Device Preparation deployment timed out before completing |
 
+## macOS ADE Runbooks
+
+Scripted procedures for macOS ADE enrollment failure scenarios. Each runbook provides portal-only instructions using ABM and Intune admin center actions. Start with the [macOS ADE Triage Decision Tree](../decision-trees/06-macos-triage.md) to identify which runbook applies.
+
+| # | Runbook | When to Use |
+|---|---------|-------------|
+| 10 | [Device Not Appearing in Intune](10-macos-device-not-appearing.md) | macOS device serial number not found in Intune after ADE enrollment |
+| 11 | [Setup Assistant Stuck or Failed](11-macos-setup-assistant-failed.md) | Setup Assistant authentication failure, Await Configuration stuck, or network connectivity issue |
+| 12 | [Configuration Profile Not Applied](12-macos-profile-not-applied.md) | Expected configuration (Wi-Fi, VPN, FileVault, restrictions) missing after enrollment |
+| 13 | [App Not Installed](13-macos-app-not-installed.md) | DMG, PKG, or VPP app not installed or showing failed status |
+| 14 | [Compliance Failure / Access Blocked](14-macos-compliance-access-blocked.md) | Device non-compliant or user cannot access Microsoft 365 resources |
+| 15 | [Company Portal Sign-In Failure](15-macos-company-portal-sign-in.md) | Company Portal not available, sign-in failing, or Entra registration incomplete |
+
 ## Scope
 
-This index covers L1 runbooks for both APv1 (classic Autopilot) and APv2 (Device Preparation) deployments. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
+This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Preparation), and macOS ADE deployments. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
 
 ## TPM Attestation Note
 
@@ -44,6 +58,7 @@ This index covers L1 runbooks for both APv1 (classic Autopilot) and APv2 (Device
 
 - [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) — Start here to identify the failure scenario
 - [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) -- APv2 failure routing
+- [macOS ADE Triage Decision Tree](../decision-trees/06-macos-triage.md) -- macOS failure routing
 - [ESP Failure Decision Tree](../decision-trees/01-esp-failure.md) — Detailed ESP triage flowchart
 - [Profile Assignment Decision Tree](../decision-trees/02-profile-assignment.md) — Profile assignment triage flowchart
 - [Master Error Code Index](../error-codes/00-index.md) — Look up any error code
@@ -55,5 +70,6 @@ This index covers L1 runbooks for both APv1 (classic Autopilot) and APv2 (Device
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Added macOS ADE runbook section | -- |
 | 2026-04-13 | Added APv2 runbook section (restored after accidental revert) | -- |
 | 2026-03-20 | Initial version | — |

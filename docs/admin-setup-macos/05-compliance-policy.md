@@ -25,7 +25,7 @@ platform: macOS
 | Enforce encryption | No | Yes (Settings Catalog > Full Disk Encryption) |
 
 > **What breaks if misconfigured:** If compliance policies are deployed WITHOUT corresponding configuration profiles, devices will be marked non-compliant but nothing enforces the settings. Users can change settings freely, and Conditional Access may block access. Symptom appears in: Intune admin center (devices non-compliant) and on device (Conditional Access blocks user if CA policies are active).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 ## Prerequisites
 
@@ -51,7 +51,7 @@ platform: macOS
 - **Require System Integrity Protection (SIP):** Not configured / Require
 
 > **What breaks if misconfigured:** SIP is a compliance-check-only setting. MDM CANNOT enable or disable SIP -- it is controlled only by booting to Recovery Mode. If required and SIP is disabled, the device is non-compliant with no automated remediation. User must boot to Recovery Mode and run `csrutil enable`. Symptom appears in: Intune admin center (non-compliant status with "SIP disabled" reason).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 **Device Properties:**
 
@@ -61,7 +61,7 @@ platform: macOS
 - Maximum OS build version
 
 > **What breaks if misconfigured:** OS version requirements that are ahead of the latest available macOS update will mark ALL devices non-compliant with no remediation path until Apple releases the update. Symptom appears in: Intune admin center (entire fleet non-compliant).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 **System Security -- Password:**
 
@@ -75,7 +75,7 @@ platform: macOS
 - Number of previous passwords to prevent reuse
 
 > **What breaks if misconfigured:** When password requirements change, the new requirement does NOT take effect until the next time the user changes their password. The device remains compliant with the old password until then. This means there is a window where the device technically meets the old policy but not the new one. Symptom appears in: Intune admin center (device may show compliant despite not meeting new password requirements until user changes password).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 **System Security -- Encryption:**
 
@@ -96,7 +96,7 @@ platform: macOS
 - Allow apps downloaded from: Not configured / Mac App Store / Mac App Store and identified developers / Anywhere
 
 > **What breaks if misconfigured:** Compliance policy checks current Gatekeeper setting but does NOT enforce it. A configuration profile (Settings Catalog > System Policy) is required to prevent users from changing the setting. If set to "Mac App Store" and user overrides to "Anywhere" without a config profile enforcing it, device becomes non-compliant immediately. Symptom appears in: Intune admin center (non-compliant for Gatekeeper) and device (Conditional Access blocks access if CA policy active).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 ### Step 3: Configure Actions for Noncompliance
 
@@ -127,11 +127,11 @@ Assign to device groups or user groups as appropriate.
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Compliance policy without enforcement config profile | Intune | Devices non-compliant but settings not enforced; users can change freely | [TBD - Phase 24] |
-| SIP required but disabled on device | Intune | Non-compliant with no MDM remediation; user must boot to Recovery Mode | [TBD - Phase 24] |
-| OS version requirement ahead of available update | Intune | Entire fleet non-compliant until Apple releases update | [TBD - Phase 24] |
-| Password change timing gap | Intune | Device appears compliant with old password until user changes it | [TBD - Phase 24] |
-| Gatekeeper compliance without config profile | Intune | Users can override Gatekeeper; compliance detects but cannot prevent | [TBD - Phase 24] |
+| Compliance policy without enforcement config profile | Intune | Devices non-compliant but settings not enforced; users can change freely | [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md) |
+| SIP required but disabled on device | Intune | Non-compliant with no MDM remediation; user must boot to Recovery Mode | [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md) |
+| OS version requirement ahead of available update | Intune | Entire fleet non-compliant until Apple releases update | [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md) |
+| Password change timing gap | Intune | Device appears compliant with old password until user changes it | [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md) |
+| Gatekeeper compliance without config profile | Intune | Users can override Gatekeeper; compliance detects but cannot prevent | [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md) |
 
 ## See Also
 
@@ -145,4 +145,5 @@ Assign to device groups or user groups as appropriate.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- compliance policies with no-security-baselines callout, detect vs enforce distinction, all settings | -- |

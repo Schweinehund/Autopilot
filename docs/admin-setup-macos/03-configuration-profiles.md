@@ -35,17 +35,17 @@ Key settings:
 - **SSID:** Must match exactly (case-sensitive).
 
 > **What breaks if misconfigured:** If SSID does not match the network name exactly (including case), the device cannot find or connect to the network. Symptom appears in: device (Wi-Fi settings show no matching network).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 - **Security type:** Must match the network's actual security type (WPA2, WPA3, etc.).
 
 > **What breaks if misconfigured:** If the security type does not match, the connection fails silently. Symptom appears in: device (Wi-Fi connection fails repeatedly).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 - **Certificate (for enterprise WPA2/WPA3):** Must reference a valid SCEP/PKCS certificate profile deployed to the device.
 
 > **What breaks if misconfigured:** Without a valid certificate profile, 802.1X authentication fails. Symptom appears in: device (Wi-Fi authentication error) and Intune admin center (profile shows "Error" status).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## VPN
 
@@ -60,7 +60,7 @@ Key settings:
 - **Authentication method:** Certificate, username/password, or machine certificate
 
 > **What breaks if misconfigured:** Wrong VPN type or server address causes connection failure with no clear error message. Symptom appears in: device (VPN shows "Not Connected" with generic error).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Email
 
@@ -75,7 +75,7 @@ Key settings:
 - **S/MIME:** Optional encryption and signing certificates
 
 > **What breaks if misconfigured:** Incorrect email server or authentication method causes email sync failure. Symptom appears in: device (Mail app shows "Cannot Get Mail" error).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Restrictions
 
@@ -93,7 +93,7 @@ Key settings to configure per organizational policy:
 - **Content caching:** Allow or block local content caching
 
 > **What breaks if misconfigured:** Overly restrictive settings may block legitimate business workflows. Insufficient restrictions may allow data exfiltration via AirDrop or Screen capture. Symptom appears in: device (feature unavailable) or Intune admin center (compliance policy detects unrestricted setting).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## FileVault (Disk Encryption)
 
@@ -108,7 +108,7 @@ Key settings:
 - **Recovery key rotation:** Configurable rotation after each use.
 
 > **What breaks if misconfigured:** If FileVault enforcement is configured without recovery key escrow, and the user forgets their password, the disk is unrecoverable. Symptom appears in: Intune admin center (no recovery key available when admin searches) and on device (FileVault recovery screen shows no institutional key).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 **Critical:** FileVault has TWO surfaces -- a configuration profile (enforce via Settings Catalog) AND a compliance policy (verify enabled in [Compliance Policies](05-compliance-policy.md)). Always deploy both together.
 
@@ -125,7 +125,7 @@ Key settings:
 - **Stealth mode:** Enable/Disable
 
 > **What breaks if misconfigured:** Enabling "Block all incoming connections" without exceptions for management traffic (APNs, IME) can break MDM communication and app deployment. Symptom appears in: Intune admin center (device stops checking in) and on device (apps fail to install).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 **Critical:** Like FileVault, firewall has configuration profile (enforce) AND compliance policy (detect). Deploy both. See [Compliance Policies](05-compliance-policy.md).
 
@@ -136,7 +136,7 @@ Key settings:
 Navigation: **Devices** > **Manage devices** > **Configuration** > **Create** > **New policy** > **Settings catalog** > **System Policy** > **System Policy Control** (Allow Identified Developer: True, Enable Assessment: True) + **System Policy Managed** (Disable Override: True)
 
 > **What breaks if misconfigured:** If Gatekeeper is not enforced via configuration profile, users can change the setting to allow apps from "Anywhere." Compliance policy detects the change but does not prevent it. Symptom appears in: Intune admin center (non-compliant for Gatekeeper) and device (Gatekeeper set to permissive mode).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Privacy Preferences (PPPC)
 
@@ -152,7 +152,7 @@ Common use cases:
 - **Accessibility** for automation and assistive tools
 
 > **What breaks if misconfigured:** Without PPPC profiles, security tools prompt the user for permissions on first run. If the user denies, the tool cannot function until the admin deploys a PPPC profile and the user re-approves. Symptom appears in: device (security agent reports reduced functionality) and security dashboard (gaps in endpoint coverage).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Extensible SSO
 
@@ -178,12 +178,12 @@ See official Microsoft documentation for full Platform SSO configuration, as set
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| New profile via Endpoint protection template (deprecated) | Intune | Profile may not contain latest settings; stale template | [TBD - Phase 24] |
-| FileVault without recovery key escrow | Intune | Admin cannot retrieve recovery key for locked device | [TBD - Phase 24] |
-| Firewall blocks incoming without MDM exceptions | Intune | Device stops checking in; app deployment fails | [TBD - Phase 24] |
-| SSID case mismatch in Wi-Fi profile | Intune | Device cannot connect to network | [TBD - Phase 24] |
-| Gatekeeper not enforced via config profile | Intune | User overrides Gatekeeper; compliance policy detects but cannot prevent | [TBD - Phase 24] |
-| Certificate profile missing for enterprise Wi-Fi | Intune | 802.1X authentication fails on device | [TBD - Phase 24] |
+| New profile via Endpoint protection template (deprecated) | Intune | Profile may not contain latest settings; stale template | [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md) |
+| FileVault without recovery key escrow | Intune | Admin cannot retrieve recovery key for locked device | [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md) |
+| Firewall blocks incoming without MDM exceptions | Intune | Device stops checking in; app deployment fails | [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md) |
+| SSID case mismatch in Wi-Fi profile | Intune | Device cannot connect to network | [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md) |
+| Gatekeeper not enforced via config profile | Intune | User overrides Gatekeeper; compliance policy detects but cannot prevent | [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md) |
+| Certificate profile missing for enterprise Wi-Fi | Intune | 802.1X authentication fails on device | [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md) |
 
 ## See Also
 
@@ -198,4 +198,5 @@ See official Microsoft documentation for full Platform SSO configuration, as set
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- 9 profile types with Settings Catalog paths, what-breaks callouts, delivery channel note | -- |

@@ -6,6 +6,7 @@ audience: L1
 ---
 
 > **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **macOS:** For macOS ADE troubleshooting, see [macOS ADE Triage](06-macos-triage.md).
 
 # Initial Triage Decision Tree
 
@@ -126,5 +127,6 @@ graph TD
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Added macOS ADE triage cross-reference banner | -- |
 | 2026-04-13 | Added APv2 triage tree cross-reference (restored after accidental revert) | -- |
 | 2026-03-20 | Initial version | — |
