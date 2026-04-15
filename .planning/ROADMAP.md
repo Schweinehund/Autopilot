@@ -49,7 +49,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 - [ ] **Phase 21: Windows Operational Gaps** (6 plans) — Device lifecycle, infrastructure prerequisites, ESP app strategy, security/compliance, migration scenarios, and monitoring (parallelizable with Phase 22)
 - [x] **Phase 22: macOS Lifecycle Foundation** (2 plans) — ADE lifecycle overview, reference files, and network endpoints (parallelizable with Phase 21) (completed 2026-04-14)
 - [x] **Phase 23: macOS Admin Setup** (4 plans) — ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance, and capability matrix (completed 2026-04-14)
-- [ ] **Phase 24: macOS Troubleshooting** — L1 decision tree and runbooks, L2 log collection and diagnostic runbooks
+- [ ] **Phase 24: macOS Troubleshooting** (3 plans) — L1 triage decision tree and 6 runbooks, L2 log collection guide and 3 investigation runbooks, navigation and link integration
 - [ ] **Phase 25: Navigation Integration & Polish** — Cross-platform common-issues routing, quick-reference card updates, and final link population
 
 ## Phase Details
@@ -128,7 +128,11 @@ Plans:
   2. L1 agent can follow runbooks for top macOS enrollment failure scenarios using only ABM portal and Intune admin center actions, with zero Terminal commands required
   3. L2 technician can collect macOS diagnostic logs using IntuneMacODC and Terminal commands, with log path references for each macOS version
   4. L2 technician can investigate profile delivery failures, app install failures, and compliance evaluation issues using macOS-native diagnostics (not Windows patterns adapted for Mac)
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 24-01-PLAN.md — macOS ADE triage decision tree + 6 L1 portal-only runbooks (MTRO-01, MTRO-02)
+- [ ] 24-02-PLAN.md — macOS L2 log collection guide (IntuneMacODC-first) + 3 L2 investigation runbooks (MTRO-03, MTRO-04)
+- [ ] 24-03-PLAN.md — Navigation integration: index updates, cross-reference banners, and [TBD - Phase 24] link resolution (MTRO-01, MTRO-02, MTRO-03, MTRO-04)
 
 ### Phase 25: Navigation Integration & Polish
 **Goal**: Users on any platform can find the correct documentation within two clicks from the hub, with macOS content fully integrated into existing navigation structures and quick-reference materials
@@ -167,5 +171,5 @@ Plans:
 | 21. Windows Operational Gaps | v1.2 | 0/6 | Not started | - |
 | 22. macOS Lifecycle Foundation | v1.2 | 2/2 | Complete    | 2026-04-14 |
 | 23. macOS Admin Setup | v1.2 | 4/4 | Complete    | 2026-04-14 |
-| 24. macOS Troubleshooting | v1.2 | 0/? | Not started | - |
+| 24. macOS Troubleshooting | v1.2 | 0/3 | Not started | - |
 | 25. Navigation Integration & Polish | v1.2 | 0/? | Not started | - |
