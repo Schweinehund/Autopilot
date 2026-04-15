@@ -22,7 +22,7 @@ All other macOS L2 runbooks open with: "Before starting: collect a diagnostic pa
 
 ## Section 1: IntuneMacODC Comprehensive Collection
 
-IntuneMacODC is a Microsoft-provided bash script — not a Windows tool adapted for Mac — that collects all Intune agent logs, system profiler output, installed profiles, process lists, and network configuration in a single zip archive. It is the macOS equivalent of `mdmdiagnosticstool.exe` for Windows Autopilot investigations.
+IntuneMacODC is a Microsoft-provided bash script — not a Windows tool adapted for Mac — that collects all Intune agent logs, system profiler output, installed profiles, process lists, and network configuration in a single zip archive. It is the primary comprehensive log collection tool for macOS Intune investigations.
 
 Run this first. It produces a single `IntuneMacODC.zip` archive that covers the vast majority of investigation scenarios.
 
