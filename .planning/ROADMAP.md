@@ -50,7 +50,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 - [x] **Phase 22: macOS Lifecycle Foundation** (2 plans) — ADE lifecycle overview, reference files, and network endpoints (parallelizable with Phase 21) (completed 2026-04-14)
 - [x] **Phase 23: macOS Admin Setup** (4 plans) — ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance, and capability matrix (completed 2026-04-14)
 - [x] **Phase 24: macOS Troubleshooting** (3 plans) — L1 triage decision tree and 6 runbooks, L2 log collection guide and 3 investigation runbooks, navigation and link integration (completed 2026-04-15)
-- [ ] **Phase 25: Navigation Integration & Polish** — Cross-platform common-issues routing, quick-reference card updates, and final link population
+- [ ] **Phase 25: Navigation Integration & Polish** (2 plans) — Cross-platform common-issues routing, quick-reference card updates, index.md fragment anchors, and reachability audit
 
 ## Phase Details
 
@@ -142,7 +142,10 @@ Plans:
   1. common-issues.md routes macOS scenarios to macOS runbooks and Windows scenarios to Windows runbooks without cross-contamination between platforms
   2. L1 and L2 quick-reference cards include macOS sections with Terminal commands, log paths, and key diagnostic checks alongside existing Windows content
   3. Every new documentation file created in Phases 20-24 is reachable from the docs hub (index.md) within two navigation clicks
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 25-01-PLAN.md — Cross-platform common-issues routing + quick-reference card macOS sections (NAVX-02, NAVX-03)
+- [ ] 25-02-PLAN.md — index.md fragment anchors + exhaustive reachability audit (NAVX-02, NAVX-03)
 
 ## Progress
 
@@ -172,4 +175,4 @@ Plans:
 | 22. macOS Lifecycle Foundation | v1.2 | 2/2 | Complete    | 2026-04-14 |
 | 23. macOS Admin Setup | v1.2 | 4/4 | Complete    | 2026-04-14 |
 | 24. macOS Troubleshooting | v1.2 | 3/3 | Complete   | 2026-04-15 |
-| 25. Navigation Integration & Polish | v1.2 | 0/? | Not started | - |
+| 25. Navigation Integration & Polish | v1.2 | 0/2 | Not started | - |
