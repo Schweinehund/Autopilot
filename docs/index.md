@@ -100,8 +100,8 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | Resource | When to Use |
 |----------|-------------|
 | [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | Understand the 7-stage macOS enrollment pipeline from ABM registration through desktop |
-| macOS Triage Decision Tree | Start here -- identifies the macOS failure scenario (TBD - Phase 24) |
-| macOS L1 Runbooks | Scripted procedures for top macOS enrollment failures (TBD - Phase 24) |
+| [macOS ADE Triage Decision Tree](decision-trees/06-macos-triage.md) | Start here -- identifies the macOS ADE failure scenario and routes to the correct runbook |
+| [macOS L1 Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Scripted procedures for top macOS ADE enrollment failures (6 runbooks: device, Setup Assistant, profiles, apps, compliance, Company Portal) |
 
 ### Desktop Engineering (L2)
 
@@ -111,8 +111,8 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS Terminal Commands Reference](reference/macos-commands.md) | Look up diagnostic commands (profiles, log show, system_profiler, IntuneMacODC) |
 | [macOS Log Paths Reference](reference/macos-log-paths.md) | Find log file locations, unified log subsystems, and configuration profile paths |
 | [Network Endpoints Reference](reference/endpoints.md#macos-ade-endpoints) | Required Apple and Microsoft URLs for ADE enrollment with test commands |
-| macOS Log Collection Guide | Collect macOS diagnostic logs using IntuneMacODC (TBD - Phase 24) |
-| macOS L2 Runbooks | Investigation guides for profile, app, and compliance failures (TBD - Phase 24) |
+| [macOS Log Collection Guide](l2-runbooks/10-macos-log-collection.md) | Collect macOS diagnostic logs using IntuneMacODC and Terminal commands |
+| [macOS L2 Runbooks](l2-runbooks/00-index.md#macos-ade-runbooks) | Investigation guides for profile delivery, app install, and compliance evaluation failures |
 
 ### Admin Setup
 
@@ -145,6 +145,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Resolved Phase 24 macOS troubleshooting TBD placeholders | -- |
 | 2026-04-14 | Added macOS Admin Setup links and macOS Capability Matrix to Cross-Platform References | -- |
 | 2026-04-13 | Restructured for cross-platform support: added platform selector, Windows and macOS headings, macOS placeholder sections, Cross-Platform References | -- |
 | 2026-04-13 | Added APv2 sections for L1 and L2, added Admin Setup section | -- |

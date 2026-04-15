@@ -10,7 +10,7 @@
      - Include full navigation paths for both ABM and Intune admin center portals
      - Steps that span both portals MUST use #### In Apple Business Manager and
        #### In Intune admin center sub-sections
-     - Runbook links use [TBD - Phase 24] until macOS troubleshooting runbooks exist
+     - Runbook links should point to the appropriate L1 runbook in docs/l1-runbooks/ (10-15 range for macOS ADE)
      - Include Renewal/Maintenance section ONLY when the guide's subject has a
        renewable component (e.g., ADE token, APNs certificate). Omit otherwise.
      Reviewer: macOS Platform Lead (role, not person name)
@@ -46,7 +46,7 @@ platform: macOS
 3. [Action].
 
    > **What breaks if misconfigured:** [Consequence. Symptom appears in: {specify portal where symptom manifests, which may differ from the portal where the misconfiguration occurs}.]
-   > See: [Troubleshooting Runbook Title](TBD - Phase 24)
+   > See: [Troubleshooting Runbook Title](../l1-runbooks/[runbook-filename].md)
 
 #### In Intune admin center
 
@@ -55,7 +55,7 @@ platform: macOS
 3. [Action].
 
    > **What breaks if misconfigured:** [Consequence. Symptom appears in: {specify portal}.]
-   > See: [Troubleshooting Runbook Title](TBD - Phase 24)
+   > See: [Troubleshooting Runbook Title](../l1-runbooks/[runbook-filename].md)
 
 ### Step 2: [Next configuration action]
 
@@ -70,8 +70,8 @@ platform: macOS
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| [Setting X set to wrong value] | [ABM or Intune] | [What admin or user sees, and in which portal the symptom manifests] | [TBD - Phase 24] |
-| [Setting Y missing] | [ABM or Intune] | [What happens] | [TBD - Phase 24] |
+| [Setting X set to wrong value] | [ABM or Intune] | [What admin or user sees, and in which portal the symptom manifests] | [Runbook Title](../l1-runbooks/[runbook-filename].md) |
+| [Setting Y missing] | [ABM or Intune] | [What happens] | [Runbook Title](../l1-runbooks/[runbook-filename].md) |
 
 <!-- Include this section ONLY if the guide's subject has a renewable component
      (e.g., ADE token, APNs certificate). Delete this entire section if not applicable. -->

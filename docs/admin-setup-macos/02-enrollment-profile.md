@@ -44,19 +44,19 @@ Configure the following enrollment settings:
 | Local account creation (LAPS) | Configure / Not configured | Not configured | Creates local admin account during setup |
 
 > **What breaks if misconfigured:** Without user affinity, Company Portal will not work and user-based Conditional Access policies do not apply. Symptom appears in: Intune admin center (device shows no primary user) and Company Portal (app not functional).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 > **What breaks if misconfigured:** Legacy authentication method requires AD FS WS-Trust 1.3 and is incompatible with modern Conditional Access policies. Symptom appears in: Setup Assistant (authentication failure screen).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 > **What breaks if misconfigured:** Await final configuration set to No allows users to reach the desktop before policies and profiles apply, causing immediate compliance failures. Symptom appears in: device (user reaches desktop without management) and Intune admin center (non-compliant status).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 > **What breaks if misconfigured:** Locked enrollment set to Yes prevents the user from removing the management profile via System Settings > Profiles. This setting cannot be changed after enrollment without a factory wipe. If set to No, the user can remove the MDM profile and become unmanaged. Symptom appears in: device (Profiles section in System Settings).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 > **What breaks if misconfigured:** Misconfigured LAPS username template causes account creation failure during Setup Assistant. Link to official LAPS documentation for full configuration. Symptom appears in: Setup Assistant (error during account creation).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 ### Step 3: Configure Setup Assistant Screens
 
@@ -94,7 +94,7 @@ These screens appear during the first-run experience and can be shown or hidden 
 | Get started | 15.0 | Show | |
 
 > **What breaks if misconfigured:** The Restore screen on macOS 15.4+ cannot be hidden -- hiding it has no effect and users receive an alert instead. The Accessibility screen hiding blocks VoiceOver on supported devices, which may create accessibility compliance issues. Symptom appears in: device (unexpected screens during Setup Assistant or blocked assistive technology).
-> See: [Troubleshooting Runbook](TBD - Phase 24)
+> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 ### Step 4: Assign Profile to Devices
 
@@ -118,12 +118,12 @@ These screens appear during the first-run experience and can be shown or hidden 
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| No user affinity on user-targeted deployment | Intune | Company Portal non-functional; user CA policies not applied | [TBD - Phase 24] |
-| Legacy authentication method | Intune | Setup Assistant auth failure when modern CA policies are enforced | [TBD - Phase 24] |
-| Await Configuration = No | Intune | User reaches desktop before policies apply; immediate non-compliance | [TBD - Phase 24] |
-| Locked enrollment = No on supervised device | Intune | User can remove management profile via System Settings | [TBD - Phase 24] |
-| Hiding Accessibility screen | Intune | VoiceOver blocked on supported devices | [TBD - Phase 24] |
-| Hiding Restore screen on macOS 15.4+ | Intune | Setting has no effect; user sees alert instead | [TBD - Phase 24] |
+| No user affinity on user-targeted deployment | Intune | Company Portal non-functional; user CA policies not applied | [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md) |
+| Legacy authentication method | Intune | Setup Assistant auth failure when modern CA policies are enforced | [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md) |
+| Await Configuration = No | Intune | User reaches desktop before policies apply; immediate non-compliance | [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md) |
+| Locked enrollment = No on supervised device | Intune | User can remove management profile via System Settings | [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md) |
+| Hiding Accessibility screen | Intune | VoiceOver blocked on supported devices | [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md) |
+| Hiding Restore screen on macOS 15.4+ | Intune | Setting has no effect; user sees alert instead | [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md) |
 
 ## See Also
 
@@ -136,4 +136,5 @@ These screens appear during the first-run experience and can be shown or hidden 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- enrollment profile with Setup Assistant screens, enrollment settings, what-breaks callouts | -- |
