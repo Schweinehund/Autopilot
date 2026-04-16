@@ -6,14 +6,14 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 ## Core Value
 
-IT teams can independently provision, troubleshoot, and manage Windows and macOS devices through Intune without escalating to engineering — covering APv1, APv2, and macOS ADE frameworks with role-appropriate documentation.
+IT teams can independently provision, troubleshoot, and manage Windows, macOS, and iOS/iPadOS devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, and iOS/iPadOS enrollment frameworks with role-appropriate documentation.
 
 ## Current State
 
-**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped.
+**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phase 26 complete.
 
 ### What's been built
-- 116 markdown documentation files in `docs/`
+- 118 markdown documentation files in `docs/`
 - Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
 - APv2 lifecycle, failure catalog, L1/L2 decision trees and runbooks (v1.1)
 - APv1 and APv2 admin setup guides with per-setting "what breaks" callouts (v1.1)
@@ -24,6 +24,7 @@ IT teams can independently provision, troubleshoot, and manage Windows and macOS
 - macOS L1/L2 troubleshooting: triage decision tree, 6 L1 runbooks, 4 L2 runbooks (v1.2)
 - Cross-platform navigation: platform selectors, quick-reference cards with macOS sections, 44-file reachability verified (v1.2)
 - Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1 + v1.2)
+- iOS/iPadOS enrollment path overview (4-path comparison, supervision axis) and ADE lifecycle (7-stage) (v1.3)
 - Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
 
 <details>
@@ -116,9 +117,9 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 ## Context
 
-- 116 markdown files in `docs/` covering APv1, APv2, and macOS ADE frameworks
+- 118 markdown files in `docs/` covering APv1, APv2, macOS ADE, and iOS/iPadOS enrollment frameworks
 - Three audiences served: L1 Service Desk (scripted), L2 Desktop Engineering (technical), Intune Admins (configuration)
-- Two platforms: Windows Autopilot and macOS ADE through Intune
+- Three platforms: Windows Autopilot, macOS ADE, and iOS/iPadOS through Intune
 - Code scaffolding exists across all three tiers (PowerShell, Python, React) but is not yet integrated
 - Docs structured for easy export to SharePoint/Confluence
 
