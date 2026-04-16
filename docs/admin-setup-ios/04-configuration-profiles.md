@@ -359,3 +359,47 @@ Block Camera removes the Camera app and disables camera access in all apps. Bloc
 Block pairing with non-Configurator hosts prevents the device from establishing USB trust relationships with any computer not configured via Apple Configurator 2 as a trusted host. This prevents USB-based unmanagement attacks.
 
 > **What breaks if misconfigured:** Leaving this setting Off on supervised corporate devices allows any computer to pair with the device via USB trust (after user clicks "Trust" in the USB connection dialog). A malicious computer or a rogue user with a personal Mac can pair the device and use Apple Configurator to perform actions including un-supervising the device via USB. Recommended On for all corporate ADE devices. Symptom appears in: security audit finding — no user-facing symptom until compromise occurs.
+
+## Verification
+
+- [ ] Each configuration profile shows "Succeeded" status in Intune admin center > Devices > Configuration > [profile] > Device status
+- [ ] Profile delivery confirmed on target devices (Settings > General > VPN & Device Management > [profile name])
+- [ ] Wi-Fi profiles connect devices to enterprise networks without manual SSID entry
+- [ ] Device restrictions marked 🔒 show as "Succeeded" on supervised devices and "Not applicable" on any unsupervised devices in the fleet
+- [ ] Home screen layout renders correctly on supervised devices (icon placement matches configured layout)
+- [ ] Every 🔒 supervised-only setting deployed to a supervised ADE device reports "Succeeded"; the same profile targeted to an unsupervised device reports "Not applicable" for those settings
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Portal | Symptom | Runbook |
+|------------------|--------|---------|---------|
+| Wi-Fi SSID case mismatch | Intune | Device cannot find network; silent auth failure | iOS L1 runbooks (Phase 30) |
+| SCEP certificate profile missing for enterprise Wi-Fi | Intune | 802.1X authentication fails on device | iOS L1 runbooks (Phase 30) |
+| Basic auth selected for Exchange ActiveSync when tenant requires Modern | Intune | Mail app shows "Cannot Get Mail" | iOS L1 runbooks (Phase 30) |
+| Supervised-only restriction targeted to unsupervised device | Intune | Profile shows "Not applicable" for that setting; no user-facing enforcement | iOS L1 runbooks (Phase 30) |
+| Block App Store with VPP user-licensed apps | Intune | VPP invitation cannot be accepted; user-licensed apps never install | iOS L1 runbooks (Phase 30) |
+| Block modification of account settings active during Entra re-auth requirement | Intune | User cannot re-authenticate; remediation requires device wipe | iOS L1 runbooks (Phase 30) |
+| Activation Lock enabled without bypass code escrow | Intune | Device bricked at activation screen if user forgets Apple ID | iOS L1 runbooks (Phase 30) |
+| Home screen layout references uninstalled bundle ID | Intune | Blank icons on device home screen | iOS L1 runbooks (Phase 30) |
+| Legacy "Defer software updates" used for update enforcement (deprecated path) | Intune | Updates not enforced; Apple is deprecating MDM-based update workloads — use DDM-based "iOS/iPadOS update policies" instead | iOS L1 runbooks (Phase 30) |
+
+## See Also
+
+- [App Deployment](05-app-deployment.md) — deploying VPP, LOB, and Store apps
+- [Compliance Policies](06-compliance-policy.md) — detect vs enforce distinction
+- [ADE Enrollment Profile](03-ade-enrollment-profile.md) — supervised mode and locked enrollment
+- [APNs Certificate](01-apns-certificate.md) — MDM delivery channel prerequisite
+- [iOS/iPadOS Admin Setup Overview](00-overview.md)
+- [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md) — supervision concept anchor
+- [iOS/iPadOS ADE Lifecycle](../ios-lifecycle/01-ade-lifecycle.md)
+- [macOS Configuration Profiles](../admin-setup-macos/03-configuration-profiles.md) — parallel macOS guide
+- [Apple Provisioning Glossary](../_glossary-macos.md)
+
+---
+*Previous: [ADE Enrollment Profile](03-ade-enrollment-profile.md) | Next: [App Deployment](05-app-deployment.md) | [Back to Overview](00-overview.md)*
+
+---
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-16 | Initial version — iOS/iPadOS configuration profiles guide with Wi-Fi/VPN/Email/Certificates/Home Screen Layout payload sections and Device Restrictions section covering 12 categories with category-level 🔒 supervised-only callouts plus 9 high-impact full-detail subsections | -- |

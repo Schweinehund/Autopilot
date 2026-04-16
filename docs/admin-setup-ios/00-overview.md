@@ -10,9 +10,9 @@ platform: iOS
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 
-# iOS/iPadOS Admin Setup: Corporate ADE Configuration
+# iOS/iPadOS Admin Setup: Corporate ADE Configuration and Device Management
 
-This guide walks Intune administrators through configuring the three prerequisites for iOS/iPadOS Automated Device Enrollment: APNs certificate, ABM/ADE token, and ADE enrollment profile. Complete the guides in order -- each is a prerequisite for the next.
+This guide walks Intune administrators through iOS/iPadOS Automated Device Enrollment prerequisites plus the core post-enrollment admin tasks: configuration profiles, app deployment, and compliance policies. Complete the guides in order -- each is a prerequisite for the next.
 
 ## Setup Sequence
 
@@ -20,6 +20,9 @@ This guide walks Intune administrators through configuring the three prerequisit
 graph LR
   A[1. APNs<br/>Certificate] --> B[2. ABM/ADE<br/>Token]
   B --> C[3. ADE Enrollment<br/>Profile]
+  C --> D[4. Configuration<br/>Profiles]
+  C --> E[5. App<br/>Deployment]
+  C --> F[6. Compliance<br/>Policies]
 ```
 
 1. **[APNs Certificate](01-apns-certificate.md)** -- Create and maintain the Apple Push Notification certificate that enables all Apple MDM communication. This certificate is shared infrastructure -- one expired certificate breaks iOS, iPadOS, AND macOS management simultaneously.
@@ -27,6 +30,12 @@ graph LR
 2. **[ABM/ADE Token](02-abm-token.md)** -- Configure the enrollment program token linking Apple Business Manager to Intune for iOS/iPadOS device syncing. Shared portal steps cross-reference the macOS ABM guide; only iOS-specific differences are documented inline.
 
 3. **[ADE Enrollment Profile](03-ade-enrollment-profile.md)** -- Create the enrollment profile that configures supervised mode, authentication method, Setup Assistant customization, and locked enrollment for corporate iOS/iPadOS devices.
+
+4. **[Configuration Profiles](04-configuration-profiles.md)** — Deploy Wi-Fi, VPN, Email, Certificates, Device Restrictions (with supervised-only callouts per category), and Home Screen Layout. Configuration profiles enforce settings; compliance policies detect non-compliance.
+
+5. **[App Deployment](05-app-deployment.md)** — Deploy iOS/iPadOS apps via VPP (device-licensed or user-licensed), LOB (.ipa), or Store apps without VPP. Silent install requires supervised mode AND device licensing.
+
+6. **[Compliance Policies](06-compliance-policy.md)** — Configure OS version gates, jailbreak detection, passcode requirements, and Actions for Noncompliance. Includes dedicated Conditional Access timing section covering the enrollment-to-first-evaluation window.
 
 ## Prerequisites
 
@@ -66,4 +75,5 @@ The Intune admin center is actively rolling out updated navigation for enrollmen
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-16 | Extended overview to include Phase 28 guides 04/05/06 and updated Mermaid diagram to 6-node graph | -- |
 | 2026-04-16 | Initial version -- iOS admin setup overview with Mermaid diagram and 3-guide setup sequence | -- |
