@@ -1,12 +1,13 @@
 ---
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-04-15
+review_by: 2026-07-14
 applies_to: both
 audience: L1
+platform: all
 ---
 
-> **Framework coverage:** This card covers both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
-> APv1 and APv2 sections are labeled. See [APv1 vs APv2](apv1-vs-apv2.md) for framework selection.
+> **Platform coverage:** This card covers Windows Autopilot (classic/APv1), Autopilot Device Preparation (APv2), and macOS ADE.
+> Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # L1 Quick-Reference Card
 
@@ -77,9 +78,44 @@ audience: L1
 - [APv1 Registration Conflict](l1-runbooks/08-apv2-apv1-conflict.md)
 - [Deployment Timeout](l1-runbooks/09-apv2-deployment-timeout.md)
 
+---
+
+## macOS ADE Quick Reference
+
+**Platform:** macOS ADE (Automated Device Enrollment)
+
+### Top Checks
+
+1. **Device in ABM?** -- Apple Business Manager > Devices -- search by serial number, verify MDM server assignment shows your Intune MDM server name
+2. **Device in Intune?** -- Intune admin center > Devices > macOS -- search by serial number, check enrollment status
+3. **Enrollment profile assigned?** -- Intune > Devices > Enrollment > Apple > Enrollment program tokens > [token] > Profiles -- verify profile is assigned to the device
+4. **Compliance state?** -- Intune > Devices > macOS > [device] > Device compliance -- check for "Compliant" or review non-compliant settings
+
+### macOS Escalation Triggers
+
+- Serial in ABM but device not in Intune after 24 hours --> **Escalate L2** (collect: serial number, ABM MDM server assignment screenshot, Intune enrollment status)
+- Setup Assistant stuck or authentication failure after one retry --> **Escalate L2** (collect: serial number, screenshot of error, macOS version)
+- Configuration profile not applied after 4-hour sync wait and manual sync --> **Escalate L2** (collect: serial number, expected profile name, Intune device compliance screenshot)
+- App showing "Failed" in Intune after reinstall attempt --> **Escalate L2** (collect: app name, app type, Intune app install status screenshot)
+- Device non-compliant but user believes settings are correct --> **Escalate L2** (collect: non-compliant setting names, device serial)
+
+### macOS Decision Tree
+
+- [macOS ADE Triage](decision-trees/06-macos-triage.md) -- start here for macOS ADE failures
+
+### macOS Runbooks
+
+- [Device Not Appearing](l1-runbooks/10-macos-device-not-appearing.md)
+- [Setup Assistant Failed](l1-runbooks/11-macos-setup-assistant-failed.md)
+- [Profile Not Applied](l1-runbooks/12-macos-profile-not-applied.md)
+- [App Not Installed](l1-runbooks/13-macos-app-not-installed.md)
+- [Compliance / Access Blocked](l1-runbooks/14-macos-compliance-access-blocked.md)
+- [Company Portal Sign-In](l1-runbooks/15-macos-company-portal-sign-in.md)
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-15 | Added macOS ADE Quick Reference section with top checks, escalation triggers, and runbook links | -- |
 | 2026-04-13 | Added APv2 quick-reference section | -- |
 | 2026-03-23 | Initial version | — |

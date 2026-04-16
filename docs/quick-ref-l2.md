@@ -1,12 +1,13 @@
 ---
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-04-15
+review_by: 2026-07-14
 applies_to: both
 audience: L2
+platform: all
 ---
 
-> **Framework coverage:** This card covers both Windows [Autopilot](_glossary.md#autopilot) (classic/APv1) and Autopilot Device Preparation (APv2).
-> APv1 and APv2 sections are labeled. See [APv1 vs APv2](apv1-vs-apv2.md) for framework selection.
+> **Platform coverage:** This card covers Windows [Autopilot](_glossary.md#autopilot) (classic/APv1), Autopilot Device Preparation (APv2), and macOS ADE.
+> Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # L2 Quick-Reference Card
 
@@ -126,9 +127,60 @@ Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Admin
 - [APv2 Deployment Report Guide](l2-runbooks/08-apv2-deployment-report.md)
 - [APv2 Failure Catalog](error-codes/06-apv2-device-preparation.md)
 
+---
+
+## macOS ADE Quick Reference
+
+**Platform:** macOS ADE (Automated Device Enrollment)
+
+### macOS Log Collection
+
+Download and run IntuneMacODC:
+
+```bash
+curl -L https://aka.ms/IntuneMacODC -o IntuneMacODC.sh
+chmod u+x ./IntuneMacODC.sh
+sudo ./IntuneMacODC.sh
+```
+
+### Key Terminal Commands
+
+```bash
+# Check MDM enrollment status
+profiles status -type enrollment
+# List installed configuration profiles
+sudo profiles show
+# Query MDM events from last hour
+log show --predicate 'subsystem == "com.apple.ManagedClient"' --info --last 1h
+# Output all profile data
+system_profiler SPConfigurationProfileDataType
+# Verify Intune agent running
+pgrep -il "^IntuneMdm"
+```
+
+### Critical Log Paths
+
+| Path | Purpose |
+|------|---------|
+| `/Library/Logs/Microsoft/Intune/IntuneMDMDaemon*.log` | Intune daemon -- PKG/DMG installs, scripts, policy |
+| `~/Library/Logs/Microsoft/Intune/IntuneMDMAgent*.log` | Intune agent -- user-context scripts, user policy |
+| `/Library/Logs/Microsoft/Intune/CompanyPortal*.log` | Company Portal enrollment, registration, compliance |
+
+Unified log subsystems: `com.apple.ManagedClient` (profile events), `com.apple.ManagedClient.cloudconfigurationd` (ADE enrollment)
+
+Full reference: [macOS Terminal Commands](reference/macos-commands.md) | [macOS Log Paths](reference/macos-log-paths.md)
+
+### macOS Investigation Runbooks
+
+- [macOS Log Collection Guide](l2-runbooks/10-macos-log-collection.md) -- prerequisite for all macOS investigations
+- [Profile Delivery Investigation](l2-runbooks/11-macos-profile-delivery.md)
+- [App Install Failure Diagnosis](l2-runbooks/12-macos-app-install.md)
+- [Compliance Evaluation Investigation](l2-runbooks/13-macos-compliance.md)
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-15 | Added macOS ADE Quick Reference section with log collection, Terminal commands, log paths, and investigation runbook links | -- |
 | 2026-04-13 | Added APv2 quick-reference section with log collection and event IDs | -- |
 | 2026-03-23 | Initial version | — |
