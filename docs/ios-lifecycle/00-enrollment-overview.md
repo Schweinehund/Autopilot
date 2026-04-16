@@ -47,6 +47,8 @@ To verify supervision state: **Settings > General > About** shows "This iPhone i
 
 Subsequent admin setup guides mark supervised-only settings with the supervised-only callout pattern.
 
+## Enrollment Path Details
+
 ### Automated Device Enrollment (ADE)
 
 [ADE](../_glossary-macos.md#ade) is the zero-touch corporate enrollment path for iOS/iPadOS. Devices assigned to an MDM server in Apple Business Manager ([ABM](../_glossary-macos.md#abm)) enroll automatically during Setup Assistant — no user interaction required. All ADE-enrolled iOS/iPadOS devices are **supervised** (see [Supervision](#supervision)), enabling the full range of Intune MDM capabilities including OS update enforcement, silent app installation, and supervised-only restrictions.
