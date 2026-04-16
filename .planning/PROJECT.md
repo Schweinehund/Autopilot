@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 
 ## Current State
 
-**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phase 26 complete.
+**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-27 complete.
 
 ### What's been built
 - 118 markdown documentation files in `docs/`
@@ -25,6 +25,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 - Cross-platform navigation: platform selectors, quick-reference cards with macOS sections, 44-file reachability verified (v1.2)
 - Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1 + v1.2)
 - iOS/iPadOS enrollment path overview (4-path comparison, supervision axis) and ADE lifecycle (7-stage) (v1.3)
+- iOS/iPadOS admin setup: APNs certificate, ABM/ADE token (macOS cross-references), ADE enrollment profile with supervised-only callout pattern (v1.3)
 - Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
 
 <details>
@@ -165,4 +166,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-16 after v1.3 milestone started*
+*Last updated: 2026-04-16 after Phase 27 complete*
