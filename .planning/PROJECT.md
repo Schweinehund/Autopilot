@@ -25,7 +25,7 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 
 ## Current State
 
-**Phase 22 complete 2026-04-14.** macOS ADE lifecycle foundation established.
+**Phase 25 complete 2026-04-16.** v1.2 milestone complete — all 6 phases shipped.
 
 ### What's been built
 - Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
@@ -34,7 +34,11 @@ IT teams can independently diagnose and resolve Autopilot deployment failures wi
 - Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1)
 - Error code lookup tables with framework tagging (APv1/APv2) (v1.0 + v1.1)
 - Cross-platform foundation: platform frontmatter taxonomy, Windows vs macOS comparison page, macOS glossary with bidirectional cross-references, macOS admin template with dual-portal structure, navigation hub restructured with platform selector (v1.2 Phase 20)
+- Device lifecycle operations (Autopilot Reset, retire/wipe, re-provisioning, tenant migration), pre-provisioning infrastructure references, app deployment/ESP integration, security/compliance enrollment, migration scenarios (APv1→APv2, imaging→Autopilot, GPO→Intune), monitoring/operational readiness (v1.2 Phase 21)
 - macOS ADE lifecycle narrative (7-stage pipeline with Mermaid diagram), Terminal commands reference, log paths reference, network endpoints extended with macOS ADE section, navigation hub updated with macOS content links (v1.2 Phase 22)
+- macOS admin setup guides (ABM, enrollment profiles, configuration profiles, app deployment, compliance policies, configuration-caused failures) (v1.2 Phase 23)
+- macOS L1/L2 troubleshooting: triage decision tree, 6 L1 runbooks, 4 L2 investigation runbooks (v1.2 Phase 24)
+- Cross-platform navigation integration: common-issues.md platform selector with macOS section, quick-reference cards with macOS ADE sections, index.md fragment anchors, 44-file reachability audit passed (v1.2 Phase 25)
 
 <details>
 <summary>Previous Milestone: v1.1 APv2 Documentation & Admin Setup Guides</summary>
@@ -80,23 +84,22 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ APv2 admin setup guides (ETG, Device Preparation, RBAC, corporate identifiers) — v1.1
 - ✓ APv1 admin setup guides (hardware hash, profiles, ESP, groups, deployment modes) — v1.1
 - ✓ Bidirectional APv1/APv2 cross-referencing and glossary — v1.1
+- ✓ Windows Autopilot Reset documentation (local and remote reset, re-provisioning, retirement) — v1.2
+- ✓ Pre-provisioning infrastructure deep-dive (network/firewall rules, Entra ID prereqs, licensing matrix) — v1.2
+- ✓ App deployment integration with ESP (Win32 packaging, install order, timeout tuning) — v1.2
+- ✓ Security & compliance during enrollment (Conditional Access, baselines, compliance timing) — v1.2
+- ✓ Migration scenarios (APv1→APv2, on-prem imaging→Autopilot, GPO→Intune mapping) — v1.2
+- ✓ Monitoring & operational readiness (deployment reporting, drift detection, new-batch workflow) — v1.2
+- ✓ macOS ABM/ADE lifecycle documentation through Intune — v1.2
+- ✓ macOS admin setup guides (ABM configuration, enrollment profiles, configuration profiles) — v1.2
+- ✓ macOS app deployment (DMG, PKG, VPP/Apps and Books) — v1.2
+- ✓ macOS compliance and security policies — v1.2
+- ✓ macOS L1/L2 troubleshooting (enrollment failures, profile delivery, app install issues) — v1.2
+- ✓ Cross-platform navigation hub restructure (Windows + macOS) — v1.2
 
 ### Active
 
-<!-- v1.2 scope -->
-
-- [ ] Windows Autopilot Reset documentation (local and remote reset, re-provisioning, retirement)
-- [ ] Pre-provisioning infrastructure deep-dive (network/firewall rules, Entra ID prereqs, licensing matrix)
-- [ ] App deployment integration with ESP (Win32 packaging, install order, timeout tuning)
-- [ ] Security & compliance during enrollment (Conditional Access, baselines, compliance timing)
-- [ ] Migration scenarios (APv1→APv2, on-prem imaging→Autopilot, GPO→Intune mapping)
-- [ ] Monitoring & operational readiness (deployment reporting, drift detection, new-batch workflow)
-- [ ] macOS ABM/ADE lifecycle documentation through Intune
-- [ ] macOS admin setup guides (ABM configuration, enrollment profiles, configuration profiles)
-- [ ] macOS app deployment (DMG, PKG, VPP/Apps and Books)
-- [ ] macOS compliance and security policies
-- [ ] macOS L1/L2 troubleshooting (enrollment failures, profile delivery, app install issues)
-- [ ] Cross-platform navigation hub restructure (Windows + macOS)
+<!-- No active requirements — v1.2 complete -->
 
 ### Out of Scope
 
@@ -134,4 +137,4 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 | Confidence-attributed citations | Community sources (oofhours, Call4Cloud) used where Microsoft docs lack coverage | Delivered — MEDIUM confidence clearly labeled |
 
 ---
-*Last updated: 2026-04-14 after Phase 22 (macOS Lifecycle Foundation) completed*
+*Last updated: 2026-04-16 after Phase 25 (Navigation Integration & Polish) completed — v1.2 milestone complete*
