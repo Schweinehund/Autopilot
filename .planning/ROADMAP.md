@@ -108,7 +108,11 @@ Plans:
   2. An admin reading the app deployment guide understands the distinction between VPP device-licensed and user-licensed apps, knows that silent install requires supervision, and can check managed app installation status in Intune
   3. An admin reading the compliance policy guide can configure OS version gates, jailbreak detection, and passcode requirements, and understands Conditional Access timing behavior and the default compliance posture for newly enrolled devices
   4. A reader can determine from the compliance guide alone what happens to a device's CA access state in the window between enrollment completion and first compliance evaluation
-**Plans**: TBD
+**Plans:** 3 plans
+Plans:
+- [ ] 28-01-PLAN.md — iOS configuration profiles guide (Wi-Fi, VPN, email, certificates, device restrictions with category-level supervised-only callouts, home screen layout) + overview update
+- [ ] 28-02-PLAN.md — iOS app deployment guide (VPP device/user licensing, LOB, Store apps; silent install supervised-only callouts; managed app status verification)
+- [ ] 28-03-PLAN.md — iOS compliance policy guide (OS version, jailbreak, passcode, Actions for Noncompliance, dedicated CA timing section answering SC #4)
 
 ### Phase 29: iOS Admin Setup — BYOD & MAM
 **Goal**: An admin or user can understand and configure all non-ADE iOS enrollment paths — Company Portal device enrollment, account-driven user enrollment, and MAM without enrollment — with explicit documentation of what IT cannot see or control on personally-owned devices
@@ -185,7 +189,7 @@ Plans:
 | 25. Navigation Integration & Polish | v1.2 | 2/2 | Complete | 2026-04-15 |
 | 26. iOS/iPadOS Foundation | v1.3 | 2/2 | Complete    | 2026-04-16 |
 | 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 3/3 | Complete    | 2026-04-16 |
-| 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 0/TBD | Not started | - |
+| 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 0/3 | Planned | - |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 0/TBD | Not started | - |
 | 30. iOS L1 Triage & Runbooks | v1.3 | 0/TBD | Not started | - |
 | 31. iOS L2 Investigation | v1.3 | 0/TBD | Not started | - |
