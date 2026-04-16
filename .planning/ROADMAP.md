@@ -61,7 +61,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 ### v1.3 iOS/iPadOS Provisioning Documentation
 
 - [x] **Phase 26: iOS/iPadOS Foundation** - Enrollment path overview and ADE lifecycle: the conceptual anchor establishing enrollment types and supervision axis (completed 2026-04-16)
-- [ ] **Phase 27: iOS Admin Setup — Corporate ADE Path** - APNs certificate, ABM/ADE token, and ADE enrollment profile guides with supervised-only callout pattern
+- [x] **Phase 27: iOS Admin Setup — Corporate ADE Path** - APNs certificate, ABM/ADE token, and ADE enrollment profile guides with supervised-only callout pattern (completed 2026-04-16)
 - [ ] **Phase 28: iOS Admin Setup — Configuration, Apps, Compliance** - Configuration profiles, app deployment, and compliance policy guides with per-setting supervision callouts
 - [ ] **Phase 29: iOS Admin Setup — BYOD & MAM** - Device enrollment, account-driven user enrollment, and MAM without enrollment (standalone) guides
 - [ ] **Phase 30: iOS L1 Triage & Runbooks** - iOS triage decision tree and 6 L1 runbooks for top failure scenarios
@@ -93,11 +93,11 @@ Plans:
   2. An admin following the ABM/ADE token guide can configure the iOS enrollment token using a cross-reference to the shared macOS ABM guide for portal steps, with only iOS-specific differences documented inline
   3. An admin following the ADE enrollment profile guide can configure supervised mode, select an authentication method, customize Setup Assistant panes, and enable locked enrollment — with every supervised-only setting marked with the established 🔒 callout pattern
   4. The supervised-only callout pattern (blockquote format: "🔒 Supervised only: [feature] requires supervised mode...") is formally established in this phase and consistent across all three guides
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 Plans:
-- [ ] 27-01-PLAN.md — iOS admin template and admin setup overview page
-- [ ] 27-02-PLAN.md — APNs certificate guide and ABM/ADE token guide
-- [ ] 27-03-PLAN.md — ADE enrollment profile guide with supervised-only callouts
+- [x] 27-01-PLAN.md — iOS admin template and admin setup overview page
+- [x] 27-02-PLAN.md — APNs certificate guide and ABM/ADE token guide
+- [x] 27-03-PLAN.md — ADE enrollment profile guide with supervised-only callouts
 
 ### Phase 28: iOS Admin Setup — Configuration, Apps, Compliance
 **Goal**: An Intune admin can configure iOS/iPadOS configuration profiles, app deployment, and compliance policies with a clear understanding of which capabilities require supervision — with every supervised-only setting explicitly marked
@@ -184,7 +184,7 @@ Plans:
 | 24. macOS Troubleshooting | v1.2 | 3/3 | Complete | 2026-04-15 |
 | 25. Navigation Integration & Polish | v1.2 | 2/2 | Complete | 2026-04-15 |
 | 26. iOS/iPadOS Foundation | v1.3 | 2/2 | Complete    | 2026-04-16 |
-| 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 0/3 | Planning | - |
+| 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 3/3 | Complete    | 2026-04-16 |
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 0/TBD | Not started | - |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 0/TBD | Not started | - |
 | 30. iOS L1 Triage & Runbooks | v1.3 | 0/TBD | Not started | - |
