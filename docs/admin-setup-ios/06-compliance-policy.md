@@ -124,3 +124,55 @@ Schedule granularity via the admin center UI is whole days only (0, 1, 2, ...). 
 3. Review and create.
 
 User-group-assigned policies apply to every device the user signs into. Device-group-assigned policies apply regardless of user. For corporate-owned ADE devices, device-group assignment is typical.
+
+## Compliance Evaluation Timing and Conditional Access
+
+Compliance evaluation does not happen instantly after enrollment. During the window between enrollment completion and the first compliance evaluation — typically 0-30 minutes — a device's compliance state is "Not evaluated." How Conditional Access treats devices in this state is governed by a single Intune tenant setting: the **default compliance posture toggle**. This section documents the timing sequence, the toggle's behavior in the gap, and iOS-specific considerations.
+
+### Compliance State Timeline Post-Enrollment
+
+| Time after enrollment | Compliance state | What is happening | Conditional Access behavior |
+|-----------------------|------------------|-------------------|------------------------------|
+| T+0 min | Managed, no compliance record | Device has just completed enrollment; Intune has not yet evaluated it | Determined by the **default compliance posture toggle** (see below) |
+| T+0-15 min | Not evaluated | Compliance check scheduled; Intune is collecting device inventory over APNs | Same as T+0 — determined by the default compliance posture toggle |
+| T+15-30 min | Compliant or Non-compliant | First compliance evaluation completes | CA "Require compliant device" now evaluates against the actual state |
+| T+up to 8 hr | Compliant or Non-compliant (state stable) | Full Intune inventory sync (apps, hardware, restricted apps check) | No change unless inventory reveals a new violation |
+| Ongoing | Re-evaluated on 8-hour check-in cycle | Automatic check-in via APNs; policy changes propagate on next cycle | Updated continuously; users can force sync immediately via Company Portal > Sync |
+
+### Default Compliance Posture Toggle
+
+**Location in Intune admin center:** **Endpoint security** > **Device compliance** > **Compliance policy settings** > **Mark devices with no compliance policy assigned as**.
+
+This setting has exactly two values, and its interpretation applies to both (a) devices without any compliance policy assigned and (b) devices in the "Not evaluated" transient state during the 0-30 minute post-enrollment window:
+
+- **Compliant (Intune default)** — Permissive. Devices without assigned policy and devices in Not-evaluated state are treated as **compliant**. Conditional Access "Require compliant device" grants access during the gap. Recommended for rollout environments where enrollment friction is a concern and the fleet-level risk from the 0-30 minute window is acceptable.
+- **Not compliant** — Restrictive. Devices without assigned policy and devices in Not-evaluated state are treated as **non-compliant**. Conditional Access "Require compliant device" blocks access during the gap. Recommended for regulated / high-security environments where any unmanaged device contact with corporate resources is unacceptable — but requires user-communication and grace-period planning to avoid help-desk escalations during rollout.
+
+### What Happens in the 0-30 Minute Gap
+
+The answer depends entirely on the toggle:
+
+- **Toggle = Compliant (default):** The user completes enrollment, reaches the home screen, opens Outlook or Teams, and sign-in succeeds. CA sees the device as compliant because no policy has evaluated it yet; access is granted. If a policy later evaluates to Non-compliant, CA blocks access going forward — but the 0-30 minute window provided transparent access.
+- **Toggle = Not compliant:** The user completes enrollment, reaches the home screen, opens Outlook or Teams, and sign-in **fails** with a "Your device does not meet your organization's policy" message. The user waits 0-30 minutes for the first compliance evaluation to complete (or triggers **Company Portal > Sync** manually). If the device is compliant, access is then granted; if non-compliant, the user sees a remediation screen with links to the specific failing setting.
+
+### iOS-Specific Timing Considerations
+
+- **APNs dependency:** iOS compliance check-in is initiated by Apple Push Notification service, not by a polling schedule. If APNs is blocked at the network edge (firewall, proxy, captive portal) the 0-15 minute evaluation can stall indefinitely. Verify APNs endpoint reachability if the Not-evaluated state persists beyond 30 minutes. See [APNs Certificate](01-apns-certificate.md).
+- **No MDM diagnostic tool on iOS:** Unlike Windows, iOS has no `mdmdiagnosticstool.exe` equivalent. L2 diagnosis of a stuck compliance state requires Company Portal log upload, MDM diagnostic report from Intune admin center, or Mac+cable sysdiagnose (documented in Phase 31 L2 runbooks).
+- **Setup Assistant CA interaction:** For ADE enrollments using Setup Assistant with modern authentication, CA evaluation occurs during Setup Assistant sign-in, before enrollment completes. If a CA policy requires a compliant device AND the "Microsoft Intune Enrollment" cloud app is not excluded from that policy, the device cannot complete Setup Assistant. The "Microsoft Intune Enrollment" cloud app is excluded by default across platforms — verify the exclusion remains in place before adjusting CA policies.
+- **User can force re-sync:** On the device, **Settings** > **General** > **VPN & Device Management** > [management profile] > **Sync** triggers an immediate MDM check-in. Alternatively, users can use Company Portal > **Settings** > **Sync**. This is the only user-actionable escalation path from a stuck Not-evaluated state.
+
+### Default Compliance Posture Decision Summary
+
+| Organizational profile | Recommended toggle | Rationale |
+|------------------------|---------------------|-----------|
+| Rolling out ADE to an existing fleet | **Compliant** (default) | Reduces help-desk tickets during rollout; 0-30 min exposure window accepted as transient |
+| Regulated industry / high-security | **Not compliant** | Blocks unmanaged devices from CA-protected resources even transiently; plan user communication for the 0-30 minute gap |
+| Mixed fleet with sensitive subset | **Not compliant** + per-app CA policies with explicit compliance-bypass groups | Granular control with documented exceptions |
+
+### Cross-References for Deep-Dive Content
+
+The timing sequence and mitigation patterns above are sufficient to determine CA behavior during the 0-30 minute window for any iOS enrollment path. For cross-platform timing mechanics, edge cases (e.g., sync failures, Ongoing-state stuck conditions), and the full Windows/macOS/iOS chicken-and-egg enrollment-vs-CA analysis, see:
+
+- [Compliance Policy Timing](../reference/compliance-timing.md) — cross-platform timing state transitions, state definitions, 8-hour sync cycle, grace period configuration
+- [Conditional Access Enrollment Timing](../reference/ca-enrollment-timing.md) — chicken-and-egg problem, "Microsoft Intune Enrollment" cloud app exclusion, platform-specific resolution patterns
