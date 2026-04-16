@@ -1,526 +1,506 @@
 # Architecture Research
 
-**Domain:** Cross-platform provisioning documentation — macOS ABM/ADE integration + Windows Autopilot operational gap closure
-**Researched:** 2026-04-13
-**Confidence:** HIGH (existing architecture is well-established; macOS structure follows proven patterns; Microsoft Learn docs confirm feature scope)
+**Domain:** Documentation suite integration — iOS/iPadOS provisioning into existing Intune docs
+**Researched:** 2026-04-16
+**Confidence:** HIGH
 
-## Architectural Decision: Parallel Platform Directories, Not Integrated
+## Architectural Context: v1.3 Adds a Third Platform
 
-### The Core Question
+The existing v1.2 architecture established a proven pattern: parallel platform directories unified through shared navigation files. This research addresses only the v1.3 question: how iOS/iPadOS plugs into that existing architecture. The v1.2 architecture notes are preserved below for reference.
 
-Should macOS content be woven into the existing Windows directories (e.g., a macOS section inside `lifecycle/`) or structured as parallel peer directories (e.g., `lifecycle-macos/` alongside `lifecycle/` and `lifecycle-apv2/`)?
+---
 
-**Recommendation: Parallel platform directories.** The existing architecture already uses this pattern — `lifecycle/` and `lifecycle-apv2/` are siblings, not nested. macOS follows the same convention. The provisioning workflows are fundamentally different technologies (Windows Autopilot vs. Apple ADE/ABM through Intune), sharing almost no diagnostic steps, registry paths, or tooling. Integrated files would violate the established anti-pattern of audience mixing, except applied to platforms instead of roles.
+## v1.3: iOS/iPadOS Integration Architecture
 
-### Why Not Integrated
+### The Core Structural Question
 
-1. **Different tooling ecosystems.** Windows troubleshooting uses PowerShell, registry inspection, Event Viewer, and MDMDiagnosticsTool. macOS troubleshooting uses Terminal, syslog, `/Library/Logs/Microsoft/Intune/`, and the Company Portal diagnostic export. Zero overlap in commands.
+iOS/iPadOS shares more Apple ecosystem infrastructure with macOS than macOS shares with Windows. Both iOS and macOS use ABM, the same ADE token mechanism, the same APNs certificate, VPP/Apps and Books, and Setup Assistant. But iOS has an enrollment complexity that macOS does not: four distinct enrollment paths (ADE, Device Enrollment, User Enrollment, MAM) versus macOS's single ADE path.
 
-2. **Different enrollment models.** Windows Autopilot uses hardware hash pre-staging (APv1) or ETG (APv2). macOS uses Apple Business Manager device assignment with enrollment program tokens and Setup Assistant. The admin setup sequences share no portal paths.
+**Recommendation:** iOS/iPadOS follows the same parallel-directory pattern as macOS. New directories `ios-lifecycle/` and `admin-setup-ios/` are created. Shared runbook directories (l1-runbooks, l2-runbooks, decision-trees) continue their sequential numbering. Navigation files (index.md, common-issues.md, quick-ref cards) receive injected platform sections.
 
-3. **Different failure modes.** Windows failures surface as ESP timeouts, TPM attestation errors, and hybrid join failures. macOS failures surface as expired Apple MDM push certificates, profile installation failures, keychain errors, and Setup Assistant completion issues. No shared error codes.
-
-4. **Proven pattern.** The APv1/APv2 split already validates that separate-but-linked directories work for this doc suite. The navigation hub (`index.md`) handles routing. Readers self-select by platform before diving in.
-
-## System Overview: v1.2 Target State
+### iOS/iPadOS in the Docs Tree
 
 ```
 docs/
-├── index.md                          # Cross-platform hub — Windows + macOS entry points
-├── _glossary.md                      # Expanded: macOS terms (ABM, ADE, Setup Assistant, APNS)
-├── _templates/
-│   ├── admin-template.md             # Existing — Windows admin guides
-│   ├── admin-template-macos.md       # NEW — macOS admin guides (adapted)
-│   ├── l1-template.md                # Existing — reusable for macOS L1
-│   └── l2-template.md                # Existing — adapted version for macOS L2
+├── [SHARED NAVIGATION — updated for iOS]
+│   ├── index.md                   ← Add "iOS/iPadOS Provisioning" as third platform section
+│   ├── common-issues.md           ← Add "iOS/iPadOS Failure Scenarios" section
+│   ├── quick-ref-l1.md            ← Add "iOS/iPadOS Quick Reference" section
+│   ├── quick-ref-l2.md            ← Add "iOS/iPadOS Quick Reference" section
+│   ├── _glossary-macos.md         ← Extend with iOS-specific terms (supervision, MAM, etc.)
+│   └── [ios-vs-macos.md]          ← NEW: iOS-to-macOS concept map (optional, low priority)
 │
-├── apv1-vs-apv2.md                   # Existing — unchanged
-├── platform-comparison.md            # NEW — "Windows Autopilot vs macOS ADE: which docs?"
+├── [PLATFORM: iOS/iPadOS — all NEW]
+│   ├── ios-lifecycle/
+│   │   └── 00-ios-enrollment-paths.md    ← Multi-path lifecycle (ADE, Device, User, MAM)
+│   └── admin-setup-ios/
+│       ├── 00-overview.md
+│       ├── 01-abm-apns-prerequisites.md  ← Shared Apple infra; cross-refs macOS ABM guide
+│       ├── 02-ade-enrollment-profile.md  ← Corporate supervised path
+│       ├── 03-device-enrollment.md       ← BYOD device-level
+│       ├── 04-user-enrollment.md         ← BYOD user-partition
+│       ├── 05-configuration-profiles.md
+│       ├── 06-app-deployment.md
+│       ├── 07-compliance-policy.md
+│       └── 08-config-failures.md
 │
-│ ── WINDOWS CONTENT (existing + operational gap fills) ──
+├── [SHARED TROUBLESHOOTING — extended for iOS]
+│   ├── decision-trees/
+│   │   └── 07-ios-triage.md              ← NEW (macOS is 06)
+│   ├── l1-runbooks/
+│   │   ├── 16-ios-device-not-appearing.md  ← NEW (macOS ends at 15)
+│   │   ├── 17-ios-setup-assistant-failed.md
+│   │   ├── 18-ios-profile-not-applied.md
+│   │   ├── 19-ios-app-not-installed.md
+│   │   ├── 20-ios-compliance-access-blocked.md
+│   │   └── 21-ios-company-portal-signin.md
+│   └── l2-runbooks/
+│       ├── 14-ios-log-collection.md        ← NEW (macOS ends at 13)
+│       ├── 15-ios-profile-delivery.md
+│       ├── 16-ios-app-install.md
+│       └── 17-ios-compliance.md
 │
-├── lifecycle/                         # Existing — APv1 lifecycle
-├── lifecycle-apv2/                    # Existing — APv2 lifecycle
-├── admin-setup-apv1/                  # Existing — APv1 admin setup
-├── admin-setup-apv2/                  # Existing — APv2 admin setup
-├── decision-trees/                    # Existing — L1 triage (APv1 + APv2)
-├── l1-runbooks/                       # Existing — L1 runbooks (APv1 + APv2)
-├── l2-runbooks/                       # Existing — L2 investigation (APv1 + APv2)
-├── error-codes/                       # Existing — error code lookup
-├── reference/                         # Existing — PowerShell, registry, endpoints
-│
-│ ── WINDOWS OPERATIONAL GAP CONTENT (new, in existing dirs) ──
-│
-├── lifecycle/
-│   ├── 06-autopilot-reset.md          # NEW — local reset, remote reset, re-provisioning
-│   ├── 07-device-retirement.md        # NEW — retirement, wipe, tenant migration
-│   └── 08-infrastructure.md           # NEW — network rules, Entra prereqs, licensing matrix
-│
-├── admin-setup-apv1/
-│   ├── 11-app-deployment-esp.md       # NEW — Win32 packaging, install order, timeout tuning
-│   ├── 12-security-compliance.md      # NEW — Conditional Access, baselines, compliance timing
-│   └── 13-migration-scenarios.md      # NEW — APv1->APv2, imaging->Autopilot, GPO->Intune
-│
-├── l2-runbooks/
-│   └── 09-monitoring-operations.md    # NEW — deployment reporting, drift detection, batch workflow
-│
-│ ── macOS CONTENT (all new) ──
-│
-├── lifecycle-macos/                   # NEW — macOS ADE lifecycle
-│   ├── 00-overview.md                 # macOS provisioning overview + flow diagram
-│   ├── 01-abm-device-assignment.md    # ABM setup, device assignment to MDM server
-│   ├── 02-enrollment-profile.md       # ADE enrollment profile configuration
-│   ├── 03-setup-assistant.md          # Setup Assistant flow, screen configuration
-│   ├── 04-post-enrollment.md          # Profile delivery, app installation, compliance
-│   └── 05-device-management.md        # Ongoing management, updates, retirement
-│
-├── admin-setup-macos/                 # NEW — macOS admin configuration
-│   ├── 00-overview.md                 # Setup sequence overview
-│   ├── 01-apple-mdm-push-cert.md      # APNS certificate setup + renewal
-│   ├── 02-abm-integration.md          # ABM token, MDM server assignment
-│   ├── 03-enrollment-profile.md       # ADE enrollment profile + Setup Assistant screens
-│   ├── 04-configuration-profiles.md   # Device restrictions, Wi-Fi, VPN, certificates
-│   ├── 05-app-deployment.md           # DMG, PKG, VPP, managed apps
-│   ├── 06-compliance-security.md      # Compliance policies, FileVault, firewall, Gatekeeper
-│   └── 07-config-failures.md          # Configuration-caused failures reference
-│
-├── decision-trees/
-│   └── 05-macos-triage.md             # NEW — macOS L1 triage decision tree
-│
-├── l1-runbooks/
-│   ├── 10-macos-enrollment-failure.md  # NEW — enrollment fails, profile not installing
-│   ├── 11-macos-app-not-installed.md   # NEW — apps missing after enrollment
-│   └── 12-macos-compliance-issue.md    # NEW — device non-compliant
-│
-├── l2-runbooks/
-│   ├── 10-macos-log-collection.md     # NEW — Intune agent logs, syslog, diagnostic export
-│   ├── 11-macos-enrollment-deep.md    # NEW — certificate issues, token expiry, ADE debugging
-│   └── 12-macos-profile-delivery.md   # NEW — configuration profile analysis
-│
-├── reference/
-│   ├── endpoints.md                   # MODIFIED — add macOS-specific endpoints section
-│   ├── macos-log-paths.md             # NEW — all macOS log file locations
-│   └── macos-commands.md              # NEW — Terminal diagnostic commands (macOS equivalent of powershell-ref.md)
-│
-├── quick-ref-l1.md                    # MODIFIED — add macOS section
-├── quick-ref-l2.md                    # MODIFIED — add macOS section
-├── common-issues.md                   # MODIFIED — add macOS symptom routing
-│
-└── architecture.md                    # Existing — unchanged
+└── [CROSS-PLATFORM REFERENCES — extended]
+    └── reference/
+        ├── endpoints.md              ← Add #ios-ade-endpoints anchor section
+        ├── 00-index.md               ← Add iOS references section
+        └── ios-capability-matrix.md  ← NEW: iOS vs macOS feature parity
 ```
 
-## Component Responsibilities
+### Component Responsibilities
 
-### New Components
-
-| Component | Responsibility | Communicates With |
-|-----------|----------------|-------------------|
-| `lifecycle-macos/` | End-to-end macOS provisioning narrative — ABM through ongoing management | Links to `admin-setup-macos/` for configuration steps; links to decision trees at failure points |
-| `admin-setup-macos/` | Step-by-step macOS Intune configuration for admins | Links to `lifecycle-macos/` for context; links to L1/L2 runbooks from "what breaks" callouts |
-| `decision-trees/05-macos-triage.md` | Mermaid flowchart for macOS enrollment triage | Routes to macOS L1 runbooks |
-| `l1-runbooks/10-12` (macOS) | Scripted macOS troubleshooting for Service Desk | Links to macOS decision tree; escalates to macOS L2 runbooks |
-| `l2-runbooks/10-12` (macOS) | Technical macOS investigation with Terminal commands | Links to `reference/macos-log-paths.md` and `reference/macos-commands.md` |
-| `reference/macos-log-paths.md` | Canonical macOS log file location reference | Linked from all macOS L2 runbooks |
-| `reference/macos-commands.md` | Terminal diagnostic commands for macOS | macOS equivalent of `powershell-ref.md`; linked from L2 runbooks |
-| `platform-comparison.md` | "Which platform docs do I need?" router | Parallel to `apv1-vs-apv2.md`; linked from `index.md` |
-
-### Modified Components
-
-| Component | Modification | Rationale |
-|-----------|-------------|-----------|
-| `index.md` | Add macOS sections for L1, L2, Admin; restructure from framework-split to platform+framework-split | Single entry point must route to all content |
-| `_glossary.md` | Add macOS terms: ABM, ADE, APNS, Setup Assistant, VPP, FileVault, Gatekeeper, Company Portal (macOS), Intune MDM Agent | Shared glossary serves all platforms |
-| `reference/endpoints.md` | Add macOS section with Apple push notification, Intune, and Apple services URLs | Keeps endpoint reference consolidated |
-| `quick-ref-l1.md` | Add macOS quick checks section | L1 staff may handle both platforms |
-| `quick-ref-l2.md` | Add macOS commands and log paths section | L2 staff handle both platforms |
-| `common-issues.md` | Add macOS symptom routing section | Symptom-based entry for macOS issues |
-
-### Windows Operational Gap Components
-
-| Component | Responsibility | Where It Fits |
-|-----------|----------------|---------------|
-| `lifecycle/06-autopilot-reset.md` | Local reset, remote reset, re-provisioning, retirement | Extends existing lifecycle sequence — next logical stage after post-enrollment |
-| `lifecycle/07-device-retirement.md` | Wipe, selective wipe, Autopilot deregistration, tenant migration | Completes the device lifecycle end-to-end |
-| `lifecycle/08-infrastructure.md` | Network/firewall deep-dive, Entra ID prerequisites, licensing matrix | Pre-provisioning infrastructure that lifecycle/00-overview.md references but doesn't detail |
-| `admin-setup-apv1/11-app-deployment-esp.md` | Win32 packaging for ESP, install order dependencies, timeout tuning | Admin configuration that affects ESP behavior — extends the admin setup sequence |
-| `admin-setup-apv1/12-security-compliance.md` | Conditional Access during enrollment, security baselines, compliance timing | Security configuration timed to enrollment phases |
-| `admin-setup-apv1/13-migration-scenarios.md` | APv1 to APv2 migration, imaging to Autopilot, GPO to Intune mapping | Transition guides for admins changing deployment models |
-| `l2-runbooks/09-monitoring-operations.md` | Deployment success reporting, registration drift detection, new-batch onboarding workflow | Operational readiness for L2/admin teams |
+| Component | Responsibility | iOS/iPadOS Specific Notes |
+|-----------|----------------|--------------------------|
+| `index.md` | Platform selector + role entry points | Add third platform section with L1/L2/Admin tables |
+| `common-issues.md` | Symptom-to-runbook router | Add iOS failure scenarios below macOS section |
+| `quick-ref-l1.md` | L1 cheat sheet per platform | Add iOS top checks, escalation triggers, runbook links |
+| `quick-ref-l2.md` | L2 cheat sheet per platform | Add iOS log collection, key commands, runbook links |
+| `_glossary-macos.md` | Shared Apple ecosystem terms | Extend: supervision, MAM, user enrollment partition, App Protection Policy, Managed Apple ID |
+| `decision-trees/07-ios-triage.md` | L1 triage flowchart | ADE path vs BYOD path as first branch |
+| `l1-runbooks/16-21` | Scripted L1 procedures | 6 runbooks mirroring macOS coverage (10-15) |
+| `l2-runbooks/14-17` | Technical L2 investigation | 4 runbooks mirroring macOS coverage (10-13) |
+| `ios-lifecycle/00-ios-enrollment-paths.md` | Multi-path enrollment lifecycle | Single file covering all 4 paths with comparison table |
+| `admin-setup-ios/` | iOS admin configuration guides | 9 files; ADE guides require supervision callout pattern |
+| `reference/ios-capability-matrix.md` | iOS vs macOS Intune feature parity | Parallel to `reference/macos-capability-matrix.md` |
 
 ## Architectural Patterns
 
-### Pattern 1: Platform-Gated Entry Points
+### Pattern 1: Platform Section Injection
 
-**What:** The navigation hub (`index.md`) gains a top-level platform selector before the role-based (L1/L2/Admin) routing. Users choose platform first, then role.
+**What:** Shared files (index.md, common-issues.md, quick-ref cards) have explicit platform sections separated by `---` horizontal rules. Adding iOS/iPadOS appends a new section below macOS.
 
-**Structure:**
+**When to use:** Any file currently containing "Choose Your Platform" selectors.
+
+**How the "Choose Your Platform" selector updates:**
 
 ```markdown
 ## Choose Your Platform
 
-| [Windows Autopilot](#windows-autopilot) | [macOS (ABM/ADE)](#macos-provisioning) |
+- [Windows Autopilot](#windows-autopilot) -- APv1 and APv2
+- [macOS Provisioning](#macos-provisioning) -- ADE via Apple Business Manager
+- [iOS/iPadOS Provisioning](#ios-ipados-provisioning) -- ADE, device enrollment, user enrollment, MAM
+```
 
-## Windows Autopilot
-### Service Desk (L1) -- APv1
-### Service Desk (L1) -- APv2
-### Desktop Engineering (L2) -- APv1
-### Desktop Engineering (L2) -- APv2
+**iOS/iPadOS section structure in index.md:**
+
+```markdown
+## iOS/iPadOS Provisioning
+
+Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment through Intune.
+Covers ADE (supervised, corporate-owned), device enrollment (Company Portal), account-driven
+user enrollment (BYOD), and MAM without enrollment. For Apple ecosystem terminology shared
+with macOS, see the [Apple Ecosystem Glossary](_glossary-macos.md).
+
+### Service Desk (L1)
+
+| Resource | When to Use |
+|----------|-------------|
+| [iOS/iPadOS Triage Decision Tree](decision-trees/07-ios-triage.md) | Start here |
+| [iOS L1 Runbooks](l1-runbooks/00-index.md#ios-ipados-runbooks) | Scripted procedures |
+| [L1 Quick-Reference Card](quick-ref-l1.md#ios-ipados-quick-reference) | Cheat sheet |
+
+### Desktop Engineering (L2)
+
+| Resource | When to Use |
+|----------|-------------|
+| [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) | Prerequisite for all iOS L2 |
+| [iOS L2 Runbooks](l2-runbooks/00-index.md#ios-ipados-runbooks) | Investigation guides |
+| [L2 Quick-Reference Card](quick-ref-l2.md#ios-ipados-quick-reference) | Commands cheat sheet |
+
 ### Admin Setup
 
-## macOS Provisioning (ABM/ADE through Intune)
-### Service Desk (L1) -- macOS
-### Desktop Engineering (L2) -- macOS
-### Admin Setup -- macOS
+| Resource | When to Use |
+|----------|-------------|
+| [iOS/iPadOS Enrollment Paths](ios-lifecycle/00-ios-enrollment-paths.md) | Understand enrollment types |
+| [iOS Admin Setup Guides](admin-setup-ios/00-overview.md) | Full setup sequence |
 ```
 
-**Why:** Platform selection is binary and fast. Nobody troubleshooting a Mac needs to scroll past Windows content. This extends the existing APv1/APv2 role-routing pattern to a higher level.
+### Pattern 2: Runbook Numbering Continuation
 
-### Pattern 2: Shared References, Platform-Specific Sections
+**What:** macOS L1 runbooks occupy 10-15, macOS L2 runbooks occupy 10-13. iOS continues from those endpoints.
 
-**What:** Reference files that serve both platforms (glossary, endpoints) add clearly labeled platform sections rather than creating separate files. Reference files that are entirely platform-specific (macOS log paths, macOS commands) are separate files.
+**iOS L1:** starts at 16 (device-not-appearing, setup-assistant-failed, profile-not-applied, app-not-installed, compliance-access-blocked, company-portal-signin)
 
-**Decision rule:**
-- If the reference concept applies to both platforms (e.g., network endpoints, glossary terms) → **one file, platform-labeled sections**
-- If the reference is entirely platform-specific (e.g., PowerShell functions for Windows, Terminal commands for macOS) → **separate files**
+**iOS L2:** starts at 14 (log-collection, profile-delivery, app-install, compliance)
 
-**Why:** Readers looking up a network endpoint should not need to know which file to open. Readers looking up a macOS Terminal command should not need to scroll past 12 PowerShell functions.
+**Trade-off:** The gap between L2 numbers 8 (last APv2 runbook) and 10 (first macOS runbook) is already an established precedent. iOS continuing from 14 is consistent with that pattern.
 
-**Example in `reference/endpoints.md`:**
+### Pattern 3: Supervision Callout Pattern (new for iOS)
+
+**What:** iOS/iPadOS has a supervision dimension that macOS does not expose in the same way. Under macOS ADE, all ADE-enrolled devices are supervised. Under iOS, supervision is a choice (ADE always supervised, Device Enrollment never supervised). Many iOS features documented in admin guides are supervision-gated.
+
+**When to use:** Any iOS admin guide section documenting a supervision-required feature.
+
+**Recommended format:**
 
 ```markdown
-## Windows Autopilot Endpoints
-[existing content unchanged]
-
-## macOS Enrollment Endpoints
-
-| URL / Pattern | Service | Purpose | Criticality |
-|---------------|---------|---------|-------------|
-| `https://identity.apple.com` | Apple Identity | ABM/ADE device assignment | Critical |
-| `https://mdmenrollment.apple.com` | Apple MDM | Enrollment protocol | Critical |
-| `https://iprofiles.apple.com` | Apple Profiles | ADE profile delivery | Critical |
-| `https://albert.apple.com` | Apple Activation | Device activation check | Critical |
-| `https://gateway.push.apple.com` | APNS | Push notification delivery | Critical |
-| `*.push.apple.com` (TCP 5223) | APNS | Device push channel | Critical |
-| `https://login.microsoftonline.com` | Microsoft Entra ID | User authentication | Critical (shared) |
-| `https://graph.microsoft.com` | Microsoft Graph | Intune management | Critical (shared) |
-| `https://manage.microsoft.com` | Intune | MDM commands | Critical |
+> **Supervised only:** [Feature name] requires the device to be supervised.
+> Devices enrolled via Device Enrollment (Company Portal) or User Enrollment are not supervised.
+> To use this feature, devices must be enrolled via ADE through Apple Business Manager.
+> See: [ADE Enrollment Profile](02-ade-enrollment-profile.md)
 ```
 
-### Pattern 3: macOS Admin Template Adaptation
+Use this callout label (`**Supervised only:**`) rather than `**What breaks if misconfigured:**` to distinguish a capability boundary from a configuration error. Both use the same blockquote format for visual consistency.
 
-**What:** Create `_templates/admin-template-macos.md` by adapting the existing `admin-template.md` with macOS-specific conventions.
+**Supervision-gated features requiring this callout:**
+- Silent app installation from App Store (no user confirmation prompt)
+- App Lock / Kiosk mode (single-app or multi-app)
+- Web content filtering (URL allowlist/blocklist)
+- Blocking screen capture
+- Autonomous Single App Mode
+- Restricting AirDrop, iMessage, FaceTime at policy level
+- Factory reset (wipe) via MDM
+- Lost Mode
+- Activation Lock bypass
+- Software update enforcement via declarative management
+- Prohibiting apps by bundle ID
 
-**Key differences from Windows admin template:**
-- Version gate references "macOS ABM/ADE" instead of "APv1/APv2"
-- Portal paths reference both Intune admin center and Apple Business Manager portal
-- "What breaks if misconfigured" callouts include Apple-side consequences (e.g., "devices will not appear in ABM if the MDM server assignment is incorrect")
-- Prerequisites include Apple Managed Apple ID, APNS certificate, and ABM enrollment
-- No registry paths; instead reference macOS configuration profile payloads
+**Supervision determination point:** Supervision is set at enrollment time via the ADE enrollment profile. It cannot be added to an already-enrolled device without wiping and re-enrolling. This is the critical "Watch Out For" in the lifecycle doc's ADE section.
 
-**L1 and L2 templates** can be reused directly — the structure (prerequisites, steps, escalation criteria) is platform-agnostic. The only change is the version gate banner text and the specific commands/paths used in steps.
+### Pattern 4: Multi-Path iOS Lifecycle
 
-### Pattern 4: Cross-Platform Glossary Sections
+**What:** macOS ADE follows a single 7-stage linear pipeline. iOS has four distinct enrollment paths, each with a different device state and management scope. The lifecycle documentation must accommodate this without creating four separate lifecycle files.
 
-**What:** The glossary (`_glossary.md`) adds macOS terms in a new "macOS / Apple" section, with cross-references to equivalent Windows concepts where applicable.
+**Recommended structure for `ios-lifecycle/00-ios-enrollment-paths.md`:**
 
-**Example entries:**
+1. **Comparison table at top:** enrollment type × key attributes (ownership, supervision, management scope, user experience, recommended for). This lets any reader immediately orient to the right path.
+2. **Section per enrollment path:** ADE (full depth), Device Enrollment (medium depth), User Enrollment (medium depth), MAM without enrollment (reference pointer — the actual MAM configuration is out of scope for a provisioning suite).
+3. **Each section uses the same macOS lifecycle subsection pattern:** What the Admin Sees, What Happens, Behind the Scenes, Watch Out For.
+
+**Depth by path (corporate IT audience):**
+
+| Path | Documentation Depth | Rationale |
+|------|--------------------|-----------| 
+| ADE (supervised, corporate) | Full — lifecycle + full admin guide set | Primary corporate path; highest management capability |
+| Device Enrollment (Company Portal) | Medium — one admin guide | Secondary BYOD path; simpler setup |
+| User Enrollment (account-driven) | Medium — one admin guide with limitations table | BYOD, iOS 13+; important to document limitations clearly |
+| MAM without enrollment | Reference only — single paragraph + link out | App team concern, not IT provisioning |
+
+### Pattern 5: Shared Apple Ecosystem Prerequisites
+
+**What:** iOS ADE and macOS ADE share the ABM portal and ADE token mechanism. The APNs certificate is also shared. An organization that already has macOS ADE running through Intune may have the ABM/APNs prerequisites already satisfied for iOS.
+
+**Cross-reference to include in `admin-setup-ios/01-abm-apns-prerequisites.md`:**
 
 ```markdown
-## macOS / Apple
-
-### ABM
-
-Apple Business Manager — Apple's portal for purchasing, managing, and assigning devices to an MDM server. The macOS equivalent of Windows Autopilot hardware hash registration for device pre-staging.
-
-> **Windows equivalent:** [Hardware hash](#hardware-hash) (device identity) + Intune portal (management assignment).
-
-### ADE
-
-Automated Device Enrollment — Apple's zero-touch provisioning protocol. Devices assigned in ABM receive MDM enrollment profiles over the air at first boot, similar to Windows Autopilot profile assignment.
-
-> **Windows equivalent:** [ZTD](#ztd) / Autopilot deployment profile assignment.
-
-### APNS
-
-Apple Push Notification Service — the push infrastructure Apple devices use to receive MDM commands. The APNS certificate must be renewed annually; expiry causes complete loss of device management.
-
-> **No direct Windows equivalent.** Windows Autopilot uses WNS (Windows Notification Service) for push, but it requires no manual certificate management.
+> **If macOS ADE is already configured:** Your organization's ABM MDM server and ADE token
+> may already be linked to Intune. Verify at: Intune admin center > Devices > Enrollment >
+> Apple > Enrollment program tokens. A single active token serves both macOS and iOS/iPadOS —
+> no separate iOS token is required.
+> See: [macOS ABM Configuration](../admin-setup-macos/01-abm-configuration.md)
 ```
 
-### Pattern 5: Numbering Continuation
-
-**What:** New files in existing directories continue the existing numbering sequence. macOS content in shared directories (l1-runbooks, l2-runbooks, decision-trees) uses numbers that follow the last Windows entry.
-
-**Rationale:** The existing convention uses sequential numbers (`00-index.md`, `01-...`, `02-...`). macOS content starting at 10 in l1-runbooks and l2-runbooks leaves room for future Windows additions (which could take 10-19 range in l1 if needed, though this is unlikely to be a real constraint).
-
-**Numbering plan:**
-| Directory | Last Windows file | macOS starts at |
-|-----------|-------------------|-----------------|
-| `decision-trees/` | `04-apv2-triage.md` | `05-macos-triage.md` |
-| `l1-runbooks/` | `09-apv2-deployment-timeout.md` | `10-macos-enrollment-failure.md` |
-| `l2-runbooks/` | `08-apv2-deployment-report.md` | Windows gaps: `09-monitoring-operations.md`; macOS: `10-macos-log-collection.md` |
-| `lifecycle/` | `05-post-enrollment.md` | Windows gaps: `06-`, `07-`, `08-` |
+The iOS admin guide for ABM/APNs covers the verification steps and what to do if prerequisites are already met vs. need to be set up from scratch. This avoids duplicating the full ABM token creation walkthrough that already exists in the macOS guide.
 
 ## Data Flow
 
-### Cross-Platform Navigation Flow
+### iOS Triage and Escalation Flow
 
 ```
-User arrives with a problem
+iOS/iPadOS Failure Reported
+    ↓
+[decision-trees/07-ios-triage.md]
+    ↓ (first branch: ADE enrolled vs BYOD enrolled)
+    ├─ ADE ──→ routes by symptom ──→ [l1-runbooks/17-ios-setup-assistant-failed.md]
+    │                                  [l1-runbooks/16-ios-device-not-appearing.md]
+    │                                  [l1-runbooks/18-ios-profile-not-applied.md]
+    │                                  [l1-runbooks/19-ios-app-not-installed.md]
+    │                                  [l1-runbooks/20-ios-compliance-access-blocked.md]
+    │                                  [l1-runbooks/21-ios-company-portal-signin.md]
     │
-    ▼
-index.md (platform selector)
-    │
-    ├─ Windows ──→ APv1/APv2 selector ──→ Role-based routing (existing flow)
-    │
-    └─ macOS ──→ Role-based routing
-                    │
-                    ├─ L1 → decision-trees/05-macos-triage.md → l1-runbooks/10-12
-                    │                                              │
-                    │                                              └─ Resolve OR escalate
-                    │
-                    ├─ L2 → lifecycle-macos/ → l2-runbooks/10-12
-                    │           │                    │
-                    │           │                    └─ reference/macos-log-paths.md
-                    │           │                       reference/macos-commands.md
-                    │           │                       reference/endpoints.md#macos
-                    │
-                    └─ Admin → admin-setup-macos/00-overview.md → 01-07 guides
-                                                                    │
-                                                                    └─ "What breaks" → l1-runbooks/10-12
+    └─ BYOD ──→ routes by symptom ──→ [l1-runbooks/18-21 as applicable]
+
+    Escalations from L1 ──→ [l2-runbooks/14-ios-log-collection.md] (prerequisite)
+                                ↓
+                            [l2-runbooks/15-17 as applicable]
+                                ↓ references
+                            [reference/ios-capability-matrix.md]
+                            [reference/endpoints.md #ios-ade-endpoints]
+                            [_glossary-macos.md #supervision]
 ```
 
-### Windows Operational Gap Integration Flow
+### Admin Setup Flow
 
 ```
-lifecycle/00-overview.md
+[admin-setup-ios/00-overview.md]
+    ↓
+[01-abm-apns-prerequisites.md] ←─cross-ref──→ [admin-setup-macos/01-abm-configuration.md]
+    ↓
+    ├─ Corporate/ADE path:
+    │   [02-ade-enrollment-profile.md]
+    │       ↓
+    │   [05-configuration-profiles.md] [06-app-deployment.md] [07-compliance-policy.md]
+    │       ↓
+    │   [08-config-failures.md]
     │
-    ├─ (existing stages 1-5) ──→ existing troubleshooting docs
-    │
-    └─ (new stages 6-8) ──→ lifecycle/06-autopilot-reset.md
-                              lifecycle/07-device-retirement.md
-                              lifecycle/08-infrastructure.md
-                                    │
-                                    └─ reference/endpoints.md (expanded)
-
-admin-setup-apv1/00-overview.md
-    │
-    ├─ (existing guides 01-10) ──→ existing error-codes, l1/l2 runbooks
-    │
-    └─ (new guides 11-13) ──→ admin-setup-apv1/11-app-deployment-esp.md
-                                admin-setup-apv1/12-security-compliance.md
-                                admin-setup-apv1/13-migration-scenarios.md
-                                    │
-                                    └─ lifecycle-apv2/ (for APv1→APv2 migration)
+    └─ BYOD paths:
+        [03-device-enrollment.md]
+        [04-user-enrollment.md]
+            ↓
+        [07-compliance-policy.md]
 ```
 
-### Cross-Platform Reference Flow
+### Navigation Hub Integration Flow
 
 ```
-_glossary.md ──→ All files (both platforms link to shared glossary)
-    │
-    └─ macOS terms cross-reference Windows equivalents
-
-reference/endpoints.md ──→ Both platform troubleshooting flows
-    │
-    ├─ Windows section (existing)
-    └─ macOS section (new)
-
-platform-comparison.md ──→ index.md (linked for platform selection help)
-    │
-    └─ "macOS ADE is not Windows Autopilot — different tools, different issues"
+[index.md] "Choose Your Platform"
+    ├── Windows Autopilot (existing — APv1/APv2)
+    ├── macOS Provisioning (existing — ADE)
+    └── iOS/iPadOS Provisioning (NEW)
+            ├── L1 ──→ [07-ios-triage.md] + [l1-runbooks/16-21] + [quick-ref-l1.md #ios]
+            ├── L2 ──→ [l2-runbooks/14-17] + [quick-ref-l2.md #ios]
+            └── Admin ──→ [ios-lifecycle/00-ios-enrollment-paths.md]
+                          [admin-setup-ios/00-overview.md]
 ```
+
+### Glossary Integration
+
+iOS-specific terms are added to `_glossary-macos.md` (not a new file) because ABM, ADE, VPP, Setup Assistant, and APNs already live there and are shared between macOS and iOS. New terms to add:
+
+- **Supervision** — managed device state enabling full MDM control; set at ADE enrollment
+- **Unsupervised** — default state for Device Enrollment and User Enrollment
+- **MDM Profile (iOS)** — the management profile installed during enrollment; removable on unsupervised devices
+- **User Enrollment** — iOS 13+ BYOD enrollment creating a work/personal partition
+- **Work Partition** — the managed portion of a User Enrollment device; isolated from personal data
+- **MAM (Mobile Application Management)** — app-level policy without device enrollment
+- **App Protection Policy** — Intune policy applied to managed apps under MAM
+- **Account-Driven User Enrollment** — the iOS 15+ variant of User Enrollment using Settings.app
+- **Managed Apple ID** — organization-controlled Apple ID required for Account-Driven User Enrollment
+- **Device Enrollment** — full device management via Company Portal; unsupervised unless Apple Configurator-supervised
 
 ## Integration Points
 
-### Existing Files to Modify
+### Files Requiring Updates (Existing Files)
 
-| File | Modification | Priority |
-|------|-------------|----------|
-| `docs/index.md` | Add platform selector; add macOS L1/L2/Admin sections | HIGH — gatekeeper for all navigation |
-| `docs/_glossary.md` | Add macOS/Apple terminology section (~15 terms) | HIGH — referenced by all new content |
-| `docs/reference/endpoints.md` | Add macOS endpoints section | MEDIUM — needed by macOS L2 content |
-| `docs/quick-ref-l1.md` | Add "macOS Quick Checks" section | MEDIUM — L1 convenience |
-| `docs/quick-ref-l2.md` | Add "macOS Commands & Logs" section | MEDIUM — L2 convenience |
-| `docs/common-issues.md` | Add macOS symptom routing section | MEDIUM — entry point for some users |
-| `docs/lifecycle/00-overview.md` | Add links to new lifecycle stages (06-08) | LOW — minor update |
-| `docs/admin-setup-apv1/00-overview.md` | Add links to new admin guides (11-13) | LOW — minor update |
-| `docs/l2-runbooks/00-index.md` | Add monitoring/operations entry and macOS entries | LOW — minor update |
-| `docs/l1-runbooks/00-index.md` | Add macOS runbook section | LOW — minor update |
+| File | Change | Scope |
+|------|--------|-------|
+| `docs/index.md` | Add iOS/iPadOS as third platform section; update "Choose Your Platform" selector | ~50 lines added |
+| `docs/common-issues.md` | Add "iOS/iPadOS Failure Scenarios" section below macOS; update "Choose Your Platform" | ~60 lines added |
+| `docs/quick-ref-l1.md` | Add "iOS/iPadOS Quick Reference" section below macOS | ~30 lines added |
+| `docs/quick-ref-l2.md` | Add "iOS/iPadOS Quick Reference" section below macOS | ~30 lines added |
+| `docs/l1-runbooks/00-index.md` | Add "iOS/iPadOS Runbooks" section (16-21) | ~25 lines added |
+| `docs/l2-runbooks/00-index.md` | Add "iOS/iPadOS Runbooks" section (14-17) | ~20 lines added |
+| `docs/_glossary-macos.md` | Add iOS-specific terms under new "iOS/iPadOS" section | ~50 lines added |
+| `docs/reference/endpoints.md` | Add iOS ADE endpoints section (Albert, ADE activation, APNs, Intune enrollment) | ~15 lines added |
+| `docs/reference/00-index.md` | Add iOS references section linking to ios-capability-matrix.md | ~8 lines added |
 
-### New Files to Create
+### New Files Required
 
-**Total new files: ~28**
+**Core content — must be built:**
 
-| Category | Files | Count |
-|----------|-------|-------|
-| macOS lifecycle | `lifecycle-macos/00-05` | 6 |
-| macOS admin setup | `admin-setup-macos/00-07` | 8 |
-| macOS troubleshooting (L1) | `l1-runbooks/10-12`, `decision-trees/05` | 4 |
-| macOS troubleshooting (L2) | `l2-runbooks/10-12` | 3 |
-| macOS reference | `reference/macos-log-paths.md`, `reference/macos-commands.md` | 2 |
-| Cross-platform | `platform-comparison.md` | 1 |
-| Templates | `_templates/admin-template-macos.md` | 1 |
-| Windows operational gaps (lifecycle) | `lifecycle/06-08` | 3 |
-| Windows operational gaps (admin) | `admin-setup-apv1/11-13` | 3 |
-| Windows operational gaps (L2) | `l2-runbooks/09` | 1 |
+| File | Type | Mirrors | Build Priority |
+|------|------|---------|---------------|
+| `docs/ios-lifecycle/00-ios-enrollment-paths.md` | Lifecycle | macOS ADE lifecycle | 1 — unblocks all other work |
+| `docs/admin-setup-ios/00-overview.md` | Admin index | macOS admin overview | 2 — needed before sub-guides |
+| `docs/admin-setup-ios/01-abm-apns-prerequisites.md` | Admin guide | macOS ABM guide | 3 — blocks ADE guides |
+| `docs/admin-setup-ios/02-ade-enrollment-profile.md` | Admin guide | macOS enrollment profile | 4 — primary corporate path |
+| `docs/admin-setup-ios/05-configuration-profiles.md` | Admin guide | macOS config profiles | 5 — core management |
+| `docs/admin-setup-ios/06-app-deployment.md` | Admin guide | macOS app deployment | 5 — core management |
+| `docs/admin-setup-ios/07-compliance-policy.md` | Admin guide | macOS compliance | 5 — core management |
+| `docs/admin-setup-ios/03-device-enrollment.md` | Admin guide | (none) | 6 — BYOD path |
+| `docs/admin-setup-ios/04-user-enrollment.md` | Admin guide | (none) | 6 — BYOD path |
+| `docs/admin-setup-ios/08-config-failures.md` | Admin guide | macOS config failures | 7 — after all guides complete |
+| `docs/decision-trees/07-ios-triage.md` | L1 tree | macOS triage | 8 — after runbooks titled |
+| `docs/l1-runbooks/16-ios-device-not-appearing.md` | L1 runbook | macOS 10 | 9 |
+| `docs/l1-runbooks/17-ios-setup-assistant-failed.md` | L1 runbook | macOS 11 | 9 |
+| `docs/l1-runbooks/18-ios-profile-not-applied.md` | L1 runbook | macOS 12 | 9 |
+| `docs/l1-runbooks/19-ios-app-not-installed.md` | L1 runbook | macOS 13 | 9 |
+| `docs/l1-runbooks/20-ios-compliance-access-blocked.md` | L1 runbook | macOS 14 | 9 |
+| `docs/l1-runbooks/21-ios-company-portal-signin.md` | L1 runbook | macOS 15 | 9 |
+| `docs/l2-runbooks/14-ios-log-collection.md` | L2 runbook | macOS 10 | 10 — prerequisite for other L2 |
+| `docs/l2-runbooks/15-ios-profile-delivery.md` | L2 runbook | macOS 11 | 11 |
+| `docs/l2-runbooks/16-ios-app-install.md` | L2 runbook | macOS 12 | 11 |
+| `docs/l2-runbooks/17-ios-compliance.md` | L2 runbook | macOS 13 | 11 |
 
-### Codebase Integration Points
+**Supporting content — build when time allows:**
 
-| Doc Location | Links To | Notes |
-|--------------|----------|-------|
-| `reference/macos-commands.md` | No codebase link | macOS management uses standard Terminal + Intune agent; no custom module exists |
-| `reference/macos-log-paths.md` | No codebase link | Log paths are OS-level, not project code |
-| `admin-setup-macos/` | Apple Business Manager portal, Intune admin center | External portal links only |
-| `lifecycle/06-autopilot-reset.md` | `src/powershell/AutopilotRemediation.psm1` `Reset-AutopilotRegistration` | Links to existing PowerShell reference |
-| `admin-setup-apv1/11-app-deployment-esp.md` | `src/powershell/AutopilotDiagnostics.psm1` `Get-AutopilotLogs` | App install debugging uses existing log collection |
+| File | Type | Note |
+|------|------|------|
+| `docs/reference/ios-capability-matrix.md` | Reference | iOS vs macOS feature parity; useful for admins managing both Apple platforms |
+| `docs/ios-vs-macos.md` | Cross-platform | Concept map; less critical since the macOS glossary + lifecycle covers shared concepts |
+| `docs/_templates/admin-template-ios.md` | Template | Create after first admin guide is written to codify the supervision callout pattern |
+
+### Internal Boundaries and Cross-References
+
+| Boundary | Direction | Pattern |
+|----------|-----------|---------|
+| iOS admin guides → macOS admin guides | One-way: iOS references macOS for shared ABM/APNs setup | Cross-ref callout in `01-abm-apns-prerequisites.md` |
+| iOS l1-runbooks → iOS l2-runbooks | Escalation node IDs in triage tree | Follow `MAC1/MACR1` pattern; use `IOS1/IOSR1` prefix |
+| iOS lifecycle → iOS admin guides | "See Also" at end of each lifecycle section | Same as macOS lifecycle → macOS admin guides |
+| `_glossary-macos.md` → iOS docs | Inline links `[term](../_glossary-macos.md#term)` | iOS docs use macOS glossary for all Apple terms |
+| iOS triage → common-issues.md | common-issues.md iOS section links to `07-ios-triage.md` | Mirrors macOS pattern exactly |
+| iOS admin guides → `08-config-failures.md` | Each guide's "Configuration-Caused Failures" table populated | Same pattern as macOS `06-config-failures.md` |
+
+## Suggested Build Order
+
+### Group 1: Foundation (no dependencies — unblocks everything)
+
+1. **`_glossary-macos.md` iOS term additions** — Supervision, MAM, user enrollment partition, account-driven user enrollment, Managed Apple ID, App Protection Policy. Zero content dependencies.
+
+2. **`docs/ios-lifecycle/00-ios-enrollment-paths.md`** — Conceptual entry point for all three audiences. Writing this crystallizes the four enrollment paths, confirms where supervision boundaries fall, and identifies what admin guides are needed. Serves as the source of truth for all downstream content.
+
+3. **`docs/_templates/admin-template-ios.md`** — Create after the lifecycle doc establishes the supervision callout pattern. Ensures all nine admin guides are structurally consistent.
+
+### Group 2: Admin Setup Guides (sequential internal dependency)
+
+4. **`admin-setup-ios/00-overview.md`** — Mermaid setup sequence. Requires knowing all guide titles from Group 1.
+
+5. **`admin-setup-ios/01-abm-apns-prerequisites.md`** — First guide in sequence. Blocks all ADE guides. Cross-references `admin-setup-macos/01-abm-configuration.md`.
+
+6. **`admin-setup-ios/02-ade-enrollment-profile.md`** — Depends on (5). Defines supervision — all "Supervised only" callouts in other guides refer back to this file.
+
+7. **`admin-setup-ios/05-configuration-profiles.md`**, **`06-app-deployment.md`**, **`07-compliance-policy.md`** — Depend on (6) conceptually. Can be written in parallel.
+
+8. **`admin-setup-ios/03-device-enrollment.md`**, **`04-user-enrollment.md`** — BYOD paths. No supervision content. Can be written in parallel with (7).
+
+9. **`admin-setup-ios/08-config-failures.md`** — Reverse-lookup table. Written last; requires all other guides to exist.
+
+### Group 3: L1 Triage and Runbooks (parallel with Group 2 after Group 1)
+
+10. **`decision-trees/07-ios-triage.md`** — L1 entry point. Sketch tree structure early; finalize after runbooks are titled.
+
+11. **L1 runbooks 16-21** — Six runbooks. Can be written in parallel after the first one establishes the iOS L1 pattern.
+
+### Group 4: L2 Investigation Guides (depends on Group 3)
+
+12. **`l2-runbooks/14-ios-log-collection.md`** — Prerequisite for all other iOS L2 guides. Written first in Group 4. iOS log collection is distinct from macOS: iOS uses Device Console (Xcode), iPhone Mirroring, or Company Portal "Share Diagnostics". Document `Settings > Privacy & Security > Analytics & Improvements > Analytics Data` for on-device log access, and `idevicesyslog` (libimobiledevice) for L2 engineers.
+
+13. **L2 runbooks 15-17** — Written in parallel after (12).
+
+### Group 5: Navigation Integration (last — depends on Groups 1-4)
+
+14. **`index.md`**, **`common-issues.md`**, **`quick-ref-l1.md`**, **`quick-ref-l2.md`** — All require final file paths from Groups 1-4. Single pass after content docs are finalized.
+
+15. **`l1-runbooks/00-index.md`**, **`l2-runbooks/00-index.md`** — Add iOS sections pointing to all new runbooks.
+
+16. **`reference/endpoints.md`**, **`reference/00-index.md`**, **`reference/ios-capability-matrix.md`** — Can be written any time; no content dependency on runbooks.
+
+### Parallelism Opportunities
+
+Groups 2 and 3 can run in parallel once Group 1 is complete (admin setup and L1 troubleshooting have no cross-dependencies). Within Group 2, guides 05/06/07 and 03/04 can be parallelized. Within Group 3, all six L1 runbooks can be parallelized after the first establishes the pattern.
+
+### Dependency Chain
+
+```
+Group 1: Glossary iOS terms + iOS lifecycle doc + iOS admin template
+    ↓
+Group 2 (parallel with Group 3):
+  Admin: 00-overview → 01-ABM/APNs → 02-ADE ─→ 05/06/07 (parallel) → 08-failures
+                                              └→ 03/04 (parallel)
+  L1:    07-triage + 16-21-runbooks (parallel)
+    ↓
+Group 4: 14-log-collection → 15/16/17-runbooks (parallel)
+    ↓
+Group 5: Navigation updates + references
+```
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Platform Mixing Within Files
+### Anti-Pattern 1: Creating a Separate iOS Glossary File
 
-**What:** Creating lifecycle files that alternate between "on Windows, do X... on macOS, do Y..." throughout the document.
+**What people do:** Create `_glossary-ios.md` to hold iOS-specific terms, mirroring the pattern of `_glossary-macos.md` next to `_glossary.md`.
 
-**Why bad:** Windows Autopilot and macOS ADE share almost no procedural steps. Interleaving them creates long, unfocused documents where readers must constantly filter out irrelevant content. The existing APv1/APv2 split already validates separation.
+**Why it's wrong:** ABM, ADE, VPP, Setup Assistant, and APNs already live in `_glossary-macos.md` and apply equally to iOS. A third glossary file fragments shared Apple ecosystem concepts. iOS docs would need to link to two files for Apple terminology.
 
-**Instead:** Platform-specific directories. Cross-reference at the conceptual level only (e.g., "the macOS equivalent of hardware hash registration is ABM device assignment — see [ABM Device Assignment](lifecycle-macos/01-abm-device-assignment.md)").
+**Do this instead:** Extend `_glossary-macos.md` with an iOS-specific section. Update the file's preamble to note it covers both macOS and iOS/iPadOS Apple ecosystem terminology.
 
-### Anti-Pattern 2: Separate Glossaries Per Platform
+### Anti-Pattern 2: Documenting All Four iOS Enrollment Paths at Equal Depth
 
-**What:** Creating `_glossary-macos.md` alongside `_glossary.md`.
+**What people do:** Write complete admin guide sets for ADE, Device Enrollment, User Enrollment, and MAM at equal detail.
 
-**Why bad:** When a reader encounters "OOBE" in a macOS doc, they should not need to know which glossary to check. A single glossary with platform-labeled sections handles both. The glossary is already organized by topic (Enrollment, Hardware, Network, Security), and a new "macOS / Apple" section fits naturally.
+**Why it's wrong:** The audience is corporate IT. ADE (supervised, corporate-owned) is the primary path. Equal treatment wastes effort and blurs the message about which path to follow for corporate devices.
 
-**Instead:** One `_glossary.md`, expanded with platform labels on platform-specific terms.
+**Do this instead:** ADE gets full admin guide treatment with supervision callouts throughout. Device Enrollment and User Enrollment each get one admin guide with a focused limitations section. MAM gets a one-paragraph reference with a link to App Protection Policy documentation (out of scope for this provisioning suite).
 
-### Anti-Pattern 3: Duplicating Shared Endpoints
+### Anti-Pattern 3: Starting iOS L1 Runbook Numbers at 10
 
-**What:** Creating `reference/macos-endpoints.md` that duplicates the Entra ID and Graph API endpoints already in `reference/endpoints.md`.
+**What people do:** Number iOS L1 runbooks starting at 10 with an `ios-` prefix to distinguish from macOS's `macos-` prefix.
 
-**Why bad:** Shared endpoints (login.microsoftonline.com, graph.microsoft.com) are used by both platforms. Two files means two places to update when Microsoft changes something.
+**Why it's wrong:** `l1-runbooks/` is a flat directory. macOS already occupies `10-macos-*` through `15-macos-*`. File system collisions aside, the 00-index.md tables would list two different "10" entries.
 
-**Instead:** One `reference/endpoints.md` with platform-labeled sections. Shared endpoints appear once with a "(shared)" label in both sections' tables.
+**Do this instead:** iOS L1 runbooks start at 16. Sequential numbering within a flat directory is the established convention.
 
-### Anti-Pattern 4: Windows Gaps as Separate Directories
+### Anti-Pattern 4: Using the macOS Admin Template Unchanged for iOS Admin Guides
 
-**What:** Creating `docs/operational/` or `docs/advanced/` directories for the Windows operational gap content.
+**What people do:** Copy `_templates/admin-template-macos.md` directly for iOS admin guides since both platforms share Apple Business Manager.
 
-**Why bad:** The content logically extends existing directories. Autopilot Reset is a lifecycle stage. App deployment for ESP is admin setup configuration. Creating new top-level directories fragments the reader's mental model and breaks the established navigation pattern.
+**Why it's wrong:** The macOS template has no supervision callout — under macOS ADE, all ADE-enrolled devices are supervised by default, so no supervision qualifier is needed. iOS requires `**Supervised only:**` callouts throughout admin guides for supervision-gated features. Using the macOS template without modification means these callouts are never added.
 
-**Instead:** Add numbered files to existing directories (`lifecycle/06-...`, `admin-setup-apv1/11-...`). Update the overview/index files in those directories to include the new entries.
+**Do this instead:** Create `_templates/admin-template-ios.md` that inherits the dual-portal ABM + Intune structure from the macOS template and adds the supervision callout pattern definition. The first admin guide written (likely `02-ade-enrollment-profile.md`) establishes the canonical supervision callout; the template is formalized from it.
 
-### Anti-Pattern 5: macOS Content Using Windows Terminology
+### Anti-Pattern 5: Omitting the Supervision Determination Warning
 
-**What:** Referring to macOS Setup Assistant as "OOBE" or calling configuration profiles "policies" without distinction.
+**What people do:** Document supervised-only features in admin guides without explaining when and how supervision is set, assuming admins will figure it out.
 
-**Why bad:** macOS and Windows use different terminology for analogous concepts. Using Windows terminology in macOS content creates confusion, especially for admins managing both platforms. Readers familiar with macOS will not find "OOBE" intuitive.
+**Why it's wrong:** Supervision is set at enrollment time during ADE enrollment profile creation. An admin who reads the configuration profiles guide, sees a "Supervised only" callout, and then enrolls devices via Device Enrollment cannot add supervision after the fact without wiping and re-enrolling. This is the highest-consequence iOS misconfiguration and must be called out explicitly in the lifecycle doc.
 
-**Instead:** Use correct Apple terminology (Setup Assistant, configuration profiles, managed preferences) with cross-references to Windows equivalents in the glossary. The `platform-comparison.md` file exists specifically to map concepts across platforms.
+**Do this instead:** In `ios-lifecycle/00-ios-enrollment-paths.md`, include a "Watch Out For" note at the ADE enrollment stage: supervision cannot be added post-enrollment; the decision must be made before enrollment begins. Cross-reference from every `**Supervised only:**` callout in admin guides back to the ADE enrollment profile guide.
 
-## Build Order
+### Anti-Pattern 6: Duplicating ABM Setup Steps from macOS Admin Guides
 
-Build in this sequence — each phase's output is referenced by the next.
+**What people do:** Reproduce the full ABM token creation walkthrough in `admin-setup-ios/01-abm-apns-prerequisites.md` since iOS admins may not read macOS docs.
 
-### Phase 1: Shared Foundation Updates
+**Why it's wrong:** The ABM MDM server setup steps are identical for macOS and iOS. Duplicating them means two places to maintain when Apple changes the ABM UI.
 
-Dependencies: None. Everything else depends on this.
-
-1. `_glossary.md` — add macOS terms (ABM, ADE, APNS, Setup Assistant, VPP, FileVault, Gatekeeper, Company Portal macOS, Intune MDM Agent, Managed Apple ID, configuration profile, enrollment program token, MDM server assignment, Setup Assistant screens, Await Final Configuration)
-2. `platform-comparison.md` — "Windows Autopilot vs macOS ADE" router
-3. `_templates/admin-template-macos.md` — macOS admin guide template
-4. `reference/endpoints.md` — add macOS endpoints section
-
-### Phase 2: Windows Operational Gap Content
-
-Dependencies: Phase 1 (glossary terms). Can run in parallel with Phase 3 since the two platform tracks are independent.
-
-5. `lifecycle/06-autopilot-reset.md` — local reset, remote reset, re-provisioning
-6. `lifecycle/07-device-retirement.md` — retirement, wipe, tenant migration
-7. `lifecycle/08-infrastructure.md` — network deep-dive, Entra prereqs, licensing matrix
-8. `admin-setup-apv1/11-app-deployment-esp.md` — Win32 for ESP
-9. `admin-setup-apv1/12-security-compliance.md` — Conditional Access, baselines
-10. `admin-setup-apv1/13-migration-scenarios.md` — APv1->APv2, imaging->AP, GPO->Intune
-11. `l2-runbooks/09-monitoring-operations.md` — deployment reporting, drift, batch workflow
-12. Update `lifecycle/00-overview.md`, `admin-setup-apv1/00-overview.md`, `l2-runbooks/00-index.md` with new entries
-
-### Phase 3: macOS Foundation
-
-Dependencies: Phase 1 (glossary, endpoints, template).
-
-13. `lifecycle-macos/00-overview.md` — macOS provisioning overview + flow diagram
-14. `lifecycle-macos/01-abm-device-assignment.md` — ABM setup, device assignment
-15. `lifecycle-macos/02-enrollment-profile.md` — ADE enrollment profile
-16. `lifecycle-macos/03-setup-assistant.md` — Setup Assistant flow
-17. `lifecycle-macos/04-post-enrollment.md` — profile delivery, app install, compliance
-18. `lifecycle-macos/05-device-management.md` — ongoing management, updates, retirement
-19. `reference/macos-log-paths.md` — canonical macOS log locations
-20. `reference/macos-commands.md` — Terminal diagnostic commands
-
-### Phase 4: macOS Admin Setup
-
-Dependencies: Phase 3 (lifecycle provides context for admin guides' "what breaks" links).
-
-21. `admin-setup-macos/00-overview.md` — setup sequence overview
-22. `admin-setup-macos/01-apple-mdm-push-cert.md` — APNS certificate
-23. `admin-setup-macos/02-abm-integration.md` — ABM token, MDM server
-24. `admin-setup-macos/03-enrollment-profile.md` — ADE profile + Setup Assistant
-25. `admin-setup-macos/04-configuration-profiles.md` — restrictions, Wi-Fi, VPN
-26. `admin-setup-macos/05-app-deployment.md` — DMG, PKG, VPP
-27. `admin-setup-macos/06-compliance-security.md` — compliance, FileVault, firewall
-28. `admin-setup-macos/07-config-failures.md` — configuration-caused failures
-
-### Phase 5: macOS Troubleshooting
-
-Dependencies: Phase 3 (lifecycle) and Phase 4 (admin setup — "what breaks" callouts feed runbook scenarios).
-
-29. `decision-trees/05-macos-triage.md` — L1 triage flowchart
-30. `l1-runbooks/10-macos-enrollment-failure.md`
-31. `l1-runbooks/11-macos-app-not-installed.md`
-32. `l1-runbooks/12-macos-compliance-issue.md`
-33. `l2-runbooks/10-macos-log-collection.md`
-34. `l2-runbooks/11-macos-enrollment-deep.md`
-35. `l2-runbooks/12-macos-profile-delivery.md`
-
-### Phase 6: Navigation and Cross-Platform Integration
-
-Dependencies: All previous phases (needs all content to exist for linking).
-
-36. `index.md` — restructure with platform selector and full macOS sections
-37. `quick-ref-l1.md` — add macOS section
-38. `quick-ref-l2.md` — add macOS section
-39. `common-issues.md` — add macOS symptom routing
-40. `l1-runbooks/00-index.md` — add macOS section
-41. `l2-runbooks/00-index.md` — add macOS and monitoring entries
-
-### Parallelism Opportunity
-
-Phases 2 and 3 can execute in parallel since Windows operational gap content and macOS lifecycle content have no cross-dependencies. This is the most significant time-saving opportunity in the build order.
-
-## Scaling Considerations
-
-| Scale | Adjustment |
-|-------|------------|
-| Two platforms (current) | Platform selector in `index.md`; separate directories per platform; shared references |
-| Three platforms (future — e.g., ChromeOS, Linux) | Same pattern extends: `lifecycle-chromeos/`, `admin-setup-chromeos/`, numbered macOS runbooks continue from 13+ in shared dirs |
-| Multi-language docs | Directory structure already uses English slugs; translation would add `docs-es/`, `docs-fr/` as peer directories, not nest under `docs/` |
-
-The parallel-directory pattern scales linearly. Each new platform adds a fixed set of directories and extends shared references. The navigation hub (`index.md`) grows by one section. No existing content requires refactoring.
+**Do this instead:** In the iOS ABM/APNs prerequisites guide, verify whether prerequisites are already met (cross-reference macOS guide), then provide the iOS-specific divergences only (iOS enrollment profiles are configured separately from macOS profiles in Intune; both can use the same ADE token).
 
 ## Sources
 
-- Existing codebase: All files in `docs/` (direct inspection of 70 files, 8,023 lines)
-- Existing architecture: `.planning/research/ARCHITECTURE.md` from v1.0/v1.1 milestone (pattern continuity)
-- [Set up ADE for macOS - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment-program-enroll-macos) — enrollment program token, profile configuration, Setup Assistant screens
-- [macOS device enrollment guide - Microsoft Learn](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/guide-macos) — enrollment method selection
-- [Get started with macOS endpoints - Microsoft Learn](https://learn.microsoft.com/en-us/intune/solutions/end-to-end-guides/macos-endpoints-get-started) — end-to-end macOS management overview
-- [macOS compliance settings - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/protect/compliance-policy-create-mac-os) — device health, properties, system security
-- [Apple MDM Push certificate - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/apple-mdm-push-certificate-get) — APNS setup and renewal
-- [Network endpoints for Intune - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/intune-endpoints) — all required URLs
-- [Add macOS DMG app - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-macos-dmg) — DMG deployment
-- [Add unmanaged macOS PKG - Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/apps/macos-unmanaged-pkg) — PKG deployment
-- [Troubleshooting Intune management agent on macOS - Microsoft Community Hub](https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-troubleshooting-microsoft-intune-management-agent-on-macos/4431810) — log locations, diagnostic commands
-- Community sources (MEDIUM confidence): [IntuneMacAdmins](https://www.intunemacadmins.com/troubleshooting/enrollment_error/), [IntuneBrew docs](https://docs.intunebrew.com/docs/Troubleshooting-Common-macOS-App-Deployment-Issues-in-Intune), [allthingscloud.blog](https://allthingscloud.blog/macos-app-deployment-with-microsoft-intune/)
+- [iOS/iPadOS device enrollment guide for Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/deployment-guide-enrollment-ios-ipados) — HIGH confidence, official Microsoft documentation (updated 2025-06-09, verified 2026-04-16)
+- [Set up automated device enrollment (ADE) for iOS/iPadOS](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment-program-enroll-ios) — HIGH confidence, official Microsoft documentation
+- [Turn on iOS/iPadOS supervised mode with Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-supervised-mode) — HIGH confidence, official Microsoft documentation
+- [Troubleshooting iOS/iPadOS device enrollment errors in Microsoft Intune](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/troubleshoot-ios-enrollment-errors) — HIGH confidence, official Microsoft support documentation
+- [Apple device restriction settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/configuration/device-restrictions-apple) — HIGH confidence, supervision-gated features list
+- Existing `docs/` architecture: direct inspection of 116-file documentation tree — HIGH confidence (source of truth for naming conventions, numbering, and file structure)
 
 ---
-*Architecture research for: v1.2 Cross-Platform Provisioning — macOS ABM/ADE integration + Windows operational gaps*
-*Researched: 2026-04-13*
+
+## v1.2 Architecture Reference (archived)
+
+*The following section preserves the v1.2 architecture research for historical continuity. The patterns established here are the foundation for the v1.3 iOS/iPadOS integration above.*
+
+**Domain:** Cross-platform provisioning documentation — macOS ABM/ADE integration + Windows Autopilot operational gap closure
+**Researched:** 2026-04-13
+**Confidence:** HIGH
+
+### Architectural Decision: Parallel Platform Directories, Not Integrated
+
+Should macOS content be woven into existing Windows directories or structured as parallel peer directories? **Recommendation: Parallel platform directories.** The existing architecture uses this pattern — `lifecycle/` and `lifecycle-apv2/` are siblings. macOS follows the same convention. The provisioning workflows are fundamentally different technologies sharing almost no diagnostic steps, registry paths, or tooling.
+
+### v1.2 Component Responsibilities
+
+| Component | Responsibility |
+|-----------|----------------|
+| `lifecycle-macos/` | End-to-end macOS provisioning narrative — ABM through ongoing management |
+| `admin-setup-macos/` | Step-by-step macOS Intune configuration for admins |
+| `decision-trees/05-macos-triage.md` through `06-macos-triage.md` | macOS L1 triage flowchart |
+| `l1-runbooks/10-15` (macOS) | Scripted macOS troubleshooting for Service Desk |
+| `l2-runbooks/10-13` (macOS) | Technical macOS investigation with Terminal commands |
+| `reference/macos-log-paths.md` | Canonical macOS log file location reference |
+| `reference/macos-commands.md` | Terminal diagnostic commands for macOS |
+
+For full v1.2 architecture detail, see the `.planning/milestones/` directory or git history.
+
+---
+*Architecture research for: v1.3 iOS/iPadOS documentation integration into Intune provisioning documentation suite*
+*Researched: 2026-04-16*
