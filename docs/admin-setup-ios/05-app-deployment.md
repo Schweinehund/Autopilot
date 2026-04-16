@@ -62,3 +62,89 @@ The table below summarizes the four deployment types against the attributes that
 | Size limit | N/A (App Store) | N/A (App Store) | **2 GB per app** | N/A (App Store) |
 | Update mechanism | Token-level auto-update; Intune sync | Token-level auto-update; Intune sync | CFBundleVersion increment + re-upload | App Store |
 | Book support | No | Yes | No | No |
+
+## Prerequisites
+
+### VPP Prerequisites
+
+- Apple Business Manager account with at least one active Content Manager role
+- VPP (Apps and Books) location token uploaded to Intune (Tenant administration > Connectors and tokens > Apple VPP tokens)
+- App licenses purchased in ABM (Apps and Books page) — select Device or User licensing at purchase time (Device = recommended default)
+- Annual token renewal configured (see Renewal / Maintenance below)
+
+### LOB (.ipa) Prerequisites
+
+- Apple Developer Enterprise Program membership
+- `.ipa` file signed with the organizational Distribution certificate
+- `.mobileprovision` provisioning profile uploaded via **Apps** > **iOS/iPadOS** > **iOS app provisioning profiles** (separate object from the app itself)
+- Unique `CFBundleVersion` and `CFBundleShortVersionString` in `Info.plist` for each uploaded version
+- `.ipa` file size ≤ 2 GB (hard limit)
+
+### Store App Prerequisites
+
+- Apple Account signed in on the device (free or paid App Store apps without VPP install under the user's own licensing)
+- Device must have App Store access (not blocked by a "Block App Store" device restriction)
+
+## VPP Device-Licensed
+
+#### In Apple Business Manager
+
+1. Sign in to [Apple Business Manager](https://business.apple.com).
+2. Navigate to **Apps and Books**. Search for the app. Purchase licenses with **Assign to: Devices** (device licensing). Confirm location.
+
+#### In Intune admin center
+
+1. Verify the VPP token is synced: **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens**.
+2. The purchased app appears automatically under **Apps** > **iOS/iPadOS**.
+3. Select the app > **Properties** > **Assignments** > **Add group**. Use **Required** to device groups or user groups.
+4. Under **App information**, confirm **License type: Device**.
+
+> 🔒 **Supervised only:** Silent install of VPP device-licensed apps — the user sees no prompt of any kind on install — requires supervised mode. On unsupervised devices, device-licensed apps install without an Apple Account prompt but the user sees a one-time install confirmation. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+
+> **What breaks if misconfigured:** Assigning VPP device-licensed apps as Available (rather than Required) to device groups does not work — Available for device groups applies only to Required intent. Use Required for device groups; Available requires user groups. Symptom appears in: Intune admin center (assignment succeeds) but device (Company Portal does not list the app).
+
+## VPP User-Licensed
+
+#### In Apple Business Manager
+
+1. Navigate to **Apps and Books**. Purchase licenses with **Assign to: Users**.
+
+#### In Intune admin center
+
+1. The app appears under **Apps** > **iOS/iPadOS** after VPP sync.
+2. Select the app > **Properties** > **App information** > confirm **License type: User**.
+3. Assign to user groups (Required or Available for enrolled — device group assignment is not available for user-licensed VPP).
+
+First-time users receive a VPP invitation requiring App Store sign-in with a personal Apple Account (or Managed Apple Account for User Enrollment). Only after acceptance does the app install.
+
+> 🔒 **Supervised only:** Silent install is NOT available for VPP user-licensed apps regardless of supervision state — the user always sees an Apple Account prompt for the VPP invitation. For silent install, switch to VPP device licensing, which is the fully silent option on supervised devices. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+
+> **What breaks if misconfigured:** Assigning VPP user-licensed apps on devices that have "Block App Store" in device restrictions breaks the VPP invitation flow — the user cannot accept the invitation (invitation requires App Store access). Symptom appears in: device (invitation shows but user cannot proceed) and Intune admin center (user license stuck in "Invitation sent" state).
+
+## LOB (.ipa)
+
+#### In Intune admin center
+
+1. Navigate to **Apps** > **iOS/iPadOS** > **Add** > **Line-of-business app**.
+2. Select the signed `.ipa` file (≤ 2 GB).
+3. Configure app information (name, description, publisher, category, minimum OS version).
+4. Upload the `.mobileprovision` provisioning profile separately via **Apps** > **iOS app provisioning profiles** (Distribution certificate expires after 3 years; provisioning profile expires after 1 year).
+5. Assign: Required, Available for enrolled devices, Available with or without enrollment (unique to LOB), or Uninstall.
+
+LOB apps can install silently on both supervised and unsupervised devices because Apple trusts the enterprise signature — no Apple Account required. No 🔒 callout applies to LOB silent install because it is signature-gated, not supervision-gated.
+
+> **What breaks if misconfigured:** Distribution certificate or provisioning profile expiring (Distribution = 3 years; provisioning profile = 1 year) causes all existing LOB installs to fail to launch with no install of new versions. Symptom appears in: device (app crashes on launch with "Unable to Verify App") and Intune admin center (push notification at 30-day expiry warning; stale apps silent-fail thereafter).
+
+> **What breaks if misconfigured:** Uploading an `.ipa` file > 2 GB causes Intune to reject the upload. Resolution: reduce app size or split into modules. Symptom appears in: Intune admin center (upload error).
+
+## Store Apps (without VPP)
+
+#### In Intune admin center
+
+1. Navigate to **Apps** > **iOS/iPadOS** > **Add** > **iOS store app**.
+2. Search the App Store for the app (by name or App Store URL) — select the bundle ID to add it.
+3. Assign: Required (forces Company Portal download), Available for enrolled devices, or Uninstall.
+
+Store apps without VPP require the user to have an Apple Account signed in on the device. Intune cannot assign licenses for these apps — it only tells the device "install this bundle ID from the App Store." Paid apps require the user to already own the app via their personal Apple Account; for paid corporate apps, use VPP instead.
+
+> **What breaks if misconfigured:** Deploying a paid Store app without VPP to corporate devices requires each user to have purchased the app personally — creates licensing and audit problems. Use VPP for all paid corporate apps. Symptom appears in: device (App Store shows "Buy" prompt rather than silent install).
