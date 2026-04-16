@@ -91,9 +91,17 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ macOS L1/L2 troubleshooting (decision tree, 10 runbooks) — v1.2
 - ✓ Cross-platform navigation integration (common-issues routing, quick-ref cards) — v1.2
 
-### Active
+## Current Milestone: v1.3 iOS/iPadOS Provisioning Documentation
 
-<!-- No active requirements — next milestone not yet defined -->
+**Goal:** Comprehensive iOS/iPadOS provisioning and management documentation through Microsoft Intune, covering all enrollment paths, MAM, and tiered troubleshooting — with parity to existing Windows/macOS coverage.
+
+**Target features:**
+- iOS/iPadOS lifecycle documentation (ADE, device enrollment, user enrollment, MAM without enrollment)
+- iOS/iPadOS admin setup guides with 🔒 Supervised only callout pattern
+- iOS/iPadOS L1/L2 troubleshooting (decision trees, runbooks)
+- Cross-platform navigation integration for iOS/iPadOS
+
+### Active
 
 ### Out of Scope
 
@@ -103,7 +111,6 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - Frontend UI implementation — deferred to future milestone
 - Backend API integration with Graph — deferred to future milestone
 - Automated remediation workflows — deferred to future milestone
-- iOS/iPadOS provisioning — platform not in current scope
 - Linux device enrollment — Intune Linux support is limited
 - ChromeOS management — different management platform (Google Admin)
 
@@ -139,5 +146,22 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 | APv1→APv2 as coexistence, not cutover | Reflects real-world mixed environments | ✓ Good — readiness checklist with blockers |
 | Phases 21/22 parallelizable | Windows gaps and macOS lifecycle have zero cross-dependencies | ✓ Good — saved time in execution |
 
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
 ---
-*Last updated: 2026-04-15 after v1.2 milestone shipped*
+*Last updated: 2026-04-16 after v1.3 milestone started*

@@ -1,38 +1,39 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.2
-milestone_name: Cross-Platform Provisioning & Operational Gaps
-status: shipped
-stopped_at: Milestone v1.2 archived
-last_updated: "2026-04-16T03:30:00.000Z"
-last_activity: 2026-04-15
+milestone: v1.3
+milestone_name: iOS/iPadOS Provisioning Documentation
+status: defining-requirements
+stopped_at: Defining requirements
+last_updated: "2026-04-16"
+last_activity: 2026-04-16
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 20
-  completed_plans: 20
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-15)
+See: .planning/PROJECT.md (updated 2026-04-16)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows and macOS devices through Intune without escalating to engineering
-**Current focus:** Planning next milestone
+**Current focus:** Defining requirements for v1.3 iOS/iPadOS
 
 ## Current Position
 
-Phase: All complete (v1.0 + v1.1 + v1.2 shipped)
-Status: Milestone v1.2 archived
-Last activity: 2026-04-15
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-16 — Milestone v1.3 started
 
 ```
-v1.2 Progress: [########################] 100%
-Phases:  6/6 complete
-Plans:   20/20 complete
+v1.3 Progress: [                        ] 0%
+Phases:  0/0 complete
+Plans:   0/0 complete
 ```
 
 ## Performance Metrics
