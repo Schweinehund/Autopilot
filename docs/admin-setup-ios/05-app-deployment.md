@@ -148,3 +148,79 @@ LOB apps can install silently on both supervised and unsupervised devices becaus
 Store apps without VPP require the user to have an Apple Account signed in on the device. Intune cannot assign licenses for these apps — it only tells the device "install this bundle ID from the App Store." Paid apps require the user to already own the app via their personal Apple Account; for paid corporate apps, use VPP instead.
 
 > **What breaks if misconfigured:** Deploying a paid Store app without VPP to corporate devices requires each user to have purchased the app personally — creates licensing and audit problems. Use VPP for all paid corporate apps. Symptom appears in: device (App Store shows "Buy" prompt rather than silent install).
+
+## Verification
+
+The Intune admin center exposes managed app installation status in three locations. Use the appropriate one depending on the scope of your check:
+
+### 1. App-centric view (primary)
+
+Navigate to **Apps** > **All apps** > [select app] > **Monitor** > **Device install status** or **User install status**. Shows per-device / per-user:
+
+- Install Status (Installed, Install Pending, Failed, Not Applicable, Uninstalled)
+- Timestamp of last status update
+- Error code and detail (for Failed entries)
+
+### 2. Device-centric view
+
+Navigate to **Devices** > **All devices** > [select device] > **Managed Apps**. Shows end-to-end app lifecycle for the individual device: targeted, delivered, install status, last check-in.
+
+### 3. Troubleshooting view
+
+Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Managed Apps** pane. User-centric per-app history across all of the user's devices — use when a single user reports an install problem across multiple devices.
+
+**Managed vs unmanaged distinction:** Managed apps = apps deployed via Intune (VPP, LOB, Store-as-Required/Available). Unmanaged apps = apps installed directly by the user from App Store with no Intune assignment record. Unmanaged apps do not appear in any of the three views above.
+
+**Verification checklist:**
+
+- [ ] VPP token shows Active status under Tenant administration > Connectors and tokens > Apple VPP tokens
+- [ ] VPP app license count in Intune matches purchased quantity in ABM
+- [ ] LOB provisioning profile shows > 30 days until expiry under Apps > iOS app provisioning profiles
+- [ ] Test-assigned app shows "Installed" status for at least one target device in the App-centric view
+- [ ] For VPP user-licensed apps, at least one user has accepted the VPP invitation (user license status transitions from "Invitation sent" to "Assigned")
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Portal | Symptom | Runbook |
+|------------------|--------|---------|---------|
+| VPP user-licensed app assigned to device with "Block App Store" restriction | Intune | Invitation cannot be accepted; user license stuck in "Invitation sent" | iOS L1 runbooks (Phase 30) |
+| VPP Available intent assigned to device groups | Intune | App does not appear in Company Portal; assignment silently fails | iOS L1 runbooks (Phase 30) |
+| VPP device-licensed app assigned to unsupervised device, admin expected silent install | Intune | User sees one-time install prompt instead of silent install | iOS L1 runbooks (Phase 30) |
+| VPP user-licensed app assigned to unsupervised device, admin expected silent install | Intune | User sees Apple Account prompt AND install prompt (silent install NOT available for user licensing) | iOS L1 runbooks (Phase 30) |
+| LOB .ipa > 2 GB | Intune | Upload fails with size-limit error | iOS L1 runbooks (Phase 30) |
+| LOB Distribution certificate expired (3-year lifecycle) | Intune | All existing LOB apps fail to launch with "Unable to Verify App" | iOS L1 runbooks (Phase 30) |
+| LOB provisioning profile expired (1-year lifecycle) | Intune | Existing LOB app installs stop launching; new installs fail to complete | iOS L1 runbooks (Phase 30) |
+| Store app deployed without VPP on corporate devices expecting silent install | Intune | User sees Apple Account / Get prompt; paid apps block with "Buy" prompt | iOS L1 runbooks (Phase 30) |
+| VPP token not renewed before annual expiry | Intune | VPP apps stop syncing from ABM; existing installs unaffected | iOS L1 runbooks (Phase 30) |
+| LOB app CFBundleVersion not incremented on re-upload | Intune | Devices do not detect a new version; existing installed version remains | iOS L1 runbooks (Phase 30) |
+
+## Renewal / Maintenance
+
+| Component | Renewal Period | Consequence of Lapse | Renewal Steps |
+|-----------|---------------|---------------------|---------------|
+| VPP (Apps and Books) location token | Annual (365 days) | VPP apps stop syncing from ABM; existing installs unaffected but no new assignments, revocations, or license management until renewed | 1. In ABM: **Preferences** > **Payments and Billing** > **Apps and Books** > **Content Tokens** > **Download**. 2. In Intune: **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens** > [token] > **Edit** > **Upload new token** |
+| LOB provisioning profile (.mobileprovision) | Annual (1 year from generation) | Existing LOB app installs fail to launch; new installs fail to complete | 1. Generate new `.mobileprovision` via Apple Developer Enterprise portal. 2. In Intune: **Apps** > **iOS app provisioning profiles** > [profile] > **Properties** > **Upload new provisioning profile**. Intune sends 30-day advance expiry notification. |
+| LOB Distribution certificate | 3 years (from Apple Developer Enterprise) | All LOB apps signed with the expired certificate fail to launch with "Unable to Verify App" | Generate new Distribution certificate in Apple Developer Enterprise portal; re-sign and re-upload each LOB `.ipa` with the new certificate. |
+| APNs certificate | 365 days | iOS MDM communication stops fleet-wide (see [APNs Certificate](01-apns-certificate.md)) | See [APNs Certificate](01-apns-certificate.md) for renewal steps |
+
+## See Also
+
+- [Configuration Profiles](04-configuration-profiles.md) — Wi-Fi/VPN/Certificates delivery (prerequisite for enterprise app infrastructure)
+- [Compliance Policies](06-compliance-policy.md)
+- [ADE Enrollment Profile](03-ade-enrollment-profile.md) — supervised mode requirement for silent install
+- [ABM/ADE Token](02-abm-token.md) — VPP token is administered in the same ABM account
+- [APNs Certificate](01-apns-certificate.md)
+- [iOS/iPadOS Admin Setup Overview](00-overview.md)
+- [iOS/iPadOS ADE Lifecycle](../ios-lifecycle/01-ade-lifecycle.md)
+- [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md) — supervision concept anchor
+- [macOS App Deployment](../admin-setup-macos/04-app-deployment.md) — parallel macOS guide
+- [Apple Provisioning Glossary](../_glossary-macos.md)
+
+---
+*Previous: [Configuration Profiles](04-configuration-profiles.md) | Next: [Compliance Policies](06-compliance-policy.md) | [Back to Overview](00-overview.md)*
+
+---
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-16 | Initial version — iOS/iPadOS app deployment guide with Key Concepts section (managed vs unmanaged, VPP device vs user licensing, silent install boundary table), 4-column deployment type comparison, per-type sections with supervised-only silent install callouts, managed app status verification in three admin-center locations, configuration-caused failures, and VPP/LOB renewal cadences | -- |
