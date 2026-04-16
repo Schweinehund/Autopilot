@@ -6,7 +6,7 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers the Windows enrollment scenario. macOS Conditional Access enrollment timing will be documented in Phase 23. See also: [Compliance Policy Timing](compliance-timing.md).
+> **Cross-platform:** This guide covers the Windows enrollment scenario. For macOS Conditional Access enrollment timing, see [macOS Compliance Policy](../admin-setup-macos/05-compliance-policy.md). See also: [Compliance Policy Timing](compliance-timing.md).
 
 # Conditional Access Enrollment Timing: The Compliance Chicken-and-Egg Problem
 

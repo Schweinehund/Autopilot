@@ -149,17 +149,6 @@ Conditional Access blocking enrollment, compliance not evaluating, or security b
 - **Admin:** [Compliance Policy Timing](reference/compliance-timing.md) — "Not evaluated" vs "Non-compliant"
 - **Admin:** [Security Baseline Conflicts](reference/security-baseline-conflicts.md) — BitLocker, WDAC, reboot conflicts
 
-## Version History
-
-| Date | Change | Author |
-|------|--------|--------|
-| 2026-04-15 | Added macOS ADE Failure Scenarios section, platform selector, cross-reference banners; updated title and frontmatter for cross-platform coverage | -- |
-| 2026-04-13 | Added Device Reset, Migration, and Security routing sections for Phase 21 content | — |
-| 2026-04-13 | Added APv2 Failure Scenarios section with framework labels | — |
-| 2026-03-23 | Transformed from inline troubleshooting guide to navigation index | — |
-
----
-
 ## macOS ADE Failure Scenarios
 
 > **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
@@ -209,3 +198,12 @@ Company Portal not available, sign-in failing, or Entra registration incomplete.
 
 - **L1:** [Company Portal Sign-In](l1-runbooks/15-macos-company-portal-sign-in.md)
 - **L2:** [Compliance Evaluation Investigation](l2-runbooks/13-macos-compliance.md) (for Entra registration issues)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-15 | Added macOS ADE Failure Scenarios section, platform selector, cross-reference banners; updated title and frontmatter for cross-platform coverage | -- |
+| 2026-04-13 | Added Device Reset, Migration, and Security routing sections for Phase 21 content | — |
+| 2026-04-13 | Added APv2 Failure Scenarios section with framework labels | — |
+| 2026-03-23 | Transformed from inline troubleshooting guide to navigation index | — |
