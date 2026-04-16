@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Cross-Platform Provisioning & Operational Gaps
-status: completed
-stopped_at: Phase 25 context gathered
-last_updated: "2026-04-16T01:22:15.167Z"
-last_activity: 2026-04-16
+status: shipped
+stopped_at: Milestone v1.2 archived
+last_updated: "2026-04-16T03:30:00.000Z"
+last_activity: 2026-04-15
 progress:
   total_phases: 6
   completed_phases: 6
@@ -18,81 +18,49 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-13)
+See: .planning/PROJECT.md (updated 2026-04-15)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows and macOS devices through Intune without escalating to engineering
-**Current focus:** Phase 24 — macos-troubleshooting (complete)
+**Current focus:** Planning next milestone
 
 ## Current Position
 
-Phase: 25
-Plan: Not started
-Status: Phase 24 complete
-Last activity: 2026-04-16
+Phase: All complete (v1.0 + v1.1 + v1.2 shipped)
+Status: Milestone v1.2 archived
+Last activity: 2026-04-15
 
 ```
-v1.2 Progress: [##############............] 83%
-Phases:  5/6 complete
-Plans:   18/18 complete
+v1.2 Progress: [########################] 100%
+Phases:  6/6 complete
+Plans:   20/20 complete
 ```
 
 ## Performance Metrics
 
-**Velocity (v1.0 + v1.1 reference):**
+**Velocity across milestones:**
 
 - v1.0: 10 phases, 24 plans — shipped 2026-04-10
 - v1.1: 9 phases, 18 plans — shipped 2026-04-13
+- v1.2: 6 phases, 20 plans — shipped 2026-04-15
 
-**v1.2 scope:**
-
-- 6 phases, 38 requirements
-- Phases 21 and 22 are parallelizable (Windows gaps and macOS lifecycle have zero cross-dependencies)
-- Phase 21 is the largest phase (18 requirements) — will decompose into multiple plans
+**Totals:** 25 phases, 62 plans, 116 documentation files
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
-
-- [v1.0/v1.1]: Tiered doc structure (L1/L2/Admin) with role-based navigation via docs/index.md
-- [v1.0/v1.1]: L1 templates forbid PowerShell/registry; L2 templates link to canonical reference files
-- [v1.0/v1.1]: Navigation hub files written last — they link to content that already exists
-- [v1.1]: Per-setting "what breaks" callouts in all admin setup guides
-- [v1.1]: Confidence-attributed citations for community sources (MEDIUM confidence labeled)
-- [v1.1]: Admin template includes Configuration-Caused Failures reverse-lookup table
-- [v1.2]: Cross-platform foundation (glossary, terminology, templates) must be built before any platform-specific content
-- [v1.2]: Phases 21 (Windows gaps) and 22 (macOS lifecycle) can execute in parallel — zero cross-dependencies
-- [v1.2]: macOS admin guides use dual-portal references (ABM + Intune admin center) via macOS-specific template
-- [v1.2]: APv1-to-APv2 migration framed as coexistence, not cutover (readiness checklist with blockers)
-- [v1.2]: Platform frontmatter field defaults to Windows when absent — no retroactive edits to existing docs
-
-### Research Flags
-
-Phases needing deeper research during planning:
-
-- **Phase 21 (migration scenarios):** APv1-to-APv2 has MEDIUM-confidence community sources. Tenant migration lacks single authoritative doc. Conditional Access enrollment timing is HIGH complexity.
-- **Phase 23 (macOS admin setup):** Apple DDM and Setup Assistant screens need verification against latest Apple Platform Deployment Guide. Platform SSO is newer with fewer community sources.
-
-Phases with standard patterns (skip dedicated research):
-
-- **Phase 20:** Glossary expansion, template creation, navigation restructure — proven patterns from v1.0/v1.1.
-- **Phase 22:** Microsoft Learn macOS ADE docs are comprehensive and recently updated (April 2026).
-- **Phase 24:** L1/L2 template pattern is proven. macOS log paths documented in community hub.
-- **Phase 25:** Pure linking and indexing work following established conventions.
+Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.2 decisions validated with outcomes.
 
 ### Pending Todos
 
-(None — roadmap just created)
+(None — milestone complete)
 
 ### Blockers/Concerns
 
-- Phase 21 is the largest phase (18 requirements across 5 sub-domains). Plan decomposition will need to group into ~4-6 plans.
-- macOS troubleshooting (Phase 24) L2 commands should ideally be verified on a real macOS device.
-- Conditional Access enrollment timing (WSEC-01) applies cross-platform — documented in Phase 21 with Windows focus, macOS admin setup (Phase 23) will cross-reference.
+(None — all resolved)
 
 ## Session Continuity
 
-Last session: 2026-04-15T13:17:29.319Z
-Stopped at: Phase 25 context gathered
-Next action: Phase 25 (Cross-Platform Navigation Hub) — discuss or plan via /gsd:plan-phase 25
+Last session: 2026-04-15
+Stopped at: Milestone v1.2 archived
+Next action: `/gsd-new-milestone` to define next milestone

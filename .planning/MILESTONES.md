@@ -1,5 +1,22 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.2 Cross-Platform Provisioning & Operational Gaps (Shipped: 2026-04-16)
+
+**Phases completed:** 6 phases, 20 plans, 23 tasks
+
+**Key accomplishments:**
+
+- docs/index.md restructured as a dual-platform navigation hub with Choose Your Platform selector, Windows Autopilot and macOS Provisioning H2 sections, and a Cross-Platform References section linking all Phase 20 artifacts
+- One-liner:
+- One-liner:
+- Commit:
+- One-liner:
+- Complete 7-stage macOS ADE lifecycle narrative (414 lines) with Mermaid pipeline diagram, per-stage breakdown using macOS-native terminology, and 15 glossary cross-references
+- macOS Terminal commands reference (6 tools), log paths reference (9 paths), extended network endpoints with ADE section (18 endpoints), and docs hub navigation linking all Phase 22 artifacts
+- Cross-platform symptom routing wired into common-issues.md, quick-ref-l1.md, and quick-ref-l2.md with macOS ADE sections, platform selectors, and bidirectional cross-reference banners
+
+---
+
 ## v1.1 APv2 Documentation & Admin Setup Guides (Shipped: 2026-04-13)
 
 **Phases completed:** 9 phases, 18 plans, 42 tasks

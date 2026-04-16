@@ -1,44 +1,39 @@
-# Windows Autopilot Troubleshooter & Documentation Suite
+# Windows Autopilot & macOS Provisioning Documentation Suite
 
 ## What This Is
 
-A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot deployments. Combines PowerShell modules for local diagnostics, a Python FastAPI backend for orchestration, a React frontend for visualization, and — critically — tiered operational documentation that IT Service Desk (L1), Desktop Engineering (L2), and Intune Admin teams can use to troubleshoot and configure Autopilot deployments covering both APv1 and APv2 frameworks.
+A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot and macOS ADE deployments through Microsoft Intune. Combines PowerShell modules for local diagnostics, a Python FastAPI backend for orchestration, a React frontend for visualization, and tiered operational documentation that IT Service Desk (L1), Desktop Engineering (L2), and Intune Admin teams can use to troubleshoot and configure deployments across both platforms.
 
 ## Core Value
 
-IT teams can independently diagnose and resolve Autopilot deployment failures without escalating to engineering — covering both APv1 (pre-provisioning, user-driven, self-deploying) and APv2 (Device Preparation) modes. Admins can configure deployments end-to-end using step-by-step setup guides with embedded misconfiguration warnings.
-
-## Current Milestone: v1.2 Cross-Platform Provisioning & Operational Gaps
-
-**Goal:** Extend the documentation suite to cover macOS provisioning via ABM/ADE through Intune, and close all significant Windows Autopilot documentation gaps from device lifecycle through operational readiness.
-
-**Target features:**
-- Device lifecycle beyond initial provisioning (Autopilot Reset, re-provisioning, retirement, tenant migration)
-- Pre-provisioning infrastructure deep-dive (network rules, Entra ID prereqs, licensing matrix)
-- App deployment integration (Win32 packaging for ESP, install order, timeout tuning)
-- Security & compliance during enrollment (Conditional Access, security baselines, compliance timing)
-- Migration scenarios (APv1→APv2, on-prem imaging transition, GPO→Intune mapping)
-- Monitoring & operational readiness (deployment reporting, registration drift, new-batch workflow)
-- macOS provisioning via Apple Business Manager / Automated Device Enrollment through Intune
-- macOS admin setup, app deployment, compliance, and L1/L2 troubleshooting
-- Cross-platform navigation updates (docs hub restructured for Windows + macOS)
+IT teams can independently provision, troubleshoot, and manage Windows and macOS devices through Intune without escalating to engineering — covering APv1, APv2, and macOS ADE frameworks with role-appropriate documentation.
 
 ## Current State
 
-**Phase 25 complete 2026-04-16.** v1.2 milestone complete — all 6 phases shipped.
+**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped.
 
 ### What's been built
+- 116 markdown documentation files in `docs/`
 - Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
 - APv2 lifecycle, failure catalog, L1/L2 decision trees and runbooks (v1.1)
 - APv1 and APv2 admin setup guides with per-setting "what breaks" callouts (v1.1)
-- Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1)
-- Error code lookup tables with framework tagging (APv1/APv2) (v1.0 + v1.1)
-- Cross-platform foundation: platform frontmatter taxonomy, Windows vs macOS comparison page, macOS glossary with bidirectional cross-references, macOS admin template with dual-portal structure, navigation hub restructured with platform selector (v1.2 Phase 20)
-- Device lifecycle operations (Autopilot Reset, retire/wipe, re-provisioning, tenant migration), pre-provisioning infrastructure references, app deployment/ESP integration, security/compliance enrollment, migration scenarios (APv1→APv2, imaging→Autopilot, GPO→Intune), monitoring/operational readiness (v1.2 Phase 21)
-- macOS ADE lifecycle narrative (7-stage pipeline with Mermaid diagram), Terminal commands reference, log paths reference, network endpoints extended with macOS ADE section, navigation hub updated with macOS content links (v1.2 Phase 22)
-- macOS admin setup guides (ABM, enrollment profiles, configuration profiles, app deployment, compliance policies, configuration-caused failures) (v1.2 Phase 23)
-- macOS L1/L2 troubleshooting: triage decision tree, 6 L1 runbooks, 4 L2 investigation runbooks (v1.2 Phase 24)
-- Cross-platform navigation integration: common-issues.md platform selector with macOS section, quick-reference cards with macOS ADE sections, index.md fragment anchors, 44-file reachability audit passed (v1.2 Phase 25)
+- Cross-platform foundation: platform taxonomy, Windows-vs-macOS comparison, macOS glossary, macOS admin template (v1.2)
+- Windows operational completeness: device lifecycle, infrastructure prerequisites, ESP/app deployment, security/compliance, migration scenarios, monitoring/operations (v1.2)
+- macOS ADE lifecycle (7-stage), Terminal commands reference, log paths reference, network endpoints (v1.2)
+- macOS admin setup suite: ABM, enrollment profiles, configuration profiles, app deployment, compliance, capability matrix (v1.2)
+- macOS L1/L2 troubleshooting: triage decision tree, 6 L1 runbooks, 4 L2 runbooks (v1.2)
+- Cross-platform navigation: platform selectors, quick-reference cards with macOS sections, 44-file reachability verified (v1.2)
+- Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1 + v1.2)
+- Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
+
+<details>
+<summary>Previous Milestone: v1.2 Cross-Platform Provisioning & Operational Gaps</summary>
+
+**Shipped:** 2026-04-15 | **Phases:** 20-25 | **Plans:** 20
+
+Delivered cross-platform foundation (taxonomy, glossary, templates), Windows operational completeness (device lifecycle, infrastructure, security, migration, monitoring), macOS ADE lifecycle documentation, macOS admin setup guides, macOS L1/L2 troubleshooting, and cross-platform navigation integration.
+
+</details>
 
 <details>
 <summary>Previous Milestone: v1.1 APv2 Documentation & Admin Setup Guides</summary>
@@ -84,22 +79,21 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ APv2 admin setup guides (ETG, Device Preparation, RBAC, corporate identifiers) — v1.1
 - ✓ APv1 admin setup guides (hardware hash, profiles, ESP, groups, deployment modes) — v1.1
 - ✓ Bidirectional APv1/APv2 cross-referencing and glossary — v1.1
-- ✓ Windows Autopilot Reset documentation (local and remote reset, re-provisioning, retirement) — v1.2
-- ✓ Pre-provisioning infrastructure deep-dive (network/firewall rules, Entra ID prereqs, licensing matrix) — v1.2
-- ✓ App deployment integration with ESP (Win32 packaging, install order, timeout tuning) — v1.2
-- ✓ Security & compliance during enrollment (Conditional Access, baselines, compliance timing) — v1.2
-- ✓ Migration scenarios (APv1→APv2, on-prem imaging→Autopilot, GPO→Intune mapping) — v1.2
-- ✓ Monitoring & operational readiness (deployment reporting, drift detection, new-batch workflow) — v1.2
-- ✓ macOS ABM/ADE lifecycle documentation through Intune — v1.2
-- ✓ macOS admin setup guides (ABM configuration, enrollment profiles, configuration profiles) — v1.2
-- ✓ macOS app deployment (DMG, PKG, VPP/Apps and Books) — v1.2
-- ✓ macOS compliance and security policies — v1.2
-- ✓ macOS L1/L2 troubleshooting (enrollment failures, profile delivery, app install issues) — v1.2
-- ✓ Cross-platform navigation hub restructure (Windows + macOS) — v1.2
+- ✓ Cross-platform foundation (taxonomy, glossary, templates, platform selector) — v1.2
+- ✓ Windows device lifecycle operations (reset, retire/wipe, re-provisioning, tenant migration) — v1.2
+- ✓ Infrastructure prerequisites (network, Entra ID, licensing, Win32 apps, ESP timeout) — v1.2
+- ✓ Security & compliance during enrollment (CA timing, baselines, compliance) — v1.2
+- ✓ Migration scenarios (APv1→APv2, imaging→Autopilot, GPO→Intune) — v1.2
+- ✓ Monitoring & operations (deployment reporting, drift detection, new-batch workflow) — v1.2
+- ✓ macOS ADE lifecycle documentation (7-stage pipeline) — v1.2
+- ✓ macOS admin setup guides (ABM, enrollment, config profiles, apps, compliance) — v1.2
+- ✓ macOS capability matrix (feature parity gaps across 5 domains) — v1.2
+- ✓ macOS L1/L2 troubleshooting (decision tree, 10 runbooks) — v1.2
+- ✓ Cross-platform navigation integration (common-issues routing, quick-ref cards) — v1.2
 
 ### Active
 
-<!-- No active requirements — v1.2 complete -->
+<!-- No active requirements — next milestone not yet defined -->
 
 ### Out of Scope
 
@@ -109,11 +103,15 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - Frontend UI implementation — deferred to future milestone
 - Backend API integration with Graph — deferred to future milestone
 - Automated remediation workflows — deferred to future milestone
+- iOS/iPadOS provisioning — platform not in current scope
+- Linux device enrollment — Intune Linux support is limited
+- ChromeOS management — different management platform (Google Admin)
 
 ## Context
 
-- 70 markdown files in `docs/` covering both APv1 and APv2 frameworks
+- 116 markdown files in `docs/` covering APv1, APv2, and macOS ADE frameworks
 - Three audiences served: L1 Service Desk (scripted), L2 Desktop Engineering (technical), Intune Admins (configuration)
+- Two platforms: Windows Autopilot and macOS ADE through Intune
 - Code scaffolding exists across all three tiers (PowerShell, Python, React) but is not yet integrated
 - Docs structured for easy export to SharePoint/Confluence
 
@@ -128,13 +126,18 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | Delivered — v1.0 complete |
-| Tiered doc structure (L1/L2/Admin) | Different skill levels need different formats | Delivered — role-based navigation via docs/index.md |
-| Generic over environment-specific | Broader applicability, teams add local details | Delivered — no tenant-specific content |
-| Markdown in docs/ | Version-controlled, exportable to any wiki platform | Delivered — 70 markdown files in docs/ |
-| Scenario-based APv2 failure catalog | APv2 has no hex error codes; symptom-based lookup is more useful | Delivered — 10 scenarios in v1.1 |
-| Per-setting "what breaks" callouts | Admins need to understand misconfiguration consequences at config time | Delivered — embedded in all admin setup guides |
-| Confidence-attributed citations | Community sources (oofhours, Call4Cloud) used where Microsoft docs lack coverage | Delivered — MEDIUM confidence clearly labeled |
+| Documentation-first milestone | IT teams need troubleshooting guides before tooling is complete | ✓ Good — v1.0 complete |
+| Tiered doc structure (L1/L2/Admin) | Different skill levels need different formats | ✓ Good — role-based navigation via docs/index.md |
+| Generic over environment-specific | Broader applicability, teams add local details | ✓ Good — no tenant-specific content |
+| Markdown in docs/ | Version-controlled, exportable to any wiki platform | ✓ Good — 116 markdown files in docs/ |
+| Scenario-based APv2 failure catalog | APv2 has no hex error codes; symptom-based lookup is more useful | ✓ Good — 10 scenarios in v1.1 |
+| Per-setting "what breaks" callouts | Admins need to understand misconfiguration consequences at config time | ✓ Good — embedded in all admin setup guides (Windows + macOS) |
+| Confidence-attributed citations | Community sources (oofhours, Call4Cloud) used where Microsoft docs lack coverage | ✓ Good — MEDIUM confidence clearly labeled |
+| Cross-platform foundation before content | Shared glossary, templates, taxonomy must exist before platform-specific docs | ✓ Good — Phase 20 prerequisite enforced |
+| Platform frontmatter defaults to Windows | Avoids retroactive edits to 70+ existing docs | ✓ Good — zero v1.0/v1.1 files modified |
+| macOS dual-portal template | ABM + Intune admin center steps in every macOS admin guide | ✓ Good — consistent pattern across 5 guides |
+| APv1→APv2 as coexistence, not cutover | Reflects real-world mixed environments | ✓ Good — readiness checklist with blockers |
+| Phases 21/22 parallelizable | Windows gaps and macOS lifecycle have zero cross-dependencies | ✓ Good — saved time in execution |
 
 ---
-*Last updated: 2026-04-16 after Phase 25 (Navigation Integration & Polish) completed — v1.2 milestone complete*
+*Last updated: 2026-04-15 after v1.2 milestone shipped*
