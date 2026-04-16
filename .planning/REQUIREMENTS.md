@@ -86,30 +86,30 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LIFE-01 | — | Pending |
-| LIFE-02 | — | Pending |
-| ACORP-01 | — | Pending |
-| ACORP-02 | — | Pending |
-| ACORP-03 | — | Pending |
-| ACFG-01 | — | Pending |
-| ACFG-02 | — | Pending |
-| ACFG-03 | — | Pending |
-| ABYOD-01 | — | Pending |
-| ABYOD-02 | — | Pending |
-| ABYOD-03 | — | Pending |
-| L1TS-01 | — | Pending |
-| L1TS-02 | — | Pending |
-| L2TS-01 | — | Pending |
-| L2TS-02 | — | Pending |
-| NAV-01 | — | Pending |
-| NAV-02 | — | Pending |
-| NAV-03 | — | Pending |
+| LIFE-01 | Phase 26 | Pending |
+| LIFE-02 | Phase 26 | Pending |
+| ACORP-01 | Phase 27 | Pending |
+| ACORP-02 | Phase 27 | Pending |
+| ACORP-03 | Phase 27 | Pending |
+| ACFG-01 | Phase 28 | Pending |
+| ACFG-02 | Phase 28 | Pending |
+| ACFG-03 | Phase 28 | Pending |
+| ABYOD-01 | Phase 29 | Pending |
+| ABYOD-02 | Phase 29 | Pending |
+| ABYOD-03 | Phase 29 | Pending |
+| L1TS-01 | Phase 30 | Pending |
+| L1TS-02 | Phase 30 | Pending |
+| L2TS-01 | Phase 31 | Pending |
+| L2TS-02 | Phase 31 | Pending |
+| NAV-01 | Phase 32 | Pending |
+| NAV-02 | Phase 32 | Pending |
+| NAV-03 | Phase 32 | Pending |
 
 **Coverage:**
 - v1.3 requirements: 18 total
-- Mapped to phases: 0
-- Unmapped: 18
+- Mapped to phases: 18
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-16*
-*Last updated: 2026-04-16 after initial definition*
+*Last updated: 2026-04-16 after roadmap creation — all 18 requirements mapped*

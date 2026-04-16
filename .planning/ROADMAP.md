@@ -5,6 +5,7 @@
 - ✅ **v1.0 Autopilot Documentation & Troubleshooting Guides** — Phases 1-10 (shipped 2026-04-10)
 - ✅ **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-19 (shipped 2026-04-13)
 - ✅ **v1.2 Cross-Platform Provisioning & Operational Gaps** — Phases 20-25 (shipped 2026-04-15)
+- [ ] **v1.3 iOS/iPadOS Provisioning Documentation** — Phases 26-32 (in progress)
 
 ## Phases
 
@@ -57,6 +58,95 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 
 </details>
 
+### v1.3 iOS/iPadOS Provisioning Documentation
+
+- [ ] **Phase 26: iOS/iPadOS Foundation** - Enrollment path overview and ADE lifecycle: the conceptual anchor establishing enrollment types and supervision axis
+- [ ] **Phase 27: iOS Admin Setup — Corporate ADE Path** - APNs certificate, ABM/ADE token, and ADE enrollment profile guides with supervised-only callout pattern
+- [ ] **Phase 28: iOS Admin Setup — Configuration, Apps, Compliance** - Configuration profiles, app deployment, and compliance policy guides with per-setting supervision callouts
+- [ ] **Phase 29: iOS Admin Setup — BYOD & MAM** - Device enrollment, account-driven user enrollment, and MAM without enrollment (standalone) guides
+- [ ] **Phase 30: iOS L1 Triage & Runbooks** - iOS triage decision tree and 6 L1 runbooks for top failure scenarios
+- [ ] **Phase 31: iOS L2 Investigation** - Log collection runbook and 3 investigation runbooks for ADE, app installs, and compliance
+- [ ] **Phase 32: Navigation Integration & References** - Glossary additions, navigation file updates, and iOS capability matrix
+
+## Phase Details
+
+### Phase 26: iOS/iPadOS Foundation
+**Goal**: IT teams have a single authoritative reference that correctly defines all iOS/iPadOS enrollment paths, the supervision state boundary, and iOS-specific terminology before any admin setup content is written
+**Depends on**: Phase 20 (Cross-Platform Foundation — shared glossary template and frontmatter schema)
+**Requirements**: LIFE-01, LIFE-02
+**Success Criteria** (what must be TRUE):
+  1. An admin can read one document and understand all four enrollment paths (ADE, Device Enrollment, User Enrollment, MAM-WE) with a comparison table showing management scope, supervision state, and appropriate use case for each
+  2. A new team member reading the ADE lifecycle document can describe each stage of supervised corporate enrollment from Setup Assistant to post-enrollment without consulting external sources
+  3. The distinction between supervised and unsupervised management capabilities is stated explicitly with the consequence that supervision is set at enrollment time and cannot be added retroactively without a wipe
+  4. The enrollment path overview clearly identifies MAM-WE as an app-layer model with no device enrollment, separate from MDM paths
+**Plans**: TBD
+
+### Phase 27: iOS Admin Setup — Corporate ADE Path
+**Goal**: An Intune admin can configure all three corporate ADE prerequisites — APNs certificate, ABM/ADE token, and ADE enrollment profile — using iOS-specific guides that cross-reference the macOS ABM guide for shared portal steps rather than duplicating them
+**Depends on**: Phase 26 (enrollment type matrix and supervision concept must exist before enrollment profile guide references them)
+**Requirements**: ACORP-01, ACORP-02, ACORP-03
+**Success Criteria** (what must be TRUE):
+  1. An admin following the APNs certificate guide can create a new certificate and understands the renew-not-replace rule and cross-platform expiry impact (one expired APNs certificate breaks ALL iOS/iPadOS MDM communication)
+  2. An admin following the ABM/ADE token guide can configure the iOS enrollment token using a cross-reference to the shared macOS ABM guide for portal steps, with only iOS-specific differences documented inline
+  3. An admin following the ADE enrollment profile guide can configure supervised mode, select an authentication method, customize Setup Assistant panes, and enable locked enrollment — with every supervised-only setting marked with the established 🔒 callout pattern
+  4. The supervised-only callout pattern (blockquote format: "🔒 Supervised only: [feature] requires supervised mode...") is formally established in this phase and consistent across all three guides
+**Plans**: TBD
+
+### Phase 28: iOS Admin Setup — Configuration, Apps, Compliance
+**Goal**: An Intune admin can configure iOS/iPadOS configuration profiles, app deployment, and compliance policies with a clear understanding of which capabilities require supervision — with every supervised-only setting explicitly marked
+**Depends on**: Phase 27 (supervised mode established in ADE enrollment profile guide; supervision callout pattern defined)
+**Requirements**: ACFG-01, ACFG-02, ACFG-03
+**Success Criteria** (what must be TRUE):
+  1. An admin reading the configuration profiles guide can identify which of the documented settings (Wi-Fi, VPN, email, device restrictions, certificates, home screen layout) require supervised mode, because each supervised-only setting has the 🔒 callout linking back to the ADE enrollment profile guide
+  2. An admin reading the app deployment guide understands the distinction between VPP device-licensed and user-licensed apps, knows that silent install requires supervision, and can check managed app installation status in Intune
+  3. An admin reading the compliance policy guide can configure OS version gates, jailbreak detection, and passcode requirements, and understands Conditional Access timing behavior and the default compliance posture for newly enrolled devices
+  4. A reader can determine from the compliance guide alone what happens to a device's CA access state in the window between enrollment completion and first compliance evaluation
+**Plans**: TBD
+
+### Phase 29: iOS Admin Setup — BYOD & MAM
+**Goal**: An admin or user can understand and configure all non-ADE iOS enrollment paths — Company Portal device enrollment, account-driven user enrollment, and MAM without enrollment — with explicit documentation of what IT cannot see or control on personally-owned devices
+**Depends on**: Phase 27 (corporate ADE path established; BYOD guides can now clearly contrast against supervised management scope)
+**Requirements**: ABYOD-01, ABYOD-02, ABYOD-03
+**Success Criteria** (what must be TRUE):
+  1. An admin reading the device enrollment guide understands both Company Portal and web-based enrollment flows for personal and corporate devices without ABM, including what management capabilities are available without supervision
+  2. An admin or end user reading the account-driven user enrollment guide understands what IT can and cannot see or do on a personally-owned device — the privacy limitations are stated as explicit callouts, not buried in prose
+  3. The MAM-WE app protection policies guide is a standalone document that does not require reading any MDM enrollment guide to understand — it covers the three-level data protection framework, targeting enrolled vs unenrolled devices, iOS-specific behaviors, and selective wipe
+  4. A reader can determine from the MAM-WE guide alone whether MAM-WE requires the device to be enrolled in Intune MDM (it does not) and what the wipe scope is (managed app data only, not the device)
+**Plans**: TBD
+
+### Phase 30: iOS L1 Triage & Runbooks
+**Goal**: An L1 service desk agent has a structured decision tree and six scenario runbooks to resolve the most common iOS enrollment, compliance, and app deployment failures without escalating to L2
+**Depends on**: Phase 27, Phase 28, Phase 29 (admin setup guides must exist and have stable file paths before runbooks can link to them)
+**Requirements**: L1TS-01, L1TS-02
+**Success Criteria** (what must be TRUE):
+  1. An L1 agent starting the iOS triage decision tree with any of the three common symptom categories (enrollment failure, compliance blocked, app not available) reaches a resolution step or an explicit L2 escalation point within 5 decision nodes
+  2. The triage tree routes iOS failures to the iOS-specific tree (decision-trees/07-ios-triage.md) via a single branch in the initial triage file — it does not embed iOS decision logic in the Windows triage flow
+  3. For each of the 6 documented failure scenarios (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked), a runbook exists with a symptom description, L1-executable steps, and an explicit escalation trigger
+  4. An L1 agent following any runbook can identify whether the failure requires an admin action in Intune admin center vs a user action on the device, with no ambiguity about who does what
+**Plans**: TBD
+
+### Phase 31: iOS L2 Investigation
+**Goal**: An L2 engineer has the log collection procedures and investigation runbooks to diagnose ADE token/profile delivery failures, app install failures, and compliance/CA timing issues — using iOS-native methods (Company Portal upload, MDM diagnostic report, Mac+cable sysdiagnose) since no CLI diagnostic tool exists on iOS
+**Depends on**: Phase 30 (L1 runbooks exist and L2 runbooks reference L1 escalation paths and decision points)
+**Requirements**: L2TS-01, L2TS-02
+**Success Criteria** (what must be TRUE):
+  1. An L2 engineer can follow the log collection runbook to obtain diagnostic data using any of three methods — Company Portal log upload, MDM diagnostic report from Intune admin center, or Mac+cable sysdiagnose procedure — with clear guidance on which method yields which type of data
+  2. The log collection runbook explicitly states there is no iOS equivalent to mdmdiagnosticstool.exe, so an L2 engineer arriving from Windows experience understands the tool landscape immediately
+  3. An L2 engineer investigating an ADE token or profile delivery failure has a runbook with specific indicators to check (token sync status, profile assignment state, enrollment profile GUID) and known failure patterns with resolution steps
+  4. An L2 engineer investigating app install or compliance/CA timing failures can use the runbooks to distinguish between configuration errors, timing issues, and genuine defects requiring Microsoft support escalation
+**Plans**: TBD
+
+### Phase 32: Navigation Integration & References
+**Goal**: iOS/iPadOS content is reachable from every shared navigation entry point — the hub index, common issues routing, quick-reference cards, and capability matrix — so users do not need to know the file paths to find iOS documentation
+**Depends on**: Phases 26-31 (all content phases complete; file paths stable)
+**Requirements**: NAV-01, NAV-02, NAV-03
+**Success Criteria** (what must be TRUE):
+  1. The shared glossary (_glossary-macos.md) contains definitions for iOS-specific terms (supervision, MAM-WE, APNs, account-driven user enrollment, VPP, and jailbreak detection) that did not exist in prior milestones
+  2. A user arriving at index.md, common-issues.md, quick-ref-l1.md, or quick-ref-l2.md finds an iOS/iPadOS section with direct links to relevant iOS documents — no iOS content is reachable only via directory browsing
+  3. The iOS capability matrix (reference/ios-capability-matrix.md) documents feature parity gaps across iOS, macOS, and Windows in a scannable table format, allowing an admin to answer "can iOS do X" without reading three separate platform guides
+  4. All navigation updates are injected into existing shared files (not full rewrites) and all pre-existing links in those files remain valid after iOS sections are added
+**Plans**: TBD
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -86,3 +176,10 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 | 23. macOS Admin Setup | v1.2 | 4/4 | Complete | 2026-04-14 |
 | 24. macOS Troubleshooting | v1.2 | 3/3 | Complete | 2026-04-15 |
 | 25. Navigation Integration & Polish | v1.2 | 2/2 | Complete | 2026-04-15 |
+| 26. iOS/iPadOS Foundation | v1.3 | 0/TBD | Not started | - |
+| 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 0/TBD | Not started | - |
+| 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 0/TBD | Not started | - |
+| 29. iOS Admin Setup — BYOD & MAM | v1.3 | 0/TBD | Not started | - |
+| 30. iOS L1 Triage & Runbooks | v1.3 | 0/TBD | Not started | - |
+| 31. iOS L2 Investigation | v1.3 | 0/TBD | Not started | - |
+| 32. Navigation Integration & References | v1.3 | 0/TBD | Not started | - |
