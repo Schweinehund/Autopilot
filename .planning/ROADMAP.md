@@ -60,7 +60,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 
 ### v1.3 iOS/iPadOS Provisioning Documentation
 
-- [ ] **Phase 26: iOS/iPadOS Foundation** - Enrollment path overview and ADE lifecycle: the conceptual anchor establishing enrollment types and supervision axis
+- [x] **Phase 26: iOS/iPadOS Foundation** - Enrollment path overview and ADE lifecycle: the conceptual anchor establishing enrollment types and supervision axis (completed 2026-04-16)
 - [ ] **Phase 27: iOS Admin Setup — Corporate ADE Path** - APNs certificate, ABM/ADE token, and ADE enrollment profile guides with supervised-only callout pattern
 - [ ] **Phase 28: iOS Admin Setup — Configuration, Apps, Compliance** - Configuration profiles, app deployment, and compliance policy guides with per-setting supervision callouts
 - [ ] **Phase 29: iOS Admin Setup — BYOD & MAM** - Device enrollment, account-driven user enrollment, and MAM without enrollment (standalone) guides
@@ -79,10 +79,10 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
   2. A new team member reading the ADE lifecycle document can describe each stage of supervised corporate enrollment from Setup Assistant to post-enrollment without consulting external sources
   3. The distinction between supervised and unsupervised management capabilities is stated explicitly with the consequence that supervision is set at enrollment time and cannot be added retroactively without a wipe
   4. The enrollment path overview clearly identifies MAM-WE as an app-layer model with no device enrollment, separate from MDM paths
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 Plans:
-- [ ] 26-01-PLAN.md — iOS enrollment path overview with 4-path comparison table and supervision section
-- [ ] 26-02-PLAN.md — iOS ADE lifecycle document (7 stages, 4 subsections each) mirroring macOS format
+- [x] 26-01-PLAN.md — iOS enrollment path overview with 4-path comparison table and supervision section
+- [x] 26-02-PLAN.md — iOS ADE lifecycle document (7 stages, 4 subsections each) mirroring macOS format
 
 ### Phase 27: iOS Admin Setup — Corporate ADE Path
 **Goal**: An Intune admin can configure all three corporate ADE prerequisites — APNs certificate, ABM/ADE token, and ADE enrollment profile — using iOS-specific guides that cross-reference the macOS ABM guide for shared portal steps rather than duplicating them
@@ -179,7 +179,7 @@ Plans:
 | 23. macOS Admin Setup | v1.2 | 4/4 | Complete | 2026-04-14 |
 | 24. macOS Troubleshooting | v1.2 | 3/3 | Complete | 2026-04-15 |
 | 25. Navigation Integration & Polish | v1.2 | 2/2 | Complete | 2026-04-15 |
-| 26. iOS/iPadOS Foundation | v1.3 | 0/2 | Planning | - |
+| 26. iOS/iPadOS Foundation | v1.3 | 2/2 | Complete    | 2026-04-16 |
 | 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 0/TBD | Not started | - |
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 0/TBD | Not started | - |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 0/TBD | Not started | - |
