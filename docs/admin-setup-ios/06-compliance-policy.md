@@ -34,6 +34,8 @@ Compliance policies DETECT non-compliance and report status. Configuration profi
 - Devices enrolled in Intune (any path: ADE, Device Enrollment, User Enrollment, or MAM-WE)
 - Understanding that compliance detects; configuration enforces (see [Configuration Profiles](04-configuration-profiles.md))
 - Conditional Access policies configured (if compliance status should gate access to corporate resources)
+- APNs certificate active and valid — compliance check-in on iOS/iPadOS depends on APNs; an expired certificate breaks compliance re-evaluation for all managed iOS/iPadOS devices (see [APNs Certificate](01-apns-certificate.md))
+- Default compliance posture toggle reviewed before deployment (**Endpoint security** > **Device compliance** > **Compliance policy settings** > **Mark devices with no compliance policy assigned as**) — this single tenant-wide setting determines CA behavior for all devices not yet evaluated, including newly enrolled devices in the 0-30 minute window after enrollment
 
 ## Steps
 
@@ -59,6 +61,8 @@ This toggle is the single most impactful setting for Day 1 device experience and
 **Email:**
 
 - **Unable to set up email on the device**: Not configured / Require (flags device non-compliant if user has set up a competing email account Intune cannot manage; requires a managed email profile present via configuration profile)
+
+> **What breaks if misconfigured:** If "Unable to set up email on the device" is set to Require without a managed email configuration profile deployed, the device will always be flagged non-compliant — there is no system email profile to detect. Deploy an email configuration profile (Settings Catalog > Mail > Account) before enabling this compliance setting. Symptom appears in: Intune admin center (all devices non-compliant for email setting despite no user-configured email conflict) and device (CA blocks access until email profile is present).
 
 **Device Health:**
 
@@ -99,7 +103,20 @@ This toggle is the single most impactful setting for Day 1 device experience and
 
 - **Restricted apps** — list by Bundle ID; marks device non-compliant if listed unmanaged apps are installed
 
-> **What breaks if misconfigured:** Typos in a Bundle ID (e.g., `com.twitter.twitter` vs `com.atebits.Tweetie2` for X/Twitter after rename) cause the compliance check to silently pass regardless of actual installed apps. Symptom appears in: Intune admin center (restricted-apps compliance passes for all devices despite app being present).
+The Restricted apps compliance setting checks for the presence of specific apps by Bundle ID. An app is treated as "restricted" only if it is installed as an **unmanaged** app — apps deployed through Intune (VPP or LOB) are not flagged even if they share the same Bundle ID. This distinction matters when an admin wants to prevent a consumer-side-loaded version of an app that is also centrally deployed through VPP.
+
+To find an app's Bundle ID: search the Apple App Store web listing for the app — the Bundle ID appears in the URL (`https://apps.apple.com/us/app/APP-NAME/id<id>`) — or use a third-party lookup tool. Bundle IDs are case-sensitive.
+
+> **What breaks if misconfigured:** Typos in a Bundle ID (e.g., `com.twitter.twitter` vs `com.atebits.Tweetie2` for X/Twitter after rename) cause the compliance check to silently pass regardless of actual installed apps. Symptom appears in: Intune admin center (restricted-apps compliance passes for all devices despite app being present). Verify Bundle IDs against the App Store listing before deploying. Note that app publishers can rename their Bundle ID after acquisition — review the list during each major iOS update cycle.
+
+#### Notification Message Templates for Send Email Action
+
+Before configuring the Send email action in Step 3, create a notification message template:
+
+1. Navigate to **Endpoint security** > **Device compliance** > **Notifications**.
+2. Select **Create notification**.
+3. Enter a subject and body using supported variables: `{{UserName}}`, `{{DeviceName}}`, `{{DeviceId}}`, `{{OSAndVersion}}`.
+4. Save the template — it becomes available when configuring the Send email action in the compliance policy.
 
 ### Step 3: Configure Actions for Noncompliance
 
@@ -124,6 +141,10 @@ Schedule granularity via the admin center UI is whole days only (0, 1, 2, ...). 
 3. Review and create.
 
 User-group-assigned policies apply to every device the user signs into. Device-group-assigned policies apply regardless of user. For corporate-owned ADE devices, device-group assignment is typical.
+
+After assignment, allow up to 30 minutes for the policy to reach devices. Compliance evaluation begins at the next APNs-triggered check-in. To confirm delivery, navigate to **Devices** > **All devices** > **[device name]** > **Device compliance** and verify the policy appears in the list with a state of "Not evaluated" (expected during the 0-30 minute post-enrollment window) or "Compliant"/"Non-compliant" after first evaluation.
+
+> **What breaks if misconfigured:** If multiple compliance policies are assigned to the same device with conflicting requirements (e.g., two policies with different minimum OS versions), Intune evaluates all assigned policies and the device must satisfy all of them to be considered compliant. The device shows as non-compliant if it fails any single policy. Review assignment scope overlap in **Devices** > **Manage devices** > **Compliance** > **[policy name]** > **Device status** to identify which policy is causing non-compliance. Symptom appears in: Intune admin center (device non-compliant but the failing policy is not the one the admin expects).
 
 ## Compliance Evaluation Timing and Conditional Access
 
@@ -176,3 +197,54 @@ The timing sequence and mitigation patterns above are sufficient to determine CA
 
 - [Compliance Policy Timing](../reference/compliance-timing.md) — cross-platform timing state transitions, state definitions, 8-hour sync cycle, grace period configuration
 - [Conditional Access Enrollment Timing](../reference/ca-enrollment-timing.md) — chicken-and-egg problem, "Microsoft Intune Enrollment" cloud app exclusion, platform-specific resolution patterns
+
+## Verification
+
+- [ ] Compliance policy appears under Devices > Manage devices > Compliance with assigned device count
+- [ ] Device compliance status visible at Devices > All devices > [device] > **Device compliance** tab
+- [ ] Non-compliant devices show specific failing settings (not just "non-compliant") — click the failing setting for remediation guidance
+- [ ] Grace period under Mark device non-compliant matches organizational policy (> 0 days recommended for rollout)
+- [ ] Default compliance posture toggle (Mark devices with no compliance policy assigned as) matches organizational security posture — default Compliant for rollout, Not compliant for regulated environments
+- [ ] Conditional Access policies using "Require compliant device" grant control enumerate the devices this compliance policy targets
+- [ ] Newly-enrolled test device transitions from Not evaluated to Compliant within 30 minutes (APNs reachable)
+- [ ] Jailbroken detection is set to Block (not "Not configured") for corporate-fleet compliance policies
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Portal | Symptom | Runbook |
+|------------------|--------|---------|---------|
+| Minimum OS version set ahead of latest Apple release | Intune | Entire fleet non-compliant until Apple ships the required version | iOS L1 runbooks (Phase 30) |
+| Jailbroken detection left at "Not configured" | Intune | Known jailbroken devices treated as compliant; data exfiltration risk open | iOS L1 runbooks (Phase 30) |
+| Password compliance changed on already-enrolled fleet | Intune | Device remains compliant with old passcode until user next changes passcode | iOS L1 runbooks (Phase 30) |
+| Restricted apps list contains Bundle ID typo | Intune | Compliance check silently passes regardless of installed apps | iOS L1 runbooks (Phase 30) |
+| Mark device non-compliant = 0 days with Retire action = 1 day | Intune | Devices retired within 24 hours during Not-evaluated gap; no time for admin intervention | iOS L1 runbooks (Phase 30) |
+| Default compliance posture = "Not compliant" without grace period | Intune | Users blocked from CA-protected resources 0-30 min post-enrollment; help desk escalations during rollout | iOS L1 runbooks (Phase 30) |
+| Default compliance posture = "Compliant" in high-security environment | Intune | Unmanaged devices and "Not evaluated" devices granted CA access; audit finding | iOS L1 runbooks (Phase 30) |
+| APNs blocked at network edge | Intune | Compliance state stuck at "Not evaluated" indefinitely; CA behavior depends on default posture toggle | iOS L1 runbooks (Phase 30) |
+| CA "Require compliant device" without "Microsoft Intune Enrollment" cloud app exclusion | Entra | ADE Setup Assistant cannot complete sign-in; chicken-and-egg enrollment block | iOS L1 runbooks (Phase 30) |
+| Compliance policy assigned with no corresponding configuration profile where pairing is possible (e.g., passcode) | Intune | Devices marked non-compliant but no enforcement mechanism present | iOS L1 runbooks (Phase 30) |
+
+## See Also
+
+- [Configuration Profiles](04-configuration-profiles.md) — enforcement counterpart to compliance detection
+- [App Deployment](05-app-deployment.md) — managed app status and Restricted apps compliance
+- [ADE Enrollment Profile](03-ade-enrollment-profile.md)
+- [APNs Certificate](01-apns-certificate.md) — APNs is required for iOS compliance check-in
+- [iOS/iPadOS Admin Setup Overview](00-overview.md)
+- [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md)
+- [iOS/iPadOS ADE Lifecycle](../ios-lifecycle/01-ade-lifecycle.md)
+- [Compliance Policy Timing](../reference/compliance-timing.md) — cross-platform timing mechanics deep-dive
+- [Conditional Access Enrollment Timing](../reference/ca-enrollment-timing.md) — chicken-and-egg problem deep-dive
+- [macOS Compliance Policies](../admin-setup-macos/05-compliance-policy.md) — parallel macOS guide (note: macOS has no dedicated CA timing section; iOS added it per ACFG-03 SC #4)
+- [Apple Provisioning Glossary](../_glossary-macos.md)
+
+---
+*Previous: [App Deployment](05-app-deployment.md) | [Back to Overview](00-overview.md)*
+
+---
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-16 | Initial version — iOS/iPadOS compliance policy guide with simplified Compliance vs. Configuration table, per-setting What-breaks callouts (jailbreak detection, OS version, passcode, restricted apps), iOS-specific Actions for Noncompliance behaviors, and dedicated Compliance Evaluation Timing and Conditional Access section covering default posture toggle, 0-30 min gap behavior, and iOS APNs considerations (answers SC #4 from the guide alone) | -- |
+
+<!-- Review scheduled: 2026-07-15. Verify against Microsoft Learn iOS/iPadOS compliance policy reference for any new settings added in iOS 18/19. Confirm DDM software update boundary remains as documented (iOS 17+). -->
