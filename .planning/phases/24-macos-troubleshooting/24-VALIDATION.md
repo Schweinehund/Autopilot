@@ -1,9 +1,9 @@
 ---
 phase: 24
 slug: macos-troubleshooting
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: approved
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-14
 ---
 
@@ -38,11 +38,11 @@ created: 2026-04-14
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 24-01-01 | 01 | 1 | MTRO-01 | — | N/A | file-check | `test -f docs/decision-trees/06-macos-triage.md` | ❌ W0 | ⬜ pending |
-| 24-01-02 | 01 | 1 | MTRO-02 | — | N/A | file-check | `ls docs/l1-runbooks/1[0-5]-*.md 2>/dev/null \| wc -l` | ❌ W0 | ⬜ pending |
-| 24-02-01 | 02 | 1 | MTRO-03 | — | N/A | file-check | `test -f docs/l2-runbooks/10-macos-log-collection.md` | ❌ W0 | ⬜ pending |
-| 24-02-02 | 02 | 1 | MTRO-04 | — | N/A | file-check | `ls docs/l2-runbooks/1[1-3]-*.md 2>/dev/null \| wc -l` | ❌ W0 | ⬜ pending |
-| 24-03-01 | 03 | 2 | MTRO-02 | — | N/A | grep-check | `grep -c "TBD - Phase 24" docs/admin-setup-macos/06-config-failures.md` | ✅ | ⬜ pending |
+| 24-01-01 | 01 | 1 | MTRO-01 | — | N/A | file-check | `test -f docs/decision-trees/06-macos-triage.md` | ✅ | ✅ green |
+| 24-01-02 | 01 | 1 | MTRO-02 | — | N/A | file-check | `ls docs/l1-runbooks/1[0-5]-*.md 2>/dev/null \| wc -l` | ✅ | ✅ green |
+| 24-02-01 | 02 | 1 | MTRO-03 | — | N/A | file-check | `test -f docs/l2-runbooks/10-macos-log-collection.md` | ✅ | ✅ green |
+| 24-02-02 | 02 | 1 | MTRO-04 | — | N/A | file-check | `ls docs/l2-runbooks/1[1-3]-*.md 2>/dev/null \| wc -l` | ✅ | ✅ green |
+| 24-03-01 | 03 | 2 | MTRO-02 | — | N/A | grep-check | `grep -c "TBD - Phase 24" docs/admin-setup-macos/06-config-failures.md` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -66,11 +66,25 @@ created: 2026-04-14
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 2s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 2s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-04-15
+
+---
+
+## Validation Audit 2026-04-15
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 0 |
+| Resolved | 5 (all pending → green) |
+| Escalated | 0 |
+
+**Notes:** Retroactive audit. All 5 automated checks pass: triage decision tree exists, 6 L1 runbooks present, L2 log collection guide exists, 3 L2 investigation runbooks present, zero remaining "TBD - Phase 24" placeholders in config-failures.md. Manual checks also verified: 0 Terminal commands in L1 runbooks, 0 Windows tool references in macOS L2 runbooks.
+
+_Audited: 2026-04-15_
