@@ -146,4 +146,4 @@ Target CA policies to specific device groups that are already enrolled, excludin
 
 ---
 
-> **macOS:** For macOS Conditional Access enrollment timing, see [macOS Admin Setup](TBD - Phase 23).
+> **macOS:** For macOS Conditional Access enrollment timing, see [macOS Compliance Policy](../admin-setup-macos/05-compliance-policy.md).
