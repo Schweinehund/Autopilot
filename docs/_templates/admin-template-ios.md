@@ -35,6 +35,19 @@ platform: iOS
      > 🔒 **Supervised only:** [feature/setting name] requires supervised mode. [1-2 sentence explanation of what this means for unsupervised devices.] See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 -->
 
+<!-- PRIVACY-LIMIT CALLOUT PATTERN
+     Use this exact format for account-driven User Enrollment privacy boundaries. No variations.
+     Place immediately AFTER the capability/setting description, BEFORE any configuration steps.
+     Plain blockquote only — NO emoji/glyph. Do NOT use 🔒 (reserved for supervised-only) or
+     introduce a new glyph (parallel glyph conventions are locked per Phase 27).
+     Link target is ALWAYS the Phase 26 conceptual page #user-enrollment anchor,
+     NOT the User Enrollment admin guide (08-user-enrollment.md).
+     Apply ONLY in account-driven User Enrollment contexts (08-user-enrollment.md).
+     Do NOT use in Device Enrollment (07-device-enrollment.md) or MAM-WE (09-mam-app-protection.md).
+
+     > **Privacy limit:** [what IT cannot see/do for this capability]. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+-->
+
 # [Admin Task Title]
 
 ## Prerequisites
