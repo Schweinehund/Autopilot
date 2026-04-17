@@ -85,7 +85,7 @@ Escalate to Intune Admin / L2 if:
 - User-visible error string (screenshot or verbatim)
 - Description of steps already attempted
 
-See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced enrollment investigation. For enrollment restriction configuration reference, see [iOS Admin Setup Overview](../admin-setup-ios/00-overview.md).
+See [iOS Log Collection Guide](../l2-runbooks/14-ios-log-collection.md) and [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md) for advanced enrollment investigation (restriction-specific diagnosis uses token/profile investigation; there is no dedicated L2 restriction runbook). For enrollment restriction configuration reference, see [iOS Admin Setup Overview](../admin-setup-ios/00-overview.md).
 
 ---
 
@@ -101,4 +101,5 @@ See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced enroll
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

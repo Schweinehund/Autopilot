@@ -87,7 +87,7 @@ Escalate to L2 (or to the Intune admin directly if not already done) if:
 - Whether any device has successfully checked in in the last 24 hours
 - User-visible error string the user reported (`APNSCertificateNotValid` / `NoEnrollmentPolicy` / `AccountNotOnboarded` / other)
 
-See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced investigation (Phase 31 placeholder; resolved when Phase 31 ships). For APNs config reference, see [APNs Certificate Guide](../admin-setup-ios/01-apns-certificate.md).
+See [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md) for advanced investigation of the APNs path through token diagnostics, with log artifacts per [iOS Log Collection Guide](../l2-runbooks/14-ios-log-collection.md). For APNs config reference, see [APNs Certificate Guide](../admin-setup-ios/01-apns-certificate.md).
 
 **Related Resources (cross-platform note):** As of Phase 30 execution, macOS has no equivalent L1 APNs-expired runbook. Cross-platform APNs failures identified from the macOS side should escalate to L2 via the standard [macOS ADE Triage](../decision-trees/06-macos-triage.md). A macOS L1 APNs runbook is planned for v1.4.
 
@@ -99,4 +99,5 @@ See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced invest
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

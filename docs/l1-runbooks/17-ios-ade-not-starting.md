@@ -111,7 +111,7 @@ L1 collects this data before the handoff to ensure escalation is actioned withou
 - Manual sync attempt timestamp and outcome
 - Which signature (a/b/c) most closely matches the observed failure
 
-See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced ADE investigation (Phase 31 placeholder).
+See [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md) for advanced ADE investigation.
 For admin configuration references:
 - [ABM/ADE Token Guide](../admin-setup-ios/02-abm-token.md)
 - [ADE Enrollment Profile Guide](../admin-setup-ios/03-ade-enrollment-profile.md)
@@ -128,4 +128,5 @@ For admin configuration references:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

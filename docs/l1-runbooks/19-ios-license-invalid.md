@@ -93,7 +93,7 @@ Escalate to L2 / Intune Admin if:
 - Whether this is Stage-1 (device showed an error) or Stage-2 (silent — nothing happened) per L1's observation
 - Intune P-04 screenshot showing device absent, OR device present but with stale check-in / unhealthy MDM profile state
 
-See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced license and Entra sync investigation.
+See [iOS Log Collection Guide](../l2-runbooks/14-ios-log-collection.md) — the MDM diagnostic report surfaces license assignment state. For ADE-path license failures, also see [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md).
 
 For admin configuration references:
 - [iOS Device Enrollment Guide](../admin-setup-ios/07-device-enrollment.md) — Stage-2 silent-failure pattern documented in the Configuration-Caused Failures table
@@ -107,4 +107,5 @@ For admin configuration references:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

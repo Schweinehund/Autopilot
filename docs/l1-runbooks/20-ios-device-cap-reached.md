@@ -80,7 +80,7 @@ Escalate to Intune Admin / L2 if:
 - Device serial number (Settings > General > About > Serial Number)
 - Description of steps already attempted
 
-See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced investigation. For device retire action documentation, see [Microsoft Learn — Retire devices](https://learn.microsoft.com/intune/remote-actions/devices-wipe).
+See [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md) — the token/enrollment-profile diagnostic surfaces device cap state. For device retire action documentation, see [Microsoft Learn — Retire devices](https://learn.microsoft.com/intune/remote-actions/devices-wipe).
 
 ---
 
@@ -97,4 +97,5 @@ See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced invest
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

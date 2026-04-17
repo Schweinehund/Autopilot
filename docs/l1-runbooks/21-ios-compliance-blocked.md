@@ -176,7 +176,7 @@ Escalate to L2 if:
 
 [Back to iOS Triage](../decision-trees/07-ios-triage.md)
 
-See [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) for advanced compliance / CA investigation (Phase 31 placeholder).
+See [Compliance & CA Timing Investigation](../l2-runbooks/17-ios-compliance-ca-timing.md) for advanced compliance / CA investigation (Cause A maps to the timing axis; Causes B and C map to the config-error axis).
 
 For admin configuration references:
 - [iOS Compliance Policy Guide](../admin-setup-ios/06-compliance-policy.md)
@@ -188,4 +188,5 @@ For admin configuration references:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |
