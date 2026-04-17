@@ -96,6 +96,39 @@ The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite
 
 > **Note:** When a ticket arrives via macOS L1 escalation, the escalation checklist from the L1 runbook specifies: serial number, macOS version, Intune device status screenshot, and description of steps attempted. Each macOS L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
+## iOS L2 Runbooks
+
+> **Version gate:** The runbooks below cover iOS/iPadOS through Microsoft Intune.
+> For macOS ADE runbooks, see above. For Windows Autopilot runbooks, see the tables above.
+
+The [iOS Log Collection Guide](14-ios-log-collection.md) is a **prerequisite for all iOS L2 investigation runbooks** -- collect a diagnostic package via one of three methods (MDM diagnostic report / Company Portal upload / Mac+cable sysdiagnose) before beginning any investigation.
+
+### When to Use
+
+| Runbook | When to Use | Prerequisite |
+|---------|-------------|--------------|
+| [iOS Log Collection Guide](14-ios-log-collection.md) | Before starting any iOS L2 investigation -- choose MDM diagnostic report, Company Portal upload, or Mac+cable sysdiagnose per the decision matrix in that guide | None |
+| [ADE Token & Profile Delivery Investigation](15-ios-ade-token-profile.md) | ADE token sync stuck, enrollment profile not reaching device, wrong MDM server on device, or device never receives MDM commands post-enrollment | [iOS Log Collection](14-ios-log-collection.md) |
+| [App Install Failure Diagnosis](16-ios-app-install.md) | VPP / LOB (IPA) / App Store app shows Failed, Pending, or crashes at launch; supervision-boundary silent-install issues | [iOS Log Collection](14-ios-log-collection.md) |
+| [Compliance & CA Timing Investigation](17-ios-compliance-ca-timing.md) | Device Non-compliant, state stuck at Not evaluated, or Conditional Access blocking despite apparent compliance | [iOS Log Collection](14-ios-log-collection.md) |
+
+### iOS L1 Escalation Mapping
+
+| L1 Runbook Source | L2 Runbook |
+|-------------------|------------|
+| [L1 16: iOS APNs Expired](../l1-runbooks/16-ios-apns-expired.md) | [ADE Token & Profile Delivery](15-ios-ade-token-profile.md) (APNs path through token diagnostic) + see-also [iOS Log Collection](14-ios-log-collection.md) |
+| [L1 17: iOS ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) | [ADE Token & Profile Delivery](15-ios-ade-token-profile.md) (direct — ADE token/profile IS the L2 investigation) |
+| [L1 18: iOS Enrollment Restriction Blocking](../l1-runbooks/18-ios-enrollment-restriction-blocking.md) | [iOS Log Collection](14-ios-log-collection.md) + [ADE Token & Profile Delivery](15-ios-ade-token-profile.md) (restrictions visible in enrollment blade; no dedicated restriction L2 runbook) |
+| [L1 19: iOS License Invalid](../l1-runbooks/19-ios-license-invalid.md) | [iOS Log Collection](14-ios-log-collection.md) (MDM diagnostic report surfaces license state) + see-also [ADE Token & Profile Delivery](15-ios-ade-token-profile.md) where ADE-path |
+| [L1 20: iOS Device Cap Reached](../l1-runbooks/20-ios-device-cap-reached.md) | [ADE Token & Profile Delivery](15-ios-ade-token-profile.md) (token/enrollment-profile diagnostic surfaces device cap state) |
+| [L1 21: iOS Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) | [Compliance & CA Timing Investigation](17-ios-compliance-ca-timing.md) (direct — maps Cause A → timing axis, Causes B and C → config-error axis) |
+
+> **Note:** iOS L2 runbook 15 has a dedicated D-17 L1 handoff block; iOS L2 runbook 17 has a Cause A/B/C Per-Cause Deep-Dive that matches L1 runbook 21's sub-cause labels — a ticket arriving with a pre-classified cause routes directly to that section.
+
+### MAM-WE Investigation Advisory
+
+> **MAM-WE investigation is out of Phase 31 scope** -- deferred to **ADDTS-01** future milestone. Selective wipe failures, PIN loop, app protection not applying, and MAM-specific compliance failures currently have no L2 runbook. Escalate MAM-specific issues directly to Microsoft Support with Company Portal log upload + app protection policy JSON export.
+
 ## Related Resources
 
 - [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
@@ -113,6 +146,7 @@ The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Added iOS L2 runbook section (runbooks 14-17 + MAM-WE advisory) | -- |
 | 2026-04-14 | Added macOS ADE runbook section | -- |
 | 2026-04-13 | Added APv2 runbook section (restored after accidental revert) | -- |
 | 2026-03-21 | Initial version | — |
