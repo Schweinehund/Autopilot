@@ -970,27 +970,15 @@ All claims in this RESEARCH.md were verified or cited. The following derived-but
 
 Claims above tagged `[DERIVED; HIGH confidence]` in-section indicate the claim is not a verbatim quote but is high-confidence by inference from authoritative sources.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Does the Phase 29 overview Mermaid diagram replace the existing 6-node ADE chain, or extend it?**
-   - What we know: D-07 says "restructured to represent ADE as a sequential chain AND BYOD/MAM-WE as parallel alternative paths." Claude's discretion on single-extended-diagram vs matrix+mini-diagrams.
-   - What's unclear: Whether the existing 6-node ADE subgraph is preserved verbatim or reformatted.
-   - Recommendation: Preserve the 6-node ADE chain visually (minimizes churn for readers familiar with Phase 27/28), add parallel branches for Device Enrollment, User Enrollment, and MAM-WE that do NOT connect to the ADE chain.
+1. **Does the Phase 29 overview Mermaid diagram replace the existing 6-node ADE chain, or extend it?** — **RESOLVED:** Preserve the 6-node ADE chain visually (minimizes churn for readers familiar with Phase 27/28); add parallel branches for Device Enrollment, User Enrollment, and MAM-WE that do NOT connect to the ADE chain (D-07 "choose your path" requirement).
 
-2. **Does the ABYOD-03 Level 2/Level 3 detail replicate the Microsoft Learn framework tables as-is, or synthesize a smaller iOS-only version?**
-   - What we know: D-25 requires summary table at top, detailed sections for Level 2 AND Level 3, with "What breaks if misconfigured" callouts.
-   - What's unclear: The Microsoft Learn tables contain Android/Windows columns too; the planner needs to drop non-iOS columns.
-   - Recommendation: Drop non-iOS columns; keep iOS/iPadOS values. Use "Setting" / "Value" / "Why this level" columns. Microsoft Learn deep link for any admin who wants the full cross-platform matrix.
+2. **Does the ABYOD-03 Level 2/Level 3 detail replicate the Microsoft Learn framework tables as-is, or synthesize a smaller iOS-only version?** — **RESOLVED:** Drop non-iOS columns; keep iOS/iPadOS values. Use "Setting" / "Value" / "Why this level" columns. Include a Microsoft Learn deep link for any admin who wants the full cross-platform matrix.
 
-3. **In ABYOD-02's federated-authentication prerequisites, does the guide assume federation is already set up (Phase 27 scope or earlier) or does it document the setup?**
-   - What we know: Federation is listed as "recommended" in Microsoft Learn (optional) for account-driven UE.
-   - What's unclear: If federation is already documented in Phase 27 ABM guide, ABYOD-02 should cross-reference; if not, ABYOD-02 needs to introduce it.
-   - Recommendation: Plan-time check of `02-abm-token.md` (Phase 27). If not covered, ABYOD-02 documents federation as part of Managed Apple ID prerequisites with a brief "Intro to federated authentication with Apple Business Manager" link to Apple's guide.
+3. **In ABYOD-02's federated-authentication prerequisites, does the guide assume federation is already set up (Phase 27 scope or earlier) or does it document the setup?** — **RESOLVED:** Plan-time check of `02-abm-token.md` (Phase 27). If federation is not already covered there, ABYOD-02 documents it as part of Managed Apple ID prerequisites with a brief "Intro to federated authentication with Apple Business Manager" link to Apple's guide. Plan 04 task 1 `read_first` includes `02-abm-token.md` to make this determination.
 
-4. **Does ABYOD-03's "enrolled vs unenrolled" coverage (D-26) assume the reader has seen the Intune MDM enrollment paths?**
-   - What we know: D-24 requires standalone-ness; D-26 requires 1-2 sentence brief conceptual intro so reader understands the distinction.
-   - What's unclear: How much enrollment-concept real estate is appropriate.
-   - Recommendation: 2-3 sentences max. Something like: "Intune MAM policies can target two populations: devices enrolled in Intune MDM (corporate devices managed through any enrollment path) and unenrolled devices (personal devices where users only access work data via MAM-WE). Policy behavior differs slightly between these modes; the rest of this guide calls out where." The reader does NOT need to understand how enrollment works to grok the targeting distinction.
+4. **Does ABYOD-03's "enrolled vs unenrolled" coverage (D-26) assume the reader has seen the Intune MDM enrollment paths?** — **RESOLVED:** 2-3 sentences maximum. Use this verbatim opening for the targeting section: "Intune MAM policies can target two populations: devices enrolled in Intune MDM (corporate devices managed through any enrollment path) and unenrolled devices (personal devices where users only access work data via MAM-WE). Policy behavior differs slightly between these modes; the rest of this guide calls out where." The reader does NOT need to understand how enrollment works to grok the targeting distinction — this preserves D-24 standalone-ness.
 
 ## Environment Availability
 
