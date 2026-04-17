@@ -1,28 +1,33 @@
 ---
-last_verified: 2026-04-16
-review_by: 2026-07-15
-applies_to: ADE
+last_verified: 2026-04-17
+review_by: 2026-07-16
+applies_to: all
 audience: admin
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
+> **Platform gate:** This guide covers iOS/iPadOS admin setup across all enrollment paths: corporate ADE, Device Enrollment, account-driven User Enrollment, and MAM-WE.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 
-# iOS/iPadOS Admin Setup: Corporate ADE Configuration and Device Management
+# iOS/iPadOS Admin Setup
 
-This guide walks Intune administrators through iOS/iPadOS Automated Device Enrollment prerequisites plus the core post-enrollment admin tasks: configuration profiles, app deployment, and compliance policies. Complete the guides in order -- each is a prerequisite for the next.
+This overview routes Intune administrators to the correct iOS/iPadOS admin setup path. Corporate devices purchased through Apple Business Manager follow the Automated Device Enrollment (ADE) chain (guides 01-06). Personal-device and non-ABM paths — Device Enrollment, account-driven User Enrollment, and app-layer MAM-WE — are parallel alternatives, each with its own prerequisites and trade-offs. Choose a path from the diagram below, then follow the guide for that path.
 
 ## Setup Sequence
 
 ```mermaid
-graph LR
-  A[1. APNs<br/>Certificate] --> B[2. ABM/ADE<br/>Token]
-  B --> C[3. ADE Enrollment<br/>Profile]
-  C --> D[4. Configuration<br/>Profiles]
-  C --> E[5. App<br/>Deployment]
-  C --> F[6. Compliance<br/>Policies]
+flowchart TD
+    START[Admin lands here] --> CHOOSE{Choose path}
+    CHOOSE -->|Corporate ADE| A[1. APNs Certificate]
+    A --> B[2. ABM/ADE Token]
+    B --> C[3. ADE Enrollment Profile]
+    C --> D[4. Configuration Profiles]
+    C --> E[5. App Deployment]
+    C --> F[6. Compliance Policies]
+    CHOOSE -->|BYOD w/o ABM| G[7. Device Enrollment]
+    CHOOSE -->|Privacy-preserving BYOD| H[8. User Enrollment]
+    CHOOSE -->|App-layer only| I[9. MAM App Protection]
 ```
 
 1. **[APNs Certificate](01-apns-certificate.md)** -- Create and maintain the Apple Push Notification certificate that enables all Apple MDM communication. This certificate is shared infrastructure -- one expired certificate breaks iOS, iPadOS, AND macOS management simultaneously.
