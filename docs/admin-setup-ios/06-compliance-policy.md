@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-16
-review_by: 2026-07-15
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -179,7 +179,7 @@ The answer depends entirely on the toggle:
 ### iOS-Specific Timing Considerations
 
 - **APNs dependency:** iOS compliance check-in is initiated by Apple Push Notification service, not by a polling schedule. If APNs is blocked at the network edge (firewall, proxy, captive portal) the 0-15 minute evaluation can stall indefinitely. Verify APNs endpoint reachability if the Not-evaluated state persists beyond 30 minutes. See [APNs Certificate](01-apns-certificate.md).
-- **No MDM diagnostic tool on iOS:** Unlike Windows, iOS has no `mdmdiagnosticstool.exe` equivalent. L2 diagnosis of a stuck compliance state requires Company Portal log upload, MDM diagnostic report from Intune admin center, or Mac+cable sysdiagnose (documented in Phase 31 L2 runbooks).
+- **No MDM diagnostic tool on iOS:** Unlike Windows, iOS has no `mdmdiagnosticstool.exe` equivalent. L2 diagnosis of a stuck compliance state uses [iOS Log Collection](../l2-runbooks/14-ios-log-collection.md) (three methods: MDM diagnostic report, Company Portal upload, Mac+cable sysdiagnose) followed by [Compliance & CA Timing Investigation](../l2-runbooks/17-ios-compliance-ca-timing.md).
 - **Setup Assistant CA interaction:** For ADE enrollments using Setup Assistant with modern authentication, CA evaluation occurs during Setup Assistant sign-in, before enrollment completes. If a CA policy requires a compliant device AND the "Microsoft Intune Enrollment" cloud app is not excluded from that policy, the device cannot complete Setup Assistant. The "Microsoft Intune Enrollment" cloud app is excluded by default across platforms — verify the exclusion remains in place before adjusting CA policies.
 - **User can force re-sync:** On the device, **Settings** > **General** > **VPN & Device Management** > [management profile] > **Sync** triggers an immediate MDM check-in. Alternatively, users can use Company Portal > **Settings** > **Sync**. This is the only user-actionable escalation path from a stuck Not-evaluated state.
 
@@ -245,6 +245,7 @@ The timing sequence and mitigation patterns above are sufficient to determine CA
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references (D-23 prose rewrite) | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS compliance policy guide with simplified Compliance vs. Configuration table, per-setting What-breaks callouts (jailbreak detection, OS version, passcode, restricted apps), iOS-specific Actions for Noncompliance behaviors, and dedicated Compliance Evaluation Timing and Conditional Access section covering default posture toggle, 0-30 min gap behavior, and iOS APNs considerations (answers SC #4 from the guide alone) | -- |
 
 <!-- Review scheduled: 2026-07-15. Verify against Microsoft Learn iOS/iPadOS compliance policy reference for any new settings added in iOS 18/19. Confirm DDM software update boundary remains as documented (iOS 17+). -->
