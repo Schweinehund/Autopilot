@@ -164,13 +164,13 @@ Plans:
   2. The log collection runbook explicitly states there is no iOS equivalent to mdmdiagnosticstool.exe, so an L2 engineer arriving from Windows experience understands the tool landscape immediately
   3. An L2 engineer investigating an ADE token or profile delivery failure has a runbook with specific indicators to check (token sync status, profile assignment state, enrollment profile GUID) and known failure patterns with resolution steps
   4. An L2 engineer investigating app install or compliance/CA timing failures can use the runbooks to distinguish between configuration errors, timing issues, and genuine defects requiring Microsoft support escalation
-**Plans:** 4/7 plans executed
+**Plans:** 5/7 plans executed
 Plans:
 - [x] 31-01-PLAN.md — Wave 0: validation harness + expected-d23.txt fixture + placeholder-inventory.json snapshot + L2 template enum edit + emoji policy audit
 - [x] 31-02-PLAN.md — Wave 1: runbook 14 (iOS log collection) with D-02 preamble + D-03 decision matrix + D-05 sysdiagnose + T-31-01/02 PII/egress callouts
 - [x] 31-03-PLAN.md — Wave 2: runbook 15 (ADE token & profile delivery) with D-07 hybrid structure + Pattern A-D + D-09 Graph API READ-ONLY preamble + D-10 triple-portal prereq
 - [x] 31-04-PLAN.md — Wave 2 (parallel): runbook 16 (app install) with three-class disambiguation [CONFIG]/[TIMING]/[DEFECT] + D-13 MAM advisory cross-ref
-- [ ] 31-05-PLAN.md — Wave 3: runbook 17 (compliance & CA timing) with D-14 hybrid axis + D-15 Pareto + D-16 Not-evaluated terminal state + D-17 L1 handoff
+- [x] 31-05-PLAN.md — Wave 3: runbook 17 (compliance & CA timing) with D-14 hybrid axis + D-15 Pareto + D-16 Not-evaluated terminal state + D-17 L1 handoff
 - [ ] 31-06-PLAN.md — Wave 4: 00-index.md iOS L2 section injection (D-20 When-to-Use + L1 Escalation Mapping + D-21 MAM advisory)
 - [ ] 31-07-PLAN.md — Wave 5: D-22 placeholder retrofit across 9 files in 4 atomic commits per D-24 + D-23 prose rewrite at line 182
 
@@ -219,5 +219,5 @@ Plans:
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete    | 2026-04-17 |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 5/5 | Complete    | 2026-04-17 |
 | 30. iOS L1 Triage & Runbooks | v1.3 | 7/10 | In Progress|  |
-| 31. iOS L2 Investigation | v1.3 | 4/7 | In Progress|  |
+| 31. iOS L2 Investigation | v1.3 | 5/7 | In Progress|  |
 | 32. Navigation Integration & References | v1.3 | 0/TBD | Not started | - |
