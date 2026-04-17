@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 
 ## Current State
 
-**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-27 complete.
+**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-28 complete.
 
 ### What's been built
 - 118 markdown documentation files in `docs/`
@@ -26,6 +26,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 - Navigation hub with role-based entry points, glossary, bidirectional cross-references (v1.0 + v1.1 + v1.2)
 - iOS/iPadOS enrollment path overview (4-path comparison, supervision axis) and ADE lifecycle (7-stage) (v1.3)
 - iOS/iPadOS admin setup: APNs certificate, ABM/ADE token (macOS cross-references), ADE enrollment profile with supervised-only callout pattern (v1.3)
+- iOS/iPadOS admin setup — configuration profiles (Wi-Fi, VPN, email, device restrictions, certificates, home screen), app deployment (VPP device/user, LOB, silent-install), compliance policy (OS version, jailbreak, passcode, CA timing) with 🔒 supervised-only callouts per setting (v1.3)
 - Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
 
 <details>
@@ -92,6 +93,9 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ macOS capability matrix (feature parity gaps across 5 domains) — v1.2
 - ✓ macOS L1/L2 troubleshooting (decision tree, 10 runbooks) — v1.2
 - ✓ Cross-platform navigation integration (common-issues routing, quick-ref cards) — v1.2
+- ✓ iOS/iPadOS configuration profiles guide (Wi-Fi, VPN, email, device restrictions with category-level supervised-only callouts, certificates, home screen layout) — Phase 28 / v1.3
+- ✓ iOS/iPadOS app deployment guide (VPP device/user licensing, LOB, Store apps; silent install supervised-only callouts; managed app status verification) — Phase 28 / v1.3
+- ✓ iOS/iPadOS compliance policy guide (OS version, jailbreak, passcode, CA timing, default compliance posture) — Phase 28 / v1.3
 
 ## Current Milestone: v1.3 iOS/iPadOS Provisioning Documentation
 
@@ -166,4 +170,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-16 after Phase 27 complete*
+*Last updated: 2026-04-17 after Phase 28 complete*
