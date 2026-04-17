@@ -77,16 +77,19 @@ const checks = [
     }
   },
   {
-    id: 3, name: "6 runbooks have ## Symptom H2",
+    id: 3, name: "6 runbooks have Symptom heading (H2 single-flow or H3 per-cause for multi-cause)",
     type: "multi-file-contains", required: true,
     run() {
       const runbooks = resolveRunbooks();
       const missing = runbooks.filter(r => {
         if (!r.path) return true;
         const content = readFileSync(r.path, "utf8");
-        return !/^## Symptom\s*$/m.test(content);
+        if (/^## Symptom\s*$/m.test(content)) return false;
+        const isMultiCause = /^## Cause [A-Z]/m.test(content);
+        if (isMultiCause && /^### Symptom\s*$/m.test(content)) return false;
+        return true;
       });
-      if (missing.length === 0) return { pass: true, detail: "All 6 runbooks have ## Symptom" };
+      if (missing.length === 0) return { pass: true, detail: "All 6 runbooks have Symptom heading" };
       const nums = missing.map(r => r.path ? r.num : r.num + " (file not found)").join(", ");
       return { pass: false, detail: "missing: " + nums };
     }
@@ -197,7 +200,7 @@ const checks = [
       const failures = [];
       for (const r of runbooks) {
         if (!r.path) { failures.push(r.num + ": file not found"); continue; }
-        const content = readFileSync(r.path, "utf8");
+        const content = readFileSync(r.path, "utf8").replace(/\r\n/g, "\n");
         const first20 = content.split("\n").slice(0, 20).join("\n");
         const fmMatch = first20.match(/^---\n([\s\S]*?)\n---/m);
         if (!fmMatch) { failures.push(r.num + ": no frontmatter found"); continue; }
