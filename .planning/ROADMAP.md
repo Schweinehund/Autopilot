@@ -189,7 +189,7 @@ Plans:
 | 25. Navigation Integration & Polish | v1.2 | 2/2 | Complete | 2026-04-15 |
 | 26. iOS/iPadOS Foundation | v1.3 | 2/2 | Complete    | 2026-04-16 |
 | 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 3/3 | Complete    | 2026-04-16 |
-| 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete   | 2026-04-16 |
+| 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete    | 2026-04-17 |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 0/TBD | Not started | - |
 | 30. iOS L1 Triage & Runbooks | v1.3 | 0/TBD | Not started | - |
 | 31. iOS L2 Investigation | v1.3 | 0/TBD | Not started | - |
