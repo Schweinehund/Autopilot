@@ -219,5 +219,5 @@ Plans:
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete    | 2026-04-17 |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 5/5 | Complete    | 2026-04-17 |
 | 30. iOS L1 Triage & Runbooks | v1.3 | 7/10 | In Progress|  |
-| 31. iOS L2 Investigation | v1.3 | 7/7 | Complete   | 2026-04-17 |
+| 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 0/TBD | Not started | - |
