@@ -578,10 +578,10 @@ Runbooks are documentation artifacts; the "test framework" is **grep-based struc
 
 | Property | Value |
 |----------|-------|
-| Framework | Bash/Node grep-based checks + optional markdown-lint; runs under GitHub Actions or locally via `bash .planning/phases/31-ios-l2-investigation/check-phase-31.mjs` (scaffold in Wave 0 mirroring Phase 30 D-01 precedent) |
+| Framework | Bash/Node grep-based checks + optional markdown-lint; runs under GitHub Actions or locally via `bash scripts/validation/check-phase-31.mjs` (scaffold in Wave 0 mirroring Phase 30 D-01 precedent) |
 | Config file | None required — script is self-contained |
-| Quick run command | `node .planning/phases/31-ios-l2-investigation/check-phase-31.mjs --quick` |
-| Full suite command | `node .planning/phases/31-ios-l2-investigation/check-phase-31.mjs --full` |
+| Quick run command | `node scripts/validation/check-phase-31.mjs --quick` |
+| Full suite command | `node scripts/validation/check-phase-31.mjs --full` |
 
 ### Phase Requirements → Test Map
 
@@ -613,7 +613,7 @@ Runbooks are documentation artifacts; the "test framework" is **grep-based struc
 
 ### Wave 0 Gaps
 
-- [ ] `.planning/phases/31-ios-l2-investigation/check-phase-31.mjs` — validation harness (mirror Phase 30 30-01 scaffold structure)
+- [ ] `scripts/validation/check-phase-31.mjs` — validation harness (mirror Phase 30 30-01 scaffold structure)
 - [ ] `.planning/phases/31-ios-l2-investigation/expected-d23.txt` — verbatim D-23 prose rewrite text
 - [ ] Link-graph audit script — scan all L2 runbook cross-references, verify no broken anchors, verify every L1 retrofitted link points to a specific 14-17 target (not bare index)
 - [ ] `.planning/phases/31-ios-l2-investigation/VALIDATION.md` — will be derived from this section by the planner downstream
@@ -672,32 +672,39 @@ CLAUDE.md primarily describes the *Windows Autopilot Troubleshooter* codebase (P
 
 ---
 
-## Open Questions for Planner
+## Open Questions for Planner (RESOLVED)
+
+All five questions below were addressed during planning. Each carries an inline **RESOLVED** disposition citing the enacting plan/task.
 
 1. **Sysdiagnose retrieval without Mac: is AirDrop-to-colleague-PC practical?**
    - What we know: AirDrop from iOS to macOS is standard; AirDrop from iOS to Windows requires third-party software.
    - What's unclear: Does the organization have a BYOD-friendly fallback for teams without Mac hardware?
    - Recommendation: Runbook 14 Tier 3 scope statement should explicitly state "requires a Mac" and defer to "escalate if no Mac available — treat as Tier 3 blocked" rather than documenting Windows workarounds (out of scope per REQUIREMENTS Out-of-Scope — "iOS vs iPadOS separate guides").
+   - **RESOLVED:** plan 02 Task 2 Tier 3 Prerequisites documents "Mac required" (no Windows workaround per REQUIREMENTS Out-of-Scope — "iOS vs iPadOS separate guides").
 
 2. **Emoji policy for ⚙️/⏱️/🐛 markers in runbook 16:**
    - What we know: CONTEXT D-12 specifies emoji markers with text fallback.
    - What's unclear: Project has shipped 13 L1 runbooks in Phase 30 — need to audit whether they use emoji (especially 🔒 Supervised only from Phase 27).
    - Recommendation: Planner confirms emoji conformance at plan time by grepping existing L1/L2 runbooks for emoji presence; if project standard is emoji-allowed, use `⚙️/⏱️/🐛`; if ambiguous, use `[CONFIG] / [TIMING] / [DEFECT]` text markers for grep-clarity.
+   - **RESOLVED:** plan 01 Task 1 locks TEXT markers `[CONFIG]` / `[TIMING]` / `[DEFECT]` in `placeholder-inventory.json._note`; grep of existing L1/L2 runbooks returned 0 emoji matches; plan 04 runbook + V-31-11 harness regex both enforce text markers.
 
 3. **ADE token rotation history — is a Change Log alternative available?**
    - What we know: No dedicated Graph endpoint for token rotation history; only `lastModifiedDateTime` snapshot.
    - What's unclear: Does Intune ship a tenant-level audit log that records DEP token uploads? (Intune Audit logs via `/deviceManagement/auditEvents` may surface this.)
    - Recommendation: Runbook 15 Pattern D can cite the Intune audit log as a secondary source if needed, but this expands scope beyond D-08 "one indicator" limit. Planner should confirm the single-GET-supplement boundary stays firm.
+   - **RESOLVED:** plan 03 stays within D-08 one-indicator boundary (Graph GET only); Intune audit log supplement deferred to post-Phase-31 to preserve scope discipline.
 
 4. **Verification of 4 MB / 50-file cap on iOS App Protection diagnostics download:**
    - What we know: Microsoft Learn explicitly documents this cap.
    - What's unclear: Is this cap TENANT-wide across all iOS diagnostics uploads OR per-user per-diagnostic-request?
    - Recommendation: Runbook 14 Tier 1 notes the cap as a limit without over-specifying. If field-observed behavior differs, flag for content correction in v1.4.
+   - **RESOLVED:** plan 02 Task 1 documents the 4 MB / 50-file cap as-stated by Microsoft Learn; field-verification of tenant-vs-per-user scope deferred to post-Phase-31 if observed variance emerges.
 
 5. **Line-drift risk if Phase 30 ships 30-08 through 30-10 before Phase 31 plan finalization:**
    - What we know: Phase 30 is at 7/10 plans; 30-08/09/10 involve substantial changes to navigation + admin-setup-ios retrofits.
    - What's unclear: Will Phase 30 30-09 (9-file admin-setup-ios retrofit) touch line 182 of `06-compliance-policy.md`? If it modifies the prose around that line, the D-23 anchor line number shifts.
    - Recommendation: Add Phase 31 Wave 0 pre-flight check: re-run `grep -n "Phase 31" docs/...` and compare against D-22 table; if drift detected, planner re-enumerates per D-26 before Wave 1 executes.
+   - **RESOLVED:** plan 07 Tasks 1/2/3 each include a Step 0 pre-flight `grep -n "Phase 31"` re-verification against `placeholder-inventory.json`; drift triggers per-D-26 re-enumeration before retrofit.
 
 ---
 
