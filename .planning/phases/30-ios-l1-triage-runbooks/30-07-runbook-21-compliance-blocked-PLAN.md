@@ -182,9 +182,6 @@ If none of the above matches the observation, proceed directly to the [overall E
 3. Navigate to P-08: `Endpoint security > Device compliance > Compliance policy settings`. Document the current "Mark devices with no compliance policy assigned as" toggle value ("Compliant" / "Not compliant").
 4. Also document whether the user exists in any Entra group that SHOULD have a compliance policy assigned (via Intune > Compliance policies > [policy] > Assignments).
 
-### User Action Required
-None — user cannot self-fix this. Not user-actionable.
-
 ### Admin Action Required
 - **Ask the admin to (choose one):**
   1. Assign an appropriate iOS compliance policy to the user's Entra group (preferred — aligned to Microsoft Learn recommendation at `compliance-policy-monitor § Important concepts`).

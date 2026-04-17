@@ -232,11 +232,11 @@ Rationale for row 66: User-not-assigned-Intune-license applies to both MDM and M
 - R19 (License Invalid): 4 resolutions (file 7: 2 rows; file 8: 1 row; file 9: 1 row)
 - R20 (Device Cap Reached): 1 resolution (file 7: 1 row)
 - R21 (Compliance Blocked): 10 resolutions (file 4: 1 row; file 6: 8 rows; file 7: 1 row)
-- L2P31 (Phase 31 placeholder): 33 resolutions (file 4: 8 rows; file 5: 10 rows; file 7: 3 rows; file 8: 5 rows; file 9: 6 rows)
+- L2P31 (Phase 31 placeholder): 32 resolutions (file 4: 8 rows; file 5: 10 rows; file 7: 3 rows; file 8: 5 rows; file 9: 6 rows)
 - PROSE-RETROFIT: 1 resolution (file 7: line 243)
 - EXPECTED-BEHAVIOR annotation: 1 resolution (file 7: row 256)
 
-**Verify arithmetic:** 7 + 13 + 2 + 4 + 1 + 10 + 33 + 1 + 1 = 72 (includes 1 expected-behavior annotation that substitutes the "iOS L1 runbooks (Phase 30)" string with a non-runbook annotation — still counts as a placeholder resolution). Re-examined: row 256 IS a "iOS L1 runbooks (Phase 30)" placeholder occurrence per the grep output; resolving it to an annotation instead of a runbook link is valid per D-17 (`acceptable alternatives: link to nearest runbook + contextual note, OR mark as "No L1 runbook"...`). The 72-count reflects that row 256 has both an annotation AND a fallback runbook link embedded in one cell — it counts as ONE placeholder resolution. Corrected total = 71.
+**Verify arithmetic:** 7 + 13 + 2 + 4 + 1 + 10 + 32 + 1 + 1 = 71 (file-4: 9 rows; file-5: 10; file-6: 10; file-7: 11+1 prose = 12; file-8: 7; file-9: 7; plus file-1: 5, file-2: 5, file-3: 6 → total 71 placeholder resolutions). Row 256 IS a "iOS L1 runbooks (Phase 30)" placeholder occurrence per the grep output; resolving it to an annotation that ALSO contains a fallback runbook link to R21 is valid per D-17 (`acceptable alternatives: link to nearest runbook + contextual note, OR mark as "No L1 runbook"...`). The annotation substitutes the placeholder string — it counts as ONE placeholder resolution under the EXPECTED-BEHAVIOR category (not under L2P31).
 
 **Per-file Version History row (D-19 — insert ABOVE existing rows in each file, maintaining chronological descending order):**
 ```
@@ -328,7 +328,7 @@ Rationale for row 66: User-not-assigned-Intune-license applies to both MDM and M
     - `grep -c "l1-runbooks/16-ios-apns-expired.md" docs/admin-setup-ios/*.md` ≥ 7 (enumeration-predicted count for R16)
     - `grep -c "l1-runbooks/17-ios-ade-not-starting.md" docs/admin-setup-ios/*.md` ≥ 13
     - `grep -c "l1-runbooks/21-ios-compliance-blocked.md" docs/admin-setup-ios/*.md` ≥ 10
-    - `grep -c "l2-runbooks/00-index.md" docs/admin-setup-ios/*.md` ≥ 33 (L2P31 count)
+    - `grep -c "l2-runbooks/00-index.md" docs/admin-setup-ios/*.md` ≥ 32 (L2P31 count)
     - `git log -1 --pretty=%B` returns exactly `docs(30): resolve iOS L1 runbook placeholders in admin-setup-ios` (D-20 atomic commit)
     - `git show --stat HEAD` shows exactly 9 files modified in that commit
   </done>
@@ -369,7 +369,7 @@ Rationale for row 66: User-not-assigned-Intune-license applies to both MDM and M
 - [x] Atomic commit per D-20 with locked message
 - [x] Validator Check 5 PASS (zero placeholder strings remain)
 - [x] Validator Check 6 PASS (line 243 clean)
-- [x] R16=7, R17=13, R18=2, R19=4, R20=1, R21=10, L2P31=33, Prose=1, Annotation=1 (sum=72; note annotation row is a placeholder substitution per D-17 "No L1 runbook" alternative; effective count aligns with 71 placeholder occurrences)
+- [x] R16=7, R17=13, R18=2, R19=4, R20=1, R21=10, L2P31=32, Prose=1, Annotation=1 (sum=71; each term counts a single placeholder resolution; annotation row substitutes the placeholder string per D-17 "No L1 runbook" alternative)
 </success_criteria>
 
 <output>
