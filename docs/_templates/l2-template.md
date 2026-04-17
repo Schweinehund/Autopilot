@@ -8,7 +8,7 @@
        Do NOT define paths or function signatures inline
      - Include actual PowerShell commands and registry paths in investigation steps
      - Document multiple resolution scenarios where applicable
-     - Set platform to Windows, macOS, or all
+     - Set platform to Windows, macOS, iOS, or all
      Reviewer: L2 Desktop Lead (role, not person name)
 -->
 ---
@@ -16,7 +16,7 @@ last_verified: YYYY-MM-DD
 review_by: YYYY-MM-DD
 applies_to: APv1 | APv2 | both
 audience: L2
-platform: Windows | macOS | all
+platform: Windows | macOS | iOS | all
 ---
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).

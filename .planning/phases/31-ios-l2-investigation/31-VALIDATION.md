@@ -3,7 +3,7 @@ phase: 31
 slug: ios-l2-investigation
 status: draft
 nyquist_compliant: false
-wave_0_complete: false
+wave_0_complete: true
 created: 2026-04-17
 ---
 
