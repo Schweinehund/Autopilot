@@ -56,3 +56,132 @@ Admin prerequisites for account-driven User Enrollment:
 - **Tenant enrollment restrictions reviewed** — See [iOS/iPadOS Admin Setup Overview § Intune Enrollment Restrictions](00-overview.md#intune-enrollment-restrictions). Account-driven User Enrollment is subject to the tenant-level enrollment-type-blocking policy.
 
 > **Research-flag note for admins deploying to devices running iOS 15.5 or iOS 15.7–16.3:** Microsoft Learn documents MFA limitations on User Enrollment on these iOS versions (iOS 15.5 cannot enroll with any MFA on the same device; iOS 15.7–16.3 cannot enroll with MFA via text, phone-call is required). These limitations are documented as current guidance despite iOS 18 shipping. Verify current status against Microsoft Learn `ios-user-enrollment-supported-actions` before assuming these apply to your fleet.
+
+## Steps
+
+Account-driven User Enrollment is primarily a user-initiated flow backed by organizational service-discovery configuration. Admin work falls into three configuration areas: service discovery hosting, Intune policy assignment, and enrollment-restriction review.
+
+### Step 1: Configure Service Discovery
+
+#### On the organization's web server
+
+1. Host a JSON resource at `https://{email-domain}/.well-known/com.apple.remotemanagement` for each email domain used by enrolling users' Managed Apple IDs. The resource points Apple's enrollment flow at the tenant's Intune enrollment endpoint.
+2. Confirm the resource is reachable over HTTPS from the public internet and returns a `application/json` content-type. Apple's Setup Assistant fetches this resource without authentication.
+
+   > **What breaks if misconfigured:** If the service-discovery resource is missing, returns non-JSON content, or is blocked by a firewall, end-user enrollment fails at the "Sign in with Managed Apple ID" step with a generic "we couldn't sign you in" error. Symptom appears in: device (Setup Assistant error) with no failure visible in the Intune admin center portal.
+
+On iOS 18.2+ devices federated with ABM, this step may be optional — Apple provides an alternate discovery path using ABM metadata. Verify current iOS version coverage against Microsoft Learn `apple-account-driven-user-enrollment` at time of writing.
+
+### Step 2: Configure Intune Enrollment Restrictions
+
+#### In Intune admin center
+
+1. Sign in to [Intune admin center](https://intune.microsoft.com).
+2. Navigate to **Devices** > **Enrollment** > **Enrollment device platform restrictions** > **iOS/iPadOS restrictions**.
+3. Confirm account-driven User Enrollment is allowed for the user groups you expect to enroll (the tenant-wide enrollment-type-blocking policy applies here; see [iOS/iPadOS Admin Setup Overview § Intune Enrollment Restrictions](00-overview.md#intune-enrollment-restrictions)).
+
+   > **What breaks if misconfigured:** Blocking account-driven User Enrollment at the tenant level prevents enrollment completion even when service discovery is correctly configured. Symptom appears in: device (profile installation fails with "enrollment not allowed") with no failure in the Intune admin center portal itself.
+
+### Step 3: Assign Microsoft Authenticator
+
+#### In Intune admin center
+
+1. Navigate to **Apps** > **iOS/iPadOS** and confirm Microsoft Authenticator is assigned as a Required app to the enrolling user groups.
+2. Microsoft Authenticator handles the Entra work-account authentication during enrollment. End users must install and sign into Authenticator before enrolling.
+
+## Managed Capabilities and Privacy Limits
+
+After enrollment, Intune manages work apps and data inside the managed APFS volume. Each capability below lists what Intune can do and includes an explicit Privacy limit callout describing what Intune cannot do. Every callout links to the Phase 26 User Enrollment concept page.
+
+### Hardware Identifiers and Inventory
+
+Intune identifies User-Enrollment-enrolled devices by the Managed Apple ID and an Apple-provided enrollment identifier. Hardware identifiers like UDID, serial number, and IMEI are not returned by Apple's User Enrollment MDM channel.
+
+> **Privacy limit:** Intune does not collect UDID, serial number, or IMEI from account-driven User Enrollment devices. Device identification is limited to the Managed Apple ID and Apple's enrollment identifier. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+
+### Wipe and Retire
+
+The only wipe scope on User Enrollment is selective wipe of the managed APFS volume. Triggering a wipe from Intune removes the managed volume, corporate accounts, and managed apps; the personal side of the device is untouched.
+
+> **Privacy limit:** System-wide device wipe is not available on account-driven User Enrollment. Only the managed APFS volume can be wiped — personal apps, personal data, and the personal iCloud are unaffected by any Intune wipe action. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+
+### App Inventory
+
+Intune inventories managed apps deployed via VPP user-licensed assignment into the managed volume. Personal apps installed by the end user from the App Store to the primary device context are outside Intune's visibility.
+
+> **Privacy limit:** Intune does not inventory personal apps or personal app data. Only managed apps inside the managed APFS volume and their work data are visible to Intune. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+
+### Location
+
+MDM location commands are not part of Apple's User Enrollment MDM feature set. Intune cannot query the device location on a User-Enrollment-enrolled device.
+
+> **Privacy limit:** Location tracking is not available on account-driven User Enrollment. Intune cannot query or report device location on these devices. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+
+### Passcode
+
+Passcode policy on User Enrollment applies only to the managed content — for example, a passcode required to open a managed Outlook inbox. Full-device passcode enforcement is not available.
+
+> **Privacy limit:** Intune cannot enforce a passcode on the primary device context of an account-driven User Enrollment device. Passcode compliance policies apply only to managed content; whether the device itself has a passcode is governed by the end user. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+
+### VPN
+
+Per-app VPN scoped to managed apps is supported; configuration flows through a VPN configuration profile targeted at the managed volume. System-wide VPN — which would route all device traffic including personal apps — is not available.
+
+> **Privacy limit:** System-wide VPN is not available on account-driven User Enrollment. Only per-app VPN scoped to managed apps is supported; personal app traffic does not route through the corporate VPN. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+
+### Managed Volume Separation
+
+User Enrollment stores work content in a cryptographically separate APFS volume on the device. Work apps, work accounts, and work data live in this volume; personal content lives in the primary volume and is never accessible to Intune, managed apps, or the work account.
+
+> **Privacy limit:** Account-driven User Enrollment creates a managed APFS volume that is cryptographically separate from the personal side of the device. Intune cannot reach personal content; managed apps cannot copy content into the personal side of the device except via iOS-mediated Managed Open In flows. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+
+## Profile-Based User Enrollment (Deprecated)
+
+**For new enrollments, use account-driven User Enrollment** (documented above). Profile-based User Enrollment via Company Portal is deprecated and is no longer available for newly enrolled devices on iOS 18 and later. Existing enrolled devices continue to work; Microsoft Intune support remains available for them.
+
+If your tenant has existing profile-based User Enrollment enrolled devices:
+
+- Continue to manage them via their existing profile-based enrollment — no forced migration is required.
+- Do not attempt to newly enroll devices via the profile-based path; the option has been removed from Company Portal and the Intune admin center for new devices.
+- Plan migration to account-driven User Enrollment at the next device refresh cycle. Migration requires unenrolling from the profile-based path and re-enrolling via the account-driven path.
+
+Verify the current deprecation status against Microsoft Learn `ios-user-enrollment-supported-actions` at time of writing — the option may be fully removed (not just deprecated) by the time this guide is read.
+
+## Verification
+
+- [ ] Service-discovery JSON resource is reachable at `https://{email-domain}/.well-known/com.apple.remotemanagement` and returns valid JSON (test with `curl` from outside the corporate network)
+- [ ] Enrolling user has a Managed Apple ID (created in ABM or federated from Entra)
+- [ ] Enrolling user has an Intune license assigned to their Entra work account
+- [ ] Microsoft Authenticator is assigned as Required to the enrolling user group and installs on enrollment
+- [ ] Test enrollment on a personal iOS 15+ device completes: user signs in with Managed Apple ID, downloads and accepts the User Enrollment profile, and the device appears in Intune admin center under **Devices** > **All devices** with ownership designation **Personal** and enrollment type **User Enrollment (account-driven)**
+- [ ] Post-enrollment: managed work account is visible on device under **Settings** > **Accounts & Passwords** and work content is accessible via managed apps (Outlook, Teams, Edge)
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Portal | Symptom | Runbook |
+|------------------|--------|---------|---------|
+| Service-discovery JSON resource missing or returns 404 | Org web server / DNS | Enrollment fails at Managed Apple ID sign-in with "we couldn't sign you in" | iOS L1 runbooks (Phase 30) |
+| Service-discovery JSON resource returns non-JSON content-type | Org web server | Enrollment fails silently; Setup Assistant rejects the discovery response | iOS L1 runbooks (Phase 30) |
+| Account-driven User Enrollment blocked by tenant enrollment restrictions | Intune | Enrollment profile fails to install with "enrollment not allowed" | iOS L1 runbooks (Phase 30) |
+| User signs in with personal Apple ID instead of Managed Apple ID | Device | Setup Assistant rejects sign-in; enrollment cannot proceed | iOS L1 runbooks (Phase 30) |
+| Microsoft Authenticator not assigned or not installed | Intune | Work-account authentication fails during JIT registration; enrollment stalls at Entra sign-in step | iOS L1 runbooks (Phase 30) |
+| Managed Apple ID not created or not federated from Entra | ABM / Entra | User cannot complete Managed Apple ID sign-in; Setup Assistant rejects credentials | iOS L1 runbooks (Phase 30) |
+| Enrollment attempted on iOS 14 or earlier | Device | Account-driven User Enrollment is not available; Setup Assistant has no path option | iOS L1 runbooks (Phase 30) |
+
+## See Also
+
+- [iOS/iPadOS Admin Setup Overview](00-overview.md) — Path router and shared Intune Enrollment Restrictions section
+- [iOS/iPadOS Enrollment Path Overview § User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment) — Conceptual definition and managed APFS volume architecture
+- [Device Enrollment](07-device-enrollment.md) — Non-privacy-preserving BYOD alternative
+- [MAM App Protection](09-mam-app-protection.md) — App-layer protection without enrollment
+- [APNs Certificate Guide](01-apns-certificate.md) — Shared APNs prerequisite
+- [Apple Provisioning Glossary](../_glossary-macos.md)
+
+---
+*Previous: [Device Enrollment](07-device-enrollment.md) | Next: [MAM App Protection](09-mam-app-protection.md) | [Back to Overview](00-overview.md)*
+
+---
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-17 | Initial version — iOS/iPadOS account-driven User Enrollment admin guide with hybrid privacy-callout pattern covering all 7 D-20 privacy boundaries | -- |
