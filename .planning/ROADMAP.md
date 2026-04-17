@@ -124,10 +124,10 @@ Plans:
   2. An admin or end user reading the account-driven user enrollment guide understands what IT can and cannot see or do on a personally-owned device — the privacy limitations are stated as explicit callouts, not buried in prose
   3. The MAM-WE app protection policies guide is a standalone document that does not require reading any MDM enrollment guide to understand — it covers the three-level data protection framework, targeting enrolled vs unenrolled devices, iOS-specific behaviors, and selective wipe
   4. A reader can determine from the MAM-WE guide alone whether MAM-WE requires the device to be enrolled in Intune MDM (it does not) and what the wipe scope is (managed app data only, not the device)
-**Plans:** 5 plans
+**Plans:** 2/5 plans executed
 Plans:
-- [ ] 29-01-PLAN.md — Extend iOS admin template with PRIVACY-LIMIT CALLOUT PATTERN comment block (D-05)
-- [ ] 29-02-PLAN.md — Restructure admin-setup-ios/00-overview.md for all iOS paths (applies_to: all, branching Mermaid, shared Intune Enrollment Restrictions section, split prereqs — D-06/07/08/09)
+- [x] 29-01-PLAN.md — Extend iOS admin template with PRIVACY-LIMIT CALLOUT PATTERN comment block (D-05)
+- [x] 29-02-PLAN.md — Restructure admin-setup-ios/00-overview.md for all iOS paths (applies_to: all, branching Mermaid, shared Intune Enrollment Restrictions section, split prereqs — D-06/07/08/09)
 - [ ] 29-03-PLAN.md — Device Enrollment guide (07-device-enrollment.md) with Capabilities Available Without Supervision table, Company Portal + web-based flows, ownership-flag section (ABYOD-01)
 - [ ] 29-04-PLAN.md — Account-Driven User Enrollment guide (08-user-enrollment.md) with hybrid privacy-callout pattern covering all 7 D-20 boundaries (ABYOD-02)
 - [ ] 29-05-PLAN.md — MAM-WE App Protection Policies guide (09-mam-app-protection.md) — standalone, three-level framework, dual-targeting, Selective Wipe section (ABYOD-03)
@@ -198,7 +198,7 @@ Plans:
 | 26. iOS/iPadOS Foundation | v1.3 | 2/2 | Complete    | 2026-04-16 |
 | 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 3/3 | Complete    | 2026-04-16 |
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete    | 2026-04-17 |
-| 29. iOS Admin Setup — BYOD & MAM | v1.3 | 0/5 | In progress | - |
+| 29. iOS Admin Setup — BYOD & MAM | v1.3 | 2/5 | In Progress|  |
 | 30. iOS L1 Triage & Runbooks | v1.3 | 0/TBD | Not started | - |
 | 31. iOS L2 Investigation | v1.3 | 0/TBD | Not started | - |
 | 32. Navigation Integration & References | v1.3 | 0/TBD | Not started | - |
