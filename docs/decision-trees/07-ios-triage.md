@@ -41,7 +41,7 @@ graph TD
     IOS2 -->|"Other / unclear"| IOSE1(["Escalate L2:<br/>Collect serial, UPN,<br/>error screenshot"])
 
     IOS3 -->|"Non-compliant or<br/>access blocked"| IOSR6(["See: Compliance Blocked Runbook"])
-    IOS3 -->|"Profile / config /<br/>app not working"| IOSE2(["Escalate L2:<br/>Not in L1 scope (Phase 31)"])
+    IOS3 -->|"Profile / config /<br/>app not working"| IOSE2(["Escalate L2:<br/>See iOS L2 Runbooks index"])
     IOS3 -->|"Other / unclear"| IOSE3(["Escalate L2:<br/>Collect serial, UPN,<br/>symptom description"])
 
     click IOSR1 "../l1-runbooks/16-ios-apns-expired.md"
@@ -69,7 +69,7 @@ All terminal nodes are within 2 decision steps of the root node (IOS1), well und
 | License invalid | Visible? No | What attempted? User Name Not Recognized | Runbook 19 |
 | Device cap reached | Visible? No | What attempted? Device limit reached | Runbook 20 |
 | Compliance blocked | Visible? Yes | Symptom: non-compliant/access blocked | Runbook 21 |
-| Profile/config/app not working | Visible? Yes | Symptom: profile/app/config | L2 escalation (Phase 31 scope) |
+| Profile/config/app not working | Visible? Yes | Symptom: profile/app/config | L2 escalation -- primary [15-ios-ade-token-profile.md](../l2-runbooks/15-ios-ade-token-profile.md) + see-also [16-ios-app-install.md](../l2-runbooks/16-ios-app-install.md) |
 | Other / unclear (not visible) | Visible? No | What attempted? Other/unclear | L2 escalation |
 | Other / unclear (visible) | Visible? Yes | Symptom: other/unclear | L2 escalation |
 
@@ -79,19 +79,19 @@ All terminal nodes are within 2 decision steps of the root node (IOS1), well und
 |----------|-------------|
 | Is the device visible in Intune? | Open Intune admin center > **Devices > All devices** and filter platform = iOS/iPadOS, OR **Devices > iOS/iPadOS**. Search by serial number or user UPN. Serial is visible on device via Settings > General > About > Serial Number. |
 | What did the user see or attempt? | Ask the user: "What exact error did you see? Was it `"User Name Not Recognized"`? `"Device limit reached"` / `"Too many devices"`? `"Invalid Profile"` / `"The configuration for your iPhone/iPad couldn't be downloaded"`? `"Company Portal Temporarily Unavailable"`?" Match literal error text to the branches. If the error is `"Company Portal Temporarily Unavailable"` — route to runbook 20 first (device cap) per Microsoft Learn documented dual-meaning. If the user cannot recall the error and has no screenshot: route to "Other / unclear" for L2 escalation. |
-| What is the primary symptom? | Ask the user: "What specifically isn't working?" Non-compliant / access blocked → runbook 21. Configuration profile missing, app not appearing, or config not applied → L2 escalation (Phase 31 scope). Anything else → L2 escalation. |
+| What is the primary symptom? | Ask the user: "What specifically isn't working?" Non-compliant / access blocked → runbook 21. Configuration profile missing, app not appearing, or config not applied → L2 escalation via [15-ios-ade-token-profile.md](../l2-runbooks/15-ios-ade-token-profile.md) (profile/config) or [16-ios-app-install.md](../l2-runbooks/16-ios-app-install.md) (app). Anything else → L2 escalation. |
 
 ## Escalation Data
 
 | When You Escalate | Collect This |
 |-------------------|-------------|
 | Other / unclear route (IOSE1 / IOSE3) | Device serial number (Settings > General > About), iOS version, User UPN, screenshot of current device screen, description of expected vs actual behavior, approximate time when issue first appeared, any steps already attempted |
-| Profile/config/app route (IOSE2 -- Phase 31 L2 scope) | All of above + the specific profile/app name expected, Intune device-status screenshot showing profile/app delivery state, last check-in time |
+| Profile/config/app route (IOSE2 -- see [15-ios-ade-token-profile.md](../l2-runbooks/15-ios-ade-token-profile.md) or [16-ios-app-install.md](../l2-runbooks/16-ios-app-install.md)) | All of above + the specific profile/app name expected, Intune device-status screenshot showing profile/app delivery state, last check-in time |
 
 ## Related Resources
 
 - [iOS L1 Runbooks Index](../l1-runbooks/00-index.md) -- All 6 iOS L1 runbooks (16-21)
-- [iOS L2 Runbooks (Phase 31)](../l2-runbooks/00-index.md) -- L2 investigation (Phase 31 placeholder; resolved when Phase 31 ships)
+- [iOS L2 Runbooks](../l2-runbooks/00-index.md#ios-l2-runbooks) -- L2 investigation (log collection + 3 investigation runbooks)
 - [iOS/iPadOS Admin Setup Overview](../admin-setup-ios/00-overview.md) -- Admin config reference
 - [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md) -- Enrollment path concepts
 - [Initial Triage Decision Tree](00-initial-triage.md) -- Windows Autopilot (classic) triage
@@ -102,4 +102,5 @@ All terminal nodes are within 2 decision steps of the root node (IOS1), well und
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |
