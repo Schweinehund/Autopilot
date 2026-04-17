@@ -112,10 +112,65 @@ The tables below enumerate the observed failure patterns per licensing model. Ea
 
 > **Supervision boundary (D-34 research verified 2026-04-17):** Silent install requires supervision on iOS 17+. Declarative Device Management (DDM, iOS 17.2+) changed HOW apps install (autonomous execution + activation predicates) but did NOT change the supervision-vs-prompt boundary. DDM can also "take over" management of a user-installed unmanaged app — silent on supervised, user-accept on unsupervised (a new [CONFIG] failure mode).
 
+### Genuine Defects (Declared [DEFECT])
+
+A failure is [DEFECT] when ALL [CONFIG] conditions above have been verified AND all [TIMING] windows elapsed AND the install still fails with no actionable Intune error. This is rare. Misclassifying a [CONFIG] or [TIMING] as a [DEFECT] wastes Microsoft Support engineering time; verify every [CONFIG] row in the tables above, plus at least one full 8-hour check-in cycle, before declaring [DEFECT].
+
+Observed [DEFECT] patterns from field data:
+
+- **[DEFECT] VPP device-licensed silent install stalled** — Supervised device + VPP token Active + license pool has capacity + app exists in ABM assigned to the correct MDM server → still shows Failed in Intune with no actionable error code. No admin-side resolution; escalation only.
+- **[DEFECT] DDM-managed app stuck on activation predicate** — iOS 17.2+ Required app install never completes despite the device meeting the declared activation predicate. Intune status stays Pending indefinitely. iOS version, app bundle ID, and the activation-predicate JSON are required for support.
+- **[DEFECT] App Store binary broken post-iOS-upgrade** — VPP app stopped launching after an iOS major version upgrade; Intune shows Installed but the app crashes on launch. Typically resolved by Apple at the app-store binary level; Microsoft Support can confirm whether the app publisher has an open case with Apple.
+
+### Microsoft Support Escalation Checklist (for [DEFECT] class)
+
+Open a Microsoft Support case with the following **data-collection package**. Missing items slow case triage substantially; collect every applicable bullet before filing.
+
+- Device serial number + iOS version + supervision state (captured in Step 2 above).
+- App ID (Intune GUID from the app Properties URL) + Bundle ID (e.g., `com.microsoft.Office.Outlook`) + app type (VPP device / VPP user / LOB / Store).
+- Intune install status screenshot — Apps > [app] > Device install status row for the target device showing the Failed state and timestamp.
+- VPP token `lastSyncSuccessDateTime` from Tenant admin > Connectors and tokens > VPP tokens pane; if Graph-pulled, include numeric `lastSyncErrorCode` per the Graph API supplement in [15-ios-ade-token-profile.md](15-ios-ade-token-profile.md).
+- ABM app assignment state screenshot — Apps & Books > [app] > Assignments showing the correct MDM server.
+- Company Portal log upload incident ID (from [iOS Log Collection Guide](14-ios-log-collection.md) Tier 2) OR sysdiagnose `.tar.gz` (Tier 3, PII-redacted).
+- Timeline: when the assignment was made, when the device was last synced, and when the failure was first observed.
+
+---
+
+## Resolution Scenarios
+
+### Scenario A: Unsupervised device + Required silent-install expectation
+
+Change the assignment to "Available" in Intune Apps > [app] > Assignments. The user then self-installs from Company Portal. Alternative: re-enroll the device via ADE with supervision enabled — note this requires a device wipe.
+
+### Scenario B: VPP token expired
+
+Renew the VPP token in ABM: Apps & Books > your name > Content tokens > [country] > Download token. In Intune: Tenant admin > Connectors and tokens > Apple VPP tokens > [token] > Edit > Upload `.vpptoken`. Sync the token. Retry the assignment within 30 minutes.
+
+### Scenario C: User-licensed assigned to non-User-Enrollment device
+
+Either reassign the app as device-licensed (Apps > [app] > Properties > License type: Device) OR re-enroll the device under User Enrollment with a Managed Apple Account. Device-licensing is simpler for managed devices that already have a tenant relationship.
+
+### Scenario D: LOB IPA code-signing issue
+
+Verify enterprise cert expiry in the Apple Developer Enterprise account. Re-sign the IPA with the current cert and a **distribution** provisioning profile (not dev). Re-upload to Intune. Delete-and-reassign (not just upgrade) to clear any device-side stale binary cache.
+
+### Scenario E: Post-check-in stale state
+
+Company Portal > Sync OR Intune Remote Sync from the portal. Wait 15–30 minutes. If still Pending, this is likely a [TIMING] issue and no action is required past the 8-hour check-in cycle. If still Failed after a full cycle with every [CONFIG] row verified, escalate to Microsoft Support with the [DEFECT] checklist above.
+
+---
+
+## Related Resources
+
+- [iOS Log Collection Guide](14-ios-log-collection.md) — prerequisite diagnostic package collection
+- [ADE Token & Profile Delivery Investigation](15-ios-ade-token-profile.md) — if failure is enrollment-related, not app-specific
+- [iOS App Deployment Admin Guide](../admin-setup-ios/05-app-deployment.md) — VPP / LOB / App Store configuration reference
+- [MAM-WE Investigation Advisory](00-index.md#mam-we-investigation-advisory) — deferred ADDTS-01 scope for MAM-WE app protection failures
+
 ---
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-04-17 | Initial version — iOS app install failure diagnosis | -- |
+| 2026-04-17 | Initial version — iOS app install failure diagnosis with SC #4 three-class disambiguation ([CONFIG] / [TIMING] / [DEFECT]) covering VPP device, VPP user, LOB IPA, supervision boundary, and Microsoft Support escalation checklist | Phase 31 Wave 2 |
