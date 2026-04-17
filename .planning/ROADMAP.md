@@ -142,10 +142,10 @@ Plans:
   2. The triage tree routes iOS failures to the iOS-specific tree (decision-trees/07-ios-triage.md) via a single branch in the initial triage file — it does not embed iOS decision logic in the Windows triage flow
   3. For each of the 6 documented failure scenarios (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked), a runbook exists with a symptom description, L1-executable steps, and an explicit escalation trigger
   4. An L1 agent following any runbook can identify whether the failure requires an admin action in Intune admin center vs a user action on the device, with no ambiguity about who does what
-**Plans:** 10 plans
+**Plans:** 2/10 plans executed
 Plans:
-- [ ] 30-01-PLAN.md — L1 template extension (D-24 platform enum) + Phase 30 validation harness scaffold (Wave 1)
-- [ ] 30-02-PLAN.md — iOS Triage Decision Tree (07-ios-triage.md) with Mermaid + Routing Verification + How to Check + Escalation Data (Wave 1)
+- [x] 30-01-PLAN.md — L1 template extension (D-24 platform enum) + Phase 30 validation harness scaffold (Wave 1)
+- [x] 30-02-PLAN.md — iOS Triage Decision Tree (07-ios-triage.md) with Mermaid + Routing Verification + How to Check + Escalation Data (Wave 1)
 - [ ] 30-03-PLAN.md — Runbook 16 (iOS APNs Certificate Expired) — cross-platform blast-radius (Wave 2)
 - [ ] 30-04-PLAN.md — Runbook 17 (iOS ADE Not Starting) — three failure signatures + D-08 manual-sync write exception (Wave 2)
 - [ ] 30-05-PLAN.md — Runbooks 18 + 20 (Enrollment Restriction Blocking + Device Cap Reached) — reciprocal disambiguation (Wave 2)
@@ -210,6 +210,6 @@ Plans:
 | 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 3/3 | Complete    | 2026-04-16 |
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete    | 2026-04-17 |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 5/5 | Complete    | 2026-04-17 |
-| 30. iOS L1 Triage & Runbooks | v1.3 | 0/10 | Planned | - |
+| 30. iOS L1 Triage & Runbooks | v1.3 | 2/10 | In Progress|  |
 | 31. iOS L2 Investigation | v1.3 | 0/TBD | Not started | - |
 | 32. Navigation Integration & References | v1.3 | 0/TBD | Not started | - |
