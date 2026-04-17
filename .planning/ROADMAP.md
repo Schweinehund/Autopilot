@@ -64,7 +64,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - [x] **Phase 27: iOS Admin Setup — Corporate ADE Path** - APNs certificate, ABM/ADE token, and ADE enrollment profile guides with supervised-only callout pattern (completed 2026-04-16)
 - [x] **Phase 28: iOS Admin Setup — Configuration, Apps, Compliance** - Configuration profiles, app deployment, and compliance policy guides with per-setting supervision callouts
  (completed 2026-04-16)
-- [x] **Phase 29: iOS Admin Setup — BYOD & MAM** - Device enrollment, account-driven user enrollment, and MAM without enrollment (standalone) guides (completed 2026-04-17)
+- [x] **Phase 29: iOS Admin Setup — BYOD & MAM** - Device enrollment, account-driven user enrollment, and MAM without enrollment (standalone) guides (completed 2026-04-17)
 - [ ] **Phase 30: iOS L1 Triage & Runbooks** - iOS triage decision tree and 6 L1 runbooks for top failure scenarios
 - [ ] **Phase 31: iOS L2 Investigation** - Log collection runbook and 3 investigation runbooks for ADE, app installs, and compliance
 - [ ] **Phase 32: Navigation Integration & References** - Glossary additions, navigation file updates, and iOS capability matrix
@@ -142,7 +142,18 @@ Plans:
   2. The triage tree routes iOS failures to the iOS-specific tree (decision-trees/07-ios-triage.md) via a single branch in the initial triage file — it does not embed iOS decision logic in the Windows triage flow
   3. For each of the 6 documented failure scenarios (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked), a runbook exists with a symptom description, L1-executable steps, and an explicit escalation trigger
   4. An L1 agent following any runbook can identify whether the failure requires an admin action in Intune admin center vs a user action on the device, with no ambiguity about who does what
-**Plans**: TBD
+**Plans:** 10 plans
+Plans:
+- [ ] 30-01-PLAN.md — L1 template extension (D-24 platform enum) + Phase 30 validation harness scaffold (Wave 1)
+- [ ] 30-02-PLAN.md — iOS Triage Decision Tree (07-ios-triage.md) with Mermaid + Routing Verification + How to Check + Escalation Data (Wave 1)
+- [ ] 30-03-PLAN.md — Runbook 16 (iOS APNs Certificate Expired) — cross-platform blast-radius (Wave 2)
+- [ ] 30-04-PLAN.md — Runbook 17 (iOS ADE Not Starting) — three failure signatures + D-08 manual-sync write exception (Wave 2)
+- [ ] 30-05-PLAN.md — Runbooks 18 + 20 (Enrollment Restriction Blocking + Device Cap Reached) — reciprocal disambiguation (Wave 2)
+- [ ] 30-06-PLAN.md — Runbook 19 (iOS License Invalid) — dual-manifestation + second-portal prerequisite flag (Wave 2)
+- [ ] 30-07-PLAN.md — Runbook 21 (iOS Compliance Blocked) — multi-cause A/B/C with User Action Required (Wave 2)
+- [ ] 30-08-PLAN.md — Navigation integration: 00-initial-triage.md banner + 00-index.md iOS section (Wave 3)
+- [ ] 30-09-PLAN.md — 9-file admin-setup-ios retrofit: 71 placeholder resolutions + 1 prose line + 9 metadata bumps (atomic commit D-20; Wave 3)
+- [ ] 30-10-PLAN.md — Final validation gate + manual verifications + human checkpoint (Wave 4)
 
 ### Phase 31: iOS L2 Investigation
 **Goal**: An L2 engineer has the log collection procedures and investigation runbooks to diagnose ADE token/profile delivery failures, app install failures, and compliance/CA timing issues — using iOS-native methods (Company Portal upload, MDM diagnostic report, Mac+cable sysdiagnose) since no CLI diagnostic tool exists on iOS
@@ -199,6 +210,6 @@ Plans:
 | 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 3/3 | Complete    | 2026-04-16 |
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete    | 2026-04-17 |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 5/5 | Complete    | 2026-04-17 |
-| 30. iOS L1 Triage & Runbooks | v1.3 | 0/TBD | Not started | - |
+| 30. iOS L1 Triage & Runbooks | v1.3 | 0/10 | Planned | - |
 | 31. iOS L2 Investigation | v1.3 | 0/TBD | Not started | - |
 | 32. Navigation Integration & References | v1.3 | 0/TBD | Not started | - |
