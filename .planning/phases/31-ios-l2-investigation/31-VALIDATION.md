@@ -19,8 +19,8 @@ created: 2026-04-17
 |----------|-------|
 | **Framework** | Node.js grep/structural checks via a self-contained harness script. Optional markdown-lint pass under `npx markdownlint docs/l2-runbooks/1[4-7]-*.md`. |
 | **Config file** | None — harness is self-contained (reads CONTEXT decisions inline). |
-| **Quick run command** | `node .planning/phases/31-ios-l2-investigation/check-phase-31.mjs --quick` |
-| **Full suite command** | `node .planning/phases/31-ios-l2-investigation/check-phase-31.mjs --full` |
+| **Quick run command** | `node scripts/validation/check-phase-31.mjs --quick` |
+| **Full suite command** | `node scripts/validation/check-phase-31.mjs --full` |
 | **Estimated runtime** | Quick ~3 s; Full ~15 s |
 
 ---
@@ -77,7 +77,7 @@ created: 2026-04-17
 
 ## Wave 0 Requirements
 
-- [ ] `.planning/phases/31-ios-l2-investigation/check-phase-31.mjs` — validation harness implementing all V-31-01..V-31-30 checks above. Mirrors Phase 30 30-01 scaffold structure; CRLF normalization + multi-cause Symptom handling per Phase 30 `ca40eb9` commit fixes.
+- [ ] `scripts/validation/check-phase-31.mjs` — validation harness implementing all V-31-01..V-31-30 checks above. Mirrors Phase 30 30-01 scaffold structure; CRLF normalization + multi-cause Symptom handling per Phase 30 `ca40eb9` commit fixes.
 - [ ] `.planning/phases/31-ios-l2-investigation/expected-d23.txt` — verbatim D-23 prose rewrite text (from CONTEXT.md D-23 template) used for V-31-23 diff check.
 - [ ] `.planning/phases/31-ios-l2-investigation/placeholder-inventory.json` — snapshot of the 13 D-22 line anchors captured at Wave 0 run-time (re-verifies against research-reported no-drift state); if drift detected, flag planner to re-enumerate per D-26 before Wave 1.
 - [ ] Link-graph audit subroutine (inside `check-phase-31.mjs`) — parses markdown link targets in the 4 new runbooks + retrofitted files, validates anchor existence in target files, enforces D-22 target-specificity rule (no bare `00-index.md` for L1 runbook escalation links).

@@ -1,0 +1,18 @@
+{
+  "_note": "Placeholder inventory captured Wave 0 of Phase 31. Wave 5 retrofit tasks MUST re-verify these line numbers via the pre-flight drift check before editing. Decisions locked Wave 0: (1) Runbook 16 uses TEXT markers [CONFIG] / [TIMING] / [DEFECT] — emoji audit returned 0 matches across docs/l1-runbooks and docs/l2-runbooks; (2) Validation harness canonical location is scripts/validation/check-phase-31.mjs (Phase 30 precedent, overrides CONTEXT.md D-26 claim of .planning/phases/.../check-phase-31.mjs).",
+  "placeholders": [
+    { "file": "docs/l1-runbooks/16-ios-apns-expired.md", "line": 90, "target_primary": "15-ios-ade-token-profile.md", "target_secondary": ["14-ios-log-collection.md"], "commit_group": "l1-runbooks" },
+    { "file": "docs/l1-runbooks/17-ios-ade-not-starting.md", "line": 114, "target_primary": "15-ios-ade-token-profile.md", "target_secondary": [], "commit_group": "l1-runbooks" },
+    { "file": "docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md", "line": 88, "target_primary": "14-ios-log-collection.md", "target_secondary": ["15-ios-ade-token-profile.md"], "commit_group": "l1-runbooks" },
+    { "file": "docs/l1-runbooks/19-ios-license-invalid.md", "line": 96, "target_primary": "14-ios-log-collection.md", "target_secondary": ["15-ios-ade-token-profile.md"], "commit_group": "l1-runbooks" },
+    { "file": "docs/l1-runbooks/20-ios-device-cap-reached.md", "line": 83, "target_primary": "15-ios-ade-token-profile.md", "target_secondary": [], "commit_group": "l1-runbooks" },
+    { "file": "docs/l1-runbooks/21-ios-compliance-blocked.md", "line": 179, "target_primary": "17-ios-compliance-ca-timing.md", "target_secondary": [], "commit_group": "l1-runbooks" },
+    { "file": "docs/decision-trees/07-ios-triage.md", "line": 44, "target_primary": "00-index.md#ios-l2-runbooks", "target_secondary": [], "commit_group": "triage-tree", "type": "mermaid-node-label" },
+    { "file": "docs/decision-trees/07-ios-triage.md", "line": 72, "target_primary": "15-ios-ade-token-profile.md", "target_secondary": ["16-ios-app-install.md"], "commit_group": "triage-tree", "type": "routing-table-row" },
+    { "file": "docs/decision-trees/07-ios-triage.md", "line": 82, "target_primary": "15-ios-ade-token-profile.md", "target_secondary": ["16-ios-app-install.md"], "commit_group": "triage-tree", "type": "how-to-check-row" },
+    { "file": "docs/decision-trees/07-ios-triage.md", "line": 89, "target_primary": "15-ios-ade-token-profile.md", "target_secondary": ["16-ios-app-install.md"], "commit_group": "triage-tree", "type": "escalation-data-row" },
+    { "file": "docs/decision-trees/07-ios-triage.md", "line": 94, "target_primary": "00-index.md#ios-l2-runbooks", "target_secondary": [], "commit_group": "triage-tree", "type": "related-resources-footer" },
+    { "file": "docs/ios-lifecycle/01-ade-lifecycle.md", "line": 364, "target_primary": "14-ios-log-collection.md#section-3-mac-cable-sysdiagnose", "target_secondary": ["15-ios-ade-token-profile.md"], "commit_group": "lifecycle" },
+    { "file": "docs/admin-setup-ios/06-compliance-policy.md", "line": 182, "target_primary": "14-ios-log-collection.md", "target_secondary": ["17-ios-compliance-ca-timing.md"], "commit_group": "admin-setup-prose-rewrite", "type": "prose-rewrite" }
+  ]
+}
