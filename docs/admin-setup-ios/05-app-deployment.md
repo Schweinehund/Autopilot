@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-16
-review_by: 2026-07-15
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -183,16 +183,16 @@ Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Manag
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| VPP user-licensed app assigned to device with "Block App Store" restriction | Intune | Invitation cannot be accepted; user license stuck in "Invitation sent" | iOS L1 runbooks (Phase 30) |
-| VPP Available intent assigned to device groups | Intune | App does not appear in Company Portal; assignment silently fails | iOS L1 runbooks (Phase 30) |
-| VPP device-licensed app assigned to unsupervised device, admin expected silent install | Intune | User sees one-time install prompt instead of silent install | iOS L1 runbooks (Phase 30) |
-| VPP user-licensed app assigned to unsupervised device, admin expected silent install | Intune | User sees Apple Account prompt AND install prompt (silent install NOT available for user licensing) | iOS L1 runbooks (Phase 30) |
-| LOB .ipa > 2 GB | Intune | Upload fails with size-limit error | iOS L1 runbooks (Phase 30) |
-| LOB Distribution certificate expired (3-year lifecycle) | Intune | All existing LOB apps fail to launch with "Unable to Verify App" | iOS L1 runbooks (Phase 30) |
-| LOB provisioning profile expired (1-year lifecycle) | Intune | Existing LOB app installs stop launching; new installs fail to complete | iOS L1 runbooks (Phase 30) |
-| Store app deployed without VPP on corporate devices expecting silent install | Intune | User sees Apple Account / Get prompt; paid apps block with "Buy" prompt | iOS L1 runbooks (Phase 30) |
-| VPP token not renewed before annual expiry | Intune | VPP apps stop syncing from ABM; existing installs unaffected | iOS L1 runbooks (Phase 30) |
-| LOB app CFBundleVersion not incremented on re-upload | Intune | Devices do not detect a new version; existing installed version remains | iOS L1 runbooks (Phase 30) |
+| VPP user-licensed app assigned to device with "Block App Store" restriction | Intune | Invitation cannot be accepted; user license stuck in "Invitation sent" | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for VPP invitation failures; L2 investigation + admin config review |
+| VPP Available intent assigned to device groups | Intune | App does not appear in Company Portal; assignment silently fails | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; VPP assignment debugging is L2 scope |
+| VPP device-licensed app assigned to unsupervised device, admin expected silent install | Intune | User sees one-time install prompt instead of silent install | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; expected-vs-actual supervision behavior is admin + L2 scope |
+| VPP user-licensed app assigned to unsupervised device, admin expected silent install | Intune | User sees Apple Account prompt AND install prompt (silent install NOT available for user licensing) | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; silent install not available for user licensing, admin expectation mismatch |
+| LOB .ipa > 2 GB | Intune | Upload fails with size-limit error | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; LOB size-limit is admin-scope upload failure |
+| LOB Distribution certificate expired (3-year lifecycle) | Intune | All existing LOB apps fail to launch with "Unable to Verify App" | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; LOB cert is distinct from APNs — requires Apple Developer portal action (different from APNs certificate portal) |
+| LOB provisioning profile expired (1-year lifecycle) | Intune | Existing LOB app installs stop launching; new installs fail to complete | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; LOB provisioning profile is Apple Developer portal + Intune re-upload admin action |
+| Store app deployed without VPP on corporate devices expecting silent install | Intune | User sees Apple Account / Get prompt; paid apps block with "Buy" prompt | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; VPP licensing migration is admin config scope |
+| VPP token not renewed before annual expiry | Intune | VPP apps stop syncing from ABM; existing installs unaffected | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; VPP token renewal is ABM admin action (distinct from ABM/ADE token) |
+| LOB app CFBundleVersion not incremented on re-upload | Intune | Devices do not detect a new version; existing installed version remains | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; LOB version-detection is L2+admin investigation |
 
 ## Renewal / Maintenance
 
@@ -223,4 +223,5 @@ Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Manag
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS app deployment guide with Key Concepts section (managed vs unmanaged, VPP device vs user licensing, silent install boundary table), 4-column deployment type comparison, per-type sections with supervised-only silent install callouts, managed app status verification in three admin-center locations, configuration-caused failures, and VPP/LOB renewal cadences | -- |

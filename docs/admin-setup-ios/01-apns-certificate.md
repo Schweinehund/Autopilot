@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-16
-review_by: 2026-07-15
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -98,11 +98,11 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| New certificate created instead of renewed | Apple Push Certificates Portal | ALL enrolled iOS, iPadOS, and macOS devices lose MDM communication; devices show "Not checking in" | iOS L1 runbooks (Phase 30) |
-| Personal Apple ID used | Apple Push Certificates Portal | Certificate cannot be renewed after employee departure; all Apple devices lose MDM at expiration | iOS L1 runbooks (Phase 30) |
-| Certificate expired without renewal | Intune | All Apple device MDM communication stops; 30-day grace period for renewal | iOS L1 runbooks (Phase 30) |
-| Wrong CSR uploaded | Apple Push Certificates Portal | Certificate created but cannot communicate with Intune tenant | iOS L1 runbooks (Phase 30) |
-| Renewed with different Apple ID | Apple Push Certificates Portal | Existing certificate not visible; renewal fails | iOS L1 runbooks (Phase 30) |
+| New certificate created instead of renewed | Apple Push Certificates Portal | ALL enrolled iOS, iPadOS, and macOS devices lose MDM communication; devices show "Not checking in" | [Runbook 16: APNs Expired](../l1-runbooks/16-ios-apns-expired.md) |
+| Personal Apple ID used | Apple Push Certificates Portal | Certificate cannot be renewed after employee departure; all Apple devices lose MDM at expiration | [Runbook 16: APNs Expired](../l1-runbooks/16-ios-apns-expired.md) |
+| Certificate expired without renewal | Intune | All Apple device MDM communication stops; 30-day grace period for renewal | [Runbook 16: APNs Expired](../l1-runbooks/16-ios-apns-expired.md) |
+| Wrong CSR uploaded | Apple Push Certificates Portal | Certificate created but cannot communicate with Intune tenant | [Runbook 16: APNs Expired](../l1-runbooks/16-ios-apns-expired.md) |
+| Renewed with different Apple ID | Apple Push Certificates Portal | Existing certificate not visible; renewal fails | [Runbook 16: APNs Expired](../l1-runbooks/16-ios-apns-expired.md) |
 
 ## Renewal / Maintenance
 
@@ -124,4 +124,5 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version -- APNs certificate creation, renewal, and cross-platform expiry impact | -- |

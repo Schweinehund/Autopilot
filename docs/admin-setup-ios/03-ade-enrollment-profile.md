@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-16
-review_by: 2026-07-15
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -158,12 +158,12 @@ After saving the enrollment profile, assign it to devices synced through the ADE
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Supervised mode set to No | Intune | Supervised-only policies show "Not applicable"; locked enrollment ineffective | iOS L1 runbooks (Phase 30) |
-| Locked enrollment set to No | Intune | Users can remove management profile via Settings > General > VPN & Device Management | iOS L1 runbooks (Phase 30) |
-| No user affinity on user-targeted deployment | Intune | Company Portal non-functional; user CA policies not applied; no primary user shown | iOS L1 runbooks (Phase 30) |
-| Legacy authentication method | Intune | Setup Assistant auth failure when modern CA policies are enforced | iOS L1 runbooks (Phase 30) |
-| Await final configuration set to No | Intune | User reaches home screen before device configuration policies apply; immediate non-compliance | iOS L1 runbooks (Phase 30) |
-| No profile assigned before device power-on | Intune | Device boots standard iOS setup; does not enroll in MDM; requires factory reset | iOS L1 runbooks (Phase 30) |
+| Supervised mode set to No | Intune | Supervised-only policies show "Not applicable"; locked enrollment ineffective | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| Locked enrollment set to No | Intune | Users can remove management profile via Settings > General > VPN & Device Management | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| No user affinity on user-targeted deployment | Intune | Company Portal non-functional; user CA policies not applied; no primary user shown | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| Legacy authentication method | Intune | Setup Assistant auth failure when modern CA policies are enforced | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| Await final configuration set to No | Intune | User reaches home screen before device configuration policies apply; immediate non-compliance | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| No profile assigned before device power-on | Intune | Device boots standard iOS setup; does not enroll in MDM; requires factory reset | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
 
 ## See Also
 
@@ -182,4 +182,5 @@ After saving the enrollment profile, assign it to devices synced through the ADE
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version -- ADE enrollment profile with supervised-only callouts, authentication methods, Setup Assistant panes, and locked enrollment | -- |
