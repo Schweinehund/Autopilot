@@ -1,12 +1,12 @@
 ---
-last_verified: 2026-04-15
-review_by: 2026-07-14
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: both
 audience: L2
 platform: all
 ---
 
-> **Platform coverage:** This card covers Windows [Autopilot](_glossary.md#autopilot) (classic/APv1), Autopilot Device Preparation (APv2), and macOS ADE.
+> **Platform coverage:** This card covers Windows [Autopilot](_glossary.md#autopilot) (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
 > Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # L2 Quick-Reference Card
@@ -69,8 +69,8 @@ Microsoft-Windows-User Device Registration/Admin
 - [TPM Attestation Investigation](l2-runbooks/03-tpm-attestation.md)
 - [Hybrid Join Investigation](l2-runbooks/04-hybrid-join.md)
 - [Policy Conflict Analysis](l2-runbooks/05-policy-conflicts.md)
-- [PowerShell Reference (full)](reference/powershell-ref.md)
-- [Registry Paths (full)](reference/registry-paths.md)
+- [Full PowerShell Reference](reference/powershell-ref.md)
+- [Full Registry Paths Reference](reference/registry-paths.md)
 - [Network Endpoints](reference/endpoints.md)
 
 ---
@@ -177,10 +177,59 @@ Full reference: [macOS Terminal Commands](reference/macos-commands.md) | [macOS 
 - [App Install Failure Diagnosis](l2-runbooks/12-macos-app-install.md)
 - [Compliance Evaluation Investigation](l2-runbooks/13-macos-compliance.md)
 
+---
+
+## iOS/iPadOS Quick Reference
+
+**Platform:** iOS/iPadOS through Microsoft Intune
+
+> **Important:** iOS has NO CLI diagnostic tool. No equivalent to `mdmdiagnosticstool.exe` (Windows) or `profiles` / `log show` / `system_profiler` (macOS). Diagnostic data is fragmented across three tiered methods — see below.
+
+### iOS Diagnostic Data Collection (3 methods)
+
+| Method | Who Triggers | L2 Access Path | When to Use |
+|--------|--------------|----------------|-------------|
+| MDM diagnostic report | User (on-device) OR L2 (MAM-scoped Intune remote action) | On-device path (general MDM profile state): Settings > General > VPN & Device Management > Management Profile > More Details (user-coordinated screenshots; authoritative per-payload MDM profile state). MAM-scoped Intune remote action (App Protection only): Intune > Troubleshooting + support > Troubleshoot > [user] > App Protection > Checked-in > [app] > "..." > Collect diagnostics (M365 app MAM logs ONLY — this remote action does NOT produce a general MDM enrollment/config bundle per [`14-ios-log-collection.md:29,58`](l2-runbooks/14-ios-log-collection.md)) | Tier 1 -- always start here; on-device path for general MDM profile state, MAM-scoped action for App Protection diagnostics |
+| Company Portal log upload | User (on device) | Microsoft Support ticket (indirect — support uploads logs to case on L2's behalf) | Tier 2 -- when Tier 1 is insufficient and no Mac+cable is available |
+| Mac+cable sysdiagnose | L2 + user (physical) | Direct `.tar.gz` extraction via macOS Console.app | Tier 3 -- when profile-delivery verbosity is required (ADE token / MDM channel investigation) |
+
+*(Full method details and scope distinctions: [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) is the authoritative source — MAM scope of the Intune "Collect diagnostics" remote action is documented at `14-ios-log-collection.md:29` and §1b:58. Verify portal paths per Phase 30 D-32 / Phase 31 D-31 research flags at execution time — Intune admin center UI can shift since last plan-time verification 2026-04-17.)*
+
+### Key Intune Portal Paths (iOS L2)
+
+| Path | Purpose |
+|------|---------|
+| Devices > Enrollment > Apple > Enrollment program tokens > [token] > Profiles | ABM token sync status, enrollment profile assignment, device assignment to profile |
+| Devices > Enrollment > Apple > MDM Push Certificate | APNs certificate status, expiry date, renewal Apple ID |
+| Devices > Enrollment > Enrollment restrictions | Platform / ownership / count restrictions applied to enrollment |
+| Apps > iOS/iPadOS apps | Managed app status, VPP licensing state (device-licensed vs user-licensed), per-device install state |
+| Devices > [device] > Device compliance | Per-device compliance policy evaluation state, timestamps, and non-compliant settings |
+
+*(Verify paths per Phase 30 D-32 research flag — Microsoft Learn (verified 2026-04-17) confirms current; re-verify before content lock-in as Intune admin center reorganizes without deprecation notice.)*
+
+### Sysdiagnose Trigger Reference (iOS/iPadOS)
+
+| Device / OS | Trigger Combination |
+|-------------|---------------------|
+| **Modern iOS 15+** / iPadOS 15+ (unified trigger, all current devices) | Press and release both volume buttons + Side/Top button simultaneously (hold for ~250ms) |
+| iPhone 8 / SE (1st+2nd gen) / iPad with Touch ID (Legacy / pre-iOS 15) | Both volume buttons + Sleep/Wake (Side) button |
+| iPhone X and later iPhones (Legacy / pre-iOS 15) | Both volume buttons + Side button |
+| iPad with Face ID (Legacy / pre-iOS 15) | Top button + either volume button |
+
+*(Full procedure with Console.app extraction: [iOS Log Collection §Section 3](l2-runbooks/14-ios-log-collection.md#section-3-maccable-sysdiagnose). Modern unified trigger verified against Apple Developer forums 2026-04-17; legacy per-device-type triggers apply to pre-iOS-15 devices (increasingly rare in managed fleets). Verify triggers per Phase 31 D-30 research flag at execution time.)*
+
+### iOS Investigation Runbooks
+
+- [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) -- prerequisite for all iOS L2 investigations
+- [ADE Token & Profile Delivery Investigation](l2-runbooks/15-ios-ade-token-profile.md) -- Pattern A-D failure analysis
+- [App Install Failure Diagnosis](l2-runbooks/16-ios-app-install.md) -- three-class [CONFIG]/[TIMING]/[DEFECT] disambiguation
+- [Compliance & CA Timing Investigation](l2-runbooks/17-ios-compliance-ca-timing.md) -- compliance axis + CA timing + Not-evaluated terminal state
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 3-method diagnostic data collection table, Intune portal paths table, sysdiagnose trigger reference table (modern unified + legacy per-device), and 4-runbook investigation list; research-flag footnotes per D-32; platform coverage blockquote updated per D-41 | -- |
 | 2026-04-15 | Added macOS ADE Quick Reference section with log collection, Terminal commands, log paths, and investigation runbook links | -- |
 | 2026-04-13 | Added APv2 quick-reference section with log collection and event IDs | -- |
 | 2026-03-23 | Initial version | — |
