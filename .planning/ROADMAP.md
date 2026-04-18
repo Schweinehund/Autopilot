@@ -207,7 +207,7 @@ Plans:
   2. Zero occurrences of the literal placeholder `iOS L1 runbooks (Phase 30)` remain in the 9 admin-setup-ios files; every prior placeholder row points to the correct runbook (APNs → 16, ABM/ADE → 17, enrollment-restriction → 18, license → 19, device-cap → 20, compliance → 21)
   3. `30-VERIFICATION.md` exists with 3-source matrix evidence that L1TS-01 and L1TS-02 are SATISFIED (triage tree + 6 runbooks reachable, admin-self-diagnosed flow restored)
   4. Re-running `/gsd-audit-milestone` for v1.3 returns `status: passed` with 18/18 requirements SATISFIED and 0 MAJOR integration findings
-**Plans:** 0/4 tasks planned
+**Plans:** 2/4 plans executed
 Tasks (to be formalized via `/gsd-plan-phase 33`):
 - [ ] Fix I-1 anchor drift in `docs/ios-lifecycle/01-ade-lifecycle.md:364`
 - [ ] Execute Plan 30-09 — 71-placeholder retrofit across 9 admin-setup-ios files
@@ -250,4 +250,4 @@ Tasks (to be formalized via `/gsd-plan-phase 33`):
 | 30. iOS L1 Triage & Runbooks | v1.3 | 7/10 | In Progress|  |
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 10/10 | Complete    | 2026-04-18 |
-| 33. v1.3 Gap Closure | v1.3 | 0/4 | Pending |  |
+| 33. v1.3 Gap Closure | v1.3 | 2/4 | In Progress|  |
