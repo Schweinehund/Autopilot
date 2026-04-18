@@ -1,12 +1,12 @@
 ---
-last_verified: 2026-04-15
-review_by: 2026-07-14
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: both
 audience: all
 platform: all
 ---
 
-> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2) and macOS ADE provisioning.
+> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, and iOS/iPadOS provisioning.
 > Not sure which framework applies? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # Device Provisioning Documentation
@@ -142,11 +142,14 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [Migration Guides](reference/00-index.md#migration-guides) | APv1-to-APv2, Imaging-to-Autopilot, GPO-to-Intune migration playbooks |
 | [Monitoring and Operations](reference/00-index.md#monitoring-and-operations) | Deployment reporting, drift detection, new-batch device onboarding workflow |
 | [macOS Capability Matrix](reference/macos-capability-matrix.md) | Intune feature parity comparison between Windows and macOS across enrollment, configuration, apps, compliance, and updates |
+| [iOS Enrollment Path Overview](ios-lifecycle/00-enrollment-overview.md) | 4-path comparison with supervision axis (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE) |
+| [iOS Capability Matrix](reference/ios-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, and iOS (NAV-03) |
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Phase 32: added iOS Capability Matrix + iOS Enrollment Path Overview Cross-Platform References entries; platform coverage updated for trilateral framing | -- |
 | 2026-04-15 | Added macOS quick-reference card links to L1 and L2 tables; updated Common Issues description for cross-platform | -- |
 | 2026-04-14 | Resolved Phase 24 macOS troubleshooting TBD placeholders | -- |
 | 2026-04-14 | Added macOS Admin Setup links and macOS Capability Matrix to Cross-Platform References | -- |

@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: both
 audience: all
 platform: all
@@ -21,6 +21,10 @@ Technical reference documents for Windows Autopilot and macOS ADE configuration,
 - [macOS Terminal Commands](macos-commands.md) — Terminal diagnostic commands for Intune and ADE (profiles, log show, system_profiler, IntuneMacODC)
 - [macOS Log Paths](macos-log-paths.md) — Log file locations, configuration profile paths, and unified log subsystems
 - [macOS Capability Matrix](macos-capability-matrix.md) — Intune feature parity comparison between Windows and macOS (MADM-06)
+
+## iOS References
+
+- [iOS Capability Matrix](ios-capability-matrix.md) — Intune feature parity comparison across Windows, macOS, and iOS (NAV-03)
 
 ## Infrastructure Prerequisites
 
@@ -54,5 +58,6 @@ Technical reference documents for Windows Autopilot and macOS ADE configuration,
 
 | Date | Change |
 |------|--------|
+| 2026-04-17 | Added iOS References section with iOS Capability Matrix (NAV-03) |
 | 2026-04-14 | Added macOS Capability Matrix to macOS References section |
 | 2026-04-13 | Initial version — organizes all Phase 21 reference files by sub-domain |
