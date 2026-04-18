@@ -361,7 +361,7 @@ iOS/iPadOS MDM operates through a **single channel** — Apple MDM via APNs. The
 - **No direct filesystem inspection.** iOS/iPadOS does not provide Terminal access or direct filesystem inspection via MDM. L2 diagnostic methods are:
   - Company Portal log upload (user uploads device logs to Microsoft via Company Portal > Help > Send Logs)
   - MDM diagnostic report (Settings > General > VPN & Device Management > Management Profile > More Details)
-  - For advanced investigation: [Mac+cable sysdiagnose](../l2-runbooks/14-ios-log-collection.md#section-3-mac-cable-sysdiagnose) -- see also [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md) for Pattern A-D token-sync context
+  - For advanced investigation: [Mac+cable sysdiagnose](../l2-runbooks/14-ios-log-collection.md#section-3-sysdiagnose-trigger-and-file-export) -- see also [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token-profile.md) for Pattern A-D token-sync context
 
 **APNs is the sole push mechanism.** If the APNs certificate expires, ALL iOS/iPadOS MDM communication stops — no commands can be sent and devices cannot check in. The APNs certificate in Intune is shared across all Apple platforms (iOS, iPadOS, macOS). A single expired certificate breaks management for all Apple devices simultaneously, not just iOS.
 
