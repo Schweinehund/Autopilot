@@ -1,12 +1,12 @@
 ---
-last_verified: 2026-04-15
-review_by: 2026-07-14
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: both
 audience: all
 platform: all
 ---
 
-> **Platform coverage:** This guide covers Windows Autopilot (classic/APv1 and Device Preparation/APv2) and macOS ADE provisioning issues.
+> **Platform coverage:** This guide covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, and iOS/iPadOS provisioning issues.
 > Not sure which platform or framework? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # Common Provisioning Issues
@@ -15,6 +15,7 @@ platform: all
 
 - [Windows Autopilot Issues](#windows-autopilot-issues) -- Windows device provisioning failures (APv1 and APv2)
 - [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios) -- macOS enrollment and management failures
+- [iOS/iPadOS Failure Scenarios](#iosipados-failure-scenarios) -- iOS/iPadOS enrollment and management failures via Intune
 
 ---
 
@@ -31,6 +32,7 @@ Symptom-based index routing to the appropriate L1 and L2 runbooks.
 ### Device Registration Issues
 
 > **macOS:** For macOS device not appearing in Intune, see [macOS: Device Not Appearing](#device-not-appearing-in-intune).
+> **iOS:** For iOS enrollment failures, see [iOS: Device Not Appearing in Intune](#ios-device-not-appearing-in-intune).
 
 Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) portal after [OOBE](_glossary.md#oobe).
 
@@ -47,6 +49,7 @@ Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) po
 ### Profile Assignment Issues
 
 > **macOS:** For macOS configuration profile issues, see [macOS: Profile Not Applied](#configuration-profile-not-applied).
+> **iOS:** For iOS configuration and restriction issues, see [iOS: Enrollment Blocked by Configuration](#ios-enrollment-blocked-by-configuration).
 
 Device goes through manual setup instead of Autopilot, or wrong profile assigned.
 
@@ -142,6 +145,7 @@ Problems during APv1-to-APv2 migration, imaging-to-Autopilot transition, or GPO-
 ### Security and Enrollment Issues
 
 > **macOS:** Conditional Access enrollment timing applies cross-platform. See [macOS: Compliance / Access Blocked](#compliance-failure-or-access-blocked) for macOS-specific guidance.
+> **iOS:** For iOS Conditional Access and compliance timing issues, see [iOS: Compliance / Access Blocked](#ios-compliance--access-blocked).
 
 Conditional Access blocking enrollment, compliance not evaluating, or security baseline conflicts.
 
@@ -157,6 +161,8 @@ Conditional Access blocking enrollment, compliance not evaluating, or security b
 
 Symptom-based index routing to the appropriate macOS L1 and L2 runbooks. Start with the [macOS ADE Triage Decision Tree](decision-trees/06-macos-triage.md) to identify the failure scenario.
 
+> **iOS:** For iOS/iPadOS device not appearing, see [iOS: Device Not Appearing in Intune](#ios-device-not-appearing-in-intune).
+
 ### Device Not Appearing in Intune
 
 Mac serial number not found in Intune admin center after ADE enrollment attempt.
@@ -170,6 +176,8 @@ Setup Assistant authentication failure, Await Configuration stuck, or network co
 
 - **L1:** [Setup Assistant Failed](l1-runbooks/11-macos-setup-assistant-failed.md)
 - **L2:** [macOS Log Collection](l2-runbooks/10-macos-log-collection.md) + [Profile Delivery Investigation](l2-runbooks/11-macos-profile-delivery.md)
+
+> **iOS:** For iOS configuration / restriction application issues, see [iOS: Enrollment Blocked by Configuration](#ios-enrollment-blocked-by-configuration).
 
 ### Configuration Profile Not Applied
 
@@ -185,6 +193,8 @@ DMG, PKG, or VPP app not installed or showing failed status after enrollment.
 - **L1:** [App Not Installed](l1-runbooks/13-macos-app-not-installed.md)
 - **L2:** [App Install Failure Diagnosis](l2-runbooks/12-macos-app-install.md)
 
+> **iOS:** For iOS compliance / Conditional Access blocking, see [iOS: Compliance / Access Blocked](#ios-compliance--access-blocked).
+
 ### Compliance Failure or Access Blocked
 
 Device non-compliant in Intune or user cannot access Microsoft 365 resources despite enrollment.
@@ -199,10 +209,66 @@ Company Portal not available, sign-in failing, or Entra registration incomplete.
 - **L1:** [Company Portal Sign-In](l1-runbooks/15-macos-company-portal-sign-in.md)
 - **L2:** [Compliance Evaluation Investigation](l2-runbooks/13-macos-compliance.md) (for Entra registration issues)
 
+## iOS/iPadOS Failure Scenarios
+
+> **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
+> **macOS:** For macOS ADE troubleshooting, see [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios).
+
+**Platform:** iOS/iPadOS through Microsoft Intune
+
+Symptom-based index routing to the appropriate iOS L1 and L2 runbooks. Start with the [iOS Triage Decision Tree](decision-trees/07-ios-triage.md) to identify the failure scenario.
+
+### iOS: Device Not Appearing in Intune
+
+iOS/iPadOS device not visible in Intune admin center after enrollment attempt. Could be caused by: APNs certificate expired (cross-platform blast radius), ADE enrollment not starting, user license invalid, or device enrollment cap reached. Start with the triage decision tree to disambiguate.
+
+- **L1:** [APNs Certificate Expired](l1-runbooks/16-ios-apns-expired.md) | [ADE Not Starting](l1-runbooks/17-ios-ade-not-starting.md) | [License Invalid](l1-runbooks/19-ios-license-invalid.md)
+- **L2:** [iOS Log Collection](l2-runbooks/14-ios-log-collection.md) + [ADE Token & Profile Investigation](l2-runbooks/15-ios-ade-token-profile.md)
+
+### iOS: ADE Setup Assistant Not Completing
+
+ADE-enrolled device stuck in Setup Assistant, authentication failure, or Await Configuration / DDM status hang during enrollment.
+
+- **L1:** [ADE Not Starting](l1-runbooks/17-ios-ade-not-starting.md)
+- **L2:** [iOS Log Collection](l2-runbooks/14-ios-log-collection.md) + [ADE Token & Profile Investigation](l2-runbooks/15-ios-ade-token-profile.md)
+
+### iOS: Enrollment Blocked by Configuration
+
+Device enrollment halted by an Intune enrollment restriction (platform, ownership, count) or configuration profile conflict before the device appears as enrolled.
+
+- **L1:** [Enrollment Restriction Blocking](l1-runbooks/18-ios-enrollment-restriction-blocking.md) | [Device Cap Reached](l1-runbooks/20-ios-device-cap-reached.md) (reciprocal disambiguation — see both if cause unclear)
+- **L2:** [iOS Log Collection](l2-runbooks/14-ios-log-collection.md)
+
+### iOS: User License Not Present
+
+Enrollment fails or blocks with "user license invalid" — user lacks an Intune license OR an ABM license sync discrepancy.
+
+- **L1:** [License Invalid](l1-runbooks/19-ios-license-invalid.md)
+- **L2:** [iOS Log Collection](l2-runbooks/14-ios-log-collection.md)
+
+### iOS: Device Enrollment Cap Reached
+
+User's per-user or per-group device cap in Intune blocks enrollment of an additional iOS/iPadOS device.
+
+- **L1:** [Device Cap Reached](l1-runbooks/20-ios-device-cap-reached.md)
+- **L2:** (none — cap adjustments are admin-center actions)
+
+### iOS: Compliance / Access Blocked
+
+Device shows compliant in Intune but Conditional Access still blocks Microsoft 365 resources, OR device is non-compliant for reasons unclear to the user (OS version, jailbreak, passcode, or CA timing window).
+
+- **L1:** [Compliance Blocked](l1-runbooks/21-ios-compliance-blocked.md)
+- **L2:** [Compliance & CA Timing Investigation](l2-runbooks/17-ios-compliance-ca-timing.md)
+
+### iOS: App Protection Policies Not Applying (MAM-WE)
+
+> **Advisory:** MAM-WE-specific L1/L2 runbooks are deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](admin-setup-ios/09-mam-app-protection.md). For the MAM-WE glossary entry, see [MAM-WE in Apple Provisioning Glossary](_glossary-macos.md#mam-we).
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Phase 32: added iOS/iPadOS Failure Scenarios section (6 symptom categories with ios- anchor prefix + MAM-WE advisory), platform selector entry, bidirectional iOS cross-reference banners; updated platform coverage blockquote | -- |
 | 2026-04-15 | Added macOS ADE Failure Scenarios section, platform selector, cross-reference banners; updated title and frontmatter for cross-platform coverage | -- |
 | 2026-04-13 | Added Device Reset, Migration, and Security routing sections for Phase 21 content | — |
 | 2026-04-13 | Added APv2 Failure Scenarios section with framework labels | — |
