@@ -1,12 +1,12 @@
 ---
-last_verified: 2026-04-15
-review_by: 2026-07-14
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: both
 audience: L1
 platform: all
 ---
 
-> **Platform coverage:** This card covers Windows Autopilot (classic/APv1), Autopilot Device Preparation (APv2), and macOS ADE.
+> **Platform coverage:** This card covers Windows Autopilot (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
 > Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # L1 Quick-Reference Card
@@ -112,10 +112,45 @@ platform: all
 - [Compliance / Access Blocked](l1-runbooks/14-macos-compliance-access-blocked.md)
 - [Company Portal Sign-In](l1-runbooks/15-macos-company-portal-sign-in.md)
 
+---
+
+## iOS/iPadOS Quick Reference
+
+**Platform:** iOS/iPadOS through Microsoft Intune
+
+### Top Checks
+
+1. **Device in ABM?** (ADE path) OR **User licensed for Intune?** (BYOD path) -- ABM [business.apple.com] > Devices (verify serial + MDM server assignment) | Entra admin center > Users > [user] > Licenses (verify Intune license)
+2. **Device in Intune?** -- Intune admin center > Devices > iOS/iPadOS -- search by serial number, check enrollment state
+3. **Enrollment profile assigned?** (ADE path only) -- Intune admin center > Devices > Enrollment > Apple > Enrollment program tokens > [token] > Profiles -- verify profile assigned to device serial
+4. **Compliance state?** -- Intune admin center > Devices > [device] > Device compliance -- check "Compliant" vs "Non-compliant" and review non-compliant settings
+
+### iOS Escalation Triggers
+
+- Serial in ABM but device not in Intune after 24 hours --> **Escalate L2** (collect: serial number, ABM MDM server assignment screenshot, enrollment token profile assignment screenshot)
+- Setup Assistant stuck or authentication failure after one retry --> **Escalate L2** (collect: serial number, screenshot of error, iOS version, enrollment token)
+- Enrollment blocked by enrollment restriction and restriction configuration does not obviously apply --> **Escalate L2** (collect: serial number, user UPN, enrollment restriction screenshot, error message)
+- User license verified in Entra but enrollment reports "license invalid" after 24-hour sync --> **Escalate L2** (collect: user UPN, license screenshot, timestamped enrollment attempt)
+- Device marked compliant in Intune but Conditional Access still blocks Microsoft 365 access --> **Escalate L2** (collect: user UPN, device ID, compliance screenshot, CA sign-in log timestamp)
+
+### iOS Decision Tree
+
+- [iOS Triage Decision Tree](decision-trees/07-ios-triage.md) -- start here for iOS/iPadOS failures
+
+### iOS Runbooks
+
+- [iOS APNs Certificate Expired](l1-runbooks/16-ios-apns-expired.md) -- cross-platform blast radius; all iOS/iPadOS + macOS MDM communication affected
+- [iOS ADE Not Starting](l1-runbooks/17-ios-ade-not-starting.md) -- three failure signatures
+- [iOS Enrollment Restriction Blocking](l1-runbooks/18-ios-enrollment-restriction-blocking.md) -- reciprocal with Device Cap Reached
+- [iOS License Invalid](l1-runbooks/19-ios-license-invalid.md) -- dual manifestation at enrollment
+- [iOS Device Cap Reached](l1-runbooks/20-ios-device-cap-reached.md) -- user or group cap exceeded
+- [iOS Compliance Blocked](l1-runbooks/21-ios-compliance-blocked.md) -- multi-cause A/B/C with user action
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 4 top checks, 5 escalation triggers, decision tree link, and 6 runbook links (16-21) | -- |
 | 2026-04-15 | Added macOS ADE Quick Reference section with top checks, escalation triggers, and runbook links | -- |
 | 2026-04-13 | Added APv2 quick-reference section | -- |
 | 2026-03-23 | Initial version | — |
