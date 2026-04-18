@@ -36,6 +36,14 @@ HARNESS_DIR="$(cd "$(dirname "$0")" && pwd)"
 PHASE32_FILES=(
   "docs/decision-trees/00-initial-triage.md"
   "docs/l1-runbooks/00-index.md"
+  "docs/decision-trees/07-ios-triage.md"
+  "docs/_glossary-macos.md"
+  "docs/reference/ios-capability-matrix.md"
+  "docs/reference/00-index.md"
+  "docs/common-issues.md"
+  "docs/index.md"
+  "docs/quick-ref-l1.md"
+  "docs/quick-ref-l2.md"
 )
 
 echo "=== link-check (Phase 32 touched files — strict) ==="
