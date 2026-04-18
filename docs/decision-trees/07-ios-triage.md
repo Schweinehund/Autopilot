@@ -96,11 +96,12 @@ All terminal nodes are within 2 decision steps of the root node (IOS1), well und
 - [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md) -- Enrollment path concepts
 - [Initial Triage Decision Tree](00-initial-triage.md) -- Windows Autopilot (classic) triage
 - [macOS ADE Triage](06-macos-triage.md) -- Sibling Apple platform triage
-- [Apple Provisioning Glossary](../_glossary-macos.md) -- Shared Apple terminology (iOS glossary additions in Phase 32 NAV-01)
+- [Apple Provisioning Glossary](../_glossary-macos.md) -- Shared Apple terminology covering iOS/iPadOS ([supervision](../_glossary-macos.md#supervision), [MAM-WE](../_glossary-macos.md#mam-we), [APNs](../_glossary-macos.md#apns), [account-driven user enrollment](../_glossary-macos.md#account-driven-user-enrollment), [jailbreak detection](../_glossary-macos.md#jailbreak-detection)) and macOS ([ABM](../_glossary-macos.md#abm), [ADE](../_glossary-macos.md#ade), [VPP](../_glossary-macos.md#vpp), [Await Configuration](../_glossary-macos.md#await-configuration), [Setup Assistant](../_glossary-macos.md#setup-assistant))
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Phase 32: resolved glossary placeholder; updated Apple glossary cross-reference to list iOS and macOS terms | -- |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |
