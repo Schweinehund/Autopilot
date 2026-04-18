@@ -11,12 +11,13 @@ platform: all
 
 # Device Provisioning Documentation
 
-Troubleshooting, investigation, and setup guides for Windows Autopilot and macOS ADE deployments. Choose your platform below, then follow the path for your role.
+Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS ADE, and iOS/iPadOS Intune provisioning deployments. Choose your platform below, then follow the path for your role.
 
 ## Choose Your Platform
 
 - [Windows Autopilot](#windows-autopilot) -- Windows device provisioning via Autopilot (classic/APv1) and Device Preparation (APv2)
 - [macOS Provisioning](#macos-provisioning) -- macOS device provisioning via Automated Device Enrollment (ADE) through Apple Business Manager
+- [iOS/iPadOS Provisioning](#iosipados-provisioning) -- iOS/iPadOS device provisioning via Microsoft Intune (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE)
 - [Cross-Platform References](#cross-platform-references) -- Glossaries, concept comparison, and shared resources
 
 ---
@@ -126,6 +127,42 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 
 ---
 
+## iOS/iPadOS Provisioning
+
+Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and management through Microsoft Intune. For terminology, see the [Apple Provisioning Glossary](_glossary-macos.md). For enrollment paths, see the [iOS Enrollment Path Overview](ios-lifecycle/00-enrollment-overview.md).
+
+### Service Desk (L1)
+
+| Resource | When to Use |
+|----------|-------------|
+| [iOS Enrollment Path Overview](ios-lifecycle/00-enrollment-overview.md) | Start here -- understand the 4 iOS enrollment paths (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE) and supervision axis |
+| [iOS Triage Decision Tree](decision-trees/07-ios-triage.md) | Identifies the iOS failure scenario from symptoms and routes to the correct runbook |
+| [iOS L1 Runbooks](l1-runbooks/00-index.md#ios-l1-runbooks) | Scripted procedures for the top iOS failure scenarios (6 runbooks: APNs expired, ADE not starting, enrollment restriction, license invalid, device cap, compliance blocked) |
+| [L1 Quick-Reference Card](quick-ref-l1.md#iosipados-quick-reference) | One-page cheat sheet -- iOS top checks, escalation triggers, decision tree, and runbook links |
+
+### Desktop Engineering (L2)
+
+| Resource | When to Use |
+|----------|-------------|
+| [iOS Enrollment Path Overview](ios-lifecycle/00-enrollment-overview.md) | Review the 4 enrollment paths before diagnosing |
+| [iOS ADE Lifecycle](ios-lifecycle/01-ade-lifecycle.md) | End-to-end supervised ADE enrollment stages with behind-the-scenes technical detail |
+| [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) | Obtain iOS diagnostic data via 3 methods: MDM diagnostic report, Company Portal log upload, or Mac+cable sysdiagnose (iOS has no CLI diagnostic tool) |
+| [iOS L2 Runbooks](l2-runbooks/00-index.md#ios-l2-runbooks) | Investigation guides for ADE token/profile delivery, app install failures, and compliance/CA timing |
+| [L2 Quick-Reference Card](quick-ref-l2.md#iosipados-quick-reference) | One-page cheat sheet -- iOS diagnostic data collection methods, Intune portal paths, and sysdiagnose triggers |
+
+### Admin Setup
+
+| Resource | When to Use |
+|----------|-------------|
+| [iOS Admin Setup Overview](admin-setup-ios/00-overview.md) | Entry point for all iOS admin setup guides -- shared prereqs and path selection |
+| [iOS ADE Lifecycle](ios-lifecycle/01-ade-lifecycle.md) | Review the supervised corporate enrollment pipeline before configuring ABM + Intune |
+| [APNs Certificate](admin-setup-ios/01-apns-certificate.md) + [ABM/ADE Token](admin-setup-ios/02-abm-token.md) + [ADE Enrollment Profile](admin-setup-ios/03-ade-enrollment-profile.md) | Three corporate ADE prerequisites |
+| [Configuration Profiles](admin-setup-ios/04-configuration-profiles.md) + [App Deployment](admin-setup-ios/05-app-deployment.md) + [Compliance Policy](admin-setup-ios/06-compliance-policy.md) | Configuration, app, and compliance admin guides with per-setting supervised-only callouts |
+| [Device Enrollment](admin-setup-ios/07-device-enrollment.md) + [User Enrollment](admin-setup-ios/08-user-enrollment.md) + [MAM-WE App Protection](admin-setup-ios/09-mam-app-protection.md) | BYOD and MAM paths (Company Portal / web-based / account-driven / app-layer) |
+| [iOS Capability Matrix](reference/ios-capability-matrix.md) | Compare iOS feature parity vs Windows and macOS -- scannable 5-domain table |
+
+---
+
 ## Cross-Platform References
 
 | Resource | Description |
@@ -149,6 +186,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Phase 32: added iOS/iPadOS Provisioning section (L1/L2/Admin Setup subsections) + Choose Your Platform third entry + trilateral H1 narrative | -- |
 | 2026-04-17 | Phase 32: added iOS Capability Matrix + iOS Enrollment Path Overview Cross-Platform References entries; platform coverage updated for trilateral framing | -- |
 | 2026-04-15 | Added macOS quick-reference card links to L1 and L2 tables; updated Common Issues description for cross-platform | -- |
 | 2026-04-14 | Resolved Phase 24 macOS troubleshooting TBD placeholders | -- |
