@@ -97,8 +97,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ABYOD-01 | Phase 29 | Pending |
 | ABYOD-02 | Phase 29 | Pending |
 | ABYOD-03 | Phase 29 | Pending |
-| L1TS-01 | Phase 30 | Pending |
-| L1TS-02 | Phase 30 | Pending |
+| L1TS-01 | Phase 33 (gap closure) | Pending |
+| L1TS-02 | Phase 33 (gap closure) | Pending |
 | L2TS-01 | Phase 31 | Pending |
 | L2TS-02 | Phase 31 | Pending |
 | NAV-01 | Phase 32 | Complete |
@@ -112,4 +112,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-04-16*
-*Last updated: 2026-04-16 after roadmap creation — all 18 requirements mapped*
+*Last updated: 2026-04-18 — L1TS-01/L1TS-02 reassigned to Phase 33 (gap closure) per v1.3-MILESTONE-AUDIT.md. Other Pending entries remain at original phase; 15 flip to Complete after Phase 33 closes integration caveats I-1/I-2.*

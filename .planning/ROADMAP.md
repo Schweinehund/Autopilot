@@ -68,6 +68,7 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - [ ] **Phase 30: iOS L1 Triage & Runbooks** - iOS triage decision tree and 6 L1 runbooks for top failure scenarios
 - [x] **Phase 31: iOS L2 Investigation** - Log collection runbook and 3 investigation runbooks for ADE, app installs, and compliance (completed 2026-04-17)
 - [x] **Phase 32: Navigation Integration & References** - Glossary additions, navigation file updates, and iOS capability matrix (completed 2026-04-18; gap-closure Plan 32-09 pending for UAT Test 15)
+- [ ] **Phase 33: v1.3 Gap Closure** - Complete Phase 30 (plans 30-09, 30-10, 30-VERIFICATION.md) and fix I-1 anchor drift in 01-ade-lifecycle.md
 
 ## Phase Details
 
@@ -196,6 +197,23 @@ Plans:
 - [x] 32-08-PLAN.md — Wave 4: reachability audit + full validation triad + human spot-check (SC #4 gate)
 - [x] 32-09-PLAN.md — Wave 5 (gap-closure): replace physical-button sysdiagnose procedure with AssistiveTouch per Apple Support canonical URL in quick-ref-l2.md + 14-ios-log-collection.md (UAT Test 15 resolution) (NAV-02)
 
+### Phase 33: v1.3 Gap Closure
+**Goal**: Close v1.3 audit gaps so the milestone can be shipped — verify L1TS-01/L1TS-02 via Phase 30 completion (plans 30-09, 30-10, 30-VERIFICATION.md), and repair the I-1 anchor drift in iOS ADE lifecycle that affects LIFE-02's L2 handoff.
+**Depends on**: Phase 30 (plans 30-09 + 30-10 are pre-authored), Phase 32 (anchor drift originated from plan 32-09 rename)
+**Requirements**: L1TS-01, L1TS-02 (direct verification); clears caveats on LIFE-02 (via I-1), ACORP-01/02/03, ACFG-01/02/03, ABYOD-01/02/03 (via I-2)
+**Gap Closure**: Closes all gaps from v1.3-MILESTONE-AUDIT.md (2 unsatisfied requirements + I-1 anchor + I-2 71-placeholder retrofit + 2 broken flows)
+**Success Criteria** (what must be TRUE):
+  1. `docs/ios-lifecycle/01-ade-lifecycle.md:364` anchor resolves to `#section-3-sysdiagnose-trigger-and-file-export` — the LIFE-02 L2 handoff renders correctly
+  2. Zero occurrences of the literal placeholder `iOS L1 runbooks (Phase 30)` remain in the 9 admin-setup-ios files; every prior placeholder row points to the correct runbook (APNs → 16, ABM/ADE → 17, enrollment-restriction → 18, license → 19, device-cap → 20, compliance → 21)
+  3. `30-VERIFICATION.md` exists with 3-source matrix evidence that L1TS-01 and L1TS-02 are SATISFIED (triage tree + 6 runbooks reachable, admin-self-diagnosed flow restored)
+  4. Re-running `/gsd-audit-milestone` for v1.3 returns `status: passed` with 18/18 requirements SATISFIED and 0 MAJOR integration findings
+**Plans:** 0/4 tasks planned
+Tasks (to be formalized via `/gsd-plan-phase 33`):
+- [ ] Fix I-1 anchor drift in `docs/ios-lifecycle/01-ade-lifecycle.md:364`
+- [ ] Execute Plan 30-09 — 71-placeholder retrofit across 9 admin-setup-ios files
+- [ ] Execute Plan 30-10 — final validation gate + manual verifications + human checkpoint
+- [ ] Produce `30-VERIFICATION.md` — phase verification document
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -232,3 +250,4 @@ Plans:
 | 30. iOS L1 Triage & Runbooks | v1.3 | 7/10 | In Progress|  |
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 10/10 | Complete    | 2026-04-18 |
+| 33. v1.3 Gap Closure | v1.3 | 0/4 | Pending |  |
