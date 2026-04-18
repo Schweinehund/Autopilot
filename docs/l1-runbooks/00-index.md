@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: all
 audience: L1
 platform: all
@@ -46,9 +46,24 @@ Scripted procedures for macOS ADE enrollment failure scenarios. Each runbook pro
 | 14 | [Compliance Failure / Access Blocked](14-macos-compliance-access-blocked.md) | Device non-compliant or user cannot access Microsoft 365 resources |
 | 15 | [Company Portal Sign-In Failure](15-macos-company-portal-sign-in.md) | Company Portal not available, sign-in failing, or Entra registration incomplete |
 
+## iOS L1 Runbooks
+
+L1 runbooks for the six most common iOS/iPadOS enrollment and compliance failure scenarios. Start with the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) to identify the failure, then follow the matching runbook below. All runbooks include L1-executable steps and explicit escalation triggers to L2.
+
+| Runbook | Scenario | Primary Cause |
+|---------|----------|---------------|
+| [16: iOS APNs Certificate Expired](16-ios-apns-expired.md) | Device Not Appearing (cross-platform blast radius) | APNs certificate lapsed — impacts ALL iOS/iPadOS MDM communication |
+| [17: iOS ADE Not Starting](17-ios-ade-not-starting.md) | ADE Setup Assistant not completing enrollment | ABM token sync failure, profile assignment, or device not in ABM |
+| [18: iOS Enrollment Restriction Blocking](18-ios-enrollment-restriction-blocking.md) | Device blocked at enrollment restriction | Platform/ownership/count restriction in Intune |
+| [19: iOS License Invalid](19-ios-license-invalid.md) | "User license invalid" at enrollment | User lacks Intune license OR ABM license sync issue |
+| [20: iOS Device Cap Reached](20-ios-device-cap-reached.md) | Device enrollment blocked at cap | User hit per-user or per-group device cap in Intune |
+| [21: iOS Compliance Blocked](21-ios-compliance-blocked.md) | Compliance / Conditional Access blocking user | Multi-cause A/B/C — OS version, jailbreak, passcode, CA timing |
+
+> **MAM-WE Note:** iOS MAM without Enrollment (app protection policy failures, selective wipe failures, PIN loop, app protection not applying) is deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](../admin-setup-ios/09-mam-app-protection.md).
+
 ## Scope
 
-This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Preparation), and macOS ADE deployments. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
+This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Preparation), macOS ADE, and iOS/iPadOS deployments. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
 
 ## TPM Attestation Note
 
@@ -59,6 +74,7 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 - [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) — Start here to identify the failure scenario
 - [APv2 Triage Decision Tree](../decision-trees/04-apv2-triage.md) -- APv2 failure routing
 - [macOS ADE Triage Decision Tree](../decision-trees/06-macos-triage.md) -- macOS failure routing
+- [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) -- iOS/iPadOS failure routing
 - [ESP Failure Decision Tree](../decision-trees/01-esp-failure.md) — Detailed ESP triage flowchart
 - [Profile Assignment Decision Tree](../decision-trees/02-profile-assignment.md) — Profile assignment triage flowchart
 - [Master Error Code Index](../error-codes/00-index.md) — Look up any error code
@@ -70,6 +86,7 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Added iOS L1 runbook section (runbooks 16-21) | -- |
 | 2026-04-14 | Added macOS ADE runbook section | -- |
 | 2026-04-13 | Added APv2 runbook section (restored after accidental revert) | -- |
 | 2026-03-20 | Initial version | — |

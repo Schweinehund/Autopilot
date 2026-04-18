@@ -1,12 +1,13 @@
 ---
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-04-17
+review_by: 2026-07-16
 applies_to: APv1
 audience: L1
 ---
 
 > **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 > **macOS:** For macOS ADE troubleshooting, see [macOS ADE Triage](06-macos-triage.md).
+> **iOS/iPadOS:** For iOS/iPadOS troubleshooting, see [iOS Triage](07-ios-triage.md).
 
 # Initial Triage Decision Tree
 
@@ -34,6 +35,7 @@ Use these links after this triage tree routes you to a specific scenario:
 - [Profile Assignment Tree](02-profile-assignment.md) — No profile assigned or wrong profile applied to device
 - [TPM Attestation Tree](03-tpm-attestation.md) — [TPM](../_glossary.md#tpm) errors during pre-provisioning or self-deploying mode
 - [APv2 Device Preparation Triage](04-apv2-triage.md) — APv2 (Device Preparation) deployment failure routing
+- [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
 
 ## Decision Tree
 
@@ -114,6 +116,8 @@ graph TD
 ## See Also
 
 - [APv2 Device Preparation Triage](04-apv2-triage.md) -- For APv2 (Device Preparation) deployment failures
+- [iOS Triage](07-ios-triage.md) -- iOS/iPadOS (Intune-managed) triage
+- [macOS ADE Triage](06-macos-triage.md) -- macOS ADE (Intune-managed) deployment failures
 
 ---
 
@@ -122,11 +126,13 @@ graph TD
 - [Profile Assignment Tree](02-profile-assignment.md)
 - [TPM Attestation Tree](03-tpm-attestation.md)
 - [APv2 Device Preparation Triage](04-apv2-triage.md)
+- [iOS Triage](07-ios-triage.md)
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-17 | Added iOS/iPadOS triage cross-reference banner | -- |
 | 2026-04-14 | Added macOS ADE triage cross-reference banner | -- |
 | 2026-04-13 | Added APv2 triage tree cross-reference (restored after accidental revert) | -- |
 | 2026-03-20 | Initial version | — |

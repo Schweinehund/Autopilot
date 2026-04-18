@@ -18,6 +18,12 @@ platform: all
 
 ---
 
+## Autopilot
+
+Windows Autopilot — Microsoft's cloud-based deployment service that provisions corporate-owned Windows devices directly from the factory or OEM. Two generations coexist: **Autopilot (classic / APv1)** uses the Enrollment Status Page (ESP) gate and assigns deployment profiles to registered hardware hashes; **Autopilot Device Preparation (APv2)** uses Enrollment Time Grouping (ETG) and a Device Preparation policy for a more portal-native flow. See [APv1 vs APv2](apv1-vs-apv2.md) for selection guidance.
+
+---
+
 ## Enrollment
 
 ### OOBE
