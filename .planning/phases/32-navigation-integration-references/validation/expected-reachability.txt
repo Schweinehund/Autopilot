@@ -1,0 +1,127 @@
+# Baseline post-Wave-0 reachability fixture. Updated in Plan 08 (Wave 4) for final audit.
+# Format: <file> | <depth> | <path-taken>  (sorted by depth, then path)
+# Generated: 2026-04-18  (post-Task-2+3 of Plan 32-00)
+docs/index.md | 0 | START
+docs/_glossary.md | 1 | docs/index.md -> docs/_glossary.md
+docs/_glossary-macos.md | 1 | docs/index.md -> docs/_glossary-macos.md
+docs/admin-setup-apv1/00-overview.md | 1 | docs/index.md -> docs/admin-setup-apv1/00-overview.md
+docs/admin-setup-apv2/00-overview.md | 1 | docs/index.md -> docs/admin-setup-apv2/00-overview.md
+docs/admin-setup-macos/00-overview.md | 1 | docs/index.md -> docs/admin-setup-macos/00-overview.md
+docs/apv1-vs-apv2.md | 1 | docs/index.md -> docs/apv1-vs-apv2.md
+docs/common-issues.md | 1 | docs/index.md -> docs/common-issues.md
+docs/decision-trees/00-initial-triage.md | 1 | docs/index.md -> docs/decision-trees/00-initial-triage.md
+docs/decision-trees/01-esp-failure.md | 1 | docs/index.md -> docs/decision-trees/01-esp-failure.md
+docs/decision-trees/02-profile-assignment.md | 1 | docs/index.md -> docs/decision-trees/02-profile-assignment.md
+docs/decision-trees/03-tpm-attestation.md | 1 | docs/index.md -> docs/decision-trees/03-tpm-attestation.md
+docs/decision-trees/04-apv2-triage.md | 1 | docs/index.md -> docs/decision-trees/04-apv2-triage.md
+docs/decision-trees/05-device-lifecycle.md | 1 | docs/index.md -> docs/decision-trees/05-device-lifecycle.md
+docs/decision-trees/06-macos-triage.md | 1 | docs/index.md -> docs/decision-trees/06-macos-triage.md
+docs/device-operations/00-overview.md | 1 | docs/index.md -> docs/device-operations/00-overview.md
+docs/error-codes/00-index.md | 1 | docs/index.md -> docs/error-codes/00-index.md
+docs/l1-runbooks/00-index.md | 1 | docs/index.md -> docs/l1-runbooks/00-index.md
+docs/l1-runbooks/06-apv2-deployment-not-launched.md | 1 | docs/index.md -> docs/l1-runbooks/06-apv2-deployment-not-launched.md
+docs/l1-runbooks/07-apv2-apps-not-installed.md | 1 | docs/index.md -> docs/l1-runbooks/07-apv2-apps-not-installed.md
+docs/l1-runbooks/08-apv2-apv1-conflict.md | 1 | docs/index.md -> docs/l1-runbooks/08-apv2-apv1-conflict.md
+docs/l1-runbooks/09-apv2-deployment-timeout.md | 1 | docs/index.md -> docs/l1-runbooks/09-apv2-deployment-timeout.md
+docs/l2-runbooks/00-index.md | 1 | docs/index.md -> docs/l2-runbooks/00-index.md
+docs/l2-runbooks/01-log-collection.md | 1 | docs/index.md -> docs/l2-runbooks/01-log-collection.md
+docs/l2-runbooks/06-apv2-log-collection.md | 1 | docs/index.md -> docs/l2-runbooks/06-apv2-log-collection.md
+docs/l2-runbooks/07-apv2-event-ids.md | 1 | docs/index.md -> docs/l2-runbooks/07-apv2-event-ids.md
+docs/l2-runbooks/08-apv2-deployment-report.md | 1 | docs/index.md -> docs/l2-runbooks/08-apv2-deployment-report.md
+docs/l2-runbooks/10-macos-log-collection.md | 1 | docs/index.md -> docs/l2-runbooks/10-macos-log-collection.md
+docs/lifecycle/00-overview.md | 1 | docs/index.md -> docs/lifecycle/00-overview.md
+docs/lifecycle-apv2/00-overview.md | 1 | docs/index.md -> docs/lifecycle-apv2/00-overview.md
+docs/macos-lifecycle/00-ade-lifecycle.md | 1 | docs/index.md -> docs/macos-lifecycle/00-ade-lifecycle.md
+docs/quick-ref-l1.md | 1 | docs/index.md -> docs/quick-ref-l1.md
+docs/quick-ref-l2.md | 1 | docs/index.md -> docs/quick-ref-l2.md
+docs/reference/00-index.md | 1 | docs/index.md -> docs/reference/00-index.md
+docs/reference/endpoints.md | 1 | docs/index.md -> docs/reference/endpoints.md
+docs/reference/macos-capability-matrix.md | 1 | docs/index.md -> docs/reference/macos-capability-matrix.md
+docs/reference/macos-commands.md | 1 | docs/index.md -> docs/reference/macos-commands.md
+docs/reference/macos-log-paths.md | 1 | docs/index.md -> docs/reference/macos-log-paths.md
+docs/reference/powershell-ref.md | 1 | docs/index.md -> docs/reference/powershell-ref.md
+docs/reference/registry-paths.md | 1 | docs/index.md -> docs/reference/registry-paths.md
+docs/windows-vs-macos.md | 1 | docs/index.md -> docs/windows-vs-macos.md
+docs/admin-setup-apv1/01-hardware-hash-upload.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/01-hardware-hash-upload.md
+docs/admin-setup-apv1/02-deployment-profile.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/02-deployment-profile.md
+docs/admin-setup-apv1/03-esp-policy.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/03-esp-policy.md
+docs/admin-setup-apv1/04-dynamic-groups.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/04-dynamic-groups.md
+docs/admin-setup-apv1/05-deployment-modes-overview.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/05-deployment-modes-overview.md
+docs/admin-setup-apv1/06-user-driven.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/06-user-driven.md
+docs/admin-setup-apv1/07-pre-provisioning.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/07-pre-provisioning.md
+docs/admin-setup-apv1/08-self-deploying.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/08-self-deploying.md
+docs/admin-setup-apv1/09-intune-connector-ad.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/09-intune-connector-ad.md
+docs/admin-setup-apv1/10-config-failures.md | 2 | docs/index.md -> docs/admin-setup-apv1/00-overview.md -> docs/admin-setup-apv1/10-config-failures.md
+docs/admin-setup-apv2/01-prerequisites-rbac.md | 2 | docs/index.md -> docs/admin-setup-apv2/00-overview.md -> docs/admin-setup-apv2/01-prerequisites-rbac.md
+docs/admin-setup-apv2/02-etg-device-group.md | 2 | docs/index.md -> docs/admin-setup-apv2/00-overview.md -> docs/admin-setup-apv2/02-etg-device-group.md
+docs/admin-setup-apv2/03-device-preparation-policy.md | 2 | docs/index.md -> docs/admin-setup-apv2/00-overview.md -> docs/admin-setup-apv2/03-device-preparation-policy.md
+docs/admin-setup-apv2/04-corporate-identifiers.md | 2 | docs/index.md -> docs/admin-setup-apv2/00-overview.md -> docs/admin-setup-apv2/04-corporate-identifiers.md
+docs/admin-setup-ios/09-mam-app-protection.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/admin-setup-ios/09-mam-app-protection.md
+docs/admin-setup-macos/01-abm-configuration.md | 2 | docs/index.md -> docs/admin-setup-macos/00-overview.md -> docs/admin-setup-macos/01-abm-configuration.md
+docs/admin-setup-macos/02-enrollment-profile.md | 2 | docs/index.md -> docs/admin-setup-macos/00-overview.md -> docs/admin-setup-macos/02-enrollment-profile.md
+docs/admin-setup-macos/03-configuration-profiles.md | 2 | docs/index.md -> docs/admin-setup-macos/00-overview.md -> docs/admin-setup-macos/03-configuration-profiles.md
+docs/admin-setup-macos/04-app-deployment.md | 2 | docs/index.md -> docs/admin-setup-macos/00-overview.md -> docs/admin-setup-macos/04-app-deployment.md
+docs/admin-setup-macos/05-compliance-policy.md | 2 | docs/index.md -> docs/admin-setup-macos/00-overview.md -> docs/admin-setup-macos/05-compliance-policy.md
+docs/admin-setup-macos/06-config-failures.md | 2 | docs/index.md -> docs/admin-setup-macos/00-overview.md -> docs/admin-setup-macos/06-config-failures.md
+docs/architecture.md | 2 | docs/index.md -> docs/lifecycle/00-overview.md -> docs/architecture.md
+docs/decision-trees/07-ios-triage.md | 2 | docs/index.md -> docs/decision-trees/00-initial-triage.md -> docs/decision-trees/07-ios-triage.md
+docs/device-operations/01-autopilot-reset.md | 2 | docs/index.md -> docs/_glossary.md -> docs/device-operations/01-autopilot-reset.md
+docs/device-operations/02-retire-wipe.md | 2 | docs/index.md -> docs/_glossary.md -> docs/device-operations/02-retire-wipe.md
+docs/device-operations/03-re-provisioning.md | 2 | docs/index.md -> docs/device-operations/00-overview.md -> docs/device-operations/03-re-provisioning.md
+docs/device-operations/04-tenant-migration.md | 2 | docs/index.md -> docs/_glossary.md -> docs/device-operations/04-tenant-migration.md
+docs/error-codes/01-mdm-enrollment.md | 2 | docs/index.md -> docs/decision-trees/02-profile-assignment.md -> docs/error-codes/01-mdm-enrollment.md
+docs/error-codes/02-tpm-attestation.md | 2 | docs/index.md -> docs/decision-trees/03-tpm-attestation.md -> docs/error-codes/02-tpm-attestation.md
+docs/error-codes/03-esp-enrollment.md | 2 | docs/index.md -> docs/decision-trees/01-esp-failure.md -> docs/error-codes/03-esp-enrollment.md
+docs/error-codes/04-pre-provisioning.md | 2 | docs/index.md -> docs/error-codes/00-index.md -> docs/error-codes/04-pre-provisioning.md
+docs/error-codes/05-hybrid-join.md | 2 | docs/index.md -> docs/error-codes/00-index.md -> docs/error-codes/05-hybrid-join.md
+docs/error-codes/06-apv2-device-preparation.md | 2 | docs/index.md -> docs/l1-runbooks/07-apv2-apps-not-installed.md -> docs/error-codes/06-apv2-device-preparation.md
+docs/l1-runbooks/01-device-not-registered.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/01-device-not-registered.md
+docs/l1-runbooks/02-esp-stuck-or-failed.md | 2 | docs/index.md -> docs/decision-trees/01-esp-failure.md -> docs/l1-runbooks/02-esp-stuck-or-failed.md
+docs/l1-runbooks/03-profile-not-assigned.md | 2 | docs/index.md -> docs/decision-trees/02-profile-assignment.md -> docs/l1-runbooks/03-profile-not-assigned.md
+docs/l1-runbooks/04-network-connectivity.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/04-network-connectivity.md
+docs/l1-runbooks/05-oobe-failure.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/05-oobe-failure.md
+docs/l1-runbooks/10-macos-device-not-appearing.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/10-macos-device-not-appearing.md
+docs/l1-runbooks/11-macos-setup-assistant-failed.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/11-macos-setup-assistant-failed.md
+docs/l1-runbooks/12-macos-profile-not-applied.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/12-macos-profile-not-applied.md
+docs/l1-runbooks/13-macos-app-not-installed.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/13-macos-app-not-installed.md
+docs/l1-runbooks/14-macos-compliance-access-blocked.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/14-macos-compliance-access-blocked.md
+docs/l1-runbooks/15-macos-company-portal-sign-in.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/15-macos-company-portal-sign-in.md
+docs/l1-runbooks/16-ios-apns-expired.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/16-ios-apns-expired.md
+docs/l1-runbooks/17-ios-ade-not-starting.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/17-ios-ade-not-starting.md
+docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md
+docs/l1-runbooks/19-ios-license-invalid.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/19-ios-license-invalid.md
+docs/l1-runbooks/20-ios-device-cap-reached.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/20-ios-device-cap-reached.md
+docs/l1-runbooks/21-ios-compliance-blocked.md | 2 | docs/index.md -> docs/l1-runbooks/00-index.md -> docs/l1-runbooks/21-ios-compliance-blocked.md
+docs/l2-runbooks/02-esp-deep-dive.md | 2 | docs/index.md -> docs/decision-trees/01-esp-failure.md -> docs/l2-runbooks/02-esp-deep-dive.md
+docs/l2-runbooks/03-tpm-attestation.md | 2 | docs/index.md -> docs/decision-trees/03-tpm-attestation.md -> docs/l2-runbooks/03-tpm-attestation.md
+docs/l2-runbooks/04-hybrid-join.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/04-hybrid-join.md
+docs/l2-runbooks/05-policy-conflicts.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/05-policy-conflicts.md
+docs/l2-runbooks/11-macos-profile-delivery.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/11-macos-profile-delivery.md
+docs/l2-runbooks/12-macos-app-install.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/12-macos-app-install.md
+docs/l2-runbooks/13-macos-compliance.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/13-macos-compliance.md
+docs/l2-runbooks/14-ios-log-collection.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/14-ios-log-collection.md
+docs/l2-runbooks/15-ios-ade-token-profile.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/15-ios-ade-token-profile.md
+docs/l2-runbooks/16-ios-app-install.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/16-ios-app-install.md
+docs/l2-runbooks/17-ios-compliance-ca-timing.md | 2 | docs/index.md -> docs/l2-runbooks/00-index.md -> docs/l2-runbooks/17-ios-compliance-ca-timing.md
+docs/lifecycle/01-hardware-hash.md | 2 | docs/index.md -> docs/lifecycle/00-overview.md -> docs/lifecycle/01-hardware-hash.md
+docs/lifecycle/02-profile-assignment.md | 2 | docs/index.md -> docs/lifecycle/00-overview.md -> docs/lifecycle/02-profile-assignment.md
+docs/lifecycle/03-oobe.md | 2 | docs/index.md -> docs/lifecycle/00-overview.md -> docs/lifecycle/03-oobe.md
+docs/lifecycle/04-esp.md | 2 | docs/index.md -> docs/lifecycle/00-overview.md -> docs/lifecycle/04-esp.md
+docs/lifecycle/05-post-enrollment.md | 2 | docs/index.md -> docs/device-operations/00-overview.md -> docs/lifecycle/05-post-enrollment.md
+docs/lifecycle-apv2/01-prerequisites.md | 2 | docs/index.md -> docs/l1-runbooks/06-apv2-deployment-not-launched.md -> docs/lifecycle-apv2/01-prerequisites.md
+docs/lifecycle-apv2/02-deployment-flow.md | 2 | docs/index.md -> docs/l1-runbooks/06-apv2-deployment-not-launched.md -> docs/lifecycle-apv2/02-deployment-flow.md
+docs/lifecycle-apv2/03-automatic-mode.md | 2 | docs/index.md -> docs/lifecycle-apv2/00-overview.md -> docs/lifecycle-apv2/03-automatic-mode.md
+docs/reference/apv1-apv2-migration.md | 2 | docs/index.md -> docs/common-issues.md -> docs/reference/apv1-apv2-migration.md
+docs/reference/ca-enrollment-timing.md | 2 | docs/index.md -> docs/common-issues.md -> docs/reference/ca-enrollment-timing.md
+docs/reference/compliance-timing.md | 2 | docs/index.md -> docs/_glossary.md -> docs/reference/compliance-timing.md
+docs/reference/deployment-reporting.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/deployment-reporting.md
+docs/reference/drift-detection.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/drift-detection.md
+docs/reference/entra-prerequisites.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/entra-prerequisites.md
+docs/reference/esp-timeout-tuning.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/esp-timeout-tuning.md
+docs/reference/gpo-to-intune.md | 2 | docs/index.md -> docs/_glossary.md -> docs/reference/gpo-to-intune.md
+docs/reference/imaging-to-autopilot.md | 2 | docs/index.md -> docs/common-issues.md -> docs/reference/imaging-to-autopilot.md
+docs/reference/licensing-matrix.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/licensing-matrix.md
+docs/reference/network-infrastructure.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/network-infrastructure.md
+docs/reference/new-batch-workflow.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/new-batch-workflow.md
+docs/reference/security-baseline-conflicts.md | 2 | docs/index.md -> docs/common-issues.md -> docs/reference/security-baseline-conflicts.md
+docs/reference/win32-app-packaging.md | 2 | docs/index.md -> docs/reference/00-index.md -> docs/reference/win32-app-packaging.md
