@@ -214,7 +214,7 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 **5-step AssistiveTouch sysdiagnose procedure (all current iPhones and iPads):**
 
 1. **Enable AssistiveTouch:** Settings > Accessibility > Touch > AssistiveTouch > toggle ON.
-2. **Add Analytics to the AssistiveTouch top-level menu:** Settings > Accessibility > Touch > AssistiveTouch > Customize Top Level Menu > tap an icon (or tap **+** to add a new slot) > select **Analytics**.
+2. **Add Analytics to the AssistiveTouch top-level menu:** Settings > Accessibility > Touch > AssistiveTouch > Customize Top Level Menu > tap **Custom** > select **Analytics**.
 3. **Trigger sysdiagnose:** tap the on-screen AssistiveTouch button > **Analytics**. Device begins background sysdiagnose generation (~10 minutes; no haptic feedback on iPad).
 4. **Locate output file:** Settings > Privacy & Security > Analytics & Improvements > Analytics Data. Scroll to the `sysdiagnose_` prefixed entry matching today's date/time.
 5. **Export from device:** tap the sysdiagnose file > tap the share button (top-right) > send via AirDrop, Email, iCloud, Files.app, or any installed share extension.

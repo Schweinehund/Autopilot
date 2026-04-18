@@ -3,12 +3,12 @@ status: partial
 phase: 32-navigation-integration-references
 source: [32-VERIFICATION.md]
 started: 2026-04-18T16:45:00Z
-updated: 2026-04-18T16:45:00Z
+updated: 2026-04-18T17:00:00Z
 ---
 
 ## Current Test
 
-[awaiting human testing]
+[awaiting human testing — items 1-4 remain]
 
 ## Tests
 
@@ -29,15 +29,15 @@ expected: Clicking iOS/iPadOS Provisioning in Choose Your Platform lands at iOS 
 result: [pending]
 
 ### 5. Step 2 AssistiveTouch wording accuracy check (WR-01 from 32-REVIEW)
-expected: Implementation reads "Customize Top Level Menu > tap an icon (or tap + to add a new slot) > select Analytics" instead of UAT-verbatim "tap Custom". Cross-check against live Apple Support URL (https://support.apple.com/guide/platform-support/use-diagnostics-to-research-device-issues-supd3f43814e/web) and either (a) accept the UI-accurate paraphrase or (b) restore "tap Custom" wording.
-result: [pending]
+expected: Step 2 matches UAT-verbatim "tap Custom" wording per UAT.md root_cause.
+result: resolved — user elected option (b); both files edited to restore "tap **Custom**" phrasing. quick-ref-l2.md:217 and 14-ios-log-collection.md:122 now read "Customize Top Level Menu > tap **Custom** > select **Analytics**". Validation clean: per-file link-check.sh exit 0; full-docs broken-link count = 85 (baseline preserved).
 
 ## Summary
 
 total: 5
-passed: 0
+passed: 1
 issues: 0
-pending: 5
+pending: 4
 skipped: 0
 blocked: 0
 
