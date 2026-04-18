@@ -44,7 +44,7 @@ Requirements for iOS/iPadOS provisioning documentation. Each maps to roadmap pha
 
 - [ ] **NAV-01**: iOS glossary additions extend existing glossary with supervision, MAM, user enrollment, APNs, and iOS-specific terms
 - [ ] **NAV-02**: Platform selector, index.md, common-issues.md, and quick-ref cards updated with iOS/iPadOS sections
-- [ ] **NAV-03**: iOS capability matrix documents feature parity gaps across iOS vs macOS vs Windows
+- [x] **NAV-03**: iOS capability matrix documents feature parity gaps across iOS vs macOS vs Windows
 
 ## Future Requirements
 
@@ -103,7 +103,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | L2TS-02 | Phase 31 | Pending |
 | NAV-01 | Phase 32 | Pending |
 | NAV-02 | Phase 32 | Pending |
-| NAV-03 | Phase 32 | Pending |
+| NAV-03 | Phase 32 | Complete |
 
 **Coverage:**
 - v1.3 requirements: 18 total
