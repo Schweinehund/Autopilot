@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 
 ## Current State
 
-**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-32 complete (iOS/iPadOS provisioning documentation — all milestone phases done; 4 pre-existing human verification items persist in 32-HUMAN-UAT.md as follow-ups).
+**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-33 complete (iOS/iPadOS provisioning documentation plus gap-closure — all 7 milestone phases done). Phase 33 gap-closure closed v1.3 milestone audit gaps (I-1 broken anchor, I-2 71-placeholder retrofit, L1TS-01/02 verification debt); v1.3-MILESTONE-AUDIT.md re-audit verdict: `status: passed` (18/18 requirements, 0 MAJOR findings). 4 pre-existing human verification items persist in 32-HUMAN-UAT.md as follow-ups.
 
 ### What's been built
 - 118 markdown documentation files in `docs/`
@@ -173,4 +173,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-18 after Phase 32 complete (v1.3 milestone phases all done)*
+*Last updated: 2026-04-18 after Phase 33 complete (v1.3 milestone audit gaps closed — I-1, I-2, L1TS-01/02; milestone re-audit passed)*
