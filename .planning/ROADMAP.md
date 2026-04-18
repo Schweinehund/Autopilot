@@ -183,14 +183,14 @@ Plans:
   2. A user arriving at index.md, common-issues.md, quick-ref-l1.md, or quick-ref-l2.md finds an iOS/iPadOS section with direct links to relevant iOS documents — no iOS content is reachable only via directory browsing
   3. The iOS capability matrix (reference/ios-capability-matrix.md) documents feature parity gaps across iOS, macOS, and Windows in a scannable table format, allowing an admin to answer "can iOS do X" without reading three separate platform guides
   4. All navigation updates are injected into existing shared files (not full rewrites) and all pre-existing links in those files remain valid after iOS sections are added
-**Plans:** 4/9 plans executed
+**Plans:** 6/9 plans executed
 Plans:
 - [x] 32-00-PLAN.md — Wave 0: validation harness (5 files) + Phase 30 30-08 retrofit absorption (iOS banner in 00-initial-triage.md + iOS L1 Runbooks section in l1-runbooks/00-index.md)
 - [x] 32-01-PLAN.md — Wave 1: glossary extension (5 new iOS terms + VPP update + new ## App Protection (MAM) H2) (NAV-01)
 - [x] 32-02-PLAN.md — Wave 1: create docs/reference/ios-capability-matrix.md trilateral matrix + wire into index.md + reference/00-index.md iOS References (NAV-03)
 - [x] 32-03-PLAN.md — Wave 1: placeholder retrofit in docs/decision-trees/07-ios-triage.md:99 (D-35)
-- [ ] 32-04-PLAN.md — Wave 2: common-issues.md iOS/iPadOS Failure Scenarios H2 (6 symptom categories with ios- anchor prefix + MAM-WE advisory + bidirectional banners) (NAV-02)
-- [ ] 32-05-PLAN.md — Wave 2: index.md iOS/iPadOS Provisioning H2 (L1/L2/Admin Setup subsections) + Choose Your Platform third entry (NAV-02)
+- [x] 32-04-PLAN.md — Wave 2: common-issues.md iOS/iPadOS Failure Scenarios H2 (6 symptom categories with ios- anchor prefix + MAM-WE advisory + bidirectional banners) (NAV-02)
+- [x] 32-05-PLAN.md — Wave 2: index.md iOS/iPadOS Provisioning H2 (L1/L2/Admin Setup subsections) + Choose Your Platform third entry (NAV-02)
 - [ ] 32-06-PLAN.md — Wave 3: quick-ref-l1.md iOS Quick Reference section (4 Top Checks + escalation + decision tree + 6 runbook links) (NAV-02)
 - [ ] 32-07-PLAN.md — Wave 3: quick-ref-l2.md iOS Quick Reference section (3 tables + research-flag footnotes + 4 L2 runbook links) (NAV-02)
 - [ ] 32-08-PLAN.md — Wave 4: reachability audit + full validation triad + human spot-check (SC #4 gate)
@@ -230,4 +230,4 @@ Plans:
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 5/5 | Complete    | 2026-04-17 |
 | 30. iOS L1 Triage & Runbooks | v1.3 | 7/10 | In Progress|  |
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
-| 32. Navigation Integration & References | v1.3 | 4/9 | In Progress|  |
+| 32. Navigation Integration & References | v1.3 | 6/9 | In Progress|  |
