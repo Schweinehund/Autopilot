@@ -65,10 +65,10 @@ Full details: [milestones/v1.2-ROADMAP.md](milestones/v1.2-ROADMAP.md)
 - [x] **Phase 28: iOS Admin Setup — Configuration, Apps, Compliance** - Configuration profiles, app deployment, and compliance policy guides with per-setting supervision callouts
  (completed 2026-04-16)
 - [x] **Phase 29: iOS Admin Setup — BYOD & MAM** - Device enrollment, account-driven user enrollment, and MAM without enrollment (standalone) guides (completed 2026-04-17)
-- [ ] **Phase 30: iOS L1 Triage & Runbooks** - iOS triage decision tree and 6 L1 runbooks for top failure scenarios
+- [x] **Phase 30: iOS L1 Triage & Runbooks** - iOS triage decision tree and 6 L1 runbooks for top failure scenarios (completed 2026-04-18 via Phase 33 gap closure)
 - [x] **Phase 31: iOS L2 Investigation** - Log collection runbook and 3 investigation runbooks for ADE, app installs, and compliance (completed 2026-04-17)
 - [x] **Phase 32: Navigation Integration & References** - Glossary additions, navigation file updates, and iOS capability matrix (completed 2026-04-18; gap-closure Plan 32-09 pending for UAT Test 15)
-- [ ] **Phase 33: v1.3 Gap Closure** - Complete Phase 30 (plans 30-09, 30-10, 30-VERIFICATION.md) and fix I-1 anchor drift in 01-ade-lifecycle.md
+- [x] **Phase 33: v1.3 Gap Closure** - Complete Phase 30 (plans 30-09, 30-10, 30-VERIFICATION.md) and fix I-1 anchor drift in 01-ade-lifecycle.md (completed 2026-04-18)
 
 ## Phase Details
 
@@ -152,9 +152,9 @@ Plans:
 - [x] 30-05-PLAN.md — Runbooks 18 + 20 (Enrollment Restriction Blocking + Device Cap Reached) — reciprocal disambiguation (Wave 2)
 - [x] 30-06-PLAN.md — Runbook 19 (iOS License Invalid) — dual-manifestation + second-portal prerequisite flag (Wave 2)
 - [x] 30-07-PLAN.md — Runbook 21 (iOS Compliance Blocked) — multi-cause A/B/C with User Action Required (Wave 2)
-- [ ] 30-08-PLAN.md — Navigation integration: 00-initial-triage.md banner + 00-index.md iOS section (Wave 3)
-- [ ] 30-09-PLAN.md — 9-file admin-setup-ios retrofit: 71 placeholder resolutions + 1 prose line + 9 metadata bumps (atomic commit D-20; Wave 3)
-- [ ] 30-10-PLAN.md — Final validation gate + manual verifications + human checkpoint (Wave 4)
+- [x] 30-08-PLAN.md — Navigation integration: 00-initial-triage.md banner + 00-index.md iOS section (absorbed into Phase 32 Plan 32-00)
+- [x] 30-09-PLAN.md — 9-file admin-setup-ios retrofit: 71 placeholder resolutions + 1 prose line + 9 metadata bumps (atomic commit D-20; executed under Phase 33 Plan 33-02 on 2026-04-18)
+- [x] 30-10-PLAN.md — Final validation gate + manual verifications + human checkpoint (executed under Phase 33 Plan 33-03 on 2026-04-18)
 
 ### Phase 31: iOS L2 Investigation
 **Goal**: An L2 engineer has the log collection procedures and investigation runbooks to diagnose ADE token/profile delivery failures, app install failures, and compliance/CA timing issues — using iOS-native methods (Company Portal upload, MDM diagnostic report, Mac+cable sysdiagnose) since no CLI diagnostic tool exists on iOS
@@ -207,12 +207,12 @@ Plans:
   2. Zero occurrences of the literal placeholder `iOS L1 runbooks (Phase 30)` remain in the 9 admin-setup-ios files; every prior placeholder row points to the correct runbook (APNs → 16, ABM/ADE → 17, enrollment-restriction → 18, license → 19, device-cap → 20, compliance → 21)
   3. `30-VERIFICATION.md` exists with 3-source matrix evidence that L1TS-01 and L1TS-02 are SATISFIED (triage tree + 6 runbooks reachable, admin-self-diagnosed flow restored)
   4. Re-running `/gsd-audit-milestone` for v1.3 returns `status: passed` with 18/18 requirements SATISFIED and 0 MAJOR integration findings
-**Plans:** 3/4 plans executed
-Tasks (to be formalized via `/gsd-plan-phase 33`):
-- [ ] Fix I-1 anchor drift in `docs/ios-lifecycle/01-ade-lifecycle.md:364`
-- [ ] Execute Plan 30-09 — 71-placeholder retrofit across 9 admin-setup-ios files
-- [ ] Execute Plan 30-10 — final validation gate + manual verifications + human checkpoint
-- [ ] Produce `30-VERIFICATION.md` — phase verification document
+**Plans:** 4/4 plans complete
+Plans:
+- [x] 33-01-PLAN.md — I-1 anchor fix in 01-ade-lifecycle.md:364
+- [x] 33-02-PLAN.md — Execute pre-authored 30-09 (71-placeholder retrofit across 9 admin-setup-ios files)
+- [x] 33-03-PLAN.md — Execute pre-authored 30-10 (final validation gate + 5 manual verifications + human checkpoint)
+- [x] 33-04-PLAN.md — Produce 30-VERIFICATION.md + update REQUIREMENTS.md/ROADMAP.md + milestone re-audit
 
 ## Progress
 
@@ -247,7 +247,7 @@ Tasks (to be formalized via `/gsd-plan-phase 33`):
 | 27. iOS Admin Setup — Corporate ADE Path | v1.3 | 3/3 | Complete    | 2026-04-16 |
 | 28. iOS Admin Setup — Configuration, Apps, Compliance | v1.3 | 3/3 | Complete    | 2026-04-17 |
 | 29. iOS Admin Setup — BYOD & MAM | v1.3 | 5/5 | Complete    | 2026-04-17 |
-| 30. iOS L1 Triage & Runbooks | v1.3 | 7/10 | In Progress|  |
+| 30. iOS L1 Triage & Runbooks | v1.3 | 10/10 | Complete | 2026-04-18 |
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 10/10 | Complete    | 2026-04-18 |
-| 33. v1.3 Gap Closure | v1.3 | 3/4 | In Progress|  |
+| 33. v1.3 Gap Closure | v1.3 | 4/4 | Complete | 2026-04-18 |
