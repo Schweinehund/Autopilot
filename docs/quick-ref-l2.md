@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: both
 audience: L2
 platform: all
@@ -209,14 +209,19 @@ Full reference: [macOS Terminal Commands](reference/macos-commands.md) | [macOS 
 
 ### Sysdiagnose Trigger Reference (iOS/iPadOS)
 
-| Device / OS | Trigger Combination |
-|-------------|---------------------|
-| **Modern iOS 15+** / iPadOS 15+ (unified trigger, all current devices) | Press and release both volume buttons + Side/Top button simultaneously (hold for ~250ms) |
-| iPhone 8 / SE (1st+2nd gen) / iPad with Touch ID (Legacy / pre-iOS 15) | Both volume buttons + Sleep/Wake (Side) button |
-| iPhone X and later iPhones (Legacy / pre-iOS 15) | Both volume buttons + Side button |
-| iPad with Face ID (Legacy / pre-iOS 15) | Top button + either volume button |
+Per Apple's canonical platform support guide, sysdiagnose is triggered via **AssistiveTouch > Analytics** — a uniform procedure that works across all iPhone/iPad models and iOS/iPadOS versions. The legacy physical-button combos (volume + Side/Top) are no longer the Apple-recommended method.
 
-*(Full procedure with Console.app extraction: [iOS Log Collection §Section 3](l2-runbooks/14-ios-log-collection.md#section-3-maccable-sysdiagnose). Modern unified trigger verified against Apple Developer forums 2026-04-17; legacy per-device-type triggers apply to pre-iOS-15 devices (increasingly rare in managed fleets). Verify triggers per Phase 31 D-30 research flag at execution time.)*
+**5-step AssistiveTouch sysdiagnose procedure (all current iPhones and iPads):**
+
+1. **Enable AssistiveTouch:** Settings > Accessibility > Touch > AssistiveTouch > toggle ON.
+2. **Add Analytics to the AssistiveTouch top-level menu:** Settings > Accessibility > Touch > AssistiveTouch > Customize Top Level Menu > tap an icon (or tap **+** to add a new slot) > select **Analytics**.
+3. **Trigger sysdiagnose:** tap the on-screen AssistiveTouch button > **Analytics**. Device begins background sysdiagnose generation (~10 minutes; no haptic feedback on iPad).
+4. **Locate output file:** Settings > Privacy & Security > Analytics & Improvements > Analytics Data. Scroll to the `sysdiagnose_` prefixed entry matching today's date/time.
+5. **Export from device:** tap the sysdiagnose file > tap the share button (top-right) > send via AirDrop, Email, iCloud, Files.app, or any installed share extension.
+
+> **Supervised-device compatibility:** AssistiveTouch-based trigger works on supervised devices. Unlike the legacy volume + Side-button combo, it does NOT conflict with the Side Button restriction profile (Allow Side Button = false). This is the recommended trigger for managed-fleet troubleshooting.
+
+*(Full procedure with Mac+cable alternative: [iOS Log Collection §Section 3](l2-runbooks/14-ios-log-collection.md#section-3-sysdiagnose-trigger-and-file-export). Authoritative source: Apple Support — [Use Diagnostics to research device issues](https://support.apple.com/guide/platform-support/use-diagnostics-to-research-device-issues-supd3f43814e/web). Verified 2026-04-18 per UAT Test 15 resolution; replaces prior Phase 31 D-30 physical-button research-flag marker.)*
 
 ### iOS Investigation Runbooks
 
@@ -229,6 +234,7 @@ Full reference: [macOS Terminal Commands](reference/macos-commands.md) | [macOS 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Phase 32 gap closure (UAT Test 15): replaced iOS Sysdiagnose Trigger Reference physical-button table with AssistiveTouch-based procedure per Apple Support canonical URL; updated cross-link anchor to match renamed Section 3 in 14-ios-log-collection.md | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 3-method diagnostic data collection table, Intune portal paths table, sysdiagnose trigger reference table (modern unified + legacy per-device), and 4-runbook investigation list; research-flag footnotes per D-32; platform coverage blockquote updated per D-41 | -- |
 | 2026-04-15 | Added macOS ADE Quick Reference section with log collection, Terminal commands, log paths, and investigation runbook links | -- |
 | 2026-04-13 | Added APv2 quick-reference section with log collection and event IDs | -- |

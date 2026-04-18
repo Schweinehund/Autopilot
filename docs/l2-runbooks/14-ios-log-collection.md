@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: all
 audience: L2
 platform: iOS
@@ -101,59 +101,61 @@ Enable verbose logging BEFORE reproducing the failure for extra detail. Path: **
 
 > **Data egress:** The iOS Company Portal log upload leaves tenant control. Logs are routed to Microsoft support infrastructure and are NOT directly downloadable from the Intune admin center. An L2 engineer with an incident ID MUST open a Microsoft Intune Support ticket and provide the incident ID — Microsoft support retrieves and returns the logs (or analysis) on the L2's behalf. Typical roundtrip: 1-3 business days. This is the signal to escalate to Tier 3 (Mac+cable sysdiagnose) when time is critical.
 
-## Section 3: Mac+Cable Sysdiagnose
+## Section 3: Sysdiagnose Trigger and File Export
 
 Use this when Tier 1 + Tier 2 are insufficient OR when profile-delivery-level verbosity is required (kernel log, APNs session records, unified log with MDM subsystem filters). This is the only path that yields the full unified log.
 
-### Prerequisites
+Apple's canonical platform-support guide documents sysdiagnose as an on-device AssistiveTouch-triggered procedure — NOT a physical-button combo. The AssistiveTouch method is uniform across all iPhone/iPad models and iOS/iPadOS versions, supervised-compatible (no Side Button restriction conflict), and requires no Mac or cable to trigger. The file is exported directly from the device via the share button.
 
-- iOS/iPadOS device to investigate.
+**Authoritative source:** Apple Support — [Use Diagnostics to research device issues](https://support.apple.com/guide/platform-support/use-diagnostics-to-research-device-issues-supd3f43814e/web) (verified 2026-04-18 per Phase 32 UAT Test 15 resolution).
+
+### Prerequisites (On-Device Trigger)
+
+- iOS/iPadOS device to investigate (any current iPhone or iPad; AssistiveTouch is available on iOS 5.0+ / iPadOS 13+).
+- User has access to Settings on the device.
+- For export: an AirDrop-capable Apple device, email access, iCloud Drive access, or any other share-extension-capable destination.
+
+### 5-Step AssistiveTouch Sysdiagnose Procedure
+
+1. **Enable AssistiveTouch:** Settings > Accessibility > Touch > AssistiveTouch > toggle **AssistiveTouch** to ON. A small floating on-screen button appears.
+
+2. **Add Analytics to the AssistiveTouch top-level menu:** Settings > Accessibility > Touch > AssistiveTouch > **Customize Top Level Menu**. Tap an existing icon slot (or tap **+** to add a new slot) > select **Analytics** from the list > tap **Done**. The Analytics action is now in the AssistiveTouch menu.
+
+3. **Trigger sysdiagnose:** tap the on-screen AssistiveTouch button > tap **Analytics**. The device begins sysdiagnose generation in the background. Collection completes in approximately **10 minutes**.
+
+   > **iPad silence:** iPad does NOT provide haptic feedback on sysdiagnose trigger. iPhone may give a brief vibration. Tell the user not to re-trigger repeatedly expecting haptic feedback — silent behavior is normal.
+
+4. **Locate the output file:** Settings > Privacy & Security > Analytics & Improvements > Analytics Data. Scroll to entries with the `sysdiagnose_` prefix. The filename pattern is `sysdiagnose_YYYY.MM.DD_HH-MM-SS±ZZZZ_iPhoneOS_iPhone_XX.X.X_XXXXXX.tar.gz`. Pick the entry matching today's trigger date/time.
+
+5. **Export from device:** tap the sysdiagnose file > tap the **share button** (top-right arrow-up-from-box icon) > select destination:
+   - **AirDrop** — fastest; requires L2 engineer on a Mac or iOS device within AirDrop range.
+   - **Mail / Messages** — works for smaller bundles (<25 MB typical).
+   - **iCloud Drive / Files.app** — works for any size; L2 retrieves from shared iCloud folder or tenant-approved cloud storage.
+   - **Any other share-extension** — OneDrive, Dropbox, Google Drive, etc. (subject to data-handling policy; see PII warning below).
+
+> **Supervised-device compatibility:** AssistiveTouch-based trigger works on supervised devices. Unlike the legacy volume + Side-button combo, it does NOT conflict with the Side Button restriction profile (`Allow Side Button = false`). This is the recommended trigger for managed-fleet troubleshooting.
+
+### Alternative: Mac+Cable Console.app Live Streaming
+
+Use this in addition to (NOT instead of) the on-device sysdiagnose when you need to observe log events in real time during failure reproduction, OR when the sysdiagnose file exceeds ~100 MB and AirDrop/email/iCloud upload is impractical (Finder sync via cable is faster for large bundles).
+
+**Prerequisites:**
 - Mac running a current macOS version with **Console.app** available (Applications > Utilities > Console).
-- Cable matching the device's port (see "Cable Type by Device" below).
-- AirDrop enabled on both the iOS device and the Mac (primary retrieval path). Apple Configurator 2 installed on the Mac as a fallback if AirDrop is not available.
+- Cable matching the device's port (Lightning for iPhone 5–14, iPad 7–9, iPad Air 1–4, iPad mini 1–5; USB-C for iPhone 15+, iPad Pro 3rd gen (2018)+, iPad Air 4+, iPad 10+, iPad mini 6+).
+- Apple Configurator 2 on the Mac if filesystem-level extraction is needed as a fallback.
 
-### Trigger on Device (Unified Modern iOS)
-
-Press and release **both volume buttons + side button** (iPhone) or **both volume buttons + top button** (iPad) simultaneously for **1 to 1.5 seconds**. Device vibrates briefly (iPhone only; iPad is silent). Collection completes in approximately 10 minutes and runs in the background.
-
-> **Warning — Emergency SOS:** Holding the button combo too long triggers the Power Off / Emergency SOS screen instead of a sysdiagnose. If this happens, dismiss and retry with a shorter hold (closer to 1 second than 1.5).
-
-> **Warning — iPad silence:** iPad does NOT vibrate on sysdiagnose trigger. Tell the user not to re-trigger repeatedly expecting haptic feedback — a silent trigger is normal on iPad.
-
-### Per-Device Trigger Reference (iOS 15+)
-
-| Device class | Trigger |
-|--------------|---------|
-| iPhone 8 / iPhone SE (Touch ID, Home button) | Both volume buttons + side / sleep-wake button, hold 1–1.5 sec |
-| iPhone X and later (Face ID) | Both volume buttons + side button, hold 1–1.5 sec |
-| iPad with Home button (Touch ID) | Both volume buttons + top / sleep-wake button, hold 1–1.5 sec |
-| iPad with Face ID (no Home button) | Both volume buttons + top button, hold 1–1.5 sec |
-
-### Artifact Location and Retrieval
-
-**On-device location:** Settings > Privacy & Security > Analytics & Improvements > Analytics Data. The file name matches `sysdiagnose_YYYY.MM.DD_HH-MM-SS±ZZZZ_iPhoneOS_iPhone_XX.X.X_XXXXXX.tar.gz`.
-
-**Retrieval (AirDrop — primary):** From the Analytics Data list, tap the sysdiagnose_* file, tap the Share icon, select the L2 engineer's Mac from the AirDrop recipient list. Bundle transfers in seconds to minutes depending on file size.
-
-**Retrieval (fallback — no AirDrop):** Install Apple Configurator 2 on the Mac, connect the device via cable, then browse the device filesystem to extract the sysdiagnose bundle. This is slower and requires Apple ID sign-in on the Mac, so prefer AirDrop when available.
-
-### Console.app Live Streaming (during failure reproduction)
-
-Console.app is used to stream the device's unified log live during failure reproduction — it is NOT a remote sysdiagnose trigger (no such trigger exists in the public Console.app UI). Use this in addition to the on-device sysdiagnose capture when you need to see log events in real time.
+**Live streaming flow:**
 
 1. Connect the iOS device to the Mac via cable.
 2. On the device, tap **Trust** on the "Trust This Computer?" prompt (first-time pairing only).
 3. On the Mac, open **Console.app** (Applications > Utilities > Console).
 4. In Console.app's left sidebar **Devices** section, click the iOS device name to select it.
 5. Click **Start** to begin streaming. Reproduce the failure on the device; log events appear live in Console.
-6. After reproduction, trigger sysdiagnose on the device per the button combo above for the full bundle.
+6. After reproduction, trigger sysdiagnose per the AssistiveTouch 5-step procedure above for the full on-device bundle (Console.app does NOT expose a remote sysdiagnose trigger in the public UI).
 
-### Cable Type by Device
+**Filesystem-level retrieval (fallback — large bundles or no share-extension path):** Install Apple Configurator 2 on the Mac, connect the device via cable, then browse the device filesystem under **Files** to extract the sysdiagnose bundle directly. Requires Apple ID sign-in on the Mac.
 
-- **Lightning:** iPhone 5 through iPhone 14 (all variants), iPad 7–9, iPad Air 1–4, iPad mini 1–5.
-- **USB-C:** iPhone 15 and later, iPad Pro 3rd gen (2018) and later, iPad Air 4th gen and later, iPad 10th gen and later, iPad mini 6 and later.
-
-> **PII warning:** Sysdiagnose bundles contain private data — device identifiers, installed app inventory, network history, location hints, user account identifiers. Before attaching to a Microsoft Support ticket, L2 MUST follow the organization's data-handling policy: redact or segregate PII per tenant policy. Sysdiagnose is NOT safe to upload to public issue trackers.
+> **PII warning:** Sysdiagnose bundles contain private data — device identifiers, installed app inventory, network history, location hints, user account identifiers. Before attaching to a Microsoft Support ticket OR uploading to any cloud destination, L2 MUST follow the organization's data-handling policy: redact or segregate PII per tenant policy. Sysdiagnose is NOT safe to upload to public issue trackers.
 
 ## Common Artifacts Cross-Reference
 
@@ -178,4 +180,5 @@ Use this table to see which runbook consumes each artifact — it is both a coll
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Phase 32 gap closure (UAT Test 15): rewrote Section 3 from "Mac+Cable Sysdiagnose" to AssistiveTouch-based on-device trigger + file export per Apple Support canonical URL; Mac+cable Console.app demoted to alternative for live-streaming and large-bundle retrieval; section renamed (new anchor: #section-3-sysdiagnose-trigger-and-file-export) | -- |
 | 2026-04-17 | Initial version — iOS L2 log collection runbook | -- |
