@@ -9,36 +9,36 @@ Requirements for iOS/iPadOS provisioning documentation. Each maps to roadmap pha
 
 ### Lifecycle
 
-- [ ] **LIFE-01**: Enrollment path overview covers all 4 paths (ADE, device enrollment, user enrollment, MAM-WE) with comparison table and selection guidance
-- [ ] **LIFE-02**: iOS/iPadOS ADE lifecycle document covers supervised corporate enrollment end-to-end (Setup Assistant through post-enrollment)
+- [x] **LIFE-01**: Enrollment path overview covers all 4 paths (ADE, device enrollment, user enrollment, MAM-WE) with comparison table and selection guidance
+- [x] **LIFE-02**: iOS/iPadOS ADE lifecycle document covers supervised corporate enrollment end-to-end (Setup Assistant through post-enrollment)
 
 ### Admin Setup — Corporate
 
-- [ ] **ACORP-01**: APNs certificate guide covers creation, renewal, and cross-platform expiry impact warning
-- [ ] **ACORP-02**: ABM/ADE token guide covers iOS token setup with cross-reference to macOS ABM guide for shared portal steps
-- [ ] **ACORP-03**: ADE enrollment profile guide covers supervised mode, authentication methods, Setup Assistant customization, and locked enrollment with supervised-only callout pattern
+- [x] **ACORP-01**: APNs certificate guide covers creation, renewal, and cross-platform expiry impact warning
+- [x] **ACORP-02**: ABM/ADE token guide covers iOS token setup with cross-reference to macOS ABM guide for shared portal steps
+- [x] **ACORP-03**: ADE enrollment profile guide covers supervised mode, authentication methods, Setup Assistant customization, and locked enrollment with supervised-only callout pattern
 
 ### Admin Setup — Configuration
 
-- [ ] **ACFG-01**: Configuration profiles guide covers Wi-Fi, VPN, email, device restrictions, certificates, home screen layout with supervised-only callouts per setting
-- [ ] **ACFG-02**: App deployment guide covers VPP device-licensed vs user-licensed, silent install (supervised-only), LOB apps, and managed app status
-- [ ] **ACFG-03**: Compliance policy guide covers OS version gates, jailbreak detection, passcode, Conditional Access timing, and default compliance behavior
+- [x] **ACFG-01**: Configuration profiles guide covers Wi-Fi, VPN, email, device restrictions, certificates, home screen layout with supervised-only callouts per setting
+- [x] **ACFG-02**: App deployment guide covers VPP device-licensed vs user-licensed, silent install (supervised-only), LOB apps, and managed app status
+- [x] **ACFG-03**: Compliance policy guide covers OS version gates, jailbreak detection, passcode, Conditional Access timing, and default compliance behavior
 
 ### Admin Setup — BYOD & MAM
 
-- [ ] **ABYOD-01**: Device enrollment guide covers Company Portal and web-based enrollment for personal/corporate devices without ABM
-- [ ] **ABYOD-02**: User enrollment guide covers account-driven enrollment (BYOD privacy-preserving) with explicit limitation callouts on what IT cannot see or do
-- [ ] **ABYOD-03**: App protection policies guide covers MAM-WE three-level data protection framework, targeting (enrolled vs unenrolled), iOS-specific behaviors, and selective wipe
+- [x] **ABYOD-01**: Device enrollment guide covers Company Portal and web-based enrollment for personal/corporate devices without ABM
+- [x] **ABYOD-02**: User enrollment guide covers account-driven enrollment (BYOD privacy-preserving) with explicit limitation callouts on what IT cannot see or do
+- [x] **ABYOD-03**: App protection policies guide covers MAM-WE three-level data protection framework, targeting (enrolled vs unenrolled), iOS-specific behaviors, and selective wipe
 
 ### L1 Troubleshooting
 
-- [ ] **L1TS-01**: iOS triage decision tree routes L1 agents through enrollment, compliance, and app deployment failures
-- [ ] **L1TS-02**: L1 runbooks cover top 6 iOS failure scenarios (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked)
+- [x] **L1TS-01**: iOS triage decision tree routes L1 agents through enrollment, compliance, and app deployment failures
+- [x] **L1TS-02**: L1 runbooks cover top 6 iOS failure scenarios (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked)
 
 ### L2 Investigation
 
-- [ ] **L2TS-01**: iOS log collection runbook covers Company Portal log upload, MDM diagnostic report, and Mac+cable sysdiagnose procedure
-- [ ] **L2TS-02**: L2 investigation runbooks cover ADE token/profile delivery, app install failures, and compliance/CA timing issues
+- [x] **L2TS-01**: iOS log collection runbook covers Company Portal log upload, MDM diagnostic report, and Mac+cable sysdiagnose procedure
+- [x] **L2TS-02**: L2 investigation runbooks cover ADE token/profile delivery, app install failures, and compliance/CA timing issues
 
 ### Navigation & References
 
@@ -86,21 +86,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LIFE-01 | Phase 26 | Pending |
-| LIFE-02 | Phase 26 | Pending |
-| ACORP-01 | Phase 27 | Pending |
-| ACORP-02 | Phase 27 | Pending |
-| ACORP-03 | Phase 27 | Pending |
-| ACFG-01 | Phase 28 | Pending |
-| ACFG-02 | Phase 28 | Pending |
-| ACFG-03 | Phase 28 | Pending |
-| ABYOD-01 | Phase 29 | Pending |
-| ABYOD-02 | Phase 29 | Pending |
-| ABYOD-03 | Phase 29 | Pending |
-| L1TS-01 | Phase 33 (gap closure) | Pending |
-| L1TS-02 | Phase 33 (gap closure) | Pending |
-| L2TS-01 | Phase 31 | Pending |
-| L2TS-02 | Phase 31 | Pending |
+| LIFE-01 | Phase 26 | Complete |
+| LIFE-02 | Phase 26 | Complete |
+| ACORP-01 | Phase 27 | Complete |
+| ACORP-02 | Phase 27 | Complete |
+| ACORP-03 | Phase 27 | Complete |
+| ACFG-01 | Phase 28 | Complete |
+| ACFG-02 | Phase 28 | Complete |
+| ACFG-03 | Phase 28 | Complete |
+| ABYOD-01 | Phase 29 | Complete |
+| ABYOD-02 | Phase 29 | Complete |
+| ABYOD-03 | Phase 29 | Complete |
+| L1TS-01 | Phase 33 (gap closure) | Complete |
+| L1TS-02 | Phase 33 (gap closure) | Complete |
+| L2TS-01 | Phase 31 | Complete |
+| L2TS-02 | Phase 31 | Complete |
 | NAV-01 | Phase 32 | Complete |
 | NAV-02 | Phase 32 | Complete |
 | NAV-03 | Phase 32 | Complete |
@@ -109,7 +109,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - v1.3 requirements: 18 total
 - Mapped to phases: 18
 - Unmapped: 0
+- Complete: 18
 
 ---
 *Requirements defined: 2026-04-16*
-*Last updated: 2026-04-18 — L1TS-01/L1TS-02 reassigned to Phase 33 (gap closure) per v1.3-MILESTONE-AUDIT.md. Other Pending entries remain at original phase; 15 flip to Complete after Phase 33 closes integration caveats I-1/I-2.*
+*Last updated: 2026-04-18 — Phase 33 gap closure complete. L1TS-01/L1TS-02 SATISFIED via Phase 30 verification (30-VERIFICATION.md). Integration caveats I-1 (01-ade-lifecycle.md:364 anchor drift) and I-2 (71 admin-setup-ios placeholders) closed by Phase 33 Plans 33-01 and 33-02 respectively. v1.3 milestone: 18/18 requirements complete.*
