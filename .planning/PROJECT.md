@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 
 ## Current State
 
-**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-31 complete.
+**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-32 complete (iOS/iPadOS provisioning documentation — all milestone phases done; 4 pre-existing human verification items persist in 32-HUMAN-UAT.md as follow-ups).
 
 ### What's been built
 - 118 markdown documentation files in `docs/`
@@ -173,4 +173,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-17 after Phase 31 complete*
+*Last updated: 2026-04-18 after Phase 32 complete (v1.3 milestone phases all done)*
