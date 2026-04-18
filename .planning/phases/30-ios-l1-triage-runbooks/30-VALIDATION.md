@@ -1,7 +1,7 @@
 ---
 phase: 30
 slug: ios-l1-triage-runbooks
-status: phase-30-complete-pending-human-checkpoint
+status: phase-30-complete
 nyquist_compliant: true
 wave_0_complete: true
 created: 2026-04-17
