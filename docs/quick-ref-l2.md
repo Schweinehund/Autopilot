@@ -199,13 +199,13 @@ Full reference: [macOS Terminal Commands](reference/macos-commands.md) | [macOS 
 
 | Path | Purpose |
 |------|---------|
-| Devices > Enrollment > Apple > Enrollment program tokens > [token] > Profiles | ABM token sync status, enrollment profile assignment, device assignment to profile |
-| Devices > Enrollment > Apple > MDM Push Certificate | APNs certificate status, expiry date, renewal Apple ID |
-| Devices > Enrollment > Enrollment restrictions | Platform / ownership / count restrictions applied to enrollment |
+| Devices > Device onboarding > Enrollment > Apple (tab) > Enrollment program tokens > [token] > Profiles | ABM token sync status, enrollment profile assignment, device assignment to profile |
+| Devices > Device onboarding > Enrollment > Apple (tab) > Apple MDM Push Certificate | APNs certificate status, expiry date, renewal Apple ID |
+| Devices > Device onboarding > Enrollment > Enrollment restrictions (Device platform restriction) | Platform / ownership / count restrictions applied to enrollment |
 | Apps > iOS/iPadOS apps | Managed app status, VPP licensing state (device-licensed vs user-licensed), per-device install state |
 | Devices > [device] > Device compliance | Per-device compliance policy evaluation state, timestamps, and non-compliant settings |
 
-*(Verify paths per Phase 30 D-32 research flag — Microsoft Learn (verified 2026-04-17) confirms current; re-verify before content lock-in as Intune admin center reorganizes without deprecation notice.)*
+*(Verified 2026-04-18 against Microsoft Learn: paths updated to reflect the "Device onboarding" section reorg under Devices. Intune admin center reorganizes without deprecation notice — re-verify before content lock-in.)*
 
 ### Sysdiagnose Trigger Reference (iOS/iPadOS)
 
@@ -234,6 +234,7 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Phase 32 HUMAN-UAT item 2 closure: updated Key Intune Portal Paths table to reflect current admin center "Device onboarding" section under Devices per Microsoft Learn 2026-04-16 docs (affects Enrollment Program Tokens, Apple MDM Push Certificate, Enrollment restrictions paths) | -- |
 | 2026-04-18 | Phase 32 gap closure (UAT Test 15): replaced iOS Sysdiagnose Trigger Reference physical-button table with AssistiveTouch-based procedure per Apple Support canonical URL; updated cross-link anchor to match renamed Section 3 in 14-ios-log-collection.md | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 3-method diagnostic data collection table, Intune portal paths table, sysdiagnose trigger reference table (modern unified + legacy per-device), and 4-runbook investigation list; research-flag footnotes per D-32; platform coverage blockquote updated per D-41 | -- |
 | 2026-04-15 | Added macOS ADE Quick Reference section with log collection, Terminal commands, log paths, and investigation runbook links | -- |
