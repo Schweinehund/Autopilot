@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: iOS/iPadOS Provisioning Documentation
 status: executing
-stopped_at: Completed 32-02-PLAN.md (iOS capability matrix + navigation wiring)
-last_updated: "2026-04-18T05:51:29.192Z"
+stopped_at: Completed 32-03-PLAN.md (placeholder retrofit)
+last_updated: "2026-04-18T05:59:49.367Z"
 last_activity: 2026-04-18
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 39
-  completed_plans: 31
-  percent: 79
+  completed_plans: 32
+  percent: 82
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-16)
 ## Current Position
 
 Phase: 32 (Navigation Integration & References) — EXECUTING
-Plan: 2 of 9
+Plan: 3 of 9
 Status: Ready to execute
 Last activity: 2026-04-18
 
@@ -63,6 +63,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.2 decisions 
 - iOS has no CLI diagnostic tool — L2 log collection (L2TS-01) covers Company Portal upload, MDM diagnostic report, and Mac+cable sysdiagnose
 - Glossary additions extend _glossary-macos.md (ABM, ADE, VPP, APNs already live there) rather than creating a new file
 - Navigation updates (Phase 32) are injected into existing shared files, not full rewrites — follows v1.2 macOS precedent
+- [Phase 32]: Rule 3 auto-fix: narrowed placeholder grep pattern from 'Phase 32|NAV-0[123]' to 'Phase 32 NAV-0[123]' to exclude legitimate shipped content (NAV-03 requirement-ID annotations and 'Phase 32: ...' Version History entries from Plans 32-01/02)
 
 ### Pending Todos
 
@@ -79,6 +80,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.2 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-18T05:51:19.634Z
-Stopped at: Completed 32-02-PLAN.md (iOS capability matrix + navigation wiring)
+Last session: 2026-04-18T05:59:49.357Z
+Stopped at: Completed 32-03-PLAN.md (placeholder retrofit)
 Next action: `/gsd:plan-phase 26` to begin iOS/iPadOS Foundation
