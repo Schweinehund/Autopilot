@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-16
-review_by: 2026-07-15
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -373,15 +373,15 @@ Block pairing with non-Configurator hosts prevents the device from establishing 
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Wi-Fi SSID case mismatch | Intune | Device cannot find network; silent auth failure | iOS L1 runbooks (Phase 30) |
-| SCEP certificate profile missing for enterprise Wi-Fi | Intune | 802.1X authentication fails on device | iOS L1 runbooks (Phase 30) |
-| Basic auth selected for Exchange ActiveSync when tenant requires Modern | Intune | Mail app shows "Cannot Get Mail" | iOS L1 runbooks (Phase 30) |
-| Supervised-only restriction targeted to unsupervised device | Intune | Profile shows "Not applicable" for that setting; no user-facing enforcement | iOS L1 runbooks (Phase 30) |
-| Block App Store with VPP user-licensed apps | Intune | VPP invitation cannot be accepted; user-licensed apps never install | iOS L1 runbooks (Phase 30) |
-| Block modification of account settings active during Entra re-auth requirement | Intune | User cannot re-authenticate; remediation requires device wipe | iOS L1 runbooks (Phase 30) |
-| Activation Lock enabled without bypass code escrow | Intune | Device bricked at activation screen if user forgets Apple ID | iOS L1 runbooks (Phase 30) |
-| Home screen layout references uninstalled bundle ID | Intune | Blank icons on device home screen | iOS L1 runbooks (Phase 30) |
-| Legacy "Defer software updates" used for update enforcement (deprecated path) | Intune | Updates not enforced; Apple is deprecating MDM-based update workloads — use DDM-based "iOS/iPadOS update policies" instead | iOS L1 runbooks (Phase 30) |
+| Wi-Fi SSID case mismatch | Intune | Device cannot find network; silent auth failure | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for Wi-Fi config failures; profile delivery investigation required |
+| SCEP certificate profile missing for enterprise Wi-Fi | Intune | 802.1X authentication fails on device | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for certificate-delivery failures; L2 SCEP investigation required |
+| Basic auth selected for Exchange ActiveSync when tenant requires Modern | Intune | Mail app shows "Cannot Get Mail" | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for Exchange auth config; policy review by admin + L2 investigation |
+| Supervised-only restriction targeted to unsupervised device | Intune | Profile shows "Not applicable" for that setting; no user-facing enforcement | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch) applies when restriction non-applicability cascades to compliance failure; else admin profile review |
+| Block App Store with VPP user-licensed apps | Intune | VPP invitation cannot be accepted; user-licensed apps never install | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for VPP/app-deployment failures; L2 app investigation required |
+| Block modification of account settings active during Entra re-auth requirement | Intune | User cannot re-authenticate; remediation requires device wipe | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; wipe remediation and CA re-auth investigation are L2+admin scope |
+| Activation Lock enabled without bypass code escrow | Intune | Device bricked at activation screen if user forgets Apple ID | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; Activation Lock bypass requires L2 + admin-scope recovery |
+| Home screen layout references uninstalled bundle ID | Intune | Blank icons on device home screen | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for home-screen config failures; L2 profile-delivery investigation |
+| Legacy "Defer software updates" used for update enforcement (deprecated path) | Intune | Updates not enforced; Apple is deprecating MDM-based update workloads — use DDM-based "iOS/iPadOS update policies" instead | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; DDM migration is admin-scope and out of L1 triage scope |
 
 ## See Also
 
@@ -402,4 +402,5 @@ Block pairing with non-Configurator hosts prevents the device from establishing 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS configuration profiles guide with Wi-Fi/VPN/Email/Certificates/Home Screen Layout payload sections and Device Restrictions section covering 12 categories with category-level 🔒 supervised-only callouts plus 9 high-impact full-detail subsections | -- |

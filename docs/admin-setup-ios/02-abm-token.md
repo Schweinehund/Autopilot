@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-16
-review_by: 2026-07-15
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -93,11 +93,11 @@ Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Personal Apple ID used for token creation | ABM | Token cannot be renewed after employee departure; new devices stop syncing | iOS L1 runbooks (Phase 30) |
-| Device not assigned before first power-on | ABM | Device runs standard iOS setup; does not enroll in MDM | iOS L1 runbooks (Phase 30) |
-| Wrong MDM server selected for device | ABM | Device enrolls to wrong Intune tenant or profile | iOS L1 runbooks (Phase 30) |
-| Expired token not renewed | Intune | New ABM-assigned devices stop appearing in Intune; existing enrolled devices unaffected | iOS L1 runbooks (Phase 30) |
-| Wrong platform selected (macOS instead of iOS) | Intune | iOS/iPadOS devices do not sync through this token | iOS L1 runbooks (Phase 30) |
+| Personal Apple ID used for token creation | ABM | Token cannot be renewed after employee departure; new devices stop syncing | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| Device not assigned before first power-on | ABM | Device runs standard iOS setup; does not enroll in MDM | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| Wrong MDM server selected for device | ABM | Device enrolls to wrong Intune tenant or profile | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| Expired token not renewed | Intune | New ABM-assigned devices stop appearing in Intune; existing enrolled devices unaffected | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
+| Wrong platform selected (macOS instead of iOS) | Intune | iOS/iPadOS devices do not sync through this token | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) |
 
 ## Renewal / Maintenance
 
@@ -122,4 +122,5 @@ Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version -- ABM/ADE token guide with macOS cross-references and iOS-specific differences | -- |

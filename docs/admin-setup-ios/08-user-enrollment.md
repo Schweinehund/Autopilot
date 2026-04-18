@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: user-enrollment
 audience: admin
 platform: iOS
@@ -160,13 +160,13 @@ Verify the current deprecation status against Microsoft Learn `ios-user-enrollme
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Service-discovery JSON resource missing or returns 404 | Org web server / DNS | Enrollment fails at Managed Apple ID sign-in with "we couldn't sign you in" | iOS L1 runbooks (Phase 30) |
-| Service-discovery JSON resource returns non-JSON content-type | Org web server | Enrollment fails silently; Setup Assistant rejects the discovery response | iOS L1 runbooks (Phase 30) |
-| Account-driven User Enrollment blocked by tenant enrollment restrictions | Intune | Enrollment profile fails to install with "enrollment not allowed" | iOS L1 runbooks (Phase 30) |
-| User signs in with personal Apple ID instead of Managed Apple ID | Device | Setup Assistant rejects sign-in; enrollment cannot proceed | iOS L1 runbooks (Phase 30) |
-| Microsoft Authenticator not assigned or not installed | Intune | Work-account authentication fails during JIT registration; enrollment stalls at Entra sign-in step | iOS L1 runbooks (Phase 30) |
-| Managed Apple ID not created or not federated from Entra | ABM / Entra | User cannot complete Managed Apple ID sign-in; Setup Assistant rejects credentials | iOS L1 runbooks (Phase 30) |
-| Enrollment attempted on iOS 14 or earlier | Device | Account-driven User Enrollment is not available; Setup Assistant has no path option | iOS L1 runbooks (Phase 30) |
+| Service-discovery JSON resource missing or returns 404 | Org web server / DNS | Enrollment fails at Managed Apple ID sign-in with "we couldn't sign you in" | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for service-discovery JSON configuration; L2 org-web/DNS investigation required |
+| Service-discovery JSON resource returns non-JSON content-type | Org web server | Enrollment fails silently; Setup Assistant rejects the discovery response | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; L2 org-web content-type debugging |
+| Account-driven User Enrollment blocked by tenant enrollment restrictions | Intune | Enrollment profile fails to install with "enrollment not allowed" | [Runbook 18: Enrollment Restriction Blocking](../l1-runbooks/18-ios-enrollment-restriction-blocking.md) |
+| User signs in with personal Apple ID instead of Managed Apple ID | Device | Setup Assistant rejects sign-in; enrollment cannot proceed | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; user-education + Managed Apple ID provisioning is out-of-L1-scope admin action |
+| Microsoft Authenticator not assigned or not installed | Intune | Work-account authentication fails during JIT registration; enrollment stalls at Entra sign-in step | [Runbook 19: License Invalid](../l1-runbooks/19-ios-license-invalid.md) — User-enrollment-specific: manifests as "license/access" failure from user perspective; L1 checks Authenticator app assignment via Intune similar to license check; if Authenticator is present and Intune license present, fall to L2P31 per runbook 19 Escalation |
+| Managed Apple ID not created or not federated from Entra | ABM / Entra | User cannot complete Managed Apple ID sign-in; Setup Assistant rejects credentials | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for Managed Apple ID provisioning (ABM + Entra federation); admin scope |
+| Enrollment attempted on iOS 14 or earlier | Device | Account-driven User Enrollment is not available; Setup Assistant has no path option | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; user-education (upgrade device) + admin confirms minimum-OS gate |
 
 ## See Also
 
@@ -184,4 +184,5 @@ Verify the current deprecation status against Microsoft Learn `ios-user-enrollme
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-17 | Initial version — iOS/iPadOS account-driven User Enrollment admin guide with hybrid privacy-callout pattern covering all 7 D-20 privacy boundaries | -- |

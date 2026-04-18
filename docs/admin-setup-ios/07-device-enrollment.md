@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: device-enrollment
 audience: admin
 platform: iOS
@@ -240,23 +240,23 @@ If a verification item fails, start the triage from the symptom first observed b
 - **Device appears but stays "Not evaluated"** — Compliance evaluation has not yet run; wait the expected window or force a sync from Company Portal.
 - **Assigned profiles or apps do not arrive** — Check assignment scope (the user or device is actually targeted), then confirm check-in timestamp to ensure APNs is healthy end-to-end.
 
-Full triage trees for each symptom will live in the iOS L1 runbooks (Phase 30).
+Full triage trees for each symptom live in the [iOS Triage Decision Tree](../decision-trees/07-ios-triage.md) and are executed via the [iOS L1 Runbooks 16-21](../l1-runbooks/00-index.md#ios-l1-runbooks).
 
 ## Configuration-Caused Failures
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Personally-owned enrollment blocked at tenant level when BYOD users attempt to enroll | Intune | Company Portal or web enrollment fails at the "this device can't be managed" step; no device appears in Intune | iOS L1 runbooks (Phase 30) |
-| APNs certificate expired | Intune | All iOS enrollment attempts fail silently; no device arrives in Intune; MDM check-in on previously enrolled devices also fails | iOS L1 runbooks (Phase 30) |
-| Per-user device limit reached | Intune | Enrollment fails with "device limit reached" user-visible message after sign-in | iOS L1 runbooks (Phase 30) |
-| Intune license not assigned to enrolling user | Intune / Entra | Enrollment sign-in succeeds but MDM profile never downloads; Intune shows no device for the user | iOS L1 runbooks (Phase 30) |
-| Web-based enrollment attempted from non-Safari browser | Device | Enrollment URL loads; sign-in succeeds; management-profile download button does nothing or errors | iOS L1 runbooks (Phase 30) |
-| Compliance policy requires passcode of length greater than device-native limit | Intune | Device enrolls but immediately shows non-compliant for passcode; user cannot comply | iOS L1 runbooks (Phase 30) |
-| Company Portal app not assigned and user tenant restricts App Store access | Intune | User cannot install Company Portal; Flow 1 enrollment blocked for affected users | iOS L1 runbooks (Phase 30) |
-| User expected fully silent app install after enrollment (unsupervised Device Enrollment) | Intune | Even device-licensed VPP apps prompt for install confirmation once; this is expected, not a failure — see [Capabilities Available Without Supervision](#capabilities-available-without-supervision) | iOS L1 runbooks (Phase 30) |
-| Device enrolled as Personal but admin expected Corporate (no identifier upload performed) | Intune | Compliance and wipe actions behave as Personal; admin cannot issue full-device wipe | iOS L1 runbooks (Phase 30) |
-| User signs in with a personal (non-work) account during enrollment | Intune / Entra | Enrollment fails or completes against the wrong tenant; no managed device appears for the corporate tenant | iOS L1 runbooks (Phase 30) |
-| Conditional Access policy blocks enrollment endpoint during sign-in | Entra | User sees "Access denied" or "This operation is not allowed" before reaching the profile-download step | iOS L1 runbooks (Phase 30) |
+| Personally-owned enrollment blocked at tenant level when BYOD users attempt to enroll | Intune | Company Portal or web enrollment fails at the "this device can't be managed" step; no device appears in Intune | [Runbook 18: Enrollment Restriction Blocking](../l1-runbooks/18-ios-enrollment-restriction-blocking.md) |
+| APNs certificate expired | Intune | All iOS enrollment attempts fail silently; no device arrives in Intune; MDM check-in on previously enrolled devices also fails | [Runbook 16: APNs Expired](../l1-runbooks/16-ios-apns-expired.md) |
+| Per-user device limit reached | Intune | Enrollment fails with "device limit reached" user-visible message after sign-in | [Runbook 20: Device Cap Reached](../l1-runbooks/20-ios-device-cap-reached.md) |
+| Intune license not assigned to enrolling user | Intune / Entra | Enrollment sign-in succeeds but MDM profile never downloads; Intune shows no device for the user | [Runbook 19: License Invalid](../l1-runbooks/19-ios-license-invalid.md) |
+| Web-based enrollment attempted from non-Safari browser | Device | Enrollment URL loads; sign-in succeeds; management-profile download button does nothing or errors | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; user-education and browser-switch instruction, NOT an L1 triage scenario |
+| Compliance policy requires passcode of length greater than device-native limit | Intune | Device enrolls but immediately shows non-compliant for passcode; user cannot comply | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch, passcode native-limit conflict) |
+| Company Portal app not assigned and user tenant restricts App Store access | Intune | User cannot install Company Portal; Flow 1 enrollment blocked for affected users | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for app-assignment-blocks-enrollment flow; admin action on Company Portal assignment scope + L2 investigation |
+| User expected fully silent app install after enrollment (unsupervised Device Enrollment) | Intune | Even device-licensed VPP apps prompt for install confirmation once; this is expected, not a failure — see [Capabilities Available Without Supervision](#capabilities-available-without-supervision) | Not a failure — see the Capabilities section linked at left. If user persistently cannot accept, see [Runbook 21](../l1-runbooks/21-ios-compliance-blocked.md) Cause B as fallback investigation. |
+| Device enrolled as Personal but admin expected Corporate (no identifier upload performed) | Intune | Compliance and wipe actions behave as Personal; admin cannot issue full-device wipe | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for ownership-misassignment; admin reviews corporate-identifier upload; L2 reconciliation if needed |
+| User signs in with a personal (non-work) account during enrollment | Intune / Entra | Enrollment fails or completes against the wrong tenant; no managed device appears for the corporate tenant | [Runbook 19: License Invalid](../l1-runbooks/19-ios-license-invalid.md) — user enrollment with non-work account manifests as "no Intune license for user" from tenant perspective; runbook 19 Stage-1 error flow applies |
+| Conditional Access policy blocks enrollment endpoint during sign-in | Entra | User sees "Access denied" or "This operation is not allowed" before reaching the profile-download step | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) — Signature (c) "Microsoft sign-in never appears / CA block" covers this directly; for NON-ADE paths (Device Enrollment) the symptom still matches R17 signature c best among available L1 runbooks |
 
 ## See Also
 
@@ -277,4 +277,5 @@ Full triage trees for each symptom will live in the iOS L1 runbooks (Phase 30).
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-17 | Initial version — iOS/iPadOS Device Enrollment admin guide covering Company Portal and web-based flows, capabilities available without supervision, and personal vs corporate ownership | -- |

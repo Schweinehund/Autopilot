@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: mam-we
 audience: admin
 platform: iOS
@@ -325,13 +325,13 @@ For MAM-WE policies to apply, the user MUST sign into the managed app with their
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| App protection policy assigned to a non-MAM-capable app | Intune | Policy shows as assigned but does not apply on device; users see no PIN prompt and no restrictions | iOS L1 runbooks (Phase 30) |
-| User not assigned Intune license | Intune / Entra | Managed app signs in with work account but policy does not enforce; no PIN prompt | iOS L1 runbooks (Phase 30) |
-| Min OS version gate set higher than tenant device fleet | Intune | Users on older iOS versions are blocked from using managed apps with generic "device does not meet requirements" | iOS L1 runbooks (Phase 30) |
-| Offline grace period set too short for typical field use | Intune | Managed apps repeatedly lock out field workers with marginal connectivity; increased help-desk load | iOS L1 runbooks (Phase 30) |
-| Conflicting policies target the same user via overlapping groups | Intune | Policy resolution applies unexpected settings; end-user symptom is inconsistent PIN complexity or data-transfer behavior | iOS L1 runbooks (Phase 30) |
-| Selective wipe initiated but device offline; wipe stalls | Intune | Wipe shows "Pending" for >24 hours; managed apps on device continue to function until next APNs-triggered launch | iOS L1 runbooks (Phase 30) |
-| Jailbroken-device response set to Warn on a Level 3 policy | Intune | Jailbroken devices continue receiving managed app data; compliance posture gap | iOS L1 runbooks (Phase 30) |
+| App protection policy assigned to a non-MAM-capable app | Intune | Policy shows as assigned but does not apply on device; users see no PIN prompt and no restrictions | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for MAM-WE failures; deferred to ADDTS-01 future milestone per Phase 30 D-31 |
+| User not assigned Intune license | Intune / Entra | Managed app signs in with work account but policy does not enforce; no PIN prompt | [Runbook 19: License Invalid](../l1-runbooks/19-ios-license-invalid.md) — License-not-assigned Symptom overlaps; L1 verifies license via P-10 before escalating MAM-specific |
+| Min OS version gate set higher than tenant device fleet | Intune | Users on older iOS versions are blocked from using managed apps with generic "device does not meet requirements" | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for MAM policy gate; admin config review + L2 |
+| Offline grace period set too short for typical field use | Intune | Managed apps repeatedly lock out field workers with marginal connectivity; increased help-desk load | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for MAM timing-tuning; admin policy adjustment |
+| Conflicting policies target the same user via overlapping groups | Intune | Policy resolution applies unexpected settings; end-user symptom is inconsistent PIN complexity or data-transfer behavior | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for MAM policy resolution; admin/L2 investigation |
+| Selective wipe initiated but device offline; wipe stalls | Intune | Wipe shows "Pending" for >24 hours; managed apps on device continue to function until next APNs-triggered launch | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for Selective Wipe stall; MAM-specific L2 investigation (ADDTS-01) |
+| Jailbroken-device response set to Warn on a Level 3 policy | Intune | Jailbroken devices continue receiving managed app data; compliance posture gap | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for MAM jailbreak response config; admin review of MAM policy severity; Security-team aware (cf. runbook 21 Cause B jailbreak branch for MDM-scope jailbreak) |
 
 ## See Also
 
@@ -353,4 +353,5 @@ For related MDM enrollment context (not required to use MAM-WE):
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-17 | Initial version — iOS MAM-WE app protection policies standalone guide covering three-level data protection framework, dual-targeting, selective wipe, and iOS-specific behaviors | -- |

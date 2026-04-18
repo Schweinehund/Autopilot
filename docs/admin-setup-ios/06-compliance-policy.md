@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-18
+review_by: 2026-07-17
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -213,16 +213,16 @@ The timing sequence and mitigation patterns above are sufficient to determine CA
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
-| Minimum OS version set ahead of latest Apple release | Intune | Entire fleet non-compliant until Apple ships the required version | iOS L1 runbooks (Phase 30) |
-| Jailbroken detection left at "Not configured" | Intune | Known jailbroken devices treated as compliant; data exfiltration risk open | iOS L1 runbooks (Phase 30) |
-| Password compliance changed on already-enrolled fleet | Intune | Device remains compliant with old passcode until user next changes passcode | iOS L1 runbooks (Phase 30) |
-| Restricted apps list contains Bundle ID typo | Intune | Compliance check silently passes regardless of installed apps | iOS L1 runbooks (Phase 30) |
-| Mark device non-compliant = 0 days with Retire action = 1 day | Intune | Devices retired within 24 hours during Not-evaluated gap; no time for admin intervention | iOS L1 runbooks (Phase 30) |
-| Default compliance posture = "Not compliant" without grace period | Intune | Users blocked from CA-protected resources 0-30 min post-enrollment; help desk escalations during rollout | iOS L1 runbooks (Phase 30) |
-| Default compliance posture = "Compliant" in high-security environment | Intune | Unmanaged devices and "Not evaluated" devices granted CA access; audit finding | iOS L1 runbooks (Phase 30) |
-| APNs blocked at network edge | Intune | Compliance state stuck at "Not evaluated" indefinitely; CA behavior depends on default posture toggle | iOS L1 runbooks (Phase 30) |
-| CA "Require compliant device" without "Microsoft Intune Enrollment" cloud app exclusion | Entra | ADE Setup Assistant cannot complete sign-in; chicken-and-egg enrollment block | iOS L1 runbooks (Phase 30) |
-| Compliance policy assigned with no corresponding configuration profile where pairing is possible (e.g., passcode) | Intune | Devices marked non-compliant but no enforcement mechanism present | iOS L1 runbooks (Phase 30) |
+| Minimum OS version set ahead of latest Apple release | Intune | Entire fleet non-compliant until Apple ships the required version | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch, OS version) |
+| Jailbroken detection left at "Not configured" | Intune | Known jailbroken devices treated as compliant; data exfiltration risk open | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch, jailbreak detection — Security-team escalation branch) |
+| Password compliance changed on already-enrolled fleet | Intune | Device remains compliant with old passcode until user next changes passcode | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch, passcode) |
+| Restricted apps list contains Bundle ID typo | Intune | Compliance check silently passes regardless of installed apps | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch, restricted apps) |
+| Mark device non-compliant = 0 days with Retire action = 1 day | Intune | Devices retired within 24 hours during Not-evaluated gap; no time for admin intervention | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch with actions-for-noncompliance timing) |
+| Default compliance posture = "Not compliant" without grace period | Intune | Users blocked from CA-protected resources 0-30 min post-enrollment; help desk escalations during rollout | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause A (CA gap) AND Cause C (default posture "Not compliant") |
+| Default compliance posture = "Compliant" in high-security environment | Intune | Unmanaged devices and "Not evaluated" devices granted CA access; audit finding | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause C (default posture configuration — though reversed direction) |
+| APNs blocked at network edge | Intune | Compliance state stuck at "Not evaluated" indefinitely; CA behavior depends on default posture toggle | [Runbook 16: APNs Expired](../l1-runbooks/16-ios-apns-expired.md) — APNs blocked at network edge presents as fleet-wide check-in failure; runbook 16 covers both expired-cert AND blocked-APNs scenarios from L1 observation perspective |
+| CA "Require compliant device" without "Microsoft Intune Enrollment" cloud app exclusion | Entra | ADE Setup Assistant cannot complete sign-in; chicken-and-egg enrollment block | [Runbook 17: ADE Not Starting](../l1-runbooks/17-ios-ade-not-starting.md) — Signature (c) "Setup Assistant cannot complete sign-in" directly describes this CA chicken-and-egg; runbook 17's signature (c) packet covers modern-auth / CA config review |
+| Compliance policy assigned with no corresponding configuration profile where pairing is possible (e.g., passcode) | Intune | Devices marked non-compliant but no enforcement mechanism present | [Runbook 21: Compliance Blocked](../l1-runbooks/21-ios-compliance-blocked.md) — Cause B (policy mismatch, no enforcement mechanism) |
 
 ## See Also
 
@@ -245,6 +245,7 @@ The timing sequence and mitigation patterns above are sufficient to determine CA
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references (D-23 prose rewrite) | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS compliance policy guide with simplified Compliance vs. Configuration table, per-setting What-breaks callouts (jailbreak detection, OS version, passcode, restricted apps), iOS-specific Actions for Noncompliance behaviors, and dedicated Compliance Evaluation Timing and Conditional Access section covering default posture toggle, 0-30 min gap behavior, and iOS APNs considerations (answers SC #4 from the guide alone) | -- |
 
