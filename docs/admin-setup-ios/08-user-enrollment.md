@@ -66,9 +66,9 @@ Account-driven User Enrollment is primarily a user-initiated flow backed by orga
 #### On the organization's web server
 
 1. Host a JSON resource at `https://{email-domain}/.well-known/com.apple.remotemanagement` for each email domain used by enrolling users' Managed Apple IDs. The resource points Apple's enrollment flow at the tenant's Intune enrollment endpoint.
-2. Confirm the resource is reachable over HTTPS from the public internet and returns a `application/json` content-type. Apple's Setup Assistant fetches this resource without authentication.
+2. Confirm the resource is reachable over HTTPS from the public internet and returns a `application/json` content-type. The iOS enrollment client fetches this resource without authentication.
 
-   > **What breaks if misconfigured:** If the service-discovery resource is missing, returns non-JSON content, or is blocked by a firewall, end-user enrollment fails at the "Sign in with Managed Apple ID" step with a generic "we couldn't sign you in" error. Symptom appears in: device (Setup Assistant error) with no failure visible in the Intune admin center portal.
+   > **What breaks if misconfigured:** If the service-discovery resource is missing, returns non-JSON content, or is blocked by a firewall, end-user enrollment fails at the "Sign in with Managed Apple ID" step with a generic "we couldn't sign you in" error. Symptom appears in: device (iOS shows the sign-in error inline in the Settings enrollment flow) with no failure visible in the Intune admin center portal.
 
 On iOS 18.2+ devices federated with ABM, this step may be optional — Apple provides an alternate discovery path using ABM metadata. Verify current iOS version coverage against Microsoft Learn `apple-account-driven-user-enrollment` at time of writing.
 
@@ -91,7 +91,7 @@ On iOS 18.2+ devices federated with ABM, this step may be optional — Apple pro
 
 ## Managed Capabilities and Privacy Limits
 
-After enrollment, Intune manages work apps and data inside the managed APFS volume. Each capability below lists what Intune can do and includes an explicit Privacy limit callout describing what Intune cannot do. Every callout links to the Phase 26 User Enrollment concept page.
+After enrollment, Intune manages work apps and data inside the managed APFS volume. Each capability below lists what Intune can do and includes an explicit Privacy limit callout describing what Intune cannot do. Every callout links back to the User Enrollment section of the [iOS/iPadOS Enrollment Path Overview](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ### Hardware Identifiers and Inventory
 
@@ -154,19 +154,19 @@ Verify the current deprecation status against Microsoft Learn `ios-user-enrollme
 - [ ] Enrolling user has an Intune license assigned to their Entra work account
 - [ ] Microsoft Authenticator is assigned as Required to the enrolling user group and installs on enrollment
 - [ ] Test enrollment on a personal iOS 15+ device completes: user signs in with Managed Apple ID, downloads and accepts the User Enrollment profile, and the device appears in Intune admin center under **Devices** > **All devices** with ownership designation **Personal** and enrollment type **User Enrollment (account-driven)**
-- [ ] Post-enrollment: managed work account is visible on device under **Settings** > **Accounts & Passwords** and work content is accessible via managed apps (Outlook, Teams, Edge)
+- [ ] Post-enrollment: the managed work account appears under **Settings** > **General** > **VPN & Device Management** as a managed User Enrollment profile, and work content is accessible via managed apps (Outlook, Teams, Edge)
 
 ## Configuration-Caused Failures
 
 | Misconfiguration | Portal | Symptom | Runbook |
 |------------------|--------|---------|---------|
 | Service-discovery JSON resource missing or returns 404 | Org web server / DNS | Enrollment fails at Managed Apple ID sign-in with "we couldn't sign you in" | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for service-discovery JSON configuration; L2 org-web/DNS investigation required |
-| Service-discovery JSON resource returns non-JSON content-type | Org web server | Enrollment fails silently; Setup Assistant rejects the discovery response | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; L2 org-web content-type debugging |
+| Service-discovery JSON resource returns non-JSON content-type | Org web server | Enrollment fails silently; the iOS enrollment flow rejects the discovery response | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; L2 org-web content-type debugging |
 | Account-driven User Enrollment blocked by tenant enrollment restrictions | Intune | Enrollment profile fails to install with "enrollment not allowed" | [Runbook 18: Enrollment Restriction Blocking](../l1-runbooks/18-ios-enrollment-restriction-blocking.md) |
-| User signs in with personal Apple ID instead of Managed Apple ID | Device | Setup Assistant rejects sign-in; enrollment cannot proceed | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; user-education + Managed Apple ID provisioning is out-of-L1-scope admin action |
+| User signs in with personal Apple ID instead of Managed Apple ID | Device | iOS rejects the sign-in with "this Apple ID cannot be used here"; enrollment cannot proceed | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; user-education + Managed Apple ID provisioning is out-of-L1-scope admin action |
 | Microsoft Authenticator not assigned or not installed | Intune | Work-account authentication fails during JIT registration; enrollment stalls at Entra sign-in step | [Runbook 19: License Invalid](../l1-runbooks/19-ios-license-invalid.md) — User-enrollment-specific: manifests as "license/access" failure from user perspective; L1 checks Authenticator app assignment via Intune similar to license check; if Authenticator is present and Intune license present, fall to L2P31 per runbook 19 Escalation |
-| Managed Apple ID not created or not federated from Entra | ABM / Entra | User cannot complete Managed Apple ID sign-in; Setup Assistant rejects credentials | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for Managed Apple ID provisioning (ABM + Entra federation); admin scope |
-| Enrollment attempted on iOS 14 or earlier | Device | Account-driven User Enrollment is not available; Setup Assistant has no path option | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; user-education (upgrade device) + admin confirms minimum-OS gate |
+| Managed Apple ID not created or not federated from Entra | ABM / Entra | User cannot complete Managed Apple ID sign-in; iOS rejects the Managed Apple ID sign-in | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook for Managed Apple ID provisioning (ABM + Entra federation); admin scope |
+| Enrollment attempted on iOS 14 or earlier | Device | Account-driven User Enrollment is not available; the Sign In to Work or School Account flow is unavailable on this iOS version | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; user-education (upgrade device) + admin confirms minimum-OS gate |
 
 ## See Also
 
