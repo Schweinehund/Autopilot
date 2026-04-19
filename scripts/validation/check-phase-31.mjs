@@ -28,6 +28,16 @@ function resolveL2Runbooks() {
   });
 }
 
+function parseInventory() {
+  const raw = readFile('.planning/phases/31-ios-l2-investigation/placeholder-inventory.json');
+  if (!raw) return { placeholders: [] };
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    return { _parseError: err.message, placeholders: [] };
+  }
+}
+
 const checks = [
   // V-31-01: SC #2 preamble grep in 14
   { id: 1, name: "V-31-01: 14 has 'no iOS equivalent to mdmdiagnosticstool.exe' preamble", type: "grep", required: true,
@@ -91,7 +101,7 @@ const checks = [
     run() { const c = readFile('docs/l2-runbooks/00-index.md'); if (!c) return { pass: false, detail: "00-index.md missing" }; const ok = /ADDTS-01/.test(c); return { pass: ok, detail: ok ? "ADDTS-01 referenced" : "ADDTS-01 not found in 00-index.md" }; } },
   // V-31-21: D-22 retrofit zero-remain check — excludes the "Resolved Phase 31 L2 cross-references" Version History row mandated by V-31-24 (both gates must co-pass)
   { id: 21, name: "V-31-21: Zero 'Phase 31' placeholder mentions across 9 retrofit targets", type: "link-graph", required: true,
-    run() { const inv = JSON.parse(readFile('.planning/phases/31-ios-l2-investigation/placeholder-inventory.json') || '{"placeholders":[]}'); const offenders = []; for (const p of inv.placeholders) { const c = readFile(p.file); if (!c) continue; const scrubbed = c.replace(/Resolved Phase 31 L2 cross-references/g, ''); if (/Phase 31/.test(scrubbed)) { offenders.push(p.file); } } return { pass: offenders.length === 0, detail: offenders.length ? `Phase 31 still in: ${[...new Set(offenders)].join(', ')}` : "0 remaining" }; } },
+    run() { const inv = parseInventory(); if (inv._parseError) return { pass: false, detail: 'inventory JSON invalid: ' + inv._parseError }; const offenders = []; for (const p of inv.placeholders) { const c = readFile(p.file); if (!c) continue; const scrubbed = c.replace(/Resolved Phase 31 L2 cross-references/g, ''); if (/Phase 31/.test(scrubbed)) { offenders.push(p.file); } } return { pass: offenders.length === 0, detail: offenders.length ? `Phase 31 still in: ${[...new Set(offenders)].join(', ')}` : "0 remaining" }; } },
   // V-31-22: D-22 target specificity
   { id: 22, name: "V-31-22: Every retrofitted L1 link points to specific 14-17 file (not bare 00-index.md)", type: "link-graph", required: true,
     run() { const files = ['docs/l1-runbooks/16-ios-apns-expired.md','docs/l1-runbooks/17-ios-ade-not-starting.md','docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md','docs/l1-runbooks/19-ios-license-invalid.md','docs/l1-runbooks/20-ios-device-cap-reached.md','docs/l1-runbooks/21-ios-compliance-blocked.md']; const bad = []; for (const f of files) { const c = readFile(f); if (!c) continue; const bareIndex = /\.\.\/l2-runbooks\/00-index\.md(?!#)/.test(c); if (bareIndex) bad.push(f); } return { pass: bad.length === 0, detail: bad.length ? `bare 00-index.md link in: ${bad.join(', ')}` : "all specific" }; } },
@@ -100,7 +110,7 @@ const checks = [
     run() { const c = readFile('docs/admin-setup-ios/06-compliance-policy.md'); const expected = readFile('.planning/phases/31-ios-l2-investigation/expected-d23.txt'); if (!c || !expected) return { pass: false, detail: "file or fixture missing" }; const lines = c.split('\n'); const actual = (lines[181] || '').trim(); const exp = expected.trim(); return { pass: actual === exp, detail: actual === exp ? "match" : `MISMATCH — actual[0:80]='${actual.slice(0,80)}' expected[0:80]='${exp.slice(0,80)}'` }; } },
   // V-31-24: D-25 Version History entries
   { id: 24, name: "V-31-24: Each of 9 retrofit files has 'Resolved Phase 31 L2 cross-references' in Version History", type: "structural", required: true,
-    run() { const inv = JSON.parse(readFile('.planning/phases/31-ios-l2-investigation/placeholder-inventory.json') || '{"placeholders":[]}'); const files = [...new Set(inv.placeholders.map(p => p.file))]; const missing = []; for (const f of files) { const c = readFile(f); if (!c || !/Resolved Phase 31 L2 cross-references/.test(c)) missing.push(f); } return { pass: missing.length === 0, detail: missing.length ? `missing in: ${missing.join(', ')}` : "all present" }; } },
+    run() { const inv = parseInventory(); if (inv._parseError) return { pass: false, detail: 'inventory JSON invalid: ' + inv._parseError }; const files = [...new Set(inv.placeholders.map(p => p.file))]; const missing = []; for (const f of files) { const c = readFile(f); if (!c || !/Resolved Phase 31 L2 cross-references/.test(c)) missing.push(f); } return { pass: missing.length === 0, detail: missing.length ? `missing in: ${missing.join(', ')}` : "all present" }; } },
   // V-31-25: D-27 L2 template enum
   { id: 25, name: "V-31-25: L2 template platform enum includes iOS", type: "grep", required: true,
     run() { const c = readFile('docs/_templates/l2-template.md'); if (!c) return { pass: false, detail: "l2-template.md missing" }; return { pass: /^platform: Windows \| macOS \| iOS \| all$/m.test(c), detail: "enum present" }; } },
