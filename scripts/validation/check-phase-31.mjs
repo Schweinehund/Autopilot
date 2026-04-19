@@ -3,7 +3,7 @@
 // Source of truth: .planning/phases/31-ios-l2-investigation/31-VALIDATION.md
 // NO SHELL: all file content via fs.readFileSync; external tools via execFileSync with argv arrays
 
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
@@ -16,25 +16,6 @@ function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
   if (!existsSync(abs)) return null;
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');  // CRLF normalization per ca40eb9
-}
-
-function walkMd(dir) {
-  const abs = join(process.cwd(), dir);
-  if (!existsSync(abs)) return [];
-  const results = [];
-  function walk(current) {
-    let entries;
-    try { entries = readdirSync(current); } catch { return; }
-    for (const entry of entries) {
-      const full = join(current, entry);
-      let stat;
-      try { stat = statSync(full); } catch { continue; }
-      if (stat.isDirectory()) { walk(full); }
-      else if (entry.endsWith('.md')) { results.push(full); }
-    }
-  }
-  walk(abs);
-  return results;
 }
 
 function resolveL2Runbooks() {
