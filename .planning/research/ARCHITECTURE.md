@@ -1,506 +1,539 @@
 # Architecture Research
 
-**Domain:** Documentation suite integration — iOS/iPadOS provisioning into existing Intune docs
-**Researched:** 2026-04-16
-**Confidence:** HIGH
-
-## Architectural Context: v1.3 Adds a Third Platform
-
-The existing v1.2 architecture established a proven pattern: parallel platform directories unified through shared navigation files. This research addresses only the v1.3 question: how iOS/iPadOS plugs into that existing architecture. The v1.2 architecture notes are preserved below for reference.
+**Domain:** Documentation suite — Android Enterprise integration into existing multi-platform Intune provisioning docs
+**Researched:** 2026-04-19
+**Confidence:** HIGH (based on direct inspection of all existing docs/ files and established patterns)
 
 ---
 
-## v1.3: iOS/iPadOS Integration Architecture
+## Standard Architecture
 
-### The Core Structural Question
-
-iOS/iPadOS shares more Apple ecosystem infrastructure with macOS than macOS shares with Windows. Both iOS and macOS use ABM, the same ADE token mechanism, the same APNs certificate, VPP/Apps and Books, and Setup Assistant. But iOS has an enrollment complexity that macOS does not: four distinct enrollment paths (ADE, Device Enrollment, User Enrollment, MAM) versus macOS's single ADE path.
-
-**Recommendation:** iOS/iPadOS follows the same parallel-directory pattern as macOS. New directories `ios-lifecycle/` and `admin-setup-ios/` are created. Shared runbook directories (l1-runbooks, l2-runbooks, decision-trees) continue their sequential numbering. Navigation files (index.md, common-issues.md, quick-ref cards) receive injected platform sections.
-
-### iOS/iPadOS in the Docs Tree
+### System Overview
 
 ```
 docs/
-├── [SHARED NAVIGATION — updated for iOS]
-│   ├── index.md                   ← Add "iOS/iPadOS Provisioning" as third platform section
-│   ├── common-issues.md           ← Add "iOS/iPadOS Failure Scenarios" section
-│   ├── quick-ref-l1.md            ← Add "iOS/iPadOS Quick Reference" section
-│   ├── quick-ref-l2.md            ← Add "iOS/iPadOS Quick Reference" section
-│   ├── _glossary-macos.md         ← Extend with iOS-specific terms (supervision, MAM, etc.)
-│   └── [ios-vs-macos.md]          ← NEW: iOS-to-macOS concept map (optional, low priority)
+├── CROSS-PLATFORM SHARED (platform: all)
+│   ├── index.md                    ← nav hub — 4-platform selector (Android stub in v1.4)
+│   ├── common-issues.md            ← symptom router — deferred for Android
+│   ├── quick-ref-l1.md             ← L1 cheat sheet — deferred for Android
+│   ├── quick-ref-l2.md             ← L2 cheat sheet — deferred for Android
+│   ├── _glossary.md                ← Windows terms
+│   ├── _glossary-macos.md          ← Apple-platform terms (iOS + macOS shared)
+│   ├── _glossary-android.md        ← NEW: Android Enterprise terms [v1.4]
+│   ├── windows-vs-macos.md         ← existing cross-platform comparison
+│   └── _templates/                 ← guide templates
+│       ├── admin-template-android.md  ← NEW: tri-portal template [v1.4 Phase 1]
+│       └── ...
 │
-├── [PLATFORM: iOS/iPadOS — all NEW]
-│   ├── ios-lifecycle/
-│   │   └── 00-ios-enrollment-paths.md    ← Multi-path lifecycle (ADE, Device, User, MAM)
-│   └── admin-setup-ios/
-│       ├── 00-overview.md
-│       ├── 01-abm-apns-prerequisites.md  ← Shared Apple infra; cross-refs macOS ABM guide
-│       ├── 02-ade-enrollment-profile.md  ← Corporate supervised path
-│       ├── 03-device-enrollment.md       ← BYOD device-level
-│       ├── 04-user-enrollment.md         ← BYOD user-partition
-│       ├── 05-configuration-profiles.md
-│       ├── 06-app-deployment.md
-│       ├── 07-compliance-policy.md
-│       └── 08-config-failures.md
+├── ANDROID LIFECYCLE (new subdirectory)
+│   └── android-lifecycle/
+│       ├── 00-enrollment-overview.md  ← enrollment modes + ownership axis [v1.4]
+│       └── 01-android-prerequisites.md ← MGP binding, ZT portal [v1.4]
 │
-├── [SHARED TROUBLESHOOTING — extended for iOS]
-│   ├── decision-trees/
-│   │   └── 07-ios-triage.md              ← NEW (macOS is 06)
-│   ├── l1-runbooks/
-│   │   ├── 16-ios-device-not-appearing.md  ← NEW (macOS ends at 15)
-│   │   ├── 17-ios-setup-assistant-failed.md
-│   │   ├── 18-ios-profile-not-applied.md
-│   │   ├── 19-ios-app-not-installed.md
-│   │   ├── 20-ios-compliance-access-blocked.md
-│   │   └── 21-ios-company-portal-signin.md
+├── ANDROID ADMIN SETUP (new subdirectory)
+│   └── admin-setup-android/
+│       ├── 00-overview.md             ← tri-portal setup sequence [v1.4]
+│       ├── 01-managed-google-play.md  ← MGP binding (prereq for all modes) [v1.4]
+│       ├── 02-zero-touch-portal.md    ← ZT portal setup [v1.4]
+│       ├── 03-fully-managed-cobo.md   ← COBO/corporate-owned [v1.4]
+│       ├── 04-byod-work-profile.md    ← personally-owned work profile [v1.4]
+│       ├── 05-dedicated-devices.md    ← kiosk/COSU [v1.4]
+│       └── 06-aosp-stub.md            ← AOSP stub [v1.4, full v1.4.1]
+│
+├── ANDROID LIFECYCLE REFERENCE
+│   └── android-lifecycle/
+│       ├── 02-provisioning-methods.md ← NFC/QR/afw#setup/ZT matrix [v1.4]
+│       └── 03-android-version-matrix.md ← min OS per mode [v1.4]
+│
+├── L1 RUNBOOKS (existing, append Android section)
+│   └── l1-runbooks/
+│       ├── 00-index.md              ← MODIFY: add Android L1 section [v1.4]
+│       ├── 22-android-enrollment-blocked.md   [v1.4]
+│       ├── 23-android-work-profile-not-created.md [v1.4]
+│       ├── 24-android-device-not-enrolled.md  [v1.4]
+│       ├── 25-android-compliance-access-blocked.md [v1.4]
+│       ├── 26-android-mgp-app-not-installed.md    [v1.4]
+│       └── 27-android-zt-enrollment-failed.md [v1.4]
+│
+├── END-USER GUIDE (new tier for BYOD)
+│   └── end-user-guides/
+│       └── android-work-profile-setup.md ← NEW TIER [v1.4]
+│
+├── L2 RUNBOOKS (existing, append Android section)
 │   └── l2-runbooks/
-│       ├── 14-ios-log-collection.md        ← NEW (macOS ends at 13)
-│       ├── 15-ios-profile-delivery.md
-│       ├── 16-ios-app-install.md
-│       └── 17-ios-compliance.md
+│       ├── 00-index.md              ← MODIFY: add Android L2 section [v1.4]
+│       ├── 18-android-log-collection.md   [v1.4]
+│       ├── 19-android-enrollment-investigation.md [v1.4]
+│       ├── 20-android-app-install-failure.md      [v1.4]
+│       └── 21-android-compliance-investigation.md [v1.4]
 │
-└── [CROSS-PLATFORM REFERENCES — extended]
+├── DECISION TREES (existing dir, new Android file)
+│   └── decision-trees/
+│       └── 08-android-triage.md     ← NEW: Android mode-first triage [v1.4]
+│
+└── REFERENCE (existing, new Android entries)
     └── reference/
-        ├── endpoints.md              ← Add #ios-ade-endpoints anchor section
-        ├── 00-index.md               ← Add iOS references section
-        └── ios-capability-matrix.md  ← NEW: iOS vs macOS feature parity
+        ├── 00-index.md              ← MODIFY: add Android entries [v1.4]
+        └── android-capability-matrix.md ← NEW [v1.4]
 ```
 
 ### Component Responsibilities
 
-| Component | Responsibility | iOS/iPadOS Specific Notes |
-|-----------|----------------|--------------------------|
-| `index.md` | Platform selector + role entry points | Add third platform section with L1/L2/Admin tables |
-| `common-issues.md` | Symptom-to-runbook router | Add iOS failure scenarios below macOS section |
-| `quick-ref-l1.md` | L1 cheat sheet per platform | Add iOS top checks, escalation triggers, runbook links |
-| `quick-ref-l2.md` | L2 cheat sheet per platform | Add iOS log collection, key commands, runbook links |
-| `_glossary-macos.md` | Shared Apple ecosystem terms | Extend: supervision, MAM, user enrollment partition, App Protection Policy, Managed Apple ID |
-| `decision-trees/07-ios-triage.md` | L1 triage flowchart | ADE path vs BYOD path as first branch |
-| `l1-runbooks/16-21` | Scripted L1 procedures | 6 runbooks mirroring macOS coverage (10-15) |
-| `l2-runbooks/14-17` | Technical L2 investigation | 4 runbooks mirroring macOS coverage (10-13) |
-| `ios-lifecycle/00-ios-enrollment-paths.md` | Multi-path enrollment lifecycle | Single file covering all 4 paths with comparison table |
-| `admin-setup-ios/` | iOS admin configuration guides | 9 files; ADE guides require supervision callout pattern |
-| `reference/ios-capability-matrix.md` | iOS vs macOS Intune feature parity | Parallel to `reference/macos-capability-matrix.md` |
+| Component | Responsibility | New / Modified |
+|-----------|----------------|----------------|
+| `android-lifecycle/00-enrollment-overview.md` | Mode axis (COBO/COPE/BYOD/Dedicated/AOSP) + ownership dimension; provisioning-method matrix reference | NEW |
+| `admin-setup-android/01-managed-google-play.md` | MGP binding via Intune; token management; prerequisite gate for all corporate modes | NEW |
+| `admin-setup-android/02-zero-touch-portal.md` | ZT portal reseller import; Intune DPC config; ZT-specific enrollment profile | NEW |
+| `_templates/admin-template-android.md` | Tri-portal template (Intune + MGP + ZT portal); extends not replaces dual-portal template | NEW |
+| `_glossary-android.md` | COBO/COPE/BYOD WP/Dedicated/AOSP/ZTE/DPC/MGP/afw#setup/WPCO terms with cross-platform equivalents | NEW |
+| `end-user-guides/android-work-profile-setup.md` | End-user BYOD Company Portal enrollment; self-service; privacy boundary callouts | NEW TIER |
+| `decision-trees/08-android-triage.md` | Android L1 triage: symptom → mode identification → mode-specific runbook routing | NEW |
+| `l1-runbooks/00-index.md` | Android L1 runbook section header + table (runbooks 22-27) | MODIFIED |
+| `l2-runbooks/00-index.md` | Android L2 runbook section header + table (runbooks 18-21) | MODIFIED |
+| `index.md` | Android stub placeholder in Choose Your Platform; full integration deferred post-v1.4 | MODIFIED (stub only) |
+| `_glossary-macos.md` | Cross-ref anchor added pointing to `_glossary-android.md` for "Work Profile" disambiguation | MODIFIED (1-line addition) |
+| `reference/android-capability-matrix.md` | Android mode × feature matrix across COBO/BYOD/Dedicated; comparison to iOS supervision axis | NEW |
+
+---
+
+## Recommended Project Structure
+
+```
+docs/
+├── android-lifecycle/              # NEW subdirectory — v1.4
+│   ├── 00-enrollment-overview.md
+│   ├── 01-android-prerequisites.md
+│   ├── 02-provisioning-methods.md
+│   └── 03-android-version-matrix.md
+├── admin-setup-android/            # NEW subdirectory — v1.4
+│   ├── 00-overview.md
+│   ├── 01-managed-google-play.md
+│   ├── 02-zero-touch-portal.md
+│   ├── 03-fully-managed-cobo.md
+│   ├── 04-byod-work-profile.md
+│   ├── 05-dedicated-devices.md
+│   └── 06-aosp-stub.md
+├── end-user-guides/                # NEW subdirectory — v1.4 (BYOD tier)
+│   └── android-work-profile-setup.md
+├── l1-runbooks/                    # EXISTING — append Android section
+│   ├── 00-index.md                 # MODIFIED
+│   ├── 22-android-*.md             # NEW (6 runbooks)
+│   └── ...
+├── l2-runbooks/                    # EXISTING — append Android section
+│   ├── 00-index.md                 # MODIFIED
+│   ├── 18-android-*.md             # NEW (4 runbooks)
+│   └── ...
+├── decision-trees/                 # EXISTING — add Android triage
+│   ├── 08-android-triage.md        # NEW
+│   └── ...
+├── reference/                      # EXISTING — add Android capability matrix
+│   ├── android-capability-matrix.md # NEW
+│   └── ...
+├── _templates/                     # EXISTING — add Android template
+│   ├── admin-template-android.md   # NEW
+│   └── ...
+├── _glossary-android.md            # NEW (platform-level glossary)
+├── index.md                        # MODIFIED (Android stub)
+├── common-issues.md                # DEFERRED — post-v1.4 unification
+├── quick-ref-l1.md                 # DEFERRED — post-v1.4 unification
+└── quick-ref-l2.md                 # DEFERRED — post-v1.4 unification
+```
+
+### Structure Rationale
+
+- **android-lifecycle/:** Mirrors `ios-lifecycle/` and `macos-lifecycle/` naming convention; keeps enrollment-model docs separate from admin-setup procedural docs.
+- **admin-setup-android/:** Mirrors `admin-setup-ios/` and `admin-setup-macos/`; numbered guides follow the prerequisite DAG (MGP first, ZT second, mode-specific guides after).
+- **end-user-guides/:** New subdirectory rather than a misfit inside `admin-setup-android/` or `l1-runbooks/`; "end-user" audience is distinct from L1/L2/Admin — placing it inside any existing tier would misrepresent the audience.
+- **_glossary-android.md:** Parallel to `_glossary.md` (Windows) and `_glossary-macos.md` (Apple). Android does not share glossary with Apple platforms; creating a third glossary avoids contaminating the Apple glossary and mirrors the established two-glossary pattern.
+- **Runbook numbering:** L1 Android runbooks start at 22 (iOS ended at 21); L2 Android start at 18 (iOS ended at 17). Flat numeric namespace maintained — no per-platform sub-numbering.
+
+---
 
 ## Architectural Patterns
 
-### Pattern 1: Platform Section Injection
+### Pattern 1: Tri-Portal Template (Android extension of Dual-Portal)
 
-**What:** Shared files (index.md, common-issues.md, quick-ref cards) have explicit platform sections separated by `---` horizontal rules. Adding iOS/iPadOS appends a new section below macOS.
+**What:** Every Android corporate admin guide uses a three-portal sub-section structure:
+`#### In Intune admin center`, `#### In Managed Google Play`, `#### In Zero-Touch portal (where applicable)`.
 
-**When to use:** Any file currently containing "Choose Your Platform" selectors.
+**When to use:** All Android admin guides touching corporate enrollment (COBO, Dedicated, ZTE). BYOD Work Profile only requires Intune admin center + brief MGP reference (MGP is already bound; no ZT portal for BYOD).
 
-**How the "Choose Your Platform" selector updates:**
+**Trade-offs:** Adds one portal section per guide vs dual-portal. Authoring cost is higher but administrators must navigate three portals in practice; omitting a portal creates a gap that generates escalations.
 
+**Relationship to dual-portal template:** The `admin-template-android.md` is a new file, not a modification to `admin-template-macos.md` or `admin-template-ios.md`. The dual-portal templates remain unchanged. Android guides cite `admin-template-android.md`. This subclasses by copy-and-extend rather than inheritance, consistent with how the iOS template extended the macOS template in v1.3.
+
+**Implementation:**
 ```markdown
-## Choose Your Platform
+### Step N: [Configuration action]
 
-- [Windows Autopilot](#windows-autopilot) -- APv1 and APv2
-- [macOS Provisioning](#macos-provisioning) -- ADE via Apple Business Manager
-- [iOS/iPadOS Provisioning](#ios-ipados-provisioning) -- ADE, device enrollment, user enrollment, MAM
+#### In Intune admin center
+...steps...
+
+#### In Managed Google Play
+...steps...
+
+#### In Zero-Touch portal
+...steps...  (omit this section when ZT is not applicable to the step)
 ```
 
-**iOS/iPadOS section structure in index.md:**
+### Pattern 2: Mode-First Triage (Android L1 decision tree)
 
-```markdown
-## iOS/iPadOS Provisioning
+**What:** Android triage tree routes symptom → enrollment mode identification FIRST, then to mode-specific runbook. This is different from iOS triage (symptom → direct runbook) because Android failure root causes differ fundamentally by mode: a "device not enrolling" symptom on a COBO device (wrong DPC, ZT config error) has entirely different remediation than the same symptom on a BYOD device (Company Portal not installed, personal Google account interference).
 
-Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment through Intune.
-Covers ADE (supervised, corporate-owned), device enrollment (Company Portal), account-driven
-user enrollment (BYOD), and MAM without enrollment. For Apple ecosystem terminology shared
-with macOS, see the [Apple Ecosystem Glossary](_glossary-macos.md).
+**When to use:** `decision-trees/08-android-triage.md`. The L1 triage tree entry question is "What enrollment mode was intended?" before branching to symptom-specific runbooks.
 
-### Service Desk (L1)
+**Trade-offs:** Mode-first adds one triage step vs symptom-first. Acceptable because L1 agents can identify the intended mode from the ticket (ticket metadata: device type, user classification) without device access.
 
-| Resource | When to Use |
-|----------|-------------|
-| [iOS/iPadOS Triage Decision Tree](decision-trees/07-ios-triage.md) | Start here |
-| [iOS L1 Runbooks](l1-runbooks/00-index.md#ios-ipados-runbooks) | Scripted procedures |
-| [L1 Quick-Reference Card](quick-ref-l1.md#ios-ipados-quick-reference) | Cheat sheet |
-
-### Desktop Engineering (L2)
-
-| Resource | When to Use |
-|----------|-------------|
-| [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) | Prerequisite for all iOS L2 |
-| [iOS L2 Runbooks](l2-runbooks/00-index.md#ios-ipados-runbooks) | Investigation guides |
-| [L2 Quick-Reference Card](quick-ref-l2.md#ios-ipados-quick-reference) | Commands cheat sheet |
-
-### Admin Setup
-
-| Resource | When to Use |
-|----------|-------------|
-| [iOS/iPadOS Enrollment Paths](ios-lifecycle/00-ios-enrollment-paths.md) | Understand enrollment types |
-| [iOS Admin Setup Guides](admin-setup-ios/00-overview.md) | Full setup sequence |
+**Implementation:**
+```
+Symptom reported
+    ↓
+"What enrollment mode was intended?"
+    COBO / ZTE → [runbook 24: device-not-enrolled or 27: zt-enrollment-failed]
+    BYOD Work Profile → [runbook 23: work-profile-not-created]
+    Dedicated → [runbook 24: device-not-enrolled]
+    Unknown → "Is this a corporate or personal device?"
+        Corporate → assume COBO/ZTE, escalate L2 if mode unclear
+        Personal → assume BYOD Work Profile → [runbook 23]
 ```
 
-### Pattern 2: Runbook Numbering Continuation
+### Pattern 3: Enrollment Method × Enrollment Mode Matrix (2-axis grid)
 
-**What:** macOS L1 runbooks occupy 10-15, macOS L2 runbooks occupy 10-13. iOS continues from those endpoints.
+**What:** Android provisioning method (NFC, QR code, afw#setup DPC identifier, Zero-Touch) is orthogonal to enrollment mode (COBO, COPE, BYOD Work Profile, Dedicated, AOSP). A single matrix doc (`android-lifecycle/02-provisioning-methods.md`) captures the full 5×4 grid rather than embedding partial coverage inside each mode doc.
 
-**iOS L1:** starts at 16 (device-not-appearing, setup-assistant-failed, profile-not-applied, app-not-installed, compliance-access-blocked, company-portal-signin)
+**When to use:** Referenced from `android-lifecycle/00-enrollment-overview.md` (full grid for conceptual understanding) and from each mode's admin guide (filtered view showing only relevant methods for that mode). Admin guides cross-reference the matrix doc rather than duplicating the grid.
 
-**iOS L2:** starts at 14 (log-collection, profile-delivery, app-install, compliance)
+**Trade-offs:** Centralized matrix is a single source of truth but requires cross-referencing discipline. The alternative — embedding mode-specific method coverage in each guide — causes duplication and divergence as ZT capabilities evolve.
 
-**Trade-off:** The gap between L2 numbers 8 (last APv2 runbook) and 10 (first macOS runbook) is already an established precedent. iOS continuing from 14 is consistent with that pattern.
-
-### Pattern 3: Supervision Callout Pattern (new for iOS)
-
-**What:** iOS/iPadOS has a supervision dimension that macOS does not expose in the same way. Under macOS ADE, all ADE-enrolled devices are supervised. Under iOS, supervision is a choice (ADE always supervised, Device Enrollment never supervised). Many iOS features documented in admin guides are supervision-gated.
-
-**When to use:** Any iOS admin guide section documenting a supervision-required feature.
-
-**Recommended format:**
-
-```markdown
-> **Supervised only:** [Feature name] requires the device to be supervised.
-> Devices enrolled via Device Enrollment (Company Portal) or User Enrollment are not supervised.
-> To use this feature, devices must be enrolled via ADE through Apple Business Manager.
-> See: [ADE Enrollment Profile](02-ade-enrollment-profile.md)
+**Matrix skeleton:**
+```
+                    COBO    COPE    BYOD WP   Dedicated   AOSP
+NFC                  Y       Y        N          Y         N
+QR Code              Y       Y        N          Y         Y
+afw#setup            Y       Y        Y          Y         Y
+Zero-Touch (ZTE)     Y       Y        N          Y         N
 ```
 
-Use this callout label (`**Supervised only:**`) rather than `**What breaks if misconfigured:**` to distinguish a capability boundary from a configuration error. Both use the same blockquote format for visual consistency.
+### Pattern 4: End-User Self-Service Guide (4th documentation tier)
 
-**Supervision-gated features requiring this callout:**
-- Silent app installation from App Store (no user confirmation prompt)
-- App Lock / Kiosk mode (single-app or multi-app)
-- Web content filtering (URL allowlist/blocklist)
-- Blocking screen capture
-- Autonomous Single App Mode
-- Restricting AirDrop, iMessage, FaceTime at policy level
-- Factory reset (wipe) via MDM
-- Lost Mode
-- Activation Lock bypass
-- Software update enforcement via declarative management
-- Prohibiting apps by bundle ID
+**What:** Android BYOD Work Profile enrollment is user-initiated via Company Portal. There is no admin-portal enrollment step for the user's device — the admin's role is to configure the Work Profile enrollment profile in Intune, then communicate enrollment instructions to users. A dedicated end-user guide (`end-user-guides/android-work-profile-setup.md`) covers the user-side enrollment steps.
 
-**Supervision determination point:** Supervision is set at enrollment time via the ADE enrollment profile. It cannot be added to an already-enrolled device without wiping and re-enrolling. This is the critical "Watch Out For" in the lifecycle doc's ADE section.
+**When to use:** BYOD Work Profile only. All other Android modes (COBO, Dedicated, ZTE, AOSP) are corporate-owned and admin-initiated.
 
-### Pattern 4: Multi-Path iOS Lifecycle
+**Audience and tone distinction:** End-user guide uses plain language, no Intune portal steps, and focuses on what the user sees on their device (Company Portal screens). Contrast with admin guide (`admin-setup-android/04-byod-work-profile.md`) which covers the policy/configuration side.
 
-**What:** macOS ADE follows a single 7-stage linear pipeline. iOS has four distinct enrollment paths, each with a different device state and management scope. The lifecycle documentation must accommodate this without creating four separate lifecycle files.
+**What this is NOT:** L1 runbook. The end-user guide is not a troubleshooting document. It is a how-to enrollment guide for the device owner. When enrollment fails, the user's next step is to contact L1 — the end-user guide does not replace L1 runbooks.
 
-**Recommended structure for `ios-lifecycle/00-ios-enrollment-paths.md`:**
-
-1. **Comparison table at top:** enrollment type × key attributes (ownership, supervision, management scope, user experience, recommended for). This lets any reader immediately orient to the right path.
-2. **Section per enrollment path:** ADE (full depth), Device Enrollment (medium depth), User Enrollment (medium depth), MAM without enrollment (reference pointer — the actual MAM configuration is out of scope for a provisioning suite).
-3. **Each section uses the same macOS lifecycle subsection pattern:** What the Admin Sees, What Happens, Behind the Scenes, Watch Out For.
-
-**Depth by path (corporate IT audience):**
-
-| Path | Documentation Depth | Rationale |
-|------|--------------------|-----------| 
-| ADE (supervised, corporate) | Full — lifecycle + full admin guide set | Primary corporate path; highest management capability |
-| Device Enrollment (Company Portal) | Medium — one admin guide | Secondary BYOD path; simpler setup |
-| User Enrollment (account-driven) | Medium — one admin guide with limitations table | BYOD, iOS 13+; important to document limitations clearly |
-| MAM without enrollment | Reference only — single paragraph + link out | App team concern, not IT provisioning |
-
-### Pattern 5: Shared Apple Ecosystem Prerequisites
-
-**What:** iOS ADE and macOS ADE share the ABM portal and ADE token mechanism. The APNs certificate is also shared. An organization that already has macOS ADE running through Intune may have the ABM/APNs prerequisites already satisfied for iOS.
-
-**Cross-reference to include in `admin-setup-ios/01-abm-apns-prerequisites.md`:**
-
-```markdown
-> **If macOS ADE is already configured:** Your organization's ABM MDM server and ADE token
-> may already be linked to Intune. Verify at: Intune admin center > Devices > Enrollment >
-> Apple > Enrollment program tokens. A single active token serves both macOS and iOS/iPadOS —
-> no separate iOS token is required.
-> See: [macOS ABM Configuration](../admin-setup-macos/01-abm-configuration.md)
-```
-
-The iOS admin guide for ABM/APNs covers the verification steps and what to do if prerequisites are already met vs. need to be set up from scratch. This avoids duplicating the full ABM token creation walkthrough that already exists in the macOS guide.
+---
 
 ## Data Flow
 
-### iOS Triage and Escalation Flow
+### L1 Triage Flow for Android
 
 ```
-iOS/iPadOS Failure Reported
+Symptom reported to L1
     ↓
-[decision-trees/07-ios-triage.md]
-    ↓ (first branch: ADE enrolled vs BYOD enrolled)
-    ├─ ADE ──→ routes by symptom ──→ [l1-runbooks/17-ios-setup-assistant-failed.md]
-    │                                  [l1-runbooks/16-ios-device-not-appearing.md]
-    │                                  [l1-runbooks/18-ios-profile-not-applied.md]
-    │                                  [l1-runbooks/19-ios-app-not-installed.md]
-    │                                  [l1-runbooks/20-ios-compliance-access-blocked.md]
-    │                                  [l1-runbooks/21-ios-company-portal-signin.md]
-    │
-    └─ BYOD ──→ routes by symptom ──→ [l1-runbooks/18-21 as applicable]
-
-    Escalations from L1 ──→ [l2-runbooks/14-ios-log-collection.md] (prerequisite)
-                                ↓
-                            [l2-runbooks/15-17 as applicable]
-                                ↓ references
-                            [reference/ios-capability-matrix.md]
-                            [reference/endpoints.md #ios-ade-endpoints]
-                            [_glossary-macos.md #supervision]
-```
-
-### Admin Setup Flow
-
-```
-[admin-setup-ios/00-overview.md]
+decision-trees/08-android-triage.md
+    ↓ (mode identification)
     ↓
-[01-abm-apns-prerequisites.md] ←─cross-ref──→ [admin-setup-macos/01-abm-configuration.md]
+Mode = BYOD?        → l1-runbooks/23-android-work-profile-not-created.md
+Mode = COBO/ZTE?    → l1-runbooks/24-android-device-not-enrolled.md
+                      or l1-runbooks/27-android-zt-enrollment-failed.md
+Mode = Dedicated?   → l1-runbooks/24-android-device-not-enrolled.md
+Mode = Compliance?  → l1-runbooks/25-android-compliance-access-blocked.md
+Mode = App?         → l1-runbooks/26-android-mgp-app-not-installed.md
+    ↓ (if L1 action fails or escalation threshold met)
+L2 escalation with data collection checklist
     ↓
-    ├─ Corporate/ADE path:
-    │   [02-ade-enrollment-profile.md]
-    │       ↓
-    │   [05-configuration-profiles.md] [06-app-deployment.md] [07-compliance-policy.md]
-    │       ↓
-    │   [08-config-failures.md]
-    │
-    └─ BYOD paths:
-        [03-device-enrollment.md]
-        [04-user-enrollment.md]
-            ↓
-        [07-compliance-policy.md]
+l2-runbooks/18-android-log-collection.md  (prerequisite)
+    ↓
+l2-runbooks/19, 20, or 21 (investigation)
 ```
 
-### Navigation Hub Integration Flow
+### Admin Setup Dependency Chain (prerequisite DAG)
 
 ```
-[index.md] "Choose Your Platform"
-    ├── Windows Autopilot (existing — APv1/APv2)
-    ├── macOS Provisioning (existing — ADE)
-    └── iOS/iPadOS Provisioning (NEW)
-            ├── L1 ──→ [07-ios-triage.md] + [l1-runbooks/16-21] + [quick-ref-l1.md #ios]
-            ├── L2 ──→ [l2-runbooks/14-17] + [quick-ref-l2.md #ios]
-            └── Admin ──→ [ios-lifecycle/00-ios-enrollment-paths.md]
-                          [admin-setup-ios/00-overview.md]
+[Phase 1 prerequisite]
+admin-template-android.md (tri-portal template)
+_glossary-android.md
+    ↓
+android-lifecycle/00-enrollment-overview.md (conceptual framework)
+    ↓
+admin-setup-android/01-managed-google-play.md  ← GATE: all corporate modes blocked until MGP bound
+    ↓              ↓
+    ↓    admin-setup-android/02-zero-touch-portal.md  ← GATE: ZTE blocked until ZT portal configured
+    ↓              ↓
+    ↓    admin-setup-android/03-fully-managed-cobo.md
+    ↓
+admin-setup-android/04-byod-work-profile.md    ← does NOT require ZT portal
+    ↓
+admin-setup-android/05-dedicated-devices.md    ← requires MGP (app assignment)
+    ↓
+admin-setup-android/06-aosp-stub.md            ← partial; full v1.4.1
+
+Parallel to main chain:
+android-lifecycle/02-provisioning-methods.md   ← reference doc; no prereqs
+android-lifecycle/03-android-version-matrix.md ← reference doc; no prereqs
 ```
 
-### Glossary Integration
+### Cross-Platform Reference Flow
 
-iOS-specific terms are added to `_glossary-macos.md` (not a new file) because ABM, ADE, VPP, Setup Assistant, and APNs already live there and are shared between macOS and iOS. New terms to add:
+```
+"What is a Work Profile?"
+    → _glossary-android.md#work-profile
+    → [cross-ref callout]: "For iOS equivalent, see Supervision in _glossary-macos.md"
+    → [disambiguation callout]: "For Android Dedicated vs iOS Shared iPad vs Windows
+       Shared PC, see android-capability-matrix.md#dedicated-device-disambiguation"
 
-- **Supervision** — managed device state enabling full MDM control; set at ADE enrollment
-- **Unsupervised** — default state for Device Enrollment and User Enrollment
-- **MDM Profile (iOS)** — the management profile installed during enrollment; removable on unsupervised devices
-- **User Enrollment** — iOS 13+ BYOD enrollment creating a work/personal partition
-- **Work Partition** — the managed portion of a User Enrollment device; isolated from personal data
-- **MAM (Mobile Application Management)** — app-level policy without device enrollment
-- **App Protection Policy** — Intune policy applied to managed apps under MAM
-- **Account-Driven User Enrollment** — the iOS 15+ variant of User Enrollment using Settings.app
-- **Managed Apple ID** — organization-controlled Apple ID required for Account-Driven User Enrollment
-- **Device Enrollment** — full device management via Company Portal; unsupervised unless Apple Configurator-supervised
+"Dedicated device" disambiguation:
+    → _glossary-android.md#dedicated-device
+    → callout: Android Dedicated (COSU) ≠ iOS Shared iPad ≠ Windows Shared PC
+    → forward reference to android-capability-matrix.md
+```
+
+---
 
 ## Integration Points
 
-### Files Requiring Updates (Existing Files)
+### New Components to Existing Components
 
-| File | Change | Scope |
-|------|--------|-------|
-| `docs/index.md` | Add iOS/iPadOS as third platform section; update "Choose Your Platform" selector | ~50 lines added |
-| `docs/common-issues.md` | Add "iOS/iPadOS Failure Scenarios" section below macOS; update "Choose Your Platform" | ~60 lines added |
-| `docs/quick-ref-l1.md` | Add "iOS/iPadOS Quick Reference" section below macOS | ~30 lines added |
-| `docs/quick-ref-l2.md` | Add "iOS/iPadOS Quick Reference" section below macOS | ~30 lines added |
-| `docs/l1-runbooks/00-index.md` | Add "iOS/iPadOS Runbooks" section (16-21) | ~25 lines added |
-| `docs/l2-runbooks/00-index.md` | Add "iOS/iPadOS Runbooks" section (14-17) | ~20 lines added |
-| `docs/_glossary-macos.md` | Add iOS-specific terms under new "iOS/iPadOS" section | ~50 lines added |
-| `docs/reference/endpoints.md` | Add iOS ADE endpoints section (Albert, ADE activation, APNs, Intune enrollment) | ~15 lines added |
-| `docs/reference/00-index.md` | Add iOS references section linking to ios-capability-matrix.md | ~8 lines added |
+| New Component | Integrates With | Integration Type |
+|---------------|-----------------|------------------|
+| `admin-template-android.md` | `admin-template-macos.md`, `admin-template-ios.md` | Sibling template; no modification to existing templates |
+| `_glossary-android.md` | `_glossary-macos.md` | Cross-reference: `_glossary-macos.md` adds 1-line see-also for "Work Profile" disambiguation |
+| `l1-runbooks/00-index.md` | Android runbooks 22-27 | Append new section; no modification to existing iOS/macOS/Windows sections |
+| `l2-runbooks/00-index.md` | Android runbooks 18-21 | Append new section; no modification to existing sections |
+| `android-lifecycle/00-enrollment-overview.md` | `ios-lifecycle/00-enrollment-overview.md` | Sibling doc; index.md links to both; no modification to iOS doc |
+| `decision-trees/08-android-triage.md` | `l1-runbooks/00-index.md` | 00-index.md related-resources section adds link to 08-android-triage.md |
+| `reference/android-capability-matrix.md` | `reference/ios-capability-matrix.md`, `reference/macos-capability-matrix.md` | Sibling; reference/00-index.md adds entry |
 
-### New Files Required
+### Deferred Integration Points (post-v1.4)
 
-**Core content — must be built:**
+| Deferred Item | Files Affected | Why Deferred |
+|---------------|----------------|--------------|
+| `index.md` Android platform section (full) | `index.md` | Regression risk against v1.0-v1.3 live nav; separate unification task |
+| `common-issues.md` Android section | `common-issues.md` | Same regression risk; 3-platform cross-refs would need Android added throughout |
+| `quick-ref-l1.md` Android section | `quick-ref-l1.md` | Consistent with iOS pattern — was deferred then backported; same approach |
+| `quick-ref-l2.md` Android section | `quick-ref-l2.md` | Same as L1 card |
 
-| File | Type | Mirrors | Build Priority |
-|------|------|---------|---------------|
-| `docs/ios-lifecycle/00-ios-enrollment-paths.md` | Lifecycle | macOS ADE lifecycle | 1 — unblocks all other work |
-| `docs/admin-setup-ios/00-overview.md` | Admin index | macOS admin overview | 2 — needed before sub-guides |
-| `docs/admin-setup-ios/01-abm-apns-prerequisites.md` | Admin guide | macOS ABM guide | 3 — blocks ADE guides |
-| `docs/admin-setup-ios/02-ade-enrollment-profile.md` | Admin guide | macOS enrollment profile | 4 — primary corporate path |
-| `docs/admin-setup-ios/05-configuration-profiles.md` | Admin guide | macOS config profiles | 5 — core management |
-| `docs/admin-setup-ios/06-app-deployment.md` | Admin guide | macOS app deployment | 5 — core management |
-| `docs/admin-setup-ios/07-compliance-policy.md` | Admin guide | macOS compliance | 5 — core management |
-| `docs/admin-setup-ios/03-device-enrollment.md` | Admin guide | (none) | 6 — BYOD path |
-| `docs/admin-setup-ios/04-user-enrollment.md` | Admin guide | (none) | 6 — BYOD path |
-| `docs/admin-setup-ios/08-config-failures.md` | Admin guide | macOS config failures | 7 — after all guides complete |
-| `docs/decision-trees/07-ios-triage.md` | L1 tree | macOS triage | 8 — after runbooks titled |
-| `docs/l1-runbooks/16-ios-device-not-appearing.md` | L1 runbook | macOS 10 | 9 |
-| `docs/l1-runbooks/17-ios-setup-assistant-failed.md` | L1 runbook | macOS 11 | 9 |
-| `docs/l1-runbooks/18-ios-profile-not-applied.md` | L1 runbook | macOS 12 | 9 |
-| `docs/l1-runbooks/19-ios-app-not-installed.md` | L1 runbook | macOS 13 | 9 |
-| `docs/l1-runbooks/20-ios-compliance-access-blocked.md` | L1 runbook | macOS 14 | 9 |
-| `docs/l1-runbooks/21-ios-company-portal-signin.md` | L1 runbook | macOS 15 | 9 |
-| `docs/l2-runbooks/14-ios-log-collection.md` | L2 runbook | macOS 10 | 10 — prerequisite for other L2 |
-| `docs/l2-runbooks/15-ios-profile-delivery.md` | L2 runbook | macOS 11 | 11 |
-| `docs/l2-runbooks/16-ios-app-install.md` | L2 runbook | macOS 12 | 11 |
-| `docs/l2-runbooks/17-ios-compliance.md` | L2 runbook | macOS 13 | 11 |
+### index.md Stub Pattern (v1.4 in-scope)
 
-**Supporting content — build when time allows:**
+Add to `index.md` "Choose Your Platform" list:
 
-| File | Type | Note |
-|------|------|------|
-| `docs/reference/ios-capability-matrix.md` | Reference | iOS vs macOS feature parity; useful for admins managing both Apple platforms |
-| `docs/ios-vs-macos.md` | Cross-platform | Concept map; less critical since the macOS glossary + lifecycle covers shared concepts |
-| `docs/_templates/admin-template-ios.md` | Template | Create after first admin guide is written to codify the supervision callout pattern |
-
-### Internal Boundaries and Cross-References
-
-| Boundary | Direction | Pattern |
-|----------|-----------|---------|
-| iOS admin guides → macOS admin guides | One-way: iOS references macOS for shared ABM/APNs setup | Cross-ref callout in `01-abm-apns-prerequisites.md` |
-| iOS l1-runbooks → iOS l2-runbooks | Escalation node IDs in triage tree | Follow `MAC1/MACR1` pattern; use `IOS1/IOSR1` prefix |
-| iOS lifecycle → iOS admin guides | "See Also" at end of each lifecycle section | Same as macOS lifecycle → macOS admin guides |
-| `_glossary-macos.md` → iOS docs | Inline links `[term](../_glossary-macos.md#term)` | iOS docs use macOS glossary for all Apple terms |
-| iOS triage → common-issues.md | common-issues.md iOS section links to `07-ios-triage.md` | Mirrors macOS pattern exactly |
-| iOS admin guides → `08-config-failures.md` | Each guide's "Configuration-Caused Failures" table populated | Same pattern as macOS `06-config-failures.md` |
-
-## Suggested Build Order
-
-### Group 1: Foundation (no dependencies — unblocks everything)
-
-1. **`_glossary-macos.md` iOS term additions** — Supervision, MAM, user enrollment partition, account-driven user enrollment, Managed Apple ID, App Protection Policy. Zero content dependencies.
-
-2. **`docs/ios-lifecycle/00-ios-enrollment-paths.md`** — Conceptual entry point for all three audiences. Writing this crystallizes the four enrollment paths, confirms where supervision boundaries fall, and identifies what admin guides are needed. Serves as the source of truth for all downstream content.
-
-3. **`docs/_templates/admin-template-ios.md`** — Create after the lifecycle doc establishes the supervision callout pattern. Ensures all nine admin guides are structurally consistent.
-
-### Group 2: Admin Setup Guides (sequential internal dependency)
-
-4. **`admin-setup-ios/00-overview.md`** — Mermaid setup sequence. Requires knowing all guide titles from Group 1.
-
-5. **`admin-setup-ios/01-abm-apns-prerequisites.md`** — First guide in sequence. Blocks all ADE guides. Cross-references `admin-setup-macos/01-abm-configuration.md`.
-
-6. **`admin-setup-ios/02-ade-enrollment-profile.md`** — Depends on (5). Defines supervision — all "Supervised only" callouts in other guides refer back to this file.
-
-7. **`admin-setup-ios/05-configuration-profiles.md`**, **`06-app-deployment.md`**, **`07-compliance-policy.md`** — Depend on (6) conceptually. Can be written in parallel.
-
-8. **`admin-setup-ios/03-device-enrollment.md`**, **`04-user-enrollment.md`** — BYOD paths. No supervision content. Can be written in parallel with (7).
-
-9. **`admin-setup-ios/08-config-failures.md`** — Reverse-lookup table. Written last; requires all other guides to exist.
-
-### Group 3: L1 Triage and Runbooks (parallel with Group 2 after Group 1)
-
-10. **`decision-trees/07-ios-triage.md`** — L1 entry point. Sketch tree structure early; finalize after runbooks are titled.
-
-11. **L1 runbooks 16-21** — Six runbooks. Can be written in parallel after the first one establishes the iOS L1 pattern.
-
-### Group 4: L2 Investigation Guides (depends on Group 3)
-
-12. **`l2-runbooks/14-ios-log-collection.md`** — Prerequisite for all other iOS L2 guides. Written first in Group 4. iOS log collection is distinct from macOS: iOS uses Device Console (Xcode), iPhone Mirroring, or Company Portal "Share Diagnostics". Document `Settings > Privacy & Security > Analytics & Improvements > Analytics Data` for on-device log access, and `idevicesyslog` (libimobiledevice) for L2 engineers.
-
-13. **L2 runbooks 15-17** — Written in parallel after (12).
-
-### Group 5: Navigation Integration (last — depends on Groups 1-4)
-
-14. **`index.md`**, **`common-issues.md`**, **`quick-ref-l1.md`**, **`quick-ref-l2.md`** — All require final file paths from Groups 1-4. Single pass after content docs are finalized.
-
-15. **`l1-runbooks/00-index.md`**, **`l2-runbooks/00-index.md`** — Add iOS sections pointing to all new runbooks.
-
-16. **`reference/endpoints.md`**, **`reference/00-index.md`**, **`reference/ios-capability-matrix.md`** — Can be written any time; no content dependency on runbooks.
-
-### Parallelism Opportunities
-
-Groups 2 and 3 can run in parallel once Group 1 is complete (admin setup and L1 troubleshooting have no cross-dependencies). Within Group 2, guides 05/06/07 and 03/04 can be parallelized. Within Group 3, all six L1 runbooks can be parallelized after the first establishes the pattern.
-
-### Dependency Chain
-
+```markdown
+- [Android Enterprise](#android-enterprise) -- Android device management
+  via Microsoft Intune (Zero-Touch corporate enrollment, Fully Managed,
+  Work Profile BYOD, Dedicated/kiosk devices)
 ```
-Group 1: Glossary iOS terms + iOS lifecycle doc + iOS admin template
-    ↓
-Group 2 (parallel with Group 3):
-  Admin: 00-overview → 01-ABM/APNs → 02-ADE ─→ 05/06/07 (parallel) → 08-failures
-                                              └→ 03/04 (parallel)
-  L1:    07-triage + 16-21-runbooks (parallel)
-    ↓
-Group 4: 14-log-collection → 15/16/17-runbooks (parallel)
-    ↓
-Group 5: Navigation updates + references
+
+Add stub section at bottom of `index.md` (after iOS/iPadOS section, before Cross-Platform References):
+
+```markdown
+## Android Enterprise
+
+> **Coverage note:** Android Enterprise documentation is v1.4.
+> Cross-platform navigation integration (quick-reference cards, common-issues routing)
+> is deferred to a post-v1.4 unification task to avoid regression in existing platform links.
+
+For Android Enterprise enrollment, see:
+- [Android Enrollment Path Overview](android-lifecycle/00-enrollment-overview.md)
+- [Android Admin Setup Guides](admin-setup-android/00-overview.md)
+- [Android L1 Runbooks](l1-runbooks/00-index.md#android-enterprise-runbooks)
+- [Android L2 Runbooks](l2-runbooks/00-index.md#android-l2-runbooks)
 ```
+
+This stub ensures reachability from index.md without modifying cross-platform tables that carry iOS/macOS/Windows anchors.
+
+---
+
+## Specific Architecture Decisions
+
+### Q1: Folder Structure
+
+**Decision:** Four new subdirectories: `android-lifecycle/`, `admin-setup-android/`, `end-user-guides/`. No new `scenarios/android` or `error-codes/android` subdirectory — Android failure catalog lives inside the L1 runbooks and L2 runbooks using the same flat-in-existing-dir pattern established for iOS and macOS. Error codes as a pattern does not apply to Android (Android Enterprise failures are symptom-based like APv2, not hex-code-based like APv1).
+
+**Rationale:** Mirrors iOS pattern (`ios-lifecycle/`, `admin-setup-ios/`). Adding `scenarios/android` would diverge from how iOS/macOS scenarios are handled (embedded in runbooks, not a separate scenarios/ dir).
+
+### Q2: Navigation Integration Deferral
+
+**Decision:** `index.md` gets a stub Android section. `common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md` get no Android content in v1.4.
+
+**Stub anchors in v1.4:** The stub section in `index.md` uses the anchor `#android-enterprise`. This anchor is stable and safe to use in cross-references within Android docs (e.g., `../index.md#android-enterprise`). Post-v1.4 unification expands this section rather than replacing it.
+
+**v1.0-v1.3 file freeze:** No modifications to files in `.planning/milestones/v1.0`-`v1.3`. Live `docs/` files that contain platform-scoped sections (like `l1-runbooks/00-index.md`) are modified by appending new Android sections — existing iOS/macOS/Windows sections are untouched.
+
+### Q3: Admin Template Evolution (Tri-Portal)
+
+**Decision:** New `admin-template-android.md` that extends the dual-portal pattern with a third portal section for ZT portal. The existing `admin-template-macos.md` and `admin-template-ios.md` are NOT modified.
+
+**Sub-classing logic:** BYOD Work Profile guide uses Intune + MGP only (no ZT portal). The ZT portal sub-section (`#### In Zero-Touch portal`) appears only in guides 02-zero-touch-portal.md and 03-fully-managed-cobo.md. Template comment block documents: "Include ZT portal section only when configuring Zero-Touch DPC rules or reseller-side configuration."
+
+**Renewal/Maintenance section:** The MGP binding has a token that can expire or need refresh (Google account credential rotation). The ZT portal has reseller import workflows with CSV exports. The template includes a Renewal/Maintenance section by default, unlike iOS ADE where it was optional.
+
+### Q4: Enrollment Method × Mode Matrix
+
+**Decision:** Standalone reference doc `android-lifecycle/02-provisioning-methods.md`. Each mode's admin guide contains a "Provisioning Methods" subsection that shows only the methods valid for that mode and cross-references the full matrix.
+
+**Not embedded per guide:** Embedding the full 5×4 grid in each of 4 mode guides would create 4 copies to maintain. The matrix changes as Android versions evolve (ZT support expands per Android version); centralizing it means one update location.
+
+### Q5: BYOD Tier Inversion
+
+**Decision:** Create `end-user-guides/` as a new first-level subdirectory of `docs/`. Android BYOD Work Profile gets one end-user guide (`android-work-profile-setup.md`). The admin guide for BYOD (`admin-setup-android/04-byod-work-profile.md`) covers the policy-side; the end-user guide covers the device-side.
+
+**The 4th tier (End User):** Sits alongside L1/L2/Admin, not inside any existing tier. It is referenced from `admin-setup-android/04-byod-work-profile.md` (admin guide tells admins to distribute the end-user guide link) and from `l1-runbooks/23-android-work-profile-not-created.md` (if the user needs to re-run enrollment, L1 can point to the end-user guide).
+
+**Not added to `index.md` main tier navigation** in v1.4 — covered by the Android stub section with a direct link.
+
+### Q6: Cross-Platform Disambiguation ("Dedicated Device")
+
+**Decision:** `_glossary-android.md#dedicated-device` entry includes a disambiguation callout block:
+
+```markdown
+> **Cross-platform disambiguation:** "Dedicated device" in Android Enterprise (COSU —
+> Corporate-Owned Single Use) is not equivalent to iOS Shared iPad or Windows Shared PC.
+> Android Dedicated: single-purpose kiosk, no user accounts, single app or limited app set.
+> iOS Shared iPad: multi-user shared device with Managed Apple IDs.
+> Windows Shared PC: multi-user shared with local accounts.
+> For a comparison across platforms, see [Android Capability Matrix](../reference/android-capability-matrix.md#dedicated-device-disambiguation).
+```
+
+**Glossary impact:** `_glossary-macos.md` does not need modification for "Dedicated" disambiguation — the iOS equivalent is "Shared iPad" which is already a distinct term. The disambiguation is handled at the Android glossary level, with a forward reference to the capability matrix.
+
+**Cross-reference banner pattern:** Admin guides for Dedicated devices (Android) include a `> **Platform note:**` banner at the top cross-referencing iOS Shared iPad and Windows Shared PC. Mirrors the existing `> **macOS:** ...` cross-ref banners already used in `common-issues.md` and `l1-runbooks/00-index.md`.
+
+### Q7: Frontmatter Taxonomy Extension
+
+**Decision:** Add `android` to the `platform` enum. No modification to v1.0-v1.3 files (Windows defaults to Windows, macOS files have `platform: macOS`, iOS files have `platform: iOS` — all remain valid).
+
+**Corporate Device Identifier type:** Android uses IMEI, serial number, and MEID for corporate device identifiers in Intune. The frontmatter taxonomy does not currently encode identifier type as a field. Decision: do NOT add `identifier_type` frontmatter field in v1.4. The identifier coverage belongs in the body of `admin-setup-android/01-managed-google-play.md` (corporate identifier enrollment restrictions section). Frontmatter is for routing and filtering, not content metadata.
+
+**Android version field:** Do NOT add `min_android_version` as frontmatter. Android version minimums per mode belong in `android-lifecycle/03-android-version-matrix.md` (reference doc) and per-mode callouts in admin guides. Frontmatter inflation is a maintenance cost.
+
+**Resulting frontmatter for Android docs:**
+```yaml
+platform: android
+audience: admin | L1 | L2 | end-user   # end-user is new valid value
+```
+
+### Q8: Build Order — Dependency DAG
+
+**Phase 1 prerequisites (must complete before any runbook phase):**
+1. `_glossary-android.md` — terms needed in all subsequent docs
+2. `_templates/admin-template-android.md` — tri-portal template for all admin guides
+3. `android-lifecycle/00-enrollment-overview.md` — conceptual framework for mode identification
+4. `android-lifecycle/02-provisioning-methods.md` — method × mode matrix
+5. `android-lifecycle/03-android-version-matrix.md` — version fragmentation reference
+
+**Phase 2 prerequisites (MGP binding gate):**
+6. `android-lifecycle/01-android-prerequisites.md` — MGP binding + ZT portal overview
+7. `admin-setup-android/00-overview.md` — tri-portal setup sequence overview
+8. `admin-setup-android/01-managed-google-play.md` — **hard gate**: all corporate modes blocked
+
+**Phase 3 (ZT portal gate, parallel with phase 2 tail):**
+9. `admin-setup-android/02-zero-touch-portal.md` — **gate for ZTE and COBO via ZT**
+
+**Phase 4 (mode-specific admin guides — parallel candidates after phase 2+3):**
+10. `admin-setup-android/03-fully-managed-cobo.md` (requires 01 + 02)
+11. `admin-setup-android/04-byod-work-profile.md` (requires 01 only)
+12. `admin-setup-android/05-dedicated-devices.md` (requires 01)
+13. `admin-setup-android/06-aosp-stub.md` (requires 01; content is minimal)
+14. `end-user-guides/android-work-profile-setup.md` (parallel with 11 — same guide pair)
+
+**Phase 5 (triage + L1 runbooks — require mode-specific admin knowledge):**
+15. `decision-trees/08-android-triage.md` (conceptual mode-first triage tree)
+16. `l1-runbooks/22-27-android-*.md` (6 runbooks; most can be parallel)
+17. `l1-runbooks/00-index.md` modification (after all 6 runbooks exist)
+
+**Phase 6 (L2 runbooks — require L1 escalation paths to exist):**
+18. `l2-runbooks/18-android-log-collection.md` (prerequisite for all L2)
+19. `l2-runbooks/19-21-android-*.md` (3 investigation runbooks; parallel after 18)
+20. `l2-runbooks/00-index.md` modification (after all 4 runbooks exist)
+
+**Phase 7 (cross-platform integration):**
+21. `reference/android-capability-matrix.md`
+22. `index.md` Android stub addition
+23. `_glossary-macos.md` 1-line see-also addition
+
+**Parallelizable pairs:**
+- Phases 4 items 10 + 11 + 12 + 13 + 14 (all independent of each other after MGP binding doc)
+- Phases 6 items 19 + 20 + 21 (all independent of each other after log collection doc)
+
+### Q9: Failure Catalog Integration
+
+**Decision:** Symptom-first, then mode-branch at the first triage step.
+
+**Rationale:** L1 agents receive tickets with symptoms ("device won't enroll"), not mode labels. The triage tree (`08-android-triage.md`) asks the mode question first because symptoms repeat across modes while causes differ by mode. This is the same L1 usability logic that drove the iOS triage tree design.
+
+**Catalog structure:** No standalone `error-codes/android` catalog file. Android Enterprise enrollment failures are symptom-based (like APv2), not error-code-based (like APv1). The L1 runbooks themselves are the failure catalog — each runbook covers one symptom cluster with mode-conditional branches inside the runbook where applicable.
+
+**Mode branch inside runbook vs separate runbook per mode:** For high-volume symptoms (device not enrolling), a single runbook (e.g., `24-android-device-not-enrolled.md`) with internal mode branches is more maintainable than 4 separate runbooks with 90% overlap. For symptoms that are mode-exclusive (ZT enrollment failure), a dedicated runbook (`27-android-zt-enrollment-failed.md`) is correct.
+
+### Q10: docs/ Cross-References That Need Android Added
+
+Files with existing platform cross-refs that will need Android added post-v1.4 (tracked, not in-scope for v1.4):
+
+| File | Existing Cross-Ref Pattern | Post-v1.4 Addition Needed |
+|------|---------------------------|---------------------------|
+| `common-issues.md` lines 14-19 | `Choose Your Platform` list | Add `[Android Enterprise Issues](#android-enterprise-issues)` |
+| `common-issues.md` H2 sections | Windows / macOS / iOS sections | Add `## Android Enterprise Failure Scenarios` |
+| `quick-ref-l1.md` | Platform sections with anchors | Add `## Android Enterprise Quick Reference` |
+| `quick-ref-l2.md` | Platform sections with anchors | Add `## Android Enterprise Quick Reference` |
+| `index.md` | iOS/iPadOS Provisioning section | Expand Android stub to full section |
+| `_glossary-macos.md` | Apple-platform scope line | Add "For Android Enterprise terms, see _glossary-android.md" |
+
+**v1.4 in-scope touches to these files:**
+- `_glossary-macos.md`: 1-line addition in the > **Platform coverage:** banner to add Android cross-ref
+- `index.md`: Android stub section (Choose Your Platform entry + stub H2)
+- `l1-runbooks/00-index.md`: Append Android section (existing sections untouched)
+- `l2-runbooks/00-index.md`: Append Android section (existing sections untouched)
+
+**Anchor safety:** All existing anchors in `l1-runbooks/00-index.md`, `l2-runbooks/00-index.md`, and `index.md` remain unchanged. New Android sections append after existing content with new anchors (`#android-enterprise-runbooks`, `#android-l2-runbooks`, `#android-enterprise`).
+
+---
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Creating a Separate iOS Glossary File
+### Anti-Pattern 1: Embedding the provisioning-method matrix inside mode guides
 
-**What people do:** Create `_glossary-ios.md` to hold iOS-specific terms, mirroring the pattern of `_glossary-macos.md` next to `_glossary.md`.
+**What people do:** Add a "Provisioning Methods" section to each mode guide (COBO, BYOD, Dedicated) with the full NFC/QR/afw#setup/ZT grid.
 
-**Why it's wrong:** ABM, ADE, VPP, Setup Assistant, and APNs already live in `_glossary-macos.md` and apply equally to iOS. A third glossary file fragments shared Apple ecosystem concepts. iOS docs would need to link to two files for Apple terminology.
+**Why it's wrong:** The matrix gets duplicated 4 times. When Google expands ZT support to new Android versions, all 4 copies need updating. Divergence happens in practice.
 
-**Do this instead:** Extend `_glossary-macos.md` with an iOS-specific section. Update the file's preamble to note it covers both macOS and iOS/iPadOS Apple ecosystem terminology.
+**Do this instead:** One canonical matrix doc (`android-lifecycle/02-provisioning-methods.md`). Mode guides reference it with a filtered view (one row of the matrix) and a link to the full matrix.
 
-### Anti-Pattern 2: Documenting All Four iOS Enrollment Paths at Equal Depth
+### Anti-Pattern 2: Putting BYOD Work Profile content inside a single combined BYOD guide
 
-**What people do:** Write complete admin guide sets for ADE, Device Enrollment, User Enrollment, and MAM at equal detail.
+**What people do:** Combine admin setup + end-user instructions into one document under `admin-setup-android/04-byod-work-profile.md`.
 
-**Why it's wrong:** The audience is corporate IT. ADE (supervised, corporate-owned) is the primary path. Equal treatment wastes effort and blurs the message about which path to follow for corporate devices.
+**Why it's wrong:** Admin portal steps (enrollment profile creation, Work Profile configuration, compliance policies) have no relevance to end users. End-user instructions (Company Portal install, account sign-in, work/personal separation explanation) have no relevance to admins. A combined doc fails both audiences.
 
-**Do this instead:** ADE gets full admin guide treatment with supervision callouts throughout. Device Enrollment and User Enrollment each get one admin guide with a focused limitations section. MAM gets a one-paragraph reference with a link to App Protection Policy documentation (out of scope for this provisioning suite).
+**Do this instead:** Two separate docs with explicit audience callouts. `admin-setup-android/04-byod-work-profile.md` (audience: admin) ends with a section "Distributing Enrollment Instructions" that links to `end-user-guides/android-work-profile-setup.md`. The end-user guide opens with a note that it is for device users, not administrators.
 
-### Anti-Pattern 3: Starting iOS L1 Runbook Numbers at 10
+### Anti-Pattern 3: Modifying v1.0-v1.3 files for cross-platform nav in v1.4
 
-**What people do:** Number iOS L1 runbooks starting at 10 with an `ios-` prefix to distinguish from macOS's `macos-` prefix.
+**What people do:** Add Android to `common-issues.md` "Choose Your Platform" list and update all the cross-ref banners (lines like `> **iOS:** For iOS issues, see...`) to add `> **Android:**` everywhere.
 
-**Why it's wrong:** `l1-runbooks/` is a flat directory. macOS already occupies `10-macos-*` through `15-macos-*`. File system collisions aside, the 00-index.md tables would list two different "10" entries.
+**Why it's wrong:** `common-issues.md` has 20+ cross-platform banners. Each banner addition in a shared file is a regression risk for existing links. Any anchor rename or formatting inconsistency breaks existing iOS/macOS/Windows navigation paths that v1.0-v1.3 consumers rely on.
 
-**Do this instead:** iOS L1 runbooks start at 16. Sequential numbering within a flat directory is the established convention.
+**Do this instead:** Stub in `index.md` only. Comprehensive `common-issues.md` + quick-ref integration is a post-v1.4 unification task, handled as a dedicated audit+update phase with a re-audit step to verify no regressions.
 
-### Anti-Pattern 4: Using the macOS Admin Template Unchanged for iOS Admin Guides
+### Anti-Pattern 4: Creating `_glossary-android.md` terms as copies of Apple terms
 
-**What people do:** Copy `_templates/admin-template-macos.md` directly for iOS admin guides since both platforms share Apple Business Manager.
+**What people do:** Write "Work Profile — similar to Supervision in iOS" as the primary definition.
 
-**Why it's wrong:** The macOS template has no supervision callout — under macOS ADE, all ADE-enrolled devices are supervised by default, so no supervision qualifier is needed. iOS requires `**Supervised only:**` callouts throughout admin guides for supervision-gated features. Using the macOS template without modification means these callouts are never added.
+**Why it's wrong:** Work Profile is not analogous to iOS Supervision. Work Profile is an ownership/data-separation concept (personal vs work data on one device). Supervision is a management-capability escalation concept (what MDM can do). Equating them misleads admins configuring both platforms.
 
-**Do this instead:** Create `_templates/admin-template-ios.md` that inherits the dual-portal ABM + Intune structure from the macOS template and adds the supervision callout pattern definition. The first admin guide written (likely `02-ade-enrollment-profile.md`) establishes the canonical supervision callout; the template is formalized from it.
+**Do this instead:** Define each term on its own merits. Add a `> **Cross-platform note:**` callout AFTER the definition to explain the closest parallel and the key difference. The definition stands alone; the cross-platform note adds context for admins who know iOS.
 
-### Anti-Pattern 5: Omitting the Supervision Determination Warning
-
-**What people do:** Document supervised-only features in admin guides without explaining when and how supervision is set, assuming admins will figure it out.
-
-**Why it's wrong:** Supervision is set at enrollment time during ADE enrollment profile creation. An admin who reads the configuration profiles guide, sees a "Supervised only" callout, and then enrolls devices via Device Enrollment cannot add supervision after the fact without wiping and re-enrolling. This is the highest-consequence iOS misconfiguration and must be called out explicitly in the lifecycle doc.
-
-**Do this instead:** In `ios-lifecycle/00-ios-enrollment-paths.md`, include a "Watch Out For" note at the ADE enrollment stage: supervision cannot be added post-enrollment; the decision must be made before enrollment begins. Cross-reference from every `**Supervised only:**` callout in admin guides back to the ADE enrollment profile guide.
-
-### Anti-Pattern 6: Duplicating ABM Setup Steps from macOS Admin Guides
-
-**What people do:** Reproduce the full ABM token creation walkthrough in `admin-setup-ios/01-abm-apns-prerequisites.md` since iOS admins may not read macOS docs.
-
-**Why it's wrong:** The ABM MDM server setup steps are identical for macOS and iOS. Duplicating them means two places to maintain when Apple changes the ABM UI.
-
-**Do this instead:** In the iOS ABM/APNs prerequisites guide, verify whether prerequisites are already met (cross-reference macOS guide), then provide the iOS-specific divergences only (iOS enrollment profiles are configured separately from macOS profiles in Intune; both can use the same ADE token).
+---
 
 ## Sources
 
-- [iOS/iPadOS device enrollment guide for Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/deployment-guide-enrollment-ios-ipados) — HIGH confidence, official Microsoft documentation (updated 2025-06-09, verified 2026-04-16)
-- [Set up automated device enrollment (ADE) for iOS/iPadOS](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment-program-enroll-ios) — HIGH confidence, official Microsoft documentation
-- [Turn on iOS/iPadOS supervised mode with Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-supervised-mode) — HIGH confidence, official Microsoft documentation
-- [Troubleshooting iOS/iPadOS device enrollment errors in Microsoft Intune](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/troubleshoot-ios-enrollment-errors) — HIGH confidence, official Microsoft support documentation
-- [Apple device restriction settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/configuration/device-restrictions-apple) — HIGH confidence, supervision-gated features list
-- Existing `docs/` architecture: direct inspection of 116-file documentation tree — HIGH confidence (source of truth for naming conventions, numbering, and file structure)
+- Direct inspection of `docs/` directory: all existing templates, glossaries, runbook indexes, quick-ref cards, admin setup overviews — HIGH confidence
+- Existing patterns from v1.2 macOS (dual-portal template) and v1.3 iOS (supervised-only callout, 4th BYOD enrollment path) — HIGH confidence (established and validated patterns)
+- Project decisions recorded in `.planning/PROJECT.md` Key Decisions table (tri-portal, BYOD tier-inversion, nav deferral) — HIGH confidence (scope decisions already made)
+- `.planning/STATE.md` v1.4 decisions (phase numbering, shape mirrors v1.3) — HIGH confidence
 
 ---
-
-## v1.2 Architecture Reference (archived)
-
-*The following section preserves the v1.2 architecture research for historical continuity. The patterns established here are the foundation for the v1.3 iOS/iPadOS integration above.*
-
-**Domain:** Cross-platform provisioning documentation — macOS ABM/ADE integration + Windows Autopilot operational gap closure
-**Researched:** 2026-04-13
-**Confidence:** HIGH
-
-### Architectural Decision: Parallel Platform Directories, Not Integrated
-
-Should macOS content be woven into existing Windows directories or structured as parallel peer directories? **Recommendation: Parallel platform directories.** The existing architecture uses this pattern — `lifecycle/` and `lifecycle-apv2/` are siblings. macOS follows the same convention. The provisioning workflows are fundamentally different technologies sharing almost no diagnostic steps, registry paths, or tooling.
-
-### v1.2 Component Responsibilities
-
-| Component | Responsibility |
-|-----------|----------------|
-| `lifecycle-macos/` | End-to-end macOS provisioning narrative — ABM through ongoing management |
-| `admin-setup-macos/` | Step-by-step macOS Intune configuration for admins |
-| `decision-trees/05-macos-triage.md` through `06-macos-triage.md` | macOS L1 triage flowchart |
-| `l1-runbooks/10-15` (macOS) | Scripted macOS troubleshooting for Service Desk |
-| `l2-runbooks/10-13` (macOS) | Technical macOS investigation with Terminal commands |
-| `reference/macos-log-paths.md` | Canonical macOS log file location reference |
-| `reference/macos-commands.md` | Terminal diagnostic commands for macOS |
-
-For full v1.2 architecture detail, see the `.planning/milestones/` directory or git history.
-
----
-*Architecture research for: v1.3 iOS/iPadOS documentation integration into Intune provisioning documentation suite*
-*Researched: 2026-04-16*
+*Architecture research for: Android Enterprise enrollment documentation integration (v1.4)*
+*Researched: 2026-04-19*
