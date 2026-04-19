@@ -13,7 +13,8 @@ findings:
   warning: 1
   info: 7
   total: 8
-status: issues_found
+status: accepted
+status_note: "WR-01 skipped per 28-REVIEW-FIX.md — fact-check against Microsoft Learn contradicts the reviewer's premise; requires human verification in a live tenant. Scheduled for 2026-07-15 review cycle per v1.3-MILESTONE-AUDIT.md tech_debt. Info-level findings (IN-01..IN-07) not addressed in v1.3 scope."
 ---
 
 # Phase 28: Code Review Report
