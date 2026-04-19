@@ -3,7 +3,7 @@ phase: 26-ios-ipados-foundation
 type: code-review
 depth: standard
 files_reviewed: 2
-status: issues_found
+status: accepted
 findings:
   critical: 1
   warning: 1
