@@ -51,7 +51,7 @@ The authoritative view of the device's management state is on the device itself.
 
 **When to use:** First-line diagnosis for "profile not taking effect" or "config didn't apply" complaints. Also the primary path for enrollment state questions (managed-by, ADE-provisioned, user-approved).
 
-**Cross-reference:** This path is documented authoritatively in the project's iOS ADE Lifecycle reference — see [iOS ADE Lifecycle §Post-enrollment diagnostics](../ios-lifecycle/01-ade-lifecycle.md#behind-the-scenes) for the full per-stage troubleshooting context.
+**Cross-reference:** This path is documented authoritatively in the project's iOS ADE Lifecycle reference — see [iOS ADE Lifecycle §Post-enrollment diagnostics](../ios-lifecycle/01-ade-lifecycle.md#post-enrollment-diagnostics) for the full per-stage troubleshooting context.
 
 ### 1b. MAM App Protection Diagnostics (Intune admin center; MAM scope only)
 
@@ -173,7 +173,7 @@ Use this table to see which runbook consumes each artifact — it is both a coll
 - [ADE Token & Profile Delivery Investigation](15-ios-ade-token-profile.md) — next step after Tier 1/2/3 collection for enrollment failures (ADE, profile delivery, token sync).
 - [App Install Failure Diagnosis](16-ios-app-install.md) — next step for VPP/LOB/supervision issues.
 - [Compliance & CA Timing Investigation](17-ios-compliance-ca-timing.md) — next step for compliance state issues (first-eval window, CA timing, Default posture, jailbreak false-positives, OS version gates).
-- [iOS ADE Lifecycle §Post-enrollment diagnostics](../ios-lifecycle/01-ade-lifecycle.md) — on-device MDM diagnostic retrieval authoritative reference.
+- [iOS ADE Lifecycle §Post-enrollment diagnostics](../ios-lifecycle/01-ade-lifecycle.md#post-enrollment-diagnostics) — on-device MDM diagnostic retrieval authoritative reference.
 - [iOS L2 Runbooks index](00-index.md#ios-l2-runbooks) — hub with L1 escalation mapping and MAM advisory.
 
 ## Version History

@@ -352,6 +352,7 @@ The user reaches the iOS/iPadOS home screen. The device is fully enrolled and ma
 
 4. **Periodic check-ins.** The device checks in with Intune approximately every 8 hours for iOS, or on-demand when the user opens Company Portal or when Intune sends an APNs push notification.
 
+<a id="post-enrollment-diagnostics"></a>
 ### Behind the Scenes
 
 iOS/iPadOS MDM operates through a **single channel** — Apple MDM via APNs. There is no equivalent to the macOS Intune Management Extension (IME) agent on iOS/iPadOS. This has the following implications for L2 troubleshooters:
