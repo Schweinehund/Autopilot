@@ -9,7 +9,7 @@ platform: all
 > **Platform coverage:** This glossary covers Apple-platform provisioning and management terminology for macOS and iOS/iPadOS.
 > For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md).
 
-# macOS Provisioning Glossary
+# Apple Provisioning Glossary
 
 ## Alphabetical Index
 
