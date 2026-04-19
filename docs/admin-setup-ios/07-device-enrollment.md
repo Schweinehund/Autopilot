@@ -126,7 +126,7 @@ Device Enrollment has two parallel flows. Complete the portal-side configuration
 
 4. Navigate to **Apps** > **iOS/iPadOS** and confirm the Intune Company Portal app is assigned as a Required app to the enrollment user groups. Company Portal self-distributes via the App Store for unassigned users; explicit assignment ensures the app stays available and updates apply.
 
-   > **What breaks if misconfigured:** If Company Portal is not assigned and the tenant relies on App Store auto-discovery only, users on devices with "Block App Store" restrictions (inherited from any other policy) cannot install Company Portal at all and cannot complete enrollment via this flow. Symptom appears in: device (user reports "I can't find Company Portal in the App Store") and Intune admin center (no new device enrollments from affected user groups).
+   > **What breaks if misconfigured:** If Company Portal is not assigned and the tenant relies on App Store auto-discovery only, users on devices with App Store access blocked by Screen Time or parental-control settings cannot install Company Portal and cannot complete enrollment via this flow. Symptom appears in: device (user reports "I can't find Company Portal in the App Store") and Intune admin center (no new device enrollments from affected user groups).
 
 **End-user flow (outcome-level summary):**
 
@@ -148,7 +148,7 @@ During the flow, the user accepts the management profile installation prompt on 
 
    > **What breaks if misconfigured:** A tenant-wide enrollment-restriction block affects both flows identically. Symptom appears in: device (enrollment URL sign-in succeeds but profile download never starts, or download starts and fails mid-flow with "enrollment not allowed").
 
-3. Communicate the web-based enrollment URL to end users: `https://enrollment.manage.microsoft.com/enrollmentserver/discovery.svc` (default tenant URL; confirm current URL against Microsoft Learn `ios-device-enrollment` at time of writing).
+3. Communicate the web-based enrollment URL to end users. This URL is tenant-scoped and varies by cloud environment; the canonical starting point is the Microsoft Intune Company Portal web experience at `https://portal.manage.microsoft.com`, from which Safari handles the profile download. Confirm the exact current URL and any tenant-specific redirects against Microsoft Learn (`ios-device-enrollment`) before distributing to end users — Microsoft has relocated this flow in the past and may do so again.
 
    > **What breaks if misconfigured:** If users are directed to the enrollment URL from a non-Safari browser (Chrome, Edge, Firefox on iOS), the management-profile download will not trigger because only Safari on iOS can hand profile payloads off to the Settings app for installation. Symptom appears in: device (browser loads the URL and sign-in succeeds, but the download button does nothing, returns an error, or opens a blank page). Resolution: user opens the same URL in Safari.
 
