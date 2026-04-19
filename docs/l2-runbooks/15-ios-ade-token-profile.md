@@ -43,7 +43,7 @@ Before starting: collect a diagnostic package per [iOS Log Collection Guide](14-
 
 **Observables to collect:**
 - Token **expiration date** (annually; ADE tokens are 1-year lifetime).
-- **Last sync date** — expected ~hourly cadence. Drift > 24 hours is Pattern A territory.
+- **Last sync date** — expected ~12-hour cadence (delta sync); manual sync rate-limited to once per 15 min. Drift > 24 hours (2+ missed automatic cycles) is Pattern A territory.
 - **`syncedDeviceCount`** — compare against ABM-side device count.
 - **Status** label — `Active` / `Expired` / `Sync error`.
 
@@ -104,7 +104,7 @@ Collect per the [iOS Log Collection Guide](14-ios-log-collection.md):
 
 ### Pattern A: Token expired or sync stuck
 
-- **Indicators:** Intune admin center shows the token as `Expired` OR last sync > 24 hours ago OR Graph `lastSyncErrorCode` != 0. New ABM-added devices do NOT appear in Intune after 24 hours (normal sync is ~hourly). Existing devices fail to enroll with "This device belongs to another organization" or "no enrollment profile found."
+- **Indicators:** Intune admin center shows the token as `Expired` OR last sync > 24 hours ago (2+ missed 12-hour cycles) OR Graph `lastSyncErrorCode` != 0. New ABM-added devices do NOT appear in Intune after 24 hours (normal sync is every 12 hours). Existing devices fail to enroll with "This device belongs to another organization" or "no enrollment profile found."
 - **Matches Data Collection:** Step 1 (sync timestamps, expiration, status), Step 1 Supplement (numeric `lastSyncErrorCode` + `syncedDeviceCount` sanity check).
 - **Resolution:** See `## Resolution` → **Pattern A Resolution** below.
 
