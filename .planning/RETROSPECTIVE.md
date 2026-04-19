@@ -104,9 +104,12 @@
 | v1.0 | 10 | 24 | Established L1/L2/Admin tiered doc structure and navigation-last pattern |
 | v1.1 | 9 | 18 | Added per-setting "what breaks" callouts and confidence-attributed citations |
 | v1.2 | 6 | 20 | Cross-platform foundation-first, parallel phase execution, platform frontmatter taxonomy |
+| v1.3 | 8 | 44 | Milestone-audit-driven gap-closure phase (33) with pre-authored plan execution; cross-phase credit preservation; REVIEW-FIX lifecycle hygiene |
 
 ### Top Lessons (Verified Across Milestones)
 
-1. **Navigation files written last** — Verified in v1.0 (Phase 7 after 1-6), v1.1 (Phase 17 after 11-16), v1.2 (Phase 25 after 20-24). Always eliminates broken-link churn.
-2. **Template-driven consistency scales** — v1.0 established admin/L1/L2 templates, v1.1 extended with "what breaks" pattern, v1.2 adapted for macOS dual-portal. Templates compound in value.
-3. **Verification during execution, not after** — v1.0/v1.1 had inline verification. v1.2 skipped verification on 2 phases and paid for it in audit overhead.
+1. **Navigation files written last** — Verified in v1.0 (Phase 7 after 1-6), v1.1 (Phase 17 after 11-16), v1.2 (Phase 25 after 20-24), v1.3 (Phase 32 after 26-31). Always eliminates broken-link churn.
+2. **Template-driven consistency scales** — v1.0 established admin/L1/L2 templates, v1.1 extended with "what breaks" pattern, v1.2 adapted for macOS dual-portal, v1.3 extended with platform enum to cover iOS. Templates compound in value.
+3. **Verification during execution, not after** — v1.0/v1.1 had inline verification. v1.2 skipped verification on 2 phases and paid for it in audit overhead. v1.3 Phase 30 also skipped — same lesson, reinforced via an explicit gap-closure phase rather than retroactive fix.
+4. **Milestone audits catch silent gaps** — First applied seriously at v1.3 close. Surfaced I-1, I-2, and L1TS verification debt that no single-phase verification would have caught. Now a mandatory pre-close step.
+5. **Pre-authored plans are durable** — v1.3 Phase 30 plans 30-09/10 were pre-authored at plan time but not executed until Phase 33 (3 days later). Zero fidelity loss on per-row execution. Plans with explicit truth tables survive deferred execution.
