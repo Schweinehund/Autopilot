@@ -79,7 +79,7 @@ Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow
 |-------|-------|
 | Maximum enrollment profiles per token | 1,000 |
 | Maximum ADE devices per profile | 200,000 |
-| Maximum ADE tokens per Intune tenant | 2,000 |
+| Maximum ADE tokens per Intune tenant | 3,000 |
 
 ## Verification
 
