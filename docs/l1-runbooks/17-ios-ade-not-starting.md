@@ -63,7 +63,7 @@ L1 documents and hands this packet to the Intune admin. L1 does not execute.
 **Ask the admin to (select based on L1 triage finding):**
 
 *Signature (a) — ABM token expired:*
-- Renew the ABM/ADE token per [ABM/ADE Token Guide § Renewal](../admin-setup-ios/02-abm-token.md#renewal). Token renewal requires the Managed Apple ID associated with the original token creation. A personal Apple ID cannot be substituted; token renewal with a different Apple ID creates a new token and requires enrollment profile reassignment.
+- Renew the ABM/ADE token per [ABM/ADE Token Guide § Renewal / Maintenance](../admin-setup-ios/02-abm-token.md#renewal--maintenance). Token renewal requires the Managed Apple ID associated with the original token creation. A personal Apple ID cannot be substituted; token renewal with a different Apple ID creates a new token and requires enrollment profile reassignment.
 
 *Signature (a) — no enrollment profile assigned:*
 - Create or assign an enrollment profile to the token per [ADE Enrollment Profile Guide](../admin-setup-ios/03-ade-enrollment-profile.md). Assign as Default for the token or scope it to the device's assignment group. Profile assignment is over-the-air and does not require the device to be present or powered on.
