@@ -12,7 +12,7 @@ platform: iOS
 
 # iOS/iPadOS Admin Setup
 
-This overview routes Intune administrators to the correct iOS/iPadOS admin setup path. Corporate devices purchased through Apple Business Manager follow the Automated Device Enrollment (ADE) chain (guides 01-06). Personal-device and non-ABM paths — Device Enrollment, account-driven User Enrollment, and app-layer MAM-WE — are parallel alternatives, each with its own prerequisites and trade-offs. Choose a path from the diagram below, then follow the guide for that path.
+This overview routes Intune administrators to the correct iOS/iPadOS admin setup path. Corporate devices purchased through Apple Business Manager follow the Automated Device Enrollment (ADE) chain (guides 01-06). Personal-device and non-ABM paths — Device Enrollment (diagram: "BYOD w/o ABM"), account-driven User Enrollment (diagram: "Privacy-preserving BYOD"), and app-layer MAM-WE (diagram: "App-layer only") — are parallel alternatives, each with its own prerequisites and trade-offs. Choose a path from the diagram below, then follow the guide for that path.
 
 ## Setup Sequence
 
