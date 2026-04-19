@@ -117,7 +117,7 @@ Apple's canonical platform-support guide documents sysdiagnose as an on-device A
 
 ### 5-Step AssistiveTouch Sysdiagnose Procedure
 
-1. **Enable AssistiveTouch:** Settings > Accessibility > Touch > AssistiveTouch > toggle **AssistiveTouch** to ON. A small floating on-screen button appears.
+1. **Enable AssistiveTouch:** Settings > Accessibility > Touch > AssistiveTouch > toggle ON. A small floating on-screen button appears.
 
 2. **Add Analytics to the AssistiveTouch top-level menu:** Settings > Accessibility > Touch > AssistiveTouch > **Customize Top Level Menu** > tap **Custom** > select **Analytics** from the list > tap **Done**. The Analytics action is now in the AssistiveTouch menu.
 
