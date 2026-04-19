@@ -1,576 +1,447 @@
 # Stack Research
 
-**Domain:** iOS/iPadOS provisioning and management documentation via Microsoft Intune — extending existing Markdown-first, multi-tier documentation suite (v1.3 milestone)
-**Researched:** 2026-04-15
-**Confidence:** HIGH (Microsoft Learn verified current as of 2026-04-14/15); MEDIUM (iOS-specific troubleshooting depth, community patterns)
-
-## Scope
-
-This STACK.md covers ONLY what is new or changed for v1.3. The existing documentation tooling stack (Markdown/CommonMark, Mermaid, MkDocs Material, Pandoc, markdownlint-cli2) is validated and unchanged. The existing document infrastructure (frontmatter, templates, tiered structure) requires only iOS-specific extensions, not replacement.
-
-v1.3 "stack" is primarily about **iOS/iPadOS-specific reference sources**, **enrollment path architecture**, **supervision state as a documentation axis**, **iOS-unique concepts absent from macOS docs**, and **new directory/template patterns** needed to match existing macOS ADE coverage parity.
+**Domain:** Android Enterprise Enrollment Documentation — Microsoft Intune (v1.4 milestone)
+**Researched:** 2026-04-19
+**Confidence:** HIGH (primary claims verified via Microsoft Learn direct fetch, updated 2026-04-16)
 
 ---
 
-## What ABM Docs Already Cover (Do Not Duplicate)
+## 1. Portal Surface: Where Each Enrollment Mode Lives
 
-The v1.2 macOS ABM documentation in `docs/admin-setup-macos/01-abm-configuration.md` covers:
+Android Enterprise documentation touches three distinct portals. This is the "tri-portal" pattern identified in v1.4 scope decisions — the first departure from the dual-portal (ABM + Intune) pattern used in macOS/iOS.
 
-- ABM MDM server creation (the token link between ABM and Intune)
-- Downloading and uploading the .p7m server token to Intune
-- Token renewal lifecycle (annual expiry, managed Apple ID requirement)
-- ABM device assignment to MDM servers
-- Apple MDM push certificate creation and renewal
+| Portal | URL | Owns | Required For |
+|--------|-----|------|--------------|
+| Microsoft Intune admin center | `https://intune.microsoft.com` | Enrollment profiles, compliance, config profiles, app deployment, corporate identifiers, Zero-Touch iframe | All enrollment modes |
+| Managed Google Play | `https://play.google.com/work` | App approval, app distribution catalog, Play Store layout | All GMS-based modes (COBO, COSU, BYOD WP, COPE) |
+| Zero-Touch enrollment portal | `https://enterprise.google.com/android/zero-touch/customers` | Device-to-configuration binding, reseller account linking, DPC extras | Zero-Touch enrollment only |
 
-**These ABM fundamentals are SHARED with iOS/iPadOS.** The same ABM portal, the same MDM server object, and the same enrollment token used for macOS ADE also applies to iOS/iPadOS ADE. The iOS/iPadOS admin setup guide for ADE should reference the existing macOS ABM setup guide for the ABM-side steps and focus only on iOS-specific enrollment profile configuration.
+**Integration point — Intune admin center embeds a Zero-Touch iframe.** Under Devices > Android > Device onboarding > Enrollment > Bulk enrollment methods > Zero-touch enrollment, Intune provides an in-console iframe that links directly to the Zero-Touch portal. Admins can manage Zero-Touch configurations without leaving Intune, but the canonical portal at `enterprise.google.com/android/zero-touch/customers` remains the authoritative source and supports configurations that the iframe does not (e.g., COPE and dedicated device configurations beyond default fully-managed).
 
-**What is NOT already documented (iOS-specific):**
-- iOS/iPadOS ADE enrollment profile creation (supervised vs unsupervised, user affinity options, authentication method choice)
-- iOS/iPadOS-specific Setup Assistant screen configuration
-- Device enrollment with Company Portal (BYOD MDM path)
-- Web-based device enrollment (iOS 15+)
-- Account-driven user enrollment (iOS 13+, work partition model)
-- MAM without enrollment (app protection policies, no MDM)
-- Shared iPad enrollment (Managed Apple ID federation, iPadOS only)
-- Apple Configurator enrollment path
-- Supervised vs unsupervised capability matrix (iOS-specific; macOS is always supervised via ADE)
-- VPP/ABM app deployment for iOS (device licensing vs user licensing distinction; macOS covered different app types)
-- iOS app protection policy (MAM) settings
-- iOS compliance policy settings
-- iOS-specific remote actions (passcode reset, activation lock disable)
-- iOS log collection tools (Company Portal diagnostic upload, sysdiagnose, Console app)
+Source: [Microsoft Learn — Enroll dedicated, fully managed, or COPE devices](https://learn.microsoft.com/en-us/intune/device-enrollment/android/ref-corporate-methods) — HIGH confidence
 
 ---
 
-## iOS/iPadOS Enrollment Path Architecture
+## 2. Managed Google Play Binding: How Intune Connects to Google
 
-This is the foundational structure for all iOS/iPadOS documentation. Every doc topic maps to one or more of these paths.
+### Binding Mechanics
 
-### Enrollment Method Decision Matrix
+The Managed Google Play binding is the single prerequisite that unlocks all GMS-based Android Enterprise enrollment modes. Without it, the enrollment profile options for COBO, COSU, COPE, and BYOD Work Profile are unavailable in Intune.
 
-| Method | Device Ownership | Supervision | MDM Scope | User Affinity | Primary Use Case |
-|--------|-----------------|-------------|-----------|---------------|-----------------|
-| ADE (via ABM/ASM) | Corporate | Always supervised | Full device | With or without | Corporate-issued iPhones/iPads at scale |
-| Apple Configurator | Corporate | Supervised (Setup Assistant) or unsupervised (Direct) | Full device | With or without | Small batches, ABM not available, existing devices |
-| Device Enrollment (Company Portal) | Personal or Corporate | Never supervised | Full device | Required | BYOD iPhones/iPads, managed enrollment |
-| Web-Based Device Enrollment | Personal | Never supervised | Full device | Required | BYOD, iOS 15+, no Company Portal app needed |
-| Account-Driven User Enrollment | Personal | Never supervised | Work partition only | Required (Managed Apple ID) | BYOD, privacy-preserving, iOS 13+ |
-| MAM without Enrollment | Personal | Not applicable | Apps only | Required (app sign-in) | BYOD where full MDM is unwanted |
+**Steps (current as of Intune 2024 service release):**
+1. Intune admin center > Devices > Enrollment > Android tab > Prerequisites > Managed Google Play
+2. Admin accepts data-sharing consent (Intune sends user/device data to Google — privacy disclosure required in docs)
+3. Admin selects "Launch Google to connect now" — redirects to Google's managed enterprise signup
+4. As of August 2024: admin can use a Microsoft Entra account (corporate email) instead of a personal/enterprise Gmail account — RECOMMENDED approach
+5. Google creates an Enterprise ID bound to the tenant's Entra account
+6. On completion, Intune auto-approves and pins four mandatory apps: Microsoft Intune, Microsoft Authenticator, Intune Company Portal, Managed Home Screen
 
-**Critical documentation axis:** Supervision state determines which configuration profile restrictions and remote actions are available. Every iOS admin guide must mark supervised-only settings with a `🔒 Supervised only` callout (matching the project's established callout pattern from PROJECT.md milestone context).
+**Entra ID integration:** The binding is now account-linked via Microsoft Entra identity rather than Gmail. The Entra account must have an active mailbox (required by Google's validation process). One account manages the Google Admin account and associated subscriptions for the entire tenant. Google recommends minimum two owners for redundancy.
 
-### Authentication Method Sub-Decision (ADE Only)
+**Token refresh cadence:** The Managed Google Play binding itself does not expire on a short cadence. However, enrollment tokens for dedicated/COBO profiles are generated with an expiry the admin sets (up to 65 years in Intune UI) — but Google enforces a practical 90-day maximum for enrollment token lifetime. Tokens must be renewed before expiry; the Replace token action generates a new token without affecting already-enrolled devices.
 
-ADE enrollment profiles require choosing one authentication method. This determines the enrollment user experience and Entra ID registration behavior:
+**What the binding auto-provisions:** The four apps above are added to the Intune app list automatically; no manual approval needed. Scope tags can be applied to newly-approved Managed Google Play apps via Tenant administration > Connectors and tokens > Managed Google Play.
 
-| Authentication Method | Entra Registration | MFA Support | Company Portal Required | Recommended |
-|----------------------|-------------------|-------------|------------------------|-------------|
-| Setup Assistant with modern authentication | Full (after CP sign-in) | Yes | Auto-installed (VPP) | YES — primary recommendation |
-| Company Portal app | Full (on CP sign-in) | Yes | Required, installed before use | YES — when device must be locked until enrolled |
-| Setup Assistant (legacy) | None (unless CP manually added) | No | Optional | NO — deprecated, no modern auth |
-
-**Note for docs:** Q2 CY2026 infrastructure migration will reorganize authentication methods in the Intune admin center UI. Existing profiles are unaffected; new profile creation UI will change. Document the current UI while flagging the upcoming change.
+Source: [Microsoft Learn — Connect Intune to Managed Google Play](https://learn.microsoft.com/en-us/intune/device-enrollment/android/connect-managed-google-play) — HIGH confidence
 
 ---
 
-## Supervision State as a Documentation Axis
+## 3. Enrollment Modes: Portal Touch Map
 
-Supervision is the single most important iOS/iPadOS management concept absent from macOS ADE (where all ADE-enrolled devices are always supervised). iOS documentation must address supervision explicitly throughout.
+### 3.1 Fully Managed (COBO) — Android 6.0+
 
-### How Supervision Is Established
+**Portal ownership:**
+- Intune: Enable fully managed user devices (Devices > Enrollment > Android > Android Enterprise > Enrollment Profiles > Corporate-owned fully managed user devices); create enrollment profile; obtain QR/token; optionally link Zero-Touch account via iframe
+- Managed Google Play: Approve and distribute the Microsoft Intune app (auto-approved at binding)
+- Zero-Touch portal: Create configuration with EMM DPC = Microsoft Intune, paste DPC extras JSON with enrollment token — used for bulk/remote provisioning
 
-- **ADE enrollment:** Check "Supervised" in the enrollment profile Device Management Settings — the **only** way to achieve supervision without a factory reset
-- **Apple Configurator:** USB-connected to Mac running Apple Configurator 2 — **requires device wipe**
-- **Retroactive supervision is impossible:** Enrolling an existing device via Device Enrollment or User Enrollment cannot add supervision without a wipe
+**Enrollment methods supported:**
+| Method | Android Version | Notes |
+|--------|----------------|-------|
+| QR code | 9.0+ (built-in QR reader); 8.x with external reader | Recommended for most scenarios |
+| Token / DPC identifier (`afw#setup`) | Any supported version | Token entered on Google sign-in screen instead of Gmail |
+| NFC tag | 8.0+, not COPE on Android 11+ | Requires NFC-formatted tag |
+| Google Zero-Touch | Varies by device | Devices must be purchased from authorized Zero-Touch reseller |
+| Knox Mobile Enrollment | Samsung Knox-supported versions | DEFERRED — v1.4.1 |
 
-### Supervised-Only Capabilities (Must Be Documented With 🔒 Callout)
+**Factory reset required before enrollment:** YES — devices must be wiped. Do not restart device mid-enrollment (risk: device appears enrolled but unapplied policies).
 
-**Configuration profile restrictions (supervised only):**
-- Block App Store entirely / block individual app installs
-- Kiosk/Single App Mode (ASAM — Autonomous Single App Mode)
-- Block AirDrop, restrict Bluetooth configuration
-- Prevent device name/wallpaper/notification modification
-- Block VPN creation, block eSIM modification
-- Defer software updates (OS update control via MDM)
-- Block user-initiated factory reset ("Erase All Content and Settings")
-- Block configuration profile removal
-- Block specific built-in apps (Safari, iMessage, Camera, FaceTime, Podcasts, etc.)
-- Silent app installation (no user Apple ID prompt for device-licensed VPP apps)
-- Block removal of system apps
-- Keyboard behavior: block dictation, QuickPath, autocorrect, spellcheck, predictive
+Source: [Microsoft Learn — Android enrollment guide](https://learn.microsoft.com/en-us/intune/device-enrollment/android/guide) and [ref-corporate-methods](https://learn.microsoft.com/en-us/intune/device-enrollment/android/ref-corporate-methods) — HIGH confidence
 
-**Remote actions (supervised only):**
-- Disable Activation Lock (requires supervision at enrollment)
-- Restart device remotely
+### 3.2 Dedicated (COSU/Kiosk) — Android 8.0+
 
-**Software update control:**
-- OS update scheduling/deferral only works on supervised devices (MDM-managed updates)
-- Unsupervised: users control their own OS updates regardless of policy
+**Portal ownership:**
+- Intune: Devices > Enrollment > Android > Enrollment Profiles > Corporate-owned dedicated devices; choose token type (standard, or Entra shared device mode); configure Managed Home Screen app; assign to static Entra device group
+- Managed Google Play: Approve apps assigned as Required (only Required apps install on dedicated devices; Available assignment not supported)
+- Zero-Touch portal: Supported; configuration same as COBO
 
-### Unsupervised Managed Device Capabilities
+**Key differentiator from COBO:** No user account at enrollment (unless Entra shared device mode token is selected, which deploys Microsoft Authenticator for shared sign-in/sign-out). Managed Home Screen app locks the device to approved apps/web links.
 
-Even without supervision, enrolled devices receive:
-- Compliance policies (passcode, OS version, jailbreak detection, threat level)
-- VPN profiles, Wi-Fi profiles, certificate profiles
-- Email profiles
-- App protection policies (MAM)
-- Required and available app deployment (with user prompts)
-- Remote lock, passcode reset/remove, wipe, retire
+**Token type options:**
+- Standard dedicated: No user credentials at any point; simple kiosk
+- Entra shared device mode: Adds Microsoft Authenticator; enables single sign-in and sign-out across apps supporting the Entra MSAL shared device mode — intended for frontline worker shared-device scenarios (e.g., hospital shift handoffs)
 
----
+Source: [Microsoft Learn — Set up dedicated devices](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-dedicated) — HIGH confidence
 
-## Reference Source Stack
+### 3.3 BYOD Work Profile on Personally-Owned Devices — Any supported AE device
 
-### iOS/iPadOS Enrollment
+**Portal ownership:**
+- Intune: No special enrollment profile needed (work profile for personally-owned devices is allowed by default); admin configures Device Platform Restrictions if needed to allow/block; compliance and config policies scoped to work profile
+- Managed Google Play: Work profile apps sourced from here (only work profile container sees Managed Play; personal side sees consumer Play Store)
+- Zero-Touch portal: NOT applicable — personal devices are not Zero-Touch enrolled
 
-| Source | URL | Content Covered | Confidence |
-|--------|-----|-----------------|------------|
-| Microsoft Learn: iOS/iPadOS enrollment guide | https://learn.microsoft.com/en-us/intune/device-enrollment/apple/guide-ios-ipados | All enrollment method comparison tables, admin/user task breakdowns, authentication method decision guide | HIGH — updated 2026-04-14 |
-| Microsoft Learn: ADE setup for iOS/iPadOS | https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment-program-enroll-ios | Full ADE enrollment profile creation, authentication method configuration, VPP Company Portal install, user affinity options | HIGH |
-| Microsoft Learn: iOS/iPadOS deployment guide | https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/deployment-guide-platform-ios-ipados | Full management lifecycle (enrollment, compliance, config, apps, remote actions, authentication) | HIGH — updated 2026-04-15 |
-| Microsoft Learn: Account-driven user enrollment | https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-account-driven-user | Account-driven user enrollment setup, work partition model, Managed Apple ID requirement | HIGH |
-| Microsoft Learn: Shared iPad setup | https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad | Shared iPad provisioning, Managed Apple ID federation with Entra ID, multi-user iPad configuration | HIGH |
-| Microsoft Learn: Supervised mode | https://learn.microsoft.com/en-us/intune/device-enrollment/apple/enable-supervised-mode | How supervision is enabled at enrollment vs retroactively via Apple Configurator, identification | HIGH — updated 2026-04-14 |
-| Microsoft Learn: Troubleshoot iOS enrollment errors | https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/troubleshoot-ios-enrollment-errors | Error messages, MFA issues, license failures, profile installation failures, DeviceCapReached | HIGH — updated 2025-03-31 |
-| Microsoft Learn: Device stuck in enrollment | https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/device-stuck-in-enrollment | ADE device stuck at Setup Assistant, token expiry causes, resolution steps | HIGH |
-| Microsoft Tech Community: New ADE enrollment policies experience | https://techcommunity.microsoft.com/blog/intunecustomersuccess/new-iosipados-and-macos-ade-enrollment-policies-experience/4393531 | Q2 CY2026 new ADE infrastructure: reorganized auth methods, no auto Company Portal, Apple-deprecated settings removed | MEDIUM — product blog |
+**Enrollment is device-side (tier-inversion):** The admin does nothing device-side. End users install Company Portal from Google Play Store, sign in with organizational credentials, and the work profile is created automatically. Admin's role: configure policies, restrictions, and communicate instructions.
 
-### iOS/iPadOS Configuration Profiles
+**Data privacy:** Personal profile is not managed; Intune cannot collect app inventory or full phone number from personal profiles. Company Portal app must be present in the work profile (Intune auto-deploys it there on enrollment).
 
-| Source | URL | Content Covered | Confidence |
-|--------|-----|-----------------|------------|
-| Microsoft Learn: iOS/iPadOS device restrictions | https://learn.microsoft.com/en-us/intune/intune-service/configuration/device-restrictions-apple | Full device restriction settings catalog — which are supervised-only vs all enrolled | HIGH |
-| Microsoft Learn: iOS/iPadOS device features | https://learn.microsoft.com/en-us/intune/intune-service/configuration/device-features-apple | AirPrint, Home Screen layout, lock screen message, notification settings, Single Sign-on, web content filter | HIGH |
-| Microsoft Learn: Wi-Fi settings iOS/iPadOS | https://learn.microsoft.com/en-us/intune/intune-service/configuration/wi-fi-settings-ios | Wi-Fi profile configuration, enterprise WPA2-Enterprise settings | HIGH |
-| Microsoft Learn: Device profiles overview | https://learn.microsoft.com/en-us/intune/intune-service/configuration/device-profiles | All profile types available across platforms — confirms iOS/iPadOS supported profile types | HIGH |
-| Microsoft Learn: Supervised device security configurations | https://learn.microsoft.com/en-us/intune/intune-service/protect/ios-ipados-supervised-device-security-configurations | Microsoft's recommended security baselines for supervised iOS/iPadOS (Zero Trust tiers: basic/enhanced/high security) | HIGH — updated 2025-09-04 |
-| Microsoft Learn: Personal device security configurations | https://learn.microsoft.com/en-us/intune/intune-service/protect/ios-ipados-personal-device-security-configurations | Recommended security baselines for unsupervised/BYOD iOS/iPadOS | HIGH |
+**Android 12+ limitation:** Google removed serial number, IMEI, and MEID access from personally-owned work profile devices starting Android 12. Corporate identifiers uploaded for this path only work on Android 11 and earlier for work profile personal devices.
 
-### iOS/iPadOS Compliance Policies
+**Custom profile deprecation:** Intune ended support for custom OMA-URI profiles for personally-owned work profile devices in April 2025. Do not document custom profile paths for BYOD WP.
 
-| Source | URL | Content Covered | Confidence |
-|--------|-----|-----------------|------------|
-| Microsoft Learn: iOS/iPadOS compliance settings | https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-ios-ipados-settings | All compliance categories: Email, Device Health (jailbreak, threat level), Device Properties (OS version/build), Microsoft Defender, System Security (password), restricted apps | HIGH — updated 2026-04-15 |
-| Microsoft Learn: iOS/iPadOS compliance security configurations | https://learn.microsoft.com/en-us/intune/intune-service/protect/ios-ipados-device-compliance-security-configurations | Microsoft-recommended compliance configurations for corporate enrolled devices | HIGH |
-| Microsoft Learn: Create compliance policy | https://learn.microsoft.com/en-us/intune/intune-service/protect/create-compliance-policy | Step-by-step compliance policy creation, platform selection, assignment | HIGH |
+Source: [Microsoft Learn — Set up personal work profile enrollment](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-personal-work-profile) — HIGH confidence
 
-### iOS/iPadOS App Deployment
+### 3.4 COPE (Corporate-Owned Work Profile) — Android 8.0+
 
-| Source | URL | Content Covered | Confidence |
-|--------|-----|-----------------|------------|
-| Microsoft Learn: Manage Apple VPP/ABM apps | https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple | Location tokens (VPP), device vs user licensing, license migration rules, automatic updates, end-user prompts by scenario, iOS vs macOS license revocation differences | HIGH — updated 2026-04-14 |
-| Microsoft Learn: Add iOS/iPadOS store apps | https://learn.microsoft.com/en-us/intune/intune-service/apps/store-app-ios | Adding App Store apps without VPP | HIGH |
-| Microsoft Learn: Add iOS/iPadOS LOB apps | https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-ios | Line-of-business app (.ipa) deployment, provisioning profiles | HIGH |
-| Microsoft Learn: App provisioning profiles | https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-provisioning-profiles-ios | iOS app certificate expiry prevention via Intune provisioning profiles | HIGH |
-| Microsoft Learn: iOS/iPadOS MAM app protection policy settings | https://learn.microsoft.com/en-us/intune/app-management/protection/ref-settings-ios | Full MAM policy settings: data protection (transfer, save-as, cut/copy/paste, encryption), functionality (notifications, web content, printing), access requirements (PIN, biometrics), conditional launch | HIGH — updated 2026-04-15 |
-| Microsoft Learn: MAM without enrollment guide | https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/deployment-guide-enrollment-mamwe | MAM-WE setup, broker app requirement (Authenticator for iOS), scope, limitations | HIGH |
-| Microsoft Learn: App protection policy overview | https://learn.microsoft.com/en-us/intune/intune-service/apps/app-protection-policy | APP/MAM concepts, enrolled vs unenrolled device behavior, selective wipe | HIGH |
+**Status: DOCUMENTED AS DEPRECATION NOTE ONLY in v1.4** (per scope decision in STATE.md). Full admin path deferred to v1.4.1.
 
-### iOS/iPadOS Diagnostics and Log Collection
+**What to surface in v1.4 COBO doc:**
+- Previously called COBO+personal; now called corporate-owned devices with a work profile (COPE)
+- Android 11 restructured COPE: removed work-profile-on-fully-managed (WPoFMD) architecture; NFC and DPC identifier (`afw#setup`) NOT supported on Android 11+ for COPE
+- Google's trajectory is Work Profile for Corporate-Owned (WPCO) — COPE is valid but declining in recommended use
+- Factory reset required before enrollment
+- Supported enrollment methods: QR code (primary), Zero-Touch, Knox Mobile Enrollment (Samsung only)
 
-| Source | URL | Content Covered | Confidence |
-|--------|-----|-----------------|------------|
-| Microsoft Learn: Collect logs from iOS (Company Portal) | https://learn.microsoft.com/en-us/intune/user-help/diagnostics/collect-logs-ios | User-initiated log collection via Company Portal shake gesture or More tab, incident ID generation, Authenticator log collection | HIGH |
-| Microsoft Learn: Retrieve iOS app logs | https://learn.microsoft.com/en-us/intune/intune-service/user-help/retrieve-ios-app-logs | Console app (Mac + cable) log collection for deep app diagnostics | HIGH |
-| Microsoft Learn: App protection policy logs | https://learn.microsoft.com/en-us/intune/app-management/protection/troubleshoot-protection-logs | MAM log collection via Microsoft Edge for iOS, reviewing protection policy application | HIGH |
-| Microsoft Learn: Troubleshoot device enrollment | https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/troubleshoot-device-enrollment-in-intune | Cross-platform enrollment troubleshooting, including iOS-specific sections | HIGH |
+Source: [Microsoft Learn — Android enrollment guide COPE section](https://learn.microsoft.com/en-us/intune/device-enrollment/android/guide) — HIGH confidence; [Jason Bayton — Android 11 COPE changes](https://bayton.org/android/android-11-cope-changes/) — MEDIUM confidence (community canonical)
 
-### Remote Actions (iOS/iPadOS)
+### 3.5 AOSP (Android Open Source Project) — Stub Level in v1.4
 
-| Source | URL | Content Covered | Confidence |
-|--------|-----|-----------------|------------|
-| Microsoft Learn: Remote device actions | https://learn.microsoft.com/en-us/intune/device-management/actions/ | Full remote actions reference: wipe, retire, remote lock, reset passcode, remove passcode, disable activation lock (supervised only), locate device | HIGH |
-| Microsoft Learn: Reset passcode | https://learn.microsoft.com/en-us/intune/intune-service/remote-actions/device-passcode-reset | iOS passcode reset behavior (removes passcode; user sets new one) | HIGH |
-| Microsoft Learn: Disable Activation Lock | https://learn.microsoft.com/en-us/intune/intune-service/remote-actions/device-activation-lock-disable | Supervised device only; bypass activation lock without touching device | HIGH |
+**What it is:** Enrollment for devices that run Android without Google Mobile Services (GMS). No Managed Google Play binding required or applicable. Targeted at AR/VR headsets, specialized rugged/wearable devices.
+
+**Portal ownership:**
+- Intune only: Create AOSP enrollment profile (userless or user-associated); QR code delivery only; one device at a time (no bulk enrollment)
+- No Google portals involved
+
+**Enrollment methods:** QR code only. No NFC, no Zero-Touch, no token/DPC identifier.
+
+**GA status:** Generally Available as of 2022 (announced as premium add-on to Microsoft Endpoint Manager). As of May 2025, Microsoft added auto-update capability for AOSP firmware (effective May 15, 2025).
+
+**Supported OEMs (verified from Microsoft Learn, updated 2025-05-12):**
+
+| OEM | Device(s) | Type |
+|-----|-----------|------|
+| DigiLens Inc. | ARGO | AR/VR Headset |
+| HTC | Vive Focus 3, Vive XR Elite, Vive Focus Vision | AR/VR Headset |
+| Lenovo | ThinkReality VRX | AR/VR Headset |
+| Meta | Quest 2, Quest 3, Quest 3s, Quest Pro | AR/VR Headset (some regions only) |
+| PICO | PICO 4 Enterprise, PICO Neo3 Pro/Eye | AR/VR Headset |
+| RealWear | HMT-1, HMT-1Z1, Navigator 500 | AR/VR Headset |
+| Vuzix | Blade 2, M400, M4000 | AR/VR Headset |
+| Zebra | WS50 | Wearable scanner |
+
+**All AOSP devices in the supported list are AR/VR headsets or wearable scanners — no mainstream Android phones or tablets.** This is a critical scoping note for v1.4 documentation: AOSP is not a path for general-purpose Android phones.
+
+**AOSP-specific network endpoint:** `intunecdnpeasd.manage.microsoft.com` (migrated from `intunecdnpeasd.azureedge.net` as of March 2025)
+
+Source: [Microsoft Learn — AOSP supported devices](https://learn.microsoft.com/en-us/intune/fundamentals/aosp-supported-devices) — HIGH confidence
 
 ---
 
-## iOS-Specific Concepts That Need Documentation (Not in Existing Docs)
+## 4. Push Notification: FCM vs APNs
 
-### 1. Supervision State (New Concept for iOS docs)
+Android Enterprise has **no APNs equivalent**. The push channel is Firebase Cloud Messaging (FCM), operated by Google.
 
-macOS ADE devices are always supervised — this distinction doesn't exist in existing docs. iOS requires explicit documentation:
-- How supervision is set at enrollment (ADE checkbox)
-- How to verify supervision state on-device (Settings banner)
-- What capabilities are gated behind supervision
-- What happens if a device is enrolled without supervision that later requires supervised features (answer: must wipe and re-enroll via ADE with supervised enabled)
+| Aspect | iOS/iPadOS (APNs) | Android Enterprise (FCM) |
+|--------|-------------------|--------------------------|
+| Push channel | Apple Push Notification service | Google Firebase Cloud Messaging |
+| Admin setup required | Yes — annual certificate renewal | No — FCM is a dependency of Google Play Services; no admin action |
+| Certificate expiry risk | Yes — APNs cert expires annually, breaks all iOS enrollment | No — FCM does not require a cert managed by the Intune admin |
+| Required device capability | APNs reachability | GMS / FCM reachability |
+| AOSP devices | N/A | FCM unavailable (no GMS); Intune uses direct polling/check-in instead |
 
-### 2. MAM Without Enrollment (New Concept)
+**Key documentation implication:** Do NOT create a "renew your push certificate" runbook for Android. The FCM dependency is a network firewall/proxy concern, not an admin portal task. Document it as a prerequisite check (FCM ports open) not a recurring action.
 
-No equivalent exists in Windows or macOS documentation. MAM-WE is an iOS/iPadOS-specific enrollment path covering:
-- App protection policies applied without MDM enrollment
-- Microsoft Authenticator as required broker on iOS
-- Which Microsoft apps support MAM SDK (Outlook, Teams, Edge, Office apps, OneDrive)
-- Data protection settings (cut/copy/paste, save-as, backup block, transfer to other apps)
-- Access requirements (PIN, biometrics, work account credentials)
-- Conditional launch (jailbreak detection, OS version gate, offline grace period)
-- Limitations: no LOB app support, no certificate-based Wi-Fi/VPN, no device compliance evaluation
+FCM network requirements: defer to [Google FCM docs — ports and firewall](https://firebase.google.com/docs/cloud-messaging/)
 
-### 3. Account-Driven User Enrollment (New Concept)
-
-No equivalent in Windows or macOS:
-- Work partition model (managed partition separate from personal)
-- Managed Apple ID requirement (must have ABM with Entra federation or manually provisioned Managed Apple IDs)
-- Limitations vs device enrollment: cannot switch back to device enrollment without unenroll+re-enroll; device-licensed VPP apps not supported
-- Privacy implications: IT cannot see personal partition; admin cannot wipe personal data; user can wipe work partition
-
-### 4. VPP/ABM App Licensing Modes (iOS-Specific Nuance)
-
-macOS VPP docs focus on DMG/PKG vs VPP. iOS VPP adds a critical licensing dimension:
-
-| License Type | iOS/iPadOS | Requires Apple Account | Silent Install (Supervised) |
-|-------------|-----------|----------------------|---------------------------|
-| Device-licensed | Supported | No | Yes (supervised, no prompt) |
-| User-licensed | Supported | Yes (personal Apple Account) | No (user prompted) |
-| User Enrollment | User-licensed only | Managed Apple Account | No |
-
-**Key difference from macOS:** macOS VPP license revocation leaves app usable for 30 days. iOS VPP license revocation is immediate (app cannot be updated; stays installed until manually removed or Uninstall assignment is pushed).
-
-### 5. Shared iPad (iPad-Only)
-
-iPad-specific concept with no iPhone equivalent:
-- Requires: supervised iPad, ADE enrollment without user affinity, Managed Apple ID federation in ABM/Entra
-- Use case: shared devices (kiosks, frontline workers, education)
-- Each user signs in with their Managed Apple ID; personal data cached per user
-- Admin can configure storage quotas, maximum cached users, guest access
-- Policy behavior: policies apply to device, not individual users
-
-### 6. iOS Diagnostic Tools vs Windows/macOS Equivalents
-
-| Platform | Primary Diagnostic Tool | What It Collects | How Triggered |
-|----------|------------------------|-----------------|---------------|
-| Windows | mdmdiagnosticstool.exe | MDM logs, event logs, registry state | Command line (admin) |
-| macOS | IntuneMacODC | Intune agent logs, MDM profile state, app install logs | Script (L2) |
-| iOS | Company Portal (shake/More tab) | Intune enrollment logs, app install logs, MDM command history | User action (shake or menu) |
-| iOS (deep) | sysdiagnose + Console app (Mac+cable) | System-level MDM, SSO, network logs | Physical connection to Mac |
-| iOS (MAM) | Microsoft Edge diagnostic upload | App protection policy logs, MAM SDK state | In-app action |
-
-**Key difference:** iOS has NO equivalent to mdmdiagnosticstool.exe. L1 and L2 iOS troubleshooting relies on Company Portal log uploads, Intune portal device state, and portal-driven remote actions. Deep log collection (sysdiagnose) requires a Mac with a cable — a physical access requirement with no remote equivalent.
+Source: [Microsoft Learn — Intune network endpoints, Android Enterprise dependencies section](https://learn.microsoft.com/en-us/intune/fundamentals/endpoints) — HIGH confidence
 
 ---
 
-## Directory Structure Additions for v1.3
+## 5. Intune Configuration Surface for Android Enterprise
 
-Extend the existing `docs/` tree to add iOS/iPadOS:
+### 5.1 Enrollment Profiles
 
-```
-docs/
-  ios/                                  # NEW: iOS/iPadOS platform root
-    00-overview.md                      # iOS/iPadOS provisioning overview (enrollment paths, supervision explained)
-    admin-setup/                        # NEW: iOS/iPadOS admin setup guides
-      00-overview.md                    # Prerequisites, MDM push cert, ABM reference, supervision decision
-      01-ade-enrollment-profile.md      # ADE enrollment profile (references macOS ABM setup; iOS-specific profile options)
-      02-device-enrollment.md           # BYOD Device Enrollment (Company Portal, Web-based)
-      03-user-enrollment.md             # Account-Driven User Enrollment (work partition, Managed Apple IDs)
-      04-mam-without-enrollment.md      # MAM-WE setup (app protection policies, no MDM)
-      05-configuration-profiles.md      # Config profile types, supervised-only callouts
-      06-app-deployment.md              # VPP/ABM apps (device vs user licensing), LOB, store apps
-      07-compliance-policy.md           # Compliance policy settings, jailbreak detection, OS version gates
-      08-config-failures.md             # Admin misconfiguration consequences (mirrors macOS 06-config-failures.md)
-    l1-runbooks/                        # NEW: iOS/iPadOS L1 troubleshooting
-      00-index.md                       # iOS/iPadOS L1 runbook index + triage decision tree
-      01-enrollment-failure.md          # ADE stuck at Setup Assistant, profile install failed
-      02-app-not-installed.md           # VPP app not appearing, LOB install failure
-      03-compliance-not-met.md          # Device marked noncompliant (passcode, jailbreak, OS version)
-      04-mam-policy-not-applied.md      # App protection policy not applying (BYOD/MAM-WE scenario)
-    l2-runbooks/                        # NEW: iOS/iPadOS L2 troubleshooting
-      00-index.md                       # iOS/iPadOS L2 runbook index
-      01-log-collection.md              # Company Portal logs, sysdiagnose, Console app, MAM Edge logs
-      02-enrollment-investigation.md    # ADE token/profile sync, MDM profile delivery verification
-      03-app-deployment-debug.md        # VPP sync, license assignment, LOB provisioning profile expiry
-      04-supervision-verification.md    # Confirming supervision state, escalation for re-enrollment
-    reference/                          # NEW: iOS/iPadOS reference
-      enrollment-paths.md               # Matrix of all enrollment methods with decision guide
-      supervision-capability-matrix.md  # Full supervised vs unsupervised feature comparison
-      network-endpoints.md              # Apple + Microsoft network requirements for iOS/iPadOS
-      mam-supported-apps.md             # Microsoft apps supporting Intune MAM SDK
-```
+| Profile Type | Admin Center Location | Purpose |
+|-------------|----------------------|---------|
+| Corporate-owned fully managed user devices toggle | Devices > Enrollment > Android > Android Enterprise | Enables COBO enrollment globally |
+| Enrollment profile (COBO/COSU/COPE) | Devices > Enrollment > Android > Enrollment Profiles | Generates QR/token; sets naming template; sets token expiry; optionally links to Entra device group |
+| Device platform restriction (BYOD WP) | Devices > Enrollment > Android > Device platform restriction | Allow/block personal work profile enrollment |
+| AOSP enrollment profile (userless/user-associated) | Devices > Enrollment > Android | Separate AOSP-specific profile; no Managed Google Play binding needed |
+| Zero-Touch iframe | Devices > Android > Device onboarding > Enrollment > Bulk enrollment methods > Zero-touch enrollment | Links Zero-Touch account; creates default configuration |
 
----
+### 5.2 Configuration Profiles
 
-## Frontmatter Extension for iOS/iPadOS
+Android Enterprise configuration profiles are in Devices > Configuration > Create > Android Enterprise. Profile types vary by management mode:
 
-Extend existing `applies_to` and `platform` fields established in v1.2:
+| Template/Profile Area | Applies To |
+|----------------------|-----------|
+| Device restrictions | COBO, COSU, COPE, BYOD WP (separate restrictions per mode) |
+| Kiosk (single-app / multi-app) | COSU/dedicated |
+| Device experience (Managed Home Screen) | COSU/dedicated |
+| Wi-Fi | All modes |
+| VPN | All modes |
+| Certificate (SCEP/PKCS) | All modes |
+| Email | Work profile modes (BYOD WP, COPE) |
+| Settings catalog | All modes (expanding coverage) |
+| OMA-URI custom profiles | COBO, COSU, COPE only — NOT available for personally-owned work profile as of April 2025 |
 
-```yaml
----
-last_verified: 2026-04-15
-review_by: 2026-07-14
-applies_to: iOS
-platform: iOS
-audience: admin
----
-```
+### 5.3 App Configuration Policies
 
-Add `iOS` as a valid value alongside existing `APv1`, `APv2`, `both`, `macOS`, `all`.
+App configuration policies for Android Enterprise are scoped per enrollment type (Managed Devices vs. Managed Apps/MAM). Must select enrollment type before creating profile:
+- **Managed Devices**: Applies to enrolled work profile or fully managed devices via the MDM channel
+- **Managed Apps**: Applies to apps protected by Intune App Protection Policies (MAM-WE, for unenrolled scenarios)
 
-For content covering both iOS and iPadOS (which is most iOS/iPadOS content), `iOS` is the correct value — iPadOS is a fork of iOS and shares all Intune management behaviors documented here, with the Shared iPad feature being the only iPadOS-only exception.
+Apps configured via Managed Google Play: approved in the Managed Google Play console or via the Managed Google Play iframe in Intune admin center (Apps > Android > Add > Managed Google Play app).
 
-For Shared iPad content specifically:
-```yaml
-applies_to: iPadOS
-platform: iPadOS
-```
+### 5.4 Compliance Policies
+
+Android Enterprise compliance policies are at Devices > Compliance > Create policy > Android Enterprise. Key Android-specific compliance settings:
+
+| Setting | Notes |
+|---------|-------|
+| Google Play Integrity verdict | Replaces SafetyNet Attestation — select Basic integrity, Basic + device integrity, or Basic + strong integrity |
+| Device Threat Level | Requires Mobile Threat Defense (MTD) connector integration |
+| OS version (min/max) | Per policy |
+| Password requirements | Complexity level, expiry (1-365 days), history |
+| Encryption | Required on Android Enterprise |
+| Security patch level | Minimum patch date configurable |
+| Factory Reset Protection emails | COPE-specific; controls which Google accounts can unlock after reset |
+
+**Play Integrity replaces SafetyNet:** SafetyNet attestation was Google's legacy API; Play Integrity is the current equivalent. Intune compliance UI uses "Play Integrity verdict" terminology. Document only Play Integrity, not SafetyNet.
+
+Source: [Microsoft Learn — Android Enterprise compliance settings](https://learn.microsoft.com/en-us/intune/intune-service/protect/compliance-policy-create-android-for-work) — HIGH confidence
 
 ---
 
-## Template Additions for v1.3
+## 6. Corporate Device Identifiers for Android
 
-### Template: iOS/iPadOS Admin Guide
+Used to pre-mark devices as corporate-owned before enrollment, so the correct management profile is applied.
 
-Extend the existing macOS admin template pattern with iOS-specific requirements:
+### Supported Identifier Types (Android)
 
-**Key differences from macOS admin template:**
-1. Supervision state callout required at the top of every guide (what enrollment path is assumed, whether supervised is required)
-2. `🔒 Supervised only` inline callout for supervised-only settings (same pattern as proposed in PROJECT.md)
-3. No Setup Assistant deferral equivalent to macOS — iOS ADE uses similar Setup Assistant but with different screen set
-4. MAM-WE guides require no portal steps at Devices level — entirely within Apps > App protection policies
-5. User Enrollment guides require Managed Apple ID prerequisite callout (ABM Entra federation or manual Managed Apple IDs)
+| Identifier | Android Version Support | Notes |
+|-----------|------------------------|-------|
+| IMEI | Android 11 and earlier (personally-owned WP); all versions for COBO/COSU/COPE | GMS-enrolled corporate modes auto-mark as corporate without needing pre-upload |
+| Serial number | Android 11 and earlier (personally-owned WP); all versions for COBO/COSU/COPE | Not guaranteed unique; verify with device supplier |
+| MEID | Supported (CDMA devices) | Same version constraints as IMEI |
 
-**Standard callout pattern to introduce:**
-```markdown
-> **🔒 Supervised only:** This setting is only available on devices enrolled via ADE
-> with supervision enabled. Unsupervised devices ignore this profile entry.
-> See: [Supervision Capability Matrix](../reference/supervision-capability-matrix.md)
-```
+**Android 12+ limitation for BYOD WP:** Google removed IMEI/serial/MEID read access from personally-owned work profile devices in Android 12. Corporate identifiers for pre-marking BYOD WP devices only work on Android 11 and earlier. This is a notable documentation gap — admins cannot pre-mark Android 12+ personal devices via identifier upload.
 
-### Template: iOS/iPadOS L1 Runbook
+**Corporate modes auto-mark:** COBO, COSU, COPE, AOSP, Zero-Touch, and Knox Mobile Enrollment all automatically assign corporate ownership at enrollment — no pre-upload of identifiers needed for these modes.
 
-Adapt existing macOS L1 template:
-- Portal-only troubleshooting (Intune admin center device hardware, compliance, configuration state)
-- Supervision state check: "Check device hardware view for 'Supervised: Yes/No' — determines escalation path"
-- Log collection: L1 can trigger Company Portal log upload via Intune portal remote action OR instruct user to shake device in Company Portal
-- No PowerShell, no Terminal — iOS is entirely portal-based at L1
+**CSV format:** One identifier per line; one type per file (IMEI OR serial, not mixed); up to 5,000 rows or 5 MB per file.
 
-### Template: iOS/iPadOS L2 Runbook
+**Admin center location:** Devices > Enrollment > Corporate device identifiers tab > Add > Upload CSV file
 
-Adapt existing macOS L2 template:
-- No terminal commands (iOS is not accessible via SSH/shell)
-- Log collection requires either Company Portal upload (remote) or physical Mac + cable (sysdiagnose)
-- Key data to collect: device enrollment date, MDM profile installed state, last check-in, compliance status, Intune portal device action history
-- MAM troubleshooting requires Microsoft Edge diagnostic upload + app protection policy logs in Intune portal
+Source: [Microsoft Learn — Add corporate identifiers](https://learn.microsoft.com/en-us/intune/device-enrollment/add-corporate-identifiers) — HIGH confidence
 
 ---
 
-## Glossary Additions for v1.3
+## 7. Zero-Touch Enrollment: Reseller Ecosystem
 
-New terms to add to `docs/_glossary.md`:
+### How the Reseller Chain Works
 
-| Term | Definition Context | Platform Label |
-|------|--------------------|----------------|
-| Supervised (iOS) | Apple device management mode enabling full MDM control; only achieved at enrollment via ADE or post-enrollment via Apple Configurator (requires device wipe); distinct from macOS where ADE always supervises | iOS |
-| ADE (iOS) | Same mechanism as macOS ADE but enrollment profile options differ; iOS adds supervision checkbox, user affinity, and authentication method selection | iOS |
-| MAM (Mobile Application Management) | App-level data protection without device enrollment; iOS implementation uses Intune App SDK or App Wrapping Tool; requires Microsoft Authenticator as broker on iOS | iOS |
-| MAM-WE (MAM Without Enrollment) | MAM app protection policies applied to unenrolled devices; protects corporate data in Microsoft apps without MDM control | iOS |
-| App Protection Policy | Intune policy controlling data transfer, save behavior, cut/copy/paste, encryption, and access requirements for MAM-enrolled apps | iOS (also Android) |
-| User Enrollment | Apple enrollment method creating a managed work partition on personal iOS devices; requires Managed Apple ID; limits admin visibility to work partition only | iOS |
-| Account-Driven User Enrollment | Current implementation of User Enrollment; initiated from device Settings app using work/school account sign-in | iOS |
-| Managed Apple ID | Apple ID provisioned and controlled by the organization via Apple Business Manager; required for User Enrollment and Shared iPad sign-in | iOS |
-| Shared iPad | iPadOS feature enabling multi-user iPad where each user signs in with a Managed Apple ID; data cached per-user; requires supervised enrollment without user affinity | iPadOS |
-| Device Licensing (VPP) | App license assigned to device identifier; allows silent app installation on supervised devices without user Apple ID; default for new VPP assignments | iOS |
-| User Licensing (VPP) | App license assigned to user Apple Account; requires user Apple ID; one license covers up to 5 devices; required for User Enrollment | iOS |
-| Activation Lock | Apple anti-theft feature; disabled remotely only on supervised devices via Intune remote action | iOS |
-| sysdiagnose | iOS system diagnostic log bundle; collected by key combination on device + transferred via Mac Console app (cable required); used for deep MDM/network troubleshooting | iOS |
-| Company Portal (iOS) | Intune management app for iOS/iPadOS; available from App Store; primary log collection and enrollment interface for BYOD devices | iOS |
-| Apple Configurator | Mac application for USB-based iOS device enrollment; used for small batches, existing devices, or when ABM is unavailable | iOS |
-| ASAM (Autonomous Single App Mode) | Supervised-only iOS feature locking device to a single app (kiosk mode); configured via configuration profile | iOS |
+1. **Reseller purchases or sells eligible devices** and registers them in the Zero-Touch reseller portal
+2. **Reseller associates devices to a customer account** using IMEI, serial number, or MEID as the device identifier
+3. **Customer (IT admin) accesses Zero-Touch customer portal** at `https://enterprise.google.com/android/zero-touch/customers` using a corporate Google account (or Entra-linked account)
+4. **Customer creates a configuration:** selects EMM DPC = Microsoft Intune, pastes DPC extras JSON (with enrollment token), adds support info
+5. **Device auto-provisions on first boot** — no user action required beyond powering on; device downloads Android Device Policy, applies configuration, and enrolls into Intune
 
----
+### Identifier Formats in Zero-Touch
 
-## iOS-Specific Configuration Profile Types
+| Identifier | Use | Notes |
+|-----------|-----|-------|
+| IMEI | Primary for cellular devices | For dual-SIM devices, register with numerically lowest IMEI |
+| Serial number | Wi-Fi-only devices (no cellular/IMEI) | Case-sensitive; must match manufacturer serial exactly |
+| MEID | CDMA devices | Less common |
 
-These are the profile types documented admins need to configure. Organize `05-configuration-profiles.md` around these categories:
+As of the 2026 portal update: the Zero-Touch search bar accepts any identifier type without requiring the admin to pre-select the type.
 
-| Profile Type | Available To | Key Settings | Supervision Required |
-|--------------|-------------|--------------|---------------------|
-| Device Restrictions | All enrolled | Password, camera block (basic), iCloud restrictions, app data separation | Partial — advanced restrictions require supervision |
-| Device Features | All enrolled | AirPrint, lock screen message, Single Sign-on, home screen layout, notifications, web content filter | No |
-| Wi-Fi | All enrolled | SSID, WPA2/Enterprise, certificates for Wi-Fi authentication | No |
-| VPN | All enrolled (per-app VPN: device and user enrollment) | VPN server, authentication, split tunneling, per-app VPN | No |
-| Email | All enrolled | Exchange ActiveSync config, S/MIME | No |
-| Certificates (SCEP/PKCS/Trusted Root) | All enrolled | Identity certificates for Wi-Fi, VPN, email authentication | No |
-| Device Restrictions (supervised) | Supervised only | App Store block, Kiosk/ASAM, AirDrop block, Bluetooth config block, software update deferral, MDM profile removal block | Yes |
-| Kiosk/Single App Mode | Supervised only | App bundle ID, accessibility options, volume/screen lock controls | Yes |
-| Software Updates | Supervised only | Defer major/minor OS updates, forced install schedule | Yes |
-| Custom (XML payload) | All enrolled | Any Apple MDM payload not exposed in Intune UI | Depends on payload |
+### Finding Authorized Resellers
+
+The canonical directory is: [Android Enterprise Business Device Solutions Directory — Resellers](https://androidenterprisepartners.withgoogle.com/resellers/)
+
+This is operated by Google, not Microsoft. Admins must purchase from listed resellers for Zero-Touch eligibility. Devices purchased from non-Zero-Touch resellers cannot be added to Zero-Touch post-purchase (reseller must register them before sale).
+
+**SPARSE DOC FLAG:** The reseller portal workflow is documented by Google at [developers.google.com/zero-touch/guides/portal](https://developers.google.com/zero-touch/guides/portal) but Microsoft Learn does not document the reseller-side steps. Admin-facing documentation should link to Google's reseller guide and note the purchase-time constraint. This is a Google-canonical source area.
+
+Source: [Google Zero-Touch IT admin guide](https://support.google.com/work/android/answer/7514005) — HIGH confidence; [Google Zero-Touch developers overview](https://developers.google.com/zero-touch/guides/overview) — HIGH confidence
 
 ---
 
-## iOS/iPadOS Compliance Policy Settings
+## 8. Network Endpoints Required for Android Enterprise
 
-Complete reference for `07-compliance-policy.md`. All settings verified against Microsoft Learn (updated 2026-04-15):
+### Intune-Side (Microsoft-operated)
 
-### Category: Email
-- Require managed email profile on device (marks noncompliant if unmanaged email account exists)
+| Endpoint | Purpose |
+|----------|---------|
+| `*.manage.microsoft.com`, `manage.microsoft.com` | Intune client and host service (TCP 80, 443) |
+| `*.dm.microsoft.com` | Device management, Defender |
+| `login.microsoftonline.com`, `graph.windows.net` | Authentication (Entra ID) |
+| `enterpriseregistration.windows.net` | Entra device registration |
+| `intunecdnpeasd.manage.microsoft.com` | AOSP-specific CDN (migrated from azureedge.net March 2025) |
 
-### Category: Device Health
-- Jailbroken devices: Not configured (default) / Block
-- Device threat level: Secured / Low / Medium / High (integrates with MTD connector)
+### Google-Side (Google-operated — NOT documented in Microsoft Learn)
 
-### Category: Device Properties
-- Minimum OS version (major.minor)
-- Maximum OS version
-- Minimum OS build version (for Rapid Security Response updates: enter supplemental build e.g. `20E772520a`)
-- Maximum OS build version
+For Android Enterprise GMS-based modes, Google documents required endpoints in the [Android Enterprise Help Center — Network port information](https://support.google.com/work/android/answer/10513641). This is the canonical source; Microsoft Learn defers to it explicitly.
 
-### Category: Microsoft Defender for Endpoint
-- Machine risk score threshold: Clear / Low / Medium / High
+Key Google-operated endpoints (MEDIUM confidence — Google Help, not verified via direct fetch):
+- `*.google.com`, `*.googleapis.com` — GMS, Play Store, Android Management API
+- `*.firebase.com`, `fcm.googleapis.com` — Firebase Cloud Messaging (push)
+- `*.android.com` — Android system updates
+- `enterprise.google.com` — Zero-Touch portal
 
-### Category: System Security — Password
-- Require password to unlock
-- Block simple passwords
-- Minimum password length
-- Required password type: Not configured / Alphanumeric / Numeric
-- Number of non-alphanumeric characters
-- Maximum minutes after screen lock before password required
-- Maximum minutes of inactivity until screen locks
-- Password expiration (days)
-- Number of previous passwords to prevent reuse
+**SPARSE DOC FLAG:** Microsoft Learn says "Google provides documentation of required network ports and destination host names in the Android Enterprise Help Center" and does not list them inline. Any network prerequisites section in v1.4 documentation must link to Google's canonical endpoint list rather than attempt to reproduce it.
 
-### Category: Device Security
-- Restricted apps (by bundle ID — marks device noncompliant if restricted app is installed; applies to unmanaged apps only)
-
-**No supervised-only compliance settings** — compliance policy settings apply equally to supervised and unsupervised enrolled devices.
+Source: [Microsoft Learn — Intune network endpoints, Android Enterprise dependencies section](https://learn.microsoft.com/en-us/intune/fundamentals/endpoints) — HIGH confidence for the pointer; MEDIUM confidence for the Google endpoint list content
 
 ---
 
-## iOS/iPadOS MAM (App Protection Policy) Settings Summary
+## 9. Authentication Stack: Entra ID Integration
 
-For `04-mam-without-enrollment.md` and cross-reference in `06-app-deployment.md`. Settings organized as they appear in Intune admin center:
+### Enrollment Authentication Flow
 
-### Data Protection (Data Transfer)
-- Backup org data to iTunes and iCloud: Allow / Block
-- Send org data to other apps: All apps / None / Policy managed apps / Policy managed with OS sharing / Policy managed with Open-In filtering
-- Receive data from other apps: All apps / None / Policy managed apps / All apps with incoming org data
-- Save copies of org data / allowed services (OneDrive, SharePoint, Box, Photo Library, local storage, iManage, Egnyte)
-- Restrict cut, copy, paste: Any app / Policy managed apps / Policy managed with paste-in / Blocked
-- iOS-specific: Third-party keyboards block (iOS only; requires Intune SDK 12.0.16+)
-- iOS-specific: Screen capture block (requires SDK 19.7.12+)
-- iOS-specific: Genmoji block, Writing Tools block (Apple Intelligence features; requires SDK 19.7.12+)
+| Mode | Authentication at Enrollment | Post-Enrollment Identity |
+|------|------------------------------|--------------------------|
+| COBO (Fully Managed) | User signs in with Entra ID work account during enrollment wizard | Device becomes Entra-joined; user identity tied to device |
+| COSU (Dedicated, standard) | No user credentials at enrollment | Device-only; no user association |
+| COSU (Entra shared device mode) | No enrollment credentials; users sign in per-session via Authenticator | Entra shared device mode; per-session user identity |
+| BYOD Work Profile | User installs Company Portal, signs in with Entra ID work account | Device becomes Entra-registered; personal device |
+| COPE | User signs in with Entra ID work account | Device becomes Entra-registered or joined depending on configuration |
+| AOSP | User-associated: user signs in with Entra ID; Userless: no user | Varies by mode |
 
-### Data Protection (Encryption)
-- Encrypt org data: Require (default) — uses iOS device-level encryption + AES-256 via APP SDK
+### Conditional Access Consideration (Critical)
 
-### Data Protection (Functionality)
-- Sync policy managed app data with native apps or add-ins
-- Printing org data
-- Restrict web content transfer: Any app / Microsoft Edge / Unmanaged browser
-- Org data notifications: Allow / Block / Block org data (iOS-specific: affects lock screen notifications)
+If a Conditional Access policy requires device compliance AND applies to All Cloud Apps AND applies to Android AND applies to Browsers, the **Microsoft Intune cloud app must be excluded**. The Android enrollment setup process uses a Chrome tab for authentication, and CA blocking Chrome during enrollment breaks enrollment. This is a documented gotcha with a specific mitigation.
 
-### Access Requirements
-- PIN for access: Require (default)
-- PIN type: Numeric / Passcode
-- Touch ID instead of PIN (iOS 8+)
-- Face ID instead of PIN (iOS 11+)
-- Work or school account credentials for access
-
-### Conditional Launch
-- Min/Max OS version (Warn / Block access / Wipe data)
-- Max PIN attempts
-- Offline grace period (Block access in minutes; Wipe data in days)
-- Jailbroken/rooted devices (Block access / Wipe data)
-- Disabled account
-- Min app version
-- Min SDK version
-- Device model(s) allowlist/blocklist
-- Max allowed device threat level (MTD integration)
+Source: [Microsoft Learn — ref-corporate-methods, CA note](https://learn.microsoft.com/en-us/intune/device-enrollment/android/ref-corporate-methods) — HIGH confidence
 
 ---
 
-## iOS/iPadOS Remote Actions
+## 10. Diagnostic Tooling
 
-Document in L2 runbooks and admin overview. Key iOS-specific actions:
+### Admin-Side Tools
 
-| Action | Supervised Required | Effect | Notes |
-|--------|---------------------|--------|-------|
-| Wipe | No | Factory reset, removes all data | Corporate devices only |
-| Retire | No | Removes MDM profile, returns to user control | BYOD-friendly offboarding |
-| Remote Lock | No | Locks device, requires PIN to unlock | Sets a 6-digit recovery PIN |
-| Reset Passcode | No | Removes device passcode; user sets new one | iOS removes passcode (different from Android which sets a temporary one) |
-| Remove Passcode | No | Removes passcode; user set a new one in Settings | Used when user locked out |
-| Disable Activation Lock | Yes | Bypasses Apple Activation Lock without device interaction | Requires supervision established at enrollment |
-| Restart | Yes | Remote device restart | Supervised only |
-| Locate Device | Yes (for non-lost mode) | Shows device location | Supervised for silent location; all enrolled for user-acknowledged |
+| Tool | What It Shows | Where to Access |
+|------|--------------|----------------|
+| Intune admin center — Device details | Enrollment status, assigned policies, app install status, compliance state | Devices > All devices > [device] |
+| Intune admin center — Troubleshooting blade | Consolidated device/user/policy/enrollment view | Help and support > Troubleshoot + support |
+| Intune admin center — Enrollment failures | Failed enrollments with failure reason codes | Devices > Enrollment failures |
+| Microsoft Graph API | All device/enrollment data programmatically | `graph.microsoft.com/v1.0/deviceManagement/managedDevices` |
 
-**Note for docs:** Wipe/Retire/Delete take precedence over all other pending actions in Intune.
+### Device-Side Tools
 
----
+| Tool | What It Captures | Collection Method |
+|------|-----------------|------------------|
+| Company Portal — Send logs | App diagnostics, enrollment errors, policy processing, sync status; includes incident ID | Help > Send logs (in-app); user emails logs to L2 |
+| Microsoft Intune app — Upload logs | Same as Company Portal for fully managed/dedicated modes | Help > Get Support > Upload Logs |
+| Android Debug Bridge (adb) — logcat | Device-level logs including Intune agent, policy application, system events | `adb logcat -v threadtime > logfile.txt` (requires USB debugging or developer mode enabled on device) |
+| Android Debug Bridge (adb) — bugreport | Full system dump: memory, app states, settings, logs | `adb bugreport bugreport.zip` |
+| Verbose logging mode | Increases log detail in Company Portal | Settings > Verbose logging toggle in Company Portal |
 
-## What NOT to Add
+**Key difference from iOS:** Android has no equivalent of Apple's sysdiagnose or mdmclient debug-level. The primary L2 tool is adb logcat + Company Portal logs. For fully managed corporate devices, adb requires USB debugging to be explicitly enabled — which may not be present on production-hardened devices. This is a documentation gap to flag.
 
-| Avoid | Why | What to Do Instead |
-|-------|-----|-------------------|
-| Separate iOS glossary file | v1.2 decision: single glossary with platform labels | Add iOS terms to `docs/_glossary.md` with `(iOS)` or `(iPadOS)` labels |
-| Apple School Manager (ASM) deep docs | Out of scope — same enrollment mechanism as ABM; education-specific features beyond provisioning are out of scope | Note that ASM works identically to ABM for enrollment; link to Apple education docs |
-| Third-party MDM (Jamf/MobileIron) comparison | Out of scope — suite covers Intune only | Add single note in iOS overview that docs assume Intune as MDM |
-| iOS error code tables | iOS/iPadOS ADE/enrollment errors are message-based, not hex code-based (unlike Windows Autopilot) | Use symptom-based decision trees (same pattern as APv2 failure catalog) |
-| Android enrollment documentation | Different platform entirely | Note Android is out of scope; different enrollment patterns, different MAM behavior |
-| mdmdiagnosticstool equivalent commands | No CLI tool exists for iOS diagnostic collection | Document Company Portal log upload + sysdiagnose (Mac+cable) as the iOS equivalent |
-| Tenant-specific ABM org details | Same constraint as all existing docs | Document the process; teams add their specific account details locally |
-| Detailed Apple Configurator USB provisioning steps | Niche use case; complex; different from ADE at scale | Document Apple Configurator as an enrollment option with reference to Apple's official Apple Configurator 2 user guide |
-| iOS MDM migration steps (iOS/iPadOS 26 feature) | New capability arriving with iOS 26; document when GA | Note upcoming MDM migration capability in overview as coming feature |
+**Enrollment diagnostic vs iOS:** iOS has MDM protocol logs (mdmclient) surfaceable at the device. Android Enterprise equivalent diagnostic depth is primarily via adb (requires physical access or developer mode) or the Intune portal's troubleshooting blade. The Intune portal is the primary remote diagnostic tool.
+
+Source: [Microsoft Learn — Share Android diagnostic logs](https://learn.microsoft.com/en-us/intune/user-help/diagnostics/collect-logs-android) — HIGH confidence; [community source — adb logcat Intune](https://uem4all.com/2020/02/24/mem-android-debugging/) — LOW confidence (not verified via official source)
 
 ---
 
-## Cross-Reference Pattern for iOS/iPadOS Docs
+## 11. What NOT to Add (Explicit Scope Boundaries)
 
-### Reference existing macOS ABM docs (do not re-document)
-
-Every iOS/iPadOS ADE admin guide should reference macOS ABM configuration:
-
-```markdown
-> **ABM Prerequisites:** This guide assumes an Apple Business Manager MDM server token
-> is already configured and linked to Intune. If not yet configured, see
-> [ABM Configuration for Automated Device Enrollment](../../admin-setup-macos/01-abm-configuration.md).
-> The ABM setup steps are identical for iOS/iPadOS and macOS.
-```
-
-### Reference Windows and macOS parallels
-
-```markdown
-> **Cross-platform note:** iOS/iPadOS ADE is conceptually equivalent to macOS ADE
-> and Windows Autopilot — all three achieve zero-touch enrollment. Key differences:
-> iOS ADE adds the supervised/unsupervised distinction that macOS and Windows do not require.
-> See [Platform Comparison](../../windows-vs-macos.md).
-```
-
-### Supervision callout pattern (establish consistently)
-
-```markdown
-> **🔒 Supervised only:** [Setting name] is only available on devices enrolled via ADE
-> with the Supervised checkbox enabled. Devices enrolled via Device Enrollment,
-> User Enrollment, or ADE without supervision cannot use this setting.
-```
+| Do Not Add | Why | What to Document Instead |
+|-----------|-----|--------------------------|
+| Knox Mobile Enrollment (KME) | Deferred to v1.4.1 — paid Knox tier, Samsung-specific | One-line stub in enrollment overview: "Samsung devices may qualify for KME — see v1.4.1" |
+| Android Device Administrator (DA) management | Deprecated; no longer available for GMS devices | Deprecation note only in overview; point to migration path |
+| COPE full admin setup runbook | Deferred to v1.4.1; Google trajectory is WPCO | Deprecation/trajectory note inside COBO doc |
+| SafetyNet attestation | Superseded by Play Integrity Verdict | Document only Play Integrity |
+| Custom OMA-URI profiles for personally-owned WP | Removed from Intune April 2025 | Settings catalog and device restriction profiles instead |
+| Google Workspace (G Suite) binding | Distinct from Managed Google Play binding; rarely used in Intune deployments | Not applicable to Microsoft Intune documentation |
+| Android TV / Auto / Wear OS | Specialized device classes outside Intune enrollment scope | Out of scope per PROJECT.md |
+| ChromeOS management | Different platform (Google Admin) | Out of scope |
+| GMS unavailability in China | Edge case, not covered in generic guidance | Note as known limitation; link to [Microsoft Learn — Manage without GMS](https://learn.microsoft.com/en-us/intune/app-management/manage-without-gms) |
 
 ---
 
-## Version and Compatibility Notes
+## 12. Android OS Version Minimums (Fragmentation Matrix)
 
-| Area | Current Requirement | Notes |
-|------|--------------------|----- |
-| Minimum iOS for Intune MAM/Company Portal | iOS 17 required after iOS/iPadOS 26 GA | Currently iOS 16+ supported; update docs when iOS 26 releases (expected WWDC 2025) |
-| Minimum iOS for ADE | iOS 8+ (all current devices qualify) | Not a practical documentation concern |
-| Web-based device enrollment | iOS 15+ | Note this in Device Enrollment guide as a prerequisite |
-| Account-driven user enrollment | iOS 13+ | Note this in User Enrollment guide as a prerequisite |
-| ADE new infrastructure | Q2 CY2026 | Create enrollment profile guide with current UI; add callout noting Q2 CY2026 UI change |
-| ACME protocol for enrollment | In development as of 2026 | New certificate enrollment protocol for iOS/iPadOS; note as upcoming in certificate profiles section |
+| Enrollment Mode | Minimum Android Version | Notes |
+|----------------|------------------------|-------|
+| BYOD Work Profile (personally-owned) | Android 5.0+ (GMS requirement) | Practical minimum is 8.0+ for modern management features |
+| Fully Managed (COBO) | Android 6.0+ | |
+| Dedicated (COSU) | Android 8.0+ | |
+| Corporate-Owned Work Profile (COPE) | Android 8.0+ | NFC and DPC identifier only supported on Android 8-10; Android 11+ requires QR or Zero-Touch |
+| AOSP | Varies by OEM firmware | No single version minimum; depends on OEM-supported firmware listed in AOSP supported devices list |
+| Zero-Touch | Device must support Zero-Touch | Hardware capability; not OS version-gated per se — varies by OEM implementation |
+
+**v1.4 baseline is Android 14** per milestone context. Document min versions but flag that Android 14 is the current baseline for feature completeness. Significant behavior changes occurred at Android 9 (built-in QR reader), Android 11 (COPE architecture change, IMEI/serial removal from work profile), Android 12 (corporate identifier removal for personally-owned work profile), Android 13 (stricter permissions), Android 14 (private space introduction).
+
+**Android 14 private space note:** Private Space (new in Android 14) is treated as a personal profile. Intune does not support MDM management within the private space. If a user with an enrolled work profile attempts to enroll the private space, it triggers device administrator enrollment and creates two enrollment records — not supported. Document as known limitation for BYOD Work Profile.
+
+Source: [Microsoft Learn — Enrollment guide](https://learn.microsoft.com/en-us/intune/device-enrollment/android/guide), [setup-dedicated](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-dedicated), [setup-personal-work-profile](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-personal-work-profile) — HIGH confidence
+
+---
+
+## 13. Confidence Assessment
+
+| Area | Confidence | Notes |
+|------|------------|-------|
+| Intune portal surface and enrollment profile locations | HIGH | Verified via direct Microsoft Learn fetches (updated 2026-04-16) |
+| Managed Google Play binding mechanics | HIGH | Direct Microsoft Learn fetch |
+| Entra ID integration (August 2024 account-linking change) | HIGH | Microsoft Learn confirmed |
+| FCM as push channel (no admin cert action required) | HIGH | Microsoft Learn confirmed; no APNs equivalent exists |
+| Enrollment methods by mode (QR, DPC, NFC, ZTE) | HIGH | Direct Microsoft Learn fetch |
+| Zero-Touch portal URL and reseller workflow | HIGH (portal URL, Google-sourced); MEDIUM (reseller steps, limited detail) | Microsoft Learn defers to Google docs |
+| AOSP OEM support matrix | HIGH | Direct fetch from supported-devices page (2025-05-12) |
+| Corporate identifier types and Android 12 limitation | HIGH | Direct fetch from add-corporate-identifiers page |
+| Android OS version minimums | HIGH | Compiled from multiple Microsoft Learn guide pages |
+| Google-side network endpoints (FCM, GMS) | MEDIUM | Microsoft Learn points to Google docs; not reproduced in Microsoft Learn |
+| adb diagnostic commands for Android Enterprise | LOW | Community source (uem4all.com); not from official Microsoft Learn page |
+| COPE deprecation trajectory | MEDIUM | Jason Bayton (community canonical for Android Enterprise) + Microsoft Learn guide |
+| Enrollment token 90-day max | MEDIUM | Multiple community sources consistent; not stated explicitly in Microsoft Learn |
+
+---
+
+## 14. Sparse-Doc Flags for Downstream Roadmapper
+
+| Area | Sparse Doc Flag | Canonical Source |
+|------|-----------------|-----------------|
+| Zero-Touch reseller portal workflow (reseller side) | SPARSE — Microsoft Learn does not document reseller steps | Google: [developers.google.com/zero-touch/guides/portal](https://developers.google.com/zero-touch/guides/portal) |
+| Google-side network endpoints for Android Enterprise | SPARSE — Microsoft Learn defers entirely to Google | Google: [support.google.com/work/android/answer/10513641](https://support.google.com/work/android/answer/10513641) |
+| BYOD Work Profile end-user experience deep detail | SPARSE — primarily user-help docs, limited admin perspective | Microsoft Learn user-help; supplement with community |
+| adb diagnostic commands for Android Enterprise | SPARSE — no official Microsoft Learn guide for adb on AE | Community: uem4all.com; verify before publishing |
+| AOSP enrollment troubleshooting | SPARSE — AOSP is a newer GA path; failure catalog not well-established | Community (RealWear support, Zebra support portals) |
+| Enrollment token 90-day max cadence | SPARSE — not stated in official docs but consistent in community | Community: multiple MDM blog sources |
+| Android 14 private space BYOD interaction | SPARSE — noted in enrollment docs but limited troubleshooting guidance | Microsoft Learn enrollment limitation note only |
 
 ---
 
 ## Sources
 
-- Microsoft Learn: iOS/iPadOS enrollment guide — https://learn.microsoft.com/en-us/intune/device-enrollment/apple/guide-ios-ipados — HIGH confidence, updated 2026-04-14, primary enrollment path reference
-- Microsoft Learn: iOS/iPadOS deployment guide — https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/deployment-guide-platform-ios-ipados — HIGH confidence, full management lifecycle
-- Microsoft Learn: iOS/iPadOS compliance settings — https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-ios-ipados-settings — HIGH confidence, updated 2026-04-15
-- Microsoft Learn: iOS/iPadOS device restrictions — https://learn.microsoft.com/en-us/intune/intune-service/configuration/device-restrictions-apple — HIGH confidence, supervised vs unsupervised distinction
-- Microsoft Learn: iOS/iPadOS app protection policy settings — https://learn.microsoft.com/en-us/intune/app-management/protection/ref-settings-ios — HIGH confidence, updated 2026-04-15
-- Microsoft Learn: Manage Apple VPP/ABM apps — https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple — HIGH confidence, updated 2026-04-14, device vs user licensing
-- Microsoft Learn: Supervised mode — https://learn.microsoft.com/en-us/intune/device-enrollment/apple/enable-supervised-mode — HIGH confidence, updated 2026-04-14
-- Microsoft Learn: Collect logs from iOS — https://learn.microsoft.com/en-us/intune/user-help/diagnostics/collect-logs-ios — HIGH confidence
-- Microsoft Learn: ADE setup for iOS/iPadOS — https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment-program-enroll-ios — HIGH confidence
-- Microsoft Tech Community: New ADE enrollment policies experience — https://techcommunity.microsoft.com/blog/intunecustomersuccess/new-iosipados-and-macos-ade-enrollment-policies-experience/4393531 — MEDIUM confidence, product blog, confirms Q2 CY2026 UI change
-- Microsoft Learn: Troubleshoot iOS enrollment errors — https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-enrollment/troubleshoot-ios-enrollment-errors — HIGH confidence
+- [Microsoft Learn — Connect Intune to Managed Google Play](https://learn.microsoft.com/en-us/intune/device-enrollment/android/connect-managed-google-play) — fetched 2026-04-19, updated 2025-11-11
+- [Microsoft Learn — Android enrollment guide](https://learn.microsoft.com/en-us/intune/device-enrollment/android/guide) — fetched 2026-04-19, updated 2024-04-23
+- [Microsoft Learn — Enroll dedicated, fully managed, COPE devices](https://learn.microsoft.com/en-us/intune/device-enrollment/android/ref-corporate-methods) — fetched 2026-04-19, updated 2025-12-04
+- [Microsoft Learn — Set up dedicated devices](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-dedicated) — fetched 2026-04-19, updated 2025-05-08
+- [Microsoft Learn — Set up personal work profile](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-personal-work-profile) — fetched 2026-04-19, updated 2024-10-28
+- [Microsoft Learn — AOSP supported devices](https://learn.microsoft.com/en-us/intune/fundamentals/aosp-supported-devices) — fetched 2026-04-19, updated 2025-05-12
+- [Microsoft Learn — Add corporate identifiers](https://learn.microsoft.com/en-us/intune/device-enrollment/add-corporate-identifiers) — fetched 2026-04-19, updated 2025-04-11
+- [Microsoft Learn — Intune network endpoints](https://learn.microsoft.com/en-us/intune/fundamentals/endpoints) — fetched 2026-04-19, updated 2026-03-24
+- [Microsoft Learn — Share Android diagnostic logs](https://learn.microsoft.com/en-us/intune/user-help/diagnostics/collect-logs-android) — fetched 2026-04-19, updated 2025-02-06
+- [Microsoft Learn — Android Enterprise compliance settings](https://learn.microsoft.com/en-us/intune/intune-service/protect/compliance-policy-create-android-for-work) — search-verified
+- [Google — Zero-Touch enrollment for IT admins](https://support.google.com/work/android/answer/7514005) — fetched 2026-04-19
+- [Google — Zero-Touch reseller portal guide](https://developers.google.com/zero-touch/guides/portal) — search-verified
+- [Android Enterprise Business Solutions Directory — Resellers](https://androidenterprisepartners.withgoogle.com/resellers/) — search-verified
+- [Jason Bayton — Android 11 COPE changes](https://bayton.org/android/android-11-cope-changes/) — MEDIUM confidence (community canonical for Android Enterprise)
 
 ---
-*Stack research for: v1.3 iOS/iPadOS Provisioning Documentation (Intune)*
-*Researched: 2026-04-15*
+*Stack research for: Android Enterprise enrollment documentation — v1.4 milestone*
+*Researched: 2026-04-19*
