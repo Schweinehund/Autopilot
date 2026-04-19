@@ -2,7 +2,7 @@
      Usage: Copy this file as your starting point for any L2 Desktop Engineer guide.
      Rules:
      - Fill in all YYYY-MM-DD dates (review_by = last_verified + 90 days)
-     - Set applies_to to APv1, APv2, or both
+     - Set applies_to to APv1, APv2, both, ADE, or all
      - Replace all [bracketed placeholders] with actual content
      - Link to reference files for registry paths, PowerShell functions, and endpoints
        Do NOT define paths or function signatures inline
@@ -14,7 +14,7 @@
 ---
 last_verified: YYYY-MM-DD
 review_by: YYYY-MM-DD
-applies_to: APv1 | APv2 | both
+applies_to: APv1 | APv2 | both | ADE | all
 audience: L2
 platform: Windows | macOS | iOS | all
 ---
