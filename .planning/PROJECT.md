@@ -10,10 +10,10 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 
 ## Current State
 
-**v1.2 shipped 2026-04-15.** Three milestones complete — 25 phases, 62 plans shipped. v1.3 Phases 26-33 complete (iOS/iPadOS provisioning documentation plus gap-closure — all 7 milestone phases done). Phase 33 gap-closure closed v1.3 milestone audit gaps (I-1 broken anchor, I-2 71-placeholder retrofit, L1TS-01/02 verification debt); v1.3-MILESTONE-AUDIT.md re-audit verdict: `status: passed` (18/18 requirements, 0 MAJOR findings). 4 pre-existing human verification items persist in 32-HUMAN-UAT.md as follow-ups.
+**v1.3 shipped 2026-04-19.** Four milestones complete — 33 phases, 106 plans, 118 documentation files shipped across Windows Autopilot, macOS ADE, and iOS/iPadOS. v1.4 Android Enterprise enrollment documentation starting 2026-04-19 — mirrors v1.3 iOS shape (overview + admin + L1/L2), continuing phase numbering from Phase 34.
 
 ### What's been built
-- 118 markdown documentation files in `docs/`
+- 118 markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, and iOS/iPadOS
 - Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
 - APv2 lifecycle, failure catalog, L1/L2 decision trees and runbooks (v1.1)
 - APv1 and APv2 admin setup guides with per-setting "what breaks" callouts (v1.1)
@@ -31,6 +31,15 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 - iOS/iPadOS L1 triage runbooks — 6 L1 scenario runbooks (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked) + iOS triage decision tree (v1.3)
 - iOS/iPadOS L2 investigation runbooks — 4 L2 runbooks (log collection, ADE token & profile delivery, app install failure, compliance & CA timing) + 00-index.md iOS L2 section + D-22 placeholder retrofit across 9 files closing cross-phase links from Phase 30 (v1.3)
 - Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
+
+<details>
+<summary>Previous Milestone: v1.3 iOS/iPadOS Provisioning Documentation</summary>
+
+**Shipped:** 2026-04-19 | **Phases:** 26-33 | **Plans:** 44
+
+Delivered iOS/iPadOS enrollment framework (4-path overview, ADE lifecycle), admin setup suite with supervised-only callouts, BYOD & MAM paths (Device Enrollment, account-driven User Enrollment, standalone MAM-WE), L1 triage + 6 scenario runbooks, L2 investigation runbooks using iOS-native methods (Mac+cable sysdiagnose, AssistiveTouch sysdiagnose), cross-platform navigation integration with iOS sections, and Phase 33 milestone audit gap closure (re-audit passed 18/18).
+
+</details>
 
 <details>
 <summary>Previous Milestone: v1.2 Cross-Platform Provisioning & Operational Gaps</summary>
@@ -100,15 +109,27 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ iOS/iPadOS app deployment guide (VPP device/user licensing, LOB, Store apps; silent install supervised-only callouts; managed app status verification) — Phase 28 / v1.3
 - ✓ iOS/iPadOS compliance policy guide (OS version, jailbreak, passcode, CA timing, default compliance posture) — Phase 28 / v1.3
 
-## Current Milestone: v1.3 iOS/iPadOS Provisioning Documentation
+## Current Milestone: v1.4 Android Enterprise Enrollment Documentation
 
-**Goal:** Comprehensive iOS/iPadOS provisioning and management documentation through Microsoft Intune, covering all enrollment paths, MAM, and tiered troubleshooting — with parity to existing Windows/macOS coverage.
+**Goal:** Comprehensive Android Enterprise provisioning and management documentation through Microsoft Intune — covering Zero-Touch corporate enrollment, Fully Managed devices, BYOD Work Profile, kiosk/dedicated devices, and basic AOSP management — with tiered troubleshooting at parity with v1.0-v1.3 platform coverage.
 
-**Target features:**
-- iOS/iPadOS lifecycle documentation (ADE, device enrollment, user enrollment, MAM without enrollment)
-- iOS/iPadOS admin setup guides with 🔒 Supervised only callout pattern
-- iOS/iPadOS L1/L2 troubleshooting (decision trees, runbooks)
-- Cross-platform navigation integration for iOS/iPadOS
+**Target features (in scope):**
+- Android Enterprise enrollment path overview + ownership/management axis (mirroring iOS supervision axis)
+- Android Enterprise prerequisites: Managed Google Play binding, tri-portal admin template (Intune + Managed Google Play + Zero-Touch portal)
+- Zero-Touch Enrollment (corporate ADE-equivalent) admin + L1/L2 content
+- Fully Managed device (COBO) admin + L1/L2 content, with COPE migration/deprecation note
+- BYOD Work Profile on Personally-Owned devices — admin + end-user self-service + L2 content (tier-inversion acknowledged)
+- Dedicated devices (kiosk/COSU) admin + L1/L2 content
+- AOSP device management — admin + triage (user-associated/userless covered as stub, full coverage deferred)
+- Android version fragmentation matrix (min OS per enrollment mode)
+- Provisioning-method axis matrix (NFC, QR, DPC identifier afw#setup, Zero-Touch)
+
+**Deferrals (tracked for future milestones):**
+- Knox Mobile Enrollment → defer to v1.4.1 (paid Knox license gating, Samsung-specific, velocity compression)
+- AOSP user-associated/userless full coverage → stub only in v1.4; full coverage v1.4.1 once OEM matrix firms
+- Cross-platform nav integration (backport Android into docs/index, common-issues, quick-refs) → post-v1.4 unification task to avoid v1.0-v1.3 regression
+- COPE full admin path → covered as migration/deprecation note inside COBO doc (Google trajectory is WPCO)
+- 4-platform comparison document → defer to v1.5 or standalone deliverable
 
 ### Active
 
@@ -122,14 +143,19 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - Automated remediation workflows — deferred to future milestone
 - Linux device enrollment — Intune Linux support is limited
 - ChromeOS management — different management platform (Google Admin)
+- Android TV / Android Auto / Wear OS — specialized device classes, not Intune enrollment scope (v1.4 exclusion)
+- Android Device Administrator (DA) legacy mode — deprecated since Android 10 for new enrollments (v1.4 exclusion)
+- Samsung E-FOTA firmware management — orthogonal to Intune enrollment (v1.4 exclusion)
+- Localization / non-English content — consistent with v1.0-v1.3 English-only policy
 
 ## Context
 
-- 118 markdown files in `docs/` covering APv1, APv2, macOS ADE, and iOS/iPadOS enrollment frameworks
+- 118 markdown files in `docs/` covering APv1, APv2, macOS ADE, and iOS/iPadOS enrollment frameworks (v1.4 Android coverage adds to this)
 - Three audiences served: L1 Service Desk (scripted), L2 Desktop Engineering (technical), Intune Admins (configuration)
-- Three platforms: Windows Autopilot, macOS ADE, and iOS/iPadOS through Intune
+- Three platforms shipped through v1.3: Windows Autopilot, macOS ADE, iOS/iPadOS. Android Enterprise adds a fourth in v1.4.
 - Code scaffolding exists across all three tiers (PowerShell, Python, React) but is not yet integrated
 - Docs structured for easy export to SharePoint/Confluence
+- v1.4 introduces tri-portal admin template pattern (Intune + Managed Google Play + Zero-Touch portal) — first deviation from dual-portal pattern established in v1.2 macOS
 
 ## Constraints
 
@@ -154,6 +180,10 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 | macOS dual-portal template | ABM + Intune admin center steps in every macOS admin guide | ✓ Good — consistent pattern across 5 guides |
 | APv1→APv2 as coexistence, not cutover | Reflects real-world mixed environments | ✓ Good — readiness checklist with blockers |
 | Phases 21/22 parallelizable | Windows gaps and macOS lifecycle have zero cross-dependencies | ✓ Good — saved time in execution |
+| v1.4 scope trimmed via adversarial review | Referee pattern identified Knox ME, COPE full path, AOSP user-modes full path, and cross-platform nav integration as over-scope for one milestone | Trimmed scope deferred with explicit tracking — pending |
+| Knox Mobile Enrollment deferred to v1.4.1 | Paid Knox license tier gating + Samsung-specific + velocity compression on top of 3x surface vs iOS | Stub planned in overview; full coverage v1.4.1 — pending |
+| Tri-portal admin template for Android | Intune + Managed Google Play + Zero-Touch portal is canonical flow; dual-portal template from v1.2/v1.3 insufficient | Template design as Phase 1 prereq before runbook phases — pending |
+| v1.4 cross-platform nav deferred post-milestone | Backport regression risk against v1.0-v1.3 archived/live docs; separate unification task safer | Post-v1.4 nav-unification task — pending |
 
 ## Evolution
 
@@ -173,4 +203,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-18 after Phase 33 complete (v1.3 milestone audit gaps closed — I-1, I-2, L1TS-01/02; milestone re-audit passed)*
+*Last updated: 2026-04-19 — v1.4 Android Enterprise milestone started; scope trimmed via adversarial review (Knox ME / COPE full path / AOSP user-modes / cross-platform nav deferred)*

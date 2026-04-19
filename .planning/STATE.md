@@ -1,38 +1,38 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.3
-milestone_name: iOS/iPadOS Provisioning Documentation
-status: executing
-stopped_at: Completed 32-08-PLAN.md
-last_updated: "2026-04-19T12:50:16.028Z"
+milestone: v1.4
+milestone_name: Android Enterprise Enrollment Documentation
+status: defining_requirements
+stopped_at: Milestone v1.4 started
+last_updated: "2026-04-19T12:00:00.000Z"
 last_activity: 2026-04-19
 progress:
-  total_phases: 7
-  completed_phases: 6
-  total_plans: 40
-  completed_plans: 38
-  percent: 95
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-16)
+See: .planning/PROJECT.md (updated 2026-04-19)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, and iOS/iPadOS devices through Intune without escalating to engineering
-**Current focus:** Phase 33 — v13-gap-closure
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering
+**Current focus:** Defining v1.4 requirements (Android Enterprise enrollment documentation)
 
 ## Current Position
 
-Phase: 33
-Plan: Not started
-Status: Executing Phase 33
-Last activity: 2026-04-19
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-19 — Milestone v1.4 started
 
 ```
-v1.3 Progress: [                        ] 0%
-Phases:  0/7 complete
+v1.4 Progress: [                        ] 0%
+Phases:  0/TBD complete
 Plans:   0/TBD complete
 ```
 
@@ -43,45 +43,60 @@ Plans:   0/TBD complete
 - v1.0: 10 phases, 24 plans — shipped 2026-04-10
 - v1.1: 9 phases, 18 plans — shipped 2026-04-13
 - v1.2: 6 phases, 20 plans — shipped 2026-04-15
+- v1.3: 8 phases, 44 plans — shipped 2026-04-19
 
-**Totals:** 25 phases, 62 plans, 116 documentation files
+**Totals:** 33 phases, 106 plans, 118 documentation files
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.2 decisions validated with outcomes.
+Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.3 decisions validated with outcomes.
 
-**v1.3 decisions:**
+**v1.4 decisions (scope-time, pre-planning):**
 
-- iOS phases numbered 26-32 (continuing from v1.2's Phase 25)
-- Phase 26 establishes enrollment type matrix before all admin setup content — supervision axis anchors all downstream guides
-- Phase 27 establishes the 🔒 Supervised only callout pattern (blockquote format) — all subsequent phases use it, none redefine it
-- ABM portal steps cross-reference macOS guide (admin-setup-macos/01-abm-configuration.md) rather than duplicate — iOS owns enrollment profile creation only
-- MAM-WE (ABYOD-03) is a standalone lifecycle document, not a subsection of MDM docs — placed in Phase 29
-- Profile-based User Enrollment is deprecated (iOS 18) — ABYOD-02 documents account-driven enrollment only
-- iOS has no CLI diagnostic tool — L2 log collection (L2TS-01) covers Company Portal upload, MDM diagnostic report, and Mac+cable sysdiagnose
-- Glossary additions extend _glossary-macos.md (ABM, ADE, VPP, APNs already live there) rather than creating a new file
-- Navigation updates (Phase 32) are injected into existing shared files, not full rewrites — follows v1.2 macOS precedent
-- [Phase 32]: Rule 3 auto-fix: narrowed placeholder grep pattern from 'Phase 32|NAV-0[123]' to 'Phase 32 NAV-0[123]' to exclude legitimate shipped content (NAV-03 requirement-ID annotations and 'Phase 32: ...' Version History entries from Plans 32-01/02)
-- [Phase 32]: Plan 32-04: MAM-WE H3 heading extended with iOS: prefix for anchor-prefix consistency with 6 symptom H3s (prevents potential Apple-side collision)
-- [Phase 32]: Plan 32-08: Extended run-all.sh PHASE32_FILES gate from 2 to 10 files (Rule 3 blocking auto-fix); regenerated expected-reachability.txt fixture to post-Wave-3 state (136 entries); 24/24 iOS files reach depth ≤ 2 from docs/index.md; 0 link regressions in Phase 20-25 sentinels; 5 manual human-verify checks deferred per auto-pipeline directive
+- v1.4 scope trimmed via adversarial-review skill before requirements definition. Referee verdict: accept trim; document deferrals for follow-up.
+- Knox Mobile Enrollment deferred to v1.4.1 — paid Knox license gating + Samsung-specific + velocity compression. Stub to appear in enrollment path overview.
+- COPE full admin path deferred — Google trajectory is WPCO; COPE covered as migration/deprecation note inside COBO doc.
+- AOSP user-associated/userless full coverage deferred to v1.4.1 — sparse public docs, speculative failure catalog, OEM matrix (RealWear/Zebra/Pico/HTC VIVE Focus) must firm up first. Stub in v1.4.
+- Cross-platform navigation integration (backport Android into docs/index, common-issues, quick-refs) deferred to post-v1.4 unification task — regression risk against live v1.0-v1.3 nav files.
+- 4-platform comparison document deferred to v1.5.
+- Phase numbering continues from v1.3 → v1.4 begins at Phase 34.
+- v1.4 shape mirrors v1.3 iOS: overview → lifecycle → admin setup → L1/L2 (nav deferred).
+- Tri-portal admin template (Intune + Managed Google Play + Zero-Touch portal) is first deviation from dual-portal pattern; designed as early phase before runbook phases.
+- BYOD Work Profile L1 content reframed as end-user self-service guide — tier-inversion acknowledged (enrollment is device-side via Company Portal, not admin-portal-first).
 
 ### Pending Todos
 
-- Start Phase 26 planning via `/gsd:plan-phase 26`
+- Decide research vs skip for v1.4 (Android Enterprise has sparse AOSP docs; Zero-Touch / COBO / BYOD well-documented)
+- Define v1.4 requirements with REQ-IDs (scoped per referee recommendation)
+- Create v1.4 roadmap starting at Phase 34
+
+### Research flags to verify at plan time
+
+- Zero-Touch portal UI (android.com/zero-touch) navigation and reseller workflow — verify current state
+- Managed Google Play binding workflow in Intune — verify Entra ID integration and token refresh cadence
+- Android version minimums per enrollment mode (COBO, COPE, BYOD, Dedicated, AOSP) — fragmentation matrix source of truth
+- AOSP OEM support matrix in Intune — which OEMs supported, which not; preview vs GA status
+- BYOD Work Profile on personally-owned devices — privacy/legal boilerplate requirements
+- COPE deprecation trajectory confirmation from Google's current Android Enterprise guidance
+- Tri-portal admin template design — Intune + Managed Google Play + Zero-Touch portal structure
+- Deferred: Knox Mobile Enrollment paid-license gating and Samsung-specific workflow (v1.4.1)
+
+### Deferred Items (tracked for v1.4.1 or later)
+
+- Knox Mobile Enrollment full admin + L1 + L2 coverage (v1.4.1)
+- AOSP user-associated/userless full coverage with OEM matrix (v1.4.1)
+- Cross-platform navigation integration for Android (post-v1.4 unification task)
+- COPE full admin path (v1.4.1 if still non-deprecated; otherwise drop)
+- 4-platform comparison document (v1.5)
 
 ### Blockers/Concerns
 
-**Research flags to verify at plan time:**
-
-- Phase 27: ADE enrollment profile UI redesigned Q1 2025 and further reorganization anticipated Q2 CY2026 (MEDIUM confidence). Verify current UI navigation against Microsoft Learn before writing portal steps.
-- Phase 28: Software update deferral supervision requirement changed in iOS 17 via DDM. Verify current boundary against Microsoft Learn supervised device security configurations reference.
-- Phase 29: Profile-based User Enrollment deprecated iOS 18 confirmed. MFA limitations on iOS 15.5 and 15.7-16.3 — verify current account-driven enrollment requirements at time of writing.
-- Phase 31: Validate sysdiagnose procedure and Console app (Mac+cable) steps against current Microsoft Learn documentation.
+- None currently blocking.
 
 ## Session Continuity
 
-Last session: 2026-04-18T06:38:53.846Z
-Stopped at: Completed 32-08-PLAN.md
-Next action: `/gsd:plan-phase 26` to begin iOS/iPadOS Foundation
+Last session: 2026-04-19T12:00:00Z
+Stopped at: Milestone v1.4 scope confirmed; PROJECT.md + STATE.md updated
+Next action: Research decision, then define v1.4 REQUIREMENTS.md, then spawn roadmapper starting Phase 34
