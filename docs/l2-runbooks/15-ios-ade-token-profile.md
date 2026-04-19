@@ -181,7 +181,7 @@ Open a Microsoft Intune Support case if:
 - [APNs Certificate Guide](../admin-setup-ios/01-apns-certificate.md) — Pattern C reference for APNs state verification.
 - [ABM/ADE Token Guide](../admin-setup-ios/02-abm-token.md) — Pattern A reference for token download/upload flow.
 - [ADE Enrollment Profile Guide](../admin-setup-ios/03-ade-enrollment-profile.md) — profile configuration reference.
-- [iOS L1 Runbooks (16-20)](../l1-runbooks/) — L1 escalation sources that route into this runbook: 16 APNs expired, 17 ADE not starting, 18 Enrollment restriction blocking, 19 License invalid (ADE path), 20 Device cap reached.
+- [iOS L1 Runbooks (16-20)](../l1-runbooks/00-index.md) — L1 escalation sources that route into this runbook: 16 APNs expired, 17 ADE not starting, 18 Enrollment restriction blocking, 19 License invalid (ADE path), 20 Device cap reached.
 
 ## Version History
 
