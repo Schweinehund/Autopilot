@@ -6,6 +6,7 @@
 - ✅ **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-19 (shipped 2026-04-13)
 - ✅ **v1.2 Cross-Platform Provisioning & Operational Gaps** — Phases 20-25 (shipped 2026-04-15)
 - ✅ **v1.3 iOS/iPadOS Provisioning Documentation** — Phases 26-33 (shipped 2026-04-19)
+- [ ] **v1.4 Android Enterprise Enrollment Documentation** — Phases 34-42 (in progress)
 
 ## Phases
 
@@ -74,6 +75,137 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 </details>
 
+### v1.4 Android Enterprise Enrollment Documentation
+
+- [ ] **Phase 34: Android Foundation** - Glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and version-fragmentation matrix — the conceptual and structural anchors that all mode-specific content depends on
+- [ ] **Phase 35: Android Prerequisites — MGP & Zero-Touch Portal** - Managed Google Play tenant binding and Zero-Touch portal configuration — the two hard gates that must exist before any GMS-based mode or ZTE admin guide can be authored
+- [ ] **Phase 36: Fully Managed COBO Admin** - Corporate-owned Fully Managed device admin setup with COPE migration note (Google recommends WPCO) and Android 15 FRP callout
+- [ ] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout
+- [ ] **Phase 38: Dedicated Devices Admin** - Kiosk/COSU admin setup with Managed Home Screen exit-PIN sync requirement, persona callouts, scenario overview, and Android 15 FRP callout
+- [ ] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix
+- [ ] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append
+- [ ] **Phase 41: Android L2 Investigation** - Log-collection guide (Company Portal, Microsoft Intune app, adb logcat) + 3 investigation runbooks (enrollment, app install, compliance with Play Integrity) + L2 index append
+- [ ] **Phase 42: Integration & Milestone Audit** - Android capability matrix, index.md Android stub, macOS glossary see-also cross-reference, and milestone audit (SafetyNet grep, supervision-term grep, AOSP stub scope-guard, last_verified frontmatter scan, deferred-file modification check)
+
+## Phase Details
+
+### Phase 34: Android Foundation
+**Goal**: An Intune admin or doc author has a single authoritative set of foundational references — Android glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and Android-version fragmentation matrix — before any mode-specific admin guide is authored, so all downstream content uses consistent terminology, portal structure, and version gating
+**Depends on**: Nothing new (builds on Phase 20 cross-platform foundation — frontmatter schema, template conventions)
+**Requirements**: AEBASE-01, AEBASE-02, AEBASE-03, AEBASE-04, AEBASE-05
+**Success Criteria** (what must be TRUE):
+  1. An admin reading `docs/_glossary-android.md` can disambiguate all 13 Android terms that collide with existing Windows/macOS/iOS glossaries (work profile, supervision, user enrollment, dedicated, corporate identifiers, etc.) with explicit cross-references pointing to the sibling-platform definitions
+  2. An admin familiar with iOS supervision can read `docs/android-lifecycle/00-enrollment-overview.md` and correctly place any Android scenario on both axes — ownership (corporate vs personal) and management scope (fully managed, work profile, dedicated, AOSP) — and understand how Android "fully managed" is the supervision analog
+  3. A doc author opening `docs/_templates/admin-template-android.md` finds H4 sub-sections for Intune admin center, Managed Google Play, and Zero-Touch portal with guidance that ZT portal section is optional (omit for BYOD, AOSP) — ready to be copied into mode-specific admin guides
+  4. An admin reading `docs/android-lifecycle/02-provisioning-methods.md` can identify for any given enrollment mode which of the four provisioning methods (NFC, QR, DPC identifier afw#setup, Zero-Touch) are supported and the Android version availability per method
+  5. An admin reading `docs/android-lifecycle/03-android-version-matrix.md` can determine the minimum supported Android OS per mode and see explicit breakpoints for Android 11 (COPE NFC removal), Android 12 (IMEI/serial removal from corporate identifiers), and Android 15 (FRP hardening)
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 35: Android Prerequisites — MGP & Zero-Touch Portal
+**Goal**: An Intune admin can complete both tenant-scoped gates — Managed Google Play binding and Zero-Touch portal configuration — independently, with each documented as a standalone guide, so subsequent mode-specific admin guides can reference them rather than duplicate portal mechanics
+**Depends on**: Phase 34 (tri-portal admin template must exist; provisioning-method matrix and version matrix referenced from prerequisites overview)
+**Requirements**: AEPREQ-01, AEPREQ-02, AEPREQ-03, AEPREQ-04
+**Success Criteria** (what must be TRUE):
+  1. An admin reading `docs/android-lifecycle/01-android-prerequisites.md` understands the full tri-portal surface (Intune admin center + Managed Google Play + Zero-Touch portal), the GMS-vs-AOSP split, and the Android 12+ corporate-identifier behavior (IMEI/serial removed)
+  2. An admin reading `docs/admin-setup-android/00-overview.md` can sequence the tri-portal setup correctly and identify which portals each mode depends on (COBO/BYOD/Dedicated need MGP; ZTE needs ZT portal; AOSP needs neither)
+  3. An admin following `docs/admin-setup-android/01-managed-google-play.md` can bind an Entra account (preferred since August 2024) from `endpoint.microsoft.com` (not `intune.microsoft.com`), and a what-breaks table explains the consequences of disconnecting the binding (all GMS modes broken, app assignments lost)
+  4. An admin following `docs/admin-setup-android/02-zero-touch-portal.md` starts at Step 0 (authorized reseller relationship is a hard prerequisite — devices cannot be added to ZT portal without it), configures DPC extras JSON, links ZT to Intune, and reads the KME/ZT mutual-exclusion callout for Samsung devices
+  5. Every what-breaks and mutual-exclusion callout on this phase's four docs is placed inline at the point of admin decision, not relegated to a footnote or separate "gotchas" section
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 36: Fully Managed COBO Admin
+**Goal**: An Intune admin can provision a corporate-owned Fully Managed (COBO) Android device using any of the four provisioning methods, with the COPE migration question answered using Google's current language (recommends WPCO) and Android 15 FRP re-enrollment behavior explained before the admin makes any irreversible device-reset decision
+**Depends on**: Phase 35 (MGP binding must be in place before COBO enrollment profiles can be created; provisioning-method matrix referenced for the four methods)
+**Requirements**: AECOBO-01, AECOBO-02, AECOBO-03
+**Success Criteria** (what must be TRUE):
+  1. An admin following `docs/admin-setup-android/03-fully-managed-cobo.md` can create a COBO enrollment profile in Intune admin center, manage the enrollment token, and select any of the four provisioning methods (QR, NFC, DPC identifier afw#setup, Zero-Touch) with inline callouts for mode-specific constraints (NFC lost COPE support on Android 11+, QR needs internet before scanning on Android 7-8)
+  2. An admin reading the COPE migration section understands Google's current wording — "Google recommends WPCO" — and does not see the phrase "COPE deprecated" (Google has not formally deprecated COPE as of v1.4 plan time)
+  3. An admin reading the Android 15 FRP callout can configure Enterprise FRP (EFRP) via Intune policy before any device reset, and understands that FRP hardening on Android 15 breaks re-enrollment flows that worked on Android 13/14
+  4. An admin reading the COBO guide understands Entra join behavior for Fully Managed devices (work profile is the entire device; no personal partition; Chrome tab used during COBO setup requires CA exclusion for Microsoft Intune cloud app)
+  5. Every behavioral assertion in the COBO guide carries a version tag (minimum Android version, notable breakpoints), and the document has `last_verified` frontmatter so stale content is visible to audit
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 37: BYOD Work Profile — Admin + End-User
+**Goal**: An Intune admin can configure BYOD Work Profile policy from the admin side AND an end user can complete the enrollment from the personal-device side, with both audiences served by separate documents (tier-inversion acknowledged), and both documents reflect post-AMAPI-migration (April 2025) guidance only
+**Depends on**: Phase 35 (MGP binding required; BYOD Work Profile is a GMS mode). Phase 36 provides the corporate-mode contrast for the privacy boundary table
+**Requirements**: AEBYOD-01, AEBYOD-02, AEBYOD-03
+**Success Criteria** (what must be TRUE):
+  1. An admin following `docs/admin-setup-android/04-byod-work-profile.md` can configure enrollment restrictions (block personal Android), work profile policy, data transfer controls (clipboard/contacts/calendar direction), and reads a privacy boundary table stating explicitly what admin CAN see (managed app inventory, device compliance, work profile data) vs CANNOT see (personal apps, personal data, personal call/SMS/browser history)
+  2. An end user reading `docs/end-user-guides/android-work-profile-setup.md` can self-enroll a personal Android device via Company Portal using plain-language steps, and reads a "what IT can and cannot see" section in user-facing language — with zero references to Intune admin portal steps (the user never logs into an admin portal)
+  3. An admin reading the AMAPI migration callout in the BYOD admin guide understands: custom OMA-URI profiles for BYOD Work Profile were removed from Intune April 2025, Wi-Fi configuration now requires certificate-based authentication (username/password no longer works), and the management app changed from Company Portal to Microsoft Intune app
+  4. All BYOD content sourced from Microsoft Learn pages dated April 2025 or later — pre-April-2025 content is explicitly excluded, and any assertion derived from pre-migration sources is labeled with a confidence marker and last_verified date
+  5. The admin guide and end-user guide are two distinct files with explicit audience callouts at the top — neither file tries to serve both audiences in one document
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 38: Dedicated Devices Admin
+**Goal**: An Intune admin can provision a Dedicated (kiosk/COSU) Android device across the four scenario types — single-app, multi-app, digital signage, Entra shared device mode — with the Managed Home Screen exit-PIN synchronization requirement surfaced before the admin creates a policy that will fail silently at device runtime
+**Depends on**: Phase 35 (MGP binding required for dedicated mode); Phase 36 (shared COBO provisioning mechanics; dedicated extends COBO enrollment profile structure)
+**Requirements**: AEDED-01, AEDED-02, AEDED-03
+**Success Criteria** (what must be TRUE):
+  1. An admin following `docs/admin-setup-android/05-dedicated-devices.md` sees a persona callout at the top identifying both stakeholders (Intune Admin for enrollment + LOB Operations Owner for app selection / kiosk configuration), a scenario overview table distinguishing single-app / multi-app / digital signage / Entra shared device mode, and can then configure the enrollment profile for the chosen scenario
+  2. An admin reading the Managed Home Screen exit-PIN callout understands that the exit-kiosk PIN must be configured identically in both the device restrictions profile AND the Managed Home Screen app configuration — mismatch causes a visible error at kiosk exit attempt (the top repeated-escalation pattern for dedicated devices)
+  3. An admin reading the Android 15 FRP callout in the dedicated guide understands how FRP behaves during factory-reset re-provisioning for kiosk devices (distinct from COBO because dedicated devices are typically re-provisioned, not re-enrolled)
+  4. The dedicated guide's provisioning-method section references the centralized `02-provisioning-methods.md` matrix (filtered row for dedicated mode) rather than duplicating the full 5x4 grid
+  5. Entra shared device mode guidance distinguishes genuinely-shared devices (Entra identity) from multi-app kiosks (single device account) so admins do not misconfigure the scenario
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 39: Zero-Touch Enrollment + AOSP Stub
+**Goal**: An Intune admin can deploy Zero-Touch Enrollment at corporate scale with mode-specific content extending the Phase 35 ZT portal doc (not duplicating it), AND Android admin readers of the AOSP section find a hard-scoped stub that identifies what AOSP is, when to use it, which OEMs are GA (RealWear confirmed), and what is deferred to v1.4.1 — without speculative per-OEM content that would be immediately stale
+**Depends on**: Phase 35 (ZT portal setup must exist; AOSP has no portal dependency but follows the admin-setup-android directory pattern). Runs in parallel with Phases 36-38 (independent after Phase 35)
+**Requirements**: AEZTE-01, AEAOSP-01
+**Success Criteria** (what must be TRUE):
+  1. An admin reading ZTE-specific admin content (extending `docs/admin-setup-android/02-zero-touch-portal.md` from Phase 35) understands the reseller-upload handoff, device claim workflow, profile assignment, the dual-SIM IMEI 1 registration note, and the KME/ZT mutual-exclusion callout for Samsung devices
+  2. An admin reading `docs/admin-setup-android/06-aosp-stub.md` sees an explicit scope callout at the top ("stub in v1.4; full coverage v1.4.1") before any content, so the reader never mistakes the stub for complete coverage
+  3. The AOSP stub contains: what AOSP is, when to use it (dedicated specialty hardware: RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest), OEM matrix from MS Learn with RealWear confirmed GA, QR-only enrollment note, one-device-at-a-time enrollment constraint, Wi-Fi credential embedding requirement (RealWear-specific), and a deferred-content table pointing to v1.4.1 targets
+  4. The AOSP stub passes a word-count / section-count scope-guard audit — stub size is bounded, not allowed to drift into de-facto full coverage without the review that v1.4.1 planning will enforce
+  5. Neither ZTE nor AOSP content introduces L1/L2 runbooks in this phase (ZTE L1 runbook 27 lands in Phase 40; AOSP has no L1/L2 in v1.4 by explicit scope)
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 40: Android L1 Triage & Runbooks
+**Goal**: An L1 service desk agent has a mode-first Android triage decision tree and 6 scenario runbooks covering the highest-volume Android symptoms — enrollment blocked, work profile not created, device not enrolled, compliance access blocked, Managed Google Play app not installed, Zero-Touch enrollment failed — and the L1 index is updated with an appended Android section that does not modify existing Windows/macOS/iOS sections
+**Depends on**: Phases 36, 37, 38, 39 (all mode-specific admin guides must exist with stable paths before runbooks can link to them — L1 runbooks reference Intune portal paths from admin guides for admin-side checks)
+**Requirements**: AEL1-01, AEL1-02, AEL1-03, AEL1-04, AEL1-05, AEL1-06, AEL1-07, AEL1-08
+**Success Criteria** (what must be TRUE):
+  1. An L1 agent starting `docs/decision-trees/08-android-triage.md` with any Android enrollment/compliance symptom reaches a resolution step or explicit L2 escalation point — and the tree asks enrollment mode (fully managed, work profile, dedicated, ZTE) BEFORE it asks symptom, because Android failure root causes differ fundamentally by mode
+  2. For each of the 6 documented scenarios — Android enrollment blocked (runbook 22), work profile not created (runbook 23), device not enrolled (runbook 24), compliance access blocked (runbook 25), Managed Google Play app not installed (runbook 26), Zero-Touch enrollment failed (runbook 27) — a runbook exists with symptom description, L1-executable steps, D-10 actor-boundary section (who does what: admin vs L1 vs end user), and D-12 three-part escalation packet
+  3. An L1 agent following any runbook can determine from the D-10 section whether the resolution requires admin action in Intune admin center, L1 action, or end-user action on the device — no ambiguity about actor boundaries
+  4. `docs/l1-runbooks/00-index.md` has an appended Android section listing runbooks 22-27; the existing Windows / macOS / iOS sections are not modified (append-only constraint preserves all live anchors from prior milestones)
+  5. Every L1 runbook carries `last_verified` frontmatter and references mode-specific admin guide paths that were stabilized in Phases 36-39 — no broken anchors across the phase boundary
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 41: Android L2 Investigation
+**Goal**: An L2 Desktop Engineering investigator can collect Android diagnostic logs using the three methods available (Company Portal logs, Microsoft Intune app logs, adb logcat) and follow 3 investigation runbooks covering enrollment failures, app install failures, and compliance/CA timing — with Play Integrity (not SafetyNet, deprecated January 2025) as the attestation reference, and adb commands clearly labeled with confidence markers where they come from community sources rather than official Microsoft Learn
+**Depends on**: Phase 40 (L1 runbooks exist; L2 investigation runbooks inherit L1 escalation framing); Phase 37 (BYOD enrollment investigation runbook 19 was introduced in BYOD phase — this phase expands with app-install + compliance runbooks)
+**Requirements**: AEL2-01, AEL2-02, AEL2-03, AEL2-04, AEL2-05
+**Success Criteria** (what must be TRUE):
+  1. An L2 engineer follows `docs/l2-runbooks/18-android-log-collection.md` to collect diagnostic data using any of three methods — Company Portal log upload, Microsoft Intune app logs, or adb logcat — with clear guidance on which method yields which data type, and any adb command not sourced from official Microsoft Learn carries an explicit confidence label (MEDIUM or LOW) and a last_verified date
+  2. An L2 engineer investigating an Android work profile enrollment failure uses `docs/l2-runbooks/19-android-enrollment-investigation.md` with structured diagnostic steps, distinguishes between configuration errors / timing issues / genuine defects, and can route to Microsoft support with an escalation packet containing token sync status, profile assignment state, and enrollment profile GUID
+  3. An L2 engineer investigating an Android app install failure uses `docs/l2-runbooks/20-android-app-install-investigation.md` covering Managed Google Play app states, license assignment, and the MAM intersection — app state A vs app state B vs genuine defect disambiguation
+  4. An L2 engineer investigating Android compliance and Conditional Access timing uses `docs/l2-runbooks/21-android-compliance-investigation.md` and references Play Integrity verdicts (Basic / Basic + Device / Strong integrity with hardware-backed security) — zero references to SafetyNet attestation (deprecated January 2025)
+  5. `docs/l2-runbooks/00-index.md` has an appended Android section listing runbooks 18-21; existing Windows / macOS / iOS sections are not modified (append-only)
+**Plans**: TBD
+**UI hint**: no
+
+### Phase 42: Integration & Milestone Audit
+**Goal**: Android content is reachable from the navigation hub via a stub entry (full integration deferred to post-v1.4 unification task), the Android capability matrix provides a mode-by-feature comparison with cross-platform columns (iOS supervision vs Android fully managed; ADE vs Zero-Touch), and a milestone audit mechanically verifies pitfall prevention across all v1.4 content
+**Depends on**: Phases 34-41 (all v1.4 content must exist; audit is a mechanical pass across every Android doc)
+**Requirements**: AEAUDIT-01, AEAUDIT-02, AEAUDIT-03, AEAUDIT-04
+**Success Criteria** (what must be TRUE):
+  1. An admin reading `docs/reference/android-capability-matrix.md` can compare Android enrollment modes by feature with cross-platform comparison columns (iOS supervision vs Android fully managed, Apple ADE vs Google Zero-Touch, iOS User Enrollment vs Android Work Profile) — answering "can Android do X" without reading every mode admin guide
+  2. `docs/index.md` has an Android stub section — a "Choose Your Platform" entry and an H2 pointing to the android-lifecycle directory — and existing Windows / macOS / iOS sections are not modified (full cross-platform nav integration is explicitly deferred to post-v1.4 unification task)
+  3. `docs/_glossary-macos.md` has a single-line see-also cross-reference pointing to `_glossary-android.md` and no other modifications (preserves all existing macOS glossary anchors)
+  4. The milestone audit passes all Android-specific mechanical checks: zero occurrences of "SafetyNet" as a compliance mechanism in any Android doc (Play Integrity only); zero uses of "supervision" as a management term in Android docs (Android uses "fully managed"); AOSP stub word-count within scope guard; zero Android links in deferred shared files (`common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md`); every Android doc has `last_verified` frontmatter
+  5. The audit produces a verification artifact (`v1.4-MILESTONE-AUDIT.md` or equivalent) recording coverage (37/37 requirements satisfied), integration findings, and any deferred items tracked for v1.4.1 or v1.5
+**Plans**: TBD
+**UI hint**: no
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -111,3 +243,12 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 10/10 | Complete    | 2026-04-18 |
 | 33. v1.3 Gap Closure | v1.3 | 4/4 | Complete    | 2026-04-18 |
+| 34. Android Foundation | v1.4 | 0/TBD | Not started | - |
+| 35. Android Prerequisites — MGP & Zero-Touch Portal | v1.4 | 0/TBD | Not started | - |
+| 36. Fully Managed COBO Admin | v1.4 | 0/TBD | Not started | - |
+| 37. BYOD Work Profile — Admin + End-User | v1.4 | 0/TBD | Not started | - |
+| 38. Dedicated Devices Admin | v1.4 | 0/TBD | Not started | - |
+| 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 0/TBD | Not started | - |
+| 40. Android L1 Triage & Runbooks | v1.4 | 0/TBD | Not started | - |
+| 41. Android L2 Investigation | v1.4 | 0/TBD | Not started | - |
+| 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |

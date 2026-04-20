@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Android Enterprise Enrollment Documentation
-status: defining_requirements
-stopped_at: Milestone v1.4 started
-last_updated: "2026-04-19T12:00:00.000Z"
+status: ready_to_plan
+stopped_at: Roadmap created — Phase 34 ready to plan
+last_updated: "2026-04-19T14:00:00.000Z"
 last_activity: 2026-04-19
 progress:
-  total_phases: 0
+  total_phases: 9
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -21,18 +21,18 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-19)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering
-**Current focus:** Defining v1.4 requirements (Android Enterprise enrollment documentation)
+**Current focus:** v1.4 Android Enterprise roadmap complete — ready to plan Phase 34 (Android Foundation)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Phase 34 — Android Foundation (not yet planned)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-19 — Milestone v1.4 started
+Status: Ready to plan
+Last activity: 2026-04-19 — v1.4 ROADMAP.md + REQUIREMENTS.md traceability populated (9 phases, 37/37 coverage)
 
 ```
-v1.4 Progress: [                        ] 0%
-Phases:  0/TBD complete
+v1.4 Progress: [                    ] 0%
+Phases:  0/9 complete
 Plans:   0/TBD complete
 ```
 
@@ -45,7 +45,9 @@ Plans:   0/TBD complete
 - v1.2: 6 phases, 20 plans — shipped 2026-04-15
 - v1.3: 8 phases, 44 plans — shipped 2026-04-19
 
-**Totals:** 33 phases, 106 plans, 118 documentation files
+**Totals (through v1.3):** 33 phases, 106 plans, 118 documentation files
+
+**v1.4 projected:** 9 phases (Phase 34-42), plan count TBD per phase. Surface ≈ 20 new Android docs + 6 L1 runbooks + 4 L2 runbooks + 3 shared-file appends + 1 audit artifact.
 
 ## Accumulated Context
 
@@ -66,37 +68,43 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.3 decisions 
 - Tri-portal admin template (Intune + Managed Google Play + Zero-Touch portal) is first deviation from dual-portal pattern; designed as early phase before runbook phases.
 - BYOD Work Profile L1 content reframed as end-user self-service guide — tier-inversion acknowledged (enrollment is device-side via Company Portal, not admin-portal-first).
 
+**v1.4 decisions (roadmap-time):**
+
+- 9-phase structure (34-42) selected over 10+ phase split: Phase 39 combines ZTE admin + AOSP stub because both are independent of COBO/BYOD/Dedicated after Phase 35 and both have low plan-count surface (1 major doc each). Parallelizable during execution.
+- ZTE L1 runbook 27 lands in Phase 40 (with the other L1 runbooks), not Phase 39, to keep Phase 40 as the single L1 triage-tree-plus-runbooks aggregation phase (mirrors v1.3 Phase 30 shape).
+- L2 enrollment investigation runbook 19 is delivered in Phase 37 (BYOD) per REQUIREMENTS.md AEL2-02 pairing with BYOD work-profile enrollment failure; remaining L2 runbooks (18 log collection, 20 app install, 21 compliance) in Phase 41. This is a deliberate cross-phase split honoring research ARCHITECTURE.md dependency DAG.
+
 ### Pending Todos
 
-- Decide research vs skip for v1.4 (Android Enterprise has sparse AOSP docs; Zero-Touch / COBO / BYOD well-documented)
-- Define v1.4 requirements with REQ-IDs (scoped per referee recommendation)
-- Create v1.4 roadmap starting at Phase 34
+- Plan Phase 34: Android Foundation (glossary, template, overview, matrices)
+- Plan Phases 35-42 in sequence after each completes
 
 ### Research flags to verify at plan time
 
-- Zero-Touch portal UI (android.com/zero-touch) navigation and reseller workflow — verify current state
-- Managed Google Play binding workflow in Intune — verify Entra ID integration and token refresh cadence
-- Android version minimums per enrollment mode (COBO, COPE, BYOD, Dedicated, AOSP) — fragmentation matrix source of truth
-- AOSP OEM support matrix in Intune — which OEMs supported, which not; preview vs GA status
-- BYOD Work Profile on personally-owned devices — privacy/legal boilerplate requirements
-- COPE deprecation trajectory confirmation from Google's current Android Enterprise guidance
-- Tri-portal admin template design — Intune + Managed Google Play + Zero-Touch portal structure
-- Deferred: Knox Mobile Enrollment paid-license gating and Samsung-specific workflow (v1.4.1)
+- **Phase 35/39:** Zero-Touch portal (enterprise.google.com/android/zero-touch/customers) current UI navigation — portal has history of redesigns
+- **Phase 35:** Enrollment token 90-day maximum — MEDIUM confidence; not stated in current MS Learn; verify before documenting as authoritative
+- **Phase 36:** COPE formal deprecation language — use "Google recommends WPCO" (NOT "COPE deprecated"); verify current Google wording at plan time
+- **Phase 37:** BYOD Android minimum version — Android 8 practical; verify current MS Learn statement
+- **Phase 37:** AMAPI migration completeness — verify web enrollment path is fully documented in current MS Learn
+- **Phase 38:** MHS exit-PIN failure pattern — MEDIUM confidence (community-confirmed); verify before writing as authoritative
+- **Phase 38:** Dedicated device default token expiry — verify what Intune sets by default when no expiry specified
+- **Phase 40:** AOSP supported-devices page — verify current OEM GA status at plan time (last verified 2025-05-12)
+- **Phase 41:** adb diagnostic commands — LOW confidence; label MEDIUM/LOW with explicit confidence callout if not verified against official source
 
 ### Deferred Items (tracked for v1.4.1 or later)
 
 - Knox Mobile Enrollment full admin + L1 + L2 coverage (v1.4.1)
 - AOSP user-associated/userless full coverage with OEM matrix (v1.4.1)
-- Cross-platform navigation integration for Android (post-v1.4 unification task)
+- Cross-platform navigation integration for Android (post-v1.4 unification task: common-issues.md, quick-ref-l1.md, quick-ref-l2.md, full index.md)
 - COPE full admin path (v1.4.1 if still non-deprecated; otherwise drop)
 - 4-platform comparison document (v1.5)
 
 ### Blockers/Concerns
 
-- None currently blocking.
+- None currently blocking. All 9 phases ready to plan in sequence; Phases 36/40 and Phases 37/38 parallelizable after Phase 35 if capacity permits.
 
 ## Session Continuity
 
-Last session: 2026-04-19T12:00:00Z
-Stopped at: Milestone v1.4 scope confirmed; PROJECT.md + STATE.md updated
-Next action: Research decision, then define v1.4 REQUIREMENTS.md, then spawn roadmapper starting Phase 34
+Last session: 2026-04-19T14:00:00Z
+Stopped at: v1.4 ROADMAP.md created (9 phases, 37/37 requirement coverage); STATE.md + REQUIREMENTS.md traceability updated
+Next action: Plan Phase 34 (Android Foundation) — `/gsd-plan-phase 34`
