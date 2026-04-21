@@ -252,7 +252,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 10/10 | Complete    | 2026-04-18 |
 | 33. v1.3 Gap Closure | v1.3 | 4/4 | Complete    | 2026-04-18 |
-| 34. Android Foundation | v1.4 | 5/5 | Complete   | 2026-04-21 |
+| 34. Android Foundation | v1.4 | 5/5 | Complete    | 2026-04-21 |
 | 35. Android Prerequisites — MGP & Zero-Touch Portal | v1.4 | 0/TBD | Not started | - |
 | 36. Fully Managed COBO Admin | v1.4 | 0/TBD | Not started | - |
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 0/TBD | Not started | - |
