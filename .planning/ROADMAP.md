@@ -100,11 +100,11 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   4. An admin reading `docs/android-lifecycle/02-provisioning-methods.md` can identify for any given enrollment mode which of the four provisioning methods (NFC, QR, DPC identifier afw#setup, Zero-Touch) are supported and the Android version availability per method
   5. An admin reading `docs/android-lifecycle/03-android-version-matrix.md` can determine the minimum supported Android OS per mode and see explicit breakpoints for Android 11 (COPE NFC removal), Android 12 (IMEI/serial removal from corporate identifiers), and Android 15 (FRP hardening)
 **Plans**: 5 plans (2 waves, all autonomous)
-  - [ ] 34-01-PLAN.md — docs/_glossary-android.md (AEBASE-01) — Wave 1
-  - [ ] 34-02-PLAN.md — docs/android-lifecycle/00-enrollment-overview.md (AEBASE-02) — Wave 1
+  - [x] 34-01-PLAN.md — docs/_glossary-android.md (AEBASE-01) — Wave 1
+  - [x] 34-02-PLAN.md — docs/android-lifecycle/00-enrollment-overview.md (AEBASE-02) — Wave 1
   - [ ] 34-03-PLAN.md — docs/android-lifecycle/02-provisioning-methods.md (AEBASE-03) — Wave 2 (depends on 34-01, 34-02)
   - [ ] 34-04-PLAN.md — docs/android-lifecycle/03-android-version-matrix.md (AEBASE-04) — Wave 2 (depends on 34-01, 34-02)
-  - [ ] 34-05-PLAN.md — docs/_templates/admin-template-android.md (AEBASE-05) — Wave 1
+  - [x] 34-05-PLAN.md — docs/_templates/admin-template-android.md (AEBASE-05) — Wave 1
 **UI hint**: no
 
 ### Phase 35: Android Prerequisites — MGP & Zero-Touch Portal
@@ -252,7 +252,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 10/10 | Complete    | 2026-04-18 |
 | 33. v1.3 Gap Closure | v1.3 | 4/4 | Complete    | 2026-04-18 |
-| 34. Android Foundation | v1.4 | 0/TBD | Not started | - |
+| 34. Android Foundation | v1.4 | 3/5 | In Progress|  |
 | 35. Android Prerequisites — MGP & Zero-Touch Portal | v1.4 | 0/TBD | Not started | - |
 | 36. Fully Managed COBO Admin | v1.4 | 0/TBD | Not started | - |
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 0/TBD | Not started | - |
