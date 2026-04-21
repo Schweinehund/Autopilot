@@ -142,3 +142,11 @@ Play Integrity is Google's device-attestation API, successor to the SafetyNet At
 ---
 
 ## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-21 | Phase 34 Foundation: initial Android Enterprise glossary — 13 disambiguation entries (work profile, supervision as callout-only, user enrollment, dedicated, corporate identifiers, COBO, COPE, BYOD, DPC, Managed Google Play, afw#setup, WPCO, fully managed) + 6 Android-native terms (Zero-Touch Enrollment, Play Integrity, AMAPI, Managed Home Screen, Entra Shared Device Mode, EMM). Five category H2 sections per D-09. | — |
+| 2025-04 | AMAPI migration for BYOD work profile: custom OMA-URI profiles no longer supported; Wi-Fi requires certificate-based auth; Microsoft Intune app became primary BYOD management surface (replaces Company Portal as the DPC for BYOD). | — |
+| 2025-01 | SafetyNet Attestation API turned off by Google. Play Integrity API is the successor. Intune compliance UI now uses "Play Integrity Verdict" terminology — Basic / Basic + Device / Strong integrity levels. | — |
+| 2024-08 | Managed Google Play binding transitioned to Microsoft Entra account as the preferred method (replacing Gmail-only binding). | — |
+| 2023+ | COPE → WPCO terminology drift recorded. Google has NOT formally deprecated COPE; community shorthand incorrectly conflates "recommended-against" with "deprecated." Use "Google recommends WPCO" language in all glossary entries and downstream docs. | — |
