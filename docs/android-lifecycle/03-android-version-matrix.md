@@ -51,6 +51,7 @@ Each breakpoint below documents a Google-driven behavior change that materially 
 - [02-provisioning-methods.md](02-provisioning-methods.md) — per-method × per-mode version gating cells
 
 <a id="android-12-breakpoint"></a>
+<a id="android-12-corporate-identifiers"></a>
 ### Android 12 — IMEI / Serial Removed from Corporate Identifiers (BYOD only)
 
 **Affected modes:** BYOD Work Profile only. COBO, Dedicated, Zero-Touch Enrollment, and AOSP are unaffected.
