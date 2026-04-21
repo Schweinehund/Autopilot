@@ -19,8 +19,9 @@
      - Include the ## Renewal / Maintenance section in EVERY Android admin guide — MGP binding
        and ZT reseller relationship always have maintenance obligations. Do NOT delete this
        section (unlike iOS/macOS templates where it is optional).
-     - Do NOT link to docs/common-issues.md, docs/quick-ref-l1.md, docs/quick-ref-l2.md, or
-       docs/index.md (Android cross-platform navigation integration is deferred post-v1.4).
+     - Do NOT link to cross-platform navigation surfaces: the common-issues symptom
+       router, the L1 and L2 quick-reference cards, or the top-level docs index.
+       Android cross-platform navigation integration is deferred post-v1.4.
      Reviewer: Android Platform Lead (role, not person name)
 -->
 ---
@@ -109,3 +110,19 @@ platform: Android
 | [Setting X set to wrong value] | [Intune admin center \| Managed Google Play \| Zero-Touch portal] | [What admin or user sees, and in which portal the symptom manifests — often different from where the misconfiguration occurred] | [Runbook Title](../l1-runbooks/[runbook-filename].md) |
 | [Setting Y missing] | [Intune admin center \| Managed Google Play \| Zero-Touch portal] | [What happens] | [Runbook Title](../l1-runbooks/[runbook-filename].md) |
 | [Cross-portal example: MGP app approval missing] | Managed Google Play | App fails to install on target device; symptom visible in Intune admin center app-assignment status column | [MGP App Not Installed Runbook](../l1-runbooks/26-mgp-app-not-installed.md) |
+
+## Renewal / Maintenance
+
+| Component | Renewal Period | Consequence of Lapse | Renewal Steps |
+|-----------|----------------|----------------------|---------------|
+| Managed Google Play binding (Entra-backed) | [Verify tenant-specific; typically no expiry if Entra account remains active] | New app approvals and app distribution to enrolled devices stop; existing enrolled devices may continue to function until token refresh fails | Re-bind via Intune admin center > Devices > Android > Managed Google Play — see [01-managed-google-play.md](../admin-setup-android/01-managed-google-play.md) |
+| Enrollment profile tokens (QR / DPC identifier / COBO token) | [Configurable 1-65535 days; Intune default varies — verify per mode] | New enrollments using the token fail; existing enrolled devices unaffected | Regenerate token in Intune admin center > Devices > Android > Enrollment > [profile] |
+| Zero-Touch reseller contract | [Reseller-specific; typically annual] | New device IMEI / serial uploads from the reseller stop appearing in the Zero-Touch portal customer account; previously uploaded devices remain claimable | Contact reseller; re-verify the reseller relationship in the Zero-Touch portal customer admin view |
+
+## See Also
+
+- [Related Android admin guide](link — e.g., ../admin-setup-android/NN-other-mode.md)
+- [Android Enterprise Enrollment Overview](../android-lifecycle/00-enrollment-overview.md)
+- [Android Provisioning Methods](../android-lifecycle/02-provisioning-methods.md)
+- [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md)
+- [Android Enterprise Provisioning Glossary](../_glossary-android.md)
