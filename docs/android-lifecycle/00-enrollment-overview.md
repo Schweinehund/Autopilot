@@ -20,6 +20,14 @@ This guide describes all five Android Enterprise enrollment modes and establishe
 
 ## Enrollment Mode Comparison
 
+| Mode | Ownership Model | Management Scope | Provisioning Surface | Appropriate Use Case |
+|------|-----------------|------------------|----------------------|----------------------|
+| Zero-Touch Enrollment (ZTE) | Corporate-owned | Fully managed (or Dedicated via portal) | Zero-Touch portal + Intune (see [02-provisioning-methods.md#zero-touch](02-provisioning-methods.md#zero-touch)) | Corporate-scale automated enrollment via reseller; devices enroll on first boot |
+| Fully Managed (COBO) | Corporate-owned | Fully managed | QR, NFC, afw#setup, Zero-Touch (see [02-provisioning-methods.md#cobo](02-provisioning-methods.md#cobo)) | Corporate single-user device; maximum admin control; no personal profile |
+| BYOD Work Profile | Personally-owned | Work profile (containerized) | Company Portal (user-initiated) — see [02-provisioning-methods.md#byod-work-profile](02-provisioning-methods.md#byod-work-profile) | BYOD with data separation; user keeps personal side; admin sees only work-profile telemetry |
+| Dedicated (COSU) | Corporate-owned | Dedicated (COSU — locked kiosk) | QR, NFC, afw#setup, Zero-Touch (see [02-provisioning-methods.md#dedicated-cosu](02-provisioning-methods.md#dedicated-cosu)) | Kiosk, digital signage, shared shift devices with Managed Home Screen |
+| AOSP | Corporate-owned (specialty) | AOSP (unmanaged — no GMS) | QR only, OEM-gated, out-of-GMS — see [02-provisioning-methods.md#aosp](02-provisioning-methods.md#aosp) | AR/VR headsets, rugged specialty devices without Google Mobile Services (see Phase 39 stub) |
+
 ## Two Axes of Android Enterprise
 
 ## For Admins Familiar with iOS
