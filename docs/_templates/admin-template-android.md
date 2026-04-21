@@ -48,3 +48,50 @@ platform: Android
      > the portal where the misconfiguration was set].
      > See: [Runbook Title](../l1-runbooks/[filename].md)
 -->
+
+## Prerequisites
+
+- [Required admin role — e.g., Intune Administrator, Global Administrator for tenant-scoped MGP binding]
+- [Required license or subscription — e.g., Microsoft Intune Plan 1, Managed Google Play bound via Entra account (preferred since August 2024), Zero-Touch portal reseller relationship]
+- [Prior configuration that must be completed first — e.g., "Complete MGP binding (see 01-managed-google-play.md)" — link to that guide]
+- [Required portal access — specify which of Intune admin center / Managed Google Play / Zero-Touch portal the admin must have access to for this guide]
+
+## Steps
+
+### Step 1: [Configuration action]
+
+#### In Intune admin center
+
+1. Sign in to [Intune admin center](https://intune.microsoft.com).
+2. Navigate to **Devices** > **Android** > **Enrollment** > **[path]**.
+3. [Action].
+
+   > **What breaks if misconfigured:** [Consequence]. Symptom appears in: [portal where the admin or user notices the failure — often different from the portal where the misconfiguration was set].
+   > See: [Runbook Title](../l1-runbooks/[filename].md)
+
+#### In Managed Google Play
+
+1. Sign in to [Managed Google Play](https://play.google.com/work).
+2. Navigate to **[section]**.
+3. [Action].
+
+   > **What breaks if misconfigured:** [Consequence]. Symptom appears in: [often Intune admin center, even though the misconfiguration was made here].
+   > See: [Runbook Title](../l1-runbooks/[filename].md)
+
+<!-- Include the "In Zero-Touch portal" subsection ONLY if the guide covers
+     corporate Zero-Touch Enrollment, Fully Managed COBO via ZT, or Dedicated
+     via ZT. Delete this entire subsection for BYOD Work Profile and AOSP
+     admin guides (neither uses the Zero-Touch portal). -->
+
+#### In Zero-Touch portal
+
+1. Sign in to [Zero-Touch portal](https://enterprise.google.com/android/zero-touch/customers).
+2. Navigate to **[section]**.
+3. [Action].
+
+   > **What breaks if misconfigured:** [Consequence]. Symptom appears in: [portal].
+   > See: [Runbook Title](../l1-runbooks/[filename].md)
+
+### Step 2: [Next configuration action]
+
+[Repeat the tri-portal sub-section pattern per the rules above — include #### In Intune admin center and #### In Managed Google Play always; include #### In Zero-Touch portal only if applicable to this guide's mode.]
