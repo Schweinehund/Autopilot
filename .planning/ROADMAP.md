@@ -99,7 +99,12 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. A doc author opening `docs/_templates/admin-template-android.md` finds H4 sub-sections for Intune admin center, Managed Google Play, and Zero-Touch portal with guidance that ZT portal section is optional (omit for BYOD, AOSP) — ready to be copied into mode-specific admin guides
   4. An admin reading `docs/android-lifecycle/02-provisioning-methods.md` can identify for any given enrollment mode which of the four provisioning methods (NFC, QR, DPC identifier afw#setup, Zero-Touch) are supported and the Android version availability per method
   5. An admin reading `docs/android-lifecycle/03-android-version-matrix.md` can determine the minimum supported Android OS per mode and see explicit breakpoints for Android 11 (COPE NFC removal), Android 12 (IMEI/serial removal from corporate identifiers), and Android 15 (FRP hardening)
-**Plans**: TBD
+**Plans**: 5 plans (2 waves, all autonomous)
+  - [ ] 34-01-PLAN.md — docs/_glossary-android.md (AEBASE-01) — Wave 1
+  - [ ] 34-02-PLAN.md — docs/android-lifecycle/00-enrollment-overview.md (AEBASE-02) — Wave 1
+  - [ ] 34-03-PLAN.md — docs/android-lifecycle/02-provisioning-methods.md (AEBASE-03) — Wave 2 (depends on 34-01, 34-02)
+  - [ ] 34-04-PLAN.md — docs/android-lifecycle/03-android-version-matrix.md (AEBASE-04) — Wave 2 (depends on 34-01, 34-02)
+  - [ ] 34-05-PLAN.md — docs/_templates/admin-template-android.md (AEBASE-05) — Wave 1
 **UI hint**: no
 
 ### Phase 35: Android Prerequisites — MGP & Zero-Touch Portal
