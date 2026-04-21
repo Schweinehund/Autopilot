@@ -77,7 +77,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 ### v1.4 Android Enterprise Enrollment Documentation
 
-- [ ] **Phase 34: Android Foundation** - Glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and version-fragmentation matrix — the conceptual and structural anchors that all mode-specific content depends on
+- [x] **Phase 34: Android Foundation** - Glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and version-fragmentation matrix — the conceptual and structural anchors that all mode-specific content depends on (completed 2026-04-21)
 - [ ] **Phase 35: Android Prerequisites — MGP & Zero-Touch Portal** - Managed Google Play tenant binding and Zero-Touch portal configuration — the two hard gates that must exist before any GMS-based mode or ZTE admin guide can be authored
 - [ ] **Phase 36: Fully Managed COBO Admin** - Corporate-owned Fully Managed device admin setup with COPE migration note (Google recommends WPCO) and Android 15 FRP callout
 - [ ] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout
@@ -102,8 +102,8 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 **Plans**: 5 plans (2 waves, all autonomous)
   - [x] 34-01-PLAN.md — docs/_glossary-android.md (AEBASE-01) — Wave 1
   - [x] 34-02-PLAN.md — docs/android-lifecycle/00-enrollment-overview.md (AEBASE-02) — Wave 1
-  - [ ] 34-03-PLAN.md — docs/android-lifecycle/02-provisioning-methods.md (AEBASE-03) — Wave 2 (depends on 34-01, 34-02)
-  - [ ] 34-04-PLAN.md — docs/android-lifecycle/03-android-version-matrix.md (AEBASE-04) — Wave 2 (depends on 34-01, 34-02)
+  - [x] 34-03-PLAN.md — docs/android-lifecycle/02-provisioning-methods.md (AEBASE-03) — Wave 2 (depends on 34-01, 34-02)
+  - [x] 34-04-PLAN.md — docs/android-lifecycle/03-android-version-matrix.md (AEBASE-04) — Wave 2 (depends on 34-01, 34-02)
   - [x] 34-05-PLAN.md — docs/_templates/admin-template-android.md (AEBASE-05) — Wave 1
 **UI hint**: no
 
@@ -252,7 +252,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 31. iOS L2 Investigation | v1.3 | 7/7 | Complete    | 2026-04-17 |
 | 32. Navigation Integration & References | v1.3 | 10/10 | Complete    | 2026-04-18 |
 | 33. v1.3 Gap Closure | v1.3 | 4/4 | Complete    | 2026-04-18 |
-| 34. Android Foundation | v1.4 | 3/5 | In Progress|  |
+| 34. Android Foundation | v1.4 | 5/5 | Complete   | 2026-04-21 |
 | 35. Android Prerequisites — MGP & Zero-Touch Portal | v1.4 | 0/TBD | Not started | - |
 | 36. Fully Managed COBO Admin | v1.4 | 0/TBD | Not started | - |
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 0/TBD | Not started | - |
