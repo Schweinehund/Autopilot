@@ -95,3 +95,17 @@ platform: Android
 ### Step 2: [Next configuration action]
 
 [Repeat the tri-portal sub-section pattern per the rules above — include #### In Intune admin center and #### In Managed Google Play always; include #### In Zero-Touch portal only if applicable to this guide's mode.]
+
+## Verification
+
+- [ ] [How to confirm the configuration is correct in Intune admin center — specific Intune portal location, expected state]
+- [ ] [How to confirm the configuration is correct in Managed Google Play — specific MGP section, expected state]
+- [ ] [How to confirm the configuration is correct in Zero-Touch portal — specific ZT portal section, expected state — OMIT this checklist item if this guide does not use the Zero-Touch portal]
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Portal | Symptom | Runbook |
+|------------------|--------|---------|---------|
+| [Setting X set to wrong value] | [Intune admin center \| Managed Google Play \| Zero-Touch portal] | [What admin or user sees, and in which portal the symptom manifests — often different from where the misconfiguration occurred] | [Runbook Title](../l1-runbooks/[runbook-filename].md) |
+| [Setting Y missing] | [Intune admin center \| Managed Google Play \| Zero-Touch portal] | [What happens] | [Runbook Title](../l1-runbooks/[runbook-filename].md) |
+| [Cross-portal example: MGP app approval missing] | Managed Google Play | App fails to install on target device; symptom visible in Intune admin center app-assignment status column | [MGP App Not Installed Runbook](../l1-runbooks/26-mgp-app-not-installed.md) |
