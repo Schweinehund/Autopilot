@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 
 ## Current State
 
-**v1.3 shipped 2026-04-19.** Four milestones complete — 33 phases, 106 plans, 118 documentation files shipped across Windows Autopilot, macOS ADE, and iOS/iPadOS. v1.4 Android Enterprise enrollment documentation starting 2026-04-19 — mirrors v1.3 iOS shape (overview + admin + L1/L2), continuing phase numbering from Phase 34.
+**v1.3 shipped 2026-04-19.** Four milestones complete — 33 phases, 106 plans, 118 documentation files shipped across Windows Autopilot, macOS ADE, and iOS/iPadOS. v1.4 Android Enterprise enrollment documentation in progress — Phase 34 (Android Foundation) complete 2026-04-21, establishing canonical glossary, enrollment overview, provisioning matrix, version matrix, and admin template for downstream Phases 35-42.
 
 ### What's been built
 - 118 markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, and iOS/iPadOS
@@ -108,6 +108,11 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ iOS/iPadOS configuration profiles guide (Wi-Fi, VPN, email, device restrictions with category-level supervised-only callouts, certificates, home screen layout) — Phase 28 / v1.3
 - ✓ iOS/iPadOS app deployment guide (VPP device/user licensing, LOB, Store apps; silent install supervised-only callouts; managed app status verification) — Phase 28 / v1.3
 - ✓ iOS/iPadOS compliance policy guide (OS version, jailbreak, passcode, CA timing, default compliance posture) — Phase 28 / v1.3
+- ✓ Android disambiguation glossary (13 colliding terms + 6 Android-native) with cross-platform callouts — Phase 34 / v1.4 (AEBASE-01)
+- ✓ Android enrollment path overview with two-axes framework (ownership × management scope) and iOS supervision analog bridge — Phase 34 / v1.4 (AEBASE-02)
+- ✓ Android provisioning-method × enrollment-mode matrix (NFC/QR/afw#setup/Zero-Touch across BYOD/Fully Managed/COPE/Dedicated/AOSP) — Phase 34 / v1.4 (AEBASE-03)
+- ✓ Android version fragmentation matrix with Android 11/12/15 breakpoint details — Phase 34 / v1.4 (AEBASE-04)
+- ✓ Tri-portal Android admin-guide template (Intune + Managed Google Play + Zero-Touch portal) — Phase 34 / v1.4 (AEBASE-05)
 
 ## Current Milestone: v1.4 Android Enterprise Enrollment Documentation
 
@@ -203,4 +208,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-19 — v1.4 Android Enterprise milestone started; scope trimmed via adversarial review (Knox ME / COPE full path / AOSP user-modes / cross-platform nav deferred)*
+*Last updated: 2026-04-21 — Phase 34 (Android Foundation) complete; AEBASE-01 through AEBASE-05 validated.*
