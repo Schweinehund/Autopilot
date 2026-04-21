@@ -117,7 +117,11 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. An admin following `docs/admin-setup-android/01-managed-google-play.md` can bind an Entra account (preferred since August 2024) from `endpoint.microsoft.com` (not `intune.microsoft.com`), and a what-breaks table explains the consequences of disconnecting the binding (all GMS modes broken, app assignments lost)
   4. An admin following `docs/admin-setup-android/02-zero-touch-portal.md` starts at Step 0 (authorized reseller relationship is a hard prerequisite — devices cannot be added to ZT portal without it), configures DPC extras JSON, links ZT to Intune, and reads the KME/ZT mutual-exclusion callout for Samsung devices
   5. Every what-breaks and mutual-exclusion callout on this phase's four docs is placed inline at the point of admin decision, not relegated to a footnote or separate "gotchas" section
-**Plans**: TBD
+**Plans**: 4 plans (2 waves, all autonomous)
+  - [ ] 35-01-PLAN.md — docs/android-lifecycle/01-android-prerequisites.md (AEPREQ-01) — Wave 1
+  - [ ] 35-02-PLAN.md — docs/admin-setup-android/00-overview.md (AEPREQ-02) — Wave 2
+  - [ ] 35-03-PLAN.md — docs/admin-setup-android/01-managed-google-play.md (AEPREQ-03) — Wave 2
+  - [ ] 35-04-PLAN.md — docs/admin-setup-android/02-zero-touch-portal.md (AEPREQ-04) — Wave 2
 **UI hint**: no
 
 ### Phase 36: Fully Managed COBO Admin
