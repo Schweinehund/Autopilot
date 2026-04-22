@@ -194,7 +194,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 ### Phase 41: Android L2 Investigation
 **Goal**: An L2 Desktop Engineering investigator can collect Android diagnostic logs using the three methods available (Company Portal logs, Microsoft Intune app logs, adb logcat) and follow 3 investigation runbooks covering enrollment failures, app install failures, and compliance/CA timing — with Play Integrity (not SafetyNet, deprecated January 2025) as the attestation reference, and adb commands clearly labeled with confidence markers where they come from community sources rather than official Microsoft Learn
-**Depends on**: Phase 40 (L1 runbooks exist; L2 investigation runbooks inherit L1 escalation framing); Phase 37 (BYOD enrollment investigation runbook 19 was introduced in BYOD phase — this phase expands with app-install + compliance runbooks)
+**Depends on**: Phase 40 (L1 runbooks exist; L2 investigation runbooks inherit L1 escalation framing); Phase 37 (BYOD admin guide anchors `#enrollment-restrictions`, `#work-profile-policy`, `#privacy-boundary` are runbook 19 cross-reference targets)
 **Requirements**: AEL2-01, AEL2-02, AEL2-03, AEL2-04, AEL2-05
 **Success Criteria** (what must be TRUE):
   1. An L2 engineer follows `docs/l2-runbooks/18-android-log-collection.md` to collect diagnostic data using any of three methods — Company Portal log upload, Microsoft Intune app logs, or adb logcat — with clear guidance on which method yields which data type, and any adb command not sourced from official Microsoft Learn carries an explicit confidence label (MEDIUM or LOW) and a last_verified date

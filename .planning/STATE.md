@@ -72,7 +72,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.3 decisions 
 
 - 9-phase structure (34-42) selected over 10+ phase split: Phase 39 combines ZTE admin + AOSP stub because both are independent of COBO/BYOD/Dedicated after Phase 35 and both have low plan-count surface (1 major doc each). Parallelizable during execution.
 - ZTE L1 runbook 27 lands in Phase 40 (with the other L1 runbooks), not Phase 39, to keep Phase 40 as the single L1 triage-tree-plus-runbooks aggregation phase (mirrors v1.3 Phase 30 shape).
-- L2 enrollment investigation runbook 19 is delivered in Phase 37 (BYOD) per REQUIREMENTS.md AEL2-02 pairing with BYOD work-profile enrollment failure; remaining L2 runbooks (18 log collection, 20 app install, 21 compliance) in Phase 41. This is a deliberate cross-phase split honoring research ARCHITECTURE.md dependency DAG.
+- All four L2 investigation runbooks (18, 19, 20, 21) are delivered in Phase 41 per REQUIREMENTS.md AEL2-01..AEL2-05 traceability and ARCHITECTURE.md Q8 DAG Phase 6 L2 grouping. The earlier Phase 37 runbook 19 claim misaligned with the DAG's own structure; corrected 2026-04-22.
 
 ### Pending Todos
 
