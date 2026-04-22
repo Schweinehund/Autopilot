@@ -149,7 +149,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   4. All BYOD content sourced from Microsoft Learn pages dated April 2025 or later — pre-April-2025 content is explicitly excluded, and any assertion derived from pre-migration sources is labeled with a confidence marker and last_verified date
   5. The admin guide and end-user guide are two distinct files with explicit audience callouts at the top — neither file tries to serve both audiences in one document
 **Plans**: 2 plans (3 waves total; 37-01 W0 anchor-verify + W1 admin doc + D-02 correction + W2 admin audit; 37-02 W0 admin-anchor dependency + W1 end-user doc + audit)
-  - [ ] 37-01-PLAN.md - docs/admin-setup-android/04-byod-work-profile.md + D-02 corrections (AEBYOD-01, AEBYOD-03) - Wave 1 (autonomous)
+  - [x] 37-01-PLAN.md - docs/admin-setup-android/04-byod-work-profile.md + D-02 corrections (AEBYOD-01, AEBYOD-03) - Wave 1 (autonomous)
   - [ ] 37-02-PLAN.md - docs/end-user-guides/android-work-profile-setup.md (AEBYOD-02) - Wave 2 (depends on 37-01 admin-doc anchors)
 **UI hint**: no
 
@@ -258,7 +258,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 34. Android Foundation | v1.4 | 5/5 | Complete    | 2026-04-21 |
 | 35. Android Prerequisites — MGP & Zero-Touch Portal | v1.4 | 4/4 | Complete    | 2026-04-22 |
 | 36. Fully Managed COBO Admin | v1.4 | 1/1 | Complete   | 2026-04-22 |
-| 37. BYOD Work Profile — Admin + End-User | v1.4 | 0/TBD | Not started | - |
+| 37. BYOD Work Profile — Admin + End-User | v1.4 | 1/2 | In Progress|  |
 | 38. Dedicated Devices Admin | v1.4 | 0/TBD | Not started | - |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 0/TBD | Not started | - |
 | 40. Android L1 Triage & Runbooks | v1.4 | 0/TBD | Not started | - |
