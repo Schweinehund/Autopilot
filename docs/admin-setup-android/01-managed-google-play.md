@@ -23,7 +23,7 @@ Binding is effectively one-way. Reversal is destructive — see [Disconnect Cons
 
 - [ ] **Microsoft Intune Plan 1** (or higher) with Intune Administrator role (or a custom RBAC role granting enrollment-management permissions)
 - [ ] **Microsoft Entra account** with corporate email and active mailbox (Entra preferred since August 2024 — see [Account Types](#account-types))
-- [ ] **Two or more Entra account owners recommended** (Google requires a minimum of two; the linked account cannot be changed without disconnecting)
+- [ ] **Two or more Entra account owners recommended** (Google recommends a minimum of two for redundancy; the linked account cannot be changed without disconnecting)
 - [ ] **Browser security zones aligned** — `portal.azure.com`, `play.google.com`, and `enterprise.google.com` must share one zone (see [What Breaks](#what-breaks))
 
 ## Account Types
