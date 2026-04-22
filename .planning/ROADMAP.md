@@ -80,7 +80,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 - [x] **Phase 34: Android Foundation** - Glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and version-fragmentation matrix — the conceptual and structural anchors that all mode-specific content depends on (completed 2026-04-21)
 - [x] **Phase 35: Android Prerequisites — MGP & Zero-Touch Portal** - Managed Google Play tenant binding and Zero-Touch portal configuration — the two hard gates that must exist before any GMS-based mode or ZTE admin guide can be authored (completed 2026-04-21)
 - [x] **Phase 36: Fully Managed COBO Admin** - Corporate-owned Fully Managed device admin setup with COPE migration note (Google recommends WPCO) and Android 15 FRP callout (completed 2026-04-22)
-- [ ] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout
+- [x] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout (completed 2026-04-22)
 - [ ] **Phase 38: Dedicated Devices Admin** - Kiosk/COSU admin setup with Managed Home Screen exit-PIN sync requirement, persona callouts, scenario overview, and Android 15 FRP callout
 - [x] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix (completed 2026-04-21)
 - [ ] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append
@@ -150,7 +150,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   5. The admin guide and end-user guide are two distinct files with explicit audience callouts at the top — neither file tries to serve both audiences in one document
 **Plans**: 2 plans (3 waves total; 37-01 W0 anchor-verify + W1 admin doc + D-02 correction + W2 admin audit; 37-02 W0 admin-anchor dependency + W1 end-user doc + audit)
   - [x] 37-01-PLAN.md - docs/admin-setup-android/04-byod-work-profile.md + D-02 corrections (AEBYOD-01, AEBYOD-03) - Wave 1 (autonomous)
-  - [ ] 37-02-PLAN.md - docs/end-user-guides/android-work-profile-setup.md (AEBYOD-02) - Wave 2 (depends on 37-01 admin-doc anchors)
+  - [x] 37-02-PLAN.md - docs/end-user-guides/android-work-profile-setup.md (AEBYOD-02) - Wave 2 (depends on 37-01 admin-doc anchors)
 **UI hint**: no
 
 ### Phase 38: Dedicated Devices Admin
@@ -258,7 +258,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 34. Android Foundation | v1.4 | 5/5 | Complete    | 2026-04-21 |
 | 35. Android Prerequisites — MGP & Zero-Touch Portal | v1.4 | 4/4 | Complete    | 2026-04-22 |
 | 36. Fully Managed COBO Admin | v1.4 | 1/1 | Complete   | 2026-04-22 |
-| 37. BYOD Work Profile — Admin + End-User | v1.4 | 1/2 | In Progress|  |
+| 37. BYOD Work Profile — Admin + End-User | v1.4 | 2/2 | Complete   | 2026-04-22 |
 | 38. Dedicated Devices Admin | v1.4 | 0/TBD | Not started | - |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 0/TBD | Not started | - |
 | 40. Android L1 Triage & Runbooks | v1.4 | 0/TBD | Not started | - |
