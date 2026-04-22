@@ -683,7 +683,7 @@ This is a 1-plan / 3-wave shape, not a multi-plan shape.
 | A4 | Phase 38 (Dedicated) adoption of Phase 36's `#enrollment-profile` and `#provisioning-method-choice` anchors will not require renaming them (Phase 36 publishes; Phase 38 consumes) | Cross-Reference Targets — consumer table | Phase 38 plan could demand different anchor names during its planning; Phase 36 anchors are a stability contract — if Phase 38 needs different names, Phase 36 doc must be amended, but this is unlikely given the names are descriptive |
 | A5 | The VALIDATION.md audit pattern is supported by the repo's existing audit conventions (precedent from other phases) | Validation Architecture | If no prior precedent exists, the plan may need to extend to include the VALIDATION.md creation itself as a deliverable; this was reflected in the Wave 0 task shape |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should Section 7 per-method subsections use H3 or H4 headings?**
    - What we know: admin-template-android.md uses H4 for in-portal sub-sections ("#### In Intune admin center"). But Section 7 per-method callouts are not tri-portal; they are content sub-grouping.

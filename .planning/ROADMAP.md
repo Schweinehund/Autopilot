@@ -134,7 +134,8 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. An admin reading the Android 15 FRP callout can configure Enterprise FRP (EFRP) via Intune policy before any device reset, and understands that FRP hardening on Android 15 breaks re-enrollment flows that worked on Android 13/14
   4. An admin reading the COBO guide understands Entra join behavior for Fully Managed devices (work profile is the entire device; no personal partition; Chrome tab used during COBO setup requires CA exclusion for Microsoft Intune cloud app)
   5. Every behavioral assertion in the COBO guide carries a version tag (minimum Android version, notable breakpoints), and the document has `last_verified` frontmatter so stale content is visible to audit
-**Plans**: TBD
+**Plans**: 1 plan (3 waves, autonomous)
+  - [ ] 36-01-PLAN.md — docs/admin-setup-android/03-fully-managed-cobo.md (AECOBO-01, AECOBO-02, AECOBO-03) — Wave 1 (W0 anchor-verify + W1 author + W2 audit)
 **UI hint**: no
 
 ### Phase 37: BYOD Work Profile — Admin + End-User
