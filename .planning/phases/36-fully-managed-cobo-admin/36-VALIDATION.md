@@ -2,8 +2,8 @@
 phase: 36
 slug: fully-managed-cobo-admin
 status: draft
-nyquist_compliant: false
-wave_0_complete: false
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-21
 ---
 
@@ -39,9 +39,9 @@ created: 2026-04-21
 
 | Req ID | Behavior | Audit Type | Automated Command | File Exists? | Status |
 |--------|----------|-----------|-------------------|-------------|--------|
-| AECOBO-01 | Doc covers 4 provisioning methods + enrollment profile + token + Entra join | content + grep | `grep -c -iE "^## " docs/admin-setup-android/03-fully-managed-cobo.md` ≥ 10 sections per D-11; `grep -iE "QR code\|NFC\|afw#setup\|Zero.Touch" docs/admin-setup-android/03-fully-managed-cobo.md` matches all four | ❌ W0 | ⬜ pending |
-| AECOBO-02 | COPE migration section uses "Google recommends WPCO"; avoids "COPE deprecated" | grep | `grep -c "recommends WPCO" docs/admin-setup-android/03-fully-managed-cobo.md` = 1 (per D-04); `grep -ciE "COPE deprecated\|deprecated COPE" docs/admin-setup-android/03-fully-managed-cobo.md` = 0 | ❌ W0 | ⬜ pending |
-| AECOBO-03 | Android 15 FRP callout + EFRP configuration steps | grep | `grep -iE "Android 15.*FRP\|EFRP\|Factory Reset Protection" docs/admin-setup-android/03-fully-managed-cobo.md` matches; `grep -iE "Enterprise.Factory.Reset.Protection" docs/admin-setup-android/03-fully-managed-cobo.md` matches | ❌ W0 | ⬜ pending |
+| AECOBO-01 | Doc covers 4 provisioning methods + enrollment profile + token + Entra join | content + grep | `grep -c -iE "^## " docs/admin-setup-android/03-fully-managed-cobo.md` ≥ 10 sections per D-11; `grep -iE "QR code\|NFC\|afw#setup\|Zero.Touch" docs/admin-setup-android/03-fully-managed-cobo.md` matches all four | ✅ green | ✅ green |
+| AECOBO-02 | COPE migration section uses "Google recommends WPCO"; avoids "COPE deprecated" | grep | `grep -c "recommends WPCO" docs/admin-setup-android/03-fully-managed-cobo.md` = 1 (per D-04); `grep -ciE "COPE deprecated\|deprecated COPE" docs/admin-setup-android/03-fully-managed-cobo.md` = 0 | ✅ green | ✅ green |
+| AECOBO-03 | Android 15 FRP callout + EFRP configuration steps | grep | `grep -iE "Android 15.*FRP\|EFRP\|Factory Reset Protection" docs/admin-setup-android/03-fully-managed-cobo.md` matches; `grep -iE "Enterprise.Factory.Reset.Protection" docs/admin-setup-android/03-fully-managed-cobo.md` matches | ✅ green | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -125,10 +125,10 @@ Each dimension has an automated command and a concrete pass criterion. These are
 
 ## Wave 0 Requirements
 
-- [ ] **`docs/admin-setup-android/03-fully-managed-cobo.md`** does not yet exist — will be created in Wave 1 task (this is expected W0 ❌)
-- [ ] **Cross-reference target verification** — run Dimension 5 audit pre-authoring to confirm all Phase 34/35 target anchors exist (research flag A1 assumption). Verified by researcher; re-verify at plan-time.
-- [ ] **Research-flag plan-time re-verification** — per CONTEXT D-15, re-verify the 4 research flags (COPE wording, token 65-year expiry, Android 15 EFRP Intune UI path, Chrome-tab CA exclusion navigation) against current sources before authoring. RESEARCH.md already carries initial verification; plan-time re-verification is a defensive check.
-- [ ] No framework install needed — pure shell audits.
+- [x] **`docs/admin-setup-android/03-fully-managed-cobo.md`** created in Wave 1 (Task 2). Final word count 3684 (target 2800-3800). All 12 D-10 anchors published as explicit `<a id>` tags.
+- [x] **Cross-reference target verification** — Verified 2026-04-21 (plan-time re-check): 11 explicit `<a id>` anchors + 9 H2/H3 auto-slug targets all resolve via the resilient check pattern in PLAN Task 1 Step 1.1. Targets: `03-android-version-matrix.md#cobo`, `#android-15-breakpoint`; `02-provisioning-methods.md#cobo`, `#afw-setup`, `#zero-touch`, H3 `### NFC`, H3 `### QR`; `_glossary-android.md#afw-setup` + H3 auto-slugs for Fully Managed/COPE/WPCO/Managed Google Play/Zero-Touch Enrollment/DPC/Play Integrity; `01-managed-google-play.md#bind-mgp` + H2 Account Types + H2 Disconnect Consequences; `02-zero-touch-portal.md#link-zt-to-intune`, `#dpc-extras-json`, `#kme-zt-mutual-exclusion`, `#step-0-reseller`.
+- [x] **Research-flag plan-time re-verification** — 2026-04-21: Flag 1 source `_glossary-android.md#cope` intact (H3 auto-slug confirmed); Flag 3 source `03-android-version-matrix.md#android-15-breakpoint` intact (line 67 explicit anchor confirmed); Flags 2/4 rely on MS Learn external sources already verified in RESEARCH.md 2026-04-21 (HIGH confidence). No drift detected in upstream repo sources.
+- [x] No framework install needed — pure shell audits.
 
 ---
 
@@ -144,11 +144,11 @@ Each dimension has an automated command and a concrete pass criterion. These are
 
 ## Validation Sign-Off
 
-- [ ] All 3 requirements (AECOBO-01/02/03) have automated audit commands in Phase Requirements → Audit Map
-- [ ] Sampling continuity: audits run per-task-commit (dimensions 2/3/6/8) and per-wave (full 8 dimensions)
-- [ ] Wave 0 covers all MISSING references (cross-reference verification pre-authoring)
-- [ ] No watch-mode flags (n/a — no test framework)
-- [ ] Feedback latency < 10s (all audits are grep/wc on one file)
-- [ ] `nyquist_compliant: true` set in frontmatter after Wave 1 authoring passes Wave-0 gate
+- [x] All 3 requirements (AECOBO-01/02/03) have automated audit commands in Phase Requirements → Audit Map
+- [x] Sampling continuity: audits run per-task-commit (dimensions 2/3/6/8) and per-wave (full 8 dimensions)
+- [x] Wave 0 covers all MISSING references (cross-reference verification pre-authoring)
+- [x] No watch-mode flags (n/a — no test framework)
+- [x] Feedback latency < 10s (all audits are grep/wc on one file)
+- [x] `nyquist_compliant: true` set in frontmatter after Wave 1 authoring passes Wave-0 gate
 
-**Approval:** pending
+**Approval:** 2026-04-21 — all 8 dimensions PASS. AECOBO-01/02/03 satisfied with grep evidence. Final word count 3684. 12 stable anchors published.
