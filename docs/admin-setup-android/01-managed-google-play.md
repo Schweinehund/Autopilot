@@ -117,7 +117,7 @@ After disconnect, app assignments, OEMConfig assignments, and LOB app availabili
 | Component | Renewal Period | Consequence of Lapse | Renewal Steps |
 |---|---|---|---|
 | Managed Google Play binding (Entra-backed) | No expiry while Entra account remains active | New app approvals and app distribution stop; existing enrolled devices continue until token refresh fails | Re-bind via Intune admin center > Devices > Android > Managed Google Play — see this guide |
-| Enrollment profile tokens (QR / DPC identifier / COBO token) | Configurable 1–65,535 days (GMS tokens can be set up to ~65 years) | New enrollments using the token fail; existing enrolled devices unaffected | Regenerate in Intune admin center > Devices > Android > Enrollment > [profile] |
+| Enrollment profile tokens (QR / DPC identifier / COBO token) | GMS token expiry configurable up to 65 years in the future (MS Learn: setup-fully-managed / setup-dedicated) | New enrollments using the token fail; existing enrolled devices unaffected | Regenerate in Intune admin center > Devices > Android > Enrollment > [profile] |
 
 ## See Also
 
