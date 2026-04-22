@@ -97,7 +97,7 @@ After binding completes:
 | Binding disconnected | All app assignments lost; OEMConfig assignments lost; LOB app availability lost instantly | **CRITICAL**: COBO broken; BYOD WP broken; Dedicated broken; ZTE-GMS-path broken; AOSP unaffected | Re-bind; reassign every app and configuration manually. See [Disconnect Consequences](#disconnect-consequences) before attempting. |
 | App assignment lost post-binding change | Apps disappear from managed device catalogs | Affects all modes that relied on the lost assignments | Re-approve apps in MGP; re-assign in Intune |
 | Google Workspace / G-Suite account used | Binding fails with opaque error | None — no binding created | Use Entra account (preferred) or consumer Gmail |
-| Consumer Gmail used (new binding post-August 2024) | Binding succeeds; Entra-preference path not taken | All GMS modes work but future migration required per v1.4.1 | See Also: "Binding migration for pre-August-2024 consumer Google/Gmail bindings — tracked for v1.4.1" (text-only stub, not hyperlink) |
+| Consumer Gmail used (new binding post-August 2024) | Binding succeeds; Entra-preference path not taken | All GMS modes work but future migration required per v1.4.1 | Binding continues to function; plan migration to an Entra-backed binding per v1.4.1 (See Also: binding migration for pre-August-2024 consumer Google/Gmail bindings, tracked for v1.4.1). |
 | Wrong portal URL used (`intune.microsoft.com`) | Redirect may loop or fail silently; browser security zone mismatch (portal.azure.com / play.google.com / enterprise.google.com must share one zone) | None — no binding created | Use `endpoint.microsoft.com`; follow the MS Learn browser-zone tip |
 
 ## Disconnect Consequences
