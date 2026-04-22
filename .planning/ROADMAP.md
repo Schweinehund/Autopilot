@@ -79,7 +79,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 - [x] **Phase 34: Android Foundation** - Glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and version-fragmentation matrix — the conceptual and structural anchors that all mode-specific content depends on (completed 2026-04-21)
 - [x] **Phase 35: Android Prerequisites — MGP & Zero-Touch Portal** - Managed Google Play tenant binding and Zero-Touch portal configuration — the two hard gates that must exist before any GMS-based mode or ZTE admin guide can be authored (completed 2026-04-21)
-- [ ] **Phase 36: Fully Managed COBO Admin** - Corporate-owned Fully Managed device admin setup with COPE migration note (Google recommends WPCO) and Android 15 FRP callout
+- [x] **Phase 36: Fully Managed COBO Admin** - Corporate-owned Fully Managed device admin setup with COPE migration note (Google recommends WPCO) and Android 15 FRP callout (completed 2026-04-22)
 - [ ] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout
 - [ ] **Phase 38: Dedicated Devices Admin** - Kiosk/COSU admin setup with Managed Home Screen exit-PIN sync requirement, persona callouts, scenario overview, and Android 15 FRP callout
 - [x] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix (completed 2026-04-21)
@@ -135,7 +135,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   4. An admin reading the COBO guide understands Entra join behavior for Fully Managed devices (work profile is the entire device; no personal partition; Chrome tab used during COBO setup requires CA exclusion for Microsoft Intune cloud app)
   5. Every behavioral assertion in the COBO guide carries a version tag (minimum Android version, notable breakpoints), and the document has `last_verified` frontmatter so stale content is visible to audit
 **Plans**: 1 plan (3 waves, autonomous)
-  - [ ] 36-01-PLAN.md — docs/admin-setup-android/03-fully-managed-cobo.md (AECOBO-01, AECOBO-02, AECOBO-03) — Wave 1 (W0 anchor-verify + W1 author + W2 audit)
+  - [x] 36-01-PLAN.md — docs/admin-setup-android/03-fully-managed-cobo.md (AECOBO-01, AECOBO-02, AECOBO-03) — Wave 1 (W0 anchor-verify + W1 author + W2 audit)
 **UI hint**: no
 
 ### Phase 37: BYOD Work Profile — Admin + End-User
@@ -255,7 +255,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 33. v1.3 Gap Closure | v1.3 | 4/4 | Complete    | 2026-04-18 |
 | 34. Android Foundation | v1.4 | 5/5 | Complete    | 2026-04-21 |
 | 35. Android Prerequisites — MGP & Zero-Touch Portal | v1.4 | 4/4 | Complete    | 2026-04-22 |
-| 36. Fully Managed COBO Admin | v1.4 | 0/TBD | Not started | - |
+| 36. Fully Managed COBO Admin | v1.4 | 1/1 | Complete   | 2026-04-22 |
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 0/TBD | Not started | - |
 | 38. Dedicated Devices Admin | v1.4 | 0/TBD | Not started | - |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 0/TBD | Not started | - |
