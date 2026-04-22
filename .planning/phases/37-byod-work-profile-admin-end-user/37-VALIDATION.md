@@ -1,7 +1,7 @@
 ---
 phase: 37
 slug: byod-work-profile-admin-end-user
-status: wave-2-complete
+status: wave-3-complete
 nyquist_compliant: true
 wave_0_complete: true
 created: 2026-04-22
@@ -473,3 +473,141 @@ Result: Match found. **STEP 7.7: PASS**
 ### Wave 3 Wave-0 Summary
 
 All 7 steps PASS. No upstream anchor is missing. End-user doc directory does not yet exist. Tone-calibration checklist recorded. DIM 9 and DIM 10 grep commands recorded verbatim. D-02 correction confirmed in STATE.md. **Task 8 (authoring) may proceed.**
+
+---
+
+## Wave 3 End-User-Doc Audit Log
+
+**Date:** 2026-04-22
+**Executor:** claude-sonnet-4-6
+**File audited:** docs/end-user-guides/android-work-profile-setup.md
+**Status:** ALL APPLICABLE DIMENSIONS PASS
+
+### DIM 1 — Mandatory-5 anchor presence
+
+**N/A** — D-06e states "No mandatory anchors locked at CONTEXT level" for the end-user doc. Phase 40 L1 runbook 23 may consume end-user doc anchors via natural heading slugs if it references the "If something goes wrong" section, but no explicit anchor lock is required by this phase.
+
+### DIM 2 — No forbidden terminology
+
+- `grep -ciE "safetynet"` → **0** (must be 0) ✓
+- `grep -ciE "supervision mode|supervised Android"` → **0** (must be 0) ✓
+- `grep -ciE "COPE deprecated"` → **0** (must be 0) ✓
+
+**DIM 2: PASS**
+
+### DIM 3 — Confidence markers
+
+**N/A** — D-10 explicitly scopes inline confidence markers to the admin doc only. Per PATTERNS.md line 495: "plain-language doc should not contain technical source-citation markers".
+
+Verified zero markers: `grep -cE '\[(HIGH|MEDIUM|LOW)...\]'` → **0** ✓
+
+**DIM 3: N/A (verified zero markers)**
+
+### DIM 4 — Version-tag substitute coverage
+
+End-user doc does not carry inline version tags (plain-language voice per D-06c). Android version awareness is present as plain-language statement:
+
+- Line 22: `**Android 8 or newer** (most phones from 2018 onward qualify)`
+
+This satisfies user-facing version awareness per D-07. Recorded as SUBSTITUTE coverage.
+
+**DIM 4: PASS (substitute coverage)**
+
+### DIM 5 — Cross-reference integrity
+
+End-user doc outbound links verified present AND targets confirmed to exist:
+
+| Link in end-user doc | Target verified |
+|---------------------|-----------------|
+| `_glossary-android.md#byod` | PASS — `### BYOD` heading at line 21 |
+| `admin-setup-android/04-byod-work-profile.md` | PASS — file exists (28143 bytes) |
+| `admin-setup-android/04-byod-work-profile.md#privacy-boundary` | PASS — `<a id="privacy-boundary">` present |
+
+**DIM 5: PASS**
+
+### DIM 6 — Frontmatter schema
+
+- `audience: end-user` (NEW enum value) ✓
+- `platform: Android` ✓
+- `applies_to: BYOD` ✓
+- `last_verified: 2026-04-22` ✓
+- `review_by: 2026-06-21` ✓ (60 days from last_verified)
+
+All 5 keys present and values compliant. `audience: end-user` is the first use of this enum value in the docs suite.
+
+**DIM 6: PASS**
+
+### DIM 7 — Length target [800, 1500]
+
+`wc -w docs/end-user-guides/android-work-profile-setup.md` → **1498** (target 800–1500) ✓
+
+**DIM 7: PASS**
+
+### DIM 8 — Shared-file modification guard
+
+`git diff --name-only HEAD~3 HEAD` output:
+- `.planning/ROADMAP.md` ✓ (D-02 correction from Phase 37-01 — allowed)
+- `.planning/phases/37-byod-work-profile-admin-end-user/37-VALIDATION.md` ✓ (Wave 3 logs — expected)
+- `docs/end-user-guides/android-work-profile-setup.md` ✓ (new file — expected)
+
+Zero forbidden shared files modified. Zero Phase 34/35/36 admin-setup-android files modified. Zero v1.0–v1.3 shared docs files modified.
+
+**DIM 8: PASS**
+
+### DIM 9 — D-09 SC2 admin-sidebar guardrail
+
+Command: `grep -E "Devices >|Apps >|> Enrollment|Intune admin center|endpoint.microsoft.com|intune.microsoft.com" docs/end-user-guides/android-work-profile-setup.md`
+
+Result: **0 lines** — no portal-navigation language anywhere in the end-user doc including the `## For IT helpdesk agents` sidebar. ✓
+
+**DIM 9: PASS (hard gate cleared)**
+
+### DIM 10 — D-04 sync contract (cross-file topic parity)
+
+**End-user doc side:**
+
+| Topic | Command | Count | Pass? |
+|-------|---------|-------|-------|
+| work profile data / work data | `grep -ciE "work profile data\|work data"` | **2** | ✓ |
+| personal apps / your apps | `grep -ciE "personal apps\|your apps\|your personal apps"` | **2** | ✓ |
+| personal data / your data / personal photos/files/messages | `grep -ciE "personal data\|your data\|personal (photos\|files\|messages)"` | **1** | ✓ |
+| location / where you are | `grep -ciE "location\|where you are"` | **2** | ✓ |
+
+**Admin doc side (re-verification from Phase 37-01 Task 6 DIM 10):**
+
+| Topic | Command | Count | Pass? |
+|-------|---------|-------|-------|
+| work profile data | `grep -ciE "work profile data"` | **1** | ✓ |
+| personal apps | `grep -ciE "personal apps"` | **6** | ✓ |
+| personal data | `grep -ciE "personal data"` | **2** | ✓ |
+| device location / location outside | `grep -ciE "device location\|location outside"` | **1** | ✓ |
+
+All 4 topics present on both sides of the sync contract. ✓
+
+**DIM 10: PASS**
+
+### AEBYOD-02 Requirement Match
+
+- `grep -iE "Company Portal|what your IT" docs/end-user-guides/android-work-profile-setup.md | wc -l` → **12** (must be ≥2) ✓
+- D-09 SC2 grep → **0** hits ✓
+
+Both conditions satisfied.
+
+**AEBYOD-02: PASS**
+
+### Wave 3 Summary
+
+All applicable VALIDATION.md dimensions PASS:
+- DIM 1: N/A (D-06e — no mandatory anchors for end-user doc)
+- DIM 2: PASS (zero SafetyNet, zero supervision-term, zero COPE-deprecated)
+- DIM 3: N/A (D-10 scope — zero confidence markers verified)
+- DIM 4: PASS (substitute coverage — "Android 8 or newer" plain-language statement)
+- DIM 5: PASS (all 3 outbound cross-links present and all 3 targets verified)
+- DIM 6: PASS (all 5 frontmatter keys; `audience: end-user` NEW enum verified)
+- DIM 7: PASS (1498 words — within [800, 1500])
+- DIM 8: PASS (only end-user doc + VALIDATION.md in diff; zero forbidden files)
+- DIM 9: PASS (zero portal-navigation hits — D-09 SC2 hard gate cleared)
+- DIM 10: PASS (all 4 D-04 topics on both admin and end-user docs)
+- AEBYOD-02: PASS (12 Company Portal/what-your-IT hits + zero D-09 hits)
+
+No blockers. Phase 37 is production-ready for `/gsd-verify-work`.
