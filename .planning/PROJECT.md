@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 
 ## Current State
 
-**v1.3 shipped 2026-04-19.** Four milestones complete — 33 phases, 106 plans, 118 documentation files shipped across Windows Autopilot, macOS ADE, and iOS/iPadOS. v1.4 Android Enterprise enrollment documentation in progress — Phase 34 (Android Foundation) complete 2026-04-21, establishing canonical glossary, enrollment overview, provisioning matrix, version matrix, and admin template for downstream Phases 35-42.
+**v1.3 shipped 2026-04-19.** Four milestones complete — 33 phases, 106 plans, 118 documentation files shipped across Windows Autopilot, macOS ADE, and iOS/iPadOS. v1.4 Android Enterprise enrollment documentation in progress — Phase 34 (Android Foundation) complete 2026-04-21 and Phase 35 (Android Prerequisites — MGP & Zero-Touch Portal) complete 2026-04-22, establishing canonical glossary, enrollment overview, provisioning/version matrices, admin template, tri-portal orientation, admin setup overview, Managed Google Play binding guide, and Zero-Touch portal admin guide for downstream Phases 36-42.
 
 ### What's been built
 - 118 markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, and iOS/iPadOS
@@ -113,6 +113,10 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ Android provisioning-method × enrollment-mode matrix (NFC/QR/afw#setup/Zero-Touch across BYOD/Fully Managed/COPE/Dedicated/AOSP) — Phase 34 / v1.4 (AEBASE-03)
 - ✓ Android version fragmentation matrix with Android 11/12/15 breakpoint details — Phase 34 / v1.4 (AEBASE-04)
 - ✓ Tri-portal Android admin-guide template (Intune + Managed Google Play + Zero-Touch portal) — Phase 34 / v1.4 (AEBASE-05)
+- ✓ Android prerequisites concept-only orientation doc (tri-portal surface, GMS-vs-AOSP split, Android 12+ corporate-identifier behavior) — Phase 35 / v1.4 (AEPREQ-01)
+- ✓ Android admin setup overview with 5-branch mermaid flowchart (COBO/BYOD/Dedicated/ZTE/AOSP) and per-path prerequisites checklists — Phase 35 / v1.4 (AEPREQ-02)
+- ✓ Managed Google Play binding admin guide with Entra-preferred dual-placement (Aug 2024), hybrid what-breaks table, and disconnect-consequences section — Phase 35 / v1.4 (AEPREQ-03)
+- ✓ Zero-Touch portal admin guide with Step 0 reseller gate, DPC extras JSON, ZT↔Intune linking (Methods A/B), and KME/ZT Samsung mutual-exclusion callout — Phase 35 / v1.4 (AEPREQ-04)
 
 ## Current Milestone: v1.4 Android Enterprise Enrollment Documentation
 
@@ -208,4 +212,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-21 — Phase 34 (Android Foundation) complete; AEBASE-01 through AEBASE-05 validated.*
+*Last updated: 2026-04-22 — Phase 35 (Android Prerequisites — MGP & Zero-Touch Portal) complete; AEPREQ-01 through AEPREQ-04 validated.*
