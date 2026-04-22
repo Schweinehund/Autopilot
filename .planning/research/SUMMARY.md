@@ -198,14 +198,13 @@ Phase numbering continues from v1.3. v1.4 begins at **Phase 34**.
 
 ---
 
-### Phase 37: BYOD Work Profile - Admin + End-User + L2
+### Phase 37: BYOD Work Profile - Admin + End-User
 
 **Rationale:** Three distinct documents across two audiences. Tier-inversion means end-user guide is a distinct file, not a section inside admin guide. AMAPI migration impact is the primary content risk - source only post-April-2025 MS Learn.
 
 **Delivers:**
 - docs/admin-setup-android/04-byod-work-profile.md - enrollment restrictions, work profile policy, data transfer controls, privacy boundary table, AMAPI migration callout
 - docs/end-user-guides/android-work-profile-setup.md - Company Portal install, work profile creation, what IT can/cannot see (plain language, no Intune portal steps)
-- docs/l2-runbooks/19-android-enrollment-investigation.md - work profile failure investigation
 
 **Avoids:** Pitfalls 6 (BYOD tier inversion), 8 (AMAPI migration), 3 (privacy boundary required)
 
