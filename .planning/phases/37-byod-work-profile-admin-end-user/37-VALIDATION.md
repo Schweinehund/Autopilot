@@ -389,3 +389,87 @@ Admin doc keyword presence (case-insensitive counts):
 All 10 dimensions PASS (DIM 9 N/A for admin doc). AEBYOD-01 and AEBYOD-03 confirmed. D-11 regex conformance confirmed (22 markers). No blockers. Admin doc is production-ready for Phase 37-02 PLAN (end-user guide authoring) and Phase 40/41 runbook cross-referencing.
 
 **Approval:** pending — Phase 37 executor to validate all 10 dimensions pass before `/gsd-verify-work` completes.
+
+---
+
+## Wave 3 End-User-Doc Wave-0 Log
+
+**Date:** 2026-04-22
+**Executor:** claude-sonnet-4-6
+**Plan:** 37-02 (Wave 0 pre-authoring dependency verification)
+**Status:** ALL CHECKS PASSED — proceeding to Task 8 (end-user doc authoring)
+
+### STEP 7.1 — Phase 37-01 Wave 1 admin doc existence
+
+Command: `ls -la docs/admin-setup-android/04-byod-work-profile.md`
+
+Result: File exists, 28143 bytes. **STEP 7.1: PASS**
+
+### STEP 7.2 — All 5 MANDATORY D-06 anchors present in admin doc
+
+Command: `for anchor in key-concepts amapi-migration enrollment-restrictions work-profile-policy privacy-boundary; do grep -q "id=\"$anchor\"" docs/admin-setup-android/04-byod-work-profile.md || echo "MISSING: $anchor"; done`
+
+| Anchor | Result |
+|--------|--------|
+| key-concepts | PASS |
+| amapi-migration | PASS |
+| enrollment-restrictions | PASS |
+| work-profile-policy | PASS |
+| privacy-boundary | PASS |
+
+Zero MISSING output. **STEP 7.2: PASS**
+
+### STEP 7.3 — Phase 34 glossary anchor for D-06d first-use parenthetical
+
+Command: `grep -qE "^### BYOD" docs/_glossary-android.md`
+
+Result: `### BYOD` heading present at line 21. Auto-slug `#byod` target confirmed. **STEP 7.3: PASS**
+
+### STEP 7.4 — `docs/end-user-guides/` directory does NOT yet exist
+
+Command: `ls docs/end-user-guides/android-work-profile-setup.md 2>/dev/null`
+
+Result: Not found — expected. This plan creates it. **STEP 7.4: PASS**
+
+### STEP 7.5 — VALIDATION.md Dimension 9 and Dimension 10 grep commands recorded verbatim
+
+**DIM 9 (D-09 SC2 admin-sidebar guardrail):**
+```bash
+grep -E "Devices >|Apps >|> Enrollment|Intune admin center|endpoint.microsoft.com|intune.microsoft.com" docs/end-user-guides/android-work-profile-setup.md
+# Expected: ZERO lines
+```
+
+**DIM 10 (D-04 sync contract):**
+```bash
+grep -iE "work profile data|work data" docs/end-user-guides/android-work-profile-setup.md           # >= 1
+grep -iE "personal apps|your apps|your personal apps" docs/end-user-guides/android-work-profile-setup.md  # >= 1
+grep -iE "personal data|your data|personal (photos|files|messages)" docs/end-user-guides/android-work-profile-setup.md  # >= 1
+grep -iE "location|where you are" docs/end-user-guides/android-work-profile-setup.md              # >= 1
+```
+
+**STEP 7.5: PASS** — Commands recorded verbatim for Task 9 use.
+
+### STEP 7.6 — Tone-calibration checklist for Task 8
+
+**iOS structural analog (08-user-enrollment.md lines 33-43 awareness — admin-voice):**
+The iOS privacy boundary section (lines 33-43) uses admin-voice: "Intune does not collect...", "MDM location commands are not available...", "No full-device passcode enforcement". End-user doc for Android BYOD MUST DIVERGE: use "Your IT team cannot see..." not "Intune does not collect...".
+
+**Tone signals to apply in Task 8:**
+- Numbered lists for step sequences (not admin-style section headings)
+- Bold `**UI element names**` (`**Company Portal**`, `**Sign In**`, `**Next**`, `**DONE**`)
+- "Your IT team" / "your organization" (NOT "the administrator" / "the tenant")
+- Short sentences; no jargon outside the admin sidebar section
+- No portal-navigation language anywhere in the doc (not even in `## For IT helpdesk agents` per D-09)
+- `## For IT helpdesk agents` is written as plain-English "what to verify" — policy-side checks only; reference admin doc for portal-step detail
+
+**STEP 7.6: PASS** — Tone checklist recorded; Task 8 MUST diverge from iOS admin-voice precedent.
+
+### STEP 7.7 — Phase 37-01 D-02 correction verified landed
+
+Command: `grep -q "All four L2 investigation runbooks (18, 19, 20, 21) are delivered in Phase 41" .planning/STATE.md`
+
+Result: Match found. **STEP 7.7: PASS**
+
+### Wave 3 Wave-0 Summary
+
+All 7 steps PASS. No upstream anchor is missing. End-user doc directory does not yet exist. Tone-calibration checklist recorded. DIM 9 and DIM 10 grep commands recorded verbatim. D-02 correction confirmed in STATE.md. **Task 8 (authoring) may proceed.**
