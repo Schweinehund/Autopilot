@@ -1,9 +1,9 @@
 ---
 phase: 37
 slug: byod-work-profile-admin-end-user
-status: draft
+status: wave-0-complete
 nyquist_compliant: false
-wave_0_complete: false
+wave_0_complete: true
 created: 2026-04-22
 ---
 
@@ -186,5 +186,83 @@ Wave 0 = pre-authoring verification to ensure all upstream references exist befo
 - [ ] No watch-mode flags (n/a — no test framework)
 - [ ] Feedback latency < 15s (all audits are grep/wc on two markdown files)
 - [ ] `nyquist_compliant: true` set in frontmatter after Wave 1 authoring passes Wave-0 gate
+
+---
+
+## Wave 0 Execution Log
+
+**Date:** 2026-04-22
+**Executor:** claude-sonnet-4-6
+**Status:** ALL CHECKS PASSED — proceeding to Wave 1 authoring
+
+### STEP 1.1 — Phase 34 glossary anchor integrity (6 anchors)
+
+| Anchor | Result | Line |
+|--------|--------|------|
+| #byod | PASS | line 21 (### BYOD auto-slug) |
+| #work-profile | PASS | line 69 (### Work Profile auto-slug) |
+| #managed-google-play | PASS | line 116 (### Managed Google Play auto-slug) |
+| #amapi | PASS | line 124 (### AMAPI auto-slug) |
+| #play-integrity | PASS | line 136 (### Play Integrity auto-slug) |
+| #fully-managed | PASS | line 59 (### Fully Managed auto-slug) |
+
+All 6 glossary anchors confirmed present via `grep -inE "^### (BYOD|Work Profile|Managed Google Play|AMAPI|Play Integrity|Fully Managed)$"`.
+
+### STEP 1.2 — Phase 35 MGP anchor integrity (3 anchors)
+
+| Anchor | Result |
+|--------|--------|
+| #bind-mgp | PASS (explicit `<a id="bind-mgp">`) |
+| #account-types | PASS (H2 auto-slug) |
+| #disconnect-consequences | PASS (H2 auto-slug) |
+
+### STEP 1.3 — Phase 36 COBO anchor integrity
+
+| Anchor | Result |
+|--------|--------|
+| 03-fully-managed-cobo.md#key-concepts | PASS (explicit `<a id="key-concepts">` at line 24) |
+
+### STEP 1.4 — Phase 34 BYOD row integrity
+
+| File | Result |
+|------|--------|
+| 03-android-version-matrix.md BYOD row | PASS |
+| 02-provisioning-methods.md BYOD row | PASS |
+
+### STEP 1.5 — Research-flag plan-time re-verification (D-17)
+
+| RF | Topic | Confidence Assignment |
+|----|-------|-----------------------|
+| RF-1 | BYOD minimum version: Android 8+ practical, Android 10+ for AMAPI web enrollment path | HIGH (MS Learn) + MEDIUM (techcommunity 4370417 for 10+ web enrollment) |
+| RF-2 | AMAPI web enrollment: opt-in Q1 2026 | MEDIUM (techcommunity blog 4370417, last_verified 2026-04-22) |
+| RF-3 | Wi-Fi cert-auth: SCEP/PKCS, EAP-TLS; username/password breaks post-AMAPI | HIGH (EAP types per MS Learn) + MEDIUM (break assertion per techcommunity 4370417) |
+| RF-4 | Management app: Microsoft Intune app post-AMAPI primary; Company Portal MAM-only; ADP hidden | MEDIUM (techcommunity blog 4370417) + HIGH (app names/IDs per MS Learn) |
+| RF-5 | Admin center path: Devices > Enrollment > Android tab > Device platform restriction; 3 UI settings map to 6 D-05b rows | HIGH (admin center path per MS Learn) + MEDIUM (calendar-no-separate-toggle) |
+| RF-6 | Entra MGP binding preferred August 2024+ | HIGH (MS Learn connect-managed-google-play) |
+| RF-7 | Top-5 error messages: HIGH for #1 "Can't create work profile", MEDIUM for #2-5 | HIGH/#1 + MEDIUM/#2-5 |
+| RF-8 | Privacy boundary rows: cannot-see rows (HIGH per Google AE Help + MS Learn) + can-see rows (HIGH per MS Learn MDM capabilities) | HIGH (both sides sourced from authoritative docs) |
+| RF-9 | App terminology: HIGH names + MEDIUM post-AMAPI role split | HIGH (app names/IDs) + MEDIUM (post-AMAPI role distinction) |
+
+### STEP 1.6 — D-02 correction target pre-verification
+
+| Target | Line Found | Status |
+|--------|-----------|--------|
+| STATE.md BEFORE text "runbook 19 is delivered in Phase 37" | Line 75 (no drift) | PASS — target confirmed at correct line |
+| research/SUMMARY.md BEFORE text "BYOD Work Profile - Admin + End-User + L2" | Line 201 (no drift) | PASS — target confirmed at correct line |
+| research/SUMMARY.md BEFORE bullet "19-android-enrollment-investigation.md" | Line 208 (no drift) | PASS — target confirmed at correct line |
+| ROADMAP.md BEFORE text "BYOD enrollment investigation runbook 19 was introduced" | Line 197 (NOTE: actual line is 197, not 195 as planned) | PASS — target found at line 197; Task 5 must target line 197 |
+
+**DRIFT NOTE:** ROADMAP.md correction target is at line 197, not line 195 as stated in the plan. The Edit tool will use the verbatim BEFORE string (not line number), so no adjustment needed for execution.
+
+### STEP 1.7 — Forbidden-path drift check (D-16)
+
+| Check | Result |
+|-------|--------|
+| docs/end-user-guides/ does not yet exist | PASS (directory not yet created — expected) |
+| docs/admin-setup-android/04-byod-work-profile.md does not yet exist | PASS (file not yet created — expected) |
+
+### Wave 0 Summary
+
+All 7 steps passed. No upstream anchor is missing. All 9 research flags have confidence assignments. D-02 correction targets confirmed at expected positions (ROADMAP.md target at line 197 — verbatim string match will handle regardless). No forbidden files exist yet. Proceeding to Wave 1 authoring (Tasks 2-5).
 
 **Approval:** pending — Phase 37 executor to validate all 10 dimensions pass before `/gsd-verify-work` completes.
