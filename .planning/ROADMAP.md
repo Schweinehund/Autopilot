@@ -148,7 +148,9 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. An admin reading the AMAPI migration callout in the BYOD admin guide understands: custom OMA-URI profiles for BYOD Work Profile were removed from Intune April 2025, Wi-Fi configuration now requires certificate-based authentication (username/password no longer works), and the management app changed from Company Portal to Microsoft Intune app
   4. All BYOD content sourced from Microsoft Learn pages dated April 2025 or later — pre-April-2025 content is explicitly excluded, and any assertion derived from pre-migration sources is labeled with a confidence marker and last_verified date
   5. The admin guide and end-user guide are two distinct files with explicit audience callouts at the top — neither file tries to serve both audiences in one document
-**Plans**: TBD
+**Plans**: 2 plans (3 waves total; 37-01 W0 anchor-verify + W1 admin doc + D-02 correction + W2 admin audit; 37-02 W0 admin-anchor dependency + W1 end-user doc + audit)
+  - [ ] 37-01-PLAN.md - docs/admin-setup-android/04-byod-work-profile.md + D-02 corrections (AEBYOD-01, AEBYOD-03) - Wave 1 (autonomous)
+  - [ ] 37-02-PLAN.md - docs/end-user-guides/android-work-profile-setup.md (AEBYOD-02) - Wave 2 (depends on 37-01 admin-doc anchors)
 **UI hint**: no
 
 ### Phase 38: Dedicated Devices Admin
