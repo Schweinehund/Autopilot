@@ -184,7 +184,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   4. The AOSP stub passes a word-count / section-count scope-guard audit — stub size is bounded, not allowed to drift into de-facto full coverage without the review that v1.4.1 planning will enforce
   5. Neither ZTE nor AOSP content introduces L1/L2 runbooks in this phase (ZTE L1 runbook 27 lands in Phase 40; AOSP has no L1/L2 in v1.4 by explicit scope)
 **Plans**: 2 plans (Wave 1, both autonomous, parallelizable)
-  - [ ] 39-01-PLAN.md — docs/admin-setup-android/02-zero-touch-portal.md (AEZTE-01) — Wave 1 (append ## Corporate-Scale Operations H2 block per D-01)
+  - [x] 39-01-PLAN.md — docs/admin-setup-android/02-zero-touch-portal.md (AEZTE-01) — Wave 1 (append ## Corporate-Scale Operations H2 block per D-01)
   - [x] 39-02-PLAN.md — docs/admin-setup-android/06-aosp-stub.md (AEAOSP-01) — Wave 1 (new AOSP stub per D-07..D-14, D-21 with D-11 9-H2 whitelist)
 **UI hint**: no
 
@@ -269,7 +269,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 36. Fully Managed COBO Admin | v1.4 | 1/1 | Complete   | 2026-04-22 |
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 2/2 | Complete   | 2026-04-22 |
 | 38. Dedicated Devices Admin | v1.4 | 1/1 | Complete   | 2026-04-23 |
-| 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 1/2 | In Progress|  |
+| 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete   | 2026-04-23 |
 | 40. Android L1 Triage & Runbooks | v1.4 | 0/TBD | Not started | - |
 | 41. Android L2 Investigation | v1.4 | 0/TBD | Not started | - |
 | 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |

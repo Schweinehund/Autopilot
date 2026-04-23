@@ -54,7 +54,7 @@ Kiosk/COSU dedicated device mode with Managed Home Screen configuration and pers
 
 Zero-Touch corporate-scale enrollment (ADE-equivalent) admin guide building on the Phase 35 ZT portal doc.
 
-- [ ] **AEZTE-01**: Intune admin can deploy Zero-Touch Enrollment with mode-specific admin content (extending the Phase 35 ZT portal doc) — reseller-upload handoff, device claim workflow, profile assignment, dual-SIM IMEI 1 note, and KME/ZT mutual-exclusion callout
+- [x] **AEZTE-01**: Intune admin can deploy Zero-Touch Enrollment with mode-specific admin content (extending the Phase 35 ZT portal doc) — reseller-upload handoff, device claim workflow, profile assignment, dual-SIM IMEI 1 note, and KME/ZT mutual-exclusion callout
 
 ### AOSP Stub (AEAOSP)
 
@@ -173,7 +173,7 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEDED-01 | Phase 38 | Pending |
 | AEDED-02 | Phase 38 | Pending |
 | AEDED-03 | Phase 38 | Pending |
-| AEZTE-01 | Phase 39 | Pending |
+| AEZTE-01 | Phase 39 | Complete |
 | AEAOSP-01 | Phase 39 | Complete |
 | AEL1-01 | Phase 40 | Pending |
 | AEL1-02 | Phase 40 | Pending |
