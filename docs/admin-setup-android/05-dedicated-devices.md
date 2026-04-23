@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-22
-review_by: 2026-06-21
+last_verified: 2026-04-23
+review_by: 2026-06-22
 audience: admin
 platform: Android
 applies_to: Dedicated
@@ -17,7 +17,7 @@ applies_to: Dedicated
 
 This guide covers Dedicated (kiosk/COSU) device enrollment through Microsoft Intune: the four Dedicated scenarios, enrollment profile creation with Dedicated-specific deltas, token lifecycle and QR rotation discipline, all four provisioning methods with constraint callouts, MHS exit-kiosk PIN synchronization, and Android 15 FRP re-provisioning behavior for kiosk fleets.
 
-**How to use:** Intune administrators read linearly. L1 Service Desk and L2 Desktop Engineering use the Phase 40 and Phase 41 runbooks (not this guide). LOB Operations Owners read [Audience and stakeholders](#audience-and-stakeholders) for the persona-specific responsibilities.
+**How to use:** Intune administrators read linearly. L1 Service Desk uses the [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks) (Phase 40, now shipped): [22: Enrollment Blocked](../l1-runbooks/22-android-enrollment-blocked.md), [24: Device Not Enrolled](../l1-runbooks/24-android-device-not-enrolled.md), [25: Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md), [26: MGP App Not Installed](../l1-runbooks/26-android-mgp-app-not-installed.md). Note: Runbook 23 (Work Profile Not Created) is BYOD-exclusive and does not apply to Dedicated devices. L2 Desktop Engineering uses the Android L2 investigation runbooks (Phase 41 — not yet shipped). LOB Operations Owners read [Audience and stakeholders](#audience-and-stakeholders) for the persona-specific responsibilities.
 
 > **Platform note:** "Dedicated device" in Android Enterprise (COSU — Corporate-Owned, Single-Use) is single-purpose kiosk hardware with no per-user identity. This is structurally distinct from iOS Shared iPad (multi-user shared identity) and Windows Shared PC (multi-user fast-switch). For cross-platform comparison, see [Android dedicated device disambiguation](../_glossary-android.md#dedicated).
 
@@ -262,9 +262,9 @@ Inline what-breaks callouts appear at each decision point throughout this guide.
 
 ## For L1 helpdesk agents
 
-Per PITFALL 7 and the v1.4 Phase 40 triage tree boundary: **this section does NOT contain L1-executable steps for Dedicated devices.** Dedicated-device failures route to L2 or to the LOB Operations Owner (app-side / device-side issues L1 cannot resolve without Intune admin or business-owner escalation).
+Per PITFALL 7 and the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) triage boundary: **this section does NOT contain L1-executable steps for Dedicated devices.** Dedicated-device failures route to L2 or to the LOB Operations Owner (app-side / device-side issues L1 cannot resolve without Intune admin or business-owner escalation).
 
-L1 agents: confirm the device is Dedicated mode using the Phase 40 Android triage tree (when shipped). If Dedicated, route to L2 or to the LOB Operations Owner (see [Audience and stakeholders](#audience-and-stakeholders)).
+L1 agents: confirm the device is Dedicated mode using the [Android Triage Decision Tree](../decision-trees/08-android-triage.md). If Dedicated, route to L2 or to the LOB Operations Owner (see [Audience and stakeholders](#audience-and-stakeholders)).
 
 ## See Also
 
@@ -284,5 +284,6 @@ L1 agents: confirm the device is Dedicated mode using the Phase 40 Android triag
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Resolved Android L1 runbook cross-references | -- |
 | 2026-04-22 | Initial version — Dedicated (kiosk/COSU) admin guide: persona callout (D-01), 4-scenario overview (D-01 + D-13 + D-14), enrollment-profile deltas via D-03 hybrid, MHS exit-PIN synchronization H2 (D-02 / AEDED-02), Android 15 FRP and re-provisioning H2 (D-04 / AEDED-03), tri-portal provisioning methods with KME/ZT callout (D-11) and Phase 39 boundary note (D-15) | -- |
 

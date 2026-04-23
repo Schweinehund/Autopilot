@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-21
-review_by: 2026-06-20
+last_verified: 2026-04-23
+review_by: 2026-06-22
 audience: admin
 platform: Android
 applies_to: COBO
@@ -17,9 +17,9 @@ This guide walks an Intune administrator through creating and operating a Fully 
 
 **Covered:** Entra join + tenant-conditional Chrome-tab CA exclusion; COPE Migration Note reflecting Google's current WPCO direction; enrollment profile creation; enrollment token management (default no expiry; staging up to 65 years); all four provisioning methods (QR, NFC, `afw#setup`, Zero-Touch) with COBO-specific callouts; Android 15 FRP + EFRP configuration.
 
-**Not covered:** MGP binding mechanics (see [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp)); Zero-Touch portal mechanics (see [02-zero-touch-portal.md](02-zero-touch-portal.md)); corporate-scale ZTE including dual-SIM IMEI 1 (Phase 39); the canonical provisioning-method × mode matrix (see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md)); full COPE admin path (deferred v1.4.1); Knox Mobile Enrollment (deferred v1.4.1); COBO L1 runbook (Phase 40); COBO L2 investigation (Phase 41).
+**Not covered:** MGP binding mechanics (see [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp)); Zero-Touch portal mechanics (see [02-zero-touch-portal.md](02-zero-touch-portal.md)); corporate-scale ZTE including dual-SIM IMEI 1 (Phase 39); the canonical provisioning-method × mode matrix (see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md)); full COPE admin path (deferred v1.4.1); Knox Mobile Enrollment (deferred v1.4.1); COBO-applicable Android L1 Runbooks — see [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks): [22: Enrollment Blocked](../l1-runbooks/22-android-enrollment-blocked.md), [24: Device Not Enrolled](../l1-runbooks/24-android-device-not-enrolled.md), [25: Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md), [26: MGP App Not Installed](../l1-runbooks/26-android-mgp-app-not-installed.md); COBO L2 investigation (Phase 41).
 
-**How to use:** Intune administrators read linearly. L1 Service Desk and L2 Desktop Engineering use the Phase 40 and Phase 41 runbooks (not this guide).
+**How to use:** Intune administrators read linearly. L1 Service Desk uses the [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks) (Phase 40, now shipped). L2 Desktop Engineering uses the Android L2 investigation runbooks (Phase 41 — not yet shipped).
 
 <a id="key-concepts"></a>
 ## Key Concepts
@@ -246,4 +246,5 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Resolved Android L1 runbook cross-references | -- |
 | 2026-04-21 | Initial version — COBO enrollment profile, token management, 4 provisioning methods (hybrid routing per D-01), COPE Migration Note (D-03), Android 15 FRP + EFRP configuration (D-05), Entra join + Chrome-tab CA exclusion (D-07), Key Concepts (D-08) | -- |
