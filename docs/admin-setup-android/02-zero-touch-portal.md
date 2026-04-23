@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-21
-review_by: 2026-06-20
+last_verified: 2026-04-23
+review_by: 2026-06-22
 audience: admin
 platform: Android
 applies_to: ZTE
@@ -125,6 +125,76 @@ For Samsung fleets, Knox Mobile Enrollment (KME) and Zero-Touch Enrollment are m
 
 **Phase 35 scope is ZT portal setup only.** The full KME/ZT device-claim callout, device-claim workflow, profile-assignment at scale, dual-SIM IMEI 1 registration, and reseller-upload handoff are Phase 39 scope and will be appended here. Full KME admin coverage is deferred to v1.4.1.
 
+<a id="corporate-scale-operations"></a>
+## Corporate-Scale Operations
+
+Phase 35 covered single-tenant ZT portal setup. This section covers per-device-scale operations for fleets: reseller-upload handoff at purchase, device-claim workflow once devices appear in the portal, profile assignment at fleet scale (including the Method A/B scale implication), dual-SIM registration discipline, KME/ZT mutual exclusion at device-claim time, and the configuration-must-be-assigned requirement that prevents consumer-setup fallthrough.
+
+<a id="reseller-upload-handoff"></a>
+### Reseller-Upload Handoff Workflow
+
+Before the reseller uploads devices to the ZT system, confirm three items with them: (a) the corporate Google account (NOT Gmail) associated with your ZT customer portal, so uploaded devices appear under your tenancy; (b) the device-identifier type they will upload (IMEI / serial / MEID), noting that dual-SIM devices must register under IMEI 1 per [Dual-SIM IMEI 1 Registration](#dual-sim-imei-1) below; and (c) the expected device count, so you can reconcile against what appears in the portal.
+
+After upload, confirm back from the reseller: upload completion, device visibility in the ZT portal **Devices** view, and any rejected or invalid identifiers so you can correct the source list before re-upload.
+
+Google is the canonical reference for reseller-side mechanics. Do not document the reseller-side steps here; surface only what the Intune admin hands off and confirms.
+
+See [Google Zero-touch enrollment for IT admins](https://support.google.com/work/android/answer/7514005) for the reseller-facing workflow and the [authorized-reseller directory](https://androidenterprisepartners.withgoogle.com/resellers/). <!-- verify UI at execute time -->
+
+<a id="device-claim-workflow"></a>
+### Device Claim Workflow
+
+Once the reseller uploads devices, they appear in the ZT portal under **Devices**. Three decision points frame the claim workflow:
+
+1. **Which devices to claim now vs later** — claim only devices you are ready to enroll. Claimed devices surface in ZT configuration assignment; unclaimed devices remain in the reseller-uploaded pool without assignable configurations.
+2. **Which configuration to assign** — configurations are created under **Configurations** (Phase 35 scope — see [Link Zero-Touch to Intune](#link-zt-to-intune) for Method A vs Method B authoring). For non-COBO fleets (COPE or Dedicated), see [Profile Assignment at Scale](#profile-assignment) below regarding the Method A default-overrule caveat.
+3. **Per-device vs bulk assignment** — use bulk assignment via device selection lists for fleet operations; reserve per-device override for pilots or exceptions.
+
+Canonical UI walkthrough: [Google ZT customer-portal help](https://support.google.com/work/android/topic/9158960). <!-- verify UI at execute time -->
+
+> **What breaks if misconfigured:** Claiming devices into a Fully Managed configuration when the target mode was Dedicated or COPE causes devices to enroll as Fully Managed instead. Symptom: Intune admin center shows Fully Managed on devices intended for other modes. Recovery: unassign devices from the erroneous configuration and reassign under a correctly-authored Method B configuration.
+
+<a id="profile-assignment"></a>
+### Profile Assignment at Scale
+
+Fleet profile assignment must respect the Method A vs Method B choice documented in [Link Zero-Touch to Intune](#link-zt-to-intune):
+
+- **COBO (Fully Managed) fleets** — Method A (iframe in Intune admin center) is acceptable; the Fully Managed default is what you want.
+- **COPE, Dedicated, or mixed fleets at scale** — Method A is incorrect. Verbatim from Microsoft Learn: "Once you link your account, the default zero-touch configuration created in Intune overrules the default configuration profile set in the zero-touch enrollment portal." Use Method B (direct ZT portal configuration) so per-device configurations are not silently overridden by the Intune-created Fully Managed default.
+
+For fleets with mixed ownership modes, create separate configurations via Method B and assign each configuration to the appropriate device set under ZT portal **Devices**.
+
+> **What breaks if misconfigured:** A non-COBO fleet linked via Method A causes all devices to enroll as Fully Managed regardless of intended mode. Symptom: Dedicated-kiosk or COPE-intended devices boot as Fully Managed in the Intune admin center. Recovery: delete the Method-A-created configuration, re-author via Method B, and re-assign the device set.
+
+<a id="dual-sim-imei-1"></a>
+### Dual-SIM IMEI 1 Registration
+
+Dual-SIM devices expose two IMEI numbers — one per discrete modem. Google's guidance, verified against both canonical sources on 2026-04-23, is to register dual-SIM devices using the numerically lowest IMEI number. From [Google Zero-touch enrollment for IT admins](https://support.google.com/work/android/answer/7514005): "It's recommended for the resellers to register dual-SIM devices with the numerically lowest IMEI number." From [Google Developers Zero-touch known issues](https://developers.google.com/zero-touch/resources/known-issues): "prefer the numerically lowest IMEI number as zero-touch enrollment works more reliably with the lowest IMEI."
+
+For admin handoff (see [Reseller-Upload Handoff Workflow](#reseller-upload-handoff) above), flag dual-SIM devices to the reseller and confirm registration under IMEI 1 (numerically lowest).
+
+[MEDIUM: Google Developers and Google AE Help, last_verified 2026-04-23]
+
+<a id="kme-zt-device-claim"></a>
+### KME/ZT Mutual Exclusion — At Device Claim
+
+When claiming Samsung devices in the ZT portal, verify that the same device set is not also configured in Knox Mobile Enrollment (KME). Google's canonical failure mode, from [Google Zero-touch enrollment for IT admins](https://support.google.com/work/android/answer/7514005): "If a device is registered and configured in both Knox Mobile Enrollment and zero-touch, the device will enroll using Knox Mobile Enrollment."
+
+Concrete check at device-claim: before selecting Samsung devices under ZT portal **Devices**, query your KME portal for the same IMEI/serial list. If devices appear in both, either remove the KME configuration before ZT claim, or skip the ZT claim and manage via KME (Knox Mobile Enrollment full coverage is deferred to v1.4.1).
+
+For broader Samsung guidance including top-of-doc framing, see [KME/ZT Mutual Exclusion (Samsung)](#kme-zt-mutual-exclusion) above.
+
+> **What breaks if misconfigured:** Samsung devices claimed in both KME and ZT silently enroll via KME, ignoring the ZT configuration. Symptom: Intune admin center shows the devices but not enrolled via Zero-Touch; ZT portal shows the claim but no first-boot activity. Recovery: remove the KME configuration for the device set, then factory-reset affected devices.
+
+<a id="configuration-must-be-assigned"></a>
+### Configuration Must Be Assigned
+
+When you paste the DPC extras JSON (see [DPC Extras JSON Configuration](#dpc-extras-json) above, in Phase 35 scope), the configuration must also be **assigned** to the target device set in the ZT portal before first boot — otherwise devices fall through to the consumer Setup Wizard instead of the Intune DPC enrollment flow.
+
+Concrete admin action in the ZT portal: after creating a configuration under **Configurations** and pasting the DPC extras JSON, navigate to **Devices**, select the target device set, and explicitly assign the configuration. A configuration that exists but is not assigned to any device is inert.
+
+> **What breaks if misconfigured:** Configuration created but not assigned causes devices to boot into the consumer Setup Wizard instead of the Intune DPC (CloudDPC) enrollment flow. Symptom: devices arrive at user hands in consumer setup state; the Intune admin center shows no enrollment attempts. Recovery: assign the configuration to the correct device set in the ZT portal, then factory-reset and re-boot affected devices.
+
 ## Verification
 
 After ZT↔Intune linking:
@@ -132,7 +202,7 @@ After ZT↔Intune linking:
 - [ ] ZT portal shows the new configuration with EMM DPC app set to Microsoft Intune.
 - [ ] Intune admin center > Devices > By platform > Android > Device onboarding > Enrollment > Zero-touch enrollment shows the linked ZT account.
 - [ ] DPC extras JSON has the token substituted (no literal `YourEnrollmentToken` remains).
-- [ ] A test device from reseller-uploaded stock boots into the Intune DPC — Phase 39 covers device-claim testing at scale.
+- [ ] A test device from reseller-uploaded stock boots into the Intune DPC — see [Device Claim Workflow](#device-claim-workflow) for device-claim testing at scale.
 
 <a id="renewal-maintenance"></a>
 ## Renewal / Maintenance
@@ -156,3 +226,4 @@ After ZT↔Intune linking:
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-21 | Initial version (Phase 35 scope) — Step 0 reseller gate, ZT account creation, DPC extras JSON, ZT↔Intune linking (Methods A/B), KME/ZT Samsung mutual-exclusion. Phase 39 will append the device-claim workflow, profile-assignment at scale, dual-SIM IMEI 1 note, reseller-upload handoff, and full KME/ZT device-claim callout. | -- |
+| 2026-04-23 | Phase 39 append — `## Corporate-Scale Operations` H2 block (6 H3s): reseller-upload handoff, device-claim workflow, profile-assignment at scale (Method A default-overrule scale implication per RESEARCH.md Pitfall 5), dual-SIM IMEI 1 registration (MEDIUM marker per D-05 / D-20 citing Google AE Help and Google Developers known-issues), KME/ZT at device-claim (D-06 distinct from top-of-doc + link-step Phase 35 callouts), configuration-must-be-assigned (D-03 cross-link to `#dpc-extras-json`). Verification placeholder on line 135 resolved to `#device-claim-workflow` per D-01. 6 D-17 anchors published. D-22 append-only contract honored. | -- |
