@@ -60,7 +60,7 @@ Zero-Touch corporate-scale enrollment (ADE-equivalent) admin guide building on t
 
 Hard-scoped stub with OEM matrix and scope guard — full coverage deferred to v1.4.1.
 
-- [ ] **AEAOSP-01**: Intune admin can read an AOSP stub guide (`docs/admin-setup-android/06-aosp-stub.md`) with explicit scope callout ("stub in v1.4; full v1.4.1"), what AOSP is, when to use it, OEM matrix from MS Learn (RealWear confirmed GA), QR-only enrollment note, one-device-at-a-time note, Wi-Fi credential embedding requirement (RealWear-specific), and deferred-content table
+- [x] **AEAOSP-01**: Intune admin can read an AOSP stub guide (`docs/admin-setup-android/06-aosp-stub.md`) with explicit scope callout ("stub in v1.4; full v1.4.1"), what AOSP is, when to use it, OEM matrix from MS Learn (RealWear confirmed GA), QR-only enrollment note, one-device-at-a-time note, Wi-Fi credential embedding requirement (RealWear-specific), and deferred-content table
 
 ### L1 Triage and Runbooks (AEL1)
 
@@ -174,7 +174,7 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEDED-02 | Phase 38 | Pending |
 | AEDED-03 | Phase 38 | Pending |
 | AEZTE-01 | Phase 39 | Pending |
-| AEAOSP-01 | Phase 39 | Pending |
+| AEAOSP-01 | Phase 39 | Complete |
 | AEL1-01 | Phase 40 | Pending |
 | AEL1-02 | Phase 40 | Pending |
 | AEL1-03 | Phase 40 | Pending |
