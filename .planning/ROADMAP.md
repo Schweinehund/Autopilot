@@ -205,7 +205,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   - [x] 40-04-PLAN.md - docs/l1-runbooks/24-android-device-not-enrolled.md (AEL1-04) - Wave 1
   - [x] 40-05-PLAN.md - docs/l1-runbooks/25-android-compliance-blocked.md (AEL1-05, multi-cause 4 sub-H2, Play Integrity only) - Wave 1
   - [x] 40-06-PLAN.md - docs/l1-runbooks/26-android-mgp-app-not-installed.md (AEL1-06) - Wave 1
-  - [ ] 40-07-PLAN.md - docs/l1-runbooks/27-android-zte-enrollment-failed.md (AEL1-07, applies_to: ZTE, multi-cause + Phase 39 D-17 anchor cross-links) - Wave 1
+  - [x] 40-07-PLAN.md - docs/l1-runbooks/27-android-zte-enrollment-failed.md (AEL1-07, applies_to: ZTE, multi-cause + Phase 39 D-17 anchor cross-links) - Wave 1
   - [ ] 40-08-PLAN.md - docs/l1-runbooks/00-index.md append Android L1 Runbooks section (AEL1-08) - Wave 2 (depends on 40-01..40-07)
   - [ ] 40-09-PLAN.md - docs/decision-trees/00-initial-triage.md banner + Scenario Trees + See Also + last_verified bump (D-23/D-24) - Wave 2 (depends on 40-01)
   - [ ] 40-10-PLAN.md - Atomic retrofit across docs/admin-setup-android/{03-fully-managed-cobo, 04-byod-work-profile, 05-dedicated-devices}.md - 6 D-21 forward-promise instances resolved - Wave 2 (depends on 40-01..40-08; D-22 atomic commit)
@@ -280,6 +280,6 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 2/2 | Complete   | 2026-04-22 |
 | 38. Dedicated Devices Admin | v1.4 | 1/1 | Complete   | 2026-04-23 |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete    | 2026-04-23 |
-| 40. Android L1 Triage & Runbooks | v1.4 | 6/10 | In Progress|  |
+| 40. Android L1 Triage & Runbooks | v1.4 | 7/10 | In Progress|  |
 | 41. Android L2 Investigation | v1.4 | 0/TBD | Not started | - |
 | 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |
