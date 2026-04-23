@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-23
+review_by: 2026-07-22
 applies_to: APv1
 audience: L1
 ---
@@ -8,6 +8,7 @@ audience: L1
 > **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 > **macOS:** For macOS ADE troubleshooting, see [macOS ADE Triage](06-macos-triage.md).
 > **iOS/iPadOS:** For iOS/iPadOS troubleshooting, see [iOS Triage](07-ios-triage.md).
+> **Android:** For Android enrollment/compliance troubleshooting, see [Android Triage](08-android-triage.md).
 
 # Initial Triage Decision Tree
 
@@ -36,6 +37,7 @@ Use these links after this triage tree routes you to a specific scenario:
 - [TPM Attestation Tree](03-tpm-attestation.md) — [TPM](../_glossary.md#tpm) errors during pre-provisioning or self-deploying mode
 - [APv2 Device Preparation Triage](04-apv2-triage.md) — APv2 (Device Preparation) deployment failure routing
 - [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
+- [Android Triage](08-android-triage.md) — Android enrollment/compliance failure routing
 
 ## Decision Tree
 
@@ -117,6 +119,7 @@ graph TD
 
 - [APv2 Device Preparation Triage](04-apv2-triage.md) -- For APv2 (Device Preparation) deployment failures
 - [iOS Triage](07-ios-triage.md) -- iOS/iPadOS (Intune-managed) triage
+- [Android Triage](08-android-triage.md) -- Android enrollment/compliance triage
 - [macOS ADE Triage](06-macos-triage.md) -- macOS ADE (Intune-managed) deployment failures
 
 ---
@@ -127,11 +130,13 @@ graph TD
 - [TPM Attestation Tree](03-tpm-attestation.md)
 - [APv2 Device Preparation Triage](04-apv2-triage.md)
 - [iOS Triage](07-ios-triage.md)
+- [Android Triage](08-android-triage.md)
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Added Android banner + triage link (Scenario Trees, See Also, Version History) | -- |
 | 2026-04-17 | Added iOS/iPadOS triage cross-reference banner | -- |
 | 2026-04-14 | Added macOS ADE triage cross-reference banner | -- |
 | 2026-04-13 | Added APv2 triage tree cross-reference (restored after accidental revert) | -- |
