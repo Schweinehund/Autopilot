@@ -93,7 +93,7 @@ Only multi-app kiosk and digital signage scenarios use Managed Home Screen (MHS)
 
 Dedicated profile creation follows the same Intune flow as Fully Managed (COBO) — see [Phase 36 enrollment profile section](03-fully-managed-cobo.md#enrollment-profile) for the canonical step-by-step (Devices → Device onboarding → Enrollment → Android tab → Enrollment Profiles → Corporate-owned dedicated devices). The Dedicated-specific deltas below explain what differs.
 
-[MEDIUM: MS Learn setup-dedicated, last_verified 2026-04-22; Intune unified admin center may rename breadcrumbs]
+[MEDIUM: MS Learn setup dedicated, last_verified 2026-04-22]
 
 **Delta 1: Token type selection**
 
@@ -122,7 +122,7 @@ Cross-link to the multi-app row in [Scenarios](#scenarios). Forward-reference: t
 
 **Delta 4: Token expiry and QR rotation discipline**
 
-Dedicated tokens require a mandatory expiry date (configurable up to 65 years); there is no "never expires" option for Dedicated tokens, unlike COBO's Default token type which does not expire. [MEDIUM: no MS Learn statement on default; behavior inferred from UI field description, last_verified 2026-04-22]
+Dedicated tokens require a mandatory expiry date (configurable up to 65 years); there is no "never expires" option for Dedicated tokens, unlike COBO's Default token type which does not expire. [MEDIUM: no MS Learn statement on default, last_verified 2026-04-22]
 
 Token expiry rotation breaks any printed, laminated, or posted QR enrollment artifacts. When rotating tokens, generate a new QR and redistribute to all field locations before retiring the old token. Plan your rotation cadence to align with operational refresh windows — annual refresh batches are common for warehouse or retail kiosk fleets.
 
@@ -142,7 +142,7 @@ After the enrollment profile is created, Intune generates an enrollment token. A
 | Standard ("Corporate-owned dedicated device (default)") | Mandatory expiry date, configurable up to 65 years; no "never expires" option | Supported (static device group only) | Standard Dedicated scenarios: single-app, multi-app MHS, digital signage |
 | Corporate-owned dedicated device with Microsoft Entra ID shared mode | Mandatory expiry date, configurable up to 65 years | Supported (static device group only) | Multi-shift Entra shared device mode scenarios |
 
-[MEDIUM: no MS Learn statement on default; behavior inferred from UI field description, last_verified 2026-04-22]
+[MEDIUM: no MS Learn statement on default, last_verified 2026-04-22]
 
 For token lifecycle operations (Replace, Revoke, Export) — these are identical to COBO mechanics — see [Phase 36 enrollment token section](03-fully-managed-cobo.md#enrollment-token).
 
@@ -205,17 +205,17 @@ Both must be set to the same value. If the exit-kiosk PIN is set in only one pol
 
 > **Applies to Android 15+**
 >
-> ⚠️ Dedicated devices are typically re-provisioned (factory reset + re-enroll), not re-enrolled in place — describing FRP behavior during factory-reset re-provisioning is therefore distinct from COBO's re-enrollment-in-place context. On Android 15, FRP behavior depends on which reset pathway you use. [HIGH: MS Learn ref-corporate-methods, last_verified 2026-04-22]
+> ⚠️ Dedicated devices are typically re-provisioned (factory reset + re-enroll), not re-enrolled in place — describing FRP behavior during factory-reset re-provisioning is therefore distinct from COBO's re-enrollment-in-place context. On Android 15, FRP behavior depends on which reset pathway you use. [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 
-**Pathway 1 — Settings > Factory data reset:** No FRP triggered on Dedicated (COSU) devices. Safe for routine re-provisioning. This is materially different from COPE behavior, which has FRP on Settings reset. [HIGH: MS Learn ref-corporate-methods, last_verified 2026-04-22]
+**Pathway 1 — Settings > Factory data reset:** No FRP triggered on Dedicated (COSU) devices. Safe for routine re-provisioning. This is materially different from COPE behavior, which has FRP on Settings reset. [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 
 > **What breaks:** Relying on Settings reset for offline/abandoned devices is safe for FRP, but token expiry must still be valid at re-enrollment time. If the token has expired since the QR was printed, re-enrollment fails at token-exchange — see [Enrollment token § QR rotation discipline](#enrollment-token).
 
-**Pathway 2 — Recovery/bootloader reset:** FRP applies. Enterprise FRP (EFRP) pre-configuration is required to recover; otherwise Google account credential intervention with the pre-reset device-owner account is needed (HIGH recovery cost). [HIGH: MS Learn ref-corporate-methods, last_verified 2026-04-22]
+**Pathway 2 — Recovery/bootloader reset:** FRP applies. Enterprise FRP (EFRP) pre-configuration is required to recover; otherwise Google account credential intervention with the pre-reset device-owner account is needed (HIGH recovery cost). [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 
 > **What breaks:** Field-replacement workflow that uses recovery reset on Dedicated devices without EFRP pre-configured = device lockout requiring Google-account credential intervention. Recovery: configure EFRP per [Phase 36 EFRP configuration](03-fully-managed-cobo.md#configure-efrp) BEFORE provisioning the Dedicated fleet, not after.
 
-**Pathway 3 — Intune wipe:** No FRP. Cleanest re-provisioning pathway when the device is online and Intune-managed. [HIGH: MS Learn ref-corporate-methods, last_verified 2026-04-22]
+**Pathway 3 — Intune wipe:** No FRP. Cleanest re-provisioning pathway when the device is online and Intune-managed. [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 
 > **What breaks:** Requires the device to be online and Intune-managed at the moment of wipe; offline devices need Pathway 1 or 2.
 
