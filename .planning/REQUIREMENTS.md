@@ -69,7 +69,7 @@ Mode-first L1 decision tree plus 6 scenario runbooks (one shared with AEZTE).
 - [x] **AEL1-01**: L1 Service Desk agent can triage an Android enrollment/compliance symptom using a mode-first decision tree (`docs/decision-trees/08-android-triage.md`) that asks enrollment mode before symptom
 - [x] **AEL1-02**: L1 Service Desk agent can resolve an "Android enrollment blocked" ticket using a runbook with D-10 actor-boundary section and D-12 escalation packet (runbook 22)
 - [x] **AEL1-03**: L1 Service Desk agent can resolve a "Work profile not created" ticket using a runbook with D-10/D-12 sections (runbook 23)
-- [ ] **AEL1-04**: L1 Service Desk agent can resolve a "Device not enrolled" ticket using a runbook with D-10/D-12 sections (runbook 24)
+- [x] **AEL1-04**: L1 Service Desk agent can resolve a "Device not enrolled" ticket using a runbook with D-10/D-12 sections (runbook 24)
 - [ ] **AEL1-05**: L1 Service Desk agent can resolve a "Compliance access blocked" ticket using a runbook with D-10/D-12 sections (runbook 25)
 - [ ] **AEL1-06**: L1 Service Desk agent can resolve a "Managed Google Play app not installed" ticket using a runbook with D-10/D-12 sections (runbook 26)
 - [ ] **AEL1-07**: L1 Service Desk agent can resolve a "Zero-Touch enrollment failed" ticket using a runbook with D-10/D-12 sections (runbook 27)
@@ -178,7 +178,7 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEL1-01 | Phase 40 | Complete |
 | AEL1-02 | Phase 40 | Complete |
 | AEL1-03 | Phase 40 | Complete |
-| AEL1-04 | Phase 40 | Pending |
+| AEL1-04 | Phase 40 | Complete |
 | AEL1-05 | Phase 40 | Pending |
 | AEL1-06 | Phase 40 | Pending |
 | AEL1-07 | Phase 40 | Pending |
