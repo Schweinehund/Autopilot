@@ -198,7 +198,17 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. An L1 agent following any runbook can determine from the D-10 section whether the resolution requires admin action in Intune admin center, L1 action, or end-user action on the device — no ambiguity about actor boundaries
   4. `docs/l1-runbooks/00-index.md` has an appended Android section listing runbooks 22-27; the existing Windows / macOS / iOS sections are not modified (append-only constraint preserves all live anchors from prior milestones)
   5. Every L1 runbook carries `last_verified` frontmatter and references mode-specific admin guide paths that were stabilized in Phases 36-39 — no broken anchors across the phase boundary
-**Plans**: TBD
+**Plans**: 10 plans (2 waves, all autonomous)
+  - [x] 40-01-PLAN.md - docs/decision-trees/08-android-triage.md + docs/_templates/l1-template.md platform enum extension (AEL1-01) - Wave 1
+  - [ ] 40-02-PLAN.md - docs/l1-runbooks/22-android-enrollment-blocked.md (AEL1-02) - Wave 1
+  - [ ] 40-03-PLAN.md - docs/l1-runbooks/23-android-work-profile-not-created.md (AEL1-03, applies_to: BYOD) - Wave 1
+  - [ ] 40-04-PLAN.md - docs/l1-runbooks/24-android-device-not-enrolled.md (AEL1-04) - Wave 1
+  - [ ] 40-05-PLAN.md - docs/l1-runbooks/25-android-compliance-blocked.md (AEL1-05, multi-cause 4 sub-H2, Play Integrity only) - Wave 1
+  - [ ] 40-06-PLAN.md - docs/l1-runbooks/26-android-mgp-app-not-installed.md (AEL1-06) - Wave 1
+  - [ ] 40-07-PLAN.md - docs/l1-runbooks/27-android-zte-enrollment-failed.md (AEL1-07, applies_to: ZTE, multi-cause + Phase 39 D-17 anchor cross-links) - Wave 1
+  - [ ] 40-08-PLAN.md - docs/l1-runbooks/00-index.md append Android L1 Runbooks section (AEL1-08) - Wave 2 (depends on 40-01..40-07)
+  - [ ] 40-09-PLAN.md - docs/decision-trees/00-initial-triage.md banner + Scenario Trees + See Also + last_verified bump (D-23/D-24) - Wave 2 (depends on 40-01)
+  - [ ] 40-10-PLAN.md - Atomic retrofit across docs/admin-setup-android/{03-fully-managed-cobo, 04-byod-work-profile, 05-dedicated-devices}.md - 6 D-21 forward-promise instances resolved - Wave 2 (depends on 40-01..40-08; D-22 atomic commit)
 **UI hint**: no
 
 ### Phase 41: Android L2 Investigation
@@ -270,6 +280,6 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 2/2 | Complete   | 2026-04-22 |
 | 38. Dedicated Devices Admin | v1.4 | 1/1 | Complete   | 2026-04-23 |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete    | 2026-04-23 |
-| 40. Android L1 Triage & Runbooks | v1.4 | 0/TBD | Not started | - |
+| 40. Android L1 Triage & Runbooks | v1.4 | 1/10 | In Progress|  |
 | 41. Android L2 Investigation | v1.4 | 0/TBD | Not started | - |
 | 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |

@@ -66,7 +66,7 @@ Hard-scoped stub with OEM matrix and scope guard — full coverage deferred to v
 
 Mode-first L1 decision tree plus 6 scenario runbooks (one shared with AEZTE).
 
-- [ ] **AEL1-01**: L1 Service Desk agent can triage an Android enrollment/compliance symptom using a mode-first decision tree (`docs/decision-trees/08-android-triage.md`) that asks enrollment mode before symptom
+- [x] **AEL1-01**: L1 Service Desk agent can triage an Android enrollment/compliance symptom using a mode-first decision tree (`docs/decision-trees/08-android-triage.md`) that asks enrollment mode before symptom
 - [ ] **AEL1-02**: L1 Service Desk agent can resolve an "Android enrollment blocked" ticket using a runbook with D-10 actor-boundary section and D-12 escalation packet (runbook 22)
 - [ ] **AEL1-03**: L1 Service Desk agent can resolve a "Work profile not created" ticket using a runbook with D-10/D-12 sections (runbook 23)
 - [ ] **AEL1-04**: L1 Service Desk agent can resolve a "Device not enrolled" ticket using a runbook with D-10/D-12 sections (runbook 24)
@@ -175,7 +175,7 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEDED-03 | Phase 38 | Pending |
 | AEZTE-01 | Phase 39 | Complete |
 | AEAOSP-01 | Phase 39 | Complete |
-| AEL1-01 | Phase 40 | Pending |
+| AEL1-01 | Phase 40 | Complete |
 | AEL1-02 | Phase 40 | Pending |
 | AEL1-03 | Phase 40 | Pending |
 | AEL1-04 | Phase 40 | Pending |

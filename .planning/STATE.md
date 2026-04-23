@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Android Enterprise Enrollment Documentation
 status: executing
-stopped_at: Phase 40 context gathered
-last_updated: "2026-04-23T16:55:01.612Z"
+stopped_at: Completed 40-01-PLAN.md
+last_updated: "2026-04-23T17:56:55.333Z"
 last_activity: 2026-04-23
 progress:
   total_phases: 9
   completed_phases: 6
-  total_plans: 15
-  completed_plans: 15
-  percent: 100
+  total_plans: 25
+  completed_plans: 16
+  percent: 64
 ---
 
 # Project State
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-19)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering
-**Current focus:** Phase 39 — Zero-Touch Enrollment + AOSP Stub
+**Current focus:** Phase 40 — Android L1 Triage & Runbooks
 
 ## Current Position
 
-Phase: 40
-Plan: Not started
+Phase: 40 (Android L1 Triage & Runbooks) — EXECUTING
+Plan: 2 of 10
 Status: Ready to execute
 Last activity: 2026-04-23
 
@@ -74,6 +74,8 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.3 decisions 
 - ZTE L1 runbook 27 lands in Phase 40 (with the other L1 runbooks), not Phase 39, to keep Phase 40 as the single L1 triage-tree-plus-runbooks aggregation phase (mirrors v1.3 Phase 30 shape).
 - All four L2 investigation runbooks (18, 19, 20, 21) are delivered in Phase 41 per REQUIREMENTS.md AEL2-01..AEL2-05 traceability and ARCHITECTURE.md Q8 DAG Phase 6 L2 grouping. The earlier Phase 37 runbook 19 claim misaligned with the DAG's own structure; corrected 2026-04-22.
 - [Phase 39]: Phase 39-02: AOSP stub uses Intune Plan 1 baseline + Plan 2/Suite for advanced features with MEDIUM source marker (D-14 fallback) because per-OEM licensing matrix is still evolving; source-confidence marker labels must use space-separated words (not hyphenated slugs) to match Phase 37 D-11 regex [A-Za-z ]+ character class.
+- [Phase 40]: Mode-first root AND1 (D-01): Android deviates from iOS visibility-first; mode before symptom eliminates false-negative triage per ROADMAP SC #1
+- [Phase 40]: AOSP branch terminates at ANDE1 (escalate-L2 out of scope v1.4); Unknown/Can't-tell branch at ANDE2 — both per Phase 40 D-03/D-04
 
 ### Pending Todos
 
@@ -106,6 +108,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.3 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-23T16:55:01.602Z
-Stopped at: Phase 40 context gathered
+Last session: 2026-04-23T17:56:55.324Z
+Stopped at: Completed 40-01-PLAN.md
 Next action: Plan Phase 34 (Android Foundation) — `/gsd-plan-phase 34`
