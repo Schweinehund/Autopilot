@@ -203,7 +203,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   - [x] 40-02-PLAN.md - docs/l1-runbooks/22-android-enrollment-blocked.md (AEL1-02) - Wave 1
   - [x] 40-03-PLAN.md - docs/l1-runbooks/23-android-work-profile-not-created.md (AEL1-03, applies_to: BYOD) - Wave 1
   - [x] 40-04-PLAN.md - docs/l1-runbooks/24-android-device-not-enrolled.md (AEL1-04) - Wave 1
-  - [ ] 40-05-PLAN.md - docs/l1-runbooks/25-android-compliance-blocked.md (AEL1-05, multi-cause 4 sub-H2, Play Integrity only) - Wave 1
+  - [x] 40-05-PLAN.md - docs/l1-runbooks/25-android-compliance-blocked.md (AEL1-05, multi-cause 4 sub-H2, Play Integrity only) - Wave 1
   - [ ] 40-06-PLAN.md - docs/l1-runbooks/26-android-mgp-app-not-installed.md (AEL1-06) - Wave 1
   - [ ] 40-07-PLAN.md - docs/l1-runbooks/27-android-zte-enrollment-failed.md (AEL1-07, applies_to: ZTE, multi-cause + Phase 39 D-17 anchor cross-links) - Wave 1
   - [ ] 40-08-PLAN.md - docs/l1-runbooks/00-index.md append Android L1 Runbooks section (AEL1-08) - Wave 2 (depends on 40-01..40-07)
@@ -280,6 +280,6 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 2/2 | Complete   | 2026-04-22 |
 | 38. Dedicated Devices Admin | v1.4 | 1/1 | Complete   | 2026-04-23 |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete    | 2026-04-23 |
-| 40. Android L1 Triage & Runbooks | v1.4 | 4/10 | In Progress|  |
+| 40. Android L1 Triage & Runbooks | v1.4 | 5/10 | In Progress|  |
 | 41. Android L2 Investigation | v1.4 | 0/TBD | Not started | - |
 | 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |
