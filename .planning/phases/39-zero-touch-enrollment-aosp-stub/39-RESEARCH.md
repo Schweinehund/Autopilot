@@ -659,11 +659,11 @@ Every claim in this RESEARCH.md is tagged verified or cited or explicitly noted 
 - All 23 locked decisions D-01..D-23 from CONTEXT.md — these are user-decided, not researcher-assumed
 - All 6 verified MS Learn / Google canonical facts (AOSP OEM list, DPC extras JSON byte-match, dual-SIM IMEI 1 text, KME mutual-exclusion text, Method A default-config-overrule caveat, reseller-side punt) — these are VERIFIED per WebFetch 2026-04-23, not assumed
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-Residual research work that could not be closed in this session.
+Residual research work that could not be closed in this session. All three OQs have been RESOLVED as noted inline below per 2026-04-23 research verification; execution proceeds under the documented dispositions.
 
-### OQ-1: Dual-SIM IMEI 1 Confidence Level — MED (locked by D-05) vs HIGH (suggested by research)
+### OQ-1: Dual-SIM IMEI 1 Confidence Level — MED (locked by D-05) vs HIGH (suggested by research) — RESOLVED: honor D-05 MEDIUM; cite both Google canonical sources in marker text
 
 **What we know:**
 - D-05 locks the marker as `[MEDIUM: Google Developers Zero-touch known issues, last_verified YYYY-MM-DD]`.
@@ -683,7 +683,7 @@ Residual research work that could not be closed in this session.
 
 **Suggested planner default:** SAFE path — honor D-05 MEDIUM; include both source citations in the marker text. User can re-open if desired.
 
-### OQ-2: Intune Plan 2 / Suite Licensing for AOSP Enrollment Per OEM
+### OQ-2: Intune Plan 2 / Suite Licensing for AOSP Enrollment Per OEM — RESOLVED: 39-02 Task 1 Step 2 attempts plan-time re-verification; fallback is D-14 MEDIUM prose with inline marker
 
 **What we know:**
 - STATE.md flag + SUMMARY.md line 254 + D-14 all cite "Verify Intune Plan 2 / Suite requirement per OEM type before publishing enrollment guide with licensing notes."
@@ -702,7 +702,7 @@ Residual research work that could not be closed in this session.
 
 **Suggested planner default:** Include research-flag re-verification as an explicit W0 task in `39-02-PLAN.md` (per D-19 W0 = research-flag re-verification for AOSP stub). If W0 task finds authoritative answer, H2 body carries HIGH marker; if not, MED fallback.
 
-### OQ-3: Google AE Help Reseller Guide URL — answer/9040598 vs answer/7514005
+### OQ-3: Google AE Help Reseller Guide URL — answer/9040598 vs answer/7514005 — RESOLVED: use answer/7514005; answer/9040598 is 404 stale per 2026-04-23 verification
 
 **What we know:**
 - STATE.md Phase 39 research flag #5 + CONTEXT.md D-22 both cite `support.google.com/work/android/answer/9040598` as the "Google reseller guide."
