@@ -536,22 +536,21 @@ Regex verified: `\[(HIGH|MEDIUM|LOW)(: [A-Za-z ]+)?(, last_verified \d{4}-\d{2}-
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Does the Intune admin UI show "no expiry" as an option for Dedicated tokens?**
+All three questions below have actionable resolutions wired into the Phase 38 plan. Executor-time re-verification is captured by D-16 (research-flag verification protocol) and is non-blocking for plan creation. Each resolution path is the documented fallback if executor verification cannot reach a HIGH confidence verdict.
+
+1. **Does the Intune admin UI show "no expiry" as an option for Dedicated tokens?** **RESOLVED** — MEDIUM-confidence marker applied per CONTEXT D-09 default. Executor re-verifies at execute time per CONTEXT D-16 by navigating Devices → Enrollment → Android → Corporate-owned dedicated devices → Create profile in the live Intune tenant. If "no expiry" option exists, executor upgrades to HIGH; otherwise MEDIUM marker remains as the safe default. Plan Task 2 (D-09 deltas) carries the MEDIUM marker; Task 3 D-16 protocol records the executor finding.
    - What we know: MS Learn setup-dedicated only documents an expiry date field (up to 65 years); no "never expires" option documented.
    - What's unclear: Whether the Intune admin center UI shows a "no expiry" option that is simply not documented in MS Learn.
-   - Recommendation: Executor verify by navigating to Devices → Enrollment → Android → Corporate-owned dedicated devices → Create profile in the actual Intune tenant. If "no expiry" option exists, upgrade to HIGH confidence. If not, MEDIUM marker applies per D-09.
 
-2. **Is the MHS exit-PIN error string present in the current MHS app version?**
+2. **Is the MHS exit-PIN error string present in the current MHS app version?** **RESOLVED** — MEDIUM-confidence marker applied per CONTEXT D-12 (Flag 6: verbatim Intune error string). Executor re-verifies at execute time per D-16 by lab-testing a deliberate PIN mismatch if a test environment is available; otherwise MEDIUM marker remains and the assertion is flagged for 60-day review cycle per CONTEXT D-18 frontmatter. Plan Task 3 (D-02 H2) carries the MEDIUM marker on the verbatim error string.
    - What we know: Microsoft Q&A thread (2182159) confirmed the string "A PIN to exit kiosk mode has not been set by your IT admin" as of the thread date.
    - What's unclear: Whether recent MHS app updates changed the error string or made PIN configuration merge into a single location.
-   - Recommendation: Executor verify by testing in a lab dedicated device with deliberate PIN mismatch if a test environment is available. Otherwise, MEDIUM marker remains; flagged for 60-day review cycle.
 
-3. **Does the D-04 FRP table apply to ALL Dedicated devices or only Android 15 devices?**
-   - What we know: The MS Learn ref-corporate-methods table does NOT have Android 15 specificity on the Dedicated COSU row (unlike the COPE row). The D-04 section opens with "Applies to Android 15+" per CONTEXT D-04 design.
-   - What's unclear: Whether the Settings-reset-no-FRP behavior for Dedicated is baseline Android Enterprise behavior (not Android 15 specific) or only applies on Android 15.
-   - Recommendation: The D-04 section-level version tag "Applies to Android 15+" should be qualified: the 3-pathway table applies to all Dedicated devices enrolled in Android Enterprise; the Android 15 significance is that recovery/bootloader reset FRP behavior intensified (EFRP pre-configuration is now essential). Frame it as: "On Android 15, FRP behavior depends on which reset pathway you use — and the recovery/bootloader path now requires EFRP pre-configuration." The Settings-reset-no-FRP behavior exists on pre-Android-15 Dedicated devices too; it is not an Android 15 change.
+3. **Does the D-04 FRP table apply to ALL Dedicated devices or only Android 15 devices?** **RESOLVED** — D-04 section-level version-tag framing per CONTEXT D-04 + D-19 PITFALL 1 discipline: the 3-pathway table applies to all Dedicated devices enrolled in Android Enterprise; the Android 15 significance is the recovery/bootloader reset FRP intensification (EFRP pre-configuration is now essential). Plan Task 3 (D-04 H2) implements this with section-level "Applies to Android 15+" tag scoping the EFRP-pre-configuration requirement, while the baseline Settings-reset-no-FRP behavior is framed as pre-existing Android Enterprise behavior. Section opening blockquote per CONTEXT D-04 reads: "On Android 15, FRP behavior depends on which reset pathway you use — and the recovery/bootloader path now requires EFRP pre-configuration."
+   - What we know: The MS Learn ref-corporate-methods table does NOT have Android 15 specificity on the Dedicated COSU row (unlike the COPE row).
+   - Resolution: D-04 implementation distinguishes baseline behavior from the Android 15 change in the section opening; per-pathway content is covered by section-level version-tag scope per F-4A-02 Referee adjudication (CONTEXT.md `<specifics>` §F-4A-02).
 
 ---
 
