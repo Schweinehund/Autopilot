@@ -89,7 +89,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
  (completed 2026-04-23)
 - [x] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix
  (completed 2026-04-21)
-- [ ] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append
+- [x] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append (completed 2026-04-23)
 - [ ] **Phase 41: Android L2 Investigation** - Log-collection guide (Company Portal, Microsoft Intune app, adb logcat) + 3 investigation runbooks (enrollment, app install, compliance with Play Integrity) + L2 index append
 - [ ] **Phase 42: Integration & Milestone Audit** - Android capability matrix, index.md Android stub, macOS glossary see-also cross-reference, and milestone audit (SafetyNet grep, supervision-term grep, AOSP stub scope-guard, last_verified frontmatter scan, deferred-file modification check)
 
@@ -208,7 +208,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   - [x] 40-07-PLAN.md - docs/l1-runbooks/27-android-zte-enrollment-failed.md (AEL1-07, applies_to: ZTE, multi-cause + Phase 39 D-17 anchor cross-links) - Wave 1
   - [x] 40-08-PLAN.md - docs/l1-runbooks/00-index.md append Android L1 Runbooks section (AEL1-08) - Wave 2 (depends on 40-01..40-07)
   - [x] 40-09-PLAN.md - docs/decision-trees/00-initial-triage.md banner + Scenario Trees + See Also + last_verified bump (D-23/D-24) - Wave 2 (depends on 40-01)
-  - [ ] 40-10-PLAN.md - Atomic retrofit across docs/admin-setup-android/{03-fully-managed-cobo, 04-byod-work-profile, 05-dedicated-devices}.md - 6 D-21 forward-promise instances resolved - Wave 2 (depends on 40-01..40-08; D-22 atomic commit)
+  - [x] 40-10-PLAN.md - Atomic retrofit across docs/admin-setup-android/{03-fully-managed-cobo, 04-byod-work-profile, 05-dedicated-devices}.md - 6 D-21 forward-promise instances resolved - Wave 2 (depends on 40-01..40-08; D-22 atomic commit)
 **UI hint**: no
 
 ### Phase 41: Android L2 Investigation
@@ -280,6 +280,6 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 37. BYOD Work Profile — Admin + End-User | v1.4 | 2/2 | Complete   | 2026-04-22 |
 | 38. Dedicated Devices Admin | v1.4 | 1/1 | Complete   | 2026-04-23 |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete    | 2026-04-23 |
-| 40. Android L1 Triage & Runbooks | v1.4 | 9/10 | In Progress|  |
+| 40. Android L1 Triage & Runbooks | v1.4 | 10/10 | Complete   | 2026-04-23 |
 | 41. Android L2 Investigation | v1.4 | 0/TBD | Not started | - |
 | 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |
