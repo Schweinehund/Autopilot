@@ -77,12 +77,17 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 
 ### v1.4 Android Enterprise Enrollment Documentation
 
-- [x] **Phase 34: Android Foundation** - Glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and version-fragmentation matrix — the conceptual and structural anchors that all mode-specific content depends on (completed 2026-04-21)
-- [x] **Phase 35: Android Prerequisites — MGP & Zero-Touch Portal** - Managed Google Play tenant binding and Zero-Touch portal configuration — the two hard gates that must exist before any GMS-based mode or ZTE admin guide can be authored (completed 2026-04-21)
-- [x] **Phase 36: Fully Managed COBO Admin** - Corporate-owned Fully Managed device admin setup with COPE migration note (Google recommends WPCO) and Android 15 FRP callout (completed 2026-04-22)
-- [x] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout (completed 2026-04-22)
+- [x] **Phase 34: Android Foundation** - Glossary, tri-portal admin template, enrollment overview, provisioning-method matrix, and version-fragmentation matrix — the conceptual and structural anchors that all mode-specific content depends on
+ (completed 2026-04-21)
+- [x] **Phase 35: Android Prerequisites — MGP & Zero-Touch Portal** - Managed Google Play tenant binding and Zero-Touch portal configuration — the two hard gates that must exist before any GMS-based mode or ZTE admin guide can be authored
+ (completed 2026-04-21)
+- [x] **Phase 36: Fully Managed COBO Admin** - Corporate-owned Fully Managed device admin setup with COPE migration note (Google recommends WPCO) and Android 15 FRP callout
+ (completed 2026-04-22)
+- [x] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout
+ (completed 2026-04-22)
 - [ ] **Phase 38: Dedicated Devices Admin** - Kiosk/COSU admin setup with Managed Home Screen exit-PIN sync requirement, persona callouts, scenario overview, and Android 15 FRP callout
-- [x] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix (completed 2026-04-21)
+- [x] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix
+ (completed 2026-04-21)
 - [ ] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append
 - [ ] **Phase 41: Android L2 Investigation** - Log-collection guide (Company Portal, Microsoft Intune app, adb logcat) + 3 investigation runbooks (enrollment, app install, compliance with Play Integrity) + L2 index append
 - [ ] **Phase 42: Integration & Milestone Audit** - Android capability matrix, index.md Android stub, macOS glossary see-also cross-reference, and milestone audit (SafetyNet grep, supervision-term grep, AOSP stub scope-guard, last_verified frontmatter scan, deferred-file modification check)
@@ -163,7 +168,8 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. An admin reading the Android 15 FRP callout in the dedicated guide understands how FRP behaves during factory-reset re-provisioning for kiosk devices (distinct from COBO because dedicated devices are typically re-provisioned, not re-enrolled)
   4. The dedicated guide's provisioning-method section references the centralized `02-provisioning-methods.md` matrix (filtered row for dedicated mode) rather than duplicating the full 5x4 grid
   5. Entra shared device mode guidance distinguishes genuinely-shared devices (Entra identity) from multi-app kiosks (single device account) so admins do not misconfigure the scenario
-**Plans**: TBD
+**Plans**: 1 plan (3 waves total; 38-01 W0 anchor-stability prereq verify + W1 author 14-section doc with D-02/D-04 landmark sections + W2 AEAUDIT-04 audit)
+  - [ ] 38-01-PLAN.md — docs/admin-setup-android/05-dedicated-devices.md (AEDED-01, AEDED-02, AEDED-03) — Wave 1 (autonomous)
 **UI hint**: no
 
 ### Phase 39: Zero-Touch Enrollment + AOSP Stub
