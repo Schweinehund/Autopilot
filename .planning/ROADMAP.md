@@ -85,7 +85,8 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
  (completed 2026-04-22)
 - [x] **Phase 37: BYOD Work Profile — Admin + End-User** - Admin-side BYOD Work Profile policy guide + end-user self-service enrollment guide (tier-inverted: user-initiated via Company Portal) + AMAPI migration callout
  (completed 2026-04-22)
-- [x] **Phase 38: Dedicated Devices Admin** - Kiosk/COSU admin setup with Managed Home Screen exit-PIN sync requirement, persona callouts, scenario overview, and Android 15 FRP callout (completed 2026-04-23)
+- [x] **Phase 38: Dedicated Devices Admin** - Kiosk/COSU admin setup with Managed Home Screen exit-PIN sync requirement, persona callouts, scenario overview, and Android 15 FRP callout
+ (completed 2026-04-23)
 - [x] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix
  (completed 2026-04-21)
 - [ ] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append
@@ -182,7 +183,9 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. The AOSP stub contains: what AOSP is, when to use it (dedicated specialty hardware: RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest), OEM matrix from MS Learn with RealWear confirmed GA, QR-only enrollment note, one-device-at-a-time enrollment constraint, Wi-Fi credential embedding requirement (RealWear-specific), and a deferred-content table pointing to v1.4.1 targets
   4. The AOSP stub passes a word-count / section-count scope-guard audit — stub size is bounded, not allowed to drift into de-facto full coverage without the review that v1.4.1 planning will enforce
   5. Neither ZTE nor AOSP content introduces L1/L2 runbooks in this phase (ZTE L1 runbook 27 lands in Phase 40; AOSP has no L1/L2 in v1.4 by explicit scope)
-**Plans**: TBD
+**Plans**: 2 plans (Wave 1, both autonomous, parallelizable)
+  - [ ] 39-01-PLAN.md — docs/admin-setup-android/02-zero-touch-portal.md (AEZTE-01) — Wave 1 (append ## Corporate-Scale Operations H2 block per D-01)
+  - [ ] 39-02-PLAN.md — docs/admin-setup-android/06-aosp-stub.md (AEAOSP-01) — Wave 1 (new AOSP stub per D-07..D-14, D-21 with D-11 9-H2 whitelist)
 **UI hint**: no
 
 ### Phase 40: Android L1 Triage & Runbooks
