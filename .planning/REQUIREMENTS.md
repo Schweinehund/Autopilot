@@ -73,7 +73,7 @@ Mode-first L1 decision tree plus 6 scenario runbooks (one shared with AEZTE).
 - [x] **AEL1-05**: L1 Service Desk agent can resolve a "Compliance access blocked" ticket using a runbook with D-10/D-12 sections (runbook 25)
 - [x] **AEL1-06**: L1 Service Desk agent can resolve a "Managed Google Play app not installed" ticket using a runbook with D-10/D-12 sections (runbook 26)
 - [x] **AEL1-07**: L1 Service Desk agent can resolve a "Zero-Touch enrollment failed" ticket using a runbook with D-10/D-12 sections (runbook 27)
-- [ ] **AEL1-08**: L1 index (`docs/l1-runbooks/00-index.md`) has Android section appended with no modification to existing Windows/macOS/iOS sections
+- [x] **AEL1-08**: L1 index (`docs/l1-runbooks/00-index.md`) has Android section appended with no modification to existing Windows/macOS/iOS sections
 
 ### L2 Investigation (AEL2)
 
@@ -182,7 +182,7 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEL1-05 | Phase 40 | Complete |
 | AEL1-06 | Phase 40 | Complete |
 | AEL1-07 | Phase 40 | Complete |
-| AEL1-08 | Phase 40 | Pending |
+| AEL1-08 | Phase 40 | Complete |
 | AEL2-01 | Phase 41 | Pending |
 | AEL2-02 | Phase 41 | Pending |
 | AEL2-03 | Phase 41 | Pending |
