@@ -61,6 +61,21 @@ L1 runbooks for the six most common iOS/iPadOS enrollment and compliance failure
 
 > **MAM-WE Note:** iOS MAM without Enrollment (app protection policy failures, selective wipe failures, PIN loop, app protection not applying) is deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](../admin-setup-ios/09-mam-app-protection.md).
 
+## Android L1 Runbooks
+
+L1 runbooks for the six most common Android Enterprise enrollment and compliance failure scenarios. Start with the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) to identify the failure mode, then follow the matching runbook below. All runbooks include L1-executable portal-only steps and explicit escalation triggers to L2.
+
+| Runbook | Scenario | Applies To |
+|---------|----------|------------|
+| [22: Android Enrollment Blocked](22-android-enrollment-blocked.md) | Enrollment restriction / "device cannot enroll" error | All GMS modes |
+| [23: Android Work Profile Not Created](23-android-work-profile-not-created.md) | Work profile container never created after BYOD enrollment | BYOD only |
+| [24: Android Device Not Enrolled](24-android-device-not-enrolled.md) | Device never appeared in Intune (no restriction error) | All GMS modes |
+| [25: Android Compliance Blocked](25-android-compliance-blocked.md) | Non-compliant / Conditional Access blocking M365 access | All GMS modes |
+| [26: Android MGP App Not Installed](26-android-mgp-app-not-installed.md) | Managed Google Play app not delivered to device | All GMS modes |
+| [27: Android ZTE Enrollment Failed](27-android-zte-enrollment-failed.md) | Zero-Touch Enrollment did not initiate or stalled | ZTE only |
+
+> **AOSP Note:** No L1 runbook exists for AOSP (specialty hardware) failures — escalate to L2. AOSP L1 coverage is planned for v1.4.1. See [Android Triage](../decision-trees/08-android-triage.md) node ANDE1 for the escalation data checklist.
+
 ## Scope
 
 This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Preparation), macOS ADE, and iOS/iPadOS deployments. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
@@ -86,6 +101,7 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Added Android L1 Runbooks section (runbooks 22-27) | -- |
 | 2026-04-17 | Added iOS L1 runbook section (runbooks 16-21) | -- |
 | 2026-04-14 | Added macOS ADE runbook section | -- |
 | 2026-04-13 | Added APv2 runbook section (restored after accidental revert) | -- |
