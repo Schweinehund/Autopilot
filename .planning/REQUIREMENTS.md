@@ -83,7 +83,7 @@ L2 log-collection guide plus 3 investigation runbooks.
 - [ ] **AEL2-02**: L2 Desktop Engineering can investigate an Android work profile enrollment failure (`docs/l2-runbooks/19-android-enrollment-investigation.md`) with structured diagnostic steps
 - [ ] **AEL2-03**: L2 Desktop Engineering can investigate an Android app install failure (`docs/l2-runbooks/20-android-app-install-investigation.md`) covering Managed Google Play app states, license assignment, and MAM intersection
 - [ ] **AEL2-04**: L2 Desktop Engineering can investigate Android compliance and Conditional Access timing (`docs/l2-runbooks/21-android-compliance-investigation.md`) using Play Integrity verdicts (not SafetyNet — deprecated January 2025)
-- [ ] **AEL2-05**: L2 index (`docs/l2-runbooks/00-index.md`) has Android section appended with no modification to existing Windows/macOS/iOS sections
+- [x] **AEL2-05**: L2 index (`docs/l2-runbooks/00-index.md`) has Android section appended with no modification to existing Windows/macOS/iOS sections
 
 ### Integration and Audit (AEAUDIT)
 
@@ -187,7 +187,7 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEL2-02 | Phase 41 | Pending |
 | AEL2-03 | Phase 41 | Pending |
 | AEL2-04 | Phase 41 | Pending |
-| AEL2-05 | Phase 41 | Pending |
+| AEL2-05 | Phase 41 | Complete |
 | AEAUDIT-01 | Phase 42 | Pending |
 | AEAUDIT-02 | Phase 42 | Pending |
 | AEAUDIT-03 | Phase 42 | Pending |
