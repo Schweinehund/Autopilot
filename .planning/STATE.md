@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
 status: executing
-stopped_at: Completed 43-01-PLAN.md (rescue commit a868882)
-last_updated: "2026-04-24T20:24:46.208Z"
+stopped_at: Completed 43-02-PLAN.md (scaffold commit be1087b)
+last_updated: "2026-04-24T20:38:17.049Z"
 last_activity: 2026-04-24
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 10
-  completed_plans: 1
-  percent: 10
+  completed_plans: 2
+  percent: 20
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 43 (v1-4-cleanup-audit-harness-fix) — EXECUTING
-Plan: 2 of 10
+Plan: 3 of 10
 Status: Ready to execute
 Last activity: 2026-04-24
 
@@ -69,6 +69,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 - Sidecar migration: `.planning/phases/42-*/v1.4-audit-allowlist.json` → `scripts/validation/v1.4-audit-allowlist.json` (atomic same-commit with harness line 57 update; CI test that allow-list parses AND has >0 entries).
 - COPE ships as FULL admin guide (Path A confirmed 2026-04-24 against MS Learn `setup-corporate-work-profile` updated 2026-04-16; Intune UI label "Corporate-owned devices with work profile"; two GA token types; not deprecated; Google WPCO = terminology evolution, not product deprecation).
 - [Phase 43]: Plan 43-01 rescue commit a868882: FROZEN marker placed on line 2 (after shebang) rather than line 1 — Node ESM requires shebang on line 1; fix preserves D-02 intent (marker in lines 1-10) while keeping harness executable. Plan 43-02 cp-then-additive editing must drop FROZEN fragment from v1.4.1 copy (kept for v1.4 frozen-predecessor only).
+- [Phase 43]: Plan 43-02 scaffold commit be1087b: v1.4.1 harness = v1.4 copy + 6 additive edits (C6/C7/C9 informational-first, _*-prefix scope-filter, TEMPLATE-SENTINEL C5 parse). Sidecar skeleton 4+9+3. Phase 42 D-25 no-shared-module contract honored.
 
 ### Pending Todos
 
@@ -101,6 +102,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-24T20:24:33.319Z
-Stopped at: Completed 43-01-PLAN.md (rescue commit a868882)
+Last session: 2026-04-24T20:37:59.555Z
+Stopped at: Completed 43-02-PLAN.md (scaffold commit be1087b)
 Next action: `/gsd-plan-phase 43` (cleanup + audit harness fix — sidecar path + allow-list + freshness + AOSP stub prep)
