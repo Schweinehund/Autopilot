@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 
 ## Current State
 
-**v1.4 shipped 2026-04-24.** Five milestones complete — 42 phases, 146 plans, 143+ documentation files shipped across Windows Autopilot, macOS ADE, iOS/iPadOS, and Android Enterprise. v1.4 delivered 25 Android Enterprise docs: 13-term disambiguation glossary, 5-mode enrollment framework (COBO / BYOD Work Profile / Dedicated / ZTE / AOSP stub), tri-portal admin setup suite (Intune admin center + Managed Google Play + Zero-Touch portal), 6 L1 runbooks + L1 triage tree, 3 L2 investigation runbooks + log-collection guide, Android capability matrix with Cross-Platform Equivalences section (iOS Supervision↔Android Fully Managed, Apple ADE↔Google Zero-Touch, iOS User Enrollment↔Android Work Profile), reciprocal glossary see-also, and v1.4-MILESTONE-AUDIT.md produced via committed 5-check Node audit harness. Audit exited `tech_debt` (accepted) with 3 defer items routed to v1.4.1 (allow-list expansion + 60-day freshness normalization + AOSP stub re-validation). Next milestone candidates: v1.4.1 (deferred-items cleanup + Knox ME + full AOSP) or v1.5 (4-platform capability comparison + cross-platform nav unification).
+**v1.4 shipped 2026-04-24; v1.4.1 started 2026-04-24.** Five milestones complete — 42 phases, 146 plans, 143+ documentation files shipped across Windows Autopilot, macOS ADE, iOS/iPadOS, and Android Enterprise. v1.4 delivered 25 Android Enterprise docs: 13-term disambiguation glossary, 5-mode enrollment framework (COBO / BYOD Work Profile / Dedicated / ZTE / AOSP stub), tri-portal admin setup suite (Intune admin center + Managed Google Play + Zero-Touch portal), 6 L1 runbooks + L1 triage tree, 3 L2 investigation runbooks + log-collection guide, Android capability matrix with Cross-Platform Equivalences section (iOS Supervision↔Android Fully Managed, Apple ADE↔Google Zero-Touch, iOS User Enrollment↔Android Work Profile), reciprocal glossary see-also, and v1.4-MILESTONE-AUDIT.md produced via committed 5-check Node audit harness. Audit exited `tech_debt` (accepted) with defer items routed to v1.4.1. **v1.4.1 scope:** close all 6 v1.4 Android deferred items — DEFER-01 allow-list expansion, DEFER-02 60-day freshness normalization, DEFER-03 Phase 39 AOSP stub re-validation, DEFER-04 Knox Mobile Enrollment, DEFER-05 full AOSP per-OEM expansion (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest), DEFER-06 COPE full admin path — bringing Android to operational completeness parity with Windows/macOS/iOS. DEFER-07 cross-platform nav unification and DEFER-08 4-platform comparison doc deferred to v1.5.
 
 ### What's been built
 - 143+ markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise
@@ -137,27 +137,25 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ Android L1 scenario runbooks 22-27 (enrollment blocked, work profile not created, device not enrolled, compliance blocked, Managed Google Play app not installed, ZTE enrollment failed); Phase 30 D-10 sectioned actor-boundary + D-12 three-part escalation packet; runbooks 25 & 27 multi-cause with 4 sub-H2s each; Play Integrity only (zero SafetyNet); 60-day review cycle — Phase 40 / v1.4 (AEL1-02 through AEL1-07)
 - ✓ L1 index append-only Android section + 00-initial-triage.md Android banner (Mermaid graph unchanged) + atomic 3-file retrofit of Android admin guides resolving 6 forward-promise text instances — Phase 40 / v1.4 (AEL1-08)
 
-## Current Milestone: v1.4 Android Enterprise Enrollment Documentation
+## Current Milestone: v1.4.1 Android Enterprise Completion & v1.4 Cleanup
 
-**Goal:** Comprehensive Android Enterprise provisioning and management documentation through Microsoft Intune — covering Zero-Touch corporate enrollment, Fully Managed devices, BYOD Work Profile, kiosk/dedicated devices, and basic AOSP management — with tiered troubleshooting at parity with v1.0-v1.3 platform coverage.
+**Goal:** Close all v1.4 deferred items — complete Android Enterprise coverage (Knox Mobile Enrollment, full AOSP per-OEM, COPE full admin path) and harden v1.4 artifacts (audit allow-list expansion, 60-day freshness normalization, AOSP stub re-validation) — bringing Android to the operational completeness bar already held by Windows, macOS, and iOS/iPadOS.
 
 **Target features (in scope):**
-- Android Enterprise enrollment path overview + ownership/management axis (mirroring iOS supervision axis)
-- Android Enterprise prerequisites: Managed Google Play binding, tri-portal admin template (Intune + Managed Google Play + Zero-Touch portal)
-- Zero-Touch Enrollment (corporate ADE-equivalent) admin + L1/L2 content
-- Fully Managed device (COBO) admin + L1/L2 content, with COPE migration/deprecation note
-- BYOD Work Profile on Personally-Owned devices — admin + end-user self-service + L2 content (tier-inversion acknowledged)
-- Dedicated devices (kiosk/COSU) admin + L1/L2 content
-- AOSP device management — admin + triage (user-associated/userless covered as stub, full coverage deferred)
-- Android version fragmentation matrix (min OS per enrollment mode)
-- Provisioning-method axis matrix (NFC, QR, DPC identifier afw#setup, Zero-Touch)
 
-**Deferrals (tracked for future milestones):**
-- Knox Mobile Enrollment → defer to v1.4.1 (paid Knox license gating, Samsung-specific, velocity compression)
-- AOSP user-associated/userless full coverage → stub only in v1.4; full coverage v1.4.1 once OEM matrix firms
-- Cross-platform nav integration (backport Android into docs/index, common-issues, quick-refs) → post-v1.4 unification task to avoid v1.0-v1.3 regression
-- COPE full admin path → covered as migration/deprecation note inside COBO doc (Google trajectory is WPCO)
-- 4-platform comparison document → defer to v1.5 or standalone deliverable
+*Cleanup & hardening (v1.4 carry-forward):*
+- Audit allow-list expansion — grow `v1.4-audit-allowlist.json` pins from ~10 to ~37 for legitimate iOS-attributed supervision bridge-prose refs in `_glossary-android.md` + `android-capability-matrix.md` Cross-Platform Equivalences (DEFER-01)
+- `last_verified` 60-day freshness normalization — retroactively re-date L2 runbooks 18-21 from 90-day → 60-day cycle + normalize `admin-template-android.md` frontmatter (DEFER-02)
+- Phase 39 AOSP stub re-validation — body is ~1089 words vs. self-certified 600-900 envelope; decide trim vs. update envelope (DEFER-03)
+
+*New content (Android completeness):*
+- Knox Mobile Enrollment — dedicated Samsung admin guide + provisioning-method matrix row + L1/L2 content; paid Knox license tier + Samsung-specific scope + reciprocal KME↔Zero-Touch mutual-exclusion callout (DEFER-04)
+- Full AOSP per-OEM expansion — lift v1.4 hard-scoped stub into real coverage across RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest with OEM capability matrix and per-vendor provisioning caveats; PITFALL-7 "not supported under AOSP" framing preserved (DEFER-05)
+- COPE full admin path — full admin guide beyond the COBO migration-note callout, OR a deprecation-rationale doc if Google's WPCO trajectory has hardened by research/discuss-phase time (DEFER-06)
+
+**Deferrals (tracked for v1.5):**
+- Cross-platform nav integration — Android backport into `docs/index.md` + `common-issues.md` + `quick-ref-l1.md` + `quick-ref-l2.md` (DEFER-07, AENAVUNIFY-04) → v1.5
+- 4-platform capability comparison document (Windows + macOS + iOS + Android) → v1.5 (DEFER-08, AECOMPARE-01)
 
 ### Active
 
@@ -231,4 +229,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-23 — Phase 40 (Android L1 Triage & Runbooks) complete; AEL1-01 through AEL1-08 validated. 6 L1 runbooks + mode-first triage tree + L1 index append + 3-file atomic retrofit shipped. 3 human verification items deferred to future /gsd-verify-work (Mermaid rendering, L1 walkthrough, ZTE portal UI).*
+*Last updated: 2026-04-24 — v1.4 shipped (audit `tech_debt` accepted); v1.4.1 started to close all v1.4 Android deferred items (DEFER-01..06) and bring Android to operational-completeness parity with Windows/macOS/iOS. DEFER-07 nav unification and DEFER-08 4-platform comparison routed to v1.5.*
