@@ -89,10 +89,10 @@ L2 log-collection guide plus 3 investigation runbooks.
 
 Capability matrix, index.md stub, glossary cross-reference, and milestone audit.
 
-- [ ] **AEAUDIT-01**: Intune admin can read an Android capability matrix (`docs/reference/android-capability-matrix.md`) comparing modes by feature with cross-platform comparison column (supervision vs Android fully managed, ADE vs Zero-Touch, etc.)
-- [ ] **AEAUDIT-02**: Navigation hub (`docs/index.md`) has an Android stub section with "Choose Your Platform" entry and H2 pointing to android-lifecycle — existing Windows/macOS/iOS sections untouched
-- [ ] **AEAUDIT-03**: Cross-platform glossary (`docs/_glossary-macos.md`) has a 1-line see-also cross-reference to `_glossary-android.md` — no other modifications
-- [ ] **AEAUDIT-04**: Milestone audit passes all Android-specific checks: no SafetyNet references in Android docs (use Play Integrity), no "supervision" term used for Android (use "fully managed"), AOSP stub word-count within scope guard, no Android links in deferred shared files (common-issues.md, quick-ref-l1.md, quick-ref-l2.md), all Android docs have `last_verified` frontmatter
+- [x] **AEAUDIT-01**: Intune admin can read an Android capability matrix (`docs/reference/android-capability-matrix.md`) comparing modes by feature with cross-platform comparison column (supervision vs Android fully managed, ADE vs Zero-Touch, etc.)
+- [x] **AEAUDIT-02**: Navigation hub (`docs/index.md`) has an Android stub section with "Choose Your Platform" entry and H2 pointing to android-lifecycle — existing Windows/macOS/iOS sections untouched
+- [x] **AEAUDIT-03**: Cross-platform glossary (`docs/_glossary-macos.md`) has a 1-line see-also cross-reference to `_glossary-android.md` — no other modifications
+- [x] **AEAUDIT-04**: Milestone audit passes all Android-specific checks: no SafetyNet references in Android docs (use Play Integrity), no "supervision" term used for Android (use "fully managed"), AOSP stub word-count within scope guard, no Android links in deferred shared files (common-issues.md, quick-ref-l1.md, quick-ref-l2.md), all Android docs have `last_verified` frontmatter <!-- verification_note: accepted tech debt per 2026-04-24 (C2 allow-list expansion DEFER-01 + C5 freshness normalization DEFER-02 + Phase 41 VERIFICATION.md DEFER-03 routed to v1.4.1 per D-05 four-part test) -->
 
 ## Future Requirements
 
@@ -188,10 +188,10 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEL2-03 | Phase 41 | Complete |
 | AEL2-04 | Phase 41 | Complete |
 | AEL2-05 | Phase 41 | Complete |
-| AEAUDIT-01 | Phase 42 | Pending |
-| AEAUDIT-02 | Phase 42 | Pending |
-| AEAUDIT-03 | Phase 42 | Pending |
-| AEAUDIT-04 | Phase 42 | Pending |
+| AEAUDIT-01 | Phase 42 | Complete |
+| AEAUDIT-02 | Phase 42 | Complete |
+| AEAUDIT-03 | Phase 42 | Complete |
+| AEAUDIT-04 | Phase 42 | Complete |
 
 **Coverage:**
 - v1.4 requirements: 37 total

@@ -91,7 +91,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
  (completed 2026-04-21)
 - [x] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append (completed 2026-04-23)
 - [x] **Phase 41: Android L2 Investigation** - Log-collection guide (Company Portal, Microsoft Intune app, adb logcat) + 3 investigation runbooks (enrollment, app install, compliance with Play Integrity) + L2 index append (completed 2026-04-24)
-- [ ] **Phase 42: Integration & Milestone Audit** - Android capability matrix, index.md Android stub, macOS glossary see-also cross-reference, and milestone audit (SafetyNet grep, supervision-term grep, AOSP stub scope-guard, last_verified frontmatter scan, deferred-file modification check)
+- [x] **Phase 42: Integration & Milestone Audit** - Android capability matrix, index.md Android stub, macOS glossary see-also cross-reference, and milestone audit (SafetyNet grep, supervision-term grep, AOSP stub scope-guard, last_verified frontmatter scan, deferred-file modification check) (completed 2026-04-24)
 
 ## Phase Details
 
@@ -297,4 +297,4 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete    | 2026-04-23 |
 | 40. Android L1 Triage & Runbooks | v1.4 | 10/10 | Complete    | 2026-04-23 |
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete   | 2026-04-24 |
-| 42. Integration & Milestone Audit | v1.4 | 0/7 | In progress | - |
+| 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete    | 2026-04-24 |
