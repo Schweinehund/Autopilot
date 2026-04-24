@@ -2,12 +2,12 @@
 gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
-status: defining_requirements
-stopped_at: Milestone v1.4.1 started — defining requirements
-last_updated: "2026-04-24T16:11:48.587Z"
+status: roadmap_approved
+stopped_at: Roadmap written — v1.4.1 spans Phases 43-47 (28 reqs 1:1 mapped)
+last_updated: "2026-04-24T16:45:00.000Z"
 last_activity: 2026-04-24
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -21,14 +21,19 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering
-**Current focus:** v1.4.1 requirements definition — close all v1.4 Android deferred items (DEFER-01..06)
+**Current focus:** v1.4.1 Phases 43-47 — close all v1.4 Android deferred items (DEFER-01..06), bring Android to operational completeness parity with Windows / macOS / iOS, flip v1.4 audit `tech_debt → passed`
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 43 (Cleanup & Audit Harness Fix) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-04-24 — Milestone v1.4.1 started
+Status: Roadmap approved; ready to plan Phase 43
+Last activity: 2026-04-24 — Roadmap written; 5 phases / 28 requirements / 1:1 coverage
+
+**Phase sequence:**
+- Phase 43 (cleanup) MUST land first — sidecar path blocker + allow-list baseline + freshness normalization + AOSP stub content-migration prep
+- Phases 44 (Knox) / 45 (AOSP per-OEM) / 46 (COPE) parallelize — disjoint file sets, append-only contract on shared files (capability matrix, Mermaid, glossary index) per v1.4 Phase 42 D-03 precedent
+- Phase 47 (integration + terminal re-audit) MUST land last — owns atomic matrix / Mermaid / glossary rebuilds + status flip
 
 ## Performance Metrics
 
@@ -42,7 +47,7 @@ Last activity: 2026-04-24 — Milestone v1.4.1 started
 
 **Totals (through v1.4):** 42 phases, 146 plans, 143+ documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise.
 
-**v1.4.1 projected:** TBD — roadmapper output from /gsd-new-milestone will size this. Early shape estimate: 3-5 phases covering (a) cleanup + hardening (DEFER-01..03), (b) Knox Mobile Enrollment (DEFER-04), (c) full AOSP per-OEM expansion (DEFER-05), (d) COPE full admin path or deprecation-rationale (DEFER-06), (e) milestone integration + re-audit closing `tech_debt → passed`.
+**v1.4.1 planned:** 5 phases (43-47), 28 requirements across 5 categories (AEAUDIT-02..05 / AEKNOX-01..07 / AEAOSPFULL-01..09 / AECOPE-01..04 / AEINTEG-01..04). Plan counts per-phase TBD via `/gsd-plan-phase` runs.
 
 ## Accumulated Context
 
@@ -52,42 +57,48 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 **v1.4 decisions (carried forward):**
 
-- v1.4 shipped with audit status `tech_debt` (accepted). v1.4.1 must re-run `scripts/validation/v1.4-milestone-audit.mjs` after DEFER-01/02 complete and flip status to `passed`.
-- Tri-portal admin template (Intune + Managed Google Play + Zero-Touch portal) is the canonical Android admin surface — Knox Mobile Enrollment guide (DEFER-04) extends this pattern for Samsung; treat KME as a 4th portal overlay, not a replacement.
-- KME↔ZT Samsung mutual-exclusion callout in Phase 35 ZT portal doc is the reciprocal pin for DEFER-04 Knox guide — DEFER-04 must add the forward link.
-- Phase 39 AOSP stub enforced the "not supported under AOSP" PITFALL-7 framing; DEFER-05 expansion must preserve this framing for v1.4-captured OEM gaps while adding per-OEM supported-feature matrices for RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest.
-- COPE trajectory: Google has signaled WPCO as the forward path. DEFER-06 scope is research-gated — researcher/discuss-phase must verify whether v1.4.1 ships a COPE full admin guide OR a formal deprecation-rationale doc.
-- `last_verified` 60-day rule was set in Phase 34 D-14; DEFER-02 retrofit normalizes 4 L2 runbooks (18-21) from their 90-day authoring-time cycle to match.
-- Audit allow-list is CONTEXT-enumerated; ~27 additional pins needed for legitimate iOS-attributed supervision bridge-prose references in `_glossary-android.md` + `android-capability-matrix.md` Cross-Platform Equivalences section.
+- v1.4 shipped with audit status `tech_debt` (accepted). v1.4.1 Phase 47 re-runs `scripts/validation/v1.4.1-milestone-audit.mjs` (file-versioned copy) after all content lands and flips status to `passed`.
+- Tri-portal admin template (Intune + Managed Google Play + Zero-Touch portal) is the canonical Android admin surface — KME (Phase 44) extends this pattern for Samsung as a 4th-portal overlay; Meta Quest (Phase 45) extends as a 4-portal pattern with Meta for Work.
+- KME↔ZT Samsung mutual-exclusion callout in Phase 35 ZT portal doc (line 16) is the reciprocal pin for Phase 44 Knox guide — Phase 44 must add forward link + verbatim-quote Google's canonical "KME wins when both configured" precedence rule.
+- Phase 39 AOSP stub PITFALL-7 "not supported under AOSP" framing is LOCKED; Phase 45 per-OEM expansion must preserve the framing and pair per-OEM "supported" assertions with the AOSP baseline caveat.
+- COPE trajectory: Google has signaled WPCO as the forward path. Phase 46 scope is research-gated — research gate must verify no formal deprecation before authoring; if deprecation declared, re-scope to rationale doc at 40% scope.
+- `last_verified` 60-day rule was set in Phase 34 D-14; Phase 43 retrofit normalizes 4 L2 runbooks (18-21) from 90-day authoring-time cycle to 60-day.
+- Audit allow-list is CONTEXT-enumerated; ~27 additional pins needed for legitimate iOS-attributed supervision bridge-prose references in `_glossary-android.md` + `android-capability-matrix.md` Cross-Platform Equivalences section (10→~37 total).
+- Audit harness file-versioning: copy `v1.4-milestone-audit.mjs` to `v1.4.1-milestone-audit.mjs` (preserves v1.4 commit-SHA `3c3a140` reproducibility anchor; Path A preferred over in-place extension).
+- Sidecar migration: `.planning/phases/42-*/v1.4-audit-allowlist.json` → `scripts/validation/v1.4-audit-allowlist.json` (atomic same-commit with harness line 57 update; CI test that allow-list parses AND has >0 entries).
+- COPE ships as FULL admin guide (Path A confirmed 2026-04-24 against MS Learn `setup-corporate-work-profile` updated 2026-04-16; Intune UI label "Corporate-owned devices with work profile"; two GA token types; not deprecated; Google WPCO = terminology evolution, not product deprecation).
 
 ### Pending Todos
 
-- Define v1.4.1 requirements (REQUIREMENTS.md) with REQ-IDs continuing from v1.4 (AEAUDIT-02+, AEKNOX-01+, AEAOSP-02+, AECOPE-01+)
-- Spawn gsd-roadmapper for v1.4.1 starting at Phase 43 (continue numbering from v1.4 per convention)
-- Plan Phase 43 after roadmap approval
+- Plan Phase 43 via `/gsd-plan-phase 43` (MUST execute before 44/45/46)
+- After Phase 43 ships: plan 44, 45, 46 in parallel (disjoint file sets)
+- Plan Phase 47 LAST (terminal re-audit sees final state; owns atomic matrix/Mermaid/glossary rebuilds)
 
 ### Research flags to verify at plan time (v1.4.1)
 
-- **DEFER-04 Knox ME:** Current Samsung Knox portal UI and URL (portal has redesign history); current KME license-tier gate; Entra-ID / Google-ID prerequisites; reciprocal mutual-exclusion wording with Zero-Touch Samsung enrollment
-- **DEFER-05 AOSP per-OEM:** Current OEM GA status for RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest on Android 11/12/15; supported-features matrix (enrollment methods, managed config, remote actions); whether Wi-Fi credential embedding / one-device-at-a-time / QR-only constraints from Phase 39 still apply uniformly
-- **DEFER-06 COPE:** Current Google wording on COPE vs. WPCO ("recommended" vs. "deprecated" vs. "legacy"); whether Intune still surfaces COPE as a first-class enrollment mode or only via admin-initiated profile swap; decision: full admin guide or deprecation-rationale doc
-- **DEFER-01 allow-list:** Exact line enumeration of legitimate iOS-attributed supervision refs in `docs/_glossary-android.md` + `docs/android-capability-matrix.md` before sidecar update; audit-strict regex compliance from v1.4 audit harness
-- **DEFER-02 freshness:** Confirm 60-day rule is still the policy (per Phase 34 D-14); apply to `docs/admin-setup-android/admin-template-android.md` frontmatter
-- **DEFER-03 AOSP stub:** Phase 39 envelope (600-900 words) vs. actual body (~1089) — decide trim vs. envelope update at `/gsd-validate-phase 39` time
+- **Phase 43 (cleanup):** Sidecar location decision (`scripts/validation/` vs `.planning/validation/`) — recommend former for co-location with harness; harness file-versioning decision (Path A copy — preferred); 60-day rule still Phase 34 D-14 policy; Phase 41 VERIFICATION.md validator placement (must run BEFORE downstream phases write new content, producing `passed` or `human_needed` — no new deferrals)
+- **Phase 44 (Knox):** Current Samsung Knox portal UI/URL (portal has redesign history); current KME license-tier gate (verified free baseline; Knox Suite gates Advanced); Entra-ID / Google-ID prerequisites; Knox L1 routing decision — KME is a provisioning method onto COBO mode, so runbook 28 extends COBO flow (NOT new triage-tree branch); DPC extras JSON schema current state
+- **Phase 45 (AOSP):** Current OEM GA status for RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest on Android 11/12/15; **CRITICAL — Meta Horizon wind-down date re-verification at plan time (community-sourced Feb 20, 2026; MEDIUM confidence)**; per-OEM Wi-Fi embedding variance (RealWear REQUIRED vs others OPTIONAL); Pico business license terms (mid-2025 changes reported); Intune Suite / Plan 2 licensing gate for AR/VR specialty devices; Zebra WS50 OEMConfig APK push delivery confirmed (NOT MGP)
+- **Phase 46 (COPE):** **MANDATORY RESEARCH GATE BEFORE AUTHORING** — Google AE Help + Android Developers release notes + Bayton FAQ for "COPE deprecated" signal; Intune admin center UI-label verification ("Corporate-owned devices with work profile"); Android 15 Private space Intune support status; Android 11+ `afw#setup`/NFC removal still accurate; **banned phrases** ("deprecated" / "end of life" / "removed") discipline via C9 sidecar JSON
+- **Phase 47 (integration + re-audit):** Re-audit acceptance criteria; classification of any new C2 findings (informational-first for C6-C10 per D-29 grace-period pattern); capability matrix unified-rebuild wave structure (3 row sets — Knox + AOSP + COPE); glossary single-author merge sequencing (line 15 alphabetical index hotspot); MILESTONE-AUDIT `re_audit_resolution:` format (commit SHA + timestamp)
 
 ### Deferred Items (tracked for v1.5)
 
-- Cross-platform nav integration for Android (AENAVUNIFY-04, DEFER-07) — backport into `docs/index.md` + `common-issues.md` + `quick-ref-l1.md` + `quick-ref-l2.md`
-- 4-platform capability comparison document (AECOMPARE-01, DEFER-08) — Windows + macOS + iOS + Android
+- **DEFER-07 / AENAVUNIFY-04** — Cross-platform nav integration for Android; backport into `docs/index.md` banner/H1 + `common-issues.md` + `quick-ref-l1.md` + `quick-ref-l2.md`
+- **DEFER-08 / AECOMPARE-01** — 4-platform capability comparison document (Windows + macOS + iOS + Android)
 
 ### Blockers/Concerns
 
-- **COPE scope is live-research-gated.** DEFER-06 may produce a deprecation-rationale doc rather than a full admin guide depending on Google's current positioning. Researcher and discuss-phase must resolve before planning Phase 4x for COPE.
-- **AOSP per-OEM GA drift.** DEFER-05 depends on current OEM supported-device pages; some vendors may still be speculative. Plan-time verification required per phase.
-- **Audit re-run must flip `tech_debt → passed`** after DEFER-01 and DEFER-02 complete. Integration phase must include an audit re-run plan.
+- **Sidecar path blocker (Phase 43 must fix first):** `scripts/validation/v1.4-milestone-audit.mjs:57` hardcodes path to archived `.planning/phases/42-integration-milestone-audit/v1.4-audit-allowlist.json`. Without atomic migration + harness update, audit silently degrades (parse-error → empty exemptions arrays at harness line 59-62), invisibly losing allow-list. HIGH severity; atomic same-commit discipline required.
+- **COPE scope re-scope trigger (Phase 46):** Mandatory research gate BEFORE authoring. If Google AE Help / Android Developers / Bayton FAQ declares formal deprecation, re-scope Phase 46 to deprecation-rationale doc at 40% scope (preserves what-was-written as historical appendix). Current signal (2026-04-24) is HIGH confidence COPE active; gate is belt-and-braces.
+- **Meta Horizon wind-down volatility (Phase 45):** Community-sourced Feb 20, 2026 wind-down report (MEDIUM confidence). Phase 45 plan-time must re-verify and carry Intune-direct fallback guidance ("use Intune AOSP profile; do NOT rely on Meta Horizon for net-new").
+- **Parallel merge conflicts (Phases 44/45/46 → 47):** Capability matrix + Mermaid + glossary line 15 are shared write hotspots. Mitigation: append-only H2-block additions per content phase (D-03 precedent); integration Phase 47 owns atomic single-author rebuilds in Wave 1/2 pattern (mirrors v1.4 Phase 42).
+- **PITFALL-7 erosion (Phase 45):** v1.4 Phase 39 "not supported under AOSP" framing must survive per-OEM "supported" assertions. Explicit carry-forward rule in Phase 45 CONTEXT; proposed harness C6 regex-detect (informational-first grace per D-29).
+- **5-SKU Knox ambiguity (Phase 44):** KME / KPE Standard / KPE Premium / Knox Manage / Knox Suite / Knox Configure confusion risks "KME requires paid license" inaccuracy OR admins paying for Knox Manage. Mitigation: 5-SKU disambiguation table as H2 (not footnote); "Intune supplies KPE Premium transparently" anti-pattern callout; proposed harness C7 bare-`Knox` regex (informational-first).
+- **Audit re-run must flip `tech_debt → passed`** after all content lands. Integration Phase 47 terminal plan runs audit LAST (not interleaved); every new v1.4.1 doc must use Phase 34 template so C5 freshness passes on first run.
 
 ## Session Continuity
 
-Last session: 2026-04-24T16:11:48.587Z
-Stopped at: Milestone v1.4.1 started — defining requirements
-Next action: Define requirements (REQUIREMENTS.md) and spawn gsd-roadmapper
+Last session: 2026-04-24T16:45:00.000Z
+Stopped at: Roadmap written — v1.4.1 spans Phases 43-47 (28 reqs 1:1 mapped)
+Next action: `/gsd-plan-phase 43` (cleanup + audit harness fix — sidecar path + allow-list + freshness + AOSP stub prep)

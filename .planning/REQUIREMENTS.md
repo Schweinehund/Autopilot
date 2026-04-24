@@ -79,12 +79,42 @@
 
 ## Traceability
 
-*Phase mapping populated during `/gsd-roadmapper` run. Expected: 5 phases (43-47) with 1:1 category→phase mapping per REQUIREMENTS.md structure above.*
+*Phase mapping populated by `/gsd-roadmapper` run 2026-04-24. 5 phases (43-47); 28/28 requirements mapped 1:1; no orphans; no duplicates.*
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| AEAUDIT-02..05 | 43 | Active |
-| AEKNOX-01..07 | 44 | Active |
-| AEAOSPFULL-01..09 | 45 | Active |
-| AECOPE-01..04 | 46 | Active |
-| AEINTEG-01..04 | 47 | Active |
+| AEAUDIT-02 | 43 | Active |
+| AEAUDIT-03 | 43 | Active |
+| AEAUDIT-04 | 43 | Active |
+| AEAUDIT-05 | 43 | Active |
+| AEKNOX-01 | 44 | Active |
+| AEKNOX-02 | 44 | Active |
+| AEKNOX-03 | 44 | Active |
+| AEKNOX-04 | 44 | Active |
+| AEKNOX-05 | 44 | Active |
+| AEKNOX-06 | 44 | Active |
+| AEKNOX-07 | 44 | Active |
+| AEAOSPFULL-01 | 45 | Active |
+| AEAOSPFULL-02 | 45 | Active |
+| AEAOSPFULL-03 | 45 | Active |
+| AEAOSPFULL-04 | 45 | Active |
+| AEAOSPFULL-05 | 45 | Active |
+| AEAOSPFULL-06 | 45 | Active |
+| AEAOSPFULL-07 | 45 | Active |
+| AEAOSPFULL-08 | 45 | Active |
+| AEAOSPFULL-09 | 45 | Active |
+| AECOPE-01 | 46 | Active |
+| AECOPE-02 | 46 | Active |
+| AECOPE-03 | 46 | Active |
+| AECOPE-04 | 46 | Active |
+| AEINTEG-01 | 47 | Active |
+| AEINTEG-02 | 47 | Active |
+| AEINTEG-03 | 47 | Active |
+| AEINTEG-04 | 47 | Active |
+
+**Coverage:** 28/28 requirements mapped (100%). No orphans. No duplicates.
+
+**Phase DAG:**
+- Phase 43 (cleanup) → entry phase (no deps)
+- Phases 44 (Knox) / 45 (AOSP) / 46 (COPE) → depend on 43; parallelize with each other
+- Phase 47 (integration + re-audit) → depends on 44/45/46; terminal
