@@ -151,6 +151,18 @@ If compliance state remains "Not evaluated" beyond 30 minutes after enrollment c
 
 **Do not escalate to Microsoft Support without:** (a) confirmed P-08 default-posture value, (b) confirmed compliance policy assignment state, (c) enrollment completion timestamp, and (d) at least one sync attempt. Missing any of these four elements will cause the support case to be returned for additional data.
 
+**Terminal-state decision flow (quick reference):**
+
+| Observation | Next action |
+|-------------|-------------|
+| State = "Not evaluated" AND enrollment < 30 min ago | Wait; no action required yet — normal first-evaluation window |
+| State = "Not evaluated" AND enrollment > 30 min AND no sync yet | Trigger device sync (Microsoft Intune app or Company Portal); wait 15 min; recheck |
+| State = "Not evaluated" AND sync completed AND > 30 min elapsed | Investigate Play services network gap (cause 1 above) |
+| State = "Not evaluated" AND Play services reachable AND policy assigned | MDM check-in failure — collect Intune app logs (runbook 18 Section 2) |
+| State = "Not compliant" AND failing-settings list EMPTY | Default-posture variant — verify P-08 and compliance policy assignment |
+| Multiple devices on same network simultaneously stuck | Network-level block — investigate firewall/proxy; MDM check-in endpoints reachability |
+| State stuck after policy assigned AND > 60 min | Microsoft Support escalation with full data package above |
+
 ### Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch {#cause-d-passcode-encryption-policy-mismatch}
 
 **Typical class:** ⚙️ Config Error
@@ -165,3 +177,38 @@ Compliance policy enforces passcode/PIN complexity rules (length, alphanumeric, 
 4. Encryption: Android 10+ enforces file-based encryption by default; if a compliance policy requires "full-disk encryption" on Android 10+, the policy is misaligned — file-based encryption IS the modern Android equivalent. Admin should update the policy to reflect current Android encryption behavior.
 
 **Escalation:** Generally User Action Required (set compliant passcode or work-profile password); escalate only if device reports compliant passcode/encryption but policy evaluation still fails. Attach: compliance policy export + Settings > Security screenshot + runbook 18 Section 2 Microsoft Intune app log incident.
+
+## Resolution
+
+Each Per-Cause Deep-Dive sub-section above includes Investigation Steps, Known Patterns (where applicable), and Microsoft Support escalation data. This section aggregates the overall escalation decision:
+
+- **Cause A Play Integrity** — 🐛 Defect escalation required when hardware-capable, current-patched device returns verdict below policy with all ⚙️ Config paths ruled out; also escalate when multiple users on the same device model show a pattern failure
+- **Cause B OS Version** — almost always ⚙️ Config fix (update OS or relax policy); rare escalation only when device version matches policy requirement but evaluation still fails
+- **Cause C CA Timing** — ⏱️ Timing wait usually resolves within 30 minutes; escalate if "Not evaluated" terminal state persists per sub-section above (Play services gap, MDM check-in failure, assignment missing, GMS disruption)
+- **Cause D Passcode / Encryption / Work Profile** — generally User Action Required (set compliant passcode); rare escalation when device reports compliance but evaluation disagrees
+
+## Escalation Criteria
+
+Escalate to Microsoft Support when:
+
+- All ⚙️ Config Error paths for the identified Cause are ruled out
+- ⏱️ Timing windows have elapsed: 30 minutes for Cause C first-evaluation; 60 minutes after policy assignment for the default-posture variant; approximately 24 hours for policy propagation after an admin change
+- Cause indicators match but Resolution Steps do not restore Compliant state
+- Data collection per runbook 18 Section 1 / 2 / 3 is complete and artifacts are ready to attach
+- Multiple users on the same device model show the same compliance failure in a pattern (OEM firmware issue indicator — Cause A)
+
+## Related Resources
+
+- [Android Log Collection Guide (runbook 18)](18-android-log-collection.md) — prerequisite diagnostic package; collect before starting any Per-Cause investigation
+- [Android Enrollment Investigation (runbook 19)](19-android-enrollment-investigation.md) — enrollment-side failures (work profile not created, COBO stuck, ZTE device claim)
+- [Android App Install Investigation (runbook 20)](20-android-app-install-investigation.md) — MGP and LOB app install failures
+- [L1 Runbook 25: Android Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md) — L1 escalation source with matching Cause A/B/C/D anchors; Per-Cause handoff is 1:1
+- [Android Version Matrix](../android-lifecycle/03-android-version-matrix.md) — OS version requirements by enrollment mode + Android 11/12/15 breakpoints
+- [Play Integrity](../_glossary-android.md#play-integrity) — glossary entry for Play Integrity attestation mechanism
+- [L2 Runbook Index](00-index.md#android-l2-runbooks) — routing table for all Android L2 runbooks
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-23 | Initial version — Android L2 compliance + CA timing investigation runbook (Phase 31 D-14 hybrid axis + 4-cause Per-Cause Deep-Dive matching L1 runbook 25 Cause A/B/C/D + Play Integrity 3-tier ladder + "Not evaluated" terminal state) | -- |
