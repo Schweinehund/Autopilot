@@ -2,15 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
-status: planning
-stopped_at: Phase 43 context gathered (adversarial-review resolved 4 gray areas)
-last_updated: "2026-04-24T18:58:36.069Z"
-last_activity: "2026-04-24 — Roadmap written; 5 phases / 28 requirements / 1:1 coverage"
+status: executing
+stopped_at: Completed 43-01-PLAN.md (rescue commit a868882)
+last_updated: "2026-04-24T20:24:46.208Z"
+last_activity: 2026-04-24
 progress:
   total_phases: 1
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 10
+  completed_plans: 1
+  percent: 10
 ---
 
 # Project State
@@ -20,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering
-**Current focus:** v1.4.1 Phases 43-47 — close all v1.4 Android deferred items (DEFER-01..06), bring Android to operational completeness parity with Windows / macOS / iOS, flip v1.4 audit `tech_debt → passed`
+**Current focus:** Phase 43 — v1-4-cleanup-audit-harness-fix
 
 ## Current Position
 
-Phase: 43 (Cleanup & Audit Harness Fix) — not started
-Plan: —
-Status: Roadmap approved; ready to plan Phase 43
-Last activity: 2026-04-24 — Roadmap written; 5 phases / 28 requirements / 1:1 coverage
+Phase: 43 (v1-4-cleanup-audit-harness-fix) — EXECUTING
+Plan: 2 of 10
+Status: Ready to execute
+Last activity: 2026-04-24
 
 **Phase sequence:**
 
@@ -67,6 +68,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 - Audit harness file-versioning: copy `v1.4-milestone-audit.mjs` to `v1.4.1-milestone-audit.mjs` (preserves v1.4 commit-SHA `3c3a140` reproducibility anchor; Path A preferred over in-place extension).
 - Sidecar migration: `.planning/phases/42-*/v1.4-audit-allowlist.json` → `scripts/validation/v1.4-audit-allowlist.json` (atomic same-commit with harness line 57 update; CI test that allow-list parses AND has >0 entries).
 - COPE ships as FULL admin guide (Path A confirmed 2026-04-24 against MS Learn `setup-corporate-work-profile` updated 2026-04-16; Intune UI label "Corporate-owned devices with work profile"; two GA token types; not deprecated; Google WPCO = terminology evolution, not product deprecation).
+- [Phase 43]: Plan 43-01 rescue commit a868882: FROZEN marker placed on line 2 (after shebang) rather than line 1 — Node ESM requires shebang on line 1; fix preserves D-02 intent (marker in lines 1-10) while keeping harness executable. Plan 43-02 cp-then-additive editing must drop FROZEN fragment from v1.4.1 copy (kept for v1.4 frozen-predecessor only).
 
 ### Pending Todos
 
@@ -99,6 +101,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-24T18:58:36.061Z
-Stopped at: Phase 43 context gathered (adversarial-review resolved 4 gray areas)
+Last session: 2026-04-24T20:24:33.319Z
+Stopped at: Completed 43-01-PLAN.md (rescue commit a868882)
 Next action: `/gsd-plan-phase 43` (cleanup + audit harness fix — sidecar path + allow-list + freshness + AOSP stub prep)

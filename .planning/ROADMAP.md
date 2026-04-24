@@ -117,7 +117,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   4. `06-aosp-stub.md` body is ≤900 words (PITFALL-7 framing preserved, deep RealWear content migrated out to prep shell for Phase 45 consumption) and C3 word-count check passes informational
   5. Harness C1-C5 checks all pass on current state (pre-44/45/46 baseline); CI-parseable allow-list test in place
 **Plans:** 10 plans
-  - [ ] 43-01-PLAN.md — Rescue: restore v1.4 allow-list sidecar from git + update harness line 57 + FROZEN marker (wave 1, atomic commit)
+  - [x] 43-01-PLAN.md — Rescue: restore v1.4 allow-list sidecar from git + update harness line 57 + FROZEN marker (wave 1, atomic commit) — shipped `a868882` 2026-04-24
   - [ ] 43-02-PLAN.md — Scaffold v1.4.1 harness (cp + 6 additive edits) + v1.4.1 sidecar skeleton (wave 2)
   - [ ] 43-03-PLAN.md — Hand-author 14 new supervision pins (9 → 23 in both sidecars) (wave 2)
   - [ ] 43-04-PLAN.md — Author regenerate-supervision-pins.mjs (3 modes) + README; run --self-test (wave 2)
