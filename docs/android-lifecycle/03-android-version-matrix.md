@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-21
-review_by: 2026-06-20
+last_verified: 2026-04-23
+review_by: 2026-06-22
 applies_to: both
 audience: admin
 platform: Android
@@ -86,7 +86,7 @@ The following drift events are NOT gated by Android API level — they are polic
 
 Google turned off SafetyNet Attestation API in January 2025. [Play Integrity API](../_glossary-android.md#play-integrity) is the successor. Intune compliance UI now uses "Play Integrity verdict" terminology — three verdict levels are returned: **Basic integrity**, **Basic + Device integrity**, and **Strong integrity** (which requires hardware-backed security such as a trusted execution environment or strongbox).
 
-**Admin action required:** Update any Android compliance policy references from the legacy attestation name to "Play Integrity." All Phase 34 and later Android documentation uses Play Integrity terminology exclusively; there is no fallback to the legacy API on any Android device today. Compliance content ships with Phase 38 (Dedicated) and Phase 41 (L2 investigation — Play Integrity failure troubleshooting per AEL2-04).
+**Admin action required:** Update any Android compliance policy references from the legacy attestation name to "Play Integrity." All Phase 34 and later Android documentation uses Play Integrity terminology exclusively; there is no fallback to the legacy API on any Android device today. Compliance content ships with Phase 38 (Dedicated) and [L2 investigation — Play Integrity failure troubleshooting](../l2-runbooks/21-android-compliance-investigation.md#cause-a-play-integrity-verdict-failure).
 
 **References:**
 - [Google Android Developers — Play Integrity API overview](https://developer.android.com/google/play/integrity)
