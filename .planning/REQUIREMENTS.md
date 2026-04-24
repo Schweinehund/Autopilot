@@ -79,7 +79,7 @@ Mode-first L1 decision tree plus 6 scenario runbooks (one shared with AEZTE).
 
 L2 log-collection guide plus 3 investigation runbooks.
 
-- [ ] **AEL2-01**: L2 Desktop Engineering can collect Android diagnostic logs (`docs/l2-runbooks/18-android-log-collection.md`) using Company Portal logs, Microsoft Intune app logs, and adb logcat — with confidence labels on any commands not sourced from official Microsoft Learn
+- [x] **AEL2-01**: L2 Desktop Engineering can collect Android diagnostic logs (`docs/l2-runbooks/18-android-log-collection.md`) using Company Portal logs, Microsoft Intune app logs, and adb logcat — with confidence labels on any commands not sourced from official Microsoft Learn
 - [ ] **AEL2-02**: L2 Desktop Engineering can investigate an Android work profile enrollment failure (`docs/l2-runbooks/19-android-enrollment-investigation.md`) with structured diagnostic steps
 - [ ] **AEL2-03**: L2 Desktop Engineering can investigate an Android app install failure (`docs/l2-runbooks/20-android-app-install-investigation.md`) covering Managed Google Play app states, license assignment, and MAM intersection
 - [ ] **AEL2-04**: L2 Desktop Engineering can investigate Android compliance and Conditional Access timing (`docs/l2-runbooks/21-android-compliance-investigation.md`) using Play Integrity verdicts (not SafetyNet — deprecated January 2025)
@@ -183,7 +183,7 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 | AEL1-06 | Phase 40 | Complete |
 | AEL1-07 | Phase 40 | Complete |
 | AEL1-08 | Phase 40 | Complete |
-| AEL2-01 | Phase 41 | Pending |
+| AEL2-01 | Phase 41 | Complete |
 | AEL2-02 | Phase 41 | Pending |
 | AEL2-03 | Phase 41 | Pending |
 | AEL2-04 | Phase 41 | Pending |
