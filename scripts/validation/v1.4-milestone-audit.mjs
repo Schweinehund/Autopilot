@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// FROZEN at commit 3c3a140 — see scripts/validation/v1.4.1-milestone-audit.mjs for active harness
 // v1.4 Milestone Audit Harness
 // Source of truth: .planning/phases/42-integration-milestone-audit/42-CONTEXT.md (D-25..D-31)
 // Sidecar allow-list: .planning/phases/42-integration-milestone-audit/v1.4-audit-allowlist.json
@@ -54,7 +55,7 @@ function walkMd(dir) {
 // parseAllowlist: load and parse the committed JSON sidecar (D-26 contract).
 // Follows check-phase-31.mjs parseInventory() degradation pattern — degrade to empty arrays on parse failure.
 function parseAllowlist() {
-  const raw = readFile('.planning/phases/42-integration-milestone-audit/v1.4-audit-allowlist.json');
+  const raw = readFile('scripts/validation/v1.4-audit-allowlist.json');
   if (!raw) return { safetynet_exemptions: [], supervision_exemptions: [] };
   try {
     return JSON.parse(raw);
