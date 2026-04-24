@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-04-24T00:00:00Z",
+  "phase": "43-v1-4-cleanup-audit-harness-fix",
+  "safetynet_exemptions": [
+    {"file": "docs/_glossary-android.md", "line": 138, "reason": "deprecation-context prose naming SafetyNet as Play Integrity predecessor (verified 2026-04-24)"},
+    {"file": "docs/_glossary-android.md", "line": 150, "reason": "changelog row naming SafetyNet-to-Play-Integrity 2025 transition (verified 2026-04-24)"},
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 85, "reason": "Non-version Breakpoints H3 header naming SafetyNet deprecation event (verified 2026-04-24)"},
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 87, "reason": "Non-version Breakpoints body paragraph describing Google SafetyNet turn-off (verified 2026-04-24)"}
+  ],
+  "supervision_exemptions": [
+    {"file": "docs/_glossary-android.md", "line": 65, "reason": "H3 Supervision disambiguation heading (verified 2026-04-24)"},
+    {"file": "docs/_glossary-android.md", "line": 67, "reason": "Supervision disambiguation blockquote body naming iOS Supervision as the source term (verified 2026-04-24)"},
+    {"file": "docs/_glossary-android.md", "line": 134, "reason": "MHS cross-platform note referencing iOS supervised MDM profile (verified 2026-04-24)"},
+    {"file": "docs/_glossary-android.md", "line": 148, "reason": "Version History row naming supervision-as-callout-only Phase 34 foundation decision (verified 2026-04-24)"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 51, "reason": "Phase 34 D-03 locked For-Admins-Familiar-with-iOS narrative citing iOS Supervision analog (verified 2026-04-24)"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 53, "reason": "Phase 34 D-03 locked narrative — Supervision-is-not-an-Android-term bridge sentence (verified 2026-04-24)"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 83, "reason": "See Also entry linking to Apple Glossary supervision anchor (verified 2026-04-24)"},
+    {"file": "docs/admin-setup-android/03-fully-managed-cobo.md", "line": 35, "reason": "Cross-platform note blockquote citing iOS Supervision analog in COBO Key Concepts (re-verified 2026-04-24 post Plan 41-08; line unchanged)"},
+    {"file": "docs/l2-runbooks/20-android-app-install-investigation.md", "line": 21, "reason": "Three-class disambiguation intro contrasting Android with iOS where supervision state is a primary failure axis (verified 2026-04-24)"}
+  ],
+  "cope_banned_phrases": [
+    "\\bCOPE\\b[^.]*\\bdeprecated\\b",
+    "\\bCOPE\\b[^.]*\\bend of life\\b",
+    "\\bCOPE\\b[^.]*\\bremoved\\b"
+  ]
+}
