@@ -6,14 +6,19 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 ## Core Value
 
-IT teams can independently provision, troubleshoot, and manage Windows, macOS, and iOS/iPadOS devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, and iOS/iPadOS enrollment frameworks with role-appropriate documentation.
+IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
 ## Current State
 
-**v1.3 shipped 2026-04-19.** Four milestones complete — 33 phases, 106 plans, 118 documentation files shipped across Windows Autopilot, macOS ADE, and iOS/iPadOS. v1.4 Android Enterprise enrollment documentation in progress — Phase 34 (Android Foundation) complete 2026-04-21 and Phase 35 (Android Prerequisites — MGP & Zero-Touch Portal) complete 2026-04-22, establishing canonical glossary, enrollment overview, provisioning/version matrices, admin template, tri-portal orientation, admin setup overview, Managed Google Play binding guide, and Zero-Touch portal admin guide for downstream Phases 36-42.
+**v1.4 shipped 2026-04-24.** Five milestones complete — 42 phases, 146 plans, 143+ documentation files shipped across Windows Autopilot, macOS ADE, iOS/iPadOS, and Android Enterprise. v1.4 delivered 25 Android Enterprise docs: 13-term disambiguation glossary, 5-mode enrollment framework (COBO / BYOD Work Profile / Dedicated / ZTE / AOSP stub), tri-portal admin setup suite (Intune admin center + Managed Google Play + Zero-Touch portal), 6 L1 runbooks + L1 triage tree, 3 L2 investigation runbooks + log-collection guide, Android capability matrix with Cross-Platform Equivalences section (iOS Supervision↔Android Fully Managed, Apple ADE↔Google Zero-Touch, iOS User Enrollment↔Android Work Profile), reciprocal glossary see-also, and v1.4-MILESTONE-AUDIT.md produced via committed 5-check Node audit harness. Audit exited `tech_debt` (accepted) with 3 defer items routed to v1.4.1 (allow-list expansion + 60-day freshness normalization + AOSP stub re-validation). Next milestone candidates: v1.4.1 (deferred-items cleanup + Knox ME + full AOSP) or v1.5 (4-platform capability comparison + cross-platform nav unification).
 
 ### What's been built
-- 118 markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, and iOS/iPadOS
+- 143+ markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise
+- Android foundation (v1.4): 13-term disambiguation glossary, 5-mode enrollment overview, NFC/QR/afw#setup/Zero-Touch provisioning-method matrix, Android 11/12/15 version breakpoint matrix, tri-portal admin template
+- Android prerequisites (v1.4): admin setup overview (5-branch mermaid), Managed Google Play binding guide (Entra-preferred since Aug 2024), Zero-Touch portal admin guide with reseller Step 0 and KME/ZT Samsung mutual-exclusion
+- Android mode-specific admin guides (v1.4): COBO Fully Managed (with COPE→WPCO migration note + Android 15 FRP), BYOD Work Profile (admin + end-user tier-inverted dual-guide + AMAPI migration callout), Dedicated/COSU (with MHS exit-PIN sync requirement), ZTE corporate-scale extension, hard-scoped AOSP stub (RealWear GA)
+- Android L1/L2 troubleshooting (v1.4): mode-first L1 triage tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed), 3-method log collection + 3 L2 investigation runbooks using Play Integrity (not deprecated SafetyNet)
+- Android integration & audit (v1.4): Android capability matrix with 3 Cross-Platform Equivalences pairs, minimal `docs/index.md` Android stub, reciprocal `_glossary-macos.md` see-also, committed Node 5-check milestone audit harness + allow-list sidecar, v1.4-MILESTONE-AUDIT.md
 - Complete APv1 lifecycle documentation with integrated troubleshooting (v1.0)
 - APv2 lifecycle, failure catalog, L1/L2 decision trees and runbooks (v1.1)
 - APv1 and APv2 admin setup guides with per-setting "what breaks" callouts (v1.1)
@@ -31,6 +36,15 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, a
 - iOS/iPadOS L1 triage runbooks — 6 L1 scenario runbooks (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked) + iOS triage decision tree (v1.3)
 - iOS/iPadOS L2 investigation runbooks — 4 L2 runbooks (log collection, ADE token & profile delivery, app install failure, compliance & CA timing) + 00-index.md iOS L2 section + D-22 placeholder retrofit across 9 files closing cross-phase links from Phase 30 (v1.3)
 - Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
+
+<details>
+<summary>Previous Milestone: v1.4 Android Enterprise Enrollment Documentation</summary>
+
+**Shipped:** 2026-04-24 | **Phases:** 34-42 | **Plans:** 40
+
+Delivered Android Enterprise enrollment framework (5 modes: COBO / BYOD Work Profile / Dedicated / ZTE / AOSP stub), tri-portal admin setup suite (Intune admin center + Managed Google Play + Zero-Touch portal), L1 triage tree + 6 scenario runbooks, L2 investigation suite (log collection + 3 runbooks) using Play Integrity (deprecated SafetyNet explicitly rephrased), Android capability matrix with Cross-Platform Equivalences section (3 paired comparisons: iOS Supervision↔Android Fully Managed, Apple ADE↔Google Zero-Touch, iOS User Enrollment↔Android Work Profile), reciprocal `_glossary-macos.md` see-also, and v1.4-MILESTONE-AUDIT.md produced via committed 5-check Node audit harness. Methodology highlight: Phase 42 gray-area decisions resolved via 12-agent adversarial-review (4 finder + 4 adversary + 4 referee, 3 parallel waves). Audit exited `tech_debt` (accepted); 3 defer items routed to v1.4.1.
+
+</details>
 
 <details>
 <summary>Previous Milestone: v1.3 iOS/iPadOS Provisioning Documentation</summary>
