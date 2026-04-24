@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: Android Enterprise Enrollment Documentation
 status: executing
-stopped_at: Completed 41-04-PLAN.md
-last_updated: "2026-04-24T04:36:49.848Z"
+stopped_at: Completed 41-05-PLAN.md
+last_updated: "2026-04-24T04:46:40.459Z"
 last_activity: 2026-04-24
 progress:
   total_phases: 9
   completed_phases: 7
   total_plans: 33
-  completed_plans: 29
-  percent: 88
+  completed_plans: 30
+  percent: 91
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-19)
 ## Current Position
 
 Phase: 41 (Android L2 Investigation) — EXECUTING
-Plan: 5 of 8
+Plan: 6 of 8
 Status: Ready to execute
 Last activity: 2026-04-24
 
@@ -90,6 +90,8 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.3 decisions 
 - [Phase 41-android-l2-investigation]: D-01 mode-first tiering: Android deviates from iOS friction-ordered Tier 1/2/3 because Company Portal vs Microsoft Intune app primary tool depends on enrollment mode (BYOD pre/post-AMAPI vs COBO/Dedicated/ZTE)
 - [Phase 41-android-l2-investigation]: Pattern E heading uses explicit {#pattern-e-tenant-config-universal} anchor attribute — heading includes '(Enrollment Restriction)' parenthetical for readability but anchor omits it for plan 41-06 L1 retrofit link stability
 - [Phase 41]: Three-class ⚙️/⏱️/🐛 markers (10 total) satisfies AEL2-03 ≥6; MAM-WE exclusion uses #android-mam-we-investigation-advisory per D-15; applies_to all covers all GMS modes
+- [Phase 41]: Cause A Play Integrity uses glossary cross-link + D-18 locked phrasing for deprecated-API context; zero literal SafetyNet tokens (AEAUDIT-04)
+- [Phase 41]: Terminal-state decision flow table added to Cause C mirroring iOS analog (runbook 17 lines 164-172); 214-line final count within 210-270 acceptance window
 
 ### Pending Todos
 
@@ -122,6 +124,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.3 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-24T04:36:49.838Z
-Stopped at: Completed 41-04-PLAN.md
+Last session: 2026-04-24T04:46:40.449Z
+Stopped at: Completed 41-05-PLAN.md
 Next action: Plan Phase 34 (Android Foundation) — `/gsd-plan-phase 34`
