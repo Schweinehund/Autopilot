@@ -263,3 +263,41 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 - **Token sync status:** Not applicable for Pattern E (enrollment restriction is tenant-config, no token involved). Capture the enrollment restriction configuration screenshot instead (Intune admin center > Devices > Enroll devices > Android tab > Device platform restriction — show the affected restriction rule with all platform/ownership type settings visible).
 - **Profile assignment state:** Intune admin center > Devices > Enrollment > Android tab > Device platform restriction — screenshot of the restriction assignment (which Entra groups the restriction is scoped to). Confirm whether the default restriction or a group-scoped override applies to the affected users.
 - **Enrollment profile GUID:** Capture the restriction policy ID from the Intune admin center URL when viewing the restriction: `.../enrollmentRestrictions/{GUID}/overview`. This is the enrollment restriction ID — not an enrollment profile GUID, but the equivalent unique identifier for Pattern E escalation.
+
+## Resolution
+
+Each Pattern sub-section above includes Resolution Steps and a Microsoft Support escalation packet (token sync status, profile assignment state, enrollment profile GUID). This section aggregates the common Microsoft Support case framing.
+
+### Microsoft Support escalation criteria
+
+Escalate to Microsoft Support when:
+- All ⚙️ Config Error paths ruled out across the identified Pattern
+- ⏱️ Timing windows have elapsed (24-48 hours for first-sync patterns; QR token rotation window per Pattern D)
+- Pattern indicators match but Resolution Steps do not move the device to the Active state
+- Data collection per runbook 18 is complete
+
+### Case data to attach (all patterns)
+
+1. Device serial number + Android OS version + OEM
+2. User UPN + tenant domain
+3. Enrollment mode and Pattern (A/B/C/D/E)
+4. Intune admin center screenshots per Data Collection Step 1-3
+5. Runbook 18 log artifact IDs (Company Portal log incident OR Microsoft Intune app log incident OR adb logcat excerpt)
+6. Pattern-specific escalation packet (token sync status, profile assignment state, enrollment profile GUID — per D-09)
+
+## Related Resources
+
+- [Android Log Collection Guide (runbook 18)](18-android-log-collection.md) — prerequisite for this runbook
+- [Android App Install Investigation (runbook 20)](20-android-app-install-investigation.md)
+- [Android Compliance Investigation (runbook 21)](21-android-compliance-investigation.md)
+- [L2 Runbook Index](00-index.md#android-l2-runbooks)
+- [L1 Runbook 22: Android Enrollment Blocked](../l1-runbooks/22-android-enrollment-blocked.md)
+- [L1 Runbook 23: Android Work Profile Not Created](../l1-runbooks/23-android-work-profile-not-created.md)
+- [L1 Runbook 24: Android Device Not Enrolled](../l1-runbooks/24-android-device-not-enrolled.md)
+- [L1 Runbook 27: Android ZTE Enrollment Failed](../l1-runbooks/27-android-zte-enrollment-failed.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-23 | Initial version — Android L2 enrollment investigation runbook (5-pattern structure covering BYOD / COBO / ZTE / Dedicated / tenant-config-universal) | -- |
