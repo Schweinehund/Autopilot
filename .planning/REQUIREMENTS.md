@@ -11,44 +11,44 @@ Requirements for the Android Enterprise milestone. Each maps to roadmap phases (
 
 Glossary, admin template, reference matrices, and enrollment overview — prerequisites for all mode-specific content.
 
-- [ ] **AEBASE-01**: Intune admin can read an Android Enterprise glossary (`docs/_glossary-android.md`) that disambiguates 13 terms colliding with existing Windows/macOS/iOS glossaries (work profile, supervision, user enrollment, dedicated, corporate identifiers, etc.)
-- [ ] **AEBASE-02**: Intune admin can read an Android enrollment overview (`docs/android-lifecycle/00-enrollment-overview.md`) explaining the two orthogonal axes — ownership (corporate vs personal) and management scope (fully managed, work profile, dedicated, AOSP) — with a supervision analog explanation for admins familiar with iOS
-- [ ] **AEBASE-03**: Intune admin can read a provisioning-method matrix (`docs/android-lifecycle/02-provisioning-methods.md`) comparing NFC / QR / DPC identifier (afw#setup) / Zero-Touch across all supported modes with Android version availability
-- [ ] **AEBASE-04**: Intune admin can read an Android version fragmentation matrix (`docs/android-lifecycle/03-android-version-matrix.md`) showing minimum OS per mode and notable version breakpoints (Android 11 COPE NFC removal, Android 12 IMEI removal, Android 15 FRP hardening)
-- [ ] **AEBASE-05**: Doc author can reference a tri-portal admin template (`docs/_templates/admin-template-android.md`) with H4 sub-sections for Intune admin center / Managed Google Play / Zero-Touch portal — this template is used by all Android admin setup guides
+- [x] **AEBASE-01**: Intune admin can read an Android Enterprise glossary (`docs/_glossary-android.md`) that disambiguates 13 terms colliding with existing Windows/macOS/iOS glossaries (work profile, supervision, user enrollment, dedicated, corporate identifiers, etc.)
+- [x] **AEBASE-02**: Intune admin can read an Android enrollment overview (`docs/android-lifecycle/00-enrollment-overview.md`) explaining the two orthogonal axes — ownership (corporate vs personal) and management scope (fully managed, work profile, dedicated, AOSP) — with a supervision analog explanation for admins familiar with iOS
+- [x] **AEBASE-03**: Intune admin can read a provisioning-method matrix (`docs/android-lifecycle/02-provisioning-methods.md`) comparing NFC / QR / DPC identifier (afw#setup) / Zero-Touch across all supported modes with Android version availability
+- [x] **AEBASE-04**: Intune admin can read an Android version fragmentation matrix (`docs/android-lifecycle/03-android-version-matrix.md`) showing minimum OS per mode and notable version breakpoints (Android 11 COPE NFC removal, Android 12 IMEI removal, Android 15 FRP hardening)
+- [x] **AEBASE-05**: Doc author can reference a tri-portal admin template (`docs/_templates/admin-template-android.md`) with H4 sub-sections for Intune admin center / Managed Google Play / Zero-Touch portal — this template is used by all Android admin setup guides
 
 ### Prerequisites (AEPREQ)
 
 Managed Google Play binding and Zero-Touch portal — hard gates for corporate GMS-based modes and Zero-Touch Enrollment respectively.
 
-- [ ] **AEPREQ-01**: Intune admin can read an Android prerequisites doc (`docs/android-lifecycle/01-android-prerequisites.md`) summarizing the tri-portal surface, GMS vs AOSP split, and corporate-identifier behavior with Android 12+ IMEI/serial removal
-- [ ] **AEPREQ-02**: Intune admin can read an admin setup overview (`docs/admin-setup-android/00-overview.md`) describing the correct tri-portal setup sequence and per-mode portal dependencies
-- [ ] **AEPREQ-03**: Intune admin can bind a tenant to Managed Google Play (`docs/admin-setup-android/01-managed-google-play.md`) using an Entra account (preferred since August 2024), starting from `endpoint.microsoft.com` (not `intune.microsoft.com`), with a "what breaks" table covering disconnect consequences
-- [ ] **AEPREQ-04**: Intune admin can configure the Zero-Touch portal (`docs/admin-setup-android/02-zero-touch-portal.md`) with reseller requirement as Step 0, portal navigation, DPC extras JSON, ZT-Intune linking, and KME/ZT mutual-exclusion callout for Samsung devices
+- [x] **AEPREQ-01**: Intune admin can read an Android prerequisites doc (`docs/android-lifecycle/01-android-prerequisites.md`) summarizing the tri-portal surface, GMS vs AOSP split, and corporate-identifier behavior with Android 12+ IMEI/serial removal
+- [x] **AEPREQ-02**: Intune admin can read an admin setup overview (`docs/admin-setup-android/00-overview.md`) describing the correct tri-portal setup sequence and per-mode portal dependencies
+- [x] **AEPREQ-03**: Intune admin can bind a tenant to Managed Google Play (`docs/admin-setup-android/01-managed-google-play.md`) using an Entra account (preferred since August 2024), starting from `endpoint.microsoft.com` (not `intune.microsoft.com`), with a "what breaks" table covering disconnect consequences
+- [x] **AEPREQ-04**: Intune admin can configure the Zero-Touch portal (`docs/admin-setup-android/02-zero-touch-portal.md`) with reseller requirement as Step 0, portal navigation, DPC extras JSON, ZT-Intune linking, and KME/ZT mutual-exclusion callout for Samsung devices
 
 ### Fully Managed COBO (AECOBO)
 
 Corporate-owned Fully Managed mode admin setup with COPE migration note and Android 15 FRP callout.
 
-- [ ] **AECOBO-01**: Intune admin can provision a Fully Managed (COBO) corporate device (`docs/admin-setup-android/03-fully-managed-cobo.md`) via any of the four provisioning methods (QR, NFC, DPC identifier, Zero-Touch) with enrollment profile, token management, and Entra join behavior documented
-- [ ] **AECOBO-02**: Intune admin can read a COPE migration note inside the COBO guide using Google's current language ("Google recommends WPCO") rather than "COPE deprecated"
-- [ ] **AECOBO-03**: Intune admin can read an Android 15 Factory Reset Protection (FRP) callout in the COBO guide explaining how FRP hardening affects re-enrollment and how to configure Enterprise FRP via Intune policy
+- [x] **AECOBO-01**: Intune admin can provision a Fully Managed (COBO) corporate device (`docs/admin-setup-android/03-fully-managed-cobo.md`) via any of the four provisioning methods (QR, NFC, DPC identifier, Zero-Touch) with enrollment profile, token management, and Entra join behavior documented
+- [x] **AECOBO-02**: Intune admin can read a COPE migration note inside the COBO guide using Google's current language ("Google recommends WPCO") rather than "COPE deprecated"
+- [x] **AECOBO-03**: Intune admin can read an Android 15 Factory Reset Protection (FRP) callout in the COBO guide explaining how FRP hardening affects re-enrollment and how to configure Enterprise FRP via Intune policy
 
 ### BYOD Work Profile (AEBYOD)
 
 BYOD Work Profile on Personally-Owned devices — tier-inverted content (end-user-initiated enrollment) sourced post-AMAPI migration (April 2025).
 
-- [ ] **AEBYOD-01**: Intune admin can configure BYOD Work Profile enrollment (`docs/admin-setup-android/04-byod-work-profile.md`) with enrollment restrictions, work profile policy, data transfer controls, and privacy boundary table (what admin CAN vs CANNOT see on personal side)
-- [ ] **AEBYOD-02**: End user can self-enroll a personal Android device (`docs/end-user-guides/android-work-profile-setup.md`) via Company Portal with plain-language steps and a "what IT can/cannot see" section — no Intune portal steps referenced
-- [ ] **AEBYOD-03**: Intune admin can read an AMAPI migration callout in the BYOD admin guide explaining custom OMA-URI removal, Wi-Fi cert-auth requirement, and management app change (from Company Portal to Microsoft Intune app)
+- [x] **AEBYOD-01**: Intune admin can configure BYOD Work Profile enrollment (`docs/admin-setup-android/04-byod-work-profile.md`) with enrollment restrictions, work profile policy, data transfer controls, and privacy boundary table (what admin CAN vs CANNOT see on personal side)
+- [x] **AEBYOD-02**: End user can self-enroll a personal Android device (`docs/end-user-guides/android-work-profile-setup.md`) via Company Portal with plain-language steps and a "what IT can/cannot see" section — no Intune portal steps referenced
+- [x] **AEBYOD-03**: Intune admin can read an AMAPI migration callout in the BYOD admin guide explaining custom OMA-URI removal, Wi-Fi cert-auth requirement, and management app change (from Company Portal to Microsoft Intune app)
 
 ### Dedicated Devices (AEDED)
 
 Kiosk/COSU dedicated device mode with Managed Home Screen configuration and persona callouts.
 
-- [ ] **AEDED-01**: Intune admin can provision a Dedicated (kiosk/COSU) device (`docs/admin-setup-android/05-dedicated-devices.md`) with persona callout (Intune Admin + LOB Operations Owner), scenario overview (single-app / multi-app / digital signage / Entra shared device mode), enrollment profile, and MHS exit-PIN sync requirement documented
-- [ ] **AEDED-02**: Intune admin can read a Managed Home Screen exit-PIN synchronization callout explaining that exit-kiosk PIN must match between device restrictions profile and Managed Home Screen app config or the user will hit a visible error
-- [ ] **AEDED-03**: Intune admin can read an Android 15 FRP callout in the Dedicated guide describing FRP behavior during factory-reset re-provisioning
+- [x] **AEDED-01**: Intune admin can provision a Dedicated (kiosk/COSU) device (`docs/admin-setup-android/05-dedicated-devices.md`) with persona callout (Intune Admin + LOB Operations Owner), scenario overview (single-app / multi-app / digital signage / Entra shared device mode), enrollment profile, and MHS exit-PIN sync requirement documented
+- [x] **AEDED-02**: Intune admin can read a Managed Home Screen exit-PIN synchronization callout explaining that exit-kiosk PIN must match between device restrictions profile and Managed Home Screen app config or the user will hit a visible error
+- [x] **AEDED-03**: Intune admin can read an Android 15 FRP callout in the Dedicated guide describing FRP behavior during factory-reset re-provisioning
 
 ### Zero-Touch Enrollment (AEZTE)
 
@@ -155,24 +155,24 @@ Which phases cover which requirements. Populated by roadmapper at roadmap creati
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AEBASE-01 | Phase 34 | Pending |
-| AEBASE-02 | Phase 34 | Pending |
-| AEBASE-03 | Phase 34 | Pending |
-| AEBASE-04 | Phase 34 | Pending |
-| AEBASE-05 | Phase 34 | Pending |
-| AEPREQ-01 | Phase 35 | Pending |
-| AEPREQ-02 | Phase 35 | Pending |
-| AEPREQ-03 | Phase 35 | Pending |
-| AEPREQ-04 | Phase 35 | Pending |
-| AECOBO-01 | Phase 36 | Pending |
-| AECOBO-02 | Phase 36 | Pending |
-| AECOBO-03 | Phase 36 | Pending |
-| AEBYOD-01 | Phase 37 | Pending |
-| AEBYOD-02 | Phase 37 | Pending |
-| AEBYOD-03 | Phase 37 | Pending |
-| AEDED-01 | Phase 38 | Pending |
-| AEDED-02 | Phase 38 | Pending |
-| AEDED-03 | Phase 38 | Pending |
+| AEBASE-01 | Phase 34 | Complete |
+| AEBASE-02 | Phase 34 | Complete |
+| AEBASE-03 | Phase 34 | Complete |
+| AEBASE-04 | Phase 34 | Complete |
+| AEBASE-05 | Phase 34 | Complete |
+| AEPREQ-01 | Phase 35 | Complete |
+| AEPREQ-02 | Phase 35 | Complete |
+| AEPREQ-03 | Phase 35 | Complete |
+| AEPREQ-04 | Phase 35 | Complete |
+| AECOBO-01 | Phase 36 | Complete |
+| AECOBO-02 | Phase 36 | Complete |
+| AECOBO-03 | Phase 36 | Complete |
+| AEBYOD-01 | Phase 37 | Complete |
+| AEBYOD-02 | Phase 37 | Complete |
+| AEBYOD-03 | Phase 37 | Complete |
+| AEDED-01 | Phase 38 | Complete |
+| AEDED-02 | Phase 38 | Complete |
+| AEDED-03 | Phase 38 | Complete |
 | AEZTE-01 | Phase 39 | Complete |
 | AEAOSP-01 | Phase 39 | Complete |
 | AEL1-01 | Phase 40 | Complete |
