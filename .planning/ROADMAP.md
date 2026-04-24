@@ -90,7 +90,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 - [x] **Phase 39: Zero-Touch Enrollment + AOSP Stub** - Zero-Touch Enrollment corporate-scale admin content (extending Phase 35 ZT portal doc) and hard-scoped AOSP stub with OEM matrix
  (completed 2026-04-21)
 - [x] **Phase 40: Android L1 Triage & Runbooks** - Mode-first L1 decision tree + 6 scenario runbooks (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed) with D-10/D-12 patterns + L1 index append (completed 2026-04-23)
-- [ ] **Phase 41: Android L2 Investigation** - Log-collection guide (Company Portal, Microsoft Intune app, adb logcat) + 3 investigation runbooks (enrollment, app install, compliance with Play Integrity) + L2 index append
+- [x] **Phase 41: Android L2 Investigation** - Log-collection guide (Company Portal, Microsoft Intune app, adb logcat) + 3 investigation runbooks (enrollment, app install, compliance with Play Integrity) + L2 index append (completed 2026-04-24)
 - [ ] **Phase 42: Integration & Milestone Audit** - Android capability matrix, index.md Android stub, macOS glossary see-also cross-reference, and milestone audit (SafetyNet grep, supervision-term grep, AOSP stub scope-guard, last_verified frontmatter scan, deferred-file modification check)
 
 ## Phase Details
@@ -229,7 +229,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   - [x] 41-05-PLAN.md — docs/l2-runbooks/21-android-compliance-investigation.md (AEL2-04; D-16..D-21 hybrid axis + 4-cause + Play Integrity 3-tier + zero-SafetyNet body) - Wave 1
   - [x] 41-06-PLAN.md — Atomic retrofit of 6 Android L1 runbooks (22-27) per D-30/D-31/D-32 - Wave 2
   - [x] 41-07-PLAN.md — Atomic retrofit of docs/android-lifecycle/03-android-version-matrix.md line 89 (D-30) - Wave 2
-  - [ ] 41-08-PLAN.md — Atomic retrofit of 3 docs/admin-setup-android files (03/04/05) per D-30/D-31; PITFALL 5 preserves 03 line 20 Not-covered list - Wave 2
+  - [x] 41-08-PLAN.md — Atomic retrofit of 3 docs/admin-setup-android files (03/04/05) per D-30/D-31; PITFALL 5 preserves 03 line 20 Not-covered list - Wave 2
 **UI hint**: no
 
 ### Phase 42: Integration & Milestone Audit
@@ -249,7 +249,7 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   - [x] 41-04-PLAN.md — docs/l2-runbooks/20-android-app-install-investigation.md (AEL2-03; D-13..D-15 three-class + MAM-WE exclusion) - Wave 1
   - [x] 41-05-PLAN.md — docs/l2-runbooks/21-android-compliance-investigation.md (AEL2-04; D-16..D-21 hybrid axis + 4-cause + Play Integrity 3-tier + zero-SafetyNet body) - Wave 1
   - [x] 41-06-PLAN.md — Atomic retrofit of 6 Android L1 runbooks (22-27) per D-30/D-31/D-32 - Wave 2
-  - [ ] 41-07-PLAN.md — Atomic retrofit of docs/android-lifecycle/03-android-version-matrix.md line 89 (D-30) - Wave 2
+  - [x] 41-07-PLAN.md — Atomic retrofit of docs/android-lifecycle/03-android-version-matrix.md line 89 (D-30) - Wave 2
   - [ ] 41-08-PLAN.md — Atomic retrofit of 3 docs/admin-setup-android files (03/04/05) per D-30/D-31; PITFALL 5 preserves 03 line 20 Not-covered list - Wave 2
 **UI hint**: no
 
@@ -297,5 +297,5 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 38. Dedicated Devices Admin | v1.4 | 1/1 | Complete   | 2026-04-23 |
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete    | 2026-04-23 |
 | 40. Android L1 Triage & Runbooks | v1.4 | 10/10 | Complete    | 2026-04-23 |
-| 41. Android L2 Investigation | v1.4 | 7/8 | In Progress|  |
+| 41. Android L2 Investigation | v1.4 | 8/8 | Complete   | 2026-04-24 |
 | 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |
