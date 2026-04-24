@@ -1,0 +1,92 @@
+name: Audit Harness Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/validation/**'
+      - 'docs/_glossary-android.md'
+      - 'docs/reference/android-capability-matrix.md'
+      - 'docs/android-lifecycle/**'
+      - 'docs/admin-setup-android/**'
+      - 'docs/l2-runbooks/**-android-*.md'
+      - 'docs/l1-runbooks/**-android-*.md'
+  schedule:
+    - cron: '0 8 * * 1'   # Weekly bitrot catch: 08:00 UTC every Monday
+  workflow_dispatch:
+
+jobs:
+  parse:
+    name: Sidecar JSON parse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Validate v1.4 sidecar
+        run: |
+          node -e "const j=JSON.parse(require('fs').readFileSync('scripts/validation/v1.4-audit-allowlist.json','utf8'));
+          if (!Array.isArray(j.supervision_exemptions) || j.supervision_exemptions.length === 0) { console.error('supervision_exemptions empty'); process.exit(1); }
+          if (!Array.isArray(j.safetynet_exemptions) || j.safetynet_exemptions.length === 0) { console.error('safetynet_exemptions empty'); process.exit(1); }
+          console.log('v1.4 OK: '+j.safetynet_exemptions.length+'+'+j.supervision_exemptions.length);"
+      - name: Validate v1.4.1 sidecar
+        run: |
+          node -e "const j=JSON.parse(require('fs').readFileSync('scripts/validation/v1.4.1-audit-allowlist.json','utf8'));
+          if (!Array.isArray(j.supervision_exemptions)) { console.error('supervision_exemptions missing'); process.exit(1); }
+          console.log('v1.4.1 OK:', j.safetynet_exemptions.length+'+'+j.supervision_exemptions.length+'+'+(j.cope_banned_phrases||[]).length);"
+
+  path-match:
+    name: Sidecar path matches harness
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assert v1.4 harness sidecar path
+        run: |
+          if ! grep -q "scripts/validation/v1.4-audit-allowlist.json" scripts/validation/v1.4-milestone-audit.mjs; then
+            echo "FAIL: v1.4 harness missing sidecar reference"; exit 1
+          fi
+      - name: Assert v1.4.1 harness sidecar path
+        run: |
+          if ! grep -q "scripts/validation/v1.4.1-audit-allowlist.json" scripts/validation/v1.4.1-milestone-audit.mjs; then
+            echo "FAIL: v1.4.1 harness missing sidecar reference"; exit 1
+          fi
+
+  harness-run:
+    name: Harness replay
+    runs-on: ubuntu-latest
+    needs: [parse, path-match]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run v1.4 harness (historical replay)
+        run: node scripts/validation/v1.4-milestone-audit.mjs --verbose
+      - name: Run v1.4.1 harness
+        run: node scripts/validation/v1.4.1-milestone-audit.mjs --verbose
+
+  pin-helper-advisory:
+    name: Supervision pin helper (advisory)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    continue-on-error: true   # D-14 / D-15: advisory only; never fails build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run regenerate-supervision-pins.mjs --report
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --report > pin-report.txt
+          cat pin-report.txt
+      - name: Post report as PR comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('pin-report.txt', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Supervision Pin Helper (Advisory)\n\n```\n' + report + '\n```\n\n*Advisory only — D-14.*'
+            });
