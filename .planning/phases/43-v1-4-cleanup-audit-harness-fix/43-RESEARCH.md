@@ -1166,27 +1166,27 @@ Test: `node scripts/validation/v1.4-milestone-audit.mjs --verbose | tee v1.4.log
 | A7 | `hasUnderscoreDirSegment` scope-filter correctly exempts `docs/_glossary-android.md` (a shipped file with `_` prefix) while catching `docs/_templates/` (the directory we want to filter). | §1 Edit 4 | If predicate is overly broad and excludes `_glossary-android.md`, C2/C5 lose ~7 pinned supervision occurrences from scope — the harness silently passes content that SHOULD be pinned. Mitigation: Option A predicate walks `segments.slice(0, -1)` (directory segments only), excluding filename. [VERIFIED via pseudocode review 2026-04-24.] |
 | A8 | The helper self-test diff criterion (identical set of `{file, line}` pairs) is the correct correctness gate; no tolerance for pin count mismatch. | §4 | If a legitimate Tier-1 occurrence drifts into existence during Phase 43 execution (e.g., a doc gets a new cross-platform note), the self-test fails. Mitigation: Phase 43 executes on a stable baseline; self-test re-run is sub-second. [VERIFIED logic — tight gate is the intended contract.] |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should the pre-commit hook be auto-installed via `npm run install-hooks` or left manual?**
    - What we know: Repo's root `package.json` has no install-hooks helper; adding one is 3 lines.
    - What's unclear: Whether repo's convention prefers zero-automation (manual `cp .git/hooks`) or single-command setup.
-   - Recommendation: Leave manual (document in README) for Phase 43; promote to `npm run install-hooks` in a future milestone if friction emerges. Claude's discretion per D-claudes-discretion.
+   - RESOLVED: Leave manual (document in README) for Phase 43; promote to `npm run install-hooks` in a future milestone if friction emerges. Claude's discretion per D-claudes-discretion.
 
 2. **Does Phase 39 VALIDATION.md require full artifact restore (including PLAN files) or is VALIDATION.md + VERIFICATION.md sufficient?**
    - What we know: `/gsd-validate-phase` workflow reads PLAN + SUMMARY files in Step 2a.
    - What's unclear: Whether it also requires CONTEXT.md or other artifacts.
-   - Recommendation: Plan 43-09 restores the FULL `.planning/phases/39-zero-touch-enrollment-aosp-stub/` tree from commit `ef7717b` (bulk restore via `git ls-tree` + per-file `git show`), to avoid a "State B: VALIDATION file missing" fallback path.
+   - RESOLVED: Plan 43-09 restores the FULL `.planning/phases/39-zero-touch-enrollment-aosp-stub/` tree from commit `ef7717b` (bulk restore via `git ls-tree` + per-file `git show`), to avoid a "State B: VALIDATION file missing" fallback path.
 
 3. **Should `regenerate-supervision-pins.mjs --self-test` be part of the CI path-match job or a separate job?**
    - What we know: D-14/D-15 mandate advisory-only for the helper `--report` mode.
    - What's unclear: Whether `--self-test` is similarly advisory or blocking. (`--self-test` is stricter — exact-match gate.)
-   - Recommendation: Make `--self-test` advisory too (same CI tier as `--report`) for Phase 43; promote to blocking in v1.5 once false-positive rate is near-zero. This matches the overall informational-first grace pattern.
+   - RESOLVED: Make `--self-test` advisory too (same CI tier as `--report`) for Phase 43; promote to blocking in v1.5 once false-positive rate is near-zero. This matches the overall informational-first grace pattern.
 
 4. **If AOSP stub trim lands outside the 600-900 envelope after first pass, does Phase 43 iterate in-phase or defer to Phase 45?**
    - What we know: D-18 targets ~700 words. §5 math lands at ~747 (with all 4 candidates compressed).
    - What's unclear: Iteration budget — how many trim passes is reasonable before concluding "this word target is infeasible without removing locked content."
-   - Recommendation: Plan 43-07 carries a "max 2 trim iterations" budget; if the 3rd iteration would violate D-17 preservation rules, escalate to user with explicit "D-18 ~700 target infeasible without D-17 content removal — proposing 800 as alternate target."
+   - RESOLVED: Plan 43-07 carries a "max 2 trim iterations" budget; if the 3rd iteration would violate D-17 preservation rules, escalate to user with explicit "D-18 ~700 target infeasible without D-17 content removal — proposing 800 as alternate target."
 
 ## Sources
 
