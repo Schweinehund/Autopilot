@@ -237,7 +237,7 @@ User-actionable remediation per sub-cause above. Cross-cause summary:
 
 (Overall — applies across all four causes.)
 
-Escalate to L2 (or to the Intune admin directly if not already done). Android L2 investigation runbooks (Phase 41) will live in `docs/l2-runbooks/` — use the L2 runbook index once Phase 41 ships.
+Escalate to L2 (or to the Intune admin directly if not already done). See [Android Compliance Investigation](../l2-runbooks/21-android-compliance-investigation.md) — L1 Cause A maps to RB21 Cause A, Cause B→B, Cause C→C, Cause D→D. Use the [L2 Runbook Index](../l2-runbooks/00-index.md#android-l2-runbooks) for routing.
 
 Escalate to L2 if:
 
@@ -267,4 +267,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Resolved Phase 41 L2 cross-references | -- |
 | 2026-04-23 | Initial version (4-cause runbook: Play Integrity / OS Version / CA Timing Gap / Passcode-Encryption) | -- |

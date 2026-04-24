@@ -93,7 +93,7 @@ L1 documents and hands this packet to the Intune administrator. L1 does not exec
 
 ## Escalation Criteria
 
-Escalate to L2 (or to the Intune admin directly if not already done). Android L2 investigation runbooks (Phase 41) will live in `docs/l2-runbooks/` — use the L2 runbook index once Phase 41 ships.
+Escalate to L2 (or to the Intune admin directly if not already done). See [Android Enrollment Investigation](../l2-runbooks/19-android-enrollment-investigation.md#pattern-a-work-profile-not-created-byod) (Pattern A — Work Profile Not Created) and [Android Log Collection Guide](../l2-runbooks/18-android-log-collection.md).
 
 Escalate to L2 if:
 
@@ -123,4 +123,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Resolved Phase 41 L2 cross-references | -- |
 | 2026-04-23 | Initial version | -- |

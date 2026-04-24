@@ -207,7 +207,7 @@ After removal, have the user factory-reset the device; ZTE enrollment should ini
 
 (Overall — applies across all four L1-diagnosable causes plus Cause E admin-only path.)
 
-Escalate to L2 (or to the Intune admin directly if not already done). Android L2 investigation runbooks (Phase 41) will live in `docs/l2-runbooks/` — use the L2 runbook index once Phase 41 ships.
+Escalate to L2 (or to the Intune admin directly if not already done). See [Android Enrollment Investigation](../l2-runbooks/19-android-enrollment-investigation.md#pattern-c-zte-device-claim-failure) (Pattern C — ZTE Device Claim Failure) and [Android Log Collection Guide](../l2-runbooks/18-android-log-collection.md).
 
 Escalate to L2 if:
 
@@ -240,4 +240,5 @@ If all Cause A-D checks pass but devices still fail at enrollment, escalate to I
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Resolved Phase 41 L2 cross-references | -- |
 | 2026-04-23 | Initial version (4 L1-diagnosable causes A-D + Cause E escalate-only) | -- |
