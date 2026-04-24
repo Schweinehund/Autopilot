@@ -122,3 +122,42 @@ Phase 39 has TWO distinct deliverables that do NOT yet exist in their Phase 39 f
 - [x] `nyquist_compliant: true` set in frontmatter after planner confirmation
 
 **Approval:** confirmed 2026-04-23 — planner has confirmed alignment of the 35-row Per-Task + Manual-Only verification map with `39-01-PLAN.md` (tasks 39-01-01..39-01-12 + phase-gate rows 39-all-01/02/03/05/06/07) and `39-02-PLAN.md` (tasks 39-02-01..39-02-17 + phase-gate rows 39-all-02/03/04/06/07). `nyquist_compliant: true` set.
+
+---
+
+## Validation Audit 2026-04-24
+
+**Re-gate scope:** DEFER-04 closure per Phase 43 D-21. v1.4-MILESTONE-AUDIT C3 flagged `06-aosp-stub.md` body 1089 words vs Phase 39 envelope 600-900 as informational drift. Phase 43 Plan 07 (commit `5dd0862`) trimmed the stub to 696 words and migrated RealWear deep content losslessly to `.planning/phases/45-per-oem-aosp-expansion/PHASE-45-AOSP-SOURCE.md`. This audit re-gates the trimmed stub against the Phase 39 envelope and all locked invariants.
+
+**Re-gate performed by:** Phase 43 Plan 09 gsd-executor (sequential, inline-equivalent of `/gsd-validate-phase 39` per CONTEXT D-21; nested workflow invocation declined per orchestrator nesting rules #686). Fresh measurement against on-disk state at Phase 43 Plan 09 execution time.
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 0 |
+| Resolved | 0 |
+| Escalated | 0 |
+
+### Mechanical Check Results (Phase 39 Envelope + Locked Invariants)
+
+| Check | Source | Command | Result | Status |
+|-------|--------|---------|--------|--------|
+| Body word count within 600-900 envelope | 39-02-10 (D-11 + PITFALL 12) | harness-formula strip-frontmatter + strip-See-Also + `wc` | **696 words** | PASS (was 1089 in v1.4 audit) |
+| PITFALL-7 "not supported under AOSP" framing | 39-02-06 (D-10, D-17 lock) | `grep -c "not supported under AOSP"` | **2 matches** | PASS |
+| Exactly 9 H2 whitelist headings | 39-02-02 (D-11 H2 whitelist) | `grep -c "^## "` | **9** | PASS |
+| All 8 MS Learn OEMs enumerated | 39-02-05 (D-09) | `grep -c` for DigiLens/HTC/Lenovo/Meta/PICO/RealWear/Vuzix/Zebra | All ≥ 2 (RealWear = 10) | PASS |
+| Deferred-content table present | 39-02-13 (D-07) | pipe-table row count in `## Deferred Content` H2 | **7 rows intact** | PASS |
+| v1.4.1 harness C3 informational | 43 Plan 02 `v1.4.1-milestone-audit.mjs` | `node scripts/validation/v1.4.1-milestone-audit.mjs` | C3 PASS reporting 696 words | PASS |
+| v1.4.1 harness C6 PITFALL-7 preservation | 43 Plan 02 C6 informational | same | 1/1 AOSP-scoped files preserve framing | PASS |
+
+### DEFER-04 Closure
+
+AOSP stub body word count (harness formula): **696 words**.
+Phase 39 envelope: 600-900 words. Status: **PASS**.
+Trim committed in Phase 43 Plan 07 commit `5dd0862` (2026-04-24).
+Lossless extract of RealWear deep content staged for Phase 45 AEAOSPFULL-01 consumption at `.planning/phases/45-per-oem-aosp-expansion/PHASE-45-AOSP-SOURCE.md` (D-16/D-17/D-20 contract).
+
+**Envelope decision:** Plan 07 hit D-18 `~700` internal target exactly (696 words) — keeps ~204 words of headroom under the 900 cap for Phase 45 AEAOSPFULL-09's deferred-content table collapse without re-triggering envelope gate.
+
+**DEFER-04 is CLOSED.** Phase 39 status remains `passed` (23/23 must-haves verified at original 2026-04-23 verification; word-count drift resolved; no other gaps detected in this re-gate). See `.planning/milestones/v1.4-MILESTONE-AUDIT.md` `re_audit_resolution:` frontmatter block for milestone-level closure record.
+
+**Approval (2026-04-24):** inline-equivalent re-gate confirmed by Phase 43 Plan 09 gsd-executor. Auto-mode approval per orchestrator `--auto --chain` directive on plan frontmatter (`autonomous: false` relaxed to inline-equivalent per CONTEXT D-21 fallback path). `nyquist_compliant: true` retained.
