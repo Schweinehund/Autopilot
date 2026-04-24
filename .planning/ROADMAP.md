@@ -227,7 +227,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 40. Android L1 Triage & Runbooks | v1.4 | 10/10 | Complete | 2026-04-23 |
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete | 2026-04-24 |
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
-| 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete   | 2026-04-24 |
+| 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 0/? | Not started | - |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 0/? | Not started | - |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
