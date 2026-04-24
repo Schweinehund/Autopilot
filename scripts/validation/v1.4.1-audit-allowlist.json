@@ -17,7 +17,16 @@
     {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 53, "reason": "Phase 34 D-03 locked narrative — Supervision-is-not-an-Android-term bridge sentence (verified 2026-04-24)"},
     {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 83, "reason": "See Also entry linking to Apple Glossary supervision anchor (verified 2026-04-24)"},
     {"file": "docs/admin-setup-android/03-fully-managed-cobo.md", "line": 35, "reason": "Cross-platform note blockquote citing iOS Supervision analog in COBO Key Concepts (re-verified 2026-04-24 post Plan 41-08; line unchanged)"},
-    {"file": "docs/l2-runbooks/20-android-app-install-investigation.md", "line": 21, "reason": "Three-class disambiguation intro contrasting Android with iOS where supervision state is a primary failure axis (verified 2026-04-24)"}
+    {"file": "docs/l2-runbooks/20-android-app-install-investigation.md", "line": 21, "reason": "Three-class disambiguation intro contrasting Android with iOS where supervision state is a primary failure axis (verified 2026-04-24)"},
+    {"file": "docs/_glossary-android.md", "line": 15, "reason": "Alphabetical index link to Supervision disambiguation entry at line 65 — iOS-attributed index-of-terms pattern (verified 2026-04-24)"},
+    {"file": "docs/_glossary-android.md", "line": 45, "reason": "COBO Cross-platform note — 6 iOS/macOS-attributed bridge-prose occurrences per Phase 34 D-03 narrative template (verified 2026-04-24)"},
+    {"file": "docs/_glossary-android.md", "line": 63, "reason": "Fully Managed Cross-platform note — 6 iOS-attributed occurrences with hyperlink to _glossary-macos.md#supervision per Phase 34 D-03 (verified 2026-04-24)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 74, "reason": "Phase 42 D-12 mandated HTML-comment authoring rule opening — never rendered to readers (verified 2026-04-24)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 76, "reason": "Phase 42 D-12 HTML-comment body — explicit 'never supervised' negative-instruction for authors (verified 2026-04-24)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 77, "reason": "Phase 42 D-12 HTML-comment closing example pair — 'iOS Supervision' not 'Supervision' (verified 2026-04-24)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 79, "reason": "Cross-Platform Equivalences intro — explicit Apple-attributed terms cited as anti-pattern to PREVENT Android-side use (verified 2026-04-24)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 83, "reason": "Paired-row header cell — explicit 'iOS Supervision (ADE-enrolled)' platform attribution per D-12 (verified 2026-04-24)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 84, "reason": "Paired-row body — 6 iOS-attributed occurrences + explicit 'not an Android management term' anti-pattern instruction per D-12 (verified 2026-04-24)"}
   ],
   "cope_banned_phrases": [
     "\\bCOPE\\b[^.]*\\bdeprecated\\b",
