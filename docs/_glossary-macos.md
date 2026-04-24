@@ -1,5 +1,5 @@
 ---
-last_verified: 2026-04-17
+last_verified: 2026-04-24
 review_by: 2026-07-16
 applies_to: both
 audience: all
@@ -7,7 +7,7 @@ platform: all
 ---
 
 > **Platform coverage:** This glossary covers Apple-platform provisioning and management terminology for macOS and iOS/iPadOS.
-> For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md).
+> For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For Android Enterprise terminology, see the [Android Enterprise Provisioning Glossary](_glossary-android.md).
 
 # Apple Provisioning Glossary
 
@@ -112,5 +112,6 @@ Managed App Without Enrollment -- Intune's **app-layer** data protection model f
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-24 | Phase 42: added Android Enterprise Provisioning Glossary see-also to continuation banner (AEAUDIT-03) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS terms (supervision, MAM-WE, APNs, account-driven user enrollment, jailbreak detection), updated VPP with iOS device-licensed vs user-licensed distinction, new ## App Protection (MAM) H2 | -- |
 | 2026-04-13 | Initial version -- 6 macOS terms with Windows cross-references | -- |
