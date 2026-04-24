@@ -14,7 +14,7 @@
 - [x] **AEAUDIT-02**: Expand audit allow-list sidecar from ~10 to ~37 pins for legitimate iOS-attributed supervision bridge-prose references in `docs/_glossary-android.md` + `docs/reference/android-capability-matrix.md` Cross-Platform Equivalences section
 - [ ] **AEAUDIT-03**: Normalize `last_verified` 60-day freshness cycle — retroactively re-date L2 runbooks 18-21 review_by (2026-07-22 → 2026-06-22) + normalize `docs/admin-setup-android/admin-template-android.md` frontmatter (exclude `_templates/` from C5 scope OR normalize sentinel)
 - [ ] **AEAUDIT-04**: Resolve Phase 39 AOSP stub envelope discrepancy (~1089 words vs 600-900 target) via content-migration approach — `docs/admin-setup-android/06-aosp-stub.md` becomes thin routing + PITFALL-7 anchor; deep content migrates to Phase 45 per-OEM files
-- [ ] **AEAUDIT-05**: Fix audit harness sidecar-path blocker — migrate `v1.4-audit-allowlist.json` from archived `.planning/phases/42-*/` to persistent `scripts/validation/`; update `v1.4-milestone-audit.mjs` line 57; version harness to `v1.4.1-milestone-audit.mjs` preserving v1.4 commit-SHA reproducibility anchor; add `scripts/validation/regenerate-supervision-pins.mjs` helper
+- [x] **AEAUDIT-05**: Fix audit harness sidecar-path blocker — migrate `v1.4-audit-allowlist.json` from archived `.planning/phases/42-*/` to persistent `scripts/validation/`; update `v1.4-milestone-audit.mjs` line 57; version harness to `v1.4.1-milestone-audit.mjs` preserving v1.4 commit-SHA reproducibility anchor; add `scripts/validation/regenerate-supervision-pins.mjs` helper
 
 ### Knox Mobile Enrollment (AEKNOX-01..07 — Phase 44)
 

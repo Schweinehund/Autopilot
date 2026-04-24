@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
 status: executing
-stopped_at: Completed 43-03-PLAN.md (AEAUDIT-02 closed; C2 PASS)
-last_updated: "2026-04-24T20:46:07.570Z"
+stopped_at: Completed 43-04-PLAN.md (regenerate-supervision-pins.mjs helper + self-test PASS; AEAUDIT-05 closed)
+last_updated: "2026-04-24T21:03:28.920Z"
 last_activity: 2026-04-24
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 10
-  completed_plans: 3
-  percent: 30
+  completed_plans: 4
+  percent: 40
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 43 (v1-4-cleanup-audit-harness-fix) — EXECUTING
-Plan: 4 of 10
+Plan: 5 of 10
 Status: Ready to execute
 Last activity: 2026-04-24
 
@@ -71,6 +71,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 - [Phase 43]: Plan 43-01 rescue commit a868882: FROZEN marker placed on line 2 (after shebang) rather than line 1 — Node ESM requires shebang on line 1; fix preserves D-02 intent (marker in lines 1-10) while keeping harness executable. Plan 43-02 cp-then-additive editing must drop FROZEN fragment from v1.4.1 copy (kept for v1.4 frozen-predecessor only).
 - [Phase 43]: Plan 43-02 scaffold commit be1087b: v1.4.1 harness = v1.4 copy + 6 additive edits (C6/C7/C9 informational-first, _*-prefix scope-filter, TEMPLATE-SENTINEL C5 parse). Sidecar skeleton 4+9+3. Phase 42 D-25 no-shared-module contract honored.
 - [Phase 43]: Plan 43-03 hand-authored 9 new iOS-attributed bridge-prose supervision pins into both v1.4 and v1.4.1 allow-list sidecars (9 to 18 total); harness C2 flipped FAIL (27 un-exempted findings) to PASS; AEAUDIT-02 substantively closed. RESEARCH '23/14-new' narrative resolved to authoritative 18 pins per canonical JSON block.
+- [Phase 43]: Plan 43-04: authored regenerate-supervision-pins.mjs helper (3 modes: --report / --emit-stubs / --self-test) + README; D-12 self-test dogfood gate PASSES reproducing Phase 43 hand-authored 9-new-pin set; classifier tightened with structural refinements (markdown anchor + enclosing H2 section) to honor D-11 Tier-2 never-auto-pin invariant; AEAUDIT-05 helper-tooling substantively closed
 
 ### Pending Todos
 
@@ -103,6 +104,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-24T20:46:07.561Z
-Stopped at: Completed 43-03-PLAN.md (AEAUDIT-02 closed; C2 PASS)
+Last session: 2026-04-24T21:03:28.912Z
+Stopped at: Completed 43-04-PLAN.md (regenerate-supervision-pins.mjs helper + self-test PASS; AEAUDIT-05 closed)
 Next action: `/gsd-plan-phase 43` (cleanup + audit harness fix — sidecar path + allow-list + freshness + AOSP stub prep)
