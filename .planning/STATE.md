@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
 status: executing
-stopped_at: Completed 43-04-PLAN.md (regenerate-supervision-pins.mjs helper + self-test PASS; AEAUDIT-05 closed)
-last_updated: "2026-04-24T21:03:28.920Z"
+stopped_at: Completed 43-05-PLAN.md
+last_updated: "2026-04-24T21:10:47.283Z"
 last_activity: 2026-04-24
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 10
-  completed_plans: 4
-  percent: 40
+  completed_plans: 5
+  percent: 50
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 43 (v1-4-cleanup-audit-harness-fix) — EXECUTING
-Plan: 5 of 10
+Plan: 6 of 10
 Status: Ready to execute
 Last activity: 2026-04-24
 
@@ -72,6 +72,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 - [Phase 43]: Plan 43-02 scaffold commit be1087b: v1.4.1 harness = v1.4 copy + 6 additive edits (C6/C7/C9 informational-first, _*-prefix scope-filter, TEMPLATE-SENTINEL C5 parse). Sidecar skeleton 4+9+3. Phase 42 D-25 no-shared-module contract honored.
 - [Phase 43]: Plan 43-03 hand-authored 9 new iOS-attributed bridge-prose supervision pins into both v1.4 and v1.4.1 allow-list sidecars (9 to 18 total); harness C2 flipped FAIL (27 un-exempted findings) to PASS; AEAUDIT-02 substantively closed. RESEARCH '23/14-new' narrative resolved to authoritative 18 pins per canonical JSON block.
 - [Phase 43]: Plan 43-04: authored regenerate-supervision-pins.mjs helper (3 modes: --report / --emit-stubs / --self-test) + README; D-12 self-test dogfood gate PASSES reproducing Phase 43 hand-authored 9-new-pin set; classifier tightened with structural refinements (markdown anchor + enclosing H2 section) to honor D-11 Tier-2 never-auto-pin invariant; AEAUDIT-05 helper-tooling substantively closed
+- [Phase 43-v1-4-cleanup-audit-harness-fix]: Plan 43-05: D-22 metadata-only shift on L2 runbooks 18-21 (review_by +60d; last_verified unchanged at 2026-04-23)
+- [Phase 43-v1-4-cleanup-audit-harness-fix]: Plan 43-05: D-24 belt-and-suspenders template sentinel (1970-01-01 # TEMPLATE-SENTINEL) paired with Plan 02 scope-filter
+- [Phase 43-v1-4-cleanup-audit-harness-fix]: Plan 43-05: D-25 Android-scope lock honored (iOS/macOS/Windows templates untouched; routed to v1.5 backlog)
 
 ### Pending Todos
 
@@ -104,6 +107,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-24T21:03:28.912Z
-Stopped at: Completed 43-04-PLAN.md (regenerate-supervision-pins.mjs helper + self-test PASS; AEAUDIT-05 closed)
+Last session: 2026-04-24T21:10:47.274Z
+Stopped at: Completed 43-05-PLAN.md
 Next action: `/gsd-plan-phase 43` (cleanup + audit harness fix — sidecar path + allow-list + freshness + AOSP stub prep)
