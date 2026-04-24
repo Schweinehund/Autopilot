@@ -1,5 +1,5 @@
 ---
-last_verified: 2026-04-17
+last_verified: 2026-04-24
 review_by: 2026-07-16
 applies_to: both
 audience: all
@@ -18,6 +18,7 @@ Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS AD
 - [Windows Autopilot](#windows-autopilot) -- Windows device provisioning via Autopilot (classic/APv1) and Device Preparation (APv2)
 - [macOS Provisioning](#macos-provisioning) -- macOS device provisioning via Automated Device Enrollment (ADE) through Apple Business Manager
 - [iOS/iPadOS Provisioning](#iosipados-provisioning) -- iOS/iPadOS device provisioning via Microsoft Intune (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE)
+- [Android Enterprise Provisioning](#android-enterprise-provisioning) -- Android device provisioning via Intune (Zero-Touch, Fully Managed, Work Profile, Dedicated, AOSP stub)
 - [Cross-Platform References](#cross-platform-references) -- Glossaries, concept comparison, and shared resources
 
 ---
@@ -163,12 +164,19 @@ Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and m
 
 ---
 
+## Android Enterprise Provisioning
+
+Troubleshooting, investigation, and setup guides for Android Enterprise provisioning through Microsoft Intune. For terminology, see the [Android Enterprise Provisioning Glossary](_glossary-android.md). For enrollment paths, see the [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md).
+
+---
+
 ## Cross-Platform References
 
 | Resource | Description |
 |----------|-------------|
 | [Windows Autopilot Glossary](_glossary.md) | Windows Autopilot terminology ([OOBE](_glossary.md#oobe), [ESP](_glossary.md#esp), TPM, ZTD, APv1, APv2) |
 | [macOS Provisioning Glossary](_glossary-macos.md) | macOS ADE terminology ([ADE](_glossary-macos.md#ade), [ABM](_glossary-macos.md#abm), Setup Assistant, Await Configuration) |
+| [Android Enterprise Provisioning Glossary](_glossary-android.md) | Android Enterprise terminology (Work Profile, COBO, COPE, Zero-Touch, DPC, Managed Google Play) |
 | [Windows vs macOS Concept Comparison](windows-vs-macos.md) | Platform terminology and enrollment mechanism mapping |
 | [Error Code Index](error-codes/00-index.md) | Master error code lookup with deployment-mode tagging (Windows) |
 | [Lifecycle Overview](lifecycle/00-overview.md) | End-to-end Windows Autopilot deployment sequence with flow diagrams |
@@ -186,6 +194,7 @@ Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and m
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-24 | Phase 42: added Android Provisioning stub H2, Choose-Your-Platform bullet, Android Glossary cross-reference entry (AEAUDIT-02) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Provisioning section (L1/L2/Admin Setup subsections) + Choose Your Platform third entry + trilateral H1 narrative | -- |
 | 2026-04-17 | Phase 32: added iOS Capability Matrix + iOS Enrollment Path Overview Cross-Platform References entries; platform coverage updated for trilateral framing | -- |
 | 2026-04-15 | Added macOS quick-reference card links to L1 and L2 tables; updated Common Issues description for cross-platform | -- |
