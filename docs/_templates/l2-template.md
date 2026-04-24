@@ -16,7 +16,7 @@ last_verified: YYYY-MM-DD
 review_by: YYYY-MM-DD
 applies_to: APv1 | APv2 | both | ADE | all
 audience: L2
-platform: Windows | macOS | iOS | all
+platform: Windows | macOS | iOS | Android | all
 ---
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
