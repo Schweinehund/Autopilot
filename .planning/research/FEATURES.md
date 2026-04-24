@@ -1,548 +1,314 @@
-# Feature Research: Android Enterprise Enrollment Documentation (v1.4)
+# Feature Research: v1.4.1 Android Enterprise Completion
 
-**Domain:** Android Enterprise enrollment documentation — Intune-managed Android devices across Zero-Touch, Fully Managed (COBO), BYOD Work Profile, Dedicated (kiosk/COSU), and AOSP modes
-**Researched:** 2026-04-19
-**Confidence:** HIGH (Microsoft Learn primary, Google Android Enterprise secondary, cross-validated)
-
----
-
-## Preamble: Android Enterprise is More Complex Than iOS
-
-iOS/iPadOS enrollment has one management axis (supervised vs unsupervised) and four paths. Android Enterprise has two independent axes:
-
-- **Ownership model axis:** Personally-owned (BYOD) vs Corporate-owned
-- **Management scope axis:** Fully managed (whole device) vs Work profile (containerized) vs Dedicated (locked single-use) vs AOSP (no GMS)
-
-These axes combine into five distinct enrollment modes in Intune. Additionally, Android introduces an **orthogonal provisioning-method axis** — the *how* of enrollment is separate from the *what* of enrollment, with QR code, NFC, DPC identifier, and Zero-Touch each applicable to different modes.
-
-The critical prerequisite that has no iOS equivalent: **Managed Google Play binding**. All Android Enterprise GMS modes require connecting the Intune tenant to a Google enterprise account before any enrollment profile can be created. This is a prerequisite gate for four of the five in-scope modes.
+**Domain:** Three sub-features closing v1.4 deferred Android coverage — Samsung Knox Mobile Enrollment (KME), full AOSP per-OEM expansion (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest), and COPE full admin path (vs. deprecation-rationale disposition).
+**Researched:** 2026-04-24
+**Milestone:** v1.4.1 (subsequent milestone after v1.4 shipped same day)
+**Confidence:** HIGH — Microsoft Learn + Samsung Knox docs + OEM vendor docs (RealWear, Meta, PICO, Zebra) cross-validated; COPE terminology re-verified against current MS Learn admin center UI labels.
 
 ---
 
-## Prerequisite: Managed Google Play Binding
+## Executive Summary
 
-### What It Is
+This research closes three distinct v1.4 deferred items. Each is a separate admin-guide surface with different complexity profiles, different portal dependencies, and different downstream links into existing v1.4 docs. Research conclusions in one paragraph each:
 
-The Managed Google Play binding is a one-time connection between the Intune tenant and a Google enterprise account (Google Admin account). Without it, no Android Enterprise enrollment modes work — not BYOD work profiles, not Fully Managed, not Dedicated. AOSP is the only in-scope mode that does not require it.
+**Knox Mobile Enrollment (DEFER-04):** KME is a Samsung-specific bulk enrollment pathway that overlays the existing tri-portal pattern. The **KME portal (Knox Admin Portal) is a fourth portal**, not a replacement for any of the three. The admin workflow is a 7-step dance requiring Samsung B2B account provisioning (1-2 business day approval wait), trusted-reseller upload handshake, EMM profile creation with mandatory Intune enrollment-token JSON, device upload approval, profile-to-device assignment, and first-boot verification. **KME itself requires no paid license**; the optional "Advanced" settings (app-install-during-enrollment, device-lock-during-enrollment) gate behind Knox Suite Enterprise Plan. Admin expectations converge on: (a) bulk via reseller handoff similar to ZT, (b) device-list-tied-to-Knox-Customer-ID ownership model, (c) automatic approval rules for trusted resellers once the relationship is established. The reciprocal **KME↔Zero-Touch mutual exclusion** (Samsung-only) is already pinned in Phase 35 ZT portal doc and Phase 36 COBO doc; the v1.4.1 KME guide must add the forward link and repeat the "KME wins when both configured" behavior documented by Google.
 
-**What the binding enables:**
-- Enrollment profile creation for all GMS-based modes
-- Automatic deployment of Microsoft Intune app, Company Portal, Microsoft Authenticator, and Managed Home Screen to enrolled devices
-- Managed Google Play store (curated app catalog for work profile and fully managed devices)
-- App approval, assignment, and silent deployment via Intune
+**Full AOSP per-OEM expansion (DEFER-05):** The Phase 39 stub's assumption of uniformity across OEMs is **partially wrong**. All 5 v1.4.1 target OEMs share the QR-only + one-device-at-a-time + Wi-Fi-credential-embedding + 90-day-token constraint envelope, BUT they differ materially on: (1) enrollment mode split — RealWear, Zebra, and PICO support both userless and user-associated; HTC VIVE Focus is userless-primary; Meta Quest ships through a **third-party MDM integration layer** (Meta Horizon Device Manager) that is itself scheduled for wind-down **February 20, 2026**; (2) device-restriction surface — Zebra WS50 is the **only wearable scanner** on the list, brings OEMConfig through a separate MX extension path, and is functionally a rugged enterprise device with kiosk-first expectations; the AR/VR headsets share hardware-button / passthrough / hand-tracking policy concerns that don't apply to Zebra; (3) licensing gate — per Microsoft Community Hub explicit language, **AR/VR specialty devices require Intune Suite or Intune Plan 2** (not Plan 1) for generally-available use; this is a binding difference from the v1.4 stub's "Plan 1 sufficient for AOSP baseline" language. The Meta Horizon wind-down is the biggest current-state gotcha — v1.4.1 should frame Meta Quest as "supported but under vendor-side transition through Feb 2026; verify alternative enrollment path at execute time."
 
-**How to connect (Intune admin center):**
-1. Devices > Enrollment > Android tab > Prerequisites > Managed Google Play
-2. Accept data sharing terms (Microsoft shares user/device info with Google — must disclose in privacy policy)
-3. Launch Google to connect now — signs in with Microsoft Entra account (as of August 2024, Entra account preferred over Gmail)
-4. Create Google Admin account, grant Microsoft Intune device management permission
-5. After binding: four Microsoft apps automatically appear in Managed Google Play app list
-
-**Token/renewal behavior:**
-- The binding itself does not expire on a fixed schedule, but enrollment tokens created per mode (Dedicated, Fully Managed) have configurable expiry up to 65 years for standard tokens, and **90-day maximum for AOSP tokens**
-- Disconnecting the binding disables all Android Enterprise GMS management for the tenant; enrolled devices lose management
-- As of 2024, Microsoft Entra account replaces Gmail requirement for the binding
-
-**Complexity:** Simple (one-time setup, iframe-based)
-**Confidence:** HIGH — Microsoft Learn (connect-managed-google-play, updated 2026-04-16)
+**COPE full admin path (DEFER-06):** The decision was live-research-gated; the verdict is **ship a full admin guide**. Microsoft Intune exposes COPE as a **first-class GA enrollment profile** under the label **"Corporate-owned devices with work profile"** in the admin center (Devices → Enrollment → Android → Android Enterprise → Enrollment Profiles). The MS Learn authoring page (`setup-corporate-work-profile`, updated 2026-04-16, `ms.date` 2025-05-08) documents this as an active, supported, GA enrollment mode — not deprecated, not preview, not legacy. Token types "Corporate-owned with work profile (default)" and "Corporate-owned with work profile, via staging" are present. Google's "recommends WPCO" language describes a **Google-side architectural evolution** (Android 11 rewrote the implementation from work-profile-on-fully-managed to work-profile-on-company-owned), but Intune's admin-facing enrollment mode **IS** the WPCO implementation under the COPE label. Conclusion for v1.4.1: ship Phase 4X COPE admin guide that acknowledges the terminology drift, maps "Intune COPE profile = Google WPCO implementation on Android 11+ / legacy COPE implementation on Android 8-10", and uses the Phase 36 COBO doc's existing COPE migration note as the reciprocal anchor.
 
 ---
 
-## Enrollment Mode Deep-Dives
+## Category 1: Samsung Knox Mobile Enrollment (KME)
 
-### Mode 1: Zero-Touch Enrollment
+### Table Stakes
 
-**What it is:** Google's automated enrollment equivalent to Apple's ADE/ABM. Devices purchased from authorized Zero-Touch resellers arrive pre-configured with an enterprise assignment. On first power-on, the device automatically downloads the DPC app and completes enrollment without user interaction.
+Features admins expect from a Samsung enterprise enrollment tool. Missing any of these = product feels incomplete.
 
-**Admin portals involved (tri-portal pattern):**
-1. **Zero-Touch portal** (enterprise.google.com/android/zero-touch) — Reseller registers devices; admin creates configurations linking DPC + enrollment token + support info
-2. **Managed Google Play** (play.google.com/work) — App approval and curation
-3. **Intune admin center** — Enrollment profiles, token generation, Zero-Touch iframe linking
+| Feature | Why Expected | Complexity | Baseline |
+|---------|--------------|------------|----------|
+| **Bulk device upload via Samsung-approved reseller** | Samsung enterprise-channel convention — matches ZT parity | Medium (Knox Reseller Portal + Customer/Reseller ID exchange) | MS Learn: "Samsung-approved resellers: A Samsung-approved reseller can automatically upload your organization's purchased devices in the Knox Admin Portal" |
+| **Knox Deployment App (KDA) bulk upload for existing stock** | Differentiator vs. Google ZT — KME can onboard pre-owned/used stock | Medium (Bluetooth/NFC scan app + manual device addition) | MS Learn: "Knox Deployment App: You don't need to work with a reseller to upload devices... recommend using the app for enrolling existing devices that were previously set up in Knox Mobile Enrollment. You can use Bluetooth or NFC to add devices to the Knox Admin Portal." |
+| **EMM profile creation with Intune selection from dropdown** | Intune is a first-party recognized EMM in Knox — auto-populates EMM agent APK | Low (Knox Admin Portal → Profiles → Create → EMM dropdown → Microsoft Intune) | MS Learn + Samsung docs: "EMM agent APK field will be auto-populated when you select a supported EMM from the drop-down menu" |
+| **Intune enrollment token embedded in Knox profile Custom JSON** | Required load-bearing handshake; Samsung doesn't know Intune's enrollment token semantics | Medium (JSON schema: `{"com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN": "<token>"}`) | MS Learn: "Custom JSON data appears optional in the Knox Admin Portal, but Microsoft Intune requires it for a successful enrollment" |
+| **First-boot auto-enrollment (no admin touch)** | KME's entire value proposition — device turns on, enrolls, done | Low (built into Samsung OOBE on Knox-capable Samsung models) | MS Learn: "all that the device user needs to do is simply turn on the device, follow a series of enrollment screens, and sign in with their EMM credentials" |
+| **Profile auto-assignment rules per trusted reseller** | Prevents admin-approval bottleneck at scale | Medium (reseller-preference configuration UI in Knox Admin Portal) | Samsung docs: "configure the reseller preferences on the console to automatically assign a profile to devices uploaded by a trusted reseller" |
+| **Company-name + system-apps + optional QR code profile settings** | Standard enterprise UX expectations | Low (checkboxes + text inputs at profile-create time) | MS Learn profile-settings enumeration |
+| **Device export / profile revocation / token replace lifecycle** | Samsung fleets rotate; tokens must be re-issuable without breaking existing enrollees | Low (Knox Admin Portal UI actions) | MS Learn: matches the Intune-side `Revoke token` / `Export token` / `Replace token` semantics from Phase 36 COBO doc |
 
-**Admin workflow:**
-1. Provide Google Account (Entra-linked) to reseller when purchasing devices
-2. Reseller adds devices to Zero-Touch customer account
-3. In Intune: Devices > Android > Enrollment > Bulk enrollment methods > Zero-touch enrollment
-4. Link Zero-Touch account via iframe
-5. Default configuration created automatically (targets Fully Managed; must use portal directly for Dedicated or COPE configurations)
-6. Export enrollment token JSON from Intune; paste into Zero-Touch portal DPC extras field
+### Differentiators
 
-**DPC extras JSON format (Intune-specific):**
-```json
-{
-  "android.app.extra.PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME": "com.google.android.apps.work.clouddpc/.receivers.CloudDeviceAdminReceiver",
-  "android.app.extra.PROVISIONING_ADMIN_EXTRAS_BUNDLE": {
-    "com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN": "<EnrollmentToken>"
-  }
-}
-```
+Features that set KME apart from Google Zero-Touch. Not universally expected, but distinctly Samsung.
 
-**Device-side unboxing experience:**
-- Device powers on, checks for Zero-Touch configuration via GMS
-- If configuration found: downloads Android Device Policy (CloudDPC), applies enrollment, no user setup interaction required
-- If no configuration found: normal consumer OOBE
+| Feature | Value Proposition | Complexity | Baseline |
+|---------|-------------------|------------|----------|
+| **No reseller relationship required (via Knox Deployment App)** | Existing Samsung stock / used devices / non-reseller-purchased stock can still enroll — Google ZT cannot do this | Medium | MS Learn + Samsung docs; contrasts directly with Phase 35 ZT portal "Step 0 reseller gate" |
+| **Tier-gated "Advanced settings" (Knox Suite Enterprise)** | App-install-during-enrollment and device-lock-during-enrollment happen BEFORE EMM takes over — shortens user-in-hand time | High (license purchase + Enterprise Plan trial caveat) | Samsung docs: "a license isn't required to use Knox Mobile Enrollment... if you want to use Advanced settings, you'll need a valid Knox Suite - Enterprise Plan license" |
+| **Supports Android Enterprise dedicated / fully managed / WPCO** | Single Knox profile can target multiple Android Enterprise modes (unlike Google ZT Method A iframe which defaults to Fully Managed) | High (profile-per-mode authoring) | MS Learn: "Enrollment is supported for the following Android Enterprise device types: Dedicated devices / Fully managed devices / Corporate-owned devices with a work profile" — **note this directly validates COPE path viability** |
+| **Enrollment via QR on any Android 10+ device (Samsung or other, if uploaded)** | Knox profile can QR-enroll even non-reseller-uploaded devices | Low | Samsung docs: "Knox Mobile Enrollment allows you to enroll both reseller-uploaded and non-reseller uploaded devices running Android 10 or higher into an EMM using a QR code" |
+| **Samsung B2B account → Knox approval workflow** | 1-2 business day Samsung-side approval is a known front-loading cost with no Google-ZT equivalent | High (pre-purchase calendar pressure) | Samsung docs explicit 1-2 business day approval window |
 
-**Android version minimum:** Android 8.0 (Oreo) minimum; Android 9+ recommended for QR-based fallback
-**GMS requirement:** Yes — Zero-Touch requires Google Mobile Services connectivity
-**Modes it applies to:** Fully Managed (default), Dedicated devices, COPE (requires direct portal config)
+### Anti-Features
 
-**Failure modes:**
-- Device not in Zero-Touch portal: device boots to consumer OOBE; admin must manually re-register with reseller
-- Wrong DPC extras JSON: enrollment silently fails or lands in wrong mode
-- GMS not reachable on corporate network: enrollment stalls at DPC download step
-- Default configuration overrides dedicated/COPE intent: linking account to Intune creates a Fully Managed default; must configure directly in Zero-Touch portal for other modes
+Features v1.4.1 KME guide should explicitly NOT document (and instead flag as "not KME's job" or "covered elsewhere").
 
-**Confidence:** HIGH — Google Zero-Touch for IT admins doc + Intune ref-corporate-methods (updated 2026-04-16)
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|---------------------|
+| **Documenting full Knox portal non-enrollment features (Knox Configure, Knox E-FOTA, Knox Manage)** | Knox is a product suite; KME is one component. Documenting Knox Configure / E-FOTA / Knox Manage is scope-creep — and v1.4 PROJECT.md Out of Scope explicitly excludes Samsung E-FOTA | Tight scope — KME admin flow only. Link to Samsung docs for the broader Knox suite. |
+| **Re-documenting tri-portal setup (Intune + MGP + ZT)** | Phase 35 already owns MGP and ZT portal setup. KME guide is a fourth-portal overlay — must reference, not duplicate | Reference Phase 35 `01-managed-google-play.md` (MGP prerequisite — Knox enrolls into Intune-managed Android Enterprise modes which still require MGP for app distribution) and Phase 35 `02-zero-touch-portal.md#kme-zt-mutual-exclusion` (mutual-exclusion reciprocal pin) |
+| **Cross-platform analog claims** | There is no KME equivalent on iOS/macOS/Windows. Apple's ABM ADE and Windows Autopilot are the "reseller-uploads-serials" pattern but are NOT Samsung-specific | Note that KME is a Samsung-hardware-only pathway; the cross-platform reseller-registration pattern documented in the capability matrix is Google ZT ↔ Apple ADE ↔ Windows Autopilot. KME is a Samsung-fleet-specific addition. |
+| **Reseller-side mechanics** | Per Phase 35's established pattern, reseller-side steps are not documented; only admin-handoff and confirmation points are | Same pattern — document only what Intune admin hands off to Samsung reseller (Knox Customer ID) and confirms (upload completion, device visibility). Link to Samsung reseller docs. |
+| **Legacy Samsung Knox Workspace (container) content** | Orthogonal — container-based Knox Workspace is separate from KME enrollment | Explicit OOS note; link to Android Enterprise BYOD work profile guide for personal/work separation on Samsung |
 
----
+### Complexity Profile
 
-### Mode 2: Fully Managed / COBO (Corporate-Owned, Business-Only)
+**Admin complexity rating:** HIGH — 7-step dance with cross-organizational dependencies.
 
-**What it is:** Organization-owned device associated with a single user, used exclusively for work. The MDM controls the entire device — no personal profile, no personal apps unless admin explicitly permits them. This is the maximum-control corporate enrollment mode.
+1. **Samsung B2B account creation** (1-2 business day wait for Samsung approval)
+2. **Knox Admin Portal onboarding** (Knox Customer ID issued; trusted-reseller relationship configured by exchanging Knox Customer ID with Reseller ID)
+3. **Reseller device upload approval** (email notification + manual approve, OR auto-approve via reseller preference)
+4. **EMM enrollment profile creation in Knox Admin Portal** (select Intune as EMM, paste Intune enrollment token in Custom JSON)
+5. **Profile-to-device assignment** (manual per-device, bulk, or auto-assign via reseller preference)
+6. **First-boot verification** (one test device to confirm JSON + token + EMM handshake)
+7. **Post-enrollment configuration** (Intune-side policies — not KME's job, but admins conflate)
 
-**Prerequisites:**
-- Managed Google Play binding complete
-- Factory reset or new device (existing enrolled device must be wiped first)
-- Android 10.0+ (hard requirement for Intune COBO enrollment)
-- GMS connectivity
+**Dependency on existing v1.4 docs:**
 
-**Provisioning methods (all four apply):**
-- NFC bump (Android 6+, NFC-capable hardware)
-- QR code (Android 7+ manual; Android 9+ built-in QR reader — no app install required)
-- DPC identifier afw#setup (enters Android Device Policy download flow)
-- Zero-Touch (corporate fleet automation)
-
-**Enrollment token:**
-- Created in Intune admin center as part of enrollment profile
-- Two token types: Standard (up to 65-year expiry) and Staging token (up to 65-year expiry; supports third-party pre-provisioning workflow; does NOT support enrollment time grouping)
-- Token exported as 20-digit string and QR code
-- Revoke or replace token without affecting already-enrolled devices
-
-**Device-side enrollment flow:**
-1. Factory reset device (required)
-2. On Welcome screen: tap 7 times to trigger QR / NFC / enter afw#setup
-3. For QR: scan enrollment profile QR code from Intune
-4. Microsoft Authenticator auto-installs (required, cannot be uninstalled)
-5. User signs in with Entra credentials
-6. Enrollment profile applies; device locks to work-only posture
-
-**Management capabilities:**
-- Block personal app installation (Managed Google Play only)
-- Block users from factory resetting via Settings (configurable)
-- Block users from uninstalling managed apps
-- Full device compliance evaluation
-- Certificate deployment (SCEP/PKCS)
-- Wi-Fi/VPN configuration
-- OS update enforcement
-- Full remote wipe
-
-**Factory Reset Protection (FRP) behavior:**
-- Fully Managed: FRP does NOT apply to Settings > Factory data reset (no FRP protection). FRP DOES apply via recovery/bootloader reset. Intune wipe does not trigger FRP.
-- Important for kiosk re-provisioning: factory reset via Settings is safe from FRP lock-in; recovery mode reset requires Google account credential
-
-**COPE note (in-scope as stub only):**
-COPE (Corporate-Owned, Personally Enabled / Android Enterprise corporate-owned work profile) uses the same enrollment methods as COBO but creates a work profile on a corporate device that also allows a personal profile. COPE requires Android 11+ due to a Google API change that removed NFC and token (afw#setup) as valid provisioning methods for COPE on Android 11+. Google's trajectory is toward WPCO (Work Profile on Corporate-Owned) as the successor terminology. v1.4 covers COPE only as a migration/deprecation note within the COBO documentation.
-
-**Complexity:** Moderate
-**Confidence:** HIGH — MS Learn setup-fully-managed (updated 2025-05-08, gitcommit 2026-04-16), ref-corporate-methods (updated 2025-12-04)
+- **Phase 35 ZT portal (`02-zero-touch-portal.md`)** — reciprocal mutual-exclusion callout; KME guide must forward-link `#kme-zt-mutual-exclusion` and restate the "KME wins when both configured" behavior.
+- **Phase 35 MGP (`01-managed-google-play.md`)** — prerequisite for Intune-side app distribution on Knox-enrolled devices that are Android Enterprise; KME guide must reference, NOT duplicate.
+- **Phase 36 COBO (`03-fully-managed-cobo.md`)** — existing Samsung-admins callout already points to v1.4.1 KME; KME guide must close that forward promise.
+- **Phase 40 L1 triage** — must add KME-specific failure modes (Samsung approval lapsed, Knox profile Custom JSON malformed, EMM agent APK mismatch). Likely a new L1 runbook.
+- **Android capability matrix `reference/android-capability-matrix.md`** — already has a `deferred-knox-mobile-enrollment-row` anchor; v1.4.1 must add the real row.
 
 ---
 
-### Mode 3: BYOD Work Profile on Personally-Owned Devices
+## Category 2: Full AOSP Per-OEM Expansion
 
-**What it is:** The primary BYOD enrollment path for Android. Company Portal creates a containerized work profile partition on the user's personal device. Work apps and data are isolated in the work profile; the personal profile is visible to the user but invisible to IT.
+### Per-OEM Capability Matrix (5 vendors × 7 dimensions)
 
-**Prerequisites:**
-- Managed Google Play binding complete
-- User installs Company Portal from Google Play Store (personal profile side)
-- No factory reset required — can enroll existing in-use device
-- Android 5.0+ (basic work profile support); Android 8+ strongly recommended for Intune; practical minimum is Android 8.0
+| Dimension | RealWear (HMT-1 / HMT-1Z1 / Navigator 500) | Zebra (WS50) | PICO (Neo3 Pro/Eye, 4 Enterprise) | HTC (Vive Focus 3, Vive XR Elite, Vive Focus Vision) | Meta (Quest 2/3/3S/Pro) |
+|-----------|---------------------------------------------|--------------|-----------------------------------|------------------------------------------------------|-------------------------|
+| **Device class** | AR/VR headset (hands-free frontline) | Wearable barcode scanner (rugged) | AR/VR headset (XR enterprise) | AR/VR headset (XR enterprise) | AR/VR headset (consumer-origin enterprise) |
+| **Minimum firmware** | HMT-1/HMT-1Z1 11.2; Navigator 500 1.1 | WS50: `11-49-15.00` | Neo3 Pro/Eye: PUI 4.8.19; 4 Enterprise: PUI 5.6.0 | Vive Focus 3: 5.2-5.0.999.624; XR Elite: 4.0-1.0.999.350; Focus Vision: 7.0.999.159 | Quest 2: v49; Quest 3: v59; Quest 3s: v71; Quest Pro: v49 |
+| **Enrollment flavor** | Userless + User-associated (both documented) | Userless (dedicated kiosk typical) + User-associated | Userless + User-associated | Userless-primary (enrollment token + QR) | Userless via AOSP profile, with Meta Horizon Device Manager layer |
+| **QR payload Wi-Fi embedding** | **REQUIRED** — no device-side Wi-Fi UI during enrollment | Required (staging Wi-Fi in QR) | Required (staging Wi-Fi in QR) | Required (staging Wi-Fi in QR) | Required (staging Wi-Fi in QR) |
+| **One-device-at-a-time** | Yes (QR-only, no bulk) | Yes | Yes | Yes | Yes |
+| **Regional availability caveats** | Global | Global | Global | Global | **Quest 2 / 3 / Pro: select regions only** per MS Learn table (Quest 3s: global) |
+| **Intune licensing gate** | **Intune Suite OR Plan 2** for specialty/AR-VR devices | Plan 1 MAY suffice for scanner class; verify against specialty-devices doc at execute time | **Intune Suite OR Plan 2** for specialty/AR-VR devices | **Intune Suite OR Plan 2** for specialty/AR-VR devices | **Intune Suite OR Plan 2** for specialty/AR-VR devices |
 
-**End-user enrollment flow:**
-1. User opens Google Play Store on personal device
-2. Installs Company Portal (com.microsoft.windowsintune.companyportal)
-3. Opens Company Portal, signs in with Entra work credentials
-4. Company Portal initiates work profile creation at OS level
-5. Work profile appears as a separate container (badged apps with work briefcase icon)
-6. Enrollment profile applies to work profile; personal profile untouched
+**Authoritative source:** [MS Learn AOSP supported devices](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/android-os-project-supported-devices) (updated 2026-04-16, `ms.date` 2025-05-12) for firmware and regional caveats; [MS Learn AOSP userless setup](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-aosp-corporate-owned-userless-enroll) for token/QR mechanics; [Microsoft Community Hub — Purpose-built devices](https://techcommunity.microsoft.com/t5/microsoft-intune-blog/protect-your-organization-s-purpose-built-devices-with-microsoft/ba-p/3755654) for Plan 2 / Suite gating.
 
-**Work badge (dual app icons):**
-- Every app available in both personal and work contexts shows a duplicate with a work badge (briefcase icon on the app icon)
-- Users see two copies of apps like Chrome, Gmail, Outlook — one personal, one managed
-- Work profile apps are isolated: data does not cross profiles by default
+### Per-Vendor Table Stakes (Shared Envelope)
 
-**Profile separation boundaries:**
-- Copy/paste between profiles: blocked by default in work profile policy (configurable)
-- File sharing between profiles: blocked by default (configurable)
-- App data: completely isolated at OS level — personal apps cannot read work app data and vice versa
-- Notifications: work profile notifications appear in system notification shade with work badge
-- Work profile can be paused by user (Android 7+): all work apps become inactive, notifications stop
+All 5 OEMs share these table-stakes constraints inherited from the AOSP enrollment envelope. The v1.4.1 expansion should NOT re-document these per-OEM — they belong in a shared AOSP top-matter.
 
-**Privacy limitations — what admin CANNOT see on personal side:**
-- Personal app list: Intune cannot inventory apps installed in the personal profile
-- Personal data: photos, contacts, SMS, call logs, personal app data — none accessible to IT
-- Location (personal side): cannot track device location beyond what compliance policy permits
-- UDID/hardware identifiers: available at device level (unlike iOS User Enrollment which blocks IMEI collection)
-- Personal browsing history: not accessible
+| Feature | Envelope constraint | Source |
+|---------|---------------------|--------|
+| **Token expiry** | Up to 90 days (hard ceiling; contrast COBO default-no-expiry + staging-65-year) | MS Learn userless setup: "Token expiration date: Select the date the token expires, which can be up to 90 days in the future" |
+| **Provisioning method** | QR ONLY. No NFC, no afw#setup, no Zero-Touch | MS Learn userless setup: single QR path |
+| **Staging network** | WPA/WPA2 PSK or WPA3 only; NO captive portal, NO corporate-managed EAP | RealWear docs: "staging network MUST BE a WPA/WPA2 PSK/WPA3 network type... Guest networks with captive portals or Corporate managed networks are not compatible" |
+| **Entra shared-device mode at enrollment** | Userless AOSP devices auto-enrolled into Entra Shared Device Mode | MS Learn userless setup: "Devices are configured in Microsoft Entra shared device mode during enrollment" |
+| **Intune app minimum version** | 24.7.0 or later (as of Oct 1, 2024+) for sync | MS Learn userless setup: "Beginning October 1st, AOSP devices must have the Microsoft Intune app, version 24.7.0 or later" |
+| **Known limitations (all AOSP)** | Cannot enforce alphabetic/alphanumeric/weak-biometric password types; device compliance reporting unavailable for AOSP; Intune for 21Vianet not supported | MS Learn userless setup Known Limitations section |
+| **Remote actions available** | Wipe / Delete / Remote lock / Reset passcode / Restart — one device at a time | MS Learn userless setup |
 
-**What admin CAN see/control on the whole device:**
-- Device serial number and IMEI (device-level, unlike iOS UE)
-- Installed work profile apps
-- Work profile compliance state
-- Device hardware info (model, OS version)
-- Enrollment status
-- Remote work profile wipe (removes work profile; leaves personal profile intact)
-- Device-level passcode enforcement (can require device PIN, but cannot see the PIN)
+### Per-Vendor Differentiators
 
-**MAM intersection:**
-- MAM app protection policies (APP) and work profile are **complementary, not mutually exclusive**
-- APP enforces policy at the app layer; work profile enforces at the profile/OS layer
-- For enrolled work profile devices, APP PIN prompt can be suppressed to avoid double PIN (device PIN + APP PIN)
-- MAM without enrollment (MAM-WE) is appropriate when: legal/liability reasons prohibit enrollment, GMS unavailable (e.g., China), or user refuses MDM enrollment
+| OEM | Differentiator | Why It Matters | Complexity Implication |
+|-----|---------------|----------------|------------------------|
+| **RealWear** | Only OEM with explicit Microsoft-documented userless AOSP setup narrative (RealWear is the MS Learn "example device" across pages) | Most mature integration; canonical reference for AOSP setup steps | Low — reuse Phase 39 RealWear GA spotlight content; expand to Navigator 500 firmware 1.1+ coverage |
+| **Zebra (WS50)** | Wearable scanner, not AR/VR. OEMConfig via Zebra MX extension is the canonical configuration surface (not device-restrictions profile). Dedicated kiosk is typical deployment. | Different configuration tooling; different Intune policy pattern; the "use AE Dedicated where possible, fall back to AOSP only on WS50" guidance is load-bearing | Medium — document WS50 as "AOSP-only within the Zebra catalog; Zebra's GMS-capable devices should go AE Dedicated". Reference MS Learn [Zebra MX overview](https://learn.microsoft.com/en-us/intune/intune-service/configuration/android-zebra-mx-overview). |
+| **PICO** | Vendor-public announcement of Intune integration (PICO Newsroom). PICO 4 Enterprise and Neo3 Pro/Eye both GA. | Enterprise-line specific (NOT consumer PICO 4) — corporate-channel procurement caveat | Low — standard AOSP pattern, call out "Enterprise SKU required" |
+| **HTC VIVE Focus** | Three supported models with different min-firmware; XR Elite has lowest min-firmware (4.0-1.0.999.350) | Firmware version matrix per model — admin must verify device firmware before enrollment | Low — table of model × min-firmware |
+| **Meta Quest** | **Meta Horizon managed services wind-down Feb 20, 2026.** Third-party MDM integration layer (Device Manager) is separate from native AOSP enrollment. Regional-availability caveat for Quest 2/3/Pro (select regions only). | Most volatile AOSP target — Intune AOSP enrollment via pure MS Learn path works, but the Meta Horizon path admins have historically used is going away. Recommend "use Intune AOSP enrollment profile; do NOT rely on Meta Horizon Device Manager for net-new deployments." | HIGH — requires execute-time re-verification; current-state caveat; possible "use alternative paths" fallback |
 
-**Data transfer restrictions:**
-- Work profile policy can control: copy/paste between profiles, opening work documents in personal apps, sharing work files to personal side
-- "Open in allowed browsers" and "Transfer to unmanaged apps" settings on work profile restrict data egress
-- Cross-profile data transfer is allowed by default on some OEM implementations; must be explicitly blocked in policy
+**Meta Horizon wind-down citation:** Meta public-facing communication — "Starting February 20, 2026, Meta Horizon managed services will no longer be available for purchase". This needs execute-time re-verification (press release vs. doc update vs. actual sunset).
 
-**Android 15 private space note:**
-Private space (Android 15 feature) is treated as personal profile. Intune does not support MDM within private space. If user attempts to enroll private space separately, a second DA enrollment record appears in admin center — unsupported scenario.
+### Per-Vendor Anti-Features
 
-**Complexity:** Moderate (enrollment is simple; data transfer policy surface is wide)
-**Confidence:** HIGH — MS Learn setup-personal-work-profile (updated 2026-04-16), mam-vs-work-profiles-android (updated 2026-04-17)
+| OEM | Anti-Feature | Why Avoid |
+|-----|-------------|-----------|
+| **RealWear** | Documenting HMT-1Z1-specific intrinsically-safe certification | Certification compliance is not an Intune concern; stays with hardware docs |
+| **Zebra** | Documenting OEMConfig schemas in detail | Zebra owns the MX schema; Intune delivers the config — stay at delivery layer, link to Zebra docs |
+| **PICO** | Consumer PICO 4 (non-Enterprise) pathway | Consumer SKU not in MS Learn supported list; explicit OOS |
+| **HTC** | Non-Enterprise HTC Vive consumer headsets | Same — consumer HTC Vive is not AOSP-managed via Intune |
+| **Meta** | Meta Horizon managed services purchase recommendations | Winding down Feb 2026; documenting a dying path is anti-value. Flag and redirect. |
 
----
+### Complexity Profile
 
-### Mode 4: Dedicated Devices (Kiosk / COSU)
+**Admin complexity rating:** MEDIUM per OEM (all share envelope; vendor deltas are isolatable).
 
-**What it is:** Organization-owned, userless or shared-user device locked to a single app or curated set of apps (kiosk mode). Commonly used for digital signage, inventory scanning, ticket printing, customer-facing kiosks. Previously known as COSU (Corporate-Owned, Single-Use).
+**Dependency on existing v1.4 docs:**
 
-**Prerequisites:**
-- Managed Google Play binding complete
-- Factory reset required
-- Android 8.0+ (device requirement for dedicated device management)
-- GMS connectivity
-
-**Provisioning methods:**
-- QR code (primary recommended method for most scenarios)
-- NFC (Android 6+, NFC-capable hardware)
-- Token / DPC identifier afw#setup
-- Zero-Touch (corporate fleet automation)
-
-**Kiosk configuration options:**
-
-**Single-app kiosk:**
-- Android's Lock Task Mode pins a single app to the foreground
-- User cannot leave the app, access notification shade, use back/home navigation, or access Settings
-- Device restarts into the kiosk app after reboot
-- Hardware keys (volume, power) behavior is configurable
-
-**Multi-app kiosk (Managed Home Screen):**
-- Managed Home Screen (MHS) app (com.microsoft.launcher.enterprise) replaces the device launcher
-- Admins configure an allowlist of approved apps; MHS displays only those apps
-- Users can navigate between approved apps but cannot exit to standard Android launcher
-- MHS shows a lock screen with org branding and support contact info
-- Exit kiosk requires admin PIN (4-6 digit numeric; must be configured in both device restriction policy AND MHS app config — mismatch causes "PIN not set" error)
-
-**Lock Task Mode mechanics:**
-- Enabled by setting the Device Experience profile in Intune (device restrictions > kiosk mode)
-- Requires the kiosk app to be in the Lock Task allowlist (set via Intune device restrictions profile)
-- App crashes or force-stops in Lock Task Mode: device shows black screen or returns to MHS; device restarts automatically into kiosk if configured
-
-**Entra shared device mode option:**
-- Token type "Corporate-owned dedicated device with Microsoft Entra ID shared mode" deploys Microsoft Authenticator into shared device mode
-- Enables single sign-in and sign-out across Entra-integrated apps (Teams, Power Apps, etc.)
-- Appropriate for shared-shift-worker devices where multiple users sign into the same physical device
-
-**Common failure modes:**
-- **Exit kiosk PIN mismatch:** Exit kiosk PIN must match in both the device restrictions config profile AND the MHS app configuration. If only set in one place, users see "a PIN to exit kiosk mode has not been set by your IT admin"
-- **App crash in Lock Task Mode:** Lock Task Mode does not recover automatically unless the DPC is configured to restart the app. Requires Intune device restrictions to re-launch app on crash.
-- **User accessing kiosk exit via repeated back button:** MHS provides back-button pin that eventually reaches the exit-PIN prompt — expected behavior. Admin PIN prevents unauthorized exit.
-- **Factory Reset Protection after Settings reset:** Dedicated devices do NOT have FRP for Settings > Factory data reset. FRP applies only via recovery/bootloader reset. Intune wipe bypasses FRP.
-- **GMS offline behavior:** Managed Google Play app updates require GMS connectivity. Kiosk device offline for extended periods will not receive app updates. Compliance policies that require app version minimum will fail.
-- **Token expiry during re-enrollment:** If enrollment token expires, the QR code changes. Stale QR code printed on laminated cards or posted at locations will fail. Plan token rotation.
-
-**Complexity:** Complex (configuration surface for kiosk is wide; MHS has its own app config layer; exit-PIN synchronization is error-prone)
-**Confidence:** HIGH — MS Learn setup-dedicated (updated 2025-05-08), ref-corporate-methods (updated 2025-12-04); MHS PIN failure pattern MEDIUM — community reports
+- **Phase 39 AOSP stub (`06-aosp-stub.md`)** — v1.4.1 replaces the deferred-content table rows with per-OEM H2 sections. Must preserve PITFALL-7 "not supported under AOSP" framing per STATE.md research flag.
+- **Capability matrix `reference/android-capability-matrix.md`** — already has `deferred-full-aosp-capability-mapping` anchor; v1.4.1 lifts stub-reference column into per-OEM rows OR pushes per-OEM matrix to a separate OEM-deltas doc.
+- **Phase 34 provisioning-methods matrix (`02-provisioning-methods.md`)** — AOSP is already QR-only; no change needed, but the 90-day token ceiling should be surfaced (currently documented as footnote only).
+- **Android version matrix (`03-android-version-matrix.md`)** — per-OEM min-firmware table is net-new content, may live in Phase 39 expansion OR get surfaced to version matrix.
 
 ---
 
-### Mode 5: AOSP Device Management (Stub)
+## Category 3: COPE Full Admin Path
 
-**What it is:** Management of Android devices that do not include Google Mobile Services — typically specialized AR/VR headsets, ruggedized industrial devices, and wearables. These devices run Android built from the Android Open Source Project without the GMS layer that enables standard Android Enterprise features.
+### Decision: Ship Full Admin Guide (NOT Deprecation-Rationale Doc)
 
-**When to use AOSP enrollment (not Android Enterprise):**
-- Device has no Google Mobile Services (verified: no Google Play Store, no Google account support)
-- Device is in a region where GMS is unavailable (e.g., mainland China)
-- Device is a specialized industrial/AR/VR device from the supported OEM matrix
+**Verdict reached after live research.** The v1.4 discussion-phase open question ("COPE full guide vs. deprecation-rationale doc") resolves to **full admin guide** based on two load-bearing facts verified 2026-04-24:
 
-**Supported OEM matrix (Intune GA, as of 2025-05-12):**
+**Fact 1 — Intune surfaces COPE as first-class GA.** [MS Learn `setup-corporate-work-profile`](https://learn.microsoft.com/en-us/mem/intune/enrollment/android-corporate-owned-work-profile-enroll) (updated 2026-04-16, `ms.date` 2025-05-08) is an active how-to article documenting the enrollment profile under the Intune admin center label **"Corporate-owned devices with work profile"**. Two GA token types are documented: *"Corporate-owned with work profile (default)"* and *"Corporate-owned with work profile, via staging"*. The profile is not marked deprecated, not in preview, not legacy. Admin center navigation: **Devices → Enrollment → Android tab → Android Enterprise → Enrollment Profiles → Corporate-owned devices with work profile**.
 
-| OEM | Device | Form Factor | Min Firmware |
-|-----|--------|-------------|--------------|
-| DigiLens | ARGO | AR Headset | DigiOS 2068 |
-| HTC | Vive Focus 3 | AR/VR Headset | 5.2 - 5.0.999.624 |
-| HTC | Vive XR Elite | AR/VR Headset | 4.0 - 1.0.999.350 |
-| HTC | Vive Focus Vision | AR/VR Headset | 7.0.999.159 |
-| Lenovo | ThinkReality VRX | AR/VR Headset | VRX_user_S766001_... |
-| Meta | Quest 2 | VR Headset | v49 (select regions) |
-| Meta | Quest 3 | VR Headset | v59 (select regions) |
-| Meta | Quest 3s | VR Headset | v71 |
-| Meta | Quest Pro | VR Headset | v49 (select regions) |
-| PICO | PICO 4 Enterprise | AR/VR Headset | PUI 5.6.0 |
-| PICO | Neo3 Pro/Eye | AR/VR Headset | PUI 4.8.19 |
-| RealWear | HMT-1 / HMT-1Z1 | Head-mounted display | 11.2 |
-| RealWear | Navigator 500 | Head-mounted display | 1.1 |
-| Vuzix | Blade 2 / M400 / M4000 | Smart Glasses | Various |
-| Zebra | WS50 | Wearable Scanner | 11-49-15.00 |
+**Fact 2 — Google's "recommends WPCO" is an implementation-evolution note, not a product deprecation.** Google rewrote the architecture in Android 11 from "work profile on fully managed" (original COPE) to "work profile on company-owned" (WPCO). Both share the use case. The current Intune enrollment profile IS the WPCO implementation on Android 11+ devices. On Android 8-10 devices, it's the legacy COPE implementation with NFC and afw#setup still supported; on Android 11+ those provisioning methods were removed for the COPE path (per MS Learn + [Google Developers Android Management](https://developers.google.com/android/management/provision-device)). Jason Bayton's [Android Enterprise EMM COPE support](https://bayton.org/android/android-enterprise-emm-cope-support/) page ("The future of COPE" callout) notes the Android 11 implementation change but stops short of formal deprecation language.
 
-Note: Zebra AOSP support is limited to the WS50 wearable scanner. Zebra's primary TC series devices use Android Enterprise (GMS), not AOSP.
+**Conclusion:** Ship a real admin guide. The Phase 36 COBO `## COPE Migration Note` is correct in its current wording ("Google recommends WPCO, COPE remains functionally supported, no formal deprecation notice") and can serve as the reciprocal anchor for the v1.4.1 COPE admin guide.
 
-**Two AOSP sub-modes:**
-- **User-associated:** Single user per device; user signs in with Entra credentials; Microsoft Authenticator + Company Portal deploy automatically; SSO via Entra shared device mode
-- **Userless:** Shared device with no user account; no Entra sign-in; device used for specific tasks only; Microsoft Authenticator + Company Portal deploy; Entra shared device mode configured for multi-user SSO
+### Table Stakes
 
-**Enrollment method:** QR code only (no NFC, no Zero-Touch, no afw#setup for AOSP)
-**Bulk enrollment:** NOT supported — one device at a time
-**Token expiry:** 90-day maximum (shorter than GMS modes)
-**Wi-Fi configuration required in enrollment profile:** RealWear devices lack auto-connect capability; SSID and pre-shared key must be embedded in the enrollment profile
+| Feature | Why Expected | Complexity | Baseline |
+|---------|--------------|------------|----------|
+| **"Corporate-owned devices with work profile" enrollment profile creation** | Core admin flow — must match COBO pattern for admin familiarity | Low (MS Learn documents it) | MS Learn `setup-corporate-work-profile` full stepper |
+| **Default vs. Staging token selection** | Same token-type pattern as COBO; staging for partner pre-provisioning | Low (reuse Phase 36 COBO framing) | MS Learn: two token types with same semantics as COBO |
+| **Token expiry: default no-expiry; staging up to 65 years** | Admin expects token lifecycle parity with COBO | Low | MS Learn: "Tokens for corporate-owned devices with a work profile will not expire automatically" + staging 65-year ceiling |
+| **Naming template + device group + scope tags** | Standard enrollment-profile admin affordances | Low (identical to COBO profile page structure) | MS Learn |
+| **Android version gate: COPE use of `afw#setup` + NFC removed on Android 11+** | Admins carrying forward COBO provisioning expectations WILL hit this breakpoint | MEDIUM — version-matrix callout load-bearing | MS Learn: *"the `afw#setup` enrollment method and the Near Field Communication (NFC) enrollment method are only supported on devices running Android 8-10. They are not available on Android 11."* |
+| **Intune app replaces Company Portal as on-device DPC** | Post-AMAPI April 2025; matches BYOD pattern | Low | MS Learn: "The Microsoft Intune app automatically installs on corporate-owned work profile devices during enrollment. This app is required for enrollment and can't be uninstalled" |
+| **Private space (Android 15) exclusion** | Android 15 introduced "Private space" feature — Intune does NOT support MDM within it | Medium (new Android 15 breakpoint) | MS Learn Limitations: "Private space is a feature introduced with Android 15... Microsoft Intune doesn't support mobile device management within the private space" |
+| **Microsoft Authenticator auto-install** | Required for work-profile sign-in | Low | MS Learn: "The Microsoft Authenticator app automatically installs on corporate-owned work profile devices during enrollment" |
 
-**Feature parity gaps vs Android Enterprise (GMS modes):**
-- No Managed Google Play (no GMS)
-- No Work Profile (no profile container possible without GMS)
-- Password complexity compliance: only "numeric" and "none" supported (alphabetic, alphanumeric, alphanumeric+symbols, weak biometric NOT enforceable)
-- Device compliance reporting: not available for AOSP devices
-- Bulk enrollment: not supported (one at a time)
-- Not supported in Intune operated by 21Vianet (China sovereign cloud)
+### Differentiators
 
-**Licensing note:** Specialized devices (AR/VR headsets) may require Microsoft Intune Plan 2 or Microsoft Intune Suite for "specialty device" management. Verify licensing per device type.
+| Feature | Value Proposition | Complexity | Baseline |
+|---------|-------------------|------------|----------|
+| **COPE vs. COBO decision matrix (when to choose COPE)** | Admins familiar with COBO need a clear "why COPE?" story | MEDIUM — workflow-decision content | Derive from Android Enterprise use cases: single-user corporate device with personal-use allowance (e.g., field sales, executive devices, corporate phones with personal app allowance) vs. COBO's zero-personal-app stance |
+| **Profile-boundary behavior (what IT sees vs. what user controls)** | Privacy story differentiator vs. COBO | MEDIUM — Android 11 WPCO changes shifted boundaries | Google-side privacy-by-default: IT visibility into personal side restricted on Android 11+; device-wide restrictions scope narrower than COBO |
+| **Migration paths** | Admins with existing COBO or BYOD fleets need a "convert" story | HIGH — typically requires factory reset | Document the migration semantics (no in-place conversion; factory reset + re-enroll to new profile) |
+| **COPE ↔ WPCO terminology reconciliation** | The glossary already flags this — admin guide must operationalize it | LOW (reference glossary; don't re-teach) | Phase 34 `_glossary-android.md` COPE + WPCO entries already land this |
 
-**Complexity:** Simple (enrollment flow) / Complex (OEM-specific behaviors, RealWear Wi-Fi requirement, limited troubleshooting surface)
-**Confidence:** HIGH for OEM matrix and enrollment flow — MS Learn aosp-supported-devices (updated 2026-04-16), setup-aosp-corporate-userless (updated 2025-05-15); LOW for per-OEM behavioral quirks and failure catalog (sparse public docs)
+### Anti-Features
 
----
+| Anti-Feature | Why Avoid |
+|--------------|-----------|
+| **"COPE is deprecated, use WPCO" framing** | Factually wrong per MS Learn + Google dev docs. Use "Intune's 'Corporate-owned devices with work profile' IS the WPCO implementation on Android 11+." |
+| **Re-documenting Google's architectural evolution from original-COPE to WPCO** | Phase 34 glossary already owns this (COPE + WPCO entries). Reference, don't repeat. |
+| **Separate per-work-profile config-profile documentation** | This is Configuration Profile authoring — distinct from enrollment; cross-link instead |
+| **Full treatment of work-profile app isolation semantics** | Same — belongs in BYOD Work Profile guide or app-deployment docs |
+| **"COPE = COBO + work profile" equivalence claim** | MISLEADING on Android 11+. The implementations differ structurally. |
 
-## Provisioning-Method Axis Matrix
+### Complexity Profile
 
-This matrix is orthogonal to the enrollment mode — it describes the *how* of enrollment, not the *what*.
+**Admin complexity rating:** MEDIUM — similar to COBO but with added terminology reconciliation burden and an Android-version-matrix branch for the `afw#setup` + NFC breakpoint.
 
-| Method | COBO Fully Managed | COPE Corp Work Profile | COSU Dedicated | BYOD Work Profile | AOSP | Android Min Version | Notes |
-|--------|-------------------|----------------------|----------------|-------------------|------|---------------------|-------|
-| QR Code | YES | YES | YES | NO | YES | Android 7+ (9+ has built-in reader) | Primary recommended method; Android 9+ has preinstalled QR reader; Android 7-8 prompts reader install |
-| NFC | YES | NO (Android 11+) | YES | NO | NO | Android 6+ with NFC hardware | Not supported for COPE on Android 11+; requires NFC Forum Type 2 Tag; 888+ bytes memory |
-| DPC identifier (afw#setup) | YES | NO (Android 11+) | YES | NO | NO | Android 6+ | User types afw#setup at Google sign-in screen; downloads Android Device Policy; NOT supported for COPE on Android 11+ |
-| Zero-Touch | YES | YES (portal config) | YES | NO | NO | Android 8+ (Oreo) | Corporate-only; requires authorized ZT reseller; device purchased via reseller |
-| Company Portal app install | NO | NO | NO | YES | NO | Android 5+ (practical: 8+) | User self-service BYOD; user installs CP from Google Play, signs in with Entra credentials |
-| Knox Mobile Enrollment | YES (Samsung only) | YES (Samsung only) | YES (Samsung only) | NO | NO | Knox-supported Android | Deferred to v1.4.1; requires Knox license |
+**Dependency on existing v1.4 docs:**
 
-**Key provisioning constraints:**
-- BYOD Work Profile: only Company Portal flow — no NFC, QR, Zero-Touch at corporate device setup screen
-- AOSP: only QR code — no other method
-- NFC and afw#setup are disabled for COPE on Android 11+ by Google API change
-- Zero-Touch requires reseller relationship established before device purchase; cannot retroactively add devices without reseller re-registration
+- **Phase 36 COBO (`03-fully-managed-cobo.md`)** — reciprocal: the `## COPE Migration Note` section is the forward anchor that the v1.4.1 COPE guide must close (add back-link, validate wording).
+- **Phase 34 glossary (`_glossary-android.md`)** — COPE and WPCO entries ground-truth the terminology; reference, don't duplicate.
+- **Phase 35 ZT portal (`02-zero-touch-portal.md`)** — Zero-Touch Method A/B choice matters for COPE fleets (Method A creates Fully Managed default — WRONG for COPE). Already documented in Phase 35; COPE guide must surface this as a Zero-Touch-provisioning-COPE pitfall.
+- **Phase 35 MGP (`01-managed-google-play.md`)** — prerequisite; reference.
+- **Android version matrix (`03-android-version-matrix.md`)** — `afw#setup` + NFC removed on Android 11+ for COPE path is a version-matrix row; validate current state of that row against MS Learn at execute time.
+- **Phase 34 provisioning-methods matrix (`02-provisioning-methods.md`)** — already has COPE rows with Android-11 breakpoint. Validate.
+- **Android capability matrix** — does NOT currently list COPE as a distinct mode (5-mode scope was COBO/BYOD/Dedicated/ZTE/AOSP). v1.4.1 decision: does COPE become a 6th mode column, or stay folded into ZTE-as-provisioning-path? Recommend **adding COPE as a 6th column** given it's a first-class Intune enrollment profile.
 
 ---
 
-## Android Version Matrix
+## Cross-Category Dependencies on Existing v1.4 Docs
 
-Intune-enforced minimum OS versions per mode (as of April 2026):
+Summarized for the roadmap:
 
-| Enrollment Mode | Intune Minimum OS | Practical Recommended | Notable Version Breakpoints |
-|-----------------|-------------------|----------------------|----------------------------|
-| BYOD Work Profile | Android 5.0 | Android 8.0+ | Android 9+: built-in QR reader; Android 15: Private Space (unsupported) |
-| Fully Managed (COBO) | Android 10.0 | Android 11+ | Android 10: hard Intune requirement; Android 11+: enrollment time grouping supported |
-| Dedicated (COSU) | Android 8.0 | Android 10+ | Android 8.0: minimum; Android 9+: built-in QR reader |
-| COPE (Corp Work Profile) | Android 8.0+ | Android 11+ | Android 11: NFC and afw#setup removed for COPE; all Android 11+ COPE must use QR or ZT |
-| AOSP (userless/user-assoc) | Varies by OEM firmware | Per OEM matrix | Not an Android API level — OEM firmware specific |
-
-**Confidence:** HIGH for Intune minimums (MS Learn setup-fully-managed: "Android OS version 10.0 and later", setup-dedicated: "Android OS version 8.0 or later"); MEDIUM for COPE 11+ NFC/token restriction (Google developer docs + Intune ref-corporate-methods note)
-
----
-
-## Feature Landscape
-
-### Table Stakes (Must-Have for v1.4)
-
-Features the target audience (IT admins, L1, L2) will expect from Android documentation at parity with iOS v1.3 coverage. Missing these = documentation feels incomplete for an IT team deploying Android.
-
-| Feature | Why Expected | Complexity | Dependencies | Confidence |
-|---------|--------------|------------|--------------|------------|
-| Android Enterprise enrollment path overview + ownership/management axis | Every platform has an overview doc; iOS had this in v1.3; critical for mode selection | Simple | None | HIGH |
-| Managed Google Play binding prerequisite guide (tri-portal template) | Prerequisite for all GMS modes; must exist before any corporate enrollment guide | Simple | None | HIGH |
-| Fully Managed (COBO) admin setup guide | Most common corporate enrollment mode; direct parallel to iOS ADE | Moderate | Managed Google Play binding guide | HIGH |
-| Fully Managed (COBO) L1 triage runbook | L1 needs scripted triage for enrollment failures | Moderate | COBO admin guide | HIGH |
-| Fully Managed (COBO) L2 investigation runbook | L2 needs token/profile troubleshooting steps | Moderate | COBO L1 runbook | HIGH |
-| BYOD Work Profile end-user self-service guide | BYOD enrollment is user-initiated; L1 needs script to hand to users | Moderate | Managed Google Play binding guide | HIGH |
-| BYOD Work Profile admin setup guide | Admin still configures enrollment restrictions, work profile policy | Moderate | Managed Google Play binding guide | HIGH |
-| BYOD Work Profile L2 runbook | Work profile failures require log investigation (Company Portal logs, enrollment event logs) | Moderate | BYOD admin guide | HIGH |
-| Dedicated device (COSU) admin setup guide + kiosk config | Kiosk deployment is complex; MHS config layering needs documentation | Complex | Managed Google Play binding guide | HIGH |
-| Dedicated device (COSU) L1 triage runbook | Kiosk failure modes (MHS PIN, app crash, exit-kiosk) are common and well-defined | Moderate | Dedicated admin guide | HIGH |
-| Dedicated device (COSU) L2 runbook | Advanced: enrollment token rotation, Lock Task Mode debugging | Moderate | Dedicated L1 runbook | HIGH |
-| Zero-Touch Enrollment admin guide | Zero-Touch is the corporate scale-enrollment mechanism; no iOS equivalent but expected by enterprise admins | Moderate | Managed Google Play binding guide | HIGH |
-| Zero-Touch L1/L2 triage content | ZT failures at device-unbox are critical; reseller-side vs Intune-side distinction needed | Moderate | ZT admin guide | HIGH |
-| Android version fragmentation matrix | Android fragmentation is a known pain point; admins need version-to-mode compatibility reference | Simple | Research only | HIGH |
-| Provisioning-method axis matrix (NFC/QR/DPC/ZT) | Orthogonal to mode selection; admins choose provisioning method based on hardware and scale | Simple | Research only | HIGH |
-| AOSP stub guide (admin + triage) | AOSP devices (RealWear, PICO, HTC Vive, Zebra WS50) are in real deployments; stub prevents "not documented = not supported" assumption | Simple-Moderate | None (no MGP binding needed) | HIGH for OEM matrix; LOW for failure catalog |
-| COPE migration/deprecation note | Admins inheriting COPE deployments need to know Google's direction; prevents COPE new deployments | Simple | COBO guide (inline note) | HIGH |
-
-### Differentiators (High-Value Adds Beyond iOS/macOS Parity)
-
-Features that go beyond the minimum and make this Android documentation distinctly more useful than generic MDM docs.
-
-| Feature | Value Proposition | Complexity | Dependencies | Confidence |
-|---------|-------------------|------------|--------------|------------|
-| Per-mode "what breaks" callouts for Managed Google Play disconnect | MGP binding disconnect breaks all GMS modes silently; per-mode impact is non-obvious | Simple | Each mode's admin guide | HIGH |
-| Tri-portal navigation guide (Intune + MGP + Zero-Touch portal) | Android is the first three-portal pattern in this suite; admins will be confused by tri-portal workflow | Moderate | MGP binding guide | HIGH |
-| Work profile privacy-boundary table ("what admin CAN vs CANNOT see") | Privacy is top concern for BYOD Android deployments; explicit table prevents overreach and employee concerns | Simple | BYOD guide | HIGH |
-| MHS exit-PIN synchronization callout | This is a well-documented operational failure; documenting the "both places must match" requirement prevents repeated escalations | Simple | Dedicated admin guide | MEDIUM |
-| Factory Reset Protection behavior matrix per mode | FRP behavior differs by mode (COBO vs COPE vs Dedicated) and by reset method (Settings vs recovery vs Intune wipe); this is a pitfall-dense area | Simple | Each corp mode guide | HIGH |
-| Enrollment token rotation runbook | AOSP tokens expire at 90 days; dedicated device tokens expire at admin-chosen date; rotation without disrupting enrolled devices is a common admin need | Moderate | AOSP + Dedicated guides | MEDIUM |
-| Android 11+ COPE provisioning method restriction callout | NFC and afw#setup removed for COPE on Android 11+; admins with mixed Android-10/11 fleets will hit this unexpectedly | Simple | COPE deprecation note | HIGH |
-| AOSP Wi-Fi credential embedding requirement (RealWear) | RealWear cannot auto-join Wi-Fi; enrollment profile must embed SSID + PSK; this is not obvious and causes silent enrollment failure | Simple | AOSP guide | MEDIUM (single OEM pattern, MS Learn confirmed) |
-
-### Anti-Features (Explicitly OUT of v1.4)
-
-| Anti-Feature | Why Requested | Why Out | What to Do Instead |
-|--------------|---------------|---------|-------------------|
-| Knox Mobile Enrollment (KME) full admin + L1/L2 docs | Samsung is dominant Android OEM; admins want Samsung-specific zero-touch | Paid Knox license tier gating; Samsung-specific; velocity compression on top of 3x existing surface | Stub mention in enrollment overview; full coverage v1.4.1 |
-| COPE full admin path and L1/L2 runbooks | COPE exists in Intune; some orgs use it | Google trajectory is WPCO; NFC/token removed on Android 11+; documenting COPE fully risks encoding a deprecated pattern | Migration/deprecation note inside COBO guide; defer full COPE to v1.4.1 if still relevant |
-| AOSP user-associated/userless full failure catalog | AOSP devices are in real deployments | Sparse public failure documentation; OEM-specific behaviors not well-documented; RealWear-specific quirks require first-party validation | AOSP stub with known OEM matrix + enrollment flow; full coverage v1.4.1 once OEM matrix firms |
-| Cross-platform navigation integration (backport Android into docs/index, common-issues, quick-refs) | Unified navigation is expected | Regression risk against live v1.0-v1.3 docs; post-v1.4 unification task is safer | Deferred to post-v1.4 nav-unification task |
-| 4-platform comparison document (Windows/macOS/iOS/Android) | Useful for platform selection decisions | Scope too large for v1.4; requires all four platforms to be at similar documentation depth | Deferred to v1.5 |
-| Android Device Administrator (DA) legacy | Some legacy devices still running DA | DA deprecated by Google 2020; Intune ending GMS-device support August 2024; documenting DA risks encoding a dead-end path | Explicit "deprecated — do not use" callout in enrollment overview; link to migration path |
-| Knox-specific hardware features (Knox Workspace, Samsung DeX MDM, EFOTA) | Samsung-specific capabilities are valuable for Samsung-heavy fleets | Outside Intune enrollment scope for v1.4; Knox platform requires separate documentation track | Out-of-scope with explicit deferral note |
-| Android TV / Wear OS / Android Auto enrollment | Some orgs manage Android TV or wearables | Different management platform or unsupported in Intune enrollment scope | Out-of-scope note in overview |
+| v1.4 Doc | Knox ME v1.4.1 use | AOSP-per-OEM v1.4.1 use | COPE v1.4.1 use |
+|----------|---------------------|--------------------------|------------------|
+| Phase 34 `_glossary-android.md` | Reference (Knox is Samsung-specific, not Android-general; may add KME entry as Android-native term or as callout in existing ZTE entry) | Reference (AOSP entry already exists) | Reference (COPE + WPCO entries already exist — ground truth) |
+| Phase 34 `02-provisioning-methods.md` | Add KME row (deferred-knox-mobile-enrollment-row anchor already exists in cap matrix; provisioning-methods matrix needs its own KME row) | Validate 90-day token ceiling surfacing | Validate Android-11 breakpoint for afw#setup + NFC on COPE path |
+| Phase 34 `03-android-version-matrix.md` | Minimal; KME is Samsung-OS agnostic (Android 10+) | Net-new per-OEM min-firmware table (or separate per-OEM doc) | Validate COPE row for afw#setup + NFC removal on Android 11+ |
+| Phase 35 `01-managed-google-play.md` | Prerequisite reference | NOT applicable (AOSP is non-GMS; no MGP) | Prerequisite reference |
+| Phase 35 `02-zero-touch-portal.md` | **CRITICAL** — reciprocal mutual-exclusion pin (`#kme-zt-mutual-exclusion`); KME guide must close the forward promise from this doc | NOT applicable (AOSP does not use ZT) | Reference Method A/B scale implication (Method A wrong for COPE) |
+| Phase 36 `03-fully-managed-cobo.md` | Samsung admins callout references v1.4.1 KME | NOT applicable | **CRITICAL** — `## COPE Migration Note` is the forward anchor; COPE guide closes it |
+| Phase 37 `04-byod-work-profile.md` | NOT applicable | NOT applicable | Reference (work-profile isolation semantics) |
+| Phase 38 `05-dedicated-devices.md` | KME can enroll into Dedicated mode on Samsung; low-risk reference | NOT applicable (Dedicated is GMS-path; AOSP is separate) | NOT applicable |
+| Phase 39 `06-aosp-stub.md` | NOT applicable | **CRITICAL** — v1.4.1 expands this stub or replaces with per-OEM coverage; PITFALL-7 framing preserved | NOT applicable |
+| Phase 40 L1 runbooks (22-27) | Need new KME-specific L1 runbook (enrollment failed — Knox profile missing / Custom JSON malformed / approval lapsed) | Likely no per-OEM L1 (volume low); may add AOSP-enrollment-failed L1 | May add COPE-specific failure mode row to existing L1-22 enrollment-blocked runbook |
+| Phase 41 L2 runbooks (18-21) | Likely reference — Knox-specific logs are Samsung-side; Intune-side shows opaque enrollment failure | Likely reference — AOSP log-collection already documented in Phase 41 | Likely reference — COPE failure modes align with COBO L2 investigation patterns |
+| Phase 42 `reference/android-capability-matrix.md` | Add real KME row (close `deferred-knox-mobile-enrollment-row` anchor) | Lift stub-reference column to per-OEM rows OR separate OEM-delta doc (close `deferred-full-aosp-capability-mapping` anchor) | Add COPE column OR fold into existing cols with "COPE parity" annotation |
 
 ---
 
-## Feature Dependencies
+## MVP Recommendation (for Roadmap)
 
-```
-Managed Google Play Binding
-    ├──required by──> BYOD Work Profile admin guide
-    ├──required by──> Fully Managed (COBO) admin guide
-    ├──required by──> Dedicated (COSU) admin guide
-    ├──required by──> Zero-Touch Enrollment admin guide
-    └──NOT required by──> AOSP admin guide
+If v1.4.1 must be further trimmed, priority order:
 
-Zero-Touch admin guide
-    └──required by──> Zero-Touch L1/L2 triage
+1. **COPE full admin guide** (DEFER-06) — cleanest scope; reuses Phase 36 COBO patterns; closes a live admin-center-visible enrollment profile with no docs; single MS Learn authoritative source; no vendor volatility.
+2. **Knox Mobile Enrollment** (DEFER-04) — clear scope; 7-step dance but each step is documentable; Samsung-side stable; reciprocal pin already planted in Phase 35; largest admin-impact of the three (Samsung fleets are common).
+3. **Full AOSP per-OEM** (DEFER-05) — **HIGHEST VOLATILITY** due to Meta Horizon Feb 2026 wind-down; 5 OEMs × varying docs; per-OEM gaps; requires plan-time re-verification; highest chance of staling within 60-day review cycle. Recommend shipping as a per-OEM H2 set within the Phase 39 doc, NOT separate per-OEM docs, to minimize surface area.
 
-Fully Managed admin guide
-    ├──required by──> COBO L1 triage runbook
-    └──required by──> COBO L2 investigation runbook
-
-Dedicated admin guide
-    ├──required by──> Dedicated L1 triage runbook
-    └──required by──> Dedicated L2 investigation runbook
-
-BYOD Work Profile admin guide
-    ├──required by──> BYOD L2 investigation runbook
-    └──enhanced by──> BYOD end-user self-service guide (tier-inversion: user-facing)
-
-Android Enterprise overview
-    └──prerequisite context for──> All mode-specific guides
-
-Android version matrix
-    └──referenced from──> Android Enterprise overview + all mode guides
-
-Provisioning-method matrix
-    └──referenced from──> Android Enterprise overview + ZT, COBO, Dedicated guides
-
-COPE deprecation note
-    └──inline in──> Fully Managed (COBO) admin guide
-```
-
-### Dependency Notes
-
-- **Managed Google Play binding is a hard gate:** No GMS-based enrollment profile can be created in Intune without this binding. All four GMS modes depend on it. Document it first as Phase 1 prerequisite before any mode-specific guide.
-- **AOSP is independent:** AOSP does not use GMS or Managed Google Play. AOSP guides can be written independently of the MGP binding dependency.
-- **Enrollment overview must precede mode guides:** Admins need to select the correct mode before consulting mode-specific admin guides. Overview with the ownership/management axis table is a conceptual gate.
-- **L1 guides depend on admin guides:** L1 triage scripts reference Intune portal paths established in admin guides. L1 must follow admin guide phase.
-- **L2 guides depend on L1 guides:** L2 investigates what L1 escalated. L2 inherits scope from L1 runbook framing.
-- **BYOD tier-inversion:** BYOD enrollment is user-initiated (Company Portal on personal device), not admin-initiated. The "L1" content is more accurately an end-user self-service guide that L1 hands off to users. Admin tasks are limited to enrollment restriction configuration and work profile policy.
+**Defer candidate:** None — all three items are already v1.4.1 scope per PROJECT.md; no deferrals to v1.5 beyond the already-tracked DEFER-07 (nav integration) and DEFER-08 (4-platform comparison).
 
 ---
 
-## v1.4 MVP Definition (Phase Sequencing Input)
+## Per-Category Quality-Gate Check
 
-### Phase 1: Foundation (must be first)
-- Android Enterprise enrollment path overview (ownership/management axis, supervision analog)
-- Managed Google Play binding guide (tri-portal template introduction)
-- Android version matrix + provisioning-method matrix (research artifacts become doc deliverables)
-
-### Phase 2: Corporate Enrollment — Fully Managed (COBO)
-- COBO admin setup guide (prerequisites, enrollment profile, token, ZT integration)
-- COBO L1 triage runbook (enrollment failure scenarios, token issues, Managed Authenticator failures)
-- COBO L2 investigation runbook (log collection, profile delivery verification, staged token workflow)
-- COPE deprecation note inline in COBO guide
-
-### Phase 3: BYOD Work Profile
-- BYOD admin setup guide (enrollment restrictions, work profile policy, data transfer controls)
-- BYOD end-user self-service guide (Company Portal install, work profile setup, what to expect)
-- BYOD L2 investigation runbook (work profile logs, profile creation failure, MAM intersection)
-
-### Phase 4: Dedicated Devices (Kiosk)
-- Dedicated device admin setup guide (enrollment profile, kiosk configuration, MHS multi-app setup, exit-PIN)
-- Dedicated L1 triage runbook (MHS PIN mismatch, app crash recovery, exit-kiosk attempts)
-- Dedicated L2 runbook (token rotation, Lock Task debugging, FRP behavior)
-
-### Phase 5: Zero-Touch Enrollment
-- Zero-Touch admin guide (reseller flow, portal navigation, DPC extras JSON, linking to Intune)
-- Zero-Touch L1/L2 triage content (ZT not triggering, wrong mode on unbox, GMS connectivity at setup)
-
-### Phase 6: AOSP (Stub)
-- AOSP admin guide: enrollment profile, QR-only flow, OEM matrix, Wi-Fi embedding requirement
-- AOSP triage stub: known failure patterns (enrollment token expiry, Wi-Fi credential absent, OEM firmware below minimum)
-
-### Defer (v1.4.1 or later)
-- Knox Mobile Enrollment full docs
-- COPE full admin path
-- AOSP full failure catalog with per-OEM behavioral matrix
-- Cross-platform navigation integration
-
----
-
-## Feature Prioritization Matrix
-
-| Feature | Audience Value | Doc Complexity | Priority |
-|---------|----------------|----------------|----------|
-| Managed Google Play binding guide | HIGH (gates everything) | LOW | P1 |
-| Enrollment path overview + axes | HIGH (orientation) | LOW | P1 |
-| COBO admin setup guide | HIGH (most common corporate mode) | MEDIUM | P1 |
-| BYOD work profile admin + user guide | HIGH (most common BYOD mode) | MEDIUM | P1 |
-| Dedicated device admin + kiosk config | HIGH (kiosk is complex/error-prone) | HIGH | P1 |
-| COBO L1/L2 runbooks | HIGH | MEDIUM | P1 |
-| BYOD L2 runbook | HIGH | MEDIUM | P1 |
-| Dedicated L1/L2 runbooks | HIGH | MEDIUM | P1 |
-| Zero-Touch admin + triage | MEDIUM (enterprise-scale only) | MEDIUM | P2 |
-| AOSP stub guide | MEDIUM (specialized devices) | LOW | P2 |
-| Android version matrix (doc artifact) | HIGH (reference) | LOW | P1 |
-| Provisioning method matrix (doc artifact) | HIGH (reference) | LOW | P1 |
-| Privacy-boundary table (BYOD) | HIGH (legal/HR concern) | LOW | P1 (embedded in BYOD guide) |
-| MHS exit-PIN sync callout | MEDIUM (operational) | LOW | P1 (embedded in Dedicated guide) |
-| FRP behavior matrix | MEDIUM (re-provisioning) | LOW | P2 (embedded in mode guides) |
-| COPE deprecation note | MEDIUM (inherited deployments) | LOW | P1 (inline in COBO guide) |
+| Quality gate | Knox ME | AOSP per-OEM | COPE |
+|---|---|---|---|
+| Table stakes vs differentiators vs anti-features distinguished | ✓ | ✓ | ✓ |
+| Complexity noted (tiers, gates, setup steps) | ✓ HIGH (7-step, Samsung B2B) | ✓ MEDIUM per-OEM (shared envelope + deltas) | ✓ MEDIUM (admin familiarity from COBO) |
+| Dependencies on existing v1.4 docs | ✓ | ✓ | ✓ |
+| COPE full-guide vs deprecation-rationale decision made | — | — | **✓ FULL GUIDE** (verified 2026-04-24) |
+| AOSP per-vendor feature-support deltas (not blanket) | — | ✓ 5-OEM × 7-dim matrix | — |
+| PITFALL-7 "not supported under AOSP" preserved | — | ✓ (must be retained from Phase 39) | — |
 
 ---
 
 ## Sources
 
-| Source | Confidence | URL | Last Updated |
-|--------|------------|-----|--------------|
-| Android device enrollment guide (Intune) | HIGH | https://learn.microsoft.com/en-us/intune/device-enrollment/android/guide | 2026-04-16 |
-| Setup fully managed enrollment (Intune) | HIGH | https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-fully-managed | 2025-05-08 / git 2026-04-16 |
-| Setup dedicated device enrollment (Intune) | HIGH | https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-dedicated | 2025-05-08 / git 2026-04-16 |
-| Setup personal work profile (Intune) | HIGH | https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-personal-work-profile | 2024-10-28 / git 2026-04-16 |
-| Connect Intune to Managed Google Play | HIGH | https://learn.microsoft.com/en-us/intune/device-enrollment/android/connect-managed-google-play | 2025-11-11 / git 2026-04-16 |
-| Enroll corporate methods (NFC/QR/ZT/Token) | HIGH | https://learn.microsoft.com/en-us/intune/device-enrollment/android/ref-corporate-methods | 2025-12-04 / git 2026-04-16 |
-| AOSP supported devices matrix | HIGH | https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/android-os-project-supported-devices | 2025-05-12 / git 2026-04-16 |
-| AOSP userless enrollment setup | HIGH | https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-aosp-corporate-userless | 2025-05-15 / git 2026-04-16 |
-| MAM vs Work Profiles (Intune) | HIGH | https://learn.microsoft.com/en-us/intune/app-management/protection/mam-vs-work-profiles-android | 2025-06-12 / git 2026-04-17 |
-| Zero-Touch for IT admins | HIGH | https://support.google.com/work/android/answer/7514005 | Google Android Enterprise Help |
-| Google: Device setup methods | MEDIUM | https://support.google.com/work/android/answer/9566881 | Google Android Enterprise Help |
+### Microsoft Learn (HIGH confidence, authoritative)
 
----
-*Feature research for: Android Enterprise enrollment documentation (v1.4)*
-*Researched: 2026-04-19*
-*Researcher: GSD Research Agent*
+- [Automatically enroll devices with Samsung Knox Mobile Enrollment](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-samsung-knox-mobile) — updated 2026-04-14, `ms.date` 2023-12-01
+- [Set up Android Enterprise work profile for corporate owned devices](https://learn.microsoft.com/en-us/mem/intune/enrollment/android-corporate-owned-work-profile-enroll) — updated 2026-04-16, `ms.date` 2025-05-08 (COPE authoritative source)
+- [Android Open Source Project Supported Devices](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/android-os-project-supported-devices) — updated 2026-04-16, `ms.date` 2025-05-12 (AOSP OEM table)
+- [Set up Intune enrollment for Android (AOSP) corporate-owned userless devices](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-aosp-corporate-owned-userless-enroll) — updated 2026-04-16, `ms.date` 2025-05-15 (AOSP setup envelope)
+- [Enroll Android Enterprise dedicated, fully managed, or corporate-owned work profile devices in Intune](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-dedicated-devices-fully-managed-enroll)
+- [Manage Specialty devices with Microsoft Intune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/specialty-devices-with-intune) (Plan 2 / Suite licensing gate)
+- [Use Zebra Mobility Extensions on Android devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/configuration/android-zebra-mx-overview)
+
+### Microsoft Tech Community (HIGH confidence, official Intune blog)
+
+- [Protect your organization's purpose-built devices with Microsoft Intune](https://techcommunity.microsoft.com/t5/microsoft-intune-blog/protect-your-organization-s-purpose-built-devices-with-microsoft/ba-p/3755654) — Intune Suite / Plan 2 gate for AR/VR specialty devices
+
+### Samsung Knox Documentation (HIGH confidence, vendor authoritative)
+
+- [Knox Mobile Enrollment documentation hub](https://docs.samsungknox.com/admin/knox-mobile-enrollment/)
+- [Get started with Knox Mobile Enrollment](https://docs.samsungknox.com/admin/knox-mobile-enrollment/get-started/get-started-with-knox-mobile-enrollment/)
+- [Manage licenses | Knox Mobile Enrollment](https://docs.samsungknox.com/admin/knox-mobile-enrollment/how-to-guides/manage-licenses/)
+- [Knox licenses | Fundamentals](https://docs.samsungknox.com/admin/fundamentals/knox-licenses/)
+- [Samsung Knox × Microsoft Intune partner page](https://www.samsungknox.com/en/partner-solutions/microsoft-intune)
+- [Configure standard settings | Knox Mobile Enrollment](https://docs.samsungknox.com/admin/knox-mobile-enrollment/how-to-guides/manage-profiles/create-profiles/configure-standard-settings/)
+
+### OEM Vendor Documentation (HIGH confidence, vendor authoritative)
+
+- [RealWear — Enrolling in Microsoft Intune: Creating Enrollment Token](https://support.realwear.com/knowledge/enrolling-in-microsoft-intune)
+- [RealWear — Supported EMM Providers](https://support.realwear.com/knowledge/supported-enterprise-mobility-management-providers)
+- [RealWear — Intune AOSP FAQ](https://support.realwear.com/knowledge/faq-intune-aosp)
+- [RealWear — Configuration from QR Code](https://support.realwear.com/knowledge/configuration-for-devices-from-a-qr-code)
+- [PICO Newsroom — Microsoft Intune integration](https://www.picoxr.com/global/about/newsroom/microsoft-intune)
+- [PICO 4 Ultra Enterprise product page](https://www.picoxr.com/global/products/pico4-ultra-enterprise)
+- [HTC VIVE Focus 3 — Enrollment via enrollment token](https://www.vive.com/us/support/focus3/category_howto/enrolling-the-headset-using-the-device-enrollment-token.html)
+- [Meta for Work — Create a third-party enrollment](https://work.meta.com/help/294719289919907)
+- [Meta Horizon managed services (wind-down Feb 2026)](https://forwork.meta.com/meta-horizon-managed-solutions/)
+- [Zebra — Enrolling Zebra Android Device with MS Intune](https://supportcommunity.zebra.com/s/article/000021176?language=en_US)
+- [Zebra — Enroll Microsoft Intune Using StageNow](https://supportcommunity.zebra.com/s/article/000020868?language=en_US)
+
+### Community & Supplementary (MEDIUM confidence, community expertise)
+
+- [Jason Bayton — Android Enterprise EMM COPE support](https://bayton.org/android/android-enterprise-emm-cope-support/) — WPCO vs. legacy-COPE architectural evolution
+- [Jason Bayton — 2026 Android Security Paper review](https://bayton.org/blog/2026/03/reviewing-the-2026-security-paper/)
+- [Jason Bayton — Android Enterprise FAQ](https://bayton.org/android/android-enterprise-faq/)
+- [Peter van der Woude — Using Samsung Knox Mobile Enrollment with Microsoft Intune](https://petervanderwoude.nl/post/using-samsung-knox-mobile-enrollment-with-microsoft-intune/)
+- [Peter van der Woude — Getting started with Corporate-Owned devices with Work Profile](https://petervanderwoude.nl/post/getting-started-with-android-enterprise-corporate-owned-devices-with-work-profile/)
+- [HTMD — Intune supports HTC and Pico for AOSP devices](https://www.anoopcnair.com/intune-supports-devices-android-open-source/)
+- [Anoop C Nair — Android AOSP Devices Support with Intune](https://www.anoopcnair.com/android-aosp-devices-support-with-intune/)
+- [MDM Tech Space — Zebra management options with Intune](https://joymalya.com/zebra-management-options-with-intune/)
+- [Hubert Maslowski — Samsung's KME with Android Enterprise enrollment to Intune](https://hmaslowski.com/home/f/samsungs-kme-with-android-enterprise-enrollment-to-memintune)
+- [Hubert Maslowski — Zebra's OEMConfig on Android dedicated (COSU)](https://hmaslowski.com/f/manage-zebra-devices-as-android-enterprise-cosu-with-oemconfig)
+- [IntuneStuff — Android Intune Enrollment Profiles unconfused](https://intunestuff.com/2024/07/17/android-intune-unconfuse-the-confusion/)
+- [Cloud Tek Space — Enroll Android (AOSP) Devices in Intune](https://www.cloudtekspace.com/post/enroll-android-aosp-devices-in-intune)
+
+### Google Android Enterprise (HIGH confidence, vendor authoritative)
+
+- [Android Enterprise Help — General FAQs](https://support.google.com/work/android/answer/14772109?hl=en)
+- [Google Developers — Provision device (WPCO + COPE)](https://developers.google.com/android/management/provision-device)
+- [Android Enterprise Recommended](https://www.android.com/enterprise/recommended/)
