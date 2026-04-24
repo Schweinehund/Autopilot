@@ -116,14 +116,14 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   3. All 4 L2 runbooks (`18-21-android-*.md`) show `review_by ≤ last_verified + 60 days`; `admin-template-android.md` frontmatter normalized (or template directory excluded from C5 scope with sentinel)
   4. `06-aosp-stub.md` body is ≤900 words (PITFALL-7 framing preserved, deep RealWear content migrated out to prep shell for Phase 45 consumption) and C3 word-count check passes informational
   5. Harness C1-C5 checks all pass on current state (pre-44/45/46 baseline); CI-parseable allow-list test in place
-**Plans:** 6/10 plans executed
+**Plans:** 7/10 plans executed
   - [x] 43-01-PLAN.md — Rescue: restore v1.4 allow-list sidecar from git + update harness line 57 + FROZEN marker (wave 1, atomic commit) — shipped `a868882` 2026-04-24
   - [x] 43-02-PLAN.md — Scaffold v1.4.1 harness (cp + 6 additive edits) + v1.4.1 sidecar skeleton (wave 2)
   - [x] 43-03-PLAN.md — Hand-author 14 new supervision pins (9 → 23 in both sidecars) (wave 2)
   - [x] 43-04-PLAN.md — Author regenerate-supervision-pins.mjs (3 modes) + README; run --self-test (wave 2)
   - [x] 43-05-PLAN.md — Shift L2 runbook 18-21 review_by + Android template sentinel (wave 3)
   - [x] 43-06-PLAN.md — Integration test: v1.4.1 harness C5 PASS with scope-filter + sentinel + shifted runbooks (wave 3)
-  - [ ] 43-07-PLAN.md — Trim 06-aosp-stub.md to ~700 words + extract RealWear deep content to PHASE-45-AOSP-SOURCE.md (wave 4)
+  - [x] 43-07-PLAN.md — Trim 06-aosp-stub.md to ~700 words + extract RealWear deep content to PHASE-45-AOSP-SOURCE.md (wave 4)
   - [ ] 43-08-PLAN.md — Bootstrap CI: .github/workflows/audit-harness-integrity.yml + scripts/hooks/pre-commit.sh (wave 5)
   - [ ] 43-09-PLAN.md — Restore Phase 39 artifacts from git + /gsd-validate-phase 39 → DEFER-04 closure (wave 6, non-autonomous)
   - [ ] 43-10-PLAN.md — Terminal sanity: both harnesses PASS + helper --self-test PASS + 43-VERIFICATION.md (wave 7)
@@ -227,7 +227,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 40. Android L1 Triage & Runbooks | v1.4 | 10/10 | Complete | 2026-04-23 |
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete | 2026-04-24 |
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
-| 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 6/10 | In Progress|  |
+| 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 7/10 | In Progress|  |
 | 44. Knox Mobile Enrollment | v1.4.1 | 0/? | Not started | - |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 0/? | Not started | - |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
