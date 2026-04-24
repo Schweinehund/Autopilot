@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-04-23
+review_by: 2026-07-22
 applies_to: both
 audience: L2
 platform: all
@@ -129,6 +129,39 @@ The [iOS Log Collection Guide](14-ios-log-collection.md) is a **prerequisite for
 
 > **MAM-WE investigation is out of Phase 31 scope** -- deferred to **ADDTS-01** future milestone. Selective wipe failures, PIN loop, app protection not applying, and MAM-specific compliance failures currently have no L2 runbook. Escalate MAM-specific issues directly to Microsoft Support with Company Portal log upload + app protection policy JSON export.
 
+## Android L2 Runbooks
+
+> **Version gate:** The runbooks below cover Android Enterprise through Microsoft Intune (GMS modes: BYOD Work Profile, Fully Managed COBO, Dedicated COSU, Zero-Touch Enrollment). AOSP is out of scope — v1.4.1.
+> For iOS L2 runbooks, see above. For macOS ADE runbooks, see above. For Windows Autopilot runbooks, see the tables above.
+
+The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequisite for all Android L2 investigation runbooks** -- select a method via the mode-first decision matrix in that guide (Company Portal logs / Microsoft Intune app logs / adb logcat) before beginning any investigation.
+
+### When to Use
+
+| Runbook | When to Use | Prerequisite |
+|---------|-------------|--------------|
+| [Android Log Collection Guide](18-android-log-collection.md) | Before starting any Android L2 investigation -- choose Company Portal logs, Microsoft Intune app logs, or adb logcat per the decision matrix | None |
+| [Android Enrollment Investigation](19-android-enrollment-investigation.md) | Work profile not created, COBO enrollment stuck, ZTE device claim failure, Dedicated QR failure, or enrollment restriction blocking | [Android Log Collection](18-android-log-collection.md) |
+| [Android App Install Investigation](20-android-app-install-investigation.md) | MGP or LOB app shows Failed, Not installed, or Pending with no user action resolving it | [Android Log Collection](18-android-log-collection.md) |
+| [Android Compliance Investigation](21-android-compliance-investigation.md) | Device Non-compliant, stuck at Not evaluated, or Conditional Access blocking despite apparent compliance | [Android Log Collection](18-android-log-collection.md) |
+
+### Android L1 Escalation Mapping
+
+| L1 Runbook Source | L2 Runbook |
+|-------------------|------------|
+| [L1 22: Android Enrollment Blocked](../l1-runbooks/22-android-enrollment-blocked.md) | [Android Enrollment Investigation](19-android-enrollment-investigation.md) Pattern E + see-also [Android Log Collection](18-android-log-collection.md) |
+| [L1 23: Android Work Profile Not Created](../l1-runbooks/23-android-work-profile-not-created.md) | [Android Enrollment Investigation](19-android-enrollment-investigation.md) Pattern A + see-also [Android Log Collection](18-android-log-collection.md) |
+| [L1 24: Android Device Not Enrolled](../l1-runbooks/24-android-device-not-enrolled.md) | [Android Enrollment Investigation](19-android-enrollment-investigation.md) (Data Collection Step 1-4 first) + see-also [Android Log Collection](18-android-log-collection.md) |
+| [L1 25: Android Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md) | [Android Compliance Investigation](21-android-compliance-investigation.md) (Cause A→A, B→B, C→C, D→D) |
+| [L1 26: Android MGP App Not Installed](../l1-runbooks/26-android-mgp-app-not-installed.md) | [Android App Install Investigation](20-android-app-install-investigation.md) + see-also [Android Log Collection](18-android-log-collection.md) |
+| [L1 27: Android ZTE Enrollment Failed](../l1-runbooks/27-android-zte-enrollment-failed.md) | [Android Enrollment Investigation](19-android-enrollment-investigation.md) Pattern C + see-also [Android Log Collection](18-android-log-collection.md) |
+
+> **Note:** Android L2 runbook 19 has a D-11 L1 handoff block that routes by L1 runbook number to the matching Pattern. Android L2 runbook 21 has a Per-Cause Deep-Dive that matches L1 runbook 25's Cause A/B/C/D labels — a ticket arriving with a pre-classified cause routes directly to that section.
+
+### Android MAM-WE Investigation Advisory {#android-mam-we-investigation-advisory}
+
+> **Android MAM-WE investigation is out of Phase 41 scope** -- deferred to **ADDTS-ANDROID-01** future milestone. Selective wipe failures, PIN loop, app protection not applying, and MAM-specific compliance failures currently have no Android L2 runbook. Escalate MAM-specific issues directly to Microsoft Support with Company Portal log upload (per [Android Log Collection Guide](18-android-log-collection.md)) + app protection policy JSON export.
+
 ## Related Resources
 
 - [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
@@ -146,6 +179,7 @@ The [iOS Log Collection Guide](14-ios-log-collection.md) is a **prerequisite for
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-23 | Added Android L2 runbook section (runbooks 18-21 + Android MAM-WE advisory) | -- |
 | 2026-04-17 | Added iOS L2 runbook section (runbooks 14-17 + MAM-WE advisory) | -- |
 | 2026-04-14 | Added macOS ADE runbook section | -- |
 | 2026-04-13 | Added APv2 runbook section (restored after accidental revert) | -- |
