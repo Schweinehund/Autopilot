@@ -19,7 +19,7 @@ This guide walks an Intune administrator through creating and operating a Fully 
 
 **Not covered:** MGP binding mechanics (see [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp)); Zero-Touch portal mechanics (see [02-zero-touch-portal.md](02-zero-touch-portal.md)); corporate-scale ZTE including dual-SIM IMEI 1 (Phase 39); the canonical provisioning-method × mode matrix (see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md)); full COPE admin path (deferred v1.4.1); Knox Mobile Enrollment (deferred v1.4.1); COBO-applicable Android L1 Runbooks — see [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks): [22: Enrollment Blocked](../l1-runbooks/22-android-enrollment-blocked.md), [24: Device Not Enrolled](../l1-runbooks/24-android-device-not-enrolled.md), [25: Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md), [26: MGP App Not Installed](../l1-runbooks/26-android-mgp-app-not-installed.md); COBO L2 investigation (Phase 41).
 
-**How to use:** Intune administrators read linearly. L1 Service Desk uses the [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks) (Phase 40, now shipped). L2 Desktop Engineering uses the Android L2 investigation runbooks (Phase 41 — not yet shipped).
+**How to use:** Intune administrators read linearly. L1 Service Desk uses the [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks) (Phase 40, now shipped). L2 Desktop Engineering uses the [Android L2 investigation runbooks](../l2-runbooks/00-index.md#android-l2-runbooks).
 
 <a id="key-concepts"></a>
 ## Key Concepts
