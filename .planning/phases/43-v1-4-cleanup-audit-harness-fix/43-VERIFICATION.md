@@ -164,4 +164,4 @@ Per the PLAN 43-10 §verification block (line 210-211) and PLAN 43-06 precedent,
 
 Phase 43 complete as of **2026-04-24**. All 4 requirements (AEAUDIT-02, AEAUDIT-03, AEAUDIT-04, AEAUDIT-05) Closed. DEFER-04 Closed (via Plan 09 inline-equivalent `/gsd-validate-phase 39` re-gate recorded in `.planning/milestones/v1.4-MILESTONE-AUDIT.md`). Both harnesses run end-to-end; active v1.4.1 harness 8/8 PASS; frozen v1.4 harness 4/5 PASS with documented architectural C5 divergence. Helper self-test reproduces hand-authored pins. CI workflow bootstrapped + pre-commit hook parses both sidecars. Downstream Phases 44 (Knox), 45 (per-OEM AOSP), 46 (COPE) unblocked on a stable v1.4.1 baseline. Phase 43 ready for `/gsd-verify-work`.
 
-Final commit SHA (this VERIFICATION.md + tracking): will be recorded by the commit that lands this file.
+Final commit SHA (this VERIFICATION.md + tracking): `985af2e` (`docs(43-10): terminal verification — both harnesses + helper PASS; Phase 43 complete`).
