@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
 status: executing
-stopped_at: Completed 43-05-PLAN.md
-last_updated: "2026-04-24T21:10:47.283Z"
+stopped_at: Completed 43-06-PLAN.md
+last_updated: "2026-04-24T21:19:23.717Z"
 last_activity: 2026-04-24
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 10
-  completed_plans: 5
-  percent: 50
+  completed_plans: 6
+  percent: 60
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 43 (v1-4-cleanup-audit-harness-fix) — EXECUTING
-Plan: 6 of 10
+Plan: 7 of 10
 Status: Ready to execute
 Last activity: 2026-04-24
 
@@ -75,6 +75,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 - [Phase 43-v1-4-cleanup-audit-harness-fix]: Plan 43-05: D-22 metadata-only shift on L2 runbooks 18-21 (review_by +60d; last_verified unchanged at 2026-04-23)
 - [Phase 43-v1-4-cleanup-audit-harness-fix]: Plan 43-05: D-24 belt-and-suspenders template sentinel (1970-01-01 # TEMPLATE-SENTINEL) paired with Plan 02 scope-filter
 - [Phase 43-v1-4-cleanup-audit-harness-fix]: Plan 43-05: D-25 Android-scope lock honored (iOS/macOS/Windows templates untouched; routed to v1.5 backlog)
+- [Phase 43]: Plan 43-06 integration-test confirmed v1.4.1 harness 8/8 PASS (exit 0) on current tree; scope-filter probe OK across 4 path classes; v1.4 harness C5 FAIL is documented D-01/D-02 frozen-predecessor divergence (NOT a regression)
 
 ### Pending Todos
 
@@ -107,6 +108,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-24T21:10:47.274Z
-Stopped at: Completed 43-05-PLAN.md
+Last session: 2026-04-24T21:19:23.708Z
+Stopped at: Completed 43-06-PLAN.md
 Next action: `/gsd-plan-phase 43` (cleanup + audit harness fix — sidecar path + allow-list + freshness + AOSP stub prep)
