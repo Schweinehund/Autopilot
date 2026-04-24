@@ -242,15 +242,14 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
   3. `docs/_glossary-macos.md` has a single-line see-also cross-reference pointing to `_glossary-android.md` and no other modifications (preserves all existing macOS glossary anchors)
   4. The milestone audit passes all Android-specific mechanical checks: zero occurrences of "SafetyNet" as a compliance mechanism in any Android doc (Play Integrity only); zero uses of "supervision" as a management term in Android docs (Android uses "fully managed"); AOSP stub word-count within scope guard; zero Android links in deferred shared files (`common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md`); every Android doc has `last_verified` frontmatter
   5. The audit produces a verification artifact (`v1.4-MILESTONE-AUDIT.md` or equivalent) recording coverage (37/37 requirements satisfied), integration findings, and any deferred items tracked for v1.4.1 or v1.5
-**Plans**: 8 plans (3 waves, all autonomous)
-  - [x] 41-01-PLAN.md — L2 template platform enum + 00-index.md Android section append (AEL2-05; D-27/D-26) - Wave 0
-  - [x] 41-02-PLAN.md — docs/l2-runbooks/18-android-log-collection.md (AEL2-01; D-01..D-06, D-22..D-25 mode-first tiering + USB-debug + confidence markers) - Wave 1
-  - [x] 41-03-PLAN.md — docs/l2-runbooks/19-android-enrollment-investigation.md (AEL2-02; D-07..D-12 5-pattern + escalation packet + BYOD/ZTE anchors) - Wave 1
-  - [x] 41-04-PLAN.md — docs/l2-runbooks/20-android-app-install-investigation.md (AEL2-03; D-13..D-15 three-class + MAM-WE exclusion) - Wave 1
-  - [x] 41-05-PLAN.md — docs/l2-runbooks/21-android-compliance-investigation.md (AEL2-04; D-16..D-21 hybrid axis + 4-cause + Play Integrity 3-tier + zero-SafetyNet body) - Wave 1
-  - [x] 41-06-PLAN.md — Atomic retrofit of 6 Android L1 runbooks (22-27) per D-30/D-31/D-32 - Wave 2
-  - [x] 41-07-PLAN.md — Atomic retrofit of docs/android-lifecycle/03-android-version-matrix.md line 89 (D-30) - Wave 2
-  - [ ] 41-08-PLAN.md — Atomic retrofit of 3 docs/admin-setup-android files (03/04/05) per D-30/D-31; PITFALL 5 preserves 03 line 20 Not-covered list - Wave 2
+**Plans**: 7 plans (2 waves, all autonomous)
+  - [ ] 42-01-PLAN.md — ROADMAP pre-flight fix: rewrite Phase 42 Plans table + progress count (D-06) - Wave 0
+  - [ ] 42-02-PLAN.md — docs/reference/android-capability-matrix.md (AEAUDIT-01; D-08..D-18) - Wave 1
+  - [ ] 42-03-PLAN.md — docs/index.md Android stub surgical additions (AEAUDIT-02; D-19..D-22) - Wave 1
+  - [ ] 42-04-PLAN.md — docs/_glossary-macos.md line-10 see-also banner-extend (AEAUDIT-03; D-23..D-24) - Wave 1
+  - [ ] 42-05-PLAN.md — scripts/validation/v1.4-milestone-audit.mjs + v1.4-audit-allowlist.json (AEAUDIT-04 infra; D-25..D-31) - Wave 1
+  - [ ] 42-06-PLAN.md — Independent-subagent audit run + .planning/milestones/v1.4-MILESTONE-AUDIT.md (AEAUDIT-04; D-02/D-32) - Wave 2
+  - [ ] 42-07-PLAN.md — REQUIREMENTS.md + ROADMAP atomic traceability flip (AEAUDIT-01/02/03/04) (D-03) - Wave 2
 **UI hint**: no
 
 ## Progress
@@ -298,4 +297,4 @@ Full details: [milestones/v1.3-ROADMAP.md](milestones/v1.3-ROADMAP.md)
 | 39. Zero-Touch Enrollment + AOSP Stub | v1.4 | 2/2 | Complete    | 2026-04-23 |
 | 40. Android L1 Triage & Runbooks | v1.4 | 10/10 | Complete    | 2026-04-23 |
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete   | 2026-04-24 |
-| 42. Integration & Milestone Audit | v1.4 | 0/TBD | Not started | - |
+| 42. Integration & Milestone Audit | v1.4 | 0/7 | In progress | - |
