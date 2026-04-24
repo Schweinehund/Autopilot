@@ -1,6 +1,6 @@
 ---
 last_verified: 2026-04-23
-review_by: 2026-07-22
+review_by: 2026-06-22
 applies_to: all
 audience: L2
 platform: Android

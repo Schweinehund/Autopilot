@@ -2,6 +2,7 @@
      Usage: Copy this file as your starting point for any Android Enterprise admin configuration guide.
      Rules:
      - Fill in all YYYY-MM-DD dates (review_by = last_verified + 60 days, NOT 90)
+     - The `1970-01-01 # TEMPLATE-SENTINEL` value on last_verified is a harness-skip sentinel — REPLACE with actual authoring date when copying this template. The harness (v1.4.1+) treats `1970-01-01` as "template placeholder, skip freshness check." Real docs MUST have a valid authoring date (never keep the sentinel value in a shipped doc).
      - Set platform to Android (this template is Android Enterprise-specific)
      - Replace all [bracketed placeholders] with actual content
      - Every configurable setting MUST have a "What breaks if misconfigured" callout
@@ -25,7 +26,7 @@
      Reviewer: Android Platform Lead (role, not person name)
 -->
 ---
-last_verified: YYYY-MM-DD
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
 review_by: YYYY-MM-DD
 audience: admin
 platform: Android
