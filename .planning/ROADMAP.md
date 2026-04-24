@@ -98,7 +98,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 
 ### 🚧 v1.4.1 Android Enterprise Completion & v1.4 Cleanup (Phases 43-47) — IN PROGRESS
 
-- [ ] **Phase 43: v1.4 Cleanup & Audit Harness Fix** — Resolve audit sidecar path blocker, expand allow-list (~10→~37 pins), normalize 60-day freshness across L2 runbooks 18-21 + template, and migrate Phase 39 AOSP stub deep content into per-OEM prep shell. MUST land before 44/45/46.
+- [x] **Phase 43: v1.4 Cleanup & Audit Harness Fix** — Resolve audit sidecar path blocker, expand allow-list (~10→~37 pins), normalize 60-day freshness across L2 runbooks 18-21 + template, and migrate Phase 39 AOSP stub deep content into per-OEM prep shell. MUST land before 44/45/46. (completed 2026-04-24)
 - [ ] **Phase 44: Knox Mobile Enrollment** — Ship Samsung KME as 4th-portal overlay (admin guide + L1 runbook 28 + L2 runbook 22); fill `#knox-mobile-enrollment-row` anchor; extend 5-branch Mermaid to 6-branch; retrofit ZT portal + COBO Samsung-admin callouts. Parallel with 45/46.
 - [ ] **Phase 45: Per-OEM AOSP Expansion** — Lift hard-scoped AOSP stub into real coverage across 5 OEMs (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest) + OEM matrix reference + L1 runbook 29 (replaces ANDE1) + L2 runbook 23. Preserves PITFALL-7 "not supported under AOSP" framing. Meta Horizon wind-down re-verification gate at plan time. Parallel with 44/46.
 - [ ] **Phase 46: COPE Full Admin** — Parallel-structured to COBO guide; Android 15 Private-space unmanaged callout (NEW); atomic same-commit COBO migration-note retrofit; research-gated for deprecation-rationale re-scope. Parallel with 44/45.
@@ -116,7 +116,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   3. All 4 L2 runbooks (`18-21-android-*.md`) show `review_by ≤ last_verified + 60 days`; `admin-template-android.md` frontmatter normalized (or template directory excluded from C5 scope with sentinel)
   4. `06-aosp-stub.md` body is ≤900 words (PITFALL-7 framing preserved, deep RealWear content migrated out to prep shell for Phase 45 consumption) and C3 word-count check passes informational
   5. Harness C1-C5 checks all pass on current state (pre-44/45/46 baseline); CI-parseable allow-list test in place
-**Plans:** 9/10 plans executed
+**Plans:** 10/10 plans complete
   - [x] 43-01-PLAN.md — Rescue: restore v1.4 allow-list sidecar from git + update harness line 57 + FROZEN marker (wave 1, atomic commit) — shipped `a868882` 2026-04-24
   - [x] 43-02-PLAN.md — Scaffold v1.4.1 harness (cp + 6 additive edits) + v1.4.1 sidecar skeleton (wave 2)
   - [x] 43-03-PLAN.md — Hand-author 14 new supervision pins (9 → 23 in both sidecars) (wave 2)
@@ -126,7 +126,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   - [x] 43-07-PLAN.md — Trim 06-aosp-stub.md to ~700 words + extract RealWear deep content to PHASE-45-AOSP-SOURCE.md (wave 4)
   - [x] 43-08-PLAN.md — Bootstrap CI: .github/workflows/audit-harness-integrity.yml + scripts/hooks/pre-commit.sh (wave 5)
   - [x] 43-09-PLAN.md — Restore Phase 39 artifacts from git + /gsd-validate-phase 39 → DEFER-04 closure (wave 6, non-autonomous)
-  - [ ] 43-10-PLAN.md — Terminal sanity: both harnesses PASS + helper --self-test PASS + 43-VERIFICATION.md (wave 7)
+  - [x] 43-10-PLAN.md — Terminal sanity: both harnesses PASS + helper --self-test PASS + 43-VERIFICATION.md (wave 7)
 **Context risks to encode:** sidecar path atomic-commit discipline (harness line 57 + file move in same diff); allow-list parse-error silent-failure path (empty exemptions on failure per harness line 59-62); file-versioning decision Path A (copy to `v1.4.1-milestone-audit.mjs`) preferred over in-place extension
 
 ### Phase 44: Knox Mobile Enrollment
@@ -227,7 +227,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 40. Android L1 Triage & Runbooks | v1.4 | 10/10 | Complete | 2026-04-23 |
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete | 2026-04-24 |
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
-| 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 9/10 | In Progress|  |
+| 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete   | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 0/? | Not started | - |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 0/? | Not started | - |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
