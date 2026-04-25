@@ -29,7 +29,7 @@
 ### Per-OEM AOSP Expansion (AEAOSPFULL-01..09 — Phase 45)
 
 - [x] **AEAOSPFULL-01**: RealWear per-OEM admin (`docs/admin-setup-android/09-aosp-realwear.md`) — HMT-1, HMT-1Z1, Navigator 500; Wi-Fi-credentials-embedded-in-QR REQUIRED (no interactive Wi-Fi UI); Intune-direct OR hybrid with RealWear Cloud (Workspace Basic/Pro tier disambiguation)
-- [ ] **AEAOSPFULL-02**: Zebra per-OEM admin (`docs/admin-setup-android/10-aosp-zebra.md`) — WS50 wearable scanner; OEMConfig-via-Intune-APK path (NOT Managed Google Play); StageNow desktop tool optional for profile generation
+- [x] **AEAOSPFULL-02**: Zebra per-OEM admin (`docs/admin-setup-android/10-aosp-zebra.md`) — WS50 wearable scanner; OEMConfig-via-Intune-APK path (NOT Managed Google Play); StageNow desktop tool optional for profile generation
 - [ ] **AEAOSPFULL-03**: PICO per-OEM admin (`docs/admin-setup-android/11-aosp-pico.md`) — PICO 4 Enterprise, Neo3 Pro/Eye; Enterprise SKU required (not consumer PICO 4); Pico Business Suite optional coexistence
 - [ ] **AEAOSPFULL-04**: HTC VIVE Focus per-OEM admin (`docs/admin-setup-android/12-aosp-htc-vive-focus.md`) — Vive Focus 3, XR Elite, Focus Vision; direct-QR Intune flow (simplest of AR/VR OEMs); 3-model firmware minimum matrix
 - [ ] **AEAOSPFULL-05**: Meta Quest per-OEM admin (`docs/admin-setup-android/13-aosp-meta-quest.md`) — Quest 2/3/3s/Pro; **4-portal pattern** (Intune + Meta for Work; MGP/ZT N/A); Meta Horizon Managed Services subscription REQUIRED; regional restrictions per model; **Feb 20, 2026 Meta Horizon wind-down risk flag with plan-time re-verification gate + Intune-direct fallback guidance**
