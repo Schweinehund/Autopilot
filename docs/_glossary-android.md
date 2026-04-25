@@ -4,6 +4,7 @@ review_by: 2026-06-24
 applies_to: both
 audience: all
 platform: all
+phase_46_wave2_retrofit: 2026-04-25
 ---
 
 # Android Enterprise Provisioning Glossary
@@ -12,7 +13,7 @@ platform: all
 
 ## Alphabetical Index
 
-[afw#setup](#afw-setup) | [AMAPI](#amapi) | [BYOD](#byod) | [COBO](#cobo) | [COPE](#cope) | [Corporate Identifiers](#corporate-identifiers) | [Dedicated](#dedicated) | [DPC](#dpc) | [EMM](#emm) | [Entra Shared Device Mode](#entra-shared-device-mode) | [Fully Managed](#fully-managed) | [Knox](#knox) | [KME](#kme) | [KPE](#kpe) | [Managed Google Play](#managed-google-play) | [Managed Home Screen](#managed-home-screen) | [OEMConfig](#oemconfig) | [Play Integrity](#play-integrity) | [Supervision](#supervision) | [User Enrollment](#user-enrollment) | [Work Profile](#work-profile) | [WPCO](#wpco) | [Zero-Touch Enrollment](#zero-touch-enrollment)
+[afw#setup](#afw-setup) | [AMAPI](#amapi) | [BYOD](#byod) | [COBO](#cobo) | [COPE](#cope) | [Corporate Identifiers](#corporate-identifiers) | [Dedicated](#dedicated) | [DPC](#dpc) | [EMM](#emm) | [Entra Shared Device Mode](#entra-shared-device-mode) | [Fully Managed](#fully-managed) | [Knox](#knox) | [KME](#kme) | [KPE](#kpe) | [Managed Google Play](#managed-google-play) | [Managed Home Screen](#managed-home-screen) | [OEMConfig](#oemconfig) | [Play Integrity](#play-integrity) | [Private Space](#private-space) | [Supervision](#supervision) | [User Enrollment](#user-enrollment) | [Work Profile](#work-profile) | [WPCO](#wpco) | [Zero-Touch Enrollment](#zero-touch-enrollment)
 
 ---
 
@@ -50,6 +51,8 @@ Corporate-Owned, Personally-Enabled (COPE) is an older Android Enterprise mode t
 
 > **Cross-platform note:** No equivalent on Windows, macOS, or iOS. The "corporate device with personal-use partition" model does not exist as a first-class enrollment mode on those platforms. See the [WPCO entry](#wpco) for the current Google-recommended naming.
 
+> See also: [Corporate-Owned Work Profile (COPE / WPCO) Admin Setup](admin-setup-android/08-cope-full-admin.md).
+
 ### Dedicated
 
 Dedicated mode (also called COSU — Corporate-Owned Single-Use) is Android Enterprise's kiosk enrollment path. The device operates in a locked, single-purpose state running one or more pre-selected apps through [Managed Home Screen](#managed-home-screen) or an OEM launcher. Typical use cases include shift-worker tablets, retail point-of-sale terminals, logistics handhelds, and signage. Dedicated devices have no personal profile and no user-owned data; admins configure an exit-PIN for service-mode access.
@@ -61,6 +64,14 @@ Dedicated mode (also called COSU — Corporate-Owned Single-Use) is Android Ente
 Fully Managed is Android Enterprise's highest-control enrollment mode. The entire device is managed with no personal profile, all apps and data are corporate, and admins have full control over restrictions, configuration, certificates, Wi-Fi, VPN, and OS update timing. Fully Managed is the Android Enterprise enrollment-mode name for the ownership category commonly abbreviated [COBO](#cobo). Provisioning uses QR, NFC (Android 8+), DPC identifier [afw#setup](#afw-setup), or [Zero-Touch Enrollment](#zero-touch-enrollment).
 
 > **Cross-platform note:** The closest iOS analog is [Supervision](_glossary-macos.md#supervision) state on ADE-enrolled devices, but the mapping is partial — iOS supervision is a permanent per-device state that gates roughly 60 restriction settings on top of a normal MDM enrollment, whereas Android Fully Managed is an ownership-mode designation set at provisioning time. See [_glossary-macos.md#supervision](_glossary-macos.md#supervision). On Windows, the closest analog is Autopilot corporate deployment with a restrictive device configuration profile — no separate "supervised" state layer. Do not conflate.
+
+### Private Space
+
+Private Space is an Android 15+ personal-side feature that creates a user-controlled, hidden profile partition on the device. It exists alongside the work profile but on the personal side; **Intune** cannot manage Private Space content, visibility, or settings on COPE, COBO, BYOD, or any other Android Enterprise mode. Admins should treat Private Space as out-of-scope for Intune MDM governance and adjust user-facing privacy messaging accordingly. Applies to Android 15.0+. [HIGH: MS Learn setup-corporate-work-profile Limitations + Bayton Private Space + Google AE Help, last_verified: 2026-04-25]
+
+> **Cross-platform note:** No iOS, macOS, or Windows equivalent — the "user-controlled hidden personal-side partition that admin policies cannot reach" model is Android 15-specific. Apple's analog "Hidden" album / Locked Notes are app-level features without OS-partition status.
+
+> **EMM-tier nuance:** AMAPI-native EMMs may apply application allowlist/blocklist policies that originate at the parent profile within Private Space on COPE deployments per Google AMAPI behavior; this is outside Intune's customDPC management surface. [MEDIUM: Bayton Private Space article, last_verified: 2026-04-25]
 
 ### Supervision
 
@@ -77,6 +88,8 @@ Android Enterprise's containerized partition on a user's device. The work profil
 Work Profile on Corporate-Owned devices (WPCO) is Android Enterprise's newer mode combining a fully managed device with a user-separated work profile. Google recommends WPCO as the successor pattern to [COPE](#cope) — same "corporate device with personal-use partition" shape, cleaner profile boundary and better user-privacy controls. WPCO provisioning is QR, Zero-Touch, or DPC identifier [afw#setup](#afw-setup); the NFC path was removed on Android 11+.
 
 > **Cross-platform note:** No Windows, macOS, or iOS equivalent — the "corporate device with user-separated personal partition" model is Android-specific. See also the [COPE entry](#cope) for the older terminology drift context.
+
+> See also: [Corporate-Owned Work Profile (COPE / WPCO) Admin Setup](admin-setup-android/08-cope-full-admin.md).
 
 ## Provisioning Methods
 

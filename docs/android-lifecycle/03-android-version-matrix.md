@@ -1,9 +1,10 @@
 ---
-last_verified: 2026-04-23
-review_by: 2026-06-22
+last_verified: 2026-04-25
+review_by: 2026-06-24
 applies_to: both
 audience: admin
 platform: Android
+phase_46_wave2_retrofit: 2026-04-25
 ---
 
 # Android Version Matrix
@@ -27,7 +28,7 @@ These two axes are related but not equivalent. Per-method × per-mode version ga
 | Mode | Intune Minimum OS | Notable Version Breakpoints |
 |------|-------------------|----------------------------|
 | Fully Managed (COBO) | Android 10.0 | Android 11: enrollment-time grouping; Android 15: FRP hardening |
-| BYOD Work Profile | Android 5.0 (practical: Android 8+) | Android 9: built-in QR reader; Android 12: IMEI/serial removed from corporate identifiers; Android 15: Private Space unsupported |
+| BYOD Work Profile | Android 5.0 (practical: Android 8+) | Android 9: built-in QR reader; Android 12: IMEI/serial removed from corporate identifiers; [Android 15: Private Space unsupported](#android-15-private-space-breakpoint) |
 | Dedicated (COSU) | Android 8.0 | Android 9: built-in QR reader; Android 15: FRP hardening on re-provisioning |
 | Zero-Touch Enrollment | Android 8.0 (Oreo) | Android 15: FRP hardening affects re-enrollment flows |
 | AOSP | Varies by OEM firmware | Not an Android API-level gate — OEM firmware-specific; see [Phase 39 AOSP stub](../admin-setup-android/06-aosp-stub.md) |
@@ -77,6 +78,22 @@ Each breakpoint below documents a Google-driven behavior change that materially 
 - [Google Android Enterprise Help — Enable enterprise factory reset protection](https://support.google.com/work/android/answer/14549362)
 - [Jason Bayton — Android 15: What's new for enterprise?](https://bayton.org/blog/2024/10/actually-new-for-enterprise-android-15/)
 - [Microsoft Learn — Factory Reset Protection Emails Not Enforced in Intune for Android](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-configuration/factory-reset-protection-emails-not-enforced)
+
+<a id="android-15-private-space-breakpoint"></a>
+### Android 15 — Private Space (Personal-Side, Unmanageable)
+
+**Affected modes:** All modes — Private Space is a personal-side feature outside the Intune MDM management surface (informational, not an admin lever).
+
+**What changed:** On Android 15, Google introduced **Private Space**, a user-controlled hidden profile partition on the personal side of the device. Users can hide apps, accounts, and data inside Private Space; the partition is locked behind a separate authentication factor and is invisible to OS-level inventory queries. Private Space coexists with the work profile on COPE / WPCO and BYOD modes but lives on the personal side of the profile boundary, not within the work-profile container.
+
+**Admin action required:** None — Private Space is an OS-level personal-side feature without an admin policy lever in Intune. **Intune** cannot manage Private Space content, visibility, or installed apps on COPE, COBO, BYOD, or any other Android Enterprise mode. Admins should adjust user-facing privacy messaging to acknowledge that Private Space content is outside IT visibility regardless of enrollment mode. (Applies to Android 15.0+.)
+
+> **EMM-tier nuance:** AMAPI-native EMMs may apply application allowlist/blocklist policies that originate at the parent profile within Private Space on COPE deployments per Google AMAPI behavior; this is outside Intune's customDPC management surface. [MEDIUM: Bayton Private Space article, last_verified: 2026-04-25]
+
+**References:**
+- [Microsoft Learn — Set up Android Enterprise corporate-owned work profile (Limitations)](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-corporate-work-profile)
+- [Bayton — What is Android 15 Private Space?](https://bayton.org/android/what-is-android-15-private-space/)
+- [_glossary-android.md#private-space](../_glossary-android.md#private-space) — glossary canonical entry
 
 ## Non-Version Breakpoints
 
