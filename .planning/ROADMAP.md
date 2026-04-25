@@ -100,7 +100,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 
 - [x] **Phase 43: v1.4 Cleanup & Audit Harness Fix** — Resolve audit sidecar path blocker, expand allow-list (~10→~37 pins), normalize 60-day freshness across L2 runbooks 18-21 + template, and migrate Phase 39 AOSP stub deep content into per-OEM prep shell. MUST land before 44/45/46. (completed 2026-04-24)
 - [x] **Phase 44: Knox Mobile Enrollment** — Ship Samsung KME as 4th-portal overlay (admin guide + L1 runbook 28 + L2 runbook 22); fill `#knox-mobile-enrollment-row` anchor; extend 5-branch Mermaid to 6-branch; retrofit ZT portal + COBO Samsung-admin callouts. Parallel with 45/46. (completed 2026-04-25)
-- [ ] **Phase 45: Per-OEM AOSP Expansion** — Lift hard-scoped AOSP stub into real coverage across 5 OEMs (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest) + OEM matrix reference + L1 runbook 29 (replaces ANDE1) + L2 runbook 23. Preserves PITFALL-7 "not supported under AOSP" framing. Meta Horizon wind-down re-verification gate at plan time. Parallel with 44/46.
+- [x] **Phase 45: Per-OEM AOSP Expansion** — Lift hard-scoped AOSP stub into real coverage across 5 OEMs (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest) + OEM matrix reference + L1 runbook 29 (replaces ANDE1) + L2 runbook 23. Preserves PITFALL-7 "not supported under AOSP" framing. Meta Horizon wind-down re-verification gate at plan time. Parallel with 44/46. (completed 2026-04-25)
 - [ ] **Phase 46: COPE Full Admin** — Parallel-structured to COBO guide; Android 15 Private-space unmanaged callout (NEW); atomic same-commit COBO migration-note retrofit; research-gated for deprecation-rationale re-scope. Parallel with 44/45.
 - [ ] **Phase 47: Integration & Re-Audit** — Atomic unified rebuilds of capability matrix + Mermaid + glossary; C4/C6-C10 harness extensions (informational-first); terminal re-audit flipping `tech_debt → passed`; PROJECT.md Active→Validated flip; close DEFER-01..06. MUST land last.
 
@@ -169,7 +169,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 - [x] 45-07-PLAN.md — AEAOSPFULL-09 partial: 06-aosp-stub.md collapse — Deferred Content table REMOVED; D-24 LOCKED preservation contract honored (Wave 2)
 - [x] 45-08-PLAN.md — AEAOSPFULL-07: L1 runbook 29 (29-android-aosp-enrollment-failed.md) — 5 OEM-scoped Causes A-E + aggregate Escalation Criteria; in-runbook OEM-identification step per D-20 (Wave 3)
 - [x] 45-09-PLAN.md — AEAOSPFULL-08: L2 runbook 23 (23-android-aosp-investigation.md) — per-OEM Pattern A-E (1:1 routing from L1 Causes); Play Integrity 3-tier; ZERO SafetyNet (Wave 3)
-- [ ] 45-10-PLAN.md — AEAOSPFULL-09 atomic-retrofits: triage tree ANDE1→ANDR29 + capability matrix anchor fill + provisioning methods AOSP token asymmetry + L1 index + glossary OEMConfig + PHASE-45-AOSP-SOURCE.md DELETED (Wave 4 atomic same-commit)
+- [x] 45-10-PLAN.md — AEAOSPFULL-09 atomic-retrofits: triage tree ANDE1→ANDR29 + capability matrix anchor fill + provisioning methods AOSP token asymmetry + L1 index + glossary OEMConfig + PHASE-45-AOSP-SOURCE.md DELETED (Wave 4 atomic same-commit)
 **Context risks to encode:** **Meta Horizon wind-down Feb 20, 2026 — MEDIUM confidence; mandatory plan-time re-verification gate + Intune-direct fallback copy**; PITFALL-7 preservation rule (explicit carry-forward in phase CONTEXT; proposed C6 regex informational-first); per-OEM Wi-Fi embedding variance (RealWear REQUIRED vs others OPTIONAL — per-OEM matrix row not uniform block); AR/VR specialty Intune Plan 2 / Suite license gate vs Plan 1 for Zebra WS50; "AOSP" semantic drift (Intune enrollment mode vs base OS — glossary disambiguation required); Device Administrator legacy mode anti-pattern on XR devices
 
 ### Phase 46: COPE Full Admin
@@ -246,6 +246,6 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
-| 45. Per-OEM AOSP Expansion | v1.4.1 | 9/10 | In Progress|  |
+| 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete   | 2026-04-25 |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
