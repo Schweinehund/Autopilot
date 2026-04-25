@@ -187,7 +187,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   5. Zero instances of banned phrases ("deprecated", "end of life", "removed") applied to COPE across any new or edited file in this phase; research gate (Google AE Help + Android Developers + Bayton FAQ) ran BEFORE authoring and confirmed full-admin-guide scope (not deprecation-rationale re-scope)
 **Plans**: 2 plans
 Plans:
-- [ ] 46-01-PLAN.md — AECOPE-01: author `08-cope-full-admin.md` with 11 H2 mirror, COPE-specific FRP table + Android 11+ removal of 3 methods (NFC + afw#setup + token-entry per RESEARCH NEW FINDING #1+#2), Android 15 Private Space ⚠️ callout, COPE-vs-COBO decision matrix sub-H3, Samsung-admins callout (Wave 1)
+- [x] 46-01-PLAN.md — AECOPE-01: author `08-cope-full-admin.md` with 11 H2 mirror, COPE-specific FRP table + Android 11+ removal of 3 methods (NFC + afw#setup + token-entry per RESEARCH NEW FINDING #1+#2), Android 15 Private Space ⚠️ callout, COPE-vs-COBO decision matrix sub-H3, Samsung-admins callout (Wave 1)
 - [ ] 46-02-PLAN.md — AECOPE-02 + AECOPE-03 + AECOPE-04 + D-10 + D-11: atomic same-commit Wave 2 — capability matrix COPE column at index 1 + Private Space row, COBO line 64 γ3 sentence-scoped trim, BYOD line 167 retrofit, glossary Private Space H3 + COPE/WPCO see-also, version-matrix Android 15 Private Space breakpoint H3 (Wave 2)
 **Context risks to encode:** Google WPCO terminology drift ("COPE deprecated" framing BANNED — C9 banned-phrase check informational-first via sidecar JSON for atomic list updates); mandatory research gate BEFORE authoring (Google AE Help + Android Developers + Bayton FAQ) — if deprecation declared, re-scope to rationale doc at 40% scope; Android 15 Private space is NEW callout (not in v1.4 COBO); atomic same-commit COBO migration-note retrofit (D-22 append-only pattern); Intune admin center UI-label verification at plan time ("Corporate-owned devices with work profile")
 
@@ -253,5 +253,5 @@ Plans:
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete   | 2026-04-25 |
-| 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
+| 46. COPE Full Admin | v1.4.1 | 1/2 | In Progress|  |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
