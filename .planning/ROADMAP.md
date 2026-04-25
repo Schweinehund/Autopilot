@@ -167,7 +167,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 - [x] 45-05-PLAN.md — AEAOSPFULL-05: Meta Quest AOSP admin guide (13-aosp-meta-quest.md) — 11-H2 + TWO REQUIRED add-on H2s (Meta for Work Portal Setup + Meta Horizon Subscription Status); 4-portal pattern; Feb 20 2026 callout; ALIVE-in-transformed-form per RESEARCH.md §2 (Wave 1)
 - [x] 45-06-PLAN.md — AEAOSPFULL-06: AOSP OEM matrix (aosp-oem-matrix.md) — 4 capability H2 sub-tables; 5 OEM rows; Meta footnote per D-14 (Wave 2)
 - [x] 45-07-PLAN.md — AEAOSPFULL-09 partial: 06-aosp-stub.md collapse — Deferred Content table REMOVED; D-24 LOCKED preservation contract honored (Wave 2)
-- [ ] 45-08-PLAN.md — AEAOSPFULL-07: L1 runbook 29 (29-android-aosp-enrollment-failed.md) — 5 OEM-scoped Causes A-E + aggregate Escalation Criteria; in-runbook OEM-identification step per D-20 (Wave 3)
+- [x] 45-08-PLAN.md — AEAOSPFULL-07: L1 runbook 29 (29-android-aosp-enrollment-failed.md) — 5 OEM-scoped Causes A-E + aggregate Escalation Criteria; in-runbook OEM-identification step per D-20 (Wave 3)
 - [ ] 45-09-PLAN.md — AEAOSPFULL-08: L2 runbook 23 (23-android-aosp-investigation.md) — per-OEM Pattern A-E (1:1 routing from L1 Causes); Play Integrity 3-tier; ZERO SafetyNet (Wave 3)
 - [ ] 45-10-PLAN.md — AEAOSPFULL-09 atomic-retrofits: triage tree ANDE1→ANDR29 + capability matrix anchor fill + provisioning methods AOSP token asymmetry + L1 index + glossary OEMConfig + PHASE-45-AOSP-SOURCE.md DELETED (Wave 4 atomic same-commit)
 **Context risks to encode:** **Meta Horizon wind-down Feb 20, 2026 — MEDIUM confidence; mandatory plan-time re-verification gate + Intune-direct fallback copy**; PITFALL-7 preservation rule (explicit carry-forward in phase CONTEXT; proposed C6 regex informational-first); per-OEM Wi-Fi embedding variance (RealWear REQUIRED vs others OPTIONAL — per-OEM matrix row not uniform block); AR/VR specialty Intune Plan 2 / Suite license gate vs Plan 1 for Zebra WS50; "AOSP" semantic drift (Intune enrollment mode vs base OS — glossary disambiguation required); Device Administrator legacy mode anti-pattern on XR devices
@@ -246,6 +246,6 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
-| 45. Per-OEM AOSP Expansion | v1.4.1 | 7/10 | In Progress|  |
+| 45. Per-OEM AOSP Expansion | v1.4.1 | 8/10 | In Progress|  |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
