@@ -140,6 +140,26 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ Capability matrix COPE column at index 1 (between COBO and BYOD per ownership×scope axes); Cross-Platform Equivalences section structure preserved (zero new paired rows — WPCO has no iOS/macOS/Windows analog); Android 15 Private Space row across all 6 Android cols as N/A with shared footnote — Phase 46 / v1.4.1 (AECOPE-02)
 - ✓ COBO migration-note γ3 sentence-scoped trim at line 64 (replaces "deferred to v1.4.1" with forward-link to `08-cope-full-admin.md`); preserves WPCO-direction paragraph + verification HTML comment with `last_verified: 2026-04-21` byte-identical; closes v1.4 forward promise atomically — Phase 46 / v1.4.1 (AECOPE-03)
 - ✓ Glossary `### Private Space` H3 added under Ownership & Management Scope (alphabetical between Play Integrity and Supervision); COPE/WPCO entries back-link to new admin doc; BYOD line 167 sentence retrofit forward-links to glossary + version-matrix anchors (eliminates Pitfall 1 drift surface); version-matrix Android 15 Private Space breakpoint H3 added — Phase 46 / v1.4.1 (AECOPE-04 + D-10 + D-11)
+- ✓ Audit allow-list sidecar expanded from ~10 to 18 pins covering iOS-attributed supervision bridge-prose in `_glossary-android.md` + `android-capability-matrix.md` Cross-Platform Equivalences; harness C2 PASS — Phase 43 / v1.4.1 (AEAUDIT-02)
+- ✓ 60-day freshness normalization — L2 runbooks 18-21 `review_by` re-dated to 60-day cycle; `admin-template-android.md` sentinel-paired with `_*`-prefix scope filter — Phase 43 / v1.4.1 (AEAUDIT-03)
+- ✓ AOSP stub envelope resolution — `06-aosp-stub.md` body trimmed 1089→696 words via content-migration to Phase 45 per-OEM files; PITFALL-7 framing + 9-H2 whitelist + 8-OEM enumeration preserved; harness C3 PASS — Phase 43 / v1.4.1 (AEAUDIT-04)
+- ✓ Audit harness versioned to `v1.4.1-milestone-audit.mjs`; sidecar migrated to `scripts/validation/`; `regenerate-supervision-pins.mjs` helper (3 modes: --report/--emit-stubs/--self-test) + CI workflow 4-job + pre-commit hook — Phase 43 / v1.4.1 (AEAUDIT-05)
+- ✓ Samsung KME admin guide (`docs/admin-setup-android/07-knox-mobile-enrollment.md`) — 4th-portal overlay; B2B account onboarding gate; reseller bulk upload + Knox Deployment App; 5-SKU disambiguation table; reciprocal ZT mutual-exclusion callout — Phase 44 / v1.4.1 (AEKNOX-01)
+- ✓ Android L1 runbook 28 (`docs/l1-runbooks/28-android-knox-enrollment-failed.md`) — KME-specific enrollment failures; D-10 sectioned actor-boundary + D-12 three-part escalation packet; Play Integrity only — Phase 44 / v1.4.1 (AEKNOX-02)
+- ✓ Android L2 runbook 22 (`docs/l2-runbooks/22-android-knox-investigation.md`) — Knox portal→Intune handoff audit; Play Integrity 3-tier verdicts; zero SafetyNet tokens — Phase 44 / v1.4.1 (AEKNOX-03)
+- ✓ Capability matrix Knox row filled at `android-capability-matrix.md:113-119`; anchor renamed from `#deferred-knox-mobile-enrollment-row` → `#knox-mobile-enrollment-row` — Phase 44 / v1.4.1 (AEKNOX-04)
+- ✓ `00-overview.md` Mermaid extended 5→6 branches (Knox - KME Samsung-only branch added); Setup Sequence updated with Knox step — Phase 44 / v1.4.1 (AEKNOX-05)
+- ✓ Knox / KME / KPE glossary entries added to `_glossary-android.md`; `02-provisioning-methods.md` Knox anchor populated with cross-links — Phase 44 / v1.4.1 (AEKNOX-06)
+- ✓ ZT portal doc KME/ZT mutual-exclusion callout + COBO Samsung-admins callout retrofitted with reciprocal forward-links to Knox guide; AEKNOX-03 anti-paste blockquote byte-identical in both docs — Phase 44 / v1.4.1 (AEKNOX-07)
+- ✓ RealWear AOSP admin guide (`docs/admin-setup-android/09-aosp-realwear.md`) — HMT-1/HMT-1Z1/Navigator 500; Wi-Fi-embedded-QR REQUIRED; PITFALL-7 framing; Intune-direct OR hybrid with RealWear Cloud — Phase 45 / v1.4.1 (AEAOSPFULL-01)
+- ✓ Zebra AOSP admin guide (`docs/admin-setup-android/10-aosp-zebra.md`) — WS50 wearable scanner; OEMConfig-via-Intune-APK (NOT Managed Google Play); StageNow optional; Android 12 not supported callout — Phase 45 / v1.4.1 (AEAOSPFULL-02)
+- ✓ PICO AOSP admin guide (`docs/admin-setup-android/11-aosp-pico.md`) — PICO 4 Enterprise + Neo3 Pro/Eye; Enterprise SKU required; Pico Business Suite optional coexistence add-on — Phase 45 / v1.4.1 (AEAOSPFULL-03)
+- ✓ HTC VIVE Focus AOSP admin guide (`docs/admin-setup-android/12-aosp-htc-vive-focus.md`) — Vive Focus 3 / XR Elite / Focus Vision; direct-QR Intune flow; 3-model firmware minimum matrix — Phase 45 / v1.4.1 (AEAOSPFULL-04)
+- ✓ Meta Quest AOSP admin guide (`docs/admin-setup-android/13-aosp-meta-quest.md`) — Quest 2/3/3s/Pro; 4-portal pattern (Intune + Meta for Work); Meta Horizon Managed Services REQUIRED; Feb 20 2026 wind-down risk flag + Intune-direct fallback — Phase 45 / v1.4.1 (AEAOSPFULL-05)
+- ✓ AOSP OEM matrix reference (`docs/reference/aosp-oem-matrix.md`) — 4 H2 sub-tables (enrollment methods / vendor portals / license tiers / Intune AOSP mode per-vendor); 5-OEM rows; PITFALL-7 framing; Meta volatility footnote — Phase 45 / v1.4.1 (AEAOSPFULL-06)
+- ✓ Android L1 runbook 29 (`docs/l1-runbooks/29-android-aosp-enrollment-failed.md`) — 5 OEM-scoped Causes A-E; ANDR29 Mermaid resolved-node swap replacing ANDE1 escalation stub — Phase 45 / v1.4.1 (AEAOSPFULL-07)
+- ✓ Android L2 runbook 23 (`docs/l2-runbooks/23-android-aosp-investigation.md`) — per-OEM Pattern A-E; Play Integrity only; cross-links to per-OEM admin guides 09-13 — Phase 45 / v1.4.1 (AEAOSPFULL-08)
+- ✓ `06-aosp-stub.md` deferred-content table collapsed; `android-capability-matrix.md:121-127` anchor filled with `aosp-oem-matrix.md` link; `02-provisioning-methods.md` AOSP token ceiling + per-OEM firmware rows added — Phase 45 / v1.4.1 (AEAOSPFULL-09)
 
 ## Current Milestone: v1.4.1 Android Enterprise Completion & v1.4 Cleanup
 
@@ -187,6 +207,15 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - Docs structured for easy export to SharePoint/Confluence
 - v1.4 introduces tri-portal admin template pattern (Intune + Managed Google Play + Zero-Touch portal) — first deviation from dual-portal pattern established in v1.2 macOS
 
+## Closed Deferred Items (v1.4 → v1.4.1)
+
+- **DEFER-01** (Audit allow-list expansion — C2 supervision pins) — closed Phase 43 commit `4f41431` (AEAUDIT-02 + Plans 43-03/43-04)
+- **DEFER-02** (60-day freshness normalization) — closed Phase 43 commit `2574c79` (AEAUDIT-03 + Plan 43-05)
+- **DEFER-03** (AOSP stub re-validation / Phase 41 VERIFICATION) — closed Phase 43 commit `c782af6` (AEAUDIT-04 + Plans 43-07/43-09)
+- **DEFER-04** (Knox Mobile Enrollment) — closed Phase 44 commit `51c2e72` (AEKNOX-01..07 + Plans 44-01..44-07)
+- **DEFER-05** (Per-OEM AOSP Expansion) — closed Phase 45 commit `eb88750` (AEAOSPFULL-01..09 + Plans 45-01..45-10)
+- **DEFER-06** (COPE Full Admin) — closed Phase 46 commit `bcb0986` (AECOPE-01..04 + Plans 46-01..46-02)
+
 ## Constraints
 
 - **Format**: Markdown files suitable for git versioning and wiki export
@@ -233,4 +262,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-25 — v1.4 shipped (audit `tech_debt` accepted); v1.4.1 in progress: Phase 43 (audit harness fix) + Phase 44 (Knox Mobile Enrollment) + Phase 45 (Per-OEM AOSP Expansion) + Phase 46 (COPE Full Admin) all COMPLETE; Phase 47 (Integration & Re-Audit) remaining. AECOPE-01..04 closed via Path A full-admin guide + atomic 5-file Wave 2 retrofit per D-23/D-34 single-source-of-truth pattern. DEFER-07 nav unification and DEFER-08 4-platform comparison routed to v1.5.*
+*Last updated: 2026-04-25 — v1.4.1 shipped. v1.4 audit re-run with status: passed; all 28 reqs validated; DEFER-01..06 closed in Closed Deferred Items subsection. v1.4.1 ships Knox Mobile Enrollment + per-OEM AOSP expansion (RealWear/Zebra/Pico/HTC VIVE Focus/Meta Quest) + COPE Full Admin + audit harness 8/8 PASS via v1.4.1-milestone-audit.mjs.*
