@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-21
-review_by: 2026-06-20
+last_verified: 2026-04-25
+review_by: 2026-06-24
 applies_to: all
 audience: admin
 platform: Android
@@ -33,11 +33,14 @@ flowchart TD
     MGPZTE --> ZT[02-zero-touch-portal.md]
     ZT --> ZTE_PATH[Phase 39 — ZTE admin content]
     CHOOSE -->|AOSP| AOSP_PATH[Phase 39 — AOSP stub]
+    CHOOSE -->|Knox - KME Samsung-only| KNOX[07-knox-mobile-enrollment.md]
 ```
 
 1. **[Managed Google Play Binding](01-managed-google-play.md)** — Bind the Intune tenant to Managed Google Play using an Entra account. Required for all GMS modes (COBO, BYOD WP, Dedicated, ZTE). Complete before any GMS enrollment profile.
 
 2. **[Zero-Touch Portal Configuration](02-zero-touch-portal.md)** — Configure the Zero-Touch portal account and DPC extras JSON, and link ZT to Intune. Required for ZTE only. Reseller relationship (Step 0) must be in place before this guide.
+
+3. **[Knox Mobile Enrollment](07-knox-mobile-enrollment.md)** — Configure Samsung Knox Admin Portal B2B account, create EMM profile pointing at Microsoft Intune, and assign profile to Samsung devices via reseller upload OR Knox Deployment App. Required for Samsung KME path only; mutually exclusive with Zero-Touch on the same Samsung device.
 
 ## Prerequisites
 
@@ -59,6 +62,15 @@ All GMS-path prerequisites PLUS:
 - [ ] **Authorized Zero-Touch reseller relationship** — Devices must have been purchased from an authorized reseller. See [02-zero-touch-portal.md#step-0-reseller](02-zero-touch-portal.md#step-0-reseller).
 - [ ] **Zero-Touch portal Google account** — Corporate email (NOT Gmail). Created at `accounts.google.com/signupwithoutgmail`.
 - [ ] **ZT portal linked to Intune** — See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune).
+
+### KME-Path Prerequisites
+
+For Samsung Knox Mobile Enrollment (Samsung-only):
+
+- [ ] **Samsung Knox B2B account** — Approval takes 1-2 business days. See [07-knox-mobile-enrollment.md#step-0-b2b-approval](07-knox-mobile-enrollment.md#step-0-b2b-approval).
+- [ ] **Microsoft Intune Plan 1+** with Intune Administrator role.
+- [ ] **Samsung devices** registered in Knox Admin Portal via reseller upload OR Knox Deployment App.
+- [ ] **NOT also configured for Zero-Touch** on the same devices — KME and ZT are mutually exclusive on Samsung hardware.
 
 ### AOSP-Path Prerequisites
 
@@ -96,3 +108,4 @@ Portal paths in these guides reflect the current documented experience. If menu 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-21 | Initial version — tri-portal setup sequence, 5-mode mermaid, per-path prerequisites, Portal Navigation Note | -- |
+| 2026-04-25 | Phase 44: added 6th Mermaid branch (Knox - KME Samsung-only) terminating at 07-knox-mobile-enrollment.md; appended Setup Sequence item 3; inserted KME-Path Prerequisites H3 between ZTE-Path and AOSP-Path. | -- |
