@@ -253,5 +253,5 @@ Plans:
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete   | 2026-04-25 |
-| 46. COPE Full Admin | v1.4.1 | 2/2 | Complete   | 2026-04-25 |
+| 46. COPE Full Admin | v1.4.1 | 2/2 | Complete    | 2026-04-25 |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
