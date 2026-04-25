@@ -177,3 +177,7 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-25 | Initial version (Phase 45 AEAOSPFULL-01) — RealWear AOSP admin guide for HMT-1 / HMT-1Z1 / Navigator 500. PITFALL-7 framing inline per D-04 + D-23. REQUIRED `## Wi-Fi QR Embedding Walkthrough` add-on H2 per D-02 with PSK-only NOT-EAP staging-Wi-Fi discipline (RealWear authoritative). 11-H2 sibling parity per D-01. Anchor scaffolding per D-05. Frontmatter contract per D-27. Sourced from PHASE-45-AOSP-SOURCE.md (Phase 43 → Phase 45 lifecycle; deleted in Plan 10 final commit per Phase 43 D-20). | -- |
+
+---
+
+*Wave 3 runbook 29 (Cause A) and L2 runbook 23 (Pattern A) cross-link landing targets: [`#common-failures`](#common-failures) and [`#wi-fi-qr-embedding`](#wi-fi-qr-embedding) anchors above are stable per D-05 anchor-scaffolding contract.*
