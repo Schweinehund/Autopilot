@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-23
-review_by: 2026-06-22
+last_verified: 2026-04-25
+review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: ZTE
@@ -13,7 +13,7 @@ applies_to: ZTE
 
 > **Reseller prerequisite:** Devices must be purchased from an authorized Zero-Touch reseller. Self-registration of existing stock is not supported. Devices deregistered from Zero-Touch cannot be re-registered without reseller involvement. See [Step 0](#step-0-reseller) below.
 
-> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment — never both. Configuring both causes out-of-sync enrollment state. Full KME coverage is tracked for v1.4.1. See [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) below.
+> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment — never both. Configuring both causes out-of-sync enrollment state. See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage and [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) below for the within-this-doc record.
 
 Phase 35 scope: ZT portal setup, ZT↔Intune linking, DPC extras JSON. Corporate-scale content (device-claim workflow, profile-assignment at scale, dual-SIM IMEI 1, reseller-upload handoff) is Phase 39 and will extend this guide.
 
@@ -89,6 +89,13 @@ Choose a method based on your target enrollment mode.
 ## DPC Extras JSON Configuration
 
 Paste the JSON below into the ZT portal configuration. Replace `YourEnrollmentToken` with the token exported from your Intune enrollment profile.
+
+<!-- AEKNOX-03-shared-anti-paste-block -->
+> ⚠️ **DO NOT paste this JSON into the other portal**
+> The KME and ZT DPC-extras JSON look similar but use different field names.
+> Pasting ZT JSON into KME (or vice versa) silently produces a "stuck applying configuration" failure.
+> If you maintain both portals: confirm the portal name in your browser tab before pasting.
+<!-- /AEKNOX-03-shared-anti-paste-block -->
 
 ```json
 {
