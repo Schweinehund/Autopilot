@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-23
-review_by: 2026-06-22
+last_verified: 2026-04-25
+review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: COBO
@@ -159,7 +159,7 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 COBO provisioning via Zero-Touch requires the Phase 35 Zero-Touch portal binding. See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune) for ZT↔Intune linking and [02-zero-touch-portal.md#dpc-extras-json](02-zero-touch-portal.md#dpc-extras-json) for the DPC extras JSON. Dual-SIM IMEI 1 registration and the corporate-scale reseller-upload workflow are Phase 39 scope.
 
-> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both. Configuring both on the same devices causes out-of-sync enrollment state on Samsung hardware. Full KME coverage is deferred to v1.4.1. See [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
+> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both. Configuring both on the same devices causes out-of-sync enrollment state on Samsung hardware. See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage; [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record; and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
 
 > **What breaks if misconfigured:** The device connects to a captive-portal Wi-Fi at first boot → the Zero-Touch configuration download fails → the device falls through to consumer Android OOBE and must be factory-reset to retry. Recovery: ship devices with a SIM for cellular fallback, or provide an accessible open Wi-Fi network at the provisioning site without captive-portal interception.
 

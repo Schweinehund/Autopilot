@@ -130,7 +130,7 @@ For Samsung fleets, Knox Mobile Enrollment (KME) and Zero-Touch Enrollment are m
 
 **Behavior when both are configured** (verified HIGH — Samsung Knox docs and Google Developers known issues): a device registered in both enrolls via KME. To apply Zero-Touch on a Samsung device, remove KME configuration for that device set.
 
-**Phase 35 scope is ZT portal setup only.** The full KME/ZT device-claim callout, device-claim workflow, profile-assignment at scale, dual-SIM IMEI 1 registration, and reseller-upload handoff are Phase 39 scope and will be appended here. Full KME admin coverage is deferred to v1.4.1.
+**Phase 35 scope is ZT portal setup only.** The full KME/ZT device-claim callout, device-claim workflow, profile-assignment at scale, dual-SIM IMEI 1 registration, and reseller-upload handoff are Phase 39 scope and will be appended here. Full KME admin coverage lives in [Knox Mobile Enrollment](07-knox-mobile-enrollment.md).
 
 <a id="corporate-scale-operations"></a>
 ## Corporate-Scale Operations
@@ -187,7 +187,7 @@ For admin handoff (see [Reseller-Upload Handoff Workflow](#reseller-upload-hando
 
 When claiming Samsung devices in the ZT portal, verify that the same device set is not also configured in Knox Mobile Enrollment (KME). Google's canonical failure mode, from [Google Zero-touch enrollment for IT admins](https://support.google.com/work/android/answer/7514005): "If a device is registered and configured in both Knox Mobile Enrollment and zero-touch, the device will enroll using Knox Mobile Enrollment."
 
-Concrete check at device-claim: before selecting Samsung devices under ZT portal **Devices**, query your KME portal for the same IMEI/serial list. If devices appear in both, either remove the KME configuration before ZT claim, or skip the ZT claim and manage via KME (Knox Mobile Enrollment full coverage is deferred to v1.4.1).
+Concrete check at device-claim: before selecting Samsung devices under ZT portal **Devices**, query your KME portal for the same IMEI/serial list. If devices appear in both, either remove the KME configuration before ZT claim, or skip the ZT claim and manage via KME (see [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for the full KME admin path).
 
 For broader Samsung guidance including top-of-doc framing, see [KME/ZT Mutual Exclusion (Samsung)](#kme-zt-mutual-exclusion) above.
 
