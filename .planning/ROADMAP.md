@@ -143,7 +143,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 - [x] 44-01-PLAN.md — AEKNOX-01: Samsung KME admin guide (07-knox-mobile-enrollment.md) — 4th-portal overlay; B2B Step 0; 5-SKU disambiguation; D-03 anti-paste; reciprocal mutex (Wave 1)
 - [x] 44-02-PLAN.md — AEKNOX-02: L1 runbook 28 (28-android-knox-enrollment-failed.md) — D-10 actor-boundary + D-12 escalation; closes Phase 40 ANDR28 placeholder (Wave 2)
 - [x] 44-03-PLAN.md — AEKNOX-03: L2 runbook 22 (22-android-knox-investigation.md) — D-09 Pattern A-E; Play Integrity 3-tier; zero SafetyNet (Wave 2)
-- [ ] 44-04-PLAN.md — AEKNOX-04: Capability matrix anchor rename + populated row (Wave 3)
+- [x] 44-04-PLAN.md — AEKNOX-04: Capability matrix anchor rename + populated row (Wave 3)
 - [ ] 44-05-PLAN.md — AEKNOX-05: 00-overview.md Mermaid 6-branch + Setup Sequence + KME-Path Prerequisites (Wave 3)
 - [ ] 44-06-PLAN.md — AEKNOX-06: Glossary 3 new entries (Knox/KME/KPE) + AMAPI cross-link + 02-provisioning-methods.md anchor populated (Wave 3)
 - [ ] 44-07-PLAN.md — AEKNOX-07: Reciprocal pins (ZT:16 + COBO:162) + AEKNOX-03 anti-paste in ZT (Wave 4)
@@ -235,7 +235,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete | 2026-04-24 |
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
-| 44. Knox Mobile Enrollment | v1.4.1 | 3/7 | In Progress|  |
+| 44. Knox Mobile Enrollment | v1.4.1 | 4/7 | In Progress|  |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 0/? | Not started | - |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
