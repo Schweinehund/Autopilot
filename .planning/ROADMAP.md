@@ -160,7 +160,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   4. L1 runbook 29 (`29-android-aosp-enrollment-failed.md`) replaces the ANDE1 escalation stub in `08-android-triage.md` (ANDE1 → ANDR29 resolved node with click-link); L2 runbook 23 (`23-android-aosp-investigation.md`) cross-links to per-OEM admin guides 09-13 and uses Play Integrity only
   5. `06-aosp-stub.md` deferred-content table is collapsed; `android-capability-matrix.md:121-127` deferred-full-aosp-capability-mapping anchor links to `aosp-oem-matrix.md`; `02-provisioning-methods.md` surfaces 90-day AOSP token ceiling + per-OEM firmware rows in version matrix; `l1-runbooks/00-index.md:77` "AOSP L1 planned for v1.4.1" note removed
 **Plans**: 10 plans
-- [ ] 45-01-PLAN.md — AEAOSPFULL-01: RealWear AOSP admin guide (09-aosp-realwear.md) — 11-H2 + REQUIRED Wi-Fi QR Embedding Walkthrough add-on H2; PSK-only NOT-EAP staging Wi-Fi (Wave 1)
+- [x] 45-01-PLAN.md — AEAOSPFULL-01: RealWear AOSP admin guide (09-aosp-realwear.md) — 11-H2 + REQUIRED Wi-Fi QR Embedding Walkthrough add-on H2; PSK-only NOT-EAP staging Wi-Fi (Wave 1)
 - [ ] 45-02-PLAN.md — AEAOSPFULL-02: Zebra AOSP admin guide (10-aosp-zebra.md) — 11-H2 + REQUIRED OEMConfig APK Push add-on H2; two-OEMConfig-app disambiguation; Android-12 NOT-supported (Wave 1)
 - [ ] 45-03-PLAN.md — AEAOSPFULL-03: Pico AOSP admin guide (11-aosp-pico.md) — 11-H2 + OPTIONAL Pico Business Suite Coexistence add-on H2; Enterprise SKU disambiguation (Wave 1)
 - [ ] 45-04-PLAN.md — AEAOSPFULL-04: HTC VIVE Focus AOSP admin guide (12-aosp-htc-vive-focus.md) — 11-H2 NO add-on (simplest of AR/VR OEMs); 3-model firmware matrix (Wave 1)
@@ -246,6 +246,6 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
-| 45. Per-OEM AOSP Expansion | v1.4.1 | 0/? | Not started | - |
+| 45. Per-OEM AOSP Expansion | v1.4.1 | 1/10 | In Progress|  |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
