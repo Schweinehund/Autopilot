@@ -23,7 +23,7 @@
 - [x] **AEKNOX-03**: Android L2 runbook 22 (`docs/l2-runbooks/22-android-knox-investigation.md`) — Knox portal → Intune handoff audit; Play Integrity 3-tier verdicts; zero SafetyNet tokens
 - [x] **AEKNOX-04**: Fill `docs/reference/android-capability-matrix.md:113-119` deferred-knox-mobile-enrollment-row anchor with live Knox row; rename anchor from `#deferred-knox-mobile-enrollment-row` → `#knox-mobile-enrollment-row`
 - [x] **AEKNOX-05**: Extend `docs/admin-setup-android/00-overview.md` Mermaid from 5-branch to 6-branch (add Knox branch); update Setup Sequence numbered list with Knox step
-- [ ] **AEKNOX-06**: Add Knox / KME / KPE glossary entries to `docs/_glossary-android.md` (+ AMAPI if missing); expand `02-provisioning-methods.md#knox-mobile-enrollment` anchor to live row
+- [x] **AEKNOX-06**: Add Knox / KME / KPE glossary entries to `docs/_glossary-android.md` (+ AMAPI if missing); expand `02-provisioning-methods.md#knox-mobile-enrollment` anchor to live row
 - [ ] **AEKNOX-07**: Retrofit Phase 35 ZT portal doc KME/ZT mutual-exclusion callout (`02-zero-touch-portal.md:16`) + Phase 36 COBO Samsung-admins callout — reciprocal forward-links to Knox guide; closes v1.4 forward promises
 
 ### Per-OEM AOSP Expansion (AEAOSPFULL-01..09 — Phase 45)

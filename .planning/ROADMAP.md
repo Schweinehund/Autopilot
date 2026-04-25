@@ -145,7 +145,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 - [x] 44-03-PLAN.md — AEKNOX-03: L2 runbook 22 (22-android-knox-investigation.md) — D-09 Pattern A-E; Play Integrity 3-tier; zero SafetyNet (Wave 2)
 - [x] 44-04-PLAN.md — AEKNOX-04: Capability matrix anchor rename + populated row (Wave 3)
 - [x] 44-05-PLAN.md — AEKNOX-05: 00-overview.md Mermaid 6-branch + Setup Sequence + KME-Path Prerequisites (Wave 3)
-- [ ] 44-06-PLAN.md — AEKNOX-06: Glossary 3 new entries (Knox/KME/KPE) + AMAPI cross-link + 02-provisioning-methods.md anchor populated (Wave 3)
+- [x] 44-06-PLAN.md — AEKNOX-06: Glossary 3 new entries (Knox/KME/KPE) + AMAPI cross-link + 02-provisioning-methods.md anchor populated (Wave 3)
 - [ ] 44-07-PLAN.md — AEKNOX-07: Reciprocal pins (ZT:16 + COBO:162) + AEKNOX-03 anti-paste in ZT (Wave 4)
 **Context risks to encode:** 5-SKU ambiguity (KME / KPE / Knox Suite / Knox Manage / Knox Configure) — disambiguation as H2 mandatory; DPC-extras-JSON copy-from-ZT anti-pattern (bidirectional "do not paste ZT JSON" callout); bare-`Knox` language discipline (optional harness C7 informational); Samsung B2B 1-2 business day approval Step 0 gate; Knox does NOT support BYOD Work Profile; KME is Samsung-only (no cross-platform analog)
 
@@ -235,7 +235,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete | 2026-04-24 |
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
-| 44. Knox Mobile Enrollment | v1.4.1 | 5/7 | In Progress|  |
+| 44. Knox Mobile Enrollment | v1.4.1 | 6/7 | In Progress|  |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 0/? | Not started | - |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
