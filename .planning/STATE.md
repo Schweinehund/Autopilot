@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
 status: executing
-stopped_at: Completed 45-06-PLAN.md (AOSP OEM matrix; Wave 2 partial)
-last_updated: "2026-04-25T15:54:54.844Z"
+stopped_at: Completed 45-07-PLAN.md
+last_updated: "2026-04-25T16:02:13.892Z"
 last_activity: 2026-04-25
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 29
-  completed_plans: 25
-  percent: 86
+  completed_plans: 26
+  percent: 90
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-24)
 ## Current Position
 
 Phase: 45 (Per-OEM AOSP Expansion) — EXECUTING
-Plan: 7 of 10
+Plan: 8 of 10
 Status: Ready to execute
 Last activity: 2026-04-25
 
@@ -95,6 +95,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 - [Phase 45]: Plan 45-04 HTC VIVE Focus AOSP admin guide shipped — pure 11-H2 baseline (NO add-on H2s per D-02; only Wave 1 plan with no add-ons; preserves AEAOSPFULL-04 simplest-of-AR/VR-OEMs framing); 3-model firmware floor matrix; verbatim in-device path Settings > Advanced > MDM setup > QR code reproduced 8 times across 3 primary surfaces; Vive Business Management System framed as alternative MDM not coexistence at 3 surfaces
 - [Phase 45]: Plan 45-05 Meta Quest AOSP admin guide shipped (Quest 2 / 3 / 3s / Pro) — heaviest Wave 1 doc with 13 H2s = 11 baseline + 2 REQUIRED add-on H2s per D-02 LOCKED override of F-1B-CRIT-01 (Meta for Work Portal Setup + Meta Horizon Subscription Status); 4-portal pattern (Intune + Meta for Work; MGP/ZT N/A) preserved per D-08; Meta Horizon framed as ALIVE in transformed form per RESEARCH.md §2 D-06 RESOLVED HIGH-confidence + D-07 Branch 2 (HMS becomes FREE post-2026-02-20; maintenance mode through 2030-01-04); mandatory ⚠️ Feb 20 2026 callout in Scope and Status per ROADMAP SC#3 verbatim; per-model regional restrictions (Quest 2/3/Pro select regions; Quest 3s no restriction) with per-model H3 sub-anchors per D-08; Step 0 Meta for Work approval H3 inside Provisioning Steps per D-09; 30-day Meta Horizon re-verify trigger row in Renewal/Maintenance per D-10 special case; Intune-direct fallback as parallel-path option; 4 verbatim Meta-source quotes; 5 PITFALL-7 hits; 12 stable anchors; 242 lines; audit harness 8/8 PASS; AEAOSPFULL-05 closed; Wave 1 COMPLETE (5/5 per-OEM admin docs shipped)
 - [Phase 45]: [Phase 45]: Plan 45-06: AOSP OEM matrix shipped at docs/reference/aosp-oem-matrix.md (85 lines) — 4 H2 sub-tables in fixed order per D-11 (Hardware Scope / Enrollment Method and Wi-Fi Embedding / Vendor Portals and Licensing / Intune AOSP Mode); single ## Scope H2 with PITFALL-7 framing once per D-13; Meta-row [^meta-volatility] reference-style footnote per D-14 (referenced from 3 cells); ## Source Attribution H2 per D-15 with 5 per-OEM HIGH pins + W-3 section-level mode-confidence pin replacing 10 per-cell MEDIUM markers; cell-value rules literal-strings only per D-16 (no + notation); ## Version History H2 per sibling convention. Audit harness 8/8 PASS. Anchor target ready for Wave 4 Plan 45-10 retrofit of android-capability-matrix.md:121-127 per AEAOSPFULL-09
+- [Phase 45]: Plan 45-07 collapsed 06-aosp-stub.md Deferred Content H2 + 8-row table per AEAOSPFULL-09 partial; preserved Phase 39 D-11 9-position whitelist (8 H2s + 2 H3s) + PITFALL-7 framing + 8-OEM enumeration + Platform banners + HTML-comment subtractive deletions per D-24 LOCKED; flipped inline scope-and-status blockquote from 'planned for v1.4.1' to 'SHIPPED in v1.4.1 (Phase 45)'; injected 5 forward cross-links to Wave 1 admin docs 09-13. Audit harness 8/8 PASS.
 
 ### Pending Todos
 
@@ -127,6 +128,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-25T15:54:36.171Z
-Stopped at: Completed 45-06-PLAN.md (AOSP OEM matrix; Wave 2 partial)
+Last session: 2026-04-25T16:02:13.882Z
+Stopped at: Completed 45-07-PLAN.md
 Next action: Execute Wave 2 — Plan 45-06 (aosp-oem-matrix.md, 4 capability H2 sub-tables, 5 OEM rows, Meta footnote per D-14) + Plan 45-07 (06-aosp-stub.md deferred-content table collapse, D-24 LOCKED preservation)

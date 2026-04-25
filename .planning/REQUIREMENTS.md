@@ -36,7 +36,7 @@
 - [x] **AEAOSPFULL-06**: AOSP OEM matrix reference (`docs/reference/aosp-oem-matrix.md`) — OEM × capability dimensions table (enrollment methods, vendor portals required/optional, license tiers, Intune AOSP mode per-vendor, Wi-Fi embedding variance)
 - [ ] **AEAOSPFULL-07**: Android L1 runbook 29 (`docs/l1-runbooks/29-android-aosp-enrollment-failed.md`) — replaces ANDE1 escalation stub in `docs/decision-trees/08-android-triage.md` Mermaid; ANDE1 → ANDR29 resolved node with click-link
 - [ ] **AEAOSPFULL-08**: Android L2 runbook 23 (`docs/l2-runbooks/23-android-aosp-investigation.md`) — per-OEM symptom catalog; Play Integrity only; cross-links to per-OEM admin guides 09-13
-- [ ] **AEAOSPFULL-09**: Retrofit `docs/admin-setup-android/06-aosp-stub.md` (collapse deferred-content table; preserve PITFALL-7 "not supported under AOSP" framing) + fill `android-capability-matrix.md:121-127` deferred-full-aosp-capability-mapping anchor with link to `aosp-oem-matrix.md` + update `docs/android-lifecycle/02-provisioning-methods.md` (surface 90-day token ceiling for AOSP; per-OEM firmware rows in version matrix)
+- [x] **AEAOSPFULL-09**: Retrofit `docs/admin-setup-android/06-aosp-stub.md` (collapse deferred-content table; preserve PITFALL-7 "not supported under AOSP" framing) + fill `android-capability-matrix.md:121-127` deferred-full-aosp-capability-mapping anchor with link to `aosp-oem-matrix.md` + update `docs/android-lifecycle/02-provisioning-methods.md` (surface 90-day token ceiling for AOSP; per-OEM firmware rows in version matrix)
 
 ### COPE Full Admin (AECOPE-01..04 — Phase 46)
 
