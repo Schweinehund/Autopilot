@@ -165,7 +165,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 - [x] 45-03-PLAN.md — AEAOSPFULL-03: Pico AOSP admin guide (11-aosp-pico.md) — 11-H2 + OPTIONAL Pico Business Suite Coexistence add-on H2; Enterprise SKU disambiguation (Wave 1)
 - [x] 45-04-PLAN.md — AEAOSPFULL-04: HTC VIVE Focus AOSP admin guide (12-aosp-htc-vive-focus.md) — 11-H2 NO add-on (simplest of AR/VR OEMs); 3-model firmware matrix (Wave 1)
 - [x] 45-05-PLAN.md — AEAOSPFULL-05: Meta Quest AOSP admin guide (13-aosp-meta-quest.md) — 11-H2 + TWO REQUIRED add-on H2s (Meta for Work Portal Setup + Meta Horizon Subscription Status); 4-portal pattern; Feb 20 2026 callout; ALIVE-in-transformed-form per RESEARCH.md §2 (Wave 1)
-- [ ] 45-06-PLAN.md — AEAOSPFULL-06: AOSP OEM matrix (aosp-oem-matrix.md) — 4 capability H2 sub-tables; 5 OEM rows; Meta footnote per D-14 (Wave 2)
+- [x] 45-06-PLAN.md — AEAOSPFULL-06: AOSP OEM matrix (aosp-oem-matrix.md) — 4 capability H2 sub-tables; 5 OEM rows; Meta footnote per D-14 (Wave 2)
 - [ ] 45-07-PLAN.md — AEAOSPFULL-09 partial: 06-aosp-stub.md collapse — Deferred Content table REMOVED; D-24 LOCKED preservation contract honored (Wave 2)
 - [ ] 45-08-PLAN.md — AEAOSPFULL-07: L1 runbook 29 (29-android-aosp-enrollment-failed.md) — 5 OEM-scoped Causes A-E + aggregate Escalation Criteria; in-runbook OEM-identification step per D-20 (Wave 3)
 - [ ] 45-09-PLAN.md — AEAOSPFULL-08: L2 runbook 23 (23-android-aosp-investigation.md) — per-OEM Pattern A-E (1:1 routing from L1 Causes); Play Integrity 3-tier; ZERO SafetyNet (Wave 3)
@@ -246,6 +246,6 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
-| 45. Per-OEM AOSP Expansion | v1.4.1 | 4/10 | In Progress|  |
+| 45. Per-OEM AOSP Expansion | v1.4.1 | 6/10 | In Progress|  |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
