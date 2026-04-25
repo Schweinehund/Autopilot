@@ -18,7 +18,7 @@
 
 ### Knox Mobile Enrollment (AEKNOX-01..07 — Phase 44)
 
-- [ ] **AEKNOX-01**: Samsung KME admin guide (`docs/admin-setup-android/07-knox-mobile-enrollment.md`) — 4th-portal overlay on tri-portal pattern; B2B account onboarding (1-2 business day gate); reseller bulk upload + Knox Deployment App (Bluetooth/NFC) for existing stock; EMM profile with Intune DPC-extras JSON; 5-SKU disambiguation table (KME / KPE / Knox Suite / Knox Manage / Knox Configure); "free baseline; Knox Suite gates advanced" framing; reciprocal ZT mutual-exclusion callout
+- [x] **AEKNOX-01**: Samsung KME admin guide (`docs/admin-setup-android/07-knox-mobile-enrollment.md`) — 4th-portal overlay on tri-portal pattern; B2B account onboarding (1-2 business day gate); reseller bulk upload + Knox Deployment App (Bluetooth/NFC) for existing stock; EMM profile with Intune DPC-extras JSON; 5-SKU disambiguation table (KME / KPE / Knox Suite / Knox Manage / Knox Configure); "free baseline; Knox Suite gates advanced" framing; reciprocal ZT mutual-exclusion callout
 - [ ] **AEKNOX-02**: Android L1 runbook 28 (`docs/l1-runbooks/28-android-knox-enrollment-failed.md`) — KME-specific enrollment failures; D-10 sectioned actor-boundary + D-12 three-part escalation packet; Play Integrity only
 - [ ] **AEKNOX-03**: Android L2 runbook 22 (`docs/l2-runbooks/22-android-knox-investigation.md`) — Knox portal → Intune handoff audit; Play Integrity 3-tier verdicts; zero SafetyNet tokens
 - [ ] **AEKNOX-04**: Fill `docs/reference/android-capability-matrix.md:113-119` deferred-knox-mobile-enrollment-row anchor with live Knox row; rename anchor from `#deferred-knox-mobile-enrollment-row` → `#knox-mobile-enrollment-row`

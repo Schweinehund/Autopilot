@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
-status: verifying
-stopped_at: Phase 44 context gathered (adversarial review)
-last_updated: "2026-04-25T03:36:20.848Z"
-last_activity: 2026-04-24
+status: executing
+stopped_at: Completed 44-01-PLAN.md (Knox admin guide foundational doc; 230 lines; audit 8/8 PASS)
+last_updated: "2026-04-25T04:40:31.762Z"
+last_activity: 2026-04-25
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 12
-  completed_plans: 12
-  percent: 100
+  total_plans: 19
+  completed_plans: 13
+  percent: 68
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-24)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering
-**Current focus:** Phase 43 — v1-4-cleanup-audit-harness-fix
+**Current focus:** Phase 44 — knox-mobile-enrollment
 
 ## Current Position
 
-Phase: 45
-Plan: Not started
-Status: Phase complete — ready for verification
-Last activity: 2026-04-24
+Phase: 44 (knox-mobile-enrollment) — EXECUTING
+Plan: 2 of 7
+Status: Ready to execute
+Last activity: 2026-04-25
 
 **Phase sequence:**
 
@@ -80,6 +80,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 - [Phase 43]: Plan 43-08: Bootstrapped first CI surface (commit 54bbc34) — .github/workflows/audit-harness-integrity.yml 4-job (parse/path-match/harness-run/pin-helper-advisory) + scripts/hooks/pre-commit.sh native bash + node. Minimum-surface over Husky/lefthook; continue-on-error on advisory job (D-14/D-15); atomic CI commit honors D-07.3. AEAUDIT-05 closed.
 - [Phase 43-v1-4-cleanup-audit-harness-fix]: Plan 43-09: DEFER-04 formally closed via inline-equivalent /gsd-validate-phase 39 re-gate (CONTEXT D-21 fallback path + auto-mode chain directive); Phase 39 directory rehydrated from commit ef7717b (11 artifacts) via Pattern K git-history-restore; 39-VALIDATION.md Validation Audit 2026-04-24 trailer + v1.4-MILESTONE-AUDIT.md re_audit_resolution block record classification change C3_aosp_wordcount: informational -> PASS; commit c782af6; AEAUDIT-04 fully resolved
 - [Phase 43]: Plan 43-10 terminal sanity (D-27 step 10): v1.4.1 harness 8/8 PASS, v1.4 harness 4/5 PASS with documented architectural C5 divergence on sentinel template (frozen-predecessor per D-01/D-02), regenerate-supervision-pins.mjs --self-test PASS with identical-diff (9 hand-authored new pins reproduced), helper --report zero un-pinned, pre-commit hook PASS. 43-VERIFICATION.md composed with 10-plan wave record + 9 must-haves evidence + ROADMAP 5 success-criteria goal-backward check + AEAUDIT-02..05 Closed rows + DEFER-04 resolution evidence. Phase 43 complete; unblocks /gsd-verify-work + /gsd-plan-phase 44/45/46 parallel.
+- [Phase 44]: D-01 implemented: 5-SKU disambiguation H2 with 5-row table; KPE Standard|Premium adjacent columns; cites 2024-03-21 Samsung free KPE Premium licensing
+- [Phase 44]: D-02 implemented: Step 0 H2 verbatim title 'Step 0 — Samsung Knox Portal B2B account approval (1-2 business days)' with parallel-work guidance
+- [Phase 44]: D-03 implemented: anti-paste blockquote wrapped by AEKNOX-03-shared-anti-paste-block HTML markers, immediately above FLAT EXTRA_ENROLLMENT_TOKEN JSON; ready for Plan 07 verbatim copy into ZT doc
 
 ### Pending Todos
 
@@ -112,6 +115,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-25T03:36:20.838Z
-Stopped at: Phase 44 context gathered (adversarial review)
+Last session: 2026-04-25T04:40:31.753Z
+Stopped at: Completed 44-01-PLAN.md (Knox admin guide foundational doc; 230 lines; audit 8/8 PASS)
 Next action: `/gsd-plan-phase 43` (cleanup + audit harness fix — sidecar path + allow-list + freshness + AOSP stub prep)
