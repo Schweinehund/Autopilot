@@ -528,27 +528,31 @@ If you have a Microsoft Entra Conditional Access policy defined that uses the *r
 
 **All other claims:** VERIFIED via WebFetch / WebSearch / direct file read with `last_verified: 2026-04-25` confidence markers attached. No assumed facts in the gate, the Standard Stack, the Code Examples, the State of the Art, or the Validation Architecture sections.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **D-05 reconciliation: COPE-vs-COBO matrix slot — sub-H3 vs sibling H2?**
    - What we know: D-05 LOCK leaves the placement at planner's discretion within the 11-slot envelope; matrix is at H2 anchor `#cope-vs-cobo-decision` per D-13.
    - What's unclear: Whether planner places matrix as sub-H3 of `## Provisioning method choice` (preserves 11-H2 lock) or as a 12th sibling H2 (requires sibling-departure rationale per D-04 reversal).
    - Recommendation: **Sub-H3 placement** preserves 11-H2 lock and avoids D-04 reversal. Planner places matrix as `### COPE-vs-COBO decision matrix` inside `## Provisioning method choice` H2.
+   - **RESOLVED:** Sub-H3 `### COPE-vs-COBO decision matrix` placed inside `## Provisioning method choice` H2 in Plan 01 — preserves 11-H2 lock per CONTEXT D-01 / D-04 / D-05.
 
 2. **D-09 Bayton-customDPC nuance: Option A vs Option B?**
    - What we know: D-09 verbatim text says "no admin policy lever in COPE or any other mode"; Bayton documents AMAPI-native EMM behavior differs from customDPC EMM behavior; MS Learn confirms Intune-specific Limitation.
    - What's unclear: Whether to scope-tighten D-09 to "Intune cannot..." (Option A, recommended) or annotate with footnote (Option B).
    - Recommendation: **Option A** for terseness. Planner edits the verbatim D-09 text from "Intune cannot manage Private Space content, visibility, or settings — there is no admin policy lever, on COPE, COBO, BYOD, or any other Android Enterprise mode" to "**Intune** cannot manage Private Space content, visibility, or settings on COPE, COBO, BYOD, or any other Android Enterprise mode" (drop the absolute "no admin policy lever" claim).
+   - **RESOLVED:** Option A scope-tightening adopted; D-08 in-doc callout AND D-09 glossary canonical entry both use "**Intune** cannot manage…" wording. Recorded as new CONTEXT D-33 (formal amendment to D-08 + D-09 verbatim text per RESEARCH Pitfall 8 Option A).
 
 3. **Token-entry method enumeration in `## Provisioning method choice` H2 — sub-H3 needed?**
    - What we know: COBO sibling has 4 sub-H3s under `## Provisioning method choice`: QR / NFC / afw#setup / Zero-Touch. Token-entry is the 5th method per MS Learn `ref-corporate-methods.md`. **NEW FINDING** — token-entry is also unsupported on COPE Android 11.0.
    - What's unclear: Whether COPE doc enumerates 5 sub-H3s (QR / NFC / afw#setup / Token / Zero-Touch) or 4 (drops Token; surfaces Android 11+ removal of all three legacy methods in a single callout).
    - Recommendation: **5 sub-H3s** for parity-preservation with what MS Learn enumerates as available enrollment methods + COPE-specific Android 11+ removal callout aggregated near `### NFC` and `### afw#setup` H3s. Planner inspects MS Learn enumeration and applies discretion.
+   - **RESOLVED:** 5 sub-H3s under `## Provisioning method choice` (QR / NFC / afw#setup / Token entry / Zero-Touch) adopted in Plan 01; NFC + afw#setup + token-entry all carry Android 11+ removal callouts per Block E.
 
 4. **Intune Plan licensing tier callout — needed in Prerequisites?**
    - What we know: `setup-corporate-work-profile.md` does not call out a specific Plan tier. Phase 36 COBO sibling line 42 lists "Microsoft Intune Plan 1+" as the hard prereq.
    - What's unclear: Whether COPE has the same Plan 1+ baseline (most likely YES) or requires additional Plan 2 / Suite licensing.
    - Recommendation: Mirror COBO Plan 1+ assertion (HIGH confidence) unless Phase 47 integration audit surfaces evidence to the contrary; cite same source.
+   - **RESOLVED:** Plan 1+ baseline matching COBO sibling adopted in Plan 01 Prerequisites H2.
 
 ## Environment Availability
 

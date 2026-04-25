@@ -98,9 +98,12 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 
 ### 🚧 v1.4.1 Android Enterprise Completion & v1.4 Cleanup (Phases 43-47) — IN PROGRESS
 
-- [x] **Phase 43: v1.4 Cleanup & Audit Harness Fix** — Resolve audit sidecar path blocker, expand allow-list (~10→~37 pins), normalize 60-day freshness across L2 runbooks 18-21 + template, and migrate Phase 39 AOSP stub deep content into per-OEM prep shell. MUST land before 44/45/46. (completed 2026-04-24)
-- [x] **Phase 44: Knox Mobile Enrollment** — Ship Samsung KME as 4th-portal overlay (admin guide + L1 runbook 28 + L2 runbook 22); fill `#knox-mobile-enrollment-row` anchor; extend 5-branch Mermaid to 6-branch; retrofit ZT portal + COBO Samsung-admin callouts. Parallel with 45/46. (completed 2026-04-25)
-- [x] **Phase 45: Per-OEM AOSP Expansion** — Lift hard-scoped AOSP stub into real coverage across 5 OEMs (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest) + OEM matrix reference + L1 runbook 29 (replaces ANDE1) + L2 runbook 23. Preserves PITFALL-7 "not supported under AOSP" framing. Meta Horizon wind-down re-verification gate at plan time. Parallel with 44/46. (completed 2026-04-25)
+- [x] **Phase 43: v1.4 Cleanup & Audit Harness Fix** — Resolve audit sidecar path blocker, expand allow-list (~10→~37 pins), normalize 60-day freshness across L2 runbooks 18-21 + template, and migrate Phase 39 AOSP stub deep content into per-OEM prep shell. MUST land before 44/45/46.
+ (completed 2026-04-24)
+- [x] **Phase 44: Knox Mobile Enrollment** — Ship Samsung KME as 4th-portal overlay (admin guide + L1 runbook 28 + L2 runbook 22); fill `#knox-mobile-enrollment-row` anchor; extend 5-branch Mermaid to 6-branch; retrofit ZT portal + COBO Samsung-admin callouts. Parallel with 45/46.
+ (completed 2026-04-25)
+- [x] **Phase 45: Per-OEM AOSP Expansion** — Lift hard-scoped AOSP stub into real coverage across 5 OEMs (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest) + OEM matrix reference + L1 runbook 29 (replaces ANDE1) + L2 runbook 23. Preserves PITFALL-7 "not supported under AOSP" framing. Meta Horizon wind-down re-verification gate at plan time. Parallel with 44/46.
+ (completed 2026-04-25)
 - [ ] **Phase 46: COPE Full Admin** — Parallel-structured to COBO guide; Android 15 Private-space unmanaged callout (NEW); atomic same-commit COBO migration-note retrofit; research-gated for deprecation-rationale re-scope. Parallel with 44/45.
 - [ ] **Phase 47: Integration & Re-Audit** — Atomic unified rebuilds of capability matrix + Mermaid + glossary; C4/C6-C10 harness extensions (informational-first); terminal re-audit flipping `tech_debt → passed`; PROJECT.md Active→Validated flip; close DEFER-01..06. MUST land last.
 
@@ -182,7 +185,10 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   3. `03-fully-managed-cobo.md:58-66` COPE Migration Note forward-links to `08-cope-full-admin.md` (ATOMIC same-commit replacing "deferred to v1.4.1" sentence; closes v1.4 forward promise)
   4. `reference/android-capability-matrix.md` contains COPE row as 6th Android column with Cross-Platform Equivalences Section structure preserved; `_glossary-android.md` COPE/WPCO entries back-link to new admin doc
   5. Zero instances of banned phrases ("deprecated", "end of life", "removed") applied to COPE across any new or edited file in this phase; research gate (Google AE Help + Android Developers + Bayton FAQ) ran BEFORE authoring and confirmed full-admin-guide scope (not deprecation-rationale re-scope)
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 46-01-PLAN.md — AECOPE-01: author `08-cope-full-admin.md` with 11 H2 mirror, COPE-specific FRP table + Android 11+ removal of 3 methods (NFC + afw#setup + token-entry per RESEARCH NEW FINDING #1+#2), Android 15 Private Space ⚠️ callout, COPE-vs-COBO decision matrix sub-H3, Samsung-admins callout (Wave 1)
+- [ ] 46-02-PLAN.md — AECOPE-02 + AECOPE-03 + AECOPE-04 + D-10 + D-11: atomic same-commit Wave 2 — capability matrix COPE column at index 1 + Private Space row, COBO line 64 γ3 sentence-scoped trim, BYOD line 167 retrofit, glossary Private Space H3 + COPE/WPCO see-also, version-matrix Android 15 Private Space breakpoint H3 (Wave 2)
 **Context risks to encode:** Google WPCO terminology drift ("COPE deprecated" framing BANNED — C9 banned-phrase check informational-first via sidecar JSON for atomic list updates); mandatory research gate BEFORE authoring (Google AE Help + Android Developers + Bayton FAQ) — if deprecation declared, re-scope to rationale doc at 40% scope; Android 15 Private space is NEW callout (not in v1.4 COBO); atomic same-commit COBO migration-note retrofit (D-22 append-only pattern); Intune admin center UI-label verification at plan time ("Corporate-owned devices with work profile")
 
 ### Phase 47: Integration & Re-Audit
