@@ -26,7 +26,7 @@ This is the SINGLE canonical provisioning-method reference for v1.4. Downstream 
 | <a id="byod-work-profile"></a>BYOD Work Profile | ✗ | ✗ | ✗ | ✗ | Company Portal user-initiated enrollment only; no corporate provisioning methods apply. AMAPI migration April 2025 — Microsoft Intune app is the primary management surface post-migration. See [`../_glossary-android.md#byod`](../_glossary-android.md#byod). |
 | <a id="dedicated-cosu"></a>Dedicated (COSU) | ✓ (Android 8+) | ✓ (Android 9+ built-in reader) | ✓ (all supported Android) | ✓ (Android 8+) | Managed Home Screen exit-PIN must sync between device-restrictions profile and MHS app config — see Phase 38 and [`../_glossary-android.md#managed-home-screen`](../_glossary-android.md#managed-home-screen). |
 | <a id="zero-touch"></a>Zero-Touch Enrollment | — | — | — | ✓ (Android 8+, via portal) | ZT is itself a provisioning method — reseller relationship is Step 0; see Phase 35 `02-zero-touch-portal.md`. |
-| <a id="aosp"></a>AOSP | ✗ | ✓ (Android 10+, one device at a time, Wi-Fi credentials embedded in QR for RealWear-class OEMs) | ✗ | ✗ | OEM firmware-specific; full per-OEM coverage in Phase 45 — see Phase 39 AOSP stub. |
+| <a id="aosp"></a>AOSP | ✗ | ✓ (Android 10+, one device at a time, Wi-Fi credentials embedded in QR for RealWear-class OEMs) | ✗ | ✗ | OEM firmware-specific — see [AOSP OEM Matrix](../reference/aosp-oem-matrix.md#hardware-scope) for per-OEM minimum firmware (RealWear / Zebra / Pico / HTC / Meta Quest). Token ceiling: userless = 90 days max; user-associated = up to 65 years (asymmetry per MS Learn). |
 
 ## Per-Method Details
 
@@ -54,8 +54,21 @@ Knox Mobile Enrollment is Samsung's Zero-Touch-equivalent for Samsung hardware. 
 
 For full admin coverage, see [Knox Mobile Enrollment Admin Guide](../admin-setup-android/07-knox-mobile-enrollment.md). For L1 enrollment-failure triage, see [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md). For L2 investigation, see [L2 Runbook 22: Android Knox Investigation](../l2-runbooks/22-android-knox-investigation.md). For the cross-mode capability matrix, see [Knox Mobile Enrollment (Samsung)](../reference/android-capability-matrix.md#knox-mobile-enrollment-row).
 
+<a id="aosp-token-expiry"></a>
+## AOSP Token Expiry Asymmetry
+
+AOSP enrollment tokens follow a different expiry model than COBO/Dedicated Android Enterprise tokens:
+
+- **Userless AOSP tokens — 90 days maximum.** Per MS Learn AOSP corporate-userless guidance, userless AOSP enrollment tokens have a hard 90-day ceiling. Plan rotation BEFORE the 90-day mark to prevent enrollment-flow break for net-new device deliveries.
+- **User-associated AOSP tokens — up to 65 years** (same ceiling as COBO/Dedicated staging tokens per Phase 36).
+
+Both ceilings must be considered separately when planning AOSP fleet enrollment cadence. The 90-day ceiling is shorter than any GMS-mode token ceiling and represents a unique operational constraint of userless AOSP. See [AOSP OEM Matrix](../reference/aosp-oem-matrix.md#intune-aosp-mode) for per-OEM mode-support.
+
+`[HIGH: MS Learn aosp-corporate-userless + setup-aosp-corporate-user-associated, last_verified 2026-04-25]`
+
 ## See Also
 
 - [Android Enterprise Enrollment Overview](00-enrollment-overview.md) — two-axes model and 5-mode comparison; references filtered rows from this matrix
 - [Android Version Matrix](03-android-version-matrix.md) — minimum Intune-supported Android OS per mode; version breakpoint narratives (Android 11, 12, 15)
 - [Android Enterprise Provisioning Glossary](../_glossary-android.md) — definitions for [afw#setup](../_glossary-android.md#afw-setup), [Zero-Touch Enrollment](../_glossary-android.md#zero-touch-enrollment), [Managed Home Screen](../_glossary-android.md#managed-home-screen)
+- [AOSP OEM Matrix](../reference/aosp-oem-matrix.md) — per-OEM AOSP capability mapping (Phase 45)

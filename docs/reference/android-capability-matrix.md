@@ -118,12 +118,12 @@ Knox Mobile Enrollment (KME) is Samsung's zero-touch-equivalent enrollment chann
 For full admin coverage, see [Knox Mobile Enrollment Admin Guide](../admin-setup-android/07-knox-mobile-enrollment.md). For L1 enrollment-failure triage, see [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md). For L2 investigation, see [L2 Runbook 22: Android Knox Investigation](../l2-runbooks/22-android-knox-investigation.md). For provisioning-method placement in the lifecycle reference, see [Knox Mobile Enrollment](../android-lifecycle/02-provisioning-methods.md#knox-mobile-enrollment).
 
 <a id="deferred-full-aosp-capability-mapping"></a>
-### Deferred: Full AOSP capability mapping
+### AOSP per-OEM capability mapping
 
 AOSP (Android Open Source Project) devices — RealWear, Zebra, Pico, HTC VIVE
-Focus, Meta Quest — appear in this matrix as a single stub-reference row.
-Per-OEM capability mapping and feature-by-feature expansion are deferred to
-v1.4.1. See [AOSP stub](../admin-setup-android/06-aosp-stub.md).
+Focus, Meta Quest — appear in this matrix as a single AOSP column. Per-OEM
+capability mapping (5-OEM × 4-capability-H2 sub-tables) is documented in
+[AOSP OEM Matrix](aosp-oem-matrix.md). See also [AOSP stub](../admin-setup-android/06-aosp-stub.md).
 
 <a id="deferred-4-platform-unified-capability-comparison"></a>
 ### Deferred: 4-platform unified capability comparison
@@ -140,4 +140,5 @@ Apple and Android, constrained to the 3 SC#1-named pairs.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-25 | Phase 45 AEAOSPFULL-09: `#deferred-full-aosp-capability-mapping` anchor fill — replaced "deferred to v1.4.1" prose with cross-link to new `aosp-oem-matrix.md` per AEAOSPFULL-09 verbatim "link to" wording. Anchor preserved for backward-compat. | -- |
 | 2026-04-24 | Initial version — Phase 42: Android Enterprise capability matrix (5 domains, 5 mode rows, Cross-Platform Equivalences H2 with 3 paired rows, Key Gaps Summary, deferral footers) | -- |

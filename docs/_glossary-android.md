@@ -12,7 +12,7 @@ platform: all
 
 ## Alphabetical Index
 
-[afw#setup](#afw-setup) | [AMAPI](#amapi) | [BYOD](#byod) | [COBO](#cobo) | [COPE](#cope) | [Corporate Identifiers](#corporate-identifiers) | [Dedicated](#dedicated) | [DPC](#dpc) | [EMM](#emm) | [Entra Shared Device Mode](#entra-shared-device-mode) | [Fully Managed](#fully-managed) | [Knox](#knox) | [KME](#kme) | [KPE](#kpe) | [Managed Google Play](#managed-google-play) | [Managed Home Screen](#managed-home-screen) | [Play Integrity](#play-integrity) | [Supervision](#supervision) | [User Enrollment](#user-enrollment) | [Work Profile](#work-profile) | [WPCO](#wpco) | [Zero-Touch Enrollment](#zero-touch-enrollment)
+[afw#setup](#afw-setup) | [AMAPI](#amapi) | [BYOD](#byod) | [COBO](#cobo) | [COPE](#cope) | [Corporate Identifiers](#corporate-identifiers) | [Dedicated](#dedicated) | [DPC](#dpc) | [EMM](#emm) | [Entra Shared Device Mode](#entra-shared-device-mode) | [Fully Managed](#fully-managed) | [Knox](#knox) | [KME](#kme) | [KPE](#kpe) | [Managed Google Play](#managed-google-play) | [Managed Home Screen](#managed-home-screen) | [OEMConfig](#oemconfig) | [Play Integrity](#play-integrity) | [Supervision](#supervision) | [User Enrollment](#user-enrollment) | [Work Profile](#work-profile) | [WPCO](#wpco) | [Zero-Touch Enrollment](#zero-touch-enrollment)
 
 ---
 
@@ -117,6 +117,13 @@ Device Policy Controller (DPC) is the on-device app responsible for applying And
 
 > **Cross-platform note:** On iOS/iPadOS and macOS, the analog is the MDM profile itself — the OS-level MDM framework plays the policy-controller role, and there is no separately-installed on-device management agent. On Windows, the MDM client is built into the operating system; Intune extends it via the Intune Management Extension for Win32 apps and PowerShell scripts, but there is no analog to the "DPC as a distinct on-device app" Android model. Do not conflate the Microsoft Intune DPC app on Android with the separate "Company Portal" app, which is the end-user portal for BYOD enrollment and app discovery.
 
+<a id="oemconfig"></a>
+### OEMConfig
+
+OEMConfig is Google's Android Enterprise mechanism for OEM-specific device-policy delivery via OEM-published Managed Configurations apps in Managed Google Play. For AOSP devices (no GMS / no MGP), Microsoft Intune supports OEMConfig via APK push: the OEM publishes their OEMConfig app as a downloadable APK (e.g., Zebra's "Zebra OEMConfig Powered by MX" for Android 13+ AND 11; "Legacy Zebra OEMConfig" for Android 11 and earlier), the admin uploads the APK as an Intune line-of-business app, and the device receives the OEMConfig profile via the AOSP enrollment + APK install flow. OEMConfig profile schemas are OEM-controlled (Zebra MX 13.5 / 14.2; other OEMs vary).
+
+> **Cross-platform note:** OEMConfig is Android-specific. No Apple, Windows, or pure-AOSP-without-OEM-collaboration equivalent. The OEMConfig delivery path differs by GMS-availability: GMS-mode Android Enterprise uses Managed Google Play; AOSP uses APK push via Intune line-of-business app upload.
+
 ## Portals & Binding
 
 ### EMM
@@ -163,6 +170,7 @@ Play Integrity is Google's device-attestation API, successor to the SafetyNet At
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-25 | Phase 45 AEAOSPFULL-09: 1 new alphabetical-index entry (OEMConfig) + 1 new H3 entry under Provisioning Methods H2; AOSP-mode delivery path documented (APK push via Intune line-of-business app — distinct from GMS-mode MGP path). | -- |
 | 2026-04-25 | Phase 44 (AEKNOX-06): 3 new Provisioning Methods H2 entries (Knox / KME / KPE) + 3 new alphabetical-index entries between Fully Managed and Managed Google Play; AMAPI cross-link added FROM Knox entry (no new AMAPI entry — single existing line preserved); WPCO single-instance preserved (no duplicate). | — |
 | 2026-04-21 | Phase 34 Foundation: initial Android Enterprise glossary — 13 disambiguation entries (work profile, supervision as callout-only, user enrollment, dedicated, corporate identifiers, COBO, COPE, BYOD, DPC, Managed Google Play, afw#setup, WPCO, fully managed) + 6 Android-native terms (Zero-Touch Enrollment, Play Integrity, AMAPI, Managed Home Screen, Entra Shared Device Mode, EMM). Five category H2 sections per D-09. | — |
 | 2025-04 | AMAPI migration for BYOD work profile: custom OMA-URI profiles no longer supported; Wi-Fi requires certificate-based auth; Microsoft Intune app became primary BYOD management surface (replaces Company Portal as the DPC for BYOD). | — |

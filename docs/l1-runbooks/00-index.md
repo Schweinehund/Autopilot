@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-25
+review_by: 2026-06-24
 applies_to: all
 audience: L1
 platform: all
@@ -73,8 +73,7 @@ L1 runbooks for the six most common Android Enterprise enrollment and compliance
 | [25: Android Compliance Blocked](25-android-compliance-blocked.md) | Non-compliant / Conditional Access blocking M365 access | All GMS modes |
 | [26: Android MGP App Not Installed](26-android-mgp-app-not-installed.md) | Managed Google Play app not delivered to device | All GMS modes |
 | [27: Android ZTE Enrollment Failed](27-android-zte-enrollment-failed.md) | Zero-Touch Enrollment did not initiate or stalled | ZTE only |
-
-> **AOSP Note:** No L1 runbook exists for AOSP (specialty hardware) failures — escalate to L2. AOSP L1 coverage is planned for v1.4.1. See [Android Triage](../decision-trees/08-android-triage.md) node ANDE1 for the escalation data checklist.
+| [29: Android AOSP Enrollment Failed](29-android-aosp-enrollment-failed.md) | AOSP enrollment did not initiate or stalled across 5 OEMs (RealWear / Zebra / Pico / HTC / Meta Quest) | AOSP only |
 
 ## Scope
 
@@ -101,6 +100,7 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-25 | Phase 45 AEAOSPFULL-09: Added Runbook 29 (Android AOSP Enrollment Failed) to Android L1 Runbooks section; removed AOSP-out-of-scope note (legacy escalation node retired per D-19) | -- |
 | 2026-04-23 | Added Android L1 Runbooks section (runbooks 22-27) | -- |
 | 2026-04-17 | Added iOS L1 runbook section (runbooks 16-21) | -- |
 | 2026-04-14 | Added macOS ADE runbook section | -- |

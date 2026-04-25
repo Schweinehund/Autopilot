@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-23
-review_by: 2026-06-22
+last_verified: 2026-04-25
+review_by: 2026-06-24
 applies_to: all
 audience: L1
 platform: Android
@@ -34,7 +34,7 @@ graph TD
     AND1 -->|"Corporate phone,<br/>fully managed (COBO)"| AND3{"What is the primary symptom?"}
     AND1 -->|"Kiosk or single-purpose<br/>device (Dedicated / COSU)"| AND4{"What is the primary symptom?"}
     AND1 -->|"Corporate Zero-Touch<br/>enrolled (ZTE)"| AND5{"What is the primary symptom?"}
-    AND1 -->|"Specialty hardware<br/>(AOSP)"| ANDE1(["Escalate L2 —<br/>AOSP L1 troubleshooting<br/>out of scope in v1.4"])
+    AND1 -->|"Specialty hardware<br/>(AOSP)"| ANDR29(["See: AOSP Enrollment Failed<br/>(Runbook 29)"])
     AND1 -->|"Don't know /<br/>Can't tell"| ANDE2(["Escalate L2 —<br/>Collect serial, UPN,<br/>screenshots for<br/>mode identification"])
 
     AND2 -->|"Enrollment-restriction error<br/>('blocked' / 'can't enroll')"| ANDR22(["See: Enrollment Blocked<br/>(Runbook 22)"])
@@ -66,14 +66,13 @@ graph TD
     click ANDR25 "../l1-runbooks/25-android-compliance-blocked.md"
     click ANDR26 "../l1-runbooks/26-android-mgp-app-not-installed.md"
     click ANDR27 "../l1-runbooks/27-android-zte-enrollment-failed.md"
+    click ANDR29 "../l1-runbooks/29-android-aosp-enrollment-failed.md"
 
     classDef resolved fill:#28a745,color:#fff
     classDef escalateL2 fill:#dc3545,color:#fff
-    class ANDR22,ANDR23,ANDR24,ANDR25,ANDR26,ANDR27 resolved
-    class ANDE1,ANDE2,ANDE3 escalateL2
+    class ANDR22,ANDR23,ANDR24,ANDR25,ANDR26,ANDR27,ANDR29 resolved
+    class ANDE2,ANDE3 escalateL2
 ```
-
-> For AOSP tickets (ANDE1): collect device OEM / model, serial number, ticket context. See [AOSP stub](../admin-setup-android/06-aosp-stub.md) for scope context. AOSP L1 troubleshooting is out of scope in v1.4; AOSP L1 content is planned for v1.4.1.
 
 ## Routing Verification
 
@@ -97,7 +96,7 @@ All terminal nodes are within 2 decision steps of the root node (AND1), well und
 | Dedicated MGP app missing | Kiosk or single-purpose (Dedicated/COSU) | Expected app not installed | Runbook 26 |
 | ZTE enrollment failed | Corporate Zero-Touch enrolled (ZTE) | Enrollment never started or stalled | Runbook 27 |
 | ZTE post-enrollment compliance | Corporate Zero-Touch enrolled (ZTE) | Non-compliant / access-blocked post-ZTE | Runbook 25 |
-| AOSP all paths | Specialty hardware (AOSP) | (any) | Escalate ANDE1 (L2 out-of-scope v1.4) |
+| AOSP all paths | Specialty hardware (AOSP) | (any) | Runbook 29 |
 | Unknown mode | Don't know / Can't tell | (any) | Escalate ANDE2 (mode identification) |
 | Other / unclear within GMS mode | Any GMS mode (BYOD/COBO/Dedicated/ZTE) | Symptom doesn't match a runbook | Escalate ANDE3 |
 
@@ -118,7 +117,6 @@ Collect this information before routing to L2.
 
 | When You Escalate | Collect This |
 |-------------------|-------------|
-| AOSP — out of scope v1.4 (ANDE1) | Device OEM / model, serial number, User UPN, ticket context, AOSP enrollment method attempted. Route to L2. |
 | Unknown mode (ANDE2) | Device serial, User UPN, lock-screen or Settings screenshot, last-known management app name (Company Portal vs Microsoft Intune app), ticket description. Route to L2 for mode identification. |
 | Unclear symptom within a GMS mode (ANDE3) | Device serial, User UPN, Android version, enrollment mode (if known), symptom description, screenshot of current Intune device status pane. Route to L2. |
 
@@ -128,7 +126,8 @@ Collect this information before routing to L2.
 - [Android Glossary](../_glossary-android.md) — Canonical Android Enterprise terminology
 - [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md) — Mode-ownership axes explained
 - [Android Admin Setup Overview](../admin-setup-android/00-overview.md) — Tri-portal admin surface
-- [AOSP Stub](../admin-setup-android/06-aosp-stub.md) — AOSP scope context (ANDE1 escalations)
+- [AOSP Stub](../admin-setup-android/06-aosp-stub.md) — AOSP scope context
+- [L1 Runbook 29: AOSP Enrollment Failed](../l1-runbooks/29-android-aosp-enrollment-failed.md) — AOSP failure routing
 - [Initial Triage Decision Tree](00-initial-triage.md) — Windows Autopilot entry point
 - [macOS ADE Triage](06-macos-triage.md) — macOS ADE failure routing
 - [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
@@ -137,4 +136,5 @@ Collect this information before routing to L2.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-25 | Phase 45 AEAOSPFULL-09: Mermaid AOSP edge now routes to ANDR29 single click target (preserves Phase 40 D-05 LOCK + ROADMAP SC#4 verbatim "single click target"); legacy AOSP-out-of-scope escalation node retired across classDef + Routing Verification table + Escalation Data table per D-19 (in-runbook OEM-id step now lives inside Runbook 29 per D-20); Related Resources cross-link to Runbook 29 added. | -- |
 | 2026-04-23 | Initial version (Phase 40 — Android L1 triage tree) | -- |
