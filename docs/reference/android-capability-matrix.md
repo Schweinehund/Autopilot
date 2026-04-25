@@ -101,7 +101,7 @@ The most significant Android capability gaps relative to Windows/macOS/iOS are (
 4. **Play Integrity replaces the prior device-attestation predecessor** — Google's January 2025 cutover to [Play Integrity](../_glossary-android.md#play-integrity) (successor to the prior Google attestation API, turned off January 2025) means there is no fallback for the deprecated API on any Android device today; compliance policies must reference Play Integrity verdict levels exclusively.
 5. **AMAPI-migrated BYOD DPC** — Post-April 2025, the Microsoft Intune app is the primary DPC for BYOD (replacing Company Portal); custom OMA-URI profiles are removed for BYOD; Wi-Fi must use certificate-based authentication. Legacy BYOD tenants require migration.
 6. **No DDM equivalent** — Android does not have a Declarative Device Management analog; Android uses a Play-integrated policy channel (Android Device Policy + AMAPI) rather than the DDM status-channel model used by iOS 17+ / macOS 14+.
-7. **AOSP coverage is stub-only in v1.4** — AOSP (RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest) appears as a single stub-reference column; per-OEM capability mapping is deferred to v1.4.1.
+7. **AOSP per-OEM matrix** — AOSP (RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest) per-OEM capability mapping is in the [AOSP OEM Matrix](aosp-oem-matrix.md); this matrix cross-references it at lines 121-127.
 8. **Dedicated = COSU + MHS, not Apple single-app mode** — Android Dedicated uses Managed Home Screen (MHS) with an exit-PIN gate, distinct from Apple single-app mode (which is ADE-gated on iOS and configures the app directly); the MHS exit-PIN must sync between the device-restrictions profile and the MHS app-config profile.
 
 ## See Also
