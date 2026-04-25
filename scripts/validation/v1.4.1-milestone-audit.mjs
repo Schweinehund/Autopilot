@@ -225,7 +225,7 @@ const checks = [
         'docs/quick-ref-l2.md'
       ];
       // /gi needs lastIndex reset between lines so the .test() scan is stateless per line.
-      const re = /\]\([^)]*(android|aosp|byod-work-profile|zero-touch|managed-google-play|play-integrity|managed-home-screen|amapi)[^)]*\)/gi;
+      const re = /\]\([^)]*(android|aosp|byod-work-profile|zero-touch|managed-google-play|play-integrity|managed-home-screen|amapi|knox|kme|kpe|realwear|zebra|pico|htc-vive-focus|meta-quest|cope-full-admin|aosp-realwear|aosp-zebra|aosp-pico|aosp-htc-vive-focus|aosp-meta-quest|aosp-oem-matrix)[^)]*\)/gi;
       for (const t of targets) {
         const content = readFile(t);
         if (!content) continue;
@@ -292,7 +292,11 @@ const checks = [
     run() {
       const targets = [
         'docs/admin-setup-android/06-aosp-stub.md',
-        // Phase 45 will add per-OEM files here (09-aosp-realwear.md, 10-aosp-zebra.md, etc.)
+        'docs/admin-setup-android/09-aosp-realwear.md',
+        'docs/admin-setup-android/10-aosp-zebra.md',
+        'docs/admin-setup-android/11-aosp-pico.md',
+        'docs/admin-setup-android/12-aosp-htc-vive-focus.md',
+        'docs/admin-setup-android/13-aosp-meta-quest.md',
       ];
       let found = 0, total = 0;
       for (const t of targets) {
@@ -311,7 +315,7 @@ const checks = [
     // D-06 + Phase 42 D-29: INFORMATIONAL-FIRST. Emits bare-Knox occurrences (no SKU qualifier within 50 chars).
     run() {
       const targets = androidDocPaths();
-      const suffixes = /(Mobile Enrollment|Platform for Enterprise|Suite|Manage|Configure)/;
+      const suffixes = /(Mobile Enrollment|Platform for Enterprise|Suite|Manage|Configure|KPE|KME|KPE Standard|KPE Premium|on-device attestation|Mobile Enrollment Portal)/;
       let bare = 0;
       for (const t of targets) {
         const c = readFile(t);
