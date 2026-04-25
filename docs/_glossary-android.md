@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-21
-review_by: 2026-06-20
+last_verified: 2026-04-25
+review_by: 2026-06-24
 applies_to: both
 audience: all
 platform: all
@@ -12,7 +12,7 @@ platform: all
 
 ## Alphabetical Index
 
-[afw#setup](#afw-setup) | [AMAPI](#amapi) | [BYOD](#byod) | [COBO](#cobo) | [COPE](#cope) | [Corporate Identifiers](#corporate-identifiers) | [Dedicated](#dedicated) | [DPC](#dpc) | [EMM](#emm) | [Entra Shared Device Mode](#entra-shared-device-mode) | [Fully Managed](#fully-managed) | [Managed Google Play](#managed-google-play) | [Managed Home Screen](#managed-home-screen) | [Play Integrity](#play-integrity) | [Supervision](#supervision) | [User Enrollment](#user-enrollment) | [Work Profile](#work-profile) | [WPCO](#wpco) | [Zero-Touch Enrollment](#zero-touch-enrollment)
+[afw#setup](#afw-setup) | [AMAPI](#amapi) | [BYOD](#byod) | [COBO](#cobo) | [COPE](#cope) | [Corporate Identifiers](#corporate-identifiers) | [Dedicated](#dedicated) | [DPC](#dpc) | [EMM](#emm) | [Entra Shared Device Mode](#entra-shared-device-mode) | [Fully Managed](#fully-managed) | [Knox](#knox) | [KME](#kme) | [KPE](#kpe) | [Managed Google Play](#managed-google-play) | [Managed Home Screen](#managed-home-screen) | [Play Integrity](#play-integrity) | [Supervision](#supervision) | [User Enrollment](#user-enrollment) | [Work Profile](#work-profile) | [WPCO](#wpco) | [Zero-Touch Enrollment](#zero-touch-enrollment)
 
 ---
 
@@ -87,6 +87,24 @@ Android for Work Setup identifier — a literal string entered in place of a Goo
 
 > **Cross-platform note:** No Windows, macOS, or iOS equivalent. This signaling pattern — a special string entered at initial setup to trigger enterprise provisioning — is Android-specific. Do not conflate with QR or NFC provisioning (those are separate methods; see the [Android Provisioning Methods matrix](android-lifecycle/02-provisioning-methods.md)).
 
+### Knox
+
+Samsung Knox is Samsung's mobile-device security platform spanning hardware (Knox eFuse, Knox Vault) and software (Knox Platform for Enterprise, Knox Mobile Enrollment, Knox Suite, Knox Manage, Knox Configure). For Intune-managed Samsung fleets, the relevant Knox SKUs are [KME](#kme) (the Samsung zero-touch-equivalent enrollment path) and [KPE](#kpe) (the Samsung security-extension layer that Intune Plan 1+ supplies transparently). Intune calls [AMAPI](#amapi) for Knox-provisioned device policy. See the [Knox SKU disambiguation table](admin-setup-android/07-knox-mobile-enrollment.md#sku-disambiguation) in the KME admin guide for the 5-SKU breakdown.
+
+> **Cross-platform note:** Samsung-specific. No Apple, Microsoft, or AOSP equivalent. Samsung Knox security features apply only to Samsung hardware; Knox SKUs are not portable to non-Samsung Android OEMs.
+
+### KME (Knox Mobile Enrollment)
+
+Knox Mobile Enrollment is Samsung's zero-touch-equivalent enrollment channel for Samsung devices. KME provisions Samsung devices into the Intune-managed [COBO](#cobo) / [Dedicated](#dedicated) / [WPCO](#wpco) modes via the Knox Admin Portal → Intune handoff (custom JSON containing the Intune enrollment token). KME is **free** and does not require a paid Knox license; it is mutually exclusive with [Zero-Touch Enrollment](#zero-touch-enrollment) on the same Samsung device (KME takes precedence at the device firmware level when both are configured).
+
+> **Cross-platform note:** Samsung-specific. The Google ZT analog is [Zero-Touch Enrollment](#zero-touch-enrollment); the Apple analog is ADE; the Windows analog is Autopilot. KME is NOT portable to non-Samsung Android OEMs.
+
+### KPE (Knox Platform for Enterprise)
+
+Knox Platform for Enterprise is Samsung's security-extension layer adding device-policy capabilities beyond stock Android Enterprise (kiosk customization, advanced restriction policies, custom boot animations). KPE has historically been licensed in two tiers: Standard (free baseline) and Premium (per-device upgrade). Samsung made Premium licenses **free** in 2024 (Samsung confirmed 2024-03-21); Microsoft Intune Plan 1+ supplies KPE Premium transparently to enrolled Samsung devices. KPE is NOT required for [KME](#kme); the two are independent SKUs.
+
+> **Cross-platform note:** Samsung-specific security-extension layer. No Apple or Windows analog at the SKU level.
+
 ### Corporate Identifiers
 
 Corporate Identifiers are pre-loaded IMEI, serial number, or MEID lists uploaded to Intune that tag devices as corporate-owned at enrollment. An uploaded identifier causes a device to enroll into the Fully Managed or Dedicated flow rather than the personal BYOD Work Profile flow. Critical version gate: Android 12 removed IMEI and serial-number access from personally-owned work profile (BYOD) devices, so corporate-identifier tagging effectively works only for corporate-owned enrollment scenarios on Android 12+. See [`docs/android-lifecycle/03-android-version-matrix.md`](android-lifecycle/03-android-version-matrix.md) for the Android 12 breakpoint detail.
@@ -145,6 +163,7 @@ Play Integrity is Google's device-attestation API, successor to the SafetyNet At
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-25 | Phase 44 (AEKNOX-06): 3 new Provisioning Methods H2 entries (Knox / KME / KPE) + 3 new alphabetical-index entries between Fully Managed and Managed Google Play; AMAPI cross-link added FROM Knox entry (no new AMAPI entry — single existing line preserved); WPCO single-instance preserved (no duplicate). | — |
 | 2026-04-21 | Phase 34 Foundation: initial Android Enterprise glossary — 13 disambiguation entries (work profile, supervision as callout-only, user enrollment, dedicated, corporate identifiers, COBO, COPE, BYOD, DPC, Managed Google Play, afw#setup, WPCO, fully managed) + 6 Android-native terms (Zero-Touch Enrollment, Play Integrity, AMAPI, Managed Home Screen, Entra Shared Device Mode, EMM). Five category H2 sections per D-09. | — |
 | 2025-04 | AMAPI migration for BYOD work profile: custom OMA-URI profiles no longer supported; Wi-Fi requires certificate-based auth; Microsoft Intune app became primary BYOD management surface (replaces Company Portal as the DPC for BYOD). | — |
 | 2025-01 | SafetyNet Attestation API turned off by Google. Play Integrity API is the successor. Intune compliance UI now uses "Play Integrity Verdict" terminology — Basic / Basic + Device / Strong integrity levels. | — |
