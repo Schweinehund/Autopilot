@@ -204,7 +204,7 @@ Plans:
 **Plans**: 4 plans
 Plans:
 - [x] 47-01-PLAN.md — AEINTEG-01: Atomic re-canonicalization at 3 SC#1 hotspots (glossary line 16 alphabetical index, capability matrix column-order coherence, 00-overview.md Mermaid leaf ordering) + sidecar pin-shift maintenance (Wave 1)
-- [ ] 47-02-PLAN.md — AEINTEG-02: Harness extensions (C4 regex 24-token expansion, C6 targets 1→6 AOSP-scoped files, C7 suffix list 5-SKU calibration, C9 sidecar cope_banned_phrases[] 3→8 patterns); informational-first preserved (Wave 1)
+- [x] 47-02-PLAN.md — AEINTEG-02: Harness extensions (C4 regex 24-token expansion, C6 targets 1→6 AOSP-scoped files, C7 suffix list 5-SKU calibration, C9 sidecar cope_banned_phrases[] 3→8 patterns); informational-first preserved (Wave 1)
 - [ ] 47-03-PLAN.md — AEINTEG-04: PROJECT.md traceability — 24 v1.4.1 reqs Active→Validated (AEAUDIT-02..05 + AEKNOX-01..07 + AEAOSPFULL-01..09 + AECOPE-01..04); Closed Deferred Items subsection + D-24 footer refresh (Wave 1)
 - [ ] 47-04-PLAN.md — AEINTEG-03: Terminal re-audit from fresh worktree (auditor-independence per Phase 42 D-02); 5 re_audit_resolution sibling keys appended to v1.4-MILESTONE-AUDIT.md (DEFER-01/02/08/09/10 audit-doc canonical); frontmatter status: tech_debt → passed; AEINTEG-01..04 atomic Validated flip (Wave 2)
 **Context risks to encode:** audit harness sidecar-regeneration (line-shifts across 44/45/46 invalidate pin indexes — `regenerate-supervision-pins.mjs` must re-run terminally); informational-first grace period for C6-C10 (D-29 pattern; promoted to blocking in v1.5); parallel-merge conflict hotspots (capability matrix + Mermaid + glossary line 15 alphabetical index) — integration phase owns these as single-plan single-author; terminal re-audit is LAST plan (not interleaved); every new v1.4.1 doc must use Phase 34 template so C5 freshness passes on first terminal run
@@ -259,4 +259,4 @@ Plans:
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete   | 2026-04-25 |
 | 46. COPE Full Admin | v1.4.1 | 2/2 | Complete    | 2026-04-25 |
-| 47. Integration & Re-Audit | v1.4.1 | 1/4 | In Progress|  |
+| 47. Integration & Re-Audit | v1.4.1 | 2/4 | In Progress|  |
