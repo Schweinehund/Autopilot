@@ -99,7 +99,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 ### 🚧 v1.4.1 Android Enterprise Completion & v1.4 Cleanup (Phases 43-47) — IN PROGRESS
 
 - [x] **Phase 43: v1.4 Cleanup & Audit Harness Fix** — Resolve audit sidecar path blocker, expand allow-list (~10→~37 pins), normalize 60-day freshness across L2 runbooks 18-21 + template, and migrate Phase 39 AOSP stub deep content into per-OEM prep shell. MUST land before 44/45/46. (completed 2026-04-24)
-- [ ] **Phase 44: Knox Mobile Enrollment** — Ship Samsung KME as 4th-portal overlay (admin guide + L1 runbook 28 + L2 runbook 22); fill `#knox-mobile-enrollment-row` anchor; extend 5-branch Mermaid to 6-branch; retrofit ZT portal + COBO Samsung-admin callouts. Parallel with 45/46.
+- [x] **Phase 44: Knox Mobile Enrollment** — Ship Samsung KME as 4th-portal overlay (admin guide + L1 runbook 28 + L2 runbook 22); fill `#knox-mobile-enrollment-row` anchor; extend 5-branch Mermaid to 6-branch; retrofit ZT portal + COBO Samsung-admin callouts. Parallel with 45/46. (completed 2026-04-25)
 - [ ] **Phase 45: Per-OEM AOSP Expansion** — Lift hard-scoped AOSP stub into real coverage across 5 OEMs (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest) + OEM matrix reference + L1 runbook 29 (replaces ANDE1) + L2 runbook 23. Preserves PITFALL-7 "not supported under AOSP" framing. Meta Horizon wind-down re-verification gate at plan time. Parallel with 44/46.
 - [ ] **Phase 46: COPE Full Admin** — Parallel-structured to COBO guide; Android 15 Private-space unmanaged callout (NEW); atomic same-commit COBO migration-note retrofit; research-gated for deprecation-rationale re-scope. Parallel with 44/45.
 - [ ] **Phase 47: Integration & Re-Audit** — Atomic unified rebuilds of capability matrix + Mermaid + glossary; C4/C6-C10 harness extensions (informational-first); terminal re-audit flipping `tech_debt → passed`; PROJECT.md Active→Validated flip; close DEFER-01..06. MUST land last.
@@ -146,7 +146,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 - [x] 44-04-PLAN.md — AEKNOX-04: Capability matrix anchor rename + populated row (Wave 3)
 - [x] 44-05-PLAN.md — AEKNOX-05: 00-overview.md Mermaid 6-branch + Setup Sequence + KME-Path Prerequisites (Wave 3)
 - [x] 44-06-PLAN.md — AEKNOX-06: Glossary 3 new entries (Knox/KME/KPE) + AMAPI cross-link + 02-provisioning-methods.md anchor populated (Wave 3)
-- [ ] 44-07-PLAN.md — AEKNOX-07: Reciprocal pins (ZT:16 + COBO:162) + AEKNOX-03 anti-paste in ZT (Wave 4)
+- [x] 44-07-PLAN.md — AEKNOX-07: Reciprocal pins (ZT:16 + COBO:162) + AEKNOX-03 anti-paste in ZT (Wave 4)
 **Context risks to encode:** 5-SKU ambiguity (KME / KPE / Knox Suite / Knox Manage / Knox Configure) — disambiguation as H2 mandatory; DPC-extras-JSON copy-from-ZT anti-pattern (bidirectional "do not paste ZT JSON" callout); bare-`Knox` language discipline (optional harness C7 informational); Samsung B2B 1-2 business day approval Step 0 gate; Knox does NOT support BYOD Work Profile; KME is Samsung-only (no cross-platform analog)
 
 ### Phase 45: Per-OEM AOSP Expansion
@@ -235,7 +235,7 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
 | 41. Android L2 Investigation | v1.4 | 8/8 | Complete | 2026-04-24 |
 | 42. Integration & Milestone Audit | v1.4 | 7/7 | Complete | 2026-04-24 |
 | 43. v1.4 Cleanup & Audit Harness Fix | v1.4.1 | 10/10 | Complete    | 2026-04-24 |
-| 44. Knox Mobile Enrollment | v1.4.1 | 6/7 | In Progress|  |
+| 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete   | 2026-04-25 |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 0/? | Not started | - |
 | 46. COPE Full Admin | v1.4.1 | 0/? | Not started | - |
 | 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
