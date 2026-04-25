@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-23
-review_by: 2026-06-22
+last_verified: 2026-04-25
+review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: AOSP
@@ -20,7 +20,7 @@ applies_to: AOSP
 
 ## Scope and Status
 
-> ⚠️ **Stub in v1.4; full AOSP admin coverage planned for v1.4.1.** See [Deferred Content](#deferred-content) for gaps — per-OEM mechanics, user-associated vs userless, and AOSP L1/L2 runbooks are deferred.
+> **AOSP per-OEM coverage SHIPPED in v1.4.1 (Phase 45).** See [aosp-oem-matrix.md](../reference/aosp-oem-matrix.md) for the cross-OEM capability matrix and per-OEM admin guides 09-13.
 
 RealWear is the confirmed GA case; non-RealWear admins are routed to Android Enterprise fully managed where GMS is available.
 
@@ -44,24 +44,24 @@ Authoritative list: [MS Learn — AOSP Supported Devices](https://learn.microsof
 <a id="realwear-confirmed-ga"></a>
 ### RealWear (confirmed GA)
 
-RealWear HMT-1, HMT-1Z1, and Navigator 500 are confirmed GA for AOSP management in Intune. Per-OEM enrollment mechanics (including Wi-Fi credential embedding in the QR payload) are deferred to Phase 45.
+RealWear HMT-1, HMT-1Z1, and Navigator 500 are confirmed GA for AOSP management in Intune. Per-OEM enrollment mechanics: see [09-aosp-realwear.md](09-aosp-realwear.md) (including the Wi-Fi-credentials-embedded-in-QR REQUIRED walkthrough).
 
-`[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-23]`
+`[HIGH: MS Learn AOSP supported devices, last_verified 2026-04-25]`
 
 <a id="other-aosp-supported-oems"></a>
 ### Other AOSP-Supported OEMs
 
-Other OEMs on Microsoft's list (2026-04-23):
+Other OEMs on Microsoft's list (2026-04-25):
 
-- **DigiLens** (ARGO)
-- **HTC** (Vive Focus 3, Vive XR Elite, Vive Focus Vision)
-- **Lenovo** (ThinkReality VRX)
-- **Meta** (Quest 2/3/3s/Pro — select regions only for 2/3/Pro)
-- **PICO** (4 Enterprise, Neo3 Pro/Eye)
-- **Vuzix** (Blade 2, M400, M4000)
-- **Zebra** (WS50)
+- **DigiLens** (ARGO) — per-OEM coverage deferred to a future milestone.
+- **HTC** (Vive Focus 3, Vive XR Elite, Vive Focus Vision) — per-OEM enrollment mechanics: see [12-aosp-htc-vive-focus.md](12-aosp-htc-vive-focus.md).
+- **Lenovo** (ThinkReality VRX) — per-OEM coverage deferred to a future milestone.
+- **Meta** (Quest 2/3/3s/Pro — select regions only for 2/3/Pro) — per-OEM enrollment mechanics: see [13-aosp-meta-quest.md](13-aosp-meta-quest.md).
+- **PICO** (4 Enterprise, Neo3 Pro/Eye) — per-OEM enrollment mechanics: see [11-aosp-pico.md](11-aosp-pico.md).
+- **Vuzix** (Blade 2, M400, M4000) — per-OEM coverage deferred to a future milestone.
+- **Zebra** (WS50) — per-OEM enrollment mechanics: see [10-aosp-zebra.md](10-aosp-zebra.md).
 
-**Per-OEM mechanics for non-RealWear OEMs deferred to v1.4.1. If GMS is present, use Android Enterprise fully managed — these OEMs are not supported under AOSP when GMS is available.**
+**For the 5 OEMs shipped in v1.4.1 (RealWear, Zebra, PICO, HTC, Meta Quest), follow the per-OEM admin guides linked above. For the remaining OEMs (DigiLens, Lenovo, Vuzix), per-OEM mechanics are deferred to a future milestone. If GMS is present, use Android Enterprise fully managed — these OEMs are not supported under AOSP when GMS is available.**
 
 ## Enrollment Constraints
 
@@ -75,20 +75,7 @@ AOSP enrollment constraints (Android 10+):
 
 Requires: Intune tenant with Android enrollment enabled; hardware on the [MS Learn list](https://learn.microsoft.com/en-us/intune/fundamentals/aosp-supported-devices) at minimum firmware; (for RealWear) Wi-Fi credentials for QR embedding.
 
-**Licensing:** Plan 1 covers baseline enrollment; Plan 2 / Suite may be required for Remote Help and advanced specialty-device management. `[MEDIUM: research inference, last_verified 2026-04-23]`
-
-<a id="deferred-content"></a>
-## Deferred Content
-
-| Topic | Current state in v1.4 | Target | Rationale |
-|---|---|---|---|
-| Per-OEM enrollment steps (non-RealWear) | Stub lists OEMs; defers mechanics | v1.4.1 | Sparse public docs; speculative content would stale fast |
-| AOSP user-associated enrollment | Mentioned as mode class only | v1.4.1 | OEM matrix must firm up first |
-| AOSP userless (shared-device) enrollment | Mentioned as mode class only | v1.4.1 | Per-OEM mechanics gate admin-guide depth |
-| AOSP L1 triage runbook | Not in v1.4 scope | v1.4.1 | Specialty class; volume-low; L2 routing current |
-| AOSP L2 investigation runbook | Not in v1.4 scope | v1.4.1 | Awaits per-OEM failure-mode catalog |
-| AOSP per-OEM behavioral failure catalog | Not written | v1.4.1 | Depends on OEM matrix + field evidence |
-| Intune Plan 2 / Suite per-OEM licensing table | Stub-level statement only | v1.4.1 | Microsoft licensing guidance is evolving |
+**Licensing:** Plan 1 covers baseline enrollment; Plan 2 / Suite may be required for Remote Help and advanced specialty-device management. `[MEDIUM: research inference, last_verified 2026-04-25]`
 
 ## See Also
 
@@ -106,3 +93,4 @@ Requires: Intune tenant with Android enrollment enabled; hardware on the [MS Lea
 |------|--------|--------|
 | 2026-04-23 | Initial stub (Phase 39 scope) — 9-H2 whitelist; RealWear GA spotlight + 7-OEM non-RealWear enumeration; PITFALL-7 "use fully managed instead" framing; Wi-Fi credential embedding requirement; Platform note banner; deferred-content table. Full coverage deferred to v1.4.1 (AEAOSPFULL-04). | -- |
 | 2026-04-24 | v1.4.1 Phase 43 AEAUDIT-04: body trimmed toward ~700-word target; RealWear deep content + per-OEM enrollment mechanics migrated to Phase 45 prep shell; PITFALL-7 "not supported under AOSP" framing preserved; 9-H2 whitelist + 8-OEM enumeration + deferred-content table intact. | -- |
+| 2026-04-25 | Phase 45 AEAOSPFULL-09: Deferred Content table COLLAPSED — per-OEM coverage NOW SHIPPED in 09-13 admin docs + aosp-oem-matrix.md + L1 runbook 29 + L2 runbook 23. PITFALL-7 framing + 9-H2 whitelist + 8-OEM enumeration + Platform note PRESERVED per D-24 LOCKED. | -- |
