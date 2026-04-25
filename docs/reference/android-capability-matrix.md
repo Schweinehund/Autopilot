@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-24
-review_by: 2026-06-23
+last_verified: 2026-04-25
+review_by: 2026-06-24
 applies_to: both
 audience: admin
 platform: Android
@@ -83,7 +83,7 @@ This section maps three Apple↔Android capability pairs called out in ROADMAP S
 | **iOS Supervision (ADE-enrolled)** | **Android Fully Managed (COBO / DPC owner)** |
 | iOS Supervision is a permanent per-device state, set at Apple Automated Device Enrollment (ADE) time, that gates approximately 60 additional restriction settings (home-screen layout, AirDrop / Camera / Safari / screen-recording restrictions, transparent per-app VPN, silent VPP device-licensed install, DDM app install) on top of a normal MDM enrollment. Supervision cannot be added retroactively without a full device erase. See [iOS Capability Matrix — Enrollment](ios-capability-matrix.md#enrollment) for the full supervised-only surface. | Android Fully Managed (COBO) is an ownership-mode designation set at provisioning time — not a per-device state layered onto a pre-existing enrollment. It delivers the closest Android analog to the iOS supervised capability set (device-wide silent install, device-wide restrictions breadth, forced deferral windows for OS updates) but the mapping is partial. "Supervision" is not an Android management term — Android does not use "supervised" or "unsupervised" as device states; the Android equivalents are the four named ownership/management modes (Fully Managed, Work Profile, Dedicated, Zero-Touch). See [Fully Managed](../_glossary-android.md#fully-managed) and [Android Provisioning Lifecycle — For Admins Familiar with iOS](../android-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-ios). |
 | **iOS Automated Device Enrollment (ADE) via Apple Business Manager** | **Google Zero-Touch Enrollment via ZT portal** |
-| Apple ADE is hardware-vendor-chain enrollment via Apple Business Manager (ABM): Apple-authorized resellers upload device serial numbers into the organization's ABM tenant, which binds ADE-purchased iOS / iPadOS / macOS devices to a specific MDM at factory level. First-boot Setup Assistant completes enrollment automatically. Reseller relationship is implicit (Apple-authorized channel); no per-device token management. Devices enroll on first boot via ABM → MDM handoff. | Google Zero-Touch Enrollment binds hardware to the organization via the [Zero-Touch portal](../admin-setup-android/02-zero-touch-portal.md) with an explicit reseller relationship as Step 0 — a distinct tri-portal administrative surface (Intune + Managed Google Play + Zero-Touch portal). Resellers upload IMEI / serial lists to the portal; devices enroll on first boot via portal → Intune handoff into Fully Managed or Dedicated. Samsung hardware: Zero-Touch is mutually exclusive with Knox Mobile Enrollment — see the [KME deferral footer](#deferred-knox-mobile-enrollment-row). |
+| Apple ADE is hardware-vendor-chain enrollment via Apple Business Manager (ABM): Apple-authorized resellers upload device serial numbers into the organization's ABM tenant, which binds ADE-purchased iOS / iPadOS / macOS devices to a specific MDM at factory level. First-boot Setup Assistant completes enrollment automatically. Reseller relationship is implicit (Apple-authorized channel); no per-device token management. Devices enroll on first boot via ABM → MDM handoff. | Google Zero-Touch Enrollment binds hardware to the organization via the [Zero-Touch portal](../admin-setup-android/02-zero-touch-portal.md) with an explicit reseller relationship as Step 0 — a distinct tri-portal administrative surface (Intune + Managed Google Play + Zero-Touch portal). Resellers upload IMEI / serial lists to the portal; devices enroll on first boot via portal → Intune handoff into Fully Managed or Dedicated. Samsung hardware: Zero-Touch is mutually exclusive with Knox Mobile Enrollment — see the [Knox Mobile Enrollment](#knox-mobile-enrollment-row). |
 | **iOS Account-Driven User Enrollment (BYOD iOS 15+)** | **Android Work Profile (BYOD, Company Portal enrollment)** |
 | iOS Account-Driven User Enrollment (iOS 15+) is the privacy-preserving BYOD path for personally-owned devices: a Managed Apple ID creates a cryptographically-isolated APFS volume for corporate apps and data while leaving personal apps, photos, iCloud content, and device identifiers outside IT visibility. IT cannot see personal apps or inspect personal data — this is Apple-enforced. Selective wipe removes only corporate data. | Android Work Profile is the privacy-preserving BYOD path using a work-profile partition — a kernel-level container that isolates work apps, work data, work certificates, and work policies from the personal side of a personally-owned device. Post-AMAPI migration (April 2025), the Microsoft Intune app is the primary DPC (replacing Company Portal); Wi-Fi profiles in the work container require certificate-based authentication. Selective wipe removes only the work container. See [BYOD Work Profile](../admin-setup-android/04-byod-work-profile.md) and [Work Profile](../_glossary-android.md#work-profile). |
 
@@ -110,13 +110,12 @@ The most significant Android capability gaps relative to Windows/macOS/iOS are (
 
 ---
 
-<a id="deferred-knox-mobile-enrollment-row"></a>
-### Deferred: Knox Mobile Enrollment row
+<a id="knox-mobile-enrollment-row"></a>
+### Knox Mobile Enrollment (Samsung)
 
-Knox Mobile Enrollment (KME) is a Samsung-specific zero-touch enrollment path
-mutually exclusive with Google Zero-Touch on Samsung hardware. KME coverage —
-including a provisioning-method row and capability mapping — is deferred to v1.4.1
-per PROJECT.md Key Decisions. See [Knox Mobile Enrollment deferral note](../android-lifecycle/02-provisioning-methods.md#knox-mobile-enrollment).
+Knox Mobile Enrollment (KME) is Samsung's zero-touch-equivalent enrollment channel for Samsung devices. KME provisions Samsung devices into the existing Android Enterprise device-owner modes (COBO / Dedicated / WPCO) via the Knox Admin Portal → Intune handoff using a flat `EXTRA_ENROLLMENT_TOKEN` Custom JSON Data field. KME itself is **free** and does not require a paid Knox license; KPE Premium has been free since Samsung's 2024-03-21 update, and Microsoft Intune Plan 1+ supplies KPE Premium transparently to enrolled Samsung devices. KME is **mutually exclusive with Google Zero-Touch** on the same Samsung device — KME takes precedence at the device firmware level when both are configured.
+
+For full admin coverage, see [Knox Mobile Enrollment Admin Guide](../admin-setup-android/07-knox-mobile-enrollment.md). For L1 enrollment-failure triage, see [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md). For L2 investigation, see [L2 Runbook 22: Android Knox Investigation](../l2-runbooks/22-android-knox-investigation.md). For provisioning-method placement in the lifecycle reference, see [Knox Mobile Enrollment](../android-lifecycle/02-provisioning-methods.md#knox-mobile-enrollment).
 
 <a id="deferred-full-aosp-capability-mapping"></a>
 ### Deferred: Full AOSP capability mapping
