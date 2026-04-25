@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-21
-review_by: 2026-06-20
+last_verified: 2026-04-25
+review_by: 2026-06-24
 applies_to: both
 audience: admin
 platform: Android
@@ -16,7 +16,7 @@ This matrix is organized mode-first — readers locate their target enrollment m
 This is the SINGLE canonical provisioning-method reference for v1.4. Downstream admin guides in [admin-setup-android/](../admin-setup-android/) (Phase 35-39) reference filtered rows from this matrix via anchor links rather than duplicating the grid. If you are authoring a mode-specific admin guide, link to the appropriate row in this file rather than copying the matrix.
 
 <a id="samsung-kme-mutual-exclusion"></a>
-> **Samsung devices:** Knox Mobile Enrollment (KME) is mutually exclusive with Zero-Touch on the same Samsung device. Configure only one. KME is deferred to v1.4.1; see the [KME deferral note](#knox-mobile-enrollment-kme---deferred-to-v141) at the bottom of this page.
+> **Samsung devices:** Knox Mobile Enrollment (KME) is mutually exclusive with Zero-Touch on the same Samsung device. Configure only one. For full KME admin coverage, see [Knox Mobile Enrollment](../admin-setup-android/07-knox-mobile-enrollment.md); for the within-this-doc record, see [Knox Mobile Enrollment](#knox-mobile-enrollment) below.
 
 ## Mode × Method Matrix
 
@@ -26,7 +26,7 @@ This is the SINGLE canonical provisioning-method reference for v1.4. Downstream 
 | <a id="byod-work-profile"></a>BYOD Work Profile | ✗ | ✗ | ✗ | ✗ | Company Portal user-initiated enrollment only; no corporate provisioning methods apply. AMAPI migration April 2025 — Microsoft Intune app is the primary management surface post-migration. See [`../_glossary-android.md#byod`](../_glossary-android.md#byod). |
 | <a id="dedicated-cosu"></a>Dedicated (COSU) | ✓ (Android 8+) | ✓ (Android 9+ built-in reader) | ✓ (all supported Android) | ✓ (Android 8+) | Managed Home Screen exit-PIN must sync between device-restrictions profile and MHS app config — see Phase 38 and [`../_glossary-android.md#managed-home-screen`](../_glossary-android.md#managed-home-screen). |
 | <a id="zero-touch"></a>Zero-Touch Enrollment | — | — | — | ✓ (Android 8+, via portal) | ZT is itself a provisioning method — reseller relationship is Step 0; see Phase 35 `02-zero-touch-portal.md`. |
-| <a id="aosp"></a>AOSP | ✗ | ✓ (Android 10+, one device at a time, Wi-Fi credentials embedded in QR for RealWear-class OEMs) | ✗ | ✗ | OEM firmware-specific; full OEM matrix deferred to v1.4.1 — see Phase 39 AOSP stub. |
+| <a id="aosp"></a>AOSP | ✗ | ✓ (Android 10+, one device at a time, Wi-Fi credentials embedded in QR for RealWear-class OEMs) | ✗ | ✗ | OEM firmware-specific; full per-OEM coverage in Phase 45 — see Phase 39 AOSP stub. |
 
 ## Per-Method Details
 
@@ -47,12 +47,12 @@ The DPC identifier string (`afw#setup`) — literally the text "afw#setup" enter
 
 Zero-Touch provisioning is corporate-scale: Android OEM resellers upload device IMEI and serial lists to the [Zero-Touch portal](https://enterprise.google.com/android/zero-touch/customers), and those devices enroll automatically on first boot. Reseller relationship is Step 0 — the portal requires a reseller identity. Android 8+. Applies to COBO, Dedicated, and Zero-Touch Enrollment (ZTE is a mode that uses Zero-Touch provisioning). See [Android Glossary — Zero-Touch Enrollment](../_glossary-android.md#zero-touch-enrollment). Samsung devices: see the [Samsung KME mutual-exclusion note](#samsung-kme-mutual-exclusion) above.
 
-<a id="knox-mobile-enrollment-kme---deferred-to-v141"></a>
-## Knox Mobile Enrollment (KME) — Deferred to v1.4.1
+<a id="knox-mobile-enrollment"></a>
+## Knox Mobile Enrollment (KME)
 
-Knox Mobile Enrollment is Samsung's Zero-Touch-equivalent for Samsung hardware. A KME row will be added to the matrix above in v1.4.1 per [PROJECT.md Key Decisions](../../.planning/PROJECT.md). For v1.4, treat Samsung devices as Zero-Touch-eligible per the [Samsung KME mutual-exclusion note](#samsung-kme-mutual-exclusion) at the top of this page. Do NOT configure both KME and Zero-Touch on the same Samsung device — KME takes precedence at the device firmware level.
+Knox Mobile Enrollment is Samsung's Zero-Touch-equivalent for Samsung hardware. KME provisions Samsung devices into the existing Android Enterprise device-owner modes (Fully Managed COBO / Dedicated / WPCO) via the Knox Admin Portal → Intune handoff using a flat `EXTRA_ENROLLMENT_TOKEN` Custom JSON Data field. KME itself is free; KPE Premium has been free since Samsung's 2024-03-21 update; Microsoft Intune Plan 1+ supplies KPE Premium transparently. KME is mutually exclusive with Zero-Touch on the same Samsung device — see the [Samsung KME mutual-exclusion note](#samsung-kme-mutual-exclusion) at the top of this page. KME takes precedence at the device firmware level when both are configured.
 
-Full KME admin documentation (binding Knox Admin Portal to Intune, Samsung reseller workflow, KME-specific failure modes) is tracked in the v1.4 deferred-items list and will ship in v1.4.1.
+For full admin coverage, see [Knox Mobile Enrollment Admin Guide](../admin-setup-android/07-knox-mobile-enrollment.md). For L1 enrollment-failure triage, see [L1 Runbook 28: Android Knox Enrollment Failed](../l1-runbooks/28-android-knox-enrollment-failed.md). For L2 investigation, see [L2 Runbook 22: Android Knox Investigation](../l2-runbooks/22-android-knox-investigation.md). For the cross-mode capability matrix, see [Knox Mobile Enrollment (Samsung)](../reference/android-capability-matrix.md#knox-mobile-enrollment-row).
 
 ## See Also
 
