@@ -1184,37 +1184,42 @@ Zebra WS50 OEMConfig delivery requires the Zebra OEMConfig Powered by MX app (An
 
 **If this table contained no entries:** All claims in this research were either HIGH-verified or explicitly cited as MEDIUM/LOW with provenance — no silent assumptions. The 7 entries above represent transparent assumptions with mitigation paths; planner has the option to elevate to confirmation if any matter to phase scope.
 
-## Open Questions
+## Open Questions (RESOLVED via deferral/recommendation)
 
 1. **MS Learn AOSP supported-devices: per-OEM AOSP mode (user-associated vs userless) explicit enumeration**
    - What we know: MS Learn AOSP supported-devices list does NOT enumerate which OEMs support which mode.
    - What we know: MS Learn `setup-aosp-corporate-userless` says "this article describes how to set up Android (AOSP) device management and enroll **RealWear** devices for use at work" — implies RealWear is the canonical userless OEM. `setup-aosp-corporate-user-associated` is more general.
    - What's unclear: Whether Zebra WS50 supports user-associated mode (typically userless wearable scanner), whether Meta Quest in HMS context defaults to user-associated, etc.
    - Recommendation: Document with `[MEDIUM: AR/VR pattern + MS Learn dual-mode AOSP]` markers in `aosp-oem-matrix.md` `## Intune AOSP Mode` H2; flag as Open Question for execute-time verification per D-22 Phase 39 protocol.
+   - **RESOLVED via Plan 06 W-3 fix:** Plan 06 action documents the disposition explicitly — per-OEM Intune AOSP Mode cells use literal `Yes` for both columns (User-Associated / Userless) WITHOUT per-cell MEDIUM markers; section-level confidence pin lives at `## Source Attribution` H2 with `[MEDIUM: AR/VR pattern inference + MS Learn dual-mode AOSP support, last_verified 2026-04-25] — per-OEM verification deferred to v1.5 if mode-specific failure modes emerge in field use`. Cell-level markers add noise; section-level pinning matches sibling matrix convention.
 
 2. **Pico 4 Ultra Enterprise scope**
    - What we know: Community docs (ArborXR setup guide; PICO Business site) treat Pico 4 Ultra Enterprise as supported.
    - What we know: MS Learn AOSP supported-devices list lists ONLY PICO 4 Enterprise and PICO Neo3 Pro/Eye (not Pico 4 Ultra Enterprise).
    - What's unclear: Whether Pico 4 Ultra Enterprise is supported under AOSP via Intune (perhaps under MS Learn list as PICO 4 Enterprise alias?) OR is a different SKU not in scope for v1.4.1.
    - Recommendation: Stick to MS-Learn-listed devices (PICO 4 Enterprise + Neo3 Pro/Eye) in Phase 45; flag Pico 4 Ultra Enterprise for v1.5 backlog as a possible expansion.
+   - **RESOLVED via v1.5 backlog deferral:** Phase 45 ships only MS-Learn-listed Pico devices (PICO 4 Enterprise + Neo3 Pro/Eye). Pico 4 Ultra Enterprise routes to v1.5 backlog per CONTEXT Out of Scope alignment; no Phase 45 admin-doc coverage. If user-tenant requires Pico 4 Ultra Enterprise, escalate to v1.5 expansion rather than retrofit Phase 45.
 
 3. **Zebra WS50 license tier classification (Plan 1 vs Plan 2 / Suite)**
    - What we know: MS Learn specialty-devices-with-intune lists "AR/VR headsets, large smart-screen devices, conference room meeting devices" — wearable scanners not explicitly named.
    - What we know: AR/VR headsets explicitly require Plan 2 / Suite.
    - What's unclear: Whether Zebra WS50 wearable scanner falls under "specialty devices" requiring Plan 2 / Suite, or under general AOSP requiring only Plan 1.
    - Recommendation: Document as `[MEDIUM: MS Learn specialty-devices-with-intune scope ambiguity]`; planner should escalate to user for tenant-specific confirmation if license-tier accuracy is critical.
+   - **RESOLVED via Plan 02 W-1 escalation pathway:** Plan 02 Task 1 action carries an explicit license-tier escalation pathway — "If reviewer flags Zebra WS50 license tier as deployment-blocking ambiguity, escalate to user via STATE.md flag for tenant-specific Plan 1 vs Plan 2 confirmation per RESEARCH.md Open Question §3 recommendation." Plan 02 documents the MEDIUM marker AND the execute-time escalation trigger; ambiguity is captured without blocking ship.
 
 4. **Meta-for-Work account onboarding latency (D-09 trigger)**
    - What we know: D-09 specifies Meta-for-Work approval as `### Step 0 — ...` H3 if there's onboarding latency.
    - What we know: Meta-for-Work account creation flow is at meta.com/meta-for-work/.
    - What's unclear: Actual latency for new Meta-for-Work account approval (e.g., is it instant, hours, or days like Samsung KME B2B 1-2 business days?).
    - Recommendation: Wave 1 Plan 05 task spec includes researcher verification of current Meta-for-Work onboarding latency at execute time; if no latency, document explicitly that Step 0 NOT needed (preserving the optionality).
+   - **RESOLVED via Plan 05 execute-time verification:** Plan 05 Task 1 includes `### Step 0 — Meta for Work account approval (variable latency; verify at vendor onboarding time)` H3 per D-09. Latency is verified at execute time; if onboarding proves instant, Step 0 collapses to a one-line note preserving the H3 anchor for sibling parity. The optionality is preserved by the variable-latency framing in the H3 title itself.
 
 5. **Whether `02-provisioning-methods.md` AOSP row needs additional NFC / afw#setup / Zero-Touch ✗ entries for per-OEM**
    - What we know: AEAOSPFULL-09 SC#5 says "per-OEM firmware rows in version matrix" — implies per-OEM rows.
    - What we know: Current `02-provisioning-methods.md:29` AOSP row is a single row for all OEMs.
    - What's unclear: Whether SC#5 means (a) split AOSP into 5 per-OEM rows, or (b) keep AOSP as single row but add per-OEM firmware-minimum sub-rows or column annotations.
    - Recommendation: Wave 4 Plan 10 task spec for `02-provisioning-methods.md` retrofit chooses (b) — single AOSP row with per-OEM firmware-minimum cell expansion or footnote — to honor append-only contract D-25 and avoid breaking Phase 34 D-26 single-canonical-source matrix discipline. Cross-link to `aosp-oem-matrix.md` for the per-OEM expansion.
+   - **RESOLVED via Plan 10 single-row + footnote choice:** Plan 10 Task 3 Operation 1 keeps `02-provisioning-methods.md:29` as a SINGLE AOSP row; Notes column updated with cross-link to `aosp-oem-matrix.md#hardware-scope` for per-OEM minimum firmware (RealWear / Zebra / Pico / HTC / Meta Quest). Token-ceiling asymmetry surfaces in a NEW additive `## AOSP Token Expiry Asymmetry` H2 (Operation 2) per D-25 append-only contract. The single-row + cross-link choice avoids splitting the AOSP row into 5 per-OEM rows (which would violate Phase 34 D-26 single-canonical-source matrix discipline).
 
 ## Environment Availability
 
