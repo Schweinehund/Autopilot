@@ -159,7 +159,17 @@ Audit: [milestones/v1.4-MILESTONE-AUDIT.md](milestones/v1.4-MILESTONE-AUDIT.md)
   3. Meta Quest guide (`13-aosp-meta-quest.md`) documents 4-portal pattern (Intune + Meta for Work; MGP/ZT N/A) + Meta Horizon Managed Services subscription requirement AND carries an explicit Feb 20, 2026 wind-down re-verification callout with Intune-direct fallback guidance
   4. L1 runbook 29 (`29-android-aosp-enrollment-failed.md`) replaces the ANDE1 escalation stub in `08-android-triage.md` (ANDE1 → ANDR29 resolved node with click-link); L2 runbook 23 (`23-android-aosp-investigation.md`) cross-links to per-OEM admin guides 09-13 and uses Play Integrity only
   5. `06-aosp-stub.md` deferred-content table is collapsed; `android-capability-matrix.md:121-127` deferred-full-aosp-capability-mapping anchor links to `aosp-oem-matrix.md`; `02-provisioning-methods.md` surfaces 90-day AOSP token ceiling + per-OEM firmware rows in version matrix; `l1-runbooks/00-index.md:77` "AOSP L1 planned for v1.4.1" note removed
-**Plans**: TBD
+**Plans**: 10 plans
+- [ ] 45-01-PLAN.md — AEAOSPFULL-01: RealWear AOSP admin guide (09-aosp-realwear.md) — 11-H2 + REQUIRED Wi-Fi QR Embedding Walkthrough add-on H2; PSK-only NOT-EAP staging Wi-Fi (Wave 1)
+- [ ] 45-02-PLAN.md — AEAOSPFULL-02: Zebra AOSP admin guide (10-aosp-zebra.md) — 11-H2 + REQUIRED OEMConfig APK Push add-on H2; two-OEMConfig-app disambiguation; Android-12 NOT-supported (Wave 1)
+- [ ] 45-03-PLAN.md — AEAOSPFULL-03: Pico AOSP admin guide (11-aosp-pico.md) — 11-H2 + OPTIONAL Pico Business Suite Coexistence add-on H2; Enterprise SKU disambiguation (Wave 1)
+- [ ] 45-04-PLAN.md — AEAOSPFULL-04: HTC VIVE Focus AOSP admin guide (12-aosp-htc-vive-focus.md) — 11-H2 NO add-on (simplest of AR/VR OEMs); 3-model firmware matrix (Wave 1)
+- [ ] 45-05-PLAN.md — AEAOSPFULL-05: Meta Quest AOSP admin guide (13-aosp-meta-quest.md) — 11-H2 + TWO REQUIRED add-on H2s (Meta for Work Portal Setup + Meta Horizon Subscription Status); 4-portal pattern; Feb 20 2026 callout; ALIVE-in-transformed-form per RESEARCH.md §2 (Wave 1)
+- [ ] 45-06-PLAN.md — AEAOSPFULL-06: AOSP OEM matrix (aosp-oem-matrix.md) — 4 capability H2 sub-tables; 5 OEM rows; Meta footnote per D-14 (Wave 2)
+- [ ] 45-07-PLAN.md — AEAOSPFULL-09 partial: 06-aosp-stub.md collapse — Deferred Content table REMOVED; D-24 LOCKED preservation contract honored (Wave 2)
+- [ ] 45-08-PLAN.md — AEAOSPFULL-07: L1 runbook 29 (29-android-aosp-enrollment-failed.md) — 5 OEM-scoped Causes A-E + aggregate Escalation Criteria; in-runbook OEM-identification step per D-20 (Wave 3)
+- [ ] 45-09-PLAN.md — AEAOSPFULL-08: L2 runbook 23 (23-android-aosp-investigation.md) — per-OEM Pattern A-E (1:1 routing from L1 Causes); Play Integrity 3-tier; ZERO SafetyNet (Wave 3)
+- [ ] 45-10-PLAN.md — AEAOSPFULL-09 atomic-retrofits: triage tree ANDE1→ANDR29 + capability matrix anchor fill + provisioning methods AOSP token asymmetry + L1 index + glossary OEMConfig + PHASE-45-AOSP-SOURCE.md DELETED (Wave 4 atomic same-commit)
 **Context risks to encode:** **Meta Horizon wind-down Feb 20, 2026 — MEDIUM confidence; mandatory plan-time re-verification gate + Intune-direct fallback copy**; PITFALL-7 preservation rule (explicit carry-forward in phase CONTEXT; proposed C6 regex informational-first); per-OEM Wi-Fi embedding variance (RealWear REQUIRED vs others OPTIONAL — per-OEM matrix row not uniform block); AR/VR specialty Intune Plan 2 / Suite license gate vs Plan 1 for Zebra WS50; "AOSP" semantic drift (Intune enrollment mode vs base OS — glossary disambiguation required); Device Administrator legacy mode anti-pattern on XR devices
 
 ### Phase 46: COPE Full Admin
