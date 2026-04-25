@@ -100,6 +100,18 @@ Android for Work Setup identifier — a literal string entered in place of a Goo
 
 > **Cross-platform note:** No Windows, macOS, or iOS equivalent. This signaling pattern — a special string entered at initial setup to trigger enterprise provisioning — is Android-specific. Do not conflate with QR or NFC provisioning (those are separate methods; see the [Android Provisioning Methods matrix](android-lifecycle/02-provisioning-methods.md)).
 
+### Corporate Identifiers
+
+Corporate Identifiers are pre-loaded IMEI, serial number, or MEID lists uploaded to Intune that tag devices as corporate-owned at enrollment. An uploaded identifier causes a device to enroll into the Fully Managed or Dedicated flow rather than the personal BYOD Work Profile flow. Critical version gate: Android 12 removed IMEI and serial-number access from personally-owned work profile (BYOD) devices, so corporate-identifier tagging effectively works only for corporate-owned enrollment scenarios on Android 12+. See [`docs/android-lifecycle/03-android-version-matrix.md`](android-lifecycle/03-android-version-matrix.md) for the Android 12 breakpoint detail.
+
+> **Cross-platform note:** On iOS/iPadOS, the analog is ABM device assignment by serial number — devices purchased through an Apple-authorized reseller appear in [ABM](_glossary-macos.md#abm) and can be assigned to an MDM server, producing the same "corporate-tagged at enrollment" effect. On Windows, the analog is hardware hash upload for Autopilot, which tags devices as corporate in the Intune Windows Autopilot devices blade. All three achieve the same enrollment-time corporate tagging, but use different identity plumbing (IMEI/serial in Intune for Android, ABM assignment for iOS, hardware hash for Windows). Do not conflate.
+
+### DPC
+
+Device Policy Controller (DPC) is the on-device app responsible for applying Android Enterprise policies. In Intune-managed scenarios, the Microsoft Intune app is the DPC for Fully Managed, Dedicated, WPCO, and post-AMAPI BYOD Work Profile; Company Portal was the legacy DPC for BYOD prior to the April 2025 AMAPI migration. The DPC receives configuration from Intune via Google Play Services on GMS devices, and enforces restrictions, certificate deployment, Wi-Fi profiles, and app assignments locally.
+
+> **Cross-platform note:** On iOS/iPadOS and macOS, the analog is the MDM profile itself — the OS-level MDM framework plays the policy-controller role, and there is no separately-installed on-device management agent. On Windows, the MDM client is built into the operating system; Intune extends it via the Intune Management Extension for Win32 apps and PowerShell scripts, but there is no analog to the "DPC as a distinct on-device app" Android model. Do not conflate the Microsoft Intune DPC app on Android with the separate "Company Portal" app, which is the end-user portal for BYOD enrollment and app discovery.
+
 ### Knox
 
 Samsung Knox is Samsung's mobile-device security platform spanning hardware (Knox eFuse, Knox Vault) and software (Knox Platform for Enterprise, Knox Mobile Enrollment, Knox Suite, Knox Manage, Knox Configure). For Intune-managed Samsung fleets, the relevant Knox SKUs are [KME](#kme) (the Samsung zero-touch-equivalent enrollment path) and [KPE](#kpe) (the Samsung security-extension layer that Intune Plan 1+ supplies transparently). Intune calls [AMAPI](#amapi) for Knox-provisioned device policy. See the [Knox SKU disambiguation table](admin-setup-android/07-knox-mobile-enrollment.md#sku-disambiguation) in the KME admin guide for the 5-SKU breakdown.
@@ -117,18 +129,6 @@ Knox Mobile Enrollment is Samsung's zero-touch-equivalent enrollment channel for
 Knox Platform for Enterprise is Samsung's security-extension layer adding device-policy capabilities beyond stock Android Enterprise (kiosk customization, advanced restriction policies, custom boot animations). KPE has historically been licensed in two tiers: Standard (free baseline) and Premium (per-device upgrade). Samsung made Premium licenses **free** in 2024 (Samsung confirmed 2024-03-21); Microsoft Intune Plan 1+ supplies KPE Premium transparently to enrolled Samsung devices. KPE is NOT required for [KME](#kme); the two are independent SKUs.
 
 > **Cross-platform note:** Samsung-specific security-extension layer. No Apple or Windows analog at the SKU level.
-
-### Corporate Identifiers
-
-Corporate Identifiers are pre-loaded IMEI, serial number, or MEID lists uploaded to Intune that tag devices as corporate-owned at enrollment. An uploaded identifier causes a device to enroll into the Fully Managed or Dedicated flow rather than the personal BYOD Work Profile flow. Critical version gate: Android 12 removed IMEI and serial-number access from personally-owned work profile (BYOD) devices, so corporate-identifier tagging effectively works only for corporate-owned enrollment scenarios on Android 12+. See [`docs/android-lifecycle/03-android-version-matrix.md`](android-lifecycle/03-android-version-matrix.md) for the Android 12 breakpoint detail.
-
-> **Cross-platform note:** On iOS/iPadOS, the analog is ABM device assignment by serial number — devices purchased through an Apple-authorized reseller appear in [ABM](_glossary-macos.md#abm) and can be assigned to an MDM server, producing the same "corporate-tagged at enrollment" effect. On Windows, the analog is hardware hash upload for Autopilot, which tags devices as corporate in the Intune Windows Autopilot devices blade. All three achieve the same enrollment-time corporate tagging, but use different identity plumbing (IMEI/serial in Intune for Android, ABM assignment for iOS, hardware hash for Windows). Do not conflate.
-
-### DPC
-
-Device Policy Controller (DPC) is the on-device app responsible for applying Android Enterprise policies. In Intune-managed scenarios, the Microsoft Intune app is the DPC for Fully Managed, Dedicated, WPCO, and post-AMAPI BYOD Work Profile; Company Portal was the legacy DPC for BYOD prior to the April 2025 AMAPI migration. The DPC receives configuration from Intune via Google Play Services on GMS devices, and enforces restrictions, certificate deployment, Wi-Fi profiles, and app assignments locally.
-
-> **Cross-platform note:** On iOS/iPadOS and macOS, the analog is the MDM profile itself — the OS-level MDM framework plays the policy-controller role, and there is no separately-installed on-device management agent. On Windows, the MDM client is built into the operating system; Intune extends it via the Intune Management Extension for Win32 apps and PowerShell scripts, but there is no analog to the "DPC as a distinct on-device app" Android model. Do not conflate the Microsoft Intune DPC app on Android with the separate "Company Portal" app, which is the end-user portal for BYOD enrollment and app discovery.
 
 <a id="oemconfig"></a>
 ### OEMConfig
