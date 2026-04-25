@@ -1,9 +1,10 @@
 ---
-last_verified: 2026-04-23
-review_by: 2026-06-22
+last_verified: 2026-04-25
+review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: BYOD
+phase_46_wave2_retrofit: 2026-04-25
 ---
 
 > **Platform gate:** This guide covers Android Enterprise BYOD (personally-owned) Work Profile enrollment through Microsoft Intune, including enrollment restrictions, work profile policy, data transfer controls, privacy boundary table, Wi-Fi certificate-based authentication, the management app change (Company Portal → Microsoft Intune app), and the AMAPI migration callout (April 2025).
@@ -164,7 +165,7 @@ The end-user guide [docs/end-user-guides/android-work-profile-setup.md](../end-u
 | Personal call / SMS / browser history | — | Personal call logs, personal SMS messages, personal browser history | Personal profile partition isolation at the OS level. [HIGH: Google Android Enterprise Help, last_verified 2026-04-22] |
 | Device location | Work-profile-scoped location (only when a work app requests location) | Personal-side location (user's 24/7 whereabouts via personal apps) | MDM location commands scoped to enrolled profile only. [HIGH: MS Learn MDM capabilities, last_verified 2026-04-22] |
 
-Android 15 introduced "private space" as a personal-side feature; Intune does not manage private space content or visibility, consistent with personal-side isolation. [HIGH: MS Learn setup-personal-work-profile Limitations, last_verified 2026-04-22]
+Android 15 introduced [Private Space](../_glossary-android.md#private-space) as a personal-side feature on the work-profile partition; Intune cannot manage it. See [version matrix breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-private-space-breakpoint) for the cross-mode behavior.
 
 > **What breaks if privacy boundary is misrepresented:** Admins explain BYOD to users with inaccurate visibility claims → trust collapses when users discover the mismatch at deployment or during an audit. Recovery: correct the user-facing messaging (see [docs/end-user-guides/android-work-profile-setup.md](../end-user-guides/android-work-profile-setup.md)).
 

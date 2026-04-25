@@ -4,6 +4,7 @@ review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: COBO
+phase_46_wave2_retrofit: 2026-04-25
 ---
 
 > **Platform gate:** This guide covers Android Enterprise Fully Managed (COBO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all four provisioning methods (QR code, NFC, `afw#setup`, Zero-Touch), the COPE migration note, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration, and Entra join behavior.
@@ -61,7 +62,7 @@ If you have existing COPE (Corporate-Owned, Personally-Enabled) deployments, rea
 
 **Google recommends WPCO (Work Profile on Corporate-Owned).** WPCO is the forward-looking Google terminology for the work-profile-on-company-owned-device pattern that replaced the original COPE experience beginning on Android 11. COPE remains functionally supported on Android 10+ fleets, and Google has not issued a formal deprecation notice. However, NFC and `afw#setup` lost their COPE path on Android 11+. COBO (Fully Managed) is a distinct enrollment mode and is not affected by the COPE method removals. For method-by-method version support, see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md).
 
-The full COPE admin path (separate from COBO) is deferred to v1.4.1; see `.planning/PROJECT.md` deferred items. For net-new corporate-with-work-profile deployments, provision WPCO; for existing COPE fleets, continue running them until your v1.4.1 migration is in place.
+The full COPE admin path (separate from COBO) is documented in [08-cope-full-admin.md](08-cope-full-admin.md). For net-new corporate-with-work-profile deployments, provision WPCO per [_glossary-android.md#wpco](../_glossary-android.md#wpco); for existing COPE fleets, see [08-cope-full-admin.md](08-cope-full-admin.md) for full-admin coverage including profile creation, token lifecycle, and Android 8-15 version breakpoints.
 
 <!-- MEDIUM confidence: locked phrasing above paraphrases Google's technical direction (Android 11 removal of work-profile-on-fully-managed in favor of work-profile-on-company-owned) per _glossary-android.md and Bayton's Android 11 COPE changes article. No current Google AE Help source uses the verbatim phrase; none contradict. last_verified: 2026-04-21. See [_glossary-android.md#cope](../_glossary-android.md#cope), [_glossary-android.md#wpco](../_glossary-android.md#wpco). -->
 
