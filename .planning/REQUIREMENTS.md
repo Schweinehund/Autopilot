@@ -47,7 +47,7 @@
 
 ### Integration & Re-Audit (AEINTEG-01..04 — Phase 47)
 
-- [ ] **AEINTEG-01**: Atomic unified-rebuilds — capability matrix (merge Knox + AOSP + COPE rows in single wave); `00-overview.md` Mermaid (Knox branch + AOSP leaves); glossary (single-author sequencing to avoid line-15 alphabetical index conflicts); mirrors v1.4 Phase 42 Wave 1/2 atomic rebuild pattern
+- [x] **AEINTEG-01**: Atomic unified-rebuilds — capability matrix (merge Knox + AOSP + COPE rows in single wave); `00-overview.md` Mermaid (Knox branch + AOSP leaves); glossary (single-author sequencing to avoid line-15 alphabetical index conflicts); mirrors v1.4 Phase 42 Wave 1/2 atomic rebuild pattern
 - [ ] **AEINTEG-02**: Audit harness check extensions — C4 regex expanded to include Knox/KME/per-OEM terms; C6 PITFALL-7 preservation check (informational-first grace per D-29); C7 Knox-attribution check (informational-first); C9 COPE banned-phrase check (informational-first via sidecar JSON so list updates atomically)
 - [ ] **AEINTEG-03**: Terminal re-audit via `scripts/validation/v1.4.1-milestone-audit.mjs` — expect C1 SafetyNet PASS + C2 supervision PASS (27 v1.4 pins + new v1.4.1 pins) + C3 AOSP word count PASS (content-migrated) + C4 deferred-file guard PASS + C5 freshness PASS (all files at 60-day baseline); append `re_audit_resolution:` block to `.planning/milestones/v1.4-MILESTONE-AUDIT.md` with commit SHA + timestamp; flip `status: tech_debt → passed`
 - [ ] **AEINTEG-04**: PROJECT.md traceability — move AEAUDIT-02..05 / AEKNOX-01..07 / AEAOSPFULL-01..09 / AECOPE-01..04 from Active → Validated; close DEFER-01..06 in Context notes; update Last Updated footer

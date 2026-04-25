@@ -201,7 +201,12 @@ Plans:
   3. Terminal re-audit via `scripts/validation/v1.4.1-milestone-audit.mjs` exits with C1 SafetyNet PASS + C2 supervision PASS (27 v1.4 pins + new v1.4.1 pins) + C3 AOSP word count PASS (content-migrated) + C4 deferred-file guard PASS + C5 freshness PASS; `re_audit_resolution:` block appended to `.planning/milestones/v1.4-MILESTONE-AUDIT.md` with commit SHA + timestamp; status flipped `tech_debt → passed`
   4. PROJECT.md Validated table contains all AEAUDIT-02..05 / AEKNOX-01..07 / AEAOSPFULL-01..09 / AECOPE-01..04 reqs moved from Active → Validated with phase references; DEFER-01..06 closed in Context notes; Last Updated footer refreshed
   5. Zero remaining "deferred to v1.4.1" language in any `docs/` file (every forward-promise closed via retrofit); link-resolution check passes across `docs/admin-setup-android/**`, L1 runbooks 22-29, L2 runbooks 18-23, `_glossary-android.md`, `reference/android-capability-matrix.md`
-**Plans**: TBD
+**Plans**: 4 plans
+Plans:
+- [x] 47-01-PLAN.md — AEINTEG-01: Atomic re-canonicalization at 3 SC#1 hotspots (glossary line 16 alphabetical index, capability matrix column-order coherence, 00-overview.md Mermaid leaf ordering) + sidecar pin-shift maintenance (Wave 1)
+- [ ] 47-02-PLAN.md — AEINTEG-02: Harness extensions (C4 regex 24-token expansion, C6 targets 1→6 AOSP-scoped files, C7 suffix list 5-SKU calibration, C9 sidecar cope_banned_phrases[] 3→8 patterns); informational-first preserved (Wave 1)
+- [ ] 47-03-PLAN.md — AEINTEG-04: PROJECT.md traceability — 24 v1.4.1 reqs Active→Validated (AEAUDIT-02..05 + AEKNOX-01..07 + AEAOSPFULL-01..09 + AECOPE-01..04); Closed Deferred Items subsection + D-24 footer refresh (Wave 1)
+- [ ] 47-04-PLAN.md — AEINTEG-03: Terminal re-audit from fresh worktree (auditor-independence per Phase 42 D-02); 5 re_audit_resolution sibling keys appended to v1.4-MILESTONE-AUDIT.md (DEFER-01/02/08/09/10 audit-doc canonical); frontmatter status: tech_debt → passed; AEINTEG-01..04 atomic Validated flip (Wave 2)
 **Context risks to encode:** audit harness sidecar-regeneration (line-shifts across 44/45/46 invalidate pin indexes — `regenerate-supervision-pins.mjs` must re-run terminally); informational-first grace period for C6-C10 (D-29 pattern; promoted to blocking in v1.5); parallel-merge conflict hotspots (capability matrix + Mermaid + glossary line 15 alphabetical index) — integration phase owns these as single-plan single-author; terminal re-audit is LAST plan (not interleaved); every new v1.4.1 doc must use Phase 34 template so C5 freshness passes on first terminal run
 
 ## Progress
@@ -254,4 +259,4 @@ Plans:
 | 44. Knox Mobile Enrollment | v1.4.1 | 7/7 | Complete    | 2026-04-25 |
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete   | 2026-04-25 |
 | 46. COPE Full Admin | v1.4.1 | 2/2 | Complete    | 2026-04-25 |
-| 47. Integration & Re-Audit | v1.4.1 | 0/? | Not started | - |
+| 47. Integration & Re-Audit | v1.4.1 | 1/4 | In Progress|  |
