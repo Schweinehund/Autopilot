@@ -147,8 +147,8 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
   - [x] 48-01-PLAN.md — Path A harness copy + v1.5 sidecar inheritance + BASELINE_9 refresh (atomic; closes AUDIT-01 + AUDIT-07)
   - [x] 48-02-PLAN.md — C10 Linux frontmatter check (blocking from start; AUDIT-02)
   - [x] 48-03-PLAN.md — C11/C12/C13 informational scaffolds, COMPACT detail format per D-08 (AUDIT-03/04/05)
-  - [ ] 48-04-PLAN.md — C6 + C7 graduation to blocking; C9 stays informational per D-04/D-05/D-06
-  - [ ] 48-05-PLAN.md — check-phase-48.mjs validator (7 deliverable checks; AUDIT-06)
+  - [x] 48-04-PLAN.md — C6 + C7 graduation to blocking; C9 stays informational per D-04/D-05/D-06
+  - [x] 48-05-PLAN.md — check-phase-48.mjs validator (7 deliverable checks; AUDIT-06)
   - [ ] 48-06-PLAN.md — audit-harness-v1.5-integrity.yml + pre-commit-advisory.sh + README install (AUDIT-06 CI registration; D-21)
   - [ ] 48-07-PLAN.md — .mlc-config.json (markdown-link-check config; PITFALL-14 mitigation)
   - [ ] 48-08-PLAN.md — GFM capital-anchor precheck + inventory scaffold (CLEAN-06; PITFALL-15)
@@ -399,7 +399,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete | 2026-04-25 |
 | 46. COPE Full Admin | v1.4.1 | 2/2 | Complete | 2026-04-25 |
 | 47. Integration & Re-Audit | v1.4.1 | 4/4 | Complete | 2026-04-25 |
-| 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 3/9 | In Progress|  |
+| 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 5/9 | In Progress|  |
 | 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 0/? | Not started | - |
 | 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 0/? | Not started | - |
