@@ -342,10 +342,9 @@ const checks = [
   {
     id: 6,
     name: 'C6: PITFALL-7 preservation in AOSP + per-OEM docs',
-    informational: true,
-    // INFORMATIONAL in Plan 48-01 (Path A copy baseline). Graduates to BLOCKING in Plan 48-04
-    // per Phase 48 D-04: C6 target files frozen; no v1.5 phases touch admin-setup-android/ AOSP files.
+    // D-04 + Phase 48 CONTEXT: BLOCKING in v1.5 (C6 target files frozen; no v1.5 phases touch admin-setup-android/ AOSP files).
     // Target regex: /not supported under AOSP/i. Scope: docs/admin-setup-android/ per-OEM AOSP files.
+    // Pre-graduation regression check (Plan 48-04): confirmed 6/6 AOSP-scoped files pass.
     run() {
       const targets = [
         'docs/admin-setup-android/06-aosp-stub.md',
@@ -362,7 +361,8 @@ const checks = [
         total++;
         if (/not supported under AOSP/i.test(c)) found++;
       }
-      return { pass: true, detail: '(informational - ' + found + '/' + total + ' AOSP-scoped files preserve PITFALL-7 framing)' };
+      if (found === total && total > 0) return { pass: true };
+      return { pass: false, detail: found + '/' + total + ' AOSP-scoped files preserve PITFALL-7 framing' };
     }
   },
   {
