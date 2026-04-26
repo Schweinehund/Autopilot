@@ -37,5 +37,17 @@
     "\\bCOPE\\b[^.]*\\bobsolete\\b",
     "\\bCOPE\\b[^.]*\\bsunset\\b",
     "\\bCOPE\\b[^.]*\\bretired\\b"
+  ],
+  "c7_knox_allowlist": [
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 11, "reason": "v1.5 graduation baseline -- Knox\u2192Intune shorthand (arrow-symbol compound; not a SKU reference)"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 143, "reason": "v1.5 graduation baseline -- 'Knox silently produces' (Knox as platform subject; unambiguous in KME context)"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 143, "reason": "v1.5 graduation baseline -- 'Knox does not recognize' (Knox as platform subject; second bare occurrence same line)"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 145, "reason": "v1.5 graduation baseline -- 'Knox JSON shown above' (short reference to Knox Custom JSON Data; unambiguous in KME context)"},
+    {"file": "docs/admin-setup-android/02-zero-touch-portal.md", "line": 131, "reason": "v1.5 graduation baseline -- 'Samsung Knox docs' (documentation reference; not a SKU)"},
+    {"file": "docs/_glossary-android.md", "line": 115, "reason": "v1.5 graduation baseline -- '### Knox' heading (term being defined in glossary; cannot have SKU suffix)"},
+    {"file": "docs/_glossary-android.md", "line": 117, "reason": "v1.5 graduation baseline -- 'Knox is Samsung\u2019s mobile-device security platform' (definitional sentence; first occurrence)"},
+    {"file": "docs/_glossary-android.md", "line": 117, "reason": "v1.5 graduation baseline -- 'Knox Vault' compound (Knox Vault is a hardware component, not a managed-device SKU; second occurrence same line)"},
+    {"file": "docs/_glossary-android.md", "line": 119, "reason": "v1.5 graduation baseline -- 'Knox security features' (cross-platform note; not a SKU reference)"},
+    {"file": "docs/_glossary-android.md", "line": 187, "reason": "v1.5 graduation baseline -- 'Knox entry' in changelog (refers to glossary entry; not a SKU reference)"}
   ]
 }

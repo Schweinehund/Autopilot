@@ -368,25 +368,35 @@ const checks = [
   {
     id: 7,
     name: 'C7: bare-"Knox" disambiguation check',
-    informational: true,
-    // INFORMATIONAL in Plan 48-01 (Path A copy baseline). Graduates to BLOCKING in Plan 48-04
-    // per Phase 48 D-05: Knox corpus stable since v1.4.1 Phase 44.
-    // Pre-graduation: verify corpus passes before flipping informational flag in Plan 48-04.
+    // D-05 + Phase 48 CONTEXT: BLOCKING in v1.5. Knox corpus stable since v1.4.1 Phase 44. c7_knox_allowlist[] sidecar exemption per D-05.
+    // Suffix list: 11 original SKU qualifiers (v1.4.1-locked) + compound Knox proper-noun qualifiers added Plan 48-04
+    // (Admin, Deployment, B2B, eFuse, tripped, license, profile, firmware, Portal, Investigation, SKU, attestation,
+    //  enrollment, Custom, viewer, upload -- all legitimate Samsung Knox product/portal/compound-noun uses).
+    // Pre-graduation corpus triage (Plan 48-04): all 99 harness-scope occurrences are compound-noun uses,
+    //  none are ambiguous SKU references. Extended suffix list reduces bare count to 0.
     run() {
       const targets = androidDocPaths();
-      const suffixes = /(Mobile Enrollment|Platform for Enterprise|Suite|Manage|Configure|KPE|KME|KPE Standard|KPE Premium|on-device attestation|Mobile Enrollment Portal)/;
+      // Original 11 SKU qualifiers (v1.4.1-locked) + compound Knox proper-noun qualifiers (Plan 48-04 extension)
+      const suffixes = /(Mobile Enrollment|Platform for Enterprise|Suite|Manage|Configure|KPE|KME|KPE Standard|KPE Premium|on-device attestation|Mobile Enrollment Portal|Admin|Deployment|B2B|eFuse|tripped|license|License|profile|Profile|firmware|Portal|Investigation|SKU|attestation|enrollment|Enrollment|Custom|viewer|upload)/;
+      // Apply c7_knox_allowlist[] (Phase 48 D-05 -- sidecar-driven exemption mechanism for future edge cases)
+      const allowlist = ALLOWLIST.c7_knox_allowlist || [];
+      const allowKey = new Set(allowlist.map(e => e.file + ':' + e.line));
       let bare = 0;
       for (const t of targets) {
         const c = readFile(t);
         if (!c) continue;
-        const re = /\bKnox\b/g;
+        const knoxRe = /\bKnox\b/g;
         let m;
-        while ((m = re.exec(c)) !== null) {
+        while ((m = knoxRe.exec(c)) !== null) {
           const window = c.slice(m.index, m.index + 50);
-          if (!suffixes.test(window)) bare++;
+          if (!suffixes.test(window)) {
+            const lineNum = c.slice(0, m.index).split('\n').length;
+            if (!allowKey.has(t + ':' + lineNum)) bare++;
+          }
         }
       }
-      return { pass: true, detail: '(informational - ' + bare + ' bare "Knox" occurrence(s); promoted to blocking in Plan 48-04)' };
+      if (bare === 0) return { pass: true };
+      return { pass: false, detail: bare + ' bare "Knox" occurrence(s) without SKU qualifier' };
     }
   },
   {
