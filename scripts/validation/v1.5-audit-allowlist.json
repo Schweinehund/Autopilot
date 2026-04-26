@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "generated": "2026-04-26T00:00:00Z",
+  "phase": "48-audit-harness-bootstrap-broken-link-sweep-first-pass",
+  "safetynet_exemptions": [
+    {"file": "docs/_glossary-android.md", "line": 176, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 190, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 102, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 104, "reason": "v1.5 inherit baseline 2026-04-26"}
+  ],
+  "supervision_exemptions": [
+    {"file": "docs/_glossary-android.md", "line": 76, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 78, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 172, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 188, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 51, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 53, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 83, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/admin-setup-android/03-fully-managed-cobo.md", "line": 36, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/l2-runbooks/20-android-app-install-investigation.md", "line": 21, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 16, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 46, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 66, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 78, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 80, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 81, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 83, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 87, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 88, "reason": "v1.5 inherit baseline 2026-04-26"}
+  ],
+  "cope_banned_phrases": [
+    "\\bCOPE\\b[^.]*\\bdeprecated\\b",
+    "\\bCOPE\\b[^.]*\\bend of life\\b",
+    "\\bCOPE\\b[^.]*\\bremoved\\b",
+    "\\bCOPE\\b[^.]*\\bEOL\\b",
+    "\\bCOPE\\b[^.]*\\bno longer supported\\b",
+    "\\bCOPE\\b[^.]*\\bobsolete\\b",
+    "\\bCOPE\\b[^.]*\\bsunset\\b",
+    "\\bCOPE\\b[^.]*\\bretired\\b"
+  ]
+}
