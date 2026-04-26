@@ -52,9 +52,8 @@ created: 2026-04-26
 | 48-06-02 | 06 | 1 | — (D-21 pre-commit advisory) | — | N/A | file-exists | `test -f scripts/validation/pre-commit-advisory.sh` | ❌ W0 | ⬜ pending |
 | 48-07-01 | 07 | 2 | AUDIT-05/CLEAN-07 | — | N/A | file-exists | `test -f .mlc-config.json && jq . .mlc-config.json` | ❌ W0 | ⬜ pending |
 | 48-08-01 | 08 | 2 | CLEAN-06 | — | N/A | command-output | `grep -rn "#[A-Z]" docs/ \| wc -l` (capture count to inventory) | ✅ grep available | ⬜ pending |
-| 48-09-01 | 09 | 2 | CLEAN-06 + CLEAN-07 | — | N/A | command-output | `npx markdown-link-check@3.14.2 --config .mlc-config.json docs/**/*.md` (capture findings) | ❌ W0 (needs config) | ⬜ pending |
-| 48-10-01 | 10 | 2 | AUDIT-08 | — | N/A | file-content | `grep -E "## Category [ABC]" .planning/phases/48-*/48-VERIFICATION-broken-links.md` | ❌ W0 | ⬜ pending |
-| 48-11-01 | 11 | 2 | (terminal sanity) | — | N/A | integration | `node scripts/validation/v1.5-milestone-audit.mjs --verbose && echo OK` | ❌ W0 | ⬜ pending |
+| 48-09-01 | 09 | 2 | AUDIT-08 + CLEAN-06 + CLEAN-07 | — | N/A | command-output + file-content | `npx markdown-link-check@3.14.2 --config .mlc-config.json docs/**/*.md` (sweep + categorize + write inventory) → `grep -E "## Category [ABC]" .planning/phases/48-*/48-VERIFICATION-broken-links.md` | ❌ W0 | ⬜ pending |
+| 48-09-02 | 09 | 2 | (terminal sanity) + D-09 SC#1/SC#3/SC#5 fix | — | N/A | integration | `node scripts/validation/v1.5-milestone-audit.mjs --verbose && node scripts/validation/regenerate-supervision-pins.mjs --self-test && node scripts/validation/check-phase-48.mjs && grep -E "C1-C7" .planning/ROADMAP.md` | ❌ W0 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 

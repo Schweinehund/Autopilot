@@ -867,17 +867,17 @@ No new top-level arrays added at Phase 48 (YAGNI per D-15).
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **C7 allowlist scope**
+1. **C7 allowlist scope** — RESOLVED
    - What we know: 99 bare "Knox" occurrences in current corpus; suffix list at v1.4.1 line 318 covers `(Mobile Enrollment|Platform for Enterprise|Suite|Manage|Configure|KPE|KME|KPE Standard|KPE Premium|on-device attestation|Mobile Enrollment Portal)`
    - What's unclear: How many of the 99 are legitimately bare (e.g., `Knox` as a heading word, or in a product comparison context not covered by suffix list)
-   - Recommendation: Executor runs `grep -rn "\bKnox\b" docs/admin-setup-android/ docs/android-lifecycle/` and manually reviews results before committing C7 as blocking. If count > 0 bare occurrences that are legitimate, add `c7_knox_allowlist[]` to sidecar per D-05 deferred.
+   - **Resolution:** Plan 48-04 Task 2 (graduation procedure) performs the grep triage at execution time. Procedure: run `grep -rn '\bKnox\b' docs/ | grep -vE '(Mobile Enrollment|Platform for Enterprise|Suite|Manage|Configure|KPE|KME|on-device attestation|Mobile Enrollment Portal)' | wc -l` to count truly-bare occurrences (no qualifying suffix within 50 chars). If count > 0, add `c7_knox_allowlist[]` array to `v1.5-audit-allowlist.json` with `{file, line, reason}` pins for each legitimately-bare occurrence (e.g., glossary cross-platform see-also entries) before flipping C7 to blocking. Sidecar-driven allowlist mechanism per Phase 43 D-26 contract.
 
-2. **ROADMAP.md SC#1 contradiction wording fix**
+2. **ROADMAP.md SC#1 contradiction wording fix** — RESOLVED
    - What we know: SC#1 says "C1-C9 blocking PASS and C10-C13 informational" but C10 ships blocking (AUDIT-02 authoritative per D-09)
    - What's unclear: Whether the fix is a one-line SC#1 edit or a VERIFICATION.md note
-   - Recommendation: Edit ROADMAP.md SC#1 to read "C1-C10 blocking PASS and C11-C13 informational" in same commit as terminal sanity step (D-23 step 11). Document in 48-VERIFICATION.md. Low risk; either approach is acceptable per D-09 Claude's Discretion.
+   - **Resolution:** Plan 48-09 Task 2 will edit `ROADMAP.md` SC#1 directly per Option A (preferred per D-09 Claude's Discretion). Wording change: `"C1-C9 blocking PASS and C10-C13 informational"` → `"C1-C7 + C10 blocking PASS; C8 unused; C9 + C11/C12/C13 informational"`. Same task expanded to also fix SC#3 (lazy-allowlist + Phase 60 promotion schedule) and SC#5 (new CI workflow filename `.github/workflows/audit-harness-v1.5-integrity.yml`) per the same revision pass.
 
 ---
 
