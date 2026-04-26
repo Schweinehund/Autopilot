@@ -1,314 +1,340 @@
-# Feature Research: v1.4.1 Android Enterprise Completion
+# Feature Research — v1.5 Feature Landscape
 
-**Domain:** Three sub-features closing v1.4 deferred Android coverage — Samsung Knox Mobile Enrollment (KME), full AOSP per-OEM expansion (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest), and COPE full admin path (vs. deprecation-rationale disposition).
-**Researched:** 2026-04-24
-**Milestone:** v1.4.1 (subsequent milestone after v1.4 shipped same day)
-**Confidence:** HIGH — Microsoft Learn + Samsung Knox docs + OEM vendor docs (RealWear, Meta, PICO, Zebra) cross-validated; COPE terminology re-verified against current MS Learn admin center UI labels.
-
----
-
-## Executive Summary
-
-This research closes three distinct v1.4 deferred items. Each is a separate admin-guide surface with different complexity profiles, different portal dependencies, and different downstream links into existing v1.4 docs. Research conclusions in one paragraph each:
-
-**Knox Mobile Enrollment (DEFER-04):** KME is a Samsung-specific bulk enrollment pathway that overlays the existing tri-portal pattern. The **KME portal (Knox Admin Portal) is a fourth portal**, not a replacement for any of the three. The admin workflow is a 7-step dance requiring Samsung B2B account provisioning (1-2 business day approval wait), trusted-reseller upload handshake, EMM profile creation with mandatory Intune enrollment-token JSON, device upload approval, profile-to-device assignment, and first-boot verification. **KME itself requires no paid license**; the optional "Advanced" settings (app-install-during-enrollment, device-lock-during-enrollment) gate behind Knox Suite Enterprise Plan. Admin expectations converge on: (a) bulk via reseller handoff similar to ZT, (b) device-list-tied-to-Knox-Customer-ID ownership model, (c) automatic approval rules for trusted resellers once the relationship is established. The reciprocal **KME↔Zero-Touch mutual exclusion** (Samsung-only) is already pinned in Phase 35 ZT portal doc and Phase 36 COBO doc; the v1.4.1 KME guide must add the forward link and repeat the "KME wins when both configured" behavior documented by Google.
-
-**Full AOSP per-OEM expansion (DEFER-05):** The Phase 39 stub's assumption of uniformity across OEMs is **partially wrong**. All 5 v1.4.1 target OEMs share the QR-only + one-device-at-a-time + Wi-Fi-credential-embedding + 90-day-token constraint envelope, BUT they differ materially on: (1) enrollment mode split — RealWear, Zebra, and PICO support both userless and user-associated; HTC VIVE Focus is userless-primary; Meta Quest ships through a **third-party MDM integration layer** (Meta Horizon Device Manager) that is itself scheduled for wind-down **February 20, 2026**; (2) device-restriction surface — Zebra WS50 is the **only wearable scanner** on the list, brings OEMConfig through a separate MX extension path, and is functionally a rugged enterprise device with kiosk-first expectations; the AR/VR headsets share hardware-button / passthrough / hand-tracking policy concerns that don't apply to Zebra; (3) licensing gate — per Microsoft Community Hub explicit language, **AR/VR specialty devices require Intune Suite or Intune Plan 2** (not Plan 1) for generally-available use; this is a binding difference from the v1.4 stub's "Plan 1 sufficient for AOSP baseline" language. The Meta Horizon wind-down is the biggest current-state gotcha — v1.4.1 should frame Meta Quest as "supported but under vendor-side transition through Feb 2026; verify alternative enrollment path at execute time."
-
-**COPE full admin path (DEFER-06):** The decision was live-research-gated; the verdict is **ship a full admin guide**. Microsoft Intune exposes COPE as a **first-class GA enrollment profile** under the label **"Corporate-owned devices with work profile"** in the admin center (Devices → Enrollment → Android → Android Enterprise → Enrollment Profiles). The MS Learn authoring page (`setup-corporate-work-profile`, updated 2026-04-16, `ms.date` 2025-05-08) documents this as an active, supported, GA enrollment mode — not deprecated, not preview, not legacy. Token types "Corporate-owned with work profile (default)" and "Corporate-owned with work profile, via staging" are present. Google's "recommends WPCO" language describes a **Google-side architectural evolution** (Android 11 rewrote the implementation from work-profile-on-fully-managed to work-profile-on-company-owned), but Intune's admin-facing enrollment mode **IS** the WPCO implementation under the COPE label. Conclusion for v1.4.1: ship Phase 4X COPE admin guide that acknowledges the terminology drift, maps "Intune COPE profile = Google WPCO implementation on Android 11+ / legacy COPE implementation on Android 8-10", and uses the Phase 36 COBO doc's existing COPE migration note as the reciprocal anchor.
+**Domain:** Microsoft Intune provisioning documentation suite (5th platform + operational depth)
+**Researched:** 2026-04-26
+**Confidence:** HIGH (Linux Intune capabilities verified against Microsoft Learn updated 2026-04-16; co-management workloads verified against Microsoft Learn updated 2026-04-15; iOS DDM migration verified against 4sysops + Microsoft Learn August 2025 + March 2026 updates)
 
 ---
 
-## Category 1: Samsung Knox Mobile Enrollment (KME)
+## Context: v1.5 Three-Pillar Structure
+
+This research covers three distinct pillars, each with its own feature set:
+
+- **Pillar 1 — Cleanup & cross-platform hardening:** DEFER-07 Android nav unification + DEFER-08 4-platform comparison + broken-link sweep
+- **Pillar 2 — Linux via Intune (Ubuntu LTS):** 5th platform enrollment, compliance, CA, app delivery, L1/L2
+- **Pillar 3 — Operational depth (4 existing platforms):** Co-management, patch/update management, app lifecycle automation, drift detection + tenant migration
+
+---
+
+## Pillar 1 — Cleanup & Cross-Platform Hardening
 
 ### Table Stakes
 
-Features admins expect from a Samsung enterprise enrollment tool. Missing any of these = product feels incomplete.
+Features that are broken or absent in existing v1.0–v1.4.1 docs. Missing these = documentation fails users trying to find Android content.
 
-| Feature | Why Expected | Complexity | Baseline |
-|---------|--------------|------------|----------|
-| **Bulk device upload via Samsung-approved reseller** | Samsung enterprise-channel convention — matches ZT parity | Medium (Knox Reseller Portal + Customer/Reseller ID exchange) | MS Learn: "Samsung-approved resellers: A Samsung-approved reseller can automatically upload your organization's purchased devices in the Knox Admin Portal" |
-| **Knox Deployment App (KDA) bulk upload for existing stock** | Differentiator vs. Google ZT — KME can onboard pre-owned/used stock | Medium (Bluetooth/NFC scan app + manual device addition) | MS Learn: "Knox Deployment App: You don't need to work with a reseller to upload devices... recommend using the app for enrolling existing devices that were previously set up in Knox Mobile Enrollment. You can use Bluetooth or NFC to add devices to the Knox Admin Portal." |
-| **EMM profile creation with Intune selection from dropdown** | Intune is a first-party recognized EMM in Knox — auto-populates EMM agent APK | Low (Knox Admin Portal → Profiles → Create → EMM dropdown → Microsoft Intune) | MS Learn + Samsung docs: "EMM agent APK field will be auto-populated when you select a supported EMM from the drop-down menu" |
-| **Intune enrollment token embedded in Knox profile Custom JSON** | Required load-bearing handshake; Samsung doesn't know Intune's enrollment token semantics | Medium (JSON schema: `{"com.google.android.apps.work.clouddpc.EXTRA_ENROLLMENT_TOKEN": "<token>"}`) | MS Learn: "Custom JSON data appears optional in the Knox Admin Portal, but Microsoft Intune requires it for a successful enrollment" |
-| **First-boot auto-enrollment (no admin touch)** | KME's entire value proposition — device turns on, enrolls, done | Low (built into Samsung OOBE on Knox-capable Samsung models) | MS Learn: "all that the device user needs to do is simply turn on the device, follow a series of enrollment screens, and sign in with their EMM credentials" |
-| **Profile auto-assignment rules per trusted reseller** | Prevents admin-approval bottleneck at scale | Medium (reseller-preference configuration UI in Knox Admin Portal) | Samsung docs: "configure the reseller preferences on the console to automatically assign a profile to devices uploaded by a trusted reseller" |
-| **Company-name + system-apps + optional QR code profile settings** | Standard enterprise UX expectations | Low (checkboxes + text inputs at profile-create time) | MS Learn profile-settings enumeration |
-| **Device export / profile revocation / token replace lifecycle** | Samsung fleets rotate; tokens must be re-issuable without breaking existing enrollees | Low (Knox Admin Portal UI actions) | MS Learn: matches the Intune-side `Revoke token` / `Export token` / `Replace token` semantics from Phase 36 COBO doc |
+| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
+|---------|--------------|------------|----------|------------|-------|
+| DEFER-07: Android sections in `docs/index.md` | Android has only a stub H2 (Phase 42); Windows/macOS/iOS have full L1/L2/Admin subsections. Users landing on index.md cannot navigate Android resources | MEDIUM | All | v1.4.1 Android content complete | Must match structural depth of iOS section: L1 (triage tree + runbook index links), L2 (log collection guide + L2 runbook index links), Admin Setup (overview + per-guide links). 6–8 table rows per subsection per existing iOS pattern |
+| DEFER-07: Android sections in `common-issues.md` | common-issues.md currently has Windows/macOS/iOS platform H2s but no Android H2. Platform selector bullet exists (Phase 42) but leads nowhere | MEDIUM | L1, L2 | v1.4.1 Android L1/L2 runbooks | Pattern: H2 per platform, symptom-H3 rows each with L1 and L2 runbook links. Android needs: enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed, Knox enrollment failed, AOSP enrollment failed (8 symptom categories matching L1 runbooks 22–29) |
+| DEFER-07: Android section in `quick-ref-l1.md` | Windows/macOS/iOS each have a dedicated quick-ref section. Android L1 responders have no equivalent | MEDIUM | L1 | v1.4.1 Android L1 triage + runbooks | Pattern: Top Checks (3–4), Escalation Triggers (4–5), Decision Tree link, Runbooks list. Android top check is mode-identification first (COBO/BYOD/Dedicated/ZTE/AOSP) per existing mode-first triage tree |
+| DEFER-07: Android section in `quick-ref-l2.md` | Windows/macOS/iOS each have an L2 quick-ref section with log paths, commands, diagnostic methods | MEDIUM | L2 | v1.4.1 Android L2 runbooks | Pattern: Log collection methods (3-method Android section), Key Intune Portal Paths table, Play Integrity verdict reference, Investigation Runbooks list. Android has no CLI diagnostic tool equivalent to mdmdiagnosticstool or `profiles` |
+| DEFER-08: 4-platform capability comparison document | Per-platform matrices exist (Windows/macOS/iOS/Android each have a capability matrix) but no cross-platform side-by-side reference. Admins managing mixed fleets must open 4 separate files | HIGH | Admin | All 4 existing capability matrices | Structural reference doc, NOT a duplicate of per-platform matrices. Axes: enrollment mechanism, identity (Entra join type), app delivery (format + store), compliance (settings depth), conditional access (native vs web-app only), monitoring/reporting, patching/update management. Cross-link reciprocity to per-platform matrices |
+| Cross-platform broken-link sweep — intra-doc anchors | 179 markdown files accumulated across 5 milestones. Phase-based authoring creates anchor drift when headings change in later phases. iOS Phase 33 gap closure already found I-1 anchor fix and I-2 placeholder retrofit (71 rows) | HIGH | — | All 179 existing files | Categories: `[text](#anchor)` same-file anchors (most common drift site), `[text](relative-path#anchor)` cross-file anchors, glossary `see-also` cross-refs. Priority: cross-file anchors with `#anchor` fragments first (hardest to detect) → same-file anchors → text-only links |
+| Cross-platform broken-link sweep — inter-doc relative paths | Relative path references like `[guide](../admin-setup-android/08-cope-full-admin.md)` can drift when files are renamed | MEDIUM | — | All 179 existing files | New file names added in v1.4.1 (COPE, Knox, per-OEM AOSP) may not have reciprocal links from older files. iOS retroactive placeholder retrofit pattern (Phase 33) is the precedent |
+| Glossary cross-ref normalization | `_glossary-macos.md` has iOS see-also. `_glossary-android.md` has macOS see-also (Phase 46). Windows glossary has no cross-refs. v1.5 adds Linux — needs `_glossary-linux.md` with see-also pattern | LOW | — | v1.2 cross-platform glossary pattern | Each glossary file should have see-also entries pointing to equivalent terms in sibling glossaries |
 
 ### Differentiators
 
-Features that set KME apart from Google Zero-Touch. Not universally expected, but distinctly Samsung.
+| Feature | Value Proposition | Complexity | Audience | Notes |
+|---------|-------------------|------------|----------|-------|
+| DEFER-08: Cross-Platform Equivalences structure in comparison doc | The v1.4 pattern of pairing equivalent mechanisms cross-platform (iOS Supervision ↔ Android Fully Managed, Apple ADE ↔ Google Zero-Touch) can be elevated to a single cross-platform comparison table. Admins managing mixed fleets can reason about parity gaps at a glance | HIGH | Admin | Must avoid duplicating per-platform matrices. Pattern: structural reference with cells that say "Windows: ring-based WUfB / macOS: DDM enforcement / iOS: DDM supervised / Android: Play-delivery + OEM-specific" — one row per domain |
+| Cross-platform broken-link sweep — automated harness check | Manual sweep is possible but a `check-broken-links.mjs` validator as a v1.5 harness check (C-new) would catch future drift mechanically | MEDIUM | — | v1.4.1 harness lineage pattern (informational-first for new checks) | Depends on whether harness phase is scoped to add a new C-check for link integrity; see PITFALLS.md |
 
-| Feature | Value Proposition | Complexity | Baseline |
-|---------|-------------------|------------|----------|
-| **No reseller relationship required (via Knox Deployment App)** | Existing Samsung stock / used devices / non-reseller-purchased stock can still enroll — Google ZT cannot do this | Medium | MS Learn + Samsung docs; contrasts directly with Phase 35 ZT portal "Step 0 reseller gate" |
-| **Tier-gated "Advanced settings" (Knox Suite Enterprise)** | App-install-during-enrollment and device-lock-during-enrollment happen BEFORE EMM takes over — shortens user-in-hand time | High (license purchase + Enterprise Plan trial caveat) | Samsung docs: "a license isn't required to use Knox Mobile Enrollment... if you want to use Advanced settings, you'll need a valid Knox Suite - Enterprise Plan license" |
-| **Supports Android Enterprise dedicated / fully managed / WPCO** | Single Knox profile can target multiple Android Enterprise modes (unlike Google ZT Method A iframe which defaults to Fully Managed) | High (profile-per-mode authoring) | MS Learn: "Enrollment is supported for the following Android Enterprise device types: Dedicated devices / Fully managed devices / Corporate-owned devices with a work profile" — **note this directly validates COPE path viability** |
-| **Enrollment via QR on any Android 10+ device (Samsung or other, if uploaded)** | Knox profile can QR-enroll even non-reseller-uploaded devices | Low | Samsung docs: "Knox Mobile Enrollment allows you to enroll both reseller-uploaded and non-reseller uploaded devices running Android 10 or higher into an EMM using a QR code" |
-| **Samsung B2B account → Knox approval workflow** | 1-2 business day Samsung-side approval is a known front-loading cost with no Google-ZT equivalent | High (pre-purchase calendar pressure) | Samsung docs explicit 1-2 business day approval window |
+### Anti-Features (Out of Scope)
 
-### Anti-Features
-
-Features v1.4.1 KME guide should explicitly NOT document (and instead flag as "not KME's job" or "covered elsewhere").
-
-| Anti-Feature | Why Avoid | What to Do Instead |
-|--------------|-----------|---------------------|
-| **Documenting full Knox portal non-enrollment features (Knox Configure, Knox E-FOTA, Knox Manage)** | Knox is a product suite; KME is one component. Documenting Knox Configure / E-FOTA / Knox Manage is scope-creep — and v1.4 PROJECT.md Out of Scope explicitly excludes Samsung E-FOTA | Tight scope — KME admin flow only. Link to Samsung docs for the broader Knox suite. |
-| **Re-documenting tri-portal setup (Intune + MGP + ZT)** | Phase 35 already owns MGP and ZT portal setup. KME guide is a fourth-portal overlay — must reference, not duplicate | Reference Phase 35 `01-managed-google-play.md` (MGP prerequisite — Knox enrolls into Intune-managed Android Enterprise modes which still require MGP for app distribution) and Phase 35 `02-zero-touch-portal.md#kme-zt-mutual-exclusion` (mutual-exclusion reciprocal pin) |
-| **Cross-platform analog claims** | There is no KME equivalent on iOS/macOS/Windows. Apple's ABM ADE and Windows Autopilot are the "reseller-uploads-serials" pattern but are NOT Samsung-specific | Note that KME is a Samsung-hardware-only pathway; the cross-platform reseller-registration pattern documented in the capability matrix is Google ZT ↔ Apple ADE ↔ Windows Autopilot. KME is a Samsung-fleet-specific addition. |
-| **Reseller-side mechanics** | Per Phase 35's established pattern, reseller-side steps are not documented; only admin-handoff and confirmation points are | Same pattern — document only what Intune admin hands off to Samsung reseller (Knox Customer ID) and confirms (upload completion, device visibility). Link to Samsung reseller docs. |
-| **Legacy Samsung Knox Workspace (container) content** | Orthogonal — container-based Knox Workspace is separate from KME enrollment | Explicit OOS note; link to Android Enterprise BYOD work profile guide for personal/work separation on Samsung |
-
-### Complexity Profile
-
-**Admin complexity rating:** HIGH — 7-step dance with cross-organizational dependencies.
-
-1. **Samsung B2B account creation** (1-2 business day wait for Samsung approval)
-2. **Knox Admin Portal onboarding** (Knox Customer ID issued; trusted-reseller relationship configured by exchanging Knox Customer ID with Reseller ID)
-3. **Reseller device upload approval** (email notification + manual approve, OR auto-approve via reseller preference)
-4. **EMM enrollment profile creation in Knox Admin Portal** (select Intune as EMM, paste Intune enrollment token in Custom JSON)
-5. **Profile-to-device assignment** (manual per-device, bulk, or auto-assign via reseller preference)
-6. **First-boot verification** (one test device to confirm JSON + token + EMM handshake)
-7. **Post-enrollment configuration** (Intune-side policies — not KME's job, but admins conflate)
-
-**Dependency on existing v1.4 docs:**
-
-- **Phase 35 ZT portal (`02-zero-touch-portal.md`)** — reciprocal mutual-exclusion callout; KME guide must forward-link `#kme-zt-mutual-exclusion` and restate the "KME wins when both configured" behavior.
-- **Phase 35 MGP (`01-managed-google-play.md`)** — prerequisite for Intune-side app distribution on Knox-enrolled devices that are Android Enterprise; KME guide must reference, NOT duplicate.
-- **Phase 36 COBO (`03-fully-managed-cobo.md`)** — existing Samsung-admins callout already points to v1.4.1 KME; KME guide must close that forward promise.
-- **Phase 40 L1 triage** — must add KME-specific failure modes (Samsung approval lapsed, Knox profile Custom JSON malformed, EMM agent APK mismatch). Likely a new L1 runbook.
-- **Android capability matrix `reference/android-capability-matrix.md`** — already has a `deferred-knox-mobile-enrollment-row` anchor; v1.4.1 must add the real row.
+| Feature | Why Requested | Why Out of Scope | Alternative |
+|---------|---------------|-----------------|-------------|
+| External Microsoft Learn URL validation | Teams may want to flag stale MS Learn links | Microsoft Learn URLs restructure without notice (observed in Phase 32: Intune admin center "Device onboarding" reorg). Automating external URL checks creates false positives and fragile CI | Spot-check high-traffic external links manually with `last_verified` dates on affected files; flag in human review |
+| Retroactive freshness normalization for all 179 files | v1.4.1 already normalized L2 runbooks 18-21 and Android admin template; remaining files are iOS/macOS/Windows | Per STATE.md note: iOS/macOS/Windows admin templates were intentionally NOT normalized in v1.4.1 (Android-scope lock per Plan 43-05 D-25). Doing all 179 files risks scope explosion | Sweep only files that failed the 60-day check as part of the broken-link sweep; do not normalize files that are still within window |
 
 ---
 
-## Category 2: Full AOSP Per-OEM Expansion
+## Pillar 2 — Linux via Intune (Ubuntu LTS)
 
-### Per-OEM Capability Matrix (5 vendors × 7 dimensions)
+### Background: What Linux Intune Actually Is (HIGH confidence, verified against Microsoft Learn 2026-03-31 + 2026-04-16)
 
-| Dimension | RealWear (HMT-1 / HMT-1Z1 / Navigator 500) | Zebra (WS50) | PICO (Neo3 Pro/Eye, 4 Enterprise) | HTC (Vive Focus 3, Vive XR Elite, Vive Focus Vision) | Meta (Quest 2/3/3S/Pro) |
-|-----------|---------------------------------------------|--------------|-----------------------------------|------------------------------------------------------|-------------------------|
-| **Device class** | AR/VR headset (hands-free frontline) | Wearable barcode scanner (rugged) | AR/VR headset (XR enterprise) | AR/VR headset (XR enterprise) | AR/VR headset (consumer-origin enterprise) |
-| **Minimum firmware** | HMT-1/HMT-1Z1 11.2; Navigator 500 1.1 | WS50: `11-49-15.00` | Neo3 Pro/Eye: PUI 4.8.19; 4 Enterprise: PUI 5.6.0 | Vive Focus 3: 5.2-5.0.999.624; XR Elite: 4.0-1.0.999.350; Focus Vision: 7.0.999.159 | Quest 2: v49; Quest 3: v59; Quest 3s: v71; Quest Pro: v49 |
-| **Enrollment flavor** | Userless + User-associated (both documented) | Userless (dedicated kiosk typical) + User-associated | Userless + User-associated | Userless-primary (enrollment token + QR) | Userless via AOSP profile, with Meta Horizon Device Manager layer |
-| **QR payload Wi-Fi embedding** | **REQUIRED** — no device-side Wi-Fi UI during enrollment | Required (staging Wi-Fi in QR) | Required (staging Wi-Fi in QR) | Required (staging Wi-Fi in QR) | Required (staging Wi-Fi in QR) |
-| **One-device-at-a-time** | Yes (QR-only, no bulk) | Yes | Yes | Yes | Yes |
-| **Regional availability caveats** | Global | Global | Global | Global | **Quest 2 / 3 / Pro: select regions only** per MS Learn table (Quest 3s: global) |
-| **Intune licensing gate** | **Intune Suite OR Plan 2** for specialty/AR-VR devices | Plan 1 MAY suffice for scanner class; verify against specialty-devices doc at execute time | **Intune Suite OR Plan 2** for specialty/AR-VR devices | **Intune Suite OR Plan 2** for specialty/AR-VR devices | **Intune Suite OR Plan 2** for specialty/AR-VR devices |
+Linux management via Intune is a **narrower surface** than Windows, macOS, iOS, or Android. Key architectural constraints:
 
-**Authoritative source:** [MS Learn AOSP supported devices](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/android-os-project-supported-devices) (updated 2026-04-16, `ms.date` 2025-05-12) for firmware and regional caveats; [MS Learn AOSP userless setup](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-aosp-corporate-owned-userless-enroll) for token/QR mechanics; [Microsoft Community Hub — Purpose-built devices](https://techcommunity.microsoft.com/t5/microsoft-intune-blog/protect-your-organization-s-purpose-built-devices-with-microsoft/ba-p/3755654) for Plan 2 / Suite gating.
-
-### Per-Vendor Table Stakes (Shared Envelope)
-
-All 5 OEMs share these table-stakes constraints inherited from the AOSP enrollment envelope. The v1.4.1 expansion should NOT re-document these per-OEM — they belong in a shared AOSP top-matter.
-
-| Feature | Envelope constraint | Source |
-|---------|---------------------|--------|
-| **Token expiry** | Up to 90 days (hard ceiling; contrast COBO default-no-expiry + staging-65-year) | MS Learn userless setup: "Token expiration date: Select the date the token expires, which can be up to 90 days in the future" |
-| **Provisioning method** | QR ONLY. No NFC, no afw#setup, no Zero-Touch | MS Learn userless setup: single QR path |
-| **Staging network** | WPA/WPA2 PSK or WPA3 only; NO captive portal, NO corporate-managed EAP | RealWear docs: "staging network MUST BE a WPA/WPA2 PSK/WPA3 network type... Guest networks with captive portals or Corporate managed networks are not compatible" |
-| **Entra shared-device mode at enrollment** | Userless AOSP devices auto-enrolled into Entra Shared Device Mode | MS Learn userless setup: "Devices are configured in Microsoft Entra shared device mode during enrollment" |
-| **Intune app minimum version** | 24.7.0 or later (as of Oct 1, 2024+) for sync | MS Learn userless setup: "Beginning October 1st, AOSP devices must have the Microsoft Intune app, version 24.7.0 or later" |
-| **Known limitations (all AOSP)** | Cannot enforce alphabetic/alphanumeric/weak-biometric password types; device compliance reporting unavailable for AOSP; Intune for 21Vianet not supported | MS Learn userless setup Known Limitations section |
-| **Remote actions available** | Wipe / Delete / Remote lock / Reset passcode / Restart — one device at a time | MS Learn userless setup |
-
-### Per-Vendor Differentiators
-
-| OEM | Differentiator | Why It Matters | Complexity Implication |
-|-----|---------------|----------------|------------------------|
-| **RealWear** | Only OEM with explicit Microsoft-documented userless AOSP setup narrative (RealWear is the MS Learn "example device" across pages) | Most mature integration; canonical reference for AOSP setup steps | Low — reuse Phase 39 RealWear GA spotlight content; expand to Navigator 500 firmware 1.1+ coverage |
-| **Zebra (WS50)** | Wearable scanner, not AR/VR. OEMConfig via Zebra MX extension is the canonical configuration surface (not device-restrictions profile). Dedicated kiosk is typical deployment. | Different configuration tooling; different Intune policy pattern; the "use AE Dedicated where possible, fall back to AOSP only on WS50" guidance is load-bearing | Medium — document WS50 as "AOSP-only within the Zebra catalog; Zebra's GMS-capable devices should go AE Dedicated". Reference MS Learn [Zebra MX overview](https://learn.microsoft.com/en-us/intune/intune-service/configuration/android-zebra-mx-overview). |
-| **PICO** | Vendor-public announcement of Intune integration (PICO Newsroom). PICO 4 Enterprise and Neo3 Pro/Eye both GA. | Enterprise-line specific (NOT consumer PICO 4) — corporate-channel procurement caveat | Low — standard AOSP pattern, call out "Enterprise SKU required" |
-| **HTC VIVE Focus** | Three supported models with different min-firmware; XR Elite has lowest min-firmware (4.0-1.0.999.350) | Firmware version matrix per model — admin must verify device firmware before enrollment | Low — table of model × min-firmware |
-| **Meta Quest** | **Meta Horizon managed services wind-down Feb 20, 2026.** Third-party MDM integration layer (Device Manager) is separate from native AOSP enrollment. Regional-availability caveat for Quest 2/3/Pro (select regions only). | Most volatile AOSP target — Intune AOSP enrollment via pure MS Learn path works, but the Meta Horizon path admins have historically used is going away. Recommend "use Intune AOSP enrollment profile; do NOT rely on Meta Horizon Device Manager for net-new deployments." | HIGH — requires execute-time re-verification; current-state caveat; possible "use alternative paths" fallback |
-
-**Meta Horizon wind-down citation:** Meta public-facing communication — "Starting February 20, 2026, Meta Horizon managed services will no longer be available for purchase". This needs execute-time re-verification (press release vs. doc update vs. actual sunset).
-
-### Per-Vendor Anti-Features
-
-| OEM | Anti-Feature | Why Avoid |
-|-----|-------------|-----------|
-| **RealWear** | Documenting HMT-1Z1-specific intrinsically-safe certification | Certification compliance is not an Intune concern; stays with hardware docs |
-| **Zebra** | Documenting OEMConfig schemas in detail | Zebra owns the MX schema; Intune delivers the config — stay at delivery layer, link to Zebra docs |
-| **PICO** | Consumer PICO 4 (non-Enterprise) pathway | Consumer SKU not in MS Learn supported list; explicit OOS |
-| **HTC** | Non-Enterprise HTC Vive consumer headsets | Same — consumer HTC Vive is not AOSP-managed via Intune |
-| **Meta** | Meta Horizon managed services purchase recommendations | Winding down Feb 2026; documenting a dying path is anti-value. Flag and redirect. |
-
-### Complexity Profile
-
-**Admin complexity rating:** MEDIUM per OEM (all share envelope; vendor deltas are isolatable).
-
-**Dependency on existing v1.4 docs:**
-
-- **Phase 39 AOSP stub (`06-aosp-stub.md`)** — v1.4.1 replaces the deferred-content table rows with per-OEM H2 sections. Must preserve PITFALL-7 "not supported under AOSP" framing per STATE.md research flag.
-- **Capability matrix `reference/android-capability-matrix.md`** — already has `deferred-full-aosp-capability-mapping` anchor; v1.4.1 lifts stub-reference column into per-OEM rows OR pushes per-OEM matrix to a separate OEM-deltas doc.
-- **Phase 34 provisioning-methods matrix (`02-provisioning-methods.md`)** — AOSP is already QR-only; no change needed, but the 90-day token ceiling should be surfaced (currently documented as footnote only).
-- **Android version matrix (`03-android-version-matrix.md`)** — per-OEM min-firmware table is net-new content, may live in Phase 39 expansion OR get surfaced to version matrix.
-
----
-
-## Category 3: COPE Full Admin Path
-
-### Decision: Ship Full Admin Guide (NOT Deprecation-Rationale Doc)
-
-**Verdict reached after live research.** The v1.4 discussion-phase open question ("COPE full guide vs. deprecation-rationale doc") resolves to **full admin guide** based on two load-bearing facts verified 2026-04-24:
-
-**Fact 1 — Intune surfaces COPE as first-class GA.** [MS Learn `setup-corporate-work-profile`](https://learn.microsoft.com/en-us/mem/intune/enrollment/android-corporate-owned-work-profile-enroll) (updated 2026-04-16, `ms.date` 2025-05-08) is an active how-to article documenting the enrollment profile under the Intune admin center label **"Corporate-owned devices with work profile"**. Two GA token types are documented: *"Corporate-owned with work profile (default)"* and *"Corporate-owned with work profile, via staging"*. The profile is not marked deprecated, not in preview, not legacy. Admin center navigation: **Devices → Enrollment → Android tab → Android Enterprise → Enrollment Profiles → Corporate-owned devices with work profile**.
-
-**Fact 2 — Google's "recommends WPCO" is an implementation-evolution note, not a product deprecation.** Google rewrote the architecture in Android 11 from "work profile on fully managed" (original COPE) to "work profile on company-owned" (WPCO). Both share the use case. The current Intune enrollment profile IS the WPCO implementation on Android 11+ devices. On Android 8-10 devices, it's the legacy COPE implementation with NFC and afw#setup still supported; on Android 11+ those provisioning methods were removed for the COPE path (per MS Learn + [Google Developers Android Management](https://developers.google.com/android/management/provision-device)). Jason Bayton's [Android Enterprise EMM COPE support](https://bayton.org/android/android-enterprise-emm-cope-support/) page ("The future of COPE" callout) notes the Android 11 implementation change but stops short of formal deprecation language.
-
-**Conclusion:** Ship a real admin guide. The Phase 36 COBO `## COPE Migration Note` is correct in its current wording ("Google recommends WPCO, COPE remains functionally supported, no formal deprecation notice") and can serve as the reciprocal anchor for the v1.4.1 COPE admin guide.
+- **Enrollment mechanism:** User-initiated only. No automated/zero-touch enrollment. No bulk enrollment (DEM accounts not supported). Each device enrolled individually via the `intune-portal` deb package + Microsoft Edge.
+- **Conditional access scope:** Web-app CA only via Microsoft Edge. No native app CA (Require approved client app / Require app protection policy grant controls are NOT supported for Linux in CA policies). Linux devices can satisfy device-based CA policies (compliant device required in Edge).
+- **App delivery:** Script-based only (Bash scripts via Intune Scripts & Remediations platform scripts). No Win32 equivalent, no .deb managed deployment via Intune, no MSI/MSIX/.pkg analog. Intune does NOT deliver .deb packages directly.
+- **Supported distros:** Ubuntu Desktop 22.04 LTS and 24.04 LTS (x86/64 only, GNOME desktop required). RHEL 9 and RHEL 10 also supported but out of v1.5 scope (Ubuntu-only per PROJECT.md). Ubuntu 20.04 support ended in August 2025 (Intune service release 2508).
+- **Compliance settings:** Settings catalog only (not templated). Categories: Allowed Distributions (distro type + min/max OS version), Custom Compliance (Bash discovery scripts), Device Encryption (dm-crypt/LUKS), Password Policy (min length/lowercase/uppercase/digits/symbols). No equivalent to Windows security baseline depth or macOS configuration profile breadth.
+- **Device ownership model:** Corporate-owned only in enrollment guide framing; however the deployment guide (platform-guide-linux) also mentions BYOD/personal enrollment support. The enrollment guide explicitly states "corporate-owned" and "enrollment isn't supported with personal devices." This is a documentation inconsistency that v1.5 should surface as a known caveat.
+- **Agent architecture:** `intune-portal` deb package (package name confirmed). Identity Broker v2.0.2+ changed from Java-based to new architecture; update triggers automatic re-enrollment with new device IDs — admins must review device-based assignments/filters post-update.
 
 ### Table Stakes
 
-| Feature | Why Expected | Complexity | Baseline |
-|---------|--------------|------------|----------|
-| **"Corporate-owned devices with work profile" enrollment profile creation** | Core admin flow — must match COBO pattern for admin familiarity | Low (MS Learn documents it) | MS Learn `setup-corporate-work-profile` full stepper |
-| **Default vs. Staging token selection** | Same token-type pattern as COBO; staging for partner pre-provisioning | Low (reuse Phase 36 COBO framing) | MS Learn: two token types with same semantics as COBO |
-| **Token expiry: default no-expiry; staging up to 65 years** | Admin expects token lifecycle parity with COBO | Low | MS Learn: "Tokens for corporate-owned devices with a work profile will not expire automatically" + staging 65-year ceiling |
-| **Naming template + device group + scope tags** | Standard enrollment-profile admin affordances | Low (identical to COBO profile page structure) | MS Learn |
-| **Android version gate: COPE use of `afw#setup` + NFC removed on Android 11+** | Admins carrying forward COBO provisioning expectations WILL hit this breakpoint | MEDIUM — version-matrix callout load-bearing | MS Learn: *"the `afw#setup` enrollment method and the Near Field Communication (NFC) enrollment method are only supported on devices running Android 8-10. They are not available on Android 11."* |
-| **Intune app replaces Company Portal as on-device DPC** | Post-AMAPI April 2025; matches BYOD pattern | Low | MS Learn: "The Microsoft Intune app automatically installs on corporate-owned work profile devices during enrollment. This app is required for enrollment and can't be uninstalled" |
-| **Private space (Android 15) exclusion** | Android 15 introduced "Private space" feature — Intune does NOT support MDM within it | Medium (new Android 15 breakpoint) | MS Learn Limitations: "Private space is a feature introduced with Android 15... Microsoft Intune doesn't support mobile device management within the private space" |
-| **Microsoft Authenticator auto-install** | Required for work-profile sign-in | Low | MS Learn: "The Microsoft Authenticator app automatically installs on corporate-owned work profile devices during enrollment" |
+| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
+|---------|--------------|------------|----------|------------|-------|
+| Linux platform taxonomy + distro framework overview | IT admins need orientation to what Linux-in-Intune actually means before any setup/troubleshooting. Establishes Ubuntu 22.04/24.04 LTS scope, enrollment constraints, supported vs. not-supported features | LOW | Admin, L1, L2 | v1.2 cross-platform taxonomy pattern; `_glossary-linux.md` | Maps to iOS enrollment path overview precedent (one doc establishing the 4-path/scope framework). Linux has one enrollment path: user-initiated deb install |
+| Linux glossary (`_glossary-linux.md`) | Every platform has a per-platform glossary. Linux introduces new terminology (dm-crypt, LUKS, HWE kernel, GNOME, `intune-portal` package, `intune-agent` service, Play Integrity analog = compliance policy) | LOW | All | v1.2 `_glossary-macos.md` pattern; see-also entries into Windows/Android/iOS glossaries | Linux-specific terms: dm-crypt, LUKS, HWE kernel, deb repository, GNOME desktop, systemd service, `intune-portal`, `intune-agent.timer`, `journalctl` |
+| Linux admin setup — enrollment configuration | What does an admin need to do before users can enroll? (Answer: almost nothing — enrollment is auto-enabled in tenant. But need to: verify licensing, create compliance policy, configure CA policy for Edge.) Admin flow is lighter than all other platforms | MEDIUM | Admin | v1.5 taxonomy doc; existing CA enrollment timing patterns | Admin task list: (1) verify Intune + Entra P1 licensing, (2) create Linux compliance policy from settings catalog, (3) optionally configure device-based CA policy scoped to Linux, (4) communicate enrollment steps to users. No MDM server assignment (no ABM/ZT equivalent). No zero-touch path. Contrast with macOS 7-step admin setup |
+| Linux compliance policy guide | Admins need to know exactly what settings they can enforce (4 categories from settings catalog). Narrower than all other platforms — this comparison must be explicit | MEDIUM | Admin | Linux admin setup; Linux compliance settings from settings catalog | Four categories: Allowed Distributions, Custom Compliance (Bash scripts), Device Encryption (LUKS/dm-crypt), Password Policy. Custom compliance scripts use POSIX-compliant shell, output JSON key-value pairs, discovery script checked vs. expected values |
+| Linux end-user enrollment guide | User-flow end-to-end: (1) install Microsoft Edge 102.x+, (2) install `intune-portal` deb from packages.microsoft.com, (3) open Intune app + sign in with org account, (4) complete compliance remediation if prompted, (5) sign into Edge to access org resources | LOW | L1 | Linux taxonomy; Linux admin setup | Package install command: `sudo apt install intune-portal`. Service: `intune-agent.timer` (systemd). Post-install requires reboot. No Setup Assistant equivalent (no zero-touch). User must actively perform enrollment — CA policy is the trigger for motivation |
+| Linux L1 triage decision tree | L1 responders need a Mermaid decision tree for the top Linux failure scenarios | MEDIUM | L1 | Linux L1 runbooks | Tree is simpler than Android/iOS (one enrollment path, web-app CA only). Key branches: (1) enrollment failed (package install? sign-in? compliance?), (2) device non-compliant (which category?), (3) CA blocking Edge access (device enrolled? compliant?), (4) Intune app service not running |
+| Linux L1 scenario runbooks | Scripted procedures for top Linux failure scenarios | MEDIUM | L1 | Linux L1 decision tree | Likely runbooks: (L1-XX) enrollment failed — package installation error / sign-in failure / enrollment timeout; (L1-XX) compliance non-compliant — distro/version out of range / disk not encrypted / password policy not met; (L1-XX) CA blocking web-app access — device not enrolled / device not compliant / Edge not signed in; (L1-XX) agent service not running |
+| Linux L2 investigation guide | L2 technical investigation methods for Linux-specific failure patterns | MEDIUM | L2 | Linux L1 runbooks | Log paths: `/var/log/` (system logs), `journalctl -u intune-agent` (agent service), `journalctl | grep intune-portal` (portal logs), `/var/log/intune-update.log` (update log), `/var/log/dpkg.log` (package installation). Service commands: `systemctl status intune-agent`, `systemctl enable --user --now intune-agent.timer`. No equivalent to mdmdiagnosticstool or IntuneMacODC |
+| Linux capability matrix | Every platform has a capability matrix. Linux is the narrowest surface — this matrix communicates parity gaps vs. other platforms explicitly | MEDIUM | Admin | Linux taxonomy; existing 4-platform matrices | Axes: enrollment mechanism, identity (Entra join), app delivery, compliance depth, CA scope, monitoring/reporting, patching. Linux will show gaps in most rows vs Windows/macOS/iOS/Android. Cross-Platform Equivalences section: Linux CA (web-app only) ↔ iOS MAM-WE (no device enrollment required) — both are "compliance-lite" patterns |
 
 ### Differentiators
 
-| Feature | Value Proposition | Complexity | Baseline |
-|---------|-------------------|------------|----------|
-| **COPE vs. COBO decision matrix (when to choose COPE)** | Admins familiar with COBO need a clear "why COPE?" story | MEDIUM — workflow-decision content | Derive from Android Enterprise use cases: single-user corporate device with personal-use allowance (e.g., field sales, executive devices, corporate phones with personal app allowance) vs. COBO's zero-personal-app stance |
-| **Profile-boundary behavior (what IT sees vs. what user controls)** | Privacy story differentiator vs. COBO | MEDIUM — Android 11 WPCO changes shifted boundaries | Google-side privacy-by-default: IT visibility into personal side restricted on Android 11+; device-wide restrictions scope narrower than COBO |
-| **Migration paths** | Admins with existing COBO or BYOD fleets need a "convert" story | HIGH — typically requires factory reset | Document the migration semantics (no in-place conversion; factory reset + re-enroll to new profile) |
-| **COPE ↔ WPCO terminology reconciliation** | The glossary already flags this — admin guide must operationalize it | LOW (reference glossary; don't re-teach) | Phase 34 `_glossary-android.md` COPE + WPCO entries already land this |
+| Feature | Value Proposition | Complexity | Audience | Notes |
+|---------|-------------------|------------|----------|-------|
+| Linux custom compliance deep-dive | Custom compliance via Bash discovery scripts is Linux's unique mechanism (not available on iOS/Android; Windows has similar via PowerShell). Documenting the script-writing pattern, JSON output format, and how to test discovery scripts gives admins a differentiating capability not visible in compliance settings UI alone | MEDIUM | Admin, L2 | Bash script format: must output JSON `{"settingName": "value"}` pairs; discovery script runs on device; Intune evaluates output against expected values configured in policy |
+| Linux CA enrollment trigger scenario | Linux is the only platform where the CA policy for Microsoft Edge is the primary enrollment motivation (unlike Windows OOBE/Autopilot or iOS/macOS ADE where enrollment is required before use). Documenting the CA-driven enrollment flow explicitly helps admins understand the intended design | LOW | Admin, L1 | Matches "web-app-CA only" constraint; relevant to explaining Linux narrowness vs. Windows/macOS |
+| Identity Broker v2.0.2 re-enrollment warning | The architectural change in `intune-portal` 2.0.2+ causes automatic re-enrollment creating new device IDs. Device-based CA assignments, filters, and Entra group memberships relying on old device IDs must be reviewed. This is a high-impact admin pitfall with no equivalent on other platforms | LOW | Admin | Confirmed in Microsoft Learn deployment guide 2026-03-31 |
 
-### Anti-Features
+### Anti-Features (Out of Scope — Linux Pillar)
 
-| Anti-Feature | Why Avoid |
-|--------------|-----------|
-| **"COPE is deprecated, use WPCO" framing** | Factually wrong per MS Learn + Google dev docs. Use "Intune's 'Corporate-owned devices with work profile' IS the WPCO implementation on Android 11+." |
-| **Re-documenting Google's architectural evolution from original-COPE to WPCO** | Phase 34 glossary already owns this (COPE + WPCO entries). Reference, don't repeat. |
-| **Separate per-work-profile config-profile documentation** | This is Configuration Profile authoring — distinct from enrollment; cross-link instead |
-| **Full treatment of work-profile app isolation semantics** | Same — belongs in BYOD Work Profile guide or app-deployment docs |
-| **"COPE = COBO + work profile" equivalence claim** | MISLEADING on Android 11+. The implementations differ structurally. |
-
-### Complexity Profile
-
-**Admin complexity rating:** MEDIUM — similar to COBO but with added terminology reconciliation burden and an Android-version-matrix branch for the `afw#setup` + NFC breakpoint.
-
-**Dependency on existing v1.4 docs:**
-
-- **Phase 36 COBO (`03-fully-managed-cobo.md`)** — reciprocal: the `## COPE Migration Note` section is the forward anchor that the v1.4.1 COPE guide must close (add back-link, validate wording).
-- **Phase 34 glossary (`_glossary-android.md`)** — COPE and WPCO entries ground-truth the terminology; reference, don't duplicate.
-- **Phase 35 ZT portal (`02-zero-touch-portal.md`)** — Zero-Touch Method A/B choice matters for COPE fleets (Method A creates Fully Managed default — WRONG for COPE). Already documented in Phase 35; COPE guide must surface this as a Zero-Touch-provisioning-COPE pitfall.
-- **Phase 35 MGP (`01-managed-google-play.md`)** — prerequisite; reference.
-- **Android version matrix (`03-android-version-matrix.md`)** — `afw#setup` + NFC removed on Android 11+ for COPE path is a version-matrix row; validate current state of that row against MS Learn at execute time.
-- **Phase 34 provisioning-methods matrix (`02-provisioning-methods.md`)** — already has COPE rows with Android-11 breakpoint. Validate.
-- **Android capability matrix** — does NOT currently list COPE as a distinct mode (5-mode scope was COBO/BYOD/Dedicated/ZTE/AOSP). v1.4.1 decision: does COPE become a 6th mode column, or stay folded into ZTE-as-provisioning-path? Recommend **adding COPE as a 6th column** given it's a first-class Intune enrollment profile.
+| Feature | Why Requested | Why Out of Scope | Alternative |
+|---------|---------------|-----------------|-------------|
+| RHEL / Rocky / Alma / Debian / SUSE Linux docs | Some admins ask for broader distro coverage | Explicitly out of scope per PROJECT.md: "Ubuntu LTS only in v1.5 per scope decision." RHEL 9/10 technically supported by Intune but not v1.5 | Flag RHEL 9/10 Intune support as a future v1.6+ candidate in Linux taxonomy overview |
+| Linux server / IoT / headless device enrollment | Admins may want to enroll Ubuntu Server or containerized workloads | Unsupported by Intune (requires GNOME graphical desktop, user must sign in) — PROJECT.md explicitly excludes | Note in Linux taxonomy: Intune Linux support is desktop-client scope only |
+| Linux app deployment via deb packages | Admins want Intune to deliver .deb packages like Win32/MSI | Intune does NOT deliver .deb packages. App delivery is Bash scripts only. No Win32/LOB equivalent for Linux | Document script-based app installation pattern as the supported mechanism |
+| Linux configuration profiles (beyond compliance) | Admins expect MDM configuration profiles like macOS/iOS | Linux has no configuration profile concept in Intune. Only compliance policies and custom settings via scripts | Custom settings profile (Bash scripts) is the only configuration mechanism |
+| Snap-based Intune delivery | Some communities discuss snap-based agent delivery | Intune agent is delivered as a deb package (`intune-portal`) from packages.microsoft.com. No snap equivalent | Document the deb-only delivery as the authoritative installation path |
 
 ---
 
-## Cross-Category Dependencies on Existing v1.4 Docs
+## Pillar 3 — Operational Depth (Existing 4 Platforms)
 
-Summarized for the roadmap:
+### Background: Per-Domain Platform Depth Summary
 
-| v1.4 Doc | Knox ME v1.4.1 use | AOSP-per-OEM v1.4.1 use | COPE v1.4.1 use |
-|----------|---------------------|--------------------------|------------------|
-| Phase 34 `_glossary-android.md` | Reference (Knox is Samsung-specific, not Android-general; may add KME entry as Android-native term or as callout in existing ZTE entry) | Reference (AOSP entry already exists) | Reference (COPE + WPCO entries already exist — ground truth) |
-| Phase 34 `02-provisioning-methods.md` | Add KME row (deferred-knox-mobile-enrollment-row anchor already exists in cap matrix; provisioning-methods matrix needs its own KME row) | Validate 90-day token ceiling surfacing | Validate Android-11 breakpoint for afw#setup + NFC on COPE path |
-| Phase 34 `03-android-version-matrix.md` | Minimal; KME is Samsung-OS agnostic (Android 10+) | Net-new per-OEM min-firmware table (or separate per-OEM doc) | Validate COPE row for afw#setup + NFC removal on Android 11+ |
-| Phase 35 `01-managed-google-play.md` | Prerequisite reference | NOT applicable (AOSP is non-GMS; no MGP) | Prerequisite reference |
-| Phase 35 `02-zero-touch-portal.md` | **CRITICAL** — reciprocal mutual-exclusion pin (`#kme-zt-mutual-exclusion`); KME guide must close the forward promise from this doc | NOT applicable (AOSP does not use ZT) | Reference Method A/B scale implication (Method A wrong for COPE) |
-| Phase 36 `03-fully-managed-cobo.md` | Samsung admins callout references v1.4.1 KME | NOT applicable | **CRITICAL** — `## COPE Migration Note` is the forward anchor; COPE guide closes it |
-| Phase 37 `04-byod-work-profile.md` | NOT applicable | NOT applicable | Reference (work-profile isolation semantics) |
-| Phase 38 `05-dedicated-devices.md` | KME can enroll into Dedicated mode on Samsung; low-risk reference | NOT applicable (Dedicated is GMS-path; AOSP is separate) | NOT applicable |
-| Phase 39 `06-aosp-stub.md` | NOT applicable | **CRITICAL** — v1.4.1 expands this stub or replaces with per-OEM coverage; PITFALL-7 framing preserved | NOT applicable |
-| Phase 40 L1 runbooks (22-27) | Need new KME-specific L1 runbook (enrollment failed — Knox profile missing / Custom JSON malformed / approval lapsed) | Likely no per-OEM L1 (volume low); may add AOSP-enrollment-failed L1 | May add COPE-specific failure mode row to existing L1-22 enrollment-blocked runbook |
-| Phase 41 L2 runbooks (18-21) | Likely reference — Knox-specific logs are Samsung-side; Intune-side shows opaque enrollment failure | Likely reference — AOSP log-collection already documented in Phase 41 | Likely reference — COPE failure modes align with COBO L2 investigation patterns |
-| Phase 42 `reference/android-capability-matrix.md` | Add real KME row (close `deferred-knox-mobile-enrollment-row` anchor) | Lift stub-reference column to per-OEM rows OR separate OEM-delta doc (close `deferred-full-aosp-capability-mapping` anchor) | Add COPE column OR fold into existing cols with "COPE parity" annotation |
+Before listing features, understanding the platform variance is critical:
+
+- **Co-management:** Windows-only concept (SCCM/ConfigMgr ↔ Intune). macOS/iOS/Android get contextual "no co-management equivalent" notes with their native migration paths (macOS: Jamf→Intune; iOS/Android: MAM→MDM, legacy DA→Enterprise).
+- **Patch/update management:** Genuinely 4-way. Windows: WUfB rings + driver/firmware + Windows Autopatch + hotpatch. macOS: DDM migration (critical — MDM-based software update commands deprecated in Apple OS 26). iOS: DDM migration (same issue — MDM commands deprecated; also supervised vs. unsupervised DDM behavior). Android: Play-delivery + OEM-specific (Zebra LifeGuard GA Jan 2026 via Intune integration, Samsung Knox SP, Play Integrity strong integrity change effective Oct 2026).
+- **App lifecycle automation:** Windows has the most mature (Win32 supersedence chains, dependency graphs, MSIX). macOS has PKG/DMG + Installomator/Intuneomator adjacency. iOS has VPP device vs. user licensing flows. Android has Managed Google Play private-app publishing + OEMConfig.
+- **Drift detection + tenant migration:** Windows has Intune Remediations (Proactive Remediation scripts), deployment report-driven compliance, co-management migration workloads. macOS/iOS/Android use compliance policy drift + Intune report. Tenant migration is M&A-driven; Windows requires BitLocker re-key; macOS/iOS requires ABM token re-issue; Android requires MGP re-binding.
+
+### Table Stakes — Co-Management (SCCM ↔ Intune)
+
+| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
+|---------|--------------|------------|----------|------------|-------|
+| Co-management overview + workload model | Admins migrating SCCM-managed Windows fleets to Intune need a conceptual anchor for the workload slider model before making any changes | MEDIUM | Admin | v1.2 Windows device lifecycle + migration content | 7 workloads verified: Compliance Policies, Windows Update Policies, Resource Access (deprecated in ConfigMgr 2203), Endpoint Protection, Device Configuration, Office Click-to-Run Apps, Client Apps. Switching Device Configuration workload implicitly switches Resource Access + Endpoint Protection |
+| Workload slider migration sequence | Admins need a recommended migration order (low-risk first: Compliance → Resource Access → WU → Endpoint Protection → Device Config → Apps) | MEDIUM | Admin | Co-management overview | Standard community best practice: start with Compliance (read-only audit mode, no enforcement change), then move to Device Configuration after pilot. Apps last (heaviest lift — Win32 repackaging required). Aligns with v1.2 Windows migration content (APv1→APv2, imaging→Autopilot, GPO→Intune) |
+| Tenant attach vs. full co-management distinction | Tenant attach (device sync + remote actions from Intune portal, no workload switching) is often confused with co-management (workload sliders active). Admins in staged migrations need to know the difference | LOW | Admin | Co-management overview | Tenant attach: admins can see ConfigMgr devices in Intune admin center + run remote actions. Full co-management: workload sliders enabled. Two different concepts with different prerequisites |
+| Platform notes for non-Windows admins (macOS/iOS/Android) | macOS admins migrating from Jamf, iOS/Android admins moving from legacy DA or 3rd-party MDM need to know "there is no co-management for your platform — here's the equivalent" | LOW | Admin | v1.2 macOS content; v1.3 iOS content; v1.4 Android content | macOS: no SCCM equivalent; migration from Jamf is MDM-transfer via ABM. iOS/Android: no co-management equivalent; BYOD path migration from MAM to MDM is the closest analog. Note these as callouts in co-management doc |
+
+### Differentiators — Co-Management
+
+| Feature | Value Proposition | Complexity | Audience | Notes |
+|---------|-------------------|------------|----------|-------|
+| Windows Autopatch co-management prerequisite | Windows Autopatch requires Device Configuration AND Office Click-to-Run workloads fully moved to Intune. Documenting this as a migration gate prevents admins from enabling Autopatch prematurely | LOW | Admin | v1.2 Windows update content + co-management overview | Source: Microsoft Learn co-management workloads doc (verified 2026-04-15): "To use Windows Autopatch with these devices, this workload must be moved to Intune" |
+| Pilot collection per workload pattern | Admins can use different pilot collections per workload — more granular than switching all at once. Documents the pilot collection strategy as a risk mitigation technique | LOW | Admin | Co-management workload overview | Each workload slider has a "Pilot" (collection-scoped) vs. "Intune" (all devices) setting. Pilot collection pattern aligns with ring-based patching philosophy |
+
+### Table Stakes — Patch & Update Management
+
+| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
+|---------|--------------|------------|----------|------------|-------|
+| Windows: WUfB rings guide | Ring-based deferral (pilot → early adopters → broad) is the standard Windows enterprise patching pattern. Admins expect this to be documented clearly | MEDIUM | Admin, L2 | v1.2 Windows monitoring/operations content | Update rings control: deferral periods (quality/feature), deadline enforcement, restart behavior, user experience. Windows Autopatch provides automated ring management if co-management workload moved. Hotpatch GA for Windows 11 Enterprise 24H2+ (default from May 2026, requires VBS) |
+| Windows: Driver and firmware via WUfB | Driver/firmware updates via Windows Update for Business (separate from quality/feature updates) are frequently misconfigured. Admins need explicit guidance on enabling driver updates without causing fleet-wide regressions | MEDIUM | Admin, L2 | Windows WUfB rings guide | Driver updates enabled/disabled per ring. Common pitfall: enabling driver updates in Intune while SCCM co-management still controls WU workload (dual-scan source conflict) |
+| macOS: Update enforcement with DDM (CRITICAL) | Apple deprecated legacy MDM software update commands (ScheduleOSUpdate / OSUpdateStatus) in Apple OS 26. Organizations still using MDM-based policies WILL LOSE update management capability within 12 months. Migration to DDM is urgent | HIGH | Admin, L2 | v1.2 macOS admin setup content | DDM: `softwareupdate.enforcement.specific` declaration. Device autonomously applies updates to meet deadline. Intune admin center: Devices > Manage updates > Apple updates > Create policy (DDM-based). Previous forceDelayedSoftwareUpdates MDM key still functional on macOS 14 and earlier. macOS Recovery Lock management added in March 2026 Intune release |
+| iOS: Update enforcement with DDM | Same DDM migration applies to iOS/iPadOS. Legacy MDM update commands deprecated in iOS 26/iPadOS 26. Basic DDM update keys now work on unsupervised devices (TargetOSVersion, TargetBuildVersion, TargetLocalDateTime, OfferPrograms) | HIGH | Admin, L2 | v1.3 iOS admin setup content | Supervised vs. unsupervised DDM behavior difference: supervised devices have additional control over update timing enforcement. Unsupervised devices can use basic DDM update keys since August 2025. This is a significant change from the prior "supervised-only" enforcement model |
+| Android: Play-delivery patch policy | Android patch delivery is primarily via Google Play updates. Admins need to understand how to configure minimum security patch level in compliance + how Play Integrity strong integrity verdict now requires security patch ≤12 months old (effective Oct 2026) | MEDIUM | Admin, L2 | v1.4 Android compliance content | Play Integrity strong integrity change: Google updated definition in May 2025 for Android 13+ — requires hardware-backed security signals + security patch <12 months old. Intune enforcement deadline: Oct 31, 2026. Compliance policy: "Minimum security patch level" setting is the mitigation |
+| Android: OEM-specific firmware management (Zebra LifeGuard) | Zebra devices in enterprise fleets need firmware managed separately from Play-delivery updates. Zebra LifeGuard OTA integration with Intune became GA in January 2026 | MEDIUM | Admin, L2 | v1.4.1 Zebra AOSP content + Android capability matrix | Zebra LifeGuard OTA: Intune manages creation/monitoring of deployments via Zebra API. Separate from Play-delivery updates. Configure in Intune admin center: Device updates > Android FOTA. Samsung KSP (Knox Service Plugin) for Samsung-specific patch windows is the analogous Samsung mechanism |
+
+### Differentiators — Patch & Update Management
+
+| Feature | Value Proposition | Complexity | Audience | Notes |
+|---------|-------------------|------------|----------|-------|
+| Cross-platform update management comparison table | Admins managing mixed fleets need a single reference showing: Windows (WUfB rings/Autopatch/hotpatch), macOS (DDM deadlines), iOS (DDM supervised vs. unsupervised), Android (Play-delivery + OEM FOTA). Single table in ops-depth update doc prevents repeated platform-hopping | MEDIUM | Admin | Logically belongs in Pillar 1 DEFER-08 comparison doc, OR as a callout in each platform's patch section |
+| Windows hotpatch guidance | Hotpatch (security patches applied without reboot) becomes default for Windows 11 Enterprise 24H2+ from May 2026. Documenting requirements (VBS enabled, 24H2+, Enterprise SKU) and how to opt out prevents unexpected behavior changes | LOW | Admin | Windows WUfB content | New Intune admin center toggle: opt-out of hotpatch for all eligible devices (available from April 2026). Admins should understand the reboot reduction impact on compliance reporting |
+| iOS unsupervised DDM update clarification | Prior to August 2025, iOS update enforcement was supervised-only. DDM now extends to unsupervised devices for basic update keys. This changes L2 investigation methodology (previously "unsupervised = can't enforce" was the answer) | LOW | L2, Admin | v1.3 iOS compliance content (supervised-only callout pattern must be updated) | This is a RETRACTION of a supervised-only callout in existing v1.3 iOS content — the compliance policy section and update guidance need a targeted update |
+
+### Table Stakes — App Lifecycle Automation
+
+| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
+|---------|--------------|------------|----------|------------|-------|
+| Windows: Win32 supersedence chains guide | Win32 app supersedence (replace/update a previous version) is a standard Intune app lifecycle operation. Admins managing dozens of Win32 apps need the supersedence + dependency graph model explained clearly | MEDIUM | Admin, L2 | v1.2 Windows app deployment content | Supersedence limit: max 10 superseding apps per app. Supersedence ≠ dependency (cannot interchange). Replace vs. Update option: enable "uninstall previous version" for Replace, disable for Update. Targeting required on superseding app for supersedence to activate |
+| Windows: .intunewin packaging at scale | Converting Win32 applications to .intunewin format and managing packaging pipeline for large app catalogs is a recurring admin task | MEDIUM | Admin | Windows Win32 supersedence | Win32ContentPrepTool for .intunewin creation. Detection rules (MSI product code, file, registry, custom script). Return codes for success/failure. Common pattern: custom detection script via PowerShell for complex apps |
+| macOS: PKG/DMG app lifecycle guide | macOS app delivery via Intune supports: LOB PKG (flat package, Apple Developer ID Installer cert, signed), unmanaged PKG (via Intune agent, non-LOB), DMG (via Intune agent, mounts and copies .app to /Applications), Microsoft 365 apps (native VPP/managed), Store apps (Mac App Store via Apple Business Manager). Each type has different prerequisites | MEDIUM | Admin, L2 | v1.2 macOS app deployment content | Intuneomator (Swift-based, wraps Installomator) bridges gap between Installomator open-source library and Intune for automated macOS app lifecycle. Not officially supported but community-standard. Munki coexistence pattern documented at Automatica blog (2026-01) |
+| iOS: VPP device-licensing vs user-licensing flows | VPP (Volume Purchase Program) app licensing has two models: device-assigned (license tied to device — no Apple ID required, silent install on supervised) vs. user-assigned (license tied to user — requires Apple ID, user must accept). Admins need to understand when each model applies and how to move licenses | MEDIUM | Admin, L2 | v1.3 iOS app deployment content | Device-licensing: preferred for corporate supervised. User-licensing: required for User Enrollment (BYOD). License reclamation: retire/wipe device returns device license; remove app returns user license. Silent install only on supervised (device-licensed) |
+| Android: Managed Google Play private-app publishing | Enterprise apps not on public Play Store must be published as private apps in Managed Google Play console. Admins need the upload → approval → assignment workflow | MEDIUM | Admin | v1.4 Android BYOD/COBO admin content | Two publishing paths: (1) direct APK upload to MGP private track (for internal apps), (2) using MGP web app publishing for web clip shortcuts. AMAPI (Android Management API) note: custom apps go through Google Play custom app API as of 2024+ |
+| Android: OEMConfig app delivery | OEMConfig apps allow Intune admins to configure OEM-specific settings beyond Android Management API scope. Zebra OEMConfig (WS50) and similar devices require Intune-APK side-loading or OEMConfig profiles | MEDIUM | Admin, L2 | v1.4.1 Zebra AOSP content | Zebra WS50: OEMConfig installed via Intune APK (not Managed Google Play). Documented in existing `10-aosp-zebra.md` — but operational lifecycle (update, revoke, troubleshoot) not yet documented |
+
+### Differentiators — App Lifecycle Automation
+
+| Feature | Value Proposition | Complexity | Audience | Notes |
+|---------|-------------------|------------|----------|-------|
+| Win32 dependency graph documentation | App dependencies (A requires B to be installed first) are distinct from supersedence. Documenting dependency chains (e.g., .NET runtime required before LOB app) prevents silent install failures | MEDIUM | Admin, L2 | Dependency: max 100 dependencies per app. Dependencies apply recursively. Circular dependencies blocked by Intune but can occur if admin misconfigures |
+| macOS Installomator/Intuneomator adjacency callout | Many macOS Intune environments use Installomator (community tool) or Intuneomator (Swift wrapper) to automate PKG sourcing and packaging. A callout that acknowledges this community pattern (without endorsing as officially supported) provides realistic operational guidance | LOW | Admin | Confidence: MEDIUM (community practice, not Microsoft-documented). Analogous to Munki coexistence pattern |
+
+### Anti-Features — App Lifecycle Automation
+
+| Feature | Why Requested | Why Out of Scope | Alternative |
+|---------|---------------|-----------------|-------------|
+| Samsung E-FOTA firmware management | Admins with Samsung COBO fleets ask about E-FOTA | Explicitly excluded from v1.4 scope (orthogonal to Intune enrollment). E-FOTA is Samsung-proprietary firmware management, separate from Managed Google Play delivery | Note E-FOTA exclusion in Android app lifecycle section with redirect to Samsung Knox documentation |
+| iOS App Store private app distribution (non-VPP) | Developers ask about ad-hoc / TestFlight / enterprise in-house distribution | TestFlight and ad-hoc distribution bypass Intune MDM delivery entirely. Enterprise in-house requires Apple Developer Enterprise Program, separate from Intune VPP | Document Intune VPP device/user licensing as the supported mechanism; note Apple's distribution alternatives are outside Intune scope |
+
+### Table Stakes — Drift Detection + Tenant Migration
+
+| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
+|---------|--------------|------------|----------|------------|-------|
+| Windows: Intune Remediations for configuration drift | Intune Remediations (Proactive Remediations) = detection + remediation Bash/PowerShell script pairs that run on schedule. This is the primary drift-detection mechanism for Windows. Admins need to understand the detect-fix-report loop | MEDIUM | Admin, L2 | v1.2 Windows monitoring/operations content | Portal path: Devices > Manage devices > Scripts and remediations > Remediation scripts. Reports: per-device status (No issues detected / Issues fixed / Error). Output limited in portal; full script output visible via Log Analytics. Windows Enterprise/Pro/Education only (not Home). Requires Intune + Entra joined or hybrid joined |
+| Cross-platform: Deployment-report-driven compliance drift | Intune compliance reports show devices that drift from compliant to non-compliant over time. This deployment-report-driven drift detection pattern is shared across Windows/macOS/iOS/Android (differs per platform in what causes drift) | MEDIUM | Admin, L2 | All 4 existing platform compliance docs | Intune admin center: Devices > Monitor > Device compliance. Per-platform drift scenarios: Windows (policy conflict / app install regression), macOS (profile revocation), iOS (jailbreak detection / OS downgrade), Android (Play Integrity verdict change) |
+| Windows: Tenant-to-tenant migration runbook | M&A scenarios require migrating Intune-managed Windows devices between tenants. BitLocker re-keying is the critical complication | HIGH | Admin | v1.2 Windows device lifecycle + migration content | BitLocker re-key approach: source tenant must escrow existing recovery key to target Entra ID via PowerShell script (scheduled task post-migration). Alternative: decrypt → re-encrypt post-Intune enrollment in target tenant (data risk window). Third-party tools: Quest On Demand Migration provides automated BitLocker re-key scripting. Key challenge: Autopilot registration in source tenant must be removed before re-registration in target |
+| macOS/iOS: Tenant-to-tenant migration runbook | M&A scenarios require migrating ABM-enrolled macOS/iOS devices between tenants. ABM token re-issue is the critical complication | HIGH | Admin | v1.2 macOS admin setup; v1.3 iOS admin setup | ABM token re-issue: cannot transfer an MDM server assignment from Tenant A to Tenant B directly. Device must be released from ABM MDM assignment in Tenant A, then re-assigned to Tenant B MDM server. For devices still in use, this requires a wipe + re-enrollment. ADE-enrolled devices without Await Configuration disabled will re-enroll to old MDM server without proper ABM assignment |
+| Android: Tenant-to-tenant migration (MGP re-binding) | M&A scenarios for Android Enterprise require Managed Google Play re-binding to target Intune tenant | HIGH | Admin | v1.4 Android admin setup; v1.4 MGP binding guide | MGP binding is tenant-specific: cannot transfer binding between Intune tenants. Must: (1) disconnect from source tenant MGP, (2) bind new MGP account (or existing corporate Google account) to target Intune tenant, (3) re-approve all apps, (4) re-provision devices (factory reset + re-enrollment for corporate-owned; work profile re-creation for BYOD). ZTE devices: re-upload to Zero-Touch portal with target tenant credentials |
+
+### Differentiators — Drift Detection + Tenant Migration
+
+| Feature | Value Proposition | Complexity | Audience | Notes |
+|---------|-------------------|------------|----------|-------|
+| Cross-platform BitLocker/FileVault/Android encryption drift patterns | Per-platform encryption drift scenarios in a single reference: Windows (BitLocker re-key after tenant migration, key escrowed to wrong tenant), macOS (FileVault escrow not updated after re-enrollment), iOS (no device-level encryption management beyond compliance check), Android (LUKS encryption not available; AOSP has different dm-crypt behavior) | MEDIUM | Admin, L2 | Conceptually belongs in tenant migration runbook section |
+| Intune Remediations script authoring pattern | The detect-fix-remediate pattern is reusable across Windows fleet. Documenting a canonical script structure (detection returns exit 1 / remediation returns exit 0, portal report interpretation) gives L2 engineers a reusable pattern | MEDIUM | L2 | Requires: Windows Enterprise/Pro/Edu + Intune + Entra joined or hybrid. NOT available on macOS/iOS/Android (Remediations is Windows-only) |
+
+### Anti-Features — Drift + Tenant Migration
+
+| Feature | Why Requested | Why Out of Scope | Alternative |
+|---------|---------------|-----------------|-------------|
+| Full SCCM-to-Intune migration playbook (replace v1.2 docs) | Admins want a comprehensive guide replacing v1.2 imaging→Autopilot and GPO→Intune migration docs | v1.2 already covers imaging→Autopilot and GPO→Intune. Co-management is the delta in v1.5 — not a full rewrite | Ops-depth co-management guide is additive to v1.2 migration content; cross-link via forward/backward references |
+| Cross-tenant device license migration | Azure AD device licenses (Intune per-device) must be re-assigned in M&A | This is a licensing/procurement operation, not an Intune provisioning operation. Out of documentation scope | Note in tenant migration runbook that licensing changes are required; link to Microsoft licensing documentation |
 
 ---
 
-## MVP Recommendation (for Roadmap)
+## Pillar 4 — Validation Tooling
 
-If v1.4.1 must be further trimmed, priority order:
+### Table Stakes
 
-1. **COPE full admin guide** (DEFER-06) — cleanest scope; reuses Phase 36 COBO patterns; closes a live admin-center-visible enrollment profile with no docs; single MS Learn authoritative source; no vendor volatility.
-2. **Knox Mobile Enrollment** (DEFER-04) — clear scope; 7-step dance but each step is documentable; Samsung-side stable; reciprocal pin already planted in Phase 35; largest admin-impact of the three (Samsung fleets are common).
-3. **Full AOSP per-OEM** (DEFER-05) — **HIGHEST VOLATILITY** due to Meta Horizon Feb 2026 wind-down; 5 OEMs × varying docs; per-OEM gaps; requires plan-time re-verification; highest chance of staling within 60-day review cycle. Recommend shipping as a per-OEM H2 set within the Phase 39 doc, NOT separate per-OEM docs, to minimize surface area.
+| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
+|---------|--------------|------------|----------|------------|-------|
+| `v1.5-milestone-audit.mjs` harness | Established pattern from v1.4/v1.4.1 — every milestone ships a versioned audit harness. v1.5 must extend the lineage | MEDIUM | — | v1.4.1 harness + sidecar; STATE.md harness carry-forward notes | New checks needed: Linux platform file presence (taxonomy + glossary + capability matrix + L1 + L2 + admin setup), ops-domain content presence (co-mgmt doc, patch guides per platform, app lifecycle guides, drift/tenant migration docs), DEFER-07 Android nav unification completion (Android sections in index.md + common-issues + quick-refs), DEFER-08 4-platform comparison doc structural validation. Existing C1-C9 checks carried forward; new checks at C10+ informational-first |
+| Per-phase `check-phase-NN.mjs` validators | v1.3+ pattern: validator ships alongside content phase. Continues v1.5 | LOW | — | v1.4.1 validator-as-deliverable pattern | Each new v1.5 phase produces its own `check-phase-NN.mjs`. Orchestrator registers in CI workflow |
 
-**Defer candidate:** None — all three items are already v1.4.1 scope per PROJECT.md; no deferrals to v1.5 beyond the already-tracked DEFER-07 (nav integration) and DEFER-08 (4-platform comparison).
+### Differentiators
+
+| Feature | Value Proposition | Complexity | Audience | Notes |
+|---------|-------------------|------------|----------|-------|
+| `regenerate-supervision-pins.mjs` self-test baseline refresh | Per STATE.md out-of-band carry-over: self-test has stale BASELINE_9 vs Phase 44+ file coordinates. v1.5 audit phase should refresh baselines | LOW | — | v1.4.1 `regenerate-supervision-pins.mjs` helper |
 
 ---
 
-## Per-Category Quality-Gate Check
+## Feature Dependencies
 
-| Quality gate | Knox ME | AOSP per-OEM | COPE |
-|---|---|---|---|
-| Table stakes vs differentiators vs anti-features distinguished | ✓ | ✓ | ✓ |
-| Complexity noted (tiers, gates, setup steps) | ✓ HIGH (7-step, Samsung B2B) | ✓ MEDIUM per-OEM (shared envelope + deltas) | ✓ MEDIUM (admin familiarity from COBO) |
-| Dependencies on existing v1.4 docs | ✓ | ✓ | ✓ |
-| COPE full-guide vs deprecation-rationale decision made | — | — | **✓ FULL GUIDE** (verified 2026-04-24) |
-| AOSP per-vendor feature-support deltas (not blanket) | — | ✓ 5-OEM × 7-dim matrix | — |
-| PITFALL-7 "not supported under AOSP" preserved | — | ✓ (must be retained from Phase 39) | — |
+```
+Linux taxonomy + distro framework
+    └──required-before──> Linux glossary
+    └──required-before──> Linux admin setup (enrollment config)
+                              └──required-before──> Linux compliance policy guide
+                              └──required-before──> Linux end-user enrollment guide
+                                                        └──required-before──> Linux L1 runbooks
+                                                                                  └──required-before──> Linux L2 investigation
+    └──required-before──> Linux capability matrix (synthesizes all Linux features)
+
+DEFER-07 Android nav unification
+    └──requires──> All v1.4.1 Android content (already shipped)
+    └──required-before──> DEFER-08 4-platform comparison doc
+                              └──requires──> All 4 existing platform capability matrices (already shipped)
+                              └──requires──> Linux capability matrix
+
+Co-management overview
+    └──requires──> v1.2 Windows migration content (already shipped)
+    └──required-before──> Patch/update management (WUfB rings co-mgmt prerequisite callout)
+
+Patch/update management guides (per platform)
+    └──requires──> v1.2 macOS admin setup (already shipped)
+    └──requires──> v1.3 iOS compliance + admin setup (already shipped)
+    └──requires──> v1.4 Android compliance content (already shipped)
+    └──important──> iOS DDM update change requires targeted RETRACTION of supervised-only callout in v1.3 iOS compliance guide
+
+App lifecycle automation
+    └──requires──> v1.2 Windows app deployment content (already shipped)
+    └──requires──> v1.3 iOS VPP content (already shipped)
+    └──requires──> v1.4 Android MGP content (already shipped)
+    └──iOS VPP device-licensing guide ──enhances──> v1.3 iOS app deployment (additive)
+
+Drift detection guides
+    └──requires──> v1.2 Windows monitoring/operations (already shipped)
+
+Tenant migration runbooks
+    └──requires──> v1.2 Windows device lifecycle (already shipped)
+    └──requires──> v1.2 macOS admin setup (already shipped)
+    └──requires──> v1.4 Android MGP binding guide (already shipped)
+    └──Windows tenant migration ──depends-on──> Co-management overview (BitLocker + Endpoint Protection workload)
+
+v1.5 audit harness
+    └──requires──> v1.4.1 harness + sidecar (already shipped)
+    └──requires-all-content-before──> Terminal re-audit pass (last v1.5 phase)
+```
+
+---
+
+## Feature Prioritization Matrix
+
+| Feature | Audience Value | Complexity | Priority | Pillar |
+|---------|---------------|------------|----------|--------|
+| DEFER-07 Android nav unification (index + common-issues + quick-refs) | HIGH — existing users cannot navigate Android content | MEDIUM | P1 | Cleanup |
+| DEFER-08 4-platform comparison doc | HIGH — mixed-fleet admins have no cross-platform reference | HIGH | P1 | Cleanup |
+| Linux platform taxonomy + distro framework overview | HIGH — foundation for all Linux content | LOW | P1 | Linux |
+| Linux admin setup (enrollment config + compliance policy) | HIGH — admins must do this before users can enroll | MEDIUM | P1 | Linux |
+| Linux end-user enrollment guide | HIGH — no zero-touch; user-driven required | LOW | P1 | Linux |
+| Linux L1 triage + runbooks | HIGH — L1 helpdesk blocked without this | MEDIUM | P1 | Linux |
+| Linux L2 investigation guide | HIGH — L2 investigation requires log paths + service commands | MEDIUM | P1 | Linux |
+| Linux capability matrix | MEDIUM — contextualizes Linux narrowness for admins | MEDIUM | P1 | Linux |
+| Linux glossary | MEDIUM — terminology foundation | LOW | P1 | Linux |
+| macOS DDM update management (URGENT migration) | HIGH — deprecated commands in Apple OS 26; urgent doc update | HIGH | P1 | Ops-depth |
+| iOS DDM update management + unsupervised DDM clarification | HIGH — same DDM migration timeline as macOS | HIGH | P1 | Ops-depth |
+| Co-management overview + workload slider guide | HIGH — SCCM→Intune migration is common enterprise scenario | MEDIUM | P1 | Ops-depth |
+| Windows WUfB rings + hotpatch guide | HIGH — standard Windows patching expectation | MEDIUM | P1 | Ops-depth |
+| Android patch management (Play Integrity + Zebra LifeGuard) | HIGH — Play Integrity strong integrity Oct 2026 deadline | MEDIUM | P1 | Ops-depth |
+| Cross-platform broken-link sweep | MEDIUM — documentation integrity | HIGH | P1 | Cleanup |
+| Win32 supersedence + dependency graph | MEDIUM — app lifecycle is common admin task | MEDIUM | P2 | Ops-depth |
+| macOS PKG/DMG app lifecycle | MEDIUM — macOS app ops | MEDIUM | P2 | Ops-depth |
+| iOS VPP device vs. user licensing flows | MEDIUM — VPP lifecycle is ongoing admin task | MEDIUM | P2 | Ops-depth |
+| Android MGP private-app publishing | MEDIUM — enterprise app ops | MEDIUM | P2 | Ops-depth |
+| Windows: Intune Remediations for drift detection | MEDIUM — proactive ops capability | MEDIUM | P2 | Ops-depth |
+| Windows tenant-to-tenant migration + BitLocker re-key | MEDIUM — M&A scenario | HIGH | P2 | Ops-depth |
+| macOS/iOS tenant migration (ABM token re-issue) | MEDIUM — M&A scenario | HIGH | P2 | Ops-depth |
+| Android tenant migration (MGP re-binding) | MEDIUM — M&A scenario | HIGH | P2 | Ops-depth |
+| Cross-platform deployment-report-driven compliance drift | LOW-MEDIUM — ops maturity | MEDIUM | P2 | Ops-depth |
+| v1.5 audit harness + per-phase validators | HIGH process — maintains CI discipline | MEDIUM | P1 | Tooling |
+| `regenerate-supervision-pins.mjs` self-test baseline refresh | LOW — carry-over debt | LOW | P3 | Tooling |
+| Linux custom compliance Bash script deep-dive | MEDIUM — advanced admin | MEDIUM | P3 | Linux |
+
+---
+
+## Audience Tier Breakdown
+
+| Feature Group | L1 (Scripted) | L2 (Technical) | Admin (Config) |
+|---------------|--------------|----------------|---------------|
+| DEFER-07 Android nav | Uses new runbook links in quick-ref + common-issues | Uses new L2 runbook links | Sees complete Android hub coverage |
+| DEFER-08 comparison doc | — | Reference | Primary audience |
+| Linux enrollment flow | Runs end-user enrollment steps, basic triage | Log collection, agent service checks | Sets up compliance + CA policies |
+| Linux compliance | Recognizes non-compliant state categories | Interprets settings catalog compliance evaluation | Configures 4-category compliance policy |
+| Linux CA (web-app) | Knows to confirm Edge is signed in | Checks Entra CA policy assignment + device compliance | Creates device-based CA policy scoped to Linux |
+| Linux L1 triage | Primary audience — decision tree + runbooks | — | — |
+| Linux L2 investigation | — | Primary audience — log paths + service commands | — |
+| Co-management | — | Monitors workload switch status, investigates dual-authority conflicts | Primary audience — workload slider migration |
+| Patch/update management | Recognizes update compliance failures | Investigates WUfB dual-scan conflicts, DDM status | Primary audience — configures update rings/DDM |
+| App lifecycle automation | — | Investigates install failures, checks dependency chains | Primary audience — packaging + publishing |
+| Drift detection | — | Runs Remediations scripts, interprets reports | Configures Remediations script pairs |
+| Tenant migration | — | Executes migration scripts (BitLocker re-key, device re-enrollment) | Primary audience — plans migration sequence |
 
 ---
 
 ## Sources
 
-### Microsoft Learn (HIGH confidence, authoritative)
+- Microsoft Learn: Linux device enrollment guide — `https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/deployment-guide-enrollment-linux` (updated 2026-04-16, verified 2026-04-26, HIGH confidence)
+- Microsoft Learn: Linux deployment guide — `https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux` (updated 2026-04-16, HIGH confidence)
+- Microsoft Learn: Linux compliance settings — `https://learn.microsoft.com/en-us/intune/intune-service/protect/compliance-policy-create-linux` (updated 2025-08-15, HIGH confidence)
+- Microsoft Learn: Enroll a Linux device in Intune — `https://learn.microsoft.com/en-us/intune/user-help/enrollment/enroll-linux` (updated 2026-04-08, HIGH confidence)
+- Microsoft Learn: Get the Microsoft Intune app for Linux — `https://learn.microsoft.com/en-us/intune/intune-service/user-help/microsoft-intune-app-linux` (updated 2026-04-08, HIGH confidence)
+- Microsoft Learn: Co-management workloads — `https://learn.microsoft.com/en-us/intune/configmgr/comanage/workloads` (updated 2026-04-15, HIGH confidence)
+- Microsoft Learn: Zebra LifeGuard OTA Integration — `https://learn.microsoft.com/en-us/intune/device-updates/android/zebra-lifeguard-ota-integration` (GA January 2026, HIGH confidence)
+- Microsoft Learn: iOS software updates (deprecated MDM policies) — `https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios` (HIGH confidence for deprecation timeline)
+- Microsoft Learn: macOS software updates — `https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-macos` (HIGH confidence)
+- Microsoft Learn: Win32 app supersedence — `https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-win32-supersedence` (HIGH confidence)
+- Microsoft TechCommunity: Play Integrity strong integrity change May 2025 — `https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-changes-to-google-play-strong-integrity-for-android-13-or-above/4435130` (HIGH confidence)
+- 4sysops: Intune March 2026 release — `https://4sysops.com/archives/microsoft-intune-march-2026-hotpatch-by-default-macos-recovery-lock-apple-ddm/` (MEDIUM confidence — community verified against official release notes)
+- IntuneIRL: macOS/iOS DDM migration urgency — `https://intuneirl.com/macos-ios-26-for-enterprise-ddm-deployment-and-the-intel-mac-sunset/` (MEDIUM confidence — community blog, aligns with Apple WWDC 2025 deprecation announcement)
+- jannikreinhard.com: Linux Bash script deployment with Intune — `https://jannikreinhard.com/2023/04/16/creating-and-configuring-bash-scripts-for-ubuntu-devices-in-intune/` (MEDIUM confidence — community verified against Microsoft Learn custom settings Linux doc)
+- BluetechGreen: SCCM to Intune migration checklist 2026 — `https://bluetechgreen.com/blog/2026-02-05-sccm-to-intune-migration-checklist.html` (MEDIUM confidence — community, consistent with Microsoft Learn workloads doc)
+- OSDSune: Migrate BitLocker keys to Entra ID — `https://www.osdsune.com/home/blog/microsoft-intune/how-to-migrate-bitlocker-key-s-from-all-fixed-drives-to-microsoft-entra-id.` (MEDIUM confidence — community PowerShell approach)
+- Quest On Demand Migration: BitLocker cleanup — `https://support.quest.com/technical-documents/on-demand-migration/current/active-directory-intune--autopilot-and-bitlocker-cleanup-quick-start-guide` (MEDIUM confidence — third-party tool vendor doc)
 
-- [Automatically enroll devices with Samsung Knox Mobile Enrollment](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-samsung-knox-mobile) — updated 2026-04-14, `ms.date` 2023-12-01
-- [Set up Android Enterprise work profile for corporate owned devices](https://learn.microsoft.com/en-us/mem/intune/enrollment/android-corporate-owned-work-profile-enroll) — updated 2026-04-16, `ms.date` 2025-05-08 (COPE authoritative source)
-- [Android Open Source Project Supported Devices](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/android-os-project-supported-devices) — updated 2026-04-16, `ms.date` 2025-05-12 (AOSP OEM table)
-- [Set up Intune enrollment for Android (AOSP) corporate-owned userless devices](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-aosp-corporate-owned-userless-enroll) — updated 2026-04-16, `ms.date` 2025-05-15 (AOSP setup envelope)
-- [Enroll Android Enterprise dedicated, fully managed, or corporate-owned work profile devices in Intune](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-dedicated-devices-fully-managed-enroll)
-- [Manage Specialty devices with Microsoft Intune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/specialty-devices-with-intune) (Plan 2 / Suite licensing gate)
-- [Use Zebra Mobility Extensions on Android devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/configuration/android-zebra-mx-overview)
+---
 
-### Microsoft Tech Community (HIGH confidence, official Intune blog)
-
-- [Protect your organization's purpose-built devices with Microsoft Intune](https://techcommunity.microsoft.com/t5/microsoft-intune-blog/protect-your-organization-s-purpose-built-devices-with-microsoft/ba-p/3755654) — Intune Suite / Plan 2 gate for AR/VR specialty devices
-
-### Samsung Knox Documentation (HIGH confidence, vendor authoritative)
-
-- [Knox Mobile Enrollment documentation hub](https://docs.samsungknox.com/admin/knox-mobile-enrollment/)
-- [Get started with Knox Mobile Enrollment](https://docs.samsungknox.com/admin/knox-mobile-enrollment/get-started/get-started-with-knox-mobile-enrollment/)
-- [Manage licenses | Knox Mobile Enrollment](https://docs.samsungknox.com/admin/knox-mobile-enrollment/how-to-guides/manage-licenses/)
-- [Knox licenses | Fundamentals](https://docs.samsungknox.com/admin/fundamentals/knox-licenses/)
-- [Samsung Knox × Microsoft Intune partner page](https://www.samsungknox.com/en/partner-solutions/microsoft-intune)
-- [Configure standard settings | Knox Mobile Enrollment](https://docs.samsungknox.com/admin/knox-mobile-enrollment/how-to-guides/manage-profiles/create-profiles/configure-standard-settings/)
-
-### OEM Vendor Documentation (HIGH confidence, vendor authoritative)
-
-- [RealWear — Enrolling in Microsoft Intune: Creating Enrollment Token](https://support.realwear.com/knowledge/enrolling-in-microsoft-intune)
-- [RealWear — Supported EMM Providers](https://support.realwear.com/knowledge/supported-enterprise-mobility-management-providers)
-- [RealWear — Intune AOSP FAQ](https://support.realwear.com/knowledge/faq-intune-aosp)
-- [RealWear — Configuration from QR Code](https://support.realwear.com/knowledge/configuration-for-devices-from-a-qr-code)
-- [PICO Newsroom — Microsoft Intune integration](https://www.picoxr.com/global/about/newsroom/microsoft-intune)
-- [PICO 4 Ultra Enterprise product page](https://www.picoxr.com/global/products/pico4-ultra-enterprise)
-- [HTC VIVE Focus 3 — Enrollment via enrollment token](https://www.vive.com/us/support/focus3/category_howto/enrolling-the-headset-using-the-device-enrollment-token.html)
-- [Meta for Work — Create a third-party enrollment](https://work.meta.com/help/294719289919907)
-- [Meta Horizon managed services (wind-down Feb 2026)](https://forwork.meta.com/meta-horizon-managed-solutions/)
-- [Zebra — Enrolling Zebra Android Device with MS Intune](https://supportcommunity.zebra.com/s/article/000021176?language=en_US)
-- [Zebra — Enroll Microsoft Intune Using StageNow](https://supportcommunity.zebra.com/s/article/000020868?language=en_US)
-
-### Community & Supplementary (MEDIUM confidence, community expertise)
-
-- [Jason Bayton — Android Enterprise EMM COPE support](https://bayton.org/android/android-enterprise-emm-cope-support/) — WPCO vs. legacy-COPE architectural evolution
-- [Jason Bayton — 2026 Android Security Paper review](https://bayton.org/blog/2026/03/reviewing-the-2026-security-paper/)
-- [Jason Bayton — Android Enterprise FAQ](https://bayton.org/android/android-enterprise-faq/)
-- [Peter van der Woude — Using Samsung Knox Mobile Enrollment with Microsoft Intune](https://petervanderwoude.nl/post/using-samsung-knox-mobile-enrollment-with-microsoft-intune/)
-- [Peter van der Woude — Getting started with Corporate-Owned devices with Work Profile](https://petervanderwoude.nl/post/getting-started-with-android-enterprise-corporate-owned-devices-with-work-profile/)
-- [HTMD — Intune supports HTC and Pico for AOSP devices](https://www.anoopcnair.com/intune-supports-devices-android-open-source/)
-- [Anoop C Nair — Android AOSP Devices Support with Intune](https://www.anoopcnair.com/android-aosp-devices-support-with-intune/)
-- [MDM Tech Space — Zebra management options with Intune](https://joymalya.com/zebra-management-options-with-intune/)
-- [Hubert Maslowski — Samsung's KME with Android Enterprise enrollment to Intune](https://hmaslowski.com/home/f/samsungs-kme-with-android-enterprise-enrollment-to-memintune)
-- [Hubert Maslowski — Zebra's OEMConfig on Android dedicated (COSU)](https://hmaslowski.com/f/manage-zebra-devices-as-android-enterprise-cosu-with-oemconfig)
-- [IntuneStuff — Android Intune Enrollment Profiles unconfused](https://intunestuff.com/2024/07/17/android-intune-unconfuse-the-confusion/)
-- [Cloud Tek Space — Enroll Android (AOSP) Devices in Intune](https://www.cloudtekspace.com/post/enroll-android-aosp-devices-in-intune)
-
-### Google Android Enterprise (HIGH confidence, vendor authoritative)
-
-- [Android Enterprise Help — General FAQs](https://support.google.com/work/android/answer/14772109?hl=en)
-- [Google Developers — Provision device (WPCO + COPE)](https://developers.google.com/android/management/provision-device)
-- [Android Enterprise Recommended](https://www.android.com/enterprise/recommended/)
+*Feature research for: Microsoft Intune provisioning documentation suite — v1.5 (Linux + ops-depth + cleanup)*
+*Researched: 2026-04-26*

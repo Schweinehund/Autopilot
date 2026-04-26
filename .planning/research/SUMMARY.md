@@ -1,257 +1,317 @@
-# Research Summary: v1.4.1 Android Enterprise Completion & v1.4 Cleanup
+# Research Summary — v1.5 Linux Platform, Operational Depth and Cross-Platform Cleanup
 
-**Project:** Windows Autopilot & macOS Provisioning Documentation Suite — v1.4.1 milestone
-**Scope:** DEFER-01..06 closure; DEFER-07/08 deferred to v1.5
-**Researched:** 2026-04-24
-**Synthesizer confidence:** HIGH (all 4 research domains cross-validated; no contradictions surfaced)
-
----
-
-## 1. Executive Summary
-
-v1.4.1 is an **additive + pin-synchronizing** milestone that closes 6 deferred items from v1.4 (DEFER-01..06) without refactoring any v1.4 architecture. Three new content blocks — Samsung **Knox Mobile Enrollment (KME)**, **per-OEM AOSP expansion** (5 OEMs: RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest), and **COPE full admin guide** — land into 6 pre-placed architectural seams (HTML anchors + `<a id="deferred-*">` stubs) already present on disk in v1.4. Three in-place hardening edits close DEFER-01 (audit allow-list expansion from ~10 to ~37 pins for legitimate iOS-attributed supervision bridge-prose), DEFER-02 (`last_verified` 60-day freshness normalization across template + 4 L2 runbooks), and DEFER-03 (Phase 39 AOSP stub re-validation, resolvable via content-migration into per-OEM files).
-
-Load-bearing decisions: **(a)** COPE ships as a **FULL admin guide** (not a deprecation-rationale doc) — verified 2026-04-24 against MS Learn `setup-corporate-work-profile` (updated 2026-04-16), which documents COPE as first-class GA with two live token types and no deprecation marker; Google's WPCO is terminology evolution, not product deprecation. **(b)** KME is free at baseline (Knox Suite gates Advanced settings only); the "KME requires paid license" framing is inaccurate. **(c)** Meta Quest is the 5-OEM outlier, requiring **Meta Horizon Managed Services subscription** + the 4-portal `work.meta.com` layer — and carries a **community-sourced Feb 20, 2026 wind-down risk** requiring plan-time re-verification. **(d)** The audit harness has a **sidecar-path blocker** (hardcoded path to archived `.planning/phases/42-*/v1.4-audit-allowlist.json`) that MUST be fixed in Phase 43 or no audit can run end-to-end. Milestone-close criterion: flip v1.4 audit `tech_debt → passed` via a terminal re-audit phase.
+**Project:** Windows Autopilot and Intune Documentation Suite
+**Domain:** Microsoft Intune provisioning documentation — 5th platform (Linux Ubuntu LTS) + operational depth + cross-platform cleanup
+**Researched:** 2026-04-26
+**Confidence:** HIGH (Microsoft-official sources for all breaking changes; MEDIUM for community tooling patterns)
 
 ---
 
-## 2. Stack Additions
+## Executive Summary
 
-| Addition | Portal / Surface | Key Fact | License Gate | Confidence |
-|---|---|---|---|---|
-| **Knox Mobile Enrollment (KME)** | `central.samsungknox.com` — 4th portal overlay on tri-portal | Same DPC-extras JSON pattern as ZT; Intune token embedded in Knox Custom JSON | **Free baseline**; Knox Suite Enterprise gates anti-theft + app-install-during-enrollment; Intune Plan 1+ sufficient | HIGH |
-| **Per-OEM AOSP (5 OEMs)** | Intune AOSP endpoints + optional vendor portals | 8 OEM / 18 model matrix from MS Learn 2026-04-16; Meta Quest outlier requires vendor portal | **AR/VR specialty devices may require Intune Suite / Plan 2** per MS Tech Community guidance; Plan 1 baseline AOSP still covers Zebra WS50 scanner | HIGH (matrix), MEDIUM (vendor tier names) |
-| **COPE full admin** | Existing Intune admin center tile — `Devices → Enrollment → Android → Android Enterprise → Enrollment Profiles → Corporate-owned devices with work profile` | **Path A confirmed:** full admin guide (not deprecation-rationale). MS Learn actively maintained; WPCO = implementation evolution, not deprecation | Same as COBO; Intune Plan 1+ | HIGH |
+v1.5 is a three-pillar milestone that matures the documentation suite from per-platform enrollment coverage into operational completeness. The first pillar closes two v1.4 deferrals (DEFER-07 Android nav unification, DEFER-08 4-platform capability comparison) and runs a systematic broken-link sweep across all 179 existing files. The second pillar adds Linux Ubuntu LTS as the 5th platform — a deliberately narrow management surface (web-app CA only, deb-only agent, script-based app delivery, 4 compliance categories) that must be framed with an explicit Supported Management Surface whitelist before any guides are authored, to avoid the parity-bait failure mode seen with early AOSP content. The third pillar delivers enterprise operational depth across all four existing platforms, with two time-sensitive DDM migration items (macOS and iOS legacy MDM update commands deprecated for Apple OS 26 cycle) and one hard deadline (Android MEETS_STRONG_INTEGRITY enforcement on Android 13+ devices, Intune enforced September 30 2025, fleet compliance deadline October 31 2026).
 
-### Per-OEM stack matrix (5 spotlight OEMs)
+The recommended approach is foundation-before-content, navigation-last — the same discipline enforced across v1.0–v1.4.1. For v1.5 this means: harness Path A copy first (so all subsequent phases run against a live validator), broken-link sweep immediately after (isolate pre-existing breakage from new v1.5 breakage), Linux foundation locked (whitelist + glossary + version matrix) before any Linux admin guides, DEFER-07 and DEFER-08 integration phases last (after all content they will link to exists). The 14-phase decomposition (48–61) encodes these constraints explicitly. Phases 51–52 (Linux L1/L2) can run in parallel with Phase 53 (co-management) because they touch disjoint file sets; Phases 54–56 (ops-domain content) can parallelize similarly. DEFER-07 and DEFER-08 must not run until all runbooks and ops-depth content exist — the navigation-files-last lesson is verified across six milestones.
 
-| OEM | Vendor portal | Portal required? | Vendor license required? | Special case |
-|---|---|---|---|---|
-| RealWear | RealWear Cloud | Optional | Optional (Workspace Pro advanced) | Wi-Fi credentials MUST be embedded in QR (no UI during enrollment) |
-| Zebra (WS50) | StageNow (desktop) + OEMConfig | Optional | Free | OEMConfig via Intune APK push — NOT Managed Google Play |
-| Pico | `business.picoxr.com` | Optional | Free baseline | Enterprise SKU required (not consumer PICO 4) |
-| HTC VIVE Focus | Vive Business DMS | **NO** | **NO** | Simplest — direct QR via Intune |
-| **Meta Quest** | **`work.meta.com`** | **REQUIRED** | **REQUIRED (Meta Horizon Managed Services, paid per-device)** | **4-portal pattern; wind-down Feb 20, 2026 (MEDIUM) — re-verify at plan time** |
-
-### v1.4 exclusions preserved
-
-Android Device Administrator (DA) legacy, Samsung E-FOTA, Knox Manage (competing MDM), ChromeOS, ArborXR/ManageXR/Ivanti/Omnissa, Android TV/Wear OS/Android Auto.
+The primary risks are: (1) Linux capability parity framing — authors inadvertently writing to a management surface that does not exist (CA device-level, app push, configuration profiles); prevention is the PITFALL-7 whitelist-first pattern, identical to Phase 34 Android AOSP framing. (2) DEFER-08 duplication — the 4-platform comparison doc must use link-not-copy architecture or it will be stale the day it ships. (3) Phase 48 scope overload — architecture proposes Phase 48 carry both harness copy and broken-link sweep; roadmapper should consider splitting into 48a (harness) + 48b (sweep) if either task warrants its own plan. (4) Shared write hotspot conflicts — docs/index.md, docs/common-issues.md, and the L1/L2 index files are touched by multiple phases; the roadmap must serialize all writes to these files with explicit single-phase ownership.
 
 ---
+## Key Findings
 
-## 3. Features per Sub-Surface
+### Stack Additions and Changes
 
-### Knox Mobile Enrollment (DEFER-04)
+v1.5 introduces no new software frameworks. All changes are documentation-surface decisions driven by platform capability changes verified against Microsoft Learn as of 2026-04.
 
-| Category | Items |
-|---|---|
-| **Table stakes** | Reseller bulk upload; Knox Deployment App (Bluetooth/NFC) for existing stock; EMM-dropdown auto-populating Intune APK; Intune enrollment token embedded in Knox Custom JSON; first-boot auto-enrollment; profile auto-assign per trusted reseller; company-name + system-apps + optional QR; token revoke/export/replace lifecycle |
-| **Differentiators** | No reseller required (KDA path) — beats Google ZT; Knox Suite Enterprise gated app-install + device-lock during enrollment; supports Dedicated + COBO + **COPE**; QR-enrollment for non-reseller devices on Android 10+; Samsung B2B 1-2 business day approval front-loading |
-| **Anti-features** | Knox Configure / E-FOTA / Manage content (suite scope-creep); re-documenting tri-portal setup (reference Phase 35 only); reseller-side mechanics; Knox Workspace container content; cross-platform analog claims (KME = Samsung-only) |
+**Linux Intune client:**
+- intune-portal deb via APT from packages.microsoft.com — GA delivery path; no snap package exists or is planned
+- Ubuntu 22.04 LTS and 24.04 LTS are the supported pair; Ubuntu 20.04 LTS dropped in Intune service release 2508 (August 2025) — document as end-of-support only
+- Identity Broker v2.0.2+ causes automatic re-enrollment with new Intune and Entra device IDs on upgrade — admin pitfall unique to Linux with no parallel on other platforms
+- Web-app CA only via Microsoft Edge 102.x+ — no device-level CA grant available on Linux
+- 4 compliance categories total: Allowed Distributions, Custom Compliance (Bash scripts), Device Encryption (dm-crypt/LUKS), Password Policy
 
-### Per-OEM AOSP (DEFER-05)
+**ConfigMgr:**
+- Current branch: CB 2503 (GA April 23 2025) — 7 co-management workloads
+- Resource Access workload deprecated since CB 2203; slider mandated to Intune in CB 2403
 
-| Category | Items |
-|---|---|
-| **Shared envelope table stakes** | 90-day token ceiling (contrast COBO no-expiry); QR-only; WPA/WPA2 PSK or WPA3 staging Wi-Fi; Entra Shared Device Mode at enrollment; Intune app 24.7.0+; wipe/delete/remote-lock/reset-passcode/restart one-device-at-a-time; alphanumeric/weak-biometric password types NOT enforceable |
-| **Differentiators** | RealWear: canonical MS Learn example; Zebra WS50: OEMConfig via Zebra MX; Pico: Enterprise SKU + Business Suite coexistence; HTC: 3-model firmware matrix; Meta Quest: Meta Horizon 4-portal + regional availability |
-| **Anti-features** | HMT-1Z1 intrinsically-safe cert; Zebra MX schema details (vendor-owned); consumer PICO 4 / consumer HTC Vive; Meta Horizon managed services recommendations (wind-down); Device Administrator legacy mode on XR devices |
+**macOS/iOS — breaking deprecations (HIGH confidence, verified from multiple sources):**
+- forceDelayedSoftwareUpdates, com.apple.SoftwareUpdate MDM payload, and ScheduleOSUpdate MDM command deprecated and will be removed with Apple OS 26
+- Current canonical enforcement path: DDM via Software Update Enforce Latest in Intune Settings Catalog
+- iOS DDM update enforcement now works on unsupervised devices (iOS 17+, effective August 2025) — retracts the supervised-only constraint documented in v1.3; requires targeted retrofit callout in existing v1.3 iOS compliance content
 
-### COPE full admin (DEFER-06 — Path A confirmed)
+**Android:**
+- MEETS_STRONG_INTEGRITY verdict now requires hardware-backed attestation + security patch within 12 months on Android 13+; Google enforced May 2025; Intune enforced September 30 2025; fleet compliance deadline October 31 2026
+- Zebra LifeGuard OTA integration with Intune: GA January 2026
 
-| Category | Items |
-|---|---|
-| **Table stakes** | "Corporate-owned devices with work profile" enrollment profile; default + staging token types; no-expiry default + 65-year staging; naming templates; Android 8+ with `afw#setup`/NFC removed on Android 11+; Intune app replaces Company Portal as DPC (post-AMAPI April 2025); **Android 15 Private space unmanaged** by Intune; Microsoft Authenticator auto-install |
-| **Differentiators** | COPE-vs-COBO decision matrix (single-user corporate w/ personal-use allowance); profile-boundary (Android 11+ WPCO privacy-by-default); migration paths (factory reset + re-enroll, no in-place); COPE↔WPCO terminology reconciliation |
-| **Anti-features** | "COPE is deprecated" framing (banned — factually wrong); re-documenting Google architectural evolution (Phase 34 glossary); per-work-profile config-profile authoring (cross-link); work-profile app isolation (BYOD guide); "COPE = COBO + work profile" equivalence (misleading Android 11+) |
+**Windows:**
+- Windows Hotpatch becomes the default for Windows 11 Enterprise 24H2+ in May 2026 — requires VBS, Enterprise SKU
+- Win32 Content Prep Tool v1.8.7 (August 13 2024); max 10-node supersedence/dependency subgraph
 
----
+**Broken-link tooling:**
+- markdown-link-check (npm, tcort/markdown-link-check) — Node ESM compatible, integrates natively with existing .mjs audit harness; preferred over lychee (Rust binary) for the internal-anchor sweep
 
-## 4. Architecture / Integration Shape
+**Graph API drift detection:**
+- POST /beta/deviceManagement/reports/exportJobs — key report names: DeviceNonCompliance, NonCompliantDevicesAndSettings, ConfigurationPolicyAggregate, SettingComplianceAggReport, FeatureUpdateDeviceState
 
-### Proposed 5-phase DAG (begins at **Phase 43**)
+**Tenant migration:**
+- No Microsoft first-party migration tool; re-enrollment required; BitLocker re-key on Windows, ABM token re-issue on macOS/iOS, MGP re-binding on Android
 
-```
-                    ┌──────────────────────────────────────┐
-                    │ Phase 43: v1.4 Cleanup & Harness Fix │
-                    │ (DEFER-01/02/03 + sidecar path)      │
-                    └──────────┬───────────────────────────┘
-                               │
-           ┌───────────────────┼────────────────────────┐
-           │                   │                        │
-           ▼                   ▼                        ▼
-┌────────────────────┐ ┌─────────────────────┐ ┌──────────────────────┐
-│ Phase 44: Knox ME  │ │ Phase 45: AOSP      │ │ Phase 46: COPE       │
-│ (DEFER-04)         │ │ Per-OEM (DEFER-05)  │ │ Full Admin (DEFER-06)│
-└──────────┬─────────┘ └──────────┬──────────┘ └──────────┬───────────┘
-           │                      │                        │
-           └──────────────────────┼────────────────────────┘
-                                  ▼
-                    ┌────────────────────────────────────┐
-                    │ Phase 47: Integration & Re-Audit   │
-                    │ (flip tech_debt → passed)          │
-                    └────────────────────────────────────┘
-```
+### Expected Features
 
-### Parallelization & blockers
+**Must have — Pillar 1 Cleanup:**
+- DEFER-07: Full Android L1/L2/Admin subsection tables in docs/index.md, Android symptom routing in common-issues.md, Android sections in quick-ref-l1.md and quick-ref-l2.md (matching iOS/macOS/Windows structural depth)
+- DEFER-08: 4-platform capability comparison doc (link-not-copy cells; 6 domain axes: Enrollment, Configuration, App Deployment, Compliance, Software Updates, Conditional Access)
+- Cross-platform broken-link sweep: 179-file audit of intra-doc anchors and cross-file relative paths
 
-| Item | Detail |
-|---|---|
-| **Phase 43 MUST land first** | Sidecar path blocker (harness line 57 points at archived dir); allow-list baseline; freshness normalization; content-migration prep for AOSP stub |
-| **Phases 44/45/46 parallelize** | Disjoint file sets; shared files (capability matrix, Mermaid, glossary index) handled append-only per v1.4 Phase 42 D-03 pattern |
-| **Phase 47 MUST land last** | Harness sees final state; terminal re-audit records `re_audit_resolution:` + flips `tech_debt → passed`; integration phase owns glossary merges (single-author to avoid line-15 conflicts) |
+**Must have — Pillar 2 Linux:**
+- Linux platform taxonomy with Supported Management Surface whitelist H2 + Out of Scope callout block (locked before any admin guides authored)
+- Linux glossary with cross-collision audit against all existing platform glossaries
+- Linux version matrix (22.04/24.04 LTS supported; 20.04 EOS flagged; GA vs HWE kernel tracks)
+- Linux admin setup 6-file guide (overview, agent, enrollment profile, compliance, app delivery, conditional access)
+- Linux L1 triage decision tree + runbooks 30–33
+- Linux L2 investigation runbooks 24–25
+- Linux capability matrix (Linux-centric bilateral; explicit Not supported cells for CA device-level, app push, zero-touch, configuration profiles)
 
-### 6 pre-placed architectural seams (forward-link anchors on disk)
+**Must have — Pillar 3 Ops-Depth:**
+- macOS DDM update enforcement guide (URGENT — distinguishes deferral from enforcement; legacy MDM commands deprecated)
+- iOS DDM guide + explicit retraction of supervised-only constraint for iOS 17+
+- Retrofit callout to existing v1.3 iOS compliance guide for unsupervised DDM retraction (small but mandatory — must be explicitly assigned in Phase 54)
+- Co-management overview + workload slider migration (all 7 workloads; all 3 slider states including Pilot Intune; Endpoint Protection HIGH-RISK callout)
+- Windows WUfB rings guide (WUfB rings vs Autopatch rings disambiguation; driver/firmware separate from quality/feature rings)
+- Android patch management (MEETS_STRONG_INTEGRITY compliance policy guidance; Zebra LifeGuard OTA)
+- App lifecycle guides: Win32 supersedence behavior matrix, macOS PKG/DMG/Installomator, iOS VPP device vs user, Android MGP private-app publishing
+- Drift detection + tenant migration runbooks (all 4 platforms)
 
-1. `02-zero-touch-portal.md:16` — `<a id="kme-zt-mutual-exclusion">` → Phase 44 closes
-2. `android-capability-matrix.md:113-127` — 3 `<a id="deferred-*">` anchors → Phases 44/45/46 fill
-3. `06-aosp-stub.md:99-112` — `<a id="deferred-content">` 7-row table → Phase 45 collapses
-4. `03-fully-managed-cobo.md:58-66` — COPE Migration Note → Phase 46 retrofits (atomic with new doc)
-5. `08-android-triage.md:37,76` — ANDE1 AOSP escalation stub → Phase 45 replaces with ANDR29
-6. `l1-runbooks/00-index.md:77` — "AOSP L1 planned for v1.4.1" → Phase 45 removes + appends rows 28-29
+**Must have — Pillar 4 Tooling:**
+- v1.5-milestone-audit.mjs Path A copy + new checks C10–C13
+- v1.5-audit-allowlist.json sidecar
+- regenerate-supervision-pins.mjs BASELINE_9 refresh (stale carry-over from v1.4.1 close; self-test currently fails)
+- Per-phase check-phase-NN.mjs validators continuing v1.3+ pattern
 
-### File-tree diff summary
+**Should have (differentiators):**
+- Linux custom compliance Bash script deep-dive (unique mechanism not available on iOS/Android)
+- Identity Broker v2.0.2 re-enrollment warning with admin action checklist
+- Windows Autopatch co-management prerequisite documentation (Device Config + Office C2R workloads must move before Autopatch)
+- Windows Hotpatch guidance (default from May 2026, opt-out toggle available)
+- Intune Remediations script authoring canonical pattern (detect-fix-remediate) for L2
 
-- **NEW files:** `07-knox-mobile-enrollment.md`, `08-cope-full-admin.md`, `09-aosp-realwear.md`, `10-aosp-zebra.md`, `11-aosp-pico.md`, `12-aosp-htc-vive-focus.md`, `13-aosp-meta-quest.md`, `reference/aosp-oem-matrix.md`, L1 runbooks 28-29, L2 runbooks 22-23, `scripts/validation/v1.4-audit-allowlist.json` (migrated), `regenerate-supervision-pins.mjs`
-- **MODIFIED:** `00-overview.md` Mermaid (5→6 branch), `android-capability-matrix.md` (fill 3 deferred anchors), `_glossary-android.md` (+ Knox/KME/AMAPI/WPCO), `admin-template-android.md` frontmatter, `06-aosp-stub.md` (collapse deferred-content table, preserve PITFALL-7), `08-android-triage.md` (replace ANDE1, add Knox sub-branch), L1/L2 index banners, 4 L2 runbooks (`review_by` re-date), `v1.4-milestone-audit.mjs` line 57 sidecar path
+**Defer to v1.6+:**
+- RHEL / Rocky / Alma / Debian / SUSE / Fedora Linux documentation
+- Linux server / IoT scenarios
+- ChromeOS management
+### Architecture Decisions
 
-### Audit harness extension strategy (sidecar-only where possible; informational-first for new checks per D-29)
+v1.5 extends the existing per-platform tree by adding docs/admin-setup-linux/ parallel to the four existing admin-setup-{platform}/ directories, and a new top-level docs/operations/ directory using **Option C (hybrid)** — per-domain sub-directories with per-platform content files, cross-referenced from (not embedded in) per-platform admin guides. Co-management belongs in operations/, not in admin-setup-windows/, because it is a post-enrollment operational lifecycle topic that cuts across the platform axis.
 
-- **C1 SafetyNet / C2 Supervision:** no regex changes; expand allow-list sidecar (~10 → ~37 pins)
-- **C3 AOSP word count:** remains informational; DEFER-03 content-migration flips it to passing naturally
-- **C4 Deferred-file Android-link guard:** extend regex to include Knox/KME/per-OEM terms
-- **C5 Freshness 60-day:** exclude template; re-date 4 L2 runbooks from `2026-07-22 → 2026-06-22`
-- **C6-C10 proposed new checks:** informational-first grace period (D-29 pattern)
-- **Harness file-versioning:** copy to `v1.4.1-milestone-audit.mjs` preserving v1.4 `commit 3c3a140` reproducibility anchor
+**New structural additions:**
+1. docs/linux-lifecycle/ — 2 files (enrollment overview + prerequisites)
+2. docs/admin-setup-linux/ — 6 files (00-overview through 05-conditional-access)
+3. docs/_glossary-linux.md — 5th platform glossary with reciprocal see-also to all 3 existing glossaries
+4. docs/reference/linux-capability-matrix.md — Linux-centric bilateral matrix
+5. docs/l1-runbooks/30..33-linux-*.md — 4 L1 runbooks (numeric continuation from 29)
+6. docs/l2-runbooks/24..25-linux-*.md — 2 L2 runbooks (numeric continuation from 23)
+7. docs/decision-trees/09-linux-triage.md
+8. docs/operations/ — 4 domains x 4-5 files each (~18 files)
+9. docs/reference/4-platform-capability-comparison.md — DEFER-08 deliverable
+10. scripts/validation/v1.5-milestone-audit.mjs + v1.5-audit-allowlist.json
 
----
+**Estimated file delta:** ~230 files total (179 existing + ~15 Linux + ~20 ops-depth + 2 new references)
 
-## 5. Pitfalls + Prevention (top per phase)
+**Audit harness lineage (Path A copy):**
+v1.4-milestone-audit.mjs (frozen) --> v1.4.1-milestone-audit.mjs (frozen) --> v1.5-milestone-audit.mjs (active)
+New checks: C10 (Linux frontmatter — blocking from start), C11 (ops-domain anti-patterns — informational-first), C12 (4-platform comparison structure — blocking once file exists), C13 (broken relative links — informational-first until manual triage complete)
 
-| Phase | Top pitfall | Prevention |
-|---|---|---|
-| **43 (cleanup)** | Allow-list sidecar silent-degradation — harness line 59-62 returns empty arrays on parse fail; if archive dir is cleaned before path update, audit invisibly loses all exemptions | Atomic commit: allow-list move + harness path update in same diff; CI test that allow-list parses AND has >0 entries |
-| **44 (Knox)** | **"KPE license per device" misconception** + bare-Knox umbrella ambiguity (KME / Knox Manage / Knox Suite / Knox Configure / KPE) | 5-SKU disambiguation table (H2 not footnote); explicit "No per-device KPE license — Intune supplies KPE Premium transparently" anti-pattern callout; proposed C7 bare-Knox regex (informational) |
-| **44 (Knox)** | DPC extras JSON schema drift — admins copy-paste Phase 35 ZT JSON into Knox profile | Bidirectional "DO NOT copy JSON from Zero-Touch guide" callout in BOTH Knox doc AND Phase 35 retrofit |
-| **45 (AOSP)** | **PITFALL-7 preservation** — per-OEM "supported" assertions erode v1.4 "not supported under AOSP" framing | Explicit carry-forward rule in phase CONTEXT; proposed C6 regex-detect (informational grace) |
-| **45 (AOSP)** | **Meta Horizon wind-down volatility** — Feb 20, 2026 community-sourced report | Per-vendor §Licensing gate with "re-verify at plan time" research flag; "use Intune AOSP profile; do NOT rely on Meta Horizon for net-new" fallback copy |
-| **45 (AOSP)** | Wi-Fi credential embedding non-uniformity — Phase 39 stub treated as blanket constraint | Per-OEM matrix enumerates each constraint with vendor honor status (RealWear REQUIRED; others OPTIONAL) |
-| **46 (COPE)** | **"Deprecated" creep** — banned-phrase regex risk parallel to v1.4 SafetyNet ban | Mandatory research gate at Phase 46 plan-time checks Google AE Help + Android Developers + Bayton FAQ; if deprecation declared → re-scope; extend C9 banned-phrase check via sidecar JSON |
-| **46 (COPE)** | Atomic back-reference management — COBO `§COPE Migration Note` says "deferred to v1.4.1" (line 64); must retrofit in same commit as new doc | Same-commit rule (D-22 append-only pattern); retrofit replaces deferral sentence with forward link |
-| **46 (COPE)** | Android 15 **Private space unmanaged** — admins expect COPE to contain personal-space mechanisms | Mandatory Android-version breakpoint block with Private space limitation callout |
-| **47 (integration + re-audit)** | **Audit re-run silent-failure paths** — terminal audit may newly fail on C5 (new docs without 60-day frontmatter) or C6 (PITFALL-7 regex on new Meta/Pico prose) and NOT flip status | Every new v1.4.1 doc uses Phase 34 template; terminal audit is LAST plan; informational-first for new C6-C10; pre-commit manual audit per phase |
-| **47 (integration + re-audit)** | **Parallel merge conflicts** on capability matrix + Mermaid + glossary line 15 | Append-only H2-block additions; integration phase owns glossary as single-plan single-author; mirror v1.4 Phase 42 Wave 1/2 atomic rebuild pattern |
+**Shared write hotspots requiring serialized phase ownership:**
+- docs/index.md — DEFER-07 (Phase 57) and Linux hub additions (Phase 59) must be sequential; no parallel writes
+- docs/common-issues.md, docs/quick-ref-l1.md, docs/quick-ref-l2.md — Android sections (Phase 57) and Linux sections (Phase 59) must be serialized
+- docs/l1-runbooks/00-index.md, docs/l2-runbooks/00-index.md — append-only contract; single-phase ownership per write event
 
----
+### Critical Pitfalls
 
-## 6. Requirements Shape
+1. **Linux capability parity framing** — Authors write Linux guides as if Intune provides full MDM depth. Prevention: PITFALL-7 whitelist-first pattern. Linux foundation doc must open with a locked Supported Management Surface H2 and an equally prominent Out of Scope for Linux via Intune callout block. Every subsequent Linux doc carries a banner referencing this whitelist. No stub H2 sections for capabilities that do not exist.
 
-REQ-IDs continue from v1.4 convention (AE-prefix + domain). Recommended categories for REQUIREMENTS.md:
+2. **DEFER-08 link-not-copy violation** — Authors copy cell values from per-platform matrices into the comparison doc; stale on day one. Prevention: every non-empty cell must contain a hyperlink to the per-platform matrix section. C12 audit check enforces this mechanically.
 
-| Category | Scope | Phase | Count est. |
-|---|---|---|---|
-| **AEAUDIT-02+** | Cleanup: allow-list sidecar expansion (~10 → ~37 pins); `last_verified` 60-day freshness normalization; Phase 39 AOSP stub re-validation (content-migration); sidecar path fix; harness file-versioning | Phase 43 | 4-6 reqs |
-| **AEKNOX-01+** | Knox Mobile Enrollment: admin guide; L1 runbook 28; L2 runbook 22; capability matrix row; Mermaid 5→6 branch; glossary KME entry; provisioning-method matrix KME row; ZT portal reciprocal retrofit; COBO Samsung-admins callout closure | Phase 44 | 6-8 reqs |
-| **AEAOSPFULL-01+** | Per-OEM AOSP: 5 OEM files (09-13); `aosp-oem-matrix.md`; L1 runbook 29 (replaces ANDE1); L2 runbook 23; Phase 39 stub retrofit (preserve PITFALL-7, collapse deferred-content table); capability matrix deferred-anchor fill; provisioning-methods 90-day token ceiling; per-OEM firmware rows | Phase 45 | 7-10 reqs |
-| **AECOPE-01+** | COPE full admin: new `08-cope-full-admin.md`; capability matrix COPE row; COBO Migration Note retrofit (atomic same-commit); glossary back-link; Android 15 Private space limitation; Intune admin center UI-label verification at plan time | Phase 46 | 4-6 reqs |
-| **AEINTEG-01+** | Integration + re-audit: capability matrix unified-rebuild; Mermaid unified-rebuild; glossary single-author merge; C4/C6-C10 harness extensions (informational-first); terminal re-audit plan; `tech_debt → passed` flip; PROJECT.md Active → Validated; MILESTONE-AUDIT `re_audit_resolution:` block; close DEFER-01..06 | Phase 47 | 5-7 reqs |
+3. **Phase 48 overload + shared write hotspot conflicts** — Architecture proposes Phase 48 carry both harness copy and broken-link sweep; roadmapper should split into 48a/48b if warranted. Separately: docs/index.md and hub files touched by multiple phases — roadmap must assign single-phase ownership to each shared write hotspot.
 
-**Projected total:** 26-37 requirements across 5 phases.
+4. **Audit harness Path A copy — frozen markers and informational-first graduation** — v1.5 harness copy must: drop the v1.4.1 frozen-predecessor comment; update sidecar filename to v1.5-audit-allowlist.json; explicitly review which v1.4.1 informational-first checks (C6/C7/C9) should graduate to blocking. regenerate-supervision-pins.mjs --self-test currently fails with stale BASELINE_9 — must be refreshed in audit-tooling phase.
 
----
+5. **macOS/iOS DDM migration urgency + v1.3 retraction** — v1.3 iOS content documents a supervised-only constraint now retracted (DDM works unsupervised on iOS 17+ from August 2025). Patch-management phase must distinguish deferral (MDM restriction still functional for delay) from enforcement (DDM only). The v1.3 retrofit is a small but mandatory task that must be explicitly assigned in Phase 54.
 
-## 7. Watch-Out-For (Risk Matrix)
+6. **Nav backport regression** — DEFER-07 edits to docs/index.md must begin with pre-edit anchor inventory (grep -rn index.md# docs/) before any edits land. Append-only H2-block contract enforced.
 
-| # | Risk | Severity | Likelihood | Mitigation | Plan-time re-verification? |
-|---|---|---|---|---|---|
-| R1 | **Meta Horizon managed services wind-down (Feb 20, 2026)** | HIGH | MEDIUM | Plan-time re-verification at Phase 45; frame Meta Quest as "supported but under vendor transition"; recommend Intune-direct path; 60-day review cycle catches staling | **YES — Phase 45 research gate** |
-| R2 | **COPE drift** — Google announces deprecation mid-milestone | HIGH | LOW (no signal as of 2026-04-24) | Phase 46 research gate runs BEFORE authoring; escape-hatch "re-scope to deprecation-rationale at 40% scope"; parameterize C9 banned-phrase check via sidecar JSON | **YES — Phase 46 research gate** |
-| R3 | **Audit harness silent-failure** — parse-error → empty allow-list; C5/C6 failing on v1.4.1 docs; re-audit does not flip status | HIGH | MEDIUM | Phase 43 sidecar-path atomic commit + CI parse-check; informational-first new regex; terminal re-audit is LAST plan; pre-commit manual audit per phase | No — engineering discipline |
-| R4 | **Parallel merge conflicts** — capability matrix / Mermaid / glossary line 15 between Phases 44/45/46 | MEDIUM | HIGH | Append-only H2-block additions; integration phase owns glossary single-author; Phase 42 Wave 1/2 atomic rebuild precedent | No — mitigated by architecture |
-| R5 | **PITFALL-7 erosion** — v1.4 Phase 39 "not supported under AOSP" framing dissolves under per-OEM "supported" assertions | MEDIUM | MEDIUM | Explicit carry-forward rule in Phase 45 CONTEXT; proposed C6 regex-detect (informational grace); per-OEM doc structure preserves stub's 9-H2 whitelist | No — regex enforcement |
-| R6 | **Knox SKU ambiguity** — KME/KPE/Knox Manage/Knox Suite/Knox Configure confusion → "KME requires paid license" inaccuracy OR admins paying for Knox Manage | MEDIUM | MEDIUM-HIGH | 5-SKU disambiguation H2 (not footnote); "Intune supplies KPE Premium transparently" callout; proposed C7 bare-Knox regex (informational) | No — content discipline |
+7. **Sidecar pin coordinate drift** — Ops-depth content appended to existing Android/iOS docs shifts absolute line-number pins in the allowlist. Run regenerate-supervision-pins.mjs --report before any phase that appends to a pinned file; update shifted coordinates before committing.
 
 ---
+## Implications for Roadmap
 
-## 8. Confidence Dashboard
+### Phase Decomposition: 14 Phases (48-61)
 
-| Domain | Confidence | Notes |
-|---|---|---|
-| Stack — Knox ME portal + license | HIGH | Samsung Knox docs + MS Learn + petervanderwoude cross-validated |
-| Stack — Per-OEM Intune AOSP matrix | HIGH | MS Learn 2026-04-16 snapshot (8 OEMs / 18 models); Phase 39 drift +2 models, no removals |
-| Stack — Meta Horizon wind-down Feb 20 2026 | MEDIUM | Community-sourced; **re-verify at Phase 45 plan time** |
-| Stack — RealWear Workspace tier names | MEDIUM | Community + support pages; not officially enumerated |
-| Stack — Pico Business Suite + Intune coexistence | MEDIUM | PICO Newsroom public + ArborXR community corroboration |
-| Stack — COPE active status (Path A) | HIGH | MS Learn `setup-corporate-work-profile` updated 2026-04-16; UI tile present; two token types GA |
-| Features — Table stakes per surface | HIGH | MS Learn authoritative across all 3 |
-| Features — Differentiators | HIGH | Cross-validated with Bayton + Samsung + OEM docs |
-| Features — COPE decision (Path A) | HIGH | Verdict: full admin guide; gated research at Phase 46 is belt-and-braces |
-| Architecture — v1.4 state + retrofit targets | HIGH | All 6 forward-link anchors verified on disk |
-| Architecture — Phase DAG parallelization | MEDIUM | Disjoint file sets verified; append-only contract proven in v1.4 Phase 42 D-03 |
-| Architecture — Audit harness sidecar-only extension | HIGH | 5-check harness reviewed; sidecar-path blocker identified at line 57 |
-| Pitfalls — Knox / AOSP / COPE / audit | HIGH | 40 pitfalls catalogued across 6 categories |
-| Pitfalls — Meta Horizon wind-down as risk | MEDIUM | Same caveat as stack MEDIUM |
-
-**Overall synthesizer confidence:** HIGH — four research files cross-validate without contradiction. Two MEDIUM-confidence items (Meta Horizon wind-down; RealWear/Pico tier names) have explicit plan-time re-verification flags.
-
+**Sequencing tension resolved:** Architecture says broken-link sweep FIRST AND LAST and harness early; Pitfalls says harness first and DEFER-07/08 not parallel. Recommended resolution: Phase 48 = harness Path A copy + BASELINE_9 refresh + broken-link sweep first pass (consider splitting 48a harness + 48b sweep). DEFER-07 and DEFER-08 are integration phases 57-58 after all content exists. Second broken-link pass in Phases 60/61.
 ---
 
-## 9. Research Flags for Plan Time (Consolidated)
+### Phase 48 - Audit Harness Bootstrap + Broken-Link Sweep First Pass
+**Rationale:** Tooling before content. All subsequent phases run against a live validator. Broken-link sweep first pass against 179-file baseline isolates pre-existing breakage from new v1.5 breakage.
+**Delivers:** v1.5-milestone-audit.mjs (Path A copy + C10-C13 scaffolded informational-first); v1.5-audit-allowlist.json; regenerate-supervision-pins.mjs BASELINE_9 refreshed; broken-link findings inventory
+**Pitfalls avoided:** Harness frozen-marker drift; stale BASELINE_9; broken-link false positives via tool configuration before sweep runs
+**Split note:** If harness + BASELINE_9 refresh + sweep is too large, split into 48a (harness) + 48b (sweep)
+**Research flags:** Standard patterns; no additional research needed
 
-| Phase | Research flag(s) |
-|---|---|
-| **43 (cleanup)** | Sidecar location decision (`scripts/validation/` vs `.planning/validation/`); harness file-versioning decision; 60-day rule still Phase 34 D-14 policy; Phase 41 VERIFICATION.md validator placement |
-| **44 (Knox)** | Current Samsung Knox portal UI/URL (portal has redesign history); current KME license-tier gate; Knox L1 routing (new branch OR AND5 sub-gate); reciprocal mutual-exclusion wording vs Phase 35; DPC extras JSON schema current state |
-| **45 (AOSP)** | OEM GA status for 5 spotlight OEMs; **Meta Horizon wind-down date re-verification**; per-OEM Wi-Fi embedding variance; Pico business license terms; Intune Suite / Plan 2 licensing gate for AR/VR; Zebra WS50 OEMConfig APK push delivery |
-| **46 (COPE)** | **Google WPCO deprecation signal check** (AE Help + Android Developers + Bayton FAQ) — if any declares deprecation, re-scope to rationale doc; Intune admin center UI-label verification; Android 15 Private space Intune support status; Android 11+ `afw#setup`/NFC removal still accurate |
-| **47 (integration + re-audit)** | Re-audit acceptance criteria; classification of new C2 findings; capability matrix unified-rebuild wave structure; glossary single-author merge sequencing; MILESTONE-AUDIT `re_audit_resolution:` format |
+### Phase 49 - Linux Foundation: Taxonomy, Glossary, Version Matrix
+**Rationale:** Foundation-before-content gate (PITFALL-7). Whitelist and glossary must be locked before any Linux admin guides or runbooks are authored. Mirrors Phase 34 Android foundation.
+**Delivers:** linux-lifecycle/00-enrollment-overview.md (whitelist H2 + Out of Scope callout); linux-lifecycle/01-linux-prerequisites.md (22.04/24.04 supported; 20.04 EOS; GA vs HWE kernel matrix); _glossary-linux.md (cross-collision audit first); reciprocal see-also in _glossary.md, _glossary-macos.md, _glossary-android.md
+**Pitfalls avoided:** Linux capability parity framing (P1); Linux CA bait (P2); Snap vs deb confusion (P3); Distro version creep (P4); Glossary collision (P5)
+**Research flags:** Standard. Surface BYOD/corporate-owned enrollment inconsistency as known caveat.
 
+### Phase 50 - Linux Admin Setup Guides + Capability Matrix
+**Rationale:** Admin setup depends on Phase 49 glossary and lifecycle overview. Capability matrix anchors the Linux surface for all subsequent Linux docs and feeds DEFER-08.
+**Delivers:** admin-setup-linux/00-overview.md through 05-conditional-access.md (6 files); reference/linux-capability-matrix.md (Linux-centric bilateral; explicit Not supported cells for CA device-level, app push, zero-touch, config profiles)
+**Pitfalls avoided:** Linux CA bait (P2) — compliance doc opens with CA constraint callout; Snap vs deb (P3) — agent guide specifies deb-only; Identity Broker v2.0.2+ re-enrollment warning documented
+**Research flags:** Verify intune-portal deb package version via apt info intune-portal at plan time. Linux log path is LOW-MEDIUM confidence — needs live-environment verification.
+
+### Phase 51 - Linux L1 Triage + Runbooks 30-33
+**Rationale:** L1 runbooks depend on admin setup guides.
+**Delivers:** decision-trees/09-linux-triage.md; L1 runbooks 30-33 (enrollment failed, compliance non-compliant, CA blocking web-app, agent service failure); l1-runbooks/00-index.md Linux section appended; initial-triage.md Linux branch appended
+**Pitfalls avoided:** Linux CA bait routing — runbook 32 routes to web-app CA workflow, not device-compliance CA path
+**Parallelism:** Can run in parallel with Phase 53 (co-management) — disjoint file sets
+
+### Phase 52 - Linux L2 Investigation Runbooks 24-25
+**Rationale:** L2 depends on L1 runbooks (escalation cross-references).
+**Delivers:** l2-runbooks/24-linux-log-collection.md; l2-runbooks/25-linux-agent-investigation.md; l2-runbooks/00-index.md Linux section appended
+**Research flags:** Log path confidence LOW-MEDIUM. L2 runbook 24 must use journalctl as confirmed primary surface.
+
+### Phase 53 - Co-Management Operational Docs
+**Rationale:** Windows-led; no dependency on Linux phases. CB 2503 is current. Resource Access deprecation and Autopatch prerequisites must be documented.
+**Delivers:** operations/00-index.md; operations/co-management/00-overview.md through 03-cocmgmt-migration-paths.md (4 files); workload table with 3 slider states; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android contextual notes inline
+**Pitfalls avoided:** Workload slider ambiguity (P8)
+**Parallelism:** Can run in parallel with Phases 51-52
+### Phase 54 - Patch and Update Management (All Platforms)
+**Rationale:** macOS and iOS DDM migration is urgent (legacy MDM update commands removed with Apple OS 26). Android MEETS_STRONG_INTEGRITY has October 2026 hard deadline. WUfB vs Autopatch ring disambiguation critical. Hotpatch default May 2026.
+**Delivers:** operations/patch-management/00-overview.md through 04-android-patch-delivery.md (5 files); macOS guide distinguishes deferral (MDM restriction for delay) from enforcement (DDM); iOS guide retracts supervised-only constraint for iOS 17+; Android guide documents MEETS_STRONG_INTEGRITY + OEM delays; Windows guide disambiguates WUfB rings vs Autopatch rings + hotpatch
+**Critical signal:** iOS unsupervised DDM retraction requires targeted retrofit callout to existing v1.3 iOS compliance guide — roadmapper must assign this as an explicit task in Phase 54.
+**Pitfalls avoided:** WUfB vs Autopatch ring collision (P9)
+**Research flags:** Verify Intune Settings Catalog path for Software Update Enforce Latest and Zebra LifeGuard OTA admin center path at plan time.
+**Parallelism:** Can run in parallel with Phases 55-56
+
+### Phase 55 - App Lifecycle Automation (All Platforms)
+**Rationale:** Independent of patch management and drift detection. Win32 supersedence Required-assignment exception must be a dedicated callout.
+**Delivers:** operations/app-lifecycle/00-overview.md through 04-android-mgp-lifecycle.md (5 files); Win32 supersedence behavior matrix (assignment type x supersedence action; Required exception as dedicated callout); macOS Installomator adjacency callout (MEDIUM confidence); iOS VPP device vs user flows; Android MGP private-app publishing
+**Pitfalls avoided:** Win32 supersedence Required-assignment exception (P10)
+**Parallelism:** Can run in parallel with Phases 54 and 56
+
+### Phase 56 - Drift Detection and Tenant Migration (All Platforms)
+**Rationale:** Depends on Graph API drift report names and per-platform migration constraints. All prerequisite content already shipped.
+**Delivers:** operations/drift-migration/00-overview.md through 04-tenant-migration-runbook.md (5 files); Graph exportJobs pattern + key report names; BitLocker re-key before unenrollment; ABM token re-issue; MGP re-binding sequence
+**Confidence note:** Tenant migration is MEDIUM confidence — no single authoritative Microsoft Learn guide; surface in runbook frontmatter.
+**Parallelism:** Can run in parallel with Phases 54 and 55
+
+### Phase 57 - DEFER-07: Android Nav Unification
+**Rationale:** Navigation-files-last. All Android runbooks (complete since v1.4.1) and all Linux runbooks (Phases 51-52) must exist before hub sections are authored.
+**Delivers:** Full Android subsection in docs/index.md (L1 table, L2 table, Admin Setup table — matching iOS/macOS/Windows depth); Android symptom routing block in common-issues.md; Android sections in quick-ref-l1.md and quick-ref-l2.md
+**Pitfalls avoided:** Nav backport regression (P6) — pre-edit anchor inventory executed first; append-only H2-block contract enforced
+**Dependencies:** Phases 51, 52, 53 complete; Phase 48 gap inventory available
+**Shared write hotspots:** docs/index.md, common-issues.md, quick-refs — single-phase ownership; serialized with Phase 59
+
+### Phase 58 - DEFER-08: 4-Platform Capability Comparison
+**Rationale:** Integration phase last. Comparison doc accurate only after Linux capability matrix (Phase 50) and all ops-depth content (Phases 53-56) exist.
+**Delivers:** docs/reference/4-platform-capability-comparison.md (6 domain axes; link-not-copy cells; 45-day last_verified cycle); retrofits to macOS/iOS/Android capability matrices; Linux capability matrix cross-reference added
+**Pitfalls avoided:** DEFER-08 duplication (P7) — C12 validates link-not-copy structural integrity
+**Dependencies:** Phases 49-56 all complete
+
+### Phase 59 - Hub Navigation Integration (Linux + Operations Sections)
+**Rationale:** Second navigation-last integration phase. Linux H2 and Operations H2 in docs/index.md authored after all content they link to exists. Serialized after Phase 57.
+**Delivers:** docs/index.md Linux H2 section; docs/index.md Operations H2 section linking to docs/operations/; ops-doc cross-references back to admin-setup-*/; Linux sections in quick-refs
+**Pitfalls avoided:** Nav backport regression — append-only contract; serialized after Phase 57
+**Dependencies:** Phases 50-58 complete; must follow Phase 57
+
+### Phase 60 - Audit Harness v1.5 Finalization
+**Rationale:** Harness finalization after all content phases. Promotes informational-first checks. Runs broken-link sweep second pass.
+**Delivers:** v1.5-milestone-audit.mjs finalized (C12 promoted to blocking; C13 promoted after triage cleared); v1.5-audit-allowlist.json seeded with known-legitimate occurrences (DDM deprecated-command prose, Ubuntu 20.04 EOL callout, Android AMAPI migration callout); broken-link sweep second pass
+**Pitfalls avoided:** Informational-first graduation (C6/C7/C9); ops-domain false positives (P13)
+
+### Phase 61 - Gap Closure + Terminal Re-Audit
+**Rationale:** Terminal re-audit pattern applied at every milestone close.
+**Delivers:** Broken-link fixes; v1.5-MILESTONE-AUDIT.md; v1.5-milestone-audit.mjs exits 8/8+ PASS; REQUIREMENTS.md synced; PROJECT.md traceability closure
+**Dependencies:** Phase 60 harness run complete
 ---
 
-## 10. Sources (aggregated)
+### Phase Ordering Rationale
 
-### Microsoft Learn — HIGH confidence
-- [Samsung Knox Mobile Enrollment](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-samsung-knox-mobile-enroll) (2026-04-14)
-- [Corporate-owned devices with work profile](https://learn.microsoft.com/en-us/mem/intune/enrollment/android-corporate-owned-work-profile-enroll) (2026-04-16)
-- [AOSP Supported Devices](https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/android-os-project-supported-devices) (2026-04-16)
-- [AOSP userless enrollment](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-aosp-corporate-owned-userless-enroll)
-- [AOSP user-associated enrollment](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/android-aosp-corporate-owned-user-associated-enroll)
-- [Zebra MX on Intune](https://learn.microsoft.com/en-us/intune/intune-service/configuration/android-zebra-mx-overview)
-- [Specialty devices with Intune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/specialty-devices-with-intune)
-- [Microsoft Tech Community — Purpose-built devices](https://techcommunity.microsoft.com/t5/microsoft-intune-blog/protect-your-organization-s-purpose-built-devices-with-microsoft/ba-p/3755654)
+- Tooling before content (Phase 48 first) prevents gap-closure tax at milestone close
+- Foundation before content (Phase 49 before 50-52) mirrors Phase 34 Android foundation discipline
+- Content before navigation (Phases 50-56 before 57-59) hub files only link to existing files
+- Integration phases last (57, 58, 59) DEFER-07 and DEFER-08 require all content they reference
+- Broken-link sweep bookends the milestone Phase 48 first pass + Phase 60/61 second pass
+- DEFER-07 (Phase 57) must precede Phase 59 both touch docs/index.md serialized to prevent conflict
+### Research Flags
 
-### Samsung Knox — HIGH confidence
-- [Knox Central Portal](https://central.samsungknox.com/)
-- [KME get-started](https://docs.samsungknox.com/admin/knox-mobile-enrollment/get-started/get-started-with-knox-mobile-enrollment/)
-- [KPE Licensing Update](https://www.samsungknox.com/en/blog/samsung-knox-platform-for-enterprise-kpe-licensing-update)
-- [Samsung Knox × Intune partner page](https://www.samsungknox.com/en/partner-solutions/microsoft-intune)
+**Phases needing deeper research or verification at plan time:**
+- **Phase 54 (macOS/iOS DDM):** Verify exact Intune Settings Catalog path for Software Update Enforce Latest at plan time; confirm which MDM deferral restrictions remain functional
+- **Phase 54 (Android Zebra LifeGuard):** Confirm Intune admin center path Device updates Android FOTA at plan time
+- **Phase 56 (Tenant Migration):** MEDIUM confidence throughout; verify per-platform migration steps given absence of single authoritative Microsoft Learn guide
+- **Phase 50 (Linux log paths):** LOW-MEDIUM confidence verify Linux intune-portal log path against live Ubuntu + Intune enrollment; journal is confirmed primary surface
 
-### OEM vendor docs — HIGH confidence
-- [RealWear Supported EMM Providers](https://support.realwear.com/knowledge/supported-enterprise-mobility-management-providers)
-- [RealWear Intune AOSP FAQ](https://support.realwear.com/knowledge/faq-intune-aosp)
-- [HTC VIVE Focus 3 Intune enrollment](https://www.vive.com/us/support/focus3/category_howto/enrolling-the-headset-using-the-device-enrollment-token.html)
-- [PICO Newsroom — Intune](https://www.picoxr.com/global/about/newsroom/microsoft-intune)
-- [Meta for Work third-party MDM](https://work.meta.com/help/294719289919907)
-- [Meta Horizon Managed Solutions](https://forwork.meta.com/meta-horizon-managed-solutions/)
-- [Zebra Intune enrollment](https://supportcommunity.zebra.com/s/article/000021176)
-
-### Google Android Enterprise — HIGH confidence
-- [AE Help — General FAQs](https://support.google.com/work/android/answer/14772109)
-- [Google Developers — Provision device (WPCO + COPE)](https://developers.google.com/android/management/provision-device)
-- [Zero-touch enrollment for IT admins](https://support.google.com/work/android/answer/7514005)
-
-### Community — MEDIUM confidence
-- [Jason Bayton — AE EMM COPE support](https://bayton.org/android/android-enterprise-emm-cope-support/)
-- [Jason Bayton — COPE in Android 11](https://bayton.org/android/android-enterprise-faq/cope-in-android-11/)
-- [Peter van der Woude — KME with Intune](https://petervanderwoude.nl/post/using-samsung-knox-mobile-enrollment-with-microsoft-intune/)
-- [Scalefusion — COPE vs WPCO](https://scalefusion.com/android-corporate-owned-personally-enabled-cope)
-- [Hexnode — KPE Premium license](https://www.hexnode.com/mobile-device-management/help/what-is-samsung-knox-platform-for-enterprise-kpe-premium-license/)
-
-### Project-internal
-- `.planning/PROJECT.md`, `.planning/STATE.md`, `.planning/milestones/v1.4-MILESTONE-AUDIT.md`
-- `scripts/validation/v1.4-milestone-audit.mjs`
-- `docs/_glossary-android.md`, `docs/admin-setup-android/*`, `docs/reference/android-capability-matrix.md`, `docs/decision-trees/08-android-triage.md`
-
+**Phases with standard patterns (reduce or skip research-phase):**
+- **Phase 48:** Procedure fully documented in v1.4.1 retrospective; no new research needed
+- **Phase 49:** Pattern identical to Phase 34 Android foundation; PITFALL-7 framing established
+- **Phases 51-52:** Runbook structure established; Linux content documented in STACK.md
+- **Phase 53:** CB 2503 and all 7 workloads documented at HIGH confidence
+- **Phase 57:** All Android content exists; structural integration with clear pattern precedent
 ---
 
-*End SUMMARY.md — ready for gsd-roadmapper consumption. Phase numbering begins at 43.*
+## Confidence Assessment
+
+| Area | Confidence | Notes |
+|------|------------|-------|
+| Linux Intune client (deb package, distros, CA scope, compliance categories) | HIGH | Microsoft Learn updated 2026-04-08 and 2026-04-16; two independent source pages confirm each constraint |
+| macOS/iOS DDM migration (deprecations, current enforcement path) | HIGH | Microsoft Learn + multiple community sources; aligns with Apple WWDC 2025 announcement |
+| iOS unsupervised DDM retraction (supervised-only constraint removed iOS 17+) | HIGH | Microsoft Learn deprecated-mdm-policies-ios + software-updates-guide-ios-ipados; August 2025 |
+| Android MEETS_STRONG_INTEGRITY enforcement timeline | HIGH | Official Microsoft TechCommunity support blog July 2025; enforcement dates confirmed |
+| ConfigMgr CB 2503 co-management workloads | HIGH | Microsoft Learn co-management workloads page updated 2026-04-15 |
+| Identity Broker v2.0.2+ re-enrollment behavior | HIGH | Microsoft Learn Linux deployment guide 2026-03-31 |
+| Architecture decisions (file placement, Option C, Path A copy) | HIGH | Direct codebase inspection; no inference required |
+| Pitfall prevention patterns | HIGH | Grounded in v1.0-v1.4.1 retrospectives and committed audit artifacts |
+| Tenant-to-tenant migration specifics | MEDIUM | No single authoritative Microsoft Learn guide; community sources + Q&A |
+| Linux log paths (intune-portal on Ubuntu) | LOW-MEDIUM | Microsoft Learn does not document a dedicated log path; journal is confirmed; file path needs live-environment verification |
+| markdown-link-check npm | MEDIUM | npm registry health confirmed; no Context7 ID; no version pinned |
+| macOS Installomator/Intuneomator adjacency | MEDIUM | Community practice; not Microsoft-documented; appropriate for a callout only |
+
+**Overall confidence:** HIGH for breaking changes and architecture; MEDIUM for tenant migration; LOW-MEDIUM for Linux log paths
+
+### Gaps to Address
+
+- **Linux intune-portal log path:** Microsoft Learn does not document a dedicated log path for intune-portal on Ubuntu. L2 runbook 24 must use journalctl as the confirmed primary surface and include a freshness caveat on any file-based path claims. STACK.md explicitly flags this gap.
+- **Linux deb package version pinning:** Microsoft Learn does not pin a specific intune-portal version. Executor should run apt info intune-portal on a current Ubuntu 22.04/24.04 install at plan time.
+- **iOS DDM v1.3 retrofit scope:** The unsupervised DDM retraction requires a targeted callout update in the existing v1.3 iOS compliance guide. Roadmapper must assign this as an explicit task in Phase 54.
+- **Linux BYOD/corporate-owned enrollment inconsistency:** Microsoft Learn enrollment guide says corporate-owned only; platform guide also mentions BYOD/personal. Linux taxonomy overview (Phase 49) should surface this as a known documentation inconsistency.
+---
+
+## Sources
+
+### Primary (HIGH confidence)
+- https://learn.microsoft.com/en-us/intune/intune-service/user-help/microsoft-intune-app-linux (updated 2026-04-08)
+- https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux (updated 2026-04-16)
+- https://learn.microsoft.com/en-us/intune/user-help/enrollment/enroll-linux (updated 2026-04-08)
+- https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-linux-settings (updated 2026-04-16)
+- https://learn.microsoft.com/en-us/intune/configmgr/comanage/workloads (updated 2026-04-15)
+- https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-macos
+- https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios
+- https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-guide-ios-ipados
+- https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-changes-to-google-play-strong-integrity-for-android-13-or-above/4435130
+- https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/reports-export-graph-available-reports
+- https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool/releases
+- Direct codebase inspection: PROJECT.md, STATE.md, RETROSPECTIVE.md, v1.4.1-milestone-audit.mjs, docs/ directory enumeration
+
+### Secondary (MEDIUM confidence)
+- https://macadifference.net/2025/04/08/intune-macos-enforcing-software-updates.html
+- https://intuneirl.com/macos-ios-26-for-enterprise-ddm-deployment-and-the-intel-mac-sunset/
+- https://learn.microsoft.com/en-us/answers/questions/2149662/tenant-to-tenant-migration-with-intune-devices
+- https://github.com/tcort/markdown-link-check
+- 4sysops.com Intune March 2026 release notes (hotpatch default May 2026)
+
+### Tertiary (LOW-MEDIUM confidence)
+- Community diagnostic commands for Linux intune-portal journalctl and systemctl service unit names not documented in Microsoft Learn
+- /var/log/microsoft/intune/ file-based log path for Linux proposed based on RHEL+MDE pattern; requires live-environment verification
+
+---
+*Research completed: 2026-04-26*
+*Ready for roadmap: yes*
