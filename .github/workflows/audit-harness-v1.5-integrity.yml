@@ -1,0 +1,293 @@
+# v1.5 Audit Harness Integrity
+# v1.5 integration surface. v1.4 + v1.4.1 harnesses frozen in audit-harness-integrity.yml.
+# New v1.5 checks (C10-C13) and per-phase validators registered here.
+
+name: Audit Harness v1.5 Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/validation/v1.5-*'
+      - 'docs/_glossary-linux.md'
+      - 'docs/reference/linux-capability-matrix.md'
+      - 'docs/linux-lifecycle/**'
+      - 'docs/admin-setup-linux/**'
+      - 'docs/l2-runbooks/**-linux-*.md'
+      - 'docs/l1-runbooks/**-linux-*.md'
+      - 'docs/operations/**'
+      - '.github/workflows/audit-harness-v1.5-integrity.yml'
+  schedule:
+    - cron: '0 8 * * 1'   # Weekly bitrot catch: 08:00 UTC every Monday
+  workflow_dispatch:
+
+jobs:
+  parse:
+    name: Parse v1.5 sidecar JSON
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Validate v1.5-audit-allowlist.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const j = JSON.parse(fs.readFileSync('scripts/validation/v1.5-audit-allowlist.json', 'utf8'));
+            if (!Array.isArray(j.supervision_exemptions) || j.supervision_exemptions.length === 0) {
+              console.error('supervision_exemptions empty');
+              process.exit(1);
+            }
+            console.log('v1.5 sidecar OK: ' + j.supervision_exemptions.length + ' supervision pins');
+          "
+
+  path-match:
+    name: Harness references v1.5 sidecar
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify harness sidecar reference
+        run: |
+          if grep -q "scripts/validation/v1.5-audit-allowlist.json" scripts/validation/v1.5-milestone-audit.mjs; then
+            echo "OK: harness references v1.5 sidecar"
+          else
+            echo "FAIL: harness does not reference v1.5-audit-allowlist.json"
+            exit 1
+          fi
+
+  harness-run:
+    name: Run v1.5 milestone audit harness
+    runs-on: ubuntu-latest
+    needs: path-match
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run v1.5-milestone-audit.mjs
+        run: node scripts/validation/v1.5-milestone-audit.mjs --verbose
+
+  check-phase-48:
+    name: check-phase-48 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-48.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-48.mjs ]; then
+            node scripts/validation/check-phase-48.mjs
+          else
+            echo "check-phase-48.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-49:
+    name: check-phase-49 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-49.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-49.mjs ]; then
+            node scripts/validation/check-phase-49.mjs
+          else
+            echo "check-phase-49.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-50:
+    name: check-phase-50 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-50.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-50.mjs ]; then
+            node scripts/validation/check-phase-50.mjs
+          else
+            echo "check-phase-50.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-51:
+    name: check-phase-51 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-51.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-51.mjs ]; then
+            node scripts/validation/check-phase-51.mjs
+          else
+            echo "check-phase-51.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-52:
+    name: check-phase-52 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-52.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-52.mjs ]; then
+            node scripts/validation/check-phase-52.mjs
+          else
+            echo "check-phase-52.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-53:
+    name: check-phase-53 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-53.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-53.mjs ]; then
+            node scripts/validation/check-phase-53.mjs
+          else
+            echo "check-phase-53.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-54:
+    name: check-phase-54 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-54.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-54.mjs ]; then
+            node scripts/validation/check-phase-54.mjs
+          else
+            echo "check-phase-54.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-55:
+    name: check-phase-55 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-55.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-55.mjs ]; then
+            node scripts/validation/check-phase-55.mjs
+          else
+            echo "check-phase-55.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-56:
+    name: check-phase-56 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-56.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-56.mjs ]; then
+            node scripts/validation/check-phase-56.mjs
+          else
+            echo "check-phase-56.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-57:
+    name: check-phase-57 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-57.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-57.mjs ]; then
+            node scripts/validation/check-phase-57.mjs
+          else
+            echo "check-phase-57.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-58:
+    name: check-phase-58 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-58.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-58.mjs ]; then
+            node scripts/validation/check-phase-58.mjs
+          else
+            echo "check-phase-58.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-59:
+    name: check-phase-59 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-59.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-59.mjs ]; then
+            node scripts/validation/check-phase-59.mjs
+          else
+            echo "check-phase-59.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  check-phase-60:
+    name: check-phase-60 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-60.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-60.mjs ]; then
+            node scripts/validation/check-phase-60.mjs
+          else
+            echo "check-phase-60.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
+  pin-helper-advisory:
+    name: Supervision-pin drift advisory (CI)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    continue-on-error: true   # Phase 43 D-14 / Phase 48 D-22: advisory only; never fails build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run regenerate-supervision-pins.mjs --report
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --report || true
+          echo "[advisory] CI advisory job; never blocks merge per Phase 43 D-14 + Phase 48 D-22"
+      - name: Run --self-test (advisory only)
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --self-test || \
+            echo "[advisory] --self-test failed; advisory only"
