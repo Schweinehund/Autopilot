@@ -1,5 +1,26 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.4.1 Android Enterprise Completion & v1.4 Cleanup (Shipped: 2026-04-25)
+
+**Phases completed:** 5 phases (43-47), 33 plans, 40 tasks
+**Timeline:** 2026-04-24 → 2026-04-25 (~2 days)
+**Audit status:** `passed` (v1.4 milestone audit re-flipped from `tech_debt` via terminal re-audit; all 6 v1.4 deferred items closed)
+**Git range:** `a868882` (43-01 audit harness rescue) → `ed3bb4e` (47-VERIFICATION PASSED)
+
+**Key accomplishments:**
+
+- **v1.4 cleanup & audit harness fix** (Phase 43, 10 plans, AEAUDIT-02..05) — Restored `v1.4-audit-allowlist.json` sidecar to persistent `scripts/validation/` (atomic harness-line-57 update); expanded allow-list from ~10 to 18 supervision pins + 4 SafetyNet (flipped C2 FAIL→PASS); normalized 60-day freshness across L2 runbooks 18-21 + Android admin template sentinel; trimmed `06-aosp-stub.md` 1089→696 words (PITFALL-7 + 9-H2 + 8-OEM locks preserved, RealWear deep content migrated to Phase 45 prep shell); shipped `regenerate-supervision-pins.mjs` helper with self-test dogfood gate; bootstrapped first CI surface (4-job GitHub Action + native-shell pre-commit hook).
+- **Knox Mobile Enrollment shipped** (Phase 44, 7 plans, AEKNOX-01..07) — Samsung KME admin guide as 4th-portal overlay on the tri-portal pattern with 5-SKU disambiguation H2 (KME / KPE Std / KPE Premium / Knox Suite / Knox Manage / Knox Configure); B2B Step 0 onboarding gate; L1 runbook 28 + L2 runbook 22 (Play Integrity 3-tier, zero SafetyNet); capability matrix `#knox-mobile-enrollment-row` anchor renamed and populated; `00-overview.md` Mermaid extended 5→6 branches; reciprocal Phase 35 ZT mutex callout + Phase 36 COBO Samsung-admin retrofit closing v1.4 forward-promises.
+- **Per-OEM AOSP coverage shipped** (Phase 45, 10 plans, AEAOSPFULL-01..09) — 5 per-OEM admin guides — RealWear (HMT-1/HMT-1Z1/Navigator 500, REQUIRED Wi-Fi-QR-embedding), Zebra WS50 (REQUIRED OEMConfig APK push, two-OEMConfig-app disambiguation, Android-12-NOT-supported), Pico (4 Enterprise + Neo3 Pro/Eye, OPTIONAL Business Suite coexistence), HTC VIVE Focus (3-model firmware matrix, simplest baseline NO add-on H2s), Meta Quest (4-portal pattern, mandatory Feb 20 2026 wind-down callout, Meta Horizon ALIVE-in-transformed-form framing); 5-OEM `aosp-oem-matrix.md` reference; L1 runbook 29 (5 OEM-scoped Causes A-E) + L2 runbook 23 (1:1 Pattern routing); ANDR29 single-target swap closing ANDE1 escalation stub; PITFALL-7 framing preserved across all 5 OEM docs.
+- **COPE Full Admin shipped** (Phase 46, 2 plans, AECOPE-01..04) — `08-cope-full-admin.md` parallel-structured to COBO with Path A LOCKED full-admin scope (NOT deprecation-rationale); Android 15 Private space ⚠️ unmanaged callout (NEW for v1.4.1); 5×3 COPE-vs-COBO decision matrix; Android 11+ removal of NFC + afw#setup + token-entry methods; atomic same-commit Wave 2 retrofit landing capability matrix COPE column at index 1, Private Space row across all modes, COBO migration-note γ3 sentence-scoped trim, glossary Private Space H3.
+- **Integration & terminal re-audit** (Phase 47, 4 plans, AEINTEG-01..04) — Atomic glossary alphabetical re-canonicalization (Provisioning Methods H3 reorder); audit harness extended (C4 regex 8→24 tokens; C6 PITFALL-7 preservation 1→6 files; C7 Knox attribution 5→11 forms; C9 COPE banned-phrase 3→8 patterns) with informational-first grace; **terminal re-audit via `v1.4.1-milestone-audit.mjs` exits 0 (8/8 PASS) and flips v1.4-MILESTONE-AUDIT.md `status: tech_debt → passed`** with `re_audit_resolution` sibling block recording DEFER-01..06 closing SHAs; PROJECT.md AEAUDIT-02..05 / AEKNOX-01..07 / AEAOSPFULL-01..09 / AECOPE-01..04 / AEINTEG-01..04 all flipped Active→Validated.
+
+**v1.4 deferred items closed:** DEFER-01 (allow-list expansion), DEFER-02 (60-day freshness), DEFER-03 (AOSP stub re-validation), DEFER-04 (Knox Mobile Enrollment), DEFER-05 (full AOSP per-OEM expansion), DEFER-06 (COPE full admin). DEFER-07 (cross-platform nav unification) and DEFER-08 (4-platform comparison doc) remain deferred to v1.5.
+
+**Methodology highlights:** Wave-based parallel execution (Phases 44/45/46 disjoint file sets, append-only contract on shared files); informational-first harness check rollout (C6/C7/C9 added without flipping pre-existing PASS state); atomic same-commit retrofits for forward-promise closures (Phase 35:16 + Phase 36:64 + Phase 36:162); hand-authored 9 iOS-attributed supervision pins via two-tier classifier (Tier 2 never auto-pinned per D-11 invariant).
+
+---
+
 ## v1.4 Android Enterprise Enrollment Documentation (Shipped: 2026-04-24)
 
 **Phases completed:** 9 phases (34-42), 40 plans

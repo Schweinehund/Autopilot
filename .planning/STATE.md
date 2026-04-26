@@ -2,32 +2,30 @@
 gsd_state_version: 1.0
 milestone: v1.4.1
 milestone_name: Android Enterprise Completion & v1.4 Cleanup
-status: executing
-stopped_at: Completed 47-03-PLAN.md (AEINTEG-04 PROJECT.md traceability closure)
-last_updated: "2026-04-25T20:43:27.566Z"
+status: between_milestones
+stopped_at: v1.4.1 milestone shipped 2026-04-25 — ready for /gsd-new-milestone
+last_updated: "2026-04-25T00:00:00.000Z"
 last_activity: 2026-04-25
 progress:
-  total_phases: 6
+  total_phases: 5
   completed_phases: 5
-  total_plans: 35
-  completed_plans: 34
-  percent: 97
+  total_plans: 33
+  completed_plans: 33
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-24)
+See: .planning/PROJECT.md (updated 2026-04-25)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering
-**Current focus:** Phase 47 — Integration & Re-Audit
+**Current focus:** Planning next milestone (v1.4.1 shipped 2026-04-25)
 
 ## Current Position
 
-Phase: 47 (Integration & Re-Audit) — EXECUTING
-Plan: 4 of 4
-Status: Ready to execute
+Status: BETWEEN MILESTONES — v1.4.1 complete; ready for `/gsd-new-milestone`
 Last activity: 2026-04-25
 
 **Phase sequence:**
@@ -46,9 +44,9 @@ Last activity: 2026-04-25
 - v1.3: 8 phases, 44 plans — shipped 2026-04-19
 - v1.4: 9 phases, 40 plans — shipped 2026-04-24
 
-**Totals (through v1.4):** 42 phases, 146 plans, 143+ documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise.
+- v1.4.1: 5 phases, 33 plans — shipped 2026-04-25
 
-**v1.4.1 planned:** 5 phases (43-47), 28 requirements across 5 categories (AEAUDIT-02..05 / AEKNOX-01..07 / AEAOSPFULL-01..09 / AECOPE-01..04 / AEINTEG-01..04). Plan counts per-phase TBD via `/gsd-plan-phase` runs.
+**Totals (through v1.4.1):** 47 phases, 179 plans, 175+ documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (Knox + 5-OEM AOSP + COPE complete).
 
 ## Accumulated Context
 
@@ -135,6 +133,6 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0-v1.4 decisions 
 
 ## Session Continuity
 
-Last session: 2026-04-25T20:43:27.555Z
-Stopped at: Completed 47-03-PLAN.md (AEINTEG-04 PROJECT.md traceability closure)
-Next action: Execute Wave 2 — Plan 45-06 (aosp-oem-matrix.md, 4 capability H2 sub-tables, 5 OEM rows, Meta footnote per D-14) + Plan 45-07 (06-aosp-stub.md deferred-content table collapse, D-24 LOCKED preservation)
+Last session: 2026-04-25 (v1.4.1 milestone close)
+Stopped at: v1.4.1 archived; ROADMAP collapsed; phase dirs 43-47 moved to milestones/v1.4.1-phases/; tag v1.4.1 created
+Next action: `/gsd-new-milestone` to start v1.5 (DEFER-07 cross-platform nav unification + DEFER-08 4-platform comparison doc carry over from v1.4.1)
