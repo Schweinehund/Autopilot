@@ -138,20 +138,20 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 **Depends on**: Nothing (first phase — runs against existing 179-file tree)
 **Requirements**: AUDIT-01, AUDIT-02, AUDIT-03, AUDIT-04, AUDIT-05, AUDIT-06 (check-phase-48.mjs), AUDIT-07, AUDIT-08, CLEAN-06, CLEAN-07
 **Success Criteria** (what must be TRUE):
-  1. `node scripts/validation/v1.5-milestone-audit.mjs` exits 0 with C1-C9 blocking PASS and C10-C13 informational — no regressions introduced on existing content
+  1. `node scripts/validation/v1.5-milestone-audit.mjs` exits 0 with C1-C7 + C10 blocking PASS, C9 + C11/C12/C13 informational — no regressions introduced on existing content (per CONTEXT D-04..D-09 graduation decisions)
   2. `regenerate-supervision-pins.mjs --self-test` exits 0 after BASELINE_9 refreshed for Phase 44+ file coordinate shifts (closes STATE.md out-of-band carry-over)
-  3. `scripts/validation/v1.5-audit-allowlist.json` sidecar exists with inherited v1.4.1 schema plus new allowlist arrays for Linux exemptions and ops-domain allowlists; C10-C13 informational-first markers documented with promotion schedule
+  3. `scripts/validation/v1.5-audit-allowlist.json` sidecar exists with inherited v1.4.1 schema verbatim; new allowlist arrays for Linux exemptions and ops-domain allowlists added LAZILY when first legitimate exemption appears (per CONTEXT D-15 YAGNI); C10-C13 informational-first markers documented with promotion schedule (Phase 60 per CONTEXT D-22)
   4. Broken-link sweep findings inventory exists as a VERIFICATION artifact with pre-existing breakage categorized: Category A (broken anchors), B (broken file paths), C (deferred stubs / intentional)
-  5. `check-phase-48.mjs` validator shipped and registered in CI workflow `audit-harness-integrity.yml`
+  5. `check-phase-48.mjs` validator shipped and registered in CI workflow `.github/workflows/audit-harness-v1.5-integrity.yml` (new file parallel to frozen `audit-harness-integrity.yml` per CONTEXT D-16)
 **Plans**: 9 plans
   - [x] 48-01-PLAN.md — Path A harness copy + v1.5 sidecar inheritance + BASELINE_9 refresh (atomic; closes AUDIT-01 + AUDIT-07)
   - [x] 48-02-PLAN.md — C10 Linux frontmatter check (blocking from start; AUDIT-02)
   - [x] 48-03-PLAN.md — C11/C12/C13 informational scaffolds, COMPACT detail format per D-08 (AUDIT-03/04/05)
   - [x] 48-04-PLAN.md — C6 + C7 graduation to blocking; C9 stays informational per D-04/D-05/D-06
   - [x] 48-05-PLAN.md — check-phase-48.mjs validator (7 deliverable checks; AUDIT-06)
-  - [ ] 48-06-PLAN.md — audit-harness-v1.5-integrity.yml + pre-commit-advisory.sh + README install (AUDIT-06 CI registration; D-21)
-  - [ ] 48-07-PLAN.md — .mlc-config.json (markdown-link-check config; PITFALL-14 mitigation)
-  - [ ] 48-08-PLAN.md — GFM capital-anchor precheck + inventory scaffold (CLEAN-06; PITFALL-15)
+  - [x] 48-06-PLAN.md — audit-harness-v1.5-integrity.yml + pre-commit-advisory.sh + README install (AUDIT-06 CI registration; D-21)
+  - [x] 48-07-PLAN.md — .mlc-config.json (markdown-link-check config; PITFALL-14 mitigation)
+  - [x] 48-08-PLAN.md — GFM capital-anchor precheck + inventory scaffold (CLEAN-06; PITFALL-15)
   - [ ] 48-09-PLAN.md — Full markdown-link-check sweep + categorize A/B/C + finalize 48-VERIFICATION-broken-links.md + ROADMAP SC#1 fix + terminal sanity (AUDIT-08, CLEAN-06, CLEAN-07)
 **Methodology notes**:
   - FROZEN marker from v1.4.1 copy updated: "Frozen-predecessor reproducibility anchor" comment references v1.4.1 (the new file's predecessor)
@@ -399,7 +399,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete | 2026-04-25 |
 | 46. COPE Full Admin | v1.4.1 | 2/2 | Complete | 2026-04-25 |
 | 47. Integration & Re-Audit | v1.4.1 | 4/4 | Complete | 2026-04-25 |
-| 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 5/9 | In Progress|  |
+| 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 8/9 | In Progress|  |
 | 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 0/? | Not started | - |
 | 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 0/? | Not started | - |
