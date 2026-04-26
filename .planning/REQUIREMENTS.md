@@ -120,28 +120,70 @@
 
 ## Traceability — Requirement → Phase Mapping
 
-*Filled by gsd-roadmapper at Step 10. Phases continue numbering from v1.4.1 close (Phase 47) → v1.5 spans Phases 48-61.*
+*Finalized by gsd-roadmapper 2026-04-26. Phases continue numbering from v1.4.1 close (Phase 47) → v1.5 spans Phases 48-61.*
 
 | REQ-ID | Phase | Notes |
 |--------|-------|-------|
-| AUDIT-01 / AUDIT-08 / CLEAN-06 / CLEAN-07 | 48 | Cleanup sweep (broken-link first pass + audit harness Path A copy + BASELINE_9 refresh) — tooling before content |
-| AUDIT-02 / AUDIT-03 / AUDIT-04 / AUDIT-05 / AUDIT-07 | 48 | Harness Path A scaffolds C10-C13 informational-first; pin baseline refresh |
-| LIN-01 / LIN-02 (BYOD caveat 1c) | 49 | Linux foundation: taxonomy + glossary + version matrix; PITFALL-7-style whitelist gate before any Linux admin guide |
-| LIN-03 / LIN-04 / LIN-05 / LIN-13 (Identity Broker 1b) | 50 | Linux admin setup + capability matrix |
-| LIN-06 | 50 | End-user enrollment guide (lives within admin setup phase per ARCHITECTURE.md) |
-| LIN-07 / LIN-08 / LIN-09 / LIN-10 / LIN-11 | 51 | Linux L1 triage tree + scenario runbooks 30-33 |
-| LIN-12 | 52 | Linux L2 investigation runbooks 24-25 |
-| COMG-01 / COMG-02 / COMG-03 / COMG-04 / COMG-05 | 53 | Co-management (Windows-led; non-Windows contextual notes) |
-| PATCH-01 / PATCH-02 (2c hotpatch fold) / PATCH-03 / PATCH-04 / PATCH-05 / PATCH-06 (3-surgical) / PATCH-07 / PATCH-08 | 54 | Patch & update management (urgent macOS/iOS DDM migration; v1.3 iOS retrofit surgical; Android Strong Integrity + Zebra LifeGuard) |
-| APP-01 / APP-02 (2a Win32 dep graph fold) / APP-03 / APP-04 / APP-05 (2b Installomator fold) / APP-06 / APP-07 / APP-08 | 55 | App lifecycle automation across all 4 platforms |
-| DRIFT-01 / DRIFT-02 / DRIFT-03 / DRIFT-04 / DRIFT-05 / DRIFT-06 / DRIFT-07 (2d encryption drift fold) | 56 | Drift detection + tenant migration |
-| CLEAN-01 / CLEAN-02 / CLEAN-03 / CLEAN-04 | 57 | DEFER-07 Android nav unification (4-file surgical retrofit) |
-| CLEAN-05 | 58 | DEFER-08 4-platform capability comparison doc (depends on Linux capability matrix from Phase 50; structural link-not-copy reference; C12 promotes to blocking when file lands) |
+| AUDIT-01 | 48 | Harness Path A copy: v1.4.1 → v1.5; FROZEN markers updated; sidecar renamed v1.5-audit-allowlist.json |
+| AUDIT-02 | 48 | C10 Linux frontmatter check — ships blocking from Phase 48 onward |
+| AUDIT-03 | 48 (scaffold) → 60 (promote to blocking) | C11 ops-domain anti-patterns — informational-first Phase 48; blocking Phase 60 |
+| AUDIT-04 | 48 (scaffold) → 60 (promote to blocking) | C12 4-platform comparison structural validation — informational-first; blocking when file exists (Phase 58+) |
+| AUDIT-05 | 48 (scaffold) → 60 (promote to blocking) | C13 broken-link automation — informational-first Phase 48; blocking after Phase 60 second-pass triage |
+| AUDIT-06 | 48–60 (each phase ships check-phase-NN.mjs) | Validator-as-deliverable; CI workflow registers each validator |
+| AUDIT-07 | 48 | regenerate-supervision-pins.mjs BASELINE_9 refresh — closes STATE.md out-of-band carry-over |
+| AUDIT-08 | 48 (first pass) → 60 (second pass) | Broken-link sweep first pass in Phase 48; second pass + milestone close report in Phase 60–61 |
+| CLEAN-01 | 57 | DEFER-07: docs/index.md Android H2 expansion (L1 / L2 / Admin sub-tables) |
+| CLEAN-02 | 57 | DEFER-07: docs/common-issues.md Android symptom routing (all 8 v1.4.1 scenario categories) |
+| CLEAN-03 | 57 | DEFER-07: docs/quick-ref-l1.md Android quick-reference section |
+| CLEAN-04 | 57 | DEFER-07: docs/quick-ref-l2.md Android quick-reference section |
+| CLEAN-05 | 58 | DEFER-08: docs/reference/4-platform-capability-comparison.md (5 platforms, 6 domains, link-not-copy) |
+| CLEAN-06 | 48 | Broken-link first-pass anchor sweep — C13 informational; findings inventory produced |
+| CLEAN-07 | 48 | Broken-link first-pass relative-path sweep — C13 informational; findings inventory produced |
 | CLEAN-08 | 59 | Hub integration: glossary cross-reference normalization across all 5 platform glossaries |
-| AUDIT-06 (per-phase validators) | 48-60 | Validator-as-deliverable discipline; each phase ships its own check-phase-NN.mjs |
-| AUDIT-01 (terminal re-audit) / AUDIT-03 / AUDIT-04 / AUDIT-05 (promotion to blocking) | 60 | Audit harness v1.5 finalization: graduate informational checks to blocking; second broken-link sweep pass |
-| (terminal verification) | 61 | Gap closure / terminal re-audit / milestone close report |
+| LIN-01 | 49 | linux-lifecycle/00-enrollment-overview.md — whitelist H2 + Out of Scope callout + BYOD caveat (1c FOLD) |
+| LIN-02 | 49 | docs/_glossary-linux.md — cross-collision audit first; reciprocal see-also in all 4 existing glossaries |
+| LIN-03 | 50 | admin-setup-linux/00-overview.md + 02-enrollment-profile.md (enrollment config) |
+| LIN-04 | 50 | admin-setup-linux/03-compliance-policy.md (4 settings-catalog categories; PITFALL-2 CA callout) |
+| LIN-05 | 50 | admin-setup-linux/01-intune-linux-agent.md — Identity Broker v2.0.2+ re-enrollment pitfall callout (1b FOLD) |
+| LIN-06 | 50 | admin-setup-linux/02-enrollment-profile.md — end-user enrollment steps embedded in admin setup phase |
+| LIN-07 | 51 | docs/decision-trees/09-linux-triage.md — Mermaid 4-branch triage tree |
+| LIN-08 | 51 | docs/l1-runbooks/30-linux-enrollment-failed.md |
+| LIN-09 | 51 | docs/l1-runbooks/31-linux-compliance-non-compliant.md |
+| LIN-10 | 51 | docs/l1-runbooks/32-linux-ca-blocking-web-access.md |
+| LIN-11 | 51 | docs/l1-runbooks/33-linux-agent-service-failure.md |
+| LIN-12 | 52 | docs/l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md |
+| LIN-13 | 50 | docs/reference/linux-capability-matrix.md — bilateral; Cross-Platform Equivalences section; explicit Not supported cells |
+| COMG-01 | 53 | operations/co-management/00-overview.md — all 7 workloads; 3 slider states; CB 2503 current |
+| COMG-02 | 53 | operations/co-management/02-windows-workload-sliders.md — low-risk-first migration sequence; Endpoint Protection HIGH-RISK callout |
+| COMG-03 | 53 | operations/co-management/01-windows-tenant-attach.md — tenant attach vs full co-management disambiguation |
+| COMG-04 | 53 | Inline callout blocks in co-management docs — macOS/iOS/Android non-equivalent analog migration paths |
+| COMG-05 | 53 | operations/co-management/03-cocmgmt-migration-paths.md — Autopatch prerequisites (Device Config + Office C2R workloads) |
+| PATCH-01 | 54 | operations/patch-management/01-windows-wufb-rings.md — WUfB ring topology; Autopatch disambiguation; PITFALL-9 |
+| PATCH-02 | 54 | Hotpatch H2 inside 01-windows-wufb-rings.md — default May 2026; VBS; opt-out toggle (2c FOLD) |
+| PATCH-03 | 54 | Driver/firmware update policy H2 inside 01-windows-wufb-rings.md — separate from quality/feature rings |
+| PATCH-04 | 54 | operations/patch-management/02-macos-update-enforcement.md — DDM only; legacy MDM commands deprecated + removed Apple OS 26 |
+| PATCH-05 | 54 | operations/patch-management/03-ios-update-lifecycle.md — supervised-only DDM constraint retracted iOS 17+ |
+| PATCH-06 | 54 | docs/admin-setup-ios/05-compliance-policy.md surgical retrofit — same-commit-atomic with Phase 54 iOS guide |
+| PATCH-07 | 54 | operations/patch-management/04-android-patch-delivery.md — MEETS_STRONG_INTEGRITY enforcement timeline; Android 13+ |
+| PATCH-08 | 54 | Zebra LifeGuard OTA section inside 04-android-patch-delivery.md — GA January 2026; Samsung KSP analog |
+| APP-01 | 55 | operations/app-lifecycle/01-windows-win32-msix-scale.md — supersedence behavior matrix; Required assignment callout; PITFALL-10 |
+| APP-02 | 55 | Dependency graph H2 inside 01-windows-win32-msix-scale.md — combined supersedence+dependency subgraph (2a FOLD) |
+| APP-03 | 55 | Win32ContentPrepTool packaging section inside 01-windows-win32-msix-scale.md — .intunewin format; detection rule types |
+| APP-04 | 55 | operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md — all supported macOS app types |
+| APP-05 | 55 | Installomator/Intuneomator community callout inside 02-macos-pkg-dmg-pipeline.md — MEDIUM confidence; non-Microsoft-supported (2b FOLD) |
+| APP-06 | 55 | operations/app-lifecycle/03-ios-vpp-licensing.md — device vs user licensing; reclamation behavior |
+| APP-07 | 55 | operations/app-lifecycle/04-android-mgp-lifecycle.md — MGP private-app publishing; AMAPI API change 2024 |
+| APP-08 | 55 | Zebra OEMConfig APK side-load section inside 04-android-mgp-lifecycle.md — NOT via MGP per v1.4.1 Phase 45 precedent |
+| DRIFT-01 | 56 | operations/drift-migration/01-windows-drift-detection.md — Intune Remediations detect+remediate; portal path |
+| DRIFT-02 | 56 | Canonical script-authoring pattern section inside 01-windows-drift-detection.md — exit codes; Log Analytics |
+| DRIFT-03 | 56 | operations/drift-migration/00-overview.md — cross-platform compliance drift signals (Windows/macOS/iOS/Android) |
+| DRIFT-04 | 56 | operations/drift-migration/04-tenant-migration-runbook.md — Windows BitLocker re-key options; Autopilot deregistration |
+| DRIFT-05 | 56 | macOS/iOS section inside 04-tenant-migration-runbook.md — ABM token re-issue; ADE Await-Configuration |
+| DRIFT-06 | 56 | Android section inside 04-tenant-migration-runbook.md — MGP re-binding sequence; per-ownership-mode re-provisioning |
+| DRIFT-07 | 56 | Cross-platform encryption-drift section inside 04-tenant-migration-runbook.md — BitLocker/FileVault/iOS/Android (2d FOLD) |
+
+**Coverage: 57/57 active requirements mapped — 100%, no orphans, no duplicates.**
 
 ---
 
-*Last updated: 2026-04-26 — v1.5 requirements defined. 53 active requirements across 4 pillars (8 CLEAN + 13 LIN + 5 COMG + 8 PATCH + 8 APP + 7 DRIFT + 8 AUDIT − overlap = 53 unique). 6 deferred to v1.5.1/v1.6+. Adversarial-review applied: 1 trim (LIN-DEFER-01), 6 folds (1b, 1c, 2a, 2b, 2c, 2d embedded as REQ sub-clauses), 5 keeps (3-surgical PATCH-06; 4-C10/C11/C12/C13 AUDIT-02/03/04/05). Phase mapping tentative; gsd-roadmapper finalizes traceability in Step 10.*
+*Last updated: 2026-04-26 — Traceability finalized by gsd-roadmapper. 57 active requirements across 4 pillars (8 CLEAN + 13 LIN + 5 COMG + 8 PATCH + 8 APP + 7 DRIFT + 8 AUDIT = 57 unique). 6 deferred to v1.5.1/v1.6+. Phase mapping finalized: 14 phases (48–61), 100% coverage. Ready for /gsd-plan-phase 48.*
