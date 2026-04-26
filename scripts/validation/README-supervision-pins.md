@@ -129,3 +129,32 @@ The helper imports only from `node:fs`, `node:path`, and `node:process`. It has:
 - Zero user-input path flow (all paths constructed via `join(process.cwd(), relPath)` with hard-coded `relPath` values from the harness scope).
 
 This contract mirrors Phase 42 D-25's no-shared-module harness contract; Phase 42 D-25's rationale applies equally here (auditability, reproducibility across milestones, no supply-chain surface).
+
+## Pre-commit advisory hook installation (Phase 48 D-21)
+
+`scripts/validation/pre-commit-advisory.sh` is a tracked reference copy of the
+pin-drift advisory hook. The actual hook lives at `.git/hooks/pre-commit` (not
+tracked in git). To install on a fresh clone:
+
+```bash
+cp scripts/validation/pre-commit-advisory.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+Verify by editing a pinned file (e.g., `docs/_glossary-android.md`) and running
+`git commit`. Expected output: `[pin-drift advisory] ...` warnings to stderr
+and a successful commit (advisory never blocks).
+
+The hook runs `regenerate-supervision-pins.mjs --report` against staged files
+matching the pinned-file glob:
+
+```
+docs/_glossary-android.md | docs/reference/android-capability-matrix.md |
+docs/admin-setup-android/ | docs/_glossary-linux.md | docs/admin-setup-linux/
+```
+
+If `node` is unavailable in PATH at commit time, the hook skips the report and
+still exits 0 (graceful degradation per D-21).
+
+CI advisory remains active in parallel (`audit-harness-v1.5-integrity.yml` →
+`pin-helper-advisory` job with `continue-on-error: true`) per D-22.
