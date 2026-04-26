@@ -3,7 +3,7 @@
 **Milestone:** v1.4.1
 **Goal:** Close all 6 v1.4 Android deferred items (DEFER-01..06) — complete Android Enterprise coverage (Knox ME, full AOSP per-OEM, COPE full admin) and harden v1.4 artifacts (audit allow-list, 60-day freshness, AOSP stub) — bringing Android to operational completeness parity with Windows / macOS / iOS.
 **REQ-ID convention:** AE-prefix + domain, continuing from v1.4 numbering. REQ-IDs pair 1:1 to requirements; phase mapping populated by `/gsd-new-milestone` roadmapper step.
-**Last updated:** 2026-04-24
+**Last updated:** 2026-04-25 (pre-close sync — checkboxes + traceability flipped to Validated; all 28 reqs shipped per PROJECT.md)
 
 ---
 
@@ -40,16 +40,16 @@
 
 ### COPE Full Admin (AECOPE-01..04 — Phase 46)
 
-- [ ] **AECOPE-01**: COPE full admin guide (`docs/admin-setup-android/08-cope-full-admin.md`) — parallel-structured to COBO guide; "Corporate-owned devices with work profile" enrollment profile; default + 65-year staging tokens; naming templates (`{{SERIAL}}`, `{{SERIALLAST4DIGITS}}`, `{{DEVICETYPE}}`, `{{ENROLLMENTDATETIME}}`, `{{UPNPREFIX}}`, `{{USERNAME}}`, `{{RAND:x}}`); Android 8-15 version breakpoints; `afw#setup` + NFC availability by Android version (removed Android 11+); **Android 15 Private space unmanaged callout (NEW for v1.4.1)**; COPE-vs-COBO decision matrix; research-gated path confirmation (full admin vs deprecation-rationale)
-- [ ] **AECOPE-02**: Add COPE row to `docs/reference/android-capability-matrix.md` (6th Android column); preserve Cross-Platform Equivalences Section structure
-- [ ] **AECOPE-03**: Retrofit Phase 36 COBO `§COPE Migration Note` (`03-fully-managed-cobo.md:58-66`) — replace "deferred to v1.4.1" sentence with forward link to `08-cope-full-admin.md` (ATOMIC same-commit with AECOPE-01)
-- [ ] **AECOPE-04**: COPE glossary back-link in `docs/_glossary-android.md` (WPCO term already exists from Phase 34); add see-also + anchor to new COPE admin doc
+- [x] **AECOPE-01**: COPE full admin guide (`docs/admin-setup-android/08-cope-full-admin.md`) — parallel-structured to COBO guide; "Corporate-owned devices with work profile" enrollment profile; default + 65-year staging tokens; naming templates (`{{SERIAL}}`, `{{SERIALLAST4DIGITS}}`, `{{DEVICETYPE}}`, `{{ENROLLMENTDATETIME}}`, `{{UPNPREFIX}}`, `{{USERNAME}}`, `{{RAND:x}}`); Android 8-15 version breakpoints; `afw#setup` + NFC availability by Android version (removed Android 11+); **Android 15 Private space unmanaged callout (NEW for v1.4.1)**; COPE-vs-COBO decision matrix; research-gated path confirmation (full admin vs deprecation-rationale)
+- [x] **AECOPE-02**: Add COPE row to `docs/reference/android-capability-matrix.md` (6th Android column); preserve Cross-Platform Equivalences Section structure
+- [x] **AECOPE-03**: Retrofit Phase 36 COBO `§COPE Migration Note` (`03-fully-managed-cobo.md:58-66`) — replace "deferred to v1.4.1" sentence with forward link to `08-cope-full-admin.md` (ATOMIC same-commit with AECOPE-01)
+- [x] **AECOPE-04**: COPE glossary back-link in `docs/_glossary-android.md` (WPCO term already exists from Phase 34); add see-also + anchor to new COPE admin doc
 
 ### Integration & Re-Audit (AEINTEG-01..04 — Phase 47)
 
 - [x] **AEINTEG-01**: Atomic unified-rebuilds — capability matrix (merge Knox + AOSP + COPE rows in single wave); `00-overview.md` Mermaid (Knox branch + AOSP leaves); glossary (single-author sequencing to avoid line-15 alphabetical index conflicts); mirrors v1.4 Phase 42 Wave 1/2 atomic rebuild pattern
 - [x] **AEINTEG-02**: Audit harness check extensions — C4 regex expanded to include Knox/KME/per-OEM terms; C6 PITFALL-7 preservation check (informational-first grace per D-29); C7 Knox-attribution check (informational-first); C9 COPE banned-phrase check (informational-first via sidecar JSON so list updates atomically)
-- [ ] **AEINTEG-03**: Terminal re-audit via `scripts/validation/v1.4.1-milestone-audit.mjs` — expect C1 SafetyNet PASS + C2 supervision PASS (27 v1.4 pins + new v1.4.1 pins) + C3 AOSP word count PASS (content-migrated) + C4 deferred-file guard PASS + C5 freshness PASS (all files at 60-day baseline); append `re_audit_resolution:` block to `.planning/milestones/v1.4-MILESTONE-AUDIT.md` with commit SHA + timestamp; flip `status: tech_debt → passed`
+- [x] **AEINTEG-03**: Terminal re-audit via `scripts/validation/v1.4.1-milestone-audit.mjs` — expect C1 SafetyNet PASS + C2 supervision PASS (27 v1.4 pins + new v1.4.1 pins) + C3 AOSP word count PASS (content-migrated) + C4 deferred-file guard PASS + C5 freshness PASS (all files at 60-day baseline); append `re_audit_resolution:` block to `.planning/milestones/v1.4-MILESTONE-AUDIT.md` with commit SHA + timestamp; flip `status: tech_debt → passed`
 - [x] **AEINTEG-04**: PROJECT.md traceability — move AEAUDIT-02..05 / AEKNOX-01..07 / AEAOSPFULL-01..09 / AECOPE-01..04 from Active → Validated; close DEFER-01..06 in Context notes; update Last Updated footer
 
 ---
@@ -83,34 +83,34 @@
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| AEAUDIT-02 | 43 | Active |
-| AEAUDIT-03 | 43 | Active |
-| AEAUDIT-04 | 43 | Active |
-| AEAUDIT-05 | 43 | Active |
-| AEKNOX-01 | 44 | Active |
-| AEKNOX-02 | 44 | Active |
-| AEKNOX-03 | 44 | Active |
-| AEKNOX-04 | 44 | Active |
-| AEKNOX-05 | 44 | Active |
-| AEKNOX-06 | 44 | Active |
-| AEKNOX-07 | 44 | Active |
-| AEAOSPFULL-01 | 45 | Active |
-| AEAOSPFULL-02 | 45 | Active |
-| AEAOSPFULL-03 | 45 | Active |
-| AEAOSPFULL-04 | 45 | Active |
-| AEAOSPFULL-05 | 45 | Active |
-| AEAOSPFULL-06 | 45 | Active |
-| AEAOSPFULL-07 | 45 | Active |
-| AEAOSPFULL-08 | 45 | Active |
-| AEAOSPFULL-09 | 45 | Active |
-| AECOPE-01 | 46 | Active |
-| AECOPE-02 | 46 | Active |
-| AECOPE-03 | 46 | Active |
-| AECOPE-04 | 46 | Active |
-| AEINTEG-01 | 47 | Active |
-| AEINTEG-02 | 47 | Active |
-| AEINTEG-03 | 47 | Active |
-| AEINTEG-04 | 47 | Active |
+| AEAUDIT-02 | 43 | Validated |
+| AEAUDIT-03 | 43 | Validated |
+| AEAUDIT-04 | 43 | Validated |
+| AEAUDIT-05 | 43 | Validated |
+| AEKNOX-01 | 44 | Validated |
+| AEKNOX-02 | 44 | Validated |
+| AEKNOX-03 | 44 | Validated |
+| AEKNOX-04 | 44 | Validated |
+| AEKNOX-05 | 44 | Validated |
+| AEKNOX-06 | 44 | Validated |
+| AEKNOX-07 | 44 | Validated |
+| AEAOSPFULL-01 | 45 | Validated |
+| AEAOSPFULL-02 | 45 | Validated |
+| AEAOSPFULL-03 | 45 | Validated |
+| AEAOSPFULL-04 | 45 | Validated |
+| AEAOSPFULL-05 | 45 | Validated |
+| AEAOSPFULL-06 | 45 | Validated |
+| AEAOSPFULL-07 | 45 | Validated |
+| AEAOSPFULL-08 | 45 | Validated |
+| AEAOSPFULL-09 | 45 | Validated |
+| AECOPE-01 | 46 | Validated |
+| AECOPE-02 | 46 | Validated |
+| AECOPE-03 | 46 | Validated |
+| AECOPE-04 | 46 | Validated |
+| AEINTEG-01 | 47 | Validated |
+| AEINTEG-02 | 47 | Validated |
+| AEINTEG-03 | 47 | Validated |
+| AEINTEG-04 | 47 | Validated |
 
 **Coverage:** 28/28 requirements mapped (100%). No orphans. No duplicates.
 
