@@ -152,7 +152,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
   - [x] 48-06-PLAN.md — audit-harness-v1.5-integrity.yml + pre-commit-advisory.sh + README install (AUDIT-06 CI registration; D-21)
   - [x] 48-07-PLAN.md — .mlc-config.json (markdown-link-check config; PITFALL-14 mitigation)
   - [x] 48-08-PLAN.md — GFM capital-anchor precheck + inventory scaffold (CLEAN-06; PITFALL-15)
-  - [ ] 48-09-PLAN.md — Full markdown-link-check sweep + categorize A/B/C + finalize 48-VERIFICATION-broken-links.md + ROADMAP SC#1 fix + terminal sanity (AUDIT-08, CLEAN-06, CLEAN-07)
+  - [x] 48-09-PLAN.md — Full markdown-link-check sweep + categorize A/B/C + finalize 48-VERIFICATION-broken-links.md + ROADMAP SC#1 fix + terminal sanity (AUDIT-08, CLEAN-06, CLEAN-07)
 **Methodology notes**:
   - FROZEN marker from v1.4.1 copy updated: "Frozen-predecessor reproducibility anchor" comment references v1.4.1 (the new file's predecessor)
   - C10 (Linux frontmatter) ships blocking immediately — frontmatter is structural
