@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 
 ## Current State
 
-**v1.4 shipped 2026-04-24; v1.4.1 started 2026-04-24.** Five milestones complete — 42 phases, 146 plans, 143+ documentation files shipped across Windows Autopilot, macOS ADE, iOS/iPadOS, and Android Enterprise. v1.4 delivered 25 Android Enterprise docs: 13-term disambiguation glossary, 5-mode enrollment framework (COBO / BYOD Work Profile / Dedicated / ZTE / AOSP stub), tri-portal admin setup suite (Intune admin center + Managed Google Play + Zero-Touch portal), 6 L1 runbooks + L1 triage tree, 3 L2 investigation runbooks + log-collection guide, Android capability matrix with Cross-Platform Equivalences section (iOS Supervision↔Android Fully Managed, Apple ADE↔Google Zero-Touch, iOS User Enrollment↔Android Work Profile), reciprocal glossary see-also, and v1.4-MILESTONE-AUDIT.md produced via committed 5-check Node audit harness. Audit exited `tech_debt` (accepted) with defer items routed to v1.4.1. **v1.4.1 scope:** close all 6 v1.4 Android deferred items — DEFER-01 allow-list expansion, DEFER-02 60-day freshness normalization, DEFER-03 Phase 39 AOSP stub re-validation, DEFER-04 Knox Mobile Enrollment, DEFER-05 full AOSP per-OEM expansion (RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest), DEFER-06 COPE full admin path — bringing Android to operational completeness parity with Windows/macOS/iOS. DEFER-07 cross-platform nav unification and DEFER-08 4-platform comparison doc deferred to v1.5.
+**v1.4.1 shipped 2026-04-25; v1.5 started 2026-04-26.** Six milestones complete — 47 phases, 179 plans, 179 documentation files shipped across Windows Autopilot, macOS ADE, iOS/iPadOS, and Android Enterprise. v1.4.1 closed all six v1.4 Android deferred items: Knox Mobile Enrollment (admin guide + L1 #28 + L2 #22 + capability matrix + Mermaid 5→6 branches + glossary), full per-OEM AOSP expansion across RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest (5 admin guides + OEM matrix + L1 #29 + L2 #23), COPE Full Admin path (Path A locked + capability matrix COPE column + Private Space glossary + COBO migration-note trim), audit harness v1.4.1-milestone-audit.mjs (8/8 PASS, sidecar 18 pins, Knox/COPE/AOSP token expansions), 60-day freshness normalization, and AOSP stub envelope resolution. **v1.5 scope:** Linux (Ubuntu LTS) as the 5th platform + cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration) across all four existing platforms + close v1.4 deferrals (DEFER-07 Android nav unification, DEFER-08 4-platform capability comparison) + cross-platform broken-link sweep + audit harness extension to `v1.5-milestone-audit.mjs`. Three-pillar milestone that matures the suite from per-platform enrollment coverage into operational completeness.
 
 ### What's been built
 - 143+ markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise
@@ -36,6 +36,15 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - iOS/iPadOS L1 triage runbooks — 6 L1 scenario runbooks (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked) + iOS triage decision tree (v1.3)
 - iOS/iPadOS L2 investigation runbooks — 4 L2 runbooks (log collection, ADE token & profile delivery, app install failure, compliance & CA timing) + 00-index.md iOS L2 section + D-22 placeholder retrofit across 9 files closing cross-phase links from Phase 30 (v1.3)
 - Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
+
+<details>
+<summary>Previous Milestone: v1.4.1 Android Enterprise Completion & v1.4 Cleanup</summary>
+
+**Shipped:** 2026-04-25 | **Phases:** 43-47 | **Plans:** 33
+
+Closed all six v1.4 deferred items (DEFER-01..06) and brought Android to operational completeness parity with Windows / macOS / iOS. Delivered: Knox Mobile Enrollment full Samsung admin path (`07-knox-mobile-enrollment.md` + L1 #28 + L2 #22 + capability matrix Knox row + Mermaid 5→6 branches + Knox/KME/KPE glossary entries + reciprocal ZT/COBO mutual-exclusion callouts); full per-OEM AOSP expansion across RealWear (HMT-1/HMT-1Z1/Navigator 500) + Zebra (WS50 OEMConfig-via-Intune-APK) + PICO (4 Enterprise / Neo3) + HTC VIVE Focus (3 / XR Elite / Focus Vision) + Meta Quest (2/3/3s/Pro with Feb 2026 wind-down risk flag) plus `aosp-oem-matrix.md` reference + L1 #29 + L2 #23; COPE Full Admin Path A LOCKED (`08-cope-full-admin.md` 11-H2 mirror of COBO + capability matrix COPE column at index-1 + Private Space glossary H3 + COBO migration-note γ3 sentence-scoped trim); audit harness `v1.4.1-milestone-audit.mjs` 8/8 PASS (5 blocking C1-C5 + 3 informational C6/C7/C9, sidecar expanded ~10→18 pins, C4 token list 8→24, C6 targets 1→6 AOSP files, C7 Knox-suffix 5→11 forms, C9 cope_banned_phrases 3→8 patterns, `regenerate-supervision-pins.mjs` helper + CI workflow 4-job + pre-commit hook); 60-day freshness normalization across L2 runbooks 18-21 + `admin-template-android.md`; AOSP stub envelope resolution (`06-aosp-stub.md` 1089→696 words via content-migration to per-OEM Phase 45 files). Phase 47 atomic surgical re-canonicalization at 3 SC#1 hotspots; v1.4-MILESTONE-AUDIT.md status flipped `tech_debt` → `passed` from fresh auditor worktree per Phase 42 D-02.
+
+</details>
 
 <details>
 <summary>Previous Milestone: v1.4 Android Enterprise Enrollment Documentation</summary>
@@ -165,25 +174,32 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ Terminal re-audit via v1.4.1-milestone-audit.mjs exits 0 (8/8 PASS — 5 blocking C1-C5 + 3 informational C6/C7/C9); v1.4-MILESTONE-AUDIT.md status flipped tech_debt→passed; re_audit_resolution sibling keys appended for DEFER-01/02/08/09/10 (audit-doc canonical numbering) from fresh auditor worktree per Phase 42 D-02 — Phase 47 / v1.4.1 (AEINTEG-03)
 - ✓ PROJECT.md traceability closure — 24 v1.4.1 reqs flipped Active→Validated (AEAUDIT-02..05 + AEKNOX-01..07 + AEAOSPFULL-01..09 + AECOPE-01..04); Closed Deferred Items (v1.4→v1.4.1) subsection enumerating DEFER-01..06 with closing commit SHAs; footer refreshed to v1.4.1 milestone closure record — Phase 47 / v1.4.1 (AEINTEG-04)
 
-## Current Milestone: v1.4.1 Android Enterprise Completion & v1.4 Cleanup
+## Current Milestone: v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup
 
-**Goal:** Close all v1.4 deferred items — complete Android Enterprise coverage (Knox Mobile Enrollment, full AOSP per-OEM, COPE full admin path) and harden v1.4 artifacts (audit allow-list expansion, 60-day freshness normalization, AOSP stub re-validation) — bringing Android to the operational completeness bar already held by Windows, macOS, and iOS/iPadOS.
+**Goal:** Add Linux (Ubuntu LTS) as the 5th platform, deliver enterprise operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration) across all four existing platforms, and close v1.4 deferrals + cross-platform documentation hardening — a three-pillar milestone that matures the suite from per-platform enrollment coverage into operational completeness.
 
 **Target features (in scope):**
 
-*Cleanup & hardening (v1.4 carry-forward):*
-- Audit allow-list expansion — grow `v1.4-audit-allowlist.json` pins from ~10 to ~37 for legitimate iOS-attributed supervision bridge-prose refs in `_glossary-android.md` + `android-capability-matrix.md` Cross-Platform Equivalences (DEFER-01)
-- `last_verified` 60-day freshness normalization — retroactively re-date L2 runbooks 18-21 from 90-day → 60-day cycle + normalize `admin-template-android.md` frontmatter (DEFER-02)
-- Phase 39 AOSP stub re-validation — body is ~1089 words vs. self-certified 600-900 envelope; decide trim vs. update envelope (DEFER-03)
+*Pillar 1 — Cleanup & cross-platform hardening:*
+- DEFER-07 / AENAVUNIFY-04 — Android nav unification: backport Android sections into `docs/index.md` + `common-issues.md` + `quick-ref-l1.md` + `quick-ref-l2.md` (closes v1.4 hub-index gap where Android currently has only a stub)
+- DEFER-08 / AECOMPARE-01 — 4-platform capability comparison document (Windows + macOS + iOS + Android side-by-side; structural reference doc with feature parity matrix across enrollment, identity, app delivery, compliance, conditional access, monitoring)
+- Cross-platform broken-link sweep — systematic anchor/link audit across all 179 markdown files, terminology drift check, glossary normalization across `_glossary-macos.md` + `_glossary-ios.md` + `_glossary-android.md` + Windows glossary
 
-*New content (Android completeness):*
-- Knox Mobile Enrollment — dedicated Samsung admin guide + provisioning-method matrix row + L1/L2 content; paid Knox license tier + Samsung-specific scope + reciprocal KME↔Zero-Touch mutual-exclusion callout (DEFER-04)
-- Full AOSP per-OEM expansion — lift v1.4 hard-scoped stub into real coverage across RealWear + Zebra + Pico + HTC VIVE Focus + Meta Quest with OEM capability matrix and per-vendor provisioning caveats; PITFALL-7 "not supported under AOSP" framing preserved (DEFER-05)
-- COPE full admin path — full admin guide beyond the COBO migration-note callout, OR a deprecation-rationale doc if Google's WPCO trajectory has hardened by research/discuss-phase time (DEFER-06)
+*Pillar 2 — Linux via Intune (Ubuntu LTS):*
+- Linux Intune client foundation — taxonomy, Ubuntu 20.04 / 22.04 / 24.04 LTS framework, deb-based Microsoft Intune Linux agent overview, Linux glossary (with iOS/Android-style cross-platform callouts)
+- Linux admin setup — enrollment via Microsoft Intune Linux client, compliance policy (with Linux-supported settings), conditional access scope (web-app-CA only on Linux — no native CA), supported app delivery (script-based; no MSI/MSIX/.pkg analog)
+- Linux L1 triage — decision tree + scenario runbooks (enrollment failed, compliance non-compliant, CA blocking web-app access, agent service `intune-portal` failures)
+- Linux L2 investigation — log collection (`/var/log/microsoft/intune/`), agent diagnostics, kernel/distro version traps (Ubuntu HWE kernels, snap-based agent vs deb)
 
-**Deferrals (tracked for v1.5):**
-- Cross-platform nav integration — Android backport into `docs/index.md` + `common-issues.md` + `quick-ref-l1.md` + `quick-ref-l2.md` (DEFER-07, AENAVUNIFY-04) → v1.5
-- 4-platform capability comparison document (Windows + macOS + iOS + Android) → v1.5 (DEFER-08, AECOMPARE-01)
+*Pillar 3 — Operational depth (Windows + macOS + iOS + Android):*
+- Co-management (SCCM ↔ Intune) — workload sliders, ConfigMgr-to-Intune migration paths, tenant attach (Windows-led; macOS/iOS/Android contextual notes for non-Windows admins)
+- Patch & update management — Windows Update for Business rings + driver/firmware via WUfB, macOS update enforcement (`forceDelayedSoftwareUpdates`, `softwareUpdate` MDM commands), iOS update lifecycle (supervised vs unsupervised behaviors), Android patch delivery (Play Integrity tier impact, OEM-specific delays — Samsung KSP, Zebra LifeGuard)
+- App lifecycle automation — Win32/MSIX packaging at scale + supersedence + dependency graphs, macOS .pkg/.dmg pipelines + Installomator/Munki adjacency, iOS VPP device-licensing vs user-licensing flows, Android Managed Google Play app lifecycle + private-app publishing
+- Drift detection + tenant migration — configuration drift workflows (deployment-report-driven remediation), tenant-to-tenant migration runbooks per platform (BitLocker re-key challenges on Windows, ABM token re-issue on macOS/iOS, MGP re-binding on Android)
+
+*Pillar 4 — Validation tooling:*
+- Audit harness extension — `v1.5-milestone-audit.mjs` extends v1.4.1 harness lineage with Linux platform coverage + ops-domain checks (co-mgmt-doc presence, patch-cycle freshness across 4 platforms, app-lifecycle anchor reachability, drift-doc cross-references, 4-platform-comparison-doc structural validity)
+- Per-phase `check-phase-NN.mjs` validators continuing v1.3+ pattern; validator-as-deliverable discipline preserved
 
 ### Active
 
@@ -192,24 +208,28 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 <!-- Explicit boundaries. Includes reasoning to prevent re-adding. -->
 
 - Environment-specific configurations — docs are generic, teams customize locally
-- Frontend UI implementation — deferred to future milestone
-- Backend API integration with Graph — deferred to future milestone
-- Automated remediation workflows — deferred to future milestone
-- Linux device enrollment — Intune Linux support is limited
-- ChromeOS management — different management platform (Google Admin)
-- Android TV / Android Auto / Wear OS — specialized device classes, not Intune enrollment scope (v1.4 exclusion)
-- Android Device Administrator (DA) legacy mode — deprecated since Android 10 for new enrollments (v1.4 exclusion)
-- Samsung E-FOTA firmware management — orthogonal to Intune enrollment (v1.4 exclusion)
-- Localization / non-English content — consistent with v1.0-v1.3 English-only policy
+- Frontend UI implementation — code scaffolding remains dormant in v1.5
+- Backend API integration with Graph — code scaffolding remains dormant in v1.5
+- Automated remediation workflows — code scaffolding remains dormant in v1.5
+- Linux non-Ubuntu distros (RHEL / Rocky / Alma / Debian / SUSE / Fedora) — Ubuntu LTS only in v1.5 per scope decision; could be revisited in v1.6+
+- Linux server / IoT scenarios — Linux desktop client only in v1.5
+- ChromeOS management — different management platform (Google Admin); excluded from v1.0–v1.5
+- BYOPC / Cloud PC / Windows 365 / Azure Virtual Desktop — defer to v1.6 candidate scope
+- Web/SaaS Entra app gallery + SCIM provisioning — orthogonal identity-led surface, not device-led
+- Android TV / Android Auto / Wear OS — specialized device classes, not Intune enrollment scope (v1.4 exclusion preserved)
+- Android Device Administrator (DA) legacy mode — deprecated since Android 10 for new enrollments (v1.4 exclusion preserved)
+- Samsung E-FOTA firmware management — orthogonal to Intune enrollment (v1.4 exclusion preserved)
+- Localization / non-English content — consistent with v1.0-v1.4.1 English-only policy
 
 ## Context
 
-- 118 markdown files in `docs/` covering APv1, APv2, macOS ADE, and iOS/iPadOS enrollment frameworks (v1.4 Android coverage adds to this)
+- 179 markdown files in `docs/` covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise enrollment frameworks (v1.5 Linux coverage adds to this; ops-depth content distributed across all 4 existing platforms)
 - Three audiences served: L1 Service Desk (scripted), L2 Desktop Engineering (technical), Intune Admins (configuration)
-- Three platforms shipped through v1.3: Windows Autopilot, macOS ADE, iOS/iPadOS. Android Enterprise adds a fourth in v1.4.
-- Code scaffolding exists across all three tiers (PowerShell, Python, React) but is not yet integrated
+- Four platforms shipped through v1.4.1: Windows Autopilot, macOS ADE, iOS/iPadOS, Android Enterprise. Linux (Ubuntu LTS) adds a fifth in v1.5.
+- Code scaffolding exists across all three tiers (PowerShell, Python, React) but is not yet integrated; remains dormant in v1.5
 - Docs structured for easy export to SharePoint/Confluence
-- v1.4 introduces tri-portal admin template pattern (Intune + Managed Google Play + Zero-Touch portal) — first deviation from dual-portal pattern established in v1.2 macOS
+- v1.4 introduced tri-portal admin template pattern (Intune + Managed Google Play + Zero-Touch portal) — first deviation from dual-portal pattern established in v1.2 macOS; v1.4.1 added 4th-portal Knox overlay for Samsung
+- v1.5 introduces ops-domain documentation pattern (per-domain × per-platform matrix) layered on top of per-platform enrollment coverage — first time content axis is operational rather than enrollment-driven
 
 ## Closed Deferred Items (v1.4 → v1.4.1)
 
@@ -266,4 +286,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-25 — v1.4.1 shipped. v1.4 audit re-run with status: passed; all 28 reqs validated; DEFER-01..06 closed in Closed Deferred Items subsection. v1.4.1 ships Knox Mobile Enrollment + per-OEM AOSP expansion (RealWear/Zebra/Pico/HTC VIVE Focus/Meta Quest) + COPE Full Admin + audit harness 8/8 PASS via v1.4.1-milestone-audit.mjs.*
+*Last updated: 2026-04-26 — v1.5 milestone started. Three pillars: (1) cleanup & cross-platform hardening (DEFER-07 Android nav unification + DEFER-08 4-platform comparison + broken-link sweep), (2) Linux Ubuntu LTS as 5th platform, (3) operational depth across Windows + macOS + iOS + Android (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration). Audit harness extends to v1.5-milestone-audit.mjs. Phase numbering continues from 47 → v1.5 spans Phases 48+. Requirements + roadmap to be defined next.*
