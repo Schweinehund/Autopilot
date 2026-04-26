@@ -1,0 +1,14 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^https://learn\\.microsoft\\.com" },
+    { "pattern": "^https://docs\\.microsoft\\.com" },
+    { "pattern": "^https://techcommunity\\.microsoft\\.com" },
+    { "pattern": "^https://portal\\.azure\\.com" },
+    { "pattern": "^https://endpoint\\.microsoft\\.com" },
+    { "pattern": "^https://intune\\.microsoft\\.com" }
+  ],
+  "retryOn429": true,
+  "retryCount": 2,
+  "timeout": "10s",
+  "aliveStatusCodes": [200, 201, 206, 301, 302, 303, 307, 308]
+}
