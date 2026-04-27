@@ -106,7 +106,7 @@ Expected: `uname -r` matches GA or HWE band per the version-track matrix; `dpkg 
 
 **Entry condition:** L1 escalation packet shows enrollment failed at package-install stage AND `dpkg -l intune-portal` returns no rows OR shows an unexpected version. The user may have followed deprecated preview-era instructions referencing a snap installation path.
 
-See [deb-repository](../_glossary-linux.md#deb-repository) and [snap](../_glossary-linux.md#snap) for delivery-path context. `intune-portal` is delivered EXCLUSIVELY as a deb from `packages.microsoft.com` per Phase 49 D-04 — there is no GA snap distribution.
+See [deb (package format)](../_glossary-linux.md#deb-package-format) for delivery-path context. `intune-portal` is delivered EXCLUSIVELY as a deb from `packages.microsoft.com` per Phase 49 D-04 — there is no GA snap distribution; snap is a deprecated preview path only.
 
 ### Symptom
 
@@ -171,7 +171,7 @@ Expected: `which intune-portal` resolves to the deb system path; `dpkg -l intune
 
 **Entry condition:** L1 escalation packet (typically from L1 [33-linux-agent-service-failure.md](../l1-runbooks/33-linux-agent-service-failure.md)) shows that the user reports `intune-agent` is "not running," but the L1 responder may have queried the wrong systemd scope (system vs user). `intune-agent.timer` is a USER-scope unit; querying it with `systemctl status intune-agent` (no `--user`) returns "Unit not found" or wrong information.
 
-See [systemd](../_glossary-linux.md#systemd) and [intune-agent.timer](../_glossary-linux.md#intune-agent.timer) for service-management context.
+See [systemd](../_glossary-linux.md#systemd) and [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for service-management context.
 
 ### Symptom
 

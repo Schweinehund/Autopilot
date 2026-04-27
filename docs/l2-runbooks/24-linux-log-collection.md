@@ -99,7 +99,7 @@ File-based log paths are secondary surfaces. `/var/log/dpkg.log` and `/var/log/i
 
 > **Source confidence:** `/var/log/microsoft/intune/` paths are LOW-MEDIUM confidence — Microsoft Learn does not document this path for Ubuntu `intune-portal` as of 2026-04-27. `journalctl` is the confirmed primary surface (Section 1). `/var/log/dpkg.log` and `/var/log/intune-update.log` are documented or community-confirmed. Verify `/var/log/microsoft/intune/` presence on the affected device before citing any files from this path in an escalation packet, and re-verify at `review_by` cadence.
 
-See [dpkg](../_glossary-linux.md#dpkg) and [apt](../_glossary-linux.md#apt) for the Debian package toolchain context.
+See [dpkg](../_glossary-linux.md#dpkg) and [APT repository](../_glossary-linux.md#apt-repository) for the Debian package toolchain context.
 
 ### 2.1 /var/log/dpkg.log `[HIGH, last_verified 2026-04-27]`
 
@@ -138,7 +138,7 @@ If this path does not exist on the affected device (likely on a clean Ubuntu 22.
 
 Package-state queries confirm the delivery path (deb from `packages.microsoft.com` is GA per Phase 49 prerequisites) and detect any erroneous snap package on the device. All commands are read-only — no `sudo` per the read-vs-write apt distinction (DPO-Phase52-01).
 
-See [intune-portal](../_glossary-linux.md#intune-portal) for the deb package context.
+See [intune-portal](../_glossary-linux.md#intune-portal-package) for the deb package context.
 
 ### 3.1 deb installation confirmation `[HIGH, last_verified 2026-04-27]`
 
