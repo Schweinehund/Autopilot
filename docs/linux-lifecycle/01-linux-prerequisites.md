@@ -51,3 +51,25 @@ When the `intune-portal` package updates to include Identity Broker v2.0.2+, the
 **Source:** Microsoft Learn — Linux deployment guide (verified 2026-04, HIGH confidence).
 
 **Admin action required:** See the [Phase 50 LIN-05 admin pitfall callout](../admin-setup-linux/01-intune-linux-agent.md#identity-broker-v202-re-enrollment) for the step-by-step review checklist (audit CA assignments, filters, Entra group membership; re-target post-re-enrollment device IDs). Phase 49 anchors the breakpoint in this matrix-doc context; Phase 50 owns the detailed admin-action callout.
+
+## Hardware and Software Prerequisites
+
+Beyond the supported Ubuntu LTS versions in the matrix above, the Microsoft Intune Linux client requires the following hardware and software prerequisites. Devices that fail any of these gates cannot enroll.
+
+### Architecture and Hardware
+
+- **CPU architecture:** x86_64 (64-bit Intel / AMD) only. ARM64 / aarch64 is NOT supported.
+- **Display environment:** GNOME graphical desktop session. Headless / server-only / IoT installations are NOT supported — `intune-portal` requires interactive GUI sign-in.
+- **Supported environments:** Physical hardware, Azure-hosted virtual machines, Hyper-V virtual machines. Other hypervisor hosts are not officially supported (use cases possible but undocumented by Microsoft).
+
+### Required Software Components
+
+- **Microsoft Edge for Linux 102.x or later:** Required for web-app Conditional Access flows. Install via the Microsoft Edge for Linux package from `packages.microsoft.com`.
+- **`intune-portal` deb package:** Distributed exclusively via `packages.microsoft.com`. NOT available via snap, NOT available via the default Ubuntu archive. See the [Linux Provisioning Glossary](../_glossary-linux.md#packagesmicrosoftcom) for the package source convention.
+- **`microsoft-identity-broker` systemd service:** Installed as a dependency of `intune-portal`. See [Linux Provisioning Glossary — microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker).
+- **`intune-agent.timer` systemd unit:** User-scoped systemd timer activated post-enrollment. See [Linux Provisioning Glossary — intune-agent.timer](../_glossary-linux.md#intune-agenttimer).
+
+### Networking
+
+- **Outbound HTTPS to Microsoft Intune endpoints:** Required for enrollment, compliance reporting, and Conditional Access evaluation. Specific endpoint list maintained by Microsoft Learn — `last_verified` discipline applies.
+- **Outbound HTTPS to `packages.microsoft.com`:** Required for `intune-portal` and Microsoft Edge for Linux installation and updates.
