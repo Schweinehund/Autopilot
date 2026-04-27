@@ -162,6 +162,28 @@ The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequi
 
 > **Android MAM-WE investigation is out of Phase 41 scope** -- deferred to **ADDTS-ANDROID-01** future milestone. Selective wipe failures, PIN loop, app protection not applying, and MAM-specific compliance failures currently have no Android L2 runbook. Escalate MAM-specific issues directly to Microsoft Support with Company Portal log upload (per [Android Log Collection Guide](18-android-log-collection.md)) + app protection policy JSON export.
 
+## Linux L2 Runbooks
+
+> **Version gate:** The runbooks below cover Linux Intune client (`intune-portal`) on Ubuntu 22.04 LTS and 24.04 LTS, delivered as a deb package from `packages.microsoft.com`. There is no GA snap distribution.
+> For Android L2 runbooks, see above. For iOS L2 runbooks, see above. For macOS ADE runbooks, see above. For Windows Autopilot runbooks, see the tables above.
+
+The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite for all Linux L2 investigation runbooks** -- collect `journalctl` output, file-based log snapshots, and `dpkg`/`apt` package-state queries before beginning any investigation.
+
+### When to Use
+
+| Runbook | When to Use | Prerequisite |
+|---------|-------------|--------------|
+| [Linux Log Collection Guide](24-linux-log-collection.md) | Before starting any Linux L2 investigation -- collect `journalctl` output, `/var/log/dpkg.log` and `/var/log/intune-update.log` snapshots, and `dpkg -l intune-portal` package state | None |
+| [Linux Agent Investigation](25-linux-agent-investigation.md) | `intune-agent.timer` not running after L1 remediation, HWE kernel compatibility suspected, snap vs deb delivery path confusion, or Identity Broker v2.0.2+ re-enrollment detected | [Linux Log Collection](24-linux-log-collection.md) |
+
+### Linux L1 Escalation Mapping
+
+| L1 Runbook Source | L2 Runbook |
+|-------------------|------------|
+| [L1 30: Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md) | [Linux Log Collection](24-linux-log-collection.md) (Section 3 package-state queries) + [Linux Agent Investigation](25-linux-agent-investigation.md) Trap A (kernel) / Trap B (snap-vs-deb) / Trap D (Identity Broker) based on cause |
+| [L1 31: Linux Compliance Non-Compliant](../l1-runbooks/31-linux-compliance-non-compliant.md) | [Linux Log Collection](24-linux-log-collection.md) Section 2 (file-based paths) for `/var/log/intune-update.log` custom-compliance Bash exit-code reading |
+| [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md) | [Linux Agent Investigation](25-linux-agent-investigation.md) Trap C (service-state user-scope — direct primary L2 escalation target) |
+
 ## Related Resources
 
 - [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
@@ -179,6 +201,7 @@ The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequi
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-27 | Added Linux L2 runbook section (Runbooks 24-25 + Linux L1 Escalation Mapping) — Phase 52 append-only edit per Phase 42 D-03 | -- |
 | 2026-04-23 | Added Android L2 runbook section (runbooks 18-21 + Android MAM-WE advisory) | -- |
 | 2026-04-17 | Added iOS L2 runbook section (runbooks 14-17 + MAM-WE advisory) | -- |
 | 2026-04-14 | Added macOS ADE runbook section | -- |
