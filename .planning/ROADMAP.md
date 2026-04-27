@@ -187,7 +187,13 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
   3. End user on Ubuntu 22.04 or 24.04 LTS can complete enrollment end-to-end following `admin-setup-linux/02-enrollment-profile.md` or equivalent guide (install Edge 102.x+, install intune-portal deb, sign in with org account, complete compliance remediation, access org resources via Edge)
   4. `docs/reference/linux-capability-matrix.md` has explicit "Not supported" cells for CA device-level, app binary delivery, zero-touch enrollment, configuration profiles, and Hybrid Entra Join — includes a Cross-Platform Equivalences section with at least 2 attributed pairs (intune-portal service ≈ macOS LaunchDaemon; Linux compliance check ≈ iOS MDM check-in cycle)
   5. `check-phase-50.mjs` passes; all 6 admin-setup-linux files carry `platform: Linux` frontmatter with 60-day `last_verified`/`review_by` cycle (C10 gate)
-**Plans**: TBD
+**Plans:** 6 plans
+  - [ ] 50-01-PLAN.md — Admin setup (Wave A): 00-overview + 01-intune-linux-agent (LIN-05) + 02-enrollment-profile (LIN-03)
+  - [ ] 50-02-PLAN.md — Admin setup (Wave A): 03-compliance-policy (LIN-04 + PITFALL-2) + 04-app-delivery (PITFALL-1) + 05-conditional-access
+  - [ ] 50-03-PLAN.md — End-user enrollment guide (Wave A): docs/end-user-guides/linux-intune-portal-enrollment.md (LIN-06)
+  - [ ] 50-04-PLAN.md — Capability matrix (Wave B): docs/reference/linux-capability-matrix.md (LIN-13 Win|Linux bilateral; 6 domains; 3-pair Equivalences)
+  - [ ] 50-05-PLAN.md — Validator (Wave C): scripts/validation/check-phase-50.mjs (AUDIT-06; 26 V-50-NN checks)
+  - [ ] 50-06-PLAN.md — D-22 metadata corrections + D-20 8-step gate + atomic D-18 commit (closes LIN-03/04/05/06/13 + AUDIT-06)
 **Methodology notes**:
   - Snap vs deb distinction explicit: deb-only delivery path marked GA; snap labeled deprecated/preview (PITFALL-3)
   - `04-app-delivery.md` opens with scope callout: script-based only, no Win32/MSIX/.pkg analog (PITFALL-1)
