@@ -9,6 +9,7 @@ audience: L1
 > **macOS:** For macOS ADE troubleshooting, see [macOS ADE Triage](06-macos-triage.md).
 > **iOS/iPadOS:** For iOS/iPadOS troubleshooting, see [iOS Triage](07-ios-triage.md).
 > **Android:** For Android enrollment/compliance troubleshooting, see [Android Triage](08-android-triage.md).
+> **Linux:** For Linux Intune client troubleshooting (Ubuntu LTS), see [Linux Triage](09-linux-triage.md).
 
 # Initial Triage Decision Tree
 
@@ -38,6 +39,7 @@ Use these links after this triage tree routes you to a specific scenario:
 - [APv2 Device Preparation Triage](04-apv2-triage.md) — APv2 (Device Preparation) deployment failure routing
 - [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
 - [Android Triage](08-android-triage.md) — Android enrollment/compliance failure routing
+- [Linux Triage](09-linux-triage.md) — Linux Intune client (Ubuntu 22.04/24.04 LTS) failure routing
 
 ## Decision Tree
 
@@ -120,6 +122,7 @@ graph TD
 - [APv2 Device Preparation Triage](04-apv2-triage.md) -- For APv2 (Device Preparation) deployment failures
 - [iOS Triage](07-ios-triage.md) -- iOS/iPadOS (Intune-managed) triage
 - [Android Triage](08-android-triage.md) -- Android enrollment/compliance triage
+- [Linux Triage](09-linux-triage.md) -- Linux Intune client (Ubuntu LTS) triage
 - [macOS ADE Triage](06-macos-triage.md) -- macOS ADE (Intune-managed) deployment failures
 
 ---
@@ -131,11 +134,13 @@ graph TD
 - [APv2 Device Preparation Triage](04-apv2-triage.md)
 - [iOS Triage](07-ios-triage.md)
 - [Android Triage](08-android-triage.md)
+- [Linux Triage](09-linux-triage.md)
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-27 | Added Linux banner + triage link (Scenario Trees, See Also, Version History) | -- |
 | 2026-04-23 | Added Android banner + triage link (Scenario Trees, See Also, Version History) | -- |
 | 2026-04-17 | Added iOS/iPadOS triage cross-reference banner | -- |
 | 2026-04-14 | Added macOS ADE triage cross-reference banner | -- |

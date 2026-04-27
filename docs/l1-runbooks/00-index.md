@@ -75,6 +75,17 @@ L1 runbooks for the six most common Android Enterprise enrollment and compliance
 | [27: Android ZTE Enrollment Failed](27-android-zte-enrollment-failed.md) | Zero-Touch Enrollment did not initiate or stalled | ZTE only |
 | [29: Android AOSP Enrollment Failed](29-android-aosp-enrollment-failed.md) | AOSP enrollment did not initiate or stalled across 5 OEMs (RealWear / Zebra / Pico / HTC / Meta Quest) | AOSP only |
 
+## Linux L1 Runbooks
+
+L1 runbooks for the four most common Linux Intune client failure scenarios on Ubuntu 22.04/24.04 LTS. Start with the [Linux Triage Decision Tree](../decision-trees/09-linux-triage.md) to identify the failure mode, then follow the matching runbook below. All runbooks include L1-executable steps (portal-first or terminal walkthrough as appropriate per cause) and explicit escalation triggers to L2.
+
+| Runbook | Scenario | Applies To |
+|---------|----------|------------|
+| [30: Linux Enrollment Failed](30-linux-enrollment-failed.md) | Enrollment failed at package install / sign-in / or timeout | Ubuntu 22.04/24.04 LTS |
+| [31: Linux Compliance Non-Compliant](31-linux-compliance-non-compliant.md) | Device shows non-compliant in Intune (distro/encryption/password/custom-compliance) | Ubuntu 22.04/24.04 LTS |
+| [32: Linux CA Blocking Web-App Access](32-linux-ca-blocking-web-access.md) | User blocked accessing M365 in Edge (web-app CA only — PITFALL-2) | Ubuntu 22.04/24.04 LTS |
+| [33: Linux Agent Service Failure](33-linux-agent-service-failure.md) | intune-agent.timer not running / not checking in | Ubuntu 22.04/24.04 LTS |
+
 ## Scope
 
 This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Preparation), macOS ADE, and iOS/iPadOS deployments. For scenarios not covered here, or when a runbook's escalation criteria are met, escalate to L2 with the data collection checklist provided in each runbook.
@@ -100,6 +111,7 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-27 | Added Linux L1 Runbooks section (runbooks 30-33) | -- |
 | 2026-04-25 | Phase 45 AEAOSPFULL-09: Added Runbook 29 (Android AOSP Enrollment Failed) to Android L1 Runbooks section; removed AOSP-out-of-scope note (legacy escalation node retired per D-19) | -- |
 | 2026-04-23 | Added Android L1 Runbooks section (runbooks 22-27) | -- |
 | 2026-04-17 | Added iOS L1 runbook section (runbooks 16-21) | -- |
