@@ -67,6 +67,36 @@ Ubuntu Long Term Support — Canonical's biennial LTS release cadence (every two
 
 ## Agent & Service
 
+### dpkg
+
+The Debian package manager binary that performs low-level package installation, removal, and inspection on Debian-derivative distributions including Ubuntu. APT is the high-level package operations layer; dpkg is the underlying tool that APT invokes. L2 engineers query `dpkg -l intune-portal` to verify installed package version on a Linux endpoint.
+
+### Identity Broker
+
+The Microsoft Entra (formerly Azure Active Directory) identity broker concept on Linux — a daemon that handles Microsoft Entra token acquisition, refresh, and device-state binding for enrolled Linux endpoints. Distinct from the systemd unit name `microsoft-identity-broker` which is the OS-level service implementation; this entry covers the conceptual identity-broker layer. The v2.0.2+ rollout introduced an automatic re-enrollment behavior detailed at [linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints](linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints).
+
+> **Cross-platform note:** The identity-broker concept exists on multiple platforms but the implementation surface differs. On macOS, the Entra broker is shipped via the Microsoft Intune Company Portal app + `IntuneMDMDaemon`. On Windows, the broker is built into the OS as the Web Account Manager (WAM). On Android, the broker is shipped via the Microsoft Authenticator app or the Microsoft Intune app. Linux is the only platform with a discrete `microsoft-identity-broker` systemd unit name.
+
+### intune-agent.timer
+
+The systemd `.timer` unit that schedules the periodic Intune compliance check-in cycle on a Linux endpoint. User-scoped timer (runs in the user's systemd instance, not the system instance) — verify with `systemctl --user status intune-agent.timer`. Activated post-enrollment by the `intune-portal` package; manual enable via `systemctl enable --user --now intune-agent.timer`.
+
+> **Cross-platform note:** The check-in cycle exists on all platforms but the implementation differs. Windows uses the OMA-DM enrollment session-based check-in. macOS uses the MDM check-in cycle scheduled by `mdmclient`. iOS uses APNs-triggered MDM check-ins. Android uses the AMAPI poll cycle for AMAPI-managed devices. Linux's `intune-agent.timer` is the user-scope analog — see the platform-specific glossaries for non-Linux equivalents.
+
+### intune-portal (package)
+
+The Microsoft-published deb package containing the Intune Linux client GUI application and supporting components. Installed via `apt install intune-portal` after the `packages.microsoft.com` APT repository is configured. The package brings in `microsoft-identity-broker` as a dependency. Provides the GUI sign-in surface that the user interacts with at enrollment time.
+
+> **Cross-platform note:** The "Company Portal" / "Intune Portal" naming convention applies to all platforms. On Windows, "Company Portal" is a UWP app from the Microsoft Store. On macOS / iOS, "Company Portal" is a Microsoft-published app from the Mac App Store / Apple App Store. On Android, "Company Portal" was the legacy DPC; the "Microsoft Intune" app is the current AMAPI-aligned management surface. Linux uses the `intune-portal` deb package name — slightly different naming convention; functionally analogous in role.
+
+### microsoft-identity-broker
+
+The systemd service unit name on Linux for the Microsoft Entra identity broker daemon. Verify via `systemctl status microsoft-identity-broker`. Installed as a dependency of `intune-portal`. See [Identity Broker](#identity-broker) for the concept-level entry.
+
+### systemd
+
+The Linux init system and service manager used by Ubuntu and most modern Linux distributions. Runs at PID 1; manages services (units), timers, sockets, and other system resources. Intune Linux endpoints rely on systemd for `microsoft-identity-broker` (system-scope service) and `intune-agent.timer` (user-scope timer). L2 diagnostic surface for Intune-related services is `systemctl status` and `journalctl` (see [journalctl](#journalctl)).
+
 ## Compliance & Encryption
 
 ## Operations & Diagnostics
