@@ -26,3 +26,14 @@ The following matrix locks Ubuntu LTS support scope for Microsoft Intune Linux d
 **Source confidence:** Ubuntu version supportability HIGH (Microsoft Learn enroll-linux page, last verified 2026-04). GA / HWE kernel-version cells MEDIUM (Ubuntu wiki kernel-version inventory; specific intune-portal kernel minima are not explicitly documented by Microsoft). Cells marked `[verify-on-current-Ubuntu]` carry an inline freshness marker — re-validate on a current Ubuntu install at execution time.
 
 **EOS Date column uses pinned-event labels** ("Intune 2508 — August 2025") rather than bare dates to prevent date-drift surface in admin reading. Bare dates ("August 2025") have lower information density than pinned-event references that name the Intune service release.
+
+### Ubuntu 20.04 — End-of-Support
+
+Ubuntu 20.04 LTS (Focal) support was dropped in the Intune 2508 service release (August 2025). Devices running Ubuntu 20.04 cannot enroll in Intune nor maintain an existing Intune enrollment after this service release.
+
+**Admin action required:**
+
+- **Audit:** Identify any Ubuntu 20.04 endpoints currently enrolled or attempting enrollment via Intune reporting.
+- **Upgrade path:** In-place upgrade is supported from 20.04 → 22.04 via `do-release-upgrade`. Direct upgrade from 20.04 to 24.04 is NOT supported by Ubuntu — go through 22.04 first.
+- **Reference:** See [Ubuntu upgrade documentation](https://ubuntu.com/server/docs/upgrade-introduction) for the recommended `do-release-upgrade` procedure.
+- **Re-enrollment:** After OS upgrade, re-install `intune-portal` deb from `packages.microsoft.com` and re-enroll via the GUI sign-in flow. The Identity Broker re-enrollment behavior in [Non-version Breakpoints](#non-version-breakpoints) applies post-upgrade if the upgraded `intune-portal` includes Identity Broker v2.0.2+.
