@@ -73,3 +73,10 @@ Beyond the supported Ubuntu LTS versions in the matrix above, the Microsoft Intu
 
 - **Outbound HTTPS to Microsoft Intune endpoints:** Required for enrollment, compliance reporting, and Conditional Access evaluation. Specific endpoint list maintained by Microsoft Learn — `last_verified` discipline applies.
 - **Outbound HTTPS to `packages.microsoft.com`:** Required for `intune-portal` and Microsoft Edge for Linux installation and updates.
+
+## See Also
+
+- [Linux Device Management Enrollment Overview](00-enrollment-overview.md) — capability whitelist, Out of Scope exclusions, BYOD vs corporate-owned caveat, cross-platform bridge
+- [Linux Provisioning Glossary](../_glossary-linux.md) — terminology including [HWE kernel](../_glossary-linux.md#hwe-kernel), [GA kernel](../_glossary-linux.md#ga-kernel), [Identity Broker](../_glossary-linux.md#identity-broker), [intune-portal (package)](../_glossary-linux.md#intune-portal-package), [packages.microsoft.com](../_glossary-linux.md#packagesmicrosoftcom)
+- Microsoft Learn — [Set up enrollment for Linux devices](https://learn.microsoft.com/mem/intune/enrollment/linux-enroll) — authoritative source for enrollment endpoint configuration (apply 60-day `last_verified` discipline)
+- Microsoft Learn — [Linux device management overview](https://learn.microsoft.com/mem/intune/fundamentals/deployment-guide-platform-linux) — authoritative source for the Identity Broker v2.0.2+ re-registration behavior cited in [Non-version Breakpoints](#non-version-breakpoints)
