@@ -96,7 +96,7 @@ const checks = [
     run() {
       const c = readFile(RB24);
       if (c === null) return { pass: false, detail: "File missing: " + RB24 };
-      const tableSection = c.match(/## Decision Matrix([\s\S]*?)(?=^## |\Z)/m);
+      const tableSection = c.match(/## Decision Matrix([\s\S]*?)(?=\n## |$)/);
       if (!tableSection) return { pass: false, detail: "## Decision Matrix H2 not found" };
       const inTable = tableSection[1].includes("/var/log/microsoft/intune/") && tableSection[1].includes("[LOW-MEDIUM");
       if (!inTable) return { pass: false, detail: "Decision Matrix lacks /var/log/microsoft/intune/ row with [LOW-MEDIUM token" };
@@ -180,7 +180,7 @@ const checks = [
     run() {
       const c = readFile(RB25);
       if (c === null) return { pass: false, detail: "File missing: " + RB25 };
-      const trapA = c.match(/## Trap A:[\s\S]*?(?=^## |\Z)/m);
+      const trapA = c.match(/## Trap A:[\s\S]*?(?=\n## |$)/);
       const body = trapA ? trapA[0] : "";
       const missing = [];
       if (!body.includes("Ubuntu HWE")) missing.push("Ubuntu HWE");
@@ -195,7 +195,7 @@ const checks = [
     run() {
       const c = readFile(RB25);
       if (c === null) return { pass: false, detail: "File missing: " + RB25 };
-      const trapC = c.match(/## Trap C:[\s\S]*?(?=^## |\Z)/m);
+      const trapC = c.match(/## Trap C:[\s\S]*?(?=\n## |$)/);
       const body = trapC ? trapC[0] : "";
       const missing = [];
       if (!body.includes("systemctl status intune-agent")) missing.push("systemctl status intune-agent");
@@ -209,7 +209,7 @@ const checks = [
     run() {
       const c = readFile(RB25);
       if (c === null) return { pass: false, detail: "File missing: " + RB25 };
-      const trapB = c.match(/## Trap B:[\s\S]*?(?=^## |\Z)/m);
+      const trapB = c.match(/## Trap B:[\s\S]*?(?=\n## |$)/);
       const body = trapB ? trapB[0] : "";
       const missing = [];
       if (!/\bsnap\b/i.test(body)) missing.push("snap");
@@ -264,7 +264,7 @@ const checks = [
         const c = readFile(f);
         if (c === null) { failures.push(f + ": file missing"); continue; }
         // Strip ### Resolution H3 sections (resolution may legitimately use sudo on state-changing commands)
-        const stripped = c.replace(/^### Resolution[\s\S]*?(?=^### |^## |\Z)/gm, '');
+        const stripped = c.replace(/### Resolution[\s\S]*?(?=\n### |\n## |$)/g, '');
         const forbidden = [
           /\bsudo\s+apt\s+list\b/,
           /\bsudo\s+dpkg\s+-l\b/,
