@@ -77,3 +77,14 @@ Cross-platform mental-model bridges below help admins onboarding from a differen
 **For macOS admins:** The `intune-portal` agent on Linux behaves like the macOS Intune management extension in the narrow respect that both run as a user-space service brokering device-state signals to Intune, but the mapping is partial — there is no ADE / Bootstrap Token / SCEP analog on Linux, no Setup Assistant / Awaiting Configuration flow, and Linux compliance covers only 4 settings-catalog categories versus macOS's broader settings catalog. See [Supported Management Surface](#supported-management-surface) for the canonical Linux scope.
 
 **For Android admins:** Linux compliance reporting behaves like Android Enterprise compliance reporting in the narrow respect that both produce a compliant / non-compliant device-state signal Intune can consume, but the mapping is partial — there is no DPC concept on Linux, no Managed Google Play app distribution surface, no work-profile container, no dedicated (COSU / kiosk) mode, and no Play Integrity attestation analog. See [Supported Management Surface](#supported-management-surface) for the canonical Linux scope.
+
+## See Also
+
+- [Linux Intune Client Prerequisites](01-linux-prerequisites.md) — Ubuntu version matrix (20.04 / 22.04 / 24.04), GA vs HWE kernel breakpoints, hardware/software prerequisites, Identity Broker non-version breakpoint
+- [Linux Provisioning Glossary](../_glossary-linux.md) — ~20 Linux-native terms (`intune-portal`, `microsoft-identity-broker`, `journalctl`, `dm-crypt`, `LUKS`, `HWE kernel`, `GA kernel`, etc.) plus 9 absent-concept callout entries (Supervision, DPC, Work Profile, MGP, ZTE, VPP, Hardware Hash, ABM, COBO/COPE/WPCO)
+- [Autopilot Lifecycle Overview](../lifecycle/00-overview.md) — Windows analog
+- [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md) — macOS analog
+- [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md) — iOS analog
+- [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md) — Android analog
+
+> **Note for Phase 50 plan authors (DPO-03):** Do not duplicate the cross-platform bridge subsection above in `docs/admin-setup-linux/00-overview.md`. Phase 50 overview back-links to the Phase 49 anchor [#for-admins-familiar-with-windows--macos--android](#for-admins-familiar-with-windows--macos--android) instead. Anti-Pattern 1 (single-canonical-doc) discipline per Phase 34 D-26.
