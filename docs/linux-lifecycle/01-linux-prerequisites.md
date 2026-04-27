@@ -37,3 +37,17 @@ Ubuntu 20.04 LTS (Focal) support was dropped in the Intune 2508 service release 
 - **Upgrade path:** In-place upgrade is supported from 20.04 → 22.04 via `do-release-upgrade`. Direct upgrade from 20.04 to 24.04 is NOT supported by Ubuntu — go through 22.04 first.
 - **Reference:** See [Ubuntu upgrade documentation](https://ubuntu.com/server/docs/upgrade-introduction) for the recommended `do-release-upgrade` procedure.
 - **Re-enrollment:** After OS upgrade, re-install `intune-portal` deb from `packages.microsoft.com` and re-enroll via the GUI sign-in flow. The Identity Broker re-enrollment behavior in [Non-version Breakpoints](#non-version-breakpoints) applies post-upgrade if the upgraded `intune-portal` includes Identity Broker v2.0.2+.
+
+### Non-version Breakpoints
+
+The following drift event is NOT gated by Ubuntu LTS version — it is a component-version-gated change in the `intune-portal` package that affects all supported Ubuntu versions identically.
+
+#### Identity Broker v2.0.2+
+
+When the `intune-portal` package updates to include Identity Broker v2.0.2+, the device automatically re-registers with Intune — creating new Intune device IDs and new Microsoft Entra device IDs. Existing device-based Conditional Access assignments, Intune filters, and Entra group memberships that rely on device object IDs continue to point at the *previous* device ID and silently stop applying to the re-registered device.
+
+**Behavior summary:** Single-event re-enrollment that is not visible in the Intune portal as a discrete enrollment action; admins discover it via CA / compliance assignment drift after the fact.
+
+**Source:** Microsoft Learn — Linux deployment guide (verified 2026-04, HIGH confidence).
+
+**Admin action required:** See the [Phase 50 LIN-05 admin pitfall callout](../admin-setup-linux/01-intune-linux-agent.md#identity-broker-v202-re-enrollment) for the step-by-step review checklist (audit CA assignments, filters, Entra group membership; re-target post-re-enrollment device IDs). Phase 49 anchors the breakpoint in this matrix-doc context; Phase 50 owns the detailed admin-action callout.
