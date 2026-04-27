@@ -129,4 +129,42 @@ The Microsoft Intune Linux client update log file. Records `intune-portal` packa
 
 ## Cross-Platform Collisions
 
+The H3 entries below are concepts that exist on other platforms but DO NOT EXIST on Linux device management in Intune. Each entry is a callout-only redirect — there is no Linux-native definition because the concept does not apply. The H3s remain present so downstream Phase 50-52 runbooks can cross-link `_glossary-linux.md#term-anchor` and have the link resolve. Per Phase 34 D-11 Supervision-pattern precedent.
+
+### ABM (Apple Business Manager)
+
+> **Linux note:** Apple Business Manager is an Apple-specific corporate device-procurement portal that ties devices to an Apple-Customer-ID for ADE / VPP / Managed Apple ID workflows. Linux device management in Intune has no analogous procurement portal — Linux endpoints are personally provisioned via `intune-portal` regardless of ownership model (see [Enrollment Constraints in 00-enrollment-overview.md](linux-lifecycle/00-enrollment-overview.md#enrollment-constraints)). See [Apple Provisioning Glossary — ABM](_glossary-macos.md#abm) for the Apple definition.
+
+### COBO / COPE / WPCO
+
+> **Linux note:** COBO (Corporate-Owned, Business-Only), COPE (Corporate-Owned, Personally-Enabled), and WPCO (Work Profile on Corporate-Owned) are Android Enterprise ownership-mode designations that do not apply to Linux device management. Linux endpoints have a single ownership category — see the BYOD vs corporate-owned framing caveat in [00-enrollment-overview.md#enrollment-constraints](linux-lifecycle/00-enrollment-overview.md#enrollment-constraints). For the Android definitions, see the [Android Enterprise Provisioning Glossary](_glossary-android.md).
+
+### DPC (Device Policy Controller)
+
+> **Linux note:** A Device Policy Controller is the Android Enterprise on-device app that applies management policies (the Microsoft Intune app for Android, historically Company Portal for BYOD). Linux device management uses systemd services (`microsoft-identity-broker`, `intune-agent.timer`) and the `intune-portal` GUI app — there is no equivalent DPC concept. See [Android Enterprise Provisioning Glossary — DPC](_glossary-android.md#dpc) for the Android definition.
+
+### Hardware Hash
+
+> **Linux note:** The Hardware Hash is a Windows Autopilot device-identification primitive (a hash of WMI-discovered hardware identifiers used to register a device for zero-touch deployment). Linux device management has no zero-touch enrollment surface and no analogous hardware-hash registration concept. See the [Windows Autopilot Glossary — Hardware hash](_glossary.md#hardware-hash) for the Windows definition.
+
+### Managed Google Play (MGP)
+
+> **Linux note:** Managed Google Play is the Android Enterprise app distribution surface bound to an Intune tenant via the Managed Google Play binding. Linux device management has no app distribution surface in Intune at all — Bash custom scripts are the only Linux app delivery mechanism, and there is no Linux app marketplace integration. See [Android Enterprise Provisioning Glossary — Managed Google Play](_glossary-android.md#managed-google-play) for the Android definition.
+
+### Supervision
+
+> **Linux note:** Supervision is an iOS / iPadOS management-state concept that gates ~60 restriction settings via Apple's per-device supervision flag. Linux endpoints have no "supervised" or "unsupervised" device state — the concept does not apply. See [Apple Provisioning Glossary — Supervision](_glossary-macos.md#supervision) for the iOS definition.
+
+### VPP (Volume Purchase Program)
+
+> **Linux note:** VPP is the Apple Volume Purchase Program (now part of Apps and Books in Apple Business Manager), used for licensed app distribution on iOS / iPadOS / macOS. Linux device management has no VPP analog — there is no app marketplace integration with Intune for Linux. See [Apple Provisioning Glossary — VPP](_glossary-macos.md#vpp) for the Apple definition.
+
+### Work Profile
+
+> **Linux note:** A Work Profile is the Android Enterprise containerized partition that isolates managed apps and data from the personal profile on a user's device (BYOD or corporate-owned). Linux device management has no profile-container concept — the entire Linux endpoint is either enrolled or not enrolled, with no intra-device isolation between work and personal usage. See [Android Enterprise Provisioning Glossary — Work Profile](_glossary-android.md#work-profile) for the Android definition.
+
+### Zero-Touch Enrollment (ZTE)
+
+> **Linux note:** Zero-Touch Enrollment is the Android Enterprise corporate-scale provisioning pathway via the Google Zero-Touch portal where reseller-uploaded device IMEI/serial lists trigger automatic enrollment on first boot. Linux device management has no zero-touch / pre-provisioning analog — enrollment is exclusively user-initiated via the `intune-portal` GUI sign-in flow. See [Android Enterprise Provisioning Glossary — Zero-Touch Enrollment](_glossary-android.md#zero-touch-enrollment) for the Android definition; see [Windows Autopilot Glossary](_glossary.md) for the Windows analog (Autopilot).
+
 ## Version History
