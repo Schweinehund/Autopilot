@@ -400,7 +400,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 | 46. COPE Full Admin | v1.4.1 | 2/2 | Complete | 2026-04-25 |
 | 47. Integration & Re-Audit | v1.4.1 | 4/4 | Complete | 2026-04-25 |
 | 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 8/9 | In Progress|  |
-| 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 0/? | Not started | - |
+| 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 3/5 | In Progress|  |
 | 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 0/? | Not started | - |
 | 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 0/? | Not started | - |
