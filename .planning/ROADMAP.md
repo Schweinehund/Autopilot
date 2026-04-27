@@ -169,7 +169,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
   1. Admin reading `linux-lifecycle/00-enrollment-overview.md` sees a locked "Supported Management Surface" H2 whitelist followed by an equally prominent "Out of Scope for Linux via Intune" callout block — and the BYOD/corporate-owned enrollment inconsistency surfaced as a `> ⚠️ Known caveat` block
   2. `linux-lifecycle/01-linux-prerequisites.md` contains a Linux version-breakpoint matrix: Ubuntu 20.04 (dropped Intune 2508 August 2025, end-of-support only), 22.04 LTS (supported), 24.04 LTS (supported) — each row with GA vs HWE kernel track columns
   3. `docs/_glossary-linux.md` exists with cross-glossary collision audit complete — every Linux-specific term overlapping with Android / iOS / macOS / Windows vocabulary carries explicit see-also cross-references (terms at risk: "agent", "compliance", "enrollment", "portal")
-  4. All 4 existing platform glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-android.md`, and `_glossary-ios.md` if it exists as a separate file) contain reciprocal Linux see-also entries (one-line appends per file — append-only contract)
+  4. All 3 existing platform glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-android.md`; iOS terminology lives inside `_glossary-macos.md`) contain reciprocal Linux see-also entries (one-line appends per file — append-only contract)
   5. `check-phase-49.mjs` validator passes; all Phase 49 files carry `platform: Linux` frontmatter with `last_verified` and `review_by` in 60-day cycle (C10 gate)
 **Plans**: TBD
 **Methodology notes**:

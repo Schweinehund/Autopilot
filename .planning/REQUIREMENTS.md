@@ -141,7 +141,7 @@
 | CLEAN-07 | 48 | Broken-link first-pass relative-path sweep — C13 informational; findings inventory produced |
 | CLEAN-08 | 59 | Hub integration: glossary cross-reference normalization across all 5 platform glossaries |
 | LIN-01 | 49 | linux-lifecycle/00-enrollment-overview.md — whitelist H2 + Out of Scope callout + BYOD caveat (1c FOLD) |
-| LIN-02 | 49 | docs/_glossary-linux.md — cross-collision audit first; reciprocal see-also in all 4 existing glossaries |
+| LIN-02 | 49 | docs/_glossary-linux.md — cross-collision audit first; reciprocal see-also in all 3 existing platform glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-android.md`; iOS terminology lives inside `_glossary-macos.md`) |
 | LIN-03 | 50 | admin-setup-linux/00-overview.md + 02-enrollment-profile.md (enrollment config) |
 | LIN-04 | 50 | admin-setup-linux/03-compliance-policy.md (4 settings-catalog categories; PITFALL-2 CA callout) |
 | LIN-05 | 50 | admin-setup-linux/01-intune-linux-agent.md — Identity Broker v2.0.2+ re-enrollment pitfall callout (1b FOLD) |
