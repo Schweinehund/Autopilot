@@ -117,7 +117,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [ ] **Phase 48: Audit Harness Bootstrap + Broken-Link Sweep First Pass** — Path A harness copy from v1.4.1, BASELINE_9 refresh, C10-C13 scaffolded informational-first, broken-link first-pass inventory against 179-file baseline
 - [x] **Phase 49: Linux Foundation — Taxonomy, Glossary, Version Matrix** — linux-lifecycle/ overview + prerequisites, _glossary-linux.md, reciprocal see-also in all 3 existing glossaries; PITFALL-7 whitelist gate locked before any admin guides
 - [ ] **Phase 50: Linux Admin Setup + Capability Matrix** — admin-setup-linux/ 6-file guide (00-overview through 05-conditional-access), linux-capability-matrix.md bilateral; end-user enrollment guide in docs/end-user-guides/ (cross-linked)
-- [ ] **Phase 51: Linux L1 Triage + Runbooks 30–33** — decision-trees/09-linux-triage.md, L1 runbooks 30-33 (enrollment failed / compliance non-compliant / CA blocking web-app / agent service failure); index appends
+- [x] **Phase 51: Linux L1 Triage + Runbooks 30–33** — decision-trees/09-linux-triage.md, L1 runbooks 30-33 (enrollment failed / compliance non-compliant / CA blocking web-app / agent service failure); index appends (completed 2026-04-27)
 - [ ] **Phase 52: Linux L2 Investigation Runbooks 24–25** — l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md; L2 index append
 - [ ] **Phase 53: Co-Management Operational Docs** — operations/co-management/ 4-file suite; all 7 workloads; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android non-equivalent contextual notes; operations/00-index.md
 - [ ] **Phase 54: Patch & Update Management** — operations/patch-management/ 5-file suite; macOS/iOS DDM migration (URGENT); v1.3 iOS retrofit surgical PATCH-06; Android MEETS_STRONG_INTEGRITY + Zebra LifeGuard; WUfB hotpatch
@@ -408,7 +408,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 | 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 8/9 | In Progress|  |
 | 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 3/5 | In Progress|  |
 | 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
-| 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 0/? | Not started | - |
+| 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 8/8 | Complete    | 2026-04-27 |
 | 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 0/? | Not started | - |
 | 53. Co-Management Operational Docs | v1.5 | 0/? | Not started | - |
 | 54. Patch & Update Management | v1.5 | 0/? | Not started | - |
