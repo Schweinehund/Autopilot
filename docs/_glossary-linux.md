@@ -113,6 +113,20 @@ The only Conditional Access pattern available for Linux endpoints — Microsoft 
 
 ## Operations & Diagnostics
 
+### journalctl
+
+The systemd journal query CLI on Linux. The canonical primary diagnostic surface for Microsoft Intune Linux client troubleshooting. L2 engineers run `journalctl -u microsoft-identity-broker` (system-scope) or `journalctl --user -u intune-agent.timer` (user-scope) to inspect service logs. Filtering examples: `journalctl --since "1 hour ago" -u microsoft-identity-broker`, `journalctl | grep intune-portal`. See the Phase 52 L2 runbooks for full diagnostic recipes.
+
+> **Cross-platform note:** Each platform has its own canonical log surface. Windows uses Event Viewer + the Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider channel. macOS uses Console.app + `log show --predicate 'subsystem == "com.microsoft.IntuneMDM"'`. iOS / iPadOS uses MDM diagnostic profile installation + sysdiagnose. Android uses `adb logcat` + Microsoft Intune app diagnostic export. journalctl is the Linux-specific primary surface.
+
+### /var/log/dpkg.log
+
+The Ubuntu / Debian package-manager event log. Records all `dpkg`-level package install / upgrade / remove / hold events. Useful for L2 investigation of `intune-portal` install failures and version-history reconstruction. **Confidence:** LOW-MEDIUM — this path is standard Ubuntu OS infrastructure but Microsoft Learn does not explicitly document its use for Intune Linux client troubleshooting. Use as a supplementary log, not as the primary diagnostic surface. Phase 52 LIN-12 live-verification protocol covers supplementary log validation.
+
+### /var/log/intune-update.log
+
+The Microsoft Intune Linux client update log file. Records `intune-portal` package update events and Identity Broker re-enrollment events. **Confidence:** LOW-MEDIUM — this path is referenced in informal documentation but Microsoft Learn does not explicitly document it for Ubuntu (versus RHEL with Microsoft Defender for Endpoint). Verify on a current Ubuntu install at L2 investigation time. Phase 52 L2 runbook 24 (LIN-12) covers the live-verification protocol.
+
 ## Cross-Platform Collisions
 
 ## Version History
