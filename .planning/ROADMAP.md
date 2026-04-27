@@ -115,7 +115,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 ## v1.5 Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 
 - [ ] **Phase 48: Audit Harness Bootstrap + Broken-Link Sweep First Pass** — Path A harness copy from v1.4.1, BASELINE_9 refresh, C10-C13 scaffolded informational-first, broken-link first-pass inventory against 179-file baseline
-- [ ] **Phase 49: Linux Foundation — Taxonomy, Glossary, Version Matrix** — linux-lifecycle/ overview + prerequisites, _glossary-linux.md, reciprocal see-also in all 4 existing glossaries; PITFALL-7 whitelist gate locked before any admin guides
+- [x] **Phase 49: Linux Foundation — Taxonomy, Glossary, Version Matrix** — linux-lifecycle/ overview + prerequisites, _glossary-linux.md, reciprocal see-also in all 3 existing glossaries; PITFALL-7 whitelist gate locked before any admin guides
 - [ ] **Phase 50: Linux Admin Setup + Capability Matrix** — admin-setup-linux/ 6-file guide (00-overview through 05-conditional-access), linux-capability-matrix.md bilateral; end-user enrollment guide embedded
 - [ ] **Phase 51: Linux L1 Triage + Runbooks 30–33** — decision-trees/09-linux-triage.md, L1 runbooks 30-33 (enrollment failed / compliance non-compliant / CA blocking web-app / agent service failure); index appends
 - [ ] **Phase 52: Linux L2 Investigation Runbooks 24–25** — l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md; L2 index append
