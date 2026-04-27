@@ -17,7 +17,7 @@
 
 **D-03:** Frontmatter: `last_verified: 2026-04-27` / `review_by: 2026-06-26` / `applies_to: both` / `audience: admin` / `platform: Linux`.
 
-**D-04:** Linux column uses 3-status closed set: `Supported` / `Partial` / `Not supported` (with optional `— qualifier` suffix). Windows column uses prose. `check-phase-50.mjs` extends V-49-07 column-aware regex to cell index 1 in `| Feature | Windows | Linux |` table.
+**D-04:** Linux column uses 3-status closed set: `Supported` / `Partial` / `Not supported` (with optional `— qualifier` suffix). Windows column uses prose. `check-phase-50.mjs` extends V-49-07 column-aware regex from `cells[1]` (2-col whitelist) to `cells[2]` (3-col `| Feature | Windows | Linux |` table; 0-based after split-and-filter — col 0 = Feature, 1 = Windows, 2 = Linux).
 
 **D-05:** Cross-Platform Equivalences H2 placement = below the 6 domain H2s, above Key Gaps Summary. Mirrors `android-capability-matrix.md` lines 76-92.
 
@@ -903,22 +903,22 @@ Body: Both are "compliance-lite" patterns that protect org data without requirin
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Edge for Linux exact CA challenge mechanism**
    - What we know: Web-app CA via Edge 102.x+ is the supported mechanism; device must be enrolled and compliant
    - What's unclear: Exact browser-challenge flow (does Edge call an Entra endpoint to verify compliance at sign-in, or is the challenge triggered by the CA policy in the resource's app registration?)
-   - Recommendation: Document the observable admin-side behavior (CA policy with "Require compliant browser" grant + Linux device enrolled) rather than the internal mechanism. Cite Microsoft Learn platform-guide-linux for CA scope.
+   - **RESOLVED:** Document the observable admin-side behavior (CA policy with "Require compliant browser" grant + Linux device enrolled) rather than the internal mechanism. Cite Microsoft Learn platform-guide-linux for CA scope. Internal mechanism is out of scope for admin-facing documentation; the observable behavior is sufficient for the SC#2 PITFALL-2 architectural callout.
 
 2. **intune-portal GUI screens for compliance remediation (end-user step 4)**
    - What we know: intune-portal is a GNOME GUI app; it shows enrollment and compliance state
    - What's unclear: Exact UI flow when device is non-compliant — are there actionable remediation buttons, or is it informational only?
-   - Recommendation: Write step 4 as "intune-portal will show which compliance requirements are not met; resolve each (e.g., enable disk encryption, set a stronger password) and re-check." Keep it instructional rather than UI-screenshot-dependent.
+   - **RESOLVED:** Write end-user step 4 as "intune-portal will show which compliance requirements are not met; resolve each (e.g., enable disk encryption, set a stronger password) and re-check." Keep it instructional rather than UI-screenshot-dependent. v1.0–v1.4.1 docs are markdown-only / no embedded screenshots policy applies; UI-screenshot dependency is out of scope.
 
 3. **Custom Compliance JSON output schema**
    - What we know: Bash scripts can write JSON to stdout for discovery values; exit 0/1 for compliant/non-compliant
    - What's unclear: Whether the JSON key names in stdout are arbitrary or must match Intune settings names
-   - Recommendation: Write the Bash example with a generic `{"Status":"compliant"}` pattern and note that the exact schema is documented in Microsoft Learn custom compliance scripts reference (LIN-DEFER-01 scope). Keep the Phase 50 compliance guide at concept level for the Bash mechanism.
+   - **RESOLVED:** Write the Bash example with a generic `{"Status":"compliant"}` pattern and note that the exact schema is documented in Microsoft Learn custom compliance scripts reference (LIN-DEFER-01 scope). Keep the Phase 50 compliance guide at concept level for the Bash mechanism. Deep-dive (including JSON schema specifics) is explicitly deferred to v1.5.1 per LIN-DEFER-01.
 
 ---
 
