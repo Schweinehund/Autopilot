@@ -168,3 +168,7 @@ The H3 entries below are concepts that exist on other platforms but DO NOT EXIST
 > **Linux note:** Zero-Touch Enrollment is the Android Enterprise corporate-scale provisioning pathway via the Google Zero-Touch portal where reseller-uploaded device IMEI/serial lists trigger automatic enrollment on first boot. Linux device management has no zero-touch / pre-provisioning analog — enrollment is exclusively user-initiated via the `intune-portal` GUI sign-in flow. See [Android Enterprise Provisioning Glossary — Zero-Touch Enrollment](_glossary-android.md#zero-touch-enrollment) for the Android definition; see [Windows Autopilot Glossary](_glossary.md) for the Windows analog (Autopilot).
 
 ## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-04-26 | Phase 49 Foundation: initial Linux Provisioning Glossary — 5 H2 content categories (Distro & Lifecycle, Agent & Service, Compliance & Encryption, Operations & Diagnostics, Cross-Platform Collisions); ~20 native term H3s; 9 absent-concept callout-only H3s (Supervision, DPC, Work Profile, COBO/COPE/WPCO, MGP, ZTE, VPP, Hardware Hash, ABM); GA + HWE kernel disambiguation pair per D-16; per-term `> **Cross-platform note:**` blockquotes on collision-risk Linux-native terms per D-12 + D-23. Reciprocal links from existing 3 glossaries land in Phase 49 commit-2. | — |
