@@ -223,7 +223,14 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
   2. L2 runbook 25 (agent investigation) covers kernel/distro version traps: Ubuntu HWE vs GA kernel tracks, `uname -r` verification step, snap-vs-deb detection, and `systemctl status intune-agent` / `systemctl enable --user --now intune-agent.timer` service commands
   3. `l2-runbooks/00-index.md` has a Linux section appended (append-only contract)
   4. `check-phase-52.mjs` passes; both runbooks carry `platform: Linux` frontmatter with 60-day cycle (C10 gate)
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 52-01-PLAN.md — Runbook 24 (Linux Log Collection Guide; SC#1 + 3-layer LOW-MEDIUM caveat)
+- [ ] 52-02-PLAN.md — Runbook 25 (Linux Agent Investigation; 4 anchor-indexed Traps; SC#2)
+- [ ] 52-03-PLAN.md — check-phase-52.mjs validator (22 V-52-NN structural assertions; AUDIT-06)
+- [ ] 52-04-PLAN.md — 00-index.md append-only edit (Linux L2 H2 + 2-row table; SC#3)
+- [ ] 52-05-PLAN.md — pre-commit gate + single atomic commit + VERIFICATION.md (D-13 atomicity; SC#4)
 
 ### Phase 53: Co-Management Operational Docs
 **Goal**: Admins can plan, sequence, and execute a ConfigMgr-to-Intune workload migration — understanding all three slider states, the per-workload risk gradient, and Windows Autopatch co-management prerequisites — with explicit non-equivalent callouts for macOS/iOS/Android admins
