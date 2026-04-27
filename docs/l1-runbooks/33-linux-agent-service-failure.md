@@ -33,7 +33,7 @@ L1 Triage Steps are read-only checks. L1 does NOT modify any service state — t
 
 1. > **Say to the user:** "Let me check whether the Intune agent timer is running on your device. Please open Terminal and type: `systemctl --user status intune-agent.timer`. Read me the output."
 
-2. If the output shows `Active: active (waiting)` and `Loaded: loaded`, the timer is healthy — escalate to a different runbook (the symptom may be misclassified). See the [Disambiguation](#linux-intune-agent-service-failure) note above.
+2. If the output shows `Active: active (waiting)` and `Loaded: loaded`, the timer is healthy — escalate to a different runbook (the symptom may be misclassified). See the **Disambiguation** note near the top of this runbook.
 
 3. If the output shows `Active: inactive (dead)` or `Active: failed`, ask the user to also run `systemctl --user is-enabled intune-agent.timer` and read me the output. Expected: `enabled` (timer set to start at boot) or `static` (timer wired to another service). If `disabled`, the timer was explicitly stopped — admin action required.
 
