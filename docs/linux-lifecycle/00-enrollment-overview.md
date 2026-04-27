@@ -40,3 +40,20 @@ The following table is the canonical Linux capability whitelist. Status cells us
 | Hardware attestation (TPM / DeviceCheck analog) | Not supported |
 
 **Status string contract:** This 3-status set (`Supported` / `Partial` / `Not supported`) is the canonical contract inherited by `docs/reference/linux-capability-matrix.md` (Phase 50 LIN-13). No additional status strings may be introduced downstream — `check-phase-49.mjs` enforces the closed set per CDI-01.
+
+## Out of Scope for Linux via Intune
+
+The following capabilities are explicitly NOT in scope for Linux device management in Microsoft Intune. This list is the inverse of [Supported Management Surface](#supported-management-surface) — these items are documented as exclusions so admins do not search for them in downstream Phase 50-52 content.
+
+- **Non-Ubuntu distributions (RHEL / Rocky / Alma / Debian / SUSE / Fedora):** Ubuntu LTS only per project scope; RHEL 9/10 deferred to v1.6+.
+- **Ubuntu Server / IoT / headless devices:** The Microsoft Intune Linux client requires GNOME graphical desktop + interactive sign-in; headless workloads are unsupported.
+- **App delivery via deb / snap packages:** Intune does not deliver `.deb` packages; app delivery is Bash-script-based only. There is no Win32 / MSI / MSIX / `.pkg` analog for Linux.
+- **Configuration profiles beyond compliance:** Linux has no MDM configuration profile concept in Intune. Compliance policies + Bash custom scripts are the only configuration mechanisms.
+- **Snap-based Intune agent delivery:** The agent is delivered as `intune-portal` deb from `packages.microsoft.com`. There is no snap distribution.
+- **Device-level Conditional Access:** The "Require device to be marked as compliant" CA grant is not available for Linux. Only web-app CA via Microsoft Edge for Linux is supported (see the Supported Management Surface CA row).
+- **Zero-touch enrollment / Autopilot / ADE / Android ZTE analog:** No reseller-driven pre-provisioning surface exists for Linux. Enrollment is exclusively user-initiated.
+- **Hybrid Entra Join:** Linux does not participate in Hybrid Entra Join. Devices are Entra-joined directly via the `intune-portal` enrollment flow.
+- **Hardware attestation (TPM / DeviceCheck analog):** No hardware-backed attestation surface for Linux device compliance.
+- **Certificate profiles (SCEP / PKCS):** Linux compliance does not consume certificate-deployment profiles.
+- **OS update enforcement:** No DDM / WUfB / managed-update analog. OS patching is host-managed (`apt`).
+- **Localization / non-English content:** Consistent with project-wide English-only policy.
