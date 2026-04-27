@@ -845,6 +845,8 @@ const ALL_CONTENT_FILES = [TREE, ...RUNBOOKS];
 
 ### Copy verbatim — Read-vs-write apt regex (V-51-20)
 
+CORRECTED per checker ISS-01: original split-on-`^## ` only inspected sections starting with "L1 Triage Steps" — that ONLY matched Runbook 33 (single-cause shape; H2 `## L1 Triage Steps`). Runbooks 30/31/32 nest `### L1 Triage Steps` inside `## Cause A:` / `## Cause B:` / etc. Use the explicit boundary-detection regex below — match BOTH H2 and H3 `L1 Triage Steps` headings, capture content up to the next H2 or H3 boundary.
+
 ```javascript
 {
   id: 20, name: "V-51-20: L1 Triage Steps in all 4 runbooks contain NO sudo prefix on apt or systemctl --user",
@@ -853,14 +855,17 @@ const ALL_CONTENT_FILES = [TREE, ...RUNBOOKS];
     for (const f of RUNBOOKS) {
       const c = readFile(f);
       if (c === null) { failures.push(f + ": file missing"); continue; }
-      // Extract L1 Triage Steps section(s) — between ## L1 Triage Steps and the next ## H2
-      const sections = c.split(/^## /m);
+      // Match BOTH `## L1 Triage Steps` (Runbook 33) AND `### L1 Triage Steps` (Runbooks 30/31/32 nested in Cause H2s).
+      // Capture content up to the next H2 or H3 boundary (whichever comes first), or to end-of-file.
+      const triageBlocks = [...c.matchAll(/^#{2,3}\s+L1 Triage Steps\s*$([\s\S]*?)(?=^#{2,3}\s+\S|\Z)/gm)];
       const issues = [];
-      for (const s of sections) {
-        if (!s.startsWith("L1 Triage Steps")) continue;
-        // Within this section, no `sudo apt` or `sudo systemctl --user`
-        if (/sudo\s+apt\s/.test(s)) issues.push("sudo apt in L1 Triage Steps");
-        if (/sudo\s+systemctl\s+--user/.test(s)) issues.push("sudo systemctl --user (--user takes no sudo)");
+      if (triageBlocks.length === 0) issues.push("no L1 Triage Steps heading found (H2 or H3)");
+      for (const block of triageBlocks) {
+        const s = block[1] || '';
+        if (/\bsudo\s+apt\s+list\b/.test(s)) issues.push("sudo apt list in L1 Triage Steps");
+        if (/\bsudo\s+dpkg\s+-l\b/.test(s)) issues.push("sudo dpkg -l in L1 Triage Steps");
+        if (/\bsudo\s+systemctl\s+--user\b/.test(s)) issues.push("sudo systemctl --user (--user takes no sudo)");
+        if (/\bsudo\s+journalctl\s+--user\b/.test(s)) issues.push("sudo journalctl --user (--user takes no sudo)");
       }
       if (issues.length > 0) failures.push(f + ": " + issues.join("; "));
     }
@@ -870,15 +875,27 @@ const ALL_CONTENT_FILES = [TREE, ...RUNBOOKS];
 },
 ```
 
+Allowed (NOT matched by the 3 sudo-on-readonly patterns above):
+- `sudo journalctl -u microsoft-identity-broker` (system-scope, root-only-journal carve-out per D-18)
+- `sudo systemctl restart ...`, `sudo apt install ...` inside `## Admin Action Required` H2 (those sections do NOT begin with "L1 Triage Steps" so they are correctly excluded by the heading match)
+
 ### Copy verbatim — Append-only assertions (V-51-21..22)
+
+STRENGTHENED per checker ISS-02: V-51-21 was originally presence-only; now also asserts that the new `## Linux L1 Runbooks` H2 appears AFTER the existing `## Android L1 Runbooks` H2 by byte-position (one-line append-only ordering enforcement per Phase 42 D-03; full append-only diff review still owned by 51-08).
 
 ```javascript
 {
-  id: 21, name: "V-51-21: 00-index.md has Linux L1 Runbooks H2 + 4 runbook entries (append-only)",
+  id: 21, name: "V-51-21: 00-index.md has Linux L1 Runbooks H2 (positioned AFTER Android H2) + 4 runbook entries",
   run() {
     const c = readFile(INDEX);
     if (c === null) return { pass: false, detail: "File missing" };
     if (!/^## Linux L1 Runbooks\s*$/m.test(c)) return { pass: false, detail: "## Linux L1 Runbooks H2 not found" };
+    // Order assertion (ISS-02): Linux H2 byte-position MUST be greater than Android H2 byte-position.
+    const linuxIdx = c.indexOf("## Linux L1 Runbooks");
+    const androidIdx = c.indexOf("## Android L1 Runbooks");
+    if (androidIdx === -1) return { pass: false, detail: "## Android L1 Runbooks H2 not found (regression — Phase 47 deliverable should be present)" };
+    if (linuxIdx === -1) return { pass: false, detail: "## Linux L1 Runbooks H2 substring not found via indexOf" };
+    if (linuxIdx <= androidIdx) return { pass: false, detail: "Append-only ordering violated: Linux H2 (byte " + linuxIdx + ") must appear AFTER Android H2 (byte " + androidIdx + ")" };
     const required = [
       /\[30: Linux Enrollment Failed\]\(30-linux-enrollment-failed\.md\)/,
       /\[31: Linux Compliance Non-Compliant\]\(31-linux-compliance-non-compliant\.md\)/,
@@ -886,7 +903,7 @@ const ALL_CONTENT_FILES = [TREE, ...RUNBOOKS];
       /\[33: Linux Agent Service Failure\]\(33-linux-agent-service-failure\.md\)/
     ];
     const missing = required.filter(r => !r.test(c)).map(r => r.source);
-    if (missing.length === 0) return { pass: true };
+    if (missing.length === 0) return { pass: true, detail: "Linux H2 at byte " + linuxIdx + " > Android H2 at byte " + androidIdx };
     return { pass: false, detail: "Missing index entry/entries: " + missing.join(", ") };
   }
 },
