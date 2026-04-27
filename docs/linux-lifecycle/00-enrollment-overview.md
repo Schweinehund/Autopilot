@@ -57,3 +57,13 @@ The following capabilities are explicitly NOT in scope for Linux device manageme
 - **Certificate profiles (SCEP / PKCS):** Linux compliance does not consume certificate-deployment profiles.
 - **OS update enforcement:** No DDM / WUfB / managed-update analog. OS patching is host-managed (`apt`).
 - **Localization / non-English content:** Consistent with project-wide English-only policy.
+
+## Enrollment Constraints
+
+Linux enrollment in Intune is exclusively user-initiated via the `intune-portal` GUI on Ubuntu LTS desktops. There is no zero-touch / pre-provisioning / corporate-owned automation pathway. The capability table above (Supported Management Surface) is capability-pure; the conceptual constraint about ownership-model framing lives here in its own H2 because it is a documentation-and-policy concern rather than a capability gap.
+
+### BYOD vs Corporate-Owned Caveat
+
+> ⚠️ **Known caveat:** Microsoft Learn documentation for Linux device management uses the BYOD vs corporate-owned framing inconsistently across pages. Some Microsoft Learn pages describe Linux Intune enrollment as a BYOD path; other pages describe it as appropriate for corporate-owned Linux workstations. **In practice, both ownership models share the same enrollment mechanism** (user-initiated `intune-portal` install + sign-in). There is no API, MDM payload, or compliance setting that distinguishes a BYOD Linux device from a corporate-owned Linux device in Intune. Admins designing CA / compliance / asset-tracking flows should treat all Linux enrollments as a single ownership category and rely on Entra group membership, device tagging, or upstream procurement records for ownership classification — not on Intune's enrollment-time framing.
+
+This caveat is a documentation-framing artifact, not a product behavior gap. The capability whitelist in [Supported Management Surface](#supported-management-surface) is the authoritative scope; this H3 records the framing inconsistency so admins do not architect compliance policies that assume Intune knows the difference.
