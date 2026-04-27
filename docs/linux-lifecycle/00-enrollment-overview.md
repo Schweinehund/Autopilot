@@ -18,3 +18,25 @@ This document is the canonical capability gate for Linux device management in Mi
 - **L2 engineers (investigating Linux failures):** Read [Enrollment Constraints](#enrollment-constraints) for the BYOD vs corporate-owned framing caveat; cross-reference the [Linux Provisioning Glossary](../_glossary-linux.md) for terminology used in L2 runbooks.
 - **L1 responders (triaging Linux tickets):** Skim [Supported Management Surface](#supported-management-surface) for the high-level capability table; defer detailed troubleshooting to L1 runbooks shipped in Phase 51.
 - **Admins coming from Windows / macOS / Android:** Read [For Admins Familiar with Windows / macOS / Android](#for-admins-familiar-with-windows--macos--android) for cross-platform mental-model bridges, but treat each bridge as a partial mapping only — Linux's capability surface is genuinely narrower than the other four platforms.
+
+## Supported Management Surface
+
+The following table is the canonical Linux capability whitelist. Status cells use a closed 3-string set: **Supported**, **Partial**, or **Not supported**. Cells that warrant additional locked phrasing carry the qualifier inline (e.g., the Conditional Access row reads `Not supported — web-app CA only` per the PITFALL-2 architectural callout requirement).
+
+| Capability | Linux Status |
+|---|---|
+| Device enrollment (user-initiated via `intune-portal`) | Supported |
+| Compliance policies (4 settings-catalog categories) | Partial |
+| Conditional Access — device-level | Not supported — web-app CA only |
+| App delivery — Bash custom scripts | Supported |
+| App delivery — binary packages (deb / snap / Win32 analog) | Not supported |
+| Configuration profiles (settings catalog beyond compliance) | Not supported |
+| Declarative Device Management (DDM) | Not supported |
+| Zero-touch enrollment (Autopilot / ADE / ZTE analog) | Not supported |
+| Hybrid Entra Join | Not supported |
+| Certificate profiles (SCEP / PKCS) | Not supported |
+| Per-app VPN | Not supported |
+| OS update enforcement (DDM / WUfB analog) | Not supported |
+| Hardware attestation (TPM / DeviceCheck analog) | Not supported |
+
+**Status string contract:** This 3-status set (`Supported` / `Partial` / `Not supported`) is the canonical contract inherited by `docs/reference/linux-capability-matrix.md` (Phase 50 LIN-13). No additional status strings may be introduced downstream — `check-phase-49.mjs` enforces the closed set per CDI-01.
