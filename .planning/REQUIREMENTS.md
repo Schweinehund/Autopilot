@@ -32,7 +32,7 @@
 - [ ] **LIN-09**: L1 responder can resolve "Linux device non-compliant" symptoms (distro/version out of range / disk not encrypted / password policy not met / custom compliance failure) following a scripted L1 runbook
 - [ ] **LIN-10**: L1 responder can resolve "Linux conditional access blocking Edge" symptoms (device not enrolled / device not compliant / Edge not signed in) following a scripted L1 runbook
 - [ ] **LIN-11**: L1 responder can resolve "Linux Intune agent service not running" symptoms following a scripted L1 runbook
-- [ ] **LIN-12**: L2 engineer can investigate Linux failure patterns using log paths (`/var/log/`, `journalctl -u intune-agent`, `journalctl | grep intune-portal`, `/var/log/intune-update.log`, `/var/log/dpkg.log`) and service commands (`systemctl status intune-agent`, `systemctl enable --user --now intune-agent.timer`) per a Phase 52 L2 investigation guide
+- [x] **LIN-12**: L2 engineer can investigate Linux failure patterns using log paths (`/var/log/`, `journalctl -u intune-agent`, `journalctl | grep intune-portal`, `/var/log/intune-update.log`, `/var/log/dpkg.log`) and service commands (`systemctl status intune-agent`, `systemctl enable --user --now intune-agent.timer`) per a Phase 52 L2 investigation guide
 - [ ] **LIN-13**: Admin can read a Linux capability matrix that quantifies the platform's narrowness vs Windows / macOS / iOS / Android (enrollment mechanism, identity, app delivery, compliance depth, CA scope, monitoring, patching) and includes a Cross-Platform Equivalences section (Linux web-app-CA ↔ iOS MAM-WE both as "compliance-lite" patterns)
 
 ### Pillar 3 — Operational Depth (Windows + macOS + iOS + Android)

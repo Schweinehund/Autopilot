@@ -118,7 +118,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [x] **Phase 49: Linux Foundation — Taxonomy, Glossary, Version Matrix** — linux-lifecycle/ overview + prerequisites, _glossary-linux.md, reciprocal see-also in all 3 existing glossaries; PITFALL-7 whitelist gate locked before any admin guides
 - [ ] **Phase 50: Linux Admin Setup + Capability Matrix** — admin-setup-linux/ 6-file guide (00-overview through 05-conditional-access), linux-capability-matrix.md bilateral; end-user enrollment guide in docs/end-user-guides/ (cross-linked)
 - [x] **Phase 51: Linux L1 Triage + Runbooks 30–33** — decision-trees/09-linux-triage.md, L1 runbooks 30-33 (enrollment failed / compliance non-compliant / CA blocking web-app / agent service failure); index appends (completed 2026-04-27)
-- [ ] **Phase 52: Linux L2 Investigation Runbooks 24–25** — l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md; L2 index append
+- [x] **Phase 52: Linux L2 Investigation Runbooks 24–25** — l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md; L2 index append (completed 2026-04-27)
 - [ ] **Phase 53: Co-Management Operational Docs** — operations/co-management/ 4-file suite; all 7 workloads; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android non-equivalent contextual notes; operations/00-index.md
 - [ ] **Phase 54: Patch & Update Management** — operations/patch-management/ 5-file suite; macOS/iOS DDM migration (URGENT); v1.3 iOS retrofit surgical PATCH-06; Android MEETS_STRONG_INTEGRITY + Zebra LifeGuard; WUfB hotpatch
 - [ ] **Phase 55: App Lifecycle Automation** — operations/app-lifecycle/ 5-file suite; Win32 supersedence chains + dependency graphs; macOS PKG/DMG + Installomator callout; iOS VPP device vs user; Android MGP private-app publishing
@@ -226,11 +226,11 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 **Plans**: 5 plans
 
 Plans:
-- [ ] 52-01-PLAN.md — Runbook 24 (Linux Log Collection Guide; SC#1 + 3-layer LOW-MEDIUM caveat)
-- [ ] 52-02-PLAN.md — Runbook 25 (Linux Agent Investigation; 4 anchor-indexed Traps; SC#2)
-- [ ] 52-03-PLAN.md — check-phase-52.mjs validator (22 V-52-NN structural assertions; AUDIT-06)
-- [ ] 52-04-PLAN.md — 00-index.md append-only edit (Linux L2 H2 + 2-row table; SC#3)
-- [ ] 52-05-PLAN.md — pre-commit gate + single atomic commit + VERIFICATION.md (D-13 atomicity; SC#4)
+- [x] 52-01-PLAN.md — Runbook 24 (Linux Log Collection Guide; SC#1 + 3-layer LOW-MEDIUM caveat)
+- [x] 52-02-PLAN.md — Runbook 25 (Linux Agent Investigation; 4 anchor-indexed Traps; SC#2)
+- [x] 52-03-PLAN.md — check-phase-52.mjs validator (22 V-52-NN structural assertions; AUDIT-06)
+- [x] 52-04-PLAN.md — 00-index.md append-only edit (Linux L2 H2 + 2-row table; SC#3)
+- [x] 52-05-PLAN.md — pre-commit gate + single atomic commit + VERIFICATION.md (D-13 atomicity; SC#4)
 
 ### Phase 53: Co-Management Operational Docs
 **Goal**: Admins can plan, sequence, and execute a ConfigMgr-to-Intune workload migration — understanding all three slider states, the per-workload risk gradient, and Windows Autopatch co-management prerequisites — with explicit non-equivalent callouts for macOS/iOS/Android admins
@@ -416,7 +416,7 @@ Plans:
 | 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 3/5 | In Progress|  |
 | 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 8/8 | Complete    | 2026-04-27 |
-| 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 0/? | Not started | - |
+| 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 5/5 | Complete   | 2026-04-27 |
 | 53. Co-Management Operational Docs | v1.5 | 0/? | Not started | - |
 | 54. Patch & Update Management | v1.5 | 0/? | Not started | - |
 | 55. App Lifecycle Automation | v1.5 | 0/? | Not started | - |

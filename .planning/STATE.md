@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: executing
-stopped_at: Phase 52 context gathered
-last_updated: "2026-04-27T19:00:35.626Z"
+stopped_at: Completed 52-05-PLAN.md (Phase 52 CLOSED — 22/22 V-52-NN PASS; 4/4 SCs; atomic commit 38e25e9 + VERIFICATION.md 772ade3)
+last_updated: "2026-04-27T20:21:14.297Z"
 last_activity: 2026-04-27
 progress:
   total_phases: 14
-  completed_phases: 4
-  total_plans: 28
-  completed_plans: 28
+  completed_phases: 5
+  total_plans: 33
+  completed_plans: 33
   percent: 100
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and operate them at depth (co-management, patching, app lifecycle, drift/migration) once enrolled
-**Current focus:** Phase 51 — Linux L1 Triage + Runbooks 30-33
+**Current focus:** Phase 52 — Linux L2 Investigation Runbooks 24-25
 
 ## Current Position
 
-Phase: 52
-Plan: Not started
-Status: Executing Phase 51
+Phase: 52 (Linux L2 Investigation Runbooks 24-25) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
 Last activity: 2026-04-27
 
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
@@ -78,6 +78,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - PITFALL-7 whitelist-first pattern — Linux foundation phase gates all Linux content (identical to Phase 34 Android AOSP framing)
 - Navigation-files-last — DEFER-07 (Phase 57) and DEFER-08 (Phase 58) and hub integration (Phase 59) execute after all content phases
 - Wave-based parallel execution — Wave A (Phases 51+53), Wave B (Phases 54+55+56); shared write hotspot ownership table in ROADMAP.md
+- [Phase 52]: Single atomic commit (D-13 + CDI-Phase52-04): validator V-52-19 append-only assertion forces one-commit atomicity; PITFALL-12 does not apply (append target not in supervision sidecar)
 
 ### Pending Todos
 
@@ -123,6 +124,6 @@ Phase 48 (harness + sweep)
 
 ## Session Continuity
 
-Last session: 2026-04-27T19:00:35.615Z
-Stopped at: Phase 52 context gathered
+Last session: 2026-04-27T20:21:14.287Z
+Stopped at: Completed 52-05-PLAN.md (Phase 52 CLOSED — 22/22 V-52-NN PASS; 4/4 SCs; atomic commit 38e25e9 + VERIFICATION.md 772ade3)
 Next action: `/gsd-plan-phase 48` — Audit Harness Bootstrap + Broken-Link Sweep First Pass
