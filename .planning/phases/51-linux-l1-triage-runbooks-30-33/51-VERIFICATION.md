@@ -1,27 +1,23 @@
 ---
 status: passed
-phase: 51
+phase: 51-linux-l1-triage-runbooks-30-33
+goal: L1 Service Desk can triage and resolve the four primary Linux Intune failure categories using a Mermaid decision tree and scripted runbooks
 verified: 2026-04-27
+verifier: gsd-verifier (independent)
 requirements: [LIN-07, LIN-08, LIN-09, LIN-10, LIN-11]
 ---
 
-# Phase 51 — VERIFICATION
+# Phase 51 Verification
 
-**Phase:** 51 — Linux L1 Triage + Runbooks 30-33
-**Status:** PASSED
-**Verified:** 2026-04-27
-**Verifier:** executor agent (autonomous)
+## Summary
 
-## Phase Overview
+Independent verification confirms Phase 51 PASSED. All 25 V-51-NN structural assertions pass against the live codebase, all 5 ROADMAP success criteria are satisfied with concrete grep evidence, all 5 LIN-NN requirements have shipped deliverables traceable in REQUIREMENTS.md §Traceability, and all spot-checked CONTEXT.md decisions (D-01, D-04, D-09, D-10, D-13, D-22, DPO-01, DPO-02) hold in the actual files. No discrepancies found between the executor's self-authored VERIFICATION.md claims and independent re-verification.
 
-Phase 51 ships the L1 Linux Intune triage layer for v1.5: a single Mermaid decision tree (`09-linux-triage.md`) routing 4 failure-symptom branches plus a "Don't know / Other" escalation node, four L1 runbooks (30-33) covering enrollment-failed / compliance-non-compliant / CA-blocking-web-access / agent-service-failure, a 25-check static validator (`check-phase-51.mjs`), and append-only edits to two hub files (`00-index.md`, `00-initial-triage.md`) so the new Linux content is reachable from existing navigation surfaces.
+## Validator Output (Live Re-Run)
 
-The phase deferred all per-plan commits: plans 51-01 through 51-07 authored files, plan 51-08 owned the single atomic D-22 commit landing all 8 deliverables together. This contract is enforced architecturally by validator V-51-21 + V-51-22 (append-only assertions can only pass if all 8 files reach git in one snapshot).
-
-## Validator Output Snapshot
+### `check-phase-51.mjs`
 
 ```
-$ node scripts/validation/check-phase-51.mjs
 [1/25] V-51-01: 09-linux-triage.md exists ....................... PASS
 [2/25] V-51-02: 30-linux-enrollment-failed.md exists ............ PASS
 [3/25] V-51-03: 31-linux-compliance-non-compliant.md exists ..... PASS
@@ -40,7 +36,7 @@ $ node scripts/validation/check-phase-51.mjs
 [16/25] V-51-16: Runbook 30 cross-links to end-user enrollment guide #enroll-your-device PASS
 [17/25] V-51-17: Runbook 32 cross-links to capability matrix #conditional-access PASS
 [18/25] V-51-18: Runbook 32 has web-app CA architectural callout (positive) PASS
-[19/25] V-51-19: Runbook 32 does NOT contain 'Require device to be marked as compliant' PASS
+[19/25] V-51-19: Runbook 32 does NOT contain 'Require device to be marked as compliant' (defect 4C-1; PITFALL-13 mitigation) PASS
 [20/25] V-51-20: L1 Triage Steps in all 4 runbooks contain NO sudo prefix on apt/systemctl --user/journalctl --user (read-vs-write boundary) PASS
 [21/25] V-51-21: 00-index.md has Linux L1 Runbooks H2 (positioned AFTER Android H2) + 4 runbook entries PASS
 [22/25] V-51-22: 00-initial-triage.md has [Linux Triage](09-linux-triage.md) link in 3+ positions (append-only) PASS
@@ -51,140 +47,165 @@ $ node scripts/validation/check-phase-51.mjs
 Summary: 25 passed, 0 failed, 0 skipped
 ```
 
+### `v1.5-milestone-audit.mjs --verbose`
+
 ```
-$ node scripts/validation/v1.5-milestone-audit.mjs --verbose
-[1/12] C1: Zero SafetyNet as compliance mechanism .................. PASS
-[2/12] C2: Zero supervision as Android mgmt term ................... PASS
-[3/12] C3: AOSP stub word count within Phase 39 envelope ........... PASS
-[4/12] C4: Zero Android links in deferred shared files ............. PASS
-[5/12] C5: last_verified frontmatter on all Android docs ........... PASS
-[6/12] C6: PITFALL-7 preservation in AOSP + per-OEM docs ........... PASS
-[7/12] C7: bare-"Knox" disambiguation check ........................ PASS
-[9/12] C9: COPE banned-phrase check ................................ PASS (informational)
+[1/12] C1: Zero SafetyNet as compliance mechanism ....... PASS
+[2/12] C2: Zero supervision as Android mgmt term ........ PASS
+[3/12] C3: AOSP stub word count within Phase 39 envelope PASS (informational)
+[4/12] C4: Zero Android links in deferred shared files .. PASS
+[5/12] C5: last_verified frontmatter on all Android docs PASS
+[6/12] C6: PITFALL-7 preservation in AOSP + per-OEM docs PASS
+[7/12] C7: bare-"Knox" disambiguation check ............. PASS
+[9/12] C9: COPE banned-phrase check ..................... PASS (informational)
 [10/12] C10: Linux frontmatter (platform: Linux + 60d last_verified) PASS
-[11/12] C11: Ops-domain anti-pattern regex ......................... PASS (informational)
-[12/12] C12: 4-platform comparison structural validation ........... PASS (informational)
-[13/12] C13: Broken-link automation (markdown-link-check) .......... PASS (informational)
+[11/12] C11: Ops-domain anti-pattern regex .............. PASS (informational)
+[12/12] C12: 4-platform comparison structural validation PASS (informational)
+[13/12] C13: Broken-link automation (markdown-link-check) PASS (informational)
 
 Summary: 12 passed, 0 failed, 0 skipped
 ```
 
+### `regenerate-supervision-pins.mjs --self-test`
+
 ```
-$ node scripts/validation/regenerate-supervision-pins.mjs --self-test
+Diff: identical
+Un-pinned Tier-2 count: 0 (all supervision occurrences classified or explicitly pinned)
 Self-test: PASS
 ```
 
-## Success Criteria — Satisfaction Proof
+All three validators exit 0. No regression introduced by Phase 51.
 
-### SC#1 — L1 reaches correct runbook in ≤2 steps for each of 4 failure branches
+## Success Criteria Verification
 
-**Evidence:**
+### SC#1 — L1 reaches correct runbook in ≤2 decision steps for each of the 4 failure branches — **VERIFIED ✓**
 
-- 4 click directives wire root LIN1 → 4 runbooks (V-51-08 PASS):
-  - `click LINR30 "../l1-runbooks/30-linux-enrollment-failed.md"`
-  - `click LINR31 "../l1-runbooks/31-linux-compliance-non-compliant.md"`
-  - `click LINR32 "../l1-runbooks/32-linux-ca-blocking-web-access.md"`
-  - `click LINR33 "../l1-runbooks/33-linux-agent-service-failure.md"`
-- LIN1 root decision-diamond confirmed (V-51-06 PASS).
-- Routing Verification table in `docs/decision-trees/09-linux-triage.md` enumerates all 5 paths (4 symptom branches + 1 unknown→LINE1) with explicit step counts; CA path is the only 2-step route via the LINCA disambiguation diamond, all others are direct 1-step terminals.
-- Don't-know / Other branch routes to escalateL2 terminal node LINE1 (V-51-11 PASS).
+Independently confirmed by reading `docs/decision-trees/09-linux-triage.md`:
 
-### SC#2 — Runbook 30 routes 3 symptoms to discrete cause/fix steps
+- Root LIN1 diamond at line 30 with 5 outgoing edges (4 symptom branches + 1 unknown→LINE1).
+- 4 click directives at lines 40-43 wire root to runbooks 30/31/32/33.
+- Routing Verification table (lines 57-63) enumerates explicit step-counts:
+  - Enrollment failed → Runbook 30 (1 step, terminal)
+  - Compliance non-compliant → Runbook 31 (1 step, terminal)
+  - CA blocking web-app access → LINCA → Runbook 32 (2 steps; LINCA disambiguation node)
+  - Agent service failure → Runbook 33 (1 step, terminal)
+  - Don't know / Other → LINE1 escalateL2 (1 step)
+- Don't-know escalation node LINE1 confirmed at line 36 with structured collect-list.
+- All paths within the SC#1 ≤2 budget (well under the documented 5-node budget).
 
-**Evidence:**
+### SC#2 — Runbook 30 routes 3 symptoms to discrete cause/fix steps — **VERIFIED ✓**
 
-- Runbook 30 has 3 anchor-indexed Cause H2s with literal slugs (V-51-12 PASS):
-  - `## Cause A: Package Install Failure {#cause-a-package-install}`
-  - `## Cause B: Sign-In Failure (Microsoft Identity Broker) {#cause-b-sign-in-failure}`
-  - `## Cause C: Enrollment Timeout (`intune-agent.timer`) {#cause-c-enrollment-timeout}`
-- Each Cause has discrete `### Symptom`, `### L1 Triage Steps`, `### Admin Action Required`, `### Verify`, `### Escalation` subsections.
-- Actor-boundary blockquote `> **Say to the user:**` confirmed in each cause (V-51-24 PASS).
-- Per-cause terminal walkthrough with cause-specific commands (Cause A: `apt list --installed | grep intune-portal`; Cause B: `journalctl -u microsoft-identity-broker`; Cause C: `systemctl --user list-timers intune-agent.timer`).
+Independently confirmed by reading `docs/l1-runbooks/30-linux-enrollment-failed.md`:
 
-### SC#3 — Runbook 32 routes to web-app CA workflow only — PITFALL-2 enforced AT TREE LEVEL
+- 3 anchor-indexed Cause H2s present:
+  - Line 47: `## Cause A: Package Install Failure {#cause-a-package-install}`
+  - Line 88: `## Cause B: Sign-In Failure (Microsoft Identity Broker) {#cause-b-sign-in-failure}`
+  - Line 132: `## Cause C: Enrollment Timeout (\`intune-agent.timer\`) {#cause-c-enrollment-timeout}`
+- Each Cause has: Entry condition paragraph + Symptom + L1 Triage Steps + Admin Action Required + Verify + Escalation subsections.
+- Each Cause has cause-specific observable error state and discrete commands (Cause A: `apt list --installed | grep intune-portal`; Cause B: `journalctl -u microsoft-identity-broker`; Cause C: `systemctl --user list-timers intune-agent.timer`).
+- Each Cause contains `> **Say to the user:**` actor-boundary blockquote (V-51-24 PASS).
 
-**Evidence (layered defense):**
+### SC#3 — Runbook 32 routes to web-app CA workflow ONLY (PITFALL-2 enforced at tree level) — **VERIFIED ✓**
 
-- **Tree-level (V-51-09 PASS):** Mermaid block contains `PITFALL-2` token + `web-app CA` / `Edge for Linux` qualifier in the LINCA disambiguation diamond.
-- **Tree-level (V-51-10 PASS):** Tree contains the deep-link `../reference/linux-capability-matrix.md#conditional-access`.
-- **Runbook-level (V-51-17 PASS):** Runbook 32 contains the same capability-matrix CA deep-link.
-- **Runbook-level (V-51-18 PASS):** Runbook 32 includes the architectural callout with `web-app CA` + `Edge for Linux` qualifiers.
-- **Runbook-level (V-51-19 PASS):** Runbook 32 does NOT contain the literal string `Require device to be marked as compliant` — paraphrased per defect 4C-1 / PITFALL-13 mitigation; uses "Device-level CA (the grant tied to compliance state) is not supported on Linux" instead.
+Layered defense independently confirmed:
 
-### SC#4 — `00-index.md` + `00-initial-triage.md` have Linux append-only edits
+**Tree-level enforcement** (`docs/decision-trees/09-linux-triage.md`):
+- Line 24: legend entry "web-app CA only on Linux (PITFALL-2)"
+- Line 34: LIN1→LINCA edge labeled `(PITFALL-2: web-app CA only)` — the disambiguation diamond carries the pitfall callout
+- Line 38: LINCA→LINR32 wires the disambiguation to Runbook 32 only
+- Line 90: deep-link `../reference/linux-capability-matrix.md#conditional-access`
 
-**Evidence:**
+**Runbook-level enforcement** (`docs/l1-runbooks/32-linux-ca-blocking-web-access.md`):
+- Line 21: positive callout — `Architecture: Linux is web-app CA only ... only web-app sign-in via Edge for Linux 102.x+ is enforceable`
+- Line 21: deep-link `../reference/linux-capability-matrix.md#conditional-access`
+- Negative regression-guard: literal `"Require device to be marked as compliant"` NOT found anywhere in the file (grep returned zero matches) — paraphrased as `"Device-level CA (the grant tied to compliance state) is not supported on Linux"` per defect 4C-1 / PITFALL-13 mitigation.
+- All 3 Causes (Not Enrolled / Non-Compliant / Edge Not Signed In) explicitly route within the web-app CA workflow; no Cause routes to a "device compliance CA" path.
 
-- **`00-index.md` (V-51-21 PASS):** `## Linux L1 Runbooks` H2 appears at byte 6824 > Android H2 at byte 5294 (append-only ordering enforced via byte-position assertion). 4-row Linux runbook table contains all 4 link literals.
-- **`00-initial-triage.md` (V-51-22 PASS):** `[Linux Triage](09-linux-triage.md)` link present in 4 distinct positions (banner, Scenario Trees H2, See Also H2, Scenario Trees footer). Version History row added 2026-04-27 above existing Android entry.
-- No existing content modified — only insertions after the last Android entries of the same kind.
+### SC#4 — Append-only edits to `00-index.md` + `00-initial-triage.md` — **VERIFIED ✓**
 
-### SC#5 — `check-phase-51.mjs` passes; all 4 runbooks `platform: Linux` frontmatter on 60-day cycle
+`docs/l1-runbooks/00-index.md`:
+- `## Linux L1 Runbooks` H2 appears at line 78 — AFTER `## Android L1 Runbooks` H2 at line 64 (byte-position ordering preserved).
+- 4-row Linux runbook table (lines 82-87) lists runbooks 30/31/32/33 with correct file paths and "Applies To: Ubuntu 22.04/24.04 LTS".
+- Sample regression check: existing Android entries at line 64 (Android H2) + line 76 (Runbook 29 row) preserved unchanged from prior phase.
+- Version History row (line 114) appended for `2026-04-27 — Added Linux L1 Runbooks section (runbooks 30-33)`.
 
-**Evidence:**
+`docs/decision-trees/00-initial-triage.md`:
+- Linux entries present at all 5 expected insertion points:
+  1. Line 12: platform-gate banner — `> **Linux:** For Linux Intune client troubleshooting (Ubuntu LTS), see [Linux Triage](09-linux-triage.md).`
+  2. Line 42: Scenario Trees H2 list — `[Linux Triage](09-linux-triage.md) — Linux Intune client (Ubuntu 22.04/24.04 LTS) failure routing`
+  3. Line 125: See Also H2 — `[Linux Triage](09-linux-triage.md) -- Linux Intune client (Ubuntu LTS) triage`
+  4. Line 137: Scenario Trees footer list — `[Linux Triage](09-linux-triage.md)`
+  5. Line 143: Version History — `2026-04-27 | Added Linux banner + triage link (Scenario Trees, See Also, Version History)`
+- Existing Android entries at line 11 (banner) and line 41 (Scenario Trees) sample-checked: unmodified.
 
-- Validator runs end-to-end (V-51-01..25); exits 0 with `Summary: 25 passed, 0 failed, 0 skipped`.
-- V-51-05 PASS confirms all 5 new content files (1 tree + 4 runbooks) carry `platform: Linux` + `audience: L1` + `last_verified: 2026-04-27` + `review_by: 2026-06-26` (60-day cycle).
-- v1.5 milestone audit C10 PASS confirms Linux frontmatter consistency across the entire Linux corpus.
+### SC#5 — `check-phase-51.mjs` passes; all 4 runbooks `platform: Linux` + 60-day cycle — **VERIFIED ✓**
 
-## DPO-01 / DPO-02 Inheritance Verification
+- Validator re-run above: 25/25 PASS.
+- Read frontmatter on all 5 new content files (1 tree + 4 runbooks). All carry:
+  - `last_verified: 2026-04-27`
+  - `review_by: 2026-06-26`
+  - `applies_to: all`
+  - `audience: L1`
+  - `platform: Linux`
+- Cycle delta: 2026-06-26 − 2026-04-27 = 60 days exactly (C10 gate satisfied).
+- C10 milestone-audit gate independently PASS.
 
-**DPO-01 (Runbook 30 deep-link to `#enroll-your-device`):**
-- Verified literal `../end-user-guides/linux-intune-portal-enrollment.md#enroll-your-device` present in Runbook 30 (V-51-16 PASS).
-- Anchor target verified at line 36 of `docs/end-user-guides/linux-intune-portal-enrollment.md`: `## Enroll your device` → GFM slug `#enroll-your-device`.
+## Requirement Traceability
 
-**DPO-02 (Runbook 32 + Tree deep-link to `#conditional-access`):**
-- Verified literal `../reference/linux-capability-matrix.md#conditional-access` present in both Tree (V-51-10 PASS) and Runbook 32 (V-51-17 PASS).
-- Anchor target verified at line 59 of `docs/reference/linux-capability-matrix.md`: `## Conditional Access` → GFM slug `#conditional-access`. Phase 50 CDI-Phase50-04 immutable.
+| Requirement | Phase | Deliverable | Status |
+|-------------|-------|-------------|--------|
+| LIN-07 | 51 | `docs/decision-trees/09-linux-triage.md` (frontmatter valid; Mermaid + 4 branches + Don't-know) | covered ✓ |
+| LIN-08 | 51 | `docs/l1-runbooks/30-linux-enrollment-failed.md` (3 anchor-indexed Causes A/B/C; frontmatter valid) | covered ✓ |
+| LIN-09 | 51 | `docs/l1-runbooks/31-linux-compliance-non-compliant.md` (4 anchor-indexed Causes A/B/C/D; frontmatter valid) | covered ✓ |
+| LIN-10 | 51 | `docs/l1-runbooks/32-linux-ca-blocking-web-access.md` (3 anchor-indexed Causes; PITFALL-2 layered defense; frontmatter valid) | covered ✓ |
+| LIN-11 | 51 | `docs/l1-runbooks/33-linux-agent-service-failure.md` (single-cause shape per D-10; frontmatter valid) | covered ✓ |
 
-## DPO-01..DPO-08 Propagation Summary (for Phase 52+ plan author)
+REQUIREMENTS.md §Traceability table (lines 149-153) maps all 5 LIN-NN IDs → Phase 51 → correct file paths.
 
-| DPO | Contract Phase 52/56/58/59/v1.5.1 inherits |
-|-----|---------------------------------------------|
-| **DPO-01** | Runbook 30 must deep-link to `linux-intune-portal-enrollment.md#enroll-your-device`. Phase 52 L2 runbooks must NOT remove or rewrite this anchor target. |
-| **DPO-02** | Runbook 32 + Tree CA disambiguation must deep-link to `linux-capability-matrix.md#conditional-access`. Phase 52 L2 + v1.5.1 capability-matrix updates must NOT remove the H2 anchor. |
-| **DPO-03** | Runbook 30 Cause B uses system-scope `journalctl -u microsoft-identity-broker` (no `--user`); fallback `sudo journalctl -u microsoft-identity-broker` per D-18 carve-out. Phase 52+ L2 broker investigation runbooks inherit. |
-| **DPO-04** | Runbook 33 single-cause shape (no `## Cause [A-Z]:` H2s). V-51-15 negative-assertion enforces. Phase 52 L2 service-failure runbook should mirror. |
-| **DPO-05** | Read-vs-write apt/systemctl boundary: L1 Triage Steps contain ZERO sudo prefix on read-only commands (`apt list`, `dpkg -l`, `systemctl --user`, `journalctl --user`). V-51-20 enforces. Phase 52 L2 runbooks should follow same convention OR explicitly carve out. |
-| **DPO-06** | Glossary anchor slugs use GFM-stripped form: `#intune-agenttimer` (period stripped), `#varlogdpkglog`, `#intune-portal-package`, `#web-app-ca`. Phase 52+ documentation must use GFM-stripped slugs to match `_glossary-linux.md` H3 targets. |
-| **DPO-07** | Single-atomic-commit pattern (D-22 / CDI-Phase51-06) for cross-file deliverables that include hub-file appends. Phase 52+ may inherit if multi-file content + hub appends ship together; otherwise standard per-task commits apply. |
-| **DPO-08** | PITFALL-2 layered defense: tree (Mermaid PITFALL-2 + web-app CA) + runbook (paraphrased architectural callout) + validator (positive V-51-18 + negative V-51-19). Phase 52 L2 + v1.5.1 must preserve all three layers; literal `Require device to be marked as compliant` string remains forbidden in L1 + L2 Linux runbooks. |
+## Decision Adherence (CONTEXT.md spot-check)
 
-## Anti-Pattern Handoff
+| Decision | Check | Result |
+|----------|-------|--------|
+| **D-01** (whitelist-first; no enrollment-mode pre-gate) | grep `BYOD\|COBO\|enrollment mode` in `09-linux-triage.md` | **PASS** — zero matches; tree uses flat-symptom shape |
+| **D-04** (tree-level CA disambiguation node) | grep `PITFALL-2` + `web-app CA` / `Edge for Linux` in tree | **PASS** — line 24 legend, line 34 LIN1→LINCA edge, line 90 deep-link |
+| **D-09** (anchor-indexed Cause shape for Runbooks 30/31/32) | Cause H2 counts: 30→3 / 31→4 / 32→3 (V-51-12/13/14) | **PASS** — independently confirmed by reading H2 anchors with literal `{#cause-X-...}` slugs |
+| **D-10** (single-cause Runbook 22-style for Runbook 33) | Runbook 33 has `## L1 Triage Steps` H2; NO `## Cause [A-D]:` H2s | **PASS** — line 28 has L1 Triage Steps; zero Cause H2s found |
+| **D-13** (read-vs-write apt distinction) | grep `sudo apt list\|sudo dpkg -l\|sudo systemctl --user\|sudo journalctl --user` in all 4 runbooks | **PASS** — zero matches across runbooks 30/31/32/33 |
+| **DPO-01** (Runbook 30 deep-links end-user file) | grep `linux-intune-portal-enrollment.md#enroll-your-device` in Runbook 30 | **PASS** — line 28 + line 140 |
+| **DPO-02** (Runbook 32 deep-links matrix CA H2) | grep `linux-capability-matrix.md#conditional-access` in Runbook 32 | **PASS** — line 21 |
+| **D-22** (single atomic commit for cross-file deliverables + hub appends) | `git log --oneline -5` shows Phase 51 commit pattern | **PASS** — c8a644d (atomic content drop) + 57c5f8d (VERIFICATION.md) + a891dba (plan summaries) = 3 commits per orchestrator pattern |
 
-**No blocking anti-patterns identified.** Phase 51 ships a clean Linux L1 layer with:
+## Cross-Reference vs Self-Authored VERIFICATION.md
 
-- **PITFALL-1 (mode-axis pre-gate) avoided:** Tree uses flat-symptom shape; V-51-07 negative regression-guard PASS confirms no Android-mode tokens (BYOD/COBO/COPE/Dedicated/ZTE/AOSP) leaked into the Linux tree.
-- **PITFALL-2 (device-CA confusion) layered defense verified:** Tree-level + runbook-level + validator-level enforcement all green. The paraphrased Runbook 32 architectural callout avoids the literal V-51-19 trigger string while preserving the architectural meaning.
-- **PITFALL-13 false-positive risk mitigated:** V-51-19 design (literal-string negative assertion) does not collide with Phase 50 `03-compliance-policy.md` line 15-17 because the Phase 50 admin-setup file is not in scope of V-51-19's file-set (Runbook 32 only).
-- **PITFALL-15 (GFM anchor-slug stripping) avoided:** Glossary cross-links use `_glossary-linux.md#intune-agenttimer` (period stripped), `#varlogdpkglog` (slashes + period stripped), `#intune-portal-package` (parens + space-to-hyphen).
-- **Read-vs-write apt boundary** (D-13) enforced via V-51-20: 4 runbooks scan-clean for `sudo apt list`, `sudo dpkg -l`, `sudo systemctl --user`, `sudo journalctl --user` in `## L1 Triage Steps` / `### L1 Triage Steps` blocks.
+The executor's prior VERIFICATION.md (status: passed; verifier: executor agent autonomous) was read in full and cross-referenced against independent verification:
 
-## Files Shipped (single atomic commit `c8a644d`)
+| Self-Claim | Independent Re-Verification | Match? |
+|------------|------------------------------|--------|
+| All 25 V-51-NN PASS | Re-ran validator: 25 passed, 0 failed, 0 skipped | ✓ identical |
+| C1-C12 PASS (C13 informational) | Re-ran milestone audit: 12/12 PASS | ✓ identical |
+| supervision-pins self-test PASS | Re-ran self-test: PASS | ✓ identical |
+| SC#1 — Routing Verification table enumerates 5 paths | Read tree lines 57-63: confirmed 5-row table with explicit step-counts | ✓ identical |
+| SC#2 — 3 anchor-indexed Causes with literal slugs | Read Runbook 30 lines 47/88/132: confirmed `{#cause-a-package-install}`, `{#cause-b-sign-in-failure}`, `{#cause-c-enrollment-timeout}` | ✓ identical |
+| SC#3 — PITFALL-2 layered defense (tree + runbook + validator) | Independently grepped: tree has PITFALL-2+web-app CA; runbook has architectural callout + deep-link; literal forbidden string absent | ✓ identical |
+| SC#4 — `00-index.md` Linux H2 at byte 6824 > Android H2 at byte 5294 | Read file: Linux H2 line 78 > Android H2 line 64 (qualitatively confirms ordering; did not re-byte-count, but the V-51-21 byte-position assertion already verified) | ✓ identical |
+| SC#4 — `00-initial-triage.md` 4 distinct Linux Triage link positions | Independently read file: 5 insertion points found at lines 12/42/125/137/143 (banner, Scenario Trees H2, See Also, Scenario Trees footer, Version History) — V-51-22 requires 3+; 5 satisfies. Self-claim said "4 distinct positions"; actual is 5 (banner + 4 link instances). Self-claim slightly understates evidence but is consistent with V-51-22's "3+" threshold | ✓ consistent (self-claim conservative) |
+| SC#5 — All 5 files carry 60-day cycle frontmatter | Independently read frontmatter on tree + 4 runbooks: all have `last_verified: 2026-04-27` + `review_by: 2026-06-26` (60-day cycle) | ✓ identical |
+| DPO-01 deep-link verified | grep `enroll-your-device` in Runbook 30: line 28 + line 140 | ✓ identical |
+| DPO-02 deep-link verified | grep `#conditional-access` in Runbook 32: line 21 | ✓ identical |
+| Single-atomic D-22 commit `c8a644d` | `git log --oneline -5` confirms c8a644d as the cross-file content drop | ✓ identical |
 
-**5 net-new content files:**
-- `docs/decision-trees/09-linux-triage.md` (LIN-07; 6204 bytes)
-- `docs/l1-runbooks/30-linux-enrollment-failed.md` (LIN-08; 13332 bytes)
-- `docs/l1-runbooks/31-linux-compliance-non-compliant.md` (LIN-09; 15631 bytes)
-- `docs/l1-runbooks/32-linux-ca-blocking-web-access.md` (LIN-10; 11996 bytes)
-- `docs/l1-runbooks/33-linux-agent-service-failure.md` (LIN-11; 6985 bytes)
+**No discrepancies found.** The executor's self-authored VERIFICATION.md is accurate. One minor under-count (4 vs 5 Linux Triage link positions in `00-initial-triage.md`) does not affect the V-51-22 PASS or SC#4 satisfaction.
 
-**1 net-new validator:**
-- `scripts/validation/check-phase-51.mjs` (AUDIT-06; 25 V-51-NN assertions)
+## Gaps
 
-**2 append-only hub edits:**
-- `docs/l1-runbooks/00-index.md` (Linux H2 + 4-row table + Version History row)
-- `docs/decision-trees/00-initial-triage.md` (5 insertion points: banner, Scenario Trees list, See Also, Scenario Trees footer, Version History row)
+None. Phase 51 is complete and ready for orchestrator-level state updates (ROADMAP / STATE / REQUIREMENTS check-off).
 
-## Sign-Off
+## Recommendations
 
-- [x] All 5 SCs satisfied with concrete grep evidence
-- [x] All 25 V-51-NN structural assertions PASS
-- [x] v1.5 milestone audit C1-C12 PASS (C13 informational)
-- [x] regenerate-supervision-pins.mjs --self-test PASS (no Phase 51 pin-coord regression)
-- [x] DPO-01 / DPO-02 deep-link inheritance verified
-- [x] PITFALL-1, PITFALL-2, PITFALL-13, PITFALL-15 mitigations confirmed
-- [x] Single atomic D-22 commit landed all 8 files (`c8a644d`)
-- [x] No modifications to existing content above append-only insertion points
+None blocking. The DPO-01..DPO-08 propagation summary captured by the executor in the prior VERIFICATION.md is a useful inheritance contract for Phase 52 (Linux L2 Runbooks 24-25). Specifically:
 
-**Phase 51 — VERIFICATION PASSED.**
+- **DPO-04** (Runbook 33 single-cause shape per D-10) — Phase 52 L2 service-failure runbook should mirror this shape unless a substantive multi-cause structure is justified.
+- **DPO-05** (read-vs-write apt boundary) — Phase 52 L2 runbooks should preserve the `sudo`-prefix discipline or explicitly carve out per-step.
+- **DPO-08** (PITFALL-2 layered defense) — Phase 52 L2 + v1.5.1 capability-matrix updates must preserve all three layers; literal `"Require device to be marked as compliant"` remains forbidden in Linux L1+L2 runbooks.
+
+## VERIFICATION PASSED
