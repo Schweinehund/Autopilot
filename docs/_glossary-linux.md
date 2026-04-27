@@ -99,6 +99,18 @@ The Linux init system and service manager used by Ubuntu and most modern Linux d
 
 ## Compliance & Encryption
 
+### Linux compliance settings
+
+The 4 categories of compliance settings exposed for Linux device-management compliance policies in the Intune settings catalog: **Allowed Distributions** (distro+version allow-list), **Custom Compliance** (Bash discovery scripts producing a compliance verdict), **Device Encryption** (dm-crypt/LUKS presence check), **Password Policy** (length / complexity / lockout). This entry is a pointer to Phase 50 LIN-04 detailed coverage at `docs/admin-setup-linux/03-compliance-policy.md`; the canonical 4-category enumeration is defined here.
+
+> **Cross-platform note:** "Compliance" is a cross-platform Intune concept but the available settings vary substantially by platform. Windows compliance has dozens of settings-catalog categories. macOS compliance has its own broad settings catalog. iOS compliance includes jailbreak detection / OS version / encryption. Android compliance includes Play Integrity verdict + work-profile checks. Linux compliance is narrower — only the 4 categories named here. See the [Apple Provisioning Glossary](_glossary-macos.md) and [Android Enterprise Provisioning Glossary](_glossary-android.md) for non-Linux compliance term coverage.
+
+### Web-app CA
+
+The only Conditional Access pattern available for Linux endpoints — Microsoft Edge for Linux (102.x+) presents the Entra Conditional Access challenge at sign-in time when the user accesses an Entra-protected web application. Device-level CA grants ("Require device to be marked as compliant" applied to a CA policy targeting all client apps) are NOT available for Linux. This is the [PITFALL-2](../.planning/research/PITFALLS.md) anchor — admins designing CA flows for Linux must understand that compliance reporting exists but is not consumable by device-level CA grants.
+
+> **Cross-platform note:** Device-level CA is available on Windows, macOS, iOS, and Android via "Require device to be marked as compliant" — none of these platforms are restricted to web-app CA. Linux is the outlier: the compliance signal exists but the CA grant surface does not consume it for non-web access. See the [Apple Provisioning Glossary — MAM-WE](_glossary-macos.md#mam-we) for the closest cross-platform pattern (iOS MAM-without-enrollment as a "compliance-lite" pattern), but the mapping is structural, not behavioral.
+
 ## Operations & Diagnostics
 
 ## Cross-Platform Collisions
