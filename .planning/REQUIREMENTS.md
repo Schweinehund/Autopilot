@@ -84,7 +84,7 @@
 - [ ] **AUDIT-03**: `v1.5-milestone-audit.mjs` includes C11 — ops-domain anti-pattern regex covering SCCM/ConfigMgr disambiguation (PITFALL-9), WUfB-vs-Autopatch ring-naming first-occurrence expansion, SafetyNet cross-domain detection — informational-first in Phase 48 with sidecar allowlist seeded for known-legitimate occurrences (DDM deprecated-MDM-command prose, Ubuntu 20.04 EOL callout, Android AMAPI migration callout); promotes to blocking at Phase 60 once ops-domain content stabilizes (4-C11 KEEP)
 - [ ] **AUDIT-04**: `v1.5-milestone-audit.mjs` includes C12 — 4-platform comparison structural validation (DEFER-08 doc must contain all 5 platform columns [Windows + macOS + iOS + Android + Linux] with non-empty cells AND each non-empty cell must contain a hyperlink to the source per-platform matrix, NOT raw copied content) — informational-first when scaffolded in Phase 48; promotes to blocking once `4-platform-capability-comparison.md` exists in Phase 58 (4-C12 KEEP)
 - [ ] **AUDIT-05**: `v1.5-milestone-audit.mjs` includes C13 — broken-link automation via `markdown-link-check` integration with `.mlc-config.json` configured for redirect-following + internal-vs-external split + sidecar allowlist for transient external URLs (Microsoft Learn redirect chains; PITFALL-14 mitigation) and GFM anchor-case-sensitivity handling (PITFALL-15 mitigation) — informational-first in Phase 48 first-pass; promotes to blocking after Phase 60 second-pass triage (4-C13 KEEP)
-- [ ] **AUDIT-06**: Each new v1.5 phase ships a `check-phase-NN.mjs` validator alongside content (continues v1.3+ validator-as-deliverable discipline); CI workflow `.github/workflows/audit-harness-integrity.yml` registers each new validator
+- [ ] **AUDIT-06**: Each new v1.5 phase ships a `check-phase-NN.mjs` validator alongside content (continues v1.3+ validator-as-deliverable discipline); CI workflow `.github/workflows/audit-harness-v1.5-integrity.yml` registers each new validator
 - [ ] **AUDIT-07**: `regenerate-supervision-pins.mjs --self-test` BASELINE_9 is refreshed from stale Phase 44+ file coordinates (carries over from v1.4.1 close per STATE.md out-of-band note) and `--self-test` exits 0 in v1.5 audit-tooling phase
 - [ ] **AUDIT-08**: Phase 48 broken-link sweep first-pass produces a baseline anchor/link inventory that distinguishes pre-existing v1.0–v1.4.1 breakage from new-content breakage; Phase 60-61 second-pass validates v1.5 cross-references are intact and produces the milestone close audit report
 
@@ -145,7 +145,7 @@
 | LIN-03 | 50 | admin-setup-linux/00-overview.md + 02-enrollment-profile.md (enrollment config) |
 | LIN-04 | 50 | admin-setup-linux/03-compliance-policy.md (4 settings-catalog categories; PITFALL-2 CA callout) |
 | LIN-05 | 50 | admin-setup-linux/01-intune-linux-agent.md — Identity Broker v2.0.2+ re-enrollment pitfall callout (1b FOLD) |
-| LIN-06 | 50 | admin-setup-linux/02-enrollment-profile.md — end-user enrollment steps embedded in admin setup phase |
+| LIN-06 | 50 | docs/end-user-guides/linux-intune-portal-enrollment.md — authored during Phase 50 admin setup; cross-linked from admin-setup-linux/02-enrollment-profile.md |
 | LIN-07 | 51 | docs/decision-trees/09-linux-triage.md — Mermaid 4-branch triage tree |
 | LIN-08 | 51 | docs/l1-runbooks/30-linux-enrollment-failed.md |
 | LIN-09 | 51 | docs/l1-runbooks/31-linux-compliance-non-compliant.md |
