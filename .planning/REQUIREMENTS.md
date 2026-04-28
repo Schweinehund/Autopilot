@@ -52,7 +52,7 @@
 - [ ] **PATCH-03**: Admin can configure driver and firmware updates via WUfB (separately from quality/feature updates) and recognize the dual-scan source conflict pitfall when SCCM co-management still controls the WU workload
 - [ ] **PATCH-04**: Admin can configure macOS update enforcement using DDM ("Software Update Enforce Latest" in Intune Settings Catalog) and understand that legacy MDM commands (`forceDelayedSoftwareUpdates`, `com.apple.SoftwareUpdate` payload, `ScheduleOSUpdate`) are deprecated and removed with Apple OS 26 — DDM is the only forward-compatible enforcement path
 - [ ] **PATCH-05**: Admin can configure iOS / iPadOS update enforcement using DDM and understand that as of August 2025 the basic DDM update keys (`TargetOSVersion`, `TargetBuildVersion`, `TargetLocalDateTime`, `OfferPrograms`) work on UNSUPERVISED devices running iOS 17+ — supervised-only constraint retracted
-- [ ] **PATCH-06**: v1.3 iOS compliance content (`docs/admin-setup-ios/05-compliance-policy.md`) supervised-only-DDM callout is surgically retrofitted in Phase 54 (same-commit atomicity per v1.4.1 lesson; no separate retrofit phase) (3-surgical KEEP)
+- [ ] **PATCH-06**: v1.3 iOS device-enrollment content (`docs/admin-setup-ios/07-device-enrollment.md`) v1.3 supervised-only-DDM cell at line 35 is surgically retrofitted in Phase 54 (same-commit atomicity per v1.4.1 lesson; no separate retrofit phase) (3-surgical KEEP) <!-- per Phase 54 CONTEXT D-06 off-ballot Referee resolution: file-system verification confirmed the v1.3 slot-05 path was off-by-one; actual residual claim site is `07-device-enrollment.md:35` -->
 - [ ] **PATCH-07**: Admin can configure Android patch delivery via Google Play and understand the Play Integrity MEETS_STRONG_INTEGRITY change (May 2025 Google enforcement, Sept 30 2025 Intune enforcement, October 31 2026 fleet deadline) requiring Android 13+ devices to have a security patch ≤12 months old
 - [ ] **PATCH-08**: Admin can configure Zebra LifeGuard OTA firmware management via Intune (GA January 2026) for Zebra fleets, separate from Play-delivery updates, and reference Samsung KSP (Knox Service Plugin) as the analogous Samsung-side mechanism
 
@@ -163,7 +163,7 @@
 | PATCH-03 | 54 | Driver/firmware update policy H2 inside 01-windows-wufb-rings.md — separate from quality/feature rings |
 | PATCH-04 | 54 | operations/patch-management/02-macos-update-enforcement.md — DDM only; legacy MDM commands deprecated + removed Apple OS 26 |
 | PATCH-05 | 54 | operations/patch-management/03-ios-update-lifecycle.md — supervised-only DDM constraint retracted iOS 17+ |
-| PATCH-06 | 54 | docs/admin-setup-ios/05-compliance-policy.md surgical retrofit — same-commit-atomic with Phase 54 iOS guide |
+| PATCH-06 | 54 | docs/admin-setup-ios/07-device-enrollment.md surgical retrofit (cell at line 35) — same-commit-atomic with Phase 54 iOS guide |
 | PATCH-07 | 54 | operations/patch-management/04-android-patch-delivery.md — MEETS_STRONG_INTEGRITY enforcement timeline; Android 13+ |
 | PATCH-08 | 54 | Zebra LifeGuard OTA section inside 04-android-patch-delivery.md — GA January 2026; Samsung KSP analog |
 | APP-01 | 55 | operations/app-lifecycle/01-windows-win32-msix-scale.md — supersedence behavior matrix; Required assignment callout; PITFALL-10 |

@@ -265,7 +265,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. Admin reading `operations/patch-management/01-windows-wufb-rings.md` finds every occurrence of "ring" qualified as "WUfB deployment ring" or "Autopatch ring" — with driver/firmware update policy documented separately from quality/feature rings, mutual-exclusion with Autopatch explicit, and Hotpatch default-from-May-2026 + VBS prerequisites as a discrete H2 section (PATCH-02, PITFALL-9)
   2. Admin reading `operations/patch-management/02-macos-update-enforcement.md` understands that `forceDelayedSoftwareUpdates`, `com.apple.SoftwareUpdate` payload, and `ScheduleOSUpdate` MDM command are deprecated and removed with Apple OS 26 — DDM "Software Update Enforce Latest" in Intune Settings Catalog is the only forward-compatible enforcement path
-  3. Admin reading `operations/patch-management/03-ios-update-lifecycle.md` sees the supervised-only DDM constraint retracted for iOS 17+ (effective August 2025) — explicit statement that DDM update keys work on unsupervised devices; AND `docs/admin-setup-ios/05-compliance-policy.md` v1.3 supervised-only-DDM callout is surgically retrofitted in the same commit as the new iOS guide (PATCH-06 atomic same-commit per v1.4.1 lesson)
+  3. Admin reading `operations/patch-management/03-ios-update-lifecycle.md` sees the supervised-only DDM constraint retracted for iOS 17+ (effective August 2025) — explicit statement that DDM update keys work on unsupervised devices; AND `docs/admin-setup-ios/07-device-enrollment.md` v1.3 supervised-only-DDM callout is surgically retrofitted in the same commit as the new iOS guide (PATCH-06 atomic same-commit per v1.4.1 lesson) <!-- per Phase 54 CONTEXT D-06 off-ballot Referee resolution: file-system verification confirmed the v1.3 slot-05 path was off-by-one; actual residual claim site is `07-device-enrollment.md:35` -->
   4. Admin reading `operations/patch-management/04-android-patch-delivery.md` understands the MEETS_STRONG_INTEGRITY enforcement timeline (Google May 2025 / Intune September 30 2025 / fleet October 31 2026 deadline) with Android 13+ security patch age requirement (≤12 months), Zebra LifeGuard OTA via Intune (GA January 2026), and Samsung KSP as the analogous OEM mechanism
   5. `check-phase-54.mjs` passes; all patch-management ops files carry correct multi-platform frontmatter
 **Plans**: 9 plans (single atomic commit per D-21 + ROADMAP:271 v1.4.1 atomicity lesson)
@@ -276,7 +276,7 @@ Plans:
 - [ ] 54-05-PLAN.md — docs/operations/patch-management/04-android-patch-delivery.md (PATCH-07 MEETS_STRONG_INTEGRITY HARD-DEADLINE three-layer + PATCH-08 Zebra LifeGuard + Samsung KSP)
 - [ ] 54-06-PLAN.md — PATCH-06 surgical retrofit at admin-setup-ios/07-device-enrollment.md:35 (atomic with 54-04)
 - [ ] 54-07-PLAN.md — PITFALL-13 forward-link at admin-setup-ios/04-configuration-profiles.md:128
-- [ ] 54-08-PLAN.md — REQ + ROADMAP errata (05-compliance-policy.md → 07-device-enrollment.md across 3 sites)
+- [ ] 54-08-PLAN.md — REQ + ROADMAP errata (off-by-one v1.3 slot-05 path → 07-device-enrollment.md across 3 sites)
 - [ ] 54-09-PLAN.md — scripts/validation/check-phase-54.mjs (32 V-54-NN checks; AUDIT-06; orchestrates atomic commit)
 **Critical note**: PATCH-06 iOS v1.3 retrofit MUST be same-commit-atomic with new iOS DDM enforcement guide content. No separate commit for the retrofit.
 **Parallelism note**: Phases 54, 55, 56 can run concurrently (disjoint file sets within operations/ subdirectories). Wave B after Phase 53 completes.

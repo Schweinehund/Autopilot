@@ -125,7 +125,7 @@ Device restrictions expose the largest set of supervised-only settings in iOS/iP
 
 ### Software Update Note
 
-The legacy "Defer software updates" setting in device restrictions remains supervised-only but is being deprecated by Apple. For software update enforcement, use the dedicated DDM-based path at **Devices** > **Apple updates** > **iOS/iPadOS update policies**, which works on both supervised and unsupervised devices (iOS 17.0+). Software update policies are not covered in this guide.
+The legacy "Defer software updates" setting in device restrictions remains supervised-only but is being deprecated by Apple. For software update enforcement, use the dedicated DDM-based path at **Devices** > **Apple updates** > **iOS/iPadOS update policies**, which works on both supervised and unsupervised devices (iOS 17.0+). Software update policies are not covered in this guide. For full iOS update enforcement guidance including DDM key reference, supervision matrix, and rollout patterns, see [iOS Update Lifecycle](../../operations/patch-management/03-ios-update-lifecycle.md).
 
 ### General
 
