@@ -119,7 +119,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [ ] **Phase 50: Linux Admin Setup + Capability Matrix** — admin-setup-linux/ 6-file guide (00-overview through 05-conditional-access), linux-capability-matrix.md bilateral; end-user enrollment guide in docs/end-user-guides/ (cross-linked)
 - [x] **Phase 51: Linux L1 Triage + Runbooks 30–33** — decision-trees/09-linux-triage.md, L1 runbooks 30-33 (enrollment failed / compliance non-compliant / CA blocking web-app / agent service failure); index appends (completed 2026-04-27)
 - [x] **Phase 52: Linux L2 Investigation Runbooks 24–25** — l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md; L2 index append (completed 2026-04-27)
-- [ ] **Phase 53: Co-Management Operational Docs** — operations/co-management/ 4-file suite; all 7 workloads; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android non-equivalent contextual notes; operations/00-index.md
+- [x] **Phase 53: Co-Management Operational Docs** — operations/co-management/ 4-file suite; all 7 workloads; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android non-equivalent contextual notes; operations/00-index.md (completed 2026-04-28)
 - [ ] **Phase 54: Patch & Update Management** — operations/patch-management/ 5-file suite; macOS/iOS DDM migration (URGENT); v1.3 iOS retrofit surgical PATCH-06; Android MEETS_STRONG_INTEGRITY + Zebra LifeGuard; WUfB hotpatch
 - [ ] **Phase 55: App Lifecycle Automation** — operations/app-lifecycle/ 5-file suite; Win32 supersedence chains + dependency graphs; macOS PKG/DMG + Installomator callout; iOS VPP device vs user; Android MGP private-app publishing
 - [ ] **Phase 56: Drift Detection + Tenant Migration** — operations/drift-migration/ 5-file suite; Windows BitLocker re-key; macOS/iOS ABM token re-issue; Android MGP re-binding; cross-platform encryption drift folded into runbook
@@ -243,12 +243,12 @@ Plans:
   4. macOS / iOS / Android admins reading co-management content see explicit "no co-management equivalent for your platform" callouts with the applicable analog migration path (macOS: Jamf→Intune via ABM MDM transfer; iOS/Android: MAM→MDM transition; Android legacy DA→Enterprise migration)
   5. Admin can identify that Windows Autopatch requires Device Configuration AND Office Click-to-Run workloads moved to Intune before enablement (COMG-05)
 **Plans**: 7 plans
-  - [ ] 53-01-PLAN.md — 00-overview.md (COMG-01; 7 workloads + 3 slider states + Pilot Intune disambiguation H2 + Resource Access deprecation + Device Config implicit-switching + cross-platform inline blockquote + soft cross-link to 03 Autopatch)
-  - [ ] 53-02-PLAN.md — 01-windows-tenant-attach.md (COMG-03; side-by-side comparison table + SC#3 "no workload switching" anchor + cross-platform inline blockquote)
-  - [ ] 53-03-PLAN.md — 02-windows-workload-sliders.md (COMG-02; single 7-row workload table + EP HIGH-RISK three-layer callout + forward-link to v1.2 Windows migration content + cross-platform inline blockquote)
-  - [ ] 53-04-PLAN.md — 03-cocmgmt-migration-paths.md (COMG-05; Windows Autopatch prereqs primary content; 3 workloads per RESEARCH Area 2 verified Microsoft Learn 2026-02-26; NO cross-platform blockquote per V-53-21 regression-guard)
-  - [ ] 53-05-PLAN.md — operations/00-index.md (D-02 1B-1 winner; co-management H2 ONLY at Phase 53 ship; ROADMAP line 448 hotspot ownership; Phases 54-56 cross-reference only)
-  - [ ] 53-06-PLAN.md — check-phase-53.mjs validator (AUDIT-06; 26 V-53-NN structural assertions per CONTEXT D-10)
+  - [x] 53-01-PLAN.md — 00-overview.md (COMG-01; 7 workloads + 3 slider states + Pilot Intune disambiguation H2 + Resource Access deprecation + Device Config implicit-switching + cross-platform inline blockquote + soft cross-link to 03 Autopatch)
+  - [x] 53-02-PLAN.md — 01-windows-tenant-attach.md (COMG-03; side-by-side comparison table + SC#3 "no workload switching" anchor + cross-platform inline blockquote)
+  - [x] 53-03-PLAN.md — 02-windows-workload-sliders.md (COMG-02; single 7-row workload table + EP HIGH-RISK three-layer callout + forward-link to v1.2 Windows migration content + cross-platform inline blockquote)
+  - [x] 53-04-PLAN.md — 03-cocmgmt-migration-paths.md (COMG-05; Windows Autopatch prereqs primary content; 3 workloads per RESEARCH Area 2 verified Microsoft Learn 2026-02-26; NO cross-platform blockquote per V-53-21 regression-guard)
+  - [x] 53-05-PLAN.md — operations/00-index.md (D-02 1B-1 winner; co-management H2 ONLY at Phase 53 ship; ROADMAP line 448 hotspot ownership; Phases 54-56 cross-reference only)
+  - [x] 53-06-PLAN.md — check-phase-53.mjs validator (AUDIT-06; 26 V-53-NN structural assertions per CONTEXT D-10)
   - [ ] 53-07-PLAN.md — pre-commit gate + single atomic commit (D-14) + VERIFICATION.md (separate commit per Phase 49/50/51/52 close pattern)
 **Methodology notes**:
   - ConfigMgr CB 2503 (GA April 23 2025) is the current branch reference — 7 co-management workloads
@@ -426,7 +426,7 @@ Plans:
 | 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 8/8 | Complete    | 2026-04-27 |
 | 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 5/5 | Complete   | 2026-04-27 |
-| 53. Co-Management Operational Docs | v1.5 | 0/7 | Planned     | - |
+| 53. Co-Management Operational Docs | v1.5 | 6/7 | Complete    | 2026-04-28 |
 | 54. Patch & Update Management | v1.5 | 0/? | Not started | - |
 | 55. App Lifecycle Automation | v1.5 | 0/? | Not started | - |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
