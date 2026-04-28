@@ -242,11 +242,20 @@ Plans:
   3. Admin can distinguish tenant attach (Intune portal device sync + remote actions; no workload switching) from full co-management (workload sliders active) via a focused disambiguation section in `01-windows-tenant-attach.md`
   4. macOS / iOS / Android admins reading co-management content see explicit "no co-management equivalent for your platform" callouts with the applicable analog migration path (macOS: Jamf→Intune via ABM MDM transfer; iOS/Android: MAM→MDM transition; Android legacy DA→Enterprise migration)
   5. Admin can identify that Windows Autopatch requires Device Configuration AND Office Click-to-Run workloads moved to Intune before enablement (COMG-05)
-**Plans**: TBD
+**Plans**: 7 plans
+  - [ ] 53-01-PLAN.md — 00-overview.md (COMG-01; 7 workloads + 3 slider states + Pilot Intune disambiguation H2 + Resource Access deprecation + Device Config implicit-switching + cross-platform inline blockquote + soft cross-link to 03 Autopatch)
+  - [ ] 53-02-PLAN.md — 01-windows-tenant-attach.md (COMG-03; side-by-side comparison table + SC#3 "no workload switching" anchor + cross-platform inline blockquote)
+  - [ ] 53-03-PLAN.md — 02-windows-workload-sliders.md (COMG-02; single 7-row workload table + EP HIGH-RISK three-layer callout + forward-link to v1.2 Windows migration content + cross-platform inline blockquote)
+  - [ ] 53-04-PLAN.md — 03-cocmgmt-migration-paths.md (COMG-05; Windows Autopatch prereqs primary content; 3 workloads per RESEARCH Area 2 verified Microsoft Learn 2026-02-26; NO cross-platform blockquote per V-53-21 regression-guard)
+  - [ ] 53-05-PLAN.md — operations/00-index.md (D-02 1B-1 winner; co-management H2 ONLY at Phase 53 ship; ROADMAP line 448 hotspot ownership; Phases 54-56 cross-reference only)
+  - [ ] 53-06-PLAN.md — check-phase-53.mjs validator (AUDIT-06; 26 V-53-NN structural assertions per CONTEXT D-10)
+  - [ ] 53-07-PLAN.md — pre-commit gate + single atomic commit (D-14) + VERIFICATION.md (separate commit per Phase 49/50/51/52 close pattern)
 **Methodology notes**:
   - ConfigMgr CB 2503 (GA April 23 2025) is the current branch reference — 7 co-management workloads
   - Resource Access workload deprecated since CB 2203; slider mandated to Intune in CB 2403 — document as deprecated
   - `operations/00-index.md` created in this phase as the top-level operations directory index (cross-referenced by Phases 54, 55, 56)
+  - **Research-derived correction (RESEARCH Area 2 verified Microsoft Learn 2026-02-26):** Windows Autopatch requires THREE workloads (Windows Update Policies + Device Configuration + Office Click-to-Run Apps), not just 2 as REQUIREMENTS.md COMG-05 wording suggests. Phase 53 documents all three.
+  - **Research-derived correction (RESEARCH Area 3 verified file system):** iOS cross-link path corrected from CONTEXT D-08 `04-byod-mam-overview.md` (does not exist) to `09-mam-app-protection.md`; macOS singular `02-enrollment-profile.md` not plural
 
 ### Phase 54: Patch & Update Management
 **Goal**: Admins across all four existing platforms can configure update enforcement using the correct current mechanisms — DDM migration for macOS/iOS before Apple OS 26 deprecations land, Android MEETS_STRONG_INTEGRITY compliance deadline coverage, and WUfB ring topology with hotpatch guidance
@@ -417,7 +426,7 @@ Plans:
 | 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 8/8 | Complete    | 2026-04-27 |
 | 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 5/5 | Complete   | 2026-04-27 |
-| 53. Co-Management Operational Docs | v1.5 | 0/? | Not started | - |
+| 53. Co-Management Operational Docs | v1.5 | 0/7 | Planned     | - |
 | 54. Patch & Update Management | v1.5 | 0/? | Not started | - |
 | 55. App Lifecycle Automation | v1.5 | 0/? | Not started | - |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
