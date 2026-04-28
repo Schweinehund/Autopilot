@@ -39,11 +39,11 @@
 
 #### Co-Management (SCCM ↔ Intune)
 
-- [ ] **COMG-01**: Admin can read a co-management overview + workload model guide covering all 7 ConfigMgr-current-branch (CB 2503 GA April 2025) workloads (Compliance Policies, Windows Update Policies, Resource Access [deprecated since CB 2203], Endpoint Protection, Device Configuration, Office Click-to-Run Apps, Client Apps) with the Device Configuration → Resource Access + Endpoint Protection implicit-switching note
-- [ ] **COMG-02**: Admin can plan a workload-slider migration sequence from SCCM to Intune (low-risk first: Compliance → Resource Access → WU → Endpoint Protection → Device Configuration → Apps) with per-workload pilot-collection guidance and forward-link to v1.2 Windows migration content (APv1→APv2, imaging→Autopilot, GPO→Intune)
-- [ ] **COMG-03**: Admin can distinguish tenant attach (Intune-portal device sync + remote actions, no workload switching) from full co-management (workload sliders active) per a focused disambiguation doc
-- [ ] **COMG-04**: macOS / iOS / Android admins reading co-management content see explicit "no co-management equivalent for your platform — here is the analog migration path" callouts (macOS: Jamf→Intune via ABM MDM transfer; iOS/Android: MAM→MDM transition; Android legacy DA→Enterprise migration)
-- [ ] **COMG-05**: Admin can identify Windows Autopatch co-management prerequisites (Device Configuration AND Office Click-to-Run workloads moved to Intune) before enabling Autopatch
+- [x] **COMG-01**: Admin can read a co-management overview + workload model guide covering all 7 ConfigMgr-current-branch (CB 2503 GA April 2025) workloads (Compliance Policies, Windows Update Policies, Resource Access [deprecated since CB 2203], Endpoint Protection, Device Configuration, Office Click-to-Run Apps, Client Apps) with the Device Configuration → Resource Access + Endpoint Protection implicit-switching note
+- [x] **COMG-02**: Admin can plan a workload-slider migration sequence from SCCM to Intune (low-risk first: Compliance → Resource Access → WU → Endpoint Protection → Device Configuration → Apps) with per-workload pilot-collection guidance and forward-link to v1.2 Windows migration content (APv1→APv2, imaging→Autopilot, GPO→Intune)
+- [x] **COMG-03**: Admin can distinguish tenant attach (Intune-portal device sync + remote actions, no workload switching) from full co-management (workload sliders active) per a focused disambiguation doc
+- [x] **COMG-04**: macOS / iOS / Android admins reading co-management content see explicit "no co-management equivalent for your platform — here is the analog migration path" callouts (macOS: Jamf→Intune via ABM MDM transfer; iOS/Android: MAM→MDM transition; Android legacy DA→Enterprise migration)
+- [x] **COMG-05**: Admin can identify Windows Autopatch co-management prerequisites (Device Configuration AND Office Click-to-Run workloads moved to Intune) before enabling Autopatch
 
 #### Patch & Update Management
 
