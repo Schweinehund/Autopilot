@@ -117,7 +117,8 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [ ] **Phase 48: Audit Harness Bootstrap + Broken-Link Sweep First Pass** — Path A harness copy from v1.4.1, BASELINE_9 refresh, C10-C13 scaffolded informational-first, broken-link first-pass inventory against 179-file baseline
 - [x] **Phase 49: Linux Foundation — Taxonomy, Glossary, Version Matrix** — linux-lifecycle/ overview + prerequisites, _glossary-linux.md, reciprocal see-also in all 3 existing glossaries; PITFALL-7 whitelist gate locked before any admin guides
 - [ ] **Phase 50: Linux Admin Setup + Capability Matrix** — admin-setup-linux/ 6-file guide (00-overview through 05-conditional-access), linux-capability-matrix.md bilateral; end-user enrollment guide in docs/end-user-guides/ (cross-linked)
-- [x] **Phase 51: Linux L1 Triage + Runbooks 30–33** — decision-trees/09-linux-triage.md, L1 runbooks 30-33 (enrollment failed / compliance non-compliant / CA blocking web-app / agent service failure); index appends (completed 2026-04-27)
+- [x] **Phase 51: Linux L1 Triage + Runbooks 30–33** — decision-trees/09-linux-triage.md, L1 runbooks 30-33 (enrollment failed / compliance non-compliant / CA blocking web-app / agent service failure); index appends
+ (completed 2026-04-27)
 - [x] **Phase 52: Linux L2 Investigation Runbooks 24–25** — l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md; L2 index append (completed 2026-04-27)
 - [x] **Phase 53: Co-Management Operational Docs** — operations/co-management/ 4-file suite; all 7 workloads; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android non-equivalent contextual notes; operations/00-index.md (completed 2026-04-28)
 - [ ] **Phase 54: Patch & Update Management** — operations/patch-management/ 5-file suite; macOS/iOS DDM migration (URGENT); v1.3 iOS retrofit surgical PATCH-06; Android MEETS_STRONG_INTEGRITY + Zebra LifeGuard; WUfB hotpatch
@@ -267,7 +268,16 @@ Plans:
   3. Admin reading `operations/patch-management/03-ios-update-lifecycle.md` sees the supervised-only DDM constraint retracted for iOS 17+ (effective August 2025) — explicit statement that DDM update keys work on unsupervised devices; AND `docs/admin-setup-ios/05-compliance-policy.md` v1.3 supervised-only-DDM callout is surgically retrofitted in the same commit as the new iOS guide (PATCH-06 atomic same-commit per v1.4.1 lesson)
   4. Admin reading `operations/patch-management/04-android-patch-delivery.md` understands the MEETS_STRONG_INTEGRITY enforcement timeline (Google May 2025 / Intune September 30 2025 / fleet October 31 2026 deadline) with Android 13+ security patch age requirement (≤12 months), Zebra LifeGuard OTA via Intune (GA January 2026), and Samsung KSP as the analogous OEM mechanism
   5. `check-phase-54.mjs` passes; all patch-management ops files carry correct multi-platform frontmatter
-**Plans**: TBD
+**Plans**: 9 plans (single atomic commit per D-21 + ROADMAP:271 v1.4.1 atomicity lesson)
+- [ ] 54-01-PLAN.md — docs/operations/patch-management/00-overview.md (D-01 1D Hybrid: cross-platform comparison + PITFALL-9 ring-disambiguation H2 + deferral-vs-enforcement terminology + routing)
+- [ ] 54-02-PLAN.md — docs/operations/patch-management/01-windows-wufb-rings.md (PATCH-01 + PATCH-02 Hotpatch H2 + PATCH-03 driver/firmware H2)
+- [ ] 54-03-PLAN.md — docs/operations/patch-management/02-macos-update-enforcement.md (PATCH-04 + Apple OS 26 HARD-DEADLINE three-layer)
+- [ ] 54-04-PLAN.md — docs/operations/patch-management/03-ios-update-lifecycle.md (PATCH-05 + Aug 2025 unsupervised retraction)
+- [ ] 54-05-PLAN.md — docs/operations/patch-management/04-android-patch-delivery.md (PATCH-07 MEETS_STRONG_INTEGRITY HARD-DEADLINE three-layer + PATCH-08 Zebra LifeGuard + Samsung KSP)
+- [ ] 54-06-PLAN.md — PATCH-06 surgical retrofit at admin-setup-ios/07-device-enrollment.md:35 (atomic with 54-04)
+- [ ] 54-07-PLAN.md — PITFALL-13 forward-link at admin-setup-ios/04-configuration-profiles.md:128
+- [ ] 54-08-PLAN.md — REQ + ROADMAP errata (05-compliance-policy.md → 07-device-enrollment.md across 3 sites)
+- [ ] 54-09-PLAN.md — scripts/validation/check-phase-54.mjs (32 V-54-NN checks; AUDIT-06; orchestrates atomic commit)
 **Critical note**: PATCH-06 iOS v1.3 retrofit MUST be same-commit-atomic with new iOS DDM enforcement guide content. No separate commit for the retrofit.
 **Parallelism note**: Phases 54, 55, 56 can run concurrently (disjoint file sets within operations/ subdirectories). Wave B after Phase 53 completes.
 
@@ -427,7 +437,7 @@ Plans:
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 8/8 | Complete    | 2026-04-27 |
 | 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 5/5 | Complete   | 2026-04-27 |
 | 53. Co-Management Operational Docs | v1.5 | 6/7 | Complete    | 2026-04-28 |
-| 54. Patch & Update Management | v1.5 | 0/? | Not started | - |
+| 54. Patch & Update Management | v1.5 | 0/9 | In Progress |  |
 | 55. App Lifecycle Automation | v1.5 | 0/? | Not started | - |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 0/? | Not started | - |
