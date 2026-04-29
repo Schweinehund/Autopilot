@@ -122,7 +122,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [x] **Phase 52: Linux L2 Investigation Runbooks 24–25** — l2-runbooks/24-linux-log-collection.md + 25-linux-agent-investigation.md; L2 index append (completed 2026-04-27)
 - [x] **Phase 53: Co-Management Operational Docs** — operations/co-management/ 4-file suite; all 7 workloads; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android non-equivalent contextual notes; operations/00-index.md (completed 2026-04-28)
 - [x] **Phase 54: Patch & Update Management** — operations/patch-management/ 5-file suite; macOS/iOS DDM migration (URGENT); v1.3 iOS retrofit surgical PATCH-06; Android MEETS_STRONG_INTEGRITY + Zebra LifeGuard; WUfB hotpatch (completed 2026-04-28)
-- [ ] **Phase 55: App Lifecycle Automation** — operations/app-lifecycle/ 5-file suite; Win32 supersedence chains + dependency graphs; macOS PKG/DMG + Installomator callout; iOS VPP device vs user; Android MGP private-app publishing
+- [x] **Phase 55: App Lifecycle Automation** — operations/app-lifecycle/ 5-file suite; Win32 supersedence chains + dependency graphs; macOS PKG/DMG + Installomator callout; iOS VPP device vs user; Android MGP private-app publishing (completed 2026-04-28; atomic commit aecf014)
 - [ ] **Phase 56: Drift Detection + Tenant Migration** — operations/drift-migration/ 5-file suite; Windows BitLocker re-key; macOS/iOS ABM token re-issue; Android MGP re-binding; cross-platform encryption drift folded into runbook
 - [ ] **Phase 57: DEFER-07 Android Nav Unification** — 4-file hub surgical retrofit: docs/index.md Android H2 expansion + common-issues.md routing + quick-ref-l1.md + quick-ref-l2.md Android sections; pre-edit anchor inventory mandatory
 - [ ] **Phase 58: DEFER-08 4-Platform Capability Comparison** — docs/reference/4-platform-capability-comparison.md (link-not-copy cells; 6 domain axes; 5 platforms including Linux); cross-link retrofits to all 4 existing capability matrices
@@ -293,13 +293,14 @@ Plans:
   5. Admin can publish Android private apps via Managed Google Play (direct APK upload + MGP web app for web clip shortcuts) and operate Zebra OEMConfig app lifecycle using APK side-load (explicitly NOT via Managed Google Play — per v1.4.1 Phase 45 Zebra precedent preserved)
 **Plans**: 7 plans
 **Plan list**:
-- [ ] 55-01-PLAN.md — docs/operations/app-lifecycle/00-overview.md (cross-platform overview hub: comparison table + App-lifecycle terminology H2 + routing; D-01 2B winner)
-- [ ] 55-02-PLAN.md — docs/operations/app-lifecycle/01-windows-win32-msix-scale.md (APP-01/02/03 fold: 3 discrete H2s — Supersedence + Dependency Graphs + ContentPrepTool Packaging; PITFALL-10 callout; same-commit edit to win32-app-packaging.md per RESEARCH §6 Option A)
-- [ ] 55-03-PLAN.md — docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md (APP-04 + APP-05 fold: 6 macOS app-type variants + Installomator/Intuneomator MEDIUM-confidence community callout)
-- [ ] 55-04-PLAN.md — docs/operations/app-lifecycle/03-ios-vpp-licensing.md (APP-06: 2-column VPP attribute table with reclamation rows + 3-step manual reclamation workflow; ZERO Mermaid per D-09)
-- [ ] 55-05-PLAN.md — docs/operations/app-lifecycle/04-android-mgp-lifecycle.md (APP-07 + APP-08 fold: peer H2s for MGP private-app publishing + Zebra OEMConfig with cross-link to Phase 45 SSoT; AMAPI 2024-2025 softened phrasing per RESEARCH §7 caveat #2)
-- [ ] 55-06-PLAN.md — scripts/validation/check-phase-55.mjs (32 V-55-NN structural assertions; AUDIT-06 validator-as-deliverable)
-- [ ] 55-07-PLAN.md — atomic commit + VERIFICATION.md close gate (5 SCs + 32 V-55-NN PASS + DPO-Phase55-01..06 propagation)
+- [x] 55-01-PLAN.md — docs/operations/app-lifecycle/00-overview.md (cross-platform overview hub: comparison table + App-lifecycle terminology H2 + routing; D-01 2B winner)
+- [x] 55-02-PLAN.md — docs/operations/app-lifecycle/01-windows-win32-msix-scale.md (APP-01/02/03 fold: 3 discrete H2s — Supersedence + Dependency Graphs + ContentPrepTool Packaging; PITFALL-10 callout; same-commit edit to win32-app-packaging.md per RESEARCH §6 Option A)
+- [x] 55-03-PLAN.md — docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md (APP-04 + APP-05 fold: 6 macOS app-type variants + Installomator/Intuneomator MEDIUM-confidence community callout)
+- [x] 55-04-PLAN.md — docs/operations/app-lifecycle/03-ios-vpp-licensing.md (APP-06: 2-column VPP attribute table with reclamation rows + 3-step manual reclamation workflow; ZERO Mermaid per D-09)
+- [x] 55-05-PLAN.md — docs/operations/app-lifecycle/04-android-mgp-lifecycle.md (APP-07 + APP-08 fold: peer H2s for MGP private-app publishing + Zebra OEMConfig with cross-link to Phase 45 SSoT; AMAPI 2024-2025 softened phrasing per RESEARCH §7 caveat #2)
+- [x] 55-06-PLAN.md — scripts/validation/check-phase-55.mjs (32 V-55-NN structural assertions; AUDIT-06 validator-as-deliverable)
+- [x] 55-07-PLAN.md — atomic commit + VERIFICATION.md close gate (5 SCs + 32 V-55-NN PASS + DPO-Phase55-01..06 propagation)
+**Closed**: 2026-04-28 (atomic commit `aecf014`; 32/32 V-55-NN PASS; 5/5 SCs satisfied)
 **Parallelism note**: Concurrent with Phases 54 and 56 (Wave B).
 
 ### Phase 56: Drift Detection + Tenant Migration
@@ -446,7 +447,7 @@ Plans:
 | 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 5/5 | Complete   | 2026-04-27 |
 | 53. Co-Management Operational Docs | v1.5 | 6/7 | Complete    | 2026-04-28 |
 | 54. Patch & Update Management | v1.5 | 9/9 | Complete   | 2026-04-28 |
-| 55. App Lifecycle Automation | v1.5 | 0/? | Not started | - |
+| 55. App Lifecycle Automation | v1.5 | 7/7 | Complete    | 2026-04-28 |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 0/? | Not started | - |
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 0/? | Not started | - |
