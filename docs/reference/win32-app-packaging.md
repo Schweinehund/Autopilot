@@ -96,7 +96,7 @@ Win32 apps support dependency declarations in Intune. Use them to enforce instal
 
 ### Circular Dependency Detection
 
-Intune does not detect circular dependencies at configuration time. A circular dependency (App A requires App B, App B requires App A) fails silently — neither app installs.
+Intune detects circular dependencies at configuration time and surfaces an explicit error message. If you misconfigure a circular dependency (App A requires App B, App B requires App A), Intune blocks the assignment with an error message identifying the cycle. (Behavior verified at Microsoft Learn April 2026; this section was previously documented as "not detected" — the prior claim is retracted as of Phase 55 publication on 2026-04-28.)
 
 **How to diagnose:** Check IME logs for conflict errors:
 ```
