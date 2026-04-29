@@ -291,7 +291,15 @@ Plans:
   3. Admin reading `operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md` sees Installomator and Intuneomator referenced as a `> Community pattern — MEDIUM confidence` adjacency callout with explicit non-Microsoft-supported labeling — not presented as a supported delivery path (APP-05 fold)
   4. Admin can distinguish iOS VPP device-licensing (no Apple ID required, silent install on supervised) from user-licensing (requires Apple ID, user accept) with license reclamation behavior for retire/wipe and remove-app scenarios
   5. Admin can publish Android private apps via Managed Google Play (direct APK upload + MGP web app for web clip shortcuts) and operate Zebra OEMConfig app lifecycle using APK side-load (explicitly NOT via Managed Google Play — per v1.4.1 Phase 45 Zebra precedent preserved)
-**Plans**: TBD
+**Plans**: 7 plans
+**Plan list**:
+- [ ] 55-01-PLAN.md — docs/operations/app-lifecycle/00-overview.md (cross-platform overview hub: comparison table + App-lifecycle terminology H2 + routing; D-01 2B winner)
+- [ ] 55-02-PLAN.md — docs/operations/app-lifecycle/01-windows-win32-msix-scale.md (APP-01/02/03 fold: 3 discrete H2s — Supersedence + Dependency Graphs + ContentPrepTool Packaging; PITFALL-10 callout; same-commit edit to win32-app-packaging.md per RESEARCH §6 Option A)
+- [ ] 55-03-PLAN.md — docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md (APP-04 + APP-05 fold: 6 macOS app-type variants + Installomator/Intuneomator MEDIUM-confidence community callout)
+- [ ] 55-04-PLAN.md — docs/operations/app-lifecycle/03-ios-vpp-licensing.md (APP-06: 2-column VPP attribute table with reclamation rows + 3-step manual reclamation workflow; ZERO Mermaid per D-09)
+- [ ] 55-05-PLAN.md — docs/operations/app-lifecycle/04-android-mgp-lifecycle.md (APP-07 + APP-08 fold: peer H2s for MGP private-app publishing + Zebra OEMConfig with cross-link to Phase 45 SSoT; AMAPI 2024-2025 softened phrasing per RESEARCH §7 caveat #2)
+- [ ] 55-06-PLAN.md — scripts/validation/check-phase-55.mjs (32 V-55-NN structural assertions; AUDIT-06 validator-as-deliverable)
+- [ ] 55-07-PLAN.md — atomic commit + VERIFICATION.md close gate (5 SCs + 32 V-55-NN PASS + DPO-Phase55-01..06 propagation)
 **Parallelism note**: Concurrent with Phases 54 and 56 (Wave B).
 
 ### Phase 56: Drift Detection + Tenant Migration
