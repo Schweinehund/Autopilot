@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-30
+review_by: 2026-06-29
 applies_to: both
 audience: L1
 platform: all
@@ -146,10 +146,46 @@ platform: all
 - [iOS Device Cap Reached](l1-runbooks/20-ios-device-cap-reached.md) -- user or group cap exceeded
 - [iOS Compliance Blocked](l1-runbooks/21-ios-compliance-blocked.md) -- multi-cause A/B/C with user action
 
+## Android Enterprise Quick Reference
+
+**Platform:** Android Enterprise through Microsoft Intune
+
+### Top Checks
+
+1. **[All GMS]** Device visible in Intune? -- Intune admin center > Devices > Android -- search by serial number, check enrollment state
+2. **[BYOD]** Work profile / briefcase badge present on device? -- User-side check; if briefcase missing on a BYOD-mode device, work profile creation failed (route to runbook 23)
+3. **[ZTE/Knox]** Serial in Zero-Touch portal or Knox Mobile Enrollment portal? -- Admin-only check; L1 escalates to admin if portal access required
+4. **[All GMS]** Compliance state in Intune device blade? -- Devices > [device] > Device compliance -- Compliant vs Non-compliant + non-compliant settings (incl. Play Integrity verdict)
+5. **[AOSP]** OEM identifier captured? -- RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest -- different enrollment paths per OEM (route to runbook 29)
+
+### Android Escalation Triggers
+
+- **[ZTE]** Device serial in Zero-Touch portal but not in Intune after 24 hours --> **Escalate L2** (collect: serial, ZTE assignment screenshot, Knox-check-if-applicable)
+- **[Knox]** Samsung KME-provisioned device booted to consumer setup or never arrived in Intune --> **Escalate L2** (collect: serial, Knox portal screenshot, Samsung model + OS version)
+- **[BYOD]** Work profile creation never started after enrollment completed in Company Portal --> **Escalate L2** (collect: user UPN, device serial, Company Portal screenshot, Android version)
+- **[All GMS]** Device marked compliant in Intune but Conditional Access still blocks Microsoft 365 access --> **Escalate L2** (collect: user UPN, device ID, Play Integrity verdict, CA sign-in log timestamp)
+- **[AOSP]** AOSP device enrollment fails on a specific OEM (RealWear / Zebra / Pico / HTC / Meta Quest) and per-OEM checklist exhausted --> **Escalate L2** (collect: OEM identifier, device serial, enrollment-token configuration screenshot)
+
+### Android Decision Tree
+
+- [Android Triage Decision Tree](decision-trees/08-android-triage.md) -- start here for Android Enterprise failures (mode-first per Phase 40 D-01)
+
+### Android Runbooks
+
+- **[All GMS]** [Android Enrollment Blocked](l1-runbooks/22-android-enrollment-blocked.md) -- enrollment restriction or "device cannot enroll" error across all GMS modes
+- **[BYOD]** [Android Work Profile Not Created](l1-runbooks/23-android-work-profile-not-created.md) -- BYOD work profile container never created
+- **[All GMS]** [Android Device Not Enrolled](l1-runbooks/24-android-device-not-enrolled.md) -- device never appeared in Intune (no restriction error visible)
+- **[All GMS]** [Android Compliance Blocked](l1-runbooks/25-android-compliance-blocked.md) -- non-compliant or CA blocking M365; multi-cause incl. Play Integrity verdict change
+- **[All GMS]** [Android MGP App Not Installed](l1-runbooks/26-android-mgp-app-not-installed.md) -- Managed Google Play app not delivered to device
+- **[ZTE]** [Android ZTE Enrollment Failed](l1-runbooks/27-android-zte-enrollment-failed.md) -- Zero-Touch Enrollment did not initiate or stalled
+- **[Knox]** [Android Knox Enrollment Failed](l1-runbooks/28-android-knox-enrollment-failed.md) -- Samsung KME provisioning failed (consumer setup loop or never arrived)
+- **[AOSP]** [Android AOSP Enrollment Failed](l1-runbooks/29-android-aosp-enrollment-failed.md) -- AOSP enrollment did not initiate across 5 OEMs (RealWear / Zebra / Pico / HTC / Meta Quest)
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: Top Checks 5 / Escalation Triggers 5 / Decision Tree 1 / Runbooks 8) with inline [Mode] prefix tags per row (mode-first per v1.4 triage tree); Mode vocabulary [BYOD]/[ZTE]/[AOSP]/[Knox]/[All GMS] LOCKED verbatim from L1-index Mode column (CLEAN-03; DEFER-07 close) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 4 top checks, 5 escalation triggers, decision tree link, and 6 runbook links (16-21) | -- |
 | 2026-04-15 | Added macOS ADE Quick Reference section with top checks, escalation triggers, and runbook links | -- |
 | 2026-04-13 | Added APv2 quick-reference section | -- |
