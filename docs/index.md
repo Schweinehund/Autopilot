@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-24
-review_by: 2026-07-16
+last_verified: 2026-04-30
+review_by: 2026-06-29
 applies_to: both
 audience: all
 platform: all
@@ -168,6 +168,32 @@ Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and m
 
 Troubleshooting, investigation, and setup guides for Android Enterprise provisioning through Microsoft Intune. For terminology, see the [Android Enterprise Provisioning Glossary](_glossary-android.md). For enrollment paths, see the [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md).
 
+### Service Desk (L1)
+
+| Resource | When to Use |
+|----------|-------------|
+| [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md) | Start here -- understand the Android enrollment paths (BYOD / COBO / Dedicated / ZTE / AOSP) and DPC modes |
+| [Android Triage Decision Tree](decision-trees/08-android-triage.md) | Identifies the Android failure scenario from symptoms and routes to the correct runbook (mode-first per Phase 40 D-01) |
+| [Android L1 Runbooks](l1-runbooks/00-index.md#android-l1-runbooks) | Scripted procedures for the 8 Android Enterprise enrollment + compliance failure scenarios (runbooks 22-29) |
+| [L1 Quick-Reference Card](quick-ref-l1.md#android-enterprise-quick-reference) | One-page cheat sheet -- top checks with mode tags, escalation triggers, decision tree, and runbook list |
+
+### Desktop Engineering (L2)
+
+| Resource | When to Use |
+|----------|-------------|
+| [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md) | Review the Android enrollment paths before diagnosing |
+| [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) | Prerequisite for all Android L2 investigations (3-method: Company Portal / Microsoft Intune App / adb logcat) |
+| [Android L2 Runbooks](l2-runbooks/00-index.md#android-l2-runbooks) | Investigation guides for enrollment, app install, compliance, Knox, and AOSP failures (runbooks 18-23) |
+| [L2 Quick-Reference Card](quick-ref-l2.md#android-enterprise-quick-reference) | One-page cheat sheet -- 3-method log collection, Intune portal paths, Play Integrity verdict reference, investigation runbook list |
+
+### Admin Setup
+
+| Resource | When to Use |
+|----------|-------------|
+| [Android Admin Setup Overview](admin-setup-android/00-overview.md) | Entry point for all Android admin setup guides; tri-portal Mermaid diagram + per-mode setup-sequence enumeration lives at this overview, not at hub level |
+| [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md) | Review the enrollment pipeline before configuring Intune + MGP (admin-context entry) |
+| [Android Capability Matrix](reference/android-capability-matrix.md) | Compare Android feature parity vs Windows, macOS, iOS -- scannable 5-domain table |
+
 ---
 
 ## Cross-Platform References
@@ -189,11 +215,14 @@ Troubleshooting, investigation, and setup guides for Android Enterprise provisio
 | [macOS Capability Matrix](reference/macos-capability-matrix.md) | Intune feature parity comparison between Windows and macOS across enrollment, configuration, apps, compliance, and updates |
 | [iOS Enrollment Path Overview](ios-lifecycle/00-enrollment-overview.md) | 4-path comparison with supervision axis (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE) |
 | [iOS Capability Matrix](reference/ios-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, and iOS (NAV-03) |
+| [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md) | Mode comparison with DPC ownership axis (BYOD / COBO / Dedicated / ZTE / AOSP) and Managed Google Play binding |
+| [Android Capability Matrix](reference/android-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, iOS, and Android |
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-30 | Phase 57: expanded Android Enterprise H2 to 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching iOS Phase 32 structural depth (CLEAN-01); added Android Provisioning Lifecycle + Android Capability Matrix Cross-Platform References entries (DEFER-07 close) | -- |
 | 2026-04-24 | Phase 42: added Android Provisioning stub H2, Choose-Your-Platform bullet, Android Glossary cross-reference entry (AEAUDIT-02) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Provisioning section (L1/L2/Admin Setup subsections) + Choose Your Platform third entry + trilateral H1 narrative | -- |
 | 2026-04-17 | Phase 32: added iOS Capability Matrix + iOS Enrollment Path Overview Cross-Platform References entries; platform coverage updated for trilateral framing | -- |
