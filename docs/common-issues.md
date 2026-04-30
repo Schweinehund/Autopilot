@@ -265,10 +265,80 @@ Device shows compliant in Intune but Conditional Access still blocks Microsoft 3
 
 > **Advisory:** MAM-WE-specific L1/L2 runbooks are deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](admin-setup-ios/09-mam-app-protection.md). For the MAM-WE glossary entry, see [MAM-WE in Apple Provisioning Glossary](_glossary-macos.md#mam-we).
 
+## Android Enterprise Failure Scenarios
+
+> **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
+> **macOS:** For macOS ADE troubleshooting, see [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios).
+> **iOS:** For iOS/iPadOS issues, see [iOS/iPadOS Failure Scenarios](#iosipados-failure-scenarios).
+
+**Platform:** Android Enterprise through Microsoft Intune
+
+> **Not sure which Android scenario?** Start with the [Android Triage Decision Tree](decision-trees/08-android-triage.md) — it disambiguates by enrollment mode (BYOD / COBO / Dedicated / ZTE / Knox / AOSP) and symptom in 2-3 steps.
+
+### Android: Enrollment Blocked
+
+Enrollment restriction or "device cannot enroll" error blocks Android Enterprise enrollment across all GMS modes (BYOD, COBO, Dedicated, ZTE). Could be caused by enrollment restriction (platform / ownership / count), Managed Google Play binding issue, or device cap. Start with the triage decision tree to disambiguate.
+
+- **L1:** [Android Enrollment Blocked](l1-runbooks/22-android-enrollment-blocked.md)
+- **L2:** [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) + [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md)
+
+### Android: Work Profile Not Created
+
+BYOD enrollment completed but the work profile container (briefcase badge) was never created on the device. Specific to BYOD mode (work profile is the BYOD-mode container model).
+
+- **L1:** [Android Work Profile Not Created](l1-runbooks/23-android-work-profile-not-created.md)
+- **L2:** [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) + [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md)
+
+### Android: Device Not Enrolled
+
+Device never appeared in Intune after enrollment attempt and there is no enrollment-restriction error visible to the user. Could overlap with Enrollment Blocked (silent restriction) or ZTE Enrollment Failed (Zero-Touch portal serial assignment problem).
+
+- **L1:** [Device Not Enrolled](l1-runbooks/24-android-device-not-enrolled.md) | [Enrollment Blocked](l1-runbooks/22-android-enrollment-blocked.md) | [ZTE Enrollment Failed](l1-runbooks/27-android-zte-enrollment-failed.md) (reciprocal disambiguation — see all if no enrollment-restriction error visible)
+- **L2:** [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) + [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md)
+
+### Android: Compliance Blocked
+
+> **iOS:** For iOS compliance and CA timing issues, see [iOS: Compliance / Access Blocked](#ios-compliance--access-blocked).
+> **macOS:** For macOS compliance issues, see [macOS: Compliance / Access Blocked](#compliance-access-blocked) (where applicable).
+
+Device shows non-compliant in Intune OR Conditional Access blocks Microsoft 365 access. Causes: Play Integrity verdict change (Android 13+ MEETS_STRONG_INTEGRITY enforcement; cross-platform jailbreak/integrity equivalence with iOS), OS version drift, passcode/encryption settings, or CA timing window.
+
+- **L1:** [Android Compliance Blocked](l1-runbooks/25-android-compliance-blocked.md)
+- **L2:** [Android Compliance Investigation](l2-runbooks/21-android-compliance-investigation.md)
+
+### Android: MGP App Not Installed
+
+Managed Google Play app assigned to user/device but never delivered. Applies to all GMS modes. Could be caused by MGP binding issue, app approval gap, app-config conflict, or per-mode delivery constraint.
+
+- **L1:** [MGP App Not Installed](l1-runbooks/26-android-mgp-app-not-installed.md)
+- **L2:** [Android App Install Investigation](l2-runbooks/20-android-app-install-investigation.md)
+
+### Android: ZTE Enrollment Failed
+
+Zero-Touch Enrollment did not initiate or stalled. Samsung KME (Knox Mobile Enrollment) provisioning often co-exists with ZTE — check both portals when triaging.
+
+- **L1:** [ZTE Enrollment Failed](l1-runbooks/27-android-zte-enrollment-failed.md) | [Knox Enrollment Failed](l1-runbooks/28-android-knox-enrollment-failed.md) (reciprocal disambiguation — Samsung KME provisioning often co-exists with ZTE; check both portals)
+- **L2:** [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md) + [Android Knox Investigation](l2-runbooks/22-android-knox-investigation.md)
+
+### Android: Knox Enrollment Failed
+
+Samsung KME provisioning failed: device booted to consumer setup, looped, or never arrived in Intune. Knox-only scope (Samsung-specific).
+
+- **L1:** [Knox Enrollment Failed](l1-runbooks/28-android-knox-enrollment-failed.md)
+- **L2:** [Android Knox Investigation](l2-runbooks/22-android-knox-investigation.md)
+
+### Android: AOSP Enrollment Failed
+
+AOSP enrollment did not initiate or stalled across the 5 supported OEMs (RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest). AOSP-only scope (no GMS / no MGP).
+
+- **L1:** [AOSP Enrollment Failed](l1-runbooks/29-android-aosp-enrollment-failed.md)
+- **L2:** [Android AOSP Investigation](l2-runbooks/23-android-aosp-investigation.md)
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-30 | Phase 57: added Android Enterprise Failure Scenarios H2 (8 H3 symptom-routing sub-sections 1:1 to L1 runbooks 22-29 + section-top decision-tree banner + 2 reciprocal disambiguation callouts on Device Not Enrolled and ZTE Enrollment Failed + 1 cross-platform iOS+macOS reciprocal banner on Compliance Blocked); added Android entry to Choose Your Platform TOC; updated platform coverage blockquote (CLEAN-02; DEFER-07 close) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Failure Scenarios section (6 symptom categories with ios- anchor prefix + MAM-WE advisory), platform selector entry, bidirectional iOS cross-reference banners; updated platform coverage blockquote | -- |
 | 2026-04-15 | Added macOS ADE Failure Scenarios section, platform selector, cross-reference banners; updated title and frontmatter for cross-platform coverage | -- |
 | 2026-04-13 | Added Device Reset, Migration, and Security routing sections for Phase 21 content | — |
