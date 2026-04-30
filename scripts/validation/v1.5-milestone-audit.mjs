@@ -16,7 +16,7 @@
 //   C1: Zero SafetyNet as compliance mechanism (exemption = allow-list pin OR nearby deprecation prose)
 //   C2: Zero supervision as Android mgmt term (exemption = allow-list pin by {file, line})
 //   C3: AOSP stub word count within Phase 39 envelope (INFORMATIONAL ONLY -- always PASS per D-29)
-//   C4: Zero Android links in deferred shared files (docs/common-issues.md, docs/quick-ref-l1.md, docs/quick-ref-l2.md)
+//   C4: Zero Android links in deferred shared files (RETIRED 2026-04-30 by Phase 57; informational/always-PASS; DEFER-07 closed; superseded by check-phase-57.mjs)
 //   C5: last_verified frontmatter on all Android docs (review_by - last_verified <= 60 days per Phase 34 D-14)
 //   C6: PITFALL-7 framing in all AOSP + per-OEM docs (BLOCKING in v1.5 per D-04)
 //   C7: bare-Knox disambiguation (BLOCKING in v1.5 per D-05)
@@ -274,14 +274,28 @@ const checks = [
     name: 'C4: Zero Android links in deferred shared files',
     // D-30: targets = docs/common-issues.md, docs/quick-ref-l1.md, docs/quick-ref-l2.md.
     // Regex scoped to markdown link target syntax ](...) only -- does not match bare text mentions.
+    //
+    // RETIRED 2026-04-30 by Phase 57 (DEFER-07 Android Nav Unification close).
+    // The DEFER-07 deferral that this check was guarding (Android links forbidden in the
+    // 4 hub files until DEFER-07 ships) closed atomically when Phase 57 plans 57-01..57-06
+    // landed Android H2 expansions in docs/index.md / common-issues.md / quick-ref-l1.md /
+    // quick-ref-l2.md per CLEAN-01..04. Validator-of-record for the new Android hub-nav
+    // surface is scripts/validation/check-phase-57.mjs (26 V-57-NN structural assertions).
+    // C4 is preserved in source as informational/always-PASS for audit-trail continuity
+    // with v1.4.1 lineage (Phase 47 authoring -> Phase 48 Path A copy -> Phase 57 retire).
+    // Original blocking implementation preserved below in /* */ for posterity.
     run() {
+      return {
+        pass: true,
+        detail: '(informational -- DEFER-07 closed by Phase 57; check retired 2026-04-30; superseded by check-phase-57.mjs)'
+      };
+      /* PRE-PHASE-57 BLOCKING IMPLEMENTATION (retired 2026-04-30):
       const violations = [];
       const targets = [
         'docs/common-issues.md',
         'docs/quick-ref-l1.md',
         'docs/quick-ref-l2.md'
       ];
-      // /gi needs lastIndex reset between lines so the .test() scan is stateless per line.
       const re = /\]\([^)]*(android|aosp|byod-work-profile|zero-touch|managed-google-play|play-integrity|managed-home-screen|amapi|knox|kme|kpe|realwear|zebra|pico|htc-vive-focus|meta-quest|cope-full-admin|aosp-realwear|aosp-zebra|aosp-pico|aosp-htc-vive-focus|aosp-meta-quest|aosp-oem-matrix)[^)]*\)/gi;
       for (const t of targets) {
         const content = readFile(t);
@@ -298,6 +312,7 @@ const checks = [
         detail: violations.length + ' Android link(s) in deferred file(s): '
               + violations.slice(0, 5).map(v => v.file + ':' + v.line).join(', ')
       };
+      */
     }
   },
   {
