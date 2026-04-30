@@ -1,18 +1,21 @@
-"""Generate 14 Style-1 (Flat Icon) SVG diagrams for runbooks and decision trees.
+"""Generate 14 Style-2 (Dark Terminal) SVG diagrams for runbooks and decision trees.
 
 Uses the Python list method per fireworks-tech-graph SKILL.md mandate.
 Each function returns a list of SVG lines; main() writes them to disk.
 
-Style 1 palette:
-  bg: #ffffff
-  box stroke: #d1d5db (gray-300)
-  text primary: #111827 (gray-900)
-  text secondary: #6b7280 (gray-500)
-  blue (main flow): #2563eb / tint #eff6ff
-  red (escalate L2): #dc2626 / tint #fef2f2
-  green (resolved): #16a34a / tint #f0fdf4
-  orange (escalate infra): #ea580c / tint #fff7ed
-  purple (router/async): #9333ea / tint #faf5ff
+Style 2 palette:
+  bg: linear-gradient #0f0f1a -> #1a1a2e
+  panel fill: #0f172a (slate-950)
+  panel stroke: #334155 (slate-700)
+  text primary: #e2e8f0 (slate-200)
+  text secondary: #94a3b8 (slate-400)
+  blue (main flow): #3b82f6 / panel #1e3a5f
+  red (escalate L2): #ef4444 / panel #450a0a
+  green (resolved): #10b981 / panel #052e16
+  orange (escalate infra): #f97316 / panel #1c1917
+  purple (router/async): #a855f7 / panel #1e1b4b
+  teal (Android): #14b8a6 / panel #042f2e
+  Font: SF Mono / Fira Code monospace
 """
 
 from __future__ import annotations
@@ -24,7 +27,7 @@ from pathlib import Path
 
 OUT_DIR = Path("docs/diagrams")
 
-FONT_STACK = "'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif"
+FONT_STACK = "'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace"
 
 # ---------- shared helpers -----------------------------------------------------
 
@@ -32,40 +35,44 @@ def svg_open(viewbox: str, width: int, height: int) -> list[str]:
     return [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{viewbox}" width="{width}" height="{height}">',
         '  <style>',
-        f'    text {{ font-family: {FONT_STACK}; }}',
-        '    .title { font-size: 18px; font-weight: 600; fill: #111827; }',
-        '    .subtitle { font-size: 12px; fill: #6b7280; }',
-        '    .label { font-size: 13px; fill: #111827; }',
-        '    .sub { font-size: 11px; fill: #6b7280; }',
-        '    .edge { font-size: 11px; fill: #374151; font-weight: 600; }',
-        '    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }',
-        '    .legend { font-size: 11px; fill: #6b7280; }',
+        f'    text {{ font-family: {FONT_STACK}; fill: #e2e8f0; letter-spacing: 0.02em; }}',
+        '    .title { font-size: 18px; font-weight: 700; fill: #e2e8f0; letter-spacing: 0.02em; }',
+        '    .subtitle { font-size: 12px; fill: #94a3b8; }',
+        '    .label { font-size: 13px; fill: #e2e8f0; }',
+        '    .sub { font-size: 11px; fill: #94a3b8; }',
+        '    .edge { font-size: 11px; fill: #cbd5e1; font-weight: 700; }',
+        '    .col-head { font-size: 13px; font-weight: 700; fill: #cbd5e1; letter-spacing: 0.08em; }',
+        '    .legend { font-size: 11px; fill: #94a3b8; }',
         '  </style>',
         '  <defs>',
+        '    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">',
+        '      <stop offset="0%" stop-color="#0f0f1a"/>',
+        '      <stop offset="100%" stop-color="#1a1a2e"/>',
+        '    </linearGradient>',
         '    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">',
-        '      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>',
+        '      <polygon points="0,0 10,3.5 0,7" fill="#3b82f6"/>',
         '    </marker>',
         '    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">',
-        '      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>',
+        '      <polygon points="0,0 10,3.5 0,7" fill="#ef4444"/>',
         '    </marker>',
         '    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">',
-        '      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>',
+        '      <polygon points="0,0 10,3.5 0,7" fill="#10b981"/>',
         '    </marker>',
         '    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">',
-        '      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>',
+        '      <polygon points="0,0 10,3.5 0,7" fill="#f97316"/>',
         '    </marker>',
         '    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">',
-        '      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>',
+        '      <polygon points="0,0 10,3.5 0,7" fill="#a855f7"/>',
         '    </marker>',
         '    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">',
-        '      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>',
+        '      <polygon points="0,0 10,3.5 0,7" fill="#64748b"/>',
         '    </marker>',
         '  </defs>',
     ]
 
 
 def svg_bg(width: int, height: int) -> list[str]:
-    return [f'  <rect width="{width}" height="{height}" fill="#ffffff"/>']
+    return [f'  <rect width="{width}" height="{height}" fill="url(#bg-grad)"/>']
 
 
 def svg_close() -> list[str]:
@@ -85,7 +92,7 @@ def diamond(x: int, y: int, w: int, h_: int, lines: list[str], sub: str | None =
     cy = y + h_ // 2
     pts = f"{cx},{y} {x + w},{cy} {cx},{y + h_} {x},{cy}"
     out = [
-        f'  <polygon points="{pts}" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>',
+        f'  <polygon points="{pts}" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>',
     ]
     n = len(lines)
     line_h = 16
@@ -102,8 +109,8 @@ def diamond(x: int, y: int, w: int, h_: int, lines: list[str], sub: str | None =
 def box(
     x: int, y: int, w: int, h_: int,
     lines: list[str],
-    fill: str = "#ffffff",
-    stroke: str = "#d1d5db",
+    fill: str = "#0f172a",
+    stroke: str = "#334155",
     sub: str | None = None,
     sub2: str | None = None,
     rx: int = 8,
@@ -134,36 +141,36 @@ def box(
 
 
 def resolved(x, y, w, h_, lines, sub=None, sub2=None):
-    return box(x, y, w, h_, lines, fill="#f0fdf4", stroke="#16a34a", sub=sub, sub2=sub2)
+    return box(x, y, w, h_, lines, fill="#052e16", stroke="#10b981", sub=sub, sub2=sub2)
 
 
 def escalate_l2(x, y, w, h_, lines, sub=None, sub2=None):
-    return box(x, y, w, h_, lines, fill="#fef2f2", stroke="#dc2626", sub=sub, sub2=sub2)
+    return box(x, y, w, h_, lines, fill="#450a0a", stroke="#ef4444", sub=sub, sub2=sub2)
 
 
 def escalate_infra(x, y, w, h_, lines, sub=None, sub2=None):
-    return box(x, y, w, h_, lines, fill="#fff7ed", stroke="#ea580c", sub=sub, sub2=sub2)
+    return box(x, y, w, h_, lines, fill="#1c1917", stroke="#f97316", sub=sub, sub2=sub2)
 
 
 def action_box(x, y, w, h_, lines, sub=None):
     """Action / process step (light blue tint)."""
-    return box(x, y, w, h_, lines, fill="#eff6ff", stroke="#2563eb", sub=sub)
+    return box(x, y, w, h_, lines, fill="#1e3a5f", stroke="#3b82f6", sub=sub)
 
 
 def router(x, y, w, h_, lines, sub=None):
     """Symptom router (purple tint)."""
-    return box(x, y, w, h_, lines, fill="#faf5ff", stroke="#9333ea", sub=sub)
+    return box(x, y, w, h_, lines, fill="#1e1b4b", stroke="#a855f7", sub=sub)
 
 
 def line_arrow(x1, y1, x2, y2, color="blue", label=None, label_offset_x=8, label_offset_y=-4):
     marker = f'arr-{color}'
     stroke_color = {
-        "blue": "#2563eb",
-        "red": "#dc2626",
-        "green": "#16a34a",
-        "orange": "#ea580c",
-        "purple": "#9333ea",
-        "gray": "#6b7280",
+        "blue": "#3b82f6",
+        "red": "#ef4444",
+        "green": "#10b981",
+        "orange": "#f97316",
+        "purple": "#a855f7",
+        "gray": "#64748b",
     }[color]
     out = [
         f'  <line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{stroke_color}" '
@@ -176,7 +183,7 @@ def line_arrow(x1, y1, x2, y2, color="blue", label=None, label_offset_x=8, label
         pad_x = max(20, len(label) * 4 + 6)
         out.append(
             f'  <rect x="{mx - pad_x // 2 + label_offset_x - 8}" y="{my + label_offset_y - 10}" '
-            f'width="{pad_x}" height="14" fill="#ffffff" opacity="0.95"/>'
+            f'width="{pad_x}" height="14" fill="#0f0f1a" opacity="0.95"/>'
         )
         out.append(
             f'  <text x="{mx + label_offset_x}" y="{my + label_offset_y}" '
@@ -189,12 +196,12 @@ def path_arrow(d: str, color: str = "blue", dashed: bool = False, label: tuple |
     """d = SVG path data; label = (x, y, text) optional."""
     marker = f'arr-{color}'
     stroke_color = {
-        "blue": "#2563eb",
-        "red": "#dc2626",
-        "green": "#16a34a",
-        "orange": "#ea580c",
-        "purple": "#9333ea",
-        "gray": "#6b7280",
+        "blue": "#3b82f6",
+        "red": "#ef4444",
+        "green": "#10b981",
+        "orange": "#f97316",
+        "purple": "#a855f7",
+        "gray": "#64748b",
     }[color]
     sd = ' stroke-dasharray="5 3"' if dashed else ''
     out = [
@@ -206,7 +213,7 @@ def path_arrow(d: str, color: str = "blue", dashed: bool = False, label: tuple |
         pad_x = max(28, len(text) * 5 + 8)
         out.append(
             f'  <rect x="{x - pad_x // 2}" y="{y - 10}" width="{pad_x}" height="14" '
-            f'fill="#ffffff" opacity="0.95"/>'
+            f'fill="#0f0f1a" opacity="0.95"/>'
         )
         out.append(
             f'  <text x="{x}" y="{y}" text-anchor="middle" class="edge">{h(text)}</text>'
@@ -249,7 +256,7 @@ def gen_decision_tree_triage():
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "Initial Triage Decision Tree", "APv1 (classic Autopilot) — L1 symptom routing  ·  docs/decision-trees/00-initial-triage.md")
-    out += [f'  <text x="{W // 2}" y="92" text-anchor="middle" class="sub" font-weight="600" font-size="11" letter-spacing="0.08em" fill="#9ca3af">START</text>']
+    out += [f'  <text x="{W // 2}" y="92" text-anchor="middle" class="sub" font-weight="600" font-size="11" letter-spacing="0.08em" fill="#64748b">START</text>']
 
     # TRD1: network reachable?
     out += diamond(400, 110, 300, 90, ["Device reaches", "any website?"], sub="TRD1")
@@ -280,39 +287,39 @@ def gen_decision_tree_triage():
 
     # Fan-out trunk
     out += [
-        '  <path d="M 550,610 L 550,645" stroke="#9333ea" stroke-width="1.5" fill="none"/>',
-        '  <path d="M 115,645 L 985,645" stroke="#9333ea" stroke-width="1.5" fill="none"/>',
+        '  <path d="M 550,610 L 550,645" stroke="#a855f7" stroke-width="1.5" fill="none"/>',
+        '  <path d="M 115,645 L 985,645" stroke="#a855f7" stroke-width="1.5" fill="none"/>',
     ]
 
     # 5 outcomes at y=700-780
     # ESP sub-tree
     out += path_arrow("M 115,645 L 115,695", color="purple")
     out += [
-        f'  <rect x="90" y="660" width="60" height="14" fill="#ffffff" opacity="0.95"/>',
+        f'  <rect x="90" y="660" width="60" height="14" fill="#0f0f1a" opacity="0.95"/>',
         f'  <text x="120" y="671" text-anchor="middle" class="edge">ESP stuck</text>',
     ]
-    out += box(25, 700, 180, 80, ["→ ESP Failure Tree"], sub="decision-trees/", sub2="01-esp-failure.md", fill="#faf5ff", stroke="#9333ea")
+    out += box(25, 700, 180, 80, ["→ ESP Failure Tree"], sub="decision-trees/", sub2="01-esp-failure.md", fill="#1e1b4b", stroke="#a855f7")
 
     # Profile sub-tree
     out += path_arrow("M 330,645 L 330,695", color="purple")
     out += [
-        f'  <rect x="290" y="660" width="80" height="14" fill="#ffffff" opacity="0.95"/>',
+        f'  <rect x="290" y="660" width="80" height="14" fill="#0f0f1a" opacity="0.95"/>',
         f'  <text x="332" y="671" text-anchor="middle" class="edge">no profile</text>',
     ]
-    out += box(240, 700, 180, 80, ["→ Profile Assignment"], sub="decision-trees/", sub2="02-profile-assignment.md", fill="#faf5ff", stroke="#9333ea")
+    out += box(240, 700, 180, 80, ["→ Profile Assignment"], sub="decision-trees/", sub2="02-profile-assignment.md", fill="#1e1b4b", stroke="#a855f7")
 
     # TPM sub-tree
     out += path_arrow("M 550,645 L 550,695", color="purple")
     out += [
-        f'  <rect x="512" y="660" width="76" height="14" fill="#ffffff" opacity="0.95"/>',
+        f'  <rect x="512" y="660" width="76" height="14" fill="#0f0f1a" opacity="0.95"/>',
         f'  <text x="550" y="671" text-anchor="middle" class="edge">TPM error</text>',
     ]
-    out += box(460, 700, 180, 80, ["→ TPM Attestation"], sub="decision-trees/", sub2="03-tpm-attestation.md", fill="#faf5ff", stroke="#9333ea")
+    out += box(460, 700, 180, 80, ["→ TPM Attestation"], sub="decision-trees/", sub2="03-tpm-attestation.md", fill="#1e1b4b", stroke="#a855f7")
 
     # Error code → resolved
     out += path_arrow("M 770,645 L 770,695", color="green")
     out += [
-        f'  <rect x="728" y="660" width="90" height="14" fill="#ffffff" opacity="0.95"/>',
+        f'  <rect x="728" y="660" width="90" height="14" fill="#0f0f1a" opacity="0.95"/>',
         f'  <text x="773" y="671" text-anchor="middle" class="edge">error code</text>',
     ]
     out += resolved(680, 700, 180, 80, ["Resolved: follow L1", "action in error table"], sub="TRR1  ·  error-codes/00-index.md")
@@ -320,14 +327,14 @@ def gen_decision_tree_triage():
     # OOBE / unclear → L2
     out += path_arrow("M 985,645 L 985,695", color="red")
     out += [
-        f'  <rect x="945" y="660" width="80" height="14" fill="#ffffff" opacity="0.95"/>',
+        f'  <rect x="945" y="660" width="80" height="14" fill="#0f0f1a" opacity="0.95"/>',
         f'  <text x="985" y="671" text-anchor="middle" class="edge">OOBE/other</text>',
     ]
     out += escalate_l2(895, 700, 180, 80, ["Escalate L2"], sub="OOBE crash / unclear", sub2="TRE5  ·  TRE6")
 
     # Sibling triage trees note
     out += [
-        f'  <rect x="25" y="808" width="1050" height="80" rx="6" ry="6" fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>',
+        f'  <rect x="25" y="808" width="1050" height="80" rx="6" ry="6" fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="4 3"/>',
         f'  <text x="45" y="828" class="col-head">SIBLING TRIAGE TREES</text>',
         f'  <text x="45" y="852" class="label">·  APv2 Device Preparation Triage — decision-trees/04-apv2-triage.md  (routes to APv2 L1 runbooks, APE1/APE2/APE3 → L2)</text>',
         f'  <text x="45" y="872" class="label">·  macOS / iOS / Android / Linux triage — decision-trees/06-09  (per-platform L1 routing)</text>',
@@ -357,12 +364,12 @@ def gen_l1_runbook_map():
 
     # 6 entry headers
     headers = [
-        ("APv1 Initial Triage", "decision-trees/00-initial-triage.md", "#f0fdf4", "#16a34a"),
-        ("APv2 Device Preparation", "decision-trees/04-apv2-triage.md", "#eff6ff", "#2563eb"),
-        ("macOS ADE Triage", "decision-trees/06-macos-triage.md", "#faf5ff", "#9333ea"),
-        ("iOS Triage", "decision-trees/07-ios-triage.md", "#fff7ed", "#ea580c"),
-        ("Android Triage", "decision-trees/08-android-triage.md", "#f0fdfa", "#0d9488"),
-        ("Linux Triage", "decision-trees/09-linux-triage.md", "#fef2f2", "#dc2626"),
+        ("APv1 Initial Triage", "decision-trees/00-initial-triage.md", "#052e16", "#10b981"),
+        ("APv2 Device Preparation", "decision-trees/04-apv2-triage.md", "#1e3a5f", "#3b82f6"),
+        ("macOS ADE Triage", "decision-trees/06-macos-triage.md", "#1e1b4b", "#a855f7"),
+        ("iOS Triage", "decision-trees/07-ios-triage.md", "#1c1917", "#f97316"),
+        ("Android Triage", "decision-trees/08-android-triage.md", "#042f2e", "#14b8a6"),
+        ("Linux Triage", "decision-trees/09-linux-triage.md", "#450a0a", "#ef4444"),
     ]
     col_w = 215
     gap = 12
@@ -373,7 +380,7 @@ def gen_l1_runbook_map():
         out += box(x, head_y, col_w, 56, [name], sub=path, fill=fill, stroke=stroke)
         # entry arrow
         cx = x + col_w // 2
-        out += path_arrow(f"M {cx},{head_y + 56} L {cx},{head_y + 86}", color={"#16a34a": "green", "#2563eb": "blue", "#9333ea": "purple", "#ea580c": "orange", "#0d9488": "green", "#dc2626": "red"}[stroke])
+        out += path_arrow(f"M {cx},{head_y + 56} L {cx},{head_y + 86}", color={"#10b981": "green", "#3b82f6": "blue", "#a855f7": "purple", "#f97316": "orange", "#14b8a6": "green", "#ef4444": "red"}[stroke])
 
     # Column containers
     col_top = 178
@@ -383,7 +390,7 @@ def gen_l1_runbook_map():
         x = start_x + i * (col_w + gap)
         out += [
             f'  <rect x="{x}" y="{col_top}" width="{col_w}" height="{col_h}" '
-            f'rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+            f'rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         ]
 
     # Column 1: APv1 (5 runbooks: 01-05)
@@ -438,12 +445,12 @@ def gen_l1_runbook_map():
         ("RB 33", "Agent Service Failure", "Intune agent service not running"),
     ]
     columns = [
-        (apv1, "#f0fdf4", "#16a34a"),
-        (apv2, "#eff6ff", "#2563eb"),
-        (macos, "#faf5ff", "#9333ea"),
-        (ios, "#fff7ed", "#ea580c"),
-        (android, "#f0fdfa", "#0d9488"),
-        (linux, "#fef2f2", "#dc2626"),
+        (apv1, "#052e16", "#10b981"),
+        (apv2, "#1e3a5f", "#3b82f6"),
+        (macos, "#1e1b4b", "#a855f7"),
+        (ios, "#1c1917", "#f97316"),
+        (android, "#042f2e", "#14b8a6"),
+        (linux, "#450a0a", "#ef4444"),
     ]
     rb_y_start = col_top + 14
     rb_h = 76
@@ -458,7 +465,7 @@ def gen_l1_runbook_map():
             out += [
                 f'  <rect x="{rx}" y="{ry}" width="{inner_w}" height="{rb_h}" rx="6" ry="6" '
                 f'fill="{fill}" stroke="{stroke}" stroke-width="1.2"/>',
-                f'  <text x="{rx + 12}" y="{ry + 18}" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">{h(num)}</text>',
+                f'  <text x="{rx + 12}" y="{ry + 18}" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">{h(num)}</text>',
                 f'  <text x="{rx + 12}" y="{ry + 38}" class="label" font-weight="600">{h(name)}</text>',
                 f'  <text x="{rx + 12}" y="{ry + 58}" class="sub">{h(trig[:32])}</text>',
             ]
@@ -469,9 +476,9 @@ def gen_l1_runbook_map():
     foot_y = H - 100
     out += [
         f'  <rect x="30" y="{foot_y}" width="{W - 60}" height="40" rx="6" ry="6" '
-        f'fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>',
+        f'fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>',
         f'  <text x="{W // 2}" y="{foot_y + 18}" text-anchor="middle" class="label" '
-        f'font-weight="700" fill="#7f1d1d">ESCALATION  →  L2 Runbooks (docs/l2-runbooks/00-index.md)</text>',
+        f'font-weight="700" fill="#fecaca">ESCALATION  →  L2 Runbooks (docs/l2-runbooks/00-index.md)</text>',
         f'  <text x="{W // 2}" y="{foot_y + 33}" text-anchor="middle" class="sub">'
         f'Each platform has its own L1 → L2 escalation node IDs. See docs/diagrams/l2-runbook-escalation.svg</text>',
     ]
@@ -508,7 +515,7 @@ def gen_l2_runbook_escalation():
     lane1_y = 114
     out += [
         f'  <rect x="20" y="{lane1_y}" width="{W - 40}" height="220" rx="8" ry="8" '
-        f'fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{lane1_y + 22}" class="col-head">LANE  ·  APv1 CLASSIC AUTOPILOT</text>',
         f'  <text x="320" y="{lane1_y + 22}" class="sub">classic ESP + registry + Graph  ·  decision-trees 00, 01, 02, 03</text>',
     ]
@@ -523,14 +530,14 @@ def gen_l2_runbook_escalation():
         sy = lane1_y + 40 + i * 42
         out += [
             f'  <rect x="40" y="{sy}" width="320" height="36" rx="4" ry="4" '
-            f'fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>',
-            f'  <text x="52" y="{sy + 16}" class="label" font-weight="700" font-size="11" fill="#7f1d1d">{h(badge)}</text>',
+            f'fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>',
+            f'  <text x="52" y="{sy + 16}" class="label" font-weight="700" font-size="11" fill="#fecaca">{h(badge)}</text>',
             f'  <text x="52" y="{sy + 30}" class="sub">{h(note)}</text>',
         ]
     # prereq
     out += box(420, lane1_y + 80, 240, 100, ["01 · Log Collection Guide"],
                sub="mdmdiagnosticstool cab", sub2="event logs · registry",
-               fill="#fff7ed", stroke="#ea580c")
+               fill="#1c1917", stroke="#f97316")
     out += [
         f'  <text x="540" y="{lane1_y + 70}" text-anchor="middle" class="sub" font-weight="700">PREREQ</text>',
     ]
@@ -549,8 +556,8 @@ def gen_l2_runbook_escalation():
         ry = lane1_y + 36 + i * 46
         out += [
             f'  <rect x="720" y="{ry}" width="640" height="40" rx="6" ry="6" '
-            f'fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>',
-            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">{h(num)}</text>',
+            f'fill="#052e16" stroke="#10b981" stroke-width="1.2"/>',
+            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">{h(num)}</text>',
             f'  <text x="734" y="{ry + 32}" class="label" font-weight="600">{h(name)}</text>',
             f'  <text x="930" y="{ry + 32}" class="sub">— {h(note)}</text>',
         ]
@@ -560,7 +567,7 @@ def gen_l2_runbook_escalation():
     lane2_y = lane1_y + 240
     out += [
         f'  <rect x="20" y="{lane2_y}" width="{W - 40}" height="180" rx="8" ry="8" '
-        f'fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{lane2_y + 22}" class="col-head">LANE  ·  APv2 DEVICE PREPARATION</text>',
         f'  <text x="340" y="{lane2_y + 22}" class="sub">deployment report + IME + BootstrapperAgent  ·  decision-tree 04</text>',
     ]
@@ -569,12 +576,12 @@ def gen_l2_runbook_escalation():
         sy = lane2_y + 40 + i * 42
         out += [
             f'  <rect x="40" y="{sy}" width="320" height="36" rx="4" ry="4" '
-            f'fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>',
-            f'  <text x="52" y="{sy + 16}" class="label" font-weight="700" font-size="11" fill="#7f1d1d">{h(badge)}</text>',
+            f'fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>',
+            f'  <text x="52" y="{sy + 16}" class="label" font-weight="700" font-size="11" fill="#fecaca">{h(badge)}</text>',
             f'  <text x="52" y="{sy + 30}" class="sub">{h(note)}</text>',
         ]
     out += box(420, lane2_y + 70, 240, 80, ["06 · APv2 Log Collection"],
-               sub="BootstrapperAgent + IME logs", fill="#fff7ed", stroke="#ea580c")
+               sub="BootstrapperAgent + IME logs", fill="#1c1917", stroke="#f97316")
     for i in range(3):
         sy = lane2_y + 58 + i * 42
         out += path_arrow(f"M 360,{sy} L 420,{lane2_y + 110}", color="red")
@@ -586,8 +593,8 @@ def gen_l2_runbook_escalation():
         ry = lane2_y + 40 + i * 46
         out += [
             f'  <rect x="720" y="{ry}" width="640" height="40" rx="6" ry="6" '
-            f'fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>',
-            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" fill="#6b7280">{h(num)}</text>',
+            f'fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>',
+            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" fill="#64748b">{h(num)}</text>',
             f'  <text x="734" y="{ry + 32}" class="label" font-weight="600">{h(name)}</text>',
             f'  <text x="950" y="{ry + 32}" class="sub">— {h(note)}</text>',
         ]
@@ -597,7 +604,7 @@ def gen_l2_runbook_escalation():
     lane3_y = lane2_y + 200
     out += [
         f'  <rect x="20" y="{lane3_y}" width="{W - 40}" height="200" rx="8" ry="8" '
-        f'fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{lane3_y + 22}" class="col-head">LANE  ·  macOS ADE</text>',
         f'  <text x="200" y="{lane3_y + 22}" class="sub">IntuneMacODC + Terminal diagnostics  ·  decision-tree 06</text>',
     ]
@@ -611,12 +618,12 @@ def gen_l2_runbook_escalation():
         sy = lane3_y + 40 + i * 38
         out += [
             f'  <rect x="40" y="{sy}" width="320" height="32" rx="4" ry="4" '
-            f'fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>',
-            f'  <text x="52" y="{sy + 14}" class="label" font-weight="700" font-size="11" fill="#7f1d1d">{h(badge)}</text>',
+            f'fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>',
+            f'  <text x="52" y="{sy + 14}" class="label" font-weight="700" font-size="11" fill="#fecaca">{h(badge)}</text>',
             f'  <text x="52" y="{sy + 27}" class="sub">{h(note)}</text>',
         ]
     out += box(420, lane3_y + 80, 240, 80, ["10 · macOS Log Collection"],
-               sub="IntuneMacODC + Terminal", fill="#fff7ed", stroke="#ea580c")
+               sub="IntuneMacODC + Terminal", fill="#1c1917", stroke="#f97316")
     for i in range(4):
         sy = lane3_y + 56 + i * 38
         out += path_arrow(f"M 360,{sy} L 420,{lane3_y + 120}", color="red")
@@ -629,8 +636,8 @@ def gen_l2_runbook_escalation():
         ry = lane3_y + 40 + i * 50
         out += [
             f'  <rect x="720" y="{ry}" width="640" height="40" rx="6" ry="6" '
-            f'fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>',
-            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" fill="#6b7280">{h(num)}</text>',
+            f'fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>',
+            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" fill="#64748b">{h(num)}</text>',
             f'  <text x="734" y="{ry + 32}" class="label" font-weight="600">{h(name)}</text>',
             f'  <text x="950" y="{ry + 32}" class="sub">— {h(note)}</text>',
         ]
@@ -640,7 +647,7 @@ def gen_l2_runbook_escalation():
     lane4_y = lane3_y + 220
     out += [
         f'  <rect x="20" y="{lane4_y}" width="{W - 40}" height="160" rx="8" ry="8" '
-        f'fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{lane4_y + 22}" class="col-head">LANE  ·  iOS / iPadOS</text>',
         f'  <text x="220" y="{lane4_y + 22}" class="sub">3-method log collection (no CLI tool)  ·  decision-tree 07</text>',
     ]
@@ -653,12 +660,12 @@ def gen_l2_runbook_escalation():
         sy = lane4_y + 40 + i * 36
         out += [
             f'  <rect x="40" y="{sy}" width="320" height="30" rx="4" ry="4" '
-            f'fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>',
-            f'  <text x="52" y="{sy + 13}" class="label" font-weight="700" font-size="11" fill="#7f1d1d">{h(badge)}</text>',
+            f'fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>',
+            f'  <text x="52" y="{sy + 13}" class="label" font-weight="700" font-size="11" fill="#fecaca">{h(badge)}</text>',
             f'  <text x="52" y="{sy + 26}" class="sub">{h(note)}</text>',
         ]
     out += box(420, lane4_y + 50, 240, 80, ["14 · iOS Log Collection"],
-               sub="3 methods (no CLI tool)", fill="#fff7ed", stroke="#ea580c")
+               sub="3 methods (no CLI tool)", fill="#1c1917", stroke="#f97316")
     for i in range(3):
         sy = lane4_y + 55 + i * 36
         out += path_arrow(f"M 360,{sy} L 420,{lane4_y + 90}", color="red")
@@ -671,8 +678,8 @@ def gen_l2_runbook_escalation():
         ry = lane4_y + 40 + i * 38
         out += [
             f'  <rect x="720" y="{ry}" width="640" height="32" rx="6" ry="6" '
-            f'fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>',
-            f'  <text x="734" y="{ry + 14}" class="sub" font-weight="700" fill="#6b7280">{h(num)}</text>',
+            f'fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>',
+            f'  <text x="734" y="{ry + 14}" class="sub" font-weight="700" fill="#64748b">{h(num)}</text>',
             f'  <text x="734" y="{ry + 27}" class="label" font-weight="600">{h(name)}</text>',
             f'  <text x="950" y="{ry + 27}" class="sub">— {h(note)}</text>',
         ]
@@ -682,7 +689,7 @@ def gen_l2_runbook_escalation():
     lane5_y = lane4_y + 180
     out += [
         f'  <rect x="20" y="{lane5_y}" width="{W - 40}" height="180" rx="8" ry="8" '
-        f'fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{lane5_y + 22}" class="col-head">LANE  ·  ANDROID ENTERPRISE</text>',
         f'  <text x="280" y="{lane5_y + 22}" class="sub">3-method log collection (Company Portal / Microsoft Intune App / adb logcat)  ·  decision-tree 08</text>',
     ]
@@ -696,12 +703,12 @@ def gen_l2_runbook_escalation():
         sy = lane5_y + 40 + i * 32
         out += [
             f'  <rect x="40" y="{sy}" width="320" height="28" rx="4" ry="4" '
-            f'fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>',
-            f'  <text x="52" y="{sy + 12}" class="label" font-weight="700" font-size="11" fill="#7f1d1d">{h(badge)}</text>',
+            f'fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>',
+            f'  <text x="52" y="{sy + 12}" class="label" font-weight="700" font-size="11" fill="#fecaca">{h(badge)}</text>',
             f'  <text x="52" y="{sy + 24}" class="sub">{h(note)}</text>',
         ]
     out += box(420, lane5_y + 60, 240, 80, ["18 · Android Log Collection"],
-               sub="Company Portal / Intune App / adb", fill="#fff7ed", stroke="#ea580c")
+               sub="Company Portal / Intune App / adb", fill="#1c1917", stroke="#f97316")
     for i in range(4):
         sy = lane5_y + 54 + i * 32
         out += path_arrow(f"M 360,{sy} L 420,{lane5_y + 100}", color="red")
@@ -716,8 +723,8 @@ def gen_l2_runbook_escalation():
         ry = lane5_y + 38 + i * 28
         out += [
             f'  <rect x="720" y="{ry}" width="640" height="24" rx="6" ry="6" '
-            f'fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>',
-            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" fill="#6b7280">{h(num)}</text>',
+            f'fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>',
+            f'  <text x="734" y="{ry + 16}" class="sub" font-weight="700" fill="#64748b">{h(num)}</text>',
             f'  <text x="800" y="{ry + 16}" class="label" font-weight="600">{h(name)}</text>',
             f'  <text x="1000" y="{ry + 16}" class="sub">— {h(note)}</text>',
         ]
@@ -727,23 +734,23 @@ def gen_l2_runbook_escalation():
     lane6_y = lane5_y + 200
     out += [
         f'  <rect x="20" y="{lane6_y}" width="{W - 40}" height="120" rx="8" ry="8" '
-        f'fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{lane6_y + 22}" class="col-head">LANE  ·  LINUX (Ubuntu LTS)</text>',
         f'  <text x="240" y="{lane6_y + 22}" class="sub">journalctl / dpkg / Edge web-app CA only  ·  decision-tree 09</text>',
     ]
     out += [
         f'  <rect x="40" y="{lane6_y + 40}" width="320" height="60" rx="4" ry="4" '
-        f'fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>',
-        f'  <text x="52" y="{lane6_y + 58}" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · RB 30 · 31 · 32 · 33</text>',
+        f'fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>',
+        f'  <text x="52" y="{lane6_y + 58}" class="label" font-weight="700" font-size="11" fill="#fecaca">L1 · RB 30 · 31 · 32 · 33</text>',
         f'  <text x="52" y="{lane6_y + 76}" class="sub">Enrollment · Compliance · CA · Agent service</text>',
     ]
     out += box(420, lane6_y + 40, 240, 60, ["24 · Linux Log Collection"],
-               sub="journalctl + dpkg snapshot", fill="#fff7ed", stroke="#ea580c")
+               sub="journalctl + dpkg snapshot", fill="#1c1917", stroke="#f97316")
     out += path_arrow(f"M 360,{lane6_y + 70} L 420,{lane6_y + 70}", color="red")
     out += [
         f'  <rect x="720" y="{lane6_y + 40}" width="640" height="60" rx="6" ry="6" '
-        f'fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>',
-        f'  <text x="734" y="{lane6_y + 60}" class="sub" font-weight="700" fill="#6b7280">L2 RB 25</text>',
+        f'fill="#052e16" stroke="#10b981" stroke-width="1.2"/>',
+        f'  <text x="734" y="{lane6_y + 60}" class="sub" font-weight="700" fill="#64748b">L2 RB 25</text>',
         f'  <text x="734" y="{lane6_y + 80}" class="label" font-weight="600">Linux Agent Investigation</text>',
         f'  <text x="930" y="{lane6_y + 80}" class="sub">— intunemgmt service · auth tokens · journalctl --user 1d</text>',
     ]
@@ -775,7 +782,7 @@ def gen_lifecycle_pipeline():
     # Track 1: APv1 (5 stages)
     t1_y = 90
     out += [
-        f'  <rect x="20" y="{t1_y}" width="{W - 40}" height="220" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'  <rect x="20" y="{t1_y}" width="{W - 40}" height="220" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{t1_y + 22}" class="col-head">APv1  ·  CLASSIC AUTOPILOT (5 stages)</text>',
         f'  <text x="370" y="{t1_y + 22}" class="sub">docs/lifecycle/00-overview.md</text>',
     ]
@@ -792,9 +799,9 @@ def gen_lifecycle_pipeline():
     start = (W - total_w) // 2
     for i, (num, name, sub) in enumerate(apv1_stages):
         x = start + i * (box_w + box_gap)
-        out += box(x, t1_y + 40, box_w, 80, [name], sub=sub, fill="#f0fdf4", stroke="#16a34a")
+        out += box(x, t1_y + 40, box_w, 80, [name], sub=sub, fill="#052e16", stroke="#10b981")
         out += [
-            f'  <text x="{x + box_w // 2}" y="{t1_y + 36}" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">{h(num)}</text>',
+            f'  <text x="{x + box_w // 2}" y="{t1_y + 36}" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">{h(num)}</text>',
         ]
         if i < 4:
             ax = x + box_w
@@ -807,8 +814,8 @@ def gen_lifecycle_pipeline():
         fy = t1_y + 140
         out += [
             f'  <rect x="{x}" y="{fy}" width="{box_w}" height="50" rx="6" ry="6" '
-            f'fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>',
-            f'  <text x="{x + box_w // 2}" y="{fy + 28}" text-anchor="middle" class="label" fill="#7f1d1d">{h(fail)}</text>',
+            f'fill="#450a0a" stroke="#ef4444" stroke-width="1" stroke-dasharray="3 2"/>',
+            f'  <text x="{x + box_w // 2}" y="{fy + 28}" text-anchor="middle" class="label" fill="#fecaca">{h(fail)}</text>',
             f'  <text x="{x + box_w // 2}" y="{fy + 44}" text-anchor="middle" class="sub">F_{["HASH","PROFILE","CONN","ESP","COMP"][i]}</text>',
         ]
         out += path_arrow(f"M {x + box_w // 2},{fy} L {x + box_w // 2},{t1_y + 122}", color="red", dashed=True)
@@ -816,7 +823,7 @@ def gen_lifecycle_pipeline():
     # Track 2: APv2 (10 steps)
     t2_y = t1_y + 240
     out += [
-        f'  <rect x="20" y="{t2_y}" width="{W - 40}" height="240" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'  <rect x="20" y="{t2_y}" width="{W - 40}" height="240" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{t2_y + 22}" class="col-head">APv2  ·  DEVICE PREPARATION (10 steps)</text>',
         f'  <text x="400" y="{t2_y + 22}" class="sub">docs/lifecycle-apv2/02-deployment-flow.md  ·  ETG replaces hash pre-staging</text>',
     ]
@@ -840,8 +847,8 @@ def gen_lifecycle_pipeline():
         x = start2 + i * (s_w + s_gap)
         out += [
             f'  <rect x="{x}" y="{t2_y + 50}" width="{s_w}" height="70" rx="6" ry="6" '
-            f'fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>',
-            f'  <text x="{x + s_w // 2}" y="{t2_y + 70}" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP {i + 1}</text>',
+            f'fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>',
+            f'  <text x="{x + s_w // 2}" y="{t2_y + 70}" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">STEP {i + 1}</text>',
             f'  <text x="{x + s_w // 2}" y="{t2_y + 92}" text-anchor="middle" class="label">{h(l1)}</text>',
             f'  <text x="{x + s_w // 2}" y="{t2_y + 108}" text-anchor="middle" class="label">{h(l2)}</text>',
         ]
@@ -853,7 +860,7 @@ def gen_lifecycle_pipeline():
     etg_x = start2 + 1 * (s_w + s_gap) + s_w + s_gap // 2 - 110
     out += [
         f'  <rect x="{etg_x}" y="{t2_y + 138}" width="220" height="30" rx="4" ry="4" '
-        f'fill="#faf5ff" stroke="#9333ea" stroke-width="1" stroke-dasharray="3 2"/>',
+        f'fill="#1e1b4b" stroke="#a855f7" stroke-width="1" stroke-dasharray="3 2"/>',
         f'  <text x="{etg_x + 110}" y="{t2_y + 158}" text-anchor="middle" class="sub">ETG · Enrollment-Time Grouping</text>',
     ]
     out += path_arrow(f"M {etg_x + 110},{t2_y + 138} L {etg_x + 110},{t2_y + 122}", color="purple", dashed=True)
@@ -867,8 +874,8 @@ def gen_lifecycle_pipeline():
         fy = t2_y + 178
         out += [
             f'  <rect x="{x}" y="{fy}" width="{s_w}" height="48" rx="6" ry="6" '
-            f'fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>',
-            f'  <text x="{x + s_w // 2}" y="{fy + 22}" text-anchor="middle" class="sub" fill="#7f1d1d">{h(label)}</text>',
+            f'fill="#450a0a" stroke="#ef4444" stroke-width="1" stroke-dasharray="3 2"/>',
+            f'  <text x="{x + s_w // 2}" y="{fy + 22}" text-anchor="middle" class="sub" fill="#fecaca">{h(label)}</text>',
             f'  <text x="{x + s_w // 2}" y="{fy + 40}" text-anchor="middle" class="sub">{h(code)}</text>',
         ]
         out += path_arrow(f"M {x + s_w // 2},{fy} L {x + s_w // 2},{t2_y + 120}", color="red", dashed=True)
@@ -876,7 +883,7 @@ def gen_lifecycle_pipeline():
     # Track 3: macOS ADE
     t3_y = t2_y + 260
     out += [
-        f'  <rect x="20" y="{t3_y}" width="{W - 40}" height="220" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>',
+        f'  <rect x="20" y="{t3_y}" width="{W - 40}" height="220" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>',
         f'  <text x="40" y="{t3_y + 22}" class="col-head">macOS  ·  ADE AUTOMATED DEVICE ENROLLMENT (7 stages)</text>',
         f'  <text x="540" y="{t3_y + 22}" class="sub">docs/macos-lifecycle/00-ade-lifecycle.md  ·  ABM + Intune</text>',
     ]
@@ -897,8 +904,8 @@ def gen_lifecycle_pipeline():
         x = start3 + i * (m_w + m_gap)
         out += [
             f'  <rect x="{x}" y="{t3_y + 50}" width="{m_w}" height="80" rx="6" ry="6" '
-            f'fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>',
-            f'  <text x="{x + m_w // 2}" y="{t3_y + 70}" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE {i + 1}</text>',
+            f'fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>',
+            f'  <text x="{x + m_w // 2}" y="{t3_y + 70}" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">STAGE {i + 1}</text>',
             f'  <text x="{x + m_w // 2}" y="{t3_y + 92}" text-anchor="middle" class="label">{h(name)}</text>',
             f'  <text x="{x + m_w // 2}" y="{t3_y + 116}" text-anchor="middle" class="sub">{h(sub)}</text>',
         ]
@@ -910,8 +917,8 @@ def gen_lifecycle_pipeline():
     s7_cx = start3 + 6 * (m_w + m_gap) + m_w // 2
     out += [
         f'  <path d="M {s5_cx},{t3_y + 130} C {s5_cx},{t3_y + 175} {s7_cx},{t3_y + 175} {s7_cx},{t3_y + 130}" '
-        f'stroke="#6b7280" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-gray)"/>',
-        f'  <rect x="{(s5_cx + s7_cx) // 2 - 60}" y="{t3_y + 165}" width="120" height="14" fill="#ffffff" opacity="0.95"/>',
+        f'stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-gray)"/>',
+        f'  <rect x="{(s5_cx + s7_cx) // 2 - 60}" y="{t3_y + 165}" width="120" height="14" fill="#0f0f1a" opacity="0.95"/>',
         f'  <text x="{(s5_cx + s7_cx) // 2}" y="{t3_y + 176}" text-anchor="middle" class="edge">userless · skip Stage 6</text>',
     ]
 
@@ -919,7 +926,7 @@ def gen_lifecycle_pipeline():
     bot_y = t3_y + 240
     out += [
         f'  <rect x="20" y="{bot_y}" width="{W - 40}" height="68" rx="8" ry="8" '
-        f'fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="4 3"/>',
         f'  <text x="40" y="{bot_y + 22}" class="col-head">KEY DIVERGENCES</text>',
         f'  <text x="40" y="{bot_y + 42}" class="sub">·  APv1 requires hardware hash pre-registration (Stage 1); APv2 uses ETG security-group membership at enrollment — no pre-staging needed.</text>',
         f'  <text x="40" y="{bot_y + 58}" class="sub">·  APv1 runs ESP with registry-observable state; APv2 surfaces progress via Intune deployment report; macOS has no ESP equivalent (Await Config + APNs push).</text>',
@@ -1499,7 +1506,7 @@ def gen_dt_08():
     note_y = sym_y + 200
     out += [
         f'  <rect x="40" y="{note_y}" width="{W - 80}" height="100" rx="8" ry="8" '
-        f'fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>',
+        f'fill="#0f172a" stroke="#334155" stroke-width="1" stroke-dasharray="4 3"/>',
         f'  <text x="60" y="{note_y + 22}" class="col-head">MODE-SPECIFIC ROUTING NOTES</text>',
         f'  <text x="60" y="{note_y + 44}" class="sub">·  RB 23 (Work Profile Not Created) is BYOD-only — does not apply to COBO / COSU / ZTE</text>',
         f'  <text x="60" y="{note_y + 60}" class="sub">·  RB 27 (ZTE Enrollment Failed) is ZTE-only — Samsung Knox uses RB 28 (link separately)</text>',
@@ -1564,8 +1571,8 @@ def gen_dt_09():
     note_y = outcomes_y + 270
     out += [
         f'  <rect x="40" y="{note_y}" width="{W - 80}" height="120" rx="8" ry="8" '
-        f'fill="#fff7ed" stroke="#ea580c" stroke-width="1" stroke-dasharray="4 3"/>',
-        f'  <text x="60" y="{note_y + 24}" class="col-head" fill="#9a3412">PITFALL-2  ·  LINUX CA SCOPE</text>',
+        f'fill="#1c1917" stroke="#f97316" stroke-width="1" stroke-dasharray="4 3"/>',
+        f'  <text x="60" y="{note_y + 24}" class="col-head" fill="#fed7aa">PITFALL-2  ·  LINUX CA SCOPE</text>',
         f'  <text x="60" y="{note_y + 46}" class="sub">Device-level Conditional Access is NOT supported on Linux. Only WEB-APP CA via Microsoft Edge for Linux is enforced.</text>',
         f'  <text x="60" y="{note_y + 64}" class="sub">If a user reports M365 access blocked from a Linux device, route to RB 32 — but only after confirming Edge for Linux is the failing surface.</text>',
         f'  <text x="60" y="{note_y + 82}" class="sub">See: docs/reference/linux-capability-matrix.md#conditional-access</text>',

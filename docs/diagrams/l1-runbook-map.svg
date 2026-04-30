@@ -1,206 +1,210 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1100" width="1400" height="1100">
   <style>
-    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
-    .title { font-size: 18px; font-weight: 600; fill: #111827; }
-    .subtitle { font-size: 12px; fill: #6b7280; }
-    .label { font-size: 13px; fill: #111827; }
-    .sub { font-size: 11px; fill: #6b7280; }
-    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
-    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
-    .legend { font-size: 11px; fill: #6b7280; }
+    text { font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace; fill: #e2e8f0; letter-spacing: 0.02em; }
+    .title { font-size: 18px; font-weight: 700; fill: #e2e8f0; letter-spacing: 0.02em; }
+    .subtitle { font-size: 12px; fill: #94a3b8; }
+    .label { font-size: 13px; fill: #e2e8f0; }
+    .sub { font-size: 11px; fill: #94a3b8; }
+    .edge { font-size: 11px; fill: #cbd5e1; font-weight: 700; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #cbd5e1; letter-spacing: 0.08em; }
+    .legend { font-size: 11px; fill: #94a3b8; }
   </style>
   <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0f1a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
     <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#3b82f6"/>
     </marker>
     <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#ef4444"/>
     </marker>
     <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#10b981"/>
     </marker>
     <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#f97316"/>
     </marker>
     <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#a855f7"/>
     </marker>
     <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#64748b"/>
     </marker>
   </defs>
-  <rect width="1400" height="1100" fill="#ffffff"/>
+  <rect width="1400" height="1100" fill="url(#bg-grad)"/>
   <text x="700" y="36" text-anchor="middle" class="title">L1 Runbook Map  ·  Service Desk Procedures</text>
   <text x="700" y="58" text-anchor="middle" class="subtitle">33 scripted runbooks across 6 platforms  ·  no PowerShell  ·  portal-only  ·  docs/l1-runbooks/</text>
-  <rect x="30" y="86" width="215" height="56" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="30" y="86" width="215" height="56" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
   <text x="137" y="112" text-anchor="middle" class="label">APv1 Initial Triage</text>
   <text x="137" y="128" text-anchor="middle" class="sub">decision-trees/00-initial-triage.md</text>
-  <path d="M 137,142 L 137,172" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="257" y="86" width="215" height="56" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <path d="M 137,142 L 137,172" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="257" y="86" width="215" height="56" rx="8" ry="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
   <text x="364" y="112" text-anchor="middle" class="label">APv2 Device Preparation</text>
   <text x="364" y="128" text-anchor="middle" class="sub">decision-trees/04-apv2-triage.md</text>
-  <path d="M 364,142 L 364,172" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="484" y="86" width="215" height="56" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <path d="M 364,142 L 364,172" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="484" y="86" width="215" height="56" rx="8" ry="8" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
   <text x="591" y="112" text-anchor="middle" class="label">macOS ADE Triage</text>
   <text x="591" y="128" text-anchor="middle" class="sub">decision-trees/06-macos-triage.md</text>
-  <path d="M 591,142 L 591,172" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
-  <rect x="711" y="86" width="215" height="56" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <path d="M 591,142 L 591,172" stroke="#a855f7" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="711" y="86" width="215" height="56" rx="8" ry="8" fill="#1c1917" stroke="#f97316" stroke-width="1.5"/>
   <text x="818" y="112" text-anchor="middle" class="label">iOS Triage</text>
   <text x="818" y="128" text-anchor="middle" class="sub">decision-trees/07-ios-triage.md</text>
-  <path d="M 818,142 L 818,172" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
-  <rect x="938" y="86" width="215" height="56" rx="8" ry="8" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+  <path d="M 818,142 L 818,172" stroke="#f97316" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
+  <rect x="938" y="86" width="215" height="56" rx="8" ry="8" fill="#042f2e" stroke="#14b8a6" stroke-width="1.5"/>
   <text x="1045" y="112" text-anchor="middle" class="label">Android Triage</text>
   <text x="1045" y="128" text-anchor="middle" class="sub">decision-trees/08-android-triage.md</text>
-  <path d="M 1045,142 L 1045,172" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="1165" y="86" width="215" height="56" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <path d="M 1045,142 L 1045,172" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1165" y="86" width="215" height="56" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
   <text x="1272" y="112" text-anchor="middle" class="label">Linux Triage</text>
   <text x="1272" y="128" text-anchor="middle" class="sub">decision-trees/09-linux-triage.md</text>
-  <path d="M 1272,142 L 1272,172" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="30" y="178" width="215" height="792" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
-  <rect x="257" y="178" width="215" height="792" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
-  <rect x="484" y="178" width="215" height="792" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
-  <rect x="711" y="178" width="215" height="792" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
-  <rect x="938" y="178" width="215" height="792" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
-  <rect x="1165" y="178" width="215" height="792" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
-  <rect x="40" y="192" width="195" height="76" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
-  <text x="52" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 01</text>
+  <path d="M 1272,142 L 1272,172" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="30" y="178" width="215" height="792" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <rect x="257" y="178" width="215" height="792" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <rect x="484" y="178" width="215" height="792" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <rect x="711" y="178" width="215" height="792" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <rect x="938" y="178" width="215" height="792" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <rect x="1165" y="178" width="215" height="792" rx="8" ry="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <rect x="40" y="192" width="195" height="76" rx="6" ry="6" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
+  <text x="52" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 01</text>
   <text x="52" y="230" class="label" font-weight="600">Device Not Registered</text>
   <text x="52" y="250" class="sub">Serial not found in Autopilot po</text>
   <text x="52" y="262" class="sub">rtal</text>
-  <rect x="40" y="274" width="195" height="76" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
-  <text x="52" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 02</text>
+  <rect x="40" y="274" width="195" height="76" rx="6" ry="6" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
+  <text x="52" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 02</text>
   <text x="52" y="312" class="label" font-weight="600">ESP Stuck or Failed</text>
   <text x="52" y="332" class="sub">ESP hang / timeout / on-screen e</text>
   <text x="52" y="344" class="sub">rror</text>
-  <rect x="40" y="356" width="195" height="76" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
-  <text x="52" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 03</text>
+  <rect x="40" y="356" width="195" height="76" rx="6" ry="6" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
+  <text x="52" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 03</text>
   <text x="52" y="394" class="label" font-weight="600">Profile Not Assigned</text>
   <text x="52" y="414" class="sub">Registered but no/wrong profile</text>
-  <rect x="40" y="438" width="195" height="76" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
-  <text x="52" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 04</text>
+  <rect x="40" y="438" width="195" height="76" rx="6" ry="6" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
+  <text x="52" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 04</text>
   <text x="52" y="476" class="label" font-weight="600">Network Connectivity</text>
   <text x="52" y="496" class="sub">Required endpoints unreachable</text>
-  <rect x="40" y="520" width="195" height="76" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
-  <text x="52" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 05</text>
+  <rect x="40" y="520" width="195" height="76" rx="6" ry="6" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
+  <text x="52" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 05</text>
   <text x="52" y="558" class="label" font-weight="600">OOBE Fails Immediately</text>
   <text x="52" y="578" class="sub">Crashes/freezes before ESP</text>
-  <rect x="267" y="192" width="195" height="76" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
-  <text x="279" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 06</text>
+  <rect x="267" y="192" width="195" height="76" rx="6" ry="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="279" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 06</text>
   <text x="279" y="230" class="label" font-weight="600">Deployment Not Launched</text>
   <text x="279" y="250" class="sub">OOBE done · no Device Prep scree</text>
   <text x="279" y="262" class="sub">n</text>
-  <rect x="267" y="274" width="195" height="76" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
-  <text x="279" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 07</text>
+  <rect x="267" y="274" width="195" height="76" rx="6" ry="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="279" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 07</text>
   <text x="279" y="312" class="label" font-weight="600">Apps Not Installed</text>
   <text x="279" y="332" class="sub">Device Prep done · apps missing</text>
-  <rect x="267" y="356" width="195" height="76" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
-  <text x="279" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 08</text>
+  <rect x="267" y="356" width="195" height="76" rx="6" ry="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="279" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 08</text>
   <text x="279" y="394" class="label" font-weight="600">APv1 Registration Conflict</text>
   <text x="279" y="414" class="sub">ESP shown instead of Device Prep</text>
-  <rect x="267" y="438" width="195" height="76" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
-  <text x="279" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 09</text>
+  <rect x="267" y="438" width="195" height="76" rx="6" ry="6" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="279" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 09</text>
   <text x="279" y="476" class="label" font-weight="600">Deployment Timeout</text>
   <text x="279" y="496" class="sub">Device Preparation timed out</text>
-  <rect x="494" y="192" width="195" height="76" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
-  <text x="506" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 10</text>
+  <rect x="494" y="192" width="195" height="76" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
+  <text x="506" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 10</text>
   <text x="506" y="230" class="label" font-weight="600">Device Not Appearing</text>
   <text x="506" y="250" class="sub">Not visible after ADE enrollment</text>
-  <rect x="494" y="274" width="195" height="76" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
-  <text x="506" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 11</text>
+  <rect x="494" y="274" width="195" height="76" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
+  <text x="506" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 11</text>
   <text x="506" y="312" class="label" font-weight="600">Setup Assistant Failed</text>
   <text x="506" y="332" class="sub">Auth fail · Await Config stuck</text>
-  <rect x="494" y="356" width="195" height="76" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
-  <text x="506" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 12</text>
+  <rect x="494" y="356" width="195" height="76" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
+  <text x="506" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 12</text>
   <text x="506" y="394" class="label" font-weight="600">Profile Not Applied</text>
   <text x="506" y="414" class="sub">WiFi/VPN/FileVault missing</text>
-  <rect x="494" y="438" width="195" height="76" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
-  <text x="506" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 13</text>
+  <rect x="494" y="438" width="195" height="76" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
+  <text x="506" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 13</text>
   <text x="506" y="476" class="label" font-weight="600">App Not Installed</text>
   <text x="506" y="496" class="sub">DMG/PKG/VPP failed</text>
-  <rect x="494" y="520" width="195" height="76" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
-  <text x="506" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 14</text>
+  <rect x="494" y="520" width="195" height="76" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
+  <text x="506" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 14</text>
   <text x="506" y="558" class="label" font-weight="600">Compliance / Access</text>
   <text x="506" y="578" class="sub">Non-compliant · M365 blocked</text>
-  <rect x="494" y="602" width="195" height="76" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
-  <text x="506" y="620" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 15</text>
+  <rect x="494" y="602" width="195" height="76" rx="6" ry="6" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
+  <text x="506" y="620" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 15</text>
   <text x="506" y="640" class="label" font-weight="600">Company Portal Sign-In</text>
   <text x="506" y="660" class="sub">Entra registration incomplete</text>
-  <rect x="721" y="192" width="195" height="76" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
-  <text x="733" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 16</text>
+  <rect x="721" y="192" width="195" height="76" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
+  <text x="733" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 16</text>
   <text x="733" y="230" class="label" font-weight="600">APNs Expired</text>
   <text x="733" y="250" class="sub">Fleetwide outage (all Apple)</text>
-  <rect x="721" y="274" width="195" height="76" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
-  <text x="733" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 17</text>
+  <rect x="721" y="274" width="195" height="76" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
+  <text x="733" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 17</text>
   <text x="733" y="312" class="label" font-weight="600">ADE Not Starting</text>
   <text x="733" y="332" class="sub">Setup Assistant stuck · no MDM</text>
-  <rect x="721" y="356" width="195" height="76" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
-  <text x="733" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 18</text>
+  <rect x="721" y="356" width="195" height="76" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
+  <text x="733" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 18</text>
   <text x="733" y="394" class="label" font-weight="600">Enrollment Restriction</text>
   <text x="733" y="414" class="sub">&#x27;Invalid Profile&#x27; · &#x27;Can&#x27;t manag</text>
   <text x="733" y="426" class="sub">e&#x27;</text>
-  <rect x="721" y="438" width="195" height="76" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
-  <text x="733" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 19</text>
+  <rect x="721" y="438" width="195" height="76" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
+  <text x="733" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 19</text>
   <text x="733" y="476" class="label" font-weight="600">License Invalid</text>
   <text x="733" y="496" class="sub">User lacks Intune license</text>
-  <rect x="721" y="520" width="195" height="76" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
-  <text x="733" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 20</text>
+  <rect x="721" y="520" width="195" height="76" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
+  <text x="733" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 20</text>
   <text x="733" y="558" class="label" font-weight="600">Device Cap Reached</text>
   <text x="733" y="578" class="sub">Too many devices per user</text>
-  <rect x="721" y="602" width="195" height="76" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
-  <text x="733" y="620" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 21</text>
+  <rect x="721" y="602" width="195" height="76" rx="6" ry="6" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
+  <text x="733" y="620" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 21</text>
   <text x="733" y="640" class="label" font-weight="600">Compliance Blocked</text>
   <text x="733" y="660" class="sub">Non-compliant · CA blocking</text>
-  <rect x="948" y="192" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 22</text>
+  <rect x="948" y="192" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 22</text>
   <text x="960" y="230" class="label" font-weight="600">Enrollment Blocked</text>
   <text x="960" y="250" class="sub">Restriction · &#x27;can&#x27;t enroll&#x27;</text>
-  <rect x="948" y="274" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 23</text>
+  <rect x="948" y="274" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 23</text>
   <text x="960" y="312" class="label" font-weight="600">Work Profile Missing</text>
   <text x="960" y="332" class="sub">BYOD · briefcase not created</text>
-  <rect x="948" y="356" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 24</text>
+  <rect x="948" y="356" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 24</text>
   <text x="960" y="394" class="label" font-weight="600">Device Not Enrolled</text>
   <text x="960" y="414" class="sub">No error · device never appeared</text>
-  <rect x="948" y="438" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 25</text>
+  <rect x="948" y="438" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 25</text>
   <text x="960" y="476" class="label" font-weight="600">Compliance Blocked</text>
   <text x="960" y="496" class="sub">Non-compliant · access blocked</text>
-  <rect x="948" y="520" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 26</text>
+  <rect x="948" y="520" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="538" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 26</text>
   <text x="960" y="558" class="label" font-weight="600">MGP App Not Installed</text>
   <text x="960" y="578" class="sub">Managed Google Play missing</text>
-  <rect x="948" y="602" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="620" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 27</text>
+  <rect x="948" y="602" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="620" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 27</text>
   <text x="960" y="640" class="label" font-weight="600">ZTE Failed</text>
   <text x="960" y="660" class="sub">Zero-Touch did not start/stalled</text>
-  <rect x="948" y="684" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="702" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 28</text>
+  <rect x="948" y="684" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="702" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 28</text>
   <text x="960" y="722" class="label" font-weight="600">Knox Failed</text>
   <text x="960" y="742" class="sub">Samsung KME provisioning fail</text>
-  <rect x="948" y="766" width="195" height="76" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
-  <text x="960" y="784" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 29</text>
+  <rect x="948" y="766" width="195" height="76" rx="6" ry="6" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
+  <text x="960" y="784" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 29</text>
   <text x="960" y="804" class="label" font-weight="600">AOSP Failed</text>
   <text x="960" y="824" class="sub">5 OEMs: RealWear/Zebra/Pico/HTC/</text>
   <text x="960" y="836" class="sub">Meta</text>
-  <rect x="1175" y="192" width="195" height="76" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
-  <text x="1187" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 30</text>
+  <rect x="1175" y="192" width="195" height="76" rx="6" ry="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="1187" y="210" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 30</text>
   <text x="1187" y="230" class="label" font-weight="600">Enrollment Failed</text>
   <text x="1187" y="250" class="sub">Cannot enroll into Intune</text>
-  <rect x="1175" y="274" width="195" height="76" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
-  <text x="1187" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 31</text>
+  <rect x="1175" y="274" width="195" height="76" rx="6" ry="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="1187" y="292" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 31</text>
   <text x="1187" y="312" class="label" font-weight="600">Compliance Non-Compliant</text>
   <text x="1187" y="332" class="sub">Device shows non-compliant</text>
-  <rect x="1175" y="356" width="195" height="76" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
-  <text x="1187" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 32</text>
+  <rect x="1175" y="356" width="195" height="76" rx="6" ry="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="1187" y="374" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 32</text>
   <text x="1187" y="394" class="label" font-weight="600">CA Blocking Web Access</text>
   <text x="1187" y="414" class="sub">Edge for Linux · web-app CA</text>
-  <rect x="1175" y="438" width="195" height="76" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
-  <text x="1187" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">RB 33</text>
+  <rect x="1175" y="438" width="195" height="76" rx="6" ry="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="1187" y="456" class="sub" font-weight="700" letter-spacing="0.05em" fill="#64748b">RB 33</text>
   <text x="1187" y="476" class="label" font-weight="600">Agent Service Failure</text>
   <text x="1187" y="496" class="sub">Intune agent service not running</text>
-  <rect x="30" y="1000" width="1340" height="40" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
-  <text x="700" y="1018" text-anchor="middle" class="label" font-weight="700" fill="#7f1d1d">ESCALATION  →  L2 Runbooks (docs/l2-runbooks/00-index.md)</text>
+  <rect x="30" y="1000" width="1340" height="40" rx="6" ry="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="700" y="1018" text-anchor="middle" class="label" font-weight="700" fill="#fecaca">ESCALATION  →  L2 Runbooks (docs/l2-runbooks/00-index.md)</text>
   <text x="700" y="1033" text-anchor="middle" class="sub">Each platform has its own L1 → L2 escalation node IDs. See docs/diagrams/l2-runbook-escalation.svg</text>
   <rect x="30" y="1065" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
   <text x="52" y="1076" class="legend">APv1 / Linux runbook</text>

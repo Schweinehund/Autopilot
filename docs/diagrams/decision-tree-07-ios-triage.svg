@@ -1,108 +1,112 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 950" width="1300" height="950">
   <style>
-    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
-    .title { font-size: 18px; font-weight: 600; fill: #111827; }
-    .subtitle { font-size: 12px; fill: #6b7280; }
-    .label { font-size: 13px; fill: #111827; }
-    .sub { font-size: 11px; fill: #6b7280; }
-    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
-    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
-    .legend { font-size: 11px; fill: #6b7280; }
+    text { font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace; fill: #e2e8f0; letter-spacing: 0.02em; }
+    .title { font-size: 18px; font-weight: 700; fill: #e2e8f0; letter-spacing: 0.02em; }
+    .subtitle { font-size: 12px; fill: #94a3b8; }
+    .label { font-size: 13px; fill: #e2e8f0; }
+    .sub { font-size: 11px; fill: #94a3b8; }
+    .edge { font-size: 11px; fill: #cbd5e1; font-weight: 700; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #cbd5e1; letter-spacing: 0.08em; }
+    .legend { font-size: 11px; fill: #94a3b8; }
   </style>
   <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0f1a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
     <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#3b82f6"/>
     </marker>
     <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#ef4444"/>
     </marker>
     <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#10b981"/>
     </marker>
     <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#f97316"/>
     </marker>
     <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#a855f7"/>
     </marker>
     <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+      <polygon points="0,0 10,3.5 0,7" fill="#64748b"/>
     </marker>
   </defs>
-  <rect width="1300" height="950" fill="#ffffff"/>
+  <rect width="1300" height="950" fill="url(#bg-grad)"/>
   <text x="650" y="36" text-anchor="middle" class="title">iOS / iPadOS Triage Decision Tree</text>
   <text x="650" y="58" text-anchor="middle" class="subtitle">iOS / iPadOS via Microsoft Intune  ·  docs/decision-trees/07-ios-triage.md</text>
-  <polygon points="650,80 775,125 650,170 525,125" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <polygon points="650,80 775,125 650,170 525,125" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
   <text x="650" y="115" text-anchor="middle" class="label">Device visible in Intune</text>
   <text x="650" y="131" text-anchor="middle" class="label">Devices &gt; iOS/iPadOS?</text>
   <text x="650" y="147" text-anchor="middle" class="sub">IOS1</text>
-  <path d="M 525,125 L 320,125 L 320,210" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="406" y="108" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 525,125 L 320,125 L 320,210" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="406" y="108" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="420" y="118" text-anchor="middle" class="edge">No</text>
-  <rect x="70" y="215" width="500" height="90" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <rect x="70" y="215" width="500" height="90" rx="8" ry="8" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
   <text x="320" y="250" text-anchor="middle" class="label">What did the user</text>
   <text x="320" y="266" text-anchor="middle" class="label">see or attempt?</text>
   <text x="320" y="282" text-anchor="middle" class="sub">IOS2 · 6 routes</text>
-  <path d="M 775,125 L 980,125 L 980,210" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="866" y="108" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 775,125 L 980,125 L 980,210" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="866" y="108" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="880" y="118" text-anchor="middle" class="edge">Yes</text>
-  <rect x="730" y="215" width="500" height="90" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <rect x="730" y="215" width="500" height="90" rx="8" ry="8" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.5"/>
   <text x="980" y="250" text-anchor="middle" class="label">What is the</text>
   <text x="980" y="266" text-anchor="middle" class="label">primary symptom?</text>
   <text x="980" y="282" text-anchor="middle" class="sub">IOS3 · 3 routes</text>
-  <rect x="60" y="380" width="180" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="60" y="380" width="180" height="80" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
   <text x="150" y="418" text-anchor="middle" class="label">APNs Expired</text>
   <text x="150" y="434" text-anchor="middle" class="sub">L1 RB 16</text>
-  <path d="M 320,305 L 150,380" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="114" y="330" width="53" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 320,305 L 150,380" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="114" y="330" width="53" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="140" y="340" text-anchor="middle" class="edge">fleetwide</text>
-  <rect x="260" y="380" width="180" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="260" y="380" width="180" height="80" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
   <text x="350" y="418" text-anchor="middle" class="label">ADE Not Starting</text>
   <text x="350" y="434" text-anchor="middle" class="sub">L1 RB 17</text>
-  <path d="M 320,305 L 350,380" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="314" y="350" width="53" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 320,305 L 350,380" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="314" y="350" width="53" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="340" y="360" text-anchor="middle" class="edge">ADE stuck</text>
-  <rect x="460" y="380" width="180" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="460" y="380" width="180" height="80" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
   <text x="550" y="418" text-anchor="middle" class="label">Enrollment Restriction</text>
   <text x="550" y="434" text-anchor="middle" class="sub">L1 RB 18</text>
-  <path d="M 320,305 L 550,380" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="499" y="330" width="83" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 320,305 L 550,380" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="499" y="330" width="83" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="540" y="340" text-anchor="middle" class="edge">Invalid Profile</text>
-  <rect x="60" y="500" width="180" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="60" y="500" width="180" height="80" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
   <text x="150" y="538" text-anchor="middle" class="label">License Invalid</text>
   <text x="150" y="554" text-anchor="middle" class="sub">L1 RB 19</text>
-  <path d="M 320,305 L 150,500" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="119" y="350" width="43" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 320,305 L 150,500" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="119" y="350" width="43" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="140" y="360" text-anchor="middle" class="edge">license</text>
-  <rect x="260" y="500" width="180" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="260" y="500" width="180" height="80" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
   <text x="350" y="538" text-anchor="middle" class="label">Device Cap Reached</text>
   <text x="350" y="554" text-anchor="middle" class="sub">L1 RB 20</text>
-  <path d="M 320,305 L 350,500" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="326" y="330" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 320,305 L 350,500" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="326" y="330" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="340" y="340" text-anchor="middle" class="edge">cap</text>
-  <rect x="460" y="500" width="180" height="80" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <rect x="460" y="500" width="180" height="80" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
   <text x="550" y="538" text-anchor="middle" class="label">Escalate L2</text>
   <text x="550" y="554" text-anchor="middle" class="sub">Other / unclear</text>
-  <path d="M 320,305 L 550,500" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="524" y="350" width="33" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 320,305 L 550,500" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="524" y="350" width="33" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="540" y="360" text-anchor="middle" class="edge">other</text>
-  <rect x="730" y="400" width="160" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <rect x="730" y="400" width="160" height="80" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
   <text x="810" y="438" text-anchor="middle" class="label">Compliance Blocked</text>
   <text x="810" y="454" text-anchor="middle" class="sub">L1 RB 21</text>
-  <path d="M 980,305 L 810,400" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="781" y="340" width="58" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 980,305 L 810,400" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="781" y="340" width="58" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="810" y="350" text-anchor="middle" class="edge">compliance</text>
-  <rect x="905" y="400" width="160" height="80" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <rect x="905" y="400" width="160" height="80" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
   <text x="985" y="438" text-anchor="middle" class="label">Escalate L2</text>
   <text x="985" y="454" text-anchor="middle" class="sub">iOS L2 index</text>
-  <path d="M 980,305 L 985,400" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="936" y="340" width="98" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 980,305 L 985,400" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="936" y="340" width="98" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="985" y="350" text-anchor="middle" class="edge">profile/config/app</text>
-  <rect x="1080" y="400" width="160" height="80" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <rect x="1080" y="400" width="160" height="80" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
   <text x="1160" y="438" text-anchor="middle" class="label">Escalate L2</text>
   <text x="1160" y="454" text-anchor="middle" class="sub">Other / unclear</text>
-  <path d="M 980,305 L 1160,400" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="1144" y="340" width="33" height="14" fill="#ffffff" opacity="0.95"/>
+  <path d="M 980,305 L 1160,400" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="1144" y="340" width="33" height="14" fill="#0f0f1a" opacity="0.95"/>
   <text x="1160" y="350" text-anchor="middle" class="edge">other</text>
   <rect x="30" y="915" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
   <text x="52" y="926" class="legend">Decision</text>
