@@ -124,7 +124,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [x] **Phase 54: Patch & Update Management** — operations/patch-management/ 5-file suite; macOS/iOS DDM migration (URGENT); v1.3 iOS retrofit surgical PATCH-06; Android MEETS_STRONG_INTEGRITY + Zebra LifeGuard; WUfB hotpatch (completed 2026-04-28)
 - [x] **Phase 55: App Lifecycle Automation** — operations/app-lifecycle/ 5-file suite; Win32 supersedence chains + dependency graphs; macOS PKG/DMG + Installomator callout; iOS VPP device vs user; Android MGP private-app publishing (completed 2026-04-28; atomic commit aecf014)
 - [ ] **Phase 56: Drift Detection + Tenant Migration** — operations/drift-migration/ 5-file suite; Windows BitLocker re-key; macOS/iOS ABM token re-issue; Android MGP re-binding; cross-platform encryption drift folded into runbook
-- [ ] **Phase 57: DEFER-07 Android Nav Unification** — 4-file hub surgical retrofit: docs/index.md Android H2 expansion + common-issues.md routing + quick-ref-l1.md + quick-ref-l2.md Android sections; pre-edit anchor inventory mandatory
+- [x] **Phase 57: DEFER-07 Android Nav Unification** — 4-file hub surgical retrofit: docs/index.md Android H2 expansion + common-issues.md routing + quick-ref-l1.md + quick-ref-l2.md Android sections; pre-edit anchor inventory mandatory — completed 2026-04-30
 - [ ] **Phase 58: DEFER-08 4-Platform Capability Comparison** — docs/reference/4-platform-capability-comparison.md (link-not-copy cells; 6 domain axes; 5 platforms including Linux); cross-link retrofits to all 4 existing capability matrices
 - [ ] **Phase 59: Hub Navigation Integration — Linux + Operations Sections** — docs/index.md Linux H2 + Operations H2; glossary cross-reference normalization (CLEAN-08) across all 5 platform glossaries; quick-ref Linux sections; ops cross-references
 - [ ] **Phase 60: Audit Harness v1.5 Finalization** — C11 promote to blocking; C12 blocking promotion; C13 second broken-link pass + promote; v1.5-audit-allowlist.json seeded with known-legitimate exemptions
@@ -326,12 +326,22 @@ Plans:
   2. L1 responder finds Android symptom routing in `docs/common-issues.md` for all 8 v1.4.1 scenario categories (enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed, Knox enrollment failed, AOSP enrollment failed) in the same format as Windows/macOS routing blocks
   3. L1 responder can use the Android quick-reference card in `docs/quick-ref-l1.md` with top checks, escalation triggers, decision tree link, and runbook list in mode-first order per v1.4 triage tree discipline
   4. L2 engineer can use the Android quick-reference card in `docs/quick-ref-l2.md` with 3-method log collection, key Intune portal paths, Play Integrity verdict reference, and investigation runbook list
-**Plans**: TBD
+**Plans**: 7 plans
+**Plan list**:
+- [x] 57-01-PLAN.md — docs/index.md Android Enterprise H2 expansion (D-01..05; 3 sub-tables L1=4/L2=4/Admin=3; CLEAN-01)
+- [x] 57-02-PLAN.md — docs/common-issues.md Android Failure Scenarios H2 (D-06..12; 8 H3s + section banner + 2 reciprocal callouts + 1 cross-platform iOS banner; CLEAN-02)
+- [x] 57-03-PLAN.md — docs/quick-ref-l1.md Android Quick Reference H2 (D-13..20; 4-part substructure + 5 Mode tag tokens + 8-row Runbooks; CLEAN-03)
+- [x] 57-04-PLAN.md — docs/quick-ref-l2.md Android Quick Reference H2 (D-22..28; 4-part substructure + 3-method + 3-row Play Integrity pointer + 6-runbook list; CLEAN-04; PITFALL-7 firewall)
+- [x] 57-05-PLAN.md — docs/l1-runbooks/00-index.md Knox row patch (D-21; runbook 28; Mode `Knox only`) + intro count fix
+- [x] 57-06-PLAN.md — scripts/validation/check-phase-57.mjs (26 V-57-NN structural assertions; AUDIT-06)
+- [x] 57-07-PLAN.md — pre-commit gate + C4 retirement + VERIFICATION.md close gate (4 SCs + 26 V-57-NN PASS + DPO-Phase57-NN propagation)
+**Closed**: 2026-04-30 (progressive-landing commits `1dee562..20dff5d`; 26/26 V-57-NN PASS; 4/4 SCs satisfied; atomic-commit interpretation reconciled at plan-series level per DPO-Phase57-06)
 **Methodology notes**:
   - MANDATORY pre-edit: `grep -rn "index.md#" docs/` anchor inventory before ANY edit to docs/index.md (PITFALL-6)
   - Append-only H2-block contract: new Android sections appended, no existing H2 headings modified or reordered
   - SERIALIZED after Phase 48, BEFORE Phase 59: both phases touch docs/index.md; no parallel writes to this file
   - Shared write hotspot ownership: docs/index.md Android expansion → Phase 57 exclusively
+  - C4 (DEFER-07 deferral guard from v1.4.1 / Phase 47) retired at Phase 57 close (commit `20dff5d`); preserved in source as informational/always-PASS for audit-trail continuity; superseded by check-phase-57.mjs (26 V-57-NN)
 
 ### Phase 58: DEFER-08 4-Platform Capability Comparison
 **Goal**: An admin managing a mixed Windows + macOS + iOS/iPadOS + Android + Linux fleet can read a single 5-platform capability comparison reference doc with link-not-copy cells across 6 domain axes — structural reference that does not duplicate per-platform matrix content
@@ -449,7 +459,7 @@ Plans:
 | 54. Patch & Update Management | v1.5 | 9/9 | Complete   | 2026-04-28 |
 | 55. App Lifecycle Automation | v1.5 | 7/7 | Complete    | 2026-04-28 |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
-| 57. DEFER-07 Android Nav Unification | v1.5 | 0/? | Not started | - |
+| 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 0/? | Not started | - |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 0/? | Not started | - |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 0/? | Not started | - |
