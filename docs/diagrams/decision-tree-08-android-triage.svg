@@ -114,13 +114,13 @@
   <text x="60" y="660" class="sub">·  RB 27 (ZTE Enrollment Failed) is ZTE-only — Samsung Knox uses RB 28 (link separately)</text>
   <text x="60" y="676" class="sub">·  RB 28 (Knox) and RB 29 (AOSP) are mode-specific terminal nodes — not part of the shared symptom router</text>
   <text x="60" y="692" class="sub">·  ZTE branch (AND5) only routes to RB 27 (mode-specific) or RB 25 (post-enrollment compliance) — not the full shared router</text>
-  <rect x="30" y="1065" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <rect x="30" y="1065" width="14" height="14" rx="3" ry="3" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
   <text x="52" y="1076" class="legend">Mode decision</text>
-  <rect x="148" y="1065" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <rect x="148" y="1065" width="14" height="14" rx="3" ry="3" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
   <text x="170" y="1076" class="legend">Mode router</text>
-  <rect x="254" y="1065" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <rect x="254" y="1065" width="14" height="14" rx="3" ry="3" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
   <text x="276" y="1076" class="legend">Resolved (L1 RB)</text>
-  <rect x="390" y="1065" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <rect x="390" y="1065" width="14" height="14" rx="3" ry="3" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
   <text x="412" y="1076" class="legend">Escalate L2</text>
   <text x="1480" y="1092" text-anchor="end" class="legend">docs/diagrams/decision-tree-08-android-triage.svg</text>
 </svg>

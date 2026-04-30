@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1100" width="1100" height="1100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000" width="1500" height="1000">
   <style>
     text { font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Courier New', monospace; fill: #e2e8f0; letter-spacing: 0.02em; }
     .title { font-size: 18px; font-weight: 700; fill: #e2e8f0; letter-spacing: 0.02em; }
@@ -33,161 +33,122 @@
       <polygon points="0,0 10,3.5 0,7" fill="#64748b"/>
     </marker>
   </defs>
-  <rect width="1100" height="1100" fill="url(#bg-grad)"/>
-  <text x="550" y="36" text-anchor="middle" class="title">ESP Failure Decision Tree</text>
-  <text x="550" y="58" text-anchor="middle" class="subtitle">APv1 · Enrollment Status Page triage  ·  docs/decision-trees/01-esp-failure.md</text>
-  <polygon points="550,80 675,120 550,160 425,120" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="550" y="110" text-anchor="middle" class="label">Stuck on</text>
-  <text x="550" y="126" text-anchor="middle" class="label">Enrollment Status Page?</text>
-  <text x="550" y="142" text-anchor="middle" class="sub">ESD1</text>
-  <rect x="50" y="100" width="230" height="50" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
-  <text x="165" y="123" text-anchor="middle" class="label">Return to Initial Triage</text>
-  <text x="165" y="139" text-anchor="middle" class="sub">ESR0</text>
-  <path d="M 425,120 L 280,120" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="341" y="103" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="355" y="113" text-anchor="middle" class="edge">No</text>
-  <path d="M 550,160 L 550,205" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="561" y="182" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="575" y="192" text-anchor="middle" class="edge">Yes</text>
-  <polygon points="550,210 675,250 550,290 425,250" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="550" y="240" text-anchor="middle" class="label">Does ESP show</text>
-  <text x="550" y="256" text-anchor="middle" class="label">an error code?</text>
-  <text x="550" y="272" text-anchor="middle" class="sub">ESD2</text>
-  <path d="M 675,250 L 800,250 L 800,330" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="726" y="234" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="740" y="244" text-anchor="middle" class="edge">Yes</text>
-  <path d="M 425,250 L 290,250 L 290,330" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="341" y="234" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="355" y="244" text-anchor="middle" class="edge">No</text>
-  <polygon points="290,335 415,375 290,415 165,375" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="290" y="365" text-anchor="middle" class="label">What does the</text>
-  <text x="290" y="381" text-anchor="middle" class="label">screen say?</text>
-  <text x="290" y="397" text-anchor="middle" class="sub">ESD4</text>
-  <polygon points="160,470 270,510 160,550 50,510" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="160" y="500" text-anchor="middle" class="label">Stuck more than</text>
-  <text x="160" y="516" text-anchor="middle" class="label">30 minutes?</text>
-  <text x="160" y="532" text-anchor="middle" class="sub">ESD5</text>
-  <path d="M 280,415 L 220,470" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="226" y="432" width="38" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="245" y="442" text-anchor="middle" class="edge">device</text>
-  <rect x="40" y="580" width="240" height="60" rx="8" ry="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="160" y="600" text-anchor="middle" class="label">Wait — device phase</text>
-  <text x="160" y="616" text-anchor="middle" class="label">up to 30 min</text>
-  <text x="160" y="632" text-anchor="middle" class="sub">ESA5</text>
-  <path d="M 160,550 L 160,580" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="164" y="557" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="178" y="567" text-anchor="middle" class="edge">No</text>
-  <rect x="40" y="660" width="240" height="60" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
-  <text x="160" y="680" text-anchor="middle" class="label">Within expected</text>
-  <text x="160" y="696" text-anchor="middle" class="label">device phase time</text>
-  <text x="160" y="712" text-anchor="middle" class="sub">ESR5</text>
-  <path d="M 160,640 L 160,660" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="40" y="750" width="240" height="50" rx="8" ry="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="160" y="773" text-anchor="middle" class="label">Reboot device, retry</text>
-  <text x="160" y="789" text-anchor="middle" class="sub">ESA2</text>
-  <path d="M 270,540 L 290,750" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="266" y="630" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="280" y="640" text-anchor="middle" class="edge">Yes</text>
-  <polygon points="160,815 280,850 160,885 40,850" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="160" y="840" text-anchor="middle" class="label">ESP proceed</text>
-  <text x="160" y="856" text-anchor="middle" class="label">after reboot?</text>
-  <text x="160" y="872" text-anchor="middle" class="sub">ESD6</text>
-  <path d="M 160,800 L 160,815" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="40" y="905" width="110" height="50" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
-  <text x="95" y="928" text-anchor="middle" class="label">Resolved</text>
-  <text x="95" y="944" text-anchor="middle" class="sub">ESR2</text>
-  <rect x="170" y="905" width="110" height="50" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
-  <text x="225" y="928" text-anchor="middle" class="label">Escalate L2</text>
-  <text x="225" y="944" text-anchor="middle" class="sub">ESE4</text>
-  <path d="M 100,885 L 100,905" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="101" y="888" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="115" y="898" text-anchor="middle" class="edge">Yes</text>
-  <path d="M 220,885 L 220,905" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="221" y="888" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="235" y="898" text-anchor="middle" class="edge">No</text>
-  <polygon points="950,470 1060,510 950,550 840,510" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="950" y="500" text-anchor="middle" class="label">Stuck more than</text>
-  <text x="950" y="516" text-anchor="middle" class="label">60 minutes?</text>
-  <text x="950" y="532" text-anchor="middle" class="sub">ESD7</text>
-  <path d="M 415,415 L 845,470" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="631" y="430" width="58" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="660" y="440" text-anchor="middle" class="edge">user phase</text>
-  <rect x="830" y="580" width="240" height="60" rx="8" ry="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="950" y="600" text-anchor="middle" class="label">Wait — user phase</text>
-  <text x="950" y="616" text-anchor="middle" class="label">up to 60 min</text>
-  <text x="950" y="632" text-anchor="middle" class="sub">ESA4</text>
-  <path d="M 950,550 L 950,580" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="954" y="557" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="968" y="567" text-anchor="middle" class="edge">No</text>
-  <rect x="830" y="660" width="240" height="60" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
-  <text x="950" y="680" text-anchor="middle" class="label">Within expected</text>
-  <text x="950" y="696" text-anchor="middle" class="label">user phase time</text>
-  <text x="950" y="712" text-anchor="middle" class="sub">ESR4</text>
-  <path d="M 950,640 L 950,660" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="830" y="750" width="240" height="50" rx="8" ry="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="950" y="773" text-anchor="middle" class="label">Reboot device, retry</text>
-  <text x="950" y="789" text-anchor="middle" class="sub">ESA3</text>
-  <path d="M 1060,540 L 1060,750" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="1061" y="630" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="1075" y="640" text-anchor="middle" class="edge">Yes</text>
-  <polygon points="950,815 1070,850 950,885 830,850" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="950" y="840" text-anchor="middle" class="label">ESP proceed</text>
-  <text x="950" y="856" text-anchor="middle" class="label">after reboot?</text>
-  <text x="950" y="872" text-anchor="middle" class="sub">ESD8</text>
-  <path d="M 950,800 L 950,815" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="830" y="905" width="110" height="50" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
-  <text x="885" y="928" text-anchor="middle" class="label">Resolved</text>
-  <text x="885" y="944" text-anchor="middle" class="sub">ESR3</text>
-  <rect x="960" y="905" width="110" height="50" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
-  <text x="1015" y="928" text-anchor="middle" class="label">Escalate L2</text>
-  <text x="1015" y="944" text-anchor="middle" class="sub">ESE5</text>
-  <path d="M 890,885 L 890,905" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="891" y="888" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="905" y="898" text-anchor="middle" class="edge">Yes</text>
-  <path d="M 1010,885 L 1010,905" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="1011" y="888" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="1025" y="898" text-anchor="middle" class="edge">No</text>
-  <rect x="425" y="470" width="250" height="70" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
-  <text x="550" y="503" text-anchor="middle" class="label">Escalate L2</text>
-  <text x="550" y="519" text-anchor="middle" class="sub">Cannot identify ESP phase  ·  ESE3</text>
-  <path d="M 290,415 L 525,470" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="389" y="427" width="63" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="420" y="437" text-anchor="middle" class="edge">Cannot tell</text>
-  <polygon points="800,335 925,375 800,415 675,375" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="800" y="365" text-anchor="middle" class="label">Can you read</text>
-  <text x="800" y="381" text-anchor="middle" class="label">the error code?</text>
-  <text x="800" y="397" text-anchor="middle" class="sub">ESD3</text>
-  <rect x="560" y="470" width="220" height="60" rx="8" ry="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="670" y="490" text-anchor="middle" class="label">Look up code in</text>
-  <text x="670" y="506" text-anchor="middle" class="label">ESP error table</text>
-  <text x="670" y="522" text-anchor="middle" class="sub">ESA1</text>
-  <path d="M 800,415 L 670,470" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
-  <rect x="726" y="430" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="740" y="440" text-anchor="middle" class="edge">Yes</text>
-  <rect x="440" y="580" width="220" height="60" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
-  <text x="550" y="600" text-anchor="middle" class="label">Resolved: follow</text>
-  <text x="550" y="616" text-anchor="middle" class="label">L1 Action</text>
-  <text x="550" y="632" text-anchor="middle" class="sub">ESR1</text>
-  <rect x="680" y="580" width="220" height="60" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
-  <text x="790" y="608" text-anchor="middle" class="label">Escalate L2</text>
-  <text x="790" y="624" text-anchor="middle" class="sub">Code not found  ·  ESE1</text>
-  <path d="M 620,530 L 550,580" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="564" y="545" width="33" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="580" y="555" text-anchor="middle" class="edge">found</text>
-  <path d="M 720,530 L 790,580" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="724" y="545" width="53" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="750" y="555" text-anchor="middle" class="edge">not found</text>
-  <rect x="800" y="470" width="250" height="60" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
-  <text x="925" y="498" text-anchor="middle" class="label">Escalate L2</text>
-  <text x="925" y="514" text-anchor="middle" class="sub">Cannot read code  ·  ESE2</text>
-  <path d="M 925,415 L 925,470" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
-  <rect x="936" y="432" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
-  <text x="950" y="442" text-anchor="middle" class="edge">No</text>
-  <rect x="30" y="1065" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
-  <text x="52" y="1076" class="legend">Decision / Action</text>
-  <rect x="172" y="1065" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
-  <text x="194" y="1076" class="legend">Resolved</text>
-  <rect x="260" y="1065" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
-  <text x="282" y="1076" class="legend">Escalate L2</text>
-  <text x="1080" y="1092" text-anchor="end" class="legend">docs/diagrams/decision-tree-01-esp-failure.svg</text>
+  <rect width="1500" height="1000" fill="url(#bg-grad)"/>
+  <text x="750" y="36" text-anchor="middle" class="title">ESP Failure Decision Tree</text>
+  <text x="750" y="58" text-anchor="middle" class="subtitle">APv1 · Enrollment Status Page triage  ·  docs/decision-trees/01-esp-failure.md</text>
+  <polygon points="900,90 1030,135 900,180 770,135" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="900" y="125" text-anchor="middle" class="label">Stuck on</text>
+  <text x="900" y="141" text-anchor="middle" class="label">Enrollment Status Page?</text>
+  <text x="900" y="157" text-anchor="middle" class="sub">ESD1</text>
+  <rect x="40" y="105" width="240" height="60" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+  <text x="160" y="133" text-anchor="middle" class="label">Return to Initial Triage</text>
+  <text x="160" y="149" text-anchor="middle" class="sub">ESR0</text>
+  <path d="M 770,135 L 280,135" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="526" y="118" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="540" y="128" text-anchor="middle" class="edge">No</text>
+  <polygon points="900,240 1030,285 900,330 770,285" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="900" y="275" text-anchor="middle" class="label">Does ESP show</text>
+  <text x="900" y="291" text-anchor="middle" class="label">an error code?</text>
+  <text x="900" y="307" text-anchor="middle" class="sub">ESD2</text>
+  <path d="M 900,180 L 900,240" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="911" y="218" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="925" y="228" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="410,390 540,435 410,480 280,435" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="410" y="425" text-anchor="middle" class="label">What does the</text>
+  <text x="410" y="441" text-anchor="middle" class="label">screen say?</text>
+  <text x="410" y="457" text-anchor="middle" class="sub">ESD4 · 3-way</text>
+  <polygon points="1350,390 1460,435 1350,480 1240,435" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="1350" y="425" text-anchor="middle" class="label">Can read</text>
+  <text x="1350" y="441" text-anchor="middle" class="label">the error code?</text>
+  <text x="1350" y="457" text-anchor="middle" class="sub">ESD3</text>
+  <path d="M 840,330 L 840,360 L 410,360 L 410,390" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="666" y="342" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="680" y="352" text-anchor="middle" class="edge">No</text>
+  <path d="M 960,330 L 960,360 L 1350,360 L 1350,390" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="1156" y="342" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="1170" y="352" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="150,580 260,625 150,670 40,625" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="150" y="615" text-anchor="middle" class="label">Stuck more than</text>
+  <text x="150" y="631" text-anchor="middle" class="label">30 minutes?</text>
+  <text x="150" y="647" text-anchor="middle" class="sub">ESD5 · device phase</text>
+  <rect x="300" y="595" width="220" height="60" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="410" y="623" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="410" y="639" text-anchor="middle" class="sub">Cannot identify phase  ·  ESE3</text>
+  <polygon points="670,580 780,625 670,670 560,625" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="670" y="615" text-anchor="middle" class="label">Stuck more than</text>
+  <text x="670" y="631" text-anchor="middle" class="label">60 minutes?</text>
+  <text x="670" y="647" text-anchor="middle" class="sub">ESD7 · user phase</text>
+  <path d="M 410,480 L 410,510 L 150,510 L 150,580" stroke="#a855f7" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="261" y="493" width="38" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="280" y="503" text-anchor="middle" class="edge">device</text>
+  <path d="M 410,480 L 410,595" stroke="#a855f7" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="409" y="493" width="63" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="440" y="503" text-anchor="middle" class="edge">cannot tell</text>
+  <path d="M 410,480 L 410,510 L 670,510 L 670,580" stroke="#a855f7" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="526" y="493" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="540" y="503" text-anchor="middle" class="edge">user</text>
+  <rect x="1240" y="595" width="220" height="60" rx="8" ry="8" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="1350" y="615" text-anchor="middle" class="label">Look up code in</text>
+  <text x="1350" y="631" text-anchor="middle" class="label">ESP error table</text>
+  <text x="1350" y="647" text-anchor="middle" class="sub">ESA1</text>
+  <rect x="1020" y="490" width="200" height="60" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="1120" y="518" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="1120" y="534" text-anchor="middle" class="sub">Cannot read code  ·  ESE2</text>
+  <path d="M 1350,480 L 1350,595" stroke="#3b82f6" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="1364" y="565" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="1378" y="575" text-anchor="middle" class="edge">Yes</text>
+  <path d="M 1240,435 L 1180,435 L 1180,520 L 1220,520" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="1131" y="418" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="1145" y="428" text-anchor="middle" class="edge">No</text>
+  <rect x="20" y="760" width="130" height="70" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+  <text x="85" y="786" text-anchor="middle" class="label">Within window</text>
+  <text x="85" y="802" text-anchor="middle" class="sub">wait</text>
+  <text x="85" y="815" text-anchor="middle" class="sub">ESR5</text>
+  <rect x="170" y="760" width="200" height="70" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="270" y="785" text-anchor="middle" class="label">Reboot retry;</text>
+  <text x="270" y="801" text-anchor="middle" class="label">escalate if persists</text>
+  <text x="270" y="817" text-anchor="middle" class="sub">ESA2 → ESD6 → ESR2 / ESE4</text>
+  <path d="M 90,670 L 90,760" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="61" y="738" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="75" y="748" text-anchor="middle" class="edge">≤30</text>
+  <path d="M 220,670 L 260,760" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="276" y="738" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="290" y="748" text-anchor="middle" class="edge">&gt;30</text>
+  <rect x="540" y="760" width="130" height="70" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+  <text x="605" y="786" text-anchor="middle" class="label">Within window</text>
+  <text x="605" y="802" text-anchor="middle" class="sub">wait</text>
+  <text x="605" y="815" text-anchor="middle" class="sub">ESR4</text>
+  <rect x="690" y="760" width="200" height="70" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="790" y="785" text-anchor="middle" class="label">Reboot retry;</text>
+  <text x="790" y="801" text-anchor="middle" class="label">escalate if persists</text>
+  <text x="790" y="817" text-anchor="middle" class="sub">ESA3 → ESD8 → ESR3 / ESE5</text>
+  <path d="M 600,670 L 600,760" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="571" y="738" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="585" y="748" text-anchor="middle" class="edge">≤60</text>
+  <path d="M 740,670 L 770,760" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="786" y="738" width="28" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="800" y="748" text-anchor="middle" class="edge">&gt;60</text>
+  <rect x="1180" y="760" width="140" height="70" rx="8" ry="8" fill="#052e16" stroke="#10b981" stroke-width="1.5"/>
+  <text x="1250" y="786" text-anchor="middle" class="label">Resolved</text>
+  <text x="1250" y="802" text-anchor="middle" class="sub">follow L1 Action</text>
+  <text x="1250" y="815" text-anchor="middle" class="sub">found · ESR1</text>
+  <rect x="1340" y="760" width="140" height="70" rx="8" ry="8" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="1410" y="786" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="1410" y="802" text-anchor="middle" class="sub">not in table</text>
+  <text x="1410" y="815" text-anchor="middle" class="sub">ESE1</text>
+  <path d="M 1300,655 L 1255,760" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1224" y="738" width="33" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="1240" y="748" text-anchor="middle" class="edge">found</text>
+  <path d="M 1400,655 L 1410,760" stroke="#ef4444" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="1439" y="738" width="53" height="14" fill="#0f0f1a" opacity="0.95"/>
+  <text x="1465" y="748" text-anchor="middle" class="edge">not found</text>
+  <rect x="30" y="965" width="14" height="14" rx="3" ry="3" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
+  <text x="52" y="976" class="legend">Decision / Action</text>
+  <rect x="172" y="965" width="14" height="14" rx="3" ry="3" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
+  <text x="194" y="976" class="legend">Sub-tree route</text>
+  <rect x="296" y="965" width="14" height="14" rx="3" ry="3" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
+  <text x="318" y="976" class="legend">Resolved</text>
+  <rect x="384" y="965" width="14" height="14" rx="3" ry="3" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
+  <text x="406" y="976" class="legend">Escalate L2</text>
+  <text x="1480" y="992" text-anchor="end" class="legend">docs/diagrams/decision-tree-01-esp-failure.svg</text>
 </svg>

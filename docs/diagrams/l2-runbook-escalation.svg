@@ -243,19 +243,19 @@
   <text x="734" y="1234" class="label" font-weight="600">Linux Agent Investigation</text>
   <text x="930" y="1234" class="sub">— intunemgmt service · auth tokens · journalctl --user 1d</text>
   <path d="M 660,1224 L 720,1224" stroke="#10b981" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
-  <rect x="30" y="1165" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <rect x="30" y="1165" width="14" height="14" rx="3" ry="3" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
   <text x="52" y="1176" class="legend">L1 escalation node</text>
-  <rect x="178" y="1165" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <rect x="178" y="1165" width="14" height="14" rx="3" ry="3" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
   <text x="200" y="1176" class="legend">Log collection prereq</text>
-  <rect x="344" y="1165" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <rect x="344" y="1165" width="14" height="14" rx="3" ry="3" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
   <text x="366" y="1176" class="legend">APv1 / Linux L2</text>
-  <rect x="474" y="1165" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <rect x="474" y="1165" width="14" height="14" rx="3" ry="3" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
   <text x="496" y="1176" class="legend">APv2 L2</text>
-  <rect x="556" y="1165" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <rect x="556" y="1165" width="14" height="14" rx="3" ry="3" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
   <text x="578" y="1176" class="legend">macOS L2</text>
-  <rect x="644" y="1165" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <rect x="644" y="1165" width="14" height="14" rx="3" ry="3" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
   <text x="666" y="1176" class="legend">iOS L2</text>
-  <rect x="720" y="1165" width="14" height="14" rx="3" ry="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <rect x="720" y="1165" width="14" height="14" rx="3" ry="3" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
   <text x="742" y="1176" class="legend">Android L2</text>
   <text x="1380" y="1192" text-anchor="end" class="legend">docs/diagrams/l2-runbook-escalation.svg</text>
 </svg>

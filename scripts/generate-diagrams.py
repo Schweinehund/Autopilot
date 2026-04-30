@@ -342,11 +342,11 @@ def gen_decision_tree_triage():
 
     # Legend
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision'),
-        ('box', ('#fff7ed', '#ea580c'), 'Escalate Infrastructure'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved'),
-        ('box', ('#faf5ff', '#9333ea'), 'Symptom router / sub-tree'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision'),
+        ('box', ('#1c1917', '#f97316'), 'Escalate Infrastructure'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
+        ('box', ('#052e16', '#10b981'), 'Resolved'),
+        ('box', ('#1e1b4b', '#a855f7'), 'Symptom router / sub-tree'),
     ], 25, 900)
 
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-triage.svg")
@@ -485,11 +485,11 @@ def gen_l1_runbook_map():
 
     # Legend
     out += legend([
-        ('box', ('#f0fdf4', '#16a34a'), 'APv1 / Linux runbook'),
-        ('box', ('#eff6ff', '#2563eb'), 'APv2 runbook'),
-        ('box', ('#faf5ff', '#9333ea'), 'macOS runbook'),
-        ('box', ('#fff7ed', '#ea580c'), 'iOS runbook'),
-        ('box', ('#f0fdfa', '#0d9488'), 'Android runbook'),
+        ('box', ('#052e16', '#10b981'), 'APv1 / Linux runbook'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'APv2 runbook'),
+        ('box', ('#1e1b4b', '#a855f7'), 'macOS runbook'),
+        ('box', ('#1c1917', '#f97316'), 'iOS runbook'),
+        ('box', ('#042f2e', '#14b8a6'), 'Android runbook'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/l1-runbook-map.svg")
     out += svg_close()
@@ -758,13 +758,13 @@ def gen_l2_runbook_escalation():
 
     # Legend
     out += legend([
-        ('box', ('#fef2f2', '#dc2626'), 'L1 escalation node'),
-        ('box', ('#fff7ed', '#ea580c'), 'Log collection prereq'),
-        ('box', ('#f0fdf4', '#16a34a'), 'APv1 / Linux L2'),
-        ('box', ('#eff6ff', '#2563eb'), 'APv2 L2'),
-        ('box', ('#faf5ff', '#9333ea'), 'macOS L2'),
-        ('box', ('#fff7ed', '#ea580c'), 'iOS L2'),
-        ('box', ('#f0fdfa', '#0d9488'), 'Android L2'),
+        ('box', ('#450a0a', '#ef4444'), 'L1 escalation node'),
+        ('box', ('#1c1917', '#f97316'), 'Log collection prereq'),
+        ('box', ('#052e16', '#10b981'), 'APv1 / Linux L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'APv2 L2'),
+        ('box', ('#1e1b4b', '#a855f7'), 'macOS L2'),
+        ('box', ('#1c1917', '#f97316'), 'iOS L2'),
+        ('box', ('#042f2e', '#14b8a6'), 'Android L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/l2-runbook-escalation.svg")
     out += svg_close()
@@ -934,10 +934,10 @@ def gen_lifecycle_pipeline():
 
     # Legend
     out += legend([
-        ('box', ('#f0fdf4', '#16a34a'), 'APv1 stage'),
-        ('box', ('#eff6ff', '#2563eb'), 'APv2 step'),
-        ('box', ('#faf5ff', '#9333ea'), 'macOS ADE stage'),
-        ('box', ('#fef2f2', '#dc2626'), 'Failure surface'),
+        ('box', ('#052e16', '#10b981'), 'APv1 stage'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'APv2 step'),
+        ('box', ('#1e1b4b', '#a855f7'), 'macOS ADE stage'),
+        ('box', ('#450a0a', '#ef4444'), 'Failure surface'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/lifecycle-pipeline.svg")
     out += svg_close()
@@ -952,89 +952,80 @@ def gen_dt_00():
 
 
 def gen_dt_01():
-    """ESP Failure tree."""
-    W, H = 1100, 1100
+    """ESP Failure tree — strict orthogonal grid; sub-loops collapsed."""
+    W, H = 1500, 1000
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "ESP Failure Decision Tree",
                  "APv1 · Enrollment Status Page triage  ·  docs/decision-trees/01-esp-failure.md")
 
-    # Layout: top decision, branches down
-    # ESD1: stuck on ESP?
-    out += diamond(425, 80, 250, 80, ["Stuck on", "Enrollment Status Page?"], sub="ESD1")
-    # ESD1 -> No -> Return
-    out += resolved(50, 100, 230, 50, ["Return to Initial Triage"], sub="ESR0")
-    out += path_arrow("M 425,120 L 280,120", color="green", label=(355, 113, "No"))
-    # ESD1 -> Yes -> ESD2
-    out += path_arrow("M 550,160 L 550,205", color="blue", label=(575, 192, "Yes"))
+    # Grid: spine at x=900; left zone <800 for "no error" branch; right zone >1000 for "has error"
+    SPINE = 900
+    Y_D1, Y_D2, Y_D34, Y_OUT, Y_LEAF = 90, 240, 390, 580, 760
 
-    # ESD2: error code shown?
-    out += diamond(425, 210, 250, 80, ["Does ESP show", "an error code?"], sub="ESD2")
-    # Yes -> ESD3
-    out += path_arrow("M 675,250 L 800,250 L 800,330", color="blue", label=(740, 244, "Yes"))
-    # No -> ESD4
-    out += path_arrow("M 425,250 L 290,250 L 290,330", color="blue", label=(355, 244, "No"))
+    # === ESD1 + ESR0 (left exit) ===
+    out += diamond(SPINE - 130, Y_D1, 260, 90, ["Stuck on", "Enrollment Status Page?"], sub="ESD1")
+    out += resolved(40, Y_D1 + 15, 240, 60, ["Return to Initial Triage"], sub="ESR0")
+    out += path_arrow(f"M {SPINE - 130},{Y_D1 + 45} L 280,{Y_D1 + 45}", color="green", label=(540, Y_D1 + 38, "No"))
 
-    # Left branch: ESD4 (no error)
-    out += diamond(165, 335, 250, 80, ["What does the", "screen say?"], sub="ESD4")
-    # ESD4 splits 3 ways
+    # === ESD2 ===
+    out += diamond(SPINE - 130, Y_D2, 260, 90, ["Does ESP show", "an error code?"], sub="ESD2")
+    out += path_arrow(f"M {SPINE},{Y_D1 + 90} L {SPINE},{Y_D2}", color="blue", label=(SPINE + 25, Y_D2 - 12, "Yes"))
 
-    # Setting up your device → ESD5 (30 min)
-    out += diamond(50, 470, 220, 80, ["Stuck more than", "30 minutes?"], sub="ESD5")
-    out += path_arrow("M 280,415 L 220,470", color="blue", label=(245, 442, "device"))
-    # ESD5 No -> wait → ESR5
-    out += action_box(40, 580, 240, 60, ["Wait — device phase", "up to 30 min"], sub="ESA5")
-    out += path_arrow("M 160,550 L 160,580", color="blue", label=(178, 567, "No"))
-    out += resolved(40, 660, 240, 60, ["Within expected", "device phase time"], sub="ESR5")
-    out += path_arrow("M 160,640 L 160,660", color="green")
-    # ESD5 Yes -> reboot/retry → ESD6
-    out += action_box(40, 750, 240, 50, ["Reboot device, retry"], sub="ESA2")
-    out += path_arrow("M 270,540 L 290,750", color="blue", label=(280, 640, "Yes"))
-    out += diamond(40, 815, 240, 70, ["ESP proceed", "after reboot?"], sub="ESD6")
-    out += path_arrow("M 160,800 L 160,815", color="blue")
-    out += resolved(40, 905, 110, 50, ["Resolved"], sub="ESR2")
-    out += escalate_l2(170, 905, 110, 50, ["Escalate L2"], sub="ESE4")
-    out += path_arrow("M 100,885 L 100,905", color="green", label=(115, 898, "Yes"))
-    out += path_arrow("M 220,885 L 220,905", color="red", label=(235, 898, "No"))
+    # === ESD4 (left, no-error) and ESD3 (right, has-error) ===
+    out += diamond(280, Y_D34, 260, 90, ["What does the", "screen say?"], sub="ESD4 · 3-way")
+    out += diamond(1240, Y_D34, 220, 90, ["Can read", "the error code?"], sub="ESD3")
+    # ESD2 No → ESD4 (down then left, orthogonal)
+    out += path_arrow(f"M {SPINE - 60},{Y_D2 + 90} L {SPINE - 60},{Y_D34 - 30} L 410,{Y_D34 - 30} L 410,{Y_D34}",
+                     color="blue", label=(680, Y_D34 - 38, "No"))
+    # ESD2 Yes → ESD3 (down then right, orthogonal)
+    out += path_arrow(f"M {SPINE + 60},{Y_D2 + 90} L {SPINE + 60},{Y_D34 - 30} L 1350,{Y_D34 - 30} L 1350,{Y_D34}",
+                     color="blue", label=(1170, Y_D34 - 38, "Yes"))
 
-    # Setting up for name → ESD7 (60 min)
-    out += diamond(840, 470, 220, 80, ["Stuck more than", "60 minutes?"], sub="ESD7")
-    out += path_arrow("M 415,415 L 845,470", color="blue", label=(660, 440, "user phase"))
-    out += action_box(830, 580, 240, 60, ["Wait — user phase", "up to 60 min"], sub="ESA4")
-    out += path_arrow("M 950,550 L 950,580", color="blue", label=(968, 567, "No"))
-    out += resolved(830, 660, 240, 60, ["Within expected", "user phase time"], sub="ESR4")
-    out += path_arrow("M 950,640 L 950,660", color="green")
-    out += action_box(830, 750, 240, 50, ["Reboot device, retry"], sub="ESA3")
-    out += path_arrow("M 1060,540 L 1060,750", color="blue", label=(1075, 640, "Yes"))
-    out += diamond(830, 815, 240, 70, ["ESP proceed", "after reboot?"], sub="ESD8")
-    out += path_arrow("M 950,800 L 950,815", color="blue")
-    out += resolved(830, 905, 110, 50, ["Resolved"], sub="ESR3")
-    out += escalate_l2(960, 905, 110, 50, ["Escalate L2"], sub="ESE5")
-    out += path_arrow("M 890,885 L 890,905", color="green", label=(905, 898, "Yes"))
-    out += path_arrow("M 1010,885 L 1010,905", color="red", label=(1025, 898, "No"))
+    # === Level 4 (ESD4 fans 3-way; ESD3 fans 2-way) ===
+    # ESD4 → 3 columns: ESD5 left (40-260), ESE3 mid (300-520), ESD7 right (560-780)
+    out += diamond(40, Y_OUT, 220, 90, ["Stuck more than", "30 minutes?"], sub="ESD5 · device phase")
+    out += escalate_l2(300, Y_OUT + 15, 220, 60, ["Escalate L2"], sub="Cannot identify phase  ·  ESE3")
+    out += diamond(560, Y_OUT, 220, 90, ["Stuck more than", "60 minutes?"], sub="ESD7 · user phase")
+    fan_y = Y_D34 + 90 + 30
+    out += path_arrow(f"M 410,{Y_D34 + 90} L 410,{fan_y} L 150,{fan_y} L 150,{Y_OUT}", color="purple", label=(280, fan_y - 7, "device"))
+    out += path_arrow(f"M 410,{Y_D34 + 90} L 410,{Y_OUT + 15}", color="purple", label=(440, fan_y - 7, "cannot tell"))
+    out += path_arrow(f"M 410,{Y_D34 + 90} L 410,{fan_y} L 670,{fan_y} L 670,{Y_OUT}", color="purple", label=(540, fan_y - 7, "user"))
 
-    # Cannot tell -> ESE3
-    out += escalate_l2(425, 470, 250, 70, ["Escalate L2"], sub="Cannot identify ESP phase  ·  ESE3")
-    out += path_arrow("M 290,415 L 525,470", color="red", label=(420, 437, "Cannot tell"))
+    # ESD3 → 2 outcomes: ESA1 (yes, below); ESE2 (no, side)
+    out += action_box(1240, Y_OUT + 15, 220, 60, ["Look up code in", "ESP error table"], sub="ESA1")
+    # ESE2 placed in left-of-spine area at the same Y as ESD3 to avoid overlap with ESD3's level-4 children
+    out += escalate_l2(1020, Y_D34 + 100, 200, 60, ["Escalate L2"], sub="Cannot read code  ·  ESE2")
+    # ESD3 Yes → ESA1 (vertical down)
+    out += path_arrow(f"M 1350,{Y_D34 + 90} L 1350,{Y_OUT + 15}", color="blue", label=(1378, Y_OUT - 5, "Yes"))
+    # ESD3 No → ESE2 (left then down: from ESD3 left edge to ESE2 right edge)
+    out += path_arrow(f"M 1240,{Y_D34 + 45} L 1180,{Y_D34 + 45} L 1180,{Y_D34 + 130} L 1220,{Y_D34 + 130}",
+                     color="red", label=(1145, Y_D34 + 38, "No"))
 
-    # Right branch: ESD3 (error code shown)
-    out += diamond(675, 335, 250, 80, ["Can you read", "the error code?"], sub="ESD3")
-    # ESD3 Yes -> Lookup
-    out += action_box(560, 470, 220, 60, ["Look up code in", "ESP error table"], sub="ESA1")
-    out += path_arrow("M 800,415 L 670,470", color="blue", label=(740, 440, "Yes"))
-    out += resolved(440, 580, 220, 60, ["Resolved: follow", "L1 Action"], sub="ESR1")
-    out += escalate_l2(680, 580, 220, 60, ["Escalate L2"], sub="Code not found  ·  ESE1")
-    out += path_arrow("M 620,530 L 550,580", color="green", label=(580, 555, "found"))
-    out += path_arrow("M 720,530 L 790,580", color="red", label=(750, 555, "not found"))
-    # ESD3 No -> Escalate L2
-    out += escalate_l2(800, 470, 250, 60, ["Escalate L2"], sub="Cannot read code  ·  ESE2")
-    out += path_arrow("M 925,415 L 925,470", color="red", label=(950, 442, "No"))
+    # === Level 5 (terminal outcomes) ===
+    # ESD5 → ESR5 (within window) | ESCD (escalate path, combined)
+    out += resolved(20, Y_LEAF, 130, 70, ["Within window"], sub="wait", sub2="ESR5")
+    out += escalate_l2(170, Y_LEAF, 200, 70, ["Reboot retry;", "escalate if persists"], sub="ESA2 → ESD6 → ESR2 / ESE4")
+    out += path_arrow(f"M 90,{Y_OUT + 90} L 90,{Y_LEAF}", color="green", label=(75, Y_LEAF - 12, "≤30"))
+    out += path_arrow(f"M 220,{Y_OUT + 90} L 260,{Y_LEAF}", color="red", label=(290, Y_LEAF - 12, ">30"))
 
-    # Legend
+    # ESD7 → ESR4 | escalate path
+    out += resolved(540, Y_LEAF, 130, 70, ["Within window"], sub="wait", sub2="ESR4")
+    out += escalate_l2(690, Y_LEAF, 200, 70, ["Reboot retry;", "escalate if persists"], sub="ESA3 → ESD8 → ESR3 / ESE5")
+    out += path_arrow(f"M 600,{Y_OUT + 90} L 600,{Y_LEAF}", color="green", label=(585, Y_LEAF - 12, "≤60"))
+    out += path_arrow(f"M 740,{Y_OUT + 90} L 770,{Y_LEAF}", color="red", label=(800, Y_LEAF - 12, ">60"))
+
+    # ESA1 → ESR1 (found) | ESE1 (not found)
+    out += resolved(1180, Y_LEAF, 140, 70, ["Resolved"], sub="follow L1 Action", sub2="found · ESR1")
+    out += escalate_l2(1340, Y_LEAF, 140, 70, ["Escalate L2"], sub="not in table", sub2="ESE1")
+    out += path_arrow(f"M 1300,{Y_OUT + 75} L 1255,{Y_LEAF}", color="green", label=(1240, Y_LEAF - 12, "found"))
+    out += path_arrow(f"M 1400,{Y_OUT + 75} L 1410,{Y_LEAF}", color="red", label=(1465, Y_LEAF - 12, "not found"))
+
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision / Action'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision / Action'),
+        ('box', ('#1e1b4b', '#a855f7'), 'Sub-tree route'),
+        ('box', ('#052e16', '#10b981'), 'Resolved'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-01-esp-failure.svg")
     out += svg_close()
@@ -1042,75 +1033,85 @@ def gen_dt_01():
 
 
 def gen_dt_02():
-    """Profile Assignment tree."""
-    W, H = 1100, 1000
+    """Profile Assignment tree — strict orthogonal grid."""
+    W, H = 1500, 1000
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "Profile Assignment Decision Tree",
                  "APv1 · Profile not assigned or wrong profile  ·  docs/decision-trees/02-profile-assignment.md")
 
-    # PRD1: registered?
-    out += diamond(425, 80, 250, 80, ["Device registered", "in Autopilot portal?"], sub="PRD1")
-    out += resolved(50, 100, 230, 50, ["Return to Initial Triage"], sub="PRR0")
-    out += path_arrow("M 425,120 L 280,120", color="green", label=(355, 113, "No"))
+    SPINE = 750
+    Y_D1, Y_D2, Y_D35, Y_OUT, Y_LEAF = 90, 230, 380, 560, 750
 
-    # PRD1 Yes -> PRD2
-    out += path_arrow("M 550,160 L 550,205", color="blue", label=(575, 192, "Yes"))
-    out += diamond(425, 210, 250, 80, ["Profile assigned", "to device?"], sub="PRD2")
+    # === PRD1 (root) + PRR0 (left return) ===
+    out += diamond(SPINE - 130, Y_D1, 260, 90, ["Device registered", "in Autopilot portal?"], sub="PRD1")
+    out += resolved(40, Y_D1 + 15, 240, 60, ["Return to Initial Triage"], sub="PRR0")
+    out += path_arrow(f"M {SPINE - 130},{Y_D1 + 45} L 280,{Y_D1 + 45}", color="green", label=(440, Y_D1 + 38, "No"))
 
-    # PRD2 No -> PRD3 (group check)
-    out += path_arrow("M 425,250 L 290,250 L 290,330", color="blue", label=(355, 244, "No"))
-    out += diamond(165, 335, 250, 90, ["In correct group for", "profile assignment?"], sub="PRD3")
+    # === PRD2 ===
+    out += diamond(SPINE - 130, Y_D2, 260, 90, ["Profile assigned", "to device?"], sub="PRD2")
+    out += path_arrow(f"M {SPINE},{Y_D1 + 90} L {SPINE},{Y_D2}", color="blue", label=(SPINE + 25, Y_D2 - 12, "Yes"))
 
-    # PRD3 No -> add to group → PRD4
-    out += action_box(50, 470, 230, 60, ["Add device to", "correct group"], sub="PRA1")
-    out += path_arrow("M 240,425 L 165,470", color="blue", label=(200, 447, "No"))
-    out += diamond(60, 560, 220, 80, ["Wait 30 min — profile", "now assigned?"], sub="PRD4")
-    out += path_arrow("M 165,530 L 165,560", color="blue")
-    out += resolved(20, 690, 165, 50, ["Resolved"], sub="PRR1 · after group fix")
-    out += escalate_l2(195, 690, 165, 50, ["Escalate L2"], sub="PRE1")
-    out += path_arrow("M 110,640 L 110,690", color="green", label=(125, 670, "Yes"))
-    out += path_arrow("M 230,640 L 230,690", color="red", label=(245, 670, "No"))
+    # === PRD3 (left, no-profile) and PRD5 (right, has-profile) ===
+    out += diamond(180, Y_D35, 260, 90, ["In correct group", "for profile?"], sub="PRD3 · 3-way")
+    out += diamond(1060, Y_D35, 260, 90, ["Correct profile", "for this device?"], sub="PRD5 · 3-way")
+    out += path_arrow(f"M {SPINE - 60},{Y_D2 + 90} L {SPINE - 60},{Y_D35 - 30} L 310,{Y_D35 - 30} L 310,{Y_D35}",
+                     color="blue", label=(530, Y_D35 - 38, "No"))
+    out += path_arrow(f"M {SPINE + 60},{Y_D2 + 90} L {SPINE + 60},{Y_D35 - 30} L 1190,{Y_D35 - 30} L 1190,{Y_D35}",
+                     color="blue", label=(960, Y_D35 - 38, "Yes"))
 
-    # PRD3 Yes -> PRE2 (in correct group, not assigning)
-    out += escalate_l2(380, 470, 230, 60, ["Escalate L2"], sub="In correct group  ·  PRE2")
-    out += path_arrow("M 350,425 L 425,470", color="red", label=(395, 447, "Yes"))
+    # === PRD3 fan-out (3 outcomes) ===
+    # No → add-to-group flow → PRD4 → resolved/escalate
+    out += action_box(40, Y_OUT, 240, 60, ["Add device to", "correct group"], sub="PRA1")
+    out += path_arrow(f"M 180,{Y_D35 + 45} L 100,{Y_D35 + 45} L 100,{Y_OUT}",
+                     color="blue", label=(125, Y_D35 + 38, "No"))
+    # Yes → PRE2 (in correct group but not assigning)
+    out += escalate_l2(40, Y_OUT + 90, 240, 70, ["Escalate L2"], sub="In correct group", sub2="PRE2")
+    out += path_arrow(f"M 200,{Y_D35 + 90} L 200,{Y_OUT + 90}",
+                     color="red", label=(220, Y_OUT + 75, "Yes"))
+    # Don't know → PRE3
+    out += escalate_l2(300, Y_OUT, 240, 70, ["Escalate L2"], sub="Cannot verify group", sub2="PRE3")
+    out += path_arrow(f"M 440,{Y_D35 + 45} L 540,{Y_D35 + 45} L 540,{Y_OUT}",
+                     color="red", label=(515, Y_D35 + 38, "Don't know"))
 
-    # PRD3 Don't know -> PRE3
-    out += escalate_l2(380, 350, 230, 60, ["Escalate L2"], sub="Cannot verify group  ·  PRE3")
-    out += path_arrow("M 415,375 L 380,375", color="red", label=(395, 368, "Don't know"))
+    # PRA1 → PRD4
+    out += diamond(40, Y_LEAF - 60, 240, 90, ["Profile assigned", "after 30 min?"], sub="PRD4")
+    out += path_arrow(f"M 160,{Y_OUT + 60} L 160,{Y_LEAF - 60}", color="blue")
+    # PRD4 outcomes (drawn in same row at far-bottom)
+    out += resolved(20, Y_LEAF + 70, 130, 70, ["Resolved"], sub="after group fix", sub2="PRR1")
+    out += escalate_l2(170, Y_LEAF + 70, 130, 70, ["Escalate L2"], sub="PRE1")
+    out += path_arrow(f"M 100,{Y_LEAF + 30} L 85,{Y_LEAF + 70}", color="green", label=(75, Y_LEAF + 60, "Yes"))
+    out += path_arrow(f"M 220,{Y_LEAF + 30} L 235,{Y_LEAF + 70}", color="red", label=(255, Y_LEAF + 60, "No"))
 
-    # PRD2 Yes -> PRD5
-    out += path_arrow("M 675,250 L 800,250 L 800,330", color="blue", label=(740, 244, "Yes"))
-    out += diamond(680, 335, 250, 90, ["Correct profile", "for this device?"], sub="PRD5")
+    # === PRD5 fan-out (3 outcomes) ===
+    # Yes → PRD6 (applied?)
+    out += diamond(1060, Y_OUT, 260, 90, ["Profile applied", "to device?"], sub="PRD6")
+    out += path_arrow(f"M 1190,{Y_D35 + 90} L 1190,{Y_OUT}", color="blue", label=(1212, Y_OUT - 12, "Yes"))
+    # No → PRE4
+    out += escalate_l2(1340, Y_D35 + 100, 140, 70, ["Escalate L2"], sub="Wrong profile", sub2="PRE4")
+    out += path_arrow(f"M 1320,{Y_D35 + 45} L 1340,{Y_D35 + 130}",
+                     color="red", label=(1370, Y_D35 + 70, "No"))
+    # Don't know → PRE6
+    out += escalate_l2(800, Y_D35 + 100, 220, 70, ["Escalate L2"], sub="Cannot verify profile", sub2="PRE6")
+    out += path_arrow(f"M 1060,{Y_D35 + 45} L 1020,{Y_D35 + 130}",
+                     color="red", label=(990, Y_D35 + 70, "Don't know"))
 
-    # PRD5 No (wrong profile) -> PRE4
-    out += escalate_l2(840, 470, 230, 60, ["Escalate L2"], sub="Wrong profile  ·  PRE4")
-    out += path_arrow("M 870,425 L 950,470", color="red", label=(900, 447, "No"))
-    # PRD5 Don't know -> PRE6
-    out += escalate_l2(620, 470, 200, 60, ["Escalate L2"], sub="Cannot verify  ·  PRE6")
-    out += path_arrow("M 740,425 L 720,470", color="red", label=(727, 447, "Don't know"))
-
-    # PRD5 Yes -> PRD6 (applied?)
-    out += path_arrow("M 805,425 L 805,470", color="blue", label=(820, 447, "Yes"))
-    out += diamond(680, 470, 250, 80, ["Profile applied", "to device?"], sub="PRD6")
-    # PRD6 Yes -> PRR3
-    out += resolved(940, 580, 130, 60, ["Resolved"], sub="Applied  ·  PRR3")
-    out += path_arrow("M 930,510 L 1010,580", color="green", label=(975, 543, "Yes"))
-    # PRD6 Pending -> reboot → PRD7
-    out += action_box(700, 580, 220, 60, ["Reboot device,", "wait for sync"], sub="PRA2")
-    out += path_arrow("M 805,550 L 810,580", color="blue", label=(820, 567, "Pending"))
-    out += diamond(700, 670, 220, 70, ["Profile now", "applied?"], sub="PRD7")
-    out += path_arrow("M 810,640 L 810,670", color="blue")
-    out += resolved(640, 780, 130, 50, ["Resolved"], sub="PRR2")
-    out += escalate_l2(810, 780, 180, 50, ["Escalate L2"], sub="Not applying  ·  PRE5")
-    out += path_arrow("M 750,740 L 705,780", color="green", label=(720, 760, "Yes"))
-    out += path_arrow("M 870,740 L 900,780", color="red", label=(885, 760, "No"))
+    # PRD6 → PRR3 (yes) | PRA2 (pending)
+    out += resolved(800, Y_LEAF, 220, 70, ["Resolved"], sub="Profile applied", sub2="PRR3")
+    out += path_arrow(f"M 1060,{Y_OUT + 45} L 1020,{Y_LEAF + 35}",
+                     color="green", label=(1010, Y_OUT + 80, "Yes"))
+    out += action_box(1060, Y_LEAF, 260, 50, ["Reboot device, wait for sync"], sub="PRA2 · pending")
+    out += path_arrow(f"M 1190,{Y_OUT + 90} L 1190,{Y_LEAF}", color="blue", label=(1228, Y_LEAF - 12, "Pending"))
+    # PRA2 → PRR2 / PRE5
+    out += resolved(1060, Y_LEAF + 80, 130, 60, ["Resolved"], sub="PRR2")
+    out += escalate_l2(1210, Y_LEAF + 80, 110, 60, ["Escalate"], sub="PRE5")
+    out += path_arrow(f"M 1140,{Y_LEAF + 50} L 1125,{Y_LEAF + 80}", color="green", label=(1112, Y_LEAF + 65, "Yes"))
+    out += path_arrow(f"M 1240,{Y_LEAF + 50} L 1265,{Y_LEAF + 80}", color="red", label=(1280, Y_LEAF + 65, "No"))
 
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision / Action'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision / Action'),
+        ('box', ('#052e16', '#10b981'), 'Resolved'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-02-profile-assignment.svg")
     out += svg_close()
@@ -1118,70 +1119,73 @@ def gen_dt_02():
 
 
 def gen_dt_03():
-    """TPM Attestation tree."""
-    W, H = 1100, 950
+    """TPM Attestation tree — linear central spine with side outcomes per level."""
+    W, H = 1500, 1100
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "TPM Attestation Decision Tree",
                  "APv1 · Pre-provisioning / Self-deploying TPM 2.0  ·  docs/decision-trees/03-tpm-attestation.md")
 
-    # TPD1
-    out += diamond(370, 80, 360, 90, ["TPM-related error during", "pre-prov / self-deploy?"], sub="TPD1")
-    out += resolved(50, 100, 230, 50, ["Return to Initial Triage"], sub="TPR0")
-    out += path_arrow("M 370,125 L 280,125", color="green", label=(325, 118, "No"))
+    SPINE = 750
+    # Per-level Y positions (rows of 140px each)
+    Y1, Y2, Y3, Y4, Y5 = 90, 230, 380, 530, 680
 
-    # TPD1 Yes -> TPD2
-    out += path_arrow("M 550,170 L 550,215", color="blue", label=(575, 202, "Yes"))
-    out += diamond(425, 220, 250, 80, ["TPM enabled", "in BIOS?"], sub="TPD2")
+    # === TPD1 (root) + TPR0 (left return) ===
+    out += diamond(SPINE - 150, Y1, 300, 90, ["TPM-related error during", "pre-prov / self-deploy?"], sub="TPD1")
+    out += resolved(40, Y1 + 15, 240, 60, ["Return to Initial Triage"], sub="TPR0")
+    out += path_arrow(f"M {SPINE - 150},{Y1 + 45} L 280,{Y1 + 45}", color="green", label=(440, Y1 + 38, "No"))
 
-    # TPD2 Don't know -> TPE5
-    out += escalate_l2(800, 240, 250, 60, ["Escalate L2"], sub="Cannot access BIOS  ·  TPE5")
-    out += path_arrow("M 675,260 L 800,265", color="red", label=(740, 252, "Don't know"))
+    # === TPD2 (BIOS enabled?) — has 3 outcomes: No, Yes, Don't know ===
+    out += diamond(SPINE - 130, Y2, 260, 90, ["TPM enabled", "in BIOS?"], sub="TPD2 · 3-way")
+    out += path_arrow(f"M {SPINE},{Y1 + 90} L {SPINE},{Y2}", color="blue", label=(SPINE + 25, Y2 - 12, "Yes"))
+    # Don't know → TPE5 (right side)
+    out += escalate_l2(1200, Y2 + 15, 260, 60, ["Escalate L2"], sub="Cannot access BIOS  ·  TPE5")
+    out += path_arrow(f"M {SPINE + 130},{Y2 + 45} L 1200,{Y2 + 45}", color="red", label=(950, Y2 + 38, "Don't know"))
+    # No → TPA1 → TPD3 (left side, sub-flow)
+    out += action_box(40, Y2 + 15, 260, 60, ["Enable TPM in BIOS,", "save settings"], sub="TPA1")
+    out += path_arrow(f"M {SPINE - 130},{Y2 + 45} L 300,{Y2 + 45}", color="blue", label=(490, Y2 + 38, "No"))
 
-    # TPD2 No -> Enable in BIOS → TPD3
-    out += action_box(50, 350, 230, 60, ["Enable TPM in BIOS,", "save settings"], sub="TPA1")
-    out += path_arrow("M 425,260 L 280,360", color="blue", label=(355, 305, "No"))
-    out += diamond(50, 440, 230, 80, ["Retry — provisioning", "succeeded?"], sub="TPD3")
-    out += path_arrow("M 165,410 L 165,440", color="blue")
-    out += resolved(30, 555, 110, 50, ["Resolved"], sub="TPR1")
-    out += escalate_l2(160, 555, 130, 50, ["Escalate L2"], sub="TPE1")
-    out += path_arrow("M 90,520 L 90,555", color="green", label=(105, 540, "Yes"))
-    out += path_arrow("M 230,520 L 230,555", color="red", label=(245, 540, "No"))
+    # TPA1 → TPD3 (just below TPA1) → TPR1/TPE1 (terminal)
+    out += diamond(40, Y2 + 100, 260, 80, ["Retry — provisioning", "succeeded?"], sub="TPD3")
+    out += path_arrow(f"M 170,{Y2 + 75} L 170,{Y2 + 100}", color="blue")
+    out += resolved(40, Y2 + 200, 120, 60, ["Resolved"], sub="TPR1")
+    out += escalate_l2(180, Y2 + 200, 120, 60, ["Escalate L2"], sub="TPE1")
+    out += path_arrow(f"M 110,{Y2 + 180} L 100,{Y2 + 200}", color="green", label=(85, Y2 + 195, "Yes"))
+    out += path_arrow(f"M 230,{Y2 + 180} L 240,{Y2 + 200}", color="red", label=(255, Y2 + 195, "No"))
 
-    # TPD2 Yes -> TPD4
-    out += path_arrow("M 550,300 L 550,345", color="blue", label=(575, 332, "Yes"))
-    out += diamond(425, 350, 250, 80, ["TPM version 2.0?"], sub="TPD4")
+    # === TPD4 (TPM 2.0?) — Yes from TPD2 → TPD4 ===
+    out += diamond(SPINE - 130, Y3, 260, 90, ["TPM version 2.0?"], sub="TPD4")
+    out += path_arrow(f"M {SPINE},{Y2 + 90} L {SPINE},{Y3}", color="blue", label=(SPINE + 25, Y3 - 12, "Yes"))
+    # No (1.2 or old) → TPE2 (right)
+    out += escalate_l2(1200, Y3 + 15, 260, 60, ["Escalate L2"], sub="Version too old (1.2)", sub2="TPE2 · hardware replace")
+    out += path_arrow(f"M {SPINE + 130},{Y3 + 45} L 1200,{Y3 + 45}", color="red", label=(990, Y3 + 38, "No (1.2)"))
 
-    # TPD4 No -> TPE2
-    out += escalate_l2(800, 360, 250, 60, ["Escalate L2"], sub="Version too old · TPE2")
-    out += path_arrow("M 675,390 L 800,390", color="red", label=(740, 383, "No (1.2)"))
+    # === TPD5 (error code shown?) — Yes from TPD4 → TPD5 ===
+    out += diamond(SPINE - 130, Y4, 260, 90, ["Error screen shows", "an error code?"], sub="TPD5")
+    out += path_arrow(f"M {SPINE},{Y3 + 90} L {SPINE},{Y4}", color="blue", label=(SPINE + 25, Y4 - 12, "Yes"))
 
-    # TPD4 Yes -> TPD5
-    out += path_arrow("M 550,430 L 550,475", color="blue", label=(575, 462, "Yes"))
-    out += diamond(425, 480, 250, 80, ["Error screen shows", "an error code?"], sub="TPD5")
+    # TPD5 Yes → TPA2 (right) → TPR2 / TPE3
+    out += action_box(1100, Y4 + 15, 280, 60, ["Look up code in", "TPM error table"], sub="TPA2")
+    out += path_arrow(f"M {SPINE + 130},{Y4 + 45} L 1100,{Y4 + 45}", color="blue", label=(940, Y4 + 38, "Yes"))
+    out += resolved(1080, Y5 + 15, 150, 60, ["Resolved"], sub="found · TPR2")
+    out += escalate_l2(1250, Y5 + 15, 150, 60, ["Escalate L2"], sub="not found · TPE3")
+    out += path_arrow(f"M 1200,{Y4 + 75} L 1155,{Y5 + 15}", color="green", label=(1140, Y5 + 5, "found"))
+    out += path_arrow(f"M 1280,{Y4 + 75} L 1325,{Y5 + 15}", color="red", label=(1340, Y5 + 5, "not found"))
 
-    # TPD5 Yes -> TPA2 (lookup)
-    out += action_box(710, 580, 230, 60, ["Look up code in", "TPM error table"], sub="TPA2")
-    out += path_arrow("M 675,520 L 825,580", color="blue", label=(750, 547, "Yes"))
-    out += resolved(610, 690, 165, 50, ["Resolved"], sub="found  ·  TPR2")
-    out += escalate_l2(795, 690, 165, 50, ["Escalate L2"], sub="not found  ·  TPE3")
-    out += path_arrow("M 770,640 L 700,690", color="green", label=(720, 670, "found"))
-    out += path_arrow("M 880,640 L 880,690", color="red", label=(905, 670, "not found"))
-
-    # TPD5 No -> TPA3 (power off retry) → TPD6
-    out += action_box(40, 600, 250, 70, ["Power off, wait 30 sec,", "retry provisioning"], sub="TPA3")
-    out += path_arrow("M 425,520 L 165,600", color="blue", label=(280, 558, "No"))
-    out += diamond(50, 700, 240, 70, ["Provisioning succeeded", "after retry?"], sub="TPD6")
-    out += path_arrow("M 165,670 L 170,700", color="blue")
-    out += resolved(40, 820, 130, 50, ["Resolved"], sub="TPR3")
-    out += escalate_l2(180, 820, 170, 50, ["Escalate L2"], sub="No code  ·  TPE4")
-    out += path_arrow("M 110,770 L 105,820", color="green", label=(120, 800, "Yes"))
-    out += path_arrow("M 230,770 L 265,820", color="red", label=(255, 800, "No"))
+    # TPD5 No → TPA3 (left) → TPD6 → TPR3 / TPE4
+    out += action_box(40, Y4 + 15, 280, 60, ["Power off, wait 30s,", "retry provisioning"], sub="TPA3")
+    out += path_arrow(f"M {SPINE - 130},{Y4 + 45} L 320,{Y4 + 45}", color="blue", label=(500, Y4 + 38, "No"))
+    out += diamond(40, Y5, 280, 80, ["Provisioning succeeded", "after retry?"], sub="TPD6")
+    out += path_arrow(f"M 180,{Y4 + 75} L 180,{Y5}", color="blue")
+    out += resolved(40, Y5 + 100, 130, 60, ["Resolved"], sub="TPR3")
+    out += escalate_l2(190, Y5 + 100, 130, 60, ["Escalate L2"], sub="No code · TPE4")
+    out += path_arrow(f"M 110,{Y5 + 80} L 105,{Y5 + 100}", color="green", label=(85, Y5 + 95, "Yes"))
+    out += path_arrow(f"M 250,{Y5 + 80} L 255,{Y5 + 100}", color="red", label=(275, Y5 + 95, "No"))
 
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision / Action'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision / Action'),
+        ('box', ('#052e16', '#10b981'), 'Resolved'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-03-tpm-attestation.svg")
     out += svg_close()
@@ -1189,66 +1193,64 @@ def gen_dt_03():
 
 
 def gen_dt_04():
-    """APv2 Triage."""
-    W, H = 1100, 800
+    """APv2 Triage — top spine + 5-way router fan-out grid."""
+    W, H = 1500, 900
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "APv2 Device Preparation Triage",
                  "Windows Autopilot Device Preparation  ·  docs/decision-trees/04-apv2-triage.md")
 
-    # APD1
-    out += diamond(425, 80, 250, 80, ["ESP displayed", "during OOBE?"], sub="APD1")
+    SPINE = 750
+    Y_D1, Y_D2, Y_R, Y_FAN = 90, 230, 380, 560
 
-    # APD1 Yes -> APR1 (APv1 conflict)
-    out += action_box(50, 100, 250, 60, ["Possible APv1", "registration conflict"], sub="APA1")
-    out += path_arrow("M 425,120 L 300,120", color="blue", label=(360, 113, "Yes"))
-    out += resolved(50, 200, 250, 50, ["See: APv1 Reg Conflict"], sub="L1 RB 08  ·  APR1")
-    out += path_arrow("M 175,160 L 175,200", color="green")
+    # === APD1 + APR1 (left, APv1 conflict) ===
+    out += diamond(SPINE - 130, Y_D1, 260, 90, ["ESP displayed", "during OOBE?"], sub="APD1")
+    out += resolved(40, Y_D1 + 15, 260, 60, ["See: APv1 Conflict"], sub="L1 RB 08  ·  APR1")
+    out += path_arrow(f"M {SPINE - 130},{Y_D1 + 45} L 300,{Y_D1 + 45}", color="green", label=(450, Y_D1 + 38, "Yes"))
 
-    # APD1 No -> APD2
-    out += path_arrow("M 550,160 L 550,205", color="blue", label=(575, 192, "No"))
-    out += diamond(425, 210, 250, 80, ["Device Preparation", "screen appeared?"], sub="APD2")
+    # === APD2 + APR2 (left, deployment not launched) ===
+    out += diamond(SPINE - 130, Y_D2, 260, 90, ["Device Preparation", "screen appeared?"], sub="APD2")
+    out += path_arrow(f"M {SPINE},{Y_D1 + 90} L {SPINE},{Y_D2}", color="blue", label=(SPINE + 25, Y_D2 - 12, "No"))
+    out += resolved(40, Y_D2 + 15, 260, 60, ["See: Deployment Not Launched"], sub="L1 RB 06  ·  APR2")
+    out += path_arrow(f"M {SPINE - 130},{Y_D2 + 45} L 300,{Y_D2 + 45}", color="green", label=(450, Y_D2 + 38, "No"))
 
-    # APD2 No -> APR2 (deployment not launched)
-    out += action_box(50, 230, 250, 60, ["Deployment never", "launched"], sub="APA2")
-    out += path_arrow("M 425,250 L 300,250", color="blue", label=(360, 243, "No"))
-    out += resolved(50, 330, 250, 50, ["See: Deployment Not Launched"], sub="L1 RB 06  ·  APR2")
-    out += path_arrow("M 175,290 L 175,330", color="green")
+    # === APD3 router (Yes from APD2) ===
+    out += router(SPINE - 200, Y_R, 400, 110, ["What is the primary", "failure symptom?"], sub="APD3 · 5 routes")
+    out += path_arrow(f"M {SPINE},{Y_D2 + 90} L {SPINE},{Y_R}", color="blue", label=(SPINE + 25, Y_R - 12, "Yes"))
 
-    # APD2 Yes -> APD3
-    out += path_arrow("M 550,290 L 550,335", color="blue", label=(575, 322, "Yes"))
-    out += router(380, 340, 340, 100, ["What is the primary", "failure symptom?"], sub="APD3")
-
-    # APD3 fan-out
-    # Apps not installed -> APR3
-    out += action_box(40, 510, 230, 60, ["Check app assignment", "+ deployment report"], sub="APA3")
-    out += path_arrow("M 380,440 L 155,510", color="purple", label=(255, 472, "apps/scripts"))
-    out += resolved(40, 600, 230, 50, ["See: Apps Not Installed"], sub="L1 RB 07  ·  APR3")
-    out += path_arrow("M 155,570 L 155,600", color="green")
-
-    # Timed out -> APR4
-    out += action_box(290, 510, 230, 60, ["Check timeout settings", "+ app count"], sub="APA4")
-    out += path_arrow("M 480,440 L 405,510", color="purple", label=(440, 472, "timed out"))
-    out += resolved(290, 600, 230, 50, ["See: Deployment Timeout"], sub="L1 RB 09  ·  APR4")
-    out += path_arrow("M 405,570 L 405,600", color="green")
-
-    # Entra join -> APE1
-    out += escalate_l2(540, 510, 230, 70, ["Escalate L2"], sub="Entra join failed", sub2="APE1")
-    out += path_arrow("M 580,440 L 655,510", color="red", label=(615, 472, "Entra join"))
-
-    # Enrollment -> APE2
-    out += escalate_l2(790, 510, 230, 70, ["Escalate L2"], sub="Enrollment failed", sub2="APE2")
-    out += path_arrow("M 680,440 L 905,510", color="red", label=(800, 472, "enrollment"))
-
-    # IME / other -> APE3
-    out += escalate_l2(540, 600, 480, 70, ["Escalate L2"], sub="IME failed or other", sub2="APE3 · deployment report phase details")
-    out += path_arrow("M 720,400 L 770,600", color="red", label=(745, 500, "IME / other"))
+    # === 5 outcomes in a row at Y_FAN ===
+    # Resolved (L1 RB): Apps Not Installed (07), Deployment Timeout (09)
+    # Escalate L2: Entra join (APE1), Enrollment (APE2), IME (APE3)
+    outcomes = [
+        ("resolved",   "Apps Not Installed",      "L1 RB 07  ·  APR3",  "apps / scripts"),
+        ("resolved",   "Deployment Timeout",      "L1 RB 09  ·  APR4",  "timed out"),
+        ("escalate",   "Entra Join Failed",       "APE1",               "Entra join"),
+        ("escalate",   "Enrollment Failed",       "APE2",               "enrollment"),
+        ("escalate",   "IME / Other",             "APE3",               "IME / other"),
+    ]
+    o_w = 240
+    o_gap = 40
+    total = len(outcomes) * o_w + (len(outcomes) - 1) * o_gap
+    start = (W - total) // 2
+    router_bot = Y_R + 110
+    bus_y = router_bot + 30
+    for i, (kind, name, sub, label) in enumerate(outcomes):
+        x = start + i * (o_w + o_gap)
+        cx = x + o_w // 2
+        if kind == "resolved":
+            out += resolved(x, Y_FAN, o_w, 100, [name], sub=sub)
+        else:
+            out += escalate_l2(x, Y_FAN, o_w, 100, [name], sub=sub)
+        # Vertical drop from router → outcome (with label on the drop)
+        out += path_arrow(f"M {SPINE},{router_bot} L {SPINE},{bus_y} L {cx},{bus_y} L {cx},{Y_FAN}",
+                         color="green" if kind == "resolved" else "red",
+                         label=(cx, bus_y - 8, label))
 
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision / Action'),
-        ('box', ('#faf5ff', '#9333ea'), 'Symptom router'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved (L1 RB)'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision / Action'),
+        ('box', ('#1e1b4b', '#a855f7'), 'Symptom router'),
+        ('box', ('#052e16', '#10b981'), 'Resolved (L1 RB)'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-04-apv2-triage.svg")
     out += svg_close()
@@ -1256,55 +1258,51 @@ def gen_dt_04():
 
 
 def gen_dt_05():
-    """Device Lifecycle - 'What do you want to preserve?'"""
-    W, H = 1100, 750
+    """Device Lifecycle — 'What do you want to preserve?'  Strict tree layout."""
+    W, H = 1500, 900
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "Device Lifecycle Decision Tree",
                  "What do you want to preserve?  ·  docs/decision-trees/05-device-lifecycle.md")
 
-    # Q1
-    out += diamond(390, 80, 320, 100,
-                   ["User's personal data", "(files, photos, personal apps)?"], sub="Q1")
-    # Yes -> RETIRE
-    out += resolved(40, 110, 280, 80, ["Retire"],
-                    sub="Removes org data only", sub2="See: 02-retire-wipe.md")
-    out += path_arrow("M 390,130 L 320,150", color="green", label=(355, 130, "Yes — remove org only"))
+    SPINE = 750
+    Y_Q1, Y_Q2, Y_SUB, Y_LEAF = 90, 240, 410, 600
 
-    # No -> Q2
-    out += path_arrow("M 550,180 L 550,225", color="blue", label=(575, 212, "No"))
-    out += diamond(390, 230, 320, 100,
-                   ["Org enrollment + settings", "(re-use for next user)?"], sub="Q2")
+    # === Q1 (root) + RETIRE outcome (left, Yes branch) ===
+    out += diamond(SPINE - 170, Y_Q1, 340, 100, ["User's personal data", "(files, photos, apps)?"], sub="Q1")
+    out += resolved(40, Y_Q1 + 15, 280, 80, ["Retire"], sub="Removes org data only", sub2="See: 02-retire-wipe.md")
+    out += path_arrow(f"M {SPINE - 170},{Y_Q1 + 50} L 320,{Y_Q1 + 50}", color="green",
+                     label=(465, Y_Q1 + 43, "Yes — remove org only"))
 
-    # Yes -> Q3 (same tenant?)
-    out += path_arrow("M 710,280 L 800,280 L 800,355", color="blue", label=(755, 273, "Yes"))
-    out += diamond(680, 360, 240, 80, ["Same tenant?"], sub="Q3")
-    # Yes -> RESET
-    out += resolved(620, 480, 320, 80, ["Autopilot Reset"],
-                    sub="APv1 only · keeps org config", sub2="See: 01-autopilot-reset.md")
-    out += path_arrow("M 800,440 L 780,480", color="green", label=(795, 460, "Yes"))
-    # No -> TENANT
-    out += escalate_infra(620, 580, 320, 100, ["Tenant Migration"],
-                          sub="Deregister Tenant A,", sub2="re-import to Tenant B  ·  04-tenant-migration.md")
-    out += path_arrow("M 920,440 L 850,580", color="orange", label=(890, 510, "No — different tenant"))
+    # === Q2 (Yes from no-personal-data) ===
+    out += diamond(SPINE - 170, Y_Q2, 340, 100, ["Org enrollment + settings", "(re-use for next user)?"], sub="Q2")
+    out += path_arrow(f"M {SPINE},{Y_Q1 + 100} L {SPINE},{Y_Q2}", color="blue", label=(SPINE + 25, Y_Q2 - 12, "No"))
 
-    # Q2 No -> Q4
-    out += path_arrow("M 390,280 L 290,280 L 290,355", color="blue", label=(345, 273, "No"))
-    out += diamond(165, 360, 240, 80, ["Keep user documents", "(Home folder)?"], sub="Q4")
-    # Yes -> FRESH
-    out += resolved(20, 480, 280, 100, ["Fresh Start"],
-                    sub="Removes OEM bloatware", sub2="Keeps user documents  ·  02-retire-wipe.md")
-    out += path_arrow("M 245,440 L 200,480", color="green", label=(225, 460, "Yes"))
-    # No -> WIPE
-    out += escalate_l2(310, 480, 280, 100, ["Wipe"],
-                      sub="Factory reset — erases all", sub2="Lost/stolen / hybrid devices  ·  02-retire-wipe.md")
-    out += path_arrow("M 385,440 L 430,480", color="red", label=(410, 460, "No"))
+    # === Q4 (left, No-side: full reset) and Q3 (right, Yes-side: same-tenant?) ===
+    out += diamond(180, Y_SUB, 280, 100, ["Keep user documents", "(Home folder)?"], sub="Q4")
+    out += diamond(1040, Y_SUB, 280, 100, ["Same tenant?"], sub="Q3")
+    out += path_arrow(f"M {SPINE - 80},{Y_Q2 + 100} L {SPINE - 80},{Y_SUB - 30} L 320,{Y_SUB - 30} L 320,{Y_SUB}",
+                     color="blue", label=(540, Y_SUB - 38, "No"))
+    out += path_arrow(f"M {SPINE + 80},{Y_Q2 + 100} L {SPINE + 80},{Y_SUB - 30} L 1180,{Y_SUB - 30} L 1180,{Y_SUB}",
+                     color="blue", label=(950, Y_SUB - 38, "Yes"))
+
+    # === Q4 outcomes: FRESH (Yes, keeps docs) | WIPE (No, erases all) ===
+    out += resolved(40, Y_LEAF, 280, 130, ["Fresh Start"], sub="Removes OEM bloatware", sub2="Keeps user documents")
+    out += escalate_l2(360, Y_LEAF, 280, 130, ["Wipe"], sub="Factory reset — erases all", sub2="Lost/stolen / hybrid")
+    out += path_arrow(f"M 250,{Y_SUB + 100} L 180,{Y_LEAF}", color="green", label=(180, Y_LEAF - 18, "Yes — keep docs"))
+    out += path_arrow(f"M 390,{Y_SUB + 100} L 500,{Y_LEAF}", color="red", label=(540, Y_LEAF - 18, "No — erase all"))
+
+    # === Q3 outcomes: RESET (Yes) | TENANT MIGRATION (No, cross-tenant) ===
+    out += resolved(880, Y_LEAF, 280, 130, ["Autopilot Reset"], sub="APv1 only · keeps org config", sub2="See: 01-autopilot-reset.md")
+    out += escalate_infra(1200, Y_LEAF, 280, 130, ["Tenant Migration"], sub="Deregister Tenant A,", sub2="re-import to Tenant B")
+    out += path_arrow(f"M 1110,{Y_SUB + 100} L 1020,{Y_LEAF}", color="green", label=(1010, Y_LEAF - 18, "Yes"))
+    out += path_arrow(f"M 1250,{Y_SUB + 100} L 1340,{Y_LEAF}", color="orange", label=(1390, Y_LEAF - 18, "No — different tenant"))
 
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Action (preserve data)'),
-        ('box', ('#fef2f2', '#dc2626'), 'Wipe (data loss)'),
-        ('box', ('#fff7ed', '#ea580c'), 'Cross-tenant operation'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision'),
+        ('box', ('#052e16', '#10b981'), 'Action (preserve data)'),
+        ('box', ('#450a0a', '#ef4444'), 'Wipe (data loss)'),
+        ('box', ('#1c1917', '#f97316'), 'Cross-tenant operation'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-05-device-lifecycle.svg")
     out += svg_close()
@@ -1312,52 +1310,64 @@ def gen_dt_05():
 
 
 def gen_dt_06():
-    """macOS Triage."""
-    W, H = 1100, 850
+    """macOS Triage — top decision splits to two flows; 5-way router under Yes branch."""
+    W, H = 1500, 900
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "macOS ADE Triage Decision Tree",
                  "macOS Automated Device Enrollment  ·  docs/decision-trees/06-macos-triage.md")
 
-    # MAC1
-    out += diamond(425, 80, 250, 90, ["Setup Assistant", "complete?"], sub="MAC1")
+    SPINE = 750
+    Y_M1, Y_M2_3, Y_OUTL, Y_FAN = 90, 230, 400, 540
 
-    # MAC1 No -> MAC2
-    out += path_arrow("M 425,125 L 290,125 L 290,205", color="blue", label=(355, 118, "No"))
-    out += diamond(155, 210, 270, 90, ["Device visible in Intune", "Devices > macOS?"], sub="MAC2")
+    # === MAC1 (root) ===
+    out += diamond(SPINE - 130, Y_M1, 260, 90, ["Setup Assistant", "complete?"], sub="MAC1")
 
-    # MAC2 No -> MACR1
-    out += resolved(50, 350, 220, 70, ["Device Not Appearing"], sub="L1 RB 10  ·  MACR1")
-    out += path_arrow("M 200,300 L 160,350", color="green", label=(180, 325, "No"))
-    # MAC2 Yes -> MACR2
-    out += resolved(290, 350, 220, 70, ["Setup Assistant Failed"], sub="L1 RB 11  ·  MACR2")
-    out += path_arrow("M 380,300 L 400,350", color="green", label=(390, 325, "Yes"))
+    # === MAC2 (No-side, left) and MAC3 router (Yes-side, right) ===
+    out += diamond(180, Y_M2_3, 280, 100, ["Device visible in Intune", "Devices > macOS?"], sub="MAC2")
+    out += router(SPINE + 200, Y_M2_3, 420, 110, ["What is the primary", "symptom after setup?"], sub="MAC3 · 5 routes")
+    out += path_arrow(f"M {SPINE - 60},{Y_M1 + 90} L {SPINE - 60},{Y_M2_3 - 30} L 320,{Y_M2_3 - 30} L 320,{Y_M2_3}",
+                     color="blue", label=(540, Y_M2_3 - 38, "No"))
+    out += path_arrow(f"M {SPINE + 60},{Y_M1 + 90} L {SPINE + 60},{Y_M2_3 - 30} L 960,{Y_M2_3 - 30} L 960,{Y_M2_3}",
+                     color="blue", label=(750, Y_M2_3 - 38, "Yes"))
 
-    # MAC1 Yes -> MAC3
-    out += path_arrow("M 675,125 L 800,125 L 800,205", color="blue", label=(740, 118, "Yes"))
-    out += router(620, 210, 360, 100, ["What is the", "primary symptom?"], sub="MAC3 · 5 routes")
+    # === MAC2 outcomes: 2 resolutions ===
+    out += resolved(40, Y_OUTL, 280, 80, ["Device Not Appearing"], sub="L1 RB 10  ·  MACR1")
+    out += resolved(340, Y_OUTL, 280, 80, ["Setup Assistant Failed"], sub="L1 RB 11  ·  MACR2")
+    out += path_arrow(f"M 250,{Y_M2_3 + 100} L 180,{Y_OUTL}", color="green", label=(165, Y_OUTL - 12, "No"))
+    out += path_arrow(f"M 390,{Y_M2_3 + 100} L 480,{Y_OUTL}", color="green", label=(515, Y_OUTL - 12, "Yes"))
 
-    # MAC3 fan-out — 5 outcomes
+    # === MAC3 router fan-out ===
     outcomes = [
-        ("MACR3", "Profile Not Applied", "L1 RB 12", "profile"),
-        ("MACR4", "App Not Installed", "L1 RB 13", "app"),
-        ("MACR5", "Compliance / Access", "L1 RB 14", "compliance"),
-        ("MACR6", "Company Portal Sign-In", "L1 RB 15", "CP signin"),
+        ("resolved", "Profile Not Applied",      "L1 RB 12  ·  MACR3", "profile"),
+        ("resolved", "App Not Installed",        "L1 RB 13  ·  MACR4", "app"),
+        ("resolved", "Compliance / Access",      "L1 RB 14  ·  MACR5", "compliance"),
+        ("resolved", "Company Portal Sign-In",   "L1 RB 15  ·  MACR6", "CP signin"),
+        ("escalate", "Other / Unclear",          "MACE1",              "other"),
     ]
-    for i, (rid, name, sub, label) in enumerate(outcomes):
-        x = 540 + i * 130
-        out += resolved(x, 460, 120, 70, [name], sub=sub)
-        out += path_arrow(f"M {800 + (i - 1.5) * 30},310 L {x + 60},460", color="green", label=(x + 40, 380 + i * 5, label))
-
-    # Other / unclear -> MACE1
-    out += escalate_l2(60, 460, 220, 70, ["Escalate L2"], sub="Other / unclear  ·  MACE1")
-    out += path_arrow("M 620,310 L 175,460", color="red", label=(380, 380, "other"))
+    o_w = 220
+    o_gap = 28
+    total = len(outcomes) * o_w + (len(outcomes) - 1) * o_gap
+    start = (W - total) // 2
+    router_bot = Y_M2_3 + 110
+    bus_y = router_bot + 30
+    cx_router = SPINE + 200 + 210  # router center
+    for i, (kind, name, sub, label) in enumerate(outcomes):
+        x = start + i * (o_w + o_gap)
+        cx = x + o_w // 2
+        if kind == "resolved":
+            out += resolved(x, Y_FAN, o_w, 100, [name], sub=sub)
+        else:
+            out += escalate_l2(x, Y_FAN, o_w, 100, [name], sub=sub)
+        out += path_arrow(f"M {cx_router},{router_bot} L {cx_router},{bus_y} L {cx},{bus_y} L {cx},{Y_FAN}",
+                         color="green" if kind == "resolved" else "red",
+                         label=(cx, bus_y - 8, label))
 
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision'),
-        ('box', ('#faf5ff', '#9333ea'), 'Symptom router'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved (L1 RB)'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision'),
+        ('box', ('#1e1b4b', '#a855f7'), 'Symptom router'),
+        ('box', ('#052e16', '#10b981'), 'Resolved (L1 RB)'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-06-macos-triage.svg")
     out += svg_close()
@@ -1422,10 +1432,10 @@ def gen_dt_07():
         out += path_arrow(f"M 980,305 L {x + 80},{y}", color=col_color, label=(x + 80, 350, label))
 
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Decision'),
-        ('box', ('#faf5ff', '#9333ea'), 'Symptom router'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved (L1 RB)'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Decision'),
+        ('box', ('#1e1b4b', '#a855f7'), 'Symptom router'),
+        ('box', ('#052e16', '#10b981'), 'Resolved (L1 RB)'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-07-ios-triage.svg")
     out += svg_close()
@@ -1515,10 +1525,10 @@ def gen_dt_08():
     ]
 
     out += legend([
-        ('box', ('#eff6ff', '#2563eb'), 'Mode decision'),
-        ('box', ('#faf5ff', '#9333ea'), 'Mode router'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved (L1 RB)'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e3a5f', '#3b82f6'), 'Mode decision'),
+        ('box', ('#1e1b4b', '#a855f7'), 'Mode router'),
+        ('box', ('#052e16', '#10b981'), 'Resolved (L1 RB)'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-08-android-triage.svg")
     out += svg_close()
@@ -1580,10 +1590,10 @@ def gen_dt_09():
     ]
 
     out += legend([
-        ('box', ('#faf5ff', '#9333ea'), 'Symptom router'),
-        ('box', ('#f0fdf4', '#16a34a'), 'Resolved (L1 RB)'),
-        ('box', ('#fff7ed', '#ea580c'), 'PITFALL-2 callout / chained route'),
-        ('box', ('#fef2f2', '#dc2626'), 'Escalate L2'),
+        ('box', ('#1e1b4b', '#a855f7'), 'Symptom router'),
+        ('box', ('#052e16', '#10b981'), 'Resolved (L1 RB)'),
+        ('box', ('#1c1917', '#f97316'), 'PITFALL-2 callout / chained route'),
+        ('box', ('#450a0a', '#ef4444'), 'Escalate L2'),
     ], 30, H - 35)
     out += footer_path(W - 20, H - 8, "docs/diagrams/decision-tree-09-linux-triage.svg")
     out += svg_close()

@@ -206,15 +206,15 @@
   <rect x="30" y="1000" width="1340" height="40" rx="6" ry="6" fill="#450a0a" stroke="#ef4444" stroke-width="1.2"/>
   <text x="700" y="1018" text-anchor="middle" class="label" font-weight="700" fill="#fecaca">ESCALATION  →  L2 Runbooks (docs/l2-runbooks/00-index.md)</text>
   <text x="700" y="1033" text-anchor="middle" class="sub">Each platform has its own L1 → L2 escalation node IDs. See docs/diagrams/l2-runbook-escalation.svg</text>
-  <rect x="30" y="1065" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <rect x="30" y="1065" width="14" height="14" rx="3" ry="3" fill="#052e16" stroke="#10b981" stroke-width="1.2"/>
   <text x="52" y="1076" class="legend">APv1 / Linux runbook</text>
-  <rect x="190" y="1065" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <rect x="190" y="1065" width="14" height="14" rx="3" ry="3" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.2"/>
   <text x="212" y="1076" class="legend">APv2 runbook</text>
-  <rect x="302" y="1065" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <rect x="302" y="1065" width="14" height="14" rx="3" ry="3" fill="#1e1b4b" stroke="#a855f7" stroke-width="1.2"/>
   <text x="324" y="1076" class="legend">macOS runbook</text>
-  <rect x="420" y="1065" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <rect x="420" y="1065" width="14" height="14" rx="3" ry="3" fill="#1c1917" stroke="#f97316" stroke-width="1.2"/>
   <text x="442" y="1076" class="legend">iOS runbook</text>
-  <rect x="526" y="1065" width="14" height="14" rx="3" ry="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <rect x="526" y="1065" width="14" height="14" rx="3" ry="3" fill="#042f2e" stroke="#14b8a6" stroke-width="1.2"/>
   <text x="548" y="1076" class="legend">Android runbook</text>
   <text x="1380" y="1092" text-anchor="end" class="legend">docs/diagrams/l1-runbook-map.svg</text>
 </svg>
