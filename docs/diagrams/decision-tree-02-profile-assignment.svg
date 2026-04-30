@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1000" width="1100" height="1000">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="1000" fill="#ffffff"/>
+  <text x="550" y="36" text-anchor="middle" class="title">Profile Assignment Decision Tree</text>
+  <text x="550" y="58" text-anchor="middle" class="subtitle">APv1 · Profile not assigned or wrong profile  ·  docs/decision-trees/02-profile-assignment.md</text>
+  <polygon points="550,80 675,120 550,160 425,120" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="110" text-anchor="middle" class="label">Device registered</text>
+  <text x="550" y="126" text-anchor="middle" class="label">in Autopilot portal?</text>
+  <text x="550" y="142" text-anchor="middle" class="sub">PRD1</text>
+  <rect x="50" y="100" width="230" height="50" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="165" y="123" text-anchor="middle" class="label">Return to Initial Triage</text>
+  <text x="165" y="139" text-anchor="middle" class="sub">PRR0</text>
+  <path d="M 425,120 L 280,120" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="341" y="103" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="355" y="113" text-anchor="middle" class="edge">No</text>
+  <path d="M 550,160 L 550,205" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="182" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="192" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="550,210 675,250 550,290 425,250" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="240" text-anchor="middle" class="label">Profile assigned</text>
+  <text x="550" y="256" text-anchor="middle" class="label">to device?</text>
+  <text x="550" y="272" text-anchor="middle" class="sub">PRD2</text>
+  <path d="M 425,250 L 290,250 L 290,330" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="341" y="234" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="355" y="244" text-anchor="middle" class="edge">No</text>
+  <polygon points="290,335 415,380 290,425 165,380" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="290" y="370" text-anchor="middle" class="label">In correct group for</text>
+  <text x="290" y="386" text-anchor="middle" class="label">profile assignment?</text>
+  <text x="290" y="402" text-anchor="middle" class="sub">PRD3</text>
+  <rect x="50" y="470" width="230" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="165" y="490" text-anchor="middle" class="label">Add device to</text>
+  <text x="165" y="506" text-anchor="middle" class="label">correct group</text>
+  <text x="165" y="522" text-anchor="middle" class="sub">PRA1</text>
+  <path d="M 240,425 L 165,470" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="186" y="437" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="200" y="447" text-anchor="middle" class="edge">No</text>
+  <polygon points="170,560 280,600 170,640 60,600" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="170" y="590" text-anchor="middle" class="label">Wait 30 min — profile</text>
+  <text x="170" y="606" text-anchor="middle" class="label">now assigned?</text>
+  <text x="170" y="622" text-anchor="middle" class="sub">PRD4</text>
+  <path d="M 165,530 L 165,560" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="20" y="690" width="165" height="50" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="102" y="713" text-anchor="middle" class="label">Resolved</text>
+  <text x="102" y="729" text-anchor="middle" class="sub">PRR1 · after group fix</text>
+  <rect x="195" y="690" width="165" height="50" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="277" y="713" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="277" y="729" text-anchor="middle" class="sub">PRE1</text>
+  <path d="M 110,640 L 110,690" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="111" y="660" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="125" y="670" text-anchor="middle" class="edge">Yes</text>
+  <path d="M 230,640 L 230,690" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="231" y="660" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="245" y="670" text-anchor="middle" class="edge">No</text>
+  <rect x="380" y="470" width="230" height="60" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="495" y="498" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="495" y="514" text-anchor="middle" class="sub">In correct group  ·  PRE2</text>
+  <path d="M 350,425 L 425,470" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="381" y="437" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="395" y="447" text-anchor="middle" class="edge">Yes</text>
+  <rect x="380" y="350" width="230" height="60" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="495" y="378" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="495" y="394" text-anchor="middle" class="sub">Cannot verify group  ·  PRE3</text>
+  <path d="M 415,375 L 380,375" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="366" y="358" width="58" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="395" y="368" text-anchor="middle" class="edge">Don&#x27;t know</text>
+  <path d="M 675,250 L 800,250 L 800,330" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="726" y="234" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="740" y="244" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="805,335 930,380 805,425 680,380" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="805" y="370" text-anchor="middle" class="label">Correct profile</text>
+  <text x="805" y="386" text-anchor="middle" class="label">for this device?</text>
+  <text x="805" y="402" text-anchor="middle" class="sub">PRD5</text>
+  <rect x="840" y="470" width="230" height="60" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="955" y="498" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="955" y="514" text-anchor="middle" class="sub">Wrong profile  ·  PRE4</text>
+  <path d="M 870,425 L 950,470" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="886" y="437" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="900" y="447" text-anchor="middle" class="edge">No</text>
+  <rect x="620" y="470" width="200" height="60" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="720" y="498" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="720" y="514" text-anchor="middle" class="sub">Cannot verify  ·  PRE6</text>
+  <path d="M 740,425 L 720,470" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="698" y="437" width="58" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="727" y="447" text-anchor="middle" class="edge">Don&#x27;t know</text>
+  <path d="M 805,425 L 805,470" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="806" y="437" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="820" y="447" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="805,470 930,510 805,550 680,510" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="805" y="500" text-anchor="middle" class="label">Profile applied</text>
+  <text x="805" y="516" text-anchor="middle" class="label">to device?</text>
+  <text x="805" y="532" text-anchor="middle" class="sub">PRD6</text>
+  <rect x="940" y="580" width="130" height="60" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="1005" y="608" text-anchor="middle" class="label">Resolved</text>
+  <text x="1005" y="624" text-anchor="middle" class="sub">Applied  ·  PRR3</text>
+  <path d="M 930,510 L 1010,580" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="961" y="533" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="975" y="543" text-anchor="middle" class="edge">Yes</text>
+  <rect x="700" y="580" width="220" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="810" y="600" text-anchor="middle" class="label">Reboot device,</text>
+  <text x="810" y="616" text-anchor="middle" class="label">wait for sync</text>
+  <text x="810" y="632" text-anchor="middle" class="sub">PRA2</text>
+  <path d="M 805,550 L 810,580" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="799" y="557" width="43" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="820" y="567" text-anchor="middle" class="edge">Pending</text>
+  <polygon points="810,670 920,705 810,740 700,705" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="810" y="695" text-anchor="middle" class="label">Profile now</text>
+  <text x="810" y="711" text-anchor="middle" class="label">applied?</text>
+  <text x="810" y="727" text-anchor="middle" class="sub">PRD7</text>
+  <path d="M 810,640 L 810,670" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="640" y="780" width="130" height="50" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="705" y="803" text-anchor="middle" class="label">Resolved</text>
+  <text x="705" y="819" text-anchor="middle" class="sub">PRR2</text>
+  <rect x="810" y="780" width="180" height="50" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="900" y="803" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="900" y="819" text-anchor="middle" class="sub">Not applying  ·  PRE5</text>
+  <path d="M 750,740 L 705,780" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="706" y="750" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="720" y="760" text-anchor="middle" class="edge">Yes</text>
+  <path d="M 870,740 L 900,780" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="871" y="750" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="885" y="760" text-anchor="middle" class="edge">No</text>
+  <rect x="30" y="965" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="52" y="976" class="legend">Decision / Action</text>
+  <rect x="172" y="965" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="194" y="976" class="legend">Resolved</text>
+  <rect x="260" y="965" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="282" y="976" class="legend">Escalate L2</text>
+  <text x="1080" y="992" text-anchor="end" class="legend">docs/diagrams/decision-tree-02-profile-assignment.svg</text>
+</svg>

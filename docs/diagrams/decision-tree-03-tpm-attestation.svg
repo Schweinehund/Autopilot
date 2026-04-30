@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 950" width="1100" height="950">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="950" fill="#ffffff"/>
+  <text x="550" y="36" text-anchor="middle" class="title">TPM Attestation Decision Tree</text>
+  <text x="550" y="58" text-anchor="middle" class="subtitle">APv1 · Pre-provisioning / Self-deploying TPM 2.0  ·  docs/decision-trees/03-tpm-attestation.md</text>
+  <polygon points="550,80 730,125 550,170 370,125" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="115" text-anchor="middle" class="label">TPM-related error during</text>
+  <text x="550" y="131" text-anchor="middle" class="label">pre-prov / self-deploy?</text>
+  <text x="550" y="147" text-anchor="middle" class="sub">TPD1</text>
+  <rect x="50" y="100" width="230" height="50" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="165" y="123" text-anchor="middle" class="label">Return to Initial Triage</text>
+  <text x="165" y="139" text-anchor="middle" class="sub">TPR0</text>
+  <path d="M 370,125 L 280,125" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="311" y="108" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="325" y="118" text-anchor="middle" class="edge">No</text>
+  <path d="M 550,170 L 550,215" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="192" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="202" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="550,220 675,260 550,300 425,260" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="250" text-anchor="middle" class="label">TPM enabled</text>
+  <text x="550" y="266" text-anchor="middle" class="label">in BIOS?</text>
+  <text x="550" y="282" text-anchor="middle" class="sub">TPD2</text>
+  <rect x="800" y="240" width="250" height="60" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="925" y="268" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="925" y="284" text-anchor="middle" class="sub">Cannot access BIOS  ·  TPE5</text>
+  <path d="M 675,260 L 800,265" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="711" y="242" width="58" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="740" y="252" text-anchor="middle" class="edge">Don&#x27;t know</text>
+  <rect x="50" y="350" width="230" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="165" y="370" text-anchor="middle" class="label">Enable TPM in BIOS,</text>
+  <text x="165" y="386" text-anchor="middle" class="label">save settings</text>
+  <text x="165" y="402" text-anchor="middle" class="sub">TPA1</text>
+  <path d="M 425,260 L 280,360" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="341" y="295" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="355" y="305" text-anchor="middle" class="edge">No</text>
+  <polygon points="165,440 280,480 165,520 50,480" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="165" y="470" text-anchor="middle" class="label">Retry — provisioning</text>
+  <text x="165" y="486" text-anchor="middle" class="label">succeeded?</text>
+  <text x="165" y="502" text-anchor="middle" class="sub">TPD3</text>
+  <path d="M 165,410 L 165,440" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="30" y="555" width="110" height="50" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="85" y="578" text-anchor="middle" class="label">Resolved</text>
+  <text x="85" y="594" text-anchor="middle" class="sub">TPR1</text>
+  <rect x="160" y="555" width="130" height="50" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="225" y="578" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="225" y="594" text-anchor="middle" class="sub">TPE1</text>
+  <path d="M 90,520 L 90,555" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="91" y="530" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="105" y="540" text-anchor="middle" class="edge">Yes</text>
+  <path d="M 230,520 L 230,555" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="231" y="530" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="245" y="540" text-anchor="middle" class="edge">No</text>
+  <path d="M 550,300 L 550,345" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="322" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="332" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="550,350 675,390 550,430 425,390" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="388" text-anchor="middle" class="label">TPM version 2.0?</text>
+  <text x="550" y="404" text-anchor="middle" class="sub">TPD4</text>
+  <rect x="800" y="360" width="250" height="60" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="925" y="388" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="925" y="404" text-anchor="middle" class="sub">Version too old · TPE2</text>
+  <path d="M 675,390 L 800,390" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="716" y="373" width="48" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="740" y="383" text-anchor="middle" class="edge">No (1.2)</text>
+  <path d="M 550,430 L 550,475" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="452" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="462" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="550,480 675,520 550,560 425,520" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="510" text-anchor="middle" class="label">Error screen shows</text>
+  <text x="550" y="526" text-anchor="middle" class="label">an error code?</text>
+  <text x="550" y="542" text-anchor="middle" class="sub">TPD5</text>
+  <rect x="710" y="580" width="230" height="60" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="825" y="600" text-anchor="middle" class="label">Look up code in</text>
+  <text x="825" y="616" text-anchor="middle" class="label">TPM error table</text>
+  <text x="825" y="632" text-anchor="middle" class="sub">TPA2</text>
+  <path d="M 675,520 L 825,580" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="736" y="537" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="750" y="547" text-anchor="middle" class="edge">Yes</text>
+  <rect x="610" y="690" width="165" height="50" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="692" y="713" text-anchor="middle" class="label">Resolved</text>
+  <text x="692" y="729" text-anchor="middle" class="sub">found  ·  TPR2</text>
+  <rect x="795" y="690" width="165" height="50" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="877" y="713" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="877" y="729" text-anchor="middle" class="sub">not found  ·  TPE3</text>
+  <path d="M 770,640 L 700,690" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="704" y="660" width="33" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="720" y="670" text-anchor="middle" class="edge">found</text>
+  <path d="M 880,640 L 880,690" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="879" y="660" width="53" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="905" y="670" text-anchor="middle" class="edge">not found</text>
+  <rect x="40" y="600" width="250" height="70" rx="8" ry="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="165" y="625" text-anchor="middle" class="label">Power off, wait 30 sec,</text>
+  <text x="165" y="641" text-anchor="middle" class="label">retry provisioning</text>
+  <text x="165" y="657" text-anchor="middle" class="sub">TPA3</text>
+  <path d="M 425,520 L 165,600" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="266" y="548" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="280" y="558" text-anchor="middle" class="edge">No</text>
+  <polygon points="170,700 290,735 170,770 50,735" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="170" y="725" text-anchor="middle" class="label">Provisioning succeeded</text>
+  <text x="170" y="741" text-anchor="middle" class="label">after retry?</text>
+  <text x="170" y="757" text-anchor="middle" class="sub">TPD6</text>
+  <path d="M 165,670 L 170,700" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="40" y="820" width="130" height="50" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="105" y="843" text-anchor="middle" class="label">Resolved</text>
+  <text x="105" y="859" text-anchor="middle" class="sub">TPR3</text>
+  <rect x="180" y="820" width="170" height="50" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="265" y="843" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="265" y="859" text-anchor="middle" class="sub">No code  ·  TPE4</text>
+  <path d="M 110,770 L 105,820" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="106" y="790" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="120" y="800" text-anchor="middle" class="edge">Yes</text>
+  <path d="M 230,770 L 265,820" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="241" y="790" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="255" y="800" text-anchor="middle" class="edge">No</text>
+  <rect x="30" y="915" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="52" y="926" class="legend">Decision / Action</text>
+  <rect x="172" y="915" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="194" y="926" class="legend">Resolved</text>
+  <rect x="260" y="915" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="282" y="926" class="legend">Escalate L2</text>
+  <text x="1080" y="942" text-anchor="end" class="legend">docs/diagrams/decision-tree-03-tpm-attestation.svg</text>
+</svg>

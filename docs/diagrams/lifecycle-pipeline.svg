@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" width="1400" height="1000">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="1000" fill="#ffffff"/>
+  <text x="700" y="36" text-anchor="middle" class="title">Autopilot &amp; ADE Lifecycle Pipelines</text>
+  <text x="700" y="58" text-anchor="middle" class="subtitle">End-to-end deployment flow with failure surfaces per stage  ·  docs/lifecycle  ·  docs/lifecycle-apv2  ·  docs/macos-lifecycle</text>
+  <rect x="20" y="90" width="1360" height="220" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="112" class="col-head">APv1  ·  CLASSIC AUTOPILOT (5 stages)</text>
+  <text x="370" y="112" class="sub">docs/lifecycle/00-overview.md</text>
+  <rect x="40" y="130" width="240" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="160" y="168" text-anchor="middle" class="label">Hardware Hash Import</text>
+  <text x="160" y="184" text-anchor="middle" class="sub">Admin · OEM · Partner</text>
+  <text x="160" y="126" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 1</text>
+  <path d="M 280,170 L 310,170" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="310" y="130" width="240" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="430" y="168" text-anchor="middle" class="label">Profile Assignment</text>
+  <text x="430" y="184" text-anchor="middle" class="sub">Admin · AAD group</text>
+  <text x="430" y="126" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 2</text>
+  <path d="M 550,170 L 580,170" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="580" y="130" width="240" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="700" y="168" text-anchor="middle" class="label">OOBE (3 modes)</text>
+  <text x="700" y="184" text-anchor="middle" class="sub">User · Pre-Prov · Self-Deploy</text>
+  <text x="700" y="126" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 3</text>
+  <path d="M 820,170 L 850,170" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="850" y="130" width="240" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="970" y="168" text-anchor="middle" class="label">ESP (device + user)</text>
+  <text x="970" y="184" text-anchor="middle" class="sub">Background MDM</text>
+  <text x="970" y="126" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 4</text>
+  <path d="M 1090,170 L 1120,170" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="1120" y="130" width="240" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="1240" y="168" text-anchor="middle" class="label">Post-Enrollment</text>
+  <text x="1240" y="184" text-anchor="middle" class="sub">Compliance · hand-off</text>
+  <text x="1240" y="126" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 5</text>
+  <rect x="40" y="230" width="240" height="50" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="160" y="258" text-anchor="middle" class="label" fill="#7f1d1d">Hash not found</text>
+  <text x="160" y="274" text-anchor="middle" class="sub">F_HASH</text>
+  <path d="M 160,230 L 160,212" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="310" y="230" width="240" height="50" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="430" y="258" text-anchor="middle" class="label" fill="#7f1d1d">Profile not assigned</text>
+  <text x="430" y="274" text-anchor="middle" class="sub">F_PROFILE</text>
+  <path d="M 430,230 L 430,212" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="580" y="230" width="240" height="50" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="700" y="258" text-anchor="middle" class="label" fill="#7f1d1d">Network · TPM fail</text>
+  <text x="700" y="274" text-anchor="middle" class="sub">F_CONN</text>
+  <path d="M 700,230 L 700,212" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="850" y="230" width="240" height="50" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="970" y="258" text-anchor="middle" class="label" fill="#7f1d1d">ESP timeout · App fail</text>
+  <text x="970" y="274" text-anchor="middle" class="sub">F_ESP</text>
+  <path d="M 970,230 L 970,212" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="1120" y="230" width="240" height="50" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="1240" y="258" text-anchor="middle" class="label" fill="#7f1d1d">Compliance not met</text>
+  <text x="1240" y="274" text-anchor="middle" class="sub">F_COMP</text>
+  <path d="M 1240,230 L 1240,212" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="20" y="330" width="1360" height="240" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="352" class="col-head">APv2  ·  DEVICE PREPARATION (10 steps)</text>
+  <text x="400" y="352" class="sub">docs/lifecycle-apv2/02-deployment-flow.md  ·  ETG replaces hash pre-staging</text>
+  <rect x="36" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="97" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 1</text>
+  <text x="97" y="422" text-anchor="middle" class="label">Boot</text>
+  <text x="97" y="438" text-anchor="middle" class="label">OEM Win 11</text>
+  <path d="M 158,415 L 170,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="170" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="231" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 2</text>
+  <text x="231" y="422" text-anchor="middle" class="label">Network</text>
+  <text x="231" y="438" text-anchor="middle" class="label">Entra auth</text>
+  <path d="M 292,415 L 304,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="304" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="365" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 3</text>
+  <text x="365" y="422" text-anchor="middle" class="label">Entra join</text>
+  <text x="365" y="438" text-anchor="middle" class="label">Intune enrol</text>
+  <path d="M 426,415 L 438,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="438" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="499" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 4</text>
+  <text x="499" y="422" text-anchor="middle" class="label">IME</text>
+  <text x="499" y="438" text-anchor="middle" class="label">installs</text>
+  <path d="M 560,415 L 572,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="572" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="633" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 5</text>
+  <text x="633" y="422" text-anchor="middle" class="label">Std-user</text>
+  <text x="633" y="438" text-anchor="middle" class="label">enforcement</text>
+  <path d="M 694,415 L 706,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="706" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="767" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 6</text>
+  <text x="767" y="422" text-anchor="middle" class="label">MDM sync</text>
+  <text x="767" y="438" text-anchor="middle" class="label">policies</text>
+  <path d="M 828,415 L 840,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="840" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="901" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 7</text>
+  <text x="901" y="422" text-anchor="middle" class="label">LOB +</text>
+  <text x="901" y="438" text-anchor="middle" class="label">M365 apps</text>
+  <path d="M 962,415 L 974,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="974" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="1035" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 8</text>
+  <text x="1035" y="422" text-anchor="middle" class="label">PowerShell</text>
+  <text x="1035" y="438" text-anchor="middle" class="label">scripts</text>
+  <path d="M 1096,415 L 1108,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="1108" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="1169" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 9</text>
+  <text x="1169" y="422" text-anchor="middle" class="label">Win32 ·</text>
+  <text x="1169" y="438" text-anchor="middle" class="label">Store apps</text>
+  <path d="M 1230,415 L 1242,415" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="1242" y="380" width="122" height="70" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="1303" y="400" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STEP 10</text>
+  <text x="1303" y="422" text-anchor="middle" class="label">Setup</text>
+  <text x="1303" y="438" text-anchor="middle" class="label">complete</text>
+  <rect x="188" y="468" width="220" height="30" rx="4" ry="4" fill="#faf5ff" stroke="#9333ea" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="298" y="488" text-anchor="middle" class="sub">ETG · Enrollment-Time Grouping</text>
+  <path d="M 298,468 L 298,452" stroke="#9333ea" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-purple)"/>
+  <rect x="304" y="508" width="122" height="48" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="365" y="530" text-anchor="middle" class="sub" fill="#7f1d1d">Enrol fails / APv1 conflict</text>
+  <text x="365" y="548" text-anchor="middle" class="sub">F_REG</text>
+  <path d="M 365,508 L 365,450" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="438" y="508" width="122" height="48" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="499" y="530" text-anchor="middle" class="sub" fill="#7f1d1d">IME install fails</text>
+  <text x="499" y="548" text-anchor="middle" class="sub">F_IME</text>
+  <path d="M 499,508 L 499,450" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="840" y="508" width="122" height="48" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="901" y="530" text-anchor="middle" class="sub" fill="#7f1d1d">LOB/M365 install fail</text>
+  <text x="901" y="548" text-anchor="middle" class="sub">F_APP1</text>
+  <path d="M 901,508 L 901,450" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="974" y="508" width="122" height="48" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="1035" y="530" text-anchor="middle" class="sub" fill="#7f1d1d">Script failure</text>
+  <text x="1035" y="548" text-anchor="middle" class="sub">F_SCRIPT</text>
+  <path d="M 1035,508 L 1035,450" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="1108" y="508" width="122" height="48" rx="6" ry="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="1169" y="530" text-anchor="middle" class="sub" fill="#7f1d1d">Win32/Store app fail</text>
+  <text x="1169" y="548" text-anchor="middle" class="sub">F_APP2</text>
+  <path d="M 1169,508 L 1169,450" stroke="#dc2626" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-red)"/>
+  <rect x="20" y="590" width="1360" height="220" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="612" class="col-head">macOS  ·  ADE AUTOMATED DEVICE ENROLLMENT (7 stages)</text>
+  <text x="540" y="612" class="sub">docs/macos-lifecycle/00-ade-lifecycle.md  ·  ABM + Intune</text>
+  <rect x="34" y="640" width="180" height="80" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="124" y="660" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 1</text>
+  <text x="124" y="682" text-anchor="middle" class="label">ABM Device Reg</text>
+  <text x="124" y="706" text-anchor="middle" class="sub">Admin · ABM portal</text>
+  <path d="M 214,680 L 226,680" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="226" y="640" width="180" height="80" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="316" y="660" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 2</text>
+  <text x="316" y="682" text-anchor="middle" class="label">ADE Token Sync</text>
+  <text x="316" y="706" text-anchor="middle" class="sub">.p7m · 24h auto</text>
+  <path d="M 406,680 L 418,680" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="418" y="640" width="180" height="80" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="508" y="660" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 3</text>
+  <text x="508" y="682" text-anchor="middle" class="label">Profile Assign</text>
+  <text x="508" y="706" text-anchor="middle" class="sub">Intune admin</text>
+  <path d="M 598,680 L 610,680" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="610" y="640" width="180" height="80" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="700" y="660" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 4</text>
+  <text x="700" y="682" text-anchor="middle" class="label">Setup Assistant</text>
+  <text x="700" y="706" text-anchor="middle" class="sub">Device + user</text>
+  <path d="M 790,680 L 802,680" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="802" y="640" width="180" height="80" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="892" y="660" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 5</text>
+  <text x="892" y="682" text-anchor="middle" class="label">Await Config</text>
+  <text x="892" y="706" text-anchor="middle" class="sub">APNs push</text>
+  <path d="M 982,680 L 994,680" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="994" y="640" width="180" height="80" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="1084" y="660" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 6</text>
+  <text x="1084" y="682" text-anchor="middle" class="label">Company Portal</text>
+  <text x="1084" y="706" text-anchor="middle" class="sub">User affinity only</text>
+  <path d="M 1174,680 L 1186,680" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="1186" y="640" width="180" height="80" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="1276" y="660" text-anchor="middle" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">STAGE 7</text>
+  <text x="1276" y="682" text-anchor="middle" class="label">Desktop / MDM</text>
+  <text x="1276" y="706" text-anchor="middle" class="sub">MDM + IME dual</text>
+  <path d="M 892,720 C 892,765 1276,765 1276,720" stroke="#6b7280" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arr-gray)"/>
+  <rect x="1024" y="755" width="120" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="1084" y="766" text-anchor="middle" class="edge">userless · skip Stage 6</text>
+  <rect x="20" y="830" width="1360" height="68" rx="8" ry="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="40" y="852" class="col-head">KEY DIVERGENCES</text>
+  <text x="40" y="872" class="sub">·  APv1 requires hardware hash pre-registration (Stage 1); APv2 uses ETG security-group membership at enrollment — no pre-staging needed.</text>
+  <text x="40" y="888" class="sub">·  APv1 runs ESP with registry-observable state; APv2 surfaces progress via Intune deployment report; macOS has no ESP equivalent (Await Config + APNs push).</text>
+  <rect x="30" y="965" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="52" y="976" class="legend">APv1 stage</text>
+  <rect x="130" y="965" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="152" y="976" class="legend">APv2 step</text>
+  <rect x="224" y="965" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="246" y="976" class="legend">macOS ADE stage</text>
+  <rect x="354" y="965" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="376" y="976" class="legend">Failure surface</text>
+  <text x="1380" y="992" text-anchor="end" class="legend">docs/diagrams/lifecycle-pipeline.svg</text>
+</svg>

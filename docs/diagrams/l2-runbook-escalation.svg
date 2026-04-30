@@ -1,0 +1,257 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1200" width="1400" height="1200">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="1200" fill="#ffffff"/>
+  <text x="700" y="36" text-anchor="middle" class="title">L2 Runbook Escalation Map</text>
+  <text x="700" y="58" text-anchor="middle" class="subtitle">L1 escalation node IDs → Log Collection prerequisite → L2 investigation runbooks  ·  docs/l2-runbooks/</text>
+  <text x="200" y="92" text-anchor="middle" class="col-head">L1 ESCALATION SOURCES</text>
+  <text x="600" y="92" text-anchor="middle" class="col-head">PREREQUISITE  ·  LOG COLLECTION</text>
+  <text x="1080" y="92" text-anchor="middle" class="col-head">L2 INVESTIGATION RUNBOOKS</text>
+  <rect x="20" y="114" width="1360" height="220" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="136" class="col-head">LANE  ·  APv1 CLASSIC AUTOPILOT</text>
+  <text x="320" y="136" class="sub">classic ESP + registry + Graph  ·  decision-trees 00, 01, 02, 03</text>
+  <rect x="40" y="154" width="320" height="36" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="170" class="label" font-weight="700" font-size="11" fill="#7f1d1d">ESE1 · ESE2 · ESE3 · ESE4 · ESE5</text>
+  <text x="52" y="184" class="sub">ESP stuck / timeout / error</text>
+  <rect x="40" y="196" width="320" height="36" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="212" class="label" font-weight="700" font-size="11" fill="#7f1d1d">TPE1 · TPE2 · TPE3 · TPE4 · TPE5</text>
+  <text x="52" y="226" class="sub">TPM attestation (pre-prov / self-deploy)</text>
+  <rect x="40" y="238" width="320" height="36" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="254" class="label" font-weight="700" font-size="11" fill="#7f1d1d">PRE1 · PRE2 · PRE3 · PRE4 · PRE5 · PRE6</text>
+  <text x="52" y="268" class="sub">Profile assignment · sync delay</text>
+  <rect x="40" y="280" width="320" height="36" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="296" class="label" font-weight="700" font-size="11" fill="#7f1d1d">TRE3 · TRE4 · TRE5 · TRE6</text>
+  <text x="52" y="310" class="sub">Initial triage escalations</text>
+  <rect x="420" y="194" width="240" height="100" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="540" y="235" text-anchor="middle" class="label">01 · Log Collection Guide</text>
+  <text x="540" y="251" text-anchor="middle" class="sub">mdmdiagnosticstool cab</text>
+  <text x="540" y="264" text-anchor="middle" class="sub">event logs · registry</text>
+  <text x="540" y="184" text-anchor="middle" class="sub" font-weight="700">PREREQ</text>
+  <path d="M 360,172 L 420,244" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,214 L 420,244" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,256 L 420,244" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,298 L 420,244" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="720" y="150" width="640" height="40" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="734" y="166" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">L2 RB 02</text>
+  <text x="734" y="182" class="label" font-weight="600">ESP Deep-Dive</text>
+  <text x="930" y="182" class="sub">— device + user phase, app install conflicts</text>
+  <path d="M 660,244 C 690,244 690,170 720,170" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="196" width="640" height="40" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="734" y="212" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">L2 RB 03</text>
+  <text x="734" y="228" class="label" font-weight="600">TPM Attestation Investigation</text>
+  <text x="930" y="228" class="sub">— hardware-specific TPM failures</text>
+  <path d="M 660,244 C 690,244 690,216 720,216" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="242" width="640" height="40" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="734" y="258" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">L2 RB 04</text>
+  <text x="734" y="274" class="label" font-weight="600">Hybrid Join Investigation</text>
+  <text x="930" y="274" class="sub">— ODJ Connector, 0x80070774</text>
+  <path d="M 660,244 C 690,244 690,262 720,262" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="288" width="640" height="40" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="734" y="304" class="sub" font-weight="700" letter-spacing="0.05em" fill="#6b7280">L2 RB 05</text>
+  <text x="734" y="320" class="label" font-weight="600">Policy Conflict Analysis</text>
+  <text x="930" y="320" class="sub">— AppLocker · Security Baseline</text>
+  <path d="M 660,244 C 690,244 690,308 720,308" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="20" y="354" width="1360" height="180" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="376" class="col-head">LANE  ·  APv2 DEVICE PREPARATION</text>
+  <text x="340" y="376" class="sub">deployment report + IME + BootstrapperAgent  ·  decision-tree 04</text>
+  <rect x="40" y="394" width="320" height="36" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="410" class="label" font-weight="700" font-size="11" fill="#7f1d1d">APE1</text>
+  <text x="52" y="424" class="sub">Entra join failed</text>
+  <rect x="40" y="436" width="320" height="36" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="452" class="label" font-weight="700" font-size="11" fill="#7f1d1d">APE2</text>
+  <text x="52" y="466" class="sub">Enrollment failed</text>
+  <rect x="40" y="478" width="320" height="36" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="494" class="label" font-weight="700" font-size="11" fill="#7f1d1d">APE3</text>
+  <text x="52" y="508" class="sub">IME / infrastructure failure</text>
+  <rect x="420" y="424" width="240" height="80" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="540" y="462" text-anchor="middle" class="label">06 · APv2 Log Collection</text>
+  <text x="540" y="478" text-anchor="middle" class="sub">BootstrapperAgent + IME logs</text>
+  <path d="M 360,412 L 420,464" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,454 L 420,464" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,496 L 420,464" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="720" y="394" width="640" height="40" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="734" y="410" class="sub" font-weight="700" fill="#6b7280">L2 RB 07</text>
+  <text x="734" y="426" class="label" font-weight="600">APv2 Event ID Reference</text>
+  <text x="950" y="426" class="sub">— BootstrapperAgent event lookup</text>
+  <path d="M 660,464 C 690,464 690,414 720,414" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="440" width="640" height="40" rx="6" ry="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="734" y="456" class="sub" font-weight="700" fill="#6b7280">L2 RB 08</text>
+  <text x="734" y="472" class="label" font-weight="600">APv2 Deployment Report Guide</text>
+  <text x="950" y="472" class="sub">— status · phase · failures</text>
+  <path d="M 660,464 C 690,464 690,460 720,460" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="20" y="554" width="1360" height="200" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="576" class="col-head">LANE  ·  macOS ADE</text>
+  <text x="200" y="576" class="sub">IntuneMacODC + Terminal diagnostics  ·  decision-tree 06</text>
+  <rect x="40" y="594" width="320" height="32" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="608" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · Setup Assistant / Enrollment</text>
+  <text x="52" y="621" class="sub">RB 10, RB 11</text>
+  <rect x="40" y="632" width="320" height="32" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="646" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · Profile not applied</text>
+  <text x="52" y="659" class="sub">RB 12</text>
+  <rect x="40" y="670" width="320" height="32" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="684" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · App not installed</text>
+  <text x="52" y="697" class="sub">RB 13</text>
+  <rect x="40" y="708" width="320" height="32" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="722" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · Compliance / CP Sign-In</text>
+  <text x="52" y="735" class="sub">RB 14, RB 15</text>
+  <rect x="420" y="634" width="240" height="80" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="540" y="672" text-anchor="middle" class="label">10 · macOS Log Collection</text>
+  <text x="540" y="688" text-anchor="middle" class="sub">IntuneMacODC + Terminal</text>
+  <path d="M 360,610 L 420,674" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,648 L 420,674" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,686 L 420,674" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,724 L 420,674" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="720" y="594" width="640" height="40" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="734" y="610" class="sub" font-weight="700" fill="#6b7280">L2 RB 11</text>
+  <text x="734" y="626" class="label" font-weight="600">Profile Delivery Investigation</text>
+  <text x="950" y="626" class="sub">— config profile not delivered</text>
+  <path d="M 660,674 C 690,674 690,614 720,614" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="644" width="640" height="40" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="734" y="660" class="sub" font-weight="700" fill="#6b7280">L2 RB 12</text>
+  <text x="734" y="676" class="label" font-weight="600">App Install Failure</text>
+  <text x="950" y="676" class="sub">— DMG / PKG / VPP failed</text>
+  <path d="M 660,674 C 690,674 690,664 720,664" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="694" width="640" height="40" rx="6" ry="6" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="734" y="710" class="sub" font-weight="700" fill="#6b7280">L2 RB 13</text>
+  <text x="734" y="726" class="label" font-weight="600">Compliance Evaluation</text>
+  <text x="950" y="726" class="sub">— non-compliant · CA blocking</text>
+  <path d="M 660,674 C 690,674 690,714 720,714" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="20" y="774" width="1360" height="160" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="796" class="col-head">LANE  ·  iOS / iPadOS</text>
+  <text x="220" y="796" class="sub">3-method log collection (no CLI tool)  ·  decision-tree 07</text>
+  <rect x="40" y="814" width="320" height="30" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="827" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · APNs / ADE / License</text>
+  <text x="52" y="840" class="sub">RB 16, 17, 19, 20</text>
+  <rect x="40" y="850" width="320" height="30" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="863" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · Compliance Blocked</text>
+  <text x="52" y="876" class="sub">RB 21</text>
+  <rect x="40" y="886" width="320" height="30" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="899" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · Restriction / Cap</text>
+  <text x="52" y="912" class="sub">RB 18, 20</text>
+  <rect x="420" y="824" width="240" height="80" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="540" y="862" text-anchor="middle" class="label">14 · iOS Log Collection</text>
+  <text x="540" y="878" text-anchor="middle" class="sub">3 methods (no CLI tool)</text>
+  <path d="M 360,829 L 420,864" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,865 L 420,864" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,901 L 420,864" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="720" y="814" width="640" height="32" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="734" y="828" class="sub" font-weight="700" fill="#6b7280">L2 RB 15</text>
+  <text x="734" y="841" class="label" font-weight="600">ADE Token &amp; Profile</text>
+  <text x="950" y="841" class="sub">— Pattern A-D failure analysis</text>
+  <path d="M 660,864 C 690,864 690,830 720,830" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="852" width="640" height="32" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="734" y="866" class="sub" font-weight="700" fill="#6b7280">L2 RB 16</text>
+  <text x="734" y="879" class="label" font-weight="600">App Install Diagnosis</text>
+  <text x="950" y="879" class="sub">— [CONFIG]/[TIMING]/[DEFECT]</text>
+  <path d="M 660,864 C 690,864 690,868 720,868" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="890" width="640" height="32" rx="6" ry="6" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="734" y="904" class="sub" font-weight="700" fill="#6b7280">L2 RB 17</text>
+  <text x="734" y="917" class="label" font-weight="600">Compliance &amp; CA Timing</text>
+  <text x="950" y="917" class="sub">— compliance axis + CA timing</text>
+  <path d="M 660,864 C 690,864 690,906 720,906" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="20" y="954" width="1360" height="180" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="976" class="col-head">LANE  ·  ANDROID ENTERPRISE</text>
+  <text x="280" y="976" class="sub">3-method log collection (Company Portal / Microsoft Intune App / adb logcat)  ·  decision-tree 08</text>
+  <rect x="40" y="994" width="320" height="28" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="1006" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · GMS Enrollment</text>
+  <text x="52" y="1018" class="sub">RB 22, 24, 27</text>
+  <rect x="40" y="1026" width="320" height="28" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="1038" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · BYOD Work Profile</text>
+  <text x="52" y="1050" class="sub">RB 22, 23, 25, 26</text>
+  <rect x="40" y="1058" width="320" height="28" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="1070" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · Knox / AOSP</text>
+  <text x="52" y="1082" class="sub">RB 28, 29</text>
+  <rect x="40" y="1090" width="320" height="28" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="1102" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · Compliance / MGP</text>
+  <text x="52" y="1114" class="sub">RB 25, 26</text>
+  <rect x="420" y="1014" width="240" height="80" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="540" y="1052" text-anchor="middle" class="label">18 · Android Log Collection</text>
+  <text x="540" y="1068" text-anchor="middle" class="sub">Company Portal / Intune App / adb</text>
+  <path d="M 360,1008 L 420,1054" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,1040 L 420,1054" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,1072 L 420,1054" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <path d="M 360,1104 L 420,1054" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="720" y="992" width="640" height="24" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <text x="734" y="1008" class="sub" font-weight="700" fill="#6b7280">L2 RB 19</text>
+  <text x="800" y="1008" class="label" font-weight="600">Enrollment Investigation</text>
+  <text x="1000" y="1008" class="sub">— GMS modes (excludes AOSP)</text>
+  <path d="M 660,1054 C 690,1054 690,1004 720,1004" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="1020" width="640" height="24" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <text x="734" y="1036" class="sub" font-weight="700" fill="#6b7280">L2 RB 20</text>
+  <text x="800" y="1036" class="label" font-weight="600">App Install Investigation</text>
+  <text x="1000" y="1036" class="sub">— MGP / LOB three-class</text>
+  <path d="M 660,1054 C 690,1054 690,1032 720,1032" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="1048" width="640" height="24" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <text x="734" y="1064" class="sub" font-weight="700" fill="#6b7280">L2 RB 21</text>
+  <text x="800" y="1064" class="label" font-weight="600">Compliance Investigation</text>
+  <text x="1000" y="1064" class="sub">— Cause A-D incl Play Integrity</text>
+  <path d="M 660,1054 C 690,1054 690,1060 720,1060" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="1076" width="640" height="24" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <text x="734" y="1092" class="sub" font-weight="700" fill="#6b7280">L2 RB 22</text>
+  <text x="800" y="1092" class="label" font-weight="600">Knox Investigation</text>
+  <text x="1000" y="1092" class="sub">— Samsung KME · Knox portal</text>
+  <path d="M 660,1054 C 690,1054 690,1088 720,1088" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="720" y="1104" width="640" height="24" rx="6" ry="6" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <text x="734" y="1120" class="sub" font-weight="700" fill="#6b7280">L2 RB 23</text>
+  <text x="800" y="1120" class="label" font-weight="600">AOSP Investigation</text>
+  <text x="1000" y="1120" class="sub">— 5 OEMs: RealWear/Zebra/Pico/HTC/Meta</text>
+  <path d="M 660,1054 C 690,1054 690,1116 720,1116" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="20" y="1154" width="1360" height="120" rx="8" ry="8" fill="#fafafa" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="40" y="1176" class="col-head">LANE  ·  LINUX (Ubuntu LTS)</text>
+  <text x="240" y="1176" class="sub">journalctl / dpkg / Edge web-app CA only  ·  decision-tree 09</text>
+  <rect x="40" y="1194" width="320" height="60" rx="4" ry="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="1212" class="label" font-weight="700" font-size="11" fill="#7f1d1d">L1 · RB 30 · 31 · 32 · 33</text>
+  <text x="52" y="1230" class="sub">Enrollment · Compliance · CA · Agent service</text>
+  <rect x="420" y="1194" width="240" height="60" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="540" y="1222" text-anchor="middle" class="label">24 · Linux Log Collection</text>
+  <text x="540" y="1238" text-anchor="middle" class="sub">journalctl + dpkg snapshot</text>
+  <path d="M 360,1224 L 420,1224" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="720" y="1194" width="640" height="60" rx="6" ry="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="734" y="1214" class="sub" font-weight="700" fill="#6b7280">L2 RB 25</text>
+  <text x="734" y="1234" class="label" font-weight="600">Linux Agent Investigation</text>
+  <text x="930" y="1234" class="sub">— intunemgmt service · auth tokens · journalctl --user 1d</text>
+  <path d="M 660,1224 L 720,1224" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="30" y="1165" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="52" y="1176" class="legend">L1 escalation node</text>
+  <rect x="178" y="1165" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="200" y="1176" class="legend">Log collection prereq</text>
+  <rect x="344" y="1165" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="366" y="1176" class="legend">APv1 / Linux L2</text>
+  <rect x="474" y="1165" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="496" y="1176" class="legend">APv2 L2</text>
+  <rect x="556" y="1165" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="578" y="1176" class="legend">macOS L2</text>
+  <rect x="644" y="1165" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="666" y="1176" class="legend">iOS L2</text>
+  <rect x="720" y="1165" width="14" height="14" rx="3" ry="3" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.2"/>
+  <text x="742" y="1176" class="legend">Android L2</text>
+  <text x="1380" y="1192" text-anchor="end" class="legend">docs/diagrams/l2-runbook-escalation.svg</text>
+</svg>

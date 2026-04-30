@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1100" width="1500" height="1100">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1500" height="1100" fill="#ffffff"/>
+  <text x="750" y="36" text-anchor="middle" class="title">Android Triage Decision Tree</text>
+  <text x="750" y="58" text-anchor="middle" class="subtitle">Mode-first routing per Phase 40 D-01  ·  docs/decision-trees/08-android-triage.md</text>
+  <polygon points="750,80 940,130 750,180 560,130" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="750" y="120" text-anchor="middle" class="label">What type of Android</text>
+  <text x="750" y="136" text-anchor="middle" class="label">enrollment does this device use?</text>
+  <text x="750" y="152" text-anchor="middle" class="sub">AND1 · mode-first</text>
+  <polygon points="155,240 265,280 155,320 45,280" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="155" y="270" text-anchor="middle" class="label">Personal phone</text>
+  <text x="155" y="286" text-anchor="middle" class="label">work profile (BYOD)</text>
+  <text x="155" y="302" text-anchor="middle" class="sub">AND2</text>
+  <path d="M 750,180 L 155,240" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="141" y="205" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="155" y="215" text-anchor="middle" class="edge">BYOD</text>
+  <polygon points="393,240 503,280 393,320 283,280" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="393" y="270" text-anchor="middle" class="label">Corporate fully</text>
+  <text x="393" y="286" text-anchor="middle" class="label">managed (COBO)</text>
+  <text x="393" y="302" text-anchor="middle" class="sub">AND3</text>
+  <path d="M 750,180 L 393,240" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="379" y="205" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="393" y="215" text-anchor="middle" class="edge">COBO</text>
+  <polygon points="631,240 741,280 631,320 521,280" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="631" y="270" text-anchor="middle" class="label">Kiosk / single-purpose</text>
+  <text x="631" y="286" text-anchor="middle" class="label">(Dedicated / COSU)</text>
+  <text x="631" y="302" text-anchor="middle" class="sub">AND4</text>
+  <path d="M 750,180 L 631,240" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="617" y="205" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="631" y="215" text-anchor="middle" class="edge">COSU</text>
+  <polygon points="869,240 979,280 869,320 759,280" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="869" y="270" text-anchor="middle" class="label">Corporate</text>
+  <text x="869" y="286" text-anchor="middle" class="label">Zero-Touch (ZTE)</text>
+  <text x="869" y="302" text-anchor="middle" class="sub">AND5</text>
+  <path d="M 750,180 L 869,240" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="855" y="205" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="869" y="215" text-anchor="middle" class="edge">ZTE</text>
+  <rect x="997" y="240" width="220" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="1107" y="270" text-anchor="middle" class="label">Specialty hardware</text>
+  <text x="1107" y="286" text-anchor="middle" class="label">(AOSP)</text>
+  <text x="1107" y="302" text-anchor="middle" class="sub">→ RB 29</text>
+  <path d="M 750,180 L 1107,240" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="1093" y="205" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="1107" y="215" text-anchor="middle" class="edge">AOSP</text>
+  <rect x="1235" y="240" width="220" height="80" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="1345" y="270" text-anchor="middle" class="label">Don&#x27;t know /</text>
+  <text x="1345" y="286" text-anchor="middle" class="label">Can&#x27;t tell</text>
+  <text x="1345" y="302" text-anchor="middle" class="sub">→ Escalate L2</text>
+  <path d="M 750,180 L 1345,240" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="1331" y="205" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="1345" y="215" text-anchor="middle" class="edge">?</text>
+  <text x="750" y="390" text-anchor="middle" class="col-head">SHARED SYMPTOM ROUTER (AND2/3/4 converge on common runbooks)</text>
+  <rect x="26" y="460" width="200" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="126" y="498" text-anchor="middle" class="label">Enrollment Blocked</text>
+  <text x="126" y="514" text-anchor="middle" class="sub">RB 22</text>
+  <rect x="234" y="460" width="200" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="334" y="498" text-anchor="middle" class="label">Work Profile Missing</text>
+  <text x="334" y="514" text-anchor="middle" class="sub">RB 23 · BYOD only</text>
+  <rect x="442" y="460" width="200" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="542" y="498" text-anchor="middle" class="label">Device Not Enrolled</text>
+  <text x="542" y="514" text-anchor="middle" class="sub">RB 24</text>
+  <rect x="650" y="460" width="200" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="750" y="498" text-anchor="middle" class="label">Compliance Blocked</text>
+  <text x="750" y="514" text-anchor="middle" class="sub">RB 25</text>
+  <rect x="858" y="460" width="200" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="958" y="498" text-anchor="middle" class="label">MGP App Not Installed</text>
+  <text x="958" y="514" text-anchor="middle" class="sub">RB 26</text>
+  <rect x="1066" y="460" width="200" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="1166" y="498" text-anchor="middle" class="label">ZTE Failed</text>
+  <text x="1166" y="514" text-anchor="middle" class="sub">RB 27 · ZTE only</text>
+  <rect x="1274" y="460" width="200" height="80" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="1374" y="498" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="1374" y="514" text-anchor="middle" class="sub">Other / unclear</text>
+  <path d="M 155,320 L 155,370" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 393,320 L 393,370" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 631,320 L 631,370" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <path d="M 869,320 L 869,370" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="40" y="600" width="1420" height="100" rx="8" ry="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="60" y="622" class="col-head">MODE-SPECIFIC ROUTING NOTES</text>
+  <text x="60" y="644" class="sub">·  RB 23 (Work Profile Not Created) is BYOD-only — does not apply to COBO / COSU / ZTE</text>
+  <text x="60" y="660" class="sub">·  RB 27 (ZTE Enrollment Failed) is ZTE-only — Samsung Knox uses RB 28 (link separately)</text>
+  <text x="60" y="676" class="sub">·  RB 28 (Knox) and RB 29 (AOSP) are mode-specific terminal nodes — not part of the shared symptom router</text>
+  <text x="60" y="692" class="sub">·  ZTE branch (AND5) only routes to RB 27 (mode-specific) or RB 25 (post-enrollment compliance) — not the full shared router</text>
+  <rect x="30" y="1065" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="52" y="1076" class="legend">Mode decision</text>
+  <rect x="148" y="1065" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="170" y="1076" class="legend">Mode router</text>
+  <rect x="254" y="1065" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="276" y="1076" class="legend">Resolved (L1 RB)</text>
+  <rect x="390" y="1065" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="412" y="1076" class="legend">Escalate L2</text>
+  <text x="1480" y="1092" text-anchor="end" class="legend">docs/diagrams/decision-tree-08-android-triage.svg</text>
+</svg>

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="900" fill="#ffffff"/>
+  <text x="600" y="36" text-anchor="middle" class="title">Linux Triage Decision Tree</text>
+  <text x="600" y="58" text-anchor="middle" class="subtitle">Linux Intune client (Ubuntu 22.04 / 24.04 LTS)  ·  docs/decision-trees/09-linux-triage.md</text>
+  <rect x="420" y="90" width="360" height="100" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="600" y="130" text-anchor="middle" class="label">What is the user&#x27;s</text>
+  <text x="600" y="146" text-anchor="middle" class="label">Linux Intune symptom?</text>
+  <text x="600" y="162" text-anchor="middle" class="sub">LIN1 · 5 paths</text>
+  <rect x="39" y="290" width="210" height="90" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="144" y="333" text-anchor="middle" class="label">Enrollment Failed</text>
+  <text x="144" y="349" text-anchor="middle" class="sub">L1 RB 30</text>
+  <path d="M 600,190 L 144,290" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="108" y="230" width="73" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="144" y="240" text-anchor="middle" class="edge">cannot enroll</text>
+  <rect x="267" y="290" width="210" height="90" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="372" y="333" text-anchor="middle" class="label">Compliance Non-Compliant</text>
+  <text x="372" y="349" text-anchor="middle" class="sub">L1 RB 31</text>
+  <path d="M 600,190 L 372,290" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="336" y="250" width="73" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="372" y="260" text-anchor="middle" class="edge">non-compliant</text>
+  <rect x="495" y="290" width="210" height="90" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="600" y="325" text-anchor="middle" class="label">Web-app CA via Edge</text>
+  <text x="600" y="341" text-anchor="middle" class="label">(PITFALL-2)</text>
+  <text x="600" y="357" text-anchor="middle" class="sub">device-CA NOT supported</text>
+  <path d="M 600,190 L 600,290" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="566" y="230" width="68" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="600" y="240" text-anchor="middle" class="edge">M365 web-app</text>
+  <rect x="723" y="290" width="210" height="90" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="828" y="333" text-anchor="middle" class="label">Agent Service Failure</text>
+  <text x="828" y="349" text-anchor="middle" class="sub">L1 RB 33</text>
+  <path d="M 600,190 L 828,290" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="794" y="250" width="68" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="828" y="260" text-anchor="middle" class="edge">service down</text>
+  <rect x="951" y="290" width="210" height="90" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="1056" y="325" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="1056" y="341" text-anchor="middle" class="label">Don&#x27;t know / Other</text>
+  <text x="1056" y="357" text-anchor="middle" class="sub">collect dpkg-l, journalctl</text>
+  <path d="M 600,190 L 1056,290" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="1040" y="230" width="33" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="1056" y="240" text-anchor="middle" class="edge">other</text>
+  <path d="M 600,380 L 600,420" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
+  <rect x="495" y="420" width="210" height="90" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="600" y="455" text-anchor="middle" class="label">Linux CA Blocking</text>
+  <text x="600" y="471" text-anchor="middle" class="label">Web-App Access</text>
+  <text x="600" y="487" text-anchor="middle" class="sub">L1 RB 32  ·  LINR32</text>
+  <rect x="40" y="560" width="1120" height="120" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="60" y="584" class="col-head" fill="#9a3412">PITFALL-2  ·  LINUX CA SCOPE</text>
+  <text x="60" y="606" class="sub">Device-level Conditional Access is NOT supported on Linux. Only WEB-APP CA via Microsoft Edge for Linux is enforced.</text>
+  <text x="60" y="624" class="sub">If a user reports M365 access blocked from a Linux device, route to RB 32 — but only after confirming Edge for Linux is the failing surface.</text>
+  <text x="60" y="642" class="sub">See: docs/reference/linux-capability-matrix.md#conditional-access</text>
+  <text x="60" y="662" class="sub">PITFALL-2 is the most common Linux triage misroute — always verify CA scope before assuming device-level enforcement applies.</text>
+  <rect x="30" y="865" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="52" y="876" class="legend">Symptom router</text>
+  <rect x="154" y="865" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="176" y="876" class="legend">Resolved (L1 RB)</text>
+  <rect x="290" y="865" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="312" y="876" class="legend">PITFALL-2 callout / chained route</text>
+  <rect x="528" y="865" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="550" y="876" class="legend">Escalate L2</text>
+  <text x="1180" y="892" text-anchor="end" class="legend">docs/diagrams/decision-tree-09-linux-triage.svg</text>
+</svg>

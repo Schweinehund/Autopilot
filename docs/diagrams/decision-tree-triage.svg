@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 920" width="1100" height="920">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="920" fill="#ffffff"/>
+  <text x="550" y="36" text-anchor="middle" class="title">Initial Triage Decision Tree</text>
+  <text x="550" y="58" text-anchor="middle" class="subtitle">APv1 (classic Autopilot) — L1 symptom routing  ·  docs/decision-trees/00-initial-triage.md</text>
+  <text x="550" y="92" text-anchor="middle" class="sub" font-weight="600" font-size="11" letter-spacing="0.08em" fill="#9ca3af">START</text>
+  <polygon points="550,110 700,155 550,200 400,155" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="145" text-anchor="middle" class="label">Device reaches</text>
+  <text x="550" y="161" text-anchor="middle" class="label">any website?</text>
+  <text x="550" y="177" text-anchor="middle" class="sub">TRD1</text>
+  <rect x="70" y="130" width="260" height="60" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="200" y="158" text-anchor="middle" class="label">Escalate: Infrastructure</text>
+  <text x="200" y="174" text-anchor="middle" class="sub">No network connectivity  ·  TRE1</text>
+  <path d="M 400,155 L 330,155" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
+  <rect x="351" y="138" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="365" y="148" text-anchor="middle" class="edge">No</text>
+  <path d="M 550,200 L 550,235" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="212" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="222" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="550,240 700,285 550,330 400,285" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="275" text-anchor="middle" class="label">Reach login.</text>
+  <text x="550" y="291" text-anchor="middle" class="label">microsoftonline.com?</text>
+  <text x="550" y="307" text-anchor="middle" class="sub">TRD2</text>
+  <rect x="70" y="260" width="260" height="60" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="200" y="288" text-anchor="middle" class="label">Escalate: Infrastructure</text>
+  <text x="200" y="304" text-anchor="middle" class="sub">Autopilot endpoints blocked  ·  TRE2</text>
+  <path d="M 400,285 L 330,285" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
+  <rect x="351" y="268" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="365" y="278" text-anchor="middle" class="edge">No</text>
+  <path d="M 550,330 L 550,365" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="342" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="352" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="550,370 700,415 550,460 400,415" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="405" text-anchor="middle" class="label">Device registered</text>
+  <text x="550" y="421" text-anchor="middle" class="label">in Autopilot portal?</text>
+  <text x="550" y="437" text-anchor="middle" class="sub">TRD4</text>
+  <rect x="70" y="390" width="260" height="60" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="200" y="418" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="200" y="434" text-anchor="middle" class="sub">Device not registered  ·  TRE3</text>
+  <path d="M 400,415 L 330,415" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="351" y="398" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="365" y="408" text-anchor="middle" class="edge">No</text>
+  <path d="M 550,460 L 550,495" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="472" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="482" text-anchor="middle" class="edge">Yes</text>
+  <rect x="380" y="500" width="340" height="110" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="550" y="545" text-anchor="middle" class="label">What is the primary</text>
+  <text x="550" y="561" text-anchor="middle" class="label">observable symptom?</text>
+  <text x="550" y="577" text-anchor="middle" class="sub">TRD5  ·  route to sub-tree</text>
+  <path d="M 550,610 L 550,645" stroke="#9333ea" stroke-width="1.5" fill="none"/>
+  <path d="M 115,645 L 985,645" stroke="#9333ea" stroke-width="1.5" fill="none"/>
+  <path d="M 115,645 L 115,695" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="90" y="660" width="60" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="120" y="671" text-anchor="middle" class="edge">ESP stuck</text>
+  <rect x="25" y="700" width="180" height="80" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="115" y="731" text-anchor="middle" class="label">→ ESP Failure Tree</text>
+  <text x="115" y="747" text-anchor="middle" class="sub">decision-trees/</text>
+  <text x="115" y="760" text-anchor="middle" class="sub">01-esp-failure.md</text>
+  <path d="M 330,645 L 330,695" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="290" y="660" width="80" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="332" y="671" text-anchor="middle" class="edge">no profile</text>
+  <rect x="240" y="700" width="180" height="80" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="330" y="731" text-anchor="middle" class="label">→ Profile Assignment</text>
+  <text x="330" y="747" text-anchor="middle" class="sub">decision-trees/</text>
+  <text x="330" y="760" text-anchor="middle" class="sub">02-profile-assignment.md</text>
+  <path d="M 550,645 L 550,695" stroke="#9333ea" stroke-width="1.5" fill="none" marker-end="url(#arr-purple)"/>
+  <rect x="512" y="660" width="76" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="550" y="671" text-anchor="middle" class="edge">TPM error</text>
+  <rect x="460" y="700" width="180" height="80" rx="8" ry="8" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="550" y="731" text-anchor="middle" class="label">→ TPM Attestation</text>
+  <text x="550" y="747" text-anchor="middle" class="sub">decision-trees/</text>
+  <text x="550" y="760" text-anchor="middle" class="sub">03-tpm-attestation.md</text>
+  <path d="M 770,645 L 770,695" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="728" y="660" width="90" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="773" y="671" text-anchor="middle" class="edge">error code</text>
+  <rect x="680" y="700" width="180" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="770" y="730" text-anchor="middle" class="label">Resolved: follow L1</text>
+  <text x="770" y="746" text-anchor="middle" class="label">action in error table</text>
+  <text x="770" y="762" text-anchor="middle" class="sub">TRR1  ·  error-codes/00-index.md</text>
+  <path d="M 985,645 L 985,695" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="945" y="660" width="80" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="985" y="671" text-anchor="middle" class="edge">OOBE/other</text>
+  <rect x="895" y="700" width="180" height="80" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="985" y="731" text-anchor="middle" class="label">Escalate L2</text>
+  <text x="985" y="747" text-anchor="middle" class="sub">OOBE crash / unclear</text>
+  <text x="985" y="760" text-anchor="middle" class="sub">TRE5  ·  TRE6</text>
+  <rect x="25" y="808" width="1050" height="80" rx="6" ry="6" fill="#f9fafb" stroke="#d1d5db" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="45" y="828" class="col-head">SIBLING TRIAGE TREES</text>
+  <text x="45" y="852" class="label">·  APv2 Device Preparation Triage — decision-trees/04-apv2-triage.md  (routes to APv2 L1 runbooks, APE1/APE2/APE3 → L2)</text>
+  <text x="45" y="872" class="label">·  macOS / iOS / Android / Linux triage — decision-trees/06-09  (per-platform L1 routing)</text>
+  <rect x="25" y="900" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="47" y="911" class="legend">Decision</text>
+  <rect x="113" y="900" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="135" y="911" class="legend">Escalate Infrastructure</text>
+  <rect x="291" y="900" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="313" y="911" class="legend">Escalate L2</text>
+  <rect x="397" y="900" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="419" y="911" class="legend">Resolved</text>
+  <rect x="485" y="900" width="14" height="14" rx="3" ry="3" fill="#faf5ff" stroke="#9333ea" stroke-width="1.2"/>
+  <text x="507" y="911" class="legend">Symptom router / sub-tree</text>
+  <text x="1080" y="912" text-anchor="end" class="legend">docs/diagrams/decision-tree-triage.svg</text>
+</svg>

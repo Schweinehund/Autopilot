@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" width="1100" height="750">
+  <style>
+    text { font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .title { font-size: 18px; font-weight: 600; fill: #111827; }
+    .subtitle { font-size: 12px; fill: #6b7280; }
+    .label { font-size: 13px; fill: #111827; }
+    .sub { font-size: 11px; fill: #6b7280; }
+    .edge { font-size: 11px; fill: #374151; font-weight: 600; }
+    .col-head { font-size: 13px; font-weight: 700; fill: #111827; letter-spacing: 0.04em; }
+    .legend { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#dc2626"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#16a34a"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#ea580c"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#9333ea"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#6b7280"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="750" fill="#ffffff"/>
+  <text x="550" y="36" text-anchor="middle" class="title">Device Lifecycle Decision Tree</text>
+  <text x="550" y="58" text-anchor="middle" class="subtitle">What do you want to preserve?  ·  docs/decision-trees/05-device-lifecycle.md</text>
+  <polygon points="550,80 710,130 550,180 390,130" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="120" text-anchor="middle" class="label">User&#x27;s personal data</text>
+  <text x="550" y="136" text-anchor="middle" class="label">(files, photos, personal apps)?</text>
+  <text x="550" y="152" text-anchor="middle" class="sub">Q1</text>
+  <rect x="40" y="110" width="280" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="180" y="141" text-anchor="middle" class="label">Retire</text>
+  <text x="180" y="157" text-anchor="middle" class="sub">Removes org data only</text>
+  <text x="180" y="170" text-anchor="middle" class="sub">See: 02-retire-wipe.md</text>
+  <path d="M 390,130 L 320,150" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="299" y="120" width="113" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="355" y="130" text-anchor="middle" class="edge">Yes — remove org only</text>
+  <path d="M 550,180 L 550,225" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="561" y="202" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="575" y="212" text-anchor="middle" class="edge">No</text>
+  <polygon points="550,230 710,280 550,330 390,280" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="550" y="270" text-anchor="middle" class="label">Org enrollment + settings</text>
+  <text x="550" y="286" text-anchor="middle" class="label">(re-use for next user)?</text>
+  <text x="550" y="302" text-anchor="middle" class="sub">Q2</text>
+  <path d="M 710,280 L 800,280 L 800,355" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="741" y="263" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="755" y="273" text-anchor="middle" class="edge">Yes</text>
+  <polygon points="800,360 920,400 800,440 680,400" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="800" y="398" text-anchor="middle" class="label">Same tenant?</text>
+  <text x="800" y="414" text-anchor="middle" class="sub">Q3</text>
+  <rect x="620" y="480" width="320" height="80" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="780" y="511" text-anchor="middle" class="label">Autopilot Reset</text>
+  <text x="780" y="527" text-anchor="middle" class="sub">APv1 only · keeps org config</text>
+  <text x="780" y="540" text-anchor="middle" class="sub">See: 01-autopilot-reset.md</text>
+  <path d="M 800,440 L 780,480" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="781" y="450" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="795" y="460" text-anchor="middle" class="edge">Yes</text>
+  <rect x="620" y="580" width="320" height="100" rx="8" ry="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1.5"/>
+  <text x="780" y="621" text-anchor="middle" class="label">Tenant Migration</text>
+  <text x="780" y="637" text-anchor="middle" class="sub">Deregister Tenant A,</text>
+  <text x="780" y="650" text-anchor="middle" class="sub">re-import to Tenant B  ·  04-tenant-migration.md</text>
+  <path d="M 920,440 L 850,580" stroke="#ea580c" stroke-width="1.5" fill="none" marker-end="url(#arr-orange)"/>
+  <rect x="834" y="500" width="113" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="890" y="510" text-anchor="middle" class="edge">No — different tenant</text>
+  <path d="M 390,280 L 290,280 L 290,355" stroke="#2563eb" stroke-width="1.5" fill="none" marker-end="url(#arr-blue)"/>
+  <rect x="331" y="263" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="345" y="273" text-anchor="middle" class="edge">No</text>
+  <polygon points="285,360 405,400 285,440 165,400" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="285" y="390" text-anchor="middle" class="label">Keep user documents</text>
+  <text x="285" y="406" text-anchor="middle" class="label">(Home folder)?</text>
+  <text x="285" y="422" text-anchor="middle" class="sub">Q4</text>
+  <rect x="20" y="480" width="280" height="100" rx="8" ry="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="160" y="521" text-anchor="middle" class="label">Fresh Start</text>
+  <text x="160" y="537" text-anchor="middle" class="sub">Removes OEM bloatware</text>
+  <text x="160" y="550" text-anchor="middle" class="sub">Keeps user documents  ·  02-retire-wipe.md</text>
+  <path d="M 245,440 L 200,480" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#arr-green)"/>
+  <rect x="211" y="450" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="225" y="460" text-anchor="middle" class="edge">Yes</text>
+  <rect x="310" y="480" width="280" height="100" rx="8" ry="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="450" y="521" text-anchor="middle" class="label">Wipe</text>
+  <text x="450" y="537" text-anchor="middle" class="sub">Factory reset — erases all</text>
+  <text x="450" y="550" text-anchor="middle" class="sub">Lost/stolen / hybrid devices  ·  02-retire-wipe.md</text>
+  <path d="M 385,440 L 430,480" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="396" y="450" width="28" height="14" fill="#ffffff" opacity="0.95"/>
+  <text x="410" y="460" text-anchor="middle" class="edge">No</text>
+  <rect x="30" y="715" width="14" height="14" rx="3" ry="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="52" y="726" class="legend">Decision</text>
+  <rect x="118" y="715" width="14" height="14" rx="3" ry="3" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.2"/>
+  <text x="140" y="726" class="legend">Action (preserve data)</text>
+  <rect x="290" y="715" width="14" height="14" rx="3" ry="3" fill="#fef2f2" stroke="#dc2626" stroke-width="1.2"/>
+  <text x="312" y="726" class="legend">Wipe (data loss)</text>
+  <rect x="426" y="715" width="14" height="14" rx="3" ry="3" fill="#fff7ed" stroke="#ea580c" stroke-width="1.2"/>
+  <text x="448" y="726" class="legend">Cross-tenant operation</text>
+  <text x="1080" y="742" text-anchor="end" class="legend">docs/diagrams/decision-tree-05-device-lifecycle.svg</text>
+</svg>
