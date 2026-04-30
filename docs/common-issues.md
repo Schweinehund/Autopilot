@@ -1,12 +1,12 @@
 ---
-last_verified: 2026-04-17
-review_by: 2026-07-16
+last_verified: 2026-04-30
+review_by: 2026-06-29
 applies_to: both
 audience: all
 platform: all
 ---
 
-> **Platform coverage:** This guide covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, and iOS/iPadOS provisioning issues.
+> **Platform coverage:** This guide covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, and Android Enterprise provisioning issues.
 > Not sure which platform or framework? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # Common Provisioning Issues
@@ -16,6 +16,7 @@ platform: all
 - [Windows Autopilot Issues](#windows-autopilot-issues) -- Windows device provisioning failures (APv1 and APv2)
 - [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios) -- macOS enrollment and management failures
 - [iOS/iPadOS Failure Scenarios](#iosipados-failure-scenarios) -- iOS/iPadOS enrollment and management failures via Intune
+- [Android Enterprise Failure Scenarios](#android-enterprise-failure-scenarios) -- Android enrollment and management failures via Intune
 
 ---
 
