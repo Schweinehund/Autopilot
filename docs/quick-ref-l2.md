@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-18
-review_by: 2026-07-17
+last_verified: 2026-04-30
+review_by: 2026-06-29
 applies_to: both
 audience: L2
 platform: all
@@ -230,10 +230,60 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 - [App Install Failure Diagnosis](l2-runbooks/16-ios-app-install.md) -- three-class [CONFIG]/[TIMING]/[DEFECT] disambiguation
 - [Compliance & CA Timing Investigation](l2-runbooks/17-ios-compliance-ca-timing.md) -- compliance axis + CA timing + Not-evaluated terminal state
 
+## Android Enterprise Quick Reference
+
+**Platform:** Android Enterprise through Microsoft Intune
+
+> **Important:** Android L2 diagnostic data collection is mode-dependent. AMAPI April 2025 changed the primary log mechanism for managed-Android modes — see the table below for the per-mode primary tool. Play Integrity verdict interpretation lives at the Phase 54 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
+
+### Android Diagnostic Data Collection (3 methods)
+
+| Method | Primary Tool by Mode | Who Triggers | L2 Access Path | When to Use |
+|--------|----------------------|--------------|----------------|-------------|
+| Company Portal Logs | BYOD pre-AMAPI: primary | User (on device) | Company Portal app > Help > Send logs (uploaded to Microsoft Support; L2 retrieves via support case) | Tier 1 -- BYOD pre-AMAPI April 2025 default; legacy log path for personal-profile work-app diagnostics |
+| Microsoft Intune App Logs | BYOD post-AMAPI + COBO + Dedicated + ZTE: primary | User (on device) | Intune app > Help > Send logs (uploaded to Microsoft Support; L2 retrieves via support case) | Tier 1 -- AMAPI April 2025 default for managed-Android modes; primary log mechanism post-AMAPI |
+| adb logcat | All modes: last-resort | L2 + user (physical USB) | Direct on-device retrieval via Android Debug Bridge (`adb logcat -d > logs.txt`) — requires Developer Options + USB Debugging enabled | Tier 3 -- when Tier 1 is insufficient; on-device verbosity for DPC / ZTE / Knox-provisioning investigation |
+
+*(Full method details and AMAPI-cutover semantics: [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) is the authoritative source. Per-method scope, evidence-collection prerequisites, and the BYOD-mode AMAPI cutover are documented in §Section 1, §Section 2, §Section 3 of that file.)*
+
+### Key Intune Portal Paths (Android L2)
+
+| Path | Purpose |
+|------|---------|
+| Devices > Android (all enrollment modes overview) | Per-mode device inventory + enrollment state across BYOD WP / Corporate-owned fully-managed / Corporate-owned dedicated / Corporate-owned WP / AOSP corporate-owned |
+| Devices > Device onboarding > Enrollment > Android (per-mode tabs: Personally-owned WP / Corporate-owned fully-managed / Corporate-owned dedicated / Corporate-owned WP / AOSP corporate-owned) | Per-mode enrollment configuration: token / profile / DPC settings |
+| Apps > Android | Managed Google Play app status, per-app deployment configuration, MGP-binding state |
+| Devices > [device] > Device compliance | Per-device compliance policy evaluation state, timestamps, non-compliant settings (incl. Play Integrity verdict) |
+| Reports > Endpoint analytics (Android subset) | Per-mode device telemetry rollup; supplemental for compliance-trend correlation |
+
+*(Verified 2026-04-30 against Microsoft Learn. Intune admin center reorganizes without deprecation notice — re-verify before content lock-in. Note: Knox Mobile Enrollment portal and Android Zero-Touch portal are EXTERNAL admin portals, not Intune admin center paths — surfaced in L1 quick-ref escalation triggers, not in this Intune-portal table.)*
+
+### Play Integrity Verdict Reference
+
+| Verdict | One-line Meaning | SSoT |
+|---------|------------------|------|
+| MEETS_BASIC_INTEGRITY | Device passed basic integrity check (running on a real Android device, not heavily-modified) | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
+| MEETS_DEVICE_INTEGRITY | Device passed integrity + has Google Play Services (a recognized app-distribution surface) | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
+| MEETS_STRONG_INTEGRITY | Device passed integrity + has Google Play Services + has hardware-backed key attestation + meets the Android security patch age requirement | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
+
+> ⚠️ **Cascade deadlines and the full enforcement-cascade migration playbook are owned by [Phase 54 SSoT — Android Patch Delivery — Deadlines](../operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).**
+
+Full cascade timeline and remediation playbook: see [Android Patch Delivery — Deadlines](../operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).
+
+### Android Investigation Runbooks
+
+- [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) -- prerequisite for all Android L2 investigations (3-method: Company Portal / Microsoft Intune App / adb logcat with AMAPI April 2025 mode-switching)
+- [Android Enrollment Investigation](l2-runbooks/19-android-enrollment-investigation.md) -- GMS modes (BYOD / COBO / Dedicated / ZTE); Pattern A-E failure analysis; AOSP excluded -- see #23
+- [Android App Install Investigation](l2-runbooks/20-android-app-install-investigation.md) -- MGP / LOB three-class disambiguation across all GMS modes
+- [Android Compliance Investigation](l2-runbooks/21-android-compliance-investigation.md) -- Cause A (Play Integrity) / B (OS version) / C (CA timing) / D (passcode / encryption); cross-link to Phase 54 Play Integrity SSoT
+- [Android Knox Investigation](l2-runbooks/22-android-knox-investigation.md) -- mode-specific (Samsung KME provisioning into COBO / Dedicated / WPCO via Knox portal); reciprocal with #19 when Knox-provisioned device fails GMS-side enrollment
+- [Android AOSP Investigation](l2-runbooks/23-android-aosp-investigation.md) -- mode-specific (5 OEMs: RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest); GMS-bearing devices route to #19 instead
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: 3-method log collection with AMAPI mode-switching / Key Intune Portal Paths Android L2 4-5 rows / Play Integrity Verdict Reference 3-row pointer table cross-linking Phase 54 SSoT / 6-runbook investigation list with iOS-style ` -- ` disambiguation per row); link-not-copy contract for Play Integrity SSoT per PITFALL-7 + Phase 56 D-08 inheritance (CLEAN-04; DEFER-07 close) | -- |
 | 2026-04-18 | Phase 32 HUMAN-UAT item 2 closure: updated Key Intune Portal Paths table to reflect current admin center "Device onboarding" section under Devices per Microsoft Learn 2026-04-16 docs (affects Enrollment Program Tokens, Apple MDM Push Certificate, Enrollment restrictions paths) | -- |
 | 2026-04-18 | Phase 32 gap closure (UAT Test 15): replaced iOS Sysdiagnose Trigger Reference physical-button table with AssistiveTouch-based procedure per Apple Support canonical URL; updated cross-link anchor to match renamed Section 3 in 14-ios-log-collection.md | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 3-method diagnostic data collection table, Intune portal paths table, sysdiagnose trigger reference table (modern unified + legacy per-device), and 4-runbook investigation list; research-flag footnotes per D-32; platform coverage blockquote updated per D-41 | -- |
