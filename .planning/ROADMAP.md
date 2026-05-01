@@ -374,7 +374,16 @@ Plans:
   2. All 5 platform glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-android.md`, `_glossary-linux.md`, and `_glossary-ios.md` or equivalent) contain reciprocal see-also entries for cross-platform-equivalent terms — extending the v1.4 macOS↔Android pattern across all 5 platforms (CLEAN-08)
   3. Operations docs carry cross-references back to the relevant per-platform admin-setup dirs (Option C hybrid cross-reference pattern — operations docs reference admin-setup, not duplicate it)
   4. `docs/quick-ref-l1.md` and `docs/quick-ref-l2.md` contain Linux quick-reference sections matching the structural depth of iOS/Android quick-ref sections
-**Plans**: TBD
+**Plans**: 9 plans
+  - [ ] 59-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-11 + D-29 step 5; gates Wave 2 hub-and-glossary edits)
+  - [ ] 59-02-PLAN.md — docs/index.md Linux H2 expansion (D-01..D-06; 3 sub-tables L1=4 / L2=4 / Admin=3 + Cross-Platform References Linux entries)
+  - [ ] 59-03-PLAN.md — docs/operations/00-index.md completion (D-10; Patch + App + Drift sections same-commit per DPO-Phase56-01 hand-off chain)
+  - [ ] 59-04-PLAN.md — docs/index.md Operations H2 (D-07..D-13; 4 sub-H3 + 1-3 row routing tables; depends on 59-03 ops-index completion)
+  - [ ] 59-05-PLAN.md — Glossary CLEAN-08 per-term see-also normalization across 4 glossaries (D-14..D-20; locked collision matrix at 59-05-COLLISION-MATRIX.md)
+  - [ ] 59-06-PLAN.md — docs/quick-ref-l1.md Linux H2 (D-21..D-22 + D-25; 4 sub-H3 + Top Checks=4 items + escalation triggers + decision tree single link + 4-link Runbooks list; mode-tag-free contract)
+  - [ ] 59-07-PLAN.md — docs/quick-ref-l2.md Linux H2 (D-23..D-25; 4 sub-H3 + 3-method log-collection + Intune portal paths + 4-row Compliance Category Reference pointer table + 2-link Investigation Runbooks list; PITFALL-7 firewall)
+  - [ ] 59-08-PLAN.md — scripts/validation/check-phase-59.mjs validator (D-26..D-27 + D-30; 36 V-59-NN structural assertions covering all 4 GAs + ops-index amendment + glossary reciprocity + regression-guards)
+  - [ ] 59-09-PLAN.md — Close gate + 59-VERIFICATION.md + STATE.md + ROADMAP.md updates (D-29 pre-commit gate)
 **Methodology notes**:
   - SERIALIZED after Phase 57 — append-only H2-block contract; Linux H2 appended to docs/index.md after Android H2 is in place
   - Pre-edit anchor inventory mandatory before docs/index.md edit (PITFALL-6)
