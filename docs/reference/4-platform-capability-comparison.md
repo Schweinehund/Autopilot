@@ -57,3 +57,54 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | App supersedence + dependency graphs | Supported — [matrix](linux-capability-matrix.md#app-deployment) | Not supported — [matrix](macos-capability-matrix.md#app-deployment) | Not supported — [matrix](ios-capability-matrix.md#app-deployment) | Not supported — [matrix](android-capability-matrix.md#app-deployment) | Not supported — [matrix](linux-capability-matrix.md#app-deployment) |
 | App-config (managed configurations) targeting | Supported — [matrix](linux-capability-matrix.md#app-deployment) | Supported — [matrix](macos-capability-matrix.md#app-deployment) | Supported — [matrix](ios-capability-matrix.md#app-deployment) | Mode-dependent — [matrix](android-capability-matrix.md#app-deployment) | Not supported — [matrix](linux-capability-matrix.md#app-deployment) |
 | Apps removed on retirement / unenrollment | Supported — [matrix](linux-capability-matrix.md#app-deployment) | Not supported — [matrix](macos-capability-matrix.md#app-deployment) | Supported — [matrix](ios-capability-matrix.md#app-deployment) | Mode-dependent — [matrix](android-capability-matrix.md#app-deployment) | n/a — [matrix](linux-capability-matrix.md#app-deployment) |
+
+## Compliance
+
+| Feature | Windows | macOS | iOS | Android | Linux |
+|---------|---------|-------|-----|---------|-------|
+| Compliance settings catalog scope | Supported — [matrix](linux-capability-matrix.md#compliance) | Partial — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | Partial — [matrix](linux-capability-matrix.md#compliance) |
+| Custom compliance scripts | Supported — [matrix](linux-capability-matrix.md#compliance) | Supported — [matrix](macos-capability-matrix.md#compliance) | Not supported — [matrix](ios-capability-matrix.md#compliance) | Not supported — [matrix](android-capability-matrix.md#compliance) | Supported — [matrix](linux-capability-matrix.md#compliance) |
+| Disk encryption check | Supported — [matrix](linux-capability-matrix.md#compliance) | Supported — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | Partial — [matrix](linux-capability-matrix.md#compliance) |
+| Password / passcode complexity policy | Supported — [matrix](linux-capability-matrix.md#compliance) | Supported — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | Partial — [matrix](linux-capability-matrix.md#compliance) |
+| Hardware attestation (TPM / T2 / Play Integrity / supervised) | Supported — [matrix](linux-capability-matrix.md#compliance) | Partial — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | Not supported — [matrix](linux-capability-matrix.md#compliance) |
+| Jailbreak / root detection | n/a — [matrix](linux-capability-matrix.md#compliance) | Partial — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | n/a — [matrix](linux-capability-matrix.md#compliance) |
+| Userless device compliance support | Supported — [matrix](linux-capability-matrix.md#compliance) | Not supported — [matrix](macos-capability-matrix.md#compliance) | Partial — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | Not supported — [matrix](linux-capability-matrix.md#compliance) |
+| Default compliance posture (newly enrolled, not-yet-evaluated) | Supported — [matrix](linux-capability-matrix.md#compliance) | Supported — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Supported — [matrix](android-capability-matrix.md#compliance) | Supported — [matrix](linux-capability-matrix.md#compliance) |
+| CA grant target (compliance enforcement) | Supported — [matrix](linux-capability-matrix.md#compliance) | Supported — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | Not supported — [matrix](linux-capability-matrix.md#compliance) |
+
+## Software Updates
+
+| Feature | Windows | macOS | iOS | Android | Linux |
+|---------|---------|-------|-----|---------|-------|
+| Update management mechanism | Supported — [matrix](linux-capability-matrix.md#software-updates) | Supported — [matrix](macos-capability-matrix.md#software-updates) | Supported — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
+| Force OS version / forced update enforcement | Supported — [matrix](linux-capability-matrix.md#software-updates) | Supported — [matrix](macos-capability-matrix.md#software-updates) | Supported — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
+| Update deferral duration | Supported — [matrix](linux-capability-matrix.md#software-updates) | Supported — [matrix](macos-capability-matrix.md#software-updates) | Supported — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
+| Update deadline enforcement | Supported — [matrix](linux-capability-matrix.md#software-updates) | Supported — [matrix](macos-capability-matrix.md#software-updates) | Supported — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
+| Emergency / critical update override | Supported — [matrix](linux-capability-matrix.md#software-updates) | Supported — [matrix](macos-capability-matrix.md#software-updates) | Supported — [matrix](ios-capability-matrix.md#software-updates) | Not supported — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
+| Driver / firmware update management | Supported — [matrix](linux-capability-matrix.md#software-updates) | Not supported — [matrix](macos-capability-matrix.md#software-updates) | n/a — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
+| Update status reporting | Supported — [matrix](linux-capability-matrix.md#software-updates) | Supported — [matrix](macos-capability-matrix.md#software-updates) | Supported — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
+
+## Conditional Access
+
+| Feature | Windows | macOS | iOS | Android | Linux |
+|---------|---------|-------|-----|---------|-------|
+| Device-based CA (`Require device to be marked as compliant`) | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Not supported — [matrix](linux-capability-matrix.md#conditional-access) |
+| Web-app CA via Edge / Safari / Chrome | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Supported — [matrix](android-capability-matrix.md#conditional-access) | Supported — [matrix](linux-capability-matrix.md#conditional-access) |
+| Per-app CA (MAM / MAM-WE / managed app) | n/a — [matrix](linux-capability-matrix.md#conditional-access) | Partial — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Not supported — [matrix](linux-capability-matrix.md#conditional-access) |
+| App-based CA / Approved Client App | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Not supported — [matrix](linux-capability-matrix.md#conditional-access) |
+| Risk-based CA (Entra ID Protection) | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Partial — [matrix](linux-capability-matrix.md#conditional-access) |
+
+## See Also
+
+- [Linux Capability Matrix](linux-capability-matrix.md) — Win|Linux bilateral comparison; primary Windows column source per architecture deferral
+- [macOS Capability Matrix](macos-capability-matrix.md) — Windows|macOS bilateral comparison
+- [iOS Capability Matrix](ios-capability-matrix.md) — Windows|macOS|iOS trilateral comparison
+- [Android Capability Matrix](android-capability-matrix.md) — Android Enterprise mode-by-feature matrix (5 GMS modes + AOSP)
+- [APv1 vs APv2 Comparison](../apv1-vs-apv2.md) — Windows-internal Autopilot v1 vs v2 feature divergence (footnote target for 3 Enrollment H2 rows)
+- [Windows vs macOS Concept Comparison](../windows-vs-macos.md) — terminology mapping (not feature parity)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-05-01 | Initial version — Phase 58: 5-platform capability comparison (Windows, macOS, iOS, Android, Linux) across 6 domain H2s with link-not-copy cell architecture (DEFER-08 / AECOMPARE-01 close; CLEAN-05) | -- |
