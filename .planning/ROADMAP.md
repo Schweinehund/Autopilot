@@ -353,7 +353,14 @@ Plans:
   3. `macos-capability-matrix.md`, `ios-capability-matrix.md`, and `android-capability-matrix.md` each have their intro updated to cross-reference the new 4-platform comparison doc; the deferred-4-platform footer stub in `android-capability-matrix.md` is removed and replaced with a forward-link
   4. `linux-capability-matrix.md` cross-references the 4-platform comparison doc (cross-reference in place from Phase 50 — verified in Phase 58)
   5. `check-phase-58.mjs` passes; comparison doc has `last_verified` frontmatter on 45-day cycle (shorter than per-platform matrices due to cross-platform drift surface per ARCHITECTURE.md)
-**Plans**: TBD
+**Plans**: 7 plans
+  - [ ] 58-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-15 baseline; gates Plan 58-02)
+  - [ ] 58-02-PLAN.md — Conditional Access H2 retrofit into macOS / iOS / Android matrices (D-04 mandatory tier-2)
+  - [ ] 58-03-PLAN.md — Author docs/reference/4-platform-capability-comparison.md (CLEAN-05 PRIMARY; D-01..11)
+  - [ ] 58-04-PLAN.md — Sibling matrix intros (D-12) + Linux hedge removal (D-13) + Android footer F3 (D-14)
+  - [ ] 58-05-PLAN.md — scripts/validation/check-phase-58.mjs validator (26 V-58-NN; AUDIT-06)
+  - [ ] 58-06-PLAN.md — C12 promotion informational → blocking at v1.5-milestone-audit.mjs:508 (AUDIT-04)
+  - [ ] 58-07-PLAN.md — Close gate + 58-VERIFICATION.md + STATE.md + ROADMAP.md updates (D-20)
 **Methodology notes**:
   - link-not-copy is a hard architectural rule — cells contain assertions + links, not duplicated prose (PITFALL-7)
   - Phase 58 does NOT write to docs/index.md — that is Phase 59's responsibility
