@@ -505,10 +505,12 @@ const checks = [
   {
     id: 12,
     name: 'C12: 4-platform comparison structural validation',
-    informational: true,
-    // AUDIT-04: INFORMATIONAL-FIRST. File-existence pre-gate. Promotes to blocking once
-    // docs/reference/4-platform-capability-comparison.md exists (Phase 58+).
-    // Link-not-copy: every non-empty data cell must contain a markdown hyperlink.
+    // AUDIT-04: PROMOTED TO BLOCKING at Phase 58 close (informational flag removed per Plan 58-06).
+    // File-existence pre-gate retained at lines below \u2014 informational PASS when file absent (Phase 48-57);
+    // BLOCKING when file exists (Phase 58+).
+    // Link-not-copy: every non-empty data cell (cols 1-5 of canonical 6-col tables) must contain a markdown hyperlink.
+    // Plan 58-06 Rule 1 deviation: col-0 (Feature-name row label) excluded from link-bearing requirement
+    // per D-01 cell-shape contract \u2014 mirrors check-phase-58.mjs V-58-07 extractCanonicalDataCells() logic.
     run() {
       const targetFile = 'docs/reference/4-platform-capability-comparison.md';
       const content = readFile(targetFile);
@@ -522,13 +524,19 @@ const checks = [
       if (missingPlatforms.length > 0) {
         return { pass: false, detail: 'Missing platform columns: ' + missingPlatforms.join(', ') };
       }
-      // Link-not-copy check: table rows with non-empty cells must contain [text](link)
+      // Link-not-copy check: table rows with non-empty data cells (cols 1-5) must contain [text](link).
+      // Restrict to canonical 6-col tables (Feature + 5 platforms) and exclude col-0 (Feature-name row label).
       const tableLines = content.split('\n').filter(l => /^\|/.test(l) && !/^\|[-: ]+\|/.test(l));
       const emptyCells = [];
       for (const line of tableLines) {
         const cells = line.split('|').slice(1, -1);
-        for (const cell of cells) {
-          const trimmed = cell.trim();
+        // Only canonical 6-col tables (Feature + 5 platforms); skip ancillary 3-col tables (Version History) etc.
+        if (cells.length !== 6) continue;
+        // Skip the header row itself
+        if (cells[0].trim() === 'Feature') continue;
+        // Check cols 1-5 only (data cells); col-0 is the row-label / Feature-name (intentionally not link-bearing)
+        for (let i = 1; i < 6; i++) {
+          const trimmed = cells[i].trim();
           if (trimmed && trimmed !== '\u2014' && trimmed !== 'N/A' && !/\[.+\]\(.+\)/.test(trimmed)) {
             emptyCells.push(trimmed.slice(0, 40));
           }
@@ -537,7 +545,7 @@ const checks = [
       if (emptyCells.length > 0) {
         return { pass: false, detail: emptyCells.length + ' cell(s) missing hyperlinks (link-not-copy violation)' };
       }
-      return { pass: true, detail: '(informational)' };
+      return { pass: true, detail: '5 platform columns + all data cells link-bearing' };
     }
   },
   {
