@@ -4,14 +4,14 @@ milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: verifying
 stopped_at: Phase 58 Plan 58-04 complete (commits 610b3bb + 4feb805); Plan 58-05 ready to ship check-phase-58.mjs validator
-last_updated: "2026-05-01T05:27:07.763Z"
+last_updated: "2026-05-01T05:34:01.776Z"
 last_activity: 2026-05-01 -- Plan 58-04 executed -- D-12 5C sibling matrix intros (macOS/iOS/Android) + D-13 Linux hedge close + D-14 Android footer F3 retrofit + W-8 Android domain-count rewrite landed atomically
 progress:
   total_phases: 14
   completed_phases: 9
   total_plans: 77
-  completed_plans: 74
-  percent: 96
+  completed_plans: 75
+  percent: 97
 ---
 
 # Project State
@@ -32,7 +32,7 @@ Last activity: 2026-05-01 -- Plan 58-04 executed -- D-12 5C sibling matrix intro
 
 ## Session Continuity
 
-Last session: 2026-05-01T05:26:47.103Z
+Last session: 2026-05-01T05:33:23.465Z
 Stopped at: Phase 58 Plan 58-04 complete (commits 610b3bb + 4feb805); Plan 58-05 ready to ship check-phase-58.mjs validator
 Resume file: None
 Next action: `/gsd-execute-phase 58 --auto` continues with Plan 58-05 (`scripts/validation/check-phase-58.mjs` validator with ~24-28 V-58-NN structural assertions covering 6 H2s + 5 platform columns + cell hyperlink presence + verdict vocabulary + 3 sibling CA H2 retrofits + Android footer F3 anchor + body + 3 sibling intro cross-refs + Linux hedge removal + comparison-doc Windows-source-acknowledgment)
@@ -40,7 +40,7 @@ Next action: `/gsd-execute-phase 58 --auto` continues with Plan 58-05 (`scripts/
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
 
 ```
-Progress: [██████████] 96%
+Progress: [██████████] 97%
 Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
 Status:   .  X  .  X  X  X  X  X  X  X  .  .  .  .
           (. = not started; X = complete)
@@ -95,6 +95,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase 58 / Plan 58-03]: CLEAN-05 PRIMARY deliverable shipped — `docs/reference/4-platform-capability-comparison.md` authored across 2 atomic commits (`0a55ecd` = frontmatter + intro + first 3 H2s; `629d7fc` = remaining 3 H2s + See Also + Version History); 6 capability H2s in ROADMAP-locked order (Enrollment / Configuration / App Deployment / Compliance / Software Updates / Conditional Access) × 5 platform columns × 48 feature rows = 240 link-bearing data cells (100% D-01 verdict + em-dash + matrix-anchor compliance); verdict distribution 118 Supported / 17 Partial / 56 Not supported / 35 Mode-dependent / 14 n/a; D-08 Windows column targets `linux-capability-matrix.md#<h2-slug>` for all 6 H2s (6 × 8 Windows-side cells per H2 = 48 Windows cells across 6 H2s); D-09 footnote-prose link to `../apv1-vs-apv2.md` applied to exactly 3 Enrollment rows (Pre-provisioning, Hybrid Entra Join, Windows 10 support — cap of ≤3 rows respected); D-10 intro Windows-source-acknowledgment sentence present verbatim; D-11 5-Platform title with retained `4-platform-capability-comparison.md` filename for DEFER-08 / AECOMPARE-01 traceability; D-19 45-day cycle (`last_verified: 2026-05-01` / `review_by: 2026-06-15`); CA H2 row consumes 4 sibling-matrix `#conditional-access` anchors (Linux pre-existing + 3 retrofitted by Plan 58-02) — Wave 3 dependency cleanly resolved; deviation (Rule 1): PLAN.md Task 2 verification regex incorrectly counted col-0 row-label cells (deliverable correct at 240/240, but original cell-shape regex needed col-0 exclusion fix — corrected check exits 0 with 100% data-cell compliance); Plan 58-04 (D-12 sibling-intro cross-refs + D-13 Linux hedge close + D-14 Android footer F3) and Plan 58-05 (validator V-58-NN structural assertions including V-58-09 / V-58-10 frontmatter pin) and Plan 58-06 (C12 informational→blocking promotion gate file-existence pre-gate) all unblocked
 - [Phase 58 / Plan 58-04]: D-12 5C sibling matrix intro cross-refs + D-13 Linux hedge close + D-14 Android footer F3 retrofit + W-8 Android domain-count rewrite shipped across 2 atomic commits (`610b3bb` = D-12 5C intro cross-ref sentences appended to macOS / iOS / Android intros + W-8 Android `five locked domains — Enrollment, Configuration, App Deployment, Compliance, and Software Updates` → `six locked domains — Enrollment, Configuration, App Deployment, Compliance, Software Updates, and Conditional Access` rewrite; `4feb805` = D-13 Linux `(when shipped)` hedge at line 70 + `— when Phase 58 ships` em-dash trailing prose at line 112 both removed (link literal preserved at both sites) + D-14 Android footer F3 retrofit: anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` PRESERVED byte-identical, H3 `Deferred:` prefix dropped per Phase 45 AEAOSPFULL-09 verbatim model, 5-line body block REMOVED and REPLACED with single 1-sentence forward-link prose to `4-platform-capability-comparison.md`, Version History row appended); 9/9 plan-level grep verifications pass; 13/13 Task 1 + 11/11 Task 2 node checks pass; all 6 capability H2s preserved across all 4 sibling matrices (macOS / iOS / Android / Linux); Phase 45 AEAOSPFULL-09 anchor `<a id="deferred-full-aosp-capability-mapping"></a>` + `### AOSP per-OEM capability mapping` H3 + 4-line body region UNTOUCHED byte-identical (V-58-22 regression-guard target satisfied — confirmed via `git diff` showing zero changes in that block); cross-Plan-58-02 dependency: W-8 Android domain-count enumeration rewrite is only computable post-58-02 CA H2 retrofit (Plan 58-02 commits `54a70b8` + `6d3ce98`); cross-Plan-58-03 dependency: Plan 58-04 forward-link target `docs/reference/4-platform-capability-comparison.md` existed at file-path-existence check pre-flight (Plan 58-03 commits `0a55ecd` + `629d7fc` + `8e888af`); deviation: NONE — Plan 58-04 executed exactly as written (out-of-scope label `4-platform deferral footer` at android-matrix line 93 logged in SUMMARY but NOT modified per append-only contract for Task 2); Plan 58-05 (`scripts/validation/check-phase-58.mjs` validator with V-58-NN structural assertions including V-58-14/15/16 sibling intro cross-refs + V-58-17/18/19 Android footer F3 + V-58-20/21 Linux hedge close + V-58-22 Phase 45 anchor regression-guard) unblocked
 - [Phase ?]: [Phase 58 / Plan 58-05]: scripts/validation/check-phase-58.mjs validator authored with 26 V-58-NN structural assertions across 2 atomic commits (ae1758a Task 1 V-58-01..13 + 0d64e62 Task 2 V-58-14..26 + runner); B-1 forward-search fix applied to V-58-25; W-9 skip-list fix applied to V-58-07; Rule 1 extractCanonicalDataCells() col-0 exclusion fix (suppresses 47 false positives; matches Plan 58-03 240-cell figure); Rule 2 V-58-26 strengthened to lock D-11 title-asymmetry contract; pre-Plan-58-06 validator run produces 25 PASS / 1 FAIL (V-58-25 awaiting C12 promotion) / 0 SKIPPED; full 26/26 PASS expected post-58-06; Plans 58-06 + 58-07 unblocked
+- [Phase ?]: [Phase 58 / Plan 58-06]: AUDIT-04 promotion gate landed; informational: true flag removed from v1.5-milestone-audit.mjs C12 entry (commit bc9cee6); harness exits 0 with C12 PASS in blocking mode; V-58-25 flips FAIL -> PASS; 26/26 V-58-NN PASS; Rule 1 deviation: col-0 cell-shape exclusion fix to C12 verifier mirrors check-phase-58.mjs extractCanonicalDataCells() per explicit handoff at check-phase-58.mjs:56; CLEAN-05 covered via AUDIT-04; Plan 58-07 unblocked
 
 ### Pending Todos
 
