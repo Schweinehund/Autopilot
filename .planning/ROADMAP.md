@@ -357,7 +357,7 @@ Plans:
   - [x] 58-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-15 baseline; gates Plan 58-02) — completed 2026-05-01 (commit `16b98ad`)
   - [x] 58-02-PLAN.md — Conditional Access H2 retrofit into macOS / iOS / Android matrices (D-04 mandatory tier-2)
   - [x] 58-03-PLAN.md — Author docs/reference/4-platform-capability-comparison.md (CLEAN-05 PRIMARY; D-01..11) — completed 2026-05-01 (commits `0a55ecd` + `629d7fc`; 240/240 D-01 cell shape compliance; D-08 Windows-source pattern + D-09 ≤3 footnote rows + D-10 intro acknowledgment + D-11 5-Platform-title + D-19 45-day cycle all satisfied)
-  - [ ] 58-04-PLAN.md — Sibling matrix intros (D-12) + Linux hedge removal (D-13) + Android footer F3 (D-14)
+  - [x] 58-04-PLAN.md — Sibling matrix intros (D-12) + Linux hedge removal (D-13) + Android footer F3 (D-14)
   - [ ] 58-05-PLAN.md — scripts/validation/check-phase-58.mjs validator (26 V-58-NN; AUDIT-06)
   - [ ] 58-06-PLAN.md — C12 promotion informational → blocking at v1.5-milestone-audit.mjs:508 (AUDIT-04)
   - [ ] 58-07-PLAN.md — Close gate + 58-VERIFICATION.md + STATE.md + ROADMAP.md updates (D-20)
@@ -467,7 +467,7 @@ Plans:
 | 55. App Lifecycle Automation | v1.5 | 7/7 | Complete    | 2026-04-28 |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
-| 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 2/7 | In Progress|  |
+| 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 4/7 | In Progress|  |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 0/? | Not started | - |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 0/? | Not started | - |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |
