@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: verifying
-stopped_at: Phase 58 Plan 58-04 complete (commits 610b3bb + 4feb805); Plan 58-05 ready to ship check-phase-58.mjs validator
-last_updated: "2026-05-01T05:34:01.776Z"
-last_activity: 2026-05-01 -- Plan 58-04 executed -- D-12 5C sibling matrix intros (macOS/iOS/Android) + D-13 Linux hedge close + D-14 Android footer F3 retrofit + W-8 Android domain-count rewrite landed atomically
+stopped_at: Phase 58 closed (DEFER-08 / AECOMPARE-01 / CLEAN-05 closed; 26/26 V-58-NN PASS; 5/5 SCs satisfied; C12 promoted informational -> blocking; C2 carry-over resolved; progressive-landing 58-01..58-07)
+last_updated: "2026-05-01T06:00:00.000Z"
+last_activity: 2026-05-01 -- Phase 58 closed -- progressive-landing 16b98ad..3f1ec7f landed across 7 plans; VERIFICATION.md authored; C2 supervision_exemptions refreshed for post-58-02 line shifts
 progress:
   total_phases: 14
-  completed_phases: 9
+  completed_phases: 10
   total_plans: 77
-  completed_plans: 75
+  completed_plans: 76
   percent: 97
 ---
 
@@ -21,28 +21,28 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and operate them at depth (co-management, patching, app lifecycle, drift/migration) once enrolled
-**Current focus:** Phase 58 — DEFER-08 4-Platform Capability Comparison (ready for /gsd-discuss-phase or /gsd-plan-phase)
+**Current focus:** Phase 59 — Hub Navigation Integration (Linux + Operations Sections) (ready for /gsd-plan-phase 59)
 
 ## Current Position
 
-Phase: 58 (DEFER-08 4-Platform Capability Comparison) — executing
-Plan: 58-04 complete; 58-05 next
-Status: Plan 58-04 surface-edit cluster shipped on 2026-05-01 across 2 atomic commits (`610b3bb` D-12 5C sibling matrix intro cross-refs + W-8 Android `five locked domains` → `six locked domains` rewrite, `4feb805` D-13 Linux `(when shipped)` + `when Phase 58 ships` hedge close at lines 70+112 + D-14 Android footer F3 anchor-preservation / H3 `Deferred:` prefix-drop / body-retarget per Phase 45 AEAOSPFULL-09 verbatim model); 9/9 plan-level grep verifications pass; 13/13 Task 1 node checks + 11/11 Task 2 node checks pass; all 6 capability H2s preserved in all 4 sibling matrices; Phase 45 AEAOSPFULL-09 anchor `<a id="deferred-full-aosp-capability-mapping">` UNTOUCHED byte-identical (V-58-22 regression-guard satisfied); D-14 anchor `<a id="deferred-4-platform-unified-capability-comparison">` PRESERVED with body retargeted from 5-line deferral wording to 1-sentence forward-link prose; Plan 58-05 (validator V-58-NN structural assertions) unblocked — V-58-14/15/16 sibling intro cross-refs + V-58-17/18/19 Android footer F3 + V-58-20/21 Linux hedge close + V-58-22 Phase 45 anchor regression-guard all now testable
-Last activity: 2026-05-01 -- Plan 58-04 executed -- D-12 5C sibling matrix intros (macOS/iOS/Android) + D-13 Linux hedge close + D-14 Android footer F3 retrofit + W-8 Android domain-count rewrite landed atomically
+Phase: 59 (Hub Navigation Integration — Linux + Operations Sections) — ready
+Plan: TBD
+Status: Phase 58 closed (DEFER-08 / AECOMPARE-01 / CLEAN-05 closed; 26/26 V-58-NN PASS; 5/5 SCs satisfied; 12/12 v1.5 milestone audit checks PASS including newly-promoted C12 in blocking mode; C2 carry-over resolved at Plan 58-07); 7-plan progressive-landing across 16 commits `16b98ad..3f1ec7f` + close commit; VERIFICATION.md authored; AUDIT-04 (C12 informational -> blocking) landed at Phase 58 close per CONTEXT D-17/D-18 routing override; AUDIT-06 validator-as-deliverable lineage extended (Phase 50..58); Phase 45 AEAOSPFULL-09 anchor preservation honored (V-58-22); ready for /gsd-plan-phase 59
+Last activity: 2026-05-01 -- Phase 58 closed -- progressive-landing 16b98ad..3f1ec7f across 7 plans + close commit; VERIFICATION.md authored; STATE.md/ROADMAP.md updated
 
 ## Session Continuity
 
-Last session: 2026-05-01T05:33:23.465Z
-Stopped at: Phase 58 Plan 58-04 complete (commits 610b3bb + 4feb805); Plan 58-05 ready to ship check-phase-58.mjs validator
-Resume file: None
-Next action: `/gsd-execute-phase 58 --auto` continues with Plan 58-05 (`scripts/validation/check-phase-58.mjs` validator with ~24-28 V-58-NN structural assertions covering 6 H2s + 5 platform columns + cell hyperlink presence + verdict vocabulary + 3 sibling CA H2 retrofits + Android footer F3 anchor + body + 3 sibling intro cross-refs + Linux hedge removal + comparison-doc Windows-source-acknowledgment)
+Last session: 2026-05-01T06:00:00.000Z
+Stopped at: Phase 58 closed (DEFER-08 / AECOMPARE-01 / CLEAN-05 closed; 26/26 V-58-NN PASS; 5/5 SCs satisfied; C12 promoted informational -> blocking; C2 carry-over resolved; progressive-landing 58-01..58-07)
+Resume file: .planning/phases/58-defer-08-4-platform-capability-comparison/58-VERIFICATION.md
+Next action: `/gsd-plan-phase 59` -- Hub Navigation Integration (Linux + Operations Sections)
 
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
 
 ```
 Progress: [██████████] 97%
 Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
-Status:   .  X  .  X  X  X  X  X  X  X  .  .  .  .
+Status:   .  X  .  X  X  X  X  X  X  X  X  .  .  .
           (. = not started; X = complete)
 ```
 
@@ -96,6 +96,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase 58 / Plan 58-04]: D-12 5C sibling matrix intro cross-refs + D-13 Linux hedge close + D-14 Android footer F3 retrofit + W-8 Android domain-count rewrite shipped across 2 atomic commits (`610b3bb` = D-12 5C intro cross-ref sentences appended to macOS / iOS / Android intros + W-8 Android `five locked domains — Enrollment, Configuration, App Deployment, Compliance, and Software Updates` → `six locked domains — Enrollment, Configuration, App Deployment, Compliance, Software Updates, and Conditional Access` rewrite; `4feb805` = D-13 Linux `(when shipped)` hedge at line 70 + `— when Phase 58 ships` em-dash trailing prose at line 112 both removed (link literal preserved at both sites) + D-14 Android footer F3 retrofit: anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` PRESERVED byte-identical, H3 `Deferred:` prefix dropped per Phase 45 AEAOSPFULL-09 verbatim model, 5-line body block REMOVED and REPLACED with single 1-sentence forward-link prose to `4-platform-capability-comparison.md`, Version History row appended); 9/9 plan-level grep verifications pass; 13/13 Task 1 + 11/11 Task 2 node checks pass; all 6 capability H2s preserved across all 4 sibling matrices (macOS / iOS / Android / Linux); Phase 45 AEAOSPFULL-09 anchor `<a id="deferred-full-aosp-capability-mapping"></a>` + `### AOSP per-OEM capability mapping` H3 + 4-line body region UNTOUCHED byte-identical (V-58-22 regression-guard target satisfied — confirmed via `git diff` showing zero changes in that block); cross-Plan-58-02 dependency: W-8 Android domain-count enumeration rewrite is only computable post-58-02 CA H2 retrofit (Plan 58-02 commits `54a70b8` + `6d3ce98`); cross-Plan-58-03 dependency: Plan 58-04 forward-link target `docs/reference/4-platform-capability-comparison.md` existed at file-path-existence check pre-flight (Plan 58-03 commits `0a55ecd` + `629d7fc` + `8e888af`); deviation: NONE — Plan 58-04 executed exactly as written (out-of-scope label `4-platform deferral footer` at android-matrix line 93 logged in SUMMARY but NOT modified per append-only contract for Task 2); Plan 58-05 (`scripts/validation/check-phase-58.mjs` validator with V-58-NN structural assertions including V-58-14/15/16 sibling intro cross-refs + V-58-17/18/19 Android footer F3 + V-58-20/21 Linux hedge close + V-58-22 Phase 45 anchor regression-guard) unblocked
 - [Phase ?]: [Phase 58 / Plan 58-05]: scripts/validation/check-phase-58.mjs validator authored with 26 V-58-NN structural assertions across 2 atomic commits (ae1758a Task 1 V-58-01..13 + 0d64e62 Task 2 V-58-14..26 + runner); B-1 forward-search fix applied to V-58-25; W-9 skip-list fix applied to V-58-07; Rule 1 extractCanonicalDataCells() col-0 exclusion fix (suppresses 47 false positives; matches Plan 58-03 240-cell figure); Rule 2 V-58-26 strengthened to lock D-11 title-asymmetry contract; pre-Plan-58-06 validator run produces 25 PASS / 1 FAIL (V-58-25 awaiting C12 promotion) / 0 SKIPPED; full 26/26 PASS expected post-58-06; Plans 58-06 + 58-07 unblocked
 - [Phase ?]: [Phase 58 / Plan 58-06]: AUDIT-04 promotion gate landed; informational: true flag removed from v1.5-milestone-audit.mjs C12 entry (commit bc9cee6); harness exits 0 with C12 PASS in blocking mode; V-58-25 flips FAIL -> PASS; 26/26 V-58-NN PASS; Rule 1 deviation: col-0 cell-shape exclusion fix to C12 verifier mirrors check-phase-58.mjs extractCanonicalDataCells() per explicit handoff at check-phase-58.mjs:56; CLEAN-05 covered via AUDIT-04; Plan 58-07 unblocked
+- [Phase 58]: 26 V-58-NN structural assertions implemented; progressive-landing pattern across 16 per-plan commits + close commit (`16b98ad..3f1ec7f` + close); pre-commit gate (3 validators) all GREEN at close — `check-phase-58.mjs` exits 0 with 26/26 V-58-NN PASS, `v1.5-milestone-audit.mjs` exits 0 with 12/12 PASS (including newly-promoted C12 in blocking mode), `regenerate-supervision-pins.mjs --self-test` informational FAIL preserved-not-regressed (v1.4.1 carry-over per STATE.md `Out-of-band carry-overs`); D-04 mandatory tier-2 CA H2 retrofit landed in macOS / iOS / Android sibling matrices (Plan 58-02 commits `54a70b8` + `6d3ce98`); D-08 Windows column → linux-capability-matrix.md canonical source applied (a dedicated windows-capability-matrix.md deferred to v1.6+ per D-10); D-09 ≤3 footnote-prose rows applied (Pre-Provisioning, Hybrid Entra Join, Windows 10 support); D-11 filename retained as `4-platform-capability-comparison.md` despite 5-platform scope (DEFER-08 / AECOMPARE-01 traceability); D-12 5C single-sentence intro cross-ref pattern (NOT 5B blockquote / NOT 5D new H2); D-13 Linux matrix `(when shipped)` hedge removed atomically (lines 70 + 112); D-14 Android footer F3 anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` preserved per Phase 45 AEAOSPFULL-09 model + body retargeted to single-sentence forward-link prose; D-15 pre-edit anchor inventory artifact (`58-ANCHOR-INVENTORY.md`) captured per PITFALL-6; D-17 + D-18 C12 promotion (informational → blocking) landed at Phase 58 close (NOT Phase 60 — ROADMAP:382-383 still owns scope expansion for Phase 60); D-19 45-day `last_verified` cycle for new comparison doc (vs 60-day per-platform); D-20 verification-during-execution discipline; W-7 spot-check methodology applied (5 random rows × 6 H2s = 30 rows; 100% verdict accuracy); W-8 Android intro `five locked domains` → `six locked domains` rewrite (CA enumeration consistency); Plan 58-07 carry-over resolution: C2 `supervision_exemptions` refreshed for post-58-02 line shifts (78/80/81/83/87/88 → 88/90/91/93/97/98) — intentional iOS-attributed citations per AEAUDIT-04 doctrine preserved verbatim, only line-number metadata refreshed; 240/240 link-bearing data cells at 100% D-01 cell-shape compliance; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed; Phase 59 unblocked
 
 ### Pending Todos
 

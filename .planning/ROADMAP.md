@@ -125,7 +125,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [x] **Phase 55: App Lifecycle Automation** — operations/app-lifecycle/ 5-file suite; Win32 supersedence chains + dependency graphs; macOS PKG/DMG + Installomator callout; iOS VPP device vs user; Android MGP private-app publishing (completed 2026-04-28; atomic commit aecf014)
 - [ ] **Phase 56: Drift Detection + Tenant Migration** — operations/drift-migration/ 5-file suite; Windows BitLocker re-key; macOS/iOS ABM token re-issue; Android MGP re-binding; cross-platform encryption drift folded into runbook
 - [x] **Phase 57: DEFER-07 Android Nav Unification** — 4-file hub surgical retrofit: docs/index.md Android H2 expansion + common-issues.md routing + quick-ref-l1.md + quick-ref-l2.md Android sections; pre-edit anchor inventory mandatory — completed 2026-04-30
-- [ ] **Phase 58: DEFER-08 4-Platform Capability Comparison** — docs/reference/4-platform-capability-comparison.md (link-not-copy cells; 6 domain axes; 5 platforms including Linux); cross-link retrofits to all 4 existing capability matrices
+- [x] **Phase 58: DEFER-08 4-Platform Capability Comparison** — docs/reference/4-platform-capability-comparison.md (link-not-copy cells; 6 domain axes; 5 platforms including Linux); cross-link retrofits to all 4 existing capability matrices (completed 2026-05-01; progressive-landing 16b98ad..3f1ec7f across 7 plans; 26/26 V-58-NN PASS; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed)
 - [ ] **Phase 59: Hub Navigation Integration — Linux + Operations Sections** — docs/index.md Linux H2 + Operations H2; glossary cross-reference normalization (CLEAN-08) across all 5 platform glossaries; quick-ref Linux sections; ops cross-references
 - [ ] **Phase 60: Audit Harness v1.5 Finalization** — C11 promote to blocking; C12 blocking promotion; C13 second broken-link pass + promote; v1.5-audit-allowlist.json seeded with known-legitimate exemptions
 - [ ] **Phase 61: Gap Closure + Terminal Re-Audit + Milestone Close** — broken-link fixes; v1.5-MILESTONE-AUDIT.md; harness exits 0 all blocking PASS; REQUIREMENTS.md synced; PROJECT.md traceability closure
@@ -360,7 +360,7 @@ Plans:
   - [x] 58-04-PLAN.md — Sibling matrix intros (D-12) + Linux hedge removal (D-13) + Android footer F3 (D-14)
   - [x] 58-05-PLAN.md — scripts/validation/check-phase-58.mjs validator (26 V-58-NN; AUDIT-06)
   - [x] 58-06-PLAN.md — C12 promotion informational → blocking at v1.5-milestone-audit.mjs:508 (AUDIT-04)
-  - [ ] 58-07-PLAN.md — Close gate + 58-VERIFICATION.md + STATE.md + ROADMAP.md updates (D-20)
+  - [x] 58-07-PLAN.md — Close gate + 58-VERIFICATION.md + STATE.md + ROADMAP.md updates (D-20) — completed 2026-05-01 (commits `3f1ec7f` C2 carry-over resolution + close commit; 5/5 SCs satisfied; 26/26 V-58-NN PASS; 12/12 v1.5-milestone-audit PASS including C12 in blocking mode; CLEAN-05 + AUDIT-04 + AUDIT-06 closed)
 **Methodology notes**:
   - link-not-copy is a hard architectural rule — cells contain assertions + links, not duplicated prose (PITFALL-7)
   - Phase 58 does NOT write to docs/index.md — that is Phase 59's responsibility
@@ -467,7 +467,7 @@ Plans:
 | 55. App Lifecycle Automation | v1.5 | 7/7 | Complete    | 2026-04-28 |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
-| 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 6/7 | In Progress|  |
+| 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 0/? | Not started | - |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 0/? | Not started | - |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |
