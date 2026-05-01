@@ -243,4 +243,218 @@ const checks = [
       return { pass: true, detail: "## Conditional Access H2 present" };
     }
   },
-  // === V-58-14..26 appended in Task 2 ===
+  // === SIBLING MATRIX INTRO CROSS-REF (V-58-14..16) ===
+  {
+    id: 14, name: "V-58-14: macos-capability-matrix.md intro contains 4-platform-capability-comparison.md link (D-12)",
+    run() {
+      const c = readFile(MACOS_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + MACOS_MATRIX };
+      const intro = c.split('\n').slice(0, 30).join('\n');
+      if (!intro.includes("4-platform-capability-comparison.md")) return { pass: false, detail: "intro missing 4-platform-capability-comparison.md link" };
+      if (!intro.includes("4-Platform Capability Comparison")) return { pass: false, detail: "intro missing '4-Platform Capability Comparison' link text" };
+      return { pass: true, detail: "intro cross-ref present" };
+    }
+  },
+  {
+    id: 15, name: "V-58-15: ios-capability-matrix.md intro contains 4-platform-capability-comparison.md link (D-12)",
+    run() {
+      const c = readFile(IOS_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + IOS_MATRIX };
+      const intro = c.split('\n').slice(0, 30).join('\n');
+      if (!intro.includes("4-platform-capability-comparison.md")) return { pass: false, detail: "intro missing 4-platform-capability-comparison.md link" };
+      if (!intro.includes("4-Platform Capability Comparison")) return { pass: false, detail: "intro missing '4-Platform Capability Comparison' link text" };
+      return { pass: true, detail: "intro cross-ref present" };
+    }
+  },
+  {
+    id: 16, name: "V-58-16: android-capability-matrix.md intro contains 4-platform-capability-comparison.md link (D-12)",
+    run() {
+      const c = readFile(ANDROID_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      const intro = c.split('\n').slice(0, 30).join('\n');
+      if (!intro.includes("4-platform-capability-comparison.md")) return { pass: false, detail: "intro missing 4-platform-capability-comparison.md link" };
+      if (!intro.includes("4-Platform Capability Comparison")) return { pass: false, detail: "intro missing '4-Platform Capability Comparison' link text" };
+      return { pass: true, detail: "intro cross-ref present" };
+    }
+  },
+
+  // === ANDROID FOOTER F3 MECHANICS (V-58-17..19) ===
+  {
+    id: 17, name: "V-58-17: android-capability-matrix.md preserves anchor #deferred-4-platform-unified-capability-comparison (D-14)",
+    run() {
+      const c = readFile(ANDROID_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      if (!c.includes('<a id="deferred-4-platform-unified-capability-comparison"></a>')) {
+        return { pass: false, detail: 'Android footer anchor "#deferred-4-platform-unified-capability-comparison" missing — D-14 anchor-preservation contract violated' };
+      }
+      return { pass: true, detail: "anchor preserved verbatim" };
+    }
+  },
+  {
+    id: 18, name: "V-58-18: android-capability-matrix.md footer block has forward-link to 4-platform-capability-comparison.md within 800 chars after anchor (D-14)",
+    run() {
+      const c = readFile(ANDROID_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      const idx = c.indexOf('<a id="deferred-4-platform-unified-capability-comparison"></a>');
+      if (idx < 0) return { pass: false, detail: "anchor not found (V-58-17 should have caught this)" };
+      const block = c.slice(idx, idx + 800);
+      if (!block.includes("4-platform-capability-comparison.md")) {
+        return { pass: false, detail: "Android footer block missing forward-link to 4-platform-capability-comparison.md (D-14 F3 violation)" };
+      }
+      return { pass: true, detail: "forward-link present in 800-char window after anchor" };
+    }
+  },
+  {
+    id: 19, name: "V-58-19: NEGATIVE — Android footer block does NOT contain pre-Phase-58 deferral wording (deferred to v1.5 OR AECOMPARE-01)",
+    run() {
+      const c = readFile(ANDROID_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      const idx = c.indexOf('<a id="deferred-4-platform-unified-capability-comparison"></a>');
+      if (idx < 0) return { pass: false, detail: "anchor not found" };
+      const block = c.slice(idx, idx + 800);
+      if (/deferred to v1\.5/.test(block)) return { pass: false, detail: "footer block still contains 'deferred to v1.5' — F3 body-replacement incomplete" };
+      if (/AECOMPARE-01/.test(block)) return { pass: false, detail: "footer block still contains 'AECOMPARE-01' — F3 body-replacement incomplete" };
+      return { pass: true, detail: "no pre-Phase-58 deferral wording in footer block" };
+    }
+  },
+
+  // === LINUX MATRIX HEDGE REMOVAL (V-58-20..21) ===
+  {
+    id: 20, name: "V-58-20: NEGATIVE — linux-capability-matrix.md does NOT contain '(when shipped)' literal anywhere (D-13)",
+    run() {
+      const c = readFile(LINUX_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + LINUX_MATRIX };
+      if (c.includes("(when shipped)")) return { pass: false, detail: "'(when shipped)' literal still present — D-13 hedge removal incomplete" };
+      if (c.includes("when Phase 58 ships")) return { pass: false, detail: "'when Phase 58 ships' literal still present — D-13 hedge removal incomplete" };
+      return { pass: true, detail: "no hedge literals present" };
+    }
+  },
+  {
+    id: 21, name: "V-58-21: linux-capability-matrix.md still contains 4-platform-capability-comparison.md link (link preservation post-hedge-removal)",
+    run() {
+      const c = readFile(LINUX_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + LINUX_MATRIX };
+      if (!c.includes("4-platform-capability-comparison.md")) return { pass: false, detail: "Linux matrix link to comparison doc missing — D-13 should have preserved link literal" };
+      return { pass: true, detail: "link literal preserved" };
+    }
+  },
+
+  // === REGRESSION GUARDS (V-58-22..23) ===
+  {
+    id: 22, name: "V-58-22: NEGATIVE regression-guard — android-capability-matrix.md preserves Phase 45 AEAOSPFULL-09 anchor #deferred-full-aosp-capability-mapping",
+    run() {
+      const c = readFile(ANDROID_MATRIX);
+      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      if (!c.includes('<a id="deferred-full-aosp-capability-mapping"></a>')) {
+        return { pass: false, detail: "Phase 45 anchor regression — '#deferred-full-aosp-capability-mapping' missing" };
+      }
+      return { pass: true, detail: "Phase 45 anchor preserved (V-58-22 regression-guard PASS)" };
+    }
+  },
+  {
+    id: 23, name: "V-58-23: NEGATIVE regression-guard — 5 existing H2 literals preserved across macOS / iOS / Android matrices (15 anchor pins)",
+    run() {
+      const h2s = ["## Enrollment", "## Configuration", "## App Deployment", "## Compliance", "## Software Updates"];
+      const failures = [];
+      for (const m of SIBLING_MATRICES) {
+        const c = readFile(m);
+        if (c === null) { failures.push(m + ": file missing"); continue; }
+        for (const h of h2s) {
+          if (!new RegExp("^" + h.replace(/[/\\^$*+?.()|[\]{}]/g, "\\$&") + "\\s*$", "m").test(c)) {
+            failures.push(m + ": missing " + h);
+          }
+        }
+      }
+      if (failures.length) return { pass: false, detail: failures.slice(0, 5).join(" | ") };
+      return { pass: true, detail: "all 15 H2 anchor pins preserved (5 H2s × 3 matrices)" };
+    }
+  },
+
+  // === TBD/TODO SCAN (V-58-24) ===
+  {
+    id: 24, name: "V-58-24: NEGATIVE — no TBD/TODO/FIXME/XXX/PLACEHOLDER tokens in 5 reference files outside Version History",
+    run() {
+      const re = /\b(TBD|TODO|FIXME|XXX|PLACEHOLDER)\b/;
+      const failures = [];
+      for (const f of REF_FILES) {
+        const c = readFile(f);
+        if (c === null) continue;
+        // Strip code blocks
+        const stripped = c.replace(/```[\s\S]*?```/g, "");
+        // Strip Version History H2 to EOF (and Changelog as belt-and-braces)
+        const beforeVH = stripped
+          .replace(/^## Version History[\s\S]*$/m, '')
+          .replace(/^## Changelog[\s\S]*$/m, '');
+        if (re.test(beforeVH)) {
+          const m = beforeVH.match(re);
+          failures.push(f + ": '" + m[1] + "' found");
+        }
+      }
+      if (failures.length) return { pass: false, detail: failures.join(" | ") };
+      return { pass: true, detail: "no TBD/TODO tokens in 5 reference files (outside Version History)" };
+    }
+  },
+
+  // === C12 PROMOTION GATE + FILENAME RETENTION (V-58-25..26) ===
+  {
+    id: 25, name: "V-58-25: scripts/validation/v1.5-milestone-audit.mjs C12 promoted from informational to blocking (Plan 58-06 deliverable)",
+    run() {
+      const c = readFile(AUDIT_HARNESS);
+      if (c === null) return { pass: false, detail: "File missing: " + AUDIT_HARNESS };
+      // Locate the C12 entry: the harness has check entries with `id: 12, name: 'C12: ...'`.
+      // The `informational: true` flag in v1.5-milestone-audit.mjs sits AFTER the C12 name line
+      // (verified pre-Plan-58-06 at line 508 of harness; name at line 507).
+      // Search FORWARD from the C12 name into a generous 800-char window that covers the full
+      // C12 entry block (descr + verifier function head). Anchored regex `/^\s*informational:\s*true,?\s*$/m`
+      // matches the standalone `informational: true,` line per B-1 fix.
+      const c12Idx = c.indexOf("name: 'C12: 4-platform comparison structural validation'");
+      if (c12Idx < 0) return { pass: false, detail: "C12 entry not found in harness (search literal: \"name: 'C12: 4-platform comparison structural validation'\")" };
+      const inC12Region = c.slice(c12Idx, c12Idx + 800);
+      if (/^\s*informational:\s*true,?\s*$/m.test(inC12Region)) {
+        return { pass: false, detail: "C12 still has 'informational: true' within first 800 chars after name (Plan 58-06 promotion patch not yet landed — expected pre-58-06)" };
+      }
+      return { pass: true, detail: "C12 promoted to blocking (informational flag removed per AUDIT-04)" };
+    }
+  },
+  {
+    id: 26, name: "V-58-26: comparison doc filename retained as 4-platform-capability-comparison.md (D-11 traceability)",
+    run() {
+      const c = readFile(COMPARISON_DOC);
+      if (c === null) return { pass: false, detail: "File missing at canonical path " + COMPARISON_DOC + " — D-11 filename retention violated" };
+      // Title literal pin — confirms the rename to 5-Platform happened in the H1 title (D-11 says: filename retained,
+      // but title is 5-Platform). Verifies content matches deliberate naming asymmetry.
+      if (!/^# 5-Platform/m.test(c)) {
+        return { pass: false, detail: "comparison doc H1 title does not start with '5-Platform' (D-11 title-asymmetry contract)" };
+      }
+      return { pass: true, detail: "filename retained per D-11 lineage (DEFER-08 / AECOMPARE-01 token preserved); title is '5-Platform'" };
+    }
+  }
+];
+
+// === RUNNER LOOP (mirrors check-phase-57.mjs lines 539-564) ===
+const LABEL_WIDTH = 64;
+function padLabel(s) {
+  if (s.length >= LABEL_WIDTH) return s + " ";
+  return s + " " + ".".repeat(LABEL_WIDTH - s.length) + " ";
+}
+
+let passed = 0, failed = 0, skipped = 0;
+
+for (const check of checks) {
+  let result;
+  try { result = check.run(); } catch (e) { result = { pass: false, detail: "Unexpected error: " + e.message }; }
+  const prefix = "[" + check.id + "/" + checks.length + "] " + check.name;
+  if (result.skipped) {
+    skipped++;
+    process.stdout.write(padLabel(prefix) + "SKIPPED -- " + (result.detail || "") + "\n");
+  } else if (result.pass) {
+    passed++;
+    process.stdout.write(padLabel(prefix) + "PASS" + (VERBOSE && result.detail ? " -- " + result.detail : "") + "\n");
+  } else {
+    failed++;
+    process.stdout.write(padLabel(prefix) + "FAIL -- " + result.detail + "\n");
+  }
+}
+
+process.stdout.write("\nSummary: " + passed + " passed, " + failed + " failed, " + skipped + " skipped\n");
+process.exit(failed > 0 ? 1 : 0);
