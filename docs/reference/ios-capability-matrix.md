@@ -77,6 +77,16 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Emergency / critical update override | Yes (Expedited Windows Quality Updates) | Yes (DDM emergency update) | Yes (DDM emergency update on iOS 17+) |
 | Update status reporting | Windows Update report | DDM status channel (macOS 14+) | DDM status channel (iOS 17+); polling on older |
 
+## Conditional Access
+
+| Feature | Windows | macOS | iOS |
+|---------|---------|-------|-----|
+| Device-based CA (`Require device to be marked as compliant`) | Supported | Supported | Supported (supervised attestation strengthens device-state signal; unsupervised devices use jailbreak detection — see [Compliance](#compliance)) |
+| Web-app CA via Edge / Safari | Supported | Supported | Supported (Microsoft Edge / Safari with Apple Single Sign-On extension) |
+| Per-app CA (MAM-WE) | n/a (Windows uses Intune client) | Limited | Supported (MAM-WE — Managed App Without Enrollment; selective-wipe + per-app PIN; works on devices NOT enrolled in Intune MDM) |
+| App-based CA / Approved Client App | Supported | Supported | Supported (Microsoft Authenticator / Outlook / Edge family; per-app token broker) |
+| Risk-based CA | Supported (Entra ID Protection signals) | Supported | Supported (Entra ID Protection user-risk signals; iOS device-risk signals via Microsoft Defender for Endpoint — see [Compliance](#compliance)) |
+
 ## Key Gaps Summary
 
 The most significant iOS capability gaps relative to Windows and macOS are:

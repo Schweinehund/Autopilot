@@ -75,6 +75,16 @@ This document compares Intune management capabilities between Windows and macOS 
 | Deferral control | Yes (0-30 days) | Yes (0-30 days via Restrictions + DDM) |
 | "Update Only" app deployment | Yes (Win32 supersedence) | No (documented gap) |
 
+## Conditional Access
+
+| Feature | Windows | macOS |
+|---------|---------|-------|
+| Device-based CA (`Require device to be marked as compliant`) | Supported | Supported (compliance evaluation requires user affinity — see [Compliance](#compliance)) |
+| Web-app CA via Edge | Supported | Supported (Microsoft Edge / Safari with Single Sign-On Extension) |
+| Per-app CA (MAM) | n/a (Windows uses Intune client) | Limited (MAM-WE is iOS-primary; macOS uses configuration profiles + DeviceID surface) |
+| App-based CA / Approved Client App | Supported | Supported (via configuration profile + native MDM enrollment) |
+| Risk-based CA | Supported (Entra ID Protection signals) | Supported (Entra ID Protection signals; macOS device state factored when user-affinity is present) |
+
 ## Key Gaps Summary
 
 The most significant capability gaps for macOS compared to Windows are:
