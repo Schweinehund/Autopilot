@@ -73,6 +73,16 @@ This matrix compares Intune management capabilities across the five Android Ente
 | Play Store app-update control | Yes — per-app auto-update posture via MGP | Yes — per-app auto-update posture via MGP (work-profile apps) | Yes (work-profile apps only) | Yes | Yes (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) (no Play Store) |
 | OEM update enforcement | 🔒 FM/DO-only — Android OS update posture respected by OEMs in managed mode | 🔒 device-owner-side — Android OS update posture respected by OEMs in managed mode | N/A (OEM updates apply to personal device; admin has no enforcement surface) | 🔒 FM/DO-only — matches COBO (kiosk windowed posture common) | 🔒 FM/DO-only — matches COBO post-handoff | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) (OEM firmware update pipeline varies by vendor) |
 
+## Conditional Access
+
+| Feature | COBO (Fully Managed) | COPE (WPCO) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
+|---------|----------------------|-------------|---------------------|------------------|------------------|------|
+| Device-based CA (`Require device to be marked as compliant`) | Supported (Play Integrity attestation; full device-wide compliance signal) | Supported (Play Integrity on work-profile + device-owner side) | Supported (Play Integrity on work-profile only) | Supported (typically not user-CA-bearing — kiosk fleets) | Supported (post-handoff; matches COBO) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) (Play Integrity not available on non-GMS hardware) |
+| Web-app CA via Edge / Chrome | Supported | Supported | Supported | Supported | Supported (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
+| Per-app CA (MAM) | Supported (Microsoft Intune app DPC + per-app policies) | Supported (work-profile-scoped) | Supported (work-profile-scoped; MAM-WE pattern available for non-enrolled BYOD) | Limited (kiosk fleets typically not MAM-targeted) | Supported (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
+| App-based CA / Approved Client App | Supported | Supported | Supported | Supported | Supported (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
+| Risk-based CA | Supported (Entra ID Protection + Microsoft Defender for Endpoint signals) | Supported | Supported | Supported | Supported (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
+
 ## Cross-Platform Equivalences
 
 <!-- AEAUDIT-04: "supervision" in this section MUST appear only as an iOS-attributed
