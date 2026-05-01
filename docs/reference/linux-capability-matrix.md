@@ -67,7 +67,7 @@ For Linux admin setup guides, see [Linux Admin Setup Overview](../admin-setup-li
 
 ## Cross-Platform Equivalences
 
-This section maps three Linux↔Apple capability pairs called out in ROADMAP SC#4. It is NOT a 4-platform comparison — see Phase 58's [4-Platform Capability Comparison](4-platform-capability-comparison.md) (when shipped) for that. Each paired row attributes the platform explicitly on both sides; mappings are STRUCTURAL, not behavioral (per Phase 49 PITFALL-1 partial-mapping discipline at `_glossary-linux.md` line 84 and 112).
+This section maps three Linux↔Apple capability pairs called out in ROADMAP SC#4. It is NOT a 4-platform comparison — see the [4-Platform Capability Comparison](4-platform-capability-comparison.md) for that. Each paired row attributes the platform explicitly on both sides; mappings are STRUCTURAL, not behavioral (per Phase 49 PITFALL-1 partial-mapping discipline at `_glossary-linux.md` line 84 and 112).
 
 | Linux | macOS / iOS |
 |-------|-------------|
@@ -109,7 +109,7 @@ The most significant capability gaps for Linux compared to Windows are:
 - [macOS Capability Matrix](macos-capability-matrix.md) — Win|macOS bilateral comparison
 - [iOS Capability Matrix](ios-capability-matrix.md)
 - [Android Capability Matrix](android-capability-matrix.md)
-- [4-Platform Capability Comparison](4-platform-capability-comparison.md) — when Phase 58 ships
+- [4-Platform Capability Comparison](4-platform-capability-comparison.md)
 
 ## Version History
 

@@ -140,13 +140,9 @@ capability mapping (5-OEM × 4-capability-H2 sub-tables) is documented in
 [AOSP OEM Matrix](aosp-oem-matrix.md). See also [AOSP stub](../admin-setup-android/06-aosp-stub.md).
 
 <a id="deferred-4-platform-unified-capability-comparison"></a>
-### Deferred: 4-platform unified capability comparison
+### 4-platform unified capability comparison
 
-This matrix is Android-centric with a bounded 3-row Cross-Platform Equivalences
-section. A unified Windows|macOS|iOS|Android 4-platform feature comparison doc
-is deferred to v1.5 (AECOMPARE-01). The paired rows in this matrix are NOT a
-4-platform comparison — they are mode-level feature parity assertions between
-Apple and Android, constrained to the 3 SC#1-named pairs.
+For a side-by-side comparison of Android Enterprise capabilities against Windows, macOS, iOS, and Linux across all 6 capability domains (Enrollment, Configuration, App Deployment, Compliance, Software Updates, Conditional Access), see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ---
 
@@ -154,5 +150,6 @@ Apple and Android, constrained to the 3 SC#1-named pairs.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-04-30 | Phase 58 D-14: `#deferred-4-platform-unified-capability-comparison` anchor preserved; H3 `Deferred:` prefix dropped; 7-line body retargeted to single-sentence forward-link prose to `4-platform-capability-comparison.md`. Phase 45 AEAOSPFULL-09 anchor-preservation precedent. Plan 58-04 also appended D-12 5C intro cross-ref sentence and W-8 domain-count rewrite (`five locked domains` → `six locked domains` enumerating Conditional Access). | -- |
 | 2026-04-25 | Phase 45 AEAOSPFULL-09: `#deferred-full-aosp-capability-mapping` anchor fill — replaced "deferred to v1.4.1" prose with cross-link to new `aosp-oem-matrix.md` per AEAOSPFULL-09 verbatim "link to" wording. Anchor preserved for backward-compat. | -- |
 | 2026-04-24 | Initial version — Phase 42: Android Enterprise capability matrix (5 domains, 5 mode rows, Cross-Platform Equivalences H2 with 3 paired rows, Key Gaps Summary, deferral footers) | -- |
