@@ -8,7 +8,7 @@ platform: all
 
 # Intune: iOS/iPadOS Capability Matrix — Windows, macOS, iOS
 
-This matrix compares Intune management capabilities across three platforms. Apple-platform readers (admins coming from macOS ADE) will find the iOS↔macOS comparison surfaces the most meaningful differences — DDM maturity, supervision model scope, and VPP licensing behavior. Windows readers should treat iOS and macOS as structurally distinct from Windows despite being managed via the same Intune tenant. For the Windows↔macOS-only view, see the [macOS Capability Matrix](macos-capability-matrix.md). For concept-level terminology comparison, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md).
+This matrix compares Intune management capabilities across three platforms. Apple-platform readers (admins coming from macOS ADE) will find the iOS↔macOS comparison surfaces the most meaningful differences — DDM maturity, supervision model scope, and VPP licensing behavior. Windows readers should treat iOS and macOS as structurally distinct from Windows despite being managed via the same Intune tenant. For the Windows↔macOS-only view, see the [macOS Capability Matrix](macos-capability-matrix.md). For concept-level terminology comparison, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For a side-by-side comparison of iOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ## Enrollment
 

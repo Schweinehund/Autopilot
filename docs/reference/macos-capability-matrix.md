@@ -8,7 +8,7 @@ platform: all
 
 # Intune: macOS vs Windows Capability Matrix
 
-This document compares Intune management capabilities between Windows and macOS across five operational domains. This is a feature parity analysis, not a terminology comparison -- for concept mapping between platforms, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For macOS admin setup guides, see [macOS Admin Setup Overview](../admin-setup-macos/00-overview.md).
+This document compares Intune management capabilities between Windows and macOS across five operational domains. This is a feature parity analysis, not a terminology comparison -- for concept mapping between platforms, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For macOS admin setup guides, see [macOS Admin Setup Overview](../admin-setup-macos/00-overview.md). For a side-by-side comparison of macOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ## Enrollment
 
