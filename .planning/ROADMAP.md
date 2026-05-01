@@ -354,7 +354,7 @@ Plans:
   4. `linux-capability-matrix.md` cross-references the 4-platform comparison doc (cross-reference in place from Phase 50 — verified in Phase 58)
   5. `check-phase-58.mjs` passes; comparison doc has `last_verified` frontmatter on 45-day cycle (shorter than per-platform matrices due to cross-platform drift surface per ARCHITECTURE.md)
 **Plans**: 7 plans
-  - [ ] 58-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-15 baseline; gates Plan 58-02)
+  - [x] 58-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-15 baseline; gates Plan 58-02) — completed 2026-05-01 (commit `16b98ad`)
   - [ ] 58-02-PLAN.md — Conditional Access H2 retrofit into macOS / iOS / Android matrices (D-04 mandatory tier-2)
   - [ ] 58-03-PLAN.md — Author docs/reference/4-platform-capability-comparison.md (CLEAN-05 PRIMARY; D-01..11)
   - [ ] 58-04-PLAN.md — Sibling matrix intros (D-12) + Linux hedge removal (D-13) + Android footer F3 (D-14)

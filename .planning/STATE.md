@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: executing
-stopped_at: "Phase 58 plans created (7 PLAN.md files in 6 waves; revision 1/3 PASSED; commit 839a53a; CLEAN-05 covered; all 20 D-NN decisions referenced; ready for /gsd-execute-phase)"
-last_updated: "2026-04-30T16:30:00.000Z"
-last_activity: 2026-04-30 -- Phase 58 plans verified and committed (839a53a) -- chain auto-advance to execute-phase
+stopped_at: "Phase 58 Plan 58-01 complete (pre-edit anchor inventory artifact landed at commit 16b98ad; Wave 2 unblocked; Plan 58-02 may begin CA H2 retrofit)"
+last_updated: "2026-05-01T04:48:00.000Z"
+last_activity: 2026-05-01 -- Phase 58 Plan 58-01 executed -- 58-ANCHOR-INVENTORY.md captures 24 pre-retrofit + 3 expected post-retrofit + 2 compat shim anchors (commit 16b98ad)
 progress:
   total_phases: 14
   completed_phases: 9
   total_plans: 77
-  completed_plans: 69
+  completed_plans: 70
   percent: 64
 ---
 
@@ -25,17 +25,17 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 
 ## Current Position
 
-Phase: 58 (DEFER-08 4-Platform Capability Comparison) — ready
-Plan: not yet started
-Status: Phase 57 closed (DEFER-07 Android nav unified; 26/26 V-57-NN PASS; 4/4 SCs satisfied); ready for `/gsd-discuss-phase 58` or `/gsd-plan-phase 58`
-Last activity: 2026-04-30 -- Phase 57 closed -- progressive-landing commits 1dee562..20dff5d landed across 7 plans; VERIFICATION.md authored
+Phase: 58 (DEFER-08 4-Platform Capability Comparison) — executing
+Plan: 58-01 complete; 58-02 next
+Status: Plan 58-01 (pre-edit anchor inventory artifact) committed at `16b98ad` on 2026-05-01; D-15 + PITFALL-6 baseline locked; Wave 2 (Plan 58-02 CA H2 retrofit) gate satisfied
+Last activity: 2026-05-01 -- Plan 58-01 executed -- 58-ANCHOR-INVENTORY.md captured (24 pre-retrofit + 3 expected post-retrofit + 2 compat shim anchors); pre-edit baseline HEAD 22161b9b recorded for VERIFICATION.md cross-check
 
 ## Session Continuity
 
-Last session: 2026-04-30T16:30:00.000Z
-Stopped at: Phase 58 plans created (7 PLAN.md, 6 waves, commit 839a53a) -- iteration 2 VERIFICATION PASSED
-Resume file: .planning/phases/58-defer-08-4-platform-capability-comparison/58-01-PLAN.md
-Next action: `/gsd-execute-phase 58 --auto` -- chain auto-advance to execute
+Last session: 2026-05-01T04:48:00.000Z
+Stopped at: Phase 58 Plan 58-01 complete (commit 16b98ad); Plan 58-02 ready to begin CA H2 retrofit
+Resume file: .planning/phases/58-defer-08-4-platform-capability-comparison/58-02-PLAN.md
+Next action: `/gsd-execute-phase 58 --auto` continues with Plan 58-02 (Conditional Access H2 retrofit into macOS / iOS / Android matrices per D-04)
 
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
 
@@ -90,6 +90,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase 55]: 32 V-55-NN structural assertions implemented; atomic single-commit landing (commit `aecf014`) covers 7 deliverables (5 content files + validator + same-commit edit to win32-app-packaging.md per RESEARCH §6 Option A) per CONTEXT D-21 + CDI-Phase55-05 inheritance from Phase 54; pre-commit gate (3 validators) and post-commit verification all exit 0; AMAPI 2024-2025 phrasing softened per CD-11 + RESEARCH §7 caveat #2; circular-dependency-detection claim retracted in win32-app-packaging.md:99 per RESEARCH §6 Option A
 - [Phase 56]: 32 V-56-NN structural assertions implemented; progressive-landing pattern across 6 per-plan commits (`d0654d2..3540f4b`) culminating in close commit `aecf014`-style; pre-commit gate (3 validators) and post-commit verification all exit 0; MEDIUM-confidence dual-surface framing on tenant-migration runbook (frontmatter + inline blockquote per CONTEXT D-16); cross-platform encryption-drift folded into runbook per SC#5 mandate; 7/7 DRIFT-NN covered
 - [Phase 57]: 26 V-57-NN structural assertions implemented; progressive-landing pattern across 8 per-plan commits (`1dee562..20dff5d`); pre-commit gate (3 validators + 4 file-level checks per D-32) and post-commit verification all exit 0; iOS H2 anchor stability NEGATIVE regression-guard (V-57-25) preserved Phase 32 deliverables byte-identical pre/post; PITFALL-7 firewall enforced for Play Integrity SSoT (V-57-21 NEGATIVE — `MEETS_VIRTUAL_INTEGRITY` ABSENT + no inline deadline literals); pre-edit anchor inventory artifact captured per PITFALL-6 + D-32 step 5; C4 (DEFER-07 deferral guard) retired with audit-trail continuity preserved (commit `20dff5d`); atomic-commit interpretation reconciled at plan-series level per DPO-Phase57-06; 4/4 CLEAN-NN covered
+- [Phase 58 / Plan 58-01]: Pre-edit anchor inventory artifact `58-ANCHOR-INVENTORY.md` captured (commit `16b98ad`); pre-edit baseline HEAD `22161b9b5f13436bc2d68bb52822037720c7096d` locked for VERIFICATION.md cross-check at Phase 58 close; 24 pre-retrofit anchor literals tabulated (Linux 7 H2s + macOS 5 + iOS 5 + Android 6 + 2 Android `<a id>` compat shims); 3 EXPECTED POST-58-02 `#conditional-access` anchors documented; 30-cell comparison-doc target mapping (5 platform cols × 6 H2 rows = 24 unique slugs because Windows + Linux columns share targets per D-08) prepared for Plan 58-03; inbound-reference baselines verified (filename refs = 2; anchor refs = 2); Phase 57 D-32 step 5 + 57-ANCHOR-INVENTORY.md format inheritance honored; Wave 2 gate satisfied — Plan 58-02 unblocked
 
 ### Pending Todos
 
