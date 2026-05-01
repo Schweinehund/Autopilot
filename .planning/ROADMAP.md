@@ -355,7 +355,7 @@ Plans:
   5. `check-phase-58.mjs` passes; comparison doc has `last_verified` frontmatter on 45-day cycle (shorter than per-platform matrices due to cross-platform drift surface per ARCHITECTURE.md)
 **Plans**: 7 plans
   - [x] 58-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-15 baseline; gates Plan 58-02) — completed 2026-05-01 (commit `16b98ad`)
-  - [ ] 58-02-PLAN.md — Conditional Access H2 retrofit into macOS / iOS / Android matrices (D-04 mandatory tier-2)
+  - [x] 58-02-PLAN.md — Conditional Access H2 retrofit into macOS / iOS / Android matrices (D-04 mandatory tier-2)
   - [ ] 58-03-PLAN.md — Author docs/reference/4-platform-capability-comparison.md (CLEAN-05 PRIMARY; D-01..11)
   - [ ] 58-04-PLAN.md — Sibling matrix intros (D-12) + Linux hedge removal (D-13) + Android footer F3 (D-14)
   - [ ] 58-05-PLAN.md — scripts/validation/check-phase-58.mjs validator (26 V-58-NN; AUDIT-06)
@@ -467,7 +467,7 @@ Plans:
 | 55. App Lifecycle Automation | v1.5 | 7/7 | Complete    | 2026-04-28 |
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
-| 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 0/? | Not started | - |
+| 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 2/7 | In Progress|  |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 0/? | Not started | - |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 0/? | Not started | - |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |

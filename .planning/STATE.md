@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
-status: executing
-stopped_at: "Phase 58 Plan 58-01 complete (pre-edit anchor inventory artifact landed at commit 16b98ad; Wave 2 unblocked; Plan 58-02 may begin CA H2 retrofit)"
-last_updated: "2026-05-01T04:48:00.000Z"
-last_activity: 2026-05-01 -- Phase 58 Plan 58-01 executed -- 58-ANCHOR-INVENTORY.md captures 24 pre-retrofit + 3 expected post-retrofit + 2 compat shim anchors (commit 16b98ad)
+status: "Plan 58-02 (D-04 mandatory tier-2 CA H2 retrofit) shipped on 2026-05-01 across 2 atomic commits (`54a70b8` macOS+iOS, `6d3ce98` Android); 3 new `#conditional-access` GFM anchors resolvable; both Android `<a id>` compat shim anchors preserved byte-identical; Wave 3 (Plan 58-03 comparison-doc author) gate satisfied"
+stopped_at: Phase 58 Plan 58-02 complete (commits 54a70b8 + 6d3ce98); Plan 58-03 ready to author 4-platform-capability-comparison.md
+last_updated: "2026-05-01T04:53:05.297Z"
+last_activity: "2026-05-01 -- Plan 58-02 executed -- macOS/iOS/Android matrices retrofitted with ## Conditional Access H2 (5 CA rows each, mirroring Linux template lines 59-66); column counts match host matrix (3/4/7); 5 existing H2 literals byte-identical pre/post"
 progress:
   total_phases: 14
   completed_phases: 9
   total_plans: 77
-  completed_plans: 70
-  percent: 64
+  completed_plans: 71
+  percent: 92
 ---
 
 # Project State
@@ -26,21 +26,21 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 ## Current Position
 
 Phase: 58 (DEFER-08 4-Platform Capability Comparison) — executing
-Plan: 58-01 complete; 58-02 next
-Status: Plan 58-01 (pre-edit anchor inventory artifact) committed at `16b98ad` on 2026-05-01; D-15 + PITFALL-6 baseline locked; Wave 2 (Plan 58-02 CA H2 retrofit) gate satisfied
-Last activity: 2026-05-01 -- Plan 58-01 executed -- 58-ANCHOR-INVENTORY.md captured (24 pre-retrofit + 3 expected post-retrofit + 2 compat shim anchors); pre-edit baseline HEAD 22161b9b recorded for VERIFICATION.md cross-check
+Plan: 58-02 complete; 58-03 next
+Status: Plan 58-02 (D-04 mandatory tier-2 CA H2 retrofit) shipped on 2026-05-01 across 2 atomic commits (`54a70b8` macOS+iOS, `6d3ce98` Android); 3 new `#conditional-access` GFM anchors resolvable; both Android `<a id>` compat shim anchors preserved byte-identical; Wave 3 (Plan 58-03 comparison-doc author) gate satisfied
+Last activity: 2026-05-01 -- Plan 58-02 executed -- macOS/iOS/Android matrices retrofitted with ## Conditional Access H2 (5 CA rows each, mirroring Linux template lines 59-66); column counts match host matrix (3/4/7); 5 existing H2 literals byte-identical pre/post
 
 ## Session Continuity
 
-Last session: 2026-05-01T04:48:00.000Z
-Stopped at: Phase 58 Plan 58-01 complete (commit 16b98ad); Plan 58-02 ready to begin CA H2 retrofit
-Resume file: .planning/phases/58-defer-08-4-platform-capability-comparison/58-02-PLAN.md
-Next action: `/gsd-execute-phase 58 --auto` continues with Plan 58-02 (Conditional Access H2 retrofit into macOS / iOS / Android matrices per D-04)
+Last session: 2026-05-01T04:53:05.272Z
+Stopped at: Phase 58 Plan 58-02 complete (commits 54a70b8 + 6d3ce98); Plan 58-03 ready to author 4-platform-capability-comparison.md
+Resume file: .planning/phases/58-defer-08-4-platform-capability-comparison/58-03-PLAN.md
+Next action: `/gsd-execute-phase 58 --auto` continues with Plan 58-03 (author docs/reference/4-platform-capability-comparison.md with 6 H2s × 5 platform columns; 30-cell verdict-word + markdown-link content per D-01/D-02/D-03)
 
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
 
 ```
-Progress: [###################           ] 9/14 phases (64%)
+Progress: [█████████░] 92%
 Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
 Status:   .  X  .  X  X  X  X  X  X  X  .  .  .  .
           (. = not started; X = complete)
@@ -91,6 +91,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase 56]: 32 V-56-NN structural assertions implemented; progressive-landing pattern across 6 per-plan commits (`d0654d2..3540f4b`) culminating in close commit `aecf014`-style; pre-commit gate (3 validators) and post-commit verification all exit 0; MEDIUM-confidence dual-surface framing on tenant-migration runbook (frontmatter + inline blockquote per CONTEXT D-16); cross-platform encryption-drift folded into runbook per SC#5 mandate; 7/7 DRIFT-NN covered
 - [Phase 57]: 26 V-57-NN structural assertions implemented; progressive-landing pattern across 8 per-plan commits (`1dee562..20dff5d`); pre-commit gate (3 validators + 4 file-level checks per D-32) and post-commit verification all exit 0; iOS H2 anchor stability NEGATIVE regression-guard (V-57-25) preserved Phase 32 deliverables byte-identical pre/post; PITFALL-7 firewall enforced for Play Integrity SSoT (V-57-21 NEGATIVE — `MEETS_VIRTUAL_INTEGRITY` ABSENT + no inline deadline literals); pre-edit anchor inventory artifact captured per PITFALL-6 + D-32 step 5; C4 (DEFER-07 deferral guard) retired with audit-trail continuity preserved (commit `20dff5d`); atomic-commit interpretation reconciled at plan-series level per DPO-Phase57-06; 4/4 CLEAN-NN covered
 - [Phase 58 / Plan 58-01]: Pre-edit anchor inventory artifact `58-ANCHOR-INVENTORY.md` captured (commit `16b98ad`); pre-edit baseline HEAD `22161b9b5f13436bc2d68bb52822037720c7096d` locked for VERIFICATION.md cross-check at Phase 58 close; 24 pre-retrofit anchor literals tabulated (Linux 7 H2s + macOS 5 + iOS 5 + Android 6 + 2 Android `<a id>` compat shims); 3 EXPECTED POST-58-02 `#conditional-access` anchors documented; 30-cell comparison-doc target mapping (5 platform cols × 6 H2 rows = 24 unique slugs because Windows + Linux columns share targets per D-08) prepared for Plan 58-03; inbound-reference baselines verified (filename refs = 2; anchor refs = 2); Phase 57 D-32 step 5 + 57-ANCHOR-INVENTORY.md format inheritance honored; Wave 2 gate satisfied — Plan 58-02 unblocked
+- [Phase 58 / Plan 58-02]: D-04 mandatory tier-2 Conditional Access H2 retrofit shipped across 2 atomic commits (`54a70b8` = macOS+iOS, `6d3ce98` = Android); 3 new `## Conditional Access` H2s landed in macOS/iOS/Android matrices with 5 CA feature rows each mirroring Linux template (Device-based CA / Web-app CA / Per-app CA MAM-or-MAM-WE / App-based CA Approved Client App / Risk-based CA); column counts match host matrix (3 / 4 / 7); GFM-deterministic `#conditional-access` slug verified resolvable for all 3 retrofitted matrices (PITFALL-15 sidestep — lowercase ASCII space-to-hyphen); append-only contract honored (5 existing H2 literals byte-identical pre/post per matrix; 3 Android `<a id>` literals preserved verbatim including Phase 45 AEAOSPFULL-09 `#deferred-full-aosp-capability-mapping` and D-14 F3 `#deferred-4-platform-unified-capability-comparison`); Linux matrix UNTOUCHED (Plan 58-04 owns Linux line 70 + line 112 hedge-removal); Plan 58-03 (comparison-doc author) and Plan 58-05 (validator V-58-11/12/13 anchor-pin assertions) both unblocked; total H2 audit post-edit = 25 lines across 4 matrices matching D-15 expected post-retrofit count (delta = +3 vs pre-Phase-58 baseline of 22)
 
 ### Pending Todos
 
