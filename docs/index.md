@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-30
-review_by: 2026-06-29
+last_verified: 2026-05-01
+review_by: 2026-06-30
 applies_to: both
 audience: all
 platform: all
@@ -196,6 +196,38 @@ Troubleshooting, investigation, and setup guides for Android Enterprise provisio
 
 ---
 
+## Linux Provisioning
+
+Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04 LTS) device management through Microsoft Intune. For terminology, see the [Linux Provisioning Glossary](_glossary-linux.md). For enrollment paths, see the [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md).
+
+### Service Desk (L1)
+
+| Resource | When to Use |
+|----------|-------------|
+| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Start here -- understand the Linux enrollment paths (Ubuntu 22.04 / 24.04 LTS, intune-portal package install, microsoft-identity-broker) |
+| [Linux Triage Decision Tree](decision-trees/09-linux-triage.md) | Identifies the Linux failure scenario from symptoms (enrollment failed / non-compliant / web-app-CA-blocking-Edge / agent service not running) and routes to the correct runbook |
+| [Linux L1 Runbooks](l1-runbooks/00-index.md#linux-l1-runbooks) | Scripted procedures for the 4 Linux failure scenarios (runbooks 30-33) |
+| [L1 Quick-Reference Card](quick-ref-l1.md#linux-quick-reference) | One-page cheat sheet -- top checks, escalation triggers, decision tree, and runbook list |
+
+### Desktop Engineering (L2)
+
+| Resource | When to Use |
+|----------|-------------|
+| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Review the Linux enrollment pipeline before diagnosing |
+| [Linux Log Collection Guide](l2-runbooks/24-linux-log-collection.md) | Prerequisite for all Linux L2 investigations (3-method matrix: journalctl / file-based paths / package-state queries) |
+| [Linux L2 Runbooks](l2-runbooks/00-index.md#linux-l2-runbooks) | Investigation guides for log collection + agent investigation (runbooks 24-25) |
+| [L2 Quick-Reference Card](quick-ref-l2.md#linux-quick-reference) | One-page cheat sheet -- 3-method log collection, Intune portal paths, Linux compliance category reference, investigation runbook list |
+
+### Admin Setup
+
+| Resource | When to Use |
+|----------|-------------|
+| [Linux Admin Setup Overview](admin-setup-linux/00-overview.md) | Entry point for all Linux admin setup guides; per-file setup sequence (00-05) lives at this overview, not at hub level |
+| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Review the enrollment pipeline before configuring Intune + intune-portal package (admin-context entry) |
+| [Linux Capability Matrix](reference/linux-capability-matrix.md) | Compare Linux feature parity vs Windows, macOS, iOS, Android -- scannable 6-domain table |
+
+---
+
 ## Cross-Platform References
 
 | Resource | Description |
@@ -217,11 +249,14 @@ Troubleshooting, investigation, and setup guides for Android Enterprise provisio
 | [iOS Capability Matrix](reference/ios-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, and iOS (NAV-03) |
 | [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md) | Mode comparison with DPC ownership axis (BYOD / COBO / Dedicated / ZTE / AOSP) and Managed Google Play binding |
 | [Android Capability Matrix](reference/android-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, iOS, and Android |
+| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Ubuntu 22.04 / 24.04 LTS enrollment pipeline summary |
+| [Linux Capability Matrix](reference/linux-capability-matrix.md) | Intune feature parity comparison across all 5 platforms |
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-01 | Phase 59: appended `## Linux Provisioning` H2 with 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching Phase 57 Android H2 structural depth (CLEAN-08 SC#1); appended Linux Provisioning Lifecycle + Linux Capability Matrix Cross-Platform References entries (D-05) | -- |
 | 2026-04-30 | Phase 57: expanded Android Enterprise H2 to 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching iOS Phase 32 structural depth (CLEAN-01); added Android Provisioning Lifecycle + Android Capability Matrix Cross-Platform References entries (DEFER-07 close) | -- |
 | 2026-04-24 | Phase 42: added Android Provisioning stub H2, Choose-Your-Platform bullet, Android Glossary cross-reference entry (AEAUDIT-02) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Provisioning section (L1/L2/Admin Setup subsections) + Choose Your Platform third entry + trilateral H1 narrative | -- |
