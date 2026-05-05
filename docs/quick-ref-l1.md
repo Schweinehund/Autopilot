@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-30
-review_by: 2026-06-29
+last_verified: 2026-05-01
+review_by: 2026-06-30
 applies_to: both
 audience: L1
 platform: all
@@ -181,10 +181,43 @@ platform: all
 - **[Knox]** [Android Knox Enrollment Failed](l1-runbooks/28-android-knox-enrollment-failed.md) -- Samsung KME provisioning failed (consumer setup loop or never arrived)
 - **[AOSP]** [Android AOSP Enrollment Failed](l1-runbooks/29-android-aosp-enrollment-failed.md) -- AOSP enrollment did not initiate across 5 OEMs (RealWear / Zebra / Pico / HTC / Meta Quest)
 
+---
+
+## Linux Quick Reference
+
+**Platform:** Linux (Ubuntu 22.04 / 24.04 LTS) through Microsoft Intune
+
+### Top Checks
+
+1. Device visible in Intune? -- Intune admin center > Devices > Linux -- search by serial; check enrollment state
+2. Compliance state? -- Devices > [device] > Device compliance -- Compliant vs Non-compliant + non-compliant categories (Allowed Distributions / Custom Compliance / Device Encryption / Password Policy)
+3. `intune-portal` package installed? -- `dpkg -l intune-portal` returns `ii` status (status indicator `ii` = installed + configured)
+4. `intune-agent.timer` running? -- `systemctl --user list-timers intune-agent.timer` shows recent activation timestamp
+
+### Linux Escalation Triggers
+
+- Enrollment timeout > 30 minutes after `intune-portal` sign-in --> **Escalate L2** (collect: `journalctl -u intune-agent`, `/var/log/dpkg.log`, `/var/log/intune-update.log`)
+- Compliance category failure persists across 2+ evaluation cycles --> **Escalate L2** (collect: full compliance evaluation output + Bash discovery script logs)
+- Conditional access blocking Microsoft Edge sign-in despite device showing as compliant in Intune --> **Escalate L2** (cause-A: stale CA evaluation; cause-B: web-app CA mode mis-scoped; reference admin-setup-linux/05-conditional-access.md)
+- Intune agent service crash-loop on systemd restart --> **Escalate L2** (collect: `systemctl status intune-agent`, `journalctl --user -u intune-agent`)
+- Identity Broker `intune-portal` 2.0.2+ Java-to-broker breaking change re-enrollment loop --> **Escalate L2** (Phase 50 LIN-05 known pitfall; verify post-update CA assignments / filters / Entra group memberships)
+
+### Linux Decision Tree
+
+- [Linux Triage Decision Tree](decision-trees/09-linux-triage.md) -- start here for Linux Intune failures
+
+### Linux Runbooks
+
+- [Linux Enrollment Failed](l1-runbooks/30-linux-enrollment-failed.md) -- package install error / sign-in failure / enrollment timeout
+- [Linux Device Non-Compliant](l1-runbooks/31-linux-compliance-non-compliant.md) -- distro/version out of range / disk not encrypted / password policy not met / custom compliance failure
+- [Linux Conditional Access Blocking Web Access](l1-runbooks/32-linux-ca-blocking-web-access.md) -- device not enrolled / device not compliant / Edge not signed in
+- [Linux Intune Agent Service Failure](l1-runbooks/33-linux-agent-service-failure.md) -- `intune-agent` service not running / timer not firing
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Top Checks 4 items / Linux Escalation Triggers / Linux Decision Tree single link / Linux Runbooks 4-link list) matching iOS quick-ref non-mode-tag pattern; D-25 mode-tag-free contract | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: Top Checks 5 / Escalation Triggers 5 / Decision Tree 1 / Runbooks 8) with inline [Mode] prefix tags per row (mode-first per v1.4 triage tree); Mode vocabulary [BYOD]/[ZTE]/[AOSP]/[Knox]/[All GMS] LOCKED verbatim from L1-index Mode column (CLEAN-03; DEFER-07 close) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 4 top checks, 5 escalation triggers, decision tree link, and 6 runbook links (16-21) | -- |
 | 2026-04-15 | Added macOS ADE Quick Reference section with top checks, escalation triggers, and runbook links | -- |
