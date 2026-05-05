@@ -30,11 +30,17 @@ Windows Autopilot — Microsoft's cloud-based deployment service that provisions
 
 Out-of-Box Experience — the first-run setup screens a device presents after power-on, before a user profile exists.
 
+> **Cross-platform note:** On macOS, the equivalent first-run configuration experience is Setup Assistant, which is customizable via the ADE enrollment profile in Intune. iOS/iPadOS also uses Setup Assistant. Android uses a Setup Wizard with the DPC download flow for enterprise provisioning.
+> See also: [Setup Assistant](_glossary-macos.md#setup-assistant) (Apple/macOS+iOS).
+
 ### ESP
 
 Enrollment Status Page — the progress screen during Autopilot provisioning that blocks desktop access until required apps and policies are applied (APv1 only).
 
 > **APv2 note:** APv2 does not use ESP. See [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) for the APv2 equivalent mechanism.
+
+> **Cross-platform note:** On macOS, the functional analog is Await Configuration ("Awaiting final configuration" screen), which holds the device at the end of Setup Assistant until critical configuration policies are installed. Both ESP and Await Configuration serve as enrollment hold gates, but ESP has explicit device-phase and user-phase stages while Await Configuration is a single hold point.
+> See also: [Await Configuration](_glossary-macos.md#await-configuration) (Apple/macOS+iOS).
 
 ### MDM
 
@@ -90,6 +96,9 @@ A 4K-byte device fingerprint derived from hardware identifiers, used by APv1 to 
 
 > **APv2 note:** APv2 does not require hardware hash registration. See [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) and [corporate identifiers](#corporate-identifiers) for APv2 alternatives.
 
+> **Cross-platform note:** Hardware hash is a Windows Autopilot-specific concept with no direct equivalent on other platforms. macOS and iOS use ABM device assignment via serial number for zero-touch enrollment; Android uses ZTE IMEI/serial upload or Corporate Identifiers; Linux has no zero-touch enrollment at all. The Linux Provisioning Glossary maintains a callout entry for this term for cross-reference navigation.
+> See also: [Hardware Hash](_glossary-linux.md#hardware-hash) (Linux).
+
 ### ZTD
 
 Zero Touch Deployment — Microsoft's internal codename for Windows Autopilot; also the prefix for the deployment service endpoint (`ztd.dds.microsoft.com`) and device identifier (ZTDID).
@@ -123,6 +132,9 @@ The minimum time (0.25 days / 6 hours) after a device is first evaluated as non-
 Device identifiers (serial number, manufacturer, model) uploaded to Intune to mark devices as corporate-owned at enrollment time. Used in APv2 as an alternative to hardware hash registration for enrollment restriction scenarios.
 
 > **APv2 primarily.** APv1 equivalent: [hardware hash](#hardware-hash) (both identify devices as corporate-owned, but hardware hash is required for APv1 profile assignment while corporate identifiers are optional for APv2 enrollment restrictions).
+
+> **Cross-platform note:** On Android, the equivalent is Corporate Identifiers — pre-loaded IMEI, serial, or MEID lists in Intune that tag devices as corporate-owned at enrollment. All achieve the same enrollment-time corporate tagging effect but use different identity plumbing (serial/manufacturer/model on Windows; IMEI/serial on Android; ABM device assignment on Apple platforms).
+> See also: [Corporate Identifiers](_glossary-android.md#corporate-identifiers) (Android).
 
 ---
 
