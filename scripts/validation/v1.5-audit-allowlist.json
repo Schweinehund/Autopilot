@@ -3,24 +3,26 @@
   "generated": "2026-04-26T00:00:00Z",
   "phase": "48-audit-harness-bootstrap-broken-link-sweep-first-pass",
   "safetynet_exemptions": [
-    {"file": "docs/_glossary-android.md", "line": 176, "reason": "v1.5 inherit baseline 2026-04-26"},
-    {"file": "docs/_glossary-android.md", "line": 190, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 183, "reason": "Phase 59 carry-over: line 176 shifted +7 (Phase 59 CLEAN-08 see-also normalization added 11 lines, net +7 before Play Integrity section); Play Integrity prose references SafetyNet as predecessor (historical context)"},
+    {"file": "docs/_glossary-android.md", "line": 198, "reason": "Phase 59 carry-over: line 190 shifted +8 (Phase 59 CLEAN-08 see-also normalization + Version History row added); SafetyNet API sunset Version History entry (2025-01 historical changelog)"},
     {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 102, "reason": "v1.5 inherit baseline 2026-04-26"},
     {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 104, "reason": "v1.5 inherit baseline 2026-04-26"}
   ],
   "supervision_exemptions": [
-    {"file": "docs/_glossary-android.md", "line": 76, "reason": "v1.5 inherit baseline 2026-04-26"},
-    {"file": "docs/_glossary-android.md", "line": 78, "reason": "v1.5 inherit baseline 2026-04-26"},
-    {"file": "docs/_glossary-android.md", "line": 172, "reason": "v1.5 inherit baseline 2026-04-26"},
-    {"file": "docs/_glossary-android.md", "line": 188, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 79, "reason": "Phase 59 carry-over: line 76 shifted +3 (Phase 59 CLEAN-08 added see-also lines to BYOD/UE/ZTE before COBO section, net +3); ### Supervision H3 heading (term being defined; iOS supervision callout; intentional AEAUDIT-04 pattern)"},
+    {"file": "docs/_glossary-android.md", "line": 81, "reason": "Phase 59 carry-over: line 78 shifted +3 (same +3 shift); Android note blockquote for Supervision H3 — explains iOS/iPadOS supervision concept in cross-platform context (Apple-attributed citation; AEAUDIT-04 scope)"},
+    {"file": "docs/_glossary-android.md", "line": 179, "reason": "Phase 59 carry-over: line 172 shifted +7 (Phase 59 CLEAN-08 net +7 lines across BYOD/UE/ZTE/COBO/COPE/Supervision/WorkProfile/WPCO/CorpID/DPC/MGP see-also additions before MHS section); MHS blockquote — supervised MDM profile Apple-attributed context (cross-platform comparison to ASAM; iOS-attributed term)"},
+    {"file": "docs/_glossary-android.md", "line": 196, "reason": "Phase 59 carry-over: line 188 shifted +8 (Phase 59 CLEAN-08 net +7 + Version History row +1); Phase 34 Foundation Version History entry — 'supervision as callout-only' historical description of initial glossary scope"},
     {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 51, "reason": "v1.5 inherit baseline 2026-04-26"},
     {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 53, "reason": "v1.5 inherit baseline 2026-04-26"},
     {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 83, "reason": "v1.5 inherit baseline 2026-04-26"},
     {"file": "docs/admin-setup-android/03-fully-managed-cobo.md", "line": 36, "reason": "v1.5 inherit baseline 2026-04-26"},
     {"file": "docs/l2-runbooks/20-android-app-install-investigation.md", "line": 21, "reason": "v1.5 inherit baseline 2026-04-26"},
     {"file": "docs/_glossary-android.md", "line": 16, "reason": "v1.5 inherit baseline 2026-04-26"},
-    {"file": "docs/_glossary-android.md", "line": 46, "reason": "v1.5 inherit baseline 2026-04-26"},
-    {"file": "docs/_glossary-android.md", "line": 66, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 49, "reason": "Phase 59 carry-over: line 46 shifted +3 (Phase 59 CLEAN-08 added see-also lines to BYOD/UE/ZTE before COBO section, net +3); COBO cross-platform blockquote — iOS supervision state referenced as contrast to COBO ownership-mode (Apple-attributed comparison; intentional disambiguation)"},
+    {"file": "docs/_glossary-android.md", "line": 69, "reason": "Phase 59 carry-over: line 66 shifted +3 (same +3 shift); Fully Managed cross-platform blockquote — iOS Supervision state referenced as closest analog with explicit partial-mapping disclaimer (Apple-attributed citation; intentional disambiguation)"},
+    {"file": "docs/_glossary-android.md", "line": 82, "reason": "Phase 59 CLEAN-08 new line: > See also line added inside Supervision H3 Android-note blockquote by Plan 59-05 Task 3 — cross-platform reciprocal links to macOS Supervision + Linux Supervision (Apple-attributed and Linux-attributed citations; AEAUDIT-04 scope)"},
+    {"file": "docs/_glossary-android.md", "line": 193, "reason": "Phase 59 CLEAN-08 Version History entry: changelog prose listing 'Supervision' as one of 11 collision-matrix terms with see-also additions — historical change documentation, not an Android management term reference"},
     {"file": "docs/reference/android-capability-matrix.md", "line": 88, "reason": "Phase 58 carry-over (post-58-02 CA H2 retrofit shifted Cross-Platform Equivalences section by +10 lines): AEAUDIT-04 doctrine HTML comment header — 'supervision in this section MUST appear only as an iOS-attributed reference'"},
     {"file": "docs/reference/android-capability-matrix.md", "line": 90, "reason": "Phase 58 carry-over: AEAUDIT-04 doctrine HTML comment continuation — 'never supervised' (intentional iOS-attribution rule statement)"},
     {"file": "docs/reference/android-capability-matrix.md", "line": 91, "reason": "Phase 58 carry-over: AEAUDIT-04 doctrine HTML comment continuation — 'iOS Supervision' contrasted with bare 'Supervision' (column-header attribution rule)"},
@@ -39,15 +41,15 @@
     "\\bCOPE\\b[^.]*\\bretired\\b"
   ],
   "c7_knox_allowlist": [
-    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 11, "reason": "v1.5 graduation baseline -- Knox\u2192Intune shorthand (arrow-symbol compound; not a SKU reference)"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 11, "reason": "v1.5 graduation baseline -- Knox→Intune shorthand (arrow-symbol compound; not a SKU reference)"},
     {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 143, "reason": "v1.5 graduation baseline -- 'Knox silently produces' (Knox as platform subject; unambiguous in KME context)"},
     {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 143, "reason": "v1.5 graduation baseline -- 'Knox does not recognize' (Knox as platform subject; second bare occurrence same line)"},
     {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 145, "reason": "v1.5 graduation baseline -- 'Knox JSON shown above' (short reference to Knox Custom JSON Data; unambiguous in KME context)"},
     {"file": "docs/admin-setup-android/02-zero-touch-portal.md", "line": 131, "reason": "v1.5 graduation baseline -- 'Samsung Knox docs' (documentation reference; not a SKU)"},
-    {"file": "docs/_glossary-android.md", "line": 115, "reason": "v1.5 graduation baseline -- '### Knox' heading (term being defined in glossary; cannot have SKU suffix)"},
-    {"file": "docs/_glossary-android.md", "line": 117, "reason": "v1.5 graduation baseline -- 'Knox is Samsung\u2019s mobile-device security platform' (definitional sentence; first occurrence)"},
-    {"file": "docs/_glossary-android.md", "line": 117, "reason": "v1.5 graduation baseline -- 'Knox Vault' compound (Knox Vault is a hardware component, not a managed-device SKU; second occurrence same line)"},
-    {"file": "docs/_glossary-android.md", "line": 119, "reason": "v1.5 graduation baseline -- 'Knox security features' (cross-platform note; not a SKU reference)"},
-    {"file": "docs/_glossary-android.md", "line": 187, "reason": "v1.5 graduation baseline -- 'Knox entry' in changelog (refers to glossary entry; not a SKU reference)"}
+    {"file": "docs/_glossary-android.md", "line": 121, "reason": "Phase 59 carry-over: line 115 shifted +6 (Phase 59 CLEAN-08 net +6 lines before Knox section); '### Knox' heading (term being defined in glossary; cannot have SKU suffix)"},
+    {"file": "docs/_glossary-android.md", "line": 123, "reason": "Phase 59 carry-over: line 117 shifted +6; 'Knox is Samsung's mobile-device security platform' (definitional sentence; first occurrence)"},
+    {"file": "docs/_glossary-android.md", "line": 123, "reason": "Phase 59 carry-over: line 117 shifted +6; 'Knox Vault' compound (Knox Vault is a hardware component, not a managed-device SKU; second occurrence same line)"},
+    {"file": "docs/_glossary-android.md", "line": 125, "reason": "Phase 59 carry-over: line 119 shifted +6; 'Knox security features' (cross-platform note; not a SKU reference)"},
+    {"file": "docs/_glossary-android.md", "line": 195, "reason": "Phase 59 carry-over: line 187 shifted +8 (Phase 59 CLEAN-08 net +7 + Version History row +1); 'Knox entry' in changelog (refers to glossary entry; not a SKU reference)"}
   ]
 }
