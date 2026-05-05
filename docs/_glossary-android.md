@@ -24,18 +24,21 @@ phase_46_wave2_retrofit: 2026-04-25
 Bring-Your-Own-Device refers to Android Enterprise's personally-owned work profile enrollment path. The user installs Company Portal (or starts enrollment through the Microsoft Intune app post-AMAPI), which provisions a work profile container on their personal device. The user retains full ownership of the personal profile; the organization manages only the work profile. BYOD enrollment is user-initiated from the device and does not use corporate provisioning methods such as NFC, QR bulk provisioning, or Zero-Touch.
 
 > **Cross-platform note:** On Windows, "BYOD" typically refers to Mobile Application Management Without Enrollment (MAM-WE) or light device enrollment — see the [Windows Autopilot Glossary](_glossary.md). On iOS, BYOD maps to [Account-Driven User Enrollment or profile-based User Enrollment](_glossary-macos.md#account-driven-user-enrollment) — completely different provisioning mechanics (no work profile container). macOS has limited BYOD support through User Enrollment only. Do not conflate.
+> See also: [Account-Driven User Enrollment](_glossary-macos.md#account-driven-user-enrollment) (Apple).
 
 ### User Enrollment
 
 User Enrollment in the Android context refers to AOSP user-associated enrollment, where a Microsoft Entra user identity is tied to the device at enrollment time. It is an AOSP-specific concept used on non-GMS hardware (for example, purpose-built rugged or head-mounted devices) and does NOT describe Android Enterprise BYOD. Android Enterprise BYOD uses the [Work Profile](#work-profile) model on personally-owned devices; AOSP user-associated enrollment is a different Phase 39 stub scope.
 
 > **Cross-platform note:** On iOS, "User Enrollment" refers to Apple's privacy-preserving BYOD enrollment method (profile-based or account-driven). See [Account-Driven User Enrollment](_glossary-macos.md#account-driven-user-enrollment) in the Apple glossary. The iOS concept is a device-level managed APFS volume with user-bound Managed Apple ID — structurally unrelated to Android AOSP user-associated enrollment. Do not conflate.
+> See also: [Account-Driven User Enrollment](_glossary-macos.md#account-driven-user-enrollment) (Apple).
 
 ### Zero-Touch Enrollment
 
 Zero-Touch Enrollment (ZTE) is Google's corporate-scale Android provisioning channel. OEM resellers upload device IMEI, serial number, or MEID lists to the [Zero-Touch portal](https://enterprise.google.com/android/zero-touch/customers); devices then enroll automatically on first boot without admin intervention. The reseller relationship is Step 0 — a device cannot appear in the ZT portal unless a ZT-enabled reseller provisions it. ZTE supports Fully Managed (COBO), WPCO, and Dedicated modes, but not personally-owned BYOD Work Profile.
 
 > **Cross-platform note:** On iOS/iPadOS and macOS, the analog is Automated Device Enrollment (ADE) through Apple Business Manager — see [ADE](_glossary-macos.md#ade). On Windows, the analog is Windows Autopilot — see the [Windows Autopilot Glossary](_glossary.md). All three share the "reseller-registers-serial-numbers-upstream, device-enrolls-automatically-on-first-boot" shape but use different portals and identity plumbing. Do not conflate ZT portal entries with ABM device assignments or Autopilot hardware hash uploads.
+> See also: [ADE](_glossary-macos.md#ade) (Apple); [Zero-Touch Enrollment (ZTE)](_glossary-linux.md#zero-touch-enrollment-zte) (Linux).
 
 ## Ownership & Management Scope
 
@@ -44,14 +47,14 @@ Zero-Touch Enrollment (ZTE) is Google's corporate-scale Android provisioning cha
 Corporate-Owned, Business-Only (COBO) is Android Enterprise's fully managed mode for corporate-owned devices with no personal profile present. The entire device is managed — all apps, data, configuration, and user experience are IT-controlled. COBO offers maximum admin control: silent app install, device-wide restrictions, full compliance telemetry, and enforcement of OS updates. Admins often refer to COBO and [Fully Managed](#fully-managed) interchangeably; COBO is the ownership category, Fully Managed is the Android Enterprise enrollment mode name.
 
 > **Cross-platform note:** No exact Windows/macOS/iOS term; the closest analog is iOS ADE-supervised corporate-owned enrollment through [ABM](_glossary-macos.md#abm) (see [iOS Supervision](_glossary-macos.md#supervision)) or macOS ADE-enrolled supervised. On Windows, Autopilot corporate-owned deployment is the closest analog. Mapping is partial — "corporate-owned" has a cross-platform meaning but the per-platform management scopes differ. Do not conflate COBO with iOS supervision state; supervision is a permanent per-device gating state on iOS, whereas COBO is an ownership-mode designation on Android.
+> See also: [COBO / COPE / WPCO](_glossary-linux.md#cobo--cope--wpco) (Linux).
 
 ### COPE
 
 Corporate-Owned, Personally-Enabled (COPE) is an older Android Enterprise mode that combines a fully managed corporate device with a separately provisioned work profile for the user's personal use. Google recommends [WPCO](#wpco) as the successor pattern for the same use case, so new deployments should provision WPCO rather than COPE. COPE is still functionally supported on existing fleets — no formal deprecation notice from Google — but WPCO is the preferred terminology and the path documented in current Google Android Enterprise guidance.
 
 > **Cross-platform note:** No equivalent on Windows, macOS, or iOS. The "corporate device with personal-use partition" model does not exist as a first-class enrollment mode on those platforms. See the [WPCO entry](#wpco) for the current Google-recommended naming.
-
-> See also: [Corporate-Owned Work Profile (COPE / WPCO) Admin Setup](admin-setup-android/08-cope-full-admin.md).
+> See also: [Corporate-Owned Work Profile (COPE / WPCO) Admin Setup](admin-setup-android/08-cope-full-admin.md); [COBO / COPE / WPCO](_glossary-linux.md#cobo--cope--wpco) (Linux).
 
 ### Dedicated
 
@@ -76,20 +79,21 @@ Private Space is an Android 15+ personal-side feature that creates a user-contro
 ### Supervision
 
 > **Android note:** "Supervision" is an iOS/iPadOS management-state concept (see [Apple Glossary — Supervision](_glossary-macos.md#supervision)). Android does not use this term. The closest analog is [Fully Managed](#fully-managed), which is an ownership-mode designation set at provisioning, not a permanent device state gating restriction settings. Do not conflate.
+> See also: [Supervision](_glossary-macos.md#supervision) (Apple); [Supervision](_glossary-linux.md#supervision) (Linux).
 
 ### Work Profile
 
 Android Enterprise's containerized partition on a user's device. The work profile creates a separate OS-level container that holds managed apps, data, and policies, isolated from the personal profile. Work profile apps appear on the launcher with a badged briefcase icon. Applies to both BYOD Work Profile (personally-owned device) and Work Profile on Corporate-Owned devices ([WPCO](#wpco), formerly [COPE](#cope)). Data does not cross the profile boundary by default; the user can pause the work profile (Android 7+) to suspend notifications and managed apps.
 
 > **Cross-platform note:** On Windows, the phrase "Work profile on personally-owned devices" applies only to Android — there is no on-Windows work-profile equivalent; closest parallels are MAM-WE app protection (app-layer only) or a separate Entra-joined work device. On iOS, there is no work-profile equivalent; the closest parallel is [Account-Driven User Enrollment](_glossary-macos.md#account-driven-user-enrollment), which uses a managed APFS volume rather than a profile container. macOS has no equivalent concept. Do not conflate with iOS User Enrollment.
+> See also: [Work Profile](_glossary-linux.md#work-profile) (Linux).
 
 ### WPCO
 
 Work Profile on Corporate-Owned devices (WPCO) is Android Enterprise's newer mode combining a fully managed device with a user-separated work profile. Google recommends WPCO as the successor pattern to [COPE](#cope) — same "corporate device with personal-use partition" shape, cleaner profile boundary and better user-privacy controls. WPCO provisioning is QR, Zero-Touch, or DPC identifier [afw#setup](#afw-setup); the NFC path was removed on Android 11+.
 
 > **Cross-platform note:** No Windows, macOS, or iOS equivalent — the "corporate device with user-separated personal partition" model is Android-specific. See also the [COPE entry](#cope) for the older terminology drift context.
-
-> See also: [Corporate-Owned Work Profile (COPE / WPCO) Admin Setup](admin-setup-android/08-cope-full-admin.md).
+> See also: [Corporate-Owned Work Profile (COPE / WPCO) Admin Setup](admin-setup-android/08-cope-full-admin.md); [COBO / COPE / WPCO](_glossary-linux.md#cobo--cope--wpco) (Linux).
 
 ## Provisioning Methods
 
@@ -105,12 +109,14 @@ Android for Work Setup identifier — a literal string entered in place of a Goo
 Corporate Identifiers are pre-loaded IMEI, serial number, or MEID lists uploaded to Intune that tag devices as corporate-owned at enrollment. An uploaded identifier causes a device to enroll into the Fully Managed or Dedicated flow rather than the personal BYOD Work Profile flow. Critical version gate: Android 12 removed IMEI and serial-number access from personally-owned work profile (BYOD) devices, so corporate-identifier tagging effectively works only for corporate-owned enrollment scenarios on Android 12+. See [`docs/android-lifecycle/03-android-version-matrix.md`](android-lifecycle/03-android-version-matrix.md) for the Android 12 breakpoint detail.
 
 > **Cross-platform note:** On iOS/iPadOS, the analog is ABM device assignment by serial number — devices purchased through an Apple-authorized reseller appear in [ABM](_glossary-macos.md#abm) and can be assigned to an MDM server, producing the same "corporate-tagged at enrollment" effect. On Windows, the analog is hardware hash upload for Autopilot, which tags devices as corporate in the Intune Windows Autopilot devices blade. All three achieve the same enrollment-time corporate tagging, but use different identity plumbing (IMEI/serial in Intune for Android, ABM assignment for iOS, hardware hash for Windows). Do not conflate.
+> See also: [Corporate identifiers](_glossary.md#corporate-identifiers) (Windows).
 
 ### DPC
 
 Device Policy Controller (DPC) is the on-device app responsible for applying Android Enterprise policies. In Intune-managed scenarios, the Microsoft Intune app is the DPC for Fully Managed, Dedicated, WPCO, and post-AMAPI BYOD Work Profile; Company Portal was the legacy DPC for BYOD prior to the April 2025 AMAPI migration. The DPC receives configuration from Intune via Google Play Services on GMS devices, and enforces restrictions, certificate deployment, Wi-Fi profiles, and app assignments locally.
 
 > **Cross-platform note:** On iOS/iPadOS and macOS, the analog is the MDM profile itself — the OS-level MDM framework plays the policy-controller role, and there is no separately-installed on-device management agent. On Windows, the MDM client is built into the operating system; Intune extends it via the Intune Management Extension for Win32 apps and PowerShell scripts, but there is no analog to the "DPC as a distinct on-device app" Android model. Do not conflate the Microsoft Intune DPC app on Android with the separate "Company Portal" app, which is the end-user portal for BYOD enrollment and app discovery.
+> See also: [DPC (Device Policy Controller)](_glossary-linux.md#dpc-device-policy-controller) (Linux).
 
 ### Knox
 
@@ -156,6 +162,7 @@ Entra Shared Device Mode is a Microsoft Entra authentication mode for shared And
 Managed Google Play (MGP) is Google's enterprise app distribution surface, tenant-bound to Intune. Admins use MGP to approve public Play Store apps for managed devices, distribute private (line-of-business) Android apps uploaded to the tenant's MGP catalog, and deliver web apps as app-wrapped shortcuts. Since August 2024, the preferred MGP binding uses a Microsoft Entra account rather than a Gmail account; existing Gmail-bound tenants continue to function but new bindings should use Entra. MGP is mandatory for all GMS-based Android Enterprise enrollment modes (COBO, BYOD, Dedicated, Zero-Touch); only out-of-GMS AOSP deployments bypass it.
 
 > **Cross-platform note:** On iOS/iPadOS and macOS, the analog is Volume Purchase Program (VPP) / Apps and Books through [ABM](_glossary-macos.md#abm) — see [VPP](_glossary-macos.md#vpp) in the Apple glossary. On Windows, the closest analog is Microsoft Store for Business (deprecated) or the direct Intune app-assignment model for Win32/MSIX apps. The MGP "tenant-bound to an upstream Google portal" requirement is Android-specific; Windows and iOS app distribution use different trust models.
+> See also: [Managed Google Play (MGP)](_glossary-linux.md#managed-google-play-mgp) (Linux).
 
 ## Compliance & Attestation
 
