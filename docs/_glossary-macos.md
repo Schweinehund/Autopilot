@@ -24,30 +24,35 @@ platform: all
 Apple's privacy-preserving BYOD enrollment method for iOS/iPadOS (iOS 15+) and macOS (Sonoma+). The user starts enrollment from Settings > General > VPN & Device Management on their personal device by signing in with their Managed Apple ID; the OS coordinates with the organization's MDM via the well-known `https://[domain]/.well-known/com.apple.remotemanagement` discovery endpoint. Only the organization's "work" apps and data are managed; the user's personal content (photos, iCloud, personal apps) remains invisible to IT. Supersedes the deprecated profile-based User Enrollment (deprecated iOS 18).
 
 > **Windows equivalent:** No direct equivalent. The closest parallel is [Intune MAM-WE](#mam-we) on Windows MAM-enrolled devices, but Account-Driven User Enrollment is a device-level BYOD enrollment path whereas Windows MAM-WE is app-layer only. Microsoft's "Work profile on personally-owned devices" concept applies to Android but has no iOS-Autopilot equivalent.
+> See also: [BYOD](_glossary-android.md#byod) (Android); [User Enrollment](_glossary-android.md#user-enrollment) (Android).
 
 ### ADE
 
 Automated Device Enrollment -- Apple's zero-touch enrollment mechanism for organization-owned macOS (and iOS/iPadOS) devices through Apple Business Manager. Devices assigned to an MDM server in ABM enroll automatically during Setup Assistant. Formerly known as DEP (Device Enrollment Program).
 
 > **Windows equivalent:** [Windows Autopilot](_glossary.md#apv1) -- APv1 uses hardware hash registration and profile assignment; APv2 uses [Enrollment Time Grouping](_glossary.md#enrollment-time-grouping-etg). Both achieve zero-touch enrollment but use different identity mechanisms (serial number via ABM vs hardware hash upload to Intune).
+> See also: [Zero-Touch Enrollment](_glossary-android.md#zero-touch-enrollment) (Android).
 
 ### Await Configuration
 
 A setting in the macOS ADE enrollment profile (officially "Await final configuration") that locks the device at the end of Setup Assistant until Intune confirms critical configuration policies are installed. The user sees an "Awaiting final configuration" screen. Default for new enrollment profiles since late 2024.
 
 > **Windows equivalent:** [ESP](_glossary.md#esp) (Enrollment Status Page) -- both block the user from accessing the desktop until policies and apps are applied. Key difference: ESP has explicit device-phase and user-phase stages, while Await Configuration is a single hold point at the end of Setup Assistant.
+> See also: [ESP](_glossary.md#esp) (Windows).
 
 ### Setup Assistant
 
 The macOS first-run configuration experience presented after power-on or device wipe. Screens are customizable (show or hide) via the ADE enrollment profile in Intune. Includes Apple-specific screens such as Apple ID, FileVault, Siri, and Privacy.
 
 > **Windows equivalent:** [OOBE](_glossary.md#oobe) (Out-of-Box Experience) -- both are the first-run setup flow on their respective platforms. OOBE has Autopilot-specific branding and Entra credential entry; Setup Assistant has Apple-specific screens and supports both modern (Entra) and legacy authentication.
+> See also: [OOBE](_glossary.md#oobe) (Windows).
 
 ### Supervision
 
 Apple's formal management designation for organization-owned iOS/iPadOS devices enrolled through [ADE](#ade) via Apple Business Manager. Supervision applies to iOS, iPadOS, and (to a lesser gating extent) macOS. Supervision is set at enrollment time and CANNOT be added retroactively without a full device erase. Supervised iOS/iPadOS devices unlock capabilities unavailable on unsupervised devices -- silent app install ([VPP](#vpp) device-licensed), home screen layout control, extensive restriction profiles, AirDrop/Camera/Safari restrictions, and DDM-enforced app install. Verify on device: Settings > General > About shows "This iPhone is supervised and managed by [organization]."
 
 > **Windows equivalent:** No direct equivalent in Autopilot. The closest parallels are (a) Autopilot pre-provisioning (device enters with administrative context) for the enrollment-time-only supervision concept, and (b) macOS FileVault enforcement via ADE for the "set-at-enrollment, cannot-add-retroactively" lifecycle property. Neither Windows nor macOS gates as many capabilities on supervision state as iOS does.
+> See also: [Supervision](_glossary-android.md#supervision) (Android); [Supervision](_glossary-linux.md#supervision) (Linux).
 
 ---
 
@@ -58,6 +63,7 @@ Apple's formal management designation for organization-owned iOS/iPadOS devices 
 Apple Business Manager -- Apple's web portal for managing device enrollment, app distribution (Apps and Books), and Managed Apple IDs for organizations. ABM is the single Apple-side portal for all device management administration. Accessed at [business.apple.com](https://business.apple.com).
 
 > **Windows equivalent:** No direct single equivalent. Device enrollment is managed in the [Intune admin center](https://intune.microsoft.com) under Devices > Windows > Enrollment. ABM is Apple-side while Intune is Microsoft-side; macOS admins work across both portals.
+> See also: [ABM (Apple Business Manager)](_glossary-linux.md#abm-apple-business-manager) (Linux).
 
 ### ABM Token
 
@@ -93,6 +99,7 @@ Silent app installation on iOS/iPadOS requires BOTH (a) VPP device-licensed assi
 Cross-links: [iOS App Deployment Guide](admin-setup-ios/05-app-deployment.md) | [macOS App Deployment Guide](admin-setup-macos/04-app-deployment.md)
 
 > **Windows equivalent:** Microsoft Store for Business (deprecated) and Intune app deployment. Windows uses Win32 app packaging (.intunewin), MSI, MSIX, and Microsoft Store apps. The VPP/Apps and Books licensing model has no direct Windows equivalent -- Intune's per-user vs per-device assignment in Windows app deployments is the closest conceptual parallel but uses Microsoft licensing infrastructure, not Apple's.
+> See also: [VPP (Volume Purchase Program)](_glossary-linux.md#vpp-volume-purchase-program) (Linux).
 
 ---
 
@@ -105,6 +112,7 @@ Managed App Without Enrollment -- Intune's **app-layer** data protection model f
 **Scope boundary (per Phase 26):** MAM-WE is separate from MDM enrollment paths (ADE, Device Enrollment, User Enrollment). A device can have MAM-WE + MDM enrollment simultaneously, but MAM-WE alone grants NO device-level control. See [MAM-WE App Protection Policies](admin-setup-ios/09-mam-app-protection.md) for configuration and the three-level data protection framework.
 
 > **Windows equivalent:** Intune App Protection Policies on Windows MAM-enrolled devices -- functionally analogous (per-app PIN, selective wipe, copy/paste gates) but uses different underlying mechanisms (Windows Information Protection lineage vs iOS's App Extensions SDK). Microsoft does not use the "MAM-WE" branding on Windows.
+> See also: [Web-app CA](_glossary-linux.md#web-app-ca) (Linux).
 
 ---
 
