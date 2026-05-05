@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-24
-review_by: 2026-07-16
+last_verified: 2026-05-05
+review_by: 2026-07-04
 applies_to: both
 audience: all
 platform: all
@@ -120,6 +120,7 @@ Managed App Without Enrollment -- Intune's **app-layer** data protection model f
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-05 | Phase 59 (CLEAN-08): appended `> See also:` lines INSIDE existing `> **Windows equivalent:**` blockquotes for collision-matrix terms (Account-Driven User Enrollment, ADE, Await Configuration, Setup Assistant, Supervision, ABM, VPP, MAM-WE); existing `> **Windows equivalent:**` labels PRESERVED verbatim per D-15 anti-rename | -- |
 | 2026-04-24 | Phase 42: added Android Enterprise Provisioning Glossary see-also to continuation banner (AEAUDIT-03) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS terms (supervision, MAM-WE, APNs, account-driven user enrollment, jailbreak detection), updated VPP with iOS device-licensed vs user-licensed distinction, new ## App Protection (MAM) H2 | -- |
 | 2026-04-13 | Initial version -- 6 macOS terms with Windows cross-references | -- |

@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-05-05
+review_by: 2026-07-04
 applies_to: both
 audience: all
 platform: all
@@ -225,3 +225,11 @@ An Intune remote action that factory-resets a device, removing all data and retu
 ### User phase
 
 The second half of ESP (after user login) that applies user-targeted apps and policies.
+
+---
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-05-05 | Phase 59 (CLEAN-08): added NEW `> **Cross-platform note:**` blockquotes with reciprocal see-also lines for collision-matrix terms (OOBE / Setup Assistant, ESP / Await Configuration, Hardware hash, Corporate identifiers) per D-15 pattern alignment normalization | -- |

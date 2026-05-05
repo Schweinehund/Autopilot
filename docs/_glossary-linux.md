@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-26
-review_by: 2026-06-25
+last_verified: 2026-05-05
+review_by: 2026-07-04
 applies_to: both
 audience: all
 platform: Linux
@@ -181,4 +181,5 @@ The H3 entries below are concepts that exist on other platforms but DO NOT EXIST
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-05 | Phase 59 (CLEAN-08): appended `> See also:` lines INSIDE existing `> **Cross-platform note:**` and `> **Linux note:**` blockquotes for collision-matrix terms (Web-app CA, ABM callout, COBO/COPE/WPCO callout, DPC callout, Hardware Hash callout, Managed Google Play callout, Supervision callout, VPP callout, Work Profile callout, Zero-Touch Enrollment (ZTE) callout); existing 9 `> **Cross-platform note:**` blockquotes preserved verbatim | — |
 | 2026-04-26 | Phase 49 Foundation: initial Linux Provisioning Glossary — 5 H2 content categories (Distro & Lifecycle, Agent & Service, Compliance & Encryption, Operations & Diagnostics, Cross-Platform Collisions); ~20 native term H3s; 9 absent-concept callout-only H3s (Supervision, DPC, Work Profile, COBO/COPE/WPCO, MGP, ZTE, VPP, Hardware Hash, ABM); GA + HWE kernel disambiguation pair per D-16; per-term `> **Cross-platform note:**` blockquotes on collision-risk Linux-native terms per D-12 + D-23. Reciprocal links from existing 3 glossaries land in Phase 49 commit-2. | — |
