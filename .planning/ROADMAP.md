@@ -380,7 +380,7 @@ Plans:
   - [x] 59-03-PLAN.md — docs/operations/00-index.md completion (D-10; Patch + App + Drift sections same-commit per DPO-Phase56-01 hand-off chain)
   - [ ] 59-04-PLAN.md — docs/index.md Operations H2 (D-07..D-13; 4 sub-H3 + 1-3 row routing tables; depends on 59-03 ops-index completion)
   - [ ] 59-05-PLAN.md — Glossary CLEAN-08 per-term see-also normalization across 4 glossaries (D-14..D-20; locked collision matrix at 59-05-COLLISION-MATRIX.md)
-  - [ ] 59-06-PLAN.md — docs/quick-ref-l1.md Linux H2 (D-21..D-22 + D-25; 4 sub-H3 + Top Checks=4 items + escalation triggers + decision tree single link + 4-link Runbooks list; mode-tag-free contract)
+  - [x] 59-06-PLAN.md — docs/quick-ref-l1.md Linux H2 (D-21..D-22 + D-25; 4 sub-H3 + Top Checks=4 items + escalation triggers + decision tree single link + 4-link Runbooks list; mode-tag-free contract)
   - [ ] 59-07-PLAN.md — docs/quick-ref-l2.md Linux H2 (D-23..D-25; 4 sub-H3 + 3-method log-collection + Intune portal paths + 4-row Compliance Category Reference pointer table + 2-link Investigation Runbooks list; PITFALL-7 firewall)
   - [ ] 59-08-PLAN.md — scripts/validation/check-phase-59.mjs validator (D-26..D-27 + D-30; 36 V-59-NN structural assertions covering all 4 GAs + ops-index amendment + glossary reciprocity + regression-guards)
   - [ ] 59-09-PLAN.md — Close gate + 59-VERIFICATION.md + STATE.md + ROADMAP.md updates (D-29 pre-commit gate)
@@ -477,7 +477,7 @@ Plans:
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
-| 59. Hub Navigation Integration — Linux + Operations | v1.5 | 3/9 | In Progress|  |
+| 59. Hub Navigation Integration — Linux + Operations | v1.5 | 4/9 | In Progress|  |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 0/? | Not started | - |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |
 
