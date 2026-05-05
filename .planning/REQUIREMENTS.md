@@ -17,7 +17,7 @@
 - [x] **CLEAN-05**: Admin managing a mixed Win+macOS+iOS+Android+Linux fleet can read a single 5-platform capability comparison reference doc with axes (enrollment, identity/Entra join, app delivery, compliance depth, conditional access scope, monitoring/reporting, patching/updates) — link-not-copy structural reference, no per-cell duplication of platform-specific matrices (closes DEFER-08 / AECOMPARE-01) — completed 2026-05-01 in Phase 58 Plan 58-03 (commits `0a55ecd` + `629d7fc`; `docs/reference/4-platform-capability-comparison.md` with 6 capability H2s × 5 platform columns × 48 feature rows = 240 link-bearing data cells at 100% D-01 cell-shape compliance)
 - [ ] **CLEAN-06**: Anchor sweep across all `docs/**/*.md` files identifies and resolves broken intra-doc and inter-doc anchor references (`[text](#anchor)` and `[text](relative-path#anchor)` patterns) introduced by phase-based authoring drift across v1.0–v1.4.1
 - [ ] **CLEAN-07**: Relative-path inter-doc link sweep across `docs/**/*.md` identifies and resolves stale `../*-{platform}/*.md` references introduced by file additions/renames in later milestones
-- [ ] **CLEAN-08**: Glossary cross-reference normalization — Windows + macOS + iOS + Android + Linux glossaries each contain reciprocal `see-also` entries for cross-platform-equivalent terms (extends v1.4 macOS↔Android pattern across all 5 platforms)
+- [x] **CLEAN-08**: Glossary cross-reference normalization — Windows + macOS + iOS + Android + Linux glossaries each contain reciprocal `see-also` entries for cross-platform-equivalent terms (extends v1.4 macOS↔Android pattern across all 5 platforms)
 
 ### Pillar 2 — Linux via Intune (Ubuntu LTS only)
 

@@ -375,7 +375,7 @@ Plans:
   3. Operations docs carry cross-references back to the relevant per-platform admin-setup dirs (Option C hybrid cross-reference pattern — operations docs reference admin-setup, not duplicate it)
   4. `docs/quick-ref-l1.md` and `docs/quick-ref-l2.md` contain Linux quick-reference sections matching the structural depth of iOS/Android quick-ref sections
 **Plans**: 9 plans
-  - [ ] 59-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-11 + D-29 step 5; gates Wave 2 hub-and-glossary edits)
+  - [x] 59-01-PLAN.md — Pre-edit anchor inventory artifact (PITFALL-6 + D-11 + D-29 step 5; gates Wave 2 hub-and-glossary edits)
   - [ ] 59-02-PLAN.md — docs/index.md Linux H2 expansion (D-01..D-06; 3 sub-tables L1=4 / L2=4 / Admin=3 + Cross-Platform References Linux entries)
   - [ ] 59-03-PLAN.md — docs/operations/00-index.md completion (D-10; Patch + App + Drift sections same-commit per DPO-Phase56-01 hand-off chain)
   - [ ] 59-04-PLAN.md — docs/index.md Operations H2 (D-07..D-13; 4 sub-H3 + 1-3 row routing tables; depends on 59-03 ops-index completion)
@@ -477,7 +477,7 @@ Plans:
 | 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
-| 59. Hub Navigation Integration — Linux + Operations | v1.5 | 0/? | Not started | - |
+| 59. Hub Navigation Integration — Linux + Operations | v1.5 | 1/9 | In Progress|  |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 0/? | Not started | - |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |
 
