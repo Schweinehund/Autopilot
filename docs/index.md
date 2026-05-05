@@ -228,6 +228,52 @@ Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04
 
 ---
 
+## Operations
+
+Cross-platform operational guidance for Intune-managed fleets -- co-management, patch and update management, app lifecycle automation, and compliance drift detection plus tenant migration. For the full operations index, see [Operations Index](operations/00-index.md).
+
+### Co-Management
+
+Windows ConfigMgr-to-Intune workload management -- slider model, migration sequence, tenant attach disambiguation, and Windows Autopatch prerequisites.
+
+| Resource | Description |
+|----------|-------------|
+| [Co-Management Overview](operations/co-management/00-overview.md) | 7 ConfigMgr-current-branch (CB 2503) workloads, 3 slider states, Pilot Intune disambiguation |
+| [Windows Tenant Attach](operations/co-management/01-windows-tenant-attach.md) | Tenant attach (Intune-portal device sync, no workload switching) vs full co-management disambiguation |
+| [Workload Slider Migration](operations/co-management/02-windows-workload-sliders.md) | Low-risk-first migration sequence; Endpoint Protection HIGH-RISK callout |
+
+### Patch & Update Management
+
+Cross-platform OS update enforcement -- Windows Update for Business rings, macOS managed update commands (DDM), iOS supervised vs unsupervised update lifecycle, and Android per-OEM patch delivery (Play Integrity tier impact).
+
+| Resource | Description |
+|----------|-------------|
+| [Patch & Update Management Overview](operations/patch-management/00-overview.md) | 4-platform update-enforcement comparison hub (Windows + macOS + iOS + Android) |
+| [Windows WUfB Rings](operations/patch-management/01-windows-wufb-rings.md) | Windows Update for Business ring topology; Hotpatch; dual-scan source conflict |
+| [Android Patch Delivery](operations/patch-management/04-android-patch-delivery.md) | Per-OEM patch delivery; Play Integrity MEETS_STRONG_INTEGRITY enforcement cascade |
+
+### App Lifecycle Automation
+
+Cross-platform app deployment at scale -- Win32/MSIX packaging + supersedence, macOS .pkg/.dmg pipelines, iOS VPP device-vs-user licensing, Android Managed Google Play app lifecycle.
+
+| Resource | Description |
+|----------|-------------|
+| [App Lifecycle Overview](operations/app-lifecycle/00-overview.md) | 4-platform app-deployment comparison hub (Windows + macOS + iOS + Android) |
+| [Windows Win32 / MSIX at Scale](operations/app-lifecycle/01-windows-win32-msix-scale.md) | Win32ContentPrepTool, supersedence chains, dependency graphs, MSIX delivery |
+| [Android Managed Google Play Lifecycle](operations/app-lifecycle/04-android-mgp-lifecycle.md) | MGP private track, web app publishing, AMAPI custom-apps API, OEMConfig (Zebra) |
+
+### Compliance Drift Detection + Tenant Migration
+
+Cross-platform configuration drift workflows + tenant-to-tenant migration runbooks -- BitLocker re-key, ABM token re-issue, Managed Google Play re-binding, cross-platform encryption-drift surface.
+
+| Resource | Description |
+|----------|-------------|
+| [Drift Detection + Tenant Migration Overview](operations/drift-migration/00-overview.md) | 4-platform drift-detection + tenant-migration comparison hub |
+| [Tenant Migration Runbook](operations/drift-migration/04-tenant-migration-runbook.md) | Windows BitLocker re-key + ABM token re-issue + MGP re-binding; cross-platform encryption drift section |
+| [Windows Drift Detection](operations/drift-migration/01-windows-drift-detection.md) | Intune Remediations (Proactive Remediations) detect+remediate PowerShell pairs |
+
+---
+
 ## Cross-Platform References
 
 | Resource | Description |
@@ -256,6 +302,7 @@ Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-01 | Phase 59: appended `## Operations` H2 with 4 sub-H3 sections (Co-Management / Patch & Update Management / App Lifecycle Automation / Compliance Drift Detection + Tenant Migration) routing to operations/ sub-directories (CLEAN-08 SC#1) | -- |
 | 2026-05-01 | Phase 59: appended `## Linux Provisioning` H2 with 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching Phase 57 Android H2 structural depth (CLEAN-08 SC#1); appended Linux Provisioning Lifecycle + Linux Capability Matrix Cross-Platform References entries (D-05) | -- |
 | 2026-04-30 | Phase 57: expanded Android Enterprise H2 to 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching iOS Phase 32 structural depth (CLEAN-01); added Android Provisioning Lifecycle + Android Capability Matrix Cross-Platform References entries (DEFER-07 close) | -- |
 | 2026-04-24 | Phase 42: added Android Provisioning stub H2, Choose-Your-Platform bullet, Android Glossary cross-reference entry (AEAUDIT-02) | -- |
