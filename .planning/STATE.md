@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: executing
-stopped_at: "Phase 59 context gathered (12-agent adversarial-review on 4 GAs; winners: 1A/2C/3E/4A — Referee FLIPPED Finder's 4C → 4A on PITFALL-7 reframing)"
-last_updated: "2026-05-05T23:17:20.339Z"
+stopped_at: Completed 59-02-PLAN.md
+last_updated: "2026-05-05T23:22:12.507Z"
 last_activity: 2026-05-05
 progress:
   total_phases: 14
   completed_phases: 10
   total_plans: 86
-  completed_plans: 77
-  percent: 90
+  completed_plans: 79
+  percent: 92
 ---
 
 # Project State
@@ -26,21 +26,21 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 ## Current Position
 
 Phase: 59 (Hub Navigation Integration — Linux + Operations Sections) — EXECUTING
-Plan: 2 of 9
+Plan: 4 of 9
 Status: Ready to execute
 Last activity: 2026-05-05
 
 ## Session Continuity
 
-Last session: 2026-05-05T23:17:20.315Z
-Stopped at: Phase 59 context gathered (12-agent adversarial-review on 4 GAs; winners: 1A/2C/3E/4A — Referee FLIPPED Finder's 4C → 4A on PITFALL-7 reframing)
+Last session: 2026-05-05T23:22:12.482Z
+Stopped at: Completed 59-02-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 59` -- Hub Navigation Integration (Linux + Operations Sections)
 
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
 
 ```
-Progress: [█████████░] 90%
+Progress: [█████████░] 92%
 Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
 Status:   .  X  .  X  X  X  X  X  X  X  X  .  .  .
           (. = not started; X = complete)
@@ -97,6 +97,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase ?]: [Phase 58 / Plan 58-05]: scripts/validation/check-phase-58.mjs validator authored with 26 V-58-NN structural assertions across 2 atomic commits (ae1758a Task 1 V-58-01..13 + 0d64e62 Task 2 V-58-14..26 + runner); B-1 forward-search fix applied to V-58-25; W-9 skip-list fix applied to V-58-07; Rule 1 extractCanonicalDataCells() col-0 exclusion fix (suppresses 47 false positives; matches Plan 58-03 240-cell figure); Rule 2 V-58-26 strengthened to lock D-11 title-asymmetry contract; pre-Plan-58-06 validator run produces 25 PASS / 1 FAIL (V-58-25 awaiting C12 promotion) / 0 SKIPPED; full 26/26 PASS expected post-58-06; Plans 58-06 + 58-07 unblocked
 - [Phase ?]: [Phase 58 / Plan 58-06]: AUDIT-04 promotion gate landed; informational: true flag removed from v1.5-milestone-audit.mjs C12 entry (commit bc9cee6); harness exits 0 with C12 PASS in blocking mode; V-58-25 flips FAIL -> PASS; 26/26 V-58-NN PASS; Rule 1 deviation: col-0 cell-shape exclusion fix to C12 verifier mirrors check-phase-58.mjs extractCanonicalDataCells() per explicit handoff at check-phase-58.mjs:56; CLEAN-05 covered via AUDIT-04; Plan 58-07 unblocked
 - [Phase 58]: 26 V-58-NN structural assertions implemented; progressive-landing pattern across 16 per-plan commits + close commit (`16b98ad..3f1ec7f` + close); pre-commit gate (3 validators) all GREEN at close — `check-phase-58.mjs` exits 0 with 26/26 V-58-NN PASS, `v1.5-milestone-audit.mjs` exits 0 with 12/12 PASS (including newly-promoted C12 in blocking mode), `regenerate-supervision-pins.mjs --self-test` informational FAIL preserved-not-regressed (v1.4.1 carry-over per STATE.md `Out-of-band carry-overs`); D-04 mandatory tier-2 CA H2 retrofit landed in macOS / iOS / Android sibling matrices (Plan 58-02 commits `54a70b8` + `6d3ce98`); D-08 Windows column → linux-capability-matrix.md canonical source applied (a dedicated windows-capability-matrix.md deferred to v1.6+ per D-10); D-09 ≤3 footnote-prose rows applied (Pre-Provisioning, Hybrid Entra Join, Windows 10 support); D-11 filename retained as `4-platform-capability-comparison.md` despite 5-platform scope (DEFER-08 / AECOMPARE-01 traceability); D-12 5C single-sentence intro cross-ref pattern (NOT 5B blockquote / NOT 5D new H2); D-13 Linux matrix `(when shipped)` hedge removed atomically (lines 70 + 112); D-14 Android footer F3 anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` preserved per Phase 45 AEAOSPFULL-09 model + body retargeted to single-sentence forward-link prose; D-15 pre-edit anchor inventory artifact (`58-ANCHOR-INVENTORY.md`) captured per PITFALL-6; D-17 + D-18 C12 promotion (informational → blocking) landed at Phase 58 close (NOT Phase 60 — ROADMAP:382-383 still owns scope expansion for Phase 60); D-19 45-day `last_verified` cycle for new comparison doc (vs 60-day per-platform); D-20 verification-during-execution discipline; W-7 spot-check methodology applied (5 random rows × 6 H2s = 30 rows; 100% verdict accuracy); W-8 Android intro `five locked domains` → `six locked domains` rewrite (CA enumeration consistency); Plan 58-07 carry-over resolution: C2 `supervision_exemptions` refreshed for post-58-02 line shifts (78/80/81/83/87/88 → 88/90/91/93/97/98) — intentional iOS-attributed citations per AEAUDIT-04 doctrine preserved verbatim, only line-number metadata refreshed; 240/240 link-bearing data cells at 100% D-01 cell-shape compliance; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed; Phase 59 unblocked
+- [Phase ?]: 59-02: Linux H2 inserted as pure Phase 57 Android mirror with 3 sub-tables (L1=4/L2=4/Admin=3); LIN-06 NOT surfaced at hub level per D-06
 
 ### Pending Todos
 
