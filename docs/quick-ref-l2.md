@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-30
-review_by: 2026-06-29
+last_verified: 2026-05-01
+review_by: 2026-06-30
 applies_to: both
 audience: L2
 platform: all
@@ -279,10 +279,58 @@ Full cascade timeline and remediation playbook: see [Android Patch Delivery — 
 - [Android Knox Investigation](l2-runbooks/22-android-knox-investigation.md) -- mode-specific (Samsung KME provisioning into COBO / Dedicated / WPCO via Knox portal); reciprocal with #19 when Knox-provisioned device fails GMS-side enrollment
 - [Android AOSP Investigation](l2-runbooks/23-android-aosp-investigation.md) -- mode-specific (5 OEMs: RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest); GMS-bearing devices route to #19 instead
 
+---
+
+## Linux Quick Reference
+
+**Platform:** Linux (Ubuntu 22.04 / 24.04 LTS) through Microsoft Intune
+
+> **Important:** Linux L2 diagnostic data collection follows a 3-tier methodology (journalctl primary / file-based paths secondary / package-state queries supplemental) per the Phase 52 Decision Matrix. Compliance category configuration content lives at the Phase 50 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
+
+### Linux Diagnostic Data Collection (3 methods)
+
+| Method | Primary Tool | Who Triggers | Data Scope | L2 Access Path | Confidence |
+|--------|--------------|--------------|------------|----------------|------------|
+| journalctl (systemd journal) | `journalctl -u intune-agent` / `journalctl --user -u intune-agent` | L2 (on device via SSH) | systemd journal entries for `intune-agent` service + user-scope timer activations | Direct on-device retrieval | Tier 1 -- primary log mechanism for all Linux Intune agent activity |
+| File-based paths | `cat /var/log/intune-update.log` + `cat /var/log/dpkg.log` | L2 (on device via SSH) | Package install/upgrade history (`dpkg.log`) + Intune update transitions (`intune-update.log`) | Direct on-device retrieval | Tier 2 -- supplemental for package-install troubleshooting + post-update re-enrollment |
+| Package-state queries | `dpkg -l intune-portal` + `apt-cache policy intune-portal` | L2 (on device via SSH) | Current package version + install state (`ii` flag) + apt source policy | Direct on-device retrieval | Tier 3 -- diagnostic for Identity Broker `intune-portal` 2.0.2+ breaking change re-enrollment loops (Phase 50 LIN-05 known pitfall) |
+
+*(Full method details: [Linux Log Collection Guide](l2-runbooks/24-linux-log-collection.md) is the authoritative source. Per-method scope, evidence-collection prerequisites, and the 3-tier escalation order are documented in the Decision Matrix at lines 30-36 of that file.)*
+
+### Key Intune Portal Paths (Linux L2)
+
+| Path | Purpose |
+|------|---------|
+| Devices > Linux | Per-device inventory + enrollment state (Linux-scoped) |
+| Devices > [device] > Device compliance | Per-device compliance policy evaluation state, timestamps, non-compliant categories (4-category surface: Allowed Distributions / Custom Compliance / Device Encryption / Password Policy) |
+| Devices > Device onboarding > Enrollment > Linux (limited surface) | Linux enrollment configuration (no zero-touch -- user-initiated only); compliance policy assignment surface |
+| Reports > Endpoint analytics (Linux subset) | Per-device telemetry rollup; supplemental for compliance-trend correlation across Linux fleet |
+
+*(Verified 2026-05-01 against Microsoft Learn. Intune admin center reorganizes without deprecation notice -- re-verify before content lock-in. Note: Linux has no zero-touch / token portal equivalent; user-initiated enrollment is the only path.)*
+
+### Linux Compliance Category Reference
+
+| Category | One-line role | SSoT |
+|----------|---------------|------|
+| Allowed Distributions | Restricts compliance to Ubuntu 22.04 / 24.04 LTS; Ubuntu 20.04 dropped from Intune 2508 (August 2025) | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-2-configure-allowed-distributions) |
+| Custom Compliance | Bash discovery scripts evaluate device state at scheduled intervals; per-device exit codes drive compliance verdict | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-3-configure-custom-compliance-bash-discovery-scripts) |
+| Device Encryption | dm-crypt + LUKS full-disk encryption signal as compliance prerequisite (encryption-compliance triple analog: BitLocker / FileVault / dm-crypt) | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-4-configure-device-encryption-dm-crypt-luks) |
+| Password Policy | Minimum length / complexity rules; enforced via PAM `pwquality` configuration on enrolled devices | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-5-configure-password-policy) |
+
+> ⚠️ **Bash discovery script authoring, compliance-evaluation cadence, and per-category remediation playbooks are owned by [Phase 50 SSoT — Linux Compliance Policy](../admin-setup-linux/03-compliance-policy.md).**
+
+Full configuration details and per-category remediation: see the [Linux Compliance Policy admin guide](../admin-setup-linux/03-compliance-policy.md).
+
+### Linux Investigation Runbooks
+
+- [Linux Log Collection Guide](l2-runbooks/24-linux-log-collection.md) -- prerequisite for all Linux L2 investigations (3-method matrix: journalctl primary / file-based paths secondary / package-state queries supplemental)
+- [Linux Agent Investigation](l2-runbooks/25-linux-agent-investigation.md) -- service-state diagnosis + Identity Broker `intune-portal` 2.0.2+ re-enrollment loop investigation + systemd timer activation analysis
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Linux Diagnostic Data Collection 3 methods / Key Intune Portal Paths Linux L2 / Linux Compliance Category Reference 4-row pointer table / Linux Investigation Runbooks 2-link list); link-not-copy contract for Phase 50 Compliance Policy SSoT per PITFALL-7 + Phase 57 D-22..D-25 + D-23 ENDORSEMENT inheritance | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: 3-method log collection with AMAPI mode-switching / Key Intune Portal Paths Android L2 4-5 rows / Play Integrity Verdict Reference 3-row pointer table cross-linking Phase 54 SSoT / 6-runbook investigation list with iOS-style ` -- ` disambiguation per row); link-not-copy contract for Play Integrity SSoT per PITFALL-7 + Phase 56 D-08 inheritance (CLEAN-04; DEFER-07 close) | -- |
 | 2026-04-18 | Phase 32 HUMAN-UAT item 2 closure: updated Key Intune Portal Paths table to reflect current admin center "Device onboarding" section under Devices per Microsoft Learn 2026-04-16 docs (affects Enrollment Program Tokens, Apple MDM Push Certificate, Enrollment restrictions paths) | -- |
 | 2026-04-18 | Phase 32 gap closure (UAT Test 15): replaced iOS Sysdiagnose Trigger Reference physical-button table with AssistiveTouch-based procedure per Apple Support canonical URL; updated cross-link anchor to match renamed Section 3 in 14-ios-log-collection.md | -- |
