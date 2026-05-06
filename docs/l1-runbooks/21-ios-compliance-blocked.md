@@ -31,6 +31,8 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 ---
 
+<a id="cause-a-ca-gap"></a>
+
 ## Cause A: CA Gap (First Compliance Evaluation Pending) {#cause-a-ca-gap}
 
 **Entry condition:** User completed enrollment within the last 30 minutes AND is being denied access to Microsoft 365 resources. Intune P-09 shows compliance state "Not evaluated" or "In grace period".
@@ -62,6 +64,8 @@ If none of the above matches the observation, proceed directly to the [overall E
 - State remains "Not evaluated" > 30 minutes after enrollment — escalate (likely runbook 16 APNs or check-in problem overlap).
 
 ---
+
+<a id="cause-b-policy-mismatch"></a>
 
 ## Cause B: Actual Policy Mismatch {#cause-b-policy-mismatch}
 
@@ -105,6 +109,8 @@ If none of the above matches the observation, proceed directly to the [overall E
 - Jailbreak detection — **escalate to Security team immediately (NOT L2 alone)**; this is a security-incident track per the device's `06-compliance-policy.md` line 217 ("Known jailbroken devices treated as compliant; data exfiltration risk open") escalation posture
 
 ---
+
+<a id="cause-c-default-posture"></a>
 
 ## Cause C: Default Posture "Not Compliant" Configuration {#cause-c-default-posture}
 
