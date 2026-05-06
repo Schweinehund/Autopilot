@@ -110,6 +110,8 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 
 Match observed indicators to one of five Patterns below. Patterns are independently diagnosable. Each Pattern includes Resolution Steps and a Microsoft Support escalation packet.
 
+<a id="pattern-a-kme-profile-misconfiguration"></a>
+
 ### Pattern A: KME Profile Misconfiguration {#pattern-a-kme-profile-misconfiguration}
 
 **Typical class:** ⚙️ Config Error (KME profile EMM choice / Custom JSON Data field-name) — occasionally ⏱️ Timing (B2B approval lag)
@@ -140,6 +142,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 ---
 
+<a id="pattern-b-knox-tripped"></a>
+
 ### Pattern B: Knox Tripped {#pattern-b-knox-tripped}
 
 **Typical class:** ⚙️ Config Error (firmware-state non-recoverable)
@@ -168,6 +172,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 - **Enrollment profile GUID:** Intune admin center URL fragment for the enrollment profile that was attempted (the profile is healthy; the device is the failure surface).
 
 ---
+
+<a id="pattern-c-kme-zt-collision"></a>
 
 ### Pattern C: KME→ZT Collision {#pattern-c-kme-zt-collision}
 
@@ -198,6 +204,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 ---
 
+<a id="pattern-d-knox-license-edge"></a>
+
 ### Pattern D: Knox License Edge {#pattern-d-knox-license-edge}
 
 **Typical class:** ⚙️ Config Error (license activation drift)
@@ -225,6 +233,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 - **Enrollment profile GUID:** Intune admin center URL fragment for the enrollment profile.
 
 ---
+
+<a id="pattern-e-dpc-json-malformation"></a>
 
 ### Pattern E: DPC JSON Malformation {#pattern-e-dpc-json-malformation}
 
