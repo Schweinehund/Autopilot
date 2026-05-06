@@ -28,6 +28,8 @@ Go directly to the section that matches the current device screen:
 
 ---
 
+<a id="authentication-failure"></a>
+
 ## Authentication Failure {#authentication-failure}
 
 **Entry condition:** Setup Assistant displays a sign-in screen (Microsoft or Apple ID) that returns an error or loops back to the same screen.
@@ -50,6 +52,8 @@ Go directly to the section that matches the current device screen:
 
 ---
 
+<a id="await-configuration-stuck"></a>
+
 ## Await Configuration Stuck {#await-configuration-stuck}
 
 **Entry condition:** Setup Assistant shows "Your Mac is being configured" (the Remote Management screen) and has not advanced after more than 30 minutes.
@@ -69,6 +73,8 @@ Go directly to the section that matches the current device screen:
 7. If the device still has not advanced after 45 minutes from first observation: proceed to [Escalation Criteria](#escalation-criteria).
 
 ---
+
+<a id="network-connectivity"></a>
 
 ## Network / Connectivity Issue {#network-connectivity}
 
