@@ -127,7 +127,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [x] **Phase 57: DEFER-07 Android Nav Unification** — 4-file hub surgical retrofit: docs/index.md Android H2 expansion + common-issues.md routing + quick-ref-l1.md + quick-ref-l2.md Android sections; pre-edit anchor inventory mandatory — completed 2026-04-30
 - [x] **Phase 58: DEFER-08 4-Platform Capability Comparison** — docs/reference/4-platform-capability-comparison.md (link-not-copy cells; 6 domain axes; 5 platforms including Linux); cross-link retrofits to all 4 existing capability matrices (completed 2026-05-01; progressive-landing 16b98ad..3f1ec7f across 7 plans; 26/26 V-58-NN PASS; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed)
 - [ ] **Phase 59: Hub Navigation Integration — Linux + Operations Sections** — docs/index.md Linux H2 + Operations H2; glossary cross-reference normalization (CLEAN-08) across all 5 platform glossaries; quick-ref Linux sections; ops cross-references
-- [ ] **Phase 60: Audit Harness v1.5 Finalization** — C11 promote to blocking; C12 blocking promotion; C13 second broken-link pass + promote; v1.5-audit-allowlist.json seeded with known-legitimate exemptions
+- [x] **Phase 60: Audit Harness v1.5 Finalization** — C11 promote to blocking; C12 blocking promotion; C13 second broken-link pass + promote; v1.5-audit-allowlist.json seeded with known-legitimate exemptions (completed 2026-05-06)
 - [ ] **Phase 61: Gap Closure + Terminal Re-Audit + Milestone Close** — broken-link fixes; v1.5-MILESTONE-AUDIT.md; harness exits 0 all blocking PASS; REQUIREMENTS.md synced; PROJECT.md traceability closure
 
 ---
@@ -408,8 +408,8 @@ Plans:
   - [x] 60-06-PLAN.md — PITFALL-12 _glossary-android.md atomic anchor-fix + sidecar pin-coord refresh + 2 templates/aosp-zebra fixes (D-07 + D-14; AUDIT-05 contributor)
   - [x] 60-07-PLAN.md — Category B path-fix commits (5 AOSP Windows-admin removals + 4 broken-path triages; D-09; AUDIT-05 contributor)
   - [x] 60-08-PLAN.md — ATOMIC HARNESS COMMIT (C9/C11/C13 promotions + C12 H2 expansion + 3 sidecar arrays + BASELINE_9 refresh + 48-VERIFICATION close-out; D-20 + D-26; closes AUDIT-03 + AUDIT-04 + AUDIT-05 + AUDIT-07)
-  - [ ] 60-09-PLAN.md — check-phase-60.mjs validator with 25 V-60-NN structural assertions (D-21 + D-22; closes AUDIT-06)
-  - [ ] 60-10-PLAN.md — ROADMAP SC#5 wording fix + 60-VERIFICATION.md close (D-23; final close gate)
+  - [x] 60-09-PLAN.md — check-phase-60.mjs validator with 25 V-60-NN structural assertions (D-21 + D-22; closes AUDIT-06)
+  - [x] 60-10-PLAN.md — ROADMAP SC#5 wording fix + 60-VERIFICATION.md close (D-23; final close gate)
 
 ### Phase 61: Gap Closure + Terminal Re-Audit + Milestone Close
 **Goal**: v1.5 milestone is formally closed with a terminal re-audit confirming 0 blocking harness failures, all requirements confirmed shipped, and traceability updated across REQUIREMENTS.md + PROJECT.md + MILESTONES.md
@@ -488,7 +488,7 @@ Plans:
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 9/9 | Complete | 2026-05-05 |
-| 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete    | 2026-05-06 |
+| 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete   | 2026-05-06 |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |
 
 ---
