@@ -59,6 +59,8 @@ Axis 🐛 — cross-cutting axis for non-configurable failures.
 
 ## Per-Cause Deep-Dive
 
+<a id="cause-a-play-integrity-verdict-failure"></a>
+
 ### Cause A: Play Integrity Verdict Failure {#cause-a-play-integrity-verdict-failure}
 
 > See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android compliance uses. The legacy attestation API was deprecated by Google in January 2025; Play Integrity is the current replacement. All Phase 34 and later Android documentation uses Play Integrity terminology exclusively.
@@ -93,6 +95,8 @@ Axis 🐛 — cross-cutting axis for non-configurable failures.
 - Runbook 18 Section 2 Microsoft Intune app log incident ID + runbook 18 Section 3 `adb logcat -s DevicePolicyManager:*` excerpt `[MEDIUM, last_verified 2026-04-23]`
 - Whether the failure affects multiple users on the same device model (pattern indicator)
 
+<a id="cause-b-os-version-policy-mismatch"></a>
+
 ### Cause B: OS Version Policy Mismatch {#cause-b-os-version-policy-mismatch}
 
 **Typical class:** ⚙️ Config Error
@@ -106,6 +110,8 @@ Compliance policy sets a `minAndroidVersion` (or max) that the device fails. Ver
 3. If device version < policy minimum, the admin has two paths: (a) update the device OS (if feasible), (b) relax the policy minimum OR scope the user into a lower-minimum compliance policy group (if the device class cannot upgrade).
 
 **Escalation:** Rare — this cause is almost always ⚙️ Config; escalate only if device reports correct OS version but compliance evaluation still fails. Attach: compliance policy export + Settings > About phone screenshot + device enrolled-state details from P-09.
+
+<a id="cause-c-ca-timing-gap"></a>
 
 ### Cause C: CA Timing Gap (First Compliance Evaluation Pending) {#cause-c-ca-timing-gap}
 
@@ -162,6 +168,8 @@ If compliance state remains "Not evaluated" beyond 30 minutes after enrollment c
 | State = "Not compliant" AND failing-settings list EMPTY | Default-posture variant — verify P-08 and compliance policy assignment |
 | Multiple devices on same network simultaneously stuck | Network-level block — investigate firewall/proxy; MDM check-in endpoints reachability |
 | State stuck after policy assigned AND > 60 min | Microsoft Support escalation with full data package above |
+
+<a id="cause-d-passcode-encryption-policy-mismatch"></a>
 
 ### Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch {#cause-d-passcode-encryption-policy-mismatch}
 
