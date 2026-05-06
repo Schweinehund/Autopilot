@@ -172,7 +172,7 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 | Misconfiguration | Section | Severity |
 |------------------|---------|----------|
 | Wrong OEMConfig app for the device's Android version | [OEMConfig APK Push (Intune)](#oemconfig-apk-push) | CRITICAL |
-| Deployment attempted on Android 12 (NOT supported on Zebra) | [Scope and Status](#) | CRITICAL |
+| Deployment attempted on Android 12 (NOT supported on Zebra) | [Scope and Status](#scope-and-status) | CRITICAL |
 | OEMConfig profile authored against unsupported MX schema | [Step 4](#provisioning-steps) | HIGH |
 | LOB app and OEMConfig profile assignment scopes mismatched | [Step 5](#provisioning-steps) | HIGH |
 | Userless token allowed to lapse beyond 90 days | [Renewal / Maintenance](#renewal-maintenance) | HIGH |

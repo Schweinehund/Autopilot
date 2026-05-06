@@ -390,11 +390,14 @@ function doEmitStubs() {
 // BASELINE_9 refreshed 2026-04-26 (Phase 48 Plan 01): original S1..S9 pre-Phase-43 pin coordinates
 // updated to current line positions after Phase 44-46 content additions (Private Space H3 insertion,
 // frontmatter freshness adds, COPE see-also blockquote I2). See 48-CONTEXT.md D-14 + 48-RESEARCH.md §BASELINE_9.
+// BASELINE_9 refreshed 2026-05-06 (Phase 60 Plan 06): Phase 59 line positions
+// updated to current after Phase 60 _glossary-android.md #kme/#kpe HTML-shim
+// insertion at lines 127 and 134 (net +2 lines after line 126).
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 76],   // ### Supervision heading (was line 65 at v1.4 close)
   ['docs/_glossary-android.md', 78],   // Supervision disambiguation blockquote (was line 67)
-  ['docs/_glossary-android.md', 172],  // MHS cross-platform note (was line 134)
-  ['docs/_glossary-android.md', 188],  // Version History row (was line 148)
+  ['docs/_glossary-android.md', 174],  // MHS cross-platform note (was line 134; Phase 60 +2 from #kme/#kpe shims)
+  ['docs/_glossary-android.md', 190],  // Version History row (was line 148; Phase 60 +2 from #kme/#kpe shims)
   ['docs/android-lifecycle/00-enrollment-overview.md', 51],
   ['docs/android-lifecycle/00-enrollment-overview.md', 53],
   ['docs/android-lifecycle/00-enrollment-overview.md', 83],
