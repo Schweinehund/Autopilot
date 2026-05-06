@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated": "2026-04-26T00:00:00Z",
-  "phase": "48-audit-harness-bootstrap-broken-link-sweep-first-pass",
+  "generated": "2026-05-06T00:00:00Z",
+  "phase": "60-audit-harness-v1-5-finalization",
   "safetynet_exemptions": [
     {"file": "docs/_glossary-android.md", "line": 185, "reason": "Phase 60 Plan 06: line 183 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 176 shifted +7 (Phase 59 CLEAN-08 see-also normalization added 11 lines, net +7 before Play Integrity section); Play Integrity prose references SafetyNet as predecessor (historical context)"},
     {"file": "docs/_glossary-android.md", "line": 200, "reason": "Phase 60 Plan 06: line 198 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 190 shifted +8 (Phase 59 CLEAN-08 see-also normalization + Version History row added); SafetyNet API sunset Version History entry (2025-01 historical changelog)"},
@@ -51,5 +51,29 @@
     {"file": "docs/_glossary-android.md", "line": 123, "reason": "Phase 59 carry-over: line 117 shifted +6; 'Knox Vault' compound (Knox Vault is a hardware component, not a managed-device SKU; second occurrence same line)"},
     {"file": "docs/_glossary-android.md", "line": 125, "reason": "Phase 59 carry-over: line 119 shifted +6; 'Knox security features' (cross-platform note; not a SKU reference)"},
     {"file": "docs/_glossary-android.md", "line": 197, "reason": "Phase 60 Plan 06: line 195 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 187 shifted +8 (Phase 59 CLEAN-08 net +7 + Version History row +1); 'Knox entry' in changelog (refers to glossary entry; not a SKU reference)"}
+  ],
+  "c9_exemptions": [
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 41, "reason": "Phase 34 Foundation + Phase 36 (AECOBO-02 COBO migration-note) -- ### Android 11 -- COPE NFC Provisioning Removed H3 heading documents Google-driven Android-11 NFC + afw#setup provisioning-method removal for COPE / WPCO; PITFALL-13 disambiguation: Google has NOT formally deprecated COPE per _glossary-android.md:200 2023+ entry. Match-text is HISTORICAL prose about a provisioning-method removal, NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 01 60-CALIBRATION.md Section A."},
+    {"file": "docs/_glossary-android.md", "line": 202, "reason": "Phase 34 Foundation Version History row (2023+ entry): 'COPE -> WPCO terminology drift recorded. Google has NOT formally deprecated COPE; community shorthand incorrectly conflates recommended-against with deprecated.' Match-text is the canonical PITFALL-13 disambiguation prose itself -- the row LITERALLY clarifies that COPE is NOT deprecated. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate: pin if outside window)."},
+    {"file": "docs/admin-setup-android/03-fully-managed-cobo.md", "line": 153, "reason": "Phase 36 AECOBO-02 COBO afw#setup section: 'afw#setup is still supported for COBO on Android 11+ (contrast: the COPE path was removed on Android 11+ -- see _glossary-android.md#afw-setup).' Match-text is HISTORICAL prose about Android-11 COPE-path removal cross-referencing the canonical PITFALL-13 entry; NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate)."},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 54, "reason": "Phase 34 Foundation AMAPI migration footnote row: 'Unaffected (AMAPI April 2025 affected BYOD specifically; COPE/WPCO unaffected)' followed by BYOD-column note 'custom OMA-URI removed'. Match-text spans table cells where COPE is in the COPE/WPCO-unaffected disambiguation note and 'removed' refers to OMA-URI removal in the BYOD column -- NOT a COPE-mode deprecation. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate)."}
+  ],
+  "c11_ops_exemptions": [],
+  "c13_broken_link_allowlist": [
+    {"file": "docs/admin-setup-android/02-zero-touch-portal.md", "line": 160, "target": "https://support.google.com/work/android/topic/9158960", "reason": "PITFALL-14 transient external; Google support URL non-MS domain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 51, "target": "https://knox.samsung.com", "reason": "PITFALL-14 transient external; Samsung Knox redirect chain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/admin-setup-android/09-aosp-realwear.md", "line": 125, "target": "https://portal.realwear.com", "reason": "PITFALL-14 transient external; RealWear portal non-MS domain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/l1-runbooks/04-network-connectivity.md", "line": 35, "target": "https://ztd.dds.microsoft.com", "reason": "PITFALL-14 transient external; ZTD endpoint reachability transient; REQUIREMENTS Out-of-Scope spirit (MS endpoint URL not docs.microsoft.com)", "category": "transient_external"},
+    {"file": "docs/l1-runbooks/28-android-knox-enrollment-failed.md", "line": 69, "target": "https://knox.samsung.com", "reason": "PITFALL-14 transient external; Samsung Knox redirect chain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/reference/endpoints.md", "line": 125, "target": "https://support.apple.com/en-us/HT101555", "reason": "PITFALL-14 transient external; Apple support URL redirect chain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/_templates/admin-template.md", "line": 23, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template.md", "line": 43, "target": "../runbooks-l1/relevant-runbook.md", "reason": "intentional template stub by design (placeholder for runbook ref)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-android.md", "line": 51, "target": "../l1-runbooks/[filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-android.md", "line": 111, "target": "../l1-runbooks/[runbook-filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-android.md", "line": 113, "target": "../l1-runbooks/26-mgp-app-not-installed.md", "reason": "intentional template stub by design (placeholder for not-yet-authored runbook)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-ios.md", "line": 71, "target": "../l1-runbooks/[runbook-filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-ios.md", "line": 57, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-macos.md", "line": 49, "target": "../l1-runbooks/[runbook-filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-macos.md", "line": 13, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"}
   ]
 }

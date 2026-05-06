@@ -393,15 +393,18 @@ function doEmitStubs() {
 // BASELINE_9 refreshed 2026-05-06 (Phase 60 Plan 06): Phase 59 line positions
 // updated to current after Phase 60 _glossary-android.md #kme/#kpe HTML-shim
 // insertion at lines 127 and 134 (net +2 lines after line 126).
+// BASELINE_9 refreshed 2026-05-06 (Phase 60 Plan 08): _glossary-android.md entries refreshed
+// to post-Plan-06 line coords (#kme/#kpe shims caused +2 shift after line 127); aligns with
+// current sidecar supervision_exemptions[] AT v1.5 close. Closes AUDIT-07 carry-over per CONTEXT D-19.
 const BASELINE_9 = [
-  ['docs/_glossary-android.md', 76],   // ### Supervision heading (was line 65 at v1.4 close)
-  ['docs/_glossary-android.md', 78],   // Supervision disambiguation blockquote (was line 67)
-  ['docs/_glossary-android.md', 174],  // MHS cross-platform note (was line 134; Phase 60 +2 from #kme/#kpe shims)
-  ['docs/_glossary-android.md', 190],  // Version History row (was line 148; Phase 60 +2 from #kme/#kpe shims)
+  ['docs/_glossary-android.md', 79],   // ### Supervision heading (was 65/76; 79 at Phase 59; stable post-Plan-06 — H3 sits before line 127)
+  ['docs/_glossary-android.md', 81],   // Supervision disambiguation blockquote (was 67/78; 81 at Phase 59; stable post-Plan-06)
+  ['docs/_glossary-android.md', 181],  // MHS cross-platform note (was 134/172/179; 181 post-Plan-06 +2 from #kme/#kpe shims)
+  ['docs/_glossary-android.md', 198],  // Version History row (was 148/188/196; 198 post-Plan-06 +2)
   ['docs/android-lifecycle/00-enrollment-overview.md', 51],
   ['docs/android-lifecycle/00-enrollment-overview.md', 53],
   ['docs/android-lifecycle/00-enrollment-overview.md', 83],
-  ['docs/admin-setup-android/03-fully-managed-cobo.md', 36],  // was line 35
+  ['docs/admin-setup-android/03-fully-managed-cobo.md', 36],
   ['docs/l2-runbooks/20-android-app-install-investigation.md', 21]
 ];
 
