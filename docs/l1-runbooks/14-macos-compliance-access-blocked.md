@@ -30,6 +30,8 @@ Go directly to the section that matches the observation:
 
 ---
 
+<a id="device-non-compliant"></a>
+
 ## Device Non-Compliant {#device-non-compliant}
 
 **Entry condition:** Intune admin center shows this macOS device with a "Not compliant" status.
@@ -55,6 +57,8 @@ Go directly to the section that matches the observation:
 7. > **Say to the user:** "We've made a change to address the compliance issue. The device will check in with our management system in the next few minutes. I'll confirm once the status updates."
 
 ---
+
+<a id="compliant-access-blocked"></a>
 
 ## Compliant but Access Blocked {#compliant-access-blocked}
 
