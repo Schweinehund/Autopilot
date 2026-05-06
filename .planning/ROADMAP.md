@@ -398,7 +398,7 @@ Plans:
   2. C12 (4-platform comparison structural validation) is blocking — file exists from Phase 58; check scope updated to verify 5 platform columns (including Linux column) + 6 domain H2 anchors
   3. C13 (broken-link detection) second pass run after all v1.5 content landed; promoted to blocking after manual triage of pre-existing breakage from Phase 48 Category A/B inventory clears; allowlist populated for transient external URLs
   4. `node scripts/validation/v1.5-milestone-audit.mjs` exits 0 with all blocking checks PASS on the post-Phase-59 state
-  5. All per-phase `check-phase-NN.mjs` validators (48–60) registered in CI workflow `audit-harness-integrity.yml`
+  5. All per-phase `check-phase-NN.mjs` validators (48–60) registered in CI workflow `audit-harness-v1.5-integrity.yml`
 **Plans**: 10 plans
   - [x] 60-01-PLAN.md — Calibration corpus scan (60-CALIBRATION.md artifact per D-27/D-28; read-only; AUDIT-03 contributor)
   - [x] 60-02-PLAN.md — macOS l1-runbooks anchor-fix cluster (10 anchor shims across 4 files; AUDIT-05 contributor)
@@ -488,7 +488,7 @@ Plans:
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 9/9 | Complete | 2026-05-05 |
-| 60. Audit Harness v1.5 Finalization | v1.5 | 8/10 | In Progress|  |
+| 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete    | 2026-05-06 |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |
 
 ---
