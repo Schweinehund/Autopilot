@@ -399,7 +399,17 @@ Plans:
   3. C13 (broken-link detection) second pass run after all v1.5 content landed; promoted to blocking after manual triage of pre-existing breakage from Phase 48 Category A/B inventory clears; allowlist populated for transient external URLs
   4. `node scripts/validation/v1.5-milestone-audit.mjs` exits 0 with all blocking checks PASS on the post-Phase-59 state
   5. All per-phase `check-phase-NN.mjs` validators (48–60) registered in CI workflow `audit-harness-integrity.yml`
-**Plans**: TBD
+**Plans**: 10 plans
+  - [ ] 60-01-PLAN.md — Calibration corpus scan (60-CALIBRATION.md artifact per D-27/D-28; read-only; AUDIT-03 contributor)
+  - [ ] 60-02-PLAN.md — macOS l1-runbooks anchor-fix cluster (10 anchor shims across 4 files; AUDIT-05 contributor)
+  - [ ] 60-03-PLAN.md — Android l1-runbooks anchor-fix cluster (17 anchor shims across 4 files; AUDIT-05 contributor)
+  - [ ] 60-04-PLAN.md — Mixed-platform l1-runbooks anchor-fix cluster (6 anchor shims across 2 files; AUDIT-05 contributor)
+  - [ ] 60-05-PLAN.md — Android l2-runbooks anchor-fix cluster (14 anchor shims across 3 files; AUDIT-05 contributor)
+  - [ ] 60-06-PLAN.md — PITFALL-12 _glossary-android.md atomic anchor-fix + sidecar pin-coord refresh + 2 templates/aosp-zebra fixes (D-07 + D-14; AUDIT-05 contributor)
+  - [ ] 60-07-PLAN.md — Category B path-fix commits (5 AOSP Windows-admin removals + 4 broken-path triages; D-09; AUDIT-05 contributor)
+  - [ ] 60-08-PLAN.md — ATOMIC HARNESS COMMIT (C9/C11/C13 promotions + C12 H2 expansion + 3 sidecar arrays + BASELINE_9 refresh + 48-VERIFICATION close-out; D-20 + D-26; closes AUDIT-03 + AUDIT-04 + AUDIT-05 + AUDIT-07)
+  - [ ] 60-09-PLAN.md — check-phase-60.mjs validator with 25 V-60-NN structural assertions (D-21 + D-22; closes AUDIT-06)
+  - [ ] 60-10-PLAN.md — ROADMAP SC#5 wording fix + 60-VERIFICATION.md close (D-23; final close gate)
 
 ### Phase 61: Gap Closure + Terminal Re-Audit + Milestone Close
 **Goal**: v1.5 milestone is formally closed with a terminal re-audit confirming 0 blocking harness failures, all requirements confirmed shipped, and traceability updated across REQUIREMENTS.md + PROJECT.md + MILESTONES.md
