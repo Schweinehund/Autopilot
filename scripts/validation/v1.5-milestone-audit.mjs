@@ -417,22 +417,38 @@ const checks = [
   {
     id: 9,
     name: 'C9: COPE banned-phrase check',
-    informational: true,
-    // D-06 + Phase 48 D-06: INFORMATIONAL through Phase 60 (ops-domain false-positive risk for Phase 53/54 content).
-    // Banned phrases source from sidecar JSON cope_banned_phrases[].
+    // Phase 60 D-17 + D-18: PROMOTED to blocking. Sources patterns from sidecar cope_banned_phrases[]
+    // and exemptions from sidecar c9_exemptions[] per {file, line, reason} contract (Phase 42 D-26).
+    // Mirrors C7 Knox `allowKey`-set + per-line iteration pattern.
     run() {
       const bannedSource = (ALLOWLIST.cope_banned_phrases && ALLOWLIST.cope_banned_phrases.length)
         ? ALLOWLIST.cope_banned_phrases
         : [ '\\bCOPE\\b[^.]*\\bdeprecated\\b', '\\bCOPE\\b[^.]*\\bend of life\\b', '\\bCOPE\\b[^.]*\\bremoved\\b' ];
-      const banned = bannedSource.map(p => new RegExp(p, 'i'));
+      const banned = bannedSource.map(p => new RegExp(p, 'gi'));
+      const allowlist = ALLOWLIST.c9_exemptions || [];
+      const allowKey = new Set(allowlist.map(e => e.file + ':' + e.line));
       const targets = androidDocPaths();
-      let hits = 0;
+      const violations = [];
       for (const t of targets) {
         const c = readFile(t);
         if (!c) continue;
-        for (const pat of banned) { if (pat.test(c)) hits++; }
+        for (const pat of banned) {
+          pat.lastIndex = 0;
+          let m;
+          while ((m = pat.exec(c)) !== null) {  // RegExp.prototype.exec — not shell exec
+            const lineNum = c.slice(0, m.index).split('\n').length;
+            if (!allowKey.has(t + ':' + lineNum)) {
+              violations.push({ file: t, line: lineNum, pattern: pat.source });
+            }
+          }
+        }
       }
-      return { pass: true, detail: '(informational)' };
+      if (violations.length === 0) return { pass: true };
+      return {
+        pass: false,
+        detail: violations.length + ' un-exempted COPE banned-phrase hit(s): '
+              + violations.slice(0, 3).map(v => v.file + ':' + v.line).join(', ')
+      };
     }
   },
   {
@@ -477,9 +493,13 @@ const checks = [
   {
     id: 11,
     name: 'C11: Ops-domain anti-pattern regex',
-    informational: true,
-    // AUDIT-03: INFORMATIONAL-FIRST. Promotes to blocking at Phase 60.
-    // Patterns sourced from sidecar JSON c11_ops_patterns[] array (lazy-loaded; hardcoded fallback).
+    // Phase 60 D-01: PROMOTED to blocking. C1-symmetric proximity-window negation against
+    // disambiguation-prose keywords. ±200-char window per match. Patterns sourced from sidecar
+    // JSON c11_ops_patterns[] (lazy-loaded; hardcoded 4-pattern fallback per D-03).
+    // Exemptions sourced from sidecar c11_ops_exemptions[] per {file, line, reason} contract
+    // (Phase 42 D-26); reserved-empty at Phase 60 close per D-02.
+    // Keyword set extended per Plan 01 60-CALIBRATION.md Section B live calibration:
+    // base D-01 set + mutually\s+exclusive + co-management + migration + transition + replacement.
     run() {
       const patternSource = (ALLOWLIST.c11_ops_patterns && ALLOWLIST.c11_ops_patterns.length)
         ? ALLOWLIST.c11_ops_patterns
@@ -489,17 +509,39 @@ const checks = [
             '\\bAutopatch rings\\b',
             '\\bSafetyNet\\b[^.]*\\bcompliance\\b'
           ];
-      const patterns = patternSource.map(p => new RegExp(p, 'i'));
+      const patterns = patternSource.map(p => new RegExp(p, 'gi'));
+      const opsAllowlist = ALLOWLIST.c11_ops_exemptions || [];
+      const opsAllowKey = new Set(opsAllowlist.map(e => e.file + ':' + e.line));
+      // D-01 keyword regex (final form per Plan 01 60-CALIBRATION.md Section B):
+      const windowKeywords = /successor|deprecated|historical|disambiguation|mutual-exclusion|mutually\s+exclusive|co-management|migration|transition|replacement|PITFALL-9|first-occurrence|callout/i;
       // Scope: all docs/**/*.md (ops-depth is cross-platform)
       const targets = [];
       for (const abs of walkMd('docs')) { targets.push(relNormalize(abs)); }
-      let hits = 0;
+      const violations = [];
       for (const t of targets) {
-        const c = readFile(t);
-        if (!c) continue;
-        for (const pat of patterns) { if (pat.test(c)) hits++; }
+        const content = readFile(t);
+        if (!content) continue;
+        for (const re of patterns) {
+          re.lastIndex = 0;
+          let m;
+          while ((m = re.exec(content)) !== null) {  // RegExp.prototype.exec — not shell exec
+            const idx = m.index;
+            const lineNum = content.slice(0, idx).split('\n').length;
+            if (opsAllowKey.has(t + ':' + lineNum)) continue;
+            const wStart = Math.max(0, idx - 200);
+            const wEnd = Math.min(content.length, idx + 200 + (m[0] ? m[0].length : 0));
+            const window = content.slice(wStart, wEnd);
+            if (windowKeywords.test(window)) continue;
+            violations.push({ file: t, line: lineNum, pattern: re.source });
+          }
+        }
       }
-      return { pass: true, detail: '(informational)' };
+      if (violations.length === 0) return { pass: true };
+      return {
+        pass: false,
+        detail: violations.length + ' un-exempted ops-domain anti-pattern hit(s): '
+              + violations.slice(0, 3).map(v => v.file + ':' + v.line + ' (' + v.pattern + ')').join(', ')
+      };
     }
   },
   {
@@ -545,24 +587,34 @@ const checks = [
       if (emptyCells.length > 0) {
         return { pass: false, detail: emptyCells.length + ' cell(s) missing hyperlinks (link-not-copy violation)' };
       }
-      return { pass: true, detail: '5 platform columns + all data cells link-bearing' };
+      // 6 H2-anchor sub-check (D-13 + D-16 — Phase 60 expansion per AUDIT-04 SC#2)
+      const h2s = ["## Enrollment", "## Configuration", "## App Deployment", "## Compliance", "## Software Updates", "## Conditional Access"];
+      const missing = h2s.filter(h => !new RegExp("^" + h.replace(/[/\\^$*+?.()|[\]{}]/g, "\\$&") + "\\s*$", "m").test(content));
+      if (missing.length) return { pass: false, detail: 'Missing H2 anchors: ' + missing.join(', ') };
+      return { pass: true, detail: '5 platform columns + all data cells link-bearing + 6 named H2 anchors present' };
     }
   },
   {
     id: 13,
     name: 'C13: Broken-link automation (markdown-link-check)',
-    informational: true,
-    // AUDIT-05: INFORMATIONAL-FIRST. Promotes to blocking after Phase 60 second-pass triage.
+    // Phase 60 D-06: PROMOTED to blocking. Allowlist sidecar shape + count assertion against
+    // c13_broken_link_allowlist[] (15 entries: 6 transient_external + 9 template_placeholder per D-10).
     // Scope: internal anchor links + relative paths in docs/**/*.md.
     // External MS Learn URL validation explicitly OUT OF SCOPE (REQUIREMENTS.md).
-    // Note: always returns informational PASS -- full sweep is Wave-2 manual step (48-VERIFICATION-broken-links.md).
+    // Full markdown-link-check tool sweep invoked at CI-level via .github/workflows/audit-harness-v1.5-integrity.yml
+    // + Phase 61 fresh-clone re-audit; this harness check verifies the allowlist sidecar shape + category counts
+    // match D-10 mandate.
     run() {
-      // Collect docs/**/*.md files to verify tool is wired; full sweep is Wave-2 step
-      const docFiles = [];
-      for (const abs of walkMd('docs')) { docFiles.push(relNormalize(abs)); }
-      if (docFiles.length === 0) return { pass: true, detail: '(informational)' };
-      // Always informational-first pass -- broken links do not block harness exit
-      return { pass: true, detail: '(informational)' };
+      const allowlist = ALLOWLIST.c13_broken_link_allowlist || [];
+      if (allowlist.length !== 15) {
+        return { pass: false, detail: 'c13_broken_link_allowlist[] expected 15 entries (6 transient_external + 9 template_placeholder), got ' + allowlist.length };
+      }
+      const transient = allowlist.filter(e => e.category === 'transient_external').length;
+      const template = allowlist.filter(e => e.category === 'template_placeholder').length;
+      if (transient !== 6 || template !== 9) {
+        return { pass: false, detail: 'c13 category counts: ' + transient + ' transient_external (expect 6), ' + template + ' template_placeholder (expect 9)' };
+      }
+      return { pass: true, detail: '15-entry broken-link allowlist (6 transient_external + 9 template_placeholder) honored; full mlc sweep deferred to CI' };
     }
   }
 ];
