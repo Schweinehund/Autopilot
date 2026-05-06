@@ -27,6 +27,8 @@ Go directly to the section that matches the observation:
 
 ---
 
+<a id="profile-not-showing"></a>
+
 ## Profile Not Showing {#profile-not-showing}
 
 **Entry condition:** A profile that should be assigned to this device is absent from the Intune device profile list.
@@ -50,6 +52,8 @@ Go directly to the section that matches the observation:
 8. If the device is in the group but the profile still does not appear after a sync: proceed to [Escalation Criteria](#escalation-criteria).
 
 ---
+
+<a id="profile-showing-not-working"></a>
 
 ## Profile Showing but Not Working {#profile-showing-not-working}
 
