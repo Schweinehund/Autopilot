@@ -1,6 +1,26 @@
-# Phase 60: Calibration Corpus Scan -- C9 + C11 Pre-Promotion (Draft)
+---
+phase: 60-audit-harness-v1-5-finalization
+slug: audit-harness-v1-5-finalization
+generated: 2026-05-06
+calibration_scope: docs/admin-setup-android/**/*.md, docs/operations/**/*.md, docs/android-lifecycle/**/*.md, docs/**/*.md (C11)
+total_c9_hits: 1
+total_c11_hits_in_window: 7
+total_c11_hits_requires_pinning: 5
+total_c11_hits_anti_pattern: 0
+---
 
-> **Lifecycle:** Read-only artifact produced BEFORE Plan 09 atomic harness commit per CONTEXT D-28. Informs c9_exemptions[] pin set + C11 final keyword list. Frontmatter + Summary + Plan 09 Inputs sections appended in Task 2.
+# Phase 60: Calibration Corpus Scan -- C9 + C11 Pre-Promotion
+
+> **Lifecycle:** Read-only artifact produced BEFORE Plan 09 atomic harness commit per CONTEXT D-28. Informs c9_exemptions[] pin set + C11 final keyword list.
+
+## Header
+
+- **Phase:** 60
+- **Generated:** 2026-05-06
+- **Calibration tools:** `node scripts/validation/v1.5-milestone-audit.mjs` (C9 lines 417-437, C11 lines 477-504) + Plan-01 one-shot Node corpus scanners mirroring harness regex semantics (`new RegExp(p, 'gi')`); ±200-char window evaluator for C11 D-01 keyword set.
+- **Scope:** Android + ops-depth corpus for C9 (`androidDocPaths()` ∪ `docs/operations/**/*.md`, 52 files); full `docs/**/*.md` for C11 (218 files).
+- **C9 raw hits:** 1 (1 legitimate-disambiguation, 0 anti-pattern)
+- **C11 raw hits:** 12 (7 windowed-exempt under D-01 starting set, 5 requires-pinning, 0 anti-pattern)
 
 ## Section A -- C9 cope_banned_phrases corpus scan
 
@@ -95,3 +115,36 @@ Plan 09 atomic harness commit recommendation: **extend the C11 proximity-window 
 This eliminates `c11_ops_exemptions[]` initial population per CONTEXT D-02 (reserved-empty array shape preserved). All 12 C11 corpus hits pass via window negation; zero pinning required. Per Plan 01 line 99 + RESEARCH "Specifics" guidance ("Window-extension is preferred for generic terms; pinning is preferred for site-specific terms"), `mutually exclusive`, `co-management`, `migration`, `transition`, `replacement` are GENERIC ops-domain disambiguation terms expected to recur across v1.6+ content -- window-extension is correct.
 
 **Anti-pattern hits in Section B:** 0. (Phase 49-59 V-NN-NN structural assertions guarantee no regressions; D-28 pre-promotion calibration confirms zero ops-domain false-positives that would represent a Phase 49-59 regression.)
+
+## Summary
+
+| Section | Hits | Disposition Breakdown |
+|---------|------|------------------------|
+| A: C9 corpus | 1 | 1 legitimate (-> c9_exemptions[]) / 0 anti-pattern (REGRESSION; must be 0) |
+| B: C11 corpus | 12 | 7 windowed-exempt / 5 requires-pinning (resolved via Plan 09 keyword extension; -> c11_ops_exemptions[] reserved-empty per D-02) / 0 anti-pattern (REGRESSION; must be 0) |
+| **Total** | **13** | **8 already-passing under D-01 starting set / 5 resolved via keyword extension / 1 c9_exemptions[] seed / 0 anti-pattern** |
+
+## Plan 09 Inputs
+
+**c9_exemptions[] seed entries (Plan 09 atomic harness commit):**
+
+- `{"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 41, "reason": "Phase 34 Foundation + Phase 36 (AECOBO-02 COBO migration-note) -- ### Android 11 -- COPE NFC Provisioning Removed H3 heading documents Google-driven Android-11 NFC + afw#setup provisioning-method removal for COPE / WPCO; PITFALL-13 disambiguation: Google has NOT formally deprecated COPE per _glossary-android.md:200 2023+ entry. Match-text is HISTORICAL prose about a provisioning-method removal, NOT a COPE-mode deprecation claim. legitimate-disambiguation."}`
+
+Total seed count: **1 entry**.
+
+**C11 final keyword regex (Plan 09 atomic harness commit):**
+
+```
+/successor|deprecated|historical|disambiguation|mutual-exclusion|mutually\s+exclusive|co-management|migration|transition|replacement|PITFALL-9|first-occurrence|callout/i
+```
+
+Added beyond D-01 starting set: `mutually\s+exclusive` (whitespace-tolerant for soft-break paragraph wraps), `co-management` (canonical SCCM/Intune workload-slider co-management term), `migration` (Migration Guides / Migration Issues hub-section semantics), `transition` (cross-tool migration-guide labels), `replacement` (legacy-tool replacement labels in index entries).
+
+Each keyword cited above is a GENERIC ops-domain disambiguation term that recurs across v1.5 ops-depth + v1.6+ planned content (per RESEARCH "Specifics" guidance). Window-extension is preferred over per-line `c11_ops_exemptions[]` pinning per Plan 01 line 99 ("central calibration knob per D-01 Claude's Discretion").
+
+**c11_ops_exemptions[] seed entries (Plan 09 atomic harness commit):**
+
+Reserved-empty per CONTEXT D-02 -- initial population = 0 entries.
+
+(All 12 C11 corpus hits pass via the extended keyword window after Plan 09 lands; no per-line pin coordinates required at Phase 60 close. Lazy-add per CONTEXT D-02 + Phase 48 D-15 when first non-windowed legitimate occurrence appears in v1.6+ content.)
+
