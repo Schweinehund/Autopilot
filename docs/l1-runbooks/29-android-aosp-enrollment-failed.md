@@ -42,6 +42,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 ---
 
+<a id="cause-a-realwear"></a>
+
 ## Cause A: RealWear enrollment failed {#cause-a-realwear}
 
 **Entry condition:** Admin reports the RealWear device serial is NOT visible in Intune after first power-on, OR the QR scan returned an error at first boot, OR the device cannot join the staging Wi-Fi network embedded in the QR. RealWear is supported under AOSP because no GMS is present on HMT-1 / HMT-1Z1 / Navigator 500.
@@ -84,6 +86,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 ---
 
+<a id="cause-b-zebra"></a>
+
 ## Cause B: Zebra WS50 enrollment failed {#cause-b-zebra}
 
 **Entry condition:** Admin reports the Zebra WS50 wearable scanner serial is NOT visible in Intune after first power-on, OR the OEMConfig profile assignment shows Failed in Intune, OR the device is on Android 12 (NOT supported per MS Learn). Zebra WS50 is supported under AOSP because no GMS is present on the wearable scanner; if GMS is later added by Zebra, use Android Enterprise fully managed (COBO) instead.
@@ -125,6 +129,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 ---
 
+<a id="cause-c-pico"></a>
+
 ## Cause C: Pico enrollment failed {#cause-c-pico}
 
 **Entry condition:** Admin reports the PICO device serial is NOT visible in Intune after first power-on, OR the device is a consumer Pico SKU (not Enterprise / Pro/Eye), OR PUI firmware is below floor. Pico is supported under AOSP because no GMS is present on the PICO 4 Enterprise / PICO Neo3 Pro/Eye; if a consumer Pico variant accidentally entered the fleet, AOSP enrollment will not work.
@@ -164,6 +170,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 - Consumer Pico SKU procured by mistake — admin must escalate to procurement to swap for Enterprise SKU (no L2 path can recover this)
 
 ---
+
+<a id="cause-d-htc"></a>
 
 ## Cause D: HTC VIVE Focus enrollment failed {#cause-d-htc}
 
@@ -205,6 +213,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 - Consumer Vive variant procured by mistake (out of scope per Phase 45 — enterprise SKUs only: Vive Focus 3 / XR Elite / Focus Vision)
 
 ---
+
+<a id="cause-e-meta-quest"></a>
 
 ## Cause E: Meta Quest enrollment failed {#cause-e-meta-quest}
 
