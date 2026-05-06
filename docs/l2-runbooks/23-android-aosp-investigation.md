@@ -115,6 +115,8 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 
 Match observed indicators to one of five per-OEM Patterns below. Patterns are independently diagnosable by OEM (1:1 routing from L1 runbook 29 Causes A-E). Each Pattern includes Resolution Steps and a Microsoft Support escalation packet.
 
+<a id="pattern-a-realwear"></a>
+
 ### Pattern A: RealWear enrollment failure {#pattern-a-realwear}
 
 **Typical class:** ⚙️ Config Error (staging Wi-Fi PSK auth-type misconfig) — occasionally 🔐 Auth (token expiry) or ⏱️ Timing (Wi-Fi credential rotation)
@@ -144,6 +146,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 - **Enrollment profile GUID:** Intune admin center URL fragment for the AOSP enrollment profile (Graph API READ-ONLY GET if URL not directly visible: `GET https://graph.microsoft.com/beta/deviceManagement/androidEnrollmentProfiles/{id}`).
 
 ---
+
+<a id="pattern-b-zebra"></a>
 
 ### Pattern B: Zebra enrollment failure {#pattern-b-zebra}
 
@@ -177,6 +181,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 ---
 
+<a id="pattern-c-pico"></a>
+
 ### Pattern C: Pico enrollment failure {#pattern-c-pico}
 
 **Typical class:** ⚙️ Config Error (consumer SKU procured by mistake) — occasionally 🔌 Hardware (PUI firmware below floor)
@@ -206,6 +212,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 ---
 
+<a id="pattern-d-htc"></a>
+
 ### Pattern D: HTC enrollment failure {#pattern-d-htc}
 
 **Typical class:** ⚙️ Config Error (in-device path missing on older firmware) — occasionally 🔌 Hardware (firmware floor)
@@ -234,6 +242,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 - **Enrollment profile GUID:** Intune admin center URL fragment for the AOSP enrollment profile (Graph API READ-ONLY GET if URL not directly visible: `GET https://graph.microsoft.com/beta/deviceManagement/androidEnrollmentProfiles/{id}`).
 
 ---
+
+<a id="pattern-e-meta-quest"></a>
 
 ### Pattern E: Meta Quest enrollment failure {#pattern-e-meta-quest}
 
