@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: executing
-stopped_at: "Phase 60 context gathered (4 gray areas resolved via adversarial review: 1B/2A/3B/4A)"
-last_updated: "2026-05-06T19:10:28.185Z"
-last_activity: 2026-05-06 -- Phase 60 execution started
+stopped_at: "Phase 60 closed 2026-05-06; AUDIT-03/04/05/06/07 closed; Phase 61 (terminal re-audit + milestone close) unblocked"
+last_updated: "2026-05-06T21:00:00.000Z"
+last_activity: 2026-05-06 -- Phase 60 closed
 progress:
   total_phases: 14
-  completed_phases: 11
+  completed_phases: 12
   total_plans: 96
-  completed_plans: 85
-  percent: 89
+  completed_plans: 95
+  percent: 99
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and operate them at depth (co-management, patching, app lifecycle, drift/migration) once enrolled
-**Current focus:** Phase 60 — audit-harness-v1-5-finalization
+**Current focus:** Phase 61 — Gap Closure + Terminal Re-Audit + Milestone Close
 
 ## Current Position
 
-Phase: 60 (audit-harness-v1-5-finalization) — EXECUTING
-Plan: 1 of 10
-Status: Executing Phase 60
-Last activity: 2026-05-06 -- Phase 60 execution started
+Phase: 60 (audit-harness-v1-5-finalization) — COMPLETE
+Plan: 10 of 10
+Status: Closed 2026-05-06
+Last activity: 2026-05-06 -- Phase 60 closed
 
 ## Session Continuity
 
@@ -42,7 +42,7 @@ Next action: `/gsd-plan-phase 60` — Audit Harness v1.5 Finalization
 ```
 Progress: [██████████] 99%
 Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
-Status:   .  X  .  X  X  X  X  X  X  X  X  X  .  .
+Status:   .  X  .  X  X  X  X  X  X  X  X  X  X  .
           (. = not started; X = complete)
 ```
 
@@ -99,6 +99,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase 58]: 26 V-58-NN structural assertions implemented; progressive-landing pattern across 16 per-plan commits + close commit (`16b98ad..3f1ec7f` + close); pre-commit gate (3 validators) all GREEN at close — `check-phase-58.mjs` exits 0 with 26/26 V-58-NN PASS, `v1.5-milestone-audit.mjs` exits 0 with 12/12 PASS (including newly-promoted C12 in blocking mode), `regenerate-supervision-pins.mjs --self-test` informational FAIL preserved-not-regressed (v1.4.1 carry-over per STATE.md `Out-of-band carry-overs`); D-04 mandatory tier-2 CA H2 retrofit landed in macOS / iOS / Android sibling matrices (Plan 58-02 commits `54a70b8` + `6d3ce98`); D-08 Windows column → linux-capability-matrix.md canonical source applied (a dedicated windows-capability-matrix.md deferred to v1.6+ per D-10); D-09 ≤3 footnote-prose rows applied (Pre-Provisioning, Hybrid Entra Join, Windows 10 support); D-11 filename retained as `4-platform-capability-comparison.md` despite 5-platform scope (DEFER-08 / AECOMPARE-01 traceability); D-12 5C single-sentence intro cross-ref pattern (NOT 5B blockquote / NOT 5D new H2); D-13 Linux matrix `(when shipped)` hedge removed atomically (lines 70 + 112); D-14 Android footer F3 anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` preserved per Phase 45 AEAOSPFULL-09 model + body retargeted to single-sentence forward-link prose; D-15 pre-edit anchor inventory artifact (`58-ANCHOR-INVENTORY.md`) captured per PITFALL-6; D-17 + D-18 C12 promotion (informational → blocking) landed at Phase 58 close (NOT Phase 60 — ROADMAP:382-383 still owns scope expansion for Phase 60); D-19 45-day `last_verified` cycle for new comparison doc (vs 60-day per-platform); D-20 verification-during-execution discipline; W-7 spot-check methodology applied (5 random rows × 6 H2s = 30 rows; 100% verdict accuracy); W-8 Android intro `five locked domains` → `six locked domains` rewrite (CA enumeration consistency); Plan 58-07 carry-over resolution: C2 `supervision_exemptions` refreshed for post-58-02 line shifts (78/80/81/83/87/88 → 88/90/91/93/97/98) — intentional iOS-attributed citations per AEAUDIT-04 doctrine preserved verbatim, only line-number metadata refreshed; 240/240 link-bearing data cells at 100% D-01 cell-shape compliance; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed; Phase 59 unblocked
 - [Phase ?]: 59-02: Linux H2 inserted as pure Phase 57 Android mirror with 3 sub-tables (L1=4/L2=4/Admin=3); LIN-06 NOT surfaced at hub level per D-06
 - [Phase 59]: 36 V-59-NN structural assertions implemented; progressive-landing pattern across 9 per-plan commits (`33ddd53..f17aecd`); pre-commit gate: check-phase-59.mjs exits 0 (36/36 PASS), v1.5-milestone-audit.mjs exits 0 after allowlist line-number refresh (commit `a01ab1d`) for Phase-59-induced +3/+6/+7/+8 shifts in `_glossary-android.md`, regenerate-supervision-pins.mjs FAIL preserved-not-regressed (v1.4.1 carry-over; Phase 60 AUDIT-07 resolves); Linux H2 appended to docs/index.md (3 sub-tables L1=4/L2=4/Admin=3); Operations H2 appended to docs/index.md (4 sub-H3 routing tables); docs/operations/00-index.md completed from 25-line stub to 67-line index (DPO-Phase56-01 hand-off chain discharged); CLEAN-08 closed — 14 terms, 40 pairs, 33 see-also lines across 4 glossaries (macOS IS the iOS glossary per REQUIREMENTS.md:144); quick-ref-l1.md Linux H2 added (4 sub-H3s); quick-ref-l2.md Linux H2 added (4 sub-H3s; Play Integrity Verdict Reference preserved); APPEND_ONLY_HONORED (V-59-32 NEGATIVE regression-guard — all pre-Phase-59 H2 anchors in 4 hub files byte-identical pre/post); gfmSlug double-hyphen fix applied (space-flanked stripped chars → double hyphens per GitHub cmark-gfm; Phase 57/58 `\s+` collapse algorithm corrected); 5/5 SCs satisfied; CLEAN-08 closed; Phase 60 unblocked
+- [Phase 60]: 25 V-60-NN structural assertions implemented; mixed atomic-commit + progressive-landing pattern across ~40 commits + 1 atomic harness commit + 1 validator commit + 2 close commits (D-25 honored); pre-commit gate at close — check-phase-60.mjs reports 22 PASS / 3 FAIL / 0 SKIPPED (V-60-14/16/21 are pre-existing Phase 51/53/58 chain regressions inherited from worktree base, NOT regressions from Phase 60 work; documented in deferred-items.md and 60-VERIFICATION.md "Pre-Existing Chain Regressions (Out of Scope)" section per orchestrator scope boundary; Phase 60 must_haves do NOT include fixing other phases' validators); v1.5-milestone-audit.mjs exits 0 with 12/12 PASS in fully-blocking mode (informational only on C3 Phase 39 self-cert per D-29 grace pattern); regenerate-supervision-pins.mjs --self-test exits 0 with `Diff: identical` reproducing Phase 43 hand-authored 11-new-pin set (AUDIT-07 carry-over closed); 51 Category A anchor-fixes (Plans 60-02..06) + 9 Category B path-fixes (Plan 60-07) = 60 FIXED-PHASE-60 + 15 c13_broken_link_allowlist[] entries (6 transient_external + 9 template_placeholder) close 75-finding Phase 48 baseline inventory per D-11; D-01 C11 proximity-window negation pattern with /successor|deprecated|historical|disambiguation|mutual-exclusion|PITFALL-9|first-occurrence|callout/i keyword set extended at Plan 60-08 per CALIBRATION live-corpus (5 additional keywords); D-02 c11_ops_exemptions[] reserved-empty; D-13 + D-16 C12 6 H2-anchor expansion (Enrollment / Configuration / App Deployment / Compliance / Software Updates / Conditional Access); D-18 c9_exemptions[] mechanism wired (mirrors C7 Knox pattern; 4 entries seeded from CALIBRATION + live-corpus PITFALL-13 refinement); D-19 BASELINE_9 refreshed to current sidecar coords (post-Phase-59 + post-Plan-06 line shifts); D-20 atomic harness commit per Phase 43 D-07 contract bundles 4 promotions + 4 sidecar adds + BASELINE_9 + 48-VERIFICATION close-out (commit `c2abdd4`); D-23 ROADMAP SC#5 wording fix landed in trailing close commit (audit-harness-integrity.yml -> audit-harness-v1.5-integrity.yml; Phase 48 D-09 contradiction-handling precedent); D-25 mixed plan-structure honored exactly (anchor-fix + path-fix progressive-landed per file across Plans 60-02..06; Plan 60-08 was single ATOMIC harness commit); D-26 Phase 48/49/52/54/55/56/57/59 V-NN-NN chain validators all PASS post-close (regression-guard satisfied for chain validators that passed pre-Phase-60); 5/5 SCs + AUDIT-07 carry-over satisfied; AUDIT-03/04/05/06/07 closed; Phase 61 (terminal re-audit + milestone close) unblocked
 
 ### Pending Todos
 
@@ -109,7 +110,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 
 ### Out-of-band carry-overs from v1.4.1 close
 
-- `regenerate-supervision-pins.mjs --self-test` has pre-existing FAIL (stale BASELINE_9 vs Phase 44+ file coordinates); MUST be refreshed in Phase 48
+- `regenerate-supervision-pins.mjs --self-test` had pre-existing FAIL (stale BASELINE_9 vs Phase 44+ file coordinates); RESOLVED at Phase 60 close per AUDIT-07 (BASELINE_9 refreshed in Plan 60-08 atomic harness commit `c2abdd4`; `--self-test` now exits 0 with `Diff: identical` reproducing Phase 43 hand-authored 11-new-pin set)
 - iOS/macOS/Windows admin templates `last_verified` intentionally NOT normalized in v1.4.1 (Android-scope lock per Phase 43 D-25); v1.5 broken-link sweep / Phase 48 should surface these if C13 flags freshness drift
 - `v1.4.1-milestone-audit.mjs` C2 PASS was authoritative at v1.4.1 close despite self-test FAIL — v1.5 harness Phase 48 resets this
 
@@ -145,7 +146,7 @@ Phase 48 (harness + sweep)
 
 ## Session Continuity
 
-Last session: 2026-05-05T23:59:00.000Z
-Stopped at: Phase 59 closed — close commit `f17aecd`; 36/36 V-59-NN PASS; 5/5 SCs passed
-Resume file: .planning/phases/59-hub-navigation-integration-linux-operations-sections/59-VERIFICATION.md
-Next action: `/gsd-plan-phase 60` — Audit Harness v1.5 Finalization
+Last session: 2026-05-06T00:00:00.000Z
+Stopped at: Phase 60 closed — atomic harness commit `c2abdd4` + check-phase-60.mjs `6626253` + 60-VERIFICATION.md (this close commit); 22/25 V-60-NN PASS (3 FAIL are pre-existing Phase 51/53/58 chain regressions out-of-scope per orchestrator boundary); v1.5-milestone-audit.mjs 12/12 PASS in fully-blocking mode; regenerate-supervision-pins.mjs --self-test exit 0; 5/5 SCs satisfied; AUDIT-03/04/05/06/07 all closed
+Resume file: .planning/phases/60-audit-harness-v1-5-finalization/60-VERIFICATION.md
+Next action: `/gsd-plan-phase 61` — Gap Closure + Terminal Re-Audit + Milestone Close
