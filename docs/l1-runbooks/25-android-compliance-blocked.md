@@ -45,6 +45,8 @@ Common ticket phrasings: "my device isn't compliant," "access to Outlook is bloc
 
 ---
 
+<a id="cause-a-play-integrity-verdict-failure"></a>
+
 ## Cause A: Play Integrity Verdict Failure {#cause-a-play-integrity-verdict-failure}
 
 > See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android uses for compliance attestation (the legacy API was deprecated by Google in January 2025; Play Integrity is the current replacement).
@@ -92,6 +94,8 @@ Common ticket phrasings: "my device isn't compliant," "access to Outlook is bloc
 
 ---
 
+<a id="cause-b-os-version-policy-mismatch"></a>
+
 ## Cause B: OS Version Policy Mismatch {#cause-b-os-version-policy-mismatch}
 
 **Entry condition:** P-09 shows "Not compliant" with a failing setting referencing the Android OS version (e.g., "Minimum OS version").
@@ -133,6 +137,8 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 - User cannot update device OS (no OEM update available, OEM support ended) AND the compliance policy cannot be adjusted to accommodate the device
 
 ---
+
+<a id="cause-c-ca-timing-gap"></a>
 
 ## Cause C: CA Timing Gap (First Compliance Evaluation Pending) {#cause-c-ca-timing-gap}
 
@@ -179,6 +185,8 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 - Admin assigns a compliance policy but compliance state does not update after 60 minutes
 
 ---
+
+<a id="cause-d-passcode-encryption-policy-mismatch"></a>
 
 ## Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch {#cause-d-passcode-encryption-policy-mismatch}
 
