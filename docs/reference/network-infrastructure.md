@@ -150,12 +150,12 @@ netsh winhttp show proxy
 
 | Misconfiguration | Symptom | Runbook |
 |-----------------|---------|---------|
-| Port 443 blocked for ztd.dds.microsoft.com | Device cannot retrieve Autopilot profile; enrollment fails at "Identifying your device" | [Network Troubleshooting](../l2-runbooks/01-network-connectivity.md) |
-| Port 443 blocked for login.microsoftonline.com | Entra join fails; no sign-in prompt appears | [Network Troubleshooting](../l2-runbooks/01-network-connectivity.md) |
-| NTP blocked (UDP 123) | Clock skew error; Azure AD token validation fails | [Network Troubleshooting](../l2-runbooks/01-network-connectivity.md) |
-| VPN required but no split-tunnel exclusions | No connectivity during OOBE; enrollment fails at connectivity check | [Network Troubleshooting](../l2-runbooks/01-network-connectivity.md) |
+| Port 443 blocked for ztd.dds.microsoft.com | Device cannot retrieve Autopilot profile; enrollment fails at "Identifying your device" | Network Troubleshooting |
+| Port 443 blocked for login.microsoftonline.com | Entra join fails; no sign-in prompt appears | Network Troubleshooting |
+| NTP blocked (UDP 123) | Clock skew error; Azure AD token validation fails | Network Troubleshooting |
+| VPN required but no split-tunnel exclusions | No connectivity during OOBE; enrollment fails at connectivity check | Network Troubleshooting |
 | Authenticated proxy during OOBE | Device hangs at "Identifying your device" — SYSTEM account cannot authenticate | [ESP Troubleshooting](../l2-runbooks/02-esp-deep-dive.md) |
-| SSL inspection with untrusted CA | Certificate validation errors; HTTPS connections fail for all Microsoft endpoints | [Network Troubleshooting](../l2-runbooks/01-network-connectivity.md) |
+| SSL inspection with untrusted CA | Certificate validation errors; HTTPS connections fail for all Microsoft endpoints | Network Troubleshooting |
 
 ## See Also
 
