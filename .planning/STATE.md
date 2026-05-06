@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: executing
-stopped_at: Completed 59-02-PLAN.md
-last_updated: "2026-05-05T23:48:12.950Z"
+stopped_at: Completed 59-09-PLAN.md
+last_updated: "2026-05-05T23:59:00.000Z"
 last_activity: 2026-05-05
 progress:
   total_phases: 14
-  completed_phases: 10
+  completed_phases: 11
   total_plans: 86
-  completed_plans: 84
-  percent: 98
+  completed_plans: 85
+  percent: 99
 ---
 
 # Project State
@@ -21,28 +21,28 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-26)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and operate them at depth (co-management, patching, app lifecycle, drift/migration) once enrolled
-**Current focus:** Phase 59 — Hub Navigation Integration — Linux + Operations Sections
+**Current focus:** Phase 60 — Audit Harness v1.5 Finalization
 
 ## Current Position
 
-Phase: 59 (Hub Navigation Integration — Linux + Operations Sections) — EXECUTING
-Plan: 9 of 9
-Status: Ready to execute
+Phase: 60 (Audit Harness v1.5 Finalization) — READY
+Plan: 0 of TBD
+Status: Ready to plan
 Last activity: 2026-05-05
 
 ## Session Continuity
 
-Last session: 2026-05-05T23:48:12.928Z
-Stopped at: Completed 59-02-PLAN.md
+Last session: 2026-05-05T23:59:00.000Z
+Stopped at: Completed 59-09-PLAN.md — Phase 59 CLOSED
 Resume file: None
-Next action: `/gsd-plan-phase 59` -- Hub Navigation Integration (Linux + Operations Sections)
+Next action: `/gsd-plan-phase 60` — Audit Harness v1.5 Finalization
 
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
 
 ```
-Progress: [██████████] 98%
+Progress: [██████████] 99%
 Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
-Status:   .  X  .  X  X  X  X  X  X  X  X  .  .  .
+Status:   .  X  .  X  X  X  X  X  X  X  X  X  .  .
           (. = not started; X = complete)
 ```
 
@@ -98,6 +98,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase ?]: [Phase 58 / Plan 58-06]: AUDIT-04 promotion gate landed; informational: true flag removed from v1.5-milestone-audit.mjs C12 entry (commit bc9cee6); harness exits 0 with C12 PASS in blocking mode; V-58-25 flips FAIL -> PASS; 26/26 V-58-NN PASS; Rule 1 deviation: col-0 cell-shape exclusion fix to C12 verifier mirrors check-phase-58.mjs extractCanonicalDataCells() per explicit handoff at check-phase-58.mjs:56; CLEAN-05 covered via AUDIT-04; Plan 58-07 unblocked
 - [Phase 58]: 26 V-58-NN structural assertions implemented; progressive-landing pattern across 16 per-plan commits + close commit (`16b98ad..3f1ec7f` + close); pre-commit gate (3 validators) all GREEN at close — `check-phase-58.mjs` exits 0 with 26/26 V-58-NN PASS, `v1.5-milestone-audit.mjs` exits 0 with 12/12 PASS (including newly-promoted C12 in blocking mode), `regenerate-supervision-pins.mjs --self-test` informational FAIL preserved-not-regressed (v1.4.1 carry-over per STATE.md `Out-of-band carry-overs`); D-04 mandatory tier-2 CA H2 retrofit landed in macOS / iOS / Android sibling matrices (Plan 58-02 commits `54a70b8` + `6d3ce98`); D-08 Windows column → linux-capability-matrix.md canonical source applied (a dedicated windows-capability-matrix.md deferred to v1.6+ per D-10); D-09 ≤3 footnote-prose rows applied (Pre-Provisioning, Hybrid Entra Join, Windows 10 support); D-11 filename retained as `4-platform-capability-comparison.md` despite 5-platform scope (DEFER-08 / AECOMPARE-01 traceability); D-12 5C single-sentence intro cross-ref pattern (NOT 5B blockquote / NOT 5D new H2); D-13 Linux matrix `(when shipped)` hedge removed atomically (lines 70 + 112); D-14 Android footer F3 anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` preserved per Phase 45 AEAOSPFULL-09 model + body retargeted to single-sentence forward-link prose; D-15 pre-edit anchor inventory artifact (`58-ANCHOR-INVENTORY.md`) captured per PITFALL-6; D-17 + D-18 C12 promotion (informational → blocking) landed at Phase 58 close (NOT Phase 60 — ROADMAP:382-383 still owns scope expansion for Phase 60); D-19 45-day `last_verified` cycle for new comparison doc (vs 60-day per-platform); D-20 verification-during-execution discipline; W-7 spot-check methodology applied (5 random rows × 6 H2s = 30 rows; 100% verdict accuracy); W-8 Android intro `five locked domains` → `six locked domains` rewrite (CA enumeration consistency); Plan 58-07 carry-over resolution: C2 `supervision_exemptions` refreshed for post-58-02 line shifts (78/80/81/83/87/88 → 88/90/91/93/97/98) — intentional iOS-attributed citations per AEAUDIT-04 doctrine preserved verbatim, only line-number metadata refreshed; 240/240 link-bearing data cells at 100% D-01 cell-shape compliance; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed; Phase 59 unblocked
 - [Phase ?]: 59-02: Linux H2 inserted as pure Phase 57 Android mirror with 3 sub-tables (L1=4/L2=4/Admin=3); LIN-06 NOT surfaced at hub level per D-06
+- [Phase 59]: 36 V-59-NN structural assertions implemented; progressive-landing pattern across 9 per-plan commits (`33ddd53..f17aecd`); pre-commit gate: check-phase-59.mjs exits 0 (36/36 PASS), v1.5-milestone-audit.mjs exits 0 after allowlist line-number refresh (commit `a01ab1d`) for Phase-59-induced +3/+6/+7/+8 shifts in `_glossary-android.md`, regenerate-supervision-pins.mjs FAIL preserved-not-regressed (v1.4.1 carry-over; Phase 60 AUDIT-07 resolves); Linux H2 appended to docs/index.md (3 sub-tables L1=4/L2=4/Admin=3); Operations H2 appended to docs/index.md (4 sub-H3 routing tables); docs/operations/00-index.md completed from 25-line stub to 67-line index (DPO-Phase56-01 hand-off chain discharged); CLEAN-08 closed — 14 terms, 40 pairs, 33 see-also lines across 4 glossaries (macOS IS the iOS glossary per REQUIREMENTS.md:144); quick-ref-l1.md Linux H2 added (4 sub-H3s); quick-ref-l2.md Linux H2 added (4 sub-H3s; Play Integrity Verdict Reference preserved); APPEND_ONLY_HONORED (V-59-32 NEGATIVE regression-guard — all pre-Phase-59 H2 anchors in 4 hub files byte-identical pre/post); gfmSlug double-hyphen fix applied (space-flanked stripped chars → double hyphens per GitHub cmark-gfm; Phase 57/58 `\s+` collapse algorithm corrected); 5/5 SCs satisfied; CLEAN-08 closed; Phase 60 unblocked
 
 ### Pending Todos
 
@@ -144,7 +145,7 @@ Phase 48 (harness + sweep)
 
 ## Session Continuity
 
-Last session: 2026-04-28T23:30:00.000Z
-Stopped at: Phase 55 closed — atomic commit aecf014; 32/32 V-55-NN PASS; 5/5 SCs passed
-Resume file: .planning/phases/55-app-lifecycle-automation/55-VERIFICATION.md
-Next action: `/gsd-plan-phase 56` — Drift Detection + Tenant Migration (Wave B sibling)
+Last session: 2026-05-05T23:59:00.000Z
+Stopped at: Phase 59 closed — close commit `f17aecd`; 36/36 V-59-NN PASS; 5/5 SCs passed
+Resume file: .planning/phases/59-hub-navigation-integration-linux-operations-sections/59-VERIFICATION.md
+Next action: `/gsd-plan-phase 60` — Audit Harness v1.5 Finalization
