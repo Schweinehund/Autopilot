@@ -6,7 +6,7 @@ platform: Android
 applies_to: AOSP
 ---
 
-> **Platform gate:** Meta Quest AOSP device management — Quest 2 / Quest 3 / Quest 3s / Quest Pro enterprise XR headsets in Microsoft Intune via 4-portal pattern (Intune + Meta for Work). For Windows Autopilot, see [Windows Admin](../admin-setup/00-overview.md). For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
+> **Platform gate:** Meta Quest AOSP device management — Quest 2 / Quest 3 / Quest 3s / Quest Pro enterprise XR headsets in Microsoft Intune via 4-portal pattern (Intune + Meta for Work). For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
 <!-- The #### In Managed Google Play subsection is intentionally omitted.

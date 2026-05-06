@@ -102,7 +102,7 @@ After a Wipe (without enrollment state retention), the device must go through fu
 
 If OOBE does not trigger Autopilot:
 - Verify the hardware hash is imported (APv1) or the APv2 policy is assigned to a group containing the device or user.
-- Verify the device is not blocked by a Conditional Access policy requiring compliance before enrollment. See [Conditional Access Enrollment Timing](../reference/conditional-access-enrollment.md) (WSEC-01).
+- Verify the device is not blocked by a Conditional Access policy requiring compliance before enrollment. See Conditional Access Enrollment Timing (WSEC-01).
 
 ---
 

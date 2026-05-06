@@ -6,7 +6,7 @@ platform: Android
 applies_to: AOSP
 ---
 
-> **Platform gate:** RealWear AOSP device management — HMT-1 / HMT-1Z1 / Navigator 500 frontline AR headsets in Microsoft Intune. For Windows Autopilot, see [Windows Admin](../admin-setup/00-overview.md). For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
+> **Platform gate:** RealWear AOSP device management — HMT-1 / HMT-1Z1 / Navigator 500 frontline AR headsets in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
 <!-- The #### In Managed Google Play subsection is intentionally omitted.
