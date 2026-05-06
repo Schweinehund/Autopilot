@@ -40,6 +40,8 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 ---
 
+<a id="cause-a-device-not-uploaded-by-reseller"></a>
+
 ## Cause A: Device Not Uploaded by Reseller {#cause-a-device-not-uploaded-by-reseller}
 
 **Entry condition:** Admin confirms the device serial is NOT visible in the ZT customer portal (`Devices` tab). Device boots to consumer setup on first power-on.
@@ -83,6 +85,8 @@ Context: see [Reseller-Upload Handoff Workflow](../admin-setup-android/02-zero-t
 
 ---
 
+<a id="cause-b-configuration-not-assigned"></a>
+
 ## Cause B: Configuration Not Assigned to Device Set {#cause-b-configuration-not-assigned}
 
 **Entry condition:** Device IS visible in ZT portal Devices tab, but no configuration is assigned to the device. Device boots to consumer setup instead of enterprise enrollment (Phase 39 D-03 "configuration must be assigned" pitfall).
@@ -121,6 +125,8 @@ Context: see [Reseller-Upload Handoff Workflow](../admin-setup-android/02-zero-t
 
 ---
 
+<a id="cause-c-zt-intune-linking-broken"></a>
+
 ## Cause C: ZT ↔ Intune Linking Broken {#cause-c-zt-intune-linking-broken}
 
 **Entry condition:** Devices are uploaded in ZT portal AND a configuration is assigned, but enrollment still fails. Admin suspects the ZT↔Intune linking token / connector is broken or expired.
@@ -157,6 +163,8 @@ Context: see [Reseller-Upload Handoff Workflow](../admin-setup-android/02-zero-t
 - Tenant has multiple ZT customer accounts; admin cannot determine which to link
 
 ---
+
+<a id="cause-d-kme-zt-mutual-exclusion-conflict"></a>
 
 ## Cause D: KME/ZT Mutual-Exclusion Conflict (Samsung) {#cause-d-kme-zt-mutual-exclusion-conflict}
 
