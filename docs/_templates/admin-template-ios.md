@@ -25,7 +25,7 @@ platform: iOS
 > **Platform gate:** This guide covers iOS/iPadOS configuration via Apple Business Manager and Intune.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
-> Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
+> Portal navigation may vary by Intune admin center version. See [Overview](../admin-setup-ios/00-overview.md#portal-navigation-note) for details.
 
 <!-- SUPERVISED-ONLY CALLOUT PATTERN
      Use this exact format for every supervised-only setting. No variations.
