@@ -104,13 +104,12 @@ If using Pilot Intune for one or more of the three workloads, ensure that:
 
 For full migration (all devices Autopatch-eligible), move all three sliders to **Intune**.
 
-## Related Patch Management Content (Phase 54 Forward-Promise)
+## Related Patch Management Content
 
-> **Note:** Windows Update Policies workload migration — including WUfB ring topology and
-> WUfB-vs-Autopatch ring naming-collision disambiguation (PITFALL-9) — is covered in Phase 54
-> patch-management content. When Phase 54 ships, this section will be retrofitted with a direct
-> cross-link to `docs/operations/patch-management/01-windows-wufb-rings.md`. In the interim,
-> refer to Microsoft Learn Windows Autopatch documentation for ring topology guidance.
+> **Windows Update Policies workload:** WUfB ring topology and WUfB-vs-Autopatch ring
+> naming-collision disambiguation (PITFALL-9) are covered in the patch-management guides.
+> See [Windows WUfB Rings](../patch-management/01-windows-wufb-rings.md) for ring topology
+> guidance and Autopatch-eligibility prerequisites (Phase 54 forward-promise fulfilled).
 
 ## Related Resources
 

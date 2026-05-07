@@ -73,7 +73,7 @@ const checks = [
 
   // === FRONTMATTER (V-53-06) ===
   {
-    id: 6, name: "V-53-06: all 5 content files have platform: Windows + audience: <non-empty> + 60-day cycle",
+    id: 6, name: "V-53-06: all 5 content files have platform field + audience: <non-empty> + 60-day cycle (V-53-06 SCOPED per Phase 61 D-02: IDX accepts any platform value per Phase 59 D-10; CO_MGMT_FILES retain strict platform: Windows)",
     run() {
       const failures = [];
       for (const f of CONTENT_FILES) {
@@ -83,7 +83,14 @@ const checks = [
         if (!fmMatch) { failures.push(f + ": no frontmatter"); continue; }
         const fm = fmMatch[1];
         const issues = [];
-        if (!/^platform: Windows\s*$/m.test(fm)) issues.push("platform: Windows missing");
+        if (f === IDX) {
+          // Phase 61 D-02 alignment per Phase 59 D-10 supersession: docs/operations/00-index.md
+          // expanded to cross-platform 4-domain index; accept any non-empty platform: value.
+          if (!/^platform:\s*\S/m.test(fm)) issues.push("platform field missing or empty");
+        } else {
+          // 4 co-management content files retain strict platform: Windows contract per Phase 53 D-02
+          if (!/^platform: Windows\s*$/m.test(fm)) issues.push("platform: Windows missing");
+        }
         if (!/^audience:\s*\S+/m.test(fm)) issues.push("audience field missing/empty");
         const lvMatch = fm.match(/^last_verified: (\d{4}-\d{2}-\d{2})\s*$/m);
         const rbMatch = fm.match(/^review_by: (\d{4}-\d{2}-\d{2})\s*$/m);
@@ -330,27 +337,32 @@ const checks = [
 
   // === D-02 + 1B-1 + ROADMAP:448 OWNERSHIP (V-53-22) ===
   {
-    id: 22, name: "V-53-22: 00-index.md has POSITIVE ## Co-Management H2 + NEGATIVE no scaffold/Phase 54-56 H2s (NOVEL single-H2 contract)",
+    id: 22, name: "V-53-22: NEGATIVE — 4 co-management files have no scaffold/ops-domain H2s (SCOPE RESTRICTED to CO_MGMT_FILES per Phase 61 D-03 alignment with Phase 59 D-10 supersession; IDX exempted because Phase 59 D-10 authored ops-domain H2s in 00-index.md as deliberate architectural evolution from Phase 53 D-02 single-H2 stub state)",
     run() {
-      const c = readFile(IDX);
-      if (c === null) return { pass: false, detail: "File missing: " + IDX };
-      // POSITIVE — literal H2
-      if (!/^## Co-Management\s*$/m.test(c))
-        return { pass: false, detail: "POSITIVE: ## Co-Management H2 missing from 00-index.md" };
-      // NEGATIVE — no future-phase H2s or scaffold text
+      const failures = [];
       const banPatterns = [
         { p: /^## Patch Management/m, name: "## Patch Management H2" },
         { p: /^## App Lifecycle/m, name: "## App Lifecycle H2" },
         { p: /^## Drift/m, name: "## Drift H2" },
         { p: /^## Tenant Migration/m, name: "## Tenant Migration H2" },
-        { p: /Phase 5[4-6]/m, name: "'Phase 54-56' reference" },
+        // Phase 61 D-03 note: ban scaffold H2 headings + TBD/Coming-in-Phase placeholders in CO_MGMT_FILES.
+        // /Phase 5[4-6]/m narrowed to ^## context only: co-management files legitimately reference
+        // "Phase 54" in prose forward-links (e.g., PITFALL-9 cross-refs) which are not scaffold H2s.
+        // The original IDX-scoped ban blocked Phase 5[4-6] text anywhere in IDX; for CO_MGMT_FILES
+        // only H2-level phase references are scaffold indicators.
+        { p: /^## .*Phase 5[4-6]/m, name: "'Phase 54-56' scaffold H2" },
         { p: /\bTBD\b/m, name: "'TBD' token" },
         { p: /Coming in Phase/m, name: "'Coming in Phase' placeholder" }
       ];
-      for (const { p, name } of banPatterns) {
-        if (p.test(c)) return { pass: false, detail: "NEGATIVE regression-guard violated: " + name + " found (forbidden per D-02 + ROADMAP line 448)" };
+      for (const f of CO_MGMT_FILES) {  // SCOPE RESTRICTION per Phase 61 D-03 (mirrors V-53-10 precedent at lines 149-165)
+        const c = readFile(f);
+        if (c === null) { failures.push(f + ": file missing"); continue; }
+        for (const { p, name } of banPatterns) {
+          if (p.test(c)) failures.push(f + ": NEGATIVE regression-guard violated: " + name);
+        }
       }
-      return { pass: true, detail: "POSITIVE H2 present + no scaffold/future-phase H2s (single-H2-only contract honored)" };
+      if (failures.length > 0) return { pass: false, detail: failures.join(" | ") };
+      return { pass: true, detail: "4 co-management files have no scaffold/ops-domain H2s (IDX exempted per Phase 59 D-10 supersession)" };
     }
   },
 
