@@ -423,7 +423,7 @@ Plans:
   4. PROJECT.md v1.5 requirements moved Active → Validated with phase references; v1.5 milestone entry added to "What's been built" narrative
   5. `.planning/MILESTONES.md` has v1.5 entry with phases completed, plans shipped, key accomplishments, and file count delta
 **Plans**: 5 plans
-  - [ ] 61-01-PLAN.md — Chain validator alignment (V-53-06 + V-53-22 refresh per Phase 59 D-10) + jump-link bullets fold-in (docs/index.md per todo D-20)
+  - [x] 61-01-PLAN.md — Chain validator alignment (V-53-06 + V-53-22 refresh per Phase 59 D-10) + jump-link bullets fold-in (docs/index.md per todo D-20)
   - [ ] 61-02-PLAN.md — REQUIREMENTS.md verify-and-flip (43 reqs across Pillars 1/2/3/4) + ROADMAP §Progress reconciliation (Phase 48/49/50/56 stale rows)
   - [ ] 61-03-PLAN.md — PROJECT.md Active → Validated migration (57 v1.5 reqs) + Closed Deferred Items (v1.4.1 → v1.5) subsection (DEFER-07 + DEFER-08) + What's been built narrative
   - [ ] 61-04-PLAN.md — v1.5-MILESTONE-AUDIT.md authoring (frontmatter mirrors v1.4 verbatim per D-14 + 4 body sections per D-15) + terminal re-audit from FRESH WORKTREE per D-22 + AUDIT-08 atomic flip
@@ -495,7 +495,7 @@ Plans:
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 9/9 | Complete | 2026-05-05 |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete    | 2026-05-06 |
-| 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 0/? | Not started | - |
+| 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 1/5 | In Progress|  |
 
 ---
 
