@@ -482,15 +482,15 @@ Plans:
 | 45. Per-OEM AOSP Expansion | v1.4.1 | 10/10 | Complete | 2026-04-25 |
 | 46. COPE Full Admin | v1.4.1 | 2/2 | Complete | 2026-04-25 |
 | 47. Integration & Re-Audit | v1.4.1 | 4/4 | Complete | 2026-04-25 |
-| 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 8/9 | In Progress|  |
-| 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 3/5 | In Progress|  |
-| 50. Linux Admin Setup + Capability Matrix | v1.5 | 0/? | Not started | - |
+| 48. Audit Harness Bootstrap + Broken-Link Sweep | v1.5 | 9/9 | Complete    | 2026-04-26 |
+| 49. Linux Foundation — Taxonomy, Glossary, Version Matrix | v1.5 | 5/5 | Complete    | 2026-04-26 |
+| 50. Linux Admin Setup + Capability Matrix | v1.5 | 5/5 | Complete    | 2026-04-27 |
 | 51. Linux L1 Triage + Runbooks 30–33 | v1.5 | 8/8 | Complete    | 2026-04-27 |
 | 52. Linux L2 Investigation Runbooks 24–25 | v1.5 | 5/5 | Complete   | 2026-04-27 |
 | 53. Co-Management Operational Docs | v1.5 | 6/7 | Complete    | 2026-04-28 |
 | 54. Patch & Update Management | v1.5 | 9/9 | Complete   | 2026-04-28 |
 | 55. App Lifecycle Automation | v1.5 | 7/7 | Complete    | 2026-04-28 |
-| 56. Drift Detection + Tenant Migration | v1.5 | 0/? | Not started | - |
+| 56. Drift Detection + Tenant Migration | v1.5 | 7/7 | Complete    | 2026-04-29 |
 | 57. DEFER-07 Android Nav Unification | v1.5 | 7/7 | Complete    | 2026-04-30 |
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 9/9 | Complete | 2026-05-05 |
