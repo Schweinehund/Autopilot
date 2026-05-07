@@ -127,7 +127,8 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [x] **Phase 57: DEFER-07 Android Nav Unification** — 4-file hub surgical retrofit: docs/index.md Android H2 expansion + common-issues.md routing + quick-ref-l1.md + quick-ref-l2.md Android sections; pre-edit anchor inventory mandatory — completed 2026-04-30
 - [x] **Phase 58: DEFER-08 4-Platform Capability Comparison** — docs/reference/4-platform-capability-comparison.md (link-not-copy cells; 6 domain axes; 5 platforms including Linux); cross-link retrofits to all 4 existing capability matrices (completed 2026-05-01; progressive-landing 16b98ad..3f1ec7f across 7 plans; 26/26 V-58-NN PASS; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed)
 - [ ] **Phase 59: Hub Navigation Integration — Linux + Operations Sections** — docs/index.md Linux H2 + Operations H2; glossary cross-reference normalization (CLEAN-08) across all 5 platform glossaries; quick-ref Linux sections; ops cross-references
-- [x] **Phase 60: Audit Harness v1.5 Finalization** — C11 promote to blocking; C12 blocking promotion; C13 second broken-link pass + promote; v1.5-audit-allowlist.json seeded with known-legitimate exemptions (completed 2026-05-06)
+- [x] **Phase 60: Audit Harness v1.5 Finalization** — C11 promote to blocking; C12 blocking promotion; C13 second broken-link pass + promote; v1.5-audit-allowlist.json seeded with known-legitimate exemptions
+ (completed 2026-05-06)
 - [ ] **Phase 61: Gap Closure + Terminal Re-Audit + Milestone Close** — broken-link fixes; v1.5-MILESTONE-AUDIT.md; harness exits 0 all blocking PASS; REQUIREMENTS.md synced; PROJECT.md traceability closure
 
 ---
@@ -421,7 +422,12 @@ Plans:
   3. All 57 active REQUIREMENTS.md checkboxes flipped from `[ ]` to `[x]` (or explicitly deferred with documented reasoning) — committed at phase close, not deferred further
   4. PROJECT.md v1.5 requirements moved Active → Validated with phase references; v1.5 milestone entry added to "What's been built" narrative
   5. `.planning/MILESTONES.md` has v1.5 entry with phases completed, plans shipped, key accomplishments, and file count delta
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 61-01-PLAN.md — Chain validator alignment (V-53-06 + V-53-22 refresh per Phase 59 D-10) + jump-link bullets fold-in (docs/index.md per todo D-20)
+  - [ ] 61-02-PLAN.md — REQUIREMENTS.md verify-and-flip (43 reqs across Pillars 1/2/3/4) + ROADMAP §Progress reconciliation (Phase 48/49/50/56 stale rows)
+  - [ ] 61-03-PLAN.md — PROJECT.md Active → Validated migration (57 v1.5 reqs) + Closed Deferred Items (v1.4.1 → v1.5) subsection (DEFER-07 + DEFER-08) + What's been built narrative
+  - [ ] 61-04-PLAN.md — v1.5-MILESTONE-AUDIT.md authoring (frontmatter mirrors v1.4 verbatim per D-14 + 4 body sections per D-15) + terminal re-audit from FRESH WORKTREE per D-22 + AUDIT-08 atomic flip
+  - [ ] 61-05-PLAN.md — MILESTONES.md v1.5 entry append + check-phase-61.mjs validator-as-deliverable (~34 V-61-NN structural assertions per D-24) + CI yml slot insertion (per RESEARCH Open Question 1) + final close commit `chore(61): close v1.5 milestone`
 
 ---
 
