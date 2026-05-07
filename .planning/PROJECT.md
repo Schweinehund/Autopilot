@@ -36,6 +36,13 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - iOS/iPadOS L1 triage runbooks — 6 L1 scenario runbooks (APNs expired, ADE not starting, enrollment restriction blocking, license invalid, device cap reached, compliance blocked) + iOS triage decision tree (v1.3)
 - iOS/iPadOS L2 investigation runbooks — 4 L2 runbooks (log collection, ADE token & profile delivery, app install failure, compliance & CA timing) + 00-index.md iOS L2 section + D-22 placeholder retrofit across 9 files closing cross-phase links from Phase 30 (v1.3)
 - Code scaffolding across all three tiers (PowerShell, Python, React) — not yet integrated
+- ✓ v1.5 Pillar 1 — Cleanup (DEFER-07 Android nav unification + DEFER-08 4-platform comparison + broken-link sweep) — Phases 57 / 58 / 48 / 60; CLEAN-01..08 closed (commits `1dee562` + `0a55ecd` + `bf14bf5` + `c2abdd4` + `adca9d8`)
+- ✓ v1.5 Pillar 2 — Linux (Ubuntu 22.04/24.04 LTS) foundation + admin setup + L1 + L2 — Phases 49 / 50 / 51 / 52; LIN-01..13 closed (commits `6ff8e1c` + `9a62a1a` + `c8a644d` + `38e25e9`)
+- ✓ v1.5 Pillar 3 — Operational depth (co-management + patch & update + app lifecycle + drift/migration) — Phases 53 / 54 / 55 / 56; COMG-01..05 + PATCH-01..08 + APP-01..08 + DRIFT-01..07 closed (commits `8d37ab2` + `be7f59d` + `aecf014` + `d0654d2` + `6b26488`)
+- ✓ v1.5 Pillar 4 — Validation tooling (audit harness Path-A copy + C10/C11/C12/C13 informational-then-blocking promotion ladder + 75-finding broken-link inventory closure: 60 FIXED + 15 ALLOWLISTED) — Phases 48 / 60; AUDIT-01..07 closed; AUDIT-08 closes at Phase 61 close (commits `47c4289` + `bf14bf5` + `c2abdd4` + `6626253`)
+- ✓ v1.5 hub navigation integration (docs/index.md ## Linux Provisioning + ## Operations H2s; quick-ref-l1/l2 Linux sections; glossary cross-references across all 5 platform glossaries) — Phase 59; CLEAN-08 closed (commits `adca9d8` + `59f595b` + `18cee15`)
+- ✓ v1.5 audit harness finalization (C9/C11/C13 promotion to blocking + C12 H2 expansion + BASELINE_9 refresh closing AUDIT-07 + 75-finding broken-link inventory full closure) — Phase 60 atomic harness commit `c2abdd4`; AUDIT-03..07 closed
+- ✓ v1.5 milestone close (terminal re-audit + REQUIREMENTS Active→Validated migration + v1.5-MILESTONE-AUDIT.md authoring) — Phase 61 (this milestone close)
 
 <details>
 <summary>Previous Milestone: v1.4.1 Android Enterprise Completion & v1.4 Cleanup</summary>
@@ -203,6 +210,67 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 ### Active
 
+- [ ] **AUDIT-08** — Phase 48 broken-link sweep first-pass baseline + Phase 60-61 second-pass milestone close audit report — Phase 48 (first pass) + Phase 61 (milestone close; this plan)
+
+### Validated (v1.5)
+
+- ✓ CLEAN-01 — docs/index.md Android L1 / L2 / Admin Setup H2 expansion (closes DEFER-07 / AENAVUNIFY-04) — Phase 57 Plan 57-01 (commits `1dee562` + `867560c`)
+- ✓ CLEAN-02 — docs/common-issues.md Android symptom routing for all 8 v1.4.1 scenario categories — Phase 57 Plan 57-02 (commits `48e5c6f` + `caf4524`)
+- ✓ CLEAN-03 — docs/quick-ref-l1.md Android quick-reference card (mode-first per v1.4 triage tree) — Phase 57 Plan 57-03 (commit `6d3fb1a`)
+- ✓ CLEAN-04 — docs/quick-ref-l2.md Android quick-reference card (3-method log collection, Play Integrity reference) — Phase 57 Plan 57-04 (commit `d1ecbae`)
+- ✓ CLEAN-05 — docs/reference/4-platform-capability-comparison.md 5-platform capability reference (closes DEFER-08 / AECOMPARE-01) — Phase 58 Plan 58-03 (commits `0a55ecd` + `629d7fc`)
+- ✓ CLEAN-06 — Anchor sweep across docs/**/*.md identifies and resolves broken intra-doc and inter-doc anchor references — Phase 48 (first pass; commit `bf14bf5`) + Phase 60 Plan 60-07 (second pass; commit `c2abdd4`)
+- ✓ CLEAN-07 — Relative-path inter-doc link sweep across docs/**/*.md resolves stale ../*-{platform}/*.md references — Phase 48 (first pass; commit `bf14bf5`) + Phase 60 Plan 60-07 (second pass; commit `c2abdd4`)
+- ✓ CLEAN-08 — Glossary cross-reference normalization across all 5 platform glossaries (reciprocal see-also entries) — Phase 59 Plan 59-05 (commits `adca9d8` + `18cee15` + `70248e2` + `6a473c5` + `0150528`)
+- ✓ LIN-01 — Linux taxonomy + distro framework overview (Ubuntu 22.04/24.04 LTS scope; BYOD caveat callout) — Phase 49 Plan 49-01 (commits `6ff8e1c` + `513d07d`)
+- ✓ LIN-02 — docs/_glossary-linux.md with reciprocal see-also entries to all 4 existing platform glossaries — Phase 49 Plan 49-02 (commits `6ff8e1c` + `513d07d`)
+- ✓ LIN-03 — Linux Intune client enrollment configuration admin setup guide — Phase 50 Plan 50-02 (commits `9a62a1a` + `ef10983`)
+- ✓ LIN-04 — Linux compliance policy guide covering all 4 supported settings-catalog categories — Phase 50 Plan 50-03 (commits `9a62a1a` + `ef10983`)
+- ✓ LIN-05 — Linux agent install guide with intune-portal 2.0.2+ Java→broker breaking-change callout — Phase 50 Plan 50-01 (commits `9a62a1a` + `ef10983`)
+- ✓ LIN-06 — End-user Linux device enrollment guide (Ubuntu 22.04 / 24.04 LTS step-by-step) — Phase 50 Plan 50-04 (commits `9a62a1a` + `ef10983`)
+- ✓ LIN-07 — Linux triage decision tree (Mermaid; enrollment / non-compliant / CA blocking / agent service branches) — Phase 51 Plan 51-01 (commits `c8a644d` + `57c5f8d`)
+- ✓ LIN-08 — L1 runbook 30: Linux enrollment failed — Phase 51 Plan 51-02 (commits `c8a644d` + `57c5f8d`)
+- ✓ LIN-09 — L1 runbook 31: Linux device non-compliant — Phase 51 Plan 51-03 (commits `c8a644d` + `57c5f8d`)
+- ✓ LIN-10 — L1 runbook 32: Linux conditional access blocking Edge — Phase 51 Plan 51-04 (commits `c8a644d` + `57c5f8d`)
+- ✓ LIN-11 — L1 runbook 33: Linux Intune agent service not running — Phase 51 Plan 51-05 (commits `c8a644d` + `57c5f8d`)
+- ✓ LIN-12 — L2 runbooks 24-25: Linux log collection + agent investigation — Phase 52 Plan 52-01 (commit `38e25e9`)
+- ✓ LIN-13 — Linux capability matrix with Cross-Platform Equivalences (Linux web-app-CA ↔ iOS MAM-WE) — Phase 50 Plan 50-05 (commits `9a62a1a` + `ef10983`)
+- ✓ COMG-01 — Co-management overview + workload model guide (7 CB 2503 workloads) — Phase 53 Plan 53-01 (commit `8d37ab2`)
+- ✓ COMG-02 — Workload-slider migration sequence (low-risk-first; Endpoint Protection HIGH-RISK callout) — Phase 53 Plan 53-02 (commit `8d37ab2`)
+- ✓ COMG-03 — Tenant attach vs full co-management disambiguation doc — Phase 53 Plan 53-03 (commit `8d37ab2`)
+- ✓ COMG-04 — Cross-platform co-management analog callouts (macOS/iOS/Android non-equivalent migration paths) — Phase 53 (commit `8d37ab2`)
+- ✓ COMG-05 — Windows Autopatch co-management prerequisites doc (Device Config + Office C2R workloads) — Phase 53 Plan 53-05 (commit `8d37ab2`)
+- ✓ PATCH-01 — Windows Update for Business ring topology guide (Autopatch disambiguation; PITFALL-9) — Phase 54 Plan 54-01 (commit `be7f59d`)
+- ✓ PATCH-02 — Windows Hotpatch H2 inside WUfB rings guide (default May 2026; VBS; opt-out toggle) — Phase 54 Plan 54-01 (commit `be7f59d`)
+- ✓ PATCH-03 — Driver/firmware update policy H2 inside WUfB rings guide — Phase 54 Plan 54-01 (commit `be7f59d`)
+- ✓ PATCH-04 — macOS update enforcement guide (DDM only; legacy MDM commands deprecated Apple OS 26) — Phase 54 Plan 54-02 (commit `be7f59d`)
+- ✓ PATCH-05 — iOS update enforcement guide (supervised-only DDM constraint retracted iOS 17+) — Phase 54 Plan 54-03 (commit `be7f59d`)
+- ✓ PATCH-06 — docs/admin-setup-ios/07-device-enrollment.md surgical retrofit (DDM supervised-only cell at line 35) — Phase 54 Plan 54-03 (commit `be7f59d`)
+- ✓ PATCH-07 — Android patch delivery guide (Play Integrity MEETS_STRONG_INTEGRITY enforcement timeline) — Phase 54 Plan 54-04 (commit `be7f59d`)
+- ✓ PATCH-08 — Zebra LifeGuard OTA firmware management via Intune (GA Jan 2026; Samsung KSP analog) — Phase 54 Plan 54-04 (commit `be7f59d`)
+- ✓ APP-01 — Win32 app supersedence chains guide (max 10; Replace vs Update; Required assignment) — Phase 55 Plan 55-01 (commit `aecf014`)
+- ✓ APP-02 — Win32 app dependency graphs H2 (max 100; recursive; circular-dependency detection) — Phase 55 Plan 55-01 (commit `aecf014`)
+- ✓ APP-03 — Win32ContentPrepTool packaging guide (.intunewin format; detection rule types) — Phase 55 Plan 55-01 (commit `aecf014`)
+- ✓ APP-04 — macOS app pipeline guide (all supported types: LOB PKG + unmanaged PKG + DMG + M365 VPP + Mac App Store) — Phase 55 Plan 55-02 (commit `aecf014`)
+- ✓ APP-05 — Installomator/Intuneomator community callout (MEDIUM confidence; non-Microsoft-supported) — Phase 55 Plan 55-02 (commit `aecf014`)
+- ✓ APP-06 — iOS VPP licensing guide (device-licensing vs user-licensing flows; license reclamation) — Phase 55 Plan 55-03 (commit `aecf014`)
+- ✓ APP-07 — Android Managed Google Play private-app publishing guide (AMAPI API change 2024) — Phase 55 Plan 55-04 (commit `aecf014`)
+- ✓ APP-08 — Android OEMConfig app deployment guide (Zebra APK side-load per v1.4.1 Phase 45 precedent) — Phase 55 Plan 55-04 (commit `aecf014`)
+- ✓ DRIFT-01 — Windows Intune Remediations detect+remediate guide (portal path; per-device status reports) — Phase 56 Plan 56-01 (commits `d0654d2` + `6b26488`)
+- ✓ DRIFT-02 — Canonical Intune Remediations script-authoring pattern (exit codes; Log Analytics) — Phase 56 Plan 56-01 (commits `d0654d2` + `6b26488`)
+- ✓ DRIFT-03 — Cross-platform compliance drift detection guide (Windows / macOS / iOS / Android signals) — Phase 56 Plan 56-02 (commits `119632e` + `6b26488`)
+- ✓ DRIFT-04 — Windows tenant-to-tenant migration runbook (BitLocker re-key; Autopilot deregistration) — Phase 56 Plan 56-04 (commits `4dd7122` + `6b26488`)
+- ✓ DRIFT-05 — macOS / iOS tenant-to-tenant migration runbook (ABM token re-issue; ADE Await-Configuration) — Phase 56 Plan 56-04 (commits `4dd7122` + `6b26488`)
+- ✓ DRIFT-06 — Android tenant-to-tenant migration runbook (MGP re-binding; per-ownership-mode re-provisioning) — Phase 56 Plan 56-04 (commits `4dd7122` + `6b26488`)
+- ✓ DRIFT-07 — Cross-platform encryption-drift section inside tenant-migration runbook (BitLocker/FileVault/iOS/Android) — Phase 56 Plan 56-04 (commits `4dd7122` + `6b26488`)
+- ✓ AUDIT-01 — v1.5-milestone-audit.mjs ships as Path A copy of v1.4.1 harness (C1-C9 preserved; sidecar renamed) — Phase 48 Plan 48-01 (commits `47c4289` + `bf14bf5`)
+- ✓ AUDIT-02 — C10 Linux frontmatter check added (platform: Linux; 60-day cycle; 22.04+24.04 scope) — Phase 48 Plan 48-01 (commits `47c4289` + `bf14bf5`)
+- ✓ AUDIT-03 — C11 ops-domain anti-pattern regex (SCCM disambiguation; WUfB-vs-Autopatch; SafetyNet cross-domain) promoted to blocking — Phase 48 scaffold + Phase 60 Plan 60-08 promotion (commit `c2abdd4`)
+- ✓ AUDIT-04 — C12 4-platform comparison structural validation (5 platform columns; link-not-copy cells) promoted to blocking — Phase 48 scaffold + Phase 60 Plan 60-08 promotion (commit `c2abdd4`)
+- ✓ AUDIT-05 — C13 broken-link automation via markdown-link-check (internal anchors + relative paths; sidecar allowlist 15 entries) promoted to blocking — Phase 48 scaffold + Phase 60 Plan 60-08 promotion (commit `c2abdd4`)
+- ✓ AUDIT-06 — Per-phase check-phase-NN.mjs validators + CI workflow audit-harness-v1.5-integrity.yml (Phases 48-60) — Phases 48-60 (commit `6626253` for check-phase-60.mjs)
+- ✓ AUDIT-07 — regenerate-supervision-pins.mjs --self-test BASELINE_9 refresh closes v1.4.1 carry-over — Phase 60 Plan 60-08 (commit `c2abdd4`)
+
 ### Out of Scope
 
 <!-- Explicit boundaries. Includes reasoning to prevent re-adding. -->
@@ -239,6 +307,11 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - **DEFER-04** (Knox Mobile Enrollment) — closed Phase 44 commit `51c2e72` (AEKNOX-01..07 + Plans 44-01..44-07)
 - **DEFER-05** (Per-OEM AOSP Expansion) — closed Phase 45 commit `eb88750` (AEAOSPFULL-01..09 + Plans 45-01..45-10)
 - **DEFER-06** (COPE Full Admin) — closed Phase 46 commit `bcb0986` (AECOPE-01..04 + Plans 46-01..46-02)
+
+## Closed Deferred Items (v1.4.1 → v1.5)
+
+- **DEFER-07** (Cross-Platform Navigation Unification — AENAVUNIFY-04 Android backport into docs/index.md + common-issues.md + quick-ref-l1.md + quick-ref-l2.md) — closed Phase 57 (CLEAN-01..04 + AENAVUNIFY-04 retrofit; commits `1dee562` + `867560c` + `48e5c6f` + `caf4524` + `6d3fb1a` + `d1ecbae`)
+- **DEFER-08** (4-Platform Capability Comparison — AECOMPARE-01 / `docs/reference/4-platform-capability-comparison.md` 5-platform × 6-domain × 48-row link-not-copy reference) — closed Phase 58 Plan 58-03 (commits `0a55ecd` + `629d7fc`)
 
 ## Constraints
 
