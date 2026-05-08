@@ -4,14 +4,14 @@ milestone: v1.5
 milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
 status: executing
 stopped_at: "Phase 61 context gathered (4 gray areas resolved via adversarial review: 1A/2A/3B/4B; Referee error correction on GA1 applied)"
-last_updated: "2026-05-07T23:54:00.973Z"
-last_activity: 2026-05-07
+last_updated: "2026-05-08T00:06:51.748Z"
+last_activity: 2026-05-08
 progress:
   total_phases: 14
   completed_phases: 12
   total_plans: 101
-  completed_plans: 98
-  percent: 97
+  completed_plans: 99
+  percent: 98
 ---
 
 # Project State
@@ -26,13 +26,13 @@ See: .planning/PROJECT.md (updated 2026-04-26)
 ## Current Position
 
 Phase: 61 (Gap Closure + Terminal Re-Audit + Milestone Close) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
-Last activity: 2026-05-07
+Last activity: 2026-05-08
 
 ## Session Continuity
 
-Last session: 2026-05-07T23:54:00.946Z
+Last session: 2026-05-08T00:05:36.094Z
 Stopped at: Phase 61 context gathered (4 gray areas resolved via adversarial review: 1A/2A/3B/4B; Referee error correction on GA1 applied)
 Resume file: None
 Next action: `/gsd-plan-phase 60` — Audit Harness v1.5 Finalization
@@ -40,7 +40,7 @@ Next action: `/gsd-plan-phase 60` — Audit Harness v1.5 Finalization
 **Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
 
 ```
-Progress: [██████████] 97%
+Progress: [██████████] 98%
 Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
 Status:   .  X  .  X  X  X  X  X  X  X  X  X  X  .
           (. = not started; X = complete)
@@ -100,6 +100,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisi
 - [Phase ?]: 59-02: Linux H2 inserted as pure Phase 57 Android mirror with 3 sub-tables (L1=4/L2=4/Admin=3); LIN-06 NOT surfaced at hub level per D-06
 - [Phase 59]: 36 V-59-NN structural assertions implemented; progressive-landing pattern across 9 per-plan commits (`33ddd53..f17aecd`); pre-commit gate: check-phase-59.mjs exits 0 (36/36 PASS), v1.5-milestone-audit.mjs exits 0 after allowlist line-number refresh (commit `a01ab1d`) for Phase-59-induced +3/+6/+7/+8 shifts in `_glossary-android.md`, regenerate-supervision-pins.mjs FAIL preserved-not-regressed (v1.4.1 carry-over; Phase 60 AUDIT-07 resolves); Linux H2 appended to docs/index.md (3 sub-tables L1=4/L2=4/Admin=3); Operations H2 appended to docs/index.md (4 sub-H3 routing tables); docs/operations/00-index.md completed from 25-line stub to 67-line index (DPO-Phase56-01 hand-off chain discharged); CLEAN-08 closed — 14 terms, 40 pairs, 33 see-also lines across 4 glossaries (macOS IS the iOS glossary per REQUIREMENTS.md:144); quick-ref-l1.md Linux H2 added (4 sub-H3s); quick-ref-l2.md Linux H2 added (4 sub-H3s; Play Integrity Verdict Reference preserved); APPEND_ONLY_HONORED (V-59-32 NEGATIVE regression-guard — all pre-Phase-59 H2 anchors in 4 hub files byte-identical pre/post); gfmSlug double-hyphen fix applied (space-flanked stripped chars → double hyphens per GitHub cmark-gfm; Phase 57/58 `\s+` collapse algorithm corrected); 5/5 SCs satisfied; CLEAN-08 closed; Phase 60 unblocked
 - [Phase 60]: 25 V-60-NN structural assertions implemented; mixed atomic-commit + progressive-landing pattern across ~40 commits + 1 atomic harness commit + 1 validator commit + 2 close commits (D-25 honored); pre-commit gate at close — check-phase-60.mjs reports 22 PASS / 3 FAIL / 0 SKIPPED (V-60-14/16/21 are pre-existing Phase 51/53/58 chain regressions inherited from worktree base, NOT regressions from Phase 60 work; documented in deferred-items.md and 60-VERIFICATION.md "Pre-Existing Chain Regressions (Out of Scope)" section per orchestrator scope boundary; Phase 60 must_haves do NOT include fixing other phases' validators); v1.5-milestone-audit.mjs exits 0 with 12/12 PASS in fully-blocking mode (informational only on C3 Phase 39 self-cert per D-29 grace pattern); regenerate-supervision-pins.mjs --self-test exits 0 with `Diff: identical` reproducing Phase 43 hand-authored 11-new-pin set (AUDIT-07 carry-over closed); 51 Category A anchor-fixes (Plans 60-02..06) + 9 Category B path-fixes (Plan 60-07) = 60 FIXED-PHASE-60 + 15 c13_broken_link_allowlist[] entries (6 transient_external + 9 template_placeholder) close 75-finding Phase 48 baseline inventory per D-11; D-01 C11 proximity-window negation pattern with /successor|deprecated|historical|disambiguation|mutual-exclusion|PITFALL-9|first-occurrence|callout/i keyword set extended at Plan 60-08 per CALIBRATION live-corpus (5 additional keywords); D-02 c11_ops_exemptions[] reserved-empty; D-13 + D-16 C12 6 H2-anchor expansion (Enrollment / Configuration / App Deployment / Compliance / Software Updates / Conditional Access); D-18 c9_exemptions[] mechanism wired (mirrors C7 Knox pattern; 4 entries seeded from CALIBRATION + live-corpus PITFALL-13 refinement); D-19 BASELINE_9 refreshed to current sidecar coords (post-Phase-59 + post-Plan-06 line shifts); D-20 atomic harness commit per Phase 43 D-07 contract bundles 4 promotions + 4 sidecar adds + BASELINE_9 + 48-VERIFICATION close-out (commit `c2abdd4`); D-23 ROADMAP SC#5 wording fix landed in trailing close commit (audit-harness-integrity.yml -> audit-harness-v1.5-integrity.yml; Phase 48 D-09 contradiction-handling precedent); D-25 mixed plan-structure honored exactly (anchor-fix + path-fix progressive-landed per file across Plans 60-02..06; Plan 60-08 was single ATOMIC harness commit); D-26 Phase 48/49/52/54/55/56/57/59 V-NN-NN chain validators all PASS post-close (regression-guard satisfied for chain validators that passed pre-Phase-60); 5/5 SCs + AUDIT-07 carry-over satisfied; AUDIT-03/04/05/06/07 closed; Phase 61 (terminal re-audit + milestone close) unblocked
+- [Phase ?]: v1.5 audit path is .planning/milestones/v1.5-MILESTONE-AUDIT.md per ASSUMPTION A4 (mirrors v1.4 precedent)
+- [Phase ?]: D-22 auditor-independence: fresh worktree spawn (agent-a5336372f28300cea) distinct from Plans 61-01/02/03 main-worktree agents
+- [Phase ?]: No re_audit_resolution block at initial v1.5 close per D-16; reserved for future v1.5.1 if needed
 
 ### Pending Todos
 
