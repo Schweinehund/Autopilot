@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 
 ## Current State
 
-**v1.4.1 shipped 2026-04-25; v1.5 started 2026-04-26.** Six milestones complete — 47 phases, 179 plans, 179 documentation files shipped across Windows Autopilot, macOS ADE, iOS/iPadOS, and Android Enterprise. v1.4.1 closed all six v1.4 Android deferred items: Knox Mobile Enrollment (admin guide + L1 #28 + L2 #22 + capability matrix + Mermaid 5→6 branches + glossary), full per-OEM AOSP expansion across RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest (5 admin guides + OEM matrix + L1 #29 + L2 #23), COPE Full Admin path (Path A locked + capability matrix COPE column + Private Space glossary + COBO migration-note trim), audit harness v1.4.1-milestone-audit.mjs (8/8 PASS, sidecar 18 pins, Knox/COPE/AOSP token expansions), 60-day freshness normalization, and AOSP stub envelope resolution. **v1.5 scope:** Linux (Ubuntu LTS) as the 5th platform + cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration) across all four existing platforms + close v1.4 deferrals (DEFER-07 Android nav unification, DEFER-08 4-platform capability comparison) + cross-platform broken-link sweep + audit harness extension to `v1.5-milestone-audit.mjs`. Three-pillar milestone that matures the suite from per-platform enrollment coverage into operational completeness.
+**v1.5 shipped 2026-05-07.** Seven milestones complete — 61 phases, ~280 plans, ~230 documentation files across Windows Autopilot, macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu 22.04/24.04 LTS). v1.5 delivered four pillars over 14 phases: (1) cleanup & cross-platform hardening — DEFER-07 Android nav unification (Phase 57: docs/index.md + common-issues.md + quick-ref-l1/l2), DEFER-08 5-platform capability comparison (Phase 58: 240 link-bearing data cells), 75-finding broken-link inventory closure across two passes (60 FIXED + 15 ALLOWLISTED), glossary cross-reference normalization across all 5 platform glossaries; (2) Linux as 5th platform — Ubuntu LTS taxonomy + glossary, admin setup with Identity Broker re-enrollment pitfall, capability matrix, end-user enrollment guide, 4 L1 runbooks + Mermaid triage tree, 2 L2 investigation runbooks; (3) operational depth across all 4 existing platforms — co-management workload sliders + Autopatch prereqs (Phase 53), WUfB rings + Hotpatch + macOS DDM + iOS DDM-supervision retraction + Play Integrity MEETS_STRONG_INTEGRITY + Zebra LifeGuard (Phase 54), Win32 supersedence/dependency graphs + macOS Installomator + iOS VPP + Android MGP/OEMConfig (Phase 55), Windows Intune Remediations + cross-platform drift detection + tenant-to-tenant migration runbooks (Phase 56); (4) validation tooling — `v1.5-milestone-audit.mjs` Path-A copy from v1.4.1 with C10-C13 informational-then-blocking promotion ladder, 13-validator chain (check-phase-48..61.mjs), BASELINE_9 refresh closing v1.4.1 carry-over, terminal re-audit at Phase 61 confirming 12/12 PASS in fully-blocking mode + 57/57 requirements closed. **Next:** v1.6 milestone planning (`/gsd-new-milestone`).
 
 ### What's been built
 - 143+ markdown documentation files in `docs/` spanning Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise
@@ -43,6 +43,15 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - ✓ v1.5 hub navigation integration (docs/index.md ## Linux Provisioning + ## Operations H2s; quick-ref-l1/l2 Linux sections; glossary cross-references across all 5 platform glossaries) — Phase 59; CLEAN-08 closed (commits `adca9d8` + `59f595b` + `18cee15`)
 - ✓ v1.5 audit harness finalization (C9/C11/C13 promotion to blocking + C12 H2 expansion + BASELINE_9 refresh closing AUDIT-07 + 75-finding broken-link inventory full closure) — Phase 60 atomic harness commit `c2abdd4`; AUDIT-03..07 closed
 - ✓ v1.5 milestone close (terminal re-audit + REQUIREMENTS Active→Validated migration + v1.5-MILESTONE-AUDIT.md authoring) — Phase 61 (this milestone close)
+
+<details>
+<summary>Previous Milestone: v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup</summary>
+
+**Shipped:** 2026-05-07 | **Phases:** 48-61 | **Plans:** 101
+
+Four-pillar milestone maturing the suite from per-platform enrollment coverage into operational completeness across 5 platforms (Windows + macOS + iOS + Android + Linux). **Pillar 1 — Cleanup & cross-platform hardening:** DEFER-07 Android nav unification (Phase 57: docs/index.md + common-issues.md + quick-ref-l1/l2 retrofits), DEFER-08 5-platform capability comparison reference doc (Phase 58: 6 H2 domains × 5 platform columns × 48 feature rows = 240 link-bearing data cells, link-not-copy architecture), 75-finding broken-link inventory closed across 2 passes (60 FIXED + 15 ALLOWLISTED), glossary cross-reference normalization across all 5 platform glossaries (CLEAN-01..08). **Pillar 2 — Linux (Ubuntu 22.04/24.04 LTS) as 5th platform:** taxonomy + 9-term Linux glossary with reciprocal see-also entries to all 4 existing glossaries, admin setup guide with Identity Broker v2.0.2+ re-enrollment pitfall + 4-category compliance + linux-capability-matrix.md + end-user enrollment walkthrough, Linux L1 (4 runbooks + Mermaid triage tree), Linux L2 (24-log-collection + 25-agent-investigation with journalctl patterns) — LIN-01..13. **Pillar 3 — Operational depth across Windows + macOS + iOS + Android:** co-management workload sliders + tenant attach disambiguation + Autopatch prereqs (Phase 53, COMG-01..05), WUfB rings + Hotpatch (Win11 24H2+ default May 2026) + macOS DDM (legacy MDM deprecated Apple OS 26) + iOS DDM (supervised-only retracted iOS 17+) + Play Integrity MEETS_STRONG_INTEGRITY (Sept 30 2025 enforcement) + Zebra LifeGuard (Phase 54, PATCH-01..08), Win32 supersedence/dependency graphs + macOS .pkg/.dmg pipelines + Installomator MEDIUM-confidence callout + iOS VPP licensing + Android MGP + Zebra OEMConfig APK side-load (Phase 55, APP-01..08), Windows Intune Remediations + cross-platform drift detection + tenant-to-tenant migration runbooks (BitLocker re-key + ABM token re-issue + MGP re-binding) (Phase 56, DRIFT-01..07). **Pillar 4 — Validation tooling:** `v1.5-milestone-audit.mjs` Path-A copy from v1.4.1 (Phase 48), C10 Linux frontmatter blocking from start, C11/C12/C13 informational-first scaffolds promoted to blocking at Phase 60 atomic harness commit (`c2abdd4`), BASELINE_9 refresh closing v1.4.1 self-test carry-over, 13-validator chain check-phase-48..61.mjs all PASS, CI workflow `audit-harness-v1.5-integrity.yml` (AUDIT-01..08). Terminal re-audit at Phase 61 from independent worktree confirmed 12/12 v1.5-milestone-audit.mjs PASS in fully-blocking mode, 14/14 phases, 4/4 integration pillars, 57/57 requirements closed. v1.4.1 deferrals DEFER-07 + DEFER-08 closed inline. Methodology: wave-based parallel execution (Wave A: 51+53; Wave B: 54+55+56), progressive-landing per-plan commits, auditor-independence via fresh worktree spawn for terminal re-audit.
+
+</details>
 
 <details>
 <summary>Previous Milestone: v1.4.1 Android Enterprise Completion & v1.4 Cleanup</summary>
@@ -181,37 +190,6 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ Terminal re-audit via v1.4.1-milestone-audit.mjs exits 0 (8/8 PASS — 5 blocking C1-C5 + 3 informational C6/C7/C9); v1.4-MILESTONE-AUDIT.md status flipped tech_debt→passed; re_audit_resolution sibling keys appended for DEFER-01/02/08/09/10 (audit-doc canonical numbering) from fresh auditor worktree per Phase 42 D-02 — Phase 47 / v1.4.1 (AEINTEG-03)
 - ✓ PROJECT.md traceability closure — 24 v1.4.1 reqs flipped Active→Validated (AEAUDIT-02..05 + AEKNOX-01..07 + AEAOSPFULL-01..09 + AECOPE-01..04); Closed Deferred Items (v1.4→v1.4.1) subsection enumerating DEFER-01..06 with closing commit SHAs; footer refreshed to v1.4.1 milestone closure record — Phase 47 / v1.4.1 (AEINTEG-04)
 
-## Current Milestone: v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup
-
-**Goal:** Add Linux (Ubuntu LTS) as the 5th platform, deliver enterprise operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration) across all four existing platforms, and close v1.4 deferrals + cross-platform documentation hardening — a three-pillar milestone that matures the suite from per-platform enrollment coverage into operational completeness.
-
-**Target features (in scope):**
-
-*Pillar 1 — Cleanup & cross-platform hardening:*
-- DEFER-07 / AENAVUNIFY-04 — Android nav unification: backport Android sections into `docs/index.md` + `common-issues.md` + `quick-ref-l1.md` + `quick-ref-l2.md` (closes v1.4 hub-index gap where Android currently has only a stub)
-- DEFER-08 / AECOMPARE-01 — 4-platform capability comparison document (Windows + macOS + iOS + Android side-by-side; structural reference doc with feature parity matrix across enrollment, identity, app delivery, compliance, conditional access, monitoring)
-- Cross-platform broken-link sweep — systematic anchor/link audit across all 179 markdown files, terminology drift check, glossary normalization across `_glossary-macos.md` + `_glossary-ios.md` + `_glossary-android.md` + Windows glossary
-
-*Pillar 2 — Linux via Intune (Ubuntu LTS):*
-- Linux Intune client foundation — taxonomy, Ubuntu 20.04 / 22.04 / 24.04 LTS framework, deb-based Microsoft Intune Linux agent overview, Linux glossary (with iOS/Android-style cross-platform callouts)
-- Linux admin setup — enrollment via Microsoft Intune Linux client, compliance policy (with Linux-supported settings), conditional access scope (web-app-CA only on Linux — no native CA), supported app delivery (script-based; no MSI/MSIX/.pkg analog)
-- Linux L1 triage — decision tree + scenario runbooks (enrollment failed, compliance non-compliant, CA blocking web-app access, agent service `intune-portal` failures)
-- Linux L2 investigation — log collection (`/var/log/microsoft/intune/`), agent diagnostics, kernel/distro version traps (Ubuntu HWE kernels, snap-based agent vs deb)
-
-*Pillar 3 — Operational depth (Windows + macOS + iOS + Android):*
-- Co-management (SCCM ↔ Intune) — workload sliders, ConfigMgr-to-Intune migration paths, tenant attach (Windows-led; macOS/iOS/Android contextual notes for non-Windows admins)
-- Patch & update management — Windows Update for Business rings + driver/firmware via WUfB, macOS update enforcement (`forceDelayedSoftwareUpdates`, `softwareUpdate` MDM commands), iOS update lifecycle (supervised vs unsupervised behaviors), Android patch delivery (Play Integrity tier impact, OEM-specific delays — Samsung KSP, Zebra LifeGuard)
-- App lifecycle automation — Win32/MSIX packaging at scale + supersedence + dependency graphs, macOS .pkg/.dmg pipelines + Installomator/Munki adjacency, iOS VPP device-licensing vs user-licensing flows, Android Managed Google Play app lifecycle + private-app publishing
-- Drift detection + tenant migration — configuration drift workflows (deployment-report-driven remediation), tenant-to-tenant migration runbooks per platform (BitLocker re-key challenges on Windows, ABM token re-issue on macOS/iOS, MGP re-binding on Android)
-
-*Pillar 4 — Validation tooling:*
-- Audit harness extension — `v1.5-milestone-audit.mjs` extends v1.4.1 harness lineage with Linux platform coverage + ops-domain checks (co-mgmt-doc presence, patch-cycle freshness across 4 platforms, app-lifecycle anchor reachability, drift-doc cross-references, 4-platform-comparison-doc structural validity)
-- Per-phase `check-phase-NN.mjs` validators continuing v1.3+ pattern; validator-as-deliverable discipline preserved
-
-### Active
-
-### Validated (v1.5)
-
 - ✓ CLEAN-01 — docs/index.md Android L1 / L2 / Admin Setup H2 expansion (closes DEFER-07 / AENAVUNIFY-04) — Phase 57 Plan 57-01 (commits `1dee562` + `867560c`)
 - ✓ CLEAN-02 — docs/common-issues.md Android symptom routing for all 8 v1.4.1 scenario categories — Phase 57 Plan 57-02 (commits `48e5c6f` + `caf4524`)
 - ✓ CLEAN-03 — docs/quick-ref-l1.md Android quick-reference card (mode-first per v1.4 triage tree) — Phase 57 Plan 57-03 (commit `6d3fb1a`)
@@ -269,6 +247,10 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ AUDIT-06 — Per-phase check-phase-NN.mjs validators + CI workflow audit-harness-v1.5-integrity.yml (Phases 48-60) — Phases 48-60 (commit `6626253` for check-phase-60.mjs)
 - ✓ AUDIT-07 — regenerate-supervision-pins.mjs --self-test BASELINE_9 refresh closes v1.4.1 carry-over — Phase 60 Plan 60-08 (commit `c2abdd4`)
 - ✓ AUDIT-08 — Phase 48 broken-link sweep first-pass baseline + Phase 60-61 second-pass milestone close audit report (v1.5-MILESTONE-AUDIT.md; 57/57 reqs; 12/12 harness PASS) — Phase 48 (first pass) + Phase 60 Plan 60-08 (second-pass; commit `c2abdd4`) + Phase 61 Plan 61-04 (audit doc; commit `690624d`)
+
+### Active
+
+<!-- Requirements for the next milestone (v1.6). Populated by /gsd-new-milestone. -->
 
 ### Out of Scope
 
@@ -338,7 +320,12 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 | v1.4 scope trimmed via adversarial review | Referee pattern identified Knox ME, COPE full path, AOSP user-modes full path, and cross-platform nav integration as over-scope for one milestone | Trimmed scope deferred with explicit tracking — pending |
 | Knox Mobile Enrollment deferred to v1.4.1 | Paid Knox license tier gating + Samsung-specific + velocity compression on top of 3x surface vs iOS | Stub planned in overview; full coverage v1.4.1 — pending |
 | Tri-portal admin template for Android | Intune + Managed Google Play + Zero-Touch portal is canonical flow; dual-portal template from v1.2/v1.3 insufficient | Template design as Phase 1 prereq before runbook phases — pending |
-| v1.4 cross-platform nav deferred post-milestone | Backport regression risk against v1.0-v1.3 archived/live docs; separate unification task safer | Post-v1.4 nav-unification task — pending |
+| v1.4 cross-platform nav deferred post-milestone | Backport regression risk against v1.0-v1.3 archived/live docs; separate unification task safer | ✓ Good — DEFER-07 closed via Phase 57 (v1.5) without regression on v1.0-v1.4.1 docs |
+| Linux as 5th platform via dedicated phases (49-52) | Ubuntu LTS Intune client is structurally different (deb agent, web-app-only CA, no native CA, script-only app delivery) — needs distinct taxonomy + glossary + capability matrix | ✓ Good — Linux taxonomy + admin setup + L1 + L2 + capability matrix shipped without contaminating Windows/macOS/iOS/Android content |
+| 4-pillar v1.5 milestone (cleanup / Linux / ops-depth / harness) | Reorganizing scope by axis (per-domain × per-platform) instead of per-platform enables wave-based parallel execution and closes pre-existing v1.4 deferrals | ✓ Good — Wave A (Phases 51+53) and Wave B (Phases 54+55+56) both completed cleanly with append-only contracts on shared files |
+| Audit harness Path-A copy (v1.4.1 → v1.5) with informational-then-blocking promotion ladder | Adding C10-C13 as blocking from start would have broken pre-existing PASS state on 179-file baseline; informational-first lets harness ship without false negatives | ✓ Good — C10 shipped blocking (Linux frontmatter is structural); C11/C12/C13 promoted to blocking at Phase 60 atomic harness commit after content phases stabilized |
+| 5-platform capability comparison as link-not-copy reference | DEFER-08 / AECOMPARE-01: copying 240 cells creates drift-on-update risk; linking to per-platform matrices keeps single source of truth per cell | ✓ Good — comparison doc cells link to platform-matrix anchors; C12 structural validator enforces architecture |
+| Auditor-independence via fresh worktree spawn at terminal re-audit | Phase 47 v1.4.1 precedent — terminal audit must not share worktree with content phases to avoid sycophantic confirmation | ✓ Good — Phase 61 Plan 61-04 spawned worktree distinct from Plans 61-01/02/03; flipped AUDIT-08 from independent vantage point |
 
 ## Evolution
 
@@ -358,4 +345,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-26 — v1.5 milestone started. Three pillars: (1) cleanup & cross-platform hardening (DEFER-07 Android nav unification + DEFER-08 4-platform comparison + broken-link sweep), (2) Linux Ubuntu LTS as 5th platform, (3) operational depth across Windows + macOS + iOS + Android (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration). Audit harness extends to v1.5-milestone-audit.mjs. Phase numbering continues from 47 → v1.5 spans Phases 48+. Requirements + roadmap to be defined next.*
+*Last updated: 2026-05-08 — v1.5 milestone shipped 2026-05-07. 14 phases (48-61), 101 plans, 57/57 requirements validated. Four pillars closed: cleanup & cross-platform hardening (CLEAN-01..08, DEFER-07 + DEFER-08 closed), Linux Ubuntu LTS as 5th platform (LIN-01..13), operational depth across Windows + macOS + iOS + Android (COMG-01..05 + PATCH-01..08 + APP-01..08 + DRIFT-01..07), validation tooling (AUDIT-01..08; v1.5-milestone-audit.mjs 12/12 PASS in fully-blocking mode at terminal re-audit). Phase numbering continues 61 → v1.6 spans Phases 62+. Next: `/gsd-new-milestone` for v1.6 scope definition.*

@@ -1,39 +1,39 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.5
-milestone_name: Phases — Linux Platform, Operational Depth & Cross-Platform Cleanup
-status: verifying
-stopped_at: v1.5 closed 2026-05-07; Phase 61 complete; ready for v1.6 milestone planning
-last_updated: "2026-05-08T00:22:40.155Z"
+milestone_name: Linux Platform, Operational Depth & Cross-Platform Cleanup
+status: between_milestones
+stopped_at: v1.5 archived 2026-05-08; awaiting `/gsd-new-milestone` for v1.6 planning
+last_updated: "2026-05-08T01:30:00.000Z"
 last_activity: 2026-05-08
 progress:
   total_phases: 14
-  completed_phases: 13
+  completed_phases: 14
   total_plans: 101
-  completed_plans: 100
-  percent: 99
+  completed_plans: 101
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-26)
+See: .planning/PROJECT.md (updated 2026-05-08)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and operate them at depth (co-management, patching, app lifecycle, drift/migration) once enrolled
-**Current focus:** Phase 61 — Gap Closure + Terminal Re-Audit + Milestone Close
+**Current focus:** Awaiting v1.6 milestone planning (`/gsd-new-milestone`)
 
 ## Current Position
 
-Phase: 61 (Gap Closure + Terminal Re-Audit + Milestone Close) — COMPLETE
-Plan: 5 of 5
-Status: Phase complete — ready for verification
+Phase: — (between milestones)
+Plan: —
+Status: v1.5 archived; ready for v1.6 scope definition
 Last activity: 2026-05-08
 
 ## Session Continuity
 
-Last session: 2026-05-08T00:22:40.133Z
-Stopped at: v1.5 closed 2026-05-07; Phase 61 complete; ready for v1.6 milestone planning
+Last session: 2026-05-08T01:30:00.000Z
+Stopped at: v1.5 archived 2026-05-08 (ROADMAP.md collapsed, REQUIREMENTS.md removed via git rm, archive files in milestones/v1.5-*); 14 phase dirs moved to milestones/v1.5-phases/; PROJECT.md evolved (61 phases / 7 milestones); git tag v1.5 created
 Resume file: None
 Next action: `/gsd-new-milestone` — v1.6 planning
 

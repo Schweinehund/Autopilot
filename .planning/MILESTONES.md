@@ -1,5 +1,75 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup (Shipped: 2026-05-08)
+
+**Phases completed:** 14 phases, 101 plans, 70 tasks
+
+**Key accomplishments:**
+
+- One-liner:
+- SUBSUMED BY PLAN 48-01.
+- SUBSUMED BY PLAN 48-01.
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- Co-management overview with 7 CB 2503 workloads, 3 slider states (Pilot Intune collection-scoped disambiguation H2), Resource Access deprecation note (CB 2203/CB 2403), Device Configuration implicit-switching callout, and cross-platform Platform applicability blockquote at TOP (macOS/iOS/Android analog migration paths with corrected cross-link targets)
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- Found during:
+- NO COMMIT
+- NO COMMIT MADE.
+- This plan does NOT commit.
+- NO COMMIT.
+- NOT COMMITTED.
+- MUST ship in same atomic commit as:
+- Pre-edit:
+- Hash:
+- Total file size:
+- NO COMMIT MADE.
+- Choice: Option (a) — dedicated `## Reclamation Workflow` H2 sub-section beneath the comparison table.
+- One-liner:
+- 1. [Rule 1 — Validator-tuning bug] V-55-13 ASCII-art node-count regex too narrow
+- None.
+- Windows Intune Remediations drift detection guide with DRIFT-01 portal path + 3 status report literals + DRIFT-02 canonical script-authoring pattern (exit 1/exit 0) + Log Analytics surface + v1.2 registration-drift cross-link
+- One-liner:
+- File:
+- One-liner:
+- One-liner:
+- One-liner:
+- One-liner:
+- File existence:
+- Insertion position:
+- Single deliverable:
+- One-liner:
+- Pre-edit anchor inventory captures 24 pre-retrofit + 3 expected post-retrofit + 2 compat shim anchors across 4 capability matrices; PITFALL-6 / PITFALL-15 baseline locked at HEAD 22161b9b for Phase 58 close cross-check.
+- 5-platform capability comparison doc shipped at `docs/reference/4-platform-capability-comparison.md` with 6 H2s × 5 platform columns × 48 rows = 240 link-bearing data cells (100% verdict + em-dash + matrix-anchor link compliance); D-09 APv1/APv2 footnote applied to 3 Enrollment rows; D-10 Windows-source-acknowledgment intro present; SC#1 + SC#2 + SC#5 satisfied; DEFER-08 / AECOMPARE-01 / CLEAN-05 closed.
+- Sibling matrix intro cross-refs added to macOS/iOS/Android (D-12 5C); Linux `(when shipped)` hedge closed at lines 70+112 (D-13); Android footer F3 applied (body retargeted, anchor preserved, intro forward-link added) — D-14 satisfied; W-8 Android `five → six locked domains` rewrite landed; Phase 45 AEAOSPFULL-09 anchor untouched.
+- Plan goal:
+- C12 promoted from informational → blocking via single-line removal of `informational: true` flag at v1.5-milestone-audit.mjs:508 + Rule 1 col-0 cell-shape fix to C12 verifier; V-58-25 in check-phase-58.mjs flips FAIL → PASS; full 26/26 V-58-NN PASS achieved; harness exit 0 with C12 PASS in blocking mode; AUDIT-04 contract honored at Phase 58 close per D-17 routing override
+- Phase 58 (DEFER-08) closed; 5/5 SCs satisfied; 26/26 V-58-NN PASS; 12/12 v1.5-milestone-audit checks PASS (including newly-promoted C12 in blocking mode); CLEAN-05 + AUDIT-04 + AUDIT-06 closed; comparison doc + 4 modified sibling matrices + validator + harness promotion + C2 carry-over resolution all landed across 7-plan progressive-landing (16b98ad..3f1ec7f + close commit).
+- 1. Quick-ref H2 naming differs from CONTEXT prose estimate
+- One-liner:
+- ops/00-index.md expanded from a 25-line stub to a fully-populated cross-platform operations routing table with 4 H2 sections (Co-Management + Patch + App + Drift) covering all 15 sub-dir files across Phases 53-56 deliverables; discharges DPO-Phase56-01 hand-off chain
+- One-liner:
+- One-liner:
+- One-liner:
+- 1. [Rule 1 - Known validator issue] CRLF line endings cause H3 regex matching failure
+- One-liner:
+- One-liner:
+- 10 GFM-honored `<a id="..."></a>` anchor shims added across 4 macOS L1 runbooks via D-08(b) HTML-shim cluster-edit pattern; 10 of 51 Category A baseline broken-anchor findings closed; mlc 3.14.2 confirms 0 broken refs in fixed files post-edit
+- V-53-06/V-53-22 aligned with Phase 59 D-10 supersession (check-phase-53.mjs 24->26 PASS; V-60-16 FAIL->PASS); docs/index.md Choose Your Platform expanded to 7 bullets with Linux + Operations jump-links
+- 43 of 44 active REQUIREMENTS.md checkboxes flipped with inline traceability comments per CONTEXT D-09 template; 4 stale ROADMAP §Progress rows reconciled; active section has exactly 1 unchecked req (AUDIT-08 deferred to Plan 61-04)
+- Single atomic commit migrating 56 v1.5 reqs to §Validated + appending ## Closed Deferred Items (v1.4.1 → v1.5) subsection + adding 7-bullet v1.5 milestone narrative to §What's been built — no harness regression (12/12 PASS + 25/25 PASS).
+- v1.5 milestone closed: check-phase-61.mjs 34/34 PASS; MILESTONES.md entry inserted; all 14 v1.5 phases marked Complete in ROADMAP; 57/57 reqs traceable; harness lineage check-phase-48..61.mjs complete
+
+---
+
 ## v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup (Shipped: 2026-05-07)
 
 **Phases completed:** 14 phases (48-61), 96+ plans, ~150 tasks
