@@ -495,7 +495,7 @@ Plans:
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 9/9 | Complete | 2026-05-05 |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete    | 2026-05-06 |
-| 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 4/5 | In Progress|  |
+| 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 5/5 | Complete    | 2026-05-07 |
 
 ---
 
