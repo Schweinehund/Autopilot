@@ -210,8 +210,6 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 ### Active
 
-- [ ] **AUDIT-08** — Phase 48 broken-link sweep first-pass baseline + Phase 60-61 second-pass milestone close audit report — Phase 48 (first pass) + Phase 61 (milestone close; this plan)
-
 ### Validated (v1.5)
 
 - ✓ CLEAN-01 — docs/index.md Android L1 / L2 / Admin Setup H2 expansion (closes DEFER-07 / AENAVUNIFY-04) — Phase 57 Plan 57-01 (commits `1dee562` + `867560c`)
@@ -270,6 +268,7 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - ✓ AUDIT-05 — C13 broken-link automation via markdown-link-check (internal anchors + relative paths; sidecar allowlist 15 entries) promoted to blocking — Phase 48 scaffold + Phase 60 Plan 60-08 promotion (commit `c2abdd4`)
 - ✓ AUDIT-06 — Per-phase check-phase-NN.mjs validators + CI workflow audit-harness-v1.5-integrity.yml (Phases 48-60) — Phases 48-60 (commit `6626253` for check-phase-60.mjs)
 - ✓ AUDIT-07 — regenerate-supervision-pins.mjs --self-test BASELINE_9 refresh closes v1.4.1 carry-over — Phase 60 Plan 60-08 (commit `c2abdd4`)
+- ✓ AUDIT-08 — Phase 48 broken-link sweep first-pass baseline + Phase 60-61 second-pass milestone close audit report (v1.5-MILESTONE-AUDIT.md; 57/57 reqs; 12/12 harness PASS) — Phase 48 (first pass) + Phase 60 Plan 60-08 (second-pass; commit `c2abdd4`) + Phase 61 Plan 61-04 (audit doc; commit `690624d`)
 
 ### Out of Scope
 
