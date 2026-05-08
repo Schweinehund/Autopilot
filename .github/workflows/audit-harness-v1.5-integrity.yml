@@ -274,6 +274,22 @@ jobs:
             echo "check-phase-60.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
           fi
 
+  check-phase-61:
+    name: check-phase-61 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-61.mjs
+        run: |
+          if [ -f scripts/validation/check-phase-61.mjs ]; then
+            node scripts/validation/check-phase-61.mjs
+          else
+            echo "check-phase-61.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+          fi
+
   pin-helper-advisory:
     name: Supervision-pin drift advisory (CI)
     runs-on: ubuntu-latest
