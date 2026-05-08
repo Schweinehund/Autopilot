@@ -265,9 +265,14 @@ const checks = [
     run() {
       const c = readFile(MILESTONES_DOC);
       if (c === null) return { pass: false, detail: 'MILESTONES.md missing' };
-      const v15Match = c.match(/## v1\.5 [^\n]*\n([\s\S]*?)(?=\n## |\Z)/);
-      if (!v15Match) return { pass: false, detail: 'v1.5 entry not parseable' };
-      if (!/\*\*Phases completed:\*\*/m.test(v15Match[1])) return { pass: false, detail: 'Phases completed line missing' };
+      // Use slice-based extraction: from ## v1.5 to the next top-level ## (after ---)
+      const v15Start = c.indexOf('## v1.5 ');
+      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found' };
+      // Find next ## H2 heading at start of line that comes AFTER the --- separator
+      const afterSep = c.indexOf('\n---\n', v15Start);
+      const nextH2 = afterSep > 0 ? c.indexOf('\n## ', afterSep) : c.indexOf('\n## ', v15Start + 10);
+      const sub = nextH2 > 0 ? c.slice(v15Start, nextH2) : c.slice(v15Start);
+      if (!/\*\*Phases completed:\*\*/m.test(sub)) return { pass: false, detail: 'Phases completed line missing' };
       return { pass: true, detail: 'Phases completed line present' };
     }
   },
@@ -276,11 +281,14 @@ const checks = [
     run() {
       const c = readFile(MILESTONES_DOC);
       if (c === null) return { pass: false, detail: 'MILESTONES.md missing' };
-      const v15Match = c.match(/## v1\.5 [^\n]*\n([\s\S]*?)(?=\n## |\Z)/);
-      if (!v15Match) return { pass: false, detail: 'v1.5 entry not parseable' };
+      const v15Start = c.indexOf('## v1.5 ');
+      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found' };
+      const afterSep = c.indexOf('\n---\n', v15Start);
+      const nextH2 = afterSep > 0 ? c.indexOf('\n## ', afterSep) : c.indexOf('\n## ', v15Start + 10);
+      const sub = nextH2 > 0 ? c.slice(v15Start, nextH2) : c.slice(v15Start);
       const issues = [];
-      if (!/\*\*Key accomplishments:\*\*/m.test(v15Match[1])) issues.push('Key accomplishments missing');
-      if (!/\*\*Methodology highlights:\*\*/m.test(v15Match[1])) issues.push('Methodology highlights missing');
+      if (!/\*\*Key accomplishments:\*\*/m.test(sub)) issues.push('Key accomplishments missing');
+      if (!/\*\*Methodology highlights:\*\*/m.test(sub)) issues.push('Methodology highlights missing');
       if (issues.length > 0) return { pass: false, detail: issues.join('; ') };
       return { pass: true, detail: 'Key accomplishments + Methodology highlights present' };
     }
@@ -290,9 +298,11 @@ const checks = [
     run() {
       const c = readFile(MILESTONES_DOC);
       if (c === null) return { pass: false, detail: 'MILESTONES.md missing' };
-      const v15Match = c.match(/## v1\.5 [^\n]*\n([\s\S]*?)(?=\n## |\Z)/);
-      if (!v15Match) return { pass: false, detail: 'v1.5 entry not parseable' };
-      const sub = v15Match[1];
+      const v15Start = c.indexOf('## v1.5 ');
+      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found' };
+      const afterSep = c.indexOf('\n---\n', v15Start);
+      const nextH2 = afterSep > 0 ? c.indexOf('\n## ', afterSep) : c.indexOf('\n## ', v15Start + 10);
+      const sub = nextH2 > 0 ? c.slice(v15Start, nextH2) : c.slice(v15Start);
       const issues = [];
       if (!/DEFER-07/.test(sub)) issues.push('DEFER-07 not cited');
       if (!/DEFER-08/.test(sub)) issues.push('DEFER-08 not cited');
