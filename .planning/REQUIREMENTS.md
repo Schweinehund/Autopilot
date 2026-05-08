@@ -86,7 +86,7 @@
 - [x] **AUDIT-05**: `v1.5-milestone-audit.mjs` includes C13 — broken-link automation via `markdown-link-check` integration with `.mlc-config.json` configured for redirect-following + internal-vs-external split + sidecar allowlist for transient external URLs (Microsoft Learn redirect chains; PITFALL-14 mitigation) and GFM anchor-case-sensitivity handling (PITFALL-15 mitigation) — informational-first in Phase 48 first-pass; promotes to blocking after Phase 60 second-pass triage (4-C13 KEEP)
 - [x] **AUDIT-06**: Each new v1.5 phase ships a `check-phase-NN.mjs` validator alongside content (continues v1.3+ validator-as-deliverable discipline); CI workflow `.github/workflows/audit-harness-v1.5-integrity.yml` registers each new validator
 - [x] **AUDIT-07**: `regenerate-supervision-pins.mjs --self-test` BASELINE_9 is refreshed from stale Phase 44+ file coordinates (carries over from v1.4.1 close per STATE.md out-of-band note) and `--self-test` exits 0 in v1.5 audit-tooling phase
-- [ ] **AUDIT-08**: Phase 48 broken-link sweep first-pass produces a baseline anchor/link inventory that distinguishes pre-existing v1.0–v1.4.1 breakage from new-content breakage; Phase 60-61 second-pass validates v1.5 cross-references are intact and produces the milestone close audit report
+- [x] **AUDIT-08**: Phase 48 broken-link sweep first-pass produces a baseline anchor/link inventory that distinguishes pre-existing v1.0–v1.4.1 breakage from new-content breakage; Phase 60-61 second-pass validates v1.5 cross-references are intact and produces the milestone close audit report — completed 2026-05-07 in Phase 48/60/61 (commits c2abdd4 + 690624d); v1.5-MILESTONE-AUDIT.md authored at Plan 61-04
 
 ---
 
