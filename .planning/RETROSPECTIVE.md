@@ -175,6 +175,64 @@
 
 ---
 
+## Milestone: v1.5 — Linux Platform, Operational Depth & Cross-Platform Cleanup
+
+**Shipped:** 2026-05-07
+**Phases:** 14 (48-61) | **Plans:** 101 | **Tasks:** ~150
+
+### What Was Built
+
+- **Pillar 1 — Cleanup & cross-platform hardening** (Phases 48 + 57 + 58 + 59 + 60, CLEAN-01..08) — Android nav unification (DEFER-07 closure: docs/index.md + common-issues.md + quick-ref-l1/l2 retrofits, Phase 57); 5-platform capability comparison (DEFER-08 closure: docs/reference/4-platform-capability-comparison.md, 6 H2 domains × 5 platform columns × 48 feature rows = 240 link-bearing data cells, link-not-copy architecture, Phase 58); broken-link sweep (75-finding inventory closed across 2 passes — Phase 48 first-pass + Phase 60 second-pass: 60 FIXED + 15 ALLOWLISTED); glossary cross-reference normalization across all 5 platform glossaries (Phase 59 Plan 59-05).
+- **Pillar 2 — Linux (Ubuntu 22.04/24.04 LTS) as 5th platform** (Phases 49-52, LIN-01..13) — Ubuntu LTS taxonomy + 9-term Linux glossary with reciprocal see-also entries to all 4 existing glossaries (Phase 49); admin setup with Identity Broker v2.0.2+ re-enrollment pitfall + 4-category compliance + linux-capability-matrix.md (bilateral cross-links to 4-platform-comparison) + end-user enrollment walkthrough (Phase 50); 4 L1 runbooks + Mermaid triage tree (Phase 51); 2 L2 investigation runbooks with journalctl patterns + intune-portal log paths (Phase 52).
+- **Pillar 3 — Operational depth (Windows + macOS + iOS + Android)** (Phases 53-56, COMG-01..05 + PATCH-01..08 + APP-01..08 + DRIFT-01..07) — Co-management workload sliders + tenant attach disambiguation + Autopatch prereqs (Phase 53); WUfB rings + Hotpatch (Win11 24H2+ default May 2026) + macOS DDM (legacy MDM commands deprecated Apple OS 26) + iOS DDM (supervised-only constraint retracted iOS 17+) + Play Integrity MEETS_STRONG_INTEGRITY enforcement (Sept 30 2025) + Zebra LifeGuard (Phase 54); Win32 supersedence/dependency graphs + macOS .pkg/.dmg pipelines + Installomator MEDIUM-confidence callout + iOS VPP licensing + Android MGP + Zebra OEMConfig APK side-load (Phase 55); Windows Intune Remediations + cross-platform drift detection + tenant-to-tenant migration runbooks (BitLocker re-key + ABM token re-issue + MGP re-binding) + cross-platform encryption-drift section (Phase 56).
+- **Pillar 4 — Validation tooling** (Phases 48 + 60 + 61, AUDIT-01..08) — Path-A copy `v1.4.1-milestone-audit.mjs` → `v1.5-milestone-audit.mjs` (Phase 48); C10 Linux frontmatter blocking from start; C11/C12/C13 informational-first scaffolds promoted to blocking at Phase 60 atomic harness commit `c2abdd4`; BASELINE_9 refresh closing v1.4.1 self-test carry-over; 13-validator chain check-phase-48..61.mjs all PASS at close; CI workflow `audit-harness-v1.5-integrity.yml`; terminal re-audit at Phase 61 Plan 61-04 from independent worktree confirmed 12/12 v1.5-milestone-audit.mjs PASS in fully-blocking mode.
+
+### What Worked
+
+- **Wave-based parallel execution scaled to a 14-phase milestone.** Wave A (Phase 51 Linux L1 + Phase 53 Co-management — disjoint file sets) ran in parallel; Wave B (Phases 54+55+56 — three concurrent operational-depth executors against operations/ subdirectories) followed. Phase 53 Plan 53-05 took ownership of `operations/00-index.md` per ROADMAP hotspot table; Phase 59 Plan 59-04 expanded it to 4-domain cross-platform routing per DPO-Phase56-01 hand-off discharge. No parallel-merge conflicts.
+- **Informational-first harness rollout extended cleanly.** v1.4.1's C6/C7/C9 informational-first pattern repeated for v1.5's C11 ops-domain anti-patterns / C12 4-platform-comparison structural / C13 broken-link automation. All three landed informational at Phase 48, content phases stabilized through Phases 49-59, then atomic promotion to blocking at Phase 60 Plan 60-08 single-commit harness change (`c2abdd4`). Avoided false negatives during high-churn content phases.
+- **Link-not-copy architecture for 5-platform comparison doc.** DEFER-08's `4-platform-capability-comparison.md` (filename retained despite 5-platform scope per D-11 / DEFER-08 / AECOMPARE-01 traceability) cells link to per-platform matrix anchors instead of copying values. C12 structural validator enforces architecture; D-08 decision routes Windows column to `linux-capability-matrix.md#<h2-slug>` as canonical Windows source pending dedicated `windows-capability-matrix.md` in v1.6+.
+- **Auditor-independence via fresh worktree spawn.** Phase 61 Plan 61-04 spawned worktree `agent-a5336372f28300cea` distinct from Plans 61-01/02/03 author-agents per CONTEXT D-22 — direct mirror of Phase 47 v1.4.1 precedent. Flipped AUDIT-08 from independent vantage point.
+- **Pre-edit anchor inventory artifacts (PITFALL-6).** Phase 57 (`57-ANCHOR-INVENTORY.md`) and Phase 58 (`58-ANCHOR-INVENTORY.md`) captured anchor literals + inbound references at HEAD before edits; Phase 58 Plan 58-01 locked baseline `22161b9b5f13436bc2d68bb52822037720c7096d` for cross-check at close. Made retrofit damage to existing anchors structurally impossible.
+- **Validator-as-deliverable discipline maintained.** Each content phase shipped a `check-phase-NN.mjs` validator alongside the docs (continuing v1.3+ pattern). 13 per-phase validators registered in CI workflow; chain-validator regression-guard at Phase 60/61 close.
+- **Append-only contract on shared files (Phase 42 D-03 carry-forward).** `docs/index.md`, capability matrices, glossaries — all multi-phase write hotspots tracked in ROADMAP Shared Write Hotspot Ownership table, append-only enforced via per-phase NEGATIVE regression-guards (e.g., V-57-25 iOS H2 anchor stability, V-58-22 Phase 45 AEAOSPFULL-09 anchor preservation, V-59-32 pre-Phase-59 H2 byte-identity).
+
+### What Was Inefficient
+
+- **Stale chain-validators surfaced at terminal re-audit.** Phase 53's `check-phase-53.mjs` V-53-06 + V-53-22 went FAIL when Phase 59 D-10 evolved `operations/00-index.md` from co-management-only stub to 4-domain cross-platform index. Phase 59's V-59-NN should have propagated but didn't. Phase 60 inherited 3 pre-existing chain regressions (V-60-14/16/21 from Phase 51/53/58 chain) marked out-of-scope per orchestrator boundary; Phase 61 Plan 61-01 fixed the V-53 set explicitly. Lesson: chain-validators need a "downstream-supersession" propagation step at every phase that legitimately evolves a structural decision in an earlier phase's scope.
+- **Stale ROADMAP §Progress rows accumulated.** 4 phases (48/49/50/56) had unchecked status in ROADMAP §Progress at Phase 61 entry despite all summaries existing. Plan 61-02 reconciled atomically with REQUIREMENTS.md flip. Lesson: per-phase close should auto-update ROADMAP §Progress, not defer to milestone close audit.
+- **Stale REQUIREMENTS.md checkboxes at close time (repeat from v1.4.1).** 43/44 active reqs still `[ ]` at Phase 61 entry despite work shipped. Plan 61-02 verify-and-flip with inline traceability comments. v1.4.1 retro lesson #1 ("traceability in commit workflow") is still being learned — needs harness-level enforcement.
+- **`gsd-sdk milestone.complete` accomplishments extraction still naive (repeat from v1.4.1).** CLI extracted "One-liner:" placeholder strings, "SUBSUMED BY PLAN 48-01.", "NO COMMIT MADE.", and stray validation rule numbers as accomplishments. Treated CLI output as draft; MILESTONES.md entry was authored manually at Phase 61 Plan 61-05 commit `965f509` instead. Same upstream gsd-sdk bug as v1.4.1.
+- **Scope expansion mid-milestone via DPO hand-offs.** DPO-Phase56-01 hand-off chain (Phase 56 → Phase 59) added `operations/00-index.md` 4-domain expansion outside Phase 56's original SC envelope. Discharged cleanly at Phase 59 Plan 59-04, but the hand-off mechanism creates implicit deferred work that escapes per-phase verification.
+
+### Patterns Established
+
+- **Atomic harness commit at terminal-finalization phase.** Phase 60 Plan 60-08 single commit `c2abdd4` bundled 4 informational→blocking promotions + 4 sidecar arrays + BASELINE_9 refresh + 48-VERIFICATION close-out. Pattern from v1.4.1 Phase 43 D-07 contract; v1.5 reproduced and extended.
+- **Pre-edit anchor inventory artifact (`<phase>-ANCHOR-INVENTORY.md`)** before any retrofit touching shared anchors. Locks pre-edit HEAD SHA for byte-identity cross-check at phase close. Phase 57 → Phase 58 inheritance.
+- **`<phase>-LEARNINGS.md` per-phase artifact.** Phase 61 generated structured Decisions/Lessons/Patterns/Surprises buckets. New artifact type for milestones; feeds retrospective at close.
+- **C2 supervision_exemptions[] coordinate refresh** at phase close when content edits shift line numbers in pinned files. Phase 58 Plan 58-07 carry-over: pre-58-02 lines 78/80/81/83/87/88 → post 88/90/91/93/97/98. Pattern explicit in PROJECT.md key-decisions.
+- **Audit harness scope-restricted assertions** (e.g., V-53-22 SCOPE_RESTRICTED to CO_MGMT_FILES, mirrors V-53-10 precedent at line 149-165). Per-file exemption preferred over permissive regex when content evolves legitimately.
+
+### Key Lessons
+
+1. **Chain-validators need downstream-supersession propagation.** When a later phase legitimately evolves a structural decision from an earlier phase, the earlier phase's `check-phase-NN.mjs` must be refreshed in the same commit — not at terminal re-audit. Phase 59 D-10 → Phase 53 chain regression cost a Phase 61 plan to repair.
+2. **Wave-based parallelism scales beyond 3 phases.** v1.4.1 validated 3 (44/45/46); v1.5 validated 5 (51+53 Wave A; 54+55+56 Wave B). Limit appears to be shared-write-hotspot count, not phase count. Hotspot ownership table in ROADMAP is the load-bearing artifact.
+3. **Informational-first → blocking promotion at terminal-finalization phase.** v1.4.1 (C6/C7/C9) → v1.5 (C11/C12/C13) — 6 mechanical checks promoted across two milestones with zero regression introductions. Pattern is durable; promote at the dedicated harness-finalization phase, not earlier.
+4. **Link-not-copy beats copy-with-sync for cross-reference docs.** DEFER-08 5-platform comparison would have been ~240 sync points if cells were copied. Link-not-copy collapses to 4 sibling-matrix anchor target files + 1 author file + 1 structural validator. v1.6+ should default to this for any new cross-reference deliverable.
+5. **Auditor-independence via fresh worktree is mandatory at terminal re-audit.** Phase 47 v1.4.1 → Phase 61 v1.5. Two milestones validated; treat as a hard pre-condition, not an option.
+6. **`/gsd-complete-milestone` still expects clean working tree at start.** v1.4.1 retro lesson #1 still applies — pre-flight artifact-state sync is mandatory. v1.5 had 1 stale todo + 4 stale ROADMAP §Progress rows + 43 stale REQUIREMENTS checkboxes despite work shipped; reconstructive Phase 61 plans absorbed the cost, but harness-level enforcement is still missing.
+7. **MILESTONES.md author the entry manually.** `gsd-sdk milestone.complete` accomplishments extraction is broken (extracts placeholder strings); same upstream bug across v1.4.1 + v1.5. The CLI's idempotent ROADMAP/REQUIREMENTS/audit archival is fine; the accomplishments field is unusable.
+
+### Cost Observations
+
+- Model mix: planner=opus, executor=sonnet (per `.planning/config.json`); auditor agents at Phase 61 used fresh-worktree spawn for independence
+- 14 phases / 101 plans / ~150 tasks shipped over 12 days (2026-04-26 → 2026-05-07); 320 commits; 422 files changed (+116,381 / -652 lines)
+- Wave-based parallelism (51+53 Wave A; 54+55+56 Wave B) materially compressed wall time — 3 days vs. estimated 6 days sequential for those 5 phases
+- Pre-edit anchor inventory artifacts (Phase 57 + 58) added small upfront cost but prevented zero-day rework when retrofits touched 4 capability matrices
+- Notable: `gsd-sdk milestone.complete` accomplishments extraction bug repeated from v1.4.1; should be filed as upstream gsd-sdk issue (priority: 2nd milestone now affected)
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -187,6 +245,7 @@
 | v1.3 | 8 | 44 | Milestone-audit-driven gap-closure phase (33) with pre-authored plan execution; cross-phase credit preservation; REVIEW-FIX lifecycle hygiene |
 | v1.4 | 9 | 40 | First mechanical 5-check audit harness (Node + sidecar JSON); 12-agent adversarial review for terminal phase; closed `tech_debt` (accepted) with 3 defer items routed to decimal milestone |
 | v1.4.1 | 5 | 33 | Decimal milestone for prior-milestone defer closure; harness extensions informational-first; auditor-independence via fresh worktree; wave-based parallel execution with append-only contract on shared files |
+| v1.5 | 14 | 101 | First 5-platform milestone (Linux added); 4-pillar reorganization (cleanup / Linux / ops-depth / harness); wave-based parallelism scaled to 5 concurrent phases; informational-first→blocking promotion ladder validated 2nd time (C11/C12/C13); link-not-copy 5-platform comparison reference doc; pre-edit anchor inventory artifacts (PITFALL-6); per-phase LEARNINGS.md artifact; 13-validator chain (check-phase-48..61.mjs) all PASS at terminal re-audit |
 
 ### Top Lessons (Verified Across Milestones)
 
@@ -197,4 +256,8 @@
 5. **Pre-authored plans are durable** — v1.3 Phase 30 plans 30-09/10 pre-authored at plan time but not executed until Phase 33. v1.4.1 Phase 47 plans similarly pre-authored. Plans with explicit truth tables survive deferred execution with zero fidelity loss.
 6. **Atomic same-commit retrofits eliminate "promised but not delivered" states.** Validated v1.0 (Phase 8 anchor closure) → v1.3 (Phase 33 gap closure) → v1.4 (Phase 42 forward-promise scrub) → v1.4.1 (6× retrofits across Phases 44/45/46/47). Default rather than exception.
 7. **Adversarial review surfaces invisible contradictions.** v1.4 Phase 42 (12-agent pattern) → v1.4.1 Phase 45 Plan 5 D-07 branch resolution gate. Worth the cost for terminal-integration phases.
-8. **Audit allow-list as sidecar JSON beats inline harness arrays.** v1.4 introduced; v1.4.1 validated atomic-update discipline. Promote sidecar pattern across all new harness checks in v1.5.
+8. **Audit allow-list as sidecar JSON beats inline harness arrays.** v1.4 introduced; v1.4.1 validated atomic-update discipline; v1.5 promoted sidecar pattern across all new harness checks (C11/C12/C13 all sidecar-backed). Confirmed default for v1.6+.
+9. **Wave-based parallel execution with hotspot-ownership table.** v1.4.1 validated 3 concurrent (44/45/46); v1.5 validated 5 concurrent across 2 waves (51+53 Wave A; 54+55+56 Wave B). Limit is shared-write-hotspot count, not phase count. Append-only contract + ROADMAP hotspot ownership table is load-bearing.
+10. **Informational-first→blocking promotion at terminal-finalization phase.** v1.4.1 (C6/C7/C9) → v1.5 (C11/C12/C13). 6 mechanical checks promoted across 2 milestones with zero regression introductions. Promote at dedicated harness-finalization phase (not earlier and not at content-phase close).
+11. **Link-not-copy for cross-reference deliverables.** v1.5 DEFER-08 5-platform comparison: 240 cells link to per-platform matrix anchors instead of copying values. Collapses N×M sync points to N+M+1. Default for v1.6+ cross-reference docs.
+12. **Auditor-independence via fresh-worktree spawn at terminal re-audit.** v1.4.1 Phase 47 → v1.5 Phase 61. Hard pre-condition for terminal re-audit phases — not optional.
