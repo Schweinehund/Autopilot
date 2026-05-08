@@ -129,7 +129,7 @@ Full details: [milestones/v1.4.1-ROADMAP.md](milestones/v1.4.1-ROADMAP.md)
 - [ ] **Phase 59: Hub Navigation Integration — Linux + Operations Sections** — docs/index.md Linux H2 + Operations H2; glossary cross-reference normalization (CLEAN-08) across all 5 platform glossaries; quick-ref Linux sections; ops cross-references
 - [x] **Phase 60: Audit Harness v1.5 Finalization** — C11 promote to blocking; C12 blocking promotion; C13 second broken-link pass + promote; v1.5-audit-allowlist.json seeded with known-legitimate exemptions
  (completed 2026-05-06)
-- [ ] **Phase 61: Gap Closure + Terminal Re-Audit + Milestone Close** — broken-link fixes; v1.5-MILESTONE-AUDIT.md; harness exits 0 all blocking PASS; REQUIREMENTS.md synced; PROJECT.md traceability closure
+- [x] **Phase 61: Gap Closure + Terminal Re-Audit + Milestone Close** — broken-link fixes; v1.5-MILESTONE-AUDIT.md; harness exits 0 all blocking PASS; REQUIREMENTS.md synced; PROJECT.md traceability closure (completed 2026-05-08)
 
 ---
 
@@ -427,7 +427,7 @@ Plans:
   - [x] 61-02-PLAN.md — REQUIREMENTS.md verify-and-flip (43 reqs across Pillars 1/2/3/4) + ROADMAP §Progress reconciliation (Phase 48/49/50/56 stale rows)
   - [x] 61-03-PLAN.md — PROJECT.md Active → Validated migration (57 v1.5 reqs) + Closed Deferred Items (v1.4.1 → v1.5) subsection (DEFER-07 + DEFER-08) + What's been built narrative
   - [x] 61-04-PLAN.md — v1.5-MILESTONE-AUDIT.md authoring (frontmatter mirrors v1.4 verbatim per D-14 + 4 body sections per D-15) + terminal re-audit from FRESH WORKTREE per D-22 + AUDIT-08 atomic flip
-  - [ ] 61-05-PLAN.md — MILESTONES.md v1.5 entry append + check-phase-61.mjs validator-as-deliverable (~34 V-61-NN structural assertions per D-24) + CI yml slot insertion (per RESEARCH Open Question 1) + final close commit `chore(61): close v1.5 milestone`
+  - [x] 61-05-PLAN.md — MILESTONES.md v1.5 entry append + check-phase-61.mjs validator-as-deliverable (~34 V-61-NN structural assertions per D-24) + CI yml slot insertion (per RESEARCH Open Question 1) + final close commit `chore(61): close v1.5 milestone`
 
 ---
 
@@ -495,7 +495,7 @@ Plans:
 | 58. DEFER-08 4-Platform Capability Comparison | v1.5 | 7/7 | Complete    | 2026-05-01 |
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 9/9 | Complete | 2026-05-05 |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete    | 2026-05-06 |
-| 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 5/5 | Complete    | 2026-05-07 |
+| 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 5/5 | Complete   | 2026-05-08 |
 
 ---
 
