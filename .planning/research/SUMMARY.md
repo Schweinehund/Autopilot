@@ -1,317 +1,260 @@
-# Research Summary — v1.5 Linux Platform, Operational Depth and Cross-Platform Cleanup
+# Project Research Summary
 
-**Project:** Windows Autopilot and Intune Documentation Suite
-**Domain:** Microsoft Intune provisioning documentation — 5th platform (Linux Ubuntu LTS) + operational depth + cross-platform cleanup
-**Researched:** 2026-04-26
-**Confidence:** HIGH (Microsoft-official sources for all breaking changes; MEDIUM for community tooling patterns)
-
----
+**Project:** Windows Autopilot & macOS Provisioning Documentation Suite — v1.6 Apple Business Delegated Governance & Multi-Org Operations
+**Domain:** Apple Business (formerly Apple Business Manager) delegated permission surface — markdown documentation tier (Intune-side RBAC out of scope)
+**Researched:** 2026-05-20
+**Confidence:** HIGH overall
 
 ## Executive Summary
 
-v1.5 is a three-pillar milestone that matures the documentation suite from per-platform enrollment coverage into operational completeness. The first pillar closes two v1.4 deferrals (DEFER-07 Android nav unification, DEFER-08 4-platform capability comparison) and runs a systematic broken-link sweep across all 179 existing files. The second pillar adds Linux Ubuntu LTS as the 5th platform — a deliberately narrow management surface (web-app CA only, deb-only agent, script-based app delivery, 4 compliance categories) that must be framed with an explicit Supported Management Surface whitelist before any guides are authored, to avoid the parity-bait failure mode seen with early AOSP content. The third pillar delivers enterprise operational depth across all four existing platforms, with two time-sensitive DDM migration items (macOS and iOS legacy MDM update commands deprecated for Apple OS 26 cycle) and one hard deadline (Android MEETS_STRONG_INTEGRITY enforcement on Android 13+ devices, Intune enforced September 30 2025, fleet compliance deadline October 31 2026).
+v1.6 documents Apple's 2026-04-14 rebrand of **Apple Business Manager → Apple Business**, which concurrently retired the legacy 5-role triad in name (replaced by Organization Administrator / IT Administrator / Marketing Administrator / Staff plus 5 preset custom roles), renamed **Locations → Organizational Units (OUs)**, renamed **privileges → permissions**, and earlier (2024) renamed **Managed Apple ID → Managed Apple Account**. The portal URL `business.apple.com` is preserved; the User Guide migrates from `/guide/apple-business-manager/` to `/guide/business/` with article IDs stable across both paths. **Microsoft Intune has not yet renamed its in-portal label "Apple VPP tokens"** as of the 2026-04-30 tutorial refresh — v1.6 must preserve Intune's current verbatim labels while using Apple's new terminology for Apple-side surfaces. This terminology fork is the central authoring discipline of the milestone.
 
-The recommended approach is foundation-before-content, navigation-last — the same discipline enforced across v1.0–v1.4.1. For v1.5 this means: harness Path A copy first (so all subsequent phases run against a live validator), broken-link sweep immediately after (isolate pre-existing breakage from new v1.5 breakage), Linux foundation locked (whitelist + glossary + version matrix) before any Linux admin guides, DEFER-07 and DEFER-08 integration phases last (after all content they will link to exists). The 14-phase decomposition (48–61) encodes these constraints explicitly. Phases 51–52 (Linux L1/L2) can run in parallel with Phase 53 (co-management) because they touch disjoint file sets; Phases 54–56 (ops-domain content) can parallelize similarly. DEFER-07 and DEFER-08 must not run until all runbooks and ops-depth content exist — the navigation-files-last lesson is verified across six milestones.
+The recommended architecture is a **new `docs/cross-platform/apple-business/` tree** (analogous to v1.5's `docs/operations/` pattern — a peer-of-platforms, not a 6th platform directory) housing foundation + multi-OU architecture + delegation runbooks + Apple TV / Shared iPad lifecycle, with **surgical edits at exactly 3 canonical rebrand-callout sites** (Q5(b) no-corpus-sweep contract). A new `_glossary-apple-business.md` (6th glossary node) holds delegation-specific terms with single-line reciprocal see-also entries added to the 5 existing glossaries via the proven v1.5 CLEAN-08 pattern. The 240-cell 5-platform comparison matrix is **deliberately preserved unchanged** — Apple Business delegation is not a device-capability axis comparable to Enrollment/Configuration/etc., so adding a 7th H2 would cascade D-13/D-18 sibling-matrix reciprocity through 4 sibling matrices and break C12 validator math without commensurate value.
 
-The primary risks are: (1) Linux capability parity framing — authors inadvertently writing to a management surface that does not exist (CA device-level, app push, configuration profiles); prevention is the PITFALL-7 whitelist-first pattern, identical to Phase 34 Android AOSP framing. (2) DEFER-08 duplication — the 4-platform comparison doc must use link-not-copy architecture or it will be stale the day it ships. (3) Phase 48 scope overload — architecture proposes Phase 48 carry both harness copy and broken-link sweep; roadmapper should consider splitting into 48a (harness) + 48b (sweep) if either task warrants its own plan. (4) Shared write hotspot conflicts — docs/index.md, docs/common-issues.md, and the L1/L2 index files are touched by multiple phases; the roadmap must serialize all writes to these files with explicit single-phase ownership.
+Key risks cluster around five themes: (1) **Account Holder lockout** — only role that can re-accept Apple T&Cs and manage federation root, structurally locks org out if transferred to personal Apple ID or departed employee; (2) **VPP content-token migration "untouched OU" data loss** — Apple's tool transfers ALL licenses ONLY while destination OU is untouched, silently degrades on first test purchase; (3) **Shared iPad 3-path passcode reset data loss** — Intune Reset/Remove Passcode actions affect device-level NOT per-user partition, leading L1 to use destructive EraseDevice when non-destructive Apple Business UI path was correct; (4) **Microsoft↔Apple terminology lag** ("Apple VPP tokens" in Intune vs "content tokens" in Apple Business); (5) **Federation collision** — personal Apple ID on corp email collides with Managed Apple Account federation; Apple's 60-day rename window is sent to personal mailbox and frequently missed. The Pillar 3 delegation runbooks are the value prop; the audit harness C14-C16 blocking-from-start checks are the structural enforcement.
 
----
 ## Key Findings
 
-### Stack Additions and Changes
+### Recommended Stack
 
-v1.5 introduces no new software frameworks. All changes are documentation-surface decisions driven by platform capability changes verified against Microsoft Learn as of 2026-04.
+v1.6 is a markdown documentation milestone (no executable stack). "Stack" here means the canonical Apple-side surfaces and Intune-side surfaces that v1.6 docs MUST cite accurately. Apple-side surfaces use Apple's new 2026 terminology; Intune-side surfaces preserve Microsoft's current verbatim labels. See [STACK.md](STACK.md) for complete URL list, article IDs, and confidence per finding.
 
-**Linux Intune client:**
-- intune-portal deb via APT from packages.microsoft.com — GA delivery path; no snap package exists or is planned
-- Ubuntu 22.04 LTS and 24.04 LTS are the supported pair; Ubuntu 20.04 LTS dropped in Intune service release 2508 (August 2025) — document as end-of-support only
-- Identity Broker v2.0.2+ causes automatic re-enrollment with new Intune and Entra device IDs on upgrade — admin pitfall unique to Linux with no parallel on other platforms
-- Web-app CA only via Microsoft Edge 102.x+ — no device-level CA grant available on Linux
-- 4 compliance categories total: Allowed Distributions, Custom Compliance (Bash scripts), Device Encryption (dm-crypt/LUKS), Password Policy
+**Core surfaces (Apple-side — use new 2026 terminology):**
+- Apple Business portal `business.apple.com` (URL unchanged across rebrand) — primary admin surface
+- Apple Business User Guide `support.apple.com/guide/business/` (legacy `/guide/apple-business-manager/` still resolves; same article IDs at both paths)
+- Apple Newsroom rebrand announcement (2026-03-24 announcement, **2026-04-14 GA** = canonical glossary callout date)
+- Apple Support transition banner article `axmd79d79dea`
+- Apple Deployment Guides for Entra federation (`depa85a35cf2`), Apple TV (`dep027e1d5a0`), Shared iPad (`dep6fa9dd532`), OS 26+ in-place migration (`dep4acb2aa44`)
 
-**ConfigMgr:**
-- Current branch: CB 2503 (GA April 23 2025) — 7 co-management workloads
-- Resource Access workload deprecated since CB 2203; slider mandated to Intune in CB 2403
+**Core surfaces (Intune-side — preserve verbatim labels):**
+- `Tenant administration > Connectors and tokens > Apple VPP tokens` — label UNCHANGED in Intune despite Apple renaming to "content token"
+- `Devices > Enrollment > Apple > Enrollment program tokens` (ADE token surface) — unchanged
+- `Devices > Enrollment > Apple > MDM Push Certificate` — unchanged
+- Microsoft Learn ADE tutorial refreshed 2026-04-30 (uses "Apple Business" in prose but retains "Apple VPP tokens" UI label)
+- Microsoft Enterprise SSO plug-in for Apple devices GA 2025-11-04
 
-**macOS/iOS — breaking deprecations (HIGH confidence, verified from multiple sources):**
-- forceDelayedSoftwareUpdates, com.apple.SoftwareUpdate MDM payload, and ScheduleOSUpdate MDM command deprecated and will be removed with Apple OS 26
-- Current canonical enforcement path: DDM via Software Update Enforce Latest in Intune Settings Catalog
-- iOS DDM update enforcement now works on unsupervised devices (iOS 17+, effective August 2025) — retracts the supervised-only constraint documented in v1.3; requires targeted retrofit callout in existing v1.3 iOS compliance content
-
-**Android:**
-- MEETS_STRONG_INTEGRITY verdict now requires hardware-backed attestation + security patch within 12 months on Android 13+; Google enforced May 2025; Intune enforced September 30 2025; fleet compliance deadline October 31 2026
-- Zebra LifeGuard OTA integration with Intune: GA January 2026
-
-**Windows:**
-- Windows Hotpatch becomes the default for Windows 11 Enterprise 24H2+ in May 2026 — requires VBS, Enterprise SKU
-- Win32 Content Prep Tool v1.8.7 (August 13 2024); max 10-node supersedence/dependency subgraph
-
-**Broken-link tooling:**
-- markdown-link-check (npm, tcort/markdown-link-check) — Node ESM compatible, integrates natively with existing .mjs audit harness; preferred over lychee (Rust binary) for the internal-anchor sweep
-
-**Graph API drift detection:**
-- POST /beta/deviceManagement/reports/exportJobs — key report names: DeviceNonCompliance, NonCompliantDevicesAndSettings, ConfigurationPolicyAggregate, SettingComplianceAggReport, FeatureUpdateDeviceState
-
-**Tenant migration:**
-- No Microsoft first-party migration tool; re-enrollment required; BitLocker re-key on Windows, ABM token re-issue on macOS/iOS, MGP re-binding on Android
+**Terminology canon (reconciles inter-researcher drift):**
+- **OU vs Locations:** v1.6 docs use **"Organizational Unit (OU) (formerly Location)"** on first mention per H2, then "OU" thereafter (mirrors v1.5 Linux first-mention convention); decision-matrix file = `03-ous-vs-custom-roles.md`
+- **Content token model:** **per-OU, NOT consolidated** (FEATURES + STACK agree). Compound phrasing "content token (Apple VPP token in Intune)" on first mention per section
+- **Managed Apple Account:** v1.6 new docs use new term; existing v1.0-v1.5 "Managed Apple ID" references untouched per Q5(b); glossary bidirectional reciprocity
 
 ### Expected Features
 
-**Must have — Pillar 1 Cleanup:**
-- DEFER-07: Full Android L1/L2/Admin subsection tables in docs/index.md, Android symptom routing in common-issues.md, Android sections in quick-ref-l1.md and quick-ref-l2.md (matching iOS/macOS/Windows structural depth)
-- DEFER-08: 4-platform capability comparison doc (link-not-copy cells; 6 domain axes: Enrollment, Configuration, App Deployment, Compliance, Software Updates, Conditional Access)
-- Cross-platform broken-link sweep: 179-file audit of intra-doc anchors and cross-file relative paths
+See [FEATURES.md](FEATURES.md) for full 8-category workflow landscape with classifications, dependencies, cross-platform applicability, and audience reach per workflow.
 
-**Must have — Pillar 2 Linux:**
-- Linux platform taxonomy with Supported Management Surface whitelist H2 + Out of Scope callout block (locked before any admin guides authored)
-- Linux glossary with cross-collision audit against all existing platform glossaries
-- Linux version matrix (22.04/24.04 LTS supported; 20.04 EOS flagged; GA vs HWE kernel tracks)
-- Linux admin setup 6-file guide (overview, agent, enrollment profile, compliance, app delivery, conditional access)
-- Linux L1 triage decision tree + runbooks 30–33
-- Linux L2 investigation runbooks 24–25
-- Linux capability matrix (Linux-centric bilateral; explicit Not supported cells for CA device-level, app push, zero-touch, configuration profiles)
+**Must have (table stakes — MUST land in v1.6):**
 
-**Must have — Pillar 3 Ops-Depth:**
-- macOS DDM update enforcement guide (URGENT — distinguishes deferral from enforcement; legacy MDM commands deprecated)
-- iOS DDM guide + explicit retraction of supervised-only constraint for iOS 17+
-- Retrofit callout to existing v1.3 iOS compliance guide for unsupervised DDM retraction (small but mandatory — must be explicitly assigned in Phase 54)
-- Co-management overview + workload slider migration (all 7 workloads; all 3 slider states including Pilot Intune; Endpoint Protection HIGH-RISK callout)
-- Windows WUfB rings guide (WUfB rings vs Autopatch rings disambiguation; driver/firmware separate from quality/feature rings)
-- Android patch management (MEETS_STRONG_INTEGRITY compliance policy guidance; Zebra LifeGuard OTA)
-- App lifecycle guides: Win32 supersedence behavior matrix, macOS PKG/DMG/Installomator, iOS VPP device vs user, Android MGP private-app publishing
-- Drift detection + tenant migration runbooks (all 4 platforms)
+- **Custom Role Authoring Guide** with **Min-Viable Sub-Org Admin Bundle Template** (Apple doesn't publish; v1.6 ships canonical 4-6 permission recipe)
+- **Multi-OU Architecture Guide** with hard prerequisites for OU deletion + cross-OU device transfer impact
+- **VPP Content Token Consolidation Runbook** with **hard-bordered untouched-OU OP-9 callout**
+- **Shared iPad Passcode Reset Runbook — Path A (Apple Business UI)** with L1-delegated workflow + 3-path decision matrix
+- **Device Release Runbook** (release ≠ removal — soft-delete semantics)
+- **Device Transfer (cross-OU) Runbook** with 4-cell impact matrix
+- **MDM Server Reassign Runbook** — **single runbook with OS-version eligibility matrix** + sub-H2 A legacy erase + sub-H2 B OS 26+ in-place migration (reconciles FEATURES Workflow 5.3 split into one doc per CI-5 anti-proliferation)
+- **Managed Apple Account Provisioning Runbook** (manual + SCIM + OIDC+JIT decision matrix)
+- **Audit Log Scoping Runbook** (UI download-only; no public REST API)
+- **Apple TV Multi-Org Provisioning Runbook**
+- **Sub-Org Admin Onboarding Runbook** with paired offboarding section
+- **Cross-Org-Boundary Cheat Sheet** ("Apple Business owns vs Intune owns" disambiguation)
 
-**Must have — Pillar 4 Tooling:**
-- v1.5-milestone-audit.mjs Path A copy + new checks C10–C13
-- v1.5-audit-allowlist.json sidecar
-- regenerate-supervision-pins.mjs BASELINE_9 refresh (stale carry-over from v1.4.1 close; self-test currently fails)
-- Per-phase check-phase-NN.mjs validators continuing v1.3+ pattern
+**Should have (competitive differentiators):**
 
-**Should have (differentiators):**
-- Linux custom compliance Bash script deep-dive (unique mechanism not available on iOS/Android)
-- Identity Broker v2.0.2 re-enrollment warning with admin action checklist
-- Windows Autopatch co-management prerequisite documentation (Device Config + Office C2R workloads must move before Autopatch)
-- Windows Hotpatch guidance (default from May 2026, opt-out toggle available)
-- Intune Remediations script authoring canonical pattern (detect-fix-remediate) for L2
+- **OS-26+ In-Place Migration runbook coverage** — newest path; preserves user data
+- **3-canonical-site rebrand-callout discipline** (alternative to corpus-wide ABM→Apple Business sweep)
+- **L1 "which admin owns this device pool" lookup convention** — Apple Business has no native query
+- **L2 7-leaf permission-denied decision tree** — decomposes Apple's generic permission error
+- **Audit harness C14/C15/C16 blocking-from-start** — first milestone shipping all new checks blocking from Phase 1
 
-**Defer to v1.6+:**
-- RHEL / Rocky / Alma / Debian / SUSE / Fedora Linux documentation
-- Linux server / IoT scenarios
-- ChromeOS management
-### Architecture Decisions
+**Anti-features (LOOK like they should exist but don't — must be documented as warnings):**
 
-v1.5 extends the existing per-platform tree by adding docs/admin-setup-linux/ parallel to the four existing admin-setup-{platform}/ directories, and a new top-level docs/operations/ directory using **Option C (hybrid)** — per-domain sub-directories with per-platform content files, cross-referenced from (not embedded in) per-platform admin guides. Co-management belongs in operations/, not in admin-setup-windows/, because it is a post-enrollment operational lifecycle topic that cuts across the platform axis.
+1. **Intune "Reset Passcode" / "Remove Passcode" on Shared iPad per-user partition** — highest-stakes anti-feature; both Intune actions affect DEVICE-level passcode (rarely set on managed Shared iPad), NOT per-user Shared iPad partition passcode. Per-user reset ONLY via Apple Business UI Path A or factory wipe. Drives the L2 permission-denied diagnostic.
+2. **Single global content token / consolidated catalog post-2024** — reality is still per-OU
+3. **Device move between OUs preserving VPP licenses** — license transfer is separate workflow, unassigned-only prerequisite
+4. **Audit log public REST API** — UI-only download (CSV)
+5. **OS 26 in-place migration on mixed-OS fleets** — only iOS 26 / iPadOS 26 / macOS 26 / tvOS 26+ eligible
+6. **OU deletion without prerequisites** — accounts + licenses + devices + role scopes all moved first; no archive state
+7. **SCIM-from-Entra OU override on manual roaming** — SCIM mapping overwrites manual moves on next sync
+8. **"Reset Shared iPad Passcode" changing federated Entra password** — separate credentials
+9. **Release-then-readd round-trip preserving status** — Configurator re-add triggers 30-day provisional period
+10. **Custom role privilege change isolated to one user** — change affects EVERY user holding that role across EVERY OU
 
-**New structural additions:**
-1. docs/linux-lifecycle/ — 2 files (enrollment overview + prerequisites)
-2. docs/admin-setup-linux/ — 6 files (00-overview through 05-conditional-access)
-3. docs/_glossary-linux.md — 5th platform glossary with reciprocal see-also to all 3 existing glossaries
-4. docs/reference/linux-capability-matrix.md — Linux-centric bilateral matrix
-5. docs/l1-runbooks/30..33-linux-*.md — 4 L1 runbooks (numeric continuation from 29)
-6. docs/l2-runbooks/24..25-linux-*.md — 2 L2 runbooks (numeric continuation from 23)
-7. docs/decision-trees/09-linux-triage.md
-8. docs/operations/ — 4 domains x 4-5 files each (~18 files)
-9. docs/reference/4-platform-capability-comparison.md — DEFER-08 deliverable
-10. scripts/validation/v1.5-milestone-audit.mjs + v1.5-audit-allowlist.json
+**Defer to v1.7+:**
 
-**Estimated file delta:** ~230 files total (179 existing + ~15 Linux + ~20 ops-depth + 2 new references)
+- Multi-tenant Apple Business (separate accounts) workflows — Q2 explicit scope-out
+- Apple Business Device API public surface (Apple hasn't published `developer.apple.com` landing yet)
+- ASM (Apple School Manager) education-specific surfaces
+- ChromeOS / non-Apple identity cross-references
 
-**Audit harness lineage (Path A copy):**
-v1.4-milestone-audit.mjs (frozen) --> v1.4.1-milestone-audit.mjs (frozen) --> v1.5-milestone-audit.mjs (active)
-New checks: C10 (Linux frontmatter — blocking from start), C11 (ops-domain anti-patterns — informational-first), C12 (4-platform comparison structure — blocking once file exists), C13 (broken relative links — informational-first until manual triage complete)
+### Architecture Approach
 
-**Shared write hotspots requiring serialized phase ownership:**
-- docs/index.md — DEFER-07 (Phase 57) and Linux hub additions (Phase 59) must be sequential; no parallel writes
-- docs/common-issues.md, docs/quick-ref-l1.md, docs/quick-ref-l2.md — Android sections (Phase 57) and Linux sections (Phase 59) must be serialized
-- docs/l1-runbooks/00-index.md, docs/l2-runbooks/00-index.md — append-only contract; single-phase ownership per write event
+See [ARCHITECTURE.md](ARCHITECTURE.md) for 10 architectural decisions (D-A1..D-A10) with options taken / alternatives rejected / rejection rationale / inherited precedent / confidence per the quality_gate requirements.
+
+**Major components (consolidated decisions):**
+
+| # | Decision | Choice |
+|---|----------|--------|
+| **D-A1** | Directory placement | NEW `docs/cross-platform/apple-business/` tree (hybrid Option d — modeled on v1.5 `docs/operations/`); 2 surgical intro-callout edits at existing macOS / iOS ABM docs per Q5(b); NOT a 6th platform |
+| **D-A2** | Glossary architecture | Split (Option c) — NEW `_glossary-apple-business.md` for delegation terms; existing Apple-platform terms stay in `_glossary-macos.md` with single see-also addition; 4 other glossaries gain 1 reciprocal banner line each |
+| **D-A3** | Capability matrix changes | 3 incremental rows added to `ios-capability-matrix.md` under existing Enrollment H2 (Apple TV mgmt / Shared iPad sessions / Apple Business delegation); `macos-capability-matrix.md` UNCHANGED; **`4-platform-capability-comparison.md` UNCHANGED — no 7th H2** (preserves C12 240-cell math + D-13/D-18 sibling-anchor-pin contract) |
+| **D-A4** | Hub navigation integration | Apple Business as 5th sub-section under existing `## Operations` H2 in `docs/index.md`, alongside Co-Management / Patch / App / Drift |
+| **D-A5** | L1/L2 numbering + frontmatter | L1 #34 = first v1.6 runbook; L2 #26 = first v1.6 runbook; NEW compound-platform frontmatter `platform: ios+macos[+shared-ipad\|+apple-tv]` with `applies_to: governance`; NEW `+` separator parsing required in harness |
+| **D-A6** | Quick-ref card placement | Append new top-level `## Apple Business Quick Reference` H2 to BOTH `quick-ref-l1.md` and `quick-ref-l2.md` |
+| **D-A7** | Apple TV + Shared iPad doc surface | First-class admin workflows inside `cross-platform/apple-business/` tree as dedicated files `09-shared-ipad-lifecycle.md` + `10-apple-tv-lifecycle.md`; NOT new platform directories |
+| **D-A8** | Cross-link contract | v1.6 NEW docs link OUT to existing docs freely (read-only); existing docs receive ZERO modifications EXCEPT 3 sanctioned canonical sites; smallest-footprint test = `git diff` shows 3 modified existing-doc files + 5 append-only hub edits + many new files |
+| **D-A9** | Audit harness C14/C15/C16 | Path-A copy `v1.5-milestone-audit.mjs` → `v1.6-milestone-audit.mjs`; **C14** rebrand-statement at 3 canonical sites (BLOCKING); **C15** Intune-delegation anti-pattern guard via deny-list regex + allowlist exemption (BLOCKING); **C16** L1 #34 cross-link integrity triangle (BLOCKING). All blocking-from-start |
+| **D-A10** | Phase build order | OUs before custom roles; custom roles before delegation runbooks; glossary before admin guides; admin guides before L1/L2; capability matrix rows before hub nav; navigation files LAST (v1.5 Phase 57+59 precedent); audit harness scaffolds at Phase 62 with C14-C16 functional from Phase 1 |
 
 ### Critical Pitfalls
 
-1. **Linux capability parity framing** — Authors write Linux guides as if Intune provides full MDM depth. Prevention: PITFALL-7 whitelist-first pattern. Linux foundation doc must open with a locked Supported Management Surface H2 and an equally prominent Out of Scope for Linux via Intune callout block. Every subsequent Linux doc carries a banner referencing this whitelist. No stub H2 sections for capabilities that do not exist.
+See [PITFALLS.md](PITFALLS.md) for full 30-pitfall catalog (15 operational OP-1..OP-15 / 9 doc-authoring DA-1..DA-9 / 6 corpus-integrity CI-1..CI-6) with severity + warning sign + prevention strategy + addressing phase per pitfall.
 
-2. **DEFER-08 link-not-copy violation** — Authors copy cell values from per-platform matrices into the comparison doc; stale on day one. Prevention: every non-empty cell must contain a hyperlink to the per-platform matrix section. C12 audit check enforces this mechanically.
+**Top 7 highest-severity pitfalls (must be addressed in v1.6 content):**
 
-3. **Phase 48 overload + shared write hotspot conflicts** — Architecture proposes Phase 48 carry both harness copy and broken-link sweep; roadmapper should split into 48a/48b if warranted. Separately: docs/index.md and hub files touched by multiple phases — roadmap must assign single-phase ownership to each shared write hotspot.
+1. **OP-2: Account Holder lockout (HIGH)** — only role that can re-accept Apple T&Cs, transfer Account Holder, manage federation root. Once transferred to personal Apple ID or departed employee, org structurally locked out; recovery requires Apple Enterprise Support paid ticket. **Prevention:** Phase 62 hard-bordered "DO NOT delegate" callout in role/privilege overview + every custom-role authoring runbook.
 
-4. **Audit harness Path A copy — frozen markers and informational-first graduation** — v1.5 harness copy must: drop the v1.4.1 frozen-predecessor comment; update sidecar filename to v1.5-audit-allowlist.json; explicitly review which v1.4.1 informational-first checks (C6/C7/C9) should graduate to blocking. regenerate-supervision-pins.mjs --self-test currently fails with stale BASELINE_9 — must be refreshed in audit-tooling phase.
+2. **OP-9: Untouched-OU VPP content-token migration trap (HIGH)** — Apple's migration tool transfers ALL licenses ONLY while destination OU is "untouched." First test purchase/assignment silently degrades to unassigned-only. Recovery HIGH cost. **Prevention:** Phase 64 VPP consolidation runbook with hard-bordered "DO NOT TOUCH the new OU until full migration completes" callout + post-migration license-count verification within 0.1%.
 
-5. **macOS/iOS DDM migration urgency + v1.3 retraction** — v1.3 iOS content documents a supervised-only constraint now retracted (DDM works unsupervised on iOS 17+ from August 2025). Patch-management phase must distinguish deferral (MDM restriction still functional for delay) from enforcement (DDM only). The v1.3 retrofit is a small but mandatory task that must be explicitly assigned in Phase 54.
+3. **OP-11: 3-path Shared iPad passcode reset data loss (HIGH)** — three paths (Apple Business UI / MDM ClearPasscode / MDM EraseDevice); time-pressured L1 picks destructive when non-destructive would suffice. **Prevention:** Phase 65 L1 runbook IS the canonical 3×3 decision matrix; ordering Apple Business UI FIRST → ClearPasscode SECOND → EraseDevice LAST with hard L2-approval gate; C16 enforces cross-link integrity.
 
-6. **Nav backport regression** — DEFER-07 edits to docs/index.md must begin with pre-edit anchor inventory (grep -rn index.md# docs/) before any edits land. Append-only H2-block contract enforced.
+4. **OP-7: Personal Apple ID federation collision (HIGH)** — user has personal Apple ID at corp email; Apple's 60-day rename window often missed (notification to personal mailbox). **Prevention:** Phase 64 federation runbook with 60-day collision-resolution sub-section + user-comms template; L1 federation-rejected runbook first-step verifies collision before MDM troubleshooting.
 
-7. **Sidecar pin coordinate drift** — Ops-depth content appended to existing Android/iOS docs shifts absolute line-number pins in the allowlist. Run regenerate-supervision-pins.mjs --report before any phase that appends to a pinned file; update shifted coordinates before committing.
+5. **OP-10 + DA-3 + CI-2 + CI-3: Intune-Apple Business terminology lag rotting references (MEDIUM-HIGH, compounding)** — Apple rebranded content tokens / OUs / Managed Apple Account; Intune retains "Apple VPP tokens" / "Locations" colloquially / "Managed Apple ID." Existing v1.0-v1.5 corpus becomes increasingly stale. Q5(b) explicitly leaves unchanged. **Prevention:** Phase 62 bidirectional reciprocal glossary entries; compound-phrasing convention; deferred-cleanup tracking artifact `.planning/milestones/v1.6-DEFERRED-CLEANUP.md`; NEW harness sidecar category `c13_rotting_external` with quarterly audit.
 
----
+6. **OP-5: Cross-OU device transfer breaks license + profile assignments (HIGH)** — mixed-state side effects: VPP licenses tied to source-OU token; enrollment profile doesn't follow; Intune-side config profiles survive. **Prevention:** Phase 64 device-transfer runbook with 4-cell impact matrix + pre-transfer license-dependency checklist + Graph API query template.
+
+7. **DA-2 + DA-5: Rebrand inconsistency within v1.6 + C12 240-cell math drift (HIGH for harness integrity)** — author completionist instinct to rename ABM→Apple Business outside 3 sanctioned sites; Path-A copy leaves C12 H2 list hardcoded → silent false-negative if 7th H2 added. **Prevention:** harness C14 = negative-check via git diff against baseline; C12 explicitly preserves 240-cell math because no 7th H2 added per D-A3; atomic-harness-commit pattern lands C14/C15/C16 + sidecar + BASELINE refresh in ONE commit.
+
 ## Implications for Roadmap
 
-### Phase Decomposition: 14 Phases (48-61)
+**Reconciled phase structure: 5 phases (62-66, no gaps)** — reconciles ARCHITECTURE's 4-phase proposal (62/63/64/65) + PITFALLS' 6-phase proposal with gaps (62-65 + 68-69) + PROJECT.md's 5-pillar scope via clean 1:1 pillar-to-phase mapping. Numbering continues from Phase 61 without gaps.
 
-**Sequencing tension resolved:** Architecture says broken-link sweep FIRST AND LAST and harness early; Pitfalls says harness first and DEFER-07/08 not parallel. Recommended resolution: Phase 48 = harness Path A copy + BASELINE_9 refresh + broken-link sweep first pass (consider splitting 48a harness + 48b sweep). DEFER-07 and DEFER-08 are integration phases 57-58 after all content exists. Second broken-link pass in Phases 60/61.
----
+### Phase 62: Foundation & Rebrand (Pillar 1)
 
-### Phase 48 - Audit Harness Bootstrap + Broken-Link Sweep First Pass
-**Rationale:** Tooling before content. All subsequent phases run against a live validator. Broken-link sweep first pass against 179-file baseline isolates pre-existing breakage from new v1.5 breakage.
-**Delivers:** v1.5-milestone-audit.mjs (Path A copy + C10-C13 scaffolded informational-first); v1.5-audit-allowlist.json; regenerate-supervision-pins.mjs BASELINE_9 refreshed; broken-link findings inventory
-**Pitfalls avoided:** Harness frozen-marker drift; stale BASELINE_9; broken-link false positives via tool configuration before sweep runs
-**Split note:** If harness + BASELINE_9 refresh + sweep is too large, split into 48a (harness) + 48b (sweep)
-**Research flags:** Standard patterns; no additional research needed
+**Rationale:** Glossary establishes the Apple Business / OU / permissions vocabulary that all subsequent phases reference. Audit harness must scaffold here because C14-C16 are blocking-from-start. Account Holder lockout (OP-2) and Edit-without-View dependency (OP-3) callouts must exist before any custom-role authoring runbook can be safely produced. **11 pitfalls gate here — critical-path bottleneck.**
 
-### Phase 49 - Linux Foundation: Taxonomy, Glossary, Version Matrix
-**Rationale:** Foundation-before-content gate (PITFALL-7). Whitelist and glossary must be locked before any Linux admin guides or runbooks are authored. Mirrors Phase 34 Android foundation.
-**Delivers:** linux-lifecycle/00-enrollment-overview.md (whitelist H2 + Out of Scope callout); linux-lifecycle/01-linux-prerequisites.md (22.04/24.04 supported; 20.04 EOS; GA vs HWE kernel matrix); _glossary-linux.md (cross-collision audit first); reciprocal see-also in _glossary.md, _glossary-macos.md, _glossary-android.md
-**Pitfalls avoided:** Linux capability parity framing (P1); Linux CA bait (P2); Snap vs deb confusion (P3); Distro version creep (P4); Glossary collision (P5)
-**Research flags:** Standard. Surface BYOD/corporate-owned enrollment inconsistency as known caveat.
+**Delivers:** `_glossary-apple-business.md` + reciprocal lines in 5 existing glossaries; `cross-platform/apple-business/00-overview.md` (canonical rebrand callout site #1); `01-role-permission-model.md` (per-permission catalog); `02-ous-architecture.md`; 2 intro callouts at existing macOS/iOS ABM doc sites #2 + #3; single inline see-also at `_glossary-macos.md:62`; audit harness v1.6 Path-A copy + C14/C15/C16 + new sidecar category `c13_rotting_external` + `+` separator parsing; style-guide HTML comment block convention; L1 admin-directory lookup convention.
 
-### Phase 50 - Linux Admin Setup Guides + Capability Matrix
-**Rationale:** Admin setup depends on Phase 49 glossary and lifecycle overview. Capability matrix anchors the Linux surface for all subsequent Linux docs and feeds DEFER-08.
-**Delivers:** admin-setup-linux/00-overview.md through 05-conditional-access.md (6 files); reference/linux-capability-matrix.md (Linux-centric bilateral; explicit Not supported cells for CA device-level, app push, zero-touch, config profiles)
-**Pitfalls avoided:** Linux CA bait (P2) — compliance doc opens with CA constraint callout; Snap vs deb (P3) — agent guide specifies deb-only; Identity Broker v2.0.2+ re-enrollment warning documented
-**Research flags:** Verify intune-portal deb package version via apt info intune-portal at plan time. Linux log path is LOW-MEDIUM confidence — needs live-environment verification.
+**Addresses:** OP-1 / OP-2 / OP-3 / OP-4 / OP-10 / DA-1 / DA-2 / DA-3 / DA-8 / CI-2 / CI-3
 
-### Phase 51 - Linux L1 Triage + Runbooks 30-33
-**Rationale:** L1 runbooks depend on admin setup guides.
-**Delivers:** decision-trees/09-linux-triage.md; L1 runbooks 30-33 (enrollment failed, compliance non-compliant, CA blocking web-app, agent service failure); l1-runbooks/00-index.md Linux section appended; initial-triage.md Linux branch appended
-**Pitfalls avoided:** Linux CA bait routing — runbook 32 routes to web-app CA workflow, not device-compliance CA path
-**Parallelism:** Can run in parallel with Phase 53 (co-management) — disjoint file sets
+### Phase 63: Multi-OU Architecture & Admin Setup (Pillar 2)
 
-### Phase 52 - Linux L2 Investigation Runbooks 24-25
-**Rationale:** L2 depends on L1 runbooks (escalation cross-references).
-**Delivers:** l2-runbooks/24-linux-log-collection.md; l2-runbooks/25-linux-agent-investigation.md; l2-runbooks/00-index.md Linux section appended
-**Research flags:** Log path confidence LOW-MEDIUM. L2 runbook 24 must use journalctl as confirmed primary surface.
+**Rationale:** Admin setup docs depend on the foundation glossary + role model + OUs concept. OUs must exist before custom-role authoring. Sub-org onboarding must contain `#which-admin-owns-this-pool` anchor required by C16. Shared iPad + Apple TV lifecycle docs unblock Phase 64 runbook cross-links.
 
-### Phase 53 - Co-Management Operational Docs
-**Rationale:** Windows-led; no dependency on Linux phases. CB 2503 is current. Resource Access deprecation and Autopatch prerequisites must be documented.
-**Delivers:** operations/00-index.md; operations/co-management/00-overview.md through 03-cocmgmt-migration-paths.md (4 files); workload table with 3 slider states; Endpoint Protection HIGH-RISK callout; macOS/iOS/Android contextual notes inline
-**Pitfalls avoided:** Workload slider ambiguity (P8)
-**Parallelism:** Can run in parallel with Phases 51-52
-### Phase 54 - Patch and Update Management (All Platforms)
-**Rationale:** macOS and iOS DDM migration is urgent (legacy MDM update commands removed with Apple OS 26). Android MEETS_STRONG_INTEGRITY has October 2026 hard deadline. WUfB vs Autopatch ring disambiguation critical. Hotpatch default May 2026.
-**Delivers:** operations/patch-management/00-overview.md through 04-android-patch-delivery.md (5 files); macOS guide distinguishes deferral (MDM restriction for delay) from enforcement (DDM); iOS guide retracts supervised-only constraint for iOS 17+; Android guide documents MEETS_STRONG_INTEGRITY + OEM delays; Windows guide disambiguates WUfB rings vs Autopatch rings + hotpatch
-**Critical signal:** iOS unsupervised DDM retraction requires targeted retrofit callout to existing v1.3 iOS compliance guide — roadmapper must assign this as an explicit task in Phase 54.
-**Pitfalls avoided:** WUfB vs Autopatch ring collision (P9)
-**Research flags:** Verify Intune Settings Catalog path for Software Update Enforce Latest and Zebra LifeGuard OTA admin center path at plan time.
-**Parallelism:** Can run in parallel with Phases 55-56
+**Delivers:** `03-ous-vs-custom-roles.md` (decision matrix); `04-custom-role-authoring.md` (min-viable bundle template; whitelist-first per OP-1); `05-sub-org-admin-onboarding.md` (paired offboarding per OP-8); `06-mdm-server-assignment.md`; `07-content-token-consolidation.md` (untouched-OU OP-9 callout); `08-managed-apple-account.md`; `09-shared-ipad-lifecycle.md`; `10-apple-tv-lifecycle.md`; 3 new rows in `reference/ios-capability-matrix.md` under existing Enrollment H2 (pre-edit anchor inventory artifact mandatory per DA-4).
 
-### Phase 55 - App Lifecycle Automation (All Platforms)
-**Rationale:** Independent of patch management and drift detection. Win32 supersedence Required-assignment exception must be a dedicated callout.
-**Delivers:** operations/app-lifecycle/00-overview.md through 04-android-mgp-lifecycle.md (5 files); Win32 supersedence behavior matrix (assignment type x supersedence action; Required exception as dedicated callout); macOS Installomator adjacency callout (MEDIUM confidence); iOS VPP device vs user flows; Android MGP private-app publishing
-**Pitfalls avoided:** Win32 supersedence Required-assignment exception (P10)
-**Parallelism:** Can run in parallel with Phases 54 and 56
+**Uses:** STACK Apple Business URLs + Apple Deployment Guide article IDs from STACK.md §9.
 
-### Phase 56 - Drift Detection and Tenant Migration (All Platforms)
-**Rationale:** Depends on Graph API drift report names and per-platform migration constraints. All prerequisite content already shipped.
-**Delivers:** operations/drift-migration/00-overview.md through 04-tenant-migration-runbook.md (5 files); Graph exportJobs pattern + key report names; BitLocker re-key before unenrollment; ABM token re-issue; MGP re-binding sequence
-**Confidence note:** Tenant migration is MEDIUM confidence — no single authoritative Microsoft Learn guide; surface in runbook frontmatter.
-**Parallelism:** Can run in parallel with Phases 54 and 55
+**Implements:** D-A1 directory placement; D-A3 capability matrix changes; D-A7 Apple TV + Shared iPad first-class.
 
-### Phase 57 - DEFER-07: Android Nav Unification
-**Rationale:** Navigation-files-last. All Android runbooks (complete since v1.4.1) and all Linux runbooks (Phases 51-52) must exist before hub sections are authored.
-**Delivers:** Full Android subsection in docs/index.md (L1 table, L2 table, Admin Setup table — matching iOS/macOS/Windows depth); Android symptom routing block in common-issues.md; Android sections in quick-ref-l1.md and quick-ref-l2.md
-**Pitfalls avoided:** Nav backport regression (P6) — pre-edit anchor inventory executed first; append-only H2-block contract enforced
-**Dependencies:** Phases 51, 52, 53 complete; Phase 48 gap inventory available
-**Shared write hotspots:** docs/index.md, common-issues.md, quick-refs — single-phase ownership; serialized with Phase 59
+**Addresses:** OP-4 / OP-12 / OP-15 / DA-4 / DA-6 / CI-4
 
-### Phase 58 - DEFER-08: 4-Platform Capability Comparison
-**Rationale:** Integration phase last. Comparison doc accurate only after Linux capability matrix (Phase 50) and all ops-depth content (Phases 53-56) exist.
-**Delivers:** docs/reference/4-platform-capability-comparison.md (6 domain axes; link-not-copy cells; 45-day last_verified cycle); retrofits to macOS/iOS/Android capability matrices; Linux capability matrix cross-reference added
-**Pitfalls avoided:** DEFER-08 duplication (P7) — C12 validates link-not-copy structural integrity
-**Dependencies:** Phases 49-56 all complete
+### Phase 64: Delegation Runbooks (Pillar 3)
 
-### Phase 59 - Hub Navigation Integration (Linux + Operations Sections)
-**Rationale:** Second navigation-last integration phase. Linux H2 and Operations H2 in docs/index.md authored after all content they link to exists. Serialized after Phase 57.
-**Delivers:** docs/index.md Linux H2 section; docs/index.md Operations H2 section linking to docs/operations/; ops-doc cross-references back to admin-setup-*/; Linux sections in quick-refs
-**Pitfalls avoided:** Nav backport regression — append-only contract; serialized after Phase 57
-**Dependencies:** Phases 50-58 complete; must follow Phase 57
+**Rationale:** Runbooks depend on Phase 63 admin foundation docs. `12-shared-ipad-passcode-reset.md` is the canonical admin-context that L1 #34 cross-links to (C16 gate). Cross-org-boundary cheat sheet harbors C15 anti-pattern allowlist exemptions in HTML comments.
 
-### Phase 60 - Audit Harness v1.5 Finalization
-**Rationale:** Harness finalization after all content phases. Promotes informational-first checks. Runs broken-link sweep second pass.
-**Delivers:** v1.5-milestone-audit.mjs finalized (C12 promoted to blocking; C13 promoted after triage cleared); v1.5-audit-allowlist.json seeded with known-legitimate occurrences (DDM deprecated-command prose, Ubuntu 20.04 EOL callout, Android AMAPI migration callout); broken-link sweep second pass
-**Pitfalls avoided:** Informational-first graduation (C6/C7/C9); ops-domain false positives (P13)
+**Delivers:** `11-vpp-catalog-runbook.md`; `12-shared-ipad-passcode-reset.md` (3-path decision matrix per OP-11); `13-device-release-runbook.md` (release ≠ removal per OP-6); `14-device-transfer-runbook.md` (4-cell impact matrix per OP-5); `15-mdm-server-reassign-runbook.md` (single runbook with OS-version eligibility matrix + 2 sub-H2s — reconciles FEATURES Workflow 5.3 split; avoids CI-5 proliferation); `16-managed-apple-account-runbook.md` (60-day federation collision per OP-7); `17-audit-log-scoping-runbook.md` (no-API anti-feature; SIEM export); `18-cross-org-boundary-cheat-sheet.md`.
 
-### Phase 61 - Gap Closure + Terminal Re-Audit
-**Rationale:** Terminal re-audit pattern applied at every milestone close.
-**Delivers:** Broken-link fixes; v1.5-MILESTONE-AUDIT.md; v1.5-milestone-audit.mjs exits 8/8+ PASS; REQUIREMENTS.md synced; PROJECT.md traceability closure
-**Dependencies:** Phase 60 harness run complete
----
+**Addresses:** OP-5 / OP-6 / OP-7 / OP-8 / OP-9 / OP-13 / OP-14
+
+### Phase 65: L1 / L2 / Common-Issues + Hub Navigation (Pillar 4 — NAVIGATION-LAST)
+
+**Rationale:** Navigation files modified LAST per v1.5 Phase 57+59 precedent. L1 #34 depends on Phase 64 `12-...md` + Phase 63 `05-...md#which-admin-owns-this-pool` (C16 gate). All edits to existing hub files are append-only.
+
+**Delivers:** `l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md` (`platform: ios+macos+shared-ipad`); `l1-runbooks/00-index.md` append; `l2-runbooks/26-apple-business-permission-denied.md` (7-leaf Mermaid decision tree per DA-9); `l2-runbooks/00-index.md` append; `docs/common-issues.md` append (`## Apple Business Governance Failure Scenarios` H2); `docs/quick-ref-l1.md` + `docs/quick-ref-l2.md` append (`## Apple Business Quick Reference` H2); `docs/operations/00-index.md` append (5th sub-section); `docs/index.md` mods (5th sub-section under `## Operations` H2 + Cross-Platform References + platform-coverage banner appendix).
+
+**Addresses:** OP-11 / OP-12 / DA-8 / DA-9 / CI-5
+
+### Phase 66: Validation Tooling Closure + Milestone Audit (Pillar 5)
+
+**Rationale:** C11 CALIBRATION + C15 banned-phrase refinement against drafted v1.6 corpus requires Phases 62-65 content to exist first. Terminal re-audit must be from fresh worktree per v1.5 D-22 auditor independence. BASELINE_10 refresh closes BASELINE_9 v1.5 carry-over.
+
+**Delivers:** C11 keyword set extended with `apple-business-side|intune-side|integration-handshake|owned-by-apple-business|owned-by-intune|scope-boundary`; C15 banned-phrase list refinement; BASELINE_10 refresh; per-phase `check-phase-62.mjs..check-phase-65.mjs` validators; CI workflow `audit-harness-v1.6-integrity.yml` (Path-A from v1.5); new sidecar `v1.6-audit-allowlist.json` migrated to `scripts/validation/`; terminal re-audit from fresh worktree (must exit 0); `v1.6-MILESTONE-AUDIT.md` authored; PROJECT.md traceability closure (REQ-IDs Active→Validated); `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` finalized (CI-1/CI-2/CI-3 rotting-reference candidates for v1.7+).
+
+**Addresses:** DA-5 / DA-7 / CI-1 / CI-6
 
 ### Phase Ordering Rationale
 
-- Tooling before content (Phase 48 first) prevents gap-closure tax at milestone close
-- Foundation before content (Phase 49 before 50-52) mirrors Phase 34 Android foundation discipline
-- Content before navigation (Phases 50-56 before 57-59) hub files only link to existing files
-- Integration phases last (57, 58, 59) DEFER-07 and DEFER-08 require all content they reference
-- Broken-link sweep bookends the milestone Phase 48 first pass + Phase 60/61 second pass
-- DEFER-07 (Phase 57) must precede Phase 59 both touch docs/index.md serialized to prevent conflict
+- **Dependency DAG:** OUs (P62) → custom roles (P63) → delegation runbooks (P64) → L1/L2 + hub nav (P65) → audit harness closure (P66)
+- **Critical-path bottleneck:** Phase 62 — 11 pitfalls gate here; foundation glossary + role model + audit scaffolds must land before parallelism opens
+- **Wave-based parallelism opportunity** (inheriting v1.5 Wave B): Phase 63 + first half of Phase 64 are file-disjoint after Phase 63 `05-...md#which-admin-owns-this-pool` anchor lands → Apple TV + Shared iPad lifecycle docs (`09-` + `10-`) can run in parallel with custom-role authoring + sub-org onboarding
+- **Navigation-files-last:** Phase 65 mirrors v1.5 Phase 57+59 precedent (DEFER-07 / DEFER-08 / hub integration after content stabilizes)
+- **Atomic-harness-commit:** Phase 62 audit harness landing (C14/C15/C16 + sidecar + new category) inherits v1.5 Plan 60-08 atomic commit pattern
+- **Auditor-independence:** Phase 66 terminal re-audit from fresh worktree inherits v1.5 D-22 / Phase 61 Plan 61-04 precedent
+
 ### Research Flags
 
-**Phases needing deeper research or verification at plan time:**
-- **Phase 54 (macOS/iOS DDM):** Verify exact Intune Settings Catalog path for Software Update Enforce Latest at plan time; confirm which MDM deferral restrictions remain functional
-- **Phase 54 (Android Zebra LifeGuard):** Confirm Intune admin center path Device updates Android FOTA at plan time
-- **Phase 56 (Tenant Migration):** MEDIUM confidence throughout; verify per-platform migration steps given absence of single authoritative Microsoft Learn guide
-- **Phase 50 (Linux log paths):** LOW-MEDIUM confidence verify Linux intune-portal log path against live Ubuntu + Intune enrollment; journal is confirmed primary surface
+Phases likely needing deeper research during planning:
 
-**Phases with standard patterns (reduce or skip research-phase):**
-- **Phase 48:** Procedure fully documented in v1.4.1 retrospective; no new research needed
-- **Phase 49:** Pattern identical to Phase 34 Android foundation; PITFALL-7 framing established
-- **Phases 51-52:** Runbook structure established; Linux content documented in STACK.md
-- **Phase 53:** CB 2503 and all 7 workloads documented at HIGH confidence
-- **Phase 57:** All Android content exists; structural integration with clear pattern precedent
----
+- **Phase 62:** Apple Business permission catalog complete enumeration (per-permission tables on 11 subgroup sub-pages NOT WebFetch-extractable; manual scrape required ~1 hour effort); Apple Business audit log retention SLA (Apple does NOT publish; community reports 90-365 days; needs live-tenant verification or hedge-language); cross-OU audit visibility 3×3 matrix (author-scope vs target-scope semantics not single-source documented); Apple TV Conference Room Display mode delegation specifics (Apple deployment guides thin on per-OU partitioning for shared physical spaces)
+- **Phase 63:** OU sub-OU nesting depth (Apple new docs describe primarily flat; legacy ABM supported one level — needs portal verification); Apple Business Device API public surface (Apple has not yet published developer.apple.com landing for Device API Manager preset role)
+
+Phases with standard patterns (skip phase-research):
+
+- **Phase 64:** Well-precedented runbook authoring patterns from v1.3 (iOS L1/L2) + v1.4 (Android L1/L2) + v1.5 (Linux L1/L2)
+- **Phase 65:** Direct lineage from v1.3-v1.5 L1/L2 / common-issues / quick-ref / hub-nav patterns; v1.5 Phase 57+59 navigation-last precedent
+- **Phase 66:** Path-A copy + CALIBRATION + terminal re-audit are procedural patterns inherited from v1.5 Phase 60+61
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Linux Intune client (deb package, distros, CA scope, compliance categories) | HIGH | Microsoft Learn updated 2026-04-08 and 2026-04-16; two independent source pages confirm each constraint |
-| macOS/iOS DDM migration (deprecations, current enforcement path) | HIGH | Microsoft Learn + multiple community sources; aligns with Apple WWDC 2025 announcement |
-| iOS unsupervised DDM retraction (supervised-only constraint removed iOS 17+) | HIGH | Microsoft Learn deprecated-mdm-policies-ios + software-updates-guide-ios-ipados; August 2025 |
-| Android MEETS_STRONG_INTEGRITY enforcement timeline | HIGH | Official Microsoft TechCommunity support blog July 2025; enforcement dates confirmed |
-| ConfigMgr CB 2503 co-management workloads | HIGH | Microsoft Learn co-management workloads page updated 2026-04-15 |
-| Identity Broker v2.0.2+ re-enrollment behavior | HIGH | Microsoft Learn Linux deployment guide 2026-03-31 |
-| Architecture decisions (file placement, Option C, Path A copy) | HIGH | Direct codebase inspection; no inference required |
-| Pitfall prevention patterns | HIGH | Grounded in v1.0-v1.4.1 retrospectives and committed audit artifacts |
-| Tenant-to-tenant migration specifics | MEDIUM | No single authoritative Microsoft Learn guide; community sources + Q&A |
-| Linux log paths (intune-portal on Ubuntu) | LOW-MEDIUM | Microsoft Learn does not document a dedicated log path; journal is confirmed; file path needs live-environment verification |
-| markdown-link-check npm | MEDIUM | npm registry health confirmed; no Context7 ID; no version pinned |
-| macOS Installomator/Intuneomator adjacency | MEDIUM | Community practice; not Microsoft-documented; appropriate for a callout only |
+| Stack | HIGH (overall); MEDIUM (per-permission enumeration); LOW (OU max counts) | Rebrand + portals + role categories + content token + federation verified via Apple Newsroom + support.apple.com/guide/business/ + Microsoft Learn 2026-04-30; per-permission sub-pages JS-rendered |
+| Features | HIGH (overall); MEDIUM (per-role privilege enumeration + min-viable bundle synthesis); LOW (audit log retention exact period) | 8 workflow categories all verified Apple-side; min-viable bundle is v1.6 synthesis from scope (Apple ships no template) |
+| Architecture | HIGH (all 10 D-A decisions inherit from v1.2/v1.4/v1.4.1/v1.5 precedents); MEDIUM (Apple Business permission surface) | Each architectural decision cites a documented prior decision |
+| Pitfalls | HIGH (OP-1..OP-12 verified Apple official + Intune Learn); HIGH (DA-1..DA-9 directly observable in corpus); MEDIUM (OP-13 / OP-14 / CI-1..CI-3 predictive) | All 30 pitfalls mapped to phase + severity + warning sign + prevention |
 
-**Overall confidence:** HIGH for breaking changes and architecture; MEDIUM for tenant migration; LOW-MEDIUM for Linux log paths
+**Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Linux intune-portal log path:** Microsoft Learn does not document a dedicated log path for intune-portal on Ubuntu. L2 runbook 24 must use journalctl as the confirmed primary surface and include a freshness caveat on any file-based path claims. STACK.md explicitly flags this gap.
-- **Linux deb package version pinning:** Microsoft Learn does not pin a specific intune-portal version. Executor should run apt info intune-portal on a current Ubuntu 22.04/24.04 install at plan time.
-- **iOS DDM v1.3 retrofit scope:** The unsupervised DDM retraction requires a targeted callout update in the existing v1.3 iOS compliance guide. Roadmapper must assign this as an explicit task in Phase 54.
-- **Linux BYOD/corporate-owned enrollment inconsistency:** Microsoft Learn enrollment guide says corporate-owned only; platform guide also mentions BYOD/personal. Linux taxonomy overview (Phase 49) should surface this as a known documentation inconsistency.
----
+5 explicit MEDIUM/LOW-confidence gaps flagged for Phase 62 resolution:
+
+1. **Per-permission enumeration tables** — Phase 62 manual scrape of Apple's 11 subgroup permission sub-pages required (~1 hour effort) before custom-role authoring runbook can ship complete
+2. **Audit log retention SLA** — Phase 62 must validate against live tenant OR explicitly document the "Apple does not publish — configure periodic SIEM export for compliance >1 year" hedge in `17-audit-log-scoping-runbook.md`
+3. **Cross-OU audit visibility matrix** — Phase 62 must produce definitive 3×3 visibility matrix (OU A admin / OU B admin / tenant-wide admin × {visible / redacted / absent}) for `17-audit-log-scoping-runbook.md`
+4. **Apple TV Conference Room Display mode delegation specifics** — Phase 62 must clarify shared-physical-space → central-tenant-admin assignment heuristic for `10-apple-tv-lifecycle.md`
+5. **Apple Business Device API public surface** — Apple has not yet published `developer.apple.com` landing; acknowledge-but-do-not-document-deeply in `01-role-permission-model.md`
+
+### Deferred Items (for v1.6-DEFERRED-CLEANUP.md at Phase 66 close)
+
+Rotting-reference candidates from PITFALLS CI-1 / CI-2 / CI-3 — Q5(b) leaves unchanged in v1.6; candidates for v1.7+ surgical sweep:
+
+- **CI-1** Apple Business Manager rotting URL references (~30 sites across `admin-setup-ios/*` + `admin-setup-macos/*` + `_glossary-macos.md`) — tracked via NEW Phase 66 sidecar category `c13_rotting_external`; quarterly audit job
+- **CI-2** VPP location token rotting references (2 specific lines: `admin-setup-ios/05-app-deployment.md:201`, `admin-setup-macos/04-app-deployment.md:148`)
+- **CI-3** Managed Apple ID rotting references (pervasive corpus-wide); Phase 62 glossary ships bidirectional reciprocity as v1.6 mitigation; corpus-wide rename deferred to v1.7+ contingent on Microsoft Intune adopting the rebrand
+
+Final site enumeration finalized at Phase 66 milestone close (not Phase 62) — depends on Phase 62-65 author-discovery of additional candidates.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- https://learn.microsoft.com/en-us/intune/intune-service/user-help/microsoft-intune-app-linux (updated 2026-04-08)
-- https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux (updated 2026-04-16)
-- https://learn.microsoft.com/en-us/intune/user-help/enrollment/enroll-linux (updated 2026-04-08)
-- https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-linux-settings (updated 2026-04-16)
-- https://learn.microsoft.com/en-us/intune/configmgr/comanage/workloads (updated 2026-04-15)
-- https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-macos
-- https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios
-- https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-guide-ios-ipados
-- https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-changes-to-google-play-strong-integrity-for-android-13-or-above/4435130
-- https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/reports-export-graph-available-reports
-- https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool/releases
-- Direct codebase inspection: PROJECT.md, STATE.md, RETROSPECTIVE.md, v1.4.1-milestone-audit.mjs, docs/ directory enumeration
+
+- Apple Newsroom 2026-03-24 rebrand announcement — `apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/`
+- Apple Business User Guide canonical — `support.apple.com/guide/business/`
+- Apple Support transition banner — `support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web`
+- Apple Business roles & privileges overview — `support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web`
+- Apple Business content tokens — `support.apple.com/guide/apple-business-manager/manage-content-tokens-axme0f8659ec/web`
+- Apple Business federated authentication — `support.apple.com/guide/apple-business-manager/intro-to-federated-authentication-axmb19317543/web`
+- Apple Deployment Guides — `dep4acb2aa44` (OS 26+ migration), `dep027e1d5a0` (Apple TV), `dep6fa9dd532` (Shared iPad), `depa85a35cf2` (Entra)
+- Microsoft Intune Apple VPP tutorial 2026-04-30 — `learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple`
+- Microsoft Intune ADE tutorial — `learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios`
+- Existing v1.0-v1.5 corpus (file:line citations throughout PITFALLS.md axis 2 / axis 3)
+- v1.5 audit harness implementation — `scripts/validation/v1.5-milestone-audit.mjs`
 
 ### Secondary (MEDIUM confidence)
-- https://macadifference.net/2025/04/08/intune-macos-enforcing-software-updates.html
-- https://intuneirl.com/macos-ios-26-for-enterprise-ddm-deployment-and-the-intel-mac-sunset/
-- https://learn.microsoft.com/en-us/answers/questions/2149662/tenant-to-tenant-migration-with-intune-devices
-- https://github.com/tcort/markdown-link-check
-- 4sysops.com Intune March 2026 release notes (hotpatch default May 2026)
 
-### Tertiary (LOW-MEDIUM confidence)
-- Community diagnostic commands for Linux intune-portal journalctl and systemctl service unit names not documented in Microsoft Learn
-- /var/log/microsoft/intune/ file-based log path for Linux proposed based on RHEL+MDE pattern; requires live-environment verification
+- IT Pro 2026-04 — "Apple Business: Everything you need to know"
+- MacRumors 2026-03-24 — "Apple Unveils Apple Business All-in-One Platform"
+- HardSoft Computers — "What are Role Privileges in Apple Business Manager?"
+- PinMeTo — "Apple Business Connect Is Now Apple Business"
+- HCS Technology Group SCIM guide
+
+### Tertiary (LOW confidence — needs validation)
+
+- Community reports of Apple Business audit log retention period (90-365 days range) — needs live-tenant verification at Phase 62
+- Apple Business Device API public surface — Apple has not yet published developer.apple.com landing; mark UNKNOWN
 
 ---
-*Research completed: 2026-04-26*
+
+*Research completed: 2026-05-20*
 *Ready for roadmap: yes*

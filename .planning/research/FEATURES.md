@@ -1,340 +1,1046 @@
-# Feature Research — v1.5 Feature Landscape
+# Feature Research — Apple Business Delegated Governance Workflows (v1.6)
 
-**Domain:** Microsoft Intune provisioning documentation suite (5th platform + operational depth)
-**Researched:** 2026-04-26
-**Confidence:** HIGH (Linux Intune capabilities verified against Microsoft Learn updated 2026-04-16; co-management workloads verified against Microsoft Learn updated 2026-04-15; iOS DDM migration verified against 4sysops + Microsoft Learn August 2025 + March 2026 updates)
+**Domain:** Apple Business (formerly Apple Business Manager) delegated permission surface — workflows performed by internal-org / sub-org admins on behalf of multi-team or multi-location device pools, documented from the Apple Business portal perspective (Intune-side actions explicitly OUT OF SCOPE per PROJECT.md scope-boundary).
+**Researched:** 2026-05-20
+**Confidence:** HIGH on rebrand fact, role model, license-transfer, device-release/transfer/migration distinction, audit-log surface; MEDIUM on per-role privilege enumeration depth (Apple's full privilege matrix is gated behind admin sign-in to the portal — public docs describe groups but not always exhaustive sub-privilege lists); LOW on certain edge cases (specific privilege names for the "shared content token" model post-2024 consolidation; activity-log retention exact period).
 
----
+## Critical Context: 2026 Rebrand
 
-## Context: v1.5 Three-Pillar Structure
+On 2026-03-24, Apple announced and on 2026-04-14 launched **"Apple Business"** — a unified platform consolidating three previously-separate products into one:
 
-This research covers three distinct pillars, each with its own feature set:
+1. **Apple Business Manager** (ABM — device management, ADE token, VPP/Apps and Books)
+2. **Apple Business Essentials** (ABE — light MDM)
+3. **Apple Business Connect** (ABC — customer-facing listings)
 
-- **Pillar 1 — Cleanup & cross-platform hardening:** DEFER-07 Android nav unification + DEFER-08 4-platform comparison + broken-link sweep
-- **Pillar 2 — Linux via Intune (Ubuntu LTS):** 5th platform enrollment, compliance, CA, app delivery, L1/L2
-- **Pillar 3 — Operational depth (4 existing platforms):** Co-management, patch/update management, app lifecycle automation, drift detection + tenant migration
+Source: [Apple Business launch announcement (business.apple.com migration banner)](https://support.apple.com/guide/business/sign-up-and-verify-your-organization-axm402206497/web); [Six Colors — Apple in the Enterprise: 2026 commentary](https://sixcolors.com/post/2026/05/apple-in-the-enterprise-the-complete-2026-commentary/); [TechRadar — Apple Business now offers MDM](https://www.techradar.com/pro/weve-unified-apples-strongest-business-offerings-into-one-simple-secure-platform-apple-business-will-now-offer-mdm-upgraded-icloud-storage-and-more-plus-the-option-to-put-ads-in-maps).
 
----
+Apple's user-guide pages now redirect from `support.apple.com/guide/apple-business-manager/*` to `support.apple.com/guide/business/*`; Apple support search results still surface the legacy ABM URL but the portal landing page shows "Apple Business Manager is now Apple Business" (HIGH confidence — verified via direct WebFetch of the migration banner). Both URL families currently route to current documentation.
 
-## Pillar 1 — Cleanup & Cross-Platform Hardening
-
-### Table Stakes
-
-Features that are broken or absent in existing v1.0–v1.4.1 docs. Missing these = documentation fails users trying to find Android content.
-
-| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
-|---------|--------------|------------|----------|------------|-------|
-| DEFER-07: Android sections in `docs/index.md` | Android has only a stub H2 (Phase 42); Windows/macOS/iOS have full L1/L2/Admin subsections. Users landing on index.md cannot navigate Android resources | MEDIUM | All | v1.4.1 Android content complete | Must match structural depth of iOS section: L1 (triage tree + runbook index links), L2 (log collection guide + L2 runbook index links), Admin Setup (overview + per-guide links). 6–8 table rows per subsection per existing iOS pattern |
-| DEFER-07: Android sections in `common-issues.md` | common-issues.md currently has Windows/macOS/iOS platform H2s but no Android H2. Platform selector bullet exists (Phase 42) but leads nowhere | MEDIUM | L1, L2 | v1.4.1 Android L1/L2 runbooks | Pattern: H2 per platform, symptom-H3 rows each with L1 and L2 runbook links. Android needs: enrollment blocked, work profile not created, device not enrolled, compliance blocked, MGP app not installed, ZTE failed, Knox enrollment failed, AOSP enrollment failed (8 symptom categories matching L1 runbooks 22–29) |
-| DEFER-07: Android section in `quick-ref-l1.md` | Windows/macOS/iOS each have a dedicated quick-ref section. Android L1 responders have no equivalent | MEDIUM | L1 | v1.4.1 Android L1 triage + runbooks | Pattern: Top Checks (3–4), Escalation Triggers (4–5), Decision Tree link, Runbooks list. Android top check is mode-identification first (COBO/BYOD/Dedicated/ZTE/AOSP) per existing mode-first triage tree |
-| DEFER-07: Android section in `quick-ref-l2.md` | Windows/macOS/iOS each have an L2 quick-ref section with log paths, commands, diagnostic methods | MEDIUM | L2 | v1.4.1 Android L2 runbooks | Pattern: Log collection methods (3-method Android section), Key Intune Portal Paths table, Play Integrity verdict reference, Investigation Runbooks list. Android has no CLI diagnostic tool equivalent to mdmdiagnosticstool or `profiles` |
-| DEFER-08: 4-platform capability comparison document | Per-platform matrices exist (Windows/macOS/iOS/Android each have a capability matrix) but no cross-platform side-by-side reference. Admins managing mixed fleets must open 4 separate files | HIGH | Admin | All 4 existing capability matrices | Structural reference doc, NOT a duplicate of per-platform matrices. Axes: enrollment mechanism, identity (Entra join type), app delivery (format + store), compliance (settings depth), conditional access (native vs web-app only), monitoring/reporting, patching/update management. Cross-link reciprocity to per-platform matrices |
-| Cross-platform broken-link sweep — intra-doc anchors | 179 markdown files accumulated across 5 milestones. Phase-based authoring creates anchor drift when headings change in later phases. iOS Phase 33 gap closure already found I-1 anchor fix and I-2 placeholder retrofit (71 rows) | HIGH | — | All 179 existing files | Categories: `[text](#anchor)` same-file anchors (most common drift site), `[text](relative-path#anchor)` cross-file anchors, glossary `see-also` cross-refs. Priority: cross-file anchors with `#anchor` fragments first (hardest to detect) → same-file anchors → text-only links |
-| Cross-platform broken-link sweep — inter-doc relative paths | Relative path references like `[guide](../admin-setup-android/08-cope-full-admin.md)` can drift when files are renamed | MEDIUM | — | All 179 existing files | New file names added in v1.4.1 (COPE, Knox, per-OEM AOSP) may not have reciprocal links from older files. iOS retroactive placeholder retrofit pattern (Phase 33) is the precedent |
-| Glossary cross-ref normalization | `_glossary-macos.md` has iOS see-also. `_glossary-android.md` has macOS see-also (Phase 46). Windows glossary has no cross-refs. v1.5 adds Linux — needs `_glossary-linux.md` with see-also pattern | LOW | — | v1.2 cross-platform glossary pattern | Each glossary file should have see-also entries pointing to equivalent terms in sibling glossaries |
-
-### Differentiators
-
-| Feature | Value Proposition | Complexity | Audience | Notes |
-|---------|-------------------|------------|----------|-------|
-| DEFER-08: Cross-Platform Equivalences structure in comparison doc | The v1.4 pattern of pairing equivalent mechanisms cross-platform (iOS Supervision ↔ Android Fully Managed, Apple ADE ↔ Google Zero-Touch) can be elevated to a single cross-platform comparison table. Admins managing mixed fleets can reason about parity gaps at a glance | HIGH | Admin | Must avoid duplicating per-platform matrices. Pattern: structural reference with cells that say "Windows: ring-based WUfB / macOS: DDM enforcement / iOS: DDM supervised / Android: Play-delivery + OEM-specific" — one row per domain |
-| Cross-platform broken-link sweep — automated harness check | Manual sweep is possible but a `check-broken-links.mjs` validator as a v1.5 harness check (C-new) would catch future drift mechanically | MEDIUM | — | v1.4.1 harness lineage pattern (informational-first for new checks) | Depends on whether harness phase is scoped to add a new C-check for link integrity; see PITFALLS.md |
-
-### Anti-Features (Out of Scope)
-
-| Feature | Why Requested | Why Out of Scope | Alternative |
-|---------|---------------|-----------------|-------------|
-| External Microsoft Learn URL validation | Teams may want to flag stale MS Learn links | Microsoft Learn URLs restructure without notice (observed in Phase 32: Intune admin center "Device onboarding" reorg). Automating external URL checks creates false positives and fragile CI | Spot-check high-traffic external links manually with `last_verified` dates on affected files; flag in human review |
-| Retroactive freshness normalization for all 179 files | v1.4.1 already normalized L2 runbooks 18-21 and Android admin template; remaining files are iOS/macOS/Windows | Per STATE.md note: iOS/macOS/Windows admin templates were intentionally NOT normalized in v1.4.1 (Android-scope lock per Plan 43-05 D-25). Doing all 179 files risks scope explosion | Sweep only files that failed the 60-day check as part of the broken-link sweep; do not normalize files that are still within window |
+Throughout this research doc, the portal is referred to as **Apple Business** (current branding) with **ABM** as the legacy parenthetical where helpful for L1/L2 readers searching old documentation. Per PROJECT.md, the v1.6 corpus handles the rebrand via glossary + 2 intro callouts only (Q5 b) — no retroactive sweep of ~30 existing ABM references.
 
 ---
 
-## Pillar 2 — Linux via Intune (Ubuntu LTS)
+## Feature Landscape
 
-### Background: What Linux Intune Actually Is (HIGH confidence, verified against Microsoft Learn 2026-03-31 + 2026-04-16)
+### Workflow Category Classification Key
 
-Linux management via Intune is a **narrower surface** than Windows, macOS, iOS, or Android. Key architectural constraints:
-
-- **Enrollment mechanism:** User-initiated only. No automated/zero-touch enrollment. No bulk enrollment (DEM accounts not supported). Each device enrolled individually via the `intune-portal` deb package + Microsoft Edge.
-- **Conditional access scope:** Web-app CA only via Microsoft Edge. No native app CA (Require approved client app / Require app protection policy grant controls are NOT supported for Linux in CA policies). Linux devices can satisfy device-based CA policies (compliant device required in Edge).
-- **App delivery:** Script-based only (Bash scripts via Intune Scripts & Remediations platform scripts). No Win32 equivalent, no .deb managed deployment via Intune, no MSI/MSIX/.pkg analog. Intune does NOT deliver .deb packages directly.
-- **Supported distros:** Ubuntu Desktop 22.04 LTS and 24.04 LTS (x86/64 only, GNOME desktop required). RHEL 9 and RHEL 10 also supported but out of v1.5 scope (Ubuntu-only per PROJECT.md). Ubuntu 20.04 support ended in August 2025 (Intune service release 2508).
-- **Compliance settings:** Settings catalog only (not templated). Categories: Allowed Distributions (distro type + min/max OS version), Custom Compliance (Bash discovery scripts), Device Encryption (dm-crypt/LUKS), Password Policy (min length/lowercase/uppercase/digits/symbols). No equivalent to Windows security baseline depth or macOS configuration profile breadth.
-- **Device ownership model:** Corporate-owned only in enrollment guide framing; however the deployment guide (platform-guide-linux) also mentions BYOD/personal enrollment support. The enrollment guide explicitly states "corporate-owned" and "enrollment isn't supported with personal devices." This is a documentation inconsistency that v1.5 should surface as a known caveat.
-- **Agent architecture:** `intune-portal` deb package (package name confirmed). Identity Broker v2.0.2+ changed from Java-based to new architecture; update triggers automatic re-enrollment with new device IDs — admins must review device-based assignments/filters post-update.
-
-### Table Stakes
-
-| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
-|---------|--------------|------------|----------|------------|-------|
-| Linux platform taxonomy + distro framework overview | IT admins need orientation to what Linux-in-Intune actually means before any setup/troubleshooting. Establishes Ubuntu 22.04/24.04 LTS scope, enrollment constraints, supported vs. not-supported features | LOW | Admin, L1, L2 | v1.2 cross-platform taxonomy pattern; `_glossary-linux.md` | Maps to iOS enrollment path overview precedent (one doc establishing the 4-path/scope framework). Linux has one enrollment path: user-initiated deb install |
-| Linux glossary (`_glossary-linux.md`) | Every platform has a per-platform glossary. Linux introduces new terminology (dm-crypt, LUKS, HWE kernel, GNOME, `intune-portal` package, `intune-agent` service, Play Integrity analog = compliance policy) | LOW | All | v1.2 `_glossary-macos.md` pattern; see-also entries into Windows/Android/iOS glossaries | Linux-specific terms: dm-crypt, LUKS, HWE kernel, deb repository, GNOME desktop, systemd service, `intune-portal`, `intune-agent.timer`, `journalctl` |
-| Linux admin setup — enrollment configuration | What does an admin need to do before users can enroll? (Answer: almost nothing — enrollment is auto-enabled in tenant. But need to: verify licensing, create compliance policy, configure CA policy for Edge.) Admin flow is lighter than all other platforms | MEDIUM | Admin | v1.5 taxonomy doc; existing CA enrollment timing patterns | Admin task list: (1) verify Intune + Entra P1 licensing, (2) create Linux compliance policy from settings catalog, (3) optionally configure device-based CA policy scoped to Linux, (4) communicate enrollment steps to users. No MDM server assignment (no ABM/ZT equivalent). No zero-touch path. Contrast with macOS 7-step admin setup |
-| Linux compliance policy guide | Admins need to know exactly what settings they can enforce (4 categories from settings catalog). Narrower than all other platforms — this comparison must be explicit | MEDIUM | Admin | Linux admin setup; Linux compliance settings from settings catalog | Four categories: Allowed Distributions, Custom Compliance (Bash scripts), Device Encryption (LUKS/dm-crypt), Password Policy. Custom compliance scripts use POSIX-compliant shell, output JSON key-value pairs, discovery script checked vs. expected values |
-| Linux end-user enrollment guide | User-flow end-to-end: (1) install Microsoft Edge 102.x+, (2) install `intune-portal` deb from packages.microsoft.com, (3) open Intune app + sign in with org account, (4) complete compliance remediation if prompted, (5) sign into Edge to access org resources | LOW | L1 | Linux taxonomy; Linux admin setup | Package install command: `sudo apt install intune-portal`. Service: `intune-agent.timer` (systemd). Post-install requires reboot. No Setup Assistant equivalent (no zero-touch). User must actively perform enrollment — CA policy is the trigger for motivation |
-| Linux L1 triage decision tree | L1 responders need a Mermaid decision tree for the top Linux failure scenarios | MEDIUM | L1 | Linux L1 runbooks | Tree is simpler than Android/iOS (one enrollment path, web-app CA only). Key branches: (1) enrollment failed (package install? sign-in? compliance?), (2) device non-compliant (which category?), (3) CA blocking Edge access (device enrolled? compliant?), (4) Intune app service not running |
-| Linux L1 scenario runbooks | Scripted procedures for top Linux failure scenarios | MEDIUM | L1 | Linux L1 decision tree | Likely runbooks: (L1-XX) enrollment failed — package installation error / sign-in failure / enrollment timeout; (L1-XX) compliance non-compliant — distro/version out of range / disk not encrypted / password policy not met; (L1-XX) CA blocking web-app access — device not enrolled / device not compliant / Edge not signed in; (L1-XX) agent service not running |
-| Linux L2 investigation guide | L2 technical investigation methods for Linux-specific failure patterns | MEDIUM | L2 | Linux L1 runbooks | Log paths: `/var/log/` (system logs), `journalctl -u intune-agent` (agent service), `journalctl | grep intune-portal` (portal logs), `/var/log/intune-update.log` (update log), `/var/log/dpkg.log` (package installation). Service commands: `systemctl status intune-agent`, `systemctl enable --user --now intune-agent.timer`. No equivalent to mdmdiagnosticstool or IntuneMacODC |
-| Linux capability matrix | Every platform has a capability matrix. Linux is the narrowest surface — this matrix communicates parity gaps vs. other platforms explicitly | MEDIUM | Admin | Linux taxonomy; existing 4-platform matrices | Axes: enrollment mechanism, identity (Entra join), app delivery, compliance depth, CA scope, monitoring/reporting, patching. Linux will show gaps in most rows vs Windows/macOS/iOS/Android. Cross-Platform Equivalences section: Linux CA (web-app only) ↔ iOS MAM-WE (no device enrollment required) — both are "compliance-lite" patterns |
-
-### Differentiators
-
-| Feature | Value Proposition | Complexity | Audience | Notes |
-|---------|-------------------|------------|----------|-------|
-| Linux custom compliance deep-dive | Custom compliance via Bash discovery scripts is Linux's unique mechanism (not available on iOS/Android; Windows has similar via PowerShell). Documenting the script-writing pattern, JSON output format, and how to test discovery scripts gives admins a differentiating capability not visible in compliance settings UI alone | MEDIUM | Admin, L2 | Bash script format: must output JSON `{"settingName": "value"}` pairs; discovery script runs on device; Intune evaluates output against expected values configured in policy |
-| Linux CA enrollment trigger scenario | Linux is the only platform where the CA policy for Microsoft Edge is the primary enrollment motivation (unlike Windows OOBE/Autopilot or iOS/macOS ADE where enrollment is required before use). Documenting the CA-driven enrollment flow explicitly helps admins understand the intended design | LOW | Admin, L1 | Matches "web-app-CA only" constraint; relevant to explaining Linux narrowness vs. Windows/macOS |
-| Identity Broker v2.0.2 re-enrollment warning | The architectural change in `intune-portal` 2.0.2+ causes automatic re-enrollment creating new device IDs. Device-based CA assignments, filters, and Entra group memberships relying on old device IDs must be reviewed. This is a high-impact admin pitfall with no equivalent on other platforms | LOW | Admin | Confirmed in Microsoft Learn deployment guide 2026-03-31 |
-
-### Anti-Features (Out of Scope — Linux Pillar)
-
-| Feature | Why Requested | Why Out of Scope | Alternative |
-|---------|---------------|-----------------|-------------|
-| RHEL / Rocky / Alma / Debian / SUSE Linux docs | Some admins ask for broader distro coverage | Explicitly out of scope per PROJECT.md: "Ubuntu LTS only in v1.5 per scope decision." RHEL 9/10 technically supported by Intune but not v1.5 | Flag RHEL 9/10 Intune support as a future v1.6+ candidate in Linux taxonomy overview |
-| Linux server / IoT / headless device enrollment | Admins may want to enroll Ubuntu Server or containerized workloads | Unsupported by Intune (requires GNOME graphical desktop, user must sign in) — PROJECT.md explicitly excludes | Note in Linux taxonomy: Intune Linux support is desktop-client scope only |
-| Linux app deployment via deb packages | Admins want Intune to deliver .deb packages like Win32/MSI | Intune does NOT deliver .deb packages. App delivery is Bash scripts only. No Win32/LOB equivalent for Linux | Document script-based app installation pattern as the supported mechanism |
-| Linux configuration profiles (beyond compliance) | Admins expect MDM configuration profiles like macOS/iOS | Linux has no configuration profile concept in Intune. Only compliance policies and custom settings via scripts | Custom settings profile (Bash scripts) is the only configuration mechanism |
-| Snap-based Intune delivery | Some communities discuss snap-based agent delivery | Intune agent is delivered as a deb package (`intune-portal`) from packages.microsoft.com. No snap equivalent | Document the deb-only delivery as the authoritative installation path |
+Each workflow below is tagged with:
+- **Category** — Table-stakes / Differentiator / Anti-feature (per `<question>` requirements)
+- **Audience reach** — Admin / Admin + L1 / Admin + L1 + L2 (which audience tiers need the workflow documented)
+- **Cross-platform applicability** — iOS-only / iPadOS-only / macOS-only / shared iPad-only / Apple TV-only / cross-platform (Apple-wide)
+- **Confidence** — HIGH / MEDIUM / LOW
+- **Apple Business UI surface** — portal sidebar path
+- **Primary citation** — Apple Support URL
 
 ---
 
-## Pillar 3 — Operational Depth (Existing 4 Platforms)
+## 1. Custom Role Authoring Workflow
 
-### Background: Per-Domain Platform Depth Summary
+### 1.1 Create a Custom Role
 
-Before listing features, understanding the platform variance is critical:
+**Category:** Table-stakes
+**Audience:** Admin
+**Cross-platform:** Cross-platform (governance layer — affects all Apple device types)
+**Confidence:** HIGH
+**UI surface:** `Access Management > Roles > Add (+ next to Custom Roles)`
+**Citation:** [Intro to roles and privileges in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web); [View and assign roles](https://support.apple.com/guide/apple-business-manager/view-and-assign-roles-axmb46d473c7/web)
 
-- **Co-management:** Windows-only concept (SCCM/ConfigMgr ↔ Intune). macOS/iOS/Android get contextual "no co-management equivalent" notes with their native migration paths (macOS: Jamf→Intune; iOS/Android: MAM→MDM, legacy DA→Enterprise).
-- **Patch/update management:** Genuinely 4-way. Windows: WUfB rings + driver/firmware + Windows Autopatch + hotpatch. macOS: DDM migration (critical — MDM-based software update commands deprecated in Apple OS 26). iOS: DDM migration (same issue — MDM commands deprecated; also supervised vs. unsupervised DDM behavior). Android: Play-delivery + OEM-specific (Zebra LifeGuard GA Jan 2026 via Intune integration, Samsung Knox SP, Play Integrity strong integrity change effective Oct 2026).
-- **App lifecycle automation:** Windows has the most mature (Win32 supersedence chains, dependency graphs, MSIX). macOS has PKG/DMG + Installomator/Intuneomator adjacency. iOS has VPP device vs. user licensing flows. Android has Managed Google Play private-app publishing + OEMConfig.
-- **Drift detection + tenant migration:** Windows has Intune Remediations (Proactive Remediation scripts), deployment report-driven compliance, co-management migration workloads. macOS/iOS/Android use compliance policy drift + Intune report. Tenant migration is M&A-driven; Windows requires BitLocker re-key; macOS/iOS requires ABM token re-issue; Android requires MGP re-binding.
+**Workflow:**
+1. Sign in as **Administrator** (only role that can create custom roles).
+2. Navigate sidebar: **Access Management** > **Roles**.
+3. Select **Add (+)** next to **Custom Roles**.
+4. Enter role name and optional description.
+5. Select each permissions group, then check individual privileges this role can perform.
+6. Save.
 
-### Table Stakes — Co-Management (SCCM ↔ Intune)
+**Prerequisite:** Signed-in user must have a role with permission to "create, edit, and delete Managed Apple Accounts." Only Administrator has this by default.
 
-| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
-|---------|--------------|------------|----------|------------|-------|
-| Co-management overview + workload model | Admins migrating SCCM-managed Windows fleets to Intune need a conceptual anchor for the workload slider model before making any changes | MEDIUM | Admin | v1.2 Windows device lifecycle + migration content | 7 workloads verified: Compliance Policies, Windows Update Policies, Resource Access (deprecated in ConfigMgr 2203), Endpoint Protection, Device Configuration, Office Click-to-Run Apps, Client Apps. Switching Device Configuration workload implicitly switches Resource Access + Endpoint Protection |
-| Workload slider migration sequence | Admins need a recommended migration order (low-risk first: Compliance → Resource Access → WU → Endpoint Protection → Device Config → Apps) | MEDIUM | Admin | Co-management overview | Standard community best practice: start with Compliance (read-only audit mode, no enforcement change), then move to Device Configuration after pilot. Apps last (heaviest lift — Win32 repackaging required). Aligns with v1.2 Windows migration content (APv1→APv2, imaging→Autopilot, GPO→Intune) |
-| Tenant attach vs. full co-management distinction | Tenant attach (device sync + remote actions from Intune portal, no workload switching) is often confused with co-management (workload sliders active). Admins in staged migrations need to know the difference | LOW | Admin | Co-management overview | Tenant attach: admins can see ConfigMgr devices in Intune admin center + run remote actions. Full co-management: workload sliders enabled. Two different concepts with different prerequisites |
-| Platform notes for non-Windows admins (macOS/iOS/Android) | macOS admins migrating from Jamf, iOS/Android admins moving from legacy DA or 3rd-party MDM need to know "there is no co-management for your platform — here's the equivalent" | LOW | Admin | v1.2 macOS content; v1.3 iOS content; v1.4 Android content | macOS: no SCCM equivalent; migration from Jamf is MDM-transfer via ABM. iOS/Android: no co-management equivalent; BYOD path migration from MAM to MDM is the closest analog. Note these as callouts in co-management doc |
+### 1.2 Privilege Groups (canonical 5 — public docs confirm these as the consistent top-level groupings)
 
-### Differentiators — Co-Management
+| Group | Example Privileges | Notes |
+|-------|-------------------|-------|
+| **Users / Managed Apple Accounts** | Create / edit / delete accounts, reset passwords, generate verification codes, manage federation, **Reset Shared iPad Passcode** | "Reset Shared iPad Passcode" is the canonical L1-delegated privilege |
+| **Devices** | Add / assign / unassign / release devices, manage MDM servers, view device assignments | Core Device Enrollment Manager surface |
+| **Content (Apps and Books)** | Buy content, reassign licenses, transfer licenses between locations, manage payment methods | Core Content Manager surface |
+| **Locations** | Create / edit / delete locations | Restricted to Admin + People Manager by default |
+| **Logs / Activity** | Read log files, view activity, download logs | Audit-access privilege; often delegated to compliance/security L2 |
 
-| Feature | Value Proposition | Complexity | Audience | Notes |
-|---------|-------------------|------------|----------|-------|
-| Windows Autopatch co-management prerequisite | Windows Autopatch requires Device Configuration AND Office Click-to-Run workloads fully moved to Intune. Documenting this as a migration gate prevents admins from enabling Autopatch prematurely | LOW | Admin | v1.2 Windows update content + co-management overview | Source: Microsoft Learn co-management workloads doc (verified 2026-04-15): "To use Windows Autopatch with these devices, this workload must be moved to Intune" |
-| Pilot collection per workload pattern | Admins can use different pilot collections per workload — more granular than switching all at once. Documents the pilot collection strategy as a risk mitigation technique | LOW | Admin | Co-management workload overview | Each workload slider has a "Pilot" (collection-scoped) vs. "Intune" (all devices) setting. Pilot collection pattern aligns with ring-based patching philosophy |
+> **Confidence note:** MEDIUM on completeness of sub-privileges. Apple's public role-privileges page enumerates groups but the full per-privilege matrix is most accurately viewed inside the portal at `Access Management > Roles > [role] > Edit`. v1.6 docs should screenshot the in-portal matrix or reference [Apple's role privileges reference page](https://support.apple.com/guide/apple-business-manager/role-privileges-tes97dd59159/web) for the canonical list.
 
-### Table Stakes — Patch & Update Management
+### 1.3 Built-in Roles (5)
 
-| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
-|---------|--------------|------------|----------|------------|-------|
-| Windows: WUfB rings guide | Ring-based deferral (pilot → early adopters → broad) is the standard Windows enterprise patching pattern. Admins expect this to be documented clearly | MEDIUM | Admin, L2 | v1.2 Windows monitoring/operations content | Update rings control: deferral periods (quality/feature), deadline enforcement, restart behavior, user experience. Windows Autopatch provides automated ring management if co-management workload moved. Hotpatch GA for Windows 11 Enterprise 24H2+ (default from May 2026, requires VBS) |
-| Windows: Driver and firmware via WUfB | Driver/firmware updates via Windows Update for Business (separate from quality/feature updates) are frequently misconfigured. Admins need explicit guidance on enabling driver updates without causing fleet-wide regressions | MEDIUM | Admin, L2 | Windows WUfB rings guide | Driver updates enabled/disabled per ring. Common pitfall: enabling driver updates in Intune while SCCM co-management still controls WU workload (dual-scan source conflict) |
-| macOS: Update enforcement with DDM (CRITICAL) | Apple deprecated legacy MDM software update commands (ScheduleOSUpdate / OSUpdateStatus) in Apple OS 26. Organizations still using MDM-based policies WILL LOSE update management capability within 12 months. Migration to DDM is urgent | HIGH | Admin, L2 | v1.2 macOS admin setup content | DDM: `softwareupdate.enforcement.specific` declaration. Device autonomously applies updates to meet deadline. Intune admin center: Devices > Manage updates > Apple updates > Create policy (DDM-based). Previous forceDelayedSoftwareUpdates MDM key still functional on macOS 14 and earlier. macOS Recovery Lock management added in March 2026 Intune release |
-| iOS: Update enforcement with DDM | Same DDM migration applies to iOS/iPadOS. Legacy MDM update commands deprecated in iOS 26/iPadOS 26. Basic DDM update keys now work on unsupervised devices (TargetOSVersion, TargetBuildVersion, TargetLocalDateTime, OfferPrograms) | HIGH | Admin, L2 | v1.3 iOS admin setup content | Supervised vs. unsupervised DDM behavior difference: supervised devices have additional control over update timing enforcement. Unsupervised devices can use basic DDM update keys since August 2025. This is a significant change from the prior "supervised-only" enforcement model |
-| Android: Play-delivery patch policy | Android patch delivery is primarily via Google Play updates. Admins need to understand how to configure minimum security patch level in compliance + how Play Integrity strong integrity verdict now requires security patch ≤12 months old (effective Oct 2026) | MEDIUM | Admin, L2 | v1.4 Android compliance content | Play Integrity strong integrity change: Google updated definition in May 2025 for Android 13+ — requires hardware-backed security signals + security patch <12 months old. Intune enforcement deadline: Oct 31, 2026. Compliance policy: "Minimum security patch level" setting is the mitigation |
-| Android: OEM-specific firmware management (Zebra LifeGuard) | Zebra devices in enterprise fleets need firmware managed separately from Play-delivery updates. Zebra LifeGuard OTA integration with Intune became GA in January 2026 | MEDIUM | Admin, L2 | v1.4.1 Zebra AOSP content + Android capability matrix | Zebra LifeGuard OTA: Intune manages creation/monitoring of deployments via Zebra API. Separate from Play-delivery updates. Configure in Intune admin center: Device updates > Android FOTA. Samsung KSP (Knox Service Plugin) for Samsung-specific patch windows is the analogous Samsung mechanism |
+| Role | Default Privileges (paraphrased) | When to Use |
+|------|----------------------------------|-------------|
+| **Administrator** | Full control of all settings; accept Apple T&Cs; only role that can manage other Admins | One per org (Account Holder); minimum redundancy = 2 |
+| **People Manager** | Create/edit/delete Managed Apple Accounts; reset passwords (except other Admins); configure federation; **create/edit Locations**; cannot manage devices or content | HR-adjacent delegation; org-restructure work |
+| **Device Enrollment Manager** | Add / assign / remove / release devices; manage MDM servers; **cannot manage content** | Pure device-ops L2; no app/license access |
+| **Content Manager** | Buy content; reassign licenses; cannot manage devices, MDM servers, or grant roles | App-procurement delegation |
+| **Staff** | Use managed devices; sign in to iCloud with Managed Apple Account; access assigned managed apps | End-user role; not an admin role |
 
-### Differentiators — Patch & Update Management
+**Citation:** [HardSoft — Role Privileges in Apple Business Manager](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/) (MEDIUM confidence community source for the default-role privilege summary; Apple's own page is structurally vaguer).
 
-| Feature | Value Proposition | Complexity | Audience | Notes |
-|---------|-------------------|------------|----------|-------|
-| Cross-platform update management comparison table | Admins managing mixed fleets need a single reference showing: Windows (WUfB rings/Autopatch/hotpatch), macOS (DDM deadlines), iOS (DDM supervised vs. unsupervised), Android (Play-delivery + OEM FOTA). Single table in ops-depth update doc prevents repeated platform-hopping | MEDIUM | Admin | Logically belongs in Pillar 1 DEFER-08 comparison doc, OR as a callout in each platform's patch section |
-| Windows hotpatch guidance | Hotpatch (security patches applied without reboot) becomes default for Windows 11 Enterprise 24H2+ from May 2026. Documenting requirements (VBS enabled, 24H2+, Enterprise SKU) and how to opt out prevents unexpected behavior changes | LOW | Admin | Windows WUfB content | New Intune admin center toggle: opt-out of hotpatch for all eligible devices (available from April 2026). Admins should understand the reboot reduction impact on compliance reporting |
-| iOS unsupervised DDM update clarification | Prior to August 2025, iOS update enforcement was supervised-only. DDM now extends to unsupervised devices for basic update keys. This changes L2 investigation methodology (previously "unsupervised = can't enforce" was the answer) | LOW | L2, Admin | v1.3 iOS compliance content (supervised-only callout pattern must be updated) | This is a RETRACTION of a supervised-only callout in existing v1.3 iOS content — the compliance policy section and update guidance need a targeted update |
+### 1.4 Location Scoping of Roles
 
-### Table Stakes — App Lifecycle Automation
+**Confidence:** HIGH
+**Key fact:** Role privileges are assigned **by Location**. The same user can hold different roles in different Locations (e.g., Content Manager in Location A, Device Enrollment Manager in Location B). This is the canonical mechanism for sub-org delegation.
 
-| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
-|---------|--------------|------------|----------|------------|-------|
-| Windows: Win32 supersedence chains guide | Win32 app supersedence (replace/update a previous version) is a standard Intune app lifecycle operation. Admins managing dozens of Win32 apps need the supersedence + dependency graph model explained clearly | MEDIUM | Admin, L2 | v1.2 Windows app deployment content | Supersedence limit: max 10 superseding apps per app. Supersedence ≠ dependency (cannot interchange). Replace vs. Update option: enable "uninstall previous version" for Replace, disable for Update. Targeting required on superseding app for supersedence to activate |
-| Windows: .intunewin packaging at scale | Converting Win32 applications to .intunewin format and managing packaging pipeline for large app catalogs is a recurring admin task | MEDIUM | Admin | Windows Win32 supersedence | Win32ContentPrepTool for .intunewin creation. Detection rules (MSI product code, file, registry, custom script). Return codes for success/failure. Common pattern: custom detection script via PowerShell for complex apps |
-| macOS: PKG/DMG app lifecycle guide | macOS app delivery via Intune supports: LOB PKG (flat package, Apple Developer ID Installer cert, signed), unmanaged PKG (via Intune agent, non-LOB), DMG (via Intune agent, mounts and copies .app to /Applications), Microsoft 365 apps (native VPP/managed), Store apps (Mac App Store via Apple Business Manager). Each type has different prerequisites | MEDIUM | Admin, L2 | v1.2 macOS app deployment content | Intuneomator (Swift-based, wraps Installomator) bridges gap between Installomator open-source library and Intune for automated macOS app lifecycle. Not officially supported but community-standard. Munki coexistence pattern documented at Automatica blog (2026-01) |
-| iOS: VPP device-licensing vs user-licensing flows | VPP (Volume Purchase Program) app licensing has two models: device-assigned (license tied to device — no Apple ID required, silent install on supervised) vs. user-assigned (license tied to user — requires Apple ID, user must accept). Admins need to understand when each model applies and how to move licenses | MEDIUM | Admin, L2 | v1.3 iOS app deployment content | Device-licensing: preferred for corporate supervised. User-licensing: required for User Enrollment (BYOD). License reclamation: retire/wipe device returns device license; remove app returns user license. Silent install only on supervised (device-licensed) |
-| Android: Managed Google Play private-app publishing | Enterprise apps not on public Play Store must be published as private apps in Managed Google Play console. Admins need the upload → approval → assignment workflow | MEDIUM | Admin | v1.4 Android BYOD/COBO admin content | Two publishing paths: (1) direct APK upload to MGP private track (for internal apps), (2) using MGP web app publishing for web clip shortcuts. AMAPI (Android Management API) note: custom apps go through Google Play custom app API as of 2024+ |
-| Android: OEMConfig app delivery | OEMConfig apps allow Intune admins to configure OEM-specific settings beyond Android Management API scope. Zebra OEMConfig (WS50) and similar devices require Intune-APK side-loading or OEMConfig profiles | MEDIUM | Admin, L2 | v1.4.1 Zebra AOSP content | Zebra WS50: OEMConfig installed via Intune APK (not Managed Google Play). Documented in existing `10-aosp-zebra.md` — but operational lifecycle (update, revoke, troubleshoot) not yet documented |
+**Workflow:**
+1. When assigning a role to a Managed Apple Account, the assignment dialog lists each Location the assigning user has access to.
+2. Select role per Location (or "All Locations" if Administrator-level scope is appropriate).
+3. Save.
 
-### Differentiators — App Lifecycle Automation
+**Implication for runbooks:** When a sub-org admin loses access to a workflow, the FIRST diagnostic is "which Location was this role assigned in, and does the device/license belong to that Location?" — this becomes the L2 permission-denied diagnostic per Pillar 4 of v1.6 scope.
 
-| Feature | Value Proposition | Complexity | Audience | Notes |
-|---------|-------------------|------------|----------|-------|
-| Win32 dependency graph documentation | App dependencies (A requires B to be installed first) are distinct from supersedence. Documenting dependency chains (e.g., .NET runtime required before LOB app) prevents silent install failures | MEDIUM | Admin, L2 | Dependency: max 100 dependencies per app. Dependencies apply recursively. Circular dependencies blocked by Intune but can occur if admin misconfigures |
-| macOS Installomator/Intuneomator adjacency callout | Many macOS Intune environments use Installomator (community tool) or Intuneomator (Swift wrapper) to automate PKG sourcing and packaging. A callout that acknowledges this community pattern (without endorsing as officially supported) provides realistic operational guidance | LOW | Admin | Confidence: MEDIUM (community practice, not Microsoft-documented). Analogous to Munki coexistence pattern |
+### 1.5 Modify or Revoke a Role
 
-### Anti-Features — App Lifecycle Automation
+**Category:** Table-stakes
+**Audience:** Admin
+**Confidence:** HIGH
+**UI surface:** `Access Management > Roles > [role] > Edit`
+**Citation:** [Apple Business — role privileges reference](https://support.apple.com/guide/apple-business-manager/role-privileges-tes97dd59159/web)
 
-| Feature | Why Requested | Why Out of Scope | Alternative |
-|---------|---------------|-----------------|-------------|
-| Samsung E-FOTA firmware management | Admins with Samsung COBO fleets ask about E-FOTA | Explicitly excluded from v1.4 scope (orthogonal to Intune enrollment). E-FOTA is Samsung-proprietary firmware management, separate from Managed Google Play delivery | Note E-FOTA exclusion in Android app lifecycle section with redirect to Samsung Knox documentation |
-| iOS App Store private app distribution (non-VPP) | Developers ask about ad-hoc / TestFlight / enterprise in-house distribution | TestFlight and ad-hoc distribution bypass Intune MDM delivery entirely. Enterprise in-house requires Apple Developer Enterprise Program, separate from Intune VPP | Document Intune VPP device/user licensing as the supported mechanism; note Apple's distribution alternatives are outside Intune scope |
+**Modify privileges:** Administrator selects **Access Management** > **Roles** > [role] > **Edit** > toggle checkboxes > **Save**. Privilege change propagates to all users holding the role.
 
-### Table Stakes — Drift Detection + Tenant Migration
+**Revoke a role from a user:** **Access Management** > **Users** > [user] > **Roles** tab > deselect role for the relevant Location > **Save**.
 
-| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
-|---------|--------------|------------|----------|------------|-------|
-| Windows: Intune Remediations for configuration drift | Intune Remediations (Proactive Remediations) = detection + remediation Bash/PowerShell script pairs that run on schedule. This is the primary drift-detection mechanism for Windows. Admins need to understand the detect-fix-report loop | MEDIUM | Admin, L2 | v1.2 Windows monitoring/operations content | Portal path: Devices > Manage devices > Scripts and remediations > Remediation scripts. Reports: per-device status (No issues detected / Issues fixed / Error). Output limited in portal; full script output visible via Log Analytics. Windows Enterprise/Pro/Education only (not Home). Requires Intune + Entra joined or hybrid joined |
-| Cross-platform: Deployment-report-driven compliance drift | Intune compliance reports show devices that drift from compliant to non-compliant over time. This deployment-report-driven drift detection pattern is shared across Windows/macOS/iOS/Android (differs per platform in what causes drift) | MEDIUM | Admin, L2 | All 4 existing platform compliance docs | Intune admin center: Devices > Monitor > Device compliance. Per-platform drift scenarios: Windows (policy conflict / app install regression), macOS (profile revocation), iOS (jailbreak detection / OS downgrade), Android (Play Integrity verdict change) |
-| Windows: Tenant-to-tenant migration runbook | M&A scenarios require migrating Intune-managed Windows devices between tenants. BitLocker re-keying is the critical complication | HIGH | Admin | v1.2 Windows device lifecycle + migration content | BitLocker re-key approach: source tenant must escrow existing recovery key to target Entra ID via PowerShell script (scheduled task post-migration). Alternative: decrypt → re-encrypt post-Intune enrollment in target tenant (data risk window). Third-party tools: Quest On Demand Migration provides automated BitLocker re-key scripting. Key challenge: Autopilot registration in source tenant must be removed before re-registration in target |
-| macOS/iOS: Tenant-to-tenant migration runbook | M&A scenarios require migrating ABM-enrolled macOS/iOS devices between tenants. ABM token re-issue is the critical complication | HIGH | Admin | v1.2 macOS admin setup; v1.3 iOS admin setup | ABM token re-issue: cannot transfer an MDM server assignment from Tenant A to Tenant B directly. Device must be released from ABM MDM assignment in Tenant A, then re-assigned to Tenant B MDM server. For devices still in use, this requires a wipe + re-enrollment. ADE-enrolled devices without Await Configuration disabled will re-enroll to old MDM server without proper ABM assignment |
-| Android: Tenant-to-tenant migration (MGP re-binding) | M&A scenarios for Android Enterprise require Managed Google Play re-binding to target Intune tenant | HIGH | Admin | v1.4 Android admin setup; v1.4 MGP binding guide | MGP binding is tenant-specific: cannot transfer binding between Intune tenants. Must: (1) disconnect from source tenant MGP, (2) bind new MGP account (or existing corporate Google account) to target Intune tenant, (3) re-approve all apps, (4) re-provision devices (factory reset + re-enrollment for corporate-owned; work profile re-creation for BYOD). ZTE devices: re-upload to Zero-Touch portal with target tenant credentials |
+> **Privilege-change blast radius callout for v1.6 runbook:** A privilege removed from a custom role removes it for EVERY user holding that role across EVERY location it's scoped to. Document this in the "Custom Role Authoring" runbook as a `> ⚠️ What breaks` callout.
 
-### Differentiators — Drift Detection + Tenant Migration
+### 1.6 "Minimum Viable Delegated Admin" — Canonical Privilege Bundle
 
-| Feature | Value Proposition | Complexity | Audience | Notes |
-|---------|-------------------|------------|----------|-------|
-| Cross-platform BitLocker/FileVault/Android encryption drift patterns | Per-platform encryption drift scenarios in a single reference: Windows (BitLocker re-key after tenant migration, key escrowed to wrong tenant), macOS (FileVault escrow not updated after re-enrollment), iOS (no device-level encryption management beyond compliance check), Android (LUKS encryption not available; AOSP has different dm-crypt behavior) | MEDIUM | Admin, L2 | Conceptually belongs in tenant migration runbook section |
-| Intune Remediations script authoring pattern | The detect-fix-remediate pattern is reusable across Windows fleet. Documenting a canonical script structure (detection returns exit 1 / remediation returns exit 0, portal report interpretation) gives L2 engineers a reusable pattern | MEDIUM | L2 | Requires: Windows Enterprise/Pro/Edu + Intune + Entra joined or hybrid. NOT available on macOS/iOS/Android (Remediations is Windows-only) |
+**Category:** Differentiator (v1.6 unique value-add — Apple does not publish a canonical "sub-org device admin" template)
+**Confidence:** MEDIUM (synthesis of community guidance + the explicit v1.6 scope of VPP + Shared iPad passcode reset + device release)
 
-### Anti-Features — Drift + Tenant Migration
+Per the `<milestone_context>` user-confirmed delegation surface (VPP app management, shared iPad passcode reset, device release), the recommended 4-6 privilege bundle for a sub-org device admin is:
 
-| Feature | Why Requested | Why Out of Scope | Alternative |
-|---------|---------------|-----------------|-------------|
-| Full SCCM-to-Intune migration playbook (replace v1.2 docs) | Admins want a comprehensive guide replacing v1.2 imaging→Autopilot and GPO→Intune migration docs | v1.2 already covers imaging→Autopilot and GPO→Intune. Co-management is the delta in v1.5 — not a full rewrite | Ops-depth co-management guide is additive to v1.2 migration content; cross-link via forward/backward references |
-| Cross-tenant device license migration | Azure AD device licenses (Intune per-device) must be re-assigned in M&A | This is a licensing/procurement operation, not an Intune provisioning operation. Out of documentation scope | Note in tenant migration runbook that licensing changes are required; link to Microsoft licensing documentation |
+| # | Privilege | Group | Rationale |
+|---|-----------|-------|-----------|
+| 1 | **Manage devices in this Location** (add/assign/unassign/release) | Devices | Core device lifecycle ownership |
+| 2 | **Manage content (Apps and Books) in this Location** | Content | Sub-org VPP catalog ownership |
+| 3 | **Reset Shared iPad Passcode** | Users / Managed Apple Accounts | L1-facing passcode reset |
+| 4 | **View activity / Read log files (scoped to this Location)** | Logs / Activity | Self-service audit visibility |
+| 5 (optional) | **Reassign MDM Server (this Location's devices only)** | Devices | If sub-org runs its own Intune tenant |
+| 6 (optional) | **Create / edit Managed Apple Accounts in this Location** | Users / Managed Apple Accounts | If sub-org runs its own account provisioning (skip if SCIM-from-Entra) |
 
----
+**Note for v1.6 runbook:** Apple does not provide a single "Bundled Device Admin" toggle — the bundle must be authored manually per role. v1.6's "Custom Role Authoring Guide" is the canonical reference doc that ships this template.
 
-## Pillar 4 — Validation Tooling
-
-### Table Stakes
-
-| Feature | Why Expected | Complexity | Audience | Depends On | Notes |
-|---------|--------------|------------|----------|------------|-------|
-| `v1.5-milestone-audit.mjs` harness | Established pattern from v1.4/v1.4.1 — every milestone ships a versioned audit harness. v1.5 must extend the lineage | MEDIUM | — | v1.4.1 harness + sidecar; STATE.md harness carry-forward notes | New checks needed: Linux platform file presence (taxonomy + glossary + capability matrix + L1 + L2 + admin setup), ops-domain content presence (co-mgmt doc, patch guides per platform, app lifecycle guides, drift/tenant migration docs), DEFER-07 Android nav unification completion (Android sections in index.md + common-issues + quick-refs), DEFER-08 4-platform comparison doc structural validation. Existing C1-C9 checks carried forward; new checks at C10+ informational-first |
-| Per-phase `check-phase-NN.mjs` validators | v1.3+ pattern: validator ships alongside content phase. Continues v1.5 | LOW | — | v1.4.1 validator-as-deliverable pattern | Each new v1.5 phase produces its own `check-phase-NN.mjs`. Orchestrator registers in CI workflow |
-
-### Differentiators
-
-| Feature | Value Proposition | Complexity | Audience | Notes |
-|---------|-------------------|------------|----------|-------|
-| `regenerate-supervision-pins.mjs` self-test baseline refresh | Per STATE.md out-of-band carry-over: self-test has stale BASELINE_9 vs Phase 44+ file coordinates. v1.5 audit phase should refresh baselines | LOW | — | v1.4.1 `regenerate-supervision-pins.mjs` helper |
-
----
-
-## Feature Dependencies
+### 1.7 Dependencies
 
 ```
-Linux taxonomy + distro framework
-    └──required-before──> Linux glossary
-    └──required-before──> Linux admin setup (enrollment config)
-                              └──required-before──> Linux compliance policy guide
-                              └──required-before──> Linux end-user enrollment guide
-                                                        └──required-before──> Linux L1 runbooks
-                                                                                  └──required-before──> Linux L2 investigation
-    └──required-before──> Linux capability matrix (synthesizes all Linux features)
+Create Location (Workflow 2.1)
+    └─required-before──> Scope role to Location (Workflow 1.4)
+                            └─required-before──> Assign role to user (Workflow 1.1)
 
-DEFER-07 Android nav unification
-    └──requires──> All v1.4.1 Android content (already shipped)
-    └──required-before──> DEFER-08 4-platform comparison doc
-                              └──requires──> All 4 existing platform capability matrices (already shipped)
-                              └──requires──> Linux capability matrix
-
-Co-management overview
-    └──requires──> v1.2 Windows migration content (already shipped)
-    └──required-before──> Patch/update management (WUfB rings co-mgmt prerequisite callout)
-
-Patch/update management guides (per platform)
-    └──requires──> v1.2 macOS admin setup (already shipped)
-    └──requires──> v1.3 iOS compliance + admin setup (already shipped)
-    └──requires──> v1.4 Android compliance content (already shipped)
-    └──important──> iOS DDM update change requires targeted RETRACTION of supervised-only callout in v1.3 iOS compliance guide
-
-App lifecycle automation
-    └──requires──> v1.2 Windows app deployment content (already shipped)
-    └──requires──> v1.3 iOS VPP content (already shipped)
-    └──requires──> v1.4 Android MGP content (already shipped)
-    └──iOS VPP device-licensing guide ──enhances──> v1.3 iOS app deployment (additive)
-
-Drift detection guides
-    └──requires──> v1.2 Windows monitoring/operations (already shipped)
-
-Tenant migration runbooks
-    └──requires──> v1.2 Windows device lifecycle (already shipped)
-    └──requires──> v1.2 macOS admin setup (already shipped)
-    └──requires──> v1.4 Android MGP binding guide (already shipped)
-    └──Windows tenant migration ──depends-on──> Co-management overview (BitLocker + Endpoint Protection workload)
-
-v1.5 audit harness
-    └──requires──> v1.4.1 harness + sidecar (already shipped)
-    └──requires-all-content-before──> Terminal re-audit pass (last v1.5 phase)
+Federated Authentication or Manual Account Creation (Workflow 6)
+    └─required-before──> Assign role to Managed Apple Account (Workflow 1.1)
 ```
 
 ---
 
-## Feature Prioritization Matrix
+## 2. Location Management Workflow
 
-| Feature | Audience Value | Complexity | Priority | Pillar |
-|---------|---------------|------------|----------|--------|
-| DEFER-07 Android nav unification (index + common-issues + quick-refs) | HIGH — existing users cannot navigate Android content | MEDIUM | P1 | Cleanup |
-| DEFER-08 4-platform comparison doc | HIGH — mixed-fleet admins have no cross-platform reference | HIGH | P1 | Cleanup |
-| Linux platform taxonomy + distro framework overview | HIGH — foundation for all Linux content | LOW | P1 | Linux |
-| Linux admin setup (enrollment config + compliance policy) | HIGH — admins must do this before users can enroll | MEDIUM | P1 | Linux |
-| Linux end-user enrollment guide | HIGH — no zero-touch; user-driven required | LOW | P1 | Linux |
-| Linux L1 triage + runbooks | HIGH — L1 helpdesk blocked without this | MEDIUM | P1 | Linux |
-| Linux L2 investigation guide | HIGH — L2 investigation requires log paths + service commands | MEDIUM | P1 | Linux |
-| Linux capability matrix | MEDIUM — contextualizes Linux narrowness for admins | MEDIUM | P1 | Linux |
-| Linux glossary | MEDIUM — terminology foundation | LOW | P1 | Linux |
-| macOS DDM update management (URGENT migration) | HIGH — deprecated commands in Apple OS 26; urgent doc update | HIGH | P1 | Ops-depth |
-| iOS DDM update management + unsupervised DDM clarification | HIGH — same DDM migration timeline as macOS | HIGH | P1 | Ops-depth |
-| Co-management overview + workload slider guide | HIGH — SCCM→Intune migration is common enterprise scenario | MEDIUM | P1 | Ops-depth |
-| Windows WUfB rings + hotpatch guide | HIGH — standard Windows patching expectation | MEDIUM | P1 | Ops-depth |
-| Android patch management (Play Integrity + Zebra LifeGuard) | HIGH — Play Integrity strong integrity Oct 2026 deadline | MEDIUM | P1 | Ops-depth |
-| Cross-platform broken-link sweep | MEDIUM — documentation integrity | HIGH | P1 | Cleanup |
-| Win32 supersedence + dependency graph | MEDIUM — app lifecycle is common admin task | MEDIUM | P2 | Ops-depth |
-| macOS PKG/DMG app lifecycle | MEDIUM — macOS app ops | MEDIUM | P2 | Ops-depth |
-| iOS VPP device vs. user licensing flows | MEDIUM — VPP lifecycle is ongoing admin task | MEDIUM | P2 | Ops-depth |
-| Android MGP private-app publishing | MEDIUM — enterprise app ops | MEDIUM | P2 | Ops-depth |
-| Windows: Intune Remediations for drift detection | MEDIUM — proactive ops capability | MEDIUM | P2 | Ops-depth |
-| Windows tenant-to-tenant migration + BitLocker re-key | MEDIUM — M&A scenario | HIGH | P2 | Ops-depth |
-| macOS/iOS tenant migration (ABM token re-issue) | MEDIUM — M&A scenario | HIGH | P2 | Ops-depth |
-| Android tenant migration (MGP re-binding) | MEDIUM — M&A scenario | HIGH | P2 | Ops-depth |
-| Cross-platform deployment-report-driven compliance drift | LOW-MEDIUM — ops maturity | MEDIUM | P2 | Ops-depth |
-| v1.5 audit harness + per-phase validators | HIGH process — maintains CI discipline | MEDIUM | P1 | Tooling |
-| `regenerate-supervision-pins.mjs` self-test baseline refresh | LOW — carry-over debt | LOW | P3 | Tooling |
-| Linux custom compliance Bash script deep-dive | MEDIUM — advanced admin | MEDIUM | P3 | Linux |
+### 2.1 Create a Location
+
+**Category:** Table-stakes
+**Audience:** Admin
+**Cross-platform:** Cross-platform (Location is a container for devices of all types)
+**Confidence:** HIGH
+**UI surface:** `Locations (sidebar) > Add (+)`
+**Citation:** [Configure locations in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/configure-locations-axmfdbe2cb0d/web); [Apple Deployment training — Adding Locations and Users](https://it-training.apple.com/tutorials/deployment/dm050/)
+
+**Required permissions:** Administrator OR People Manager.
+
+**Workflow:**
+1. Sign in as Administrator or People Manager.
+2. Sidebar: **Locations**.
+3. Select **Add (+)** at top of window.
+4. Enter location details (Name, Address fields, Phone, Time Zone). Address is required by Apple for tax-jurisdiction purposes on Apps and Books purchases.
+5. Save.
+
+**Key fact:** When org first signs up for Apple Business, the **first Location is auto-created** mirroring the org name. Multi-location work begins by adding the second Location.
+
+### 2.2 Edit a Location
+
+**Category:** Table-stakes
+**Audience:** Admin
+**Confidence:** HIGH
+**UI surface:** `Locations > [location] > Edit`
+**Citation:** [Edit or remove a location](https://support.apple.com/guide/business/edit-or-remove-a-location-abcb7fc491ec/web)
+
+Administrator or People Manager selects location > **Edit** > update fields > **Save**.
+
+### 2.3 Move Devices Between Locations
+
+**Category:** Table-stakes
+**Audience:** Admin (NOT L1 — moving devices changes role-scope visibility)
+**Confidence:** HIGH
+**UI surface:** `Devices > [select devices] > Edit Location` (or `Edit MDM Server` with location-scoped server)
+**Citation:** [Assign, reassign, or unassign devices in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/assign-reassign-or-unassign-devices-axmf500c0851/web)
+
+**Workflow:**
+1. **Devices** sidebar.
+2. Select devices by checkbox, serial number, order number, or CSV upload (CSV bulk-move supported — same CSV-upload pattern as initial device assignment).
+3. **Edit Location** (or **Edit MDM Server** if the target Location has a distinct MDM server entry).
+4. Confirm. No approval workflow within Apple Business — single Admin click.
+
+**Bulk-move methods:**
+- **CSV upload** at `Devices > Edit Location > Choose Devices > Upload CSV` (serial number column).
+- **Reseller upload** (initial device-assignment time only) — when a reseller is linked to Apple Business via Apple Customer Number, devices arrive at a default Location set by the Admin in `Preferences > Apple Customer Numbers`. Not a "move" workflow per se — pre-assignment routing.
+- **API:** Apple Business does NOT publish a public REST API for device-location move; CSV is the canonical bulk mechanism.
+
+**Device-side effect:** Moving a device between Locations does NOT trigger re-enrollment by itself. However, if the target Location uses a different MDM server, the device's next factory reset will route to the new MDM server (legacy reassign-MDM behavior — see Workflow 5.3).
+
+### 2.4 Delete / Archive a Location
+
+**Category:** Table-stakes (with hard prerequisites — anti-feature edge documented)
+**Audience:** Admin
+**Confidence:** HIGH
+**UI surface:** `Locations > [location] > Delete`
+**Citation:** [Configure locations in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/configure-locations-axmfdbe2cb0d/web)
+
+**Hard prerequisites — ALL must be true before delete is permitted:**
+1. Accounts (Managed Apple Accounts) must be transferred to another Location.
+2. Apps and Books licenses must be transferred to another Location (see Workflow 3.4).
+3. Devices must be moved to another Location.
+4. No Admin or People Manager roles scoped exclusively to this Location may remain.
+
+**Workflow:**
+1. Admin or People Manager: **Locations** sidebar > select location > **Delete**.
+2. Apple Business validates prerequisites. If any unmet, delete is rejected with an error pointing at the unmet prerequisite.
+3. Confirm. **This action cannot be undone.** No "archive" intermediate state — delete is permanent.
+
+> **Anti-feature flag for PITFALLS researcher:** No "archive" or "soft-delete" state exists. There is no way to retain a Location's audit history after deletion — activity log entries scoped to the deleted Location remain visible at org level, but the Location name appears as a "deleted Location" placeholder in some audit views.
+
+### 2.5 Dependencies
+
+```
+Workflow 2.1 (Create Location)
+    └─required-before──> Workflow 1.4 (Scope role to Location)
+    └─required-before──> Workflow 2.3 (Move devices between Locations)
+    └─required-before──> Workflow 3.4 (Transfer licenses between Locations)
+    └─required-before──> Workflow 6.4 (Account roaming between Locations)
+
+Workflows 2.3 + 3.4 + 6.4
+    └─prerequisites-for──> Workflow 2.4 (Delete Location)
+```
 
 ---
 
-## Audience Tier Breakdown
+## 3. VPP / Content Token Delegation Workflow
 
-| Feature Group | L1 (Scripted) | L2 (Technical) | Admin (Config) |
-|---------------|--------------|----------------|---------------|
-| DEFER-07 Android nav | Uses new runbook links in quick-ref + common-issues | Uses new L2 runbook links | Sees complete Android hub coverage |
-| DEFER-08 comparison doc | — | Reference | Primary audience |
-| Linux enrollment flow | Runs end-user enrollment steps, basic triage | Log collection, agent service checks | Sets up compliance + CA policies |
-| Linux compliance | Recognizes non-compliant state categories | Interprets settings catalog compliance evaluation | Configures 4-category compliance policy |
-| Linux CA (web-app) | Knows to confirm Edge is signed in | Checks Entra CA policy assignment + device compliance | Creates device-based CA policy scoped to Linux |
-| Linux L1 triage | Primary audience — decision tree + runbooks | — | — |
-| Linux L2 investigation | — | Primary audience — log paths + service commands | — |
-| Co-management | — | Monitors workload switch status, investigates dual-authority conflicts | Primary audience — workload slider migration |
-| Patch/update management | Recognizes update compliance failures | Investigates WUfB dual-scan conflicts, DDM status | Primary audience — configures update rings/DDM |
-| App lifecycle automation | — | Investigates install failures, checks dependency chains | Primary audience — packaging + publishing |
-| Drift detection | — | Runs Remediations scripts, interprets reports | Configures Remediations script pairs |
-| Tenant migration | — | Executes migration scripts (BitLocker re-key, device re-enrollment) | Primary audience — plans migration sequence |
+### 3.1 Content Token Model (Post-2024 Consolidation)
+
+**Category:** Table-stakes
+**Audience:** Admin (Content Manager scope) + L2 (when troubleshooting sync)
+**Cross-platform:** Cross-platform (Apps and Books applies to iOS / iPadOS / macOS / tvOS)
+**Confidence:** HIGH
+**UI surface:** `Settings > Apps and Books` (formerly `Preferences > Payments and Billing > Apps and Books > Content Tokens`)
+**Citation:** [Intro to buying content in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/intro-to-buying-content-axme19b23f7f/web); [Distribute content with Apps and Books](https://support.apple.com/en-us/103264)
+
+**Key facts:**
+- **One content token per Location.** Apple did NOT consolidate to a single global content token in the 2024 Apps-and-Books update. The "VPP location token" terminology continues to apply — each Location gets its own token, and each token is uploaded to Intune as a separate VPP token entry.
+- Tokens are valid 365 days from download.
+- Up to 3,000 VPP tokens per Intune tenant (Intune-side limit; Apple Business does not impose a token count limit per org).
+- **A given content token cannot be shared between Intune tenants.**
+
+**Confidence note:** The phrase "shared content token model" in the v1.6 question prompt may refer to community/internal misunderstanding — the actual Apple model is "one token per Location, with cross-Location license transfer via the portal." Document this as a glossary callout to prevent confusion.
+
+### 3.2 Sub-Org Admin Claims a Content Token
+
+**Workflow:**
+1. Sub-org admin (with Content Manager privilege scoped to their Location) signs in to Apple Business.
+2. **Settings** > **Apps and Books**.
+3. Selects the token for their Location > **Download**.
+4. Uploads to the sub-org's Intune tenant at `Tenant administration > Connectors and tokens > Apple VPP tokens > Add`.
+5. Intune syncs licenses from that Location.
+
+**Constraint:** Sub-org admin can only see / download tokens for Locations where they hold Content Manager (or equivalent custom-role) privilege.
+
+### 3.3 Can Sub-Orgs Have Different VPP Catalogs?
+
+**Confidence:** HIGH
+**Answer:** Yes. Each Location has its own catalog of purchased apps and books, distinct from other Locations. A purchase made under Location A's payment method results in licenses in Location A's catalog only. This is the foundation of multi-org VPP delegation.
+
+**Implication for v1.6:** Document the "per-Location catalog" model in the rebrand glossary callout — admins migrating from single-tenant ABM may incorrectly assume a global catalog.
+
+### 3.4 License Reclamation Across Location Boundaries
+
+**Category:** Table-stakes
+**Audience:** Admin (Content Manager)
+**Confidence:** HIGH
+**UI surface:** `Apps and Books > [app] > Transfer`
+**Citation:** [Transfer licenses to another location in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/transfer-licenses-axm1242b0715/web)
+
+**Workflow:**
+1. Content Manager: **Apps and Books** > search/select app.
+2. App details show license counts per Location admin has access to.
+3. Select **Transfer** > enter quantity (up to 24,999 per transfer) and target Location > confirm.
+4. Transfer completes in a few minutes; license counts update at both Locations.
+
+**Hard constraint:** **Only unassigned licenses can be transferred between Locations.** Licenses currently assigned to a user or device must first be revoked (and the 30-day Apple grace period observed if revoking from a managed device) before transfer is permitted.
+
+**Device-moves-between-Locations implication:** Moving a device between Locations does NOT automatically transfer that device's VPP licenses. The Content Manager must explicitly revoke licenses in source Location, then re-purchase or transfer-then-assign in target Location. This is a critical L2 diagnostic for "device moved but apps disappeared" — flag for PITFALLS.
+
+### 3.5 Buying Apps / Books for a Sub-Org
+
+**Category:** Table-stakes
+**Audience:** Admin (Content Manager)
+**Confidence:** HIGH
+**UI surface:** `Apps and Books > Search > [app] > Buy`
+**Citation:** [Get licenses for apps and books in Apple Business](https://support.apple.com/guide/business/get-licenses-for-apps-and-books-axmc21817890/web); [Select and buy content](https://support.apple.com/guide/apple-business-manager/select-and-buy-content-axmc21817890/web)
+
+**Workflow:**
+1. Content Manager: **Apps and Books** sidebar.
+2. Search for app by name or App Store ID.
+3. Select **Buy**.
+4. Choose **Assign to: Devices** (device licensing — recommended for corporate-owned supervised) OR **Assign to: Users** (user licensing — required for User Enrollment or apps with books content).
+5. Select **Location** (drop-down restricted to Locations the buyer has Content Manager privilege in).
+6. Enter quantity. Free apps require quantity but no payment. Paid apps require valid payment method on the Location's account.
+7. Confirm.
+
+**Payment method scoping:** Each Location can have its own VPP credit / payment method configured at `Settings > Apps and Books > Payment Methods`. This is the canonical mechanism for sub-org budget isolation — sub-org A's purchases bill against sub-org A's payment method, never to sub-org B.
+
+### 3.6 Dependencies
+
+```
+Workflow 2.1 (Create Location)
+    └─required-before──> Workflow 3.5 (Buy apps for sub-org)
+                            └─required-before──> Workflow 3.2 (Sub-org claims content token)
+                                                    └─required-before──> Intune-side VPP token upload (out-of-scope)
+Workflow 3.4 (License transfer) requires unassigned licenses
+    └─prerequisite──> Revoke licenses from devices/users first (with 30-day grace period)
+```
+
+---
+
+## 4. Shared iPad Passcode Reset Workflow (THREE PATHS)
+
+### 4.1 Path A: Apple Business UI (Admin or L1)
+
+**Category:** Table-stakes
+**Audience:** Admin + L1
+**Cross-platform:** Shared iPad ONLY (iPadOS supervised devices configured for Shared iPad mode)
+**Confidence:** HIGH
+**UI surface:** `Users > [user] > More > Lock` then `Reset Shared iPad Passcode`
+**Citation:** [Reset a Shared iPad passcode in Apple Business Manager](https://support.apple.com/en-gb/guide/apple-business-manager/axm61439a814/1/web/1); [Create Shared iPad passcodes](https://support.apple.com/guide/apple-business-manager/create-shared-ipad-passcodes-axm124535e27/web)
+
+**Required privileges:** "privileges to reset passwords, generate verification codes and create sign-in information." Built-in: Administrator OR People Manager OR custom role with these privileges.
+
+**Workflow:**
+1. Sign in with admin/L1 holding the required privileges.
+2. **Users** sidebar > search by Managed Apple Account / name / email > select user.
+3. **More** menu > **Lock** (the "Reset Shared iPad Passcode" button appears in this dialog).
+4. Enter a new 8-character alphanumeric passcode (Apple-enforced Shared iPad minimum — passcode complexity settings in Intune device configuration profiles DO NOT apply to Shared iPad).
+5. Select delivery method:
+   - **Download as 1-up PDF** (one page per user with passcode for printing / handover)
+   - **Download as CSV** (columns: Managed Apple Account, first/middle/last name, passcode — for bulk handoff)
+6. Hand new passcode to user via the chosen method.
+
+**Federated authentication caveat:** If federation is enabled, resetting the Shared iPad passcode in Apple Business does NOT change the user's federated (Entra) password. The Shared iPad passcode is a separate device-side credential. Users may still need to use their Entra password for federated sign-in to apps.
+
+### 4.2 Path B: Intune MDM Remote Action — DOES NOT WORK FOR SHARED IPAD (Anti-feature)
+
+**Category:** Anti-feature (flag for PITFALLS researcher)
+**Audience:** L2 (must know this DOES NOT work)
+**Confidence:** HIGH
+**Citation:** [Microsoft Q&A — What is the remove passcode used for in the case of shared iPad in Intune portal?](https://learn.microsoft.com/en-us/answers/questions/1192129/what-is-the-remove-passcode-used-for-in-the-case-o); [Shared iPad devices — Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad)
+
+**The trap:** Intune exposes two passcode-related remote actions:
+- **Reset Passcode** (`Devices > [device] > ... > Reset Passcode`) — sets a temporary passcode on the device
+- **Remove Passcode** (`Devices > [device] > ... > Remove Passcode`) — removes the device passcode
+
+**On a Shared iPad, BOTH of these affect the DEVICE-LEVEL passcode (rarely set on a managed Shared iPad), NOT the per-user Shared iPad partition passcode.** The per-user Shared iPad passcode that a user actually uses to sign in to their partition can ONLY be reset via Apple Business Path A (Workflow 4.1) or factory wipe.
+
+**Why this is an anti-feature:** L1 and L2 staff coming from single-user iPad experience reasonably assume Intune's Reset Passcode remote action covers Shared iPad. It does not. Document this prominently in the v1.6 L1 Shared iPad runbook and L2 permission-denied diagnostic.
+
+### 4.3 Path C: Apple Configurator (USB-Tethered Local Admin)
+
+**Category:** Differentiator (edge-case last-resort path)
+**Audience:** L2 (admin-attended local)
+**Cross-platform:** Shared iPad only (any iPad, but for passcode-reset scenarios specifically the Shared iPad partition passcode)
+**Confidence:** MEDIUM (Apple Configurator supports erase + re-supervise on USB-tethered iPad; this resets ALL Shared iPad user partitions, not a single user — different operational profile than Path A)
+**Citation:** [Add devices using Apple Configurator to Apple Business Manager](https://support.apple.com/guide/apple-business-manager/add-devices-using-apple-configurator-axm200a54d59/web); [Add devices to ABM via Configurator](https://support.apple.com/guide/apple-configurator-mac/add-devices-apple-school-manager-business-apd7a57d9560/mac)
+
+**Workflow (last-resort full-wipe path):**
+1. L2 admin connects iPad to a Mac running Apple Configurator 2 via USB-C (or Lightning + adapter).
+2. Apple Configurator 2 > select device > **Actions** > **Advanced** > **Erase All Content and Settings**.
+3. Device factory-resets. All Shared iPad user partitions and their passcodes are destroyed.
+4. On reboot, device re-runs Setup Assistant, re-enrolls via ADE, re-pulls Shared iPad configuration from Intune.
+
+**When to use Path C vs A:** Use Path A for single-user passcode reset (99% of cases). Use Path C only when the device is unreachable from Apple Business (e.g., severed from network for extended period and admin needs to recover the device before getting it back online), or when the entire Shared iPad pool needs reset (mass passcode forgotten scenario in education-style deployments).
+
+### 4.4 Path Selection Decision Matrix
+
+| Scenario | Recommended Path | Reason |
+|----------|------------------|--------|
+| Single user forgot Shared iPad passcode (most common) | Path A (Apple Business UI) | Targeted, no other users impacted, fast |
+| All users on one device forgot passcodes | Path A repeated per user OR Path C if unreachable | Path A scales linearly; Path C is faster when >5 users |
+| Device offline / firewalled, can be brought to admin desk | Path C (Apple Configurator) | Path A requires device to receive MDM push; Path C is local |
+| L1 thinks Intune Reset Passcode will fix it | **NEITHER — escalate to Path A** | Anti-feature trap (see 4.2) |
+| Device returned from L2 with corrupted Shared iPad partition | Path C (factory reset + re-enroll) | Configuration-level corruption |
+
+### 4.5 Dependencies
+
+```
+Workflow 1.6 (Custom Role bundle) — privilege "Reset Shared iPad Passcode"
+    └─required-before──> Workflow 4.1 (Path A by L1)
+
+Workflow 6 (Managed Apple Account exists for the Shared iPad user)
+    └─required-before──> Workflow 4.1 (cannot reset a non-existent account's passcode)
+
+Workflow 4.3 (Path C)
+    └─requires──> Workflow 2.3 (device still assigned to a Location with valid MDM server)
+                  └─else──> Workflow 5.1 (Release device first if pool is being decommissioned)
+```
+
+---
+
+## 5. Device Release / Transfer / MDM Reassignment Workflow (THREE DISTINCT WORKFLOWS — DO NOT CONFLATE)
+
+### 5.1 RELEASE: Remove Device from Apple Business Entirely
+
+**Category:** Table-stakes
+**Audience:** Admin (Device Enrollment Manager or higher)
+**Cross-platform:** Cross-platform (iOS, iPadOS, macOS, tvOS)
+**Confidence:** HIGH
+**UI surface:** `Devices > [device(s)] > Release Devices`
+**Citation:** [Assign, reassign, or unassign devices in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/assign-reassign-or-unassign-devices-axmf500c0851/web); [Apple Community — Adding a released device back into ABM](https://discussions.apple.com/thread/255677993)
+
+**When to use:** Device is being sold, donated, returned to lessor, scrapped, or sent for RMA permanently.
+
+**Workflow:**
+1. Device Enrollment Manager (or higher) signs in.
+2. **Devices** sidebar > select device(s) by serial / CSV.
+3. **Release Devices** action > confirm.
+4. Apple sends a release notification to the device's MDM server (Intune); Intune removes the device.
+5. **At next factory reset**, device runs standard (non-managed) Setup Assistant. Device is no longer supervised, no longer in ABM.
+
+**Device-side effects:**
+- Existing supervision / MDM enrollment is NOT immediately broken — device continues to operate as-managed until next factory reset.
+- After factory reset, device is "civilian" — can be sold or handed to a personal user.
+
+**Re-adding a released device:** A released device CAN be re-added to Apple Business via Apple Configurator (Workflow 4.3 equivalent flow for re-add, not erase). The 30-day provisional period (during which the user can remove the device from ABM unilaterally) applies to Configurator-added devices.
+
+**Audit trail:** Release event logged in Activity log with admin identity, device serial, and timestamp (see Workflow 7).
+
+### 5.2 TRANSFER: Move Device Between Locations Within Same Apple Business
+
+**Category:** Table-stakes
+**Audience:** Admin (Device Enrollment Manager with privilege in both source AND target Location)
+**Cross-platform:** Cross-platform
+**Confidence:** HIGH
+**UI surface:** `Devices > [device(s)] > Edit Location`
+**Citation:** [Assign, reassign, or unassign devices in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/assign-reassign-or-unassign-devices-axmf500c0851/web)
+
+**See Workflow 2.3 for full mechanics.** Key distinction from Release:
+- Device stays in Apple Business.
+- Device remains supervised / enrolled.
+- Audit log records the Location-to-Location move.
+- VPP licenses do NOT auto-transfer (see Workflow 3.4 dependency).
+- If source and target Location use the SAME MDM server, no device-side effect.
+- If source and target Location use DIFFERENT MDM servers, the device's next factory reset will route to the new server.
+
+### 5.3 REASSIGN MDM SERVER: Same Apple Business, Different MDM Server (Two Sub-Paths)
+
+**Category:** Table-stakes (with two sub-paths — legacy and OS-26+)
+**Audience:** Admin (Device Enrollment Manager)
+**Cross-platform:** Cross-platform
+**Confidence:** HIGH
+**Citation:** [Migrate managed devices to another device management service (Apple Deployment Guide)](https://support.apple.com/guide/deployment/migrate-managed-devices-dep4acb2aa44/web); [Migrate devices to a new management service (ABM)](https://support.apple.com/guide/apple-business-manager/migrate-devices-to-a-new-management-service-axm3a49a769d/web)
+
+#### 5.3.1 Sub-path A: Legacy Reassign (iOS 18 / iPadOS 18 / macOS 15 and earlier)
+
+**UI surface:** `Devices > [device(s)] > Edit MDM Server`
+
+**Behavior:** Changing the MDM server in Apple Business updates the device's **next-factory-reset** routing. The currently-enrolled device continues talking to the OLD MDM server until factory wiped.
+
+**Required device-side action:** Factory wipe the device, then have it re-run Setup Assistant. New MDM server enrolls device.
+
+**Use case:** Tenant-to-tenant migration when accepting one factory-reset per device (greenfield rollouts, refresh cycles).
+
+#### 5.3.2 Sub-path B: OS-26+ In-Place Migration (NO ERASE)
+
+**UI surface:** `Devices > [device(s)] > Edit MDM Server` + new "Set deadline for completing enrollment" field.
+
+**Eligibility:** Devices running **iOS 26 / iPadOS 26 / macOS 26 / tvOS 26 or later**.
+
+**Behavior:**
+1. Admin changes MDM server in Apple Business; sets enrollment deadline.
+2. Device receives notification of pending migration.
+3. User experiences guided migration: device unenrolls from old MDM (preserves user data + declarative managed apps), then enrolls in new MDM, which redeploys configs + managed apps.
+4. Escalating notifications (daily, then hourly, then minute-by-minute in the final hour). If deadline passes, mandatory restart (iOS / iPadOS) or full-screen prompt (macOS) enforces migration.
+
+**What is preserved:** All user data, declarative managed app data; managed app inventory the new MDM has re-pushed (apps not in new MDM's list are removed).
+
+**What is NOT preserved:** MDM-installed configs, restrictions, VPN profiles, Wi-Fi profiles — the new MDM must redeploy these.
+
+**VPP token implication:** The new MDM server must have a valid VPP/content token uploaded; VPP-purchased apps require new content-token-upload within 30 days of migration start.
+
+**This is the canonical workflow for Intune-tenant-to-Intune-tenant migration without device wipe on supported OS versions.**
+
+### 5.4 Workflow Selection Decision Matrix
+
+| Goal | Workflow | Device Stays in ABM? | Device-Side Effect |
+|------|----------|----------------------|---------------------|
+| Sell / donate device | 5.1 Release | No | At next wipe, device becomes civilian |
+| Move device between teams (same org) | 5.2 Transfer (Edit Location) | Yes | No device-side change unless MDM server differs |
+| Move device between Intune tenants (greenfield) | 5.3.1 Legacy Reassign | Yes | Factory wipe required |
+| Move device between Intune tenants (OS 26+, no wipe) | 5.3.2 In-Place Migration | Yes | User experiences guided unenroll/re-enroll, data preserved |
+
+### 5.5 Audit Trail per Workflow
+
+| Workflow | Logged Event |
+|----------|--------------|
+| 5.1 Release | "Device released" with admin, serial, timestamp, source Location |
+| 5.2 Transfer | "Device Location changed" with admin, serial, timestamp, source + target Location |
+| 5.3.1 Legacy Reassign | "MDM server changed" with admin, serial, timestamp, source + target MDM server |
+| 5.3.2 In-Place Migration | "Device migration initiated" + "Device migration completed/failed" + per-device deadline metadata |
+
+### 5.6 Dependencies
+
+```
+Workflow 5.2 (Transfer between Locations)
+    └─dependency──> Workflow 3.4 (License transfer must be done separately — anti-feature edge)
+
+Workflow 5.3.2 (OS-26 in-place migration)
+    └─requires──> All target devices on OS 26+ (mixed-OS fleets must split into two waves)
+    └─requires──> New MDM has valid VPP/content token uploaded
+    └─requires──> Source and target are both within ABM (cross-Apple-Business migration NOT supported — out of v1.6 scope)
+```
+
+---
+
+## 6. Managed Apple Account Provisioning Workflow (FOUR PATHS)
+
+### 6.1 Path A: Manual Account Creation in Apple Business UI
+
+**Category:** Table-stakes (every org needs to know this path even if they federate)
+**Audience:** Admin (People Manager or higher)
+**Cross-platform:** Cross-platform (accounts span devices)
+**Confidence:** HIGH
+**UI surface:** `Users > Add (+) > Add Account`
+**Citation:** [Apple Business Manager — sign-up and account creation](https://support.apple.com/guide/apple-business-manager/sign-up-axm402206497/web); [About Managed Apple Accounts in Apple Business Manager](https://support.apple.com/en-sa/guide/apple-business-manager/axm78b477c81/web)
+
+**Workflow:**
+1. People Manager (or Admin): **Users** sidebar > **Add (+)**.
+2. Enter user details: first/middle/last name, Managed Apple Account (must be unique within Apple's global Apple Account namespace), Location, role(s).
+3. Optionally set a temporary password OR generate a one-time verification code.
+4. Save. User receives an email or printable sheet with sign-in info.
+5. User signs in on a managed device or at appleid.apple.com to set permanent password.
+
+**Use case:** Small orgs (<100 users), test/break-glass accounts, accounts that don't exist in the IdP (e.g., a contractor with Apple-only access).
+
+### 6.2 Path B: SCIM Provisioning from Microsoft Entra ID
+
+**Category:** Table-stakes (most enterprise orgs use this for production)
+**Audience:** Admin (Federation privilege)
+**Confidence:** HIGH
+**UI surface:** `Account (top-right) > Preferences > Federated Authentication / Directory Sync > Microsoft Entra ID`
+**Citation:** [Sync user accounts from your identity provider in Apple Business Manager](https://support.apple.com/en-gb/guide/apple-business-manager/axm526a05814/web); [HCS Online — Renew your SCIM Token for Directory Sync between Apple Business Manager and Microsoft Entra ID](https://hcsonline.com/support/resources/white-papers/renew-your-scim-token-for-directory-sync-between-apple-business-manager-and-microsoft-entra-id)
+
+**Workflow:**
+1. Admin sets up Microsoft Entra Enterprise App for Apple Business (gallery app: "Apple Business Manager") OR uses the new "Apple Business" enterprise gallery app.
+2. Configure SCIM endpoint and tenant URL.
+3. Generate SCIM token in Apple Business UI > paste into Entra.
+4. Map attributes (UPN → Managed Apple Account, displayName, etc.).
+5. Assign Entra groups to the enterprise app for sync scope.
+6. Start provisioning. Accounts appear in Apple Business with **account source: Microsoft Entra Connect Sync** and federated authentication enabled.
+
+**Token renewal:** SCIM token expires; Apple sends renewal notice at 60 days. **Failure to renew = sync stops; new accounts don't appear.** Annual operational concern.
+
+### 6.3 Path C: OIDC Federated Authentication (JIT — Just-In-Time Provisioning)
+
+**Category:** Differentiator (newer, simpler than SCIM for some orgs)
+**Audience:** Admin (Federation privilege)
+**Confidence:** HIGH
+**UI surface:** `Account > Preferences > Federated Authentication > Microsoft Entra ID > OIDC`
+**Citation:** [Use federated authentication with Microsoft Entra ID in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/federated-authentication-microsoft-entra-axm8c1cac980/web); [Cloudtek Space — Federate with Entra and Apple Business Manager](https://www.cloudtekspace.com/post/federate-with-entra-and-apple-business-manager)
+
+**Key fact:** OIDC supports **JIT provisioning** — when a user signs in with their Entra account for the first time on an Apple device, a Managed Apple Account is auto-created in Apple Business if one doesn't already exist. No upfront SCIM sync required.
+
+**Constraints:**
+- User's Entra UPN must match their email address.
+- Sign-in method must be OIDC (not legacy SAML federation).
+- Scope access: `ssf.manage` and `ssf.read` permissions in Entra.
+
+**SCIM vs OIDC choice (for v1.6 decision matrix):**
+
+| Criterion | SCIM (Path B) | OIDC + JIT (Path C) |
+|-----------|---------------|---------------------|
+| Upfront sync | Yes (all users pre-staged) | No (lazy, on first sign-in) |
+| Visibility in Apple Business before user signs in | Yes | No (account doesn't exist until JIT) |
+| Suited for shared iPad pre-staging | YES (must pre-stage user accounts) | NO (Shared iPad needs accounts pre-existing for passcode reset L1 path) |
+| Token renewal burden | Annual SCIM token renewal | None (OIDC tokens managed by Entra) |
+| Recommendation | Shared iPad fleets + account-driven User Enrollment with pre-known users | macOS/iOS supervised single-user fleets, ad-hoc user adds |
+
+### 6.4 Path D: Account-Driven Enrollment Intersection
+
+**Category:** Table-stakes (intersection with v1.3 account-driven User Enrollment)
+**Audience:** Admin
+**Confidence:** HIGH
+**Citation:** [iOS/iPadOS Account-Driven User Enrollment](../../docs/admin-setup-ios/08-user-enrollment.md) (existing corpus); [About Managed Apple Accounts](https://support.apple.com/en-sa/guide/apple-business-manager/axm78b477c81/web)
+
+**Intersection:** When a user enrolls via Account-Driven User Enrollment (iOS 15+) on a personal device:
+- The user MUST sign in with a Managed Apple Account (NOT personal Apple ID).
+- The Managed Apple Account MUST have been provisioned via Path A, B, or C BEFORE the user attempts enrollment.
+- The account's Location at provisioning time dictates which VPP/content token's user-licensed apps the user gets.
+
+**Implication for v1.6:** The User Enrollment runbook (existing v1.3 doc) does NOT cover the case where the user's account is in the WRONG Location. Add a cross-reference in the v1.6 multi-org admin setup guide.
+
+### 6.5 Account Roaming Between Locations
+
+**Category:** Differentiator
+**Audience:** Admin (People Manager)
+**Confidence:** MEDIUM (Apple's public docs describe account transfer between Locations but operational details around what carries over — license assignments, federated state — are less explicit)
+**UI surface:** `Users > [user] > Edit > Location > [new Location] > Save`
+**Citation:** [Configure locations in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/configure-locations-axmfdbe2cb0d/web); [Transfer licenses to another location](https://support.apple.com/guide/apple-business-manager/transfer-licenses-axm1242b0715/web)
+
+**Workflow:**
+1. People Manager: **Users** > select user > **Edit** > change Location > **Save**.
+2. Account moves to new Location.
+3. User's previously-assigned VPP user-licensed apps may need re-assignment from the new Location's catalog if the old Location's licenses are revoked.
+
+**Key gotcha:** If the user account was created via SCIM from Entra, manual Location reassignment may be overwritten on next SCIM sync if the SCIM mapping enforces a specific Location. Document this in v1.6 anti-pattern callouts.
+
+### 6.6 Dependencies
+
+```
+Workflow 6 (any path)
+    └─required-before──> Workflow 1.1 (Assign role to account)
+    └─required-before──> Workflow 4.1 (Reset Shared iPad Passcode for user)
+    └─required-before──> Workflow 6.4 (Account-Driven User Enrollment)
+    └─required-before──> Shared iPad sign-in by user
+
+Workflow 6.2 (SCIM)
+    └─requires──> SCIM token renewed annually
+
+Workflow 6.5 (Account roaming)
+    └─may conflict with──> Workflow 6.2 (SCIM enforces Location mapping)
+```
+
+---
+
+## 7. Audit Log Workflow
+
+### 7.1 Activity Log Access
+
+**Category:** Table-stakes
+**Audience:** Admin + L2 (compliance/security investigations)
+**Cross-platform:** Cross-platform (logs cover all device types and admin actions)
+**Confidence:** HIGH
+**UI surface:** `Activity (sidebar)`
+**Citation:** [View activity in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/view-activity-axmf7d043c03/web); [Read log files in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/read-log-files-axm90f9d53f2/web)
+
+**Required privileges:** "Read log files" privilege on user's role. Built-in: Administrator. Custom-role-delegatable to L2 / security users.
+
+**Workflow:**
+1. Sign in with privilege.
+2. **Activity** sidebar.
+3. Search by:
+   - **Category** (Devices, Users, Content / Apps and Books, MDM servers, Federation, Locations, etc.)
+   - **Event name** (e.g., "Device released", "License purchased", "Password reset")
+   - **Activity status** (Completed, Failed, In progress)
+   - **Date range**
+4. Select event > view detailed log message (UPDATED / FAILED / IN PROGRESS).
+5. **Download Logs** to export.
+
+### 7.2 What Is Logged
+
+Per Apple's `view-activity` page, all admin actions are logged. Confirmed-logged categories include:
+
+| Category | Example Events |
+|----------|----------------|
+| Devices | Device assigned, reassigned, unassigned, released, MDM server changed, Location changed, migration initiated/completed |
+| Users | Account created / edited / deleted, role assigned, password reset, Shared iPad passcode reset, federation events |
+| Content (Apps and Books) | License purchased, transferred between Locations, revoked, payment method changed |
+| MDM Servers | MDM server added / edited / deleted, server token regenerated |
+| Federation | SCIM token created / renewed, OIDC configuration changed, federation enabled/disabled |
+| Locations | Location created / edited / deleted, default-location changed |
+
+### 7.3 Filtering by Location / Role / Admin
+
+**Confidence:** MEDIUM (Apple's public docs confirm filtering by category, event, status, date; filtering by Location and admin is reported in community posts but Apple's own doc page doesn't enumerate every filter dimension)
+**Implication:** v1.6 audit-scoping runbook should screenshot the in-portal filter UI to document the canonical filter dimensions.
+
+### 7.4 Export Format
+
+**Confidence:** HIGH (for general "Download Logs" + CSV device-assignment export)
+**Citation:** [Read log files in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/read-log-files-axm90f9d53f2/web)
+
+- **Download Logs** button on the Activity page exports the filtered log set.
+- File format: Text/log file (browser downloads via standard file dialog).
+- For device-assignment-specific events: **CSV with serial numbers** is downloadable via a separate Download button on the assignment event.
+
+### 7.5 Retention Policy
+
+**Confidence:** LOW (Apple's public documentation does NOT enumerate an explicit retention period; community sources reference "approximately 90 days" but Apple has not committed to this number publicly)
+**Recommendation for v1.6 audit runbook:** Document this as "Apple does not publish a definitive retention period; rotate exported logs to long-term storage in your SIEM / log archive at least monthly to ensure compliance evidence retention."
+
+### 7.6 API Access for Audit Log
+
+**Confidence:** HIGH
+**Answer:** **There is no public Apple Business REST API for activity log export.** Audit log access is UI-only. This is a documented limitation — flag for PITFALLS and as a "what NOT to document" boundary (admins asking for automation should be redirected to Apple Feedback Assistant).
+
+### 7.7 Dependencies
+
+```
+Workflow 7.1 (Audit log access)
+    └─requires──> Custom role with "Read log files" privilege OR built-in Administrator role
+    └─scoped-by──> Location (audit entries are visible based on Location-scope of viewer's privileges)
+```
+
+---
+
+## 8. Apple TV Management Workflow
+
+### 8.1 Provisioning: Add Apple TV to Apple Business
+
+**Category:** Table-stakes (for orgs deploying Apple TVs)
+**Audience:** Admin (Device Enrollment Manager) + L2 (for Configurator-based adds)
+**Cross-platform:** Apple TV (tvOS) only
+**Confidence:** HIGH
+**Citation:** [Add devices using Apple Configurator to Apple Business Manager](https://support.apple.com/guide/apple-business-manager/add-devices-using-apple-configurator-axm200a54d59/web); [SimpleMDM — Enroll Apple TV into MDM](https://simplemdm.com/blog/enroll-appletv-mdm/); [Manage Engine — MDM enroll Apple TV ABM using Apple Configurator](https://www.manageengine.com/mobile-device-management/how-to/mdm-enroll-apple-tv-abm-using-apple-configurator.html)
+
+**Two provisioning paths:**
+
+#### 8.1.1 Path A: Reseller Direct (Like Mac/iPhone/iPad)
+
+Apple TVs purchased directly from Apple, an Apple Authorized Reseller, or authorized cellular carrier with the org's Apple Customer Number arrive pre-loaded into Apple Business. They appear in `Devices > Apple TV` and can be assigned to an MDM server like any other device.
+
+#### 8.1.2 Path B: Apple Configurator USB Add-In (Devices NOT Purchased via Reseller Path)
+
+For Apple TVs not purchased through the linked reseller channel (e.g., older inventory, retail purchases, refurbished units):
+
+1. L2 admin runs **Apple Configurator 2** on a Mac.
+2. Connect Apple TV to Mac via USB-C (Apple TV HD or 4K Gen 1+) or via same-network Ethernet + 6-digit PIN displayed on Apple TV (Apple TV 4K Gen 2+).
+3. In Apple Configurator: **Select Apple TV** > **Add to Apple Business Manager** > select org > Apple TV appears in Apple Business `Devices` within ~5 minutes.
+4. Assign to MDM server.
+
+**30-day provisional period:** Apple Configurator-added devices grant the end-user 30 days to remove the device from supervision via Settings. After 30 days, supervision is locked.
+
+### 8.2 Restrictions / Configuration
+
+**Category:** Out-of-scope for v1.6 (Intune-side concern per scope-boundary)
+**Note:** Apple Business assigns the Apple TV to an MDM server; the MDM server (Intune) handles restrictions, AirPlay config, conference-room mode, etc. **v1.6 documents only the Apple Business assignment side.**
+
+### 8.3 Retire / Release Apple TV
+
+**Category:** Table-stakes
+**Audience:** Admin (Device Enrollment Manager)
+**Confidence:** HIGH
+
+Same as Workflow 5.1 (Release) — Apple TV is released from Apple Business via `Devices > [Apple TV] > Release Devices`. Device returns to civilian state on next factory reset.
+
+### 8.4 Reassign Apple TV Between Locations
+
+**Category:** Table-stakes
+**Audience:** Admin
+**Confidence:** HIGH
+
+Same as Workflow 5.2 — `Devices > [Apple TV] > Edit Location`.
+
+### 8.5 Pool Lifecycle (Conference-Room Pool Management)
+
+**Category:** Differentiator
+**Audience:** Admin
+**Confidence:** MEDIUM (the "pool" concept is operational rather than a distinct Apple Business feature — Apple TVs are managed as individual devices; the "pool" framing is an org-management abstraction)
+
+**Workflow:** Group Apple TVs by Location (e.g., "HQ Conference Rooms" Location). Apply uniform MDM server assignment. Bulk-release at end of life via CSV.
+
+**v1.6 runbook note:** Document the Apple-TV-pool workflow as "treat as a per-Location set of devices; use CSV bulk operations for at-scale lifecycle moves."
+
+### 8.6 Dependencies
+
+```
+Workflow 8.1.2 (Apple Configurator add)
+    └─requires──> Physical Mac + Apple Configurator 2 + USB or Ethernet to Apple TV
+
+Workflow 8.4 (Apple TV Location move)
+    └─follows──> Workflow 5.2 (same mechanics as iPad/Mac)
+```
+
+---
+
+## Cross-Workflow Dependency Graph (DAG)
+
+```
+                          ┌───────────────────────────────────────┐
+                          │  2.1 Create Location (Admin only)     │
+                          └────────────────────┬──────────────────┘
+                                               │
+              ┌────────────────────────────────┼───────────────────────────────┐
+              │                                │                               │
+              ▼                                ▼                               ▼
+   ┌──────────────────────┐    ┌──────────────────────────┐    ┌──────────────────────────┐
+   │ 1.4 Scope role to    │    │ 3.5 Buy apps for sub-org │    │ 6 Provision Managed      │
+   │     Location         │    │     (per-Location ctlg)  │    │   Apple Account          │
+   └──────────┬───────────┘    └────────────┬─────────────┘    └────────────┬─────────────┘
+              │                              │                              │
+              ▼                              ▼                              ▼
+   ┌──────────────────────┐    ┌──────────────────────────┐    ┌──────────────────────────┐
+   │ 1.1 Create + assign  │◄───┤ 3.2 Sub-org claims       │    │ 6.4 User can enroll      │
+   │     custom role      │    │     content token        │    │     (account-driven UE)  │
+   └──────────┬───────────┘    └────────────┬─────────────┘    └──────────────────────────┘
+              │                              │
+              │   ┌──────────────────────────┴────────────────────────────┐
+              │   │                                                       │
+              ▼   ▼                                                       ▼
+   ┌──────────────────────────┐                              ┌──────────────────────────┐
+   │ 1.6 Min-viable bundle    │                              │ 3.4 License transfer     │
+   │ • Device mgmt            │                              │     between Locations    │
+   │ • Content mgmt           │                              │ (unassigned only)        │
+   │ • Reset Shared iPad pwd  │                              └────────────┬─────────────┘
+   │ • Read logs              │                                           │
+   └──────────┬───────────────┘                                           │
+              │                                                           │
+              ▼                                                           │
+   ┌──────────────────────────┐                                           │
+   │ Sub-org admin can now:   │                                           │
+   │ - 4.1 Reset SP iPad pwd  │                                           │
+   │ - 5.1 Release device     │                                           │
+   │ - 5.2 Move device locn   │◄──────────────────────────────────────────┘
+   │ - 5.3 Reassign MDM srv   │       (Workflow 5.2 + 3.4 must be
+   │ - 7.1 Audit own scope    │        sequenced together — Anti-feature)
+   └──────────────────────────┘
+
+   ┌──────────────────────────┐    ┌──────────────────────────┐
+   │ 2.3 Move devices         │    │ 6.5 Move accounts        │
+   │  (sub-prereq for 2.4)    │    │  (sub-prereq for 2.4)    │
+   └────────────┬─────────────┘    └────────────┬─────────────┘
+                └──────────────────┬────────────┘
+                                   ▼
+                      ┌──────────────────────────┐
+                      │ 2.4 Delete Location      │
+                      │ (all assets must move)   │
+                      └──────────────────────────┘
+```
+
+---
+
+## Anti-Features (Flagged for PITFALLS Researcher)
+
+Workflows that LOOK like they should work but DON'T, or have sharp edges that cause silent failures:
+
+| Anti-Feature | Why It Trips People Up | Reality | Document Where |
+|---|---|---|---|
+| **Intune "Reset Passcode" / "Remove Passcode" on Shared iPad** (4.2) | L1 sees iOS device and assumes Intune passcode action works | Affects device-level passcode, NOT per-user Shared iPad partition passcode. Only Apple Business UI Path A or Apple Configurator factory wipe works. | L1 Shared iPad runbook + L2 permission-denied diagnostic |
+| **Device move between Locations preserving VPP licenses** (5.2 + 3.4) | "I moved the device, why are the apps gone?" | License transfer is a SEPARATE workflow with hard "only-unassigned" prerequisite — must revoke first | v1.6 device-transfer runbook + v1.6 VPP runbook cross-link |
+| **Single global content token / catalog** (3.1) | Multi-tenant ABM admins assume one token consolidates all locations | Each Location still has its own token + catalog post-2024 Apps-and-Books refresh | Rebrand glossary callout |
+| **Audit log API for automation** (7.6) | Compliance/SOC admins expect API export | UI-only download, no public REST API | v1.6 audit runbook + "out-of-scope" callout |
+| **OS 26 in-place migration on mixed-OS fleets** (5.3.2) | "Just turn on migration" assumes all devices support it | Only iOS 26 / iPadOS 26 / macOS 26 / tvOS 26+ — older OS still requires factory reset | v1.6 MDM-reassign runbook + version matrix |
+| **Location deletion without prerequisites** (2.4) | "I'll delete this empty Location" — but it's not empty | Apple validates accounts + licenses + devices + role scopes all moved first; otherwise rejection | v1.6 Location-archival runbook |
+| **SCIM-from-Entra Location override on manual roaming** (6.5) | Admin manually moves a SCIM-managed account to a new Location | Next SCIM sync may overwrite the manual move | v1.6 account-provisioning runbook anti-pattern |
+| **"Reset Shared iPad Passcode" changing federated password** (4.1) | Admin assumes resetting Shared iPad passcode also fixes Entra sign-in issues | Shared iPad passcode is separate from federated password | L1 Shared iPad runbook + federation context |
+| **Release-then-readd round-trip via Apple Configurator** (5.1) | Admin releases a device thinking they can readd it later | Re-add via Configurator triggers the 30-day provisional period, not the same as the original reseller-direct status | v1.6 device-release runbook |
+| **Custom role privilege change blast radius** (1.5) | Admin removes a privilege from a custom role thinking it affects one user | Affects EVERY user holding that role across EVERY Location | v1.6 custom-role-authoring runbook |
+
+---
+
+## Cross-Platform Applicability Matrix
+
+| Workflow | Windows | macOS | iOS / iPadOS | Shared iPad | Apple TV |
+|----------|---------|-------|--------------|-------------|----------|
+| 1. Custom role authoring | n/a | ✓ (governance affects) | ✓ (governance affects) | ✓ (governance affects) | ✓ (governance affects) |
+| 2. Locations | n/a | ✓ | ✓ | ✓ | ✓ |
+| 3. VPP / content token | n/a | ✓ | ✓ | ✓ | ✓ (tvOS apps) |
+| 4. Shared iPad passcode reset | n/a | n/a | n/a | ✓ ONLY | n/a |
+| 5. Device release / transfer / MDM reassign | n/a | ✓ | ✓ | ✓ | ✓ |
+| 6. Managed Apple Account provisioning | n/a | ✓ (federation, SCIM) | ✓ (User Enrollment, Shared iPad) | ✓ REQUIRED | ✓ (less common) |
+| 7. Audit log | n/a | ✓ (entries logged) | ✓ (entries logged) | ✓ (entries logged) | ✓ (entries logged) |
+| 8. Apple TV management | n/a | n/a | n/a | n/a | ✓ ONLY |
+
+---
+
+## Audience Reach per Workflow
+
+| Workflow | Admin | L1 | L2 |
+|----------|:-----:|:--:|:--:|
+| 1.1 Create custom role | ✓ (primary) | — | — |
+| 1.4 Scope role to Location | ✓ (primary) | — | — |
+| 1.5 Modify / revoke role | ✓ (primary) | — | — |
+| 1.6 Min-viable bundle template | ✓ (primary) | — | — |
+| 2.1 Create Location | ✓ (primary) | — | — |
+| 2.3 Move devices between Locations | ✓ (primary) | — | ✓ (escalation diagnosis) |
+| 2.4 Delete Location | ✓ (primary) | — | — |
+| 3.2 Sub-org admin claims token | ✓ (primary) | — | — |
+| 3.4 License transfer | ✓ (primary) | — | ✓ (cross-Location license diag) |
+| 3.5 Buy apps for sub-org | ✓ (primary) | — | — |
+| 4.1 Shared iPad passcode reset (Path A) | ✓ | ✓ (delegated via privilege bundle) | — |
+| 4.2 Anti-feature: Intune Reset Passcode on Shared iPad | — | ✓ (must know NOT to use) | ✓ (permission-denied diag) |
+| 4.3 Apple Configurator factory wipe (Path C) | — | — | ✓ (primary) |
+| 5.1 Release device | ✓ (primary) | — | ✓ (asset lifecycle diag) |
+| 5.2 Transfer device between Locations | ✓ (primary) | — | — |
+| 5.3.1 Legacy MDM reassign | ✓ (primary) | — | ✓ (greenfield rollouts) |
+| 5.3.2 OS-26+ in-place migration | ✓ (primary) | — | ✓ (mixed-OS-wave planning) |
+| 6.1 Manual account creation | ✓ (primary) | — | — |
+| 6.2 SCIM provisioning | ✓ (primary) | — | ✓ (token-renewal failure diag) |
+| 6.3 OIDC + JIT | ✓ (primary) | — | ✓ (federation diag) |
+| 6.4 User Enrollment intersection | ✓ (primary) | — | ✓ (account-location mismatch diag) |
+| 6.5 Account roaming | ✓ (primary) | — | ✓ (SCIM-overwrite diag) |
+| 7.1 Audit log access | ✓ (primary) | — | ✓ (security investigation) |
+| 7.6 API expectation (anti-feature) | ✓ (must know) | — | ✓ (must know) |
+| 8.1 Add Apple TV | ✓ (primary) | — | ✓ (Configurator path) |
+| 8.3 Release Apple TV | ✓ (primary) | — | — |
+| 8.4 Apple TV Location reassign | ✓ (primary) | — | — |
+
+---
+
+## MVP Definition for v1.6 Documentation
+
+### Launch With (v1.6 Pillar 3 — Delegation Runbooks)
+
+Per `<milestone_context>`, the user-confirmed delegation surface is VPP, shared iPad passcode reset, device release. Mapped to workflows above:
+
+- [x] **1.1 + 1.4 + 1.5 — Custom Role Authoring Guide** (foundation for everything; without this, no delegation)
+- [x] **1.6 — Min-Viable Bundle Template** (the canonical "sub-org device admin" recipe)
+- [x] **2.1 + 2.3 + 2.4 — Multi-Location Architecture Guide** (foundation for everything; without this, no Location-scoping)
+- [x] **3.2 + 3.4 + 3.5 — VPP Content Token Consolidation Runbook** (Pillar 3 confirmed scope)
+- [x] **4.1 — Shared iPad Passcode Reset Runbook (Path A)** (Pillar 3 + Pillar 4 L1 confirmed scope)
+- [x] **4.2 — Anti-feature callout for Intune Reset Passcode on Shared iPad** (Pillar 4 L2 confirmed scope: permission-denied diagnostic)
+- [x] **5.1 — Device Release Runbook** (Pillar 3 confirmed scope)
+- [x] **5.2 + 5.3.1 + 5.3.2 — Device Transfer + MDM Reassign Runbook** (Pillar 3 multi-cohort scope)
+- [x] **6.1 + 6.2 + 6.3 — Managed Apple Account Provisioning Runbook** (Pillar 3 confirmed scope)
+- [x] **7.1 — Audit Log Scoping Runbook** (Pillar 3 confirmed scope)
+- [x] **8.1 + 8.3 + 8.4 — Apple TV Multi-Org Provisioning Runbook** (Pillar 3 confirmed scope: "shared iPad / Apple TV pool lifecycle")
+
+### Add If Time Permits (v1.6 stretch)
+
+- [ ] **4.3 — Apple Configurator Path C** runbook (last-resort wipe path; admin-only, not in confirmed L1/L2 scope but useful as a Differentiator)
+- [ ] **6.5 — Account Roaming** detail (Differentiator; covered briefly in 6 main runbook)
+
+### Future Consideration (v1.7+)
+
+- [ ] Apple Business → Apple Business cross-tenant operations (currently OUT OF SCOPE per PROJECT.md inter-tenant boundary)
+- [ ] Apple Business REST API automation (currently no public API; depends on future Apple roadmap)
+- [ ] Apple Business Connect customer-listing workflows (rebrand consolidation: Apple Business inherits these from ABC, but out-of-scope for IT device-management workflows)
+- [ ] School-specific ASM features (Classroom, Schoolwork, Class Roster) — explicitly out-of-scope per `<downstream_consumer>`
+
+---
+
+## Feature Prioritization Matrix (Documentation Workflows)
+
+Priority key: P1 = Pillar 3 confirmed scope (must ship in v1.6); P2 = supporting docs (Pillars 1 + 2 + 4); P3 = stretch / nice-to-have.
+
+| Workflow | User Value | Documentation Cost | Priority |
+|----------|------------|---------------------|----------|
+| 1.1 + 1.4 + 1.5 Custom Role Authoring | HIGH | MEDIUM (privilege matrix screenshots required) | P1 |
+| 1.6 Min-Viable Bundle Template | HIGH | LOW | P1 |
+| 2.1 + 2.3 + 2.4 Multi-Location Architecture | HIGH | MEDIUM | P1 |
+| 3.2 + 3.4 + 3.5 VPP Content Token | HIGH | MEDIUM | P1 |
+| 4.1 Shared iPad Passcode (Path A) | HIGH | LOW (single-portal flow) | P1 |
+| 4.2 Anti-feature: Intune Reset Passcode | HIGH | LOW (single callout) | P1 |
+| 5.1 Device Release | HIGH | LOW | P1 |
+| 5.2 Transfer between Locations | HIGH | LOW | P1 |
+| 5.3.1 + 5.3.2 MDM Reassign (legacy + OS-26) | HIGH | MEDIUM (OS-version matrix) | P1 |
+| 6.1 + 6.2 + 6.3 Account Provisioning (3 paths) | HIGH | MEDIUM-HIGH (SCIM + OIDC each complex) | P1 |
+| 6.4 User Enrollment intersection | MEDIUM | LOW (cross-link to v1.3 existing doc) | P1 |
+| 7.1 Audit Log Access | HIGH | LOW | P1 |
+| 7.6 No-API anti-feature callout | MEDIUM | LOW | P1 |
+| 8.1 + 8.3 + 8.4 Apple TV Lifecycle | MEDIUM | LOW | P1 |
+| 4.3 Apple Configurator Path C | LOW | MEDIUM | P3 |
+| 6.5 Account Roaming detail | LOW | LOW | P3 |
+
+---
+
+## What NOT to Document (Out-of-Scope per Downstream Consumer)
+
+- **School-specific ASM features** — Classroom, Schoolwork, class rosters, Managed Apple ID for students
+- **Consumer Apple ID flows** — Personal Apple IDs, App Store family sharing
+- **Apple Business Connect customer-listing workflows** — out-of-scope (orthogonal to device management; inherited from ABC consolidation but not IT-device-relevant)
+- **Inter-tenant patterns** — Multi-account Apple Business federation (per PROJECT.md scope boundary)
+- **Intune-side actions** — Per PROJECT.md hard scope boundary: Intune RBAC, configuration profile authoring, compliance authoring, enrollment profile authoring are MDM concerns, NOT Apple Business workflows
+- **Apple Business Manager UI screenshots from pre-rebrand era** — rebrand handling is glossary + 2 intro callouts only (no retroactive sweep)
+
+---
+
+## Confidence Summary
+
+| Workflow | Confidence | Why |
+|----------|------------|-----|
+| 1. Custom Role Authoring | HIGH | Apple's docs + community sources align; built-in roles well-documented |
+| 1.6 Min-Viable Bundle | MEDIUM | Synthesized recommendation from v1.6 scope; no Apple "official" template exists |
+| 2. Locations | HIGH | Apple's `configure-locations` page is detailed and current |
+| 3. VPP / Content Token | HIGH | Apple's Apps and Books docs + Microsoft Intune docs cross-verify per-location model |
+| 4.1 Shared iPad Passcode (Path A) | HIGH | Apple's `axm61439a814` reset page is detailed; delivery methods (PDF/CSV) confirmed |
+| 4.2 Intune Anti-feature | HIGH | Microsoft Q&A + Microsoft Learn confirm Shared iPad limitation |
+| 4.3 Apple Configurator (Path C) | MEDIUM | Workflow inferred from Apple Configurator docs; explicit "shared iPad passcode reset via Configurator" not a documented use case but is functionally equivalent to wipe-and-readd |
+| 5. Device Release / Transfer / MDM Reassign | HIGH | Apple's `assign-reassign-or-unassign-devices` + `migrate-devices-to-a-new-management-service` + `migrate-managed-devices` deployment guides are comprehensive |
+| 5.3.2 OS-26+ in-place migration | HIGH | Apple's deployment guide describes the new flow in detail; Miradore + Jamf + Addigy community articles cross-verify |
+| 6.1 Manual provisioning | HIGH | Apple's account creation flow is well-documented |
+| 6.2 SCIM | HIGH | Apple + Microsoft + HCS guide all align |
+| 6.3 OIDC + JIT | HIGH | Apple's `federated-authentication-microsoft-entra` page is detailed |
+| 6.5 Account roaming | MEDIUM | Workflow exists; specific behavior with SCIM overlay is less documented |
+| 7.1 - 7.4 Audit log | HIGH | Apple's `view-activity` + `read-log-files` pages document the UI and export |
+| 7.5 Retention period | LOW | Apple does NOT publish retention; community guesses ~90 days but unverified |
+| 7.6 No public REST API | HIGH | Verified absence — no API documented |
+| 8.1 Apple TV provisioning | HIGH | Apple's Configurator docs + multi-MDM community guides align |
 
 ---
 
 ## Sources
 
-- Microsoft Learn: Linux device enrollment guide — `https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/deployment-guide-enrollment-linux` (updated 2026-04-16, verified 2026-04-26, HIGH confidence)
-- Microsoft Learn: Linux deployment guide — `https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux` (updated 2026-04-16, HIGH confidence)
-- Microsoft Learn: Linux compliance settings — `https://learn.microsoft.com/en-us/intune/intune-service/protect/compliance-policy-create-linux` (updated 2025-08-15, HIGH confidence)
-- Microsoft Learn: Enroll a Linux device in Intune — `https://learn.microsoft.com/en-us/intune/user-help/enrollment/enroll-linux` (updated 2026-04-08, HIGH confidence)
-- Microsoft Learn: Get the Microsoft Intune app for Linux — `https://learn.microsoft.com/en-us/intune/intune-service/user-help/microsoft-intune-app-linux` (updated 2026-04-08, HIGH confidence)
-- Microsoft Learn: Co-management workloads — `https://learn.microsoft.com/en-us/intune/configmgr/comanage/workloads` (updated 2026-04-15, HIGH confidence)
-- Microsoft Learn: Zebra LifeGuard OTA Integration — `https://learn.microsoft.com/en-us/intune/device-updates/android/zebra-lifeguard-ota-integration` (GA January 2026, HIGH confidence)
-- Microsoft Learn: iOS software updates (deprecated MDM policies) — `https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios` (HIGH confidence for deprecation timeline)
-- Microsoft Learn: macOS software updates — `https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-macos` (HIGH confidence)
-- Microsoft Learn: Win32 app supersedence — `https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-win32-supersedence` (HIGH confidence)
-- Microsoft TechCommunity: Play Integrity strong integrity change May 2025 — `https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-changes-to-google-play-strong-integrity-for-android-13-or-above/4435130` (HIGH confidence)
-- 4sysops: Intune March 2026 release — `https://4sysops.com/archives/microsoft-intune-march-2026-hotpatch-by-default-macos-recovery-lock-apple-ddm/` (MEDIUM confidence — community verified against official release notes)
-- IntuneIRL: macOS/iOS DDM migration urgency — `https://intuneirl.com/macos-ios-26-for-enterprise-ddm-deployment-and-the-intel-mac-sunset/` (MEDIUM confidence — community blog, aligns with Apple WWDC 2025 deprecation announcement)
-- jannikreinhard.com: Linux Bash script deployment with Intune — `https://jannikreinhard.com/2023/04/16/creating-and-configuring-bash-scripts-for-ubuntu-devices-in-intune/` (MEDIUM confidence — community verified against Microsoft Learn custom settings Linux doc)
-- BluetechGreen: SCCM to Intune migration checklist 2026 — `https://bluetechgreen.com/blog/2026-02-05-sccm-to-intune-migration-checklist.html` (MEDIUM confidence — community, consistent with Microsoft Learn workloads doc)
-- OSDSune: Migrate BitLocker keys to Entra ID — `https://www.osdsune.com/home/blog/microsoft-intune/how-to-migrate-bitlocker-key-s-from-all-fixed-drives-to-microsoft-entra-id.` (MEDIUM confidence — community PowerShell approach)
-- Quest On Demand Migration: BitLocker cleanup — `https://support.quest.com/technical-documents/on-demand-migration/current/active-directory-intune--autopilot-and-bitlocker-cleanup-quick-start-guide` (MEDIUM confidence — third-party tool vendor doc)
+### Apple Official Documentation (HIGH-confidence)
+
+- [Intro to roles and privileges in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web)
+- [View and assign roles in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/view-and-assign-roles-axmb46d473c7/web)
+- [Role privileges in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/role-privileges-tes97dd59159/web)
+- [Configure locations in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/configure-locations-axmfdbe2cb0d/web)
+- [Edit or remove a location in Apple Business](https://support.apple.com/guide/business/edit-or-remove-a-location-abcb7fc491ec/web)
+- [Assign, reassign, or unassign devices in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/assign-reassign-or-unassign-devices-axmf500c0851/web)
+- [Migrate devices to a new management service (ABM)](https://support.apple.com/guide/apple-business-manager/migrate-devices-to-a-new-management-service-axm3a49a769d/web)
+- [Migrate managed devices to another device management service (Apple Deployment Guide)](https://support.apple.com/guide/deployment/migrate-managed-devices-dep4acb2aa44/web)
+- [Automated Device Enrollment and device management (Apple Deployment Guide)](https://support.apple.com/guide/deployment/automated-device-enrollment-management-dep73069dd57/web)
+- [Create Shared iPad passcodes in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/create-shared-ipad-passcodes-axm124535e27/web)
+- [Reset a Shared iPad passcode in Apple Business Manager](https://support.apple.com/en-gb/guide/apple-business-manager/axm61439a814/1/web/1)
+- [Create or reset user passwords in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/create-or-reset-user-passwords-axmd9c4cbc33/web)
+- [Intro to buying content in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/intro-to-buying-content-axme19b23f7f/web)
+- [Get licenses for apps and books in Apple Business](https://support.apple.com/guide/business/get-licenses-for-apps-and-books-axmc21817890/web)
+- [Transfer licenses to another location in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/transfer-licenses-axm1242b0715/web)
+- [Distribute content with Apps and Books in Apple School Manager, Apple Business Essentials, and Apple Business Manager](https://support.apple.com/en-us/103264)
+- [View activity in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/view-activity-axmf7d043c03/web)
+- [Read log files in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/read-log-files-axm90f9d53f2/web)
+- [Add devices using Apple Configurator to Apple Business Manager](https://support.apple.com/guide/apple-business-manager/add-devices-using-apple-configurator-axm200a54d59/web)
+- [Add devices to Apple School Manager or Apple Business Manager in Apple Configurator for Mac](https://support.apple.com/guide/apple-configurator-mac/add-devices-apple-school-manager-business-apd7a57d9560/mac)
+- [Use federated authentication with Microsoft Entra ID in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/federated-authentication-microsoft-entra-axm8c1cac980/web)
+- [Sync user accounts from your identity provider in Apple Business Manager](https://support.apple.com/en-gb/guide/apple-business-manager/axm526a05814/web)
+- [About Managed Apple Accounts in Apple Business Manager](https://support.apple.com/en-sa/guide/apple-business-manager/axm78b477c81/web)
+- [Sign up for Apple Business](https://support.apple.com/guide/business/sign-up-and-verify-your-organization-axm402206497/web)
+- [Integrate Apple devices with Microsoft Entra ID (Apple Deployment Guide)](https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web)
+
+### Microsoft Documentation (HIGH-confidence for Intune side)
+
+- [Manage Apple Volume-Purchased Apps — Microsoft Intune](https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple)
+- [Shared iPad devices — Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad)
+- [Device Action: Remove Passcode — Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/remote-actions/device-remove-passcode)
+- [Device Action: Reset Passcode — Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/remote-actions/device-passcode-reset)
+- [What is the remove passcode used for in the case of shared iPad in Intune portal? — Microsoft Q&A](https://learn.microsoft.com/en-us/answers/questions/1192129/what-is-the-remove-passcode-used-for-in-the-case-o)
+- [Set up automated device enrollment (ADE) for iOS/iPadOS](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-ios)
+
+### Community / Vendor Sources (MEDIUM-confidence, cross-verified where used)
+
+- [HardSoft Computers — Understanding Role Privileges in Apple Business Manager](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/)
+- [Cloudtek Space — Provision managed Apple IDs in ABM with Entra and SCIM](https://www.cloudtekspace.com/post/provision-managed-apple-ids-in-abm-with-entra-and-scim)
+- [Cloudtek Space — Federate with Entra and Apple Business Manager](https://www.cloudtekspace.com/post/federate-with-entra-and-apple-business-manager)
+- [HCS Online — Renew your SCIM Token for Directory Sync between Apple Business Manager and Microsoft Entra ID](https://hcsonline.com/support/resources/white-papers/renew-your-scim-token-for-directory-sync-between-apple-business-manager-and-microsoft-entra-id)
+- [The Sequence — Federated Authentication in Apple Business Manager with Azure AD / Office 365](https://the-sequence.com/federated-authentication-in-apple-business-manager-with-azure-ad-office-365)
+- [Ivanti — Apple Business Manager Device Migration: What You Need to Know](https://www.ivanti.com/blog/apple-business-manager-device-migration-what-you-need-to-know)
+- [Miradore — Migrate Apple devices running iOS 26 / iPadOS 26 / macOS 26+ without factory reset](https://www.miradore.com/knowledge/apple/ios-ipados-macos26-migration-without-factory-reset/)
+- [Miradore — Migrate Apple devices running iOS 18 / iPadOS 18 / macOS 15 with factory reset](https://www.miradore.com/knowledge/apple/apple-migration-with-factory-reset/)
+- [Addigy — Migrating MDM Devices Using Apple Business Manager (ABM) and OS 26+](https://support.addigy.com/hc/en-us/articles/46108153085459-Migrating-MDM-Devices-Using-Apple-Business-Manager-ABM-and-OS-26)
+- [Jamf — Easier MDM Migrations](https://www.jamf.com/blog/easier-mdm-migrations/)
+- [SimpleMDM — How to enroll an Apple TV into your MDM](https://simplemdm.com/blog/enroll-appletv-mdm/)
+- [SimpleMDM — How to migrate macOS devices between MDMs](https://simplemdm.com/blog/mdm-migration/)
+- [ManageEngine — How to enroll Apple TV to Apple Business Manager using Apple Configurator](https://www.manageengine.com/mobile-device-management/how-to/mdm-enroll-apple-tv-abm-using-apple-configurator.html)
+- [Apple Deployment Training — Adding Locations and Users](https://it-training.apple.com/tutorials/deployment/dm050/)
+- [Apple Community — Adding a released device back into Apple Business Manager](https://discussions.apple.com/thread/255677993)
+- [Apple Community — Reassigning a Device to a Different MDM Server](https://discussions.apple.com/thread/254591605)
+
+### Rebrand / Industry Context (2026)
+
+- [Six Colors — Apple in the Enterprise: The complete 2026 commentary](https://sixcolors.com/post/2026/05/apple-in-the-enterprise-the-complete-2026-commentary/)
+- [TechRadar — Apple Business now offers MDM, upgraded iCloud storage — and ads in Maps](https://www.techradar.com/pro/weve-unified-apples-strongest-business-offerings-into-one-simple-secure-platform-apple-business-will-now-offer-mdm-upgraded-icloud-storage-and-more-plus-the-option-to-put-ads-in-maps)
+- [BusinessToday — Apple brings enterprise tools under one roof with new "Apple Business"](https://www.businesstoday.in/technology/news/story/apple-bring-enterprise-tools-under-one-roof-with-new-apple-business-522177-2026-03-24)
+- [iru.com — What Apple Business Actually Means for Your IT Team (And Whether It Replaces Your MDM)](https://www.iru.com/blog/updates-apple-business-mdm)
 
 ---
-
-*Feature research for: Microsoft Intune provisioning documentation suite — v1.5 (Linux + ops-depth + cleanup)*
-*Researched: 2026-04-26*
+*Feature research for: Apple Business delegated governance + multi-org workflows (v1.6 Pillar 3 — Delegation Runbooks foundation)*
+*Researched: 2026-05-20*

@@ -1,540 +1,519 @@
-# Stack Research
+# Stack Research — v1.6 Apple Business Delegated Governance
 
-**Domain:** Microsoft Intune documentation suite — v1.5 additions (Linux platform + operational depth + cross-platform cleanup)
-**Researched:** 2026-04-26
-**Confidence:** HIGH for Microsoft-official items (verified against learn.microsoft.com, GitHub releases, updated April 2026); MEDIUM for community tooling patterns; LOW where noted
-
----
-
-## 1. Linux Intune Client Tooling
-
-### Package Name and Distribution Format
-
-**Package:** `intune-portal` (deb)
-**Distribution:** APT repository at `https://packages.microsoft.com/ubuntu/<version>/prod/`
-**Format:** deb only — no snap package exists or is planned. Microsoft explicitly avoids snap due to enterprise immaturity.
-**Install command:** `sudo apt install intune-portal`
-**Remove + purge:** `sudo apt remove intune-portal && sudo apt purge intune-portal`
-
-**Sample install script:** https://go.microsoft.com/fwlink/?linkid=2358529 (GitHub-hosted, reviewed before use)
-
-Source: https://learn.microsoft.com/en-us/intune/intune-service/user-help/microsoft-intune-app-linux (updated 2026-04-08) — HIGH confidence
-
-### Supported Ubuntu LTS Versions (GA as of 2026-04)
-
-| Ubuntu Version | Support Status | Notes |
-|---------------|---------------|-------|
-| 24.04 LTS (Noble) | **GA — supported** | Added Dec 2024; x86/64 only; physical, Azure VM, or Hyper-V |
-| 22.04 LTS (Jammy) | **GA — supported** | x86/64 only; physical, Azure VM, or Hyper-V |
-| 20.04 LTS (Focal) | **Dropped** | Removed in Intune 2508 service release (August 2025) |
-
-**Scope for v1.5 docs:** Document 22.04 and 24.04 as the supported pair. Flag 20.04 as end-of-support in the Linux glossary.
-
-GNOME desktop environment required — automatically included with Ubuntu Desktop; Ubuntu Server not supported.
-
-Source: https://learn.microsoft.com/en-us/intune/user-help/enrollment/enroll-linux (updated 2026-04-08); https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux (updated 2026-04-16) — HIGH confidence
-
-### Enrollment Type
-
-Linux enrollment is corporate-owned OR personal/BYOD — no forced corporate-only gate. However: no bulk enrollment; no DEM account support; no userless/kiosk mode; one-device-per-user login required.
-
-Key gotcha: **Identity Broker v2.0.2+** (included in current `intune-portal` package) introduces a major architectural change from the prior Java-based broker. When devices update to this version, Intune **automatically re-registers the device and creates new Intune device IDs and Entra device IDs**. Admins must review device-based assignments, filters, and Entra group memberships that rely on device IDs post-upgrade.
-
-### Agent CLI and Service Names
-
-`intune-portal` is a GUI app (GNOME), not a pure CLI agent. Background sync uses:
-- **`intune-agent.timer`** (systemd user timer) — triggers periodic check-ins
-- **`microsoft-identity-broker`** (systemd service) — handles Entra ID registration
-
-Diagnostic commands:
-```bash
-# View intune-agent check-in logs
-journalctl | grep intune-agent
-
-# View full service journal (identity broker errors)
-journalctl -xe --unit microsoft-identity-broker
-
-# Check intune-agent timer status
-systemctl --user status intune-agent.timer
-
-# Verify intune-portal package is installed and version
-dpkg -l intune-portal
-
-# APT dependency check
-apt depends intune-portal
-```
-
-Source: Community troubleshooting (HIGH confidence for commands; MEDIUM confidence for service unit names — not explicitly documented on Microsoft Learn as of 2026-04)
-
-### Log Paths
-
-| Path | What it Contains |
-|------|-----------------|
-| `journalctl -u microsoft-identity-broker` | Entra device registration events |
-| `journalctl | grep intune-agent` | Intune check-in/reporting events |
-| `/var/log/dpkg.log` | Package installation history |
-| `/var/opt/microsoft/mdatp/` | MDE (if co-installed with Defender) — not intune-portal itself |
-
-**Critical gap:** Microsoft Learn does not document a dedicated `/var/log/microsoft/intune/` path for `intune-portal` on Ubuntu (as opposed to RHEL with MDE). The primary diagnostic surface is the systemd journal. This is a known documentation gap and should be flagged as LOW confidence in v1.5 L2 docs with a freshness review note.
-
-### Compliance Settings Available on Linux
-
-Categories available in the Intune Settings Catalog for Linux compliance:
-- **Allowed Distributions** — min/max OS version per distro type
-- **Custom Compliance** — Bash script-based (write your own assertions)
-- **Device Encryption** — dm-crypt/LUKS; Intune recognizes any dm-crypt subsystem encryption; `/boot` and `/boot/efi` are excluded from the encryption requirement
-- **Password Policy** — min length, min uppercase, min lowercase, min symbols, min digits
-
-**What is NOT available:** App configuration profiles, MDM-pushed app deployment, Declarative Device Management, hardware attestation, certificate profiles, per-app VPN, SCEP, PKCS.
-
-**Conditional Access scope on Linux:** Web-app CA only via Microsoft Edge (version 102.x+). No native-app CA. No Intune-pushed VPN or Wi-Fi profiles. This is the defining constraint for all v1.5 Linux CA documentation.
-
-Source: https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-linux-settings (updated 2026-04-16); https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux — HIGH confidence
-
-### App Delivery on Linux
-
-No MSI, MSIX, .pkg, .deb push from Intune. Script-based only via shell scripts assigned as device configuration. Custom compliance scripts (Bash) are the primary ops mechanism for verifying app state. This is fundamental to the Linux admin guide structure: admins deploy apps via other means (APT, snap, manual) and use Intune only for compliance gating and CA.
+**Domain:** Apple Business (formerly Apple Business Manager) admin / delegation surface for documentation authoring across iOS/iPadOS + macOS in Microsoft Intune
+**Researched:** 2026-05-20
+**Confidence:** HIGH for rebrand timing + portal URLs + role/permission categories + content token + federation existence (verified against Apple Newsroom, support.apple.com/guide/business, learn.microsoft.com); MEDIUM for full per-permission enumeration (Apple's User Guide pages return navigation-only via WebFetch — per-permission tables exist but were not fully scraped); LOW for Locations / OU max counts (Apple publishes no numeric limit)
+**Scope reminder:** "Stack" here = the Apple-side platform surfaces (portals, URLs, identity, content delivery, federation) that v1.6 docs must cite. v1.6 ships markdown documentation only — there is no code to install.
 
 ---
 
-## 2. Co-Management (SCCM ↔ Intune)
+## TL;DR for downstream consumers
 
-### ConfigMgr Current Branch Versions (as of 2026-04)
+| Item | Value | Confidence |
+|---|---|---|
+| Rebrand name | **Apple Business Manager → Apple Business** | HIGH |
+| Announcement date | **2026-03-24** (Apple Newsroom) | HIGH |
+| GA / launch date | **2026-04-14** (>200 countries) | HIGH |
+| Portal URL | `https://business.apple.com` (unchanged) | HIGH |
+| New User Guide URL | `https://support.apple.com/guide/business/` | HIGH |
+| Legacy User Guide URL | `https://support.apple.com/guide/apple-business-manager/` (still resolves; carries "Apple Business Manager is now Apple Business" banner page `axmd79d79dea`) | HIGH |
+| "Locations" renamed to | **Organizational Units** | HIGH |
+| Legacy fixed-role triad status | **Retired in name; functionally replaced** by Organization Administrator / IT Administrator / Marketing Administrator / Staff + 5 preset custom roles (People Manager, Content Manager, Device Enrollment Manager, Device API Manager, Brand Manager) | HIGH |
+| Custom roles | **Supported** with granular per-permission selection | HIGH |
+| Permission groups | Organization, People, Devices, Apps & Services, Brands (+ subgroups: Basic organization, Organization access, API/OAuth, AppleCare, Apps & Books, Subscription, Email service, Brand, Brand location, Branded Mail, Tap to Pay, Verify with Wallet) | HIGH |
+| Content token model | **Per-OU content token** (was "per-Location"); same token can be referenced by multiple MDM policies in same tenant | HIGH |
+| Microsoft Entra ID federation | OIDC + SCIM both supported and documented; status = effectively **GA** (no preview flag in Apple docs; Microsoft Learn page dated 2025-11-04) | HIGH |
+| Intune-side portal language | `Tenant administration > Connectors and tokens > Apple VPP tokens` **UNCHANGED** as of 2026-04-30 Microsoft Learn tutorial revision (Apple-side branding shifted; Intune-side label still says "Apple VPP tokens"; tutorial prose now says "Apple Business" instead of "Apple Business Manager") | HIGH |
+| iOS/iPadOS + macOS + Apple TV + Shared iPad | All four device classes managed from same Apple Business tenant; same role/permission surface | HIGH |
 
-| Version | Released | Support End | Notes |
-|---------|----------|-------------|-------|
-| **CB 2503** | April 23, 2025 | Oct 2026 | Current latest; security-fix focused release (230+ bug fixes, no new features per Microsoft Secure Future Initiative) |
-| CB 2409 | Nov 18, 2024 | May 2026 | Prior release; still in support |
-| CB 2403 | April 2024 | Oct 2025 | Approaching end of support |
-
-**For v1.5 docs:** Reference CB 2503 as current. Note 18-month support lifecycle per version.
-
-Source: https://learn.microsoft.com/en-us/intune/configmgr/hotfix/2503/31909343; https://www.prajwal.org/sccm-2503-upgrade-new-features-and-hotfixes/ — HIGH confidence
-
-### Co-Management Workload Sliders
-
-Seven workloads available, each independently slideable from ConfigMgr to Intune (or to Pilot Collection → then fully to Intune):
-
-| Workload | Notes |
-|----------|-------|
-| Compliance Policies | Defines device compliance for CA |
-| Windows Update Policies | Required before Windows Autopatch can be used |
-| Resource Access Policies | **Deprecated since CB 2203** — slider mandated to Intune in CB 2403; upgrade blocked if old policies present |
-| Endpoint Protection | Defender suite + BitLocker + Firewall; also part of Device Configuration |
-| Device Configuration | Settings catalog policies; switching also moves Resource Access + Endpoint Protection |
-| Office Click-to-Run Apps | M365 Apps management; moves to Company Portal from Software Center |
-| Client Apps (Mobile Apps) | Win32 apps + PowerShell scripts; moves app source to Company Portal |
-
-**Pilot Collection pattern:** Each workload slider has three states — `Configuration Manager`, `Pilot Intune` (scoped to a specified collection), `Intune`. Pilot Collection is the documented stage-gating mechanism. Microsoft recommends ring-based collection design: lab → pilot → production.
-
-**Windows Autopatch dependency:** Windows Update Policies AND Device Configuration workloads must both be moved to Intune before Windows Autopatch can manage devices.
-
-**Tenant Attach vs Co-management:** Tenant Attach (enabled via Administration > Cloud Services > Cloud Attach in ConfigMgr console) surfaces ConfigMgr devices in the Intune admin center (shows "ConfigMgr" in Managed By column) without requiring co-management enrollment. Upload cycle: every 15 minutes; appearance in admin center: additional 5-10 minutes.
-
-Source: https://learn.microsoft.com/en-us/intune/configmgr/comanage/workloads (updated 2026-04-15); https://learn.microsoft.com/en-us/intune/configmgr/tenant-attach/device-sync-actions — HIGH confidence
+> **The single most important v1.6 implication:** Apple renamed the entire administrative substrate (Locations→Organizational Units; privileges→permissions; the fixed-role triad → expanded role set with custom roles) but **kept the URL at `business.apple.com`** and **Microsoft Intune's UI labels still say "Apple VPP tokens"**. v1.6 docs must use Apple's NEW terminology (Organizational Units, permissions, Apple Business) when describing the Apple-side surface, but preserve Intune's CURRENT labels verbatim when describing the Intune-side handshake. This is the rebrand-callout discipline.
 
 ---
 
-## 3. Patch and Update Management
+## 1. Apple Business Rebrand — Authoritative Surface
 
-### Windows Update for Business (WUfB)
+### 1.1 Timing
 
-**Ring topology — standard Intune model:**
+| Event | Date | Source |
+|---|---|---|
+| Public announcement | 2026-03-24 | [Apple Newsroom — Introducing Apple Business](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/) |
+| Global availability (GA) | 2026-04-14 | [Apple Newsroom — Introducing Apple Business](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/) |
+| Legacy ABM/ABE/Connect retirement | 2026-04-14 (Apple states the three legacy platforms "will no longer be available once Apple Business launches"; existing data auto-migrated) | [Apple Newsroom](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/); [Apple Support — Apple Business Manager is now Apple Business `axmd79d79dea`](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web) |
 
-| Ring | Quality Deferral | Feature Deferral | Audience |
-|------|-----------------|-----------------|----------|
-| Test/Lab | 0 days | 0 days | 1-5% lab devices |
-| Pilot | 7 days | 30 days | ~10% early adopters |
-| Broad/Production | 14-30 days | 90-180 days | General fleet |
+**Single canonical authoritative date for v1.6 glossary callout: 2026-04-14 (GA). The 2026-03-24 announcement is supporting context.** Confidence: HIGH.
 
-- Quality update deferral: 0-30 days
-- Feature update deferral: 0-365 days
-- Pause: up to 35 days; auto-expires after maximum
+### 1.2 What Apple Business consolidates
 
-**Driver and Firmware via WUfB (GA):**
-- Requires Windows E3/E5/A3/A5 or Microsoft 365 Business Premium license
-- Managed via "Driver Update Profile" in Intune (separate from Update Ring policy)
-- If WUfB Ring allows driver updates without a Driver Update Profile, drivers update automatically via Windows Update without granular admin control
-- With Driver Update Profile: admins review, approve, or pause specific driver updates before deployment
-- Built on Windows Update for Business deployment service (WUfB-DS); devices sync daily
+The rebrand merges three previously distinct platforms into one offering:
 
-Source: https://learn.microsoft.com/en-us/intune/intune-service/protect/windows-10-update-rings; https://learn.microsoft.com/en-us/intune/device-updates/windows/update-ring-policy-settings — HIGH confidence
+- **Apple Business Manager** (ABM) — device enrollment, MDM linking, content token administration, Managed Apple IDs (legacy name for Managed Apple Account)
+- **Apple Business Essentials** (ABE) — Apple-hosted MDM-lite for SMB (previously paid; now free as part of Apple Business consolidation)
+- **Apple Business Connect** (ABC) — customer-facing brand listings, Apple Maps/Wallet/Mail business surface
 
-### macOS Software Update (Critical 2025-2026 Change)
+**Implication for v1.6:** ABE features (built-in MDM, Blueprints) and ABC features (brand profiles, Maps ads, Branded Mail) are now in the Apple Business portal. **They are OUT OF SCOPE for v1.6** — v1.6 documents the device-management / delegation surface that was formerly ABM. v1.6 glossary callout must explicitly say "Apple Business in the context of this guide refers to the device-management surface formerly known as Apple Business Manager."
 
-**Legacy MDM commands are deprecated and will be fully removed with macOS 26 (2025-2026 cycle):**
+### 1.3 URL surface (the practical reality)
 
-Deprecated items (DO NOT document as current):
-- `com.apple.SoftwareUpdate` MDM payload
-- `forceDelayedSoftwareUpdates` restriction
-- MDM-based `ScheduleOSUpdate` command
-- MDM update queries
+| Surface | URL | Status |
+|---|---|---|
+| Sign-in portal | `https://business.apple.com` | **Unchanged** — same URL admins have used for years |
+| Sign-in login page | `https://business.apple.com/login` | Unchanged |
+| Sign-up page | `https://business.apple.com/signup` | Unchanged |
+| New User Guide (canonical) | `https://support.apple.com/guide/business/` | New URL path; replaces ABM guide for new readers |
+| Legacy User Guide | `https://support.apple.com/guide/apple-business-manager/` | Still resolves; top-level page now displays "Apple Business Manager is now Apple Business" banner (article ID `axmd79d79dea`); deep links still valid |
+| URL ID stability | Article IDs (e.g., `axm97dd59159`, `axmfdbe2cb0d`, `axme0f8659ec`) are **STABLE across the rebrand** — same article ID resolves at both `/guide/apple-business-manager/` and `/guide/business/` paths | HIGH |
 
-**Current canonical approach: Declarative Device Management (DDM)**
-
-Setting to use in Intune Settings Catalog: **"Software Update Enforce Latest"** (DDM-based)
-
-For update deferral, Intune still surfaces:
-- `Force Delayed Software Updates` (MDM restriction) — delays visibility
-- `Force Delayed App Software Updates` — delays non-OS updates (XProtect, Safari)
-
-However, for enforcement (requiring a specific version by a specific deadline), DDM is the only forward-compatible method as of 2025.
-
-**For v1.5 docs:** The existing macOS update enforcement documentation must distinguish between deferral (MDM restriction still functional) and enforcement (DDM required). Flag `forceDelayedSoftwareUpdates` as deprecated-for-enforcement with a callout pointing to DDM path.
-
-Source: https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-macos; https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-guide-macos; https://macadifference.net/2025/04/08/intune-macos-enforcing-software-updates.html — HIGH confidence (confirmed from multiple sources)
-
-### iOS/iPadOS Software Update
-
-**Same DDM transition applies:**
-- Legacy MDM supervised-only update commands deprecated alongside macOS equivalents
-- **DDM update enforcement now works on unsupervised devices** (iOS/iPadOS 17+): basic DDM keys (TargetOSVersion, TargetBuildVersion, TargetLocalDateTime, OfferPrograms) are available without supervision
-- This removes the hard supervised-vs-unsupervised boundary for update enforcement that existed in v1.3 docs
-- Full enforcement behavior (forced install prompt cycle) is identical on supervised and unsupervised devices when DDM policy applies
-
-**For v1.5 ops-depth docs:** The iOS update management guide must document the DDM enforcement path and note that the supervised-only constraint on update enforcement is removed for iOS 17+. Existing v1.3 admin setup docs should receive a callout noting DDM availability.
-
-Source: https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios; https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-guide-ios-ipados — HIGH confidence
-
-### Android Patch Delivery — Play Integrity Impact
-
-**Breaking change enforced September 30, 2025:**
-
-Google's MEETS_STRONG_INTEGRITY verdict now requires (for Android 13+):
-- Hardware-backed security signals (hardware attestation)
-- Security patch released within the past 12 months (all partitions: OS + vendor)
-
-Microsoft Intune enforces these requirements from September 30, 2025 onward. Devices failing to meet MEETS_STRONG_INTEGRITY on Android 13+ will not satisfy Intune compliance policies configured with "Play Integrity" checks at Strong tier.
-
-**Compliance policy guidance for v1.5:**
-- Set `Minimum security patch level` to a date no more than 12 months old (YYYY-MM-DD format)
-- This aligns with the MEETS_STRONG_INTEGRITY security-patch recency requirement
-- OEM-specific delays (Samsung Knox Service Platform, Zebra LifeGuard) can cause late patches — these devices may transiently fail compliance until OEM pushes the update
-
-**For v1.5 ops-depth docs:** The patch management section for Android must document the post-September 2025 MEETS_STRONG_INTEGRITY gate and explain that patch delivery timelines differ by OEM, particularly Samsung (Knox Security Patch = monthly) and Zebra (LifeGuard = quarterly cadence for most devices).
-
-Source: https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-changes-to-google-play-strong-integrity-for-android-13-or-above/4435130 (July 2025) — HIGH confidence (official Microsoft TechCommunity support blog)
+**v1.6 doc-authoring rule:** Always link to the new `/guide/business/` paths in newly authored v1.6 content. Legacy `/guide/apple-business-manager/` URLs in pre-existing docs do NOT require sweep retrofit (per v1.6 Q5 option b scope decision: glossary + 2 intro callouts only).
 
 ---
 
-## 4. App Lifecycle Tooling
+## 2. Custom Role & Permission Model
 
-### Win32 Packaging — Microsoft Win32 Content Prep Tool
+### 2.1 The legacy fixed-role triad — current status
 
-**Current version:** v1.8.7 (released August 13, 2024)
-**Download:** https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool/releases
-**Output format:** `.intunewin` (encrypted ZIP with detection metadata)
-**Key v1.8.7 changes:** SHA256 FIPS-compliant algorithms, silent mode support, crash-fix in logging
+The old ABM 5-role model was:
 
-**Supersedence and dependency chains (current capability):**
-- Maximum 10 apps per supersedence/dependency subgraph
-- Supersedence and dependency relationships can now coexist in the same app subgraph (post-2023 improvement)
-- Conflict resolution: IME enforces supersedence intent when conflicts arise
-- Supersedence only works between Win32 apps (cannot mix Win32 with LOB/MSIX in a supersedence chain)
-- MSIX apps do NOT support supersedence; use version replacement in the same app entry instead
+1. Administrator
+2. People Manager
+3. Device Enrollment Manager (also called Device Manager in some Apple docs)
+4. Content Manager
+5. Staff
 
-**For v1.5 docs:** Win32 supersedence+dependency guide should document the 10-node maximum, the combined-relationship capability, and the MSIX vs Win32 distinction.
+**Status in Apple Business (post-2026-04-14):** The fixed-role triad has been **functionally retired as the top-of-tree structure** but **preserved as preset custom roles**.
 
-Source: https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool/releases; https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-win32-supersedence — HIGH confidence
+| Legacy role | Apple Business equivalent | Notes |
+|---|---|---|
+| Administrator | **Organization Administrator** (renamed, expanded) | Top-level role; can also assign IT Administrator + Marketing Administrator |
+| (new) | **IT Administrator** | New top-level role separating device/MDM concerns from marketing/brand concerns |
+| (new) | **Marketing Administrator** | New top-level role owning Brand profiles, Branded Mail, Maps ads (ABC-origin features) |
+| Staff | **Staff** (preserved) | Bottom-level role |
+| People Manager | Preset custom role (preserved name) | Permissions scoped to People group |
+| Device Enrollment Manager | Preset custom role (preserved name) | Permissions scoped to Devices group |
+| Content Manager | Preset custom role (preserved name) | Permissions scoped to Apps & Services group |
+| (new) | **Device API Manager** | Preset custom role — exposes Apple's Apple Business API surface (new) |
+| (new) | **Brand Manager** | Preset custom role — Marketing Administrator subset |
 
-### MSIX Packaging
+Source: [Intro to roles and permissions in Apple Business — `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web). Confidence: HIGH for the role list; HIGH that custom roles supersede the fixed triad as the primary delegation mechanism.
 
-MSIX apps are uploaded to Intune as Line-of-Business apps (not Win32). Intune reads MSIX manifest metadata automatically. Version updates: replace the file in the existing app entry — Intune detects version change and pushes delta on next sync. No supersedence option exists for MSIX.
+### 2.2 Permission categories (the new flat model)
 
-All MSIX packages must be signed (Developer ID certificate); unsigned MSIX will not install even via MDM.
+Apple Business exposes permissions in **5 top-level groups**, decomposed into **11+ subgroups** for granular custom-role authoring:
 
-### macOS App Deployment Pipeline
+| Top-level group | Subgroups (per Apple's intro page navigation) |
+|---|---|
+| **Organization** | Basic organization, Organization access, API/OAuth |
+| **People** | People |
+| **Devices** | Devices, AppleCare |
+| **Apps & Services** | Apps & Books, Subscription, Email service |
+| **Brands** | Brand, Brand location, Branded Mail, Tap to Pay, Verify with Wallet |
 
-Three Intune-native methods:
+**v1.6 in-scope subgroups** (device-management surface):
 
-| Method | File Type | Signing Required | Use Case |
-|--------|-----------|-----------------|----------|
-| Managed LOB `.pkg` | `.pkg` | Yes — Developer ID Installer | Signed commercial apps |
-| Unmanaged PKG with scripts | `.pkg` | No | Unsigned or payload-less packages |
-| DMG | `.dmg` | No | Apps distributed as disk images |
+- Basic organization
+- Organization access
+- API/OAuth (Device API Manager preset)
+- People (Managed Apple Account provisioning)
+- Devices (device assignment, MDM server management, device release)
+- AppleCare (device support entitlement)
+- Apps & Books (content tokens, license assignment, VPP-successor)
 
-For unmanaged PKG: requires `intune-mdm-agent` version 2309.007 or later; supports pre-install and post-install shell scripts.
+**v1.6 out-of-scope subgroups** (ABC/ABE-origin marketing surface):
 
-**Installomator adjacency:** Installomator (https://github.com/Installomator/Installomator) is an open-source shell script framework that downloads and installs ~1000+ macOS apps from their official sources. Used in conjunction with Intune shell script deployment (assign as shell script to device group) as an alternative to packaging. Community-standard pattern; not Microsoft-official. Use when: app updates frequently and packaging overhead is undesirable.
+- Subscription (ABE billing — no longer charged post-2026-04-14)
+- Email service (Branded Mail)
+- Brand / Brand location / Branded Mail / Tap to Pay / Verify with Wallet
 
-**Munki adjacency:** Munki (https://github.com/munki/munki) is an enterprise macOS software management system. Integration pattern (2025): Intune as MDM authority for enrollment/compliance/CA + Munki as dedicated software deployment layer (handles LOB, auto-updates, Intel vs Apple silicon binary selection). Replaces need for Jamf-specific software deployment features. Relevant for orgs already using Munki who are migrating from Jamf to Intune.
+Source: [Intro to roles and permissions in Apple Business `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web). Confidence: HIGH for category list; MEDIUM for per-subgroup permission enumeration — Apple's intro page lists category names but the per-permission tables live on linked sub-pages that WebFetch could not extract (likely require JavaScript rendering or authentication). **v1.6 phase 1 may need a one-off manual scrape of the 11 subgroup permission tables for the glossary**; flag for `gsd-research` phase-research before Phase 62/63 authoring.
 
-**For v1.5 docs:** macOS app lifecycle section should document all three Intune-native methods, flag Installomator as the community standard for recurring app updates, and note Munki as the full-replacement pattern for Jamf migrations.
+### 2.3 Custom role authoring surface
 
-Source: https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-macos; https://learn.microsoft.com/en-us/intune/intune-service/apps/macos-unmanaged-pkg; https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-macos-dmg — HIGH confidence
+Per [Intro to roles and permissions](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web):
 
-### iOS VPP App Licensing
+- Path: **Settings > Roles & Permissions** in the Apple Business portal
+- Operation: "Add a custom role and define very specific permissions to that role"
+- Constraint: Only users whose role has "view, edit, and delete roles" permissions in the Organization permission group can author custom roles (the meta-permission)
+- Scope: **A user can have more than one role assigned** — a key change from the legacy ABM single-role-per-user model. Confidence: HIGH.
 
-Two license types:
+**v1.6 implication for Phase 1 (Foundation) and Phase 2 (Multi-org architecture):** The Locations-vs-custom-roles decision matrix must reflect that custom roles are now first-class (not an afterthought) and that multi-role assignment is possible. The "one Apple Business account with Locations and/or custom roles per team (Q2 b/c + combination)" topology maps directly to OU + custom-role authoring.
 
-| Type | Assignment | Apple ID Required | Silent Install | Use For |
-|------|-----------|------------------|---------------|---------|
-| Device license | Assigned to device | No | Yes | Supervised + shared/kiosk devices; preferred default |
-| User license | Assigned to user (1 license = up to 5 devices) | Yes (personal or Managed Apple ID) | Requires App Store sign-in | User Enrollment only |
+### 2.4 Specific privileges identified by category (best-effort from accessible docs)
 
-**Post-2025 default change:** New VPP app assignments now default to "device" license type. Existing assignments unchanged.
+> Caveat: Apple's complete permission tables live behind a JavaScript-rendered table on the intro page sub-links that did not return full content via WebFetch. The list below is what was triangulated from the Apple intro page navigation + the legacy ABM HardSoft/community summary + the Microsoft Learn Intune tutorial. **Confidence: MEDIUM** per privilege; **HIGH** for category-level coverage. v1.6 Phase 1 should perform a manual scrape against the 11 sub-pages.
 
-Source: https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple — HIGH confidence
+| Subgroup | Confirmed example permissions (illustrative, NOT exhaustive) |
+|---|---|
+| Basic organization | View organization profile; edit organization profile; accept Terms of Service |
+| Organization access | View users; edit users; assign roles; delete roles; configure federated authentication; configure SCIM provisioning; create/edit/delete organizational units |
+| API/OAuth | Generate Apple Business API tokens (Device API surface); revoke API tokens |
+| People | Create Managed Apple Accounts; edit Managed Apple Accounts; delete Managed Apple Accounts; reset Managed Apple Account passwords; reset Shared iPad passcodes; configure default Managed Apple ID username format |
+| Devices | Add devices (manual / Configurator); assign devices to MDM server; reassign devices; unassign devices; release devices from organization; manage MDM servers; manage device suppliers (reseller numbers); upload via Apple Configurator |
+| AppleCare | View AppleCare entitlements; submit AppleCare repair requests |
+| Apps & Books | View content tokens; download content tokens; purchase content (apps + books); assign content (device-licensed); assign content (user-licensed); reclaim licenses; view purchase history |
 
-### Android Managed Google Play — Private App Publishing
-
-Two paths:
-1. **Intune admin center direct upload** (recommended): APK + title only; no Google Developer Account required; live in ~10 minutes; max 15 uploads per day (including web clips)
-2. **Google Play Console**: Full developer account required; enables advanced metadata (icons, screenshots, descriptions), staged rollout, multiple tracks
-
-**Constraint:** App package name must be globally unique in Google Play — not just within your tenant. Duplicate package names cause "Upload a new APK file with a different package name" error.
-
-Source: https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-add-android-for-work — HIGH confidence
-
----
-
-## 5. Drift Detection and Tenant Migration Tooling
-
-### Microsoft Graph API — Deployment Reports and Drift Queries
-
-**Endpoint:** `https://graph.microsoft.com/beta/deviceManagement/reports/exportJobs`
-**Format:** POST body with `reportName`, optional `filter`, optional `select`, optional `format` (csv/json)
-**Status polling:** GET to the returned export job ID until `status: 'complete'`
-
-Key report names for drift detection workflows:
-
-| Report Name | Purpose |
-|-------------|---------|
-| `DeviceCompliance` | Overall compliance state per device |
-| `DeviceNonCompliance` | Filtered non-compliant devices only |
-| `NonCompliantDevicesAndSettings` | Which specific settings are out of compliance |
-| `DevicesWithoutCompliancePolicy` | Devices with no compliance assignment |
-| `ConfigurationPolicyAggregate` / `V3` | Aggregate pass/fail per configuration policy |
-| `DeviceAssignmentStatusByConfigurationPolicy` / `V3` | Per-device policy assignment status |
-| `PerSettingDeviceSummaryByConfigurationPolicy` | Per-setting compliance across devices |
-| `SettingComplianceAggReport` / `V3` | Setting-level drift aggregate |
-| `FeatureUpdateDeviceState` | Feature update deployment status |
-| `QualityUpdateDeviceStatusByPolicy` | Quality update status per policy |
-| `DriverUpdatePolicyStatusSummary` | Driver update deployment state |
-
-**For v1.5 docs:** The drift detection guide should document the `exportJobs` endpoint pattern and key report names above. The roadmap's drift-detection phase should use these as the reference surface for per-platform drift query examples (Windows: ConfigurationPolicyAggregate; macOS: equivalent settings-catalog report; iOS/Android: compliance reports).
-
-Source: https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/reports-export-graph-available-reports; https://learn.microsoft.com/en-us/graph/intune-concept-overview — HIGH confidence
-
-### Tenant-to-Tenant Migration Posture
-
-**Microsoft's official position:** Tenant-to-tenant device migration is **not a supported Intune scenario**. The recommended path is unenroll from source tenant + re-enroll in destination tenant. Device reset/wipe may be required depending on join type.
-
-**Per-platform specifics for v1.5 migration runbooks:**
-
-| Platform | Migration Challenge | Documented Resolution |
-|----------|--------------------|-----------------------|
-| Windows | BitLocker recovery keys stored in source Entra ID; keys don't transfer to destination tenant | Trigger BitLocker key rotation in Intune (Devices > select device > BitLocker Key Rotation) before unenroll; new key escrows to destination after re-enrollment. Also: ConfigMgr co-managed devices need workload slider assessment before migration. |
-| macOS/iOS | ABM ADE token is tenant-scoped; a location token can only be used with ONE Intune tenant at a time | Must re-issue ADE token from Apple Business Manager for destination tenant. APNs push certificate is also tenant-scoped — new APNs cert needed in destination. |
-| iOS VPP | App licenses assigned to source tenant Apple ID association | Re-assign VPP token to destination Intune tenant from ABM; existing device license assignments must be re-created. |
-| Android | MGP binding is tenant-scoped; one binding per Managed Google Play account | Must disconnect MGP from source Intune tenant and re-bind to destination. All app deployments, policies, and assignments must be recreated. Enrolled devices need factory reset + re-enrollment. |
-
-**Export/import tooling:** Microsoft Graph scripts exist (PowerShell) to export and import selected policy types between tenants. Not all policy types are supported (notably: certificate profiles must be manually recreated). No official first-party migration tool.
-
-Source: https://learn.microsoft.com/en-us/answers/questions/2149662/tenant-to-tenant-migration-with-intune-devices; https://learn.microsoft.com/en-us/answers/questions/1499138/migrate-mobile-devices-to-a-different-intune-tenan; https://techcommunity.microsoft.com/blog/coreinfrastructureandsecurityblog/migrating-bitlocker-recovery-key-management-from-configmgr-to-intune-a-practical/4414948 — MEDIUM confidence (Q&A and community sources; no single authoritative Microsoft Learn tenant migration guide exists)
+Sources: [Apple Business intro page navigation `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web); [HardSoft legacy ABM role summary (MEDIUM confidence, third-party)](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/); [Microsoft Learn tutorial verifying device + MDM permission boundaries](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios)
 
 ---
 
-## 6. Broken-Link Sweep Tooling
+## 3. Organizational Units (formerly "Locations")
 
-### Recommended Tool: `markdown-link-check` (npm)
+### 3.1 What changed in the rebrand
 
-**Why:** Pure Node ESM compatible; integrates directly into existing `.mjs` audit harness pattern; can be called from a `check-phase-NN.mjs` script or from the milestone audit harness; supports ignore patterns for false positives.
+| Aspect | Legacy ABM (pre-2026-04-14) | Apple Business (post-2026-04-14) |
+|---|---|---|
+| Term | Locations | **Organizational Units (OUs)** |
+| Article ID | `axmfdbe2cb0d` | Same `axmfdbe2cb0d` (URL preserved) |
+| Sub-Location concept | "Sublocation" supported for nesting | Sublocation concept preserved; called "sub-OU" in some user-facing prose |
+| Primary scope | App content licenses (per-location content tokens), MDM server attachment | Same: content tokens + MDM server + user/role scoping |
 
-**Package:** `markdown-link-check` on npm (tcort/markdown-link-check on GitHub)
-**Current status (2025):** Healthy maintenance cadence; scanned for vulnerabilities — no issues; JUnit reporter available for CI integration.
-**Install:** `npm install -D markdown-link-check`
+Source: [Configure organizational units in Apple Business `axmfdbe2cb0d`](https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web); [legacy ABM page same article ID](https://support.apple.com/guide/apple-business-manager/configure-locations-axmfdbe2cb0d/web). Confidence: HIGH.
 
-**Usage pattern for audit harness integration:**
-```bash
-# Check a single file
-markdown-link-check docs/index.md
+### 3.2 Hierarchy rules
 
-# Check with config (ignore patterns, timeout, retry)
-markdown-link-check --config .mlc-config.json docs/index.md
+| Property | Value | Confidence |
+|---|---|---|
+| Structure | **Flat by default with optional sub-OUs** (1-level sublocation supported in legacy ABM; this concept appears preserved in Apple Business though the new docs describe the structure as flat in their primary text) | MEDIUM (Apple does not explicitly state "max 1 nesting level" in 2026 docs; legacy ABM supported sub-location but Apple's "Configure organizational units" page describes it primarily as flat) |
+| First OU | Auto-created at signup; named after organization | HIGH |
+| Max count | **NO numeric limit published by Apple** | HIGH (negative claim verified — Apple publishes no max; community Q&A explicitly notes the absence of a documented limit) |
+| Naming uniqueness | OU names must be unique within the organization | HIGH |
+| Deletion | Manually-created OUs can be deleted **only after transferring accounts and Apps & Books licenses to another OU** | HIGH |
 
-# Recursive — pipe from find (used in CI)
-find docs -name "*.md" | xargs markdown-link-check --print-summary
+**v1.6 implication:** Phase 2 (Multi-org architecture) cannot promise specific max-count guidance because Apple doesn't publish one. The doc should say "Apple has not published a maximum OU count as of 2026-05-20; large-scale deployments (>100 OUs) should consult Apple Enterprise support before architecting."
 
-# JUnit output for CI
-markdown-link-check --reporters default,junit docs/index.md
-```
+### 3.3 What scopes per OU
 
-**Config file (`.mlc-config.json`) for this repo:**
-```json
-{
-  "ignorePatterns": [
-    { "pattern": "^#" },
-    { "pattern": "localhost" }
-  ],
-  "timeout": "20s",
-  "retryOn429": true,
-  "retryCount": 2,
-  "concurrentFileCheck": 5
-}
-```
+| Scopable | At OU level? | Notes |
+|---|---|---|
+| **Devices** | YES | Devices are assigned to OUs via Configurator, reseller upload (Reseller Number tied to OU), or manual assignment |
+| **Content tokens (Apps & Books)** | YES | One downloadable content token per OU; same token can be used by multiple MDM policies in same MDM tenant |
+| **MDM servers** | YES (indirectly — MDM servers are linked at OU level for ADE-via-OU) | An MDM server is created in Apple Business per OU; devices in that OU are assigned to that MDM server |
+| **Users / Managed Apple Accounts** | YES | Users can be added to specific OUs; the same user can be added to multiple OUs |
+| **Role assignments** | YES — this is the delegation lever | Custom roles can be assigned scoped to specific OUs (so e.g. a "Site B Device Manager" role only manages Site B devices/content) |
+| **Federated authentication / SCIM** | NO — tenant-wide | Federated auth and SCIM are configured at the organization level, not per OU. Confidence: HIGH. |
 
-**Anchor checking:** `markdown-link-check` checks anchor links (`#section-name`) within the same file and across files if the target file exists. This is the primary need for the 179-file sweep (broken `#anchor` references after sections were renamed in v1.4.x edits).
+Source: [Configure organizational units `axmfdbe2cb0d`](https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web); [Manage content tokens in Apple Business `axme0f8659ec`](https://support.apple.com/en-ca/guide/business/axme0f8659ec/web). Confidence: HIGH.
 
-**Integration with existing audit harness:** Add as a new check in `v1.5-milestone-audit.mjs`. Pattern: C10 = broken-anchor sweep across `docs/` tree. Use informational-first (D-29 grace pattern) on first harness run; promote to blocking after sweep phase completes.
+### 3.4 How devices are assigned to OUs
 
-### Alternative: `lychee` (Rust-based)
+| Path | Mechanism | Notes |
+|---|---|---|
+| **Reseller upload** | Reseller Number registered on the OU profile; devices ordered via that reseller auto-flow into that OU | Each OU has its own Reseller Number set; canonical for large fleets |
+| **Apple Configurator (manual)** | Admin runs Configurator 2 on Mac, pairs the iOS/iPadOS/tvOS device, uploads to Apple Business; assigns to an OU at upload time | Useful for devices NOT purchased via authorized reseller (retail / refurb / hand-me-down) |
+| **Direct from Apple** | Devices ordered with Apple Customer Number registered to the OU auto-flow | Same as reseller path but Apple direct |
+| **Cross-OU reassignment** | Admin uses Devices page → select devices → Reassign to OU | Useful for device transfer between sites |
+| **Provisional release period** | Manually-Configurator-added devices have a 30-day provisional period during which the end-user can release the device from MDM | Important for v1.6 device-transfer runbook |
 
-**When to prefer lychee over markdown-link-check:**
-- Need to check external URLs at scale (lychee is async/stream-based, much faster for live URL checks)
-- Need GitHub Actions integration via `lycheeverse/lychee-action`
-- v0.23.0 is the default in the GitHub Action
-
-**For this project:** External URL checking is lower priority than internal anchor checking. `markdown-link-check` is the better fit for the 179-file internal-link sweep because it integrates natively into the Node ESM audit harness without adding a Rust binary dependency to the CI environment.
-
-Source: https://github.com/tcort/markdown-link-check; https://github.com/lycheeverse/lychee-action; https://www.npmjs.com/package/markdown-link-check — MEDIUM confidence (npm registry health; no Context7 ID for this library)
+Source: [Add devices using Apple Configurator `axm200a54d59`](https://support.apple.com/guide/business/add-devices-using-apple-configurator-axm200a54d59/web); [Assign, reassign, or unassign devices `axmf500c0851`](https://support.apple.com/guide/apple-business-manager/axmf500c0851/web). Confidence: HIGH.
 
 ---
 
-## 7. 4-Platform Capability Comparison Document
+## 4. Content Token Model (replacing legacy "VPP location token")
 
-### Structural Pattern
+### 4.1 Before vs after framing
 
-No single Microsoft Learn document exists that does a 4-platform capability matrix — Microsoft organizes documentation per-platform. The existing per-platform capability matrices in this suite (`windows-capability-matrix.md`, `macos-capability-matrix.md`, `ios-capability-matrix.md`, `android-capability-matrix.md`) serve as the per-platform source of truth. DEFER-08 calls for a cross-platform synthesis document.
+| Era | Apple-side label | Microsoft Intune-side label | Token shape |
+|---|---|---|---|
+| Pre-2018 (VPP era) | "VPP token" | "Apple VPP tokens" | Per-Apple-ID; one VPP account per Apple ID |
+| 2018–2026-04-14 (ABM era) | "Content token (Location)" — "location token" colloquially | "Apple VPP tokens" (unchanged label) | Per-ABM-Location; downloadable from ABM Preferences > Payments and Billing > Apps and Books |
+| Post-2026-04-14 (Apple Business era) | **"Content token (Organizational Unit)"** | **"Apple VPP tokens"** (unchanged label — see §6 below) | Per-OU; same article-ID `axme0f8659ec` page |
 
-**Recommended structure (based on v1.4 Cross-Platform Equivalences pattern + industry documentation patterns):**
+Source: [Manage content tokens in Apple Business `axme0f8659ec`](https://support.apple.com/guide/apple-business-manager/manage-content-tokens-axme0f8659ec/web). Confidence: HIGH.
 
-```markdown
-# Cross-Platform Capability Comparison
+### 4.2 Current shape
 
-## Enrollment
-| Feature | Windows | macOS | iOS/iPadOS | Android |
-|---------|---------|-------|-----------|---------|
+- **One content token per Organizational Unit.** Token is generated and downloadable from Apple Business at `Preferences > Payments and Billing > Apps and Books > Content Tokens > Download` (path may be slightly different in new portal navigation; the article still refers to the same area).
+- The **same content token can be uploaded to multiple MDM tenants OR multiple policies within the same tenant** — but licenses are shared across all consumers; no per-tenant isolation when the same token is reused. **This is the "do not share content tokens across Intune tenants" pitfall** (v1.6 PITFALLS topic).
+- **Token lifecycle:** 1 year validity; annual renewal required; expiry causes new app sync to halt but existing installs continue working.
+- **Device-vs-user licensing model:** Unchanged from legacy ABM. Device-licensed (pinned to serial; silent-install on supervised iOS/iPadOS) and user-licensed (pinned to Managed Apple Account; requires sign-in) variants both still exist. v1.5 Phase 55 APP-06 already documents this.
 
-## Identity and Conditional Access
-## App Delivery
-## Compliance Settings
-## Update Management
-## Monitoring and Reporting
-## Platform-Specific Constraints
-```
+### 4.3 What changed in the licensing model
 
-**Pattern precedent in existing suite:** The `android-capability-matrix.md` Cross-Platform Equivalences section (3 paired rows) established the pattern for bridging platform-specific terminology. The 4-platform doc extends this to a full matrix, using each per-platform capability matrix as the row source of truth.
+Per [Apple Business — Manage content tokens `axme0f8659ec`](https://support.apple.com/guide/business/axme0f8659ec/web) and the Apple Newsroom announcement: the underlying VPP licensing semantics (device vs user, 30-day grace period on revocation, license reclamation, 1-year token validity) are **structurally unchanged**. Only the **container term** changed (Location → Organizational Unit) and the **portal navigation paths**.
 
-**Anti-pattern to avoid:** Do NOT duplicate setting-by-setting details from per-platform matrices. The 4-platform doc should reference per-platform docs (with anchors), not duplicate them. Its value is navigability and gap identification, not duplication.
-
-Source: Derived from project history and industry documentation patterns — MEDIUM confidence
+**v1.6 implication:** APP-06 (iOS VPP licensing) and APP-04/05 (macOS VPP) docs from v1.5 do not require content rewrites — only an Apple Business / OU terminology pass in the new v1.6 Apple Business governance docs tree that references them.
 
 ---
 
-## 8. Audit Harness Extension — v1.5 Checks
+## 5. Managed Apple Account Federation
 
-### New Token Categories for Linux Platform (C4 extension)
+### 5.1 Rebrand: Managed Apple ID → Managed Apple Account
 
-Add to existing C4 token regex list in `v1.5-milestone-audit.mjs`:
-```
-linux_platform_tokens = [
-  "intune-portal", "intune_portal",
-  "Ubuntu", "ubuntu",
-  "22.04", "24.04",
-  "LTS",
-  "LUKS", "dm-crypt",
-  "journalctl", "systemd",
-  "microsoft-identity-broker",
-  "GNOME",
-  "deb", "apt"
-]
-```
+- Apple formally rebranded **Managed Apple ID → Managed Apple Account in 2024** (predates the 2026 Apple Business rebrand).
+- Existing iOS user-enrollment doc `docs/admin-setup-ios/08-user-enrollment.md` already acknowledges this at line 49 with a 2024 rebrand callout — that callout is sufficient and does not need re-authoring for v1.6.
+- v1.6 glossary callout should consolidate: "Apple uses Managed Apple Account as of 2024; Microsoft Intune documentation continues to use Managed Apple ID; both refer to the same identity object."
 
-### New Ops-Domain Checks (informational-first per D-29 pattern)
+### 5.2 Microsoft Entra ID federation — current status
 
-| Check ID | Check Name | Pattern | Grace |
-|----------|-----------|---------|-------|
-| C10 | Broken-anchor sweep | `markdown-link-check` across `docs/` — check all `[text](#anchor)` links resolve | Informational first; promote to blocking after sweep phase |
-| C11 | Deprecated-MDM-command anti-pattern | Detect `forceDelayedSoftwareUpdates`, `ScheduleOSUpdate`, `com.apple.SoftwareUpdate` MDM payload in docs without a DDM-migration callout | Informational |
-| C12 | SafetyNet anti-pattern (inherited from v1.4) | Detect `SafetyNet` without `deprecated` qualifier — already in v1.4.1 harness; extend to ops-domain docs | Already blocking in C5; verify ops-depth docs inherit coverage |
-| C13 | Ubuntu 20.04 anti-pattern | Detect `20.04` in Linux docs without an end-of-support callout | Informational |
-| C14 | Co-management workload anti-pattern | Detect "Resource Access" workload documented as active without a CB 2203 deprecation note | Informational |
+| Mechanism | Status | URL |
+|---|---|---|
+| **OIDC (OpenID Connect) federation** | **GA** — documented in Apple Business User Guide and Microsoft Learn deployment guide; no preview / beta flag | [Apple Support — Use federated authentication with Microsoft Entra ID in Apple Business `axm8c1cac980`](https://support.apple.com/guide/business/federated-authentication-microsoft-entra-axm8c1cac980/web) |
+| **SCIM provisioning** (auto-create Managed Apple Accounts on user create) | **GA** — official Apple Business User Guide page; documented with concrete endpoint URLs | [Apple Support — Sync user accounts from your identity provider `axm526a05814`](https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web) |
+| **Microsoft Enterprise SSO plug-in for Apple devices** | **GA** (Platform SSO; supports Mac and iOS) | [Microsoft Learn — Microsoft Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (last published 2025-11-04) |
+| **Profile-based User Enrollment (legacy)** | **Deprecated** on iOS 18+ (already documented in existing iOS user-enrollment guide) | n/a |
+| **National-cloud Entra IDs (Gov / China / 21Vianet)** | **NOT SUPPORTED** | [Apple Support — Integrate with Microsoft Entra ID `depa85a35cf2`](https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web): "Integration with national clouds isn't currently supported." |
 
-### Sidecar Allowlist (`v1.5-audit-allowlist.json`)
+Confidence: HIGH for all federation status entries.
 
-New allowlist entries needed:
-- macOS/iOS DDM migration callout prose that legitimately references deprecated MDM commands in a "deprecated since" context
-- Any cross-platform comparison doc that lists `forceDelayedSoftwareUpdates` in a "legacy approach" column
+### 5.3 SCIM endpoint surface (for documentation accuracy)
 
-### Path A Copy Pattern (Confirmed for v1.5)
+For Apple Business / Entra SCIM provisioning, v1.6 docs may cite:
 
-`v1.5-milestone-audit.mjs` = copy of `v1.4.1-milestone-audit.mjs` + additive extensions. Predecessor must remain reproducible (no in-place mutation). Sidecar `scripts/validation/v1.5-audit-allowlist.json` co-located alongside harness.
+- SCIM connector base URL: `https://federation.apple.com/feeds/business/scim`
+- Access token URI: `https://appleaccount.apple.com/auth/oauth2/v2/token`
+- Authorization URI: `https://appleaccount.apple.com/auth/oauth2/v2/authorize`
+- SCIM token validity: **1 year**; Apple sends notification 60 days before expiry
+- Token transfer window: **4 calendar days** to complete handoff from Apple Business to Entra after token generation
 
-`regenerate-supervision-pins.mjs` self-test baselines need refresh in the audit-tooling phase — flagged as carry-over from v1.4.1 close.
+Source: [Apple Business — Sync user accounts `axm526a05814`](https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web). Confidence: HIGH.
 
----
+### 5.4 Federation scope (per-OU vs tenant-wide)
 
-## What NOT to Build in v1.5
+- **Federated authentication is configured at the organization (tenant) level, not per OU.** A Managed Apple Account federated from Entra exists in the organization and is then assignable to one or more OUs.
+- **Role scope is per-OU even when federated.** Federation establishes the identity; the role grant (which OUs a delegated admin can operate in) is a separate operation. Confidence: HIGH.
 
-| Avoid | Why | Scope Decision |
-|-------|-----|---------------|
-| Ubuntu 20.04 LTS support documentation | Dropped from Intune in August 2025 (Intune 2508 service release) | Document as end-of-support; point admins to upgrade path |
-| RHEL / Rocky / Alma / Debian / SUSE / Fedora | Explicitly out of scope per PROJECT.md scope decision | Ubuntu LTS only in v1.5; v1.6 candidate |
-| Linux server / IoT | Out of scope per PROJECT.md | Desktop client only |
-| Snap-based intune-portal | Does not exist; Microsoft uses deb only | Do not document snap as an option |
-| Android Device Administrator legacy mode | Deprecated since Android 10; explicitly excluded v1.4 | Preserve v1.4 exclusion |
-| Samsung E-FOTA | Orthogonal to Intune enrollment | Excluded since v1.4 |
-| ChromeOS | Different management platform | Excluded v1.0-v1.5 |
-| Code scaffolding tiers (PowerShell/FastAPI/React) | Remain dormant per v1.5 scope decision | No v1.5 work on src/ |
-| Intune-native Linux app push (deb/snap packages) | Not a supported Intune feature — no MDM app push for Linux | Script-based compliance is the limit; document honestly |
-| forceDelayedSoftwareUpdates as current enforcement | Deprecated with macOS/iOS 26; removed in 2026 | Document as legacy-only; DDM is current |
+### 5.5 Account-Driven User Enrollment intersection
+
+- AD-UE uses Managed Apple Accounts; federation accelerates Managed Apple Account provisioning but **federation is NOT a precondition for AD-UE** (admins can manually create Managed Apple Accounts in Apple Business). Existing iOS user-enrollment doc captures this.
+- **iOS 18.2+ ABM-federated devices** have an alternate discovery path that bypasses the `.well-known/com.apple.remotemanagement` JSON hosting requirement (already documented in iOS user-enrollment guide at line 50).
 
 ---
 
-## Version Reference Summary
+## 6. Microsoft Intune-Side Handshake (the half v1.6 must reference but NOT document)
 
-| Technology | Version / State as of 2026-04 | Source Confidence |
-|-----------|------------------------------|-------------------|
-| `intune-portal` (Ubuntu deb) | Current; no explicit version pinned in docs | HIGH |
-| Ubuntu 22.04 LTS | Supported | HIGH |
-| Ubuntu 24.04 LTS | Supported (added Dec 2024) | HIGH |
-| Ubuntu 20.04 LTS | **Dropped August 2025** | HIGH |
-| ConfigMgr CB 2503 | Current branch (Apr 23, 2025) | HIGH |
-| ConfigMgr CB 2409 | Prior release; still in support | HIGH |
-| Win32 Content Prep Tool | v1.8.7 (Aug 13, 2024) | HIGH |
-| macOS DDM enforcement | Current canonical (legacy MDM commands deprecated/removed) | HIGH |
-| iOS DDM update enforcement | Available unsupervised iOS 17+ (removes supervised-only gate) | HIGH |
-| Android MEETS_STRONG_INTEGRITY enforcement | Google enforced May 2025; Intune enforced Sep 30, 2025 | HIGH |
-| Microsoft Edge (Linux CA requirement) | v102.x+ required | HIGH |
-| `markdown-link-check` npm | Healthy (no specific version pinned — check npm at implementation time) | MEDIUM |
-| lychee link checker | v0.23.0 (GitHub Action default) | MEDIUM |
-| Graph `exportJobs` endpoint | `/beta/deviceManagement/reports/exportJobs` | HIGH |
-| Intune tenant-to-tenant migration | Not officially supported; re-enrollment required | MEDIUM |
+> **Reminder:** v1.6 is Apple Business surface only. Intune-side RBAC, profile authoring, compliance, enrollment-profile assignment are OUT OF SCOPE per the v1.6 scope decision. This section captures only the Intune-side **labels and paths** that v1.6 docs must cite to anchor the Apple-side handshake correctly.
+
+### 6.1 Microsoft's terminology adoption status (as of 2026-04-30)
+
+From the most recently updated Microsoft Learn page ([Tutorial: Use Apple Business to enroll iOS/iPadOS devices in Intune](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios), updated `2026-04-30`):
+
+| Microsoft surface | Current text | Status |
+|---|---|---|
+| Tutorial title + prose | "Apple Business" (matches Apple's new branding) | UPDATED |
+| Admin Center menu: `Devices > Device onboarding > Enrollment > Apple mobile > Enrollment program tokens` | Same path | UNCHANGED |
+| Admin Center menu: `Tenant administration > Connectors and tokens > Apple VPP tokens` | **Still labeled "Apple VPP tokens"** | NOT YET UPDATED |
+| Admin Center menu: `Devices > Enrollment > Apple > MDM Push Certificate` | Same path | UNCHANGED |
+| Tutorial step language | "Create a token via Apple Business" | UPDATED |
+| Apple Support link targets in tutorials | Link to `https://support.apple.com/guide/apple-business-manager/...` (legacy URL — but auto-redirects to new content) | NOT YET UPDATED |
+
+**v1.6 doc-authoring rule:** When citing Intune-side portal paths, use the **CURRENT in-portal label** verbatim — including "Apple VPP tokens" — and add a parenthetical clarifier `(formerly VPP token, now Apple Business content token)` only on first mention in each runbook. Do NOT mass-rewrite the existing ~30 ABM references in v1.0-v1.5 docs (per v1.6 Q5 option b).
+
+### 6.2 Intune connectors-and-tokens paths v1.6 docs will reference
+
+| Surface | Intune path | Apple Business equivalent |
+|---|---|---|
+| ADE / ABM token (.p7m) | `Devices > Enrollment > Apple > Enrollment program tokens` | `Settings > Preferences > MDM Server Assignments` (legacy) / new equivalent in Apple Business |
+| Content token (VPP successor) | `Tenant administration > Connectors and tokens > Apple VPP tokens` | `Preferences > Payments and Billing > Apps and Books > Content Tokens` |
+| APNs Push Certificate | `Devices > Enrollment > Apple > MDM Push Certificate` | n/a (created at identity.apple.com, not Apple Business) |
+
+---
+
+## 7. Shared iPad Lifecycle — Apple Business-Owned Actions
+
+### 7.1 What Apple Business controls (delegate-able surface)
+
+| Action | Surface | Permission group | v1.6 audience |
+|---|---|---|---|
+| **Reset Shared iPad passcode** for a specific Managed Apple Account user | Apple Business portal — "Reset Shared iPad Passcode" button on the Managed Apple Account profile | People (permission: reset Shared iPad passcode) | L1 (primary v1.6 use case) |
+| **Reset Managed Apple Account password** (broader than passcode) | Apple Business portal — Access Management > user profile | People (permission: reset password) | L1 / Admin |
+| **Delete user session** (free local storage on a specific Shared iPad) | MDM-side `DeleteUser` command (Apple Business does NOT directly expose; v1.6 must clarify this) | n/a — MDM-side | Admin (out of v1.6 scope for runbook depth, but glossary callout needed) |
+| **Reassign Shared iPad device between OUs** | Apple Business — Devices > select > Reassign | Devices (permission: reassign devices) | Admin |
+| **Federated password sync caveat** | Documented: changing Shared iPad passcode in Apple Business does NOT change the federated Entra password | n/a — operational pitfall | L1 + L2 |
+
+Source: [Create or reset user passwords in Apple Business Manager `axmd9c4cbc33`](https://support.apple.com/guide/apple-business-manager/create-or-reset-user-passwords-axmd9c4cbc33/web); [Microsoft Learn — Shared iPad devices](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad). Confidence: HIGH.
+
+### 7.2 Three surfaces converge on Shared iPad — v1.6 must disambiguate
+
+The Shared iPad passcode-reset surface is split across **three places**, and v1.6 must clarify which one each audience touches:
+
+| Surface | What it does | Who uses it |
+|---|---|---|
+| **Apple Business portal** (admin-driven password reset on the Managed Apple Account) | Resets the user's Managed Apple Account credentials globally; affects all devices the user signs into | L1 (per v1.6 scope) — primary v1.6 runbook |
+| **MDM command (`ClearPasscode` / `DeleteUser`)** | Clears device-side passcode without resetting the cloud identity; or deletes a cached user session to free storage | Admin / L2 — out of v1.6 scope (MDM concern) |
+| **Apple Configurator (physical / Bluetooth)** | Local recovery when the device is unreachable via MDM | L2 fallback — out of v1.6 scope (recovery concern) |
+
+**v1.6 implication:** The L1 Shared iPad passcode-reset runbook (REQUIREMENTS) must include an explicit "Apple Business password reset != MDM `ClearPasscode` != local Configurator reset" boundary callout — this is one of the C14-C16 audit-harness check candidates per the milestone scope.
 
 ---
 
-## Sources
+## 8. Apple TV Delegation Surface
 
-- https://learn.microsoft.com/en-us/intune/intune-service/user-help/microsoft-intune-app-linux (updated 2026-04-08) — Linux package name, uninstall commands
-- https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux (updated 2026-04-16) — Linux enrollment, compliance settings, CA scope
-- https://learn.microsoft.com/en-us/intune/user-help/enrollment/enroll-linux (updated 2026-04-08) — Linux supported versions, enrollment process
-- https://learn.microsoft.com/en-us/intune/device-security/compliance/ref-linux-settings (updated 2026-04-16) — Linux compliance settings categories (Allowed Distributions, Custom Compliance, Device Encryption, Password Policy)
-- https://learn.microsoft.com/en-us/intune/device-enrollment/guide-linux (updated 2026-04-16) — Linux enrollment types, constraints
-- https://learn.microsoft.com/en-us/intune/configmgr/comanage/workloads (updated 2026-04-15) — Co-management workload list and slider behavior
-- https://learn.microsoft.com/en-us/intune/configmgr/tenant-attach/device-sync-actions — Tenant attach setup and sync cadence
-- https://learn.microsoft.com/en-us/intune/configmgr/hotfix/2503/31909343 — ConfigMgr CB 2503 summary
-- https://learn.microsoft.com/en-us/intune/intune-service/protect/windows-10-update-rings — WUfB ring policy settings
-- https://learn.microsoft.com/en-us/intune/device-updates/windows/update-ring-policy-settings — Quality/feature deferral values
-- https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-macos — macOS update policy (DDM transition)
-- https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-guide-macos — macOS update admin checklist
-- https://learn.microsoft.com/en-us/intune/device-updates/apple/deprecated-mdm-policies-ios — iOS deprecated MDM update commands
-- https://learn.microsoft.com/en-us/intune/device-updates/apple/software-updates-guide-ios-ipados — iOS update admin checklist
-- https://techcommunity.microsoft.com/blog/intunecustomersuccess/support-tip-changes-to-google-play-strong-integrity-for-android-13-or-above/4435130 — Android MEETS_STRONG_INTEGRITY enforcement timeline
-- https://github.com/microsoft/Microsoft-Win32-Content-Prep-Tool/releases — Win32 Content Prep Tool v1.8.7
-- https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-win32-supersedence — Win32 supersedence and dependency
-- https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-macos — macOS LOB .pkg deployment
-- https://learn.microsoft.com/en-us/intune/intune-service/apps/macos-unmanaged-pkg — macOS unmanaged PKG + scripts
-- https://learn.microsoft.com/en-us/intune/intune-service/apps/lob-apps-macos-dmg — macOS DMG deployment
-- https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple — iOS VPP device vs user licensing
-- https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-add-android-for-work — Android MGP private app publishing
-- https://learn.microsoft.com/en-us/intune/intune-service/fundamentals/reports-export-graph-available-reports — Graph API report names for drift detection
-- https://learn.microsoft.com/en-us/answers/questions/2149662/tenant-to-tenant-migration-with-intune-devices — Tenant migration posture (MEDIUM confidence — Q&A)
-- https://github.com/tcort/markdown-link-check — markdown-link-check npm tool
-- https://github.com/lycheeverse/lychee — lychee Rust link checker
-- https://github.com/lycheeverse/lychee-action — lychee GitHub Action (v0.23.0 default)
-- Community sources (4sysops, mikemdm.de, macadifference.net, intuneirl.com) — DDM enforcement patterns, macOS/iOS deprecation timelines — MEDIUM confidence
+### 8.1 What is delegate-able for Apple TV in Apple Business
+
+| Action | Apple Business permission group | Notes |
+|---|---|---|
+| Add Apple TV to organization (Configurator path) | Devices | Required because most Apple TVs are retail-purchased, not bought through Apple authorized resellers (no Reseller Number flow available for retail purchases) |
+| Assign Apple TV to MDM server (Intune) | Devices | Same flow as iOS / iPadOS / Mac assignment |
+| Assign Apple TV to OU | Devices | Same flow; Apple TV is treated identically to iOS for OU scoping |
+| Reassign Apple TV to different OU | Devices | Cross-org device transfer |
+| Release Apple TV from organization | Devices | Necessary for device disposal / resale |
+| **AirPlay restrictions, Single App Mode, OS update deferrals** | **MDM-side only — NOT Apple Business** | These are configuration profile concerns, owned by Intune. v1.6 documents that they exist but does not document how to configure them (out-of-scope, MDM concern). |
+| **Content assignment to Apple TV** | Apps & Books | Apps for tvOS can be assigned via content token like any other Apple device class |
+
+Source: [Apple Support — Deploy Apple TV `dep027e1d5a0`](https://support.apple.com/guide/deployment/deploy-apple-tv-dep027e1d5a0/web); [Apple Support — Device management restrictions for Apple TV devices `depzf41d7aae`](https://support.apple.com/guide/deployment/restrictions-for-apple-tv-depzf41d7aae/web); [Microsoft Learn — Set up automated device enrollment (ADE) for tvOS](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-tv-os). Confidence: HIGH.
+
+### 8.2 Retail-purchase pitfall
+
+Apple TV devices purchased at retail (Best Buy, Amazon, Apple Store retail) **cannot flow to Apple Business via Reseller Number** because retail isn't an authorized device-enrollment reseller path. They must be added via **Apple Configurator 2 over Bluetooth/USB-C/network**. v1.6 Apple TV delegation runbook must include this constraint as a callout — it's the dominant Apple TV onboarding pitfall.
 
 ---
-*Stack research for: Windows Autopilot & Intune Documentation Suite v1.5*
-*Researched: 2026-04-26*
+
+## 9. Portal & API Surfaces — Canonical URLs for v1.6 Citations
+
+### 9.1 Apple authoritative URLs (use these in v1.6 docs)
+
+| Purpose | URL | Notes |
+|---|---|---|
+| Apple Business portal (sign-in) | `https://business.apple.com` | Primary navigation entry |
+| New Apple Business User Guide | `https://support.apple.com/guide/business/` | All new v1.6 doc citations |
+| Apple Business — Roles & Permissions intro | `https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web` | Canonical for role/permission model |
+| Apple Business — Organizational Units | `https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web` | Canonical for OU model |
+| Apple Business — Content tokens | `https://support.apple.com/guide/business/manage-content-tokens-axme0f8659ec/web` | Canonical for content token + Apps and Books |
+| Apple Business — Federated authentication (Entra) | `https://support.apple.com/guide/business/federated-authentication-microsoft-entra-axm8c1cac980/web` | Canonical for Entra OIDC federation |
+| Apple Business — Sync from IdP (SCIM) | `https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web` | Canonical for SCIM provisioning |
+| Apple Business — Apple Configurator device add | `https://support.apple.com/guide/business/add-devices-using-apple-configurator-axm200a54d59/web` | Apple TV + retail iPad add-flow |
+| Apple Newsroom rebrand announcement | `https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/` | Authoritative for rebrand date |
+| Apple Support — "Apple Business Manager is now Apple Business" banner page | `https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web` | Use as the citation for the glossary rebrand callout |
+| Apple Deployment Guide — Microsoft Entra ID integration | `https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web` | Apple-published Microsoft cross-reference |
+| Apple Deployment Guide — Deploy Apple TV | `https://support.apple.com/guide/deployment/deploy-apple-tv-dep027e1d5a0/web` | Apple TV onboarding overview |
+| Apple Deployment Guide — Apple TV restrictions | `https://support.apple.com/guide/deployment/restrictions-for-apple-tv-depzf41d7aae/web` | Apple TV management restrictions |
+| Apple Deployment Guide — Prepare Shared iPad | `https://support.apple.com/guide/deployment/prepare-shared-ipad-dep6fa9dd532/web` | Shared iPad architecture |
+
+### 9.2 Microsoft authoritative URLs (cross-references)
+
+| Purpose | URL |
+|---|---|
+| Intune tutorial: enroll iOS/iPadOS via Apple Business | `https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios` |
+| Intune tvOS ADE setup | `https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-tv-os` |
+| Intune Shared iPad guidance | `https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad` |
+| Intune Apple VPP management | `https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple` |
+| Microsoft Entra SSO plug-in for Apple devices | `https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin` |
+
+### 9.3 API surface (Apple Business — for the Device API Manager preset role)
+
+- The new **Device API Manager** preset custom role exposes the Apple Business **Device API** — a developer-facing surface (not part of the SCIM provisioning surface).
+- Apple has not yet published a dedicated developer.apple.com landing page for the Apple Business Device API as of 2026-05-20; v1.6 docs should treat this as an **acknowledge-but-do-not-document-deeply** surface unless Phase 62/63 research finds an authoritative API reference URL.
+- Confidence: MEDIUM (the role exists per Apple's roles intro page; the API documentation URL was not located).
+
+---
+
+## 10. Out-of-Scope Orientation — What v1.6 Docs MUST NOT Add
+
+> Downstream consumers (REQUIREMENTS, ROADMAP, FEATURES) should treat the items below as explicitly excluded — anti-features for the v1.6 scope.
+
+| Surface | Reason excluded |
+|---|---|
+| **Apple Business Connect (brand profiles, Maps ads, Branded Mail, Tap to Pay, Verify with Wallet)** | Customer-facing surface; NOT device delegation. Mention in v1.6 glossary callout for completeness only. |
+| **Apple Business Essentials (built-in Apple-hosted MDM, Blueprints)** | Microsoft Intune is the MDM throughout this docs suite. Apple's built-in MDM is a competing surface; v1.6 mentions Blueprints as a concept in glossary only. |
+| **Apple School Manager (ASM)** specific features | ASM is functionally identical to ABM for MDM purposes (per v1.3 doc precedent); v1.6 keeps the existing ASM=ABM cross-reference and does not add ASM-school-specific content (SIS rostering, classes, etc.). |
+| **Multiple separate Apple Business accounts** (cross-tenant federation) | v1.6 scope is one Apple Business account with OUs + custom roles. Multi-account topology is Q3 b/c — explicitly out of scope. |
+| **Intune-side RBAC** (Intune roles, scope tags, custom Intune permissions) | MDM concern; covered by other Intune RBAC docs outside v1.6 scope. v1.6 runbooks carry explicit boundary callouts here (audit C14-C16). |
+| **ChromeOS / Android / Windows surfaces** | Wrong platform. |
+| **iCloud personal account surface** (consumer features) | Not an enterprise admin surface. |
+| **Apple Push Notification certificate (APNs) lifecycle deep-dive** | Already covered by existing v1.2/v1.3 docs; v1.6 only references. |
+| **Profile-based User Enrollment (legacy)** | Deprecated iOS 18+; already documented; v1.6 does not refresh. |
+
+---
+
+## 11. What NOT to Use (rebrand-era anti-patterns)
+
+| Anti-pattern | Why | Use Instead |
+|---|---|---|
+| Saying "Apple Business Manager" in newly authored v1.6 docs | Apple retired the name 2026-04-14 | "Apple Business (formerly Apple Business Manager)" on first mention; "Apple Business" thereafter |
+| Saying "Location" in newly authored v1.6 docs | Renamed to Organizational Unit | "Organizational Unit (OU)" — on first mention add "(formerly Location)" |
+| Saying "privileges" in newly authored v1.6 docs | Apple renamed to "permissions" | "permissions" |
+| Saying "Managed Apple ID" in newly authored v1.6 docs | Apple renamed in 2024 (predates Apple Business rebrand) | "Managed Apple Account" with parenthetical "(Microsoft Intune documentation continues to use Managed Apple ID)" on first mention |
+| Linking to legacy `/guide/apple-business-manager/` URLs in newly authored v1.6 docs | Apple's new canonical is `/guide/business/` | Use `/guide/business/...` paths; same article IDs resolve at both paths but new path is preferred |
+| Mass-sweeping existing v1.0–v1.5 docs to rename ABM → Apple Business | Out of v1.6 scope per Q5 option b | Leave existing ABM references alone; only add a rebrand callout at the 3 canonical sites (glossary + macOS ABM-config intro + iOS ABM-token intro) |
+| Renaming "Apple VPP tokens" in Intune-side documentation prose | Microsoft has not renamed the in-portal label as of 2026-04-30 | Use Microsoft's current verbatim label "Apple VPP tokens" when citing Intune-portal paths |
+| Claiming "Apple Business has a max of N Organizational Units" | Apple publishes no max | State "Apple does not publish a maximum OU count; consult Apple Enterprise support for large-scale deployments (>100 OUs)" |
+| Documenting Intune-side RBAC alongside Apple Business roles | Out of v1.6 scope (MDM concern) | Add explicit boundary callout "This runbook covers the Apple Business surface only; Intune-side RBAC is documented separately at [Intune RBAC docs]" |
+
+---
+
+## 12. Cross-Platform Applicability Matrix
+
+Per the v1.6 quality gate requirement: which capabilities apply to which device classes.
+
+| Apple Business capability | iOS / iPadOS | macOS | Apple TV (tvOS) | Shared iPad |
+|---|:---:|:---:|:---:|:---:|
+| Add device via reseller upload | YES | YES | YES (rare; most retail) | YES |
+| Add device via Apple Configurator | YES | YES | YES (primary path for tvOS) | YES |
+| Assign device to OU | YES | YES | YES | YES |
+| Reassign device between OUs | YES | YES | YES | YES |
+| Release device from organization | YES | YES | YES | YES |
+| Content token / Apps and Books | YES (VPP iOS) | YES (VPP macOS) | YES (tvOS apps) | YES (VPP user-licensed for student/shared scenarios) |
+| Managed Apple Account sign-in | YES (AD-UE; Shared iPad) | YES (Sonoma+) | NO (tvOS doesn't sign into Managed Apple Account at user level) | YES (REQUIRED — Shared iPad mandates Managed Apple Account) |
+| Reset Shared iPad passcode (Apple Business UI) | n/a | n/a | n/a | YES (the unique Shared iPad operation) |
+| AirPlay restrictions | n/a | n/a | YES (but MDM-side, not Apple Business) | n/a |
+| OS update deferral | YES (DDM, MDM-side) | YES (DDM, MDM-side) | YES (MDM-side) | YES (MDM-side) |
+| Federated authentication (OIDC) | YES (Managed Apple Account at AD-UE) | YES (Managed Apple Account at sign-in) | NO (tvOS does not consume Managed Apple Account identity directly) | YES (Shared iPad sign-in) |
+| Custom role scoping per OU | n/a (device class doesn't matter for role scope; admin-side) | same | same | same |
+
+Confidence: HIGH for matrix structure; HIGH for cell values.
+
+---
+
+## 13. Confidence Summary
+
+| Finding | Confidence | Source basis |
+|---|---|---|
+| Rebrand name + GA date (2026-04-14) | HIGH | Apple Newsroom + Apple Support banner page |
+| URL surface (business.apple.com + /guide/business/) | HIGH | Direct fetch from Apple Support |
+| Legacy fixed-role triad retired in name | HIGH | Apple Business intro page lists new role names + custom role mechanism |
+| Custom role authoring + multi-role assignment | HIGH | Apple Business intro page explicit text |
+| Full per-permission table for each subgroup | MEDIUM | Apple's intro page lists categories but sub-page tables not extractable via WebFetch; manual scrape recommended for v1.6 Phase 1 glossary |
+| OU hierarchy + scoping behavior | HIGH for primary structure; MEDIUM for nesting depth | Apple article preserved with same ID; community confirms sublocation exists; Apple new docs describe primarily flat |
+| Apple OU max count = unpublished | HIGH (negative claim verified) | Multiple Apple community threads explicitly note no published max |
+| Content token model (per-OU, 1-year, share-allowed) | HIGH | Apple support page + community confirmation |
+| Microsoft Entra federation status (GA, OIDC + SCIM) | HIGH | Apple Support pages + Microsoft Learn page dated 2025-11-04 |
+| National-cloud Entra unsupported | HIGH | Direct quote from Apple deployment guide |
+| Intune-side label still "Apple VPP tokens" | HIGH | Microsoft Learn tutorial dated 2026-04-30 |
+| Shared iPad passcode-reset split across 3 surfaces | HIGH | Apple Support + Microsoft Learn + Apple Deployment Guide consensus |
+| Apple TV retail-purchase Configurator-only path | HIGH | Multiple Apple Support + Microsoft Learn confirmations |
+| Device API Manager preset role exists | HIGH | Apple Business intro page |
+| Device API public API URL | UNKNOWN — not located | (Apple does not currently publish a developer.apple.com landing page for the Apple Business Device API surface) |
+
+---
+
+## 14. Sources
+
+### Apple-authoritative (HIGH confidence)
+
+- [Apple Newsroom — Introducing Apple Business (2026-03-24)](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/) — rebrand announcement, GA date 2026-04-14
+- [Apple Support — Apple Business Manager is now Apple Business `axmd79d79dea`](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web) — official banner page
+- [Apple Business User Guide — Welcome](https://support.apple.com/guide/business/welcome/web) — top of new docs tree
+- [Apple Business User Guide — Intro to roles and permissions `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web) — role + permission model
+- [Apple Business User Guide — Configure organizational units `axmfdbe2cb0d`](https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web) — OU model
+- [Apple Business User Guide — Manage content tokens `axme0f8659ec`](https://support.apple.com/guide/business/manage-content-tokens-axme0f8659ec/web) — content token (per-OU)
+- [Apple Business User Guide — Federated authentication with Microsoft Entra ID `axm8c1cac980`](https://support.apple.com/guide/business/federated-authentication-microsoft-entra-axm8c1cac980/web) — Entra OIDC federation
+- [Apple Business User Guide — Sync user accounts from your identity provider `axm526a05814`](https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web) — SCIM provisioning
+- [Apple Business User Guide — Add devices using Apple Configurator `axm200a54d59`](https://support.apple.com/guide/business/add-devices-using-apple-configurator-axm200a54d59/web) — manual device add
+- [Apple Business User Guide — Assign, reassign, or unassign devices `axmf500c0851`](https://support.apple.com/guide/apple-business-manager/axmf500c0851/web) — device assignment (legacy URL, same content)
+- [Apple Business Manager User Guide — Create or reset user passwords `axmd9c4cbc33`](https://support.apple.com/guide/apple-business-manager/create-or-reset-user-passwords-axmd9c4cbc33/web) — Shared iPad passcode reset
+- [Apple Deployment Guide — Integrate with Microsoft Entra ID `depa85a35cf2`](https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web) — Entra integration (published 2025-11-04)
+- [Apple Deployment Guide — Deploy Apple TV `dep027e1d5a0`](https://support.apple.com/guide/deployment/deploy-apple-tv-dep027e1d5a0/web) — Apple TV onboarding
+- [Apple Deployment Guide — Restrictions for Apple TV devices `depzf41d7aae`](https://support.apple.com/guide/deployment/restrictions-for-apple-tv-depzf41d7aae/web) — Apple TV management surface
+- [Apple Deployment Guide — Prepare Shared iPad `dep6fa9dd532`](https://support.apple.com/guide/deployment/prepare-shared-ipad-dep6fa9dd532/web) — Shared iPad architecture
+
+### Microsoft-authoritative (HIGH confidence)
+
+- [Microsoft Learn — Tutorial: Use Apple Business to enroll iOS/iPadOS devices in Intune](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios) (updated 2026-04-30; uses "Apple Business" terminology in prose)
+- [Microsoft Learn — Set up automated device enrollment (ADE) for tvOS](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-tv-os)
+- [Microsoft Learn — Shared iPad devices](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad)
+- [Microsoft Learn — Manage Apple Volume-Purchased Apps](https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple)
+- [Microsoft Learn — Microsoft Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (published 2025-11-04)
+
+### Third-party (MEDIUM confidence — use only to corroborate Apple-authoritative)
+
+- [HardSoft — Understanding Role Privileges in Apple Business Manager](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/) — pre-rebrand role/permission summary (used to triangulate per-permission examples in §2.4)
+- [Apple Insider — Apple Business goes free (2026-03-24)](https://appleinsider.com/articles/26/03/24/apple-business-goes-free-consolidating-business-and-brand-management-tools-in-one-platform) — corroborates rebrand timing
+- [MacRumors — Apple Launches Apple Business Platform (2026-04-14)](https://www.macrumors.com/2026/04/14/apple-business-platform-launches/) — corroborates GA date
+- [9to5Mac — Apple @ Work: Managed Apple Accounts and federated authentication (2025-11-15)](https://9to5mac.com/2025/11/15/apple-work-why-managed-apple-accounts-and-federated-authentication-are-now-essential-for-every-enterprise/) — federation context
+
+### Last verified
+
+`last_verified: 2026-05-20` — all URLs and dates above were verified against the listed sources during the v1.6 research phase.
+
+---
+
+*Stack research for: v1.6 Apple Business Delegated Governance — Apple Business platform surfaces for documentation citation in iOS/iPadOS + macOS delegation runbooks*
+*Researched: 2026-05-20*

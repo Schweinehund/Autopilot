@@ -1,563 +1,744 @@
-# Architecture Patterns: v1.5 Integration Analysis
+# Architecture Research: v1.6 Apple Business Delegated Governance Integration
 
-**Domain:** Microsoft Intune provisioning documentation suite (5th platform + operational depth)
-**Researched:** 2026-04-26
-**Source basis:** Existing codebase inspection — PROJECT.md, STATE.md, RETROSPECTIVE.md, docs/index.md, docs/admin-setup-android/00-overview.md, docs/reference/android-capability-matrix.md, scripts/validation/v1.4.1-milestone-audit.mjs, plus directory structure enumeration.
+**Domain:** Microsoft Intune docs corpus — Apple Business delegated permissions layered onto 5-platform tree
+**Researched:** 2026-05-20
+**Overall confidence:** HIGH for structural decisions inheriting from v1.2 / v1.4 / v1.4.1 / v1.5 precedents; MEDIUM for Apple Business privilege surface (verified rebrand from training data: Apple Business Manager → Apple Business announced 2026-03-24, GA 2026-04-14; built-in roles People Manager / Device Enrollment Manager / Content Manager + custom roles; role assignment is per-Location)
+
+**Source basis:**
+- `.planning/PROJECT.md` (Q-decisions Q2/Q5; v1.4/v1.4.1/v1.5 patterns)
+- `.planning/MILESTONES.md` (v1.5 architectural patterns)
+- `docs/index.md` (hub structure: Choose Your Platform selector + 5 platform H2s + Operations H2)
+- `docs/admin-setup-macos/00-overview.md` + `docs/admin-setup-ios/00-overview.md` (dual-portal + branching-Mermaid path-selector)
+- `docs/admin-setup-android/00-overview.md` (tri-portal + 4th-portal Knox overlay pattern)
+- `docs/admin-setup-linux/00-overview.md` (5-step linear sequence)
+- `docs/operations/00-index.md` (cross-platform ops index pattern)
+- `docs/reference/4-platform-capability-comparison.md` (5 platforms × 6 H2 × 48 rows = 240 cells; link-not-copy)
+- `docs/reference/{macos,ios}-capability-matrix.md` (bilateral / trilateral matrix structure)
+- `docs/_glossary-macos.md` (Apple-shared glossary for macOS + iOS)
+- `docs/l1-runbooks/` (33 runbooks, next = 34), `docs/l2-runbooks/` (25 runbooks, next = 26)
+- `docs/common-issues.md` (cross-platform symptom routing)
+- `docs/quick-ref-l1.md`, `docs/quick-ref-l2.md`
+- Apple Support documentation (verified rebrand + role architecture)
 
 ---
 
-## Recommended Architecture
+## Executive Architecture Summary
 
-v1.5 extends the existing per-platform tree with a new `docs/admin-setup-linux/` branch parallel to all existing `admin-setup-{platform}/` directories, adds a hybrid operations layer at `docs/operations/` (Option C — see Pillar 3 decision below), closes two v1.4 nav-unification deferrals via targeted modifications to existing hub files, and extends the audit harness via Path A copy lineage.
+v1.6 adds a **hybrid Apple Business docs tree** under a new `docs/cross-platform/apple-business/` directory (mirroring the `docs/operations/` v1.5 pattern) for foundation, glossary-cross-link target, multi-org architecture, custom-role authoring, and delegation runbooks shared between iOS and macOS. **Platform-specific overlays** (the 2 rebrand intro callouts at existing macOS ABM-config doc and existing iOS ABM-token doc) remain in place per the Q5 (b) no-corpus-sweep contract. Apple Business **does NOT become a 6th platform** (no `docs/admin-setup-apple-business/`); it becomes a **5th Operations domain** under the existing v1.5 Operations H2 in the hub, because conceptually Apple Business is operational/multi-org-governance over existing-managed iOS+macOS devices, not a provisioning surface.
 
-### Existing Tree Shape (carry-forward, DO NOT modify structure)
+Apple TV and shared iPad become **first-class admin workflows** *inside* the Apple Business tree (because they are Apple Business-owned lifecycle: device assignment + Managed Apple Account provisioning + sessions), with a single sub-row added to the existing iOS capability matrix (no new H2). The 240-cell comparison matrix structure is **preserved unchanged** — Apple Business is not a capability axis comparable to Enrollment/Configuration/etc., so we deliberately do NOT add a 7th H2 (this avoids the D-13/D-18 sibling-matrix reciprocity cascade and keeps the C12 240-cell math intact).
+
+A **new shared glossary file** `docs/_glossary-apple-business.md` (split architecture, option c) holds Apple Business-delegation-specific terms; reciprocal see-also entries are added to the 5 existing glossaries via the CLEAN-08 pattern. L1 / L2 runbooks continue global numbering (L1 starts at 34, L2 starts at 26) with a new frontmatter convention `platform: ios+macos` (or `+shared-ipad` / `+apple-tv` where applicable) — first use of compound-platform frontmatter, inheriting from the v1.4 D-14 "platform frontmatter" pattern but extending it. The audit harness v1.6-milestone-audit.mjs is a Path-A copy from v1.5 + C14/C15/C16 new blocking checks.
+
+---
+
+## Standard Architecture
+
+### System Overview — Where v1.6 Content Lives
 
 ```
 docs/
-  _glossary.md                      (Windows)
-  _glossary-macos.md                (Apple — macOS + iOS shared)
-  _glossary-android.md              (Android Enterprise)
-  admin-setup-{apv1,apv2,macos,ios,android}/  (per-platform admin guides)
-  android-lifecycle/, ios-lifecycle/, macos-lifecycle/, lifecycle/, lifecycle-apv2/
-  l1-runbooks/00-index.md + 01..29-{platform}-*.md
-  l2-runbooks/00-index.md + 01..23-{platform}-*.md
-  reference/  (capability matrices + shared references)
-  decision-trees/  (triage flowcharts per platform)
-  index.md, common-issues.md, quick-ref-l1.md, quick-ref-l2.md  (hub files)
+├── _glossary.md                                (Windows — unchanged)
+├── _glossary-macos.md                          (Apple-shared — unchanged at v1.6, gains reciprocal entry only)
+├── _glossary-ios.md                            (does NOT exist — Apple terms collapse to _glossary-macos.md per v1.3 D-22)
+├── _glossary-android.md                        (Android — unchanged, gains reciprocal entry only)
+├── _glossary-linux.md                          (Linux — unchanged, gains reciprocal entry only)
+├── _glossary-apple-business.md                 ★ NEW v1.6 — delegated-governance terminology
+├── index.md                                    ☆ MOD v1.6 — Operations H2 gains 5th sub-section
+├── common-issues.md                            ☆ MOD v1.6 — append cross-org-boundary symptom rows
+├── quick-ref-l1.md                             ☆ MOD v1.6 — append Apple Business L1 H2
+├── quick-ref-l2.md                             ☆ MOD v1.6 — append Apple Business L2 H2
+├── admin-setup-apv1/                           (Windows APv1 — unchanged)
+├── admin-setup-apv2/                           (Windows APv2 — unchanged)
+├── admin-setup-macos/
+│   ├── 00-overview.md                          (unchanged)
+│   ├── 01-abm-configuration.md                 ☆ MOD v1.6 — intro callout #1 (Q5 b)
+│   └── (rest unchanged)
+├── admin-setup-ios/
+│   ├── 00-overview.md                          (unchanged)
+│   ├── 02-abm-token.md                         ☆ MOD v1.6 — intro callout #2 (Q5 b)
+│   └── (rest unchanged)
+├── admin-setup-android/                        (Android — unchanged)
+├── admin-setup-linux/                          (Linux — unchanged)
+├── cross-platform/                             ★ NEW v1.6 — first cross-platform/ tree
+│   └── apple-business/
+│       ├── 00-overview.md                      ★ Foundation + rebrand callout #3 (Q5 b — canonical site)
+│       ├── 01-role-privilege-model.md          ★ Built-in roles + privilege catalog + scope-boundary table
+│       ├── 02-locations-architecture.md        ★ Locations concept + multi-location patterns
+│       ├── 03-locations-vs-custom-roles.md     ★ Decision matrix Q2-b vs Q2-c vs combination
+│       ├── 04-custom-role-authoring.md         ★ Step-by-step authoring guide (Locations prerequisite)
+│       ├── 05-sub-org-admin-onboarding.md      ★ Onboarding workflow for new sub-org admin
+│       ├── 06-mdm-server-assignment.md         ★ MDM server scoping + multi-cohort device assignment
+│       ├── 07-content-token-consolidation.md   ★ VPP content token unification under Locations
+│       ├── 08-managed-apple-account.md         ★ Managed Apple Account provisioning per Location
+│       ├── 09-shared-ipad-lifecycle.md         ★ Shared iPad multi-org provisioning + Sessions
+│       ├── 10-apple-tv-lifecycle.md            ★ Apple TV multi-org provisioning
+│       ├── 11-vpp-catalog-runbook.md           ★ Delegation runbook — VPP catalog scoped to Location
+│       ├── 12-shared-ipad-passcode-reset.md    ★ Delegation runbook — passcode reset (L1 cross-link target)
+│       ├── 13-device-release-runbook.md        ★ Delegation runbook — device release
+│       ├── 14-device-transfer-runbook.md       ★ Delegation runbook — inter-Location device transfer
+│       ├── 15-audit-log-scoping.md             ★ Delegation runbook — audit log scope per role
+│       └── 16-cross-org-boundary-cheat-sheet.md ★ "What Apple Business owns vs what Intune owns" matrix
+├── l1-runbooks/
+│   ├── 00-index.md                             ☆ MOD v1.6 — append Apple Business section
+│   ├── ... (00-33 unchanged)
+│   └── 34-apple-business-shared-ipad-passcode-reset.md  ★ NEW (next global number)
+├── l2-runbooks/
+│   ├── 00-index.md                             ☆ MOD v1.6 — append Apple Business section
+│   ├── ... (00-25 unchanged)
+│   └── 26-apple-business-permission-denied.md  ★ NEW (next global number)
+├── operations/                                 ☆ MOD v1.6 — 00-index.md gains 5th H2
+│   ├── 00-index.md
+│   ├── co-management/
+│   ├── patch-management/
+│   ├── app-lifecycle/
+│   └── drift-migration/
+└── reference/
+    ├── macos-capability-matrix.md              (unchanged — no Apple Business H2)
+    ├── ios-capability-matrix.md                ☆ MOD v1.6 — 3 rows added under existing Enrollment H2 (Apple TV / Shared iPad / Apple Business delegation)
+    └── 4-platform-capability-comparison.md     (UNCHANGED — Apple Business is NOT a 7th H2)
 ```
 
-### v1.5 Additions and Modifications
+**Legend:** ★ NEW, ☆ MOD (existing file, surgical edit only), unmarked = untouched
 
-```
-docs/
-  _glossary-linux.md                          NEW — 5th platform glossary
-  linux-lifecycle/                            NEW — enrollment overview + prerequisites
-    00-enrollment-overview.md
-    01-linux-prerequisites.md
-  admin-setup-linux/                          NEW — parallel to admin-setup-android/
-    00-overview.md
-    01-intune-linux-agent.md
-    02-enrollment-profile.md
-    03-compliance-policy.md
-    04-app-delivery.md
-    05-conditional-access.md
-  reference/
-    linux-capability-matrix.md               NEW — 5th capability matrix
-    4-platform-capability-comparison.md      NEW — DEFER-08 deliverable
-  l1-runbooks/
-    30-linux-enrollment-failed.md            NEW
-    31-linux-compliance-non-compliant.md     NEW
-    32-linux-ca-blocking-web-access.md       NEW
-    33-linux-agent-service-failure.md        NEW
-  l2-runbooks/
-    24-linux-log-collection.md               NEW
-    25-linux-agent-investigation.md          NEW
-  decision-trees/
-    09-linux-triage.md                       NEW
-  operations/                                NEW top-level dir (Option C, see below)
-    00-index.md
-    co-management/
-      00-overview.md                         (Windows-led; macOS/iOS/Android contextual notes)
-      01-windows-tenant-attach.md
-      02-windows-workload-sliders.md
-      03-cocmgmt-migration-paths.md
-    patch-management/
-      00-overview.md
-      01-windows-wufb-rings.md
-      02-macos-update-enforcement.md
-      03-ios-update-lifecycle.md
-      04-android-patch-delivery.md
-    app-lifecycle/
-      00-overview.md
-      01-windows-win32-msix-scale.md
-      02-macos-pkg-dmg-pipeline.md
-      03-ios-vpp-licensing.md
-      04-android-mgp-lifecycle.md
-    drift-migration/
-      00-overview.md
-      01-windows-drift-detection.md
-      02-macos-ios-drift-detection.md
-      03-android-drift-detection.md
-      04-tenant-migration-runbook.md
-  index.md                                   MODIFIED — Linux H2 + ops-depth section
-  common-issues.md                           MODIFIED — Android symptom routing (DEFER-07)
-  quick-ref-l1.md                            MODIFIED — Android + Linux sections
-  quick-ref-l2.md                            MODIFIED — Android + Linux sections
-  _glossary-android.md                       MODIFIED — Linux see-also reciprocal
-  _glossary-macos.md                         MODIFIED — Linux see-also reciprocal
-  _glossary.md                               MODIFIED — Linux see-also reciprocal
-  reference/android-capability-matrix.md    MODIFIED — remove deferred-4-platform footer stub
-  reference/macos-capability-matrix.md      MODIFIED — cross-link to 4-platform-comparison
-  reference/ios-capability-matrix.md        MODIFIED — cross-link to 4-platform-comparison
-scripts/validation/
-  v1.5-milestone-audit.mjs                  NEW (Path A copy of v1.4.1)
-  v1.5-audit-allowlist.json                 NEW (sidecar for v1.5 harness)
-```
+### Component Responsibilities
+
+| Component | Responsibility | Inherits From |
+|-----------|---------------|---------------|
+| `docs/cross-platform/apple-business/` | All v1.6 NEW content — foundation, multi-org architecture, admin guides, delegation runbooks | New top-level convention; modeled after `docs/operations/` v1.5 pattern |
+| `_glossary-apple-business.md` | Delegated-governance-specific terms; reciprocal see-also from other 5 glossaries | Glossary split pattern from v1.4 (`_glossary-android.md`) + v1.5 (`_glossary-linux.md`) |
+| `_glossary-macos.md` | Apple-platform terms remain here (ABM, ADE, Supervision, VPP, APNs); gains see-also pointer to Apple Business glossary; **no entry rewrites** | CLEAN-08 v1.5 reciprocal-see-also pattern |
+| `admin-setup-macos/01-abm-configuration.md:1` | Intro callout flagging rebrand (canonical site #2) | v1.4 platform-frontmatter no-retroactive-sweep precedent |
+| `admin-setup-ios/02-abm-token.md:1` | Intro callout flagging rebrand (canonical site #3) | Same as above |
+| `cross-platform/apple-business/00-overview.md:1` | Rebrand callout #1 (canonical site for harness C14 scan) | New convention; first canonical content site |
+| `l1-runbooks/34-*.md` | L1 shared iPad passcode reset; frontmatter `platform: ios+macos+shared-ipad` | L1 global numbering from v1.4 (22-29) + v1.5 (30-33) |
+| `l2-runbooks/26-*.md` | L2 Apple Business permission-denied diagnostic; frontmatter `platform: ios+macos` | L2 global numbering from v1.4.1 (22-23) + v1.5 (24-25) |
+| `reference/ios-capability-matrix.md` | Adds rows for "Apple TV management", "Shared iPad sessions", "Apple Business delegation surface" under existing Enrollment H2; iOS column only | v1.3 iOS matrix incremental-row pattern |
+| `reference/4-platform-capability-comparison.md` | **UNCHANGED** — Apple Business is not a capability axis | C12 240-cell structural validator gate; D-13/D-18 sibling-matrix reciprocity preserved |
+| `docs/index.md` Operations H2 | Gains "### Apple Business Delegated Governance" sub-section pointing into `cross-platform/apple-business/` | v1.5 Operations H2 sub-section pattern (Co-Management / Patch / App / Drift / **+ Apple Business**) |
+| `docs/common-issues.md` | Append "## Apple Business Governance Failure Scenarios" H2 with cross-org-boundary symptom routing | v1.5 Phase 57 Android append-only pattern |
+| `docs/quick-ref-l1.md` / `quick-ref-l2.md` | Append `## Apple Business Quick Reference` H2 each | v1.5 Phase 57 / CLEAN-03 / CLEAN-04 append-only pattern |
+| Audit harness v1.6 | Path-A copy v1.5→v1.6 + C14/C15/C16 new blocking checks | v1.5 Path-A v1.4.1→v1.5 precedent (AUDIT-01) |
 
 ---
 
-## Component Boundaries
+## Architectural Decisions (Recommended)
 
-| Component | Responsibility | New in v1.5 | Communicates With |
-|-----------|---------------|-------------|-------------------|
-| `docs/admin-setup-linux/` | Linux Intune client admin setup guides (6 files) | YES — new dir | `linux-lifecycle/`, `_glossary-linux.md`, `linux-capability-matrix.md`, hub files |
-| `docs/linux-lifecycle/` | Linux enrollment overview + prerequisites | YES — new dir | `admin-setup-linux/`, L1/L2 runbooks, glossary |
-| `docs/_glossary-linux.md` | Linux-specific Intune terminology with cross-platform callouts | YES — new file | All 3 existing glossaries (reciprocal see-also) |
-| `docs/reference/linux-capability-matrix.md` | Feature surface comparison: Linux vs Windows/macOS/iOS/Android | YES — new file | `4-platform-capability-comparison.md`, `admin-setup-linux/`, L1/L2 runbooks |
-| `docs/l1-runbooks/30..33-linux-*.md` | L1 scenario runbooks for Linux (4 files) | YES — new files | `00-index.md` L1 Linux section, decision tree 09 |
-| `docs/l2-runbooks/24..25-linux-*.md` | L2 investigation runbooks for Linux (2 files) | YES — new files | `00-index.md` L2 Linux section |
-| `docs/decision-trees/09-linux-triage.md` | Linux Mermaid triage decision tree | YES — new file | L1 runbooks 30-33, `linux-lifecycle/` |
-| `docs/operations/` | Cross-platform operational depth (4 domains × 4-5 platforms) | YES — new dir | All platform admin-setup dirs, `reference/`, hub files |
-| `docs/reference/4-platform-capability-comparison.md` | 4-platform side-by-side matrix (DEFER-08) | YES — new file | All 4 existing capability matrices (cross-link, not duplicate) |
-| `docs/index.md` (MODIFIED) | Navigation hub — add Linux H2 + ops-depth section | MODIFIED | All new Linux files + ops files |
-| `docs/common-issues.md` (MODIFIED) | Android symptom routing (DEFER-07) | MODIFIED | Android L1 runbooks 22-29 |
-| `docs/quick-ref-l1.md`, `quick-ref-l2.md` (MODIFIED) | Android + Linux quick-ref sections (DEFER-07 + Linux) | MODIFIED | L1/L2 runbooks |
-| `scripts/validation/v1.5-milestone-audit.mjs` | Audit harness — Linux + ops-domain checks | YES — new file | v1.4.1 harness lineage (Path A copy) |
+The following 10 decisions track 1:1 against the orchestrator's 10 sub-questions. Each carries: option taken / alternatives rejected / rejection rationale / inherited precedent / confidence.
 
 ---
 
-## Pillar 2 — Linux Integration
+### D-A1: Directory Placement — `docs/cross-platform/apple-business/` (Option d, hybrid leaning to "c")
 
-### Linux Admin Docs Location
+**Option taken:** Option d (hybrid) — foundation/glossary/multi-org architecture/runbooks all live in NEW `docs/cross-platform/apple-business/`. The 2 platform-specific intro callouts (Q5 b) live as surgical edits inside existing `admin-setup-macos/01-abm-configuration.md` and `admin-setup-ios/02-abm-token.md`. The new tree introduces the first `docs/cross-platform/` parent directory (analogous to `docs/operations/`).
 
-`docs/admin-setup-linux/` is the correct home. This is a direct parallel to `admin-setup-android/`, `admin-setup-macos/`, `admin-setup-ios/`, `admin-setup-apv1/`, `admin-setup-apv2/`. The convention is per-platform, not per-enrollment-mode within a platform. Six files match the established admin-guide depth for a narrower platform (Linux has a smaller Intune surface than Android):
+**Alternatives considered + rejection rationale:**
 
-```
-docs/admin-setup-linux/
-  00-overview.md            — enrollment-path selector (simpler than Android's 6-branch Mermaid)
-  01-intune-linux-agent.md  — deb package installation, daemon service setup, agent lifecycle
-  02-enrollment-profile.md  — enrollment profile creation in Intune admin center
-  03-compliance-policy.md   — supported compliance settings (OS version, password, encryption)
-  04-app-delivery.md        — script-based app delivery (no MSI/MSIX/.pkg; shell scripts via Intune)
-  05-conditional-access.md  — web-app CA only (no native CA on Linux per known scope constraint)
-```
+| Option | Why Rejected |
+|--------|--------------|
+| (a) `docs/admin-setup-apple-business/` (treats Apple Business as a 6th platform) | Creates a peer to the 5 existing platform directories, but Apple Business is NOT a platform — it's a delegated-permissions surface that spans iOS+macOS. Adding a 6th platform directory would force a 6th Choose-Your-Platform bullet in `docs/index.md`, a 6th glossary (already deciding to add one), and would imply admins should look here for *primary* iOS/macOS provisioning rather than for governance. Violates the platform-as-target-device-OS taxonomy v1.2 established. |
+| (b) Extend `admin-setup-macos/` + `admin-setup-ios/` with shared `0X-apple-business-*.md` docs cross-linked between the two | Creates duplicate doc maintenance (or relies on symlinks, which break on git/SharePoint export). The Q5 (b) decision explicitly says "iOS+macOS share one merged docs tree" — this option produces two trees that *must* stay in lockstep. Violates the cross-platform v1.2 single-source-of-truth pattern. |
+| (c) `docs/cross-platform/apple-business/` mirroring `docs/operations/` v1.5 pattern exactly (no platform-specific overlays) | Pure-c is rejected because Q5 (b) decision requires intro callouts at the 2 existing admin docs. Pure-c can't satisfy the canonical-callout-sites requirement without also editing existing docs. Hybrid (d) adds the 2 callouts on top of (c). |
 
-A `linux-lifecycle/` directory with `00-enrollment-overview.md` + `01-linux-prerequisites.md` precedes the admin guides (mirrors `ios-lifecycle/`, `android-lifecycle/`).
+**Inherits from:** `docs/operations/` v1.5 pattern (Phase 59 Plan 59-05) — operations content lived in a new top-level directory because it spans multiple platforms by operational axis rather than per-platform. Same logic here: Apple Business governance spans 2 platforms (iOS+macOS) by delegation axis. Plus v1.4 platform-frontmatter no-retroactive-sweep precedent (D-14) for the surgical 2-callout edits.
 
-### Linux Capability Matrix Structure
+**Why "cross-platform/" rather than "operations/apple-business/":** Apple Business is a *governance* surface (multi-org administration of who-can-do-what), not an *operations* surface (what to do to devices). It's conceptually adjacent to operations but the categorical distinction matters for navigation discoverability — admins look here for *permission-delegation patterns*, not for patch/app/drift workflows. Reserving `cross-platform/` as a parent leaves room for future cross-platform-but-not-operations content (e.g., cross-platform identity, cross-platform supervision concepts).
 
-`docs/reference/linux-capability-matrix.md` follows the established pattern (platform vs feature rows across 5 domains: Enrollment, Configuration, App Deployment, Compliance, Software Updates) but with a narrower column count. Because Linux is one platform (not a multi-mode platform like Android), the matrix is effectively Linux vs existing platforms — structured as a 5-platform comparison (Linux | Windows | macOS | iOS | Android) OR as a Linux-focused bilateral (Linux column + "Windows/macOS/iOS/Android" combined reference column) to avoid duplication with `4-platform-capability-comparison.md`.
+**PITFALL-6 anchor-stability surface:** Zero existing anchor changes because we ADD new files and ADD content to existing docs only. The 2 intro-callout edits at `admin-setup-macos/01-abm-configuration.md:1` and `admin-setup-ios/02-abm-token.md:1` add content above the existing H1 — no existing H2/H3 anchors shift. Append-only contract enforced.
 
-Recommended shape: **Linux-centric bilateral** (Linux column + cross-reference "see 4-platform comparison" pointer for other platforms). This keeps the matrix from becoming a duplicate of DEFER-08. The `4-platform-capability-comparison.md` is the canonical cross-platform surface; `linux-capability-matrix.md` answers "what can Intune do on Linux?" without re-deriving the full 4-platform matrix.
-
-Key cells to call out explicitly (Linux surface is distinctly narrower):
-- No native Conditional Access — web-app CA only via browser certificate assertion; no device compliance CA gate for native apps
-- No zero-touch enrollment analog — manual deb package install + user-initiated enrollment via Company Portal
-- Script-based app delivery only — no Win32/MSIX/.pkg equivalent; Intune delivers shell scripts as the "app" mechanism
-- Compliance surface limited — no BitLocker equivalent (VeraCrypt/dm-crypt is out-of-scope); password policy + OS version + disk encryption status are the primary axes
-- No equivalent of APNs/ADE/ABM/MGP — Linux enrollment is single-portal (Intune admin center only)
-
-Cross-Platform Equivalences section (following Android capability matrix precedent) should contain 2-3 explicitly attributed pairs:
-- `intune-portal` service (Linux) ≈ macOS LaunchDaemon for agent supervision (both are OS-managed background services the MDM agent registers with; both can be inspected/restarted via OS service management tools)
-- Linux compliance check cycle ≈ iOS MDM check-in cycle (both are agent-polled; neither uses a Windows-style scheduled task)
-- No Linux equivalent of ADE/APv1/ZTE zero-touch — enrollment is always user-initiated from the device
-
-### Linux Glossary Reciprocal See-Also Pattern
-
-`docs/_glossary-linux.md` should add a banner pointing to all 3 existing glossaries (same pattern as `_glossary-android.md` and `_glossary-macos.md`). The existing glossaries need reciprocal back-links added:
-
-- `_glossary.md` (Windows): add "For Linux terminology, see `_glossary-linux.md`" to the platform-coverage banner
-- `_glossary-macos.md` (Apple): add Linux see-also
-- `_glossary-android.md` (Android): add Linux see-also
-
-This is a 4-file retrofit (1 new + 3 existing). The Android glossary already has a 3-platform see-also format; adding Linux is a one-line append per file.
-
-### L1 Runbook Numbering — Linux
-
-L1 runbooks currently run 01-29. Last Android runbook is `29-android-aosp-enrollment-failed.md`. Linux L1 runbooks continue the numeric sequence:
-
-```
-30-linux-enrollment-failed.md         — intune-portal daemon not enrolling
-31-linux-compliance-non-compliant.md  — compliance check failing (OS version, encryption, password)
-32-linux-ca-blocking-web-access.md    — web-app Conditional Access blocking browser
-33-linux-agent-service-failure.md     — intune-portal service crashed / not running
-```
-
-Four L1 runbooks matches the iOS (6 runbooks for a richer platform) and Android (8+ runbooks) precedent proportionally for a narrower platform. The `l1-runbooks/00-index.md` gets a Linux section appended (append-only contract on shared index).
-
-The Mermaid initial triage tree in `decision-trees/00-initial-triage.md` gets a Linux branch added (same pattern as Android was added in Phase 40).
-
-### L2 Runbook Numbering — Linux
-
-L2 runbooks currently run 01-23. Last Android runbook is `23-android-aosp-investigation.md`. Linux L2 runbooks:
-
-```
-24-linux-log-collection.md        — /var/log/microsoft/intune/, journalctl, intune-portal diag
-25-linux-agent-investigation.md   — kernel/distro version traps (Ubuntu HWE, snap vs deb)
-```
-
-Two L2 runbooks is appropriate given Linux's narrower Intune surface. `l2-runbooks/00-index.md` gets a Linux section appended.
+**Confidence:** HIGH — directly inherits two proven precedents (v1.5 `docs/operations/` + v1.4 platform-frontmatter surgical-edit pattern).
 
 ---
 
-## Pillar 3 — Operational Depth Integration
+### D-A2: Glossary Architecture — Split (Option c): NEW `_glossary-apple-business.md` + reciprocal see-also on 5 existing glossaries
 
-### Directory Option Decision
+**Option taken:** Option (c) — dedicated `_glossary-apple-business.md` for Apple-Business-delegation-specific terms (Locations, custom role, privilege, content token, Managed Apple Account, shared iPad sessions, device transfer, audit log scope, sub-org admin); existing `_glossary-macos.md` Apple-platform terms (ABM, ADE, Supervision, VPP, APNs, Await Configuration, Setup Assistant, MAM-WE) stay in `_glossary-macos.md`. ABM term in `_glossary-macos.md` gains a Q5 (b) intro callout flagging the rebrand at the entry; no rewrite of existing entries.
 
-**Option C (Hybrid) is the correct choice.** Rationale:
+**Alternatives considered + rejection rationale:**
 
-- **Option A (top-level `docs/operations/`** per-domain with per-platform sub-docs) is the right primary structure because ops-domain content cuts *across* platforms — a "co-management" doc is fundamentally a Windows → Intune migration topic, not a Windows admin guide appendix. A top-level `operations/` directory signals that this is an orthogonal capability axis, not a platform-specific admin guide extension.
+| Option | Why Rejected |
+|--------|--------------|
+| (a) Append everything to `_glossary-macos.md` | The file is already Apple-shared (iOS+macOS) per v1.3 D-22 and would grow ~9 new entries. More importantly, the Apple Business *delegation* concepts (Locations, custom roles, privileges) have qualitatively different semantics from the Apple *platform* concepts (ADE, Supervision, VPP). Mixing them blurs the conceptual layer — a reader looking for "Supervision" shouldn't have to wade through Apple Business role-privilege terminology. |
+| (b) New `_glossary-apple-business.md` shared between iOS + macOS, but ALSO move ABM/ADE/Supervision/VPP into it | Breaks ~30 existing inbound links to `_glossary-macos.md#abm` / `#ade` / `#supervision` / `#vpp` across the corpus (PITFALL-6 anchor-stability violation, retroactive corpus sweep). Q5 (b) explicitly forbids this. |
+| (c) Split: Apple-Business delegation terms in NEW glossary, Apple-platform terms stay in existing | **Chosen.** Minimizes existing-anchor churn (zero changes to existing `#abm`/`#ade`/`#supervision`/`#vpp` anchors). |
 
-- **Option B (per-platform sub-tree)** fails because co-management is Windows-led — you cannot put it in `admin-setup-macos/` without misrepresenting the scope. Patch management is genuinely multi-platform. Forcing it into per-platform dirs creates fragmentation.
+**CLEAN-08 v1.5 reciprocal-see-also impact:** v1.5 CLEAN-08 normalized 5 platform glossaries with reciprocal see-also entries. v1.6 adds a 6th glossary node, which requires:
+- 5 existing glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-android.md`, `_glossary-linux.md`) each gain ONE new see-also line in their header banner pointing to `_glossary-apple-business.md`. Total: 4 single-line additions (Windows + Android + Linux + macOS).
+- The new `_glossary-apple-business.md` carries see-also lines to all 4 existing glossaries.
+- ABM entry in `_glossary-macos.md` gains an inline see-also link to `_glossary-apple-business.md#locations` (the "Locations replaces what used to be one global ABM scope" concept-bridge).
 
-- **Option C** means: `docs/operations/{domain}/` holds the per-domain primary docs with per-platform sub-docs, AND existing per-platform admin guides add cross-references pointing into `operations/` (not duplicate content). The admin guides say "for ongoing patch management, see [operations/patch-management/02-macos-update-enforcement.md]"; the operations docs say "for initial enrollment setup, see [admin-setup-macos/]". This preserves existing patterns without breaking the existing tree.
+**Inherits from:** v1.5 CLEAN-08 reciprocal-see-also pattern (Phase 59 Plan 59-05) + v1.4 `_glossary-android.md` precedent (separate glossary because Android terms qualitatively different from Apple/Windows) + v1.5 `_glossary-linux.md` precedent (separate glossary because Linux terms qualitatively different).
 
-Specifically for each domain:
-
-**Co-management** (`docs/operations/co-management/`):
-- `00-overview.md` — workload slider concept, ConfigMgr-to-Intune migration model, Mermaid workload-slider diagram (new diagram type — first use of workload-slider Mermaid in the suite)
-- `01-windows-tenant-attach.md` — Tenant Attach setup, co-management prerequisites
-- `02-windows-workload-sliders.md` — per-workload slider decisions (Compliance, Resource Access, Endpoint Protection, etc.)
-- `03-cocmgmt-migration-paths.md` — ConfigMgr-to-Intune migration runbook (workload-by-workload sequence)
-- Cross-references from `docs/admin-setup-apv1/` and `docs/admin-setup-apv2/` pointing into this dir
-- macOS/iOS/Android contextual notes are in-line callout blocks within the above Windows-led docs, NOT separate files (macOS/iOS/Android have no co-management concept; notes explain this)
-
-**Patch & Update Management** (`docs/operations/patch-management/`):
-- `00-overview.md` — cross-platform update strategy comparison, ring topology concept, Mermaid ring topology diagram (new diagram type)
-- `01-windows-wufb-rings.md` — Windows Update for Business: pilot/broad/defer rings, driver/firmware via WUfB-DS
-- `02-macos-update-enforcement.md` — `forceDelayedSoftwareUpdates`, `softwareUpdate` MDM commands, DDM managed updates
-- `03-ios-update-lifecycle.md` — supervised vs unsupervised update behaviors, DDM update enforcement on iOS 17+
-- `04-android-patch-delivery.md` — system update policy (Default/Automatic/Postpone/Windowed), OEM delays (Samsung KSP, Zebra LifeGuard), Play Integrity tier impact on compliance after patch
-
-**App Lifecycle** (`docs/operations/app-lifecycle/`):
-- `00-overview.md` — cross-platform app delivery comparison, supersedence DAG concept (new diagram type)
-- `01-windows-win32-msix-scale.md` — Win32 packaging at scale, supersedence chains, dependency graphs, detection rules
-- `02-macos-pkg-dmg-pipeline.md` — .pkg/.dmg pipelines, Installomator/Munki adjacency callout (confidence-attributed)
-- `03-ios-vpp-licensing.md` — device vs user VPP licensing flows, license reclaim, volume-purchase workflows
-- `04-android-mgp-lifecycle.md` — Managed Google Play app lifecycle, private-app publishing, app approval workflows, version management
-
-**Drift Detection + Tenant Migration** (`docs/operations/drift-migration/`):
-- `00-overview.md` — deployment-report-driven drift detection workflow, tenant migration overview
-- `01-windows-drift-detection.md` — Windows deployment reporting, baseline drift remediation
-- `02-macos-ios-drift-detection.md` — macOS/iOS configuration drift patterns, profile re-push
-- `03-android-drift-detection.md` — Android compliance-report drift, MGP re-binding scenarios
-- `04-tenant-migration-runbook.md` — per-platform tenant-to-tenant migration (BitLocker re-key on Windows, ABM token re-issue on macOS/iOS, MGP re-binding on Android)
-
-### Mermaid Usage in Operations Content
-
-Existing Mermaid usage is limited to L1 triage decision trees (flowchart TD). v1.5 ops content introduces new Mermaid diagram types:
-
-- **Workload-slider diagram** (co-management): Conceptually a horizontal bar showing which workloads are on ConfigMgr vs Intune. Can be rendered as a `gantt` or a `graph LR` with labeled edges — `graph LR` with ConfigMgr/Intune nodes is the pragmatic choice given existing rendering context.
-- **Ring topology diagram** (patch management): Pipeline stages (pilot → early adopter → broad → deferred). Use `flowchart LR` with labeled nodes for rings and deferral windows. Consistent with existing Mermaid style.
-- **Supersedence DAG** (app lifecycle): Dependency and supersedence chains. Use `flowchart TD` with directed edges. Consistent with existing triage tree style.
-
-No new Mermaid renderer or tooling is needed — existing flowchart + graph patterns cover all new diagram types. The `docs/diagrams/` directory (present but unused per git status) may receive diagram source files; however, given existing pattern of inline Mermaid in markdown, keep diagrams inline in docs files rather than external SVG.
+**Confidence:** HIGH — direct inheritance from two proven glossary-split precedents.
 
 ---
 
-## Pillar 1 — Cleanup Integration
+### D-A3: Capability Matrix Strategy — Incremental rows in `ios-capability-matrix.md` ONLY; NO change to `macos-capability-matrix.md`; NO change to `4-platform-capability-comparison.md`
 
-### DEFER-07: Android Nav Backport
+**Option taken:** Three sub-decisions:
 
-The Android `## Android Enterprise Provisioning` section in `docs/index.md` (lines 169-171 in current file) is a stub — it has the H2 heading and a one-line description, but lacks the L1/L2/Admin subsection tables present for Windows, macOS, and iOS.
+1. **`ios-capability-matrix.md`** — add 3 new rows under the existing `## Enrollment` H2 (no new H2):
+   - `Apple TV management` (iOS column: Supported via Apple Business Location + MDM server assignment)
+   - `Shared iPad sessions` (iOS column: Supported on iPad; supervised + Managed Apple Account required)
+   - `Apple Business delegated administration surface` (iOS column: Supported via Locations + custom roles; cross-link to `cross-platform/apple-business/00-overview.md`)
 
-**Exact additions required to reach parity with other platforms:**
+2. **`macos-capability-matrix.md`** — UNCHANGED. macOS *uses* Apple Business for governance but does not need new rows; existing ABM/ADE rows already cover macOS. (Optionally a single see-also link in the file footer pointing to the Apple Business tree.)
 
-`docs/index.md`: Expand the Android Enterprise Provisioning H2 section from the current stub (3 lines) to a full subsection with three sub-tables matching macOS/iOS depth:
-- `### Service Desk (L1)` table — linking to `decision-trees/08-android-triage.md`, `l1-runbooks/00-index.md#android-l1-runbooks`, `quick-ref-l1.md#android-quick-reference`, and the 8 Android L1 runbooks (22-29)
-- `### Desktop Engineering (L2)` table — linking to `l2-runbooks/18-android-log-collection.md`, `l2-runbooks/00-index.md#android-l2-runbooks`, `quick-ref-l2.md#android-quick-reference`
-- `### Admin Setup` table — linking to `admin-setup-android/00-overview.md`, `android-lifecycle/00-enrollment-overview.md`, all per-mode admin guides (01-13), `reference/android-capability-matrix.md`
+3. **`reference/4-platform-capability-comparison.md`** — **UNCHANGED.** No 7th H2 column for Apple Business delegation.
 
-`docs/common-issues.md`: Add an Android symptom routing block. Current file routes to Windows and macOS sections; Android L1 runbooks 22-29 have no entry point via `common-issues.md`. The Android block needs symptom-first routing (enrollment blocked → runbook 22, work profile not created → runbook 23, etc.) matching the Windows/macOS block structure.
+**Why NO 7th H2 in the 5-platform comparison doc:** The 5 existing H2s (Enrollment / Configuration / App Deployment / Compliance / Software Updates / Conditional Access — that's actually 6 H2s containing 48 rows totaling 240 cells per the C12 validator) are **device-capability axes** that exist across all platforms. Apple Business delegation is **not** a device-capability axis — it's an iOS+macOS-only multi-tenant-governance overlay that has no Windows / Android / Linux analog. Adding a 7th H2 would:
+- Force 5 n/a cells per row (Windows / Android / Linux all n/a for Apple Business governance)
+- Trigger the D-13/D-18 sibling-matrix-anchor-pin contract: any new H2 in the comparison doc requires reciprocal H2 in `linux-capability-matrix.md`, `macos-capability-matrix.md`, `ios-capability-matrix.md`, `android-capability-matrix.md` — that's 4 new H2s to add, each with rows
+- Break the C12 240-cell math (6 H2 × 5 cols × 48 rows = 240). New H2 → 7 H2 × 5 cols × N rows → C12 validator needs a new expected-cell count
+- Mix a delegation concept into a device-capability matrix (categorical confusion)
 
-`docs/quick-ref-l1.md`: Add `## Android Quick Reference` section with top checks + escalation triggers + decision-tree link + runbook links matrix (8 runbooks × 3-column table). The section should match iOS Quick Reference depth (added in Phase 32).
+**Alternatives considered + rejection rationale:**
 
-`docs/quick-ref-l2.md`: Add `## Android Quick Reference` section with log collection methods, Intune portal investigation paths, and links to L2 runbooks 18-23.
+| Option | Why Rejected |
+|--------|--------------|
+| 7th H2 "Apple Business Delegation" added to all 4 sibling matrices + comparison doc | Forces 5 n/a cells per row in Windows/Android/Linux columns, mixes governance with device capability, triggers D-13/D-18 cascade across 4 files, breaks C12 240-cell math. |
+| New H2 "Apple Business Delegation" in iOS + macOS matrices only (no propagation) | Breaks D-13/D-18 sibling-matrix-anchor-pin contract which requires reciprocal H2 in ALL 4 sibling matrices, not just 2. |
+| Add 3 rows to BOTH iOS + macOS capability matrices | macOS matrix doesn't gain meaningfully from these rows because (a) shared iPad is iOS-only, (b) Apple TV is tvOS but admins-mental-model-iOS, (c) Apple Business delegation surface adds 1 row to a matrix that already documents ABM extensively. Less duplication if iOS matrix is sole home. |
+| Add rows to iOS matrix only (chosen) | Apple TV / shared iPad are iPad-family concerns; iOS matrix is the natural home. Cross-link from macOS matrix footer suffices for macOS admins who want to reach the same content. |
 
-### DEFER-08: 4-Platform Capability Comparison Document
+**Inherits from:** v1.5 D-13 sibling-matrix-anchor-pin contract (deliberately *preserves* it by not adding a 7th H2); v1.3 iOS matrix incremental-row pattern (rows added under existing H2 without forcing structural change); v1.4 / v1.4.1 Android capability matrix row-addition pattern (Knox row, COPE column).
 
-`docs/reference/4-platform-capability-comparison.md` — structural reference doc.
+**C12 240-cell math preservation:** **240 cells unchanged.** 6 H2 × 5 platform columns × 48 rows. Apple Business delegation does NOT enter this matrix. The C12 structural validator passes without modification.
 
-**Structure recommendation:**
+**Confidence:** HIGH — explicitly preserves the most expensive v1.5 invariant (C12 + D-13/D-18). The alternative was researched and rejected because the cost of cascading sibling-matrix reciprocity for a non-device-capability concept exceeds the value.
 
+---
+
+### D-A4: Hub Navigation — Apple Business as 5th Operations sub-domain (Option c)
+
+**Option taken:** Option (c) — append `### Apple Business Delegated Governance` as a 5th sub-section under the existing `## Operations` H2 in `docs/index.md`, alongside Co-Management / Patch / App / Drift. Also append entries to the `## Cross-Platform References` H2 at the bottom (analogous to the v1.5 Linux Capability Matrix / Linux Provisioning Lifecycle entries).
+
+**Alternatives considered + rejection rationale:**
+
+| Option | Why Rejected |
+|--------|--------------|
+| (a) New top-level H2 `## Apple Business Governance` (peer to `## Windows Autopilot`, `## macOS Provisioning`, `## iOS/iPadOS Provisioning`, `## Android Enterprise Provisioning`, `## Linux Provisioning`, `## Operations`) | Treats Apple Business as a *platform* peer, but it's not — it's a delegation surface over iOS+macOS. Would force a 7th Choose-Your-Platform bullet which dilutes the platform-selector signal ("choose your platform" stops being about device OS). v1.5 Operations H2 set the precedent that cross-platform-by-axis content is a peer-of-platforms, not a platform-itself; Apple Business is *narrower* than Operations (only 2 platforms) so even less platform-like. |
+| (b) Sub-sections under both `## macOS Provisioning` AND `## iOS/iPadOS Provisioning` (cross-linked) | Duplicates the same content under two H2s, fragments the Apple Business surface across the hub, creates two link targets for the same content (PITFALL-6 anchor-stability concern when readers bookmark either copy). |
+| (c) Sub-section under existing `## Operations` H2 alongside Co-Management / Patch / App / Drift | **Chosen.** Apple Business is conceptually operational (you're doing things to existing-managed devices via delegation) and fits naturally as the 5th ops domain. Single canonical link target; existing Operations H2 already established by v1.5 (Phase 59 CLEAN-08 SC#1) as the cross-platform-by-axis home. |
+
+**Specific edit to `docs/index.md`:**
+- Insert new sub-section under `## Operations` H2 (after the existing `### Compliance Drift Detection + Tenant Migration` H3), structured as: `### Apple Business Delegated Governance` + 1-2 sentence intro + table of 4-5 representative resources (overview, role-privilege model, custom-role authoring guide, shared iPad passcode reset runbook, cross-org-boundary cheat sheet)
+- The `## Cross-Platform References` H2 at file bottom gains 2-3 new entries (Apple Business glossary, Apple Business role-privilege model, cross-org-boundary cheat sheet)
+- The `> **Platform coverage:**` banner at the top of `docs/index.md:9` gains a small clause appendix: "...plus cross-platform Apple Business delegated governance (iOS+macOS multi-org operations)" — surgical append, no rewrite
+
+**Confidence:** HIGH — inherits directly from v1.5 Phase 59 Operations H2 pattern; the "5th ops domain" framing maps cleanly onto the existing 4 sub-sections.
+
+---
+
+### D-A5: L1 / L2 Runbook Numbering & Frontmatter
+
+**Option taken:**
+
+- **L1 next available global number = 34.** First v1.6 L1 runbook is `34-apple-business-shared-ipad-passcode-reset.md`. (Verified by Bash directory listing: 00-33 occupied across Windows/macOS/iOS/Android/Linux per v1.0-v1.5.)
+- **L2 next available global number = 26.** First v1.6 L2 runbook is `26-apple-business-permission-denied.md`. (Verified by Bash directory listing: 00-25 occupied; gaps at 09 not a numbering reset per v1.0 omission.)
+- **Frontmatter convention — NEW compound-platform values:** `platform: ios+macos` (default for Apple Business runbooks), `platform: ios+macos+shared-ipad` (for shared iPad-specific), `platform: ios+macos+apple-tv` (for Apple TV-specific). Plus-separator follows the v1.4 D-14 platform-frontmatter convention's spirit (default-Windows + explicit-other-platforms) but extends it for cross-platform runbooks.
+- **common-issues.md routing** — append `## Apple Business Governance Failure Scenarios` H2 with rows: "Shared iPad passcode reset blocked / wrong sub-org admin" → L1 #34, "VPP catalog assignment failing / permission denied" → L2 #26, "Device cannot be released by sub-org admin" → L2 #26 sub-cause routing, etc.
+
+**Alternatives considered + rejection rationale:**
+
+| Option | Why Rejected |
+|--------|--------------|
+| Reset numbering at 100 for v1.6 (e.g., L1 100, L2 100) to mark milestone | Breaks global-numbering invariant established v1.0-v1.5 (33 L1 runbooks numbered sequentially across platforms). Would create a discontinuity that's purely cosmetic and complicates downstream Mermaid triage-tree node IDs. |
+| Per-platform numbering reset (e.g., apple-business-l1-01.md) | Breaks the global L1/L2 numbering invariant. v1.5 did NOT reset for Linux (used 30-33 continuing from Android 22-29). |
+| `platform: apple-business` (single value, replaces ios+macos) | Implies Apple Business is its own platform (see D-A1 rejection of Option a). Compound `ios+macos` correctly signals "applies to both iOS and macOS, scoped to Apple Business delegation context" without inventing a new platform identity. |
+| `platform: ios+macos` continuing global numbering (chosen) | **Chosen.** Honors invariant, signals cross-platform scope, allows downstream Mermaid + harness checks to recognize compound platforms via a `+` split parse. |
+
+**Frontmatter convention introduced (NEW for v1.6):**
+```yaml
+---
+last_verified: 2026-05-20
+review_by: 2026-07-19      # 60-day cycle per v1.4 D-14
+applies_to: governance      # NEW value — formerly all/both/ADE/etc.
+audience: L1                # or L2
+platform: ios+macos+shared-ipad  # NEW compound-platform pattern
+---
+```
+
+**Inherits from:** v1.4 D-14 platform-frontmatter convention (extends, does not replace) + v1.5 L1 numbering 30-33 + L2 numbering 24-25 (continues sequence).
+
+**Confidence:** HIGH for numbering; MEDIUM for compound-platform frontmatter (new convention; needs Phase 1 validation that the audit harness can parse `ios+macos+shared-ipad` correctly — recommend C15 anti-pattern guard include a parse-test for the `+` separator).
+
+---
+
+### D-A6: Quick-Ref Card Placement — Append new Apple Business H2 (Option a)
+
+**Option taken:** Option (a) — append new top-level `## Apple Business Quick Reference` H2 to BOTH `docs/quick-ref-l1.md` and `docs/quick-ref-l2.md`, alongside existing platform H2s (Windows / macOS / iOS / Android / Linux). The H2 contains scenario-specific quick checks (Apple Business L1 #34 link, "is this user a sub-org admin?" lookup, escalation triggers for sub-org admin permission gaps).
+
+**Alternatives considered + rejection rationale:**
+
+| Option | Why Rejected |
+|--------|--------------|
+| (a) New Apple Business H2 alongside existing 5 platform H2s | **Chosen.** Single discoverability point; mirrors the structure of all 5 existing platform sections; readers can scan H2s and find their domain. |
+| (b) Extend existing macOS + iOS H2s with Apple Business sub-H3s | Fragments the Apple Business content across 2 different H2s within the same file. A reader looking for "shared iPad passcode reset" doesn't know whether to scan macOS or iOS quick-ref sections. Defeats the cross-platform consolidation principle (Q5 b decision). |
+
+**Specific quick-ref structure** (matches the existing per-platform H2 template):
 ```markdown
-# Intune: 4-Platform Capability Comparison
-# (Windows | macOS | iOS/iPadOS | Android)
+## Apple Business Quick Reference
 
-## Purpose
-One-sentence scope: side-by-side feature comparison for admins managing multi-platform
-Intune tenants. Cross-references existing per-platform capability matrices; does NOT
-duplicate per-platform detail.
+### Top 5 Checks
 
-## Enrollment
+**Domain:** Apple Business Delegated Governance (iOS + macOS multi-org)
 
-| Feature | Windows | macOS | iOS/iPadOS | Android |
-|---------|---------|-------|------------|---------|
-| Zero-touch method | Autopilot (hardware hash) | ADE via ABM | ADE via ABM | ZTE via Zero-Touch portal (GMS) / N/A (AOSP) |
-| Hardware identity | 4KB hash | Serial | Serial | IMEI / serial (ZTE) / enrollment token (COBO) |
-| Supervision/management model | N/A | ADE = supervised | ADE = supervised; Device Enrollment = unsupervised | Fully Managed / Work Profile / Dedicated / ZTE / AOSP |
-...
+1. **Sub-org admin role assigned?** — Apple Business > Access Management > Users > [user] — verify role + Location assignment
+2. **Custom role has required privilege?** — Apple Business > Access Management > Roles > [role] — verify privilege checkbox for the action
+3. **Device in correct Location?** — Apple Business > Devices > filter by Location
+4. **Content token attached to Location?** — Apple Business > Content > [token] — verify Location assignment
+5. **Managed Apple Account provisioned?** — Apple Business > Users > [user] — verify Managed Apple Account status
+
+### Escalation Triggers
+
+- Sub-org admin reports "Permission denied" but they have the role → Verify Location assignment, escalate L2 #26
+- Shared iPad passcode reset blocked → Verify sub-org admin owns the device's Location, see L1 #34
+- ...
+
+### Runbooks
+
+- [Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md)
+- [Cross-Org-Boundary Cheat Sheet](cross-platform/apple-business/16-cross-org-boundary-cheat-sheet.md)
 ```
 
-Matrix axes: rows = features, columns = 4 platforms. Per-cell content should be 1-2 sentences max + cross-reference link (not duplicate prose). Footnotes handle variance (e.g., iOS ADE = supervised / Device Enrollment = unsupervised). Anchor scheme: `#enrollment`, `#configuration`, `#app-deployment`, `#compliance`, `#software-updates`, `#conditional-access` matching the per-platform capability matrix domain structure.
+**Inherits from:** v1.5 Phase 57 CLEAN-03 / CLEAN-04 quick-ref append-only pattern for Android; v1.5 Phase 59 Linux quick-ref H2 addition.
 
-The `android-capability-matrix.md` deferred-4-platform footer stub (`#deferred-4-platform-unified-capability-comparison`) gets replaced with a link to this new doc when it lands.
-
-**Domains to cover:**
-1. Enrollment (zero-touch, hardware identity, supervision model, re-enrollment)
-2. Configuration (DDM availability, profile mechanism, restriction breadth, Settings Catalog)
-3. App Deployment (delivery channel, silent install, LOB path, app protection)
-4. Compliance (attestation mechanism, CA integration, default posture)
-5. Software Updates (update enforcement, deferral control, OEM integration)
-6. Conditional Access (native app CA, web-app CA, compliance-based CA)
-
-**Relationship to existing per-platform matrices:**
-- `macos-capability-matrix.md` — bilateral Windows/macOS; update its intro to cross-reference `4-platform-capability-comparison.md`
-- `ios-capability-matrix.md` — trilateral Windows/macOS/iOS; update intro similarly
-- `android-capability-matrix.md` — Android-centric with Cross-Platform Equivalences; remove deferred footer stub, add cross-reference
-- `linux-capability-matrix.md` (new) — Linux-centric bilateral; add cross-reference to 4-platform doc from day one
-
-### Broken-Link Sweep
-
-**Automation approach:** Integrate a link-check as audit harness check C13 in `v1.5-milestone-audit.mjs`. Use Node.js `fs.readFileSync` pattern (no shell invocations, consistent with existing harness design) to:
-1. Walk all `docs/**/*.md` files
-2. Extract markdown links `\]\(([^)]+)\)` that are relative (not `https://`)
-3. Resolve each relative path from the source file's directory
-4. Check `existsSync()` on resolved path (anchor-stripping for `#anchor` fragments)
-5. Collect non-existent targets as violations
-
-Ship as informational-first (C13) in the first phase it appears — promote to blocking only after manual triage resolves pre-existing broken links. This is the same informational-first grace pattern used for C6/C7/C9 in v1.4.1.
-
-**Manual triage protocol:** After C13 runs for the first time, the findings list becomes the input for a manual triage sweep:
-- Category A: Broken anchors (file exists, anchor doesn't) — fix anchor names or add anchor targets
-- Category B: Broken file paths (file doesn't exist) — either create stub file or fix path
-- Category C: Intentionally deferred stubs (e.g., future milestone content) — add to allowlist sidecar
-
-**Timing recommendation: run the broken-link sweep FIRST, before adding v1.5 content.** Rationale: adding Linux + ops-depth content will create new cross-references; auditing before content addition isolates pre-existing breakage from new breakage. The sweep phase is a natural "cleanup before build" step that matches the Pillar 1 ordering. A second sweep pass AFTER all content lands validates the new cross-references are intact — this second pass is the C13 blocking promotion condition.
+**Confidence:** HIGH — direct inheritance from two proven precedents (Android v1.4.1, Linux v1.5).
 
 ---
 
-## Pillar 4 — Audit Harness Integration
+### D-A7: Apple TV + Shared iPad Doc Surface
 
-### File Versioning Lineage (Path A Copy)
+**Option taken:** Apple TV and Shared iPad become **first-class admin workflows under `docs/cross-platform/apple-business/`** as dedicated files (`09-shared-ipad-lifecycle.md` and `10-apple-tv-lifecycle.md`), with:
+- 3 new rows added to `reference/ios-capability-matrix.md` under existing Enrollment H2 (per D-A3): one each for Apple TV management, shared iPad sessions, Apple Business delegation surface
+- L1 #34 (shared iPad passcode reset) carries `platform: ios+macos+shared-ipad` compound frontmatter and lives in `l1-runbooks/`
+- Existing iOS docs (e.g., `docs/admin-setup-ios/03-ade-enrollment-profile.md`) are NOT modified — Apple TV / shared iPad coverage is additive only
+
+**Alternatives considered + rejection rationale:**
+
+| Option | Why Rejected |
+|--------|--------------|
+| Apple TV / shared iPad remain only in capability matrices + lifecycle docs (do not elevate) | Q1 hard scope explicitly calls Apple TV + shared iPad first-class admin workflows in v1.6. Leaving them as matrix cells doesn't satisfy the multi-org provisioning need. |
+| Create separate `docs/admin-setup-tvos/` + `docs/admin-setup-shared-ipad/` trees | Creates 2 NEW top-level platform-like directories for what are really *sub-form-factors* of iOS/iPadOS (Apple TV runs tvOS but is admin-mental-model adjacent to iPad; shared iPad is an iPad mode). Violates platform-as-target-device-OS taxonomy. Multiplies maintenance surface. |
+| Elevate via dedicated files inside `cross-platform/apple-business/` tree (chosen) | **Chosen.** Apple TV + shared iPad are governance concerns (Location assignment, Managed Apple Account, content token routing) — fits naturally under Apple Business tree. Doesn't fragment iOS/iPadOS docs. |
+
+**Confidence:** HIGH — the governance-not-platform framing makes the location obvious.
+
+---
+
+### D-A8: Cross-Link Contract — Read-only references to existing docs; reciprocal see-also additions allowed via single-line surgical appends ONLY at 3 canonical sites (Q5 b)
+
+**Option taken:** v1.6 new docs link **OUT** to existing v1.0-v1.5 docs freely (read-only references); existing v1.0-v1.5 docs receive **NO modifications** EXCEPT the 2 explicit Q5 (b) intro-callout sites:
+- `docs/admin-setup-macos/01-abm-configuration.md:1` — intro callout flagging ABM→Apple Business rebrand + see-also link to `cross-platform/apple-business/00-overview.md`
+- `docs/admin-setup-ios/02-abm-token.md:1` — intro callout flagging rebrand + see-also link to `cross-platform/apple-business/00-overview.md`
+- `docs/_glossary-macos.md:62` (the ABM entry) — single inline see-also link added to the existing entry, NOT a rewrite
+
+That's the entire scope of existing-doc modifications. No reciprocal see-also additions in any other existing v1.0-v1.5 docs. PITFALL-6 anchor-stability is fully preserved.
+
+**Cross-link patterns allowed for v1.6 NEW docs:**
+- Link from `cross-platform/apple-business/01-role-privilege-model.md` → `docs/admin-setup-macos/01-abm-configuration.md#existing-anchor` (read-only)
+- Link from `cross-platform/apple-business/06-mdm-server-assignment.md` → `docs/admin-setup-ios/02-abm-token.md#existing-anchor` (read-only)
+- Link from `cross-platform/apple-business/11-vpp-catalog-runbook.md` → `docs/operations/app-lifecycle/03-ios-vpp-licensing.md#existing-anchor` (read-only)
+
+**Cross-link patterns FORBIDDEN for v1.6:**
+- Adding "see also" lines to existing v1.0-v1.5 docs OTHER than the 3 canonical sites (would violate Q5 b no-corpus-sweep)
+- Changing anchor text in existing docs (PITFALL-6)
+- Adding new H2/H3 to existing docs (PITFALL-6)
+
+**Smallest-footprint pattern (what's the test):** Run `git diff origin/master -- docs/*.md` after v1.6 close. The diff should show:
+- 3 modified existing files (`admin-setup-macos/01-abm-configuration.md`, `admin-setup-ios/02-abm-token.md`, `_glossary-macos.md`) — each with ≤3 added lines
+- 5 modified hub/cross-cutting files (`docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l1.md`, `docs/quick-ref-l2.md`, `docs/operations/00-index.md`) — each with append-only additions
+- Many new files under `docs/cross-platform/apple-business/`, `docs/l1-runbooks/`, `docs/l2-runbooks/`, plus the new glossary
+
+**Inherits from:** v1.4 D-14 no-retroactive-sweep precedent (platform: Windows default avoided retroactive edits to 70+ v1.0/v1.1 docs); v1.5 CLEAN-08 reciprocal-see-also pattern (single-line additions only).
+
+**Confidence:** HIGH — the surgical-cross-link discipline is well-established by 4 prior milestones.
+
+---
+
+### D-A9: Audit Harness C14 / C15 / C16 Design
+
+**Option taken:** Path-A copy `v1.5-milestone-audit.mjs` → `v1.6-milestone-audit.mjs` + add 3 new blocking checks. v1.6 ships C14 / C15 / C16 as **blocking from start** because they each target a structurally-required invariant (mirrors v1.5 C10 Linux-frontmatter blocking-from-start; differs from C11/C12/C13 which scaffolded informational-first because they targeted breadth checks).
+
+**C14 — rebrand-statement presence at 3 canonical sites (BLOCKING)**
+- **Target file:line coords (verified for harness regex stability):**
+  - `docs/cross-platform/apple-business/00-overview.md` — within first 30 lines, must contain the rebrand statement (a short paragraph naming both "Apple Business Manager" and "Apple Business" with the rebrand date 2026-04-14)
+  - `docs/admin-setup-macos/01-abm-configuration.md` — within first 15 lines (the intro-callout zone above the existing H1)
+  - `docs/admin-setup-ios/02-abm-token.md` — within first 15 lines
+- **Regex sketch:**
+  ```javascript
+  const REBRAND_STATEMENT = /Apple Business Manager.{0,80}now (called )?Apple Business|Apple Business.{0,80}formerly (known as )?Apple Business Manager/i;
+  const REBRAND_DATE = /2026-04-14|April 14,? 2026/;
+  // Both must match in the file's first N lines
+  ```
+- **Why blocking from start:** the 3-site presence is a structural requirement of Q5 (b). If any canonical site is missing the statement, the rebrand handling is incomplete.
+
+**C15 — Intune-delegation anti-pattern guard (BLOCKING)**
+- **Target files scanned:** all files matching `docs/cross-platform/apple-business/**/*.md` (new tree only — existing docs unchanged)
+- **Banned phrases (deny-list, case-insensitive):**
+  ```javascript
+  const BANNED_PHRASES = [
+    /delegate.{0,40}VPP.{0,40}role.{0,40}(in|via|through)\s+Intune/i,
+    /Apple Business.{0,40}scope group.{0,40}(in|via|through)\s+(Intune|Endpoint Manager)/i,
+    /Intune.{0,40}custom role.{0,40}for.{0,40}Apple Business/i,
+    /Endpoint Manager.{0,40}Locations/i,
+    /Intune.{0,40}grant.{0,40}Apple Business.{0,40}privilege/i,
+    /assign.{0,40}Apple Business.{0,40}(role|privilege).{0,40}in.{0,40}(Intune|Endpoint Manager)/i,
+    /Intune.{0,40}(replace|substitute|fulfill).{0,40}Apple Business.{0,40}role/i,
+    /(?:^|\s)delegate.{0,40}Apple Business.{0,40}(?:via|using|through).{0,40}(?:Intune|Microsoft Entra|Graph API)/i,
+  ];
+  ```
+- **Pre-allowlist exemption pattern:** matches inside a `> ⚠️ Anti-pattern:` blockquote or inside a `<!-- C15-allowlist-anti-pattern: ... -->` HTML comment are exempt (the Cross-Org-Boundary Cheat Sheet legitimately *names* anti-patterns to flag them).
+- **Why blocking from start:** the hard scope boundary (Q-decision: Apple Business surface only; Intune RBAC out of scope) is the central architectural invariant of v1.6. A single Intune-delegation anti-pattern leak undermines the milestone's value.
+
+**C16 — shared iPad passcode reset L1 cross-link integrity (BLOCKING)**
+- **Target link the validator must resolve:** the L1 #34 runbook (`docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md`) MUST link to BOTH:
+  - `docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md` (the canonical admin-context runbook) — anchor-resolvable
+  - `docs/cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool` (the "which admin owns this pool" lookup procedure) — anchor-resolvable
+- **Reverse-link assertion:** the canonical admin-context runbook MUST link back to L1 #34 (reciprocal)
+- **common-issues.md row assertion:** `docs/common-issues.md` MUST have a row under "Apple Business Governance Failure Scenarios" pointing to L1 #34
+- **Regex sketch:**
+  ```javascript
+  const L1_RUNBOOK = readFile('docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md');
+  assert(L1_RUNBOOK.includes('cross-platform/apple-business/12-shared-ipad-passcode-reset.md'));
+  assert(L1_RUNBOOK.match(/cross-platform\/apple-business\/05-sub-org-admin-onboarding\.md#which-admin-owns-this-pool/));
+  const CANON = readFile('docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md');
+  assert(CANON.includes('l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md'));
+  const COMMON_ISSUES = readFile('docs/common-issues.md');
+  assert(COMMON_ISSUES.match(/Apple Business Governance Failure Scenarios[\s\S]*l1-runbooks\/34-/));
+  ```
+- **Why blocking from start:** the L1 / admin-doc / common-issues triangle is the central user-facing integration test for the L1 runbook integration pillar. If any leg fails, end users cannot navigate to the runbook from the symptom they're searching.
+
+**Additional harness lift:**
+- Sidecar `v1.6-audit-allowlist.json` migrated to `scripts/validation/` per v1.4.1 / v1.5 precedent
+- BASELINE refresh: regenerate-supervision-pins.mjs --self-test exits 0 after C15 pre-allowlist is populated
+- Per-phase `check-phase-NN.mjs` validators (62, 63, 64, ...) following v1.5 lineage
+- CI workflow `audit-harness-v1.6-integrity.yml` Path-A from v1.5
+
+**Inherits from:** v1.5 Path-A v1.4.1→v1.5 (AUDIT-01); v1.4.1 C9 cope_banned_phrases pattern (deny-list regex with allowlist exemption — direct ancestor of C15); v1.5 C12 cross-link integrity validator pattern (direct ancestor of C16).
+
+**Confidence:** HIGH for C14 + C16 (well-precedented patterns); MEDIUM for C15 (banned-phrase list quality depends on phase 1 content-pattern review; recommend Phase 1 produce a tightened list after first draft of cross-org-boundary cheat sheet is written).
+
+---
+
+### D-A10: Phase Build Order (Dependency DAG)
+
+**Critical dependency rules** (must be respected by phase sequencing):
+1. **Locations exist** in Apple Business before **custom roles** can be assigned (role assignment is per-Location)
+2. **Custom roles exist** before **delegation runbooks** can describe per-role workflows
+3. **Glossary terms exist** before **admin guides** can reference them via see-also
+4. **Admin guides exist** before **L1/L2 runbooks** can cross-link to them (PITFALL-6 — L1 #34 must resolve `cross-platform/apple-business/12-...md` anchor on commit, or C16 fails)
+5. **Capability matrix rows exist** before **hub navigation** lists them (D-13 sibling-anchor-pin contract — anchors must be stable before they're linked)
+6. **Audit harness scaffold exists** before content phases land — but C14/C15/C16 are blocking from start (no informational-first promotion ladder), so harness scaffold must include C14/C15/C16 functional from Phase 1
+7. **Navigation files land LAST** — `docs/index.md` Operations H2 sub-section + `docs/common-issues.md` + `docs/quick-ref-l1.md` + `docs/quick-ref-l2.md` are all append-only edits done at the final integration phase, AFTER all downstream content is committed (v1.5 navigation-files-last precedent from Phase 57 + Phase 59)
+
+**Recommended phase sequence:**
 
 ```
-v1.4-milestone-audit.mjs  (frozen, reproducibility anchor)
-  → v1.4.1-milestone-audit.mjs  (Path A copy + C6/C7/C9 informational-first)
-    → v1.5-milestone-audit.mjs  (Path A copy + C10/C11/C12/C13 informational-first)
+Phase 62 — Foundation
+  ├── _glossary-apple-business.md (NEW)
+  ├── _glossary-macos.md reciprocal see-also (+1 line in header banner)
+  ├── _glossary.md, _glossary-android.md, _glossary-linux.md reciprocal see-also (+1 line each)
+  ├── 00-overview.md (Apple Business tree) — canonical rebrand callout site #1
+  ├── 01-role-privilege-model.md — defines roles + privileges before anything references them
+  ├── 02-locations-architecture.md — defines Locations before role-assignment guides
+  ├── Audit harness v1.6 Path-A copy + C14/C15/C16 scaffold (blocking from start)
+  └── intro callouts at admin-setup-macos/01 + admin-setup-ios/02 (canonical sites #2 + #3)
+
+Phase 63 — Multi-Org Architecture + Custom Roles
+  ├── 03-locations-vs-custom-roles.md (decision matrix)
+  ├── 04-custom-role-authoring.md (depends on Locations from 02)
+  ├── 05-sub-org-admin-onboarding.md (depends on custom roles from 04; contains "which admin owns this pool" anchor required by C16)
+  ├── 06-mdm-server-assignment.md
+  ├── 07-content-token-consolidation.md
+  └── 08-managed-apple-account.md
+
+Phase 64 — Apple TV + Shared iPad + Delegation Runbooks
+  ├── 09-shared-ipad-lifecycle.md
+  ├── 10-apple-tv-lifecycle.md
+  ├── 11-vpp-catalog-runbook.md
+  ├── 12-shared-ipad-passcode-reset.md (CANONICAL admin-doc — must exist before L1 #34 lands)
+  ├── 13-device-release-runbook.md
+  ├── 14-device-transfer-runbook.md
+  ├── 15-audit-log-scoping.md
+  ├── 16-cross-org-boundary-cheat-sheet.md (contains C15 anti-pattern allowlist exemptions)
+  └── ios-capability-matrix.md row additions (3 new rows under existing Enrollment H2 — D-A3)
+
+Phase 65 — L1 + L2 + Common Issues + Hub Integration (NAVIGATION FILES LAST)
+  ├── l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md (depends on 12-shared-ipad-passcode-reset.md + 05-sub-org-admin-onboarding.md#which-admin-owns-this-pool; C16 gate)
+  ├── l1-runbooks/00-index.md append (Apple Business H2 section)
+  ├── l2-runbooks/26-apple-business-permission-denied.md
+  ├── l2-runbooks/00-index.md append (Apple Business H2 section)
+  ├── docs/common-issues.md append (## Apple Business Governance Failure Scenarios H2)
+  ├── docs/quick-ref-l1.md append (## Apple Business Quick Reference H2)
+  ├── docs/quick-ref-l2.md append (## Apple Business Quick Reference H2)
+  ├── docs/operations/00-index.md append (5th H2 sub-section)
+  ├── docs/index.md mod (5th sub-section under ## Operations H2 + Cross-Platform References entries + platform-coverage banner appendix)
+  └── Audit harness terminal re-audit from fresh worktree
 ```
 
-Copy `v1.4.1-milestone-audit.mjs` to `v1.5-milestone-audit.mjs`, update header comment, add new checks. Predecessor file is frozen — do not modify `v1.4.1-milestone-audit.mjs`.
+**Why navigation files LAST:** v1.5 Phase 57 + Phase 59 established that navigation files (`docs/index.md` / `common-issues.md` / `quick-ref-*.md`) are modified at the END of the milestone, after all downstream content is committed. Reason: navigation edits link TO downstream content, and downstream content must exist at the time the navigation commit lands or C13 (broken-link automation) fires.
 
-Sidecar: `v1.5-audit-allowlist.json` (new file) co-located in `scripts/validation/`. Inherits the same JSON schema as `v1.4.1-audit-allowlist.json` (`safetynet_exemptions`, `supervision_exemptions`, `cope_banned_phrases`). Adds new arrays for Linux exemptions and ops-domain allowlists.
+**Parallelization opportunity:** Phase 63 and Phase 64 are partially parallelizable IF Phase 63 lands the `05-sub-org-admin-onboarding.md#which-admin-owns-this-pool` anchor first (Phase 64's L1 #34 depends on it for C16 gate). Realistic wave structure: Wave A = Phase 62 sequential; Wave B = Phase 63 in parallel with the *first half* of Phase 64 (Apple TV + shared iPad lifecycle docs which don't depend on roles); Wave C = Phase 65 sequential (navigation-last).
 
-### New Checks: C10-C13
+**Inherits from:** v1.5 wave-based parallelism (Wave A Phases 51+53; Wave B Phases 54+55+56); v1.5 navigation-files-last precedent (Phase 57 + Phase 59); v1.4.1 atomic same-commit retrofit (multiple cross-link targets land in same commit to avoid C13 false fires).
 
-**C10: Linux platform tokenization**
-- Scope: `docs/linux-lifecycle/**/*.md`, `docs/admin-setup-linux/**/*.md`, `docs/_glossary-linux.md`, `docs/reference/linux-capability-matrix.md`, L1 runbooks 30-33, L2 runbooks 24-25
-- Check: required frontmatter fields present (`platform: Linux`, `last_verified`, `review_by`); `review_by - last_verified <= 60 days` (same rule as C5 for Android)
-- Blocking from the start (frontmatter is structural, not content)
+**Confidence:** HIGH — sequence respects all dependencies and inherits proven parallelism patterns.
 
-**C11: Ops-domain anti-pattern regex**
-- Scope: `docs/operations/**/*.md`
-- Checks: (a) no "SCCM" without "ConfigMgr/SCCM" disambiguation in same file (branded term drift), (b) no "WUfB" without expansion in first occurrence, (c) no SafetyNet in ops-domain docs (same C1 rule applies cross-domain)
-- Informational-first, promote to blocking once ops-domain content is stable
+---
 
-**C12: 4-platform comparison structural validity**
-- Scope: `docs/reference/4-platform-capability-comparison.md`
-- Checks: (a) file exists, (b) all 6 required H2 domain anchors present (`#enrollment`, `#configuration`, `#app-deployment`, `#compliance`, `#software-updates`, `#conditional-access`), (c) all 4 platform columns present in at least 3 tables
-- Blocking once file exists (structural skeleton is a hard requirement)
+## Architectural Patterns
 
-**C13: Broken relative link detection**
-- Scope: all `docs/**/*.md` relative links
-- Informational-first (pre-existing breakage must be triaged before promoting to blocking)
-- Allowlist: `scripts/validation/v1.5-audit-allowlist.json` `broken_link_exemptions[]` array (per-file path + line number)
+### Pattern 1: Cross-Platform Tree for Multi-Platform-Spanning Domains
 
-### Informational-First Grace Pattern
+**What:** When content spans 2+ platforms by a non-device-OS axis (governance, operations, identity), create a new `docs/cross-platform/{domain}/` subdirectory rather than duplicating into per-platform trees.
 
-C10 (Linux frontmatter) ships as blocking immediately because frontmatter is structural. C11, C12, C13 ship informational-first during the phases when content is being authored; C12 promotes to blocking when the 4-platform comparison file lands; C13 promotes to blocking after manual triage sweep resolves pre-existing breakage.
+**When to use:**
+- Content has the same architectural model across all targeted platforms (Apple Business delegation is identical for iOS, iPadOS, macOS, tvOS, shared iPad)
+- Content would create maintenance burden if duplicated into per-platform trees (lockstep update problem)
+- Content is conceptually about a SHARED surface (the Apple Business *portal* is one place, not two)
 
-### CI Workflow: New Job vs Upgrade Existing
+**Trade-offs:**
+- (+) Single source of truth; no cross-tree drift
+- (+) Cleaner mental model for readers ("I want to learn about Apple Business" → one location)
+- (-) Adds a new top-level directory category; reader must learn the cross-platform/ convention
 
-**Decision: add a new job to the existing `.github/workflows/audit-harness-integrity.yml`** rather than upgrading the existing job. Rationale: the v1.4.1 harness job must remain as-is for predecessor reproducibility (PATH A copy invariant). A second job `v1.5-harness` runs `node scripts/validation/v1.5-milestone-audit.mjs` in parallel with the existing `v1.4.1-harness` job. Both must pass for CI green. This mirrors the "frozen predecessor" principle in audit lineage.
+**Example: directory + cross-link convention:**
+```
+docs/cross-platform/apple-business/
+├── 00-overview.md     (rebrand callout #1)
+├── 01-role-privilege-model.md
+└── ...
+
+# Cross-links FROM new tree TO existing per-platform docs (read-only)
+docs/cross-platform/apple-business/01-role-privilege-model.md:
+  See also: [macOS ABM Configuration](../../admin-setup-macos/01-abm-configuration.md)
+
+# Cross-links FROM existing per-platform docs TO new tree (only at 3 canonical Q5 b sites)
+docs/admin-setup-macos/01-abm-configuration.md:1
+  > **Naming update:** Apple Business Manager is now called Apple Business (rebrand 2026-04-14).
+  > For delegated governance and Locations, see [Apple Business Governance](../cross-platform/apple-business/00-overview.md).
+```
+
+### Pattern 2: Compound-Platform Frontmatter for Cross-Platform Runbooks
+
+**What:** When an L1/L2 runbook applies to multiple platforms via a shared abstraction (Apple Business), use a `+`-separated compound platform value in frontmatter.
+
+**When to use:**
+- Runbook is multi-platform by design (not a happen-to-overlap)
+- Audit harness needs to recognize the runbook's platform scope (e.g., C10 Linux-frontmatter validator pattern)
+
+**Trade-offs:**
+- (+) Single runbook, no per-platform duplication
+- (+) Discoverable by either platform's docs reader (common-issues.md routes both iOS + macOS symptoms to it)
+- (-) Harness parsing must handle the `+` separator (new convention — needs explicit parser support)
+
+**Example:**
+```yaml
+---
+last_verified: 2026-05-20
+review_by: 2026-07-19
+applies_to: governance       # NEW value alongside existing all/both/ADE/enrollment
+audience: L1
+platform: ios+macos+shared-ipad
+---
+```
+
+### Pattern 3: 3-Canonical-Site Rebrand Callout
+
+**What:** When a vendor renames a critical product mid-corpus-lifetime (Apple Business Manager → Apple Business), do NOT corpus-sweep all ~30 references. Instead, place rebrand statements at 3 canonical sites where readers FIRST encounter the term: the new domain's overview, the existing platform's first ABM-related doc per platform.
+
+**When to use:**
+- Rebrand is non-functional (capability surface unchanged; only name changed)
+- Existing references work correctly under either name (anchor stability preserved)
+- Corpus-sweep cost exceeds the disambiguation value
+
+**Trade-offs:**
+- (+) Zero retroactive churn on existing v1.0-v1.5 docs
+- (+) PITFALL-6 anchor-stability fully preserved
+- (-) Readers searching for "Apple Business" via grep will find ~30 unchanged "Apple Business Manager" / "ABM" hits without rebrand context; the 3-callout strategy assumes readers enter via the canonical sites
+
+**Inherits from:** v1.4 D-14 platform-frontmatter-defaults-to-Windows no-retroactive-sweep precedent (same logic: corpus-sweep cost > disambiguation value).
+
+### Pattern 4: 5-State Verdict Lock for Comparison Cells (preserved)
+
+**What:** Cells in the 5-platform comparison doc use exactly one of `Supported` / `Partial` / `Not supported` / `Mode-dependent` / `n/a`. v1.6 does NOT change this lock because Apple Business is not added to the matrix.
+
+**Inheritance:** v1.5 D-09 verdict-vocabulary lock.
+
+---
+
+## Anti-Patterns
+
+### Anti-Pattern 1: Treating Apple Business as a 6th Platform
+
+**What people do:** Create `docs/admin-setup-apple-business/` parallel to the 5 existing per-platform directories; add `## Apple Business` as a 6th top-level H2 in `docs/index.md`; create a `_glossary-apple-business.md` AND move ABM/ADE/Supervision entries out of `_glossary-macos.md` into it.
+
+**Why it's wrong:**
+- Apple Business is NOT a target device platform — it's a delegation surface over iOS+macOS
+- Adding a 6th platform forces 6th column in the 5-platform comparison matrix (240 cells → 288 cells, breaks C12)
+- Moving ABM/ADE/Supervision out of `_glossary-macos.md` breaks ~30 existing inbound anchor links (PITFALL-6)
+- Hub Choose-Your-Platform selector dilutes ("choose your platform" was about device OS)
+
+**Do this instead:** Treat Apple Business as a 5th Operations sub-domain (D-A4) under `cross-platform/apple-business/` (D-A1), with its own NEW glossary that ADDS to (does not replace) the existing Apple-shared glossary.
+
+### Anti-Pattern 2: Adding a 7th H2 to the 5-Platform Comparison Doc
+
+**What people do:** Add `## Apple Business Delegation` as a 7th H2 to `docs/reference/4-platform-capability-comparison.md`, force 5 n/a cells per row (Windows / Android / Linux all n/a), and propagate the new H2 to all 4 sibling matrices per D-13/D-18 reciprocity contract.
+
+**Why it's wrong:**
+- Apple Business delegation is not a device-capability axis comparable to Enrollment/Configuration/etc.
+- Triggers D-13/D-18 cascade across 4 files (each sibling matrix needs the new H2 + new rows)
+- Breaks C12 240-cell math (becomes 7 H2 × 5 cols × N rows)
+- Confuses two categorical layers (device capability vs delegation governance)
+
+**Do this instead:** Add 3 rows to `ios-capability-matrix.md` under the existing Enrollment H2 (D-A3); leave the comparison doc and other sibling matrices unchanged.
+
+### Anti-Pattern 3: Corpus-Sweeping All ABM References to "Apple Business"
+
+**What people do:** Find/replace all 30+ "Apple Business Manager" / "ABM" references across the corpus, update anchors from `#abm` to `#apple-business`, update inbound links.
+
+**Why it's wrong:**
+- Violates Q5 (b) decision explicitly
+- Breaks every existing inbound anchor link (PITFALL-6 anchor-stability cascade — ~30 references means ~30+ broken inbound links)
+- Forces retroactive freshness-date refresh on ~30 files (60-day review cycle invariant)
+- Multiplies milestone surface from "add new tree + 3 callouts + 2 runbooks" to "edit 30+ existing files"
+
+**Do this instead:** 3-canonical-site callout pattern (Pattern 3 above). Existing references remain unchanged; readers who land on an existing doc see "ABM" without context (acceptable because the 3 canonical entry points provide context).
+
+### Anti-Pattern 4: Allowing Intune-Delegation Language in Apple Business Docs
+
+**What people do:** Write "delegate VPP role assignment in Intune" or "use Endpoint Manager scope groups for Apple Business permissions" or "Intune custom roles fulfill the Apple Business delegation requirement."
+
+**Why it's wrong:**
+- Hard scope boundary (Q-decision: Apple Business surface only; Intune RBAC out of scope)
+- The two systems are SEPARATE delegation surfaces — conflating them undermines the milestone's central value (admins must learn Apple Business as its own system)
+- C15 audit guard exists specifically to prevent this leak
+
+**Do this instead:** Each delegation runbook carries an explicit scope-boundary callout at the top ("This action is owned by Apple Business — Intune cannot delegate this"). The `16-cross-org-boundary-cheat-sheet.md` is the canonical reference. C15 banned-phrase list enforces.
 
 ---
 
 ## Data Flow
 
-The documentation suite has a static content data flow (no runtime components). The relevant "flows" are:
+### Reader Navigation Flow — Apple Business Governance Question
 
-**Author → Audit → Publish**
 ```
-Author writes docs/  →  per-phase check-phase-NN.mjs  →  v1.5-milestone-audit.mjs  →  CI workflow
+[Reader has Apple Business governance question]
+    │
+    ├── Entry via docs/index.md
+    │     → ## Operations H2
+    │       → ### Apple Business Delegated Governance (D-A4)
+    │         → cross-platform/apple-business/00-overview.md
+    │
+    ├── Entry via grep / search "Locations"
+    │     → docs/_glossary-apple-business.md#locations (D-A2)
+    │       → cross-platform/apple-business/02-locations-architecture.md
+    │
+    ├── Entry via symptom in common-issues.md
+    │     → ## Apple Business Governance Failure Scenarios
+    │       → L1 #34 (l1-runbooks/34-...md) [if Service Desk]
+    │       → L2 #26 (l2-runbooks/26-...md) [if Desktop Engineering]
+    │       → cross-platform/apple-business/12-shared-ipad-passcode-reset.md [if Admin]
+    │
+    └── Entry via existing macOS/iOS ABM doc
+          → docs/admin-setup-macos/01-abm-configuration.md:1 intro callout (D-A8 canonical site #2)
+            → cross-platform/apple-business/00-overview.md
 ```
 
-**Navigation flow** (reader perspective):
-```
-Hub (index.md / common-issues.md / quick-ref)
-  → Platform section (admin-setup-linux/ OR operations/)
-    → Per-guide (admin setup, capability matrix, glossary)
-      → Per-scenario (L1 runbook OR L2 runbook)
-```
+### Cross-Link Network — C16 Integrity Triangle
 
-The new `docs/operations/` layer adds a second entry axis into the platform-specific content. Readers can enter via the hub → operations domain → platform sub-doc; OR via the hub → platform section → cross-reference to operations. Both paths must be navigable. This is the cross-platform navigation impact of Option C.
+```
+docs/common-issues.md
+    │ (## Apple Business Governance Failure Scenarios H2)
+    ↓ (symptom row link)
+docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md
+    │           │
+    │           ↓ (admin-context link)
+    │   docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md
+    │           ↑ (reciprocal back-link to L1)
+    │           │
+    └───────────┘
+    │
+    ↓ (which-admin-owns-this-pool link)
+docs/cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool
+
+C16 asserts: ALL 4 edges of this graph resolve to existing anchors at commit time.
+```
 
 ---
 
-## Build Order and Phase Dependencies
+## Scaling Considerations
 
-### Dependency Graph
-
-```
-Broken-link sweep (P1 cleanup, no deps)
-  ↓
-Linux foundation: glossary + lifecycle overview (P2 foundation, parallel to cleanup)
-  ↓
-Linux admin setup + capability matrix (depends on glossary)
-Linux L1/L2 + decision tree (depends on admin setup)
-  ↓
-Ops-domain foundation: co-management (Windows-led, parallel to Linux content)
-  ↓
-Ops-domain content: patch + app lifecycle + drift (can parallelize with each other)
-  ↓
-Integration (DEFER-07 Android nav, DEFER-08 4-platform comparison, index.md Linux section)
-  ↓
-Audit harness v1.5 (extends after all content lands)
-```
-
-### Phase Decomposition (12-15 phases, starting at Phase 48)
-
-The following phase structure derives from the dependency graph and v1.2's foundation-first lesson:
-
-**Phase 48 — Pillar 1a: Broken-Link Sweep + Android Nav Audit (DEFER-07 prep)**
-- Files touched: scan only (no edits), produce findings report
-- Produces: C13 informational harness check as proof of concept
-- Depends on: nothing (runs against existing 179 files)
-- Key output: categorized broken-link inventory + Android nav gap inventory
-
-**Phase 49 — Linux Foundation: Taxonomy, Glossary, Lifecycle Overview**
-- Files created: `_glossary-linux.md`, `linux-lifecycle/00-enrollment-overview.md`, `linux-lifecycle/01-linux-prerequisites.md`
-- Files modified: `_glossary.md`, `_glossary-macos.md`, `_glossary-android.md` (see-also reciprocal)
-- Depends on: nothing for new files; Phase 48 findings inform any glossary cleanup
-- Pattern mirrors: Phase 20 (v1.2 cross-platform foundation)
-
-**Phase 50 — Linux Admin Setup Guides**
-- Files created: `admin-setup-linux/00-overview.md` through `05-conditional-access.md` (6 files)
-- Files created: `reference/linux-capability-matrix.md`
-- Depends on: Phase 49 (glossary + lifecycle)
-
-**Phase 51 — Linux Triage + L1 Runbooks**
-- Files created: `decision-trees/09-linux-triage.md`, `l1-runbooks/30..33-linux-*.md` (4 files)
-- Files modified: `l1-runbooks/00-index.md` (append-only Linux section), `decision-trees/00-initial-triage.md` (Linux branch)
-- Depends on: Phase 50 (admin setup — L1 runbooks reference admin guides)
-
-**Phase 52 — Linux L2 Investigation Runbooks**
-- Files created: `l2-runbooks/24..25-linux-*.md` (2 files)
-- Files modified: `l2-runbooks/00-index.md` (append-only Linux section)
-- Depends on: Phase 51 (L1 runbooks cross-reference L2 by convention)
-
-**Phase 53 — Co-Management Operational Docs**
-- Files created: `operations/co-management/00-overview.md`, `01-windows-tenant-attach.md`, `02-windows-workload-sliders.md`, `03-cocmgmt-migration-paths.md`, `operations/00-index.md`
-- Depends on: nothing structural (Windows-led, no dependency on Linux phases)
-- Can run in parallel with Phases 51-52 (disjoint file sets)
-
-**Phase 54 — Patch & Update Management**
-- Files created: `operations/patch-management/00-overview.md` through `04-android-patch-delivery.md` (5 files)
-- Depends on: Phase 53 (`operations/00-index.md` must exist for cross-reference)
-- Can parallelize with Phase 52 (disjoint file sets)
-
-**Phase 55 — App Lifecycle Automation**
-- Files created: `operations/app-lifecycle/00-overview.md` through `04-android-mgp-lifecycle.md` (5 files)
-- Depends on: Phase 53 (`operations/00-index.md`)
-- Can parallelize with Phase 54 (disjoint file sets)
-
-**Phase 56 — Drift Detection + Tenant Migration**
-- Files created: `operations/drift-migration/00-overview.md` through `04-tenant-migration-runbook.md` (5 files)
-- Depends on: Phase 53 (`operations/00-index.md`)
-- Can parallelize with Phases 54-55
-
-**Phase 57 — DEFER-07: Android Nav Unification**
-- Files modified: `docs/index.md` (Android H2 expansion), `common-issues.md` (Android routing block), `quick-ref-l1.md` (Android section), `quick-ref-l2.md` (Android section)
-- Depends on: Phase 48 (gap inventory) + Phases 51-52 (all Android + Linux runbooks must exist before hub links)
-- Key lesson: navigation files written AFTER content (v1.0 lesson verified across all milestones)
-
-**Phase 58 — DEFER-08: 4-Platform Capability Comparison**
-- Files created: `docs/reference/4-platform-capability-comparison.md`
-- Files modified: `macos-capability-matrix.md`, `ios-capability-matrix.md`, `android-capability-matrix.md` (intro cross-references + remove deferred stub), `linux-capability-matrix.md` (cross-reference)
-- Depends on: Phases 49-56 all complete (the comparison doc must see Linux + all ops-depth content to be accurate)
-- Integration-phase-last pattern — mirrors Phase 42 (v1.4) and Phase 47 (v1.4.1)
-
-**Phase 59 — Hub Navigation Integration: index.md Linux + Operations Sections**
-- Files modified: `docs/index.md` (Linux H2 section + new Operations section linking to `docs/operations/`), hub cross-references from ops docs back to admin-setup dirs
-- Depends on: Phase 57 (Android nav), Phase 58 (4-platform comparison), all Linux phases
-- Navigation-last pattern enforced here as well as Phase 57
-
-**Phase 60 — Audit Harness v1.5**
-- Files created: `v1.5-milestone-audit.mjs`, `v1.5-audit-allowlist.json`
-- Extends: v1.4.1 harness with C10/C11/C12/C13
-- Depends on: all content phases complete (harness validates the final delivered state)
-- C13 broken-link sweep: second pass (after Phase 48 first pass), should pass clean after Phase 48 fixes were applied
-
-**Phase 61 — Broken-Link Fix Execution + Pre-Close Gap Closure**
-- Files modified: whatever Phase 48 inventory + Phase 60 C13 violations reveal
-- Produces: terminal re-audit, milestone audit doc
-- Depends on: Phase 60 harness exists
-
-Total: 14 phases (48-61). This falls within the 12-15 phase target.
-
-### Parallelism Opportunities
-
-- Phases 51-52 (Linux L1/L2) can run in parallel with Phase 53 (co-management) — completely disjoint file sets
-- Phases 54, 55, 56 can run in parallel with each other (each ops domain touches different files)
-- Phase 57 (Android nav) can run in parallel with Phase 58 (4-platform comparison) if Phase 48 gap inventory is complete and all runbook phases are done
+| Scale | Architecture Adjustments |
+|-------|--------------------------|
+| Single Apple Business account, no Locations | Single-default-Location pattern; sub-org admin onboarding becomes vestigial; custom-role authoring still applies |
+| 1 Apple Business account + 2-10 Locations | Core v1.6 scope; the multi-org architecture guide documents this case |
+| 1 Apple Business account + 10-100 Locations | Same architecture; the sub-org-admin onboarding workflow becomes higher-volume — recommend tooling layer (out of scope for v1.6) |
+| Multiple separate Apple Business accounts (inter-tenant) | **OUT OF SCOPE per Q-decision.** v1.6 documents one Apple Business account only. |
 
 ---
 
-## Scalability Considerations
+## Integration Points
 
-| Concern | Current (v1.4.1) | v1.5 State | Notes |
-|---------|-----------------|------------|-------|
-| File count | 179 markdown files | ~230+ markdown files | Linux adds ~15, ops adds ~20, new refs add 2 |
-| Broken-link audit scope | Not automated | C13 in harness | First systematic scan across all 230 files |
-| Per-phase validators | 47 check-phase-NN.mjs scripts | Continues | Each phase ships its own validator |
-| Hub maintainability | 4 platforms in index.md | 5 platforms + operations | Operations section is the new navigation surface; index.md grows but remains single hub |
-| Capability matrix proliferation | 3 per-platform matrices + android multi-mode | 4 per-platform + 1 4-platform comparison | `4-platform-capability-comparison.md` is the consolidation point |
+### External Services / References
+
+| Service | Integration Pattern | Notes |
+|---------|---------------------|-------|
+| Apple Business portal | Read-only URL references in admin guides; no API integration | All admin actions documented as portal-click sequences (consistent with existing macOS/iOS admin docs) |
+| Microsoft Intune | Read-only cross-link references to existing v1.0-v1.5 Intune docs | NO new Intune-side configuration in v1.6 (hard scope boundary) |
+| Apple Business Connect / Essentials | Acknowledged in 00-overview.md as consolidated under Apple Business since 2026-04-14 | Not in scope for delegation governance content |
+
+### Internal Doc Boundaries
+
+| Boundary | Communication | Notes |
+|----------|---------------|-------|
+| `cross-platform/apple-business/` ↔ `admin-setup-macos/` | Cross-link FROM Apple Business tree to existing macOS docs; intro callout AT `admin-setup-macos/01-abm-configuration.md` (canonical site #2) | Read-only outbound + 1 surgical edit inbound |
+| `cross-platform/apple-business/` ↔ `admin-setup-ios/` | Cross-link FROM Apple Business tree to existing iOS docs; intro callout AT `admin-setup-ios/02-abm-token.md` (canonical site #3) | Read-only outbound + 1 surgical edit inbound |
+| `_glossary-apple-business.md` ↔ `_glossary-macos.md` | Reciprocal see-also entries; ABM entry in `_glossary-macos.md` gains 1 inline see-also line | Append-only |
+| `cross-platform/apple-business/` ↔ `operations/` | Sibling Operations domain (5th sub-section) | No content cross-links beyond the hub-level index references |
+| `l1-runbooks/34-...md` ↔ `cross-platform/apple-business/12-...md` | Bidirectional cross-link (C16 integrity triangle) | Both directions must resolve at commit time |
 
 ---
 
-## Anti-Patterns to Avoid
+## Confidence Assessment
 
-### Anti-Pattern 1: Ops-Domain Content in Per-Platform Admin Guides
-**What:** Adding `operations/` content directly inside `admin-setup-windows/`, `admin-setup-macos/` etc.
-**Why bad:** Co-management is not a Windows admin setup topic — it is a post-enrollment operational lifecycle topic. Embedding it in admin-setup dirs misrepresents the content axis and forces cross-references into platform-specific files.
-**Instead:** Use `docs/operations/` as the primary home; add brief cross-reference callouts (one sentence + link) in per-platform admin guides.
-
-### Anti-Pattern 2: Linux Capability Matrix as Full 4-Platform Comparison
-**What:** Building `linux-capability-matrix.md` as a 5-column table (Linux | Windows | macOS | iOS | Android)
-**Why bad:** Duplicates DEFER-08 (`4-platform-capability-comparison.md`). Creates synchronization debt — changes to platform capabilities require updates in multiple matrices.
-**Instead:** `linux-capability-matrix.md` is Linux-centric bilateral or Linux-focused with 1-2 reference columns; `4-platform-capability-comparison.md` is the canonical 4-platform reference.
-
-### Anti-Pattern 3: Android Nav Backport Before Linux/Ops Content Lands
-**What:** Executing DEFER-07 (hub nav updates) before Linux runbooks and ops content are complete
-**Why bad:** Hub nav links that land before the target files exist create broken links. The navigation-files-last lesson has been verified across every milestone (v1.0-v1.4.1).
-**Instead:** DEFER-07 and DEFER-08 are integration phases (57-58-59), executed after all content phases complete.
-
-### Anti-Pattern 4: v1.5 Harness Modifying v1.4.1 Harness File
-**What:** Editing `v1.4.1-milestone-audit.mjs` to add C10-C13 checks
-**Why bad:** Breaks predecessor reproducibility. v1.4.1 terminal re-audit is a committed artifact; modifying the harness changes what that audit means retroactively.
-**Instead:** Path A copy — new file `v1.5-milestone-audit.mjs`, v1.4.1 file is frozen.
-
-### Anti-Pattern 5: Broken-Link Sweep Run Last Only
-**What:** Only running the broken-link sweep after all v1.5 content has landed
-**Why bad:** Pre-existing breakage (from 179 existing files) gets mixed with new breakage from v1.5 content, making triage ambiguous.
-**Instead:** Phase 48 runs the sweep first (against existing tree), triages pre-existing issues. Phase 60/61 runs a second pass to validate the new content is clean.
+| Decision | Confidence | Reason |
+|----------|------------|--------|
+| D-A1 Directory placement (`cross-platform/apple-business/`) | HIGH | Direct inheritance from v1.5 `docs/operations/` pattern + v1.4 surgical-edit precedent |
+| D-A2 Glossary architecture (split, new file) | HIGH | Direct inheritance from v1.4 `_glossary-android.md` + v1.5 `_glossary-linux.md` precedents |
+| D-A3 Capability matrix strategy (3 rows in iOS matrix, no change to comparison) | HIGH | Explicitly preserves C12 240-cell invariant; D-13/D-18 reciprocity untouched |
+| D-A4 Hub navigation (5th Operations sub-domain) | HIGH | Direct inheritance from v1.5 Operations H2 4-sub-section pattern |
+| D-A5 L1 / L2 numbering (continue global) | HIGH for numbering, MEDIUM for compound-platform frontmatter | Numbering follows v1.5 precedent; compound frontmatter is new convention needing Phase 1 parser-test |
+| D-A6 Quick-ref placement (new H2) | HIGH | Direct inheritance from v1.5 CLEAN-03 / CLEAN-04 |
+| D-A7 Apple TV + shared iPad (in Apple Business tree) | HIGH | Governance-not-platform framing makes location obvious |
+| D-A8 Cross-link contract (Q5 b 3 canonical sites only) | HIGH | Inherits v1.4 D-14 + v1.5 CLEAN-08 |
+| D-A9 Audit harness C14/C15/C16 design | HIGH for C14 + C16, MEDIUM for C15 banned-phrase list | C15 needs Phase 1 content-pattern review to tighten regex list |
+| D-A10 Phase build order | HIGH | Respects all dependencies; inherits v1.5 navigation-files-last + wave-based parallelism |
+| Apple Business capability surface (Locations, roles, privileges) | MEDIUM | Verified rebrand timing from Apple Support docs (2026-04-14 GA); detailed privilege catalog not exhaustively researched here — Phase 62 Foundation phase must verify the complete privilege list via Apple Support |
 
 ---
 
 ## Sources
 
-All findings derived from direct inspection of the existing repository at `D:\claude\Autopilot`:
+- `.planning/PROJECT.md` (D-decisions and milestone history)
+- `.planning/MILESTONES.md` (v1.5 architectural patterns)
+- `docs/index.md`, `docs/operations/00-index.md`, `docs/common-issues.md`, `docs/quick-ref-l1.md`, `docs/quick-ref-l2.md`
+- `docs/admin-setup-{macos,ios,android,linux}/00-overview.md` (4 platform overview patterns)
+- `docs/reference/{macos,ios}-capability-matrix.md`, `docs/reference/4-platform-capability-comparison.md`
+- `docs/_glossary-{macos,android,linux}.md` (3 platform glossary patterns)
+- `docs/l1-runbooks/` directory listing (next available = 34)
+- `docs/l2-runbooks/` directory listing (next available = 26)
+- [Apple Business Manager is now Apple Business — Apple Support](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web) — rebrand announcement
+- [Intro to roles and privileges in Apple Business Manager — Apple Support](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web) — built-in roles + privilege model
+- [View and assign roles in Apple Business Manager — Apple Support](https://support.apple.com/en-gb/guide/apple-business-manager/axmb46d473c7/web) — Location-scoped role assignment
+- [What are Role Privileges in Apple Business Manager? — HardSoft](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/) — third-party confirmation of People Manager / Device Enrollment Manager / Content Manager + custom roles
+- [Apple Business Connect Is Now Apple Business — PinMeTo (2026-03-24)](https://www.pinmeto.com/blog/apple-business-connect-now-apple-business/) — rebrand announcement context
+- [Apple Business: Everything you need to know — IT Pro](https://www.itpro.com/software/apple/apple-business-everything-you-need-to-know-about-the-all-new-enterprise-platform) — consolidation of ABM + Apple Business Essentials + Apple Business Connect under Apple Business
 
-- `.planning/PROJECT.md` — v1.5 scope definition, carry-forward patterns, Key Decisions table
-- `.planning/STATE.md` — phase numbering, pending todos, carry-forward decisions
-- `.planning/RETROSPECTIVE.md` — process evolution, verified lessons (foundation-first, navigation-last, informational-first harness, atomic retrofits)
-- `docs/index.md` — current hub structure, Android stub confirmation, existing platform H2 depth for parity analysis
-- `docs/admin-setup-android/00-overview.md` — tri-portal Mermaid structure to parallel for Linux
-- `docs/reference/android-capability-matrix.md` — Cross-Platform Equivalences pattern, deferred-4-platform footer stub
-- `docs/reference/macos-capability-matrix.md` — bilateral matrix structure (Windows/macOS)
-- `docs/reference/ios-capability-matrix.md` — trilateral matrix structure (Windows/macOS/iOS)
-- `docs/_glossary-android.md`, `docs/_glossary-macos.md` — reciprocal see-also banner patterns
-- `scripts/validation/v1.4.1-milestone-audit.mjs` — harness lineage, C1-C9 check patterns, androidDocPaths() enumeration, sidecar JSON contract, informational-first tags
-- Directory enumeration: `docs/l1-runbooks/` (01-29), `docs/l2-runbooks/` (01-23), `docs/reference/` (all capability matrices), `docs/` (top-level layout)
+---
 
-Confidence: HIGH for all architectural decisions — all derived from direct codebase inspection, not inference. No external library documentation needed (this is a documentation suite, not a software project).
+*Architecture research for: v1.6 Apple Business Delegated Governance & Multi-Org Operations integration into the existing 5-platform Intune docs corpus*
+*Researched: 2026-05-20*
+*Source confidence: HIGH for structural decisions inheriting from v1.2 / v1.4 / v1.4.1 / v1.5; MEDIUM for Apple Business privilege surface (Phase 62 Foundation must verify via Apple Support deep-dive)*
