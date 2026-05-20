@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.5
-milestone_name: Linux Platform, Operational Depth & Cross-Platform Cleanup
-status: between_milestones
-stopped_at: v1.5 archived 2026-05-08; awaiting `/gsd-new-milestone` for v1.6 planning
-last_updated: "2026-05-08T01:30:00.000Z"
-last_activity: 2026-05-08
+milestone: v1.6
+milestone_name: Apple Business Delegated Governance & Multi-Org Operations
+status: planning
+last_updated: "2026-05-20T21:14:57.189Z"
+last_activity: 2026-05-20
 progress:
-  total_phases: 14
-  completed_phases: 14
-  total_plans: 101
-  completed_plans: 101
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -25,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-05-08)
 
 ## Current Position
 
-Phase: — (between milestones)
+Phase: Not started (defining requirements)
 Plan: —
-Status: v1.5 archived; ready for v1.6 scope definition
-Last activity: 2026-05-08
+Status: Defining requirements
+Last activity: 2026-05-20 — Milestone v1.6 started
 
 ## Session Continuity
 
