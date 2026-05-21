@@ -29,8 +29,8 @@ Requirements for v1.6 release. Each maps to one phase. Phases 62-66 continue fro
 - [x] **OU-06**: Admin can provision Managed Apple Accounts via manual + SCIM + OIDC+JIT with a documented decision matrix
 - [x] **OU-07**: Admin can manage Shared iPad lifecycle (`09-shared-ipad-lifecycle.md`) including sessions, user provisioning, and Find My disable per OP-12 under multi-OU per the Apple Business surface
 - [x] **OU-08**: Admin can manage Apple TV lifecycle (`10-apple-tv-lifecycle.md`) including Configurator-only retail-purchase path, OU assignment, content-token-based app deployment, and shared-physical-space heuristic for Conference Room Display mode per OP-15
-- [ ] **OU-09**: 3 new rows added to `docs/reference/ios-capability-matrix.md` under existing Enrollment H2 (Apple TV management / Shared iPad sessions / Apple Business delegation surface); pre-edit anchor inventory artifact mandatory per DA-4
-- [ ] **OU-10**: `docs/reference/macos-capability-matrix.md` and `docs/reference/4-platform-capability-comparison.md` remain UNCHANGED — preserves C12 240-cell math and D-13/D-18 sibling-anchor-pin contract per D-A3
+- [x] **OU-09**: 3 new rows added to `docs/reference/ios-capability-matrix.md` under existing Enrollment H2 (Apple TV management / Shared iPad sessions / Apple Business delegation surface); pre-edit anchor inventory artifact mandatory per DA-4
+- [x] **OU-10**: `docs/reference/macos-capability-matrix.md` and `docs/reference/4-platform-capability-comparison.md` remain UNCHANGED — preserves C12 240-cell math and D-13/D-18 sibling-anchor-pin contract per D-A3
 
 ### Pillar 3 — Delegation Runbooks
 
@@ -116,8 +116,8 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | OU-06 | Phase 63 | Complete |
 | OU-07 | Phase 63 | Complete |
 | OU-08 | Phase 63 | Complete |
-| OU-09 | Phase 63 | Pending |
-| OU-10 | Phase 63 | Pending |
+| OU-09 | Phase 63 | Complete |
+| OU-10 | Phase 63 | Complete |
 | DELEG-01 | Phase 64 | Pending |
 | DELEG-02 | Phase 64 | Pending |
 | DELEG-03 | Phase 64 | Pending |
