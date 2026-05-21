@@ -298,7 +298,7 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 | 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete | 2026-05-06 |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 5/5 | Complete | 2026-05-08 |
 | 62. Apple Business Foundation & Rebrand | v1.6 | 8/8 | Complete   | 2026-05-21 |
-| 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 6/6 | Complete   | 2026-05-21 |
+| 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 6/6 | Complete    | 2026-05-21 |
 | 64. Apple Business Delegation Runbooks | v1.6 | 0/? | Not started | — |
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 0/? | Not started | — |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 0/? | Not started | — |
