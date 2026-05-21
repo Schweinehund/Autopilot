@@ -80,7 +80,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 **v1.6 architectural decisions (research-attributed; see research/ARCHITECTURE.md):**
 
 - **D-A1** Directory placement → NEW `docs/cross-platform/apple-business/` tree (hybrid Option d) — modeled on v1.5 `docs/operations/`; NOT a 6th platform
-- **D-A2** Glossary architecture → Split (Option c) — NEW `_glossary-apple-business.md` + reciprocal banner lines to 5 existing glossaries
+- **D-A2** Glossary architecture → Split (Option c) — NEW `_glossary-apple-business.md` + reciprocal banner lines to 4 existing glossaries¹
+
+  ¹ `_glossary-macos.md` covers macOS + iOS/iPadOS per its line-9 header — single Apple glossary, not separate macOS/iOS files. Count corrected from "5" to "4" during Phase 62 execution per D-05.
 - **D-A3** Capability matrix changes → 3 incremental rows in `ios-capability-matrix.md` only; `macos-capability-matrix.md` UNCHANGED; `4-platform-capability-comparison.md` UNCHANGED (preserves C12 240-cell math + D-13/D-18 sibling-anchor-pin contract)
 - **D-A4** Hub navigation → Apple Business as 5th sub-section under existing `## Operations` H2
 - **D-A5** L1/L2 numbering + frontmatter → L1 #34 first v1.6 runbook; L2 #26 first v1.6 runbook; NEW compound-platform frontmatter `platform: ios+macos[+shared-ipad|+apple-tv]` with `+` separator parsing required in harness

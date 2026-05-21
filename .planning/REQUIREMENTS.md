@@ -14,7 +14,9 @@ Requirements for v1.6 release. Each maps to one phase. Phases 62-66 continue fro
 - [ ] **AB-03**: Admin can find the canonical per-permission catalog across in-scope subgroups (Basic Organization / Organization Access / API+OAuth / People / Devices / AppleCare / Apps & Books — out of scope: Brand-related subgroups) with Edit-without-View dependency table per OP-3
 - [ ] **AB-04**: Admin can find an Organizational Units (OUs) concept doc explaining hierarchy rules (flat-by-default with optional sub-OUs; no published max-count), what scopes per OU (devices / content tokens / MDM servers / accounts / role assignments), and how OUs replaced legacy Locations
 - [ ] **AB-05**: Apple Business rebrand statement appears at exactly 3 canonical sites (`docs/cross-platform/apple-business/00-overview.md`, `docs/admin-setup-macos/01-abm-configuration.md` intro, `docs/admin-setup-ios/02-abm-token.md` intro) per Q5(b) no-corpus-sweep contract; each statement contains "Apple Business Manager", "Apple Business", and "2026-04-14" tokens for C14 PASS
-- [ ] **AB-06**: 5 existing platform glossaries each gain one reciprocal banner line pointing to `_glossary-apple-business.md`; `_glossary-macos.md` gains one inline see-also at the ABM entry per v1.5 CLEAN-08 pattern
+- [ ] **AB-06**: 4 existing platform glossaries¹ each gain one reciprocal banner line pointing to `_glossary-apple-business.md`; `_glossary-macos.md` gains one inline see-also at the ABM entry per v1.5 CLEAN-08 pattern
+
+  ¹ `_glossary-macos.md` covers macOS + iOS/iPadOS per its line-9 header — single Apple glossary, not separate macOS/iOS files. Count corrected from "5" to "4" during Phase 62 execution per D-05.
 - [ ] **AB-07**: L1 admin-directory lookup convention published (external directory or contact-card format) so L1 runbooks have a stable "which admin owns this device pool" lookup target per DA-8
 
 ### Pillar 2 — Multi-OU Architecture & Admin Setup
