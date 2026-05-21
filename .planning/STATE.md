@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
-status: planning
+status: completed
 stopped_at: Phase 62 context gathered
-last_updated: "2026-05-21T13:13:52.000Z"
-last_activity: 2026-05-20 — v1.6 ROADMAP.md drafted (5 phases, 39 requirements, 100% coverage)
+last_updated: "2026-05-21T15:42:40.580Z"
+last_activity: 2026-05-21 -- Phase 62 marked complete
 progress:
   total_phases: 5
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  completed_phases: 1
+  total_plans: 8
+  completed_plans: 8
+  percent: 20
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-20)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** v1.6 roadmap drafted — Phase 62 ready to plan (`/gsd-plan-phase 62`)
+**Current focus:** Phase 62 — Apple Business Foundation & Rebrand
 
 ## Current Position
 
-Phase: 62 — Apple Business Foundation & Rebrand (ready to plan)
-Plan: —
-Status: Phase 62 ready to plan
-Last activity: 2026-05-20 — v1.6 ROADMAP.md drafted (5 phases, 39 requirements, 100% coverage)
+Phase: 62 — COMPLETE
+Plan: 1 of 8
+Status: Phase 62 complete
+Last activity: 2026-05-21 -- Phase 62 marked complete
 
 ```
 Progress: [          ]   0%
@@ -83,6 +83,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 - **D-A2** Glossary architecture → Split (Option c) — NEW `_glossary-apple-business.md` + reciprocal banner lines to 4 existing glossaries¹
 
   ¹ `_glossary-macos.md` covers macOS + iOS/iPadOS per its line-9 header — single Apple glossary, not separate macOS/iOS files. Count corrected from "5" to "4" during Phase 62 execution per D-05.
+
 - **D-A3** Capability matrix changes → 3 incremental rows in `ios-capability-matrix.md` only; `macos-capability-matrix.md` UNCHANGED; `4-platform-capability-comparison.md` UNCHANGED (preserves C12 240-cell math + D-13/D-18 sibling-anchor-pin contract)
 - **D-A4** Hub navigation → Apple Business as 5th sub-section under existing `## Operations` H2
 - **D-A5** L1/L2 numbering + frontmatter → L1 #34 first v1.6 runbook; L2 #26 first v1.6 runbook; NEW compound-platform frontmatter `platform: ios+macos[+shared-ipad|+apple-tv]` with `+` separator parsing required in harness

@@ -140,7 +140,7 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 
 ### v1.6 Apple Business Delegated Governance & Multi-Org Operations (Phases 62-66) — IN PROGRESS
 
-- [ ] **Phase 62: Apple Business Foundation & Rebrand** — Glossary + role/permission model + OUs concept + 3 canonical rebrand callouts + audit harness scaffold with C14/C15/C16 blocking-from-start
+- [x] **Phase 62: Apple Business Foundation & Rebrand** — Glossary + role/permission model + OUs concept + 3 canonical rebrand callouts + audit harness scaffold with C14/C15/C16 blocking-from-start (completed 2026-05-21)
 - [ ] **Phase 63: Multi-OU Architecture & Apple Admin Setup** — OUs-vs-custom-roles decision matrix + custom role authoring + sub-org admin onboarding + MDM server assignment + content token consolidation + Managed Apple Account provisioning + Shared iPad / Apple TV lifecycle + iOS capability matrix rows
 - [ ] **Phase 64: Apple Business Delegation Runbooks** — VPP catalog + shared iPad passcode reset (admin context) + device release + device transfer + MDM server reassign + Managed Apple Account provisioning + audit log scoping + cross-org-boundary cheat sheet
 - [ ] **Phase 65: Apple Business L1/L2 + Hub Navigation Integration** — L1 #34 (shared iPad passcode reset) + L2 #26 (permission-denied 7-leaf tree) + common-issues append + quick-ref-l1/l2 append + operations index append + docs/index.md hub append (NAVIGATION-LAST)
@@ -166,15 +166,15 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 
   ¹ `_glossary-macos.md` covers macOS + iOS/iPadOS per its line-9 header — single Apple glossary, not separate macOS/iOS files. Count corrected from "5" to "4" during Phase 62 execution per D-05.
   5. `v1.6-milestone-audit.mjs` ships in a single atomic harness commit (per v1.5 Plan 60-08 atomic-harness-commit precedent) as Path-A copy from v1.5 with C1-C13 preserved + C14/C15/C16 blocking-from-start + new sidecar category `c13_rotting_external` + BASELINE_10 refresh + `+` separator parsing for compound-platform frontmatter; `check-phase-62.mjs` validator-as-deliverable ships in same commit; harness exits 0
-**Plans:** 8 plans
-- [ ] 62-01-PLAN.md — D-05 planning-doc count-correction + per-permission scrape preparation
-- [ ] 62-02-PLAN.md — Author `_glossary-apple-business.md` (rebrand-mapping table + 4 H2 categories)
-- [ ] 62-03-PLAN.md — Author `00-overview.md` (rebrand callout site #1 + style-guide convention)
-- [ ] 62-04-PLAN.md — Author `01-role-permission-model.md` (Account Holder + 7-subgroup catalog + Edit-without-View)
-- [ ] 62-05-PLAN.md — Author `02-ous-architecture.md` (OU hierarchy + scoping table)
-- [ ] 62-06-PLAN.md — Author `_admin-directory.md` template (`<TENANT_FILL_IN>` placeholders + 4 backend types)
-- [ ] 62-07-PLAN.md — Anchor inventory + 4 reciprocal banner lines + 1 inline see-also + 2 intro callouts (C14 sites #2 + #3)
-- [ ] 62-08-PLAN.md — Atomic harness commit (v1.6-milestone-audit.mjs + sidecar + check-phase-62.mjs)
+**Plans:** 8/8 plans complete
+- [x] 62-01-PLAN.md — D-05 planning-doc count-correction + per-permission scrape preparation
+- [x] 62-02-PLAN.md — Author `_glossary-apple-business.md` (rebrand-mapping table + 4 H2 categories)
+- [x] 62-03-PLAN.md — Author `00-overview.md` (rebrand callout site #1 + style-guide convention)
+- [x] 62-04-PLAN.md — Author `01-role-permission-model.md` (Account Holder + 7-subgroup catalog + Edit-without-View)
+- [x] 62-05-PLAN.md — Author `02-ous-architecture.md` (OU hierarchy + scoping table)
+- [x] 62-06-PLAN.md — Author `_admin-directory.md` template (`<TENANT_FILL_IN>` placeholders + 4 backend types)
+- [x] 62-07-PLAN.md — Anchor inventory + 4 reciprocal banner lines + 1 inline see-also + 2 intro callouts (C14 sites #2 + #3)
+- [x] 62-08-PLAN.md — Atomic harness commit (v1.6-milestone-audit.mjs + sidecar + check-phase-62.mjs)
 
 ### Phase 63: Multi-OU Architecture & Apple Admin Setup
 **Goal**: Admins can choose between OUs / custom roles / combined topology via a decision matrix, author a custom role with the v1.6 differentiator min-viable sub-org admin bundle, onboard a sub-org admin (with paired offboarding), assign devices to MDM servers per OU, consolidate VPP content tokens, provision Managed Apple Accounts (manual / SCIM / OIDC+JIT), and manage Shared iPad + Apple TV lifecycle — and 3 incremental rows land in `ios-capability-matrix.md` without touching `macos-capability-matrix.md` or `4-platform-capability-comparison.md`.
@@ -290,7 +290,7 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 | 59. Hub Navigation Integration — Linux + Operations | v1.5 | 9/9 | Complete | 2026-05-05 |
 | 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete | 2026-05-06 |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 5/5 | Complete | 2026-05-08 |
-| 62. Apple Business Foundation & Rebrand | v1.6 | 0/? | Not started | — |
+| 62. Apple Business Foundation & Rebrand | v1.6 | 8/8 | Complete   | 2026-05-21 |
 | 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 0/? | Not started | — |
 | 64. Apple Business Delegation Runbooks | v1.6 | 0/? | Not started | — |
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 0/? | Not started | — |
