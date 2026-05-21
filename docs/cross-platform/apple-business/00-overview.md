@@ -7,6 +7,7 @@ platform: ios+macos
 ---
 
 > **Platform applicability:** This tree covers Apple Business delegated governance on iOS,
+<!-- ABAUDIT-02: next line explicitly declares Intune-side surfaces OUT OF SCOPE; C15 regex 4 false-positive exemption (scope disclaimer is the inverse of an Intune-delegation anti-pattern) per AEAUDIT-04 precedent -->
 > iPadOS, and macOS Apple-managed devices. Microsoft Intune-side surfaces (RBAC, scope tags,
 > admin role assignments within Intune) are out of scope per Q5(b); see the
 > [Apple Business Governance Glossary](../../_glossary-apple-business.md) for terminology canon.
@@ -24,6 +25,7 @@ architecture, and the L1 admin-directory lookup convention. Delegation runbooks 
 routing build on this foundation in Phases 64-65.
 
 Coverage boundary: Apple Business is the Apple-owned permission surface for Apple-managed
+<!-- ABAUDIT-03: next line explicitly contrasts Apple Business with Intune-side RBAC to clarify distinct surfaces; C15 regex 4 false-positive exemption (disambiguation clause, not conflation) per AEAUDIT-04 precedent -->
 devices (iOS / iPadOS / macOS). It is distinct from Intune-side RBAC (which controls
 Intune's MDM surface). The two surfaces interact at device-policy enforcement boundaries but
 have separate role/permission models.
