@@ -99,51 +99,54 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AB-01 | TBD | Pending |
-| AB-02 | TBD | Pending |
-| AB-03 | TBD | Pending |
-| AB-04 | TBD | Pending |
-| AB-05 | TBD | Pending |
-| AB-06 | TBD | Pending |
-| AB-07 | TBD | Pending |
-| OU-01 | TBD | Pending |
-| OU-02 | TBD | Pending |
-| OU-03 | TBD | Pending |
-| OU-04 | TBD | Pending |
-| OU-05 | TBD | Pending |
-| OU-06 | TBD | Pending |
-| OU-07 | TBD | Pending |
-| OU-08 | TBD | Pending |
-| OU-09 | TBD | Pending |
-| OU-10 | TBD | Pending |
-| DELEG-01 | TBD | Pending |
-| DELEG-02 | TBD | Pending |
-| DELEG-03 | TBD | Pending |
-| DELEG-04 | TBD | Pending |
-| DELEG-05 | TBD | Pending |
-| DELEG-06 | TBD | Pending |
-| DELEG-07 | TBD | Pending |
-| DELEG-08 | TBD | Pending |
-| ABNAV-01 | TBD | Pending |
-| ABNAV-02 | TBD | Pending |
-| ABNAV-03 | TBD | Pending |
-| ABNAV-04 | TBD | Pending |
-| ABNAV-05 | TBD | Pending |
-| ABNAV-06 | TBD | Pending |
-| ABNAV-07 | TBD | Pending |
-| AUDIT-09 | TBD | Pending |
-| AUDIT-10 | TBD | Pending |
-| AUDIT-11 | TBD | Pending |
-| AUDIT-12 | TBD | Pending |
-| AUDIT-13 | TBD | Pending |
-| AUDIT-14 | TBD | Pending |
-| AUDIT-15 | TBD | Pending |
+| AB-01 | Phase 62 | Pending |
+| AB-02 | Phase 62 | Pending |
+| AB-03 | Phase 62 | Pending |
+| AB-04 | Phase 62 | Pending |
+| AB-05 | Phase 62 | Pending |
+| AB-06 | Phase 62 | Pending |
+| AB-07 | Phase 62 | Pending |
+| OU-01 | Phase 63 | Pending |
+| OU-02 | Phase 63 | Pending |
+| OU-03 | Phase 63 | Pending |
+| OU-04 | Phase 63 | Pending |
+| OU-05 | Phase 63 | Pending |
+| OU-06 | Phase 63 | Pending |
+| OU-07 | Phase 63 | Pending |
+| OU-08 | Phase 63 | Pending |
+| OU-09 | Phase 63 | Pending |
+| OU-10 | Phase 63 | Pending |
+| DELEG-01 | Phase 64 | Pending |
+| DELEG-02 | Phase 64 | Pending |
+| DELEG-03 | Phase 64 | Pending |
+| DELEG-04 | Phase 64 | Pending |
+| DELEG-05 | Phase 64 | Pending |
+| DELEG-06 | Phase 64 | Pending |
+| DELEG-07 | Phase 64 | Pending |
+| DELEG-08 | Phase 64 | Pending |
+| ABNAV-01 | Phase 65 | Pending |
+| ABNAV-02 | Phase 65 | Pending |
+| ABNAV-03 | Phase 65 | Pending |
+| ABNAV-04 | Phase 65 | Pending |
+| ABNAV-05 | Phase 65 | Pending |
+| ABNAV-06 | Phase 65 | Pending |
+| ABNAV-07 | Phase 65 | Pending |
+| AUDIT-09 | Phase 62 | Pending |
+| AUDIT-10 | Phase 62 | Pending |
+| AUDIT-11 | Phase 62 | Pending |
+| AUDIT-12 | Phase 62 | Pending |
+| AUDIT-13 | Phase 62 | Pending |
+| AUDIT-14 | Phase 66 | Pending |
+| AUDIT-15 | Phase 66 | Pending |
 
 **Coverage:**
 - v1.6 requirements: 39 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 39 ⚠️ (will be resolved by `/gsd-roadmapper`)
+- Mapped to phases: 39 (100% coverage)
+- Unmapped: 0 ✓
+- Phase distribution: Phase 62 = 12 reqs (AB-01..07 + AUDIT-09..13); Phase 63 = 10 reqs (OU-01..10); Phase 64 = 8 reqs (DELEG-01..08); Phase 65 = 7 reqs (ABNAV-01..07); Phase 66 = 2 reqs (AUDIT-14, AUDIT-15)
+
+**Rationale for Phase 62 absorbing AUDIT-09..13 (5 reqs) alongside the 7 Foundation reqs:** D-A9 mandates that C14/C15/C16 land blocking-from-start so the harness rejects bad content from Phase 1. The audit harness Path-A copy + C14/C15/C16 + per-phase validator scaffolds + CI workflow must all exist by Phase 62 close in a single atomic harness commit (v1.5 Plan 60-08 precedent). AUDIT-14 (BASELINE_10 refresh closing BASELINE_9 carry-over) and AUDIT-15 (terminal re-audit from fresh worktree) are inherently milestone-close concerns that route to Phase 66 per v1.5 Phase 60 + 61 precedent.
 
 ---
 *Requirements defined: 2026-05-20*
-*Last updated: 2026-05-20 — v1.6 milestone start; pre-roadmap*
+*Last updated: 2026-05-20 — Traceability populated by /gsd-roadmapper; 39/39 requirements mapped across 5 phases (62-66); 100% coverage validated; no orphans, no duplicates*

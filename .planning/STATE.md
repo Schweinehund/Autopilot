@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
-status: planning
-last_updated: "2026-05-20T21:14:57.189Z"
+status: ready_to_plan
+last_updated: "2026-05-20T22:00:00.000Z"
 last_activity: 2026-05-20
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,32 +17,40 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-08)
+See: .planning/PROJECT.md (updated 2026-05-20)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and operate them at depth (co-management, patching, app lifecycle, drift/migration) once enrolled
-**Current focus:** Awaiting v1.6 milestone planning (`/gsd-new-milestone`)
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
+**Current focus:** v1.6 roadmap drafted — Phase 62 ready to plan (`/gsd-plan-phase 62`)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 62 — Apple Business Foundation & Rebrand (ready to plan)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-05-20 — Milestone v1.6 started
-
-## Session Continuity
-
-Last session: 2026-05-08T01:30:00.000Z
-Stopped at: v1.5 archived 2026-05-08 (ROADMAP.md collapsed, REQUIREMENTS.md removed via git rm, archive files in milestones/v1.5-*); 14 phase dirs moved to milestones/v1.5-phases/; PROJECT.md evolved (61 phases / 7 milestones); git tag v1.5 created
-Resume file: None
-Next action: `/gsd-new-milestone` — v1.6 planning
-
-**Phase numbering:** v1.5 spans Phases 48–61 (continues from v1.4.1 close at Phase 47)
+Status: Phase 62 ready to plan
+Last activity: 2026-05-20 — v1.6 ROADMAP.md drafted (5 phases, 39 requirements, 100% coverage)
 
 ```
-Progress: [██████████] 100%
-Phases:   48 49 50 51 52 53 54 55 56 57 58 59 60 61
-Status:   X  X  X  X  X  X  X  X  X  X  X  X  X  X
-          (X = complete)
+Progress: [          ]   0%
+Phases:   62 63 64 65 66
+Status:   .  .  .  .  .
+          (. = not started, X = complete)
+```
+
+**Phase numbering:** v1.6 spans Phases 62–66 (continues from v1.5 close at Phase 61; no `--reset-phase-numbers`)
+
+## v1.6 Phase Dependency Summary
+
+```
+Phase 62 (Foundation + harness scaffold — critical-path bottleneck, 11 pitfalls gate here)
+  → Phase 63 (Multi-OU Architecture & Admin Setup)
+    │       (Phase 63 anchors `05-...md#which-admin-owns-this-pool`,
+    │        `09-shared-ipad-lifecycle.md`, `10-apple-tv-lifecycle.md` unlock Wave B)
+    ├─ Wave B concurrent ─→ Phase 64 (Delegation Runbooks)
+    │                       (file-disjoint after Phase 63 anchors land)
+    ↓
+   Phase 65 (L1/L2 + Hub Navigation Integration — NAVIGATION-LAST)
+    ↓
+   Phase 66 (Validation Tooling Closure + Terminal Re-Audit from FRESH WORKTREE)
 ```
 
 ## Performance Metrics
@@ -55,100 +63,90 @@ Status:   X  X  X  X  X  X  X  X  X  X  X  X  X  X
 - v1.3: 8 phases, 44 plans — shipped 2026-04-19
 - v1.4: 9 phases, 40 plans — shipped 2026-04-24
 - v1.4.1: 5 phases, 33 plans — shipped 2026-04-25
-- **v1.5: 14 phases, ~65–85 plans estimated — started 2026-04-26**
+- v1.5: 14 phases, 101 plans — shipped 2026-05-07
+- **v1.6: 5 phases (62-66), TBD plans — started 2026-05-20**
 
-**Totals (through v1.4.1):** 47 phases, 179 plans, 179 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, and Android Enterprise.
+**Totals (through v1.5):** 61 phases, 280 plans, ~230 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS).
 
-**v1.5 scope:** ~51 new documentation files (15 Linux + 18 ops-depth + 2 new references + 16 ops sub-files) + 4-6 modified hub files + 2 harness files. Estimated ~230 total files post-v1.5.
+**v1.6 scope:** ~18 new documentation files (1 glossary + 11 cross-platform/apple-business/ governance files + 2 L1/L2 runbooks + harness + per-phase validators + CI workflow + milestone audit doc + deferred-cleanup tracking artifact) + 5 modified hub files + 3 canonical rebrand-callout edits.
 
 ## Accumulated Context
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.4.1 decisions validated with outcomes.
+Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decisions validated with outcomes.
 
-**Patterns carried forward into v1.5:**
+**v1.6 architectural decisions (research-attributed; see research/ARCHITECTURE.md):**
 
-- Tiered doc structure (L1 / L2 / Admin) is canonical — applies to Linux too
-- Per-platform glossary file (`_glossary-{platform}.md`) — `_glossary-linux.md` added in Phase 49
-- Capability matrix per platform — `linux-capability-matrix.md` added in Phase 50; existing per-platform matrices updated for ops-depth cross-references in Phase 58
-- Audit harness file-versioning lineage — `v1.4.1-milestone-audit.mjs` → `v1.5-milestone-audit.mjs` (Path A copy + additive C10-C13; preserves predecessor reproducibility)
-- Sidecar `scripts/validation/v1.X-audit-allowlist.json` co-located with harness
-- 60-day `last_verified` rule (Phase 34 D-14) — applies to all Linux docs
-- Validator-as-deliverable: per-phase `check-phase-NN.mjs` ships alongside content
-- Verification-during-execution: every phase produces VERIFICATION.md BEFORE downstream phases consume it (v1.2 retro lesson)
+- **D-A1** Directory placement → NEW `docs/cross-platform/apple-business/` tree (hybrid Option d) — modeled on v1.5 `docs/operations/`; NOT a 6th platform
+- **D-A2** Glossary architecture → Split (Option c) — NEW `_glossary-apple-business.md` + reciprocal banner lines to 5 existing glossaries
+- **D-A3** Capability matrix changes → 3 incremental rows in `ios-capability-matrix.md` only; `macos-capability-matrix.md` UNCHANGED; `4-platform-capability-comparison.md` UNCHANGED (preserves C12 240-cell math + D-13/D-18 sibling-anchor-pin contract)
+- **D-A4** Hub navigation → Apple Business as 5th sub-section under existing `## Operations` H2
+- **D-A5** L1/L2 numbering + frontmatter → L1 #34 first v1.6 runbook; L2 #26 first v1.6 runbook; NEW compound-platform frontmatter `platform: ios+macos[+shared-ipad|+apple-tv]` with `+` separator parsing required in harness
+- **D-A6** Quick-ref placement → Append new `## Apple Business Quick Reference` H2 to both `quick-ref-l1.md` and `quick-ref-l2.md`
+- **D-A7** Apple TV + Shared iPad → first-class admin workflows inside `cross-platform/apple-business/` tree
+- **D-A8** Cross-link contract → v1.6 NEW docs link OUT to existing docs freely (read-only); existing docs receive ZERO modifications EXCEPT 3 sanctioned canonical sites + 5 append-only hub edits
+- **D-A9** Audit harness C14/C15/C16 → Path-A copy v1.5→v1.6; C14 rebrand-statement at 3 canonical sites (BLOCKING); C15 Intune-delegation anti-pattern guard (BLOCKING); C16 L1 #34 cross-link integrity triangle (BLOCKING); all blocking-from-start
+- **D-A10** Phase build order → OUs before custom roles; custom roles before delegation runbooks; glossary before admin guides; admin guides before L1/L2; capability matrix rows before hub nav; navigation files LAST (v1.5 Phase 57+59 precedent); audit harness scaffolds at Phase 62 with C14-C16 functional from Phase 1
+
+**Patterns carried forward into v1.6:**
+
+- Tiered doc structure (L1 / L2 / Admin) — applies to Apple Business L1 #34 + L2 #26 + admin-context `12-shared-ipad-passcode-reset.md`
+- Per-platform glossary file (`_glossary-{platform}.md`) — `_glossary-apple-business.md` is the 6th glossary node (split architecture per D-A2)
+- Audit harness file-versioning lineage — `v1.5-milestone-audit.mjs` → `v1.6-milestone-audit.mjs` (Path A copy + additive C14/C15/C16; preserves predecessor reproducibility)
+- Sidecar `scripts/validation/v1.6-audit-allowlist.json` co-located with harness
+- 60-day `last_verified` rule applies to all Apple Business docs (45-day for `4-platform-capability-comparison.md` doc per v1.5 Phase 58 D-19; that file remains UNCHANGED in v1.6 per D-A3)
+- Validator-as-deliverable — per-phase `check-phase-62.mjs..check-phase-66.mjs` ship alongside content
+- Verification-during-execution — every phase produces VERIFICATION.md BEFORE downstream phases consume it (v1.2 retro lesson)
 - Traceability updates in commit workflow, not deferred to milestone audit (v1.2 retro lesson)
 - TBD scanning post-execution checklist (v1.2 retro lesson)
-- Append-only H2-block contract on shared files when phases parallelize (v1.4 Phase 42 D-03 precedent)
-- Cross-Platform Equivalences pattern in capability matrices — extends to linux-capability-matrix.md
-- PITFALL-7 whitelist-first pattern — Linux foundation phase gates all Linux content (identical to Phase 34 Android AOSP framing)
-- Navigation-files-last — DEFER-07 (Phase 57) and DEFER-08 (Phase 58) and hub integration (Phase 59) execute after all content phases
-- Wave-based parallel execution — Wave A (Phases 51+53), Wave B (Phases 54+55+56); shared write hotspot ownership table in ROADMAP.md
-- [Phase 52]: Single atomic commit (D-13 + CDI-Phase52-04): validator V-52-19 append-only assertion forces one-commit atomicity; PITFALL-12 does not apply (append target not in supervision sidecar)
-- [Phase 54]: 32 V-54-NN structural assertions implemented; atomic single-commit landing covers all 9 plans per CONTEXT D-21 + ROADMAP:271 v1.4.1 atomicity lesson; pre-commit gate (3 validators) and post-commit verification all exit 0
-- [Phase 55]: 32 V-55-NN structural assertions implemented; atomic single-commit landing (commit `aecf014`) covers 7 deliverables (5 content files + validator + same-commit edit to win32-app-packaging.md per RESEARCH §6 Option A) per CONTEXT D-21 + CDI-Phase55-05 inheritance from Phase 54; pre-commit gate (3 validators) and post-commit verification all exit 0; AMAPI 2024-2025 phrasing softened per CD-11 + RESEARCH §7 caveat #2; circular-dependency-detection claim retracted in win32-app-packaging.md:99 per RESEARCH §6 Option A
-- [Phase 56]: 32 V-56-NN structural assertions implemented; progressive-landing pattern across 6 per-plan commits (`d0654d2..3540f4b`) culminating in close commit `aecf014`-style; pre-commit gate (3 validators) and post-commit verification all exit 0; MEDIUM-confidence dual-surface framing on tenant-migration runbook (frontmatter + inline blockquote per CONTEXT D-16); cross-platform encryption-drift folded into runbook per SC#5 mandate; 7/7 DRIFT-NN covered
-- [Phase 57]: 26 V-57-NN structural assertions implemented; progressive-landing pattern across 8 per-plan commits (`1dee562..20dff5d`); pre-commit gate (3 validators + 4 file-level checks per D-32) and post-commit verification all exit 0; iOS H2 anchor stability NEGATIVE regression-guard (V-57-25) preserved Phase 32 deliverables byte-identical pre/post; PITFALL-7 firewall enforced for Play Integrity SSoT (V-57-21 NEGATIVE — `MEETS_VIRTUAL_INTEGRITY` ABSENT + no inline deadline literals); pre-edit anchor inventory artifact captured per PITFALL-6 + D-32 step 5; C4 (DEFER-07 deferral guard) retired with audit-trail continuity preserved (commit `20dff5d`); atomic-commit interpretation reconciled at plan-series level per DPO-Phase57-06; 4/4 CLEAN-NN covered
-- [Phase 58 / Plan 58-01]: Pre-edit anchor inventory artifact `58-ANCHOR-INVENTORY.md` captured (commit `16b98ad`); pre-edit baseline HEAD `22161b9b5f13436bc2d68bb52822037720c7096d` locked for VERIFICATION.md cross-check at Phase 58 close; 24 pre-retrofit anchor literals tabulated (Linux 7 H2s + macOS 5 + iOS 5 + Android 6 + 2 Android `<a id>` compat shims); 3 EXPECTED POST-58-02 `#conditional-access` anchors documented; 30-cell comparison-doc target mapping (5 platform cols × 6 H2 rows = 24 unique slugs because Windows + Linux columns share targets per D-08) prepared for Plan 58-03; inbound-reference baselines verified (filename refs = 2; anchor refs = 2); Phase 57 D-32 step 5 + 57-ANCHOR-INVENTORY.md format inheritance honored; Wave 2 gate satisfied — Plan 58-02 unblocked
-- [Phase 58 / Plan 58-02]: D-04 mandatory tier-2 Conditional Access H2 retrofit shipped across 2 atomic commits (`54a70b8` = macOS+iOS, `6d3ce98` = Android); 3 new `## Conditional Access` H2s landed in macOS/iOS/Android matrices with 5 CA feature rows each mirroring Linux template (Device-based CA / Web-app CA / Per-app CA MAM-or-MAM-WE / App-based CA Approved Client App / Risk-based CA); column counts match host matrix (3 / 4 / 7); GFM-deterministic `#conditional-access` slug verified resolvable for all 3 retrofitted matrices (PITFALL-15 sidestep — lowercase ASCII space-to-hyphen); append-only contract honored (5 existing H2 literals byte-identical pre/post per matrix; 3 Android `<a id>` literals preserved verbatim including Phase 45 AEAOSPFULL-09 `#deferred-full-aosp-capability-mapping` and D-14 F3 `#deferred-4-platform-unified-capability-comparison`); Linux matrix UNTOUCHED (Plan 58-04 owns Linux line 70 + line 112 hedge-removal); Plan 58-03 (comparison-doc author) and Plan 58-05 (validator V-58-11/12/13 anchor-pin assertions) both unblocked; total H2 audit post-edit = 25 lines across 4 matrices matching D-15 expected post-retrofit count (delta = +3 vs pre-Phase-58 baseline of 22)
-- [Phase 58 / Plan 58-03]: CLEAN-05 PRIMARY deliverable shipped — `docs/reference/4-platform-capability-comparison.md` authored across 2 atomic commits (`0a55ecd` = frontmatter + intro + first 3 H2s; `629d7fc` = remaining 3 H2s + See Also + Version History); 6 capability H2s in ROADMAP-locked order (Enrollment / Configuration / App Deployment / Compliance / Software Updates / Conditional Access) × 5 platform columns × 48 feature rows = 240 link-bearing data cells (100% D-01 verdict + em-dash + matrix-anchor compliance); verdict distribution 118 Supported / 17 Partial / 56 Not supported / 35 Mode-dependent / 14 n/a; D-08 Windows column targets `linux-capability-matrix.md#<h2-slug>` for all 6 H2s (6 × 8 Windows-side cells per H2 = 48 Windows cells across 6 H2s); D-09 footnote-prose link to `../apv1-vs-apv2.md` applied to exactly 3 Enrollment rows (Pre-provisioning, Hybrid Entra Join, Windows 10 support — cap of ≤3 rows respected); D-10 intro Windows-source-acknowledgment sentence present verbatim; D-11 5-Platform title with retained `4-platform-capability-comparison.md` filename for DEFER-08 / AECOMPARE-01 traceability; D-19 45-day cycle (`last_verified: 2026-05-01` / `review_by: 2026-06-15`); CA H2 row consumes 4 sibling-matrix `#conditional-access` anchors (Linux pre-existing + 3 retrofitted by Plan 58-02) — Wave 3 dependency cleanly resolved; deviation (Rule 1): PLAN.md Task 2 verification regex incorrectly counted col-0 row-label cells (deliverable correct at 240/240, but original cell-shape regex needed col-0 exclusion fix — corrected check exits 0 with 100% data-cell compliance); Plan 58-04 (D-12 sibling-intro cross-refs + D-13 Linux hedge close + D-14 Android footer F3) and Plan 58-05 (validator V-58-NN structural assertions including V-58-09 / V-58-10 frontmatter pin) and Plan 58-06 (C12 informational→blocking promotion gate file-existence pre-gate) all unblocked
-- [Phase 58 / Plan 58-04]: D-12 5C sibling matrix intro cross-refs + D-13 Linux hedge close + D-14 Android footer F3 retrofit + W-8 Android domain-count rewrite shipped across 2 atomic commits (`610b3bb` = D-12 5C intro cross-ref sentences appended to macOS / iOS / Android intros + W-8 Android `five locked domains — Enrollment, Configuration, App Deployment, Compliance, and Software Updates` → `six locked domains — Enrollment, Configuration, App Deployment, Compliance, Software Updates, and Conditional Access` rewrite; `4feb805` = D-13 Linux `(when shipped)` hedge at line 70 + `— when Phase 58 ships` em-dash trailing prose at line 112 both removed (link literal preserved at both sites) + D-14 Android footer F3 retrofit: anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` PRESERVED byte-identical, H3 `Deferred:` prefix dropped per Phase 45 AEAOSPFULL-09 verbatim model, 5-line body block REMOVED and REPLACED with single 1-sentence forward-link prose to `4-platform-capability-comparison.md`, Version History row appended); 9/9 plan-level grep verifications pass; 13/13 Task 1 + 11/11 Task 2 node checks pass; all 6 capability H2s preserved across all 4 sibling matrices (macOS / iOS / Android / Linux); Phase 45 AEAOSPFULL-09 anchor `<a id="deferred-full-aosp-capability-mapping"></a>` + `### AOSP per-OEM capability mapping` H3 + 4-line body region UNTOUCHED byte-identical (V-58-22 regression-guard target satisfied — confirmed via `git diff` showing zero changes in that block); cross-Plan-58-02 dependency: W-8 Android domain-count enumeration rewrite is only computable post-58-02 CA H2 retrofit (Plan 58-02 commits `54a70b8` + `6d3ce98`); cross-Plan-58-03 dependency: Plan 58-04 forward-link target `docs/reference/4-platform-capability-comparison.md` existed at file-path-existence check pre-flight (Plan 58-03 commits `0a55ecd` + `629d7fc` + `8e888af`); deviation: NONE — Plan 58-04 executed exactly as written (out-of-scope label `4-platform deferral footer` at android-matrix line 93 logged in SUMMARY but NOT modified per append-only contract for Task 2); Plan 58-05 (`scripts/validation/check-phase-58.mjs` validator with V-58-NN structural assertions including V-58-14/15/16 sibling intro cross-refs + V-58-17/18/19 Android footer F3 + V-58-20/21 Linux hedge close + V-58-22 Phase 45 anchor regression-guard) unblocked
-- [Phase ?]: [Phase 58 / Plan 58-05]: scripts/validation/check-phase-58.mjs validator authored with 26 V-58-NN structural assertions across 2 atomic commits (ae1758a Task 1 V-58-01..13 + 0d64e62 Task 2 V-58-14..26 + runner); B-1 forward-search fix applied to V-58-25; W-9 skip-list fix applied to V-58-07; Rule 1 extractCanonicalDataCells() col-0 exclusion fix (suppresses 47 false positives; matches Plan 58-03 240-cell figure); Rule 2 V-58-26 strengthened to lock D-11 title-asymmetry contract; pre-Plan-58-06 validator run produces 25 PASS / 1 FAIL (V-58-25 awaiting C12 promotion) / 0 SKIPPED; full 26/26 PASS expected post-58-06; Plans 58-06 + 58-07 unblocked
-- [Phase ?]: [Phase 58 / Plan 58-06]: AUDIT-04 promotion gate landed; informational: true flag removed from v1.5-milestone-audit.mjs C12 entry (commit bc9cee6); harness exits 0 with C12 PASS in blocking mode; V-58-25 flips FAIL -> PASS; 26/26 V-58-NN PASS; Rule 1 deviation: col-0 cell-shape exclusion fix to C12 verifier mirrors check-phase-58.mjs extractCanonicalDataCells() per explicit handoff at check-phase-58.mjs:56; CLEAN-05 covered via AUDIT-04; Plan 58-07 unblocked
-- [Phase 58]: 26 V-58-NN structural assertions implemented; progressive-landing pattern across 16 per-plan commits + close commit (`16b98ad..3f1ec7f` + close); pre-commit gate (3 validators) all GREEN at close — `check-phase-58.mjs` exits 0 with 26/26 V-58-NN PASS, `v1.5-milestone-audit.mjs` exits 0 with 12/12 PASS (including newly-promoted C12 in blocking mode), `regenerate-supervision-pins.mjs --self-test` informational FAIL preserved-not-regressed (v1.4.1 carry-over per STATE.md `Out-of-band carry-overs`); D-04 mandatory tier-2 CA H2 retrofit landed in macOS / iOS / Android sibling matrices (Plan 58-02 commits `54a70b8` + `6d3ce98`); D-08 Windows column → linux-capability-matrix.md canonical source applied (a dedicated windows-capability-matrix.md deferred to v1.6+ per D-10); D-09 ≤3 footnote-prose rows applied (Pre-Provisioning, Hybrid Entra Join, Windows 10 support); D-11 filename retained as `4-platform-capability-comparison.md` despite 5-platform scope (DEFER-08 / AECOMPARE-01 traceability); D-12 5C single-sentence intro cross-ref pattern (NOT 5B blockquote / NOT 5D new H2); D-13 Linux matrix `(when shipped)` hedge removed atomically (lines 70 + 112); D-14 Android footer F3 anchor `<a id="deferred-4-platform-unified-capability-comparison"></a>` preserved per Phase 45 AEAOSPFULL-09 model + body retargeted to single-sentence forward-link prose; D-15 pre-edit anchor inventory artifact (`58-ANCHOR-INVENTORY.md`) captured per PITFALL-6; D-17 + D-18 C12 promotion (informational → blocking) landed at Phase 58 close (NOT Phase 60 — ROADMAP:382-383 still owns scope expansion for Phase 60); D-19 45-day `last_verified` cycle for new comparison doc (vs 60-day per-platform); D-20 verification-during-execution discipline; W-7 spot-check methodology applied (5 random rows × 6 H2s = 30 rows; 100% verdict accuracy); W-8 Android intro `five locked domains` → `six locked domains` rewrite (CA enumeration consistency); Plan 58-07 carry-over resolution: C2 `supervision_exemptions` refreshed for post-58-02 line shifts (78/80/81/83/87/88 → 88/90/91/93/97/98) — intentional iOS-attributed citations per AEAUDIT-04 doctrine preserved verbatim, only line-number metadata refreshed; 240/240 link-bearing data cells at 100% D-01 cell-shape compliance; 5/5 SCs satisfied; CLEAN-05 + AUDIT-04 + AUDIT-06 closed; Phase 59 unblocked
-- [Phase ?]: 59-02: Linux H2 inserted as pure Phase 57 Android mirror with 3 sub-tables (L1=4/L2=4/Admin=3); LIN-06 NOT surfaced at hub level per D-06
-- [Phase 59]: 36 V-59-NN structural assertions implemented; progressive-landing pattern across 9 per-plan commits (`33ddd53..f17aecd`); pre-commit gate: check-phase-59.mjs exits 0 (36/36 PASS), v1.5-milestone-audit.mjs exits 0 after allowlist line-number refresh (commit `a01ab1d`) for Phase-59-induced +3/+6/+7/+8 shifts in `_glossary-android.md`, regenerate-supervision-pins.mjs FAIL preserved-not-regressed (v1.4.1 carry-over; Phase 60 AUDIT-07 resolves); Linux H2 appended to docs/index.md (3 sub-tables L1=4/L2=4/Admin=3); Operations H2 appended to docs/index.md (4 sub-H3 routing tables); docs/operations/00-index.md completed from 25-line stub to 67-line index (DPO-Phase56-01 hand-off chain discharged); CLEAN-08 closed — 14 terms, 40 pairs, 33 see-also lines across 4 glossaries (macOS IS the iOS glossary per REQUIREMENTS.md:144); quick-ref-l1.md Linux H2 added (4 sub-H3s); quick-ref-l2.md Linux H2 added (4 sub-H3s; Play Integrity Verdict Reference preserved); APPEND_ONLY_HONORED (V-59-32 NEGATIVE regression-guard — all pre-Phase-59 H2 anchors in 4 hub files byte-identical pre/post); gfmSlug double-hyphen fix applied (space-flanked stripped chars → double hyphens per GitHub cmark-gfm; Phase 57/58 `\s+` collapse algorithm corrected); 5/5 SCs satisfied; CLEAN-08 closed; Phase 60 unblocked
-- [Phase 60]: 25 V-60-NN structural assertions implemented; mixed atomic-commit + progressive-landing pattern across ~40 commits + 1 atomic harness commit + 1 validator commit + 2 close commits (D-25 honored); pre-commit gate at close — check-phase-60.mjs reports 22 PASS / 3 FAIL / 0 SKIPPED (V-60-14/16/21 are pre-existing Phase 51/53/58 chain regressions inherited from worktree base, NOT regressions from Phase 60 work; documented in deferred-items.md and 60-VERIFICATION.md "Pre-Existing Chain Regressions (Out of Scope)" section per orchestrator scope boundary; Phase 60 must_haves do NOT include fixing other phases' validators); v1.5-milestone-audit.mjs exits 0 with 12/12 PASS in fully-blocking mode (informational only on C3 Phase 39 self-cert per D-29 grace pattern); regenerate-supervision-pins.mjs --self-test exits 0 with `Diff: identical` reproducing Phase 43 hand-authored 11-new-pin set (AUDIT-07 carry-over closed); 51 Category A anchor-fixes (Plans 60-02..06) + 9 Category B path-fixes (Plan 60-07) = 60 FIXED-PHASE-60 + 15 c13_broken_link_allowlist[] entries (6 transient_external + 9 template_placeholder) close 75-finding Phase 48 baseline inventory per D-11; D-01 C11 proximity-window negation pattern with /successor|deprecated|historical|disambiguation|mutual-exclusion|PITFALL-9|first-occurrence|callout/i keyword set extended at Plan 60-08 per CALIBRATION live-corpus (5 additional keywords); D-02 c11_ops_exemptions[] reserved-empty; D-13 + D-16 C12 6 H2-anchor expansion (Enrollment / Configuration / App Deployment / Compliance / Software Updates / Conditional Access); D-18 c9_exemptions[] mechanism wired (mirrors C7 Knox pattern; 4 entries seeded from CALIBRATION + live-corpus PITFALL-13 refinement); D-19 BASELINE_9 refreshed to current sidecar coords (post-Phase-59 + post-Plan-06 line shifts); D-20 atomic harness commit per Phase 43 D-07 contract bundles 4 promotions + 4 sidecar adds + BASELINE_9 + 48-VERIFICATION close-out (commit `c2abdd4`); D-23 ROADMAP SC#5 wording fix landed in trailing close commit (audit-harness-integrity.yml -> audit-harness-v1.5-integrity.yml; Phase 48 D-09 contradiction-handling precedent); D-25 mixed plan-structure honored exactly (anchor-fix + path-fix progressive-landed per file across Plans 60-02..06; Plan 60-08 was single ATOMIC harness commit); D-26 Phase 48/49/52/54/55/56/57/59 V-NN-NN chain validators all PASS post-close (regression-guard satisfied for chain validators that passed pre-Phase-60); 5/5 SCs + AUDIT-07 carry-over satisfied; AUDIT-03/04/05/06/07 closed; Phase 61 (terminal re-audit + milestone close) unblocked
-- [Phase ?]: v1.5 audit path is .planning/milestones/v1.5-MILESTONE-AUDIT.md per ASSUMPTION A4 (mirrors v1.4 precedent)
-- [Phase ?]: D-22 auditor-independence: fresh worktree spawn (agent-a5336372f28300cea) distinct from Plans 61-01/02/03 main-worktree agents
-- [Phase ?]: No re_audit_resolution block at initial v1.5 close per D-16; reserved for future v1.5.1 if needed
+- Append-only H2-block contract on shared files when phases parallelize (v1.4 Phase 42 D-03)
+- PITFALL-6 anchor-stability surface — pre-edit anchor inventory artifact mandatory before any edit to existing capability matrices or hub files
+- PITFALL-7 whitelist-first pattern — Phase 62 custom-role authoring guide applies whitelist-first to "Manage MDM Servers" privilege (DENY-by-default per OP-1)
+- Navigation-files-last — Phase 65 executes after Phases 62-64 content phases (mirrors v1.5 Phase 57+59 precedent)
+- Wave-based parallel execution — Wave A (Phase 62 sequential, critical-path bottleneck); Wave B (Phase 63 + first half of Phase 64 file-disjoint after Phase 63 anchors land); Wave C (Phases 65 + 66 sequential close-gate)
+- Atomic-harness-commit pattern — Phase 62 audit harness landing inherits v1.5 Plan 60-08 atomic-commit contract (C14/C15/C16 + sidecar + new `c13_rotting_external` category + BASELINE_10 refresh + `+` separator parsing all land in ONE commit)
+- Auditor-independence via fresh worktree — Phase 66 terminal re-audit spawned distinct from content-phase author-agents (v1.5 D-22 / Phase 61 Plan 61-04 precedent)
+- Informational-then-blocking promotion ladder OPT-OUT for v1.6 — C14/C15/C16 are blocking from Phase 1 (per D-A9); no informational grace period (different from v1.5 C11/C12/C13 pattern)
+
+**Anti-regression invariants inherited from v1.0-v1.5 (must be preserved by every v1.6 phase):**
+
+- C12 240-cell math (6 H2 × 5 platform cols × 48 rows) preserved — no 7th H2 added to `4-platform-capability-comparison.md` (OU-10 requirement)
+- D-13/D-18 sibling-anchor-pin contract preserved across 4 sibling matrices — `macos-capability-matrix.md` + `4-platform-capability-comparison.md` remain byte-unchanged in v1.6
+- PITFALL-6 pre-edit anchor inventory mandatory before any edit to existing capability matrices, glossaries, or hub files (OU-09 / DA-4)
+- Append-only contract on existing hub files (`docs/common-issues.md`, `docs/quick-ref-l1.md`, `docs/quick-ref-l2.md`, `docs/operations/00-index.md`) — pre-existing H2 anchors byte-identical pre/post (v1.5 Phase 57 V-57-25 NEGATIVE regression-guard precedent)
+- Q5(b) no-corpus-sweep — exactly 3 canonical rebrand-callout sites (AB-05); existing ~30 ABM references in v1.0-v1.5 corpus remain unchanged
+- Single MDM Reassign runbook with OS-version sub-H2s (DELEG-05) — not 2 runbooks (CI-5 anti-proliferation)
+- L1 runbook count capped at 1 in v1.6 (#34); L2 capped at 1 (#26); navigation files modified LAST in Phase 65
+- BASELINE_9 v1.5 carry-over MUST be closed by AUDIT-14 (BASELINE_10 refresh at Phase 66)
+- Auditor-independence at terminal re-audit (fresh worktree spawn per v1.5 D-22)
 
 ### Pending Todos
 
-- Plan Phase 56 via `/gsd-plan-phase 56` (Drift Detection + Tenant Migration; Wave B sibling)
-- Plan Phase 48 via `/gsd-plan-phase 48`
-- Execute Phase 48 (audit harness bootstrap + broken-link sweep first pass)
-- Wave A execution: Phase 49 → Phase 50 → Phases 51+53 concurrent → Phase 52
+- Plan Phase 62 via `/gsd-plan-phase 62` (Apple Business Foundation & Rebrand — critical-path bottleneck; 11 pitfalls gate here)
+- Phase 62 phase-research likely needed for: per-permission enumeration (Apple's 11 subgroup permission sub-pages manual scrape ~1 hour effort) + Apple Business audit log retention SLA + cross-OU audit visibility 3×3 matrix + Apple TV Conference Room Display mode delegation specifics + Apple Business Device API public surface (mark UNKNOWN if Apple hasn't published developer.apple.com landing by Phase 62 execution time)
+- After Phase 62 closes: Wave B execution — Phase 63 + first half of Phase 64 in parallel (after Phase 63 anchors `05-...md#which-admin-owns-this-pool` + `09-shared-ipad-lifecycle.md` + `10-apple-tv-lifecycle.md` land)
+- After Phases 62-64 close: Phase 65 (NAVIGATION-LAST sequential)
+- After Phase 65 closes: Phase 66 (terminal re-audit from FRESH WORKTREE — auditor-independence per v1.5 D-22)
 
-### Out-of-band carry-overs from v1.4.1 close
+### Out-of-band carry-overs from v1.5 close
 
-- `regenerate-supervision-pins.mjs --self-test` had pre-existing FAIL (stale BASELINE_9 vs Phase 44+ file coordinates); RESOLVED at Phase 60 close per AUDIT-07 (BASELINE_9 refreshed in Plan 60-08 atomic harness commit `c2abdd4`; `--self-test` now exits 0 with `Diff: identical` reproducing Phase 43 hand-authored 11-new-pin set)
-- iOS/macOS/Windows admin templates `last_verified` intentionally NOT normalized in v1.4.1 (Android-scope lock per Phase 43 D-25); v1.5 broken-link sweep / Phase 48 should surface these if C13 flags freshness drift
-- `v1.4.1-milestone-audit.mjs` C2 PASS was authoritative at v1.4.1 close despite self-test FAIL — v1.5 harness Phase 48 resets this
-
-### v1.5 Phase Dependency Summary
-
-```
-Phase 48 (harness + sweep)
-  → Phase 49 (Linux foundation gate)
-    → Phase 50 (Linux admin setup)
-      → Phase 51 (Linux L1) ─┬─ concurrent ─ Phase 53 (co-management)
-        → Phase 52 (Linux L2) │
-                              │
-                              Phase 53 → Wave B: Phases 54 + 55 + 56 (concurrent)
-                                             ↓
-                                         Phase 57 (DEFER-07 Android nav)
-                                             ↓
-                                         Phase 58 (DEFER-08 comparison)
-                                             ↓
-                                         Phase 59 (hub integration)
-                                             ↓
-                                         Phase 60 (harness finalization)
-                                             ↓
-                                         Phase 61 (terminal re-audit + close)
-```
+- BASELINE_9 was refreshed at Phase 60 close (commit `c2abdd4`); BASELINE_10 refresh is AUDIT-14 contract at Phase 66 close (Path-A inheritance pattern)
+- Existing ~30 ABM references in v1.0-v1.5 corpus remain unchanged per Q5(b) no-corpus-sweep contract — tracked as CI-1/CI-2/CI-3 rotting-reference candidates for v1.7+ via new `c13_rotting_external` sidecar category landing at Phase 62 in atomic harness commit
+- Existing v1.0-v1.5 corpus uses "Apple Business Manager" / "Managed Apple ID" / "VPP location token" / "Locations" — v1.6 docs use NEW terminology (Apple Business / Managed Apple Account / content token / Organizational Units); bidirectional reciprocity in Phase 62 glossary mitigates author confusion
+- Intune-side label "Apple VPP tokens" UNCHANGED in Microsoft Intune portal as of 2026-04-30 tutorial refresh — v1.6 docs preserve Intune's verbatim labels when citing Intune-side handshake paths
 
 ### Blockers/Concerns
 
-- None blocking at roadmap creation. Previously-identified concerns resolved:
-  - Linux surface area unknowns: resolved via research (HIGH confidence from SUMMARY.md)
-  - Ops-depth phase shape: resolved — 4 domain phases (53-56) with Wave B parallelism
-  - DEFER-08 structural risk: resolved — link-not-copy architecture mandated; C12 harness check enforces
-  - Audit harness extension: resolved — C10 blocking, C11/C12/C13 informational-first with documented promotion schedule
+- None blocking at roadmap creation. Concerns identified in research:
+  - Per-permission table enumeration — Apple's 11 subgroup permission sub-pages JS-rendered, not WebFetch-extractable; manual scrape required at Phase 62 (~1 hour effort)
+  - Audit log retention SLA — Apple does not publish; Phase 62 must validate against live tenant OR document "Apple does not publish — configure periodic SIEM export for compliance >1 year" hedge in `17-audit-log-scoping-runbook.md`
+  - Cross-OU audit visibility 3×3 matrix not single-source documented — Phase 62 phase-research deliverable
+  - Apple Business Device API public surface — Apple has not yet published developer.apple.com landing; acknowledge-but-do-not-document-deeply in `01-role-permission-model.md`
 
 ## Session Continuity
 
-Last session: 2026-05-06T00:00:00.000Z
-Stopped at: Phase 60 closed — atomic harness commit `c2abdd4` + check-phase-60.mjs `6626253` + 60-VERIFICATION.md (this close commit); 22/25 V-60-NN PASS (3 FAIL are pre-existing Phase 51/53/58 chain regressions out-of-scope per orchestrator boundary); v1.5-milestone-audit.mjs 12/12 PASS in fully-blocking mode; regenerate-supervision-pins.mjs --self-test exit 0; 5/5 SCs satisfied; AUDIT-03/04/05/06/07 all closed
-Resume file: .planning/phases/60-audit-harness-v1-5-finalization/60-VERIFICATION.md
-Next action: `/gsd-plan-phase 61` — Gap Closure + Terminal Re-Audit + Milestone Close
+Last session: 2026-05-20T22:00:00.000Z
+Stopped at: v1.6 ROADMAP.md drafted (5 phases 62-66, 39 requirements mapped, 100% coverage validation passed); REQUIREMENTS.md traceability table populated; STATE.md updated to Phase 62 ready-to-plan
+Resume file: .planning/ROADMAP.md (v1.6 section)
+Next action: `/gsd-plan-phase 62` — Apple Business Foundation & Rebrand
