@@ -8,6 +8,7 @@ platform: Linux
 
 > **Platform coverage:** This glossary covers Linux-specific terminology for Intune-managed Ubuntu LTS devices.
 > For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For Apple-platform terminology, see the [Apple Provisioning Glossary](_glossary-macos.md). For Android Enterprise terminology, see the [Android Enterprise Provisioning Glossary](_glossary-android.md).
+> **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
 
 # Linux Provisioning Glossary
 
