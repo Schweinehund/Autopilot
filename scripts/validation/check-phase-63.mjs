@@ -3,7 +3,7 @@
 // Source of truth: .planning/phases/63-multi-ou-architecture-apple-admin-setup/63-CONTEXT.md (D-01..D-06)
 // File reads only: all content via fs.readFileSync; subprocess only for V-63-CHAIN + V-63-AUDIT
 //
-// ~18 V-63-NN structural assertions per CONTEXT D-01..D-06 covering:
+// 12 V-63-NN structural assertions per CONTEXT D-01..D-06 covering:
 //   03-ous-vs-custom-roles.md + 04-custom-role-authoring.md + 05-sub-org-admin-onboarding.md
 //   06-mdm-server-assignment.md + 07-vpp-content-token-consolidation.md
 //   08-managed-apple-account-provisioning.md + 09-shared-ipad-lifecycle.md + 10-apple-tv-lifecycle.md
