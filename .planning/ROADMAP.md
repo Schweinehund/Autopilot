@@ -164,7 +164,15 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
   3. Apple Business rebrand statement appears at exactly 3 canonical sites (`cross-platform/apple-business/00-overview.md` + `admin-setup-macos/01-abm-configuration.md` intro + `admin-setup-ios/02-abm-token.md` intro) per Q5(b) no-corpus-sweep contract; each site contains "Apple Business Manager", "Apple Business", and "2026-04-14" tokens for C14 PASS — no additional rebrand callouts are added elsewhere in the corpus
   4. 5 existing platform glossaries each gain exactly one reciprocal banner line pointing to `_glossary-apple-business.md`; `_glossary-macos.md` ABM entry gains one inline see-also; zero existing glossary anchors shift (PITFALL-6 anchor-stability invariant preserved; pre-edit anchor inventory artifact captured before any glossary edit)
   5. `v1.6-milestone-audit.mjs` ships in a single atomic harness commit (per v1.5 Plan 60-08 atomic-harness-commit precedent) as Path-A copy from v1.5 with C1-C13 preserved + C14/C15/C16 blocking-from-start + new sidecar category `c13_rotting_external` + BASELINE_10 refresh + `+` separator parsing for compound-platform frontmatter; `check-phase-62.mjs` validator-as-deliverable ships in same commit; harness exits 0
-**Plans**: TBD
+**Plans:** 8 plans
+- [ ] 62-01-PLAN.md — D-05 planning-doc count-correction + per-permission scrape preparation
+- [ ] 62-02-PLAN.md — Author `_glossary-apple-business.md` (rebrand-mapping table + 4 H2 categories)
+- [ ] 62-03-PLAN.md — Author `00-overview.md` (rebrand callout site #1 + style-guide convention)
+- [ ] 62-04-PLAN.md — Author `01-role-permission-model.md` (Account Holder + 7-subgroup catalog + Edit-without-View)
+- [ ] 62-05-PLAN.md — Author `02-ous-architecture.md` (OU hierarchy + scoping table)
+- [ ] 62-06-PLAN.md — Author `_admin-directory.md` template (`<TENANT_FILL_IN>` placeholders + 4 backend types)
+- [ ] 62-07-PLAN.md — Anchor inventory + 4 reciprocal banner lines + 1 inline see-also + 2 intro callouts (C14 sites #2 + #3)
+- [ ] 62-08-PLAN.md — Atomic harness commit (v1.6-milestone-audit.mjs + sidecar + check-phase-62.mjs)
 
 ### Phase 63: Multi-OU Architecture & Apple Admin Setup
 **Goal**: Admins can choose between OUs / custom roles / combined topology via a decision matrix, author a custom role with the v1.6 differentiator min-viable sub-org admin bundle, onboard a sub-org admin (with paired offboarding), assign devices to MDM servers per OU, consolidate VPP content tokens, provision Managed Apple Accounts (manual / SCIM / OIDC+JIT), and manage Shared iPad + Apple TV lifecycle — and 3 incremental rows land in `ios-capability-matrix.md` without touching `macos-capability-matrix.md` or `4-platform-capability-comparison.md`.
