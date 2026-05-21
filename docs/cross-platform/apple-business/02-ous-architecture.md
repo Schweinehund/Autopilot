@@ -99,10 +99,12 @@ OUs where Locations previously appeared.
 The "untouched-OU trap" applies when a tenant consolidates device pools across OUs and
 needs to migrate content tokens from a source OU to a destination OU. Content tokens are
 OU-scoped and are NOT automatically transferred when devices move between OUs. The
-Phase 63 VPP catalog consolidation runbook (`05-vpp-catalog-consolidation`, forthcoming)
-carries the OP-9 untouched-OU hard-bordered callout covering cross-OU content-token
-migration scenarios. This concept doc does not duplicate that callout — refer to Phase 63
-for the operational procedure.
+The Phase 63 admin-setup doc `07-vpp-content-token-consolidation.md` (OU-05) covers
+per-OU content-token consolidation concepts. The Phase 64 operational runbook
+`11-vpp-catalog-runbook.md` (DELEG-01) carries the OP-9 untouched-OU hard-bordered callout
+covering cross-OU content-token migration scenarios. This concept doc does not duplicate
+that callout — refer to Phase 63 `07-vpp-content-token-consolidation.md` for admin-setup
+guidance and Phase 64 `11-vpp-catalog-runbook.md` for the operational procedure.
 
 ## OU Scope Coverage
 
