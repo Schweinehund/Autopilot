@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-18
-review_by: 2026-07-17
+last_verified: 2026-05-21
+review_by: 2026-07-20
 applies_to: ADE
 audience: admin
 platform: iOS
@@ -10,6 +10,11 @@ platform: iOS
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
+
+> **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on
+> 2026-04-14. This guide retains the legacy "ABM" terminology for portal-navigation continuity
+> but uses the new "Apple Business" framing in cross-references. See the [Apple Business
+> Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
 
 # ABM/ADE Token Configuration for iOS/iPadOS
 

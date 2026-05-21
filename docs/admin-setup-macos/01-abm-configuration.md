@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-14
-review_by: 2026-07-13
+last_verified: 2026-05-21
+review_by: 2026-07-20
 applies_to: ADE
 audience: admin
 platform: macOS
@@ -9,6 +9,11 @@ platform: macOS
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
+
+> **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on
+> 2026-04-14. This guide retains the legacy "ABM" terminology for portal-navigation continuity
+> but uses the new "Apple Business" framing in cross-references. See the [Apple Business
+> Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
 
 # ABM Configuration for Automated Device Enrollment
 
