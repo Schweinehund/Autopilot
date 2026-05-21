@@ -26,6 +26,9 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | ABM token shared with macOS | N/A | Yes | Yes (same ABM token covers iOS, iPadOS, macOS, tvOS enrollment) |
 | Re-enrollment blocking screen | Yes (every enrollment) | No (first enrollment only) | No (first enrollment only) |
 | Dynamic enrollment groups | Yes (ZTDId attribute) | Yes (enrollmentProfileName attribute) | Yes (enrollmentProfileName attribute) |
+| Apple TV management | N/A | N/A | 🔒 supervised ADE only (tvOS via Apple Business / Configurator; OU-scoped device pool) |
+| Shared iPad sessions | N/A | N/A | 🔒 supervised ADE only (multi-user shared sessions; requires Managed Apple Account sign-in; iPadOS 13.4+) |
+| Apple Business delegation surface | N/A | N/A | Yes (OU-scoped sub-org admin via Apple Business custom roles; see Phase 63 governance docs) |
 
 ## Configuration
 
