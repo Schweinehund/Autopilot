@@ -37,9 +37,11 @@ IT administrator (see OP-1 DENY-by-default callout below).
 > **"Manage MDM Servers" — DENY-by-default (OP-1 superprivilege):**
 > This permission bundles four actions (Add / Edit / Assign / Download MDM server token).
 > Sub-org admins who need to assign devices to an MDM server should be granted
-> "Assign devices to MDM server" (through the Device Enrollment Manager preset), NOT
-> "Manage MDM Servers". Granting "Manage MDM Servers" to a non-Account-Holder role allows
-> creation of competing MDM servers, which routes new devices to the wrong tenant.
+> "Assign devices to MDM server" via the canonical Sub-Org Admin custom role bundle
+> (see [04-custom-role-authoring.md](04-custom-role-authoring.md)), NOT "Manage MDM Servers".
+> In OUs-only topologies, the Device Enrollment Manager preset provides equivalent capability.
+> Granting "Manage MDM Servers" to a non-Account-Holder role allows creation of competing
+> MDM servers, which routes new devices to the wrong tenant.
 >
 > Source: `01-role-permission-model.md` line 276 — `Manage MDM Servers | tenant-wide | Edit+bundle | DENY-by-default (OP-1) | View Devices`
 
@@ -47,7 +49,7 @@ IT administrator (see OP-1 DENY-by-default callout below).
 
 | Permission | Who holds it | Scope | Permitted for sub-org admin? |
 |------------|-------------|-------|------------------------------|
-| Assign devices to MDM server | Sub-org admin (OU-scoped) | OU-scoped | Yes — via Device Enrollment Manager preset |
+| Assign devices to MDM server | Sub-org admin (OU-scoped) | OU-scoped | Yes — via Sub-Org Admin custom role bundle (Combined topology; see [04-custom-role-authoring.md](04-custom-role-authoring.md)) or Device Enrollment Manager preset (OUs-only topology) |
 | Manage MDM Servers | Tenant IT administrator / Account Holder only | tenant-wide | **DENY-by-default (OP-1)** |
 
 Sub-org admins are granted `Assign devices to MDM server` (OU-scoped, conditionally-grant).
