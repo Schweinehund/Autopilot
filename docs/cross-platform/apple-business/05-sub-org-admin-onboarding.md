@@ -79,8 +79,10 @@ ID prior to the 2026-04-14 rebrand — see the glossary for the rebrand mapping.
    - **Managed Apple Account email** — typically `{firstname}.{lastname}@{tenant-domain}` per
      your tenant's naming convention. The `@{tenant-domain}` must match the domain claimed and
      verified by your Apple Business tenant.
-5. Set the account type to **IT Administrator** or leave as default and apply the custom role
-   in Step 2 (see note below on role-at-creation vs. role-at-assignment).
+5. Leave the account type as the **default** (do not assign IT Administrator at creation).
+   The Sub-Org Admin role bundle with OU scoping is applied in Step 2–3. If you set
+   IT Administrator here, the custom role in Step 2 is redundant — the account will already
+   have tenant-wide admin privileges, which violates the minimum-viable delegation principle.
 6. Save the account. Apple sends an activation email to the Managed Apple Account address.
 
 > **Note:** If your tenant uses federated authentication (SCIM provisioning or OIDC + JIT),
