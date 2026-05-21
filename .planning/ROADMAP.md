@@ -140,7 +140,8 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 
 ### v1.6 Apple Business Delegated Governance & Multi-Org Operations (Phases 62-66) — IN PROGRESS
 
-- [x] **Phase 62: Apple Business Foundation & Rebrand** — Glossary + role/permission model + OUs concept + 3 canonical rebrand callouts + audit harness scaffold with C14/C15/C16 blocking-from-start (completed 2026-05-21)
+- [x] **Phase 62: Apple Business Foundation & Rebrand** — Glossary + role/permission model + OUs concept + 3 canonical rebrand callouts + audit harness scaffold with C14/C15/C16 blocking-from-start
+ (completed 2026-05-21)
 - [ ] **Phase 63: Multi-OU Architecture & Apple Admin Setup** — OUs-vs-custom-roles decision matrix + custom role authoring + sub-org admin onboarding + MDM server assignment + content token consolidation + Managed Apple Account provisioning + Shared iPad / Apple TV lifecycle + iOS capability matrix rows
 - [ ] **Phase 64: Apple Business Delegation Runbooks** — VPP catalog + shared iPad passcode reset (admin context) + device release + device transfer + MDM server reassign + Managed Apple Account provisioning + audit log scoping + cross-org-boundary cheat sheet
 - [ ] **Phase 65: Apple Business L1/L2 + Hub Navigation Integration** — L1 #34 (shared iPad passcode reset) + L2 #26 (permission-denied 7-leaf tree) + common-issues append + quick-ref-l1/l2 append + operations index append + docs/index.md hub append (NAVIGATION-LAST)
@@ -186,7 +187,13 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
   3. Admin can onboard a sub-org admin via `05-sub-org-admin-onboarding.md` (Managed Apple Account creation + role assignment + OU scoping) with paired offboarding section (OP-8); `#which-admin-owns-this-pool` anchor is present and stable (C16 gate for Phase 65 L1 #34 cross-link)
   4. Admin can provision Managed Apple Accounts via documented manual + SCIM + OIDC+JIT decision matrix; manage Shared iPad lifecycle (`09-shared-ipad-lifecycle.md`) including sessions, user provisioning, Find My disable (OP-12); manage Apple TV lifecycle (`10-apple-tv-lifecycle.md`) including Configurator-only retail-purchase path, OU assignment, content-token-based app deployment, and shared-physical-space heuristic for Conference Room Display (OP-15); admin can consolidate VPP content tokens per OU with hard-bordered "DO NOT TOUCH the new OU until full migration completes" callout (OP-9)
   5. 3 new rows are appended to `ios-capability-matrix.md` under the existing Enrollment H2 (Apple TV management / Shared iPad sessions / Apple Business delegation surface) with pre-edit anchor inventory artifact captured per DA-4 / PITFALL-6 mandatory-pre-edit-inventory invariant; `macos-capability-matrix.md` and `4-platform-capability-comparison.md` remain byte-unchanged — C12 240-cell math and D-13/D-18 sibling-anchor-pin contract preserved (v1.5 anti-regression invariant)
-**Plans**: TBD
+**Plans:** 6 plans (Wave 1: 5 parallel file-disjoint plans; Wave 2: 1 atomic validator plan)
+- [ ] 63-01-PLAN.md — OU-01 + OU-02: `03-ous-vs-custom-roles.md` decision matrix + `04-custom-role-authoring.md` canonical Sub-Org Admin bundle
+- [ ] 63-02-PLAN.md — OU-03: `05-sub-org-admin-onboarding.md` (C16 `#which-admin-owns-this-pool` anchor + OP-8 paired offboarding; Wave-B gate)
+- [ ] 63-03-PLAN.md — OU-04 + OU-05 + OU-06: standalone `06-mdm-server-assignment.md` / `07-vpp-content-token-consolidation.md` / `08-managed-apple-account-provisioning.md`
+- [ ] 63-04-PLAN.md — OU-07 + OU-08: `09-shared-ipad-lifecycle.md` (mandatory OP-12) + `10-apple-tv-lifecycle.md` (OP-15 heuristic; Wave-B gates)
+- [ ] 63-05-PLAN.md — OU-09 + OU-10 + D-05: pre-edit anchor inventory + iOS matrix +3 rows + byte-unchanged guard + `02-ous-architecture.md` stale-ref repair
+- [ ] 63-06-PLAN.md — `check-phase-63.mjs` validator-as-deliverable (atomic, Wave 2, asserts all 10 OU deliverables)
 
 ### Phase 64: Apple Business Delegation Runbooks
 **Goal**: Admins can execute all 8 Apple-Business-owned delegated actions (VPP catalog management, shared iPad passcode reset, device release, device transfer, MDM server reassign, Managed Apple Account provisioning, audit log scoping) via dedicated runbooks plus a Cross-Org-Boundary Cheat Sheet — with the canonical admin-context shared iPad passcode reset doc (`12-shared-ipad-passcode-reset.md`) landing so Phase 65 L1 #34 can cross-link to it (C16 gate).
@@ -291,7 +298,7 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 | 60. Audit Harness v1.5 Finalization | v1.5 | 10/10 | Complete | 2026-05-06 |
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 5/5 | Complete | 2026-05-08 |
 | 62. Apple Business Foundation & Rebrand | v1.6 | 8/8 | Complete   | 2026-05-21 |
-| 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 0/? | Not started | — |
+| 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 0/6 | Planned | — |
 | 64. Apple Business Delegation Runbooks | v1.6 | 0/? | Not started | — |
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 0/? | Not started | — |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 0/? | Not started | — |
