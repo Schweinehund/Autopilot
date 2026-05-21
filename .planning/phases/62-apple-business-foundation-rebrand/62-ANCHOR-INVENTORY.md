@@ -102,11 +102,11 @@ H3 anchors:
 
 ## Post-Edit Verification Checklist (Plan 62-08 + post-Plan-62-07 manual check)
 
-- [ ] `_glossary-macos.md` alphabetical index line unchanged byte-for-byte (compare line 16 area pre/post)
-- [ ] All `_glossary-macos.md` H3 anchors present with zero slug changes (`grep -nE "^### " <file>` output matches pre-edit list)
-- [ ] `01-abm-configuration.md` all pre-edit H2/H3 anchors present post-edit
-- [ ] `02-abm-token.md` all pre-edit H2/H3 anchors present post-edit
-- [ ] `git diff --word-diff` against pre-edit SHAs shows ONLY additions in heading regions (no `-` lines on headings)
+- [x] `_glossary-macos.md` alphabetical index line unchanged byte-for-byte (compare line 16 area pre/post)
+- [x] All `_glossary-macos.md` H3 anchors present with zero slug changes (`grep -nE "^### " <file>` output matches pre-edit list)
+- [x] `01-abm-configuration.md` all pre-edit H2/H3 anchors present post-edit
+- [x] `02-abm-token.md` all pre-edit H2/H3 anchors present post-edit
+- [x] `git diff --word-diff` against pre-edit SHAs shows ONLY additions in heading regions (no `-` lines on headings)
 
 ## Note on the 4 banner-line glossary edits (not anchor-inventoried separately)
 
