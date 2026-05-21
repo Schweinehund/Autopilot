@@ -133,7 +133,7 @@ sub-org admin provisions these accounts before first use.
 
 **Provisioning paths:**
 
-1. **Manual (ABM web portal entry)**
+1. **Manual (Apple Business portal entry)**
    - Navigate to **People** in the Apple Business portal.
    - Create a new Managed Apple Account for each user.
    - Set the username in the org's verified domain format (e.g., `firstname.lastname@school.org`).
