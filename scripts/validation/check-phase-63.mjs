@@ -47,9 +47,9 @@ const PLATFORM_COMPARISON = 'docs/reference/4-platform-capability-comparison.md'
 const AB_OUS = 'docs/cross-platform/apple-business/02-ous-architecture.md';
 const ANCHOR_INVENTORY = '.planning/phases/63-multi-ou-architecture-apple-admin-setup/63-ANCHOR-INVENTORY.md';
 
-// Phase 50 stub excluded per check-phase-61.mjs precedent (stub validator; not full check).
 // Extends check-phase-62.mjs chain by adding 62.
-const CHAIN_PHASES = [48, 49, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62];
+// Phase 50 included: check-phase-50.mjs runs 26 checks and exits 0 (not a stub).
+const CHAIN_PHASES = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62];
 
 // Phases with known pre-existing failures that predate Plan 63-06 and are NOT regressions
 // introduced by Phase 63 changes. These are skipped (not failed) in the chain regression-guard
