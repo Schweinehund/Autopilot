@@ -65,7 +65,7 @@ cross-OU Shared iPad pools, a top-level IT Administrator role is required.
 > **Never assume Find My is disabled.** Always verify before proceeding to enrollment.
 > Skipping this step produces locked devices that block fleet turnover.
 >
-> See also: [PITFALLS.md OP-12 — Find My activation lock (HIGH)](../../.planning/research/PITFALLS.md)
+> See also: PITFALLS.md OP-12 — Find My activation lock (HIGH)
 
 ---
 
