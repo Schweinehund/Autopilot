@@ -48,6 +48,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 
 #### In Apple Business Manager
 
+<!-- ABAUDIT-01: Apple-side sign-in instruction; Managed Apple ID is an Apple portal concept here, not an Intune delegation pattern (C15 false-positive exemption per AEAUDIT-04 precedent) -->
 1. Sign in to [Apple Business Manager](https://business.apple.com) with a **Managed Apple ID**.
 2. Navigate to account profile > **Preferences** > **MDM Server Assignments**.
 3. Select **Add MDM Server**. Enter a descriptive name (e.g., "Intune Production" -- name is for identification only).
