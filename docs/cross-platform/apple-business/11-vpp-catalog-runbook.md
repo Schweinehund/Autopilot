@@ -81,6 +81,7 @@ OU's catalog to managed devices.
 | 2 | Navigate to **Settings** > **Apps and Books** | Sub-org admin | `[CITED: training; needs live verification]` — exact nav path may differ in 2026 UI |
 | 3 | Select the target OU from the location selector | Sub-org admin | Only OUs within your permission scope appear |
 | 4 | Locate the content token for the OU and select **Download** | Sub-org admin | Token is a `.vpptoken` file; valid for 365 days |
+<!-- ABAUDIT-09: next line references Intune admin as the actor for the token-upload step; C15 regex 8 false-positive exemption (factual workflow step clarifying that this Intune-side upload action is performed by an Intune admin, not an Apple Business action — outside Apple Business permission surface per scope boundary) -->
 | 5 | Upload the downloaded token to Intune: **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens** > **Create** | Intune admin | This Intune upload step is outside Apple Business scope — see scope boundary above |
 | 6 | Confirm the token is active in Intune and that the license count matches the OU's Apple Business purchase history | Admin | See Verification section for the 0.1% tolerance check |
 

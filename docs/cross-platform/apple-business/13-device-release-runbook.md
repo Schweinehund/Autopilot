@@ -71,6 +71,7 @@ timed release can leave a device in an ambiguous management state.
 | 5 | Select **Release Devices** (or equivalent action in 2026 UI) | Admin | `[CITED: training; needs live verification]` — exact action label may differ |
 | 6 | Confirm the release in the confirmation dialog | Admin | Read the dialog carefully — release is immediate and cannot be undone without reseller re-push or manual re-add |
 | 7 | Verify the device no longer appears in Apple Business Devices for the OU | Admin | See Verification section |
+<!-- ABAUDIT-10: next line references Intune admin as the party to notify after Apple Business release; C15 regex 8 false-positive exemption (factual handoff instruction to the Intune admin role — this is a coordination step, not an Apple Business permission claim) -->
 | 8 | Notify Intune admin that the device has been released from Apple Business | Admin | Intune will receive the MDM release notification; follow up to ensure device status is updated |
 
 ---
