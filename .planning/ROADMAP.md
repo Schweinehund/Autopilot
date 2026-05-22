@@ -205,7 +205,13 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
   3. Admin can reassign MDM server via a SINGLE runbook `15-mdm-server-reassign-runbook.md` with OS-version eligibility matrix (iOS 26 / iPadOS 26 / macOS 26 / tvOS 26+ → in-place migration; legacy → factory erase) and 2 sub-H2s consolidating FEATURES Workflow 5.3 split — anti-proliferation invariant (CI-5) honored: exactly 1 MDM Reassign runbook ships, not 2
   4. Admin can provision Managed Apple Accounts (`16-managed-apple-account-runbook.md`) covering manual + SCIM + OIDC+JIT, including a 60-day federation collision resolution sub-section (OP-7) and SCIM token renewal cadence; admin can scope audit log access per OU (`17-audit-log-scoping-runbook.md`) including author-scope vs target-scope semantics (OP-14), SIEM export pattern (OP-13), and "no public REST API" anti-feature documentation
   5. Cross-Org-Boundary Cheat Sheet `18-cross-org-boundary-cheat-sheet.md` ships with Apple-Business-vs-Intune-vs-integration disambiguation table and harbors C15 anti-pattern allowlist exemptions in HTML comments; every delegation runbook carries an explicit Apple-Business-vs-Intune scope-boundary callout (Intune-side RBAC out-of-scope invariant honored — C15 enforces no Intune-delegation banned phrases leak into v1.6 docs)
-**Plans**: TBD
+**Plans:** 6 plans
+- [ ] 64-01-PLAN.md — check-phase-64.mjs validator-as-deliverable + 64-CONVENTIONS.md locked hard-callout strings + ABAUDIT-05 registry (Wave 1)
+- [ ] 64-02-PLAN.md — DELEG-01/02/03: 11-vpp-catalog + 12-shared-ipad-passcode-reset (canonical C16 doc) + 13-device-release (Wave 2)
+- [ ] 64-03-PLAN.md — DELEG-04/05: 14-device-transfer (4-cell matrix) + 15-mdm-server-reassign (SINGLE, 2 sub-H2s) (Wave 2)
+- [ ] 64-04-PLAN.md — DELEG-06/07: 16-managed-apple-account + 17-audit-log-scoping (Wave 2)
+- [ ] 64-05-PLAN.md — DELEG-08: 18-cross-org-boundary-cheat-sheet (C15 ABAUDIT exemption host) (Wave 2)
+- [ ] 64-06-PLAN.md — Wave 3 close-gate: full suite green + 64-VERIFICATION.md
 
 ### Phase 65: Apple Business L1/L2 + Hub Navigation Integration
 **Goal**: L1 staff can use a single shared iPad passcode reset runbook (L1 #34) that cross-links to the admin-directory lookup + canonical admin-context doc; L2 engineering can use a 7-leaf permission-denied decision tree (L2 #26); cross-platform symptom routing + quick-ref cards + operations index + docs/index.md hub all gain Apple Business sections — all edits to existing hub files are APPEND-ONLY with the navigation-files-last invariant honored per v1.5 Phase 57+59 precedent.
