@@ -316,7 +316,7 @@ is essential.
 | Account appears in Apple Business Users sidebar | Account visible in correct OU with expected name and Managed Apple Account email | Verify OU assignment and name fields; check SCIM provisioning logs in Entra if Path B |
 | Account can sign in on an Apple device | User successfully authenticates using Managed Apple Account credentials (Path A/B) or Entra credentials (Path C) | Check credential delivery (Path A); check SCIM sync status (Path B); check OIDC claim mapping (Path C) |
 | SCIM sync active (Path B) | Entra provisioning log shows successful sync cycles; no errors | Re-check SCIM token validity and expiry; verify SCIM endpoint URL in Entra matches Apple Business |
-| JIT account created (Path C) | After first federated sign-in, Managed Apple Account visible in Apple Business Users sidebar | Check OIDC application registration in Entra; verify `ssf.manage` and `ssf.read` scopes are granted; check claim mapping |
+| JIT account created (Path C) | After first federated sign-in, Managed Apple Account visible in Apple Business Users sidebar | Check OIDC application registration in Entra; verify the granted scopes match the live OIDC reference (`ssf.manage` / `ssf.read` per FEATURES.md §6.3 are `[ASSUMED]` and need live verification — see step 3); check claim mapping |
 | No conflicting Apple IDs outstanding | Federation banner shows zero conflicting Apple IDs | Resend user-comms to affected users; escalate missed-deadline cases to Apple Enterprise Support |
 
 ### Post-SCIM-Token-Renewal Verification
