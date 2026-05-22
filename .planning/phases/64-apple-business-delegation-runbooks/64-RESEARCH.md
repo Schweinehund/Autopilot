@@ -700,27 +700,31 @@ No new authentication, authorization, secrets, or data at rest are introduced by
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> All four are resolved by **documentation design decision**, not by needing a definitive
+> external answer before planning. Each resolution is encoded in the relevant plan's
+> `<action>`/`<acceptance_criteria>`. None is a blocking unknown.
 
 1. **Exact portal navigation path for content token operations in 2026 Apple Business UI**
    - What we know: Pre-rebrand path was `Preferences > Payments and Billing > Apps and Books > Content Tokens`. STACK.md flags this as possibly changed.
    - What's unclear: Whether 2026 Apple Business portal moved this to `Settings > Apps and Books` or kept original path.
-   - Recommendation: Tag with `[CITED: training; needs live verification]` in `11-`. The 60-day `review_by` date creates an audit trail.
+   - **RESOLVED:** Tag the path with `[CITED: training; needs live verification]` in `11-` (per Plan 64-02 action); the 60-day `review_by` date creates the audit trail. No fabricated definitive path.
 
 2. **Audit log retention period**
    - What we know: Apple does not publish a definitive retention SLA. Community reports suggest approximately 90 days (LOW confidence per FEATURES §7.5).
    - What's unclear: Whether the retention period changed with the 2026 Apple Business rebrand.
-   - Recommendation: `17-` documents this as "Apple does not publish a definitive retention period" and recommends monthly SIEM export. Do NOT state a specific number. Flag for per-org live-tenant validation.
+   - **RESOLVED:** `17-` documents "Apple does not publish a definitive retention period" and recommends monthly SIEM export (per Plan 64-04 action). Do NOT state a specific number; flag for per-org live-tenant validation.
 
 3. **SCIM token renewal: does Apple send renewal notice at 60 days before expiry, or at 90 days?**
    - What we know: STACK.md says "60 days before expiry." FEATURES §6.2 cites an HCS Online community source for the 60-day figure.
    - What's unclear: Whether this is 60 or 90 days; Apple's official page `axm526a05814` should be checked.
-   - Recommendation: Tag the exact window as `[ASSUMED]` in `16-` and note that `axm526a05814` is the authoritative source for the current value.
+   - **RESOLVED:** Tag the exact window as `[ASSUMED]` in `16-` and cite `axm526a05814` as the authoritative source for the current value (per Plan 64-04 action).
 
 4. **What ABAUDIT numbers does `18-` need?**
    - What we know: `18-` disambiguation table will have multiple rows referencing both Apple Business and Intune, each requiring an ABAUDIT comment per banned line.
    - What's unclear: Exact number of ABAUDIT comments until `18-` body is authored.
-   - Recommendation: Wave 1 task reserves ABAUDIT-05 through ABAUDIT-20 as a generous block; allocate specific numbers as runbooks are authored in Wave 2, tracking in Wave 1 plan artifact.
+   - **RESOLVED:** Wave 1 (Plan 64-01) reserves the ABAUDIT-05 through ABAUDIT-20 block in `64-CONVENTIONS.md`; specific numbers are allocated as runbooks are authored in Wave 2, tracked in the conventions registry.
 
 ---
 

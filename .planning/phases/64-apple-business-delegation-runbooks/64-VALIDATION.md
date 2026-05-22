@@ -1,8 +1,8 @@
 ---
 phase: 64
 slug: apple-business-delegation-runbooks
-status: draft
-nyquist_compliant: false
+status: approved
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-05-22
 ---
@@ -51,7 +51,7 @@ created: 2026-05-22
 | 64-02-06 | 02 | 2 | DELEG-06 | OP-7 | `16-` exists; manual+SCIM+OIDC+JIT; 60-day federation collision sub-H2 | structural | `node scripts/validation/check-phase-64.mjs` | ❌ W1 | ⬜ pending |
 | 64-02-07 | 02 | 2 | DELEG-07 | OP-13/14 | `17-` exists; author/target scope; SIEM export; no-public-REST-API anti-feature | structural | `node scripts/validation/check-phase-64.mjs` | ❌ W1 | ⬜ pending |
 | 64-02-08 | 02 | 2 | DELEG-08 | — | `18-` exists; disambiguation table; ABAUDIT exemptions (one per banned line) | structural + C15 | `node scripts/validation/v1.6-milestone-audit.mjs` | Harness | ⬜ pending |
-| 64-02-ALL | 02 | 2 | All 8 | — | envelope: `last_verified:` + `platform:` frontmatter; `## Required Role & Permission` + `## Verification` H2s | structural section-slice | `node scripts/validation/check-phase-64.mjs` | ❌ W1 | ⬜ pending |
+| 64-02-ALL | 02 | 2 | All 8 | — | envelope: `last_verified:` + `platform:` frontmatter + `## Verification` H2 (all 8); `## Required Role & Permission` H2 (action runbooks `11-`–`17-` ONLY; `18-` cheat-sheet exempt) | structural section-slice | `node scripts/validation/check-phase-64.mjs` | ❌ W1 | ⬜ pending |
 | 64-03-01 | 03 | 3 | All | — | full suite green: check-phase-64 all PASS + C14/C15/C16 PASS | corpus-integrity | `node scripts/validation/v1.6-milestone-audit.mjs && node scripts/validation/check-phase-64.mjs` | ❌ W1 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky · ❌ W1 = file created in Wave 1*
@@ -78,11 +78,11 @@ created: 2026-05-22
 
 ## Validation Sign-Off
 
-- [ ] All tasks have an `<automated>` verify (check-phase-64.mjs) or Wave 1 dependency
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 1 builds `check-phase-64.mjs` covering all DELEG-01..08 + envelope + exact-string assertions
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 5s
-- [ ] `nyquist_compliant: true` set in frontmatter (after planner maps every task)
+- [x] All tasks have an `<automated>` verify (check-phase-64.mjs) or Wave 1 dependency
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 1 builds `check-phase-64.mjs` covering all DELEG-01..08 + envelope + exact-string assertions
+- [x] No watch-mode flags
+- [x] Feedback latency < 5s
+- [x] `nyquist_compliant: true` set in frontmatter (after planner maps every task)
 
-**Approval:** pending
+**Approval:** approved 2026-05-22
