@@ -34,14 +34,14 @@ Requirements for v1.6 release. Each maps to one phase. Phases 62-66 continue fro
 
 ### Pillar 3 — Delegation Runbooks
 
-- [ ] **DELEG-01**: Admin can manage VPP catalog per OU via runbook `11-vpp-catalog-runbook.md` (claim + transfer + buy + payment-scoping) including untouched-OU OP-9 hard-bordered callout and post-migration license-count verification within 0.1%
-- [ ] **DELEG-02**: Admin can reset shared iPad passcode via 3-path decision matrix (Apple Business UI Path A primary L1-delegated / MDM ClearPasscode Path B L2-only / MDM EraseDevice Path C L2-with-approval) — canonical admin-context doc `12-shared-ipad-passcode-reset.md` that L1 #34 cross-links to per C16 gate
-- [ ] **DELEG-03**: Admin can release a device from Apple Business via runbook `13-device-release-runbook.md` with explicit "release ≠ removal" semantics per OP-6 soft-delete and 30-day provisional-period callout
-- [ ] **DELEG-04**: Admin can transfer a device cross-OU via runbook `14-device-transfer-runbook.md` with 4-cell impact matrix (VPP license / enrollment profile / Intune config profile / audit entry) and pre-transfer dependency checklist per OP-5
-- [ ] **DELEG-05**: Admin can reassign MDM server via single runbook `15-mdm-server-reassign-runbook.md` with OS-version eligibility matrix (iOS 26 / iPadOS 26 / macOS 26 / tvOS 26+ → in-place migration; legacy → factory erase) + 2 sub-H2s consolidating FEATURES Workflow 5.3 split per CI-5 anti-proliferation
-- [ ] **DELEG-06**: Admin can provision Managed Apple Accounts via runbook `16-managed-apple-account-runbook.md` covering manual + SCIM + OIDC+JIT including 60-day federation collision resolution sub-section per OP-7 and SCIM token renewal cadence
-- [ ] **DELEG-07**: Admin can scope audit log access per OU via runbook `17-audit-log-scoping-runbook.md` including author-scope vs target-scope semantics per OP-14, SIEM export pattern per OP-13, and "no public REST API" anti-feature documentation
-- [ ] **DELEG-08**: Cross-Org-Boundary Cheat Sheet `18-cross-org-boundary-cheat-sheet.md` shipped with Apple-Business-vs-Intune-vs-integration disambiguation table; harbors C15 anti-pattern allowlist exemptions in HTML comments
+- [x] **DELEG-01**: Admin can manage VPP catalog per OU via runbook `11-vpp-catalog-runbook.md` (claim + transfer + buy + payment-scoping) including untouched-OU OP-9 hard-bordered callout and post-migration license-count verification within 0.1%
+- [x] **DELEG-02**: Admin can reset shared iPad passcode via 3-path decision matrix (Apple Business UI Path A primary L1-delegated / MDM ClearPasscode Path B L2-only / MDM EraseDevice Path C L2-with-approval) — canonical admin-context doc `12-shared-ipad-passcode-reset.md` that L1 #34 cross-links to per C16 gate
+- [x] **DELEG-03**: Admin can release a device from Apple Business via runbook `13-device-release-runbook.md` with explicit "release ≠ removal" semantics per OP-6 soft-delete and 30-day provisional-period callout
+- [x] **DELEG-04**: Admin can transfer a device cross-OU via runbook `14-device-transfer-runbook.md` with 4-cell impact matrix (VPP license / enrollment profile / Intune config profile / audit entry) and pre-transfer dependency checklist per OP-5
+- [x] **DELEG-05**: Admin can reassign MDM server via single runbook `15-mdm-server-reassign-runbook.md` with OS-version eligibility matrix (iOS 26 / iPadOS 26 / macOS 26 / tvOS 26+ → in-place migration; legacy → factory erase) + 2 sub-H2s consolidating FEATURES Workflow 5.3 split per CI-5 anti-proliferation
+- [x] **DELEG-06**: Admin can provision Managed Apple Accounts via runbook `16-managed-apple-account-runbook.md` covering manual + SCIM + OIDC+JIT including 60-day federation collision resolution sub-section per OP-7 and SCIM token renewal cadence
+- [x] **DELEG-07**: Admin can scope audit log access per OU via runbook `17-audit-log-scoping-runbook.md` including author-scope vs target-scope semantics per OP-14, SIEM export pattern per OP-13, and "no public REST API" anti-feature documentation
+- [x] **DELEG-08**: Cross-Org-Boundary Cheat Sheet `18-cross-org-boundary-cheat-sheet.md` shipped with Apple-Business-vs-Intune-vs-integration disambiguation table; harbors C15 anti-pattern allowlist exemptions in HTML comments
 
 ### Pillar 4 — L1 / L2 + Common-Issues + Hub Navigation (Navigation-Last)
 
@@ -118,14 +118,14 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | OU-08 | Phase 63 | Complete |
 | OU-09 | Phase 63 | Complete |
 | OU-10 | Phase 63 | Complete |
-| DELEG-01 | Phase 64 | Pending |
-| DELEG-02 | Phase 64 | Pending |
-| DELEG-03 | Phase 64 | Pending |
-| DELEG-04 | Phase 64 | Pending |
-| DELEG-05 | Phase 64 | Pending |
-| DELEG-06 | Phase 64 | Pending |
-| DELEG-07 | Phase 64 | Pending |
-| DELEG-08 | Phase 64 | Pending |
+| DELEG-01 | Phase 64 | Complete |
+| DELEG-02 | Phase 64 | Complete |
+| DELEG-03 | Phase 64 | Complete |
+| DELEG-04 | Phase 64 | Complete |
+| DELEG-05 | Phase 64 | Complete |
+| DELEG-06 | Phase 64 | Complete |
+| DELEG-07 | Phase 64 | Complete |
+| DELEG-08 | Phase 64 | Complete |
 | ABNAV-01 | Phase 65 | Pending |
 | ABNAV-02 | Phase 65 | Pending |
 | ABNAV-03 | Phase 65 | Pending |

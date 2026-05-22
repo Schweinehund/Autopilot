@@ -4,13 +4,13 @@ milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
 status: executing
 stopped_at: Phase 64 context gathered
-last_updated: "2026-05-22T17:24:40.487Z"
-last_activity: 2026-05-22 -- Phase 64 planning complete
+last_updated: "2026-05-22T17:35:21.694Z"
+last_activity: 2026-05-22
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 20
-  completed_plans: 14
+  completed_plans: 15
   percent: 40
 ---
 
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-20)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 64 — apple business delegation runbooks
+**Current focus:** Phase 64 — apple-business-delegation-runbooks
 
 ## Current Position
 
-Phase: 64
-Plan: Not started
+Phase: 64 (apple-business-delegation-runbooks) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-05-22 -- Phase 64 planning complete
+Last activity: 2026-05-22
 
 ```
-Progress: [██████████] 100%
+Progress: [████████░░] 75%
 Phases:   62 63 64 65 66
 Status:   .  .  .  .  .
           (. = not started, X = complete)
@@ -150,7 +150,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 
 ## Session Continuity
 
-Last session: 2026-05-22T16:45:31.422Z
+Last session: 2026-05-22T17:35:21.667Z
 Stopped at: Phase 64 context gathered
-Resume file: .planning/phases/64-apple-business-delegation-runbooks/64-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 62` — Apple Business Foundation & Rebrand
