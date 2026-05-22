@@ -142,10 +142,14 @@ passcode must be reset. It is destructive and irreversible.
 > **⚠️ L2 approval required before proceeding.**
 >
 > Only use Path C when:
-> - Path A (Apple Business UI) is unavailable AND
-> - Path B (MDM ClearPasscode) has been attempted and failed AND
+> - Path A (Apple Business UI) is unavailable or has not resolved the partition passcode AND
 > - Data loss on all Shared iPad user partitions has been explicitly accepted by the
 >   device owner and an L2 admin has approved the action.
+>
+> Do **not** attempt Path B (MDM ClearPasscode) as a prerequisite — it targets the
+> device-level screen-lock, not the per-user Shared iPad partition passcode (see the
+> Path B anti-feature note above), so it cannot resolve a partition-passcode problem and
+> issuing it first only sends a wrong-layer command to the device.
 >
 > Source: PITFALLS.md OP-11 — Apple MDM Protocol reference; ROADMAP.md SC#1
 

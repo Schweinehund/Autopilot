@@ -117,8 +117,7 @@ tenant-wide log query.
 > should notify the OU-B admin directly and document the transfer reason in a ticket or
 > change record. The Apple Business audit log alone is insufficient for OU-B's visibility.
 > See [14-device-transfer-runbook.md](14-device-transfer-runbook.md) for the cross-OU
-> transfer pre-checklist, which includes notifying the device user and confirming
-> enrollment profile compatibility.
+> transfer pre-transfer dependency checklist and 4-cell impact matrix.
 
 ---
 

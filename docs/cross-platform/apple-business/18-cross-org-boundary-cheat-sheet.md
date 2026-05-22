@@ -117,4 +117,4 @@ After reviewing this cheat sheet:
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-05-22 | Phase 64 plan 64-05: initial authoring — canonical Apple-Business-vs-Intune disambiguation table (DELEG-08); 9-row capability table with line-pair-scoped ABAUDIT-17..ABAUDIT-22 exemptions for C15 compliance; D-02 SOT (no self-referential scope-boundary link) | -- |
+| 2026-05-22 | Phase 64 plan 64-05: initial authoring — canonical Apple-Business-vs-Intune disambiguation table (DELEG-08); 9-row capability table with line-pair-scoped ABAUDIT-17..ABAUDIT-23 exemptions (7 total; ABAUDIT-23 added for the audit-log-access row's "Intune admin center" disambiguation) for C15 compliance; D-02 SOT (no self-referential scope-boundary link) | -- |

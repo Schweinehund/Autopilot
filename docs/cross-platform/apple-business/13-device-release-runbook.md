@@ -91,7 +91,7 @@ timed release can leave a device in an ambiguous management state.
 > **Pre-release checklist (all must be resolved):**
 > - [ ] No active Shared iPad session ongoing on device
 > - [ ] Admin understands device will re-enroll if DEP profile remains set
-> - [ ] No other admin's MDM scope covers this device (coordinate first)
+> - [ ] No other OU or admin has a pending/recent action on this device — check the Apple Business **Activity** log filtered by device serial number; if another OU owns it, use the [`05-sub-org-admin-onboarding.md`](05-sub-org-admin-onboarding.md#which-admin-owns-this-pool) lookup to identify and coordinate with the owning admin first
 >
 > Source: PITFALLS.md OP-6
 

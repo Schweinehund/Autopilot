@@ -3,7 +3,7 @@ last_verified: 2026-05-22
 review_by: 2026-07-21
 applies_to: apple-business
 audience: admin
-platform: ios+macos
+platform: ios+ipados+macos
 ---
 
 > **Platform applicability:** This document covers Apple Business Managed Apple Account
@@ -190,7 +190,7 @@ users can sign in via federated credentials.
 |------|--------|-----|-------|
 | 1 | In Apple Business, navigate to **Account > Preferences > Federated Authentication > Microsoft Entra ID > OIDC** | Tenant IT administrator | `[CITED: training; needs live verification]` |
 | 2 | Enable OIDC federated authentication | IT administrator | Requires "Configure federated authentication" permission (tenant-wide, DENY-by-default) |
-| 3 | In Microsoft Entra ID, register the Apple Business OIDC application and grant the required scopes: `ssf.manage` and `ssf.read` | IT administrator | `[CITED: FEATURES.md §6.3]` |
+| 3 | In Microsoft Entra ID, register the Apple Business OIDC application and grant the required scopes (`ssf.manage` and `ssf.read` per FEATURES.md §6.3) | IT administrator | `[ASSUMED — scope names per FEATURES.md §6.3; non-standard and NOT confirmed against a current Apple/Microsoft OIDC reference. Verify the exact scope strings in the live Entra app registration before relying on them.]` |
 | 4 | Complete the OIDC configuration in Apple Business with the Entra application credentials | IT administrator | `[CITED: training; needs live verification]` |
 | 5 | Test with a pilot user: sign in on an Apple device using Entra credentials | IT administrator + pilot user | On first sign-in, Apple Business auto-creates a Managed Apple Account if none exists (JIT provisioning) |
 | 6 | Verify the JIT-created account appears in Apple Business Users sidebar with the correct OU assignment | IT administrator | OU assignment is determined by claim mapping from the Entra identity payload |
