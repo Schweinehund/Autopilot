@@ -205,11 +205,11 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
   3. Admin can reassign MDM server via a SINGLE runbook `15-mdm-server-reassign-runbook.md` with OS-version eligibility matrix (iOS 26 / iPadOS 26 / macOS 26 / tvOS 26+ → in-place migration; legacy → factory erase) and 2 sub-H2s consolidating FEATURES Workflow 5.3 split — anti-proliferation invariant (CI-5) honored: exactly 1 MDM Reassign runbook ships, not 2
   4. Admin can provision Managed Apple Accounts (`16-managed-apple-account-runbook.md`) covering manual + SCIM + OIDC+JIT, including a 60-day federation collision resolution sub-section (OP-7) and SCIM token renewal cadence; admin can scope audit log access per OU (`17-audit-log-scoping-runbook.md`) including author-scope vs target-scope semantics (OP-14), SIEM export pattern (OP-13), and "no public REST API" anti-feature documentation
   5. Cross-Org-Boundary Cheat Sheet `18-cross-org-boundary-cheat-sheet.md` ships with Apple-Business-vs-Intune-vs-integration disambiguation table and harbors C15 anti-pattern allowlist exemptions in HTML comments; every delegation runbook carries an explicit Apple-Business-vs-Intune scope-boundary callout (Intune-side RBAC out-of-scope invariant honored — C15 enforces no Intune-delegation banned phrases leak into v1.6 docs)
-**Plans:** 3/6 plans executed
+**Plans:** 4/6 plans executed
 - [x] 64-01-PLAN.md — check-phase-64.mjs validator-as-deliverable + 64-CONVENTIONS.md locked hard-callout strings + ABAUDIT-05 registry (Wave 1)
 - [x] 64-02-PLAN.md — DELEG-01/02/03: 11-vpp-catalog + 12-shared-ipad-passcode-reset (canonical C16 doc) + 13-device-release (Wave 2)
 - [x] 64-03-PLAN.md — DELEG-04/05: 14-device-transfer (4-cell matrix) + 15-mdm-server-reassign (SINGLE, 2 sub-H2s) (Wave 2)
-- [ ] 64-04-PLAN.md — DELEG-06/07: 16-managed-apple-account + 17-audit-log-scoping (Wave 2)
+- [x] 64-04-PLAN.md — DELEG-06/07: 16-managed-apple-account + 17-audit-log-scoping (Wave 2)
 - [ ] 64-05-PLAN.md — DELEG-08: 18-cross-org-boundary-cheat-sheet (C15 ABAUDIT exemption host) (Wave 2)
 - [ ] 64-06-PLAN.md — Wave 3 close-gate: full suite green + 64-VERIFICATION.md
 
@@ -305,7 +305,7 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 | 61. Gap Closure + Terminal Re-Audit + Milestone Close | v1.5 | 5/5 | Complete | 2026-05-08 |
 | 62. Apple Business Foundation & Rebrand | v1.6 | 8/8 | Complete   | 2026-05-21 |
 | 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 6/6 | Complete    | 2026-05-21 |
-| 64. Apple Business Delegation Runbooks | v1.6 | 3/6 | In Progress|  |
+| 64. Apple Business Delegation Runbooks | v1.6 | 4/6 | In Progress|  |
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 0/? | Not started | — |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 0/? | Not started | — |
 
