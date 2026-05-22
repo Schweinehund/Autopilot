@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
-status: verifying
-stopped_at: Phase 64 context gathered
-last_updated: "2026-05-22T18:21:37.234Z"
+status: ready_to_plan
+stopped_at: Phase 64 complete (6/6) — ready to discuss Phase 65
+last_updated: 2026-05-22T18:43:11.683Z
 last_activity: 2026-05-22
 progress:
   total_phases: 5
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-20)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 64 — apple-business-delegation-runbooks
+**Current focus:** Phase 65 — apple business l1/l2 + hub navigation integration
 
 ## Current Position
 
-Phase: 64 (apple-business-delegation-runbooks) — EXECUTING
-Plan: 6 of 6
-Status: Phase complete — ready for verification
+Phase: 65
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-05-22
 
 ```
