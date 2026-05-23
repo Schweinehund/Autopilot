@@ -59,8 +59,21 @@ Cross-platform configuration drift workflows + tenant-to-tenant migration runboo
 | [iOS / Android Drift Detection](drift-migration/03-ios-android-drift-detection.md) | iOS jailbreak detection / OS downgrade; Android Play Integrity verdict change |
 | [Tenant Migration Runbook](drift-migration/04-tenant-migration-runbook.md) | Windows BitLocker re-key + ABM token re-issue + MGP re-binding; cross-platform encryption drift section |
 
+## Apple Business Governance
+
+Apple Business delegated governance — sub-org admin onboarding, Shared iPad passcode reset, MDM server assignment, Managed Apple Account provisioning, VPP catalog management, and cross-org boundary operations.
+
+| Guide | Covers |
+|-------|--------|
+| [Overview: Apple Business Governance](../cross-platform/apple-business/00-overview.md) | Governance model overview; tree root linking all 18 admin-context docs |
+| [Role & Permission Model](../cross-platform/apple-business/01-role-permission-model.md) | 7-subgroup permission catalog; OP-1/OP-2/OP-3 safety rules; Edit-without-View table |
+| [OUs Architecture](../cross-platform/apple-business/02-ous-architecture.md) | OU primitive; flat-by-default; OU-scoped resource coverage |
+| [L1 Runbooks](../l1-runbooks/00-index.md#apple-business-l1-runbooks) | L1 #34 — Shared iPad passcode reset (Path A) |
+| [L2 Runbooks](../l2-runbooks/00-index.md#apple-business-l2-runbooks) | L2 #26 — Permission denied investigation (7-leaf triage) |
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Governance H2 (ABNAV-06; 5th Operations sub-section) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added 3 new H2 sections (Patch & Update Management 5 rows / App Lifecycle Automation 5 rows / Compliance Drift Detection + Tenant Migration 5 rows) mirroring Co-Management section template; updated frontmatter `platform: Windows` -> `platform: cross-platform`; discharges DPO-Phase56-01 hand-off chain (D-10) | -- |
