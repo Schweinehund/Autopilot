@@ -213,10 +213,34 @@ platform: all
 - [Linux Conditional Access Blocking Web Access](l1-runbooks/32-linux-ca-blocking-web-access.md) -- device not enrolled / device not compliant / Edge not signed in
 - [Linux Intune Agent Service Failure](l1-runbooks/33-linux-agent-service-failure.md) -- `intune-agent` service not running / timer not firing
 
+## Apple Business Quick Reference
+
+**Platform:** Apple Business (Shared iPad + sub-org admin delegated governance)
+
+### Top Checks — Shared iPad Passcode Reset
+
+1. **Which path?** — Can the sub-org admin reach the Apple Business portal? → Path A (Apple Business UI, L1-delegatable)
+2. **Pool owner?** — See [`05-sub-org-admin-onboarding.md#which-admin-owns-this-pool`](cross-platform/apple-business/05-sub-org-admin-onboarding.md#which-admin-owns-this-pool) to confirm who owns the Shared iPad pool
+3. **Portal reachable?** — Navigate to Apple Business and confirm sub-org admin can log in
+4. **Permission granted?** — Sub-org admin has "Reset Shared iPad passcode" in their OU
+5. **Error visible?** — Note exact portal error text for escalation
+
+### Apple Business Escalation Triggers
+
+- Path A failed or portal unreachable → **Escalate L2** (collect: serial, UPN, pool owner, screenshot)
+- Permission denied error in Apple Business portal → **Escalate L2 directly** (collect: error text, user role, OU name)
+- MDM path required (Paths B/C) → **L2 only** per OP-11
+
+### Apple Business Runbooks
+
+- [34: Apple Business Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) — Path A primary (L1-delegatable)
+- [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — 7-leaf L2 triage tree
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-04; C16 edge quick_ref_l1 → l1_34 live; H2 title slug = apple-business-quick-reference) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Top Checks 4 items / Linux Escalation Triggers / Linux Decision Tree single link / Linux Runbooks 4-link list) matching iOS quick-ref non-mode-tag pattern; D-25 mode-tag-free contract | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: Top Checks 5 / Escalation Triggers 5 / Decision Tree 1 / Runbooks 8) with inline [Mode] prefix tags per row (mode-first per v1.4 triage tree); Mode vocabulary [BYOD]/[ZTE]/[AOSP]/[Knox]/[All GMS] LOCKED verbatim from L1-index Mode column (CLEAN-03; DEFER-07 close) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Quick Reference section with 4 top checks, 5 escalation triggers, decision tree link, and 6 runbook links (16-21) | -- |
