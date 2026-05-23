@@ -326,10 +326,33 @@ Full configuration details and per-category remediation: see the [Linux Complian
 - [Linux Log Collection Guide](l2-runbooks/24-linux-log-collection.md) -- prerequisite for all Linux L2 investigations (3-method matrix: journalctl primary / file-based paths secondary / package-state queries supplemental)
 - [Linux Agent Investigation](l2-runbooks/25-linux-agent-investigation.md) -- service-state diagnosis + Identity Broker `intune-portal` 2.0.2+ re-enrollment loop investigation + systemd timer activation analysis
 
+## Apple Business Quick Reference
+
+**Platform:** Apple Business (Shared iPad + sub-org admin delegated governance)
+
+### Apple Business Portal Navigation
+
+- **Permission catalog:** Apple Business > Settings > Roles (sub-org admin view)
+- **OU device list:** Apple Business > Locations > [OU name] > Devices
+- **Activity log:** Apple Business > Activity (audit log for permission events; no public retention SLA per DELEG-07)
+
+### Apple Business Permission Investigation
+
+1. Confirm user role in Apple Business portal — Settings > People > [user] > Role
+2. Check OU scope of the role assignment — compare against the failing action's OU
+3. Check Edit-without-View table in [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md) for OP-3 companion-view dependencies
+4. Federation state check: Settings > Accounts (SCIM/OIDC sync status) — see [16-managed-apple-account-runbook.md](cross-platform/apple-business/16-managed-apple-account-runbook.md)
+
+### Investigation Runbooks
+
+- [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — 7-leaf Mermaid tree; role / OU / scope / federation / quota / lockout
+- [12: Shared iPad Passcode Reset](cross-platform/apple-business/12-shared-ipad-passcode-reset.md) — 3-path matrix (Path A UI / Path B MDM ClearPasscode / Path C MDM EraseDevice + OP-11)
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-05; L2 command/log-collection voice) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Linux Diagnostic Data Collection 3 methods / Key Intune Portal Paths Linux L2 / Linux Compliance Category Reference 4-row pointer table / Linux Investigation Runbooks 2-link list); link-not-copy contract for Phase 50 Compliance Policy SSoT per PITFALL-7 + Phase 57 D-22..D-25 + D-23 ENDORSEMENT inheritance | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: 3-method log collection with AMAPI mode-switching / Key Intune Portal Paths Android L2 4-5 rows / Play Integrity Verdict Reference 3-row pointer table cross-linking Phase 54 SSoT / 6-runbook investigation list with iOS-style ` -- ` disambiguation per row); link-not-copy contract for Play Integrity SSoT per PITFALL-7 + Phase 56 D-08 inheritance (CLEAN-04; DEFER-07 close) | -- |
 | 2026-04-18 | Phase 32 HUMAN-UAT item 2 closure: updated Key Intune Portal Paths table to reflect current admin center "Device onboarding" section under Devices per Microsoft Learn 2026-04-16 docs (affects Enrollment Program Tokens, Apple MDM Push Certificate, Enrollment restrictions paths) | -- |
