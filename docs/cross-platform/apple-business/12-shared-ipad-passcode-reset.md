@@ -192,9 +192,11 @@ passcode must be reset. It is destructive and irreversible.
   prerequisites; Find My pre-check (OP-12); lifecycle stages
 - Cross-org boundary: [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md) —
   full Apple-Business-vs-Intune responsibility table (D-02 SOT)
+- **L1 runbook:** [L1 #34 — Apple Business Shared iPad Passcode Reset](../../l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) (Path A L1-delegated entry point)
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-22 | Phase 64 plan 64-02: initial authoring — canonical 3-path Shared iPad passcode reset runbook; Path A (Apple Business UI, L1-delegatable); Path B anti-feature (ClearPasscode ≠ partition passcode, ABAUDIT-07 exemption); Path C (EraseDevice, OP-11 hard callout + L2-approval gate); C16 Phase 65 back-link deferred (DELEG-02) | -- |
+| 2026-05-22 | Phase 65 plan 65-04: added L1 #34 back-link to `## Cross-References` tail per D-04a + C16 atomic-reconciliation contract (62-08-PLAN §464-465); removed admin_12 C16 exemption from allowlist | -- |

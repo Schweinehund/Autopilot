@@ -77,10 +77,5 @@
     {"file": "docs/_templates/admin-template-macos.md", "line": 13, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"}
   ],
   "c13_rotting_external": [],
-  "c16_missing_endpoint_exemptions": [
-    {"file": "docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md", "reason": "Phase 65 deliverable per ABNAV-01; lands with all 4 edges per C16 triangle contract", "sunset_phase": "65"},
-    {"file": "docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md", "reason": "Phase 64 deliverable per DELEG-02; admin-context canonical doc for L1 #34 cross-link", "sunset_phase": "64-65"},
-    {"file": "docs/common-issues.md#apple-business-governance-failure-scenarios", "reason": "Phase 65 deliverable per ABNAV-03; inbound H2 section append-only", "sunset_phase": "65"},
-    {"file": "docs/quick-ref-l1.md#apple-business-quick-reference", "reason": "Phase 65 deliverable per ABNAV-04; inbound H2 section append-only", "sunset_phase": "65"}
-  ]
+  "c16_missing_endpoint_exemptions": []
 }

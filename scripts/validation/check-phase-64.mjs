@@ -132,16 +132,17 @@ const checks = [
     }
   },
 
-  // === V-64-05: 12- does NOT contain 34-apple-business reference (C16 Phase 65 gate) ===
+  // === V-64-05: 12- MUST contain 34-apple-business reference (C16 Phase 65 gate — RECONCILED) ===
   {
-    id: 5, name: 'V-64-05: 12-shared-ipad-passcode-reset.md does NOT contain 34-apple-business (C16 sunset Phase 65)',
+    id: 5, name: 'V-64-05 [RECONCILED Phase 65]: 12-shared-ipad-passcode-reset.md MUST contain 34-apple-business (C16 back-link landed)',
+    // RECONCILED: was NEGATIVE assertion in Phase 64 (must NOT contain). Phase 65 atomic commit
+    // (D-04a + 62-08-PLAN §464-465 contract) added the back-link; assertion flipped to POSITIVE.
     run() {
       const c = readFile(AB_12);
       if (c === null) return { pass: false, detail: AB_12 + ' missing' };
-      // V-64-NN: 12- does NOT contain 34-apple-business reference (C16 Phase 65 gate)
       const has34 = c.includes('34-apple-business');
-      if (has34) return { pass: false, detail: '12- contains 34-apple-business reference (C16 sunset Phase 65; must not appear in Phase 64)' };
-      return { pass: true, detail: '12- does not contain 34-apple-business (C16 constraint satisfied)' };
+      if (!has34) return { pass: false, detail: '12- missing 34-apple-business back-link -- Phase 65 atomic commit (D-04a) not yet landed' };
+      return { pass: true, detail: '12- contains 34-apple-business back-link (C16 RECONCILED; Phase 65 atomic commit confirmed)' };
     }
   },
 

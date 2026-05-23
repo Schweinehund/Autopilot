@@ -274,19 +274,19 @@ const checks = [
     }
   },
 
-  // === V-62-SIDECAR: v1.6-audit-allowlist.json valid JSON + c16 entries ===
+  // === V-62-SIDECAR: v1.6-audit-allowlist.json valid JSON + c16 entries [RECONCILED Phase 65] ===
   {
-    id: 'SIDECAR', name: 'V-62-SIDECAR: v1.6-audit-allowlist.json valid JSON; c16_missing_endpoint_exemptions has 4 entries all with sunset_phase',
+    id: 'SIDECAR', name: 'V-62-SIDECAR [RECONCILED Phase 65]: v1.6-audit-allowlist.json valid JSON; c16_missing_endpoint_exemptions has 0 entries (all 4 sunset-65 exemptions removed by Phase 65 atomic-trio)',
+    // RECONCILED: was NEGATIVE count assertion in Phase 62 (expected 4 entries). Phase 65 atomic commit
+    // (D-04a + 62-08-PLAN §464-465 contract) removed all 4 sunset-65 exemptions; array is now empty.
     run() {
       const raw = readFile(SIDECAR);
       if (raw === null) return { pass: false, detail: SIDECAR + ' missing' };
       let parsed;
       try { parsed = JSON.parse(raw); } catch (e) { return { pass: false, detail: 'JSON parse error: ' + e.message }; }
       const c16 = parsed.c16_missing_endpoint_exemptions || [];
-      if (c16.length !== 4) return { pass: false, detail: 'c16_missing_endpoint_exemptions has ' + c16.length + ' entries (expected 4)' };
-      const noSunset = c16.filter(e => !e.sunset_phase);
-      if (noSunset.length > 0) return { pass: false, detail: 'entries missing sunset_phase: ' + JSON.stringify(noSunset) };
-      return { pass: true, detail: 'valid JSON; c16=4 entries all with sunset_phase' };
+      if (c16.length !== 0) return { pass: false, detail: 'c16_missing_endpoint_exemptions has ' + c16.length + ' entries (expected 0 after Phase 65 atomic-trio removal)' };
+      return { pass: true, detail: 'valid JSON; c16=0 entries (Phase 65 atomic-trio sunset-65 removals confirmed)' };
     }
   },
 ];
