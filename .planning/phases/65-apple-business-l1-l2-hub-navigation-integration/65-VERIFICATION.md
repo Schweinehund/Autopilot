@@ -1,12 +1,111 @@
-# Phase 65 Verification
+---
+phase: 65-apple-business-l1-l2-hub-navigation-integration
+verified: 2026-05-22T22:00:00Z
+status: passed
+score: 7/7 must-haves verified
+overrides_applied: 0
+re_verification:
+  previous_status: passed
+  previous_score: 7/7
+  gaps_closed: []
+  gaps_remaining: []
+  regressions: []
+---
 
-**Date:** 2026-05-22
+# Phase 65: Apple Business L1/L2 + Hub Navigation Integration — Verification Report
+
+**Phase Goal:** L1 staff can use a single shared iPad passcode reset runbook (L1 #34) that cross-links to the admin-directory lookup + canonical admin-context doc; L2 engineering can use a 7-leaf permission-denied decision tree (L2 #26); cross-platform symptom routing + quick-ref cards + operations index + docs/index.md hub all gain Apple Business sections — all edits to existing hub files are APPEND-ONLY with the navigation-files-last invariant honored per v1.5 Phase 57+59 precedent.
+**Verified:** 2026-05-22T22:00:00Z
 **Status:** PASSED
-**Verifier:** gsd-executor (Wave 5 close-gate)
+**Re-verification:** Yes — independent verifier audit layered on Wave-5 executor close-gate doc
 
 ---
 
-## Section A — Executive Summary
+## Independent Verifier Findings (Goal-Backward Audit)
+
+**Verifier:** Claude (gsd-verifier), adversarial stance — SUMMARY.md claims not trusted.
+
+All validator commands were re-run live in the author environment. All key deliverable files were read directly and cross-referenced against SC#1-5 requirements. Findings below are based solely on codebase evidence.
+
+### Observable Truths — Independent Verification
+
+| # | Truth (from SC) | Status | Codebase Evidence |
+|---|-----------------|--------|-------------------|
+| 1 | L1 #34 exists with `platform: ios+macos+shared-ipad`, `#which-admin-owns-this-pool` link, 3-path matrix with OP-11 gating on Path C, cross-link to `12-shared-ipad-passcode-reset.md`, L1 #00-index appended | VERIFIED | File read directly; all elements confirmed at correct lines; `grep` confirmed 3 occurrences of `#which-admin-owns-this-pool` + 6 occurrences of OP-11 references + `12-shared-ipad-passcode-reset` present at lines 42, 52, 91, 109, 139 |
+| 2 | L2 #26 exists with 7-leaf Mermaid tree (DA-9 LOCKED) — 7 distinct leaf types confirmed; L2 #00-index appended | VERIFIED | File read directly; `([` count = 8 (7 leaf nodes + 1 root); all 7 leaf types (role-lacks-permission / OU-boundary / Apple-Business-scope / Intune-scope / federation-state / quota-limit / Account-Holder-lockout) present in Mermaid block; L2 00-index confirmed at line 195 |
+| 3 | 5 hub appends delivered: `## Apple Business Governance Failure Scenarios` in common-issues.md; `## Apple Business Quick Reference` in quick-ref-l1.md and quick-ref-l2.md; `## Apple Business Governance` in operations/00-index.md; Apple Business sub-H3 + banner + cross-platform refs in docs/index.md | VERIFIED | All 5 files confirmed; tail output shows sections appended correctly; PITFALL-6 invariant verified — all pre-existing H2 slugs present post-edit (grep -n "^## " output matches pre-edit inventory) |
+| 4 | C16 4-edge cross-link triangle PASSES: l1_34→admin_12, admin_12→l1_34, common_issues→quick_ref_l1, quick_ref_l1→l1_34 — zero exemptions | VERIFIED | Atomic commit `8721a63` verified via `git log --stat` (4 files, correct shape); `c16_missing_endpoint_exemptions: []` confirmed in allowlist; `v1.6-milestone-audit.mjs` C16 PASS confirmed via live run |
+| 5 | Zero existing hub-file anchors shift across all 6 inventoried files — PITFALL-6 / SC#5 anti-regression honored; navigation-files-last invariant honored | VERIFIED | `grep -n "^## "` on common-issues.md (7 H2s, new one at line 337 after pre-existing), quick-ref-l1.md (11 H2s, new one at line 216), operations/00-index.md (6 H2s, new one at line 62); back-link in 12- confirmed at line 195; anchor slugs unchanged |
+| 6 | Validator chain: `check-phase-65.mjs` 28 PASS / 0 FAIL / 5 SKIP; `check-phase-64.mjs` 24 PASS / 0 FAIL / 5 SKIP; `check-phase-62.mjs` 29 PASS / 0 FAIL / 5 SKIP; `v1.6-milestone-audit.mjs` 15 PASS / 0 FAIL / 0 SKIP | VERIFIED | All 4 validators re-run live; exit codes all 0; output captured verbatim in Section B below |
+| 7 | REQUIREMENTS.md ABNAV-01..07 all marked `[x] Complete` in both checkbox list and traceability table | VERIFIED | `grep ABNAV .planning/REQUIREMENTS.md` output shows all 7 checked `[x]` and `Complete` in traceability table |
+
+**Score: 7/7 truths verified**
+
+### Required Artifacts
+
+| Artifact | Expected | Status | Evidence |
+|----------|----------|--------|---------|
+| `docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md` | L1 #34 with Path A executable, pool-owner lookup, OP-11 gating | VERIFIED | File read at full length; all SC#1 elements confirmed |
+| `docs/l2-runbooks/26-apple-business-permission-denied.md` | L2 #26 with 7-leaf Mermaid | VERIFIED | File read; leaf count = 7 confirmed |
+| `docs/common-issues.md` (appended) | `## Apple Business Governance Failure Scenarios` H2 | VERIFIED | grep confirms at line 337 |
+| `docs/quick-ref-l1.md` (appended) | `## Apple Business Quick Reference` H2 | VERIFIED | grep confirms at line 216; C16 load-bearing slug present |
+| `docs/quick-ref-l2.md` (appended) | `## Apple Business Quick Reference` H2 | VERIFIED | tail output confirms section present |
+| `docs/operations/00-index.md` (appended) | `## Apple Business Governance` H2 as 5th sub-section | VERIFIED | grep confirms at line 62; 5th operational H2 |
+| `docs/index.md` (surgical edits) | Apple Business sub-H3 under `## Operations` + banner + cross-platform refs | VERIFIED | grep output confirms `### Apple Business Governance` at line 277 + banner at line 9 |
+| `docs/cross-platform/apple-business/12-shared-ipad-passcode-reset.md` (back-link) | `34-apple-business` substring in `## Cross-References` tail | VERIFIED | grep confirms at line 195 |
+| `scripts/validation/v1.6-audit-allowlist.json` | `c16_missing_endpoint_exemptions: []` | VERIFIED | File read; empty array confirmed |
+| `scripts/validation/check-phase-65.mjs` | Validator-as-deliverable; exits 0 | VERIFIED | Live run: 28 PASS, 0 FAIL, 5 SKIP |
+
+### Key Link Verification
+
+| From | To | Via | Status | Evidence |
+|------|----|-----|--------|---------|
+| `34-apple-business-shared-ipad-passcode-reset.md` | `12-shared-ipad-passcode-reset.md` | `12-shared-ipad-passcode-reset` substring (multiple) | WIRED | grep confirms 5 occurrences |
+| `12-shared-ipad-passcode-reset.md` | `34-apple-business-shared-ipad-passcode-reset.md` | `34-apple-business` substring | WIRED | grep confirms at line 195 in `## Cross-References` |
+| `common-issues.md` | `quick-ref-l1.md` | `#apple-business-quick-reference` anchor | WIRED | tail output confirms link present in Apple Business H2 section |
+| `quick-ref-l1.md` | `34-apple-business-shared-ipad-passcode-reset.md` | `34-apple-business` substring in Runbooks subsection | WIRED | tail output confirms at line 236+ |
+| `34-apple-business-shared-ipad-passcode-reset.md` | `05-sub-org-admin-onboarding.md#which-admin-owns-this-pool` | anchor link | WIRED | grep confirms at lines 23 and 127 and 141 |
+| L1 #34 | L2 #26 | cross-reference and escalation pointers | WIRED | File read; escalation section confirmed at lines 113-133 |
+
+### Anti-Patterns Found
+
+None. Zero debt markers (`TBD`, `FIXME`, `XXX`) found in any Phase 65 modified file. The `[CITED: training; needs live verification]` annotations are intentional review-by markers with a specific `review_by: 2026-07-21` date in frontmatter — these are documented open items, not orphaned debt.
+
+### Behavioral Spot-Checks
+
+| Behavior | Command | Result | Status |
+|----------|---------|--------|--------|
+| check-phase-65.mjs exits 0 | `node scripts/validation/check-phase-65.mjs` | 28 PASS, 0 FAIL, 5 SKIP | PASS |
+| check-phase-64.mjs exits 0 with V-64-05 RECONCILED | `node scripts/validation/check-phase-64.mjs` | 24 PASS, 0 FAIL, 5 SKIP | PASS |
+| check-phase-62.mjs exits 0 with V-62-SIDECAR RECONCILED | `node scripts/validation/check-phase-62.mjs` | 29 PASS, 0 FAIL, 5 SKIP | PASS |
+| v1.6-milestone-audit.mjs exits 0 with C16 PASS | `node scripts/validation/v1.6-milestone-audit.mjs` | 15 PASS, 0 FAIL, 0 SKIP (C16 PASS) | PASS |
+| Atomic commit 8721a63 covers 4 correct files | `git log -1 --stat 8721a63` | 4 files changed: 12-, allowlist, check-64, check-62 | PASS |
+
+### Requirements Coverage
+
+| Requirement | Source Plan | Description | Status | Evidence |
+|-------------|------------|-------------|--------|---------|
+| ABNAV-01 | 65-02-PLAN.md | L1 #34 with pool-owner lookup + 3-path matrix + OP-11 gating + compound frontmatter + L1 00-index | SATISFIED | File verified; REQUIREMENTS.md shows `[x] Complete` |
+| ABNAV-02 | 65-02-PLAN.md | L2 #26 with 7-leaf Mermaid + L2 00-index | SATISFIED | File verified; REQUIREMENTS.md shows `[x] Complete` |
+| ABNAV-03 | 65-03-PLAN.md | `## Apple Business Governance Failure Scenarios` in common-issues.md | SATISFIED | grep confirms at line 337 |
+| ABNAV-04 | 65-03-PLAN.md | `## Apple Business Quick Reference` in quick-ref-l1.md | SATISFIED | grep confirms at line 216 |
+| ABNAV-05 | 65-03-PLAN.md | `## Apple Business Quick Reference` in quick-ref-l2.md | SATISFIED | tail output confirms |
+| ABNAV-06 | 65-03-PLAN.md | Apple Business as 5th sub-section in operations/00-index.md | SATISFIED | grep confirms at line 62; 5th H2 in file |
+| ABNAV-07 | 65-03-PLAN.md | Apple Business sub-H3 + banner + cross-platform refs in docs/index.md | SATISFIED | grep confirms `### Apple Business Governance` at line 277 |
+
+**All 7 ABNAV requirements: SATISFIED. No orphaned requirements.**
+
+### Human Verification Required
+
+None. All SC#1-5 requirements are verifiable programmatically. The single residual open item (live Apple Business portal navigation step verification for L1 #34 Path A) is tagged `[CITED: training; needs live verification]` with `review_by: 2026-07-21` in the runbook frontmatter — this is a 60-day review-window item per the standard corpus pattern, not a phase-blocking gap.
+
+### Gaps Summary
+
+No gaps. All 7 must-haves verified. All 5 validators exit 0. All 7 ABNAV requirements satisfied. Zero debt markers. Zero anchor regressions. C16 4-edge triangle live with 0 exemptions.
+
+---
+
+## Section A — Executive Summary (Wave-5 Executor Record, Preserved)
 
 Phase 65 delivered all 7 ABNAV-01..07 requirements across 5 waves: L1 #34 and L2 #26 runbooks (Wave 2), 5 hub-file appends (Wave 3), and the C16 4-edge cross-link integrity triangle (Wave 4 atomic commit `8721a63`). The C16 4-edge triangle is fully live with 0 exemptions remaining in `v1.6-audit-allowlist.json`. The PITFALL-6 anti-regression invariant is honored across all 6 inventoried files — zero pre-existing H2/H3 anchor slugs shifted. All 3 validators (`v1.6-milestone-audit.mjs`, `check-phase-64.mjs`, `check-phase-65.mjs`) plus the full chain (`check-phase-62.mjs` and `check-phase-63.mjs`) exit 0, confirming Phase 66 may now spawn the terminal re-audit from a FRESH WORKTREE per D-22 auditor-independence.
 
@@ -355,8 +454,6 @@ All validators exit 0 post-commit. The atomic commit covers 4 files (not 3 as pl
 
 ---
 
-## Status
-
-Phase 65 plan-execution: **COMPLETE**. Ready for `/gsd:verify-work` (or Phase 66 terminal re-audit consumption per v1.5 D-22 precedent — Phase 66 verifies the full chain from a fresh worktree).
-
-**Full suite result:** `check-phase-65.mjs` exits 0 (28 PASS, 0 FAIL, 5 SKIPPED); all V-65-01..V-65-14 + V-65-SELF + V-65-CHAIN + V-65-AUDIT PASS; V-64-05 [RECONCILED Phase 65] PASS; V-62-SIDECAR [RECONCILED Phase 65] PASS; C14/C15/C16 PASS; C16 4-edge triangle LIVE with 0 exemptions; PITFALL-6 zero regressions; SC#1-5 all satisfied.
+_Verified: 2026-05-22T22:00:00Z_
+_Verifier: Claude (gsd-verifier) — independent goal-backward audit_
+_Prior verifier: gsd-executor (Wave 5 close-gate, 2026-05-22)_
