@@ -334,10 +334,43 @@ AOSP enrollment did not initiate or stalled across the 5 supported OEMs (RealWea
 - **L1:** [AOSP Enrollment Failed](l1-runbooks/29-android-aosp-enrollment-failed.md)
 - **L2:** [Android AOSP Investigation](l2-runbooks/23-android-aosp-investigation.md)
 
+## Apple Business Governance Failure Scenarios
+
+> **Apple Business:** For Apple Business permission errors and Shared iPad issues, use the runbooks below. For L1 quick reference, see [Apple Business Quick Reference](quick-ref-l1.md#apple-business-quick-reference).
+
+### Shared iPad Passcode Reset
+
+Shared iPad passcode locked or inaccessible.
+
+- **L1:** [34: Apple Business Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) — Path A (Apple Business UI); L1-delegatable
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — Paths B/C or permission failures
+
+### Apple Business Permission Denied
+
+Apple Business portal returns permission error.
+
+- **L1:** Route to L2 directly (no L1 self-service resolution for permission errors)
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — 7-leaf Mermaid triage tree
+
+### Managed Apple Account Provisioning Failure
+
+Managed Apple Account not created, sync delayed, or federation state error.
+
+- **L1:** Route to L2 directly (federation/SCIM state changes require L2 access)
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — federation-state leaf routes to Managed Apple Account Runbook
+
+### Cross-OU Boundary Violation
+
+Sub-org admin action fails with permission error due to OU scope mismatch.
+
+- **L1:** Route to L2 directly (OU-boundary investigation requires admin portal access)
+- **L2:** [26: Apple Business Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) — OU-boundary leaf routes to OUs Architecture + pool owner lookup
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Governance Failure Scenarios H2 (ABNAV-03; C16 edge common_issues → quick_ref_l1 live) | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Failure Scenarios H2 (8 H3 symptom-routing sub-sections 1:1 to L1 runbooks 22-29 + section-top decision-tree banner + 2 reciprocal disambiguation callouts on Device Not Enrolled and ZTE Enrollment Failed + 1 cross-platform iOS+macOS reciprocal banner on Compliance Blocked); added Android entry to Choose Your Platform TOC; updated platform coverage blockquote (CLEAN-02; DEFER-07 close) | -- |
 | 2026-04-17 | Phase 32: added iOS/iPadOS Failure Scenarios section (6 symptom categories with ios- anchor prefix + MAM-WE advisory), platform selector entry, bidirectional iOS cross-reference banners; updated platform coverage blockquote | -- |
 | 2026-04-15 | Added macOS ADE Failure Scenarios section, platform selector, cross-reference banners; updated title and frontmatter for cross-platform coverage | -- |
