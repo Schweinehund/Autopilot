@@ -6,7 +6,7 @@ audience: all
 platform: all
 ---
 
-> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning, plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration).
+> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning, plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration), and Apple Business delegated governance (Apple Business-managed device pools, shared iPad passcode reset, sub-org admin onboarding).
 > Not sure which framework applies? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 # Device Provisioning Documentation
@@ -274,6 +274,16 @@ Cross-platform configuration drift workflows + tenant-to-tenant migration runboo
 | [Tenant Migration Runbook](operations/drift-migration/04-tenant-migration-runbook.md) | Windows BitLocker re-key + ABM token re-issue + MGP re-binding; cross-platform encryption drift section |
 | [Windows Drift Detection](operations/drift-migration/01-windows-drift-detection.md) | Intune Remediations (Proactive Remediations) detect+remediate PowerShell pairs |
 
+### Apple Business Governance
+
+Apple Business delegated governance for sub-org admins — Shared iPad passcode reset, permission denied investigation, MDM server assignment, VPP catalog, Managed Apple Account provisioning, and cross-org boundary operations.
+
+| Resource | Description |
+|----------|-------------|
+| [Apple Business Operations Overview](cross-platform/apple-business/00-overview.md) | Governance tree root; links to all 18 admin-context docs |
+| [L1 #34: Shared iPad Passcode Reset](l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md) | Path A (Apple Business UI, L1-delegatable) |
+| [L2 #26: Permission Denied Investigation](l2-runbooks/26-apple-business-permission-denied.md) | 7-leaf Mermaid triage tree |
+
 ---
 
 ## Cross-Platform References
@@ -299,11 +309,14 @@ Cross-platform configuration drift workflows + tenant-to-tenant migration runboo
 | [Android Capability Matrix](reference/android-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, iOS, and Android |
 | [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Ubuntu 22.04 / 24.04 LTS enrollment pipeline summary |
 | [Linux Capability Matrix](reference/linux-capability-matrix.md) | Intune feature parity comparison across all 5 platforms |
+| [Apple Business Governance Glossary](_glossary-apple-business.md) | Apple Business terminology; Organizational Units; Managed Apple Accounts; rebrand mapping (ABM → Apple Business 2026-04-14) |
+| [Cross-Org Boundary Cheat Sheet](cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md) | Apple-Business-vs-Intune responsibility table; scope-boundary disambiguation |
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-22 | Phase 65 plan 65-03: 3 surgical edits — line-9 banner clause appendix + ### Apple Business Governance Operations sub-H3 + 2 Cross-Platform References entries (ABNAV-07) | -- |
 | 2026-05-01 | Phase 59: appended `## Operations` H2 with 4 sub-H3 sections (Co-Management / Patch & Update Management / App Lifecycle Automation / Compliance Drift Detection + Tenant Migration) routing to operations/ sub-directories (CLEAN-08 SC#1) | -- |
 | 2026-05-01 | Phase 59: appended `## Linux Provisioning` H2 with 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching Phase 57 Android H2 structural depth (CLEAN-08 SC#1); appended Linux Provisioning Lifecycle + Linux Capability Matrix Cross-Platform References entries (D-05) | -- |
 | 2026-04-30 | Phase 57: expanded Android Enterprise H2 to 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching iOS Phase 32 structural depth (CLEAN-01); added Android Provisioning Lifecycle + Android Capability Matrix Cross-Platform References entries (DEFER-07 close) | -- |
