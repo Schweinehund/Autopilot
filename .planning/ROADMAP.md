@@ -223,11 +223,11 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
   3. `docs/common-issues.md` gains a new `## Apple Business Governance Failure Scenarios` H2 (append-only); `docs/quick-ref-l1.md` and `docs/quick-ref-l2.md` each gain a new `## Apple Business Quick Reference` H2 (append-only); `docs/operations/00-index.md` gains Apple Business as 5th sub-section alongside Co-Management / Patch / App / Drift (append-only); `docs/index.md` gains Apple Business as 5th sub-section under existing `## Operations` H2 + Cross-Platform References entries + platform-coverage banner clause appendix at line 9 (surgical edits)
   4. C16 4-edge cross-link integrity triangle PASSES across L1 #34 ↔ admin doc `12-shared-ipad-passcode-reset.md` ↔ `common-issues.md` ↔ `quick-ref-l1.md` — harness verifies all 4 edges are bidirectional and resolve
   5. Zero existing hub-file anchors shift — all 5 hub-file edits (common-issues / quick-ref-l1 / quick-ref-l2 / operations/00-index / docs/index.md) verified append-only against pre-edit anchor inventory (PITFALL-6 / DA-4 anti-regression invariant); navigation-files-last invariant honored (no navigation file is modified before Phase 64 content stabilizes per v1.5 Phase 57+59 precedent)
-**Plans:** 3/5 plans executed
+**Plans:** 4/5 plans executed
 - [x] 65-01-PLAN.md — Wave 1: check-phase-65.mjs scaffold + 65-CONVENTIONS.md locked strings + 65-ANCHOR-INVENTORY.md PITFALL-6 pre-edit anchor snapshot
 - [x] 65-02-PLAN.md — Wave 2: L1 #34 (Path A executable + B/C escalation pointers) + L1 00-index append + L2 #26 (7-leaf Mermaid tree, hybrid leaf D-02) + L2 00-index append
 - [x] 65-03-PLAN.md — Wave 3: 5 hub appends (common-issues + quick-ref-l1 + quick-ref-l2 + operations/00-index + docs/index surgical edits) with D-03 asymmetric voice
-- [ ] 65-04-PLAN.md — Wave 4: ATOMIC TRIO — 12- back-link bullet + 4 sunset-65 allowlist removals + V-64-05 flip (NEGATIVE→POSITIVE) in ONE indivisible commit
+- [x] 65-04-PLAN.md — Wave 4: ATOMIC TRIO — 12- back-link bullet + 4 sunset-65 allowlist removals + V-64-05 flip (NEGATIVE→POSITIVE) in ONE indivisible commit
 - [ ] 65-05-PLAN.md — Wave 5: close-gate — full v1.6 chain green + 65-VERIFICATION.md (SC#1-5 satisfaction + PITFALL-6 re-grep + Phase 66 readiness)
 **UI hint**: yes
 
@@ -311,7 +311,7 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 | 62. Apple Business Foundation & Rebrand | v1.6 | 8/8 | Complete   | 2026-05-21 |
 | 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 6/6 | Complete    | 2026-05-21 |
 | 64. Apple Business Delegation Runbooks | v1.6 | 6/6 | Complete    | 2026-05-22 |
-| 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 3/5 | In Progress|  |
+| 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 4/5 | In Progress|  |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 0/? | Not started | — |
 
 ---
