@@ -45,13 +45,13 @@ Requirements for v1.6 release. Each maps to one phase. Phases 62-66 continue fro
 
 ### Pillar 4 — L1 / L2 + Common-Issues + Hub Navigation (Navigation-Last)
 
-- [ ] **ABNAV-01**: L1 staff can use runbook `docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md` including "which admin owns this pool" lookup step + 3-path decision matrix with destructive paths gated by L2 approval per OP-11 prevention; `platform: ios+macos+shared-ipad` compound frontmatter; L1 #00-index appended
-- [ ] **ABNAV-02**: L2 engineering can use runbook `docs/l2-runbooks/26-apple-business-permission-denied.md` with 7-leaf Mermaid decision tree per DA-9 decomposing Apple's generic permission error (role-lacks-permission / OU-boundary / Apple-Business-scope / Intune-scope / federation-state / quota-limit / Account-Holder-lockout); L2 #00-index appended
-- [ ] **ABNAV-03**: Cross-platform symptom-to-runbook routing for Apple Business governance failure modes added to `docs/common-issues.md` under new `## Apple Business Governance Failure Scenarios` H2 (append-only)
-- [ ] **ABNAV-04**: L1 quick-ref card `docs/quick-ref-l1.md` has new `## Apple Business Quick Reference` H2 section (append-only)
-- [ ] **ABNAV-05**: L2 quick-ref card `docs/quick-ref-l2.md` has new `## Apple Business Quick Reference` H2 section (append-only)
-- [ ] **ABNAV-06**: `docs/operations/00-index.md` has Apple Business as 5th sub-section alongside Co-Management / Patch / App / Drift (append-only)
-- [ ] **ABNAV-07**: `docs/index.md` has Apple Business as 5th sub-section under `## Operations` H2 + Cross-Platform References entries + platform-coverage banner clause appendix at line 9 (surgical edits)
+- [x] **ABNAV-01**: L1 staff can use runbook `docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md` including "which admin owns this pool" lookup step + 3-path decision matrix with destructive paths gated by L2 approval per OP-11 prevention; `platform: ios+macos+shared-ipad` compound frontmatter; L1 #00-index appended
+- [x] **ABNAV-02**: L2 engineering can use runbook `docs/l2-runbooks/26-apple-business-permission-denied.md` with 7-leaf Mermaid decision tree per DA-9 decomposing Apple's generic permission error (role-lacks-permission / OU-boundary / Apple-Business-scope / Intune-scope / federation-state / quota-limit / Account-Holder-lockout); L2 #00-index appended
+- [x] **ABNAV-03**: Cross-platform symptom-to-runbook routing for Apple Business governance failure modes added to `docs/common-issues.md` under new `## Apple Business Governance Failure Scenarios` H2 (append-only)
+- [x] **ABNAV-04**: L1 quick-ref card `docs/quick-ref-l1.md` has new `## Apple Business Quick Reference` H2 section (append-only)
+- [x] **ABNAV-05**: L2 quick-ref card `docs/quick-ref-l2.md` has new `## Apple Business Quick Reference` H2 section (append-only)
+- [x] **ABNAV-06**: `docs/operations/00-index.md` has Apple Business as 5th sub-section alongside Co-Management / Patch / App / Drift (append-only)
+- [x] **ABNAV-07**: `docs/index.md` has Apple Business as 5th sub-section under `## Operations` H2 + Cross-Platform References entries + platform-coverage banner clause appendix at line 9 (surgical edits)
 
 ### Pillar 5 — Validation Tooling
 
@@ -126,13 +126,13 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | DELEG-06 | Phase 64 | Complete |
 | DELEG-07 | Phase 64 | Complete |
 | DELEG-08 | Phase 64 | Complete |
-| ABNAV-01 | Phase 65 | Pending |
-| ABNAV-02 | Phase 65 | Pending |
-| ABNAV-03 | Phase 65 | Pending |
-| ABNAV-04 | Phase 65 | Pending |
-| ABNAV-05 | Phase 65 | Pending |
-| ABNAV-06 | Phase 65 | Pending |
-| ABNAV-07 | Phase 65 | Pending |
+| ABNAV-01 | Phase 65 | Complete |
+| ABNAV-02 | Phase 65 | Complete |
+| ABNAV-03 | Phase 65 | Complete |
+| ABNAV-04 | Phase 65 | Complete |
+| ABNAV-05 | Phase 65 | Complete |
+| ABNAV-06 | Phase 65 | Complete |
+| ABNAV-07 | Phase 65 | Complete |
 | AUDIT-09 | Phase 62 | Pending |
 | AUDIT-10 | Phase 62 | Pending |
 | AUDIT-11 | Phase 62 | Pending |
