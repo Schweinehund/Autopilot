@@ -108,10 +108,19 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 
 ---
 
+## Apple Business L1 Runbooks
+
+L1 runbook for the Apple Business Shared iPad passcode reset scenario. Start with the [Apple Business permission-denied triage](../l2-runbooks/26-apple-business-permission-denied.md) for complex escalation routing.
+
+| Runbook | Scenario | Applies To |
+|---------|----------|------------|
+| [34: Apple Business Shared iPad Passcode Reset](34-apple-business-shared-ipad-passcode-reset.md) | Shared iPad passcode reset via Apple Business UI (Path A primary); Paths B/C escalation to L2 | iOS+macOS+Shared iPad |
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-22 | Phase 65 plan 65-02: appended Apple Business L1 Runbooks H2 with #34 row | -- |
 | 2026-04-30 | Phase 57: added Knox runbook 28 row to Android L1 Runbooks table (orthogonal patch supporting CLEAN-02 cross-doc consistency; runbook 28 file existed on disk since Phase 44 but was missing from the index); fixed stale `six most common` → `eight most common` intro count (Phase 44 + Phase 45 added Knox + AOSP; intro count was never updated) | -- |
 | 2026-04-27 | Added Linux L1 Runbooks section (runbooks 30-33) | -- |
 | 2026-04-25 | Phase 45 AEAOSPFULL-09: Added Runbook 29 (Android AOSP Enrollment Failed) to Android L1 Runbooks section; removed AOSP-out-of-scope note (legacy escalation node retired per D-19) | -- |
