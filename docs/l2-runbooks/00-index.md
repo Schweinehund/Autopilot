@@ -184,6 +184,16 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 | [L1 31: Linux Compliance Non-Compliant](../l1-runbooks/31-linux-compliance-non-compliant.md) | [Linux Log Collection](24-linux-log-collection.md) Section 2 (file-based paths) for `/var/log/intune-update.log` custom-compliance Bash exit-code reading |
 | [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md) | [Linux Agent Investigation](25-linux-agent-investigation.md) Trap C (service-state user-scope — direct primary L2 escalation target) |
 
+## Apple Business L2 Runbooks
+
+> **Version gate:** The runbooks below cover Apple Business Delegated Governance through Apple Business portal and associated MDM surfaces (Phase 65 deliverables).
+
+### When to Use
+
+| Runbook | When to Use | Prerequisite |
+|---------|-------------|--------------|
+| [Apple Business Permission Denied Investigation](26-apple-business-permission-denied.md) | Apple Business portal returns permission error across any delegation action; includes 7-leaf triage tree routing to per-cause runbooks | None |
+
 ## Related Resources
 
 - [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
@@ -201,6 +211,7 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-05-22 | Phase 65 plan 65-02: appended Apple Business L2 Runbooks H2 with #26 row | -- |
 | 2026-04-27 | Added Linux L2 runbook section (Runbooks 24-25 + Linux L1 Escalation Mapping) — Phase 52 append-only edit per Phase 42 D-03 | -- |
 | 2026-04-23 | Added Android L2 runbook section (runbooks 18-21 + Android MAM-WE advisory) | -- |
 | 2026-04-17 | Added iOS L2 runbook section (runbooks 14-17 + MAM-WE advisory) | -- |
