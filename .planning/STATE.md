@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
-status: ready_to_plan
-stopped_at: Phase 65 complete (5/5) — ready to discuss Phase 66
-last_updated: 2026-05-23T02:08:14.084Z
+status: planning
+stopped_at: Phase 66 context gathered
+last_updated: "2026-05-24T15:47:11.228Z"
 last_activity: 2026-05-23
 progress:
   total_phases: 5
@@ -150,7 +150,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 
 ## Session Continuity
 
-Last session: 2026-05-23T01:45:47.147Z
-Stopped at: Phase 65 context gathered
-Resume file: None
+Last session: 2026-05-24T15:47:11.150Z
+Stopped at: Phase 66 context gathered
+Resume file: .planning/phases/66-apple-business-validation-tooling-closure-milestone-audit/66-CONTEXT.md
 Next action: `/gsd-plan-phase 62` — Apple Business Foundation & Rebrand
