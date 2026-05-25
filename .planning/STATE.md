@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
-status: complete
-stopped_at: v1.6 milestone close — Phase 66 complete
-last_updated: "2026-05-25T16:30:00.000Z"
+status: verifying
+stopped_at: v1.6 milestone shipped — Phase 66 complete
+last_updated: "2026-05-25T16:15:23.962Z"
 last_activity: 2026-05-25
 progress:
   total_phases: 5
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-05-20)
 
 Phase: 66 (apple-business-validation-tooling-closure-milestone-audit) — COMPLETE
 Plan: 5 of 5
-Status: v1.6 milestone CLOSED
+Status: Phase complete — ready for verification
 Last activity: 2026-05-25
 
 ```
@@ -129,6 +129,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 - [Phase ?]: Phase 66 Plan 66-02: AUDIT-14 atomic harness commit landed at 3a9a671 as 3 files (check-phase-66.mjs needed no Wave 2 tuning; V-62-SIDECAR did not cascade since assertion only validates c16, not c13 shape)
 - [Phase ?]: Phase 66 Plan 66-04: Wave 4 terminal re-audit via fresh git clone (D-22 INTENT preserved via D-03 LOCKED). All 7 validators ran from temp clone of HEAD 62b592e. Harness 15/15 + selftest 9/9 + check-phase-62..65 all exit 0 (modulo CHAIN_SKIP {48,51,58,60,61}); check-phase-66 exit 1 with V-66-06 SOLE RED (chicken-and-egg with Wave 5 MILESTONE-AUDIT.md). Clone removed post-audit; zero orphan temp dirs. AUDIT-RESULTS committed at 489edca.
 - [v1.6 close]: Phase 66 Plan 66-05: Wave 5 milestone close — v1.6-MILESTONE-AUDIT.md authored Path-A from v1.5 (39/39 reqs / 5/5 phases / mechanical_checks populated from 66-04-AUDIT-RESULTS / performed_by D-22-INTENT narrative / Auditor-Independence Verification + Command Verification Table + Wave 5 Post-Audit Confirmation); 66-VERIFICATION.md authored as Phase 66 close-gate report; LOCAL re-run check-phase-66.mjs (NOT another fresh clone — infinite-recursion guard) confirmed V-66-06 RED -> PASS at commit 153d59d. Final: 23 PASS / 0 FAIL / 5 SKIPPED. v1.6 SHIPPED 2026-05-25.
+- [Phase ?]: Phase 66 Plan 66-05: v1.6 milestone CLOSED — MILESTONE-AUDIT.md authored; LOCAL re-run of check-phase-66.mjs confirmed V-66-06 RED->PASS at commit 153d59d. Final close-gate: 23 PASS / 0 FAIL / 5 SKIPPED. v1.6 SHIPPED 2026-05-25.
 
 ### Pending Todos
 
@@ -152,7 +153,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 
 ## Session Continuity
 
-Last session: 2026-05-25T16:30:00.000Z
+Last session: 2026-05-25T16:15:14.280Z
 Stopped at: v1.6 milestone shipped — Phase 66 complete
-Resume file: .planning/milestones/v1.6-MILESTONE-AUDIT.md
+Resume file: None
 Next action: v1.7 entry-phase planning — read `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` for backlog
