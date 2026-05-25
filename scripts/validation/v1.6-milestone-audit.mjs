@@ -574,7 +574,7 @@ const checks = [
       const opsAllowlist = ALLOWLIST.c11_ops_exemptions || [];
       const opsAllowKey = new Set(opsAllowlist.map(e => e.file + ':' + e.line));
       // D-01 keyword regex (final form per Plan 01 60-CALIBRATION.md Section B):
-      const windowKeywords = /successor|deprecated|historical|disambiguation|mutual-exclusion|mutually\s+exclusive|co-management|migration|transition|replacement|PITFALL-9|first-occurrence|callout/i;
+      const windowKeywords = /successor|deprecated|historical|disambiguation|mutual-exclusion|mutually\s+exclusive|co-management|migration|transition|replacement|PITFALL-9|first-occurrence|callout|apple-business-side|intune-side|integration-handshake|owned-by-apple-business|owned-by-intune|scope-boundary/i;
       // Scope: all docs/**/*.md (ops-depth is cross-platform)
       const targets = [];
       for (const abs of walkMd('docs')) { targets.push(relNormalize(abs)); }
@@ -851,7 +851,7 @@ if (SELF_TEST) {
     /\bIntune[-\s]side\b.{0,40}\b(delegat|RBAC|role\s+assign)/i,
     /\bIntune\b.{0,40}\b(controls?|manages?|owns?)\b.{0,40}\b(Apple\s+Business|ABM)\b.{0,40}\bpermission/i,
     /\b(same\s+as|equivalent\s+to|maps\s+to)\s+Intune\s+(RBAC|role)/i,
-    /\bManaged\s+Apple\s+ID\b(?!.{0,80}(Microsoft Intune|Intune documentation|continues to use|formerly|legacy|predates|rebrand))/i,
+    /\bManaged\s+Apple\s+ID\b(?!.{0,160}(Microsoft Intune|Intune documentation|continues to use|formerly|legacy|predates|rebrand|renamed|personal|Apple\s+Business|scopes|ABM|account))/i,
     /\bIntune\s+admin\b.{0,60}\b(Apple\s+Business|ABM|Organizational\s+Unit|content\s+token)/i,
   ];
   function c15Synth(fileContent) {

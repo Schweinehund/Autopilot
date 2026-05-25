@@ -76,6 +76,46 @@
     {"file": "docs/_templates/admin-template-macos.md", "line": 49, "target": "../l1-runbooks/[runbook-filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
     {"file": "docs/_templates/admin-template-macos.md", "line": 13, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"}
   ],
-  "c13_rotting_external": [],
+  "c13_rotting_external": {
+    "ci_1_abm_urls": [
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 92, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand; included for completeness — quarterly check confirms reachability", "category": "live_url_quarterly_check" },
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/01-abm-configuration.md", "line": 52, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check" },
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 105, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check" },
+      { "url": "https://business.apple.com", "file": "docs/_glossary-macos.md", "line": 64, "reason": "ABM live portal URL in definitional prose; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check" }
+    ],
+    "ci_2_vpp_location_token": [
+      { "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 71, "term": "VPP (Apps and Books) location token", "context": "prerequisites bullet", "reason": "legacy 'VPP location token' term retained per Q5(b) no-corpus-sweep contract; rename deferred to v1.7+ CI-2", "category": "legacy_term_surgical_rename_candidate" },
+      { "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 201, "term": "VPP (Apps and Books) location token", "context": "Renewal/Maintenance table row", "reason": "PITFALLS.md:642 canonical CI-2 site #1", "category": "legacy_term_surgical_rename_candidate" },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 45, "term": "VPP location token", "context": "prerequisites bullet", "reason": "legacy term; rename deferred to v1.7+", "category": "legacy_term_surgical_rename_candidate" },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 46, "term": "VPP location token", "context": "prerequisites bullet", "reason": "legacy term; rename deferred to v1.7+", "category": "legacy_term_surgical_rename_candidate" },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 113, "term": "VPP location token", "context": "verification step", "reason": "legacy term; rename deferred to v1.7+", "category": "legacy_term_surgical_rename_candidate" },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 148, "term": "VPP location token", "context": "Renewal/Maintenance table row", "reason": "PITFALLS.md:642 canonical CI-2 site #2", "category": "legacy_term_surgical_rename_candidate" }
+    ],
+    "ci_3_managed_apple_id": [
+      { "file": "docs/admin-setup-android/04-byod-work-profile.md", "count": 1, "reason": "Managed Apple ID legacy term; rename deferred to v1.7+ contingent on Microsoft Intune adopting rebrand per REQUIREMENTS.md:74" },
+      { "file": "docs/admin-setup-ios/00-overview.md", "count": 2 },
+      { "file": "docs/admin-setup-ios/02-abm-token.md", "count": 2 },
+      { "file": "docs/admin-setup-ios/08-user-enrollment.md", "count": 17, "reason": "PITFALLS.md:665 canonical CI-3 pervasive-site; highest density" },
+      { "file": "docs/admin-setup-ios/09-mam-app-protection.md", "count": 1 },
+      { "file": "docs/admin-setup-macos/01-abm-configuration.md", "count": 5 },
+      { "file": "docs/cross-platform/apple-business/02-ous-architecture.md", "count": 1, "reason": "Phase 62 deliverable — uses legacy term in cross-reference context only" },
+      { "file": "docs/cross-platform/apple-business/09-shared-ipad-lifecycle.md", "count": 1, "reason": "Phase 63 deliverable" },
+      { "file": "docs/ios-lifecycle/01-ade-lifecycle.md", "count": 2 },
+      { "file": "docs/l1-runbooks/17-ios-ade-not-starting.md", "count": 2 },
+      { "file": "docs/macos-lifecycle/00-ade-lifecycle.md", "count": 2 },
+      { "file": "docs/reference/android-capability-matrix.md", "count": 1 },
+      { "file": "docs/_glossary-android.md", "count": 1 },
+      { "file": "docs/_glossary-apple-business.md", "count": 3, "reason": "Phase 62 glossary — intentional legacy↔new term reciprocity per AB-01" },
+      { "file": "docs/_glossary-linux.md", "count": 1 },
+      { "file": "docs/_glossary-macos.md", "count": 3 },
+      { "total_corpus_count": 45, "files_count": 16 }
+    ],
+    "quarterly_audit": {
+      "cadence": "0 8 1 1,4,7,10 *",
+      "scope": "external-url-link-check (ci_1_abm_urls only — ci_2 + ci_3 are line-ref tracking, no URL probe)",
+      "tool": "markdown-link-check",
+      "next_review": "2026-07-01"
+    }
+  },
   "c16_missing_endpoint_exemptions": []
 }

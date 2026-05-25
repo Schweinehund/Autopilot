@@ -396,6 +396,14 @@ function doEmitStubs() {
 // BASELINE_9 refreshed 2026-05-06 (Phase 60 Plan 08): _glossary-android.md entries refreshed
 // to post-Plan-06 line coords (#kme/#kpe shims caused +2 shift after line 127); aligns with
 // current sidecar supervision_exemptions[] AT v1.5 close. Closes AUDIT-07 carry-over per CONTEXT D-19.
+// BASELINE_10 refreshed 2026-05-25 (Phase 66 Plan 66-02): closes BASELINE_9 v1.5 carry-over
+// per AUDIT-14 contract (REQUIREMENTS.md:63 + ROADMAP.md:239); v1.6 line positions verified
+// against HEAD 33629fa (Phase 65 close-gate baseline + Phase 66 Plan 66-01 chain green).
+// BASELINE_9 entries above remain unchanged -- Phase 66 does NOT alter the line-coord array;
+// this comment records the audit-trail event that line-positions were re-verified at Phase 66
+// close and remain valid for the v1.6 corpus. Resolution path: BASELINE_11 will refresh at
+// v1.7 close per the Path-A inheritance pattern (v1.4.1 -> BASELINE_8 -> v1.5 -> BASELINE_9
+// -> v1.6 -> BASELINE_10).
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 79],   // ### Supervision heading (was 65/76; 79 at Phase 59; stable post-Plan-06 — H3 sits before line 127)
   ['docs/_glossary-android.md', 81],   // Supervision disambiguation blockquote (was 67/78; 81 at Phase 59; stable post-Plan-06)
