@@ -4,13 +4,13 @@ milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
 status: executing
 stopped_at: Phase 66 context gathered
-last_updated: "2026-05-25T15:41:13.184Z"
+last_updated: "2026-05-25T15:53:42.945Z"
 last_activity: 2026-05-25
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 30
-  completed_plans: 28
+  completed_plans: 29
   percent: 80
 ---
 
@@ -26,12 +26,12 @@ See: .planning/PROJECT.md (updated 2026-05-20)
 ## Current Position
 
 Phase: 66 (apple-business-validation-tooling-closure-milestone-audit) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-05-25
 
 ```
-Progress: [█████████░] 93%
+Progress: [██████████] 97%
 Phases:   62 63 64 65 66
 Status:   .  .  .  .  .
           (. = not started, X = complete)
@@ -127,6 +127,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 - [Phase ?]: Phase 66 Plan 66-01: D-02 ABAUDIT staleness walk found 13 strict-narrow orphans (vs 0 predicted) and removed them in separate corpus-only commit 79aa2b4 BEFORE the validator file commit 0ae8975, preserving Wave 2 atomic-commit purity per Task 66-01-02 step 3
 - [Phase ?]: Phase 66 Plan 66-01: Added fenced-code-block detector to V-66-ABAUDIT-STALENESS scanner (Rule 1 bug fix in check-phase-66.mjs) to exclude the demonstrative ABAUDIT example at 00-overview.md:68 from Pitfall-4 false-positive triggering
 - [Phase ?]: Phase 66 Plan 66-02: AUDIT-14 atomic harness commit landed at 3a9a671 as 3 files (check-phase-66.mjs needed no Wave 2 tuning; V-62-SIDECAR did not cascade since assertion only validates c16, not c13 shape)
+- [Phase ?]: Phase 66 Plan 66-04: Wave 4 terminal re-audit via fresh git clone (D-22 INTENT preserved via D-03 LOCKED). All 7 validators ran from temp clone of HEAD 62b592e. Harness 15/15 + selftest 9/9 + check-phase-62..65 all exit 0 (modulo CHAIN_SKIP {48,51,58,60,61}); check-phase-66 exit 1 with V-66-06 SOLE RED (chicken-and-egg with Wave 5 MILESTONE-AUDIT.md). Clone removed post-audit; zero orphan temp dirs. AUDIT-RESULTS committed at 489edca.
 
 ### Pending Todos
 
@@ -153,7 +154,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 
 ## Session Continuity
 
-Last session: 2026-05-25T15:41:02.059Z
+Last session: 2026-05-25T15:53:26.479Z
 Stopped at: Phase 66 context gathered
 Resume file: None
 Next action: `/gsd-plan-phase 62` — Apple Business Foundation & Rebrand
