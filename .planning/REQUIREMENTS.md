@@ -61,7 +61,7 @@ Requirements for v1.6 release. Each maps to one phase. Phases 62-66 continue fro
 - [ ] **AUDIT-12**: C16 (L1 #34 cross-link integrity triangle) lands blocking from Phase 62; harness fails if any of the 4 edges break (L1 #34 ↔ admin doc `12-shared-ipad-passcode-reset.md` ↔ `common-issues.md` ↔ `quick-ref-l1.md`)
 - [ ] **AUDIT-13**: Per-phase validators `check-phase-62.mjs..check-phase-66.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+); CI workflow `audit-harness-v1.6-integrity.yml` Path-A from v1.5
 - [x] **AUDIT-14**: BASELINE_10 refreshes in atomic harness commit (closes BASELINE_9 v1.5 carry-over); new sidecar category `c13_rotting_external` added with quarterly audit job; `scripts/validation/v1.6-audit-allowlist.json` migrated co-located with harness
-- [ ] **AUDIT-15**: Terminal re-audit at Phase 66 from fresh worktree per v1.5 D-22 auditor-independence precedent exits 0; `.planning/milestones/v1.6-MILESTONE-AUDIT.md` authored confirming all checks PASS; `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` finalized with CI-1/CI-2/CI-3 rotting-reference candidates for v1.7+
+- [x] **AUDIT-15**: Terminal re-audit at Phase 66 from fresh worktree per v1.5 D-22 auditor-independence precedent exits 0; `.planning/milestones/v1.6-MILESTONE-AUDIT.md` authored confirming all checks PASS; `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` finalized with CI-1/CI-2/CI-3 rotting-reference candidates for v1.7+
 
 ## v1.7+ Requirements (Deferred)
 
@@ -139,7 +139,7 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | AUDIT-12 | Phase 62 | Pending |
 | AUDIT-13 | Phase 62 | Pending |
 | AUDIT-14 | Phase 66 | Complete |
-| AUDIT-15 | Phase 66 | Pending |
+| AUDIT-15 | Phase 66 | Complete |
 
 **Coverage:**
 - v1.6 requirements: 39 total
