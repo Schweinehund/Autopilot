@@ -4,13 +4,13 @@ milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
 status: executing
 stopped_at: Phase 66 context gathered
-last_updated: "2026-05-24T16:37:25.080Z"
-last_activity: 2026-05-24 -- Phase 66 planning complete
+last_updated: "2026-05-25T15:14:16.179Z"
+last_activity: 2026-05-25
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 30
-  completed_plans: 25
+  completed_plans: 26
   percent: 80
 ---
 
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-20)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 66 — apple business validation tooling closure + milestone audit
+**Current focus:** Phase 66 — apple-business-validation-tooling-closure-milestone-audit
 
 ## Current Position
 
-Phase: 66
-Plan: Not started
+Phase: 66 (apple-business-validation-tooling-closure-milestone-audit) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-05-24 -- Phase 66 planning complete
+Last activity: 2026-05-25
 
 ```
-Progress: [██████████] 100%
+Progress: [█████████░] 87%
 Phases:   62 63 64 65 66
 Status:   .  .  .  .  .
           (. = not started, X = complete)
@@ -124,6 +124,8 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 - L1 runbook count capped at 1 in v1.6 (#34); L2 capped at 1 (#26); navigation files modified LAST in Phase 65
 - BASELINE_9 v1.5 carry-over MUST be closed by AUDIT-14 (BASELINE_10 refresh at Phase 66)
 - Auditor-independence at terminal re-audit (fresh worktree spawn per v1.5 D-22)
+- [Phase ?]: Phase 66 Plan 66-01: D-02 ABAUDIT staleness walk found 13 strict-narrow orphans (vs 0 predicted) and removed them in separate corpus-only commit 79aa2b4 BEFORE the validator file commit 0ae8975, preserving Wave 2 atomic-commit purity per Task 66-01-02 step 3
+- [Phase ?]: Phase 66 Plan 66-01: Added fenced-code-block detector to V-66-ABAUDIT-STALENESS scanner (Rule 1 bug fix in check-phase-66.mjs) to exclude the demonstrative ABAUDIT example at 00-overview.md:68 from Pitfall-4 false-positive triggering
 
 ### Pending Todos
 
@@ -150,7 +152,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 
 ## Session Continuity
 
-Last session: 2026-05-24T15:47:11.150Z
+Last session: 2026-05-25T15:12:32.224Z
 Stopped at: Phase 66 context gathered
-Resume file: .planning/phases/66-apple-business-validation-tooling-closure-milestone-audit/66-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 62` — Apple Business Foundation & Rebrand
