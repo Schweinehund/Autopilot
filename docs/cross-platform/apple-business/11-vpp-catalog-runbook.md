@@ -10,7 +10,6 @@ platform: ios+ipados+macos+tvos
 > content-token management, app purchasing, license transfer, and payment scoping per
 > Organizational Unit (OU). This is distinct from Intune VPP token management (uploading the
 > downloaded content token to Intune at Tenant administration > Connectors and tokens > Apple VPP tokens),
-<!-- ABAUDIT-05: next line distinguishes Apple-side content-token operations from Intune-side token upload; C15 regex 4 false-positive exemption (disambiguation clause clarifying distinct surfaces, not conflating Apple and Intune delegation) -->
 > which is an Intune-side operation outside the Apple Business permission surface and is not covered here.
 > For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).

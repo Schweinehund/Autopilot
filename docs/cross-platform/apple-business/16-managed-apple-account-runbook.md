@@ -11,7 +11,6 @@ platform: ios+ipados+macos
 > within Apple Business for use with Apple-managed devices. Federation framing in this
 > document describes the Apple Business-side provisioning configuration, not the identity
 > provider's internal delegation model. This is distinct from Intune device enrollment and
-<!-- ABAUDIT-15: next line distinguishes Apple-side Managed Apple Account provisioning from Intune MDM enrollment; C15 regex 4 false-positive exemption (disambiguation clause clarifying that Intune enrollment is a downstream consumer of Managed Apple Accounts, not the provisioning authority) -->
 > user management, which are Intune-side operations outside the Apple Business permission
 > surface and are not covered here.
 > For a full Apple-Business-vs-Intune responsibility table, see

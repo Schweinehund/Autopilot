@@ -9,7 +9,6 @@ platform: ios+ipados+macos+tvos
 > **Platform applicability:** This document covers Apple Business device release operations —
 > removing the Apple Business-to-MDM-server binding for a device (ADE / DEP record). This is
 > distinct from Intune device retire and wipe actions (which are MDM-side operations), which
-<!-- ABAUDIT-08: next line distinguishes Apple-side ADE binding release from Intune MDM retire/wipe operations; C15 regex 4 false-positive exemption (disambiguation clause clarifying distinct surfaces) -->
 > are Intune-side operations outside the Apple Business permission surface and are not covered here.
 > For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).

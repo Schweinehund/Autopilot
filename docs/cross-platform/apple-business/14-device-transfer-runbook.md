@@ -9,7 +9,6 @@ platform: ios+ipados+macos+tvos
 > **Platform applicability:** This document covers Apple Business cross-OU device transfer —
 > reassigning a device's Organizational Unit (OU) assignment within the same Apple Business
 > tenant. This is distinct from Intune device reassignment and unenrollment operations, which
-<!-- ABAUDIT-11: next line distinguishes Apple-side OU transfer from Intune-side device management; C15 regex 4 false-positive exemption (disambiguation clause clarifying distinct surfaces, not conflating Apple and Intune delegation) -->
 > are Intune-side operations outside the Apple Business permission surface and are not covered here.
 > For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).
@@ -70,7 +69,6 @@ targeted.
 > |----------------|----------------------|
 > | VPP device-licensed apps | **BREAKS** — stops working |
 > | Enrollment profile | **Does NOT follow** device |
-<!-- ABAUDIT-12: next line documents that Intune config profiles survive OU transfer because Intune is the assignment authority, not Apple Business; C15 regex 4 false-positive exemption (factual disambiguation — this row explains the Apple Business vs Intune responsibility boundary for config profile assignment) -->
 > | Intune config profiles | **Survives** (Intune is assignment authority) |
 > | Audit entry | **Logged** — author-scope semantics (OP-14) |
 >
@@ -94,7 +92,6 @@ and coordinating downstream actions.
 |----------------|----------------------|-----------------|
 | VPP device-licensed apps | **BREAKS** — stops working immediately | Revoke source-OU licenses (30-day grace for managed devices); re-assign from target-OU catalog after transfer |
 | Enrollment profile | **Does NOT follow** the device | On next factory reset, device receives target OU's enrollment profile; supervision flags, app pre-load, and restriction policies may differ — verify compatibility before transfer |
-<!-- ABAUDIT-13: next line explains that Intune config profiles are managed by Intune as the assignment authority and therefore survive Apple Business OU transfers; C15 regex 4 false-positive exemption (cross-boundary factual statement clarifying that profile assignment belongs to Intune, not Apple Business) -->
 | Intune config profiles | **Survives** (Intune is the assignment authority for config profiles; Apple Business OU transfer does not affect Intune assignments) | Review post-transfer device state; note the device will have source-OU enrollment profile + target-OU Intune configs until next factory reset |
 | Audit entry | **Logged** — "Device Location changed" with admin, serial, timestamp, source + target OU | Source-OU admin and tenant admin see it; target-OU admin may NOT see the action if scoped only to target OU (author-scope semantics, OP-14) |
 

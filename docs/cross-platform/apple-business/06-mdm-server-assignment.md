@@ -9,7 +9,6 @@ platform: ios+macos
 > **Platform applicability:** This document covers Apple Business per-OU MDM server assignment —
 > the Apple-side configuration that determines which MDM server receives newly added devices within
 > each Organizational Unit. This is distinct from Intune MDM push-certificate management, which
-<!-- ABAUDIT-04: next line distinguishes Apple-side MDM server assignment from Intune MDM push-cert management; C15 regex 4 false-positive exemption (disambiguation clause clarifying distinct surfaces, not conflating Apple and Intune delegation) -->
 > is an Intune-side operation outside the Apple Business permission surface. See the
 > [Apple Business Governance Glossary](../../_glossary-apple-business.md) for terminology canon.
 

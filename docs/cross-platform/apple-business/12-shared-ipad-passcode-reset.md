@@ -10,7 +10,6 @@ platform: ios+macos+shared-ipad
 > operations — resetting the per-user Managed Apple Account passcode on a Shared iPad device
 > partition. This is distinct from Intune device passcode management (Reset Passcode / Remove
 > Passcode remote actions), which operate at the device level and do NOT reset per-user Shared
-<!-- ABAUDIT-06: next line disambiguates Apple Business per-user partition passcode reset from Intune device-level passcode management; C15 regex 4 false-positive exemption (Apple-side vs Intune-side surface distinction, not conflating the two) -->
 > iPad partition passcodes — those are an Intune-side operation outside the Apple Business
 > permission surface. For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).

@@ -9,7 +9,6 @@ platform: ios+ipados+macos+tvos
 > **Platform applicability:** This document covers Apple Business MDM server reassignment —
 > changing the MDM server a device is assigned to within an Organizational Unit (OU). This is
 > distinct from Intune MDM push-certificate management and device re-enrollment operations, which
-<!-- ABAUDIT-14: next line distinguishes Apple-side MDM server assignment from Intune MDM certificate and enrollment management; C15 regex 4 false-positive exemption (disambiguation clause clarifying distinct surfaces, not conflating Apple Business MDM server assignment with Intune MDM management) -->
 > are Intune-side operations outside the Apple Business permission surface and are not covered here.
 > For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).

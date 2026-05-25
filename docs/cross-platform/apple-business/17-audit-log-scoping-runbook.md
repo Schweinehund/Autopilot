@@ -11,7 +11,6 @@ platform: ios+ipados+macos+tvos
 > author-scope vs target-scope semantics, and export logs to an external SIEM for long-term
 > retention. This covers iOS, iPadOS, macOS, and tvOS devices managed in Apple Business OUs.
 > This is distinct from Intune device audit logs and Intune compliance reports, which are
-<!-- ABAUDIT-16: next line distinguishes Apple Business Activity log access from Intune audit log and compliance reporting surfaces; C15 regex 4 false-positive exemption (disambiguation clause clarifying distinct surfaces, not conflating Apple Business and Intune audit capabilities) -->
 > Intune-side operations outside the Apple Business permission surface and are not covered here.
 > For a full Apple-Business-vs-Intune responsibility table, see
 > [18-cross-org-boundary-cheat-sheet.md](18-cross-org-boundary-cheat-sheet.md).
