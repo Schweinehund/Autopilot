@@ -9,15 +9,15 @@ Requirements for v1.6 release. Each maps to one phase. Phases 62-66 continue fro
 
 ### Pillar 1 — Foundation & Rebrand
 
-- [ ] **AB-01**: Admin can find Apple Business rebrand timing (2026-04-14 GA), terminology mappings (Locations→Organizational Units / OUs, privileges→permissions, Managed Apple ID→Managed Apple Account, VPP location token→content token), and v1.6 doc-corpus conventions in a single glossary file `_glossary-apple-business.md` with bidirectional reciprocity to legacy terms
-- [ ] **AB-02**: Admin can identify which of the 4 top-level roles (Organization Administrator / IT Administrator / Marketing Administrator / Staff) and which of the 5 preset custom roles (People Manager / Content Manager / Device Enrollment Manager / Device API Manager / Brand Manager) apply to their delegation use case in a role-permission overview doc, including hard-bordered "Account Holder — DO NOT delegate" callout per OP-2
-- [ ] **AB-03**: Admin can find the canonical per-permission catalog across in-scope subgroups (Basic Organization / Organization Access / API+OAuth / People / Devices / AppleCare / Apps & Books — out of scope: Brand-related subgroups) with Edit-without-View dependency table per OP-3
-- [ ] **AB-04**: Admin can find an Organizational Units (OUs) concept doc explaining hierarchy rules (flat-by-default with optional sub-OUs; no published max-count), what scopes per OU (devices / content tokens / MDM servers / accounts / role assignments), and how OUs replaced legacy Locations
-- [ ] **AB-05**: Apple Business rebrand statement appears at exactly 3 canonical sites (`docs/cross-platform/apple-business/00-overview.md`, `docs/admin-setup-macos/01-abm-configuration.md` intro, `docs/admin-setup-ios/02-abm-token.md` intro) per Q5(b) no-corpus-sweep contract; each statement contains "Apple Business Manager", "Apple Business", and "2026-04-14" tokens for C14 PASS
-- [ ] **AB-06**: 4 existing platform glossaries¹ each gain one reciprocal banner line pointing to `_glossary-apple-business.md`; `_glossary-macos.md` gains one inline see-also at the ABM entry per v1.5 CLEAN-08 pattern
+- [x] **AB-01**: Admin can find Apple Business rebrand timing (2026-04-14 GA), terminology mappings (Locations→Organizational Units / OUs, privileges→permissions, Managed Apple ID→Managed Apple Account, VPP location token→content token), and v1.6 doc-corpus conventions in a single glossary file `_glossary-apple-business.md` with bidirectional reciprocity to legacy terms
+- [x] **AB-02**: Admin can identify which of the 4 top-level roles (Organization Administrator / IT Administrator / Marketing Administrator / Staff) and which of the 5 preset custom roles (People Manager / Content Manager / Device Enrollment Manager / Device API Manager / Brand Manager) apply to their delegation use case in a role-permission overview doc, including hard-bordered "Account Holder — DO NOT delegate" callout per OP-2
+- [x] **AB-03**: Admin can find the canonical per-permission catalog across in-scope subgroups (Basic Organization / Organization Access / API+OAuth / People / Devices / AppleCare / Apps & Books — out of scope: Brand-related subgroups) with Edit-without-View dependency table per OP-3
+- [x] **AB-04**: Admin can find an Organizational Units (OUs) concept doc explaining hierarchy rules (flat-by-default with optional sub-OUs; no published max-count), what scopes per OU (devices / content tokens / MDM servers / accounts / role assignments), and how OUs replaced legacy Locations
+- [x] **AB-05**: Apple Business rebrand statement appears at exactly 3 canonical sites (`docs/cross-platform/apple-business/00-overview.md`, `docs/admin-setup-macos/01-abm-configuration.md` intro, `docs/admin-setup-ios/02-abm-token.md` intro) per Q5(b) no-corpus-sweep contract; each statement contains "Apple Business Manager", "Apple Business", and "2026-04-14" tokens for C14 PASS
+- [x] **AB-06**: 4 existing platform glossaries¹ each gain one reciprocal banner line pointing to `_glossary-apple-business.md`; `_glossary-macos.md` gains one inline see-also at the ABM entry per v1.5 CLEAN-08 pattern
 
   ¹ `_glossary-macos.md` covers macOS + iOS/iPadOS per its line-9 header — single Apple glossary, not separate macOS/iOS files. Count corrected from "5" to "4" during Phase 62 execution per D-05.
-- [ ] **AB-07**: L1 admin-directory lookup convention published (external directory or contact-card format) so L1 runbooks have a stable "which admin owns this device pool" lookup target per DA-8
+- [x] **AB-07**: L1 admin-directory lookup convention published (external directory or contact-card format) so L1 runbooks have a stable "which admin owns this device pool" lookup target per DA-8
 
 ### Pillar 2 — Multi-OU Architecture & Admin Setup
 
@@ -55,11 +55,11 @@ Requirements for v1.6 release. Each maps to one phase. Phases 62-66 continue fro
 
 ### Pillar 5 — Validation Tooling
 
-- [ ] **AUDIT-09**: `scripts/validation/v1.6-milestone-audit.mjs` ships as Path-A copy from `v1.5-milestone-audit.mjs` with C1-C13 preserved (lineage from v1.4.1 → v1.5 → v1.6)
-- [ ] **AUDIT-10**: C14 (rebrand-statement presence at 3 canonical sites) lands blocking from Phase 62; harness fails if any of 3 sites missing the required tokens
-- [ ] **AUDIT-11**: C15 (Intune-delegation anti-pattern guard) lands blocking from Phase 62; harness fails if v1.6 docs contain banned phrases from Intune-side delegation deny-list (8-regex list); allowlist exemptions live in `18-cross-org-boundary-cheat-sheet.md` HTML comments
-- [ ] **AUDIT-12**: C16 (L1 #34 cross-link integrity triangle) lands blocking from Phase 62; harness fails if any of the 4 edges break (L1 #34 ↔ admin doc `12-shared-ipad-passcode-reset.md` ↔ `common-issues.md` ↔ `quick-ref-l1.md`)
-- [ ] **AUDIT-13**: Per-phase validators `check-phase-62.mjs..check-phase-66.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+); CI workflow `audit-harness-v1.6-integrity.yml` Path-A from v1.5
+- [x] **AUDIT-09**: `scripts/validation/v1.6-milestone-audit.mjs` ships as Path-A copy from `v1.5-milestone-audit.mjs` with C1-C13 preserved (lineage from v1.4.1 → v1.5 → v1.6)
+- [x] **AUDIT-10**: C14 (rebrand-statement presence at 3 canonical sites) lands blocking from Phase 62; harness fails if any of 3 sites missing the required tokens
+- [x] **AUDIT-11**: C15 (Intune-delegation anti-pattern guard) lands blocking from Phase 62; harness fails if v1.6 docs contain banned phrases from Intune-side delegation deny-list (8-regex list); allowlist exemptions live in `18-cross-org-boundary-cheat-sheet.md` HTML comments
+- [x] **AUDIT-12**: C16 (L1 #34 cross-link integrity triangle) lands blocking from Phase 62; harness fails if any of the 4 edges break (L1 #34 ↔ admin doc `12-shared-ipad-passcode-reset.md` ↔ `common-issues.md` ↔ `quick-ref-l1.md`)
+- [x] **AUDIT-13**: Per-phase validators `check-phase-62.mjs..check-phase-66.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+); CI workflow `audit-harness-v1.6-integrity.yml` Path-A from v1.5
 - [x] **AUDIT-14**: BASELINE_10 refreshes in atomic harness commit (closes BASELINE_9 v1.5 carry-over); new sidecar category `c13_rotting_external` added with quarterly audit job; `scripts/validation/v1.6-audit-allowlist.json` migrated co-located with harness
 - [x] **AUDIT-15**: Terminal re-audit at Phase 66 from fresh worktree per v1.5 D-22 auditor-independence precedent exits 0; `.planning/milestones/v1.6-MILESTONE-AUDIT.md` authored confirming all checks PASS; `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` finalized with CI-1/CI-2/CI-3 rotting-reference candidates for v1.7+
 
@@ -101,13 +101,13 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AB-01 | Phase 62 | Pending |
-| AB-02 | Phase 62 | Pending |
-| AB-03 | Phase 62 | Pending |
-| AB-04 | Phase 62 | Pending |
-| AB-05 | Phase 62 | Pending |
-| AB-06 | Phase 62 | Pending |
-| AB-07 | Phase 62 | Pending |
+| AB-01 | Phase 62 | Complete |
+| AB-02 | Phase 62 | Complete |
+| AB-03 | Phase 62 | Complete |
+| AB-04 | Phase 62 | Complete |
+| AB-05 | Phase 62 | Complete |
+| AB-06 | Phase 62 | Complete |
+| AB-07 | Phase 62 | Complete |
 | OU-01 | Phase 63 | Complete |
 | OU-02 | Phase 63 | Complete |
 | OU-03 | Phase 63 | Complete |
@@ -133,11 +133,11 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | ABNAV-05 | Phase 65 | Complete |
 | ABNAV-06 | Phase 65 | Complete |
 | ABNAV-07 | Phase 65 | Complete |
-| AUDIT-09 | Phase 62 | Pending |
-| AUDIT-10 | Phase 62 | Pending |
-| AUDIT-11 | Phase 62 | Pending |
-| AUDIT-12 | Phase 62 | Pending |
-| AUDIT-13 | Phase 62 | Pending |
+| AUDIT-09 | Phase 62 | Complete |
+| AUDIT-10 | Phase 62 | Complete |
+| AUDIT-11 | Phase 62 | Complete |
+| AUDIT-12 | Phase 62 | Complete |
+| AUDIT-13 | Phase 62 | Complete |
 | AUDIT-14 | Phase 66 | Complete |
 | AUDIT-15 | Phase 66 | Complete |
 
@@ -145,10 +145,11 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 - v1.6 requirements: 39 total
 - Mapped to phases: 39 (100% coverage)
 - Unmapped: 0 ✓
+- **Complete: 39/39 (100%) — v1.6 milestone shipped 2026-05-25**
 - Phase distribution: Phase 62 = 12 reqs (AB-01..07 + AUDIT-09..13); Phase 63 = 10 reqs (OU-01..10); Phase 64 = 8 reqs (DELEG-01..08); Phase 65 = 7 reqs (ABNAV-01..07); Phase 66 = 2 reqs (AUDIT-14, AUDIT-15)
 
 **Rationale for Phase 62 absorbing AUDIT-09..13 (5 reqs) alongside the 7 Foundation reqs:** D-A9 mandates that C14/C15/C16 land blocking-from-start so the harness rejects bad content from Phase 1. The audit harness Path-A copy + C14/C15/C16 + per-phase validator scaffolds + CI workflow must all exist by Phase 62 close in a single atomic harness commit (v1.5 Plan 60-08 precedent). AUDIT-14 (BASELINE_10 refresh closing BASELINE_9 carry-over) and AUDIT-15 (terminal re-audit from fresh worktree) are inherently milestone-close concerns that route to Phase 66 per v1.5 Phase 60 + 61 precedent.
 
 ---
 *Requirements defined: 2026-05-20*
-*Last updated: 2026-05-20 — Traceability populated by /gsd-roadmapper; 39/39 requirements mapped across 5 phases (62-66); 100% coverage validated; no orphans, no duplicates*
+*Last updated: 2026-05-25 — v1.6 milestone shipped; 39/39 v1.6 requirements Complete (AB-01..07 + OU-01..10 + DELEG-01..08 + ABNAV-01..07 + AUDIT-09..15); traceability table fully flipped Pending→Complete per AUDIT-15 close. See `.planning/milestones/v1.6-MILESTONE-AUDIT.md` for per-REQ closing commit SHAs.*

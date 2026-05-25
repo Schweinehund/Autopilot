@@ -9,7 +9,7 @@
 - ✅ **v1.4 Android Enterprise Enrollment Documentation** — Phases 34-42 (shipped 2026-04-24)
 - ✅ **v1.4.1 Android Enterprise Completion & v1.4 Cleanup** — Phases 43-47 (shipped 2026-04-25)
 - ✅ **v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup** — Phases 48-61 (shipped 2026-05-07)
-- 🔄 **v1.6 Apple Business Delegated Governance & Multi-Org Operations** — Phases 62-66 (in progress)
+- ✅ **v1.6 Apple Business Delegated Governance & Multi-Org Operations** — Phases 62-66 (shipped 2026-05-25)
 
 ## Phases
 
@@ -138,14 +138,14 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 
 </details>
 
-### v1.6 Apple Business Delegated Governance & Multi-Org Operations (Phases 62-66) — IN PROGRESS
+### v1.6 Apple Business Delegated Governance & Multi-Org Operations (Phases 62-66) — SHIPPED 2026-05-25
 
 - [x] **Phase 62: Apple Business Foundation & Rebrand** — Glossary + role/permission model + OUs concept + 3 canonical rebrand callouts + audit harness scaffold with C14/C15/C16 blocking-from-start
  (completed 2026-05-21)
 - [x] **Phase 63: Multi-OU Architecture & Apple Admin Setup** — OUs-vs-custom-roles decision matrix + custom role authoring + sub-org admin onboarding + MDM server assignment + content token consolidation + Managed Apple Account provisioning + Shared iPad / Apple TV lifecycle + iOS capability matrix rows (completed 2026-05-21)
 - [x] **Phase 64: Apple Business Delegation Runbooks** — VPP catalog + shared iPad passcode reset (admin context) + device release + device transfer + MDM server reassign + Managed Apple Account provisioning + audit log scoping + cross-org-boundary cheat sheet (completed 2026-05-22)
 - [x] **Phase 65: Apple Business L1/L2 + Hub Navigation Integration** — L1 #34 (shared iPad passcode reset) + L2 #26 (permission-denied 7-leaf tree) + common-issues append + quick-ref-l1/l2 append + operations index append + docs/index.md hub append (NAVIGATION-LAST) (completed 2026-05-23)
-- [ ] **Phase 66: Apple Business Validation Tooling Closure + Milestone Audit** — C11 keyword extension + C15 banned-phrase refinement + BASELINE_10 refresh (closes BASELINE_9) + per-phase validators check-phase-62..66.mjs + CI workflow + terminal re-audit from fresh worktree + v1.6-MILESTONE-AUDIT.md + DEFERRED-CLEANUP.md
+- [x] **Phase 66: Apple Business Validation Tooling Closure + Milestone Audit** — C11 keyword extension + C15 banned-phrase refinement + BASELINE_10 refresh (closes BASELINE_9) + per-phase validators check-phase-62..66.mjs + CI workflow + terminal re-audit from fresh clone + v1.6-MILESTONE-AUDIT.md + DEFERRED-CLEANUP.md (completed 2026-05-25)
 
 **Wave designation map:**
 
@@ -241,12 +241,12 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
   3. Terminal re-audit at Phase 66 close runs `v1.6-milestone-audit.mjs` from a FRESH WORKTREE (spawned distinct from content-phase author-agents per v1.5 D-22 auditor-independence invariant); harness exits 0 with all 15+ checks PASS in fully-blocking mode (C1-C13 inherited + C14/C15/C16 v1.6 new); all 5 chain validators check-phase-62..66.mjs PASS
   4. `.planning/milestones/v1.6-MILESTONE-AUDIT.md` authored confirming all checks PASS, 39/39 v1.6 requirements closed, and 5-phase scope delivered; `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` finalized listing CI-1/CI-2/CI-3 rotting-reference candidates for v1.7+ (Apple Business Manager ~30 URL refs + 2 VPP location token line refs + Managed Apple ID corpus-wide refs) — final site enumeration finalized at Phase 66 close (not Phase 62), depends on Phases 62-65 author-discovery
   5. PROJECT.md traceability closure — 39 v1.6 reqs (AB-01..07 + OU-01..10 + DELEG-01..08 + ABNAV-01..07 + AUDIT-09..15) flipped Active→Validated with closing commit SHAs; ROADMAP.md Progress table reflects 5/5 phases Complete; STATE.md milestone close recorded — preserves v1.4.1 / v1.5 milestone-close traceability discipline
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans complete
 - [x] 66-01-PLAN.md — Wave 1: check-phase-66.mjs scaffold (Path-A from check-phase-65.mjs; V-66-NN assertions + V-66-ABAUDIT-STALENESS) + 24 ABAUDIT exemption staleness walk across 11 files
-- [x] 66-02-PLAN.md — Wave 2: AUDIT-14 ATOMIC harness commit (4-5 files indivisible: v1.6-milestone-audit.mjs C11+regex-7 / v1.6-audit-allowlist.json c13_rotting_external populated / regenerate-supervision-pins.mjs BASELINE_10 / check-phase-66.mjs / probable check-phase-62.mjs V-62-SIDECAR extension); mandatory pre-commit dry-run loop per D-01 LOCKED
+- [x] 66-02-PLAN.md — Wave 2: AUDIT-14 ATOMIC harness commit (3 files indivisible: v1.6-milestone-audit.mjs C11+regex-7 / v1.6-audit-allowlist.json c13_rotting_external populated / regenerate-supervision-pins.mjs BASELINE_10) at commit `3a9a671`
 - [x] 66-03-PLAN.md — Wave 3: audit-harness-v1.6-integrity.yml Path-A from v1.5 (15-entry path-filter + 2 crons + new rotting-external-quarterly job; PR-blocking per D-A9) + v1.6-DEFERRED-CLEANUP.md (CI-1/CI-2/CI-3 + CHAIN_SKIP-CRLF + carry-overs from Phases 63-65)
-- [x] 66-04-PLAN.md — Wave 4: terminal re-audit via FRESH gsd-executor sub-agent + FRESH git clone --no-hardlinks in $env:TEMP\v1.6-audit-<rand> per D-03 LOCKED (stricter physical isolation than worktree; reconciles D-22 INTENT with use_worktrees:false); captures exit codes + summary lines into 66-04-AUDIT-RESULTS.md
-- [ ] 66-05-PLAN.md — Wave 5: v1.6-MILESTONE-AUDIT.md (Path-A from v1.5; 39/39 + 5/5 + performed_by D-22-INTENT narrative + Auditor-Independence Verification section + Command Verification Table) + 66-VERIFICATION.md close-gate report + traceability closure across PROJECT.md/ROADMAP.md/STATE.md/REQUIREMENTS.md
+- [x] 66-04-PLAN.md — Wave 4: terminal re-audit via FRESH gsd-executor sub-agent + FRESH git clone --no-hardlinks in $env:TEMP\v1.6-audit-<rand> per D-03 LOCKED (stricter physical isolation than worktree; reconciles D-22 INTENT with use_worktrees:false); captures exit codes + summary lines into 66-04-AUDIT-RESULTS.md (commit `489edca`)
+- [x] 66-05-PLAN.md — Wave 5: v1.6-MILESTONE-AUDIT.md (Path-A from v1.5; 39/39 + 5/5 + performed_by D-22-INTENT narrative + Auditor-Independence Verification section + Command Verification Table) + 66-VERIFICATION.md close-gate report + traceability closure across PROJECT.md/ROADMAP.md/STATE.md/REQUIREMENTS.md (completed 2026-05-25)
 
 ## Progress
 
@@ -317,8 +317,8 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 | 63. Multi-OU Architecture & Apple Admin Setup | v1.6 | 6/6 | Complete    | 2026-05-21 |
 | 64. Apple Business Delegation Runbooks | v1.6 | 6/6 | Complete    | 2026-05-22 |
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 5/5 | Complete    | 2026-05-23 |
-| 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 4/5 | In Progress|  |
+| 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 5/5 | Complete    | 2026-05-25 |
 
 ---
 
-*Last updated: 2026-05-20 — v1.6 roadmap drafted. 5 phases (62-66), 39 requirements mapped, 100% coverage. Next: `/gsd-plan-phase 62`.*
+*Last updated: 2026-05-25 — v1.6 milestone SHIPPED. 5/5 phases complete (62 / 63 / 64 / 65 / 66); 39/39 requirements Complete (AB-01..07 + OU-01..10 + DELEG-01..08 + ABNAV-01..07 + AUDIT-09..15); terminal re-audit from fresh sub-agent + fresh git clone confirmed 23 PASS / 0 FAIL / 5 SKIPPED in check-phase-66.mjs (V-66-06 chicken-and-egg resolved at Wave 5 local re-run). See `.planning/milestones/v1.6-MILESTONE-AUDIT.md` for the full close artifact and `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` for v1.7+ backlog. Next: v1.7 entry-phase planning.*

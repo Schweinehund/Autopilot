@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: Apple Business Delegated Governance & Multi-Org Operations
-status: executing
-stopped_at: Phase 66 context gathered
-last_updated: "2026-05-25T15:53:42.945Z"
+status: complete
+stopped_at: v1.6 milestone close — Phase 66 complete
+last_updated: "2026-05-25T16:30:00.000Z"
 last_activity: 2026-05-25
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 30
-  completed_plans: 29
-  percent: 80
+  completed_plans: 30
+  percent: 100
 ---
 
 # Project State
@@ -25,15 +25,15 @@ See: .planning/PROJECT.md (updated 2026-05-20)
 
 ## Current Position
 
-Phase: 66 (apple-business-validation-tooling-closure-milestone-audit) — EXECUTING
+Phase: 66 (apple-business-validation-tooling-closure-milestone-audit) — COMPLETE
 Plan: 5 of 5
-Status: Ready to execute
+Status: v1.6 milestone CLOSED
 Last activity: 2026-05-25
 
 ```
-Progress: [██████████] 97%
+Progress: [██████████] 100%
 Phases:   62 63 64 65 66
-Status:   .  .  .  .  .
+Status:   X  X  X  X  X
           (. = not started, X = complete)
 ```
 
@@ -65,9 +65,9 @@ Phase 62 (Foundation + harness scaffold — critical-path bottleneck, 11 pitfall
 - v1.4: 9 phases, 40 plans — shipped 2026-04-24
 - v1.4.1: 5 phases, 33 plans — shipped 2026-04-25
 - v1.5: 14 phases, 101 plans — shipped 2026-05-07
-- **v1.6: 5 phases (62-66), TBD plans — started 2026-05-20**
+- **v1.6: 5 phases (62-66), 30 plans — shipped 2026-05-25**
 
-**Totals (through v1.5):** 61 phases, 280 plans, ~230 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS).
+**Totals (through v1.6):** 66 phases, 310 plans, ~248 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, Android Enterprise, Linux (Ubuntu LTS), and Apple Business Delegated Governance (OUs + custom roles + delegation runbooks).
 
 **v1.6 scope:** ~18 new documentation files (1 glossary + 11 cross-platform/apple-business/ governance files + 2 L1/L2 runbooks + harness + per-phase validators + CI workflow + milestone audit doc + deferred-cleanup tracking artifact) + 5 modified hub files + 3 canonical rebrand-callout edits.
 
@@ -128,14 +128,12 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 - [Phase ?]: Phase 66 Plan 66-01: Added fenced-code-block detector to V-66-ABAUDIT-STALENESS scanner (Rule 1 bug fix in check-phase-66.mjs) to exclude the demonstrative ABAUDIT example at 00-overview.md:68 from Pitfall-4 false-positive triggering
 - [Phase ?]: Phase 66 Plan 66-02: AUDIT-14 atomic harness commit landed at 3a9a671 as 3 files (check-phase-66.mjs needed no Wave 2 tuning; V-62-SIDECAR did not cascade since assertion only validates c16, not c13 shape)
 - [Phase ?]: Phase 66 Plan 66-04: Wave 4 terminal re-audit via fresh git clone (D-22 INTENT preserved via D-03 LOCKED). All 7 validators ran from temp clone of HEAD 62b592e. Harness 15/15 + selftest 9/9 + check-phase-62..65 all exit 0 (modulo CHAIN_SKIP {48,51,58,60,61}); check-phase-66 exit 1 with V-66-06 SOLE RED (chicken-and-egg with Wave 5 MILESTONE-AUDIT.md). Clone removed post-audit; zero orphan temp dirs. AUDIT-RESULTS committed at 489edca.
+- [v1.6 close]: Phase 66 Plan 66-05: Wave 5 milestone close — v1.6-MILESTONE-AUDIT.md authored Path-A from v1.5 (39/39 reqs / 5/5 phases / mechanical_checks populated from 66-04-AUDIT-RESULTS / performed_by D-22-INTENT narrative / Auditor-Independence Verification + Command Verification Table + Wave 5 Post-Audit Confirmation); 66-VERIFICATION.md authored as Phase 66 close-gate report; LOCAL re-run check-phase-66.mjs (NOT another fresh clone — infinite-recursion guard) confirmed V-66-06 RED -> PASS at commit 153d59d. Final: 23 PASS / 0 FAIL / 5 SKIPPED. v1.6 SHIPPED 2026-05-25.
 
 ### Pending Todos
 
-- Plan Phase 62 via `/gsd-plan-phase 62` (Apple Business Foundation & Rebrand — critical-path bottleneck; 11 pitfalls gate here)
-- Phase 62 phase-research likely needed for: per-permission enumeration (Apple's 11 subgroup permission sub-pages manual scrape ~1 hour effort) + Apple Business audit log retention SLA + cross-OU audit visibility 3×3 matrix + Apple TV Conference Room Display mode delegation specifics + Apple Business Device API public surface (mark UNKNOWN if Apple hasn't published developer.apple.com landing by Phase 62 execution time)
-- After Phase 62 closes: Wave B execution — Phase 63 + first half of Phase 64 in parallel (after Phase 63 anchors `05-...md#which-admin-owns-this-pool` + `09-shared-ipad-lifecycle.md` + `10-apple-tv-lifecycle.md` land)
-- After Phases 62-64 close: Phase 65 (NAVIGATION-LAST sequential)
-- After Phase 65 closes: Phase 66 (terminal re-audit from FRESH WORKTREE — auditor-independence per v1.5 D-22)
+- v1.7 entry-phase planning — read `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` as the v1.7 backlog source (CI-1 ABM URLs / CI-2 VPP location token / CI-3 Managed Apple ID + CHAIN_SKIP-CRLF Linux-CI resolution + multi-tenant Apple Business + Apple Business Device API + per-OU Conference Room Display + Account Holder runbook + ASM)
+- `audit-harness-v1.6-integrity.yml` `rotting-external-quarterly` job first-fires 2026-07-01 — v1.7 discuss-phase can verify first-fire artifact
 
 ### Out-of-band carry-overs from v1.5 close
 
@@ -154,7 +152,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.5 decision
 
 ## Session Continuity
 
-Last session: 2026-05-25T15:53:26.479Z
-Stopped at: Phase 66 context gathered
-Resume file: None
-Next action: `/gsd-plan-phase 62` — Apple Business Foundation & Rebrand
+Last session: 2026-05-25T16:30:00.000Z
+Stopped at: v1.6 milestone shipped — Phase 66 complete
+Resume file: .planning/milestones/v1.6-MILESTONE-AUDIT.md
+Next action: v1.7 entry-phase planning — read `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` for backlog
