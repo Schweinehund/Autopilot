@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.6
-milestone_name: Apple Business Delegated Governance & Multi-Org Operations
-status: verifying
-stopped_at: v1.6 milestone shipped — Phase 66 complete
-last_updated: "2026-05-25T16:15:23.962Z"
+milestone: v1.7
+milestone_name: Deferred Backlog Closure + Validator Chain Hardening
+status: planning
+last_updated: "2026-05-25T18:19:23.027Z"
 last_activity: 2026-05-25
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 30
-  completed_plans: 30
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -25,19 +24,10 @@ See: .planning/PROJECT.md (updated 2026-05-20)
 
 ## Current Position
 
-Phase: 66 (apple-business-validation-tooling-closure-milestone-audit) — COMPLETE
-Plan: 5 of 5
-Status: Phase complete — ready for verification
-Last activity: 2026-05-25
-
-```
-Progress: [██████████] 100%
-Phases:   62 63 64 65 66
-Status:   X  X  X  X  X
-          (. = not started, X = complete)
-```
-
-**Phase numbering:** v1.6 spans Phases 62–66 (continues from v1.5 close at Phase 61; no `--reset-phase-numbers`)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-25 — Milestone v1.7 started
 
 ## v1.6 Phase Dependency Summary
 
