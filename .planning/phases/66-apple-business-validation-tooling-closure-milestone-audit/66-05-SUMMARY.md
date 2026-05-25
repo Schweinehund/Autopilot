@@ -163,11 +163,13 @@ The only minor accommodation: ROADMAP.md required two smaller targeted edits to 
 
 ## Self-Check: PASSED
 
+Confirmed post-execution:
 - [x] FOUND: .planning/milestones/v1.6-MILESTONE-AUDIT.md
 - [x] FOUND: .planning/phases/66-apple-business-validation-tooling-closure-milestone-audit/66-VERIFICATION.md
 - [x] FOUND: .planning/phases/66-apple-business-validation-tooling-closure-milestone-audit/66-05-SUMMARY.md (this file)
 - [x] FOUND commit 153d59d (Task 66-05-01 — milestone close + verification report)
 - [x] FOUND commit 9d8877c (Task 66-05-02 — traceability closure)
+- [x] FOUND commit 91bfb61 (final metadata commit — SUMMARY + state advance + roadmap update)
 - [x] LOCAL re-run check-phase-66.mjs: exit 0 / 23 PASS / 0 FAIL / 5 SKIPPED — V-66-06 chicken-and-egg RESOLVED
 - [x] Full chain green: 7/7 validators exit 0 from D:\claude\Autopilot main repo
 - [x] REQUIREMENTS.md AUDIT-14 + AUDIT-15 + AB-01..07 + AUDIT-09..13 all show "Complete" in Traceability table
