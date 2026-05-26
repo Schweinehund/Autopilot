@@ -989,27 +989,27 @@ None — every Phase 68 requirement maps to an existing automated test (the exis
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **`check-phase-62.mjs:41` ANCHOR_INVENTORY archive resolution mechanism**
    - What we know: `62-ANCHOR-INVENTORY.md` is currently archived to `.planning/milestones/v1.6-phases/62-...` (per D-02 advisor empirical finding).
    - What's unclear: Should Plan 68-02 (a) extend the CONTEXT D-02 helper signature to support v1.6-phases, or (b) skip 62/63 from Plan 68-02 helper replacement and patch them in Plan 70 HARNESS-03? D-02 advisor §4.5-4.6 says apply now (defensive); CONTEXT D-02 lists 62/63 in scope.
-   - Recommendation: **(a) extend helper signature** to `resolveArchivedPhasePath(phaseSuffix, milestoneRoots = ['v1.5-phases'])` so 62/63 callers pass `['v1.6-phases']`. Backward-compatible.
+   - **RESOLVED:** (a) extend helper signature to `resolveArchivedPhasePath(phaseSuffix, milestoneRoots = ['v1.5-phases'])` so 62/63 callers pass `['v1.6-phases']`. Backward-compatible. Transcribed into Plan 68-02 Wave 1 helper signature.
 
 2. **Plan 68-02 Wave 4 broad-rebase scope (CHAIN-02 narrow vs broad interpretation)**
    - What we know: V-60-23 FAILs because C2 + C7 + C9 ALL fail; D-04 advisor §2.3 recommends broad rebase.
    - What's unclear: Does Plan 68-02 own the c7_knox_allowlist[] + cope_banned_phrases[] rebases, OR is that out of CHAIN-02 literal scope per REQUIREMENTS.md:20 narrow reading?
-   - Recommendation: **broad reading** (per advisor D-04 §2.3 Reading 1). All v1.5-sidecar exemption arrays referencing `_glossary-android.md` rebase together at Plan 68-02 Wave 4. Single coordinated commit per advisor's section.
+   - **RESOLVED:** broad reading (per advisor D-04 §2.3 Reading 1). All v1.5-sidecar exemption arrays referencing `_glossary-android.md` rebase together at Plan 68-02 Wave 4. Single coordinated commit per advisor's section. Transcribed into Plan 68-02 Wave 4 acceptance criteria.
 
 3. **v1.7-DEFERRED-CLEANUP.md creation timing**
    - What we know: File does NOT exist yet (`ls .planning/milestones/v1.7-DEFERRED-CLEANUP.md` returns "No such file"). It is referenced in REQUIREMENTS.md:46 + advisor D-04 as the cdcce23 root-cause landing site.
    - What's unclear: Plan 68-05 (close-gate) OR Phase 70 HARNESS-06 creates the file? CONTEXT.md "Deferred Ideas" says "cdcce23 archive-script garbage-insert root cause … Plan 68-05 author files this in v1.7-DEFERRED-CLEANUP.md line item with cdcce23 SHA citation" — so Plan 68-05 CREATES the file (stub at minimum).
-   - Recommendation: **Plan 68-05 creates `v1.7-DEFERRED-CLEANUP.md` as a stub** with the cdcce23 line item + any other Phase 68 discoveries (check-phase-31 silent-swallow closed, archive-script defect deferred). Phase 70 HARNESS-06 extends with v1.7-final additions.
+   - **RESOLVED:** Plan 68-05 creates `v1.7-DEFERRED-CLEANUP.md` as a stub with the cdcce23 line item + any other Phase 68 discoveries (check-phase-31 silent-swallow closed, archive-script defect deferred). Phase 70 HARNESS-06 extends with v1.7-final additions. Transcribed into Plan 68-05 task list.
 
 4. **`check-phase-31.mjs` STRETCH vs DEFER (D-02 advisor §4.7)**
    - What we know: D-02 advisor recommends STRETCH (low cost — helper already loaded).
    - What's unclear: Does the STRETCH break V-31-21/V-31-24 if `placeholder-inventory.json` resolves to archived v1.3-phases path correctly?
-   - Recommendation: **STRETCH per D-02 advisor.** Plan 68-02 Wave 2 covers it. Planner verifies V-31-21 + V-31-24 continue to PASS post-fix (the helper resolves the file at archived path, so `placeholders[]` is populated → both V-NN PASS).
+   - **RESOLVED:** STRETCH per D-02 advisor. Plan 68-02 Wave 2 covers it. Planner verifies V-31-21 + V-31-24 continue to PASS post-fix (the helper resolves the file at archived path, so `placeholders[]` is populated → both V-NN PASS). Transcribed into Plan 68-02 Wave 2 acceptance criteria.
 
 ---
 
