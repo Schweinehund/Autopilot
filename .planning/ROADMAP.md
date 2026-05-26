@@ -164,7 +164,7 @@ Deferred backlog: [milestones/v1.6-DEFERRED-CLEANUP.md](milestones/v1.6-DEFERRED
 
 ### v1.7 Deferred Backlog Closure + Validator Chain Hardening (Phases 67-70) — PLANNING 2026-05-26
 
-- [ ] **Phase 67: Corpus Surgical Sweeps (Pillar A)** — CI-1 ABM URL refs (4 URLs / 4 files) verified/edited + CI-2 VPP location token rename (6 occurrences / 2 files) per PITFALLS:657 first-mention-per-H2 convention; per-file Version History rows + chain validator re-runs; sidecar `c13_rotting_external` updates to reflect post-sweep state
+- [x] **Phase 67: Corpus Surgical Sweeps (Pillar A)** — CI-1 ABM URL refs (4 URLs / 4 files) verified/edited + CI-2 VPP location token rename (6 occurrences / 2 files) per PITFALLS:657 first-mention-per-H2 convention; per-file Version History rows + chain validator re-runs; sidecar `c13_rotting_external` updates to reflect post-sweep state (completed 2026-05-26)
 - [ ] **Phase 68: CHAIN_SKIP Root-Cause Resolution (Pillar B)** — CRLF regex fixes in check-phase-{51,58}.mjs (`\n` → `\r?\n`); archive-path detection in check-phase-48.mjs + line-number drift fix in regenerate-supervision-pins.mjs --self-test; cascade fixes to check-phase-{60,61}.mjs; ATOMIC removal of 5 entries from CHAIN_SKIP arrays across check-phase-62..66.mjs (preserves chain-validator indivisibility per Phase 66-02 atomic-harness precedent)
 - [ ] **Phase 69: CI-Linux Hardening (Pillar C)** — New `ubuntu-latest` runner job added to v1.7 CI workflow that runs `check-phase-{48..70}.mjs` + v1.x-milestone-audit.mjs on Linux LF line endings; PR-blocking per D-A9 inheritance; coexists with v1.4/v1.5/v1.6 workflows (no modifications to predecessors); catches CRLF-style regressions before they hit local
 - [ ] **Phase 70: v1.7 Harness Lineage Bump + Milestone Close (Pillar D)** — `v1.7-milestone-audit.mjs` Path-A from v1.6 (C1-C16 inherited) + `v1.7-audit-allowlist.json` co-located + BASELINE_11 refresh (closes BASELINE_10 v1.6 carry-over) + per-phase validators check-phase-67..70.mjs + `audit-harness-v1.7-integrity.yml` CI workflow + terminal re-audit from fresh `git clone --no-hardlinks` per D-03 LOCKED + v1.7-MILESTONE-AUDIT.md + v1.7-DEFERRED-CLEANUP.md (carries CI-3 + Other Deferrals forward to v1.8+) + PROJECT.md/ROADMAP.md/STATE.md traceability closure
@@ -392,7 +392,7 @@ Deferred backlog: [milestones/v1.6-DEFERRED-CLEANUP.md](milestones/v1.6-DEFERRED
 | 64. Apple Business Delegation Runbooks | v1.6 | 6/6 | Complete    | 2026-05-22 |
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 5/5 | Complete    | 2026-05-23 |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 5/5 | Complete   | 2026-05-25 |
-| 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 3/3 | Complete | 2026-05-26 |
+| 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 3/3 | Complete    | 2026-05-26 |
 | 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 0/TBD | Not started | — |
 | 69. CI-Linux Hardening (Pillar C) | v1.7 | 0/TBD | Not started | — |
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 0/TBD | Not started | — |
