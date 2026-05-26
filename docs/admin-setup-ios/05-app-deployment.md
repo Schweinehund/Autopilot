@@ -1,5 +1,5 @@
 ---
-last_verified: 2026-04-18
+last_verified: 2026-05-26
 review_by: 2026-07-17
 applies_to: ADE
 audience: admin
@@ -68,7 +68,7 @@ The table below summarizes the four deployment types against the attributes that
 ### VPP Prerequisites
 
 - Apple Business Manager account with at least one active Content Manager role
-- VPP (Apps and Books) location token uploaded to Intune (Tenant administration > Connectors and tokens > Apple VPP tokens)
+- Content token (formerly VPP location token; still labeled "Apple VPP token" in Intune) uploaded to Intune (Tenant administration > Connectors and tokens > Apple VPP tokens)
 - App licenses purchased in ABM (Apps and Books page) — select Device or User licensing at purchase time (Device = recommended default)
 - Annual token renewal configured (see Renewal / Maintenance below)
 
@@ -194,11 +194,13 @@ Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Manag
 | VPP token not renewed before annual expiry | Intune | VPP apps stop syncing from ABM; existing installs unaffected | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; VPP token renewal is ABM admin action (distinct from ABM/ADE token) |
 | LOB app CFBundleVersion not incremented on re-upload | Intune | Devices do not detect a new version; existing installed version remains | [iOS L2 runbooks (Phase 31)](../l2-runbooks/00-index.md) — No L1 runbook; LOB version-detection is L2+admin investigation |
 
+> **Note:** Apple calls this artifact a "content token" (formerly "VPP location token"); Microsoft Intune labels it "Apple VPP token" under `Tenant administration > Connectors and tokens > Apple VPP tokens`. Same artifact, different vendor terminology.
+
 ## Renewal / Maintenance
 
 | Component | Renewal Period | Consequence of Lapse | Renewal Steps |
 |-----------|---------------|---------------------|---------------|
-| VPP (Apps and Books) location token | Annual (365 days) | VPP apps stop syncing from ABM; existing installs unaffected but no new assignments, revocations, or license management until renewed | 1. In ABM: **Preferences** > **Payments and Billing** > **Apps and Books** > **Content Tokens** > **Download**. 2. In Intune: **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens** > [token] > **Edit** > **Upload new token** |
+| Content token | Annual (365 days) | VPP apps stop syncing from ABM; existing installs unaffected but no new assignments, revocations, or license management until renewed | 1. In ABM: **Preferences** > **Payments and Billing** > **Apps and Books** > **Content Tokens** > **Download**. 2. In Intune: **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens** > [token] > **Edit** > **Upload new token** |
 | LOB provisioning profile (.mobileprovision) | Annual (1 year from generation) | Existing LOB app installs fail to launch; new installs fail to complete | 1. Generate new `.mobileprovision` via Apple Developer Enterprise portal. 2. In Intune: **Apps** > **iOS app provisioning profiles** > [profile] > **Properties** > **Upload new provisioning profile**. Intune sends 30-day advance expiry notification. |
 | LOB Distribution certificate | 3 years (from Apple Developer Enterprise) | All LOB apps signed with the expired certificate fail to launch with "Unable to Verify App" | Generate new Distribution certificate in Apple Developer Enterprise portal; re-sign and re-upload each LOB `.ipa` with the new certificate. |
 | APNs certificate | 365 days | iOS MDM communication stops fleet-wide (see [APNs Certificate](01-apns-certificate.md)) | See [APNs Certificate](01-apns-certificate.md) for renewal steps |
@@ -225,3 +227,4 @@ Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Manag
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS app deployment guide with Key Concepts section (managed vs unmanaged, VPP device vs user licensing, silent install boundary table), 4-column deployment type comparison, per-type sections with supervised-only silent install callouts, managed app status verification in three admin-center locations, configuration-caused failures, and VPP/LOB renewal cadences | -- |
+| 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP (Apps and Books) location token" to "content token" per Apple 2026-04-14 rebrand (L71, L201); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; PITFALLS.md CI-2 closure | -- |

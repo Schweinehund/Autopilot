@@ -1,5 +1,5 @@
 ---
-last_verified: 2026-04-14
+last_verified: 2026-05-26
 review_by: 2026-07-13
 applies_to: ADE
 audience: admin
@@ -42,8 +42,8 @@ This guide covers deploying macOS applications through Intune using three method
 
 ### VPP/Apps and Books Prerequisites
 
-- Apple Business Manager account with active VPP location token
-- VPP location token uploaded to Intune (Tenant administration > Connectors and tokens > Apple VPP tokens)
+- Apple Business Manager account with an active content token (formerly VPP location token; still labeled "Apple VPP token" in Intune)
+- Content token uploaded to Intune (Tenant administration > Connectors and tokens > Apple VPP tokens)
 - App licenses purchased in ABM for each app to deploy
 - Annual token renewal configured (see Renewal / Maintenance section below)
 
@@ -110,7 +110,7 @@ Supported scenarios beyond managed LOB: non-flat packages, component packages, u
 #### In Intune admin center
 
 1. Navigate to **Tenant administration** > **Connectors and tokens** > **Apple VPP tokens**.
-2. Verify the VPP location token is active and synced.
+2. Verify the content token (formerly VPP location token; still labeled "Apple VPP token" in Intune) is active and synced.
 3. Navigate to **Apps** > **macOS** -- VPP apps appear automatically after sync.
 4. Select the app > **Properties** > **Assignments**.
 5. Assign as Required (device or user groups) or Available for enrolled devices (user groups only).
@@ -141,11 +141,13 @@ Supported scenarios beyond managed LOB: non-flat packages, component packages, u
 | VPP license revoked without Uninstall intent | ABM | App remains installed for 30-day grace period | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
 | Expired VPP token | Intune | VPP apps stop syncing; existing installs unaffected | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
 
+> **Note:** Apple calls this artifact a "content token" (formerly "VPP location token"); Microsoft Intune labels it "Apple VPP token" under `Tenant administration > Connectors and tokens > Apple VPP tokens`. Same artifact, different vendor terminology.
+
 ## Renewal / Maintenance
 
 | Component | Renewal Period | Consequence of Lapse | Renewal Steps |
 |-----------|---------------|---------------------|---------------|
-| VPP location token | Annual (365 days) | VPP apps stop syncing from ABM; existing installs unaffected but no new assignments or license management | 1. In ABM: Preferences > Payments and Billing > Apps and Books > Content Tokens > Download. 2. In Intune: Tenant admin > Connectors and tokens > Apple VPP tokens > [token] > Edit > Upload new token |
+| Content token | Annual (365 days) | VPP apps stop syncing from ABM; existing installs unaffected but no new assignments or license management | 1. In ABM: Preferences > Payments and Billing > Apps and Books > Content Tokens > Download. 2. In Intune: Tenant admin > Connectors and tokens > Apple VPP tokens > [token] > Edit > Upload new token |
 
 Up to 3,000 VPP tokens supported per Intune tenant. One VPP token cannot be shared between Intune tenants.
 
@@ -163,3 +165,4 @@ Up to 3,000 VPP tokens supported per Intune tenant. One VPP token cannot be shar
 |------|--------|--------|
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- DMG, PKG (managed/unmanaged), VPP with comparison table, per-type prerequisites, VPP renewal | -- |
+| 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP location token" to "content token" per Apple 2026-04-14 rebrand (L45, L46, L113, L148); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; PITFALLS.md CI-2 closure | -- |
