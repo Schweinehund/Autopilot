@@ -14,7 +14,7 @@ const VERBOSE = argv.includes('--verbose');
 function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
   if (!existsSync(abs)) return null;
-  return readFileSync(abs, 'utf8');
+  return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');  // CRLF normalization (CHAIN-01; mirrors check-phase-48.mjs:25)
 }
 
 // CDI-02: Pinned H2 strings — Phase 52+ renaming requires same-commit validator update.
