@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 67 Plan 01 complete (SWEEP-01 Branch A — 4 ABM URLs verified alive + sidecar last_revalidated annotation)
-last_updated: "2026-05-26T16:06:45.000Z"
-last_activity: 2026-05-26 -- Phase 67 Plan 01 closed (commit 3fb8ca5; Branch A)
+stopped_at: Phase 67 Plan 02 complete (SWEEP-02 atomic — 6 D-03 rewrites + 2 OP-10 callouts + 2 VH rows + glossary coord row + 6 sidecar annotations + PITFALL-6 anchor inventory; commit 55260b3)
+last_updated: "2026-05-26T16:25:00.000Z"
+last_activity: 2026-05-26 -- Phase 67 Plan 02 closed (commit 55260b3; SWEEP-02 atomic-within-plan)
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 11
+  completed_plans: 2
+  percent: 22
 ---
 
 # Project State
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 67 (corpus-surgical-sweeps-pillar-a-low-risk-warm-up) — EXECUTING
-Plan: 2 of 3 (Plan 67-01 closed; Plan 67-02 next)
-Status: Executing Phase 67 — Plan 67-01 closed (commit `3fb8ca5`; Branch A taken)
-Last activity: 2026-05-26 -- Phase 67 Plan 01 closed (SWEEP-01 4/4 ABM URLs verified alive; sidecar annotated; no corpus edits)
+Plan: 3 of 3 (Plan 67-01 + 67-02 closed; Plan 67-03 close-gate next)
+Status: Executing Phase 67 — Plan 67-02 closed (commit `55260b3`; SWEEP-02 atomic-within-plan, 5 files)
+Last activity: 2026-05-26 -- Phase 67 Plan 02 closed (SWEEP-02 atomic: 6 D-03 rewrites + 2 OP-10 callouts + 2 VH rows + glossary coord row + 6 sidecar annotations + PITFALL-6 anchor inventory; harness 15/15 PASS unchanged)
 
 ## v1.7 Phase Dependency Summary
 
@@ -155,10 +155,10 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T16:06:45.000Z
-Stopped at: Phase 67 Plan 01 closed (commit 3fb8ca5; Branch A; SWEEP-01 verified live)
-Resume file: .planning/phases/67-corpus-surgical-sweeps-pillar-a-low-risk-warm-up/67-02-PLAN.md
-Next action: Execute Plan 67-02 (SWEEP-02 atomic: 6 D-03 line rewrites + 2 OP-10 callout block inserts + tail-table VH rows + glossary coordinating row + sidecar resolved_2026_05_26 annotations + PITFALL-6 pre/post-edit anchor inventory)
+Last session: 2026-05-26T16:25:00.000Z
+Stopped at: Phase 67 Plan 02 closed (commit 55260b3; SWEEP-02 atomic-within-plan; 5 files; harness 15/15 PASS)
+Resume file: .planning/phases/67-corpus-surgical-sweeps-pillar-a-low-risk-warm-up/67-03-PLAN.md
+Next action: Execute Plan 67-03 (Phase 67 close-gate: full chain re-run via check-phase-66.mjs subprocess loop + harness 15/15 PASS confirmation + 67-VERIFICATION.md append SWEEP-02 H2 + Section B Commands + SC#1-4 Satisfaction + V-67-NN Final State + traceability flips across PROJECT.md / REQUIREMENTS.md / ROADMAP.md / STATE.md for SWEEP-01 + SWEEP-02 Active→Validated with closing SHAs 3fb8ca5 + 55260b3)
 
 ## Decisions
 
@@ -168,3 +168,14 @@ Next action: Execute Plan 67-02 (SWEEP-02 atomic: 6 D-03 line rewrites + 2 OP-10
 - 4 c13_rotting_external.ci_1_abm_urls entries annotated with `last_revalidated:"2026-05-26"` (ANNOTATE-not-remove per CONTEXT.md D-04); 4-entry shape preserved (V-66-02 stable)
 - Pre-existing FAIL observed (NOT Phase 67-introduced): V-62-ANCHORS reports `.planning/phases/62-apple-business-foundation-rebrand/62-ANCHOR-INVENTORY.md missing` because file was archived to `.planning/milestones/v1.6-phases/62-*/` after v1.6 close. This is Phase 68 Pillar B CHAIN-02 archive-path-detection scope; Phase 67 Scope Boundary forbids touching it.
 - v1.6-milestone-audit.mjs (the actual harness gate) PASS 15/15 — UNCHANGED before vs after Plan 67-01 commit
+
+### Phase 67 — Plan 02 (SWEEP-02 atomic-within-plan; 2026-05-26)
+
+- Atomic indivisible commit `55260b3` lands 5 files in ONE git SHA per CONTEXT.md D-04 LOCKED Option E: 2 corpus (admin-setup-ios/05- + admin-setup-macos/04-app-deployment.md) + 1 glossary (_glossary-macos.md coordinating row) + 1 sidecar (v1.6-audit-allowlist.json 6 ci_2 annotations) + 1 NEW anchor inventory artifact (67-ANCHOR-INVENTORY.md)
+- 6 D-03 line rewrites + 2 OP-10 blockquote callout inserts + 2 unheaded-tail-table VH rows applied VERBATIM per CONTEXT.md D-03 table (rows #1, #2a, #2b, #3, #4, #5, #6a, #6b) — zero paraphrasing; first-mention-per-H2 compound form per PITFALLS:657 honored
+- 3 frontmatter `last_verified` bumped to 2026-05-26 (iOS + macOS + glossary); glossary bump per Claude's Discretion for traceability symmetry
+- Sidecar c13_rotting_external.ci_2_vpp_location_token 6 entries gained `"resolved_2026_05_26": true` (ANNOTATE-not-remove per D-04); 6-entry shape preserved
+- PITFALL-6 anchor inventory: pre-edit + post-edit anchor enumeration of _glossary-macos.md captured; Wave 7 `git diff --no-index` returned ZERO output — `## Version History` H2 remains at line 121 post-edit (PITFALL-6 invariant satisfied)
+- Unheaded tail-table append convention is OLDEST-FIRST per plan text line 491 (executor self-corrected during Wave 4 — see SUMMARY Deviations Rule 3 note); glossary `## Version History` H2 table uses NEWEST-FIRST per 67-PATTERNS.md:146
+- Pre-commit + post-commit validator exit codes IDENTICAL: harness 15/15 PASS / check-phase-62 28/1/5 (pre-existing V-62-ANCHORS) / check-phase-66 19/4/5 (pre-existing V-66-CHAIN cascade) — zero new validator regression introduced by Plan 67-02
+- Plan 67-02 confirms the v1.7 Pillar A "Low-Risk Warm-Up" atomic-edit pattern: atomic-within-plan commit + Version History rows + sidecar annotation + chain validator re-runs identical to baseline

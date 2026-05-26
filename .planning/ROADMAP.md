@@ -283,7 +283,7 @@ Deferred backlog: [milestones/v1.6-DEFERRED-CLEANUP.md](milestones/v1.6-DEFERRED
   4. Full chain `check-phase-{48..66}.mjs` exits with same status as v1.6 close (PASS modulo CHAIN_SKIP {48,51,58,60,61} — these are still suppressed; Phase 68 resolves them); no validator regression introduced by corpus edits
 **Plans:** 3 plans
 - [x] 67-01-PLAN.md — Wave 1: SWEEP-01 ABM URL live-state verification (branchable; markdown-link-check@3.14.2 + corroborating curl HEAD; sidecar last_revalidated:2026-05-26 annotation; Branch A OR Branch B per Apple URL state) — Branch A taken (4/4 URLs alive); commit `3fb8ca5`
-- [ ] 67-02-PLAN.md — Wave 2: SWEEP-02 atomic-within-plan (6 D-03 line rewrites + 2 OP-10 callout block inserts + 2 tail-table Version History rows + 1 _glossary-macos.md coordinating row + 3 frontmatter last_verified bumps + 6 sidecar resolved_2026_05_26:true annotations + PITFALL-6 pre/post-edit anchor inventory)
+- [x] 67-02-PLAN.md — Wave 2: SWEEP-02 atomic-within-plan (6 D-03 line rewrites + 2 OP-10 callout block inserts + 2 tail-table Version History rows + 1 _glossary-macos.md coordinating row + 3 frontmatter last_verified bumps + 6 sidecar resolved_2026_05_26:true annotations + PITFALL-6 pre/post-edit anchor inventory) — atomic commit `55260b3` (5 files in ONE SHA; harness 15/15 PASS unchanged)
 - [ ] 67-03-PLAN.md — Wave 3: close-gate (full chain re-run via check-phase-66.mjs subprocess loop + harness 15/15 PASS + 67-VERIFICATION.md authoring + traceability flips across PROJECT.md/REQUIREMENTS.md/ROADMAP.md/STATE.md)
 
 ### Phase 68: CHAIN_SKIP Root-Cause Resolution (Pillar B — Validator Surgery)
