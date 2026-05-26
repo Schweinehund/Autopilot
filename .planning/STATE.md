@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
-status: ready_to_plan
-stopped_at: Phase 67 complete (3/3) — ready to discuss Phase 68
-last_updated: 2026-05-26T16:48:02.917Z
-last_activity: 2026-05-26 -- Phase 67 SHIPPED (Pillar A — Corpus Surgical Sweeps; SWEEP-01 commit 3fb8ca5 + SWEEP-02 commit 55260b3 + close-gate Plan 67-03)
+status: planning
+stopped_at: Phase 68 context gathered
+last_updated: "2026-05-26T18:38:01.679Z"
+last_activity: 2026-05-26
 progress:
   total_phases: 9
   completed_phases: 1
@@ -155,9 +155,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T16:35:00.000Z
-Stopped at: Phase 67 SHIPPED 2026-05-26 (Plan 67-03 close-gate landed; SWEEP-01 + SWEEP-02 closed; 4/4 SC satisfied; harness 15/15 PASS; chain CHAIN_SKIP {48,51,58,60,61} identical to v1.6 close)
-Resume file: .planning/phases/67-corpus-surgical-sweeps-pillar-a-low-risk-warm-up/67-VERIFICATION.md
+Last session: 2026-05-26T18:38:01.659Z
+Stopped at: Phase 68 context gathered
+Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-CONTEXT.md
 Next action: `/gsd:discuss-phase 68` (Pillar B CHAIN_SKIP root-cause resolution — CHAIN-01 CRLF regex fixes in check-phase-{51,58}.mjs + CHAIN-02 archive-path detection in check-phase-48.mjs + V-62-ANCHORS resolver + line-number drift fix in regenerate-supervision-pins.mjs --self-test + CHAIN-03 cascade fixes + ATOMIC removal of {48,51,58,60,61} from CHAIN_SKIP arrays across check-phase-62..66.mjs)
 
 ## Decisions
