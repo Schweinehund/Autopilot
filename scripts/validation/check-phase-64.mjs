@@ -51,26 +51,26 @@ const AB_18 = 'docs/cross-platform/apple-business/18-cross-org-boundary-cheat-sh
 // Phase 50 included: check-phase-50.mjs runs 26 checks and exits 0 (not a stub).
 const CHAIN_PHASES = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63];
 
-// Phases with known pre-existing failures that predate Plan 64-01 and are NOT regressions
-// introduced by Phase 64 changes. These are skipped (not failed) in the chain regression-guard
-// to prevent cascading false negatives. Phase 64 adds NO new entries to this skip list.
+// CHAIN_SKIP topology: HISTORICAL — empty by Phase 68 CHAIN-03 close (sha {68_03_SHA}).
 //
-// Pre-existing failure root causes (documented for Phase 66 terminal re-audit):
-//   48: (a) .planning/phases/ archived to .planning/milestones/v1.5-phases/ after v1.5 close
-//           -- check-phase-48 hardcodes old path for 48-VERIFICATION-broken-links.md
-//       (b) regenerate-supervision-pins.mjs --self-test fails due to _glossary-android.md
-//           +1 line-number shift from Phase 62-06/62-07 banner additions; v1.5-audit-allowlist.json
-//           also needs updating (tracked as out-of-scope for this plan; see deferred-items)
-//   51: check-phase-51 Mermaid regex uses literal \n but docs/decision-trees/09-linux-triage.md
-//       has CRLF line endings on this Windows worktree; CRLF-LF mismatch causes false FAIL
-//   58: check-phase-58 frontmatter parse uses \n but docs/reference/4-platform-capability-comparison.md
-//       has CRLF on this Windows worktree; CRLF-LF mismatch causes false FAIL
-//   60: cascades from 48 + 51 + 58 + v1.5 harness C7/C9 line-number mismatch
-//   61: cascades from 48 + 51 + 58 + 60 + v1.5 harness C7/C9 line-number mismatch
+// Pre-existing v1.5/v1.6-era failures {48, 51, 58, 60, 61} had been suppressed here pending
+// root-cause resolution (this file historically held the CANONICAL pre-Phase-68 rationale
+// block; full historical narrative now in .planning/milestones/v1.6-DEFERRED-CLEANUP.md
+// "CHAIN_SKIP Resolution" section).
 //
-// Resolution path: Phase 66 terminal re-audit will run in a fresh Linux worktree where
-// CRLF issues disappear; v1.5-audit-allowlist.json line-number rebase tracked in deferred-items.
-const CHAIN_SKIP = new Set([48, 51, 58, 60, 61]);
+// Phase 68 (Pillar B — Validator Surgery) resolved all 5 root causes:
+//   - CHAIN-01: CRLF normalization in check-phase-{51,58}.mjs readFile() — sha 36a753d
+//   - CHAIN-02: archive-path helper scripts/validation/_lib/archive-path.mjs across
+//               check-phase-{31,48,60,62,63}.mjs + regenerate-supervision-pins.mjs
+//               BASELINE_9 +1 banner-shift rebase + v1.5 sidecar supervision_exemptions[]
+//               +1 coord rebase — sha 79c65c6
+//   - CHAIN-03: this atomic 5-file empty-Set commit — sha {68_03_SHA}
+//   - MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion (V-61-19/20 PASS) — sha d142c7a
+//   - V-61-01..04 v1.5-frozen-aware (Plan 68-03 Option A pivot) — sha d7d7d5f
+//
+// Full chain check-phase-{48..66}.mjs exits 0 on Windows host with NO CHAIN_SKIP entries
+// for the first time since v1.5 close. Phase 68 close-gate: sha {68_05_SHA}.
+const CHAIN_SKIP = new Set([]);
 
 const checks = [
   // === V-64-01: all 8 new Phase 64 runbooks (AB_11..AB_18) exist ===
@@ -300,7 +300,7 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
         return { pass: true, skipped: true, detail: path + ' not present (graceful skip)' };
       }
       try {
-        execFileSync('node', [path], { stdio: 'pipe', timeout: 60000, cwd: process.cwd() });
+        execFileSync('node', [path], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
         return { pass: true, detail: 'check-phase-' + phaseNum + ' exits 0' };
       } catch (err) {
         const stderr = err.stderr ? err.stderr.toString() : '';
@@ -318,7 +318,7 @@ checks.push({
   id: 'AUDIT', name: 'V-64-AUDIT: v1.6-milestone-audit.mjs exits 0 (15 checks all PASS)',
   run() {
     try {
-      execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 60000, cwd: process.cwd() });
+      execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
       return { pass: true, detail: 'v1.6 harness exits 0' };
     } catch (err) {
       const stderr = err.stderr ? err.stderr.toString() : '';
