@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
-status: executing
-stopped_at: Phase 68 complete (Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery SHIPPED 2026-05-26; CHAIN-01 + CHAIN-02 + CHAIN-03 all closed; full chain check-phase-{48..66}.mjs exits 0 with 0 SKIPPED across all 19 phases — first time since v1.5 close); ready for Phase 69 (Pillar C — CI-Linux Hardening; CILINUX-01)
-last_updated: "2026-05-26T22:00:00Z"
+status: ready_to_plan
+stopped_at: Phase 68 complete (5/5) — ready to discuss Phase 69
+last_updated: 2026-05-26T22:13:54.352Z
 last_activity: 2026-05-26 -- Phase 68 Plan 68-05 closed (close-gate landed 68-VERIFICATION.md NEW + v1.7-DEFERRED-CLEANUP.md NEW stub + PROJECT.md/REQUIREMENTS.md CHAIN-01/02/03 Active→Validated flips + STATE.md/ROADMAP.md updates + 5 chain validator `{68_03_SHA}` placeholder substitution in preceding Commit A `3814bee`; Phase 68 (Pillar B — Validator Surgery) SHIPPED; 5/5 plans complete; CHAIN-01 + CHAIN-02 + CHAIN-03 all closed; full chain exits 0 with 0 SKIPPED — first time since v1.5 close)
 progress:
   total_phases: 4
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 69 — ci-linux-hardening-pillar-c-cilinux-01 (entry-phase planning; Phase 68 SHIPPED)
+**Current focus:** Phase 69 — ci linux hardening (pillar c — cross os verification)
 
 ## Current Position
 
-Phase: 69 (ci-linux-hardening-pillar-c-cilinux-01) — NOT STARTED
-Plan: 0 of TBD (Phase 68 SHIPPED 2026-05-26 — all 5 plans complete with closing SHAs)
-Status: Phase 68 complete; ready for Phase 69 planning + execution
-Last activity: 2026-05-26 -- Phase 68 Plan 68-05 closed (close-gate); Phase 68 (Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery) SHIPPED 2026-05-26. 5/5 plans complete; CHAIN-01 + CHAIN-02 + CHAIN-03 all closed (Active → Validated traceability flipped across PROJECT.md / REQUIREMENTS.md). Closing SHAs: Plan 68-01 `36a753d` (CHAIN-01 CRLF readFile centralization) + Plan 68-02 `79c65c6` (CHAIN-02 archive-path helper + self-test lineage repoint + v1.5 sidecar broad rebase) + Plan 68-03 Task 1 `d7d7d5f` (V-61-01..04 v1.5-frozen-aware Option A pivot precondition) + Plan 68-03 Task 2 `7b635ca` (CHAIN-03 atomic 5-file CHAIN_SKIP empty-Set substitution) + Plan 68-04 `d142c7a` (MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion) + Plan 68-05 Commit A `3814bee` ({68_03_SHA} placeholder fill across 5 chain validators) + Plan 68-05 Commit B (this close-gate commit). Full chain check-phase-{48..66}.mjs exits 0 across all 19 phases with 0 SKIPPED — **first time since v1.5 close**; v1.5-harness 12/12 PASS in fully-blocking mode (was 9/12); v1.6-harness 15/15 PASS unchanged; regenerate-supervision-pins.mjs --self-test PASS. Discoveries routed to v1.7-DEFERRED-CLEANUP.md (NEW stub authored at Phase 68 close): ARCHIVE-01 (cdcce23 archive-script root cause) + ARCHIVE-02 (v1.2 placeholder residue) + HARNESS-FORWARD-01 (v1.5-frozen-aware pattern for Phase 70 HARNESS-03 carry-forward) + TIMEOUT-01 (60s→300s discovery for Phase 69 CI-Linux first-run timing measurement) + CHAIN-31 CLOSED.
+Phase: 69
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-05-26
 
 ## v1.7 Phase Dependency Summary
 
