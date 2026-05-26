@@ -286,7 +286,8 @@ function scanSupervisionOccurrences() {
 // ---------------------------------------------------------------------------
 
 function doReport() {
-  const allow = parseAllowlist('scripts/validation/v1.4-audit-allowlist.json');
+  // v1.6 sidecar per Plan 68-02 D-03 lineage repoint (REVIEW WR-01 polish — close coverage gap from doSelfTest line 429)
+  const allow = parseAllowlist('scripts/validation/v1.6-audit-allowlist.json');
   const pinned = (allow.supervision_exemptions || []).slice();
   const pinnedKeys = new Set(pinned.map(e => e.file + ':' + e.line));
 
@@ -331,7 +332,8 @@ function doReport() {
 // ---------------------------------------------------------------------------
 
 function doEmitStubs() {
-  const allow = parseAllowlist('scripts/validation/v1.4-audit-allowlist.json');
+  // v1.6 sidecar per Plan 68-02 D-03 lineage repoint (REVIEW WR-01 polish — close coverage gap from doSelfTest line 429)
+  const allow = parseAllowlist('scripts/validation/v1.6-audit-allowlist.json');
   const pinnedKeys = new Set((allow.supervision_exemptions || []).map(e => e.file + ':' + e.line));
 
   const { tier1, tier2 } = scanSupervisionOccurrences();

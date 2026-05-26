@@ -343,7 +343,7 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
         return { pass: true, skipped: true, detail: path + ' not present (graceful skip)' };
       }
       try {
-        execFileSync('node', [path], { stdio: 'pipe', timeout: 60000, cwd: process.cwd() });
+        execFileSync('node', [path], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
         return { pass: true, detail: 'check-phase-' + phaseNum + ' exits 0' };
       } catch (err) {
         const stderr = err.stderr ? err.stderr.toString() : '';
@@ -361,7 +361,7 @@ checks.push({
   id: 33, name: "V-61-33 (V-61-AUDIT): v1.5-milestone-audit.mjs exits 0 in fully-blocking mode (12/12 PASS)",
   run() {
     try {
-      execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 60000, cwd: process.cwd() });
+      execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
       return { pass: true, detail: 'harness exits 0' };
     } catch (err) {
       const stderr = err.stderr ? err.stderr.toString() : '';

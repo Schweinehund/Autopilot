@@ -17,6 +17,9 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 export function resolveArchivedPhasePath(phaseSuffix, milestoneRoots = ['v1.5-phases']) {
+  // REVIEW WR-03 polish: reject empty/null/whitespace input to prevent directory-only
+  // resolution (e.g., '.planning/phases/'). Callers MUST pass a non-empty phase suffix.
+  if (typeof phaseSuffix !== 'string' || phaseSuffix.trim() === '') return null;
   const live = '.planning/phases/' + phaseSuffix;
   if (existsSync(join(process.cwd(), live))) return live;
   for (const root of milestoneRoots) {
