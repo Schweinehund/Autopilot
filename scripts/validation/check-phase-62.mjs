@@ -45,7 +45,7 @@ const GLOSSARIES_4 = ['docs/_glossary.md', 'docs/_glossary-macos.md', 'docs/_glo
 // Phase 50 stub excluded per check-phase-61.mjs precedent (stub validator; not full check).
 const CHAIN_PHASES = [48, 49, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61];
 
-// CHAIN_SKIP topology: HISTORICAL — empty by Phase 68 CHAIN-03 close (sha {68_03_SHA}).
+// CHAIN_SKIP topology: HISTORICAL — empty by Phase 68 CHAIN-03 close (sha 7b635ca).
 //
 // Pre-existing v1.5/v1.6-era failures {48, 51, 58, 60, 61} had been suppressed here pending
 // root-cause resolution (documented at scripts/validation/check-phase-64.mjs:55-73 prior to
@@ -58,7 +58,7 @@ const CHAIN_PHASES = [48, 49, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61];
 //               check-phase-{31,48,60,62,63}.mjs + regenerate-supervision-pins.mjs
 //               BASELINE_9 +1 banner-shift rebase + v1.5 sidecar supervision_exemptions[]
 //               +1 coord rebase — sha 79c65c6
-//   - CHAIN-03: this atomic 5-file empty-Set commit — sha {68_03_SHA}
+//   - CHAIN-03: this atomic 5-file empty-Set commit — sha 7b635ca
 //   - MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion (V-61-19/20 PASS) — sha d142c7a
 //   - V-61-01..04 v1.5-frozen-aware (Plan 68-03 Option A pivot) — sha d7d7d5f
 //
