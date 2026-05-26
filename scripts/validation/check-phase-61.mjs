@@ -27,6 +27,22 @@ function readFile(relPath) {
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
 }
 
+// Reads REQUIREMENTS.md state at v1.5-close SHA ba2cbc0 (frozen state for V-61-01..04 structural assertions).
+// V1.5-frozen-aware per Plan 68-03 Option A pivot (gray-area-pick surfaced during execution; user approved).
+// Rationale: V-61-01..04 originally asserted post-Plan-61-04 state of `## v1.5 Requirements (Active)` section.
+// REQUIREMENTS.md has since been reorganized for v1.7 (`## v1.7 Requirements (Active)` at line 6;
+// v1.5 reqs migrated to PROJECT.md `## Validated` per Phase 61-03 commit 0302100; v1.7 active section
+// added per commit 939a8af). Reading the v1.5-close SHA preserves the original assertion semantics
+// without breaking on v1.7 reorg. Same v1.5-frozen-aware pattern as the archive-path helper from
+// Plan 68-02 CHAIN-02 (validator becomes archive-aware).
+function readRequirementsAtV15Close() {
+  try {
+    return execFileSync('git', ['show', 'ba2cbc0:.planning/REQUIREMENTS.md'], { encoding: 'utf8', timeout: 10000 }).replace(/\r\n/g, '\n');
+  } catch (err) {
+    return null;
+  }
+}
+
 const HARNESS = 'scripts/validation/v1.5-milestone-audit.mjs';
 const PIN_HELPER = 'scripts/validation/regenerate-supervision-pins.mjs';
 const REQUIREMENTS = '.planning/REQUIREMENTS.md';
@@ -45,50 +61,50 @@ const checks = [
   // === V-61-01..04: REQUIREMENTS.md active-section state ===
   // Pattern from RESEARCH code example lines 514-528 + Pitfall 4 lines 482-485
   {
-    id: 1, name: "V-61-01: REQUIREMENTS.md active-section has zero unchecked [ ] reqs (post-Plan-61-04 AUDIT-08 flip)",
+    id: 1, name: "V-61-01: REQUIREMENTS.md active-section has zero unchecked [ ] reqs (post-Plan-61-04 AUDIT-08 flip) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(REQUIREMENTS);
-      if (c === null) return { pass: false, detail: 'REQUIREMENTS.md missing' };
+      const c = readRequirementsAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       const activeMatch = c.match(/## v1\.5 Requirements \(Active\)([\s\S]*?)## Future Requirements/);
       if (!activeMatch) return { pass: false, detail: 'Active section boundaries not found' };
       const activeSection = activeMatch[1];
       const unchecked = (activeSection.match(/^- \[ \]/gm) || []).length;
       if (unchecked !== 0) return { pass: false, detail: unchecked + ' unchecked reqs remain in active section (Plan 61-04 should have flipped AUDIT-08)' };
-      return { pass: true, detail: 'active section: 0 unchecked [ ] reqs' };
+      return { pass: true, detail: 'active section: 0 unchecked [ ] reqs (v1.5-frozen @ ba2cbc0)' };
     }
   },
   {
-    id: 2, name: "V-61-02: REQUIREMENTS.md AUDIT-08 specifically flipped [x] (Plan 61-04 atomic close commit)",
+    id: 2, name: "V-61-02: REQUIREMENTS.md AUDIT-08 specifically flipped [x] (Plan 61-04 atomic close commit) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(REQUIREMENTS);
-      if (c === null) return { pass: false, detail: 'REQUIREMENTS.md missing' };
+      const c = readRequirementsAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       if (!/^- \[x\] \*\*AUDIT-08\*\*/m.test(c)) return { pass: false, detail: 'AUDIT-08 not flipped to [x]' };
-      return { pass: true, detail: 'AUDIT-08 flipped' };
+      return { pass: true, detail: 'AUDIT-08 flipped (v1.5-frozen @ ba2cbc0)' };
     }
   },
   {
-    id: 3, name: "V-61-03: REQUIREMENTS.md active reqs all carry inline traceability comments per CONTEXT D-09 template",
+    id: 3, name: "V-61-03: REQUIREMENTS.md active reqs all carry inline traceability comments per CONTEXT D-09 template [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(REQUIREMENTS);
-      if (c === null) return { pass: false, detail: 'REQUIREMENTS.md missing' };
+      const c = readRequirementsAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       const activeMatch = c.match(/## v1\.5 Requirements \(Active\)([\s\S]*?)## Future Requirements/);
       if (!activeMatch) return { pass: false, detail: 'Active section boundaries not found' };
       const activeSection = activeMatch[1];
       const flipped = (activeSection.match(/^- \[x\] \*\*[A-Z]+-[0-9]+\*\*/gm) || []).length;
       const traceable = (activeSection.match(/^- \[x\] \*\*[A-Z]+-[0-9]+\*\*[^\n]*— completed [0-9]{4}-[0-9]{2}-[0-9]{2} in Phase /gm) || []).length;
       if (traceable < flipped) return { pass: false, detail: (flipped - traceable) + ' flipped reqs lack traceability comment' };
-      return { pass: true, detail: flipped + '/' + flipped + ' flipped reqs have traceability comments' };
+      return { pass: true, detail: flipped + '/' + flipped + ' flipped reqs have traceability comments (v1.5-frozen @ ba2cbc0)' };
     }
   },
   {
-    id: 4, name: "V-61-04: REQUIREMENTS.md §Future Requirements legitimately deferred items preserved (LIN-DEFER-01, RHEL-01, BYOPC-01, WEB-01, CHROMEOS-01, CODE-01)",
+    id: 4, name: "V-61-04: REQUIREMENTS.md §Future Requirements legitimately deferred items preserved (LIN-DEFER-01, RHEL-01, BYOPC-01, WEB-01, CHROMEOS-01, CODE-01) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(REQUIREMENTS);
-      if (c === null) return { pass: false, detail: 'REQUIREMENTS.md missing' };
+      const c = readRequirementsAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       const expected = ['LIN-DEFER-01', 'RHEL-01', 'BYOPC-01', 'WEB-01', 'CHROMEOS-01', 'CODE-01'];
       const missing = expected.filter(e => !c.includes(e));
       if (missing.length > 0) return { pass: false, detail: 'Missing deferred items: ' + missing.join(', ') };
-      return { pass: true, detail: 'all 6 §Future Requirements deferrals preserved' };
+      return { pass: true, detail: 'all 6 §Future Requirements deferrals preserved (v1.5-frozen @ ba2cbc0)' };
     }
   },
 
