@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 68 Plan 68-02 complete (CHAIN-02)
-last_updated: "2026-05-26T20:01:14Z"
-last_activity: 2026-05-26 -- Phase 68 Plan 68-02 closed (CHAIN-02 archive-path helper + self-test lineage repoint + v1.5 sidecar broad rebase; commit 79c65c6)
+stopped_at: Phase 68 Plan 68-04 complete (MILESTONES.md cdcce23 garbage-entry deletion)
+last_updated: "2026-05-26T20:08:00Z"
+last_activity: 2026-05-26 -- Phase 68 Plan 68-04 closed (MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion — 70 lines removed; V-61-19/20 FAIL→PASS; commit d142c7a)
 progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 8
-  completed_plans: 5
-  percent: 17
+  completed_plans: 6
+  percent: 19
 ---
 
 # Project State
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 68 (chain-skip-root-cause-resolution-pillar-b-validator-surgery) — EXECUTING
-Plan: 3 of 5 (Plan 68-01 closed at commit `36a753d`; Plan 68-02 closed at commit `79c65c6`)
+Plan: 4 of 5 (Plan 68-01 closed at commit `36a753d`; Plan 68-02 closed at commit `79c65c6`; Plan 68-04 closed at commit `d142c7a`; next Wave 2 = Plan 68-03 ATOMIC CHAIN_SKIP removal)
 Status: Executing Phase 68
-Last activity: 2026-05-26 -- Phase 68 Plan 68-02 closed (CHAIN-02 archive-path helper at scripts/validation/_lib/archive-path.mjs + 5 call-site replacements across check-phase-{31,48,60,62,63}.mjs + regenerate-supervision-pins.mjs BASELINE_9 +1 banner shift + parseAllowlist lineage repoint v1.5→v1.6 + v1.5-audit-allowlist.json broad rebase across supervision_exemptions+c7_knox_allowlist+safetynet_exemptions+c9_exemptions for 17 _glossary-android.md entries; v1.5-milestone-audit.mjs 9/12→12/12 PASS in fully-blocking mode; self-test FAIL→PASS; check-phase-48 5/7→7/7; check-phase-60 19/25→25/25; check-phase-31 silent-swallow data-integrity bug CLOSED + V-31-21/V-31-24 preserved)
+Last activity: 2026-05-26 -- Phase 68 Plan 68-04 closed (MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion via single-file atomic commit; lines 3-71 deleted = 70 lines; line count 208→138; ^## v1.5 count 2→1 with correct entry "Shipped: 2026-05-07" promoted to line 3; V-61-19 + V-61-20 FAIL→PASS via indexOf('## v1.5 ') now returning correct entry; zero content authoring per CONTEXT D-04 surgical deletion mechanism; 3 pre-existing 'One-liner:' residue in v1.2 section flagged for v1.7-DEFERRED-CLEANUP.md ARCHIVE-01 line item via Plan 68-05 close-gate)
 
 ## v1.7 Phase Dependency Summary
 
@@ -155,10 +155,10 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T20:01:14Z
-Stopped at: Phase 68 Plan 68-02 complete (CHAIN-02 commit 79c65c6); ready for Plan 68-03 (ATOMIC CHAIN_SKIP removal — depends on Plan 68-04 MILESTONES.md deletion also landing first so cascade is fully-green before CHAIN_SKIP strip)
-Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-02-SUMMARY.md
-Next action: `/gsd:execute-phase 68` Plan 68-02 (CHAIN-02 archive-path helper + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase across supervision_exemptions[] + c7_knox_allowlist[] + cope_banned_phrases[] for _glossary-android.md +1 banner-shift entries)
+Last session: 2026-05-26T20:08:00Z
+Stopped at: Phase 68 Plan 68-04 complete (MILESTONES.md cdcce23 garbage v1.5 H2 deletion, commit d142c7a); all 3 Wave 1 plans LANDED (68-01 + 68-02 + 68-04); ready for Wave 2 Plan 68-03 (ATOMIC CHAIN_SKIP removal across check-phase-62..66.mjs in single git SHA per Phase 66-02 3a9a671 precedent)
+Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-04-SUMMARY.md
+Next action: `/gsd:execute-phase 68` Plan 68-03 (CHAIN-03 ATOMIC 5-file CHAIN_SKIP empty-Set substitution across check-phase-{62,63,64,65,66}.mjs in ONE indivisible commit; pre-removal cascade-verify confirms 68-01 + 68-02 + 68-04 cumulatively cascade-green chain; comment block above each CHAIN_SKIP Set updated to cite Plan 68-04 SHA d142c7a + Plan 68-03 SHA-of-this-commit)
 
 ## Decisions
 
@@ -186,6 +186,17 @@ Next action: `/gsd:execute-phase 68` Plan 68-02 (CHAIN-02 archive-path helper + 
 - Unheaded tail-table append convention is OLDEST-FIRST per plan text line 491 (executor self-corrected during Wave 4 — see SUMMARY Deviations Rule 3 note); glossary `## Version History` H2 table uses NEWEST-FIRST per 67-PATTERNS.md:146
 - Pre-commit + post-commit validator exit codes IDENTICAL: harness 15/15 PASS / check-phase-62 28/1/5 (pre-existing V-62-ANCHORS) / check-phase-66 19/4/5 (pre-existing V-66-CHAIN cascade) — zero new validator regression introduced by Plan 67-02
 - Plan 67-02 confirms the v1.7 Pillar A "Low-Risk Warm-Up" atomic-edit pattern: atomic-within-plan commit + Version History rows + sidecar annotation + chain validator re-runs identical to baseline
+
+### Phase 68 — Plan 04 (MILESTONES.md cdcce23 garbage-entry deletion; 2026-05-26)
+
+- D-04 Option E executed per CONTEXT.md: surgical deletion of 69-line cdcce23 garbage v1.5 H2 entry from `.planning/MILESTONES.md` lines 3-71 inclusive (plus trailing `---` separator on line 72 = 70 total lines deleted); zero content authoring (per CONTEXT.md D-04: "V-61-19 + V-61-20 are NOT content gaps — corpus-defect"); single-file atomic commit `d142c7a`
+- Pre-delete boundary verification confirmed line 71 = `---` separator and line 73 = correct H2 with `Shipped: 2026-05-07` attribution (NOT the garbage `Shipped: 2026-05-08`); used Edit tool with verbatim multi-line `old_string`/`new_string` for byte-perfect line-ending preservation (per threat T-68-04-LE — avoided Set-Content CRLF/LF drift risk)
+- Pre-delete state: line count 208; `^## v1.5` matches = 2 (lines 3 + 73); V-61-19 + V-61-20 BOTH FAIL via validator `indexOf('## v1.5 ')` returning garbage entry first
+- Post-delete state: line count 138; `^## v1.5` matches = 1 (line 3); V-61-19 + V-61-20 BOTH PASS via validator `indexOf('## v1.5 ')` now returning correct entry
+- Scripted-extraction debris eliminated: zero `NO COMMIT MADE.` (was 2), zero `Hash:` (was 1), zero `Pre-edit:` (was 1), zero `Total file size:` (was 1), zero `SUBSUMED BY PLAN 48-01.` (was 2), 27+ `One-liner:` placeholder reduced to 3 (the 3 remaining are pre-existing v1.2-section residue from an EARLIER archive defect, NOT cdcce23 — out of Phase 68-04 scope)
+- Other H2 entries (v1.4.1, v1.4, v1.3, v1.2, v1.1, v1.0) below the deleted range remain byte-unchanged
+- Discovery routed to Plan 68-05 close-gate authoring v1.7-DEFERRED-CLEANUP.md ARCHIVE-01 line item: (1) cdcce23 archive-script garbage-insert ROOT CAUSE itself out of Phase 68 scope per CONTEXT D-04 §5.2; (2) 3 pre-existing `One-liner:` residue in v1.2 section (lines 112/113/115 post-edit) from an earlier archive defect class; (3) Phase 70 v1.7 milestone-archival MAY RE-TRIGGER the same defect — Plan 70 author audit checklist required
+- Wave 1 complete: 3 file-disjoint plans (68-01 + 68-02 + 68-04) all landed; chain cascade-ready for Wave 2 Plan 68-03 ATOMIC CHAIN_SKIP removal per Phase 66-02 atomic-harness-commit precedent
 
 ### Phase 68 — Plan 01 (CHAIN-01 CRLF readFile() centralization; 2026-05-26)
 
