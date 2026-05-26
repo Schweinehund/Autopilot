@@ -76,8 +76,8 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SWEEP-01 | Phase 67 | Pending |
-| SWEEP-02 | Phase 67 | Pending |
+| SWEEP-01 | Phase 67 | Complete |
+| SWEEP-02 | Phase 67 | Complete |
 | CHAIN-01 | Phase 68 | Pending |
 | CHAIN-02 | Phase 68 | Pending |
 | CHAIN-03 | Phase 68 | Pending |
