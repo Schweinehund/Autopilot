@@ -296,7 +296,13 @@ Deferred backlog: [milestones/v1.6-DEFERRED-CLEANUP.md](milestones/v1.6-DEFERRED
   3. Cascade fixes applied to `check-phase-60.mjs` and `check-phase-61.mjs` (downstream of CHAIN-01 + CHAIN-02 root causes); both exit 0 on Windows host without suppression
   4. CHAIN_SKIP arrays in `check-phase-62.mjs` through `check-phase-66.mjs` have entries {48, 51, 58, 60, 61} REMOVED in a single atomic commit (preserves chain-validator indivisibility per v1.6 Phase 66-02 precedent); full chain `check-phase-{48..66}.mjs` exits 0 on the local Windows host with NO SKIPPED entries reported
   5. `regenerate-supervision-pins.mjs --self-test` exits 0; no out-of-band corpus edits introduced (validator-only commit; corpus already cleaned by Phase 67)
-**Plans:** TBD
+**Plans:** 5 plans
+Plans:
+- [ ] 68-01-PLAN.md — Wave 1: CHAIN-01 readFile() CRLF centralization in check-phase-{51,58}.mjs
+- [ ] 68-02-PLAN.md — Wave 1: CHAIN-02 archive-path helper (NEW _lib/) + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase
+- [ ] 68-03-PLAN.md — Wave 2: CHAIN-03 ATOMIC 5-file CHAIN_SKIP empty-Set substitution across check-phase-{62,63,64,65,66}.mjs (ONE git SHA per Phase 66-02 3a9a671 precedent)
+- [ ] 68-04-PLAN.md — Wave 1: MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion (lines 3-71; V-61-19/20 PASS)
+- [ ] 68-05-PLAN.md — Wave 3: close-gate (68-VERIFICATION.md authoring + v1.7-DEFERRED-CLEANUP.md stub creation + traceability flips PROJECT/REQUIREMENTS/STATE/ROADMAP + SHA-placeholder fill in 5 chain validators)
 
 ### Phase 69: CI-Linux Hardening (Pillar C — Cross-OS Verification)
 **Goal**: Add an `ubuntu-latest` runner job that executes the full validator chain `check-phase-{48..66}.mjs` + applicable milestone-audit harnesses on Linux LF line endings — proving the CRLF regex fixes from Phase 68 hold on Linux AND catching CRLF-style regressions in CI before they hit local Windows development. Coexists with existing per-version workflows (v1.4 + v1.5 + v1.6) with zero modifications to predecessors.
