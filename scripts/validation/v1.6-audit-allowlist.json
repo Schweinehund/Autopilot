@@ -78,10 +78,10 @@
   ],
   "c13_rotting_external": {
     "ci_1_abm_urls": [
-      { "url": "https://business.apple.com", "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 92, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand; included for completeness — quarterly check confirms reachability", "category": "live_url_quarterly_check" },
-      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/01-abm-configuration.md", "line": 52, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check" },
-      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 105, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check" },
-      { "url": "https://business.apple.com", "file": "docs/_glossary-macos.md", "line": 64, "reason": "ABM live portal URL in definitional prose; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check" }
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 92, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand; included for completeness — quarterly check confirms reachability", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" },
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/01-abm-configuration.md", "line": 52, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" },
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 105, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" },
+      { "url": "https://business.apple.com", "file": "docs/_glossary-macos.md", "line": 64, "reason": "ABM live portal URL in definitional prose; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" }
     ],
     "ci_2_vpp_location_token": [
       { "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 71, "term": "VPP (Apps and Books) location token", "context": "prerequisites bullet", "reason": "legacy 'VPP location token' term retained per Q5(b) no-corpus-sweep contract; rename deferred to v1.7+ CI-2", "category": "legacy_term_surgical_rename_candidate" },
