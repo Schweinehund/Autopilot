@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 68 Plan 68-03 complete (ATOMIC CHAIN_SKIP removal + Option A pivot precondition; full chain green for first time since v1.5 close)
-last_updated: "2026-05-26T21:10:00Z"
-last_activity: 2026-05-26 -- Phase 68 Plan 68-03 closed (ATOMIC 5-file CHAIN_SKIP empty-Set substitution across check-phase-{62..66}.mjs in single SHA `7b635ca` per Phase 66-02 3a9a671 precedent; preceded by precondition commit `d7d7d5f` v1.5-frozen-aware V-61-01..04 reads REQUIREMENTS.md @ ba2cbc0 — Option A pivot resolving REQUIREMENTS.md v1.7-reorg-mismatch; subprocess timeout 60s→300s auto-applied per Rule 3 to accommodate recursive chain expansion; full chain check-phase-{48..66}.mjs exits 0 with 0 SKIPPED across all 19 phases — first time since v1.5 close; v1.5-harness 12/12 + v1.6-harness 15/15 + self-test PASS unchanged)
+stopped_at: Phase 68 complete (Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery SHIPPED 2026-05-26; CHAIN-01 + CHAIN-02 + CHAIN-03 all closed; full chain check-phase-{48..66}.mjs exits 0 with 0 SKIPPED across all 19 phases — first time since v1.5 close); ready for Phase 69 (Pillar C — CI-Linux Hardening; CILINUX-01)
+last_updated: "2026-05-26T22:00:00Z"
+last_activity: 2026-05-26 -- Phase 68 Plan 68-05 closed (close-gate landed 68-VERIFICATION.md NEW + v1.7-DEFERRED-CLEANUP.md NEW stub + PROJECT.md/REQUIREMENTS.md CHAIN-01/02/03 Active→Validated flips + STATE.md/ROADMAP.md updates + 5 chain validator `{68_03_SHA}` placeholder substitution in preceding Commit A `3814bee`; Phase 68 (Pillar B — Validator Surgery) SHIPPED; 5/5 plans complete; CHAIN-01 + CHAIN-02 + CHAIN-03 all closed; full chain exits 0 with 0 SKIPPED — first time since v1.5 close)
 progress:
-  total_phases: 9
-  completed_phases: 1
+  total_phases: 4
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 7
-  percent: 22
+  completed_plans: 8
+  percent: 50
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 68 — chain-skip-root-cause-resolution-pillar-b-validator-surgery
+**Current focus:** Phase 69 — ci-linux-hardening-pillar-c-cilinux-01 (entry-phase planning; Phase 68 SHIPPED)
 
 ## Current Position
 
-Phase: 68 (chain-skip-root-cause-resolution-pillar-b-validator-surgery) — EXECUTING
-Plan: 5 of 5 (Plan 68-01 closed at commit `36a753d`; Plan 68-02 closed at commit `79c65c6`; Plan 68-04 closed at commit `d142c7a`; Plan 68-03 closed in 2 commits — precondition `d7d7d5f` + atomic `7b635ca`; next Wave 3 = Plan 68-05 close-gate)
-Status: Executing Phase 68
-Last activity: 2026-05-26 -- Phase 68 Plan 68-03 closed (ATOMIC 5-file CHAIN_SKIP empty-Set substitution across check-phase-{62..66}.mjs in single SHA `7b635ca` per Phase 66-02 3a9a671 atomic-harness-commit precedent; 5 files staged in ONE git add + ONE git commit; uniform Phase-68-closure narrative replaces per-file canonical comment blocks with {68_01_SHA}/{68_02_SHA}/{68_04_SHA} filled and {68_03_SHA}/{68_05_SHA} left as literal placeholders for Plan 68-05 close-gate fill; preceded by precondition commit `d7d7d5f` v1.5-frozen-aware V-61-01..04 reads REQUIREMENTS.md @ v1.5-close SHA ba2cbc0 via execFileSync('git', ['show', ...]) — Option A pivot user-approved at checkpoint to resolve REQUIREMENTS.md v1.7-reorg-mismatch; subprocess timeout 60s→300s auto-applied per Rule 3 across 10 sites in 5 files to accommodate empty-CHAIN_SKIP recursive chain expansion (check-phase-65 standalone now ~102s; previously bounded by skip); full chain check-phase-{48..66}.mjs exits 0 with 0 SKIPPED across all 19 phases — first time since v1.5 close; v1.5-harness 12/12 + v1.6-harness 15/15 + self-test PASS unchanged)
+Phase: 69 (ci-linux-hardening-pillar-c-cilinux-01) — NOT STARTED
+Plan: 0 of TBD (Phase 68 SHIPPED 2026-05-26 — all 5 plans complete with closing SHAs)
+Status: Phase 68 complete; ready for Phase 69 planning + execution
+Last activity: 2026-05-26 -- Phase 68 Plan 68-05 closed (close-gate); Phase 68 (Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery) SHIPPED 2026-05-26. 5/5 plans complete; CHAIN-01 + CHAIN-02 + CHAIN-03 all closed (Active → Validated traceability flipped across PROJECT.md / REQUIREMENTS.md). Closing SHAs: Plan 68-01 `36a753d` (CHAIN-01 CRLF readFile centralization) + Plan 68-02 `79c65c6` (CHAIN-02 archive-path helper + self-test lineage repoint + v1.5 sidecar broad rebase) + Plan 68-03 Task 1 `d7d7d5f` (V-61-01..04 v1.5-frozen-aware Option A pivot precondition) + Plan 68-03 Task 2 `7b635ca` (CHAIN-03 atomic 5-file CHAIN_SKIP empty-Set substitution) + Plan 68-04 `d142c7a` (MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion) + Plan 68-05 Commit A `3814bee` ({68_03_SHA} placeholder fill across 5 chain validators) + Plan 68-05 Commit B (this close-gate commit). Full chain check-phase-{48..66}.mjs exits 0 across all 19 phases with 0 SKIPPED — **first time since v1.5 close**; v1.5-harness 12/12 PASS in fully-blocking mode (was 9/12); v1.6-harness 15/15 PASS unchanged; regenerate-supervision-pins.mjs --self-test PASS. Discoveries routed to v1.7-DEFERRED-CLEANUP.md (NEW stub authored at Phase 68 close): ARCHIVE-01 (cdcce23 archive-script root cause) + ARCHIVE-02 (v1.2 placeholder residue) + HARNESS-FORWARD-01 (v1.5-frozen-aware pattern for Phase 70 HARNESS-03 carry-forward) + TIMEOUT-01 (60s→300s discovery for Phase 69 CI-Linux first-run timing measurement) + CHAIN-31 CLOSED.
 
 ## v1.7 Phase Dependency Summary
 
@@ -88,6 +88,7 @@ Phase 70 (Pillar D — v1.7 Harness Lineage Bump + Milestone Close)
 - v1.6: 5 phases (62-66), 30 plans — shipped 2026-05-25
 - **v1.7 (executing): 4 phases (67-70), 12-18 plans estimated, ~1 week elapsed time target**
 - Phase 67 (v1.7 Pillar A — Corpus Surgical Sweeps): 3 plans, shipped 2026-05-26 — SWEEP-01 + SWEEP-02 closed (Plan 67-01 `3fb8ca5` Branch A + Plan 67-02 `55260b3` atomic-within-plan + Plan 67-03 close-gate)
+- Phase 68 (v1.7 Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery): 5 plans, shipped 2026-05-26 — CHAIN-01 + CHAIN-02 + CHAIN-03 closed (Plan 68-01 `36a753d` CHAIN-01 + Plan 68-02 `79c65c6` CHAIN-02 + Plan 68-03 Task 1 `d7d7d5f` v1.5-frozen-aware precondition + Plan 68-03 Task 2 `7b635ca` ATOMIC CHAIN_SKIP empty-Set + Plan 68-04 `d142c7a` cdcce23 deletion + Plan 68-05 Commit A `3814bee` {68_03_SHA} placeholder fill + Plan 68-05 Commit B close-gate); full chain green for first time since v1.5 close; v1.5-frozen-aware pattern + subprocess timeout 60s→300s as v1.7+ architectural discoveries
 
 **Totals (through v1.6):** 66 phases, 310 plans, ~248 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, Android Enterprise, Linux (Ubuntu LTS), and Apple Business Delegated Governance (OUs + custom roles + delegation runbooks).
 
@@ -133,10 +134,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ### Pending Todos
 
-- Phase 68 plan authoring — read `scripts/validation/check-phase-64.mjs:65-73` documented root causes; sequence CHAIN-01 (CRLF) → CHAIN-02 (archive-path + line drift; will also resolve the V-62-ANCHORS archive-path drift surfaced as Phase 67 Discovery #2) → CHAIN-03 (cascade + atomic CHAIN_SKIP removal); atomic-commit pattern per Phase 66-02 precedent
-- Phase 69 plan authoring — staging strategy for ubuntu-latest job (extend v1.6 workflow transitionally OR stage directly into Phase 70 v1.7 workflow); verify cross-OS reproducibility on representative PR
-- Phase 70 plan authoring — Path-A copy v1.6 → v1.7 (milestone-audit.mjs + audit-allowlist.json + check-phase-67..70.mjs); CI workflow `audit-harness-v1.7-integrity.yml`; terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; v1.7-MILESTONE-AUDIT.md + v1.7-DEFERRED-CLEANUP.md authoring; traceability closure
-- `audit-harness-v1.6-integrity.yml` `rotting-external-quarterly` job first-fires 2026-07-01 — Phase 67 can verify first-fire artifact if execution lands after that date
+- Phase 69 plan authoring — staging strategy for ubuntu-latest job (extend v1.6 workflow transitionally OR stage directly into Phase 70 v1.7 workflow); verify cross-OS reproducibility on representative PR; Phase 69 CI-Linux first-run timing measurement to validate 300s subprocess-timeout headroom per Phase 68 TIMEOUT-01 discovery
+- Phase 70 plan authoring — Path-A copy v1.6 → v1.7 (milestone-audit.mjs + audit-allowlist.json + check-phase-67..70.mjs); CI workflow `audit-harness-v1.7-integrity.yml`; terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md stub (already authored at Phase 68 close) with v1.6 carry-overs + v1.7-execution-discovered items; carry-forward v1.5-frozen-aware pattern in HARNESS-03 Path-A copy per Phase 68 HARNESS-FORWARD-01 forward-coordination flag; audit cdcce23 archive-script defect recurrence post-archival per ARCHIVE-01; traceability closure
+- `audit-harness-v1.6-integrity.yml` `rotting-external-quarterly` job first-fires 2026-07-01 — Phase 69/70 can verify first-fire artifact if execution lands after that date
 
 ### Out-of-band carry-overs from v1.6 close
 
@@ -155,10 +155,10 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T21:10:00Z
-Stopped at: Phase 68 Plan 68-03 complete (ATOMIC CHAIN_SKIP removal commit `7b635ca` + Option A precondition commit `d7d7d5f`); Wave 1 + Wave 2 LANDED; ready for Wave 3 Plan 68-05 (close-gate authoring)
-Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-03-SUMMARY.md
-Next action: `/gsd:execute-phase 68` Plan 68-05 (Wave 3 close-gate: author 68-VERIFICATION.md + v1.7-DEFERRED-CLEANUP.md stub + traceability flips across PROJECT.md/REQUIREMENTS.md/STATE.md/ROADMAP.md + fill `{68_03_SHA}` placeholder with `7b635ca` across all 5 chain validators (check-phase-62..66.mjs) via sed -i + small follow-up commit OR amend; also fill `{68_05_SHA}` self-referential placeholder; document Option A pivot mechanism + subprocess timeout discovery in 68-VERIFICATION.md as v1.7 architectural patterns)
+Last session: 2026-05-26T22:00:00Z
+Stopped at: Phase 68 SHIPPED 2026-05-26 — all 5 plans complete (CHAIN-01 + CHAIN-02 + CHAIN-03 closed). Full chain check-phase-{48..66}.mjs exits 0 across all 19 phases with 0 SKIPPED — first time since v1.5 close. Plan 68-05 close-gate landed in 2 commits: Commit A `3814bee` (`{68_03_SHA}` placeholder fill across 5 chain validators) + Commit B (this close-gate; 68-VERIFICATION.md NEW + v1.7-DEFERRED-CLEANUP.md NEW + PROJECT.md/REQUIREMENTS.md/STATE.md/ROADMAP.md traceability flips + 68-05-SUMMARY.md). `{68_05_SHA}` placeholder remains as literal `{68_05_SHA}` per Plan 68-05 chicken-and-egg resolution — Phase 70+ readers can git log to find this close-gate SHA.
+Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-05-SUMMARY.md
+Next action: `/gsd:plan-phase 69` (Pillar C — CI-Linux Hardening / CILINUX-01) — author Phase 69 CONTEXT/RESEARCH/PLAN; staging strategy for ubuntu-latest runner job; verify cross-OS reproducibility; validate 300s subprocess-timeout headroom per Phase 68 TIMEOUT-01 discovery
 
 ## Decisions
 
@@ -186,6 +186,16 @@ Next action: `/gsd:execute-phase 68` Plan 68-05 (Wave 3 close-gate: author 68-VE
 - Unheaded tail-table append convention is OLDEST-FIRST per plan text line 491 (executor self-corrected during Wave 4 — see SUMMARY Deviations Rule 3 note); glossary `## Version History` H2 table uses NEWEST-FIRST per 67-PATTERNS.md:146
 - Pre-commit + post-commit validator exit codes IDENTICAL: harness 15/15 PASS / check-phase-62 28/1/5 (pre-existing V-62-ANCHORS) / check-phase-66 19/4/5 (pre-existing V-66-CHAIN cascade) — zero new validator regression introduced by Plan 67-02
 - Plan 67-02 confirms the v1.7 Pillar A "Low-Risk Warm-Up" atomic-edit pattern: atomic-within-plan commit + Version History rows + sidecar annotation + chain validator re-runs identical to baseline
+
+### Phase 68 — Plan 05 (close-gate; 2026-05-26)
+
+- Plan 68-05 close-gate satisfies all 5 ROADMAP.md Phase 68 SC#1-5 with consolidated evidence in `68-VERIFICATION.md`: SC#1 (CHAIN-01 INTENT-equivalence via D-01 Option B readFile centralization in check-phase-{51,58}.mjs at Plan 68-01 SHA `36a753d`; adversarial-wedge protection preserved zero regex-body changes) + SC#2 (CHAIN-02 archive-path helper `_lib/archive-path.mjs` + 5 call-sites + check-phase-31 STRETCH + regenerate-supervision-pins.mjs BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase across 4 array keys at Plan 68-02 SHA `79c65c6`; v1.5-harness 12/12 PASS in fully-blocking mode) + SC#3 (CHAIN-03 cascade — check-phase-60 25/25 PASS post-Plan-68-02; check-phase-61 34/34 PASS post-Plan-68-02 + post-Plan-68-04 + post-Plan-68-03 Task 1 v1.5-frozen-aware precondition `d7d7d5f`) + SC#4 (CHAIN_SKIP atomic 5-file empty-Set substitution at Plan 68-03 Task 2 SHA `7b635ca` per Phase 66-02 atomic-harness-commit precedent `3a9a671` + ROADMAP SC#4 contract; subprocess timeout 60s→300s bundled per Rule 3; full chain check-phase-{48..66}.mjs exits 0 with 0 SKIPPED — first time since v1.5 close) + SC#5 (regenerate-supervision-pins.mjs --self-test PASS; Plans 68-01/02/03 are validator-only commits; Plan 68-04 MILESTONES.md edit is planning-doc not corpus per 4 independent SoT — `docs/*` definition preserved)
+- v1.7-DEFERRED-CLEANUP.md NEW stub authored at `.planning/milestones/v1.7-DEFERRED-CLEANUP.md` per CONTEXT D-04 §"Deferred Ideas / Discovered during Phase 68 discussion" + 68-RESEARCH Open Question 3 resolution; contains ARCHIVE-01 (cdcce23 archive-script garbage-insert root cause; deferred to v1.8+ pending Phase 70 v1.7 milestone-archival re-trigger audit) + ARCHIVE-02 (3 pre-existing `One-liner:` placeholder residue in v1.2 section from earlier archive defect class) + HARNESS-FORWARD-01 (v1.5-frozen-aware validator pattern carry-forward for Phase 70 HARNESS-03 Path-A copy of check-phase-66.mjs → check-phase-{67..70}.mjs) + TIMEOUT-01 (subprocess timeout 60s→300s discovery; forward coordination flag for Phase 69 CI-Linux first-run timing measurement) + CHAIN-31 (CLOSED — check-phase-31 silent-swallow data-integrity bug closure via _missing marker in Plan 68-02 STRETCH) + Carry-forward placeholder bullet listing v1.6 → v1.7 carry-over items for Phase 70 HARNESS-06 extension at v1.7 close
+- Plan 68-05 landed in 2 commits: Commit A `3814bee` (`{68_03_SHA}` placeholder substitution with `7b635ca` across 5 chain validators check-phase-{62,63,64,65,66}.mjs; 10 occurrences = 2 per file; comment-only edit with no semantic change; post-fill check-phase-{62,63,64} all exit 0 with 34/32/29 PASS unchanged) + Commit B (this close-gate commit: 68-VERIFICATION.md NEW + v1.7-DEFERRED-CLEANUP.md NEW + PROJECT.md CHAIN-01/02/03 Validated section gains 3 rows + REQUIREMENTS.md Active-list checkboxes flipped [ ]→[x] at lines 18+20 + Traceability table rows flipped Pending→Complete at lines 81+82 + STATE.md frontmatter progress block updated (completed_phases 1→2; completed_plans 7→8; total_phases corrected 9→4; percent 22→50) + Performance Metrics gains Phase 68 line + Pending Todos updated removing Phase 68 planning entry + Session Continuity points to Phase 69 next + Decisions gains this Plan 68-05 close-gate H3 + ROADMAP.md Phase 68 row flipped to Complete with closing SHAs + Plan 68-05 checkbox flipped [x] + Progress table row 68 updated 4/5→5/5 Complete + 68-05-SUMMARY.md authored)
+- `{68_05_SHA}` placeholder fill — Plan 68-05's own SHA cannot be substituted before this commit lands per RESEARCH §Atomic Commit Surface "SHA-placeholder handling" recommended Option (a) — leave `{68_05_SHA}` as literal placeholder in the comment blocks. The comment is documentation; the load-bearing edit is the empty-Set declaration. Phase 70+ readers can `git log --all --grep="68-05"` to find this close-gate SHA. Documented as known limitation in 68-VERIFICATION.md §Section D Atomic-Commit SHA Record.
+- Discoveries documented as v1.7+ architectural patterns in 68-VERIFICATION.md §Section F: (1) v1.5-frozen-aware validator pattern (chain validators that assert on historical milestone state should read from frozen close-SHA via `execFileSync('git', ['show', '<SHA>:<path>'])`); (2) HARNESS-03 V-NN-CHAIN-01 forward coordination — `check-phase-68.mjs` self-verifier (Phase 70 HARNESS-03 Path-A copy from check-phase-66.mjs) MUST verify CHAIN-01 via INTENT (exit 0 + 0 CHAIN_SKIP) not literal-letter grep of `\r?\n` source per D-01 Caveat
+- Forward-coordination flags for Phase 69 + 70: (1) Phase 69 first-run timing measurement to validate 300s subprocess-timeout headroom; if ubuntu-latest slower than Windows host's ~102s, additional headroom required; (2) Phase 70 HARNESS-02 BASELINE_11 refresh continues parseAllowlist() lineage repoint pattern v1.6 → v1.7 sidecar (1-line edit at line 422); (3) Phase 70 HARNESS-03 carries forward v1.5-frozen-aware pattern wherever future validators assert on historical state; (4) Phase 70 HARNESS-06 extends v1.7-DEFERRED-CLEANUP.md stub with v1.6 carry-overs + v1.7 final items + audits cdcce23 archive-script defect recurrence post-archival
+- Phase 68 (Pillar B — Validator Surgery) CLOSED 2026-05-26. CHAIN-01 + CHAIN-02 + CHAIN-03 Active → Validated traceability flipped across PROJECT.md + REQUIREMENTS.md. Phase 69 entry-state ready (chain cascade-green; no CHAIN_SKIP suppression; v1.7 corpus state stable; 3 independence axes available at terminal re-audit per 68-VERIFICATION.md §Section G).
 
 ### Phase 68 — Plan 03 (CHAIN-03 ATOMIC CHAIN_SKIP removal + Option A pivot; 2026-05-26)
 
