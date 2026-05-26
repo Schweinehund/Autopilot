@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 67 context gathered
-last_updated: "2026-05-26T15:53:28.435Z"
-last_activity: 2026-05-26 -- Phase 67 planning complete
+stopped_at: Phase 67 Plan 01 complete (SWEEP-01 Branch A — 4 ABM URLs verified alive + sidecar last_revalidated annotation)
+last_updated: "2026-05-26T16:06:45.000Z"
+last_activity: 2026-05-26 -- Phase 67 Plan 01 closed (commit 3fb8ca5; Branch A)
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 11
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** v1.7 entry-phase — Phase 67 (Corpus Surgical Sweeps, Pillar A)
+**Current focus:** Phase 67 — corpus-surgical-sweeps-pillar-a-low-risk-warm-up
 
 ## Current Position
 
-Phase: 67 (not started — roadmap authored 2026-05-26)
-Plan: —
-Status: Ready to execute
-Last activity: 2026-05-26 -- Phase 67 planning complete
+Phase: 67 (corpus-surgical-sweeps-pillar-a-low-risk-warm-up) — EXECUTING
+Plan: 2 of 3 (Plan 67-01 closed; Plan 67-02 next)
+Status: Executing Phase 67 — Plan 67-01 closed (commit `3fb8ca5`; Branch A taken)
+Last activity: 2026-05-26 -- Phase 67 Plan 01 closed (SWEEP-01 4/4 ABM URLs verified alive; sidecar annotated; no corpus edits)
 
 ## v1.7 Phase Dependency Summary
 
@@ -155,7 +155,16 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T15:13:23.576Z
-Stopped at: Phase 67 context gathered
-Resume file: .planning/phases/67-corpus-surgical-sweeps-pillar-a-low-risk-warm-up/67-CONTEXT.md
-Next action: `/gsd-plan-phase 67` to author Phase 67 plans (Corpus Surgical Sweeps — Pillar A)
+Last session: 2026-05-26T16:06:45.000Z
+Stopped at: Phase 67 Plan 01 closed (commit 3fb8ca5; Branch A; SWEEP-01 verified live)
+Resume file: .planning/phases/67-corpus-surgical-sweeps-pillar-a-low-risk-warm-up/67-02-PLAN.md
+Next action: Execute Plan 67-02 (SWEEP-02 atomic: 6 D-03 line rewrites + 2 OP-10 callout block inserts + tail-table VH rows + glossary coordinating row + sidecar resolved_2026_05_26 annotations + PITFALL-6 pre/post-edit anchor inventory)
+
+## Decisions
+
+### Phase 67 — Plan 01 (Branch A taken; 2026-05-26)
+
+- markdown-link-check@3.14.2 probe returned `status:'alive' / statusCode:200` for https://business.apple.com; corroborating curl.exe HEAD returned HTTP/1.1 200 OK / Server: Apple / no redirect → Branch A path of the branchable plan taken (no corpus edits)
+- 4 c13_rotting_external.ci_1_abm_urls entries annotated with `last_revalidated:"2026-05-26"` (ANNOTATE-not-remove per CONTEXT.md D-04); 4-entry shape preserved (V-66-02 stable)
+- Pre-existing FAIL observed (NOT Phase 67-introduced): V-62-ANCHORS reports `.planning/phases/62-apple-business-foundation-rebrand/62-ANCHOR-INVENTORY.md missing` because file was archived to `.planning/milestones/v1.6-phases/62-*/` after v1.6 close. This is Phase 68 Pillar B CHAIN-02 archive-path-detection scope; Phase 67 Scope Boundary forbids touching it.
+- v1.6-milestone-audit.mjs (the actual harness gate) PASS 15/15 — UNCHANGED before vs after Plan 67-01 commit
