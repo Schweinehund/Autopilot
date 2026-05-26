@@ -11,6 +11,13 @@ re_verification:
   gaps_closed: []
   gaps_remaining: []
   regressions: []
+verifier_cross_check:
+  verified: 2026-05-26
+  verifier: Claude (gsd-verifier)
+  status: passed
+  goal_backward_evidence_count: 14 must-have truths verified against the codebase
+  observations:
+    - "Discovery #1 enumeration in this artifact lists 3 sites in docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md (lines 115, 149, 155); a 4th occurrence at line 160 ('VPP location token cannot be shared between Intune tenants') is NOT enumerated. Minor underclaim — not goal-breaking; suggest including in v1.7-DEFERRED-CLEANUP.md CI-2-CONTINUATION pickup."
 ---
 
 # Phase 67 — Verification & Close-Gate Report
@@ -320,3 +327,84 @@ Phase 67 close-gate satisfies all prerequisites for Phase 68 Pillar B (CHAIN_SKI
 ---
 
 *Phase 67 verification artifact authored across 3 plans: Plan 67-01 contributed the SWEEP-01 H2 subsection draft; Plan 67-02 captured the SWEEP-02 evidence into `67-02-SUMMARY.md` (sources for the SWEEP-02 H2 here); Plan 67-03 close-gate appended the SWEEP-02 H2 + Section B Commands + SC#1-4 Satisfaction + Atomic-Commit SHA Record + Discoveries + Phase 68 Readiness Signal + Sign-Off into this final form.*
+
+---
+
+## Verifier Cross-Check (gsd-verifier)
+
+**Verified:** 2026-05-26
+**Verifier:** Claude (gsd-verifier)
+**Result:** PASSED — 67-VERIFICATION.md body claims are corroborated by codebase evidence
+
+### Goal-Backward Verification Matrix
+
+| # | Must-Have Truth | Evidence (cross-checked) | Status |
+|---|-----------------|--------------------------|--------|
+| 1 | Sidecar `ci_1_abm_urls` 4 entries each carry `last_revalidated:2026-05-26`; 4-entry shape preserved | `node -e "JSON.parse(...)..."` returned `ci_1 count:4 annotated:4` | ✓ VERIFIED |
+| 2 | Sidecar `ci_2_vpp_location_token` 6 entries each carry `resolved_2026_05_26:true`; 6-entry shape preserved | Same probe returned `ci_2 count:6 resolved:6` | ✓ VERIFIED |
+| 3 | `quarterly_audit.cadence == "0 8 1 1,4,7,10 *"` byte-identical | Probe returned `cadence:0 8 1 1,4,7,10 *` | ✓ VERIFIED |
+| 4 | Sidecar `c16_missing_endpoint_exemptions.length == 0` (V-62-SIDECAR canary stable) | Probe returned `c16:0` | ✓ VERIFIED |
+| 5 | Sidecar JSON parses cleanly | `node -e "JSON.parse(...); console.log('JSON OK')"` printed `JSON OK` | ✓ VERIFIED |
+| 6 | iOS L71 compound form + L197 callout + L203 short form landed verbatim | Read of `docs/admin-setup-ios/05-app-deployment.md:71,197,203` — all 3 strings match D-03 LOCKED verbatim | ✓ VERIFIED |
+| 7 | macOS L45 + L46 + L113 + L144 callout + L150 short form landed verbatim | Read of `docs/admin-setup-macos/04-app-deployment.md:45,46,113,144,150` — all 5 strings match D-03 LOCKED verbatim | ✓ VERIFIED |
+| 8 | 2 tail-table VH rows appended (one per SWEEP-02 file; oldest-first append) | Read of iOS:L230 + macOS:L168 — both present with verbatim D-03 VH-iOS / VH-mac text | ✓ VERIFIED |
+| 9 | 3 frontmatter `last_verified: 2026-05-26` bumps (iOS + macOS + glossary) | Read of L2 of all 3 files — all show `last_verified: 2026-05-26` | ✓ VERIFIED |
+| 10 | `_glossary-macos.md` `## Version History` H2 at line 121 (PITFALL-6 invariant) | Grep `^## Version History` returned single match at L121 | ✓ VERIFIED |
+| 11 | Glossary coordinating row at L125 (newest-first insert) | Read of `_glossary-macos.md:125` — row text matches Plan 67-02 D-03 Glossary row verbatim | ✓ VERIFIED |
+| 12 | `v1.6-milestone-audit.mjs` exits 0 with 15/15 PASS | Re-ran live: `Summary: 15 passed, 0 failed, 0 skipped` + `EXIT:0` | ✓ VERIFIED |
+| 13 | `check-phase-66.mjs` exits 1 with `19 PASS, 4 FAIL, 5 SKIPPED`; CHAIN_SKIP = {48,51,58,60,61} | Re-ran live: identical output; grep extracted SKIPPED entries [48,51,58,60,61] | ✓ VERIFIED |
+| 14 | check-phase-{62,63,64,65}.mjs exit 1 with PASS/FAIL/SKIPPED counts as claimed (cascade from V-62-ANCHORS root) | Re-ran all 4 live: `28/1/5`, `25/2/5`, `22/2/5`, `25/3/5` exactly match claimed counts | ✓ VERIFIED |
+
+**Result: 14/14 must-have truths VERIFIED against the actual codebase.**
+
+### V-62-ANCHORS Root-Cause Verification
+
+The artifact claims the 4 FAILs in `check-phase-66.mjs` are pre-existing V-62-ANCHORS archive-path drift (NOT Phase 67 regression). Cross-checked by grepping `check-phase-62.mjs` output for the FAIL message:
+
+```
+[ANCHORS/34] V-62-ANCHORS: ... FAIL -- .planning/phases/62-apple-business-foundation-rebrand/62-ANCHOR-INVENTORY.md missing
+```
+
+Confirmed: V-62-ANCHORS root cause = missing `62-ANCHOR-INVENTORY.md` because the file was archived to `.planning/milestones/v1.6-phases/62-apple-business-foundation-rebrand/`. Cascade to V-63/64/65/66-CHAIN-62 is the expected downstream propagation. Phase 68 CHAIN-02 archive-path-detection is the scheduled resolver. **This is NOT a Phase 67 regression.**
+
+### Anti-Regression Invariants Cross-Checked
+
+`git diff --name-only 4fd3ece..HEAD` produced exactly 19 paths — all within the expected Phase 67 surface (4 corpus/sidecar files + 5 planning markdown files in `.planning/phases/67-*/` + 4 milestone traceability files + `config.json`). Specifically verified:
+
+| Invariant | Files probed | Result |
+|-----------|--------------|--------|
+| Zero hub-file edits | `docs/common-issues.md`, `docs/quick-ref-l1.md`, `docs/quick-ref-l2.md`, `docs/operations/00-index.md`, `docs/index.md` | ✓ ZERO touches in 4fd3ece..HEAD |
+| Zero capability-matrix edits | `docs/reference/macos-capability-matrix.md`, `docs/reference/ios-capability-matrix.md`, `docs/reference/4-platform-capability-comparison.md` | ✓ ZERO touches |
+| Zero older-workflow file edits | `audit-harness-integrity.yml` (v1.4), `audit-harness-v1.5-integrity.yml`, `audit-harness-v1.6-integrity.yml` | ✓ ZERO touches |
+| Zero edits to Discovery #1 file (`02-macos-pkg-dmg-pipeline.md`) | per CONTEXT.md calibrated-enumeration contract | ✓ ZERO touches (correctly deferred) |
+| Zero edits to any `check-phase-NN.mjs` validator | per Phase 67 Scope Boundary (Phase 68 scope) | ✓ ZERO touches via `git log --name-only 3fb8ca5^..d07f345 -- scripts/validation/check-phase-*.mjs scripts/validation/v1.6-milestone-audit.mjs` returned empty |
+| Sidecar JSON: only 10 line insertions + 10 deletions across Phase 67 commits | per atomic ANNOTATE-not-remove discipline | ✓ `git diff --stat 3fb8ca5^..d07f345 -- scripts/validation/v1.6-audit-allowlist.json` returned `10 insertions(+), 10 deletions(-)` exactly |
+
+### Traceability Cross-Check
+
+| Artifact | Claim | Evidence | Status |
+|----------|-------|----------|--------|
+| PROJECT.md ### Validated SWEEP-01 row with SHA 3fb8ca5 | "Active → Validated" | Found at L323 with full evidence narrative + SHA | ✓ VERIFIED |
+| PROJECT.md ### Validated SWEEP-02 row with SHA 55260b3 | "Active → Validated" | Found at L324 with full evidence narrative + SHA | ✓ VERIFIED |
+| REQUIREMENTS.md Traceability table SWEEP-01 + SWEEP-02 → Complete | "Pending → Complete" | Grep found L79 `SWEEP-01...Complete` + L80 `SWEEP-02...Complete` | ✓ VERIFIED |
+| ROADMAP.md Phase 67 Plans 3/3 complete | "TBD → 3/3 plans complete" | Grep found L284 `**Plans:** 3/3 plans complete` + plan checkboxes [x]+[x]+[x] | ✓ VERIFIED |
+| STATE.md Phase 67 closed; completed_phases=1; last_activity=2026-05-26 | "Phase 67 SHIPPED" | Frontmatter L11 `completed_phases: 1`; L6 `stopped_at: Phase 67 complete`; L8 `last_activity: 2026-05-26 -- Phase 67 SHIPPED` | ✓ VERIFIED |
+| Git log shows Plan 67-01 SHA 3fb8ca5 touches exactly (sidecar + 67-VERIFICATION.md) | atomic Branch A | `git log --name-only -1 3fb8ca5` returned exactly those 2 files | ✓ VERIFIED |
+| Git log shows Plan 67-02 SHA 55260b3 touches exactly (2 corpus + glossary + sidecar + ANCHOR-INVENTORY) | atomic-within-plan | `git log --name-only -1 55260b3` returned exactly those 5 files | ✓ VERIFIED |
+| Legacy-leak post-edit grep | 0 leaked legacy mentions outside formerly + VH rows | Grep filtered output empty (3 iOS + 4 macOS total matches; all in formerly+VH) | ✓ VERIFIED |
+
+### Minor Observations (non-blocking, non-regressions)
+
+1. **Discovery #1 enumeration appears to undercount by 1.** The artifact lists 3 sites in `docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md` at lines 115, 149, 155. Cross-check via `Grep VPP location token` in the file shows a 4th occurrence at L160 (`Token-sharing constraint: A single VPP location token cannot be shared between Intune tenants.`). This is a minor underclaim in the Discovery routing scope — NOT goal-breaking (Phase 67 explicitly defers ALL `02-macos-pkg-dmg-pipeline.md` sites; the calibrated-enumeration contract is preserved). Suggested follow-up for Phase 70 HARNESS-06: include L160 in the `v1.7-DEFERRED-CLEANUP.md` CI-2-CONTINUATION pickup so a future v1.8+ Pillar A-equivalent sweep handles all 4 sites.
+
+2. **Plan 67-03 close-gate SHA (`d07f345` per 67-03-SUMMARY.md) and HEAD SHA placeholder.** The artifact body and frontmatter retain `<populated post-commit>` placeholders for the Plan 67-03 SHA. 67-03-SUMMARY.md captures the actual SHA (`d07f345`). Per 66-VERIFICATION.md:120 post-hoc SHA insertion precedent, this is by design (the close-gate commit lands the verification artifact + traceability flips atomically, so the SHA cannot self-reference). The SHA is in `git log --all` and recoverable for downstream traceability.
+
+### Verifier Verdict
+
+The 67-VERIFICATION.md body claims accurately reflect the codebase state. SWEEP-01 (4 ABM URLs verified live via cron-pinned tool + ANNOTATE sidecar) and SWEEP-02 (6 surgical renames + 2 callouts + VH rows + glossary coord row + sidecar ANNOTATE; PITFALL-6 zero-shift) both closed correctly. Anti-regression invariants honored (zero hub/matrix/older-workflow/pipeline/validator edits). Validator chain status byte-identical to v1.6 close baseline (CHAIN_SKIP {48,51,58,60,61} preserved; 4 FAILs are pre-existing V-62-ANCHORS archive-path cascade, NOT Phase 67 regressions). Traceability flips landed across PROJECT.md / REQUIREMENTS.md / ROADMAP.md / STATE.md with correct closing SHAs.
+
+**Status: passed** (no downgrade required).
+
+---
+
+*Verifier cross-check appended 2026-05-26 by gsd-verifier (goal-backward verification methodology; 14/14 must-haves verified against codebase evidence; zero overrides applied).*
