@@ -331,7 +331,7 @@ Plans:
 **Wave 1**
 
 - [x] 68-01-PLAN.md — Wave 1: CHAIN-01 readFile() CRLF centralization in check-phase-{51,58}.mjs (commit `36a753d` 2026-05-26; 25/25 + 26/26 preserved; sister-validator regression sweep byte-identical to pre-edit)
-- [ ] 68-02-PLAN.md — Wave 1: CHAIN-02 archive-path helper (NEW _lib/) + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase
+- [x] 68-02-PLAN.md — Wave 1: CHAIN-02 archive-path helper (NEW _lib/) + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase (commit `79c65c6` 2026-05-26; self-test FAIL→PASS; v1.5-harness 9/12→12/12; check-phase-48 5/7→7/7; check-phase-60 19/25→25/25; V-31-21/V-31-24 preserved with silent-swallow bug closed; v1.6-harness 15/15 unchanged)
 - [ ] 68-04-PLAN.md — Wave 1: MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion (lines 3-71; V-61-19/20 PASS)
 
 **Wave 2** *(blocked on Wave 1 completion)*

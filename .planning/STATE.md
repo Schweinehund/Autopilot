@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 68 Plan 68-01 complete (CHAIN-01)
-last_updated: "2026-05-26T19:39:34Z"
-last_activity: 2026-05-26 -- Phase 68 Plan 68-01 closed (CHAIN-01 CRLF centralization; commit 36a753d)
+stopped_at: Phase 68 Plan 68-02 complete (CHAIN-02)
+last_updated: "2026-05-26T20:01:14Z"
+last_activity: 2026-05-26 -- Phase 68 Plan 68-02 closed (CHAIN-02 archive-path helper + self-test lineage repoint + v1.5 sidecar broad rebase; commit 79c65c6)
 progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 8
-  completed_plans: 4
-  percent: 14
+  completed_plans: 5
+  percent: 17
 ---
 
 # Project State
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 68 (chain-skip-root-cause-resolution-pillar-b-validator-surgery) — EXECUTING
-Plan: 2 of 5 (Plan 68-01 closed at commit `36a753d`)
+Plan: 3 of 5 (Plan 68-01 closed at commit `36a753d`; Plan 68-02 closed at commit `79c65c6`)
 Status: Executing Phase 68
-Last activity: 2026-05-26 -- Phase 68 Plan 68-01 closed (CHAIN-01 readFile() CRLF centralization in check-phase-{51,58}.mjs; pre-edit baselines 25/25 + 26/26 preserved post-edit; sister-validator regression sweep byte-identical)
+Last activity: 2026-05-26 -- Phase 68 Plan 68-02 closed (CHAIN-02 archive-path helper at scripts/validation/_lib/archive-path.mjs + 5 call-site replacements across check-phase-{31,48,60,62,63}.mjs + regenerate-supervision-pins.mjs BASELINE_9 +1 banner shift + parseAllowlist lineage repoint v1.5→v1.6 + v1.5-audit-allowlist.json broad rebase across supervision_exemptions+c7_knox_allowlist+safetynet_exemptions+c9_exemptions for 17 _glossary-android.md entries; v1.5-milestone-audit.mjs 9/12→12/12 PASS in fully-blocking mode; self-test FAIL→PASS; check-phase-48 5/7→7/7; check-phase-60 19/25→25/25; check-phase-31 silent-swallow data-integrity bug CLOSED + V-31-21/V-31-24 preserved)
 
 ## v1.7 Phase Dependency Summary
 
@@ -155,9 +155,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T19:39:34Z
-Stopped at: Phase 68 Plan 68-01 complete (CHAIN-01 commit 36a753d); ready for Plan 68-02
-Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-01-SUMMARY.md
+Last session: 2026-05-26T20:01:14Z
+Stopped at: Phase 68 Plan 68-02 complete (CHAIN-02 commit 79c65c6); ready for Plan 68-03 (ATOMIC CHAIN_SKIP removal — depends on Plan 68-04 MILESTONES.md deletion also landing first so cascade is fully-green before CHAIN_SKIP strip)
+Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-02-SUMMARY.md
 Next action: `/gsd:execute-phase 68` Plan 68-02 (CHAIN-02 archive-path helper + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase across supervision_exemptions[] + c7_knox_allowlist[] + cope_banned_phrases[] for _glossary-android.md +1 banner-shift entries)
 
 ## Decisions
