@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 68 context gathered
-last_updated: "2026-05-26T19:32:45.224Z"
-last_activity: 2026-05-26 -- Phase 68 planning complete
+stopped_at: Phase 68 Plan 68-01 complete (CHAIN-01)
+last_updated: "2026-05-26T19:39:34Z"
+last_activity: 2026-05-26 -- Phase 68 Plan 68-01 closed (CHAIN-01 CRLF centralization; commit 36a753d)
 progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 8
-  completed_plans: 3
-  percent: 11
+  completed_plans: 4
+  percent: 14
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 68 — chain_skip root cause resolution (pillar b — validator surgery)
+**Current focus:** Phase 68 — chain-skip-root-cause-resolution-pillar-b-validator-surgery
 
 ## Current Position
 
-Phase: 68
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-05-26 -- Phase 68 planning complete
+Phase: 68 (chain-skip-root-cause-resolution-pillar-b-validator-surgery) — EXECUTING
+Plan: 2 of 5 (Plan 68-01 closed at commit `36a753d`)
+Status: Executing Phase 68
+Last activity: 2026-05-26 -- Phase 68 Plan 68-01 closed (CHAIN-01 readFile() CRLF centralization in check-phase-{51,58}.mjs; pre-edit baselines 25/25 + 26/26 preserved post-edit; sister-validator regression sweep byte-identical)
 
 ## v1.7 Phase Dependency Summary
 
@@ -155,10 +155,10 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T18:38:01.659Z
-Stopped at: Phase 68 context gathered
-Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-CONTEXT.md
-Next action: `/gsd:discuss-phase 68` (Pillar B CHAIN_SKIP root-cause resolution — CHAIN-01 CRLF regex fixes in check-phase-{51,58}.mjs + CHAIN-02 archive-path detection in check-phase-48.mjs + V-62-ANCHORS resolver + line-number drift fix in regenerate-supervision-pins.mjs --self-test + CHAIN-03 cascade fixes + ATOMIC removal of {48,51,58,60,61} from CHAIN_SKIP arrays across check-phase-62..66.mjs)
+Last session: 2026-05-26T19:39:34Z
+Stopped at: Phase 68 Plan 68-01 complete (CHAIN-01 commit 36a753d); ready for Plan 68-02
+Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-01-SUMMARY.md
+Next action: `/gsd:execute-phase 68` Plan 68-02 (CHAIN-02 archive-path helper + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase across supervision_exemptions[] + c7_knox_allowlist[] + cope_banned_phrases[] for _glossary-android.md +1 banner-shift entries)
 
 ## Decisions
 
@@ -186,3 +186,14 @@ Next action: `/gsd:discuss-phase 68` (Pillar B CHAIN_SKIP root-cause resolution 
 - Unheaded tail-table append convention is OLDEST-FIRST per plan text line 491 (executor self-corrected during Wave 4 — see SUMMARY Deviations Rule 3 note); glossary `## Version History` H2 table uses NEWEST-FIRST per 67-PATTERNS.md:146
 - Pre-commit + post-commit validator exit codes IDENTICAL: harness 15/15 PASS / check-phase-62 28/1/5 (pre-existing V-62-ANCHORS) / check-phase-66 19/4/5 (pre-existing V-66-CHAIN cascade) — zero new validator regression introduced by Plan 67-02
 - Plan 67-02 confirms the v1.7 Pillar A "Low-Risk Warm-Up" atomic-edit pattern: atomic-within-plan commit + Version History rows + sidecar annotation + chain validator re-runs identical to baseline
+
+### Phase 68 — Plan 01 (CHAIN-01 CRLF readFile() centralization; 2026-05-26)
+
+- D-01 Option B (CRLF-normalize in readFile()) executed verbatim per CONTEXT.md: 2-line append-suffix edit appending `.replace(/\r\n/g, '\n')` to `check-phase-51.mjs:17` + `check-phase-58.mjs:21` readFile() bodies; verbatim byte-copy of the canonical idiom from `check-phase-48.mjs:25` (Phase 31 ca40eb9 lineage); single 2-file atomic commit `36a753d`
+- Pre-edit baseline preserved post-edit: check-phase-51 = 25/25 PASS (exit 0); check-phase-58 = 26/26 PASS (exit 0); zero validator regression on either target
+- Sister-validator regression sweep BYTE-IDENTICAL pre-edit vs post-edit across 13 phases: {49,52..57,59} all exit 0 (8 clean-PASS validators preserved); {62..66} continue to exit 1 on pre-existing V-NN-ANCHORS archive-path drift (Plan 68-02 CHAIN-02 territory — STATE.md:169 + 175 carry-over)
+- Adversarial-wedge protection: zero regex bodies changed (D-01 adversary identified Option A would have injected ~9 semantic-bug edits to `[^\n]*` negated character classes at check-phase-51.mjs:190-192/205-208/221-223; Option B routes around this entirely); check-phase-58.mjs:188 `c.indexOf("---\n", 4)` literal-string CRLF risk transparently covered (Option A would NOT have covered it)
+- ROADMAP SC#1 literal-letter "regex updated to `\r?\n`" NOT satisfied; INTENT-equivalence achieved via read-time normalization (renders the validator's `\n` regex semantically equivalent to `\r?\n` regardless of on-disk line endings) — Phase 67 D-04 "no active validator constrains the boundary" precedent
+- Forward coordination flag captured for Plan 68-05 close-gate: `check-phase-68.mjs` self-verifier (Phase 70 HARNESS-03 Path-A) MUST verify CHAIN-01 via INTENT (exit 0 + 0 CHAIN_SKIP) not literal-letter source grep
+- Style preservation: single-quote `'utf8'` preserved on both files; two-space indent preserved; inline comment `// CRLF normalization (CHAIN-01; mirrors check-phase-48.mjs:25)` matches regenerate-supervision-pins.mjs:77 + check-phase-31.mjs:18 attribution-comment shape
+- File-disjoint Wave 2 handoff confirmed: Plan 68-02 touches 8 distinct files; zero overlap with Plan 68-01's check-phase-51 + check-phase-58

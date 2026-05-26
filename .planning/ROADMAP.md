@@ -330,7 +330,7 @@ Deferred backlog: [milestones/v1.6-DEFERRED-CLEANUP.md](milestones/v1.6-DEFERRED
 Plans:
 **Wave 1**
 
-- [ ] 68-01-PLAN.md — Wave 1: CHAIN-01 readFile() CRLF centralization in check-phase-{51,58}.mjs
+- [x] 68-01-PLAN.md — Wave 1: CHAIN-01 readFile() CRLF centralization in check-phase-{51,58}.mjs (commit `36a753d` 2026-05-26; 25/25 + 26/26 preserved; sister-validator regression sweep byte-identical to pre-edit)
 - [ ] 68-02-PLAN.md — Wave 1: CHAIN-02 archive-path helper (NEW _lib/) + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase
 - [ ] 68-04-PLAN.md — Wave 1: MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion (lines 3-71; V-61-19/20 PASS)
 
@@ -443,7 +443,7 @@ Plans:
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 5/5 | Complete    | 2026-05-23 |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 5/5 | Complete   | 2026-05-25 |
 | 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 3/3 | Complete    | 2026-05-26 |
-| 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 0/TBD | Not started | — |
+| 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 1/5 | In progress | — |
 | 69. CI-Linux Hardening (Pillar C) | v1.7 | 0/TBD | Not started | — |
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 0/TBD | Not started | — |
 
