@@ -76,25 +76,29 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SWEEP-01 | TBD | Pending |
-| SWEEP-02 | TBD | Pending |
-| CHAIN-01 | TBD | Pending |
-| CHAIN-02 | TBD | Pending |
-| CHAIN-03 | TBD | Pending |
-| CILINUX-01 | TBD | Pending |
-| HARNESS-01 | TBD | Pending |
-| HARNESS-02 | TBD | Pending |
-| HARNESS-03 | TBD | Pending |
-| HARNESS-04 | TBD | Pending |
-| HARNESS-05 | TBD | Pending |
-| HARNESS-06 | TBD | Pending |
+| SWEEP-01 | Phase 67 | Pending |
+| SWEEP-02 | Phase 67 | Pending |
+| CHAIN-01 | Phase 68 | Pending |
+| CHAIN-02 | Phase 68 | Pending |
+| CHAIN-03 | Phase 68 | Pending |
+| CILINUX-01 | Phase 69 | Pending |
+| HARNESS-01 | Phase 70 | Pending |
+| HARNESS-02 | Phase 70 | Pending |
+| HARNESS-03 | Phase 70 | Pending |
+| HARNESS-04 | Phase 70 | Pending |
+| HARNESS-05 | Phase 70 | Pending |
+| HARNESS-06 | Phase 70 | Pending |
 
 **Coverage:**
 - v1.7 requirements: 12 total
-- Mapped to phases: 0 of 12 (pending /gsd-roadmapper run)
-- Unmapped: 12 (will be 0 after roadmapper)
-- Phase distribution: TBD (target ~4 phases: 67-70)
+- Mapped to phases: 12 of 12 ✓ (100% — no orphans, no duplicates)
+- Unmapped: 0
+- Phase distribution:
+  - Phase 67 (Pillar A — Corpus Surgical Sweeps): 2 reqs (SWEEP-01, SWEEP-02)
+  - Phase 68 (Pillar B — CHAIN_SKIP Root-Cause Resolution): 3 reqs (CHAIN-01, CHAIN-02, CHAIN-03)
+  - Phase 69 (Pillar C — CI-Linux Hardening): 1 req (CILINUX-01)
+  - Phase 70 (Pillar D — v1.7 Harness Lineage Bump + Milestone Close): 6 reqs (HARNESS-01..06)
 
 ---
 *Requirements defined: 2026-05-26*
-*Last updated: 2026-05-26 — v1.7 entry-phase draft; awaiting /gsd-roadmapper traceability mapping*
+*Last updated: 2026-05-26 — /gsd-roadmapper traceability mapping complete; 12/12 v1.7 requirements mapped to 4 phases (67-70); coverage 100%, no orphans, no duplicates*

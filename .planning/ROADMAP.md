@@ -10,6 +10,7 @@
 - ✅ **v1.4.1 Android Enterprise Completion & v1.4 Cleanup** — Phases 43-47 (shipped 2026-04-25)
 - ✅ **v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup** — Phases 48-61 (shipped 2026-05-07)
 - ✅ **v1.6 Apple Business Delegated Governance & Multi-Org Operations** — Phases 62-66 (shipped 2026-05-25)
+- 🟡 **v1.7 Deferred Backlog Closure + Validator Chain Hardening** — Phases 67-70 (planning started 2026-05-26)
 
 ## Phases
 
@@ -138,11 +139,12 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 
 </details>
 
-### v1.6 Apple Business Delegated Governance & Multi-Org Operations (Phases 62-66) — SHIPPED 2026-05-25
+<details>
+<summary>✅ v1.6 Apple Business Delegated Governance & Multi-Org Operations (Phases 62-66) — SHIPPED 2026-05-25</summary>
 
 - [x] **Phase 62: Apple Business Foundation & Rebrand** — Glossary + role/permission model + OUs concept + 3 canonical rebrand callouts + audit harness scaffold with C14/C15/C16 blocking-from-start
  (completed 2026-05-21)
-- [x] **Phase 63: Multi-OU Architecture & Apple Admin Setup** — OUs-vs-custom-roles decision matrix + custom role authoring + sub-org admin onboarding + MDM server assignment + content token consolidation + Managed Apple Account provisioning + Shared iPad / Apple TV lifecycle + iOS capability matrix rows (completed 2026-05-21)
+- [x] **Phase 63: Multi-OU Architecture & Apple Admin Setup** — OUs-vs-custom-roles decision matrix + custom role authoring + sub-org admin onboarding + MDM server assignment + content token consolidation + Managed Apple Account provisioning + Shared iPad / Apple TV lifecycle + iOS capability matrix rows (completed 2026-05-21)
 - [x] **Phase 64: Apple Business Delegation Runbooks** — VPP catalog + shared iPad passcode reset (admin context) + device release + device transfer + MDM server reassign + Managed Apple Account provisioning + audit log scoping + cross-org-boundary cheat sheet (completed 2026-05-22)
 - [x] **Phase 65: Apple Business L1/L2 + Hub Navigation Integration** — L1 #34 (shared iPad passcode reset) + L2 #26 (permission-denied 7-leaf tree) + common-issues append + quick-ref-l1/l2 append + operations index append + docs/index.md hub append (NAVIGATION-LAST) (completed 2026-05-23)
 - [x] **Phase 66: Apple Business Validation Tooling Closure + Milestone Audit** — C11 keyword extension + C15 banned-phrase refinement + BASELINE_10 refresh (closes BASELINE_9) + per-phase validators check-phase-62..66.mjs + CI workflow + terminal re-audit from fresh clone + v1.6-MILESTONE-AUDIT.md + DEFERRED-CLEANUP.md (completed 2026-05-25)
@@ -152,6 +154,28 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 - **Wave A (sequential — critical-path bottleneck):** Phase 62 — 11 pitfalls gate here; foundation glossary + role model + audit scaffolds must land before parallelism opens
 - **Wave B (parallel after Phase 63 anchors land):** Phase 63 + first half of Phase 64 are file-disjoint after Phase 63 `05-sub-org-admin-onboarding.md#which-admin-owns-this-pool` + `09-shared-ipad-lifecycle.md` + `10-apple-tv-lifecycle.md` anchors land. Specifically, Phase 64 Apple TV + Shared iPad runbook authoring (`12-...md`, `14-...md` cross-OU device transfer touching Apple TV / Shared iPad surfaces) can begin in parallel with Phase 63 custom-role authoring + sub-org onboarding
 - **Wave C (sequential close-gate):** Phase 65 (navigation-last per v1.5 Phase 57+59 precedent) → Phase 66 (terminal re-audit from fresh worktree per v1.5 D-22 / Phase 61 Plan 61-04 precedent)
+
+**Audit status:** `passed` — Phase 66 terminal re-audit from fresh `gsd-executor` sub-agent + fresh `git clone --no-hardlinks` (D-03 LOCKED, stricter physical isolation than v1.5 worktree precedent) confirmed 23 PASS / 0 FAIL / 5 SKIPPED in check-phase-66.mjs; 15/15 harness PASS in fully-blocking mode + 5/5 chain validators check-phase-62..66.mjs PASS modulo CHAIN_SKIP {48,51,58,60,61} (Windows-host CRLF — deferred to v1.7 CI-Linux job per v1.6-DEFERRED-CLEANUP.md); 39/39 requirements closed.
+
+Full details: [milestones/v1.6-MILESTONE-AUDIT.md](milestones/v1.6-MILESTONE-AUDIT.md)
+Deferred backlog: [milestones/v1.6-DEFERRED-CLEANUP.md](milestones/v1.6-DEFERRED-CLEANUP.md)
+
+</details>
+
+### v1.7 Deferred Backlog Closure + Validator Chain Hardening (Phases 67-70) — PLANNING 2026-05-26
+
+- [ ] **Phase 67: Corpus Surgical Sweeps (Pillar A)** — CI-1 ABM URL refs (4 URLs / 4 files) verified/edited + CI-2 VPP location token rename (6 occurrences / 2 files) per PITFALLS:657 first-mention-per-H2 convention; per-file Version History rows + chain validator re-runs; sidecar `c13_rotting_external` updates to reflect post-sweep state
+- [ ] **Phase 68: CHAIN_SKIP Root-Cause Resolution (Pillar B)** — CRLF regex fixes in check-phase-{51,58}.mjs (`\n` → `\r?\n`); archive-path detection in check-phase-48.mjs + line-number drift fix in regenerate-supervision-pins.mjs --self-test; cascade fixes to check-phase-{60,61}.mjs; ATOMIC removal of 5 entries from CHAIN_SKIP arrays across check-phase-62..66.mjs (preserves chain-validator indivisibility per Phase 66-02 atomic-harness precedent)
+- [ ] **Phase 69: CI-Linux Hardening (Pillar C)** — New `ubuntu-latest` runner job added to v1.7 CI workflow that runs `check-phase-{48..70}.mjs` + v1.x-milestone-audit.mjs on Linux LF line endings; PR-blocking per D-A9 inheritance; coexists with v1.4/v1.5/v1.6 workflows (no modifications to predecessors); catches CRLF-style regressions before they hit local
+- [ ] **Phase 70: v1.7 Harness Lineage Bump + Milestone Close (Pillar D)** — `v1.7-milestone-audit.mjs` Path-A from v1.6 (C1-C16 inherited) + `v1.7-audit-allowlist.json` co-located + BASELINE_11 refresh (closes BASELINE_10 v1.6 carry-over) + per-phase validators check-phase-67..70.mjs + `audit-harness-v1.7-integrity.yml` CI workflow + terminal re-audit from fresh `git clone --no-hardlinks` per D-03 LOCKED + v1.7-MILESTONE-AUDIT.md + v1.7-DEFERRED-CLEANUP.md (carries CI-3 + Other Deferrals forward to v1.8+) + PROJECT.md/ROADMAP.md/STATE.md traceability closure
+
+**Wave designation map:**
+
+- **Wave A (sequential — corpus warm-up):** Phase 67 — lowest-risk surgical edits establish the v1.7 pattern (atomic small edits + Version History rows + chain validator re-runs); clean corpus before fixing validators
+- **Wave B (sequential — validator surgery):** Phase 68 — modifies 7 validator files (check-phase-{48,51,58,60,61}.mjs + regenerate-supervision-pins.mjs + atomic CHAIN_SKIP removal across check-phase-62..66.mjs); ATOMIC commit pattern (precedent: v1.6 Phase 66-02 atomic-harness-commit `3a9a671`) preserves chain-validator indivisibility
+- **Wave C (sequential close-gate):** Phase 69 (CI-Linux verifies green chain on LF runner) → Phase 70 (harness lineage bump + terminal re-audit from fresh clone per D-03 LOCKED + milestone close)
+
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 70 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.7-audit-<rand>` (D-03 LOCKED — STRICTER physical isolation than worktree precedent; reconciles D-22 INTENT with `use_worktrees:false` constraint, same mechanism as v1.6 Phase 66-04).
 
 ## Phase Details
 
@@ -248,6 +272,53 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 - [x] 66-04-PLAN.md — Wave 4: terminal re-audit via FRESH gsd-executor sub-agent + FRESH git clone --no-hardlinks in $env:TEMP\v1.6-audit-<rand> per D-03 LOCKED (stricter physical isolation than worktree; reconciles D-22 INTENT with use_worktrees:false); captures exit codes + summary lines into 66-04-AUDIT-RESULTS.md (commit `489edca`)
 - [x] 66-05-PLAN.md — Wave 5: v1.6-MILESTONE-AUDIT.md (Path-A from v1.5; 39/39 + 5/5 + performed_by D-22-INTENT narrative + Auditor-Independence Verification section + Command Verification Table) + 66-VERIFICATION.md close-gate report + traceability closure across PROJECT.md/ROADMAP.md/STATE.md/REQUIREMENTS.md (completed 2026-05-25)
 
+### Phase 67: Corpus Surgical Sweeps (Pillar A — Low-Risk Warm-Up)
+**Goal**: Close v1.6's CI-1 ABM URL surgical sweep (4 URLs / 4 files) and CI-2 VPP location token surgical rename (6 occurrences / 2 files) per `v1.6-DEFERRED-CLEANUP.md` calibrated enumeration; establish the v1.7 pattern (atomic small edits + Version History rows + chain validator re-runs); sidecar `c13_rotting_external` reflects post-sweep state. Quarterly rotting-external cron job continues to monitor the (now smaller or unchanged) set of ABM URLs against whatever Apple actually publishes.
+**Depends on**: Nothing (v1.7 entry phase; continues from v1.6 close at Phase 66 — quarterly cron `0 8 1 1,4,7,10 *` next first-fires 2026-07-01)
+**Requirements**: SWEEP-01, SWEEP-02
+**Success Criteria** (what must be TRUE):
+  1. The 4 `business.apple.com` URL refs at `admin-setup-ios/05-app-deployment.md:92` + `admin-setup-macos/01-abm-configuration.md:52` + `admin-setup-macos/04-app-deployment.md:105` + `_glossary-macos.md:64` are verified against live Apple URL state — either confirmed-current (no edits required; quarterly cron `rotting-external-quarterly` continues monitoring the 4 calibrated URLs) OR surgically updated if Apple has issued redirects/sunsets; each edited file carries a Version History row dated 2026-05-26+
+  2. The 6 "VPP location token" / "VPP (Apps and Books) location token" occurrences across `admin-setup-ios/05-app-deployment.md:71,201` + `admin-setup-macos/04-app-deployment.md:45,46,113,148` are surgically renamed to use the new canonical term ("content token" or compound "content token (formerly VPP location token; still labeled 'Apple VPP token' in Intune portal)" per PITFALLS:657 first-mention-per-H2 convention); each of the 2 files gains a Version History row; harness C11/C15 re-run shows no false positives from the rename
+  3. Sidecar `scripts/validation/v1.6-audit-allowlist.json` (and forward-copied `v1.7-audit-allowlist.json` at Phase 70) `c13_rotting_external.ci_1_abm_urls` updated to reflect new state (entries unchanged-but-re-validated, OR entries removed/edited if Apple URLs shifted); `c13_rotting_external.ci_2_vpp_location_token` updated to reflect post-rename state (entries removed or marked complete)
+  4. Full chain `check-phase-{48..66}.mjs` exits with same status as v1.6 close (PASS modulo CHAIN_SKIP {48,51,58,60,61} — these are still suppressed; Phase 68 resolves them); no validator regression introduced by corpus edits
+**Plans:** TBD
+
+### Phase 68: CHAIN_SKIP Root-Cause Resolution (Pillar B — Validator Surgery)
+**Goal**: Resolve the 5-entry CHAIN_SKIP root causes documented at `check-phase-64.mjs:65-73` — CRLF regex normalization in check-phase-{51,58}.mjs, archive-path detection in check-phase-48.mjs, line-number drift in regenerate-supervision-pins.mjs --self-test, cascade fixes to check-phase-{60,61}.mjs — and ATOMICALLY remove the 5 entries from CHAIN_SKIP arrays across check-phase-62..66.mjs in ONE indivisible commit (precedent: v1.6 Phase 66-02 atomic-harness-commit `3a9a671`). Full chain exits 0 on Windows host without suppression for the first time since v1.5 close.
+**Depends on**: Phase 67 (clean corpus before fixing validators — eliminates risk that corpus drift masquerades as validator bugs during root-cause investigation)
+**Requirements**: CHAIN-01, CHAIN-02, CHAIN-03
+**Success Criteria** (what must be TRUE):
+  1. CRLF regex mismatch resolved: `check-phase-51.mjs` Mermaid regex updated from literal `\n` to `\r?\n` (per documented root cause at `check-phase-64.mjs:65-73`); `check-phase-58.mjs` frontmatter parse regex updated from `\n` to `\r?\n`; both validators exit 0 on Windows host without CHAIN_SKIP suppression; no false positives introduced (verified against existing PASS state on other phases the regex touches)
+  2. Archive-path detection added to `check-phase-48.mjs` — handles BOTH pre-archival path `.planning/phases/48-.../48-VERIFICATION-broken-links.md` AND post-archival path `.planning/milestones/v1.5-phases/48-.../48-VERIFICATION-broken-links.md`; `regenerate-supervision-pins.mjs --self-test` line-number drift fixed via EITHER `v1.5-audit-allowlist.json` line-number rebase OR self-test tolerance for ±1 line drift; both fixes verified by running validator against existing archived v1.5 directory layout
+  3. Cascade fixes applied to `check-phase-60.mjs` and `check-phase-61.mjs` (downstream of CHAIN-01 + CHAIN-02 root causes); both exit 0 on Windows host without suppression
+  4. CHAIN_SKIP arrays in `check-phase-62.mjs` through `check-phase-66.mjs` have entries {48, 51, 58, 60, 61} REMOVED in a single atomic commit (preserves chain-validator indivisibility per v1.6 Phase 66-02 precedent); full chain `check-phase-{48..66}.mjs` exits 0 on the local Windows host with NO SKIPPED entries reported
+  5. `regenerate-supervision-pins.mjs --self-test` exits 0; no out-of-band corpus edits introduced (validator-only commit; corpus already cleaned by Phase 67)
+**Plans:** TBD
+
+### Phase 69: CI-Linux Hardening (Pillar C — Cross-OS Verification)
+**Goal**: Add an `ubuntu-latest` runner job that executes the full validator chain `check-phase-{48..66}.mjs` + applicable milestone-audit harnesses on Linux LF line endings — proving the CRLF regex fixes from Phase 68 hold on Linux AND catching CRLF-style regressions in CI before they hit local Windows development. Coexists with existing per-version workflows (v1.4 + v1.5 + v1.6) with zero modifications to predecessors.
+**Depends on**: Phase 68 (CHAIN_SKIP must be removed before CI-Linux can verify a clean chain — otherwise the new job would either need its own CHAIN_SKIP duplication OR fail spuriously on the 5 historical phases)
+**Requirements**: CILINUX-01
+**Success Criteria** (what must be TRUE):
+  1. A new `ubuntu-latest` runner job is added to a v1.7 CI workflow (the v1.7 workflow itself ships in Phase 70; Phase 69 may stage the job inside `audit-harness-v1.6-integrity.yml` as a coexistence transition or stage directly into a Phase-70-staged `audit-harness-v1.7-integrity.yml` — the plan-phase planner determines the staging strategy) that runs the full validator chain `check-phase-{48..66}.mjs` on Linux LF line endings
+  2. Job is PR-blocking (`continue-on-error: false`) per D-A9 inheritance from v1.6; only `pin-helper-advisory` retains `continue-on-error: true` if forward-copied
+  3. Job exits 0 on `ubuntu-latest` runner with NO CHAIN_SKIP entries reported (Phase 68 must have already removed them; this is the cross-OS confirmation)
+  4. Existing per-version workflows (`audit-harness-integrity.yml` v1.4 + `audit-harness-v1.5-integrity.yml` + `audit-harness-v1.6-integrity.yml`) remain byte-unchanged — no modifications to older workflow files; v1.7 ubuntu-latest job lives in a v1.7-scoped workflow file (or transitionally in v1.6 with explicit handoff comment)
+  5. CI run on a representative PR (synthetic or real) confirms: Windows runner exits 0 + Linux runner exits 0 + both report 0 SKIPPED + both report identical PASS counts (cross-OS reproducibility verified)
+**Plans:** TBD
+
+### Phase 70: v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)
+**Goal**: Bump the audit harness lineage v1.6 → v1.7 via Path-A copy (atomic harness commit pattern from v1.5 Plan 60-08 / v1.6 Phase 66-02 / Phase 62-08), ship per-phase validators check-phase-67..70.mjs as deliverables, ship `audit-harness-v1.7-integrity.yml` CI workflow as third parallel coexistence file (composing with Phase 69 CILINUX-01 ubuntu-latest job), run terminal re-audit from a fresh `git clone --no-hardlinks` (D-03 LOCKED — STRICTER physical isolation than worktree, reconciles D-22 INTENT with `use_worktrees:false`), author `v1.7-MILESTONE-AUDIT.md` and `v1.7-DEFERRED-CLEANUP.md`, and close all 12 v1.7 requirements with closing commit SHAs across PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md.
+**Depends on**: Phase 69 (CI workflow file must exist for HARNESS-04 to extend with v1.7-specific bits; CI-Linux job must be proven green so terminal re-audit's auditor-independence axis includes BOTH fresh-clone AND cross-OS)
+**Requirements**: HARNESS-01, HARNESS-02, HARNESS-03, HARNESS-04, HARNESS-05, HARNESS-06
+**Success Criteria** (what must be TRUE):
+  1. `scripts/validation/v1.7-milestone-audit.mjs` ships as Path-A copy from `v1.6-milestone-audit.mjs` with C1-C13 + C14/C15/C16 preserved (lineage: v1.4 → v1.4.1 → v1.5 → v1.6 → v1.7); `scripts/validation/v1.7-audit-allowlist.json` ships as Path-A copy from v1.6 with `c13_rotting_external` reset for v1.7 (CI-1/CI-2 reflect post-SWEEP-01/SWEEP-02 state) + `c16_missing_endpoint_exemptions: []` + sidecar shape preserved + `quarterly_audit` metadata carried forward (cron `0 8 1 1,4,7,10 *`); BASELINE_11 freshness comment added to `regenerate-supervision-pins.mjs` (closes BASELINE_10 v1.6 carry-over per per-milestone AUDIT-14-equivalent contract); harness exits 0 with all 15+ checks PASS in fully-blocking mode
+  2. Per-phase validators `check-phase-67.mjs..check-phase-70.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+); each is Path-A from `check-phase-66.mjs` with phase-specific V-NN-NN assertions for that phase's deliverables; CHAIN_PHASES does NOT include the validator's own phase (V-NN-SELF guard per `check-phase-65.mjs:151` precedent); `.github/workflows/audit-harness-v1.7-integrity.yml` ships as Path-A copy from v1.6 with v1.7-scoped path-filter + 2 crons preserved + v1.7 validator jobs + ubuntu-latest job from Phase 69 fully composed + PR-blocking per D-A9 + coexists with v1.4/v1.5/v1.6 workflows
+  3. Terminal re-audit at Phase 70 close runs `v1.7-milestone-audit.mjs` + full chain `check-phase-{48..70}.mjs` from a fresh `git clone --no-hardlinks` into `$env:TEMP\v1.7-audit-<rand>` via fresh `gsd-executor` sub-agent (D-22 INTENT via D-03 mechanism — STRICTER physical isolation than worktree; reconciles with `.planning/config.json:7` `use_worktrees:false`); harness + all chain validators exit 0 with NO CHAIN_SKIP entries (Pillar B already resolved them); auditor-independence verified at execution start (zero context-carryover from Plans 67-01..70-N author-agents); clone removed post-audit with zero orphan temp dirs
+  4. `.planning/milestones/v1.7-MILESTONE-AUDIT.md` authored (Path-A from `v1.6-MILESTONE-AUDIT.md` template) confirming all checks PASS, 12/12 v1.7 requirements closed with closing commit SHAs, and 4-phase scope (67-70) delivered; `.planning/milestones/v1.7-DEFERRED-CLEANUP.md` finalized carrying CI-3 (Managed Apple ID, 45 occurrences across 16 files) + Multi-tenant Apple Business + Apple Business Device API + per-OU Conference Room Display + Account Holder runbook + ASM forward to v1.8+
+  5. PROJECT.md traceability closure — 12 v1.7 reqs (SWEEP-01..02 + CHAIN-01..03 + CILINUX-01 + HARNESS-01..06) flipped Active→Validated with closing commit SHAs; ROADMAP.md Progress table reflects 4/4 phases Complete; STATE.md milestone close recorded; REQUIREMENTS.md Traceability table fully populated — preserves v1.4.1 / v1.5 / v1.6 milestone-close traceability discipline
+**Plans:** TBD
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -318,7 +389,11 @@ Audit: [milestones/v1.5-MILESTONE-AUDIT.md](milestones/v1.5-MILESTONE-AUDIT.md)
 | 64. Apple Business Delegation Runbooks | v1.6 | 6/6 | Complete    | 2026-05-22 |
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 5/5 | Complete    | 2026-05-23 |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 5/5 | Complete   | 2026-05-25 |
+| 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 0/TBD | Not started | — |
+| 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 0/TBD | Not started | — |
+| 69. CI-Linux Hardening (Pillar C) | v1.7 | 0/TBD | Not started | — |
+| 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 0/TBD | Not started | — |
 
 ---
 
-*Last updated: 2026-05-25 — v1.6 milestone SHIPPED. 5/5 phases complete (62 / 63 / 64 / 65 / 66); 39/39 requirements Complete (AB-01..07 + OU-01..10 + DELEG-01..08 + ABNAV-01..07 + AUDIT-09..15); terminal re-audit from fresh sub-agent + fresh git clone confirmed 23 PASS / 0 FAIL / 5 SKIPPED in check-phase-66.mjs (V-66-06 chicken-and-egg resolved at Wave 5 local re-run). See `.planning/milestones/v1.6-MILESTONE-AUDIT.md` for the full close artifact and `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` for v1.7+ backlog. Next: v1.7 entry-phase planning.*
+*Last updated: 2026-05-26 — v1.7 milestone PLANNING. Roadmap appended with 4 v1.7 phases (67-70) mapping all 12 v1.7 requirements (SWEEP-01..02 + CHAIN-01..03 + CILINUX-01 + HARNESS-01..06). v1.6 history preserved verbatim (SHIPPED 2026-05-25; frozen). Phase 67 = Pillar A corpus surgical sweeps (warm-up). Phase 68 = Pillar B CHAIN_SKIP root-cause resolution (validator surgery, atomic commit). Phase 69 = Pillar C CI-Linux hardening (cross-OS verification). Phase 70 = Pillar D harness lineage bump + terminal re-audit from fresh clone per D-03 LOCKED + v1.7-MILESTONE-AUDIT.md + v1.7-DEFERRED-CLEANUP.md + traceability closure. Sequential-on-main-tree execution per `.planning/config.json` `use_worktrees:false` durable constraint. Next: `/gsd-plan-phase 67` to author Phase 67 plans.*
