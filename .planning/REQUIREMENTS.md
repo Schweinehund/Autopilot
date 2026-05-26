@@ -19,7 +19,7 @@ Requirements for v1.7 release. Each maps to one phase. Phases 67-70 continue fro
 
 - [ ] **CHAIN-02**: Archive-path detection added to `check-phase-48.mjs` (handle both pre-archival path `.planning/phases/48-...` and post-archival `.planning/milestones/v1.5-phases/48-.../48-VERIFICATION-broken-links.md`); `regenerate-supervision-pins.mjs --self-test` line-number drift fixed via either `v1.5-audit-allowlist.json` line-number rebase OR self-test tolerance for ±1 line drift. Both fixes verified by running validator on existing archived v1.5 directory layout.
 
-- [ ] **CHAIN-03**: Cascade fixes applied to `check-phase-60.mjs` + `check-phase-61.mjs` (downstream of CHAIN-01 + CHAIN-02 root causes); CHAIN_SKIP arrays in `check-phase-62.mjs` through `check-phase-66.mjs` have entries {48, 51, 58, 60, 61} removed; full chain `check-phase-{48..66}.mjs` exits 0 on the local Windows host (no SKIPPED entries). Removal commit is atomic across all 5 v1.6 validator files to preserve indivisibility of the chain-validator topology.
+- [x] **CHAIN-03**: Cascade fixes applied to `check-phase-60.mjs` + `check-phase-61.mjs` (downstream of CHAIN-01 + CHAIN-02 root causes); CHAIN_SKIP arrays in `check-phase-62.mjs` through `check-phase-66.mjs` have entries {48, 51, 58, 60, 61} removed; full chain `check-phase-{48..66}.mjs` exits 0 on the local Windows host (no SKIPPED entries). Removal commit is atomic across all 5 v1.6 validator files to preserve indivisibility of the chain-validator topology. — completed 2026-05-26 in Phase 68 Plan 68-03 (atomic commit `7b635ca` removes CHAIN_SKIP entries across check-phase-{62..66}.mjs in single SHA per Phase 66-02 3a9a671 precedent; preceded by Option A pivot precondition commit `d7d7d5f` making V-61-01..04 in check-phase-61.mjs v1.5-frozen-aware — reads REQUIREMENTS.md @ v1.5-close ba2cbc0 via execFileSync('git', ['show', ...]) instead of HEAD, resolving v1.7-reorg-mismatch; subprocess timeout 60s→300s auto-applied per Rule 3 to 10 sites accommodating empty-CHAIN_SKIP recursive chain expansion)
 
 ### Pillar C — CI-Linux Hardening
 
@@ -80,7 +80,7 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | SWEEP-02 | Phase 67 | Complete |
 | CHAIN-01 | Phase 68 | Pending |
 | CHAIN-02 | Phase 68 | Pending |
-| CHAIN-03 | Phase 68 | Pending |
+| CHAIN-03 | Phase 68 | Complete |
 | CILINUX-01 | Phase 69 | Pending |
 | HARNESS-01 | Phase 70 | Pending |
 | HARNESS-02 | Phase 70 | Pending |

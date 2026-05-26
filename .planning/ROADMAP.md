@@ -334,9 +334,9 @@ Plans:
 - [x] 68-02-PLAN.md — Wave 1: CHAIN-02 archive-path helper (NEW _lib/) + 5 call-site replacements + check-phase-31 STRETCH + regenerate-supervision-pins BASELINE_9 +1 shift + parseAllowlist v1.5→v1.6 lineage repoint + v1.5-audit-allowlist.json broad rebase (commit `79c65c6` 2026-05-26; self-test FAIL→PASS; v1.5-harness 9/12→12/12; check-phase-48 5/7→7/7; check-phase-60 19/25→25/25; V-31-21/V-31-24 preserved with silent-swallow bug closed; v1.6-harness 15/15 unchanged)
 - [x] 68-04-PLAN.md — Wave 1: MILESTONES.md cdcce23 garbage v1.5 H2 entry deletion (commit `d142c7a` 2026-05-26; 70 lines deleted; line count 208→138; single ^## v1.5 H2 with Shipped: 2026-05-07; V-61-19/20 FAIL→PASS)
 
-**Wave 2** *(blocked on Wave 1 completion)*
+**Wave 2** *(complete)*
 
-- [ ] 68-03-PLAN.md — Wave 2: CHAIN-03 ATOMIC 5-file CHAIN_SKIP empty-Set substitution across check-phase-{62,63,64,65,66}.mjs (ONE git SHA per Phase 66-02 3a9a671 precedent)
+- [x] 68-03-PLAN.md — Wave 2: CHAIN-03 ATOMIC 5-file CHAIN_SKIP empty-Set substitution across check-phase-{62,63,64,65,66}.mjs (atomic commit `7b635ca` 2026-05-26; 5 files in ONE git SHA per Phase 66-02 3a9a671 precedent; preceded by Option A pivot precondition commit `d7d7d5f` v1.5-frozen-aware V-61-01..04 reads REQUIREMENTS.md @ ba2cbc0 — full chain 48..66 exits 0 with 0 SKIPPED first time since v1.5 close; subprocess timeout 60s→300s auto-applied per Rule 3 to accommodate recursive expansion)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -443,7 +443,7 @@ Plans:
 | 65. Apple Business L1/L2 + Hub Navigation Integration | v1.6 | 5/5 | Complete    | 2026-05-23 |
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 5/5 | Complete   | 2026-05-25 |
 | 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 3/3 | Complete    | 2026-05-26 |
-| 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 1/5 | In progress | — |
+| 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 4/5 | In progress | — |
 | 69. CI-Linux Hardening (Pillar C) | v1.7 | 0/TBD | Not started | — |
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 0/TBD | Not started | — |
 
