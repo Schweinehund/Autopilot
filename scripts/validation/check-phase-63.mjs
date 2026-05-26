@@ -22,6 +22,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -45,7 +46,7 @@ const IOS_MATRIX = 'docs/reference/ios-capability-matrix.md';
 const MACOS_MATRIX = 'docs/reference/macos-capability-matrix.md';
 const PLATFORM_COMPARISON = 'docs/reference/4-platform-capability-comparison.md';
 const AB_OUS = 'docs/cross-platform/apple-business/02-ous-architecture.md';
-const ANCHOR_INVENTORY = '.planning/phases/63-multi-ou-architecture-apple-admin-setup/63-ANCHOR-INVENTORY.md';
+const ANCHOR_INVENTORY = resolveArchivedPhasePath('63-multi-ou-architecture-apple-admin-setup/63-ANCHOR-INVENTORY.md', ['v1.6-phases']);
 
 // Extends check-phase-62.mjs chain by adding 62.
 // Phase 50 included: check-phase-50.mjs runs 26 checks and exits 0 (not a stub).
@@ -287,6 +288,7 @@ const checks = [
   {
     id: 'ANCHOR-INVENTORY', name: 'V-63-ANCHOR-INVENTORY: 63-ANCHOR-INVENTORY.md exists with >= 2 Pre-edit git SHA entries',
     run() {
+      if (ANCHOR_INVENTORY === null) return { pass: false, detail: '63-ANCHOR-INVENTORY.md not found at .planning/phases/ or .planning/milestones/v1.6-phases/' };
       const c = readFile(ANCHOR_INVENTORY);
       if (c === null) return { pass: false, detail: ANCHOR_INVENTORY + ' missing' };
       const shaCount = (c.match(/Pre-edit git SHA/gi) || []).length;

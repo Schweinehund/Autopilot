@@ -404,11 +404,18 @@ function doEmitStubs() {
 // close and remain valid for the v1.6 corpus. Resolution path: BASELINE_11 will refresh at
 // v1.7 close per the Path-A inheritance pattern (v1.4.1 -> BASELINE_8 -> v1.5 -> BASELINE_9
 // -> v1.6 -> BASELINE_10).
+// BASELINE_9 refreshed 2026-05-26 (Phase 68 Plan 68-02): _glossary-android.md entries +1 line-coord
+// shift to absorb Phase 62-07 Apple Business reciprocal-governance banner at _glossary-android.md:13;
+// parseAllowlist() lineage repointed v1.5 -> v1.6 sidecar (closes D-03 dogfood-test FAIL; helper
+// honors anti-tolerance directive at line 499 -- tightens via lineage repoint, not relaxes via
+// tolerance window). v1.6 sidecar already carries the +1-rebased coords per Phase 66-02 atomic
+// commit 3a9a671 (BASELINE_10 freshness comment). Forward-pointer: Phase 70 HARNESS-02 repoints
+// parseAllowlist() to v1.7 sidecar at that future commit via 1-line edit (line 422).
 const BASELINE_9 = [
-  ['docs/_glossary-android.md', 79],   // ### Supervision heading (was 65/76; 79 at Phase 59; stable post-Plan-06 — H3 sits before line 127)
-  ['docs/_glossary-android.md', 81],   // Supervision disambiguation blockquote (was 67/78; 81 at Phase 59; stable post-Plan-06)
-  ['docs/_glossary-android.md', 181],  // MHS cross-platform note (was 134/172/179; 181 post-Plan-06 +2 from #kme/#kpe shims)
-  ['docs/_glossary-android.md', 198],  // Version History row (was 148/188/196; 198 post-Plan-06 +2)
+  ['docs/_glossary-android.md', 80],   // ### Supervision heading (was 79 at Phase 59; +1 Phase 62-07 banner shift; H3 sits before line 127)
+  ['docs/_glossary-android.md', 82],   // Supervision disambiguation blockquote (was 81 at Phase 59; +1 Phase 62-07 banner shift)
+  ['docs/_glossary-android.md', 182],  // MHS cross-platform note (was 181 at Phase 60-06; +1 Phase 62-07 banner shift)
+  ['docs/_glossary-android.md', 199],  // Version History row (was 198 at Phase 60-06; +1 Phase 62-07 banner shift)
   ['docs/android-lifecycle/00-enrollment-overview.md', 51],
   ['docs/android-lifecycle/00-enrollment-overview.md', 53],
   ['docs/android-lifecycle/00-enrollment-overview.md', 83],
@@ -419,9 +426,9 @@ const BASELINE_9 = [
 function doSelfTest() {
   process.stdout.write('=== self-test: reproduce Phase 43 hand-authored new-pin set ===\n');
 
-  const allow = parseAllowlist('scripts/validation/v1.5-audit-allowlist.json');
+  const allow = parseAllowlist('scripts/validation/v1.6-audit-allowlist.json');
   if (allow._missing) {
-    process.stderr.write('FAIL: sidecar missing at scripts/validation/v1.5-audit-allowlist.json\n');
+    process.stderr.write('FAIL: sidecar missing at scripts/validation/v1.6-audit-allowlist.json\n');
     process.exit(1);
   }
   if (allow._parseError) {

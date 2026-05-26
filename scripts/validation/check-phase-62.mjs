@@ -19,6 +19,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -38,7 +39,7 @@ const AB_OUS = 'docs/cross-platform/apple-business/02-ous-architecture.md';
 const AB_ADMIN_DIR = 'docs/cross-platform/apple-business/_admin-directory.md';
 const ABM_MACOS_INTRO = 'docs/admin-setup-macos/01-abm-configuration.md';
 const ABM_IOS_INTRO = 'docs/admin-setup-ios/02-abm-token.md';
-const ANCHOR_INVENTORY = '.planning/phases/62-apple-business-foundation-rebrand/62-ANCHOR-INVENTORY.md';
+const ANCHOR_INVENTORY = resolveArchivedPhasePath('62-apple-business-foundation-rebrand/62-ANCHOR-INVENTORY.md', ['v1.6-phases']);
 const GLOSSARIES_4 = ['docs/_glossary.md', 'docs/_glossary-macos.md', 'docs/_glossary-android.md', 'docs/_glossary-linux.md'];
 
 // Phase 50 stub excluded per check-phase-61.mjs precedent (stub validator; not full check).
@@ -243,6 +244,7 @@ const checks = [
   {
     id: 'ANCHORS', name: 'V-62-ANCHORS: 62-ANCHOR-INVENTORY.md exists with >= 3 Pre-edit git SHA entries',
     run() {
+      if (ANCHOR_INVENTORY === null) return { pass: false, detail: '62-ANCHOR-INVENTORY.md not found at .planning/phases/ or .planning/milestones/v1.6-phases/' };
       const c = readFile(ANCHOR_INVENTORY);
       if (c === null) return { pass: false, detail: ANCHOR_INVENTORY + ' missing' };
       const shaCount = (c.match(/Pre-edit git SHA/gi) || []).length;

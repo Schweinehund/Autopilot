@@ -15,6 +15,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -80,7 +81,8 @@ const checks = [
     id: 5,
     name: '48-VERIFICATION-broken-links.md exists with Category A/B/C sections',
     run() {
-      const relPath = '.planning/phases/48-audit-harness-bootstrap-broken-link-sweep-first-pass/48-VERIFICATION-broken-links.md';
+      const relPath = resolveArchivedPhasePath('48-audit-harness-bootstrap-broken-link-sweep-first-pass/48-VERIFICATION-broken-links.md');
+      if (relPath === null) return { pass: false, detail: '48-VERIFICATION-broken-links.md not found at .planning/phases/ or .planning/milestones/v1.5-phases/' };
       const content = readFile(relPath);
       if (!content) return { pass: false, detail: relPath + ' does not exist' };
       const hasA = /^## Category A/m.test(content);

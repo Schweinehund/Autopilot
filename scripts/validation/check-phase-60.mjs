@@ -14,6 +14,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -27,9 +28,9 @@ function readFile(relPath) {
 const HARNESS = 'scripts/validation/v1.5-milestone-audit.mjs';
 const SIDECAR = 'scripts/validation/v1.5-audit-allowlist.json';
 const PIN_HELPER = 'scripts/validation/regenerate-supervision-pins.mjs';
-const BROKEN_LINKS_INVENTORY = '.planning/phases/48-audit-harness-bootstrap-broken-link-sweep-first-pass/48-VERIFICATION-broken-links.md';
+const BROKEN_LINKS_INVENTORY = resolveArchivedPhasePath('48-audit-harness-bootstrap-broken-link-sweep-first-pass/48-VERIFICATION-broken-links.md');
 const COMPARISON_DOC = 'docs/reference/4-platform-capability-comparison.md';
-const CALIBRATION_DOC = '.planning/phases/60-audit-harness-v1-5-finalization/60-CALIBRATION.md';
+const CALIBRATION_DOC = resolveArchivedPhasePath('60-audit-harness-v1-5-finalization/60-CALIBRATION.md');
 // CHAIN_PHASES: Phase 50 (Linux Admin Setup + Capability Matrix) intentionally excluded -- Phase 50 is
 // 'Not started' per ROADMAP:471; check-phase-50.mjs is a stub validator without full assertions until
 // Phase 50 ships content. Graceful-skip mechanism would handle a missing file, but Phase 50's stub-state
@@ -149,6 +150,7 @@ const checks = [
   {
     id: 8, name: "V-60-08: 48-VERIFICATION-broken-links.md Triage Decision column populated 75/75 entries (D-11 close)",
     run() {
+      if (BROKEN_LINKS_INVENTORY === null) return { pass: false, detail: 'archived doc not found at .planning/phases/ or .planning/milestones/v1.5-phases/' };
       const c = readFile(BROKEN_LINKS_INVENTORY);
       if (c === null) return { pass: false, detail: 'broken-links inventory missing' };
       // Count rows with populated Triage Decision: matches `| FIXED-PHASE-60 |` or `| ALLOWLISTED-c13_broken_link_allowlist |` at end of row
@@ -256,6 +258,7 @@ checks.push({
 checks.push({
   id: 24, name: "V-60-24: 60-CALIBRATION.md artifact exists with Section A + Section B + Summary (D-27)",
   run() {
+    if (CALIBRATION_DOC === null) return { pass: false, detail: 'archived doc not found at .planning/phases/ or .planning/milestones/v1.5-phases/' };
     const c = readFile(CALIBRATION_DOC);
     if (c === null) return { pass: false, detail: 'calibration artifact missing' };
     if (!/^phase:\s*60-audit-harness-v1-5-finalization/m.test(c))
@@ -271,6 +274,7 @@ checks.push({
 checks.push({
   id: 25, name: "V-60-25: 48-VERIFICATION-broken-links.md baseline preserved (total_findings: 75 + Summary table) per D-11 audit-trail",
   run() {
+    if (BROKEN_LINKS_INVENTORY === null) return { pass: false, detail: 'archived doc not found at .planning/phases/ or .planning/milestones/v1.5-phases/' };
     const c = readFile(BROKEN_LINKS_INVENTORY);
     if (c === null) return { pass: false, detail: 'inventory missing' };
     if (!/total_findings:\s*75/.test(c))
