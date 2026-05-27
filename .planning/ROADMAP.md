@@ -355,7 +355,7 @@ Plans:
   4. Existing per-version workflows (`audit-harness-integrity.yml` v1.4 + `audit-harness-v1.5-integrity.yml` + `audit-harness-v1.6-integrity.yml`) remain byte-unchanged — no modifications to older workflow files; v1.7 ubuntu-latest job lives in a v1.7-scoped workflow file (or transitionally in v1.6 with explicit handoff comment)
   5. CI run on a representative PR (synthetic or real) confirms: Windows runner exits 0 + Linux runner exits 0 + both report 0 SKIPPED + both report identical PASS counts (cross-OS reproducibility verified)
 
-**Plans:** TBD
+**Plans:** 1/2 plans executed
 
 ### Phase 70: v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)
 
@@ -444,7 +444,7 @@ Plans:
 | 66. Apple Business Validation Tooling Closure + Milestone Audit | v1.6 | 5/5 | Complete   | 2026-05-25 |
 | 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 3/3 | Complete    | 2026-05-26 |
 | 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 5/5 | Complete    | 2026-05-26 |
-| 69. CI-Linux Hardening (Pillar C) | v1.7 | 0/TBD | Not started | — |
+| 69. CI-Linux Hardening (Pillar C) | v1.7 | 1/2 | In Progress|  |
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 0/TBD | Not started | — |
 
 ---
