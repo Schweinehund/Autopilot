@@ -628,7 +628,7 @@ git diff --name-only .github/workflows/audit-harness-integrity.yml \
 
 **If this table changes:** A3 is the only assumption with non-trivial planning impact — if Phase 69 close-gate reveals Linux > 1500s, `timeout-minutes` must bump. Plan should include a re-measurement step at SC#5 B.1 capture.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 ### Q1: For SC#5 B.4 PASS-count diff table, where does check-phase-66 emit per-validator PASS counts?
 - **What we know:** `check-phase-66.mjs --verbose` emits a final line `Result: N PASS, M FAIL, K SKIPPED\n` (from line 378 in the script). Per-validator detail lines are emitted with the format `[check_id/total] V-66-NN: ...` showing PASS/FAIL/SKIPPED.
