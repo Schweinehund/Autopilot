@@ -73,6 +73,7 @@ jobs:
       - name: Disable autocrlf BEFORE checkout (LF-fidelity contract)
         run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
       - name: Run chain-apex check-phase-66.mjs (recursively spawns 48..65)
