@@ -1,0 +1,92 @@
+# v1.7 Audit Harness Integrity (Phase 69 CILINUX-01 skeleton)
+# Phase 70 HARNESS-04 extends this file (adds both crons + supervision-pin drift advisory job + repoints sidecar references v1.6 -> v1.7)
+# Path-filter `docs/decision-trees/09-linux-triage.md` entry is Phase 69 SC#5-evidence-only per D-04 sub-decision (a); Phase 70 HARNESS-04(a) removes it
+
+name: Audit Harness v1.7 Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/validation/check-phase-*.mjs'
+      - '.github/workflows/audit-harness-v1.7-integrity.yml'
+      - '.planning/REQUIREMENTS.md'
+      - 'docs/decision-trees/09-linux-triage.md'
+  workflow_dispatch:
+
+# NOTE: on.schedule: OMITTED in Phase 69 -- both crons (weekly bitrot + quarterly rotting-external)
+# are Phase 70 HARNESS-04(b) deliverables. Firing crons pre-v1.7-sidecar would target v1.6 sidecar
+# which is transitional-only in this skeleton; semantically wrong as bitrot-checking surface.
+
+jobs:
+  parse:
+    name: Parse v1.6 sidecar JSON
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Validate v1.6-audit-allowlist.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const j = JSON.parse(fs.readFileSync('scripts/validation/v1.6-audit-allowlist.json', 'utf8'));
+            if (!Array.isArray(j.supervision_exemptions) || j.supervision_exemptions.length === 0) {
+              console.error('supervision_exemptions empty');
+              process.exit(1);
+            }
+            console.log('v1.6 sidecar OK: ' + j.supervision_exemptions.length + ' supervision pins');
+          "
+
+  path-match:
+    name: Harness references v1.6 sidecar
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify harness sidecar reference
+        run: |
+          if grep -q "scripts/validation/v1.6-audit-allowlist.json" scripts/validation/v1.6-milestone-audit.mjs; then
+            echo "OK: harness references v1.6 sidecar"
+          else
+            echo "FAIL: harness does not reference v1.6-audit-allowlist.json"
+            exit 1
+          fi
+
+  harness-run:
+    name: Run v1.6 milestone audit harness
+    runs-on: ubuntu-latest
+    needs: path-match
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run v1.6-milestone-audit.mjs
+        run: node scripts/validation/v1.6-milestone-audit.mjs --verbose
+
+  linux-chain-ubuntu-latest:
+    name: Validator chain on Linux LF (Phase 69 CILINUX-01)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 30
+    continue-on-error: false
+    steps:
+      - name: Disable autocrlf BEFORE checkout (LF-fidelity contract)
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run chain-apex check-phase-66.mjs (recursively spawns 48..65)
+        run: |
+          START=$(date +%s)
+          node scripts/validation/check-phase-66.mjs --verbose
+          END=$(date +%s)
+          echo "::notice title=CHAIN_TIMING_LINUX::Full chain wall-clock: $((END-START))s (Windows reference: ~102s; subprocess timeout: 300s)"
+      - name: check-phase-67..70 skip-if-missing stubs
+        run: |
+          for i in 67 68 69 70; do
+            if [ -f scripts/validation/check-phase-$i.mjs ]; then
+              node scripts/validation/check-phase-$i.mjs
+            else
+              echo "check-phase-$i.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
+            fi
+          done
