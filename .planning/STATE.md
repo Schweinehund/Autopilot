@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
-status: ready_to_plan
-stopped_at: Phase 68 complete (5/5) — ready to discuss Phase 69
-last_updated: 2026-05-26T22:13:54.352Z
-last_activity: 2026-05-26 -- Phase 68 Plan 68-05 closed (close-gate landed 68-VERIFICATION.md NEW + v1.7-DEFERRED-CLEANUP.md NEW stub + PROJECT.md/REQUIREMENTS.md CHAIN-01/02/03 Active→Validated flips + STATE.md/ROADMAP.md updates + 5 chain validator `{68_03_SHA}` placeholder substitution in preceding Commit A `3814bee`; Phase 68 (Pillar B — Validator Surgery) SHIPPED; 5/5 plans complete; CHAIN-01 + CHAIN-02 + CHAIN-03 all closed; full chain exits 0 with 0 SKIPPED — first time since v1.5 close)
+status: planning
+stopped_at: Phase 69 context gathered
+last_updated: "2026-05-27T02:10:22.784Z"
+last_activity: 2026-05-26
 progress:
-  total_phases: 4
+  total_phases: 9
   completed_phases: 2
   total_plans: 8
   completed_plans: 8
-  percent: 50
+  percent: 22
 ---
 
 # Project State
@@ -155,9 +155,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-26T22:00:00Z
-Stopped at: Phase 68 SHIPPED 2026-05-26 — all 5 plans complete (CHAIN-01 + CHAIN-02 + CHAIN-03 closed). Full chain check-phase-{48..66}.mjs exits 0 across all 19 phases with 0 SKIPPED — first time since v1.5 close. Plan 68-05 close-gate landed in 2 commits: Commit A `3814bee` (`{68_03_SHA}` placeholder fill across 5 chain validators) + Commit B (this close-gate; 68-VERIFICATION.md NEW + v1.7-DEFERRED-CLEANUP.md NEW + PROJECT.md/REQUIREMENTS.md/STATE.md/ROADMAP.md traceability flips + 68-05-SUMMARY.md). `{68_05_SHA}` placeholder remains as literal `{68_05_SHA}` per Plan 68-05 chicken-and-egg resolution — Phase 70+ readers can git log to find this close-gate SHA.
-Resume file: .planning/phases/68-chain-skip-root-cause-resolution-pillar-b-validator-surgery/68-05-SUMMARY.md
+Last session: 2026-05-27T02:10:22.752Z
+Stopped at: Phase 69 context gathered
+Resume file: .planning/phases/69-ci-linux-hardening-pillar-c-cross-os-verification/69-CONTEXT.md
 Next action: `/gsd:plan-phase 69` (Pillar C — CI-Linux Hardening / CILINUX-01) — author Phase 69 CONTEXT/RESEARCH/PLAN; staging strategy for ubuntu-latest runner job; verify cross-OS reproducibility; validate 300s subprocess-timeout headroom per Phase 68 TIMEOUT-01 discovery
 
 ## Decisions
