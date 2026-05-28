@@ -415,7 +415,7 @@ function doEmitStubs() {
 // parseAllowlist() to v1.7 sidecar at that future commit via 1-line edit (line 422).
 // BASELINE_11 refreshed 2026-05-28 (Phase 70 Plan 70-02): closes BASELINE_10 v1.6 carry-over
 // per HARNESS-02 contract (REQUIREMENTS.md:32 + ROADMAP.md:370); v1.7 line positions verified
-// against HEAD {phase_70_atom_1_SHA} (Phase 69 close-gate baseline + Phase 70 Plan 70-01 chain green).
+// against HEAD 26a1ae9 (Phase 69 close-gate baseline + Phase 70 Plan 70-01 chain green).
 // BASELINE_9 entries above remain unchanged -- Phase 70 does NOT alter the line-coord array;
 // this comment records the audit-trail event that line-positions were re-verified at Phase 70
 // close and remain valid for the v1.7 corpus. Resolution path: BASELINE_12 will refresh at

@@ -7,9 +7,9 @@
 //
 // Per-assertion-class freshness routing per 70-CONTEXT.md D-01 LOCKED (Option C):
 //   V-70-01..17 -> HEAD-coupled (live deliverables: HARNESS-01/02/03/04 surface)
-//   V-70-18..27 -> v1.7-frozen-aware via {phase_70_close_SHA} placeholder (HARNESS-05/06 + traceability)
+//   V-70-18..27 -> v1.7-frozen-aware via aa6de68 placeholder (HARNESS-05/06 + traceability)
 //
-// Plan 70-05 Commit A substitutes {phase_70_close_SHA} via `sed -i` across this file + check-phase-67/68/69.mjs
+// Plan 70-05 Commit A substitutes aa6de68 via `sed -i` across this file + check-phase-67/68/69.mjs
 // (4 validators total). See 70-CONVENTIONS.md §"Chicken-and-Egg SHA Placeholder Convention".
 //
 // Lineage: Phase 48 D-25 -> ... -> Phase 66 AUDIT-14..15 -> Phase 67 SWEEP-01..02 -> Phase 68 CHAIN-01..03 -> Phase 69 CILINUX-01 -> Phase 70 HARNESS-01..06
@@ -39,7 +39,7 @@ function readFile(relPath) {
 // reusable for any v1.7-frozen corpus read. Substitution: Plan 70-05 Commit A via sed -i.
 function readCorpusFileAtV17Close(relPath) {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -48,7 +48,7 @@ function readCorpusFileAtV17Close(relPath) {
 // Reads v1.7-MILESTONE-AUDIT.md at v1.7-close SHA (HARNESS-06 deliverable; frozen at close).
 function readMilestoneAuditAtV17Close() {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:.planning/milestones/v1.7-MILESTONE-AUDIT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:.planning/milestones/v1.7-MILESTONE-AUDIT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -57,7 +57,7 @@ function readMilestoneAuditAtV17Close() {
 // Reads v1.7-DEFERRED-CLEANUP.md at v1.7-close SHA (HARNESS-06 deliverable; frozen at close).
 function readDeferredCleanupAtV17Close() {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:.planning/milestones/v1.7-DEFERRED-CLEANUP.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:.planning/milestones/v1.7-DEFERRED-CLEANUP.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -66,7 +66,7 @@ function readDeferredCleanupAtV17Close() {
 // Reads REQUIREMENTS.md at v1.7-close SHA (HARNESS-06 traceability closure target).
 function readRequirementsAtV17Close() {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:.planning/REQUIREMENTS.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:.planning/REQUIREMENTS.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -75,7 +75,7 @@ function readRequirementsAtV17Close() {
 // Reads ROADMAP.md at v1.7-close SHA (HARNESS-06 Progress table 4/4 v1.7 phases Complete).
 function readRoadmapAtV17Close() {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:.planning/ROADMAP.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:.planning/ROADMAP.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -84,7 +84,7 @@ function readRoadmapAtV17Close() {
 // Reads STATE.md at v1.7-close SHA (HARNESS-06 milestone close state).
 function readStateAtV17Close() {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:.planning/STATE.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:.planning/STATE.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -93,7 +93,7 @@ function readStateAtV17Close() {
 // Reads PROJECT.md at v1.7-close SHA (HARNESS-06 Validated section 12 v1.7 rows).
 function readProjectAtV17Close() {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:.planning/PROJECT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:.planning/PROJECT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -399,31 +399,31 @@ checks.push({
 });
 
 // =============================================================================
-// V-70-18..V-70-27 — v1.7-frozen-aware (chicken-and-egg via {phase_70_close_SHA} placeholder)
+// V-70-18..V-70-27 — v1.7-frozen-aware (chicken-and-egg via aa6de68 placeholder)
 // =============================================================================
 
-// === V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 18, name: 'V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 18, name: 'V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-frozen @ aa6de68]',
   run() {
     const PATH = '.planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-04-AUDIT-RESULTS.md';
     const c = readCorpusFileAtV17Close(PATH);
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     if (c.length < 100) return { pass: false, detail: '70-04-AUDIT-RESULTS.md too short (< 100 chars)' };
     return { pass: true, detail: '70-04-AUDIT-RESULTS.md present at v1.7-close SHA' };
   }
 });
 
-// === V-70-19: HARNESS-05 audit-results document contains B.1 + B.2 sections [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-19: HARNESS-05 audit-results document contains B.1 + B.2 sections [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 19, name: 'V-70-19: HARNESS-05 audit-results doc contains B.1 (local fresh-clone) + B.2 (Linux GHA cross-OS) [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 19, name: 'V-70-19: HARNESS-05 audit-results doc contains B.1 (local fresh-clone) + B.2 (Linux GHA cross-OS) [v1.7-frozen @ aa6de68]',
   run() {
     const PATH = '.planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-04-AUDIT-RESULTS.md';
     const c = readCorpusFileAtV17Close(PATH);
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     const hasB1 = /##?\s*B\.?1\b/i.test(c) || /Section\s*B\.1/i.test(c);
     const hasB2 = /##?\s*B\.?2\b/i.test(c) || /Section\s*B\.2/i.test(c);
@@ -434,13 +434,13 @@ checks.push({
   }
 });
 
-// === V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md exists with YAML frontmatter [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md exists with YAML frontmatter [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 20, name: 'V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md frontmatter (milestone:v1.7, status:passed, requirements:12/12, phases:4/4) [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 20, name: 'V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md frontmatter (milestone:v1.7, status:passed, requirements:12/12, phases:4/4) [v1.7-frozen @ aa6de68]',
   run() {
     const c = readMilestoneAuditAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     const REQUIRED = ['milestone: v1.7', 'status: passed', 'requirements: 12/12', 'phases: 4/4'];
     const missing = REQUIRED.filter(s => !c.includes(s));
@@ -451,11 +451,11 @@ checks.push({
 
 // === V-70-21: HARNESS-06 milestone audit doc has performed_by + Auditor-Independence + Command Verification Table sections ===
 checks.push({
-  id: 21, name: 'V-70-21: HARNESS-06 milestone audit doc has performed_by + Auditor-Independence + Command Verification Table [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 21, name: 'V-70-21: HARNESS-06 milestone audit doc has performed_by + Auditor-Independence + Command Verification Table [v1.7-frozen @ aa6de68]',
   run() {
     const c = readMilestoneAuditAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     const REQUIRED = ['performed_by:', 'Auditor-Independence', 'Command Verification'];
     const missing = REQUIRED.filter(s => !c.includes(s));
@@ -466,11 +466,11 @@ checks.push({
 
 // === V-70-22: HARNESS-06 milestone audit doc has NEW "Discoveries Surfaced During Execution" section with 5 discoveries ===
 checks.push({
-  id: 22, name: 'V-70-22: HARNESS-06 milestone audit doc has Discoveries Surfaced During Execution (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01 + CHAIN-WRAPPER-01 + ARCHIVE-01) [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 22, name: 'V-70-22: HARNESS-06 milestone audit doc has Discoveries Surfaced During Execution (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01 + CHAIN-WRAPPER-01 + ARCHIVE-01) [v1.7-frozen @ aa6de68]',
   run() {
     const c = readMilestoneAuditAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     if (!/Discoveries Surfaced/i.test(c)) return { pass: false, detail: '"Discoveries Surfaced During Execution" section absent' };
     const FIVE = ['FETCH-DEPTH-01', 'SCOPE-GAP-61', 'D-04-OVERSPEC-01', 'CHAIN-WRAPPER-01', 'ARCHIVE-01'];
@@ -480,13 +480,13 @@ checks.push({
   }
 });
 
-// === V-70-23: HARNESS-06 v1.7-DEFERRED-CLEANUP.md finalized [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-23: HARNESS-06 v1.7-DEFERRED-CLEANUP.md finalized [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 23, name: 'V-70-23: HARNESS-06 v1.7-DEFERRED-CLEANUP.md finalized (carry-forward + v1.6 items + Phase 69 discoveries) [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 23, name: 'V-70-23: HARNESS-06 v1.7-DEFERRED-CLEANUP.md finalized (carry-forward + v1.6 items + Phase 69 discoveries) [v1.7-frozen @ aa6de68]',
   run() {
     const c = readDeferredCleanupAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     // Look for carry-forward markers + Phase 69 discoveries
     const REQUIRED = ['HARNESS-FORWARD-01', 'CI-3'];
@@ -496,13 +496,13 @@ checks.push({
   }
 });
 
-// === V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 24, name: 'V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 24, name: 'V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-frozen @ aa6de68]',
   run() {
     const c = readProjectAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     // Identify v1.7 requirement IDs (SWEEP-01/02 + CHAIN-01/02/03 + CILINUX-01 + HARNESS-01..06 = 12)
     const REQS_V17 = ['SWEEP-01', 'SWEEP-02', 'CHAIN-01', 'CHAIN-02', 'CHAIN-03', 'CILINUX-01', 'HARNESS-01', 'HARNESS-02', 'HARNESS-03', 'HARNESS-04', 'HARNESS-05', 'HARNESS-06'];
@@ -512,13 +512,13 @@ checks.push({
   }
 });
 
-// === V-70-25: Traceability closure ROADMAP.md Progress table 4/4 v1.7 phases (67-70) Complete [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-25: Traceability closure ROADMAP.md Progress table 4/4 v1.7 phases (67-70) Complete [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 25, name: 'V-70-25: Traceability closure ROADMAP.md Progress 4/4 v1.7 phases (67-70) Complete [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 25, name: 'V-70-25: Traceability closure ROADMAP.md Progress 4/4 v1.7 phases (67-70) Complete [v1.7-frozen @ aa6de68]',
   run() {
     const c = readRoadmapAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     // Look for Phase 67/68/69/70 + "Complete" markers
     const PHASES = ['Phase 67', 'Phase 68', 'Phase 69', 'Phase 70'];
@@ -528,13 +528,13 @@ checks.push({
   }
 });
 
-// === V-70-26: Traceability closure STATE.md frontmatter status:complete + completed_phases:4 / total_phases:4 [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-26: Traceability closure STATE.md frontmatter status:complete + completed_phases:4 / total_phases:4 [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 26, name: 'V-70-26: Traceability closure STATE.md frontmatter status:complete + completed_phases:4/total_phases:4 [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 26, name: 'V-70-26: Traceability closure STATE.md frontmatter status:complete + completed_phases:4/total_phases:4 [v1.7-frozen @ aa6de68]',
   run() {
     const c = readStateAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     // STATE.md at v1.7-close should record milestone completion. Tolerant pattern check.
     const hasStatus = /status:\s*(complete|completed|closed)/i.test(c) || /milestone:\s*v1\.7/i.test(c);
@@ -543,13 +543,13 @@ checks.push({
   }
 });
 
-// === V-70-27: Traceability closure REQUIREMENTS.md Traceability table 12 v1.7 rows all "Complete" [v1.7-frozen @ {phase_70_close_SHA}] ===
+// === V-70-27: Traceability closure REQUIREMENTS.md Traceability table 12 v1.7 rows all "Complete" [v1.7-frozen @ aa6de68] ===
 checks.push({
-  id: 27, name: 'V-70-27: Traceability closure REQUIREMENTS.md Traceability table 12 v1.7 rows all Complete [v1.7-frozen @ {phase_70_close_SHA}]',
+  id: 27, name: 'V-70-27: Traceability closure REQUIREMENTS.md Traceability table 12 v1.7 rows all Complete [v1.7-frozen @ aa6de68]',
   run() {
     const c = readRequirementsAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
     }
     const REQS_V17 = ['SWEEP-01', 'SWEEP-02', 'CHAIN-01', 'CHAIN-02', 'CHAIN-03', 'CILINUX-01', 'HARNESS-01', 'HARNESS-02', 'HARNESS-03', 'HARNESS-04', 'HARNESS-05', 'HARNESS-06'];
     const present = REQS_V17.filter(r => c.includes(r));

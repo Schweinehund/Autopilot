@@ -26,25 +26,25 @@ function readFile(relPath) {
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
 }
 
-// Reads .planning/MILESTONES.md at v1.7-close SHA {phase_70_close_SHA} (frozen state).
+// Reads .planning/MILESTONES.md at v1.7-close SHA aa6de68 (frozen state).
 // V1.7-frozen-aware per 70-CONTEXT.md D-01 LOCKED (Option C); MILESTONES.md is post-close-mutable.
 // V-68-09 asserts cdcce23 garbage entry deletion: zero `One-liner:` placeholders in v1.5 section
-// post-Phase-68 d142c7a cleanup. Substitution: Plan 70-05 Commit A replaces {phase_70_close_SHA}.
+// post-Phase-68 d142c7a cleanup. Substitution: Plan 70-05 Commit A replaces aa6de68.
 function readMilestonesAtV17Close() {
   try {
     // stdio: ['ignore', 'pipe', 'pipe'] explicitly captures stderr (prevents inner git
     // "fatal: invalid object name" leaking to parent stderr pre-Plan-70-05 Commit A substitution).
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:.planning/MILESTONES.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:.planning/MILESTONES.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
 }
 
-// Reads scripts/validation/regenerate-supervision-pins.mjs at v1.7-close SHA {phase_70_close_SHA}
+// Reads scripts/validation/regenerate-supervision-pins.mjs at v1.7-close SHA aa6de68
 // (frozen state for V-68-05 BASELINE_9/10/11 banner-shift assertion). v1.7-frozen-aware per D-01.
 function readCorpusFileAtV17Close(relPath) {
   try {
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -126,13 +126,13 @@ const checks = [
     }
   },
 
-  // === V-68-05 (v1.7-frozen-aware): CHAIN-02 — regenerate-supervision-pins.mjs BASELINE_9/10/11 banner shift documented [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-68-05 (v1.7-frozen-aware): CHAIN-02 — regenerate-supervision-pins.mjs BASELINE_9/10/11 banner shift documented [v1.7-frozen @ aa6de68] ===
   {
-    id: 5, name: 'V-68-05: BASELINE_9 +1 banner shift + BASELINE_10/11 comment blocks present [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 5, name: 'V-68-05: BASELINE_9 +1 banner shift + BASELINE_10/11 comment blocks present [v1.7-frozen @ aa6de68]',
     run() {
       const c = readCorpusFileAtV17Close('scripts/validation/regenerate-supervision-pins.mjs');
       if (c === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       const hasB10 = c.includes('BASELINE_10');
       const hasB11 = c.includes('BASELINE_11');
@@ -188,13 +188,13 @@ const checks = [
     }
   },
 
-  // === V-68-09 (v1.7-frozen-aware): MILESTONES.md cdcce23 garbage v1.5 section deletion [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-68-09 (v1.7-frozen-aware): MILESTONES.md cdcce23 garbage v1.5 section deletion [v1.7-frozen @ aa6de68] ===
   {
-    id: 9, name: 'V-68-09: MILESTONES.md zero One-liner: placeholders in v1.5 section (cdcce23 cleanup) [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 9, name: 'V-68-09: MILESTONES.md zero One-liner: placeholders in v1.5 section (cdcce23 cleanup) [v1.7-frozen @ aa6de68]',
     run() {
       const c = readMilestonesAtV17Close();
       if (c === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       // Find v1.5 H2 section and look for "One-liner:" placeholder strings within it
       const v15Match = c.match(/##\s*v1\.5[\s\S]*?(?=^##\s|\Z)/m);

@@ -26,30 +26,30 @@ function readFile(relPath) {
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
 }
 
-// Reads <relPath> at v1.7-close SHA {phase_70_close_SHA} (frozen state for SWEEP corpus assertions).
+// Reads <relPath> at v1.7-close SHA aa6de68 (frozen state for SWEEP corpus assertions).
 // V1.7-frozen-aware per 70-CONTEXT.md D-01 LOCKED (Option C: per-assertion-class freshness routing).
 // Rationale: V-67-01..07 assert SWEEP-01/02 corpus state which is post-close-mutable surface;
 // reading at v1.7-close SHA preserves assertion semantics under subsequent corpus edits.
-// Substitution: Plan 70-05 Commit A replaces {phase_70_close_SHA} via `sed -i` (per Phase 68 Plan 68-05
+// Substitution: Plan 70-05 Commit A replaces aa6de68 via `sed -i` (per Phase 68 Plan 68-05
 // + Phase 69 Plan 69-02 precedent). Until substituted, helper returns null and callers PASS-with-degraded-detail.
 function readCorpusFileAtV17Close(relPath) {
   try {
     // stdio: ['ignore', 'pipe', 'pipe'] explicitly captures stderr (prevents inner git
-    // "fatal: invalid object name" from leaking to parent's stderr when {phase_70_close_SHA}
+    // "fatal: invalid object name" from leaking to parent's stderr when aa6de68
     // is still a literal placeholder pre-Plan-70-05 Commit A substitution).
-    return execFileSync('git', ['show', '{phase_70_close_SHA}:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'aa6de68:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
 }
 
-// Reads scripts/validation/v1.7-audit-allowlist.json at v1.7-close SHA {phase_70_close_SHA}.
+// Reads scripts/validation/v1.7-audit-allowlist.json at v1.7-close SHA aa6de68.
 // V1.7-frozen-aware per 70-CONTEXT.md D-01 LOCKED. Sidecar shape post-Phase-67-revalidation is the
 // reference state; ci_1_abm_urls entries carry `last_revalidated: "2026-05-26"`, ci_2_vpp_location_token
 // entries carry `resolved_2026_05_26: true` (per Plan 70-02 Atom 1 HARNESS-02 deliverable).
 function readSidecarAtV17Close() {
   try {
-    const c = execFileSync('git', ['show', '{phase_70_close_SHA}:scripts/validation/v1.7-audit-allowlist.json'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] });
+    const c = execFileSync('git', ['show', 'aa6de68:scripts/validation/v1.7-audit-allowlist.json'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] });
     return JSON.parse(c);
   } catch (err) {
     return null;
@@ -68,9 +68,9 @@ const CHAIN_PHASES = [48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66];
 const CHAIN_SKIP = new Set([]);
 
 const checks = [
-  // === V-67-01: SWEEP-01 ABM URL refs — 4 URLs across 4 files unchanged from post-revalidation state (3fb8ca5) [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-67-01: SWEEP-01 ABM URL refs — 4 URLs across 4 files unchanged from post-revalidation state (3fb8ca5) [v1.7-frozen @ aa6de68] ===
   {
-    id: 1, name: 'V-67-01: SWEEP-01 ABM URLs — 4 https://business.apple.com refs across 4 files [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 1, name: 'V-67-01: SWEEP-01 ABM URLs — 4 https://business.apple.com refs across 4 files [v1.7-frozen @ aa6de68]',
     run() {
       const FILES = [
         { path: 'docs/admin-setup-ios/05-app-deployment.md', line: 92 },
@@ -88,7 +88,7 @@ const checks = [
         }
       }
       if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes (' + nullCount + ' files unreadable)' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes (' + nullCount + ' files unreadable)' };
       }
       if (missing.length > 0) {
         return { pass: false, detail: missing.length + ' file(s) missing ABM URL ref: ' + missing.join(', ') };
@@ -97,13 +97,13 @@ const checks = [
     }
   },
 
-  // === V-67-02: SWEEP-01 sidecar c13_rotting_external.ci_1_abm_urls — 4 entries with last_revalidated: 2026-05-26 [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-67-02: SWEEP-01 sidecar c13_rotting_external.ci_1_abm_urls — 4 entries with last_revalidated: 2026-05-26 [v1.7-frozen @ aa6de68] ===
   {
-    id: 2, name: 'V-67-02: SWEEP-01 sidecar ci_1_abm_urls — 4 entries with last_revalidated: 2026-05-26 [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 2, name: 'V-67-02: SWEEP-01 sidecar ci_1_abm_urls — 4 entries with last_revalidated: 2026-05-26 [v1.7-frozen @ aa6de68]',
     run() {
       const j = readSidecarAtV17Close();
       if (j === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       const ci1 = j.c13_rotting_external && j.c13_rotting_external.ci_1_abm_urls;
       if (!Array.isArray(ci1)) return { pass: false, detail: 'sidecar.c13_rotting_external.ci_1_abm_urls is not an array' };
@@ -114,9 +114,9 @@ const checks = [
     }
   },
 
-  // === V-67-03: SWEEP-02 VPP rename — 6 'content token' mentions across 2 files (per D-01 LOCKED matrix m1 fix) [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-67-03: SWEEP-02 VPP rename — 6 'content token' mentions across 2 files (per D-01 LOCKED matrix m1 fix) [v1.7-frozen @ aa6de68] ===
   {
-    id: 3, name: 'V-67-03: SWEEP-02 VPP rename — 6 content token mentions across 2 files [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 3, name: 'V-67-03: SWEEP-02 VPP rename — 6 content token mentions across 2 files [v1.7-frozen @ aa6de68]',
     run() {
       const FILES = [
         'docs/admin-setup-ios/05-app-deployment.md',
@@ -132,7 +132,7 @@ const checks = [
         totalMentions += matches;
       }
       if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       if (totalMentions < 6) {
         return { pass: false, detail: 'expected >= 6 content token mentions across 2 files; got ' + totalMentions };
@@ -141,13 +141,13 @@ const checks = [
     }
   },
 
-  // === V-67-04: SWEEP-02 sidecar c13_rotting_external.ci_2_vpp_location_token — 6 entries with resolved_2026_05_26: true [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-67-04: SWEEP-02 sidecar c13_rotting_external.ci_2_vpp_location_token — 6 entries with resolved_2026_05_26: true [v1.7-frozen @ aa6de68] ===
   {
-    id: 4, name: 'V-67-04: SWEEP-02 sidecar ci_2_vpp_location_token — 6 entries with resolved_2026_05_26: true [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 4, name: 'V-67-04: SWEEP-02 sidecar ci_2_vpp_location_token — 6 entries with resolved_2026_05_26: true [v1.7-frozen @ aa6de68]',
     run() {
       const j = readSidecarAtV17Close();
       if (j === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       const ci2 = j.c13_rotting_external && j.c13_rotting_external.ci_2_vpp_location_token;
       if (!Array.isArray(ci2)) return { pass: false, detail: 'sidecar.c13_rotting_external.ci_2_vpp_location_token is not an array' };
@@ -158,9 +158,9 @@ const checks = [
     }
   },
 
-  // === V-67-05: SWEEP-02 OP-10 callouts — 2 first-mention-per-H2 OP-10 callouts present in renamed files [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-67-05: SWEEP-02 OP-10 callouts — 2 first-mention-per-H2 OP-10 callouts present in renamed files [v1.7-frozen @ aa6de68] ===
   {
-    id: 5, name: 'V-67-05: SWEEP-02 OP-10 first-mention-per-H2 callouts — 2 callouts across affected files [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 5, name: 'V-67-05: SWEEP-02 OP-10 first-mention-per-H2 callouts — 2 callouts across affected files [v1.7-frozen @ aa6de68]',
     run() {
       const FILES = [
         'docs/admin-setup-ios/05-app-deployment.md',
@@ -176,7 +176,7 @@ const checks = [
         if (matches > 0) total++;
       }
       if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       if (total < 2) {
         return { pass: false, detail: 'expected OP-10 callouts in 2 files; got ' + total };
@@ -185,9 +185,9 @@ const checks = [
     }
   },
 
-  // === V-67-06: SWEEP-02 Version History rows — 2 VH rows + glossary coord row [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-67-06: SWEEP-02 Version History rows — 2 VH rows + glossary coord row [v1.7-frozen @ aa6de68] ===
   {
-    id: 6, name: 'V-67-06: SWEEP-02 Version History rows — 2 VH rows across affected files + glossary cross-ref [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 6, name: 'V-67-06: SWEEP-02 Version History rows — 2 VH rows across affected files + glossary cross-ref [v1.7-frozen @ aa6de68]',
     run() {
       const FILES = [
         'docs/admin-setup-ios/05-app-deployment.md',
@@ -205,7 +205,7 @@ const checks = [
         }
       }
       if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       if (withVH < 2) {
         return { pass: false, detail: 'expected >= 2 files with Version History; got ' + withVH };
@@ -214,9 +214,9 @@ const checks = [
     }
   },
 
-  // === V-67-07: last_verified frontmatter bumps — 3 files updated to 2026-05-26 (iOS + macOS + glossary) [v1.7-frozen @ {phase_70_close_SHA}] ===
+  // === V-67-07: last_verified frontmatter bumps — 3 files updated to 2026-05-26 (iOS + macOS + glossary) [v1.7-frozen @ aa6de68] ===
   {
-    id: 7, name: 'V-67-07: last_verified frontmatter bumps — 3 files updated to 2026-05-26 [v1.7-frozen @ {phase_70_close_SHA}]',
+    id: 7, name: 'V-67-07: last_verified frontmatter bumps — 3 files updated to 2026-05-26 [v1.7-frozen @ aa6de68]',
     run() {
       const FILES = [
         'docs/admin-setup-ios/05-app-deployment.md',
@@ -233,7 +233,7 @@ const checks = [
         }
       }
       if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: {phase_70_close_SHA} placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       if (withBump < 3) {
         return { pass: false, detail: 'expected 3 files carrying 2026-05-26; got ' + withBump };
