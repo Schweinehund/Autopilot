@@ -376,10 +376,24 @@ Plans:
 **Plans:** 5 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 70-01-PLAN.md — Wave 1: Scaffold + Conventions + per-V-NN-NN freshness matrix (HARNESS-03 scaffold per D-01 LOCKED)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 70-02-PLAN.md — Wave 2: ATOMIC harness-core (HARNESS-01 + HARNESS-02 + BASELINE_11 + parseAllowlist v1.6 to v1.7 repoint per D-02 Atom 1)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 70-03-PLAN.md — Wave 3: ATOMIC validators + CI surface (HARNESS-03 check-phase-67..70 + HARNESS-04 workflow EXTEND per D-02 Atom 2)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 70-04-PLAN.md — Wave 4: HARNESS-05 3-axis terminal re-audit (local fresh-clone + GHA workflow_dispatch per D-03 LOCKED)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 70-05-PLAN.md — Wave 5: HARNESS-06 milestone close + 4-doc traceability closure (two-commit chicken-and-egg per D-04 Option b)
 
 ## Progress
