@@ -287,7 +287,7 @@ function scanSupervisionOccurrences() {
 
 function doReport() {
   // v1.6 sidecar per Plan 68-02 D-03 lineage repoint (REVIEW WR-01 polish — close coverage gap from doSelfTest line 429)
-  const allow = parseAllowlist('scripts/validation/v1.6-audit-allowlist.json');
+  const allow = parseAllowlist('scripts/validation/v1.7-audit-allowlist.json');
   const pinned = (allow.supervision_exemptions || []).slice();
   const pinnedKeys = new Set(pinned.map(e => e.file + ':' + e.line));
 
@@ -333,7 +333,7 @@ function doReport() {
 
 function doEmitStubs() {
   // v1.6 sidecar per Plan 68-02 D-03 lineage repoint (REVIEW WR-01 polish — close coverage gap from doSelfTest line 429)
-  const allow = parseAllowlist('scripts/validation/v1.6-audit-allowlist.json');
+  const allow = parseAllowlist('scripts/validation/v1.7-audit-allowlist.json');
   const pinnedKeys = new Set((allow.supervision_exemptions || []).map(e => e.file + ':' + e.line));
 
   const { tier1, tier2 } = scanSupervisionOccurrences();
@@ -413,6 +413,14 @@ function doEmitStubs() {
 // tolerance window). v1.6 sidecar already carries the +1-rebased coords per Phase 66-02 atomic
 // commit 3a9a671 (BASELINE_10 freshness comment). Forward-pointer: Phase 70 HARNESS-02 repoints
 // parseAllowlist() to v1.7 sidecar at that future commit via 1-line edit (line 422).
+// BASELINE_11 refreshed 2026-05-28 (Phase 70 Plan 70-02): closes BASELINE_10 v1.6 carry-over
+// per HARNESS-02 contract (REQUIREMENTS.md:32 + ROADMAP.md:370); v1.7 line positions verified
+// against HEAD {phase_70_atom_1_SHA} (Phase 69 close-gate baseline + Phase 70 Plan 70-01 chain green).
+// BASELINE_9 entries above remain unchanged -- Phase 70 does NOT alter the line-coord array;
+// this comment records the audit-trail event that line-positions were re-verified at Phase 70
+// close and remain valid for the v1.7 corpus. Resolution path: BASELINE_12 will refresh at
+// v1.8 close per the Path-A inheritance pattern (v1.4.1 -> BASELINE_8 -> v1.5 -> BASELINE_9
+// -> v1.6 -> BASELINE_10 -> v1.7 -> BASELINE_11).
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 80],   // ### Supervision heading (was 79 at Phase 59; +1 Phase 62-07 banner shift; H3 sits before line 127)
   ['docs/_glossary-android.md', 82],   // Supervision disambiguation blockquote (was 81 at Phase 59; +1 Phase 62-07 banner shift)
@@ -428,9 +436,9 @@ const BASELINE_9 = [
 function doSelfTest() {
   process.stdout.write('=== self-test: reproduce Phase 43 hand-authored new-pin set ===\n');
 
-  const allow = parseAllowlist('scripts/validation/v1.6-audit-allowlist.json');
+  const allow = parseAllowlist('scripts/validation/v1.7-audit-allowlist.json');
   if (allow._missing) {
-    process.stderr.write('FAIL: sidecar missing at scripts/validation/v1.6-audit-allowlist.json\n');
+    process.stderr.write('FAIL: sidecar missing at scripts/validation/v1.7-audit-allowlist.json\n');
     process.exit(1);
   }
   if (allow._parseError) {

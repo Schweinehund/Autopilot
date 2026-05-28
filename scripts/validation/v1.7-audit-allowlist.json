@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.1",
+  "generated": "2026-05-28T00:00:00Z",
+  "phase": "70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo",
+  "safetynet_exemptions": [
+    {"file": "docs/_glossary-android.md", "line": 186, "reason": "Phase 62 carry-over: line 185 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 183 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 176 shifted +7 (Phase 59 CLEAN-08 see-also normalization added 11 lines, net +7 before Play Integrity section); Play Integrity prose references SafetyNet as predecessor (historical context)"},
+    {"file": "docs/_glossary-android.md", "line": 201, "reason": "Phase 62 carry-over: line 200 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 198 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 190 shifted +8 (Phase 59 CLEAN-08 see-also normalization + Version History row added); SafetyNet API sunset Version History entry (2025-01 historical changelog)"},
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 102, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 104, "reason": "v1.5 inherit baseline 2026-04-26"}
+  ],
+  "supervision_exemptions": [
+    {"file": "docs/_glossary-android.md", "line": 80, "reason": "Phase 62 carry-over: line 79 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 76 shifted +3 (Phase 59 CLEAN-08 added see-also lines to BYOD/UE/ZTE before COBO section, net +3); ### Supervision H3 heading (term being defined; iOS supervision callout; intentional AEAUDIT-04 pattern)"},
+    {"file": "docs/_glossary-android.md", "line": 82, "reason": "Phase 62 carry-over: line 81 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 78 shifted +3 (same +3 shift); Android note blockquote for Supervision H3 — explains iOS/iPadOS supervision concept in cross-platform context (Apple-attributed citation; AEAUDIT-04 scope)"},
+    {"file": "docs/_glossary-android.md", "line": 182, "reason": "Phase 62 carry-over: line 181 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 179 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 172 shifted +7 (Phase 59 CLEAN-08 net +7 lines across BYOD/UE/ZTE/COBO/COPE/Supervision/WorkProfile/WPCO/CorpID/DPC/MGP see-also additions before MHS section); MHS blockquote — supervised MDM profile Apple-attributed context (cross-platform comparison to ASAM; iOS-attributed term)"},
+    {"file": "docs/_glossary-android.md", "line": 199, "reason": "Phase 62 carry-over: line 198 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 196 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 188 shifted +8 (Phase 59 CLEAN-08 net +7 + Version History row +1); Phase 34 Foundation Version History entry — 'supervision as callout-only' historical description of initial glossary scope"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 51, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 53, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/android-lifecycle/00-enrollment-overview.md", "line": 83, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/admin-setup-android/03-fully-managed-cobo.md", "line": 36, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/l2-runbooks/20-android-app-install-investigation.md", "line": 21, "reason": "v1.5 inherit baseline 2026-04-26"},
+    {"file": "docs/_glossary-android.md", "line": 17, "reason": "Phase 62 carry-over: line 16 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); v1.5 inherit baseline 2026-04-26; alphabetical index — 'Supervision' link entry"},
+    {"file": "docs/_glossary-android.md", "line": 50, "reason": "Phase 62 carry-over: line 49 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 46 shifted +3 (Phase 59 CLEAN-08 added see-also lines to BYOD/UE/ZTE before COBO section, net +3); COBO cross-platform blockquote — iOS supervision state referenced as contrast to COBO ownership-mode (Apple-attributed comparison; intentional disambiguation)"},
+    {"file": "docs/_glossary-android.md", "line": 70, "reason": "Phase 62 carry-over: line 69 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 66 shifted +3 (same +3 shift); Fully Managed cross-platform blockquote — iOS Supervision state referenced as closest analog with explicit partial-mapping disclaimer (Apple-attributed citation; intentional disambiguation)"},
+    {"file": "docs/_glossary-android.md", "line": 83, "reason": "Phase 62 carry-over: line 82 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 CLEAN-08 new line: > See also line added inside Supervision H3 Android-note blockquote by Plan 59-05 Task 3 — cross-platform reciprocal links to macOS Supervision + Linux Supervision (Apple-attributed and Linux-attributed citations; AEAUDIT-04 scope)"},
+    {"file": "docs/_glossary-android.md", "line": 196, "reason": "Phase 62 carry-over: line 195 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 193 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 CLEAN-08 Version History entry: changelog prose listing 'Supervision' as one of 11 collision-matrix terms with see-also additions — historical change documentation, not an Android management term reference"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 88, "reason": "Phase 58 carry-over (post-58-02 CA H2 retrofit shifted Cross-Platform Equivalences section by +10 lines): AEAUDIT-04 doctrine HTML comment header — 'supervision in this section MUST appear only as an iOS-attributed reference'"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 90, "reason": "Phase 58 carry-over: AEAUDIT-04 doctrine HTML comment continuation — 'never supervised' (intentional iOS-attribution rule statement)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 91, "reason": "Phase 58 carry-over: AEAUDIT-04 doctrine HTML comment continuation — 'iOS Supervision' contrasted with bare 'Supervision' (column-header attribution rule)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 93, "reason": "Phase 58 carry-over: Cross-Platform Equivalences intro — 'iOS Supervision' Apple-attributed citation + 'supervised'/'unsupervised' quoted as Apple-attributed terms (intentional disambiguation prose)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 97, "reason": "Phase 58 carry-over: Cross-Platform Equivalences row header — '**iOS Supervision (ADE-enrolled)**' Apple-attributed pairing (column-header iOS attribution per AEAUDIT-04 rule)"},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 98, "reason": "Phase 58 carry-over: Cross-Platform Equivalences row body — 'iOS Supervision' definitional prose (multiple Apple-attributed citations describing supervised-only iOS surface; Android side explicitly avoids 'supervised' terminology)"}
+  ],
+  "cope_banned_phrases": [
+    "\\bCOPE\\b[^.]*\\bdeprecated\\b",
+    "\\bCOPE\\b[^.]*\\bend of life\\b",
+    "\\bCOPE\\b[^.]*\\bremoved\\b",
+    "\\bCOPE\\b[^.]*\\bEOL\\b",
+    "\\bCOPE\\b[^.]*\\bno longer supported\\b",
+    "\\bCOPE\\b[^.]*\\bobsolete\\b",
+    "\\bCOPE\\b[^.]*\\bsunset\\b",
+    "\\bCOPE\\b[^.]*\\bretired\\b"
+  ],
+  "c7_knox_allowlist": [
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 11, "reason": "v1.5 graduation baseline -- Knox→Intune shorthand (arrow-symbol compound; not a SKU reference)"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 143, "reason": "v1.5 graduation baseline -- 'Knox silently produces' (Knox as platform subject; unambiguous in KME context)"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 143, "reason": "v1.5 graduation baseline -- 'Knox does not recognize' (Knox as platform subject; second bare occurrence same line)"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 145, "reason": "v1.5 graduation baseline -- 'Knox JSON shown above' (short reference to Knox Custom JSON Data; unambiguous in KME context)"},
+    {"file": "docs/admin-setup-android/02-zero-touch-portal.md", "line": 131, "reason": "v1.5 graduation baseline -- 'Samsung Knox docs' (documentation reference; not a SKU)"},
+    {"file": "docs/_glossary-android.md", "line": 122, "reason": "Phase 62 carry-over: line 121 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 115 shifted +6 (Phase 59 CLEAN-08 net +6 lines before Knox section); '### Knox' heading (term being defined in glossary; cannot have SKU suffix)"},
+    {"file": "docs/_glossary-android.md", "line": 124, "reason": "Phase 62 carry-over: line 123 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 117 shifted +6; 'Knox is Samsung's mobile-device security platform' (definitional sentence; first occurrence)"},
+    {"file": "docs/_glossary-android.md", "line": 124, "reason": "Phase 62 carry-over: line 123 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 117 shifted +6; 'Knox Vault' compound (Knox Vault is a hardware component, not a managed-device SKU; second occurrence same line)"},
+    {"file": "docs/_glossary-android.md", "line": 126, "reason": "Phase 62 carry-over: line 125 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 59 carry-over: line 119 shifted +6; 'Knox security features' (cross-platform note; not a SKU reference)"},
+    {"file": "docs/_glossary-android.md", "line": 198, "reason": "Phase 62 carry-over: line 197 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 195 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 187 shifted +8 (Phase 59 CLEAN-08 net +7 + Version History row +1); 'Knox entry' in changelog (refers to glossary entry; not a SKU reference)"}
+  ],
+  "c9_exemptions": [
+    {"file": "docs/android-lifecycle/03-android-version-matrix.md", "line": 41, "reason": "Phase 34 Foundation + Phase 36 (AECOBO-02 COBO migration-note) -- ### Android 11 -- COPE NFC Provisioning Removed H3 heading documents Google-driven Android-11 NFC + afw#setup provisioning-method removal for COPE / WPCO; PITFALL-13 disambiguation: Google has NOT formally deprecated COPE per _glossary-android.md:200 2023+ entry. Match-text is HISTORICAL prose about a provisioning-method removal, NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 01 60-CALIBRATION.md Section A."},
+    {"file": "docs/_glossary-android.md", "line": 203, "reason": "Phase 62 carry-over: line 202 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 34 Foundation Version History row (2023+ entry): 'COPE -> WPCO terminology drift recorded. Google has NOT formally deprecated COPE; community shorthand incorrectly conflates recommended-against with deprecated.' Match-text is the canonical PITFALL-13 disambiguation prose itself -- the row LITERALLY clarifies that COPE is NOT deprecated. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate: pin if outside window)."},
+    {"file": "docs/admin-setup-android/03-fully-managed-cobo.md", "line": 153, "reason": "Phase 36 AECOBO-02 COBO afw#setup section: 'afw#setup is still supported for COBO on Android 11+ (contrast: the COPE path was removed on Android 11+ -- see _glossary-android.md#afw-setup).' Match-text is HISTORICAL prose about Android-11 COPE-path removal cross-referencing the canonical PITFALL-13 entry; NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate)."},
+    {"file": "docs/reference/android-capability-matrix.md", "line": 54, "reason": "Phase 34 Foundation AMAPI migration footnote row: 'Unaffected (AMAPI April 2025 affected BYOD specifically; COPE/WPCO unaffected)' followed by BYOD-column note 'custom OMA-URI removed'. Match-text spans table cells where COPE is in the COPE/WPCO-unaffected disambiguation note and 'removed' refers to OMA-URI removal in the BYOD column -- NOT a COPE-mode deprecation. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate)."}
+  ],
+  "c11_ops_exemptions": [],
+  "c13_broken_link_allowlist": [
+    {"file": "docs/admin-setup-android/02-zero-touch-portal.md", "line": 160, "target": "https://support.google.com/work/android/topic/9158960", "reason": "PITFALL-14 transient external; Google support URL non-MS domain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/admin-setup-android/07-knox-mobile-enrollment.md", "line": 51, "target": "https://knox.samsung.com", "reason": "PITFALL-14 transient external; Samsung Knox redirect chain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/admin-setup-android/09-aosp-realwear.md", "line": 125, "target": "https://portal.realwear.com", "reason": "PITFALL-14 transient external; RealWear portal non-MS domain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/l1-runbooks/04-network-connectivity.md", "line": 35, "target": "https://ztd.dds.microsoft.com", "reason": "PITFALL-14 transient external; ZTD endpoint reachability transient; REQUIREMENTS Out-of-Scope spirit (MS endpoint URL not docs.microsoft.com)", "category": "transient_external"},
+    {"file": "docs/l1-runbooks/28-android-knox-enrollment-failed.md", "line": 69, "target": "https://knox.samsung.com", "reason": "PITFALL-14 transient external; Samsung Knox redirect chain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/reference/endpoints.md", "line": 125, "target": "https://support.apple.com/en-us/HT101555", "reason": "PITFALL-14 transient external; Apple support URL redirect chain; REQUIREMENTS Out-of-Scope spirit", "category": "transient_external"},
+    {"file": "docs/_templates/admin-template.md", "line": 23, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template.md", "line": 43, "target": "../runbooks-l1/relevant-runbook.md", "reason": "intentional template stub by design (placeholder for runbook ref)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-android.md", "line": 51, "target": "../l1-runbooks/[filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-android.md", "line": 111, "target": "../l1-runbooks/[runbook-filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-android.md", "line": 113, "target": "../l1-runbooks/26-mgp-app-not-installed.md", "reason": "intentional template stub by design (placeholder for not-yet-authored runbook)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-ios.md", "line": 71, "target": "../l1-runbooks/[runbook-filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-ios.md", "line": 57, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-macos.md", "line": 49, "target": "../l1-runbooks/[runbook-filename].md", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"},
+    {"file": "docs/_templates/admin-template-macos.md", "line": 13, "target": "link", "reason": "intentional template stub by design (placeholder)", "category": "template_placeholder"}
+  ],
+  "c13_rotting_external": {
+    "ci_1_abm_urls": [
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 92, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand; included for completeness — quarterly check confirms reachability", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" },
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/01-abm-configuration.md", "line": 52, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" },
+      { "url": "https://business.apple.com", "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 105, "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" },
+      { "url": "https://business.apple.com", "file": "docs/_glossary-macos.md", "line": 64, "reason": "ABM live portal URL in definitional prose; retained per Apple newsroom post-rebrand", "category": "live_url_quarterly_check", "last_revalidated": "2026-05-26" }
+    ],
+    "ci_2_vpp_location_token": [
+      { "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 71, "term": "VPP (Apps and Books) location token", "context": "prerequisites bullet", "reason": "legacy 'VPP location token' term retained per Q5(b) no-corpus-sweep contract; rename deferred to v1.7+ CI-2", "category": "legacy_term_surgical_rename_candidate", "resolved_2026_05_26": true },
+      { "file": "docs/admin-setup-ios/05-app-deployment.md", "line": 201, "term": "VPP (Apps and Books) location token", "context": "Renewal/Maintenance table row", "reason": "PITFALLS.md:642 canonical CI-2 site #1", "category": "legacy_term_surgical_rename_candidate", "resolved_2026_05_26": true },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 45, "term": "VPP location token", "context": "prerequisites bullet", "reason": "legacy term; rename deferred to v1.7+", "category": "legacy_term_surgical_rename_candidate", "resolved_2026_05_26": true },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 46, "term": "VPP location token", "context": "prerequisites bullet", "reason": "legacy term; rename deferred to v1.7+", "category": "legacy_term_surgical_rename_candidate", "resolved_2026_05_26": true },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 113, "term": "VPP location token", "context": "verification step", "reason": "legacy term; rename deferred to v1.7+", "category": "legacy_term_surgical_rename_candidate", "resolved_2026_05_26": true },
+      { "file": "docs/admin-setup-macos/04-app-deployment.md", "line": 148, "term": "VPP location token", "context": "Renewal/Maintenance table row", "reason": "PITFALLS.md:642 canonical CI-2 site #2", "category": "legacy_term_surgical_rename_candidate", "resolved_2026_05_26": true }
+    ],
+    "ci_3_managed_apple_id": [
+      { "file": "docs/admin-setup-android/04-byod-work-profile.md", "count": 1, "reason": "Managed Apple ID legacy term; rename deferred to v1.7+ contingent on Microsoft Intune adopting rebrand per REQUIREMENTS.md:74" },
+      { "file": "docs/admin-setup-ios/00-overview.md", "count": 2 },
+      { "file": "docs/admin-setup-ios/02-abm-token.md", "count": 2 },
+      { "file": "docs/admin-setup-ios/08-user-enrollment.md", "count": 17, "reason": "PITFALLS.md:665 canonical CI-3 pervasive-site; highest density" },
+      { "file": "docs/admin-setup-ios/09-mam-app-protection.md", "count": 1 },
+      { "file": "docs/admin-setup-macos/01-abm-configuration.md", "count": 5 },
+      { "file": "docs/cross-platform/apple-business/02-ous-architecture.md", "count": 1, "reason": "Phase 62 deliverable — uses legacy term in cross-reference context only" },
+      { "file": "docs/cross-platform/apple-business/09-shared-ipad-lifecycle.md", "count": 1, "reason": "Phase 63 deliverable" },
+      { "file": "docs/ios-lifecycle/01-ade-lifecycle.md", "count": 2 },
+      { "file": "docs/l1-runbooks/17-ios-ade-not-starting.md", "count": 2 },
+      { "file": "docs/macos-lifecycle/00-ade-lifecycle.md", "count": 2 },
+      { "file": "docs/reference/android-capability-matrix.md", "count": 1 },
+      { "file": "docs/_glossary-android.md", "count": 1 },
+      { "file": "docs/_glossary-apple-business.md", "count": 3, "reason": "Phase 62 glossary — intentional legacy↔new term reciprocity per AB-01" },
+      { "file": "docs/_glossary-linux.md", "count": 1 },
+      { "file": "docs/_glossary-macos.md", "count": 3 },
+      { "total_corpus_count": 45, "files_count": 16 }
+    ],
+    "quarterly_audit": {
+      "cadence": "0 8 1 1,4,7,10 *",
+      "scope": "external-url-link-check (ci_1_abm_urls only — ci_2 + ci_3 are line-ref tracking, no URL probe)",
+      "tool": "markdown-link-check",
+      "next_review": "2026-07-01"
+    }
+  },
+  "c16_missing_endpoint_exemptions": []
+}
