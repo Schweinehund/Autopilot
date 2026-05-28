@@ -1,67 +1,75 @@
-# v1.7 Audit Harness Integrity (Phase 69 CILINUX-01 skeleton)
-# Phase 70 HARNESS-04 extends this file (adds both crons + supervision-pin drift advisory job + repoints sidecar references v1.6 -> v1.7)
-# Path-filter `docs/decision-trees/09-linux-triage.md` entry is Phase 69 SC#5-evidence-only per D-04 sub-decision (a); Phase 70 HARNESS-04(a) removes it
+# v1.7 Audit Harness Integrity
+# v1.7 integration surface. v1.4 + v1.4.1 + v1.5 + v1.6 harnesses frozen in their respective workflow files.
+# Phase 70 HARNESS-04 EXTEND: path-filter v1.7-scoped + 2 crons + parse/path-match/harness-run repointed v1.7 +
+# pin-helper-advisory + rotting-external-quarterly + active chain-67..70 invocations.
+# PRESERVES from Phase 69 dd1ff08 + 85521bb + 2d61981:
+#   linux-chain-ubuntu-latest fetch-depth:0 (FETCH-DEPTH-01 inheritance contract)
+#   linux-chain-ubuntu-latest core.autocrlf false (LF-fidelity contract)
+#   linux-chain-ubuntu-latest continue-on-error:false (D-A9 PR-blocking contract)
+#   linux-chain-ubuntu-latest timeout-minutes:30
+#   chain-apex CHAIN_TIMING_LINUX ::notice emission
 
 name: Audit Harness v1.7 Integrity
 
 on:
   pull_request:
     paths:
+      - 'scripts/validation/v1.7-*'
       - 'scripts/validation/check-phase-*.mjs'
       - '.github/workflows/audit-harness-v1.7-integrity.yml'
       - '.planning/REQUIREMENTS.md'
-      - 'docs/decision-trees/09-linux-triage.md'
+      - '.planning/milestones/v1.7-MILESTONE-AUDIT.md'
+      - '.planning/milestones/v1.7-DEFERRED-CLEANUP.md'
+  schedule:
+    - cron: '0 8 * * 1'         # Weekly bitrot catch: 08:00 UTC every Monday (Path-A from v1.6)
+    - cron: '0 8 1 1,4,7,10 *'  # Quarterly c13_rotting_external check: 08:00 UTC on 1st of Jan/Apr/Jul/Oct (Phase 70 HARNESS-04 inheritance from Phase 66 AUDIT-14)
   workflow_dispatch:
-
-# NOTE: on.schedule: OMITTED in Phase 69 -- both crons (weekly bitrot + quarterly rotting-external)
-# are Phase 70 HARNESS-04(b) deliverables. Firing crons pre-v1.7-sidecar would target v1.6 sidecar
-# which is transitional-only in this skeleton; semantically wrong as bitrot-checking surface.
 
 jobs:
   parse:
-    name: Parse v1.6 sidecar JSON
+    name: Parse v1.7 sidecar JSON
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      - name: Validate v1.6-audit-allowlist.json
+      - name: Validate v1.7-audit-allowlist.json
         run: |
           node -e "
             const fs = require('fs');
-            const j = JSON.parse(fs.readFileSync('scripts/validation/v1.6-audit-allowlist.json', 'utf8'));
+            const j = JSON.parse(fs.readFileSync('scripts/validation/v1.7-audit-allowlist.json', 'utf8'));
             if (!Array.isArray(j.supervision_exemptions) || j.supervision_exemptions.length === 0) {
               console.error('supervision_exemptions empty');
               process.exit(1);
             }
-            console.log('v1.6 sidecar OK: ' + j.supervision_exemptions.length + ' supervision pins');
+            console.log('v1.7 sidecar OK: ' + j.supervision_exemptions.length + ' supervision pins');
           "
 
   path-match:
-    name: Harness references v1.6 sidecar
+    name: Harness references v1.7 sidecar
     runs-on: ubuntu-latest
     needs: parse
     steps:
       - uses: actions/checkout@v4
       - name: Verify harness sidecar reference
         run: |
-          if grep -q "scripts/validation/v1.6-audit-allowlist.json" scripts/validation/v1.6-milestone-audit.mjs; then
-            echo "OK: harness references v1.6 sidecar"
+          if grep -q "scripts/validation/v1.7-audit-allowlist.json" scripts/validation/v1.7-milestone-audit.mjs; then
+            echo "OK: harness references v1.7 sidecar"
           else
-            echo "FAIL: harness does not reference v1.6-audit-allowlist.json"
+            echo "FAIL: harness does not reference v1.7-audit-allowlist.json"
             exit 1
           fi
 
   harness-run:
-    name: Run v1.6 milestone audit harness
+    name: Run v1.7 milestone audit harness
     runs-on: ubuntu-latest
     needs: path-match
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      - name: Run v1.6-milestone-audit.mjs
-        run: node scripts/validation/v1.6-milestone-audit.mjs --verbose
+      - name: Run v1.7-milestone-audit.mjs
+        run: node scripts/validation/v1.7-milestone-audit.mjs --verbose
 
   linux-chain-ubuntu-latest:
     name: Validator chain on Linux LF (Phase 69 CILINUX-01)
@@ -82,12 +90,111 @@ jobs:
           node scripts/validation/check-phase-66.mjs --verbose
           END=$(date +%s)
           echo "::notice title=CHAIN_TIMING_LINUX::Full chain wall-clock: $((END-START))s (Windows reference: ~102s; subprocess timeout: 300s)"
-      - name: check-phase-67..70 skip-if-missing stubs
+
+  check-phase-67:
+    name: check-phase-67 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-67.mjs
+        run: node scripts/validation/check-phase-67.mjs
+
+  check-phase-68:
+    name: check-phase-68 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-68.mjs
+        run: node scripts/validation/check-phase-68.mjs
+
+  check-phase-69:
+    name: check-phase-69 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-69.mjs
+        run: node scripts/validation/check-phase-69.mjs
+
+  check-phase-70:
+    name: check-phase-70 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-70.mjs
+        run: node scripts/validation/check-phase-70.mjs
+
+  rotting-external-quarterly:
+    name: Quarterly c13_rotting_external link-check
+    runs-on: ubuntu-latest
+    needs: harness-run
+    if: github.event_name == 'schedule' && github.event.schedule == '0 8 1 1,4,7,10 *'
+    # DEFAULT continue-on-error: false -- quarterly drift FAILS the scheduled run per D-A9 fully-blocking
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check@3.14.2  # Pinned via `npm view markdown-link-check version` at Phase 66 Wave 3 authoring (2026-05-25); inherited at Phase 70 HARNESS-04(i)
+      - name: Extract URLs from c13_rotting_external
         run: |
-          for i in 67 68 69 70; do
-            if [ -f scripts/validation/check-phase-$i.mjs ]; then
-              node scripts/validation/check-phase-$i.mjs
-            else
-              echo "check-phase-$i.mjs not present -- skipping (graceful degradation per Phase 42 D-31)"
-            fi
-          done
+          node -e "
+            const fs = require('fs');
+            const sidecar = JSON.parse(fs.readFileSync('scripts/validation/v1.7-audit-allowlist.json','utf8'));
+            const c13 = sidecar.c13_rotting_external || {};
+            const urls = [];
+            if (Array.isArray(c13.ci_1_abm_urls)) urls.push(...c13.ci_1_abm_urls.map(e => e.url).filter(Boolean));
+            // CI-2 + CI-3 entries do not carry URLs -- they are line-ref tracking only
+            fs.writeFileSync('quarterly-urls.txt', urls.join('\n'));
+            console.log('Quarterly URL check candidates: ' + urls.length);
+          "
+      - name: Run markdown-link-check
+        run: |
+          if [ -s quarterly-urls.txt ]; then
+            while IFS= read -r url; do
+              markdown-link-check <(echo "[link]($url)") || exit 1
+            done < quarterly-urls.txt
+          else
+            echo "No URLs to check in c13_rotting_external (empty population -- DEFERRED-CLEANUP.md notes calibration finding)"
+          fi
+
+  pin-helper-advisory:
+    name: Supervision-pin drift advisory (CI)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    continue-on-error: true   # Phase 43 D-14 / Phase 48 D-22: advisory only; never fails build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run regenerate-supervision-pins.mjs --report
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --report || true
+          echo "[advisory] CI advisory job; never blocks merge per Phase 43 D-14 + Phase 48 D-22"
+      - name: Run --self-test (advisory only)
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --self-test || \
+            echo "[advisory] --self-test failed; advisory only"
