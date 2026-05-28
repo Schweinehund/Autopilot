@@ -386,7 +386,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 70-03-PLAN.md — Wave 3: ATOMIC validators + CI surface (HARNESS-03 check-phase-67..70 + HARNESS-04 workflow EXTEND per D-02 Atom 2)
+- [x] 70-03-PLAN.md — Wave 3: ATOMIC validators + CI surface (HARNESS-03 check-phase-67..70 + HARNESS-04 workflow EXTEND per D-02 Atom 2) — `aa6de68` ATOMIC 5-file commit shipped 2026-05-28
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -469,7 +469,7 @@ Plans:
 | 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 3/3 | Complete    | 2026-05-26 |
 | 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 5/5 | Complete    | 2026-05-26 |
 | 69. CI-Linux Hardening (Pillar C) | v1.7 | 2/2 | Complete    | 2026-05-28 |
-| 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 2/5 | In Progress|  |
+| 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 3/5 | In Progress | Plan 70-03 `aa6de68` (Atom 2 — HARNESS-03 + HARNESS-04 atomic; 5-file SHA) |
 
 ---
 

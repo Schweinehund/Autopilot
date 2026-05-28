@@ -31,9 +31,9 @@ Requirements for v1.7 release. Each maps to one phase. Phases 67-70 continue fro
 
 - [x] **HARNESS-02**: `scripts/validation/v1.7-audit-allowlist.json` ships as Path-A copy from `v1.6-audit-allowlist.json` with `c13_rotting_external` reset for v1.7 (CI-1/CI-2 entries reflect post-SWEEP-01/SWEEP-02 state); `c16_missing_endpoint_exemptions: []`; sidecar shape preserved; `quarterly_audit` metadata carried forward (cadence `0 8 1 1,4,7,10 *`); BASELINE_11 freshness comment added to `regenerate-supervision-pins.mjs` closing BASELINE_10 v1.6 carry-over per per-milestone AUDIT-14-equivalent contract.
 
-- [ ] **HARNESS-03**: Per-phase validators `check-phase-67.mjs..check-phase-70.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+); each is Path-A from `check-phase-66.mjs` with phase-specific V-NN-NN assertions for that phase's deliverables; CHAIN_PHASES does NOT include the validator's own phase (V-NN-SELF guard per `check-phase-65.mjs:151`).
+- [x] **HARNESS-03**: Per-phase validators `check-phase-67.mjs..check-phase-70.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+); each is Path-A from `check-phase-66.mjs` with phase-specific V-NN-NN assertions for that phase's deliverables; CHAIN_PHASES does NOT include the validator's own phase (V-NN-SELF guard per `check-phase-65.mjs:151`). — completed 2026-05-28 in Phase 70 Plan 70-03 (Atom 2 atomic commit `aa6de68`; 4 validators with per-assertion freshness routing per D-01 LOCKED; V-NN-SELF + V-NN-CHAIN + V-NN-AUDIT guards per validator)
 
-- [ ] **HARNESS-04**: `.github/workflows/audit-harness-v1.7-integrity.yml` ships as Path-A copy from `audit-harness-v1.6-integrity.yml` with: (a) path-filter swapped to v1.7-scoped files (`scripts/validation/v1.7-*` + any v1.7 docs surface + workflow self-reference); (b) 2 crons preserved (weekly bitrot + quarterly `rotting-external-quarterly`); (c) v1.7 validator jobs `check-phase-67..70`; (d) PR-blocking per D-A9 (only `pin-helper-advisory` retains `continue-on-error: true`); (e) coexists with v1.4/v1.5/v1.6 workflows. **Composes with CILINUX-01:** the v1.7 workflow includes the new ubuntu-latest runner job.
+- [x] **HARNESS-04**: `.github/workflows/audit-harness-v1.7-integrity.yml` ships as Path-A copy from `audit-harness-v1.6-integrity.yml` with: (a) path-filter swapped to v1.7-scoped files (`scripts/validation/v1.7-*` + any v1.7 docs surface + workflow self-reference); (b) 2 crons preserved (weekly bitrot + quarterly `rotting-external-quarterly`); (c) v1.7 validator jobs `check-phase-67..70`; (d) PR-blocking per D-A9 (only `pin-helper-advisory` retains `continue-on-error: true`); (e) coexists with v1.4/v1.5/v1.6 workflows. **Composes with CILINUX-01:** the v1.7 workflow includes the new ubuntu-latest runner job. — completed 2026-05-28 in Phase 70 Plan 70-03 (workflow EXTEND not Path-A-recreate; 9 itemized edits a..i applied per HARNESS-04 spec; predecessor v1.4/v1.5/v1.6 workflow YAMLs BYTE-UNCHANGED verified post-aa6de68; FETCH-DEPTH-01 inheritance preserved + 09-linux-triage.md removed)
 
 - [ ] **HARNESS-05**: Terminal re-audit at Phase 70 close runs `v1.7-milestone-audit.mjs` + full chain `check-phase-{48..70}.mjs` from a fresh `git clone --no-hardlinks` into `$env:TEMP\v1.7-audit-<rand>` via fresh `gsd-executor` sub-agent (D-22 INTENT via D-03 mechanism — STRICTER physical isolation than worktree; reconciles with `.planning/config.json:7` `use_worktrees:false`). Harness + all chain validators exit 0 with NO CHAIN_SKIP entries (Pillar B resolved them). Auditor-independence verified at execution start: zero context-carryover from Plans 67-01..70-N author-agents.
 
@@ -84,8 +84,8 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | CILINUX-01 | Phase 69 | Complete |
 | HARNESS-01 | Phase 70 | Complete |
 | HARNESS-02 | Phase 70 | Complete |
-| HARNESS-03 | Phase 70 | Pending |
-| HARNESS-04 | Phase 70 | Pending |
+| HARNESS-03 | Phase 70 | Complete (Plan 70-03 `aa6de68`) |
+| HARNESS-04 | Phase 70 | Complete (Plan 70-03 `aa6de68`) |
 | HARNESS-05 | Phase 70 | Pending |
 | HARNESS-06 | Phase 70 | Pending |
 

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 70 context gathered
+stopped_at: Phase 70 Plan 70-03 complete (Atom 2 atomic commit aa6de68)
 last_updated: "2026-05-28T17:27:42.466Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 15
-  completed_plans: 12
-  percent: 33
+  completed_plans: 13
+  percent: 36
 ---
 
 # Project State
@@ -26,9 +26,10 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 70 (v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)) — EXECUTING
-Plan: 3 of 5
-Status: Ready to execute
+Plan: 4 of 5
+Status: Ready to execute Plan 70-04 (Wave 4 terminal re-audit; 3-axis stacking)
 Last activity: 2026-05-28
+Last commit: aa6de68 (Atom 2 — 5-file atomic: HARNESS-03 + HARNESS-04)
 
 ## v1.7 Phase Dependency Summary
 
@@ -90,6 +91,7 @@ Phase 70 (Pillar D — v1.7 Harness Lineage Bump + Milestone Close)
 - Phase 67 (v1.7 Pillar A — Corpus Surgical Sweeps): 3 plans, shipped 2026-05-26 — SWEEP-01 + SWEEP-02 closed (Plan 67-01 `3fb8ca5` Branch A + Plan 67-02 `55260b3` atomic-within-plan + Plan 67-03 close-gate)
 - Phase 68 (v1.7 Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery): 5 plans, shipped 2026-05-26 — CHAIN-01 + CHAIN-02 + CHAIN-03 closed (Plan 68-01 `36a753d` CHAIN-01 + Plan 68-02 `79c65c6` CHAIN-02 + Plan 68-03 Task 1 `d7d7d5f` v1.5-frozen-aware precondition + Plan 68-03 Task 2 `7b635ca` ATOMIC CHAIN_SKIP empty-Set + Plan 68-04 `d142c7a` cdcce23 deletion + Plan 68-05 Commit A `3814bee` {68_03_SHA} placeholder fill + Plan 68-05 Commit B close-gate); full chain green for first time since v1.5 close; v1.5-frozen-aware pattern + subprocess timeout 60s→300s as v1.7+ architectural discoveries
 - Phase 69 (v1.7 Pillar C — CI-Linux Hardening): 2 plans, shipped 2026-05-28 — CILINUX-01 closed; 3 cross-OS discoveries surfaced (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01); Linux chain runtime ~56s (well within TIMEOUT-01 budget); commit chain dd1ff08 + 85521bb + 2d61981 + {69_02_SHA}
+- Phase 70 (v1.7 Pillar D — Close-Gate, in progress): Plan 70-01 Wave-1 scaffold `2f2dc7b` + 70-CONVENTIONS.md `22663d7` + Plan 70-02 Atom 1 atomic harness-core `26a1ae9` (HARNESS-01/02 + BASELINE_11) + **Plan 70-03 Atom 2 atomic validator+CI surface `aa6de68` (HARNESS-03 4 validators check-phase-67..70 + HARNESS-04 9 itemized workflow edits)**. Atomic-commit pattern preserved per dual precedent (Phase 66-02 + Phase 68 7b635ca). Pre-commit dry-run all green (15+21+31+31+41+28 = 167 PASS across full chain). Plan 70-04 next (3-axis terminal re-audit).
 
 **Totals (through v1.6):** 66 phases, 310 plans, ~248 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, Android Enterprise, Linux (Ubuntu LTS), and Apple Business Delegated Governance (OUs + custom roles + delegation runbooks).
 
