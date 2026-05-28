@@ -373,7 +373,14 @@ Plans:
   4. `.planning/milestones/v1.7-MILESTONE-AUDIT.md` authored (Path-A from `v1.6-MILESTONE-AUDIT.md` template) confirming all checks PASS, 12/12 v1.7 requirements closed with closing commit SHAs, and 4-phase scope (67-70) delivered; `.planning/milestones/v1.7-DEFERRED-CLEANUP.md` finalized carrying CI-3 (Managed Apple ID, 45 occurrences across 16 files) + Multi-tenant Apple Business + Apple Business Device API + per-OU Conference Room Display + Account Holder runbook + ASM forward to v1.8+
   5. PROJECT.md traceability closure — 12 v1.7 reqs (SWEEP-01..02 + CHAIN-01..03 + CILINUX-01 + HARNESS-01..06) flipped Active→Validated with closing commit SHAs; ROADMAP.md Progress table reflects 4/4 phases Complete; STATE.md milestone close recorded; REQUIREMENTS.md Traceability table fully populated — preserves v1.4.1 / v1.5 / v1.6 milestone-close traceability discipline
 
-**Plans:** TBD
+**Plans:** 5 plans
+
+Plans:
+- [ ] 70-01-PLAN.md — Wave 1: Scaffold + Conventions + per-V-NN-NN freshness matrix (HARNESS-03 scaffold per D-01 LOCKED)
+- [ ] 70-02-PLAN.md — Wave 2: ATOMIC harness-core (HARNESS-01 + HARNESS-02 + BASELINE_11 + parseAllowlist v1.6 to v1.7 repoint per D-02 Atom 1)
+- [ ] 70-03-PLAN.md — Wave 3: ATOMIC validators + CI surface (HARNESS-03 check-phase-67..70 + HARNESS-04 workflow EXTEND per D-02 Atom 2)
+- [ ] 70-04-PLAN.md — Wave 4: HARNESS-05 3-axis terminal re-audit (local fresh-clone + GHA workflow_dispatch per D-03 LOCKED)
+- [ ] 70-05-PLAN.md — Wave 5: HARNESS-06 milestone close + 4-doc traceability closure (two-commit chicken-and-egg per D-04 Option b)
 
 ## Progress
 
