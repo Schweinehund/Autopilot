@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
-status: ready_to_plan
-stopped_at: Phase 69 complete (2/2) — ready to discuss Phase 70
-last_updated: 2026-05-28T15:26:17.944Z
-last_activity: 2026-05-28 -- Phase 69 (Pillar C — CI-Linux Hardening) CLOSED; CILINUX-01 Active → Validated; 3 architectural discoveries surfaced (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01); 1 latent meta-bug deferred to v1.8+ (CHAIN-WRAPPER-01); chain-apex 28/0/0 cross-OS EXACT MATCH
+status: planning
+stopped_at: Phase 70 context gathered
+last_updated: "2026-05-28T15:48:13.151Z"
+last_activity: 2026-05-28
 progress:
-  total_phases: 4
+  total_phases: 9
   completed_phases: 3
-  total_plans: 12
+  total_plans: 10
   completed_plans: 10
-  percent: 75
+  percent: 33
 ---
 
 # Project State
@@ -155,9 +155,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-28T15:30:00.000Z
-Stopped at: Phase 69 CLOSED 2026-05-28 — CILINUX-01 Validated. All 5 SC satisfied (SC#5 via reframe-aware B.1+B.2+B.4 trio per D-04-OVERSPEC-01 discovery). 3 architectural discoveries documented in 69-VERIFICATION.md §E (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01). 1 latent meta-bug deferred to v1.8+ (CHAIN-WRAPPER-01). Phase 70 entry-state ready (3 independence axes available: fresh-clone + fresh sub-agent + cross-OS).
-Resume file: .planning/phases/69-ci-linux-hardening-pillar-c-cross-os-verification/69-02-SUMMARY.md
+Last session: 2026-05-28T15:48:13.104Z
+Stopped at: Phase 70 context gathered
+Resume file: .planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-CONTEXT.md
 Next action: `/gsd:plan-phase 70` (Pillar D — v1.7 Audit Harness Lineage Bump + Milestone Close / HARNESS-01..06) — Path-A copy v1.6 → v1.7 milestone-audit + sidecar + check-phase-67..70.mjs; EXTEND existing audit-harness-v1.7-integrity.yml with v1.7 validator jobs (preserve fetch-depth:0 + remove docs/decision-trees/09-linux-triage.md from path-filter); terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; finalize v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md; traceability closure
 
 ## Decisions
