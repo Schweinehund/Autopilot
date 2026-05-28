@@ -4,13 +4,13 @@ milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
 stopped_at: Phase 70 context gathered
-last_updated: "2026-05-28T16:50:20.588Z"
-last_activity: 2026-05-28 -- Phase 70 planning complete
+last_updated: "2026-05-28T17:13:36.708Z"
+last_activity: 2026-05-28
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 15
-  completed_plans: 10
+  completed_plans: 11
   percent: 33
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 70 — v1.7 audit harness lineage bump + milestone close (pillar d — close gate)
+**Current focus:** Phase 70 — v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)
 
 ## Current Position
 
-Phase: 70
-Plan: Not started
+Phase: 70 (v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-05-28 -- Phase 70 planning complete
+Last activity: 2026-05-28
 
 ## v1.7 Phase Dependency Summary
 
@@ -132,6 +132,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 - L2 runbook count NOT changed in v1.7 (v1.6 added #26; v1.7 makes no runbook additions)
 - Auditor-independence at terminal re-audit (fresh clone per v1.6 D-03)
 - BASELINE_10 v1.6 carry-over MUST be closed by Phase 70 HARNESS-02 (BASELINE_11 refresh)
+- [Phase ?]: Phase 70 Plan 70-01 (Wave 1 scaffold): 60-row per-V-NN-NN freshness routing matrix + check-phase-70.mjs Path-A scaffold (CHAIN_PHASES=[48..69], V-70-01..27 placeholder slots). Dual-SHA-placeholder convention documented.
 
 ### Pending Todos
 
@@ -155,9 +156,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-28T15:48:13.104Z
+Last session: 2026-05-28T17:13:12.228Z
 Stopped at: Phase 70 context gathered
-Resume file: .planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-CONTEXT.md
+Resume file: None
 Next action: `/gsd:plan-phase 70` (Pillar D — v1.7 Audit Harness Lineage Bump + Milestone Close / HARNESS-01..06) — Path-A copy v1.6 → v1.7 milestone-audit + sidecar + check-phase-67..70.mjs; EXTEND existing audit-harness-v1.7-integrity.yml with v1.7 validator jobs (preserve fetch-depth:0 + remove docs/decision-trees/09-linux-triage.md from path-filter); terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; finalize v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md; traceability closure
 
 ## Decisions
