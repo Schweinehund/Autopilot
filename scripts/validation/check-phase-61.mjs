@@ -43,6 +43,25 @@ function readRequirementsAtV15Close() {
   }
 }
 
+// Reads ROADMAP.md state at v1.5-close SHA ba2cbc0 (frozen state for V-61-05..08 §Progress structural assertions).
+// V1.5-frozen-aware per Plan 69-02 Option A+ scope-gap closure (surfaced during Phase 69 SC#5 B.1 baseline).
+// Rationale: V-61-05..08 originally asserted post-Plan-61-02 state of §Progress (zero In Progress rows, zero Not started,
+// Phase 61 Complete, all 14 v1.5 phases 48-61 Complete). HEAD ROADMAP.md is mutated by every subsequent milestone's
+// tracking-update commits (e.g., Plan 69-01 `6e12a75` added an "In Progress" row for Phase 69), which legitimately
+// violates the v1.5-frozen §Progress shape. Reading the v1.5-close SHA preserves the original assertion semantics
+// without breaking on subsequent mid-flight planning-doc edits.
+//
+// Lineage: parallel to readRequirementsAtV15Close() introduced Plan 68-03 Task 1 commit d7d7d5f for V-61-01..04.
+// V-61-01..04 were made v1.5-frozen-aware in d7d7d5f; V-61-05..08 were the scope-gap (left HEAD-coupled) and are
+// closed here as Plan 68-03 Task 1 scope-gap closure surfaced during Phase 69 B.1 baseline (run 26574959797 evidence).
+function readRoadmapAtV15Close() {
+  try {
+    return execFileSync('git', ['show', 'ba2cbc0:.planning/ROADMAP.md'], { encoding: 'utf8', timeout: 10000 }).replace(/\r\n/g, '\n');
+  } catch (err) {
+    return null;
+  }
+}
+
 const HARNESS = 'scripts/validation/v1.5-milestone-audit.mjs';
 const PIN_HELPER = 'scripts/validation/regenerate-supervision-pins.mjs';
 const REQUIREMENTS = '.planning/REQUIREMENTS.md';
@@ -110,49 +129,49 @@ const checks = [
 
   // === V-61-05..08: ROADMAP §Progress all 14 v1.5 phases marked Complete ===
   {
-    id: 5, name: "V-61-05: ROADMAP §Progress has zero `In Progress` rows (4 stale rows reconciled per Plan 61-02 Task 5)",
+    id: 5, name: "V-61-05: ROADMAP §Progress has zero `In Progress` rows (4 stale rows reconciled per Plan 61-02 Task 5) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(ROADMAP);
-      if (c === null) return { pass: false, detail: 'ROADMAP.md missing' };
+      const c = readRoadmapAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
       const inProgress = (c.match(/In Progress/g) || []).length;
-      if (inProgress !== 0) return { pass: false, detail: inProgress + ' `In Progress` rows remain' };
-      return { pass: true, detail: 'no In Progress rows' };
+      if (inProgress !== 0) return { pass: false, detail: inProgress + ' `In Progress` rows remain (v1.5-frozen @ ba2cbc0)' };
+      return { pass: true, detail: 'no In Progress rows (v1.5-frozen @ ba2cbc0)' };
     }
   },
   {
-    id: 6, name: "V-61-06: ROADMAP §Progress has zero `Not started` rows post-Plan-61-05 (Phase 61 own row flipped at this plan close)",
+    id: 6, name: "V-61-06: ROADMAP §Progress has zero `Not started` rows post-Plan-61-05 (Phase 61 own row flipped at this plan close) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(ROADMAP);
-      if (c === null) return { pass: false, detail: 'ROADMAP.md missing' };
+      const c = readRoadmapAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
       // Slice §Progress section only
       const progMatch = c.match(/## Progress[\s\S]*?(?=\n## |\n---|\Z)/);
       if (!progMatch) return { pass: false, detail: '§Progress section not found' };
       const notStarted = (progMatch[0].match(/Not started/g) || []).length;
-      if (notStarted !== 0) return { pass: false, detail: notStarted + ' `Not started` rows remain in §Progress' };
-      return { pass: true, detail: 'no Not started rows in §Progress' };
+      if (notStarted !== 0) return { pass: false, detail: notStarted + ' `Not started` rows remain in §Progress (v1.5-frozen @ ba2cbc0)' };
+      return { pass: true, detail: 'no Not started rows in §Progress (v1.5-frozen @ ba2cbc0)' };
     }
   },
   {
-    id: 7, name: "V-61-07: ROADMAP §Progress Phase 61 row marked Complete with completion date",
+    id: 7, name: "V-61-07: ROADMAP §Progress Phase 61 row marked Complete with completion date [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(ROADMAP);
-      if (c === null) return { pass: false, detail: 'ROADMAP.md missing' };
-      if (!/^\| 61\..*\| Complete\s*\| 20\d{2}-\d{2}-\d{2}/m.test(c)) return { pass: false, detail: 'Phase 61 row not marked Complete with date' };
-      return { pass: true, detail: 'Phase 61 row Complete + date populated' };
+      const c = readRoadmapAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
+      if (!/^\| 61\..*\| Complete\s*\| 20\d{2}-\d{2}-\d{2}/m.test(c)) return { pass: false, detail: 'Phase 61 row not marked Complete with date (v1.5-frozen @ ba2cbc0)' };
+      return { pass: true, detail: 'Phase 61 row Complete + date populated (v1.5-frozen @ ba2cbc0)' };
     }
   },
   {
-    id: 8, name: "V-61-08: ROADMAP §Progress all 14 v1.5 phase rows (48-61) marked Complete",
+    id: 8, name: "V-61-08: ROADMAP §Progress all 14 v1.5 phase rows (48-61) marked Complete [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(ROADMAP);
-      if (c === null) return { pass: false, detail: 'ROADMAP.md missing' };
+      const c = readRoadmapAtV15Close();
+      if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
       const v15Phases = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61];
       const incomplete = v15Phases.filter(n => {
         const re = new RegExp('^\\| ' + n + '\\..*\\| Complete', 'm');
         return !re.test(c);
       });
-      if (incomplete.length > 0) return { pass: false, detail: 'Phases not marked Complete: ' + incomplete.join(', ') };
-      return { pass: true, detail: '14/14 v1.5 phase rows Complete' };
+      if (incomplete.length > 0) return { pass: false, detail: 'Phases not marked Complete: ' + incomplete.join(', ') + ' (v1.5-frozen @ ba2cbc0)' };
+      return { pass: true, detail: '14/14 v1.5 phase rows Complete (v1.5-frozen @ ba2cbc0)' };
     }
   },
 
