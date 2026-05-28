@@ -373,7 +373,7 @@ Plans:
   4. `.planning/milestones/v1.7-MILESTONE-AUDIT.md` authored (Path-A from `v1.6-MILESTONE-AUDIT.md` template) confirming all checks PASS, 12/12 v1.7 requirements closed with closing commit SHAs, and 4-phase scope (67-70) delivered; `.planning/milestones/v1.7-DEFERRED-CLEANUP.md` finalized carrying CI-3 (Managed Apple ID, 45 occurrences across 16 files) + Multi-tenant Apple Business + Apple Business Device API + per-OU Conference Room Display + Account Holder runbook + ASM forward to v1.8+
   5. PROJECT.md traceability closure — 12 v1.7 reqs (SWEEP-01..02 + CHAIN-01..03 + CILINUX-01 + HARNESS-01..06) flipped Active→Validated with closing commit SHAs; ROADMAP.md Progress table reflects 4/4 phases Complete; STATE.md milestone close recorded; REQUIREMENTS.md Traceability table fully populated — preserves v1.4.1 / v1.5 / v1.6 milestone-close traceability discipline
 
-**Plans:** 2/5 plans executed
+**Plans:** 4/5 plans executed
 
 Plans:
 **Wave 1**
@@ -390,7 +390,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 70-04-PLAN.md — Wave 4: HARNESS-05 3-axis terminal re-audit (local fresh-clone + GHA workflow_dispatch per D-03 LOCKED)
+- [x] 70-04-PLAN.md — Wave 4: HARNESS-05 3-axis terminal re-audit (local fresh-clone + GHA workflow_dispatch per D-03 LOCKED) — `{70_04_SHA}` artifact-only commit lands 70-04-AUDIT-RESULTS.md shipped 2026-05-28 (Axis 1 local fresh-clone tohma3w0 7/7 validators exit 0 + Axis 2 GHA run 26604414109 9/9 active jobs success + Cross-OS PASS-Count EXACT MATCH; ARCHIVE-01 deferral to /gsd-complete-milestone explicit)
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
@@ -469,7 +469,7 @@ Plans:
 | 67. Corpus Surgical Sweeps (Pillar A) | v1.7 | 3/3 | Complete    | 2026-05-26 |
 | 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 5/5 | Complete    | 2026-05-26 |
 | 69. CI-Linux Hardening (Pillar C) | v1.7 | 2/2 | Complete    | 2026-05-28 |
-| 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 3/5 | In Progress | Plan 70-03 `aa6de68` (Atom 2 — HARNESS-03 + HARNESS-04 atomic; 5-file SHA) |
+| 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 4/5 | In Progress | Plan 70-04 `{70_04_SHA}` (Wave 4 HARNESS-05 3-axis terminal re-audit; 70-04-AUDIT-RESULTS.md artifact-only commit) |
 
 ---
 

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 70 Plan 70-03 complete (Atom 2 atomic commit aa6de68)
-last_updated: "2026-05-28T17:27:42.466Z"
+stopped_at: Phase 70 Plan 70-04 complete (Wave 4 HARNESS-05 3-axis terminal re-audit; 70-04-AUDIT-RESULTS.md artifact-only commit)
+last_updated: "2026-05-28T23:05:00.000Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 15
-  completed_plans: 13
-  percent: 36
+  completed_plans: 14
+  percent: 39
 ---
 
 # Project State
@@ -26,10 +26,10 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 70 (v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)) — EXECUTING
-Plan: 4 of 5
-Status: Ready to execute Plan 70-04 (Wave 4 terminal re-audit; 3-axis stacking)
+Plan: 5 of 5
+Status: Ready to execute Plan 70-05 (Wave 5 HARNESS-06 milestone close + 4-doc traceability closure via two-commit chicken-and-egg per D-04 Option (b))
 Last activity: 2026-05-28
-Last commit: aa6de68 (Atom 2 — 5-file atomic: HARNESS-03 + HARNESS-04)
+Last commit: {70_04_SHA} (Plan 70-04 Wave 4 artifact-only — 70-04-AUDIT-RESULTS.md + 70-04-SUMMARY.md + STATE/ROADMAP/REQUIREMENTS updates)
 
 ## v1.7 Phase Dependency Summary
 
@@ -91,7 +91,7 @@ Phase 70 (Pillar D — v1.7 Harness Lineage Bump + Milestone Close)
 - Phase 67 (v1.7 Pillar A — Corpus Surgical Sweeps): 3 plans, shipped 2026-05-26 — SWEEP-01 + SWEEP-02 closed (Plan 67-01 `3fb8ca5` Branch A + Plan 67-02 `55260b3` atomic-within-plan + Plan 67-03 close-gate)
 - Phase 68 (v1.7 Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery): 5 plans, shipped 2026-05-26 — CHAIN-01 + CHAIN-02 + CHAIN-03 closed (Plan 68-01 `36a753d` CHAIN-01 + Plan 68-02 `79c65c6` CHAIN-02 + Plan 68-03 Task 1 `d7d7d5f` v1.5-frozen-aware precondition + Plan 68-03 Task 2 `7b635ca` ATOMIC CHAIN_SKIP empty-Set + Plan 68-04 `d142c7a` cdcce23 deletion + Plan 68-05 Commit A `3814bee` {68_03_SHA} placeholder fill + Plan 68-05 Commit B close-gate); full chain green for first time since v1.5 close; v1.5-frozen-aware pattern + subprocess timeout 60s→300s as v1.7+ architectural discoveries
 - Phase 69 (v1.7 Pillar C — CI-Linux Hardening): 2 plans, shipped 2026-05-28 — CILINUX-01 closed; 3 cross-OS discoveries surfaced (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01); Linux chain runtime ~56s (well within TIMEOUT-01 budget); commit chain dd1ff08 + 85521bb + 2d61981 + {69_02_SHA}
-- Phase 70 (v1.7 Pillar D — Close-Gate, in progress): Plan 70-01 Wave-1 scaffold `2f2dc7b` + 70-CONVENTIONS.md `22663d7` + Plan 70-02 Atom 1 atomic harness-core `26a1ae9` (HARNESS-01/02 + BASELINE_11) + **Plan 70-03 Atom 2 atomic validator+CI surface `aa6de68` (HARNESS-03 4 validators check-phase-67..70 + HARNESS-04 9 itemized workflow edits)**. Atomic-commit pattern preserved per dual precedent (Phase 66-02 + Phase 68 7b635ca). Pre-commit dry-run all green (15+21+31+31+41+28 = 167 PASS across full chain). Plan 70-04 next (3-axis terminal re-audit).
+- Phase 70 (v1.7 Pillar D — Close-Gate, in progress): Plan 70-01 Wave-1 scaffold `2f2dc7b` + 70-CONVENTIONS.md `22663d7` + Plan 70-02 Atom 1 atomic harness-core `26a1ae9` (HARNESS-01/02 + BASELINE_11) + Plan 70-03 Atom 2 atomic validator+CI surface `aa6de68` (HARNESS-03 4 validators check-phase-67..70 + HARNESS-04 9 itemized workflow edits) + **Plan 70-04 Wave 4 HARNESS-05 3-axis terminal re-audit `{70_04_SHA}` (70-04-AUDIT-RESULTS.md artifact-only commit; Axis 1 local fresh-clone tohma3w0 + Axis 2 GHA run 26604414109 ubuntu-latest + Cross-OS EXACT MATCH; 19 SKIPPED entries are v1.7-frozen-aware chicken-and-egg awaiting Plan 70-05 Commit A SHA-substitution; ARCHIVE-01 deferral to /gsd-complete-milestone explicit)**. Atomic-commit pattern preserved per dual precedent (Phase 66-02 + Phase 68 7b635ca). Pre-commit dry-run all green (15+21+31+31+41+28 = 167 PASS across full chain). Plan 70-05 next (Wave 5 close-gate + 4-doc traceability closure).
 
 **Totals (through v1.6):** 66 phases, 310 plans, ~248 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, Android Enterprise, Linux (Ubuntu LTS), and Apple Business Delegated Governance (OUs + custom roles + delegation runbooks).
 
@@ -159,12 +159,24 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-28T17:27:35.997Z
-Stopped at: Phase 70 context gathered
+Last session: 2026-05-28T23:05:00.000Z
+Stopped at: Phase 70 Plan 70-04 complete (Wave 4 HARNESS-05 3-axis terminal re-audit; 70-04-AUDIT-RESULTS.md artifact-only commit)
 Resume file: None
-Next action: `/gsd:plan-phase 70` (Pillar D — v1.7 Audit Harness Lineage Bump + Milestone Close / HARNESS-01..06) — Path-A copy v1.6 → v1.7 milestone-audit + sidecar + check-phase-67..70.mjs; EXTEND existing audit-harness-v1.7-integrity.yml with v1.7 validator jobs (preserve fetch-depth:0 + remove docs/decision-trees/09-linux-triage.md from path-filter); terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; finalize v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md; traceability closure
+Next action: `/gsd:execute-phase 70` continuation — execute Plan 70-05 (Wave 5 HARNESS-06 milestone close + 4-doc traceability closure via two-commit chicken-and-egg per D-04 Option (b); Commit A SHA-substitutes {phase_70_close_SHA} across check-phase-67/68/69/70.mjs + regenerate-supervision-pins.mjs flipping 19 SKIPPED → PASS; Commit B is the close-gate landing v1.7-MILESTONE-AUDIT.md + v1.7-DEFERRED-CLEANUP.md finalize + traceability across PROJECT.md/ROADMAP.md/STATE.md/REQUIREMENTS.md)
 
 ## Decisions
+
+### Phase 70 — Plan 04 (Wave 4 HARNESS-05 3-axis terminal re-audit; 2026-05-28)
+
+- Plan 70-04 Wave 4 operationalizes D-03 LOCKED 3-axis stacking (D-03 fresh-clone + D-22 fresh sub-agent + CILINUX-01 cross-OS Linux GHA) at the literal v1.7 close-gate moment per STATE.md:111 declaration "three independence axes now stack at terminal re-audit"; first close-gate in project history to operationalize all three axes simultaneously
+- Axis 1 (local fresh-clone via this fresh gsd-executor sub-agent): `git clone --no-hardlinks D:\claude\Autopilot $env:TEMP\v1.7-audit-tohma3w0` (random suffix `tohma3w0` per `Get-Random -Count 8` `[0-9a-z]` charset ~2.8 trillion combinations); main_head_sha = clone_head_sha = `84e9f4ee018f12e025d7ed5c88a8be75a282a2bc`; 7 validators exit 0 (v1.7-milestone-audit.mjs 15/0/0 + selftest 9/0 + check-phase-67 21/0/7 + check-phase-68 31/0/2 + check-phase-69 31/0/0 + check-phase-70 41/0/10 + chain-apex-66 28/0/0); clone removed post-audit (Remove-Item -Recurse -Force); zero orphan temp dirs OR files (over-fulfillment beyond strict contract)
+- Axis 2 (cross-OS Linux GHA workflow_dispatch): `gh workflow run audit-harness-v1.7-integrity.yml --ref master` → run 26604414109 (https://github.com/Schweinehund/Autopilot/actions/runs/26604414109); 9 active jobs `conclusion: success` (parse + path-match + harness-run + linux-chain-ubuntu-latest + check-phase-67/68/69/70 + pin-helper-advisory) + 1 correctly-skipped (rotting-external-quarterly cron-only); chain-67..70 ACTIVELY ran (NOT skip-if-missing per Plan 70-03 Atom 2 HARNESS-04 EXTEND); chain-apex 28/0/0 on ubuntu-latest matches Windows local exactly; CHAIN_TIMING_LINUX = 74s (Phase 69 baseline ~56s + 18s for Atom 2 additive); HEAD SHA at run = `84e9f4ee...` EXACT MATCH with Axis 1
+- Cross-OS PASS-Count EXACT MATCH verified across 6 cross-OS-applicable validators including chicken-and-egg SKIPPED counts (19 total: 7 + 2 + 10 across check-phase-67/68/70 = v1.7-frozen-aware reads of `{phase_70_close_SHA}` placeholder per D-01 routing); SKIPPED counts deterministic across OS proves Plan 70-05 Commit A SHA-substitution will resolve uniformly on BOTH OS axes
+- ARCHIVE-01 boundary preserved (explicit D-03 LOCKED ruling): recurrence-check OUT OF SCOPE for HARNESS-05 AND HARNESS-06; deferred to `/gsd-complete-milestone` skill invocation post-Phase-70-close per `v1.7-DEFERRED-CLEANUP.md:21` "Plan 70 author MUST run `git diff HEAD~1 HEAD -- .planning/MILESTONES.md` immediately after the archive automation runs" wording locating the diff-check at the archival invocation site
+- 3 deviations Rule 3 fixes applied + documented (operational only; no source-file changes): (1) PowerShell heredoc embedded in Bash got backtick-newline-mangled → recovered via `.ps1` script file invoked with `pwsh -File`; (2) GH_TOKEN env-var was invalid while keyring auth was valid → every gh invocation prefixed with `unset GH_TOKEN; unset GITHUB_TOKEN;`; (3) orphan-hygiene strict over-fulfillment — also swept results-JSON FILES post-evidence-capture so final orphan count = 0 for both dirs AND files
+- Zero new architectural discoveries (Wave 4 audit reaffirms Plan 70-01..03 close-state; cross-OS EXACT MATCH proves zero Linux-specific fragility surfaced)
+- `{70_04_SHA}` placeholder left as literal per Phase 68 Plan 68-05 / Phase 69 Plan 69-02 chicken-and-egg precedent — Plan 70-04's own SHA cannot be substituted before this commit lands; recovered via `git log --all --grep="70-04"` post-commit
+- Phase 70 entry-state for Wave 5: chain cascade-green on BOTH Windows AND Linux; 3-axis terminal re-audit complete; 19 SKIPPED entries are chicken-and-egg only (zero genuine FAILs); ready for Plan 70-05 two-commit close-gate (Commit A SHA-substitution + Commit B HARNESS-06 milestone close + 4-doc traceability)
 
 ### Phase 69 — Plan 02 (close-gate; 2026-05-28)
 
