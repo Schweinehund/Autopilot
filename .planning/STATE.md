@@ -4,13 +4,13 @@ milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
 stopped_at: Phase 70 context gathered
-last_updated: "2026-05-28T17:13:36.708Z"
+last_updated: "2026-05-28T17:27:42.466Z"
 last_activity: 2026-05-28
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 15
-  completed_plans: 11
+  completed_plans: 12
   percent: 33
 ---
 
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 70 (v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-05-28
 
@@ -133,6 +133,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 - Auditor-independence at terminal re-audit (fresh clone per v1.6 D-03)
 - BASELINE_10 v1.6 carry-over MUST be closed by Phase 70 HARNESS-02 (BASELINE_11 refresh)
 - [Phase ?]: Phase 70 Plan 70-01 (Wave 1 scaffold): 60-row per-V-NN-NN freshness routing matrix + check-phase-70.mjs Path-A scaffold (CHAIN_PHASES=[48..69], V-70-01..27 placeholder slots). Dual-SHA-placeholder convention documented.
+- [Phase ?]: Plan 70-02 Atom 1 atomic commit 26a1ae9 lands v1.7-milestone-audit.mjs + v1.7-audit-allowlist.json + regenerate-supervision-pins.mjs BASELINE_11 in ONE 3-file SHA per Phase 66-02 3a9a671 precedent; predecessor v1.6 BYTE-UNCHANGED verified
 
 ### Pending Todos
 
@@ -156,7 +157,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-28T17:13:12.228Z
+Last session: 2026-05-28T17:27:35.997Z
 Stopped at: Phase 70 context gathered
 Resume file: None
 Next action: `/gsd:plan-phase 70` (Pillar D — v1.7 Audit Harness Lineage Bump + Milestone Close / HARNESS-01..06) — Path-A copy v1.6 → v1.7 milestone-audit + sidecar + check-phase-67..70.mjs; EXTEND existing audit-harness-v1.7-integrity.yml with v1.7 validator jobs (preserve fetch-depth:0 + remove docs/decision-trees/09-linux-triage.md from path-filter); terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; finalize v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md; traceability closure

@@ -27,9 +27,9 @@ Requirements for v1.7 release. Each maps to one phase. Phases 67-70 continue fro
 
 ### Pillar D — v1.7 Audit Harness Lineage Bump
 
-- [ ] **HARNESS-01**: `scripts/validation/v1.7-milestone-audit.mjs` ships as Path-A copy from `v1.6-milestone-audit.mjs` with C1-C13 + C14/C15/C16 preserved; lineage extends `v1.4-milestone-audit.mjs` → `v1.4.1-milestone-audit.mjs` → `v1.5-milestone-audit.mjs` → `v1.6-milestone-audit.mjs` → `v1.7-milestone-audit.mjs`. Harness exits 0 with all 15+ checks PASS in fully-blocking mode (C1-C13 inherited + C14/C15/C16 v1.6 new + any v1.7-specific additions if needed).
+- [x] **HARNESS-01**: `scripts/validation/v1.7-milestone-audit.mjs` ships as Path-A copy from `v1.6-milestone-audit.mjs` with C1-C13 + C14/C15/C16 preserved; lineage extends `v1.4-milestone-audit.mjs` → `v1.4.1-milestone-audit.mjs` → `v1.5-milestone-audit.mjs` → `v1.6-milestone-audit.mjs` → `v1.7-milestone-audit.mjs`. Harness exits 0 with all 15+ checks PASS in fully-blocking mode (C1-C13 inherited + C14/C15/C16 v1.6 new + any v1.7-specific additions if needed).
 
-- [ ] **HARNESS-02**: `scripts/validation/v1.7-audit-allowlist.json` ships as Path-A copy from `v1.6-audit-allowlist.json` with `c13_rotting_external` reset for v1.7 (CI-1/CI-2 entries reflect post-SWEEP-01/SWEEP-02 state); `c16_missing_endpoint_exemptions: []`; sidecar shape preserved; `quarterly_audit` metadata carried forward (cadence `0 8 1 1,4,7,10 *`); BASELINE_11 freshness comment added to `regenerate-supervision-pins.mjs` closing BASELINE_10 v1.6 carry-over per per-milestone AUDIT-14-equivalent contract.
+- [x] **HARNESS-02**: `scripts/validation/v1.7-audit-allowlist.json` ships as Path-A copy from `v1.6-audit-allowlist.json` with `c13_rotting_external` reset for v1.7 (CI-1/CI-2 entries reflect post-SWEEP-01/SWEEP-02 state); `c16_missing_endpoint_exemptions: []`; sidecar shape preserved; `quarterly_audit` metadata carried forward (cadence `0 8 1 1,4,7,10 *`); BASELINE_11 freshness comment added to `regenerate-supervision-pins.mjs` closing BASELINE_10 v1.6 carry-over per per-milestone AUDIT-14-equivalent contract.
 
 - [ ] **HARNESS-03**: Per-phase validators `check-phase-67.mjs..check-phase-70.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+); each is Path-A from `check-phase-66.mjs` with phase-specific V-NN-NN assertions for that phase's deliverables; CHAIN_PHASES does NOT include the validator's own phase (V-NN-SELF guard per `check-phase-65.mjs:151`).
 
@@ -82,8 +82,8 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | CHAIN-02 | Phase 68 | Complete |
 | CHAIN-03 | Phase 68 | Complete |
 | CILINUX-01 | Phase 69 | Complete |
-| HARNESS-01 | Phase 70 | Pending |
-| HARNESS-02 | Phase 70 | Pending |
+| HARNESS-01 | Phase 70 | Complete |
+| HARNESS-02 | Phase 70 | Complete |
 | HARNESS-03 | Phase 70 | Pending |
 | HARNESS-04 | Phase 70 | Pending |
 | HARNESS-05 | Phase 70 | Pending |
