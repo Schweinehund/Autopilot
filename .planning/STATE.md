@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
 status: executing
-stopped_at: Phase 69 context gathered
-last_updated: "2026-05-27T02:48:04.999Z"
-last_activity: 2026-05-27 -- Phase 69 execution started
+stopped_at: "Phase 69 closed (CILINUX-01 Validated); 3 cross-OS discoveries documented"
+last_updated: "2026-05-28T15:30:00.000Z"
+last_activity: 2026-05-28 -- Phase 69 (Pillar C — CI-Linux Hardening) CLOSED; CILINUX-01 Active → Validated; 3 architectural discoveries surfaced (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01); 1 latent meta-bug deferred to v1.8+ (CHAIN-WRAPPER-01); chain-apex 28/0/0 cross-OS EXACT MATCH
 progress:
-  total_phases: 9
-  completed_phases: 2
-  total_plans: 10
-  completed_plans: 8
-  percent: 22
+  total_phases: 4
+  completed_phases: 3
+  total_plans: 12
+  completed_plans: 10
+  percent: 75
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 69 — ci-linux-hardening-pillar-c-cross-os-verification
+**Current focus:** Phase 70 — v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D)
 
 ## Current Position
 
-Phase: 69 (ci-linux-hardening-pillar-c-cross-os-verification) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 69
-Last activity: 2026-05-27 -- Phase 69 execution started
+Phase: 70 (v1.7-audit-harness-lineage-bump-pillar-d-close-gate) — NOT STARTED
+Plan: 0 of TBD
+Status: Phase 69 CLOSED; Phase 70 entry-state ready
+Last activity: 2026-05-28 -- Phase 69 (Pillar C — CI-Linux Hardening) CLOSED; CILINUX-01 Validated; 3 cross-OS discoveries documented
 
 ## v1.7 Phase Dependency Summary
 
@@ -89,6 +89,7 @@ Phase 70 (Pillar D — v1.7 Harness Lineage Bump + Milestone Close)
 - **v1.7 (executing): 4 phases (67-70), 12-18 plans estimated, ~1 week elapsed time target**
 - Phase 67 (v1.7 Pillar A — Corpus Surgical Sweeps): 3 plans, shipped 2026-05-26 — SWEEP-01 + SWEEP-02 closed (Plan 67-01 `3fb8ca5` Branch A + Plan 67-02 `55260b3` atomic-within-plan + Plan 67-03 close-gate)
 - Phase 68 (v1.7 Pillar B — CHAIN_SKIP Root-Cause Resolution / Validator Surgery): 5 plans, shipped 2026-05-26 — CHAIN-01 + CHAIN-02 + CHAIN-03 closed (Plan 68-01 `36a753d` CHAIN-01 + Plan 68-02 `79c65c6` CHAIN-02 + Plan 68-03 Task 1 `d7d7d5f` v1.5-frozen-aware precondition + Plan 68-03 Task 2 `7b635ca` ATOMIC CHAIN_SKIP empty-Set + Plan 68-04 `d142c7a` cdcce23 deletion + Plan 68-05 Commit A `3814bee` {68_03_SHA} placeholder fill + Plan 68-05 Commit B close-gate); full chain green for first time since v1.5 close; v1.5-frozen-aware pattern + subprocess timeout 60s→300s as v1.7+ architectural discoveries
+- Phase 69 (v1.7 Pillar C — CI-Linux Hardening): 2 plans, shipped 2026-05-28 — CILINUX-01 closed; 3 cross-OS discoveries surfaced (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01); Linux chain runtime ~56s (well within TIMEOUT-01 budget); commit chain dd1ff08 + 85521bb + 2d61981 + {69_02_SHA}
 
 **Totals (through v1.6):** 66 phases, 310 plans, ~248 documentation files across Windows APv1/APv2, macOS ADE, iOS/iPadOS, Android Enterprise, Linux (Ubuntu LTS), and Apple Business Delegated Governance (OUs + custom roles + delegation runbooks).
 
@@ -134,9 +135,8 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ### Pending Todos
 
-- Phase 69 plan authoring — staging strategy for ubuntu-latest job (extend v1.6 workflow transitionally OR stage directly into Phase 70 v1.7 workflow); verify cross-OS reproducibility on representative PR; Phase 69 CI-Linux first-run timing measurement to validate 300s subprocess-timeout headroom per Phase 68 TIMEOUT-01 discovery
-- Phase 70 plan authoring — Path-A copy v1.6 → v1.7 (milestone-audit.mjs + audit-allowlist.json + check-phase-67..70.mjs); CI workflow `audit-harness-v1.7-integrity.yml`; terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md stub (already authored at Phase 68 close) with v1.6 carry-overs + v1.7-execution-discovered items; carry-forward v1.5-frozen-aware pattern in HARNESS-03 Path-A copy per Phase 68 HARNESS-FORWARD-01 forward-coordination flag; audit cdcce23 archive-script defect recurrence post-archival per ARCHIVE-01; traceability closure
-- `audit-harness-v1.6-integrity.yml` `rotting-external-quarterly` job first-fires 2026-07-01 — Phase 69/70 can verify first-fire artifact if execution lands after that date
+- Phase 70 plan authoring — Path-A copy v1.6 → v1.7 (milestone-audit.mjs + audit-allowlist.json + check-phase-67..70.mjs); EXTEND existing `audit-harness-v1.7-integrity.yml` workflow (already authored as Plan 69-01 `dd1ff08` + fixes `85521bb` `2d61981`) with v1.7 validator jobs + v1.7 path-filter updates + v1.7 milestone-audit harness reference — PRESERVE `fetch-depth: 0` on linux-chain-ubuntu-latest checkout step (FETCH-DEPTH-01 inheritance contract); REMOVE `docs/decision-trees/09-linux-triage.md` from path-filter (Phase-69-evidence-only entry, no v1.7-deliverable status); terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks (HARNESS-05); v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md with v1.6 carry-overs + Phase-69-discovered items (FETCH-DEPTH-01 CLOSED + SCOPE-GAP-61 CLOSED + D-04-OVERSPEC-01 ACKNOWLEDGED + CHAIN-WRAPPER-01 DEFERRED to v1.8+); carry-forward v1.5-frozen-aware pattern in HARNESS-03 per HARNESS-FORWARD-01 + SCOPE-GAP-61 retrospective audit recommendation for V-NN-NN HEAD-coupled assertion class; audit cdcce23 archive-script defect recurrence post-archival per ARCHIVE-01; traceability closure across PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md
+- `audit-harness-v1.6-integrity.yml` `rotting-external-quarterly` job first-fires 2026-07-01 — Phase 70 can verify first-fire artifact if execution lands after that date
 
 ### Out-of-band carry-overs from v1.6 close
 
@@ -155,12 +155,22 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-27T02:10:22.752Z
-Stopped at: Phase 69 context gathered
-Resume file: .planning/phases/69-ci-linux-hardening-pillar-c-cross-os-verification/69-CONTEXT.md
-Next action: `/gsd:plan-phase 69` (Pillar C — CI-Linux Hardening / CILINUX-01) — author Phase 69 CONTEXT/RESEARCH/PLAN; staging strategy for ubuntu-latest runner job; verify cross-OS reproducibility; validate 300s subprocess-timeout headroom per Phase 68 TIMEOUT-01 discovery
+Last session: 2026-05-28T15:30:00.000Z
+Stopped at: Phase 69 CLOSED 2026-05-28 — CILINUX-01 Validated. All 5 SC satisfied (SC#5 via reframe-aware B.1+B.2+B.4 trio per D-04-OVERSPEC-01 discovery). 3 architectural discoveries documented in 69-VERIFICATION.md §E (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01). 1 latent meta-bug deferred to v1.8+ (CHAIN-WRAPPER-01). Phase 70 entry-state ready (3 independence axes available: fresh-clone + fresh sub-agent + cross-OS).
+Resume file: .planning/phases/69-ci-linux-hardening-pillar-c-cross-os-verification/69-02-SUMMARY.md
+Next action: `/gsd:plan-phase 70` (Pillar D — v1.7 Audit Harness Lineage Bump + Milestone Close / HARNESS-01..06) — Path-A copy v1.6 → v1.7 milestone-audit + sidecar + check-phase-67..70.mjs; EXTEND existing audit-harness-v1.7-integrity.yml with v1.7 validator jobs (preserve fetch-depth:0 + remove docs/decision-trees/09-linux-triage.md from path-filter); terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks; finalize v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md; traceability closure
 
 ## Decisions
+
+### Phase 69 — Plan 02 (close-gate; 2026-05-28)
+
+- Plan 69-02 close-gate satisfies all 5 ROADMAP.md Phase 69 SC#1-5 with consolidated evidence in `69-VERIFICATION.md`: SC#1 (ubuntu-latest job runs full chain on Linux LF via B.1 iter 3 run 26576405590) + SC#2 (PR-blocking continue-on-error:false declared on linux-chain-ubuntu-latest job; only pin-helper-advisory retains continue-on-error:true) + SC#3 (chain exits 0 with 0 SKIPPED on B.1 iter 3 — `Result: 28 PASS, 0 FAIL, 0 SKIPPED`) + SC#4 (predecessor workflows byte-unchanged — `git diff dd1ff08^ HEAD -- .github/workflows/audit-harness-integrity.yml .github/workflows/audit-harness-v1.5-integrity.yml .github/workflows/audit-harness-v1.6-integrity.yml` returns empty across all 4 Phase 69 commits) + SC#5 (cross-OS reproducibility via B.1+B.2+B.4 trio per D-04-OVERSPEC-01 reframe: B.1 iter 3 Linux workflow_dispatch 28/0/0 + B.2 synthetic CRLF PR Linux 28/0/0 on PR #1 + B.4 Windows local check-phase-66 chain-apex 28/0/0 = EXACT MATCH)
+- 3 architectural discoveries surfaced during Plan 69-02 execution — phase's primary value-add beyond the 1-2h Path-A workflow YAML: (1) **FETCH-DEPTH-01** (PRIMARY cross-OS) — shallow-clone (default fetch-depth:1 on actions/checkout@v4) cannot resolve historical SHA `ba2cbc0` that v1.5-frozen-aware validators depend on (introduced by Plan 68-03 Task 1 `d7d7d5f` `readRequirementsAtV15Close()` helper); evidence run 26513528485 FAIL with `fatal: invalid object name 'ba2cbc0'`; fix `85521bb` adds `with: { fetch-depth: 0 }` to linux-chain-ubuntu-latest checkout; Phase 70 HARNESS-04 inherits verbatim. (2) **SCOPE-GAP-61** (SECONDARY latent Windows+Linux) — V-61-05..08 in check-phase-61.mjs were left HEAD-coupled by Plan 68-03 Task 1 (which only made V-61-01..04 v1.5-frozen-aware); surfaced when Plan 69-01 tracking-update commit `6e12a75` introduced an "In Progress" row to ROADMAP.md line 447; evidence run 26574959797 FAIL post-FETCH-DEPTH-fix with empty stderr (masked by CHAIN-WRAPPER-01); fix `2d61981` adds `readRoadmapAtV15Close()` helper parallel to `readRequirementsAtV15Close()`; V-61-05..08 suffixed `[v1.5-frozen @ ba2cbc0]`; attribution: Plan 68-03 Task 1 scope-gap closure NOT Phase 69 deliverable surface. (3) **D-04-OVERSPEC-01** (TERTIARY design-vs-reality) — SC#5 D-04 synthetic-PR design pre-supposed check-phase-51 would FAIL on CRLF injection; reality is Phase 68 CHAIN-01 fix (`36a753d`) added `.replace(/\r\n/g, '\n')` to readFile() making check-phase-51 CRLF-tolerant (defensively normalizes inputs to LF before regex matching); B.2-GREEN reframed as positive cross-OS resilience proof not negative regression-detection; B.3 SKIPPED per reframe (redundant once B.2 reframed as positive)
+- 1 latent meta-bug flagged for v1.8+ (**CHAIN-WRAPPER-01**): `scripts/validation/check-phase-66.mjs:313` chain-apex wrapper captures only `err.stderr` (not `err.stdout`); check-phase-61 writes per-validator FAIL detail to stdout; chain-66 wrapper masks V-61-05 failure as empty-stderr generic chain failure. Masked SCOPE-GAP-61 on Windows local for 2 weeks. Fix DEFERRED to v1.8+ per scope discipline (CILINUX-01 scope is workflow YAML, not chain wrapper); routed to v1.7-DEFERRED-CLEANUP.md CHAIN-WRAPPER-01 entry.
+- Forward-coordination flags for Phase 70 captured in 69-VERIFICATION.md §F: (1) HARNESS-04 EXTENDS existing v1.7 workflow (do NOT Path-A-copy from v1.6 since v1.7 file already exists post-Plan-69-01); MUST preserve `fetch-depth: 0` on linux-chain-ubuntu-latest checkout (FETCH-DEPTH-01 inheritance); HARNESS-04(a) MUST REMOVE `docs/decision-trees/09-linux-triage.md` from path-filter (Phase-69-evidence-only entry; no v1.7-deliverable status). (2) HARNESS-03 carries v1.5-frozen-aware pattern further forward; check-phase-67..70.mjs each consider whether their assertions touch v1.5/v1.6/v1.7-frozen state via parallel helper pattern; v1.8+ retrospective audit recommended scanning check-phase-{48..66}.mjs for HEAD-coupled assertions whose docstrings cite milestone-close state. (3) HARNESS-06 audits TIMEOUT-01 disposition: Linux runtime ~56s measured (well within 1500s escalation threshold; no v1.8+ subprocess-timeout-architecture review needed); TIMEOUT-01 entry CLOSED at Phase 69 close.
+- `{69_02_SHA}` placeholder left as literal per Phase 68 Plan 68-05 chicken-and-egg precedent Option (a) — Plan 69-02's own SHA cannot be substituted before this commit lands. Recovered via `git log --all --grep="69-02"` or `git log --all --grep="phase-69.*close-gate"`. Documented in 69-VERIFICATION.md §Section D Atomic-Commit SHA Record.
+- Zero-master-tree-churn invariant preserved (PR #1 closed-without-merge + branch `phase-69/sc5-crlf-evidence` deleted local + remote; master tree byte-unchanged except for 3 in-Phase commits `dd1ff08` + `85521bb` + `2d61981` + this close-gate).
+- Phase 69 (Pillar C — CI-Linux Hardening) CLOSED 2026-05-28. CILINUX-01 Active → Validated traceability flipped across PROJECT.md + REQUIREMENTS.md + ROADMAP.md + STATE.md. Phase 70 entry-state ready: chain cascade-green on BOTH Windows AND Linux (28/0/0 EXACT MATCH at chain-apex); 3 independence axes available at terminal re-audit (fresh-clone + fresh sub-agent + cross-OS); v1.7-DEFERRED-CLEANUP.md updated with TIMEOUT-01 CLOSED + FETCH-DEPTH-01 CLOSED + SCOPE-GAP-61 CLOSED + D-04-OVERSPEC-01 ACKNOWLEDGED + CHAIN-WRAPPER-01 DEFERRED.
 
 ### Phase 67 — Plan 01 (Branch A taken; 2026-05-26)
 

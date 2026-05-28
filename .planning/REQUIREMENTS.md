@@ -23,7 +23,7 @@ Requirements for v1.7 release. Each maps to one phase. Phases 67-70 continue fro
 
 ### Pillar C — CI-Linux Hardening
 
-- [ ] **CILINUX-01**: A new `ubuntu-latest` runner job is added to the v1.7 CI workflow (or extended into v1.6 if scope permits) that runs the full validator chain `check-phase-{48..70}.mjs` + `v1.x-milestone-audit.mjs` on Linux LF line endings. Job is PR-blocking (`continue-on-error: false`) per D-A9 inheritance. Catches CRLF-style regressions before they hit Windows local. Coexists with existing per-version workflows (`audit-harness-integrity.yml` v1.4 + `audit-harness-v1.5-integrity.yml` + `audit-harness-v1.6-integrity.yml`) — no modifications to older workflow files.
+- [x] **CILINUX-01**: A new `ubuntu-latest` runner job is added to the v1.7 CI workflow (or extended into v1.6 if scope permits) that runs the full validator chain `check-phase-{48..70}.mjs` + `v1.x-milestone-audit.mjs` on Linux LF line endings. Job is PR-blocking (`continue-on-error: false`) per D-A9 inheritance. Catches CRLF-style regressions before they hit Windows local. Coexists with existing per-version workflows (`audit-harness-integrity.yml` v1.4 + `audit-harness-v1.5-integrity.yml` + `audit-harness-v1.6-integrity.yml`) — no modifications to older workflow files. — completed 2026-05-28 in Phase 69 (Plan 69-01 `dd1ff08` workflow YAML NEW Path-A copy from v1.6 + Plan 69-02 Fix-1 `85521bb` fetch-depth:0 for FETCH-DEPTH-01 discovery + Plan 69-02 Fix-2 `2d61981` V-61-05..08 v1.5-frozen-aware via readRoadmapAtV15Close() for SCOPE-GAP-61 discovery / Plan 68-03 Task 1 scope-gap closure + Plan 69-02 close-gate); 3 cross-OS discoveries surfaced + documented in 69-VERIFICATION.md §E (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01); 1 latent meta-bug CHAIN-WRAPPER-01 deferred to v1.8+; chain-apex 28 PASS / 0 FAIL / 0 SKIPPED on BOTH Windows local AND Linux GHA ubuntu-latest (EXACT MATCH at chain-apex level); Linux runtime ~56s (well within TIMEOUT-01 1500s escalation threshold)
 
 ### Pillar D — v1.7 Audit Harness Lineage Bump
 
@@ -81,7 +81,7 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | CHAIN-01 | Phase 68 | Complete |
 | CHAIN-02 | Phase 68 | Complete |
 | CHAIN-03 | Phase 68 | Complete |
-| CILINUX-01 | Phase 69 | Pending |
+| CILINUX-01 | Phase 69 | Complete |
 | HARNESS-01 | Phase 70 | Pending |
 | HARNESS-02 | Phase 70 | Pending |
 | HARNESS-03 | Phase 70 | Pending |
