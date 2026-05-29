@@ -141,10 +141,40 @@ After milestone archival: `/gsd-new-milestone` to plan v1.8+ entry-phase from v1
 - Commit A `14683de` — verified above via `git log -1` (4 files: check-phase-67/68/70.mjs + regenerate-supervision-pins.mjs)
 - Commit B `{phase_70_close_SHA}` — pending stage+commit (will verify post-landing)
 
-## Self-Check: PENDING
+## Self-Check: PASSED
 
-Self-check status will resolve to PASSED post-Commit-B landing. Commit A verification:
-- `git log --oneline | grep 14683de` → found
-- File modifications verified via `git log -1 14683de --name-only` → 4 files matching plan-conditional spec
+Post-Commit-B verification (Commit B SHA `4df3a16`):
 
-Commit B self-check will execute after `git commit` lands the 7-file close-gate.
+**Files created (claim → verification):**
+- `.planning/milestones/v1.7-MILESTONE-AUDIT.md` → FOUND ✓
+- `.planning/milestones/v1.7-DEFERRED-CLEANUP.md` → FOUND ✓ (modified, not created — stub from Phase 68 close extended)
+- `.planning/phases/70-.../70-VERIFICATION.md` → FOUND ✓
+- `.planning/phases/70-.../70-05-SUMMARY.md` → FOUND ✓ (this file)
+
+**Commits landed:**
+- Commit A `14683de` → FOUND in `git log --oneline --all` ✓
+- Commit B `4df3a16` (the literal value of `{phase_70_close_SHA}` placeholder is now resolved to `4df3a16`) → FOUND in `git log --oneline --all` ✓
+
+**Commit B file scope verification:**
+- `git log -1 --name-only --pretty=format:` shows EXACTLY 8 files (7 plan-named + 70-05-SUMMARY.md per output spec):
+  1. `.planning/PROJECT.md`
+  2. `.planning/REQUIREMENTS.md`
+  3. `.planning/ROADMAP.md`
+  4. `.planning/STATE.md`
+  5. `.planning/milestones/v1.7-DEFERRED-CLEANUP.md`
+  6. `.planning/milestones/v1.7-MILESTONE-AUDIT.md`
+  7. `.planning/phases/70-.../70-05-SUMMARY.md`
+  8. `.planning/phases/70-.../70-VERIFICATION.md`
+
+**M2 fix predecessor byte-unchanged verification (pre-Commit-B):**
+- `git diff 8175f82..HEAD -- .github/workflows/audit-harness-integrity.yml .github/workflows/audit-harness-v1.5-integrity.yml .github/workflows/audit-harness-v1.6-integrity.yml scripts/validation/v1.4*.mjs scripts/validation/v1.4*.json scripts/validation/v1.5*.mjs scripts/validation/v1.5*.json scripts/validation/v1.6*.mjs scripts/validation/v1.6*.json` → EMPTY ✓ (predecessor v1.4/v1.4.1/v1.5/v1.6 workflows + harnesses + sidecars all BYTE-UNCHANGED through Commit B per anti-regression invariant)
+
+**4-doc traceability cross-consistency (T-70-05-TRACE-DRIFT mitigation):**
+- REQUIREMENTS.md HARNESS-06 checkbox `[x]` ✓; Traceability row Complete ✓
+- ROADMAP.md Phase 70 row `5/5 Complete | 2026-05-28` ✓; Plans line `5/5 plans complete` ✓
+- STATE.md frontmatter `status: complete` ✓; `completed_phases: 4` + `completed_plans: 15` + `percent: 100` ✓
+- PROJECT.md Validated section has 6 v1.7 HARNESS rows with closing SHAs ✓
+
+**All 4 docs agree:** 12/12 v1.7 reqs Complete + 4/4 phases Complete + 15/15 plans Complete.
+
+**v1.7 milestone CLOSED 2026-05-28** — `{phase_70_close_SHA}` placeholder permanently resolves to Commit B SHA `4df3a16` via `git log --all --grep="70-05" --grep="Commit B" --all-match -1 --format=%H`.
