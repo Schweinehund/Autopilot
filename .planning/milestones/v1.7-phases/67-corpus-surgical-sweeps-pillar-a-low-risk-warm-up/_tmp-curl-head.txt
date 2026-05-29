@@ -1,0 +1,24 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0HTTP/1.1 200 OK
+Server: Apple
+Content-Type: text/html
+Access-Control-Allow-Origin: *
+Content-Language: en
+Content-Security-Policy: default-src 'self' *.apple.com; base-uri 'self'; script-src 'self' *.apple.com 'strict-dynamic' 'nonce-a7bbfbeca5a0908e638cfef73098b284' 'unsafe-eval'; style-src 'self' *.apple.com 'unsafe-inline'; img-src 'self' *.apple.com data: pineapple-coyote.s3.amazonaws.com data.securemetrics-apple.com; media-src 'self' *.apple.com blob: embed.apple.media pineapple-coyote.s3.amazonaws.com; frame-src 'self' *.apple.com embed.apple.media pineapple-coyote.s3.amazonaws.com; connect-src 'self' *.apple.com dpm.demdex.net data.securemetrics-apple.com; worker-src 'self' blob:; object-src 'none'
+Cross-Origin-Opener-Policy: same-origin
+Hwp-Trace-Id: 4aac7ae26aa07d0f7ed5de2b9f810626
+Server-Timing: marketing;dur=84.1;desc="Marketing Static Pages Proxy",total;dur=84.3;desc="Total Response Time"
+Strict-Transport-Security: max-age=31536000; includeSubdomains
+Vary: Accept-Language, User-Agent
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+Expires: Tue, 26 May 2026 15:58:15 GMT
+Cache-Control: max-age=0, no-cache, no-store
+Pragma: no-cache
+Date: Tue, 26 May 2026 15:58:15 GMT
+Content-Length: 0
+Connection: keep-alive
+
+

@@ -1,0 +1,8 @@
+[
+  {
+    "link": "https://business.apple.com",
+    "statusCode": 200,
+    "err": null,
+    "status": "alive"
+  }
+]

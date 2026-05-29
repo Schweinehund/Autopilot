@@ -1,0 +1,18 @@
+﻿  13 | # Apple Provisioning Glossary
+  15 | ## Alphabetical Index
+  21 | ## Enrollment
+  23 | ### Account-Driven User Enrollment
+  30 | ### ADE
+  37 | ### Await Configuration
+  44 | ### Setup Assistant
+  51 | ### Supervision
+  60 | ## Device Management
+  62 | ### ABM
+  70 | ### ABM Token
+  76 | ### APNs
+  82 | ### Jailbreak Detection
+  90 | ## App Distribution
+  92 | ### VPP
+ 108 | ## App Protection (MAM)
+ 110 | ### MAM-WE
+ 121 | ## Version History

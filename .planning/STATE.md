@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Deferred Backlog Closure + Validator Chain Hardening
-status: complete
+status: Awaiting next milestone
 stopped_at: Phase 70 Plan 70-05 complete (Wave 5 HARNESS-06 close-gate + 4-doc traceability closure via two-commit chicken-and-egg per D-04 Option (b); v1.7 milestone CLOSED)
-last_updated: "2026-05-28T23:59:00.000Z"
-last_activity: 2026-05-28
+last_updated: "2026-05-29T12:24:54.959Z"
+last_activity: 2026-05-29 — Milestone v1.7 completed and archived
 progress:
-  total_phases: 4
+  total_phases: 9
   completed_phases: 4
   total_plans: 15
   completed_plans: 15
-  percent: 100
+  percent: 44
 ---
 
 # Project State
@@ -25,12 +25,10 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 ## Current Position
 
-Phase: 70 (v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)) — **COMPLETE**
-Plan: 5 of 5 (all complete)
-Milestone: v1.7 — **CLOSED 2026-05-28**
-Status: v1.7 milestone CLOSED via Plan 70-05 Commit B; 12/12 v1.7 requirements Validated; 4/4 v1.7 phases Complete. Next: user invokes `/gsd-complete-milestone v1.7` for milestone archival + post-archival ARCHIVE-01 recurrence-check.
-Last activity: 2026-05-28
-Last commits: `14683de` (Plan 70-05 Commit A — SHA placeholder fill {phase_70_close_SHA}→aa6de68 + {phase_70_atom_1_SHA}→26a1ae9 across 4 validators + regenerate-supervision-pins.mjs) + `{phase_70_close_SHA}` (Plan 70-05 Commit B — close-gate landing v1.7-MILESTONE-AUDIT.md NEW + v1.7-DEFERRED-CLEANUP.md FINALIZE + 4-doc traceability + 70-VERIFICATION.md NEW)
+Phase: Milestone v1.7 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-05-29 — Milestone v1.7 completed and archived
 
 ## v1.7 Phase Dependency Summary
 
@@ -269,3 +267,7 @@ Next action: User invokes `/gsd-complete-milestone v1.7` separately (post-Phase-
 - Forward coordination flag captured for Plan 68-05 close-gate: `check-phase-68.mjs` self-verifier (Phase 70 HARNESS-03 Path-A) MUST verify CHAIN-01 via INTENT (exit 0 + 0 CHAIN_SKIP) not literal-letter source grep
 - Style preservation: single-quote `'utf8'` preserved on both files; two-space indent preserved; inline comment `// CRLF normalization (CHAIN-01; mirrors check-phase-48.mjs:25)` matches regenerate-supervision-pins.mjs:77 + check-phase-31.mjs:18 attribution-comment shape
 - File-disjoint Wave 2 handoff confirmed: Plan 68-02 touches 8 distinct files; zero overlap with Plan 68-01's check-phase-51 + check-phase-58
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone
