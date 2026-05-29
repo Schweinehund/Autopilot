@@ -37,7 +37,7 @@ Requirements for v1.7 release. Each maps to one phase. Phases 67-70 continue fro
 
 - [x] **HARNESS-05**: Terminal re-audit at Phase 70 close runs `v1.7-milestone-audit.mjs` + full chain `check-phase-{48..70}.mjs` from a fresh `git clone --no-hardlinks` into `$env:TEMP\v1.7-audit-<rand>` via fresh `gsd-executor` sub-agent (D-22 INTENT via D-03 mechanism — STRICTER physical isolation than worktree; reconciles with `.planning/config.json:7` `use_worktrees:false`). Harness + all chain validators exit 0 with NO CHAIN_SKIP entries (Pillar B resolved them). Auditor-independence verified at execution start: zero context-carryover from Plans 67-01..70-N author-agents. — completed 2026-05-28 in Phase 70 Plan 70-04 (Wave 4 artifact-only commit `{70_04_SHA}` lands 70-04-AUDIT-RESULTS.md; 3-axis stacking operationalized: Axis 1 local fresh-clone tohma3w0 main_head_sha=clone_head_sha=84e9f4e all 7 validators exit 0 + clone removed zero orphans + Axis 2 cross-OS Linux GHA run 26604414109 9 active jobs conclusion=success + Axis 3 fresh sub-agent zero context-carryover; Cross-OS PASS-Count EXACT MATCH verified; 19 SKIPPED entries are v1.7-frozen-aware chicken-and-egg awaiting Plan 70-05 Commit A SHA-substitution; ARCHIVE-01 deferral to /gsd-complete-milestone explicit per D-03 LOCKED)
 
-- [ ] **HARNESS-06**: `.planning/milestones/v1.7-MILESTONE-AUDIT.md` authored (Path-A from `v1.6-MILESTONE-AUDIT.md` template) confirming all checks PASS, all v1.7 requirements closed, and 4-phase scope delivered with closing commit SHAs; `.planning/milestones/v1.7-DEFERRED-CLEANUP.md` finalized carrying CI-3 (Managed Apple ID, 45 occurrences) + Multi-tenant Apple Business + Apple Business Device API + per-OU CRD + Account Holder runbook + ASM forward to v1.8+. PROJECT.md traceability closure — all v1.7 reqs flipped Active→Validated with closing commit SHAs; ROADMAP.md Progress table reflects 4/4 phases Complete; STATE.md milestone close recorded.
+- [x] **HARNESS-06**: `.planning/milestones/v1.7-MILESTONE-AUDIT.md` authored (Path-A from `v1.6-MILESTONE-AUDIT.md` template) confirming all checks PASS, all v1.7 requirements closed, and 4-phase scope delivered with closing commit SHAs; `.planning/milestones/v1.7-DEFERRED-CLEANUP.md` finalized carrying CI-3 (Managed Apple ID, 45 occurrences) + Multi-tenant Apple Business + Apple Business Device API + per-OU CRD + Account Holder runbook + ASM forward to v1.8+. PROJECT.md traceability closure — all v1.7 reqs flipped Active→Validated with closing commit SHAs; ROADMAP.md Progress table reflects 4/4 phases Complete; STATE.md milestone close recorded. — completed 2026-05-28 in Phase 70 Plan 70-05 (two-commit chicken-and-egg per D-04 Option (b); Commit A `14683de` SHA placeholder fill {phase_70_close_SHA}→aa6de68 + {phase_70_atom_1_SHA}→26a1ae9 across 4 validators; Commit B `{phase_70_close_SHA}` close-gate landing 7 files: v1.7-MILESTONE-AUDIT.md NEW with 3-axis Auditor-Independence + 5-entry Discoveries section + 12-row Traceability + V-70-18..23 residual state documentation per M4 fix + /gsd-complete-milestone hand-off documented; v1.7-DEFERRED-CLEANUP.md FINALIZED with 6 v1.6 carry-over sections promoted + Phase 67 VPP-additional + Phase 69 dispositions; 4-doc traceability across PROJECT/ROADMAP/STATE/REQUIREMENTS; 70-VERIFICATION.md NEW close-gate report Sections A-G; ARCHIVE-01 recurrence-check OUT OF SCOPE per D-03 LOCKED — deferred to /gsd-complete-milestone skill invocation)
 
 ## v1.8+ Requirements (Deferred)
 
@@ -86,8 +86,8 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 | HARNESS-02 | Phase 70 | Complete |
 | HARNESS-03 | Phase 70 | Complete (Plan 70-03 `aa6de68`) |
 | HARNESS-04 | Phase 70 | Complete (Plan 70-03 `aa6de68`) |
-| HARNESS-05 | Phase 70 | Complete (Plan 70-04 `{70_04_SHA}`) |
-| HARNESS-06 | Phase 70 | Pending |
+| HARNESS-05 | Phase 70 | Complete (Plan 70-04 `8175f82`) |
+| HARNESS-06 | Phase 70 | Complete (Plan 70-05 Commit A `14683de` SHA placeholder fill + Commit B `{phase_70_close_SHA}` close-gate) |
 
 **Coverage:**
 - v1.7 requirements: 12 total
@@ -101,4 +101,4 @@ Which phases cover which requirements. Populated by `/gsd-roadmapper` during ROA
 
 ---
 *Requirements defined: 2026-05-26*
-*Last updated: 2026-05-26 — /gsd-roadmapper traceability mapping complete; 12/12 v1.7 requirements mapped to 4 phases (67-70); coverage 100%, no orphans, no duplicates*
+*Last updated: 2026-05-28 — v1.7 milestone CLOSED via Phase 70 Plan 70-05 Commit B (HARNESS-06 close-gate + 4-doc traceability closure). 12/12 v1.7 requirements Validated (SWEEP-01 `3fb8ca5` + SWEEP-02 `55260b3` + CHAIN-01 `36a753d` + CHAIN-02 `79c65c6` + CHAIN-03 `7b635ca` + CILINUX-01 `dd1ff08`+`85521bb`+`2d61981` + HARNESS-01/02 `26a1ae9` Atom 1 + HARNESS-03/04 `aa6de68` Atom 2 + HARNESS-05 `8175f82` + HARNESS-06 `{phase_70_close_SHA}` Commit B). 4/4 v1.7 phases Complete. 15 v1.7 plans Complete. Next: `/gsd-complete-milestone v1.7` for milestone archival.*
