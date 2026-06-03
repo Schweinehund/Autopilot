@@ -11,6 +11,7 @@
 - ✅ **v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup** — Phases 48-61 (shipped 2026-05-07)
 - ✅ **v1.6 Apple Business Delegated Governance & Multi-Org Operations** — Phases 62-66 (shipped 2026-05-25)
 - ✅ **v1.7 Deferred Backlog Closure + Validator Chain Hardening** — Phases 67-70 (shipped 2026-05-29)
+- 🚀 **v1.8 Tooling Debt Closure + Chain-Resilience Hardening** — Phases 71-74 (planned)
 
 ## Phases
 
@@ -179,6 +180,23 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
 </details>
 
+<details>
+<summary>v1.8 Tooling Debt Closure + Chain-Resilience Hardening (Phases 71-74) — IN PROGRESS</summary>
+
+- [ ] **Phase 71: Archive-Automation Root-Cause Fix (Pillar A)** — ARCHIVE-01 extraction-logic fix + regression-test fixture + ARCHIVE-02 historical residue sweep
+- [ ] **Phase 72: Chain-Wrapper Hardening (Pillar B)** — WRAPPER-01 stdout+stderr capture fix + per-validator audit + regression sweep
+- [ ] **Phase 73: Retrospective Forward-Port (Pillar C)** — RETRO-01 HEAD-coupled assertion scan + RETRO-02 per-validator frozen-aware conversion
+- [ ] **Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)** — HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate
+
+**Wave designation map:**
+
+- **Wave A (independent — ship early):** Phase 71 (Pillar A — ARCHIVE-01 fix in place before Pillar D milestone-close runs; independent of B/C)
+- **Wave B (sequential after Wave A):** Phase 72 (Pillar B — surgical fix; may overlap with Phase 73)
+- **Wave C (sequential after Wave A):** Phase 73 (Pillar C — scan + conversion + verification; may overlap with Phase 72)
+- **Wave D (close-gate — must be last):** Phase 74 (Pillar D — harness lineage bump + VPP-01 carry-over + terminal re-audit + milestone close; requires Pillars A/B/C complete)
+
+</details>
+
 ## Phase Details
 
 ### Phase 62: Apple Business Foundation & Rebrand
@@ -297,6 +315,56 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [x] 66-05-PLAN.md — Wave 5: v1.6-MILESTONE-AUDIT.md (Path-A from v1.5; 39/39 + 5/5 + performed_by D-22-INTENT narrative + Auditor-Independence Verification section + Command Verification Table) + 66-VERIFICATION.md close-gate report + traceability closure across PROJECT.md/ROADMAP.md/STATE.md/REQUIREMENTS.md (completed 2026-05-25)
 
 
+### Phase 71: Archive-Automation Root-Cause Fix (Pillar A)
+
+**Goal**: The gsd-complete-milestone.md archive-extraction logic is fixed so it no longer emits placeholder-label garbage into MILESTONES.md, a regression-test fixture surfaces any recurrence automatically, and all v1.0..v1.4.1 historical scripted-extraction residue in MILESTONES.md is surgically swept clean.
+**Depends on**: Nothing (Pillar A is independent of Pillars B and C; ships early so ARCHIVE-01 fix is in place before Pillar D milestone-close runs)
+**Requirements**: ARCHIVE-01, ARCHIVE-02
+**Success Criteria** (what must be TRUE):
+  1. The gsd-complete-milestone.md (or underlying gsd-sdk milestone.complete handler) extraction-pattern no longer emits placeholder-label strings (One-liner: / SUBSUMED BY PLAN... / Hash: / Pre-edit: / Total file size: / File: / Insertion position: / Single deliverable: / Plan goal: / Found during:) into MILESTONES.md milestone-close entries -- root cause identified and fixed in the script, NOT masked via deletion
+  2. A regression-test fixture exists that simulates a synthetic milestone-close invocation and diff-checks the MILESTONES.md output for placeholder-label patterns; fixture exits non-zero if recurrence is detected
+  3. MILESTONES.md v1.0..v1.4.1 entries are clean of scripted-extraction debris -- the known 3-line One-liner: residue in the v1.2 section and any other historical placeholder lines are surgically deleted; post-sweep validator or diff confirms zero placeholder tokens remain
+  4. A closing commit SHA is recorded in the plan VERIFICATION.md artifact confirming the fix lands atomically with the regression fixture
+**Plans**: TBD
+
+### Phase 72: Chain-Wrapper Hardening (Pillar B)
+
+**Goal**: The chain-apex validator wrapper in check-phase-66.mjs:313 captures both stdout and stderr from subprocess validator execution, closing the 2-week diagnostic masking surface that hid SCOPE-GAP-61 on Windows local; a per-validator stdout-vs-stderr audit confirms no other masking surfaces exist; a regression sweep confirms the chain exits 0 with zero false positives introduced.
+**Depends on**: Phase 71 (ARCHIVE-01 fix should land first; Pillar B is independent of Pillar C)
+**Requirements**: WRAPPER-01
+**Success Criteria** (what must be TRUE):
+  1. check-phase-66.mjs:313 chain-apex wrapper captures both err.stdout AND err.stderr (not stderr-only) -- the fix matches the recommendation in v1.7-DEFERRED-CLEANUP.md:160-192 and is verified by code inspection
+  2. A per-validator stdout-vs-stderr audit of check-phase-48..66.mjs is completed; any other chain wrappers with stderr-only capture are identified and fixed or documented
+  3. Full chain check-phase-48..66.mjs exits 0 with 0 FAIL / 0 SKIPPED after the wrapper fix -- no false positives introduced by stdout capture addition
+  4. A closing commit SHA is recorded confirming the chain-apex fix lands atomically
+**Plans**: TBD
+
+### Phase 73: Retrospective Forward-Port (Pillar C)
+
+**Goal**: Every HEAD-coupled assertion in check-phase-48..66.mjs whose validator name or docstring cites a milestone-close state is identified, inventoried, and converted to the v1.5/v1.6/v1.7-frozen-aware pattern via SHA-pinned helpers -- closing the HARNESS-FORWARD-01 + SCOPE-GAP-61 retrospective debt; scope-discipline guardrail prevents v1.8 ballooning if scan surfaces additional SCOPE-GAP-class discoveries.
+**Depends on**: Phase 72 (chain wrapper should be fixed before frozen-aware conversion so stdout capture is available during verification; may overlap with Phase 72 if file sets are disjoint)
+**Requirements**: RETRO-01, RETRO-02
+**Success Criteria** (what must be TRUE):
+  1. A complete per-validator class-signature inventory exists for all 19 validators check-phase-48..66.mjs documenting which assertions are HEAD-coupled vs already frozen-aware, with assessment of conversion scope -- inventory is a committed artifact
+  2. All identified HEAD-coupled assertions whose docstrings cite milestone-close state are converted to frozen-aware via SHA-pinned helpers (parallel to existing readRequirementsAtV15Close() / readRoadmapAtV15Close() / readCorpusFileAtV17Close() pattern) per D-01 LOCKED Option C per-V-NN-NN freshness routing matrix
+  3. Full chain check-phase-48..66.mjs exits 0 after conversions -- all converted validators pass without regression; chain-apex confirms 0 FAIL / 0 SKIPPED
+  4. Scope-discipline guardrail is honored: if retrospective scan surfaces SCOPE-GAP-class discoveries beyond the initial inventory, they are documented and routed to v1.9+ rather than expanding v1.8 scope
+**Plans**: TBD
+
+### Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)
+
+**Goal**: The v1.8 audit harness lineage is bumped via Path-A copy from v1.7 (v1.8-milestone-audit.mjs + v1.8-audit-allowlist.json + BASELINE_12); per-phase validators ship for Phases 71-74; CI workflow ships as fifth parallel coexistence file; VPP-01 3-site surgical rename lands; 3-axis terminal re-audit confirms cross-OS EXACT MATCH; v1.8-MILESTONE-AUDIT.md and v1.8-DEFERRED-CLEANUP.md are authored; 4-doc traceability closure completes the milestone.
+**Depends on**: Phase 71 (ARCHIVE-01 fix must be in place so milestone-close does not re-trigger the defect); Phase 72 (chain wrapper fixed); Phase 73 (frozen-aware conversions landed)
+**Requirements**: HARNESS-07, HARNESS-08, HARNESS-09, HARNESS-10, HARNESS-11, HARNESS-12, VPP-01
+**Success Criteria** (what must be TRUE):
+  1. v1.8-milestone-audit.mjs ships as Path-A copy from v1.7 in an atomic harness commit (per v1.5 Plan 60-08 / v1.6 Phase 62-08 / v1.6 Phase 66-02 / v1.7 Plan 70-02 atomic-commit precedent) with v1.8-audit-allowlist.json + BASELINE_12 freshness comment in regenerate-supervision-pins.mjs -- 3 files indivisible; per-phase validators check-phase-71..74.mjs + audit-harness-v1.8-integrity.yml ship as second atomic commit (Atom 2) as fifth parallel CI coexistence file
+  2. VPP-01: the 3 VPP-location-token sites in docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md (lines 115, 149, 155) are surgically renamed to content token form per PITFALLS:657 first-mention-per-H2 convention, with Version History rows + sidecar annotations, per Phase 67 SWEEP-02 atomic-within-plan pattern
+  3. 3-axis terminal re-audit at v1.8 close executes with full auditor independence: Axis 1 local fresh git clone --no-hardlinks into temp dir via fresh gsd-executor sub-agent (D-03 LOCKED + D-22 INTENT); Axis 2 cross-OS Linux GHA workflow_dispatch of audit-harness-v1.8-integrity.yml; Axis 3 fresh sub-agent with zero context-carryover from content phases; cross-OS PASS-Count EXACT MATCH verified across all cross-OS-applicable validators
+  4. v1.8-MILESTONE-AUDIT.md is authored Path-A from v1.7 with 3-axis Auditor-Independence Verification + Discoveries Surfaced During Execution section + Requirements Traceability + Sign-off hand-off; v1.8-DEFERRED-CLEANUP.md is FINALIZED with v1.7 carry-overs (CI-3 + Multi-tenant + ABDevice API + per-OU CRD + Account Holder + ASM) promoted to full sections + any v1.8 retrospective discoveries beyond scope
+  5. 4-doc traceability closure completes: 12 v1.8 requirements flipped Active->Validated with closing commit SHAs across PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md; predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 workflows + harnesses + sidecars remain BYTE-UNCHANGED through close-gate commit
+**Plans**: TBD
+
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
@@ -371,7 +439,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 68. CHAIN_SKIP Root-Cause Resolution (Pillar B) | v1.7 | 5/5 | Complete    | 2026-05-26 |
 | 69. CI-Linux Hardening (Pillar C) | v1.7 | 2/2 | Complete    | 2026-05-28 |
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 5/5 | Complete    | 2026-05-29 |
+| 71. Archive-Automation Root-Cause Fix (Pillar A) | v1.8 | 0/TBD | Not started | - |
+| 72. Chain-Wrapper Hardening (Pillar B) | v1.8 | 0/TBD | Not started | - |
+| 73. Retrospective Forward-Port (Pillar C) | v1.8 | 0/TBD | Not started | - |
+| 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 0/TBD | Not started | - |
 
 ---
 
-*Last updated: 2026-05-28 — **v1.7 MILESTONE CLOSED** via Phase 70 Plan 70-05 Commit B (HARNESS-06 close-gate + 4-doc traceability closure). 4/4 v1.7 phases Complete (67/68/69/70). 12/12 v1.7 requirements Validated. 15 v1.7 plans Complete. Closing SHAs: Phase 67 `3fb8ca5` + `55260b3` (SWEEP-01 + SWEEP-02 Pillar A corpus surgical sweeps); Phase 68 `36a753d` + `79c65c6` + `7b635ca` precondition `d7d7d5f` + `d142c7a` cdcce23 deletion + `3814bee` Commit A + `07b5bf3` Commit B close-gate (CHAIN-01/02/03 Pillar B CHAIN_SKIP root-cause resolution); Phase 69 `dd1ff08` + Fix-1 `85521bb` + Fix-2 `2d61981` + `c397509` close-gate (CILINUX-01 Pillar C CI-Linux hardening); Phase 70 Atom 1 `26a1ae9` (HARNESS-01/02) + Atom 2 `aa6de68` (HARNESS-03/04) + `8175f82` Wave 4 audit-results (HARNESS-05) + Commit A `14683de` SHA placeholder fill + Commit B `{phase_70_close_SHA}` close-gate (HARNESS-06). 3-axis auditor independence operationalized at Wave 4 terminal re-audit (D-03 fresh-clone + D-22 fresh sub-agent + CILINUX-01 cross-OS Linux GHA) — first close-gate in project history to stack all three axes simultaneously per STATE.md:111 declaration; Cross-OS PASS-Count EXACT MATCH verified across 6 cross-OS-applicable validators. Predecessor v1.4/v1.4.1/v1.5/v1.6 workflows + harnesses + sidecars BYTE-UNCHANGED through Commit B per anti-regression invariant. CHAIN_SKIP EMPTY across full chain post-Phase 68 `7b635ca`. v1.7-DEFERRED-CLEANUP.md finalized with CI-3 + Multi-tenant + Apple Business Device API + per-OU CRD + Account Holder + ASM forward to v1.8+ + CHAIN-WRAPPER-01 + ARCHIVE-01 root-cause + HARNESS-FORWARD-01 retrospective. **ARCHIVE-01 RECURRENCE CONFIRMED 2026-05-29 during `/gsd-complete-milestone v1.7` invocation** — `gsd-sdk query milestone.complete` emitted 14 garbage accomplishments entries (11× `"One-liner:"` placeholders + 3 extraction-label fragments); identical cdcce23-class defect signature; root cause confirmed to live in `gsd-sdk milestone.complete` SDK handler / `.claude/commands/gsd-complete-milestone.md` extraction-pattern logic. Per "DO NOT mask via deletion" guidance: v1.7 H2 entry authored manually in MILESTONES.md from `v1.7-MILESTONE-AUDIT.md` source-of-truth (REPLACEMENT, not deletion); v1.6 H2 entry retroactively authored from `v1.6-MILESTONE-AUDIT.md` (previous symptom-fix `d142c7a` had silently dropped v1.6 stub along with cdcce23 garbage). ARCHIVE-01 status promoted from "monitor for recurrence" to "**HIGH priority v1.8+ root-cause fix required**" — manual authoring per-milestone is unsustainable. v1.7 milestone archived to `.planning/milestones/v1.7-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md` + `.planning/milestones/v1.7-phases/`; REQUIREMENTS.md removed via `git rm` (fresh for v1.8+); git tag v1.7 created. Next: `/gsd-new-milestone` to plan v1.8 entry-phase from v1.7-DEFERRED-CLEANUP.md backlog.*
+*Last updated: 2026-06-03 — **v1.8 ROADMAP CREATED** (Phases 71-74; 4 phases; 12 requirements mapped). v1.8 Tooling Debt Closure + Chain-Resilience Hardening. Phase 71 (Pillar A — ARCHIVE-01 root-cause fix + ARCHIVE-02 residue sweep), Phase 72 (Pillar B — WRAPPER-01 stdout+stderr capture), Phase 73 (Pillar C — RETRO-01 scan + RETRO-02 frozen-aware conversion), Phase 74 (Pillar D — HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate). Sequential execution per use_worktrees:false. Predecessor v1.7 MILESTONE CLOSED 2026-05-29 (original footer below).
+
+*Original v1.7 close footer: 2026-05-28 — **v1.7 MILESTONE CLOSED** via Phase 70 Plan 70-05 Commit B (HARNESS-06 close-gate + 4-doc traceability closure). 4/4 v1.7 phases Complete (67/68/69/70). 12/12 v1.7 requirements Validated. 15 v1.7 plans Complete. Closing SHAs: Phase 67 `3fb8ca5` + `55260b3` (SWEEP-01 + SWEEP-02 Pillar A corpus surgical sweeps); Phase 68 `36a753d` + `79c65c6` + `7b635ca` precondition `d7d7d5f` + `d142c7a` cdcce23 deletion + `3814bee` Commit A + `07b5bf3` Commit B close-gate (CHAIN-01/02/03 Pillar B CHAIN_SKIP root-cause resolution); Phase 69 `dd1ff08` + Fix-1 `85521bb` + Fix-2 `2d61981` + `c397509` close-gate (CILINUX-01 Pillar C CI-Linux hardening); Phase 70 Atom 1 `26a1ae9` (HARNESS-01/02) + Atom 2 `aa6de68` (HARNESS-03/04) + `8175f82` Wave 4 audit-results (HARNESS-05) + Commit A `14683de` SHA placeholder fill + Commit B `{phase_70_close_SHA}` close-gate (HARNESS-06). 3-axis auditor independence operationalized at Wave 4 terminal re-audit (D-03 fresh-clone + D-22 fresh sub-agent + CILINUX-01 cross-OS Linux GHA) — first close-gate in project history to stack all three axes simultaneously per STATE.md:111 declaration; Cross-OS PASS-Count EXACT MATCH verified across 6 cross-OS-applicable validators. Predecessor v1.4/v1.4.1/v1.5/v1.6 workflows + harnesses + sidecars BYTE-UNCHANGED through Commit B per anti-regression invariant. CHAIN_SKIP EMPTY across full chain post-Phase 68 `7b635ca`. v1.7-DEFERRED-CLEANUP.md finalized with CI-3 + Multi-tenant + Apple Business Device API + per-OU CRD + Account Holder + ASM forward to v1.8+ + CHAIN-WRAPPER-01 + ARCHIVE-01 root-cause + HARNESS-FORWARD-01 retrospective. **ARCHIVE-01 RECURRENCE CONFIRMED 2026-05-29 during `/gsd-complete-milestone v1.7` invocation** — `gsd-sdk query milestone.complete` emitted 14 garbage accomplishments entries (11× `"One-liner:"` placeholders + 3 extraction-label fragments); identical cdcce23-class defect signature; root cause confirmed to live in `gsd-sdk milestone.complete` SDK handler / `.claude/commands/gsd-complete-milestone.md` extraction-pattern logic. Per "DO NOT mask via deletion" guidance: v1.7 H2 entry authored manually in MILESTONES.md from `v1.7-MILESTONE-AUDIT.md` source-of-truth (REPLACEMENT, not deletion); v1.6 H2 entry retroactively authored from `v1.6-MILESTONE-AUDIT.md` (previous symptom-fix `d142c7a` had silently dropped v1.6 stub along with cdcce23 garbage). ARCHIVE-01 status promoted from "monitor for recurrence" to "**HIGH priority v1.8+ root-cause fix required**" — manual authoring per-milestone is unsustainable. v1.7 milestone archived to `.planning/milestones/v1.7-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md` + `.planning/milestones/v1.7-phases/`; REQUIREMENTS.md removed via `git rm` (fresh for v1.8+); git tag v1.7 created. Next: `/gsd-new-milestone` to plan v1.8 entry-phase from v1.7-DEFERRED-CLEANUP.md backlog.*

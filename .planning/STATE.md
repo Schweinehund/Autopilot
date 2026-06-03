@@ -6,9 +6,9 @@ status: planning
 last_updated: "2026-06-03T13:05:14.568Z"
 last_activity: 2026-06-03
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
-  total_plans: 0
+  total_plans: 12
   completed_plans: 0
   percent: 0
 ---
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Phase 71 ready to plan
 Plan: —
 Status: Defining requirements
 Last activity: 2026-06-03 — Milestone v1.8 started
@@ -73,6 +73,72 @@ Phase 70 (Pillar D — v1.7 Harness Lineage Bump + Milestone Close)
 
 **Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 70 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.7-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6 Phase 66-04).
 
+
+## v1.8 Phase Dependency Summary
+
+```
+Phase 71 (Pillar A -- Archive-Automation Root-Cause Fix)
+  |       ARCHIVE-01 (gsd-complete-milestone.md extraction-logic root-cause fix +
+  |                   regression-test fixture for synthetic milestone-close)
+  |       ARCHIVE-02 (MILESTONES.md v1.0..v1.4.1 historical residue sweep +
+  |                   surgical deletion coordinated with ARCHIVE-01 atomic commit)
+  |       Independent of Pillars B and C; ships early so ARCHIVE-01 fix is
+  |       in place before Pillar D milestone-close can re-trigger the defect
+  |
+  +-----> Phase 72 (Pillar B -- Chain-Wrapper Hardening) [after Phase 71]
+  |         WRAPPER-01 (check-phase-66.mjs:313 stdout+stderr capture fix +
+  |                     per-validator stdout-vs-stderr audit + regression sweep)
+  |         Surgical fix: 1-2 plans; may execute in parallel with Phase 73
+  |         if file sets are disjoint
+  |
+  +-----> Phase 73 (Pillar C -- Retrospective Forward-Port) [after Phase 71]
+  |         RETRO-01 (class-wide scan of check-phase-48..66.mjs for HEAD-coupled
+  |                   assertions citing milestone-close state -- per-validator
+  |                   class-signature inventory + scope assessment)
+  |         RETRO-02 (per-validator conversion to frozen-aware via SHA-pinned
+  |                   helpers parallel to readRequirementsAtV15Close() /
+  |                   readRoadmapAtV15Close() / readCorpusFileAtV17Close();
+  |                   scope-discipline guardrail: SCOPE-GAP-class discoveries
+  |                   beyond inventory route to v1.9+ not v1.8)
+  |         May overlap with Phase 72 if file sets are disjoint
+  |
+  v
+Phase 74 (Pillar D -- v1.8 Audit Harness Lineage Bump + Milestone Close)
+          [Depends on Phases 71 + 72 + 73 -- MUST BE LAST]
+          HARNESS-07 (v1.8-milestone-audit.mjs Path-A from v1.7, C1-C16 inherited)
+          HARNESS-08 (v1.8-audit-allowlist.json + BASELINE_12 in regenerate-supervision-pins.mjs)
+          HARNESS-09 (check-phase-71..74.mjs per-phase validators as deliverables)
+          HARNESS-10 (audit-harness-v1.8-integrity.yml fifth parallel CI coexistence file)
+          HARNESS-11 (3-axis terminal re-audit: D-03 fresh-clone + D-22 fresh sub-agent
+                      + cross-OS Linux GHA; inherits v1.7 Plan 70-04 precedent;
+                      cross-OS PASS-Count EXACT MATCH required)
+          HARNESS-12 (v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md FINALIZED +
+                      4-doc traceability closure across PROJECT/ROADMAP/STATE/REQUIREMENTS)
+          VPP-01 (3 VPP-location-token sites in 02-macos-pkg-dmg-pipeline.md
+                  lines 115/149/155 surgically renamed to content token form;
+                  Phase 67 SWEEP-02 carry-over from v1.7-DEFERRED-CLEANUP.md)
+          Atomic harness commit pattern (Atom 1: 3 files indivisible;
+          Atom 2: validators+CI indivisible; two-commit chicken-and-egg close-gate
+          per v1.5 Plan 60-08 / v1.6 Phase 62-08 / v1.6 Phase 66-02 / v1.7 Plan 70-02)
+```
+
+**Wave designation map:**
+
+- **Wave A (independent -- ship early):** Phase 71 -- ARCHIVE-01 root-cause fix; lowest-risk entry; establishes v1.8 pattern; must land before Pillar D
+- **Wave B (sequential after Wave A -- may overlap with Wave C):** Phase 72 -- surgical wrapper fix (1-2 plans); independent of Phase 73 if file sets disjoint
+- **Wave C (sequential after Wave A -- may overlap with Wave B):** Phase 73 -- scan (RETRO-01) then conversion (RETRO-02); 2-4 plans; scope-discipline guardrail prevents ballooning
+- **Wave D (close-gate -- must be last):** Phase 74 -- harness lineage bump + VPP-01 carry-over + 3-axis terminal re-audit + milestone close; requires Pillars A/B/C complete
+
+**Requirement coverage:**
+
+| Phase | Pillar | REQ-IDs | Plan estimate |
+|-------|--------|---------|---------------|
+| 71 | A | ARCHIVE-01, ARCHIVE-02 | 2-3 |
+| 72 | B | WRAPPER-01 | 1-2 |
+| 73 | C | RETRO-01, RETRO-02 | 2-4 |
+| 74 | D | HARNESS-07, HARNESS-08, HARNESS-09, HARNESS-10, HARNESS-11, HARNESS-12, VPP-01 | 4-6 |
+
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 74 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.8-audit-<rand>` (D-03 LOCKED -- same mechanism as v1.6 Phase 66-04 + v1.7 Phase 70-04).
 ## Performance Metrics
 
 **Velocity across milestones:**

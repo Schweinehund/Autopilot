@@ -77,20 +77,20 @@ These are tracked in `v1.7-DEFERRED-CLEANUP.md` and will carry into `v1.8-DEFERR
 
 | REQ-ID | Description (short) | Phase | Status |
 |--------|---------------------|-------|--------|
-| ARCHIVE-01 | gsd-complete-milestone.md extraction-logic root-cause fix | TBD | Pending |
-| ARCHIVE-02 | MILESTONES.md v1.0..v1.4.1 historical residue sweep | TBD | Pending |
-| WRAPPER-01 | check-phase-66.mjs:313 stdout+stderr capture | TBD | Pending |
-| RETRO-01 | HEAD-coupled assertion class-wide scan | TBD | Pending |
-| RETRO-02 | Per-validator conversion to frozen-aware | TBD | Pending |
-| HARNESS-07 | v1.8-milestone-audit.mjs Path-A copy | TBD | Pending |
-| HARNESS-08 | v1.8-audit-allowlist.json + BASELINE_12 | TBD | Pending |
-| HARNESS-09 | check-phase-71..74.mjs per-phase validators | TBD | Pending |
-| HARNESS-10 | audit-harness-v1.8-integrity.yml workflow | TBD | Pending |
-| HARNESS-11 | 3-axis terminal re-audit at v1.8 close | TBD | Pending |
-| HARNESS-12 | v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md + 4-doc traceability | TBD | Pending |
-| VPP-01 | 3 VPP-location-token sites in app-lifecycle/02-macos-pkg-dmg-pipeline.md | TBD | Pending |
+| ARCHIVE-01 | gsd-complete-milestone.md extraction-logic root-cause fix | Phase 71 | Pending |
+| ARCHIVE-02 | MILESTONES.md v1.0..v1.4.1 historical residue sweep | Phase 71 | Pending |
+| WRAPPER-01 | check-phase-66.mjs:313 stdout+stderr capture | Phase 72 | Pending |
+| RETRO-01 | HEAD-coupled assertion class-wide scan | Phase 73 | Pending |
+| RETRO-02 | Per-validator conversion to frozen-aware | Phase 73 | Pending |
+| HARNESS-07 | v1.8-milestone-audit.mjs Path-A copy | Phase 74 | Pending |
+| HARNESS-08 | v1.8-audit-allowlist.json + BASELINE_12 | Phase 74 | Pending |
+| HARNESS-09 | check-phase-71..74.mjs per-phase validators | Phase 74 | Pending |
+| HARNESS-10 | audit-harness-v1.8-integrity.yml workflow | Phase 74 | Pending |
+| HARNESS-11 | 3-axis terminal re-audit at v1.8 close | Phase 74 | Pending |
+| HARNESS-12 | v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md + 4-doc traceability | Phase 74 | Pending |
+| VPP-01 | 3 VPP-location-token sites in app-lifecycle/02-macos-pkg-dmg-pipeline.md | Phase 74 | Pending |
 
-**12 requirements** | **0 mapped** | Awaiting roadmap
+**12 requirements** | **12 mapped** | Phase 71: ARCHIVE-01, ARCHIVE-02 | Phase 72: WRAPPER-01 | Phase 73: RETRO-01, RETRO-02 | Phase 74: HARNESS-07..12, VPP-01
 
 ---
 
