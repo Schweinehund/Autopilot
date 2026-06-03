@@ -1,34 +1,33 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.7
-milestone_name: Deferred Backlog Closure + Validator Chain Hardening
-status: Awaiting next milestone
-stopped_at: Phase 70 Plan 70-05 complete (Wave 5 HARNESS-06 close-gate + 4-doc traceability closure via two-commit chicken-and-egg per D-04 Option (b); v1.7 milestone CLOSED)
-last_updated: "2026-05-29T12:24:54.959Z"
-last_activity: 2026-05-29 — Milestone v1.7 completed and archived
+milestone: v1.8
+milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
+status: planning
+last_updated: "2026-06-03T13:05:14.568Z"
+last_activity: 2026-06-03
 progress:
-  total_phases: 9
-  completed_phases: 4
-  total_plans: 15
-  completed_plans: 15
-  percent: 44
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-25)
+See: .planning/PROJECT.md (updated 2026-06-03)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 70 — v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D — Close-Gate)
+**Current focus:** v1.8 milestone defining — Tooling Debt Closure + Chain-Resilience Hardening (Phases 71-74; ARCHIVE-01/02 + CHAIN-WRAPPER-01 + HARNESS-FORWARD-01/SCOPE-GAP-61 retrospective + v1.8 audit harness lineage bump with VPP-3-sites carry-over)
 
 ## Current Position
 
-Phase: Milestone v1.7 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-05-29 — Milestone v1.7 completed and archived
+Status: Defining requirements
+Last activity: 2026-06-03 — Milestone v1.8 started
 
 ## v1.7 Phase Dependency Summary
 
@@ -140,8 +139,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ### Pending Todos
 
-- Phase 70 plan authoring — Path-A copy v1.6 → v1.7 (milestone-audit.mjs + audit-allowlist.json + check-phase-67..70.mjs); EXTEND existing `audit-harness-v1.7-integrity.yml` workflow (already authored as Plan 69-01 `dd1ff08` + fixes `85521bb` `2d61981`) with v1.7 validator jobs + v1.7 path-filter updates + v1.7 milestone-audit harness reference — PRESERVE `fetch-depth: 0` on linux-chain-ubuntu-latest checkout step (FETCH-DEPTH-01 inheritance contract); REMOVE `docs/decision-trees/09-linux-triage.md` from path-filter (Phase-69-evidence-only entry, no v1.7-deliverable status); terminal re-audit via fresh gsd-executor + fresh git clone --no-hardlinks (HARNESS-05); v1.7-MILESTONE-AUDIT.md + extend v1.7-DEFERRED-CLEANUP.md with v1.6 carry-overs + Phase-69-discovered items (FETCH-DEPTH-01 CLOSED + SCOPE-GAP-61 CLOSED + D-04-OVERSPEC-01 ACKNOWLEDGED + CHAIN-WRAPPER-01 DEFERRED to v1.8+); carry-forward v1.5-frozen-aware pattern in HARNESS-03 per HARNESS-FORWARD-01 + SCOPE-GAP-61 retrospective audit recommendation for V-NN-NN HEAD-coupled assertion class; audit cdcce23 archive-script defect recurrence post-archival per ARCHIVE-01; traceability closure across PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md
-- `audit-harness-v1.6-integrity.yml` `rotting-external-quarterly` job first-fires 2026-07-01 — Phase 70 can verify first-fire artifact if execution lands after that date
+- v1.8 entry-phase planning from `v1.7-DEFERRED-CLEANUP.md` backlog: ARCHIVE-01 root-cause investigation (`.claude/commands/gsd-complete-milestone.md` OR `gsd-sdk query milestone.complete` handler emitting `"One-liner:"` placeholder garbage; recurrence ACTIVE per v1.7 close 2026-05-29 — **DO NOT mask via deletion; investigate the script**) + ARCHIVE-02 v1.0..v1.4.1 historical residue sweep + CHAIN-WRAPPER-01 (`check-phase-66.mjs:313` stdout+stderr capture) + HARNESS-FORWARD-01 retrospective scan of `check-phase-{48..66}.mjs` for HEAD-coupled assertions + SCOPE-GAP-61 retrospective conversion to v1.5/v1.6/v1.7-frozen-aware via SHA-pinned helpers + VPP-3-sites surgical rename in `docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md` (lines 115/149/155) + v1.8 audit harness lineage bump (Path-A from v1.7) + terminal re-audit at v1.8 close with 3-axis stacking (D-03 fresh-clone + D-22 fresh sub-agent + cross-OS Linux GHA per v1.7 Plan 70-04 first-operationalization)
+- `audit-harness-v1.6-integrity.yml` `rotting-external-quarterly` job first-fires 2026-07-01 — v1.8 Pillar D terminal re-audit may verify first-fire artifact if execution lands after that date
+- Verify Intune portal label state at next quarterly tutorial refresh post-2026-07-01 (CI-3 trigger gate); if portal HAS adopted "Managed Apple Account", CI-3 becomes urgent for v1.9
 
 ### Out-of-band carry-overs from v1.6 close
 
@@ -160,10 +160,10 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-05-28T23:59:00.000Z
-Stopped at: Phase 70 Plan 70-05 complete (Wave 5 HARNESS-06 close-gate + 4-doc traceability closure via two-commit chicken-and-egg per D-04 Option (b); v1.7 milestone CLOSED)
+Last session: 2026-06-03 — `/gsd-new-milestone` invoked; v1.8 milestone defining
+Stopped at: PROJECT.md + STATE.md updated for v1.8 open; awaiting research-decision → requirements → roadmap creation
 Resume file: None
-Next action: User invokes `/gsd-complete-milestone v1.7` separately (post-Phase-70-close skill) — archives Phase 67/68/69/70 directories to `.planning/milestones/v1.7-phases/`; runs post-archival `git diff HEAD~1 HEAD -- .planning/MILESTONES.md` to detect cdcce23-class ARCHIVE-01 recurrence per D-03 LOCKED hand-off documented in v1.7-MILESTONE-AUDIT.md Sign-off + 70-VERIFICATION.md Section F + v1.7-DEFERRED-CLEANUP.md §ARCHIVE-01. After milestone archival, `/gsd-new-milestone` to plan v1.8+ entry-phase from v1.7-DEFERRED-CLEANUP.md backlog (CHAIN-WRAPPER-01 + ARCHIVE-01 root-cause + HARNESS-FORWARD-01 retrospective audit + CI-3 + Multi-tenant + Apple Business Device API + per-OU CRD + Account Holder + ASM).
+Next action: After REQUIREMENTS.md + ROADMAP.md commit, user runs `/gsd-discuss-phase 71` to gather context for Pillar A (ARCHIVE-01 root-cause + ARCHIVE-02 historical residue sweep). Alternative: `/gsd-plan-phase 71` to skip discussion and plan directly.
 
 ## Decisions
 
