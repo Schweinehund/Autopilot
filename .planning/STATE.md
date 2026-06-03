@@ -2,9 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.8
 milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
-status: planning
-last_updated: "2026-06-03T13:05:14.568Z"
-last_activity: 2026-06-03
+status: Defining requirements
+stopped_at: Phase 71 context gathered
+last_updated: "2026-06-03T20:43:55.662Z"
+last_activity: 2026-06-03 — Milestone v1.8 started
 progress:
   total_phases: 4
   completed_phases: 0
@@ -73,7 +74,6 @@ Phase 70 (Pillar D — v1.7 Harness Lineage Bump + Milestone Close)
 
 **Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 70 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.7-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6 Phase 66-04).
 
-
 ## v1.8 Phase Dependency Summary
 
 ```
@@ -110,6 +110,7 @@ Phase 74 (Pillar D -- v1.8 Audit Harness Lineage Bump + Milestone Close)
           HARNESS-09 (check-phase-71..74.mjs per-phase validators as deliverables)
           HARNESS-10 (audit-harness-v1.8-integrity.yml fifth parallel CI coexistence file)
           HARNESS-11 (3-axis terminal re-audit: D-03 fresh-clone + D-22 fresh sub-agent
+
                       + cross-OS Linux GHA; inherits v1.7 Plan 70-04 precedent;
                       cross-OS PASS-Count EXACT MATCH required)
           HARNESS-12 (v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md FINALIZED +
@@ -139,6 +140,7 @@ Phase 74 (Pillar D -- v1.8 Audit Harness Lineage Bump + Milestone Close)
 | 74 | D | HARNESS-07, HARNESS-08, HARNESS-09, HARNESS-10, HARNESS-11, HARNESS-12, VPP-01 | 4-6 |
 
 **Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 74 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.8-audit-<rand>` (D-03 LOCKED -- same mechanism as v1.6 Phase 66-04 + v1.7 Phase 70-04).
+
 ## Performance Metrics
 
 **Velocity across milestones:**
@@ -226,9 +228,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-06-03 — `/gsd-new-milestone` invoked; v1.8 milestone defining
-Stopped at: PROJECT.md + STATE.md updated for v1.8 open; awaiting research-decision → requirements → roadmap creation
-Resume file: None
+Last session: 2026-06-03T20:43:55.639Z
+Stopped at: Phase 71 context gathered
+Resume file: .planning/phases/71-archive-automation-root-cause-fix-pillar-a/71-CONTEXT.md
 Next action: After REQUIREMENTS.md + ROADMAP.md commit, user runs `/gsd-discuss-phase 71` to gather context for Pillar A (ARCHIVE-01 root-cause + ARCHIVE-02 historical residue sweep). Alternative: `/gsd-plan-phase 71` to skip discussion and plan directly.
 
 ## Decisions
