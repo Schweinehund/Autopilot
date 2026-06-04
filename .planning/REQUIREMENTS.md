@@ -12,9 +12,9 @@
 
 ### Pillar A — Archive-Automation Root-Cause Fix
 
-- [ ] **ARCHIVE-01**: Root-cause fix for `.claude/commands/gsd-complete-milestone.md` (and/or `gsd-sdk query milestone.complete` SDK handler) extraction-pattern logic emitting placeholder-label garbage (`"One-liner:"`, `"SUBSUMED BY PLAN..."`, `"Hash:"`, `"Pre-edit:"`, `"Total file size:"`, `"File:"`, `"Insertion position:"`, `"Single deliverable:"`, `"Plan goal:"`, `"Found during:"`) into MILESTONES.md milestone-close entries. Ship regression-test fixture (synthetic milestone-close → diff-check assertion) that surfaces recurrence. Recurrence is ACTIVE as of v1.7 milestone close 2026-05-29 per `v1.7-DEFERRED-CLEANUP.md:28-34`. Per ARCHIVE-01 explicit guidance: **DO NOT mask via deletion — investigate the script.**
+- [x] **ARCHIVE-01**: Root-cause fix for `.claude/commands/gsd-complete-milestone.md` (and/or `gsd-sdk query milestone.complete` SDK handler) extraction-pattern logic emitting placeholder-label garbage (`"One-liner:"`, `"SUBSUMED BY PLAN..."`, `"Hash:"`, `"Pre-edit:"`, `"Total file size:"`, `"File:"`, `"Insertion position:"`, `"Single deliverable:"`, `"Plan goal:"`, `"Found during:"`) into MILESTONES.md milestone-close entries. Ship regression-test fixture (synthetic milestone-close → diff-check assertion) that surfaces recurrence. Recurrence is ACTIVE as of v1.7 milestone close 2026-05-29 per `v1.7-DEFERRED-CLEANUP.md:28-34`. Per ARCHIVE-01 explicit guidance: **DO NOT mask via deletion — investigate the script.** **CLOSED Phase 71 Plan 71-01 atomic SHA `e4887b2` (vendored extractor + 3-case fixture + chain-apex validator in ONE SHA per SC#4 byte-exact).**
 
-- [ ] **ARCHIVE-02**: Historical residue sweep across `.planning/MILESTONES.md` entries v1.0..v1.4.1 for similar scripted-extraction debris (known site: v1.2 H2 entry has 3 `One-liner:` placeholder lines per `v1.7-DEFERRED-CLEANUP.md:38-48`). Surgical deletion after ARCHIVE-01 root-cause confirms scope; coordinated with ARCHIVE-01 atomic-commit if recurrence-fix and historical-sweep are committed together.
+- [x] **ARCHIVE-02**: Historical residue sweep across `.planning/MILESTONES.md` entries v1.0..v1.4.1 for similar scripted-extraction debris (known site: v1.2 H2 entry has 3 `One-liner:` placeholder lines per `v1.7-DEFERRED-CLEANUP.md:38-48` + v1.1 line 164 `Edit 1 --` NEW DISCOVERY by D-03 advisor pre-sweep grep). Surgical deletion after ARCHIVE-01 root-cause confirms scope; coordinated with ARCHIVE-01 atomic-commit if recurrence-fix and historical-sweep are committed together. **CLOSED Phase 71 Plan 71-02 SHA `ff4514b` (v1.1 + v1.2 H2 re-authored from MILESTONE-AUDIT canonical source per D-03 LOCKED Option D REPLACEMENT-not-deletion; symmetric with v1.6+v1.7 retroactive-authoring at v1.7 close).**
 
 ### Pillar B — Chain-Wrapper Hardening
 
@@ -77,8 +77,8 @@ These are tracked in `v1.7-DEFERRED-CLEANUP.md` and will carry into `v1.8-DEFERR
 
 | REQ-ID | Description (short) | Phase | Status |
 |--------|---------------------|-------|--------|
-| ARCHIVE-01 | gsd-complete-milestone.md extraction-logic root-cause fix | Phase 71 | Pending |
-| ARCHIVE-02 | MILESTONES.md v1.0..v1.4.1 historical residue sweep | Phase 71 | Pending |
+| ARCHIVE-01 | gsd-complete-milestone.md extraction-logic root-cause fix | Phase 71 | Complete (closing SHA `e4887b2`) |
+| ARCHIVE-02 | MILESTONES.md v1.0..v1.4.1 historical residue sweep | Phase 71 | Complete (closing SHA `ff4514b`) |
 | WRAPPER-01 | check-phase-66.mjs:313 stdout+stderr capture | Phase 72 | Pending |
 | RETRO-01 | HEAD-coupled assertion class-wide scan | Phase 73 | Pending |
 | RETRO-02 | Per-validator conversion to frozen-aware | Phase 73 | Pending |
