@@ -137,31 +137,35 @@
 
 ## v1.2 Cross-Platform Provisioning & Operational Gaps (Shipped: 2026-04-16)
 
-**Phases completed:** 6 phases, 20 plans, 23 tasks
+**Phases completed:** 6 phases (20-25), 20 plans, 23 tasks
+**Audit status:** `gaps_found` (.planning/milestones/v1.2-MILESTONE-AUDIT.md; 16/38 requirements formally verified — 22/38 "partial" status due to Phases 21 + 24 lacking VERIFICATION.md at close; all 44+ content deliverables exist on disk; 4/6 phases formally verified; 20/20 plans with SUMMARY.md; nature: process gaps not content gaps; tech-debt routed to v1.3 closure)
+
+**Note:** v1.2 entry retroactively re-authored 2026-06-04 during Phase 71 ARCHIVE-02 sweep from canonical source-of-truth `.planning/milestones/v1.2-MILESTONE-AUDIT.md` per Plan 71-02. Symmetric with v1.6+v1.7 retroactive-authoring 2026-05-29 (v1.7 close). The pre-sweep entry carried 4 placeholder-label debris lines at lines 145-148 (3× `- One-liner:` + 1× `- Commit:`) per the `v1.7-DEFERRED-CLEANUP.md:38-48` known-sites enumeration. Replacement-from-canonical-source honors the "DO NOT mask via deletion — investigate the script" doctrine; ARCHIVE-01 root-cause fix lands at Plan 71-01 atomic SHA `e4887b2` (vendored extractor `scripts/archive/extract-summary-oneliners.mjs` + regression fixture + chain validator `scripts/validation/check-phase-71.mjs`).
 
 **Key accomplishments:**
 
-- docs/index.md restructured as a dual-platform navigation hub with Choose Your Platform selector, Windows Autopilot and macOS Provisioning H2 sections, and a Cross-Platform References section linking all Phase 20 artifacts
-- One-liner:
-- One-liner:
-- Commit:
-- One-liner:
-- Complete 7-stage macOS ADE lifecycle narrative (414 lines) with Mermaid pipeline diagram, per-stage breakdown using macOS-native terminology, and 15 glossary cross-references
-- macOS Terminal commands reference (6 tools), log paths reference (9 paths), extended network endpoints with ADE section (18 endpoints), and docs hub navigation linking all Phase 22 artifacts
-- Cross-platform symptom routing wired into common-issues.md, quick-ref-l1.md, and quick-ref-l2.md with macOS ADE sections, platform selectors, and bidirectional cross-reference banners
+- **Phase 20 — Cross-platform foundation** (XPLAT-01..04 + NAVX-01; 5 requirements, formally verified): `docs/index.md` restructured as a dual-platform navigation hub with Choose Your Platform selector, Windows Autopilot and macOS Provisioning H2 sections, and a Cross-Platform References section linking all Phase 20 artifacts. Phase 20 VERIFICATION.md 5/5 passed.
+- **Phase 21 — Windows operational gaps** (WDLC-01..04 + WINF-01..05 + WSEC-01..03 + WMIG-01..03 + WMON-01..03; 18 requirements, content shipped + indirectly content-verified via Phase 25 link-resolve audit; formal VERIFICATION.md tech-debt routed to v1.3 closure): 18 reference + device-operations docs covering device lifecycle (autopilot-reset / retire-wipe / re-provisioning / tenant-migration), network/infrastructure (network-infrastructure / entra-prerequisites / licensing-matrix / win32-app-packaging / esp-timeout-tuning), security (ca-enrollment-timing / security-baseline-conflicts / compliance-timing), migration (apv1-apv2-migration / imaging-to-autopilot / gpo-to-intune), monitoring (deployment-reporting / drift-detection / new-batch-workflow). All 18 content files exist on disk per audit-doc Requirements Coverage rows 232-252.
+- **Phase 22 — macOS lifecycle foundation** (MLIF-01..03; 3 requirements, formally verified): Complete 7-stage macOS ADE lifecycle narrative (414 lines) with Mermaid pipeline diagram, per-stage breakdown using macOS-native terminology, and 15 glossary cross-references. macOS Terminal commands reference (6 tools), log paths reference (9 paths), extended network endpoints with ADE section (18 endpoints), and docs hub navigation linking all Phase 22 artifacts. Phase 22 VERIFICATION.md 9/9 passed.
+- **Phase 23 — macOS admin setup** (MADM-01..06; 6 requirements, formally verified): macOS admin setup guides covering ABM/ADE token + APNs certificate + ADE enrollment profile + configuration profiles + app deployment + compliance policy with per-setting supervised-only callouts. Phase 23 VERIFICATION.md 14/14 passed.
+- **Phases 24-25 — macOS troubleshooting + navigation integration & polish** (MTRO-01..04 + NAVX-02..03; 6 requirements — Phase 24 content shipped + indirectly content-verified via Phase 25 audit, formal VERIFICATION.md tech-debt routed to v1.3 closure; Phase 25 formally verified 11/11): macOS triage decision tree at `docs/decision-trees/06-macos-triage.md` + 6 L1 runbooks (`docs/l1-runbooks/10-15-macos-*.md`) + 4 L2 runbooks including log collection (`docs/l2-runbooks/10-13-macos-*.md`). Phase 25 wired cross-platform symptom routing into `common-issues.md` + `quick-ref-l1.md` + `quick-ref-l2.md` with macOS ADE sections, platform selectors, and bidirectional cross-reference banners; 44-file reachability audit passed (all 44 Phase 20-24 docs reachable from `docs/index.md` within 2 navigation clicks); zero cross-contamination (macOS Terminal commands absent from Windows sections; Windows PowerShell/registry absent from macOS sections).
 
 ---
 
 ## v1.1 APv2 Documentation & Admin Setup Guides (Shipped: 2026-04-13)
 
-**Phases completed:** 9 phases, 18 plans, 42 tasks
+**Phases completed:** 7 phases (11-17), 18 plans, 42 tasks
+**Audit status:** `tech_debt` (.planning/milestones/v1.1-MILESTONE-AUDIT.md; 24/24 requirements satisfied; 7/7 phases verified — 6 formal VERIFICATION.md + Phase 15 informal via Phase 17 link-resolve audit; 5/6 working integration flows; 5/6 working flows; 7 tech-debt items routed to subsequent cleanup pass)
+
+**Note:** v1.1 entry retroactively re-authored 2026-06-04 during Phase 71 ARCHIVE-02 sweep from canonical source-of-truth `.planning/milestones/v1.1-MILESTONE-AUDIT.md` per Plan 71-02. Symmetric with v1.6+v1.7 retroactive-authoring 2026-05-29 (v1.7 close). The pre-sweep entry carried 1 placeholder-label debris line at line 164 (`- Edit 1 -- docs/error-codes/00-index.md:`) — a NEW DISCOVERY by the D-03 advisor's pre-sweep grep enumeration; NOT in the `v1.7-DEFERRED-CLEANUP.md:38-48` known-sites list and NOT tracked in Plan 68-04 Garbage Debris Elimination Confirmation. Replacement-from-canonical-source honors the "DO NOT mask via deletion — investigate the script" doctrine; ARCHIVE-01 root-cause fix lands at Plan 71-01 atomic SHA `e4887b2` (vendored extractor `scripts/archive/extract-summary-oneliners.mjs` + regression fixture + chain validator `scripts/validation/check-phase-71.mjs`).
 
 **Key accomplishments:**
 
-- APv1 admin setup overview index, hardware hash upload guide with 3-path decision tree, deployment profile with 11 OOBE settings documented, and ESP policy with critical Windows quality update default change
-- Dynamic groups with ZTDId rule and sync delays, 3-mode comparison table, and full admin guides for user-driven (hybrid join), pre-provisioning (TPM 2.0/Win+F12/reseal), and self-deploying (no user affinity)
-- Intune Connector guide with critical version gate (6.2501.2000.5) and OU XML config, plus 30-entry consolidated reverse-lookup table across 6 failure categories linking to all guide files and L1 runbooks
-- Edit 1 -- docs/error-codes/00-index.md:
+- **Phases 11-12 — APv2 lifecycle foundation + failure index** (LIFE-01..04 + TROU-01 + NAVG-02; 6 requirements): APv2 lifecycle taxonomy + 4-stage narrative (`docs/lifecycle-apv2/` overview + automatic / pre-provisioning / self-deploying mode docs); APv2 failure catalog at `docs/error-codes/06-apv2-device-preparation.md` cross-linked from `docs/error-codes/00-index.md`. Phase 12 VERIFICATION.md 5/5 passed.
+- **Phases 13-14 — APv2 L1 decision trees + L2 investigation runbooks** (TROU-02..05; 4 requirements): APv2 triage decision tree (Mermaid) + L1 scenario runbooks at Phase 13 (12/12 passed); L2 log-collection + 3-method investigation runbooks at Phase 14 (9/9 passed, re-verified).
+- **Phase 15 — APv2 admin setup guides** (ASET-01..05; 5 requirements): 5 admin guides under `docs/admin-setup-apv2/` covering enrollment profile, ESP policy, group assignment, license assignment, profile validation. Phase 15 lacks formal VERIFICATION.md at v1.1 close — content shipped + validated indirectly via Phase 17 link-resolve audit (all links to admin-setup-apv2/ resolve correctly); tech-debt routed to subsequent cleanup pass.
+- **Phase 16 — APv1 admin setup guides** (ADMN-01..07; 7 requirements): APv1 admin setup overview index + hardware hash upload guide with 3-path decision tree + deployment profile with 11 OOBE settings + ESP policy with critical Windows quality update default-change callout + dynamic groups with ZTDId rule and sync delays + 3-mode comparison table + full admin guides for user-driven (hybrid join), pre-provisioning (TPM 2.0/Win+F12/reseal), and self-deploying (no user affinity). Phase 16 VERIFICATION.md 7/7 passed.
+- **Phases 16-17 — Intune Connector + consolidated error-code reverse-lookup + navigation hub updates** (ADMN-06..07 + NAVG-01 + NAVG-03..04; semantically restores the truncated pre-sweep debris bullet at line 164 referencing `docs/error-codes/00-index.md`): Intune Connector for hybrid AAD-join guide with critical version gate (6.2501.2000.5) + OU XML config example; 30-entry consolidated error-code reverse-lookup table at `docs/error-codes/00-index.md` linking 6 failure categories to per-guide files + L1 runbooks; navigation hub updates wiring APv1 + APv2 entry points into `docs/index.md` + `docs/common-issues.md` + `docs/quick-ref-l1.md` + `docs/quick-ref-l2.md`. Phase 17 VERIFICATION.md 15/15 passed.
 
 ---
 
