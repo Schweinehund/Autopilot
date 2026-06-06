@@ -341,10 +341,10 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   3. Full chain check-phase-48..66.mjs exits 0 with 0 FAIL / 0 SKIPPED after the wrapper fix -- no false positives introduced by stdout capture addition
   4. A closing commit SHA is recorded confirming the chain-apex fix lands atomically
 
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
-- [ ] 72-01-PLAN.md — WRAPPER-01 atomic fix: 6 CHAIN wrapper stdout+stderr captures at check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator (7 files in ONE atomic SHA per SC#4 byte-exact)
+- [x] 72-01-PLAN.md — WRAPPER-01 atomic fix: 6 CHAIN wrapper stdout+stderr captures at check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator (7 files in ONE atomic SHA per SC#4 byte-exact)
 - [ ] 72-02-PLAN.md — Phase 72 close-gate (chain delta-diff witness + 72-VERIFICATION.md SC#1-4 satisfaction + v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 STUB → PARTIALLY-RESOLVED-EMPIRICAL-BASELINE-CAPTURED transition + 4-doc traceability flips)
 
 ### Phase 73: Retrospective Forward-Port (Pillar C)
@@ -448,7 +448,7 @@ Plans:
 | 69. CI-Linux Hardening (Pillar C) | v1.7 | 2/2 | Complete    | 2026-05-28 |
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 5/5 | Complete    | 2026-05-29 |
 | 71. Archive-Automation Root-Cause Fix (Pillar A) | v1.8 | 3/3 | Complete | 2026-06-04 |
-| 72. Chain-Wrapper Hardening (Pillar B) | v1.8 | 0/TBD | Not started | - |
+| 72. Chain-Wrapper Hardening (Pillar B) | v1.8 | 1/2 | In Progress|  |
 | 73. Retrospective Forward-Port (Pillar C) | v1.8 | 0/TBD | Not started | - |
 | 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 0/TBD | Not started | - |
 

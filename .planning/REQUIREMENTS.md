@@ -18,7 +18,7 @@
 
 ### Pillar B — Chain-Wrapper Hardening
 
-- [ ] **WRAPPER-01**: Fix `scripts/validation/check-phase-66.mjs:313` chain-apex wrapper to capture both `err.stdout` AND `err.stderr` instead of stderr-only (per `v1.7-DEFERRED-CLEANUP.md:160-192` fix recommendation). Per-validator stdout-vs-stderr audit to identify any other masking surfaces. Chain-apex regression sweep to confirm no false positives introduced. Closes the 2-week-masking surface that hid SCOPE-GAP-61 on Windows local until GHA workflow_dispatch surfaced it.
+- [x] **WRAPPER-01**: Fix `scripts/validation/check-phase-66.mjs:313` chain-apex wrapper to capture both `err.stdout` AND `err.stderr` instead of stderr-only (per `v1.7-DEFERRED-CLEANUP.md:160-192` fix recommendation). Per-validator stdout-vs-stderr audit to identify any other masking surfaces. Chain-apex regression sweep to confirm no false positives introduced. Closes the 2-week-masking surface that hid SCOPE-GAP-61 on Windows local until GHA workflow_dispatch surfaced it.
 
 ### Pillar C — Retrospective Forward-Port
 
