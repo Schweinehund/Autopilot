@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.8
 milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
-status: Phase 72 ready to plan
-stopped_at: Phase 71 closed (Plan 71-03 close-gate)
-last_updated: "2026-06-04T00:00:00.000Z"
-last_activity: 2026-06-04 — Phase 71 (Pillar A) closed; ARCHIVE-01 + ARCHIVE-02 Validated
+status: Phase 71 (Pillar A) closed 2026-06-04 — ARCHIVE-01 + ARCHIVE-02 Validated
+stopped_at: Phase 72 context gathered
+last_updated: "2026-06-06T14:09:51.476Z"
+last_activity: 2026-06-04 — Phase 71 closed via Plan 71-03 close-gate (chain validators 21 PASS / 8 FAIL — 8 FAILs are pre-existing chain degradation routed to v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 → Phase 73 Pillar C scope; Phase-71-OWNED validators all PASS)
 progress:
   total_phases: 4
   completed_phases: 1
@@ -232,9 +232,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-06-04T00:00:00.000Z
-Stopped at: Phase 71 (Pillar A) closed 2026-06-04 — ARCHIVE-01 + ARCHIVE-02 Validated; Plan 71-03 close-gate landed (71-VERIFICATION.md + v1.8-DEFERRED-CLEANUP.md NEW + 4-doc traceability flips across PROJECT/REQUIREMENTS/STATE/ROADMAP)
-Resume file: .planning/phases/71-archive-automation-root-cause-fix-pillar-a/71-VERIFICATION.md
+Last session: 2026-06-06T14:09:51.436Z
+Stopped at: Phase 72 context gathered
+Resume file: .planning/phases/72-chain-wrapper-hardening-pillar-b/72-CONTEXT.md
 Next action: User runs `/gsd-discuss-phase 72` (Pillar B — CHAIN-WRAPPER-01 surgical fix at `scripts/validation/check-phase-66.mjs:313` chain-apex wrapper stderr→stdout+stderr capture per `v1.7-DEFERRED-CLEANUP.md:160-192` fix recommendation) OR `/gsd-plan-phase 72` to skip discussion and plan directly. Phase 72 entry-state ready: vendored extractor in place at `scripts/archive/extract-summary-oneliners.mjs` + MILESTONES.md clean (V-71-MILESTONES-01 PASS on HEAD) + CHAIN_SKIP = [] preserved + V-71-FIX-01/02 + V-71-AUDIT + V-71-SELF all PASS + ARCHIVE-UPSTREAM-01 + CHAIN-DEGRADED-AT-HEAD-01 stubs in `v1.8-DEFERRED-CLEANUP.md` for Phase 74 HARNESS-12 finalization. 8 pre-existing chain FAILs (V-71-CHAIN-{61..67, 70}) are NOT Phase 72 blockers — they route to Phase 73 Pillar C SCOPE-GAP-RETRO-01 scope.
 
 ## Decisions
