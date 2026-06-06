@@ -184,7 +184,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 <summary>v1.8 Tooling Debt Closure + Chain-Resilience Hardening (Phases 71-74) â€” IN PROGRESS</summary>
 
 - [ ] **Phase 71: Archive-Automation Root-Cause Fix (Pillar A)** â€” ARCHIVE-01 extraction-logic fix + regression-test fixture + ARCHIVE-02 historical residue sweep
-- [ ] **Phase 72: Chain-Wrapper Hardening (Pillar B)** â€” WRAPPER-01 stdout+stderr capture fix + per-validator audit + regression sweep
+- [x] **Phase 72: Chain-Wrapper Hardening (Pillar B)** (2/2 plans) — completed 2026-06-06 (WRAPPER-01 stdout+stderr capture fix + per-validator audit + regression sweep; closing SHAs Plan 72-01 atomic `d374095` 7-file + Plan 72-02 close-gate `{phase_72_close_SHA}` 5-file)
 - [ ] **Phase 73: Retrospective Forward-Port (Pillar C)** â€” RETRO-01 HEAD-coupled assertion scan + RETRO-02 per-validator frozen-aware conversion
 - [ ] **Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)** â€” HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate
 
@@ -341,11 +341,9 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   3. Full chain check-phase-48..66.mjs exits 0 with 0 FAIL / 0 SKIPPED after the wrapper fix -- no false positives introduced by stdout capture addition
   4. A closing commit SHA is recorded confirming the chain-apex fix lands atomically
 
-**Plans:** 1/2 plans executed
-
-Plans:
-- [x] 72-01-PLAN.md — WRAPPER-01 atomic fix: 6 CHAIN wrapper stdout+stderr captures at check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator (7 files in ONE atomic SHA per SC#4 byte-exact)
-- [ ] 72-02-PLAN.md — Phase 72 close-gate (chain delta-diff witness + 72-VERIFICATION.md SC#1-4 satisfaction + v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 STUB → PARTIALLY-RESOLVED-EMPIRICAL-BASELINE-CAPTURED transition + 4-doc traceability flips)
+**Plans:** 2/2 plans complete
+- [x] 72-01-PLAN.md — WRAPPER-01 fix: 6 CHAIN wrapper stdout+stderr captures at check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator (atomic SC#4; closing SHA `d374095`; 7 files in ONE atomic SHA per Phase 67 Plan 67-02 `55260b3` 5-file precedent scaled to 7)
+- [x] 72-02-PLAN.md — Phase 72 close-gate (chain delta-diff witness + 72-VERIFICATION.md SC#1-4 satisfaction + v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 STUB → PARTIALLY-RESOLVED-EMPIRICAL-BASELINE-CAPTURED transition + 4-doc traceability flips; closing SHA `{phase_72_close_SHA}` literal placeholder per Phase 71 Plan 71-03 precedent; recoverable via `git log --all --grep="72-02" --grep="close-gate" --all-match -1 --format=%H`)
 
 ### Phase 73: Retrospective Forward-Port (Pillar C)
 

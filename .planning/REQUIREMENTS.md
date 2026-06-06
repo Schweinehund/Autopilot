@@ -18,7 +18,7 @@
 
 ### Pillar B — Chain-Wrapper Hardening
 
-- [x] **WRAPPER-01**: Fix `scripts/validation/check-phase-66.mjs:313` chain-apex wrapper to capture both `err.stdout` AND `err.stderr` instead of stderr-only (per `v1.7-DEFERRED-CLEANUP.md:160-192` fix recommendation). Per-validator stdout-vs-stderr audit to identify any other masking surfaces. Chain-apex regression sweep to confirm no false positives introduced. Closes the 2-week-masking surface that hid SCOPE-GAP-61 on Windows local until GHA workflow_dispatch surfaced it.
+- [x] **WRAPPER-01**: Fix `scripts/validation/check-phase-66.mjs:313` chain-apex wrapper to capture both `err.stdout` AND `err.stderr` instead of stderr-only (per `v1.7-DEFERRED-CLEANUP.md:160-192` fix recommendation). Per-validator stdout-vs-stderr audit to identify any other masking surfaces. Chain-apex regression sweep to confirm no false positives introduced. Closes the 2-week-masking surface that hid SCOPE-GAP-61 on Windows local until GHA workflow_dispatch surfaced it. **CLOSED Phase 72 Plan 72-01 atomic SHA `d374095` (6 CHAIN wrapper fixes in check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator in ONE 7-file SHA per SC#4 byte-exact contract + D-02 Option B SC#3 second-clause discriminator satisfied via delta-diff witness; 8 pre-existing V-72-CHAIN-{61..67,70} FAILs are accepted-residual routed to v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 → Phase 73 Pillar C RETRO-01/02). Close-gate Plan 72-02 SHA `{phase_72_close_SHA}`.**
 
 ### Pillar C — Retrospective Forward-Port
 
@@ -79,7 +79,7 @@ These are tracked in `v1.7-DEFERRED-CLEANUP.md` and will carry into `v1.8-DEFERR
 |--------|---------------------|-------|--------|
 | ARCHIVE-01 | gsd-complete-milestone.md extraction-logic root-cause fix | Phase 71 | Complete (closing SHA `e4887b2`) |
 | ARCHIVE-02 | MILESTONES.md v1.0..v1.4.1 historical residue sweep | Phase 71 | Complete (closing SHA `ff4514b`) |
-| WRAPPER-01 | check-phase-66.mjs:313 stdout+stderr capture | Phase 72 | Pending |
+| WRAPPER-01 | check-phase-66.mjs:313 stdout+stderr capture | Phase 72 | Complete (closing SHA `d374095`) |
 | RETRO-01 | HEAD-coupled assertion class-wide scan | Phase 73 | Pending |
 | RETRO-02 | Per-validator conversion to frozen-aware | Phase 73 | Pending |
 | HARNESS-07 | v1.8-milestone-audit.mjs Path-A copy | Phase 74 | Pending |
@@ -90,7 +90,7 @@ These are tracked in `v1.7-DEFERRED-CLEANUP.md` and will carry into `v1.8-DEFERR
 | HARNESS-12 | v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md + 4-doc traceability | Phase 74 | Pending |
 | VPP-01 | 3 VPP-location-token sites in app-lifecycle/02-macos-pkg-dmg-pipeline.md | Phase 74 | Pending |
 
-**12 requirements** | **12 mapped** | Phase 71: ARCHIVE-01, ARCHIVE-02 | Phase 72: WRAPPER-01 | Phase 73: RETRO-01, RETRO-02 | Phase 74: HARNESS-07..12, VPP-01
+**12 requirements** | **12 mapped** | **3 complete** (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01) | Phase 71: ARCHIVE-01, ARCHIVE-02 | Phase 72: WRAPPER-01 | Phase 73: RETRO-01, RETRO-02 | Phase 74: HARNESS-07..12, VPP-01
 
 ---
 
