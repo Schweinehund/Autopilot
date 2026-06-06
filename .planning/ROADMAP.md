@@ -340,7 +340,12 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   2. A per-validator stdout-vs-stderr audit of check-phase-48..66.mjs is completed; any other chain wrappers with stderr-only capture are identified and fixed or documented
   3. Full chain check-phase-48..66.mjs exits 0 with 0 FAIL / 0 SKIPPED after the wrapper fix -- no false positives introduced by stdout capture addition
   4. A closing commit SHA is recorded confirming the chain-apex fix lands atomically
-**Plans**: TBD
+
+**Plans:** 2 plans
+
+Plans:
+- [ ] 72-01-PLAN.md — WRAPPER-01 atomic fix: 6 CHAIN wrapper stdout+stderr captures at check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator (7 files in ONE atomic SHA per SC#4 byte-exact)
+- [ ] 72-02-PLAN.md — Phase 72 close-gate (chain delta-diff witness + 72-VERIFICATION.md SC#1-4 satisfaction + v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 STUB → PARTIALLY-RESOLVED-EMPIRICAL-BASELINE-CAPTURED transition + 4-doc traceability flips)
 
 ### Phase 73: Retrospective Forward-Port (Pillar C)
 

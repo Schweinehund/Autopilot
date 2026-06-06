@@ -887,17 +887,17 @@ Not applicable — Phase 72 modifies internal Node.js validation scripts only. N
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Slice budget final value**
-   - What we know: 300-char slice misses V-61-17 at offset ~2252; 500 chars also misses it; full diagnostic at ~2252+ chars would require ~2048-char window
-   - What's unclear: How much diagnostic context is "enough" for the chain wrapper to be useful
-   - Recommendation: Use 500 chars as a reasonable middle ground; document in 72-VERIFICATION.md Section B that the slice is a preview, not a full diagnostic
+1. **Slice budget final value** — **RESOLVED: 500 chars**
+   - What we knew: 300-char slice misses V-61-17 at offset ~2252; 500 chars also misses it; full diagnostic at ~2252+ chars would require ~2048-char window
+   - **Resolution:** Plans 72-01 + 72-02 use 500 chars throughout — captures V-67-05/06 immediately; documents V-61-17 as deeper-in-stdout per 72-VERIFICATION.md Section B Commands evidence. The slice is a preview, not a full diagnostic; Phase 73 RETRO-01 inventory will reference standalone `node check-phase-NN.mjs` runs for full content per established pattern.
+   - **Authority:** Locked in CONTEXT.md "Claude's Discretion" slice-budget bullet + PATTERNS.md shared pattern + applied to all 6 wrapper fixes + the new check-phase-72.mjs CHAIN wrapper.
 
-2. **V-72-AUDIT ID naming (AUDIT-VERIFY vs AUDIT for heading-presence check)**
-   - What we know: D-04 pseudocode has ambiguous naming; two checks need distinct IDs
-   - What's unclear: Whether `AUDIT-VERIFY` or `VERIFICATION` is the better ID
-   - Recommendation: Use `AUDIT-VERIFY` for the heading-presence check; keeps `AUDIT` slot for the milestone-audit subprocess (matches check-phase-71 pattern)
+2. **V-72-AUDIT ID naming (AUDIT-VERIFY vs AUDIT for heading-presence check)** — **RESOLVED: `AUDIT-VERIFY` + `AUDIT` as distinct IDs**
+   - What we knew: D-04 pseudocode used ambiguous naming; two checks need distinct IDs
+   - **Resolution:** `id: 'AUDIT-VERIFY'` for the 72-VERIFICATION.md heading-presence check; `id: 'AUDIT'` for the v1.7-milestone-audit.mjs subprocess (mirrors check-phase-71.mjs V-71-AUDIT slot precedent). Distinct IDs enforced in both plan task acceptance_criteria + check-phase-72.mjs `must_haves`.
+   - **Authority:** Locked in plans 72-01 Task 2 interfaces block + 72-02 close-gate; mirrors RESEARCH.md Section 5 recommendation.
 
 ---
 

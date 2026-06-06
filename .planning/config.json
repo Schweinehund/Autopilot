@@ -4,6 +4,7 @@
     "_auto_chain_active": true,
     "ui_safety_gate": false,
     "ui_phase": false,
-    "use_worktrees": false
+    "use_worktrees": false,
+    "nyquist_validation": false
   }
 }
