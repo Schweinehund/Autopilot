@@ -355,7 +355,10 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   2. All identified HEAD-coupled assertions whose docstrings cite milestone-close state are converted to frozen-aware via SHA-pinned helpers (parallel to existing readRequirementsAtV15Close() / readRoadmapAtV15Close() / readCorpusFileAtV17Close() pattern) per D-01 LOCKED Option C per-V-NN-NN freshness routing matrix
   3. Full chain check-phase-48..66.mjs exits 0 after conversions -- all converted validators pass without regression; chain-apex confirms 0 FAIL / 0 SKIPPED
   4. Scope-discipline guardrail is honored: if retrospective scan surfaces SCOPE-GAP-class discoveries beyond the initial inventory, they are documented and routed to v1.9+ rather than expanding v1.8 scope
-**Plans**: TBD
+**Plans:** 3/3 plans pending
+- [ ] 73-01-PLAN.md — RETRO-01 inventory + 8 wrapper folds + _lib/frozen-at-close + check-phase-73 stub (atomic SC#1 + SC#4; per D-01 LOCKED Option C refined + D-02/D-04 MERGED + D-03 B-3)
+- [ ] 73-02-PLAN.md — RETRO-02 per-validator HEAD-coupled assertion conversion to frozen-aware (atomic SC#4; flips 8 V-72-CHAIN-{61..67,70} FAILs → PASS; inventory-driven scope)
+- [ ] 73-03-PLAN.md — Phase 73 close-gate (73-VERIFICATION.md Sections A-H + 4-doc traceability + CHAIN-DEGRADED-AT-HEAD-01 STUB → CLOSED + 3 NEW v1.9+ stubs)
 
 ### Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)
 

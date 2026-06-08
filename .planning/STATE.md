@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.8
 milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
-status: Phase 72 closed; Phase 73 entry-state ready
+status: executing
 stopped_at: Phase 73 context gathered
-last_updated: "2026-06-08T13:12:54.566Z"
-last_activity: 2026-06-06 — Phase 72 (Pillar B) closed; WRAPPER-01 validated
+last_updated: "2026-06-08T13:58:59.800Z"
+last_activity: 2026-06-08 -- Phase 73 planning complete
 progress:
   total_phases: 4
   completed_phases: 2
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 
 Phase: 73 (Retrospective Forward-Port (Pillar C)) — READY TO PLAN
 Plan: 1 of TBD
-Status: Phase 72 closed; Phase 73 entry-state ready
-Last activity: 2026-06-06 — Phase 72 (Pillar B) closed; WRAPPER-01 validated
+Status: Ready to execute
+Last activity: 2026-06-08 -- Phase 73 planning complete
 
 ## v1.7 Phase Dependency Summary
 

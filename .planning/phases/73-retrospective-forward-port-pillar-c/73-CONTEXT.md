@@ -111,7 +111,7 @@ All four gray areas resolved via 4 parallel `gsd-advisor-researcher` agents in a
   const isMissing = err.code === 'ENOENT' || err.status === 127
     || stderr.includes('not found') || stderr.includes('Could not resolve');
   if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-  return { pass: false, detail: 'check-phase-' + phaseNum + ' FAIL: ' + (stdout + stderr).slice(0, 300).trim() };
+  return { pass: false, detail: 'check-phase-' + phaseNum + ' FAIL: ' + (stdout + stderr).slice(0, 500).trim() };
 }
 ```
 
@@ -397,7 +397,7 @@ Plan 73-03 (close-gate — 73-VERIFICATION.md + traceability flips + DEFERRED-CL
 
 - **CHAIN_SKIP empty-Set invariant** — Permanent post-Phase 68 `7b635ca`. `check-phase-73.mjs` MUST declare `CHAIN_SKIP = new Set([])` (V-73-SELF assertion enforces).
 - **CHAIN_PHASES exclusion of validator's own phase** — `check-phase-73.mjs` CHAIN_PHASES = {48..72} (does NOT include 73). V-73-SELF guard mirror of `check-phase-72.mjs` V-72-SELF.
-- **Uniform wrapper pattern (CHAIN ≡ AUDIT capture shape)** — Post-Phase-73-Plan-73-01-Wave-2, both CHAIN and AUDIT subprocess catch blocks across `check-phase-{60..73}.mjs` use the same `(stdout + stderr).slice(0, 300).trim()` shape. Phase 73 closes the wrapper-class signature surface for the 8 sites Phase 72 D-01 carved out as "free passenger" (excludes the 3 helper-spawn sites per D-01 carve-out).
+- **Uniform wrapper pattern (CHAIN ≡ AUDIT capture shape)** — Post-Phase-73-Plan-73-01-Wave-2, both CHAIN and AUDIT subprocess catch blocks across `check-phase-{60..73}.mjs` use the same `(stdout + stderr).slice(0, 500).trim()` shape (slice budget 500 per RESEARCH.md Pattern 4 empirical correction from Phase 72; AUDIT-HARNESS catch block budget remains 300 per `check-phase-72.mjs:332` precedent). Phase 73 closes the wrapper-class signature surface for the 8 sites Phase 72 D-01 carved out as "free passenger" (excludes the 3 helper-spawn sites per D-01 carve-out).
 - **Source-text regex anchored to topology marker (NOT byte-exact equality)** — Phase 71 V-71-FIX-01 + Phase 72 V-72-WRAPPER-01..06 established this pattern. Phase 73 V-73-WRAPPER-NEG + V-73-AUDIT-WRAPPER-NEG inherit: anchor on `execFileSync('node', [path], ...)` or `execFileSync('node', [auditPath], ...)` topology marker + 600-char catch-block window + presence/absence token checks.
 - **Complementary negative invariant for whole-file class signature** — V-73-WRAPPER-NEG (FIXED_FILES_RETRO_02 = [60..65]) + V-73-AUDIT-WRAPPER-NEG (AUDIT_FIXED_FILES = [60, 61]). Counts stderr-only catch blocks within respective wrapper-window across files → asserts == 0. Closes the wrapper-fold-in class signature per Phase 72 V-72-WRAPPER-NEG precedent.
 - **Pre-conversion vs post-conversion chain delta-diff witness** — Plan 73-01 Wave 6 captures `.claude/tmp/73-chain-pre.txt` (records V-72-CHAIN-{61..67, 70} FAIL state at Plan 73-01 SHA). Plan 73-02 Wave 3 captures `.claude/tmp/73-chain-post.txt` (8 FAILs flipped → PASS). Witness inherits Phase 72 Plan 72-02 Wave 1 precedent.
