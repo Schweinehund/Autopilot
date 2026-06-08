@@ -454,7 +454,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 5/5 | Complete    | 2026-05-29 |
 | 71. Archive-Automation Root-Cause Fix (Pillar A) | v1.8 | 3/3 | Complete | 2026-06-04 |
 | 72. Chain-Wrapper Hardening (Pillar B) | v1.8 | 2/2 | Complete   | 2026-06-06 |
-| 73. Retrospective Forward-Port (Pillar C) | v1.8 | 3/3 | Complete   | 2026-06-08 |
+| 73. Retrospective Forward-Port (Pillar C) | v1.8 | 3/3 | Complete    | 2026-06-08 |
 | 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 0/TBD | Not started | - |
 
 ---
