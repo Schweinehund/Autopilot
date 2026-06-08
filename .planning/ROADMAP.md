@@ -185,7 +185,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
 - [ ] **Phase 71: Archive-Automation Root-Cause Fix (Pillar A)** â€” ARCHIVE-01 extraction-logic fix + regression-test fixture + ARCHIVE-02 historical residue sweep
 - [x] **Phase 72: Chain-Wrapper Hardening (Pillar B)** (2/2 plans) — completed 2026-06-06 (WRAPPER-01 stdout+stderr capture fix + per-validator audit + regression sweep; closing SHAs Plan 72-01 atomic `d374095` 7-file + Plan 72-02 close-gate `{phase_72_close_SHA}` 5-file)
-- [ ] **Phase 73: Retrospective Forward-Port (Pillar C)** â€” RETRO-01 HEAD-coupled assertion scan + RETRO-02 per-validator frozen-aware conversion
+- [x] **Phase 73: Retrospective Forward-Port (Pillar C)** â€” RETRO-01 HEAD-coupled assertion scan + RETRO-02 per-validator frozen-aware conversion (completed 2026-06-08)
 - [ ] **Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)** â€” HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate
 
 **Wave designation map:**
@@ -355,7 +355,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   2. All identified HEAD-coupled assertions whose docstrings cite milestone-close state are converted to frozen-aware via SHA-pinned helpers (parallel to existing readRequirementsAtV15Close() / readRoadmapAtV15Close() / readCorpusFileAtV17Close() pattern) per D-01 LOCKED Option C per-V-NN-NN freshness routing matrix
   3. Full chain check-phase-48..66.mjs exits 0 after conversions -- all converted validators pass without regression; chain-apex confirms 0 FAIL / 0 SKIPPED
   4. Scope-discipline guardrail is honored: if retrospective scan surfaces SCOPE-GAP-class discoveries beyond the initial inventory, they are documented and routed to v1.9+ rather than expanding v1.8 scope
-**Plans:** 3/3 plans complete **— COMPLETE 2026-06-08**
+**Plans:** 3/3 plans complete
 - [x] 73-01-PLAN.md — RETRO-01 inventory + 8 wrapper folds + _lib/frozen-at-close + check-phase-73 stub (atomic SC#1 + SC#4; SHA `d2b8917` — 9 files in ONE atomic commit)
 - [x] 73-02-PLAN.md — RETRO-02 per-validator HEAD-coupled assertion conversion to frozen-aware (atomic SC#4; SHA `a85da77` — 5 files; flips 8 V-72-CHAIN-{61..67,70} FAILs → PASS; CHAIN-DEGRADED-AT-HEAD-01 TERMINAL CLOSURE — 7th chicken-and-egg lineage entry)
 - [x] 73-03-PLAN.md — Phase 73 close-gate (73-VERIFICATION.md Sections A-H + 4-doc traceability + CHAIN-DEGRADED-AT-HEAD-01 STUB → CLOSED + 3 NEW v1.9+ stubs; closing SHA recoverable via `git log --all --grep="73-03" --grep="close-gate" --all-match -1 --format=%H`)
@@ -454,7 +454,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 70. v1.7 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.7 | 5/5 | Complete    | 2026-05-29 |
 | 71. Archive-Automation Root-Cause Fix (Pillar A) | v1.8 | 3/3 | Complete | 2026-06-04 |
 | 72. Chain-Wrapper Hardening (Pillar B) | v1.8 | 2/2 | Complete   | 2026-06-06 |
-| 73. Retrospective Forward-Port (Pillar C) | v1.8 | 2/3 | In Progress|  |
+| 73. Retrospective Forward-Port (Pillar C) | v1.8 | 3/3 | Complete   | 2026-06-08 |
 | 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 0/TBD | Not started | - |
 
 ---
