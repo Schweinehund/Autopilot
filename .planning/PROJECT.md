@@ -356,12 +356,9 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 **Pillar A — Archive-Automation Root-Cause (ARCHIVE-01 + ARCHIVE-02):** ✓ CLOSED 2026-06-04 (Phase 71 Plan 71-01 atomic SHA `e4887b2` + Plan 71-02 SHA `ff4514b` + Plan 71-03 close-gate `{phase_71_close_SHA}`; see Validated section above)
 
-**Pillar B — Chain-Wrapper Hardening (CHAIN-WRAPPER-01):**
-- [ ] **CHAIN-WRAPPER-01**: Fix `check-phase-66.mjs:313` chain-apex wrapper to capture both `err.stdout` AND `err.stderr`; chain-apex regression sweep to confirm no false positives
+**Pillar B — Chain-Wrapper Hardening (CHAIN-WRAPPER-01):** ✓ CLOSED 2026-06-06 (Phase 72 Plan 72-01 atomic SHA `d374095` 7-file; Plan 72-02 close-gate; WRAPPER-01 Complete)
 
-**Pillar C — Retrospective Forward-Port (HARNESS-FORWARD-01 + SCOPE-GAP-61 retrospective):**
-- [ ] **HARNESS-FORWARD-01**: Class-wide scan of `check-phase-{48..66}.mjs` (19 validators) for HEAD-coupled assertions citing milestone-close state; per-validator class signature analysis
-- [ ] **SCOPE-GAP-RETRO-01**: Per-validator conversion to v1.5/v1.6/v1.7-frozen-aware via SHA-pinned helpers parallel to `readRequirementsAtV15Close()` / `readRoadmapAtV15Close()` / `readCorpusFileAtV17Close()`
+**Pillar C — Retrospective Forward-Port (HARNESS-FORWARD-01 + SCOPE-GAP-61 retrospective):** ✓ CLOSED 2026-06-08 (Phase 73 Plan 73-01 atomic SHA `d2b8917` + Plan 73-02 atomic SHA `a85da77`; RETRO-01 + RETRO-02 Complete; CHAIN-DEGRADED-AT-HEAD-01 CLOSED)
 
 **Pillar D — v1.8 Audit Harness Lineage Bump (HARNESS-A..F equivalents):**
 - [ ] **HARNESS-A**: `scripts/validation/v1.8-milestone-audit.mjs` Path-A copy from v1.7 (C1-C16 inherited)

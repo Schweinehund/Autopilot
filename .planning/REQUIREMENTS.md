@@ -22,9 +22,9 @@
 
 ### Pillar C — Retrospective Forward-Port
 
-- [ ] **RETRO-01**: Class-wide scan of `scripts/validation/check-phase-{48..66}.mjs` (19 validators) for HEAD-coupled assertions whose validator name or docstring cites a milestone-close state (e.g., "4 stale rows reconciled per Plan 61-02", "deferred items LIN-DEFER-01..", "Methodology highlights from v1.5 close") but whose implementation reads HEAD via `readFile()`. Produce per-validator class signature inventory + assessment of conversion scope. Per `v1.7-DEFERRED-CLEANUP.md:127, 132`.
+- [x] **RETRO-01**: Class-wide scan of `scripts/validation/check-phase-{48..66}.mjs` (19 validators) for HEAD-coupled assertions whose validator name or docstring cites a milestone-close state (e.g., "4 stale rows reconciled per Plan 61-02", "deferred items LIN-DEFER-01..", "Methodology highlights from v1.5 close") but whose implementation reads HEAD via `readFile()`. Produce per-validator class signature inventory + assessment of conversion scope. Per `v1.7-DEFERRED-CLEANUP.md:127, 132`. **Closed: Phase 73 Plan 73-01 atomic SHA `d2b8917` + Plan 73-03 close-gate SHA (recoverable via `git log --all --grep="73-03" --grep="close-gate" --all-match -1 --format=%H`).**
 
-- [x] **RETRO-02**: Per-validator conversion of identified HEAD-coupled assertions to v1.5/v1.6/v1.7-frozen-aware via SHA-pinned helpers parallel to existing `readRequirementsAtV15Close()` / `readRoadmapAtV15Close()` / `readCorpusFileAtV17Close()`. Mechanism: `execFileSync('git', ['show', '<frozen-SHA>:<path>'])` per milestone-close. Per-assertion freshness routing follows v1.7 D-01 LOCKED Option C convention (per-V-NN-NN matrix). Scope-discipline guardrail: if scan surfaces SCOPE-GAP-class discovery beyond initial inventory, route to v1.9+ rather than ballooning v1.8.
+- [x] **RETRO-02**: Per-validator conversion of identified HEAD-coupled assertions to v1.5/v1.6/v1.7-frozen-aware via SHA-pinned helpers parallel to existing `readRequirementsAtV15Close()` / `readRoadmapAtV15Close()` / `readCorpusFileAtV17Close()`. Mechanism: `execFileSync('git', ['show', '<frozen-SHA>:<path>'])` per milestone-close. Per-assertion freshness routing follows v1.7 D-01 LOCKED Option C convention (per-V-NN-NN matrix). Scope-discipline guardrail: if scan surfaces SCOPE-GAP-class discovery beyond initial inventory, route to v1.9+ rather than ballooning v1.8. **Closed: Phase 73 Plan 73-02 atomic SHA `a85da77` + Plan 73-03 close-gate SHA (recoverable via `git log --all --grep="73-03" --grep="close-gate" --all-match -1 --format=%H`).**
 
 ### Pillar D — v1.8 Audit Harness Lineage Bump + Milestone Close
 
@@ -80,8 +80,8 @@ These are tracked in `v1.7-DEFERRED-CLEANUP.md` and will carry into `v1.8-DEFERR
 | ARCHIVE-01 | gsd-complete-milestone.md extraction-logic root-cause fix | Phase 71 | Complete (closing SHA `e4887b2`) |
 | ARCHIVE-02 | MILESTONES.md v1.0..v1.4.1 historical residue sweep | Phase 71 | Complete (closing SHA `ff4514b`) |
 | WRAPPER-01 | check-phase-66.mjs:313 stdout+stderr capture | Phase 72 | Complete (closing SHA `d374095`) |
-| RETRO-01 | HEAD-coupled assertion class-wide scan | Phase 73 | Pending |
-| RETRO-02 | Per-validator conversion to frozen-aware | Phase 73 | Pending |
+| RETRO-01 | HEAD-coupled assertion class-wide scan | Phase 73 | Complete (closing SHA `d2b8917` + Plan 73-03 close-gate) |
+| RETRO-02 | Per-validator conversion to frozen-aware | Phase 73 | Complete (closing SHA `a85da77` + Plan 73-03 close-gate) |
 | HARNESS-07 | v1.8-milestone-audit.mjs Path-A copy | Phase 74 | Pending |
 | HARNESS-08 | v1.8-audit-allowlist.json + BASELINE_12 | Phase 74 | Pending |
 | HARNESS-09 | check-phase-71..74.mjs per-phase validators | Phase 74 | Pending |
@@ -90,7 +90,7 @@ These are tracked in `v1.7-DEFERRED-CLEANUP.md` and will carry into `v1.8-DEFERR
 | HARNESS-12 | v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md + 4-doc traceability | Phase 74 | Pending |
 | VPP-01 | 3 VPP-location-token sites in app-lifecycle/02-macos-pkg-dmg-pipeline.md | Phase 74 | Pending |
 
-**12 requirements** | **12 mapped** | **3 complete** (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01) | Phase 71: ARCHIVE-01, ARCHIVE-02 | Phase 72: WRAPPER-01 | Phase 73: RETRO-01, RETRO-02 | Phase 74: HARNESS-07..12, VPP-01
+**12 requirements** | **12 mapped** | **5 complete** (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01 + RETRO-01 + RETRO-02) | Phase 71: ARCHIVE-01, ARCHIVE-02 | Phase 72: WRAPPER-01 | Phase 73: RETRO-01, RETRO-02 | Phase 74: HARNESS-07..12, VPP-01
 
 ---
 

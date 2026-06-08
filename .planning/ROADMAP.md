@@ -355,10 +355,12 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   2. All identified HEAD-coupled assertions whose docstrings cite milestone-close state are converted to frozen-aware via SHA-pinned helpers (parallel to existing readRequirementsAtV15Close() / readRoadmapAtV15Close() / readCorpusFileAtV17Close() pattern) per D-01 LOCKED Option C per-V-NN-NN freshness routing matrix
   3. Full chain check-phase-48..66.mjs exits 0 after conversions -- all converted validators pass without regression; chain-apex confirms 0 FAIL / 0 SKIPPED
   4. Scope-discipline guardrail is honored: if retrospective scan surfaces SCOPE-GAP-class discoveries beyond the initial inventory, they are documented and routed to v1.9+ rather than expanding v1.8 scope
-**Plans:** 2/3 plans executed
-- [x] 73-01-PLAN.md — RETRO-01 inventory + 8 wrapper folds + _lib/frozen-at-close + check-phase-73 stub (atomic SC#1 + SC#4; SHA `d2b8917`) — **COMPLETE 2026-06-08**
-- [x] 73-02-PLAN.md — RETRO-02 per-validator HEAD-coupled assertion conversion to frozen-aware (atomic SC#4; flips 8 V-72-CHAIN-{61..67,70} FAILs → PASS; inventory-driven scope)
-- [ ] 73-03-PLAN.md — Phase 73 close-gate (73-VERIFICATION.md Sections A-H + 4-doc traceability + CHAIN-DEGRADED-AT-HEAD-01 STUB → CLOSED + 3 NEW v1.9+ stubs)
+**Plans:** 3/3 plans complete **— COMPLETE 2026-06-08**
+- [x] 73-01-PLAN.md — RETRO-01 inventory + 8 wrapper folds + _lib/frozen-at-close + check-phase-73 stub (atomic SC#1 + SC#4; SHA `d2b8917` — 9 files in ONE atomic commit)
+- [x] 73-02-PLAN.md — RETRO-02 per-validator HEAD-coupled assertion conversion to frozen-aware (atomic SC#4; SHA `a85da77` — 5 files; flips 8 V-72-CHAIN-{61..67,70} FAILs → PASS; CHAIN-DEGRADED-AT-HEAD-01 TERMINAL CLOSURE — 7th chicken-and-egg lineage entry)
+- [x] 73-03-PLAN.md — Phase 73 close-gate (73-VERIFICATION.md Sections A-H + 4-doc traceability + CHAIN-DEGRADED-AT-HEAD-01 STUB → CLOSED + 3 NEW v1.9+ stubs; closing SHA recoverable via `git log --all --grep="73-03" --grep="close-gate" --all-match -1 --format=%H`)
+
+**Status:** Complete (SC#1-4 satisfied; Plan 73-01 atomic `d2b8917`; Plan 73-02 atomic `a85da77`; 8 V-72-CHAIN-{61..67,70} FAILs flipped PASS; SCOPE-GAP-RETRO-02-OVERFLOW-01 OMITTED; 3 NEW v1.9+ stubs: HELPER-SPAWN-STDERR-01 + FROZEN-AWARE-ADOPTION-SWEEP-01 + EXEC-FAIL-DETAIL-EXTRACTION-01)
 
 ### Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)
 
@@ -371,6 +373,8 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   3. 3-axis terminal re-audit at v1.8 close executes with full auditor independence: Axis 1 local fresh git clone --no-hardlinks into temp dir via fresh gsd-executor sub-agent (D-03 LOCKED + D-22 INTENT); Axis 2 cross-OS Linux GHA workflow_dispatch of audit-harness-v1.8-integrity.yml; Axis 3 fresh sub-agent with zero context-carryover from content phases; cross-OS PASS-Count EXACT MATCH verified across all cross-OS-applicable validators
   4. v1.8-MILESTONE-AUDIT.md is authored Path-A from v1.7 with 3-axis Auditor-Independence Verification + Discoveries Surfaced During Execution section + Requirements Traceability + Sign-off hand-off; v1.8-DEFERRED-CLEANUP.md is FINALIZED with v1.7 carry-overs (CI-3 + Multi-tenant + ABDevice API + per-OU CRD + Account Holder + ASM) promoted to full sections + any v1.8 retrospective discoveries beyond scope
   5. 4-doc traceability closure completes: 12 v1.8 requirements flipped Active->Validated with closing commit SHAs across PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md; predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 workflows + harnesses + sidecars remain BYTE-UNCHANGED through close-gate commit
+**Entry-state from Phase 73 (closed 2026-06-08):** clean chain (V-72-CHAIN-{61..67,70} PASS; 39 PASS / 0 FAIL / 1 SKIPPED); `_lib/frozen-at-close.mjs` available (MILESTONE_CLOSE_SHAS V141/V15/V16/V17/V17_CLOSEGATE); check-phase-73.mjs Path-A source ready for HARNESS-09 check-phase-74.mjs; CHAIN-DEGRADED-AT-HEAD-01 CLOSED; 3 NEW v1.9+ stubs in v1.8-DEFERRED-CLEANUP.md for HARNESS-12 finalization (HELPER-SPAWN-STDERR-01 + FROZEN-AWARE-ADOPTION-SWEEP-01 + EXEC-FAIL-DETAIL-EXTRACTION-01); 5/12 v1.8 requirements complete (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01 + RETRO-01 + RETRO-02); predecessor v1.4..v1.7 frozen surfaces BYTE-UNCHANGED.
+
 **Plans**: TBD
 
 
