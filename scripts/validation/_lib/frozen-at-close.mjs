@@ -19,6 +19,9 @@ export const MILESTONE_CLOSE_SHAS = {
   V15:  'ba2cbc0',  // Phase 61 close — canonical (matches inline helper in check-phase-61.mjs:40)
   V16:  '9d8877c',  // Phase 66 close 2026-05-25 (D-04 advisor empirical discovery; v1.6 has NO git tag)
   V17:  'aa6de68',  // Phase 70 Plan 70-02 Atom 1 — canonical (matches inline helpers in check-phase-67/68/70.mjs)
+  V17_CLOSEGATE: '4df3a16',  // Phase 70 Plan 70-05 Commit B — true v1.7 milestone close-gate (HARNESS-06 +
+                              // 4-doc traceability closure); added by Plan 73-02 RETRO-02 to fix V-70-24
+                              // (PROJECT.md 12/12 v1.7 reqs only present at Commit B, not at aa6de68 Atom 2).
   // V14 omitted — RETRO-01 must surface a v1.4-close-state assertion in check-phase-{48..66}.mjs
   // before adding (v1.4 close was Phase 42, predating chain validators).
   // Candidates if needed: b5cf529 or 671f72a (D-02 advisor pre-scan).
@@ -44,7 +47,8 @@ export function readAtClose(milestoneTag, relPath) {
 }
 
 // Convenience exports for readability at call-sites
-export const readAtV141Close = (p) => readAtClose('V141', p);
-export const readAtV15Close  = (p) => readAtClose('V15',  p);
-export const readAtV16Close  = (p) => readAtClose('V16',  p);
-export const readAtV17Close  = (p) => readAtClose('V17',  p);
+export const readAtV141Close      = (p) => readAtClose('V141',         p);
+export const readAtV15Close       = (p) => readAtClose('V15',          p);
+export const readAtV16Close       = (p) => readAtClose('V16',          p);
+export const readAtV17Close       = (p) => readAtClose('V17',          p);
+export const readAtV17CloseGate   = (p) => readAtClose('V17_CLOSEGATE', p);

@@ -175,10 +175,163 @@ checks.push({
   }
 });
 
-// V-73-CONVERT-* assertions grow in Plan 73-02 as each HEAD-coupled assertion is converted.
-// Each entry asserts: (1) the file imports readAtV{15,16,17}Close from _lib/frozen-at-close.mjs,
-//                    (2) the validator name contains the [v1.X-frozen @ <SHA>] suffix.
-// [ stub — will be replaced with per-assertion entries in Plan 73-02 atomic commit ]
+// V-73-CONVERT-* assertions: one per RETRO-02-converted HEAD-coupled assertion. Each asserts:
+//   (1) the file imports readAtV{15,16,17}Close from _lib/frozen-at-close.mjs AND
+//   (2) the validator name carries the [v1.X-frozen @ <SHA>] suffix.
+// Grown in Plan 73-02 atomic commit (RETRO-02 per-validator HEAD-coupled assertion conversion).
+//
+// Conversions:
+//   V-61-17..20 (check-phase-61.mjs): readFile(MILESTONES_DOC) -> readAtV15Close + [v1.5-frozen @ ba2cbc0]
+//   V-67-05/06 (check-phase-67.mjs): wrong-pattern fix (literal OP-10 / VH heading) -> correct content pattern
+//     Root cause: plan design labels (OP-10, Version History heading) were not written into corpus files;
+//     correct patterns: "content token" callout (V-67-05) + SWEEP-02 date rows (V-67-06)
+
+checks.push({
+  id: 'CONVERT-61-17',
+  name: 'V-73-CONVERT-61-17: check-phase-61.mjs V-61-17 imports readAtV15Close and has v1.5-frozen suffix',
+  run() {
+    const content = readFile('scripts/validation/check-phase-61.mjs');
+    if (!content) return { pass: false, detail: 'check-phase-61.mjs not found' };
+    if (!content.includes('readAtV15Close') && !content.includes('frozen-at-close')) {
+      return { pass: false, detail: 'V-61-17 conversion: readAtV15Close import not found' };
+    }
+    if (!content.includes('[v1.5-frozen @ ba2cbc0]') || !content.match(/V-61-17.*v1\.5-frozen/)) {
+      return { pass: false, detail: 'V-61-17: [v1.5-frozen @ ba2cbc0] suffix missing from check name' };
+    }
+    return { pass: true, detail: 'V-61-17 frozen-aware conversion confirmed (readAtV15Close + suffix)' };
+  }
+});
+
+checks.push({
+  id: 'CONVERT-61-18',
+  name: 'V-73-CONVERT-61-18: check-phase-61.mjs V-61-18 imports readAtV15Close and has v1.5-frozen suffix',
+  run() {
+    const content = readFile('scripts/validation/check-phase-61.mjs');
+    if (!content) return { pass: false, detail: 'check-phase-61.mjs not found' };
+    if (!content.includes('readAtV15Close') && !content.includes('frozen-at-close')) {
+      return { pass: false, detail: 'V-61-18 conversion: readAtV15Close import not found' };
+    }
+    if (!content.match(/V-61-18.*v1\.5-frozen/)) {
+      return { pass: false, detail: 'V-61-18: [v1.5-frozen @ ba2cbc0] suffix missing from check name' };
+    }
+    return { pass: true, detail: 'V-61-18 frozen-aware conversion confirmed (readAtV15Close + suffix)' };
+  }
+});
+
+checks.push({
+  id: 'CONVERT-61-19',
+  name: 'V-73-CONVERT-61-19: check-phase-61.mjs V-61-19 imports readAtV15Close and has v1.5-frozen suffix',
+  run() {
+    const content = readFile('scripts/validation/check-phase-61.mjs');
+    if (!content) return { pass: false, detail: 'check-phase-61.mjs not found' };
+    if (!content.includes('readAtV15Close') && !content.includes('frozen-at-close')) {
+      return { pass: false, detail: 'V-61-19 conversion: readAtV15Close import not found' };
+    }
+    if (!content.match(/V-61-19.*v1\.5-frozen/)) {
+      return { pass: false, detail: 'V-61-19: [v1.5-frozen @ ba2cbc0] suffix missing from check name' };
+    }
+    return { pass: true, detail: 'V-61-19 frozen-aware conversion confirmed (readAtV15Close + suffix)' };
+  }
+});
+
+checks.push({
+  id: 'CONVERT-61-20',
+  name: 'V-73-CONVERT-61-20: check-phase-61.mjs V-61-20 imports readAtV15Close and has v1.5-frozen suffix',
+  run() {
+    const content = readFile('scripts/validation/check-phase-61.mjs');
+    if (!content) return { pass: false, detail: 'check-phase-61.mjs not found' };
+    if (!content.includes('readAtV15Close') && !content.includes('frozen-at-close')) {
+      return { pass: false, detail: 'V-61-20 conversion: readAtV15Close import not found' };
+    }
+    if (!content.match(/V-61-20.*v1\.5-frozen/)) {
+      return { pass: false, detail: 'V-61-20: [v1.5-frozen @ ba2cbc0] suffix missing from check name' };
+    }
+    return { pass: true, detail: 'V-61-20 frozen-aware conversion confirmed (readAtV15Close + suffix)' };
+  }
+});
+
+// V-67-05/06: COMPLEX_CONVERSION — wrong assertion patterns fixed (not wrong SHA).
+// Root cause: literal "OP-10" + "version history heading" were plan design labels not in corpus.
+// Correct assertions check actual SWEEP-02 content: "content token" callout + SWEEP-02 date rows.
+checks.push({
+  id: 'CONVERT-67-05',
+  name: 'V-73-CONVERT-67-05: check-phase-67.mjs V-67-05 has v1.7-frozen suffix and correct content-token assertion',
+  run() {
+    const content = readFile('scripts/validation/check-phase-67.mjs');
+    if (!content) return { pass: false, detail: 'check-phase-67.mjs not found' };
+    if (!content.includes('frozen-at-close') && !content.includes('readCorpusFileAtV17Close')) {
+      return { pass: false, detail: 'V-67-05: no frozen-aware read in check-phase-67.mjs' };
+    }
+    if (!content.match(/V-67-05.*v1\.7-frozen/)) {
+      return { pass: false, detail: 'V-67-05: [v1.7-frozen @ aa6de68] suffix missing from check name' };
+    }
+    if (!content.includes('Apple calls this artifact') && !content.includes('formerly "VPP location token"')) {
+      return { pass: false, detail: 'V-67-05: correct content-token callout pattern not found (expected "Apple calls this artifact" or "formerly VPP location token")' };
+    }
+    return { pass: true, detail: 'V-67-05 COMPLEX_CONVERSION pattern-fix confirmed (correct content-token callout + v1.7-frozen suffix)' };
+  }
+});
+
+checks.push({
+  id: 'CONVERT-67-06',
+  name: 'V-73-CONVERT-67-06: check-phase-67.mjs V-67-06 has v1.7-frozen suffix and correct VH date-row assertion',
+  run() {
+    const content = readFile('scripts/validation/check-phase-67.mjs');
+    if (!content) return { pass: false, detail: 'check-phase-67.mjs not found' };
+    if (!content.includes('frozen-at-close') && !content.includes('readCorpusFileAtV17Close')) {
+      return { pass: false, detail: 'V-67-06: no frozen-aware read in check-phase-67.mjs' };
+    }
+    if (!content.match(/V-67-06.*v1\.7-frozen/)) {
+      return { pass: false, detail: 'V-67-06: [v1.7-frozen @ aa6de68] suffix missing from check name' };
+    }
+    if (!content.includes('2026-05-26.*SWEEP-02') && !content.includes('SWEEP-02')) {
+      return { pass: false, detail: 'V-67-06: SWEEP-02 date-row assertion pattern not found' };
+    }
+    return { pass: true, detail: 'V-67-06 COMPLEX_CONVERSION pattern-fix confirmed (SWEEP-02 date rows + v1.7-frozen suffix)' };
+  }
+});
+
+// V-70-24: Rule 1 bug fix (Plan 73-02 out-of-inventory, required for CHAIN-70 PASS).
+// V-70-24 used readProjectAtV17Close() (aa6de68) but PROJECT.md at aa6de68 has only 7/12 v1.7 reqs;
+// the remaining 5 were added in Plan 70-05 Commit B (4df3a16 = true v1.7 close-gate).
+// Fix: ADD readProjectAtV17CloseGate() helper (4df3a16) + V17_CLOSEGATE to _lib/frozen-at-close.mjs.
+checks.push({
+  id: 'CONVERT-70-24',
+  name: 'V-73-CONVERT-70-24: check-phase-70.mjs V-70-24 uses 4df3a16 close-gate SHA (readProjectAtV17CloseGate) for 12/12 v1.7 reqs',
+  run() {
+    const content = readFile('scripts/validation/check-phase-70.mjs');
+    if (!content) return { pass: false, detail: 'check-phase-70.mjs not found' };
+    if (!content.includes('readProjectAtV17CloseGate')) {
+      return { pass: false, detail: 'V-70-24: readProjectAtV17CloseGate helper not found (should use 4df3a16 close-gate)' };
+    }
+    if (!content.includes('4df3a16')) {
+      return { pass: false, detail: 'V-70-24: 4df3a16 SHA not referenced in check-phase-70.mjs' };
+    }
+    if (!content.match(/V-70-24.*close-gate/)) {
+      return { pass: false, detail: 'V-70-24: check name does not reference close-gate SHA (expected v1.7-close-gate @ 4df3a16)' };
+    }
+    return { pass: true, detail: 'V-70-24 close-gate fix confirmed (readProjectAtV17CloseGate @ 4df3a16)' };
+  }
+});
+
+checks.push({
+  id: 'CONVERT-LIB-V17-CLOSEGATE',
+  name: 'V-73-CONVERT-LIB-V17-CLOSEGATE: _lib/frozen-at-close.mjs has V17_CLOSEGATE: 4df3a16 entry + readAtV17CloseGate export',
+  run() {
+    const content = readFile('scripts/validation/_lib/frozen-at-close.mjs');
+    if (!content) return { pass: false, detail: '_lib/frozen-at-close.mjs not found' };
+    if (!content.includes("V17_CLOSEGATE: '4df3a16'") && !content.includes('V17_CLOSEGATE:')) {
+      return { pass: false, detail: 'V17_CLOSEGATE key missing from MILESTONE_CLOSE_SHAS' };
+    }
+    if (!content.includes('4df3a16')) {
+      return { pass: false, detail: '4df3a16 SHA not present in _lib/frozen-at-close.mjs' };
+    }
+    if (!content.includes('readAtV17CloseGate')) {
+      return { pass: false, detail: 'readAtV17CloseGate convenience export missing' };
+    }
+    return { pass: true, detail: 'V17_CLOSEGATE: 4df3a16 + readAtV17CloseGate export present (additive, non-breaking)' };
+  }
+});
 
 // === V-73-CHAIN-NN: chain regression-guards for check-phase-{48..72}.mjs ===
 // NESTED-aware optimization (CHECK_PHASE_NESTED=1) prevents polynomial wall-clock blowup when

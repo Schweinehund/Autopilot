@@ -17,6 +17,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { readAtV15Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -282,67 +283,63 @@ const checks = [
     }
   },
 
-  // === V-61-17..20: MILESTONES.md v1.5 entry ===
+  // === V-61-17..20: MILESTONES.md v1.5 entry (v1.5-frozen @ ba2cbc0) ===
   {
-    id: 17, name: "V-61-17: MILESTONES.md has `## v1.5 Linux Platform` H2 as top entry",
+    id: 17, name: "V-61-17: MILESTONES.md has `## v1.5 Linux Platform` H2 as top entry [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(MILESTONES_DOC);
-      if (c === null) return { pass: false, detail: 'MILESTONES.md missing' };
+      const c = readAtV15Close('.planning/MILESTONES.md');
       // Top entry: first ## H2 after the # H1 should be v1.5
       const h2s = c.match(/^## .+$/gm);
-      if (!h2s || h2s.length === 0) return { pass: false, detail: 'no ## H2 entries' };
-      if (!h2s[0].includes('v1.5')) return { pass: false, detail: 'top H2 is not v1.5: ' + h2s[0] };
-      return { pass: true, detail: 'top H2: ' + h2s[0] };
+      if (!h2s || h2s.length === 0) return { pass: false, detail: 'no ## H2 entries [v1.5-frozen @ ba2cbc0]' };
+      if (!h2s[0].includes('v1.5')) return { pass: false, detail: 'top H2 is not v1.5: ' + h2s[0] + ' [v1.5-frozen @ ba2cbc0]' };
+      return { pass: true, detail: 'top H2: ' + h2s[0] + ' [v1.5-frozen @ ba2cbc0]' };
     }
   },
   {
-    id: 18, name: "V-61-18: MILESTONES.md v1.5 entry has Phases completed line",
+    id: 18, name: "V-61-18: MILESTONES.md v1.5 entry has Phases completed line [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(MILESTONES_DOC);
-      if (c === null) return { pass: false, detail: 'MILESTONES.md missing' };
+      const c = readAtV15Close('.planning/MILESTONES.md');
       // Use slice-based extraction: from ## v1.5 to the next top-level ## (after ---)
       const v15Start = c.indexOf('## v1.5 ');
-      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found' };
+      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found [v1.5-frozen @ ba2cbc0]' };
       // Find next ## H2 heading at start of line that comes AFTER the --- separator
       const afterSep = c.indexOf('\n---\n', v15Start);
       const nextH2 = afterSep > 0 ? c.indexOf('\n## ', afterSep) : c.indexOf('\n## ', v15Start + 10);
       const sub = nextH2 > 0 ? c.slice(v15Start, nextH2) : c.slice(v15Start);
-      if (!/\*\*Phases completed:\*\*/m.test(sub)) return { pass: false, detail: 'Phases completed line missing' };
-      return { pass: true, detail: 'Phases completed line present' };
+      if (!/\*\*Phases completed:\*\*/m.test(sub)) return { pass: false, detail: 'Phases completed line missing [v1.5-frozen @ ba2cbc0]' };
+      return { pass: true, detail: 'Phases completed line present [v1.5-frozen @ ba2cbc0]' };
     }
   },
   {
-    id: 19, name: "V-61-19: MILESTONES.md v1.5 entry has Key accomplishments + Methodology highlights subsections",
+    id: 19, name: "V-61-19: MILESTONES.md v1.5 entry has Key accomplishments + Methodology highlights subsections [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(MILESTONES_DOC);
-      if (c === null) return { pass: false, detail: 'MILESTONES.md missing' };
+      const c = readAtV15Close('.planning/MILESTONES.md');
       const v15Start = c.indexOf('## v1.5 ');
-      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found' };
+      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found [v1.5-frozen @ ba2cbc0]' };
       const afterSep = c.indexOf('\n---\n', v15Start);
       const nextH2 = afterSep > 0 ? c.indexOf('\n## ', afterSep) : c.indexOf('\n## ', v15Start + 10);
       const sub = nextH2 > 0 ? c.slice(v15Start, nextH2) : c.slice(v15Start);
       const issues = [];
-      if (!/\*\*Key accomplishments:\*\*/m.test(sub)) issues.push('Key accomplishments missing');
-      if (!/\*\*Methodology highlights:\*\*/m.test(sub)) issues.push('Methodology highlights missing');
+      if (!/\*\*Key accomplishments:\*\*/m.test(sub)) issues.push('Key accomplishments missing [v1.5-frozen @ ba2cbc0]');
+      if (!/\*\*Methodology highlights:\*\*/m.test(sub)) issues.push('Methodology highlights missing [v1.5-frozen @ ba2cbc0]');
       if (issues.length > 0) return { pass: false, detail: issues.join('; ') };
-      return { pass: true, detail: 'Key accomplishments + Methodology highlights present' };
+      return { pass: true, detail: 'Key accomplishments + Methodology highlights present [v1.5-frozen @ ba2cbc0]' };
     }
   },
   {
-    id: 20, name: "V-61-20: MILESTONES.md v1.5 entry cites v1.4.1 deferred items closed (DEFER-07 + DEFER-08)",
+    id: 20, name: "V-61-20: MILESTONES.md v1.5 entry cites v1.4.1 deferred items closed (DEFER-07 + DEFER-08) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(MILESTONES_DOC);
-      if (c === null) return { pass: false, detail: 'MILESTONES.md missing' };
+      const c = readAtV15Close('.planning/MILESTONES.md');
       const v15Start = c.indexOf('## v1.5 ');
-      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found' };
+      if (v15Start < 0) return { pass: false, detail: '## v1.5 not found [v1.5-frozen @ ba2cbc0]' };
       const afterSep = c.indexOf('\n---\n', v15Start);
       const nextH2 = afterSep > 0 ? c.indexOf('\n## ', afterSep) : c.indexOf('\n## ', v15Start + 10);
       const sub = nextH2 > 0 ? c.slice(v15Start, nextH2) : c.slice(v15Start);
       const issues = [];
-      if (!/DEFER-07/.test(sub)) issues.push('DEFER-07 not cited');
-      if (!/DEFER-08/.test(sub)) issues.push('DEFER-08 not cited');
+      if (!/DEFER-07/.test(sub)) issues.push('DEFER-07 not cited [v1.5-frozen @ ba2cbc0]');
+      if (!/DEFER-08/.test(sub)) issues.push('DEFER-08 not cited [v1.5-frozen @ ba2cbc0]');
       if (issues.length > 0) return { pass: false, detail: issues.join('; ') };
-      return { pass: true, detail: 'DEFER-07 + DEFER-08 cited' };
+      return { pass: true, detail: 'DEFER-07 + DEFER-08 cited [v1.5-frozen @ ba2cbc0]' };
     }
   }
 ];

@@ -158,9 +158,12 @@ const checks = [
     }
   },
 
-  // === V-67-05: SWEEP-02 OP-10 callouts — 2 first-mention-per-H2 OP-10 callouts present in renamed files [v1.7-frozen @ aa6de68] ===
+  // === V-67-05: SWEEP-02 content-token callouts — 2 Apple-vs-Intune label disambiguation callouts [v1.7-frozen @ aa6de68] ===
+  // Root-cause correction (Plan 73-02 RETRO-02): original assertion searched for literal "OP-10" which
+  // is a PITFALLS.md pattern label, not a string written into corpus files. Correct check: assert the
+  // actual Note callout inserted by SWEEP-02 commit 55260b3 above each Renewal/Maintenance table.
   {
-    id: 5, name: 'V-67-05: SWEEP-02 OP-10 first-mention-per-H2 callouts — 2 callouts across affected files [v1.7-frozen @ aa6de68]',
+    id: 5, name: 'V-67-05: SWEEP-02 content-token Apple-vs-Intune callouts — 2 callouts across affected files [v1.7-frozen @ aa6de68]',
     run() {
       const FILES = [
         'docs/admin-setup-ios/05-app-deployment.md',
@@ -171,23 +174,28 @@ const checks = [
       for (const path of FILES) {
         const c = readCorpusFileAtV17Close(path);
         if (c === null) { nullCount++; continue; }
-        // Count OP-10 callout occurrences (any form: "OP-10" label appears in callout context)
-        const matches = (c.match(/OP-10/g) || []).length;
-        if (matches > 0) total++;
+        // Assert the actual Apple-vs-Intune disambiguation callout inserted by SWEEP-02
+        if (/Apple calls this artifact a "content token"/.test(c) || /formerly "VPP location token"/.test(c)) {
+          total++;
+        }
       }
       if (nullCount === FILES.length) {
         return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       if (total < 2) {
-        return { pass: false, detail: 'expected OP-10 callouts in 2 files; got ' + total };
+        return { pass: false, detail: 'expected content-token callouts in 2 files; got ' + total + ' [v1.7-frozen @ aa6de68]' };
       }
-      return { pass: true, detail: total + ' files carry OP-10 callouts (v1.7-frozen)' };
+      return { pass: true, detail: total + ' files carry content-token Apple-vs-Intune callouts [v1.7-frozen @ aa6de68]' };
     }
   },
 
-  // === V-67-06: SWEEP-02 Version History rows — 2 VH rows + glossary coord row [v1.7-frozen @ aa6de68] ===
+  // === V-67-06: SWEEP-02 Version History rows — 2 VH date rows + glossary coord row [v1.7-frozen @ aa6de68] ===
+  // Root-cause correction (Plan 73-02 RETRO-02): original assertion checked for "version history" heading
+  // which the deployment docs do NOT have. The docs use a bare tail table (| Date | Change | Author |)
+  // with NO ## Version History H2. Correct check: assert the 2026-05-26 SWEEP-02 change row in the
+  // tail table and the glossary's ## Version History heading.
   {
-    id: 6, name: 'V-67-06: SWEEP-02 Version History rows — 2 VH rows across affected files + glossary cross-ref [v1.7-frozen @ aa6de68]',
+    id: 6, name: 'V-67-06: SWEEP-02 Version History tail rows — 2 date rows (2026-05-26) + glossary VH section [v1.7-frozen @ aa6de68]',
     run() {
       const FILES = [
         'docs/admin-setup-ios/05-app-deployment.md',
@@ -199,8 +207,9 @@ const checks = [
       for (const path of FILES) {
         const c = readCorpusFileAtV17Close(path);
         if (c === null) { nullCount++; continue; }
-        // Detect Version History section/heading (broad markdown pattern)
-        if (/version history/i.test(c) || /^##.*history/im.test(c)) {
+        // Deploy docs: tail table row with 2026-05-26 SWEEP-02 change
+        // Glossary: ## Version History heading
+        if (/2026-05-26.*SWEEP-02/.test(c) || /## Version History/.test(c)) {
           withVH++;
         }
       }
@@ -208,9 +217,9 @@ const checks = [
         return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
       }
       if (withVH < 2) {
-        return { pass: false, detail: 'expected >= 2 files with Version History; got ' + withVH };
+        return { pass: false, detail: 'expected >= 2 files with SWEEP-02 VH entries; got ' + withVH + ' [v1.7-frozen @ aa6de68]' };
       }
-      return { pass: true, detail: withVH + '/' + (FILES.length - nullCount) + ' files carry Version History markers (v1.7-frozen)' };
+      return { pass: true, detail: withVH + '/' + (FILES.length - nullCount) + ' files carry SWEEP-02 VH entries [v1.7-frozen @ aa6de68]' };
     }
   },
 

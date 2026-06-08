@@ -99,6 +99,18 @@ function readProjectAtV17Close() {
   }
 }
 
+// Reads PROJECT.md at v1.7 true close-gate SHA 4df3a16 (Plan 70-05 Commit B).
+// Added by Plan 73-02 RETRO-02 (Rule 1 bug fix): V-70-24 used readProjectAtV17Close() (aa6de68)
+// but PROJECT.md at aa6de68 only has 7/12 v1.7 reqs (the remaining 5 were added in Commit B
+// 4df3a16 = true close-gate). ADD-not-MODIFY per D-02 carve-out (new helper alongside existing).
+function readProjectAtV17CloseGate() {
+  try {
+    return execFileSync('git', ['show', '4df3a16:.planning/PROJECT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
+  } catch (err) {
+    return null;
+  }
+}
+
 const HARNESS         = 'scripts/validation/v1.7-milestone-audit.mjs';
 const ALLOWLIST       = 'scripts/validation/v1.7-audit-allowlist.json';
 const PIN_HELPER      = 'scripts/validation/regenerate-supervision-pins.mjs';
@@ -496,19 +508,22 @@ checks.push({
   }
 });
 
-// === V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-frozen @ aa6de68] ===
+// === V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-close-gate @ 4df3a16] ===
+// Plan 73-02 RETRO-02 fix: rewired from readProjectAtV17Close() (aa6de68) to readProjectAtV17CloseGate()
+// (4df3a16) because the 12 v1.7 traceability rows were added in Plan 70-05 Commit B (4df3a16), not at
+// Atom 2 aa6de68. Reading aa6de68 returns only 7/12 rows (CHAIN-01..03 + HARNESS-01..04 missing from Atom 2 state).
 checks.push({
-  id: 24, name: 'V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-frozen @ aa6de68]',
+  id: 24, name: 'V-70-24: Traceability closure PROJECT.md Validated section has 12 v1.7 rows [v1.7-close-gate @ 4df3a16]',
   run() {
-    const c = readProjectAtV17Close();
+    const c = readProjectAtV17CloseGate();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: true, skipped: true, detail: 'chicken-and-egg: 4df3a16 (Plan 70-05 Commit B) not resolvable; check git history' };
     }
     // Identify v1.7 requirement IDs (SWEEP-01/02 + CHAIN-01/02/03 + CILINUX-01 + HARNESS-01..06 = 12)
     const REQS_V17 = ['SWEEP-01', 'SWEEP-02', 'CHAIN-01', 'CHAIN-02', 'CHAIN-03', 'CILINUX-01', 'HARNESS-01', 'HARNESS-02', 'HARNESS-03', 'HARNESS-04', 'HARNESS-05', 'HARNESS-06'];
     const validated = REQS_V17.filter(r => c.includes(r));
-    if (validated.length < 12) return { pass: false, detail: 'PROJECT.md mentions only ' + validated.length + '/12 v1.7 requirements' };
-    return { pass: true, detail: '12/12 v1.7 requirements present in PROJECT.md' };
+    if (validated.length < 12) return { pass: false, detail: 'PROJECT.md mentions only ' + validated.length + '/12 v1.7 requirements [v1.7-close-gate @ 4df3a16]' };
+    return { pass: true, detail: '12/12 v1.7 requirements present in PROJECT.md [v1.7-close-gate @ 4df3a16]' };
   }
 });
 
