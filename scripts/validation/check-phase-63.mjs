@@ -319,10 +319,11 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
         return { pass: true, detail: 'check-phase-' + phaseNum + ' exits 0' };
       } catch (err) {
         const stderr = err.stderr ? err.stderr.toString() : '';
+        const stdout = err.stdout ? err.stdout.toString() : '';
         const isMissing = err.code === 'ENOENT' || err.status === 127
           || stderr.includes('not found') || stderr.includes('Could not resolve');
         if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-        return { pass: false, detail: 'check-phase-' + phaseNum + ' FAIL: ' + stderr.slice(0, 200) };
+        return { pass: false, detail: 'check-phase-' + phaseNum + ' FAIL: ' + (stdout + stderr).slice(0, 500).trim() };
       }
     }
   });
