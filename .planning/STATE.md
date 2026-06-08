@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.8
 milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
 status: executing
-stopped_at: Plan 73-01 complete — awaiting Plan 73-02 RETRO-02 conversion
-last_updated: "2026-06-08T15:00:00.000Z"
-last_activity: 2026-06-08 -- Plan 73-01 atomic commit d2b8917 landed (9 files)
+stopped_at: Phase 73 context gathered
+last_updated: "2026-06-08T16:10:08.176Z"
+last_activity: 2026-06-08
 progress:
   total_phases: 4
   completed_phases: 2
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 ## Current Position
 
 Phase: 73 (Retrospective Forward-Port (Pillar C)) — EXECUTING
-Plan: 2 of 3
-Status: Executing Phase 73
-Last activity: 2026-06-08 -- Plan 73-01 atomic commit d2b8917 (RETRO-01 inventory + 8 wrapper folds + _lib/frozen-at-close + check-phase-73 stub)
+Plan: 3 of 3
+Status: Ready to execute
+Last activity: 2026-06-08
 
 ## v1.7 Phase Dependency Summary
 
@@ -233,9 +233,9 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-06-08T13:12:54.528Z
+Last session: 2026-06-08T16:10:08.155Z
 Stopped at: Phase 73 context gathered
-Resume file: .planning/phases/73-retrospective-forward-port-pillar-c/73-CONTEXT.md
+Resume file: None
 Next action: User runs `/gsd-discuss-phase 72` (Pillar B — CHAIN-WRAPPER-01 surgical fix at `scripts/validation/check-phase-66.mjs:313` chain-apex wrapper stderr→stdout+stderr capture per `v1.7-DEFERRED-CLEANUP.md:160-192` fix recommendation) OR `/gsd-plan-phase 72` to skip discussion and plan directly. Phase 72 entry-state ready: vendored extractor in place at `scripts/archive/extract-summary-oneliners.mjs` + MILESTONES.md clean (V-71-MILESTONES-01 PASS on HEAD) + CHAIN_SKIP = [] preserved + V-71-FIX-01/02 + V-71-AUDIT + V-71-SELF all PASS + ARCHIVE-UPSTREAM-01 + CHAIN-DEGRADED-AT-HEAD-01 stubs in `v1.8-DEFERRED-CLEANUP.md` for Phase 74 HARNESS-12 finalization. 8 pre-existing chain FAILs (V-71-CHAIN-{61..67, 70}) are NOT Phase 72 blockers — they route to Phase 73 Pillar C SCOPE-GAP-RETRO-01 scope.
 
 ## Decisions

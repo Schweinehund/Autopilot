@@ -24,7 +24,7 @@
 
 - [ ] **RETRO-01**: Class-wide scan of `scripts/validation/check-phase-{48..66}.mjs` (19 validators) for HEAD-coupled assertions whose validator name or docstring cites a milestone-close state (e.g., "4 stale rows reconciled per Plan 61-02", "deferred items LIN-DEFER-01..", "Methodology highlights from v1.5 close") but whose implementation reads HEAD via `readFile()`. Produce per-validator class signature inventory + assessment of conversion scope. Per `v1.7-DEFERRED-CLEANUP.md:127, 132`.
 
-- [ ] **RETRO-02**: Per-validator conversion of identified HEAD-coupled assertions to v1.5/v1.6/v1.7-frozen-aware via SHA-pinned helpers parallel to existing `readRequirementsAtV15Close()` / `readRoadmapAtV15Close()` / `readCorpusFileAtV17Close()`. Mechanism: `execFileSync('git', ['show', '<frozen-SHA>:<path>'])` per milestone-close. Per-assertion freshness routing follows v1.7 D-01 LOCKED Option C convention (per-V-NN-NN matrix). Scope-discipline guardrail: if scan surfaces SCOPE-GAP-class discovery beyond initial inventory, route to v1.9+ rather than ballooning v1.8.
+- [x] **RETRO-02**: Per-validator conversion of identified HEAD-coupled assertions to v1.5/v1.6/v1.7-frozen-aware via SHA-pinned helpers parallel to existing `readRequirementsAtV15Close()` / `readRoadmapAtV15Close()` / `readCorpusFileAtV17Close()`. Mechanism: `execFileSync('git', ['show', '<frozen-SHA>:<path>'])` per milestone-close. Per-assertion freshness routing follows v1.7 D-01 LOCKED Option C convention (per-V-NN-NN matrix). Scope-discipline guardrail: if scan surfaces SCOPE-GAP-class discovery beyond initial inventory, route to v1.9+ rather than ballooning v1.8.
 
 ### Pillar D — v1.8 Audit Harness Lineage Bump + Milestone Close
 
