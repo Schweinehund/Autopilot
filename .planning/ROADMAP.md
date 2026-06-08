@@ -375,7 +375,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   5. 4-doc traceability closure completes: 12 v1.8 requirements flipped Active->Validated with closing commit SHAs across PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md; predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 workflows + harnesses + sidecars remain BYTE-UNCHANGED through close-gate commit
 **Entry-state from Phase 73 (closed 2026-06-08):** clean chain (V-72-CHAIN-{61..67,70} PASS; 39 PASS / 0 FAIL / 1 SKIPPED); `_lib/frozen-at-close.mjs` available (MILESTONE_CLOSE_SHAS V141/V15/V16/V17/V17_CLOSEGATE); check-phase-73.mjs Path-A source ready for HARNESS-09 check-phase-74.mjs; CHAIN-DEGRADED-AT-HEAD-01 CLOSED; 3 NEW v1.9+ stubs in v1.8-DEFERRED-CLEANUP.md for HARNESS-12 finalization (HELPER-SPAWN-STDERR-01 + FROZEN-AWARE-ADOPTION-SWEEP-01 + EXEC-FAIL-DETAIL-EXTRACTION-01); 5/12 v1.8 requirements complete (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01 + RETRO-01 + RETRO-02); predecessor v1.4..v1.7 frozen surfaces BYTE-UNCHANGED.
 
-**Plans**: TBD
+**Plans:** 5 plans
+
+- [ ] 74-01-PLAN.md — VPP-01 4-site rename (D-02 override of REQ 3 sites) + 74-CONVENTIONS.md freshness/SHA matrix (Wave 1)
+- [ ] 74-02-PLAN.md — Atom 1: v1.8-milestone-audit.mjs + v1.8-audit-allowlist.json (4 post-VPP entries) + BASELINE_12 (3 files, one indivisible commit) — HARNESS-07/08 (Wave 2)
+- [ ] 74-03-PLAN.md — Atom 2: check-phase-74.mjs (Path-A chain-apex + V-74-VPP) + audit-harness-v1.8-integrity.yml (5th coexistence file); pushed to origin/master — HARNESS-09/10 (Wave 3)
+- [ ] 74-04-PLAN.md — HARNESS-11 3-axis terminal re-audit (fresh-clone sub-agent + Linux GHA; cross-OS EXACT MATCH across 6 validators); artifact-only 74-04-AUDIT-RESULTS.md (Wave 4)
+- [ ] 74-05-PLAN.md — HARNESS-12 close-gate: SINGLE commit (NO Commit A) — v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md finalize + 4-doc traceability flip (12/12) + 74-VERIFICATION.md (Wave 5)
 
 
 ## Progress
