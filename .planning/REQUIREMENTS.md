@@ -28,9 +28,9 @@
 
 ### Pillar D — v1.8 Audit Harness Lineage Bump + Milestone Close
 
-- [ ] **HARNESS-07**: `scripts/validation/v1.8-milestone-audit.mjs` Path-A copy from `v1.7-milestone-audit.mjs` with C1-C13 + C14/C15/C16 preserved verbatim. Lineage extends v1.4 → v1.4.1 → v1.5 → v1.6 → v1.7 → v1.8 (6th milestone). Self-test 9/9 PASS preserved.
+- [x] **HARNESS-07**: `scripts/validation/v1.8-milestone-audit.mjs` Path-A copy from `v1.7-milestone-audit.mjs` with C1-C13 + C14/C15/C16 preserved verbatim. Lineage extends v1.4 → v1.4.1 → v1.5 → v1.6 → v1.7 → v1.8 (6th milestone). Self-test 9/9 PASS preserved.
 
-- [ ] **HARNESS-08**: `scripts/validation/v1.8-audit-allowlist.json` Path-A copy from `v1.7-audit-allowlist.json` with `c13_rotting_external` reset for v1.8 (CI-1/CI-2 entries reflect Phase 67 SWEEP-01/02 closed state + post-VPP-3-sites annotations); sidecar shape preserved; `quarterly_audit` metadata carried forward (cadence `0 8 1 1,4,7,10 *`). BASELINE_12 freshness comment added to `regenerate-supervision-pins.mjs` (closes BASELINE_11 v1.7 carry-over per per-milestone AUDIT-14-equivalent contract).
+- [x] **HARNESS-08**: `scripts/validation/v1.8-audit-allowlist.json` Path-A copy from `v1.7-audit-allowlist.json` with `c13_rotting_external` reset for v1.8 (CI-1/CI-2 entries reflect Phase 67 SWEEP-01/02 closed state + post-VPP-3-sites annotations); sidecar shape preserved; `quarterly_audit` metadata carried forward (cadence `0 8 1 1,4,7,10 *`). BASELINE_12 freshness comment added to `regenerate-supervision-pins.mjs` (closes BASELINE_11 v1.7 carry-over per per-milestone AUDIT-14-equivalent contract).
 
 - [ ] **HARNESS-09**: Per-phase validators `check-phase-71.mjs..check-phase-74.mjs` ship as deliverables (validator-as-deliverable pattern from v1.3+). Each is Path-A from `check-phase-70.mjs` with phase-specific V-NN-NN assertions for that phase's deliverables. CHAIN_PHASES does NOT include the validator's own phase (V-NN-SELF guard per `check-phase-65.mjs:151` precedent). Per-assertion-class freshness routing per D-01 LOCKED Option C (per-V-NN-NN matrix).
 
