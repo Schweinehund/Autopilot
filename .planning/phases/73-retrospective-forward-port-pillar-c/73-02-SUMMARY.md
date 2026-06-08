@@ -28,6 +28,7 @@ metrics:
   tasks_completed: 3
   files_changed: 5
   completed_date: "2026-06-08"
+one-liner: "Atomic SC#4 landing of RETRO-02 frozen-aware conversion (6 assertion fixes across check-phase-{61,67,70}.mjs + V17_CLOSEGATE entry in _lib/frozen-at-close.mjs + 8-entry V-73-CONVERT-NN grow in check-phase-73.mjs), closing all 8 CHAIN-DEGRADED-AT-HEAD-01 FAILs in ONE SHA (`a85da77`)."
 ---
 
 # Phase 73 Plan 02: RETRO-02 Per-Validator HEAD-Coupled Assertion Conversion Summary

@@ -31,6 +31,7 @@ metrics:
   completed: "2026-06-06"
   tasks: 5
   files: 7
+one-liner: "Uniform stdout+stderr capture fix at 6 CHAIN-wrapper sites in check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator (self-dogfood, FIXED_FILES=[66..72]), landing as atomic SHA `d374095` per SC#4 byte-exact contract."
 ---
 
 # Phase 72 Plan 01: WRAPPER-01 Chain-Apex stdout+stderr Capture Summary

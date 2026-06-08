@@ -1,7 +1,7 @@
 # REQUIREMENTS — v1.8 Tooling Debt Closure + Chain-Resilience Hardening
 
 **Milestone:** v1.8
-**Status:** Active (defined 2026-06-03; awaiting roadmap)
+**Status:** CLOSED (all 12 requirements Validated 2026-06-08; Phase 74 Plan 74-05 close-gate `{phase_74_close_SHA}`)
 **Goal:** Close v1.7 tooling debt — fix archive-automation root cause, harden chain-validator diagnostic surface, forward-port HEAD-coupled chain validators to frozen-aware pattern, close Phase 67 SWEEP-02 carry-over, bump audit harness lineage v1.7 → v1.8.
 
 **Phase numbering:** Continues from v1.7 close (Phase 70) → v1.8 spans Phase 71+ (4 phases estimated)
@@ -36,13 +36,13 @@
 
 - [x] **HARNESS-10**: `.github/workflows/audit-harness-v1.8-integrity.yml` Path-A from v1.7 with v1.8-scoped path-filter + 2 crons preserved + new validator jobs check-phase-71..74. Fourth parallel coexistence file (coexists with v1.4/v1.5/v1.6/v1.7 workflows zero modifications). `fetch-depth: 0` on linux-chain-ubuntu-latest checkout step preserved per FETCH-DEPTH-01 inheritance. PR-blocking per D-A9 (only `pin-helper-advisory` retains `continue-on-error: true`).
 
-- [ ] **HARNESS-11**: 3-axis terminal re-audit at v1.8 close (HARNESS-05 v1.7 precedent extended). Axis 1: local fresh `git clone --no-hardlinks` into `$env:TEMP\v1.8-audit-<rand>` via fresh `gsd-executor` sub-agent (D-03 LOCKED + D-22 INTENT). Axis 2: cross-OS Linux GHA `workflow_dispatch` of `audit-harness-v1.8-integrity.yml`. Axis 3: fresh sub-agent (zero context-carryover from content phases). Cross-OS PASS-Count EXACT MATCH required across all cross-OS-applicable validators.
+- [x] **HARNESS-11**: 3-axis terminal re-audit at v1.8 close (HARNESS-05 v1.7 precedent extended). Axis 1: local fresh `git clone --no-hardlinks` into `$env:TEMP\v1.8-audit-<rand>` via fresh `gsd-executor` sub-agent (D-03 LOCKED + D-22 INTENT). Axis 2: cross-OS Linux GHA `workflow_dispatch` of `audit-harness-v1.8-integrity.yml`. Axis 3: fresh sub-agent (zero context-carryover from content phases). Cross-OS PASS-Count EXACT MATCH required across all cross-OS-applicable validators. **CLOSED Phase 74 Plan 74-04 artifact-only SHA `af15242` (74-04-AUDIT-RESULTS.md; cross-OS EXACT MATCH confirmed 30/0/1 == 30/0/1 across 6 validators; GHA run 27167245009 success).**
 
-- [ ] **HARNESS-12**: `.planning/milestones/v1.8-MILESTONE-AUDIT.md` authored Path-A from v1.7 with 3-axis Auditor-Independence Verification + NEW Discoveries Surfaced During Execution section + Requirements Traceability + Sign-off /gsd-complete-milestone hand-off (including ARCHIVE-01 recurrence-check now PRE-VERIFIED by v1.8 Pillar A). `.planning/milestones/v1.8-DEFERRED-CLEANUP.md` FINALIZED with v1.7 carry-overs promoted to full sections (CI-3 + Multi-tenant + ABDevice API + per-OU CRD + Account Holder + ASM) + any v1.8 retrospective discoveries beyond scope. 4-doc traceability closure across PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md.
+- [x] **HARNESS-12**: `.planning/milestones/v1.8-MILESTONE-AUDIT.md` authored Path-A from v1.7 with 3-axis Auditor-Independence Verification + NEW Discoveries Surfaced During Execution section + Requirements Traceability + Sign-off /gsd-complete-milestone hand-off (including ARCHIVE-01 recurrence-check now PRE-VERIFIED by v1.8 Pillar A). `.planning/milestones/v1.8-DEFERRED-CLEANUP.md` FINALIZED with v1.7 carry-overs promoted to full sections (CI-3 + Multi-tenant + ABDevice API + per-OU CRD + Account Holder + ASM) + any v1.8 retrospective discoveries beyond scope. 4-doc traceability closure across PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md. **CLOSED Phase 74 Plan 74-05 close-gate `{phase_74_close_SHA}` (recoverable via `git log --all --grep="74-05" --grep="close-gate" --all-match -1 --format=%H`).**
 
 ### Pillar D Carry-Over
 
-- [x] **VPP-01**: 3 VPP-location-token sites in `docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md` (lines 115, 149, 155) surgically renamed to "content token" form per PITFALLS:657 first-mention-per-H2 convention. Mirrors Phase 67 SWEEP-02 atomic-within-plan pattern (D-03 line rewrites + Version History rows + sidecar annotation; PITFALL-6 anchor inventory pre-edit). Phase 67 SWEEP-02 carry-over per `v1.7-DEFERRED-CLEANUP.md:208-223`.
+- [x] **VPP-01**: 4 VPP-location-token sites in `docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md` (lines 115, 149, 155, 160 — note: headline originally said "3 sites" but `v1.7-DEFERRED-CLEANUP.md:213` records L160 as the 4th; D-02 user-approved 4-site rename 2026-06-08) surgically renamed to "content token" form per PITFALLS:657 first-mention-per-H2 convention. Mirrors Phase 67 SWEEP-02 atomic-within-plan pattern (D-03 line rewrites + Version History rows + sidecar annotation; PITFALL-6 anchor inventory pre-edit). Phase 67 SWEEP-02 carry-over per `v1.7-DEFERRED-CLEANUP.md:208-223`. **CLOSED Phase 74 Plan 74-01 commit `be48583` (4-site rename; zero legacy leak confirmed).**
 
 ---
 
@@ -82,15 +82,15 @@ These are tracked in `v1.7-DEFERRED-CLEANUP.md` and will carry into `v1.8-DEFERR
 | WRAPPER-01 | check-phase-66.mjs:313 stdout+stderr capture | Phase 72 | Complete (closing SHA `d374095`) |
 | RETRO-01 | HEAD-coupled assertion class-wide scan | Phase 73 | Complete (closing SHA `d2b8917` + Plan 73-03 close-gate) |
 | RETRO-02 | Per-validator conversion to frozen-aware | Phase 73 | Complete (closing SHA `a85da77` + Plan 73-03 close-gate) |
-| HARNESS-07 | v1.8-milestone-audit.mjs Path-A copy | Phase 74 | Pending |
-| HARNESS-08 | v1.8-audit-allowlist.json + BASELINE_12 | Phase 74 | Pending |
-| HARNESS-09 | check-phase-71..74.mjs per-phase validators | Phase 74 | Pending |
-| HARNESS-10 | audit-harness-v1.8-integrity.yml workflow | Phase 74 | Pending |
-| HARNESS-11 | 3-axis terminal re-audit at v1.8 close | Phase 74 | Pending |
-| HARNESS-12 | v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md + 4-doc traceability | Phase 74 | Pending |
-| VPP-01 | 3 VPP-location-token sites in app-lifecycle/02-macos-pkg-dmg-pipeline.md | Phase 74 | Pending |
+| HARNESS-07 | v1.8-milestone-audit.mjs Path-A copy | Phase 74 | Validated (closing SHA `62ffaa2`) |
+| HARNESS-08 | v1.8-audit-allowlist.json + BASELINE_12 | Phase 74 | Validated (closing SHA `62ffaa2`) |
+| HARNESS-09 | check-phase-71..74.mjs per-phase validators | Phase 74 | Validated (closing SHA `407ba89`) |
+| HARNESS-10 | audit-harness-v1.8-integrity.yml workflow (fifth coexistence file) | Phase 74 | Validated (closing SHA `407ba89`) |
+| HARNESS-11 | 3-axis terminal re-audit at v1.8 close | Phase 74 | Validated (closing SHA `af15242`) |
+| HARNESS-12 | v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md + 4-doc traceability | Phase 74 | Validated (closing SHA `{phase_74_close_SHA}`) |
+| VPP-01 | 4 VPP-location-token sites in app-lifecycle/02-macos-pkg-dmg-pipeline.md (D-02: 4 not 3) | Phase 74 | Validated (closing SHA `be48583`) |
 
-**12 requirements** | **12 mapped** | **5 complete** (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01 + RETRO-01 + RETRO-02) | Phase 71: ARCHIVE-01, ARCHIVE-02 | Phase 72: WRAPPER-01 | Phase 73: RETRO-01, RETRO-02 | Phase 74: HARNESS-07..12, VPP-01
+**12 requirements** | **12 mapped** | **12 complete** (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01 + RETRO-01 + RETRO-02 + HARNESS-07 + HARNESS-08 + HARNESS-09 + HARNESS-10 + HARNESS-11 + HARNESS-12 + VPP-01) | Phase 71: ARCHIVE-01, ARCHIVE-02 | Phase 72: WRAPPER-01 | Phase 73: RETRO-01, RETRO-02 | Phase 74: HARNESS-07..12, VPP-01
 
 ---
 

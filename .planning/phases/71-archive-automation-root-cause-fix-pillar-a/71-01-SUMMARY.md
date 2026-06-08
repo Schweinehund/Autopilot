@@ -38,6 +38,7 @@ metrics:
   files-created: 3
   files-modified: 0
   commit-sha: e4887b2
+one-liner: "Vendored extractor + 3-case unit-test fixture + chain-apex validator landed atomically (3 files in 1 SHA per SC#4 byte-exact); 2 expected transient FAILs + 8 pre-existing chain FAILs documented; commits the chicken-and-egg state per Plan 70-05 Commit A `14683de` precedent."
 ---
 
 # Phase 71 Plan 71-01: Vendored Extractor + Unit-Test Fixture + Chain-Apex Validator Summary

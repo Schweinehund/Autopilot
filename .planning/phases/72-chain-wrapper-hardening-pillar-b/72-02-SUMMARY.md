@@ -27,6 +27,7 @@ metrics:
   completed: "2026-06-06"
   tasks: 3
   files: 5
+one-liner: "Phase 72 close-gate commits 72-VERIFICATION.md (Sections A-H, SC#1-4 satisfied, Per-Validator Audit Inventory V-72-AUDIT-VERIFY target) + v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 STUB→PARTIALLY-RESOLVED transition + 4-doc traceability flips in ONE SHA `45f697e`, closing WRAPPER-01 and handing Phase 73 the empirical 11-site inventory baseline."
 ---
 
 # Phase 72 Plan 02: Close-Gate Summary

@@ -5,6 +5,7 @@ status: complete
 requirements: [HARNESS-11]
 commit: af15242
 date: 2026-06-08
+one-liner: "3-axis terminal re-audit confirmed cross-OS PASS-Count EXACT MATCH (30/0/1 chain-apex on Windows main tree == Linux GHA) across all 6 cross-OS-applicable validators; artifact-only commit `af15242`."
 ---
 
 # Plan 74-04 Summary — HARNESS-11 3-Axis Terminal Re-Audit

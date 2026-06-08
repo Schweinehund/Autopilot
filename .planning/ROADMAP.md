@@ -11,7 +11,7 @@
 - âœ… **v1.5 Linux Platform, Operational Depth & Cross-Platform Cleanup** â€” Phases 48-61 (shipped 2026-05-07)
 - âœ… **v1.6 Apple Business Delegated Governance & Multi-Org Operations** â€” Phases 62-66 (shipped 2026-05-25)
 - âœ… **v1.7 Deferred Backlog Closure + Validator Chain Hardening** â€” Phases 67-70 (shipped 2026-05-29)
-- ðŸš€ **v1.8 Tooling Debt Closure + Chain-Resilience Hardening** â€” Phases 71-74 (planned)
+- ✅ **v1.8 Tooling Debt Closure + Chain-Resilience Hardening** — Phases 71-74 (shipped 2026-06-08)
 
 ## Phases
 
@@ -181,12 +181,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 </details>
 
 <details>
-<summary>v1.8 Tooling Debt Closure + Chain-Resilience Hardening (Phases 71-74) â€” IN PROGRESS</summary>
+<summary>✅ v1.8 Tooling Debt Closure + Chain-Resilience Hardening (Phases 71-74) — SHIPPED 2026-06-08</summary>
 
-- [ ] **Phase 71: Archive-Automation Root-Cause Fix (Pillar A)** â€” ARCHIVE-01 extraction-logic fix + regression-test fixture + ARCHIVE-02 historical residue sweep
+- [x] **Phase 71: Archive-Automation Root-Cause Fix (Pillar A)** â€” ARCHIVE-01 extraction-logic fix + regression-test fixture + ARCHIVE-02 historical residue sweep
 - [x] **Phase 72: Chain-Wrapper Hardening (Pillar B)** (2/2 plans) — completed 2026-06-06 (WRAPPER-01 stdout+stderr capture fix + per-validator audit + regression sweep; closing SHAs Plan 72-01 atomic `d374095` 7-file + Plan 72-02 close-gate `{phase_72_close_SHA}` 5-file)
-- [x] **Phase 73: Retrospective Forward-Port (Pillar C)** â€” RETRO-01 HEAD-coupled assertion scan + RETRO-02 per-validator frozen-aware conversion (completed 2026-06-08)
-- [ ] **Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)** â€” HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate
+- [x] **Phase 73: Retrospective Forward-Port (Pillar C)** â€” RETRO-01 HEAD-coupled assertion scan + RETRO-02 per-validator frozen-aware conversion
+ (completed 2026-06-08)
+- [x] **Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)** — HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate (completed 2026-06-08; closing commit `{phase_74_close_SHA}`)
 
 **Wave designation map:**
 
@@ -375,13 +376,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   5. 4-doc traceability closure completes: 12 v1.8 requirements flipped Active->Validated with closing commit SHAs across PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md; predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 workflows + harnesses + sidecars remain BYTE-UNCHANGED through close-gate commit
 **Entry-state from Phase 73 (closed 2026-06-08):** clean chain (V-72-CHAIN-{61..67,70} PASS; 39 PASS / 0 FAIL / 1 SKIPPED); `_lib/frozen-at-close.mjs` available (MILESTONE_CLOSE_SHAS V141/V15/V16/V17/V17_CLOSEGATE); check-phase-73.mjs Path-A source ready for HARNESS-09 check-phase-74.mjs; CHAIN-DEGRADED-AT-HEAD-01 CLOSED; 3 NEW v1.9+ stubs in v1.8-DEFERRED-CLEANUP.md for HARNESS-12 finalization (HELPER-SPAWN-STDERR-01 + FROZEN-AWARE-ADOPTION-SWEEP-01 + EXEC-FAIL-DETAIL-EXTRACTION-01); 5/12 v1.8 requirements complete (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01 + RETRO-01 + RETRO-02); predecessor v1.4..v1.7 frozen surfaces BYTE-UNCHANGED.
 
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans complete
 
 - [x] 74-01-PLAN.md — VPP-01 4-site rename (D-02 override of REQ 3 sites) + 74-CONVENTIONS.md freshness/SHA matrix (Wave 1)
 - [x] 74-02-PLAN.md — Atom 1: v1.8-milestone-audit.mjs + v1.8-audit-allowlist.json (4 post-VPP entries) + BASELINE_12 (3 files, one indivisible commit) — HARNESS-07/08 (Wave 2)
 - [x] 74-03-PLAN.md — Atom 2: check-phase-74.mjs (Path-A chain-apex + V-74-VPP) + audit-harness-v1.8-integrity.yml (5th coexistence file); pushed to origin/master — HARNESS-09/10 (Wave 3)
 - [x] 74-04-PLAN.md — HARNESS-11 3-axis terminal re-audit (fresh-clone sub-agent + Linux GHA; cross-OS EXACT MATCH across 6 validators); artifact-only 74-04-AUDIT-RESULTS.md (Wave 4)
-- [ ] 74-05-PLAN.md — HARNESS-12 close-gate: SINGLE commit (NO Commit A) — v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md finalize + 4-doc traceability flip (12/12) + 74-VERIFICATION.md (Wave 5)
+- [x] 74-05-PLAN.md — HARNESS-12 close-gate: SINGLE commit (NO Commit A) — v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md finalize + 4-doc traceability flip (12/12) + 74-VERIFICATION.md (Wave 5; closing commit `{phase_74_close_SHA}`)
 
 
 ## Progress
@@ -461,7 +462,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 71. Archive-Automation Root-Cause Fix (Pillar A) | v1.8 | 3/3 | Complete | 2026-06-04 |
 | 72. Chain-Wrapper Hardening (Pillar B) | v1.8 | 2/2 | Complete   | 2026-06-06 |
 | 73. Retrospective Forward-Port (Pillar C) | v1.8 | 3/3 | Complete    | 2026-06-08 |
-| 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 4/5 | In Progress|  |
+| 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 5/5 | Complete | 2026-06-08 |
 
 ---
 
@@ -470,3 +471,5 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 *Original v1.8 roadmap-creation footer: 2026-06-03 — **v1.8 ROADMAP CREATED** (Phases 71-74; 4 phases; 12 requirements mapped). v1.8 Tooling Debt Closure + Chain-Resilience Hardening. Phase 71 (Pillar A — ARCHIVE-01 root-cause fix + ARCHIVE-02 residue sweep), Phase 72 (Pillar B — WRAPPER-01 stdout+stderr capture), Phase 73 (Pillar C — RETRO-01 scan + RETRO-02 frozen-aware conversion), Phase 74 (Pillar D — HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate). Sequential execution per use_worktrees:false. Predecessor v1.7 MILESTONE CLOSED 2026-05-29 (original footer below).
 
 *Original v1.7 close footer: 2026-05-28 â€” **v1.7 MILESTONE CLOSED** via Phase 70 Plan 70-05 Commit B (HARNESS-06 close-gate + 4-doc traceability closure). 4/4 v1.7 phases Complete (67/68/69/70). 12/12 v1.7 requirements Validated. 15 v1.7 plans Complete. Closing SHAs: Phase 67 `3fb8ca5` + `55260b3` (SWEEP-01 + SWEEP-02 Pillar A corpus surgical sweeps); Phase 68 `36a753d` + `79c65c6` + `7b635ca` precondition `d7d7d5f` + `d142c7a` cdcce23 deletion + `3814bee` Commit A + `07b5bf3` Commit B close-gate (CHAIN-01/02/03 Pillar B CHAIN_SKIP root-cause resolution); Phase 69 `dd1ff08` + Fix-1 `85521bb` + Fix-2 `2d61981` + `c397509` close-gate (CILINUX-01 Pillar C CI-Linux hardening); Phase 70 Atom 1 `26a1ae9` (HARNESS-01/02) + Atom 2 `aa6de68` (HARNESS-03/04) + `8175f82` Wave 4 audit-results (HARNESS-05) + Commit A `14683de` SHA placeholder fill + Commit B `{phase_70_close_SHA}` close-gate (HARNESS-06). 3-axis auditor independence operationalized at Wave 4 terminal re-audit (D-03 fresh-clone + D-22 fresh sub-agent + CILINUX-01 cross-OS Linux GHA) â€” first close-gate in project history to stack all three axes simultaneously per STATE.md:111 declaration; Cross-OS PASS-Count EXACT MATCH verified across 6 cross-OS-applicable validators. Predecessor v1.4/v1.4.1/v1.5/v1.6 workflows + harnesses + sidecars BYTE-UNCHANGED through Commit B per anti-regression invariant. CHAIN_SKIP EMPTY across full chain post-Phase 68 `7b635ca`. v1.7-DEFERRED-CLEANUP.md finalized with CI-3 + Multi-tenant + Apple Business Device API + per-OU CRD + Account Holder + ASM forward to v1.8+ + CHAIN-WRAPPER-01 + ARCHIVE-01 root-cause + HARNESS-FORWARD-01 retrospective. **ARCHIVE-01 RECURRENCE CONFIRMED 2026-05-29 during `/gsd-complete-milestone v1.7` invocation** â€” `gsd-sdk query milestone.complete` emitted 14 garbage accomplishments entries (11Ã— `"One-liner:"` placeholders + 3 extraction-label fragments); identical cdcce23-class defect signature; root cause confirmed to live in `gsd-sdk milestone.complete` SDK handler / `.claude/commands/gsd-complete-milestone.md` extraction-pattern logic. Per "DO NOT mask via deletion" guidance: v1.7 H2 entry authored manually in MILESTONES.md from `v1.7-MILESTONE-AUDIT.md` source-of-truth (REPLACEMENT, not deletion); v1.6 H2 entry retroactively authored from `v1.6-MILESTONE-AUDIT.md` (previous symptom-fix `d142c7a` had silently dropped v1.6 stub along with cdcce23 garbage). ARCHIVE-01 status promoted from "monitor for recurrence" to "**HIGH priority v1.8+ root-cause fix required**" â€” manual authoring per-milestone is unsustainable. v1.7 milestone archived to `.planning/milestones/v1.7-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md` + `.planning/milestones/v1.7-phases/`; REQUIREMENTS.md removed via `git rm` (fresh for v1.8+); git tag v1.7 created. Next: `/gsd-new-milestone` to plan v1.8 entry-phase from v1.7-DEFERRED-CLEANUP.md backlog.*
+
+*2026-06-08 — **v1.8 MILESTONE CLOSED** via Phase 74 Plan 74-05 SINGLE close-gate commit (NO Commit A; D-04 single-commit ruling). 4/4 v1.8 phases Complete (71/72/73/74). 12/12 v1.8 requirements Validated. Closing SHAs: Phase 71 `e4887b2` (ARCHIVE-01 Pillar A extractor + vendored assets); Phase 72 Atom 1 `62ffaa2` (WRAPPER-01 wrapper + sidecar + update logic) + Atom 2 `407ba89` (WRAPPER-01 CI + docs; Pillar B); Phase 73 `af15242` (RETRO-01/02 retrospective + forward-port; Pillar C); Phase 74 VPP-01 `be48583` (4-site rename) + HARNESS-07..11 Atoms + `{phase_74_close_SHA}` close-gate (HARNESS-12; Pillar D). 3-axis auditor independence: D-03 fresh-clone + D-22 fresh sub-agent + CILINUX-01 cross-OS Linux GHA — Cross-OS PASS-Count EXACT MATCH confirmed across 6 validators (check-phase-74.mjs 30/0/1 on both Windows and Linux). ARCHIVE-01 CLOSED vector: Phase 71 `e4887b2` vendored extractor + `--pre-write-frontmatter` strategy (NO `gsd-sdk milestone.complete` invocation). Predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 workflows + harnesses + sidecars BYTE-UNCHANGED through close-gate per anti-regression invariant. CHAIN_SKIP EMPTY; CHAIN_PHASES covers 26 elements [48..73]. v1.8-DEFERRED-CLEANUP.md finalized with 13 deferred items including 6 promoted v1.7 carry-overs + WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 new discovery. v1.8 milestone archived to `.planning/milestones/v1.8-{MILESTONE-AUDIT,DEFERRED-CLEANUP}.md` (REQUIREMENTS.md remains active for v1.9+). Next: `/gsd-new-milestone` to plan v1.9 entry-phase from v1.8-DEFERRED-CLEANUP.md backlog.*
