@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.8
 milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
-status: complete
-stopped_at: Phase 74 CLOSED — v1.8 MILESTONE CLOSED 2026-06-08; 12/12 requirements Validated; 4/4 phases Complete; 5/5 plans complete; close-gate commit {phase_74_close_SHA}
-last_updated: "2026-06-08T22:00:00.000Z"
+status: verifying
+stopped_at: Phase 74 CLOSED — v1.8 MILESTONE CLOSED 2026-06-08 (close-gate commit `{phase_74_close_SHA}`)
+last_updated: "2026-06-08T23:13:12.158Z"
 last_activity: 2026-06-08
 progress:
-  total_phases: 4
-  completed_phases: 4
+  total_phases: 1
+  completed_phases: 1
   total_plans: 5
   completed_plans: 5
   percent: 100
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 
 Phase: 74 (v1-8-audit-harness-lineage-bump-milestone-close-pillar-d) — CLOSED
 Plan: 5 of 5 (COMPLETE)
-Status: v1.8 MILESTONE CLOSED 2026-06-08
+Status: Phase complete — ready for verification
 Last activity: 2026-06-08
 
 ## v1.7 Phase Dependency Summary
@@ -238,7 +238,7 @@ Decisions are logged in PROJECT.md Key Decisions table. All v1.0–v1.6 decision
 
 ## Session Continuity
 
-Last session: 2026-06-08T22:00:00.000Z
+Last session: 2026-06-08T23:13:12.137Z
 Stopped at: Phase 74 CLOSED — v1.8 MILESTONE CLOSED 2026-06-08 (close-gate commit `{phase_74_close_SHA}`)
 Resume file: None
 Next action: User runs `/gsd-new-milestone` to plan v1.9 entry-phase from v1.8-DEFERRED-CLEANUP.md backlog (13 deferred items). v1.8 milestone fully archived: v1.8-MILESTONE-AUDIT.md + v1.8-DEFERRED-CLEANUP.md FINALIZED in `.planning/milestones/`. NO `/gsd-complete-milestone v1.8` invocation required (ARCHIVE-01 CLOSED via Phase 71 `e4887b2` vendored extractor + `--pre-write-frontmatter` strategy).
