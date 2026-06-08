@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.8
 milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
 status: executing
-stopped_at: Phase 73 context gathered
-last_updated: "2026-06-08T13:58:59.800Z"
-last_activity: 2026-06-08 -- Phase 73 planning complete
+stopped_at: Plan 73-01 complete — awaiting Plan 73-02 RETRO-02 conversion
+last_updated: "2026-06-08T15:00:00.000Z"
+last_activity: 2026-06-08 -- Plan 73-01 atomic commit d2b8917 landed (9 files)
 progress:
   total_phases: 4
   completed_phases: 2
   total_plans: 12
-  completed_plans: 5
+  completed_plans: 6
   percent: 50
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-03)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — and now, internal organizations can manage their own Apple device pools (VPP catalogs, shared iPad passcode resets, device releases, MDM server assignments, account provisioning, device transfers, audit access, shared iPad / Apple TV lifecycle) without escalating to a central tenant admin
-**Current focus:** Phase 72 — Chain-Wrapper Hardening (Pillar B)
+**Current focus:** Phase 73 — Retrospective Forward-Port (Pillar C)
 
 ## Current Position
 
-Phase: 73 (Retrospective Forward-Port (Pillar C)) — READY TO PLAN
-Plan: 1 of TBD
-Status: Ready to execute
-Last activity: 2026-06-08 -- Phase 73 planning complete
+Phase: 73 (Retrospective Forward-Port (Pillar C)) — EXECUTING
+Plan: 2 of 3
+Status: Executing Phase 73
+Last activity: 2026-06-08 -- Plan 73-01 atomic commit d2b8917 (RETRO-01 inventory + 8 wrapper folds + _lib/frozen-at-close + check-phase-73 stub)
 
 ## v1.7 Phase Dependency Summary
 
