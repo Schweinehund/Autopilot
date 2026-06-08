@@ -42,7 +42,7 @@
 
 ### Pillar D Carry-Over
 
-- [ ] **VPP-01**: 3 VPP-location-token sites in `docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md` (lines 115, 149, 155) surgically renamed to "content token" form per PITFALLS:657 first-mention-per-H2 convention. Mirrors Phase 67 SWEEP-02 atomic-within-plan pattern (D-03 line rewrites + Version History rows + sidecar annotation; PITFALL-6 anchor inventory pre-edit). Phase 67 SWEEP-02 carry-over per `v1.7-DEFERRED-CLEANUP.md:208-223`.
+- [x] **VPP-01**: 3 VPP-location-token sites in `docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md` (lines 115, 149, 155) surgically renamed to "content token" form per PITFALLS:657 first-mention-per-H2 convention. Mirrors Phase 67 SWEEP-02 atomic-within-plan pattern (D-03 line rewrites + Version History rows + sidecar annotation; PITFALL-6 anchor inventory pre-edit). Phase 67 SWEEP-02 carry-over per `v1.7-DEFERRED-CLEANUP.md:208-223`.
 
 ---
 
