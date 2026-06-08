@@ -1,5 +1,5 @@
 ---
-last_verified: 2026-04-28
+last_verified: 2026-06-08
 review_by: 2026-06-27
 applies_to: all
 audience: admin
@@ -112,7 +112,7 @@ Manager (**ABM**) location-token integration with Intune. For macOS, VPP include
   PowerPoint, Outlook, Teams) available via Intune as managed apps, syncing per the ABM token
   sync schedule. These deliver as native VPP-managed apps without requiring repackaging.
 - **Volume-purchased commercial apps** — Apps purchased through ABM are synced to Intune via
-  the VPP location token, allowing assignment to users (User-Licensed) or devices
+  the content token, allowing assignment to users (User-Licensed) or devices
   (Device-Licensed).
 
 **Default license type:** Per Microsoft Learn, when you create a new VPP assignment, the
@@ -146,18 +146,18 @@ Apple ID (when using device-based licensing).
 **Workflow:**
 
 1. Purchase the Mac App Store app via Apple Business Manager (Apps and Books area).
-2. Sync the ABM / VPP location token to Intune (sync runs at scheduled intervals; manual sync
+2. Sync the ABM / content token to Intune (sync runs at scheduled intervals; manual sync
    available via Tenant administration > Connectors and tokens > Apple VPP tokens).
 3. Assign the app to users or devices in Intune; choose Required (device or user groups) or
    Available for enrolled devices (user groups only).
 4. App installs silently on supervised Macs without Apple ID prompts (when device-licensed).
 
-**ABM token expiry:** The ABM / VPP location token has a 1-year (365-day) expiry; renew via the
+**ABM token expiry:** The ABM / content token has a 1-year (365-day) expiry; renew via the
 ABM portal before expiry to avoid sync failures. Existing installs remain functional after
 token expiry, but no new assignments or license-management actions are possible until the
 token is renewed and re-uploaded to Intune.
 
-**Token-sharing constraint:** A single VPP location token cannot be shared between Intune
+**Token-sharing constraint:** A single content token cannot be shared between Intune
 tenants. Up to 3,000 VPP tokens are supported per Intune tenant.
 
 ## Community Pattern: Installomator / Intuneomator
