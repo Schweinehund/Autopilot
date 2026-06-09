@@ -1,5 +1,23 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.8 Tooling Debt Closure + Chain-Resilience Hardening (Shipped: 2026-06-09)
+
+**Phases completed:** 4 phases (71-74), 13 plans, 12/12 requirements Validated
+**Timeline:** 2026-06-03 → 2026-06-09 (~6 days)
+**Audit status:** `passed` (.planning/milestones/v1.8-MILESTONE-AUDIT.md; HARNESS-11 3-axis terminal re-audit at Plan 74-04 — Axis 1 local fresh-clone via `git clone --no-hardlinks` to `$env:TEMP\v1.8-audit-<rand>`: 6 cross-OS validators + zero orphans; Axis 2 cross-OS Linux GHA workflow_dispatch run `27167245009`: all jobs `conclusion: success` + chain wall-clock 152s; Axis 3 fresh `gsd-executor` sub-agent: zero context-carryover; Cross-OS PASS-Count EXACT MATCH across 6 cross-OS-applicable validators — chain-apex `check-phase-74.mjs` 30/0/1 on Windows main tree == Linux GHA; 12/12 requirements closed; ARCHIVE-01 recurrence a CLOSED vector, pre-verified by Pillar A)
+**Git range:** `e4887b2` (Phase 71 Plan 71-01 ARCHIVE-01 root-cause fix) → `2bd79d8` (Phase 74 Plan 74-05 close-gate)
+
+**Key accomplishments:**
+
+- **Pillar A (Phase 71) — Archive-Automation Root-Cause Fix:** vendored a corrected `extractOneLinerFromBody` regex at `scripts/archive/extract-summary-oneliners.mjs` + frontmatter pre-write CLI + 3-case fixture + chain-apex `check-phase-71.mjs` in ONE atomic SHA `e4887b2`; re-authored the v1.1 + v1.2 `MILESTONES.md` H2 entries from MILESTONE-AUDIT canonical source (REPLACEMENT-not-deletion) at `ff4514b`. Closed the placeholder-label-garbage recurrence confirmed at v1.7 close.
+- **Pillar B (Phase 72) — Chain-Wrapper Hardening:** fixed 6 CHAIN-regression-guard wrappers in `check-phase-{66..71}.mjs` to capture both `stdout` AND `stderr` + shipped `check-phase-72.mjs` regression-witness in ONE 7-file atomic SHA `d374095`; un-masked the SCOPE-GAP-61 diagnostic that had been hidden on Windows local for 2 weeks.
+- **Pillar C (Phase 73) — Retrospective Forward-Port:** class-wide RETRO-01 inventory of 19 chain validators + RETRO-02 conversion of HEAD-coupled assertions to frozen-aware via the new centralized `scripts/validation/_lib/frozen-at-close.mjs` (`MILESTONE_CLOSE_SHAS` V141/V15/V16/V17) at `d2b8917` + `a85da77`; closed CHAIN-DEGRADED-AT-HEAD-01 (8 pre-existing chain FAILs → 0; chain 39 PASS / 0 FAIL / 1 SKIPPED).
+- **Pillar D (Phase 74) — Audit Harness Lineage Bump + Milestone Close:** Path-A bumped the harness lineage v1.7→v1.8 (6th milestone) — `v1.8-milestone-audit.mjs` + `v1.8-audit-allowlist.json` + BASELINE_12 in ONE indivisible Atom 1 `62ffaa2`; `check-phase-74.mjs` (CHAIN_PHASES=[48..73]) + `audit-harness-v1.8-integrity.yml` (5th parallel CI coexistence file) in ONE indivisible Atom 2 `407ba89`; VPP-01 surgically renamed **4** VPP-location-token sites → content token in `02-macos-pkg-dmg-pipeline.md` (`be48583`; D-02 4-site correction of the stale REQ "3 sites" headline); HARNESS-11 3-axis terminal re-audit confirmed cross-OS PASS-Count EXACT MATCH (`af15242`); close-gate authored `v1.8-MILESTONE-AUDIT.md` + FINALIZED `v1.8-DEFERRED-CLEANUP.md` (6 v1.7 carry-overs promoted + WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 discovery) + 4-doc traceability closure (12/12) in a SINGLE commit `2bd79d8` (NO Commit A per D-04, since RETRO-02 centralized frozen reads — no v1.8 artifact forward-references the close SHA).
+
+**Closing SHAs:** Phase 71 `e4887b2` + `ff4514b` · Phase 72 `d374095` · Phase 73 `d2b8917` + `a85da77` · Phase 74 Atom 1 `62ffaa2` + Atom 2 `407ba89` + VPP-01 `be48583` + HARNESS-11 `af15242` + close-gate `2bd79d8`. Predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 workflows + harnesses + sidecars BYTE-UNCHANGED through close. **ARCHIVE-01 fix verified working: this entry was authored cleanly (the v1.7-close garbage-emission defect did not recur — the `--pre-write-frontmatter` step + corrected extractor prevented it; the lone residual fragment from a non-`one-liner` SUMMARY schema was corrected by replacement per project doctrine).**
+
+---
+
 ## v1.7 Deferred Backlog Closure + Validator Chain Hardening (Shipped: 2026-05-29)
 
 **Phases completed:** 4 phases (67-70), 15 plans, 19 tasks

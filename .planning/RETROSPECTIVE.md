@@ -233,6 +233,39 @@
 
 ---
 
+## Milestone: v1.8 — Tooling Debt Closure + Chain-Resilience Hardening
+
+**Shipped:** 2026-06-09
+**Phases:** 4 (71-74) | **Plans:** 13 | **Requirements:** 12/12 Validated
+
+### What Was Built
+A pure tooling/infrastructure milestone (zero new corpus content beyond one 4-site rename) closing v1.7's accumulated validator-chain debt across four pillars: **(A)** root-caused and fixed the `gsd-sdk milestone.complete` placeholder-label-garbage defect via a vendored corrected extractor + frontmatter pre-write CLI + regression fixture; **(B)** hardened 6 chain-apex wrappers to capture stdout+stderr, un-masking a diagnostic that had been hidden on Windows for 2 weeks; **(C)** forward-ported 19 HEAD-coupled chain validators to a centralized frozen-aware helper (`_lib/frozen-at-close.mjs`), closing CHAIN-DEGRADED-AT-HEAD-01; **(D)** Path-A bumped the audit harness lineage v1.7→v1.8 (6th milestone), renamed the VPP-01 carry-over, and ran a 3-axis cross-OS terminal re-audit.
+
+### What Worked
+- **The ARCHIVE-01 fix paid off at this very close.** The defect flagged in the v1.5 retrospective (line 232) and recurrence-confirmed at v1.7 close was finally root-caused in Pillar A — and the `--pre-write-frontmatter` step prevented garbage emission when *this* milestone archived. The bug closed the loop on itself.
+- **Adversarial-review for all 4 gray-area picks** (per user preference) empirically surfaced two upstream documentation drifts that would otherwise have shipped silently: VPP-01 was a **4-site** rename not 3 (the spawning source recorded a 4th occurrence the REQUIREMENTS headline dropped), and the v1.8 CI workflow was the **fifth** coexistence file not "fourth."
+- **The 3-axis terminal re-audit did its job twice over** — it both *confirmed* cross-OS PASS-Count EXACT MATCH (30/0/1 Windows main == Linux GHA) and *surfaced* a genuine new fragility (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01).
+- **Atomic-commit indivisibility (SC#1)** held cleanly: 3-file Atom 1 and 2-file Atom 2 each landed in exactly one SHA.
+
+### What Was Inefficient
+- **The deepest validator (check-phase-66 re-chaining 48..65 inside check-phase-74) is O(n²) on cold clones.** The Axis-1 fresh-clone re-audit stalled at this guard on a cold Windows filesystem, costing significant investigation time to distinguish a perf artifact from a correctness defect. The harness's recursive re-chaining is expensive to re-verify in isolation.
+- **SUMMARY.md schema drift** — one executor-authored SUMMARY used a `dependency_graph` frontmatter without a `one-liner:` field, so the milestone-archive extractor fell back to a body heading and produced one label fragment that had to be hand-corrected (per the REPLACEMENT-not-deletion doctrine).
+
+### Patterns Established
+- **No-Commit-A close-gates when frozen reads are centralized.** Phase 70 needed a chicken-and-egg Commit A only because it authored inline frozen-aware helpers during the bump; once Phase 73 centralized those into `_lib/frozen-at-close.mjs` (no `V18`/`readAtV18Close`), the v1.8 close-gate needed no SHA-placeholder-fill commit — a single close-gate commit sufficed.
+- **Honest discovery-logging over papering-over.** The Windows cold-clone timeout was documented as a v1.9+ deferred item rather than retried until green or hidden.
+
+### Key Lessons
+1. **When carrying a DEFERRED-CLEANUP discovery into REQUIREMENTS, copy the full site list including parenthetical "Nth occurrence" notes** — the VPP "3 sites" headline silently dropped L160.
+2. **Centralizing frozen-aware reads removes an entire class of close-gate complexity** (the chicken-and-egg Commit A).
+3. **A recursive re-chaining validator is cheap to run warm but punishing to re-verify cold** — terminal-re-audit recipes on Windows should cache-warm the clone or raise the subprocess timeout.
+
+### Cost Observations
+- Model mix: orchestration on Opus; researcher/planner-checker/executors on Sonnet.
+- Notable: the single longest investigation of the milestone was not implementation but *distinguishing a Windows clone-perf artifact from a real cross-OS parity break* — resolved by triangulating warm-main-tree vs cold-clone vs Linux-CI.
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution

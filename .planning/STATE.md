@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.8
 milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
-status: verifying
+status: Awaiting next milestone
 stopped_at: Phase 74 CLOSED — v1.8 MILESTONE CLOSED 2026-06-08 (close-gate commit `{phase_74_close_SHA}`)
-last_updated: "2026-06-08T23:13:12.158Z"
-last_activity: 2026-06-08
+last_updated: "2026-06-09T17:11:43.148Z"
+last_activity: 2026-06-09 — Milestone v1.8 completed and archived
 progress:
   total_phases: 1
   completed_phases: 1
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 
 ## Current Position
 
-Phase: 74 (v1-8-audit-harness-lineage-bump-milestone-close-pillar-d) — CLOSED
-Plan: 5 of 5 (COMPLETE)
-Status: Phase complete — ready for verification
-Last activity: 2026-06-08
+Phase: Milestone v1.8 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-06-09 — Milestone v1.8 completed and archived
 
 ## v1.7 Phase Dependency Summary
 
