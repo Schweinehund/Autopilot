@@ -92,43 +92,43 @@ Explicitly excluded for v1.9. Documented to prevent scope creep. Anti-features a
 
 ## Traceability
 
-Populated during roadmap creation. Each requirement maps to exactly one phase.
+Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one phase.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PSSO-01 | TBD | Pending |
-| PSSO-02 | TBD | Pending |
-| PSSO-03 | TBD | Pending |
-| PSSO-04 | TBD | Pending |
-| PSSO-05 | TBD | Pending |
-| PSSO-06 | TBD | Pending |
-| PSSO-07 | TBD | Pending |
-| PSSO-08 | TBD | Pending |
-| PSSO-09 | TBD | Pending |
-| PSSO-10 | TBD | Pending |
-| PSSO-11 | TBD | Pending |
-| PSSO-12 | TBD | Pending |
-| SSOMIG-01 | TBD | Pending |
-| SSOMIG-02 | TBD | Pending |
-| SSOMIG-03 | TBD | Pending |
-| SSOMIG-04 | TBD | Pending |
-| SSORUN-01 | TBD | Pending |
-| SSORUN-02 | TBD | Pending |
-| SSORUN-03 | TBD | Pending |
-| SSOREF-01 | TBD | Pending |
-| SSOREF-02 | TBD | Pending |
-| SSOREF-03 | TBD | Pending |
-| SSOREF-04 | TBD | Pending |
-| SSOHARN-01 | TBD | Pending |
-| SSOHARN-02 | TBD | Pending |
-| SSOHARN-03 | TBD | Pending |
-| SSOHARN-04 | TBD | Pending |
+| PSSO-01 | Phase 76 | Pending |
+| PSSO-02 | Phase 76 | Pending |
+| PSSO-03 | Phase 76 | Pending |
+| PSSO-04 | Phase 75 | Pending |
+| PSSO-05 | Phase 77 | Pending |
+| PSSO-06 | Phase 77 | Pending |
+| PSSO-07 | Phase 77 | Pending |
+| PSSO-08 | Phase 77 | Pending |
+| PSSO-09 | Phase 77 | Pending |
+| PSSO-10 | Phase 77 | Pending |
+| PSSO-11 | Phase 77 | Pending |
+| PSSO-12 | Phase 76 | Pending |
+| SSOMIG-01 | Phase 78 | Pending |
+| SSOMIG-02 | Phase 78 | Pending |
+| SSOMIG-03 | Phase 78 | Pending |
+| SSOMIG-04 | Phase 78 | Pending |
+| SSORUN-01 | Phase 80 | Pending |
+| SSORUN-02 | Phase 80 | Pending |
+| SSORUN-03 | Phase 80 | Pending |
+| SSOREF-01 | Phase 75 | Pending |
+| SSOREF-02 | Phase 79 | Pending |
+| SSOREF-03 | Phase 75 | Pending |
+| SSOREF-04 | Phase 81 | Pending |
+| SSOHARN-01 | Phase 82 | Pending |
+| SSOHARN-02 | Phase 82 | Pending |
+| SSOHARN-03 | Phase 82 | Pending |
+| SSOHARN-04 | Phase 82 | Pending |
 
 **Coverage:**
 - v1.9 requirements: 27 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 27 ⚠️ (resolved at roadmap creation)
+- Mapped to phases: 27 (roadmap complete)
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-20*
-*Last updated: 2026-06-20 after initial definition (research-grounded + 4 gray-area picks resolved via /adversarial-review)*
+*Last updated: 2026-06-20 — traceability table populated at roadmap creation (all 27 requirements mapped to Phases 75-82)*
