@@ -1,9 +1,9 @@
-# Stack Research — v1.6 Apple Business Delegated Governance
+# Stack Research — v1.9 macOS Platform SSO + Secure Enclave Authentication Documentation
 
-**Domain:** Apple Business (formerly Apple Business Manager) admin / delegation surface for documentation authoring across iOS/iPadOS + macOS in Microsoft Intune
-**Researched:** 2026-05-20
-**Confidence:** HIGH for rebrand timing + portal URLs + role/permission categories + content token + federation existence (verified against Apple Newsroom, support.apple.com/guide/business, learn.microsoft.com); MEDIUM for full per-permission enumeration (Apple's User Guide pages return navigation-only via WebFetch — per-permission tables exist but were not fully scraped); LOW for Locations / OU max counts (Apple publishes no numeric limit)
-**Scope reminder:** "Stack" here = the Apple-side platform surfaces (portals, URLs, identity, content delivery, federation) that v1.6 docs must cite. v1.6 ships markdown documentation only — there is no code to install.
+**Domain:** Microsoft Entra ID + Apple Platform SSO feature surface for documentation authoring — macOS enterprise auth (Platform SSO, Secure Enclave, Enterprise SSO plug-in) via Microsoft Intune
+**Researched:** 2026-06-20
+**Confidence:** HIGH for all product names, payload keys, version floors, auth-method matrices, Secure Enclave hardware facts (all verified against Microsoft Learn + Apple Platform Deployment + Apple Security Guide, sources dated as late as 2026-06-15)
+**Scope reminder:** "Stack" here = the Microsoft Intune / Entra ID / Apple platform configuration surfaces that v1.9 docs must cite accurately. v1.9 ships markdown documentation only — there is no application code to install. This file focuses on macOS only; iOS/iPadOS is out of scope for v1.9.
 
 ---
 
@@ -11,509 +11,479 @@
 
 | Item | Value | Confidence |
 |---|---|---|
-| Rebrand name | **Apple Business Manager → Apple Business** | HIGH |
-| Announcement date | **2026-03-24** (Apple Newsroom) | HIGH |
-| GA / launch date | **2026-04-14** (>200 countries) | HIGH |
-| Portal URL | `https://business.apple.com` (unchanged) | HIGH |
-| New User Guide URL | `https://support.apple.com/guide/business/` | HIGH |
-| Legacy User Guide URL | `https://support.apple.com/guide/apple-business-manager/` (still resolves; carries "Apple Business Manager is now Apple Business" banner page `axmd79d79dea`) | HIGH |
-| "Locations" renamed to | **Organizational Units** | HIGH |
-| Legacy fixed-role triad status | **Retired in name; functionally replaced** by Organization Administrator / IT Administrator / Marketing Administrator / Staff + 5 preset custom roles (People Manager, Content Manager, Device Enrollment Manager, Device API Manager, Brand Manager) | HIGH |
-| Custom roles | **Supported** with granular per-permission selection | HIGH |
-| Permission groups | Organization, People, Devices, Apps & Services, Brands (+ subgroups: Basic organization, Organization access, API/OAuth, AppleCare, Apps & Books, Subscription, Email service, Brand, Brand location, Branded Mail, Tap to Pay, Verify with Wallet) | HIGH |
-| Content token model | **Per-OU content token** (was "per-Location"); same token can be referenced by multiple MDM policies in same tenant | HIGH |
-| Microsoft Entra ID federation | OIDC + SCIM both supported and documented; status = effectively **GA** (no preview flag in Apple docs; Microsoft Learn page dated 2025-11-04) | HIGH |
-| Intune-side portal language | `Tenant administration > Connectors and tokens > Apple VPP tokens` **UNCHANGED** as of 2026-04-30 Microsoft Learn tutorial revision (Apple-side branding shifted; Intune-side label still says "Apple VPP tokens"; tutorial prose now says "Apple Business" instead of "Apple Business Manager") | HIGH |
-| iOS/iPadOS + macOS + Apple TV + Shared iPad | All four device classes managed from same Apple Business tenant; same role/permission surface | HIGH |
-
-> **The single most important v1.6 implication:** Apple renamed the entire administrative substrate (Locations→Organizational Units; privileges→permissions; the fixed-role triad → expanded role set with custom roles) but **kept the URL at `business.apple.com`** and **Microsoft Intune's UI labels still say "Apple VPP tokens"**. v1.6 docs must use Apple's NEW terminology (Organizational Units, permissions, Apple Business) when describing the Apple-side surface, but preserve Intune's CURRENT labels verbatim when describing the Intune-side handshake. This is the rebrand-callout discipline.
-
----
-
-## 1. Apple Business Rebrand — Authoritative Surface
-
-### 1.1 Timing
-
-| Event | Date | Source |
-|---|---|---|
-| Public announcement | 2026-03-24 | [Apple Newsroom — Introducing Apple Business](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/) |
-| Global availability (GA) | 2026-04-14 | [Apple Newsroom — Introducing Apple Business](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/) |
-| Legacy ABM/ABE/Connect retirement | 2026-04-14 (Apple states the three legacy platforms "will no longer be available once Apple Business launches"; existing data auto-migrated) | [Apple Newsroom](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/); [Apple Support — Apple Business Manager is now Apple Business `axmd79d79dea`](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web) |
-
-**Single canonical authoritative date for v1.6 glossary callout: 2026-04-14 (GA). The 2026-03-24 announcement is supporting context.** Confidence: HIGH.
-
-### 1.2 What Apple Business consolidates
-
-The rebrand merges three previously distinct platforms into one offering:
-
-- **Apple Business Manager** (ABM) — device enrollment, MDM linking, content token administration, Managed Apple IDs (legacy name for Managed Apple Account)
-- **Apple Business Essentials** (ABE) — Apple-hosted MDM-lite for SMB (previously paid; now free as part of Apple Business consolidation)
-- **Apple Business Connect** (ABC) — customer-facing brand listings, Apple Maps/Wallet/Mail business surface
-
-**Implication for v1.6:** ABE features (built-in MDM, Blueprints) and ABC features (brand profiles, Maps ads, Branded Mail) are now in the Apple Business portal. **They are OUT OF SCOPE for v1.6** — v1.6 documents the device-management / delegation surface that was formerly ABM. v1.6 glossary callout must explicitly say "Apple Business in the context of this guide refers to the device-management surface formerly known as Apple Business Manager."
-
-### 1.3 URL surface (the practical reality)
-
-| Surface | URL | Status |
-|---|---|---|
-| Sign-in portal | `https://business.apple.com` | **Unchanged** — same URL admins have used for years |
-| Sign-in login page | `https://business.apple.com/login` | Unchanged |
-| Sign-up page | `https://business.apple.com/signup` | Unchanged |
-| New User Guide (canonical) | `https://support.apple.com/guide/business/` | New URL path; replaces ABM guide for new readers |
-| Legacy User Guide | `https://support.apple.com/guide/apple-business-manager/` | Still resolves; top-level page now displays "Apple Business Manager is now Apple Business" banner (article ID `axmd79d79dea`); deep links still valid |
-| URL ID stability | Article IDs (e.g., `axm97dd59159`, `axmfdbe2cb0d`, `axme0f8659ec`) are **STABLE across the rebrand** — same article ID resolves at both `/guide/apple-business-manager/` and `/guide/business/` paths | HIGH |
-
-**v1.6 doc-authoring rule:** Always link to the new `/guide/business/` paths in newly authored v1.6 content. Legacy `/guide/apple-business-manager/` URLs in pre-existing docs do NOT require sweep retrofit (per v1.6 Q5 option b scope decision: glossary + 2 intro callouts only).
+| Umbrella product name | **Microsoft Enterprise SSO plug-in for Apple devices** | HIGH |
+| macOS-specific sub-feature 1 | **Platform SSO** (macOS 13+; recommended macOS 14+) | HIGH |
+| macOS-specific sub-feature 2 | **SSO app extension** (macOS 10.15+; redirect type; configurable alone or bundled with Platform SSO) | HIGH |
+| Intune config surface for Platform SSO | **Settings Catalog** only — `Devices > Manage devices > Configuration > Create > New policy > macOS > Settings catalog > Authentication > Extensible Single Sign On (SSO)` | HIGH |
+| Apple payload type name | `com.apple.extensiblesso` | HIGH |
+| Extension Identifier (macOS) | `com.microsoft.CompanyPortalMac.ssoextension` | HIGH |
+| Team Identifier | `UBF8T346G9` | HIGH |
+| Registration token | `{{DEVICEREGISTRATION}}` (literal value including braces) | HIGH |
+| macOS version floor (absolute min) | **macOS 13.0** (Platform SSO functional but Secure Enclave + Smart Card require 14+; 13 is "deprecated" path) | HIGH |
+| macOS version recommended floor | **macOS 14 Sonoma** (recommended by Microsoft — all three auth methods available) | HIGH |
+| Company Portal version floor | **5.2404.0** (any Platform SSO) — **5.2604.0** (Platform SSO during ADE enrollment) | HIGH |
+| Licensing | **Included in all Microsoft Intune licensing plans** — no premium Entra ID tier required for Platform SSO itself | HIGH |
+| Auth methods | **Secure Enclave (recommended)** / **Password (sync)** / **Smart Card** | HIGH |
+| Smart Card macOS floor | **macOS 14+** only — not available on macOS 13 | HIGH |
+| Secure Enclave hardware | All **Apple Silicon** Macs + all **T2-equipped Intel Macs** (2018-2020 models) | HIGH |
+| Hybrid-join support | **NOT SUPPORTED** — macOS Platform SSO requires Entra ID join; no hybrid-join path | HIGH |
+| Entra-side prerequisite | "Allow users to join devices" = **All** (or scoped group) in Entra ID > Devices > Device Settings | HIGH |
+| Device Identity Key Storage transition | From August 2025, new registrations use **Secure Enclave** for WPJ key storage by default (replaces Keychain) | HIGH |
 
 ---
 
-## 2. Custom Role & Permission Model
+## 1. Product Name Disambiguation (CRITICAL — most-confused area)
 
-### 2.1 The legacy fixed-role triad — current status
+Three terms appear in the ecosystem and must be precisely distinguished in all v1.9 docs:
 
-The old ABM 5-role model was:
+### 1.1 Microsoft Enterprise SSO plug-in for Apple devices
 
-1. Administrator
-2. People Manager
-3. Device Enrollment Manager (also called Device Manager in some Apple docs)
-4. Content Manager
-5. Staff
+The **umbrella product**. Delivered via Microsoft Intune Company Portal (macOS) or Microsoft Authenticator (iOS/iPadOS). On macOS it has two sub-components:
 
-**Status in Apple Business (post-2026-04-14):** The fixed-role triad has been **functionally retired as the top-of-tree structure** but **preserved as preset custom roles**.
+- **Platform SSO** — the newer, recommended component; configures device-level Entra ID authentication at macOS login and SSO across all apps
+- **SSO app extension** — the foundational component; provides SSO for apps and websites using Microsoft Entra ID; can be configured standalone (legacy Device Features template) or bundled inside Platform SSO policy (Settings Catalog)
 
-| Legacy role | Apple Business equivalent | Notes |
+**v1.9 doc rule:** "Microsoft Enterprise SSO plug-in" is the container name. When discussing macOS enterprise authentication, the correct sub-feature names are "Platform SSO" and "SSO app extension." Do NOT use "Enterprise SSO plug-in" as a synonym for "Platform SSO" — they are different scopes.
+
+Source: [Microsoft Entra — Microsoft Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (updated 2026-06-15). Confidence: HIGH.
+
+### 1.2 Platform SSO vs SSO app extension — configuration surface differences
+
+| Dimension | SSO app extension (standalone) | Platform SSO (includes SSO app extension) |
 |---|---|---|
-| Administrator | **Organization Administrator** (renamed, expanded) | Top-level role; can also assign IT Administrator + Marketing Administrator |
-| (new) | **IT Administrator** | New top-level role separating device/MDM concerns from marketing/brand concerns |
-| (new) | **Marketing Administrator** | New top-level role owning Brand profiles, Branded Mail, Maps ads (ABC-origin features) |
-| Staff | **Staff** (preserved) | Bottom-level role |
-| People Manager | Preset custom role (preserved name) | Permissions scoped to People group |
-| Device Enrollment Manager | Preset custom role (preserved name) | Permissions scoped to Devices group |
-| Content Manager | Preset custom role (preserved name) | Permissions scoped to Apps & Services group |
-| (new) | **Device API Manager** | Preset custom role — exposes Apple's Apple Business API surface (new) |
-| (new) | **Brand Manager** | Preset custom role — Marketing Administrator subset |
+| Intune config surface | **Device Features template** (`Devices > Manage devices > Configuration > Create > New policy > macOS > Templates > Device features`) | **Settings Catalog** (`Authentication > Extensible Single Sign On (SSO)`) |
+| What it configures | SSO for apps and websites using Entra ID; no device-level login integration | Both device-level macOS login authentication AND app/web SSO |
+| macOS version floor | macOS 10.15 | macOS 13.0 (recommended 14.0) |
+| Company Portal requirement | Yes (any version) | Yes, version 5.2404.0+ |
+| Workplace Join (WPJ) cert | Obtained after user manually signs into app/browser | Obtained during Platform SSO registration; hardware-bound from August 2025 |
+| Phishing-resistant auth | NO | YES (Secure Enclave method) |
+| Windows Hello for Business analog | NO | YES (Secure Enclave method) |
+| Can coexist in same policy | NO — never deploy both; Platform SSO supersedes and conflicts with standalone SSO app extension profile | N/A |
 
-Source: [Intro to roles and permissions in Apple Business — `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web). Confidence: HIGH for the role list; HIGH that custom roles supersede the fixed triad as the primary delegation mechanism.
+**Decision rule for v1.9 docs:** New deployments should always use Platform SSO (Settings Catalog). The standalone SSO app extension (Device Features template) is legacy/migration context. Step 7 in the Intune Platform SSO guide explicitly requires unassigning any existing SSO app extension profiles after validating the Platform SSO policy.
 
-### 2.2 Permission categories (the new flat model)
+Source: [Microsoft Learn — Configure macOS Enterprise SSO app extension with MDMs](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-enterprise-sso-plugin-macos) (updated 2026-04-14). Confidence: HIGH.
 
-Apple Business exposes permissions in **5 top-level groups**, decomposed into **11+ subgroups** for granular custom-role authoring:
+### 1.3 Kerberos SSO extension — NOT Platform SSO
 
-| Top-level group | Subgroups (per Apple's intro page navigation) |
-|---|---|
-| **Organization** | Basic organization, Organization access, API/OAuth |
-| **People** | People |
-| **Devices** | Devices, AppleCare |
-| **Apps & Services** | Apps & Books, Subscription, Email service |
-| **Brands** | Brand, Brand location, Branded Mail, Tap to Pay, Verify with Wallet |
+The **Kerberos SSO extension** (payload type `Kerberos` vs `SSO`) is a separate macOS SSO mechanism for on-premises Active Directory Kerberos. Microsoft Platform SSO can optionally configure a Kerberos SSO scenario via Extension Data keys, but the Kerberos extension and Platform SSO are distinct payloads. v1.9 docs must not conflate them.
 
-**v1.6 in-scope subgroups** (device-management surface):
-
-- Basic organization
-- Organization access
-- API/OAuth (Device API Manager preset)
-- People (Managed Apple Account provisioning)
-- Devices (device assignment, MDM server management, device release)
-- AppleCare (device support entitlement)
-- Apps & Books (content tokens, license assignment, VPP-successor)
-
-**v1.6 out-of-scope subgroups** (ABC/ABE-origin marketing surface):
-
-- Subscription (ABE billing — no longer charged post-2026-04-14)
-- Email service (Branded Mail)
-- Brand / Brand location / Branded Mail / Tap to Pay / Verify with Wallet
-
-Source: [Intro to roles and permissions in Apple Business `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web). Confidence: HIGH for category list; MEDIUM for per-subgroup permission enumeration — Apple's intro page lists category names but the per-permission tables live on linked sub-pages that WebFetch could not extract (likely require JavaScript rendering or authentication). **v1.6 phase 1 may need a one-off manual scrape of the 11 subgroup permission tables for the glossary**; flag for `gsd-research` phase-research before Phase 62/63 authoring.
-
-### 2.3 Custom role authoring surface
-
-Per [Intro to roles and permissions](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web):
-
-- Path: **Settings > Roles & Permissions** in the Apple Business portal
-- Operation: "Add a custom role and define very specific permissions to that role"
-- Constraint: Only users whose role has "view, edit, and delete roles" permissions in the Organization permission group can author custom roles (the meta-permission)
-- Scope: **A user can have more than one role assigned** — a key change from the legacy ABM single-role-per-user model. Confidence: HIGH.
-
-**v1.6 implication for Phase 1 (Foundation) and Phase 2 (Multi-org architecture):** The Locations-vs-custom-roles decision matrix must reflect that custom roles are now first-class (not an afterthought) and that multi-role assignment is possible. The "one Apple Business account with Locations and/or custom roles per team (Q2 b/c + combination)" topology maps directly to OU + custom-role authoring.
-
-### 2.4 Specific privileges identified by category (best-effort from accessible docs)
-
-> Caveat: Apple's complete permission tables live behind a JavaScript-rendered table on the intro page sub-links that did not return full content via WebFetch. The list below is what was triangulated from the Apple intro page navigation + the legacy ABM HardSoft/community summary + the Microsoft Learn Intune tutorial. **Confidence: MEDIUM** per privilege; **HIGH** for category-level coverage. v1.6 Phase 1 should perform a manual scrape against the 11 sub-pages.
-
-| Subgroup | Confirmed example permissions (illustrative, NOT exhaustive) |
-|---|---|
-| Basic organization | View organization profile; edit organization profile; accept Terms of Service |
-| Organization access | View users; edit users; assign roles; delete roles; configure federated authentication; configure SCIM provisioning; create/edit/delete organizational units |
-| API/OAuth | Generate Apple Business API tokens (Device API surface); revoke API tokens |
-| People | Create Managed Apple Accounts; edit Managed Apple Accounts; delete Managed Apple Accounts; reset Managed Apple Account passwords; reset Shared iPad passcodes; configure default Managed Apple ID username format |
-| Devices | Add devices (manual / Configurator); assign devices to MDM server; reassign devices; unassign devices; release devices from organization; manage MDM servers; manage device suppliers (reseller numbers); upload via Apple Configurator |
-| AppleCare | View AppleCare entitlements; submit AppleCare repair requests |
-| Apps & Books | View content tokens; download content tokens; purchase content (apps + books); assign content (device-licensed); assign content (user-licensed); reclaim licenses; view purchase history |
-
-Sources: [Apple Business intro page navigation `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web); [HardSoft legacy ABM role summary (MEDIUM confidence, third-party)](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/); [Microsoft Learn tutorial verifying device + MDM permission boundaries](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios)
+**v1.9 scope decision:** Kerberos SSO configuration is an optional Platform SSO scenario; document it as a "common Platform SSO scenario" cross-reference (per `configure-platform-sso-scenarios-macos`) rather than in the core Platform SSO admin guide.
 
 ---
 
-## 3. Organizational Units (formerly "Locations")
+## 2. Platform SSO Configuration Surface (Intune)
 
-### 3.1 What changed in the rebrand
+### 2.1 Admin center navigation path
 
-| Aspect | Legacy ABM (pre-2026-04-14) | Apple Business (post-2026-04-14) |
-|---|---|---|
-| Term | Locations | **Organizational Units (OUs)** |
-| Article ID | `axmfdbe2cb0d` | Same `axmfdbe2cb0d` (URL preserved) |
-| Sub-Location concept | "Sublocation" supported for nesting | Sublocation concept preserved; called "sub-OU" in some user-facing prose |
-| Primary scope | App content licenses (per-location content tokens), MDM server attachment | Same: content tokens + MDM server + user/role scoping |
+```
+Devices
+  > Manage devices
+    > Configuration
+      > Create
+        > New policy
+          Platform: macOS
+          Profile type: Settings catalog
+            > Authentication
+              > Extensible Single Sign On (SSO)
+```
 
-Source: [Configure organizational units in Apple Business `axmfdbe2cb0d`](https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web); [legacy ABM page same article ID](https://support.apple.com/guide/apple-business-manager/configure-locations-axmfdbe2cb0d/web). Confidence: HIGH.
+The Settings Catalog is the **only correct path** for Platform SSO. The older `Templates > Device features > Single sign-on app extension` path configures only the SSO app extension and does NOT configure Platform SSO. Creating both a Settings Catalog Platform SSO policy and a Device Features SSO app extension policy on the same device causes **error 10002** (multiple SSOe payloads conflict).
 
-### 3.2 Hierarchy rules
+### 2.2 Required Settings Catalog keys — complete list
 
-| Property | Value | Confidence |
-|---|---|---|
-| Structure | **Flat by default with optional sub-OUs** (1-level sublocation supported in legacy ABM; this concept appears preserved in Apple Business though the new docs describe the structure as flat in their primary text) | MEDIUM (Apple does not explicitly state "max 1 nesting level" in 2026 docs; legacy ABM supported sub-location but Apple's "Configure organizational units" page describes it primarily as flat) |
-| First OU | Auto-created at signup; named after organization | HIGH |
-| Max count | **NO numeric limit published by Apple** | HIGH (negative claim verified — Apple publishes no max; community Q&A explicitly notes the absence of a documented limit) |
-| Naming uniqueness | OU names must be unique within the organization | HIGH |
-| Deletion | Manually-created OUs can be deleted **only after transferring accounts and Apps & Books licenses to another OU** | HIGH |
+All settings live under `Authentication > Extensible Single Sign On (SSO)` in the Settings Catalog picker.
 
-**v1.6 implication:** Phase 2 (Multi-org architecture) cannot promise specific max-count guidance because Apple doesn't publish one. The doc should say "Apple has not published a maximum OU count as of 2026-05-20; large-scale deployments (>100 OUs) should consult Apple Enterprise support before architecting."
-
-### 3.3 What scopes per OU
-
-| Scopable | At OU level? | Notes |
-|---|---|---|
-| **Devices** | YES | Devices are assigned to OUs via Configurator, reseller upload (Reseller Number tied to OU), or manual assignment |
-| **Content tokens (Apps & Books)** | YES | One downloadable content token per OU; same token can be used by multiple MDM policies in same MDM tenant |
-| **MDM servers** | YES (indirectly — MDM servers are linked at OU level for ADE-via-OU) | An MDM server is created in Apple Business per OU; devices in that OU are assigned to that MDM server |
-| **Users / Managed Apple Accounts** | YES | Users can be added to specific OUs; the same user can be added to multiple OUs |
-| **Role assignments** | YES — this is the delegation lever | Custom roles can be assigned scoped to specific OUs (so e.g. a "Site B Device Manager" role only manages Site B devices/content) |
-| **Federated authentication / SCIM** | NO — tenant-wide | Federated auth and SCIM are configured at the organization level, not per OU. Confidence: HIGH. |
-
-Source: [Configure organizational units `axmfdbe2cb0d`](https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web); [Manage content tokens in Apple Business `axme0f8659ec`](https://support.apple.com/en-ca/guide/business/axme0f8659ec/web). Confidence: HIGH.
-
-### 3.4 How devices are assigned to OUs
-
-| Path | Mechanism | Notes |
-|---|---|---|
-| **Reseller upload** | Reseller Number registered on the OU profile; devices ordered via that reseller auto-flow into that OU | Each OU has its own Reseller Number set; canonical for large fleets |
-| **Apple Configurator (manual)** | Admin runs Configurator 2 on Mac, pairs the iOS/iPadOS/tvOS device, uploads to Apple Business; assigns to an OU at upload time | Useful for devices NOT purchased via authorized reseller (retail / refurb / hand-me-down) |
-| **Direct from Apple** | Devices ordered with Apple Customer Number registered to the OU auto-flow | Same as reseller path but Apple direct |
-| **Cross-OU reassignment** | Admin uses Devices page → select devices → Reassign to OU | Useful for device transfer between sites |
-| **Provisional release period** | Manually-Configurator-added devices have a 30-day provisional period during which the end-user can release the device from MDM | Important for v1.6 device-transfer runbook |
-
-Source: [Add devices using Apple Configurator `axm200a54d59`](https://support.apple.com/guide/business/add-devices-using-apple-configurator-axm200a54d59/web); [Assign, reassign, or unassign devices `axmf500c0851`](https://support.apple.com/guide/apple-business-manager/axmf500c0851/web). Confidence: HIGH.
-
----
-
-## 4. Content Token Model (replacing legacy "VPP location token")
-
-### 4.1 Before vs after framing
-
-| Era | Apple-side label | Microsoft Intune-side label | Token shape |
+| Setting Name in Intune | Value | macOS Version | Required |
 |---|---|---|---|
-| Pre-2018 (VPP era) | "VPP token" | "Apple VPP tokens" | Per-Apple-ID; one VPP account per Apple ID |
-| 2018–2026-04-14 (ABM era) | "Content token (Location)" — "location token" colloquially | "Apple VPP tokens" (unchanged label) | Per-ABM-Location; downloadable from ABM Preferences > Payments and Billing > Apps and Books |
-| Post-2026-04-14 (Apple Business era) | **"Content token (Organizational Unit)"** | **"Apple VPP tokens"** (unchanged label — see §6 below) | Per-OU; same article-ID `axme0f8659ec` page |
+| `Extension Identifier` | `com.microsoft.CompanyPortalMac.ssoextension` | 13+ | Required |
+| `Team Identifier` | `UBF8T346G9` | 13+ | Required |
+| `Type` | `Redirect` | 13+ | Required |
+| `URLs` | See §2.3 for full list | 13+ | Required |
+| `Registration Token` | `{{DEVICEREGISTRATION}}` | 13+ | Required |
+| `Screen Locked Behavior` | `Do Not Handle` | 13+ | Required |
+| `Authentication Method (Deprecated)` | `Password` or `UserSecureEnclaveKey` | **macOS 13 ONLY** | Required if macOS 13 devices in scope |
+| `Platform SSO > Authentication Method` | `Password`, `UserSecureEnclaveKey`, or `SmartCard` | **macOS 14+** | Required for macOS 14+ |
+| `Platform SSO > Use Shared Device Keys` | Enabled | macOS 14+ | Required (enables shared keys across users on same device; triggers re-registration if changed later) |
+| `Platform SSO > Token To User Mapping > Account Name` | `com.apple.PlatformSSO.AccountShortName` (recommended) or `preferred_username` | 13+ | Required |
+| `Platform SSO > Token To User Mapping > Full Name` | `name` | 13+ | Required |
+| `Platform SSO > FileVault Policy` | `AttemptAuthentication` | **macOS 15+ only** | Required for Password auth on macOS 15+ |
+| `Platform SSO > Enable Registration During Setup` | Enabled | macOS 26+ (ADE only) | Required only for Platform SSO during ADE enrollment |
+| `Platform SSO > Enable Create First User During Setup` | Enabled | macOS 26+ (ADE only) | Required only if Password auth + ADE enrollment |
 
-Source: [Manage content tokens in Apple Business `axme0f8659ec`](https://support.apple.com/guide/apple-business-manager/manage-content-tokens-axme0f8659ec/web). Confidence: HIGH.
+**Critical mixed-fleet rule:** If the fleet includes BOTH macOS 13.x and macOS 14+ devices, BOTH `Authentication Method (Deprecated)` AND `Platform SSO > Authentication Method` must be configured in the SAME settings catalog policy. Omitting either causes error 10001 on the excluded OS version.
 
-### 4.2 Current shape
+Source: [Microsoft Learn — Configure Platform SSO for macOS devices](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos) (updated 2026-05-18). Confidence: HIGH.
 
-- **One content token per Organizational Unit.** Token is generated and downloadable from Apple Business at `Preferences > Payments and Billing > Apps and Books > Content Tokens > Download` (path may be slightly different in new portal navigation; the article still refers to the same area).
-- The **same content token can be uploaded to multiple MDM tenants OR multiple policies within the same tenant** — but licenses are shared across all consumers; no per-tenant isolation when the same token is reused. **This is the "do not share content tokens across Intune tenants" pitfall** (v1.6 PITFALLS topic).
-- **Token lifecycle:** 1 year validity; annual renewal required; expiry causes new app sync to halt but existing installs continue working.
-- **Device-vs-user licensing model:** Unchanged from legacy ABM. Device-licensed (pinned to serial; silent-install on supervised iOS/iPadOS) and user-licensed (pinned to Managed Apple Account; requires sign-in) variants both still exist. v1.5 Phase 55 APP-06 already documents this.
+### 2.3 Required URLs (Redirect type)
 
-### 4.3 What changed in the licensing model
+Core URLs (required for all environments):
+```
+https://login.microsoftonline.com
+https://login.microsoft.com
+https://sts.windows.net
+```
 
-Per [Apple Business — Manage content tokens `axme0f8659ec`](https://support.apple.com/guide/business/axme0f8659ec/web) and the Apple Newsroom announcement: the underlying VPP licensing semantics (device vs user, 30-day grace period on revocation, license reclamation, 1-year token validity) are **structurally unchanged**. Only the **container term** changed (Location → Organizational Unit) and the **portal navigation paths**.
+Sovereign cloud additions (add only if environment uses these):
+```
+https://login.partner.microsoftonline.cn  (Azure China)
+https://login.chinacloudapi.cn             (Azure China)
+https://login.microsoftonline.us           (Azure Government)
+https://login-us.microsoftonline.com       (Azure Government)
+```
 
-**v1.6 implication:** APP-06 (iOS VPP licensing) and APP-04/05 (macOS VPP) docs from v1.5 do not require content rewrites — only an Apple Business / OU terminology pass in the new v1.6 Apple Business governance docs tree that references them.
+### 2.4 Apple payload type name (for non-Intune MDM or custom profile references)
 
----
+The Apple MDM payload type is `com.apple.extensiblesso`. The Settings Catalog exposes this via the UI; custom `.mobileconfig` files or non-Intune MDMs must use this payload type. v1.9 docs should cite this string when explaining the payload for L2 troubleshooting context (e.g., `System Settings > Privacy and Security > Profiles` shows the profile under `com.apple.extensiblesso Profile`).
 
-## 5. Managed Apple Account Federation
+Source: [Apple Platform Deployment — Extensible Single Sign-on MDM payload settings](https://support.apple.com/guide/deployment/extensible-single-sign-on-payload-settings-depfd9cdf845/web) (confirmed payload type `com.apple.extensiblesso`). Confidence: HIGH.
 
-### 5.1 Rebrand: Managed Apple ID → Managed Apple Account
+### 2.5 Assignment rules (user groups, not device groups)
 
-- Apple formally rebranded **Managed Apple ID → Managed Apple Account in 2024** (predates the 2026 Apple Business rebrand).
-- Existing iOS user-enrollment doc `docs/admin-setup-ios/08-user-enrollment.md` already acknowledges this at line 49 with a 2024 rebrand callout — that callout is sufficient and does not need re-authoring for v1.6.
-- v1.6 glossary callout should consolidate: "Apple uses Managed Apple Account as of 2024; Microsoft Intune documentation continues to use Managed Apple ID; both refer to the same identity object."
+Platform SSO policies **must be assigned to user groups or user groups with assignment filters** for devices with user affinity. Assigning to device groups on devices with user affinity causes users to be unable to access Conditional Access-protected resources. This is a documented Microsoft constraint (not an advisory).
 
-### 5.2 Microsoft Entra ID federation — current status
-
-| Mechanism | Status | URL |
-|---|---|---|
-| **OIDC (OpenID Connect) federation** | **GA** — documented in Apple Business User Guide and Microsoft Learn deployment guide; no preview / beta flag | [Apple Support — Use federated authentication with Microsoft Entra ID in Apple Business `axm8c1cac980`](https://support.apple.com/guide/business/federated-authentication-microsoft-entra-axm8c1cac980/web) |
-| **SCIM provisioning** (auto-create Managed Apple Accounts on user create) | **GA** — official Apple Business User Guide page; documented with concrete endpoint URLs | [Apple Support — Sync user accounts from your identity provider `axm526a05814`](https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web) |
-| **Microsoft Enterprise SSO plug-in for Apple devices** | **GA** (Platform SSO; supports Mac and iOS) | [Microsoft Learn — Microsoft Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (last published 2025-11-04) |
-| **Profile-based User Enrollment (legacy)** | **Deprecated** on iOS 18+ (already documented in existing iOS user-enrollment guide) | n/a |
-| **National-cloud Entra IDs (Gov / China / 21Vianet)** | **NOT SUPPORTED** | [Apple Support — Integrate with Microsoft Entra ID `depa85a35cf2`](https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web): "Integration with national clouds isn't currently supported." |
-
-Confidence: HIGH for all federation status entries.
-
-### 5.3 SCIM endpoint surface (for documentation accuracy)
-
-For Apple Business / Entra SCIM provisioning, v1.6 docs may cite:
-
-- SCIM connector base URL: `https://federation.apple.com/feeds/business/scim`
-- Access token URI: `https://appleaccount.apple.com/auth/oauth2/v2/token`
-- Authorization URI: `https://appleaccount.apple.com/auth/oauth2/v2/authorize`
-- SCIM token validity: **1 year**; Apple sends notification 60 days before expiry
-- Token transfer window: **4 calendar days** to complete handoff from Apple Business to Entra after token generation
-
-Source: [Apple Business — Sync user accounts `axm526a05814`](https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web). Confidence: HIGH.
-
-### 5.4 Federation scope (per-OU vs tenant-wide)
-
-- **Federated authentication is configured at the organization (tenant) level, not per OU.** A Managed Apple Account federated from Entra exists in the organization and is then assignable to one or more OUs.
-- **Role scope is per-OU even when federated.** Federation establishes the identity; the role grant (which OUs a delegated admin can operate in) is a separate operation. Confidence: HIGH.
-
-### 5.5 Account-Driven User Enrollment intersection
-
-- AD-UE uses Managed Apple Accounts; federation accelerates Managed Apple Account provisioning but **federation is NOT a precondition for AD-UE** (admins can manually create Managed Apple Accounts in Apple Business). Existing iOS user-enrollment doc captures this.
-- **iOS 18.2+ ABM-federated devices** have an alternate discovery path that bypasses the `.well-known/com.apple.remotemanagement` JSON hosting requirement (already documented in iOS user-enrollment guide at line 50).
+Only one Platform SSO settings catalog policy can be assigned per device. All Platform SSO scenario settings (Kerberos, non-Microsoft app SSO, Touch ID biometric, etc.) must be added to the single existing policy — not created as separate Platform SSO policies.
 
 ---
 
-## 6. Microsoft Intune-Side Handshake (the half v1.6 must reference but NOT document)
+## 3. Authentication Methods — Per-Method Prerequisite Tables
 
-> **Reminder:** v1.6 is Apple Business surface only. Intune-side RBAC, profile authoring, compliance, enrollment-profile assignment are OUT OF SCOPE per the v1.6 scope decision. This section captures only the Intune-side **labels and paths** that v1.6 docs must cite to anchor the Apple-side handshake correctly.
+### 3.1 Comparison matrix
 
-### 6.1 Microsoft's terminology adoption status (as of 2026-04-30)
-
-From the most recently updated Microsoft Learn page ([Tutorial: Use Apple Business to enroll iOS/iPadOS devices in Intune](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios), updated `2026-04-30`):
-
-| Microsoft surface | Current text | Status |
-|---|---|---|
-| Tutorial title + prose | "Apple Business" (matches Apple's new branding) | UPDATED |
-| Admin Center menu: `Devices > Device onboarding > Enrollment > Apple mobile > Enrollment program tokens` | Same path | UNCHANGED |
-| Admin Center menu: `Tenant administration > Connectors and tokens > Apple VPP tokens` | **Still labeled "Apple VPP tokens"** | NOT YET UPDATED |
-| Admin Center menu: `Devices > Enrollment > Apple > MDM Push Certificate` | Same path | UNCHANGED |
-| Tutorial step language | "Create a token via Apple Business" | UPDATED |
-| Apple Support link targets in tutorials | Link to `https://support.apple.com/guide/apple-business-manager/...` (legacy URL — but auto-redirects to new content) | NOT YET UPDATED |
-
-**v1.6 doc-authoring rule:** When citing Intune-side portal paths, use the **CURRENT in-portal label** verbatim — including "Apple VPP tokens" — and add a parenthetical clarifier `(formerly VPP token, now Apple Business content token)` only on first mention in each runbook. Do NOT mass-rewrite the existing ~30 ABM references in v1.0-v1.5 docs (per v1.6 Q5 option b).
-
-### 6.2 Intune connectors-and-tokens paths v1.6 docs will reference
-
-| Surface | Intune path | Apple Business equivalent |
-|---|---|---|
-| ADE / ABM token (.p7m) | `Devices > Enrollment > Apple > Enrollment program tokens` | `Settings > Preferences > MDM Server Assignments` (legacy) / new equivalent in Apple Business |
-| Content token (VPP successor) | `Tenant administration > Connectors and tokens > Apple VPP tokens` | `Preferences > Payments and Billing > Apps and Books > Content Tokens` |
-| APNs Push Certificate | `Devices > Enrollment > Apple > MDM Push Certificate` | n/a (created at identity.apple.com, not Apple Business) |
-
----
-
-## 7. Shared iPad Lifecycle — Apple Business-Owned Actions
-
-### 7.1 What Apple Business controls (delegate-able surface)
-
-| Action | Surface | Permission group | v1.6 audience |
+| Feature | Secure Enclave (UserSecureEnclaveKey) | Password (sync) | Smart Card |
 |---|---|---|---|
-| **Reset Shared iPad passcode** for a specific Managed Apple Account user | Apple Business portal — "Reset Shared iPad Passcode" button on the Managed Apple Account profile | People (permission: reset Shared iPad passcode) | L1 (primary v1.6 use case) |
-| **Reset Managed Apple Account password** (broader than passcode) | Apple Business portal — Access Management > user profile | People (permission: reset password) | L1 / Admin |
-| **Delete user session** (free local storage on a specific Shared iPad) | MDM-side `DeleteUser` command (Apple Business does NOT directly expose; v1.6 must clarify this) | n/a — MDM-side | Admin (out of v1.6 scope for runbook depth, but glossary callout needed) |
-| **Reassign Shared iPad device between OUs** | Apple Business — Devices > select > Reassign | Devices (permission: reassign devices) | Admin |
-| **Federated password sync caveat** | Documented: changing Shared iPad passcode in Apple Business does NOT change the federated Entra password | n/a — operational pitfall | L1 + L2 |
+| Passwordless | YES | NO | YES |
+| Phishing-resistant MFA | YES | NO | YES |
+| Can be used as passkey (WebAuthn) | YES | NO | NO |
+| MFA mandatory during setup | YES | NO (optional) | YES |
+| Local Mac password synced with Entra ID | NO — local password unchanged | YES — Entra password replaces/syncs with local password | NO — local password unchanged |
+| macOS 13.x supported | YES | YES | NO |
+| macOS 14.x supported | YES | YES | YES |
+| Settings Catalog key value | `UserSecureEnclaveKey` | `Password` | `SmartCard` |
+| Settings Catalog key value (macOS 13 deprecated field) | `UserSecureEnclaveKey` | `Password` | N/A — 13 not supported |
+| Requires Secure Enclave hardware | YES | NO | NO (external hardware token) |
+| Touch ID device unlock (after initial reboot password) | YES | YES | YES |
+| FileVault behavior | Local password unchanged (FileVault still uses local password as unlock key) | Local password syncs; FileVault uses synced password | Local password unchanged |
+| Microsoft recommendation | **RECOMMENDED** | Second choice | Third choice |
+| Windows Hello for Business analog | YES | NO | Partial (certificate-based) |
 
-Source: [Create or reset user passwords in Apple Business Manager `axmd9c4cbc33`](https://support.apple.com/guide/apple-business-manager/create-or-reset-user-passwords-axmd9c4cbc33/web); [Microsoft Learn — Shared iPad devices](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad). Confidence: HIGH.
+Source: [Microsoft Learn — Configure Platform SSO for macOS — Step 1 auth method table](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos) (updated 2026-05-18). Confidence: HIGH.
 
-### 7.2 Three surfaces converge on Shared iPad — v1.6 must disambiguate
+### 3.2 Secure Enclave method — specific prerequisites
 
-The Shared iPad passcode-reset surface is split across **three places**, and v1.6 must clarify which one each audience touches:
-
-| Surface | What it does | Who uses it |
+| Prerequisite | Requirement | Why it matters |
 |---|---|---|
-| **Apple Business portal** (admin-driven password reset on the Managed Apple Account) | Resets the user's Managed Apple Account credentials globally; affects all devices the user signs into | L1 (per v1.6 scope) — primary v1.6 runbook |
-| **MDM command (`ClearPasscode` / `DeleteUser`)** | Clears device-side passcode without resetting the cloud identity; or deletes a cached user session to free storage | Admin / L2 — out of v1.6 scope (MDM concern) |
-| **Apple Configurator (physical / Bluetooth)** | Local recovery when the device is unreachable via MDM | L2 fallback — out of v1.6 scope (recovery concern) |
+| macOS version | 13.0 minimum; **14.0 strongly recommended** | macOS 13 uses `Authentication Method (Deprecated)` key; macOS 14+ uses `Platform SSO > Authentication Method`. Both work but Microsoft's own docs say "strongly recommend 14.0 Sonoma for best experience" |
+| Hardware | **Apple Silicon** OR **T2-equipped Intel Mac** — see §5 for model list | Secure Enclave is the physical hardware component that stores and protects the cryptographic key; without it, `UserSecureEnclaveKey` cannot provision |
+| Company Portal | 5.2404.0+ | Contains the SSO extension that provisions the Secure Enclave key |
+| MFA during registration | Required — user must complete MFA to register | MFA establishes the initial identity binding for the hardware key |
+| Device join permission in Entra | User must be in "Users may join devices to Microsoft Entra" allowlist | If not allowed, registration silently fails with no error shown |
+| FileVault interaction | Local password unchanged; FileVault uses local password; after reboot user enters local password, then Touch ID takes over | By design — Apple's FileVault architecture requires local password as disk unlock key |
+| Touch ID biometric policy (optional) | macOS 14.6+; Company Portal 2504+ | Optional `enable_se_key_biometric_policy: true` Extension Data key — forces Touch ID for every Secure Enclave key access. Requires re-registration if enabled post-PSSO-registration |
 
-**v1.6 implication:** The L1 Shared iPad passcode-reset runbook (REQUIREMENTS) must include an explicit "Apple Business password reset != MDM `ClearPasscode` != local Configurator reset" boundary callout — this is one of the C14-C16 audit-harness check candidates per the milestone scope.
+### 3.3 Password (sync) method — specific prerequisites
+
+| Prerequisite | Requirement | Why it matters |
+|---|---|---|
+| macOS version | 13.0+ | No macOS 14 floor; macOS 13 supported via `Authentication Method (Deprecated)` = `Password` |
+| Entra ID password complexity | Must match Intune MDM password policy | If policies diverge, password sync silently fails and users are locked out |
+| Per-user MFA | Must be DISABLED (use CA-based MFA instead) | Per-user MFA causes password sync failure during registration — known issue |
+| FileVault + macOS 15 | `Platform SSO > FileVault Policy` = `AttemptAuthentication` unlocks Entra password verification at FileVault screen | macOS 14 and earlier cannot use Entra password at FileVault screen — this is a macOS 15 feature only |
+| KeyVault recovery | Optional but recommended (Institutional FileVault Recovery Keys) | Allows data recovery if user forgets password; admin configures via Apple MDM payload settings |
+| SSPR (Self-Service Password Reset) | Recommended enabled in Entra ID | Password change from another device syncs within 4 hours; SSPR enables user self-recovery |
+
+### 3.4 Smart Card method — specific prerequisites
+
+| Prerequisite | Requirement | Why it matters |
+|---|---|---|
+| macOS version | **14.0+ only** — NOT available on macOS 13 | Smart Card is only exposed in `Platform SSO > Authentication Method` (macOS 14+); the deprecated macOS 13 field does not support SmartCard value |
+| Smart card / hard token hardware | External smart card or smart card-compatible token (e.g., YubiKey) with certificate and PIN | Physical hardware token required; no software fallback |
+| Entra ID CBA | Microsoft Entra certificate-based authentication (CBA) configured in Entra ID | Entra must be configured to accept the certificate on the smart card for authentication |
+| Certificate type | X.509 certificate on the smart card that maps to Entra ID user identity | Attribute mapping must be configured in Entra CBA settings |
+| Setup Assistant Smart Card limit | Smart card authentication during macOS Setup Assistant is **NOT supported** | If deploying Platform SSO during ADE/Setup Assistant, Smart Card requires PSSO registration to complete AFTER Setup Assistant finishes |
+
+Source: [Microsoft Entra — macOS PSSO overview](https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso) (updated 2026-06-15); [Microsoft Learn — Configure Platform SSO for macOS — Smart Card tab](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos). Confidence: HIGH.
 
 ---
 
-## 8. Apple TV Delegation Surface
+## 4. Version Floors and Prerequisites — Exact Values
 
-### 8.1 What is delegate-able for Apple TV in Apple Business
+### 4.1 Version matrix — what is required and why
 
-| Action | Apple Business permission group | Notes |
+| Component | Minimum Version | WHY it matters |
 |---|---|---|
-| Add Apple TV to organization (Configurator path) | Devices | Required because most Apple TVs are retail-purchased, not bought through Apple authorized resellers (no Reseller Number flow available for retail purchases) |
-| Assign Apple TV to MDM server (Intune) | Devices | Same flow as iOS / iPadOS / Mac assignment |
-| Assign Apple TV to OU | Devices | Same flow; Apple TV is treated identically to iOS for OU scoping |
-| Reassign Apple TV to different OU | Devices | Cross-org device transfer |
-| Release Apple TV from organization | Devices | Necessary for device disposal / resale |
-| **AirPlay restrictions, Single App Mode, OS update deferrals** | **MDM-side only — NOT Apple Business** | These are configuration profile concerns, owned by Intune. v1.6 documents that they exist but does not document how to configure them (out-of-scope, MDM concern). |
-| **Content assignment to Apple TV** | Apps & Books | Apps for tvOS can be assigned via content token like any other Apple device class |
+| **macOS (absolute floor)** | **13.0 Ventura** | Platform SSO framework introduced in macOS 13; below 13 there is no Platform SSO capability at all |
+| **macOS (recommended floor)** | **14.0 Sonoma** | All three auth methods (SE key + Password + Smart Card) available; `Platform SSO > Authentication Method` key used instead of deprecated field; Microsoft explicitly says "strongly recommend 14.0 for best experience"; macOS 14 also added Entra repair flow in Settings |
+| **macOS (FileVault Entra password)** | **15.0 Sequoia** | `Platform SSO > FileVault Policy = AttemptAuthentication` only available on macOS 15+; only on 15+ can Entra password be used at FileVault screen |
+| **macOS (ADE enrollment-time PSSO)** | **macOS 26** | `Enable Registration During Setup` capability requires macOS 26+; earlier versions cannot complete PSSO during Setup Assistant |
+| **Company Portal (Platform SSO)** | **5.2404.0** | Version that introduced Platform SSO support; older versions cause Platform SSO to fail silently |
+| **Company Portal (ADE enrollment PSSO)** | **5.2604.0** | Version required when deploying Platform SSO during Automated Device Enrollment |
+| **Company Portal (Touch ID biometric policy)** | **2504** | Required for `enable_se_key_biometric_policy` (UserSecureEnclaveKeyBiometricPolicy) |
+| **macOS (Touch ID biometric policy)** | **14.6** | Required for `UserSecureEnclaveKeyBiometricPolicy` |
+| **Smart Card available** | **macOS 14.0** | Smart Card auth method key only exists in the non-deprecated `Platform SSO > Authentication Method` field |
+| **macOS 15.3 known fix** | **15.3** | Re-registration concurrency bug fixed in macOS 15.3 (Apple confirmed); persistent re-registration prompts on 15.0–15.2 are a known Apple OS bug |
 
-Source: [Apple Support — Deploy Apple TV `dep027e1d5a0`](https://support.apple.com/guide/deployment/deploy-apple-tv-dep027e1d5a0/web); [Apple Support — Device management restrictions for Apple TV devices `depzf41d7aae`](https://support.apple.com/guide/deployment/restrictions-for-apple-tv-depzf41d7aae/web); [Microsoft Learn — Set up automated device enrollment (ADE) for tvOS](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-tv-os). Confidence: HIGH.
+### 4.2 Entra ID prerequisites — Entra-side configuration
 
-### 8.2 Retail-purchase pitfall
+| Entra-side requirement | Where to configure | Why required |
+|---|---|---|
+| **Users may join devices to Microsoft Entra** = All (or scoped group including target users) | Entra admin center: Entra ID > Devices > Overview > Device Settings > `Microsoft Entra join and registration settings` | Without this, PSSO registration silently fails — no error shown to user |
+| **Entra device registration** | Automatic when user completes PSSO registration flow | Devices receive a hardware-bound WPJ certificate; WPJ cert is what apps and browsers use for device-based Conditional Access |
+| **Conditional Access MFA policy** (not per-user MFA) | CA policy in Entra admin center | Per-user MFA (legacy) causes Password sync failures during PSSO registration; use CA-based MFA instead |
+| **No hybrid-join deployment** | N/A — architecture constraint | macOS PSSO requires Entra ID join; hybrid-join is NOT supported and Microsoft has stated there are no plans to support it |
+| **WPJ certificate (hardware-bound from Aug 2025)** | Automatic from August 2025 | Microsoft transitioned WPJ key storage from Apple Keychain to Apple Secure Enclave for new registrations starting August 2025; requires Enterprise SSO plug-in to report device identity |
+| **Passkeys (FIDO2) — optional** | Entra admin center: Authentication methods | Required only if organization wants to use Secure Enclave Platform Credential as a FIDO2 passkey; AAGUID to allowlist: `7FD635B3-2EF9-4542-8D9D-164F2C771EFC` |
+| **Entra CBA — Smart Card only** | Entra admin center: Authentication methods > Certificate-based authentication | Required only for Smart Card auth method; configures how Entra validates the certificate on the smart card |
 
-Apple TV devices purchased at retail (Best Buy, Amazon, Apple Store retail) **cannot flow to Apple Business via Reseller Number** because retail isn't an authorized device-enrollment reseller path. They must be added via **Apple Configurator 2 over Bluetooth/USB-C/network**. v1.6 Apple TV delegation runbook must include this constraint as a callout — it's the dominant Apple TV onboarding pitfall.
+Source: [Microsoft Learn — Configure Platform SSO (prerequisites section)](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos); [Microsoft Entra — macOS PSSO troubleshooting — Insufficient permissions](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension). Confidence: HIGH.
+
+### 4.3 Licensing
+
+Platform SSO is **included in all Microsoft Intune licensing plans** — this is an explicit statement from Microsoft Learn. No Entra ID P1 or P2 tier is required for Platform SSO itself. Related features that DO require Entra ID P1/P2:
+
+- Conditional Access policies (Entra ID P1 minimum)
+- Entra ID Protection risk-based CA (Entra ID P2)
+- SSPR in some configurations
+
+For the core Platform SSO admin guide, document: "Platform SSO requires only a Microsoft Intune license. Conditional Access integration, which is a recommended complement to Platform SSO, requires Microsoft Entra ID P1 or higher."
+
+Source: [Microsoft Learn — Configure Platform SSO > Benefits section](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos): "It's included with all Microsoft Intune licensing plans." Confidence: HIGH.
 
 ---
 
-## 9. Portal & API Surfaces — Canonical URLs for v1.6 Citations
+## 5. Secure Enclave — Hardware Facts to Pin
 
-### 9.1 Apple authoritative URLs (use these in v1.6 docs)
+### 5.1 Which Mac hardware has Secure Enclave
 
-| Purpose | URL | Notes |
-|---|---|---|
-| Apple Business portal (sign-in) | `https://business.apple.com` | Primary navigation entry |
-| New Apple Business User Guide | `https://support.apple.com/guide/business/` | All new v1.6 doc citations |
-| Apple Business — Roles & Permissions intro | `https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web` | Canonical for role/permission model |
-| Apple Business — Organizational Units | `https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web` | Canonical for OU model |
-| Apple Business — Content tokens | `https://support.apple.com/guide/business/manage-content-tokens-axme0f8659ec/web` | Canonical for content token + Apps and Books |
-| Apple Business — Federated authentication (Entra) | `https://support.apple.com/guide/business/federated-authentication-microsoft-entra-axm8c1cac980/web` | Canonical for Entra OIDC federation |
-| Apple Business — Sync from IdP (SCIM) | `https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web` | Canonical for SCIM provisioning |
-| Apple Business — Apple Configurator device add | `https://support.apple.com/guide/business/add-devices-using-apple-configurator-axm200a54d59/web` | Apple TV + retail iPad add-flow |
-| Apple Newsroom rebrand announcement | `https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/` | Authoritative for rebrand date |
-| Apple Support — "Apple Business Manager is now Apple Business" banner page | `https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web` | Use as the citation for the glossary rebrand callout |
-| Apple Deployment Guide — Microsoft Entra ID integration | `https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web` | Apple-published Microsoft cross-reference |
-| Apple Deployment Guide — Deploy Apple TV | `https://support.apple.com/guide/deployment/deploy-apple-tv-dep027e1d5a0/web` | Apple TV onboarding overview |
-| Apple Deployment Guide — Apple TV restrictions | `https://support.apple.com/guide/deployment/restrictions-for-apple-tv-depzf41d7aae/web` | Apple TV management restrictions |
-| Apple Deployment Guide — Prepare Shared iPad | `https://support.apple.com/guide/deployment/prepare-shared-ipad-dep6fa9dd532/web` | Shared iPad architecture |
+**All current and recent Mac hardware has a Secure Enclave.** The Secure Enclave is a dedicated hardware security chip integrated into:
 
-### 9.2 Microsoft authoritative URLs (cross-references)
+- **All Apple Silicon Macs** (M1, M2, M3, M4 and all variants) — 2020 onwards; Secure Enclave is part of the Apple Silicon SoC
+- **All T2 Security Chip Intel Macs** — specific models 2018-2020 (see list below)
+- **T1 chip Macs** — MacBook Pro 2016-2017 with Touch Bar (T1 is an earlier generation; has Secure Enclave but not the same capabilities as T2/Apple Silicon)
 
-| Purpose | URL |
+T2-equipped Intel Mac models (Secure Enclave via T2):
+
+| Model | Year |
 |---|---|
-| Intune tutorial: enroll iOS/iPadOS via Apple Business | `https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios` |
-| Intune tvOS ADE setup | `https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-tv-os` |
-| Intune Shared iPad guidance | `https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad` |
-| Intune Apple VPP management | `https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple` |
-| Microsoft Entra SSO plug-in for Apple devices | `https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin` |
+| MacBook Pro | 2018, 2019, 2020 (Intel) |
+| MacBook Air | 2018, 2019, 2020 (Intel) |
+| Mac mini | 2018 |
+| iMac | 2020 (27-inch 5K Retina), iMac Pro |
+| Mac Pro | 2019 |
 
-### 9.3 API surface (Apple Business — for the Device API Manager preset role)
+**Macs WITHOUT Secure Enclave (no Platform SSO Secure Enclave method):**
+- Intel Mac models 2017 and earlier without T1 or T2 (most pre-2018 Intel Macs)
+- MacBook (12-inch models without Touch Bar, pre-T2)
 
-- The new **Device API Manager** preset custom role exposes the Apple Business **Device API** — a developer-facing surface (not part of the SCIM provisioning surface).
-- Apple has not yet published a dedicated developer.apple.com landing page for the Apple Business Device API as of 2026-05-20; v1.6 docs should treat this as an **acknowledge-but-do-not-document-deeply** surface unless Phase 62/63 research finds an authoritative API reference URL.
-- Confidence: MEDIUM (the role exists per Apple's roles intro page; the API documentation URL was not located).
+**v1.9 practical implication:** Any Mac purchased since 2018 almost certainly has Secure Enclave hardware. The Secure Enclave method will fail to provision only on genuinely old hardware (2017 and earlier Intel without T2). In a modern fleet this edge case may not need prominent documentation, but a capability matrix row and a prerequisite note are appropriate.
+
+Source: [Apple Platform Security — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web); [Apple Support — Mac computers with Apple T2 Security Chip](https://support.apple.com/en-us/103265). Confidence: HIGH for Apple Silicon and T2 list; HIGH for T1 (2016-2017 Touch Bar MacBook Pro).
+
+### 5.2 How Platform SSO uses the Secure Enclave
+
+The Secure Enclave is used to generate and protect the **User Secure Enclave Key** (referred to in Apple's platform SSO documentation as the "Platform Credential"). Key facts:
+
+1. **The key cannot be exported.** Secure Enclave hardware prevents keys from ever leaving the chip; even the OS kernel cannot read them. Keys are used only for signing operations performed inside the Secure Enclave.
+
+2. **The key is hardware-bound to the specific Mac.** The User Secure Enclave Key is tied to both the device hardware AND the user account on that device. A key provisioned on one Mac cannot be transferred to another Mac.
+
+3. **The key generates a hardware-bound Primary Refresh Token (PRT).** After Platform SSO registration, the Secure Enclave key is used to obtain a PRT. Apps and browsers use this PRT for device-wide SSO without requiring re-authentication.
+
+4. **The key functions as a passkey (WebAuthn).** When using Secure Enclave auth, the PRT key can serve as a FIDO2 passkey via WebAuthn APIs in browsers. This enables phishing-resistant MFA via the Mac itself (no external hardware key needed).
+
+5. **FileVault does NOT use the Secure Enclave key.** FileVault disk encryption uses the local macOS account password as the unlock key — this is why the Secure Enclave method intentionally leaves the local account password unchanged. The two mechanisms are parallel, not interdependent.
+
+6. **Password reset breaks the Secure Enclave key.** If a password reset occurs without the local account password being provided (FileVault recovery, MDM-driven recovery), the Secure Enclave resets and the Platform SSO key is lost. The device must re-register for Platform SSO. This is an important L2 troubleshooting scenario.
+
+7. **Device Identity Key Storage migration (August 2025):** Microsoft transitioned from storing the WPJ certificate in Apple Keychain to storing it in the Secure Enclave for all new device registrations. This means applications that previously accessed the WPJ cert via Keychain will fail — they must use MSAL + Enterprise SSO plug-in instead.
+
+Source: [Apple Platform Security — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web); [Microsoft Entra — apple-sso-plugin — Device Identity Key Storage section](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin); [Microsoft Learn — Configure Platform SSO — Secure Enclave tab](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos). Confidence: HIGH.
+
+### 5.3 Secure Enclave vs FileVault relationship
+
+This is the single most frequently misunderstood aspect of macOS Platform SSO. The relationship:
+
+| Mechanism | What it protects | Uses Secure Enclave? | Uses local account password? |
+|---|---|---|---|
+| **FileVault** | Full disk encryption | NO — uses local account password as key | YES — required |
+| **Platform SSO (Secure Enclave method)** | Entra ID authentication credential (WPJ cert / PRT key) | YES — key generated in and never leaves Secure Enclave | NO — local password deliberately unchanged |
+| **Platform SSO (Password method)** | Entra ID authentication credential (synced password) | Partially — WPJ cert stored in SE from Aug 2025 | YES — Entra password syncs to local password |
+
+**Documentation implication:** The admin guide must explicitly state "Enabling Platform SSO with the Secure Enclave method does NOT change your FileVault configuration. FileVault continues to use the local macOS account password as its disk unlock key. After a device reboot, users must enter their local password to unlock FileVault, then Touch ID handles subsequent unlocks." This prevents the common admin mistake of thinking Platform SSO makes the local password irrelevant.
 
 ---
 
-## 10. Out-of-Scope Orientation — What v1.6 Docs MUST NOT Add
+## 6. Legacy Enterprise SSO Plug-in (SSO App Extension) — When to Document
 
-> Downstream consumers (REQUIREMENTS, ROADMAP, FEATURES) should treat the items below as explicitly excluded — anti-features for the v1.6 scope.
+### 6.1 What it is and when it predates Platform SSO
+
+The standalone SSO app extension (configured via the **Device Features template**, not Settings Catalog) provides Entra ID SSO for apps and websites on macOS 10.15+. It does NOT integrate with the macOS login screen and does NOT create a WPJ certificate during registration.
+
+**Payload type (Apple):** `com.apple.extensiblesso` (same payload type as Platform SSO — distinguished by the absence of Platform SSO-specific keys)
+
+**Extension Identifier:** `com.microsoft.CompanyPortalMac.ssoextension` (same as Platform SSO)
+
+**When admins still use the standalone SSO app extension:**
+- Legacy macOS 10.15–12.x devices (cannot run Platform SSO)
+- Orgs that have not yet migrated to Platform SSO
+- During migration period when Platform SSO policy is being validated
+
+### 6.2 Migration path from SSO app extension to Platform SSO
+
+The migration is documented explicitly in the Intune Platform SSO guide:
+1. Create and assign the Platform SSO settings catalog policy
+2. Validate Platform SSO is working (Step 6 in the Intune guide — use `app-sso platform -s` command)
+3. **Unassign** the existing Device Features SSO app extension profile
+4. Do NOT keep both profiles assigned — error 10002 (multiple SSOe payloads) results
+
+**v1.9 implication:** The migration runbook is a dedicated v1.9 deliverable. The key insight to document: since Platform SSO's Settings Catalog policy includes the SSO app extension configuration automatically, migrating to Platform SSO is a policy-add-then-remove-old-policy operation, not a reconfiguration.
+
+Source: [Microsoft Learn — Configure Platform SSO — Step 7](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos): "If you keep both policies, conflicts can occur." Confidence: HIGH.
+
+### 6.3 Additional configuration keys shared between both configurations
+
+These optional keys apply to both the SSO app extension and Platform SSO (configured in Extension Data in Settings Catalog for Platform SSO):
+
+| Key | Type | Recommended Value | Purpose |
+|---|---|---|---|
+| `AppPrefixAllowList` | String | `com.microsoft.,com.apple.` | Allows non-MSAL apps matching these bundle ID prefixes to use SSO |
+| `browser_sso_interaction_enabled` | Integer | `1` | Allows Safari and non-MSAL apps to bootstrap the SSO extension |
+| `disable_explicit_app_prompt` | Integer | `1` | Suppresses redundant authentication prompts from apps that bypass SSO at protocol level |
+| `enable_se_key_biometric_policy` | Boolean | `true` (high-security optional) | Requires Touch ID for every Secure Enclave key access; macOS 14.6+, CP 2504+ |
+| `use_most_secure_storage` | Integer | `0` (troubleshooting only) | Disables Secure Enclave key storage — for diagnostics only, never production |
+
+---
+
+## 7. Platform SSO During ADE Enrollment (Enrollment-time PSSO)
+
+This is a distinct deployment mode with higher prerequisites:
+
+| Requirement | Value | Notes |
+|---|---|---|
+| macOS version | **macOS 26+** | `Enable Registration During Setup` requires macOS 26 |
+| Company Portal | **5.2604.0+** | Must be deployed as a **Line-of-Business (LOB) app** (not from App Store) |
+| ADE enrollment profile | Setup Assistant with modern authentication + Await final configuration = Yes + Locked enrollment = Yes | All four settings required |
+| Group type | **Assigned (static) user groups only** — NOT dynamic groups, NOT device groups | Feature does not work with dynamic or device groups |
+| Smart Card | **NOT available during Setup Assistant** | Smart Card PSSO requires completing Setup Assistant first; then PSSO registration can be initiated |
+| Policy assignment | Settings Catalog policy + LOB Company Portal app + ADE enrollment profile all assigned to the **same static user group** | If assigned to different groups, enrollment fails; wipe and re-enroll required |
+
+Source: [Microsoft Learn — Add Platform SSO policy to ADE Profile on macOS devices](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment) (updated 2026-06-01). Confidence: HIGH.
+
+---
+
+## 8. Browser SSO Support
+
+Platform SSO requires specific browser configurations for device-based Conditional Access to work:
+
+| Browser | Configuration required |
+|---|---|
+| **Safari** | Built-in SSO integration — no additional configuration needed |
+| **Microsoft Edge** | User must sign into Edge profile; Edge uses Microsoft SSO integration automatically |
+| **Google Chrome** | Requires [Microsoft Single Sign On extension](https://chromewebstore.google.com/detail/windows-accounts/ppnbnpeolgkicgegkbkbjmhlideopiji) (force-install via Intune `.plist` preference file); Chrome 135+ has built-in Enterprise SSO support |
+| **Firefox** | Requires [MicrosoftEntraSSO policy](https://mozilla.github.io/policy-templates/#microsoftentrasso) configured (Intune preference file or manual); Firefox 133+ Enterprise supports this policy |
+
+Browser SSO is blocked if TLS inspection intercepts Apple CDN domains or Microsoft login domains. Ensure these are excluded from TLS break-and-inspect:
+- `app-site-association.cdn-apple.com`
+- `app-site-association.networking.apple`
+- All Microsoft login URLs (for Platform SSO-targeted devices)
+
+Source: [Microsoft Entra — apple-sso-plugin — Requirements](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (updated 2026-06-15). Confidence: HIGH.
+
+---
+
+## 9. What NOT to Document (Out of Scope for v1.9)
 
 | Surface | Reason excluded |
 |---|---|
-| **Apple Business Connect (brand profiles, Maps ads, Branded Mail, Tap to Pay, Verify with Wallet)** | Customer-facing surface; NOT device delegation. Mention in v1.6 glossary callout for completeness only. |
-| **Apple Business Essentials (built-in Apple-hosted MDM, Blueprints)** | Microsoft Intune is the MDM throughout this docs suite. Apple's built-in MDM is a competing surface; v1.6 mentions Blueprints as a concept in glossary only. |
-| **Apple School Manager (ASM)** specific features | ASM is functionally identical to ABM for MDM purposes (per v1.3 doc precedent); v1.6 keeps the existing ASM=ABM cross-reference and does not add ASM-school-specific content (SIS rostering, classes, etc.). |
-| **Multiple separate Apple Business accounts** (cross-tenant federation) | v1.6 scope is one Apple Business account with OUs + custom roles. Multi-account topology is Q3 b/c — explicitly out of scope. |
-| **Intune-side RBAC** (Intune roles, scope tags, custom Intune permissions) | MDM concern; covered by other Intune RBAC docs outside v1.6 scope. v1.6 runbooks carry explicit boundary callouts here (audit C14-C16). |
-| **ChromeOS / Android / Windows surfaces** | Wrong platform. |
-| **iCloud personal account surface** (consumer features) | Not an enterprise admin surface. |
-| **Apple Push Notification certificate (APNs) lifecycle deep-dive** | Already covered by existing v1.2/v1.3 docs; v1.6 only references. |
-| **Profile-based User Enrollment (legacy)** | Deprecated iOS 18+; already documented; v1.6 does not refresh. |
+| **iOS/iPadOS Platform SSO or Enterprise SSO plug-in** | iOS uses Microsoft Authenticator (not Company Portal) as the plug-in host; iOS PSSO is a different implementation; out of v1.9 scope |
+| **Apple School Manager (ASM) / Education federation** | Education-specific; enterprise scope only |
+| **Non-Entra identity providers** (Okta, Ping, etc.) | v1.9 scope is Entra ID-joined Macs via Intune only; other IdPs would use the same Platform SSO framework but are separate documentation projects |
+| **macOS hybrid join** | Not supported; document as explicit "not supported, no roadmap" callout in the prerequisites section only |
+| **Jamf Pro / other MDM Platform SSO configurations** | v1.9 is Intune-managed; MDM-generic payload values can be noted for L2 context only |
+| **Kerberos SSO deep-dive** | Optional Platform SSO scenario; cross-reference to `configure-platform-sso-scenarios-macos`; do not fold into core Platform SSO admin guide |
+| **Managed Apple Account federation** | Covered in existing docs; Platform SSO is separate from Managed Apple Account sign-in |
+| **ABM/Apple Business token management** | Out of v1.9 scope (v1.6 covered this) |
 
 ---
 
-## 11. What NOT to Use (rebrand-era anti-patterns)
+## 10. Key Canonical URLs for v1.9 Citations
 
-| Anti-pattern | Why | Use Instead |
+### Microsoft Learn (HIGH confidence — all verified June 2026)
+
+| Purpose | URL | Last Updated |
 |---|---|---|
-| Saying "Apple Business Manager" in newly authored v1.6 docs | Apple retired the name 2026-04-14 | "Apple Business (formerly Apple Business Manager)" on first mention; "Apple Business" thereafter |
-| Saying "Location" in newly authored v1.6 docs | Renamed to Organizational Unit | "Organizational Unit (OU)" — on first mention add "(formerly Location)" |
-| Saying "privileges" in newly authored v1.6 docs | Apple renamed to "permissions" | "permissions" |
-| Saying "Managed Apple ID" in newly authored v1.6 docs | Apple renamed in 2024 (predates Apple Business rebrand) | "Managed Apple Account" with parenthetical "(Microsoft Intune documentation continues to use Managed Apple ID)" on first mention |
-| Linking to legacy `/guide/apple-business-manager/` URLs in newly authored v1.6 docs | Apple's new canonical is `/guide/business/` | Use `/guide/business/...` paths; same article IDs resolve at both paths but new path is preferred |
-| Mass-sweeping existing v1.0–v1.5 docs to rename ABM → Apple Business | Out of v1.6 scope per Q5 option b | Leave existing ABM references alone; only add a rebrand callout at the 3 canonical sites (glossary + macOS ABM-config intro + iOS ABM-token intro) |
-| Renaming "Apple VPP tokens" in Intune-side documentation prose | Microsoft has not renamed the in-portal label as of 2026-04-30 | Use Microsoft's current verbatim label "Apple VPP tokens" when citing Intune-portal paths |
-| Claiming "Apple Business has a max of N Organizational Units" | Apple publishes no max | State "Apple does not publish a maximum OU count; consult Apple Enterprise support for large-scale deployments (>100 OUs)" |
-| Documenting Intune-side RBAC alongside Apple Business roles | Out of v1.6 scope (MDM concern) | Add explicit boundary callout "This runbook covers the Apple Business surface only; Intune-side RBAC is documented separately at [Intune RBAC docs]" |
+| Platform SSO configuration guide (primary) | https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos | 2026-05-18 |
+| Platform SSO during ADE enrollment | https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment | 2026-06-01 |
+| Platform SSO scenarios (Kerberos, Touch ID, non-MSAL apps) | https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos | (current) |
+| SSO app extension — macOS (legacy / Device Features template) | https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-enterprise-sso-plugin-macos | 2024-05-01 |
+| SSO overview and options for Apple devices | https://learn.microsoft.com/en-us/intune/device-configuration/enterprise-sso-plugin | (current) |
+| Microsoft Enterprise SSO plug-in for Apple devices (Entra ID) | https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin | 2026-06-15 |
+| macOS Platform SSO overview (Entra ID) | https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso | 2026-06-15 |
+| Platform SSO troubleshooting and known issues | https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension | 2026-06-15 |
+| Join Mac with Entra ID via Company Portal (user experience) | https://learn.microsoft.com/en-us/entra/identity/devices/device-join-microsoft-entra-company-portal | (current) |
+| Join Mac with Entra ID during OOBE (user experience) | https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on | (current) |
+| Entra certificate-based authentication (Smart Card) | https://learn.microsoft.com/en-us/entra/identity/authentication/concept-certificate-based-authentication-mobile-ios | (current) |
+
+### Apple Official (HIGH confidence)
+
+| Purpose | URL |
+|---|---|
+| Extensible SSO MDM payload settings | https://support.apple.com/guide/deployment/extensible-single-sign-on-payload-settings-depfd9cdf845/web |
+| Platform SSO overview (Apple Platform Deployment) | https://support.apple.com/guide/deployment/dep7bbb05313/web |
+| The Secure Enclave (Apple Platform Security) | https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web |
+| Mac computers with Apple T2 Security Chip | https://support.apple.com/en-us/103265 |
+| Integrate with Microsoft Entra ID (Apple Deployment Guide) | https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web |
+| FileVault MDM payload settings | https://support.apple.com/en-ie/guide/deployment/dep32bf53500/1/web/1.0 |
+| Manage FileVault with MDM | https://support.apple.com/en-ie/guide/deployment/dep0a2cb7686/web |
+| Platform SSO on-demand account creation | https://support.apple.com/guide/deployment/dep7bbb05313/web |
 
 ---
 
-## 12. Cross-Platform Applicability Matrix
+## 11. Confidence Summary
 
-Per the v1.6 quality gate requirement: which capabilities apply to which device classes.
-
-| Apple Business capability | iOS / iPadOS | macOS | Apple TV (tvOS) | Shared iPad |
-|---|:---:|:---:|:---:|:---:|
-| Add device via reseller upload | YES | YES | YES (rare; most retail) | YES |
-| Add device via Apple Configurator | YES | YES | YES (primary path for tvOS) | YES |
-| Assign device to OU | YES | YES | YES | YES |
-| Reassign device between OUs | YES | YES | YES | YES |
-| Release device from organization | YES | YES | YES | YES |
-| Content token / Apps and Books | YES (VPP iOS) | YES (VPP macOS) | YES (tvOS apps) | YES (VPP user-licensed for student/shared scenarios) |
-| Managed Apple Account sign-in | YES (AD-UE; Shared iPad) | YES (Sonoma+) | NO (tvOS doesn't sign into Managed Apple Account at user level) | YES (REQUIRED — Shared iPad mandates Managed Apple Account) |
-| Reset Shared iPad passcode (Apple Business UI) | n/a | n/a | n/a | YES (the unique Shared iPad operation) |
-| AirPlay restrictions | n/a | n/a | YES (but MDM-side, not Apple Business) | n/a |
-| OS update deferral | YES (DDM, MDM-side) | YES (DDM, MDM-side) | YES (MDM-side) | YES (MDM-side) |
-| Federated authentication (OIDC) | YES (Managed Apple Account at AD-UE) | YES (Managed Apple Account at sign-in) | NO (tvOS does not consume Managed Apple Account identity directly) | YES (Shared iPad sign-in) |
-| Custom role scoping per OU | n/a (device class doesn't matter for role scope; admin-side) | same | same | same |
-
-Confidence: HIGH for matrix structure; HIGH for cell values.
-
----
-
-## 13. Confidence Summary
-
-| Finding | Confidence | Source basis |
+| Finding | Confidence | Verification basis |
 |---|---|---|
-| Rebrand name + GA date (2026-04-14) | HIGH | Apple Newsroom + Apple Support banner page |
-| URL surface (business.apple.com + /guide/business/) | HIGH | Direct fetch from Apple Support |
-| Legacy fixed-role triad retired in name | HIGH | Apple Business intro page lists new role names + custom role mechanism |
-| Custom role authoring + multi-role assignment | HIGH | Apple Business intro page explicit text |
-| Full per-permission table for each subgroup | MEDIUM | Apple's intro page lists categories but sub-page tables not extractable via WebFetch; manual scrape recommended for v1.6 Phase 1 glossary |
-| OU hierarchy + scoping behavior | HIGH for primary structure; MEDIUM for nesting depth | Apple article preserved with same ID; community confirms sublocation exists; Apple new docs describe primarily flat |
-| Apple OU max count = unpublished | HIGH (negative claim verified) | Multiple Apple community threads explicitly note no published max |
-| Content token model (per-OU, 1-year, share-allowed) | HIGH | Apple support page + community confirmation |
-| Microsoft Entra federation status (GA, OIDC + SCIM) | HIGH | Apple Support pages + Microsoft Learn page dated 2025-11-04 |
-| National-cloud Entra unsupported | HIGH | Direct quote from Apple deployment guide |
-| Intune-side label still "Apple VPP tokens" | HIGH | Microsoft Learn tutorial dated 2026-04-30 |
-| Shared iPad passcode-reset split across 3 surfaces | HIGH | Apple Support + Microsoft Learn + Apple Deployment Guide consensus |
-| Apple TV retail-purchase Configurator-only path | HIGH | Multiple Apple Support + Microsoft Learn confirmations |
-| Device API Manager preset role exists | HIGH | Apple Business intro page |
-| Device API public API URL | UNKNOWN — not located | (Apple does not currently publish a developer.apple.com landing page for the Apple Business Device API surface) |
+| Product name hierarchy (plug-in > Platform SSO + SSO app extension) | HIGH | Microsoft Entra docs + Intune docs cross-referenced |
+| All Settings Catalog key names and values | HIGH | Directly from Microsoft Learn Platform SSO guide (updated 2026-05-18) |
+| Apple payload type `com.apple.extensiblesso` | HIGH | Apple Platform Deployment official page |
+| Extension Identifier + Team Identifier | HIGH | Multiple Microsoft sources confirm `com.microsoft.CompanyPortalMac.ssoextension` + `UBF8T346G9` |
+| Version floors (macOS 13/14/15, CP 5.2404.0 / 5.2604.0) | HIGH | Microsoft Learn prerequisites section (current docs) |
+| macOS 26 for ADE enrollment PSSO | HIGH | Directly from June 2026 updated Microsoft Learn ADE enrollment doc |
+| Smart Card = macOS 14+ only | HIGH | Auth method comparison table in official docs |
+| Secure Enclave hardware list (T2 models + Apple Silicon) | HIGH | Apple Security Guide + Apple T2 support page |
+| Keys in Secure Enclave cannot be exported | HIGH | Apple Platform Security guide |
+| FileVault/Secure Enclave non-relationship | HIGH | Multiple Microsoft Learn sources explicit on this |
+| Licensing = included in all Intune plans | HIGH | Explicit statement in Microsoft Learn Platform SSO benefits section |
+| Hybrid-join = not supported | HIGH | Microsoft Entra PSSO FAQ explicit; "no plans to support" stated |
+| August 2025 WPJ key storage migration (SE default) | HIGH | Microsoft Entra apple-sso-plugin page, "Device Identity Key Storage" section |
+| macOS 15.3 re-registration bug fix | HIGH | Microsoft Entra troubleshooting page; "Apple confirmed the fix is deployed in macOS 15.3" |
+| ADE enrollment group-type constraints (static user, not dynamic/device) | HIGH | June 2026 Microsoft Learn ADE enrollment page |
+| macOS 15.3 / iOS 18.1.1 Enterprise SSO regression (PluginKit Code=16) | HIGH | Microsoft Entra apple-sso-plugin page, "Important update" section |
 
 ---
 
-## 14. Sources
+## 12. Version-Sensitive Facts That Must Be Pinned in v1.9 Docs
 
-### Apple-authoritative (HIGH confidence)
+These facts are specifically version-dependent and MUST be cited with versions in the documentation (not stated as universally true):
 
-- [Apple Newsroom — Introducing Apple Business (2026-03-24)](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/) — rebrand announcement, GA date 2026-04-14
-- [Apple Support — Apple Business Manager is now Apple Business `axmd79d79dea`](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web) — official banner page
-- [Apple Business User Guide — Welcome](https://support.apple.com/guide/business/welcome/web) — top of new docs tree
-- [Apple Business User Guide — Intro to roles and permissions `axm97dd59159`](https://support.apple.com/guide/business/intro-to-roles-and-permissions-axm97dd59159/web) — role + permission model
-- [Apple Business User Guide — Configure organizational units `axmfdbe2cb0d`](https://support.apple.com/guide/business/configure-organizational-units-axmfdbe2cb0d/web) — OU model
-- [Apple Business User Guide — Manage content tokens `axme0f8659ec`](https://support.apple.com/guide/business/manage-content-tokens-axme0f8659ec/web) — content token (per-OU)
-- [Apple Business User Guide — Federated authentication with Microsoft Entra ID `axm8c1cac980`](https://support.apple.com/guide/business/federated-authentication-microsoft-entra-axm8c1cac980/web) — Entra OIDC federation
-- [Apple Business User Guide — Sync user accounts from your identity provider `axm526a05814`](https://support.apple.com/guide/business/sync-user-accounts-identity-provider-axm526a05814/web) — SCIM provisioning
-- [Apple Business User Guide — Add devices using Apple Configurator `axm200a54d59`](https://support.apple.com/guide/business/add-devices-using-apple-configurator-axm200a54d59/web) — manual device add
-- [Apple Business User Guide — Assign, reassign, or unassign devices `axmf500c0851`](https://support.apple.com/guide/apple-business-manager/axmf500c0851/web) — device assignment (legacy URL, same content)
-- [Apple Business Manager User Guide — Create or reset user passwords `axmd9c4cbc33`](https://support.apple.com/guide/apple-business-manager/create-or-reset-user-passwords-axmd9c4cbc33/web) — Shared iPad passcode reset
-- [Apple Deployment Guide — Integrate with Microsoft Entra ID `depa85a35cf2`](https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web) — Entra integration (published 2025-11-04)
-- [Apple Deployment Guide — Deploy Apple TV `dep027e1d5a0`](https://support.apple.com/guide/deployment/deploy-apple-tv-dep027e1d5a0/web) — Apple TV onboarding
-- [Apple Deployment Guide — Restrictions for Apple TV devices `depzf41d7aae`](https://support.apple.com/guide/deployment/restrictions-for-apple-tv-depzf41d7aae/web) — Apple TV management surface
-- [Apple Deployment Guide — Prepare Shared iPad `dep6fa9dd532`](https://support.apple.com/guide/deployment/prepare-shared-ipad-dep6fa9dd532/web) — Shared iPad architecture
+1. **Smart Card = macOS 14+ only.** On macOS 13, only `Password` and `UserSecureEnclaveKey` are valid Authentication Method values.
 
-### Microsoft-authoritative (HIGH confidence)
+2. **FileVault Entra password unlock = macOS 15+ only.** The `FileVaultPolicy = AttemptAuthentication` key only applies on macOS 15 and later. On macOS 14 and 13, FileVault still requires the local account password exclusively.
 
-- [Microsoft Learn — Tutorial: Use Apple Business to enroll iOS/iPadOS devices in Intune](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/tutorial-automated-ios) (updated 2026-04-30; uses "Apple Business" terminology in prose)
-- [Microsoft Learn — Set up automated device enrollment (ADE) for tvOS](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/setup-automated-tv-os)
-- [Microsoft Learn — Shared iPad devices](https://learn.microsoft.com/en-us/intune/device-enrollment/apple/shared-ipad)
-- [Microsoft Learn — Manage Apple Volume-Purchased Apps](https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple)
-- [Microsoft Learn — Microsoft Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (published 2025-11-04)
+3. **Company Portal 5.2404.0 minimum.** Older Company Portal silently breaks Platform SSO. This is not a user-visible error — the admin must verify CP version during deployment.
 
-### Third-party (MEDIUM confidence — use only to corroborate Apple-authoritative)
+4. **Authentication Method (Deprecated) = macOS 13 only.** The top-level `Authentication Method` field is the legacy path; macOS 14+ should use `Platform SSO > Authentication Method`. Mixed fleets need BOTH in the same policy.
 
-- [HardSoft — Understanding Role Privileges in Apple Business Manager](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/) — pre-rebrand role/permission summary (used to triangulate per-permission examples in §2.4)
-- [Apple Insider — Apple Business goes free (2026-03-24)](https://appleinsider.com/articles/26/03/24/apple-business-goes-free-consolidating-business-and-brand-management-tools-in-one-platform) — corroborates rebrand timing
-- [MacRumors — Apple Launches Apple Business Platform (2026-04-14)](https://www.macrumors.com/2026/04/14/apple-business-platform-launches/) — corroborates GA date
-- [9to5Mac — Apple @ Work: Managed Apple Accounts and federated authentication (2025-11-15)](https://9to5mac.com/2025/11/15/apple-work-why-managed-apple-accounts-and-federated-authentication-are-now-essential-for-every-enterprise/) — federation context
+5. **WPJ key storage in Secure Enclave (default from August 2025).** New device registrations after August 2025 store the WPJ certificate in the Secure Enclave. Applications that access WPJ via Keychain will fail. This affects any organization that upgraded devices post-August 2025 without also updating their MDM configuration to use MSAL/Enterprise SSO plug-in.
 
-### Last verified
+6. **macOS 15.3 re-registration bug fixed.** Devices on macOS 15.0–15.2 may experience unexpected re-registration prompts (OS concurrency bug). Fixed in 15.3. L2 runbooks should recommend upgrading to 15.3+ before troubleshooting PSSO re-registration loops.
 
-`last_verified: 2026-05-20` — all URLs and dates above were verified against the listed sources during the v1.6 research phase.
+7. **ADE enrollment PSSO requires macOS 26.** Platform SSO during Setup Assistant is a macOS 26-only capability. Do not document it as available on earlier versions.
+
+8. **Touch ID biometric policy requires macOS 14.6 AND Company Portal 2504.** Both version floors must be met; the feature silently does not activate if either is below minimum.
 
 ---
 
-*Stack research for: v1.6 Apple Business Delegated Governance — Apple Business platform surfaces for documentation citation in iOS/iPadOS + macOS delegation runbooks*
-*Researched: 2026-05-20*
+*Stack research for: v1.9 macOS Platform SSO + Secure Enclave Authentication Documentation*
+*Researched: 2026-06-20*
+*Source freshness: primary Microsoft Learn sources dated 2026-05-18 to 2026-06-15; Apple sources current as of June 2026*

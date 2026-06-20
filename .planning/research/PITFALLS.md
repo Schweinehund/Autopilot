@@ -1,757 +1,698 @@
-# Pitfalls Research — v1.6 Apple Business Delegated Governance & Multi-Org Operations
+# Pitfalls Research — v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation
 
-**Domain:** Documentation suite — Apple Business delegated permission model (Locations + custom roles + content-token consolidation) layered onto existing v1.0-v1.5 5-platform Intune docs corpus
-**Researched:** 2026-05-20
-**Overall confidence:** HIGH for operational pitfalls (Apple official docs + rebrand newsroom + Intune Learn verified); HIGH for doc-authoring pitfalls (existing v1.0-v1.5 corpus patterns + harness behaviors directly observable); MEDIUM for some corpus-integrity pitfalls (rotting-reference rates are inherently predictive)
+**Domain:** Documentation suite — macOS Platform SSO (PSSO), Secure Enclave key authentication, Password sync, Smart card, Microsoft Enterprise SSO plug-in (Kerberos/redirect legacy), Entra ID device registration via Intune
+**Researched:** 2026-06-20
+**Overall confidence:** HIGH for deployment failure modes (Microsoft Learn official + Apple Platform Deployment official + Jamf/Intune community corroboration); HIGH for conceptual disambiguations; MEDIUM for some version-recency flags (behavior changed rapidly in 2025-2026 point releases); MEDIUM for documentation-suite-specific pitfalls (extrapolated from v1.0-v1.8 corpus patterns)
 
-## Scope Reminder
+## Scope
 
-This document categorizes pitfalls across three axes per the consumer specification:
+Pitfalls organized into five axes as specified by the downstream consumer (roadmap / requirements for v1.9):
 
-- **AXIS 1 — Operational:** mistakes Apple Business admins commonly make in the field (feed in-doc "what breaks if misconfigured" callouts inside delegation runbooks)
-- **AXIS 2 — Doc-authoring:** mistakes v1.6 authors will make while writing the new docs (feed PLAN.md per-phase contracts)
-- **AXIS 3 — Corpus-integrity:** mistakes the 5-platform corpus will accumulate if v1.6 isn't architected carefully (feed new C14-C16 audit harness checks + deferred-cleanup tracking)
-
-**Existing pitfall lineage NOT re-litigated here** (cross-reference instead):
-- PITFALL-7 (whitelist-first / AOSP scope-firewall) — v1.4 Phase 39
-- PITFALL-6 (anchor-stability surface / pre-edit anchor inventory contract) — v1.5 Phase 58
-- PITFALL-13 (cope_banned_phrases C9 sidecar pattern) — v1.4.1 Phase 47
-- PITFALL-14 (transient external link allowlist category) — v1.5 Phase 60
-- PITFALL-15 (GFM-deterministic slug behavior) — v1.5 Phase 58
-- PITFALL-9 (SCCM disambiguation / WUfB-vs-Autopatch / SafetyNet-cross-domain) — v1.5 Phase 54
+- **AXIS 1 — Deployment/config failure modes:** Real symptoms + root causes admins hit in the field
+- **AXIS 2 — Version/recency traps:** Facts that have changed; what needs `last_verified` callouts
+- **AXIS 3 — Conceptual confusion to disambiguate:** Terminology collisions that mislead docs readers
+- **AXIS 4 — Legacy to Platform SSO migration pitfalls:** Coexistence, ordering, what breaks for enrolled devices
+- **AXIS 5 — Documentation/project-specific traps:** Suite conventions applied incorrectly in v1.9 docs
 
 ## Confidence-Level Legend
 
-| Level | Evidence type | Use |
-|-------|--------------|-----|
-| HIGH | Apple official support guide + Microsoft Learn + Apple newsroom OR direct v1.0-v1.5 corpus evidence | State as fact in v1.6 docs |
-| MEDIUM | Single authoritative source OR established analog v1.0-v1.5 pattern with explicit reasoning | State with attribution / hedge |
-| LOW | Predictive / hypothetical-but-plausible / single-community-source | Flag for live-tenant validation before publish |
+| Level | Evidence | Use |
+|-------|----------|-----|
+| HIGH | Microsoft Learn official + Apple Platform Deployment official, corroborated | State as fact |
+| MEDIUM | Single authoritative source OR strong community + one official anchor | State with attribution |
+| LOW | Community-only or inference | Flag for live-tenant validation |
 
 ---
 
-## AXIS 1 — Operational Pitfalls (Apple Business Admins, 2026 corpus)
+## AXIS 1 — Deployment / Config Failure Modes
 
-### OP-1: "Create MDM Server" privilege accidentally delegated to sub-org admin
+### DF-1: Registration prompt never appears after profile delivery
 
-**Confidence:** HIGH (Apple official: "Intro to roles and privileges in Apple Business Manager"; the privilege "Manage MDM Servers" exists and is independently toggleable in custom roles)
+**Confidence:** HIGH (Microsoft Learn "Configure Platform SSO for macOS devices" + "macOS Platform single sign-on known issues and troubleshooting")
 
 **Severity:** HIGH
 
-**What goes wrong:** Custom role for a sub-org admin includes the "Manage MDM Servers" privilege (which sub-org admins legitimately need to assign devices to MDM servers). Admin clicks "Add MDM Server" instead of "Edit MDM Server" and creates a competing MDM server entry. New devices synced through ABM/Apple Business that hit the wrong default-MDM-server route enroll into a competing Intune tenant or get marked Unassigned. Existing devices on the correct MDM server are unaffected, so the issue is invisible until net-new device drain is detected.
+**What goes wrong:** Intune shows the Settings Catalog profile as "Succeeded" on the device but the user never sees a "Registration Required" notification. PSSO is therefore inactive — Entra tokens are never issued, apps prompt individually, Conditional Access device compliance is not evaluated via PSSO.
 
-**Why it happens:** Apple Business uses one privilege bundle ("Manage MDM Servers") to cover four distinct actions: (a) Add server, (b) Edit server, (c) Assign devices to server, (d) Download server token. Admins receive (c) intentionally but inherit (a) by privilege bundling. Apple's UI does not visually distinguish (a) from (c) at the click level.
+**Why it happens:** Four distinct root causes share this symptom:
+1. **Company Portal version too old.** Minimum required is 5.2404.0. Older versions silently fail to surface the registration notification. The policy installs cleanly because Intune delivers it through MDM (not Company Portal), so Intune reports success while Company Portal cannot act on it.
+2. **Conflicting legacy SSO extension profile still active.** If a Device Features template-based SSO app extension (redirect type) is still assigned alongside the new Settings Catalog PSSO policy, Error 10002 fires in the background and the registration flow is suppressed.
+3. **`{{DEVICEREGISTRATION}}` token missing or mis-typed.** The Registration Token field MUST be set to the literal string `{{DEVICEREGISTRATION}}` (including curly braces). Manual typing often loses braces. Without this token, silent Entra device registration cannot proceed.
+4. **User dismissed or missed the notification.** If the user dismisses the registration dialog, the prompt is not automatically re-raised. The user must sign out and sign back in to re-trigger the flow.
 
-**Warning sign:**
-- New MDM server entry appears in Apple Business that the central tenant admin did not create
-- Sudden drop in net-new device throughput on the production MDM server token sync after a sub-org admin onboarded
-- Apple Business `Devices > [serial] > Default MDM server` shows a server the central admin doesn't recognize
+**Symptoms:**
+- Intune: Profile status = Succeeded; Entra: no device record or device state = "Registered" but user state = "Pending"
+- `app-sso platform -s` on device returns `Device Registration: REGISTERED` but `User Registration: PENDING` or `FAILED`
+- Apps continue to prompt for credentials individually
 
-**Prevention strategy:**
-- v1.6 custom-role authoring guide (Phase 62 Foundation): require explicit list of which privileges to GRANT vs DENY for the canonical "VPP-and-passcode-reset sub-org admin" role; treat "Manage MDM Servers" as DENY by default per whitelist-first PITFALL-7 pattern
-- Delegation runbook for MDM server assignment (Phase 64): hard scope-boundary callout — "this runbook requires Account Holder or a custom role with `Manage MDM Servers` deliberately granted; sub-org device-pool admins SHOULD NOT have this privilege"
-- L2 diagnostic runbook (Phase 65): "competing MDM server detection" diagnostic — query Apple Business `Preferences > MDM Server Assignments` and compare against known-good list
+**Prevention:**
+- Phase 75 (admin setup guide): include a pre-flight checklist — Company Portal version check FIRST, confirm both settings catalog fields (Extension Identifier + Registration Token literal)
+- L1/L2 runbooks: `app-sso platform -s` is the canonical first-triage command; document its output fields and what each state means
 
-**Doc-authoring contract:** Phase 62 custom-role authoring guide MUST contain a privilege-grant matrix table with at minimum 6 sub-org-admin reference roles and explicit grant/deny per privilege; reject PR if "Manage MDM Servers" is silently granted in any non-Account-Holder reference role
+**Phase target:** Phase 75 (admin setup); Phase 79 (L1/L2 runbooks)
+
+**Sources:** [Microsoft Learn — Configure Platform SSO for macOS](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos); [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
 
 ---
 
-### OP-2: Account Holder privilege delegated and irreversible
+### DF-2: Secure Enclave key destroyed by MDM password reset
 
-**Confidence:** HIGH (Apple official: "Intro to Account Holder" — only one Account Holder per organization, and only the current Account Holder can transfer)
+**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Apple Platform Deployment security model)
 
 **Severity:** HIGH
 
-**What goes wrong:** Admin grants the "Account Holder" privilege (or transfers Account Holder role) to a sub-org admin or to a person who later leaves the organization, or to a personal Apple ID. Account Holder is the only role that can: re-accept Apple Terms of Service, transfer Account Holder, manage federation root, and recover lost Administrator passwords. Once transferred to an account that goes dark (employee departure, personal Apple ID locked, federated account disabled), the org is structurally locked out of Apple Business for governance-level actions. Existing enrolled devices keep working; net-new tenant-level changes block.
+**What goes wrong:** An IT admin performs a remote password reset via Intune, or the user recovers via FileVault institutional key or MDM-initiated wipe-and-restore, or a macOS upgrade triggers a security migration. After reset, the user's Secure Enclave key is inaccessible. The key was generated by the Secure Enclave and bound to the local account password as its unlock secret — any password change that does NOT flow through the local account's interactive password-change prompt destroys the derived key for that account. The user must re-register PSSO from scratch. Until they do, SSO is broken and apps prompt individually.
 
-**Why it happens:** Account Holder transfer is presented in the same UI surface as routine role edits. The "this is irreversible without the prior holder's consent" warning is a single confirmation dialog. Federation collisions and personal-Apple-ID-confused-with-Managed-Apple-Account are pervasive (see OP-7).
+**Why it happens:** Secure Enclave key derivation uses the local account password as a protection factor. Remote/MDM password resets bypass the interactive Secure Enclave key re-derivation flow that a user-initiated password change would trigger (via the macOS password-change UI, which calls the Secure Enclave to derive a new key under the new password).
 
-**Warning sign:**
-- Apple Business shows Account Holder = a personal-email-domain Apple ID (not the org's Managed Apple Account domain)
-- Apple Business shows Account Holder = the email of an offboarded employee
-- Apple T&C updates pile up unacknowledged in Apple Business banner
-- Federation root cannot be re-configured (Account Holder gate)
+**Symptoms:**
+- User reports "Touch ID login stopped working" or "I keep getting Microsoft sign-in prompts after IT reset my password"
+- `app-sso platform -s` returns registration state = "NOT REGISTERED" or key state invalid
+- User re-registration prompt may appear if macOS detects the key loss
 
-**Prevention strategy:**
-- v1.6 Foundation doc (Phase 62) MUST contain a "What is the Account Holder, why you should not delegate it" callout in the role/privilege overview
-- Delegation runbook anti-pattern callout: every custom-role authoring runbook gets a hard-bordered "DO NOT include Account-Holder-transfer privilege in delegated roles" callout
-- L1/L2 escalation runbook (Phase 65): "Account Holder lockout" recovery is hard-routed to L2+ AND explicitly notes the Apple Enterprise Support paid-ticket path (no L1 self-service)
+**Prevention:**
+- Phase 76 (auth-method deep-dive): explicitly document this limitation in the Secure Enclave key section
+- L2 runbook: "after any MDM password reset on a Secure Enclave key device, expect user re-registration to be required — this is expected behavior, not a bug"
+- L1 runbook step: "advise user to sign out and sign in to re-trigger the PSSO registration prompt"
 
-**Doc-authoring contract:** Phase 62 glossary entry for "Account Holder" MUST cite Apple official support URL + carry a "lock-on" reciprocal reference from every custom-role authoring sub-section
+**Phase target:** Phase 76 (auth-method deep-dive); Phase 79 (L2 runbook)
 
----
-
-### OP-3: Role granted "Edit" privilege without companion "View" privilege
-
-**Confidence:** MEDIUM (community sources: HardSoft blog + Codeproof MDM integration docs describe the privilege-toggle UI; Apple official confirms privileges are independently checkable. The specific "Edit-without-View blank UI" symptom is plausible-but-not-officially-documented by Apple)
-
-**Severity:** MEDIUM
-
-**What goes wrong:** Custom role granted `Edit Device Assignments` but not `View Devices`. UI loads the Devices section but shows an empty list (the admin's role cannot read the device list to enumerate edit targets). Admin reports "the privilege didn't apply" / "Apple Business is broken." Actual cause: Edit is gated behind View. Time wasted in support tickets.
-
-**Why it happens:** Apple Business custom-role UI doesn't visualize privilege dependencies. Most admins assume "Edit > View" hierarchically, but Apple models them as independent toggles that compose multiplicatively.
-
-**Warning sign:**
-- Sub-org admin reports "I have permissions but I see nothing"
-- L1 ticket pattern: "Apple Business shows blank in {Devices, Apps and Books, People}" combined with role recently created
-
-**Prevention strategy:**
-- v1.6 custom-role authoring guide includes a "privilege dependency table" mapping each Edit privilege to its required companion View privileges
-- L2 diagnostic runbook (Phase 65) includes a "permission-denied generic-vs-specific" decision tree (see DA-9) — one branch explicitly covers Edit-without-View
-
-**Doc-authoring contract:** Phase 62 privilege table column "Requires" enumerates companion View privileges for each Edit privilege; harness check optional (skip until v1.7) since this is a generated-table validation, not corpus integrity
+**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO known issues](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension); [Apple — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web)
 
 ---
 
-### OP-4: Per-Location role applied at tenant level (or vice versa)
+### DF-3: Per-user MFA blocks Password sync registration
 
-**Confidence:** HIGH (Apple official: "Since role privileges are assigned by location, you can give the same user different roles in different locations" — assignment scope is per-Location-or-all by design)
+**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Microsoft Q&A community + Microsoft Learn answers)
 
 **Severity:** HIGH
 
-**What goes wrong:** Two specific footguns:
-- (a) Admin assigns a Location-A-only role to a user who already has an All-Locations role — Apple Business uses MOST PRIVILEGED policy across overlapping role assignments, so the Location-A scope intended as a downgrade is silently overridden by the existing All-Locations grant. Admin thinks they restricted scope; they didn't.
-- (b) Admin assigns an All-Locations role intending to restrict by Location-A in a subsequent step. Forgets the subsequent step. User has tenant-wide read-write on a delegated workflow that was supposed to be scoped.
+**What goes wrong:** When the Password sync authentication method is configured, the PSSO registration flow requires the user to authenticate to Entra ID in a webview. If the user has legacy per-user MFA enabled (in the older Azure AD per-user MFA settings, NOT Conditional Access MFA), the webview authentication challenge is escalated in a way that the PSSO registration host cannot complete. The flow stalls silently — no error is shown to the user.
 
-**Why it happens:** Apple Business role-assignment UI presents Location and Role as two independent dropdowns; the "scope-narrowing semantics" of per-Location assignment vs the "scope-expansion semantics" of multiple role assignments are not surfaced in the UI. Admins coming from Intune RBAC mental-model (where role IS scope) misframe the mental model.
+**Why it happens:** Legacy per-user MFA enforces MFA at the authentication layer before the PSSO registration flow can complete. Conditional Access MFA policies (the recommended approach) are evaluated differently and can be configured to suppress the MFA step during device registration flows.
 
-**Warning sign:**
-- Audit log shows a sub-org admin successfully performed an action in a Location the central admin believed was out-of-scope
-- Sub-org admin reports "I can see Locations I shouldn't"
-- Role-assignment list in Apple Business `Access Management > People > [user]` shows multiple overlapping role+Location pairs for one user
+**Symptoms:**
+- User is presented with Entra sign-in webview, enters credentials, MFA prompt appears but cannot complete, flow terminates
+- No error message is displayed; registration simply does not proceed
 
-**Prevention strategy:**
-- v1.6 Foundation doc (Phase 62) Locations-vs-custom-roles decision matrix MUST contain a "role scope is additive (most-permissive wins across overlapping assignments)" explicit callout
-- Multi-cohort architecture guide (Phase 63) MUST contain a "single-role-per-user-per-Location" recommended pattern + a "how to audit overlapping role assignments" sub-section
-- L2 diagnostic runbook (Phase 65): "sub-org admin sees more than expected" — first triage step is "list all role+Location pairs for that user in Access Management"
+**Prevention:**
+- Phase 75 (admin setup prerequisites section): explicitly list "disable per-user MFA for all PSSO target users; use Conditional Access MFA policy instead" as a hard prerequisite — this must appear BEFORE any Settings Catalog steps
 
-**Doc-authoring contract:** Phase 62 + Phase 63 docs MUST cross-reference each other on the additive-scope semantics; harness C15 (proposed) checks for the literal phrase "most-permissive wins" OR equivalent disambiguation prose in both files
+**Phase target:** Phase 75 (admin setup prerequisites)
+
+**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension); [Microsoft Q&A — PSSO password sync](https://learn.microsoft.com/en-us/answers/questions/1690643/platform-sso-password-sync)
 
 ---
 
-### OP-5: Device transfer between Locations breaks license + profile assignments
+### DF-4: Error 10001 — macOS 13/14 mixed-fleet settings catalog misconfiguration
 
-**Confidence:** HIGH for VPP license behavior (Apple official "Migrate content tokens" guide explicitly documents this — Content Manager migrations to a Location that already has licenses move only unassigned licenses); MEDIUM for enrollment profile re-evaluation behavior (inferred from MDM-server-per-Location model, not officially stated in a single guide)
+**Confidence:** HIGH (Microsoft Learn "Configure Platform SSO for macOS devices" — explicitly documented)
 
 **Severity:** HIGH
 
-**What goes wrong:** Device moved from Location A to Location B in Apple Business (admin action: bulk edit, MDM server reassign, or Location reassign). Side effects:
-- VPP device-licensed apps purchased under Location-A's content token may STOP working because the license is tied to Location A's token, not the device. Apps remain installed on the device but show as unlicensed; new devices in Location B can't be assigned these apps.
-- Enrollment profile assigned at MDM-server-level (Location-A's MDM server) does not follow the device to Location B's MDM server. On next factory reset, device gets Location B's enrollment profile (which may differ in supervision flags, app pre-load, restrictions).
-- Configuration profiles assigned via Intune (NOT Apple Business) survive because Intune is the assignment authority. This creates a mixed-state device: Intune-managed config A + Location-B enrollment profile + Location-A VPP licenses (unlicensed) — a hybrid state most admins don't expect.
+**What goes wrong:** Error 10001 appears in Intune device status for the PSSO profile when a required settings catalog field is missing or when a field that only applies to macOS 14+ is included for a macOS 13 device (or vice versa). In mixed fleets (macOS 13.x + 14.x), a single settings catalog policy must configure BOTH the deprecated `Authentication Method (Deprecated)` field (macOS 13) AND the `Platform SSO > Authentication Method` field (macOS 14+). Configuring only the macOS 14+ field causes Error 10001 on macOS 13 devices.
 
-**Why it happens:** Apple Business and Intune partition the assignment surface differently. Apple Business owns: device-to-MDM-server, device-to-Location, content-token-to-Location. Intune owns: profile-to-device, app-assignment-to-device-or-user. The cross-Location move only touches Apple-Business-side bindings, but the user-facing "device just got moved" mental model assumes everything moves.
+**Why it happens:** Apple changed the Platform SSO payload schema between macOS 13 and 14. Intune Settings Catalog exposes both the deprecated and current fields. Admins creating their first policy choose one or the other, not both.
 
-**Warning sign:**
-- Apps installed on a moved device show as unlicensed in Intune (`Devices > [device] > App install status`)
-- Newly-imaged moved devices receive a different OOBE experience than peers in the source Location
-- Help-desk tickets cluster around "after my device was transferred, apps stopped opening"
+**Symptoms:**
+- Intune profile status: Error with code 10001 on some devices in a mixed fleet
+- Devices affected are consistently on macOS 13.x while macOS 14+ devices succeed (or vice versa)
 
-**Prevention strategy:**
-- v1.6 device-transfer runbook (Phase 64) MUST contain a 4-cell impact matrix table: { VPP licenses, Enrollment profile, Configuration profiles (Intune), Compliance state } × { survives transfer | breaks }
-- v1.6 device-transfer runbook MUST include a pre-transfer checklist: "before transferring devices, identify cross-Location license dependencies" + a SQL/PowerShell-style query template against Intune Graph API
-- L1 runbook for "app stopped working" (existing common-issues.md) extended with an Apple-Business cross-Location-transfer branch
+**Prevention:**
+- Phase 75 admin setup guide: show BOTH field paths in the Settings Catalog steps and label which macOS version each applies to
+- Capability matrix: flag macOS 13 vs 14 row distinction; Smart card method is macOS 14+ only (not available via the deprecated field)
 
-**Doc-authoring contract:** Phase 64 device-transfer runbook MUST cite Apple's content-token migration guide for the license-doesn't-follow-device claim; harness C14 (rebrand-statement presence) AND C15 (Intune-delegation anti-pattern guard) both touch this file
+**Phase target:** Phase 75 (admin setup); Phase 80 (capability matrix)
+
+**Sources:** [Microsoft Learn — Configure Platform SSO for macOS](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
 
 ---
 
-### OP-6: Releasing a device that's still under DEP profile assignment
+### DF-5: Error 10002 — coexisting legacy SSO app extension profile
 
-**Confidence:** HIGH (Apple official: "Release devices" guide — release in Apple Business deletes the device-to-MDM-server binding; on next Apple Business sync via the device's serial, if the device is re-added to Apple Business by reseller or manual re-add, it WILL re-acquire a default profile if one is set)
+**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Intune community corroboration)
 
 **Severity:** HIGH
 
-**What goes wrong:** Admin releases a device from Apple Business intending permanent removal. Device remains in physical possession (not wiped, not re-imaged). At next Apple Business sync (every 12-24 hours), the device's serial number gets re-fetched from Apple's DEP backend by ANY MDM server that has the device pre-assigned via reseller upload. If a reseller continues to push devices to the same Apple Business account, the released device's serial can re-appear; admin thinks they removed it. On next factory reset, device hits whatever default enrollment profile is currently set — possibly a profile that doesn't apply (because the device is now physically with the user as a personal device).
+**What goes wrong:** When deploying PSSO, an admin leaves the older SSO app extension profile (created via Intune Device Features template, redirect type) assigned to the same device group. Both profiles target the macOS SSO extension slot. The system detects two competing extension payloads and emits Error 10002. PSSO registration is blocked.
 
-**Why it happens:** "Release" in Apple Business is a soft delete — it removes the device's assignment but does NOT remove the device from Apple's DEP backend. Resellers continue to push to Apple Business per their commercial agreement. Bulk-released devices appearing later is a known Apple Business surprise.
+**Why it happens:** When Platform SSO is configured, Microsoft explicitly states that only ONE SSO extension profile should be active — the Settings Catalog PSSO policy. The legacy Device Features template profile was the pre-Platform-SSO pattern. Admins often add the new policy while leaving the old one in place as a "backup."
 
-**Warning sign:**
-- Device released >30 days ago re-appears in Apple Business device list
-- Released device serial shows in Apple Business audit log with action: "Device added by reseller"
-- End user reports OOBE forcing MDM enrollment on a device they consider personal
+**Symptoms:**
+- Intune: PSSO policy status = Error 10002 on affected devices
+- `app-sso platform -s` may show conflicting extension states
 
-**Prevention strategy:**
-- v1.6 device-release runbook (Phase 64) MUST contain a "release is not permanent removal — to permanently remove, coordinate with reseller to remove from DEP backend" callout
-- Device-release runbook MUST contain an "active-shared-iPad-session" + "DEP-profile-assignment" + "another-admin-MDM-scope" pre-release checklist (3 specific blocking conditions)
-- Bulk-release runbook contains an explicit "Apple confirmation UI shows count, not serials — verify CSV before submit" warning
+**Prevention:**
+- Phase 75 setup guide: explicit "migration ordering" — step 1 assign new Settings Catalog PSSO policy, step 2 unassign ALL legacy SSO app extension profiles, step 3 confirm no legacy profile remains on device
+- Phase 77/78 migration guide: document this as the primary cause of post-migration failures
 
-**Doc-authoring contract:** Phase 64 device-release runbook serves as the canonical "what release does and does not do" document — Foundation glossary entry for "Release device" cross-references it
+**Phase target:** Phase 75 (admin setup ordering section); Phase 77/78 (migration guide)
+
+**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension); [scloud.work — Intune Error 10002](https://scloud.work/intune-assigment-error-10002-platform-sso/)
 
 ---
 
-### OP-7: Personal Apple ID collision with Managed Apple Account federation
+### DF-6: FileVault unlock cannot use Touch ID or Entra credentials after cold reboot
 
-**Confidence:** HIGH (Apple official: Federated Authentication guide documents the "Apple ID with same email exists" conflict path — Apple notifies user via email and provides a 60-day window to rename personal Apple ID. Existing v1.3 docs already reference this collision risk indirectly via the personal-vs-Managed-Apple-ID disambiguation)
+**Confidence:** HIGH (Apple Platform Deployment; Microsoft Learn; multiple community sources)
+
+**Severity:** MEDIUM (confuses admins writing "passwordless" docs and users who expect full passwordless behavior)
+
+**What goes wrong:** Admins writing docs that call PSSO "passwordless at the login screen" are wrong about the cold-boot case. After a reboot, macOS MUST present the FileVault pre-boot password screen, which requires the local account password (the disk encryption key). Touch ID is not available at the FileVault unlock stage. Only after the disk is unlocked and macOS loads does the login window appear, where Touch ID / Secure Enclave key SSO operates.
+
+**Why it happens:** FileVault uses the local user account password as the volume encryption key. The Secure Enclave key for PSSO is a separate cryptographic artifact. The two are not interchangeable at the disk-decryption layer.
+
+**Symptoms / documentation trap:**
+- Docs or user communications claiming "Platform SSO = fully passwordless; no password needed after enrollment" are incorrect for cold-boot
+- Users still prompted for password after firmware update or restart and report the feature "broke"
+
+**Prevention:**
+- Phase 76 auth-method deep-dive: include a "FileVault + Platform SSO interaction" sub-section explicitly stating that FileVault unlock after reboot always requires the local password
+- Avoid the phrase "fully passwordless" without the cold-boot caveat
+- For Password-sync method: the local password equals the Entra password, so users have ONE password for both FileVault and Entra; for Secure Enclave key method, the local password and Entra authentication are separate concerns
+
+**Phase target:** Phase 76 (auth-method deep-dive)
+
+**Sources:** [Apple Support — Platform SSO for macOS](https://support.apple.com/guide/deployment/platform-sso-for-macos-dep7bbb05313/web); [intuneirl.com — macOS SSO Playbook](https://intuneirl.com/the-complete-macos-sso-playbook-advanced-configuration-strategies-explained/)
+
+---
+
+### DF-7: AD-bound (mobile) accounts: password sync registration silently fails
+
+**Confidence:** HIGH (Apple Developer Forums — confirmed limitation; Microsoft confirmed no restriction on their side)
+
+**Severity:** HIGH for orgs with legacy AD-bound Macs
+
+**What goes wrong:** Devices where the macOS user account was created by Active Directory binding (the account is an AD "mobile account") fail PSSO registration when Password sync is the authentication method. The registration flow reaches the stage where Apple prompts the user to enter their password to sync the local account with the Entra password. Because the local account is an AD mobile account rather than a pure-local account, the password synchronization API call fails silently — no error dialog is shown, the flow just stops.
+
+**Why it happens:** AD mobile accounts have a different local account structure from standard macOS local accounts. The PSSO password synchronization flow expects a standard macOS local account as the target. This is a platform limitation with no announced fix date from Apple.
+
+**Symptoms:**
+- Registration prompt appears, user enters password, nothing further happens
+- `app-sso platform -s` shows perpetual registration pending
+- Only affects Password sync method; Secure Enclave key method may succeed (key derivation does not sync a password)
+
+**Prevention:**
+- Phase 76 auth-method deep-dive: call out AD-bound mobile account incompatibility with Password sync explicitly; recommend Secure Enclave key method for orgs transitioning away from AD binding
+- Phase 77/78 migration guide: "if devices are AD-bound, unbind from AD before deploying PSSO Password sync — OR switch to Secure Enclave key method which does not require password sync"
+
+**Phase target:** Phase 76 (auth-method deep-dive, Password sync section); Phase 77/78 (migration)
+
+**Sources:** [Apple Developer Forums — Platform SSO registration fails on Mobile AD accounts](https://developer.apple.com/forums/thread/803802)
+
+---
+
+### DF-8: PSSO device configuration corruption on macOS 15.0 through 15.2
+
+**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Apple fix confirmed in macOS 15.3)
+
+**Severity:** HIGH (causes re-registration loops)
+
+**What goes wrong:** On macOS 15.0 through 15.2, a race condition between the system `AppSSOAgent` and `AppSSODaemon` processes can corrupt the underlying Platform SSO JSON configuration file. Once corrupted, macOS discards the config and initiates a remediation sequence: the re-registration maintenance expiration fires, and users receive repeated PSSO registration prompts — sometimes daily. The re-registration loop is self-healing for the user (if they complete re-registration each time) but generates helpdesk tickets.
+
+**Why it happens:** Simultaneous writes to the Platform SSO config from two system processes create a race condition causing the JSON to become malformed. macOS interprets the malformed config as an expired registration state.
+
+**Symptoms:**
+- Users on macOS 15.0 through 15.2 report daily or weekly PSSO registration prompts
+- `app-sso platform -s` shows device config cycling through valid / invalid states
+- Issue does NOT recur on macOS 15.3+
+
+**Prevention:**
+- Phase 75 setup guide prerequisites: recommend macOS 15.3+ for Sequoia fleets; this is a freshness-callout candidate
+- L2 runbook: if re-registration loop is reported on macOS 15.0-15.2, the remediation is OS upgrade to 15.3+; if it persists on 15.3+, collect logs via `app-sso diagnose` and engage Apple Support
+
+**Phase target:** Phase 75 (prerequisites version floor note); Phase 79 (L2 runbook)
+
+**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
+
+---
+
+### DF-9: Conditional Access policy blocks user registration after device registration succeeds
+
+**Confidence:** MEDIUM (Microsoft Learn; Jamf community; bootstrapping dependency well-established in practice)
 
 **Severity:** HIGH
 
-**What goes wrong:** Org federates Microsoft Entra to Apple Business. User `alice@corp.com` has a personal Apple ID at `alice@corp.com` (created years ago using corp email, perhaps for an old iPhone). At federation time, Apple flags the collision. If unresolved within 60 days, Apple converts the personal Apple ID's email to a different address (forces rename), or blocks the federation. Side effects:
-- User's personal iCloud data (photos, contacts) remains accessible but is now signed in with a different email → confusion + perceived data loss
-- Work-side Managed Apple Account creation may silently fail for the user; admin doesn't see this in Apple Business
-- For shared iPad scenarios, the user cannot sign in until federation collision is resolved
+**What goes wrong:** Platform SSO has two distinct registration phases: (1) device registration (the SSO extension registers the device with Entra ID silently using the `{{DEVICEREGISTRATION}}` token) and (2) user registration (the user authenticates interactively). A Conditional Access policy that requires "compliant device" as a condition will evaluate at user registration time. If the device has not yet been marked compliant by Intune (because compliance evaluation itself depends on PSSO being established), the CA policy blocks the user registration and displays a "compliant device required" error instead of the registration UI.
 
-**Why it happens:** Apple historically allowed personal Apple ID creation with any email address (no domain verification). When orgs adopt Managed Apple Accounts post-hoc, the collision surface depends on how many employees historically created personal Apple IDs on the corp email domain (often >10% of workforce). The Apple email notification to the user (warning about the rename) often goes to a personal mailbox or gets filtered.
+**Why it happens:** Circular dependency: CA requires compliance, compliance requires PSSO, PSSO registration requires passing CA. Assigning PSSO policy to device groups WITH filters is also explicitly unsupported for devices with user affinity.
 
-**Warning sign:**
-- Federation rollout pre-flight check shows N "conflicting Apple IDs" in Apple Business federation banner
-- Users report "I can't sign in to Managed Apple Account"
-- Apple Business federation status shows "partial federation"
+**Symptoms:**
+- Device registration: REGISTERED (Phase 1 OK)
+- User registration: FAILED with "Conditional Access requires compliant device" error
+- Only affects newly enrolled devices; existing enrolled devices already marked compliant are unaffected
 
-**Prevention strategy:**
-- v1.6 federation runbook (Phase 64) MUST contain a 60-day-window collision-resolution sub-section with explicit user-comms template
-- L1 runbook for "Apple Business federation rejected sign-in" (Phase 65) MUST first-step verify "is this a colliding personal Apple ID" before MDM-side troubleshooting
-- Account-driven User Enrollment docs (existing `docs/admin-setup-ios/08-user-enrollment.md`) get a v1.6 forward-link to the new federation runbook (sentence-level surgical edit only per v1.4 D-25 / v1.5 Q5(b) no-corpus-sweep)
+**Prevention:**
+- Phase 75 admin setup guide: temporarily exclude the enrollment device group from the strict CA "require compliant device" policy during the PSSO bootstrapping window; note this exclusion can be removed after initial enrollment
 
-**Doc-authoring contract:** Phase 62 glossary entry for "Managed Apple Account" cross-references the federation collision section; harness C14 confirms the rebrand-statement callout is present in `08-user-enrollment.md` (already acknowledged at line 22, 49 in existing doc)
+**Phase target:** Phase 75 (admin setup prerequisites / Entra CA interaction section)
+
+**Sources:** [Microsoft Learn — Configure Platform SSO](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
 
 ---
 
-### OP-8: Federated admin offboarded — role auto-revoke or stuck?
+### DF-10: Tenant Restrictions v2 via corporate proxy breaks PSSO token acquisition
 
-**Confidence:** MEDIUM (Apple official documents federation but does not authoritatively document the offboarding-cascades behavior across all scenarios; community reports confirm Entra-disable → Managed Apple Account sign-in blocked, but the Apple Business role assignment ROW remains until manually removed)
+**Confidence:** HIGH (Microsoft Learn troubleshoot guide — explicitly documented)
 
-**Severity:** MEDIUM (HIGH when combined with OP-2 Account Holder)
+**Severity:** HIGH for orgs using corporate proxy with TLS inspection
 
-**What goes wrong:** Admin Alice has an Apple Business custom role assigned via federated Managed Apple Account from Entra. Alice leaves the org; Entra account is disabled in offboarding workflow. Effects:
-- Alice can no longer sign in to Apple Business (Entra-federated authentication fails) ✓ expected
-- Alice's Apple Business role assignment ROW persists in `Access Management > People > Alice` — the role is not auto-revoked, just unusable
-- If Alice is re-enabled in Entra (rehire, contractor return), the role is automatically usable again without re-approval — surprise risk
-- If Alice was Account Holder, see OP-2 — the org may be effectively locked out of governance actions
+**What goes wrong:** Microsoft Entra ID Tenant Restrictions v2 implemented via corporate proxy (where the proxy injects TR headers) is incompatible with macOS Platform SSO when the proxy uses a certificate trust chain outside Apple's system root certificates. The PSSO registration and token-acquisition flows use certificate-pinned requests; a proxy performing TLS inspection with a non-Apple-root CA breaks these flows.
 
-**Why it happens:** Apple Business federation is authentication-layer only. Authorization (the role assignment) lives in Apple Business's own data model and does not subscribe to Entra group changes or disable events. There is no Entra-Group-driven-role-assignment mechanism in Apple Business (unlike Intune RBAC group assignments).
+**Symptoms:**
+- PSSO registration succeeds behind non-intercepting proxies but fails behind TLS-inspecting proxies
+- PSSO token refresh failures result in frequent re-authentication prompts for affected users
+- Error logs show certificate validation failures on Microsoft login endpoints
 
-**Warning sign:**
-- Offboarded employees still appear in Apple Business `Access Management > People` with active role assignments
-- Periodic Apple Business audit shows N people with role X, but HR's active-employee list shows N-K
+**Prevention:**
+- Phase 75 admin setup prerequisites: explicitly list PSSO endpoints that MUST be exempted from TLS inspection
+- Phase 76 deep-dive: note the Tenant Restrictions v2 incompatibility; recommend exempting PSSO endpoints from TR v2 proxy injection OR using TR v2 client-side signaling instead of proxy injection
 
-**Prevention strategy:**
-- v1.6 sub-org admin onboarding runbook (Phase 64) MUST contain a paired offboarding section — "Apple Business role revocation is NOT automatic; add to your offboarding checklist"
-- L2 diagnostic runbook (Phase 65) Apple Business audit log review playbook includes "people with role X but disabled in Entra" cross-tenant reconciliation query
+**Phase target:** Phase 75 (prerequisites / network requirements section)
 
-**Doc-authoring contract:** Phase 64 onboarding runbook MUST link to a corresponding offboarding runbook (or have a paired offboarding sub-section in same file); harness C15 optional check
+**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO known issues](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
 
 ---
 
-### OP-9: Content token consolidation — "untouched Location" gotcha
+### DF-11: Smart card: missing Entra CBA prerequisite causes silent failure
 
-**Confidence:** HIGH (Apple official: "Migrate content tokens" guide explicitly documents: "When you create a location in an untouched state, it allows Apple to transfer all licenses, including licenses currently in use from a legacy token, but as soon as anything is done on this location, only unused licenses are transferred")
+**Confidence:** HIGH (Microsoft Learn — PSSO smart card method requires Certificate-Based Authentication enabled in Entra ID)
 
 **Severity:** HIGH
 
-**What goes wrong:** Org begins migration from legacy per-Location VPP tokens to consolidated content tokens. Admin creates the new Location, then "tests" it by purchasing 1 app, OR assigns ANY license to it BEFORE the legacy-token migration completes. From that moment, the Location is no longer "untouched" — Apple's migration tool will only transfer UNUSED legacy licenses. Licenses currently assigned to devices stay tied to the legacy token. Admin discovers months later that 60% of fleet licenses are still pointing at the legacy token (which they thought was retired) and re-doing this is impractical because licenses-in-use cannot be transferred from a "touched" Location.
+**What goes wrong:** Admin configures `SmartCard` as the authentication method in the Settings Catalog PSSO policy (macOS 14+ only). The smart card is physically present and paired with a local account. PSSO profile delivers successfully. Registration prompt appears but fails silently or with a cryptic error when the user inserts the smart card. Root cause: Certificate-Based Authentication (CBA) has not been configured and enabled in the Entra ID tenant.
 
-**Why it happens:** "Untouched state" is a specific Apple data-model term not surfaced in the UI. The migration tool's pre-flight check does not warn about touched-state at the time the admin clicks "test purchase." Admins testing the new Location naturally want to "verify it works" by buying one app — which is precisely the action that breaks the bulk-migration semantic.
+**Why it happens:** Smart card PSSO is layered on top of Entra ID CBA. CBA is a separate Entra feature that must be pre-configured (trusted CA certificates uploaded, authentication strength policy set) before smart card PSSO registration will succeed. The Settings Catalog profile alone does not provision the Entra side.
 
-**Warning sign:**
-- After migration, Apple Business shows the legacy token still has ~50%+ of licenses assigned
-- New device assignments fail license-checkout against the new Location's token even though purchased-license count is sufficient
-- Apps installed on old devices stop syncing license-state into Intune
+**Symptoms:**
+- Smart card PSSO registration: "authentication failed" or silent failure
+- Non-smart-card PSSO methods succeed on same device
 
-**Prevention strategy:**
-- v1.6 VPP content-token consolidation runbook (Phase 64) MUST contain a "DO NOT TOUCH the new Location until full migration completes" hard-bordered callout with explicit list of forbidden actions (purchase, assign, edit metadata, etc.)
-- Pre-migration checklist MUST include: "verify all Content Managers have selected a Location" + "verify all VPP purchasers invited and accepted" + "Location is empty (no licenses, no people, no devices)"
-- Post-migration verification step: "compare license counts between legacy token and new Location — must match within 0.1%"
+**Prevention:**
+- Phase 76 auth-method deep-dive: Smart card section MUST open with "Entra ID CBA must be configured first — see [Entra CBA documentation]" as a hard prerequisite callout, BEFORE any Settings Catalog steps
+- Phase 75 admin setup guide: capability table row for Smart card: label "Requires Entra CBA — additional setup"
 
-**Doc-authoring contract:** Phase 64 VPP consolidation runbook is the highest-stakes runbook in v1.6 — recommend explicit L2-approval-gate before action; runbook MUST cite Apple official migration guide URL
+**Phase target:** Phase 76 (auth-method deep-dive, Smart card section); Phase 75 (capability table)
 
----
-
-### OP-10: Intune-side VPP token upload after rebrand — UI navigation
-
-**Confidence:** HIGH (Microsoft Learn confirmed in May 2026: Intune admin center path remains `Tenant administration > Connectors and tokens > Apple VPP tokens`; Apple's content-token consolidation is portal-side at business.apple.com — does NOT change the Intune-side upload path)
-
-**Severity:** LOW (cosmetic confusion)
-
-**What goes wrong:** Admin reads Apple's new Apple Business documentation (which uses "content token" terminology) and looks for "content token" in Intune. Intune admin center still uses "Apple VPP tokens" label in `Tenant administration > Connectors and tokens`. Admin spends 10 minutes searching for a non-existent menu, files a support ticket, escalates.
-
-**Why it happens:** Apple rebranded ABM → Apple Business and VPP-location-token → content-token in April 2026. Microsoft Intune's UI surface has not (as of May 2026) renamed the corresponding menu — it remains "Apple VPP tokens." This is normal lag for cross-vendor terminology synchronization.
-
-**Warning sign:**
-- L1 ticket: "where is the content token upload in Intune?"
-- Apple-side docs and Intune-side docs use different terms for the same artifact
-
-**Prevention strategy:**
-- v1.6 VPP consolidation runbook MUST have a `> Note: Apple calls this a "content token" — Microsoft Intune calls it an "Apple VPP token." Same artifact, different label.` callout
-- Glossary entry for "VPP location token" carries `→ now called content token in Apple Business (2026 rebrand); Intune UI still labels as Apple VPP token` cross-reference
-- v1.6 docs use "content token (Apple VPP token in Intune)" compound phrasing on first mention per section
-
-**Doc-authoring contract:** Phase 62 glossary MUST contain reciprocal entries for both terms; harness C14 (rebrand-statement) catches missing Apple-vs-Intune label disambiguation
+**Sources:** [Microsoft Learn — macOS PSSO overview](https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso); [Microsoft Learn — Configure Platform SSO](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
 
 ---
 
-### OP-11: Shared iPad passcode reset — three paths, three privilege gates
+### DF-12: Changing authentication method in existing PSSO policy triggers fleet-wide re-registration
 
-**Confidence:** HIGH (Apple official: "Create or reset user passwords in Apple Business Manager" guide documents the Apple-Business-UI path; MDM `ClearPasscode` and `EraseDevice` commands are documented in Apple's Developer MDM Protocol reference; Apple Configurator USB-tethered reset is documented but is a fallback)
+**Confidence:** HIGH (Microsoft Learn — explicitly documented)
 
-**Severity:** HIGH (data loss risk on wrong-path choice)
+**Severity:** MEDIUM (operational disruption)
 
-**What goes wrong:** L1 admin needs to reset a shared iPad passcode. Three paths exist:
-- (a) Apple Business UI passcode reset — requires `Reset Shared iPad Passcode` privilege (per-Location); preserves user data; works for federated Managed Apple Accounts only
-- (b) MDM `ClearPasscode` command from Intune — requires Intune RBAC + device must be online; clears the device passcode but does NOT reset the Managed Apple Account password
-- (c) MDM `EraseDevice` — destructive; nukes the device; for last-resort recovery
+**What goes wrong:** An admin modifies the `Platform SSO > Authentication Method` or `Platform SSO > Use Shared Device Keys` settings in an existing PSSO policy (e.g., changes from Password to Secure Enclave key). Intune pushes the updated profile to all targeted devices. macOS receives the updated profile and triggers Entra re-registration for ALL previously registered users simultaneously. Helpdesk is flooded with "I need to sign in again" tickets.
 
-Admin picks (c) when (a) would have sufficed → data loss. OR admin picks (a) when the user is in an active shared iPad session → race condition: passcode reset happens mid-session, user is signed out, in-flight work is lost.
+**Prevention:**
+- Phase 75 admin setup guide: include a callout warning that authentication method changes after initial deployment cause fleet-wide re-registration; recommend piloting on a small test group before changing method in production
+- Phase 77/78 migration guide: sequence password sync to Secure Enclave key migrations through staged pilot groups, not fleet-wide policy edit
 
-**Why it happens:** The three paths are documented in three separate vendors' docs (Apple Business help + Apple Developer MDM Protocol + Intune Learn). No single source enumerates the decision matrix. L1 admins facing time pressure pick the "obvious" path which is often the most destructive.
+**Phase target:** Phase 75 (admin setup, production deployment callout); Phase 77/78 (migration)
 
-**Warning sign:**
-- Help-desk ticket: "shared iPad data loss after passcode reset"
-- L1 ticket history shows EraseDevice used in 100% of reset cases when fewer are warranted
-
-**Prevention strategy:**
-- v1.6 L1 shared iPad passcode reset runbook (Phase 65) IS the canonical decision matrix — explicit 3x3 table: { Apple Business UI, MDM ClearPasscode, MDM EraseDevice } × { federated Managed Apple Account, non-federated, supervised vs unsupervised }
-- Runbook ordering: Apple Business UI FIRST (least destructive), MDM ClearPasscode SECOND, EraseDevice LAST with a hard L2-approval-required gate
-- "Which admin owns this device pool" lookup step (the DA-8 doc-authoring pitfall) is a PREREQUISITE step in the runbook — admin must first identify the per-Location admin who has reset privilege
-
-**Doc-authoring contract:** Phase 65 L1 shared iPad passcode reset runbook is the FIRST L1 runbook in v1.6 and the architectural template for all subsequent L1 runbooks; harness C16 (proposed: shared iPad passcode-reset cross-link integrity) validates this runbook cross-links to MDM ClearPasscode docs in `docs/admin-setup-ios/` AND to the Apple Business UI path in the delegation runbook section
+**Sources:** [Microsoft Learn — Configure Platform SSO](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
 
 ---
 
-### OP-12: Find-My enabled blocks shared iPad reset / device release
+### DF-13: ADE PSSO during Setup Assistant — dynamic group assignment fails silently
 
-**Confidence:** HIGH (Apple official: Activation Lock requires Find My to be disabled before MDM commands like erase + setup-from-scratch will succeed on supervised devices; this is a long-standing Apple security boundary)
+**Confidence:** HIGH (Microsoft Learn — explicitly documented for ADE-during-enrollment feature)
 
-**Severity:** HIGH
+**Severity:** HIGH for orgs using the macOS 26 ADE + Setup Assistant PSSO integration
 
-**What goes wrong:** Shared iPad has Find My enabled (often via a misconfigured initial setup OR a user enabling it via Settings during a prior session). Admin attempts passcode reset path that requires erase (path c), or attempts device release. Operation fails with Activation Lock error. Without prior unlinking of the user's Apple ID (which requires the user's password OR Apple Enterprise Support intervention), the device is bricked from a re-enrollment standpoint.
+**What goes wrong:** The Platform SSO During ADE Enrollment feature requires three policies assigned to the SAME STATIC groups: the Settings Catalog PSSO policy, the Company Portal LOB app policy, and the ADE enrollment profile. If any of the three is assigned via dynamic groups, or if there is a group membership evaluation lag, the Setup Assistant wait does not receive all three policies in the correct order, and the user arrives at the desktop without PSSO registered. No error is surfaced; setup simply continues without PSSO.
 
-**Why it happens:** Find My can be enabled by end users on shared iPad (depending on supervision restriction profile) — admins assume supervision blocks it but the restriction is a separate Configuration Profile setting (`Restrictions.payloadIdentifier.allowFindMyDevice` or similar) that must be explicitly disabled.
+**Why it happens:** Dynamic group evaluation has latency (Entra group membership evaluation can take minutes). The ADE Setup Assistant Await Final Configuration window is time-bounded. Static group assignment ensures immediate policy targeting.
 
-**Warning sign:**
-- Activation Lock error in Intune device action log
-- Apple Business device shows "Activation Lock: Enabled" in detail panel
+**Symptoms:**
+- User completes Setup Assistant and reaches desktop without PSSO registration prompt
+- Profile delivery shows some policies succeeded, others still pending at Setup Assistant exit
 
-**Prevention strategy:**
-- v1.6 shared iPad provisioning admin guide (Phase 63) MUST include "disable Find My in supervised restrictions" as a mandatory pre-deployment configuration step
-- L1 passcode reset runbook (Phase 65) has a pre-check: "if Find My is enabled, do NOT proceed with EraseDevice path; escalate to L2 for Activation Lock unlock via Apple Business `Device > Bypass Activation Lock` (requires `Activation Lock Bypass` privilege)"
+**Prevention:**
+- Phase 75 admin setup guide (ADE subsection): explicit callout "ALL THREE policies must be assigned to the SAME static groups — dynamic groups are not supported for this flow"
 
-**Doc-authoring contract:** Phase 65 L1 runbook + Phase 63 admin guide both reference the Activation Lock unlock privilege; harness C15 confirms cross-reference is bilateral
+**Phase target:** Phase 75 (ADE PSSO setup subsection)
 
----
-
-### OP-13: Audit log retention < SOX / compliance requirement
-
-**Confidence:** MEDIUM (Apple does not publish official audit log retention SLA for Apple Business; community reports vary 90-365 days; SOX/compliance frameworks often require 7-year retention)
-
-**Severity:** MEDIUM
-
-**What goes wrong:** SOX-regulated org assumes Apple Business audit log will satisfy compliance retention requirements. Discovers at audit time that Apple Business retains audit log for [X] days, not [Y] years. Compliance gap. Org cannot prove who authorized a specific device release 14 months ago.
-
-**Why it happens:** Apple Business is positioned as a device-management tool, not a compliance audit system. Apple does not publish a retention SLA. Community reports (anecdotal) suggest <1 year.
-
-**Warning sign:**
-- Compliance team asks "produce audit log for action X on date Y, 18 months ago"
-- Apple Business audit log query returns "no records" for old date ranges
-
-**Prevention strategy:**
-- v1.6 audit log scoping runbook (Phase 64) MUST include a "Apple Business does NOT guarantee long-term audit retention; for compliance frameworks requiring >1 year retention, configure periodic export to an external SIEM" callout
-- Confidence-marker: this finding is MEDIUM — recommend per-org live-tenant validation against Apple Business's current retention behavior
-- Cross-link to Intune-side audit log (which DOES have configurable retention via Azure Monitor)
-
-**Doc-authoring contract:** Phase 64 audit log runbook flags external-SIEM-export pattern as recommended; harness check not needed (this is content quality, not corpus integrity)
+**Sources:** [Microsoft Learn — Add Platform SSO policy to ADE Profile](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment); [Microsoft Community Hub — New Platform SSO with ADE](https://techcommunity.microsoft.com/blog/intunecustomersuccess/new-platform-sso-with-registration-during-automated-device-enrollment-on-macos/4519846)
 
 ---
 
-### OP-14: Cross-Location audit visibility
+## AXIS 2 — Version / Recency Traps
 
-**Confidence:** MEDIUM (Apple official: roles assigned per Location restrict view scope; cross-Location actions are visible to whoever has tenant-wide audit privilege — but the exact "what does sub-org admin see" matrix isn't single-source documented)
+### VR-1: Platform SSO GA timeline — preview vs GA distinction matters
 
-**Severity:** MEDIUM
+**Confidence:** HIGH (Microsoft Tech Community official blog posts)
 
-**What goes wrong:** Sub-org admin for Location A performs an action that affects a device in Location B (e.g., reassigns device A-to-B). Audit log entry exists. WHO sees this entry?
-- Sub-org admin for Location A: sees the action they performed
-- Sub-org admin for Location B: may NOT see the inbound device because the action was authored in Location A's scope
-- Central tenant admin: sees both
+**What changed and when:**
 
-Result: Location B admin discovers a device in their fleet that they didn't authorize. Audit query for "how did this device get here" against Location B's scoped log returns nothing.
+| Event | Date |
+|-------|------|
+| Platform SSO framework introduced in macOS | macOS 13 Ventura, Oct 2022 |
+| macOS 14 Sonoma adds v2 of PSSOe spec (Password sync improvements, Smart card method) | Sept 2023 |
+| Microsoft Platform SSO public **preview** | May 2024 |
+| Microsoft Platform SSO generally **available** | Aug 2025 |
+| PSSO during ADE / Setup Assistant generally **available** (Intune + macOS 26) | May 2026 |
 
-**Why it happens:** Audit log scoping follows author-scope, not target-scope. This is consistent with most audit systems but counter-intuitive for new admins.
+**Documentation trap:** Any doc citing "Platform SSO preview" is at minimum 2 years stale as of June 2026. Docs written near the May 2024 preview announcement may state "in preview" or use preview-era configuration steps that have since changed.
 
-**Warning sign:**
-- Location B admin reports "ghost device" — appears in fleet without traceable provenance
-- Cross-Location reconciliation discrepancies
+**What needs a `last_verified` callout:**
+- The authentication method table (Secure Enclave key, Password sync, Smart card) — Smart card is macOS 14+ only; document the version constraint
+- The ADE + Setup Assistant PSSO flow — GA'd May 2026, macOS 26 required; must carry `last_verified`
+- Company Portal minimum version requirement: currently 5.2404.0 for standard PSSO; 5.2604.0 for ADE-enrollment PSSO
 
-**Prevention strategy:**
-- v1.6 audit log scoping runbook (Phase 64) MUST explicitly document author-scope vs target-scope semantics
-- Multi-cohort architecture guide (Phase 63) recommends central-tenant-admin retains tenant-wide audit privilege; per-Location admins are scoped to their own Location only
-- L2 diagnostic runbook (Phase 65) "device with unknown provenance" — investigation starts at tenant-wide audit log, not Location-scoped log
+**Phase target:** Phase 75 admin setup guide — all feature capability tables must carry `last_verified` dates matching the milestone close date
 
-**Doc-authoring contract:** Phase 64 audit log runbook contains a labeled "Author-scope vs target-scope" sub-section; harness check not needed
-
----
-
-### OP-15: Apple TV in conference room — content assignment ownership boundary
-
-**Confidence:** MEDIUM (Apple TV management surface is documented but Conference Room Display mode + per-Location content assignment is sparse in official docs)
-
-**Severity:** LOW (niche surface — most orgs have <10 Apple TVs)
-
-**What goes wrong:** Apple TV deployed in a conference room is assigned to Location-A's MDM server. Content (apps, configurations, AirPlay restrictions) flows through Location-A's content token. Location B's admin wants to deploy a new conference-room AirPlay app to Location B's Apple TVs. Discovers Apple TV configuration is partitioned by Apple Business Location, not by physical conference room location. Admin can't independently configure if Apple TV was assigned to the wrong Location at intake.
-
-**Why it happens:** Apple TVs in shared physical spaces (conference rooms) have weak organizational ownership (no single department "owns" the conference room). Initial-assignment-to-Location is often arbitrary. The misassignment is invisible until a Location-B admin tries to make a change.
-
-**Warning sign:**
-- L2 ticket: "I can't see Apple TV X in my Location"
-- Apple TV's MDM server entry differs from expected Location
-
-**Prevention strategy:**
-- v1.6 Apple TV provisioning admin guide (Phase 63) recommends a "shared physical space → central tenant admin owns; non-shared spaces → per-Location admin owns" assignment heuristic
-- Apple TV transfer between Locations: same caveats as OP-5 (VPP licenses, enrollment profile)
-
-**Doc-authoring contract:** Phase 63 Apple TV provisioning admin guide is the niche surface; explicitly de-prioritize to satisfy doc-authoring pitfall DA-1 (don't skip Apple TV / shared iPad sections)
+**Sources:** [Microsoft Tech Community — PSSO Public Preview](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/platform-sso-for-macos-now-in-public-preview/4051574); [Microsoft Tech Community — PSSO GA](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/now-generally-available-platform-sso-for-macos-with-microsoft-entra-id/4437424)
 
 ---
 
-## AXIS 2 — Doc-Authoring Pitfalls (v1.6 Authors)
+### VR-2: macOS 15.0 through 15.2 PSSO concurrency bug — fixed in 15.3
 
-### DA-1: Cross-platform language drift — "iOS" used when "all Apple platforms managed by Apple Business" intended
+**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Apple patch notes)
 
-**Confidence:** HIGH (observable pattern in existing v1.3 + v1.5 cross-platform corpus — e.g., `docs/admin-setup-ios/08-user-enrollment.md:22` already pre-emptively notes "Managed Apple ID" vs "Managed Apple Account" terminology drift)
+**What changed:** macOS 15.0 through 15.2 has a documented concurrency bug causing PSSO device configuration corruption and re-registration loops. Fixed in macOS 15.3. The fix carried forward into macOS 26 (Tahoe).
 
-**Severity:** HIGH (will mislead admins managing macOS or Apple TV through Apple Business)
+**Documentation trap:** Any troubleshooting doc that lists "re-registration loop" as an unsolved issue is stale for 15.3+ fleets. Listing "wait for an Apple fix" as the remediation is also stale — the fix shipped in macOS 15.3.
 
-**What goes wrong:** v1.6 author writes "in iOS, the Apple Business custom role grants…" when the actual statement applies to iOS + iPadOS + macOS + shared iPad + Apple TV. Reader managing macOS thinks the v1.6 doc doesn't apply to them. Authors default to iOS-framing because (a) Apple Business UI is most-frequently demonstrated on iOS in marketing material, (b) existing v1.3 iOS work is fresh in author memory, (c) iOS user base is larger.
+**What needs a `last_verified` callout:** The macOS 15 troubleshooting section for re-registration loops must note "fixed in 15.3; this section applies only to devices on 15.0 through 15.2"
 
-**Why it happens:** Apple Business is genuinely cross-platform but most authoring examples bias to iOS. Existing docs tree split (`docs/admin-setup-ios/` vs `docs/admin-setup-macos/`) creates a directory-level naming pull on author terminology choice. v1.6 merged docs tree (per project constraint) creates ambiguity about which sub-directory new docs live in.
-
-**Warning sign:**
-- Grep for "iOS" in v1.6 PR diff returns N occurrences in delegation docs where "Apple platform" or "iOS / iPadOS / macOS" would be correct
-- Code-review comment pattern: "doesn't this also apply to macOS?"
-
-**Prevention strategy:**
-- Phase 62 (Foundation) ships a "v1.6 docs cross-platform language convention" mini-style-guide as an HTML comment block at top of every v1.6 doc
-- Convention: use "Apple Business" + "Managed Apple Account" + "Apple platforms (iOS / iPadOS / macOS / shared iPad / Apple TV)" as the canonical phrasing on first mention per H2 section
-- Phase contract: every v1.6 phase PLAN.md MUST include a "cross-platform language check" pre-merge item
-
-**Doc-authoring contract:** Phase 62 PLAN.md mandates the language-convention HTML comment block; harness C15 (proposed: Intune-delegation anti-pattern guard) can be extended to catch bare "iOS" without "iPadOS / macOS" companion in v1.6-scoped files
+**Phase target:** Phase 79 L1/L2 runbooks — version-gated troubleshooting steps
 
 ---
 
-### DA-2: Rebrand inconsistency WITHIN v1.6 itself
+### VR-3: Workplace Join (WPJ) certificate storage migrated to Secure Enclave (Q3 2025)
 
-**Confidence:** HIGH (Q5 (b) decision explicitly limits rebrand to glossary + 2 intro callouts → v1.6 docs will use "Apple Business" while linking to existing "ABM" docs that v1.6 doesn't touch)
+**Confidence:** MEDIUM (Jamf community announcement; Microsoft change confirmed in community sources; exact date from Jamf community thread)
 
-**Severity:** MEDIUM (cosmetic but compounds confusion with DA-3)
+**What changed:** Starting approximately Q3 2025, all NEW Entra device registrations on macOS store the Workplace Join Key in the Secure Enclave rather than the user's Login Keychain. When a device completes PSSO registration, the legacy WPJ registration is removed from the keychain.
 
-**What goes wrong:** v1.6 author writes `## Apple Business Custom Roles` in a new doc and immediately links to `[ABM Configuration](../admin-setup-macos/01-abm-configuration.md)` — title says Apple Business, link title says ABM. Reader is confused: is this Apple Business or ABM? Are they the same thing? (They are — but the doc doesn't say so explicitly.) Authors will be tempted to "fix" the ABM references in the existing doc, violating Q5(b) no-corpus-sweep contract.
+**Documentation trap:** Any admin script or troubleshooting doc that checks for the WPJ key in the Login Keychain (using `security find-certificate -a | grep Microsoft` or similar) will return false negatives on PSSO-enrolled devices. The correct check is `app-sso platform -s`.
 
-**Why it happens:** The rebrand-callout-budget is intentionally tight (glossary + 2 callouts). Authors with completionist instincts will reach for "while I'm in this file, let me also rename…" — the same instinct that caused v1.4 to retroactively-sweep frontmatter (which was correctly avoided by D-25).
+**What needs a `last_verified` callout:**
+- Any reference to checking Keychain for device registration certificates must note the Q3 2025 migration date
+- L2 runbooks using `security find-certificate` for WPJ verification must be rewritten to use `app-sso platform -s`
 
-**Warning sign:**
-- v1.6 PR diff touches any file in `docs/admin-setup-{ios,macos}/0[1-9]-*.md` for terminology-only changes
-- v1.6 PR diff renames "ABM" → "Apple Business" in body text outside the 2 sanctioned callout sites
+**Phase target:** Phase 79 (L1/L2 runbooks, verification steps); Phase 80 (capability matrix, device registration storage row)
 
-**Prevention strategy:**
-- Phase 62 PLAN.md explicitly enumerates the 3 rebrand-callout sites (glossary entry, macOS ABM-config intro, iOS ABM-token intro) by file:line and forbids any other corpus changes for rebrand
-- v1.6 audit harness C14 (proposed: rebrand-statement presence) validates the 3 sanctioned callouts EXIST AND simultaneously validates no other file received an ABM→Apple-Business edit (negative-check via git diff against baseline)
-- Pre-merge contract: every v1.6 PR description includes a "rebrand sites touched: 0/1/2/3" line item
-
-**Doc-authoring contract:** Harness C14 is the technical enforcement; PLAN.md per-phase is the prose enforcement; both must agree on the 3-site whitelist
+**Sources:** Jamf Community — upcoming change device compliance integration for macOS SSO extension
 
 ---
 
-### DA-3: Glossary forward-reference conflict — Managed Apple ID vs Managed Apple Account
+### VR-4: macOS 13 Authentication Method (Deprecated) field — schema divergence
 
-**Confidence:** HIGH (existing v1.3 doc already shows this conflict in-corpus: `docs/admin-setup-ios/08-user-enrollment.md:22` documents "Managed Apple ID (sometimes branded 'Managed Apple Account'…); Microsoft Intune documentation continues to use 'Managed Apple ID'")
+**Confidence:** HIGH (Microsoft Learn Settings Catalog documentation)
 
-**Severity:** MEDIUM (admin confusion across reading new + old docs)
+**What changed:** The Settings Catalog field `Authentication Method (Deprecated)` applies to macOS 13 only and supports only `Password` and `UserSecureEnclaveKey`. The non-deprecated `Platform SSO > Authentication Method` applies to macOS 14+ and also supports `SmartCard`. Smart card is NOT available on macOS 13 via any field.
 
-**What goes wrong:** v1.6 glossary introduces "Managed Apple Account" as canonical term. Existing docs (v1.3+) use "Managed Apple ID" pervasively. Admin reading the new v1.6 federation runbook + the old v1.3 User Enrollment guide sees two terms. Admin's mental model fractures: are these the same thing? Is one newer? Which should I trust?
+**Documentation trap:** Docs that show only the macOS 14+ Settings Catalog path without covering the macOS 13 deprecated path will be incomplete for mixed fleets. Conversely, docs showing only the deprecated path will be incomplete for macOS 14+ features including Smart card.
 
-**Why it happens:** Q5 (b) explicitly leaves existing "Managed Apple ID" usages unchanged. Apple's rebrand creates a transient terminology fork.
+**What needs a `last_verified` callout:** The Settings Catalog field name and path could change with Intune updates; the dual-path requirement is confirmed as of June 2026.
 
-**Warning sign:**
-- L1 ticket: "the docs use Managed Apple ID and Managed Apple Account — which is current?"
-- Glossary entry for one term doesn't cross-reference the other
-
-**Prevention strategy:**
-- Phase 62 Foundation glossary entry for "Managed Apple Account" MUST contain a bidirectional "← see also: Managed Apple ID (Microsoft Intune retains this term as of v1.6 publication date)" cross-reference
-- Glossary entry for "Managed Apple ID" gets a single-line forward-reference: "→ Apple rebranded this to 'Managed Apple Account' in 2026. In Intune contexts, the older term is still used."
-- Both entries cite Apple newsroom URL + Microsoft Learn URL with publication dates
-
-**Doc-authoring contract:** Harness C14 validates both glossary entries exist + cross-reference each other; corpus-wide single-term-only-please enforcement is OUT OF SCOPE per Q5(b)
+**Phase target:** Phase 75 admin setup guide — side-by-side table showing macOS 13 vs 14+ field paths
 
 ---
 
-### DA-4: Anchor stability regression in capability matrices
+### VR-5: ADE + PSSO during Setup Assistant is macOS 26 only, requires Company Portal 5.2604.0
 
-**Confidence:** HIGH (this is a direct lineage from PITFALL-6 / v1.5 D-10 sibling-matrix-anchor-pin contract — Phase 58 already locked the pre-edit anchor inventory pattern)
+**Confidence:** HIGH (Microsoft Community Hub; Microsoft Learn)
 
-**Severity:** HIGH (will fail C12 audit harness check)
+**What changed:** The ability to complete PSSO registration during the macOS Setup Assistant (as opposed to post-desktop-arrival) requires macOS 26 (Tahoe) and Company Portal 5.2604.0 or newer. This is a DIFFERENT Company Portal version floor than standard PSSO (which requires 5.2404.0). These are two distinct code paths with different prerequisites.
 
-**What goes wrong:** v1.6 adds an Apple Business delegation row group to iOS + macOS capability matrices. New H2 inserted between existing H2s shifts all downstream anchor offsets. If sibling-matrix-anchor-pin contract isn't honored (reciprocal-H2 in all 4 sibling matrices: Windows / Linux / iOS / macOS / Android), `docs/reference/4-platform-capability-comparison.md` cells linking to the now-shifted anchor break. C12 audit fails.
+**Documentation trap:** A v1.9 doc that conflates the standard post-enrollment PSSO flow (manual registration prompt after user reaches desktop) with the new ADE-during-Setup-Assistant flow will mislead admins about when and where registration happens, and will state wrong minimum version requirements.
 
-**Why it happens:** Author makes a "small surgical add" to one matrix file without remembering the cross-matrix contract. v1.5 D-10 specifically created this contract to prevent this regression — v1.6 authors who haven't read v1.5 retrospective will re-discover it the hard way.
+**What needs a `last_verified` callout:** Mark the ADE PSSO section with `last_verified: 2026-05-11` (GA date) and a `review_by` date 90 days out. The static-groups constraint and Company Portal version floor may change in future Intune updates.
 
-**Warning sign:**
-- C12 audit check fails post-PR
-- `4-platform-capability-comparison.md` link sweep finds broken anchors
-- Sibling matrices have H2 count mismatch
-
-**Prevention strategy:**
-- Phase 63 (architecture / capability matrix extension) PLAN.md MUST include a "pre-edit anchor inventory" artifact (lift verbatim from v1.5 Phase 58 Plan 58-05 contract)
-- Sibling-matrix-anchor-pin contract is reciprocal: every new H2 in iOS/macOS matrices REQUIRES a reciprocal H2 in Linux/Windows/Android matrices (even if cells are `n/a — [matrix](...)`)
-- Pre-merge check: anchor inventory diff must show new anchors are reciprocal across all 5 matrices
-
-**Doc-authoring contract:** Inherit verbatim from v1.5 D-10; explicit re-statement in Phase 63 PLAN.md is mandatory (no implicit inheritance)
+**Phase target:** Phase 75 admin setup guide (separate ADE subsection)
 
 ---
 
-### DA-5: C12 240-cell math drift
+### VR-6: "Managed Apple ID" vs "Managed Apple Account" label in PSSO context
 
-**Confidence:** HIGH (C12 validator implementation in `scripts/validation/v1.5-milestone-audit.mjs:556-595` checks `cells.length !== 6` AND validates 6 named H2s; expanding to 7th H2 changes the assertion math)
+**Confidence:** HIGH (Apple rebrand 2026; v1.8 CI-3 deferred constraint)
 
-**Severity:** HIGH (will fail v1.6 audit on Phase 58 carry-over)
+**What changed:** Apple rebranded "Managed Apple ID" to "Managed Apple Account" in 2026. Microsoft Intune portal and some Microsoft Learn articles still use "Managed Apple ID." The v1.8-DEFERRED-CLEANUP.md carries CI-3 (corpus rename deferred until Intune portal adopts the rebrand, trigger: post-2026-07-01 quarterly tutorial refresh).
 
-**What goes wrong:** v1.6 adds 7th H2 "Apple Business Delegation" to `docs/reference/4-platform-capability-comparison.md`. C12 validator's H2 list at v1.5-milestone-audit.mjs:591 is hardcoded to 6 H2 names. Validator either (a) doesn't find the new H2 in its expected list and passes silently (false-negative), or (b) author copies the validator unchanged into v1.6-milestone-audit.mjs and the new H2 goes unvalidated. Cell-link-math (currently 240 cells = 6 H2 × ~8 rows × 5 platforms) also changes.
+**Documentation trap:** v1.9 PSSO docs should follow whatever term the Intune admin center displays at the time of authoring. Do NOT sweep existing corpus occurrences (CI-3 constraint still applies). If both terms appear in adjacent Microsoft documentation, use the Intune portal term and add a disambiguation note matching the v1.6 pattern.
 
-**Why it happens:** Validator math is hardcoded for v1.5 expected state. Path-A copy v1.5→v1.6 needs explicit math update at the new harness; authors who skip this get a silent-pass false negative.
-
-**Warning sign:**
-- v1.6 audit harness Path-A copy passes immediately on Phase 1 without any v1.6 content (false-positive PASS = signal to investigate)
-- Cell count in `4-platform-capability-comparison.md` exceeds 240 but C12 still reports 240-cell math
-
-**Prevention strategy:**
-- Phase 68 (v1.6 audit harness Path-A copy) PLAN.md MUST explicitly update: (a) C12 H2 list to 7 entries including "Apple Business Delegation", (b) cell-count math to ~280 (or whatever the new row × column product equals), (c) BASELINE refresh to capture pre-v1.6 state for diff
-- Atomic harness commit pattern (v1.5 Phase 60 Plan 60-08 precedent) — promotion + math update + sidecar refresh land in ONE commit
-- BASELINE refresh `regenerate-supervision-pins.mjs --self-test` analog for new C14-C16 checks
-
-**Doc-authoring contract:** Phase 68 audit harness work is the LAST v1.6 phase; cannot land until all content phases stable; harness self-test must pass before milestone close
+**Phase target:** Phase 75 admin setup guide — match Intune portal terminology; add disambiguation footnote; do not trigger a corpus-wide sweep
 
 ---
 
-### DA-6: Sibling-matrix-anchor-pin contract violation
+## AXIS 3 — Conceptual Confusion to Disambiguate
 
-**Confidence:** HIGH (same lineage as DA-4 but specifically the cross-matrix-symmetry constraint)
+### CD-1: Platform SSO vs Enterprise SSO plug-in vs Kerberos SSO extension
 
-**Severity:** HIGH (will produce `n/a`-cell mismatches in comparison doc)
+**Confidence:** HIGH (Microsoft Learn "Single sign-on (SSO) for iOS/iPadOS and macOS"; "Enterprise SSO plug-in for Apple devices")
 
-**What goes wrong:** Apple Business delegation H2 added only to iOS + macOS capability matrices (because Apple Business is Apple-only). But the comparison doc requires reciprocal H2s in ALL 5 platform columns. Windows/Linux/Android matrices need an Apple-Business-Delegation H2 with `n/a` cells (or a footnote redirecting to "see iOS / macOS").
+**The confusion:** These three names refer to related but distinct things. Microsoft's own documentation uses "Enterprise SSO plug-in" to mean different things in different contexts.
 
-**Why it happens:** Authors reason "this doesn't apply to Windows/Linux/Android, so why add an empty section?" — forgetting that the comparison doc's structural validator requires the row to exist (with `n/a` cells) for the comparison to be authored at all.
+**Disambiguation cheat-sheet:**
 
-**Warning sign:**
-- C12 validator reports "missing H2" in Windows/Linux/Android capability matrices
-- Comparison doc has Apple-Business-Delegation row but referenced matrix files don't have the anchor
+| Term | What it is | When to use |
+|------|-----------|-------------|
+| **Microsoft Enterprise SSO plug-in** | The parent umbrella component provided by Company Portal that implements Apple's SSO Extension framework. Includes BOTH Platform SSO AND the SSO app extension (redirect type). | Use when referring to the overall Company Portal component; avoid as a synonym for either sub-feature |
+| **Platform SSO (PSSO)** | The modern macOS-specific feature (macOS 13+) within the Enterprise SSO plug-in that binds the local login to Entra ID. Supports three auth methods. Performs Entra device registration. Configured via Settings Catalog, NOT Device Features template. | Use when discussing the recommended macOS 13+ authentication path |
+| **SSO app extension (redirect type)** | The legacy pre-Platform-SSO feature within the Enterprise SSO plug-in that provides token brokering for apps and browsers using Microsoft identity. Does NOT do OS-level login binding. Does NOT do Entra device registration. Configured via Device Features template or Settings Catalog redirect type. | Use when discussing what worked before Platform SSO, or what provides app-scope SSO alongside Platform SSO |
+| **Kerberos SSO extension** | Apple's BUILT-IN macOS / iOS SSO extension (separate from Microsoft's) that handles Kerberos / AD ticket-granting. Managed via MDM payload. Supports password sync to on-prem AD, smart card, local password management. | Use ONLY for on-premises Kerberos / AD scenarios. NOT for Entra ID scenarios. Can coexist with PSSO. |
+| **"Enterprise SSO"** (unqualified) | Ambiguous — used by Microsoft to mean at least three of the above depending on context. AVOID this unqualified term in docs. |  |
 
-**Prevention strategy:**
-- Phase 63 PLAN.md explicit checklist: "Apple-Business-Delegation H2 added to ALL 5 platform matrices, including n/a-only ones"
-- Reciprocal-H2 prose convention: Windows/Linux/Android matrices include a `## Apple Business Delegation` H2 with a single sentence: "n/a — Apple Business is an Apple platform exclusive. See [iOS](../reference/ios-capability-matrix.md#apple-business-delegation) or [macOS](../reference/macos-capability-matrix.md#apple-business-delegation)."
+**Documentation trap:** Writing "configure the Enterprise SSO plug-in" when meaning "configure Platform SSO" causes admins to configure the legacy redirect-type extension instead, resulting in Error 10002 conflicts.
 
-**Doc-authoring contract:** Phase 63 PLAN.md SC must enumerate the 5 expected H2 anchors by file:line:anchor-slug; harness C12 enforces
+**Phase target:** Phase 75 admin setup guide (intro section disambiguation); Phase 77 legacy vs Platform SSO guide (disambiguation table required in opening section)
 
----
-
-### DA-7: C11 ops-domain false-positive on Apple Business prose
-
-**Confidence:** HIGH (C11 implementation calibrated via v1.5 Phase 60 Plan 60-08 CALIBRATION; documented at v1.5-milestone-audit.mjs:494-545; the keyword set `successor|deprecated|historical|disambiguation|mutual-exclusion|...` defines the ±200-char window negation)
-
-**Severity:** MEDIUM (will produce noisy CI failures; demoralizes authors)
-
-**What goes wrong:** v1.6 docs will frequently reference "Intune VPP token upload" (the handshake between Apple Business and Intune). The C11 regex set includes patterns like `\bIntune\b[^.]*\bAutopatch\b`-style cross-domain detection. Even if Apple Business prose doesn't match the LITERAL patterns, expansion of the pattern set during v1.6 audit-harness Path-A copy may introduce new patterns that DO false-positive on legitimate Apple-Business-meets-Intune prose.
-
-**Why it happens:** C11 was tuned for v1.5 ops-depth content (SCCM disambiguation, WUfB-vs-Autopatch). v1.6 introduces a new cross-domain prose surface (Apple Business ↔ Intune) where boundary-call language is legitimate. The CALIBRATION pattern (live-corpus refinement of keyword set) needs to be re-run for v1.6.
-
-**Warning sign:**
-- v1.6 audit harness CI run shows N C11 false-positives on Apple-Business-meets-Intune sentences
-- Calibration drift: keyword set doesn't cover v1.6 disambiguation phrases like "Apple Business owns; Intune owns; integration handshake"
-
-**Prevention strategy:**
-- Phase 68 (audit harness) MUST include a C11 CALIBRATION sub-phase modeled on v1.5 Plan 60-08 CALIBRATION
-- Keyword set extended with v1.6-specific tokens: `apple-business-side|intune-side|integration-handshake|owned-by-apple-business|owned-by-intune|scope-boundary`
-- Live-corpus refinement run against drafted v1.6 docs BEFORE C11 promotion to blocking
-
-**Doc-authoring contract:** Phase 68 PLAN.md CALIBRATION sub-task is a HARD prerequisite to C11 blocking-mode promotion; if calibration finds >5 false-positives that aren't reducible by keyword extension, C11 stays informational for v1.6
+**Sources:** [Microsoft Learn — Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin); [Microsoft Learn — SSO for iOS/iPadOS and macOS](https://learn.microsoft.com/en-us/intune/intune-service/configuration/use-enterprise-sso-plug-in-ios-ipados-macos)
 
 ---
 
-### DA-8: L1 "which admin owns this device pool" lookup directory missing
+### CD-2: Secure Enclave key vs Keychain vs FileVault key
 
-**Confidence:** HIGH (the problem is structural — Apple Business does not natively provide a "who has reset privilege for this device pool" query; admins must manually correlate Device → Location → Role-Assignments → People)
+**Confidence:** HIGH (Apple security documentation; Microsoft Learn)
 
-**Severity:** HIGH (L1 runbook unusable without this lookup; blocks OP-11 prevention)
+**The confusion:** All three are key or secret storage mechanisms on macOS. They are related but serve completely different purposes. Conflating them causes admins to misunderstand what PSSO is protecting and what breaks when each is disturbed.
 
-**What goes wrong:** L1 shared iPad passcode reset runbook step 1 is "look up which admin owns this device pool." But: Apple Business UI doesn't surface this directly. L1 admin's available data: device serial number. To get from "device serial" to "admin who can reset" requires: (a) lookup device → Location, (b) lookup Location → Role-assignments containing `Reset Shared iPad Passcode` privilege, (c) lookup those role-assignments → People → contact info. Step (b) requires Access Management privilege which L1 doesn't have.
+**Disambiguation cheat-sheet:**
 
-**Why it happens:** Apple Business is not designed as an org-chart lookup tool. The L1 → L2 escalation pattern is the implicit answer (escalate to L2 who has Access Management read).
+| Concept | What it is | Role in PSSO |
+|---------|-----------|--------------|
+| **Secure Enclave** | Hardware security processor on all Apple Silicon Macs and Intel T2 Macs. Generates and stores cryptographic keys that never leave the hardware. | For `UserSecureEnclaveKey` PSSO method: generates a per-user hardware-bound public/private key pair. Private key never leaves Secure Enclave. Used to authenticate to Entra ID without typing a password. |
+| **Keychain (Login Keychain)** | macOS software key/certificate store per user. Accessible to apps with appropriate entitlements. | Pre-PSSO: WPJ certificate stored here. Post-PSSO enrollment: WPJ cert moved to Secure Enclave. PSSO SSO tokens are stored in Keychain but derived from and protected by Secure Enclave keys. |
+| **FileVault key** | The cryptographic key used to encrypt the APFS data volume. Derived from the local user account password. | NOT the same as the Secure Enclave PSSO key. FileVault unlock always requires local password at cold boot regardless of PSSO auth method. Secure Enclave PSSO key is protected by local password as an unlock factor, so MDM-forced password resets that bypass the interactive Secure Enclave key update path can render the PSSO key inaccessible. |
 
-**Warning sign:**
-- L1 runbook step "look up which admin owns this device pool" has no concrete action verb
-- L1 admin tickets show this step as a frequent stuck-point
+**Documentation trap:** Writing "PSSO stores keys in the Keychain" (partially true for tokens, not for the key itself) or "Touch ID unlocks FileVault" (false — Touch ID only operates after FileVault disk is unlocked by password).
 
-**Prevention strategy:**
-- v1.6 Foundation (Phase 62) MUST ship a "delegated admin contact-directory" doc OR convention — recommended approach: org maintains an external (SharePoint / wiki / IT-portal) lookup keyed by Location → primary admin contact email/phone; v1.6 runbook step is "look up Location in the Apple-Business-admin-directory at [LINK]" with a clear note that "[LINK]" is org-specific
-- L1 → L2 escalation packet (per v1.3 D-12 three-part contract) includes Location ID as one of the three artifacts so L2 can resolve the admin via Apple Business Access Management
-- Phase 65 L1 runbook EXPLICITLY documents this is an escalation-required step when org hasn't built the directory
-
-**Doc-authoring contract:** Phase 62 ships the convention doc; Phase 65 L1 runbook references it; harness C16 (cross-link integrity) confirms the back-pointer
+**Phase target:** Phase 76 auth-method deep-dive — dedicated "What the Secure Enclave key is and is not" section; glossary entries in Phase 79/80
 
 ---
 
-### DA-9: L2 "permission denied" runbook generic-vs-specific
+### CD-3: "Passwordless" claims — what PSSO does and does not eliminate
 
-**Confidence:** HIGH (Apple Business permission errors are notoriously generic — UI shows "You don't have permission to perform this action" with no privilege-level diagnostics)
+**Confidence:** HIGH
 
-**Severity:** HIGH (L2 runbook quality is the value prop)
+**The confusion:** Marketing materials and some Microsoft Learn prose call PSSO "passwordless authentication." This is true in a narrow sense. Docs that use the term without qualification will mislead users and generate support tickets.
 
-**What goes wrong:** L2 admin receives ticket: "sub-org admin can't perform action X." Apple Business UI showed a generic permission-denied error. L2 doesn't know if the failure was: (i) role lacks privilege X, (ii) Location boundary blocks action, (iii) MDM-side permission, (iv) Apple-account-locked, (v) Find My / Activation Lock, (vi) federation collision, (vii) Account Holder gate. L2 runbook that says "check permissions" is useless — needs a specific decision tree.
+| Claim | Accurate? | Nuance |
+|-------|-----------|--------|
+| "No password needed to sign in after enrollment" | CONDITIONALLY TRUE | Only for the interactive macOS login window after the disk is already unlocked. After cold reboot, FileVault requires the local password first. |
+| "Password sync removes the local password" | FALSE | The local password is not removed. For Password sync method, the local password becomes equal to the Entra password, but the local password still exists and is required for FileVault. |
+| "Secure Enclave key method means no password at all" | FALSE | The local account password still exists as the unlock factor for the Secure Enclave key itself. It is also required for FileVault. Users simply do not TYPE the password in normal flows because Touch ID handles authentication. |
+| "PSSO satisfies phishing-resistant MFA for Conditional Access" | TRUE | PSSO Secure Enclave key is treated as phishing-resistant MFA by Entra Conditional Access and satisfies MFA requirements. |
+| "PSSO is passwordless like Windows Hello for Business" | MEDIUM — useful analogy | Windows Hello for Business also retains local credentials for recovery. The analogy is functionally accurate as an orientation but the underlying mechanisms differ. PSSO is the Apple analogue, not an identical implementation. |
 
-**Why it happens:** Apple's permission-denied error is intentionally vague (security non-disclosure). L2 must externally reason about the 7 failure modes and build a differential-diagnosis tree.
-
-**Warning sign:**
-- L2 ticket cycle time on "permission denied" > 30 min
-- L2 ticket re-escalation rate > 20%
-
-**Prevention strategy:**
-- Phase 65 L2 "Apple Business permission-denied" diagnostic runbook MUST contain a 7-leaf decision tree (one leaf per failure mode above); each leaf has a specific signature to look for in: (a) Apple Business audit log, (b) device logs, (c) federation status, (d) MDM command logs
-- Each leaf carries a remediation step that references the relevant operational pitfall (OP-1 through OP-15)
-- Mermaid diagram preferred (consistent with v1.4 Android L1 triage tree pattern)
-
-**Doc-authoring contract:** Phase 65 PLAN.md SC enumerates the 7 leaves; harness C16 confirms each leaf cross-links to the corresponding OP-N pitfall doc
+**Phase target:** Phase 76 auth-method deep-dive — "What passwordless means in PSSO context" callout box early in the Secure Enclave key section
 
 ---
 
-## AXIS 3 — Corpus-Integrity Pitfalls (5-Platform Corpus Long-Term)
+### CD-4: What Platform SSO does NOT do — anti-features admins wrongly assume
 
-### CI-1: "Apple Business Manager" rotting reference (long-tail dead URLs)
+**Confidence:** HIGH
 
-**Confidence:** MEDIUM (Apple has stated business.apple.com remains the URL; legacy ABM docs continue to be reachable as of May 2026; future redirect chains are speculative)
+| Anti-feature | What admins assume | Reality |
+|-------------|-------------------|---------|
+| Hybrid Entra join support | PSSO provides hybrid-join functionality like Windows | FALSE. macOS PSSO is ONLY supported for Entra-joined (cloud-only) deployments. Microsoft has no plans to support hybrid join for macOS. macOS cannot be Hybrid Entra joined. |
+| Replaces MDM enrollment | PSSO is an alternative to Intune enrollment | FALSE. PSSO requires the device to already be MDM-enrolled. PSSO is an authentication layer on top of enrollment, not a replacement. |
+| Provides on-premises app SSO via Kerberos | PSSO handles all SSO including on-prem Kerberos apps | FALSE. PSSO handles Entra ID (Microsoft cloud) authentication. For on-premises Kerberos / AD app SSO, the Apple Kerberos SSO extension must ALSO be configured separately. The two can coexist. |
+| Works on BYOD (User Enrolled) Macs equivalently | PSSO works identically for BYOD Macs | PARTIALLY. Standard PSSO (post-enrollment notification) works on all MDM-enrolled Macs. The ADE-during-Setup-Assistant path requires ADE. |
+| Per-device registration | PSSO registers the device once and all users benefit | FALSE. PSSO registration is PER USER. On a shared Mac, every user must complete their own PSSO registration. |
+| Conditional Access supports multi-user Macs | CA device-based policies work on shared Macs with PSSO | FALSE. CA device-based policies are not supported on macOS devices shared with multiple users. |
 
-**Severity:** MEDIUM (URL-level failure surface; not corpus-prose-level)
-
-**What goes wrong:** Apple's 2026-04-14 rebrand: ABM → Apple Business. URL `business.apple.com` retained per Apple newsroom + support guide. But over a 12-24 month window, support URLs Apple links to may migrate (e.g., `support.apple.com/guide/apple-business-manager/...` → `support.apple.com/guide/apple-business/...`). v1.0-v1.5 docs reference ~30 ABM URLs across `docs/admin-setup-ios/*` + `docs/admin-setup-macos/*` + `docs/_glossary-macos.md`. Q5(b) no-corpus-sweep decision means these references remain unchanged. Over time, % broken URLs grows.
-
-**Why it happens:** Cross-vendor terminology rebrand has inherent URL-level lag. PITFALL-14 (transient external links) already documents this pattern for non-Microsoft domains.
-
-**Warning sign:**
-- markdown-link-check (C13 harness) reports increasing % broken external links in `support.apple.com/guide/apple-business-manager/*` paths over quarterly audits
-- User reports "the link in the docs goes to a 404 page on Apple's site"
-
-**Prevention strategy:**
-- v1.6 Phase 68 audit harness adds a NEW sidecar category `c13_rotting_external` for tracked-known-current external URLs Apple ecosystem
-- Quarterly audit job (CI workflow or manual): re-run markdown-link-check against `support.apple.com/guide/*` and flag drift
-- Deferred-cleanup tracking list (v1.6+): document the ~30 ABM URLs that v1.6 explicitly left unchanged per Q5(b); they become candidates for v1.7+ corpus sweep if Apple drops ABM URL support
-
-**Doc-authoring contract:** Phase 68 ships the rotting-reference sidecar category; deferred-cleanup list lives at `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` (new artifact)
+**Phase target:** Phase 77 legacy/migration guide introduction; Phase 80 capability matrix rows; Phase 79 L1/L2 pre-check lists
 
 ---
 
-### CI-2: "VPP location token" rotting reference
+### CD-5: "Entra registered" vs "Entra joined" distinction for macOS
 
-**Confidence:** HIGH (specific files cited: `docs/admin-setup-ios/05-app-deployment.md:201` line "VPP (Apps and Books) location token" in Renewal/Maintenance table; `docs/admin-setup-macos/04-app-deployment.md:148` line "VPP location token" in Renewal/Maintenance table)
+**Confidence:** HIGH (Microsoft Learn; community analysis)
 
-**Severity:** MEDIUM
+**The confusion:** Before Platform SSO, Intune-managed Macs were in state "Microsoft Entra registered" (Company Portal registered the device with a WPJ certificate in the Login Keychain). After Platform SSO is deployed, the device transitions to "Microsoft Entra joined" — a different, stronger state where the WPJ key is hardware-bound in the Secure Enclave. Using "registered" and "joined" interchangeably will confuse admins troubleshooting Conditional Access "device must be compliant or joined" errors.
 
-**What goes wrong:** Apple's content-token consolidation (per OP-9) means the term "VPP location token" is now historical. Existing v1.5 docs in `docs/admin-setup-{ios,macos}/0[45]-app-deployment.md` use this term. Admin reading these docs in 2027 sees a term that no longer exists in Apple Business UI. Confusion + tickets.
+**Key distinction:**
+- **Entra registered:** Legacy state (Company Portal WPJ cert in Login Keychain). Supports device-based CA via the SSO extension passing the WPJ cert to Entra.
+- **Entra joined:** PSSO state (WPJ key in Secure Enclave, hardware-bound). Supports stronger device-based CA claims including phishing-resistant claims from Secure Enclave key. This is the state PSSO enrollment transitions devices into.
 
-**Why it happens:** Q5(b) leaves these unchanged. Apple's portal label is now "content token" (or just "token"); UI search for "VPP location token" returns nothing or redirects to a help article that uses the new term.
-
-**Warning sign:**
-- L1 ticket pattern: "the doc says VPP location token but I can't find it in Apple Business"
-- Apple Business UI search for legacy term returns zero results
-
-**Prevention strategy:**
-- v1.6 Phase 62 glossary adds reciprocal entries: "VPP location token" → "renamed to content token in Apple Business (2026 rebrand). Microsoft Intune UI continues to use 'Apple VPP token' as of v1.6 publication date."
-- Deferred-cleanup list flags these 2 specific lines for v1.7 surgical rename
-- v1.6 docs use "content token (formerly VPP location token; still labeled 'Apple VPP token' in Intune)" compound phrasing on first mention per H2
-
-**Doc-authoring contract:** Phase 62 glossary contract — same as DA-3 lineage; harness C14 catches missing reciprocity
+**Phase target:** Phase 75 admin setup guide — "What happens to device registration state when you deploy PSSO" section; Phase 75 or 80 glossary entries
 
 ---
 
-### CI-3: "Managed Apple ID" → "Managed Apple Account" rotting reference
+## AXIS 4 — Legacy to Platform SSO Migration Pitfalls
 
-**Confidence:** HIGH (pervasive across `docs/admin-setup-ios/08-user-enrollment.md` lines 22, 49, 51; `docs/admin-setup-macos/01-abm-configuration.md` line 23; many other sites)
+### MG-1: Migration ordering — Error 10002 from dual-profile assignment
 
-**Severity:** MEDIUM (already partially mitigated by v1.3 author's forward-looking disclaimer at line 22)
+Already covered in DF-5. The migration guide must enforce an explicit ordering contract:
 
-**What goes wrong:** Same lineage as CI-2 but for the user-account term. v1.6 introduces "Managed Apple Account"; existing docs use "Managed Apple ID." Admin sees both, asks if they're the same.
+1. Deploy new Settings Catalog PSSO policy to pilot group
+2. Confirm pilot group PSSO registration succeeds (verify `app-sso platform -s` on representative devices)
+3. THEN unassign the legacy SSO app extension profile from the pilot group
+4. Monitor for 48 hours (confirm no Error 10002, no compliance drift)
+5. Expand to full fleet; unassign legacy profile from all groups
+6. Do NOT delete the legacy profile until confirmed unassigned from all devices
 
-**Why it happens:** Q5(b). Apple's rebrand. Microsoft Intune retains the older term.
-
-**Warning sign:**
-- Cross-doc terminology mismatch in glossary lookup
-- L1/L2 tickets reference "Managed Apple ID/Account" as one OR other inconsistently
-
-**Prevention strategy:**
-- Same as DA-3 — glossary reciprocal cross-reference is the prevention
-- Phase 62 glossary entries: both terms, each cross-references the other, each cites authoritative source
-- Deferred-cleanup list tracks all sites using "Managed Apple ID" for v1.7+ surgical sweep (when Apple's rebrand has settled and Intune may have caught up)
-
-**Doc-authoring contract:** Phase 62 glossary work is the v1.6 surface; corpus-wide sweep deferred
+**Phase target:** Phase 77/78 migration guide — numbered step sequence; steps 1 and 3 must never be combined
 
 ---
 
-### CI-4: Capability matrix de-normalization (iOS + macOS Apple Business rows drift)
+### MG-2: Legacy WPJ Keychain certificate checks break after PSSO migration
 
-**Confidence:** HIGH (structural risk inherent in cross-matrix row duplication; v1.5 D-10 sibling-matrix-anchor-pin contract solved the H2 surface but not the row content)
+**Confidence:** HIGH (Jamf community; Microsoft Q3 2025 WPJ migration)
 
-**Severity:** HIGH (long-term drift between iOS + macOS matrices for same Apple Business capability)
+**What goes wrong:** IT teams who have Jamf Extension Attributes, PowerShell scripts, or Graph API queries that check for the Workplace Join certificate in the macOS Login Keychain (using `security find-certificate` or equivalent) will get false negatives after PSSO enrollment. The WPJ key is now in the Secure Enclave (not the Keychain). These scripts will report "device not joined / not compliant" when the device IS correctly PSSO-enrolled.
 
-**What goes wrong:** v1.6 adds an Apple Business delegation row group to iOS + macOS matrices. Rows are substantially the same (because Apple Business is one tool managing both iOS and macOS). Without an explicit shared-source convention, the rows in iOS matrix and macOS matrix will drift over future maintenance windows. Six months later, "Custom Role privilege list" row in iOS matrix says X, in macOS matrix says X+1.
+**Prevention:**
+- Phase 77/78 migration guide: "Update compliance monitoring scripts before migration" as a pre-migration checklist item; the correct check is `app-sso platform -s | grep "Device Registration"`
+- Phase 79 L2 runbook: note that any compliance check relying on Keychain WPJ cert must be updated for PSSO fleets
 
-**Why it happens:** No shared-source for the same prose. Each matrix maintained independently.
-
-**Warning sign:**
-- iOS + macOS matrix Apple Business rows diverge in periodic audit
-- Comparison doc cell-link points to different verdicts for what should be the same capability
-
-**Prevention strategy:**
-- v1.6 Phase 63 architectural decision: Apple-Business-Delegation rows in iOS + macOS matrices reference a SINGLE source (a new `docs/reference/apple-business-capability-supplement.md` OR embed-via-HTML-anchor pattern)
-- Recommended: introduce a "shared-row-supplement" pattern — comparison-doc cells point to the supplement; iOS + macOS matrix cells also point to the supplement for the Apple Business row group
-- C12 validator extended to check row-prose-equality across iOS + macOS matrices for Apple-Business-flagged rows
-
-**Doc-authoring contract:** Phase 63 architectural decision; harness C15 OR C16 enforces row-equality OR shared-source link
+**Phase target:** Phase 77/78 migration guide (pre-migration checklist); Phase 79 L2 runbooks
 
 ---
 
-### CI-5: L1 runbook proliferation cascade
+### MG-3: PSSO rollback leaves users unable to satisfy Conditional Access
 
-**Confidence:** HIGH (observable pattern: v1.4 had 6 L1 Android runbooks, v1.4.1 added 2 more, v1.5 added 4 Linux — each new platform/surface triggers 4-8 new L1 runbooks)
+**Confidence:** HIGH (Microsoft Learn — explicitly documented)
 
-**Severity:** MEDIUM (corpus grows but each runbook is small; aggregate cognitive load is the issue)
+**What goes wrong:** An admin assigns a PSSO policy by mistake, some users complete registration, then the admin removes the PSSO policy and reinstates the old SSO app extension profile. The affected users now have NO Entra device registration (the PSSO flow deleted the old WPJ from Keychain, and removing PSSO removes the new Secure Enclave WPJ without reinstating the legacy Keychain WPJ). These users cannot satisfy device-based Conditional Access until they re-open Company Portal and complete a fresh legacy WPJ registration manually.
 
-**What goes wrong:** v1.6 ships L1 shared iPad passcode reset runbook (Phase 65). If "shared iPad passcode reset" gets its own L1 runbook, what about Apple TV factory reset? Apple TV conference-room provisioning? Apple TV AirPlay restriction lifecycle? VPP license reclamation from departed user? Device transfer between Locations? Each of these is a plausible L1 runbook candidate. Proliferation: L1 runbook count grows from ~33 to ~50+, L1 admin spend more time finding the runbook than executing it.
+**Prevention:**
+- Phase 77/78 migration guide: document rollback steps explicitly — "if rolling back from PSSO, affected users must complete legacy WPJ registration via Company Portal on device"
+- Never pilot PSSO on users protected by critical CA device compliance requirements without confirming rollback procedure
 
-**Why it happens:** "If X gets a runbook, Y should too" — symmetric reasoning. Without explicit scope-gate, every delegation surface attracts its own L1 runbook.
-
-**Warning sign:**
-- Phase 65 PLAN.md L1 runbook count exceeds 3
-- L1 quick-ref-l1.md Apple Business section grows beyond 1 H3
-
-**Prevention strategy:**
-- Phase 65 PLAN.md MUST cap L1 runbook count at 2 (shared iPad passcode reset + Apple Business permission-denied as the L2 escalation entry point)
-- Anti-pattern callout: "If a delegation surface doesn't have a high-volume L1 ticket pattern, the L1 runbook is premature; route to L2 instead"
-- L2 runbooks are the catch-all for the long-tail (Apple TV, VPP reclamation, device transfer escalation, etc.)
-
-**Doc-authoring contract:** Phase 65 PLAN.md SC explicitly caps L1 runbook count; future v1.7+ work can add more L1 runbooks once ticket-volume data exists
+**Phase target:** Phase 77/78 migration guide — rollback section is mandatory, not deferrable
 
 ---
 
-### CI-6: Audit harness over-/under-fitting (C14-C16)
+### MG-4: Apple Kerberos SSO extension coexistence — conflated extension identifiers
 
-**Confidence:** HIGH (lineage from v1.5 informational-then-blocking promotion ladder; C11/C12/C13 calibration history)
+**Confidence:** HIGH (Microsoft Learn — confirmed the two extensions can coexist with separate identifiers)
 
-**Severity:** HIGH (audit harness IS the corpus-integrity enforcement)
+**What goes wrong:** Orgs with on-premises Kerberos resources deploy both the Apple Kerberos SSO extension (for on-prem) and Platform SSO (for Entra cloud). Both extensions are configured in Settings Catalog. An admin who configures both under the SAME `Extension Identifier` value causes one to override the other. Apple's SSO extension framework supports multiple extensions per device IF they have different identifiers.
 
-**What goes wrong:** Two failure modes:
-- (a) Over-fitting: C14-C16 designed too narrowly. Pass v1.6 work but miss future regressions. e.g., C14 only checks the 3 sanctioned rebrand sites by file:line — works for v1.6, but doesn't catch rebrand drift introduced in v1.7+
-- (b) Under-fitting: C14-C16 designed too broadly. Catch legitimate v1.6 work as violations. e.g., C15 ("Intune-delegation anti-pattern guard") false-positives on legitimate Apple-Business-meets-Intune handshake prose
+**Prevention:**
+- Phase 77 legacy/migration guide: show BOTH extension configurations as separate profile entries with their distinct identifier values; explicitly state they do NOT conflict when configured with separate identifiers
 
-**Why it happens:** Designing checks without seeing the live corpus they'll run against. v1.5 solved this via informational-first-then-blocking promotion. v1.6 inherits the pattern.
+**Phase target:** Phase 77 legacy/migration guide — "Coexisting with Kerberos SSO extension" section
 
-**Warning sign:**
-- (a) C14-C16 pass on v1.6 immediately upon harness ship — no false-positives but also no insight into edge cases
-- (b) C14-C16 fail on legitimate v1.6 content; calibration loop required
+---
 
-**Prevention strategy:**
-- Phase 68 ships C14-C16 informational-first per v1.5 D-25 graduation pattern
-- C14-C16 promotion to blocking happens at Phase 69 (v1.6 close) AFTER live-corpus refinement
-- Each check carries a sidecar exemption array for legitimate exceptions (consistent with v1.4.1+ pattern)
-- BASELINE_10 refresh closes v1.5 carry-over (BASELINE_9 → BASELINE_10) at v1.6 close
+### MG-5: Existing enrolled devices — PSSO registration requires user action, not silent MDM push
 
-**Doc-authoring contract:** Phase 68 PLAN.md mandates informational-first; Phase 69 close-gate requires C14-C16 blocking-mode PASS from fresh worktree per D-22 auditor-independence
+**Confidence:** HIGH
+
+**What goes wrong:** Admins deploying PSSO to an existing enrolled fleet expect registration to be silent/automatic like MDM profile delivery. The MDM profile delivery IS silent. The user registration step is NOT. Each enrolled user must interactively respond to the "Registration Required" notification to complete PSSO. Admins who do not communicate this to users see compliance dashboards showing "PSSO active: 12%" instead of near-100% immediately after policy assignment, and a flood of confused helpdesk tickets about the notification.
+
+**Prevention:**
+- Phase 75 admin setup guide: "user communication is a deployment requirement, not optional" callout; provide template user communication language explaining what the notification means and why the user should complete it
+- L1 runbook: "PSSO not registered" first-check — "Did the user receive and respond to the registration notification?"
+
+**Phase target:** Phase 75 (admin setup, deployment communication plan section); Phase 79 (L1 runbooks)
+
+---
+
+## AXIS 5 — Documentation / Project-Specific Traps
+
+### DS-1: Supervised-only callout misuse — PSSO is not supervision-gated
+
+**Confidence:** HIGH (Apple Platform Deployment; MDM supervision is at the device level; PSSO is an SSO extension feature)
+
+**What goes wrong:** The suite's iOS/macOS docs use supervised-only callout formatting for features that require device supervision (ADE-enrolled, supervised via ABM). Authors writing PSSO docs may incorrectly apply this callout to PSSO features. Platform SSO is NOT a supervised-only feature — it works on any MDM-enrolled Mac, whether supervised (ADE) or not. The only PSSO sub-feature that requires ADE is the new "PSSO during Setup Assistant" flow (macOS 26), which requires ADE because it runs inside Setup Assistant.
+
+**Prevention:**
+- Phase 75 admin setup guide: DO NOT put a supervised-only callout on the main PSSO configuration section
+- DO put an "ADE-only" callout (distinct from supervised-only) on the "PSSO during Setup Assistant" subsection
+- Phase 80 capability matrix: "PSSO during ADE Setup Assistant" row = ADE-only; "PSSO (post-enrollment)" row = all MDM-enrolled (not supervision-gated)
+
+**Phase target:** Phase 75 (admin setup); Phase 80 (capability matrix integration)
+
+---
+
+### DS-2: `last_verified` dates on rapidly-changing PSSO ecosystem
+
+**Confidence:** HIGH (internal corpus pattern; PSSO evolved substantially in 2024-2026)
+
+**What goes wrong:** Platform SSO docs that do not carry `last_verified` / `review_by` front matter, or that carry the initial authoring date and never get refreshed, will become stale within one or two Company Portal releases. The PSSO ecosystem has changed substantially: preview (May 2024) to GA (Aug 2025), macOS 15 concurrency bug fix (15.3), ADE integration GA (May 2026), macOS 26 simplified setup. Any doc written in mid-2026 could be wrong for macOS 27 or Intune updates within 6 months.
+
+**Prevention:**
+- All PSSO-specific docs in v1.9 MUST carry `last_verified` and `review_by` front matter with a 90-day review cycle (shorter than some suite docs given the pace of ecosystem change)
+- Audit harness v1.9 check: validate that files in `docs/admin-setup-macos/` scoped to PSSO topics carry `review_by` within 90 days of `last_verified`
+
+**Phase target:** Phase 75 through Phase 79 (all content phases); Phase 80 (audit harness integration check)
+
+---
+
+### DS-3: Capability matrix cell drift — new PSSO rows intersecting existing FileVault/Secure Enclave rows
+
+**Confidence:** HIGH (internal pattern from v1.5 DA-4 / v1.6 DA-4 anchor-stability history)
+
+**What goes wrong:** The macOS capability matrix will need new rows for Platform SSO auth methods (Secure Enclave key / Password sync / Smart card) and a PSSO registration state row. If existing FileVault and Secure Enclave rows are modified to cross-reference PSSO without pre-edit anchor inventory handling, the `4-platform-capability-comparison.md` cells pointing to those anchors will break (C13 / C12 failures at audit gate).
+
+**Prevention:**
+- Phase 80 capability matrix integration: run the pre-edit anchor inventory audit BEFORE any edits to capability matrix files (inherit v1.5 Phase 58 Plan 58-05 contract)
+- New PSSO rows added BELOW existing rows where possible (preserve anchor offsets for existing rows)
+- C12 math update: if new H2 additions change expected cell count, update the v1.9-milestone-audit.mjs C12 validator math at the same time (atomic harness commit pattern)
+
+**Phase target:** Phase 80 (capability matrix); pre-merge anchor inventory is a hard contract item in the phase plan
+
+---
+
+### DS-4: Cross-link integrity for new L1/L2 runbooks
+
+**Confidence:** HIGH (internal pattern; prior milestones repeatedly hit broken cross-link issues at audit gate)
+
+**What goes wrong:** v1.9 will create new L1 runbooks (PSSO registration not working, Secure Enclave key verification) and L2 runbooks (PSSO log collection, Entra registration state investigation). These runbooks will require bidirectional cross-links from:
+- `docs/common-issues.md` (symptom routing)
+- `docs/quick-ref-l1.md` and `docs/quick-ref-l2.md` (quick reference cards)
+- `docs/admin-setup-macos/03-configuration-profiles.md` (existing SSO stub)
+- `docs/l1-runbooks/00-index.md` and `docs/l2-runbooks/00-index.md`
+
+If any bidirectional links are missed, C13 (broken link check) will fail at milestone close. Based on prior milestones, the highest-risk missed links are in the index files and quick-ref cards.
+
+**Prevention:**
+- Phase 79 L1/L2 runbooks: pre-authoring cross-link inventory (list all files that will need forward-links to new runbooks; lock this list in the phase plan before authoring begins)
+- Confirm next runbook file sequence numbers before authoring (check current l1-runbooks file count; next after #33 Linux = #34 for macOS PSSO L1)
+
+**Phase target:** Phase 79 (runbook authoring — pre-authoring cross-link inventory contract); Phase 80 (integration / hub edits / cross-link closure checklist)
+
+---
+
+### DS-5: Existing stub in 03-configuration-profiles.md contains inaccurate SSO description
+
+**Confidence:** HIGH (directly observed from the file read; lines 157-168)
+
+**What is currently inaccurate:**
+The existing stub at `docs/admin-setup-macos/03-configuration-profiles.md` lines 157-168 states:
+
+> "Platform SSO (macOS 14+): Binds the macOS login password to Entra ID credentials; enables passwordless login via Touch ID or smart card"
+
+Three inaccuracies:
+1. "Binds the macOS login password" — only accurate for the Password sync method. NOT accurate for Secure Enclave key (no password sync) or Smart card.
+2. "macOS 14+" — the Platform SSO framework is available from macOS 13; macOS 14 is RECOMMENDED (and required only for Smart card). Stating 14+ makes the feature appear unavailable on macOS 13.
+3. The description conflates all three auth methods as if they are one feature.
+
+**Prevention:**
+- When the full PSSO setup guide is authored in Phase 75, the SSO section in `03-configuration-profiles.md` (lines 157-168) must be replaced with a brief accurate summary plus a forward-link to the new PSSO admin guide
+- This is a surgical edit to the existing stub only; the surrounding 03-configuration-profiles.md structure is unchanged
+- Determine in Phase 75 planning whether this stub replacement is best done in Phase 75 itself or a dedicated surgical edit phase
+
+**Phase target:** Phase 75 (or the opening phase of the milestone; resolve in phase planning)
 
 ---
 
@@ -759,187 +700,102 @@ Result: Location B admin discovers a device in their fleet that they didn't auth
 
 | Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
 |----------|------------------|----------------|-----------------|
-| Skip rebrand callout in glossary, "add it later" | Faster Phase 62 ship | Authors miss the 3-site callout budget; rebrand inconsistency cascades | Never — Phase 62 IS the rebrand foundation |
-| Add 4th, 5th rebrand callout "for completeness" | Author satisfaction; reader clarity per-site | Erodes Q5(b) no-corpus-sweep contract; sets precedent for v1.7+ scope creep | Never — strictly cap at 3 sanctioned sites |
-| Skip the "untouched Location" callout in VPP runbook | Faster Phase 64 ship | OP-9 high-stakes data loss in real-world migration | Never — OP-9 is HIGH severity |
-| Use "iOS" as proxy for "all Apple platforms" in v1.6 prose | Author velocity (iOS is most familiar) | Cross-platform language drift (DA-1); macOS admin alienation | Only in iOS-specific paragraphs explicitly scoped to iOS |
-| Skip Apple TV / shared iPad sections "they're niche" | Faster shipping | Org with shared iPad fleet has no v1.6 coverage; OP-12 + OP-15 land in tickets | Only if explicitly scoped out at Phase 62 boundary (NOT recommended) |
-| Hardcode C12 H2 list to 7 entries without atomic harness commit | Single-line edit | Math drift; sidecar miss; v1.5 lineage break | Never — atomic harness commit pattern is locked |
-| Auto-translate every "ABM" to "Apple Business" in PR | Author thinks they're being helpful | Violates Q5(b); breaks v1.5 D-25 lock-on precedent; harness C14 negative-check FAILS | Never |
-| Reuse v1.5 C11 keyword set unchanged in v1.6 harness | Path-A copy velocity | DA-7 false-positives on legitimate Apple-Business-meets-Intune prose; CI noise | Only if calibration sub-phase confirms zero false-positives |
+| Document only Secure Enclave key method (skip Password sync + Smart card) | Faster authoring | Admins with mixed-method needs escalate repeatedly; missing CBA requirements for smart card create reputational risk for the docs | Never — all three auth methods are in-scope per v1.9 milestone |
+| Copy-paste Microsoft's "configure Platform SSO" Learn page verbatim | Zero content authoring effort | Attribution / license concern; Microsoft Learn content changes without notice; no org-specific context | Never |
+| Skip the macOS 13 deprecated-field path (document macOS 14+ only) | Cleaner docs | Breaks for any org with macOS 13 devices still in fleet | Acceptable ONLY IF the docs explicitly declare macOS 14 minimum floor with a hard callout |
+| Use `last_verified` from authoring date and never schedule a review | No process overhead | PSSO ecosystem is rapidly evolving; docs become misleading within 6 months | Never for PSSO-specific docs; 90-day review cycle required |
+| Write L1 runbooks without `app-sso platform -s` as the first verification step | Simpler runbooks | All PSSO troubleshooting bottlenecks on escalations; this command is the diagnostic entry point | Never |
+
+---
 
 ## Integration Gotchas
 
 | Integration | Common Mistake | Correct Approach |
-|-------------|---------------|------------------|
-| Apple Business UI ↔ Intune VPP token upload | Admin looks for "content token" in Intune UI | Use compound phrasing "content token (Apple VPP token in Intune)"; reciprocal glossary entries |
-| Apple Business Federation ↔ Microsoft Entra | Assume Entra disable cascades to Apple Business role revocation | Document offboarding requires explicit Apple Business role removal; OP-8 prevention |
-| Apple Business MDM server ↔ Intune ADE token | Sub-org admin can create new MDM server unintentionally | Whitelist-first custom role authoring; "Manage MDM Servers" privilege is DENY by default |
-| Apple Business shared iPad ↔ MDM ClearPasscode | Use ClearPasscode when Apple Business UI reset would suffice | L1 runbook decision matrix orders by least-destructive-first |
-| Apple Business device release ↔ DEP backend | Assume release is permanent removal | Document release is soft-delete; coordinate with reseller for permanent removal |
-| Apple Business Location ↔ VPP content token | Touch the new Location before migration completes | "Untouched Location" callout in VPP consolidation runbook |
-| Apple Business audit log ↔ SOX retention | Assume Apple Business satisfies long-term retention | Recommend periodic SIEM export; cite Apple does not publish retention SLA |
-| Apple Business Account Holder ↔ Apple T&C acceptance | Account Holder = departed employee → T&C updates pile up | OP-2 callout; Account-Holder-as-personal-Apple-ID is hard error |
+|-------------|----------------|------------------|
+| Intune Settings Catalog + Company Portal | Assuming Intune delivers PSSO silently without Company Portal involvement | Company Portal is the SSO extension host; PSSO will not activate without Company Portal 5.2404.0+ installed and running |
+| Entra CA + PSSO registration bootstrapping | Requiring device compliance before PSSO is registered on new enrollments | Exclude new-enrollment devices from strict CA compliance requirement during PSSO bootstrapping window |
+| Apple Kerberos extension + PSSO | Configuring both under the same Extension Identifier value | Each SSO extension must have its own unique Extension Identifier in separate profile entries |
+| ADE enrollment profile + PSSO policy | Assigning to dynamic groups for ADE PSSO during Setup Assistant | Static groups only; dynamic group evaluation latency breaks the time-bounded Await Final Configuration window |
+| Corporate proxy (TLS inspection) + PSSO | Not exempting PSSO endpoints from TLS inspection | Exempt PSSO auth endpoints from TLS inspection; or use TR v2 client-side signaling instead of proxy injection |
+| Smart card PSSO + Entra CBA | Deploying smart card PSSO profile before Entra CBA is configured | Configure and verify Entra CBA (trusted CAs uploaded, authentication strength policy set) before deploying smart card PSSO |
 
-## Performance Traps
+---
 
-Not directly applicable — this is a documentation corpus, not a runtime system. The performance trap equivalents are:
+## Phase-Specific Warnings
 
-| Trap | Symptoms | Prevention | When It Breaks |
-|------|---------|-----------|----------------|
-| Audit harness runtime > 30s | CI feedback loop too slow; authors disable harness | Keep file-walks scoped (e.g., apple-business doc paths only for C14-C16) | At ~250 docs (current corpus + v1.6 adds ~15) |
-| L1 runbook count > 35 | L1 admin spend > 60s finding the runbook | Cap L1 runbook count per CI-5 prevention strategy | Already approaching limit at v1.5 |
-| Glossary entry count > 80 | Glossary becomes unscannable; cross-references go stale | Defer non-canonical terms to in-context disambiguation prose | At ~100 entries the index UX degrades |
-| Capability matrix row count per platform > 60 | Comparison doc cell count > 300; eye-fatigue | Cap per-domain rows; defer niche capabilities to platform-specific matrices only | At ~50 rows currently in iOS/macOS |
+| Phase Topic | Likely Pitfall | Mitigation |
+|-------------|---------------|------------|
+| Phase 75 — Admin setup guide | Error 10002 from legacy profile coexistence; missing macOS 13 deprecated field (Error 10001); per-user MFA blocker; ADE dynamic-group failure; existing stub inaccuracies | Deployment order checklist; dual-field Settings Catalog coverage; MFA prerequisite in step 1; static-groups callout for ADE; surgical stub replacement |
+| Phase 76 — Auth-method deep-dive | "Passwordless" overclaim; FileVault cold-boot interaction misconception; Secure Enclave key loss after password reset; AD-bound account Password sync silent failure; missing Entra CBA prerequisite for Smart card | Passwordless caveat callout box; FileVault interaction sub-section; key loss recovery documented; AD-bound callout in Password sync section; CBA prerequisite callout opening Smart card section |
+| Phase 77 — Legacy Enterprise SSO plug-in | CD-1 terminology confusion (Enterprise SSO vs Platform SSO); Kerberos coexistence; comparison table framing of what Legacy does NOT do | Disambiguation table in opening section; coexistence section with distinct Extension Identifiers shown |
+| Phase 78 — Migration guide | MG-1 Error 10002 ordering; MG-2 Keychain compliance script breakage; MG-3 rollback leaves CA-blocked users | Numbered migration step sequence; pre-migration checklist (update scripts first); rollback section mandatory |
+| Phase 79 — L1/L2 runbooks | DS-4 cross-link gaps; VR-3 WPJ Keychain checks in L2 runbooks; DF-8 macOS 15.0-15.2 version-gated step | Pre-authoring cross-link inventory; replace `security find-certificate` with `app-sso platform -s`; version gate the re-registration loop troubleshooting step |
+| Phase 80 — Capability matrix + integration | DS-3 anchor drift; DS-1 supervised-only callout misuse; DS-2 missing `last_verified` dates; DS-4 hub link gaps | Pre-edit anchor inventory; ADE-only vs supervised-only distinction enforced; 90-day review cycle dates on all PSSO docs |
 
-## Security Mistakes
-
-| Mistake | Risk | Prevention |
-|---------|------|-----------|
-| Account Holder delegated to non-canonical account | Org structural lockout (OP-2) | Phase 62 hard-bordered callout; never include in delegated roles |
-| Custom role grants Manage MDM Servers privilege to sub-org admin (OP-1) | Sub-org admin creates competing MDM server; device drain to wrong tenant | Whitelist-first role design; deny by default |
-| Personal Apple ID becomes Account Holder | Federation-impossible; T&C unacknowledgeable | Pre-flight federation collision check (OP-7) |
-| Apple Business audit log relied on for compliance > 1 year | Compliance gap at audit time (OP-13) | Periodic SIEM export pattern |
-| Federated admin leaves org without Apple Business role revocation (OP-8) | Rehire silently re-grants Apple Business access | Offboarding checklist couples Entra disable + Apple Business role removal |
-| Find My enabled on shared iPad blocks reset (OP-12) | Device bricked from re-enrollment standpoint | Disable Find My in supervised restrictions; Activation Lock bypass privilege |
-| Released device re-acquires default enrollment profile (OP-6) | OOBE forces MDM on user's expected personal device | Coordinate with reseller for permanent DEP removal |
-
-## UX Pitfalls
-
-| Pitfall | User Impact | Better Approach |
-|---------|------------|-----------------|
-| Cross-platform language drift (DA-1) | macOS admin thinks v1.6 doc doesn't apply to them | "Apple platforms (iOS / iPadOS / macOS / shared iPad / Apple TV)" canonical phrasing |
-| Rebrand inconsistency within v1.6 (DA-2) | Reader sees "Apple Business" + "ABM" in same paragraph | 3-site rebrand-callout budget enforced by harness |
-| Two glossary terms for same concept (DA-3) | Admin doesn't know which is current | Bidirectional cross-references with publication-date attribution |
-| L1 "look up admin" step has no action verb (DA-8) | L1 stuck; ticket escalates | Convention doc + L1→L2 escalation packet template |
-| L2 generic "permission denied" runbook (DA-9) | L2 cycle time > 30 min on common ticket | 7-leaf decision tree |
-| VPP terminology mismatch across Apple + Intune (OP-10) | 10-min menu search per admin | Compound phrasing convention |
+---
 
 ## "Looks Done But Isn't" Checklist
 
-Things that appear complete but are missing critical pieces.
+- [ ] **PSSO policy delivery:** Profile shows Succeeded in Intune — but has the user completed registration? Check `app-sso platform -s` on device, not just Intune portal.
+- [ ] **Secure Enclave key method:** Settings Catalog profile delivered — but is Company Portal 5.2404.0+ installed AND running? Old CP versions silently fail.
+- [ ] **Smart card method:** PSSO policy delivered — but is Entra CBA configured in the tenant? Smart card PSSO is non-functional without it.
+- [ ] **Mixed fleet (macOS 13 + 14):** Profile targets macOS 13 devices — but does it include BOTH the deprecated AND non-deprecated Authentication Method fields? Missing deprecated field = Error 10001 on macOS 13.
+- [ ] **Legacy SSO extension removed:** PSSO policy assigned — but is the old Device Features SSO app extension profile still assigned to overlapping groups? If yes, Error 10002 will suppress registration.
+- [ ] **AD-bound Macs:** Password sync method configured — but are any target Macs AD-bound (mobile accounts)? If yes, registration will silently fail for those users.
+- [ ] **Conditional Access bootstrapping:** New-device PSSO deployment — is there a CA policy requiring device compliance that will block user registration before compliance can be evaluated? If yes, CA exclusion for enrollment group is required.
+- [ ] **ADE PSSO during Setup Assistant:** Three required policies assigned — but are ALL THREE assigned to the SAME static groups? Any dynamic group = silent failure at Setup Assistant exit.
+- [ ] **Existing stub accuracy:** Has the SSO section in `03-configuration-profiles.md` (lines 157-168) been replaced with a correct summary + forward-link? The existing text misrepresents all three auth methods.
+- [ ] **Supervised-only callout not misapplied:** Is the supervised-only callout absent from the main PSSO section? PSSO is not supervised-only; only the ADE-during-Setup-Assistant sub-feature is ADE-only.
+- [ ] **Cross-links bidirectional:** Do all new L1/L2 runbooks have back-links from `docs/l1-runbooks/00-index.md`, `docs/l2-runbooks/00-index.md`, `docs/common-issues.md`, and `docs/quick-ref-l1.md` / `docs/quick-ref-l2.md`?
 
-- [ ] **Custom role authoring guide:** Often missing the privilege-grant matrix table with at minimum 6 sub-org-admin reference roles — verify Phase 62 ships the table
-- [ ] **VPP content token consolidation runbook:** Often missing the "untouched Location" hard-bordered callout — verify OP-9 prevention is in-doc
-- [ ] **Shared iPad passcode reset runbook:** Often missing the 3-path decision matrix and Find My pre-check — verify OP-11 + OP-12 are both in Phase 65 L1 runbook
-- [ ] **Federation runbook:** Often missing the 60-day collision-resolution window detail — verify OP-7 prevention
-- [ ] **Device release runbook:** Often missing the "release is not permanent removal" callout + active-shared-iPad-session pre-check — verify OP-6 prevention
-- [ ] **Sibling capability matrices:** Often missing the reciprocal-H2 in Windows/Linux/Android matrices — verify DA-6 prevention; C12 harness check confirms
-- [ ] **Glossary entries for both rebrand terms:** Often missing bidirectional cross-reference — verify DA-3 + CI-2 + CI-3 prevention
-- [ ] **C12 H2 list in v1.6 harness:** Often missing the 7th H2 update post-Apple-Business addition — verify Phase 68 atomic harness commit landed math update
-- [ ] **C11 calibration for v1.6 keyword set:** Often missing live-corpus refinement; defaults to v1.5 keyword set causing false-positives — verify Phase 68 CALIBRATION sub-phase
-- [ ] **L1 runbook count:** Often grows beyond cap due to symmetric reasoning; verify CI-5 prevention (cap at 2)
-- [ ] **Deferred-cleanup tracking list:** Often missing artifact; v1.7+ corpus sweep candidates aren't tracked — verify `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` exists
-- [ ] **Pre-edit anchor inventory:** Often skipped on "small" matrix retrofit — verify DA-4 prevention; Phase 63 PLAN.md mandates artifact
+---
 
 ## Recovery Strategies
 
-When pitfalls occur despite prevention, how to recover.
-
 | Pitfall | Recovery Cost | Recovery Steps |
-|---------|--------------|----------------|
-| OP-1 (competing MDM server created) | MEDIUM | Identify competing MDM server in Apple Business; reassign devices back to canonical MDM server; revoke "Manage MDM Servers" privilege from sub-org role |
-| OP-2 (Account Holder lockout) | HIGH | Apple Enterprise Support paid ticket; identity verification; possible re-onboarding of Apple Business tenant if cannot recover |
-| OP-5 (cross-Location device transfer broke licenses) | MEDIUM | Re-assign device to original Location; re-acquire licenses against Location-A token; if migration is permanent, purchase additional licenses against Location-B token |
-| OP-6 (released device re-appeared) | LOW | Re-release device + coordinate with reseller to remove from DEP backend |
-| OP-7 (federation collision) | MEDIUM | Resolve within 60-day Apple-imposed window; rename conflicting personal Apple ID OR use a non-conflicting Managed Apple Account domain |
-| OP-8 (offboarded admin retains role assignment) | LOW | Periodic Apple Business audit; remove role assignments for Entra-disabled users |
-| OP-9 (VPP migration touched Location too early) | HIGH | Cannot transfer licenses-in-use from "touched" Location; org must purchase replacement licenses against new Location OR continue using legacy token in parallel |
-| OP-11 (data loss from EraseDevice on shared iPad) | HIGH | Restore from Time Machine / iCloud backup if available; no recovery if no backup |
-| OP-12 (Activation Lock from Find My) | MEDIUM | Apple Business `Bypass Activation Lock` privilege; OR Apple Enterprise Support escalation |
-| OP-13 (audit log gap at compliance audit) | HIGH | No recovery; document the retention SLA limitation; recommend SIEM export going forward |
-| DA-4 (anchor stability regression) | LOW | Atomic fix-up commit; revert problematic edit; re-apply with anchor inventory artifact |
-| DA-5 (C12 math drift in v1.6 harness) | LOW | Atomic harness commit updating C12 H2 list + math + sidecar |
-| DA-6 (sibling-matrix-anchor-pin violation) | LOW | Atomic fix-up commit adding reciprocal H2 to missing platform matrices |
-| CI-1 (rotting external URL) | LOW per URL | Surgical URL update; sidecar entry for transient external category |
-| CI-4 (capability matrix row drift) | MEDIUM | Periodic audit; converge to single shared source if drift detected |
+|---------|---------------|----------------|
+| Registration prompt never appeared | LOW | User signs out and signs back in; registration prompt re-appears |
+| Registration dismissed by user | LOW | User signs out and signs back in; OR L1 instructs user to re-open Company Portal |
+| Secure Enclave key lost after MDM password reset | LOW-MEDIUM | User signs out and signs back in; completes re-registration flow; no data loss |
+| Error 10002 (legacy profile conflict) | LOW | Admin unassigns legacy SSO app extension profile; Intune re-evaluates; PSSO policy reapplies; users complete registration |
+| PSSO rollback leaves CA-blocked users | HIGH | Admin re-assigns legacy WPJ registration path; each affected user must open Company Portal and complete manual WPJ registration; may require L2 hands-on per device |
+| AD-bound Mac password sync failure | MEDIUM | Unbind Mac from AD, convert mobile account to local account, re-attempt PSSO registration; OR switch auth method to Secure Enclave key |
+| macOS 15.0 through 15.2 re-registration loop | MEDIUM | Upgrade device to macOS 15.3+; re-registration loop ceases |
+| Smart card PSSO fails — Entra CBA not configured | HIGH | Configure Entra CBA (upload CA certificates, set authentication strength policy); this requires Entra Global Admin and is a multi-day provisioning process for the Entra side alone |
+| ADE PSSO during Setup Assistant not triggered | MEDIUM | Wipe and re-enroll device with corrected static group assignments AND correct Await Final Configuration = Yes; no in-place fix for devices that have already passed Setup Assistant |
 
-## Pitfall-to-Phase Mapping
-
-How v1.6 phases should address these pitfalls. Phase numbering continues from v1.5 close at Phase 61; v1.6 spans Phase 62+.
-
-| Pitfall | Prevention Phase | Verification |
-|---------|------------------|--------------|
-| OP-1 (Manage MDM Servers privilege) | Phase 62 (Foundation), Phase 64 (delegation runbooks) | Privilege-grant matrix table present; harness C15 confirms |
-| OP-2 (Account Holder lockout) | Phase 62 | Glossary entry + hard-bordered callout in role overview |
-| OP-3 (Edit-without-View) | Phase 62 | Privilege dependency table column "Requires" populated |
-| OP-4 (per-Location vs tenant scope) | Phase 62 + Phase 63 (multi-org architecture) | Bidirectional cross-reference between Foundation and architecture; "most-permissive wins" callout present |
-| OP-5 (cross-Location transfer) | Phase 64 (delegation runbooks) | 4-cell impact matrix table in device-transfer runbook |
-| OP-6 (release ≠ removal) | Phase 64 | "Release is not permanent removal" callout |
-| OP-7 (federation collision) | Phase 64 | 60-day window collision-resolution sub-section |
-| OP-8 (offboarded admin) | Phase 64 | Paired onboarding/offboarding runbook sub-sections |
-| OP-9 (untouched Location) | Phase 64 | Hard-bordered callout in VPP consolidation runbook |
-| OP-10 (Intune VPP token UI label) | Phase 62 (glossary) + Phase 64 | Compound phrasing convention enforced |
-| OP-11 (3-path passcode reset) | Phase 65 (L1/L2 integration) | 3x3 decision matrix in L1 runbook; harness C16 confirms cross-links |
-| OP-12 (Find My / Activation Lock) | Phase 63 (admin setup) + Phase 65 (L1 runbook) | Pre-deployment config step + L1 pre-check both present |
-| OP-13 (audit retention) | Phase 64 (audit log runbook) | SIEM export recommendation callout |
-| OP-14 (cross-Location audit visibility) | Phase 64 | Author-scope vs target-scope sub-section |
-| OP-15 (Apple TV ownership boundary) | Phase 63 (admin setup) | Shared-physical-space heuristic in Apple TV provisioning guide |
-| DA-1 (cross-platform language drift) | Phase 62 (style guide) | HTML comment block at top of every v1.6 doc; per-phase PLAN.md check |
-| DA-2 (rebrand inconsistency) | Phase 62 + Phase 68 (harness) | 3-site whitelist; harness C14 negative-check |
-| DA-3 (Managed Apple ID/Account) | Phase 62 (glossary) | Bidirectional cross-reference; harness C14 |
-| DA-4 (anchor stability regression) | Phase 63 (matrix retrofit) | Pre-edit anchor inventory artifact mandatory |
-| DA-5 (C12 math drift) | Phase 68 (harness) | Atomic harness commit with H2 list + math + sidecar update |
-| DA-6 (sibling-matrix-anchor-pin) | Phase 63 | SC enumerates 5 expected H2 anchors by file:line:slug |
-| DA-7 (C11 false-positive on Apple-Business-Intune prose) | Phase 68 (CALIBRATION sub-phase) | Live-corpus refinement; keyword set extended |
-| DA-8 (L1 admin-directory lookup) | Phase 62 (convention) + Phase 65 (runbook back-pointer) | External directory convention documented; harness C16 |
-| DA-9 (L2 permission-denied tree) | Phase 65 | 7-leaf decision tree; each leaf cross-links to OP-N |
-| CI-1 (rebrand URL rot) | Phase 68 (rotting-reference sidecar) + deferred-cleanup list | New sidecar category; quarterly audit job |
-| CI-2 (VPP location token rot) | Phase 62 (glossary) + deferred-cleanup list | Reciprocal entries; v1.7+ sweep candidates tracked |
-| CI-3 (Managed Apple ID rot) | Phase 62 (glossary) + deferred-cleanup list | Reciprocal entries; v1.7+ sweep candidates tracked |
-| CI-4 (matrix de-normalization) | Phase 63 (shared-source convention) | Shared-row-supplement pattern OR row-equality harness check |
-| CI-5 (L1 runbook proliferation) | Phase 65 PLAN.md cap | L1 runbook count ≤ 2 enforced at PLAN.md SC |
-| CI-6 (harness over-/under-fitting) | Phase 68 (informational-first) + Phase 69 (close-gate promotion) | C14-C16 promoted to blocking only after live-corpus refinement |
-
-## Suggested v1.6 Phase Structure (Informed by Pitfalls)
-
-Based on pitfall mapping, recommended phase ordering:
-
-1. **Phase 62 — Foundation & Rebrand** — covers OP-1 (privilege overview), OP-2 (Account Holder), OP-3 (privilege dependencies), OP-4 (Locations decision matrix), OP-10 + DA-3 + CI-2 + CI-3 (glossary reciprocity), DA-1 (style guide), DA-2 (rebrand-callout budget), DA-8 (admin-directory convention)
-2. **Phase 63 — Multi-org Architecture & Admin Setup** — covers OP-4 (architecture extension), OP-12 + OP-15 (Apple TV / shared iPad provisioning), DA-4 + DA-6 (capability matrix retrofit with pre-edit anchor inventory), CI-4 (shared-source convention)
-3. **Phase 64 — Delegation Runbooks** — covers OP-5 (transfer), OP-6 (release), OP-7 (federation), OP-8 (offboarding), OP-9 (VPP consolidation), OP-13 + OP-14 (audit log)
-4. **Phase 65 — L1 / L2 / Common-Issues Integration** — covers OP-11 + OP-12 (shared iPad reset L1), DA-9 (permission-denied L2), DA-8 (admin-directory back-pointer), CI-5 (runbook count cap)
-5. **Phase 68 — Validation Tooling** — covers DA-2 (C14 rebrand-statement), DA-5 (C12 H2 math), DA-7 (C11 calibration), CI-1 (rotting-reference sidecar), CI-6 (informational-first promotion ladder)
-6. **Phase 69 — Milestone Close** — covers CI-6 (blocking-mode promotion) + auditor-independence (D-22 lineage)
-
-Phases 66-67 reserved for ad-hoc work / regression / wave-based parallel execution slots (consistent with v1.5 methodology).
+---
 
 ## Sources
 
-### Apple Official (HIGH confidence)
-- [Intro to roles and privileges in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web)
-- [Manage content tokens in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/manage-content-tokens-axme0f8659ec/web)
-- [Migrate content tokens to Apple Business Manager](https://support.apple.com/guide/apple-business-manager/migrate-content-tokens-to-apps-axm593d6f469/web)
-- [Create or reset user passwords in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/create-or-reset-user-passwords-axmd9c4cbc33/web)
-- [Edit Managed Apple Accounts in Apple Business Manager](https://support.apple.com/guide/apple-business-manager/edit-managed-apple-accounts-axmfbea5f962/web)
-- [Apple Business Manager is now Apple Business — transition notice](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web)
-- [Introducing Apple Business — newsroom](https://www.apple.com/newsroom/2026/03/introducing-apple-business-a-new-all-in-one-platform-for-businesses-of-all-sizes/)
-- [Intro to federated authentication with Apple Business Manager](https://support.apple.com/guide/apple-business-manager/intro-to-federated-authentication-axmb19317543/web)
+### HIGH confidence (official Microsoft Learn and Apple Platform Deployment)
 
-### Microsoft Learn (HIGH confidence)
-- [Manage Apple Volume-Purchased Apps — Microsoft Intune](https://learn.microsoft.com/en-us/intune/app-management/deployment/manage-vpp-apple)
+- [Microsoft Learn — Configure Platform SSO for macOS devices](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
+- [Microsoft Learn — macOS Platform single sign-on known issues and troubleshooting](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
+- [Microsoft Learn — macOS Platform Single Sign-on (PSSO) overview](https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso)
+- [Microsoft Learn — Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin)
+- [Microsoft Learn — Configure Enterprise SSO extension for macOS with Intune](https://learn.microsoft.com/en-us/intune/intune-service/configuration/use-enterprise-sso-plug-in-macos-with-intune)
+- [Microsoft Learn — Add Platform SSO policy to ADE Profile on macOS](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment)
+- [Apple Support — Platform Single Sign-on for macOS](https://support.apple.com/guide/deployment/platform-sso-for-macos-dep7bbb05313/web)
+- [Apple Support — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web)
+- [Microsoft Tech Community — PSSO Now Generally Available](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/now-generally-available-platform-sso-for-macos-with-microsoft-entra-id/4437424)
+- [Microsoft Tech Community — PSSO during ADE GA](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/platform-sso-during-automated-device-enrollment-is-now-generally-available-for-m/4436813)
+- [Microsoft Tech Community — New Platform SSO with ADE](https://techcommunity.microsoft.com/blog/intunecustomersuccess/new-platform-sso-with-registration-during-automated-device-enrollment-on-macos/4519846)
 
-### Community (MEDIUM confidence — confirms rebrand and operational patterns)
-- [Apple Business Manager Is Becoming Apple Business — Pulkit Vora / Medium](https://medium.com/@pulkitvora/apple-business-manager-is-becoming-apple-business-what-this-means-and-why-it-matters-3c653a03c1ed)
-- [Apple Business: Everything you need to know — IT Pro](https://www.itpro.com/software/apple/apple-business-everything-you-need-to-know-about-the-all-new-enterprise-platform)
-- [Apple Unveils Apple Business All-in-One Platform — MacRumors](https://www.macrumors.com/2026/03/24/apple-unveils-apple-business/)
-- [The New Apple Business Manager — Jon Brown blog](https://jonbrown.org/blog/new-apple-business-manager-overview/)
-- [What are Role Privileges in Apple Business Manager — HardSoft](https://www.hardsoftcomputers.co.uk/blog/apple-business-manager/understanding-role-privileges-in-apple-business-manager/)
+### MEDIUM confidence (community sources with official anchors)
 
-### Internal v1.0-v1.5 Lineage (HIGH confidence — direct corpus evidence)
-- `.planning/PROJECT.md` (v1.4 D-25 platform-frontmatter-defaults-to-Windows no-retroactive-sweep; v1.5 D-10 sibling-matrix-anchor-pin; v1.5 D-22 auditor independence; v1.5 D-25 informational-first promotion ladder)
-- `.planning/MILESTONES.md` (v1.5 methodology highlights — wave-based parallel execution; progressive-landing per-plan commits; auditor-independence via fresh worktree)
-- `docs/admin-setup-macos/01-abm-configuration.md` (existing single-admin assumptions — Account Holder, Managed Apple ID requirement, MDM server assignment)
-- `docs/admin-setup-ios/02-abm-token.md` (existing iOS ABM token doc — cross-references macOS, ASM functionally identical)
-- `docs/admin-setup-ios/05-app-deployment.md:201` (VPP location token rotting-reference candidate)
-- `docs/admin-setup-macos/04-app-deployment.md:148` (macOS VPP rotting-reference candidate)
-- `docs/admin-setup-ios/08-user-enrollment.md:22, 49, 51` (Managed Apple ID rebrand acknowledgment — pre-existing forward-looking disclaimer)
-- `docs/reference/4-platform-capability-comparison.md` (C12 math context — 6 H2 × 5 platform × 48 row = 240 cell)
-- `scripts/validation/v1.5-milestone-audit.mjs:494-595` (C11 + C12 validator implementation; CALIBRATION pattern lineage)
-- `scripts/validation/v1.5-audit-allowlist.json` (sidecar schema for exemption arrays — c11_ops_exemptions, c13_broken_link_allowlist, c9_exemptions, cope_banned_phrases, supervision_exemptions, safetynet_exemptions)
+- [Apple Developer Forums — Platform SSO registration fails on Mobile AD accounts](https://developer.apple.com/forums/thread/803802)
+- [scloud.work — Intune Assignment Error 10002 Platform SSO](https://scloud.work/intune-assigment-error-10002-platform-sso/)
+- [intuneirl.com — Platform SSO Deep Dive](https://intuneirl.com/implementing-platform-sso-for-macos-a-deep-dive-into-configuration-troubleshooting/)
+- [intuneirl.com — Complete macOS SSO Playbook](https://intuneirl.com/the-complete-macos-sso-playbook-advanced-configuration-strategies-explained/)
+- [Twocanoes — PSSO Technical Deep Dive](https://twocanoes.com/psso-technical-deep-dive/)
+- Jamf Community — upcoming change device compliance integration for macOS SSO extension
+
+### Internal v1.0-v1.8 lineage (HIGH confidence for doc-authoring pitfalls)
+
+- `.planning/PROJECT.md` (v1.5 D-10 sibling-matrix-anchor-pin; v1.6 DA-4 anchor-stability; v1.8 CI-3 deferred constraint; sequential-on-main-tree constraint)
+- `docs/admin-setup-macos/03-configuration-profiles.md` (existing SSO stub — lines 157-168 contain the inaccurate description identified in DS-5)
 
 ---
-*Pitfalls research for: v1.6 Apple Business Delegated Governance & Multi-Org Operations*
-*Researched: 2026-05-20*
-*Author: gsd-project-researcher (Pitfalls axis)*
-*Confidence: HIGH overall (verified against Apple official + Microsoft Learn + v1.0-v1.5 corpus)*
+*Pitfalls research for: macOS Platform SSO + Secure Enclave (v1.9 milestone)*
+*Researched: 2026-06-20*
