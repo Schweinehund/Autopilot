@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.8
-milestone_name: Tooling Debt Closure + Chain-Resilience Hardening
-status: Awaiting next milestone
-stopped_at: Phase 74 CLOSED — v1.8 MILESTONE CLOSED 2026-06-08 (close-gate commit `{phase_74_close_SHA}`)
-last_updated: "2026-06-09T17:11:43.148Z"
-last_activity: 2026-06-09 — Milestone v1.8 completed and archived
+milestone: v1.9
+milestone_name: macOS Platform SSO & Secure Enclave Authentication Documentation
+status: planning
+last_updated: "2026-06-20T15:32:32.834Z"
+last_activity: 2026-06-20
 progress:
-  total_phases: 1
-  completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -25,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-06-03)
 
 ## Current Position
 
-Phase: Milestone v1.8 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-06-09 — Milestone v1.8 completed and archived
+Status: Defining requirements
+Last activity: 2026-06-20 — Milestone v1.9 started
 
 ## v1.7 Phase Dependency Summary
 
