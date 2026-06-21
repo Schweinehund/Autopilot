@@ -182,6 +182,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [x] **Phase 72: Chain-Wrapper Hardening (Pillar B)** (2/2 plans) — completed 2026-06-06 (WRAPPER-01 stdout+stderr capture fix + per-validator audit + regression sweep; closing SHAs Plan 72-01 atomic `d374095` 7-file + Plan 72-02 close-gate `{phase_72_close_SHA}` 5-file)
 - [x] **Phase 73: Retrospective Forward-Port (Pillar C)** — RETRO-01 HEAD-coupled assertion scan + RETRO-02 per-validator frozen-aware conversion
  (completed 2026-06-08)
+
 - [x] **Phase 74: v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D)** — HARNESS-07..12 + VPP-01 carry-over + 3-axis terminal re-audit + close-gate (completed 2026-06-08; closing commit `{phase_74_close_SHA}`)
 
 **Wave designation map:**
@@ -200,6 +201,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Phase count:** 7 phases (75-81). Derived from the 5 requirement categories; Phase 75 holds foundation prerequisites (glossary + lifecycle + 03-stub correction) that must pre-exist for all subsequent guides to link to. Phases 76-78 cover the three admin guides (07/08/09) as separate files per single-responsibility pattern — audience separation is non-negotiable (Intune click-path admin vs architect vs mixed-fleet admin). Phase 79 synthesizes into the capability matrix after all guides exist. Phase 80 authors the runbooks that reference those guides. Phase 81 appends to nav hubs last (navigation-last pattern, v1.2+). Phase 82 is the harness lineage bump — always last, always its own phase.
 
 **Research flags for plan-phase authoring:**
+
 - Phase 77 (Smart card section): fetch Entra CBA configuration detail at plan time — `learn.microsoft.com/en-us/entra/identity/authentication/concept-certificate-based-authentication-mobile-ios`
 - Phase 80 (L2 runbook): `app-sso diagnose` command and `log stream --predicate` subsystem filter values are LOW confidence — validate against Apple developer docs at plan time
 - Phase 82 (harness): C17 cross-link check decision — invoke `/adversarial-review` at Phase 82 planning per user memory preference
@@ -212,7 +214,6 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [ ] **Phase 80: L1/L2 Runbooks** — L1 runbooks #35 and #36 + L2 runbook #27 + runbook index updates
 - [ ] **Phase 81: Nav Hub Integration** — Append-only extensions to `index.md`, `common-issues.md`, `quick-ref-l1/l2.md`, decision tree SSO leaf, all runbook index rows
 - [ ] **Phase 82: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.9 harness (Atom 1 + Atom 2) + V18 SHA pinned in frozen-at-close.mjs + 3-axis terminal re-audit + close-gate
-
 
 ## Phase Details
 
@@ -328,18 +329,20 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [x] 66-04-PLAN.md — Wave 4: terminal re-audit via FRESH gsd-executor sub-agent + FRESH git clone --no-hardlinks in $env:TEMP\v1.6-audit-<rand> per D-03 LOCKED (stricter physical isolation than worktree; reconciles D-22 INTENT with use_worktrees:false); captures exit codes + summary lines into 66-04-AUDIT-RESULTS.md (commit `489edca`)
 - [x] 66-05-PLAN.md — Wave 5: v1.6-MILESTONE-AUDIT.md (Path-A from v1.5; 39/39 + 5/5 + performed_by D-22-INTENT narrative + Auditor-Independence Verification section + Command Verification Table) + 66-VERIFICATION.md close-gate report + traceability closure across PROJECT.md/ROADMAP.md/STATE.md/REQUIREMENTS.md (completed 2026-05-25)
 
-
 ### Phase 71: Archive-Automation Root-Cause Fix (Pillar A) — COMPLETE 2026-06-04
 
 **Goal**: The gsd-complete-milestone.md archive-extraction logic is fixed so it no longer emits placeholder-label garbage into MILESTONES.md, a regression-test fixture surfaces any recurrence automatically, and all v1.0..v1.4.1 historical scripted-extraction residue in MILESTONES.md is surgically swept clean.
 **Depends on**: Nothing (Pillar A is independent of Pillars B and C; ships early so ARCHIVE-01 fix is in place before Pillar D milestone-close runs)
 **Requirements**: ARCHIVE-01, ARCHIVE-02
 **Success Criteria** (what must be TRUE):
+
   1. The gsd-complete-milestone.md (or underlying gsd-sdk milestone.complete handler) extraction-pattern no longer emits placeholder-label strings (One-liner: / SUBSUMED BY PLAN... / Hash: / Pre-edit: / Total file size: / File: / Insertion position: / Single deliverable: / Plan goal: / Found during:) into MILESTONES.md milestone-close entries -- root cause identified and fixed in the script, NOT masked via deletion
   2. A regression-test fixture exists that simulates a synthetic milestone-close invocation and diff-checks the MILESTONES.md output for placeholder-label patterns; fixture exits non-zero if recurrence is detected
   3. MILESTONES.md v1.0..v1.4.1 entries are clean of scripted-extraction debris -- the known 3-line One-liner: residue in the v1.2 section and any other historical placeholder lines are surgically deleted; post-sweep validator or diff confirms zero placeholder tokens remain
   4. A closing commit SHA is recorded in the plan VERIFICATION.md artifact confirming the fix lands atomically with the regression fixture
+
 **Plans:** 3/3 plans complete
+
 - [x] 71-01-PLAN.md — Atomic ARCHIVE-01 fix + regression fixture (vendored extractor + 3-case unit-test fixture + chain-apex validator with V-71-FIX-01/02 + V-71-MILESTONES-01 + V-71-ARCHIVE02-01 + V-71-CHAIN + V-71-AUDIT + V-71-SELF; 3 files in 1 atomic SHA per SC#4 byte-exact; closing SHA `e4887b2`)
 - [x] 71-02-PLAN.md — ARCHIVE-02 v1.1 + v1.2 MILESTONES.md re-authoring from canonical MILESTONE-AUDIT source-of-truth (REPLACEMENT-not-deletion per ARCHIVE-01 doctrine per D-03 LOCKED Option D; closes chicken-and-egg V-71-MILESTONES-01 + V-71-ARCHIVE02-01 FAIL → PASS; closing SHA `ff4514b`)
 - [x] 71-03-PLAN.md — Phase 71 close-gate (chain re-run 48..71 + v1.7-milestone-audit + 71-VERIFICATION.md SC#1-4 satisfaction + traceability flips across PROJECT/REQUIREMENTS/STATE/ROADMAP + v1.8-DEFERRED-CLEANUP.md NEW stub with ARCHIVE-UPSTREAM-01 + CHAIN-DEGRADED-AT-HEAD-01; closing SHA `{phase_71_close_SHA}` literal placeholder per Phase 68 Plan 68-05 / Phase 70 Plan 70-05 Commit B chicken-and-egg precedent; recoverable via `git log --all --grep="71-03" --grep="close-gate" --all-match -1 --format=%H`)
@@ -350,12 +353,14 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 71 (ARCHIVE-01 fix should land first; Pillar B is independent of Pillar C)
 **Requirements**: WRAPPER-01
 **Success Criteria** (what must be TRUE):
+
   1. check-phase-66.mjs:313 chain-apex wrapper captures both err.stdout AND err.stderr (not stderr-only) -- the fix matches the recommendation in v1.7-DEFERRED-CLEANUP.md:160-192 and is verified by code inspection
   2. A per-validator stdout-vs-stderr audit of check-phase-48..66.mjs is completed; any other chain wrappers with stderr-only capture are identified and fixed or documented
   3. Full chain check-phase-48..66.mjs exits 0 with 0 FAIL / 0 SKIPPED after the wrapper fix -- no false positives introduced by stdout capture addition
   4. A closing commit SHA is recorded confirming the chain-apex fix lands atomically
 
 **Plans:** 2/2 plans complete
+
 - [x] 72-01-PLAN.md — WRAPPER-01 fix: 6 CHAIN wrapper stdout+stderr captures at check-phase-{66..71}.mjs + new check-phase-72.mjs regression-witness validator (atomic SC#4; closing SHA `d374095`; 7 files in ONE atomic SHA per Phase 67 Plan 67-02 `55260b3` 5-file precedent scaled to 7)
 - [x] 72-02-PLAN.md — Phase 72 close-gate (chain delta-diff witness + 72-VERIFICATION.md SC#1-4 satisfaction + v1.8-DEFERRED-CLEANUP.md CHAIN-DEGRADED-AT-HEAD-01 STUB → PARTIALLY-RESOLVED-EMPIRICAL-BASELINE-CAPTURED transition + 4-doc traceability flips; closing SHA `{phase_72_close_SHA}` literal placeholder per Phase 71 Plan 71-03 precedent; recoverable via `git log --all --grep="72-02" --grep="close-gate" --all-match -1 --format=%H`)
 
@@ -365,11 +370,14 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 72 (chain wrapper should be fixed before frozen-aware conversion so stdout capture is available during verification; may overlap with Phase 72 if file sets are disjoint)
 **Requirements**: RETRO-01, RETRO-02
 **Success Criteria** (what must be TRUE):
+
   1. A complete per-validator class-signature inventory exists for all 19 validators check-phase-48..66.mjs documenting which assertions are HEAD-coupled vs already frozen-aware, with assessment of conversion scope -- inventory is a committed artifact
   2. All identified HEAD-coupled assertions whose docstrings cite milestone-close state are converted to frozen-aware via SHA-pinned helpers (parallel to existing readRequirementsAtV15Close() / readRoadmapAtV15Close() / readCorpusFileAtV17Close() pattern) per D-01 LOCKED Option C per-V-NN-NN freshness routing matrix
   3. Full chain check-phase-48..66.mjs exits 0 after conversions -- all converted validators pass without regression; chain-apex confirms 0 FAIL / 0 SKIPPED
   4. Scope-discipline guardrail is honored: if retrospective scan surfaces SCOPE-GAP-class discoveries beyond the initial inventory, they are documented and routed to v1.9+ rather than expanding v1.8 scope
+
 **Plans:** 3/3 plans complete
+
 - [x] 73-01-PLAN.md — RETRO-01 inventory + 8 wrapper folds + _lib/frozen-at-close + check-phase-73 stub (atomic SC#1 + SC#4; SHA `d2b8917` — 9 files in ONE atomic commit)
 - [x] 73-02-PLAN.md — RETRO-02 per-validator HEAD-coupled assertion conversion to frozen-aware (atomic SC#4; SHA `a85da77` — 5 files; flips 8 V-72-CHAIN-{61..67,70} FAILs → PASS; CHAIN-DEGRADED-AT-HEAD-01 TERMINAL CLOSURE — 7th chicken-and-egg lineage entry)
 - [x] 73-03-PLAN.md — Phase 73 close-gate (73-VERIFICATION.md Sections A-H + 4-doc traceability + CHAIN-DEGRADED-AT-HEAD-01 STUB → CLOSED + 3 NEW v1.9+ stubs; closing SHA recoverable via `git log --all --grep="73-03" --grep="close-gate" --all-match -1 --format=%H`)
@@ -382,11 +390,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 71 (ARCHIVE-01 fix must be in place so milestone-close does not re-trigger the defect); Phase 72 (chain wrapper fixed); Phase 73 (frozen-aware conversions landed)
 **Requirements**: HARNESS-07, HARNESS-08, HARNESS-09, HARNESS-10, HARNESS-11, HARNESS-12, VPP-01
 **Success Criteria** (what must be TRUE):
+
   1. v1.8-milestone-audit.mjs ships as Path-A copy from v1.7 in an atomic harness commit (per v1.5 Plan 60-08 / v1.6 Phase 62-08 / v1.6 Phase 66-02 / v1.7 Plan 70-02 atomic-commit precedent) with v1.8-audit-allowlist.json + BASELINE_12 freshness comment in regenerate-supervision-pins.mjs -- 3 files indivisible; per-phase validators check-phase-71..74.mjs + audit-harness-v1.8-integrity.yml ship as second atomic commit (Atom 2) as fifth parallel CI coexistence file
   2. VPP-01: the 3 VPP-location-token sites in docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md (lines 115, 149, 155) are surgically renamed to content token form per PITFALLS:657 first-mention-per-H2 convention, with Version History rows + sidecar annotations, per Phase 67 SWEEP-02 atomic-within-plan pattern
   3. 3-axis terminal re-audit at v1.8 close executes with full auditor independence: Axis 1 local fresh git clone --no-hardlinks into temp dir via fresh gsd-executor sub-agent (D-03 LOCKED + D-22 INTENT); Axis 2 cross-OS Linux GHA workflow_dispatch of audit-harness-v1.8-integrity.yml; Axis 3 fresh sub-agent with zero context-carryover from content phases; cross-OS PASS-Count EXACT MATCH verified across all cross-OS-applicable validators
   4. v1.8-MILESTONE-AUDIT.md is authored Path-A from v1.7 with 3-axis Auditor-Independence Verification + Discoveries Surfaced During Execution section + Requirements Traceability + Sign-off hand-off; v1.8-DEFERRED-CLEANUP.md is FINALIZED with v1.7 carry-overs (CI-3 + Multi-tenant + ABDevice API + per-OU CRD + Account Holder + ASM) promoted to full sections + any v1.8 retrospective discoveries beyond scope
   5. 4-doc traceability closure completes: 12 v1.8 requirements flipped Active->Validated with closing commit SHAs across PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md; predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 workflows + harnesses + sidecars remain BYTE-UNCHANGED through close-gate commit
+
 **Entry-state from Phase 73 (closed 2026-06-08):** clean chain (V-72-CHAIN-{61..67,70} PASS; 39 PASS / 0 FAIL / 1 SKIPPED); `_lib/frozen-at-close.mjs` available (MILESTONE_CLOSE_SHAS V141/V15/V16/V17/V17_CLOSEGATE); check-phase-73.mjs Path-A source ready for HARNESS-09 check-phase-74.mjs; CHAIN-DEGRADED-AT-HEAD-01 CLOSED; 3 NEW v1.9+ stubs in v1.8-DEFERRED-CLEANUP.md for HARNESS-12 finalization (HELPER-SPAWN-STDERR-01 + FROZEN-AWARE-ADOPTION-SWEEP-01 + EXEC-FAIL-DETAIL-EXTRACTION-01); 5/12 v1.8 requirements complete (ARCHIVE-01 + ARCHIVE-02 + WRAPPER-01 + RETRO-01 + RETRO-02); predecessor v1.4..v1.7 frozen surfaces BYTE-UNCHANGED.
 
 **Plans:** 5/5 plans complete
@@ -405,10 +415,10 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 74 (v1.8 milestone closed; v1.9 entry phase; continues from Phase 74)
 **Requirements**: PSSO-04, SSOREF-01, SSOREF-03
 **Success Criteria** (what must be TRUE):
+
   1. An admin reading `_glossary-macos.md` can find Platform SSO, Secure Enclave, and Enterprise SSO Plug-in in a new `## Authentication` section with reciprocal see-also links to `_glossary.md` (TPM / Entra ID SSO adjacent terms); `_glossary.md` carries the corresponding reciprocal see-also pointing back to the macOS glossary
   2. An admin reading `docs/admin-setup-macos/03-configuration-profiles.md` finds the ## Extensible SSO section no longer contains factual errors — the three documented errors (DS-5) are corrected and the section closes with an intra-suite link to `07-platform-sso-setup.md` rather than an external "See official Microsoft documentation" fallback
-  3. An admin reading `docs/macos-lifecycle/00-ade-lifecycle.md` finds SSO-relevant timing notes at Stage 4 (SSO extension profile must arrive before first sign-in attempt), Stage 6 (Entra device registration via Platform SSO), and Stage 7 (SSO key expiry / re-attestation note) — all edits surgical and append-only within each stage section
-**Plans**: 3 plans
+  3. An admin reading `docs/macos-lifecycle/00-ade-lifecycle.md` finds SSO-relevant timing notes at Stage 4 (SSO extension profile must arrive before first sign-in attempt), Stage 6 (Entra device registration via Platform SSO), and Stage 7 (SSO key expiry / re-attestation note) — all edits surgical and append-only within each stage section**Plans**: 3 plans
   - [ ] 75-01-PLAN.md — Glossary vocabulary: add ## Authentication section (Platform SSO, Secure Enclave, Enterprise SSO Plug-in) + Entra ID SSO term + reciprocal see-also wiring (SSOREF-01)
   - [ ] 75-02-PLAN.md — Stub correction: fix three DS-5 errors in 03-configuration-profiles.md ## Extensible SSO + deferred inline-code pointer to guide 07 (PSSO-04)
   - [ ] 75-03-PLAN.md — Lifecycle timing notes: append SSO bullets to Stage 4/6/7 Watch Out For in 00-ade-lifecycle.md (SSOREF-03)
@@ -419,11 +429,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 75 (glossary terms must exist before guide 07 links to them; 03-stub must already be corrected and pointing to 07)
 **Requirements**: PSSO-01, PSSO-02, PSSO-03, PSSO-12
 **Success Criteria** (what must be TRUE):
+
   1. Admin can follow `07-platform-sso-setup.md` to create a working Platform SSO Settings Catalog policy — the guide covers the `com.apple.extensiblesso` payload, extension identifier `com.microsoft.CompanyPortalMac.ssoextension`, Team ID `UBF8T346G9`, registration token literal `{{DEVICEREGISTRATION}}`, and Entra device-registration prerequisites with `app-sso platform -s` as the post-deployment verification step
   2. Admin deploying to a mixed macOS 13/14+ fleet can find the dual-field configuration (deprecated `Authentication Method` field for macOS 13 AND `Platform SSO > Authentication Method` for macOS 14+) in one policy to prevent Error 10001 on macOS 13 devices
   3. Admin can identify and resolve all three bootstrapping blockers before deploying: per-user MFA removal (silently blocks Password sync), new-enrollment device CA exclusion during the bootstrap window, and TLS break-and-inspect exemption for PSSO/Microsoft login endpoints
   4. Admin following the advanced ADE-during-Setup-Assistant path (`EnableRegistrationDuringSetup`) can locate the macOS 26 + Company Portal 5.2604.0 prerequisites, the static-groups-only constraint, the Smart-card-excluded note, and the wipe-to-fix recovery — clearly marked as optional/advanced with post-enrollment as the documented default; `last_verified: 2026-06-20` / `review_by: 2026-09-20` carried
   5. `docs/admin-setup-macos/00-overview.md` Mermaid diagram and numbered bullet list include nodes/entries for guides 07, 08, and 09 — an admin starting at the overview can discover all three Platform SSO guides
+
 **Plans**: TBD
 
 ### Phase 77: Auth Methods Deep-Dive
@@ -433,11 +445,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Requirements**: PSSO-05, PSSO-06, PSSO-07, PSSO-08, PSSO-09, PSSO-10, PSSO-11
 **Research flag**: Smart card section needs `microsoft_docs_fetch` of Entra CBA configuration guide at plan time — research confirmed CBA is required but did not fully document the Entra admin walk-through (CA cert upload, auth strength policy, X.509 attribute mapping). Fetch `learn.microsoft.com/en-us/entra/identity/authentication/concept-certificate-based-authentication-mobile-ios`.
 **Success Criteria** (what must be TRUE):
+
   1. Admin can use the auth-method comparison table in `08-auth-methods-deep-dive.md` to select between Secure Enclave key (recommended), Password sync, and Smart card across passwordless / phishing-resistant / hardware / macOS-version dimensions; the comparison table clearly marks Secure Enclave as Microsoft's recommendation
   2. Admin reading the Secure Enclave section understands: T2 Intel + Apple Silicon hardware scope; private key never leaves the Secure Enclave (non-exportable); PRT for device-wide SSO; **FileVault continues using the local macOS password at cold boot** (Secure Enclave key is parallel, not replacement); MDM-driven or FileVault-recovery password reset destroys the derived key and requires re-registration
   3. Admin reading the Password sync section understands: the ~4-hour sync window, complexity-mismatch failure mode, macOS 15+ `FileVaultPolicy = AttemptAuthentication`, the per-user MFA blocker, and the AD-bound (mobile) account limitation
   4. Admin reading the Smart card section understands: Entra CBA must be pre-configured in the Entra tenant before deploying Smart card PSSO (separate admin task), `sc_auth` pairing, macOS 14+ gate, and not-available-during-Setup-Assistant constraint; Touch ID biometric policy (`enable_se_key_biometric_policy` CP 2504, macOS 14.6+) is documented with the no-password-fallback lockout warning
   5. Passkey/FIDO2 from the Platform Credential and NUAL (on-demand account creation at login window, macOS 14+) are each documented — passkey as an advanced section with AAGUID `7FD635B3-2EF9-4542-8D9D-164F2C771EFC` (conditional note on key-restrictions-only), NUAL with Shared Device Keys and `com.apple.PlatformSSO.AccountShortName` mapping; `NewUserAuthorizationMode` key is explicitly omitted and tracked in `v1.9-DEFERRED-CLEANUP.md`
+
 **Plans**: TBD
 
 ### Phase 78: Legacy SSO Plug-in & Migration Guide
@@ -446,10 +460,12 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 76 (`07-platform-sso-setup.md` must exist; guide 09 includes See Also links to guide 07)
 **Requirements**: SSOMIG-01, SSOMIG-02, SSOMIG-03, SSOMIG-04
 **Success Criteria** (what must be TRUE):
+
   1. Admin reading the guide understands the product-name hierarchy: "Microsoft Enterprise SSO plug-in for Apple devices" (umbrella) vs "Platform SSO" (Settings Catalog modern path) vs "SSO app extension" (Device Features legacy path) vs "Kerberos SSO extension" (separate Apple-native extension) — terminology confusion is the highest-risk documentation error and is addressed in the opening disambiguation
   2. Admin deploying to a mixed fleet with existing SSO app extension profiles can follow the staged migration sequence (assign PSSO to pilot → validate → THEN unassign legacy profile) with an explicit warning that deploying both simultaneously causes Error 10002 and stops both from working
   3. Admin who needs to roll back Platform SSO can follow the mandatory rollback procedure covering destructive WPJ-key removal from the Secure Enclave, the CA-blocked-until-re-registered impact window, and the pre-migration compliance-script update replacing `security find-certificate` with `app-sso platform -s` (false-negatives since WPJ moved to Secure Enclave in August 2025)
   4. Admin reading the Kerberos SSO extension note understands it is a distinct Apple-native extension with separate Extension Identifiers, coexists with PSSO, and a full deep-dive is out of v1.9 scope — with a cross-reference note to the out-of-scope item
+
 **Plans**: TBD
 
 ### Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison
@@ -458,8 +474,10 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 77 (auth method facts verified in guide 08 before matrix summarizes them); Phase 78 (migration guide facts verified before matrix reflects them); pre-edit anchor inventory of `macos-capability-matrix.md` is a hard prerequisite before any edit
 **Requirements**: SSOREF-02
 **Success Criteria** (what must be TRUE):
+
   1. `docs/reference/macos-capability-matrix.md` has a new `## Authentication` section appended below existing sections (preserving all existing anchor offsets) with rows covering: auth method (Secure Enclave key / Password sync / Smart card), hardware gate (T2 chip / Apple Silicon required for Secure Enclave), macOS version gate (14.0 recommended floor), Entra ID licensing (no P1/P2 required for PSSO itself), NUAL (macOS 14+), Passkey/FIDO2 (Secure Enclave method only), and hybrid Entra join (NOT SUPPORTED — explicit anti-feature)
   2. `docs/reference/4-platform-capability-comparison.md` macOS Platform SSO cell is updated from its current stub to "Supported (macOS 14+) — [matrix](macos-capability-matrix.md#authentication)" using the link-not-copy architecture; a pre-edit anchor inventory artifact is committed before any matrix edits to prevent C12/C13 anchor-drift failures
+
 **Plans**: TBD
 
 ### Phase 80: L1/L2 Runbooks
@@ -469,10 +487,12 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Research flag**: `app-sso diagnose` command and `log stream --predicate` subsystem filter values for SSO deep-dive diagnostics are LOW confidence — validate against Apple developer documentation at plan time before authoring L2 #27.
 **Requirements**: SSORUN-01, SSORUN-02, SSORUN-03
 **Success Criteria** (what must be TRUE):
+
   1. L1 staff using `35-macos-sso-sign-in-failure.md` can triage "Registration required" notification not appearing despite Intune reporting Succeeded — covering the four root causes (old Company Portal / Error 10002 legacy conflict / mistyped registration token / dismissed notification) with `app-sso platform -s` as the first triage step and clear escalation triggers to L2 #27
   2. L1 staff using `36-macos-secure-enclave-key.md` can verify Secure Enclave key state and guide a user through the re-registration path after key loss due to password reset — with `app-sso platform -s` as verification and clear escalation triggers to L2 #27
   3. L2 engineers using `27-macos-sso-investigation.md` can investigate PSSO registration failures and Password sync failures using sign-in logs, sysdiagnose, TLS-inspection exclusion verification, and per-user-MFA / AD-bound-account checks; the macOS 15.0-15.2 re-registration loop step is version-gated as "fixed in 15.3"; `security find-certificate` is absent — replaced by `app-sso platform -s` everywhere
   4. `docs/l1-runbooks/00-index.md` and `docs/l2-runbooks/00-index.md` each have new rows for the Phase 80 runbooks; `l2-runbooks/00-index.md` escalation mapping table maps L1 #35 and L1 #36 → L2 #27
+
 **Plans**: TBD
 
 ### Phase 81: Nav Hub Integration
@@ -481,10 +501,12 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Depends on**: Phase 75 through Phase 80 — nav hubs can only link to what exists; all content and runbooks must be committed before any hub file is touched (navigation-last per v1.2 Phase 25 + v1.5 Phase 59 + v1.6 Phase 65 established pattern)
 **Requirements**: SSOREF-04
 **Success Criteria** (what must be TRUE):
+
   1. `docs/index.md` macOS Provisioning section contains new rows in the Admin Setup table (guides 07/08/09), L1 table (runbooks #35/#36), and L2 table (runbook #27) — all append-only; no existing rows modified
   2. `docs/common-issues.md` macOS section contains an SSO sign-in failure entry routing to L1 #35 and L2 #27 — append-only; `docs/quick-ref-l1.md` macOS section contains SSO escalation triggers (Secure Enclave key error → L1 #36; sign-in loop → L1 #35) — append-only; `docs/quick-ref-l2.md` macOS section contains SSO log paths and the `app-sso platform -s` attestation command — append-only
   3. `docs/decision-trees/06-macos-triage.md` SSO failure leaf nodes are extended to route to L1 #35 (registration not appearing) and L1 #36 (Secure Enclave key failure) — append-only extension of the existing decision tree
   4. A committed cross-link closure checklist confirms all 8 SSO-specific edges (SSO-E1 through SSO-E8) are present across the corpus: 07→glossary (E1), glossary→07 (E2), 07→capability-matrix#authentication (E3), capability-matrix→07 (E4), 35→27 escalation (E5), 27→35 back-link (E6), 03-config-profiles→07 (E7), 00-ade-lifecycle→07 (E8)
+
 **Plans**: TBD
 
 ### Phase 82: Harness Lineage Bump + Terminal Re-Audit + Milestone Close
@@ -494,12 +516,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Requirements**: SSOHARN-01, SSOHARN-02, SSOHARN-03, SSOHARN-04
 **Research flag at plan time**: C17 cross-link check decision (whether SSO-E1 through SSO-E8 edges become a named C17 blocking harness check parallel to C16) — invoke `/adversarial-review` at Phase 82 planning per user memory preference.
 **Success Criteria** (what must be TRUE):
+
   1. `v1.9-milestone-audit.mjs` + `v1.9-audit-allowlist.json` + BASELINE_13 freshness comment in `regenerate-supervision-pins.mjs` ship as ONE indivisible Atom 1 commit (Path-A from v1.8, C1-C16 inherited; C17 added if /adversarial-review determines it); `_lib/frozen-at-close.mjs` gains `V18` entry (v1.8 close-gate SHA identified from git log and pinned BEFORE any check-phase-NN.mjs is authored) + `readAtV18Close` export
   2. Per-phase validators `check-phase-75.mjs` through `check-phase-82.mjs` + `audit-harness-v1.9-integrity.yml` ship as ONE indivisible Atom 2 commit; chain-apex `check-phase-82.mjs` has `CHAIN_PHASES=[48..81]` and `CHAIN_SKIP = new Set([])` (empty — zero suppressions); the 6th parallel CI coexistence workflow inherits `fetch-depth: 0`, `core.autocrlf false`, `continue-on-error: false`, `timeout-minutes: 30`; predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7/v1.8 workflows + harnesses + sidecars remain BYTE-UNCHANGED
   3. 3-axis terminal re-audit executes with full auditor independence: Axis 1 local fresh `git clone --no-hardlinks` into `$env:TEMP\v1.9-audit-<rand>`; Axis 2 cross-OS Linux GHA `workflow_dispatch` of `audit-harness-v1.9-integrity.yml`; Axis 3 fresh sub-agent with zero context-carryover from content phases; cross-OS PASS-Count EXACT MATCH verified across all cross-OS-applicable validators
   4. `v1.9-MILESTONE-AUDIT.md` is authored (Path-A from v1.8) with 3-axis Auditor-Independence Verification section + Requirements Traceability (27/27 requirements Validated); `v1.9-DEFERRED-CLEANUP.md` is authored routing PSSO-FUT-01 (`NewUserAuthorizationMode` key verification), PSSO-FUT-02 (Graph API Platform Credential), PSSO-FUT-03 (Multi-tenant PSSO), PSSO-FUT-04 (Kerberos deep-dive), plus any discoveries surfaced during execution; 4-doc traceability closure (PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md) completes the milestone
-**Plans**: TBD
 
+**Plans**: TBD
 
 ## Progress
 

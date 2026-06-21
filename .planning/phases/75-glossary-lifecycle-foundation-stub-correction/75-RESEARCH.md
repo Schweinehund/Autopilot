@@ -459,17 +459,17 @@ Phase 75 adds only documentation content — no code, no endpoints, no auth flow
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Stage 4 Watch Out For — standard vs. ADE-enrollment-time PSSO**
    - What we know: The SSO extension profile timing constraint applies to the ADE-during-Setup-Assistant path (macOS 26+, `EnableRegistrationDuringSetup`, Phase 76 PSSO-12 scope). For standard PSSO (post-enrollment), the "Registration required" notification appears at the desktop.
    - What's unclear: Whether the Stage 4 Watch Out For note should mention the ADE-during-Setup-Assistant path at all (it is Phase 76 territory) or limit itself to a general note about the SSO extension profile needing to be delivered before first sign-in.
-   - Recommendation: Keep the Stage 4 note narrowly scoped. Note that if Platform SSO is configured for ADE enrollment-time registration (advanced, macOS 26+ only), the SSO extension profile must be deployed to the static assignment group before the device enrolls. This is forward-compatible with Phase 76's PSSO-12 content without requiring guide 07 to exist yet.
+   - RESOLVED: Keep the Stage 4 note narrowly scoped. Note that if Platform SSO is configured for ADE enrollment-time registration (advanced, macOS 26+ only), the SSO extension profile must be deployed to the static assignment group before the device enrolls. This is forward-compatible with Phase 76's PSSO-12 content without requiring guide 07 to exist yet.
 
 2. **`_glossary.md` Security section ordering**
    - What we know: The Security section contains Secure Boot, SCP, Selective wipe, TPM, TPM attestation (all confirmed by file read). Entra ID SSO needs to be inserted alphabetically (E before S).
    - What's unclear: Whether there are any E-prefixed terms currently in the Security section that would affect insertion position.
-   - Recommendation: Planner should read the Security section live and insert `### Entra ID SSO` in alphabetical position relative to actual current content.
+   - RESOLVED: Planner should read the Security section live and insert `### Entra ID SSO` in alphabetical position relative to actual current content.
 
 ---
 
