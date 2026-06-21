@@ -477,7 +477,8 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   2. Admin deploying to a mixed fleet with existing SSO app extension profiles can follow the staged migration sequence (assign PSSO to pilot → validate → THEN unassign legacy profile) with an explicit warning that deploying both simultaneously causes Error 10002 and stops both from working
   3. Admin who needs to roll back Platform SSO can follow the mandatory rollback procedure covering destructive WPJ-key removal from the Secure Enclave, the CA-blocked-until-re-registered impact window, and the pre-migration compliance-script update replacing `security find-certificate` with `app-sso platform -s` (false-negatives since WPJ moved to Secure Enclave in August 2025)
   4. Admin reading the Kerberos SSO extension note understands it is a distinct Apple-native extension with separate Extension Identifiers, coexists with PSSO, and a full deep-dive is out of v1.9 scope — with a cross-reference note to the out-of-scope item
-**Plans**: 1 plan
+
+**Plans**: 1 plan
 
   - [x] 78-01-PLAN.md -- Author guide 09 (09-enterprise-sso-plugin-migration.md): A3 hybrid migration/decision reference -- opening four-term disambiguation table + migrate/keep/coexist decision matrix (links guide 08) + up-front compliance-script prerequisite callout + staged migration sequence with Error 10002 warning + what-breaks section + mandatory ## Rollback section/destructive callout + bounded Kerberos coexistence note; atomically convert the 00-overview line-49 and 08 line-327 code-spans to live links in one commit (SSOMIG-01..04)
 
@@ -491,7 +492,9 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   1. `docs/reference/macos-capability-matrix.md` has a new `## Authentication` section appended below existing sections (preserving all existing anchor offsets) with rows covering: auth method (Secure Enclave key / Password sync / Smart card), hardware gate (T2 chip / Apple Silicon required for Secure Enclave), macOS version gate (14.0 recommended floor), Entra ID licensing (no P1/P2 required for PSSO itself), NUAL (macOS 14+), Passkey/FIDO2 (Secure Enclave method only), and hybrid Entra join (NOT SUPPORTED — explicit anti-feature)
   2. `docs/reference/4-platform-capability-comparison.md` macOS Platform SSO cell is updated from its current stub to "Supported (macOS 14+) — [matrix](macos-capability-matrix.md#authentication)" using the link-not-copy architecture; a pre-edit anchor inventory artifact is committed before any matrix edits to prevent C12/C13 anchor-drift failures
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+  - [ ] 79-01-PLAN.md -- Pre-edit anchor inventory (commit 1) + integrate macOS PSSO auth into macos-capability-matrix.md (new ## Authentication section, 7 rows + X1 ## Configuration cell edit) and 4-platform-capability-comparison.md (new ## Single Sign-On section, X3 SC2 cell + X2 N/A cells) in one atomic commit; v1.8 C12/C13 harness green (SSOREF-02)
 
 ### Phase 80: L1/L2 Runbooks
 
