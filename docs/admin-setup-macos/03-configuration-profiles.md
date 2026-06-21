@@ -160,12 +160,12 @@ Common use cases:
 
 Navigation: **Devices** > **Manage devices** > **Configuration** > **Create** > **New policy** > **Settings catalog** > **Authentication** > **Extensible Single Sign On (SSO)**
 
-Enterprise SSO plug-in or Platform SSO (macOS 14+) for single sign-on across apps and web. Two configuration approaches:
+Enterprise SSO plug-in or Platform SSO (macOS 13+, macOS 14 recommended) for single sign-on across apps and web. Two configuration approaches:
 
 - **SSO app extension (Redirect type):** For Microsoft Enterprise SSO plug-in -- enables SSO across Safari and apps using Microsoft identity
-- **Platform SSO (macOS 14+):** Binds the macOS login password to Entra ID credentials; enables passwordless login via Touch ID or smart card
+- **Platform SSO (macOS 13+; macOS 14 recommended; Smart Card requires macOS 14+):** Registers the Mac with Entra ID and provides device-wide SSO. Three mutually exclusive authentication methods configured in Settings Catalog: Secure Enclave key/Platform Credential (recommended — local password unchanged), Password sync (Entra ID password replaces local password), and Smart Card (macOS 14+ only)
 
-See official Microsoft documentation for full Platform SSO configuration, as setup requires specific Entra ID and device registration steps.
+Continue with Platform SSO setup in `07-platform-sso-setup.md` (added in the next documentation phase).
 
 ## Verification
 
