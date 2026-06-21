@@ -23,7 +23,7 @@ Choose your authentication method using the four dimensions below. Secure Enclav
 | **Microsoft recommendation** | **Recommended (Microsoft)** | Second choice | Third choice |
 | **Passwordless** | Yes | No | Yes |
 | **Phishing-resistant** | Yes | No | Yes |
-| **Hardware required** | Yes -- T2 Intel or Apple Silicon | No | No -- external token |
+| **Hardware required** | Yes -- T2 Intel or Apple Silicon | No | Yes -- external smart card + reader (no built-in chip required) |
 | **macOS version gate** | macOS 13+ | macOS 13+ | macOS 14+ only |
 
 > **Selection guidance:**
@@ -275,11 +275,13 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 | `New User Authorization Mode` | Enum (Standard / Admin / Groups) | One-time permissions granted to the new user when the account is first created |
 | `User Authorization Mode` | Enum (Standard / Admin / Groups) | Persistent permissions at each subsequent PSSO sign-in |
 
-> **Deferred item -- MDM key literal for New User Authorization Mode:**
+> **Deferred item -- MDM key literals for the NUAL authorization-mode settings:**
 >
-> The Settings Catalog display name is "New User Authorization Mode" with values Standard / Admin / Groups.
-> The underlying MDM plist key name is unconfirmed from an authoritative Settings Catalog payload schema
-> and is therefore omitted from this guide pending verification.
+> Two Settings Catalog display names control NUAL authorization: "New User Authorization Mode" (one-time
+> permissions at account creation) and "User Authorization Mode" (persistent permissions at each subsequent
+> sign-in), both with values Standard / Admin / Groups. The underlying MDM plist key names for **both** are
+> unconfirmed from an authoritative Settings Catalog payload schema and are therefore omitted from this guide
+> pending verification.
 >
 > See `v1.9-DEFERRED-CLEANUP.md` for tracking details (PSSO-11 / PSSO-FUT-01).
 
@@ -312,7 +314,6 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 | Auth method changed in an existing policy applied to enrolled fleet | Intune | Fleet-wide re-registration triggered for all users; helpdesk flooded simultaneously | -- |
 | MDM-driven password reset or FileVault recovery key use | Intune / macOS | User's PSSO stops working after password reset; sign-in prompts resume; re-registration required | `36-macos-se-key-verification.md` (Phase 80) |
 | Touch ID biometric policy enabled on devices lacking Touch ID support | Intune | Users with no Touch ID cannot authenticate to Entra ID via PSSO; no password fallback | -- |
-| AAGUID `7FD635B3-2EF9-4542-8D9D-164F2C771EFC` listed in FIDO2 policy without key restrictions configured | Entra | No functional impact (AAGUID ignored when key restrictions are disabled); admin confusion about why it has no effect | -- |
 
 ---
 
