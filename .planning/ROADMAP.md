@@ -459,7 +459,9 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   4. Admin reading the Smart card section understands: Entra CBA must be pre-configured in the Entra tenant before deploying Smart card PSSO (separate admin task), `sc_auth` pairing, macOS 14+ gate, and not-available-during-Setup-Assistant constraint; Touch ID biometric policy (`enable_se_key_biometric_policy` CP 2504, macOS 14.6+) is documented with the no-password-fallback lockout warning
   5. Passkey/FIDO2 from the Platform Credential and NUAL (on-demand account creation at login window, macOS 14+) are each documented — passkey as an advanced section with AAGUID `7FD635B3-2EF9-4542-8D9D-164F2C771EFC` (conditional note on key-restrictions-only), NUAL with Shared Device Keys and `com.apple.PlatformSSO.AccountShortName` mapping; `NewUserAuthorizationMode` key is explicitly omitted and tracked in `v1.9-DEFERRED-CLEANUP.md`
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+  - [ ] 77-01-PLAN.md -- Author guide 08 (08-auth-methods-deep-dive.md): four-dimension selection table + three-method deep-dive (SE key/Password sync/Smart card) + FileVault interaction + misconceptions box + Touch ID/Passkey/NUAL advanced sections; atomically convert the 00-overview line-47 code-span to a live link; track the omitted NewUserAuthorizationMode key in v1.9-DEFERRED-CLEANUP.md (PSSO-05..11)
 
 ### Phase 78: Legacy SSO Plug-in & Migration Guide
 
