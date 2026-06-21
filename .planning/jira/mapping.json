@@ -97,8 +97,8 @@
         "75": { "issueKey": "RTS-634", "status": "done", "name": "Glossary, Lifecycle Foundation & Stub Correction" },
         "76": { "issueKey": "RTS-635", "status": "done", "name": "Platform SSO Admin Setup Guide" },
         "77": { "issueKey": "RTS-636", "status": "done", "name": "Auth Methods Deep-Dive" },
-        "78": { "issueKey": "RTS-637", "status": "in_progress", "name": "Legacy SSO Plug-in & Migration Guide" },
-        "79": { "issueKey": "RTS-638", "status": "todo", "name": "Reference Integration — Capability Matrix & 5-Platform Comparison" },
+        "78": { "issueKey": "RTS-637", "status": "done", "name": "Legacy SSO Plug-in & Migration Guide" },
+        "79": { "issueKey": "RTS-638", "status": "in_progress", "name": "Reference Integration — Capability Matrix & 5-Platform Comparison" },
         "80": { "issueKey": "RTS-639", "status": "todo", "name": "L1/L2 Runbooks" },
         "81": { "issueKey": "RTS-640", "status": "todo", "name": "Nav Hub Integration" },
         "82": { "issueKey": "RTS-641", "status": "todo", "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close" }
