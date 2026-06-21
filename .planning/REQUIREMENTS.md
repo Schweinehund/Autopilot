@@ -22,7 +22,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 - [ ] **PSSO-01**: Admin can stand up macOS Platform SSO from a dedicated setup guide (`07-platform-sso-setup.md`) — Settings Catalog payload (`com.apple.extensiblesso`), key identifiers (extension `com.microsoft.CompanyPortalMac.ssoextension`, Team ID `UBF8T346G9`, registration token literal `{{DEVICEREGISTRATION}}`), Entra device-registration prerequisites, assignment to **user** groups (not device groups), Company Portal install as a prerequisite step, and the registration flow with `app-sso platform -s` verification
 - [ ] **PSSO-02**: Guide documents mixed-fleet dual-field configuration (macOS 13 deprecated `Authentication Method` AND macOS 14+ `Platform SSO > Authentication Method` in one policy) to prevent Error 10001 on excluded OS versions
 - [ ] **PSSO-03**: Guide documents the bootstrapping prerequisites — remove legacy per-user MFA (silently blocks Password sync), exclude new-enrollment devices from strict Conditional Access "compliant device" gating during the bootstrap window, and exempt PSSO/Microsoft login endpoints from TLS break-and-inspect
-- [ ] **PSSO-04**: Existing inaccurate Extensible SSO stub in `03-configuration-profiles.md` (lines ~157-168, 3 factual errors) is corrected and repointed to `07-platform-sso-setup.md`
+- [x] **PSSO-04**: Existing inaccurate Extensible SSO stub in `03-configuration-profiles.md` (lines ~157-168, 3 factual errors) is corrected and repointed to `07-platform-sso-setup.md`
 - [ ] **PSSO-05**: Admin can choose an auth method from a selection/comparison guide (Secure Enclave key [recommended] vs Password sync vs Smart card; passwordless / phishing-resistant / hardware / macOS-version dimensions)
 - [ ] **PSSO-06**: Secure Enclave auth method is documented in depth (`08-auth-methods-deep-dive.md`) — hardware scope (Apple Silicon + T2 Intel), non-exportable hardware-bound key, PRT for device-wide SSO, **FileVault non-relationship** (local password still required at cold boot), and the **password-reset-destroys-the-key** warning
 - [ ] **PSSO-07**: Password sync auth method is documented in depth (`08`) — what syncs and the ~4-hour window, complexity-mismatch failure, macOS 15+ `FileVaultPolicy = AttemptAuthentication`, per-user MFA blocker, and the AD-bound (mobile) account limitation
@@ -99,7 +99,7 @@ Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one p
 | PSSO-01 | Phase 76 | Pending |
 | PSSO-02 | Phase 76 | Pending |
 | PSSO-03 | Phase 76 | Pending |
-| PSSO-04 | Phase 75 | Pending |
+| PSSO-04 | Phase 75 | Complete |
 | PSSO-05 | Phase 77 | Pending |
 | PSSO-06 | Phase 77 | Pending |
 | PSSO-07 | Phase 77 | Pending |
