@@ -165,7 +165,7 @@ Enterprise SSO plug-in or Platform SSO (macOS 13+, macOS 14 recommended) for sin
 - **SSO app extension (Redirect type):** For Microsoft Enterprise SSO plug-in -- enables SSO across Safari and apps using Microsoft identity
 - **Platform SSO (macOS 13+; macOS 14 recommended; Smart Card requires macOS 14+):** Registers the Mac with Entra ID and provides device-wide SSO. Three mutually exclusive authentication methods configured in Settings Catalog: Secure Enclave key/Platform Credential (recommended — local password unchanged), Password sync (Entra ID password replaces local password), and Smart Card (macOS 14+ only)
 
-Continue with Platform SSO setup in `07-platform-sso-setup.md` (added in the next documentation phase).
+Continue with Platform SSO setup in [07-platform-sso-setup.md](07-platform-sso-setup.md).
 
 ## Verification
 
@@ -198,6 +198,7 @@ Continue with Platform SSO setup in `07-platform-sso-setup.md` (added in the nex
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-20 | Phase 76 (PSSO-01 / D-06): converted `07-platform-sso-setup.md` code-span to live markdown link | -- |
 | 2026-06-20 | Phase 75 (PSSO-04 / DS-5): corrected Extensible SSO section — fixed macOS version floor (13+, 14 recommended, Smart Card 14+), separated the three auth methods, removed blanket password-binding claim; replaced external fallback with deferred in-suite pointer to `07-platform-sso-setup.md` (link converted in Phase 76) | -- |
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- 9 profile types with Settings Catalog paths, what-breaks callouts, delivery channel note | -- |
