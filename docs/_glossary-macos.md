@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-05-26
-review_by: 2026-07-04
+last_verified: 2026-06-20
+review_by: 2026-09-20
 applies_to: both
 audience: all
 platform: all
@@ -14,7 +14,7 @@ platform: all
 
 ## Alphabetical Index
 
-[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ADE](#ade) | [APNs](#apns) | [Await Configuration](#await-configuration) | [Jailbreak Detection](#jailbreak-detection) | [MAM-WE](#mam-we) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
+[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ADE](#ade) | [APNs](#apns) | [Await Configuration](#await-configuration) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [Jailbreak Detection](#jailbreak-detection) | [MAM-WE](#mam-we) | [Platform SSO](#platform-sso) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
 
 ---
 
@@ -118,10 +118,34 @@ Managed App Without Enrollment -- Intune's **app-layer** data protection model f
 
 ---
 
+## Authentication
+
+### Platform SSO
+
+Platform SSO (PSSO) is a macOS-native feature (available macOS 13+; macOS 14 recommended) powered by the Microsoft Enterprise SSO plug-in that enables users to sign in to their Mac using their Microsoft Entra ID credentials and provides single sign-on across apps and browsers that use Entra ID for authentication. It registers the Mac with Entra ID, delivering a hardware-bound Primary Refresh Token (PRT) used for device-wide SSO. Platform SSO offers three mutually exclusive authentication methods configured in the Settings Catalog: Secure Enclave key/Platform Credential (recommended — local macOS password unchanged), Password sync (Entra ID password replaces and stays synced with local password), and Smart Card (requires macOS 14+; local password unchanged). Assigning the Platform SSO policy to user groups — not device groups — is required for devices with user affinity.
+
+> **Windows equivalent:** On Windows, Entra-joined devices receive a Primary Refresh Token brokered by Windows Hello for Business or the Web Account Manager, which silently provides SSO across apps, Edge, and browsers. Platform SSO on macOS is conceptually analogous: hardware-bound credentials, phishing-resistant authentication, and device-wide SSO — both establish a PRT tied to device identity for continuous access.
+> See also: [Enterprise SSO Plug-in](#enterprise-sso-plug-in); [Entra ID SSO](_glossary.md#entra-id-sso).
+
+### Secure Enclave
+
+The Secure Enclave is a dedicated secure subsystem integrated into Apple's SoC, physically isolated from the main processor, that stores and manages cryptographic keys such that software — including the OS kernel — cannot extract the private key material. Keys are generated and used within the Secure Enclave; they never leave in plain-text form (Apple's own phrasing: "Not having a mechanism to transfer plain-text key data into or out of the Secure Enclave is fundamental to its security"). Hardware scope: all Apple Silicon Macs (M1 and later, 2020+) and Intel Macs with the Apple T2 Security Chip (MacBook Pro/Air 2018–2020, Mac mini 2018, iMac 2020, Mac Pro 2019); pre-2018 Intel Macs without T2 cannot use the Secure Enclave Platform Credential auth method. From August 2025, new Entra device registrations store the Workplace Join (WPJ) key in the Secure Enclave by default — use `app-sso platform -s` to verify registration rather than `security find-certificate`, which returns false negatives for Secure Enclave-stored keys.
+
+> See also: [TPM](_glossary.md#tpm) (analogous hardware root of trust; not bit-for-bit equivalent — Secure Enclave performs no TPM-2.0/DICE attestation).
+
+### Enterprise SSO Plug-in
+
+The Microsoft Enterprise SSO plug-in for Apple devices is the umbrella product — an Apple enterprise SSO extension delivered on macOS (and iOS/iPadOS) via the Intune Company Portal app — that provides Entra ID single sign-on across apps and browsers. It contains two sub-features: Platform SSO (the modern mode, configured via Settings Catalog, macOS 13+, recommended macOS 14+) and the SSO app extension (the legacy mode, configured via Intune Device Features template). The plug-in uses the Redirect type in Apple's extensible SSO framework; the Kerberos SSO extension (for on-premises AD Kerberos) is a separate, coexisting Apple-native extension. Running both the legacy SSO app extension profile and a Platform SSO Settings Catalog policy simultaneously causes Error 10002; migration sequence is to assign Platform SSO to a pilot group, validate, then remove the legacy profile.
+
+> See also: [Platform SSO](#platform-sso); [Entra ID SSO](_glossary.md#entra-id-sso).
+
+---
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-20 | Phase 75: added `## Authentication` section (Platform SSO, Secure Enclave, Enterprise SSO Plug-in); added three new terms to `## Alphabetical Index`; updated `last_verified` and `review_by` front matter | -- |
 | 2026-05-26 | Phase 67 (SWEEP-02): coordinating row for VPP location token → content token surgical rename in admin-setup-ios/05- + admin-setup-macos/04-app-deployment.md (PITFALLS.md CI-2 closure) | -- |
 | 2026-05-05 | Phase 59 (CLEAN-08): appended `> See also:` lines INSIDE existing `> **Windows equivalent:**` blockquotes for collision-matrix terms (Account-Driven User Enrollment, ADE, Await Configuration, Setup Assistant, Supervision, ABM, VPP, MAM-WE); existing `> **Windows equivalent:**` labels PRESERVED verbatim per D-15 anti-rename | -- |
 | 2026-04-24 | Phase 42: added Android Enterprise Provisioning Glossary see-also to continuation banner (AEAUDIT-03) | -- |
