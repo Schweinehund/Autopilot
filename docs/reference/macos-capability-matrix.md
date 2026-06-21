@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-14
-review_by: 2026-07-13
+last_verified: 2026-06-21
+review_by: 2026-09-21
 applies_to: both
 audience: admin
 platform: all
@@ -35,7 +35,7 @@ This document compares Intune management capabilities between Windows and macOS 
 | BitLocker / FileVault | BitLocker (MDM) | FileVault (MDM) |
 | Registry inspection via MDM | Yes | No (plist/defaults system) |
 | PPPC (Privacy Preferences) | N/A | Yes (macOS only) |
-| Platform SSO | No | Yes (macOS 14+ via Settings Catalog) |
+| Platform SSO | No | Yes (macOS 14+ via Settings Catalog) — see [Authentication](#authentication) |
 | Kernel Extension policy | No | Yes (macOS-only KEXT management) |
 | Declarative Device Management (DDM) | No | Yes (macOS 14+, preferred for software updates) |
 
@@ -97,6 +97,20 @@ The most significant capability gaps for macOS compared to Windows are:
 6. **Apps not removed on device retirement** -- explicit uninstall required before retiring
 7. **No userless device compliance** -- compliance evaluation requires user affinity
 
+## Authentication
+
+This section documents macOS Platform SSO (PSSO) authentication. Windows SSO configuration (Windows Hello for Business / Web Account Manager) is not covered in this matrix.
+
+| Feature | Windows | macOS |
+|---------|---------|-------|
+| Auth methods | n/a — not covered in this matrix | Three methods: Secure Enclave key (Microsoft-recommended), Password sync, Smart card — see [Auth Methods Deep Dive](../admin-setup-macos/08-auth-methods-deep-dive.md) |
+| Hardware gate | n/a — not covered in this matrix | Secure Enclave method requires T2 chip (Intel 2018–2020) or Apple Silicon (M1+, 2020+); Password sync and Smart card have no hardware gate |
+| macOS version floor | n/a — not covered in this matrix | macOS 14.0 Sonoma (recommended floor — all three methods, non-deprecated Settings Catalog key, NUAL, Repair flow); see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) for macOS 13 absolute-minimum details |
+| Entra ID licensing | n/a — not covered in this matrix | No Entra ID P1 or P2 required for Platform SSO itself; see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) for CA-integration licensing detail |
+| NUAL (New User at Login) | n/a — not covered in this matrix | Supported — macOS 14+; creates on-demand accounts at login window using Shared Device Keys — see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) |
+| Passkey / FIDO2 | n/a — not covered in this matrix | Supported via Platform Credential — Secure Enclave method only; requires Entra Authentication-methods enablement — see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) |
+| Hybrid Entra join | n/a — not covered in this matrix | **Not supported** — macOS PSSO requires Entra ID (cloud-only) join; Microsoft has no plans to support hybrid Entra join on macOS |
+
 ## See Also
 
 - [Windows vs macOS Concept Comparison](../windows-vs-macos.md) -- terminology mapping (not feature parity)
@@ -109,3 +123,4 @@ The most significant capability gaps for macOS compared to Windows are:
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-14 | Initial version -- 5-domain capability matrix comparing Windows and macOS Intune management | -- |
+| 2026-06-21 | Add `## Authentication` section (7 rows: auth methods, hardware gate, macOS version floor, Entra licensing, NUAL, passkey/FIDO2, hybrid Entra join anti-feature); update `## Configuration` Platform SSO row to link `#authentication` (X1); refresh DS-2 dates | -- |

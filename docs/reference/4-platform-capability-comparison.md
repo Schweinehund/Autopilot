@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-05-01
-review_by: 2026-06-15
+last_verified: 2026-06-21
+review_by: 2026-09-21
 applies_to: both
 audience: admin
 platform: all
@@ -94,6 +94,14 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | App-based CA / Approved Client App | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Not supported — [matrix](linux-capability-matrix.md#conditional-access) |
 | Risk-based CA (Entra ID Protection) | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Partial — [matrix](linux-capability-matrix.md#conditional-access) |
 
+## Single Sign-On
+
+| Feature | Windows | macOS | iOS | Android | Linux |
+|---------|---------|-------|-----|---------|-------|
+| OS-integrated SSO (Platform SSO) | N/A | Supported (macOS 14+) — [matrix](macos-capability-matrix.md#authentication) | N/A | N/A | N/A |
+
+> Non-macOS platform SSO authentication is not covered in this documentation set; `N/A` reflects deliberate scope, not capability absence.
+
 ## See Also
 
 - [Linux Capability Matrix](linux-capability-matrix.md) — Win|Linux bilateral comparison; primary Windows column source per architecture deferral
@@ -108,3 +116,4 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-01 | Initial version — Phase 58: 5-platform capability comparison (Windows, macOS, iOS, Android, Linux) across 6 domain H2s with link-not-copy cell architecture (DEFER-08 / AECOMPARE-01 close; CLEAN-05) | -- |
+| 2026-06-21 | Add `## Single Sign-On` section (7th H2) with one feature row — macOS Platform SSO cell (X3 SC2 verbatim, links matrix `#authentication`); non-macOS cells bare N/A (X2); update front-matter dates (DS-2) | -- |
