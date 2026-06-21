@@ -208,7 +208,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
 - [x] **Phase 75: Glossary, Lifecycle Foundation & Stub Correction** — Authentication vocabulary, lifecycle timing notes, and 03-configuration-profiles.md inaccuracy corrected (completed 2026-06-21)
 - [x] **Phase 76: Platform SSO Admin Setup Guide** — Full `07-platform-sso-setup.md` admin guide + `00-overview.md` Mermaid update + 03-stub repointed (completed 2026-06-21)
-- [ ] **Phase 77: Auth Methods Deep-Dive** — `08-auth-methods-deep-dive.md` covering all three methods + advanced surfaces (Touch ID, passkey, NUAL, ADE-during-Setup)
+- [x] **Phase 77: Auth Methods Deep-Dive** — `08-auth-methods-deep-dive.md` covering all three methods + advanced surfaces (Touch ID, passkey, NUAL, ADE-during-Setup) (completed 2026-06-21)
 - [ ] **Phase 78: Legacy SSO Plug-in & Migration Guide** — `09-enterprise-sso-plugin-migration.md` covering legacy plug-in, decision matrix, staged migration, rollback
 - [ ] **Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison** — `macos-capability-matrix.md` Authentication section + `4-platform-capability-comparison.md` macOS cells
 - [ ] **Phase 80: L1/L2 Runbooks** — L1 runbooks #35 and #36 + L2 runbook #27 + runbook index updates
@@ -461,7 +461,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
 **Plans**: 1 plan
 
-  - [ ] 77-01-PLAN.md -- Author guide 08 (08-auth-methods-deep-dive.md): four-dimension selection table + three-method deep-dive (SE key/Password sync/Smart card) + FileVault interaction + misconceptions box + Touch ID/Passkey/NUAL advanced sections; atomically convert the 00-overview line-47 code-span to a live link; track the omitted NewUserAuthorizationMode key in v1.9-DEFERRED-CLEANUP.md (PSSO-05..11)
+  - [x] 77-01-PLAN.md -- Author guide 08 (08-auth-methods-deep-dive.md): four-dimension selection table + three-method deep-dive (SE key/Password sync/Smart card) + FileVault interaction + misconceptions box + Touch ID/Passkey/NUAL advanced sections; atomically convert the 00-overview line-47 code-span to a live link; track the omitted NewUserAuthorizationMode key in v1.9-DEFERRED-CLEANUP.md (PSSO-05..11)
 
 ### Phase 78: Legacy SSO Plug-in & Migration Guide
 
@@ -613,7 +613,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 5/5 | Complete   | 2026-06-08 |
 | 75. Glossary, Lifecycle Foundation & Stub Correction | v1.9 | 3/3 | Complete    | 2026-06-21 |
 | 76. Platform SSO Admin Setup Guide | v1.9 | 2/2 | Complete    | 2026-06-21 |
-| 77. Auth Methods Deep-Dive | v1.9 | 0/TBD | Not started | - |
+| 77. Auth Methods Deep-Dive | v1.9 | 1/1 | Complete   | 2026-06-21 |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 0/TBD | Not started | - |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 0/TBD | Not started | - |
 | 80. L1/L2 Runbooks | v1.9 | 0/TBD | Not started | - |
