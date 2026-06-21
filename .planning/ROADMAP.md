@@ -418,7 +418,8 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
   1. An admin reading `_glossary-macos.md` can find Platform SSO, Secure Enclave, and Enterprise SSO Plug-in in a new `## Authentication` section with reciprocal see-also links to `_glossary.md` (TPM / Entra ID SSO adjacent terms); `_glossary.md` carries the corresponding reciprocal see-also pointing back to the macOS glossary
   2. An admin reading `docs/admin-setup-macos/03-configuration-profiles.md` finds the ## Extensible SSO section no longer contains factual errors — the three documented errors (DS-5) are corrected and the section closes with an intra-suite link to `07-platform-sso-setup.md` rather than an external "See official Microsoft documentation" fallback
-  3. An admin reading `docs/macos-lifecycle/00-ade-lifecycle.md` finds SSO-relevant timing notes at Stage 4 (SSO extension profile must arrive before first sign-in attempt), Stage 6 (Entra device registration via Platform SSO), and Stage 7 (SSO key expiry / re-attestation note) — all edits surgical and append-only within each stage section**Plans**: 3 plans
+  3. An admin reading `docs/macos-lifecycle/00-ade-lifecycle.md` finds SSO-relevant timing notes at Stage 4 (SSO extension profile must arrive before first sign-in attempt), Stage 6 (Entra device registration via Platform SSO), and Stage 7 (SSO key expiry / re-attestation note) — all edits surgical and append-only within each stage section
+**Plans**: 3 plans
   - [x] 75-01-PLAN.md — Glossary vocabulary: add ## Authentication section (Platform SSO, Secure Enclave, Enterprise SSO Plug-in) + Entra ID SSO term + reciprocal see-also wiring (SSOREF-01)
   - [x] 75-02-PLAN.md — Stub correction: fix three DS-5 errors in 03-configuration-profiles.md ## Extensible SSO + deferred inline-code pointer to guide 07 (PSSO-04)
   - [x] 75-03-PLAN.md — Lifecycle timing notes: append SSO bullets to Stage 4/6/7 Watch Out For in 00-ade-lifecycle.md (SSOREF-03)
@@ -475,7 +476,9 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   3. Admin who needs to roll back Platform SSO can follow the mandatory rollback procedure covering destructive WPJ-key removal from the Secure Enclave, the CA-blocked-until-re-registered impact window, and the pre-migration compliance-script update replacing `security find-certificate` with `app-sso platform -s` (false-negatives since WPJ moved to Secure Enclave in August 2025)
   4. Admin reading the Kerberos SSO extension note understands it is a distinct Apple-native extension with separate Extension Identifiers, coexists with PSSO, and a full deep-dive is out of v1.9 scope — with a cross-reference note to the out-of-scope item
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+  - [ ] 78-01-PLAN.md -- Author guide 09 (09-enterprise-sso-plugin-migration.md): A3 hybrid migration/decision reference -- opening four-term disambiguation table + migrate/keep/coexist decision matrix (links guide 08) + up-front compliance-script prerequisite callout + staged migration sequence with Error 10002 warning + what-breaks section + mandatory ## Rollback section/destructive callout + bounded Kerberos coexistence note; atomically convert the 00-overview line-49 and 08 line-327 code-spans to live links in one commit (SSOMIG-01..04)
 
 ### Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison
 
