@@ -15,7 +15,7 @@ platform: all
 
 ## Alphabetical Index
 
-[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Tenant migration](#tenant-migration) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
+[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [Entra ID SSO](#entra-id-sso) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Tenant migration](#tenant-migration) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
 
 ---
 
@@ -112,6 +112,8 @@ Zero Touch Device ID — the unique identifier assigned to a device when it is r
 
 Trusted Platform Module — the hardware security chip that stores cryptographic keys and performs attestation; required for self-deploying and pre-provisioning modes.
 
+> See also: [Secure Enclave](_glossary-macos.md#secure-enclave) (analogous Apple hardware root of trust; not bit-for-bit equivalent — Secure Enclave performs no TPM-2.0/DICE attestation).
+
 ### TPM attestation
 
 The process by which a device proves its TPM identity to Microsoft's attestation service during pre-provisioning.
@@ -152,6 +154,12 @@ Network Connection Status Indicator — the Windows component that tests interne
 ---
 
 ## Security
+
+### Entra ID SSO
+
+Microsoft Entra ID single sign-on on Windows devices: when a user signs in to an Entra-joined or Entra-registered device, the Web Account Manager (WAM) obtains a Primary Refresh Token (PRT) that silently authenticates the user to apps and browsers without requiring repeated credential entry. The PRT is hardware-bound (via TPM when available) and carries device compliance claims evaluated by Conditional Access policies.
+
+> See also: [Enterprise SSO Plug-in](_glossary-macos.md#enterprise-sso-plug-in) (macOS equivalent via Microsoft Enterprise SSO plug-in and Platform SSO).
 
 ### Secure Boot
 
