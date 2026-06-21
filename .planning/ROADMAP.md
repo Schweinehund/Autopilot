@@ -436,7 +436,9 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   4. Admin following the advanced ADE-during-Setup-Assistant path (`EnableRegistrationDuringSetup`) can locate the macOS 26 + Company Portal 5.2604.0 prerequisites, the static-groups-only constraint, the Smart-card-excluded note, and the wipe-to-fix recovery — clearly marked as optional/advanced with post-enrollment as the documented default; `last_verified: 2026-06-20` / `review_by: 2026-09-20` carried
   5. `docs/admin-setup-macos/00-overview.md` Mermaid diagram and numbered bullet list include nodes/entries for guides 07, 08, and 09 — an admin starting at the overview can discover all three Platform SSO guides
 
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 76-01-PLAN.md — Author guide 07 (Settings Catalog payload, dual-field table, upfront bootstrapping blockers, ADE advanced subsection) + atomically convert the 03-stub code-span to a live link (PSSO-01/02/03/12)
+  - [ ] 76-02-PLAN.md — Edit 00-overview.md: surface guides 07/08/09 in the Mermaid diagram and numbered list (07 live link, 08/09 code-spans; SC5)
 
 ### Phase 77: Auth Methods Deep-Dive
 
