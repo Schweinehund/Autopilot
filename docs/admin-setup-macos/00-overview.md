@@ -44,7 +44,7 @@ graph LR
 
 7. **[Platform SSO Setup](07-platform-sso-setup.md)** -- Configure macOS Platform SSO via the Settings Catalog `com.apple.extensiblesso` payload. Covers Entra prerequisites, the three silent bootstrapping blockers, dual-field mixed-fleet configuration, user-group assignment, and `app-sso platform -s` verification.
 
-8. `08-auth-methods-deep-dive.md` (added in a later documentation phase)
+8. **[Auth Methods Deep-Dive](08-auth-methods-deep-dive.md)** -- Selection guide and deep-dive reference for all three Platform SSO authentication methods (Secure Enclave key [recommended], Password sync, Smart card) with FileVault interaction, dangerous misconceptions, Touch ID biometric policy, and Passkey/FIDO2 from the Platform Credential.
 
 9. `09-enterprise-sso-plugin-migration.md` (added in a later documentation phase)
 
@@ -68,3 +68,4 @@ graph LR
 |------|--------|--------|
 | 2026-06-20 | Phase 76: added guides 07/08/09 to Mermaid diagram and numbered list | -- |
 | 2026-04-14 | Initial version -- macOS admin setup overview with Mermaid diagram and 6-guide setup sequence | -- |
+| 2026-06-21 | Phase 77: converted `08-auth-methods-deep-dive.md` code-span to live link with description | -- |
