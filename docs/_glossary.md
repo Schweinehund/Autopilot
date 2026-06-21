@@ -241,4 +241,5 @@ The second half of ESP (after user login) that applies user-targeted apps and po
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-20 | Phase 75 (SSOREF-01 / XC-1): added `### Entra ID SSO` term (Security section) and a reciprocal `> See also:` to Secure Enclave inside the existing `### TPM` body; Alphabetical Index updated | -- |
 | 2026-05-05 | Phase 59 (CLEAN-08): added NEW `> **Cross-platform note:**` blockquotes with reciprocal see-also lines for collision-matrix terms (OOBE / Setup Assistant, ESP / Await Configuration, Hardware hash, Corporate identifiers) per D-15 pattern alignment normalization | -- |

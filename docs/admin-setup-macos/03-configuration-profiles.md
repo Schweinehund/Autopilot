@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-14
-review_by: 2026-07-13
+last_verified: 2026-06-20
+review_by: 2026-09-20
 applies_to: ADE
 audience: admin
 platform: macOS
@@ -198,5 +198,6 @@ Continue with Platform SSO setup in `07-platform-sso-setup.md` (added in the nex
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-20 | Phase 75 (PSSO-04 / DS-5): corrected Extensible SSO section — fixed macOS version floor (13+, 14 recommended, Smart Card 14+), separated the three auth methods, removed blanket password-binding claim; replaced external fallback with deferred in-suite pointer to `07-platform-sso-setup.md` (link converted in Phase 76) | -- |
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- 9 profile types with Settings Catalog paths, what-breaks callouts, delivery channel note | -- |
