@@ -151,6 +151,8 @@ Both fields must be present in the **same policy**. Microsoft Learn documents Er
 
 > **ADE-only path:** The following section covers Platform SSO registration during Setup Assistant — an advanced, optional configuration that requires Automated Device Enrollment (ADE / Apple Business Manager). This is NOT a supervised-only feature; it requires ADE specifically because PSSO must register before the user reaches the desktop. The **default and documented standard path is post-enrollment** (the user receives a "Registration Required" notification after reaching the desktop). Proceed here only if your organization requires zero-click PSSO registration during the ADE Setup Assistant flow.
 
+> _Section provenance — `last_verified: 2026-06-20` / `review_by: 2026-09-20`. This is the highest-drift content in this guide (macOS 26 GA, Company Portal 5.2604.0); re-confirm against current Microsoft Learn / Apple documentation at each 90-day review._
+
 **If your fleet is currently on macOS < 26:** Update devices to macOS 26 before enrolling via this path. The ADE-during-Setup-Assistant PSSO feature hard-gates at macOS 26 and will not activate on earlier versions. Perform the OS update, then proceed with the prerequisites below.
 
 ### ADE Path Prerequisites
