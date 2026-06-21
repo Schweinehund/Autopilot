@@ -618,7 +618,9 @@ All locked technical facts (Settings Catalog field names, identifiers, version g
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Both questions below have a definitive recommendation and are implemented by the Phase 76 plans (code-span runbook placeholders per D-06; `applies_to: ADE` for corpus consistency, executor discretion). No blocking unknowns remain.
 
 1. **`applies_to` front-matter value for guide 07**
    - What we know: All existing guides 01-06 use `applies_to: ADE`. Guide 07 covers PSSO which works on any MDM-enrolled Mac, not exclusively ADE.

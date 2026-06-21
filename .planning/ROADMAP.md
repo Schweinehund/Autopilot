@@ -437,7 +437,12 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   5. `docs/admin-setup-macos/00-overview.md` Mermaid diagram and numbered bullet list include nodes/entries for guides 07, 08, and 09 — an admin starting at the overview can discover all three Platform SSO guides
 
 **Plans**: 2 plans
+**Wave 1**
+
   - [ ] 76-01-PLAN.md — Author guide 07 (Settings Catalog payload, dual-field table, upfront bootstrapping blockers, ADE advanced subsection) + atomically convert the 03-stub code-span to a live link (PSSO-01/02/03/12)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
   - [ ] 76-02-PLAN.md — Edit 00-overview.md: surface guides 07/08/09 in the Mermaid diagram and numbered list (07 live link, 08/09 code-spans; SC5)
 
 ### Phase 77: Auth Methods Deep-Dive
