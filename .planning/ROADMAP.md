@@ -206,7 +206,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - Phase 80 (L2 runbook): `app-sso diagnose` command and `log stream --predicate` subsystem filter values are LOW confidence — validate against Apple developer docs at plan time
 - Phase 82 (harness): C17 cross-link check decision — invoke `/adversarial-review` at Phase 82 planning per user memory preference
 
-- [ ] **Phase 75: Glossary, Lifecycle Foundation & Stub Correction** — Authentication vocabulary, lifecycle timing notes, and 03-configuration-profiles.md inaccuracy corrected
+- [x] **Phase 75: Glossary, Lifecycle Foundation & Stub Correction** — Authentication vocabulary, lifecycle timing notes, and 03-configuration-profiles.md inaccuracy corrected (completed 2026-06-21)
 - [ ] **Phase 76: Platform SSO Admin Setup Guide** — Full `07-platform-sso-setup.md` admin guide + `00-overview.md` Mermaid update + 03-stub repointed
 - [ ] **Phase 77: Auth Methods Deep-Dive** — `08-auth-methods-deep-dive.md` covering all three methods + advanced surfaces (Touch ID, passkey, NUAL, ADE-during-Setup)
 - [ ] **Phase 78: Legacy SSO Plug-in & Migration Guide** — `09-enterprise-sso-plugin-migration.md` covering legacy plug-in, decision matrix, staged migration, rollback
@@ -421,7 +421,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   3. An admin reading `docs/macos-lifecycle/00-ade-lifecycle.md` finds SSO-relevant timing notes at Stage 4 (SSO extension profile must arrive before first sign-in attempt), Stage 6 (Entra device registration via Platform SSO), and Stage 7 (SSO key expiry / re-attestation note) — all edits surgical and append-only within each stage section**Plans**: 3 plans
   - [x] 75-01-PLAN.md — Glossary vocabulary: add ## Authentication section (Platform SSO, Secure Enclave, Enterprise SSO Plug-in) + Entra ID SSO term + reciprocal see-also wiring (SSOREF-01)
   - [x] 75-02-PLAN.md — Stub correction: fix three DS-5 errors in 03-configuration-profiles.md ## Extensible SSO + deferred inline-code pointer to guide 07 (PSSO-04)
-  - [ ] 75-03-PLAN.md — Lifecycle timing notes: append SSO bullets to Stage 4/6/7 Watch Out For in 00-ade-lifecycle.md (SSOREF-03)
+  - [x] 75-03-PLAN.md — Lifecycle timing notes: append SSO bullets to Stage 4/6/7 Watch Out For in 00-ade-lifecycle.md (SSOREF-03)
 
 ### Phase 76: Platform SSO Admin Setup Guide
 
@@ -602,7 +602,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 72. Chain-Wrapper Hardening (Pillar B) | v1.8 | 2/2 | Complete   | 2026-06-06 |
 | 73. Retrospective Forward-Port (Pillar C) | v1.8 | 3/3 | Complete    | 2026-06-08 |
 | 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 5/5 | Complete   | 2026-06-08 |
-| 75. Glossary, Lifecycle Foundation & Stub Correction | v1.9 | 2/3 | In Progress|  |
+| 75. Glossary, Lifecycle Foundation & Stub Correction | v1.9 | 3/3 | Complete   | 2026-06-21 |
 | 76. Platform SSO Admin Setup Guide | v1.9 | 0/TBD | Not started | - |
 | 77. Auth Methods Deep-Dive | v1.9 | 0/TBD | Not started | - |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 0/TBD | Not started | - |
