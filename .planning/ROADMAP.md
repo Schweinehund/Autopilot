@@ -207,7 +207,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - Phase 82 (harness): C17 cross-link check decision — invoke `/adversarial-review` at Phase 82 planning per user memory preference
 
 - [x] **Phase 75: Glossary, Lifecycle Foundation & Stub Correction** — Authentication vocabulary, lifecycle timing notes, and 03-configuration-profiles.md inaccuracy corrected (completed 2026-06-21)
-- [ ] **Phase 76: Platform SSO Admin Setup Guide** — Full `07-platform-sso-setup.md` admin guide + `00-overview.md` Mermaid update + 03-stub repointed
+- [x] **Phase 76: Platform SSO Admin Setup Guide** — Full `07-platform-sso-setup.md` admin guide + `00-overview.md` Mermaid update + 03-stub repointed (completed 2026-06-21)
 - [ ] **Phase 77: Auth Methods Deep-Dive** — `08-auth-methods-deep-dive.md` covering all three methods + advanced surfaces (Touch ID, passkey, NUAL, ADE-during-Setup)
 - [ ] **Phase 78: Legacy SSO Plug-in & Migration Guide** — `09-enterprise-sso-plugin-migration.md` covering legacy plug-in, decision matrix, staged migration, rollback
 - [ ] **Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison** — `macos-capability-matrix.md` Authentication section + `4-platform-capability-comparison.md` macOS cells
@@ -443,7 +443,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-  - [ ] 76-02-PLAN.md — Edit 00-overview.md: surface guides 07/08/09 in the Mermaid diagram and numbered list (07 live link, 08/09 code-spans; SC5)
+  - [x] 76-02-PLAN.md — Edit 00-overview.md: surface guides 07/08/09 in the Mermaid diagram and numbered list (07 live link, 08/09 code-spans; SC5)
 
 ### Phase 77: Auth Methods Deep-Dive
 
@@ -610,7 +610,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 73. Retrospective Forward-Port (Pillar C) | v1.8 | 3/3 | Complete    | 2026-06-08 |
 | 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 5/5 | Complete   | 2026-06-08 |
 | 75. Glossary, Lifecycle Foundation & Stub Correction | v1.9 | 3/3 | Complete    | 2026-06-21 |
-| 76. Platform SSO Admin Setup Guide | v1.9 | 1/2 | In Progress|  |
+| 76. Platform SSO Admin Setup Guide | v1.9 | 2/2 | Complete   | 2026-06-21 |
 | 77. Auth Methods Deep-Dive | v1.9 | 0/TBD | Not started | - |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 0/TBD | Not started | - |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 0/TBD | Not started | - |
