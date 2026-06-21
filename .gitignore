@@ -61,3 +61,7 @@ coverage/
 # Windows
 Thumbs.db
 desktop.ini
+
+# Claude Code — personal/local hook + tool config (not shared)
+.claude/settings.local.json
+.claude/tmp/

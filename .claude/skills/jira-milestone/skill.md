@@ -265,3 +265,44 @@ Bulk create epics for all phases where `epicKey` is null.
 1. **Check transition ID**: Use `"41"` for Done, `"31"` for In Progress
 2. **Verify epic exists**: Call `getJiraIssue` first to confirm
 3. **Use `getTransitionsForJiraIssue`** to see available transitions from current status
+
+---
+
+## Stop-Hook Integration Contract (non-negotiable)
+
+A Stop hook — `.claude/hooks/jira-milestone-gate.cjs` — watches GSD planning state
+and auto-nudges these commands at end-of-turn to keep each phase's epic in lockstep.
+The hook depends on the exact mapping fields below, so every command MUST write them
+and MUST preserve fields it does not change.
+
+**Per-phase entry shape** in `.planning/jira/mapping.json` under `phases["<N>"]`:
+
+```json
+{ "epicKey": "RTS-NNN", "name": "<phase name>", "milestone": "v1.X",
+  "status": "created | in_progress | completed", "lastCommentedPlans": 0,
+  "created": "YYYY-MM-DD", "completedDate": "YYYY-MM-DD" }
+```
+
+**Status lifecycle (exact strings):** `create` → `"created"` · `start` → `"in_progress"` · `complete` → `"completed"`.
+
+Command field-write rules the hook relies on:
+
+- **`create <phase>`** — idempotency-guard against duplicates (skip if `phases["<N>"]`
+  already has an `epicKey`, or an epic for the phase already exists in Jira — record it
+  instead of creating a second). Read `ROADMAP.md` for the phase goal/requirements.
+  Account value by phase type (new feature content → New Development `4`; hygiene/docs/
+  cleanup → Maintenance `5`; mirror the previous epic if unsure). Pass `customfield_10224`
+  as a **plain integer**, never an object. Write the entry with `status: "created"`,
+  `lastCommentedPlans: 0`, and `created` set to today.
+- **`start <phase>`** — transition to In Progress (`31`); set `status: "in_progress"`.
+- **`update <phase>`** — post the progress comment, **then** set
+  `lastCommentedPlans` = the number of completed plans for that phase currently shown in
+  `ROADMAP.md` (count of `- [x] <N>-NN-PLAN.md` lines). This is what stops the hook
+  re-firing the update on every turn.
+- **`complete <phase>`** — post a completion comment (include the phase verification /
+  milestone-audit summary if present), transition to Done (`41`), set `status: "completed"`
+  and `completedDate`.
+
+**Scope note:** the hook only acts on the *current* phase (and the just-completed phase,
+for closeout). It does not nag to backfill older unsynced phases — backfill those manually
+with `create-all` or `create <phase>`.
