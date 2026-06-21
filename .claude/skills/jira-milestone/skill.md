@@ -1,308 +1,117 @@
 # Jira Milestone Skill
 
-Manages Jira epics for Autopilot Documentation Suite GSD phases.
+Keeps Jira in lockstep with GSD milestone progress for the Autopilot Documentation Suite,
+using an **Epic-per-milestone + Story-per-phase** model. Driven automatically by the Stop
+hook `.claude/hooks/jira-milestone-gate.cjs`, or run manually.
+
+## Issue model (non-negotiable — the Stop hook depends on it)
+
+- **One Epic per GSD milestone** (e.g. `v1.9`), issue type Epic (`10000`).
+- **One child Story per GSD phase**, issue type Story (`10007`), linked to the Epic via the
+  `parent` field (verified working in this company-managed project — no Epic-Link custom field
+  needed), assigned to the milestone assignee.
+- **Story lifecycle:** `todo` → `in_progress` → `done`. **Epic lifecycle:** `created` → `in_progress` → `completed`.
+- Stories are created **all up front** (To Do) at milestone `create`.
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/jira-milestone start <phase>` | Transition phase epic to In Progress |
-| `/jira-milestone update <phase>` | Update phase epic with current progress |
-| `/jira-milestone complete <phase>` | Transition phase epic to Done |
-| `/jira-milestone status` | Show all phase mappings |
-| `/jira-milestone create <phase>` | Create epic for a single phase |
-| `/jira-milestone create-all` | Create epics for all phases missing an epic key |
+| `create <version>` | Create the milestone Epic + one To Do Story per phase; record the mapping entry |
+| `start <version>` | Transition the Epic → In Progress |
+| `sync <version>` | Reconcile phase Stories with ROADMAP/STATE (create missing, start active, complete done) |
+| `complete <version>` | Close any open phase Stories, comment + transition the Epic → Done |
+| `status [version]` | Show the milestone Epic + phase Story mapping |
 
-## Usage
+`<version>` is the GSD milestone string from `.planning/STATE.md` `milestone:` (e.g. `v1.9`).
 
-```bash
-/jira-milestone create-all      # Create Jira epics for all 7 phases
-/jira-milestone start 6         # Move Phase 6 epic to In Progress
-/jira-milestone update 6        # Update Phase 6 epic progress
-/jira-milestone complete 6      # Close Phase 6 epic
-/jira-milestone status          # List all phase mappings
-```
+## Mapping file — `.planning/jira/mapping.json`
 
-## Workflow
-
-### Create Epic (`create <phase>`)
-
-Create a Jira epic for a phase that doesn't have one yet.
-
-1. Read `.planning/jira/mapping.json` to confirm epicKey is null for the phase
-2. Read `.planning/ROADMAP.md` for phase details (goal, requirements, success criteria)
-3. Create epic using `mcp__plugin_atlassian_atlassian__createJiraIssue`
-4. Store returned epic key in `.planning/jira/mapping.json`
-5. If phase is already completed, transition to Done and add completion comment
-6. Display created epic link
-
-**Required Parameters:**
+Per-milestone entry shape under `milestones["<version>"]` (every command MUST preserve fields it
+does not change, and MUST never drop the `phases` map):
 
 ```json
 {
-  "cloudId": "a04fcb6a-ae5a-4f81-95e7-83941226b47b",
-  "projectKey": "RTS",
-  "issueType": "10000",
-  "summary": "Autopilot Docs - Phase N: {name}",
-  "description": "{goal and success criteria from ROADMAP.md}",
-  "additional_fields": {
-    "duedate": "2026-MM-DD",
-    "customfield_10553": "2026-MM-DD",
-    "customfield_10224": 4,
-    "labels": ["autopilot-docs", "v1"]
+  "epicKey": "RTS-NNN",
+  "status": "created | in_progress | completed",
+  "created": "YYYY-MM-DD",
+  "completedDate": "YYYY-MM-DD",
+  "phases": {
+    "75": { "issueKey": "RTS-NNN", "status": "todo | in_progress | done", "name": "<phase name>" }
   }
 }
 ```
 
-**IMPORTANT:** The `customfield_10224` (Account) must be a plain integer (e.g., `4`), NOT an object like `{"id": 4}`. Using an object format will cause a deserialization error.
+The top-level `phases` map (historical per-phase epics RTS-425…RTS-614 from the older model) is
+**legacy history** — leave it untouched; the milestone model uses `milestones` only.
 
-### Create All Epics (`create-all`)
+## Discovered Jira config (RTS / Retail Technology Systems)
 
-Bulk create epics for all phases where `epicKey` is null.
+| Key | Value |
+|-----|-------|
+| cloudId | `a04fcb6a-ae5a-4f81-95e7-83941226b47b` |
+| projectKey | `RTS` |
+| Epic issue type | `10000` (Epic) |
+| Phase issue type | `10007` (Story) — child via `parent` field |
+| Account field | `customfield_10224` — **plain integer**: `4`=New Development, `5`=Maintenance, `6`=Small Demands |
+| Epic start date | `customfield_10553` (YYYY-MM-DD) — Epic only |
+| Due date | `duedate` (YYYY-MM-DD) — required on Epic |
+| Transitions | To Do `2` · In Progress `31` · Done `41` (Backlog→Done is a direct transition) |
+| Assignee (milestone) | Joshua Anderson `712020:70012a54-aa0a-46d8-bf7a-4b5eab5925bb` |
+| Labels | `["autopilot-docs", "v1", "<version>"]` (e.g. add `v1.9`) |
 
-1. Read `.planning/jira/mapping.json` to find all phases with null epicKey
-2. Read `.planning/ROADMAP.md` for all phase details
-3. For each phase missing an epic:
-   a. Create the epic using `mcp__plugin_atlassian_atlassian__createJiraIssue`
-   b. Update mapping.json with the new epic key
-   c. If phase status is "completed", transition to Done
-   d. If phase status is "in_progress", transition to In Progress
-4. Write updated mapping.json
-5. Display summary table of all created epics
+**Epic required fields:** `summary`, `duedate`, `customfield_10553`, `customfield_10224`.
+**Story required fields:** only `summary` (+ `parent`, `assignee`, `labels` as policy). No Account/date fields needed on Stories.
+**Account by milestone type:** new-feature/content milestone → `4` (New Development); hygiene/maintenance/cleanup → `5`. Mirror the previous milestone if unsure.
 
-### Start Phase (`start <phase>`)
+## Workflows
 
-1. Read `.planning/jira/mapping.json` to get epic key for phase number
-2. Verify epic exists using `mcp__plugin_atlassian_atlassian__getJiraIssue`
-3. Transition to In Progress using `mcp__plugin_atlassian_atlassian__transitionJiraIssue`
-4. Update mapping.json with status "in_progress"
-5. Add comment noting phase work has started
-6. Display confirmation with epic link
+### `create <version>`
+1. Read `mapping.json`; **idempotency-guard** — if `milestones["<version>"]` already has an `epicKey` (or an Epic for the milestone already exists in Jira), record/keep it instead of creating a duplicate.
+2. Read `.planning/ROADMAP.md` for the milestone goal and its phase list (the `- [ ]/[x] **Phase N: <name>**` rows for this milestone).
+3. Create the **Epic** via `createJiraIssue` (cloudId, projectKey `RTS`, `issueTypeName:"Epic"`, summary `Autopilot Docs - <version>: <milestone name>`, description from ROADMAP, `assignee_account_id` = milestone assignee, `additional_fields`: `duedate`, `customfield_10553`, `customfield_10224` (plain int by type), `labels`).
+4. For **each phase**, create a **Story** via `createJiraIssue` (`issueTypeName:"Story"`, `parent:"<epicKey>"`, `assignee_account_id`, summary `Phase N: <name>`, `additional_fields.labels`). New Stories land in Backlog → transition each to **To Do** (`2`).
+5. Write `milestones["<version>"]` with `status:"created"`, `created:<today>`, and a full `phases` map (every phase `status:"todo"` with its `issueKey` + `name`).
 
-**Required Parameters:**
+### `start <version>`
+1. Transition the Epic → In Progress (`31`).
+2. Set `milestones["<version>"].status = "in_progress"`. Preserve `phases`.
 
-```json
-{
-  "cloudId": "a04fcb6a-ae5a-4f81-95e7-83941226b47b",
-  "issueIdOrKey": "{epicKey}",
-  "transition": { "id": "31" }
-}
-```
+### `sync <version>`  (the workhorse)
+1. Read `.planning/ROADMAP.md` (authoritative `[x]`/`[ ]` per phase) and `.planning/STATE.md` (`## Current Position` → `Phase: N`).
+2. **Create any missing** phase Stories (To Do, parent=epic, assignee) and add them to the mapping.
+3. Transition the **active** phase (STATE `Phase: N`) Story → In Progress (`31`); set its mapping status `in_progress`.
+4. Transition **every completed** phase (`[x]` in ROADMAP) Story → Done (`41`); set its mapping status `done`.
+5. Save `mapping.json` (preserve epic + untouched phases).
 
-### Update Progress (`update <phase>`)
+### `complete <version>`
+1. Transition any phase Stories not already Done → Done (`41`); set their mapping status `done`.
+2. Post a comment on the Epic with the milestone-audit summary (from `*-MILESTONE-AUDIT.md` if present).
+3. Transition the Epic → Done (`41`).
+4. Set `milestones["<version>"].status = "completed"` and `completedDate`. Preserve `phases`.
 
-1. Read `.planning/ROADMAP.md` for current phase status
-2. Read `.planning/jira/mapping.json` for epic key
-3. Calculate progress from GSD plan status if available
-4. Add comment to epic using `mcp__plugin_atlassian_atlassian__addCommentToJiraIssue`
-5. Display update confirmation
+### `status [version]`
+Read `mapping.json`; print the Epic + phase Story table for the version (or all milestones).
 
-**Comment Format:**
+## MCP tools
 
-```markdown
-## Progress Update - {date}
+- `mcp__plugin_atlassian_atlassian__createJiraIssue` — Epic + Stories (Story uses `parent`)
+- `mcp__plugin_atlassian_atlassian__editJiraIssue` — Epic summary/description/assignee edits
+- `mcp__plugin_atlassian_atlassian__transitionJiraIssue` — To Do / In Progress / Done
+- `mcp__plugin_atlassian_atlassian__addCommentToJiraIssue` — progress / completion comments
+- `mcp__plugin_atlassian_atlassian__getJiraIssue` — verify parent link / status
 
-**Phase {N}: {name}**
-**Status**: {status}
+## Gotchas
 
-### Completed Plans
-- Plan {N}-01: {name} - Completed {date}
+- **Account `customfield_10224` must be a plain integer** (`4`), never `{"id":4}` (deserialization error).
+- **Stories don't need** `duedate`/`customfield_10553`/`customfield_10224` — keep them minimal.
+- New issues start in **Backlog**; transition `2` moves Backlog→To Do, and `41` (Done) is reachable directly from Backlog.
+- `parent` links a Story to its Epic here — do **not** look for a separate Epic-Link field.
 
-### In Progress
-- Plan {N}-02: {name}
+## Stop-hook integration
 
-### Remaining
-- Plan {N}-03: {name}
-```
-
-### Complete Phase (`complete <phase>`)
-
-1. Read `.planning/jira/mapping.json` for epic key
-2. Add final comment with completion summary
-3. Transition epic to Done using `mcp__plugin_atlassian_atlassian__transitionJiraIssue`
-4. Update mapping.json with status "completed" and completion date
-5. Display completion confirmation
-
-**Required Parameters for Transition:**
-
-```json
-{
-  "cloudId": "a04fcb6a-ae5a-4f81-95e7-83941226b47b",
-  "issueIdOrKey": "{epicKey}",
-  "transition": { "id": "41" }
-}
-```
-
-### Status (`status`)
-
-1. Read `.planning/jira/mapping.json`
-2. Display table of all phases with their epic keys and status
-
-**Output Format:**
-
-```
-## Autopilot Docs - Phase Status
-
-| Phase | Name | Epic | Status |
-|-------|------|------|--------|
-| 1 | Foundation | RTS-??? | completed |
-| 2 | Lifecycle | RTS-??? | completed |
-| 3 | Error Codes | RTS-??? | completed |
-| 4 | L1 Decision Trees | RTS-??? | completed |
-| 5 | L1 Runbooks | RTS-??? | completed |
-| 6 | L2 Runbooks | — | pending |
-| 7 | Navigation | — | pending |
-```
-
----
-
-## Configuration
-
-**Mapping File:** `.planning/jira/mapping.json`
-
-```json
-{
-  "cloudId": "a04fcb6a-ae5a-4f81-95e7-83941226b47b",
-  "projectKey": "RTS",
-  "epicIssueTypeId": "10000",
-  "labels": ["autopilot-docs", "v1"],
-  "requiredFields": {
-    "duedate": "YYYY-MM-DD (system field)",
-    "customfield_10553": "Epic start date (YYYY-MM-DD)",
-    "customfield_10224": "Account ID - integer only (4=New Dev, 5=Maintenance, 6=Small)"
-  },
-  "transitions": {
-    "done": { "id": "41", "name": "Done" },
-    "inProgress": { "id": "31", "name": "In Progress" },
-    "toDo": { "id": "2", "name": "To Do" },
-    "canceled": { "id": "7", "name": "Canceled" },
-    "backlog": { "id": "11", "name": "Backlog" }
-  },
-  "phases": { ... }
-}
-```
-
-**RTS Project Transition IDs:**
-
-| ID | Name | Target Status | Use For |
-|----|------|---------------|---------|
-| **41** | **Done** | Done (green) | **Completing phases** |
-| 7 | Canceled | Canceled (green) | Abandoned phases |
-| 31 | In Progress | In Progress (yellow) | Active work |
-| 2 | To Do | To Do (blue) | Not started |
-| 11 | Backlog | Backlog (blue) | Deferred work |
-| 5 | In Testing | In Testing (yellow) | QA phase |
-| 6 | UAT | UAT (yellow) | User acceptance |
-| 8 | Ready to Deploy | Ready to Deploy (blue) | Awaiting deployment |
-
-**RTS Project Custom Fields Reference:**
-
-| Custom Field ID | Name | Type | Required |
-|-----------------|------|------|----------|
-| `customfield_10553` | Epic start date | date | Yes |
-| `customfield_10224` | Account | integer | Yes |
-| `customfield_10001` | Team | team | No |
-| `customfield_10031` | Goals | array | No |
-
-**Account Field Values:**
-
-| ID | Value | Use For |
-|----|-------|---------|
-| 4 | New Development | New features and phases |
-| 5 | Maintenance | Bug fixes and maintenance |
-| 6 | Small Demands | Small tasks |
-
-## MCP Tools Used
-
-- `mcp__plugin_atlassian_atlassian__createJiraIssue` - Create epic
-- `mcp__plugin_atlassian_atlassian__addCommentToJiraIssue` - Update progress
-- `mcp__plugin_atlassian_atlassian__transitionJiraIssue` - Start/complete epic
-- `mcp__plugin_atlassian_atlassian__getTransitionsForJiraIssue` - Get available transitions
-- `mcp__plugin_atlassian_atlassian__getJiraIssue` - Verify epic exists
-
-## Integration with GSD
-
-| GSD Event | Jira Action |
-|-----------|-------------|
-| `/gsd:plan-phase` | Run `/jira-milestone start <phase>` |
-| `/gsd:execute-phase` completed | Run `/jira-milestone update <phase>` |
-| `/gsd:complete-milestone` | Run `/jira-milestone complete` for all phase epics |
-
-**Lifecycle:** Epics stay In Progress until phase completion. Individual plan completion is tracked via comments, not transitions.
-
-## Error Handling
-
-- **Epic already exists**: Prompt to update instead (for `create` command)
-- **Epic not found**: Offer to create new one
-- **Transition failed**: Show available transitions using `getTransitionsForJiraIssue`
-- **Network error**: Retry with backoff
-
-### Common Creation Errors
-
-| Error Message | Cause | Solution |
-|---------------|-------|----------|
-| `"duedate": "Due date is required."` | Missing duedate field | Add `"duedate": "YYYY-MM-DD"` to additional_fields |
-| `"customfield_10553": "Epic start date is required."` | Missing epic start date | Add `"customfield_10553": "YYYY-MM-DD"` to additional_fields |
-| `"customfield_10224": "Account is required."` | Missing account field | Add `"customfield_10224": 4` to additional_fields |
-| `"Can not deserialize instance of java.lang.Long out of START_OBJECT token"` | Account field passed as object | Use integer `4` not `{"id": 4}` |
-
-### Common Transition Errors
-
-| Error Message | Cause | Solution |
-|---------------|-------|----------|
-| `"Transition id 'X' is not valid"` | Wrong transition ID | Use ID from transitions table (Done = "41") |
-| `"Issue does not exist"` | Wrong issue key | Verify epic key in mapping.json |
-| `"It is not on the appropriate status"` | Transition not available from current status | Check current status, may need intermediate transition |
-
-### Troubleshooting Checklist
-
-**For Creation:**
-1. **Check required fields**: RTS project requires duedate, customfield_10553, and customfield_10224
-2. **Verify field formats**: Dates as "YYYY-MM-DD", Account as plain integer
-3. **Use `getJiraIssueTypeMetaWithFields`** to discover project-specific requirements if errors persist
-
-**For Transitions:**
-1. **Check transition ID**: Use `"41"` for Done, `"31"` for In Progress
-2. **Verify epic exists**: Call `getJiraIssue` first to confirm
-3. **Use `getTransitionsForJiraIssue`** to see available transitions from current status
-
----
-
-## Stop-Hook Integration Contract (non-negotiable)
-
-A Stop hook — `.claude/hooks/jira-milestone-gate.cjs` — watches GSD planning state
-and auto-nudges these commands at end-of-turn to keep each phase's epic in lockstep.
-The hook depends on the exact mapping fields below, so every command MUST write them
-and MUST preserve fields it does not change.
-
-**Per-phase entry shape** in `.planning/jira/mapping.json` under `phases["<N>"]`:
-
-```json
-{ "epicKey": "RTS-NNN", "name": "<phase name>", "milestone": "v1.X",
-  "status": "created | in_progress | completed", "lastCommentedPlans": 0,
-  "created": "YYYY-MM-DD", "completedDate": "YYYY-MM-DD" }
-```
-
-**Status lifecycle (exact strings):** `create` → `"created"` · `start` → `"in_progress"` · `complete` → `"completed"`.
-
-Command field-write rules the hook relies on:
-
-- **`create <phase>`** — idempotency-guard against duplicates (skip if `phases["<N>"]`
-  already has an `epicKey`, or an epic for the phase already exists in Jira — record it
-  instead of creating a second). Read `ROADMAP.md` for the phase goal/requirements.
-  Account value by phase type (new feature content → New Development `4`; hygiene/docs/
-  cleanup → Maintenance `5`; mirror the previous epic if unsure). Pass `customfield_10224`
-  as a **plain integer**, never an object. Write the entry with `status: "created"`,
-  `lastCommentedPlans: 0`, and `created` set to today.
-- **`start <phase>`** — transition to In Progress (`31`); set `status: "in_progress"`.
-- **`update <phase>`** — post the progress comment, **then** set
-  `lastCommentedPlans` = the number of completed plans for that phase currently shown in
-  `ROADMAP.md` (count of `- [x] <N>-NN-PLAN.md` lines). This is what stops the hook
-  re-firing the update on every turn.
-- **`complete <phase>`** — post a completion comment (include the phase verification /
-  milestone-audit summary if present), transition to Done (`41`), set `status: "completed"`
-  and `completedDate`.
-
-**Scope note:** the hook only acts on the *current* phase (and the just-completed phase,
-for closeout). It does not nag to backfill older unsynced phases — backfill those manually
-with `create-all` or `create <phase>`.
+`.claude/hooks/jira-milestone-gate.cjs` fires on Stop, reads STATE.md + ROADMAP.md + this mapping, and
+nudges `create` / `start` / `sync` / `complete` to keep Jira in lockstep. It is **fail-open** and only
+acts on the **current** milestone. **Adaptation note:** the gate derives the milestone's phase count
+from ROADMAP (not STATE `total_phases`, which is stale in this repo). Activation lives in gitignored
+`.claude/settings.local.json` and loads only at Claude Code session start.

@@ -2,6 +2,7 @@
   "cloudId": "a04fcb6a-ae5a-4f81-95e7-83941226b47b",
   "projectKey": "RTS",
   "epicIssueTypeId": "10000",
+  "phaseIssueType": "Story",
   "labels": ["autopilot-docs", "v1"],
   "requiredFields": {
     "duedate": "YYYY-MM-DD (system field)",
@@ -85,9 +86,25 @@
     "67": { "epicKey": "RTS-607", "name": "v1.7 Pillar A — Corpus Surgical Sweeps",                "milestone": "v1.7",    "status": "completed", "completedDate": "2026-05-26" },
     "68": { "epicKey": "RTS-609", "name": "v1.7 Pillar B — CHAIN_SKIP Root-Cause Resolution",      "milestone": "v1.7",    "status": "completed", "completedDate": "2026-05-26" },
     "69": { "epicKey": "RTS-610", "name": "v1.7 Pillar C — CI-Linux Hardening",                    "milestone": "v1.7",    "status": "completed", "completedDate": "2026-05-28" },
-    "70": { "epicKey": "RTS-612", "name": "v1.7 Pillar D — Audit Harness Lineage Bump + Milestone Close", "milestone": "v1.7", "status": "completed", "completedDate": "2026-05-28" },
-    "77": { "epicKey": "RTS-633", "name": "Auth Methods Deep-Dive", "milestone": "v1.9", "status": "created", "lastCommentedPlans": 0, "created": "2026-06-21" }
+    "70": { "epicKey": "RTS-612", "name": "v1.7 Pillar D — Audit Harness Lineage Bump + Milestone Close", "milestone": "v1.7", "status": "completed", "completedDate": "2026-05-28" }
   },
-  "lastUpdated": "2026-05-30",
+  "milestones": {
+    "v1.9": {
+      "epicKey": "RTS-633",
+      "status": "in_progress",
+      "created": "2026-06-21",
+      "phases": {
+        "75": { "issueKey": "RTS-634", "status": "done", "name": "Glossary, Lifecycle Foundation & Stub Correction" },
+        "76": { "issueKey": "RTS-635", "status": "done", "name": "Platform SSO Admin Setup Guide" },
+        "77": { "issueKey": "RTS-636", "status": "in_progress", "name": "Auth Methods Deep-Dive" },
+        "78": { "issueKey": "RTS-637", "status": "todo", "name": "Legacy SSO Plug-in & Migration Guide" },
+        "79": { "issueKey": "RTS-638", "status": "todo", "name": "Reference Integration — Capability Matrix & 5-Platform Comparison" },
+        "80": { "issueKey": "RTS-639", "status": "todo", "name": "L1/L2 Runbooks" },
+        "81": { "issueKey": "RTS-640", "status": "todo", "name": "Nav Hub Integration" },
+        "82": { "issueKey": "RTS-641", "status": "todo", "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close" }
+      }
+    }
+  },
+  "lastUpdated": "2026-06-21",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending."
 }
