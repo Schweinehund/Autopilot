@@ -85,7 +85,8 @@
     "67": { "epicKey": "RTS-607", "name": "v1.7 Pillar A — Corpus Surgical Sweeps",                "milestone": "v1.7",    "status": "completed", "completedDate": "2026-05-26" },
     "68": { "epicKey": "RTS-609", "name": "v1.7 Pillar B — CHAIN_SKIP Root-Cause Resolution",      "milestone": "v1.7",    "status": "completed", "completedDate": "2026-05-26" },
     "69": { "epicKey": "RTS-610", "name": "v1.7 Pillar C — CI-Linux Hardening",                    "milestone": "v1.7",    "status": "completed", "completedDate": "2026-05-28" },
-    "70": { "epicKey": "RTS-612", "name": "v1.7 Pillar D — Audit Harness Lineage Bump + Milestone Close", "milestone": "v1.7", "status": "completed", "completedDate": "2026-05-28" }
+    "70": { "epicKey": "RTS-612", "name": "v1.7 Pillar D — Audit Harness Lineage Bump + Milestone Close", "milestone": "v1.7", "status": "completed", "completedDate": "2026-05-28" },
+    "77": { "epicKey": "RTS-633", "name": "Auth Methods Deep-Dive", "milestone": "v1.9", "status": "created", "lastCommentedPlans": 0, "created": "2026-06-21" }
   },
   "lastUpdated": "2026-05-30",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending."
