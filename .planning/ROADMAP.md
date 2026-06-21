@@ -491,8 +491,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
   1. `docs/reference/macos-capability-matrix.md` has a new `## Authentication` section appended below existing sections (preserving all existing anchor offsets) with rows covering: auth method (Secure Enclave key / Password sync / Smart card), hardware gate (T2 chip / Apple Silicon required for Secure Enclave), macOS version gate (14.0 recommended floor), Entra ID licensing (no P1/P2 required for PSSO itself), NUAL (macOS 14+), Passkey/FIDO2 (Secure Enclave method only), and hybrid Entra join (NOT SUPPORTED — explicit anti-feature)
   2. `docs/reference/4-platform-capability-comparison.md` macOS Platform SSO cell is updated from its current stub to "Supported (macOS 14+) — [matrix](macos-capability-matrix.md#authentication)" using the link-not-copy architecture; a pre-edit anchor inventory artifact is committed before any matrix edits to prevent C12/C13 anchor-drift failures
-
-**Plans**: 1 plan
+**Plans**: 1 plan
 
   - [ ] 79-01-PLAN.md -- Pre-edit anchor inventory (commit 1) + integrate macOS PSSO auth into macos-capability-matrix.md (new ## Authentication section, 7 rows + X1 ## Configuration cell edit) and 4-platform-capability-comparison.md (new ## Single Sign-On section, X3 SC2 cell + X2 N/A cells) in one atomic commit; v1.8 C12/C13 harness green (SSOREF-02)
 
