@@ -210,7 +210,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [x] **Phase 76: Platform SSO Admin Setup Guide** — Full `07-platform-sso-setup.md` admin guide + `00-overview.md` Mermaid update + 03-stub repointed (completed 2026-06-21)
 - [x] **Phase 77: Auth Methods Deep-Dive** — `08-auth-methods-deep-dive.md` covering all three methods + advanced surfaces (Touch ID, passkey, NUAL, ADE-during-Setup) (completed 2026-06-21)
 - [x] **Phase 78: Legacy SSO Plug-in & Migration Guide** — `09-enterprise-sso-plugin-migration.md` covering legacy plug-in, decision matrix, staged migration, rollback (completed 2026-06-21)
-- [ ] **Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison** — `macos-capability-matrix.md` Authentication section + `4-platform-capability-comparison.md` macOS cells
+- [x] **Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison** — `macos-capability-matrix.md` Authentication section + `4-platform-capability-comparison.md` macOS cells (completed 2026-06-21)
 - [ ] **Phase 80: L1/L2 Runbooks** — L1 runbooks #35 and #36 + L2 runbook #27 + runbook index updates
 - [ ] **Phase 81: Nav Hub Integration** — Append-only extensions to `index.md`, `common-issues.md`, `quick-ref-l1/l2.md`, decision tree SSO leaf, all runbook index rows
 - [ ] **Phase 82: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.9 harness (Atom 1 + Atom 2) + V18 SHA pinned in frozen-at-close.mjs + 3-axis terminal re-audit + close-gate
@@ -493,7 +493,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   2. `docs/reference/4-platform-capability-comparison.md` macOS Platform SSO cell is updated from its current stub to "Supported (macOS 14+) — [matrix](macos-capability-matrix.md#authentication)" using the link-not-copy architecture; a pre-edit anchor inventory artifact is committed before any matrix edits to prevent C12/C13 anchor-drift failures
 **Plans**: 1 plan
 
-  - [ ] 79-01-PLAN.md -- Pre-edit anchor inventory (commit 1) + integrate macOS PSSO auth into macos-capability-matrix.md (new ## Authentication section, 7 rows + X1 ## Configuration cell edit) and 4-platform-capability-comparison.md (new ## Single Sign-On section, X3 SC2 cell + X2 N/A cells) in one atomic commit; v1.8 C12/C13 harness green (SSOREF-02)
+  - [x] 79-01-PLAN.md -- Pre-edit anchor inventory (commit 1) + integrate macOS PSSO auth into macos-capability-matrix.md (new ## Authentication section, 7 rows + X1 ## Configuration cell edit) and 4-platform-capability-comparison.md (new ## Single Sign-On section, X3 SC2 cell + X2 N/A cells) in one atomic commit; v1.8 C12/C13 harness green (SSOREF-02)
 
 ### Phase 80: L1/L2 Runbooks
 
@@ -621,7 +621,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 76. Platform SSO Admin Setup Guide | v1.9 | 2/2 | Complete    | 2026-06-21 |
 | 77. Auth Methods Deep-Dive | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 1/1 | Complete    | 2026-06-21 |
-| 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 0/TBD | Not started | - |
+| 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete   | 2026-06-21 |
 | 80. L1/L2 Runbooks | v1.9 | 0/TBD | Not started | - |
 | 81. Nav Hub Integration | v1.9 | 0/TBD | Not started | - |
 | 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 0/TBD | Not started | - |
