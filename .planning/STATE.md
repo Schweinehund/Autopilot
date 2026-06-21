@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.9
 milestone_name: macOS Platform SSO & Secure Enclave Authentication Documentation
 status: planning
-last_updated: "2026-06-20T00:00:00.000Z"
-last_activity: 2026-06-20
+last_updated: "2026-06-21T01:17:33.329Z"
+last_activity: 2026-06-20 — v1.9 roadmap created (8 phases 75-82; 27 requirements mapped)
 progress:
-  total_phases: 8
+  total_phases: 18
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -136,12 +136,13 @@ None yet.
 ### Blockers/Concerns
 
 Research flags for plan-phase resolution (not blockers — known gaps):
+
 - Phase 77: Entra CBA walk-through for Smart card (MEDIUM confidence) — fetch CBA guide at plan time
 - Phase 80: `app-sso diagnose` / `log stream --predicate` filter values (LOW confidence) — validate at plan time
 - Phase 82: C17 cross-link check decision — /adversarial-review at plan time
 
 ## Session Continuity
 
-Last session: 2026-06-20
-Stopped at: v1.9 roadmap created. Next action: `/gsd-plan-phase 75`
-Resume file: None
+Last session: 2026-06-21T01:17:33.306Z
+Stopped at: Phase 75 context gathered
+Resume file: .planning/phases/75-glossary-lifecycle-foundation-stub-correction/75-CONTEXT.md
