@@ -46,7 +46,7 @@ graph LR
 
 8. **[Auth Methods Deep-Dive](08-auth-methods-deep-dive.md)** -- Selection guide and deep-dive reference for all three Platform SSO authentication methods (Secure Enclave key [recommended], Password sync, Smart card) with FileVault interaction, dangerous misconceptions, Touch ID biometric policy, and Passkey/FIDO2 from the Platform Credential.
 
-9. `09-enterprise-sso-plugin-migration.md` (added in a later documentation phase)
+9. **[Enterprise SSO Plug-in & Migration Guide](09-enterprise-sso-plugin-migration.md)** -- Decision-first reference for mixed-fleet admins: product-name disambiguation (Microsoft Enterprise SSO plug-in vs Platform SSO vs legacy SSO app extension vs Kerberos SSO extension), migrate/keep/coexist decision matrix, staged migration sequence that avoids Error 10002, what breaks during migration, and the mandatory destructive rollback procedure.
 
 ## Cross-Platform References
 
@@ -69,3 +69,4 @@ graph LR
 | 2026-06-20 | Phase 76: added guides 07/08/09 to Mermaid diagram and numbered list | -- |
 | 2026-04-14 | Initial version -- macOS admin setup overview with Mermaid diagram and 6-guide setup sequence | -- |
 | 2026-06-21 | Phase 77: converted `08-auth-methods-deep-dive.md` code-span to live link with description | -- |
+| 2026-06-21 | Phase 78: converted guide-09 code-span to live link with description | -- |

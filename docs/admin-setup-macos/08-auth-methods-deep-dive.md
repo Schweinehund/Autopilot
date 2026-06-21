@@ -324,10 +324,11 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 - [Secure Enclave](../_glossary-macos.md#secure-enclave)
 - [Enterprise SSO Plug-in](../_glossary-macos.md#enterprise-sso-plug-in)
 - [Entra ID SSO](../_glossary.md#entra-id-sso)
-- Legacy Enterprise SSO plug-in and migration guide: `09-enterprise-sso-plugin-migration.md` (Phase 78 -- not yet authored)
+- [Legacy Enterprise SSO Plug-in & Migration Guide](09-enterprise-sso-plugin-migration.md) -- when to migrate from the legacy SSO app extension to Platform SSO, the staged sequence that avoids Error 10002, what breaks during migration, and the mandatory destructive rollback procedure
 
 ---
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-21 | Phase 77 (PSSO-05..11): initial version -- auth method selection table and three-method deep-dive with FileVault interaction, misconceptions box, Touch ID biometric policy, Passkey/FIDO2, NUAL | -- |
+| 2026-06-21 | Phase 78: converted guide-09 code-span to live link in ## See Also | -- |
