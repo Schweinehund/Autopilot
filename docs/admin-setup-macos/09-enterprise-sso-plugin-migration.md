@@ -46,7 +46,7 @@ The matrix below covers the **migrate / keep-legacy / coexist** decision axis on
 | All devices on macOS 13+ | **Migrate** -- assign Platform SSO Settings Catalog policy to all devices. See [Auth Methods Deep-Dive](08-auth-methods-deep-dive.md) for method selection. |
 | Mixed fleet: some devices on macOS 10.15--12 | **Coexist (cross-segment)** -- keep legacy Device Features SSO app extension profile for macOS 10.15--12 devices; assign Platform SSO Settings Catalog policy to macOS 13+ devices using separate groups. Do NOT overlap on the same device. |
 | macOS 12 devices targeted with PSSO profile | **Keep legacy** -- PSSO profile installs on macOS 12 but registration **fails silently** (no error displayed). Retain the legacy Device Features profile for macOS 12 devices or upgrade to macOS 13+ first. |
-| On-premises AD / Kerberos resources needed | **Migrate + Kerberos coexistence** -- Platform SSO for Entra cloud authentication; add a separate Kerberos SSO extension profile for on-prem Kerberos (see [Kerberos SSO Extension (Coexistence)](#kerberos-sso-extension-coexistence)). Both profiles can coexist when identifiers are separate. |
+| On-premises AD / Kerberos resources needed | **Migrate + Kerberos coexistence** -- Platform SSO for Entra cloud authentication; add a separate Kerberos SSO extension profile for on-prem Kerberos (see [Kerberos SSO Extension (Coexistence)](#kerberos-sso-extension-coexistence)). PSSO and the Kerberos SSO extension can run on the **same device** because they are different extension types with separate Extension Identifiers -- this is allowed, unlike a legacy SSO app extension + PSSO on one device (the FORBIDDEN row below). |
 | Same device: both legacy Device Features profile AND PSSO Settings Catalog policy | **FORBIDDEN** -- Error 10002; both SSO profiles stop working. Never assign both to the same device simultaneously. |
 | Hybrid Entra join (on-premises AD domain join) | **NOT SUPPORTED** -- Platform SSO requires Entra join (cloud-only). Hybrid Entra-joined devices are not supported by PSSO. |
 
@@ -92,7 +92,7 @@ Follow this sequence to migrate from the legacy SSO app extension (Device Featur
 
 5. **Monitor for 48 hours** -- confirm no Error 10002, no compliance drift, no CA-blocked users, and no browser SSO regressions on pilot devices. _Note: The 48-hour window is a practitioner-recommended minimum, not an official Microsoft SLA._
 
-6. **Expand to full fleet** -- for each additional device group, assign the PSSO Settings Catalog profile AND simultaneously unassign the legacy Device Features profile. Process one group at a time. Do NOT allow both profiles to overlap on any device even briefly during policy sync.
+6. **Expand to full fleet** -- for each additional device group, perform the swap as a single change: assign the PSSO Settings Catalog policy to the group and unassign the legacy Device Features profile from that same group in one change window, so the two never overlap on a device. (This is the atomic swap, not the validate-first pilot path in steps 1--5; the pilot group was already validated before its legacy profile was removed.) Process one group at a time. Do NOT allow both profiles to overlap on any device even briefly during policy sync -- any overlap triggers Error 10002.
 
 7. **Do NOT delete the legacy Device Features profile** until confirmed unassigned from ALL devices in all groups. Deleting before full unassignment risks orphaned profile state.
 
@@ -126,7 +126,7 @@ If both profiles coexist on a device -- even briefly during policy sync -- Error
 >
 > - **CA-blocked-until-re-registered impact window:** After rollback, affected users have **no Entra device registration**. PSSO deleted the old Login Keychain WPJ certificate during enrollment, and removing the PSSO policy removes the Secure Enclave WPJ key without reinstating the legacy Keychain certificate. Users cannot satisfy device-based Conditional Access policies until they manually open Company Portal and complete a fresh legacy WPJ registration. This is an **active service outage** for any user protected by device-based CA policies.
 >
-> - **Compliance-script swap:** See the [Before You Migrate -- Update Compliance Scripts First](#before-you-migrate--update-compliance-scripts-first) prerequisite callout above -- `security find-certificate` returns false negatives for Secure Enclave-stored keys; update compliance scripts to use `app-sso platform -s` **before rollback as well as before migration**, to avoid triggering rollback unnecessarily.
+> - **Compliance-script swap:** See the [Before You Migrate -- Update Compliance Scripts First](#before-you-migrate----update-compliance-scripts-first) prerequisite callout above -- `security find-certificate` returns false negatives for Secure Enclave-stored keys; update compliance scripts to use `app-sso platform -s` **before rollback as well as before migration**, to avoid triggering rollback unnecessarily.
 
 **Rollback procedure:**
 
