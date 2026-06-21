@@ -105,11 +105,11 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 |---------|---------|-------|
 | Auth methods | n/a — not covered in this matrix | Three methods: Secure Enclave key (Microsoft-recommended), Password sync, Smart card — see [Auth Methods Deep Dive](../admin-setup-macos/08-auth-methods-deep-dive.md) |
 | Hardware gate | n/a — not covered in this matrix | Secure Enclave method requires T2 chip (Intel 2018–2020) or Apple Silicon (M1+, 2020+); Password sync and Smart card have no hardware gate |
-| macOS version floor | n/a — not covered in this matrix | macOS 14.0 Sonoma (recommended floor — all three methods, non-deprecated Settings Catalog key, NUAL, Repair flow); see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) for macOS 13 absolute-minimum details |
-| Entra ID licensing | n/a — not covered in this matrix | No Entra ID P1 or P2 required for Platform SSO itself; see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) for CA-integration licensing detail |
+| macOS version floor | n/a — not covered in this matrix | macOS 14.0 Sonoma (recommended floor — all three methods, non-deprecated Settings Catalog key, NUAL); see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) for macOS 13 absolute-minimum details |
+| Entra ID licensing | n/a — not covered in this matrix | No Entra ID P1 or P2 required for Platform SSO itself (Conditional Access integration is licensed independently of PSSO) |
 | NUAL (New User at Login) | n/a — not covered in this matrix | Supported — macOS 14+; creates on-demand accounts at login window using Shared Device Keys — see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) |
 | Passkey / FIDO2 | n/a — not covered in this matrix | Supported via Platform Credential — Secure Enclave method only; requires Entra Authentication-methods enablement — see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) |
-| Hybrid Entra join | n/a — not covered in this matrix | **Not supported** — macOS PSSO requires Entra ID (cloud-only) join; Microsoft has no plans to support hybrid Entra join on macOS |
+| Hybrid Entra join | n/a — not covered in this matrix | **Not supported** — macOS PSSO requires Entra ID (cloud-only) join; hybrid Entra-joined devices are not supported by PSSO — see [Enterprise SSO Plug-in & Migration Guide](../admin-setup-macos/09-enterprise-sso-plugin-migration.md) |
 
 ## See Also
 
