@@ -25,6 +25,9 @@ graph LR
   C --> F[6. Config<br/>Failures]
   D --> F
   E --> F
+  C --> G[7. Platform SSO<br/>Setup]
+  G --> H[8. Auth Methods<br/>Deep-Dive]
+  G --> I[9. Enterprise SSO<br/>Migration]
 ```
 
 1. **[ABM Configuration](01-abm-configuration.md)** -- Create ADE token in Apple Business Manager and Intune, assign devices to MDM server, configure token renewal. This must be complete before any enrollment profile can be created.
@@ -38,6 +41,12 @@ graph LR
 5. **[Compliance Policies](05-compliance-policy.md)** -- Configure compliance policies for SIP, FileVault, firewall, Gatekeeper, and password. Important: no Intune security baselines exist for macOS.
 
 6. **[Configuration-Caused Failures Reference](06-config-failures.md)** -- Consolidated reverse-lookup table of all macOS admin setup misconfigurations with links to guide files and troubleshooting runbooks.
+
+7. **[Platform SSO Setup](07-platform-sso-setup.md)** -- Configure macOS Platform SSO via the Settings Catalog `com.apple.extensiblesso` payload. Covers Entra prerequisites, the three silent bootstrapping blockers, dual-field mixed-fleet configuration, user-group assignment, and `app-sso platform -s` verification.
+
+8. `08-auth-methods-deep-dive.md` (added in a later documentation phase)
+
+9. `09-enterprise-sso-plugin-migration.md` (added in a later documentation phase)
 
 ## Cross-Platform References
 
@@ -57,4 +66,5 @@ graph LR
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-20 | Phase 76: added guides 07/08/09 to Mermaid diagram and numbered list | -- |
 | 2026-04-14 | Initial version -- macOS admin setup overview with Mermaid diagram and 6-guide setup sequence | -- |
