@@ -47,7 +47,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 ### Reference & Navigation Integration (SSOREF)
 
-- [ ] **SSOREF-01**: `_glossary-macos.md` gains a `## Authentication` section (Platform SSO, Secure Enclave, Enterprise SSO plug-in entries) with reciprocal `_glossary.md` see-also
+- [x] **SSOREF-01**: `_glossary-macos.md` gains a `## Authentication` section (Platform SSO, Secure Enclave, Enterprise SSO plug-in entries) with reciprocal `_glossary.md` see-also
 - [ ] **SSOREF-02**: `macos-capability-matrix.md` gains a `## Authentication` section (auth-method rows, hardware/macOS-version gates, Entra licensing, hybrid-join = NOT SUPPORTED) and `4-platform-capability-comparison.md` macOS Platform SSO cell is updated (link-not-copy; pre-edit anchor inventory to prevent C12/C13 anchor drift)
 - [ ] **SSOREF-03**: `00-ade-lifecycle.md` Stage 4/6/7 are surgically extended with PSSO timing/registration notes and `00-overview.md` Mermaid + bullet list is extended for guides 07/08/09
 - [ ] **SSOREF-04**: Navigation hubs integrate the new content (append-only) — `index.md`, `common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md`, `l1-runbooks/00-index.md`, `l2-runbooks/00-index.md`, and `decision-trees/06-macos-triage.md` SSO failure leaf
@@ -115,7 +115,7 @@ Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one p
 | SSORUN-01 | Phase 80 | Pending |
 | SSORUN-02 | Phase 80 | Pending |
 | SSORUN-03 | Phase 80 | Pending |
-| SSOREF-01 | Phase 75 | Pending |
+| SSOREF-01 | Phase 75 | Complete |
 | SSOREF-02 | Phase 79 | Pending |
 | SSOREF-03 | Phase 75 | Pending |
 | SSOREF-04 | Phase 81 | Pending |
