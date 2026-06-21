@@ -209,7 +209,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [x] **Phase 75: Glossary, Lifecycle Foundation & Stub Correction** — Authentication vocabulary, lifecycle timing notes, and 03-configuration-profiles.md inaccuracy corrected (completed 2026-06-21)
 - [x] **Phase 76: Platform SSO Admin Setup Guide** — Full `07-platform-sso-setup.md` admin guide + `00-overview.md` Mermaid update + 03-stub repointed (completed 2026-06-21)
 - [x] **Phase 77: Auth Methods Deep-Dive** — `08-auth-methods-deep-dive.md` covering all three methods + advanced surfaces (Touch ID, passkey, NUAL, ADE-during-Setup) (completed 2026-06-21)
-- [ ] **Phase 78: Legacy SSO Plug-in & Migration Guide** — `09-enterprise-sso-plugin-migration.md` covering legacy plug-in, decision matrix, staged migration, rollback
+- [x] **Phase 78: Legacy SSO Plug-in & Migration Guide** — `09-enterprise-sso-plugin-migration.md` covering legacy plug-in, decision matrix, staged migration, rollback (completed 2026-06-21)
 - [ ] **Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison** — `macos-capability-matrix.md` Authentication section + `4-platform-capability-comparison.md` macOS cells
 - [ ] **Phase 80: L1/L2 Runbooks** — L1 runbooks #35 and #36 + L2 runbook #27 + runbook index updates
 - [ ] **Phase 81: Nav Hub Integration** — Append-only extensions to `index.md`, `common-issues.md`, `quick-ref-l1/l2.md`, decision tree SSO leaf, all runbook index rows
@@ -479,7 +479,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   4. Admin reading the Kerberos SSO extension note understands it is a distinct Apple-native extension with separate Extension Identifiers, coexists with PSSO, and a full deep-dive is out of v1.9 scope — with a cross-reference note to the out-of-scope item
 **Plans**: 1 plan
 
-  - [ ] 78-01-PLAN.md -- Author guide 09 (09-enterprise-sso-plugin-migration.md): A3 hybrid migration/decision reference -- opening four-term disambiguation table + migrate/keep/coexist decision matrix (links guide 08) + up-front compliance-script prerequisite callout + staged migration sequence with Error 10002 warning + what-breaks section + mandatory ## Rollback section/destructive callout + bounded Kerberos coexistence note; atomically convert the 00-overview line-49 and 08 line-327 code-spans to live links in one commit (SSOMIG-01..04)
+  - [x] 78-01-PLAN.md -- Author guide 09 (09-enterprise-sso-plugin-migration.md): A3 hybrid migration/decision reference -- opening four-term disambiguation table + migrate/keep/coexist decision matrix (links guide 08) + up-front compliance-script prerequisite callout + staged migration sequence with Error 10002 warning + what-breaks section + mandatory ## Rollback section/destructive callout + bounded Kerberos coexistence note; atomically convert the 00-overview line-49 and 08 line-327 code-spans to live links in one commit (SSOMIG-01..04)
 
 ### Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison
 
@@ -618,7 +618,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 75. Glossary, Lifecycle Foundation & Stub Correction | v1.9 | 3/3 | Complete    | 2026-06-21 |
 | 76. Platform SSO Admin Setup Guide | v1.9 | 2/2 | Complete    | 2026-06-21 |
 | 77. Auth Methods Deep-Dive | v1.9 | 1/1 | Complete    | 2026-06-21 |
-| 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 0/TBD | Not started | - |
+| 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 1/1 | Complete   | 2026-06-21 |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 0/TBD | Not started | - |
 | 80. L1/L2 Runbooks | v1.9 | 0/TBD | Not started | - |
 | 81. Nav Hub Integration | v1.9 | 0/TBD | Not started | - |

@@ -34,10 +34,10 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 ### Legacy SSO & Migration (SSOMIG)
 
-- [ ] **SSOMIG-01**: Legacy Microsoft Enterprise SSO plug-in (SSO app extension, Device Features template) is documented (`09-enterprise-sso-plugin-migration.md`) — what it is and does NOT do vs Platform SSO, with a when-to-use-which decision matrix; product-name hierarchy (Enterprise SSO plug-in umbrella vs Platform SSO vs SSO app extension vs Kerberos SSO extension) made explicit
-- [ ] **SSOMIG-02**: Staged legacy→Platform SSO migration sequence is documented (`09`) — assign PSSO to pilot → validate → THEN unassign legacy profile (never both assigned simultaneously → Error 10002), plus what breaks during migration
-- [ ] **SSOMIG-03**: Mandatory PSSO rollback procedure is documented (`09`) — destructive WPJ-key removal from Secure Enclave, CA-blocked-until-re-registered impact, and the pre-migration compliance-script update (`security find-certificate` → `app-sso platform -s`, false-negatives since WPJ moved to Secure Enclave)
-- [ ] **SSOMIG-04**: Kerberos SSO extension coexistence is documented as a cross-reference note (`09`) — distinct Apple-native extension, separate extension identifiers, coexists with PSSO (full Kerberos deep-dive out of scope)
+- [x] **SSOMIG-01**: Legacy Microsoft Enterprise SSO plug-in (SSO app extension, Device Features template) is documented (`09-enterprise-sso-plugin-migration.md`) — what it is and does NOT do vs Platform SSO, with a when-to-use-which decision matrix; product-name hierarchy (Enterprise SSO plug-in umbrella vs Platform SSO vs SSO app extension vs Kerberos SSO extension) made explicit
+- [x] **SSOMIG-02**: Staged legacy→Platform SSO migration sequence is documented (`09`) — assign PSSO to pilot → validate → THEN unassign legacy profile (never both assigned simultaneously → Error 10002), plus what breaks during migration
+- [x] **SSOMIG-03**: Mandatory PSSO rollback procedure is documented (`09`) — destructive WPJ-key removal from Secure Enclave, CA-blocked-until-re-registered impact, and the pre-migration compliance-script update (`security find-certificate` → `app-sso platform -s`, false-negatives since WPJ moved to Secure Enclave)
+- [x] **SSOMIG-04**: Kerberos SSO extension coexistence is documented as a cross-reference note (`09`) — distinct Apple-native extension, separate extension identifiers, coexists with PSSO (full Kerberos deep-dive out of scope)
 
 ### Troubleshooting Runbooks (SSORUN)
 
@@ -108,10 +108,10 @@ Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one p
 | PSSO-10 | Phase 77 | Complete |
 | PSSO-11 | Phase 77 | Complete |
 | PSSO-12 | Phase 76 | Complete |
-| SSOMIG-01 | Phase 78 | Pending |
-| SSOMIG-02 | Phase 78 | Pending |
-| SSOMIG-03 | Phase 78 | Pending |
-| SSOMIG-04 | Phase 78 | Pending |
+| SSOMIG-01 | Phase 78 | Complete |
+| SSOMIG-02 | Phase 78 | Complete |
+| SSOMIG-03 | Phase 78 | Complete |
+| SSOMIG-04 | Phase 78 | Complete |
 | SSORUN-01 | Phase 80 | Pending |
 | SSORUN-02 | Phase 80 | Pending |
 | SSORUN-03 | Phase 80 | Pending |
