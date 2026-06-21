@@ -439,7 +439,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Plans**: 2 plans
 **Wave 1**
 
-  - [ ] 76-01-PLAN.md — Author guide 07 (Settings Catalog payload, dual-field table, upfront bootstrapping blockers, ADE advanced subsection) + atomically convert the 03-stub code-span to a live link (PSSO-01/02/03/12)
+  - [x] 76-01-PLAN.md — Author guide 07 (Settings Catalog payload, dual-field table, upfront bootstrapping blockers, ADE advanced subsection) + atomically convert the 03-stub code-span to a live link (PSSO-01/02/03/12)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -610,7 +610,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 73. Retrospective Forward-Port (Pillar C) | v1.8 | 3/3 | Complete    | 2026-06-08 |
 | 74. v1.8 Audit Harness Lineage Bump + Milestone Close (Pillar D) | v1.8 | 5/5 | Complete   | 2026-06-08 |
 | 75. Glossary, Lifecycle Foundation & Stub Correction | v1.9 | 3/3 | Complete    | 2026-06-21 |
-| 76. Platform SSO Admin Setup Guide | v1.9 | 0/TBD | Not started | - |
+| 76. Platform SSO Admin Setup Guide | v1.9 | 1/2 | In Progress|  |
 | 77. Auth Methods Deep-Dive | v1.9 | 0/TBD | Not started | - |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 0/TBD | Not started | - |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 0/TBD | Not started | - |

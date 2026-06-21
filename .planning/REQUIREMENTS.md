@@ -19,9 +19,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 ### Platform SSO Setup & Authentication (PSSO)
 
-- [ ] **PSSO-01**: Admin can stand up macOS Platform SSO from a dedicated setup guide (`07-platform-sso-setup.md`) — Settings Catalog payload (`com.apple.extensiblesso`), key identifiers (extension `com.microsoft.CompanyPortalMac.ssoextension`, Team ID `UBF8T346G9`, registration token literal `{{DEVICEREGISTRATION}}`), Entra device-registration prerequisites, assignment to **user** groups (not device groups), Company Portal install as a prerequisite step, and the registration flow with `app-sso platform -s` verification
-- [ ] **PSSO-02**: Guide documents mixed-fleet dual-field configuration (macOS 13 deprecated `Authentication Method` AND macOS 14+ `Platform SSO > Authentication Method` in one policy) to prevent Error 10001 on excluded OS versions
-- [ ] **PSSO-03**: Guide documents the bootstrapping prerequisites — remove legacy per-user MFA (silently blocks Password sync), exclude new-enrollment devices from strict Conditional Access "compliant device" gating during the bootstrap window, and exempt PSSO/Microsoft login endpoints from TLS break-and-inspect
+- [x] **PSSO-01**: Admin can stand up macOS Platform SSO from a dedicated setup guide (`07-platform-sso-setup.md`) — Settings Catalog payload (`com.apple.extensiblesso`), key identifiers (extension `com.microsoft.CompanyPortalMac.ssoextension`, Team ID `UBF8T346G9`, registration token literal `{{DEVICEREGISTRATION}}`), Entra device-registration prerequisites, assignment to **user** groups (not device groups), Company Portal install as a prerequisite step, and the registration flow with `app-sso platform -s` verification
+- [x] **PSSO-02**: Guide documents mixed-fleet dual-field configuration (macOS 13 deprecated `Authentication Method` AND macOS 14+ `Platform SSO > Authentication Method` in one policy) to prevent Error 10001 on excluded OS versions
+- [x] **PSSO-03**: Guide documents the bootstrapping prerequisites — remove legacy per-user MFA (silently blocks Password sync), exclude new-enrollment devices from strict Conditional Access "compliant device" gating during the bootstrap window, and exempt PSSO/Microsoft login endpoints from TLS break-and-inspect
 - [x] **PSSO-04**: Existing inaccurate Extensible SSO stub in `03-configuration-profiles.md` (lines ~157-168, 3 factual errors) is corrected and repointed to `07-platform-sso-setup.md`
 - [ ] **PSSO-05**: Admin can choose an auth method from a selection/comparison guide (Secure Enclave key [recommended] vs Password sync vs Smart card; passwordless / phishing-resistant / hardware / macOS-version dimensions)
 - [ ] **PSSO-06**: Secure Enclave auth method is documented in depth (`08-auth-methods-deep-dive.md`) — hardware scope (Apple Silicon + T2 Intel), non-exportable hardware-bound key, PRT for device-wide SSO, **FileVault non-relationship** (local password still required at cold boot), and the **password-reset-destroys-the-key** warning
@@ -30,7 +30,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 - [ ] **PSSO-09**: Touch ID biometric policy is documented as a subsection of the Secure Enclave method in `08` (D1=A) — `enable_se_key_biometric_policy` [CP 2504] + `UserSecureEnclaveKeyBiometricPolicy` [macOS 14.6+], the **no-password-fallback lockout warning**, and admin-driven re-registration to enable
 - [ ] **PSSO-10**: Passkey/FIDO2 from the Secure Enclave Platform Credential is documented as an advanced section in `08` (D2=A) — Entra Authentication-methods enablement, AAGUID allowlist `7FD635B3-2EF9-4542-8D9D-164F2C771EFC` (conditional — only when FIDO2 key restrictions apply), and end-user self-enablement
 - [ ] **PSSO-11**: NUAL (new-user-at-login-window / on-demand account creation) behavior is documented conceptually in `08` (D3=B) — macOS 14+, Shared Device Keys, `com.apple.PlatformSSO.AccountShortName` mapping; the LOW-confidence `NewUserAuthorizationMode` privilege key is **omitted** and tracked in `v1.9-DEFERRED-CLEANUP.md` pending verification
-- [ ] **PSSO-12**: ADE-during-Setup-Assistant PSSO (`EnableRegistrationDuringSetup`) is documented as an **advanced/optional** path (D4=B) with an explicit, achievable "update-to-macOS-26-first" prerequisite branch — macOS 26 + Company Portal 5.2604.0 + static-groups-only + Smart-card-excluded + wipe-to-fix-if-misconfigured; post-enrollment registration remains the documented default. Section carries `last_verified: 2026-06-20` / `review_by: 2026-09-20`
+- [x] **PSSO-12**: ADE-during-Setup-Assistant PSSO (`EnableRegistrationDuringSetup`) is documented as an **advanced/optional** path (D4=B) with an explicit, achievable "update-to-macOS-26-first" prerequisite branch — macOS 26 + Company Portal 5.2604.0 + static-groups-only + Smart-card-excluded + wipe-to-fix-if-misconfigured; post-enrollment registration remains the documented default. Section carries `last_verified: 2026-06-20` / `review_by: 2026-09-20`
 
 ### Legacy SSO & Migration (SSOMIG)
 
@@ -96,9 +96,9 @@ Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one p
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PSSO-01 | Phase 76 | Pending |
-| PSSO-02 | Phase 76 | Pending |
-| PSSO-03 | Phase 76 | Pending |
+| PSSO-01 | Phase 76 | Complete |
+| PSSO-02 | Phase 76 | Complete |
+| PSSO-03 | Phase 76 | Complete |
 | PSSO-04 | Phase 75 | Complete |
 | PSSO-05 | Phase 77 | Pending |
 | PSSO-06 | Phase 77 | Pending |
@@ -107,7 +107,7 @@ Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one p
 | PSSO-09 | Phase 77 | Pending |
 | PSSO-10 | Phase 77 | Pending |
 | PSSO-11 | Phase 77 | Pending |
-| PSSO-12 | Phase 76 | Pending |
+| PSSO-12 | Phase 76 | Complete |
 | SSOMIG-01 | Phase 78 | Pending |
 | SSOMIG-02 | Phase 78 | Pending |
 | SSOMIG-03 | Phase 78 | Pending |
