@@ -491,7 +491,8 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
   1. `docs/reference/macos-capability-matrix.md` has a new `## Authentication` section appended below existing sections (preserving all existing anchor offsets) with rows covering: auth method (Secure Enclave key / Password sync / Smart card), hardware gate (T2 chip / Apple Silicon required for Secure Enclave), macOS version gate (14.0 recommended floor), Entra ID licensing (no P1/P2 required for PSSO itself), NUAL (macOS 14+), Passkey/FIDO2 (Secure Enclave method only), and hybrid Entra join (NOT SUPPORTED — explicit anti-feature)
   2. `docs/reference/4-platform-capability-comparison.md` macOS Platform SSO cell is updated from its current stub to "Supported (macOS 14+) — [matrix](macos-capability-matrix.md#authentication)" using the link-not-copy architecture; a pre-edit anchor inventory artifact is committed before any matrix edits to prevent C12/C13 anchor-drift failures
-**Plans**: 1 plan
+
+**Plans**: 1 plan
 
   - [x] 79-01-PLAN.md -- Pre-edit anchor inventory (commit 1) + integrate macOS PSSO auth into macos-capability-matrix.md (new ## Authentication section, 7 rows + X1 ## Configuration cell edit) and 4-platform-capability-comparison.md (new ## Single Sign-On section, X3 SC2 cell + X2 N/A cells) in one atomic commit; v1.8 C12/C13 harness green (SSOREF-02)
 
@@ -530,7 +531,16 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   3. `docs/decision-trees/06-macos-triage.md` SSO failure leaf nodes are extended to route to L1 #35 (registration not appearing) and L1 #36 (Secure Enclave key failure) — append-only extension of the existing decision tree
   4. A committed cross-link closure checklist confirms all 8 SSO-specific edges (SSO-E1 through SSO-E8) are present across the corpus: 07→glossary (E1), glossary→07 (E2), 07→capability-matrix#authentication (E3), capability-matrix→07 (E4), 35→27 escalation (E5), 27→35 back-link (E6), 03-config-profiles→07 (E7), 00-ade-lifecycle→07 (E8)
 
-**Plans**: TBD
+**Plans**: 4 plans
+**Wave 1**
+
+  - [ ] 81-01-PLAN.md -- Append Platform SSO nav entries to reader hubs: index.md macOS Admin Setup/L1/L2 rows (D-04), common-issues.md SSO failure entry, quick-ref-l1 escalation triggers, quick-ref-l2 SSO log paths + `app-sso platform -s` (SC1, SC2)
+  - [ ] 81-02-PLAN.md -- Extend 06-macos-triage.md with the MACSSO sub-decision leaf routing to L1 #35/#36 + matching Routing Verification rows; 3-edge invariant preserved (D-01, SC3)
+  - [ ] 81-03-PLAN.md -- Create the 4 absent SSO cross-link edges as one-line additive links (revised D-03): E8 ade-lifecycle->07, E2 glossary->07, E3 07->capability-matrix#authentication, E4 capability-matrix->07 (SC4)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+  - [ ] 81-04-PLAN.md -- Create 81-CROSSLINK-CLOSURE.md (8-edge E1-E8 closure checklist, file:line evidence, all resolved) + 81-VERIFICATION.md referencing it for the Phase-82 C17 author (D-02, SC4)
 
 ### Phase 82: Harness Lineage Bump + Terminal Re-Audit + Milestone Close
 
