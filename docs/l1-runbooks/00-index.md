@@ -45,6 +45,8 @@ Scripted procedures for macOS ADE enrollment failure scenarios. Each runbook pro
 | 13 | [App Not Installed](13-macos-app-not-installed.md) | DMG, PKG, or VPP app not installed or showing failed status |
 | 14 | [Compliance Failure / Access Blocked](14-macos-compliance-access-blocked.md) | Device non-compliant or user cannot access Microsoft 365 resources |
 | 15 | [Company Portal Sign-In Failure](15-macos-company-portal-sign-in.md) | Company Portal not available, sign-in failing, or Entra registration incomplete |
+| 35 | [Platform SSO Sign-In Failure](35-macos-sso-sign-in-failure.md) | "Registration Required" notification not appearing despite Intune Succeeded, or Platform SSO sign-in not working after registration attempt |
+| 36 | [Platform SSO — Secure Enclave Key Loss](36-macos-secure-enclave-key.md) | Platform SSO stopped working after a password reset or FileVault recovery key use |
 
 ## iOS L1 Runbooks
 
@@ -120,6 +122,7 @@ L1 runbook for the Apple Business Shared iPad passcode reset scenario. Start wit
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-21 | Phase 80 SSORUN-01/02: added macOS Platform SSO runbooks #35 and #36 to macOS ADE Runbooks table | -- |
 | 2026-05-22 | Phase 65 plan 65-02: appended Apple Business L1 Runbooks H2 with #34 row | -- |
 | 2026-04-30 | Phase 57: added Knox runbook 28 row to Android L1 Runbooks table (orthogonal patch supporting CLEAN-02 cross-doc consistency; runbook 28 file existed on disk since Phase 44 but was missing from the index); fixed stale `six most common` → `eight most common` intro count (Phase 44 + Phase 45 added Knox + AOSP; intro count was never updated) | -- |
 | 2026-04-27 | Added Linux L1 Runbooks section (runbooks 30-33) | -- |
