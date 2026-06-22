@@ -22,6 +22,9 @@ export const MILESTONE_CLOSE_SHAS = {
   V17_CLOSEGATE: '4df3a16',  // Phase 70 Plan 70-05 Commit B — true v1.7 milestone close-gate (HARNESS-06 +
                               // 4-doc traceability closure); added by Plan 73-02 RETRO-02 to fix V-70-24
                               // (PROJECT.md 12/12 v1.7 reqs only present at Commit B, not at aa6de68 Atom 2).
+  V18:  '2bd79d8',  // Phase 74 Plan 74-05 — v1.8 milestone close-gate (docs(74-05); 4-doc traceability
+                    // + v1.8 MILESTONE-AUDIT NEW + DEFERRED-CLEANUP finalize). Single entry per D-04
+                    // (v1.8 closed in ONE commit so atom == close-gate; no separate V18_CLOSEGATE).
   // V14 omitted — RETRO-01 must surface a v1.4-close-state assertion in check-phase-{48..66}.mjs
   // before adding (v1.4 close was Phase 42, predating chain validators).
   // Candidates if needed: b5cf529 or 671f72a (D-02 advisor pre-scan).
@@ -52,3 +55,4 @@ export const readAtV15Close       = (p) => readAtClose('V15',          p);
 export const readAtV16Close       = (p) => readAtClose('V16',          p);
 export const readAtV17Close       = (p) => readAtClose('V17',          p);
 export const readAtV17CloseGate   = (p) => readAtClose('V17_CLOSEGATE', p);
+export const readAtV18Close       = (p) => readAtClose('V18',          p);
