@@ -678,7 +678,7 @@ The following conventions must be honored by all three runbooks. This list conso
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **`app-sso platform -s` exact output schema**
    - What we know: Command returns JSON; healthy output includes `Device Registration: REGISTERED` and `User Registration: REGISTERED` and shows SSO tokens; command path is `/usr/bin/app-sso platform -s`
