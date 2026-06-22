@@ -12,7 +12,7 @@
 - ✅ **v1.6 Apple Business Delegated Governance & Multi-Org Operations** — Phases 62-66 (shipped 2026-05-25)
 - ✅ **v1.7 Deferred Backlog Closure + Validator Chain Hardening** — Phases 67-70 (shipped 2026-05-29)
 - ✅ **v1.8 Tooling Debt Closure + Chain-Resilience Hardening** — Phases 71-74 (shipped 2026-06-08)
-- 🚧 **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation** — Phases 75-81 (in progress)
+- ✅ **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation** — Phases 75-82 (shipped 2026-06-22)
 
 ## Phases
 
@@ -194,7 +194,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
 </details>
 
-### 🚧 v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (In Progress)
+### ✅ v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (Shipped 2026-06-22)
 
 **Milestone Goal:** Close the macOS authentication documentation gap by delivering complete, actionable coverage of Platform SSO (macOS 14+) and Secure Enclave, so Intune admins and L1/L2 teams can configure, operate, and troubleshoot Apple-platform single sign-on without escalating to engineering.
 
@@ -213,7 +213,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [x] **Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison** — `macos-capability-matrix.md` Authentication section + `4-platform-capability-comparison.md` macOS cells (completed 2026-06-21)
 - [x] **Phase 80: L1/L2 Runbooks** — L1 runbooks #35 and #36 + L2 runbook #27 + runbook index updates (completed 2026-06-22)
 - [x] **Phase 81: Nav Hub Integration** — Append-only extensions to `index.md`, `common-issues.md`, `quick-ref-l1/l2.md`, decision tree SSO leaf, all runbook index rows (completed 2026-06-22)
-- [ ] **Phase 82: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.9 harness (Atom 1 + Atom 2) + V18 SHA pinned in frozen-at-close.mjs + 3-axis terminal re-audit + close-gate
+- [x] **Phase 82: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.9 harness (Atom 1 + Atom 2) + V18 SHA pinned in frozen-at-close.mjs + 3-axis terminal re-audit + close-gate (completed 2026-06-22; closing commit `{phase_82_close_SHA}`)
 
 ## Phase Details
 
@@ -563,7 +563,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   - [x] 82-01-PLAN.md — 82-CONVENTIONS.md (Wave 1) + Atom 1 (SSOHARN-01): v1.9-milestone-audit.mjs (Path-A, C1-C16, NO C17) + v1.9-audit-allowlist.json + BASELINE_13 + frozen-at-close V18=2bd79d8 entry — ONE indivisible commit (SC#1)
   - [x] 82-02-PLAN.md — Atom 2 (SSOHARN-02/03): check-phase-75..82.mjs (8 net-new; apex CHAIN_PHASES=[48..81], 81 carries V-81-CROSSLINK) + audit-harness-v1.9-integrity.yml (6th coexistence) — ONE indivisible commit (SC#2), pushed to origin/master
   - [x] 82-03-PLAN.md — 3-axis terminal re-audit (SSOHARN-04): 82-03-AUDIT-RESULTS.md (Axis 1 fresh-clone + Axis 2 Linux GHA + Axis 3 zero-context; 10-validator cross-OS EXACT MATCH) — artifact-only commit (SC#3)
-  - [ ] 82-04-PLAN.md — close-gate (SSOHARN-04): v1.9-MILESTONE-AUDIT.md + v1.9-DEFERRED-CLEANUP.md + 4-doc traceability (27/27 Validated) + 82-VERIFICATION.md — SINGLE commit, NO Commit A (SC#4)
+  - [x] 82-04-PLAN.md — close-gate (SSOHARN-04): v1.9-MILESTONE-AUDIT.md + v1.9-DEFERRED-CLEANUP.md + 4-doc traceability (27/27 Validated) + 82-VERIFICATION.md — SINGLE commit, NO Commit A (SC#4)
 
 ## Progress
 
@@ -650,9 +650,11 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 80. L1/L2 Runbooks | v1.9 | 3/3 | Complete    | 2026-06-22 |
 | 81. Nav Hub Integration | v1.9 | 4/4 | Complete    | 2026-06-22 |
-| 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 3/4 | In Progress|  |
+| 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 4/4 | Complete | 2026-06-22 |
 
 ---
+
+*2026-06-22 — **v1.9 MILESTONE CLOSED** via Phase 82 Plan 82-04 SINGLE close-gate commit (NO Commit A; D-04 single-commit ruling). 8/8 v1.9 phases Complete (75/76/77/78/79/80/81/82). 27/27 v1.9 requirements Validated. Closing SHAs: content Phases 75-81 (PSSO/SSOMIG/SSORUN/SSOREF); Phase 82 SSOHARN-01 Atom 1 `e760176` (v1.9-milestone-audit.mjs 4-line Path-A relabel + V18=2bd79d8 pin + BASELINE_13) + SSOHARN-02/03 Atom 2 `e825fdb` (check-phase-75..82.mjs 8 net-new + audit-harness-v1.9-integrity.yml 6th coexistence) + SSOHARN-04 re-audit `9dc04ef` + `{phase_82_close_SHA}` close-gate. 3-axis auditor independence: Axis 1 fresh `git clone --no-hardlinks` + Axis 2 cross-OS Linux GHA run `27966769510` + Axis 3 fresh sub-agent zero-context — Cross-OS PASS/FAIL/SKIP-Count EXACT MATCH confirmed across all 10 cross-OS-applicable validators (apex 26/10/1 on both Windows and Linux). Harness lineage extended to 7th milestone (v1.4→…→v1.8→v1.9); harness-close lineage 62→66→70→74→82. Predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7/v1.8 frozen surfaces BYTE-UNCHANGED through close-gate (HARD gate EMPTY across 17 surfaces). CHAIN_SKIP EMPTY; CHAIN_PHASES covers [48..81]. **HONEST accounting:** ~10 PRE-EXISTING legacy chain FAILs (phases 58-66, 73) are out-of-Phase-82-scope (predecessor-byte-unchanged; untouched prior apex check-phase-74.mjs reports identical 10 FAIL/1 SKIP), identical cross-OS, and routed to v1.9-DEFERRED-CLEANUP.md (PRE-EXISTING-CHAIN-RED-AT-HEAD-01) — NOT a Phase-82 regression; Phase-82 deliverables are GREEN. v1.9-DEFERRED-CLEANUP.md authored (canonical .planning/milestones/ artifact: carried v1.8 items + PSSO-FUT-01..04 + 2 harness-hygiene discoveries; cross-links pre-existing docs/v1.9-DEFERRED-CLEANUP.md, not deleted). Next: `/gsd-complete-milestone v1.9`, then `/gsd-new-milestone` to plan v1.10+ from v1.9-DEFERRED-CLEANUP.md backlog.*
 
 *2026-06-20 — **v1.9 ROADMAP CREATED** (Phases 75-82; 8 phases; 27 requirements mapped). v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation. Phase 75 (Glossary + Lifecycle Foundation + 03-stub correction — PSSO-04 + SSOREF-01 + SSOREF-03), Phase 76 (Platform SSO Admin Setup Guide 07 — PSSO-01/02/03/12), Phase 77 (Auth Methods Deep-Dive 08 — PSSO-05/06/07/08/09/10/11), Phase 78 (Legacy SSO Plug-in & Migration Guide 09 — SSOMIG-01/02/03/04), Phase 79 (Capability Matrix + 5-Platform Comparison — SSOREF-02), Phase 80 (L1/L2 Runbooks #35/#36/#27 — SSORUN-01/02/03), Phase 81 (Nav Hub Integration — SSOREF-04), Phase 82 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — SSOHARN-01/02/03/04). Sequential execution per use_worktrees:false. Research flags: Phase 77 Smart card Entra CBA detail (fetch CBA guide at plan time); Phase 80 `app-sso diagnose`/log-predicate paths (LOW confidence, validate at plan time); Phase 82 C17 cross-link check decision (/adversarial-review at planning). v1.8 MILESTONE CLOSED 2026-06-08 (preceding footer below).*
 

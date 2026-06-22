@@ -8,7 +8,9 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation
+## Current Milestone: v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation — CLOSED 2026-06-22
+
+**Status:** ✅ CLOSED 2026-06-22 — 8/8 phases (75-82) Complete; 27/27 requirements Validated via Phase 82 Plan 82-04 SINGLE close-gate commit (NO Commit A; D-04). No active milestone until `/gsd-new-milestone` scopes v1.10+.
 
 **Goal:** Close the macOS authentication documentation gap by delivering complete, actionable coverage of Platform SSO (macOS 14+) and Secure Enclave, so Intune admins and L1/L2 teams can configure, operate, and troubleshoot Apple-platform single sign-on without escalating to engineering.
 
@@ -384,9 +386,13 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 ### Active
 
-<!-- v1.9 milestone STARTED 2026-06-20. Requirements being defined → see REQUIREMENTS.md once scoped; traceability populated at roadmap. -->
+<!-- v1.9 milestone CLOSED 2026-06-22 — 27/27 requirements Validated. No active milestone until /gsd-new-milestone scopes v1.10+. -->
 
-*v1.9 milestone STARTED 2026-06-20 — macOS Platform SSO & Secure Enclave Authentication Documentation. Requirements under definition (research → requirements → roadmap). Predecessor v1.8 CLOSED 2026-06-08 — 12/12 requirements Validated.*
+*v1.9 milestone **CLOSED 2026-06-22** — macOS Platform SSO & Secure Enclave Authentication Documentation. 8/8 phases (75-82) Complete; 27/27 requirements Validated. Closed via Phase 82 Plan 82-04 SINGLE close-gate commit (NO Commit A; D-04). SSOHARN-01 Atom 1 `e760176` (v1.9-milestone-audit.mjs 4-line Path-A relabel + V18=2bd79d8 pin + BASELINE_13); SSOHARN-02/03 Atom 2 `e825fdb` (check-phase-75..82.mjs 8 net-new + 6th-coexistence audit-harness-v1.9-integrity.yml); SSOHARN-04 re-audit `9dc04ef` + close-gate `{phase_82_close_SHA}`. 3-axis auditor independence (fresh clone + cross-OS Linux GHA run `27966769510` + fresh sub-agent); Cross-OS EXACT MATCH 10/10 (apex 26/10/1 both OSes). Harness lineage now 7th milestone (v1.4→…→v1.9). Predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7/v1.8 frozen surfaces BYTE-UNCHANGED. HONEST accounting: ~10 pre-existing legacy chain FAILs (phases 58-66, 73) out-of-scope, identical cross-OS, routed to v1.9-DEFERRED-CLEANUP.md (PRE-EXISTING-CHAIN-RED-AT-HEAD-01) — Phase-82 deliverables GREEN. v1.9-DEFERRED-CLEANUP.md authored (canonical; carried v1.8 + PSSO-FUT-01..04; cross-links pre-existing docs/v1.9-DEFERRED-CLEANUP.md, not deleted). Predecessor v1.8 CLOSED 2026-06-08 — 12/12 requirements Validated.*
+
+<!-- v1.9 milestone STARTED 2026-06-20 — macOS Platform SSO & Secure Enclave Authentication Documentation. Requirements: see REQUIREMENTS.md (27/27 Validated at close). -->
+
+*Validated v1.9 requirements (27/27) traced in `.planning/REQUIREMENTS.md` Traceability table + `.planning/milestones/v1.9-MILESTONE-AUDIT.md` Cumulative Requirements Traceability (27/27 Total).*
 
 ### Out of Scope
 
