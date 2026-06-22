@@ -55,8 +55,8 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 ### Validation Tooling & Milestone Close (SSOHARN)
 
 - [x] **SSOHARN-01**: `v1.9-milestone-audit.mjs` + `v1.9-audit-allowlist.json` ship as Path-A copies from v1.8 (C1-C16 inherited) + BASELINE_13 freshness comment in `regenerate-supervision-pins.mjs` (Atom 1, indivisible)
-- [ ] **SSOHARN-02**: Per-phase `check-phase-75..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a `V18` entry (v1.8 close-gate SHA) + `readAtV18Close` export; the V18 SHA is pinned BEFORE any validator is authored (Atom 2, indivisible)
-- [ ] **SSOHARN-03**: `audit-harness-v1.9-integrity.yml` ships as the 6th parallel CI coexistence workflow (predecessors v1.4/v1.5/v1.6/v1.7/v1.8 byte-unchanged)
+- [x] **SSOHARN-02**: Per-phase `check-phase-75..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a `V18` entry (v1.8 close-gate SHA) + `readAtV18Close` export; the V18 SHA is pinned BEFORE any validator is authored (Atom 2, indivisible)
+- [x] **SSOHARN-03**: `audit-harness-v1.9-integrity.yml` ships as the 6th parallel CI coexistence workflow (predecessors v1.4/v1.5/v1.6/v1.7/v1.8 byte-unchanged)
 - [ ] **SSOHARN-04**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` + Axis 2 cross-OS Linux GHA + Axis 3 fresh sub-agent; cross-OS PASS-Count EXACT MATCH) + `v1.9-MILESTONE-AUDIT.md` + `v1.9-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT/ROADMAP/STATE/REQUIREMENTS)
 
 ---
@@ -120,8 +120,8 @@ Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one p
 | SSOREF-03 | Phase 75 | Complete |
 | SSOREF-04 | Phase 81 | Complete |
 | SSOHARN-01 | Phase 82 | Complete |
-| SSOHARN-02 | Phase 82 | Pending |
-| SSOHARN-03 | Phase 82 | Pending |
+| SSOHARN-02 | Phase 82 | Complete |
+| SSOHARN-03 | Phase 82 | Complete |
 | SSOHARN-04 | Phase 82 | Pending |
 
 **Coverage:**
