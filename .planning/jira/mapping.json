@@ -564,12 +564,12 @@
         },
         "81": {
           "issueKey": "RTS-640",
-          "status": "in_progress",
+          "status": "done",
           "name": "Nav Hub Integration"
         },
         "82": {
           "issueKey": "RTS-641",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
         }
       }
