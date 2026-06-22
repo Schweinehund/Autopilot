@@ -107,6 +107,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS ADE Triage Decision Tree](decision-trees/06-macos-triage.md) | Start here -- identifies the macOS ADE failure scenario and routes to the correct runbook |
 | [macOS L1 Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Scripted procedures for top macOS ADE enrollment failures (6 runbooks: device, Setup Assistant, profiles, apps, compliance, Company Portal) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#macos-ade-quick-reference) | One-page cheat sheet -- macOS top checks, escalation triggers, and runbook links |
+| [macOS Platform SSO Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Platform SSO sign-in failure (runbook #35: "Registration Required" not appearing) or Secure Enclave key loss after password reset (runbook #36) |
 
 ### Desktop Engineering (L2)
 
@@ -119,6 +120,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS Log Collection Guide](l2-runbooks/10-macos-log-collection.md) | Collect macOS diagnostic logs using IntuneMacODC and Terminal commands |
 | [macOS L2 Runbooks](l2-runbooks/00-index.md#macos-ade-runbooks) | Investigation guides for profile delivery, app install, and compliance evaluation failures |
 | [L2 Quick-Reference Card](quick-ref-l2.md#macos-ade-quick-reference) | One-page cheat sheet -- macOS Terminal commands, log paths, and key diagnostic checks |
+| [macOS Platform SSO Investigation](l2-runbooks/00-index.md#macos-ade-runbooks) | PSSO registration failure or Password-sync failure investigation (runbook #27) |
 
 ### Admin Setup
 
@@ -127,6 +129,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | Review the enrollment pipeline before configuring ABM and Intune |
 | [Network Endpoints Reference](reference/endpoints.md#macos-ade-endpoints) | Verify firewall rules for all required ADE endpoints |
 | [macOS Admin Setup Guides](admin-setup-macos/00-overview.md) | ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance policies |
+| [macOS Platform SSO Admin Setup Guides](admin-setup-macos/00-overview.md) | Platform SSO deployment (guide 07: setup), authentication method selection and deep-dive (guide 08: Secure Enclave key, Password sync, Smart card), and legacy SSO plug-in migration (guide 09) |
 
 ---
 
@@ -317,6 +320,7 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-05-22 | Phase 65 plan 65-03: 3 surgical edits — line-9 banner clause appendix + ### Apple Business Governance Operations sub-H3 + 2 Cross-Platform References entries (ABNAV-07) | -- |
+| 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO rows to macOS Admin Setup / L1 / L2 nav tables | -- |
 | 2026-05-01 | Phase 59: appended `## Operations` H2 with 4 sub-H3 sections (Co-Management / Patch & Update Management / App Lifecycle Automation / Compliance Drift Detection + Tenant Migration) routing to operations/ sub-directories (CLEAN-08 SC#1) | -- |
 | 2026-05-01 | Phase 59: appended `## Linux Provisioning` H2 with 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching Phase 57 Android H2 structural depth (CLEAN-08 SC#1); appended Linux Provisioning Lifecycle + Linux Capability Matrix Cross-Platform References entries (D-05) | -- |
 | 2026-04-30 | Phase 57: expanded Android Enterprise H2 to 3 sub-tables (L1=4 rows / L2=4 rows / Admin=3 rows) matching iOS Phase 32 structural depth (CLEAN-01); added Android Provisioning Lifecycle + Android Capability Matrix Cross-Platform References entries (DEFER-07 close) | -- |
