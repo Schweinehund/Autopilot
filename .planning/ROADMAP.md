@@ -555,7 +555,15 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   3. 3-axis terminal re-audit executes with full auditor independence: Axis 1 local fresh `git clone --no-hardlinks` into `$env:TEMP\v1.9-audit-<rand>`; Axis 2 cross-OS Linux GHA `workflow_dispatch` of `audit-harness-v1.9-integrity.yml`; Axis 3 fresh sub-agent with zero context-carryover from content phases; cross-OS PASS-Count EXACT MATCH verified across all cross-OS-applicable validators
   4. `v1.9-MILESTONE-AUDIT.md` is authored (Path-A from v1.8) with 3-axis Auditor-Independence Verification section + Requirements Traceability (27/27 requirements Validated); `v1.9-DEFERRED-CLEANUP.md` is authored routing PSSO-FUT-01 (`NewUserAuthorizationMode` key verification), PSSO-FUT-02 (Graph API Platform Credential), PSSO-FUT-03 (Multi-tenant PSSO), PSSO-FUT-04 (Kerberos deep-dive), plus any discoveries surfaced during execution; 4-doc traceability closure (PROJECT.md + ROADMAP.md + STATE.md + REQUIREMENTS.md) completes the milestone
 
-**Plans**: TBD
+**Plans**: 4 plans (5 commits per D-02)
+
+**Wave 1** — 82-CONVENTIONS commit
+**Wave 2** — Atom 1 (indivisible)
+
+  - [ ] 82-01-PLAN.md — 82-CONVENTIONS.md (Wave 1) + Atom 1 (SSOHARN-01): v1.9-milestone-audit.mjs (Path-A, C1-C16, NO C17) + v1.9-audit-allowlist.json + BASELINE_13 + frozen-at-close V18=2bd79d8 entry — ONE indivisible commit (SC#1)
+  - [ ] 82-02-PLAN.md — Atom 2 (SSOHARN-02/03): check-phase-75..82.mjs (8 net-new; apex CHAIN_PHASES=[48..81], 81 carries V-81-CROSSLINK) + audit-harness-v1.9-integrity.yml (6th coexistence) — ONE indivisible commit (SC#2), pushed to origin/master
+  - [ ] 82-03-PLAN.md — 3-axis terminal re-audit (SSOHARN-04): 82-03-AUDIT-RESULTS.md (Axis 1 fresh-clone + Axis 2 Linux GHA + Axis 3 zero-context; 10-validator cross-OS EXACT MATCH) — artifact-only commit (SC#3)
+  - [ ] 82-04-PLAN.md — close-gate (SSOHARN-04): v1.9-MILESTONE-AUDIT.md + v1.9-DEFERRED-CLEANUP.md + 4-doc traceability (27/27 Validated) + 82-VERIFICATION.md — SINGLE commit, NO Commit A (SC#4)
 
 ## Progress
 
@@ -642,7 +650,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 80. L1/L2 Runbooks | v1.9 | 3/3 | Complete    | 2026-06-22 |
 | 81. Nav Hub Integration | v1.9 | 4/4 | Complete    | 2026-06-22 |
-| 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 0/TBD | Not started | - |
+| 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 0/4 | Planned     | - |
 
 ---
 
