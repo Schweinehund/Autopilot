@@ -41,8 +41,8 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 ### Troubleshooting Runbooks (SSORUN)
 
-- [ ] **SSORUN-01**: L1 runbook `35-macos-sso-sign-in-failure.md` — "Registration required" not appearing despite Intune "Succeeded" (4 root causes: old Company Portal / Error 10002 legacy conflict / mistyped registration token / dismissed notification); `app-sso platform -s` as the first triage step
-- [ ] **SSORUN-02**: L1 runbook `36-macos-secure-enclave-key.md` — Secure Enclave key verification and loss-after-password-reset recovery (re-registration path)
+- [x] **SSORUN-01**: L1 runbook `35-macos-sso-sign-in-failure.md` — "Registration required" not appearing despite Intune "Succeeded" (4 root causes: old Company Portal / Error 10002 legacy conflict / mistyped registration token / dismissed notification); `app-sso platform -s` as the first triage step
+- [x] **SSORUN-02**: L1 runbook `36-macos-secure-enclave-key.md` — Secure Enclave key verification and loss-after-password-reset recovery (re-registration path)
 - [ ] **SSORUN-03**: L2 runbook `27-macos-sso-investigation.md` — PSSO registration-failure + Password-sync-failure investigation (sign-in logs, sysdiagnose, TLS-inspection exclusions, per-user-MFA/AD-bound causes), with the macOS 15.0-15.2 re-registration loop version-gated to "fixed in 15.3"
 
 ### Reference & Navigation Integration (SSOREF)
@@ -112,8 +112,8 @@ Populated at roadmap creation 2026-06-20. Each requirement maps to exactly one p
 | SSOMIG-02 | Phase 78 | Complete |
 | SSOMIG-03 | Phase 78 | Complete |
 | SSOMIG-04 | Phase 78 | Complete |
-| SSORUN-01 | Phase 80 | Pending |
-| SSORUN-02 | Phase 80 | Pending |
+| SSORUN-01 | Phase 80 | Complete |
+| SSORUN-02 | Phase 80 | Complete |
 | SSORUN-03 | Phase 80 | Pending |
 | SSOREF-01 | Phase 75 | Complete |
 | SSOREF-02 | Phase 79 | Complete |
