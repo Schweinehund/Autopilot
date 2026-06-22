@@ -98,6 +98,8 @@ platform: all
 - Configuration profile not applied after 4-hour sync wait and manual sync --> **Escalate L2** (collect: serial number, expected profile name, Intune device compliance screenshot)
 - App showing "Failed" in Intune after reinstall attempt --> **Escalate L2** (collect: app name, app type, Intune app install status screenshot)
 - Device non-compliant but user believes settings are correct --> **Escalate L2** (collect: non-compliant setting names, device serial)
+- Secure Enclave key error after password reset or FileVault recovery --> **Escalate L2** via [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) first; escalate to L2 if re-registration fails (collect: serial number, macOS version, `app-sso platform -s` output)
+- Platform SSO sign-in loop or "Registration Required" notification never appeared --> **Use [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) runbook** (collect: Intune Succeeded screenshot, Company Portal version, `app-sso platform -s` output)
 
 ### macOS Decision Tree
 
@@ -111,6 +113,8 @@ platform: all
 - [App Not Installed](l1-runbooks/13-macos-app-not-installed.md)
 - [Compliance / Access Blocked](l1-runbooks/14-macos-compliance-access-blocked.md)
 - [Company Portal Sign-In](l1-runbooks/15-macos-company-portal-sign-in.md)
+- [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) — "Registration Required" not appearing, sign-in loop
+- [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) — key loss after password reset
 
 ---
 
@@ -240,6 +244,7 @@ platform: all
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO escalation triggers (#36 Secure Enclave, #35 sign-in loop) and runbook links to macOS section | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-04; C16 edge quick_ref_l1 → l1_34 live; H2 title slug = apple-business-quick-reference) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Top Checks 4 items / Linux Escalation Triggers / Linux Decision Tree single link / Linux Runbooks 4-link list) matching iOS quick-ref non-mode-tag pattern; D-25 mode-tag-free contract | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: Top Checks 5 / Escalation Triggers 5 / Decision Tree 1 / Runbooks 8) with inline [Mode] prefix tags per row (mode-first per v1.4 triage tree); Mode vocabulary [BYOD]/[ZTE]/[AOSP]/[Knox]/[All GMS] LOCKED verbatim from L1-index Mode column (CLEAN-03; DEFER-07 close) | -- |

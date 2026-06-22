@@ -170,12 +170,30 @@ Unified log subsystems: `com.apple.ManagedClient` (profile events), `com.apple.M
 
 Full reference: [macOS Terminal Commands](reference/macos-commands.md) | [macOS Log Paths](reference/macos-log-paths.md)
 
+### Platform SSO Log Paths
+
+| Path | Purpose |
+|------|---------|
+| `/Library/Logs/Microsoft/CompanyPortal/CompanyPortal*.log` | Company Portal PSSO registration events |
+| `/var/log/DiagnosticMessages` | System-level SSO framework messages (search for `ssoextension`) |
+
+#### Platform SSO Attestation Command
+
+Verify PSSO registration state -- run on the affected Mac:
+
+```bash
+app-sso platform -s
+```
+
+Expected healthy output includes both `Device Registration: REGISTERED` and `User Registration: REGISTERED` with SSO tokens listed. See [07-platform-sso-setup.md — Verification](admin-setup-macos/07-platform-sso-setup.md) for the full expected output format.
+
 ### macOS Investigation Runbooks
 
 - [macOS Log Collection Guide](l2-runbooks/10-macos-log-collection.md) -- prerequisite for all macOS investigations
 - [Profile Delivery Investigation](l2-runbooks/11-macos-profile-delivery.md)
 - [App Install Failure Diagnosis](l2-runbooks/12-macos-app-install.md)
 - [Compliance Evaluation Investigation](l2-runbooks/13-macos-compliance.md)
+- [Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md) -- PSSO registration failure and Password-sync failure investigation
 
 ---
 
@@ -352,6 +370,7 @@ Full configuration details and per-category remediation: see the [Linux Complian
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO Log Paths section + app-sso platform -s attestation command + L2 #27 investigation runbook bullet to macOS section | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-05; L2 command/log-collection voice) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Linux Diagnostic Data Collection 3 methods / Key Intune Portal Paths Linux L2 / Linux Compliance Category Reference 4-row pointer table / Linux Investigation Runbooks 2-link list); link-not-copy contract for Phase 50 Compliance Policy SSoT per PITFALL-7 + Phase 57 D-22..D-25 + D-23 ENDORSEMENT inheritance | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Quick Reference H2 (4-part substructure: 3-method log collection with AMAPI mode-switching / Key Intune Portal Paths Android L2 4-5 rows / Play Integrity Verdict Reference 3-row pointer table cross-linking Phase 54 SSoT / 6-runbook investigation list with iOS-style ` -- ` disambiguation per row); link-not-copy contract for Play Integrity SSoT per PITFALL-7 + Phase 56 D-08 inheritance (CLEAN-04; DEFER-07 close) | -- |
