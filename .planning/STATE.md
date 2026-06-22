@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.9
 milestone_name: macOS Platform SSO & Secure Enclave Authentication Documentation
-status: executing
-last_updated: "2026-06-22T04:13:27.799Z"
+status: verifying
+last_updated: "2026-06-22T04:18:35.256Z"
 last_activity: 2026-06-22
 progress:
   total_phases: 18
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 11
-  completed_plans: 10
-  percent: 28
+  completed_plans: 11
+  percent: 33
 ---
 
 # Project State
@@ -26,10 +26,10 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 Phase: 80 (L1/L2 Runbooks) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-22
 
-Progress: [█████████░] 91%
+Progress: [██████████] 100%
 
 ## v1.9 Phase Dependency Summary
 
@@ -135,6 +135,7 @@ Phase 82 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close -- MUST BE 
 - [Phase ?]: C12/C13 harness constraints honored
 - [Phase ?]: Two-commit sequence enforced
 - [Phase ?]: Authentication section shape and placement
+- [Phase ?]: Append-only index edits: L1 #35/#36 rows in macOS ADE table; L2 #27 When-to-Use row + L1 #35/#36 escalation-mapping rows; navigation-last invariant honored; SC4 satisfied
 
 ### Pending Todos
 
@@ -150,8 +151,8 @@ Research flags for plan-phase resolution (not blockers — known gaps):
 
 ## Session Continuity
 
-Last session: 2026-06-22T04:13:27.782Z
-Stopped at: Phase 80 context gathered
+Last session: 2026-06-22T04:18:35.239Z
+Stopped at: Completed 80-03-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -162,3 +163,4 @@ Resume file: None
 | Phase 75 P03 | 6min | 1 tasks | 1 files |
 | Phase 78 P01 | 25m | 3 tasks | 3 files |
 | Phase 79 P01 | 20 | 3 tasks | 3 files |
+| Phase 80 P03 | 5min | 2 tasks | 2 files |

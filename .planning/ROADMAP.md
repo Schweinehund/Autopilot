@@ -211,7 +211,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 - [x] **Phase 77: Auth Methods Deep-Dive** — `08-auth-methods-deep-dive.md` covering all three methods + advanced surfaces (Touch ID, passkey, NUAL, ADE-during-Setup) (completed 2026-06-21)
 - [x] **Phase 78: Legacy SSO Plug-in & Migration Guide** — `09-enterprise-sso-plugin-migration.md` covering legacy plug-in, decision matrix, staged migration, rollback (completed 2026-06-21)
 - [x] **Phase 79: Reference Integration — Capability Matrix & 5-Platform Comparison** — `macos-capability-matrix.md` Authentication section + `4-platform-capability-comparison.md` macOS cells (completed 2026-06-21)
-- [ ] **Phase 80: L1/L2 Runbooks** — L1 runbooks #35 and #36 + L2 runbook #27 + runbook index updates
+- [x] **Phase 80: L1/L2 Runbooks** — L1 runbooks #35 and #36 + L2 runbook #27 + runbook index updates (completed 2026-06-22)
 - [ ] **Phase 81: Nav Hub Integration** — Append-only extensions to `index.md`, `common-issues.md`, `quick-ref-l1/l2.md`, decision tree SSO leaf, all runbook index rows
 - [ ] **Phase 82: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.9 harness (Atom 1 + Atom 2) + V18 SHA pinned in frozen-at-close.mjs + 3-axis terminal re-audit + close-gate
 
@@ -516,7 +516,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-  - [ ] 80-03-PLAN.md -- Register #35/#36 in l1-runbooks/00-index.md and #27 + L1#35/#36 -> L2#27 escalation mapping in l2-runbooks/00-index.md (SC4)
+  - [x] 80-03-PLAN.md -- Register #35/#36 in l1-runbooks/00-index.md and #27 + L1#35/#36 -> L2#27 escalation mapping in l2-runbooks/00-index.md (SC4)
 
 ### Phase 81: Nav Hub Integration
 
@@ -630,7 +630,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 77. Auth Methods Deep-Dive | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete    | 2026-06-21 |
-| 80. L1/L2 Runbooks | v1.9 | 2/3 | In Progress|  |
+| 80. L1/L2 Runbooks | v1.9 | 3/3 | Complete   | 2026-06-22 |
 | 81. Nav Hub Integration | v1.9 | 0/TBD | Not started | - |
 | 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 0/TBD | Not started | - |
 
