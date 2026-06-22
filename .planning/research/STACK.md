@@ -1,489 +1,423 @@
-# Stack Research — v1.9 macOS Platform SSO + Secure Enclave Authentication Documentation
+# Stack Research — v1.10 macOS Platform SSO Follow-ons (Kerberos, Graph API, NUAL)
 
-**Domain:** Microsoft Entra ID + Apple Platform SSO feature surface for documentation authoring — macOS enterprise auth (Platform SSO, Secure Enclave, Enterprise SSO plug-in) via Microsoft Intune
-**Researched:** 2026-06-20
-**Confidence:** HIGH for all product names, payload keys, version floors, auth-method matrices, Secure Enclave hardware facts (all verified against Microsoft Learn + Apple Platform Deployment + Apple Security Guide, sources dated as late as 2026-06-15)
-**Scope reminder:** "Stack" here = the Microsoft Intune / Entra ID / Apple platform configuration surfaces that v1.9 docs must cite accurately. v1.9 ships markdown documentation only — there is no application code to install. This file focuses on macOS only; iOS/iPadOS is out of scope for v1.9.
+**Domain:** Microsoft Entra ID + Apple Platform SSO follow-on surfaces for documentation authoring — Kerberos SSO extension, Graph API Platform Credential management, NUAL MDM key literal verification
+**Researched:** 2026-06-22
+**Confidence:** HIGH for Graph API GA status and all v1.0 paths (verified from Microsoft Graph docs contributor repo + Microsoft Learn); HIGH for Kerberos extension identifier and payload mechanics (verified from Apple device-management schema + Microsoft Entra tutorial + Apple Platform Deployment); HIGH for NUAL plist key literals (confirmed from Apple's authoritative `apple/device-management` repo + Apple Device Policy Explorer); MEDIUM for `app-sso` Kerberos-specific CLI subcommands (diagnostic command `app-sso platform -s` confirmed, Kerberos-specific subcommand surface thin in public docs)
+
+**Scope:** v1.10-specific NEW surfaces only. Existing v1.9-researched facts (Platform SSO, Secure Enclave, Enterprise SSO plug-in) are inherited from the v1.9 STACK.md (researched 2026-06-20 — final section of this file preserved below). This file EXTENDS v1.9 STACK.md; it does NOT replace it.
+
+**Out of scope (do NOT research or document):** Multi-tenant PSSO (PSSO-FUT-03) — deferred to its own architectural milestone.
 
 ---
 
-## TL;DR for downstream consumers
+## TL;DR for downstream consumers — v1.10 new surfaces
 
-| Item | Value | Confidence |
+| Surface | Key Fact | Confidence |
 |---|---|---|
-| Umbrella product name | **Microsoft Enterprise SSO plug-in for Apple devices** | HIGH |
-| macOS-specific sub-feature 1 | **Platform SSO** (macOS 13+; recommended macOS 14+) | HIGH |
-| macOS-specific sub-feature 2 | **SSO app extension** (macOS 10.15+; redirect type; configurable alone or bundled with Platform SSO) | HIGH |
-| Intune config surface for Platform SSO | **Settings Catalog** only — `Devices > Manage devices > Configuration > Create > New policy > macOS > Settings catalog > Authentication > Extensible Single Sign On (SSO)` | HIGH |
-| Apple payload type name | `com.apple.extensiblesso` | HIGH |
-| Extension Identifier (macOS) | `com.microsoft.CompanyPortalMac.ssoextension` | HIGH |
-| Team Identifier | `UBF8T346G9` | HIGH |
-| Registration token | `{{DEVICEREGISTRATION}}` (literal value including braces) | HIGH |
-| macOS version floor (absolute min) | **macOS 13.0** (Platform SSO functional but Secure Enclave + Smart Card require 14+; 13 is "deprecated" path) | HIGH |
-| macOS version recommended floor | **macOS 14 Sonoma** (recommended by Microsoft — all three auth methods available) | HIGH |
-| Company Portal version floor | **5.2404.0** (any Platform SSO) — **5.2604.0** (Platform SSO during ADE enrollment) | HIGH |
-| Licensing | **Included in all Microsoft Intune licensing plans** — no premium Entra ID tier required for Platform SSO itself | HIGH |
-| Auth methods | **Secure Enclave (recommended)** / **Password (sync)** / **Smart Card** | HIGH |
-| Smart Card macOS floor | **macOS 14+** only — not available on macOS 13 | HIGH |
-| Secure Enclave hardware | All **Apple Silicon** Macs + all **T2-equipped Intel Macs** (2018-2020 models) | HIGH |
-| Hybrid-join support | **NOT SUPPORTED** — macOS Platform SSO requires Entra ID join; no hybrid-join path | HIGH |
-| Entra-side prerequisite | "Allow users to join devices" = **All** (or scoped group) in Entra ID > Devices > Device Settings | HIGH |
-| Device Identity Key Storage transition | From August 2025, new registrations use **Secure Enclave** for WPJ key storage by default (replaces Keychain) | HIGH |
+| Graph API GA status | `platformCredentialAuthenticationMethod` is **GA in v1.0** — NOT beta | HIGH |
+| Graph API URL root | `https://graph.microsoft.com/v1.0/users/{id}/authentication/platformCredentialMethods` | HIGH |
+| Graph API operations | **List**, **Get**, **Delete** only — no Create/Update | HIGH |
+| Graph API min permission (read) | `UserAuthMethod-PlatformCred.Read` (delegated) / `UserAuthMethod-PlatformCred.Read.All` (application) | HIGH |
+| Graph API min permission (delete) | `UserAuthenticationMethod.ReadWrite` (delegated) / `UserAuthenticationMethod.ReadWrite.All` (application) | HIGH |
+| Kerberos extension identifier | `com.apple.AppSSOKerberos.KerberosExtension` | HIGH |
+| Kerberos Team Identifier | `apple` | HIGH |
+| Kerberos payload type (Apple) | `com.apple.extensiblesso(kerberos)` — distinct from the redirect-type `com.apple.extensiblesso` used for Platform SSO | HIGH |
+| Kerberos SSO type | `Credential` (not `Redirect`) | HIGH |
+| Kerberos Intune deployment path | **Custom Template (mobileconfig upload)** — NOT Settings Catalog; Platform: macOS, Profile type: Templates > Custom | HIGH |
+| Kerberos macOS version floor | **macOS 14.6** (for PSSO TGT integration; standalone Kerberos SSO extension works on earlier macOS) | HIGH |
+| NUAL key — one-time permissions | `NewUserAuthorizationMode` (string; values: `Standard`, `Admin`, `Groups`, `Temporary`) | HIGH — VERIFIED |
+| NUAL key — persistent permissions | `UserAuthorizationMode` (string; values: `Standard`, `Admin`, `Groups`) | HIGH — VERIFIED |
+| NUAL key — enable new-user login | `EnableCreateUserAtLogin` (boolean; default: `false`) | HIGH — VERIFIED |
+| NUAL resolution verdict | **RESOLVABLE — CLOSE PSSO-FUT-01** — all three key literals confirmed from Apple authoritative source | HIGH |
 
 ---
 
-## 1. Product Name Disambiguation (CRITICAL — most-confused area)
+## Surface A: Kerberos SSO Extension
 
-Three terms appear in the ecosystem and must be precisely distinguished in all v1.9 docs:
+### A.1 What it is and how it relates to Platform SSO
 
-### 1.1 Microsoft Enterprise SSO plug-in for Apple devices
+The Kerberos SSO extension is an **Apple-native extension** — not a Microsoft product. It handles Kerberos Ticket Granting Ticket (TGT) acquisition for on-premises Active Directory and cloud-based Kerberos resources. It is distinct from the Microsoft Enterprise SSO plug-in (Platform SSO / SSO app extension).
 
-The **umbrella product**. Delivered via Microsoft Intune Company Portal (macOS) or Microsoft Authenticator (iOS/iPadOS). On macOS it has two sub-components:
+In the Platform SSO + Kerberos context documented in v1.10, Microsoft Entra ID issues Kerberos TGTs during PSSO registration. These TGTs are shared with macOS's native Kerberos stack via TGT mapping in PSSO. The Apple Kerberos SSO extension then handles how those TGTs are delivered to applications.
 
-- **Platform SSO** — the newer, recommended component; configures device-level Entra ID authentication at macOS login and SSO across all apps
-- **SSO app extension** — the foundational component; provides SSO for apps and websites using Microsoft Entra ID; can be configured standalone (legacy Device Features template) or bundled inside Platform SSO policy (Settings Catalog)
+**Coexistence model (already stated in v1.9 guide 09):** Platform SSO (`com.microsoft.CompanyPortalMac.ssoextension`, Redirect type) and the Kerberos SSO extension (`com.apple.AppSSOKerberos.KerberosExtension`, Credential type) run as separate profiles with separate extension identifiers. They do not conflict when identifiers are kept distinct.
 
-**v1.9 doc rule:** "Microsoft Enterprise SSO plug-in" is the container name. When discussing macOS enterprise authentication, the correct sub-feature names are "Platform SSO" and "SSO app extension." Do NOT use "Enterprise SSO plug-in" as a synonym for "Platform SSO" — they are different scopes.
+### A.2 Extension identifier and payload type
 
-Source: [Microsoft Entra — Microsoft Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (updated 2026-06-15). Confidence: HIGH.
-
-### 1.2 Platform SSO vs SSO app extension — configuration surface differences
-
-| Dimension | SSO app extension (standalone) | Platform SSO (includes SSO app extension) |
-|---|---|---|
-| Intune config surface | **Device Features template** (`Devices > Manage devices > Configuration > Create > New policy > macOS > Templates > Device features`) | **Settings Catalog** (`Authentication > Extensible Single Sign On (SSO)`) |
-| What it configures | SSO for apps and websites using Entra ID; no device-level login integration | Both device-level macOS login authentication AND app/web SSO |
-| macOS version floor | macOS 10.15 | macOS 13.0 (recommended 14.0) |
-| Company Portal requirement | Yes (any version) | Yes, version 5.2404.0+ |
-| Workplace Join (WPJ) cert | Obtained after user manually signs into app/browser | Obtained during Platform SSO registration; hardware-bound from August 2025 |
-| Phishing-resistant auth | NO | YES (Secure Enclave method) |
-| Windows Hello for Business analog | NO | YES (Secure Enclave method) |
-| Can coexist in same policy | NO — never deploy both; Platform SSO supersedes and conflicts with standalone SSO app extension profile | N/A |
-
-**Decision rule for v1.9 docs:** New deployments should always use Platform SSO (Settings Catalog). The standalone SSO app extension (Device Features template) is legacy/migration context. Step 7 in the Intune Platform SSO guide explicitly requires unassigning any existing SSO app extension profiles after validating the Platform SSO policy.
-
-Source: [Microsoft Learn — Configure macOS Enterprise SSO app extension with MDMs](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-enterprise-sso-plugin-macos) (updated 2026-04-14). Confidence: HIGH.
-
-### 1.3 Kerberos SSO extension — NOT Platform SSO
-
-The **Kerberos SSO extension** (payload type `Kerberos` vs `SSO`) is a separate macOS SSO mechanism for on-premises Active Directory Kerberos. Microsoft Platform SSO can optionally configure a Kerberos SSO scenario via Extension Data keys, but the Kerberos extension and Platform SSO are distinct payloads. v1.9 docs must not conflate them.
-
-**v1.9 scope decision:** Kerberos SSO configuration is an optional Platform SSO scenario; document it as a "common Platform SSO scenario" cross-reference (per `configure-platform-sso-scenarios-macos`) rather than in the core Platform SSO admin guide.
-
----
-
-## 2. Platform SSO Configuration Surface (Intune)
-
-### 2.1 Admin center navigation path
-
-```
-Devices
-  > Manage devices
-    > Configuration
-      > Create
-        > New policy
-          Platform: macOS
-          Profile type: Settings catalog
-            > Authentication
-              > Extensible Single Sign On (SSO)
-```
-
-The Settings Catalog is the **only correct path** for Platform SSO. The older `Templates > Device features > Single sign-on app extension` path configures only the SSO app extension and does NOT configure Platform SSO. Creating both a Settings Catalog Platform SSO policy and a Device Features SSO app extension policy on the same device causes **error 10002** (multiple SSOe payloads conflict).
-
-### 2.2 Required Settings Catalog keys — complete list
-
-All settings live under `Authentication > Extensible Single Sign On (SSO)` in the Settings Catalog picker.
-
-| Setting Name in Intune | Value | macOS Version | Required |
+| Field | Value | Source | Confidence |
 |---|---|---|---|
-| `Extension Identifier` | `com.microsoft.CompanyPortalMac.ssoextension` | 13+ | Required |
-| `Team Identifier` | `UBF8T346G9` | 13+ | Required |
-| `Type` | `Redirect` | 13+ | Required |
-| `URLs` | See §2.3 for full list | 13+ | Required |
-| `Registration Token` | `{{DEVICEREGISTRATION}}` | 13+ | Required |
-| `Screen Locked Behavior` | `Do Not Handle` | 13+ | Required |
-| `Authentication Method (Deprecated)` | `Password` or `UserSecureEnclaveKey` | **macOS 13 ONLY** | Required if macOS 13 devices in scope |
-| `Platform SSO > Authentication Method` | `Password`, `UserSecureEnclaveKey`, or `SmartCard` | **macOS 14+** | Required for macOS 14+ |
-| `Platform SSO > Use Shared Device Keys` | Enabled | macOS 14+ | Required (enables shared keys across users on same device; triggers re-registration if changed later) |
-| `Platform SSO > Token To User Mapping > Account Name` | `com.apple.PlatformSSO.AccountShortName` (recommended) or `preferred_username` | 13+ | Required |
-| `Platform SSO > Token To User Mapping > Full Name` | `name` | 13+ | Required |
-| `Platform SSO > FileVault Policy` | `AttemptAuthentication` | **macOS 15+ only** | Required for Password auth on macOS 15+ |
-| `Platform SSO > Enable Registration During Setup` | Enabled | macOS 26+ (ADE only) | Required only for Platform SSO during ADE enrollment |
-| `Platform SSO > Enable Create First User During Setup` | Enabled | macOS 26+ (ADE only) | Required only if Password auth + ADE enrollment |
+| Extension Identifier | `com.apple.AppSSOKerberos.KerberosExtension` | Microsoft Entra Kerberos tutorial (mobileconfig example) + Apple Deployment Guide Kerberos payload settings page | HIGH |
+| Team Identifier | `apple` | Same sources — mobileconfig examples | HIGH |
+| Apple MDM payload type | `com.apple.extensiblesso(kerberos)` | Apple Platform Deployment — Extensible Single Sign-on Kerberos payload settings | HIGH |
+| SSO Type | `Credential` (NOT `Redirect`) | Apple deployment guide; Intune device features guide comparison table | HIGH |
+| Payload scope | System (device-level) | Microsoft Entra tutorial mobileconfig example | HIGH |
 
-**Critical mixed-fleet rule:** If the fleet includes BOTH macOS 13.x and macOS 14+ devices, BOTH `Authentication Method (Deprecated)` AND `Platform SSO > Authentication Method` must be configured in the SAME settings catalog policy. Omitting either causes error 10001 on the excluded OS version.
+**Critical distinction:** The Platform SSO profile uses `com.apple.extensiblesso` with `Type: Redirect`. The Kerberos SSO extension profile uses `com.apple.extensiblesso(kerberos)` with `Type: Credential`. In the Intune UI, these are exposed under different profile shapes — Platform SSO goes through Settings Catalog; the Kerberos extension mobileconfig is uploaded via the Custom Template. Never configure both using the same extension identifier or the same profile.
 
-Source: [Microsoft Learn — Configure Platform SSO for macOS devices](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos) (updated 2026-05-18). Confidence: HIGH.
+### A.3 Intune deployment path for Kerberos SSO extension
 
-### 2.3 Required URLs (Redirect type)
+The Kerberos SSO extension MDM profile is NOT deployed via Settings Catalog for the standalone Kerberos profile. Per the Microsoft Entra Kerberos tutorial (canonical Microsoft source, verified 2026-06-22):
 
-Core URLs (required for all environments):
+**Profile creation path:**
 ```
-https://login.microsoftonline.com
-https://login.microsoft.com
-https://sts.windows.net
+Devices > Configuration > Create > New policy
+  Platform: macOS
+  Profile type: Templates
+    Template: Custom
 ```
 
-Sovereign cloud additions (add only if environment uses these):
-```
-https://login.partner.microsoftonline.cn  (Azure China)
-https://login.chinacloudapi.cn             (Azure China)
-https://login.microsoftonline.us           (Azure Government)
-https://login-us.microsoftonline.com       (Azure Government)
-```
+**Steps:**
+1. Author the Kerberos mobileconfig file (see §A.4 for required keys)
+2. In Intune: Devices > Configuration > Create > New Policy > macOS > Templates > Custom
+3. Enter a name (e.g., "macOS - Platform SSO Kerberos On-Premises")
+4. Set Deployment channel: **Device channel** (recommended)
+5. Upload the `.mobileconfig` file
+6. Assign to user groups (same user groups as Platform SSO policy)
 
-### 2.4 Apple payload type name (for non-Intune MDM or custom profile references)
+**Repeat for Cloud Kerberos profile** if both on-prem and cloud Kerberos TGTs are needed.
 
-The Apple MDM payload type is `com.apple.extensiblesso`. The Settings Catalog exposes this via the UI; custom `.mobileconfig` files or non-Intune MDMs must use this payload type. v1.9 docs should cite this string when explaining the payload for L2 troubleshooting context (e.g., `System Settings > Privacy and Security > Profiles` shows the profile under `com.apple.extensiblesso Profile`).
+**IMPORTANT NOTE about Settings Catalog + Kerberos interaction:** The Kerberos TGT *mapping behavior* (whether to map on-prem TGT, cloud TGT, both, or neither) is configured via a key in the Platform SSO Settings Catalog policy's **Extension Data** setting — NOT in the Kerberos mobileconfig. The `custom_tgt_setting` Extension Data key (documented in the Intune scenarios page) controls how PSSO-issued TGTs are delivered. The Kerberos mobileconfig is a separate, additional profile that configures the Apple Kerberos extension to consume those TGTs.
 
-Source: [Apple Platform Deployment — Extensible Single Sign-on MDM payload settings](https://support.apple.com/guide/deployment/extensible-single-sign-on-payload-settings-depfd9cdf845/web) (confirmed payload type `com.apple.extensiblesso`). Confidence: HIGH.
+Source: [Microsoft Entra — Enable Kerberos SSO to on-premises Active Directory and Microsoft Entra ID Kerberos Resources in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) (updated 2026-06-15). Confidence: HIGH.
 
-### 2.5 Assignment rules (user groups, not device groups)
+Also: [Microsoft Intune — Platform SSO scenarios for macOS — Kerberos section](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos) (updated 2026-05-13). Confidence: HIGH.
 
-Platform SSO policies **must be assigned to user groups or user groups with assignment filters** for devices with user affinity. Assigning to device groups on devices with user affinity causes users to be unable to access Conditional Access-protected resources. This is a documented Microsoft constraint (not an advisory).
+### A.4 Required Kerberos mobileconfig keys
 
-Only one Platform SSO settings catalog policy can be assigned per device. All Platform SSO scenario settings (Kerberos, non-Microsoft app SSO, Touch ID biometric, etc.) must be added to the single existing policy — not created as separate Platform SSO policies.
+**On-premises Active Directory profile keys:**
 
----
-
-## 3. Authentication Methods — Per-Method Prerequisite Tables
-
-### 3.1 Comparison matrix
-
-| Feature | Secure Enclave (UserSecureEnclaveKey) | Password (sync) | Smart Card |
-|---|---|---|---|
-| Passwordless | YES | NO | YES |
-| Phishing-resistant MFA | YES | NO | YES |
-| Can be used as passkey (WebAuthn) | YES | NO | NO |
-| MFA mandatory during setup | YES | NO (optional) | YES |
-| Local Mac password synced with Entra ID | NO — local password unchanged | YES — Entra password replaces/syncs with local password | NO — local password unchanged |
-| macOS 13.x supported | YES | YES | NO |
-| macOS 14.x supported | YES | YES | YES |
-| Settings Catalog key value | `UserSecureEnclaveKey` | `Password` | `SmartCard` |
-| Settings Catalog key value (macOS 13 deprecated field) | `UserSecureEnclaveKey` | `Password` | N/A — 13 not supported |
-| Requires Secure Enclave hardware | YES | NO | NO (external hardware token) |
-| Touch ID device unlock (after initial reboot password) | YES | YES | YES |
-| FileVault behavior | Local password unchanged (FileVault still uses local password as unlock key) | Local password syncs; FileVault uses synced password | Local password unchanged |
-| Microsoft recommendation | **RECOMMENDED** | Second choice | Third choice |
-| Windows Hello for Business analog | YES | NO | Partial (certificate-based) |
-
-Source: [Microsoft Learn — Configure Platform SSO for macOS — Step 1 auth method table](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos) (updated 2026-05-18). Confidence: HIGH.
-
-### 3.2 Secure Enclave method — specific prerequisites
-
-| Prerequisite | Requirement | Why it matters |
+| Configuration Key | Value | Notes |
 |---|---|---|
-| macOS version | 13.0 minimum; **14.0 strongly recommended** | macOS 13 uses `Authentication Method (Deprecated)` key; macOS 14+ uses `Platform SSO > Authentication Method`. Both work but Microsoft's own docs say "strongly recommend 14.0 Sonoma for best experience" |
-| Hardware | **Apple Silicon** OR **T2-equipped Intel Mac** — see §5 for model list | Secure Enclave is the physical hardware component that stores and protects the cryptographic key; without it, `UserSecureEnclaveKey` cannot provision |
-| Company Portal | 5.2404.0+ | Contains the SSO extension that provisions the Secure Enclave key |
-| MFA during registration | Required — user must complete MFA to register | MFA establishes the initial identity binding for the hardware key |
-| Device join permission in Entra | User must be in "Users may join devices to Microsoft Entra" allowlist | If not allowed, registration silently fails with no error shown |
-| FileVault interaction | Local password unchanged; FileVault uses local password; after reboot user enters local password, then Touch ID takes over | By design — Apple's FileVault architecture requires local password as disk unlock key |
-| Touch ID biometric policy (optional) | macOS 14.6+; Company Portal 2504+ | Optional `enable_se_key_biometric_policy: true` Extension Data key — forces Touch ID for every Secure Enclave key access. Requires re-registration if enabled post-PSSO-registration |
+| `ExtensionIdentifier` | `com.apple.AppSSOKerberos.KerberosExtension` | Required — the Apple Kerberos extension identifier |
+| `TeamIdentifier` | `apple` | Required |
+| `Type` | `Credential` | Required — Kerberos uses Credential type, not Redirect |
+| `Realm` | `CONTOSO.COM` | Required — uppercase; your AD domain realm name |
+| `Hosts` | `.contoso.com` and `contoso.com` | Required — both dot-prefixed and bare domain |
+| `PayloadType` | `com.apple.extensiblesso` | Required — the outer payload type |
+| `PayloadScope` | `System` | Recommended — deploy at device level |
+| `ExtensionData > allowPlatformSSOAuthFallback` | `true` | Recommended — allows fallback to PSSO TGT |
+| `ExtensionData > usePlatformSSOTGT` | `true` | KEY setting — uses the Platform SSO-issued TGT |
+| `ExtensionData > performKerberosOnly` | `true` | Recommended — extension does only Kerberos, skips password expiry checks |
+| `ExtensionData > syncLocalPassword` | `false` | Recommended — do not sync Kerberos/AD password to local macOS account |
 
-### 3.3 Password (sync) method — specific prerequisites
+**Cloud Kerberos (Microsoft Entra ID) profile additional keys:**
 
-| Prerequisite | Requirement | Why it matters |
+| Configuration Key | Value | Notes |
 |---|---|---|
-| macOS version | 13.0+ | No macOS 14 floor; macOS 13 supported via `Authentication Method (Deprecated)` = `Password` |
-| Entra ID password complexity | Must match Intune MDM password policy | If policies diverge, password sync silently fails and users are locked out |
-| Per-user MFA | Must be DISABLED (use CA-based MFA instead) | Per-user MFA causes password sync failure during registration — known issue |
-| FileVault + macOS 15 | `Platform SSO > FileVault Policy` = `AttemptAuthentication` unlocks Entra password verification at FileVault screen | macOS 14 and earlier cannot use Entra password at FileVault screen — this is a macOS 15 feature only |
-| KeyVault recovery | Optional but recommended (Institutional FileVault Recovery Keys) | Allows data recovery if user forgets password; admin configures via Apple MDM payload settings |
-| SSPR (Self-Service Password Reset) | Recommended enabled in Entra ID | Password change from another device syncs within 4 hours; SSPR enables user self-recovery |
+| `Realm` | `KERBEROS.MICROSOFTONLINE.COM` | Uppercase — Entra cloud Kerberos realm |
+| `Hosts` | `windows.net` and `.windows.net` | Required for Azure Files / cloud Kerberos resources |
+| `ExtensionData > preferredKDCs` | `kkdcp://login.microsoftonline.com/{TenantID}/kerberos` | Replace `{TenantID}` with your Entra tenant ID |
+| `ExtensionData > usePlatformSSOTGT` | `true` | Required — consume PSSO TGT for cloud Kerberos |
+| `ExtensionData > performKerberosOnly` | `true` | Same as on-prem |
 
-### 3.4 Smart Card method — specific prerequisites
+Source: Full mobileconfig XML examples in Microsoft Entra Kerberos tutorial (verified 2026-06-22). Confidence: HIGH.
 
-| Prerequisite | Requirement | Why it matters |
+### A.5 macOS version requirements
+
+| Scenario | macOS Version | Notes |
 |---|---|---|
-| macOS version | **14.0+ only** — NOT available on macOS 13 | Smart Card is only exposed in `Platform SSO > Authentication Method` (macOS 14+); the deprecated macOS 13 field does not support SmartCard value |
-| Smart card / hard token hardware | External smart card or smart card-compatible token (e.g., YubiKey) with certificate and PIN | Physical hardware token required; no software fallback |
-| Entra ID CBA | Microsoft Entra certificate-based authentication (CBA) configured in Entra ID | Entra must be configured to accept the certificate on the smart card for authentication |
-| Certificate type | X.509 certificate on the smart card that maps to Entra ID user identity | Attribute mapping must be configured in Entra CBA settings |
-| Setup Assistant Smart Card limit | Smart card authentication during macOS Setup Assistant is **NOT supported** | If deploying Platform SSO during ADE/Setup Assistant, Smart Card requires PSSO registration to complete AFTER Setup Assistant finishes |
+| Apple Kerberos SSO extension (standalone, no PSSO integration) | macOS 10.15+ | Extension exists without PSSO; limited utility if no TGT mapping |
+| Kerberos SSO extension + PSSO TGT mapping (`usePlatformSSOTGT: true`) | **macOS 14.6 Sonoma** minimum | Microsoft Entra Kerberos tutorial explicitly states macOS 14.6 as minimum for PSSO Kerberos integration |
+| Company Portal version (for PSSO Kerberos integration) | **5.2408.0 or later** | Required per Microsoft Entra Kerberos tutorial |
+| TGT customization (`custom_tgt_setting` Extension Data key) | Company Portal version 2508 and newer | Per Intune scenarios page |
 
-Source: [Microsoft Entra — macOS PSSO overview](https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso) (updated 2026-06-15); [Microsoft Learn — Configure Platform SSO for macOS — Smart Card tab](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos). Confidence: HIGH.
+### A.6 On-premises AD prerequisites
 
----
+The on-prem Kerberos SSO configuration requires:
 
-## 4. Version Floors and Prerequisites — Exact Values
+1. **Windows Server 2008 or later** — AD domain controller requirement
+2. **Network access** — Mac must be able to reach AD domain controllers via Wi-Fi, Ethernet, or VPN
+3. **Microsoft Entra Kerberos (Cloud Kerberos Trust)** — Required for cloud Kerberos TGT scenario. If deploying Windows Hello for Business with Cloud Kerberos Trust is already complete, this prerequisite is met. Setup instructions: [Cloud Kerberos trust deployment guide](https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/deploy/hybrid-cloud-kerberos-trust)
+4. **Platform SSO already deployed** — Kerberos TGT integration requires Platform SSO to be configured and devices registered; Kerberos SSO is an optional add-on to Platform SSO, not a standalone deployment
+5. **DNS resolution** — Mac must resolve AD domain (`contoso.com`) via DNS
 
-### 4.1 Version matrix — what is required and why
+### A.7 `app-sso` CLI diagnostics for Kerberos
 
-| Component | Minimum Version | WHY it matters |
+The `app-sso` command-line tool is the primary diagnostic utility. Commands confirmed by Microsoft Entra Kerberos tutorial (HIGH confidence):
+
+| Command | Purpose | Expected output |
 |---|---|---|
-| **macOS (absolute floor)** | **13.0 Ventura** | Platform SSO framework introduced in macOS 13; below 13 there is no Platform SSO capability at all |
-| **macOS (recommended floor)** | **14.0 Sonoma** | All three auth methods (SE key + Password + Smart Card) available; `Platform SSO > Authentication Method` key used instead of deprecated field; Microsoft explicitly says "strongly recommend 14.0 for best experience"; macOS 14 also added Entra repair flow in Settings |
-| **macOS (FileVault Entra password)** | **15.0 Sequoia** | `Platform SSO > FileVault Policy = AttemptAuthentication` only available on macOS 15+; only on 15+ can Entra password be used at FileVault screen |
-| **macOS (ADE enrollment-time PSSO)** | **macOS 26** | `Enable Registration During Setup` capability requires macOS 26+; earlier versions cannot complete PSSO during Setup Assistant |
-| **Company Portal (Platform SSO)** | **5.2404.0** | Version that introduced Platform SSO support; older versions cause Platform SSO to fail silently |
-| **Company Portal (ADE enrollment PSSO)** | **5.2604.0** | Version required when deploying Platform SSO during Automated Device Enrollment |
-| **Company Portal (Touch ID biometric policy)** | **2504** | Required for `enable_se_key_biometric_policy` (UserSecureEnclaveKeyBiometricPolicy) |
-| **macOS (Touch ID biometric policy)** | **14.6** | Required for `UserSecureEnclaveKeyBiometricPolicy` |
-| **Smart Card available** | **macOS 14.0** | Smart Card auth method key only exists in the non-deprecated `Platform SSO > Authentication Method` field |
-| **macOS 15.3 known fix** | **15.3** | Re-registration concurrency bug fixed in macOS 15.3 (Apple confirmed); persistent re-registration prompts on 15.0–15.2 are a known Apple OS bug |
+| `app-sso platform -s` | Show full Platform SSO + Kerberos TGT status | Shows `Device Registration`, `User Registration`, and Kerberos ticket details including `ticketKeyPath: tgt_ad` (on-prem) and `ticketKeyPath: tgt_cloud` (cloud) |
+| `/usr/bin/klist` | List held Kerberos tickets (standard macOS Kerberos tool) | Lists TGTs with expiry times |
+| `/usr/bin/kdestroy` | Destroy/clear Kerberos tickets | Removes cached TGTs |
 
-### 4.2 Entra ID prerequisites — Entra-side configuration
+After deploying both the PSSO policy and the Kerberos mobileconfig, the device should show two Kerberos tickets in `app-sso platform -s` output: one `tgt_ad` (on-prem) and one `tgt_cloud` (if cloud Kerberos is also configured).
 
-| Entra-side requirement | Where to configure | Why required |
-|---|---|---|
-| **Users may join devices to Microsoft Entra** = All (or scoped group including target users) | Entra admin center: Entra ID > Devices > Overview > Device Settings > `Microsoft Entra join and registration settings` | Without this, PSSO registration silently fails — no error shown to user |
-| **Entra device registration** | Automatic when user completes PSSO registration flow | Devices receive a hardware-bound WPJ certificate; WPJ cert is what apps and browsers use for device-based Conditional Access |
-| **Conditional Access MFA policy** (not per-user MFA) | CA policy in Entra admin center | Per-user MFA (legacy) causes Password sync failures during PSSO registration; use CA-based MFA instead |
-| **No hybrid-join deployment** | N/A — architecture constraint | macOS PSSO requires Entra ID join; hybrid-join is NOT supported and Microsoft has stated there are no plans to support it |
-| **WPJ certificate (hardware-bound from Aug 2025)** | Automatic from August 2025 | Microsoft transitioned WPJ key storage from Apple Keychain to Apple Secure Enclave for new registrations starting August 2025; requires Enterprise SSO plug-in to report device identity |
-| **Passkeys (FIDO2) — optional** | Entra admin center: Authentication methods | Required only if organization wants to use Secure Enclave Platform Credential as a FIDO2 passkey; AAGUID to allowlist: `7FD635B3-2EF9-4542-8D9D-164F2C771EFC` |
-| **Entra CBA — Smart Card only** | Entra admin center: Authentication methods > Certificate-based authentication | Required only for Smart Card auth method; configures how Entra validates the certificate on the smart card |
+**Note on `app-ssoctl`:** No documentation for an `app-ssoctl` command was found across Apple Platform Deployment, Microsoft Learn, or Apple Developer Forums as of 2026-06-22. The Apple Deployment Guide for Kerberos SSO extension documents `app-sso` only. The `app-ssoctl` name does not appear to be a valid macOS CLI tool. Use `app-sso` exclusively. Confidence: MEDIUM (cannot definitively rule out undocumented internal tool, but no public evidence exists).
 
-Source: [Microsoft Learn — Configure Platform SSO (prerequisites section)](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos); [Microsoft Entra — macOS PSSO troubleshooting — Insufficient permissions](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension). Confidence: HIGH.
+### A.8 Browser configuration for Kerberos SSO
 
-### 4.3 Licensing
+Safari supports Kerberos SSO by default. Other browsers require additional configuration:
 
-Platform SSO is **included in all Microsoft Intune licensing plans** — this is an explicit statement from Microsoft Learn. No Entra ID P1 or P2 tier is required for Platform SSO itself. Related features that DO require Entra ID P1/P2:
-
-- Conditional Access policies (Entra ID P1 minimum)
-- Entra ID Protection risk-based CA (Entra ID P2)
-- SSPR in some configurations
-
-For the core Platform SSO admin guide, document: "Platform SSO requires only a Microsoft Intune license. Conditional Access integration, which is a recommended complement to Platform SSO, requires Microsoft Entra ID P1 or higher."
-
-Source: [Microsoft Learn — Configure Platform SSO > Benefits section](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos): "It's included with all Microsoft Intune licensing plans." Confidence: HIGH.
-
----
-
-## 5. Secure Enclave — Hardware Facts to Pin
-
-### 5.1 Which Mac hardware has Secure Enclave
-
-**All current and recent Mac hardware has a Secure Enclave.** The Secure Enclave is a dedicated hardware security chip integrated into:
-
-- **All Apple Silicon Macs** (M1, M2, M3, M4 and all variants) — 2020 onwards; Secure Enclave is part of the Apple Silicon SoC
-- **All T2 Security Chip Intel Macs** — specific models 2018-2020 (see list below)
-- **T1 chip Macs** — MacBook Pro 2016-2017 with Touch Bar (T1 is an earlier generation; has Secure Enclave but not the same capabilities as T2/Apple Silicon)
-
-T2-equipped Intel Mac models (Secure Enclave via T2):
-
-| Model | Year |
+| Browser | Required setting |
 |---|---|
-| MacBook Pro | 2018, 2019, 2020 (Intel) |
-| MacBook Air | 2018, 2019, 2020 (Intel) |
-| Mac mini | 2018 |
-| iMac | 2020 (27-inch 5K Retina), iMac Pro |
-| Mac Pro | 2019 |
+| Safari | No additional configuration needed |
+| Microsoft Edge | Configure `AuthNegotiateDelegateAllowlist` and `AuthServerAllowlist` with on-premises AD forest information |
+| Google Chrome | Configure `AuthNegotiateDelegateAllowlist` and `AuthServerAllowlist` with on-premises AD forest information |
+| Firefox | Configure `network.negotiate-auth.trusted-uris` and `network.automatic-ntlm-auth.trusted-uris` |
 
-**Macs WITHOUT Secure Enclave (no Platform SSO Secure Enclave method):**
-- Intel Mac models 2017 and earlier without T1 or T2 (most pre-2018 Intel Macs)
-- MacBook (12-inch models without Touch Bar, pre-T2)
+Source: [Microsoft Entra — Enable Kerberos SSO tutorial — Browser Support section](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) (updated 2026-06-15). Confidence: HIGH.
 
-**v1.9 practical implication:** Any Mac purchased since 2018 almost certainly has Secure Enclave hardware. The Secure Enclave method will fail to provision only on genuinely old hardware (2017 and earlier Intel without T2). In a modern fleet this edge case may not need prominent documentation, but a capability matrix row and a prerequisite note are appropriate.
+### A.9 What NOT to document in the Kerberos guide
 
-Source: [Apple Platform Security — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web); [Apple Support — Mac computers with Apple T2 Security Chip](https://support.apple.com/en-us/103265). Confidence: HIGH for Apple Silicon and T2 list; HIGH for T1 (2016-2017 Touch Bar MacBook Pro).
-
-### 5.2 How Platform SSO uses the Secure Enclave
-
-The Secure Enclave is used to generate and protect the **User Secure Enclave Key** (referred to in Apple's platform SSO documentation as the "Platform Credential"). Key facts:
-
-1. **The key cannot be exported.** Secure Enclave hardware prevents keys from ever leaving the chip; even the OS kernel cannot read them. Keys are used only for signing operations performed inside the Secure Enclave.
-
-2. **The key is hardware-bound to the specific Mac.** The User Secure Enclave Key is tied to both the device hardware AND the user account on that device. A key provisioned on one Mac cannot be transferred to another Mac.
-
-3. **The key generates a hardware-bound Primary Refresh Token (PRT).** After Platform SSO registration, the Secure Enclave key is used to obtain a PRT. Apps and browsers use this PRT for device-wide SSO without requiring re-authentication.
-
-4. **The key functions as a passkey (WebAuthn).** When using Secure Enclave auth, the PRT key can serve as a FIDO2 passkey via WebAuthn APIs in browsers. This enables phishing-resistant MFA via the Mac itself (no external hardware key needed).
-
-5. **FileVault does NOT use the Secure Enclave key.** FileVault disk encryption uses the local macOS account password as the unlock key — this is why the Secure Enclave method intentionally leaves the local account password unchanged. The two mechanisms are parallel, not interdependent.
-
-6. **Password reset breaks the Secure Enclave key.** If a password reset occurs without the local account password being provided (FileVault recovery, MDM-driven recovery), the Secure Enclave resets and the Platform SSO key is lost. The device must re-register for Platform SSO. This is an important L2 troubleshooting scenario.
-
-7. **Device Identity Key Storage migration (August 2025):** Microsoft transitioned from storing the WPJ certificate in Apple Keychain to storing it in the Secure Enclave for all new device registrations. This means applications that previously accessed the WPJ cert via Keychain will fail — they must use MSAL + Enterprise SSO plug-in instead.
-
-Source: [Apple Platform Security — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web); [Microsoft Entra — apple-sso-plugin — Device Identity Key Storage section](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin); [Microsoft Learn — Configure Platform SSO — Secure Enclave tab](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos). Confidence: HIGH.
-
-### 5.3 Secure Enclave vs FileVault relationship
-
-This is the single most frequently misunderstood aspect of macOS Platform SSO. The relationship:
-
-| Mechanism | What it protects | Uses Secure Enclave? | Uses local account password? |
-|---|---|---|---|
-| **FileVault** | Full disk encryption | NO — uses local account password as key | YES — required |
-| **Platform SSO (Secure Enclave method)** | Entra ID authentication credential (WPJ cert / PRT key) | YES — key generated in and never leaves Secure Enclave | NO — local password deliberately unchanged |
-| **Platform SSO (Password method)** | Entra ID authentication credential (synced password) | Partially — WPJ cert stored in SE from Aug 2025 | YES — Entra password syncs to local password |
-
-**Documentation implication:** The admin guide must explicitly state "Enabling Platform SSO with the Secure Enclave method does NOT change your FileVault configuration. FileVault continues to use the local macOS account password as its disk unlock key. After a device reboot, users must enter their local password to unlock FileVault, then Touch ID handles subsequent unlocks." This prevents the common admin mistake of thinking Platform SSO makes the local password irrelevant.
+| Out of scope | Reason |
+|---|---|
+| Azure Files / Cloud Kerberos TGT (limited preview) | Explicitly marked "currently in limited preview" in Microsoft Entra tutorial; document as preview callout only, not as GA feature |
+| Kerberos SSO extension without Platform SSO | Out of scope; v1.10 documents PSSO-integrated Kerberos deployment only |
+| `performKerberosOnly: false` scenarios (password expiry checks) | AD password management via Kerberos extension is a complex optional scenario; out of scope for v1.10 guide 10 |
 
 ---
 
-## 6. Legacy Enterprise SSO Plug-in (SSO App Extension) — When to Document
+## Surface B: Graph API — `platformCredentialAuthenticationMethod`
 
-### 6.1 What it is and when it predates Platform SSO
+### B.1 GA vs Beta verdict: CONFIRMED GA in v1.0
 
-The standalone SSO app extension (configured via the **Device Features template**, not Settings Catalog) provides Entra ID SSO for apps and websites on macOS 10.15+. It does NOT integrate with the macOS login screen and does NOT create a WPJ certificate during registration.
+**Verdict: GA. Ship the documentation.**
 
-**Payload type (Apple):** `com.apple.extensiblesso` (same payload type as Platform SSO — distinguished by the absence of Platform SSO-specific keys)
+The `platformCredentialAuthenticationMethod` resource type and all three operations (List, Get, Delete) are documented under `graph-rest-1.0` — the generally available Microsoft Graph endpoint. Verified directly from:
 
-**Extension Identifier:** `com.microsoft.CompanyPortalMac.ssoextension` (same as Platform SSO)
+- Microsoft Graph docs contributor repo (github.com/microsoftgraph/microsoft-graph-docs-contrib) — file paths under `api-reference/v1.0/`
+- Microsoft Learn: `https://learn.microsoft.com/en-us/graph/api/resources/platformcredentialauthenticationmethod?view=graph-rest-1.0`
+- Both the resource page and the operation pages carry `monikers: graph-rest-1.0`, confirming GA
 
-**When admins still use the standalone SSO app extension:**
-- Legacy macOS 10.15–12.x devices (cannot run Platform SSO)
-- Orgs that have not yet migrated to Platform SSO
-- During migration period when Platform SSO policy is being validated
+The resource also exists in beta (same operations), but the v1.0 surface is stable and documentable.
 
-### 6.2 Migration path from SSO app extension to Platform SSO
+Source: Direct WebFetch of Microsoft Learn v1.0 resource page (verified 2026-06-22). Also documented in the `macos-psso.md` Microsoft Entra overview page which explicitly lists the v1.0 Graph API URLs. Confidence: HIGH.
 
-The migration is documented explicitly in the Intune Platform SSO guide:
-1. Create and assign the Platform SSO settings catalog policy
-2. Validate Platform SSO is working (Step 6 in the Intune guide — use `app-sso platform -s` command)
-3. **Unassign** the existing Device Features SSO app extension profile
-4. Do NOT keep both profiles assigned — error 10002 (multiple SSOe payloads) results
+### B.2 Resource path
 
-**v1.9 implication:** The migration runbook is a dedicated v1.9 deliverable. The key insight to document: since Platform SSO's Settings Catalog policy includes the SSO app extension configuration automatically, migrating to Platform SSO is a policy-add-then-remove-old-policy operation, not a reconfiguration.
+| Path variant | URL |
+|---|---|
+| Self (signed-in user) — delegated only | `GET /me/authentication/platformCredentialMethods` |
+| Specific user (by ID or UPN) | `GET /users/{id | userPrincipalName}/authentication/platformCredentialMethods` |
+| Get single method | `GET /users/{id}/authentication/platformCredentialMethods/{platformCredentialAuthenticationMethod-id}` |
+| Delete single method | `DELETE /users/{id}/authentication/platformCredentialMethods/{platformCredentialAuthenticationMethod-id}` |
 
-Source: [Microsoft Learn — Configure Platform SSO — Step 7](https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos): "If you keep both policies, conflicts can occur." Confidence: HIGH.
+**Note on `/me` endpoint:** The `/me` endpoint requires a signed-in user and therefore only supports delegated permissions. Application permissions are not supported for `/me`. For automation scenarios (e.g., admin bulk-clearing credentials), the `/users/{id}` path is required.
 
-### 6.3 Additional configuration keys shared between both configurations
+### B.3 Supported operations
 
-These optional keys apply to both the SSO app extension and Platform SSO (configured in Extension Data in Settings Catalog for Platform SSO):
-
-| Key | Type | Recommended Value | Purpose |
+| Operation | HTTP Method | Returns | Notes |
 |---|---|---|---|
-| `AppPrefixAllowList` | String | `com.microsoft.,com.apple.` | Allows non-MSAL apps matching these bundle ID prefixes to use SSO |
-| `browser_sso_interaction_enabled` | Integer | `1` | Allows Safari and non-MSAL apps to bootstrap the SSO extension |
-| `disable_explicit_app_prompt` | Integer | `1` | Suppresses redundant authentication prompts from apps that bypass SSO at protocol level |
-| `enable_se_key_biometric_policy` | Boolean | `true` (high-security optional) | Requires Touch ID for every Secure Enclave key access; macOS 14.6+, CP 2504+ |
-| `use_most_secure_storage` | Integer | `0` (troubleshooting only) | Disables Secure Enclave key storage — for diagnostics only, never production |
+| **List** | `GET` | Collection of `platformCredentialAuthenticationMethod` objects | Lists all Platform Credential registrations for a user |
+| **Get** | `GET` (with specific ID) | Single `platformCredentialAuthenticationMethod` object | Gets properties of one registration; supports `$expand=device` to include device details |
+| **Delete** | `DELETE` | `204 No Content` | Removes the credential registration; device must re-register for PSSO |
+| Create | N/A | N/A | **NOT SUPPORTED** — registrations are created only by the device during PSSO enrollment |
+| Update | N/A | N/A | **NOT SUPPORTED** — no PATCH operation exists |
 
----
+Source: Microsoft Learn resource type page + individual operation pages (verified 2026-06-22). Confidence: HIGH.
 
-## 7. Platform SSO During ADE Enrollment (Enrollment-time PSSO)
+### B.4 Resource properties
 
-This is a distinct deployment mode with higher prerequisites:
-
-| Requirement | Value | Notes |
+| Property | Type | Description |
 |---|---|---|
-| macOS version | **macOS 26+** | `Enable Registration During Setup` requires macOS 26 |
-| Company Portal | **5.2604.0+** | Must be deployed as a **Line-of-Business (LOB) app** (not from App Store) |
-| ADE enrollment profile | Setup Assistant with modern authentication + Await final configuration = Yes + Locked enrollment = Yes | All four settings required |
-| Group type | **Assigned (static) user groups only** — NOT dynamic groups, NOT device groups | Feature does not work with dynamic or device groups |
-| Smart Card | **NOT available during Setup Assistant** | Smart Card PSSO requires completing Setup Assistant first; then PSSO registration can be initiated |
-| Policy assignment | Settings Catalog policy + LOB Company Portal app + ADE enrollment profile all assigned to the **same static user group** | If assigned to different groups, enrollment fails; wipe and re-enroll required |
+| `id` | String | Unique identifier for the authentication method |
+| `displayName` | String | Name of the device on which Platform Credential is registered |
+| `createdDateTime` | DateTimeOffset | Date/time when the Platform Credential Key was registered |
+| `keyStrength` | authenticationMethodKeyStrength | Key strength: `normal`, `weak`, or `unknown` |
+| `platform` | authenticationMethodPlatform | Platform: `macOS`, `windows`, `iOS`, `android`, `linux`, or `unknown` |
 
-Source: [Microsoft Learn — Add Platform SSO policy to ADE Profile on macOS devices](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment) (updated 2026-06-01). Confidence: HIGH.
+**Relationship:**
+- `device` — the registered device resource; expand with `?$expand=device` on a single GET
 
----
+Source: Microsoft Learn v1.0 resource page (verified 2026-06-22). Confidence: HIGH.
 
-## 8. Browser SSO Support
+### B.5 Required permissions — full matrix
 
-Platform SSO requires specific browser configurations for device-based Conditional Access to work:
+**For LIST and GET operations:**
 
-| Browser | Configuration required |
+| Permission type | Least privileged | Higher privileged options |
+|---|---|---|
+| Delegated (work or school account) | `UserAuthMethod-PlatformCred.Read` | `UserAuthenticationMethod.Read`, `UserAuthenticationMethod.Read.All`, `UserAuthMethod-PlatformCred.Read.All`, `UserAuthMethod-PlatformCred.ReadWrite`, `UserAuthMethod-PlatformCred.ReadWrite.All`, `UserAuthenticationMethod.ReadWrite`, `UserAuthenticationMethod.ReadWrite.All` |
+| Delegated (personal Microsoft account) | Not supported | Not supported |
+| Application | `UserAuthMethod-PlatformCred.Read.All` | `UserAuthenticationMethod.Read.All`, `UserAuthMethod-PlatformCred.ReadWrite.All`, `UserAuthenticationMethod.ReadWrite.All` |
+
+**For DELETE operations:**
+
+| Permission type | Least privileged | Higher privileged options |
+|---|---|---|
+| Delegated (work or school account) | `UserAuthenticationMethod.ReadWrite` | `UserAuthMethod-PlatformCred.ReadWrite`, `UserAuthMethod-PlatformCred.ReadWrite.All`, `UserAuthenticationMethod.ReadWrite.All` |
+| Delegated (personal Microsoft account) | Not supported | Not supported |
+| Application | `UserAuthenticationMethod.ReadWrite.All` | `UserAuthMethod-PlatformCred.ReadWrite.All` |
+
+**Required Entra roles for delegated access (when acting on another user's credentials):**
+- Global Reader (read only)
+- Authentication Administrator
+- Privileged Authentication Administrator
+
+**MFA re-prompt on DELETE:** When a user deletes their own authentication methods via delegated permissions, the system prompts for MFA re-authentication if the user last authenticated more than 10 minutes ago in the current session.
+
+Source: Microsoft Learn List operation page + Delete operation page (verified 2026-06-22). Confidence: HIGH.
+
+### B.6 PowerShell SDK cmdlets
+
+| Operation | Cmdlet |
 |---|---|
-| **Safari** | Built-in SSO integration — no additional configuration needed |
-| **Microsoft Edge** | User must sign into Edge profile; Edge uses Microsoft SSO integration automatically |
-| **Google Chrome** | Requires [Microsoft Single Sign On extension](https://chromewebstore.google.com/detail/windows-accounts/ppnbnpeolgkicgegkbkbjmhlideopiji) (force-install via Intune `.plist` preference file); Chrome 135+ has built-in Enterprise SSO support |
-| **Firefox** | Requires [MicrosoftEntraSSO policy](https://mozilla.github.io/policy-templates/#microsoftentrasso) configured (Intune preference file or manual); Firefox 133+ Enterprise supports this policy |
+| List | `Get-MgUserAuthenticationPlatformCredentialMethod -UserId $userId` |
+| Get | `Get-MgUserAuthenticationPlatformCredentialMethod -UserId $userId -PlatformCredentialAuthenticationMethodId $id` |
+| Delete | `Remove-MgUserAuthenticationPlatformCredentialMethod -UserId $userId -PlatformCredentialAuthenticationMethodId $id` |
 
-Browser SSO is blocked if TLS inspection intercepts Apple CDN domains or Microsoft login domains. Ensure these are excluded from TLS break-and-inspect:
-- `app-site-association.cdn-apple.com`
-- `app-site-association.networking.apple`
-- All Microsoft login URLs (for Platform SSO-targeted devices)
+Module: `Microsoft.Graph.Identity.SignIns`
 
-Source: [Microsoft Entra — apple-sso-plugin — Requirements](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin) (updated 2026-06-15). Confidence: HIGH.
+Source: PowerShell SDK code samples on Microsoft Learn operation pages (verified 2026-06-22). Confidence: HIGH.
 
----
+### B.7 National cloud availability
 
-## 9. What NOT to Document (Out of Scope for v1.9)
+All three operations (List, Get, Delete) are available in:
+- Global service (commercial)
+- US Government L4 (GCC High)
+- US Government L5 (DoD)
+- China operated by 21Vianet
 
-| Surface | Reason excluded |
+Source: Cloud deployment tables on Microsoft Learn operation pages (verified 2026-06-22). Confidence: HIGH.
+
+### B.8 What NOT to document in the Graph API doc
+
+| Out of scope | Reason |
 |---|---|
-| **iOS/iPadOS Platform SSO or Enterprise SSO plug-in** | iOS uses Microsoft Authenticator (not Company Portal) as the plug-in host; iOS PSSO is a different implementation; out of v1.9 scope |
-| **Apple School Manager (ASM) / Education federation** | Education-specific; enterprise scope only |
-| **Non-Entra identity providers** (Okta, Ping, etc.) | v1.9 scope is Entra ID-joined Macs via Intune only; other IdPs would use the same Platform SSO framework but are separate documentation projects |
-| **macOS hybrid join** | Not supported; document as explicit "not supported, no roadmap" callout in the prerequisites section only |
-| **Jamf Pro / other MDM Platform SSO configurations** | v1.9 is Intune-managed; MDM-generic payload values can be noted for L2 context only |
-| **Kerberos SSO deep-dive** | Optional Platform SSO scenario; cross-reference to `configure-platform-sso-scenarios-macos`; do not fold into core Platform SSO admin guide |
-| **Managed Apple Account federation** | Covered in existing docs; Platform SSO is separate from Managed Apple Account sign-in |
-| **ABM/Apple Business token management** | Out of v1.9 scope (v1.6 covered this) |
+| Graph API for Windows/iOS/Android Platform Credentials | `platform` property can be non-macOS values but v1.10 scope is macOS Platform SSO follow-ons only |
+| Programmatic creation of Platform Credential registrations | Create is not supported via Graph — by design; document explicitly |
+| Multi-tenant scenarios | PSSO-FUT-03 is explicitly deferred to its own milestone |
 
 ---
 
-## 10. Key Canonical URLs for v1.9 Citations
+## Surface C: NUAL MDM Plist Key Literals — PSSO-FUT-01 Resolution
 
-### Microsoft Learn (HIGH confidence — all verified June 2026)
+### C.1 Verdict: VERIFIED. CLOSE PSSO-FUT-01.
+
+Both key literals are confirmed from Apple's authoritative `apple/device-management` GitHub repository (the canonical Apple MDM schema, used by all MDM vendors) and cross-verified from the Apple Device Policy Explorer tool (appledevicepolicy.tools) which renders the same schema. Both sources agree exactly.
+
+The PSSO-FUT-01 decision "keep deferred rather than ship a guessed key" was correct at Phase 77. The keys are now verified and the documentation can be written.
+
+### C.2 Verified key literals
+
+| Settings Catalog Display Name (shown in Intune) | MDM Plist Key Literal | Type | Allowed Values | Notes |
+|---|---|---|---|---|
+| "New User Authorization Mode" | `NewUserAuthorizationMode` | String | `Standard`, `Admin`, `Groups`, `Temporary` | One-time permissions applied when the new account is first created at login |
+| "User Authorization Mode" | `UserAuthorizationMode` | String | `Standard`, `Admin`, `Groups` | Persistent permissions applied each time the user authenticates via PSSO |
+| "Enable Create User At Login" (the boolean prerequisite for NUAL) | `EnableCreateUserAtLogin` | Boolean | `true` / `false`; default: `false` | Must be `true` for NUAL to be active; requires `UseSharedDeviceKeys = true` |
+
+Source: [Apple device-management repository — `com.apple.extensiblesso.yaml`](https://github.com/apple/device-management/blob/release/mdm/profiles/com.apple.extensiblesso.yaml) (authoritative Apple MDM schema, `release` branch); cross-verified at [Apple Device Policy Explorer](https://appledevicepolicy.tools/policy-explorer/detail?type=com.apple.extensiblesso&branch=release) (2026-06-22). Confidence: HIGH.
+
+Also confirmed by indirect verification: the [Intune Platform SSO scenarios page](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos) lists all three display names in its End User Experience Settings table using identical wording, confirming that Intune exposes these keys as Settings Catalog settings under their display names. The Settings Catalog display names match the MDM plist key names exactly (same words, same case convention for the labels).
+
+### C.3 Additional NUAL-related keys (context for the guide)
+
+These keys are adjacent to the authorization-mode settings and may need documentation context in guide `08`:
+
+| MDM Plist Key | Type | Default | macOS Version | Notes |
+|---|---|---|---|---|
+| `EnableCreateUserAtLogin` | Boolean | `false` | macOS 14+ | The prerequisite key — must be enabled for NUAL to work |
+| `NewUserAuthorizationMode` | String | none | macOS 14+ | One-time account creation permissions |
+| `UserAuthorizationMode` | String | none | macOS 14+ | Persistent sign-in permissions |
+| `EnableCreateFirstUserDuringSetup` | Boolean | `true` | macOS 26+ | ADE-only: creates first user during Setup Assistant via Platform SSO |
+| `NewUserAuthenticationMethods` | Array of strings | — | macOS 14+ | Allowed values: `Password`, `SmartCard`, `AccessKey` — the auth methods for newly created accounts at login |
+| `EnableRegistrationDuringSetup` | Boolean | `false` | macOS 26+ | ADE-only: enables PSSO registration during Setup Assistant |
+
+Source: Apple `device-management` repo, `release` branch, `com.apple.extensiblesso.yaml` (verified 2026-06-22). Confidence: HIGH.
+
+### C.4 Intune Settings Catalog location for NUAL keys
+
+In Intune, these settings appear in the Settings Catalog under:
+
+```
+Authentication > Extensible Single Sign On (SSO) > Platform SSO
+```
+
+The Settings Catalog picker shows them as:
+- `Platform SSO > Enable Create User At Login` (Boolean toggle)
+- `Platform SSO > New User Authorization Mode` (Enum: Standard / Admin / Groups)
+- `Platform SSO > User Authorization Mode` (Enum: Standard / Admin / Groups)
+
+Source: Intune Platform SSO scenarios page End User Experience Settings table (display names match); Settings Catalog path inferred from settings category structure confirmed in configure-platform-sso-macos.md. Confidence: HIGH for display names; MEDIUM for exact Settings Catalog picker path (the path was not explicitly verified in the fetched pages — it is inferred from the Settings Catalog structure already documented in v1.9 STACK.md §2.1).
+
+**Resolution action for guide `08`:** The NUAL section in `08-auth-methods-deep-dive.md` currently has a deferred-item callout block stating the MDM key literals are unconfirmed. That block should be replaced with the verified literals above. The Settings Catalog table should be updated to include a new "MDM plist key literal" column (or inline key references).
+
+### C.5 Intune's current display names for NUAL settings (cross-reference to verify no drift)
+
+From the Intune scenarios page (fetched 2026-06-22, page last updated 2026-05-11):
+
+| Intune Display Name | Allowed Values as shown in Intune | Notes |
+|---|---|---|
+| Enable Create User At Login | Enable or Disable | Note: the Apple schema key is `EnableCreateUserAtLogin` (boolean); Intune renders as Enable/Disable toggle |
+| New User Authorization Mode | Standard, Admin, or Groups | Note: Intune docs say "Currently, Standard and Admin values are supported" — Groups and Temporary exist in Apple schema but may not be fully surfaced in Intune UI as of 2026-05-11 |
+| User Authorization Mode | Standard, Admin, or Groups | Same caveat — Groups defined in Apple schema; Intune support status for Groups value should be noted as "schema-supported but Intune UI may not expose Groups" |
+
+**Caveat to document:** The Apple `NewUserAuthorizationMode` schema includes a `Temporary` value (temporary session configuration for newly created accounts at login). This value is defined in Apple's MDM schema but does NOT appear in the Intune Settings Catalog display. The `Temporary` value would require a custom mobileconfig. Document this in guide `08` as a "schema value not exposed in Intune Settings Catalog."
+
+---
+
+## Authoritative Source URLs — v1.10 additions
+
+### Microsoft Learn (HIGH confidence — all verified 2026-06-22)
 
 | Purpose | URL | Last Updated |
 |---|---|---|
-| Platform SSO configuration guide (primary) | https://learn.microsoft.com/en-us/intune/intune-service/configuration/platform-sso-macos | 2026-05-18 |
-| Platform SSO during ADE enrollment | https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment | 2026-06-01 |
-| Platform SSO scenarios (Kerberos, Touch ID, non-MSAL apps) | https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos | (current) |
-| SSO app extension — macOS (legacy / Device Features template) | https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-enterprise-sso-plugin-macos | 2024-05-01 |
-| SSO overview and options for Apple devices | https://learn.microsoft.com/en-us/intune/device-configuration/enterprise-sso-plugin | (current) |
-| Microsoft Enterprise SSO plug-in for Apple devices (Entra ID) | https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin | 2026-06-15 |
-| macOS Platform SSO overview (Entra ID) | https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso | 2026-06-15 |
-| Platform SSO troubleshooting and known issues | https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension | 2026-06-15 |
-| Join Mac with Entra ID via Company Portal (user experience) | https://learn.microsoft.com/en-us/entra/identity/devices/device-join-microsoft-entra-company-portal | (current) |
-| Join Mac with Entra ID during OOBE (user experience) | https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on | (current) |
-| Entra certificate-based authentication (Smart Card) | https://learn.microsoft.com/en-us/entra/identity/authentication/concept-certificate-based-authentication-mobile-ios | (current) |
+| Kerberos SSO extension + Platform SSO tutorial | https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration | 2026-06-15 |
+| Platform SSO scenarios (Kerberos, Touch ID, non-MSAL) | https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos | 2026-05-13 |
+| Graph API — `platformCredentialAuthenticationMethod` resource (v1.0) | https://learn.microsoft.com/en-us/graph/api/resources/platformcredentialauthenticationmethod?view=graph-rest-1.0 | 2026-01-28 |
+| Graph API — List operation (v1.0) | https://learn.microsoft.com/en-us/graph/api/platformcredentialauthenticationmethod-list?view=graph-rest-1.0 | 2025-11-13 |
+| Graph API — Get operation (v1.0) | https://learn.microsoft.com/en-us/graph/api/platformcredentialauthenticationmethod-get?view=graph-rest-1.0 | (current) |
+| Graph API — Delete operation (v1.0) | https://learn.microsoft.com/en-us/graph/api/platformcredentialauthenticationmethod-delete?view=graph-rest-1.0 | 2025-11-08 |
+| macOS PSSO overview — Graph API section | https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso | 2026-06-15 |
+| SSO app extension vs Kerberos type comparison (Device Features guide) | https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-enterprise-sso-plugin-macos | 2024-05-01 |
 
-### Apple Official (HIGH confidence)
+### Apple Official (HIGH confidence — all verified 2026-06-22)
 
 | Purpose | URL |
 |---|---|
-| Extensible SSO MDM payload settings | https://support.apple.com/guide/deployment/extensible-single-sign-on-payload-settings-depfd9cdf845/web |
-| Platform SSO overview (Apple Platform Deployment) | https://support.apple.com/guide/deployment/dep7bbb05313/web |
-| The Secure Enclave (Apple Platform Security) | https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web |
-| Mac computers with Apple T2 Security Chip | https://support.apple.com/en-us/103265 |
-| Integrate with Microsoft Entra ID (Apple Deployment Guide) | https://support.apple.com/guide/deployment/integrate-with-microsoft-entra-id-depa85a35cf2/web |
-| FileVault MDM payload settings | https://support.apple.com/en-ie/guide/deployment/dep32bf53500/1/web/1.0 |
-| Manage FileVault with MDM | https://support.apple.com/en-ie/guide/deployment/dep0a2cb7686/web |
-| Platform SSO on-demand account creation | https://support.apple.com/guide/deployment/dep7bbb05313/web |
+| Kerberos SSO extension overview | https://support.apple.com/guide/deployment/kerberos-sso-extension-depe6a1cda64/web |
+| Extensible Single Sign-on Kerberos payload settings | https://support.apple.com/guide/deployment/extensible-single-sign-kerberos-payload-dep13c5cfdf9/web |
+| Apple device-management repo — `com.apple.extensiblesso.yaml` | https://github.com/apple/device-management/blob/release/mdm/profiles/com.apple.extensiblesso.yaml |
+| Apple Device Policy Explorer — com.apple.extensiblesso | https://appledevicepolicy.tools/policy-explorer/detail?type=com.apple.extensiblesso&branch=release |
 
 ---
 
-## 11. Confidence Summary
+## Confidence Summary — v1.10 surfaces
 
 | Finding | Confidence | Verification basis |
 |---|---|---|
-| Product name hierarchy (plug-in > Platform SSO + SSO app extension) | HIGH | Microsoft Entra docs + Intune docs cross-referenced |
-| All Settings Catalog key names and values | HIGH | Directly from Microsoft Learn Platform SSO guide (updated 2026-05-18) |
-| Apple payload type `com.apple.extensiblesso` | HIGH | Apple Platform Deployment official page |
-| Extension Identifier + Team Identifier | HIGH | Multiple Microsoft sources confirm `com.microsoft.CompanyPortalMac.ssoextension` + `UBF8T346G9` |
-| Version floors (macOS 13/14/15, CP 5.2404.0 / 5.2604.0) | HIGH | Microsoft Learn prerequisites section (current docs) |
-| macOS 26 for ADE enrollment PSSO | HIGH | Directly from June 2026 updated Microsoft Learn ADE enrollment doc |
-| Smart Card = macOS 14+ only | HIGH | Auth method comparison table in official docs |
-| Secure Enclave hardware list (T2 models + Apple Silicon) | HIGH | Apple Security Guide + Apple T2 support page |
-| Keys in Secure Enclave cannot be exported | HIGH | Apple Platform Security guide |
-| FileVault/Secure Enclave non-relationship | HIGH | Multiple Microsoft Learn sources explicit on this |
-| Licensing = included in all Intune plans | HIGH | Explicit statement in Microsoft Learn Platform SSO benefits section |
-| Hybrid-join = not supported | HIGH | Microsoft Entra PSSO FAQ explicit; "no plans to support" stated |
-| August 2025 WPJ key storage migration (SE default) | HIGH | Microsoft Entra apple-sso-plugin page, "Device Identity Key Storage" section |
-| macOS 15.3 re-registration bug fix | HIGH | Microsoft Entra troubleshooting page; "Apple confirmed the fix is deployed in macOS 15.3" |
-| ADE enrollment group-type constraints (static user, not dynamic/device) | HIGH | June 2026 Microsoft Learn ADE enrollment page |
-| macOS 15.3 / iOS 18.1.1 Enterprise SSO regression (PluginKit Code=16) | HIGH | Microsoft Entra apple-sso-plugin page, "Important update" section |
+| Graph API `platformCredentialAuthenticationMethod` is GA in v1.0 | HIGH | Direct fetch of `graph-rest-1.0`-moniker Microsoft Learn pages; Context7 docs confirming v1.0 path |
+| Graph API URL paths (`/authentication/platformCredentialMethods`) | HIGH | Microsoft Learn + Context7 both confirm |
+| Graph API operations: List, Get, Delete only (no Create/Update) | HIGH | Resource type page explicitly states only these three methods |
+| Graph API permissions matrix (read vs delete) | HIGH | Individual operation pages on Microsoft Learn |
+| Kerberos extension identifier `com.apple.AppSSOKerberos.KerberosExtension` | HIGH | Microsoft Entra tutorial mobileconfig example; Apple deployment guide Kerberos payload settings page |
+| Kerberos payload type `com.apple.extensiblesso(kerberos)` | HIGH | Apple Platform Deployment — Extensible Single Sign-on Kerberos payload settings |
+| Kerberos `Type: Credential` (not Redirect) | HIGH | Apple deployment guide + Intune Device Features guide comparison table |
+| Kerberos Intune deployment = Custom Template (not Settings Catalog) | HIGH | Microsoft Entra tutorial Intune steps; Intune scenarios page shows Kerberos TGT mapping is via Extension Data key in existing PSSO policy |
+| Kerberos `usePlatformSSOTGT: true` as the integration key | HIGH | Microsoft Entra tutorial; both on-prem and cloud profiles |
+| macOS 14.6 as minimum for PSSO Kerberos TGT integration | HIGH | Microsoft Entra Kerberos tutorial prerequisites |
+| `app-sso platform -s` showing `tgt_ad` and `tgt_cloud` ticket keys | HIGH | Microsoft Entra tutorial Testing Kerberos SSO section |
+| No `app-ssoctl` command documented | MEDIUM | Not found in any Apple/Microsoft public source; likely does not exist as a public tool |
+| NUAL key `NewUserAuthorizationMode` confirmed literal | HIGH | Apple `device-management` repo YAML + Apple Device Policy Explorer (dual verification) |
+| NUAL key `UserAuthorizationMode` confirmed literal | HIGH | Same dual verification |
+| NUAL key `EnableCreateUserAtLogin` confirmed literal | HIGH | Same dual verification |
+| `Temporary` value for `NewUserAuthorizationMode` not in Intune Settings Catalog UI | MEDIUM | Intune docs (2026-05-11) list only Standard/Admin/Groups; Apple schema has Temporary; Intune UI support unconfirmed |
+| NUAL settings in `Platform SSO >` category of Settings Catalog | HIGH | Intune scenarios page display names match Apple schema keys; Settings Catalog path confirmed by category structure in v1.9 docs |
 
 ---
 
-## 12. Version-Sensitive Facts That Must Be Pinned in v1.9 Docs
+## What NOT to document in v1.10 (scope guard)
 
-These facts are specifically version-dependent and MUST be cited with versions in the documentation (not stated as universally true):
-
-1. **Smart Card = macOS 14+ only.** On macOS 13, only `Password` and `UserSecureEnclaveKey` are valid Authentication Method values.
-
-2. **FileVault Entra password unlock = macOS 15+ only.** The `FileVaultPolicy = AttemptAuthentication` key only applies on macOS 15 and later. On macOS 14 and 13, FileVault still requires the local account password exclusively.
-
-3. **Company Portal 5.2404.0 minimum.** Older Company Portal silently breaks Platform SSO. This is not a user-visible error — the admin must verify CP version during deployment.
-
-4. **Authentication Method (Deprecated) = macOS 13 only.** The top-level `Authentication Method` field is the legacy path; macOS 14+ should use `Platform SSO > Authentication Method`. Mixed fleets need BOTH in the same policy.
-
-5. **WPJ key storage in Secure Enclave (default from August 2025).** New device registrations after August 2025 store the WPJ certificate in the Secure Enclave. Applications that access WPJ via Keychain will fail. This affects any organization that upgraded devices post-August 2025 without also updating their MDM configuration to use MSAL/Enterprise SSO plug-in.
-
-6. **macOS 15.3 re-registration bug fixed.** Devices on macOS 15.0–15.2 may experience unexpected re-registration prompts (OS concurrency bug). Fixed in 15.3. L2 runbooks should recommend upgrading to 15.3+ before troubleshooting PSSO re-registration loops.
-
-7. **ADE enrollment PSSO requires macOS 26.** Platform SSO during Setup Assistant is a macOS 26-only capability. Do not document it as available on earlier versions.
-
-8. **Touch ID biometric policy requires macOS 14.6 AND Company Portal 2504.** Both version floors must be met; the feature silently does not activate if either is below minimum.
+| Surface | Reason |
+|---|---|
+| Multi-tenant PSSO (PSSO-FUT-03) | Explicitly deferred to its own architectural milestone |
+| Kerberos SSO extension WITHOUT Platform SSO TGT integration | Out of v1.10 scope — v1.10 Kerberos guide covers PSSO-integrated deployment only |
+| Azure Files / Cloud Kerberos (limited preview feature) | Explicitly marked "limited preview" in Microsoft Entra tutorial as of 2026-06-15; document as preview callout only |
+| Graph API Create/Update for Platform Credentials | Does not exist |
+| iOS/iPadOS Kerberos SSO or Graph API | v1.10 scope is macOS follow-ons only |
+| Graph API operations for non-macOS Platform Credentials | Platform property filtering is a query concern; document macOS scope in examples |
 
 ---
 
-*Stack research for: v1.9 macOS Platform SSO + Secure Enclave Authentication Documentation*
-*Researched: 2026-06-20*
-*Source freshness: primary Microsoft Learn sources dated 2026-05-18 to 2026-06-15; Apple sources current as of June 2026*
+## Integration with existing v1.9 STACK.md
+
+The v1.9 STACK.md (researched 2026-06-20) remains fully valid. All Platform SSO, Secure Enclave, Enterprise SSO plug-in, and Settings Catalog facts from that research are inherited unchanged. The v1.10 additions in this document are additive.
+
+Cross-reference: The Kerberos guide (`10-kerberos-sso-extension.md`) and the Graph API doc will cite the v1.9 Settings Catalog configuration path documented in v1.9 STACK.md §2.1 as a prerequisite ("Platform SSO must already be deployed and devices registered before Kerberos TGT integration can be configured").
+
+---
+
+*Stack research for: v1.10 macOS Platform SSO Follow-ons — Kerberos SSO Extension, Graph API Platform Credential management, NUAL MDM key verification*
+*Researched: 2026-06-22*
+*Source freshness: Microsoft Learn sources dated 2025-11-08 to 2026-06-15; Apple device-management repo `release` branch; all verified 2026-06-22*

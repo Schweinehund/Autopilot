@@ -1,698 +1,466 @@
-# Pitfalls Research — v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation
+# Pitfalls Research — v1.10 macOS Platform SSO Follow-ons (Kerberos, Graph API & NUAL)
 
-**Domain:** Documentation suite — macOS Platform SSO (PSSO), Secure Enclave key authentication, Password sync, Smart card, Microsoft Enterprise SSO plug-in (Kerberos/redirect legacy), Entra ID device registration via Intune
-**Researched:** 2026-06-20
-**Overall confidence:** HIGH for deployment failure modes (Microsoft Learn official + Apple Platform Deployment official + Jamf/Intune community corroboration); HIGH for conceptual disambiguations; MEDIUM for some version-recency flags (behavior changed rapidly in 2025-2026 point releases); MEDIUM for documentation-suite-specific pitfalls (extrapolated from v1.0-v1.8 corpus patterns)
+**Domain:** Documentation suite — Apple Kerberos SSO extension, Microsoft Graph `platformCredentialAuthenticationMethod` resource, NUAL MDM plist key literals in guide 08; doc-integration conventions
+**Researched:** 2026-06-22
+**Overall confidence:** HIGH for Kerberos extension identifiers (Apple developer docs + Microsoft Learn authoritative examples); HIGH for Graph API GA status (Context7 `v1.0` endpoint evidence); HIGH for NUAL key literals (Apple `device-management` repo YAML schema); HIGH for doc-integration pitfalls (internal v1.0–v1.9 lineage)
+
+---
 
 ## Scope
 
-Pitfalls organized into five axes as specified by the downstream consumer (roadmap / requirements for v1.9):
+Three content surfaces + doc-integration layer:
 
-- **AXIS 1 — Deployment/config failure modes:** Real symptoms + root causes admins hit in the field
-- **AXIS 2 — Version/recency traps:** Facts that have changed; what needs `last_verified` callouts
-- **AXIS 3 — Conceptual confusion to disambiguate:** Terminology collisions that mislead docs readers
-- **AXIS 4 — Legacy to Platform SSO migration pitfalls:** Coexistence, ordering, what breaks for enrolled devices
-- **AXIS 5 — Documentation/project-specific traps:** Suite conventions applied incorrectly in v1.9 docs
+- **AXIS 1 — Kerberos SSO extension accuracy traps:** Extension identifier errors, conflation with Platform SSO or Enterprise SSO plug-in, stale CLI syntax, wrong on-prem AD scope
+- **AXIS 2 — Graph API accuracy traps:** GA-vs-beta confusion, destructive DELETE without safety callout, wrong permission/scope
+- **AXIS 3 — NUAL MDM key accuracy traps:** Shipping a guessed key literal, redundancy with existing guide 08 NUAL table
+- **AXIS 4 — Doc-integration traps:** Navigation-last invariant, capability-matrix anchor inventory, pre-existing chain-red masking
+
+---
 
 ## Confidence-Level Legend
 
 | Level | Evidence | Use |
 |-------|----------|-----|
-| HIGH | Microsoft Learn official + Apple Platform Deployment official, corroborated | State as fact |
+| HIGH | Apple developer docs + Microsoft Learn official, corroborated | State as fact |
 | MEDIUM | Single authoritative source OR strong community + one official anchor | State with attribution |
 | LOW | Community-only or inference | Flag for live-tenant validation |
 
 ---
 
-## AXIS 1 — Deployment / Config Failure Modes
+## AXIS 1 — Kerberos SSO Extension Accuracy Traps
 
-### DF-1: Registration prompt never appears after profile delivery
+### K-1: Wrong Extension Identifier — Using a Microsoft or generic SSO value Instead of `com.apple.AppSSOKerberos.KerberosExtension`
 
-**Confidence:** HIGH (Microsoft Learn "Configure Platform SSO for macOS devices" + "macOS Platform single sign-on known issues and troubleshooting")
+**Confidence:** HIGH — Apple Developer Documentation `ExtensibleSingleSignOnKerberos`; Microsoft Learn Kerberos PSSO configuration guide (explicit plist sample, last updated 2024-05-13 / re-verified 2026-06-15)
 
-**Severity:** HIGH
+**What goes wrong:**
+A doc author copying from Platform SSO documentation inserts `com.microsoft.CompanyPortalMac.ssoextension` (the Microsoft PSSO extension identifier) as the `ExtensionIdentifier` value in the Kerberos SSO extension profile, or inserts a generic placeholder. On-device, the Kerberos extension fails to load; authentication to on-prem Kerberos resources silently stops working. Because the Microsoft PSSO extension with the WRONG identifier is now effectively claiming the Kerberos payload, the Platform SSO extension may also malfunction (two payloads under the same identifier override each other).
 
-**What goes wrong:** Intune shows the Settings Catalog profile as "Succeeded" on the device but the user never sees a "Registration Required" notification. PSSO is therefore inactive — Entra tokens are never issued, apps prompt individually, Conditional Access device compliance is not evaluated via PSSO.
+**Why it happens:**
+Guide 09 documents both extensions side-by-side as a coexistence note (v1.9 SSOMIG-04). An author who copies the Microsoft PSSO Extension Identifier from guide 07 or guide 09 and pastes it into the Kerberos profile will produce a broken config. The two identifiers are superficially similar: both live in `com.apple.extensiblesso` payloads.
 
-**Why it happens:** Four distinct root causes share this symptom:
-1. **Company Portal version too old.** Minimum required is 5.2404.0. Older versions silently fail to surface the registration notification. The policy installs cleanly because Intune delivers it through MDM (not Company Portal), so Intune reports success while Company Portal cannot act on it.
-2. **Conflicting legacy SSO extension profile still active.** If a Device Features template-based SSO app extension (redirect type) is still assigned alongside the new Settings Catalog PSSO policy, Error 10002 fires in the background and the registration flow is suppressed.
-3. **`{{DEVICEREGISTRATION}}` token missing or mis-typed.** The Registration Token field MUST be set to the literal string `{{DEVICEREGISTRATION}}` (including curly braces). Manual typing often loses braces. Without this token, silent Entra device registration cannot proceed.
-4. **User dismissed or missed the notification.** If the user dismisses the registration dialog, the prompt is not automatically re-raised. The user must sign out and sign back in to re-trigger the flow.
+**Authoritative value:**
+The Apple Kerberos SSO extension `ExtensionIdentifier` is `com.apple.AppSSOKerberos.KerberosExtension`.
+The Microsoft PSSO extension `ExtensionIdentifier` is `com.microsoft.CompanyPortalMac.ssoextension`.
+These are different extension bundles from different vendors. They MUST each appear in a separate profile entry with their own identifier.
 
-**Symptoms:**
-- Intune: Profile status = Succeeded; Entra: no device record or device state = "Registered" but user state = "Pending"
-- `app-sso platform -s` on device returns `Device Registration: REGISTERED` but `User Registration: PENDING` or `FAILED`
-- Apps continue to prompt for credentials individually
+**Warning signs:**
+- Kerberos profile entry uses any `com.microsoft.*` identifier value
+- Profile entry uses an identifier containing only `com.apple.extensiblesso` without the `.KerberosExtension` suffix
+- Doc shows "Extension Identifier" in a single profile that handles both Entra and Kerberos authentication
 
-**Prevention:**
-- Phase 75 (admin setup guide): include a pre-flight checklist — Company Portal version check FIRST, confirm both settings catalog fields (Extension Identifier + Registration Token literal)
-- L1/L2 runbooks: `app-sso platform -s` is the canonical first-triage command; document its output fields and what each state means
+**Prevention strategy:**
+Phase that authors guide `10-kerberos-sso-extension.md` MUST include the exact literal `com.apple.AppSSOKerberos.KerberosExtension` sourced from Apple developer documentation, not from memory or from guide 09's prose. Include a side-by-side "Extension Identifier" comparison table showing both values and confirming they are distinct.
 
-**Phase target:** Phase 75 (admin setup); Phase 79 (L1/L2 runbooks)
+**Phase to address:** Kerberos guide authoring phase (the phase that writes `10-kerberos-sso-extension.md`).
 
-**Sources:** [Microsoft Learn — Configure Platform SSO for macOS](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos); [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
-
----
-
-### DF-2: Secure Enclave key destroyed by MDM password reset
-
-**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Apple Platform Deployment security model)
-
-**Severity:** HIGH
-
-**What goes wrong:** An IT admin performs a remote password reset via Intune, or the user recovers via FileVault institutional key or MDM-initiated wipe-and-restore, or a macOS upgrade triggers a security migration. After reset, the user's Secure Enclave key is inaccessible. The key was generated by the Secure Enclave and bound to the local account password as its unlock secret — any password change that does NOT flow through the local account's interactive password-change prompt destroys the derived key for that account. The user must re-register PSSO from scratch. Until they do, SSO is broken and apps prompt individually.
-
-**Why it happens:** Secure Enclave key derivation uses the local account password as a protection factor. Remote/MDM password resets bypass the interactive Secure Enclave key re-derivation flow that a user-initiated password change would trigger (via the macOS password-change UI, which calls the Secure Enclave to derive a new key under the new password).
-
-**Symptoms:**
-- User reports "Touch ID login stopped working" or "I keep getting Microsoft sign-in prompts after IT reset my password"
-- `app-sso platform -s` returns registration state = "NOT REGISTERED" or key state invalid
-- User re-registration prompt may appear if macOS detects the key loss
-
-**Prevention:**
-- Phase 76 (auth-method deep-dive): explicitly document this limitation in the Secure Enclave key section
-- L2 runbook: "after any MDM password reset on a Secure Enclave key device, expect user re-registration to be required — this is expected behavior, not a bug"
-- L1 runbook step: "advise user to sign out and sign in to re-trigger the PSSO registration prompt"
-
-**Phase target:** Phase 76 (auth-method deep-dive); Phase 79 (L2 runbook)
-
-**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO known issues](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension); [Apple — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web)
+**Sources:**
+- [Apple Developer Docs — ExtensibleSingleSignOnKerberos](https://developer.apple.com/documentation/devicemanagement/extensiblesinglesignonkerberos)
+- [Microsoft Learn — Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) — plist sample shows `ExtensionIdentifier` = `com.apple.AppSSOKerberos.KerberosExtension`
 
 ---
 
-### DF-3: Per-user MFA blocks Password sync registration
+### K-2: Conflating the Apple Kerberos Extension with Platform SSO or the Microsoft Enterprise SSO Plug-in
 
-**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Microsoft Q&A community + Microsoft Learn answers)
+**Confidence:** HIGH (Microsoft Learn; Apple Developer Docs; guide 09 existing disambiguation — v1.9 SSOMIG-04)
 
-**Severity:** HIGH
+**What goes wrong:**
+Three distinct features share the `com.apple.extensiblesso` payload type and are routinely conflated:
 
-**What goes wrong:** When the Password sync authentication method is configured, the PSSO registration flow requires the user to authenticate to Entra ID in a webview. If the user has legacy per-user MFA enabled (in the older Azure AD per-user MFA settings, NOT Conditional Access MFA), the webview authentication challenge is escalated in a way that the PSSO registration host cannot complete. The flow stalls silently — no error is shown to the user.
+| Feature | Owner | Payload type | Purpose | Identifier prefix |
+|---------|-------|-------------|---------|-------------------|
+| Platform SSO (PSSO) | Microsoft (Company Portal) | `com.apple.extensiblesso` — Redirect type | Entra ID device registration + login binding | `com.microsoft.CompanyPortalMac.ssoextension` |
+| Microsoft Enterprise SSO plug-in (redirect legacy) | Microsoft (Company Portal) | `com.apple.extensiblesso` — Redirect type | Token brokering (pre-PSSO) | same as PSSO in newer Company Portal |
+| Apple Kerberos SSO extension | Apple (built-in) | `com.apple.extensiblesso` — **Credential** type | On-prem AD / Kerberos TGT only | `com.apple.AppSSOKerberos.KerberosExtension` |
 
-**Why it happens:** Legacy per-user MFA enforces MFA at the authentication layer before the PSSO registration flow can complete. Conditional Access MFA policies (the recommended approach) are evaluated differently and can be configured to suppress the MFA step during device registration flows.
+Conflation traps specific to guide 10 authoring:
 
-**Symptoms:**
-- User is presented with Entra sign-in webview, enters credentials, MFA prompt appears but cannot complete, flow terminates
-- No error message is displayed; registration simply does not proceed
+1. **Claiming the Kerberos extension handles Entra ID authentication** — it does not. The Kerberos extension handles only Kerberos ticket-granting for on-prem AD resources (or Cloud Kerberos TGTs issued by Platform SSO/Entra). Entra ID SSO is handled by the Microsoft PSSO extension.
+2. **Stating the Kerberos extension is "part of" Platform SSO or Company Portal** — it is an Apple-built-in extension, not shipped by Microsoft.
+3. **Treating Kerberos extension diagnostics as identical to Platform SSO diagnostics** — the `app-sso platform -s` command reports Platform SSO state; Kerberos ticket state is checked via `klist` (standard MIT Kerberos CLI) or `app-sso platform -s` which also surfaces Kerberos TGTs (tgt_ad / tgt_cloud) when PSSO Kerberos integration is active.
+4. **Saying Kerberos extension requires Platform SSO** — it does not. The Kerberos extension can be deployed standalone, without PSSO, as it historically was for on-prem AD organizations. The v1.10 scope covers the coexistence-with-PSSO pattern, but the guide must distinguish standalone from PSSO-coexistence configurations.
 
-**Prevention:**
-- Phase 75 (admin setup prerequisites section): explicitly list "disable per-user MFA for all PSSO target users; use Conditional Access MFA policy instead" as a hard prerequisite — this must appear BEFORE any Settings Catalog steps
+**Warning signs:**
+- Guide prose says "the Enterprise SSO plug-in handles Kerberos" (wrong — Enterprise SSO plug-in is Microsoft's; Kerberos extension is Apple's)
+- Guide uses `app-sso diagnose` for Kerberos-only diagnostics (NOTE: `app-sso diagnose` is UNVERIFIED in v1.9 plan context; the verified Kerberos check is `app-sso platform -s` which reports tgt_ad/tgt_cloud ticket paths)
+- Guide makes PSSO a prerequisite for Kerberos extension
 
-**Phase target:** Phase 75 (admin setup prerequisites)
+**Prevention strategy:**
+Guide 10 opening section must include an explicit "What this guide is NOT" disambiguation box referencing guide 09's coexistence note and guide 07/08 for Platform SSO itself. The guide covers only the Apple-native Kerberos extension (`com.apple.AppSSOKerberos.KerberosExtension`), and its on-prem AD / Kerberos authentication role.
 
-**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension); [Microsoft Q&A — PSSO password sync](https://learn.microsoft.com/en-us/answers/questions/1690643/platform-sso-password-sync)
+**Phase to address:** Kerberos guide authoring phase.
 
----
-
-### DF-4: Error 10001 — macOS 13/14 mixed-fleet settings catalog misconfiguration
-
-**Confidence:** HIGH (Microsoft Learn "Configure Platform SSO for macOS devices" — explicitly documented)
-
-**Severity:** HIGH
-
-**What goes wrong:** Error 10001 appears in Intune device status for the PSSO profile when a required settings catalog field is missing or when a field that only applies to macOS 14+ is included for a macOS 13 device (or vice versa). In mixed fleets (macOS 13.x + 14.x), a single settings catalog policy must configure BOTH the deprecated `Authentication Method (Deprecated)` field (macOS 13) AND the `Platform SSO > Authentication Method` field (macOS 14+). Configuring only the macOS 14+ field causes Error 10001 on macOS 13 devices.
-
-**Why it happens:** Apple changed the Platform SSO payload schema between macOS 13 and 14. Intune Settings Catalog exposes both the deprecated and current fields. Admins creating their first policy choose one or the other, not both.
-
-**Symptoms:**
-- Intune profile status: Error with code 10001 on some devices in a mixed fleet
-- Devices affected are consistently on macOS 13.x while macOS 14+ devices succeed (or vice versa)
-
-**Prevention:**
-- Phase 75 admin setup guide: show BOTH field paths in the Settings Catalog steps and label which macOS version each applies to
-- Capability matrix: flag macOS 13 vs 14 row distinction; Smart card method is macOS 14+ only (not available via the deprecated field)
-
-**Phase target:** Phase 75 (admin setup); Phase 80 (capability matrix)
-
-**Sources:** [Microsoft Learn — Configure Platform SSO for macOS](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
+**Sources:**
+- [Microsoft Learn — Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration)
+- Existing guide 09 `docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md` §Kerberos SSO Extension (Coexistence) — the v1.9 coexistence note already calls out the extension type and identifier distinctness; guide 10 must not contradict it
 
 ---
 
-### DF-5: Error 10002 — coexisting legacy SSO app extension profile
+### K-3: Stale or Wrong `app-sso` CLI Syntax for Kerberos Diagnostics
 
-**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Intune community corroboration)
+**Confidence:** MEDIUM — `app-sso platform -s` for Platform SSO Kerberos ticket state is HIGH confidence (Microsoft Learn sample output); standalone Kerberos-only `app-sso kerberos` subcommand availability is MEDIUM confidence (man page exists but Microsoft Learn does not endorse it; v1.9 explicitly banned `app-sso diagnose` as UNVERIFIED); `klist` is HIGH confidence (standard MIT Kerberos CLI, available on macOS)
 
-**Severity:** HIGH
+**What goes wrong:**
+An author documents Kerberos diagnostic steps using:
+- `app-sso diagnose` — this command's output was marked UNVERIFIED in v1.9 Phase 80 planning (80-01-PLAN.md, 80-02-PLAN.md explicitly banned it); a v1.10 author may assume it is now verified and use it
+- `kinit` / `kdestroy` as admin-initiated diagnostic steps — these are user-ticket manipulation commands, not appropriate admin diagnostic steps (they destroy or request tickets interactively)
+- `klist -v` syntax flags that differ across macOS versions
 
-**What goes wrong:** When deploying PSSO, an admin leaves the older SSO app extension profile (created via Intune Device Features template, redirect type) assigned to the same device group. Both profiles target the macOS SSO extension slot. The system detects two competing extension payloads and emits Error 10002. PSSO registration is blocked.
+Additionally: the v1.9 PSSO Kerberos ticket output uses `app-sso platform -s` to show `ticketKeyPath` = `tgt_ad` (on-prem) and `tgt_cloud` (Entra). A guide that documents `app-sso kerberos` subcommands without verifying they exist in the shipped macOS binary will break in production.
 
-**Why it happens:** When Platform SSO is configured, Microsoft explicitly states that only ONE SSO extension profile should be active — the Settings Catalog PSSO policy. The legacy Device Features template profile was the pre-Platform-SSO pattern. Admins often add the new policy while leaving the old one in place as a "backup."
+**Warning signs:**
+- `app-sso diagnose` appears in any Kerberos troubleshooting step
+- CLI syntax is sourced from community blog posts rather than verified against macOS man pages or Microsoft Learn
+- Kerberos diagnostic steps do not distinguish the standalone-Kerberos-extension case from the PSSO-integrated case
 
-**Symptoms:**
-- Intune: PSSO policy status = Error 10002 on affected devices
-- `app-sso platform -s` may show conflicting extension states
+**Prevention strategy:**
+Before authoring guide 10 diagnostics:
+1. Verify `app-sso` subcommands against the man page (`app-sso -h` / man page at https://keith.github.io/xcode-man-pages/app-sso.1.html).
+2. Use `app-sso platform -s` (HIGH confidence; verified by Microsoft Learn) for checking TGT state in the PSSO+Kerberos coexistence case.
+3. Use `klist` (HIGH confidence; standard macOS MIT Kerberos CLI) for checking Kerberos ticket cache state in all configurations.
+4. Do NOT use `app-sso diagnose` unless explicitly verified from a current macOS binary or Apple developer documentation update; follow the v1.9 PROHIBITED list precedent.
 
-**Prevention:**
-- Phase 75 setup guide: explicit "migration ordering" — step 1 assign new Settings Catalog PSSO policy, step 2 unassign ALL legacy SSO app extension profiles, step 3 confirm no legacy profile remains on device
-- Phase 77/78 migration guide: document this as the primary cause of post-migration failures
+**Phase to address:** Kerberos guide authoring phase — verify CLI syntax before incorporating any `app-sso` subcommand other than `platform -s`.
 
-**Phase target:** Phase 75 (admin setup ordering section); Phase 77/78 (migration guide)
-
-**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension); [scloud.work — Intune Error 10002](https://scloud.work/intune-assigment-error-10002-platform-sso/)
-
----
-
-### DF-6: FileVault unlock cannot use Touch ID or Entra credentials after cold reboot
-
-**Confidence:** HIGH (Apple Platform Deployment; Microsoft Learn; multiple community sources)
-
-**Severity:** MEDIUM (confuses admins writing "passwordless" docs and users who expect full passwordless behavior)
-
-**What goes wrong:** Admins writing docs that call PSSO "passwordless at the login screen" are wrong about the cold-boot case. After a reboot, macOS MUST present the FileVault pre-boot password screen, which requires the local account password (the disk encryption key). Touch ID is not available at the FileVault unlock stage. Only after the disk is unlocked and macOS loads does the login window appear, where Touch ID / Secure Enclave key SSO operates.
-
-**Why it happens:** FileVault uses the local user account password as the volume encryption key. The Secure Enclave key for PSSO is a separate cryptographic artifact. The two are not interchangeable at the disk-decryption layer.
-
-**Symptoms / documentation trap:**
-- Docs or user communications claiming "Platform SSO = fully passwordless; no password needed after enrollment" are incorrect for cold-boot
-- Users still prompted for password after firmware update or restart and report the feature "broke"
-
-**Prevention:**
-- Phase 76 auth-method deep-dive: include a "FileVault + Platform SSO interaction" sub-section explicitly stating that FileVault unlock after reboot always requires the local password
-- Avoid the phrase "fully passwordless" without the cold-boot caveat
-- For Password-sync method: the local password equals the Entra password, so users have ONE password for both FileVault and Entra; for Secure Enclave key method, the local password and Entra authentication are separate concerns
-
-**Phase target:** Phase 76 (auth-method deep-dive)
-
-**Sources:** [Apple Support — Platform SSO for macOS](https://support.apple.com/guide/deployment/platform-sso-for-macos-dep7bbb05313/web); [intuneirl.com — macOS SSO Playbook](https://intuneirl.com/the-complete-macos-sso-playbook-advanced-configuration-strategies-explained/)
+**Sources:**
+- [app-sso man page](https://keith.github.io/xcode-man-pages/app-sso.1.html)
+- [Microsoft Learn — Enable Kerberos SSO in Platform SSO (Testing section)](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) — shows `app-sso platform -s` as the verified Kerberos TGT check command
 
 ---
 
-### DF-7: AD-bound (mobile) accounts: password sync registration silently fails
+### K-4: Over-documenting On-Prem Active Directory Content Outside the Suite's Intune/Entra Scope
 
-**Confidence:** HIGH (Apple Developer Forums — confirmed limitation; Microsoft confirmed no restriction on their side)
+**Confidence:** HIGH (internal suite scope discipline; v1.9 PROJECT.md scope definition)
 
-**Severity:** HIGH for orgs with legacy AD-bound Macs
+**What goes wrong:**
+The Kerberos SSO extension's primary use case is on-premises AD Kerberos. Guide 10 risks expanding into:
+- Active Directory DNS/SRV record configuration
+- Kerberos realm mapping for multi-domain forests
+- AD domain controller reachability testing (`nltest`, `klist`, AD-specific tooling)
+- Organizational Unit structures in AD
+- Kerberos Key Distribution Center (KDC) configuration
 
-**What goes wrong:** Devices where the macOS user account was created by Active Directory binding (the account is an AD "mobile account") fail PSSO registration when Password sync is the authentication method. The registration flow reaches the stage where Apple prompts the user to enter their password to sync the local account with the Entra password. Because the local account is an AD mobile account rather than a pure-local account, the password synchronization API call fails silently — no error dialog is shown, the flow just stops.
+None of these are Intune/Entra admin actions. The suite's scope is "through Microsoft Intune" — the Intune/Entra admin perspective. AD admin actions are outside scope.
 
-**Why it happens:** AD mobile accounts have a different local account structure from standard macOS local accounts. The PSSO password synchronization flow expects a standard macOS local account as the target. This is a platform limitation with no announced fix date from Apple.
+**Why it happens:**
+Kerberos documentation naturally wants to explain the full protocol. Microsoft Learn's own Kerberos guide includes on-prem AD prerequisites. An author following the Microsoft Learn page will absorb out-of-scope AD content and include it unless explicitly constrained.
 
-**Symptoms:**
-- Registration prompt appears, user enters password, nothing further happens
-- `app-sso platform -s` shows perpetual registration pending
-- Only affects Password sync method; Secure Enclave key method may succeed (key derivation does not sync a password)
+**Warning signs:**
+- Guide sections addressing "configure your AD realm" or "verify SRV records" that require an AD admin rather than an Intune admin
+- More than one paragraph on on-prem Kerberos infrastructure prerequisites (a brief dependency note is appropriate; a how-to is not)
+- Guide uses tools (`nltest`, `klist get`, domain controller diagnostics) that require AD admin access
 
-**Prevention:**
-- Phase 76 auth-method deep-dive: call out AD-bound mobile account incompatibility with Password sync explicitly; recommend Secure Enclave key method for orgs transitioning away from AD binding
-- Phase 77/78 migration guide: "if devices are AD-bound, unbind from AD before deploying PSSO Password sync — OR switch to Secure Enclave key method which does not require password sync"
+**Prevention strategy:**
+Guide 10 scope gate: the document covers ONLY the MDM payload configuration and verification actions an Intune/Entra admin performs. On-prem AD prerequisites are summarized in one callout pointing to Microsoft's Kerberos PSSO guide and Apple's Kerberos SSO Extension User Guide for AD-side setup. Do not duplicate AD admin content.
 
-**Phase target:** Phase 76 (auth-method deep-dive, Password sync section); Phase 77/78 (migration)
+**Phase to address:** Kerberos guide authoring phase — SCOPE checklist item before content expansion begins.
 
-**Sources:** [Apple Developer Forums — Platform SSO registration fails on Mobile AD accounts](https://developer.apple.com/forums/thread/803802)
-
----
-
-### DF-8: PSSO device configuration corruption on macOS 15.0 through 15.2
-
-**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Apple fix confirmed in macOS 15.3)
-
-**Severity:** HIGH (causes re-registration loops)
-
-**What goes wrong:** On macOS 15.0 through 15.2, a race condition between the system `AppSSOAgent` and `AppSSODaemon` processes can corrupt the underlying Platform SSO JSON configuration file. Once corrupted, macOS discards the config and initiates a remediation sequence: the re-registration maintenance expiration fires, and users receive repeated PSSO registration prompts — sometimes daily. The re-registration loop is self-healing for the user (if they complete re-registration each time) but generates helpdesk tickets.
-
-**Why it happens:** Simultaneous writes to the Platform SSO config from two system processes create a race condition causing the JSON to become malformed. macOS interprets the malformed config as an expired registration state.
-
-**Symptoms:**
-- Users on macOS 15.0 through 15.2 report daily or weekly PSSO registration prompts
-- `app-sso platform -s` shows device config cycling through valid / invalid states
-- Issue does NOT recur on macOS 15.3+
-
-**Prevention:**
-- Phase 75 setup guide prerequisites: recommend macOS 15.3+ for Sequoia fleets; this is a freshness-callout candidate
-- L2 runbook: if re-registration loop is reported on macOS 15.0-15.2, the remediation is OS upgrade to 15.3+; if it persists on 15.3+, collect logs via `app-sso diagnose` and engage Apple Support
-
-**Phase target:** Phase 75 (prerequisites version floor note); Phase 79 (L2 runbook)
-
-**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
+**Sources:**
+- Suite scope: `PROJECT.md` "through Microsoft Intune" framing; v1.9 milestone "Intune/Entra scope" constraints carried forward to v1.10
+- [Microsoft Learn — Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) — model for what is in-scope vs what to defer to Apple/AD admin docs
 
 ---
 
-### DF-9: Conditional Access policy blocks user registration after device registration succeeds
+### K-5: Wrong Payload Type — Using Redirect Instead of Credential for Kerberos Extension
 
-**Confidence:** MEDIUM (Microsoft Learn; Jamf community; bootstrapping dependency well-established in practice)
+**Confidence:** HIGH (Apple Developer Docs; Microsoft Learn plist sample)
 
-**Severity:** HIGH
+**What goes wrong:**
+The `com.apple.extensiblesso` payload supports two `Type` values: `Redirect` and `Credential`. The Microsoft PSSO extension uses `Redirect`. The Apple Kerberos SSO extension uses `Credential`. A doc author who copies from PSSO configuration guides will specify `Type = Redirect`, which is wrong for the Kerberos extension and causes the Kerberos ticket-granting flow to fail silently.
 
-**What goes wrong:** Platform SSO has two distinct registration phases: (1) device registration (the SSO extension registers the device with Entra ID silently using the `{{DEVICEREGISTRATION}}` token) and (2) user registration (the user authenticates interactively). A Conditional Access policy that requires "compliant device" as a condition will evaluate at user registration time. If the device has not yet been marked compliant by Intune (because compliance evaluation itself depends on PSSO being established), the CA policy blocks the user registration and displays a "compliant device required" error instead of the registration UI.
+**Authoritative value:** Kerberos profile requires `Type = Credential` (confirmed in Microsoft Learn plist sample: `<key>Type</key><string>Credential</string>`).
 
-**Why it happens:** Circular dependency: CA requires compliance, compliance requires PSSO, PSSO registration requires passing CA. Assigning PSSO policy to device groups WITH filters is also explicitly unsupported for devices with user affinity.
+**Warning signs:**
+- Settings Catalog or plist sample shows `Type: Redirect` in the Kerberos profile
+- Guide does not distinguish the payload type between PSSO (Redirect) and Kerberos (Credential)
 
-**Symptoms:**
-- Device registration: REGISTERED (Phase 1 OK)
-- User registration: FAILED with "Conditional Access requires compliant device" error
-- Only affects newly enrolled devices; existing enrolled devices already marked compliant are unaffected
+**Prevention strategy:**
+Include the `Type = Credential` value explicitly in every Kerberos profile plist example. Add a callout: "The Kerberos SSO extension uses Type = Credential, NOT Redirect. Using Redirect (the Platform SSO value) is the most common configuration copy-error."
 
-**Prevention:**
-- Phase 75 admin setup guide: temporarily exclude the enrollment device group from the strict CA "require compliant device" policy during the PSSO bootstrapping window; note this exclusion can be removed after initial enrollment
+**Phase to address:** Kerberos guide authoring phase.
 
-**Phase target:** Phase 75 (admin setup prerequisites / Entra CA interaction section)
-
-**Sources:** [Microsoft Learn — Configure Platform SSO](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
-
----
-
-### DF-10: Tenant Restrictions v2 via corporate proxy breaks PSSO token acquisition
-
-**Confidence:** HIGH (Microsoft Learn troubleshoot guide — explicitly documented)
-
-**Severity:** HIGH for orgs using corporate proxy with TLS inspection
-
-**What goes wrong:** Microsoft Entra ID Tenant Restrictions v2 implemented via corporate proxy (where the proxy injects TR headers) is incompatible with macOS Platform SSO when the proxy uses a certificate trust chain outside Apple's system root certificates. The PSSO registration and token-acquisition flows use certificate-pinned requests; a proxy performing TLS inspection with a non-Apple-root CA breaks these flows.
-
-**Symptoms:**
-- PSSO registration succeeds behind non-intercepting proxies but fails behind TLS-inspecting proxies
-- PSSO token refresh failures result in frequent re-authentication prompts for affected users
-- Error logs show certificate validation failures on Microsoft login endpoints
-
-**Prevention:**
-- Phase 75 admin setup prerequisites: explicitly list PSSO endpoints that MUST be exempted from TLS inspection
-- Phase 76 deep-dive: note the Tenant Restrictions v2 incompatibility; recommend exempting PSSO endpoints from TR v2 proxy injection OR using TR v2 client-side signaling instead of proxy injection
-
-**Phase target:** Phase 75 (prerequisites / network requirements section)
-
-**Sources:** [Microsoft Learn — Troubleshoot macOS PSSO known issues](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
+**Sources:**
+- [Microsoft Learn — Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) — plist sample explicitly shows `<string>Credential</string>`
 
 ---
 
-### DF-11: Smart card: missing Entra CBA prerequisite causes silent failure
+## AXIS 2 — Graph API Accuracy Traps
 
-**Confidence:** HIGH (Microsoft Learn — PSSO smart card method requires Certificate-Based Authentication enabled in Entra ID)
+### G-1: Documenting `platformCredentialAuthenticationMethod` as Beta When It Is GA in v1.0
 
-**Severity:** HIGH
+**Confidence:** HIGH — Context7 confirms resource and all three operations (GET single, LIST, DELETE) are in the `v1.0` Graph API endpoint, not `beta`; endpoints use `https://graph.microsoft.com/v1.0/` path prefix in all Context7-sourced documentation (source: `/microsoftgraph/microsoft-graph-docs-contrib`)
 
-**What goes wrong:** Admin configures `SmartCard` as the authentication method in the Settings Catalog PSSO policy (macOS 14+ only). The smart card is physically present and paired with a local account. PSSO profile delivers successfully. Registration prompt appears but fails silently or with a cryptic error when the user inserts the smart card. Root cause: Certificate-Based Authentication (CBA) has not been configured and enabled in the Entra ID tenant.
+**What goes wrong:**
+The v1.9 deferred item PSSO-FUT-02 (`v1.9-DEFERRED-CLEANUP.md`) carried a research flag: "keep deferred if still beta." If an author checks old training data or a stale search result that referenced the beta period, they will document this resource under `https://graph.microsoft.com/beta/` and warn readers it may change. This is wrong: the resource is GA and stable.
 
-**Why it happens:** Smart card PSSO is layered on top of Entra ID CBA. CBA is a separate Entra feature that must be pre-configured (trusted CA certificates uploaded, authentication strength policy set) before smart card PSSO registration will succeed. The Settings Catalog profile alone does not provision the Entra side.
+**Authoritative endpoints (v1.0):**
+```
+GET  https://graph.microsoft.com/v1.0/me/authentication/platformCredentialMethods
+GET  https://graph.microsoft.com/v1.0/me/authentication/platformCredentialMethods/{id}
+GET  https://graph.microsoft.com/v1.0/users/{id}/authentication/platformCredentialMethods
+DELETE https://graph.microsoft.com/v1.0/users/{id}/authentication/platformCredentialAuthenticationMethod/{id}
+```
 
-**Symptoms:**
-- Smart card PSSO registration: "authentication failed" or silent failure
-- Non-smart-card PSSO methods succeed on same device
+**Warning signs:**
+- Endpoint URL in doc uses `graph.microsoft.com/beta/`
+- A callout says "this API is in preview and subject to change"
+- Code samples reference the beta SDK namespace rather than the v1.0 namespace
 
-**Prevention:**
-- Phase 76 auth-method deep-dive: Smart card section MUST open with "Entra ID CBA must be configured first — see [Entra CBA documentation]" as a hard prerequisite callout, BEFORE any Settings Catalog steps
-- Phase 75 admin setup guide: capability table row for Smart card: label "Requires Entra CBA — additional setup"
+**Prevention strategy:**
+Phase that authors the Graph API doc MUST verify the endpoint namespace against Microsoft Graph documentation before drafting. The research guard is: confirm the URL prefix is `/v1.0/` not `/beta/`. If a future check finds the resource has been moved or renamed, it warrants a research flag in the phase plan — do not assume.
 
-**Phase target:** Phase 76 (auth-method deep-dive, Smart card section); Phase 75 (capability table)
+**Phase to address:** Graph API doc authoring phase.
 
-**Sources:** [Microsoft Learn — macOS PSSO overview](https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso); [Microsoft Learn — Configure Platform SSO](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
-
----
-
-### DF-12: Changing authentication method in existing PSSO policy triggers fleet-wide re-registration
-
-**Confidence:** HIGH (Microsoft Learn — explicitly documented)
-
-**Severity:** MEDIUM (operational disruption)
-
-**What goes wrong:** An admin modifies the `Platform SSO > Authentication Method` or `Platform SSO > Use Shared Device Keys` settings in an existing PSSO policy (e.g., changes from Password to Secure Enclave key). Intune pushes the updated profile to all targeted devices. macOS receives the updated profile and triggers Entra re-registration for ALL previously registered users simultaneously. Helpdesk is flooded with "I need to sign in again" tickets.
-
-**Prevention:**
-- Phase 75 admin setup guide: include a callout warning that authentication method changes after initial deployment cause fleet-wide re-registration; recommend piloting on a small test group before changing method in production
-- Phase 77/78 migration guide: sequence password sync to Secure Enclave key migrations through staged pilot groups, not fleet-wide policy edit
-
-**Phase target:** Phase 75 (admin setup, production deployment callout); Phase 77/78 (migration)
-
-**Sources:** [Microsoft Learn — Configure Platform SSO](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
+**Sources:**
+- Context7 `/microsoftgraph/microsoft-graph-docs-contrib` — GET list source: `api-reference/v1.0/api/platformcredentialauthenticationmethod-list.md`; DELETE source: `api-reference/v1.0/api/platformcredentialauthenticationmethod-delete.md`
 
 ---
 
-### DF-13: ADE PSSO during Setup Assistant — dynamic group assignment fails silently
+### G-2: Documenting the DELETE Operation Without the Suite's Established Safety-Callout Convention
 
-**Confidence:** HIGH (Microsoft Learn — explicitly documented for ADE-during-enrollment feature)
+**Confidence:** HIGH (internal suite convention; existing suite callout pattern uses `[!WARNING]` / `[!CAUTION]` blockquotes for destructive operations; DELETE on `platformCredentialAuthenticationMethod` triggers PSSO re-registration for the affected user)
 
-**Severity:** HIGH for orgs using the macOS 26 ADE + Setup Assistant PSSO integration
+**What goes wrong:**
+The DELETE endpoint (`DELETE /users/{id}/authentication/platformCredentialAuthenticationMethod/{id}`) is a **destructive, user-impacting operation**: it removes the user's Secure Enclave Platform Credential, forcing the user to re-register Platform SSO. If documented without a safety callout following the suite's convention, an L2 engineer running a bulk credential cleanup script could silently trigger fleet-wide re-registration.
 
-**What goes wrong:** The Platform SSO During ADE Enrollment feature requires three policies assigned to the SAME STATIC groups: the Settings Catalog PSSO policy, the Company Portal LOB app policy, and the ADE enrollment profile. If any of the three is assigned via dynamic groups, or if there is a group membership evaluation lag, the Setup Assistant wait does not receive all three policies in the correct order, and the user arrives at the desktop without PSSO registered. No error is surfaced; setup simply continues without PSSO.
+The suite's established convention for destructive operations:
+- `[!WARNING]` blockquote for operations that are reversible at significant cost or have fleet-wide impact
+- `[!CAUTION]` for operations that are irreversible or critical-path
+- Prose description of the consequence ("this action removes the user's Platform Credential and requires the user to re-register Platform SSO") in the same section as the operation
 
-**Why it happens:** Dynamic group evaluation has latency (Entra group membership evaluation can take minutes). The ADE Setup Assistant Await Final Configuration window is time-bounded. Static group assignment ensures immediate policy targeting.
+The existing suite uses this pattern in `docs/admin-setup-apv1/03-esp-policy.md`, `docs/reference/win32-app-packaging.md`, and `docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md` (the rollback / WPJ removal section, which uses "destructive" prose callouts).
 
-**Symptoms:**
-- User completes Setup Assistant and reaches desktop without PSSO registration prompt
-- Profile delivery shows some policies succeeded, others still pending at Setup Assistant exit
+**Warning signs:**
+- DELETE endpoint documented without any callout block
+- DELETE endpoint documented with only a plain-text note ("note: this deletes the credential") rather than a `[!WARNING]` or `[!CAUTION]` blockquote
+- Automation script examples that call DELETE in a loop without a dryrun or confirmation step
 
-**Prevention:**
-- Phase 75 admin setup guide (ADE subsection): explicit callout "ALL THREE policies must be assigned to the SAME static groups — dynamic groups are not supported for this flow"
+**Prevention strategy:**
+The phase plan for the Graph API doc MUST explicitly include a "safety callout required for DELETE" deliverable item. The callout should follow the `> [!WARNING]` GitHub-flavored Markdown syntax consistent with `03-esp-policy.md` and `win32-app-packaging.md`. Automation examples must include a confirmation step (e.g., `-WhatIf` for PowerShell, a `--dry-run` flag pattern for shell, or a review loop before batch deletion).
 
-**Phase target:** Phase 75 (ADE PSSO setup subsection)
+**Phase to address:** Graph API doc authoring phase — safety callout is a hard requirement, not optional polish.
 
-**Sources:** [Microsoft Learn — Add Platform SSO policy to ADE Profile](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment); [Microsoft Community Hub — New Platform SSO with ADE](https://techcommunity.microsoft.com/blog/intunecustomersuccess/new-platform-sso-with-registration-during-automated-device-enrollment-on-macos/4519846)
-
----
-
-## AXIS 2 — Version / Recency Traps
-
-### VR-1: Platform SSO GA timeline — preview vs GA distinction matters
-
-**Confidence:** HIGH (Microsoft Tech Community official blog posts)
-
-**What changed and when:**
-
-| Event | Date |
-|-------|------|
-| Platform SSO framework introduced in macOS | macOS 13 Ventura, Oct 2022 |
-| macOS 14 Sonoma adds v2 of PSSOe spec (Password sync improvements, Smart card method) | Sept 2023 |
-| Microsoft Platform SSO public **preview** | May 2024 |
-| Microsoft Platform SSO generally **available** | Aug 2025 |
-| PSSO during ADE / Setup Assistant generally **available** (Intune + macOS 26) | May 2026 |
-
-**Documentation trap:** Any doc citing "Platform SSO preview" is at minimum 2 years stale as of June 2026. Docs written near the May 2024 preview announcement may state "in preview" or use preview-era configuration steps that have since changed.
-
-**What needs a `last_verified` callout:**
-- The authentication method table (Secure Enclave key, Password sync, Smart card) — Smart card is macOS 14+ only; document the version constraint
-- The ADE + Setup Assistant PSSO flow — GA'd May 2026, macOS 26 required; must carry `last_verified`
-- Company Portal minimum version requirement: currently 5.2404.0 for standard PSSO; 5.2604.0 for ADE-enrollment PSSO
-
-**Phase target:** Phase 75 admin setup guide — all feature capability tables must carry `last_verified` dates matching the milestone close date
-
-**Sources:** [Microsoft Tech Community — PSSO Public Preview](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/platform-sso-for-macos-now-in-public-preview/4051574); [Microsoft Tech Community — PSSO GA](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/now-generally-available-platform-sso-for-macos-with-microsoft-entra-id/4437424)
+**Sources:**
+- `docs/admin-setup-apv1/03-esp-policy.md` lines 101–105 — pattern: `> [!WARNING]` blockquote for destructive operations
+- `docs/reference/win32-app-packaging.md` lines 112–116 — same pattern
+- `docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md` line 125 — "WPJ key removal is destructive" prose callout (v1.9 precedent for Secure Enclave destructive operations)
 
 ---
 
-### VR-2: macOS 15.0 through 15.2 PSSO concurrency bug — fixed in 15.3
+### G-3: Wrong Graph Permission / Scope for Listing or Deleting Platform Credentials
 
-**Confidence:** HIGH (Microsoft Learn troubleshoot guide; Apple patch notes)
+**Confidence:** HIGH — Context7 confirms the correct permission structure for `platformCredentialAuthenticationMethod`; multiple permission types exist and the least-privileged correct scope is specific
 
-**What changed:** macOS 15.0 through 15.2 has a documented concurrency bug causing PSSO device configuration corruption and re-registration loops. Fixed in macOS 15.3. The fix carried forward into macOS 26 (Tahoe).
+**What goes wrong:**
+The Graph API operations for platform credentials have distinct permissions for read vs. delete. A doc that states the wrong permission will cause either:
+- Insufficient-permission errors in automation scripts (if it understates the required scope)
+- Least-privilege violation (if it overstates and recommends a broader permission than necessary)
 
-**Documentation trap:** Any troubleshooting doc that lists "re-registration loop" as an unsolved issue is stale for 15.3+ fleets. Listing "wait for an Apple fix" as the remediation is also stale — the fix shipped in macOS 15.3.
+**Authoritative permission structure (from Context7 Microsoft Graph docs):**
 
-**What needs a `last_verified` callout:** The macOS 15 troubleshooting section for re-registration loops must note "fixed in 15.3; this section applies only to devices on 15.0 through 15.2"
+| Operation | Minimum delegated permission | Minimum application permission |
+|-----------|------------------------------|--------------------------------|
+| List/Get platform credentials | `UserAuthenticationMethod.Read.All` | `UserAuthenticationMethod.Read.All` |
+| Delete platform credential | `UserAuthenticationMethod.ReadWrite.All` | `UserAuthenticationMethod.ReadWrite.All` |
+| List own credential (`/me/`) | `UserAuthenticationMethod.Read` (self) | Not supported for `/me/` |
 
-**Phase target:** Phase 79 L1/L2 runbooks — version-gated troubleshooting steps
+There is also a specific narrow scope `UserAuthMethod-PlatformCred.Read.All` documented in the Graph permissions reference for reading platform credential methods specifically (admin consent required).
 
----
+**Warning signs:**
+- Doc lists `DeviceManagementManagedDevices.Read.All` as the required permission (this is the Intune device management scope, not the authentication method scope)
+- Doc conflates the authentication method read scope with any Intune device scope
+- Doc does not distinguish between the `/me/` (delegated) path and the `/users/{id}/` (admin application) path
 
-### VR-3: Workplace Join (WPJ) certificate storage migrated to Secure Enclave (Q3 2025)
+**Prevention strategy:**
+Phase that authors the Graph API doc MUST verify the exact permission names against the Graph permissions reference at `https://learn.microsoft.com/en-us/graph/permissions-reference` or Context7. Include the permission table in the doc (not just a sentence saying "you need admin permissions"). Distinguish the admin-automation case (application permission, acts on behalf of any user) from the delegated case (delegated permission, acts on behalf of the signed-in user).
 
-**Confidence:** MEDIUM (Jamf community announcement; Microsoft change confirmed in community sources; exact date from Jamf community thread)
+**Phase to address:** Graph API doc authoring phase — permission table is a required doc component.
 
-**What changed:** Starting approximately Q3 2025, all NEW Entra device registrations on macOS store the Workplace Join Key in the Secure Enclave rather than the user's Login Keychain. When a device completes PSSO registration, the legacy WPJ registration is removed from the keychain.
-
-**Documentation trap:** Any admin script or troubleshooting doc that checks for the WPJ key in the Login Keychain (using `security find-certificate -a | grep Microsoft` or similar) will return false negatives on PSSO-enrolled devices. The correct check is `app-sso platform -s`.
-
-**What needs a `last_verified` callout:**
-- Any reference to checking Keychain for device registration certificates must note the Q3 2025 migration date
-- L2 runbooks using `security find-certificate` for WPJ verification must be rewritten to use `app-sso platform -s`
-
-**Phase target:** Phase 79 (L1/L2 runbooks, verification steps); Phase 80 (capability matrix, device registration storage row)
-
-**Sources:** Jamf Community — upcoming change device compliance integration for macOS SSO extension
-
----
-
-### VR-4: macOS 13 Authentication Method (Deprecated) field — schema divergence
-
-**Confidence:** HIGH (Microsoft Learn Settings Catalog documentation)
-
-**What changed:** The Settings Catalog field `Authentication Method (Deprecated)` applies to macOS 13 only and supports only `Password` and `UserSecureEnclaveKey`. The non-deprecated `Platform SSO > Authentication Method` applies to macOS 14+ and also supports `SmartCard`. Smart card is NOT available on macOS 13 via any field.
-
-**Documentation trap:** Docs that show only the macOS 14+ Settings Catalog path without covering the macOS 13 deprecated path will be incomplete for mixed fleets. Conversely, docs showing only the deprecated path will be incomplete for macOS 14+ features including Smart card.
-
-**What needs a `last_verified` callout:** The Settings Catalog field name and path could change with Intune updates; the dual-path requirement is confirmed as of June 2026.
-
-**Phase target:** Phase 75 admin setup guide — side-by-side table showing macOS 13 vs 14+ field paths
+**Sources:**
+- Context7 `/microsoftgraph/microsoft-graph-docs-contrib` — `UserAuthenticationMethod Permissions` source: `api-reference/v1.0/includes/permissions/authenticationmethod-get-2-permissions.md`
+- Context7 — `Permissions Reference > UserAuthMethod-PlatformCred.Read.All` source: `concepts/permissions-reference.md`
 
 ---
 
-### VR-5: ADE + PSSO during Setup Assistant is macOS 26 only, requires Company Portal 5.2604.0
+## AXIS 3 — NUAL MDM Key Accuracy Traps
 
-**Confidence:** HIGH (Microsoft Community Hub; Microsoft Learn)
+### N-1: Shipping a Guessed MDM Plist Key Literal — the Core v1.9-Deferred Guard
 
-**What changed:** The ability to complete PSSO registration during the macOS Setup Assistant (as opposed to post-desktop-arrival) requires macOS 26 (Tahoe) and Company Portal 5.2604.0 or newer. This is a DIFFERENT Company Portal version floor than standard PSSO (which requires 5.2404.0). These are two distinct code paths with different prerequisites.
+**Confidence:** HIGH for key literal resolution — Apple `device-management` GitHub repo (official Apple MDM schema source at `https://github.com/apple/device-management/blob/release/mdm/profiles/com.apple.extensiblesso.yaml`) confirms the exact key names; MEDIUM for Intune Settings Catalog display-name-to-key-name mapping (the Settings Catalog may use a different surface name; must verify against live Intune catalog or Microsoft Learn Settings Catalog reference)
 
-**Documentation trap:** A v1.9 doc that conflates the standard post-enrollment PSSO flow (manual registration prompt after user reaches desktop) with the new ADE-during-Setup-Assistant flow will mislead admins about when and where registration happens, and will state wrong minimum version requirements.
+**What goes wrong:**
+PSSO-FUT-01 was deferred from v1.9 specifically because the MDM plist key literals were LOW confidence (Phase 77 PSSO-11 / D3=B decision). The risk is documenting a plausible but wrong key name. For example:
+- Guessing `NewUserAuthorizationMode` is correct because it matches the Settings Catalog display name — but the underlying plist key in the `com.apple.extensiblesso` payload could be `newUserAuthorizationMode` (camelCase) or `New_User_Authorization_Mode` or similar
+- Guessing `UserAuthorizationMode` without confirming whether the payload key is exactly that string or a variant
 
-**What needs a `last_verified` callout:** Mark the ADE PSSO section with `last_verified: 2026-05-11` (GA date) and a `review_by` date 90 days out. The static-groups constraint and Company Portal version floor may change in future Intune updates.
+**Authoritative research finding (2026-06-22 verification):**
+The Apple `device-management` GitHub repository YAML schema for `com.apple.extensiblesso` confirms:
+- `NewUserAuthorizationMode` — key: "The permission to apply to newly created accounts at login" (one-time, at account creation)
+- `UserAuthorizationMode` — key: "The permission to apply to an account each time the user authenticates" (persistent, per subsequent sign-in)
 
-**Phase target:** Phase 75 admin setup guide (separate ADE subsection)
+These match the Settings Catalog display names documented in guide 08's NUAL table. **The key literals ARE `NewUserAuthorizationMode` and `UserAuthorizationMode` (PascalCase).**
 
----
+**However**, before v1.10 ships these literals in the guide 08 NUAL settings table, the phase must perform a second-pass verification against (1) Microsoft Learn Settings Catalog reference page for `com.apple.extensiblesso` and (2) the live Intune admin center Settings Catalog payload schema, to confirm the Intune UI-facing key name matches the Apple schema key name. The Settings Catalog sometimes wraps Apple keys under different display names without exposing the underlying plist key.
 
-### VR-6: "Managed Apple ID" vs "Managed Apple Account" label in PSSO context
+**Warning signs:**
+- Phase plan ships key literals sourced only from training data or community blogs
+- Key literals are added to the NUAL table without citing the Apple `device-management` schema or Microsoft Learn Settings Catalog reference
+- A note is NOT added to the NUAL table indicating the source and verification date
 
-**Confidence:** HIGH (Apple rebrand 2026; v1.8 CI-3 deferred constraint)
+**Prevention strategy — the "do not ship a guessed key" guard:**
+The phase that closes PSSO-FUT-01 MUST follow this verification sequence:
+1. Check `https://github.com/apple/device-management/blob/release/mdm/profiles/com.apple.extensiblesso.yaml` for the exact Apple MDM key name (HIGH confidence source)
+2. Cross-reference against `https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos` (or the NUAL-specific Settings Catalog page) for the Intune-side surface name
+3. Only after BOTH sources are checked and agree should the key literal be inserted into guide 08
+4. If the sources disagree or the Intune key name is not found, defer again with a narrowed LOW-confidence flag (do not ship)
 
-**What changed:** Apple rebranded "Managed Apple ID" to "Managed Apple Account" in 2026. Microsoft Intune portal and some Microsoft Learn articles still use "Managed Apple ID." The v1.8-DEFERRED-CLEANUP.md carries CI-3 (corpus rename deferred until Intune portal adopts the rebrand, trigger: post-2026-07-01 quarterly tutorial refresh).
+**Phase to address:** NUAL key verification phase (the dedicated phase or task that closes PSSO-FUT-01).
 
-**Documentation trap:** v1.9 PSSO docs should follow whatever term the Intune admin center displays at the time of authoring. Do NOT sweep existing corpus occurrences (CI-3 constraint still applies). If both terms appear in adjacent Microsoft documentation, use the Intune portal term and add a disambiguation note matching the v1.6 pattern.
-
-**Phase target:** Phase 75 admin setup guide — match Intune portal terminology; add disambiguation footnote; do not trigger a corpus-wide sweep
-
----
-
-## AXIS 3 — Conceptual Confusion to Disambiguate
-
-### CD-1: Platform SSO vs Enterprise SSO plug-in vs Kerberos SSO extension
-
-**Confidence:** HIGH (Microsoft Learn "Single sign-on (SSO) for iOS/iPadOS and macOS"; "Enterprise SSO plug-in for Apple devices")
-
-**The confusion:** These three names refer to related but distinct things. Microsoft's own documentation uses "Enterprise SSO plug-in" to mean different things in different contexts.
-
-**Disambiguation cheat-sheet:**
-
-| Term | What it is | When to use |
-|------|-----------|-------------|
-| **Microsoft Enterprise SSO plug-in** | The parent umbrella component provided by Company Portal that implements Apple's SSO Extension framework. Includes BOTH Platform SSO AND the SSO app extension (redirect type). | Use when referring to the overall Company Portal component; avoid as a synonym for either sub-feature |
-| **Platform SSO (PSSO)** | The modern macOS-specific feature (macOS 13+) within the Enterprise SSO plug-in that binds the local login to Entra ID. Supports three auth methods. Performs Entra device registration. Configured via Settings Catalog, NOT Device Features template. | Use when discussing the recommended macOS 13+ authentication path |
-| **SSO app extension (redirect type)** | The legacy pre-Platform-SSO feature within the Enterprise SSO plug-in that provides token brokering for apps and browsers using Microsoft identity. Does NOT do OS-level login binding. Does NOT do Entra device registration. Configured via Device Features template or Settings Catalog redirect type. | Use when discussing what worked before Platform SSO, or what provides app-scope SSO alongside Platform SSO |
-| **Kerberos SSO extension** | Apple's BUILT-IN macOS / iOS SSO extension (separate from Microsoft's) that handles Kerberos / AD ticket-granting. Managed via MDM payload. Supports password sync to on-prem AD, smart card, local password management. | Use ONLY for on-premises Kerberos / AD scenarios. NOT for Entra ID scenarios. Can coexist with PSSO. |
-| **"Enterprise SSO"** (unqualified) | Ambiguous — used by Microsoft to mean at least three of the above depending on context. AVOID this unqualified term in docs. |  |
-
-**Documentation trap:** Writing "configure the Enterprise SSO plug-in" when meaning "configure Platform SSO" causes admins to configure the legacy redirect-type extension instead, resulting in Error 10002 conflicts.
-
-**Phase target:** Phase 75 admin setup guide (intro section disambiguation); Phase 77 legacy vs Platform SSO guide (disambiguation table required in opening section)
-
-**Sources:** [Microsoft Learn — Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin); [Microsoft Learn — SSO for iOS/iPadOS and macOS](https://learn.microsoft.com/en-us/intune/intune-service/configuration/use-enterprise-sso-plug-in-ios-ipados-macos)
+**Sources:**
+- [Apple device-management GitHub — com.apple.extensiblesso YAML schema](https://github.com/apple/device-management/blob/release/mdm/profiles/com.apple.extensiblesso.yaml) — authoritative Apple MDM payload spec
+- `docs/admin-setup-macos/08-auth-methods-deep-dive.md` lines 278–286 — existing deferred-item callout (the guide ALREADY has the deferred-item note; v1.10 replaces it with the verified key)
+- `docs/v1.9-DEFERRED-CLEANUP.md` — fuller PSSO-FUT-01 detail including resolution trigger sources
 
 ---
 
-### CD-2: Secure Enclave key vs Keychain vs FileVault key
+### N-2: Redundancy With Content Already in Guide 08's NUAL Settings Table
 
-**Confidence:** HIGH (Apple security documentation; Microsoft Learn)
+**Confidence:** HIGH (direct read of `docs/admin-setup-macos/08-auth-methods-deep-dive.md` lines 270–287)
 
-**The confusion:** All three are key or secret storage mechanisms on macOS. They are related but serve completely different purposes. Conflating them causes admins to misunderstand what PSSO is protecting and what breaks when each is disturbed.
+**What goes wrong:**
+Guide 08's NUAL section already contains a Settings Catalog settings table with three rows:
+- `Enable Create User At Login` (Boolean)
+- `New User Authorization Mode` (Enum: Standard / Admin / Groups)
+- `User Authorization Mode` (Enum: Standard / Admin / Groups)
 
-**Disambiguation cheat-sheet:**
+The deferred item is only the MDM plist key literals for the two authorization-mode settings. A v1.10 author who creates a new NUAL table or expands the NUAL section without carefully reading the existing content will:
+- Duplicate the `Enable Create User At Login` row (already documented with MDM key implicit)
+- Restate the enum values (Standard / Admin / Groups) already in the table
+- Add a second NUAL configuration section that conflicts with or is visually redundant to the existing one
 
-| Concept | What it is | Role in PSSO |
-|---------|-----------|--------------|
-| **Secure Enclave** | Hardware security processor on all Apple Silicon Macs and Intel T2 Macs. Generates and stores cryptographic keys that never leave the hardware. | For `UserSecureEnclaveKey` PSSO method: generates a per-user hardware-bound public/private key pair. Private key never leaves Secure Enclave. Used to authenticate to Entra ID without typing a password. |
-| **Keychain (Login Keychain)** | macOS software key/certificate store per user. Accessible to apps with appropriate entitlements. | Pre-PSSO: WPJ certificate stored here. Post-PSSO enrollment: WPJ cert moved to Secure Enclave. PSSO SSO tokens are stored in Keychain but derived from and protected by Secure Enclave keys. |
-| **FileVault key** | The cryptographic key used to encrypt the APFS data volume. Derived from the local user account password. | NOT the same as the Secure Enclave PSSO key. FileVault unlock always requires local password at cold boot regardless of PSSO auth method. Secure Enclave PSSO key is protected by local password as an unlock factor, so MDM-forced password resets that bypass the interactive Secure Enclave key update path can render the PSSO key inaccessible. |
+**The correct change is surgical:** Add the MDM plist key column to the EXISTING table, or add a `MDM plist key:` row beneath each entry. The deferred item is specifically the key literal — NOT a rewrite of the NUAL section.
 
-**Documentation trap:** Writing "PSSO stores keys in the Keychain" (partially true for tokens, not for the key itself) or "Touch ID unlocks FileVault" (false — Touch ID only operates after FileVault disk is unlocked by password).
+**Warning signs:**
+- Phase plan says "write NUAL section" rather than "add MDM key literals to existing NUAL table"
+- Phase plan creates a new `docs/admin-setup-macos/` file for NUAL rather than editing guide 08
+- Diff shows the entire NUAL section (`## New User At Login Window`) replaced rather than augmented
 
-**Phase target:** Phase 76 auth-method deep-dive — dedicated "What the Secure Enclave key is and is not" section; glossary entries in Phase 79/80
+**Prevention strategy:**
+Phase plan must explicitly scope PSSO-FUT-01 as a surgical edit to guide 08, not a section rewrite. Deliverable: add the plist key literal value to the two authorization-mode rows. Remove the deferred-item callout blockquote (lines 278–286 of guide 08) once the keys are confirmed. Version history row appended.
 
----
+**Phase to address:** NUAL key verification phase.
 
-### CD-3: "Passwordless" claims — what PSSO does and does not eliminate
-
-**Confidence:** HIGH
-
-**The confusion:** Marketing materials and some Microsoft Learn prose call PSSO "passwordless authentication." This is true in a narrow sense. Docs that use the term without qualification will mislead users and generate support tickets.
-
-| Claim | Accurate? | Nuance |
-|-------|-----------|--------|
-| "No password needed to sign in after enrollment" | CONDITIONALLY TRUE | Only for the interactive macOS login window after the disk is already unlocked. After cold reboot, FileVault requires the local password first. |
-| "Password sync removes the local password" | FALSE | The local password is not removed. For Password sync method, the local password becomes equal to the Entra password, but the local password still exists and is required for FileVault. |
-| "Secure Enclave key method means no password at all" | FALSE | The local account password still exists as the unlock factor for the Secure Enclave key itself. It is also required for FileVault. Users simply do not TYPE the password in normal flows because Touch ID handles authentication. |
-| "PSSO satisfies phishing-resistant MFA for Conditional Access" | TRUE | PSSO Secure Enclave key is treated as phishing-resistant MFA by Entra Conditional Access and satisfies MFA requirements. |
-| "PSSO is passwordless like Windows Hello for Business" | MEDIUM — useful analogy | Windows Hello for Business also retains local credentials for recovery. The analogy is functionally accurate as an orientation but the underlying mechanisms differ. PSSO is the Apple analogue, not an identical implementation. |
-
-**Phase target:** Phase 76 auth-method deep-dive — "What passwordless means in PSSO context" callout box early in the Secure Enclave key section
+**Sources:**
+- `docs/admin-setup-macos/08-auth-methods-deep-dive.md` lines 270–287 — existing NUAL table and deferred-item callout
 
 ---
 
-### CD-4: What Platform SSO does NOT do — anti-features admins wrongly assume
+## AXIS 4 — Doc-Integration Traps
 
-**Confidence:** HIGH
+### DI-1: Breaking the Navigation-Last Invariant
 
-| Anti-feature | What admins assume | Reality |
-|-------------|-------------------|---------|
-| Hybrid Entra join support | PSSO provides hybrid-join functionality like Windows | FALSE. macOS PSSO is ONLY supported for Entra-joined (cloud-only) deployments. Microsoft has no plans to support hybrid join for macOS. macOS cannot be Hybrid Entra joined. |
-| Replaces MDM enrollment | PSSO is an alternative to Intune enrollment | FALSE. PSSO requires the device to already be MDM-enrolled. PSSO is an authentication layer on top of enrollment, not a replacement. |
-| Provides on-premises app SSO via Kerberos | PSSO handles all SSO including on-prem Kerberos apps | FALSE. PSSO handles Entra ID (Microsoft cloud) authentication. For on-premises Kerberos / AD app SSO, the Apple Kerberos SSO extension must ALSO be configured separately. The two can coexist. |
-| Works on BYOD (User Enrolled) Macs equivalently | PSSO works identically for BYOD Macs | PARTIALLY. Standard PSSO (post-enrollment notification) works on all MDM-enrolled Macs. The ADE-during-Setup-Assistant path requires ADE. |
-| Per-device registration | PSSO registers the device once and all users benefit | FALSE. PSSO registration is PER USER. On a shared Mac, every user must complete their own PSSO registration. |
-| Conditional Access supports multi-user Macs | CA device-based policies work on shared Macs with PSSO | FALSE. CA device-based policies are not supported on macOS devices shared with multiple users. |
+**Confidence:** HIGH — navigation-last is an established invariant enforced across v1.0–v1.9; specifically enforced in Phase 80 planning (80-CONTEXT.md, 80-03-PLAN.md, 80-03-SUMMARY.md) where nav-hub edits were explicitly prohibited until Phase 81; Phase 81 was the designated nav-hub integration phase
 
-**Phase target:** Phase 77 legacy/migration guide introduction; Phase 80 capability matrix rows; Phase 79 L1/L2 pre-check lists
+**What goes wrong:**
+The navigation-last invariant means: **nav-hub files are edited LAST, in a dedicated integration phase, after all content files exist**. Nav-hub files in this suite include:
+- `docs/index.md`
+- `docs/common-issues.md`
+- `docs/quick-ref-l1.md` / `docs/quick-ref-l2.md`
+- `docs/decision-trees/06-macos-triage.md` (or equivalent triage tree)
+- Runbook index files (`docs/l1-runbooks/00-index.md`, `docs/l2-runbooks/00-index.md`)
 
----
+**For v1.10 specifically:** Guide `10-kerberos-sso-extension.md` (new file) and the dedicated Graph API doc (new file) must each be integrated into nav-hub files. If a content-authoring phase also edits `docs/index.md` or `common-issues.md` to add nav entries before the content is finished, two problems arise:
+1. Forward-link to a file that does not exist yet causes a C13 broken-link FAIL at the next audit gate
+2. If the filename changes during authoring (e.g., planned as `10-kerberos-sso.md`, shipped as `10-kerberos-sso-extension.md`), every nav-hub edit must be corrected
 
-### CD-5: "Entra registered" vs "Entra joined" distinction for macOS
+**Warning signs:**
+- Phase plan for guide 10 authoring includes a task to edit `docs/index.md`
+- Phase plan for Graph API doc includes a task to add a row to `common-issues.md`
+- A single phase both authors a new guide AND edits nav-hub files
 
-**Confidence:** HIGH (Microsoft Learn; community analysis)
+**Prevention strategy:**
+Roadmap must include a dedicated nav-hub integration phase (the equivalent of v1.9's Phase 81 SSOREF-04). Content-authoring phases for Kerberos, Graph API, and NUAL must include the explicit prohibition: "Nav-hub files (`docs/index.md`, `common-issues.md`, `quick-ref-l1/l2.md`) are NOT touched in this phase — navigation-last invariant." The integration phase runs after all content is stable.
 
-**The confusion:** Before Platform SSO, Intune-managed Macs were in state "Microsoft Entra registered" (Company Portal registered the device with a WPJ certificate in the Login Keychain). After Platform SSO is deployed, the device transitions to "Microsoft Entra joined" — a different, stronger state where the WPJ key is hardware-bound in the Secure Enclave. Using "registered" and "joined" interchangeably will confuse admins troubleshooting Conditional Access "device must be compliant or joined" errors.
+**Phase to address:** Roadmap-level design — designate one phase as the nav-hub integration phase (runs after all v1.10 content phases). Each content phase plan includes an explicit navigation-last prohibition clause.
 
-**Key distinction:**
-- **Entra registered:** Legacy state (Company Portal WPJ cert in Login Keychain). Supports device-based CA via the SSO extension passing the WPJ cert to Entra.
-- **Entra joined:** PSSO state (WPJ key in Secure Enclave, hardware-bound). Supports stronger device-based CA claims including phishing-resistant claims from Secure Enclave key. This is the state PSSO enrollment transitions devices into.
-
-**Phase target:** Phase 75 admin setup guide — "What happens to device registration state when you deploy PSSO" section; Phase 75 or 80 glossary entries
-
----
-
-## AXIS 4 — Legacy to Platform SSO Migration Pitfalls
-
-### MG-1: Migration ordering — Error 10002 from dual-profile assignment
-
-Already covered in DF-5. The migration guide must enforce an explicit ordering contract:
-
-1. Deploy new Settings Catalog PSSO policy to pilot group
-2. Confirm pilot group PSSO registration succeeds (verify `app-sso platform -s` on representative devices)
-3. THEN unassign the legacy SSO app extension profile from the pilot group
-4. Monitor for 48 hours (confirm no Error 10002, no compliance drift)
-5. Expand to full fleet; unassign legacy profile from all groups
-6. Do NOT delete the legacy profile until confirmed unassigned from all devices
-
-**Phase target:** Phase 77/78 migration guide — numbered step sequence; steps 1 and 3 must never be combined
+**Sources:**
+- `docs/admin-setup-macos/.planning/milestones/v1.9-phases/80-l1-l2-runbooks/80-CONTEXT.md` — "navigation-last invariant" doctrine and Phase 81 ownership
+- `docs/admin-setup-macos/.planning/milestones/v1.9-phases/80-l1-l2-runbooks/80-03-SUMMARY.md` — `navigation-last-invariant` pattern tag
 
 ---
 
-### MG-2: Legacy WPJ Keychain certificate checks break after PSSO migration
+### DI-2: Editing the Capability Matrix Without a Pre-Edit Anchor Inventory (C12/C13 Harness Risk)
 
-**Confidence:** HIGH (Jamf community; Microsoft Q3 2025 WPJ migration)
+**Confidence:** HIGH — this exact pitfall was documented in v1.9 research DS-3; the harness guards are active; `check-phase-58.mjs` V-58-02 and V-58-11/V-58-14 check `macos-capability-matrix.md` structure; `check-phase-63.mjs` V-63-08 has a byte-unchanged baseline blob check for `macos-capability-matrix.md` at `e91d7f9e001bb7ff4dc56a4ca98c84868fbf0716` (this baseline is FROM Phase 63, meaning any edit to the matrix will break V-63-08 unless the validator is updated atomically)
 
-**What goes wrong:** IT teams who have Jamf Extension Attributes, PowerShell scripts, or Graph API queries that check for the Workplace Join certificate in the macOS Login Keychain (using `security find-certificate` or equivalent) will get false negatives after PSSO enrollment. The WPJ key is now in the Secure Enclave (not the Keychain). These scripts will report "device not joined / not compliant" when the device IS correctly PSSO-enrolled.
+**What goes wrong:**
+The `macos-capability-matrix.md` file has:
+- A byte-unchanged baseline guard in `check-phase-63.mjs` (blob hash `e91d7f9e001bb7ff4dc56a4ca98c84868fbf0716`)
+- H2 anchor checks in `check-phase-58.mjs` (V-58-11: `## Conditional Access` must exist; V-58-14: link to `4-platform-capability-comparison.md` must exist)
+- Cross-link edges in `check-phase-81.mjs` (E3: guide 07 links to `macos-capability-matrix.md#authentication`; E4: `macos-capability-matrix.md` links to guide 07)
+- The `## Authentication` H2 section (added Phase 79) with rows for Platform SSO auth methods
 
-**Prevention:**
-- Phase 77/78 migration guide: "Update compliance monitoring scripts before migration" as a pre-migration checklist item; the correct check is `app-sso platform -s | grep "Device Registration"`
-- Phase 79 L2 runbook: note that any compliance check relying on Keychain WPJ cert must be updated for PSSO fleets
+Any v1.10 additions to the capability matrix (Kerberos SSO rows, Graph API row, updated NUAL row) will:
+1. **Break V-63-08** (byte-unchanged baseline) — because `check-phase-63.mjs` was written at Phase 63 and locked the matrix at that commit. The fix: update V-63-08 to the new blob hash in the same atomic commit as the matrix change (following the v1.9 harness-update pattern).
+2. **Risk breaking C12** — if a new H2 is added and the `4-platform-capability-comparison.md` cells pointing to those H2 anchors are not updated (link-not-copy architecture)
+3. **Risk breaking C13** — if new cross-links to new guide 10 or Graph API doc are added before those files exist
 
-**Phase target:** Phase 77/78 migration guide (pre-migration checklist); Phase 79 L2 runbooks
+**Warning signs:**
+- Phase plan edits `macos-capability-matrix.md` without a corresponding update to `check-phase-63.mjs` V-63-08 blob baseline
+- Phase plan adds a new H2 to the matrix without verifying whether `4-platform-capability-comparison.md` has cells pointing to that H2
+- Matrix edit and harness validator update are in separate commits (not atomic)
 
----
+**Prevention strategy — the "pre-edit anchor inventory" guard:**
+The phase that adds Kerberos or Graph API rows to `macos-capability-matrix.md` MUST:
+1. Run `git hash-object docs/reference/macos-capability-matrix.md` to record the current blob hash BEFORE any edits
+2. Audit all validators that reference `macos-capability-matrix.md` (`check-phase-58.mjs`, `check-phase-63.mjs`, `check-phase-81.mjs`) — list every assertion that will be affected
+3. For V-63-08: update the blob hash expectation in the same atomic commit as the matrix change
+4. For C12 (4-platform comparison): verify that any new H2 anchor is either covered by an existing `4-platform-capability-comparison.md` cell or a new cell is added in the same commit
+5. For C13: do NOT add cross-links in the matrix to guide 10 or the Graph API doc until those files exist
 
-### MG-3: PSSO rollback leaves users unable to satisfy Conditional Access
+**Phase to address:** The phase that integrates Kerberos/Graph API content into the capability matrix (likely the nav-hub integration phase or a dedicated matrix-update phase). This is the same phase that must update the harness validator — following the v1.9 Phase 79 + Phase 82 atomic harness commit pattern.
 
-**Confidence:** HIGH (Microsoft Learn — explicitly documented)
-
-**What goes wrong:** An admin assigns a PSSO policy by mistake, some users complete registration, then the admin removes the PSSO policy and reinstates the old SSO app extension profile. The affected users now have NO Entra device registration (the PSSO flow deleted the old WPJ from Keychain, and removing PSSO removes the new Secure Enclave WPJ without reinstating the legacy Keychain WPJ). These users cannot satisfy device-based Conditional Access until they re-open Company Portal and complete a fresh legacy WPJ registration manually.
-
-**Prevention:**
-- Phase 77/78 migration guide: document rollback steps explicitly — "if rolling back from PSSO, affected users must complete legacy WPJ registration via Company Portal on device"
-- Never pilot PSSO on users protected by critical CA device compliance requirements without confirming rollback procedure
-
-**Phase target:** Phase 77/78 migration guide — rollback section is mandatory, not deferrable
-
----
-
-### MG-4: Apple Kerberos SSO extension coexistence — conflated extension identifiers
-
-**Confidence:** HIGH (Microsoft Learn — confirmed the two extensions can coexist with separate identifiers)
-
-**What goes wrong:** Orgs with on-premises Kerberos resources deploy both the Apple Kerberos SSO extension (for on-prem) and Platform SSO (for Entra cloud). Both extensions are configured in Settings Catalog. An admin who configures both under the SAME `Extension Identifier` value causes one to override the other. Apple's SSO extension framework supports multiple extensions per device IF they have different identifiers.
-
-**Prevention:**
-- Phase 77 legacy/migration guide: show BOTH extension configurations as separate profile entries with their distinct identifier values; explicitly state they do NOT conflict when configured with separate identifiers
-
-**Phase target:** Phase 77 legacy/migration guide — "Coexisting with Kerberos SSO extension" section
+**Sources:**
+- `scripts/validation/check-phase-63.mjs` lines 202–220 — V-63-08 byte-unchanged baseline assertion
+- `scripts/validation/check-phase-58.mjs` lines 88, 220, 248 — H2 and cross-link assertions on `macos-capability-matrix.md`
+- `scripts/validation/check-phase-81.mjs` lines 48–49 — E3/E4 cross-link edges
+- v1.9 research `PITFALLS.md` DS-3 — identical pitfall documented for v1.9 Phase 80; same risks carry forward to v1.10
 
 ---
 
-### MG-5: Existing enrolled devices — PSSO registration requires user action, not silent MDM push
+### DI-3: The Pre-Existing Chain-Red Must Not Be Masked by the v1.10 Harness-Bump Phase
 
-**Confidence:** HIGH
+**Confidence:** HIGH — documented in `v1.9-DEFERRED-CLEANUP.md` §PRE-EXISTING-CHAIN-RED-AT-HEAD-01; evidence is the apex `check-phase-82.mjs` reporting 10 FAIL / 1 SKIPPED at v1.9 close HEAD (phases 58, 59, 60, 61, 62, 63, 64, 65, 66, 73); this state is PRE-EXISTING before any v1.10 work begins
 
-**What goes wrong:** Admins deploying PSSO to an existing enrolled fleet expect registration to be silent/automatic like MDM profile delivery. The MDM profile delivery IS silent. The user registration step is NOT. Each enrolled user must interactively respond to the "Registration Required" notification to complete PSSO. Admins who do not communicate this to users see compliance dashboards showing "PSSO active: 12%" instead of near-100% immediately after policy assignment, and a flood of confused helpdesk tickets about the notification.
+**What goes wrong:**
+The validator chain `[48..82]` is currently RED at HEAD: 10 pre-existing legacy FAILs in validators for phases 58–66/73. When v1.10 adds `check-phase-83..NN.mjs` validators and a new apex, a phase executor may:
 
-**Prevention:**
-- Phase 75 admin setup guide: "user communication is a deployment requirement, not optional" callout; provide template user communication language explaining what the notification means and why the user should complete it
-- L1 runbook: "PSSO not registered" first-check — "Did the user receive and respond to the registration notification?"
+1. **Mask the legacy FAILs by expanding CHAIN_SKIP** — adding phases 58/59/60/61/62/63/64/65/66/73 to `CHAIN_SKIP = new Set([58, 59, ...])` in the new apex validator. This hides the pre-existing FAILs, makes the new apex appear green, but silently abandons chain integrity for legacy phases.
+2. **Redefine "all PASS" to mean the new phases only** — writing the close-gate audit summary as "all v1.10 validators PASS" without disclosing that the chain remains RED for legacy phases. This satisfies the letter of the phase plan but violates the "do NOT mask via deletion" doctrine established in `v1.9-DEFERRED-CLEANUP.md`.
+3. **Fix some but not all of the legacy FAILs in a harness-bump phase** — a harness-bump phase is not the right scope for a class-wide RETRO-style scan. If only some FAILs are fixed, the chain appears partially fixed but not to 0 FAIL, creating ambiguity about which FAILs are new regressions vs. known legacy.
 
-**Phase target:** Phase 75 (admin setup, deployment communication plan section); Phase 79 (L1 runbooks)
+**The correct approach:**
+The v1.9-DEFERRED-CLEANUP PRE-EXISTING-CHAIN-RED-AT-HEAD-01 resolution mechanism is: a dedicated chain-health phase (1 phase, 2-4 plans) performing a RETRO-style scan of `check-phase-{58..66, 73}.mjs` for HEAD-coupled assertions, converting them to frozen-aware reads via `_lib/frozen-at-close.mjs`, and restoring/regenerating `73-RETRO-INVENTORY.md`. This is DISTINCT from the harness-lineage-bump phase.
 
----
+**Warning signs:**
+- Harness-bump phase plan includes `CHAIN_SKIP` entries for any of phases 58–66/73
+- Harness-bump phase plan close-gate audit summary does not report the full chain FAIL count (passes when "new phases all GREEN" without mentioning the legacy RED)
+- The chain-health pass is folded into the harness-bump phase scope without a pre-fold adversarial-review decision
 
-## AXIS 5 — Documentation / Project-Specific Traps
+**Prevention strategy — the "do not mask pre-existing chain-red" guard:**
+The v1.10 roadmap MUST explicitly schedule the chain-health pass as a separate decision point. Options (to be resolved at roadmap, not execution time):
+- **Option A (preferred by DEFERRED-CLEANUP):** Dedicated early chain-health phase before the v1.10 harness-lineage bump, so the bump phase inherits a GREEN chain
+- **Option B:** Fold chain-health into the harness-lineage-bump phase scope (requires adversarial-review to validate scope discipline before execution)
+- **Option C (PROHIBITED):** Mask legacy FAILs via CHAIN_SKIP expansion — violates the "do NOT mask" doctrine
 
-### DS-1: Supervised-only callout misuse — PSSO is not supervision-gated
+The harness-bump phase MUST document the chain state honestly: if legacy FAILs remain at close-gate, the audit summary must list them as "pre-existing legacy FAILs (out-of-scope for this phase)" with the count. The count must match the count documented in `v1.9-DEFERRED-CLEANUP.md` (currently 10 FAIL / 1 SKIPPED).
 
-**Confidence:** HIGH (Apple Platform Deployment; MDM supervision is at the device level; PSSO is an SSO extension feature)
+**Phase to address:** Roadmap-level design for the chain-health phase; harness-lineage-bump phase must NOT fold chain-health unless the adversarial-review process approves the fold.
 
-**What goes wrong:** The suite's iOS/macOS docs use supervised-only callout formatting for features that require device supervision (ADE-enrolled, supervised via ABM). Authors writing PSSO docs may incorrectly apply this callout to PSSO features. Platform SSO is NOT a supervised-only feature — it works on any MDM-enrolled Mac, whether supervised (ADE) or not. The only PSSO sub-feature that requires ADE is the new "PSSO during Setup Assistant" flow (macOS 26), which requires ADE because it runs inside Setup Assistant.
-
-**Prevention:**
-- Phase 75 admin setup guide: DO NOT put a supervised-only callout on the main PSSO configuration section
-- DO put an "ADE-only" callout (distinct from supervised-only) on the "PSSO during Setup Assistant" subsection
-- Phase 80 capability matrix: "PSSO during ADE Setup Assistant" row = ADE-only; "PSSO (post-enrollment)" row = all MDM-enrolled (not supervision-gated)
-
-**Phase target:** Phase 75 (admin setup); Phase 80 (capability matrix integration)
-
----
-
-### DS-2: `last_verified` dates on rapidly-changing PSSO ecosystem
-
-**Confidence:** HIGH (internal corpus pattern; PSSO evolved substantially in 2024-2026)
-
-**What goes wrong:** Platform SSO docs that do not carry `last_verified` / `review_by` front matter, or that carry the initial authoring date and never get refreshed, will become stale within one or two Company Portal releases. The PSSO ecosystem has changed substantially: preview (May 2024) to GA (Aug 2025), macOS 15 concurrency bug fix (15.3), ADE integration GA (May 2026), macOS 26 simplified setup. Any doc written in mid-2026 could be wrong for macOS 27 or Intune updates within 6 months.
-
-**Prevention:**
-- All PSSO-specific docs in v1.9 MUST carry `last_verified` and `review_by` front matter with a 90-day review cycle (shorter than some suite docs given the pace of ecosystem change)
-- Audit harness v1.9 check: validate that files in `docs/admin-setup-macos/` scoped to PSSO topics carry `review_by` within 90 days of `last_verified`
-
-**Phase target:** Phase 75 through Phase 79 (all content phases); Phase 80 (audit harness integration check)
-
----
-
-### DS-3: Capability matrix cell drift — new PSSO rows intersecting existing FileVault/Secure Enclave rows
-
-**Confidence:** HIGH (internal pattern from v1.5 DA-4 / v1.6 DA-4 anchor-stability history)
-
-**What goes wrong:** The macOS capability matrix will need new rows for Platform SSO auth methods (Secure Enclave key / Password sync / Smart card) and a PSSO registration state row. If existing FileVault and Secure Enclave rows are modified to cross-reference PSSO without pre-edit anchor inventory handling, the `4-platform-capability-comparison.md` cells pointing to those anchors will break (C13 / C12 failures at audit gate).
-
-**Prevention:**
-- Phase 80 capability matrix integration: run the pre-edit anchor inventory audit BEFORE any edits to capability matrix files (inherit v1.5 Phase 58 Plan 58-05 contract)
-- New PSSO rows added BELOW existing rows where possible (preserve anchor offsets for existing rows)
-- C12 math update: if new H2 additions change expected cell count, update the v1.9-milestone-audit.mjs C12 validator math at the same time (atomic harness commit pattern)
-
-**Phase target:** Phase 80 (capability matrix); pre-merge anchor inventory is a hard contract item in the phase plan
-
----
-
-### DS-4: Cross-link integrity for new L1/L2 runbooks
-
-**Confidence:** HIGH (internal pattern; prior milestones repeatedly hit broken cross-link issues at audit gate)
-
-**What goes wrong:** v1.9 will create new L1 runbooks (PSSO registration not working, Secure Enclave key verification) and L2 runbooks (PSSO log collection, Entra registration state investigation). These runbooks will require bidirectional cross-links from:
-- `docs/common-issues.md` (symptom routing)
-- `docs/quick-ref-l1.md` and `docs/quick-ref-l2.md` (quick reference cards)
-- `docs/admin-setup-macos/03-configuration-profiles.md` (existing SSO stub)
-- `docs/l1-runbooks/00-index.md` and `docs/l2-runbooks/00-index.md`
-
-If any bidirectional links are missed, C13 (broken link check) will fail at milestone close. Based on prior milestones, the highest-risk missed links are in the index files and quick-ref cards.
-
-**Prevention:**
-- Phase 79 L1/L2 runbooks: pre-authoring cross-link inventory (list all files that will need forward-links to new runbooks; lock this list in the phase plan before authoring begins)
-- Confirm next runbook file sequence numbers before authoring (check current l1-runbooks file count; next after #33 Linux = #34 for macOS PSSO L1)
-
-**Phase target:** Phase 79 (runbook authoring — pre-authoring cross-link inventory contract); Phase 80 (integration / hub edits / cross-link closure checklist)
-
----
-
-### DS-5: Existing stub in 03-configuration-profiles.md contains inaccurate SSO description
-
-**Confidence:** HIGH (directly observed from the file read; lines 157-168)
-
-**What is currently inaccurate:**
-The existing stub at `docs/admin-setup-macos/03-configuration-profiles.md` lines 157-168 states:
-
-> "Platform SSO (macOS 14+): Binds the macOS login password to Entra ID credentials; enables passwordless login via Touch ID or smart card"
-
-Three inaccuracies:
-1. "Binds the macOS login password" — only accurate for the Password sync method. NOT accurate for Secure Enclave key (no password sync) or Smart card.
-2. "macOS 14+" — the Platform SSO framework is available from macOS 13; macOS 14 is RECOMMENDED (and required only for Smart card). Stating 14+ makes the feature appear unavailable on macOS 13.
-3. The description conflates all three auth methods as if they are one feature.
-
-**Prevention:**
-- When the full PSSO setup guide is authored in Phase 75, the SSO section in `03-configuration-profiles.md` (lines 157-168) must be replaced with a brief accurate summary plus a forward-link to the new PSSO admin guide
-- This is a surgical edit to the existing stub only; the surrounding 03-configuration-profiles.md structure is unchanged
-- Determine in Phase 75 planning whether this stub replacement is best done in Phase 75 itself or a dedicated surgical edit phase
-
-**Phase target:** Phase 75 (or the opening phase of the milestone; resolve in phase planning)
+**Sources:**
+- `v1.9-DEFERRED-CLEANUP.md` §PRE-EXISTING-CHAIN-RED-AT-HEAD-01 — full evidence, root-cause class, resolution mechanism, estimated effort
+- `.planning/phases/82-harness-lineage-bump-terminal-re-audit-milestone-close/82-02-SUMMARY.md` §Known Issue — the precedent Phase 82 set for honest reporting of pre-existing FAILs
+- `.planning/phases/82-harness-lineage-bump-terminal-re-audit-milestone-close/82-03-AUDIT-RESULTS.md` §Pre-existing legacy chain FAILs — cross-OS EXACT MATCH evidence
 
 ---
 
@@ -700,11 +468,11 @@ Three inaccuracies:
 
 | Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
 |----------|------------------|----------------|-----------------|
-| Document only Secure Enclave key method (skip Password sync + Smart card) | Faster authoring | Admins with mixed-method needs escalate repeatedly; missing CBA requirements for smart card create reputational risk for the docs | Never — all three auth methods are in-scope per v1.9 milestone |
-| Copy-paste Microsoft's "configure Platform SSO" Learn page verbatim | Zero content authoring effort | Attribution / license concern; Microsoft Learn content changes without notice; no org-specific context | Never |
-| Skip the macOS 13 deprecated-field path (document macOS 14+ only) | Cleaner docs | Breaks for any org with macOS 13 devices still in fleet | Acceptable ONLY IF the docs explicitly declare macOS 14 minimum floor with a hard callout |
-| Use `last_verified` from authoring date and never schedule a review | No process overhead | PSSO ecosystem is rapidly evolving; docs become misleading within 6 months | Never for PSSO-specific docs; 90-day review cycle required |
-| Write L1 runbooks without `app-sso platform -s` as the first verification step | Simpler runbooks | All PSSO troubleshooting bottlenecks on escalations; this command is the diagnostic entry point | Never |
+| Source Kerberos Extension Identifier from guide 09 prose rather than Apple dev docs | Faster — guide 09 mentions both identifiers | Guide 09 prose is correct but not the authoritative source; if guide 09 is ever updated, the Kerberos guide may silently diverge | Never — always source from Apple developer documentation directly |
+| Document Graph API DELETE without a safety callout | Simpler doc | A bulk-delete script without a callout leads to accidental PSSO fleet re-registration; no way to undo without user-by-user re-enrollment | Never — suite convention requires `[!WARNING]` for all destructive operations |
+| Ship NUAL MDM key literals sourced only from community blogs | Resolves PSSO-FUT-01 immediately | Wrong key name in a Settings Catalog table is worse than a deferred-item note; it creates silent misconfigurations | Never — Apple `device-management` schema + MS Learn verification required first |
+| Fold chain-health RETRO pass into the harness-lineage-bump phase without adversarial-review | Fewer phases | If chain-health work overruns, it balloons the harness-bump phase; if chain-health is incomplete, the new apex inherits partially-fixed legacy state | Only after adversarial-review approves the fold (per v1.9 Phase 80 gray-area precedent) |
+| Edit `macos-capability-matrix.md` and update the harness validator in separate commits | Easier review of individual changes | V-63-08 will FAIL between the two commits, creating a transient broken-chain state; breaks the atomic-commit indivisibility invariant | Never — matrix edit and V-63-08 blob update must be atomic |
 
 ---
 
@@ -712,90 +480,76 @@ Three inaccuracies:
 
 | Integration | Common Mistake | Correct Approach |
 |-------------|----------------|------------------|
-| Intune Settings Catalog + Company Portal | Assuming Intune delivers PSSO silently without Company Portal involvement | Company Portal is the SSO extension host; PSSO will not activate without Company Portal 5.2404.0+ installed and running |
-| Entra CA + PSSO registration bootstrapping | Requiring device compliance before PSSO is registered on new enrollments | Exclude new-enrollment devices from strict CA compliance requirement during PSSO bootstrapping window |
-| Apple Kerberos extension + PSSO | Configuring both under the same Extension Identifier value | Each SSO extension must have its own unique Extension Identifier in separate profile entries |
-| ADE enrollment profile + PSSO policy | Assigning to dynamic groups for ADE PSSO during Setup Assistant | Static groups only; dynamic group evaluation latency breaks the time-bounded Await Final Configuration window |
-| Corporate proxy (TLS inspection) + PSSO | Not exempting PSSO endpoints from TLS inspection | Exempt PSSO auth endpoints from TLS inspection; or use TR v2 client-side signaling instead of proxy injection |
-| Smart card PSSO + Entra CBA | Deploying smart card PSSO profile before Entra CBA is configured | Configure and verify Entra CBA (trusted CAs uploaded, authentication strength policy set) before deploying smart card PSSO |
-
----
-
-## Phase-Specific Warnings
-
-| Phase Topic | Likely Pitfall | Mitigation |
-|-------------|---------------|------------|
-| Phase 75 — Admin setup guide | Error 10002 from legacy profile coexistence; missing macOS 13 deprecated field (Error 10001); per-user MFA blocker; ADE dynamic-group failure; existing stub inaccuracies | Deployment order checklist; dual-field Settings Catalog coverage; MFA prerequisite in step 1; static-groups callout for ADE; surgical stub replacement |
-| Phase 76 — Auth-method deep-dive | "Passwordless" overclaim; FileVault cold-boot interaction misconception; Secure Enclave key loss after password reset; AD-bound account Password sync silent failure; missing Entra CBA prerequisite for Smart card | Passwordless caveat callout box; FileVault interaction sub-section; key loss recovery documented; AD-bound callout in Password sync section; CBA prerequisite callout opening Smart card section |
-| Phase 77 — Legacy Enterprise SSO plug-in | CD-1 terminology confusion (Enterprise SSO vs Platform SSO); Kerberos coexistence; comparison table framing of what Legacy does NOT do | Disambiguation table in opening section; coexistence section with distinct Extension Identifiers shown |
-| Phase 78 — Migration guide | MG-1 Error 10002 ordering; MG-2 Keychain compliance script breakage; MG-3 rollback leaves CA-blocked users | Numbered migration step sequence; pre-migration checklist (update scripts first); rollback section mandatory |
-| Phase 79 — L1/L2 runbooks | DS-4 cross-link gaps; VR-3 WPJ Keychain checks in L2 runbooks; DF-8 macOS 15.0-15.2 version-gated step | Pre-authoring cross-link inventory; replace `security find-certificate` with `app-sso platform -s`; version gate the re-registration loop troubleshooting step |
-| Phase 80 — Capability matrix + integration | DS-3 anchor drift; DS-1 supervised-only callout misuse; DS-2 missing `last_verified` dates; DS-4 hub link gaps | Pre-edit anchor inventory; ADE-only vs supervised-only distinction enforced; 90-day review cycle dates on all PSSO docs |
+| Kerberos extension + PSSO coexistence | Using the same `Extension Identifier` value for both extensions in Intune Settings Catalog | Each extension must be in a SEPARATE profile entry with its own identifier: `com.apple.AppSSOKerberos.KerberosExtension` for Kerberos; `com.microsoft.CompanyPortalMac.ssoextension` for PSSO |
+| Graph API DELETE + safety convention | Documenting DELETE without a blockquote safety callout | Follow the `> [!WARNING]` pattern from `03-esp-policy.md`; include "removes user's Platform Credential; requires PSSO re-registration" as the consequence statement |
+| NUAL key literals + guide 08 existing content | Writing a new NUAL section or new file | Surgical edit to guide 08's existing NUAL table only; add MDM key column to the two authorization-mode rows; remove the deferred-item callout blockquote |
+| Capability matrix + V-63-08 baseline | Editing `macos-capability-matrix.md` without updating `check-phase-63.mjs` V-63-08 | Run `git hash-object` pre-edit and post-edit; update V-63-08 blob hash in the same atomic commit as the matrix file change |
+| Nav-hub integration + content authoring | Adding `docs/index.md` entries in a content-authoring phase | Nav-hub edits belong in the dedicated integration phase; content-authoring phases must explicitly prohibit nav-hub file edits |
 
 ---
 
 ## "Looks Done But Isn't" Checklist
 
-- [ ] **PSSO policy delivery:** Profile shows Succeeded in Intune — but has the user completed registration? Check `app-sso platform -s` on device, not just Intune portal.
-- [ ] **Secure Enclave key method:** Settings Catalog profile delivered — but is Company Portal 5.2404.0+ installed AND running? Old CP versions silently fail.
-- [ ] **Smart card method:** PSSO policy delivered — but is Entra CBA configured in the tenant? Smart card PSSO is non-functional without it.
-- [ ] **Mixed fleet (macOS 13 + 14):** Profile targets macOS 13 devices — but does it include BOTH the deprecated AND non-deprecated Authentication Method fields? Missing deprecated field = Error 10001 on macOS 13.
-- [ ] **Legacy SSO extension removed:** PSSO policy assigned — but is the old Device Features SSO app extension profile still assigned to overlapping groups? If yes, Error 10002 will suppress registration.
-- [ ] **AD-bound Macs:** Password sync method configured — but are any target Macs AD-bound (mobile accounts)? If yes, registration will silently fail for those users.
-- [ ] **Conditional Access bootstrapping:** New-device PSSO deployment — is there a CA policy requiring device compliance that will block user registration before compliance can be evaluated? If yes, CA exclusion for enrollment group is required.
-- [ ] **ADE PSSO during Setup Assistant:** Three required policies assigned — but are ALL THREE assigned to the SAME static groups? Any dynamic group = silent failure at Setup Assistant exit.
-- [ ] **Existing stub accuracy:** Has the SSO section in `03-configuration-profiles.md` (lines 157-168) been replaced with a correct summary + forward-link? The existing text misrepresents all three auth methods.
-- [ ] **Supervised-only callout not misapplied:** Is the supervised-only callout absent from the main PSSO section? PSSO is not supervised-only; only the ADE-during-Setup-Assistant sub-feature is ADE-only.
-- [ ] **Cross-links bidirectional:** Do all new L1/L2 runbooks have back-links from `docs/l1-runbooks/00-index.md`, `docs/l2-runbooks/00-index.md`, `docs/common-issues.md`, and `docs/quick-ref-l1.md` / `docs/quick-ref-l2.md`?
+- [ ] **Kerberos guide identifier:** Is `com.apple.AppSSOKerberos.KerberosExtension` sourced from Apple developer documentation (not from guide 09 prose or memory)?
+- [ ] **Kerberos guide payload type:** Does the Kerberos profile example use `Type = Credential` (not `Redirect`)?
+- [ ] **Kerberos guide scope:** Does the guide avoid AD admin content beyond a brief dependency note?
+- [ ] **Graph API endpoint namespace:** Does every Graph API example use `https://graph.microsoft.com/v1.0/` (not `/beta/`)?
+- [ ] **Graph DELETE safety callout:** Is there a `[!WARNING]` or `[!CAUTION]` blockquote on the DELETE endpoint section?
+- [ ] **Graph permission table:** Does the doc include a permission table distinguishing read vs. delete scopes?
+- [ ] **NUAL key verification:** Are the plist key literals sourced from Apple `device-management` schema AND cross-verified against Microsoft Learn Settings Catalog reference (not guessed)?
+- [ ] **NUAL surgical edit:** Is the change scoped to adding key literals to the existing guide 08 table (not a rewrite)?
+- [ ] **Capability matrix harness:** Is V-63-08 blob hash updated in the same atomic commit as the matrix file change?
+- [ ] **Navigation-last invariant:** Do all content-authoring phase plans explicitly prohibit editing nav-hub files?
+- [ ] **Chain-red honest reporting:** Does the harness-bump phase audit summary report the full chain FAIL count (including any remaining legacy FAILs), not just the new-phase count?
 
 ---
 
-## Recovery Strategies
+## Pitfall-to-Phase Mapping
 
-| Pitfall | Recovery Cost | Recovery Steps |
-|---------|---------------|----------------|
-| Registration prompt never appeared | LOW | User signs out and signs back in; registration prompt re-appears |
-| Registration dismissed by user | LOW | User signs out and signs back in; OR L1 instructs user to re-open Company Portal |
-| Secure Enclave key lost after MDM password reset | LOW-MEDIUM | User signs out and signs back in; completes re-registration flow; no data loss |
-| Error 10002 (legacy profile conflict) | LOW | Admin unassigns legacy SSO app extension profile; Intune re-evaluates; PSSO policy reapplies; users complete registration |
-| PSSO rollback leaves CA-blocked users | HIGH | Admin re-assigns legacy WPJ registration path; each affected user must open Company Portal and complete manual WPJ registration; may require L2 hands-on per device |
-| AD-bound Mac password sync failure | MEDIUM | Unbind Mac from AD, convert mobile account to local account, re-attempt PSSO registration; OR switch auth method to Secure Enclave key |
-| macOS 15.0 through 15.2 re-registration loop | MEDIUM | Upgrade device to macOS 15.3+; re-registration loop ceases |
-| Smart card PSSO fails — Entra CBA not configured | HIGH | Configure Entra CBA (upload CA certificates, set authentication strength policy); this requires Entra Global Admin and is a multi-day provisioning process for the Entra side alone |
-| ADE PSSO during Setup Assistant not triggered | MEDIUM | Wipe and re-enroll device with corrected static group assignments AND correct Await Final Configuration = Yes; no in-place fix for devices that have already passed Setup Assistant |
+| Pitfall | Prevention Phase | Verification |
+|---------|-----------------|--------------|
+| K-1 Wrong extension identifier | Kerberos guide authoring | Phase plan cites Apple dev docs as source; guide contains the literal `com.apple.AppSSOKerberos.KerberosExtension` |
+| K-2 Extension conflation with PSSO | Kerberos guide authoring | Opening disambiguation section present; does not contradict guide 09 |
+| K-3 Stale `app-sso` CLI syntax | Kerberos guide authoring | Verify against man page; no `app-sso diagnose` in guide |
+| K-4 Out-of-scope AD content | Kerberos guide authoring | SCOPE checklist item in phase plan; no AD admin how-to steps |
+| K-5 Wrong payload type (Redirect vs Credential) | Kerberos guide authoring | Every Kerberos plist example uses `Type = Credential` |
+| G-1 Beta vs GA Graph endpoint | Graph API doc authoring | Endpoint URLs confirmed as `v1.0` before doc is written |
+| G-2 DELETE without safety callout | Graph API doc authoring | `[!WARNING]` blockquote present on DELETE section |
+| G-3 Wrong Graph permission scope | Graph API doc authoring | Permission table present with least-privilege scopes verified |
+| N-1 Guessed NUAL key literal | NUAL key verification (PSSO-FUT-01 close) | Two-source verification: Apple schema + Microsoft Learn; source citation in guide 08 |
+| N-2 NUAL content redundancy | NUAL key verification | Diff shows surgical addition to existing table only; deferred-item callout removed |
+| DI-1 Navigation-last broken | Roadmap + each content phase plan | Nav-hub prohibition clause in every content-phase plan; dedicated integration phase in roadmap |
+| DI-2 Capability matrix without anchor inventory | Matrix-update/integration phase | Pre-edit anchor inventory step in phase plan; V-63-08 update in same atomic commit |
+| DI-3 Chain-red masked | Harness-lineage-bump phase | Audit summary reports full chain FAIL count; no CHAIN_SKIP entries for phases 58–66/73 |
 
 ---
 
 ## Sources
 
-### HIGH confidence (official Microsoft Learn and Apple Platform Deployment)
+### HIGH confidence (official Apple and Microsoft documentation)
 
-- [Microsoft Learn — Configure Platform SSO for macOS devices](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-macos)
-- [Microsoft Learn — macOS Platform single sign-on known issues and troubleshooting](https://learn.microsoft.com/en-us/entra/identity/devices/troubleshoot-macos-platform-single-sign-on-extension)
-- [Microsoft Learn — macOS Platform Single Sign-on (PSSO) overview](https://learn.microsoft.com/en-us/entra/identity/devices/macos-psso)
-- [Microsoft Learn — Enterprise SSO plug-in for Apple devices](https://learn.microsoft.com/en-us/entra/identity-platform/apple-sso-plugin)
-- [Microsoft Learn — Configure Enterprise SSO extension for macOS with Intune](https://learn.microsoft.com/en-us/intune/intune-service/configuration/use-enterprise-sso-plug-in-macos-with-intune)
-- [Microsoft Learn — Add Platform SSO policy to ADE Profile on macOS](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-during-enrollment)
-- [Apple Support — Platform Single Sign-on for macOS](https://support.apple.com/guide/deployment/platform-sso-for-macos-dep7bbb05313/web)
-- [Apple Support — The Secure Enclave](https://support.apple.com/guide/security/the-secure-enclave-sec59b0b31ff/web)
-- [Microsoft Tech Community — PSSO Now Generally Available](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/now-generally-available-platform-sso-for-macos-with-microsoft-entra-id/4437424)
-- [Microsoft Tech Community — PSSO during ADE GA](https://techcommunity.microsoft.com/blog/microsoft-entra-blog/platform-sso-during-automated-device-enrollment-is-now-generally-available-for-m/4436813)
-- [Microsoft Tech Community — New Platform SSO with ADE](https://techcommunity.microsoft.com/blog/intunecustomersuccess/new-platform-sso-with-registration-during-automated-device-enrollment-on-macos/4519846)
+- [Apple Developer Docs — ExtensibleSingleSignOnKerberos](https://developer.apple.com/documentation/devicemanagement/extensiblesinglesignonkerberos)
+- [Apple device-management GitHub — com.apple.extensiblesso YAML schema](https://github.com/apple/device-management/blob/release/mdm/profiles/com.apple.extensiblesso.yaml) — authoritative MDM plist key names including `NewUserAuthorizationMode` and `UserAuthorizationMode`
+- [Apple Support — Extensible Single Sign-on Kerberos MDM payload settings](https://support.apple.com/guide/deployment/dep13c5cfdf9/web)
+- [Microsoft Learn — Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) — plist sample with `com.apple.AppSSOKerberos.KerberosExtension` and `Type = Credential`; last updated 2024-05-13, re-verified 2026-06-15
+- [Microsoft Learn — Platform SSO scenarios for macOS (Settings Catalog)](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos) — end user experience settings table including `New User Authorization Mode` and `User Authorization Mode` display names; last updated 2026-05-11
+- Context7 `/microsoftgraph/microsoft-graph-docs-contrib` — confirmed `platformCredentialAuthenticationMethod` in `api-reference/v1.0/` (GET, LIST, DELETE all GA); permission scopes in `concepts/permissions-reference.md`
+- [Microsoft Graph Docs — platformCredentialAuthenticationMethod-list (v1.0)](https://github.com/microsoftgraph/microsoft-graph-docs-contrib/blob/main/api-reference/v1.0/api/platformcredentialauthenticationmethod-list.md)
+- [Microsoft Graph Docs — platformCredentialAuthenticationMethod-delete (v1.0)](https://github.com/microsoftgraph/microsoft-graph-docs-contrib/blob/main/api-reference/v1.0/api/platformcredentialauthenticationmethod-delete.md)
+- [app-sso man page](https://keith.github.io/xcode-man-pages/app-sso.1.html)
 
-### MEDIUM confidence (community sources with official anchors)
+### HIGH confidence (internal v1.9 lineage)
 
-- [Apple Developer Forums — Platform SSO registration fails on Mobile AD accounts](https://developer.apple.com/forums/thread/803802)
-- [scloud.work — Intune Assignment Error 10002 Platform SSO](https://scloud.work/intune-assigment-error-10002-platform-sso/)
-- [intuneirl.com — Platform SSO Deep Dive](https://intuneirl.com/implementing-platform-sso-for-macos-a-deep-dive-into-configuration-troubleshooting/)
-- [intuneirl.com — Complete macOS SSO Playbook](https://intuneirl.com/the-complete-macos-sso-playbook-advanced-configuration-strategies-explained/)
-- [Twocanoes — PSSO Technical Deep Dive](https://twocanoes.com/psso-technical-deep-dive/)
-- Jamf Community — upcoming change device compliance integration for macOS SSO extension
-
-### Internal v1.0-v1.8 lineage (HIGH confidence for doc-authoring pitfalls)
-
-- `.planning/PROJECT.md` (v1.5 D-10 sibling-matrix-anchor-pin; v1.6 DA-4 anchor-stability; v1.8 CI-3 deferred constraint; sequential-on-main-tree constraint)
-- `docs/admin-setup-macos/03-configuration-profiles.md` (existing SSO stub — lines 157-168 contain the inaccurate description identified in DS-5)
+- `docs/admin-setup-macos/08-auth-methods-deep-dive.md` lines 270–287 — existing NUAL table and deferred-item callout (PSSO-FUT-01)
+- `docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md` §Kerberos SSO Extension (Coexistence) — lines 140–148
+- `.planning/milestones/v1.9-DEFERRED-CLEANUP.md` §PSSO-FUT-01, §PSSO-FUT-02, §PSSO-FUT-04, §PRE-EXISTING-CHAIN-RED-AT-HEAD-01
+- `scripts/validation/check-phase-63.mjs` lines 202–220 — V-63-08 byte-unchanged baseline for `macos-capability-matrix.md`
+- `scripts/validation/check-phase-58.mjs` lines 88, 220, 248 — H2 and cross-link assertions on `macos-capability-matrix.md`
+- `scripts/validation/check-phase-81.mjs` lines 48–49 — E3/E4 cross-link edges
+- `docs/admin-setup-apv1/03-esp-policy.md` lines 101–105 — `[!WARNING]` callout convention for destructive operations (suite pattern)
+- `.planning/milestones/v1.9-phases/80-l1-l2-runbooks/80-CONTEXT.md` — navigation-last invariant doctrine
+- `.planning/phases/82-harness-lineage-bump-terminal-re-audit-milestone-close/82-02-SUMMARY.md` — pre-existing chain-red honest reporting precedent
 
 ---
-*Pitfalls research for: macOS Platform SSO + Secure Enclave (v1.9 milestone)*
-*Researched: 2026-06-20*
+*Pitfalls research for: v1.10 macOS Platform SSO follow-ons (Kerberos SSO extension, Graph API, NUAL)*
+*Researched: 2026-06-22*

@@ -1,8 +1,8 @@
 # Architecture Research
 
-**Domain:** Documentation information architecture — Platform SSO + Secure Enclave integration into an existing macOS Intune documentation suite
-**Researched:** 2026-06-20
-**Confidence:** HIGH (grounded in direct file inspection of all named integration points)
+**Domain:** Documentation information architecture — v1.10 Platform SSO follow-ons (Kerberos guide, Graph-API doc, NUAL key edit) integrating into an existing macOS Intune documentation suite
+**Researched:** 2026-06-22
+**Confidence:** HIGH (grounded in direct file inspection of all named integration points; v1.9 close state verified)
 
 ---
 
@@ -10,46 +10,54 @@
 
 ### System Overview
 
-The existing documentation suite uses a layered hub-and-spoke architecture. Content is organized by function tier (admin setup / lifecycle / runbooks / reference / nav hubs) and connected by bidirectional cross-links. Every layer that touches macOS must be updated when a new macOS feature ships.
+The suite uses the same layered hub-and-spoke architecture established across v1.0–v1.9. v1.10 adds three new content surfaces and one surgical edit into this structure. The key integration question is where the Graph-API doc lives — see the Component Responsibilities section and the gray-area call below.
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      NAVIGATION HUBS (append-only)                  │
-│  docs/index.md  |  docs/common-issues.md  |  quick-ref-l1/l2.md    │
-├─────────────────────────────────────────────────────────────────────┤
-│                   ADMIN SETUP GUIDES (numbered)                      │
-│  docs/admin-setup-macos/00-overview.md  (Mermaid sequence diagram)  │
-│  01-abm  02-enrollment  03-config-profiles  04-app  05-compliance   │
-│  06-config-failures   [NEW 07-platform-sso-setup.md]               │
-│                        [NEW 08-auth-methods-deep-dive.md]           │
-│                        [NEW 09-enterprise-sso-plugin-migration.md]  │
-├─────────────────────────────────────────────────────────────────────┤
-│                  LIFECYCLE NARRATIVE (extend in-place)              │
-│  docs/macos-lifecycle/00-ade-lifecycle.md  (7-stage)               │
-│             Stage 4: Setup Assistant  -- SSO extension profile      │
-│             Stage 6: Company Portal   -- Entra device registration  │
-│             Stage 7: Ongoing MDM      -- SSO key operation          │
-├─────────────────────────────────────────────────────────────────────┤
-│               L1 / L2 RUNBOOKS (next sequential numbers)            │
-│  docs/l1-runbooks/35-macos-sso-sign-in-failure.md   [NEW]          │
-│  docs/l1-runbooks/36-macos-secure-enclave-key.md    [NEW]          │
-│  docs/l2-runbooks/27-macos-sso-investigation.md     [NEW]          │
-├─────────────────────────────────────────────────────────────────────┤
-│                  REFERENCE LAYER (surgical extensions)              │
-│  docs/reference/macos-capability-matrix.md  -- auth rows added      │
-│  docs/reference/4-platform-capability-comparison.md  -- macOS cells │
-├─────────────────────────────────────────────────────────────────────┤
-│                    GLOSSARY LAYER (reciprocal)                       │
-│  docs/_glossary-macos.md  -- 3 new entries + see-also              │
-│  docs/_glossary.md        -- reciprocal see-also only              │
-├─────────────────────────────────────────────────────────────────────┤
-│               VALIDATION / HARNESS LAYER (lineage bump)             │
-│  scripts/validation/v1.9-milestone-audit.mjs   (Path-A from v1.8)  │
-│  scripts/validation/v1.9-audit-allowlist.json  (sidecar)           │
-│  scripts/validation/check-phase-75.mjs ... check-phase-NN.mjs      │
-│  .github/workflows/audit-harness-v1.9-integrity.yml                │
-└─────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      NAVIGATION HUBS (append-only)                       │
+│  docs/index.md  |  docs/common-issues.md  |  quick-ref-l1/l2.md         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                   ADMIN SETUP GUIDES (numbered, macOS)                   │
+│  docs/admin-setup-macos/00-overview.md  (Mermaid sequence diagram)       │
+│  01-abm … 07-platform-sso-setup … 09-enterprise-sso-plugin-migration     │
+│  [NEW: 10-kerberos-sso-extension.md]                                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                GRAPH-API DOC — PLACEMENT DECISION REQUIRED               │
+│  Option A: docs/admin-setup-macos/11-graph-api-platform-credential.md   │
+│  Option B: docs/operations/[new subtree]/platform-credential-graph.md   │
+│  (see gray-area analysis in Architectural Patterns below)                │
+├─────────────────────────────────────────────────────────────────────────┤
+│               L1 / L2 RUNBOOKS (next sequential numbers)                 │
+│  docs/l2-runbooks/28-macos-kerberos-sso-investigation.md   [NEW]        │
+│  docs/l2-runbooks/29-macos-graph-credential-investigation.md [NEW]      │
+├─────────────────────────────────────────────────────────────────────────┤
+│                  REFERENCE LAYER (surgical extensions)                   │
+│  docs/reference/macos-capability-matrix.md -- Kerberos row(s) added     │
+│  docs/_glossary-macos.md -- Kerberos SSO Extension + Graph entries       │
+├─────────────────────────────────────────────────────────────────────────┤
+│               VALIDATION / HARNESS LAYER (lineage bump)                  │
+│  scripts/validation/v1.10-milestone-audit.mjs  (Path-A from v1.9)        │
+│  scripts/validation/v1.10-audit-allowlist.json  (sidecar)                │
+│  scripts/validation/check-phase-83.mjs … check-phase-NN.mjs             │
+│  .github/workflows/audit-harness-v1.10-integrity.yml                    │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Component Responsibilities
+
+| Component | Responsibility | v1.10 Action |
+|-----------|---------------|--------------|
+| `docs/admin-setup-macos/` | Per-admin-guide numbered sequence for macOS ADE config | ADD `10-kerberos-sso-extension.md`; possibly ADD `11-graph-api-platform-credential.md` (see gray area) |
+| `docs/operations/` | Cross-platform operational depth (domain-organized subtrees: co-management, patch-mgmt, app-lifecycle, drift-migration, apple-business) | Possible new subtree for Graph-API doc if Option B chosen |
+| `docs/l2-runbooks/` | Technical investigation runbooks, globally numbered cross-platform | ADD `28-macos-kerberos-sso-investigation.md`; ADD `29-macos-graph-credential-investigation.md` |
+| `docs/_glossary-macos.md` | macOS terminology, term-per-H3, reciprocal see-also pattern | ADD Kerberos SSO Extension entry; ADD Platform Credential Graph API entry (if warranted) |
+| `docs/reference/macos-capability-matrix.md` | Feature parity table, pre-edit anchor inventory required | ADD Kerberos SSO Extension row; pre-edit anchor inventory artifact required before edits |
+| `docs/admin-setup-macos/08-auth-methods-deep-dive.md` | NUAL + auth method deep-dive | SURGICAL EDIT: NUAL Settings Catalog table — add verified plist key literals once confirmed |
+| `docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md` | Legacy SSO migration + Kerberos coexistence note | SURGICAL EDIT: replace deferred-item note at `## Kerberos SSO Extension (Coexistence)` with forward link to guide 10 |
+| `scripts/validation/` | Per-phase validators, milestone harness, chain-apex | ADD v1.10 harness files; ADD check-phase-83..NN.mjs; EXTEND `_lib/frozen-at-close.mjs` (V19 SHA entry) |
+| `docs/index.md`, `docs/l1-runbooks/00-index.md`, `docs/l2-runbooks/00-index.md` | Navigation hubs (append-only invariant) | EXTEND macOS sections last (navigation-last convention) |
 
 ---
 
@@ -57,416 +65,409 @@ The existing documentation suite uses a layered hub-and-spoke architecture. Cont
 
 ### New Files to Create
 
-All proposed names follow existing conventions exactly: admin guides use zero-padded two-digit prefixes continuing from 07, L1 runbooks use next sequential numbers after 34 (`34-apple-business-shared-ipad-passcode-reset.md`), L2 runbooks use next sequential number after 26 (`26-apple-business-permission-denied.md`).
+File names follow existing conventions exactly:
+
+- Admin guides: zero-padded two-digit prefix; current highest is 09; next free is 10 (Kerberos) and 11 (Graph API if option A).
+- L2 runbooks: globally sequential; current highest confirmed by directory listing is 27 (`27-macos-sso-investigation.md`). Next free is 28 (Kerberos L2) and 29 (Graph API L2).
+- No new L1 runbooks are strictly required for v1.10 — Kerberos and Graph API are L2-tier investigations; L1 escalation can route via the existing macOS SSO triage path if needed, or a minimal L1 cross-reference can be appended to existing L1 macOS SSO runbooks (#35/#36) without creating a new L1 file.
 
 ```
 docs/
 ├── admin-setup-macos/
-│   ├── 07-platform-sso-setup.md
-│   │       Full admin setup guide: Intune Settings Catalog paths,
-│   │       Entra ID prerequisites, device registration, SSO extension
-│   │       configuration profile. Replaces the 12-line stub at
-│   │       03-configuration-profiles.md lines 157-168.
+│   ├── 10-kerberos-sso-extension.md         [NEW — PSSO-FUT-04]
+│   │       Full Kerberos SSO extension guide: realm config, on-prem AD
+│   │       dependency, ticket lifecycle, `app-sso` Kerberos diagnostics,
+│   │       MDM payload structure (Kerberos payload type vs Redirect),
+│   │       Extension Identifier values, coexistence with Platform SSO.
+│   │       Replaces the deferred-item note in guide 09 (Kerberos
+│   │       Coexistence section) with a forward link.
 │   │
-│   ├── 08-auth-methods-deep-dive.md
-│   │       All three auth methods: Secure Enclave key (hardware-backed,
-│   │       T2/Apple Silicon gate), Password sync, Smart card.
-│   │       Secure Enclave architecture, attestation, FileVault context.
-│   │       Method comparison matrix.
-│   │
-│   └── 09-enterprise-sso-plugin-migration.md
-│           Legacy Microsoft Enterprise SSO plug-in (Kerberos / redirect
-│           SSO) coverage. When-to-use-which comparison vs Platform SSO.
-│           Migration path for mixed fleets.
+│   └── [11-graph-api-platform-credential.md OR operations/ subtree]
+│           [NEW — PSSO-FUT-02] — see gray-area analysis below.
 │
-├── l1-runbooks/
-│   ├── 35-macos-sso-sign-in-failure.md
-│   │       Sign-in failure after Platform SSO enrollment. L1-executable
-│   │       portal steps. Explicit escalation triggers to L2 #27.
-│   │
-│   └── 36-macos-secure-enclave-key.md
-│           Secure Enclave key verification + Company Portal interaction
-│           failures. L1-executable steps. Escalation to L2 #27.
+└── [08-auth-methods-deep-dive.md]            [MODIFY — PSSO-FUT-01]
+        NUAL Settings Catalog table: add verified MDM plist key literals
+        for "New User Authorization Mode" and "User Authorization Mode"
+        once confirmed from Apple com.apple.extensiblesso schema /
+        Microsoft Learn Settings Catalog reference. Gate: do not edit
+        unless key literals are verified — keep deferred note if not.
+
+docs/l2-runbooks/
+├── 28-macos-kerberos-sso-investigation.md   [NEW]
+│       Kerberos SSO L2 investigation: ticket-granting failures,
+│       realm-configuration errors, Kerberos extension log collection
+│       (`app-sso kerberos -s`, Kerberos ticket cache inspection).
+│       Prerequisite: macOS Log Collection (#10).
 │
-└── l2-runbooks/
-    └── 27-macos-sso-investigation.md
-            Full investigation guide: log collection paths for SSO,
-            key attestation verification, Entra device registration
-            investigation. Prerequisite: macOS Log Collection (#10).
+└── 29-macos-graph-credential-investigation.md   [NEW]
+        Graph API Platform Credential L2 investigation: enumerate /
+        query / delete a user's platformCredentialAuthenticationMethod
+        registrations via Graph, interpret API errors, automation
+        troubleshooting. Prerequisite: macOS Log Collection (#10).
 
 scripts/validation/
-├── v1.9-milestone-audit.mjs              Path-A copy from v1.8
-├── v1.9-audit-allowlist.json             Path-A sidecar from v1.8
-├── check-phase-75.mjs                    Phase 75 deliverable validator
-├── check-phase-76.mjs                    Phase 76 deliverable validator
-├── ...                                   one per v1.9 phase (75..NN)
-└── check-phase-NN.mjs                    chain-apex (CHAIN_PHASES=[48..NN-1])
+├── v1.10-milestone-audit.mjs                [NEW — Path-A from v1.9]
+├── v1.10-audit-allowlist.json               [NEW — Path-A sidecar]
+├── check-phase-83.mjs                       [NEW — Phase 83 validator]
+├── check-phase-84.mjs                       [NEW — Phase 84 validator]
+├── check-phase-85.mjs                       [NEW — Phase 85 validator]
+├── check-phase-86.mjs                       [NEW — chain-apex for v1.10]
+│       (exact count finalized at roadmap; estimated 4–6 phases = 83–88)
+└── [possible] check-phase-84-chain-health.mjs  [if chain-health phase added]
 
 .github/workflows/
-└── audit-harness-v1.9-integrity.yml      sixth parallel coexistence CI workflow
+└── audit-harness-v1.10-integrity.yml        [NEW — 7th parallel coexistence]
 ```
 
-### Existing Files to Surgically Extend
-
-These files require targeted edits, not rewrites. The append-only and sibling-anchor-pin conventions constrain what changes.
+### Existing Files to Surgically Modify
 
 ```
 docs/admin-setup-macos/
 ├── 00-overview.md
-│     EXTEND: add guides 07/08/09 to Mermaid Setup Sequence diagram
-│     and to the numbered bullet list. Update "6-guide" language to
-│     "9-guide" (or "6 core guides + 3 Platform SSO guides").
+│     EXTEND: Mermaid Setup Sequence diagram — add node 10 (Kerberos SSO
+│     Extension) branching from node 9; add node 11 / operations link for
+│     Graph API doc. Extend numbered bullet list accordingly.
 │
-└── 03-configuration-profiles.md
-      EXTEND: ## Extensible SSO section (lines 157-168).
-      Current 12-line stub ends with "See official Microsoft documentation."
-      Replace that sentence with an intra-suite link to 07-platform-sso-setup.md.
-      Keep the 2-paragraph orientation summary; do not expand inline.
+├── 08-auth-methods-deep-dive.md
+│     SURGICAL EDIT (NUAL key literals, PSSO-FUT-01):
+│     Replace the deferred-item blockquote in ## NUAL > NUAL Settings
+│     Catalog settings table with the confirmed MDM plist key literals.
+│     GATE: only if key literals are verified from authoritative source;
+│     if unverifiable, leave deferred note in place and close PSSO-FUT-01
+│     as "kept-deferred with evidence".
+│
+└── 09-enterprise-sso-plugin-migration.md
+      SURGICAL EDIT (Kerberos forward-link):
+      Replace the deferred-item note at bottom of
+      ## Kerberos SSO Extension (Coexistence) with:
+      "For full Kerberos SSO extension configuration, see
+      [Kerberos SSO Extension Guide](10-kerberos-sso-extension.md)."
+      Keep the existing coexistence explanation intact — only the
+      deferred-item sentence changes.
 
-docs/macos-lifecycle/
-└── 00-ade-lifecycle.md
-      EXTEND Stage 4 "Watch Out For": add SSO extension profile timing pitfall
-        (profile must arrive before user attempts first sign-in).
-      EXTEND Stage 6 "What Happens": add Entra device registration via
-        Platform SSO (device key bound to Entra at Company Portal sign-in).
-      EXTEND Stage 7 "Watch Out For": add SSO key expiry / re-attestation note.
-      EXTEND Stage Summary Table: add SSO pitfall column entries for stages 4/6/7.
+docs/_glossary-macos.md
+      ADD: "Kerberos SSO Extension" term entry (new H3 under the
+      existing ## Authentication section or appended to ## E). Pattern:
+      term definition + > **Windows equivalent:** blockquote +
+      > See also: cross-references to guide 10.
+      ADD: "Platform Credential (Graph API)" entry if dedicated enough
+      to warrant a standalone term, or extend the existing Platform SSO
+      term with a See Also to the Graph-API doc.
 
-docs/reference/
-├── macos-capability-matrix.md
-│     EXTEND ## Configuration: update "Platform SSO" row (currently one-cell)
-│       to add anchor-friendly H2 note for link-not-copy surface.
-│     ADD ## Authentication section with rows:
-│       - Auth method: Secure Enclave key | Password sync | Smart card
-│       - Hardware gate: T2 chip / Apple Silicon required for Secure Enclave
-│       - macOS version gate: 14 (Sonoma) minimum for Platform SSO
-│       - Entra ID P1/P2 license requirement
-│
-└── 4-platform-capability-comparison.md
-      EXTEND ## Configuration: update macOS "Platform SSO" cell from current
-        single-word verdict to "Supported (macOS 14+)" linking to
-        macos-capability-matrix.md#authentication (sibling-anchor pin).
-      All other platform columns: "Not supported" or "n/a".
+docs/reference/macos-capability-matrix.md
+      PRE-EDIT ANCHOR INVENTORY REQUIRED before any edits.
+      ADD: Kerberos SSO Extension row under ## Authentication or a new
+      ## SSO Extensions section. Link to guide 10.
+      EXISTING anchor inventory: run grep on all ## headings and existing
+      anchor IDs before editing; record in a phase plan artifact
+      (this is the PITFALL-6 / DA-4 convention from Phase 63 Plan 63-05).
 
-docs/
-├── _glossary-macos.md
-│     ADD ## Authentication H2 section (new section, appended after existing
-│     ## App Protection (MAM) section) with three entries:
-│       - Platform SSO
-│       - Secure Enclave
-│       - Enterprise SSO Plug-in (Microsoft)
-│     Each entry follows the established pattern:
-│       term definition + > **Windows equivalent:** blockquote
-│       + > See also: links to related terms + cross-platform glossaries.
-│
-├── _glossary.md
-│     EXTEND: reciprocal see-also only (no new primary definitions).
-│     Pattern: inside existing Entra ID or SSO-adjacent term blockquotes,
-│     append "> See also: [Platform SSO](_glossary-macos.md#platform-sso) (macOS)."
-│
-├── index.md
-│     EXTEND ## macOS Provisioning > Admin Setup table: add rows for 07/08/09.
-│     EXTEND ## macOS Provisioning > Service Desk (L1) table: add rows for #35/#36.
-│     EXTEND ## macOS Provisioning > Desktop Engineering (L2) table: add row for #27.
-│
-├── common-issues.md
-│     EXTEND ## macOS ADE Failure Scenarios: add SSO sign-in failure entry
-│       routing to L1 #35 and L2 #27. Append-only -- do not reorder existing entries.
-│
-├── quick-ref-l1.md
-│     EXTEND ## macOS ADE Quick Reference: add SSO-specific escalation trigger
-│       (Secure Enclave key error at sign-in → L1 #36; sign-in loop → L1 #35).
-│
-└── quick-ref-l2.md
-      EXTEND ## macOS ADE Quick Reference: add SSO log paths (system.log
-        SSO subsystem, ssoextension logs) and key attestation command.
+docs/l2-runbooks/00-index.md
+      EXTEND ## macOS ADE Runbooks table: add rows for #28 (Kerberos)
+      and #29 (Graph API). Add escalation mapping rows for both.
+      NAVIGATION-LAST: this edit happens in the same phase as or after
+      nav hub integration.
 
-docs/l1-runbooks/
-└── 00-index.md
-      EXTEND ## macOS ADE Runbooks table: add rows 35 and 36.
+docs/index.md
+      EXTEND ## macOS Provisioning > Admin Setup: add row for guide 10
+      (and guide 11 / Graph-API doc location). Add row to Desktop
+      Engineering (L2) table for L2 #28 and #29.
+      NAVIGATION-LAST: this is the final edit in v1.10 content phases.
 
-docs/l2-runbooks/
-└── 00-index.md
-      EXTEND ## macOS ADE Runbooks table: add row 27.
-      EXTEND macOS L1 Escalation Mapping table: map L1 #35/#36 → L2 #27.
+docs/l1-runbooks/00-index.md
+      EXTEND ## macOS ADE Runbooks: add L2 #28/#29 cross-reference or
+      escalation note if an L1 touch-point is warranted. Low-change edit.
+
+docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md
+      (See surgical edit above — replace deferred-item note only.)
 
 scripts/validation/_lib/frozen-at-close.mjs
-      EXTEND MILESTONE_CLOSE_SHAS: add V18 entry with v1.8 close-gate SHA.
-      ADD export: readAtV18Close convenience function.
-      (Identify v1.8 close-gate SHA from the commit that delivered
-       v1.8-MILESTONE-AUDIT.md + 4-doc traceability closure -- equivalent
-       role to v1.7's 4df3a16 per the two-commit chicken-and-egg pattern.)
+      EXTEND MILESTONE_CLOSE_SHAS: add V19 entry with v1.9 close-gate SHA.
+      The v1.9 close-gate SHA is the commit that delivered
+      v1.9-MILESTONE-AUDIT.md + 4-doc traceability closure (equiv to
+      v1.8's Commit B / v1.7's 4df3a16). Identify via:
+        git log --all --grep="close-gate" --grep="v1.9" --all-match -1
+      ADD export: readAtV19Close = (p) => readAtClose('V19', p)
+      This must be done BEFORE authoring check-phase-83.mjs.
 ```
 
 ---
 
 ## Architectural Patterns
 
-### Pattern 1: Admin Guide Numbering (Zero-Padded Sequential)
+### Pattern 1: Kerberos Guide Placement — Extend the Admin Setup Numbered Sequence
 
-**What:** Each admin guide in `docs/admin-setup-macos/` uses a two-digit zero-padded numeric prefix (01-06). The overview is always 00. New guides append at the next available number.
+**What:** `docs/admin-setup-macos/10-kerberos-sso-extension.md` continues the established zero-padded numeric sequence. The Kerberos SSO extension is a macOS admin-setup topic: it requires an MDM configuration profile, has a realm-config Intune path, and is the operational partner to the Platform SSO setup guides (07–09). It belongs in the same admin-setup-macos/ tree at the next free number.
 
-**When to use:** All new admin-setup-macos content. Current highest is 06 (`06-config-failures.md`). Platform SSO setup guide = 07, auth-methods deep-dive = 08, legacy plug-in + migration = 09.
+**Why this is unambiguous:** The deferred-cleanup file (`v1.9-DEFERRED-CLEANUP.md` PSSO-FUT-04) specifies "New `docs/admin-setup-macos/10-kerberos-sso-extension.md`" explicitly. Guide 09 already names `10-kerberos-sso-extension.md` as the proposed filename in its deferred-item note. The Kerberos guide is structurally peer to guide 09 (which covers the Microsoft Enterprise SSO plug-in) and should sit at the same level.
 
-**Why 3 files, not 1:** The existing pattern separates admin setup how-to from reference deep-dives from failure references. `03-configuration-profiles.md` covers Wi-Fi/VPN/FileVault mechanics. `05-compliance-policy.md` is compliance-only. `06-config-failures.md` is a reverse-lookup table. Platform SSO warrants the same separation: the setup guide (07) covers the Intune click-path; the auth deep-dive (08) covers architecture and method comparison (different primary audience: architect or senior admin); the migration doc (09) covers the legacy-to-modern transition path (audience: admin managing a mixed fleet). Forcing all three into 07 would violate the single-responsibility pattern established across 01-06 and create a file that serves no single audience well.
+**Confidence:** HIGH — mandated by deferred-cleanup backlog, corroborated by guide 09's existing forward reference naming the exact file.
 
-**Example (00-overview.md Mermaid extension):**
-```
-graph LR
-  A[1. ABM] --> B[2. Enrollment Profile]
-  B --> C[3. Config Profiles]
-  B --> D[4. App Deployment]
-  B --> E[5. Compliance]
-  C --> F[6. Config Failures]
-  C --> G[7. Platform SSO Setup]
-  G --> H[8. Auth Methods Deep-Dive]
-  G --> I[9. Enterprise SSO Plugin Migration]
-  D --> F
-  E --> F
-```
+### Pattern 2: L2 Kerberos Runbook Number — 28 is the Next Free Slot
 
-### Pattern 2: L1/L2 Runbook Sequential Numbering (Global, Cross-Platform)
+**What:** L2 runbooks are globally numbered across all platforms. Direct inspection of `docs/l2-runbooks/` confirms the highest existing file is `27-macos-sso-investigation.md`. The next free L2 number is 28. The Kerberos L2 runbook becomes `28-macos-kerberos-sso-investigation.md`.
 
-**What:** Runbooks are globally sequentially numbered across all platforms. Last L1 runbook: #34 (`34-apple-business-shared-ipad-passcode-reset.md`). Last L2 runbook: #26 (`26-apple-business-permission-denied.md`). New runbooks take the next available number in each tier.
+**Triage tree / nav hub edit locations for L2 #28:**
+- `docs/l2-runbooks/00-index.md` ## macOS ADE Runbooks: add row for #28 (and escalation mapping).
+- `docs/index.md` ## macOS Provisioning > Desktop Engineering (L2) table: add row for #28.
+- No dedicated macOS SSO triage tree exists at this level — `docs/decision-trees/06-macos-triage.md` is the macOS ADE triage tree. Add a Kerberos SSO extension leaf node to this tree routing to L2 #28.
 
-**Proposed assignment:**
-- L1 #35: `35-macos-sso-sign-in-failure.md`
-- L1 #36: `36-macos-secure-enclave-key.md`
-- L2 #27: `27-macos-sso-investigation.md`
+**For the Graph API L2 runbook:** If Option A (admin-setup-macos/11) is chosen, Graph API L2 = #29. If Option B (operations subtree) is chosen, the number assignment is the same (#29), only the primary doc location differs. The L2 runbook itself always lives in `docs/l2-runbooks/` regardless.
 
-**Trade-offs:** Global numbering creates a collision risk only if phases execute in parallel. Because v1.9 uses sequential-on-main-tree execution (confirmed by `.planning/PROJECT.md` `use_worktrees:false` constraint), there is no collision risk within v1.9.
+**Confidence:** HIGH — verified by directory listing of l2-runbooks/.
 
-### Pattern 3: Glossary Reciprocal See-Also Convention
+### Pattern 3: Graph-API Doc Placement — GRAY AREA — Two Options
 
-**What:** Every glossary term with a cross-platform equivalent carries a `> See also:` line inside the term's blockquote. `_glossary-macos.md` and `_glossary.md` cross-reference each other. The pattern is established at `_glossary-macos.md` lines 26-28 (Account-Driven User Enrollment), lines 33-35 (ADE), lines 44-47 (Await Configuration).
+**This is the primary architectural decision for v1.10.**
 
-**When to use:** All three new glossary entries.
-- Platform SSO: cross-references Entra ID SSO / Hybrid Join concepts in `_glossary.md` (if entries exist); note Windows equivalent is "None direct — closest is Entra ID-joined device SSO via Windows Hello for Business"
-- Secure Enclave: cross-references TPM in `_glossary.md` (closest Windows analog for hardware-backed key storage)
-- Enterprise SSO Plug-in: macOS-specific; no direct Windows equivalent; reciprocal see-also not needed in `_glossary.md`
+The `platformCredentialAuthenticationMethod` Graph API resource is a programmatic management surface — distinct from portal-based admin setup (guides 07–10) or end-user device workflows. The suite currently has no dedicated "programmatic API" documentation tree. Two options:
 
-### Pattern 4: Link-Not-Copy for Capability Matrix Integration
+**Option A: `docs/admin-setup-macos/11-graph-api-platform-credential.md`**
 
-**What:** `docs/reference/4-platform-capability-comparison.md` carries verdict words linked to the sibling per-platform matrix via anchor, never duplicating prose. Confirmed by `4-platform-capability-comparison.md` lines 23-31: every cell is `Verdict -- [matrix](macos-capability-matrix.md#anchor)`.
+Rationale for:
+- The Platform Credential managed via Graph is the same object as the Secure Enclave credential managed via the Intune portal. An admin reading guide 08 (Auth Methods Deep-Dive) naturally wants programmatic management as the next guide.
+- Keeps the complete macOS Platform SSO documentation surface in one numbered sequence (07–11). Discoverable from `00-overview.md` and from the macOS Admin Setup nav hub row.
+- The deferred-cleanup file (PSSO-FUT-02) says "A new advanced section in `08-auth-methods-deep-dive.md` **or a dedicated Graph-API operations doc**" — a standalone guide at 11 satisfies the "dedicated" variant without modifying guide 08.
+- Precedent: guide 09 (Enterprise SSO Plug-in & Migration) is also a narrowly scoped operational topic sitting alongside setup guides.
 
-**When to use:** When adding Platform SSO auth-method rows to `macos-capability-matrix.md`, also add corresponding cells in the 5-platform comparison using the same link-not-copy pattern pointing to `macos-capability-matrix.md#authentication`. The existing "Platform SSO" row in `macos-capability-matrix.md ## Configuration` (confirmed present) must be updated to carry the anchor so the comparison doc can reference it.
+Rationale against:
+- Graph API access requires different tooling (Graph Explorer, PowerShell SDK, REST client) and a different audience (DevOps / automation engineer) vs portal-based admin. Mixing programmatic and portal-based guidance in the admin-setup tree may confuse the audience.
+- If future milestones add other Graph-side management guides (e.g., device lifecycle automation, conditional-access automation), a dedicated operations subtree would be the right home; starting that subtree now is cleaner than retrofitting later.
 
-### Pattern 5: Frozen-Aware SHA-Pinned Helpers for v1.9 Chain Validators
+**Option B: `docs/operations/platform-credential/00-graph-api.md` (new subtree)**
 
-**What:** `scripts/validation/_lib/frozen-at-close.mjs` exports `MILESTONE_CLOSE_SHAS` and `readAtClose()`. Per-phase validators that need to assert against milestone-close state use `readAtClose('V17', path)` or the convenience export `readAtV17Close`. Introduced v1.7 to fix SCOPE-GAP-61. The file currently has: V141, V15, V16, V17, V17_CLOSEGATE.
+Rationale for:
+- The `docs/operations/` tree is the established home for cross-portal, programmatic, and lifecycle-operations content (co-management, drift-migration, app-lifecycle). Graph API management is operationally closer to "drift detection + lifecycle automation" than to "Intune portal admin setup".
+- Creates a natural expansion point if future milestones add other programmatic macOS or cross-platform Graph-API management guides.
+- The `docs/operations/00-index.md` already shows the append-only H2 section pattern (6th H2 = Apple Business Governance). A 7th H2 ("Platform Credential Management") follows the same pattern.
 
-**When to use:** v1.9 chain validators asserting "v1.8 content is byte-unchanged" must use `readAtV18Close` via the same helper. The next entry to add is `V18: '<v1.8-close-gate-SHA>'` plus `export const readAtV18Close = (p) => readAtClose('V18', p)`.
+Rationale against:
+- The existing operations subtrees are cross-platform (co-management covers Windows + macOS; app-lifecycle covers 4 platforms). A macOS-specific Graph API guide in operations is a narrow outlier.
+- The deferred-cleanup file (PSSO-FUT-02) scoped this as "Platform Credential management" and cited it alongside Kerberos and NUAL in a macOS Platform SSO context — placement in admin-setup-macos is more consistent with that framing.
+- Creates a new subtree directory (`docs/operations/platform-credential/`) for a single file, which is over-structure for v1.10 scope.
 
-**Implementation note for roadmap:** The v1.8 close-gate SHA is the commit that delivered `v1.8-MILESTONE-AUDIT.md` + 4-doc traceability closure. This is equivalent to `4df3a16` for v1.7 (labeled `V17_CLOSEGATE`). The roadmap harness lineage bump phase must include a concrete task: identify and pin `V18` before authoring `check-phase-75.mjs`.
+**Recommendation: Option A** (admin-setup-macos/11), with the explicit caveat that if `/adversarial-review` is invoked at roadmap time and surfaces a strong argument for Option B, the guidance here should yield. The key determining factors are: (1) Is the primary audience for this doc an automation engineer or an Intune admin? If automation engineer, Option B is stronger. (2) Does the project anticipate multiple Graph-API management docs in v1.11+? If yes, Option B seeds the right tree. At v1.10 scope alone, Option A is simpler.
+
+**Recommendation confidence: MEDIUM** — both options are architecturally defensible. Flag for adversarial-review if the roadmap author wants coverage.
+
+### Pattern 4: Pre-Edit Anchor Inventory for Capability Matrix Edits
+
+**What:** Before editing `docs/reference/macos-capability-matrix.md`, a plan artifact must record all existing `## Heading` anchors in the file. This is the PITFALL-6 / DA-4 convention first operationalized in Phase 63 Plan 63-05 (commit `65f8a55`) for `ios-capability-matrix.md`.
+
+**When to use:** Every capability matrix edit in v1.10 (adding Kerberos SSO Extension rows). The pre-edit anchor inventory is a one-time read: grep all `## ` headings and the file's existing anchor IDs, record them in the phase plan, then proceed with edits.
+
+**Why critical:** The `docs/reference/4-platform-capability-comparison.md` uses sibling-anchor-pin links to capability matrices. Adding a new `## Authentication` H2 or a new row under an existing H2 in the macOS capability matrix may shift existing anchor targets if heading text changes. The pre-edit inventory detects this risk before it becomes a broken-link regression.
+
+### Pattern 5: Guide 09 Surgical Edit — Replace Only the Deferred-Item Note
+
+**What:** `docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md` at `## Kerberos SSO Extension (Coexistence)` (line ~148) contains: "A full Kerberos SSO extension configuration guide (payload walkthrough, Extension Identifier values, profile structure) is deferred to a future documentation phase -- see PSSO-FUT-04 in the v1.9 deferred-cleanup tracking."
+
+This one sentence is the only change needed in guide 09. The rest of the section (coexistence rationale, Extension Identifier separation, parallel-operation explanation) is accurate and complete — it stays unchanged.
+
+**Replacement text:** Replace the deferred-item sentence with a forward link: "For the full Kerberos SSO extension configuration guide (payload walkthrough, Extension Identifier values, profile structure), see [Kerberos SSO Extension Guide](10-kerberos-sso-extension.md)."
+
+**Confidence:** HIGH — the exact text to be replaced is confirmed at guide 09 line ~148.
+
+### Pattern 6: Harness Lineage Bump — Path-A v1.9 → v1.10 (8th Milestone)
+
+**What:** v1.10 is the 8th milestone in the Path-A lineage: v1.4 → v1.4.1 → v1.5 → v1.6 → v1.7 → v1.8 → v1.9 → v1.10. The harness close phase follows the two-atomic-commit pattern established in v1.7 Phase 70 and confirmed through v1.9 Phase 82:
+
+- Atom 1 (harness scaffold): `v1.10-milestone-audit.mjs` + `v1.10-audit-allowlist.json` + BASELINE_14 comment in `regenerate-supervision-pins.mjs` — 3 files indivisible.
+- Atom 2 (validators + CI): `check-phase-83..NN.mjs` (one per v1.10 phase) + `audit-harness-v1.10-integrity.yml` + `_lib/frozen-at-close.mjs` (V19 SHA entry) — indivisible set.
+
+**Critical pre-condition:** V19 (v1.9 close-gate SHA) must be pinned in `_lib/frozen-at-close.mjs` BEFORE any check-phase-83.mjs is authored. The v1.9 close-gate SHA is in the commit that delivered `v1.9-MILESTONE-AUDIT.md` + the 4-doc traceability closure (equiv to `4df3a16` in v1.7 / Commit B in v1.8 / commit `b29dca5` per PROJECT.md v1.9 footer).
+
+**PRE-EXISTING-CHAIN-RED-AT-HEAD-01 watch item:** The validator chain is RED at v1.9 close HEAD (10 legacy FAILs in check-phase-{58,59,60,61,62,63,64,65,66,73}). The harness-close phase must either: (a) include a chain-health sub-phase to convert the failing validators to frozen-aware reads (RETRO-class fix, ~1 phase, 2-4 plans), or (b) explicitly route the red chain forward with a documented rationale. Decision is at roadmap; if a chain-health pass is included, it becomes a distinct phase BEFORE the harness lineage bump (so the chain-apex can run clean before Atom 1 is authored). If routed forward, the 10 FAILs persist into v1.10's apex run, which is acceptable as a known-pre-existing state but degrades the "exit 0" invariant for the apex.
 
 ---
 
 ## Data Flow
 
-### Cross-Link Topology for Platform SSO Content
+### Cross-Link Topology for v1.10 Content
 
 ```
-docs/admin-setup-macos/03-configuration-profiles.md (## Extensible SSO)
-    -- outbound link --> 07-platform-sso-setup.md
+docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md
+  ## Kerberos SSO Extension (Coexistence) [surgical edit]
+    -- forward link --> 10-kerberos-sso-extension.md
 
-docs/admin-setup-macos/07-platform-sso-setup.md
-    -- see-also --> 08-auth-methods-deep-dive.md
-    -- see-also --> 09-enterprise-sso-plugin-migration.md
-    -- link      --> docs/_glossary-macos.md#platform-sso
-    -- link      --> docs/reference/macos-capability-matrix.md#authentication
-    -- link      --> docs/macos-lifecycle/00-ade-lifecycle.md#stage-4
+docs/admin-setup-macos/10-kerberos-sso-extension.md  [NEW]
+    -- back-link   --> 09-enterprise-sso-plugin-migration.md
+    -- link        --> docs/_glossary-macos.md#kerberos-sso-extension
+    -- link        --> docs/reference/macos-capability-matrix.md#[kerberos-anchor]
+    -- escalation  --> docs/l2-runbooks/28-macos-kerberos-sso-investigation.md
 
-docs/macos-lifecycle/00-ade-lifecycle.md (Stage 4 / Stage 6 / Stage 7)
-    -- outbound link --> 07-platform-sso-setup.md
+docs/l2-runbooks/28-macos-kerberos-sso-investigation.md  [NEW]
+    -- back-link   --> 10-kerberos-sso-extension.md
+    -- prerequisite--> docs/l2-runbooks/10-macos-log-collection.md
 
-docs/_glossary-macos.md (## Authentication section)
-    -- reciprocal see-also --> docs/_glossary.md (Entra / TPM terms)
-    <- referenced from <- 07, 08, 09 guides
+docs/admin-setup-macos/[11 or operations/]  [NEW — Graph API doc]
+    -- link        --> docs/_glossary-macos.md#platform-credential-graph-api (if entry added)
+    -- link        --> 08-auth-methods-deep-dive.md (back-reference to Secure Enclave context)
+    -- escalation  --> docs/l2-runbooks/29-macos-graph-credential-investigation.md
 
-docs/reference/macos-capability-matrix.md (## Authentication)
-    <- facts from <- 07 + 08
+docs/l2-runbooks/29-macos-graph-credential-investigation.md  [NEW]
+    -- back-link   --> [Graph API doc location]
+    -- prerequisite--> docs/l2-runbooks/10-macos-log-collection.md
+
+docs/admin-setup-macos/08-auth-methods-deep-dive.md
+  ## NUAL [surgical edit — plist key literals if verified]
+    -- no new cross-links, in-place table update only
+
+docs/_glossary-macos.md
+    ADD: Kerberos SSO Extension entry (## Authentication section)
+    <- referenced from <- 10-kerberos-sso-extension.md
+
+docs/reference/macos-capability-matrix.md
+    ADD: Kerberos SSO Extension row [pre-edit anchor inventory first]
+    <- linked from <- 10-kerberos-sso-extension.md
     -- sourced by --> docs/reference/4-platform-capability-comparison.md
-       (link-not-copy: "Supported -- [matrix](macos-capability-matrix.md#authentication)")
+       (if Kerberos SSO Extension row is macOS-specific, the 5-platform
+        comparison doc gets a "macOS only" / "n/a" verdict in other columns)
 
-docs/l1-runbooks/35-macos-sso-sign-in-failure.md
-docs/l1-runbooks/36-macos-secure-enclave-key.md
-    -- escalation --> docs/l2-runbooks/27-macos-sso-investigation.md
-    <- escalation routing <- docs/decision-trees/06-macos-triage.md (extend)
+docs/admin-setup-macos/00-overview.md
+    EXTEND: Mermaid + bullet list to include guide 10 (and 11 if Option A)
 
-docs/l2-runbooks/27-macos-sso-investigation.md
-    -- back-link --> L1 #35 / L1 #36 (source runbooks)
-    -- prerequisite --> docs/l2-runbooks/10-macos-log-collection.md
+docs/l2-runbooks/00-index.md
+    EXTEND: ## macOS ADE Runbooks table — rows 28 + 29 + escalation mapping
 
-docs/l1-runbooks/00-index.md  (## macOS ADE Runbooks rows 35, 36)
-docs/l2-runbooks/00-index.md  (## macOS ADE Runbooks row 27 + escalation mapping)
-docs/index.md                 (## macOS Provisioning all three tables)
-docs/common-issues.md         (## macOS ADE Failure Scenarios)
-docs/quick-ref-l1.md          (## macOS ADE Quick Reference)
-docs/quick-ref-l2.md          (## macOS ADE Quick Reference)
-    <- all receive append-only additions pointing to 07/08/09 and 35/36/27
+docs/index.md
+    EXTEND: macOS Admin Setup table (guide 10/11 row)
+             Desktop Engineering (L2) table (L2 #28/#29 rows)
+  [NAVIGATION-LAST — these edits happen in the final content phase]
 ```
 
-### Recommended Phase / Build Sequence
+### Recommended Phase / Build Order
 
-Dependencies flow strictly from foundation upward. Each phase produces complete, committable deliverables that later phases reference.
+Dependencies flow from foundation upward. Navigation-last convention holds: `docs/index.md` and hub file edits are the last content deliverable before harness close.
 
-**Phase 75 — Foundation: Glossary + Lifecycle Extensions**
-- Deliverables: `_glossary-macos.md` (## Authentication with Platform SSO, Secure Enclave, Enterprise SSO Plug-in entries); `_glossary.md` (reciprocal see-also); `00-ade-lifecycle.md` Stage 4/6/7 extensions
-- Rationale: Glossary terms must exist before admin guides link to them. Lifecycle extensions are self-contained surgical edits that do not depend on runbooks.
-- check-phase-75.mjs asserts: new glossary H2 present, three terms defined, lifecycle doc modified (word-count increase or heading presence).
+**Phase 83 — Foundation: Kerberos SSO Extension Guide + Guide 09 Surgical Edit**
+- Deliverables: `10-kerberos-sso-extension.md` (new); guide 09 Kerberos Coexistence section (surgical edit: replace deferred-item note with forward link); `00-overview.md` (extend Mermaid + bullet list for guide 10); glossary entry for Kerberos SSO Extension in `_glossary-macos.md`.
+- Rationale: The Kerberos guide is the largest new content file. Guide 09 edit closes the forward-reference. Glossary entry must exist before capability matrix cross-links are added. Overview update ensures discoverability from the admin setup entry point.
+- check-phase-83.mjs asserts: `10-kerberos-sso-extension.md` exists; guide 09 no longer contains the deferred-item text; `00-overview.md` contains "10-kerberos-sso-extension"; glossary contains "Kerberos SSO Extension" entry.
 
-**Phase 76 — Admin Setup Core: Platform SSO Setup Guide**
-- Deliverables: `07-platform-sso-setup.md` (full admin setup); `00-overview.md` extended (Mermaid + bullet list); `03-configuration-profiles.md` ## Extensible SSO stub replaced with link
-- Rationale: The setup guide (07) is the primary admin deliverable. It depends on glossary terms (Phase 75) and is referenced by Phase 77 deep-dive.
-- check-phase-76.mjs asserts: 07 exists, 00-overview.md contains "07-platform-sso-setup", 03-configuration-profiles.md contains link to 07.
+**Phase 84 — Graph API Platform Credential Doc + NUAL Key Edit**
+- Deliverables: Graph API doc (at location determined by Option A or B); guide 08 NUAL table surgical edit (if plist key literals are verified; else keep deferred note with updated verification date); glossary extension for Platform Credential Graph API (if warranted).
+- Rationale: The Graph API doc is independent of the Kerberos guide. NUAL edit is minimal and can be bundled with the Graph API phase or kept separate if verification is still pending at execution time.
+- check-phase-84.mjs asserts: Graph API doc exists at chosen path; guide 08 NUAL section updated (either new key literals present, or deferred note updated with 2026 verification attempt); `00-overview.md` updated if Option A chosen (guide 11 added).
+- Research flag: If `platformCredentialAuthenticationMethod` is still in beta at execution time, route the Graph API doc to v1.11 and close PSSO-FUT-02 as "kept deferred" rather than shipping a doc about a beta API surface.
 
-**Phase 77 — Admin Setup Depth: Auth Methods + Legacy Migration**
-- Deliverables: `08-auth-methods-deep-dive.md`; `09-enterprise-sso-plugin-migration.md`
-- Rationale: These docs reference 07 (Phase 76). Auth deep-dive is referenced by capability matrix (Phase 78).
-- check-phase-77.mjs asserts: 08 and 09 exist; each references 07 in See Also.
+**Phase 85 — Capability Matrix + L2 Runbooks**
+- Deliverables: Pre-edit anchor inventory artifact for `macos-capability-matrix.md`; Kerberos SSO Extension row added to matrix; `28-macos-kerberos-sso-investigation.md`; `29-macos-graph-credential-investigation.md`; `l2-runbooks/00-index.md` extended (rows 28 + 29 + escalation mapping).
+- Rationale: Matrix edit requires anchor inventory first (Pattern 4). L2 runbooks reference admin guides (Phases 83/84). L2 index is an internal-to-runbooks hub — updated in this phase before the main nav hub.
+- check-phase-85.mjs asserts: `28-` and `29-` files exist; `l2-runbooks/00-index.md` contains rows 28 and 29; `macos-capability-matrix.md` contains Kerberos SSO Extension row; anchor inventory artifact committed in this phase.
 
-**Phase 78 — Reference Integration: Capability Matrix + 5-Platform Comparison**
-- Deliverables: `macos-capability-matrix.md` ## Authentication section added; `4-platform-capability-comparison.md` macOS cells updated (link-not-copy); `macos-capability-matrix.md ## Configuration` Platform SSO row updated with anchor
-- Rationale: Capability matrix synthesizes facts from admin guides (Phases 76/77). 5-platform comparison depends on matrix.
-- check-phase-78.mjs asserts: `## Authentication` heading present in macos-capability-matrix.md; comparison doc macOS Platform SSO cell contains link to macos-capability-matrix.md#authentication.
+**Phase 86 — Nav Hub Integration + Harness Chain-Health Pass (if included)**
+- Deliverables: `docs/index.md` macOS section extensions (admin setup + L2 rows); `common-issues.md` macOS section extension (Kerberos escalation entry); `quick-ref-l2.md` macOS section extension (Kerberos log commands).
+- Optional sub-deliverable (if chain-health included): frozen-aware conversion of check-phase-{58,59,60,61,62,63,64,65,66,73}.mjs to eliminate the 10 pre-existing legacy FAILs; regenerate/restore `73-RETRO-INVENTORY.md`.
+- Rationale: Nav hub edits are NAVIGATION-LAST per convention. Chain-health pass, if included, should precede the harness lineage bump phase so the apex exits clean before Atom 1 is authored.
+- check-phase-86.mjs asserts: `docs/index.md` contains links to guide 10 and L2 #28/#29; `quick-ref-l2.md` updated; (if chain-health included) chain-apex exits 0 with 0 FAIL.
 
-**Phase 79 — L1/L2 Runbooks**
-- Deliverables: L1 `35-macos-sso-sign-in-failure.md`; L1 `36-macos-secure-enclave-key.md`; L2 `27-macos-sso-investigation.md`; `l1-runbooks/00-index.md` extended; `l2-runbooks/00-index.md` extended
-- Rationale: Runbooks reference the admin guides (Phases 76/77) and glossary (Phase 75). They are referenced by nav hubs (Phase 80). L2 #27 must reference L1 #35 and #36 as source escalation paths.
-- check-phase-79.mjs asserts: files 35, 36, 27 exist; l1-index contains rows 35 and 36; l2-index contains row 27 and updated escalation mapping.
+**Phase 87 — Harness Lineage Bump + Terminal Re-Audit + Milestone Close**
+- Deliverables (Atom 1): `v1.10-milestone-audit.mjs` + `v1.10-audit-allowlist.json` + BASELINE_14 in `regenerate-supervision-pins.mjs` — 3 files indivisible.
+- Deliverables (Atom 2): `check-phase-83..86.mjs` + `audit-harness-v1.10-integrity.yml` + `_lib/frozen-at-close.mjs` (V19 SHA entry) — indivisible set.
+- Terminal re-audit: 3-axis stacking per v1.9 precedent (Axis 1 fresh-clone local, Axis 2 Linux GHA, Axis 3 fresh sub-agent).
+- Close-gate: two-commit chicken-and-egg (Commit A SHA placeholder fill + Commit B MILESTONE-AUDIT.md NEW + DEFERRED-CLEANUP.md + 4-doc traceability closure).
+- check-phase-87.mjs (chain-apex): CHAIN_PHASES=[48..86]; V-87-AUDIT-HARNESS asserts `v1.10-milestone-audit.mjs` exits 0; CHAIN_SKIP=new Set([]).
 
-**Phase 80 — Nav Hub Integration**
-- Deliverables: `docs/index.md` macOS section extensions; `common-issues.md` macOS section extension; `quick-ref-l1.md` macOS section extension; `quick-ref-l2.md` macOS section extension; `decision-trees/06-macos-triage.md` SSO leaf nodes added
-- Rationale: Nav hubs are append-only; they can only link to what already exists (Phases 75-79). Decision tree extension routes to L1 #35 and #36.
-- check-phase-80.mjs asserts: index.md contains link to 07-platform-sso-setup; quick-ref-l1.md contains link to #35; common-issues.md updated.
-
-**Phase 81 — Harness Lineage Bump (Atom 1 + Atom 2)**
-- Deliverables (Atom 1 commit): `v1.9-milestone-audit.mjs` + `v1.9-audit-allowlist.json` + BASELINE comment in `regenerate-supervision-pins.mjs` -- three files indivisible
-- Deliverables (Atom 2 commit): `check-phase-75..80.mjs` + `audit-harness-v1.9-integrity.yml` + `_lib/frozen-at-close.mjs` (V18 SHA entry) -- indivisible per v1.8 Phase 74 Atom 2 precedent
-- Rationale: Harness is authored last so it can validate all content phases. `frozen-at-close.mjs` V18 entry required before chain validators can assert predecessor-byte-unchanged invariant.
-- check-phase-81.mjs (chain-apex): CHAIN_PHASES=[48..80]; V-81-AUDIT-HARNESS asserts `v1.9-milestone-audit.mjs` exits 0; V-81-SELF asserts CHAIN_SKIP is empty Set.
-
-**Terminal re-audit (Phase 82 close-gate):**
-- 3-axis stacking per v1.8 precedent: Axis 1 fresh-clone local, Axis 2 cross-OS Linux GHA, Axis 3 fresh sub-agent
-- `v1.9-MILESTONE-AUDIT.md` + `v1.9-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT.md + REQUIREMENTS.md + ROADMAP.md + STATE.md)
-- Two-commit chicken-and-egg: Commit A (SHA placeholder fill) + Commit B (MILESTONE-AUDIT.md NEW + 4-doc finalize)
+**Estimated phase count: 4–5 phases (83–86 or 83–87 depending on chain-health bundling)**
 
 ---
 
 ## Integration Points
 
-### Cross-Link Surfaces with Integrity Check Potential
+### Cross-Link Edges with Integrity-Check Potential
 
-C16 (introduced Phase 62) asserts a 4-edge cross-link integrity triangle for Apple Business content. For v1.9, the Platform SSO content creates an analogous surface. The per-phase validators should assert the following edges exist:
+These edges are candidates for per-phase validator assertions (extending the SSO-E1..E8 pattern from v1.9 check-phase validators):
 
 | Edge ID | From | To | Direction |
 |---------|------|----|-----------|
-| SSO-E1 | `07-platform-sso-setup.md` | `_glossary-macos.md#platform-sso` | outbound link |
-| SSO-E2 | `_glossary-macos.md` | `07-platform-sso-setup.md` | reciprocal see-also |
-| SSO-E3 | `07-platform-sso-setup.md` | `macos-capability-matrix.md#authentication` | outbound link |
-| SSO-E4 | `macos-capability-matrix.md` | `07-platform-sso-setup.md` | See Also |
-| SSO-E5 | `35-macos-sso-sign-in-failure.md` | `27-macos-sso-investigation.md` | escalation link |
-| SSO-E6 | `27-macos-sso-investigation.md` | `35-macos-sso-sign-in-failure.md` | back-link |
-| SSO-E7 | `03-configuration-profiles.md` (## Extensible SSO) | `07-platform-sso-setup.md` | outbound link |
-| SSO-E8 | `00-ade-lifecycle.md` (Stage 4) | `07-platform-sso-setup.md` | outbound link |
+| KRB-E1 | `09-enterprise-sso-plugin-migration.md` (## Kerberos Coexistence) | `10-kerberos-sso-extension.md` | forward link (replaces deferred-item note) |
+| KRB-E2 | `10-kerberos-sso-extension.md` | `09-enterprise-sso-plugin-migration.md` | back-link |
+| KRB-E3 | `10-kerberos-sso-extension.md` | `_glossary-macos.md#kerberos-sso-extension` | outbound link |
+| KRB-E4 | `_glossary-macos.md` (Kerberos entry) | `10-kerberos-sso-extension.md` | see-also |
+| KRB-E5 | `10-kerberos-sso-extension.md` | `28-macos-kerberos-sso-investigation.md` | escalation link |
+| KRB-E6 | `28-macos-kerberos-sso-investigation.md` | `10-kerberos-sso-extension.md` | back-link |
+| GRA-E1 | `[Graph API doc]` | `08-auth-methods-deep-dive.md` | context link (Secure Enclave credential) |
+| GRA-E2 | `[Graph API doc]` | `29-macos-graph-credential-investigation.md` | escalation link |
+| GRA-E3 | `29-macos-graph-credential-investigation.md` | `[Graph API doc]` | back-link |
 
-Whether the roadmap encodes these as a named C17 harness check (parallel to C16) is a Phase 81 decision. At minimum, the per-phase validators for Phases 76-79 should assert the specific edges relevant to each phase's deliverables.
-
-### Harness Lineage Bump: File Set (Path-A from v1.8)
-
-Following the v1.4 → v1.4.1 → v1.5 → v1.6 → v1.7 → v1.8 Path-A convention (six milestones, confirmed by `scripts/validation/` directory listing and `v1.8-milestone-audit.mjs` comment block), v1.9 requires these files named exactly as follows:
+### Harness Lineage Bump: File Set (Path-A from v1.9)
 
 | File | Action | Key Notes |
 |------|--------|-----------|
-| `scripts/validation/v1.9-milestone-audit.mjs` | NEW (Path-A copy of v1.8) | Inherits C1-C16 blocking checks verbatim; comment block updated to cite v1.9 lineage; sidecar reference updated to `v1.9-audit-allowlist.json`; C17 (if added) new here |
-| `scripts/validation/v1.9-audit-allowlist.json` | NEW (Path-A copy of v1.8) | `schema_version`, `generated`, `phase` fields updated; `c13_rotting_external` reset for v1.9 (if Platform SSO admin guides include external Microsoft Learn links, seed c13 with those URLs) |
-| `scripts/validation/check-phase-75.mjs` | NEW | CHAIN_PHASES=[48..74]; HARNESS=`v1.8-milestone-audit.mjs` (predecessor-byte-unchanged); asserts Phase 75 glossary + lifecycle deliverables |
-| `scripts/validation/check-phase-76.mjs` | NEW | CHAIN_PHASES=[48..75]; asserts Phase 76 admin guide 07 deliverables |
-| `scripts/validation/check-phase-77.mjs` | NEW | CHAIN_PHASES=[48..76]; asserts Phase 77 guides 08 + 09 deliverables |
-| `scripts/validation/check-phase-78.mjs` | NEW | CHAIN_PHASES=[48..77]; asserts capability matrix ## Authentication + comparison doc cells |
-| `scripts/validation/check-phase-79.mjs` | NEW | CHAIN_PHASES=[48..78]; asserts L1 #35, #36, L2 #27, runbook index rows |
-| `scripts/validation/check-phase-80.mjs` | NEW | CHAIN_PHASES=[48..79]; asserts nav hub extensions (index.md, common-issues.md, quick-ref-l1/l2.md) |
-| `scripts/validation/check-phase-81.mjs` | NEW (chain-apex) | CHAIN_PHASES=[48..80]; CHAIN_SKIP=new Set([]); V-81-AUDIT-HARNESS asserts `v1.9-milestone-audit.mjs` exits 0; V-81-SELF asserts CHAIN_PHASES excludes 81 |
-| `.github/workflows/audit-harness-v1.9-integrity.yml` | NEW | Sixth parallel coexistence workflow; path-filter scoped to `v1.9-*` and v1.9 milestone artifacts; inherits: `fetch-depth: 0`, `core.autocrlf false`, `continue-on-error: false`, `timeout-minutes: 30`, `CHAIN_TIMING_LINUX` notice, weekly Monday cron + quarterly cron |
-| `scripts/validation/_lib/frozen-at-close.mjs` | EXTEND | Add `V18: '<v1.8-close-gate-SHA>'` to `MILESTONE_CLOSE_SHAS`; add `export const readAtV18Close = (p) => readAtClose('V18', p)` |
+| `scripts/validation/v1.10-milestone-audit.mjs` | NEW (Path-A from v1.9) | Inherit C1–C16 blocking checks verbatim; comment block updated to cite v1.10 lineage (8th Path-A milestone); sidecar reference → `v1.10-audit-allowlist.json`; v1.10-specific checks (KRB-E1..E6, GRA-E1..E3) added as new assertions |
+| `scripts/validation/v1.10-audit-allowlist.json` | NEW (Path-A from v1.9) | `schema_version`, `generated`, `phase` fields updated; `c13_rotting_external` reset / seeded with new Microsoft Learn URLs from Guide 10 and Graph API doc |
+| `scripts/validation/check-phase-83.mjs` | NEW | CHAIN_PHASES=[48..82]; HARNESS=`v1.9-milestone-audit.mjs` (predecessor-byte-unchanged); asserts Phase 83 Kerberos guide + guide 09 surgical edit + glossary |
+| `scripts/validation/check-phase-84.mjs` | NEW | CHAIN_PHASES=[48..83]; asserts Phase 84 Graph API doc + NUAL table edit |
+| `scripts/validation/check-phase-85.mjs` | NEW | CHAIN_PHASES=[48..84]; asserts Phase 85 capability matrix + L2 #28/#29 + l2-index |
+| `scripts/validation/check-phase-86.mjs` | NEW | CHAIN_PHASES=[48..85]; asserts Phase 86 nav hub extensions (index.md, quick-ref-l2.md, common-issues.md); [optional: chain-health 0-FAIL assertion] |
+| `scripts/validation/check-phase-87.mjs` | NEW (chain-apex) | CHAIN_PHASES=[48..86]; CHAIN_SKIP=new Set([]); V-87-AUDIT-HARNESS; V-87-SELF |
+| `.github/workflows/audit-harness-v1.10-integrity.yml` | NEW | 7th parallel coexistence workflow; inherits: fetch-depth:0, autocrlf false, continue-on-error:false, 30-min timeout, weekly + quarterly crons |
+| `scripts/validation/_lib/frozen-at-close.mjs` | EXTEND | Add `V19: '<v1.9-close-gate-SHA>'`; add `export const readAtV19Close = (p) => readAtClose('V19', p)` |
 
-**Atomic commit pattern (per v1.8 Phase 74 precedent):**
-- Atom 1 commit: `v1.9-milestone-audit.mjs` + `v1.9-audit-allowlist.json` + BASELINE_13 comment in `regenerate-supervision-pins.mjs` -- 3 files indivisible
-- Atom 2 commit: `check-phase-75..81.mjs` + `audit-harness-v1.9-integrity.yml` + `_lib/frozen-at-close.mjs` (V18 SHA) -- indivisible set, delivered in Phase 81
-
----
-
-## Scaling Considerations
-
-This is a documentation architecture project. Scaling here means "how does this hold if additional SSO-adjacent features ship in v2.0+":
-
-| Scenario | Architecture Impact |
-|----------|---------------------|
-| One more macOS auth feature | Append as `10-new-auth-feature.md`; L1 #37, L2 #28; identical pattern; no structural change needed |
-| Auth runbooks exceed 2-3 L1 entries | Consider a `docs/decision-trees/10-macos-auth-triage.md` following the pattern of `06-macos-triage.md` but scoped to authentication failures |
-| Windows gains Platform SSO equivalent | Add Windows SSO row to `macos-capability-matrix.md` and `4-platform-capability-comparison.md`; add primary definition to `_glossary.md`; add `> See also:` to `_glossary-macos.md` Platform SSO entry |
-| v1.9 harness chain grows beyond ~35 validators | Existing `CHAIN_SKIP` infrastructure handles suppression; no structural change; execution time increases linearly (current chain is 26 validators at ~102s Windows / ~56s Linux per v1.8 data) |
+**Atomic commit pattern (per v1.9 Phase 82 precedent):**
+- Atom 1: `v1.10-milestone-audit.mjs` + `v1.10-audit-allowlist.json` + BASELINE_14 in `regenerate-supervision-pins.mjs` — 3 files indivisible.
+- Atom 2: `check-phase-83..87.mjs` + `audit-harness-v1.10-integrity.yml` + `_lib/frozen-at-close.mjs` V19 entry — indivisible set.
 
 ---
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Expanding the 03-configuration-profiles.md Stub Inline
+### Anti-Pattern 1: Editing the Capability Matrix Without the Pre-Edit Anchor Inventory
 
-**What people do:** Turn the 12-line ## Extensible SSO stub at `03-configuration-profiles.md` lines 157-168 into a full Platform SSO guide inline.
+**What people do:** Open `macos-capability-matrix.md`, add a Kerberos SSO Extension row, commit.
 
-**Why it's wrong:** The existing file is 200 lines covering 9 profile types. Platform SSO setup requires Entra ID prerequisites, device registration steps, the SSO extension payload configuration, and auth-method selection -- content peer in depth to the entire existing guide. An inline expansion exceeds the single-responsibility scope of 03-configuration-profiles.md and makes it impossible for the nav hub to link at appropriate granularity.
+**Why it's wrong:** `docs/reference/4-platform-capability-comparison.md` carries sibling-anchor-pin links to capability matrix anchors. Adding a new `## Authentication` sub-H2 or renaming an existing H2 shifts anchor targets. Without recording the pre-edit anchor state, it is impossible to verify whether the 4-platform comparison doc's links still resolve.
 
-**Do this instead:** Replace the "See official Microsoft documentation" sentence in the stub with "See [Platform SSO Setup](07-platform-sso-setup.md)" and keep the 2-paragraph orientation intact. The stub's job is orientation + pointer, not setup reference.
+**Do this instead:** In the plan for Phase 85 (or whichever phase edits the capability matrix), the first task is to grep all `## ` headings in `macos-capability-matrix.md` and record them as a named artifact (e.g., `85-ANCHOR-INVENTORY.md`). Only then proceed with row additions. The check-phase-85.mjs validator should assert this artifact exists.
 
-### Anti-Pattern 2: Combining 07 + 08 + 09 into One Mega-Guide
+### Anti-Pattern 2: Editing Guide 09 Beyond the Single Deferred-Item Sentence
 
-**What people do:** Put all Platform SSO content (setup, auth deep-dive, legacy migration) into a single `07-platform-sso-complete.md`.
+**What people do:** Use the "update guide 09" task as an opportunity to expand the Kerberos Coexistence section with additional content, since guide 10 is now being authored.
 
-**Why it's wrong:** The audience for admin setup (Intune admin clicking through Intune paths) differs from the audience for auth method comparison (architect choosing between Secure Enclave/Password sync/Smart card) and differs from the audience for legacy migration (admin managing a mixed fleet with existing Enterprise SSO plug-in). A single file serves none of them well. The `docs/index.md` macOS Admin Setup table links specific guides to specific "when to use" use cases -- a combined file cannot be linked at that granularity.
+**Why it's wrong:** Guide 09's Kerberos section is complete and correct — the coexistence rationale, Extension Identifier separation, and parallel-operation explanation are accurate. The only content gap was the deferred forward-reference. Expanding beyond that single sentence risks duplicating content between guide 09 and guide 10, creating two canonical sources for coexistence mechanics.
 
-**Do this instead:** Three files (07/08/09) under ~400 lines each, each with a single-sentence "When to use this guide" opener.
+**Do this instead:** Replace exactly one sentence (the deferred-item note). Leave the rest of the section byte-unchanged. Guide 10 is the canonical reference for Kerberos configuration; guide 09 is the canonical reference for coexistence with Platform SSO.
 
-### Anti-Pattern 3: Skipping the 00-overview.md Mermaid Update
+### Anti-Pattern 3: Authoring the Graph API Doc Before Confirming GA Status
 
-**What people do:** Create 07/08/09 but omit updating `00-overview.md`.
+**What people do:** Author `11-graph-api-platform-credential.md` (or equivalent) based on current `platformCredentialAuthenticationMethod` Graph API documentation without confirming whether it is GA or still in beta/preview.
 
-**Why it's wrong:** `00-overview.md` is the documented starting point for macOS admin setup. The Mermaid diagram currently ends at node F (`[6. Config Failures]`). Admins starting at 00-overview.md will not discover 07/08/09 if it is not in the diagram and bullet list.
+**Why it's wrong:** The project has an established "keep deferred rather than ship a guessed or beta surface" doctrine (PROJECT.md v1.9 plan-time research flags). A doc for a beta API becomes stale on the GA date and may describe endpoints/schemas that change. Worse, an admin acting on a preview-API doc in production may encounter breaking changes.
 
-**Do this instead:** Treat 00-overview.md as a required deliverable in the same phase as guide 07. check-phase-76.mjs must assert that 00-overview.md contains the string "07-platform-sso-setup".
+**Do this instead:** Verify GA/stable status before the Graph API doc phase executes. If `platformCredentialAuthenticationMethod` is still preview at Phase 84 execution time, close PSSO-FUT-02 as "kept deferred, API not GA" rather than shipping the doc. The research phase should surface GA status; if inconclusive, this is a plan-time blocker for Phase 84.
 
-### Anti-Pattern 4: Rewriting Nav Hub Files Instead of Appending
+### Anti-Pattern 4: Skipping Navigation-Last Order
 
-**What people do:** Rewrite `docs/index.md`, `common-issues.md`, `quick-ref-l1.md`, or `quick-ref-l2.md` macOS sections to "clean them up" while adding Platform SSO entries.
+**What people do:** Update `docs/index.md` in the same commit as the Kerberos guide (guide 10), to save a phase.
 
-**Why it's wrong:** These files have an established append-only H2 section convention confirmed across five prior milestones (v1.2 through v1.6). Rewrites risk breaking existing cross-links and create diff noise obscuring actual content additions.
+**Why it's wrong:** The navigation-last convention exists across all prior milestones (v1.2–v1.9). Nav hub files (`docs/index.md`, `common-issues.md`, `quick-ref-l1/l2.md`) link to content that must already exist before the link is committed. A nav hub linking to a file that does not yet exist passes no check but creates a broken-link window. The convention ensures that any execution failure in a content phase does not leave the nav hub with dangling links.
 
-**Do this instead:** Add new table rows only. Never change existing rows in these files as part of a feature-addition phase.
+**Do this instead:** Nav hub edits happen in the last content phase (Phase 86 in this structure), after all new files (guides 10/11, L2 #28/#29) are confirmed committed.
 
-### Anti-Pattern 5: Authoring v1.9-milestone-audit.mjs Before Pinning the V18 SHA
+### Anti-Pattern 5: Folding Chain-Health Pass Into the Harness Lineage Bump Atom
 
-**What people do:** Copy v1.8-milestone-audit.mjs to v1.9 and start authoring check-phase-75.mjs before identifying the v1.8 close-gate commit SHA.
+**What people do:** Include the frozen-aware conversion of legacy validators (check-phase-{58–66,73}) inside the harness lineage bump Atom 2 commit.
 
-**Why it's wrong:** check-phase-75.mjs (and all subsequent v1.9 chain validators) inherit the predecessor-byte-unchanged invariant. Any assertion that reads a frozen file via `readAtV18Close()` will throw at the `readAtClose()` call site if `V18` is absent from `MILESTONE_CLOSE_SHAS`. The first cross-OS Linux GHA run will fail even if local tests pass (if the SHA is guessed incorrectly, it fails on the Linux runner).
+**Why it's wrong:** The Atom 2 invariant is "check-phase-83..87 + CI workflow + frozen-at-close.mjs V19 — indivisible." Adding 10 legacy validator rewrites to that atom breaks indivisibility and makes the commit non-reviewable as a single unit. If any one legacy validator rewrite fails, the entire atom fails.
 
-**Do this instead:** In the harness lineage bump phase (Phase 81), make the first task be: "identify v1.8 close-gate SHA from git log, verify it contains v1.8-MILESTONE-AUDIT.md + 4-doc traceability closure, add to frozen-at-close.mjs as V18." Then author the harness files.
+**Do this instead:** If a chain-health pass is included in v1.10, it must be a separate phase (e.g., Phase 86a or a standalone Phase before 87) with its own phase validators. The harness Atom 2 then contains only the v1.10-new harness files.
 
 ---
 
 ## Sources
 
-- Direct inspection: `docs/admin-setup-macos/` (all 7 files including 00-overview.md Mermaid structure and 03-configuration-profiles.md lines 157-168 stub)
-- Direct inspection: `docs/_glossary-macos.md` (term structure, ## sections, blockquote pattern, version history)
-- Direct inspection: `docs/reference/macos-capability-matrix.md` (6 H2 domains, Platform SSO row in ## Configuration confirmed)
-- Direct inspection: `docs/reference/4-platform-capability-comparison.md` (link-not-copy cell architecture with sibling-anchor pins confirmed)
-- Direct inspection: `docs/index.md` (macOS Provisioning section structure, Admin Setup / L1 / L2 table patterns)
-- Direct inspection: `docs/l1-runbooks/00-index.md` (last runbook #34), `docs/l2-runbooks/00-index.md` (last runbook #26, macOS L1 Escalation Mapping pattern)
-- Direct inspection: `docs/macos-lifecycle/00-ade-lifecycle.md` (7-stage pipeline, Stage 4 Setup Assistant, Stage 6 Company Portal, Stage 7 Ongoing MDM)
-- Direct inspection: `scripts/validation/` directory listing (v1.4 through v1.8 lineage confirmed), `v1.8-milestone-audit.mjs` (C1-C16 blocking check set, sidecar reference), `v1.8-audit-allowlist.json` (schema_version 1.1, sidecar shape), `check-phase-74.mjs` (CHAIN_PHASES=[48..73], chain-apex structure, CHAIN_SKIP invariant), `check-phase-71.mjs` (CHAIN_PHASES pattern), `_lib/frozen-at-close.mjs` (MILESTONE_CLOSE_SHAS with V141/V15/V16/V17/V17_CLOSEGATE entries)
-- Direct inspection: `.github/workflows/audit-harness-v1.8-integrity.yml` (5-job structure: parse + path-match + harness-run + linux-chain-ubuntu-latest + check-phase-71..74 individual jobs; fetch-depth:0 inheritance; autocrlf false; continue-on-error:false; weekly + quarterly crons)
-- `.planning/PROJECT.md` (v1.9 milestone goal, Phase 75+ numbering, sequential-on-main-tree constraint, per-platform documentation pattern, v1.8 Path-A lineage precedent documentation)
+- Direct inspection: `docs/admin-setup-macos/` — 10 files (00-overview.md Mermaid structure through 09-enterprise-sso-plugin-migration.md Kerberos Coexistence section line ~148 confirmed)
+- Direct inspection: `docs/l2-runbooks/` directory listing — highest file confirmed `27-macos-sso-investigation.md`; `00-index.md` macOS section confirmed
+- Direct inspection: `docs/operations/00-index.md` — 5 H2 subtrees confirmed (co-management, patch-management, app-lifecycle, drift-migration, apple-business governance); structure verified
+- Direct inspection: `docs/_glossary-macos.md` — existing ## Authentication section confirmed (Platform SSO + Secure Enclave entries); Kerberos SSO Extension mentioned in Enterprise SSO Plug-in entry but no standalone term
+- Direct inspection: `docs/reference/macos-capability-matrix.md` — ## Authentication section confirmed added in v1.9; 8 rows confirmed; Kerberos SSO Extension absent (new in v1.10)
+- Direct inspection: `docs/index.md` — macOS Provisioning section structure confirmed; L2 #27 SSO Investigation row confirmed at line 123
+- Direct inspection: `scripts/validation/` directory listing — v1.9 harness files (`v1.9-milestone-audit.mjs`, `v1.9-audit-allowlist.json`, `check-phase-75..82.mjs`) confirmed; `audit-harness-v1.9-integrity.yml` confirmed (6 CI workflows total)
+- `.planning/milestones/v1.9-DEFERRED-CLEANUP.md` — PSSO-FUT-01/02/04 deferred backlog items with "where it belongs when resolved" guidance; PRE-EXISTING-CHAIN-RED-AT-HEAD-01 (10 FAILs in check-phase-{58–66,73}) confirmed
+- `.planning/PROJECT.md` — v1.10 milestone framing; Phase 83+ numbering; PRE-EXISTING-CHAIN-RED-AT-HEAD-01 harness-close watch item; navigation-last convention across all milestones; pre-edit anchor inventory convention (Phase 63 Plan 63-05 DA-4 reference)
 
 ---
 
-*Architecture research for: Platform SSO + Secure Enclave integration into existing macOS Intune documentation suite*
-*Researched: 2026-06-20*
+*Architecture research for: v1.10 Platform SSO follow-ons — Kerberos guide + Graph API doc + NUAL key edit + harness lineage bump integration into existing macOS Intune documentation suite*
+*Researched: 2026-06-22*
