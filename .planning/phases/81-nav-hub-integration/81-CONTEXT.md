@@ -14,7 +14,10 @@ Wire the already-shipped v1.9 Platform SSO content into every navigation hub via
 - `docs/quick-ref-l1.md` — macOS section: append SSO escalation triggers (Secure Enclave key error → #36; sign-in loop → #35)
 - `docs/quick-ref-l2.md` — macOS section: append SSO log paths + `app-sso platform -s` attestation command
 - `docs/decision-trees/06-macos-triage.md` — append SSO failure leaf (disambiguates #35 vs #36)
-- `docs/macos-lifecycle/00-ade-lifecycle.md` — append E8 bullet to the "Related Guides:" list (lines 391–394)
+- `docs/macos-lifecycle/00-ade-lifecycle.md` — append E8 bullet to the "Related Guides:" list (~line 394)
+- `docs/_glossary-macos.md` — append E2 cross-link (Platform SSO term → guide 07) **[added per revised D-03]**
+- `docs/admin-setup-macos/07-platform-sso-setup.md` — append E3 cross-link (→ capability-matrix#authentication) **[added per revised D-03]**
+- `docs/reference/macos-capability-matrix.md` — append E4 cross-link (authentication → guide 07) **[added per revised D-03]**
 - `.planning/phases/81-nav-hub-integration/81-CROSSLINK-CLOSURE.md` — NEW committed closure checklist (planning-dir, not corpus)
 
 **Not in this phase:** No new content authoring (guides 07/08/09 and runbooks #35/#36/#27 already shipped in Phases 76–80). The v1.9 harness lineage bump + any `check-phase-81` validator + the 3-axis terminal re-audit + milestone close are **Phase 82**. Non-macOS authentication content is out of scope this milestone.
@@ -40,10 +43,17 @@ All four gray areas were resolved via a three-agent adversarial review (Finder �
 - **Falsified Finder claim:** SC4's "present across the corpus" describes where the *edges* live, not where the *checklist* sits — FALSE POSITIVE against 2B.
 - **D-02 GUARDRAIL:** enumerate all 8 edges E1–E8 **verbatim from ROADMAP line 531**, each with a source `file:line` and a resolved? checkbox; reference the checklist from the phase VERIFICATION.md so it is not author-invisible to the Phase-82 harness author.
 
-### D3 — Edge-creation scope (WINNER: 3A, create-missing + verify-rest, bounded)
-- **D-03: Phase 81 CREATES the genuinely-missing edges (E8 + the new nav-hub rows/leaf) and VERIFIES E1–E7 already landed in Phases 75–79.** E8 (`00-ade-lifecycle→07`) does NOT exist yet and is legitimately owned by this navigation-last phase.
-- **Rejected 3B** (defer / backfill-flag E8): deferring E8 = an absent edge at close → fails SC4 (CRITICAL) and makes the phase goal unachievable; the "Phase 75 backfill" framing is also a misattribution (guide 07 is a Phase 76 deliverable; the lifecycle doc predates it).
-- **D-03 GUARDRAIL:** (a) append E8 as ONE bullet in `00-ade-lifecycle.md`'s **"Related Guides:" list (lines 391–394)** — e.g. `- [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md) -- Configure macOS Platform SSO authentication` (clean append, shifts no anchors); (b) **bound the "remediate" clause** — verify E1–E7 with cited grep/line evidence per edge; if any prior-phase edge is found broken, **log it to `81-CROSSLINK-CLOSURE.md` + the deferred backlog — do NOT silently re-author prior-phase content** inside this nav-hub phase (avoids cross-phase scope creep). E7 is already present at `03-configuration-profiles.md:168`.
+### D3 — Edge-creation scope (WINNER: 3A, create-missing + verify-rest — REVISED 2026-06-22 after research discovery)
+- **D-03: Phase 81 CREATES every genuinely-missing SSO-E edge as an append-only one-line cross-link, and VERIFIES the rest.** Research (`81-RESEARCH.md`) found **4 of 8 edges absent**, not just E8: **E2** (`glossary→07`), **E3** (`07→capability-matrix#authentication`), **E4** (`capability-matrix→07`), and **E8** (`00-ade-lifecycle→07`). Present/verified: **E1, E5, E6, E7**. The user (2026-06-22) chose **"Create all 4 now"** so all 8 edges are genuinely present at close and SC4 is literally satisfied.
+- **D-03 REVISION rationale:** the original D-03 guardrail ("log, don't re-author prior-phase content") anticipated E8 as a lone gap. With 4/8 missing — half in prior-phase files (glossary/Phase 75, guide 07/Phase 76, capability matrix/Phase 79) — deferring would push 4 edges to Phase 82 and leave SC4 unmet at Phase 81 close. The original guardrail's risk (ballooning into prior-phase **content rewrites**) does NOT materialize here because every missing edge is a **single additive cross-link**, not a content change. The "log-don't-fix" path (former 3B-adjacent) is therefore superseded for E2/E3/E4/E8.
+- **D-03 GUARDRAIL (revised):**
+  - **E8** — append ONE bullet to `00-ade-lifecycle.md`'s **"Related Guides:" list (append after the last bullet, ~line 394)**: `- [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md) -- Configure macOS Platform SSO authentication`.
+  - **E2** — append a link from the **Platform SSO glossary term** in `docs/_glossary-macos.md` to `admin-setup-macos/07-platform-sso-setup.md` (additive "See:" / cross-ref within the existing term entry; do not rewrite the definition).
+  - **E3** — add a link in `docs/admin-setup-macos/07-platform-sso-setup.md` to `../reference/macos-capability-matrix.md#authentication` (additive cross-ref, e.g. in a See Also / Related block; do not rewrite guide content).
+  - **E4** — add a link in `docs/reference/macos-capability-matrix.md` (authentication rows/section) back to `../admin-setup-macos/07-platform-sso-setup.md` (additive cross-ref).
+  - **Every edit is a one-line additive cross-link — NO prose rewrites of prior-phase content.** Confirm the exact anchor slug of the capability matrix `#authentication` section before wiring E3/E4 (the anchor must resolve).
+  - **Verify E1/E5/E6/E7** present with cited `file:line` evidence in `81-CROSSLINK-CLOSURE.md`. E7 confirmed at `03-configuration-profiles.md:168`; E1 confirmed present (07→glossary).
+  - **Closure checklist confirms all 8 edges PRESENT** (no deferred-gap rows expected after this work). If any edge unexpectedly cannot be cleanly wired, STOP and surface rather than silently rewriting prior content.
 
 ### D4 — index.md Admin Setup row granularity (WINNER: 4B, one grouped row naming all three)
 - **D-04: Append ONE grouped row to each of the macOS Admin Setup / L1 / L2 tables in `docs/index.md`**, matching the established grouped-row house style (existing macOS tables at index.md:102–130 all use single grouped rows → overview/index, never per-item rows).
@@ -76,9 +86,10 @@ All four gray areas were resolved via a three-agent adversarial review (Finder �
 - `docs/decision-trees/06-macos-triage.md` — Mermaid block (lines 29–55), **Routing Verification table (lines 57–69)**, `click`/`classDef`/`class` directives (lines 44–54). Append SSO leaf per D-01. **Honor the line-15 "within 3 decision steps" + line-59 "within 3 edges" invariant.**
 - `docs/macos-lifecycle/00-ade-lifecycle.md` — "See Also" → **"Related Guides:" bullet list (lines ~391–394)**. Append E8 bullet per D-03.
 
-### Edges already present (verify, do not recreate)
-- `docs/admin-setup-macos/03-configuration-profiles.md:168` — E7 (`03→07`) already live: `Continue with Platform SSO setup in [07-platform-sso-setup.md](07-platform-sso-setup.md).` (added Phase 76).
-- E1–E4 (07↔glossary, 07↔capability-matrix) are Phase 75–79 deliverables; E5/E6 (35↔27) are Phase-80 in-phase edges (`80-CONTEXT.md:112`). Verify each with cited evidence in the closure checklist.
+### Edge audit (verified by research 2026-06-22 — see `81-RESEARCH.md`)
+- **PRESENT (verify + cite, do not recreate):** E1 (`07→glossary`), E5 (`35→27`), E6 (`27→35`, `80-CONTEXT.md:112`), E7 (`03→07` at `03-configuration-profiles.md:168`: `Continue with Platform SSO setup in [07-platform-sso-setup.md](07-platform-sso-setup.md).`).
+- **ABSENT — CREATE this phase (revised D-03):** E2 (`glossary→07`), E3 (`07→capability-matrix#authentication`), E4 (`capability-matrix→07`), E8 (`00-ade-lifecycle→07`). Each is a one-line additive cross-link.
+- **New target files for E2/E3/E4:** `docs/_glossary-macos.md`, `docs/admin-setup-macos/07-platform-sso-setup.md`, `docs/reference/macos-capability-matrix.md`. Confirm the matrix `#authentication` anchor slug before wiring E3/E4.
 
 ### Canonical fact sources for nav-entry copy (link-not-copy — summarize + link, never duplicate)
 - `docs/admin-setup-macos/07-platform-sso-setup.md` — guide 07 (`app-sso platform -s`, registration token diagnostics).
@@ -134,10 +145,9 @@ All four gray areas were resolved via a three-agent adversarial review (Finder �
 <deferred>
 ## Deferred Ideas
 
-- **v1.9 harness lineage bump + `check-phase-81` validator + 3-axis terminal re-audit + milestone close** — Phase 82.
-- **Any broken E1–E7 edge discovered during verification** — log to `81-CROSSLINK-CLOSURE.md` + deferred backlog; do NOT re-author prior-phase content inside this nav phase (D-03 guardrail).
+- **v1.9 harness lineage bump + `check-phase-81` validator + 3-axis terminal re-audit + milestone close** — Phase 82 (incl. C17 cross-link closure adversarial-review gate).
 
-None other — discussion stayed within phase scope.
+**Note (2026-06-22):** The original D-03 deferral of broken prior-phase edges was SUPERSEDED — research found E2/E3/E4/E8 absent and the user chose to create all 4 in this phase as append-only cross-links (revised D-03). No edge gaps are deferred. Only a content **rewrite** of prior-phase files (not needed here) would be out of scope.
 
 </deferred>
 
