@@ -266,6 +266,38 @@ A pure tooling/infrastructure milestone (zero new corpus content beyond one 4-si
 
 ---
 
+## Milestone: v1.9 — macOS Platform SSO & Secure Enclave Authentication Documentation
+
+**Shipped:** 2026-06-22
+**Phases:** 8 (75-82) | **Plans:** 19 | **Requirements:** 27/27 Validated
+
+### What Was Built
+Complete macOS Platform SSO (macOS 14+) + Secure Enclave authentication documentation: admin setup guide (`07-platform-sso-setup.md`), three-method auth deep-dive (`08`, Secure Enclave / Password sync / Smart card + Touch ID / Passkey / NUAL / ADE-during-Setup), legacy Enterprise SSO plug-in + migration guide (`09`) with rollback, L1/L2 runbooks (#35/#36/#27), capability-matrix + 5-platform comparison + lifecycle integration with 8 SSO-E cross-link edges, and the v1.9 audit-harness lineage bump (7th Path-A milestone) closed by a 3-axis terminal re-audit.
+
+### What Worked
+- **Adversarial-review-driven discuss-phase** — Phase 82's four gray areas (C17 / plan-layout / re-audit-set / close-gate) were each resolved by parallel Finder/Adversary/Referee advisors, which independently surfaced load-bearing facts (e.g. C13 doesn't crawl internal links → the V-81-CROSSLINK gap was real, not theoretical).
+- **Path-A harness discipline** — the 4-line relabel + predecessor-byte-unchanged invariant kept the 7th lineage bump near-mechanical and bisect-clean.
+- **Honest legacy-FAIL accounting** — distinguishing green Phase-82 deliverables from pre-existing chain FAILs (and routing the latter to deferred-cleanup) preserved audit credibility instead of masking.
+- **Post-execution code review caught a real harness bug** — WR-01 (E7 non-load-bearing cross-link needle) was a genuine specificity gap in a gating validator; fixed count-neutrally before milestone archive.
+
+### What Was Inefficient
+- **8 net-new validators in one indivisible Atom 2** — because Phases 75-81 didn't ship per-phase validators during their own execution (unlike v1.8's 71/72/73), all eight `check-phase-75..82.mjs` landed in Phase 82, enlarging the close phase. Shipping validators-as-deliverable per content phase would have spread the load.
+- **MILESTONES.md auto-extraction produced empty `One-liner:` rows** — several content-phase SUMMARY.md files lacked a clean `one_liner` field, requiring manual curation of the milestone entry.
+
+### Patterns Established
+- **Phase-scoped cross-link assertions over global C-categories** (D-01) — milestone-specific edge sets belong in the per-phase validator (chain-replayed = permanent + blocking), not a new global C-check every future milestone inherits forever.
+- **Post-terminal-audit count-neutral hardening** — an advisory fix that provably doesn't change PASS/FAIL/SKIP counts can be applied after the terminal re-audit without invalidating it, when documented in the milestone audit.
+
+### Key Lessons
+- The "terminal" re-audit is only as strong as the validators' specificity — a green chain with a non-load-bearing assertion is a false sense of security; code-review-after-execution is a worthwhile backstop even for tooling-only phases.
+- Markdown-link-anchored needles (`](path)`) beat bare-filename needles for cross-link assertions, because filenames recur in changelog/version-history prose.
+
+### Cost Observations
+- Model mix: orchestration on Opus; researcher/planner-checker/verifier/code-reviewer on Sonnet; executors on Opus (delicate atomic harness/close-gate work).
+- Notable: the whole milestone ran as a single `/gsd-discuss-phase 82 --chain` auto-pipeline (discuss → plan → execute → review → verify → close → Jira sync) for the final phase.
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution

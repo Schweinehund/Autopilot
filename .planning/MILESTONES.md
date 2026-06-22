@@ -1,5 +1,22 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (Shipped: 2026-06-22)
+
+**Phases completed:** 8 phases (75-82), 19 plans, 26 tasks, 27/27 requirements Validated
+**Timeline:** 2026-06-21 → 2026-06-22 (~2 days)
+**Audit status:** `passed` (.planning/milestones/v1.9-MILESTONE-AUDIT.md; Phase 82 SSOHARN-04 3-axis terminal re-audit — Axis 1 local fresh-clone via `git clone --no-hardlinks` into `$env:TEMP\v1.9-audit-<rand>`; Axis 2 cross-OS Linux GHA workflow_dispatch run `27966769510`; Axis 3 fresh zero-context sub-agent; Cross-OS PASS/FAIL/SKIP-count EXACT MATCH across all 10 cross-OS-applicable validators; predecessor v1.4–v1.8 frozen surfaces byte-unchanged)
+
+**Key accomplishments:**
+
+- **Platform SSO admin setup guide** (`07-platform-sso-setup.md`, Phases 75-76) — Intune Settings Catalog paths, Entra ID prerequisites, device registration, mixed-fleet dual-field config; glossary Authentication foundation (`#platform-sso`, `#secure-enclave`, `#enterprise-sso-plug-in`, `#entra-id-sso` anchor contracts) and the `03-configuration-profiles.md` Extensible SSO stub correction (3 DS-5 factual errors fixed).
+- **Auth-methods deep-dive** (`08-auth-methods-deep-dive.md`, Phase 77, PSSO-05..11) — Secure Enclave key (hardware-backed, T2/Apple Silicon attestation), Password sync, and Smart card methods, plus advanced surfaces (Touch ID biometric policy, Passkey/FIDO2, NUAL, ADE-during-Setup).
+- **Legacy Enterprise SSO plug-in & migration** (`09-enterprise-sso-plugin-migration.md`, Phase 78, SSOMIG-01..04) — legacy plug-in vs Platform SSO disambiguation, staged migration sequence, mandatory rollback procedure, Kerberos coexistence.
+- **L1/L2 runbooks + reference integration** (Phases 79-81) — L1 #35/#36 + L2 #27, capability-matrix Authentication rows + 5-platform comparison cells, lifecycle PSSO timing, and append-only nav-hub integration including the 8 SSO-E cross-link edges (E1-E8) with file:line closure evidence.
+- **v1.9 audit-harness lineage bump** (Phase 82, SSOHARN-01..04) — 7th milestone in the Path-A lineage (v1.4→v1.9) as a pristine 4-line relabel; 8 net-new `check-phase-75..82.mjs` validators (E7 cross-link assertion hardened post-audit, WR-01); 6th-coexistence CI workflow; single bisect-clean close-gate (no Commit A); V18=`2bd79d8` pinned.
+- **3-axis terminal re-audit with honest accounting** — cross-OS PASS/FAIL/SKIP EXACT MATCH proven (Windows fresh-clone == Linux GHA == zero-context sub-agent); ~10 pre-existing legacy chain FAILs (phases 58-66/73) distinguished from green Phase-82 deliverables and routed to `v1.9-DEFERRED-CLEANUP.md` (PRE-EXISTING-CHAIN-RED-AT-HEAD-01) rather than masked.
+
+---
+
 ## v1.8 Tooling Debt Closure + Chain-Resilience Hardening (Shipped: 2026-06-09)
 
 **Phases completed:** 4 phases (71-74), 13 plans, 12/12 requirements Validated
