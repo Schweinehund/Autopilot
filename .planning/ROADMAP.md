@@ -562,7 +562,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
   - [x] 82-01-PLAN.md — 82-CONVENTIONS.md (Wave 1) + Atom 1 (SSOHARN-01): v1.9-milestone-audit.mjs (Path-A, C1-C16, NO C17) + v1.9-audit-allowlist.json + BASELINE_13 + frozen-at-close V18=2bd79d8 entry — ONE indivisible commit (SC#1)
   - [x] 82-02-PLAN.md — Atom 2 (SSOHARN-02/03): check-phase-75..82.mjs (8 net-new; apex CHAIN_PHASES=[48..81], 81 carries V-81-CROSSLINK) + audit-harness-v1.9-integrity.yml (6th coexistence) — ONE indivisible commit (SC#2), pushed to origin/master
-  - [ ] 82-03-PLAN.md — 3-axis terminal re-audit (SSOHARN-04): 82-03-AUDIT-RESULTS.md (Axis 1 fresh-clone + Axis 2 Linux GHA + Axis 3 zero-context; 10-validator cross-OS EXACT MATCH) — artifact-only commit (SC#3)
+  - [x] 82-03-PLAN.md — 3-axis terminal re-audit (SSOHARN-04): 82-03-AUDIT-RESULTS.md (Axis 1 fresh-clone + Axis 2 Linux GHA + Axis 3 zero-context; 10-validator cross-OS EXACT MATCH) — artifact-only commit (SC#3)
   - [ ] 82-04-PLAN.md — close-gate (SSOHARN-04): v1.9-MILESTONE-AUDIT.md + v1.9-DEFERRED-CLEANUP.md + 4-doc traceability (27/27 Validated) + 82-VERIFICATION.md — SINGLE commit, NO Commit A (SC#4)
 
 ## Progress
@@ -650,7 +650,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 80. L1/L2 Runbooks | v1.9 | 3/3 | Complete    | 2026-06-22 |
 | 81. Nav Hub Integration | v1.9 | 4/4 | Complete    | 2026-06-22 |
-| 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 2/4 | In Progress|  |
+| 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 3/4 | In Progress|  |
 
 ---
 
