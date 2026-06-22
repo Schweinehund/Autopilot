@@ -117,10 +117,12 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 - [macOS Admin Setup Overview](../admin-setup-macos/00-overview.md)
 - [macOS ADE Lifecycle Overview](../macos-lifecycle/00-ade-lifecycle.md)
 - [APv1 vs APv2 Comparison](../apv1-vs-apv2.md) -- Windows framework comparison
+- [Platform SSO Setup Guide](../admin-setup-macos/07-platform-sso-setup.md) -- step-by-step Platform SSO configuration (Settings Catalog payload, registration flow)
 
 ---
 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-14 | Initial version -- 5-domain capability matrix comparing Windows and macOS Intune management | -- |
+| 2026-06-22 | Phase 81 (SSOREF-04): added E4 See Also cross-link to 07-platform-sso-setup.md | -- |
 | 2026-06-21 | Add `## Authentication` section (7 rows: auth methods, hardware gate, macOS version floor, Entra licensing, NUAL, passkey/FIDO2, hybrid Entra join anti-feature); update `## Configuration` Platform SSO row to link `#authentication` (X1); refresh DS-2 dates | -- |

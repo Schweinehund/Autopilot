@@ -144,6 +144,7 @@ Both fields must be present in the **same policy**. Microsoft Learn documents Er
 - [Enterprise SSO Plug-in](../_glossary-macos.md#enterprise-sso-plug-in)
 - [Configuration Profiles](03-configuration-profiles.md)
 - [macOS ADE Lifecycle Overview](../macos-lifecycle/00-ade-lifecycle.md)
+- [macOS Capability Matrix — Authentication](../reference/macos-capability-matrix.md#authentication) -- macOS vs Windows auth-method capability comparison and hardware/version gates
 
 ---
 
@@ -195,4 +196,5 @@ There is no repair path that avoids a device wipe for this specific misconfigura
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-22 | Phase 81 (SSOREF-04): added E3 See Also cross-link to macos-capability-matrix.md#authentication | -- |
 | 2026-06-20 | Phase 76 (PSSO-01/02/03/12): initial Platform SSO admin setup guide | -- |
