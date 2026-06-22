@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.9
-milestone_name: macOS Platform SSO & Secure Enclave Authentication Documentation
-status: Awaiting next milestone
-last_updated: "2026-06-22T18:02:24.647Z"
-last_activity: 2026-06-22 — Milestone v1.9 completed and archived
+milestone: v1.10
+milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
+status: planning
+last_updated: "2026-06-22T19:14:03.743Z"
+last_activity: 2026-06-22
 progress:
-  total_phases: 18
-  completed_phases: 8
-  total_plans: 19
-  completed_plans: 19
-  percent: 44
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-06-20)
 
 ## Current Position
 
-Phase: Milestone v1.9 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-06-22 — Milestone v1.9 completed and archived
+Status: Defining requirements
+Last activity: 2026-06-22 — Milestone v1.10 started
 
 ## v1.9 Phase Dependency Summary
 

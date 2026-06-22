@@ -8,7 +8,28 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation — CLOSED 2026-06-22
+## Current Milestone: v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
+
+**Goal:** Close the v1.9-deferred Platform SSO follow-on backlog (PSSO-FUT-01/02/04) with discoverable, fully-integrated documentation, so Intune/Entra admins and L1/L2 teams can configure and troubleshoot macOS Kerberos SSO and programmatic Platform Credential management without escalating to engineering.
+
+**Target features:**
+
+- **Kerberos SSO extension deep-dive** (PSSO-FUT-04) — new `docs/admin-setup-macos/10-kerberos-sso-extension.md` (realm config, on-prem AD dependency, ticket lifecycle, `app-sso` Kerberos diagnostics) + reciprocal cross-links from guide `09` + glossary + `macos-capability-matrix.md` + an L2 Kerberos troubleshooting runbook
+- **Graph API Platform Credential management** (PSSO-FUT-02) — dedicated Graph-API operations doc (`platformCredentialAuthenticationMethod` query / enumerate / delete + automation patterns) + L2 troubleshooting for Graph-side credential queries
+- **NUAL MDM key verification** (PSSO-FUT-01) — verify and document the `NewUserAuthorizationMode` (one-time) and persistent User-Authorization-Mode MDM plist key literals in guide `08`'s NUAL Settings Catalog table; close PSSO-FUT-01
+- **v1.10 audit-harness lineage bump + 3-axis terminal re-audit close** — Path-A v1.9→v1.10 (8th milestone in the lineage), `check-phase-83..NN.mjs` validators + CI workflow, following the full close ritual used since v1.4
+
+**Key context:**
+
+- **Single-feature content milestone** (Platform SSO follow-ons) — scope resolved via `/adversarial-review` (Finder/Adversary/Referee): winners 1A (Kerberos standalone guide + L2) + 2A (dedicated Graph-API doc + L2) + 4A (minimal NUAL key fix)
+- **Multi-tenant PSSO (PSSO-FUT-03) DEFERRED to its own architectural milestone** — net-new architecture ("its own planning surface"), not authentication-doc cleanup; folding it in would break the single-feature-content-milestone convention held across nine milestones
+- **Phase numbering continues from v1.9 close (Phase 82) → v1.10 starts at Phase 83**
+- Sequential-on-main-tree execution per `.planning/config.json` `use_worktrees:false` (durable user constraint)
+- **Plan-time research flags** (not blockers): Kerberos on-prem AD depth + demand-trigger; Graph `platformCredentialAuthenticationMethod` GA/stability status (keep deferred if still beta); NUAL plist key-literal verification against authoritative Settings Catalog / Apple `com.apple.extensiblesso` schema (keep deferred rather than ship a guessed key)
+- **Harness-close watch item:** the validator chain is already RED at HEAD (10 pre-existing legacy FAILs, phases 58–66/73 per `PRE-EXISTING-CHAIN-RED-AT-HEAD-01`) — the harness-bump phase must decide whether to fold in a chain-health pass or route it forward; finalized at roadmap
+- **Estimated scope** — content milestone; ~4-6 phases (83+), phase/plan count finalized at roadmap
+
+## Previous Milestone: v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (CLOSED 2026-06-22)
 
 **Status:** ✅ CLOSED 2026-06-22 — 8/8 phases (75-82) Complete; 27/27 requirements Validated via Phase 82 Plan 82-04 SINGLE close-gate commit (NO Commit A; D-04). No active milestone until `/gsd-new-milestone` scopes v1.10+.
 
@@ -32,7 +53,8 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - Source freshness: macOS auth docs last verified 2026-04-14; Platform SSO GA since macOS 14 (Oct 2023) — corpus lags platform capability by ~2.5 years
 - **Estimated scope** — content milestone; ~4-6 phases (75+), phase/plan count finalized at roadmap
 
-## Previous Milestone: v1.8 Tooling Debt Closure + Chain-Resilience Hardening (CLOSED 2026-06-08)
+<details>
+<summary>Previous Milestone: v1.8 Tooling Debt Closure + Chain-Resilience Hardening (CLOSED 2026-06-08)</summary>
 
 **Goal:** Close v1.7 tooling debt — fix the `.claude/commands/gsd-complete-milestone.md` archive-extraction logic emitting placeholder garbage into `MILESTONES.md` (RECURRENCE-CONFIRMED 2026-05-29), harden the validator chain's diagnostic surface (CHAIN-WRAPPER-01 stdout+stderr capture), forward-port HEAD-coupled chain validators across `check-phase-{48..66}.mjs` to the frozen-aware pattern (HARNESS-FORWARD-01 + SCOPE-GAP-61 retrospective), close Phase 67 SWEEP-02's 3-site VPP-location-token carry-over — bumping audit harness lineage v1.7 → v1.8 per Path-A convention.
 
@@ -54,6 +76,8 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - **HARNESS-FORWARD-01 scope discipline** — Pillar C is 2-4h scan-and-convert across 19 validator files; explicit guardrail prevents v1.8 ballooning if retrospective surfaces another SCOPE-GAP-class discovery
 - **Anti-precedent risk preserved** — Path-A inheritance (5 milestones strong: v1.4 → v1.4.1 → v1.5 → v1.6 → v1.7) extended to 6th milestone; predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7 byte-unchanged invariant maintained
 - **Estimated scope** — ~5-7h work, 4 phases (71-74), ~10-15 plans
+
+</details>
 
 <details>
 <summary>Previous Milestone: v1.7 Deferred Backlog Closure + Validator Chain Hardening</summary>
@@ -386,6 +410,10 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 ### Active
 
+<!-- v1.10 milestone STARTED 2026-06-22 — macOS Platform SSO Follow-ons (Kerberos + Graph API + NUAL). Requirements defined this milestone in REQUIREMENTS.md. -->
+
+*v1.10 milestone **STARTED 2026-06-22** — macOS Platform SSO Follow-ons (Kerberos, Graph API & NUAL). Closes PSSO-FUT-04 (Kerberos SSO extension guide + L2 runbook), PSSO-FUT-02 (Graph API Platform Credential management + L2), and PSSO-FUT-01 (NUAL MDM key verification). Scope resolved via `/adversarial-review` (winners 1A + 2A + 4A); multi-tenant PSSO (PSSO-FUT-03) deferred to its own architectural milestone. Phase numbering continues from Phase 82 → v1.10 starts at Phase 83. Requirements defined in `.planning/REQUIREMENTS.md`.*
+
 <!-- v1.9 milestone CLOSED 2026-06-22 — 27/27 requirements Validated. No active milestone until /gsd-new-milestone scopes v1.10+. -->
 
 *v1.9 milestone **CLOSED 2026-06-22** — macOS Platform SSO & Secure Enclave Authentication Documentation. 8/8 phases (75-82) Complete; 27/27 requirements Validated. Closed via Phase 82 Plan 82-04 SINGLE close-gate commit (NO Commit A; D-04). SSOHARN-01 Atom 1 `e760176` (v1.9-milestone-audit.mjs 4-line Path-A relabel + V18=2bd79d8 pin + BASELINE_13); SSOHARN-02/03 Atom 2 `e825fdb` (check-phase-75..82.mjs 8 net-new + 6th-coexistence audit-harness-v1.9-integrity.yml); SSOHARN-04 re-audit `9dc04ef` + close-gate `{phase_82_close_SHA}`. 3-axis auditor independence (fresh clone + cross-OS Linux GHA run `27966769510` + fresh sub-agent); Cross-OS EXACT MATCH 10/10 (apex 26/10/1 both OSes). Harness lineage now 7th milestone (v1.4→…→v1.9). Predecessor v1.4/v1.4.1/v1.5/v1.6/v1.7/v1.8 frozen surfaces BYTE-UNCHANGED. HONEST accounting: ~10 pre-existing legacy chain FAILs (phases 58-66, 73) out-of-scope, identical cross-OS, routed to v1.9-DEFERRED-CLEANUP.md (PRE-EXISTING-CHAIN-RED-AT-HEAD-01) — Phase-82 deliverables GREEN. v1.9-DEFERRED-CLEANUP.md authored (canonical; carried v1.8 + PSSO-FUT-01..04; cross-links pre-existing docs/v1.9-DEFERRED-CLEANUP.md, not deleted). Predecessor v1.8 CLOSED 2026-06-08 — 12/12 requirements Validated.*
@@ -413,6 +441,7 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 - Localization / non-English content — consistent with v1.0-v1.4.1 English-only policy
 - **CI-3 Managed Apple ID → Managed Apple Account corpus rename** (45 occurrences / 16 files) — DEFERRED to v1.9+ pending Microsoft Intune portal rebrand adoption (trigger: post-2026-07-01 quarterly tutorial refresh per `v1.7-DEFERRED-CLEANUP.md:252`)
 - **Multi-tenant Apple Business surfaces** — DEFERRED indefinitely; requires net-new architectural decisions (cross-tenant identity, audit log scoping, VPP license accounting)
+- **Multi-tenant Platform SSO (PSSO-FUT-03)** — DEFERRED to its own architectural milestone; net-new architecture (a single macOS fleet registering Platform Credentials against multiple Entra tenants + cross-tenant registration models + CA/compliance scoping) requiring its own planning surface, not authentication-doc cleanup. Excluded from v1.10 per `/adversarial-review` recommendation to keep v1.10 a single-feature content milestone (distinct from Multi-tenant Apple Business above)
 - **Apple Business Device API documentation** — DEFERRED pending Apple publishing `developer.apple.com/documentation/applebusiness/`
 - **Per-OU Conference Room Display deep-dive** — TRACKER ONLY; trigger is customer demand
 - **Account Holder lockout dedicated runbook** — CONDITIONAL; currently 7-leaf branch in L2 #26; promote if 5+ escalations per quarter
@@ -501,6 +530,8 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
+*Last updated: 2026-06-22 — **v1.10 macOS Platform SSO Follow-ons MILESTONE STARTED 2026-06-22** (Kerberos SSO extension deep-dive + Graph API Platform Credential management + NUAL MDM key verification + v1.10 audit-harness lineage bump). Single-feature content milestone closing v1.9-deferred PSSO follow-ons (PSSO-FUT-04 / PSSO-FUT-02 / PSSO-FUT-01); scope resolved via `/adversarial-review` (Finder/Adversary/Referee — winners 1A standalone Kerberos guide + L2, 2A dedicated Graph-API doc + L2, 4A minimal NUAL key fix). Multi-tenant PSSO (PSSO-FUT-03) DEFERRED to its own architectural milestone. Phase numbering continues from v1.9 close at Phase 82 → v1.10 spans Phase 83+. Sequential-on-main-tree per `use_worktrees:false`. Research-first enabled. Plan-time research flags: Kerberos on-prem AD depth/demand-trigger; Graph `platformCredentialAuthenticationMethod` GA/stability status; NUAL plist key-literal verification (keep deferred if unverifiable). Harness-close watch: pre-existing legacy chain-red (10 FAILs, phases 58-66/73 per PRE-EXISTING-CHAIN-RED-AT-HEAD-01) — fold a chain-health pass into the harness phase or route forward, decided at roadmap. Previous v1.9-milestone footer below.*
+
 *Last updated: 2026-06-22 after v1.9 milestone — **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation SHIPPED 2026-06-22** (tag `v1.9`). 8 phases (75-82), 19 plans, 27/27 requirements Validated. Delivered: complete macOS Platform SSO (macOS 14+) + Secure Enclave auth documentation — admin setup guide `07`, three-method deep-dive `08`, legacy Enterprise SSO plug-in + migration `09`, L1/L2 runbooks #35/#36/#27, capability-matrix + 5-platform comparison + lifecycle integration with 8 SSO-E cross-link edges, and the v1.9 audit-harness lineage bump (7th Path-A milestone) closed via Phase 82 3-axis terminal re-audit (cross-OS EXACT MATCH 10/10; predecessor v1.4-v1.8 frozen surfaces byte-unchanged). Closing SHAs: Atom 1 `e760176` + Atom 2 `e825fdb` + re-audit `9dc04ef` + close-gate `b29dca5` + WR-01 hardening `f709722`. Deferred to v1.10+: PRE-EXISTING-CHAIN-RED-AT-HEAD-01 (10 legacy chain FAILs, phases 58-66/73), PSSO-FUT-01..04, WINDOWS-CLONE-DEEPNEST-TIMEOUT-01. Next: `/gsd-new-milestone` scopes v1.10. v1.9-milestone-start footer below.*
 
 *v1.9-milestone-start footer: 2026-06-20 — **v1.9 MILESTONE STARTED 2026-06-20** (macOS Platform SSO & Secure Enclave Authentication Documentation). Single-feature content milestone closing the macOS authentication documentation gap: Platform SSO admin setup guide + all-three-auth-methods deep-dive (Secure Enclave key / Password sync / Smart card) + Secure Enclave architecture + legacy Microsoft Enterprise SSO plug-in (Kerberos/redirect) coverage with migration path + L1/L2 troubleshooting runbooks + glossary/capability-matrix integration + v1.9 audit-harness lineage bump (v1.8→v1.9) with full 3-axis terminal re-audit close. Phase numbering continues from v1.8 close at Phase 74 → v1.9 spans Phase 75+. Sequential-on-main-tree per `use_worktrees:false`. Research-first enabled. No backlog items folded in (tooling-debt + trigger-gated Apple Business items remain in `v1.8-DEFERRED-CLEANUP.md`). Previous: **v1.8 MILESTONE CLOSED 2026-06-08** (Tooling Debt Closure + Chain-Resilience Hardening — Phases 71-74, 13 plans, 12/12 requirements Validated, `passed`). Original v1.8 footer below.*
