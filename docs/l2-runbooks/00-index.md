@@ -83,6 +83,7 @@ The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite
 | [Profile Delivery Investigation](11-macos-profile-delivery.md) | Configuration profile not delivered, showing error/conflict, or not taking effect on device | [macOS Log Collection](10-macos-log-collection.md) |
 | [App Install Failure Diagnosis](12-macos-app-install.md) | DMG, PKG, or VPP app not installing, showing failed status, or continuous reinstall loop | [macOS Log Collection](10-macos-log-collection.md) |
 | [Compliance Evaluation Investigation](13-macos-compliance.md) | Device non-compliant, compliance not evaluating, or Conditional Access blocking despite compliance | [macOS Log Collection](10-macos-log-collection.md) |
+| [Platform SSO Investigation](27-macos-sso-investigation.md) | PSSO registration not completing, "Registration Required" loop, or Password-sync sign-in failure | [macOS Log Collection](10-macos-log-collection.md) |
 
 ### macOS L1 Escalation Mapping
 
@@ -93,6 +94,8 @@ The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite
 | App not installed | [App Install Failure Diagnosis](12-macos-app-install.md) |
 | Compliance / access blocked | [Compliance Evaluation Investigation](13-macos-compliance.md) |
 | Company Portal sign-in failure | [Compliance Evaluation Investigation](13-macos-compliance.md) for Entra registration issues |
+| [L1 35: Platform SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md) | [Platform SSO Investigation](27-macos-sso-investigation.md) — Registration Failure track |
+| [L1 36: Platform SSO — Secure Enclave Key Loss](../l1-runbooks/36-macos-secure-enclave-key.md) | [Platform SSO Investigation](27-macos-sso-investigation.md) — Registration Failure track (SE key re-registration path) |
 
 > **Note:** When a ticket arrives via macOS L1 escalation, the escalation checklist from the L1 runbook specifies: serial number, macOS version, Intune device status screenshot, and description of steps attempted. Each macOS L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
@@ -211,6 +214,7 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-21 | Phase 80 SSORUN-03/SC4: added macOS Platform SSO Investigation #27 to When-to-Use table; added L1 #35 and L1 #36 escalation mapping rows to macOS L1 Escalation Mapping table | -- |
 | 2026-05-22 | Phase 65 plan 65-02: appended Apple Business L2 Runbooks H2 with #26 row | -- |
 | 2026-04-27 | Added Linux L2 runbook section (Runbooks 24-25 + Linux L1 Escalation Mapping) — Phase 52 append-only edit per Phase 42 D-03 | -- |
 | 2026-04-23 | Added Android L2 runbook section (runbooks 18-21 + Android MAM-WE advisory) | -- |
