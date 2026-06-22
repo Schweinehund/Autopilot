@@ -512,7 +512,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 **Wave 1**
 
   - [x] 80-01-PLAN.md -- Create L1 runbooks #35 (Platform SSO sign-in failure, 4 root causes, app-sso platform -s first) and #36 (Secure Enclave key loss + re-registration recovery), both escalating to L2 #27 (SSORUN-01, SSORUN-02)
-  - [ ] 80-02-PLAN.md -- Create L2 runbook #27: two-track linear investigation (Registration-failure + Password-sync-failure), sysdiagnose, TLS exclusions, MFA/AD-bound checks, 15.0-15.2 version gate, reciprocal back-refs to #35/#36 (SSORUN-03)
+  - [x] 80-02-PLAN.md -- Create L2 runbook #27: two-track linear investigation (Registration-failure + Password-sync-failure), sysdiagnose, TLS exclusions, MFA/AD-bound checks, 15.0-15.2 version gate, reciprocal back-refs to #35/#36 (SSORUN-03)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -630,7 +630,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 77. Auth Methods Deep-Dive | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete    | 2026-06-21 |
-| 80. L1/L2 Runbooks | v1.9 | 1/3 | In Progress|  |
+| 80. L1/L2 Runbooks | v1.9 | 2/3 | In Progress|  |
 | 81. Nav Hub Integration | v1.9 | 0/TBD | Not started | - |
 | 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 0/TBD | Not started | - |
 
