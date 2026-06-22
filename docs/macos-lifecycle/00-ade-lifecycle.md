@@ -392,6 +392,7 @@ The user reaches the standard macOS desktop. In the background, Intune continues
 
 - [Autopilot Lifecycle Overview](../lifecycle/00-overview.md) -- Windows Autopilot 5-stage deployment pipeline (for comparison)
 - [Documentation Hub](../index.md) -- Role-based entry points for all platforms
+- [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md) -- Configure macOS Platform SSO authentication via the Settings Catalog `com.apple.extensiblesso` payload
 
 ---
 
@@ -414,4 +415,5 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 | Date | Change |
 |------|--------|
+| 2026-06-22 | Phase 81 (SSOREF-04): added E8 Related Guides cross-link to guide 07 | -- |
 | 2026-04-14 | Initial version -- complete 7-stage ADE lifecycle narrative |

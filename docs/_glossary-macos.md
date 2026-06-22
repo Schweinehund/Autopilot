@@ -125,7 +125,7 @@ Managed App Without Enrollment -- Intune's **app-layer** data protection model f
 Platform SSO (PSSO) is a macOS-native feature (available macOS 13+; macOS 14 recommended) powered by the Microsoft Enterprise SSO plug-in that enables users to sign in to their Mac using their Microsoft Entra ID credentials and provides single sign-on across apps and browsers that use Entra ID for authentication. It registers the Mac with Entra ID, delivering a hardware-bound Primary Refresh Token (PRT) used for device-wide SSO. Platform SSO offers three mutually exclusive authentication methods configured in the Settings Catalog: Secure Enclave key/Platform Credential (recommended — local macOS password unchanged), Password sync (Entra ID password replaces and stays synced with local password), and Smart Card (requires macOS 14+; local password unchanged). Assigning the Platform SSO policy to user groups — not device groups — is required for devices with user affinity.
 
 > **Windows equivalent:** On Windows, Entra-joined devices receive a Primary Refresh Token brokered by Windows Hello for Business or the Web Account Manager, which silently provides SSO across apps, Edge, and browsers. Platform SSO on macOS is conceptually analogous: hardware-bound credentials, phishing-resistant authentication, and device-wide SSO — both establish a PRT tied to device identity for continuous access.
-> See also: [Enterprise SSO Plug-in](#enterprise-sso-plug-in); [Entra ID SSO](_glossary.md#entra-id-sso).
+> See also: [Enterprise SSO Plug-in](#enterprise-sso-plug-in); [Entra ID SSO](_glossary.md#entra-id-sso); [Platform SSO Setup Guide](admin-setup-macos/07-platform-sso-setup.md).
 
 ### Secure Enclave
 
@@ -145,6 +145,7 @@ The Microsoft Enterprise SSO plug-in for Apple devices is the umbrella product �
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-22 | Phase 81 (SSOREF-04): added E2 cross-link from Platform SSO term to guide 07 | -- |
 | 2026-06-20 | Phase 75: added `## Authentication` section (Platform SSO, Secure Enclave, Enterprise SSO Plug-in); added three new terms to `## Alphabetical Index`; updated `last_verified` and `review_by` front matter | -- |
 | 2026-05-26 | Phase 67 (SWEEP-02): coordinating row for VPP location token → content token surgical rename in admin-setup-ios/05- + admin-setup-macos/04-app-deployment.md (PITFALLS.md CI-2 closure) | -- |
 | 2026-05-05 | Phase 59 (CLEAN-08): appended `> See also:` lines INSIDE existing `> **Windows equivalent:**` blockquotes for collision-matrix terms (Account-Driven User Enrollment, ADE, Await Configuration, Setup Assistant, Supervision, ABM, VPP, MAM-WE); existing `> **Windows equivalent:**` labels PRESERVED verbatim per D-15 anti-rename | -- |
