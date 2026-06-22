@@ -73,6 +73,8 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 | Compliance / access blocked | Setup Assistant? Yes | Symptom: non-compliant | Runbook 14 |
 | Company Portal sign-in | Setup Assistant? Yes | Symptom: CP sign-in | Runbook 15 |
 | Other / unclear | Setup Assistant? Yes | Symptom: other | L2 escalation |
+| Platform SSO — registration not appearing | Setup Assistant? Yes | Symptom: Platform SSO | Runbook 35 |
+| Platform SSO — Secure Enclave key error | Setup Assistant? Yes | Symptom: Platform SSO → key error | Runbook 36 |
 
 ## How to Check
 
@@ -101,3 +103,4 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-14 | Initial version | -- |
+| 2026-06-22 | Phase 81 (SSOREF-04): added Platform SSO sub-decision leaf (MACSSO -> #35/#36) + 2 Routing Verification rows | -- |
