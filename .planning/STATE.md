@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.9
 milestone_name: macOS Platform SSO & Secure Enclave Authentication Documentation
-status: verifying
-last_updated: "2026-06-22T04:18:35.256Z"
+status: ready_to_plan
+last_updated: 2026-06-22T04:30:37.345Z
 last_activity: 2026-06-22
 progress:
   total_phases: 18
@@ -11,6 +11,7 @@ progress:
   total_plans: 11
   completed_plans: 11
   percent: 33
+stopped_at: Phase 80 complete (3/3) — ready to discuss Phase 81
 ---
 
 # Project State
@@ -20,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-20)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Apple-platform single sign-on (macOS Platform SSO + Secure Enclave) through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 80 — L1/L2 Runbooks
+**Current focus:** Phase 81 — nav hub integration
 
 ## Current Position
 
-Phase: 80 (L1/L2 Runbooks) — EXECUTING
-Plan: 3 of 3
-Status: Phase complete — ready for verification
+Phase: 81
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-22
 
 Progress: [██████████] 100%

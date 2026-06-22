@@ -630,7 +630,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 77. Auth Methods Deep-Dive | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete    | 2026-06-21 |
-| 80. L1/L2 Runbooks | v1.9 | 3/3 | Complete   | 2026-06-22 |
+| 80. L1/L2 Runbooks | v1.9 | 3/3 | Complete    | 2026-06-22 |
 | 81. Nav Hub Integration | v1.9 | 0/TBD | Not started | - |
 | 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 0/TBD | Not started | - |
 
