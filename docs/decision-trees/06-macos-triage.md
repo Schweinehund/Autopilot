@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-14
-review_by: 2026-07-13
+last_verified: 2026-06-22
+review_by: 2026-09-20
 applies_to: ADE
 audience: L1
 platform: macOS
@@ -40,6 +40,9 @@ graph TD
     MAC3 -->|"Non-compliant /<br/>access blocked"| MACR5(["See: Compliance / Access<br/>Blocked Runbook"])
     MAC3 -->|"Company Portal<br/>sign-in issue"| MACR6(["See: Company Portal<br/>Sign-In Runbook"])
     MAC3 -->|"Other / unclear"| MACE1(["Escalate to L2:<br/>Collect serial number,<br/>stage of failure, screenshots"])
+    MAC3 -->|"Platform SSO<br/>sign-in issue"| MACSSO{"Did a 'Registration Required'<br/>notification ever appear?"}
+    MACSSO -->|"No — notification<br/>never appeared"| MACR7(["See: Platform SSO<br/>Sign-In Failure Runbook"])
+    MACSSO -->|"Yes, but key error<br/>or lost after reset"| MACR8(["See: Platform SSO —<br/>Secure Enclave Key Loss Runbook"])
 
     click MACR1 "../l1-runbooks/10-macos-device-not-appearing.md"
     click MACR2 "../l1-runbooks/11-macos-setup-assistant-failed.md"
@@ -47,10 +50,13 @@ graph TD
     click MACR4 "../l1-runbooks/13-macos-app-not-installed.md"
     click MACR5 "../l1-runbooks/14-macos-compliance-access-blocked.md"
     click MACR6 "../l1-runbooks/15-macos-company-portal-sign-in.md"
+    click MACR7 "../l1-runbooks/35-macos-sso-sign-in-failure.md"
+    click MACR8 "../l1-runbooks/36-macos-secure-enclave-key.md"
 
     classDef resolved fill:#28a745,color:#fff
     classDef escalateL2 fill:#dc3545,color:#fff
     class MACR1,MACR2,MACR3,MACR4,MACR5,MACR6 resolved
+    class MACR7,MACR8 resolved
     class MACE1 escalateL2
 ```
 
