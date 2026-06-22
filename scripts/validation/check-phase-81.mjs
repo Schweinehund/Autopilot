@@ -49,7 +49,7 @@ const SSO_EDGES = [
   { id: 'E4', file: 'docs/reference/macos-capability-matrix.md',           needle: '../admin-setup-macos/07-platform-sso-setup.md' },
   { id: 'E5', file: 'docs/l1-runbooks/35-macos-sso-sign-in-failure.md',    needle: '../l2-runbooks/27-macos-sso-investigation.md' },
   { id: 'E6', file: 'docs/l2-runbooks/27-macos-sso-investigation.md',      needle: '../l1-runbooks/35-macos-sso-sign-in-failure.md' },
-  { id: 'E7', file: 'docs/admin-setup-macos/03-configuration-profiles.md', needle: '07-platform-sso-setup.md' },
+  { id: 'E7', file: 'docs/admin-setup-macos/03-configuration-profiles.md', needle: '](07-platform-sso-setup.md)' },
   { id: 'E8', file: 'docs/macos-lifecycle/00-ade-lifecycle.md',            needle: '../admin-setup-macos/07-platform-sso-setup.md' },
 ];
 
