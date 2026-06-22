@@ -536,7 +536,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 
   - [x] 81-01-PLAN.md -- Append Platform SSO nav entries to reader hubs: index.md macOS Admin Setup/L1/L2 rows (D-04), common-issues.md SSO failure entry, quick-ref-l1 escalation triggers, quick-ref-l2 SSO log paths + `app-sso platform -s` (SC1, SC2)
   - [x] 81-02-PLAN.md -- Extend 06-macos-triage.md with the MACSSO sub-decision leaf routing to L1 #35/#36 + matching Routing Verification rows; 3-edge invariant preserved (D-01, SC3)
-  - [ ] 81-03-PLAN.md -- Create the 4 absent SSO cross-link edges as one-line additive links (revised D-03): E8 ade-lifecycle->07, E2 glossary->07, E3 07->capability-matrix#authentication, E4 capability-matrix->07 (SC4)
+  - [x] 81-03-PLAN.md -- Create the 4 absent SSO cross-link edges as one-line additive links (revised D-03): E8 ade-lifecycle->07, E2 glossary->07, E3 07->capability-matrix#authentication, E4 capability-matrix->07 (SC4)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -641,7 +641,7 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
 | 78. Legacy SSO Plug-in & Migration Guide | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 79. Reference Integration — Capability Matrix & 5-Platform Comparison | v1.9 | 1/1 | Complete    | 2026-06-21 |
 | 80. L1/L2 Runbooks | v1.9 | 3/3 | Complete    | 2026-06-22 |
-| 81. Nav Hub Integration | v1.9 | 2/4 | In Progress|  |
+| 81. Nav Hub Integration | v1.9 | 3/4 | In Progress|  |
 | 82. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | v1.9 | 0/TBD | Not started | - |
 
 ---
