@@ -36,7 +36,7 @@ Use this runbook when a user's Mac does not display the "Registration Required" 
 2. In the Intune admin center, navigate to **Devices** > **macOS** > select the device by serial number > **Configuration**. Locate the Platform SSO Settings Catalog policy. Check the status column.
 
    - If the policy shows an **error code (such as Error 10002)** — proceed to **Root Cause 2** below.
-   - If the policy shows **"Succeeded"** but the user never received a "Registration Required" notification — proceed to **Root Cause 3 or 4** below.
+   - If the policy shows **"Succeeded"** but the user never received a "Registration Required" notification — check **Root Cause 1** (Company Portal version) first, then **Root Cause 3 or 4** below.
    - If the policy shows **"Succeeded"** and the user did receive a notification — proceed to **Root Cause 4** below.
 
 3. **Root Cause 1 — Old Company Portal version (version older than 5.2404.0):**

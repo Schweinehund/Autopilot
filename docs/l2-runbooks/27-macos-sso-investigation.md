@@ -20,7 +20,7 @@ Before starting: collect a diagnostic package per the [macOS Log Collection Guid
 
 - L1 35 → Track A: Registration Failure Investigation
 - L1 36 → Track A: Registration Failure Investigation (SE key re-registration path)
-- Password-sync failures (no REGISTERED state + per-user MFA suspected or AD-bound account) → Track B: Password-Sync Failure Investigation
+- Password-sync failures (registration shows REGISTERED but sign-in / token acquisition fails; per-user MFA or AD-bound account suspected) → Track B: Password-Sync Failure Investigation
 - No L1 escalation: begin at Track A Step 1 to confirm registration state, then proceed to Track B if registration state shows REGISTERED but sign-in still fails
 
 ---
@@ -114,7 +114,7 @@ TLS break-and-inspect (SSL interception) on a corporate proxy will silently bloc
 - Apple app-site-association domains (`app-site-association.cdn-apple.com`, `app-site-association.networking.apple`) — required for SSO extension functioning
 - Microsoft identity and graph endpoints (`login.microsoftonline.com`, `login.microsoft.com`, `sts.windows.net`) — required for token acquisition and refresh
 
-For the full list of required TLS exclusion endpoints (DF-10 Known Silent Blocker), see [Platform SSO Setup Guide §Known Silent Blockers](../admin-setup-macos/07-platform-sso-setup.md). The network team should confirm proxy bypass rules are in place — device-side tests cannot validate this.
+The Microsoft identity endpoints above are the documented TLS-inspection exclusions from the Platform SSO Setup Guide (DF-10 Known Silent Blocker); see [Platform SSO Setup Guide §Known Silent Blockers](../admin-setup-macos/07-platform-sso-setup.md). The Apple `app-site-association` domains are an additional Apple-platform requirement for the SSO extension (not enumerated in DF-10). The network team should confirm proxy bypass rules are in place for **both** endpoint categories — device-side tests cannot validate this.
 
 ### Step 5: macOS 15.0–15.2 re-registration loop check
 
