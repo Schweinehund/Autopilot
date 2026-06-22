@@ -509,9 +509,13 @@ Deferred backlog: [milestones/v1.7-DEFERRED-CLEANUP.md](milestones/v1.7-DEFERRED
   4. `docs/l1-runbooks/00-index.md` and `docs/l2-runbooks/00-index.md` each have new rows for the Phase 80 runbooks; `l2-runbooks/00-index.md` escalation mapping table maps L1 #35 and L1 #36 → L2 #27
 
 **Plans**: 3 plans
+**Wave 1**
 
   - [ ] 80-01-PLAN.md -- Create L1 runbooks #35 (Platform SSO sign-in failure, 4 root causes, app-sso platform -s first) and #36 (Secure Enclave key loss + re-registration recovery), both escalating to L2 #27 (SSORUN-01, SSORUN-02)
   - [ ] 80-02-PLAN.md -- Create L2 runbook #27: two-track linear investigation (Registration-failure + Password-sync-failure), sysdiagnose, TLS exclusions, MFA/AD-bound checks, 15.0-15.2 version gate, reciprocal back-refs to #35/#36 (SSORUN-03)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
   - [ ] 80-03-PLAN.md -- Register #35/#36 in l1-runbooks/00-index.md and #27 + L1#35/#36 -> L2#27 escalation mapping in l2-runbooks/00-index.md (SC4)
 
 ### Phase 81: Nav Hub Integration
