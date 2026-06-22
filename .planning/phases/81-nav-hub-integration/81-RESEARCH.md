@@ -855,17 +855,15 @@ Security domain: NOT APPLICABLE for this phase. Phase 81 consists exclusively of
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **E2/E3/E4 absent — should Phase 82 C17 check them?**
-   - What we know: All three edges are missing from the corpus. SC4 in ROADMAP line 531 defines only E1-E8 as the closure set for Phase 81; E2/E3/E4 are in that set, so the 81-CROSSLINK-CLOSURE.md checklist will mark them as NOT resolved.
-   - What's unclear: Whether Phase 82's C17 harness check (if created) should gate on E2/E3/E4 or only on the Phase-81-created edges (E8 + nav hub rows).
-   - Recommendation: Log E2/E3/E4 as unresolved in `81-CROSSLINK-CLOSURE.md` with a note that they are prior-phase gaps, per D-03. The C17 adversarial review at Phase 82 planning handles enforcement.
+   - What we know: All three edges are missing from the corpus. SC4 in ROADMAP line 531 defines E1-E8 as the closure set for Phase 81; E2/E3/E4/E8 are in that set.
+   - **RESOLVED (2026-06-22):** D-03 was REVISED after this research — the user chose "Create all 4 now," so E2/E3/E4/E8 are CREATED in Phase 81 (Plan 81-03) as one-line additive cross-links, NOT logged as deferred gaps. The 81-CROSSLINK-CLOSURE.md checklist will therefore mark all 8 edges resolved. The C17 harness-enforcement decision (whether a `check-phase-81` validator gates on these edges) remains deferred to Phase 82 adversarial-review **by design** — that is a Phase-82-owned scope decision, not a Phase-81 gap.
 
 2. **`81-CROSSLINK-CLOSURE.md` — should it be referenced from VERIFICATION.md?**
    - What we know: D-02 GUARDRAIL states "reference the checklist from the phase VERIFICATION.md so it is not author-invisible to the Phase-82 harness author."
-   - What's unclear: The Phase 81 VERIFICATION.md does not yet exist.
-   - Recommendation: The planner should include creation of `81-VERIFICATION.md` with a reference to `81-CROSSLINK-CLOSURE.md` as a task in Wave 3.
+   - **RESOLVED:** Plan 81-04 Task 2 creates `81-VERIFICATION.md` with an explicit reference to `81-CROSSLINK-CLOSURE.md` (D-02 guardrail honored).
 
 ---
 
