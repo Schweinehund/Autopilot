@@ -666,9 +666,9 @@ An Apple-native extension (`com.apple.AppSSOKerberos.KerberosExtension`, payload
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Where exactly does `custom_tgt_setting` go?**
+1. **Where exactly does `custom_tgt_setting` go?** — RESOLVED: ship with the A4 assumption (PSSO Settings Catalog policy, not the Kerberos .mobileconfig), tagged `[ASSUMED]` in guide 10 with executor confirmation at authoring time. Not a blocker.
    - What we know: Microsoft Learn says it is set "in the extension data dictionary in SSO extension configuration" — this phrase is ambiguous between the PSSO Settings Catalog policy and the Kerberos .mobileconfig.
    - What's unclear: The Microsoft Learn page shows it as a key/value in "the extension data dictionary" without showing a complete plist. The Kerberos profile's `ExtensionData` dictionary is the most natural location, but the PSSO profile also has an `ExtensionData` dictionary.
    - Recommendation: The executor should test or verify against the Microsoft Learn screenshots / a live Intune instance. Based on context ("TGT mapping in PSSO"), A4 above assumes it is in the PSSO profile. Tag as [ASSUMED] in the guide until confirmed.
