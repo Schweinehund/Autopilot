@@ -74,13 +74,12 @@ Plans:
   4. The v1.9 deferred-item callout blockquote in guide 08's NUAL section is removed; PSSO-FUT-01 is closed
   5. `docs/admin-setup-macos/00-overview.md` includes a node for guide 11; `docs/_glossary-macos.md` contains a Platform Credential Graph API entry or extended Platform SSO term with a see-also to guide 11
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
 
-- [ ] 84-01: Pre-task execution checks — verify Intune Settings Catalog NUAL display names vs Apple schema; confirm least-privilege Graph delete permission scope against live permissions reference
-- [ ] 84-02: Author `11-graph-api-platform-credential.md` — resource reference, List/Get/Delete with HTTP + PowerShell SDK examples, permissions matrix, `[!WARNING]` callout, leaver/offboarding automation pattern
-- [ ] 84-03: Guide 08 NUAL surgical edit — replace deferred-item blockquote with verified key literal table (`NewUserAuthorizationMode`/`UserAuthorizationMode`/`EnableCreateUserAtLogin`); `00-overview.md` guide 11 node; glossary Platform Credential extension
+- [ ] 84-01-PLAN.md — Author `11-graph-api-platform-credential.md` (hybrid suite-anchored Graph API operations-reference): resource reference, List/Get/Delete with HTTP-primary + PowerShell SDK companion examples (`platformCredentialMethods` nav-property per D-08), verified permissions matrix (D-09), mandatory Delete `[!WARNING]`, and dry-run-gated leaver/offboarding pattern (GRAPH-01, GRAPH-02). Pre-task endpoint/permission verification is pre-resolved in 84-RESEARCH.md.
+- [ ] 84-02-PLAN.md — Surgical integration edits: guide 08 NUAL consolidated table with verified key literals + deferred-blockquote removal (NUAL-01 / PSSO-FUT-01 closed); `00-overview.md` guide 11 node; `_glossary-macos.md` Platform SSO see-also extension (GRAPH-01 integration; completes SC#5).
 
 ### Phase 85: Capability Matrix + L2 Runbooks
 
