@@ -157,3 +157,19 @@ Upload the .mobileconfig via the Intune Custom Template profile path (NOT Settin
 6. **Deployment channel:** Device channel (recommended)
 7. **Configuration profile file:** Upload your edited `.mobileconfig` file
 8. **Assignments:** Assign to **user groups** -- NOT device groups (same assignment rule as Platform SSO; assigning to device groups causes the extension to load before user context is available)
+
+---
+
+## Prerequisites
+
+- **Platform SSO:** Already deployed and devices registered before pushing this profile. See [Platform SSO Setup](07-platform-sso-setup.md) for the Settings Catalog configuration. **Pitfall 5 -- deployment order:** Deploying this Kerberos profile with `usePlatformSSOTGT: true` before PSSO is registered has no effect -- the extension has no Platform SSO TGT to reuse. Complete guide 07 and verify PSSO registration on pilot devices before assigning this profile.
+
+- **macOS version:** macOS 14.6 Sonoma or later is required for PSSO TGT integration (`usePlatformSSOTGT: true`, as covered in this guide). macOS 10.15 or later supports standalone Kerberos extension deployment without PSSO, but standalone operation is outside v1.10 scope (D-02) -- see [Kerberos SSO Extension](../_glossary-macos.md#kerberos-sso-extension) for a brief standalone note.
+
+- **Company Portal:** Version 5.2408.0 or later is required for PSSO TGT sharing with the Kerberos extension. Version 2508 or later is required for the `custom_tgt_setting` fine-grained TGT mapping control (covered in the PSSO + Kerberos TGT Integration section, authored in 83-02).
+
+- **On-premises Active Directory / KDC:**
+
+  > **On-Premises AD / KDC Prerequisites (not covered in this guide):**
+  >
+  > This guide covers the Intune-admin-facing MDM payload only. Configuring the on-premises Active Directory Kerberos realm, KDC reachability, and DNS SRV records is an AD-admin responsibility outside this guide's scope. See [Apple Kerberos SSO Extension deployment reference](https://developer.apple.com/documentation/devicemanagement/extensiblesinglesignonkerberos) (Apple Developer Docs) and [Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) (Microsoft Learn) for AD-side configuration steps.
