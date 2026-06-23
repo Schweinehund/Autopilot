@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-20
-review_by: 2026-09-20
+last_verified: 2026-06-22
+review_by: 2026-09-22
 applies_to: both
 audience: all
 platform: all
@@ -14,7 +14,7 @@ platform: all
 
 ## Alphabetical Index
 
-[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ADE](#ade) | [APNs](#apns) | [Await Configuration](#await-configuration) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [Jailbreak Detection](#jailbreak-detection) | [MAM-WE](#mam-we) | [Platform SSO](#platform-sso) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
+[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ADE](#ade) | [APNs](#apns) | [Await Configuration](#await-configuration) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [Jailbreak Detection](#jailbreak-detection) | [Kerberos SSO Extension](#kerberos-sso-extension) | [MAM-WE](#mam-we) | [Platform SSO](#platform-sso) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
 
 ---
 
@@ -139,12 +139,19 @@ The Microsoft Enterprise SSO plug-in for Apple devices is the umbrella product â
 
 > See also: [Platform SSO](#platform-sso); [Entra ID SSO](_glossary.md#entra-id-sso).
 
+### Kerberos SSO Extension
+
+An Apple-native extension (`com.apple.AppSSOKerberos.KerberosExtension`, payload Type: Credential, Team Identifier: `apple`) that provides seamless Kerberos ticket-granting ticket (TGT) acquisition for on-premises Active Directory resources on macOS. It is deployed as a separate Intune Custom Template (.mobileconfig) profile -- distinct from Platform SSO (which uses Type: Redirect and handles Entra ID authentication) and from the Microsoft Enterprise SSO plug-in. When combined with Platform SSO and `usePlatformSSOTGT: true`, the extension uses TGTs issued by PSSO rather than independently acquiring its own, enabling seamless on-prem AD resource access without user interaction. Requires macOS 14.6 or later for PSSO TGT integration; macOS 10.15 or later for standalone operation (standalone is outside v1.10 scope).
+
+> See also: [Platform SSO](#platform-sso); [Enterprise SSO Plug-in](#enterprise-sso-plug-in); [Kerberos SSO Extension Guide](admin-setup-macos/10-kerberos-sso-extension.md).
+
 ---
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-22 | Phase 83 (KRB-04): added Kerberos SSO Extension entry to ## Authentication and Alphabetical Index | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E2 cross-link from Platform SSO term to guide 07 | -- |
 | 2026-06-20 | Phase 75: added `## Authentication` section (Platform SSO, Secure Enclave, Enterprise SSO Plug-in); added three new terms to `## Alphabetical Index`; updated `last_verified` and `review_by` front matter | -- |
 | 2026-05-26 | Phase 67 (SWEEP-02): coordinating row for VPP location token â†’ content token surgical rename in admin-setup-ios/05- + admin-setup-macos/04-app-deployment.md (PITFALLS.md CI-2 closure) | -- |
