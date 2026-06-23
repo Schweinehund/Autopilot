@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
 status: executing
-last_updated: "2026-06-23T16:54:48.134Z"
-last_activity: 2026-06-23 -- Phase 84 planning complete
+last_updated: "2026-06-23T17:01:49.579Z"
+last_activity: 2026-06-23
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
   percent: 17
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-22)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 84 — graph api doc + nual key table
+**Current focus:** Phase 84 — graph-api-doc-nual-key-table
 
 ## Current Position
 
-Phase: 84
-Plan: Not started
+Phase: 84 (graph-api-doc-nual-key-table) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-06-23 -- Phase 84 planning complete
+Last activity: 2026-06-23
 
 ## v1.10 Phase Dependency Summary
 
@@ -176,9 +176,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-23T16:35:31.528Z
+Last session: 2026-06-23T17:01:49.564Z
 Stopped at: Phase 84 context gathered
-Resume file: .planning/phases/84-graph-api-doc-nual-key-table/84-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 83`
 
 ## Operator Next Steps

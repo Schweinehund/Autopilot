@@ -28,8 +28,8 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 
 ### Graph API Platform Credential Management (GRAPH)
 
-- [ ] **GRAPH-01**: Admin can manage macOS Secure Enclave Platform Credentials programmatically from a new Graph-API operations doc (`docs/admin-setup-macos/11-graph-api-platform-credential.md`) — the **GA** `platformCredentialAuthenticationMethod` resource (Graph v1.0), **List / Get / Delete** operations (no Create/Update — credentials are device-initiated only), key properties (`id`, `displayName`, `createdDateTime`, `keyStrength`, `platform`), and the `Microsoft.Graph.Identity.SignIns` PowerShell SDK cmdlets
-- [ ] **GRAPH-02**: Graph doc documents required Graph permissions + Entra roles (read vs delete; delegated vs application; national-cloud availability) and, via the suite's mandatory `[!WARNING]` safety-callout convention, warns that **Delete severs the Entra binding (forces PSSO re-registration) and does NOT remote-erase the device Secure Enclave key** (least-privilege delete scope resolved at plan time)
+- [x] **GRAPH-01**: Admin can manage macOS Secure Enclave Platform Credentials programmatically from a new Graph-API operations doc (`docs/admin-setup-macos/11-graph-api-platform-credential.md`) — the **GA** `platformCredentialAuthenticationMethod` resource (Graph v1.0), **List / Get / Delete** operations (no Create/Update — credentials are device-initiated only), key properties (`id`, `displayName`, `createdDateTime`, `keyStrength`, `platform`), and the `Microsoft.Graph.Identity.SignIns` PowerShell SDK cmdlets
+- [x] **GRAPH-02**: Graph doc documents required Graph permissions + Entra roles (read vs delete; delegated vs application; national-cloud availability) and, via the suite's mandatory `[!WARNING]` safety-callout convention, warns that **Delete severs the Entra binding (forces PSSO re-registration) and does NOT remote-erase the device Secure Enclave key** (least-privilege delete scope resolved at plan time)
 
 ### NUAL MDM Key Verification (NUAL)
 
@@ -96,8 +96,8 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 | KRB-02 | Phase 83 | Complete |
 | KRB-03 | Phase 83 | Complete |
 | KRB-04 | Phase 83 | Complete |
-| GRAPH-01 | Phase 84 | Pending |
-| GRAPH-02 | Phase 84 | Pending |
+| GRAPH-01 | Phase 84 | Complete |
+| GRAPH-02 | Phase 84 | Complete |
 | NUAL-01 | Phase 84 | Pending |
 | RUN-01 | Phase 85 | Pending |
 | RUN-02 | Phase 85 | Pending |

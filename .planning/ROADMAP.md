@@ -78,7 +78,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 84-01-PLAN.md — Author `11-graph-api-platform-credential.md` (hybrid suite-anchored Graph API operations-reference): resource reference, List/Get/Delete with HTTP-primary + PowerShell SDK companion examples (`platformCredentialMethods` nav-property per D-08), verified permissions matrix (D-09), mandatory Delete `[!WARNING]`, and dry-run-gated leaver/offboarding pattern (GRAPH-01, GRAPH-02). Pre-task endpoint/permission verification is pre-resolved in 84-RESEARCH.md.
+- [x] 84-01-PLAN.md — Author `11-graph-api-platform-credential.md` (hybrid suite-anchored Graph API operations-reference): resource reference, List/Get/Delete with HTTP-primary + PowerShell SDK companion examples (`platformCredentialMethods` nav-property per D-08), verified permissions matrix (D-09), mandatory Delete `[!WARNING]`, and dry-run-gated leaver/offboarding pattern (GRAPH-01, GRAPH-02). Pre-task endpoint/permission verification is pre-resolved in 84-RESEARCH.md.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -170,7 +170,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 83. Kerberos SSO Extension Guide | 3/3 | Complete    | 2026-06-23 |
-| 84. Graph API Doc + NUAL Key Table | 0/3 | Not started | - |
+| 84. Graph API Doc + NUAL Key Table | 1/2 | In Progress|  |
 | 85. Capability Matrix + L2 Runbooks | 0/3 | Not started | - |
 | 86. Chain Health Pass | 0/2 | Not started | - |
 | 87. Navigation Hub Integration | 0/2 | Not started | - |
