@@ -242,3 +242,77 @@ Cloud Kerberos enables macOS devices to authenticate to Azure Files (SMB shares)
 > **Onboarding:** To join the Azure Files Cloud Kerberos limited preview, contact **azurefiles@microsoft.com**. The preview onboarding includes tenant-specific configuration guidance for the `preferredKDCs` endpoint and any additional policy requirements at the time of your enrollment.
 
 The Cloud Kerberos profile is deployed as a **separate** Intune Custom Template profile in addition to (not replacing) the on-prem AD profile. Devices that need both on-prem Kerberos resources and Azure Files access receive both profiles simultaneously -- they use different `Realm` values and `Hosts` arrays, so they do not conflict.
+
+---
+
+## Verification
+
+Use the following two commands as the canonical diagnostic pair for Kerberos SSO extension health in PSSO-integrated deployments. These are read-only commands safe to run on any enrolled device.
+
+> **Diagnostics scope:** Only the two read-only commands below are documented in this guide. Do not use `kinit` as an admin diagnostic step -- it is a write-operation that acquires a new ticket and is not appropriate for verifying extension health. Use only `app-sso platform -s` and `klist` as described below.
+
+### Step 1 -- app-sso platform -s (Platform SSO TGT State)
+
+Run `app-sso platform -s` in Terminal on the enrolled macOS device to view Platform SSO state, including the TGT ticket paths:
+
+```console
+app-sso platform -s
+```
+
+**Output interpretation (D-12):**
+
+| Output field | What it signals |
+|---|---|
+| `ticketKeyPath: tgt_ad` present in output | On-prem Active Directory TGT is functioning -- the Kerberos extension is sharing the PSSO-issued on-prem TGT |
+| `ticketKeyPath: tgt_cloud` present in output | Cloud Kerberos TGT is available -- Azure Files / Entra Cloud Kerberos TGT is active (requires Cloud Kerberos profile from the section above) |
+| Neither `tgt_ad` nor `tgt_cloud` present | `usePlatformSSOTGT` may not be set in the Kerberos profile, PSSO registration is incomplete, or the device has not yet received the Kerberos profile |
+
+**"Not signed in" disambiguation:** If `app-sso platform -s` shows `tgt_ad` in its output but the macOS menu-bar Kerberos icon displays **"Not signed in"**, this is the expected cosmetic behavior described in the PSSO + Kerberos TGT Integration section above. The "Not signed in" label is a display artifact of TGT sharing -- Kerberos SSO is functioning correctly. Trust `app-sso platform -s` over the menu-bar display.
+
+### Step 2 -- klist (Kerberos Ticket Cache)
+
+Run `klist` (bare form -- do not use `klist -v`, which has version-variant behavior across macOS releases) to inspect the Kerberos credential cache:
+
+```console
+klist
+```
+
+**What to look for:**
+
+```
+Credentials cache: API:...
+        Principal: user@CONTOSO.COM
+
+  Issued                Expires               Service principal
+  [timestamp]           [timestamp]           krbtgt/CONTOSO.COM@CONTOSO.COM
+  [timestamp]           [timestamp]           krbtgt/KERBEROS.MICROSOFTONLINE.COM@KERBEROS.MICROSOFTONLINE.COM
+```
+
+| Service principal in output | What it signals |
+|---|---|
+| `krbtgt/CONTOSO.COM@CONTOSO.COM` | On-prem Active Directory TGT is present and valid |
+| `krbtgt/KERBEROS.MICROSOFTONLINE.COM@KERBEROS.MICROSOFTONLINE.COM` | Cloud Kerberos TGT is present (Azure Files profile deployed) |
+| No entries / "No credentials cache found" | PSSO registration not complete, profiles not yet received, or TGTs have expired |
+
+**Ticket expiry:** The `Expires` column shows when each ticket will expire. The Kerberos extension proactively renews TGTs on network state change; default TGT lifetime is set by the KDC (typically 10 hours for on-prem AD). Expiry times reflect normal Kerberos TTL behavior -- a ticket near expiry that has not yet expired is functioning correctly and will be renewed automatically.
+
+### Realm and KDC Reachability
+
+If `klist` shows no tickets and `app-sso platform -s` shows neither `tgt_ad` nor `tgt_cloud`, check the following at the Intune-admin level:
+
+- **Profile assignment:** Confirm the Kerberos `.mobileconfig` profile is assigned to the correct user group in Intune (Devices > Configuration) and shows as installed on the device.
+- **PSSO registration:** Confirm Platform SSO is registered on the device (see guide 07 Verification steps). PSSO must be registered before `usePlatformSSOTGT` takes effect.
+- **Company Portal version:** Confirm Company Portal 5.2408.0 or later is installed on the device (Settings > Company Portal > About).
+- **Network path to KDC:** AD Kerberos realm reachability (DNS SRV records, port 88, KDC connectivity) is an AD-admin responsibility. If profile assignment and PSSO registration are confirmed but tickets still do not appear, escalate KDC reachability to your AD team. See the [Apple Kerberos SSO Extension deployment reference](https://developer.apple.com/documentation/devicemanagement/extensiblesinglesignonkerberos) for AD-side diagnostic guidance.
+
+---
+
+## Configuration-Caused Failures
+
+The following table covers the three most common Kerberos extension misconfigurations and their symptoms. Refer to the runbook placeholder for remediation steps once the L2 runbook is published (Phase 85).
+
+| Misconfiguration | Portal | Symptom | Runbook |
+|-----------------|--------|---------|---------|
+| `Type: Redirect` used instead of `Type: Credential` in the Kerberos `.mobileconfig` | Intune profile shows as installed | No Kerberos TGT acquired; `klist` shows no `krbtgt/CONTOSO.COM` entry; `app-sso platform -s` shows no `tgt_ad`; users prompted for Kerberos credentials repeatedly | -- (Phase 85) |
+| Wrong `ExtensionIdentifier` -- Microsoft PSSO value (`com.microsoft.CompanyPortalMac.ssoextension`) used in the Kerberos profile | Intune profile shows as installed | Kerberos extension silently fails to load; the Apple Kerberos SSO extension is never activated; symptom identical to Type mismatch above | -- (Phase 85) |
+| `usePlatformSSOTGT: true` set but PSSO not registered | Intune profile shows as installed | No `tgt_ad` in `app-sso platform -s` output; PSSO registration status in Company Portal shows incomplete or pending | -- (Phase 85) |
