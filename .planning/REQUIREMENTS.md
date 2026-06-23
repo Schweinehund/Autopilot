@@ -24,7 +24,7 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 - [x] **KRB-01**: Admin can configure the Apple Kerberos SSO extension from a new guide (`docs/admin-setup-macos/10-kerberos-sso-extension.md`) — extension identity `com.apple.AppSSOKerberos.KerberosExtension` (`Type: Credential`, Team ID `apple`), Intune **Custom Template (.mobileconfig)** deployment path (NOT Settings Catalog), realm/KDC + on-prem AD prerequisites, and explicit disambiguation from Platform SSO (`Redirect`) and the Microsoft Enterprise SSO plug-in
 - [ ] **KRB-02**: Guide 10 documents PSSO + Kerberos TGT integration — `usePlatformSSOTGT` / `custom_tgt_setting` (Company Portal floor), **macOS 14.6** floor for PSSO-integrated Kerberos, the cosmetic "Not signed in" menu-bar note, and the Microsoft Entra (cloud) Kerberos scenario; Azure Files Cloud-Kerberos documented as a **limited-preview** callout (not GA)
 - [ ] **KRB-03**: Guide 10 documents Kerberos diagnostics — `app-sso platform -s` (`tgt_ad` / `tgt_cloud`) + `klist`, ticket lifecycle, and realm/KDC reachability checks (standalone `app-sso kerberos` subcommand verified at plan time; default to `klist` + `app-sso platform -s`)
-- [ ] **KRB-04**: The legacy Enterprise SSO plug-in & migration guide (`09`) SSOMIG-04 deferred-note is replaced with a live forward cross-link to guide 10, and the macOS admin-setup overview (`00-overview.md`) Mermaid + bullet flow is extended to include guide 10
+- [x] **KRB-04**: The legacy Enterprise SSO plug-in & migration guide (`09`) SSOMIG-04 deferred-note is replaced with a live forward cross-link to guide 10, and the macOS admin-setup overview (`00-overview.md`) Mermaid + bullet flow is extended to include guide 10
 
 ### Graph API Platform Credential Management (GRAPH)
 
@@ -95,7 +95,7 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 | KRB-01 | Phase 83 | Complete |
 | KRB-02 | Phase 83 | Pending |
 | KRB-03 | Phase 83 | Pending |
-| KRB-04 | Phase 83 | Pending |
+| KRB-04 | Phase 83 | Complete |
 | GRAPH-01 | Phase 84 | Pending |
 | GRAPH-02 | Phase 84 | Pending |
 | NUAL-01 | Phase 84 | Pending |

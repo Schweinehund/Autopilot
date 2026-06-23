@@ -55,7 +55,7 @@ Plans:
 **Wave 1**
 
 - [x] 83-01: Author `10-kerberos-sso-extension.md` — extension identity, payload type, Intune Custom Template path, realm/KDC config, disambiguation table
-- [ ] 83-03: Surgical edits — guide 09 forward-link replacement (one sentence), `00-overview.md` Mermaid/bullet extension (guide 10 node), glossary Kerberos SSO Extension entry
+- [x] 83-03: Surgical edits — guide 09 forward-link replacement (one sentence), `00-overview.md` Mermaid/bullet extension (guide 10 node), glossary Kerberos SSO Extension entry
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -167,7 +167,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 83. Kerberos SSO Extension Guide | 1/3 | In Progress|  |
+| 83. Kerberos SSO Extension Guide | 2/3 | In Progress|  |
 | 84. Graph API Doc + NUAL Key Table | 0/3 | Not started | - |
 | 85. Capability Matrix + L2 Runbooks | 0/3 | Not started | - |
 | 86. Chain Health Pass | 0/2 | Not started | - |
