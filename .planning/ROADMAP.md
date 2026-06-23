@@ -121,12 +121,12 @@ Plans:
   3. The full validator chain (check-phase-{48..82}.mjs) exits 0 FAIL / 0 SKIPPED on Windows local
   4. The full validator chain exits 0 FAIL / 0 SKIPPED on Linux GHA (cross-OS EXACT MATCH with Windows)
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
 
-- [ ] 86-01: Classify each of the 10 legacy FAILs by assertion class; restore/regenerate `73-RETRO-INVENTORY.md`; convert HEAD-coupled assertions to frozen-aware reads in check-phase-{58..66,73}.mjs
-- [ ] 86-02: Verify full chain 0 FAIL / 0 SKIPPED locally; trigger Linux GHA run; confirm cross-OS EXACT MATCH
+- [ ] 86-01-PLAN.md — Convert V-58-10/V-59-24 to frozen-aware (ba2cbc0) + V-72/73/74/82 VERIFICATION + V-73-INVENTORY to archive-aware (SKIP-PASS→FAIL); cascade 60-66 untouched; CHAIN_SKIP stays Set([])
+- [ ] 86-02-PLAN.md — Run apex 0 FAIL / 0 SKIPPED on Windows; dispatch existing v1.9 GHA workflow; confirm Linux green + cross-OS EXACT MATCH
 
 ### Phase 87: Navigation Hub Integration
 
