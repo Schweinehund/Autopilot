@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-21
-review_by: 2026-09-21
+last_verified: 2026-06-22
+review_by: 2026-09-22
 applies_to: ADE
 audience: admin
 platform: macOS
@@ -145,7 +145,7 @@ The Kerberos SSO extension is a **distinct Apple-native extension** -- NOT a Mic
 
 **Coexists with Platform SSO.** On devices that need both Entra ID cloud authentication (Platform SSO) and on-premises AD / Kerberos resources (Kerberos SSO extension), both extensions can be deployed simultaneously as separate profile entries with their distinct identifiers. Platform SSO handles Entra cloud auth; the Kerberos SSO extension handles on-prem Kerberos SSO. They operate in parallel without conflict when identifiers are correctly separated.
 
-A full Kerberos SSO extension configuration guide (payload walkthrough, Extension Identifier values, profile structure) is deferred to a future documentation phase -- see **PSSO-FUT-04** in the v1.9 deferred-cleanup tracking.
+For the full Kerberos SSO extension configuration guide (payload walkthrough, Extension Identifier values, PSSO TGT integration, and diagnostics), see [Kerberos SSO Extension](10-kerberos-sso-extension.md).
 
 ---
 
@@ -173,3 +173,4 @@ A full Kerberos SSO extension configuration guide (payload walkthrough, Extensio
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-21 | Phase 78 (SSOMIG-01..04): initial Enterprise SSO plug-in migration guide | -- |
+| 2026-06-22 | Phase 83 (KRB-04): replaced deferred-note sentence with forward link to guide 10 | -- |
