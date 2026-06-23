@@ -587,12 +587,12 @@
         },
         "84": {
           "issueKey": "RTS-658",
-          "status": "todo",
+          "status": "done",
           "name": "Graph API Doc + NUAL Key Table"
         },
         "85": {
           "issueKey": "RTS-659",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Capability Matrix + L2 Runbooks"
         },
         "86": {
