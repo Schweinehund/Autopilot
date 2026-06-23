@@ -170,7 +170,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 83. Kerberos SSO Extension Guide | 3/3 | Complete    | 2026-06-23 |
-| 84. Graph API Doc + NUAL Key Table | 2/2 | Complete   | 2026-06-23 |
+| 84. Graph API Doc + NUAL Key Table | 2/2 | Complete    | 2026-06-23 |
 | 85. Capability Matrix + L2 Runbooks | 0/3 | Not started | - |
 | 86. Chain Health Pass | 0/2 | Not started | - |
 | 87. Navigation Hub Integration | 0/2 | Not started | - |
