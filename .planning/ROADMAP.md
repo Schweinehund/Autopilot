@@ -30,7 +30,7 @@ Full details in milestone entries above and in `.planning/milestones/`.
 
 - [x] **Phase 83: Kerberos SSO Extension Guide** — New `10-kerberos-sso-extension.md` + guide 09 surgical edit + glossary entry + 00-overview.md extension (completed 2026-06-23)
 - [x] **Phase 84: Graph API Doc + NUAL Key Table** — New `11-graph-api-platform-credential.md` (Option A) + guide 08 NUAL surgical edit + glossary extension (completed 2026-06-23)
-- [ ] **Phase 85: Capability Matrix + L2 Runbooks** — Kerberos matrix row (atomic with V-63-08 hash update) + L2 runbooks #28 and #29 + l2-runbooks/00-index extension
+- [x] **Phase 85: Capability Matrix + L2 Runbooks** — Kerberos matrix row (atomic with V-63-08 hash update) + L2 runbooks #28 and #29 + l2-runbooks/00-index extension (completed 2026-06-23)
 - [ ] **Phase 86: Chain Health Pass** — Frozen-aware conversion of 10 legacy FAILs (check-phase-{58-66,73}) + restore 73-RETRO-INVENTORY.md; chain apex exits 0 FAIL on Windows and Linux
 - [ ] **Phase 87: Navigation Hub Integration** — Navigation-last integration into docs/index.md, common-issues.md, quick-ref-l2.md, l2-runbooks/00-index.md, decision-trees/06-macos-triage.md
 - [ ] **Phase 88: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.10 harness (Atom 1 + Atom 2) + 3-axis terminal re-audit + close-gate
@@ -107,7 +107,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 85-02-PLAN.md — Verify macOS glossary terms (no recreate); reciprocal Windows `_glossary.md` Kerberos + Platform-Credential see-also; `4-platform-capability-comparison.md` macOS cell link-not-copy + atomic V-63-09 hash update (REF-02)
+- [x] 85-02-PLAN.md — Verify macOS glossary terms (no recreate); reciprocal Windows `_glossary.md` Kerberos + Platform-Credential see-also; `4-platform-capability-comparison.md` macOS cell link-not-copy + atomic V-63-09 hash update (REF-02)
 
 ### Phase 86: Chain Health Pass
 
@@ -175,7 +175,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 83. Kerberos SSO Extension Guide | 3/3 | Complete    | 2026-06-23 |
 | 84. Graph API Doc + NUAL Key Table | 2/2 | Complete    | 2026-06-23 |
-| 85. Capability Matrix + L2 Runbooks | 2/3 | In Progress|  |
+| 85. Capability Matrix + L2 Runbooks | 3/3 | Complete   | 2026-06-23 |
 | 86. Chain Health Pass | 0/2 | Not started | - |
 | 87. Navigation Hub Integration | 0/2 | Not started | - |
 | 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
