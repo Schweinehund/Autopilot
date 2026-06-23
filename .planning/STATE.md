@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
 status: executing
-last_updated: "2026-06-23T18:21:09.181Z"
+last_updated: "2026-06-23T18:28:55.796Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 33
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-22)
 ## Current Position
 
 Phase: 85 (capability-matrix-l2-runbooks) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-23
 
@@ -176,7 +176,7 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-23T18:21:09.167Z
+Last session: 2026-06-23T18:28:55.782Z
 Stopped at: Phase 85 context gathered
 Resume file: None
 Next action: `/gsd-plan-phase 83`
@@ -193,3 +193,4 @@ Next action: `/gsd-plan-phase 83`
 | Phase 83 P02 | 15m | 3 tasks | 1 files |
 | Phase 84 P02 | 15m | 3 tasks | 3 files |
 | Phase 85 P01 | 10m | 3 tasks | 3 files |
+| Phase 85 P03 | 20m | 3 tasks | 3 files |

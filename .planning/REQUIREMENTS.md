@@ -37,8 +37,8 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 
 ### Troubleshooting Runbooks (RUN)
 
-- [ ] **RUN-01**: L2 engineer can investigate Kerberos SSO extension failures via a new runbook (`docs/l2-runbooks/28-macos-kerberos-sso-investigation.md`) — ticket acquisition, realm/KDC reachability, TGT verification (`app-sso platform -s` / `klist`), and log collection
-- [ ] **RUN-02**: L2 engineer can investigate Graph-side Platform Credential issues via a new runbook (`docs/l2-runbooks/29-macos-graph-credential-investigation.md`) — enumerate/verify, the delete-and-re-register flow, and permission/role troubleshooting
+- [x] **RUN-01**: L2 engineer can investigate Kerberos SSO extension failures via a new runbook (`docs/l2-runbooks/28-macos-kerberos-sso-investigation.md`) — ticket acquisition, realm/KDC reachability, TGT verification (`app-sso platform -s` / `klist`), and log collection
+- [x] **RUN-02**: L2 engineer can investigate Graph-side Platform Credential issues via a new runbook (`docs/l2-runbooks/29-macos-graph-credential-investigation.md`) — enumerate/verify, the delete-and-re-register flow, and permission/role troubleshooting
 
 ### Reference & Navigation Integration (REF)
 
@@ -99,8 +99,8 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 | GRAPH-01 | Phase 84 | Complete |
 | GRAPH-02 | Phase 84 | Complete |
 | NUAL-01 | Phase 84 | Complete |
-| RUN-01 | Phase 85 | Pending |
-| RUN-02 | Phase 85 | Pending |
+| RUN-01 | Phase 85 | Complete |
+| RUN-02 | Phase 85 | Complete |
 | REF-01 | Phase 85 | Complete |
 | REF-02 | Phase 85 | Pending |
 | REF-03 | Phase 87 | Pending |

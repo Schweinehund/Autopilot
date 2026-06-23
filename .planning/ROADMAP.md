@@ -103,7 +103,7 @@ Plans:
 **Wave 1**
 
 - [x] 85-01-PLAN.md — Pre-edit anchor inventory for `macos-capability-matrix.md` (committed artifact); add Kerberos SSO Extension row(s) under `## Authentication` + atomic V-63-08 hash update in one commit (REF-01)
-- [ ] 85-03-PLAN.md — Author L2 runbook `28-macos-kerberos-sso-investigation.md` + `29-macos-graph-credential-investigation.md`; extend `00-index.md` macOS ADE Runbooks table (RUN-01, RUN-02)
+- [x] 85-03-PLAN.md — Author L2 runbook `28-macos-kerberos-sso-investigation.md` + `29-macos-graph-credential-investigation.md`; extend `00-index.md` macOS ADE Runbooks table (RUN-01, RUN-02)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -175,7 +175,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 83. Kerberos SSO Extension Guide | 3/3 | Complete    | 2026-06-23 |
 | 84. Graph API Doc + NUAL Key Table | 2/2 | Complete    | 2026-06-23 |
-| 85. Capability Matrix + L2 Runbooks | 1/3 | In Progress|  |
+| 85. Capability Matrix + L2 Runbooks | 2/3 | In Progress|  |
 | 86. Chain Health Pass | 0/2 | Not started | - |
 | 87. Navigation Hub Integration | 0/2 | Not started | - |
 | 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
