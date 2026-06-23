@@ -33,7 +33,7 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 
 ### NUAL MDM Key Verification (NUAL)
 
-- [ ] **NUAL-01**: Guide 08's NUAL section documents the **verified** MDM payload key literals `NewUserAuthorizationMode` (one-time; `Standard`/`Admin`/`Groups`/`Temporary`) and `UserAuthorizationMode` (persistent; `Standard`/`Admin`/`Groups`) + the `EnableCreateUserAtLogin` prerequisite and the one-time-vs-persistent behavioral asymmetry; the v1.9 deferred-item callout is replaced and **PSSO-FUT-01 is closed** (Apple-schema-vs-Intune-Settings-Catalog display-name second-pass + the `Temporary`-not-in-Intune-UI caveat handled at plan time)
+- [x] **NUAL-01**: Guide 08's NUAL section documents the **verified** MDM payload key literals `NewUserAuthorizationMode` (one-time; `Standard`/`Admin`/`Groups`/`Temporary`) and `UserAuthorizationMode` (persistent; `Standard`/`Admin`/`Groups`) + the `EnableCreateUserAtLogin` prerequisite and the one-time-vs-persistent behavioral asymmetry; the v1.9 deferred-item callout is replaced and **PSSO-FUT-01 is closed** (Apple-schema-vs-Intune-Settings-Catalog display-name second-pass + the `Temporary`-not-in-Intune-UI caveat handled at plan time)
 
 ### Troubleshooting Runbooks (RUN)
 
@@ -98,7 +98,7 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 | KRB-04 | Phase 83 | Complete |
 | GRAPH-01 | Phase 84 | Complete |
 | GRAPH-02 | Phase 84 | Complete |
-| NUAL-01 | Phase 84 | Pending |
+| NUAL-01 | Phase 84 | Complete |
 | RUN-01 | Phase 85 | Pending |
 | RUN-02 | Phase 85 | Pending |
 | REF-01 | Phase 85 | Pending |

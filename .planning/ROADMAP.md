@@ -29,7 +29,7 @@ Full details in milestone entries above and in `.planning/milestones/`.
 **Milestone Goal:** Close the v1.9-deferred Platform SSO follow-on backlog (PSSO-FUT-01/02/04) with discoverable, fully-integrated documentation, so Intune/Entra admins and L1/L2 teams can configure and troubleshoot macOS Kerberos SSO and programmatic Platform Credential management without escalating to engineering.
 
 - [x] **Phase 83: Kerberos SSO Extension Guide** — New `10-kerberos-sso-extension.md` + guide 09 surgical edit + glossary entry + 00-overview.md extension (completed 2026-06-23)
-- [ ] **Phase 84: Graph API Doc + NUAL Key Table** — New `11-graph-api-platform-credential.md` (Option A) + guide 08 NUAL surgical edit + glossary extension
+- [x] **Phase 84: Graph API Doc + NUAL Key Table** — New `11-graph-api-platform-credential.md` (Option A) + guide 08 NUAL surgical edit + glossary extension (completed 2026-06-23)
 - [ ] **Phase 85: Capability Matrix + L2 Runbooks** — Kerberos matrix row (atomic with V-63-08 hash update) + L2 runbooks #28 and #29 + l2-runbooks/00-index extension
 - [ ] **Phase 86: Chain Health Pass** — Frozen-aware conversion of 10 legacy FAILs (check-phase-{58-66,73}) + restore 73-RETRO-INVENTORY.md; chain apex exits 0 FAIL on Windows and Linux
 - [ ] **Phase 87: Navigation Hub Integration** — Navigation-last integration into docs/index.md, common-issues.md, quick-ref-l2.md, l2-runbooks/00-index.md, decision-trees/06-macos-triage.md
@@ -82,7 +82,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 84-02-PLAN.md — Surgical integration edits: guide 08 NUAL consolidated table with verified key literals + deferred-blockquote removal (NUAL-01 / PSSO-FUT-01 closed); `00-overview.md` guide 11 node; `_glossary-macos.md` Platform SSO see-also extension (GRAPH-01 integration; completes SC#5).
+- [x] 84-02-PLAN.md — Surgical integration edits: guide 08 NUAL consolidated table with verified key literals + deferred-blockquote removal (NUAL-01 / PSSO-FUT-01 closed); `00-overview.md` guide 11 node; `_glossary-macos.md` Platform SSO see-also extension (GRAPH-01 integration; completes SC#5).
 
 ### Phase 85: Capability Matrix + L2 Runbooks
 
@@ -170,7 +170,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 83. Kerberos SSO Extension Guide | 3/3 | Complete    | 2026-06-23 |
-| 84. Graph API Doc + NUAL Key Table | 1/2 | In Progress|  |
+| 84. Graph API Doc + NUAL Key Table | 2/2 | Complete   | 2026-06-23 |
 | 85. Capability Matrix + L2 Runbooks | 0/3 | Not started | - |
 | 86. Chain Health Pass | 0/2 | Not started | - |
 | 87. Navigation Hub Integration | 0/2 | Not started | - |
