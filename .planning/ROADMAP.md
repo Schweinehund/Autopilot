@@ -47,7 +47,7 @@ Full details in milestone entries above and in `.planning/milestones/`.
   3. Guide 10 documents `app-sso platform -s` + `klist` as the canonical diagnostic pair; ticket lifecycle and realm/KDC reachability checks are present
   4. Guide 09's `## Kerberos SSO Extension (Coexistence)` deferred-item sentence is replaced with a live forward link to guide 10 (no other prose in guide 09 changes)
   5. `docs/admin-setup-macos/00-overview.md` Mermaid + bullet list includes a node for guide 10; `docs/_glossary-macos.md` contains a Kerberos SSO Extension entry
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
 - [ ] 83-01: Author `10-kerberos-sso-extension.md` — extension identity, payload type, Intune Custom Template path, realm/KDC config, disambiguation table
