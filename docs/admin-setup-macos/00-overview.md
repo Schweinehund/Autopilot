@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-14
-review_by: 2026-07-13
+last_verified: 2026-06-22
+review_by: 2026-09-22
 applies_to: ADE
 audience: admin
 platform: macOS
@@ -28,6 +28,7 @@ graph LR
   C --> G[7. Platform SSO<br/>Setup]
   G --> H[8. Auth Methods<br/>Deep-Dive]
   G --> I[9. Enterprise SSO<br/>Migration]
+  G --> J[10. Kerberos SSO<br/>Extension]
 ```
 
 1. **[ABM Configuration](01-abm-configuration.md)** -- Create ADE token in Apple Business Manager and Intune, assign devices to MDM server, configure token renewal. This must be complete before any enrollment profile can be created.
@@ -47,6 +48,8 @@ graph LR
 8. **[Auth Methods Deep-Dive](08-auth-methods-deep-dive.md)** -- Selection guide and deep-dive reference for all three Platform SSO authentication methods (Secure Enclave key [recommended], Password sync, Smart card) with FileVault interaction, dangerous misconceptions, Touch ID biometric policy, and Passkey/FIDO2 from the Platform Credential.
 
 9. **[Enterprise SSO Plug-in & Migration Guide](09-enterprise-sso-plugin-migration.md)** -- Decision-first reference for mixed-fleet admins: product-name disambiguation (Microsoft Enterprise SSO plug-in vs Platform SSO vs legacy SSO app extension vs Kerberos SSO extension), migrate/keep/coexist decision matrix, staged migration sequence that avoids Error 10002, what breaks during migration, and the mandatory destructive rollback procedure.
+
+10. **[Kerberos SSO Extension](10-kerberos-sso-extension.md)** -- Configure the Apple Kerberos SSO extension (`com.apple.AppSSOKerberos.KerberosExtension`, Type: Credential) via Intune Custom Template (.mobileconfig) for PSSO-integrated on-premises AD Kerberos authentication. Covers realm and Hosts payload, PSSO TGT sharing (`usePlatformSSOTGT`), and `app-sso platform -s` / `klist` diagnostics.
 
 ## Cross-Platform References
 
@@ -70,3 +73,4 @@ graph LR
 | 2026-04-14 | Initial version -- macOS admin setup overview with Mermaid diagram and 6-guide setup sequence | -- |
 | 2026-06-21 | Phase 77: converted `08-auth-methods-deep-dive.md` code-span to live link with description | -- |
 | 2026-06-21 | Phase 78: converted guide-09 code-span to live link with description | -- |
+| 2026-06-22 | Phase 83 (KRB-04): added guide 10 node to Mermaid diagram and item 10 to numbered list | -- |
