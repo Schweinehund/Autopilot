@@ -592,12 +592,12 @@
         },
         "85": {
           "issueKey": "RTS-659",
-          "status": "in_progress",
+          "status": "done",
           "name": "Capability Matrix + L2 Runbooks"
         },
         "86": {
           "issueKey": "RTS-660",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Chain Health Pass"
         },
         "87": {
