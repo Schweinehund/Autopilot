@@ -99,12 +99,15 @@ Plans:
   5. `docs/l2-runbooks/29-macos-graph-credential-investigation.md` exists with enumerate/verify/delete workflow, the delete-and-re-register flow, and permission/role troubleshooting steps
 
 **Plans**: 3 plans
-
 Plans:
+**Wave 1**
 
 - [ ] 85-01-PLAN.md — Pre-edit anchor inventory for `macos-capability-matrix.md` (committed artifact); add Kerberos SSO Extension row(s) under `## Authentication` + atomic V-63-08 hash update in one commit (REF-01)
-- [ ] 85-02-PLAN.md — Verify macOS glossary terms (no recreate); reciprocal Windows `_glossary.md` Kerberos + Platform-Credential see-also; `4-platform-capability-comparison.md` macOS cell link-not-copy + atomic V-63-09 hash update (REF-02)
 - [ ] 85-03-PLAN.md — Author L2 runbook `28-macos-kerberos-sso-investigation.md` + `29-macos-graph-credential-investigation.md`; extend `00-index.md` macOS ADE Runbooks table (RUN-01, RUN-02)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 85-02-PLAN.md — Verify macOS glossary terms (no recreate); reciprocal Windows `_glossary.md` Kerberos + Platform-Credential see-also; `4-platform-capability-comparison.md` macOS cell link-not-copy + atomic V-63-09 hash update (REF-02)
 
 ### Phase 86: Chain Health Pass
 
