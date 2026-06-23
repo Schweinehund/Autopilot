@@ -33,3 +33,127 @@ This guide walks an Intune administrator through deploying the Apple Kerberos SS
 - The Kerberos SSO extension is **NOT** shipped or owned by Microsoft -- it is an Apple-native, Apple-built extension.
 - Using the PSSO identifier (`com.microsoft.CompanyPortalMac.ssoextension`) in the Kerberos profile is the most common configuration error -- see [K-1 callout](#k-1-wrong-extension-identifier) below.
 - Using `Type: Redirect` (the PSSO value) instead of `Type: Credential` in the Kerberos profile causes silent TGT acquisition failure -- see [K-5 callout](#k-5-wrong-payload-type) below.
+
+---
+
+## Configuration: On-Premises Active Directory Profile
+
+This section delivers the Intune-admin-facing MDM payload for the Apple Kerberos SSO extension using the Intune Custom Template (.mobileconfig) upload path -- NOT the Settings Catalog picker flow used by Platform SSO guide 07.
+
+### Payload Key-Value Reference
+
+| Key | Value | Required | Notes |
+|-----|-------|----------|-------|
+| `ExtensionIdentifier` | `com.apple.AppSSOKerberos.KerberosExtension` | Yes | Apple-owned extension. NEVER use the PSSO identifier `com.microsoft.CompanyPortalMac.ssoextension` here (K-1). |
+| `TeamIdentifier` | `apple` | Yes | Literal string `apple` -- the word "apple", NOT a numeric Team ID such as the Microsoft Company Portal Team ID. Using a numeric App Store Team ID here is the most common copy-error from guide 07 (Pitfall 1). |
+| `Type` | `Credential` | Yes | NOT `Redirect`. Using `Redirect` (the Platform SSO value) causes silent Kerberos TGT acquisition failure (K-5). |
+| `PayloadType` | `com.apple.extensiblesso` | Yes | Same payload type as Platform SSO, but the `ExtensionIdentifier` and `Type` values are different -- the extension identity is what routes the payload. |
+| `Realm` | `CONTOSO.COM` | Yes | ALL CAPS required -- must match the on-prem AD Kerberos realm canonical name. `contoso.com` (lowercase) will fail to match the realm (Pitfall 6). |
+| `Hosts` | `["contoso.com", ".contoso.com"]` | Yes | Both entries required: bare domain AND dot-prefixed wildcard. Omitting `.contoso.com` breaks Kerberos SSO for subdomains (Pitfall 7). |
+| `ExtensionData` > `usePlatformSSOTGT` | `<true/>` | Recommended | Enables PSSO TGT sharing so the Kerberos extension reuses TGTs issued by Platform SSO. Requires macOS 14.6+. Has no effect if PSSO is not registered (Pitfall 5). |
+| `ExtensionData` > `performKerberosOnly` | `<true/>` | Recommended (PSSO deployments) | Disables password sync and expiration checks when Entra ID owns the password lifecycle (Platform SSO deployment). |
+| `ExtensionData` > `syncLocalPassword` | `<false/>` | Recommended (PSSO deployments) | Keep false in PSSO-combined deployments to avoid conflicting password sync. |
+| `ExtensionData` > `allowPasswordChange` | `<true/>` | Optional | Permits user-initiated password change via the macOS menu-bar extra. |
+| `ExtensionData` > `allowPlatformSSOAuthFallback` | `<true/>` | Optional | Permits fallback to independent Kerberos TGT acquisition if PSSO TGT is unavailable. |
+| `ExtensionData` > `pwReqComplexity` | `<true/>` | Optional | Enforces AD password complexity requirements in menu-bar password change flow. |
+
+### Extension Identifier Comparison -- Use This to Avoid K-1
+
+The two SSO extension identifiers are superficially similar (both live in `com.apple.extensiblesso` payloads). Using the wrong one produces a silently broken configuration.
+
+| Extension | Identifier | Type | Owner | Purpose |
+|-----------|-----------|------|-------|---------|
+| **Apple Kerberos SSO extension** -- USE THIS for Kerberos | `com.apple.AppSSOKerberos.KerberosExtension` | `Credential` | Apple (built-in to macOS) | On-prem AD Kerberos TGT acquisition |
+| **Microsoft PSSO extension** -- do NOT use in Kerberos profile | `com.microsoft.CompanyPortalMac.ssoextension` | `Redirect` | Microsoft (Company Portal) | Entra ID device registration + SSO |
+
+> **K-1 -- Wrong Extension Identifier:** Never copy the Microsoft PSSO identifier (`com.microsoft.CompanyPortalMac.ssoextension`) into the Kerberos extension profile. Every Kerberos `ExtensionIdentifier` plist value MUST use `com.apple.AppSSOKerberos.KerberosExtension`. These are distinct extensions from different vendors.
+
+> **K-5 -- Wrong Payload Type:** The Kerberos SSO extension uses `Type = Credential`, NOT `Redirect`. Using `Redirect` (the Platform SSO value) is the most common configuration copy-error when building a Kerberos profile from a Platform SSO template. Every plist example in this guide shows `<key>Type</key><string>Credential</string>` -- verify this value before uploading the profile to Intune.
+
+### On-Premises AD Kerberos Profile (.mobileconfig)
+
+The following is the verified on-prem .mobileconfig plist, sourced verbatim from Microsoft Learn (updated 2026-06-15). Replace the placeholder `PayloadUUID` and `PayloadIdentifier` values with your own generated UUIDs before uploading to Intune.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>ExtensionData</key>
+            <dict>
+                <key>allowPasswordChange</key>
+                <true/>
+                <key>allowPlatformSSOAuthFallback</key>
+                <true/>
+                <key>performKerberosOnly</key>
+                <true/>
+                <key>pwReqComplexity</key>
+                <true/>
+                <key>syncLocalPassword</key>
+                <false/>
+                <key>usePlatformSSOTGT</key>
+                <true/>
+            </dict>
+            <key>ExtensionIdentifier</key>
+            <string>com.apple.AppSSOKerberos.KerberosExtension</string>
+            <key>Hosts</key>
+            <array>
+                <string>.contoso.com</string>
+                <string>contoso.com</string>
+            </array>
+            <key>Realm</key>
+            <string>CONTOSO.COM</string>
+            <key>PayloadDisplayName</key>
+            <string>Single Sign-On Extensions Payload for On-Premises</string>
+            <key>PayloadIdentifier</key>
+            <string>com.apple.extensiblesso.1aaaaaa1-2bb2-3cc3-4dd4-5eeeeeeeeee5</string>
+            <key>PayloadType</key>
+            <string>com.apple.extensiblesso</string>
+            <key>PayloadUUID</key>
+            <string>1aaaaaa1-2bb2-3cc3-4dd4-5eeeeeeeeee5</string>
+            <key>TeamIdentifier</key>
+            <string>apple</string>
+            <key>Type</key>
+            <string>Credential</string>
+        </dict>
+    </array>
+    <key>PayloadDisplayName</key>
+    <string>Kerberos SSO Extension for macOS for On-Premises</string>
+    <key>PayloadEnabled</key>
+    <true/>
+    <key>PayloadScope</key>
+    <string>System</string>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadRemovalDisallowed</key>
+    <true/>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
+```
+
+**Source:** [Microsoft Learn -- Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) (updated 2026-06-15)
+
+**Critical values to verify before upload:**
+- `<key>ExtensionIdentifier</key><string>com.apple.AppSSOKerberos.KerberosExtension</string>` -- must be the Apple identifier, not the Microsoft one (K-1)
+- `<key>Type</key><string>Credential</string>` -- must be `Credential`, not `Redirect` (K-5)
+- `<key>TeamIdentifier</key><string>apple</string>` -- literal string `apple`, never a numeric App Store Team ID (Pitfall 1)
+- `<key>Realm</key><string>CONTOSO.COM</string>` -- replace `CONTOSO.COM` with your actual AD realm in ALL CAPS (Pitfall 6)
+- `<key>PayloadUUID</key>` and `<key>PayloadIdentifier</key>` -- replace the placeholder UUIDs with your own generated values
+
+### Intune Custom Template Upload Steps
+
+Upload the .mobileconfig via the Intune Custom Template profile path (NOT Settings Catalog -- that is the Platform SSO path from guide 07):
+
+1. Navigate to **Devices** > **Configuration** > **Create** > **New policy**
+2. **Platform:** macOS
+3. **Profile type:** Templates > Custom
+4. **Basics:** Enter a descriptive name (e.g., `macOS -- Kerberos SSO Extension -- On-Premises`)
+5. **Custom configuration profile name:** Enter an internal identifier name
+6. **Deployment channel:** Device channel (recommended)
+7. **Configuration profile file:** Upload your edited `.mobileconfig` file
+8. **Assignments:** Assign to **user groups** -- NOT device groups (same assignment rule as Platform SSO; assigning to device groups causes the extension to load before user context is available)
