@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
-status: planning
-last_updated: "2026-06-22T00:00:00.000Z"
-last_activity: 2026-06-22
+status: Roadmap approved; ready for `/gsd-plan-phase 83`
+last_updated: "2026-06-23T04:25:57.117Z"
+last_activity: 2026-06-22 — Roadmap created for v1.10 (6 phases, 83-88; 17/17 requirements mapped)
 progress:
   total_phases: 6
   completed_phases: 0
@@ -90,6 +90,7 @@ Phase 88 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
           V19 (v1.9 close-gate SHA) pinned in _lib/frozen-at-close.mjs BEFORE any
             check-phase-83.mjs is authored (hard ordering constraint)
           Atom 1 (3 files indivisible): v1.10-milestone-audit.mjs (Path-A from v1.9, C1-C16)
+
             + v1.10-audit-allowlist.json + BASELINE_14 in regenerate-supervision-pins.mjs
           Atom 2 (indivisible set): check-phase-83..88.mjs + audit-harness-v1.10-integrity.yml
             (7th parallel coexistence CI workflow) + _lib/frozen-at-close.mjs V19 entry
@@ -175,9 +176,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-22
-Stopped at: Roadmap created for v1.10 (6 phases, 83-88; 17/17 requirements mapped)
-Resume file: None
+Last session: 2026-06-23T04:25:57.100Z
+Stopped at: Phase 83 context gathered
+Resume file: .planning/phases/83-kerberos-sso-extension-guide/83-CONTEXT.md
 Next action: `/gsd-plan-phase 83`
 
 ## Operator Next Steps
