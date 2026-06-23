@@ -75,7 +75,8 @@ Plans:
   5. `docs/admin-setup-macos/00-overview.md` includes a node for guide 11; `docs/_glossary-macos.md` contains a Platform Credential Graph API entry or extended Platform SSO term with a see-also to guide 11
 
 **Plans**: 2 plans
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 84-01-PLAN.md — Author `11-graph-api-platform-credential.md` (hybrid suite-anchored Graph API operations-reference): resource reference, List/Get/Delete with HTTP-primary + PowerShell SDK companion examples (`platformCredentialMethods` nav-property per D-08), verified permissions matrix (D-09), mandatory Delete `[!WARNING]`, and dry-run-gated leaver/offboarding pattern (GRAPH-01, GRAPH-02). Pre-task endpoint/permission verification is pre-resolved in 84-RESEARCH.md.
@@ -97,13 +98,13 @@ Plans:
   4. `docs/l2-runbooks/28-macos-kerberos-sso-investigation.md` exists with ticket acquisition triage, realm/KDC reachability checks, TGT verification (`app-sso platform -s` / `klist`), and log collection steps
   5. `docs/l2-runbooks/29-macos-graph-credential-investigation.md` exists with enumerate/verify/delete workflow, the delete-and-re-register flow, and permission/role troubleshooting steps
 
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
 
-- [ ] 85-01: Pre-edit anchor inventory for `macos-capability-matrix.md` (committed artifact); add Kerberos SSO Extension row + atomic V-63-08 hash update in one commit
-- [ ] 85-02: Glossary Kerberos SSO Extension entry + Platform Credential see-also; `4-platform-capability-comparison.md` macOS cell update (link-not-copy)
-- [ ] 85-03: Author L2 runbook `28-macos-kerberos-sso-investigation.md` + L2 runbook `29-macos-graph-credential-investigation.md`
+- [ ] 85-01-PLAN.md — Pre-edit anchor inventory for `macos-capability-matrix.md` (committed artifact); add Kerberos SSO Extension row(s) under `## Authentication` + atomic V-63-08 hash update in one commit (REF-01)
+- [ ] 85-02-PLAN.md — Verify macOS glossary terms (no recreate); reciprocal Windows `_glossary.md` Kerberos + Platform-Credential see-also; `4-platform-capability-comparison.md` macOS cell link-not-copy + atomic V-63-09 hash update (REF-02)
+- [ ] 85-03-PLAN.md — Author L2 runbook `28-macos-kerberos-sso-investigation.md` + `29-macos-graph-credential-investigation.md`; extend `00-index.md` macOS ADE Runbooks table (RUN-01, RUN-02)
 
 ### Phase 86: Chain Health Pass
 
