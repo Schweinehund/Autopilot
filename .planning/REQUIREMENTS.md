@@ -92,29 +92,29 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| KRB-01 | (roadmap) | Pending |
-| KRB-02 | (roadmap) | Pending |
-| KRB-03 | (roadmap) | Pending |
-| KRB-04 | (roadmap) | Pending |
-| GRAPH-01 | (roadmap) | Pending |
-| GRAPH-02 | (roadmap) | Pending |
-| NUAL-01 | (roadmap) | Pending |
-| RUN-01 | (roadmap) | Pending |
-| RUN-02 | (roadmap) | Pending |
-| REF-01 | (roadmap) | Pending |
-| REF-02 | (roadmap) | Pending |
-| REF-03 | (roadmap) | Pending |
-| CHAIN-01 | (roadmap) | Pending |
-| CHAIN-02 | (roadmap) | Pending |
-| HARN-01 | (roadmap) | Pending |
-| HARN-02 | (roadmap) | Pending |
-| HARN-03 | (roadmap) | Pending |
+| KRB-01 | Phase 83 | Pending |
+| KRB-02 | Phase 83 | Pending |
+| KRB-03 | Phase 83 | Pending |
+| KRB-04 | Phase 83 | Pending |
+| GRAPH-01 | Phase 84 | Pending |
+| GRAPH-02 | Phase 84 | Pending |
+| NUAL-01 | Phase 84 | Pending |
+| RUN-01 | Phase 85 | Pending |
+| RUN-02 | Phase 85 | Pending |
+| REF-01 | Phase 85 | Pending |
+| REF-02 | Phase 85 | Pending |
+| REF-03 | Phase 87 | Pending |
+| CHAIN-01 | Phase 86 | Pending |
+| CHAIN-02 | Phase 86 | Pending |
+| HARN-01 | Phase 88 | Pending |
+| HARN-02 | Phase 88 | Pending |
+| HARN-03 | Phase 88 | Pending |
 
 **Coverage:**
 - v1 requirements: 17 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 17 ⚠️ (resolved at roadmap creation)
+- Mapped to phases: 17/17 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-06-22 after `/gsd-new-milestone` v1.10 (research-first; scope via `/adversarial-review`)*
-*Last updated: 2026-06-22 after initial definition*
+*Last updated: 2026-06-22 — Traceability filled at roadmap creation (gsd-roadmapper)*
