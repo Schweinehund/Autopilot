@@ -42,7 +42,7 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 
 ### Reference & Navigation Integration (REF)
 
-- [ ] **REF-01**: `docs/reference/macos-capability-matrix.md` gains Kerberos SSO Extension (+ Graph-managed Platform Credential) rows under the **pre-edit anchor-inventory** convention, committed atomically with the `check-phase-63.mjs` V-63-08 blob-hash baseline update
+- [x] **REF-01**: `docs/reference/macos-capability-matrix.md` gains Kerberos SSO Extension (+ Graph-managed Platform Credential) rows under the **pre-edit anchor-inventory** convention, committed atomically with the `check-phase-63.mjs` V-63-08 blob-hash baseline update
 - [ ] **REF-02**: `_glossary-macos.md` (+ reciprocal `_glossary.md` see-also) gain Kerberos SSO extension + Graph Platform Credential entries, and the `4-platform-capability-comparison.md` macOS cells are updated link-not-copy
 - [ ] **REF-03**: Navigation hubs integrate the new content **navigation-last** (after all content exists) — `docs/index.md`, `common-issues.md`, `quick-ref-l2.md`, `l2-runbooks/00-index.md`, and the `decision-trees/06-macos-triage.md` Kerberos/Graph leaf
 
@@ -101,7 +101,7 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 | NUAL-01 | Phase 84 | Complete |
 | RUN-01 | Phase 85 | Pending |
 | RUN-02 | Phase 85 | Pending |
-| REF-01 | Phase 85 | Pending |
+| REF-01 | Phase 85 | Complete |
 | REF-02 | Phase 85 | Pending |
 | REF-03 | Phase 87 | Pending |
 | CHAIN-01 | Phase 86 | Pending |

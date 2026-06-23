@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
 status: executing
-last_updated: "2026-06-23T18:10:26.998Z"
-last_activity: 2026-06-23 -- Phase 85 planning complete
+last_updated: "2026-06-23T18:21:09.181Z"
+last_activity: 2026-06-23
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 8
-  completed_plans: 5
+  completed_plans: 6
   percent: 33
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-22)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 85 — capability matrix + l2 runbooks
+**Current focus:** Phase 85 — capability-matrix-l2-runbooks
 
 ## Current Position
 
-Phase: 85
-Plan: Not started
+Phase: 85 (capability-matrix-l2-runbooks) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-23 -- Phase 85 planning complete
+Last activity: 2026-06-23
 
 ## v1.10 Phase Dependency Summary
 
@@ -176,9 +176,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-23T17:43:24.816Z
+Last session: 2026-06-23T18:21:09.167Z
 Stopped at: Phase 85 context gathered
-Resume file: .planning/phases/85-capability-matrix-l2-runbooks/85-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 83`
 
 ## Operator Next Steps
@@ -192,3 +192,4 @@ Next action: `/gsd-plan-phase 83`
 | Phase 83-kerberos-sso-extension-guide P03 | 277 | 3 tasks | 3 files |
 | Phase 83 P02 | 15m | 3 tasks | 1 files |
 | Phase 84 P02 | 15m | 3 tasks | 3 files |
+| Phase 85 P01 | 10m | 3 tasks | 3 files |
