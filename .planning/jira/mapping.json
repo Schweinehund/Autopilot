@@ -574,6 +574,43 @@
           "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
         }
       }
+    },
+    "v1.10": {
+      "epicKey": "RTS-656",
+      "status": "created",
+      "created": "2026-06-22",
+      "phases": {
+        "83": {
+          "issueKey": "RTS-657",
+          "status": "todo",
+          "name": "Kerberos SSO Extension Guide"
+        },
+        "84": {
+          "issueKey": "RTS-658",
+          "status": "todo",
+          "name": "Graph API Doc + NUAL Key Table"
+        },
+        "85": {
+          "issueKey": "RTS-659",
+          "status": "todo",
+          "name": "Capability Matrix + L2 Runbooks"
+        },
+        "86": {
+          "issueKey": "RTS-660",
+          "status": "todo",
+          "name": "Chain Health Pass"
+        },
+        "87": {
+          "issueKey": "RTS-661",
+          "status": "todo",
+          "name": "Navigation Hub Integration"
+        },
+        "88": {
+          "issueKey": "RTS-662",
+          "status": "todo",
+          "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
+        }
+      }
     }
   },
   "lastUpdated": "2026-06-22",
