@@ -159,7 +159,7 @@ Network Connection Status Indicator — the Windows component that tests interne
 
 Microsoft Entra ID single sign-on on Windows devices: when a user signs in to an Entra-joined or Entra-registered device, the Web Account Manager (WAM) obtains a Primary Refresh Token (PRT) that silently authenticates the user to apps and browsers without requiring repeated credential entry. The PRT is hardware-bound (via TPM when available) and carries device compliance claims evaluated by Conditional Access policies.
 
-> See also: [Enterprise SSO Plug-in](_glossary-macos.md#enterprise-sso-plug-in) (macOS equivalent via Microsoft Enterprise SSO plug-in and Platform SSO).
+> See also: [Enterprise SSO Plug-in](_glossary-macos.md#enterprise-sso-plug-in) (macOS equivalent via Microsoft Enterprise SSO plug-in and Platform SSO); [Kerberos SSO Extension](_glossary-macos.md#kerberos-sso-extension) (macOS on-premises Kerberos TGT extension, coexisting with PSSO); [Graph API: Platform Credential Management](admin-setup-macos/11-graph-api-platform-credential.md) (programmatic management of macOS Platform Credentials).
 
 ### Secure Boot
 
