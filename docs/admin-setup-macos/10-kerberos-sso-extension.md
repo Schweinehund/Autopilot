@@ -316,3 +316,22 @@ The following table covers the three most common Kerberos extension misconfigura
 | `Type: Redirect` used instead of `Type: Credential` in the Kerberos `.mobileconfig` | Intune profile shows as installed | No Kerberos TGT acquired; `klist` shows no `krbtgt/CONTOSO.COM` entry; `app-sso platform -s` shows no `tgt_ad`; users prompted for Kerberos credentials repeatedly | -- (Phase 85) |
 | Wrong `ExtensionIdentifier` -- Microsoft PSSO value (`com.microsoft.CompanyPortalMac.ssoextension`) used in the Kerberos profile | Intune profile shows as installed | Kerberos extension silently fails to load; the Apple Kerberos SSO extension is never activated; symptom identical to Type mismatch above | -- (Phase 85) |
 | `usePlatformSSOTGT: true` set but PSSO not registered | Intune profile shows as installed | No `tgt_ad` in `app-sso platform -s` output; PSSO registration status in Company Portal shows incomplete or pending | -- (Phase 85) |
+
+---
+
+## See Also
+
+- [Platform SSO Setup](07-platform-sso-setup.md) -- Settings Catalog policy creation, prerequisites, and verification for Platform SSO (prerequisite for this guide)
+- [Auth Methods Deep-Dive](08-auth-methods-deep-dive.md) -- Authentication method selection for Platform SSO (Secure Enclave key, Password sync, Smart Card)
+- [Enterprise SSO Plug-in & Migration Guide](09-enterprise-sso-plugin-migration.md) -- Disambiguation of Platform SSO vs Enterprise SSO plug-in vs Kerberos SSO extension, Error 10002 avoidance, migration sequence
+- [Kerberos SSO Extension](../_glossary-macos.md#kerberos-sso-extension)
+- [Platform SSO](../_glossary-macos.md#platform-sso)
+- [Enterprise SSO Plug-in](../_glossary-macos.md#enterprise-sso-plug-in)
+- [Apple Kerberos SSO Extension deployment reference](https://developer.apple.com/documentation/devicemanagement/extensiblesinglesignonkerberos) -- Apple Developer Docs (authoritative ExtensibleSingleSignOnKerberos MDM payload reference)
+- [Enable Kerberos SSO in Platform SSO](https://learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration) -- Microsoft Learn (authoritative on-prem .mobileconfig payload source; Company Portal prerequisites; `custom_tgt_setting` reference)
+
+---
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-22 | Phase 83 (KRB-01..04): initial Kerberos SSO Extension guide | -- |
