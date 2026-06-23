@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
-status: ready_to_plan
-last_updated: 2026-06-23T18:59:50.222Z
+status: planning
+last_updated: "2026-06-23T23:24:44.541Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 6
@@ -11,7 +11,6 @@ progress:
   total_plans: 8
   completed_plans: 8
   percent: 50
-stopped_at: Phase 85 complete (3/3) — ready to discuss Phase 86
 ---
 
 # Project State
@@ -177,9 +176,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-23T18:39:21.225Z
-Stopped at: Phase 85 context gathered
-Resume file: None
+Last session: 2026-06-23T23:24:44.529Z
+Stopped at: Phase 86 context gathered
+Resume file: .planning/phases/86-chain-health-pass/86-CONTEXT.md
 Next action: `/gsd-plan-phase 83`
 
 ## Operator Next Steps
