@@ -110,6 +110,8 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 | NUAL (New User at Login) | n/a — not covered in this matrix | Supported — macOS 14+; creates on-demand accounts at login window using Shared Device Keys — see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) |
 | Passkey / FIDO2 | n/a — not covered in this matrix | Supported via Platform Credential — Secure Enclave method only; requires Entra Authentication-methods enablement — see [guide 08](../admin-setup-macos/08-auth-methods-deep-dive.md) |
 | Hybrid Entra join | n/a — not covered in this matrix | **Not supported** — macOS PSSO requires Entra ID (cloud-only) join; hybrid Entra-joined devices are not supported by PSSO — see [Enterprise SSO Plug-in & Migration Guide](../admin-setup-macos/09-enterprise-sso-plugin-migration.md) |
+| Kerberos SSO Extension | n/a — not covered in this matrix | Supported (`com.apple.AppSSOKerberos.KerberosExtension`, Type: Credential) — deployed via Intune Custom Template (.mobileconfig); see [Kerberos SSO Extension Guide](../admin-setup-macos/10-kerberos-sso-extension.md) |
+| PSSO TGT integration (`usePlatformSSOTGT`) | n/a — not covered in this matrix | Supported (macOS 14.6+); enables Kerberos extension to reuse TGTs issued by Platform SSO — see [guide 10](../admin-setup-macos/10-kerberos-sso-extension.md) |
 
 ## See Also
 
@@ -126,3 +128,4 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 | 2026-04-14 | Initial version -- 5-domain capability matrix comparing Windows and macOS Intune management | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E4 See Also cross-link to 07-platform-sso-setup.md | -- |
 | 2026-06-21 | Add `## Authentication` section (7 rows: auth methods, hardware gate, macOS version floor, Entra licensing, NUAL, passkey/FIDO2, hybrid Entra join anti-feature); update `## Configuration` Platform SSO row to link `#authentication` (X1); refresh DS-2 dates | -- |
+| 2026-06-23 | Phase 85 (REF-01): add Kerberos SSO Extension rows under ## Authentication | -- |

@@ -199,14 +199,14 @@ const checks = [
     }
   },
 
-  // === V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob e91d7f9e001bb7ff4dc56a4ca98c84868fbf0716 ===
+  // === V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 73f16378197223378a8507a6751c763902de58db ===
   {
-    id: 8, name: 'V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob e91d7f9e001bb7ff4dc56a4ca98c84868fbf0716',
+    id: 8, name: 'V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 73f16378197223378a8507a6751c763902de58db',
     run() {
       if (!existsSync(join(process.cwd(), MACOS_MATRIX))) {
         return { pass: false, detail: MACOS_MATRIX + ' missing' };
       }
-      const BASELINE = 'e91d7f9e001bb7ff4dc56a4ca98c84868fbf0716';
+      const BASELINE = '73f16378197223378a8507a6751c763902de58db';
       try {
         const result = execFileSync('git', ['hash-object', MACOS_MATRIX], { stdio: 'pipe', cwd: process.cwd() });
         const actual = result.toString().trim();
