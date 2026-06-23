@@ -28,7 +28,7 @@ Full details in milestone entries above and in `.planning/milestones/`.
 
 **Milestone Goal:** Close the v1.9-deferred Platform SSO follow-on backlog (PSSO-FUT-01/02/04) with discoverable, fully-integrated documentation, so Intune/Entra admins and L1/L2 teams can configure and troubleshoot macOS Kerberos SSO and programmatic Platform Credential management without escalating to engineering.
 
-- [ ] **Phase 83: Kerberos SSO Extension Guide** — New `10-kerberos-sso-extension.md` + guide 09 surgical edit + glossary entry + 00-overview.md extension
+- [x] **Phase 83: Kerberos SSO Extension Guide** — New `10-kerberos-sso-extension.md` + guide 09 surgical edit + glossary entry + 00-overview.md extension (completed 2026-06-23)
 - [ ] **Phase 84: Graph API Doc + NUAL Key Table** — New `11-graph-api-platform-credential.md` (Option A) + guide 08 NUAL surgical edit + glossary extension
 - [ ] **Phase 85: Capability Matrix + L2 Runbooks** — Kerberos matrix row (atomic with V-63-08 hash update) + L2 runbooks #28 and #29 + l2-runbooks/00-index extension
 - [ ] **Phase 86: Chain Health Pass** — Frozen-aware conversion of 10 legacy FAILs (check-phase-{58-66,73}) + restore 73-RETRO-INVENTORY.md; chain apex exits 0 FAIL on Windows and Linux
@@ -59,7 +59,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 83-02: Author guide 10 PSSO TGT integration section — macOS 14.6 floor, Company Portal versions, `usePlatformSSOTGT`, cosmetic note, Cloud-Kerberos preview callout; diagnostics section (`app-sso platform -s`, `klist`, ticket lifecycle)
+- [x] 83-02: Author guide 10 PSSO TGT integration section — macOS 14.6 floor, Company Portal versions, `usePlatformSSOTGT`, cosmetic note, Cloud-Kerberos preview callout; diagnostics section (`app-sso platform -s`, `klist`, ticket lifecycle)
 
 ### Phase 84: Graph API Doc + NUAL Key Table
 
@@ -167,7 +167,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 83. Kerberos SSO Extension Guide | 2/3 | In Progress|  |
+| 83. Kerberos SSO Extension Guide | 3/3 | Complete   | 2026-06-23 |
 | 84. Graph API Doc + NUAL Key Table | 0/3 | Not started | - |
 | 85. Capability Matrix + L2 Runbooks | 0/3 | Not started | - |
 | 86. Chain Health Pass | 0/2 | Not started | - |
