@@ -220,14 +220,14 @@ const checks = [
     }
   },
 
-  // === V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob f25ff51a14b7feac46611c4c0511ed5c074ce03f ===
+  // === V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 2314ede7be54efbea1d4a4a787068310869a5896 ===
   {
-    id: 9, name: 'V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob f25ff51a14b7feac46611c4c0511ed5c074ce03f',
+    id: 9, name: 'V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 2314ede7be54efbea1d4a4a787068310869a5896',
     run() {
       if (!existsSync(join(process.cwd(), PLATFORM_COMPARISON))) {
         return { pass: false, detail: PLATFORM_COMPARISON + ' missing' };
       }
-      const BASELINE = 'f25ff51a14b7feac46611c4c0511ed5c074ce03f';
+      const BASELINE = '2314ede7be54efbea1d4a4a787068310869a5896';
       try {
         const result = execFileSync('git', ['hash-object', PLATFORM_COMPARISON], { stdio: 'pipe', cwd: process.cwd() });
         const actual = result.toString().trim();

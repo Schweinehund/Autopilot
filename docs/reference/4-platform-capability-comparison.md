@@ -98,7 +98,7 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
-| OS-integrated SSO (Platform SSO) | N/A | Supported (macOS 14+) — [matrix](macos-capability-matrix.md#authentication) | N/A | N/A | N/A |
+| OS-integrated SSO (Platform SSO) | N/A | Supported (macOS 14+, incl. Kerberos SSO Extension) — [matrix](macos-capability-matrix.md#authentication) | N/A | N/A | N/A |
 
 > Non-macOS platform SSO authentication is not covered in this documentation set; `N/A` reflects deliberate scope, not capability absence.
 
