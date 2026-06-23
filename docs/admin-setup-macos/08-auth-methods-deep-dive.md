@@ -269,21 +269,16 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 
 **NUAL Settings Catalog settings:**
 
-| Settings Catalog Setting | Type | Purpose |
-|--------------------------|------|---------|
-| `Enable Create User At Login` | Boolean | Allow any organizational user to sign in and create a new local account on first login |
-| `New User Authorization Mode` | Enum (Standard / Admin / Groups) | One-time permissions granted to the new user when the account is first created |
-| `User Authorization Mode` | Enum (Standard / Admin / Groups) | Persistent permissions at each subsequent PSSO sign-in |
+| Settings Catalog Display Name | MDM plist key | Type | Allowed Values | Scope |
+|-------------------------------|--------------|------|----------------|-------|
+| Enable Create User At Login | `EnableCreateUserAtLogin` | Boolean | `true` / `false` (default: `false`) | Prerequisite — requires `UseSharedDeviceKeys: true` in same policy |
+| New User Authorization Mode | `NewUserAuthorizationMode` | String | `Standard`, `Admin`, `Groups`, `Temporary` | One-time: applied at account creation only |
+| User Authorization Mode | `UserAuthorizationMode` | String | `Standard`, `Admin`, `Groups` | Persistent: re-applied at each subsequent PSSO sign-in |
 
-> **Deferred item -- MDM key literals for the NUAL authorization-mode settings:**
->
-> Two Settings Catalog display names control NUAL authorization: "New User Authorization Mode" (one-time
-> permissions at account creation) and "User Authorization Mode" (persistent permissions at each subsequent
-> sign-in), both with values Standard / Admin / Groups. The underlying MDM plist key names for **both** are
-> unconfirmed from an authoritative Settings Catalog payload schema and are therefore omitted from this guide
-> pending verification.
->
-> See `v1.9-DEFERRED-CLEANUP.md` for tracking details (PSSO-11 / PSSO-FUT-01).
+**Notes:**
+- `Temporary` is a valid value in the Apple schema for `NewUserAuthorizationMode` only. It is **not surfaced in the Intune Settings Catalog UI** — to use it, deploy via a custom profile or direct plist.
+- `UserAuthorizationMode` does NOT accept `Temporary` — the allowed values are Standard / Admin / Groups only.
+- **Behavioral asymmetry example:** Setting `NewUserAuthorizationMode: Admin` + `UserAuthorizationMode: Standard` grants admin rights at first login, then reverts to standard at every subsequent PSSO sign-in. The admin promotion is overwritten on the second sign-in.
 
 ---
 
@@ -332,3 +327,4 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 |------|--------|--------|
 | 2026-06-21 | Phase 77 (PSSO-05..11): initial version -- auth method selection table and three-method deep-dive with FileVault interaction, misconceptions box, Touch ID biometric policy, Passkey/FIDO2, NUAL | -- |
 | 2026-06-21 | Phase 78: converted guide-09 code-span to live link in ## See Also | -- |
+| 2026-06-23 | Phase 84 (NUAL-01): consolidated NUAL Settings Catalog table with verified MDM plist key literals; removed v1.9 deferred blockquote (PSSO-FUT-01 closed) | -- |
