@@ -577,15 +577,17 @@ Step 2.6: SKIPPED — Phase 90 is a documentation-authoring phase with no extern
 | L2 #10 filename | HIGH | Verified from directory listing |
 | Structural conventions | HIGH | Direct read of sibling files 01 and 27 |
 
-### Open Questions
+### Open Questions (RESOLVED — authoring-day verification items)
 
-1. **Supervision status on first pilot device.** Before authoring states supervision as confirmed-preserved, run `profiles status -type enrollment | grep Supervised` on a test device post-OS-26-migration and document the verified result with `last_verified` stamp.
+Each item below is resolved with a definite authoring posture; the "open" portion is a deliberate authoring-day verification step, not an unresolved planning blocker.
 
-2. **Exact ABM UI for releasing a deadline-locked device.** The conceptual flow (ABM admin → change/cancel migration) is confirmed; exact click-path for a device already showing the full-screen lock is not confirmed in a single authoritative source. Recommend L2 #30 Track A include a cross-link to Apple Business Support for this edge case.
+1. **Supervision status on first pilot device.** RESOLVED: state supervision-preserved at **MEDIUM confidence** with a freshness stamp; the doc instructs the operator to run `profiles status -type enrollment | grep Supervised` on a pilot device post-OS-26-migration before fleet rollout. (Posture baked into B1 pre-flight per D-01/D-04.)
 
-3. **Iru console label drift.** Verify on authoring day whether support.kandji.io/iru.com has published updated Iru-branded documentation for "Delete Device Record." If not, D-04's vendor-neutral language is the correct and complete solution.
+2. **Exact ABM UI for releasing a deadline-locked device.** RESOLVED: the conceptual flow (ABM admin → change/cancel migration) is confirmed and stated; the exact post-lock click-path is authored conceptually with an L2 #30 Track A cross-link to Apple Business Support for the edge case (per D-03).
 
-4. **One-time reset for pre-26-enrolled devices.** MEDIUM confidence community-sourced pitfall (P-12). Cannot verify authoritatively. State in B1 pre-flight checklist at MEDIUM confidence.
+3. **Iru console label drift.** RESOLVED: D-04's vendor-neutral language ("Delete Device Record" + both Kandji/Iru names + verify-current-labels note) is the correct and complete solution regardless of portal drift.
+
+4. **One-time reset for pre-26-enrolled devices.** RESOLVED: state in the B1 pre-flight checklist at **MEDIUM confidence** (community-sourced pitfall P-12, not authoritatively verifiable).
 
 ### Ready for Planning
 Research complete. Planner can now create PLAN.md files.
