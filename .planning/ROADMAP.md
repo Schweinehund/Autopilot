@@ -78,7 +78,17 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. `docs/l2-runbooks/30-macos-mdm-migration-failure.md` exists with three failure tracks (deadline lockout + ABM admin recovery, profile-not-delivered / enrollment-failed with leftover source-MDM agent diagnostic, PSSO re-registration stuck); log collection prerequisite cross-links L2 #10
   5. `docs/l2-runbooks/00-index.md` is extended with a row for L2 #30 in the macOS ADE Runbooks table (internal hub edit, content-phase; top-level nav hubs are NOT touched in this phase); reciprocal See Also appended to `27-macos-sso-investigation.md`
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+**Wave 1**
+
+- [ ] 90-01-PLAN.md — Author `02-mdm-migration-psso.md` (selector-first opening, shared OS-gate + Kandji/Iru secret-retrieval pre-flight, B1 9-stage in-place track + Stage 9 PSSO re-registration delta + app-sso gate, B2 wipe fork, footers) (MIG-01..04)
+- [ ] 90-02-PLAN.md — Author `30-macos-mdm-migration-failure.md` L2 runbook (Context preamble + Track A deadline lockout / Track B profile-not-delivered / Track C PSSO re-registration stuck link-not-copy to #27; L2 #10 prereq) (RUN-01)
+
+**Wave 2** *(blocked on Wave 1 — navigation-last)*
+
+- [ ] 90-03-PLAN.md — Internal-hub + reciprocal cross-links: `00-index.md` #30 row, `27` reciprocal See Also, `01`→`02` back-link completing the bidirectional MIG-04 junction (RUN-01, MIG-04)
+
 **UI hint**: no
 
 ### Phase 91: Glossary + Capability Matrix
@@ -131,7 +141,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 89. PSSO Provisioning Walkthrough | 2/2 | Complete    | 2026-06-24 |
-| 90. MDM Migration Walkthrough + L2 Runbook #30 | 0/TBD | Not started | - |
+| 90. MDM Migration Walkthrough + L2 Runbook #30 | 0/3 | Planned | - |
 | 91. Glossary + Capability Matrix | 0/TBD | Not started | - |
 | 92. Navigation Hub Integration | 0/TBD | Not started | - |
 | 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
