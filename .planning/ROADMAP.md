@@ -191,4 +191,4 @@ Plans:
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
 | 86. Chain Health Pass | 2/2 | Complete    | 2026-06-24 |
 | 87. Navigation Hub Integration | 2/2 | Complete    | 2026-06-24 |
-| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete    | 2026-06-24 |
+| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete   | 2026-06-24 |

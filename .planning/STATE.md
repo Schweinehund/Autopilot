@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
-status: closed
-last_updated: "2026-06-24T00:00:00Z"
+status: verifying
+last_updated: "2026-06-24T15:21:11.431Z"
 last_activity: 2026-06-24
 progress:
   total_phases: 6
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-22)
 
 Phase: 88 (harness-lineage-bump-terminal-re-audit-milestone-close) — COMPLETE
 Plan: 4 of 4 — CLOSED
-Status: v1.10 MILESTONE CLOSED 2026-06-24 — 17/17 Validated — archival pending (/gsd-complete-milestone)
+Status: Phase complete — ready for verification
 Last activity: 2026-06-24
 
 ## v1.10 Phase Dependency Summary
@@ -178,7 +178,7 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24T00:00:00Z
+Last session: 2026-06-24T15:21:11.417Z
 Stopped at: Completed 88-04: v1.10 close-gate — MILESTONE CLOSED (17/17 Validated)
 Resume file: None
 Next action: `/gsd-complete-milestone` (archival + Jira close — D-05 separate step)
