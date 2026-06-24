@@ -8,7 +8,30 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
-## Most Recent Milestone: v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (SHIPPED 2026-06-24)
+## Current Milestone: v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (STARTED 2026-06-24)
+
+**Status:** 🚧 IN PROGRESS — started 2026-06-24. Defining requirements → roadmap. Phase numbering continues from v1.10 close (Phase 88) → **v1.11 starts at Phase 89**.
+
+**Goal:** Give Intune/L1/L2 teams two consolidated, operator-followable macOS scenario guides — (1) deploying a Mac from enrollment profile to a fully PSSO-registered end user, and (2) migrating Macs from Kandji/Iru into Intune with PSSO — so the full device journey no longer has to be assembled by hopping between docs `00`/`02`/`07`.
+
+**Target features:**
+
+- **Pillar A — End-to-end PSSO provisioning walkthrough** — New consolidated scenario doc threading enrollment profile → assignment → delivery → Setup Assistant → desktop → "Registration Required" → user PSSO registration → verify. Covers **both** delivery paths (standard post-enrollment + ADE-during-Setup-Assistant zero-click, macOS 26+). Link-not-copy to existing guides `00-ade-lifecycle`/`02-enrollment-profile`/`07-platform-sso-setup`; per-stage cross-links to L1 #35/#36 + L2 #27 for failures (no inline triage).
+- **Pillar B — Kandji/Iru → Intune MDM migration with PSSO** — New migration scenario doc using Apple Business Manager **"Assign Device Management" + Deadline** (macOS/iOS 26+ in-place, no factory reset) **and** the pre-macOS-26 fallback (retire/wipe-and-re-enroll). Documents Kandji/Iru source-side release steps and post-migration PSSO re-registration (Secure Enclave key re-creation against the new tenant). **New L2 migration-failure runbook** (deadline lockout, profile-not-delivered, PSSO re-registration stuck).
+- **Pillar C — Glossary, capability-matrix & navigation integration** — Glossary entries (MDM Migration / Assign Device Management / Deadline; Kandji→Iru rebrand note), capability-matrix migration coverage, navigation-last hub wiring (`docs/index.md`, `common-issues.md`, `quick-ref-l2.md`, `decision-trees/06-macos-triage.md`).
+- **Pillar D — Audit-harness lineage bump + 3-axis terminal re-audit close** — Path-A v1.10→v1.11 (**9th** in lineage): `v1.11-milestone-audit.mjs`, `check-phase-89..NN.mjs` validators, 8th parallel CI coexistence workflow, frozen-aware V110 (v1.10 close-gate SHA) pin in `_lib/frozen-at-close.mjs`, 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP EXACT MATCH).
+
+**Key context:**
+
+- **Two-pillar content milestone** on the existing macOS platform (no new platform) — both pillars are scenario/journey guides that stitch existing surfaces together rather than net-new feature docs
+- **macOS 26 / iOS 26 version-gating throughout** — both the in-place ABM migration and the ADE-during-Setup-Assistant zero-click path are OS-26-gated; high-drift content needing per-section `last_verified` freshness stamps
+- **"Iru" = Kandji rebrand (2026)** — surface both names for accuracy and searchability
+- **Phase numbering continues from v1.10** (closed at Phase 88) → **v1.11 starts at Phase 89**
+- Sequential-on-main-tree per `.planning/config.json` `use_worktrees:false` (durable user constraint); Phase 88-style fresh-clone terminal re-audit at close (D-03)
+- **Plan-time research flags** (not blockers): verify ABM "Assign Device Management" UI path + Deadline lock behavior (Apple Support + Intune OS-26 migration blog); confirm whether PSSO survives migration vs. requires re-registration (Secure Enclave key tenant-binding); verify Kandji/Iru source-side release steps; macOS 26 GA status + Company Portal version floor
+- **Estimated scope** — content milestone; ~4-6 phases (89+), phase/plan count finalized at roadmap
+
+## Previous Milestone: v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (SHIPPED 2026-06-24)
 
 **Status:** ✅ SHIPPED & ARCHIVED 2026-06-24 — 6/6 phases (83-88) Complete; 17/17 requirements Validated via Phase 88 Plan 88-04 SINGLE close-gate commit (NO Commit A); archived to `.planning/milestones/v1.10-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md` and tagged `v1.10` via `/gsd-complete-milestone`. **No active milestone** — run `/gsd-new-milestone` to scope the next.
 
@@ -31,7 +54,8 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - **Harness-close watch item:** the validator chain is already RED at HEAD (10 pre-existing legacy FAILs, phases 58–66/73 per `PRE-EXISTING-CHAIN-RED-AT-HEAD-01`) — the harness-bump phase must decide whether to fold in a chain-health pass or route it forward; finalized at roadmap
 - **Estimated scope** — content milestone; ~4-6 phases (83+), phase/plan count finalized at roadmap
 
-## Previous Milestone: v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (CLOSED 2026-06-22)
+<details>
+<summary>Previous Milestone: v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (CLOSED 2026-06-22)</summary>
 
 **Status:** ✅ CLOSED 2026-06-22 — 8/8 phases (75-82) Complete; 27/27 requirements Validated via Phase 82 Plan 82-04 SINGLE close-gate commit (NO Commit A; D-04). No active milestone until `/gsd-new-milestone` scopes v1.10+.
 
@@ -54,6 +78,8 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - Sequential-on-main-tree execution per `.planning/config.json` `use_worktrees:false` (durable user constraint)
 - Source freshness: macOS auth docs last verified 2026-04-14; Platform SSO GA since macOS 14 (Oct 2023) — corpus lags platform capability by ~2.5 years
 - **Estimated scope** — content milestone; ~4-6 phases (75+), phase/plan count finalized at roadmap
+
+</details>
 
 <details>
 <summary>Previous Milestone: v1.8 Tooling Debt Closure + Chain-Resilience Hardening (CLOSED 2026-06-08)</summary>
@@ -101,7 +127,7 @@ Documented the Apple Business rebrand and its new delegated permission surface �
 
 ## Current State
 
-**v1.10 shipped 2026-06-24.** Twelve milestones complete — 88 phases, ~366 plans, ~250 documentation files across Windows Autopilot, macOS ADE (incl. Platform SSO + Secure Enclave + Kerberos SSO + Graph API Platform Credential management), iOS/iPadOS, Android Enterprise, and Linux (Ubuntu 22.04/24.04 LTS), plus an 8-milestone Path-A audit-harness lineage (v1.4→v1.10) with per-phase validators + cross-OS Linux GHA CI. **Most recent:** v1.10 closed the v1.9-deferred macOS Platform SSO follow-on backlog — Kerberos SSO extension guide, Graph API Platform Credential operations doc, verified NUAL MDM key literals, two L2 runbooks, a dedicated chain-health pass, and the 8th harness lineage bump. **Next:** scope the next milestone (`/gsd-new-milestone`).
+**v1.11 started 2026-06-24** (Phases 89+). Twelve milestones shipped (v1.0→v1.10) — 88 phases, ~366 plans, ~250 documentation files across Windows Autopilot, macOS ADE (incl. Platform SSO + Secure Enclave + Kerberos SSO + Graph API Platform Credential management), iOS/iPadOS, Android Enterprise, and Linux (Ubuntu 22.04/24.04 LTS), plus an 8-milestone Path-A audit-harness lineage (v1.4→v1.10) with per-phase validators + cross-OS Linux GHA CI. **Now building:** v1.11 delivers two consolidated macOS scenario guides — an end-to-end PSSO provisioning walkthrough (enrollment profile → delivery → registered user, both delivery paths) and a Kandji/Iru → Intune MDM-migration-with-PSSO walkthrough (ABM "Assign Device Management" + Deadline on macOS/iOS 26, plus pre-26 fallback) with a new L2 migration-failure runbook — closed by the 9th Path-A harness lineage bump. **Next:** define requirements → roadmap.
 
 <details>
 <summary>Historical Current-State snapshot — v1.5 (2026-05-07)</summary>
@@ -439,9 +465,13 @@ Delivered end-to-end APv1 lifecycle documentation, error code lookup tables, L1 
 
 ### Active
 
-<!-- No active milestone. v1.10 SHIPPED & ARCHIVED 2026-06-24. Run /gsd-new-milestone to scope the next milestone (fresh REQUIREMENTS.md). -->
+<!-- v1.11 milestone STARTED 2026-06-24 — macOS PSSO End-to-End Provisioning & MDM Migration. Requirements defined in REQUIREMENTS.md (this milestone cycle). -->
 
-*No active milestone. v1.10 macOS Platform SSO Follow-ons **SHIPPED & ARCHIVED 2026-06-24** (tag `v1.10`) — 6 phases (83-88), 16 plans, 17/17 requirements Validated. Deferred to a future milestone: multi-tenant PSSO (MTPSSO-01/02/03, own architectural milestone), on-prem-AD-only Kerberos depth + Azure Files Cloud-Kerberos GA (KRBFUT-01/02). Run `/gsd-new-milestone` to scope the next milestone.*
+*v1.11 macOS PSSO End-to-End Provisioning & MDM Migration **STARTED 2026-06-24** (Phases 89+). Two-pillar content milestone: (A) end-to-end PSSO provisioning walkthrough (both delivery paths) + (B) Kandji/Iru → Intune MDM migration with PSSO (ABM "Assign Device Management" + Deadline, macOS/iOS 26 + pre-26 fallback) + new L2 migration-failure runbook, closed by the 9th Path-A harness lineage bump. Requirements being defined in `.planning/REQUIREMENTS.md`.*
+
+<!-- v1.10 SHIPPED & ARCHIVED 2026-06-24 — 17/17 requirements Validated. -->
+
+*v1.10 macOS Platform SSO Follow-ons **SHIPPED & ARCHIVED 2026-06-24** (tag `v1.10`) — 6 phases (83-88), 16 plans, 17/17 requirements Validated. Deferred to a future milestone: multi-tenant PSSO (MTPSSO-01/02/03, own architectural milestone), on-prem-AD-only Kerberos depth + Azure Files Cloud-Kerberos GA (KRBFUT-01/02).*
 
 <!-- v1.9 milestone CLOSED 2026-06-22 — 27/27 requirements Validated. No active milestone until /gsd-new-milestone scopes v1.10+. -->
 
@@ -559,6 +589,8 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
+*v1.11-milestone-start footer: 2026-06-24 — **v1.11 MILESTONE STARTED 2026-06-24** (macOS PSSO End-to-End Provisioning & MDM Migration). Two-pillar content milestone on the existing macOS platform: (A) a new consolidated end-to-end PSSO provisioning walkthrough threading enrollment profile → assignment → delivery → Setup Assistant → desktop → "Registration Required" → user registration → verify, covering both the standard post-enrollment path and the ADE-during-Setup-Assistant zero-click path (macOS 26+), link-not-copy to guides 00/02/07 with per-stage cross-links to L1 #35/#36 + L2 #27; (B) a new Kandji/Iru → Intune MDM-migration-with-PSSO walkthrough using Apple Business Manager "Assign Device Management" + Deadline (macOS/iOS 26+ in-place, no factory reset) plus the pre-macOS-26 retire/wipe-and-re-enroll fallback, documenting Kandji/Iru source-side release steps + post-migration PSSO re-registration, with a NEW L2 migration-failure runbook (deadline lockout / profile-not-delivered / PSSO re-registration stuck); plus glossary + capability-matrix + navigation-last hub integration and the 9th Path-A audit-harness lineage bump (v1.10→v1.11) with full 3-axis terminal re-audit close. macOS 26 / iOS 26 version-gating throughout (high-drift; per-section freshness stamps). "Iru" = Kandji 2026 rebrand (both names surfaced). Phase numbering continues from v1.10 close at Phase 88 → v1.11 spans Phase 89+. Sequential-on-main-tree per `use_worktrees:false`. Research-first decision at workflow Step 8. Plan-time research flags: ABM "Assign Device Management" UI path + Deadline lock behavior; PSSO-survives-migration vs re-registration; Kandji/Iru source-side release steps; macOS 26 GA + Company Portal floor. Previous: **v1.10 SHIPPED 2026-06-24** (tag `v1.10`, 17/17 Validated). Original v1.10-milestone footer below.*
+
 *Last updated: 2026-06-24 after v1.10 milestone — **v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL SHIPPED 2026-06-24** (tag `v1.10`). 6 phases (83-88), 16 plans, 17/17 requirements Validated. Delivered: new Kerberos SSO extension guide `10` (`com.apple.AppSSOKerberos.KerberosExtension`, Type Credential, Intune Custom Template, macOS 14.6 floor, `app-sso platform -s`/`klist` diagnostics), new Graph API Platform Credential operations doc `11` (GA `platformCredentialAuthenticationMethod` List/Get/Delete + mandatory Delete `[!WARNING]` + dry-run leaver pattern), verified NUAL MDM key literals in guide `08` (PSSO-FUT-01 closed), L2 runbooks #28/#29, capability-matrix + glossary + 4-platform-comparison integration, a dedicated chain-health pass (10 legacy FAILs → frozen-aware, `CHAIN_SKIP = Set([])`, cross-OS EXACT MATCH), navigation-last hub integration across 5 hubs, and the 8th Path-A audit-harness lineage bump closed via Phase 88 3-axis terminal re-audit (Linux GHA run `28106073384` authoritative per D-04; cross-OS EXACT MATCH 8/8; predecessor v1.4-v1.9 frozen surfaces byte-unchanged). Closing SHAs: Atom 1 `cec1211` + Atom 2 `9529d60` + close-gate `a3617e9`. Deferred to a future milestone: multi-tenant PSSO (MTPSSO-01/02/03; PSSO-FUT-03, own architectural milestone), on-prem-AD-only Kerberos depth + Azure Files Cloud-Kerberos GA (KRBFUT-01/02), WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 (warm-tree deep-nest apex nondeterminism, mitigated by D-04). Next: `/gsd-new-milestone` scopes the next milestone. Previous v1.9-milestone footer below.*
 
 *Last updated: 2026-06-22 after v1.9 milestone — **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation SHIPPED 2026-06-22** (tag `v1.9`). 8 phases (75-82), 19 plans, 27/27 requirements Validated. Delivered: complete macOS Platform SSO (macOS 14+) + Secure Enclave auth documentation — admin setup guide `07`, three-method deep-dive `08`, legacy Enterprise SSO plug-in + migration `09`, L1/L2 runbooks #35/#36/#27, capability-matrix + 5-platform comparison + lifecycle integration with 8 SSO-E cross-link edges, and the v1.9 audit-harness lineage bump (7th Path-A milestone) closed via Phase 82 3-axis terminal re-audit (cross-OS EXACT MATCH 10/10; predecessor v1.4-v1.8 frozen surfaces byte-unchanged). Closing SHAs: Atom 1 `e760176` + Atom 2 `e825fdb` + re-audit `9dc04ef` + close-gate `b29dca5` + WR-01 hardening `f709722`. Deferred to v1.10+: PRE-EXISTING-CHAIN-RED-AT-HEAD-01 (10 legacy chain FAILs, phases 58-66/73), PSSO-FUT-01..04, WINDOWS-CLONE-DEEPNEST-TIMEOUT-01. Next: `/gsd-new-milestone` scopes v1.10. v1.9-milestone-start footer below.*
