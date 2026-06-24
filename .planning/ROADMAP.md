@@ -122,10 +122,13 @@ Plans:
   4. The full validator chain exits 0 FAIL / 0 SKIPPED on Linux GHA (cross-OS EXACT MATCH with Windows)
 
 **Plans**: 2 plans
-
 Plans:
+**Wave 1**
 
 - [ ] 86-01-PLAN.md — Convert V-58-10/V-59-24 to frozen-aware (ba2cbc0) + V-72/73/74/82 VERIFICATION + V-73-INVENTORY to archive-aware (SKIP-PASS→FAIL); cascade 60-66 untouched; CHAIN_SKIP stays Set([])
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 86-02-PLAN.md — Run apex 0 FAIL / 0 SKIPPED on Windows; dispatch existing v1.9 GHA workflow; confirm Linux green + cross-OS EXACT MATCH
 
 ### Phase 87: Navigation Hub Integration
