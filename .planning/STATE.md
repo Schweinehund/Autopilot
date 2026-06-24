@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
-status: executing
-last_updated: "2026-06-24T05:16:23.466Z"
+status: verifying
+last_updated: "2026-06-24T05:24:36.017Z"
 last_activity: 2026-06-24
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 12
-  completed_plans: 11
-  percent: 67
+  completed_plans: 12
+  percent: 83
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-22)
 
 Phase: 87 (navigation-hub-integration) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-24
 
 ## v1.10 Phase Dependency Summary
@@ -176,7 +176,7 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24T05:16:23.452Z
+Last session: 2026-06-24T05:24:35.998Z
 Stopped at: Phase 87 context gathered
 Resume file: None
 Next action: `/gsd-plan-phase 83`
@@ -196,3 +196,4 @@ Next action: `/gsd-plan-phase 83`
 | Phase 85 P03 | 20m | 3 tasks | 3 files |
 | Phase 86-chain-health-pass P01 | 18 | 3 tasks | 6 files |
 | Phase 86-chain-health-pass P02 | 20min | 2 tasks | 0 files |
+| Phase 87-navigation-hub-integration P02 | 275 | 2 tasks | 2 files |

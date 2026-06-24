@@ -32,7 +32,7 @@ Full details in milestone entries above and in `.planning/milestones/`.
 - [x] **Phase 84: Graph API Doc + NUAL Key Table** — New `11-graph-api-platform-credential.md` (Option A) + guide 08 NUAL surgical edit + glossary extension (completed 2026-06-23)
 - [x] **Phase 85: Capability Matrix + L2 Runbooks** — Kerberos matrix row (atomic with V-63-08 hash update) + L2 runbooks #28 and #29 + l2-runbooks/00-index extension (completed 2026-06-23)
 - [x] **Phase 86: Chain Health Pass** — Frozen-aware conversion of 10 legacy FAILs (check-phase-{58-66,73}) + restore 73-RETRO-INVENTORY.md; chain apex exits 0 FAIL on Windows and Linux (completed 2026-06-24)
-- [ ] **Phase 87: Navigation Hub Integration** — Navigation-last integration into docs/index.md, common-issues.md, quick-ref-l2.md, l2-runbooks/00-index.md, decision-trees/06-macos-triage.md
+- [x] **Phase 87: Navigation Hub Integration** — Navigation-last integration into docs/index.md, common-issues.md, quick-ref-l2.md, l2-runbooks/00-index.md, decision-trees/06-macos-triage.md (completed 2026-06-24)
 - [ ] **Phase 88: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.10 harness (Atom 1 + Atom 2) + 3-axis terminal re-audit + close-gate
 
 ## Phase Details
@@ -150,7 +150,7 @@ Plans:
 **Wave 1**
 
 - [x] 87-01-PLAN.md — Append-only edits to `docs/index.md` (D-01 enrich Platform SSO admin-setup row for guides 10/11; D-02 two L2 rows #28/#29 → `00-index.md#macos-ade-runbooks`) and `docs/common-issues.md` (D-05 standalone Kerberos SSO Extension Failure entry → L2 #28)
-- [ ] 87-02-PLAN.md — Append-only edits to `docs/quick-ref-l2.md` (D-04 Kerberos SSO Diagnostics block, klist only + pointer), VERIFY-ONLY `docs/l2-runbooks/00-index.md` (D-03 rows #28/#29 present, no L1-mapping row), and `docs/decision-trees/06-macos-triage.md` (D-06/D-07 RED MACE2 Kerberos leaf under MACSSO → L2 #28)
+- [x] 87-02-PLAN.md — Append-only edits to `docs/quick-ref-l2.md` (D-04 Kerberos SSO Diagnostics block, klist only + pointer), VERIFY-ONLY `docs/l2-runbooks/00-index.md` (D-03 rows #28/#29 present, no L1-mapping row), and `docs/decision-trees/06-macos-triage.md` (D-06/D-07 RED MACE2 Kerberos leaf under MACSSO → L2 #28)
 
 ### Phase 88: Harness Lineage Bump + Terminal Re-Audit + Milestone Close
 
@@ -181,5 +181,5 @@ Plans:
 | 84. Graph API Doc + NUAL Key Table | 2/2 | Complete    | 2026-06-23 |
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
 | 86. Chain Health Pass | 2/2 | Complete    | 2026-06-24 |
-| 87. Navigation Hub Integration | 1/2 | In Progress|  |
+| 87. Navigation Hub Integration | 2/2 | Complete   | 2026-06-24 |
 | 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
