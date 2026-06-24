@@ -24,6 +24,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -49,8 +50,12 @@ checks.push({
   id: 'AUDIT',
   name: 'V-82-AUDIT: 82-VERIFICATION.md exists and contains Phase 82 verification heading',
   run() {
-    const verif = readFile('.planning/phases/82-harness-lineage-bump-terminal-re-audit-milestone-close/82-VERIFICATION.md');
-    if (!verif) return { pass: true, skipped: true, detail: '82-VERIFICATION.md not yet authored (PASS-via-skip until Plan 82-04 lands)' };
+    const verifPath = resolveArchivedPhasePath(
+      '82-harness-lineage-bump-terminal-re-audit-milestone-close/82-VERIFICATION.md',
+      ['v1.9-phases']
+    );
+    const verif = verifPath ? readFile(verifPath) : null;
+    if (!verif) return { pass: false, detail: '82-VERIFICATION.md not found in live tree or v1.9-phases archive' };
     if (!/Phase 82/i.test(verif)) {
       return { pass: false, detail: '82-VERIFICATION.md missing "Phase 82" section heading' };
     }

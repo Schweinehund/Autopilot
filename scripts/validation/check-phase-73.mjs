@@ -37,6 +37,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -73,8 +74,12 @@ checks.push({
   id: 'INVENTORY',
   name: 'V-73-INVENTORY: 73-RETRO-INVENTORY.md exists and contains per-validator class-signature table',
   run() {
-    const c = readFile('.planning/phases/73-retrospective-forward-port-pillar-c/73-RETRO-INVENTORY.md');
-    if (c === null) return { pass: false, detail: '73-RETRO-INVENTORY.md missing' };
+    const inventoryPath = resolveArchivedPhasePath(
+      '73-retrospective-forward-port-pillar-c/73-RETRO-INVENTORY.md',
+      ['v1.8-phases']
+    );
+    const c = inventoryPath ? readFile(inventoryPath) : null;
+    if (c === null) return { pass: false, detail: '73-RETRO-INVENTORY.md missing (not in live tree or v1.8-phases archive)' };
     if (!c.includes('check-phase-')) return { pass: false, detail: 'no per-validator table rows found' };
     const rowCount = (c.match(/\| check-phase-/g) || []).length;
     if (rowCount < 19) return { pass: false, detail: `only ${rowCount}/19 validator rows found` };
@@ -166,8 +171,12 @@ checks.push({
   id: 'AUDIT',
   name: 'V-73-AUDIT: 73-VERIFICATION.md exists and contains Phase 73 verification heading',
   run() {
-    const verif = readFile('.planning/phases/73-retrospective-forward-port-pillar-c/73-VERIFICATION.md');
-    if (!verif) return { pass: true, skipped: true, detail: '73-VERIFICATION.md not yet authored (PASS-via-skip until Plan 73-03 lands)' };
+    const verifPath = resolveArchivedPhasePath(
+      '73-retrospective-forward-port-pillar-c/73-VERIFICATION.md',
+      ['v1.8-phases']
+    );
+    const verif = verifPath ? readFile(verifPath) : null;
+    if (!verif) return { pass: false, detail: '73-VERIFICATION.md not found in live tree or v1.8-phases archive' };
     if (!/Phase 73/i.test(verif)) {
       return { pass: false, detail: '73-VERIFICATION.md missing "Phase 73" section heading' };
     }

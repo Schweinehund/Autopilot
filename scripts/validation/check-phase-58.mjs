@@ -11,6 +11,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV15Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -194,10 +195,10 @@ const checks = [
     }
   },
   {
-    id: 10, name: "V-58-10: comparison doc frontmatter has last_verified + review_by (45-day cycle per D-19) + audience: admin + platform: all",
+    id: 10, name: "V-58-10: comparison doc frontmatter has last_verified + review_by (45-day cycle per D-19) + audience: admin + platform: all [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(COMPARISON_DOC);
-      if (c === null) return { pass: false, detail: "File missing: " + COMPARISON_DOC };
+      const c = readAtV15Close(COMPARISON_DOC);
+      // no null-check: readAtV15Close throws on git error; let it propagate
       const fm = c.match(/^---\n([\s\S]*?)\n---/);
       if (!fm) return { pass: false, detail: "frontmatter block not parseable" };
       const fmBody = fm[1];

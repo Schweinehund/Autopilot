@@ -34,6 +34,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
+import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -109,8 +110,12 @@ checks.push({
   id: 'AUDIT-VERIFY',
   name: 'V-72-AUDIT-VERIFY: 72-VERIFICATION.md exists and contains Per-Validator Audit Inventory heading',
   run() {
-    const verif = readFile('.planning/phases/72-chain-wrapper-hardening-pillar-b/72-VERIFICATION.md');
-    if (!verif) return { pass: true, skipped: true, detail: '72-VERIFICATION.md not yet authored (PASS-via-skip until Plan 72-02 lands)' };
+    const verifPath = resolveArchivedPhasePath(
+      '72-chain-wrapper-hardening-pillar-b/72-VERIFICATION.md',
+      ['v1.8-phases']
+    );
+    const verif = verifPath ? readFile(verifPath) : null;
+    if (!verif) return { pass: false, detail: '72-VERIFICATION.md not found in live tree or v1.8-phases archive' };
     if (!/Per-Validator Audit Inventory/i.test(verif)) {
       return { pass: false, detail: '72-VERIFICATION.md missing "Per-Validator Audit Inventory" section heading' };
     }

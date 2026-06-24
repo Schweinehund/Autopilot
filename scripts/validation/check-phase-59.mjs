@@ -11,6 +11,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import process from 'node:process';
+import { readAtV15Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -641,12 +642,12 @@ const checks = [
     }
   },
   {
-    id: 24, name: 'V-59-24: A3 blockquote integrity -- every "> See also:" line is preceded by another ">" line within its H3 region',
+    id: 24, name: 'V-59-24: A3 blockquote integrity -- every "> See also:" line is preceded by another ">" line within its H3 region [v1.5-frozen @ ba2cbc0]',
     run() {
       const failures = [];
       for (const f of ALL_GLOSSARIES) {
-        const c = readFile(f);
-        if (c === null) continue;
+        const c = readAtV15Close(f);
+        // no null-check: readAtV15Close throws on git error; let it propagate
         const lines = c.split(/\r?\n/);
         for (let i = 0; i < lines.length; i++) {
           if (/^> See also:/i.test(lines[i])) {
