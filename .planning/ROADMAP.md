@@ -144,12 +144,13 @@ Plans:
   4. `docs/l2-runbooks/00-index.md` macOS ADE Runbooks table includes rows for L2 #28 and L2 #29 with escalation mapping
   5. `docs/decision-trees/06-macos-triage.md` includes a Kerberos SSO extension leaf node routing to L2 #28
 
-**Plans**: TBD
+**Plans**: 2 plans (Wave 1, parallel — disjoint file sets)
 
 Plans:
+**Wave 1**
 
-- [ ] 87-01: Append-only edits to `docs/index.md` (guide 10/11 admin setup rows; L2 #28/#29 desktop engineering rows) and `docs/common-issues.md` (Kerberos escalation entry)
-- [ ] 87-02: Append-only edits to `docs/quick-ref-l2.md` (Kerberos commands), `docs/l2-runbooks/00-index.md` (rows 28/29), and `docs/decision-trees/06-macos-triage.md` (Kerberos leaf node)
+- [ ] 87-01-PLAN.md — Append-only edits to `docs/index.md` (D-01 enrich Platform SSO admin-setup row for guides 10/11; D-02 two L2 rows #28/#29 → `00-index.md#macos-ade-runbooks`) and `docs/common-issues.md` (D-05 standalone Kerberos SSO Extension Failure entry → L2 #28)
+- [ ] 87-02-PLAN.md — Append-only edits to `docs/quick-ref-l2.md` (D-04 Kerberos SSO Diagnostics block, klist only + pointer), VERIFY-ONLY `docs/l2-runbooks/00-index.md` (D-03 rows #28/#29 present, no L1-mapping row), and `docs/decision-trees/06-macos-triage.md` (D-06/D-07 RED MACE2 Kerberos leaf under MACSSO → L2 #28)
 
 ### Phase 88: Harness Lineage Bump + Terminal Re-Audit + Milestone Close
 
