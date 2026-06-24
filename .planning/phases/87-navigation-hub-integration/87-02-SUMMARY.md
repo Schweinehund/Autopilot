@@ -106,3 +106,7 @@ None (documentation-only plan, no new files).
 ### Commits
 - `7512efd` — Task 1
 - `eb61cd5` — Task 2
+
+## Self-Check: PASSED
+
+All expected files found; all task commits verified in git history.
