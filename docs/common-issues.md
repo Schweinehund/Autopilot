@@ -217,6 +217,13 @@ Platform SSO "Registration Required" notification never appeared despite Intune 
 - **L1:** [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) — four root causes: old Company Portal, Error 10002 legacy conflict, mistyped registration token, dismissed notification
 - **L2:** [Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md)
 
+### Kerberos SSO Extension Failure
+
+Kerberos TGT not acquired, realm or KDC unreachable, or `usePlatformSSOTGT` PSSO-TGT integration failing.
+
+- **L1:** No L1 runbook — escalate to L2
+- **L2:** [Kerberos SSO Investigation](l2-runbooks/28-macos-kerberos-sso-investigation.md)
+
 ## iOS/iPadOS Failure Scenarios
 
 > **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
@@ -377,6 +384,7 @@ Sub-org admin action fails with permission error due to OU scope mismatch.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO Extension Failure entry under macOS ADE Failure Scenarios | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO Sign-In Failure entry routing to L1 #35 / L2 #27 | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Governance Failure Scenarios H2 (ABNAV-03; C16 edge common_issues → quick_ref_l1 live) | -- |
 | 2026-04-30 | Phase 57: added Android Enterprise Failure Scenarios H2 (8 H3 symptom-routing sub-sections 1:1 to L1 runbooks 22-29 + section-top decision-tree banner + 2 reciprocal disambiguation callouts on Device Not Enrolled and ZTE Enrollment Failed + 1 cross-platform iOS+macOS reciprocal banner on Compliance Blocked); added Android entry to Choose Your Platform TOC; updated platform coverage blockquote (CLEAN-02; DEFER-07 close) | -- |
