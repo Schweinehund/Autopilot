@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
-status: verifying
-last_updated: "2026-06-24T21:56:45.068Z"
+status: ready_to_plan
+last_updated: 2026-06-24T22:11:00.185Z
 last_activity: 2026-06-24
 progress:
   total_phases: 5
@@ -11,6 +11,7 @@ progress:
   total_plans: 2
   completed_plans: 2
   percent: 20
+stopped_at: Phase 89 complete (2/2) — ready to discuss Phase 90
 ---
 
 # Project State
@@ -20,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-24)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 89 — psso-provisioning-walkthrough
+**Current focus:** Phase 90 — mdm migration walkthrough + l2 runbook #30
 
 ## Current Position
 
-Phase: 89 (psso-provisioning-walkthrough) — EXECUTING
-Plan: 2 of 2
-Status: Phase complete — ready for verification
+Phase: 90
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-24
 
 ```

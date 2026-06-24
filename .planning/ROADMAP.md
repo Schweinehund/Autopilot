@@ -130,7 +130,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 89. PSSO Provisioning Walkthrough | 2/2 | Complete   | 2026-06-24 |
+| 89. PSSO Provisioning Walkthrough | 2/2 | Complete    | 2026-06-24 |
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 0/TBD | Not started | - |
 | 91. Glossary + Capability Matrix | 0/TBD | Not started | - |
 | 92. Navigation Hub Integration | 0/TBD | Not started | - |
