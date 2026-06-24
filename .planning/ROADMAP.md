@@ -57,7 +57,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 89-01-PLAN.md — Author new `01-psso-provisioning-walkthrough.md` (selector-first opening, A1+A2 shared spine, hybrid anatomy, `app-sso platform -s` gates, A2 macOS-26 divergence callout, sibling footers)
+- [x] 89-01-PLAN.md — Author new `01-psso-provisioning-walkthrough.md` (selector-first opening, A1+A2 shared spine, hybrid anatomy, `app-sso platform -s` gates, A2 macOS-26 divergence callout, sibling footers)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -130,7 +130,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 89. PSSO Provisioning Walkthrough | 0/2 | Not started | - |
+| 89. PSSO Provisioning Walkthrough | 1/2 | In Progress|  |
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 0/TBD | Not started | - |
 | 91. Glossary + Capability Matrix | 0/TBD | Not started | - |
 | 92. Navigation Hub Integration | 0/TBD | Not started | - |
