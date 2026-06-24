@@ -612,6 +612,38 @@
           "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
         }
       }
+    },
+    "v1.11": {
+      "epicKey": "RTS-665",
+      "status": "created",
+      "created": "2026-06-24",
+      "phases": {
+        "89": {
+          "issueKey": "RTS-666",
+          "status": "todo",
+          "name": "PSSO Provisioning Walkthrough"
+        },
+        "90": {
+          "issueKey": "RTS-667",
+          "status": "todo",
+          "name": "MDM Migration Walkthrough + L2 Runbook #30"
+        },
+        "91": {
+          "issueKey": "RTS-668",
+          "status": "todo",
+          "name": "Glossary + Capability Matrix"
+        },
+        "92": {
+          "issueKey": "RTS-669",
+          "status": "todo",
+          "name": "Navigation Hub Integration"
+        },
+        "93": {
+          "issueKey": "RTS-670",
+          "status": "todo",
+          "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
+        }
+      }
     }
   },
   "lastUpdated": "2026-06-24T17:19:00Z",
