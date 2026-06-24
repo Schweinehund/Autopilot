@@ -1,0 +1,228 @@
+# v1.10 Audit Harness Integrity
+# v1.10 integration surface. v1.4 + v1.4.1 + v1.5 + v1.6 + v1.7 + v1.8 + v1.9 harnesses frozen in their respective workflow files.
+# Phase 88 HARN-02: 7th coexistence workflow. path-filter v1.10-scoped + 2 crons + parse/path-match/harness-run repointed v1.10 +
+# pin-helper-advisory + rotting-external-quarterly + active chain-83..88 invocations.
+# PRESERVES from Phase 69 dd1ff08 + 85521bb + 2d61981 (inherited verbatim via v1.9 Path-A):
+#   linux-chain-ubuntu-latest fetch-depth:0 (FETCH-DEPTH-01 inheritance contract)
+#   linux-chain-ubuntu-latest core.autocrlf false (LF-fidelity contract)
+#   linux-chain-ubuntu-latest continue-on-error:false (D-A9 PR-blocking contract)
+#   linux-chain-ubuntu-latest timeout-minutes:30
+#   chain-apex CHAIN_TIMING_LINUX ::notice emission
+
+name: Audit Harness v1.10 Integrity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/validation/v1.10-*'
+      - 'scripts/validation/check-phase-*.mjs'
+      - '.github/workflows/audit-harness-v1.10-integrity.yml'
+      - '.planning/REQUIREMENTS.md'
+      - '.planning/milestones/v1.10-MILESTONE-AUDIT.md'
+      - '.planning/milestones/v1.10-DEFERRED-CLEANUP.md'
+  schedule:
+    - cron: '0 8 * * 1'         # Weekly bitrot catch: 08:00 UTC every Monday (Path-A from v1.6)
+    - cron: '0 8 1 1,4,7,10 *'  # Quarterly c13_rotting_external check: 08:00 UTC on 1st of Jan/Apr/Jul/Oct (Phase 70 HARNESS-04 inheritance from Phase 66 AUDIT-14)
+  workflow_dispatch:
+
+jobs:
+  parse:
+    name: Parse v1.10 sidecar JSON
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Validate v1.10-audit-allowlist.json
+        run: |
+          node -e "
+            const fs = require('fs');
+            const j = JSON.parse(fs.readFileSync('scripts/validation/v1.10-audit-allowlist.json', 'utf8'));
+            if (!Array.isArray(j.supervision_exemptions) || j.supervision_exemptions.length === 0) {
+              console.error('supervision_exemptions empty');
+              process.exit(1);
+            }
+            console.log('v1.10 sidecar OK: ' + j.supervision_exemptions.length + ' supervision pins');
+          "
+
+  path-match:
+    name: Harness references v1.10 sidecar
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify harness sidecar reference
+        run: |
+          if grep -q "scripts/validation/v1.10-audit-allowlist.json" scripts/validation/v1.10-milestone-audit.mjs; then
+            echo "OK: harness references v1.10 sidecar"
+          else
+            echo "FAIL: harness does not reference v1.10-audit-allowlist.json"
+            exit 1
+          fi
+
+  harness-run:
+    name: Run v1.10 milestone audit harness
+    runs-on: ubuntu-latest
+    needs: path-match
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run v1.10-milestone-audit.mjs
+        run: node scripts/validation/v1.10-milestone-audit.mjs --verbose
+
+  linux-chain-ubuntu-latest:
+    name: Validator chain on Linux LF (Phase 69 CILINUX-01)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 30
+    continue-on-error: false
+    steps:
+      - name: Disable autocrlf BEFORE checkout (LF-fidelity contract)
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run chain-apex check-phase-88.mjs (recursively spawns 48..87)
+        run: |
+          START=$(date +%s)
+          node scripts/validation/check-phase-88.mjs --verbose
+          END=$(date +%s)
+          echo "::notice title=CHAIN_TIMING_LINUX::Full chain wall-clock: $((END-START))s (Windows reference: ~430s; subprocess timeout: 600s)"
+
+  check-phase-83:
+    name: check-phase-83 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-83.mjs
+        run: node scripts/validation/check-phase-83.mjs
+
+  check-phase-84:
+    name: check-phase-84 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-84.mjs
+        run: node scripts/validation/check-phase-84.mjs
+
+  check-phase-85:
+    name: check-phase-85 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-85.mjs
+        run: node scripts/validation/check-phase-85.mjs
+
+  check-phase-86:
+    name: check-phase-86 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-86.mjs
+        run: node scripts/validation/check-phase-86.mjs
+
+  check-phase-87:
+    name: check-phase-87 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-87.mjs
+        run: node scripts/validation/check-phase-87.mjs
+
+  check-phase-88:
+    name: check-phase-88 validator
+    runs-on: ubuntu-latest
+    needs: harness-run
+    timeout-minutes: 15
+    continue-on-error: false
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run check-phase-88.mjs
+        run: node scripts/validation/check-phase-88.mjs
+
+  rotting-external-quarterly:
+    name: Quarterly c13_rotting_external link-check
+    runs-on: ubuntu-latest
+    needs: harness-run
+    if: github.event_name == 'schedule' && github.event.schedule == '0 8 1 1,4,7,10 *'
+    # DEFAULT continue-on-error: false -- quarterly drift FAILS the scheduled run per D-A9 fully-blocking
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check@3.14.2  # Pinned via `npm view markdown-link-check version` at Phase 66 Wave 3 authoring (2026-05-25); inherited at Phase 70 HARNESS-04(i)
+      - name: Extract URLs from c13_rotting_external
+        run: |
+          node -e "
+            const fs = require('fs');
+            const sidecar = JSON.parse(fs.readFileSync('scripts/validation/v1.10-audit-allowlist.json','utf8'));
+            const c13 = sidecar.c13_rotting_external || {};
+            const urls = [];
+            if (Array.isArray(c13.ci_1_abm_urls)) urls.push(...c13.ci_1_abm_urls.map(e => e.url).filter(Boolean));
+            // CI-2 + CI-3 entries do not carry URLs -- they are line-ref tracking only
+            fs.writeFileSync('quarterly-urls.txt', urls.join('\n'));
+            console.log('Quarterly URL check candidates: ' + urls.length);
+          "
+      - name: Run markdown-link-check
+        run: |
+          if [ -s quarterly-urls.txt ]; then
+            while IFS= read -r url; do
+              markdown-link-check <(echo "[link]($url)") || exit 1
+            done < quarterly-urls.txt
+          else
+            echo "No URLs to check in c13_rotting_external (empty population -- DEFERRED-CLEANUP.md notes calibration finding)"
+          fi
+
+  pin-helper-advisory:
+    name: Supervision-pin drift advisory (CI)
+    runs-on: ubuntu-latest
+    needs: harness-run
+    continue-on-error: true   # Phase 43 D-14 / Phase 48 D-22: advisory only; never fails build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Run regenerate-supervision-pins.mjs --report
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --report || true
+          echo "[advisory] CI advisory job; never blocks merge per Phase 43 D-14 + Phase 48 D-22"
+      - name: Run --self-test (advisory only)
+        run: |
+          node scripts/validation/regenerate-supervision-pins.mjs --self-test || \
+            echo "[advisory] --self-test failed; advisory only"
