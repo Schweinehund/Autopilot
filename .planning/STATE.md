@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
 status: executing
-last_updated: "2026-06-24T14:20:20.440Z"
+last_updated: "2026-06-24T15:05:00.649Z"
 last_activity: 2026-06-24
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 16
-  completed_plans: 14
+  completed_plans: 15
   percent: 83
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-22)
 ## Current Position
 
 Phase: 88 (harness-lineage-bump-terminal-re-audit-milestone-close) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-06-24
 
@@ -159,6 +159,7 @@ Phase 88 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - `> [!WARNING]` callout required for destructive Graph API DELETE operation (PITFALL G-2)
 - Wrong Kerberos extension identifier (K-1) and wrong payload type (K-5) are critical pitfalls — every profile example must use `com.apple.AppSSOKerberos.KerberosExtension` and `Type: Credential`
 - [Phase ?]: V19 pinned as b29dca5 (close-gate SHA), BASELINE_14 added, pre-Phase-88 anchor=c8f4cf6
+- [Phase ?]: D-04 applied: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 affects warm-tree chain at depth [48..87] — Linux GHA exclusively authoritative for v1.10 apex (42/0/1)
 
 ### Pending Todos
 
@@ -177,8 +178,8 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24T14:20:20.425Z
-Stopped at: Phase 88 context gathered
+Last session: 2026-06-24T15:05:00.635Z
+Stopped at: Completed 88-03: 3-axis re-audit + EXACT MATCH table in 88-03-AUDIT-RESULTS.md
 Resume file: None
 Next action: `/gsd-plan-phase 83`
 
@@ -199,3 +200,4 @@ Next action: `/gsd-plan-phase 83`
 | Phase 86-chain-health-pass P02 | 20min | 2 tasks | 0 files |
 | Phase 87-navigation-hub-integration P02 | 275 | 2 tasks | 2 files |
 | Phase 88 P01 | 15m | 3 tasks | 5 files |
+| Phase 88 P03 | 35m | 4 tasks | 1 files |

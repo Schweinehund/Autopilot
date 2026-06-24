@@ -176,7 +176,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 88-03: 3-axis terminal re-audit (Axis 1 fresh-clone + Axis 2 Linux GHA + Axis 3 fresh sub-agent); document cross-OS EXACT MATCH
+- [x] 88-03: 3-axis terminal re-audit (Axis 1 fresh-clone + Axis 2 Linux GHA + Axis 3 fresh sub-agent); document cross-OS EXACT MATCH
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -191,4 +191,4 @@ Plans:
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
 | 86. Chain Health Pass | 2/2 | Complete    | 2026-06-24 |
 | 87. Navigation Hub Integration | 2/2 | Complete    | 2026-06-24 |
-| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |
+| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |
