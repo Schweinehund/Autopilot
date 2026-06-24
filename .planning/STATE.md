@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
 status: executing
-last_updated: "2026-06-24T23:31:25.945Z"
-last_activity: 2026-06-24 -- Phase 90 planning complete
+last_updated: "2026-06-24T23:42:23.489Z"
+last_activity: 2026-06-24
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 20
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-24)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 90 — mdm migration walkthrough + l2 runbook #30
+**Current focus:** Phase 90 — mdm-migration-walkthrough-l2-runbook-30
 
 ## Current Position
 
-Phase: 90
-Plan: Not started
+Phase: 90 (mdm-migration-walkthrough-l2-runbook-30) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-24 -- Phase 90 planning complete
+Last activity: 2026-06-24
 
 ```
 Phase 89-93 Progress: [░░░░░░░░░░] 0%
@@ -189,6 +189,7 @@ Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - Predecessor guides 00/02/07 are FROZEN for v1.11 (content additions in new files only; reciprocal See Also cross-links are permitted as append-only edits)
 - Link-not-copy architecture: scenario guides stitch the journey but do NOT inline guide 00/02/07 prose
 - Per-section `last_verified`/`review_by` stamps required on all macOS-26-gated sections (90-day review cycle per guide 07 ADE section precedent)
+- [Phase ?]: D-01/D-02/D-04: Shared pre-flight hard-fork; Stage 9 migration-delta-only PSSO re-registration; vendor-neutral Kandji/Iru authoring with both names
 
 ### Pending Todos
 
@@ -212,9 +213,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24T22:58:51.301Z
-Stopped at: Phase 90 context gathered
-Resume file: .planning/phases/90-mdm-migration-walkthrough-l2-runbook-30/90-CONTEXT.md
+Last session: 2026-06-24T23:42:23.476Z
+Stopped at: Completed 90-01-PLAN.md
+Resume file: None
 Next action: `/gsd-plan-phase 89`
 
 ## Operator Next Steps
@@ -227,3 +228,4 @@ Next action: `/gsd-plan-phase 89`
 |-------|------|----------|-------|
 | (v1.11 phases not yet started) | — | — | — |
 | Phase 89 P01 | 339s | 2 tasks | 1 files |
+| Phase 90 P01 | 23m | 2 tasks | 1 files |
