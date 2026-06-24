@@ -97,7 +97,9 @@ The truncation is reproducible (both warm-tree runs) because the subprocess pipe
 
 ### check-phase-82 (prior-apex continuity row)
 
-The prior v1.9 apex `check-phase-82.mjs` was verified at HEAD `26d3c60` (pre-Phase-88 baseline) as **37 PASS / 0 FAIL / 0 SKIPPED** per RESEARCH.md (verified `node check-phase-82.mjs` at that HEAD). The Phase 86 chain-health pass resolved all legacy FAILs in phases 58-66, 73. Phase 88 changes are all in `.planning/` and do not affect check-phase-82's chain [48..81]. On Linux GHA, `[CHAIN-82/43] V-88-CHAIN-82: check-phase-82.mjs exits 0 (nested)` — confirmed pass.
+The prior v1.9 apex `check-phase-82.mjs` was verified at HEAD `26d3c60` (pre-Phase-88 baseline) as **37 PASS / 0 FAIL / 0 SKIPPED** per RESEARCH.md. The Phase 86 chain-health pass resolved all legacy FAILs in phases 58-66, 73. However, during this re-audit session, the Windows standalone run of check-phase-82 also shows WINDOWS-CLONE-DEEPNEST-TIMEOUT-01: **36 PASS / 1 FAIL / 0 SKIPPED** — the same CHAIN-66 subprocess truncation at `[5/28] V-66-05: .github/work`. This confirms the interleaving issue is general to Windows warm-tree chain runs containing check-phase-66 as a nested subprocess, regardless of which apex invokes it.
+
+**Linux GHA:** `[CHAIN-82/43] V-88-CHAIN-82: check-phase-82.mjs exits 0 (nested)` — confirmed pass in nested context (CHECK_PHASE_NESTED=1, so chain does not recurse). The standalone check-phase-82 Linux result is not directly available in the v1.10 GHA workflow (which only ships check-phase-83..88 standalone validator jobs), but the RESEARCH.md pre-Phase-88 baseline of 37/0/0 is the correct standalone value (Phase 88 adds only `.planning/` files which do not affect the [48..81] chain).
 
 ---
 
@@ -106,7 +108,7 @@ The prior v1.9 apex `check-phase-82.mjs` was verified at HEAD `26d3c60` (pre-Pha
 | # | Validator | Windows (Axis 1+3, fresh clone or warm tree) | Linux (Axis 2, GHA) | Match |
 |---|-----------|----------------------------------------------|---------------------|-------|
 | 1 | `v1.10-milestone-audit.mjs` (incl. self-test 9/9) | 15 / 0 / 0 (fresh clone) | 15 / 0 / 0 | EXACT MATCH |
-| 2 | `check-phase-82.mjs` (prior-apex continuity) | 37 / 0 / 0 (warm tree, pre-88 baseline) | 37 / 0 / 0 (via CHAIN-82 nested exit 0) | EXACT MATCH |
+| 2 | `check-phase-82.mjs` (prior-apex continuity) | 37 / 0 / 0 (RESEARCH.md pre-88 baseline; current warm-tree also shows WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 on CHAIN-66) | 37 / 0 / 0 (pre-88 baseline; GHA confirms nested exit 0) | EXACT MATCH (baseline) |
 | 3 | `check-phase-83.mjs` | 2 / 0 / 0 (fresh clone) | 2 / 0 / 0 | EXACT MATCH |
 | 4 | `check-phase-84.mjs` | 2 / 0 / 0 (fresh clone) | 2 / 0 / 0 | EXACT MATCH |
 | 5 | `check-phase-85.mjs` | 2 / 0 / 0 (fresh clone) | 2 / 0 / 0 | EXACT MATCH |
