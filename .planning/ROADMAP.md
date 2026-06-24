@@ -165,12 +165,21 @@ Plans:
   4. `v1.10-MILESTONE-AUDIT.md` and `v1.10-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 17 requirements to Validated
 
 **Plans**: 4 plans
-
 Plans:
+**Wave 1**
 
 - [ ] 88-01: Pin V19 (v1.9 close-gate SHA) in `_lib/frozen-at-close.mjs`; author Atom 1 (3-file indivisible commit)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 88-02: Author `check-phase-83..88.mjs` validators + Atom 2 (indivisible commit: validators + CI workflow + frozen-at-close V19 entry)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 88-03: 3-axis terminal re-audit (Axis 1 fresh-clone + Axis 2 Linux GHA + Axis 3 fresh sub-agent); document cross-OS EXACT MATCH
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 88-04: Close-gate commit — `v1.10-MILESTONE-AUDIT.md` + `v1.10-DEFERRED-CLEANUP.md` + 4-doc traceability closure (17/17 Validated)
 
 ## Progress
