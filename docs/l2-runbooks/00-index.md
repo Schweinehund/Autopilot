@@ -86,6 +86,7 @@ The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite
 | [Platform SSO Investigation](27-macos-sso-investigation.md) | PSSO registration not completing, "Registration Required" loop, or Password-sync sign-in failure | [macOS Log Collection](10-macos-log-collection.md) |
 | [Kerberos SSO Investigation](28-macos-kerberos-sso-investigation.md) | Kerberos TGT not acquired, realm/KDC unreachable, or PSSO-TGT integration failure (`usePlatformSSOTGT`) | [macOS Log Collection](10-macos-log-collection.md) |
 | [Graph Credential Investigation](29-macos-graph-credential-investigation.md) | Platform Credential not appearing in Graph, delete-and-re-register flow, or permission/scope errors on `platformCredentialMethods` | [macOS Log Collection](10-macos-log-collection.md) |
+| [macOS MDM Migration Failure](30-macos-mdm-migration-failure.md) | Migration deadline lockout (non-dismissible screen), profile-not-delivered after migration, or PSSO re-registration stuck post-migration | [macOS Log Collection](10-macos-log-collection.md) |
 
 ### macOS L1 Escalation Mapping
 
@@ -216,6 +217,7 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 90 (RUN-01): added macOS MDM Migration Failure runbook #30 to the macOS ADE Runbooks When-to-Use table | -- |
 | 2026-06-21 | Phase 80 SSORUN-03/SC4: added macOS Platform SSO Investigation #27 to When-to-Use table; added L1 #35 and L1 #36 escalation mapping rows to macOS L1 Escalation Mapping table | -- |
 | 2026-05-22 | Phase 65 plan 65-02: appended Apple Business L2 Runbooks H2 with #26 row | -- |
 | 2026-04-27 | Added Linux L2 runbook section (Runbooks 24-25 + Linux L1 Escalation Mapping) — Phase 52 append-only edit per Phase 42 D-03 | -- |
