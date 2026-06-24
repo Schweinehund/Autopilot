@@ -597,12 +597,12 @@
         },
         "86": {
           "issueKey": "RTS-660",
-          "status": "in_progress",
+          "status": "done",
           "name": "Chain Health Pass"
         },
         "87": {
           "issueKey": "RTS-661",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Navigation Hub Integration"
         },
         "88": {
