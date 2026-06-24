@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
-status: verifying
-last_updated: "2026-06-24T15:21:11.431Z"
-last_activity: 2026-06-24
+status: Awaiting next milestone
+last_updated: "2026-06-24T17:03:12.511Z"
+last_activity: 2026-06-24 — Milestone v1.10 completed and archived
 progress:
   total_phases: 6
   completed_phases: 6
@@ -17,17 +17,17 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-22)
+See: .planning/PROJECT.md (updated 2026-06-24)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 88 — harness-lineage-bump-terminal-re-audit-milestone-close
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) — through Microsoft Intune / Entra ID without escalating to engineering.
+**Current focus:** No active milestone — planning next milestone (`/gsd-new-milestone`)
 
 ## Current Position
 
-Phase: 88 (harness-lineage-bump-terminal-re-audit-milestone-close) — COMPLETE
-Plan: 4 of 4 — CLOSED
-Status: Phase complete — ready for verification
-Last activity: 2026-06-24
+Phase: Milestone v1.10 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-06-24 — Milestone v1.10 completed and archived
 
 ## v1.10 Phase Dependency Summary
 
@@ -185,7 +185,7 @@ Next action: `/gsd-complete-milestone` (archival + Jira close — D-05 separate 
 
 ## Operator Next Steps
 
-- Run `/gsd-complete-milestone` to archive v1.10 phase directories and close the Jira story (D-05 boundary — separate step from this close-gate)
+- Start the next milestone with /gsd-new-milestone
 
 ## Performance Metrics
 

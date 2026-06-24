@@ -1,5 +1,25 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (Shipped: 2026-06-24)
+
+**Phases completed:** 6 phases (83-88), 16 plans, 32 tasks, 17/17 requirements Validated
+**Timeline:** 2026-06-22 → 2026-06-24 (~3 days)
+**Git range:** `v1.9`..`v1.10` — 103 commits; 204 files changed, +19,885 / −2,748
+**Audit status:** `passed` (.planning/milestones/v1.10-MILESTONE-AUDIT.md; Phase 88 HARN-03 3-axis terminal re-audit — Axis 1 local fresh-clone `git clone --no-hardlinks`; Axis 2 cross-OS Linux GHA run `28106073384` (authoritative apex 42/0/1 per D-04); Axis 3 fresh zero-context sub-agent; Cross-OS PASS/FAIL/SKIP EXACT MATCH 8/8; predecessor v1.4–v1.9 frozen surfaces byte-unchanged)
+
+**Key accomplishments:**
+
+- **Kerberos SSO Extension guide** (`docs/admin-setup-macos/10-kerberos-sso-extension.md`, Phase 83) — extension identity `com.apple.AppSSOKerberos.KerberosExtension` (Type Credential, Team `apple`), Intune Custom Template (.mobileconfig) deployment, realm/KDC + on-prem AD prerequisites, three-way disambiguation from Platform SSO and the Enterprise SSO plug-in, macOS 14.6 floor + `usePlatformSSOTGT`, and `app-sso platform -s` + `klist` diagnostics; guide 09 forward-link + 00-overview node (KRB-01..04)
+- **Graph API Platform Credential doc** (`docs/admin-setup-macos/11-graph-api-platform-credential.md`, Phase 84) — GA `platformCredentialAuthenticationMethod` (Graph v1.0) List/Get/Delete with HTTP + PowerShell SDK, permissions matrix (read/delete, delegated/application, national-cloud), mandatory Delete `[!WARNING]` (severs Entra binding, no Secure-Enclave erase), and dry-run-gated leaver pattern (GRAPH-01/02)
+- **NUAL key verification** (Phase 84) — verified MDM literals `NewUserAuthorizationMode` (one-time) + `UserAuthorizationMode` (persistent) + `EnableCreateUserAtLogin` and the one-time-vs-persistent asymmetry in guide 08; v1.9 deferred blockquote removed and **PSSO-FUT-01 closed** (NUAL-01)
+- **L2 runbooks + reference integration** (Phase 85) — runbook #28 (Kerberos SSO investigation) + #29 (Graph credential investigation), capability-matrix Kerberos row committed atomically with the `check-phase-63.mjs` V-63-08 blob-hash baseline, reciprocal glossary see-also, and 4-platform comparison link-not-copy (RUN-01/02, REF-01/02)
+- **Chain health pass + navigation-last integration** (Phases 86-87) — 10 legacy HEAD-coupled FAILs (check-phase-{58-66,73}) converted to frozen-aware via `_lib/frozen-at-close.mjs` with `CHAIN_SKIP = Set([])` (no masking) and `73-RETRO-INVENTORY.md` restored; full chain 0 FAIL/0 SKIPPED on Windows local + Linux GHA (EXACT MATCH); all new content wired into 5 nav hubs navigation-last (CHAIN-01/02, REF-03)
+- **8th Path-A audit harness + milestone close** (Phase 88) — `v1.10-milestone-audit.mjs` (Atom 1, C1-C16 inherited) + `check-phase-83..88.mjs` validators + `audit-harness-v1.10-integrity.yml` (7th CI coexistence workflow) + V19 close-gate SHA pin (Atom 2); 3-axis terminal re-audit, cross-OS EXACT MATCH, single-commit close-gate (a3617e9) flipping 17/17 to Validated (HARN-01/02/03)
+
+**Known deferred items at close:** see `.planning/milestones/v1.10-DEFERRED-CLEANUP.md` — MTPSSO-01/02/03 (multi-tenant PSSO, own architectural milestone), KRBFUT-01/02 (on-prem-AD-only Kerberos depth; Azure Files Cloud-Kerberos GA), and WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 (Windows warm-tree deep-nest apex nondeterminism at depth [48..87]; mitigated by D-04 — Linux GHA apex authoritative).
+
+---
+
 ## v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (Shipped: 2026-06-22)
 
 **Phases completed:** 8 phases (75-82), 19 plans, 26 tasks, 27/27 requirements Validated

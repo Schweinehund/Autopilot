@@ -298,6 +298,38 @@ Complete macOS Platform SSO (macOS 14+) + Secure Enclave authentication document
 
 ---
 
+## Milestone: v1.10 — macOS Platform SSO Follow-ons (Kerberos, Graph API & NUAL)
+
+**Shipped:** 2026-06-24
+**Phases:** 6 (83-88) | **Plans:** 16 | **Requirements:** 17/17 Validated
+
+### What Was Built
+Closed the v1.9-deferred macOS Platform SSO follow-on backlog: a new Kerberos SSO extension guide (`10`, `com.apple.AppSSOKerberos.KerberosExtension` Type Credential via Intune Custom Template, macOS 14.6 floor, `app-sso platform -s`/`klist` diagnostics), a new Graph API Platform Credential operations doc (`11`, GA `platformCredentialAuthenticationMethod` List/Get/Delete with HTTP + PowerShell SDK, mandatory Delete `[!WARNING]`, dry-run leaver pattern), verified NUAL MDM key literals in guide `08` (PSSO-FUT-01 closed), two L2 runbooks (#28 Kerberos, #29 Graph credential), capability-matrix + glossary + 4-platform-comparison integration, a dedicated chain-health pass (10 legacy FAILs → frozen-aware, no CHAIN_SKIP masking), navigation-last hub integration across 5 hubs, and the 8th Path-A audit-harness lineage bump closed via a 3-axis terminal re-audit.
+
+### What Worked
+- **Dedicated chain-health phase before the harness bump** (Phase 86) — resolving the 10 pre-existing legacy FAILs frozen-aware *first* (with `CHAIN_SKIP = Set([])`, no masking) meant the v1.10 harness landed on a green chain instead of inheriting RED-at-HEAD. Separating it from the harness Atom (Anti-Pattern 5) kept both phases bisect-clean.
+- **Cross-OS authority decision (D-04) made the apex deterministic** — pre-committing to "Linux GHA apex is authoritative, never cold Windows clone" correctly predicted the Windows warm-tree deep-nest truncation (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01); the Linux GHA run was the binding signal at close.
+- **Path-A harness discipline held for the 8th consecutive milestone** — predecessor v1.4-v1.9 byte-unchanged invariant + the two-atomic-commit split (Atom 1 harness-core / Atom 2 validators+CI) kept the lineage bump near-mechanical.
+- **Adversarial-review-driven scope** — winners 1A/2A/4A plus the explicit deferral of multi-tenant PSSO (PSSO-FUT-03) to its own architectural milestone preserved the single-feature-content-milestone convention across a 10th milestone.
+
+### What Was Inefficient
+- **`/gsd-complete-milestone` SDK auto-extraction emitted `One-liner:` placeholder rows again** — the ARCHIVE-01-class recurrence (documented at v1.7/v1.8) still surfaces for content-phase SUMMARY.md files whose `one_liner` frontmatter is unpopulated; the milestone entry required manual curation. Root cause is the unpopulated `requirements_completed`/`one_liner` SUMMARY frontmatter, authoritatively mirrored only in each VERIFICATION.md.
+- **The audit-file move clobbered the canonical close-gate audit** — `milestone.complete` moved the post-close re-audit copy on top of the richer committed close-gate `MILESTONE-AUDIT.md` (full C1-C16 mechanical_checks block); had to be restored from HEAD during archival.
+
+### Patterns Established
+- **Frozen-aware conversion over CHAIN_SKIP masking** — legacy HEAD-coupled assertions are converted to read milestone-close SHAs via `_lib/frozen-at-close.mjs` helpers rather than suppressed; `CHAIN_SKIP` stays empty. This is now the standing chain-health remedy.
+- **Pre-commit the cross-OS authority rule when an OS-specific flake is known** — when a platform exhibits nondeterminism (warm-tree deep-nest apex), name the authoritative axis in a LOCKED decision before the terminal re-audit so the close signal is unambiguous.
+
+### Key Lessons
+- A "milestone close" that already ran a close-gate (Phase 88) leaves `/gsd-complete-milestone` doing the *archival* half only — but the SDK's audit-file move can still overwrite a hand-authored canonical audit; verify `git status` on `milestones/*-MILESTONE-AUDIT.md` after `milestone.complete` and restore from HEAD if the richer version was clobbered.
+- The `One-liner:` extraction bug is best prevented upstream by populating SUMMARY.md `one_liner` frontmatter at phase close, not patched downstream at milestone archive.
+
+### Cost Observations
+- Model mix: orchestration on Opus; the whole milestone ran largely as `/gsd-discuss-phase --chain` auto-pipelines (discuss → plan → execute → verify → close) sequential-on-main-tree per `use_worktrees:false`.
+- Notable: 8th Path-A harness in the lineage; cross-OS EXACT MATCH 8/8 with Linux GHA authoritative.
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -311,6 +343,11 @@ Complete macOS Platform SSO (macOS 14+) + Secure Enclave authentication document
 | v1.4 | 9 | 40 | First mechanical 5-check audit harness (Node + sidecar JSON); 12-agent adversarial review for terminal phase; closed `tech_debt` (accepted) with 3 defer items routed to decimal milestone |
 | v1.4.1 | 5 | 33 | Decimal milestone for prior-milestone defer closure; harness extensions informational-first; auditor-independence via fresh worktree; wave-based parallel execution with append-only contract on shared files |
 | v1.5 | 14 | 101 | First 5-platform milestone (Linux added); 4-pillar reorganization (cleanup / Linux / ops-depth / harness); wave-based parallelism scaled to 5 concurrent phases; informational-first→blocking promotion ladder validated 2nd time (C11/C12/C13); link-not-copy 5-platform comparison reference doc; pre-edit anchor inventory artifacts (PITFALL-6); per-phase LEARNINGS.md artifact; 13-validator chain (check-phase-48..61.mjs) all PASS at terminal re-audit |
+| v1.6 | 5 | 30 | Apple Business delegated-governance milestone; C14/C15/C16 audit checks blocking from start; 4-agent adversarial-review for terminal gray areas; fresh-clone (not worktree) terminal re-audit |
+| v1.7 | 4 | 15 | Deferred-backlog + validator-chain hardening; CHAIN_SKIP root-cause resolution (empty Set); v1.5-frozen-aware helper introduced; first 3-axis terminal re-audit (fresh-clone + fresh sub-agent + cross-OS Linux GHA) |
+| v1.8 | 4 | 13 | Tooling-debt closure; ARCHIVE-01 vendored extractor fix; `_lib/frozen-at-close.mjs` centralized module; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 surfaced + deferred |
+| v1.9 | 8 | 19 | macOS Platform SSO + Secure Enclave content milestone; phase-scoped cross-link assertions (D-01); post-terminal-audit count-neutral hardening; SINGLE close-gate commit (no Commit A) |
+| v1.10 | 6 | 16 | macOS Platform SSO follow-ons (Kerberos / Graph API / NUAL); dedicated chain-health phase before harness bump (frozen-aware, no CHAIN_SKIP masking); cross-OS authority rule pre-committed (D-04, Linux GHA authoritative); 8th Path-A harness lineage |
 
 ### Top Lessons (Verified Across Milestones)
 
