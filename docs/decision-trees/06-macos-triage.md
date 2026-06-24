@@ -43,6 +43,7 @@ graph TD
     MAC3 -->|"Platform SSO<br/>sign-in issue"| MACSSO{"Did a 'Registration Required'<br/>notification ever appear?"}
     MACSSO -->|"No — notification<br/>never appeared"| MACR7(["See: Platform SSO<br/>Sign-In Failure Runbook"])
     MACSSO -->|"Yes, but key error<br/>or lost after reset"| MACR8(["See: Platform SSO —<br/>Secure Enclave Key Loss Runbook"])
+    MACSSO -->|"Kerberos TGT<br/>not acquired"| MACE2(["Escalate to L2:<br/>Kerberos SSO Investigation"])
 
     click MACR1 "../l1-runbooks/10-macos-device-not-appearing.md"
     click MACR2 "../l1-runbooks/11-macos-setup-assistant-failed.md"
@@ -52,12 +53,13 @@ graph TD
     click MACR6 "../l1-runbooks/15-macos-company-portal-sign-in.md"
     click MACR7 "../l1-runbooks/35-macos-sso-sign-in-failure.md"
     click MACR8 "../l1-runbooks/36-macos-secure-enclave-key.md"
+    click MACE2 "../l2-runbooks/28-macos-kerberos-sso-investigation.md"
 
     classDef resolved fill:#28a745,color:#fff
     classDef escalateL2 fill:#dc3545,color:#fff
     class MACR1,MACR2,MACR3,MACR4,MACR5,MACR6 resolved
     class MACR7,MACR8 resolved
-    class MACE1 escalateL2
+    class MACE1,MACE2 escalateL2
 ```
 
 ## Routing Verification
@@ -75,6 +77,7 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 | Other / unclear | Setup Assistant? Yes | Symptom: other | L2 escalation |
 | Platform SSO — registration not appearing | Setup Assistant? Yes | Symptom: Platform SSO | Runbook 35 |
 | Platform SSO — Secure Enclave key error | Setup Assistant? Yes | Symptom: Platform SSO → key error | Runbook 36 |
+| Kerberos SSO — TGT not acquired | Setup Assistant? Yes | Symptom: Platform SSO → Kerberos TGT | L2 escalation (#28) |
 
 ## How to Check
 
@@ -102,5 +105,6 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO third arm under MACSSO (MACE2 → L2 #28) + 1 Routing Verification row | -- |
 | 2026-04-14 | Initial version | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added Platform SSO sub-decision leaf (MACSSO -> #35/#36) + 2 Routing Verification rows | -- |
