@@ -168,3 +168,79 @@ sw_vers -productVersion
 If the device is running macOS 25 or earlier, it received the ABM deadline prompt but cannot complete B1 in-place enrollment. The device needs the B2 path (wipe-and-re-enroll via Intune ADE after a wipe). In the interim, the ABM admin should cancel the migration deadline for this device (Track A Recovery Option B — pre-lockout cancellation) and route it to the B2 fallback path.
 
 > **Version gate — macOS 26:** The in-place migration path (B1) requires macOS 26 or later. If your fleet contains devices on earlier macOS versions, complete an OS upgrade to macOS 26+ BEFORE triggering the ABM deadline for those devices, or route them explicitly to the B2 wipe path. Setting a deadline on a macOS 25 device without a B2 fallback plan creates an unrecoverable enrollment failure without ABM admin intervention.
+
+---
+
+## Track C: PSSO Re-Registration Stuck
+
+Use this track when the device has successfully completed the MDM migration — Intune admin center shows the device as **Enrolled** — but Platform SSO re-registration is not completing: either the "Registration Required" notification has not appeared, or the user initiated registration but it is not completing.
+
+> **Important:** PSSO re-registration is **always required** after an MDM migration. Apple's Platform Deployment guide states: "If you unenroll a Mac from the device management service, it also unregisters from the IdP." The macOS 26 in-place migration (B1 path) is a genuine unenrollment from the source MDM and re-enrollment into Intune — not a profile swap. The Secure Enclave WPJ key is re-created on new enrollment, and ACME certification is reissued. A "Registration Required" notification appearing after migration is **expected behavior, not an error**. Do not attempt to suppress or skip this step.
+
+> **Important:** Do NOT document or suggest that PSSO keys "survive" a same-tenant migration or that re-registration can be skipped because the Entra tenant has not changed. Apple's authoritative statement — MDM unenrollment equals IdP unregistration — applies regardless of tenant continuity. There is no supported same-tenant key-survival path.
+
+### Step 1: Confirm prerequisites before investigating PSSO
+
+Before investigating why PSSO re-registration is not completing, confirm that the prerequisites for registration exist:
+
+1. **Device is user-affinity enrolled** — Userless (shared/kiosk) devices enrolled without user affinity never perform PSSO registration. No WPJ key is written and no Secure Enclave registration entry is created. If this is a userless device, PSSO registration is not expected and is out of scope.
+
+2. **Migration enrollment completed** — Confirm in Intune admin center that the device shows as **Enrolled** (not "Not Enrolled" or "Enrollment Failed"). If the device is not enrolled, return to Track B.
+
+3. **PSSO Settings Catalog policy delivered** — Intune admin center > **Devices** > **All devices** > [device] > **Configuration** — confirm the Platform SSO Settings Catalog policy shows as **Succeeded** for this device. If the policy has not been delivered, the "Registration Required" notification cannot appear.
+
+### Step 2: Quick verification — check current PSSO registration state
+
+Run the following command on the affected macOS device:
+
+```bash
+app-sso platform -s
+```
+
+Interpret the output in prose — do not match against specific JSON field values beyond the two key registration state lines:
+
+- If the output shows `Device Registration: REGISTERED` but `User Registration: NOT REGISTERED`: the device enrolled successfully into Intune and the device-level PSSO registration completed, but the user has not yet completed their individual MFA re-registration. The "Registration Required" notification should appear or should have appeared — confirm the user has not dismissed it. The user must tap the notification and complete the MFA challenge in the webview to complete user registration.
+
+- If the output shows both `Device Registration: NOT REGISTERED` and `User Registration: NOT REGISTERED`: the device-level registration has not completed. This may indicate the PSSO Settings Catalog policy has not reached the device yet (check Step 1 prerequisite 3), or there is a registration failure that requires further investigation.
+
+> **Important:** Do not interpret the absence or unexpected value of any particular JSON field beyond the two key registration state lines as a specific root cause without additional investigation. The full JSON schema for failure states is not published in an authoritative source — collect and forward the complete output rather than drawing conclusions from specific field values. See the [Platform SSO Setup Guide](../admin-setup-macos/07-platform-sso-setup.md) for the confirmed healthy-state reference.
+
+### Step 3: Route to L2 #27 for registration failure investigation
+
+If the PSSO "Registration Required" notification has not appeared after the PSSO Settings Catalog policy shows as Succeeded, or if registration was initiated but is failing (the webview does not complete, registration loops, or `app-sso platform -s` shows both registrations NOT REGISTERED after several minutes of expected processing):
+
+**Route to [macOS Platform SSO Investigation (runbook 27)](27-macos-sso-investigation.md) — Track A: Registration Failure Investigation.**
+
+Track A of runbook 27 contains the authoritative registration-failure investigation steps, including the sysdiagnose capture procedure, Intune portal configuration status checks, TLS-inspection exclusion verification, and the macOS 15.0–15.2 version gate callout. These steps are not duplicated here — use runbook 27 as the authoritative source.
+
+---
+
+## Microsoft Support Escalation Packet
+
+When Track A, B, or C investigation does not resolve the issue, engage Microsoft Support. Assemble the following before opening a case:
+
+- **`app-sso platform -s` full JSON output** — captured on the affected device at the time of failure; include the complete output, not excerpts
+- **IntuneMacODC diagnostic package** — collected per the [macOS Log Collection Guide (runbook 10)](10-macos-log-collection.md); required for Microsoft Support to analyze MDM enrollment and PSSO subsystem events
+- **Intune device enrollment status screenshot** — Intune admin center > **Devices** > **Enrollment** > **Apple** > **Enrollment program tokens** > [token] > **Devices**, showing the device serial number and its assigned enrollment policy (or absence thereof)
+- **ABM migration status screenshot** — the device's current migration state in ABM (Devices → locate by serial → current MDM assignment and any pending migration status)
+- **macOS version** and **Company Portal version** — from the Intune device record or device About screen
+- **Company Portal log incident ID** — generated via Company Portal app > **Help** > **Send diagnostic report** > **Email logs**; note the incident ID before closing — Microsoft Support uses this to retrieve the associated logs
+- **Entra sign-in log screenshot** — Entra admin center > **Monitoring** > **Sign-in logs**, filtered to the affected user, showing any MFA failures, Conditional Access policy blocks, or sign-in error codes
+
+---
+
+## Related Resources
+
+- [macOS Log Collection Guide (runbook 10)](10-macos-log-collection.md) — prerequisite for this runbook
+- [macOS Platform SSO Investigation (runbook 27)](27-macos-sso-investigation.md) — Track C PSSO re-registration stuck routes to Track A of this runbook for registration-failure investigation
+- [macOS MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md) — companion walkthrough for the normal B1 in-place and B2 wipe-and-re-enroll migration paths; source-side Kandji/Iru Delete Device Record steps live here (link-not-copy)
+- [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md) — PSSO Settings Catalog policy configuration reference; Configuration-Caused Failures table; healthy `app-sso platform -s` output reference
+- [macOS ADE L2 Runbook Index](00-index.md#macos-ade-runbooks)
+
+---
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-24 | Phase 90 (RUN-01): initial macOS MDM migration failure runbook — Track A deadline lockout, Track B profile-not-delivered/enrollment-failed, Track C PSSO re-registration stuck | -- |
