@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
-status: planning
-last_updated: "2026-06-24T04:48:09.417Z"
-last_activity: 2026-06-24
+status: executing
+last_updated: "2026-06-24T05:09:30.660Z"
+last_activity: 2026-06-24 -- Phase 87 planning complete
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 10
+  total_plans: 12
   completed_plans: 10
   percent: 67
 ---
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-06-22)
 
 Phase: 87
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-06-24
+Status: Ready to execute
+Last activity: 2026-06-24 -- Phase 87 planning complete
 
 ## v1.10 Phase Dependency Summary
 
