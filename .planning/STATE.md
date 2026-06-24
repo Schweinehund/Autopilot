@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
-status: roadmapped
-last_updated: "2026-06-24T20:00:00.000Z"
-last_activity: 2026-06-24
+status: Roadmapped; ready for `/gsd-plan-phase 89`
+last_updated: "2026-06-24T21:21:04.584Z"
+last_activity: 2026-06-24 — Roadmap created (15/15 requirements mapped, 5 phases 89-93)
 progress:
   total_phases: 5
   completed_phases: 0
@@ -119,6 +119,7 @@ Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
           V110 (v1.10 close-gate SHA a3617e9) pinned in _lib/frozen-at-close.mjs BEFORE
             any check-phase-89.mjs is authored (hard ordering constraint)
           Atom 1 (3 files indivisible): v1.11-milestone-audit.mjs (Path-A from v1.10, C1-C16)
+
             + v1.11-audit-allowlist.json + BASELINE_15 in regenerate-supervision-pins.mjs
           Atom 2 (indivisible set): check-phase-89..93.mjs + audit-harness-v1.11-integrity.yml
             (8th parallel coexistence CI workflow) + _lib/frozen-at-close.mjs V110 entry
@@ -211,9 +212,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24
-Stopped at: Roadmap created (5 phases 89-93, 15/15 requirements mapped)
-Resume file: None
+Last session: 2026-06-24T21:21:04.573Z
+Stopped at: Phase 89 context gathered
+Resume file: .planning/phases/89-psso-provisioning-walkthrough/89-CONTEXT.md
 Next action: `/gsd-plan-phase 89`
 
 ## Operator Next Steps
