@@ -8,7 +8,9 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
+## Current Milestone: v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (CLOSED 2026-06-24)
+
+**Status:** ✅ CLOSED 2026-06-24 — 6/6 phases (83-88) Complete; 17/17 requirements Validated via Phase 88 Plan 88-04 SINGLE close-gate commit (NO Commit A). Archival pending (`/gsd-complete-milestone` — D-05 separate step).
 
 **Goal:** Close the v1.9-deferred Platform SSO follow-on backlog (PSSO-FUT-01/02/04) with discoverable, fully-integrated documentation, so Intune/Entra admins and L1/L2 teams can configure and troubleshoot macOS Kerberos SSO and programmatic Platform Credential management without escalating to engineering.
 
@@ -28,6 +30,10 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 - **Plan-time research flags** (not blockers): Kerberos on-prem AD depth + demand-trigger; Graph `platformCredentialAuthenticationMethod` GA/stability status (keep deferred if still beta); NUAL plist key-literal verification against authoritative Settings Catalog / Apple `com.apple.extensiblesso` schema (keep deferred rather than ship a guessed key)
 - **Harness-close watch item:** the validator chain is already RED at HEAD (10 pre-existing legacy FAILs, phases 58–66/73 per `PRE-EXISTING-CHAIN-RED-AT-HEAD-01`) — the harness-bump phase must decide whether to fold in a chain-health pass or route it forward; finalized at roadmap
 - **Estimated scope** — content milestone; ~4-6 phases (83+), phase/plan count finalized at roadmap
+
+## Previous Milestone: v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (CLOSED 2026-06-24)
+
+**Status:** ✅ CLOSED 2026-06-24 — see above for full details.
 
 ## Previous Milestone: v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation (CLOSED 2026-06-22)
 

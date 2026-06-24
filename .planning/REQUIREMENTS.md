@@ -54,7 +54,7 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 ### Audit Harness & Milestone Close (HARN)
 
 - [x] **HARN-01**: `v1.10-milestone-audit.mjs` + `v1.10-audit-allowlist.json` ship as Path-A copies from v1.9 (C1-C16 inherited) + BASELINE_14 freshness comment in `regenerate-supervision-pins.mjs` (Atom 1, indivisible)
-- [ ] **HARN-02**: Per-phase `check-phase-83..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a `V19` entry (v1.9 close-gate SHA, pinned BEFORE any validator is authored) + `audit-harness-v1.10-integrity.yml` ships as the **7th** parallel CI coexistence workflow (predecessors v1.4–v1.9 byte-unchanged) (Atom 2, indivisible)
+- [x] **HARN-02**: Per-phase `check-phase-83..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a `V19` entry (v1.9 close-gate SHA, pinned BEFORE any validator is authored) + `audit-harness-v1.10-integrity.yml` ships as the **7th** parallel CI coexistence workflow (predecessors v1.4–v1.9 byte-unchanged) (Atom 2, indivisible)
 - [x] **HARN-03**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` + Axis 2 cross-OS Linux GHA + Axis 3 fresh sub-agent; cross-OS PASS/FAIL/SKIP-count EXACT MATCH) + `v1.10-MILESTONE-AUDIT.md` + `v1.10-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT / ROADMAP / STATE / REQUIREMENTS)
 
 ## v2 Requirements
@@ -92,29 +92,30 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| KRB-01 | Phase 83 | Complete |
-| KRB-02 | Phase 83 | Complete |
-| KRB-03 | Phase 83 | Complete |
-| KRB-04 | Phase 83 | Complete |
-| GRAPH-01 | Phase 84 | Complete |
-| GRAPH-02 | Phase 84 | Complete |
-| NUAL-01 | Phase 84 | Complete |
-| RUN-01 | Phase 85 | Complete |
-| RUN-02 | Phase 85 | Complete |
-| REF-01 | Phase 85 | Complete |
-| REF-02 | Phase 85 | Complete |
-| REF-03 | Phase 87 | Complete |
-| CHAIN-01 | Phase 86 | Complete |
-| CHAIN-02 | Phase 86 | Complete |
-| HARN-01 | Phase 88 | Complete |
-| HARN-02 | Phase 88 | Pending |
-| HARN-03 | Phase 88 | Complete |
+| KRB-01 | Phase 83 | Validated |
+| KRB-02 | Phase 83 | Validated |
+| KRB-03 | Phase 83 | Validated |
+| KRB-04 | Phase 83 | Validated |
+| GRAPH-01 | Phase 84 | Validated |
+| GRAPH-02 | Phase 84 | Validated |
+| NUAL-01 | Phase 84 | Validated |
+| RUN-01 | Phase 85 | Validated |
+| RUN-02 | Phase 85 | Validated |
+| REF-01 | Phase 85 | Validated |
+| REF-02 | Phase 85 | Validated |
+| REF-03 | Phase 87 | Validated |
+| CHAIN-01 | Phase 86 | Validated |
+| CHAIN-02 | Phase 86 | Validated |
+| HARN-01 | Phase 88 | Validated |
+| HARN-02 | Phase 88 | Validated |
+| HARN-03 | Phase 88 | Validated |
 
 **Coverage:**
 - v1 requirements: 17 total
 - Mapped to phases: 17/17 ✓
 - Unmapped: 0 ✓
+- Validated: 17/17 ✓
 
 ---
 *Requirements defined: 2026-06-22 after `/gsd-new-milestone` v1.10 (research-first; scope via `/adversarial-review`)*
-*Last updated: 2026-06-22 — Traceability filled at roadmap creation (gsd-roadmapper)*
+*Last updated: 2026-06-24 — 17/17 Validated at Phase 88 Plan 88-04 close-gate (v1.10 MILESTONE CLOSE)*

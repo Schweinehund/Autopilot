@@ -13,7 +13,7 @@
 - ✅ **v1.7 Deferred Backlog Closure + Validator Chain Hardening** — Phases 67-70 (shipped 2026-05-29)
 - ✅ **v1.8 Tooling Debt Closure + Chain-Resilience Hardening** — Phases 71-74 (shipped 2026-06-08)
 - ✅ **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation** — Phases 75-82 (shipped 2026-06-22)
-- 🚧 **v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL** — Phases 83-88 (in progress)
+- ✅ **v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL** — Phases 83-88 (shipped 2026-06-24)
 
 ## Phases
 
@@ -24,7 +24,7 @@ Full details in milestone entries above and in `.planning/milestones/`.
 
 </details>
 
-### 🚧 v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (In Progress)
+### ✅ v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (SHIPPED 2026-06-24)
 
 **Milestone Goal:** Close the v1.9-deferred Platform SSO follow-on backlog (PSSO-FUT-01/02/04) with discoverable, fully-integrated documentation, so Intune/Entra admins and L1/L2 teams can configure and troubleshoot macOS Kerberos SSO and programmatic Platform Credential management without escalating to engineering.
 
@@ -33,7 +33,7 @@ Full details in milestone entries above and in `.planning/milestones/`.
 - [x] **Phase 85: Capability Matrix + L2 Runbooks** — Kerberos matrix row (atomic with V-63-08 hash update) + L2 runbooks #28 and #29 + l2-runbooks/00-index extension (completed 2026-06-23)
 - [x] **Phase 86: Chain Health Pass** — Frozen-aware conversion of 10 legacy FAILs (check-phase-{58-66,73}) + restore 73-RETRO-INVENTORY.md; chain apex exits 0 FAIL on Windows and Linux (completed 2026-06-24)
 - [x] **Phase 87: Navigation Hub Integration** — Navigation-last integration into docs/index.md, common-issues.md, quick-ref-l2.md, l2-runbooks/00-index.md, decision-trees/06-macos-triage.md (completed 2026-06-24)
-- [ ] **Phase 88: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.10 harness (Atom 1 + Atom 2) + 3-axis terminal re-audit + close-gate
+- [x] **Phase 88: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A v1.10 harness (Atom 1 + Atom 2) + 3-axis terminal re-audit + close-gate (completed 2026-06-24)
 
 ## Phase Details
 
@@ -180,7 +180,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 88-04: Close-gate commit — `v1.10-MILESTONE-AUDIT.md` + `v1.10-DEFERRED-CLEANUP.md` + 4-doc traceability closure (17/17 Validated)
+- [x] 88-04: Close-gate commit — `v1.10-MILESTONE-AUDIT.md` + `v1.10-DEFERRED-CLEANUP.md` + 4-doc traceability closure (17/17 Validated)
 
 ## Progress
 
@@ -191,4 +191,4 @@ Plans:
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
 | 86. Chain Health Pass | 2/2 | Complete    | 2026-06-24 |
 | 87. Navigation Hub Integration | 2/2 | Complete    | 2026-06-24 |
-| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |
+| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete    | 2026-06-24 |
