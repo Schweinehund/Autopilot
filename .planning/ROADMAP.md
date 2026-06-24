@@ -52,7 +52,9 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. `app-sso platform -s` → `Device Registration: REGISTERED` / `User Registration: REGISTERED` verification gates appear at each applicable stage; cross-links go link-not-copy to guides `00-ade-lifecycle`, `02-enrollment-profile`, and `07-platform-sso-setup` (no content duplicated inline)
   4. Cross-links to L1 #35/#36 and L2 #27 are placed at the PSSO registration stage for failure escalation (no inline triage in the walkthrough itself)
   5. Reciprocal "See Also" entries pointing to `01-psso-provisioning-walkthrough.md` are appended to guides `00-ade-lifecycle.md`, `02-enrollment-profile.md`, and `07-platform-sso-setup.md` (content-phase edits; nav-hub files are NOT touched in this phase)
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 89-01-PLAN.md — Author new `01-psso-provisioning-walkthrough.md` (selector-first opening, A1+A2 shared spine, hybrid anatomy, `app-sso platform -s` gates, A2 macOS-26 divergence callout, sibling footers)
+- [ ] 89-02-PLAN.md — Reciprocal See Also entries into guides 00/07/02 (each matching its own house style)
 **UI hint**: no
 
 ### Phase 90: MDM Migration Walkthrough + L2 Runbook #30
@@ -108,7 +110,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 89. PSSO Provisioning Walkthrough | 0/TBD | Not started | - |
+| 89. PSSO Provisioning Walkthrough | 0/2 | Not started | - |
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 0/TBD | Not started | - |
 | 91. Glossary + Capability Matrix | 0/TBD | Not started | - |
 | 92. Navigation Hub Integration | 0/TBD | Not started | - |
