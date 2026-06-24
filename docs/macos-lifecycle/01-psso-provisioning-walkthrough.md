@@ -391,7 +391,7 @@ If either line shows a different value, wait and re-run. If REGISTERED does not 
 > | Misconfiguration recovery | Device wipe required — no in-place fix |
 > | PSSO registration event | Inside Setup Assistant — no "Registration Required" notification at desktop |
 >
-> For Company Portal LOB setup detail and the `Enable Registration During Setup` Settings Catalog field configuration, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md).
+> For Company Portal LOB setup detail and the `Enable Registration During Setup` Settings Catalog field configuration, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md#advanced--optional-ade-during-setup-assistant).
 >
 > ---
 >
@@ -405,7 +405,7 @@ If either line shows a different value, wait and re-run. If REGISTERED does not 
 >
 > **What the user experiences during A2 Setup Assistant:**
 >
-> The user is prompted for their Microsoft Entra organizational credentials at least twice during Setup Assistant — once for the standard enrollment authentication and once in the Company Portal authentication flow for the SSO extension. For the exact screen-by-screen flow, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md). If the user sees "Unable to sign in" during Setup Assistant, tap "Try Again" — Company Portal may still be downloading. If "Try Again" does not resolve the error after several retries, verify the Company Portal LOB deployment and the three-policy group alignment before wiping the device.
+> The user is prompted for their Microsoft Entra organizational credentials at least twice during Setup Assistant — once for the standard enrollment authentication and once in the Company Portal authentication flow for the SSO extension. For the exact screen-by-screen flow, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md#advanced--optional-ade-during-setup-assistant). If the user sees "Unable to sign in" during Setup Assistant, tap "Try Again" — Company Portal may still be downloading. If "Try Again" does not resolve the error after several retries, verify the Company Portal LOB deployment and the three-policy group alignment before wiping the device.
 >
 > **SmartCard exclusion:** SmartCard authentication is not available on the A2 path. If SmartCard is required for a user population, those devices must use the A1 standard path. For A2 devices, configure Secure Enclave (recommended) or Password as the authentication method in the Platform SSO Settings Catalog policy. Attempting SmartCard on A2 causes enrollment to stall during Setup Assistant.
 >
