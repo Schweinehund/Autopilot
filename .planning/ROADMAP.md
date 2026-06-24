@@ -149,7 +149,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 87-01-PLAN.md — Append-only edits to `docs/index.md` (D-01 enrich Platform SSO admin-setup row for guides 10/11; D-02 two L2 rows #28/#29 → `00-index.md#macos-ade-runbooks`) and `docs/common-issues.md` (D-05 standalone Kerberos SSO Extension Failure entry → L2 #28)
+- [x] 87-01-PLAN.md — Append-only edits to `docs/index.md` (D-01 enrich Platform SSO admin-setup row for guides 10/11; D-02 two L2 rows #28/#29 → `00-index.md#macos-ade-runbooks`) and `docs/common-issues.md` (D-05 standalone Kerberos SSO Extension Failure entry → L2 #28)
 - [ ] 87-02-PLAN.md — Append-only edits to `docs/quick-ref-l2.md` (D-04 Kerberos SSO Diagnostics block, klist only + pointer), VERIFY-ONLY `docs/l2-runbooks/00-index.md` (D-03 rows #28/#29 present, no L1-mapping row), and `docs/decision-trees/06-macos-triage.md` (D-06/D-07 RED MACE2 Kerberos leaf under MACSSO → L2 #28)
 
 ### Phase 88: Harness Lineage Bump + Terminal Re-Audit + Milestone Close
@@ -181,5 +181,5 @@ Plans:
 | 84. Graph API Doc + NUAL Key Table | 2/2 | Complete    | 2026-06-23 |
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
 | 86. Chain Health Pass | 2/2 | Complete    | 2026-06-24 |
-| 87. Navigation Hub Integration | 0/2 | Not started | - |
+| 87. Navigation Hub Integration | 1/2 | In Progress|  |
 | 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
