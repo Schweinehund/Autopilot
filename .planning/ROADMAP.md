@@ -164,7 +164,7 @@ Plans:
   3. 3-axis terminal re-audit completes: Axis 1 fresh `git clone --no-hardlinks` local + Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP counts are EXACT MATCH
   4. `v1.10-MILESTONE-AUDIT.md` and `v1.10-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 17 requirements to Validated
 
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
 
