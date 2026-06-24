@@ -393,6 +393,7 @@ The user reaches the standard macOS desktop. In the background, Intune continues
 - [Autopilot Lifecycle Overview](../lifecycle/00-overview.md) -- Windows Autopilot 5-stage deployment pipeline (for comparison)
 - [Documentation Hub](../index.md) -- Role-based entry points for all platforms
 - [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md) -- Configure macOS Platform SSO authentication via the Settings Catalog `com.apple.extensiblesso` payload
+- [PSSO Provisioning Walkthrough](01-psso-provisioning-walkthrough.md) -- End-to-end operator walkthrough threading the ADE lifecycle through Platform SSO registration for both standard post-enrollment (A1) and ADE-during-Setup-Assistant (A2, macOS 26+) paths
 
 ---
 

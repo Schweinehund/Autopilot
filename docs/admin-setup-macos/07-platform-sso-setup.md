@@ -144,6 +144,7 @@ Both fields must be present in the **same policy**. Microsoft Learn documents Er
 - [Enterprise SSO Plug-in](../_glossary-macos.md#enterprise-sso-plug-in)
 - [Configuration Profiles](03-configuration-profiles.md)
 - [macOS ADE Lifecycle Overview](../macos-lifecycle/00-ade-lifecycle.md)
+- [PSSO Provisioning Walkthrough](../macos-lifecycle/01-psso-provisioning-walkthrough.md) -- End-to-end operator walkthrough from enrollment profile through Platform SSO registration (standard post-enrollment and ADE-during-Setup-Assistant paths)
 - [macOS Capability Matrix — Authentication](../reference/macos-capability-matrix.md#authentication) -- macOS vs Windows auth-method capability comparison and hardware/version gates
 
 ---

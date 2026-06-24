@@ -130,6 +130,7 @@ These screens appear during the first-run experience and can be shown or hidden 
 - [ABM Configuration](01-abm-configuration.md)
 - [Configuration Profiles](03-configuration-profiles.md)
 - [macOS ADE Lifecycle Overview](../macos-lifecycle/00-ade-lifecycle.md)
+- [PSSO Provisioning Walkthrough](../macos-lifecycle/01-psso-provisioning-walkthrough.md)
 - [macOS Provisioning Glossary](../_glossary-macos.md)
 
 ---
