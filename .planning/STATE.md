@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
-status: planning
-last_updated: "2026-06-24T19:57:09.293Z"
+status: roadmapped
+last_updated: "2026-06-24T20:00:00.000Z"
 last_activity: 2026-06-24
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,108 +20,136 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-24)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** No active milestone — planning next milestone (`/gsd-new-milestone`)
+**Current focus:** v1.11 — macOS PSSO End-to-End Provisioning & MDM Migration (Phases 89-93)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 89 (not started)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-06-24 — Milestone v1.11 started
-
-## v1.10 Phase Dependency Summary
+Status: Roadmapped; ready for `/gsd-plan-phase 89`
+Last activity: 2026-06-24 — Roadmap created (15/15 requirements mapped, 5 phases 89-93)
 
 ```
-Phase 83 (Kerberos SSO Extension Guide)
-  |       KRB-01, KRB-02, KRB-03, KRB-04
-  |       New 10-kerberos-sso-extension.md + guide 09 surgical edit (one sentence)
-  |       + 00-overview.md guide 10 node + glossary Kerberos SSO Extension entry
-  |       MUST AVOID: wrong identifier (K-1), wrong payload type Redirect vs Credential (K-5),
-  |                   any nav-hub edits (DI-1)
-  |       Research flag: verify app-sso kerberos subcommand surface at plan time;
-  |                      default to app-sso platform -s + klist
-  |
-  v
-Phase 84 (Graph API Platform Credential Doc + NUAL Key Table)
-  |       GRAPH-01, GRAPH-02, NUAL-01
-  |       New 11-graph-api-platform-credential.md (Option A: docs/admin-setup-macos/)
-  |       + guide 08 NUAL surgical edit (replace deferred-item blockquote with key literal table)
-  |       + 00-overview.md guide 11 node + glossary Platform Credential extension
-  |       MUST AVOID: G-2 ([!WARNING] on DELETE is mandatory), no nav-hub edits (DI-1)
-  |       Research flag (pre-task, not blocker):
-  |         - Verify Intune Settings Catalog NUAL display names vs Apple schema key names
-  |         - Confirm least-privilege delete scope (UserAuthMethod-PlatformCred.ReadWrite
-  |           vs UserAuthenticationMethod.ReadWrite) against live permissions reference
-  |
-  v
-Phase 85 (Capability Matrix + L2 Runbooks)
-  |       REF-01, REF-02, RUN-01, RUN-02
-  |       Pre-edit anchor inventory FIRST (committed artifact, PITFALL-6 / DA-4 convention)
-  |       macos-capability-matrix.md Kerberos row + ATOMIC V-63-08 hash update (same commit)
-  |       4-platform-capability-comparison.md macOS cells update (link-not-copy)
-  |       L2 #28 (28-macos-kerberos-sso-investigation.md) + L2 #29 (29-macos-graph-credential-investigation.md)
-  |       l2-runbooks/00-index.md extended (rows 28/29 + escalation mapping) — internal hub only
-  |       MUST AVOID: DI-2 (matrix + V-63-08 NEVER split commits), no top-level nav hubs (DI-1)
-  |
-  v
-Phase 86 (Chain Health Pass)
-  |       CHAIN-01, CHAIN-02
-  |       DEDICATED phase before harness lineage bump — no CHAIN_SKIP masking (DI-3)
-  |       Convert 10 legacy HEAD-coupled FAILs in check-phase-{58,59,60,61,62,63,64,65,66,73}.mjs
-  |         to frozen-aware reads via _lib/frozen-at-close.mjs helpers
-  |       Restore/regenerate 73-RETRO-INVENTORY.md
-  |       Full chain (48..82) exits 0 FAIL / 0 SKIPPED on Windows local AND Linux GHA (EXACT MATCH)
-  |       MUST NOT fold into Atom 2 of Phase 88 (Anti-Pattern 5 from ARCHITECTURE.md)
-  |
-  v
-Phase 87 (Navigation Hub Integration — NAVIGATION-LAST)
-  |       REF-03
-  |       All content from Phases 83-85 must be committed before ANY nav-hub edit
-  |       docs/index.md: guide 10/11 admin setup rows + L2 #28/#29 desktop engineering rows
-  |       docs/common-issues.md: Kerberos escalation entry
-  |       docs/quick-ref-l2.md: app-sso platform -s + klist commands
-  |       docs/l2-runbooks/00-index.md: rows 28/29 (also touched in Phase 85 as internal hub — 
-  |         top-level index.md and common-issues.md strictly navigation-last)
-  |       docs/decision-trees/06-macos-triage.md: Kerberos leaf node → L2 #28
-  |
-  v
-Phase 88 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE LAST)
-          HARN-01, HARN-02, HARN-03
-          V19 (v1.9 close-gate SHA) pinned in _lib/frozen-at-close.mjs BEFORE any
-            check-phase-83.mjs is authored (hard ordering constraint)
-          Atom 1 (3 files indivisible): v1.10-milestone-audit.mjs (Path-A from v1.9, C1-C16)
+Phase 89-93 Progress: [░░░░░░░░░░] 0%
+Phases: 0/5 complete
+```
 
-            + v1.10-audit-allowlist.json + BASELINE_14 in regenerate-supervision-pins.mjs
-          Atom 2 (indivisible set): check-phase-83..88.mjs + audit-harness-v1.10-integrity.yml
-            (7th parallel coexistence CI workflow) + _lib/frozen-at-close.mjs V19 entry
+## v1.11 Phase Dependency Summary
+
+```
+Phase 89 (PSSO Provisioning Walkthrough — Pillar A)
+  |       PROV-01, PROV-02, PROV-03, PROV-04
+  |       NEW: docs/macos-lifecycle/01-psso-provisioning-walkthrough.md
+  |       MODIFIED (content-phase, NOT nav-last):
+  |         - docs/macos-lifecycle/00-ade-lifecycle.md — See Also cross-link
+  |         - docs/admin-setup-macos/07-platform-sso-setup.md — See Also cross-link
+  |         - docs/admin-setup-macos/02-enrollment-profile.md — See Also cross-link
+  |       Research flags (verify on authoring day):
+  |         - ADE-during-Setup-Assistant GA status + CP 5.2604.0 LOB floor
+  |           against current Microsoft Learn (not late-2025 community posts)
+  |         - macOS 26 final GA confirmation; add last_verified stamps
+  |       MUST AVOID: any nav-hub edits (docs/index.md, common-issues.md,
+  |                   quick-ref-l2.md, decision-trees/06-macos-triage.md);
+  |                   duplicating guide 00/02/07 content inline (link-not-copy);
+  |                   editing guide 00/02/07 for content additions (frozen for v1.11);
+  |                   omitting last_verified/review_by on macOS-26-gated sections
+  |
+  v
+Phase 90 (MDM Migration Walkthrough + L2 Runbook #30 — Pillar B)
+  |       MIG-01, MIG-02, MIG-03, MIG-04, RUN-01
+  |       NEW: docs/macos-lifecycle/02-mdm-migration-psso.md
+  |       NEW: docs/l2-runbooks/30-macos-mdm-migration-failure.md
+  |       MODIFIED (content-phase, NOT nav-last):
+  |         - docs/l2-runbooks/00-index.md — append #30 row (internal hub)
+  |         - docs/l2-runbooks/27-macos-sso-investigation.md — See Also cross-link
+  |       Research flags (verify at plan time — HIGH open gaps):
+  |         - Intune profile-based-enrollment config for migrated macOS 26 devices
+  |           (Apple says result is profile-based; unclear if Intune needs config
+  |           beyond ADE token assignment — verify before stating as fact)
+  |         - Current Iru console device-deletion steps post-rebrand
+  |           (support.kandji.io; Iru blog)
+  |         - Supervision status preserved post-migration — MEDIUM confidence;
+  |           pilot-device verification required before stating as fact
+  |         - One-time reset for pre-26-ABM-enrolled devices — MEDIUM confidence;
+  |           document with confidence callout, recommend pilot test
+  |       KEY FACTS (firm, verified):
+  |         - PSSO re-registration ALWAYS required post-migration (Apple authoritative)
+  |         - OS-26 migration IS genuine unenroll+reenroll (NOT profile-swap)
+  |         - ACME cert IS reissued on genuine re-enrollment
+  |         - profiles renew is NOT a shortcut for ADE-enrolled Kandji devices
+  |         - VPP token must be revoked in Kandji/Iru BEFORE upload to Intune
+  |         - Pre-migration OS gate check required (macOS 26 hard gate)
+  |         - Sync lag: up to 24h auto-sync; 15-min manual rate limit; 7-day full cooldown
+  |       MUST AVOID: nav-hub files; duplicating guide 00/02/07 inline;
+  |                   stating PSSO key survives migration (Apple authoritative: never);
+  |                   stating supervision preserved (MEDIUM confidence only);
+  |                   using profiles renew as pre-26 shortcut for ADE devices
+  |
+  v
+Phase 91 (Glossary + Capability Matrix — Pillar C content portion)
+  |       REF-01, REF-02
+  |       MODIFIED:
+  |         - docs/_glossary-macos.md — MDM Migration, Assign Device Management,
+  |                                      Deadline, Kandji→Iru rebrand note
+  |         - docs/_glossary.md — reciprocal see-also
+  |         - docs/reference/macos-capability-matrix.md — migration row
+  |           ATOMIC with check-phase-63.mjs V-63-08 hash update
+  |           (baseline: 73f16378197223378a8507a6751c763902de58db — verify on authoring day)
+  |           Pre-edit anchor inventory artifact FIRST (Phase 85 Plan 85-01 precedent)
+  |         - docs/reference/4-platform-capability-comparison.md — macOS migration cells
+  |           ATOMIC with equivalent blob-hash update
+  |       MUST AVOID: editing capability matrix without same-commit V-63-08 hash update;
+  |                   adding cross-links in matrix to guide files that don't yet exist
+  |
+  v
+Phase 92 (Navigation Hub Integration — NAVIGATION-LAST)
+  |       NAV-01
+  |       NAVIGATION-LAST: ALL content from Phases 89-91 MUST be confirmed committed
+  |       before ANY nav-hub edit is committed (DA-3 invariant)
+  |       MODIFIED (all nav-last):
+  |         - docs/index.md
+  |         - docs/common-issues.md
+  |         - docs/quick-ref-l2.md
+  |         - docs/decision-trees/06-macos-triage.md
+  |       MUST AVOID: committing any nav-hub edit before verifying content files exist
+  |
+  v
+Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE LAST)
+          HARN-01, HARN-02, HARN-03
+          V110 (v1.10 close-gate SHA a3617e9) pinned in _lib/frozen-at-close.mjs BEFORE
+            any check-phase-89.mjs is authored (hard ordering constraint)
+          Atom 1 (3 files indivisible): v1.11-milestone-audit.mjs (Path-A from v1.10, C1-C16)
+            + v1.11-audit-allowlist.json + BASELINE_15 in regenerate-supervision-pins.mjs
+          Atom 2 (indivisible set): check-phase-89..93.mjs + audit-harness-v1.11-integrity.yml
+            (8th parallel coexistence CI workflow) + _lib/frozen-at-close.mjs V110 entry
           3-axis terminal re-audit: Axis 1 fresh git clone --no-hardlinks +
             Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent;
             cross-OS PASS/FAIL/SKIP EXACT MATCH required
-          Close-gate: v1.10-MILESTONE-AUDIT.md + v1.10-DEFERRED-CLEANUP.md +
-            4-doc traceability closure (17/17 Validated)
-          Predecessor v1.4-v1.9 frozen surfaces BYTE-UNCHANGED invariant
+          Close-gate: v1.11-MILESTONE-AUDIT.md + v1.11-DEFERRED-CLEANUP.md +
+            4-doc traceability closure (15/15 Validated)
+          Predecessor v1.4-v1.10 frozen surfaces BYTE-UNCHANGED invariant
 ```
 
-**Requirement coverage (17/17 mapped; 17/17 Validated — v1.10 CLOSED):**
+**Requirement coverage (15/15 mapped; 0/15 Validated — v1.11 IN PROGRESS):**
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
-| 83 | KRB-01, KRB-02, KRB-03, KRB-04 | 4 |
-| 84 | GRAPH-01, GRAPH-02, NUAL-01 | 3 |
-| 85 | REF-01, REF-02, RUN-01, RUN-02 | 4 |
-| 86 | CHAIN-01, CHAIN-02 | 2 |
-| 87 | REF-03 | 1 |
-| 88 | HARN-01, HARN-02, HARN-03 | 3 |
+| 89 | PROV-01, PROV-02, PROV-03, PROV-04 | 4 |
+| 90 | MIG-01, MIG-02, MIG-03, MIG-04, RUN-01 | 5 |
+| 91 | REF-01, REF-02 | 2 |
+| 92 | NAV-01 | 1 |
+| 93 | HARN-01, HARN-02, HARN-03 | 3 |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 88 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.10-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6/v1.7/v1.8/v1.9 precedent).
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 93 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.11-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6/v1.7/v1.8/v1.9/v1.10 precedent).
 
-**Named decisions (LOCKED at requirements 2026-06-22):**
+**Named decisions (LOCKED at roadmap 2026-06-24):**
 
-- KERBEROS-GUIDE-LOCATION: `docs/admin-setup-macos/10-kerberos-sso-extension.md` (mandated by PSSO-FUT-04 backlog item and guide 09's existing forward-reference)
-- GRAPH-API-PLACEMENT: Option A — `docs/admin-setup-macos/11-graph-api-platform-credential.md` (keeps complete macOS Platform SSO documentation surface in one numbered sequence 07-11; confirmed by adversarial-review)
-- CHAIN-HEALTH-DECISION: dedicated Phase 86 before harness lineage bump (Option A per ARCHITECTURE.md; no CHAIN_SKIP masking)
-- NUAL-KEY-LITERALS: verified from Apple `com.apple.extensiblesso` schema — `NewUserAuthorizationMode` + `UserAuthorizationMode` + `EnableCreateUserAtLogin`; `Temporary` value noted but not surfaced in Intune UI
-- MULTITENANT-PSSO: DEFERRED to its own architectural milestone (PSSO-FUT-03 explicitly out of scope)
+- SCENARIO-DOC-LOCATION: `docs/macos-lifecycle/` (not `admin-setup-macos/`; multi-role journey docs go in `*-lifecycle/` per cross-platform parallelism; iOS/Android analog confirmed)
+- MIGRATION-WALKTHROUGH-NUMBERING: `01-psso-provisioning-walkthrough.md`, `02-mdm-migration-psso.md` (following `00-ade-lifecycle.md` existing file)
+- L2-RUNBOOK-NUMBER: #30 (`docs/l2-runbooks/30-macos-mdm-migration-failure.md`; global sequential; last = #29)
+- PSSO-SURVIVAL: PSSO re-registration ALWAYS required post-migration — Apple authoritative ("MDM unenrollment = IdP unregistration"); same-tenant key-survival hypothesis NOT documented (LOW confidence, no authoritative source)
+- MIGRATION-MECHANISM: OS-26 path is genuine unenroll+reenroll (NOT profile-swap); Intune result is profile-based enrollment; ACME cert reissued
+- PHASE-COUNT: 5 phases (89-93) per research SUMMARY recommended sequence; confirmed by dependency analysis
 
 ## Performance Metrics
 
@@ -138,66 +166,62 @@ Phase 88 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - v1.7: 4 phases (67-70), 15 plans — shipped 2026-05-29
 - v1.8: 4 phases (71-74), 13 plans — shipped 2026-06-08
 - v1.9: 8 phases (75-82), 19 plans — shipped 2026-06-22
-- **v1.10 (in progress): 6 phases (83-88), ~17 plans TBD**
+- v1.10: 6 phases (83-88), 16 plans — shipped 2026-06-24
+- **v1.11 (in progress): 5 phases (89-93), plan count TBD**
 
 ## Accumulated Context
 
 ### Decisions
 
-**v1.10 adversarial-review decisions (LOCKED 2026-06-22):**
+**v1.11 roadmap decisions (LOCKED 2026-06-24):**
 
-- Area 1 Kerberos: Option A — standalone `10-kerberos-sso-extension.md` guide + cross-links + glossary + matrix + L2 runbook
-- Area 2 Graph API: Option A — dedicated `11-graph-api-platform-credential.md` doc (Option A placement) + L2 troubleshooting; Graph API confirmed GA in v1.0
-- Area 3 Multi-tenant PSSO: DEFERRED to own architectural milestone (net-new architecture; breaks single-feature-content-milestone convention)
-- Area 4 NUAL: Option A — minimal verify + document verified key literals in guide 08; PSSO-FUT-01 closed (key literals confirmed from Apple schema)
-- Chain-health: dedicated Phase 86 before harness lineage bump; no CHAIN_SKIP masking (PRE-EXISTING-CHAIN-RED-AT-HEAD-01 resolved in-milestone)
+- Pillar A provisioning: two delivery paths in one doc (standard post-enrollment + ADE-during-SA macOS 26+); both in `01-psso-provisioning-walkthrough.md`
+- Pillar B migration: two paths in one doc (OS-26 in-place + pre-26 fallback) + dedicated L2 runbook #30
+- Pillar C nav: capability-matrix + glossary in Phase 91; nav-hubs strictly Phase 92 (navigation-last invariant)
+- Pillar D harness: Phase 93 is LAST; Atom 1 + Atom 2 two-atomic-commit pattern per v1.10 Phase 88 precedent
+- Research-summary proposed 5-phase sequence (89-93) ADOPTED as-is; dependency analysis confirms no reordering needed
 
-**Durable architectural decisions (carried forward from v1.9):**
+**Durable architectural decisions (carried forward from v1.10):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commit (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; navigation-last invariant; pre-edit anchor inventory before matrix edits; predecessor frozen surfaces BYTE-UNCHANGED
-- V-63-08 blob hash in check-phase-63.mjs must be updated atomically with any macos-capability-matrix.md change (PITFALL DI-2)
-- `> [!WARNING]` callout required for destructive Graph API DELETE operation (PITFALL G-2)
-- Wrong Kerberos extension identifier (K-1) and wrong payload type (K-5) are critical pitfalls — every profile example must use `com.apple.AppSSOKerberos.KerberosExtension` and `Type: Credential`
-- [Phase ?]: V19 pinned as b29dca5 (close-gate SHA), BASELINE_14 added, pre-Phase-88 anchor=c8f4cf6
-- [Phase ?]: D-04 applied: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 affects warm-tree chain at depth [48..87] — Linux GHA exclusively authoritative for v1.10 apex (42/0/1)
+- V-63-08 blob hash in check-phase-63.mjs must be updated atomically with any macos-capability-matrix.md change (PITFALL DA-5)
+- Predecessor guides 00/02/07 are FROZEN for v1.11 (content additions in new files only; reciprocal See Also cross-links are permitted as append-only edits)
+- Link-not-copy architecture: scenario guides stitch the journey but do NOT inline guide 00/02/07 prose
+- Per-section `last_verified`/`review_by` stamps required on all macOS-26-gated sections (90-day review cycle per guide 07 ADE section precedent)
 
 ### Pending Todos
 
-- Identify v1.9 close-gate SHA (V19) before Phase 88 Atom 2 authoring: `git log --all --grep="close-gate" --grep="v1.9" --all-match -1`
-- At Phase 84 plan time: verify Intune Settings Catalog NUAL display names vs Apple schema; confirm least-privilege Graph delete scope against live permissions reference
-- At Phase 83 plan time: verify `app-sso kerberos` subcommand surface against macOS 14.6+ man page before incorporating beyond `app-sso platform -s` + `klist`
+- At Phase 89 plan time: verify ADE-during-Setup-Assistant GA status + Company Portal 5.2604.0 LOB floor against current Microsoft Learn (not late-2025 community sources)
+- At Phase 89 plan time: verify macOS 26 final GA date; apply `last_verified: <authoring-day>` / `review_by: <authoring-day+90>` stamps on all OS-26-gated sections
+- At Phase 90 plan time: resolve HIGH open gap — Intune profile-based-enrollment config requirement for OS-26-migrated macOS devices (Apple says result is profile-based; verify if Intune needs explicit config beyond ADE token assignment)
+- At Phase 90 plan time: verify Iru console post-rebrand device-deletion steps (support.kandji.io)
+- At Phase 90 plan time: supervision-status preserved post-migration — pilot-device test before stating as fact (MEDIUM confidence; Apple support guide silent on this)
+- At Phase 91 plan time: verify V-63-08 current baseline (`git hash-object docs/reference/macos-capability-matrix.md`) on authoring day before any matrix edit
+- At Phase 91 plan time: confirm blob-hash variable name for `4-platform-capability-comparison.md` in the governing `check-phase-NN.mjs` validator before editing
+- At Phase 93 plan time: confirm V110 = v1.10 close-gate SHA `a3617e9` (`git log --grep="close-gate" --grep="v1.10" --all-match -1`)
 
 ### Blockers/Concerns
 
 Execution-time checks (not blockers — must be addressed within specified phases):
 
-- Phase 83: `app-sso kerberos` subcommand verification (MEDIUM confidence; default to `app-sso platform -s` + `klist`)
-- Phase 84: NUAL Settings Catalog display-name second-pass (confirm display names match Apple schema key names; document divergence if any)
-- Phase 84: Graph API delete permission least-privilege scope resolution (`UserAuthMethod-PlatformCred.ReadWrite` vs `UserAuthenticationMethod.ReadWrite`)
-- Phase 83: Azure Files Cloud-Kerberos GA status check at guide 10 execution time (verify still preview; document accordingly)
+- Phase 89: ADE-during-Setup-Assistant GA + CP 5.2604.0 verification on authoring day (DA-1 pitfall)
+- Phase 90: HIGH confidence gap — Intune profile-based-enrollment config for migrated macOS 26 devices
+- Phase 90: MEDIUM confidence — Iru console device-deletion steps; supervision post-migration status
+- Phase 91: V-63-08 blob-hash current value must be measured on authoring day (not from research, which cites `73f16378...` as a point-in-time snapshot)
 
 ## Session Continuity
 
-Last session: 2026-06-24T15:21:11.417Z
-Stopped at: Completed 88-04: v1.10 close-gate — MILESTONE CLOSED (17/17 Validated)
+Last session: 2026-06-24
+Stopped at: Roadmap created (5 phases 89-93, 15/15 requirements mapped)
 Resume file: None
-Next action: `/gsd-complete-milestone` (archival + Jira close — D-05 separate step)
+Next action: `/gsd-plan-phase 89`
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Plan Phase 89: `/gsd-plan-phase 89`
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
-| Phase 83-kerberos-sso-extension-guide P03 | 277 | 3 tasks | 3 files |
-| Phase 83 P02 | 15m | 3 tasks | 1 files |
-| Phase 84 P02 | 15m | 3 tasks | 3 files |
-| Phase 85 P01 | 10m | 3 tasks | 3 files |
-| Phase 85 P03 | 20m | 3 tasks | 3 files |
-| Phase 86-chain-health-pass P01 | 18 | 3 tasks | 6 files |
-| Phase 86-chain-health-pass P02 | 20min | 2 tasks | 0 files |
-| Phase 87-navigation-hub-integration P02 | 275 | 2 tasks | 2 files |
-| Phase 88 P01 | 15m | 3 tasks | 5 files |
-| Phase 88 P03 | 35m | 4 tasks | 1 files |
+| (v1.11 phases not yet started) | — | — | — |

@@ -99,12 +99,26 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| _(filled by roadmapper)_ | — | — |
+| PROV-01 | Phase 89 | Active |
+| PROV-02 | Phase 89 | Active |
+| PROV-03 | Phase 89 | Active |
+| PROV-04 | Phase 89 | Active |
+| MIG-01 | Phase 90 | Active |
+| MIG-02 | Phase 90 | Active |
+| MIG-03 | Phase 90 | Active |
+| MIG-04 | Phase 90 | Active |
+| RUN-01 | Phase 90 | Active |
+| REF-01 | Phase 91 | Active |
+| REF-02 | Phase 91 | Active |
+| NAV-01 | Phase 92 | Active |
+| HARN-01 | Phase 93 | Active |
+| HARN-02 | Phase 93 | Active |
+| HARN-03 | Phase 93 | Active |
 
 **Coverage:**
 - v1 requirements: 15 total
-- Mapped to phases: 0/15 (pre-roadmap)
-- Unmapped: 15 (pre-roadmap)
+- Mapped to phases: 15/15 (roadmap complete 2026-06-24)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-06-24 after `/gsd-new-milestone` v1.11 (research-first; 4 parallel researchers + synthesis at `1dd1606`)*
