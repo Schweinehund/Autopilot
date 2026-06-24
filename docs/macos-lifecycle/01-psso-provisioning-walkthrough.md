@@ -463,6 +463,7 @@ If either line shows a different value, wait and re-run. If REGISTERED does not 
 - [L1 #35 macOS SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md) -- L1 escalation runbook for PSSO sign-in failures
 - [L1 #36 macOS Secure Enclave Key](../l1-runbooks/36-macos-secure-enclave-key.md) -- L1 escalation runbook for Secure Enclave key issues
 - [L2 #27 macOS SSO Investigation](../l2-runbooks/27-macos-sso-investigation.md) -- L2 deep-dive investigation runbook for macOS SSO failures
+- [macOS MDM Migration Walkthrough](02-mdm-migration-psso.md) -- B1 in-place (macOS 26+) and B2 wipe migration from Kandji/Iru, including the post-migration PSSO re-registration handoff back to this guide
 
 ---
 
@@ -487,4 +488,5 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 | Date | Change |
 |------|--------|
+| 2026-06-24 | Phase 90 (MIG-04): added reciprocal See Also link to 02-mdm-migration-psso.md (bidirectional PSSO re-registration junction) |
 | 2026-06-24 | Phase 89 (PROV-01..04): initial PSSO provisioning walkthrough (A1 + A2 paths) |

@@ -194,6 +194,7 @@ When Track A or Track B investigation does not resolve the issue, engage Microso
 - [macOS Auth Methods Deep-Dive](../admin-setup-macos/08-auth-methods-deep-dive.md) — SE key behavior, DF-3 per-user MFA, DF-7 AD-bound account (link-not-copy)
 - [Enterprise SSO Plugin Migration Guide](../admin-setup-macos/09-enterprise-sso-plugin-migration.md) — Error 10002 / legacy plug-in conflict context (link-not-copy)
 - [macOS ADE L2 Runbook Index](00-index.md#macos-ade-runbooks)
+- [macOS MDM Migration Failure (runbook 30)](30-macos-mdm-migration-failure.md) — for PSSO re-registration stuck post-migration from Kandji/Iru; Track C of runbook 30 routes to this runbook
 
 ---
 
@@ -201,4 +202,5 @@ When Track A or Track B investigation does not resolve the issue, engage Microso
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 90 (RUN-01): appended reciprocal Related Resources entry -> L2 #30 macOS MDM Migration Failure | -- |
 | 2026-06-21 | Initial version — macOS Platform SSO L2 investigation (SSORUN-03): Registration Failure track + Password-Sync Failure track; macOS 15.0–15.2 version-gate callout | -- |
