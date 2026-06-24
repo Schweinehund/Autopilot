@@ -187,6 +187,16 @@ app-sso platform -s
 
 Expected healthy output includes both `Device Registration: REGISTERED` and `User Registration: REGISTERED` with SSO tokens listed. See [07-platform-sso-setup.md — Verification](admin-setup-macos/07-platform-sso-setup.md) for the full expected output format.
 
+#### Kerberos SSO Diagnostics
+
+Verify Kerberos ticket cache -- run on the affected Mac:
+
+```bash
+klist
+```
+
+Healthy output shows a TGT with a future expiry for the configured realm. An empty cache or "No credentials cache found" indicates TGT acquisition failure. For PSSO-TGT integration context (`tgt_ad` on-prem vs `tgt_cloud` Entra), see the [Platform SSO Attestation Command](#platform-sso-attestation-command) block above.
+
 ### macOS Investigation Runbooks
 
 - [macOS Log Collection Guide](l2-runbooks/10-macos-log-collection.md) -- prerequisite for all macOS investigations
@@ -194,6 +204,7 @@ Expected healthy output includes both `Device Registration: REGISTERED` and `Use
 - [App Install Failure Diagnosis](l2-runbooks/12-macos-app-install.md)
 - [Compliance Evaluation Investigation](l2-runbooks/13-macos-compliance.md)
 - [Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md) -- PSSO registration failure and Password-sync failure investigation
+- [Kerberos SSO Investigation](l2-runbooks/28-macos-kerberos-sso-investigation.md) -- Kerberos TGT not acquired, realm/KDC reachability, and PSSO-TGT integration investigation
 
 ---
 
@@ -370,6 +381,7 @@ Full configuration details and per-category remediation: see the [Linux Complian
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO Diagnostics block (klist) + Kerberos SSO Investigation runbook bullet to macOS section | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO Log Paths section + app-sso platform -s attestation command + L2 #27 investigation runbook bullet to macOS section | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-05; L2 command/log-collection voice) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Linux Diagnostic Data Collection 3 methods / Key Intune Portal Paths Linux L2 / Linux Compliance Category Reference 4-row pointer table / Linux Investigation Runbooks 2-link list); link-not-copy contract for Phase 50 Compliance Policy SSoT per PITFALL-7 + Phase 57 D-22..D-25 + D-23 ENDORSEMENT inheritance | -- |
