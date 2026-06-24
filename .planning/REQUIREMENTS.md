@@ -48,7 +48,7 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 
 ### Chain Health (CHAIN)
 
-- [ ] **CHAIN-01**: The 10 pre-existing legacy chain FAILs (`check-phase-{58,59,60,61,62,63,64,65,66,73}.mjs`) are resolved — HEAD-coupled assertions converted to frozen-aware reads via `_lib/frozen-at-close.mjs`, and the missing `73-RETRO-INVENTORY.md` restored/regenerated, with **no CHAIN_SKIP masking** (closes PRE-EXISTING-CHAIN-RED-AT-HEAD-01)
+- [x] **CHAIN-01**: The 10 pre-existing legacy chain FAILs (`check-phase-{58,59,60,61,62,63,64,65,66,73}.mjs`) are resolved — HEAD-coupled assertions converted to frozen-aware reads via `_lib/frozen-at-close.mjs`, and the missing `73-RETRO-INVENTORY.md` restored/regenerated, with **no CHAIN_SKIP masking** (closes PRE-EXISTING-CHAIN-RED-AT-HEAD-01)
 - [ ] **CHAIN-02**: The full validator chain exits **0 FAIL** on both Windows local and Linux GHA before the v1.10 harness lineage bump adds new validators
 
 ### Audit Harness & Milestone Close (HARN)
@@ -104,7 +104,7 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 | REF-01 | Phase 85 | Complete |
 | REF-02 | Phase 85 | Complete |
 | REF-03 | Phase 87 | Pending |
-| CHAIN-01 | Phase 86 | Pending |
+| CHAIN-01 | Phase 86 | Complete |
 | CHAIN-02 | Phase 86 | Pending |
 | HARN-01 | Phase 88 | Pending |
 | HARN-02 | Phase 88 | Pending |

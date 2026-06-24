@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
 status: executing
-last_updated: "2026-06-24T00:02:46.235Z"
-last_activity: 2026-06-24 -- Phase 86 planning complete
+last_updated: "2026-06-24T00:28:54.040Z"
+last_activity: 2026-06-24
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 9
   percent: 50
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-22)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 86 — chain health pass
+**Current focus:** Phase 86 — chain-health-pass
 
 ## Current Position
 
-Phase: 86
-Plan: Not started
+Phase: 86 (chain-health-pass) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-06-24 -- Phase 86 planning complete
+Last activity: 2026-06-24
 
 ## v1.10 Phase Dependency Summary
 
@@ -176,9 +176,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-23T23:24:44.529Z
+Last session: 2026-06-24T00:28:54.025Z
 Stopped at: Phase 86 context gathered
-Resume file: .planning/phases/86-chain-health-pass/86-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 83`
 
 ## Operator Next Steps
@@ -194,3 +194,4 @@ Next action: `/gsd-plan-phase 83`
 | Phase 84 P02 | 15m | 3 tasks | 3 files |
 | Phase 85 P01 | 10m | 3 tasks | 3 files |
 | Phase 85 P03 | 20m | 3 tasks | 3 files |
+| Phase 86-chain-health-pass P01 | 18 | 3 tasks | 6 files |

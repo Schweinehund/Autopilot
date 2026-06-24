@@ -125,7 +125,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 86-01-PLAN.md — Convert V-58-10/V-59-24 to frozen-aware (ba2cbc0) + V-72/73/74/82 VERIFICATION + V-73-INVENTORY to archive-aware (SKIP-PASS→FAIL); cascade 60-66 untouched; CHAIN_SKIP stays Set([])
+- [x] 86-01-PLAN.md — Convert V-58-10/V-59-24 to frozen-aware (ba2cbc0) + V-72/73/74/82 VERIFICATION + V-73-INVENTORY to archive-aware (SKIP-PASS→FAIL); cascade 60-66 untouched; CHAIN_SKIP stays Set([])
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -179,6 +179,6 @@ Plans:
 | 83. Kerberos SSO Extension Guide | 3/3 | Complete    | 2026-06-23 |
 | 84. Graph API Doc + NUAL Key Table | 2/2 | Complete    | 2026-06-23 |
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
-| 86. Chain Health Pass | 0/2 | Not started | - |
+| 86. Chain Health Pass | 1/2 | In Progress|  |
 | 87. Navigation Hub Integration | 0/2 | Not started | - |
 | 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
