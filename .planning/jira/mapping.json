@@ -607,7 +607,7 @@
         },
         "88": {
           "issueKey": "RTS-662",
-          "status": "in_progress",
+          "status": "done",
           "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
         }
       }
