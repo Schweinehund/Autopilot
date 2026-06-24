@@ -172,7 +172,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 88-02: Author `check-phase-83..88.mjs` validators + Atom 2 (indivisible commit: validators + CI workflow + frozen-at-close V19 entry)
+- [x] 88-02: Author `check-phase-83..88.mjs` validators + Atom 2 (indivisible commit: validators + CI workflow + frozen-at-close V19 entry)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -191,4 +191,4 @@ Plans:
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
 | 86. Chain Health Pass | 2/2 | Complete    | 2026-06-24 |
 | 87. Navigation Hub Integration | 2/2 | Complete    | 2026-06-24 |
-| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 1/4 | In Progress|  |
+| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |
