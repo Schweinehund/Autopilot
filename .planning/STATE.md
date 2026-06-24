@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
-status: verifying
-last_updated: "2026-06-24T05:24:36.017Z"
+status: ready_to_plan
+last_updated: 2026-06-24T05:34:30.177Z
 last_activity: 2026-06-24
 progress:
   total_phases: 6
@@ -11,6 +11,7 @@ progress:
   total_plans: 12
   completed_plans: 12
   percent: 83
+stopped_at: Phase 87 complete (2/2) — ready to discuss Phase 88
 ---
 
 # Project State
@@ -20,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-22)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 87 — navigation-hub-integration
+**Current focus:** Phase 88 — harness lineage bump + terminal re audit + milestone close
 
 ## Current Position
 
-Phase: 87 (navigation-hub-integration) — EXECUTING
-Plan: 2 of 2
-Status: Phase complete — ready for verification
+Phase: 88
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-24
 
 ## v1.10 Phase Dependency Summary
