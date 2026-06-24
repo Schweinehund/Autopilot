@@ -544,12 +544,11 @@ This phase makes no changes to authentication, authorization, data handling, or 
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **V-74-AUDIT scope confirmation**
+1. **V-74-AUDIT scope confirmation** — RESOLVED: included in 86-01 Task 2 as archive-aware bonus cleanup (`['v1.8-phases']`).
    - What we know: V-74-AUDIT fires a SKIPPED inside check-phase-74, which is spawned as a child of check-phase-82 (phaseNum 74 is in CHAIN_PHASES=[48..81]). The apex tally is NOT affected (child exits 0). The CONTEXT.md D-03 lists 72, 73, 82 but not 74.
-   - What's unclear: Was 74 deliberately excluded (it doesn't affect apex count) or was it an oversight?
-   - Recommendation: Include the V-74-AUDIT archive-aware conversion in Plan 86-01 as a bonus cleanup. If D-03 interpretation is strict "apex only," it's still correct behavior. If D-03 means "clean up all VERIFICATION.md SKIPPEDs anywhere in the chain," it's required. Either way, the edit is safe.
+   - Resolution: The plan includes the V-74-AUDIT archive-aware conversion in Plan 86-01 Task 2. If D-03 interpretation is strict "apex only," it's still correct behavior; if D-03 means "clean up all VERIFICATION.md SKIPPEDs anywhere in the chain," it's required. Either way, the edit is safe and the question is closed.
 
 ---
 
