@@ -53,7 +53,7 @@ Requirements for milestone v1.10. Each maps to exactly one roadmap phase.
 
 ### Audit Harness & Milestone Close (HARN)
 
-- [ ] **HARN-01**: `v1.10-milestone-audit.mjs` + `v1.10-audit-allowlist.json` ship as Path-A copies from v1.9 (C1-C16 inherited) + BASELINE_14 freshness comment in `regenerate-supervision-pins.mjs` (Atom 1, indivisible)
+- [x] **HARN-01**: `v1.10-milestone-audit.mjs` + `v1.10-audit-allowlist.json` ship as Path-A copies from v1.9 (C1-C16 inherited) + BASELINE_14 freshness comment in `regenerate-supervision-pins.mjs` (Atom 1, indivisible)
 - [ ] **HARN-02**: Per-phase `check-phase-83..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a `V19` entry (v1.9 close-gate SHA, pinned BEFORE any validator is authored) + `audit-harness-v1.10-integrity.yml` ships as the **7th** parallel CI coexistence workflow (predecessors v1.4–v1.9 byte-unchanged) (Atom 2, indivisible)
 - [ ] **HARN-03**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` + Axis 2 cross-OS Linux GHA + Axis 3 fresh sub-agent; cross-OS PASS/FAIL/SKIP-count EXACT MATCH) + `v1.10-MILESTONE-AUDIT.md` + `v1.10-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT / ROADMAP / STATE / REQUIREMENTS)
 
@@ -106,7 +106,7 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 | REF-03 | Phase 87 | Complete |
 | CHAIN-01 | Phase 86 | Complete |
 | CHAIN-02 | Phase 86 | Complete |
-| HARN-01 | Phase 88 | Pending |
+| HARN-01 | Phase 88 | Complete |
 | HARN-02 | Phase 88 | Pending |
 | HARN-03 | Phase 88 | Pending |
 

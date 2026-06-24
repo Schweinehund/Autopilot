@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.10
 milestone_name: macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL
 status: executing
-last_updated: "2026-06-24T13:39:53.717Z"
-last_activity: 2026-06-24 -- Phase 88 planning complete
+last_updated: "2026-06-24T13:52:20.554Z"
+last_activity: 2026-06-24
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 16
-  completed_plans: 12
-  percent: 75
+  completed_plans: 13
+  percent: 81
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-22)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 88 — harness lineage bump + terminal re audit + milestone close
+**Current focus:** Phase 88 — harness-lineage-bump-terminal-re-audit-milestone-close
 
 ## Current Position
 
-Phase: 88
-Plan: Not started
+Phase: 88 (harness-lineage-bump-terminal-re-audit-milestone-close) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-06-24 -- Phase 88 planning complete
+Last activity: 2026-06-24
 
 ## v1.10 Phase Dependency Summary
 
@@ -158,6 +158,7 @@ Phase 88 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - V-63-08 blob hash in check-phase-63.mjs must be updated atomically with any macos-capability-matrix.md change (PITFALL DI-2)
 - `> [!WARNING]` callout required for destructive Graph API DELETE operation (PITFALL G-2)
 - Wrong Kerberos extension identifier (K-1) and wrong payload type (K-5) are critical pitfalls — every profile example must use `com.apple.AppSSOKerberos.KerberosExtension` and `Type: Credential`
+- [Phase ?]: V19 pinned as b29dca5 (close-gate SHA), BASELINE_14 added, pre-Phase-88 anchor=c8f4cf6
 
 ### Pending Todos
 
@@ -176,9 +177,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24T12:57:34.636Z
+Last session: 2026-06-24T13:52:20.539Z
 Stopped at: Phase 88 context gathered
-Resume file: .planning/phases/88-harness-lineage-bump-terminal-re-audit-milestone-close/88-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 83`
 
 ## Operator Next Steps
@@ -197,3 +198,4 @@ Next action: `/gsd-plan-phase 83`
 | Phase 86-chain-health-pass P01 | 18 | 3 tasks | 6 files |
 | Phase 86-chain-health-pass P02 | 20min | 2 tasks | 0 files |
 | Phase 87-navigation-hub-integration P02 | 275 | 2 tasks | 2 files |
+| Phase 88 P01 | 15m | 3 tasks | 5 files |

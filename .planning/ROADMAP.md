@@ -168,7 +168,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 88-01: Pin V19 (v1.9 close-gate SHA) in `_lib/frozen-at-close.mjs`; author Atom 1 (3-file indivisible commit)
+- [x] 88-01: Pin V19 (v1.9 close-gate SHA) in `_lib/frozen-at-close.mjs`; author Atom 1 (3-file indivisible commit)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -191,4 +191,4 @@ Plans:
 | 85. Capability Matrix + L2 Runbooks | 3/3 | Complete    | 2026-06-23 |
 | 86. Chain Health Pass | 2/2 | Complete    | 2026-06-24 |
 | 87. Navigation Hub Integration | 2/2 | Complete    | 2026-06-24 |
-| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
+| 88. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 1/4 | In Progress|  |
