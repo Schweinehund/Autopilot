@@ -83,7 +83,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Wave 1**
 
 - [x] 90-01-PLAN.md — Author `02-mdm-migration-psso.md` (selector-first opening, shared OS-gate + Kandji/Iru secret-retrieval pre-flight, B1 9-stage in-place track + Stage 9 PSSO re-registration delta + app-sso gate, B2 wipe fork, footers) (MIG-01..04)
-- [ ] 90-02-PLAN.md — Author `30-macos-mdm-migration-failure.md` L2 runbook (Context preamble + Track A deadline lockout / Track B profile-not-delivered / Track C PSSO re-registration stuck link-not-copy to #27; L2 #10 prereq) (RUN-01)
+- [x] 90-02-PLAN.md — Author `30-macos-mdm-migration-failure.md` L2 runbook (Context preamble + Track A deadline lockout / Track B profile-not-delivered / Track C PSSO re-registration stuck link-not-copy to #27; L2 #10 prereq) (RUN-01)
 
 **Wave 2** *(blocked on Wave 1 — navigation-last)*
 
@@ -141,7 +141,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 89. PSSO Provisioning Walkthrough | 2/2 | Complete    | 2026-06-24 |
-| 90. MDM Migration Walkthrough + L2 Runbook #30 | 1/3 | In Progress|  |
+| 90. MDM Migration Walkthrough + L2 Runbook #30 | 2/3 | In Progress|  |
 | 91. Glossary + Capability Matrix | 0/TBD | Not started | - |
 | 92. Navigation Hub Integration | 0/TBD | Not started | - |
 | 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |

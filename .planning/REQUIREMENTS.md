@@ -39,7 +39,7 @@ Requirements for milestone v1.11. Each maps to exactly one roadmap phase.
 
 ### L2 Migration-Failure Runbook (RUN)
 
-- [ ] **RUN-01**: An L2 engineer can investigate MDM-migration failures via a new runbook (`docs/l2-runbooks/30-macos-mdm-migration-failure.md`) — three failure tracks: **deadline lockout** (non-dismissible full-screen) + ABM admin recovery, **profile-not-delivered / enrollment-failed** (leftover source-MDM agent), and **PSSO re-registration stuck** — with macOS log-collection prerequisites (L2 #10); indexed in `l2-runbooks/00-index.md` (content-phase internal hub edit)
+- [x] **RUN-01**: An L2 engineer can investigate MDM-migration failures via a new runbook (`docs/l2-runbooks/30-macos-mdm-migration-failure.md`) — three failure tracks: **deadline lockout** (non-dismissible full-screen) + ABM admin recovery, **profile-not-delivered / enrollment-failed** (leftover source-MDM agent), and **PSSO re-registration stuck** — with macOS log-collection prerequisites (L2 #10); indexed in `l2-runbooks/00-index.md` (content-phase internal hub edit)
 
 ### Reference Integration (REF)
 

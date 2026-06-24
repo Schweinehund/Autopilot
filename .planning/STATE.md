@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
 status: executing
-last_updated: "2026-06-24T23:42:23.489Z"
+last_updated: "2026-06-24T23:49:10.256Z"
 last_activity: 2026-06-24
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
   percent: 20
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-24)
 ## Current Position
 
 Phase: 90 (mdm-migration-walkthrough-l2-runbook-30) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-24
 
@@ -190,6 +190,8 @@ Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - Link-not-copy architecture: scenario guides stitch the journey but do NOT inline guide 00/02/07 prose
 - Per-section `last_verified`/`review_by` stamps required on all macOS-26-gated sections (90-day review cycle per guide 07 ADE section precedent)
 - [Phase ?]: D-01/D-02/D-04: Shared pre-flight hard-fork; Stage 9 migration-delta-only PSSO re-registration; vendor-neutral Kandji/Iru authoring with both names
+- [Phase ?]: D-03 executed: L2 #30 Track C link-not-copies to L2 #27 for PSSO registration-failure investigation (no inline duplication)
+- [Phase ?]: RUN-01 satisfied: 30-macos-mdm-migration-failure.md authored with three parallel tracks, L2 #10 prereq cross-link, ABM admin recovery in MEDIUM-confidence callouts, no same-tenant key-survival claim
 
 ### Pending Todos
 
@@ -213,7 +215,7 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24T23:42:23.476Z
+Last session: 2026-06-24T23:48:49.688Z
 Stopped at: Completed 90-01-PLAN.md
 Resume file: None
 Next action: `/gsd-plan-phase 89`
@@ -229,3 +231,4 @@ Next action: `/gsd-plan-phase 89`
 | (v1.11 phases not yet started) | — | — | — |
 | Phase 89 P01 | 339s | 2 tasks | 1 files |
 | Phase 90 P01 | 23m | 2 tasks | 1 files |
+| Phase 90-mdm-migration-walkthrough-l2-runbook-30 P02 | 5m | 2 tasks | 1 files |
