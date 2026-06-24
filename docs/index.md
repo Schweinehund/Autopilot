@@ -121,6 +121,8 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS L2 Runbooks](l2-runbooks/00-index.md#macos-ade-runbooks) | Investigation guides for profile delivery, app install, and compliance evaluation failures |
 | [L2 Quick-Reference Card](quick-ref-l2.md#macos-ade-quick-reference) | One-page cheat sheet -- macOS Terminal commands, log paths, and key diagnostic checks |
 | [macOS Platform SSO Investigation](l2-runbooks/00-index.md#macos-ade-runbooks) | PSSO registration failure or Password-sync failure investigation (runbook #27) |
+| [macOS Kerberos SSO Investigation](l2-runbooks/00-index.md#macos-ade-runbooks) | Kerberos TGT not acquired, realm/KDC unreachable, or PSSO-TGT integration failure (runbook #28) |
+| [macOS Graph Credential Investigation](l2-runbooks/00-index.md#macos-ade-runbooks) | Platform Credential not appearing in Graph, delete-and-re-register flow, or permission errors (runbook #29) |
 
 ### Admin Setup
 
@@ -129,7 +131,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | Review the enrollment pipeline before configuring ABM and Intune |
 | [Network Endpoints Reference](reference/endpoints.md#macos-ade-endpoints) | Verify firewall rules for all required ADE endpoints |
 | [macOS Admin Setup Guides](admin-setup-macos/00-overview.md) | ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance policies |
-| [macOS Platform SSO Admin Setup Guides](admin-setup-macos/00-overview.md) | Platform SSO deployment (guide 07: setup), authentication method selection and deep-dive (guide 08: Secure Enclave key, Password sync, Smart card), and legacy SSO plug-in migration (guide 09) |
+| [macOS Platform SSO Admin Setup Guides](admin-setup-macos/00-overview.md) | Platform SSO deployment (guide 07: setup), authentication method selection and deep-dive (guide 08: Secure Enclave key, Password sync, Smart card), legacy SSO plug-in migration (guide 09), Kerberos SSO Extension deployment (guide 10), and Graph API Platform Credential management (guide 11) |
 
 ---
 
@@ -319,6 +321,7 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 87 (REF-03): enriched macOS Admin Setup Platform SSO row to name guides 10/11; added macOS L2 rows for Kerberos SSO Investigation (#28) and Graph Credential Investigation (#29) | -- |
 | 2026-05-22 | Phase 65 plan 65-03: 3 surgical edits — line-9 banner clause appendix + ### Apple Business Governance Operations sub-H3 + 2 Cross-Platform References entries (ABNAV-07) | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO rows to macOS Admin Setup / L1 / L2 nav tables | -- |
 | 2026-05-01 | Phase 59: appended `## Operations` H2 with 4 sub-H3 sections (Co-Management / Patch & Update Management / App Lifecycle Automation / Compliance Drift Detection + Tenant Migration) routing to operations/ sub-directories (CLEAN-08 SC#1) | -- |
