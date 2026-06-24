@@ -436,6 +436,13 @@ function doEmitStubs() {
 // this comment records the audit-trail event that line-positions were re-verified at Phase 82
 // close and remain valid for the v1.9 corpus. Resolution path: BASELINE_14 will refresh at the
 // next milestone close per the Path-A inheritance pattern (... -> v1.8 -> BASELINE_12 -> v1.9 -> BASELINE_13).
+// BASELINE_14 refreshed 2026-06-24 (Phase 88 Plan 88-01): closes BASELINE_13 v1.9 carry-over
+// per HARN-01 contract (REQUIREMENTS.md + ROADMAP.md Phase 88 SC#1); v1.10 line positions
+// verified against HEAD 2329791 (Phase 88 Wave-1 commit — 88-CONVENTIONS.md constants lock).
+// BASELINE_9 entries above remain unchanged -- Phase 88 does NOT alter the line-coord array;
+// this comment records the audit-trail event that line-positions were re-verified at Phase 88
+// close and remain valid for the v1.10 corpus. Resolution path: BASELINE_15 will refresh at
+// the next milestone close per the Path-A inheritance pattern (... -> v1.9 -> BASELINE_13 -> v1.10 -> BASELINE_14).
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 80],   // ### Supervision heading (was 79 at Phase 59; +1 Phase 62-07 banner shift; H3 sits before line 127)
   ['docs/_glossary-android.md', 82],   // Supervision disambiguation blockquote (was 81 at Phase 59; +1 Phase 62-07 banner shift)
