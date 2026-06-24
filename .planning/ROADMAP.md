@@ -35,7 +35,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Milestone Goal:** Give Intune/L1/L2 teams two consolidated, operator-followable macOS scenario guides — (1) deploying a Mac from enrollment profile to a fully PSSO-registered end user, and (2) migrating Macs from Kandji/Iru into Intune with PSSO — so the full device journey no longer requires hopping between guides 00/02/07.
 
 - [x] **Phase 89: PSSO Provisioning Walkthrough** — New `01-psso-provisioning-walkthrough.md` covering both delivery paths (standard post-enrollment + ADE-during-Setup-Assistant macOS 26+), path-divergence selector, `app-sso platform -s` verification gates, cross-links to guides 00/02/07 and L1 #35/#36 + L2 #27, and reciprocal See Also edits to guides 00/02/07 (completed 2026-06-24)
-- [ ] **Phase 90: MDM Migration Walkthrough + L2 Runbook #30** — New `02-mdm-migration-psso.md` (ABM "Assign Device Management" + Deadline OS-26 in-place path + pre-macOS-26 fallback + mandatory PSSO re-registration) + new `30-macos-mdm-migration-failure.md` L2 runbook + `l2-runbooks/00-index.md` extension
+- [x] **Phase 90: MDM Migration Walkthrough + L2 Runbook #30** — New `02-mdm-migration-psso.md` (ABM "Assign Device Management" + Deadline OS-26 in-place path + pre-macOS-26 fallback + mandatory PSSO re-registration) + new `30-macos-mdm-migration-failure.md` L2 runbook + `l2-runbooks/00-index.md` extension (completed 2026-06-24)
 - [ ] **Phase 91: Glossary + Capability Matrix** — Glossary terms (MDM Migration / Assign Device Management / Deadline / Kandji→Iru rebrand), `macos-capability-matrix.md` migration row (atomic V-63-08 hash update), `4-platform-capability-comparison.md` macOS migration cells
 - [ ] **Phase 92: Navigation Hub Integration** — Navigation-last integration into `docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l2.md`, and `docs/decision-trees/06-macos-triage.md`
 - [ ] **Phase 93: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A 9th lineage bump (Atom 1 + Atom 2), `frozen-at-close.mjs` V110 pin, 3-axis terminal re-audit, `v1.11-MILESTONE-AUDIT.md` + close-gate
@@ -87,7 +87,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 — navigation-last)*
 
-- [ ] 90-03-PLAN.md — Internal-hub + reciprocal cross-links: `00-index.md` #30 row, `27` reciprocal See Also, `01`→`02` back-link completing the bidirectional MIG-04 junction (RUN-01, MIG-04)
+- [x] 90-03-PLAN.md — Internal-hub + reciprocal cross-links: `00-index.md` #30 row, `27` reciprocal See Also, `01`→`02` back-link completing the bidirectional MIG-04 junction (RUN-01, MIG-04)
 
 **UI hint**: no
 
@@ -141,7 +141,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 89. PSSO Provisioning Walkthrough | 2/2 | Complete    | 2026-06-24 |
-| 90. MDM Migration Walkthrough + L2 Runbook #30 | 2/3 | In Progress|  |
+| 90. MDM Migration Walkthrough + L2 Runbook #30 | 3/3 | Complete   | 2026-06-24 |
 | 91. Glossary + Capability Matrix | 0/TBD | Not started | - |
 | 92. Navigation Hub Integration | 0/TBD | Not started | - |
 | 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
