@@ -48,7 +48,7 @@ Requirements for milestone v1.11. Each maps to exactly one roadmap phase.
 
 ### Navigation Integration (NAV)
 
-- [ ] **NAV-01**: Navigation hubs integrate the two new walkthroughs + L2 #30 **navigation-last** (after all content files confirmed committed) — `docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l2.md`, and the `docs/decision-trees/06-macos-triage.md` migration leaf
+- [x] **NAV-01**: Navigation hubs integrate the two new walkthroughs + L2 #30 **navigation-last** (after all content files confirmed committed) — `docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l2.md`, and the `docs/decision-trees/06-macos-triage.md` migration leaf
 
 ### Audit Harness & Milestone Close (HARN)
 
