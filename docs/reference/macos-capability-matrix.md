@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-21
-review_by: 2026-09-21
+last_verified: 2026-06-24
+review_by: 2026-09-24
 applies_to: both
 audience: admin
 platform: all
@@ -24,6 +24,7 @@ This document compares Intune management capabilities between Windows and macOS 
 | ESP timeout configuration | Yes (admin-configurable) | No (no enforced timeout) |
 | Dynamic enrollment groups | Yes (ZTDId attribute) | Yes (enrollmentProfileName attribute) |
 | Re-enrollment fires blocking screen | Yes (every enrollment) | No (first enrollment only) |
+| macOS 26 in-place ABM migration | n/a | Supported (profile-based re-enrollment, wipe-free; PSSO re-registration always required post-migration; pre-macOS-26 devices use wipe-and-re-enroll fallback) — see [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md) |
 
 ## Configuration
 
@@ -125,6 +126,7 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 91: add macOS 26 in-place ABM migration row under ## Enrollment; update V-63-08 BASELINE in check-phase-63.mjs atomically | -- |
 | 2026-04-14 | Initial version -- 5-domain capability matrix comparing Windows and macOS Intune management | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E4 See Also cross-link to 07-platform-sso-setup.md | -- |
 | 2026-06-21 | Add `## Authentication` section (7 rows: auth methods, hardware gate, macOS version floor, Entra licensing, NUAL, passkey/FIDO2, hybrid Entra join anti-feature); update `## Configuration` Platform SSO row to link `#authentication` (X1); refresh DS-2 dates | -- |

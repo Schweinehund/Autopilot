@@ -199,14 +199,14 @@ const checks = [
     }
   },
 
-  // === V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 73f16378197223378a8507a6751c763902de58db ===
+  // === V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 732588a57fd762c294400a4f6fd9a065c974216c ===
   {
-    id: 8, name: 'V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 73f16378197223378a8507a6751c763902de58db',
+    id: 8, name: 'V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 732588a57fd762c294400a4f6fd9a065c974216c',
     run() {
       if (!existsSync(join(process.cwd(), MACOS_MATRIX))) {
         return { pass: false, detail: MACOS_MATRIX + ' missing' };
       }
-      const BASELINE = '73f16378197223378a8507a6751c763902de58db';
+      const BASELINE = '732588a57fd762c294400a4f6fd9a065c974216c';
       try {
         const result = execFileSync('git', ['hash-object', MACOS_MATRIX], { stdio: 'pipe', cwd: process.cwd() });
         const actual = result.toString().trim();
@@ -220,14 +220,14 @@ const checks = [
     }
   },
 
-  // === V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 2314ede7be54efbea1d4a4a787068310869a5896 ===
+  // === V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 8dc79613922450a00c9a6bb40279a1e65a44390a ===
   {
-    id: 9, name: 'V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 2314ede7be54efbea1d4a4a787068310869a5896',
+    id: 9, name: 'V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 8dc79613922450a00c9a6bb40279a1e65a44390a',
     run() {
       if (!existsSync(join(process.cwd(), PLATFORM_COMPARISON))) {
         return { pass: false, detail: PLATFORM_COMPARISON + ' missing' };
       }
-      const BASELINE = '2314ede7be54efbea1d4a4a787068310869a5896';
+      const BASELINE = '8dc79613922450a00c9a6bb40279a1e65a44390a';
       try {
         const result = execFileSync('git', ['hash-object', PLATFORM_COMPARISON], { stdio: 'pipe', cwd: process.cwd() });
         const actual = result.toString().trim();

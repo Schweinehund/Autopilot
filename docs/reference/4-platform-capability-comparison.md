@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-21
-review_by: 2026-09-21
+last_verified: 2026-06-24
+review_by: 2026-09-24
 applies_to: both
 audience: admin
 platform: all
@@ -30,6 +30,7 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | BYOD enrollment path | Supported — [matrix](linux-capability-matrix.md#enrollment) | n/a — [matrix](macos-capability-matrix.md#enrollment) | Supported — [matrix](ios-capability-matrix.md#enrollment) | Supported — [matrix](android-capability-matrix.md#enrollment) | Partial — [matrix](linux-capability-matrix.md#enrollment) |
 | Factory-reset / re-provisioning behavior | Supported — [matrix](linux-capability-matrix.md#enrollment) | Supported — [matrix](macos-capability-matrix.md#enrollment) | Supported — [matrix](ios-capability-matrix.md#enrollment) | Mode-dependent — [matrix](android-capability-matrix.md#enrollment) | Not supported — [matrix](linux-capability-matrix.md#enrollment) |
 | Windows 10 support / minimum OS | Supported — [matrix](linux-capability-matrix.md#enrollment) (APv1 only on Windows 10; APv2 requires Windows 11 22H2+ — see [APv1 vs APv2](../apv1-vs-apv2.md)) | n/a — [matrix](macos-capability-matrix.md#enrollment) | n/a — [matrix](ios-capability-matrix.md#enrollment) | n/a — [matrix](android-capability-matrix.md#enrollment) | n/a — [matrix](linux-capability-matrix.md#enrollment) |
+| macOS 26 in-place ABM migration | n/a — [matrix](linux-capability-matrix.md#enrollment) | Supported — [matrix](macos-capability-matrix.md#enrollment) | n/a — [matrix](ios-capability-matrix.md#enrollment) | n/a — [matrix](android-capability-matrix.md#enrollment) | n/a — [matrix](linux-capability-matrix.md#enrollment) |
 
 ## Configuration
 
@@ -115,5 +116,6 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 91: add macOS 26 in-place ABM migration row under ## Enrollment; update V-63-09 BASELINE in check-phase-63.mjs atomically | -- |
 | 2026-05-01 | Initial version — Phase 58: 5-platform capability comparison (Windows, macOS, iOS, Android, Linux) across 6 domain H2s with link-not-copy cell architecture (DEFER-08 / AECOMPARE-01 close; CLEAN-05) | -- |
 | 2026-06-21 | Add `## Single Sign-On` section (7th H2) with one feature row — macOS Platform SSO cell (X3 SC2 verbatim, links matrix `#authentication`); non-macOS cells bare N/A (X2); update front-matter dates (DS-2) | -- |
