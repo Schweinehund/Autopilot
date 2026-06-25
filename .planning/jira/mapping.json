@@ -625,7 +625,7 @@
         },
         "90": {
           "issueKey": "RTS-667",
-          "status": "todo",
+          "status": "done",
           "name": "MDM Migration Walkthrough + L2 Runbook #30"
         },
         "91": {
