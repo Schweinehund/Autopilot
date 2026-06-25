@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
 status: verifying
-last_updated: "2026-06-24T23:54:27.199Z"
+last_updated: "2026-06-25T03:25:20.606Z"
 last_activity: 2026-06-24
 progress:
   total_phases: 5
@@ -215,9 +215,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-24T23:54:27.185Z
-Stopped at: Completed 90-01-PLAN.md
-Resume file: None
+Last session: 2026-06-25T03:25:20.594Z
+Stopped at: Phase 91 context gathered
+Resume file: .planning/phases/91-glossary-capability-matrix/91-CONTEXT.md
 Next action: `/gsd-plan-phase 89`
 
 ## Operator Next Steps
