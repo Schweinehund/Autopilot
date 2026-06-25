@@ -104,10 +104,14 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. `docs/reference/4-platform-capability-comparison.md` macOS migration cells are updated link-not-copy (pointing to the new matrix row); the equivalent blob-hash update for this file is committed atomically with its edit
 
 **Plans**: 3 plans
-
 Plans:
+**Wave 1**
+
 - [ ] 91-01-PLAN.md — REF-01: mint 9 glossary entries (all dead inbound anchors) + reciprocal _glossary.md see-also
 - [ ] 91-02-PLAN.md — REF-02: pre-edit anchor-inventory artifact for both pinned matrix files (committed first)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 91-03-PLAN.md — REF-02: atomic matrix + 4-platform migration rows + V-63-08/09 BASELINE pins (single commit)
 
 **UI hint**: no
