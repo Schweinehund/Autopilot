@@ -635,12 +635,12 @@
         },
         "92": {
           "issueKey": "RTS-669",
-          "status": "in_progress",
+          "status": "done",
           "name": "Navigation Hub Integration"
         },
         "93": {
           "issueKey": "RTS-670",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
         }
       }
