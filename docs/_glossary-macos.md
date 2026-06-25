@@ -14,7 +14,7 @@ platform: all
 
 ## Alphabetical Index
 
-[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ACME](#acme) | [Activation Lock Bypass](#activation-lock-bypass) | [ADE](#ade) | [app-sso](#app-sso) | [APNs](#apns) | [Assign Device Management](#assign-device-management) | [Await Configuration](#await-configuration) | [Deadline](#deadline) | [Delete Device Record](#delete-device-record) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [FileVault Recovery Key](#filevault-recovery-key) | [Jailbreak Detection](#jailbreak-detection) | [Kandji-Iru](#kandji-iru) | [Kerberos SSO Extension](#kerberos-sso-extension) | [MAM-WE](#mam-we) | [MDM Migration](#mdm-migration) | [Platform SSO](#platform-sso) | [Profile-Based Enrollment](#profile-based-enrollment) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
+[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ACME](#acme) | [Activation Lock Bypass](#activation-lock-bypass) | [ADE](#ade) | [APNs](#apns) | [app-sso](#app-sso) | [Assign Device Management](#assign-device-management) | [Await Configuration](#await-configuration) | [Deadline](#deadline) | [Delete Device Record](#delete-device-record) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [FileVault Recovery Key](#filevault-recovery-key) | [Jailbreak Detection](#jailbreak-detection) | [Kandji-Iru](#kandji-iru) | [Kerberos SSO Extension](#kerberos-sso-extension) | [MAM-WE](#mam-we) | [MDM Migration](#mdm-migration) | [Platform SSO](#platform-sso) | [Profile-Based Enrollment](#profile-based-enrollment) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
 
 ---
 
@@ -218,7 +218,7 @@ Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-06-24 | Phase 91: added 9 new terms (MDM Migration, Assign Device Management, Deadline, Kandji-Iru, Delete Device Record, FileVault Recovery Key, Activation Lock Bypass under ## Device Management; Profile-Based Enrollment, ACME under ## Enrollment; app-sso under ## Authentication); updated Alphabetical Index with all 10 new display names; updated last_verified and review_by | -- |
+| 2026-06-24 | Phase 91: added 10 new terms (MDM Migration, Assign Device Management, Deadline, Kandji-Iru, Delete Device Record, FileVault Recovery Key, Activation Lock Bypass under ## Device Management; Profile-Based Enrollment, ACME under ## Enrollment; app-sso under ## Authentication); updated Alphabetical Index with all 10 new display names; updated last_verified and review_by | -- |
 | 2026-06-22 | Phase 83 (KRB-04): added Kerberos SSO Extension entry to ## Authentication and Alphabetical Index | -- |
 | 2026-06-23 | Phase 84 (GRAPH-02): extended Platform SSO term see-also with guide 11 cross-link | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E2 cross-link from Platform SSO term to guide 07 | -- |
