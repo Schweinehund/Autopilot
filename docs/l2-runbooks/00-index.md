@@ -98,7 +98,9 @@ The [macOS Log Collection Guide](10-macos-log-collection.md) is a **prerequisite
 | Compliance / access blocked | [Compliance Evaluation Investigation](13-macos-compliance.md) |
 | Company Portal sign-in failure | [Compliance Evaluation Investigation](13-macos-compliance.md) for Entra registration issues |
 | [L1 35: Platform SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md) | [Platform SSO Investigation](27-macos-sso-investigation.md) — Registration Failure track |
+| [L1 35: Platform SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md) (post-migration context — device recently migrated from Kandji/Iru to Intune) | [macOS MDM Migration Failure](30-macos-mdm-migration-failure.md) — Track C: PSSO Re-Registration Stuck → then [Platform SSO Investigation](27-macos-sso-investigation.md) Track A |
 | [L1 36: Platform SSO — Secure Enclave Key Loss](../l1-runbooks/36-macos-secure-enclave-key.md) | [Platform SSO Investigation](27-macos-sso-investigation.md) — Registration Failure track (SE key re-registration path) |
+| Setup Assistant / enrollment failure (post-migration context — device recently migrated from Kandji/Iru to Intune via ABM deadline) | [macOS MDM Migration Failure](30-macos-mdm-migration-failure.md) — Track A (deadline lockout) or Track B (profile-not-delivered / enrollment-failed) |
 
 > **Note:** When a ticket arrives via macOS L1 escalation, the escalation checklist from the L1 runbook specifies: serial number, macOS version, Intune device status screenshot, and description of steps attempted. Each macOS L2 runbook opens with a triage block that routes "from L1 escalation" paths to skip initial data collection steps.
 
