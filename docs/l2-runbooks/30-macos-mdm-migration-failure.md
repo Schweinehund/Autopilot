@@ -80,7 +80,8 @@ This is the preferred path because it allows the device to self-recover without 
 
 For pre-lockout cancellation (device has prompts but is not yet at the full-screen lock):
 1. In ABM: **Devices** → locate the device by serial number
-2. Select the device → **Change Deadline** → remove the deadline date → **Save**
+2. Select the device → change or remove the migration deadline → **Save**
+   (Verify the exact ABM label — may read **Change Deadline** or equivalent in the current ABM portal; ABM portal navigation is subject to change and the pre-lockout button label carries the same authoring-day verify requirement as the post-lockout steps below.)
 3. This cancels the migration prompts on the device and re-assigns the device to its previous MDM assignment
 
 For a device already at the non-dismissible lockout screen:
