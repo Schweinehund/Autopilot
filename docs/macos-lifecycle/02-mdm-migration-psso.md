@@ -83,6 +83,11 @@ graph TD
 | 7: Post-Migration Profile-Based Enrollment | Device/System | On-device + Intune | Genuine unenroll from Kandji/Iru MDM + reenroll via profile-based enrollment; ACME cert reissued; Intune delivers enrollment policy + PSSO Settings Catalog | PSSO Settings Catalog not assigned to user groups before migration — delays PSSO delivery | B1 |
 | 8: FileVault Key Rotation | System/Admin | Intune admin center | Intune's FileVault escrow policy generates new recovery key post-enrollment | Pre-migration FileVault key from Kandji/Iru is no longer valid after migration | B1 |
 | 9: PSSO Re-Registration | User | On-device | "Registration Required" notification appears; user completes MFA; new Secure Enclave key written; verify with `app-sso platform -s` | PSSO key does NOT survive migration — re-registration is always required; MFA cannot be skipped | B1 |
+| B2-1: OS Gate — Wipe Required | Admin | Kandji/Iru + fleet audit | Confirm device running macOS 25 or earlier; communicate wipe requirement to user; route B1-eligible devices back to Stage 1 | Attempting B1 in-place path on a device that cannot support it | B2 |
+| B2-2: Secret Retrieval | Admin | Kandji/Iru console | FileVault recovery key + Activation Lock bypass code retrieved from Kandji/Iru console before Delete Device Record | Deleting device record before retrieving secrets — permanently destroys both key types | B2 |
+| B2-3: Retire & Wipe | Admin/Device | Kandji/Iru + on-device | Delete Device Record in Kandji/Iru; Erase Mac; device enters Setup Assistant | Using `profiles renew` instead of a full wipe — not a supported ADE migration shortcut | B2 |
+| B2-4: ADE Re-Enroll via Intune | Device | On-device (Setup Assistant) | Device contacts ABM during Setup Assistant; retrieves Intune ADE enrollment profile; ACME certificate issued | ADE enrollment policy not assigned to device serial number in ABM before wipe | B2 |
+| B2-5: Fresh PSSO Provisioning | User | On-device | Standard PSSO provisioning from scratch via [macOS Platform SSO Provisioning Walkthrough (guide 01)](01-psso-provisioning-walkthrough.md) — A1 path | Skipping the guide 01 handoff; attempting to document PSSO provisioning inline here | B2 |
 
 ---
 
