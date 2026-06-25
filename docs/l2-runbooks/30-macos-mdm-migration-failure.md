@@ -197,11 +197,12 @@ Run the following command on the affected macOS device:
 app-sso platform -s
 ```
 
-Interpret the output in prose — do not match against specific JSON field values beyond the two key registration state lines:
+A fully healthy post-migration PSSO state shows both of the following lines:
 
-- If the output shows `Device Registration: REGISTERED` but `User Registration: NOT REGISTERED`: the device enrolled successfully into Intune and the device-level PSSO registration completed, but the user has not yet completed their individual MFA re-registration. The "Registration Required" notification should appear or should have appeared — confirm the user has not dismissed it. The user must tap the notification and complete the MFA challenge in the webview to complete user registration.
+- `Device Registration: REGISTERED`
+- `User Registration: REGISTERED`
 
-- If the output shows both `Device Registration: NOT REGISTERED` and `User Registration: NOT REGISTERED`: the device-level registration has not completed. This may indicate the PSSO Settings Catalog policy has not reached the device yet (check Step 1 prerequisite 3), or there is a registration failure that requires further investigation.
+If either line does not show `REGISTERED`, the device has not completed PSSO re-registration. Capture the full `app-sso platform -s` output — do not draw conclusions from specific combinations of partial field values, as the JSON schema for intermediate states is not published in any authoritative source, and the same partial-state appearance can arise from multiple distinct root causes. Proceed to Step 3 to route to runbook 27 for the full registration-failure investigation.
 
 > **Important:** Do not interpret the absence or unexpected value of any particular JSON field beyond the two key registration state lines as a specific root cause without additional investigation. The full JSON schema for failure states is not published in an authoritative source — collect and forward the complete output rather than drawing conclusions from specific field values. See the [Platform SSO Setup Guide](../admin-setup-macos/07-platform-sso-setup.md) for the confirmed healthy-state reference.
 
