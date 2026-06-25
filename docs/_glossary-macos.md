@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-22
-review_by: 2026-09-22
+last_verified: 2026-06-24
+review_by: 2026-09-24
 applies_to: both
 audience: all
 platform: all
@@ -14,7 +14,7 @@ platform: all
 
 ## Alphabetical Index
 
-[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ADE](#ade) | [APNs](#apns) | [Await Configuration](#await-configuration) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [Jailbreak Detection](#jailbreak-detection) | [Kerberos SSO Extension](#kerberos-sso-extension) | [MAM-WE](#mam-we) | [Platform SSO](#platform-sso) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
+[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ACME](#acme) | [Activation Lock Bypass](#activation-lock-bypass) | [ADE](#ade) | [app-sso](#app-sso) | [APNs](#apns) | [Assign Device Management](#assign-device-management) | [Await Configuration](#await-configuration) | [Deadline](#deadline) | [Delete Device Record](#delete-device-record) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [FileVault Recovery Key](#filevault-recovery-key) | [Jailbreak Detection](#jailbreak-detection) | [Kandji-Iru](#kandji-iru) | [Kerberos SSO Extension](#kerberos-sso-extension) | [MAM-WE](#mam-we) | [MDM Migration](#mdm-migration) | [Platform SSO](#platform-sso) | [Profile-Based Enrollment](#profile-based-enrollment) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
 
 ---
 
@@ -55,6 +55,18 @@ Apple's formal management designation for organization-owned iOS/iPadOS devices 
 > **Windows equivalent:** No direct equivalent in Autopilot. The closest parallels are (a) Autopilot pre-provisioning (device enters with administrative context) for the enrollment-time-only supervision concept, and (b) macOS FileVault enforcement via ADE for the "set-at-enrollment, cannot-add-retroactively" lifecycle property. Neither Windows nor macOS gates as many capabilities on supervision state as iOS does.
 > See also: [Supervision](_glossary-android.md#supervision) (Android); [Supervision](_glossary-linux.md#supervision) (Linux).
 
+### Profile-Based Enrollment
+
+The enrollment type resulting from the macOS 26 in-place ABM migration (B1 path). Apple describes the B1 outcome as the device unenrolling from ADE and re-enrolling with profile-based enrollment. From Intune's perspective, no separate configuration is required -- the existing ADE enrollment policy handles the migrated device's re-enrollment. The result is functionally equivalent to a fresh ADE enrollment, including ACME certificate issuance and PSSO Settings Catalog delivery. PSSO re-registration is always required after migration. See [Stage 7](../macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
+
+> **Windows equivalent:** No direct equivalent -- this is a macOS-specific enrollment-type distinction. All Windows Autopilot enrollments are equivalent from Intune's management perspective regardless of the device's prior enrollment history.
+
+### ACME
+
+Automated Certificate Management Environment -- certificate protocol used by Intune to issue device identity certificates during genuine MDM enrollment on macOS 13.1 and later. The ACME certificate is reissued on every genuine re-enrollment (including the macOS 26 in-place migration via the B1 path); it is NOT reissued on profile renewal or MDM refresh without a full unenroll/reenroll. See [Stage 7](../macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
+
+> **Windows equivalent:** No direct equivalent -- Windows Intune device certificates use SCEP/PKCS protocols; ACME is macOS-specific in the Intune context. SCEP and PKCS certificates serve the analogous device-identity function on Windows.
+
 ---
 
 ## Device Management
@@ -78,6 +90,48 @@ The server token (.p7m file) downloaded from Apple Business Manager that enables
 Apple Push Notification service -- Apple's push notification service used by all Apple platforms (iOS, iPadOS, macOS, tvOS) for MDM command delivery. Intune uses APNs to wake devices and deliver configuration profiles, app install commands, and compliance evaluation triggers. The Apple **APNs certificate** (Microsoft also calls it the "MDM Push Certificate") is provisioned per-tenant in Intune admin center at `Devices > Enrollment > Apple > MDM Push Certificate` and must be renewed annually. **Critical cross-platform blast radius:** a single expired or revoked APNs certificate breaks ALL iOS/iPadOS AND macOS MDM communication for the entire tenant until renewed. Must be renewed by the SAME Apple ID that created it -- renewing with a different Apple ID forces re-enrollment of every managed Apple device.
 
 > **Windows equivalent:** No direct equivalent for the certificate lifecycle. Windows Autopilot relies on Windows Notification Service (WNS) and HTTPS polling; there is no per-tenant certificate to renew. The closest parallel is Intune's automatic communication with Windows clients via Entra ID, which does not lapse annually.
+
+### MDM Migration
+
+The process by which a Mac enrolled in a source MDM (such as Kandji/Iru) is moved to a target MDM (such as Microsoft Intune) without requiring a full device wipe. On macOS 26+, the "Assign Device Management" action in Apple Business Manager triggers an in-place migration (B1 path) that unenrolls the device from the source MDM and re-enrolls it in the target MDM via profile-based enrollment. Pre-macOS-26 devices require a wipe-and-re-enroll fallback (B2 path). PSSO re-registration is always required post-migration regardless of path. See [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md).
+
+> **Windows equivalent:** No direct equivalent -- Windows tenant-to-tenant migration requires deregistration from the source tenant, hardware-hash re-import to the target tenant, and a full device reset (NOT Autopilot Reset). In-place re-enrollment without a wipe is not available on Windows. See [Tenant migration](_glossary.md#tenant-migration).
+
+### Assign Device Management
+
+The Apple Business Manager action that assigns a device's serial number to a new MDM server, triggering the managed device migration workflow on macOS 26+. Once executed in ABM, the source MDM receives a migration signal at its next check-in; the device transitions to the target MDM enrollment profile without requiring a wipe. The Deadline must be configured before or alongside this action to set the migration enforcement window. See [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md).
+
+> **Windows equivalent:** No direct equivalent -- Windows tenant-to-tenant migration requires deregistration from the source tenant, hardware-hash re-import to the target tenant, and a full device reset (NOT Autopilot Reset). In-place re-enrollment without a wipe is not available on Windows. See [Tenant migration](_glossary.md#tenant-migration).
+
+### Deadline
+
+Migration enforcement date set in Apple Business Manager (1--90 day range) after which macOS displays a non-dismissible full-screen prompt until migration enrollment completes. See [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md) for the full lockout UX and [L2 Runbook #30](../l2-runbooks/30-macos-mdm-migration-failure.md) for deadline-lockout recovery.
+
+> **Windows equivalent:** No direct equivalent -- Windows tenant-to-tenant migration requires deregistration from the source tenant, hardware-hash re-import to the target tenant, and a full device reset (NOT Autopilot Reset). In-place re-enrollment without a wipe is not available on Windows. See [Tenant migration](_glossary.md#tenant-migration).
+
+### Kandji-Iru
+
+macOS MDM platform rebranded from Kandji to Iru in October 2025. Both names refer to the same product; this documentation uses "Kandji/Iru" throughout to be clear for readers who may know either name. The support portal URL is unchanged: support.kandji.io.
+
+> **Windows equivalent:** No direct equivalent -- macOS MDM platforms (Kandji/Iru, Jamf, Mosyle) have no Windows analog; Windows devices enroll directly into Intune without a third-party MDM intermediary.
+
+### Delete Device Record
+
+Kandji/Iru console action that removes a Mac from MDM management and permanently destroys all MDM-held secrets (FileVault recovery key and Activation Lock bypass code). After deletion, the Kandji/Iru agent (`/Library/Kandji/Kandji Agent.app`) receives an uninstall command at its next MDM check-in (~15 minutes) and removes itself. **Retrieve all secrets BEFORE performing this action -- there is no recovery path after deletion.** See [Stage 2: Secret Retrieval](../macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
+
+> **Windows equivalent:** No direct equivalent. The conceptual parallel is removing a device from Intune ("Retire" or "Delete" in Intune admin center), which also removes MDM management, but Windows Intune does not hold an Activation Lock bypass code or equivalent hardware secret that is permanently destroyed on deletion.
+
+### FileVault Recovery Key
+
+MDM-held cryptographic key that allows decryption of a FileVault-encrypted Mac startup disk. Each MDM enrollment holds its own escrow copy; the key is permanently destroyed when the MDM device record is deleted. During Kandji/Iru-to-Intune migration, the source MDM copy is destroyed on Delete Device Record -- retrieve it BEFORE deletion. See [Stage 2: Secret Retrieval](../macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
+
+> **Windows equivalent:** [BitLocker recovery key](https://learn.microsoft.com/en-us/mem/intune/protect/encrypt-devices) escrowed in Intune -- conceptually analogous (MDM holds the decryption key); lifecycle differs (the BitLocker recovery key is NOT destroyed on device record deletion in most Intune configurations).
+
+### Activation Lock Bypass
+
+Device-specific code enabling an administrator to bypass Activation Lock if the supervising MDM is removed. Generated at device supervision time; only available within 30 days of supervision. Permanently destroyed on Delete Device Record in the source MDM -- retrieve before any device record deletion. See [Stage 2: Secret Retrieval](../macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
+
+> **Windows equivalent:** No direct equivalent. Activation Lock is an Apple-specific iCloud-linked device lock; Windows has no hardware-anchored device-lock mechanism requiring an MDM-held bypass code.
 
 ### Jailbreak Detection
 
@@ -145,12 +199,26 @@ An Apple-native extension (`com.apple.AppSSOKerberos.KerberosExtension`, payload
 
 > See also: [Platform SSO](#platform-sso); [Enterprise SSO Plug-in](#enterprise-sso-plug-in); [Kerberos SSO Extension Guide](admin-setup-macos/10-kerberos-sso-extension.md).
 
+### app-sso
+
+macOS built-in command-line tool for inspecting Platform SSO extension registration state. The subcommand `app-sso platform -s` returns the current Device Registration and User Registration status for the Entra ID SSO extension. Expected output after successful PSSO registration:
+
+```
+Device Registration: REGISTERED
+User Registration: REGISTERED
+```
+
+Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and at the final stage of any PSSO provisioning flow. See [Platform SSO](#platform-sso) for the full PSSO entry; see [Stage 9](../macos-lifecycle/02-mdm-migration-psso.md#stage-9-psso-re-registration-b1-path) for migration context.
+
+> **Windows equivalent:** No direct equivalent. The closest Windows analog is the `dsregcmd /status` command, which returns Entra ID device join state and PRT status -- conceptually similar verification function, different platform mechanism.
+
 ---
 
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 91: added 9 new terms (MDM Migration, Assign Device Management, Deadline, Kandji-Iru, Delete Device Record, FileVault Recovery Key, Activation Lock Bypass under ## Device Management; Profile-Based Enrollment, ACME under ## Enrollment; app-sso under ## Authentication); updated Alphabetical Index with all 10 new display names; updated last_verified and review_by | -- |
 | 2026-06-22 | Phase 83 (KRB-04): added Kerberos SSO Extension entry to ## Authentication and Alphabetical Index | -- |
 | 2026-06-23 | Phase 84 (GRAPH-02): extended Platform SSO term see-also with guide 11 cross-link | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E2 cross-link from Platform SSO term to guide 07 | -- |
