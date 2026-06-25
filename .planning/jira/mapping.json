@@ -630,12 +630,12 @@
         },
         "91": {
           "issueKey": "RTS-668",
-          "status": "todo",
+          "status": "done",
           "name": "Glossary + Capability Matrix"
         },
         "92": {
           "issueKey": "RTS-669",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Navigation Hub Integration"
         },
         "93": {
