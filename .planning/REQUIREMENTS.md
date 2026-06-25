@@ -44,7 +44,7 @@ Requirements for milestone v1.11. Each maps to exactly one roadmap phase.
 ### Reference Integration (REF)
 
 - [x] **REF-01**: `_glossary-macos.md` (+ reciprocal `_glossary.md` see-also) gain **MDM Migration**, **"Assign Device Management"**, and **Deadline** entries, plus a **Kandji→Iru rebrand** note
-- [ ] **REF-02**: `docs/reference/macos-capability-matrix.md` gains an **MDM-migration coverage row** under the **pre-edit anchor-inventory** convention, committed **atomically** with the `check-phase-63.mjs` **V-63-08 blob-hash** baseline update (`73f16378197223378a8507a6751c763902de58db` baseline; verify on authoring day); `4-platform-capability-comparison.md` macOS cells updated **link-not-copy**
+- [x] **REF-02**: `docs/reference/macos-capability-matrix.md` gains an **MDM-migration coverage row** under the **pre-edit anchor-inventory** convention, committed **atomically** with the `check-phase-63.mjs` **V-63-08 blob-hash** baseline update (`73f16378197223378a8507a6751c763902de58db` baseline; verify on authoring day); `4-platform-capability-comparison.md` macOS cells updated **link-not-copy**
 
 ### Navigation Integration (NAV)
 

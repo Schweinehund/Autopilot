@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
 status: executing
-last_updated: "2026-06-25T03:57:09.307Z"
+last_updated: "2026-06-25T04:02:43.098Z"
 last_activity: 2026-06-25
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 40
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-24)
 ## Current Position
 
 Phase: 91 (glossary-capability-matrix) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-25
 
@@ -192,6 +192,7 @@ Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - [Phase ?]: D-01/D-02/D-04: Shared pre-flight hard-fork; Stage 9 migration-delta-only PSSO re-registration; vendor-neutral Kandji/Iru authoring with both names
 - [Phase ?]: D-03 executed: L2 #30 Track C link-not-copies to L2 #27 for PSSO registration-failure investigation (no inline duplication)
 - [Phase ?]: RUN-01 satisfied: 30-macos-mdm-migration-failure.md authored with three parallel tracks, L2 #10 prereq cross-link, ABM admin recovery in MEDIUM-confidence callouts, no same-tenant key-survival claim
+- [Phase ?]: Pre-edit blob hashes re-measured 2026-06-24: V-63-08 (73f16378) and V-63-09 (2314ede7) confirmed unchanged; macos-capability-matrix.md has no ## Version History heading
 
 ### Pending Todos
 
@@ -215,8 +216,8 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-25T03:57:09.294Z
-Stopped at: Phase 91 context gathered
+Last session: 2026-06-25T04:02:43.084Z
+Stopped at: Completed 91-02: pre-edit anchor inventory committed (40a4cdd)
 Resume file: None
 Next action: `/gsd-plan-phase 89`
 
@@ -233,3 +234,4 @@ Next action: `/gsd-plan-phase 89`
 | Phase 90 P01 | 23m | 2 tasks | 1 files |
 | Phase 90-mdm-migration-walkthrough-l2-runbook-30 P02 | 5m | 2 tasks | 1 files |
 | Phase 91 P01 | 8m | 2 tasks | 2 files |
+| Phase 91 P02 | 4m | 1 tasks | 1 files |
