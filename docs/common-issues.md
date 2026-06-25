@@ -235,6 +235,7 @@ Device stuck on a non-dismissible full-screen migration prompt at or after the A
 
 Platform SSO "Registration Required" notification has not appeared after MDM migration, or registration was initiated but is not completing. PSSO re-registration is always required after MDM migration — MDM unenrollment = IdP unregistration; the Secure Enclave key is re-created on re-enrollment.
 
+- **L1:** No L1 runbook — escalate to L2
 - **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md)
 - **L2:** [macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md) — Track C: PSSO re-registration stuck
 
