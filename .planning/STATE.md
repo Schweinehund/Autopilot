@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
 status: executing
-last_updated: "2026-06-25T03:49:52.023Z"
-last_activity: 2026-06-25 -- Phase 91 planning complete
+last_updated: "2026-06-25T03:57:09.307Z"
+last_activity: 2026-06-25
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 8
-  completed_plans: 5
+  completed_plans: 6
   percent: 40
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-24)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 90 — mdm-migration-walkthrough-l2-runbook-30
+**Current focus:** Phase 91 — glossary-capability-matrix
 
 ## Current Position
 
-Phase: 90 (mdm-migration-walkthrough-l2-runbook-30) — EXECUTING
-Plan: 3 of 3
+Phase: 91 (glossary-capability-matrix) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-25 -- Phase 91 planning complete
+Last activity: 2026-06-25
 
 ```
 Phase 89-93 Progress: [░░░░░░░░░░] 0%
@@ -215,9 +215,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-25T03:25:20.594Z
+Last session: 2026-06-25T03:57:09.294Z
 Stopped at: Phase 91 context gathered
-Resume file: .planning/phases/91-glossary-capability-matrix/91-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 89`
 
 ## Operator Next Steps
@@ -232,3 +232,4 @@ Next action: `/gsd-plan-phase 89`
 | Phase 89 P01 | 339s | 2 tasks | 1 files |
 | Phase 90 P01 | 23m | 2 tasks | 1 files |
 | Phase 90-mdm-migration-walkthrough-l2-runbook-30 P02 | 5m | 2 tasks | 1 files |
+| Phase 91 P01 | 8m | 2 tasks | 2 files |

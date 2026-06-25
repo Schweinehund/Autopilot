@@ -107,7 +107,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 Plans:
 **Wave 1**
 
-- [ ] 91-01-PLAN.md — REF-01: mint 9 glossary entries (all dead inbound anchors) + reciprocal _glossary.md see-also
+- [x] 91-01-PLAN.md — REF-01: mint 9 glossary entries (all dead inbound anchors) + reciprocal _glossary.md see-also
 - [ ] 91-02-PLAN.md — REF-02: pre-edit anchor-inventory artifact for both pinned matrix files (committed first)
 
 **Wave 2** *(blocked on Wave 1 completion)*
@@ -152,6 +152,6 @@ Plans:
 |-------|----------------|--------|-----------|
 | 89. PSSO Provisioning Walkthrough | 2/2 | Complete    | 2026-06-24 |
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 3/3 | Complete   | 2026-06-24 |
-| 91. Glossary + Capability Matrix | 0/TBD | Not started | - |
+| 91. Glossary + Capability Matrix | 1/3 | In Progress|  |
 | 92. Navigation Hub Integration | 0/TBD | Not started | - |
 | 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
