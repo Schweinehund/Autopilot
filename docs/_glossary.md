@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-05-05
-review_by: 2026-07-04
+last_verified: 2026-06-24
+review_by: 2026-09-24
 applies_to: both
 audience: all
 platform: all
@@ -122,6 +122,8 @@ The process by which a device proves its TPM identity to Microsoft's attestation
 
 The process of moving Autopilot-registered devices from one Microsoft tenant to another. Requires deregistration from source tenant, hardware hash re-import to target tenant, and device reset (NOT Autopilot Reset). See [Tenant Migration](device-operations/04-tenant-migration.md).
 
+> See also: [MDM Migration](_glossary-macos.md#mdm-migration) (macOS -- wipe-free in-place re-enrollment on macOS 26+, distinct from Windows tenant migration which requires a full device reset).
+
 ### Firmware TPM (fTPM)
 
 A TPM implemented in processor firmware (Intel, AMD, Qualcomm) rather than a discrete chip; requires manufacturer certificate retrieval on first use.
@@ -241,5 +243,6 @@ The second half of ESP (after user login) that applies user-targeted apps and po
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-24 | Phase 91: added reciprocal `> See also:` to ### Tenant migration pointing to _glossary-macos.md#mdm-migration | -- |
 | 2026-06-20 | Phase 75 (SSOREF-01 / XC-1): added `### Entra ID SSO` term (Security section) and a reciprocal `> See also:` to Secure Enclave inside the existing `### TPM` body; Alphabetical Index updated | -- |
 | 2026-05-05 | Phase 59 (CLEAN-08): added NEW `> **Cross-platform note:**` blockquotes with reciprocal see-also lines for collision-matrix terms (OOBE / Setup Assistant, ESP / Await Configuration, Hardware hash, Corporate identifiers) per D-15 pattern alignment normalization | -- |
