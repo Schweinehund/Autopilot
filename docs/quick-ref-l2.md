@@ -197,6 +197,24 @@ klist
 
 Healthy output shows a TGT with a future expiry for the configured realm. An empty cache or "No credentials cache found" indicates TGT acquisition failure. For PSSO-TGT integration context (`tgt_ad` on-prem vs `tgt_cloud` Entra), see the [Platform SSO Attestation Command](#platform-sso-attestation-command) block above.
 
+#### MDM Migration Diagnostics
+
+Diagnose Kandji/Iru → Intune migration failures on the affected Mac:
+
+```bash
+# Check if Kandji (Iru) agent directory is still present (Track B root cause)
+ls /Library/Kandji/
+
+# Verify macOS version meets the macOS 26+ gate for B1 in-place migration
+sw_vers -productVersion
+```
+
+For enrollment status, cross-reference:
+- [`profiles status -type enrollment`](#key-terminal-commands) — already in Key Terminal Commands above; checks MDM enrollment state and stale Kandji/Iru MDM certificates
+- [`app-sso platform -s`](#platform-sso-attestation-command) — already in Platform SSO Attestation Command above; verifies PSSO re-registration state post-migration
+
+See [L2 #30 macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md) for Track A/B/C investigation steps.
+
 ### macOS Investigation Runbooks
 
 - [macOS Log Collection Guide](l2-runbooks/10-macos-log-collection.md) -- prerequisite for all macOS investigations
@@ -205,6 +223,7 @@ Healthy output shows a TGT with a future expiry for the configured realm. An emp
 - [Compliance Evaluation Investigation](l2-runbooks/13-macos-compliance.md)
 - [Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md) -- PSSO registration failure and Password-sync failure investigation
 - [Kerberos SSO Investigation](l2-runbooks/28-macos-kerberos-sso-investigation.md) -- Kerberos TGT not acquired, realm/KDC reachability, and PSSO-TGT integration investigation
+- [macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md) -- Track A: deadline lockout, Track B: profile-not-delivered / enrollment-failed, Track C: PSSO re-registration stuck
 
 ---
 

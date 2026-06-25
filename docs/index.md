@@ -108,6 +108,8 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS L1 Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Scripted procedures for top macOS ADE enrollment failures (6 runbooks: device, Setup Assistant, profiles, apps, compliance, Company Portal) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#macos-ade-quick-reference) | One-page cheat sheet -- macOS top checks, escalation triggers, and runbook links |
 | [macOS Platform SSO Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Platform SSO sign-in failure (runbook #35: "Registration Required" not appearing) or Secure Enclave key loss after password reset (runbook #36) |
+| [macOS PSSO Provisioning Walkthrough](macos-lifecycle/01-psso-provisioning-walkthrough.md) | Walk through a Mac from enrollment to PSSO-registered end user — both standard post-enrollment (A1) and ADE-during-Setup-Assistant macOS 26+ (A2) paths |
+| [macOS MDM Migration Walkthrough (Kandji/Iru → Intune)](macos-lifecycle/02-mdm-migration-psso.md) | Walk through B1 wipe-free in-place migration (macOS 26+) or B2 wipe-and-re-enroll (macOS 25 or earlier) from Kandji/Iru to Intune |
 
 ### Desktop Engineering (L2)
 
@@ -123,6 +125,9 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS Platform SSO Investigation](l2-runbooks/00-index.md#macos-ade-runbooks) | PSSO registration failure or Password-sync failure investigation (runbook #27) |
 | [macOS Kerberos SSO Investigation](l2-runbooks/00-index.md#macos-ade-runbooks) | Kerberos TGT not acquired, realm/KDC unreachable, or PSSO-TGT integration failure (runbook #28) |
 | [macOS Graph Credential Investigation](l2-runbooks/00-index.md#macos-ade-runbooks) | Platform Credential not appearing in Graph, delete-and-re-register flow, or permission errors (runbook #29) |
+| [macOS PSSO Provisioning Walkthrough](macos-lifecycle/01-psso-provisioning-walkthrough.md) | Walk through a Mac from enrollment to PSSO-registered end user — both standard post-enrollment (A1) and ADE-during-Setup-Assistant macOS 26+ (A2) paths |
+| [macOS MDM Migration Walkthrough (Kandji/Iru → Intune)](macos-lifecycle/02-mdm-migration-psso.md) | Walk through B1 wipe-free in-place migration (macOS 26+) or B2 wipe-and-re-enroll (macOS 25 or earlier) from Kandji/Iru to Intune |
+| [macOS MDM Migration Failure Runbook](l2-runbooks/30-macos-mdm-migration-failure.md) | Investigate migration failures — Track A: deadline lockout (non-dismissible full-screen prompt, ABM admin recovery), Track B: profile-not-delivered / enrollment-failed (leftover Kandji/Iru agent), Track C: PSSO re-registration stuck |
 
 ### Admin Setup
 
