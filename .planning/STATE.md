@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
-status: ready_to_plan
-last_updated: 2026-06-25T04:33:15.104Z
+status: planning
+last_updated: "2026-06-25T22:26:05.327Z"
 last_activity: 2026-06-25
 progress:
   total_phases: 5
@@ -11,7 +11,6 @@ progress:
   total_plans: 8
   completed_plans: 8
   percent: 60
-stopped_at: Phase 91 complete (3/3) — ready to discuss Phase 92
 ---
 
 # Project State
@@ -217,9 +216,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-25T04:09:24.553Z
-Stopped at: Completed 91-02: pre-edit anchor inventory committed (40a4cdd)
-Resume file: None
+Last session: 2026-06-25T22:26:05.301Z
+Stopped at: Phase 92 context gathered
+Resume file: .planning/phases/92-navigation-hub-integration/92-CONTEXT.md
 Next action: `/gsd-plan-phase 89`
 
 ## Operator Next Steps
