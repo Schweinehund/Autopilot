@@ -32,7 +32,7 @@ Requirements for milestone v1.12. Each maps to exactly one roadmap phase.
 
 - [x] **HARN-02**: Per-phase `check-phase-94..NN.mjs` validators ship as deliverables (chain-apex `CHAIN_PHASES=[48..93]`, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` gains a **`V111`** entry (v1.11 close-gate SHA — candidate `919b23b`; confirm with `git log --grep="close-gate" --grep="v1.11" --all-match -1` at harness-phase time — pinned BEFORE any v1.12 validator is authored) + `audit-harness-v1.12-integrity.yml` ships as the **9th** parallel CI coexistence workflow (predecessors v1.4–v1.11 byte-unchanged) — **Atom 2**, indivisible.
 
-- [ ] **HARN-03**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` + Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP-count **EXACT MATCH**, Linux GHA apex authoritative per D-03 given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth `[48..93]`) + `v1.12-MILESTONE-AUDIT.md` + `v1.12-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT / ROADMAP / STATE / REQUIREMENTS). Predecessor v1.4–v1.11 frozen surfaces BYTE-UNCHANGED.
+- [x] **HARN-03**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` + Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP-count **EXACT MATCH**, Linux GHA apex authoritative per D-03 given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth `[48..93]`) + `v1.12-MILESTONE-AUDIT.md` + `v1.12-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT / ROADMAP / STATE / REQUIREMENTS). Predecessor v1.4–v1.11 frozen surfaces BYTE-UNCHANGED.
 
 ## v2 Requirements
 
@@ -82,7 +82,7 @@ Populated by gsd-roadmapper 2026-06-26. Each requirement maps to exactly one pha
 | MIGV-03 | Phase 94 | Complete |
 | HARN-01 | Phase 95 | Complete |
 | HARN-02 | Phase 95 | Complete |
-| HARN-03 | Phase 95 | Pending |
+| HARN-03 | Phase 95 | Complete |
 
 **Coverage:**
 - v1 requirements: 6 total

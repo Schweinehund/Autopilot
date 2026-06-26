@@ -78,7 +78,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-  - [ ] 95-03-PLAN.md — HARN-03 3-axis terminal re-audit (4-row cross-OS; both chain validators Linux-authoritative)
+  - [x] 95-03-PLAN.md — HARN-03 3-axis terminal re-audit (4-row cross-OS; both chain validators Linux-authoritative)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -91,4 +91,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 94. Post-Migration Verification Content Closure | 1/1 | Complete    | 2026-06-26 |
-| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |
+| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |
