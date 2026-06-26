@@ -20,11 +20,11 @@ Requirements for milestone v1.12. Each maps to exactly one roadmap phase.
 
 ### MDM-Migration Verification (MIGV)
 
-- [ ] **MIGV-01**: An operator reading `docs/macos-lifecycle/02-mdm-migration-psso.md` learns — **at full confidence, verified against current Microsoft Learn** — whether Intune requires any configuration **beyond ADE token assignment** once an OS-26 in-place ABM migration resolves to profile-based enrollment, or whether the existing ADE token assignment alone yields full compliance + policy application. Documented as an addendum to the post-migration verification steps (and/or a pre-migration readiness-checklist sidebar), with the L2 #30 runbook updated only if the answer affects migration-failure triage. Carries `last_verified: <authoring-day>` / `review_by: <+90d>` stamps (OS-26-gated content).
+- [x] **MIGV-01**: An operator reading `docs/macos-lifecycle/02-mdm-migration-psso.md` learns — **at full confidence, verified against current Microsoft Learn** — whether Intune requires any configuration **beyond ADE token assignment** once an OS-26 in-place ABM migration resolves to profile-based enrollment, or whether the existing ADE token assignment alone yields full compliance + policy application. Documented as an addendum to the post-migration verification steps (and/or a pre-migration readiness-checklist sidebar), with the L2 #30 runbook updated only if the answer affects migration-failure triage. Carries `last_verified: <authoring-day>` / `review_by: <+90d>` stamps (OS-26-gated content).
 
-- [ ] **MIGV-02**: The Kandji/Iru source-side steps section of guide `02` reflects the **verified current Iru (post-Kandji-rebrand, Oct 2025) console device-deletion UI path**, checked against live vendor documentation (`support.iru.io` / current Iru support portal + admin-console docs) — confirming the path is unchanged or correcting it — and confirms whether the delete operation still requires the documented secret-retrieval pre-flight (FileVault recovery key / Activation Lock bypass code). Both **Kandji** and **Iru** names remain surfaced for searchability.
+- [x] **MIGV-02**: The Kandji/Iru source-side steps section of guide `02` reflects the **verified current Iru (post-Kandji-rebrand, Oct 2025) console device-deletion UI path**, checked against live vendor documentation (`support.iru.io` / current Iru support portal + admin-console docs) — confirming the path is unchanged or correcting it — and confirms whether the delete operation still requires the documented secret-retrieval pre-flight (FileVault recovery key / Activation Lock bypass code). Both **Kandji** and **Iru** names remain surfaced for searchability.
 
-- [ ] **MIGV-03**: Guide `02` documents the best-available inference on whether **device supervision is preserved after an OS-26 in-place ABM "Assign Device Management" migration** to Intune, framed as an explicit **MEDIUM-confidence callout** that (a) states the most-likely behavior with sources, (b) **recommends a pilot-device test** (`profiles status` / `profiles list` before-and-after) without shipping author-unverified step-by-step procedure as if validated, and (c) makes **no claim that the PSSO key survives** (Apple authoritative: re-registration always required). Placed in the post-migration verification checklist or as a MEDIUM-confidence callout in the source-side steps section. Carries `last_verified` / `review_by` stamps.
+- [x] **MIGV-03**: Guide `02` documents the best-available inference on whether **device supervision is preserved after an OS-26 in-place ABM "Assign Device Management" migration** to Intune, framed as an explicit **MEDIUM-confidence callout** that (a) states the most-likely behavior with sources, (b) **recommends a pilot-device test** (`profiles status` / `profiles list` before-and-after) without shipping author-unverified step-by-step procedure as if validated, and (c) makes **no claim that the PSSO key survives** (Apple authoritative: re-registration always required). Placed in the post-migration verification checklist or as a MEDIUM-confidence callout in the source-side steps section. Carries `last_verified` / `review_by` stamps.
 
 ### Audit Harness & Milestone Close (HARN)
 
@@ -77,9 +77,9 @@ Populated by gsd-roadmapper 2026-06-26. Each requirement maps to exactly one pha
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MIGV-01 | Phase 94 | Pending |
-| MIGV-02 | Phase 94 | Pending |
-| MIGV-03 | Phase 94 | Pending |
+| MIGV-01 | Phase 94 | Complete |
+| MIGV-02 | Phase 94 | Complete |
+| MIGV-03 | Phase 94 | Complete |
 | HARN-01 | Phase 95 | Pending |
 | HARN-02 | Phase 95 | Pending |
 | HARN-03 | Phase 95 | Pending |

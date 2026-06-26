@@ -36,7 +36,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Milestone Goal:** Close the three Phase-90 post-migration verification gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md` (Intune profile-based-enrollment config, Iru console delete UI path, supervision-status post-migration), then bump the audit harness to its 10th Path-A generation and close the milestone.
 
-- [ ] **Phase 94: Post-Migration Verification Content Closure** — Source-verify and document three open gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md`: (1) Intune config beyond ADE token for profile-based enrollment (MIGV-01, full confidence after Microsoft Learn verification), (2) current Iru console delete UI path (MIGV-02, confirmed against support.iru.io), (3) supervision-status MEDIUM-confidence callout + pilot recommendation (MIGV-03, not a flat assertion). Carries `last_verified`/`review_by` stamps on all OS-26-gated additions.
+- [x] **Phase 94: Post-Migration Verification Content Closure** — Source-verify and document three open gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md`: (1) Intune config beyond ADE token for profile-based enrollment (MIGV-01, full confidence after Microsoft Learn verification), (2) current Iru console delete UI path (MIGV-02, confirmed against support.iru.io), (3) supervision-status MEDIUM-confidence callout + pilot recommendation (MIGV-03, not a flat assertion). Carries `last_verified`/`review_by` stamps on all OS-26-gated additions. (completed 2026-06-26)
 - [ ] **Phase 95: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — 10th Path-A lineage bump (Atom 1: `v1.12-milestone-audit.mjs` + `v1.12-audit-allowlist.json` + BASELINE_16; Atom 2: `check-phase-94..95.mjs` + `_lib/frozen-at-close.mjs` V111 pin + `audit-harness-v1.12-integrity.yml` as 9th CI coexistence workflow); 3-axis terminal re-audit (cross-OS EXACT MATCH); `v1.12-MILESTONE-AUDIT.md` + `v1.12-DEFERRED-CLEANUP.md` + 4-doc traceability closure.
 
 ## Phase Details
@@ -51,7 +51,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   1. `docs/macos-lifecycle/02-mdm-migration-psso.md` contains a source-verified addendum (post-migration verification steps or pre-migration readiness-checklist sidebar) stating — at full confidence, citing current Microsoft Learn — whether any Intune configuration beyond ADE token assignment is required once an OS-26 in-place migration resolves to profile-based enrollment; carries `last_verified: <authoring-day>` and `review_by: <+90d>` stamps; `docs/l2-runbooks/30-macos-mdm-migration-failure.md` is updated only if the answer affects migration-failure triage
   2. The Kandji/Iru source-side steps section of guide `02` reflects the verified current Iru post-rebrand console device-deletion UI path (checked against `support.iru.io` or current Iru support portal); the text confirms whether the documented secret-retrieval pre-flight (FileVault recovery key / Activation Lock bypass) is still required; both "Kandji" and "Iru" names remain present for searchability
   3. Guide `02` contains an explicit MEDIUM-confidence callout on supervision status that (a) states the most-likely behavior with available sources, (b) recommends a pilot-device `profiles status` / `profiles list` before-and-after test without asserting unverified procedure as fact, and (c) makes no claim that the PSSO Secure Enclave key survives migration (Apple authoritative: re-registration always required); callout carries `last_verified` / `review_by` stamps; the callout is framed as MEDIUM confidence and does NOT assert supervision is preserved as a fact**Plans**: 1 plan
-  - [ ] 94-01-PLAN.md — Close all three MIGV gaps in docs/macos-lifecycle/02-mdm-migration-psso.md: MIGV-01 Microsoft-Learn-cited full-confidence upgrade (Stage 3/7) + MIGV-03 MEDIUM supervision callout refinement + MIGV-02 Iru/Kandji both-URL delete-path verification (Stage 2 + glossary) + D-04 hybrid freshness stamps
+  - [x] 94-01-PLAN.md — Close all three MIGV gaps in docs/macos-lifecycle/02-mdm-migration-psso.md: MIGV-01 Microsoft-Learn-cited full-confidence upgrade (Stage 3/7) + MIGV-03 MEDIUM supervision callout refinement + MIGV-02 Iru/Kandji both-URL delete-path verification (Stage 2 + glossary) + D-04 hybrid freshness stamps
 
 **UI hint**: no
 
@@ -75,5 +75,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 94. Post-Migration Verification Content Closure | 0/1 | Not started | - |
+| 94. Post-Migration Verification Content Closure | 1/1 | Complete   | 2026-06-26 |
 | 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
