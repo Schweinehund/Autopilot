@@ -414,8 +414,9 @@ Device Registration: REGISTERED
 User Registration: REGISTERED
 ```
 
-If either line shows a different value, wait and re-run the command — registration may still be in progress. If the values do not transition to REGISTERED after several minutes, escalate to:
+If either line shows a different value, wait and re-run the command — registration may still be in progress. If the values do not transition to REGISTERED after several minutes, escalate. Because this is a **post-migration** failure, start with the migration-specific runbook:
 
+- [L2 #30 macOS MDM Migration Failure — Track C: PSSO Re-Registration Stuck](../l2-runbooks/30-macos-mdm-migration-failure.md) (migration-context primary)
 - [L1 #35 macOS SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md)
 - [L1 #36 macOS Secure Enclave Key](../l1-runbooks/36-macos-secure-enclave-key.md)
 - [L2 #27 macOS SSO Investigation](../l2-runbooks/27-macos-sso-investigation.md)

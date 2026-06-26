@@ -14,7 +14,7 @@ platform: all
 
 ## Alphabetical Index
 
-[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ACME](#acme) | [Activation Lock Bypass](#activation-lock-bypass) | [ADE](#ade) | [APNs](#apns) | [app-sso](#app-sso) | [Assign Device Management](#assign-device-management) | [Await Configuration](#await-configuration) | [Deadline](#deadline) | [Delete Device Record](#delete-device-record) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [FileVault Recovery Key](#filevault-recovery-key) | [Jailbreak Detection](#jailbreak-detection) | [Kandji-Iru](#kandji-iru) | [Kerberos SSO Extension](#kerberos-sso-extension) | [MAM-WE](#mam-we) | [MDM Migration](#mdm-migration) | [Platform SSO](#platform-sso) | [Profile-Based Enrollment](#profile-based-enrollment) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp)
+[ABM](#abm) | [ABM Token](#abm-token) | [Account-Driven User Enrollment](#account-driven-user-enrollment) | [ACME](#acme) | [Activation Lock Bypass](#activation-lock-bypass) | [ADE](#ade) | [APNs](#apns) | [app-sso](#app-sso) | [Assign Device Management](#assign-device-management) | [Await Configuration](#await-configuration) | [Deadline](#deadline) | [Delete Device Record](#delete-device-record) | [Enterprise SSO Plug-in](#enterprise-sso-plug-in) | [FileVault Recovery Key](#filevault-recovery-key) | [Jailbreak Detection](#jailbreak-detection) | [Kandji-Iru](#kandji-iru) | [Kerberos SSO Extension](#kerberos-sso-extension) | [LOB app](#lob-app) | [MAM-WE](#mam-we) | [MDM Migration](#mdm-migration) | [Platform SSO](#platform-sso) | [Profile-Based Enrollment](#profile-based-enrollment) | [Secure Enclave](#secure-enclave) | [Setup Assistant](#setup-assistant) | [Supervision](#supervision) | [VPP](#vpp) | [WPJ](#wpj)
 
 ---
 
@@ -157,6 +157,13 @@ Cross-links: [iOS App Deployment Guide](admin-setup-ios/05-app-deployment.md) | 
 > **Windows equivalent:** Microsoft Store for Business (deprecated) and Intune app deployment. Windows uses Win32 app packaging (.intunewin), MSI, MSIX, and Microsoft Store apps. The VPP/Apps and Books licensing model has no direct Windows equivalent -- Intune's per-user vs per-device assignment in Windows app deployments is the closest conceptual parallel but uses Microsoft licensing infrastructure, not Apple's.
 > See also: [VPP (Volume Purchase Program)](_glossary-linux.md#vpp-volume-purchase-program) (Linux).
 
+### LOB app
+
+Line-of-business (LOB) app -- a PKG or DMG application uploaded directly to Intune as a managed app, as opposed to VPP/App Store ("Apps and Books") distribution. On macOS the Company Portal is deployed as a required LOB app (PKG) so it is present before the user reaches the desktop. The ADE-during-Setup-Assistant PSSO path requires the Company Portal **5.2604.0 LOB build specifically** (not the VPP build), because only the LOB build carries the registration-during-Setup-Assistant capability.
+
+> **Windows equivalent:** Intune line-of-business apps (.msi) and Win32 apps (.intunewin) -- organization-supplied installers uploaded directly to Intune rather than sourced from a store. "LOB app" is shared Intune terminology across platforms.
+> See also: [VPP](#vpp); [PSSO Provisioning Walkthrough -- A2 path](../macos-lifecycle/01-psso-provisioning-walkthrough.md).
+
 ---
 
 ## App Protection (MAM)
@@ -186,6 +193,13 @@ Platform SSO (PSSO) is a macOS-native feature (available macOS 13+; macOS 14 rec
 The Secure Enclave is a dedicated secure subsystem integrated into Apple's SoC, physically isolated from the main processor, that stores and manages cryptographic keys such that software — including the OS kernel — cannot extract the private key material. Keys are generated and used within the Secure Enclave; they never leave in plain-text form (Apple's own phrasing: "Not having a mechanism to transfer plain-text key data into or out of the Secure Enclave is fundamental to its security"). Hardware scope: all Apple Silicon Macs (M1 and later, 2020+) and Intel Macs with the Apple T2 Security Chip (MacBook Pro/Air 2018–2020, Mac mini 2018, iMac 2020, Mac Pro 2019); pre-2018 Intel Macs without T2 cannot use the Secure Enclave Platform Credential auth method. From August 2025, new Entra device registrations store the Workplace Join (WPJ) key in the Secure Enclave by default — use `app-sso platform -s` to verify registration rather than `security find-certificate`, which returns false negatives for Secure Enclave-stored keys.
 
 > See also: [TPM](_glossary.md#tpm) (analogous hardware root of trust; not bit-for-bit equivalent — Secure Enclave performs no TPM-2.0/DICE attestation).
+
+### WPJ
+
+Workplace Join (WPJ) -- the cryptographic registration of a device with Microsoft Entra ID. On macOS the WPJ key is the device-identity key created during Platform SSO registration and, from August 2025, is stored in the Secure Enclave by default (verify with `app-sso platform -s` showing `Device Registration: REGISTERED`, not `security find-certificate`, which returns false negatives for Secure Enclave-stored keys). The WPJ key is re-created against the new tenant whenever a device is migrated between MDMs -- MDM unenrollment unregisters the device from the IdP -- which is why PSSO re-registration is always required post-migration.
+
+> **Windows equivalent:** "Workplace Join" originates on Windows, where it denotes registering a personal/BYOD device with Entra ID (Entra-registered state) to obtain a device certificate and PRT without a full Entra join. The macOS WPJ key is the conceptual analog: a device-bound credential establishing Entra device identity.
+> See also: [Secure Enclave](#secure-enclave); [Platform SSO](#platform-sso); [Profile-Based Enrollment](#profile-based-enrollment).
 
 ### Enterprise SSO Plug-in
 
@@ -218,6 +232,7 @@ Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-25 | v1.11 audit fix: added `### WPJ` (## Authentication) and `### LOB app` (## App Distribution) to resolve dead inbound anchors `#wpj`/`#lob-app` from guide 01 Glossary Quick Reference (lines 478, 482); updated Alphabetical Index | -- |
 | 2026-06-24 | Phase 91: added 10 new terms (MDM Migration, Assign Device Management, Deadline, Kandji-Iru, Delete Device Record, FileVault Recovery Key, Activation Lock Bypass under ## Device Management; Profile-Based Enrollment, ACME under ## Enrollment; app-sso under ## Authentication); updated Alphabetical Index with all 10 new display names; updated last_verified and review_by | -- |
 | 2026-06-22 | Phase 83 (KRB-04): added Kerberos SSO Extension entry to ## Authentication and Alphabetical Index | -- |
 | 2026-06-23 | Phase 84 (GRAPH-02): extended Platform SSO term see-also with guide 11 cross-link | -- |
