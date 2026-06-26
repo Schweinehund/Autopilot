@@ -50,7 +50,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   1. `docs/macos-lifecycle/02-mdm-migration-psso.md` contains a source-verified addendum (post-migration verification steps or pre-migration readiness-checklist sidebar) stating — at full confidence, citing current Microsoft Learn — whether any Intune configuration beyond ADE token assignment is required once an OS-26 in-place migration resolves to profile-based enrollment; carries `last_verified: <authoring-day>` and `review_by: <+90d>` stamps; `docs/l2-runbooks/30-macos-mdm-migration-failure.md` is updated only if the answer affects migration-failure triage
   2. The Kandji/Iru source-side steps section of guide `02` reflects the verified current Iru post-rebrand console device-deletion UI path (checked against `support.iru.io` or current Iru support portal); the text confirms whether the documented secret-retrieval pre-flight (FileVault recovery key / Activation Lock bypass) is still required; both "Kandji" and "Iru" names remain present for searchability
   3. Guide `02` contains an explicit MEDIUM-confidence callout on supervision status that (a) states the most-likely behavior with available sources, (b) recommends a pilot-device `profiles status` / `profiles list` before-and-after test without asserting unverified procedure as fact, and (c) makes no claim that the PSSO Secure Enclave key survives migration (Apple authoritative: re-registration always required); callout carries `last_verified` / `review_by` stamps; the callout is framed as MEDIUM confidence and does NOT assert supervision is preserved as a fact
-**Plans**: TBD
+**Plans**: 1 plan
+  - [ ] 94-01-PLAN.md — Close all three MIGV gaps in docs/macos-lifecycle/02-mdm-migration-psso.md: MIGV-01 Microsoft-Learn-cited full-confidence upgrade (Stage 3/7) + MIGV-03 MEDIUM supervision callout refinement + MIGV-02 Iru/Kandji both-URL delete-path verification (Stage 2 + glossary) + D-04 hybrid freshness stamps
 
 **UI hint**: no
 
@@ -72,5 +73,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 94. Post-Migration Verification Content Closure | 0/TBD | Not started | - |
+| 94. Post-Migration Verification Content Closure | 0/1 | Not started | - |
 | 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
