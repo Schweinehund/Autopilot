@@ -155,7 +155,7 @@ Plans:
 **Plans**: 4 plans
 **Wave 1**
 
-- [ ] 93-01-PLAN.md — 93-CONVENTIONS.md constants lock + Atom 1 (HARN-01): v1.11-milestone-audit.mjs + v1.11-audit-allowlist.json + BASELINE_15
+- [x] 93-01-PLAN.md — 93-CONVENTIONS.md constants lock + Atom 1 (HARN-01): v1.11-milestone-audit.mjs + v1.11-audit-allowlist.json + BASELINE_15
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -179,4 +179,4 @@ Plans:
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 3/3 | Complete   | 2026-06-24 |
 | 91. Glossary + Capability Matrix | 3/3 | Complete    | 2026-06-25 |
 | 92. Navigation Hub Integration | 1/1 | Complete    | 2026-06-25 |
-| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
+| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 1/4 | In Progress|  |

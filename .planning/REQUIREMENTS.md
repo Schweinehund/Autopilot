@@ -52,7 +52,7 @@ Requirements for milestone v1.11. Each maps to exactly one roadmap phase.
 
 ### Audit Harness & Milestone Close (HARN)
 
-- [ ] **HARN-01**: `v1.11-milestone-audit.mjs` + `v1.11-audit-allowlist.json` ship as Path-A copies from v1.10 (C1-C16 inherited) + `BASELINE_15` freshness comment in `regenerate-supervision-pins.mjs` (**Atom 1**, indivisible)
+- [x] **HARN-01**: `v1.11-milestone-audit.mjs` + `v1.11-audit-allowlist.json` ship as Path-A copies from v1.10 (C1-C16 inherited) + `BASELINE_15` freshness comment in `regenerate-supervision-pins.mjs` (**Atom 1**, indivisible)
 - [ ] **HARN-02**: Per-phase `check-phase-89..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a **`V110`** entry (v1.10 close-gate SHA `a3617e9`, pinned BEFORE any validator is authored — confirm SHA at Phase 93) + `audit-harness-v1.11-integrity.yml` ships as the **8th** parallel CI coexistence workflow (predecessors v1.4–v1.10 byte-unchanged) (**Atom 2**, indivisible)
 - [ ] **HARN-03**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` + Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP-count **EXACT MATCH**) + `v1.11-MILESTONE-AUDIT.md` + `v1.11-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT / ROADMAP / STATE / REQUIREMENTS)
 
