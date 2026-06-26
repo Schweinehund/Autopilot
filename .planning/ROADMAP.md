@@ -67,7 +67,12 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. 3-axis terminal re-audit completes: Axis 1 fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` + Axis 2 cross-OS Linux GHA (apex authoritative per D-03, given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93]) + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP counts are EXACT MATCH
   4. `v1.12-MILESTONE-AUDIT.md` and `v1.12-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 6 requirements to Validated; predecessor v1.4–v1.11 frozen surfaces BYTE-UNCHANGED
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+  - [ ] 95-01-PLAN.md — 95-CONVENTIONS.md constants lock + HARN-01 Atom 1 (v1.12-milestone-audit.mjs + v1.12-audit-allowlist.json + BASELINE_16)
+  - [ ] 95-02-PLAN.md — HARN-02 Atom 2 (check-phase-94 + check-phase-95 apex [48..94] + frozen-at-close V111 + 9th CI workflow); pushed to origin/master
+  - [ ] 95-03-PLAN.md — HARN-03 3-axis terminal re-audit (4-row cross-OS; both chain validators Linux-authoritative)
+  - [ ] 95-04-PLAN.md — HARN-03 close-gate (v1.12 MILESTONE-AUDIT + DEFERRED-CLEANUP + 4-doc traceability 6/6 + D-01 apex patch + byte-unchanged gate)
 
 **UI hint**: no
 
@@ -76,4 +81,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 94. Post-Migration Verification Content Closure | 1/1 | Complete    | 2026-06-26 |
-| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
+| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
