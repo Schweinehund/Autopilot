@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.12
 milestone_name: macOS MDM-Migration Verification Closure
-status: closed
-last_updated: "2026-06-26T23:19:15.997Z"
+status: verifying
+last_updated: "2026-06-26T23:37:58.274Z"
 last_activity: 2026-06-26
 progress:
   total_phases: 2
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
 Phase: 95 (harness-lineage-bump-terminal-re-audit-milestone-close) — COMPLETE
 Plan: 4 of 4 — COMPLETE
-Status: v1.12 CLOSED — 6/6 Validated; run /gsd-complete-milestone to archive
+Status: Phase complete — ready for verification
 Last activity: 2026-06-26
 
 ## v1.12 Phase Dependency Summary
@@ -183,7 +183,7 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-26T23:19:15.982Z
+Last session: 2026-06-26T23:37:58.261Z
 Stopped at: Phase 95 Plan 95-04 close-gate — v1.12 MILESTONE CLOSED
 Resume file: None
 Next action: `/gsd-complete-milestone v1.12`
@@ -200,3 +200,4 @@ Next action: `/gsd-complete-milestone v1.12`
 | Phase 94 P01 | 25m | 2 tasks | 1 files |
 | Phase 95 P01 | 690 | 2 tasks | 4 files |
 | Phase 95 P03 | 20 | 3 tasks | 1 files |
+| Phase 95 P95-04 | 25 minutes | 2 tasks | 7 files |
