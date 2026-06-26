@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.11
-milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
-status: Awaiting next milestone
-last_updated: "2026-06-26T16:18:38.586Z"
-last_activity: 2026-06-26 — Milestone v1.11 completed and archived
+milestone: v1.12
+milestone_name: macOS MDM-Migration Verification Closure
+status: planning
+last_updated: "2026-06-26T19:28:36.456Z"
+last_activity: 2026-06-26
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 13
-  completed_plans: 13
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** No active milestone — v1.11 SHIPPED & ARCHIVED 2026-06-26 (tag `v1.11`, 15/15 Validated). Run `/gsd-new-milestone` to scope the next.
+**Current focus:** v1.12 macOS MDM-Migration Verification Closure — ACTIVE (started 2026-06-26). Closing three Phase-90 post-migration verification gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md` + 10th Path-A audit-harness lineage bump. Scope locked via `/adversarial-review` → 1-A / 2-A / 3-iii. Defining requirements (Phase 94+).
 
 ## Current Position
 
-Phase: Milestone v1.11 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-06-26 — Milestone v1.11 completed and archived
+Status: Defining requirements
+Last activity: 2026-06-26 — Milestone v1.12 started
 
 ## v1.11 Phase Dependency Summary
 
