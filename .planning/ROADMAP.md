@@ -68,10 +68,20 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. `v1.12-MILESTONE-AUDIT.md` and `v1.12-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 6 requirements to Validated; predecessor v1.4–v1.11 frozen surfaces BYTE-UNCHANGED
 
 **Plans**: 4 plans
+**Wave 1**
 
   - [ ] 95-01-PLAN.md — 95-CONVENTIONS.md constants lock + HARN-01 Atom 1 (v1.12-milestone-audit.mjs + v1.12-audit-allowlist.json + BASELINE_16)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
   - [ ] 95-02-PLAN.md — HARN-02 Atom 2 (check-phase-94 + check-phase-95 apex [48..94] + frozen-at-close V111 + 9th CI workflow); pushed to origin/master
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
   - [ ] 95-03-PLAN.md — HARN-03 3-axis terminal re-audit (4-row cross-OS; both chain validators Linux-authoritative)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
   - [ ] 95-04-PLAN.md — HARN-03 close-gate (v1.12 MILESTONE-AUDIT + DEFERRED-CLEANUP + 4-doc traceability 6/6 + D-01 apex patch + byte-unchanged gate)
 
 **UI hint**: no
