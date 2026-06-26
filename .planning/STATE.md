@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.12
 milestone_name: macOS MDM-Migration Verification Closure
-status: verifying
-last_updated: "2026-06-26T21:01:49.010Z"
+status: ready_to_plan
+last_updated: 2026-06-26T21:15:10.310Z
 last_activity: 2026-06-26
 progress:
   total_phases: 2
@@ -11,6 +11,7 @@ progress:
   total_plans: 1
   completed_plans: 1
   percent: 50
+stopped_at: Phase 94 complete (1/1) — ready to discuss Phase 95
 ---
 
 # Project State
@@ -20,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 94 — post-migration-verification-content-closure
+**Current focus:** Phase 95 — harness lineage bump + terminal re audit + milestone close
 
 ## Current Position
 
-Phase: 94 (post-migration-verification-content-closure) — EXECUTING
-Plan: 1 of 1
-Status: Phase complete — ready for verification
+Phase: 95
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-26
 
 ## v1.12 Phase Dependency Summary
