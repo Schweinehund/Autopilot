@@ -15,7 +15,7 @@
 - ✅ **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation** — Phases 75-82 (shipped 2026-06-22)
 - ✅ **v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL** — Phases 83-88 (shipped 2026-06-24)
 - ✅ **v1.11 macOS PSSO End-to-End Provisioning & MDM Migration** — Phases 89-93 (shipped 2026-06-26)
-- [ ] **v1.12 macOS MDM-Migration Verification Closure** — Phases 94-95 (in progress)
+- [x] **v1.12 macOS MDM-Migration Verification Closure** — Phases 94-95 (shipped 2026-06-26)
 
 ## Phases
 
@@ -63,8 +63,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Success Criteria** (what must be TRUE):
 
   1. Atom 1 ships as one indivisible commit: `v1.12-milestone-audit.mjs` (Path-A from v1.11, C1-C16 inherited) + `v1.12-audit-allowlist.json` + BASELINE_16 freshness comment in `regenerate-supervision-pins.mjs`
-  2. Atom 2 ships as one indivisible commit: `check-phase-94..95.mjs` (per-phase validators; chain-apex `CHAIN_PHASES=[48..93]`, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V111 entry (v1.11 close-gate SHA — confirm with `git log --grep="close-gate" --grep="v1.11" --all-match -1` on authoring day, candidate `919b23b`; pinned BEFORE any v1.12 validator is authored) + `audit-harness-v1.12-integrity.yml` as the 9th parallel CI coexistence workflow (predecessors v1.4–v1.11 byte-unchanged)
-  3. 3-axis terminal re-audit completes: Axis 1 fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` + Axis 2 cross-OS Linux GHA (apex authoritative per D-03, given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93]) + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP counts are EXACT MATCH
+  2. Atom 2 ships as one indivisible commit: `check-phase-94..95.mjs` (per-phase validators; chain-apex `CHAIN_PHASES=[48..94]` (47 entries), `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V111 entry (v1.11 close-gate SHA `919b23b`; confirmed via `git log --grep="close-gate" --grep="v1.11" --all-match -1`; pinned BEFORE any v1.12 validator is authored) + `audit-harness-v1.12-integrity.yml` as the 9th parallel CI coexistence workflow (predecessors v1.4–v1.11 byte-unchanged)
+  3. 3-axis terminal re-audit completes: Axis 1 fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` + Axis 2 cross-OS Linux GHA (BOTH chain validators authoritative per D-03 corrected OS split, given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..94]) + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP counts are EXACT MATCH
   4. `v1.12-MILESTONE-AUDIT.md` and `v1.12-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 6 requirements to Validated; predecessor v1.4–v1.11 frozen surfaces BYTE-UNCHANGED
 
 **Plans**: 4 plans
@@ -82,7 +82,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-  - [ ] 95-04-PLAN.md — HARN-03 close-gate (v1.12 MILESTONE-AUDIT + DEFERRED-CLEANUP + 4-doc traceability 6/6 + D-01 apex patch + byte-unchanged gate)
+  - [x] 95-04-PLAN.md — HARN-03 close-gate (v1.12 MILESTONE-AUDIT + DEFERRED-CLEANUP + 4-doc traceability 6/6 + D-01 apex patch + byte-unchanged gate)
 
 **UI hint**: no
 
@@ -91,4 +91,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 94. Post-Migration Verification Content Closure | 1/1 | Complete    | 2026-06-26 |
-| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |
+| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete   | 2026-06-26 |

@@ -8,26 +8,18 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.12 macOS MDM-Migration Verification Closure
+## Previous Milestone: v1.12 macOS MDM-Migration Verification Closure (SHIPPED 2026-06-26)
+
+**Status:** SHIPPED 2026-06-26 — 2/2 phases (94-95) Complete; 6/6 requirements Validated via Phase 95 Plan 95-04 SINGLE close-gate commit (NO Commit A). **Run `/gsd-complete-milestone v1.12`** to archive phase dirs to `.planning/milestones/v1.12-phases/`, delete working-tree cruft, and close Jira story.
 
 **Goal:** Close the three Phase-90 post-migration verification gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md`, then bump the audit harness to its 10th Path-A generation.
 
-**Target features:**
+**Delivered:**
 
-- **INTUNE-PROFILE-ENROLLMENT-01** — verify against current Microsoft Learn whether Intune requires configuration beyond ADE token assignment after an OS-26 in-place ABM migration yields profile-based enrollment; document the answer at full confidence in guide `02` (and L2 #30 if relevant). HIGH-confidence open gap.
-- **IRU-CONSOLE-DELETE-01** — verify the current Iru (post-Kandji-rebrand, Oct 2025) console device-deletion UI path against live vendor docs (`support.iru.io`); confirm-or-correct the Kandji/Iru source-side steps section of guide `02`. MEDIUM confidence.
-- **SUPERVISION-STATUS-POST-MIGRATION-01** — document the best-available inference on whether supervision is preserved after an OS-26 in-place migration as an explicit **MEDIUM-confidence callout + "pilot recommended"** pointer (NOT a flat assertion, NOT an author-unrunnable procedure) in guide `02`. MEDIUM confidence; Apple guide silent.
-- **Pillar D — 10th Path-A audit-harness lineage bump + 3-axis terminal re-audit close** — `v1.12-milestone-audit.mjs` (Path-A from v1.11, C1-C16), `check-phase-94..NN.mjs` validators (chain-apex `CHAIN_PHASES=[48..93]`), 9th parallel CI coexistence workflow, V111 (v1.11 close-gate SHA) frozen pin in `_lib/frozen-at-close.mjs`, 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP EXACT MATCH).
-
-**Key context:**
-
-- **Verification-closure content milestone** on the existing macOS platform — all three content gaps edit ONE file (`docs/macos-lifecycle/02-mdm-migration-psso.md`); likely 1 content phase + 1 harness phase.
-- **Scope locked via `/adversarial-review`** (Finder/Adversary/Referee, per durable preference `feedback_adversarial_review_preference`): verdict **1-A / 2-A / 3-iii** — supervision as a MEDIUM-confidence callout (not assertion, not procedure); full Path-A close (the lineage is a machine-validated, retroactively-costly invariant proven across 9 milestones and a demonstrated bug-catcher); do **NOT** bundle the CI-3 45-occurrence rename or any tooling refactor (byte-unchanged-invariant hazard — both review agents concurred).
-- **macOS-26-gated content** carries `last_verified`/`review_by` freshness-stamp obligations (90-day cycle per guide 07 ADE-section precedent).
-- **Phase numbering continues from v1.11 close (Phase 93) → v1.12 starts at Phase 94.**
-- Sequential-on-main-tree per `.planning/config.json` `use_worktrees:false` (durable user constraint); terminal re-audit via fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` (D-03 LOCKED).
-- **Plan-time research flags** (not blockers): INTUNE-PROFILE-ENROLLMENT config requirement (Microsoft Learn, OS-26 in-place migration enrollment outcome); Iru console post-rebrand delete UI path (`support.iru.io`); supervision-preservation inference sources (best-available; pilot-test recommended but cannot be run by authors).
-- **Estimated scope** — small verification-closure milestone; ~2-3 phases (94+), phase/plan count finalized at roadmap.
+- **MIGV-01** (Phase 94) — Intune ADE-token-only verification at full confidence (Microsoft Learn confirmed: no additional config needed); guide 02 addendum with freshness stamps.
+- **MIGV-02** (Phase 94) — Iru console device-deletion UI path confirmed against `support.iru.io` + `docs.iru.com`; both brand names + both portal URLs documented.
+- **MIGV-03** (Phase 94) — Supervision-status MEDIUM-confidence callout in guide 02; pilot recommendation; no flat assertion; freshness stamps.
+- **Pillar D — 10th Path-A audit-harness lineage bump + 3-axis terminal re-audit close** — `v1.12-milestone-audit.mjs` (Path-A from v1.11, C1-C16), `check-phase-94/95.mjs` validators (chain-apex `CHAIN_PHASES=[48..94]`, 47 entries, D-01 corrected), 9th parallel CI coexistence workflow, V111 pin, 3-axis terminal re-audit GHA run 28270308253 (cross-OS EXACT MATCH; both chain validators Linux-GHA sole-authoritative per corrected D-03 OS split).
 
 ## Previous Milestone: v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (SHIPPED 2026-06-26)
 
@@ -151,7 +143,7 @@ Documented the Apple Business rebrand and its new delegated permission surface �
 
 ## Current State
 
-**v1.11 SHIPPED & ARCHIVED 2026-06-26** (Phases 89-93, tag `v1.11`). Thirteen milestones shipped (v1.0→v1.11) — 93 phases, ~379 plans, ~253 documentation files across Windows Autopilot, macOS ADE (incl. Platform SSO + Secure Enclave + Kerberos SSO + Graph API Platform Credential management + end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration), iOS/iPadOS, Android Enterprise, and Linux (Ubuntu 22.04/24.04 LTS), plus a 9-milestone Path-A audit-harness lineage (v1.4→v1.11) with per-phase validators + cross-OS Linux GHA CI. **v1.11 delivered** two consolidated macOS scenario guides — an end-to-end PSSO provisioning walkthrough (`docs/macos-lifecycle/01-psso-provisioning-walkthrough.md`, both A1 standard + A2 ADE-during-Setup-Assistant macOS-26 delivery paths) and a Kandji/Iru → Intune MDM-migration-with-PSSO walkthrough (`02-mdm-migration-psso.md`; ABM "Assign Device Management" + Deadline on macOS 26 in-place, plus pre-26 wipe fallback) with a new L2 migration-failure runbook (#30), glossary + capability-matrix integration, navigation-last hub wiring, and the 9th Path-A harness lineage bump closed via Phase 93 3-axis terminal re-audit (cross-OS EXACT MATCH; Linux GHA apex 47/0/1 authoritative). 15/15 requirements Validated. **Next:** `/gsd-new-milestone` scopes the next milestone.
+**v1.12 SHIPPED 2026-06-26** (Phases 94-95). Fourteen milestones shipped (v1.0→v1.12) — 95 phases across Windows Autopilot, macOS ADE (incl. Platform SSO + Secure Enclave + Kerberos SSO + Graph API Platform Credential management + end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration + post-migration verification closure), iOS/iPadOS, Android Enterprise, and Linux (Ubuntu 22.04/24.04 LTS), plus a 10-milestone Path-A audit-harness lineage (v1.4→v1.12) with per-phase validators + cross-OS Linux GHA CI. **v1.12 delivered** three post-migration verification gap closures in `docs/macos-lifecycle/02-mdm-migration-psso.md` (MIGV-01 full-confidence Intune ADE-token-only verification; MIGV-02 confirmed Iru/Kandji both-URL delete-path; MIGV-03 MEDIUM-confidence supervision-status callout + pilot recommendation) and the 10th Path-A harness lineage bump closed via Phase 95 3-axis terminal re-audit (cross-OS EXACT MATCH; corrected D-03 OS split: BOTH chain validators Linux-GHA authoritative; apex 49/0/1 + continuity 47/0/1). D-01 apex correction applied: [48..93]→[48..94] (47 entries). 6/6 requirements Validated. Run `/gsd-complete-milestone v1.12` to archive. **Next:** `/gsd-new-milestone` scopes the next milestone.
 
 <details>
 <summary>Historical Current-State snapshot — v1.5 (2026-05-07)</summary>

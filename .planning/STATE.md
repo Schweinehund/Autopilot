@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.12
 milestone_name: macOS MDM-Migration Verification Closure
-status: executing
+status: closed
 last_updated: "2026-06-26T23:19:15.997Z"
 last_activity: 2026-06-26
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 4
-  percent: 50
+  completed_plans: 5
+  percent: 100
 ---
 
 # Project State
@@ -24,9 +24,9 @@ See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
 ## Current Position
 
-Phase: 95 (harness-lineage-bump-terminal-re-audit-milestone-close) — EXECUTING
-Plan: 4 of 4
-Status: Ready to execute
+Phase: 95 (harness-lineage-bump-terminal-re-audit-milestone-close) — COMPLETE
+Plan: 4 of 4 — COMPLETE
+Status: v1.12 CLOSED — 6/6 Validated; run /gsd-complete-milestone to archive
 Last activity: 2026-06-26
 
 ## v1.12 Phase Dependency Summary
@@ -90,7 +90,7 @@ Phase 95 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
           Atom 2 (indivisible set — HARN-02):
 
             - check-phase-94.mjs + check-phase-95.mjs (per-phase validators;
-              chain-apex CHAIN_PHASES=[48..93], CHAIN_SKIP=new Set([]))
+              chain-apex CHAIN_PHASES=[48..94] (47 entries), CHAIN_SKIP=new Set([]))
 
             - _lib/frozen-at-close.mjs V111 entry (v1.11 close-gate SHA)
             - audit-harness-v1.12-integrity.yml (9th parallel CI coexistence workflow;
@@ -98,8 +98,8 @@ Phase 95 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
           3-axis terminal re-audit (HARN-03):
 
             - Axis 1: fresh git clone --no-hardlinks into $env:TEMP\v1.12-audit-<rand>
-            - Axis 2: cross-OS Linux GHA (apex authoritative per D-03 — Linux GHA
-              authoritative given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93])
+            - Axis 2: cross-OS Linux GHA (BOTH chain validators authoritative per D-03 corrected —
+              Linux GHA authoritative given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..94])
 
             - Axis 3: fresh zero-context sub-agent
             - cross-OS PASS/FAIL/SKIP EXACT MATCH required
@@ -108,14 +108,14 @@ Phase 95 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
           Predecessor v1.4-v1.11 frozen surfaces BYTE-UNCHANGED invariant
 ```
 
-## v1.12 Requirement Coverage (6/6 mapped; 0/6 Validated — in progress)
+## v1.12 Requirement Coverage (6/6 mapped; 6/6 Validated — CLOSED)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
 | 94 | MIGV-01, MIGV-02, MIGV-03 | 3 |
 | 95 | HARN-01, HARN-02, HARN-03 | 3 |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 95 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6–v1.11 precedent). Linux GHA apex is authoritative (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93]).
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 95 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6–v1.11 precedent). Linux GHA BOTH chain validators are authoritative (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..94]; D-03 corrected OS split applied).
 
 **Named decisions (LOCKED at roadmap 2026-06-26):**
 
@@ -169,8 +169,8 @@ Phase 95 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - At Phase 94 plan time: Microsoft Learn verification — does Intune require config beyond ADE token assignment when OS-26 in-place ABM migration yields profile-based enrollment? Document at full confidence only after verification (MIGV-01)
 - At Phase 94 plan time: support.iru.io / Iru support portal — confirm current post-rebrand device-deletion UI path; confirm or correct guide 02 Kandji/Iru source-side section (MIGV-02)
 - At Phase 94 plan time: best-available sources on supervision status post-OS-26-in-place migration — collect and assess; frame as MEDIUM-confidence callout only (MIGV-03)
-- At Phase 95 plan time: confirm V111 = v1.11 close-gate SHA via `git log --grep="close-gate" --grep="v1.11" --all-match -1` (candidate: 919b23b — must verify before authoring any v1.12 validator)
-- At Phase 95 plan time: confirm chain-apex count CHAIN_PHASES=[48..93] (46 entries)
+- Phase 95 COMPLETED: V111 = 919b23b confirmed (v1.11 close-gate `docs(93-04)`)
+- Phase 95 COMPLETED: CHAIN_PHASES=[48..94] (47 entries) — CONFIRMED per D-01 apex correction (corrects roadmap-locked [48..93] off-by-one; [48..N-1] triple-confirmed invariant)
 
 ### Blockers/Concerns
 
@@ -179,18 +179,18 @@ Execution-time checks (not blockers — must be addressed within specified phase
 - Phase 94: MIGV-01 — answer only at full confidence after Microsoft Learn verification; do not document as assumed
 - Phase 94: MIGV-02 — Iru console UI may have changed post-rebrand; verify against live support.iru.io
 - Phase 94: MIGV-03 — MEDIUM confidence only; adversarial-review verdict 3-iii is LOCKED; any attempt to ship as flat assertion violates the locked scope decision
-- Phase 95: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93] — mitigated by D-03 (Linux GHA apex is authoritative); do not rely on Windows local clone for chain-apex PASS/FAIL at this depth
+- Phase 95 RESOLVED: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..94] — mitigated by D-03 corrected OS split (Linux GHA BOTH chain validators authoritative); carried in v1.12-DEFERRED-CLEANUP.md
 
 ## Session Continuity
 
 Last session: 2026-06-26T23:19:15.982Z
-Stopped at: Phase 95 context gathered
+Stopped at: Phase 95 Plan 95-04 close-gate — v1.12 MILESTONE CLOSED
 Resume file: None
-Next action: `/gsd-plan-phase 94`
+Next action: `/gsd-complete-milestone v1.12`
 
 ## Operator Next Steps
 
-- Run `/gsd-plan-phase 94` to plan the post-migration verification content closure
+- Run `/gsd-complete-milestone v1.12` to archive phase dirs, clean cruft, and close Jira story
 
 ## Performance Metrics
 
