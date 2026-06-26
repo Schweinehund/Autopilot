@@ -145,19 +145,24 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
 
    > **Note:** After assigning the device to Intune in ABM (Stage 3), allow up to 24 hours for automatic ABM-to-Intune sync, or trigger a manual sync (rate-limited to once per 15 minutes; 7-day full cooldown between full syncs).
 
-3. **FileVault recovery key retrieval.** In the Kandji (rebranded **Iru**, October 2025; support portal URL unchanged at support.kandji.io) console, navigate to the device record and retrieve the FileVault recovery key. Record it securely — this key is permanently destroyed when the device record is deleted.
+3. **FileVault recovery key retrieval.** In the Kandji/Iru console, navigate to the device record and retrieve the FileVault recovery key. Record it securely — this key is permanently destroyed when the device record is deleted. **Portal URLs (verify which resolves on your authoring day):** `support.kandji.io` hosts Iru-branded KB articles (verified 2026-06-26: HTTP 200, displays "Kandji is now Iru" branding); `support.iru.io` resolves but is a login-gated SPA (verified 2026-06-26: HTTP 200, no publicly accessible content); `docs.iru.com` is the new authoritative Iru documentation domain (verified 2026-06-26: publicly accessible). The conceptual retrieval action is the same regardless of which URL you use.
 
 4. **Activation Lock bypass code retrieval.** In the Kandji/Iru console, retrieve the Activation Lock bypass code for the device. This code is only available within 30 days of the device being supervised, and is permanently destroyed on Delete Device Record.
 
-   > **Note:** Verify current Iru console labels on authoring day — the October 2025 rebrand may cause console navigation to differ from the support.kandji.io documentation, which still displays "Kandji" branding. The conceptual action is: navigate to the device record, open the Device Action Menu, and access the secret-retrieval options before any deletion step.
+   > **Note:** As of 2026-06-26 verification: `support.kandji.io` now displays Iru branding ("Kandji is now Iru") and remains fully accessible. `docs.iru.com` is the new authoritative Iru public docs domain where the device-deletion UI path is confirmed accessible. `support.iru.io` resolves but is a login-gated SPA — console navigation there is not verifiable without operator login credentials. The conceptual action is the same regardless of which portal you access: navigate to the device record, open the Device Action Menu, and access the secret-retrieval options before any deletion step. Verify current console labels on your own authoring day — both Kandji and Iru names may appear depending on the portal and rebranding progress.
 
-5. **Source-side release — Delete Device Record.** After all secrets are retrieved and Intune readiness is confirmed, perform the Delete Device Record action in the Kandji/Iru console for each device being migrated in this wave. The conceptual steps (verify in current Iru console — exact UI labels may differ from support.kandji.io documentation):
-   - Navigate to Devices.
-   - Select the device.
-   - Open the Device Action Menu.
-   - Select Delete Device Record.
-   - Confirm deletion in the popup.
-   
+5. **Source-side release — Delete Device Record.** After all secrets are retrieved and Intune readiness is confirmed, perform the Delete Device Record action in the Kandji/Iru console for each device being migrated in this wave. The UI path below is confirmed from `docs.iru.com` (publicly accessible, verified 2026-06-26) and consistent with `support.kandji.io` (Iru-branded KB, verified 2026-06-26). Verify exact labels in the current console on your authoring day — `support.iru.io` resolves but is login-gated; confirm via `docs.iru.com` if labels differ:
+   - Navigate to **Devices**.
+   - Click the target device.
+   - Click the **Device Action Menu** (top right of device record).
+   - Select **Delete Device Record**.
+   - In the confirmation popup, type **DELETE** in the text field.
+   - Click **Delete Device Record** to confirm.
+
+   > **Permanently destroyed on Delete Device Record (no recovery path):** Device lock PIN code, Recovery password, FileVault Recovery Key, Activation Lock Bypass Code. Note: the vendor's own documentation (`docs.iru.com`, `support.kandji.io`) does NOT include a "retrieve secrets first" pre-flight instruction — steps 3 and 4 above fill this gap. Complete steps 3 and 4 before this step.
+
+   > **Stage 2 verification note (2026-06-26):** `docs.iru.com` deletion article confirmed publicly accessible (HTTP 200); UI path above confirmed identical to `support.kandji.io` KB content. `support.iru.io` resolves (HTTP 200) but serves a login-gated SPA — the deletion console path at `support.iru.io` is not verifiable without operator login credentials. Verify portal URLs resolve on your own authoring day before fleet migration.
+
    After deletion: the Kandji/Iru agent receives notification at its next check-in (~15 minutes) and automatically uninstalls itself, removing all installed profiles. Allow approximately 15 minutes before proceeding to avoid profile conflicts.
 
 ### Behind the Scenes
@@ -545,7 +550,7 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 | [Activation Lock bypass code](../_glossary-macos.md#activation-lock-bypass) | Device-specific code enabling an admin to bypass Activation Lock if the supervising MDM is removed; permanently destroyed on Delete Device Record; only available within 30 days of supervision | Stage 2 |
 | [ACME](../_glossary-macos.md#acme) | Automated Certificate Management Environment -- certificate issued by Intune during genuine MDM enrollment (macOS 13.1+); reissued on every re-enrollment | Stage 7 |
 | [Profile-based enrollment](../_glossary-macos.md#profile-based-enrollment) | The enrollment type resulting from the macOS 26 in-place migration; distinct from ADE, but uses the existing ADE enrollment policy for policy delivery | Stage 7 |
-| [Kandji / Iru](../_glossary-macos.md#kandji-iru) | macOS MDM platform; rebranded from Kandji to Iru in October 2025; support portal remains at support.kandji.io | Stage 2 |
+| [Kandji / Iru](../_glossary-macos.md#kandji-iru) | macOS MDM platform; rebranded from Kandji to Iru in October 2025; `support.kandji.io` hosts Iru-branded KB articles (verified accessible 2026-06-26); `support.iru.io` is the rebrand target (resolves but login-gated SPA on 2026-06-26); `docs.iru.com` is the new authoritative public docs domain (verified accessible 2026-06-26) | Stage 2 |
 | [PSSO / Platform SSO](../_glossary-macos.md#platform-sso) | Platform Single Sign-On -- macOS extension enabling Entra ID SSO via the Enterprise SSO plug-in; always requires re-registration after MDM migration | Stage 9 |
 | [app-sso platform -s](../_glossary-macos.md#app-sso) | macOS built-in command to check Platform SSO extension registration state | Stage 9 |
 | [Delete Device Record](../_glossary-macos.md#delete-device-record) | Kandji/Iru console action that removes the device from MDM management and permanently destroys associated secrets; triggers agent self-removal at next check-in (~15 min) | Stage 2 |
