@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
-status: ready_to_plan
-last_updated: 2026-06-25T23:11:02.021Z
+status: planning
+last_updated: "2026-06-26T02:29:39.688Z"
 last_activity: 2026-06-25
 progress:
   total_phases: 5
@@ -11,7 +11,6 @@ progress:
   total_plans: 9
   completed_plans: 9
   percent: 80
-stopped_at: Phase 92 complete (1/1) — ready to discuss Phase 93
 ---
 
 # Project State
@@ -217,9 +216,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-25T22:55:20.746Z
-Stopped at: Phase 92 context gathered
-Resume file: None
+Last session: 2026-06-26T02:29:39.659Z
+Stopped at: Phase 93 context gathered
+Resume file: .planning/phases/93-harness-lineage-bump-terminal-re-audit-milestone-close/93-CONTEXT.md
 Next action: `/gsd-plan-phase 89`
 
 ## Operator Next Steps
