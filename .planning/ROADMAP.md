@@ -15,6 +15,7 @@
 - ✅ **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation** — Phases 75-82 (shipped 2026-06-22)
 - ✅ **v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL** — Phases 83-88 (shipped 2026-06-24)
 - ✅ **v1.11 macOS PSSO End-to-End Provisioning & MDM Migration** — Phases 89-93 (shipped 2026-06-26)
+- [ ] **v1.12 macOS MDM-Migration Verification Closure** — Phases 94-95 (in progress)
 
 ## Phases
 
@@ -31,4 +32,45 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 ---
 
-_No active milestone. Run `/gsd-new-milestone` to scope the next._
+### v1.12 macOS MDM-Migration Verification Closure (started 2026-06-26)
+
+**Milestone Goal:** Close the three Phase-90 post-migration verification gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md` (Intune profile-based-enrollment config, Iru console delete UI path, supervision-status post-migration), then bump the audit harness to its 10th Path-A generation and close the milestone.
+
+- [ ] **Phase 94: Post-Migration Verification Content Closure** — Source-verify and document three open gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md`: (1) Intune config beyond ADE token for profile-based enrollment (MIGV-01, full confidence after Microsoft Learn verification), (2) current Iru console delete UI path (MIGV-02, confirmed against support.iru.io), (3) supervision-status MEDIUM-confidence callout + pilot recommendation (MIGV-03, not a flat assertion). Carries `last_verified`/`review_by` stamps on all OS-26-gated additions.
+- [ ] **Phase 95: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — 10th Path-A lineage bump (Atom 1: `v1.12-milestone-audit.mjs` + `v1.12-audit-allowlist.json` + BASELINE_16; Atom 2: `check-phase-94..95.mjs` + `_lib/frozen-at-close.mjs` V111 pin + `audit-harness-v1.12-integrity.yml` as 9th CI coexistence workflow); 3-axis terminal re-audit (cross-OS EXACT MATCH); `v1.12-MILESTONE-AUDIT.md` + `v1.12-DEFERRED-CLEANUP.md` + 4-doc traceability closure.
+
+## Phase Details
+
+### Phase 94: Post-Migration Verification Content Closure
+
+**Goal**: An operator reading `docs/macos-lifecycle/02-mdm-migration-psso.md` finds all three previously-unresolved post-migration verification questions answered at their correct confidence level — the Intune profile-based-enrollment config requirement documented at full confidence (source-verified against Microsoft Learn), the Iru console delete UI path confirmed-or-corrected against live vendor docs, and the supervision-status question documented as an explicit MEDIUM-confidence callout with a pilot recommendation
+**Depends on**: Nothing (first and only content phase of v1.12)
+**Requirements**: MIGV-01, MIGV-02, MIGV-03
+**Success Criteria** (what must be TRUE):
+  1. `docs/macos-lifecycle/02-mdm-migration-psso.md` contains a source-verified addendum (post-migration verification steps or pre-migration readiness-checklist sidebar) stating — at full confidence, citing current Microsoft Learn — whether any Intune configuration beyond ADE token assignment is required once an OS-26 in-place migration resolves to profile-based enrollment; carries `last_verified: <authoring-day>` and `review_by: <+90d>` stamps; `docs/l2-runbooks/30-macos-mdm-migration-failure.md` is updated only if the answer affects migration-failure triage
+  2. The Kandji/Iru source-side steps section of guide `02` reflects the verified current Iru post-rebrand console device-deletion UI path (checked against `support.iru.io` or current Iru support portal); the text confirms whether the documented secret-retrieval pre-flight (FileVault recovery key / Activation Lock bypass) is still required; both "Kandji" and "Iru" names remain present for searchability
+  3. Guide `02` contains an explicit MEDIUM-confidence callout on supervision status that (a) states the most-likely behavior with available sources, (b) recommends a pilot-device `profiles status` / `profiles list` before-and-after test without asserting unverified procedure as fact, and (c) makes no claim that the PSSO Secure Enclave key survives migration (Apple authoritative: re-registration always required); callout carries `last_verified` / `review_by` stamps; the callout is framed as MEDIUM confidence and does NOT assert supervision is preserved as a fact
+**Plans**: TBD
+
+**UI hint**: no
+
+### Phase 95: Harness Lineage Bump + Terminal Re-Audit + Milestone Close
+
+**Goal**: The v1.12 audit harness ships as the 10th Path-A milestone harness (Atom 1 + Atom 2 two-atomic-commit pattern), the 3-axis terminal re-audit confirms cross-OS EXACT MATCH with Linux GHA apex authoritative, and the milestone is formally closed with all predecessor frozen surfaces byte-unchanged
+**Depends on**: Phase 94
+**Requirements**: HARN-01, HARN-02, HARN-03
+**Success Criteria** (what must be TRUE):
+  1. Atom 1 ships as one indivisible commit: `v1.12-milestone-audit.mjs` (Path-A from v1.11, C1-C16 inherited) + `v1.12-audit-allowlist.json` + BASELINE_16 freshness comment in `regenerate-supervision-pins.mjs`
+  2. Atom 2 ships as one indivisible commit: `check-phase-94..95.mjs` (per-phase validators; chain-apex `CHAIN_PHASES=[48..93]`, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V111 entry (v1.11 close-gate SHA — confirm with `git log --grep="close-gate" --grep="v1.11" --all-match -1` on authoring day, candidate `919b23b`; pinned BEFORE any v1.12 validator is authored) + `audit-harness-v1.12-integrity.yml` as the 9th parallel CI coexistence workflow (predecessors v1.4–v1.11 byte-unchanged)
+  3. 3-axis terminal re-audit completes: Axis 1 fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` + Axis 2 cross-OS Linux GHA (apex authoritative per D-03, given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93]) + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP counts are EXACT MATCH
+  4. `v1.12-MILESTONE-AUDIT.md` and `v1.12-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 6 requirements to Validated; predecessor v1.4–v1.11 frozen surfaces BYTE-UNCHANGED
+**Plans**: TBD
+
+**UI hint**: no
+
+## Progress
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 94. Post-Migration Verification Content Closure | 0/TBD | Not started | - |
+| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |

@@ -73,22 +73,22 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exactly one phase.
+Populated by gsd-roadmapper 2026-06-26. Each requirement maps to exactly one phase.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MIGV-01 | TBD | Pending |
-| MIGV-02 | TBD | Pending |
-| MIGV-03 | TBD | Pending |
-| HARN-01 | TBD | Pending |
-| HARN-02 | TBD | Pending |
-| HARN-03 | TBD | Pending |
+| MIGV-01 | Phase 94 | Pending |
+| MIGV-02 | Phase 94 | Pending |
+| MIGV-03 | Phase 94 | Pending |
+| HARN-01 | Phase 95 | Pending |
+| HARN-02 | Phase 95 | Pending |
+| HARN-03 | Phase 95 | Pending |
 
 **Coverage:**
 - v1 requirements: 6 total
-- Mapped to phases: 0/6 (roadmap pending)
+- Mapped to phases: 6/6
 - Validated: 0/6
-- Unmapped: 6
+- Unmapped: 0
 
 ---
-*Requirements defined: 2026-06-26 after `/gsd-new-milestone` v1.12 (ecosystem research skipped — no new domain; targeted source-verification deferred to plan-time `gsd-phase-researcher`). Scope locked via `/adversarial-review` → 1-A / 2-A / 3-iii.*
+*Requirements defined: 2026-06-26 after `/gsd-new-milestone` v1.12 (ecosystem research skipped — no new domain; targeted source-verification deferred to plan-time `gsd-phase-researcher`). Scope locked via `/adversarial-review` → 1-A / 2-A / 3-iii. Traceability populated by gsd-roadmapper 2026-06-26.*

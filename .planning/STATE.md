@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-06-26T19:28:36.456Z"
 last_activity: 2026-06-26
 progress:
-  total_phases: 0
+  total_phases: 2
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,132 +20,106 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** v1.12 macOS MDM-Migration Verification Closure — ACTIVE (started 2026-06-26). Closing three Phase-90 post-migration verification gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md` + 10th Path-A audit-harness lineage bump. Scope locked via `/adversarial-review` → 1-A / 2-A / 3-iii. Defining requirements (Phase 94+).
+**Current focus:** v1.12 macOS MDM-Migration Verification Closure — ACTIVE (started 2026-06-26). Roadmap created 2026-06-26. 2 phases (94-95). Phase 94 closes three verification gaps in `docs/macos-lifecycle/02-mdm-migration-psso.md`; Phase 95 is the 10th Path-A harness lineage bump + 3-axis terminal re-audit + milestone close. Scope locked via `/adversarial-review` → 1-A / 2-A / 3-iii.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Not started (roadmap defined)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-06-26 — Milestone v1.12 started
+Status: Roadmap defined; ready for `/gsd-plan-phase 94`
+Last activity: 2026-06-26 — Roadmap created by gsd-roadmapper
 
-## v1.11 Phase Dependency Summary
+## v1.12 Phase Dependency Summary
 
 ```
-Phase 89 (PSSO Provisioning Walkthrough — Pillar A)
-  |       PROV-01, PROV-02, PROV-03, PROV-04
-  |       NEW: docs/macos-lifecycle/01-psso-provisioning-walkthrough.md
-  |       MODIFIED (content-phase, NOT nav-last):
-  |         - docs/macos-lifecycle/00-ade-lifecycle.md — See Also cross-link
-  |         - docs/admin-setup-macos/07-platform-sso-setup.md — See Also cross-link
-  |         - docs/admin-setup-macos/02-enrollment-profile.md — See Also cross-link
-  |       Research flags (verify on authoring day):
-  |         - ADE-during-Setup-Assistant GA status + CP 5.2604.0 LOB floor
-  |           against current Microsoft Learn (not late-2025 community posts)
-  |         - macOS 26 final GA confirmation; add last_verified stamps
-  |       MUST AVOID: any nav-hub edits (docs/index.md, common-issues.md,
-  |                   quick-ref-l2.md, decision-trees/06-macos-triage.md);
-  |                   duplicating guide 00/02/07 content inline (link-not-copy);
-  |                   editing guide 00/02/07 for content additions (frozen for v1.11);
-  |                   omitting last_verified/review_by on macOS-26-gated sections
+Phase 94 (Post-Migration Verification Content Closure)
+  |       MIGV-01, MIGV-02, MIGV-03
+  |       MODIFIED (surgical patches to existing file only — no new files):
+  |         - docs/macos-lifecycle/02-mdm-migration-psso.md
+  |           * MIGV-01: addendum to post-migration verification steps OR pre-migration
+  |             readiness-checklist sidebar — full-confidence, Microsoft Learn verified —
+  |             whether Intune requires config beyond ADE token assignment for
+  |             profile-based enrollment resulting from OS-26 in-place migration;
+  |             last_verified/review_by stamps required
+  |           * MIGV-02: confirm-or-correct Iru console device-deletion UI path
+  |             (checked against support.iru.io); confirm secret-retrieval pre-flight
+  |             still required; both "Kandji" and "Iru" names remain for searchability
+  |           * MIGV-03: explicit MEDIUM-confidence callout on supervision status —
+  |             most-likely behavior + sources; pilot recommendation (`profiles status`
+  |             / `profiles list` before-and-after); NO claim PSSO key survives
+  |             (Apple authoritative: re-registration always required); NOT a flat
+  |             assertion; NOT an author-unrunnable procedure; last_verified/review_by
+  |       POSSIBLY MODIFIED (only if MIGV-01 answer affects triage):
+  |         - docs/l2-runbooks/30-macos-mdm-migration-failure.md
+  |       Research flags (must be resolved at plan time — NOT pre-blocked):
+  |         - MIGV-01: Microsoft Learn — current profile-based enrollment config
+  |           requirement for Intune after OS-26 in-place ABM migration (is ADE token
+  |           assignment alone sufficient, or is additional config required?)
+  |         - MIGV-02: support.iru.io / current Iru support portal — device-deletion
+  |           UI path post-rebrand (Oct 2025); confirm Activation Lock bypass +
+  |           FileVault key secret-retrieval pre-flight still required
+  |         - MIGV-03: best-available sources on supervision preservation after
+  |           OS-26 in-place migration (Apple MDM protocol spec, developer forums,
+  |           community reports — pilot-test recommended but cannot be author-run)
+  |       HARD CONSTRAINTS:
+  |         - MIGV-03 ships as MEDIUM-confidence callout ONLY (adversarial-review
+  |           verdict 1-A / 3-iii — locked; NOT a flat assertion, NOT an
+  |           author-unrunnable procedure)
+  |         - MIGV-01 documented at full confidence ONLY after Microsoft Learn
+  |           verification (not assumed)
+  |         - All OS-26-gated additions carry last_verified/review_by stamps
+  |           (90-day cycle per guide 07 ADE-section precedent)
+  |         - DO NOT bundle CI-3 Managed-Apple-ID→Account rename (byte-unchanged
+  |           hazard, adversarial-review ruled out-of-scope)
+  |         - DO NOT edit nav-hub files (docs/index.md, common-issues.md,
+  |           quick-ref-l2.md, decision-trees/06-macos-triage.md) — guide 02 is
+  |           already navigation-wired from v1.11; no new files, no nav-last phase
+  |         - DO NOT add new files — v1.12 patches the single existing guide 02 only
   |
   v
-Phase 90 (MDM Migration Walkthrough + L2 Runbook #30 — Pillar B)
-  |       MIG-01, MIG-02, MIG-03, MIG-04, RUN-01
-  |       NEW: docs/macos-lifecycle/02-mdm-migration-psso.md
-  |       NEW: docs/l2-runbooks/30-macos-mdm-migration-failure.md
-  |       MODIFIED (content-phase, NOT nav-last):
-  |         - docs/l2-runbooks/00-index.md — append #30 row (internal hub)
-  |         - docs/l2-runbooks/27-macos-sso-investigation.md — See Also cross-link
-  |       Research flags (verify at plan time — HIGH open gaps):
-  |         - Intune profile-based-enrollment config for migrated macOS 26 devices
-  |           (Apple says result is profile-based; unclear if Intune needs config
-  |           beyond ADE token assignment — verify before stating as fact)
-  |         - Current Iru console device-deletion steps post-rebrand
-  |           (support.kandji.io; Iru blog)
-  |         - Supervision status preserved post-migration — MEDIUM confidence;
-  |           pilot-device verification required before stating as fact
-  |         - One-time reset for pre-26-ABM-enrolled devices — MEDIUM confidence;
-  |           document with confidence callout, recommend pilot test
-  |       KEY FACTS (firm, verified):
-  |         - PSSO re-registration ALWAYS required post-migration (Apple authoritative)
-  |         - OS-26 migration IS genuine unenroll+reenroll (NOT profile-swap)
-  |         - ACME cert IS reissued on genuine re-enrollment
-  |         - profiles renew is NOT a shortcut for ADE-enrolled Kandji devices
-  |         - VPP token must be revoked in Kandji/Iru BEFORE upload to Intune
-  |         - Pre-migration OS gate check required (macOS 26 hard gate)
-  |         - Sync lag: up to 24h auto-sync; 15-min manual rate limit; 7-day full cooldown
-  |       MUST AVOID: nav-hub files; duplicating guide 00/02/07 inline;
-  |                   stating PSSO key survives migration (Apple authoritative: never);
-  |                   stating supervision preserved (MEDIUM confidence only);
-  |                   using profiles renew as pre-26 shortcut for ADE devices
-  |
-  v
-Phase 91 (Glossary + Capability Matrix — Pillar C content portion)
-  |       REF-01, REF-02
-  |       MODIFIED:
-  |         - docs/_glossary-macos.md — MDM Migration, Assign Device Management,
-  |                                      Deadline, Kandji→Iru rebrand note
-  |         - docs/_glossary.md — reciprocal see-also
-  |         - docs/reference/macos-capability-matrix.md — migration row
-  |           ATOMIC with check-phase-63.mjs V-63-08 hash update
-  |           (baseline: 73f16378197223378a8507a6751c763902de58db — verify on authoring day)
-  |           Pre-edit anchor inventory artifact FIRST (Phase 85 Plan 85-01 precedent)
-  |         - docs/reference/4-platform-capability-comparison.md — macOS migration cells
-  |           ATOMIC with equivalent blob-hash update
-  |       MUST AVOID: editing capability matrix without same-commit V-63-08 hash update;
-  |                   adding cross-links in matrix to guide files that don't yet exist
-  |
-  v
-Phase 92 (Navigation Hub Integration — NAVIGATION-LAST)
-  |       NAV-01
-  |       NAVIGATION-LAST: ALL content from Phases 89-91 MUST be confirmed committed
-  |       before ANY nav-hub edit is committed (DA-3 invariant)
-  |       MODIFIED (all nav-last):
-  |         - docs/index.md
-  |         - docs/common-issues.md
-  |         - docs/quick-ref-l2.md
-  |         - docs/decision-trees/06-macos-triage.md
-  |       MUST AVOID: committing any nav-hub edit before verifying content files exist
-  |
-  v
-Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE LAST)
+Phase 95 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE LAST)
           HARN-01, HARN-02, HARN-03
-          V110 (v1.10 close-gate SHA a3617e9) pinned in _lib/frozen-at-close.mjs BEFORE
-            any check-phase-89.mjs is authored (hard ordering constraint)
-          Atom 1 (3 files indivisible): v1.11-milestone-audit.mjs (Path-A from v1.10, C1-C16)
-
-            + v1.11-audit-allowlist.json + BASELINE_15 in regenerate-supervision-pins.mjs
-          Atom 2 (indivisible set): check-phase-89..93.mjs + audit-harness-v1.11-integrity.yml
-            (8th parallel coexistence CI workflow) + _lib/frozen-at-close.mjs V110 entry
-          3-axis terminal re-audit: Axis 1 fresh git clone --no-hardlinks +
-            Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent;
-            cross-OS PASS/FAIL/SKIP EXACT MATCH required
-          Close-gate: v1.11-MILESTONE-AUDIT.md + v1.11-DEFERRED-CLEANUP.md +
-            4-doc traceability closure (15/15 Validated)
-          Predecessor v1.4-v1.10 frozen surfaces BYTE-UNCHANGED invariant
+          V111 (v1.11 close-gate SHA — candidate 919b23b; CONFIRM with
+            `git log --grep="close-gate" --grep="v1.11" --all-match -1` on authoring day)
+            pinned in _lib/frozen-at-close.mjs BEFORE any check-phase-94.mjs is authored
+          Atom 1 (3 files indivisible — HARN-01):
+            - v1.12-milestone-audit.mjs (Path-A from v1.11, C1-C16 inherited)
+            - v1.12-audit-allowlist.json (sidecar repointed)
+            - BASELINE_16 freshness comment in regenerate-supervision-pins.mjs
+          Atom 2 (indivisible set — HARN-02):
+            - check-phase-94.mjs + check-phase-95.mjs (per-phase validators;
+              chain-apex CHAIN_PHASES=[48..93], CHAIN_SKIP=new Set([]))
+            - _lib/frozen-at-close.mjs V111 entry (v1.11 close-gate SHA)
+            - audit-harness-v1.12-integrity.yml (9th parallel CI coexistence workflow;
+              predecessors v1.4-v1.11 byte-unchanged)
+          3-axis terminal re-audit (HARN-03):
+            - Axis 1: fresh git clone --no-hardlinks into $env:TEMP\v1.12-audit-<rand>
+            - Axis 2: cross-OS Linux GHA (apex authoritative per D-03 — Linux GHA
+              authoritative given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93])
+            - Axis 3: fresh zero-context sub-agent
+            - cross-OS PASS/FAIL/SKIP EXACT MATCH required
+          Close-gate: v1.12-MILESTONE-AUDIT.md + v1.12-DEFERRED-CLEANUP.md +
+            4-doc traceability closure (6/6 Validated)
+          Predecessor v1.4-v1.11 frozen surfaces BYTE-UNCHANGED invariant
 ```
 
-**Requirement coverage (15/15 mapped; 15/15 Validated — v1.11 CLOSED 2026-06-26):**
+## v1.12 Requirement Coverage (6/6 mapped; 0/6 Validated — in progress)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
-| 89 | PROV-01, PROV-02, PROV-03, PROV-04 | 4 |
-| 90 | MIG-01, MIG-02, MIG-03, MIG-04, RUN-01 | 5 |
-| 91 | REF-01, REF-02 | 2 |
-| 92 | NAV-01 | 1 |
-| 93 | HARN-01, HARN-02, HARN-03 | 3 |
+| 94 | MIGV-01, MIGV-02, MIGV-03 | 3 |
+| 95 | HARN-01, HARN-02, HARN-03 | 3 |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 93 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.11-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6/v1.7/v1.8/v1.9/v1.10 precedent).
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 95 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` (D-03 LOCKED — same mechanism as v1.6–v1.11 precedent). Linux GHA apex is authoritative (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93]).
 
-**Named decisions (LOCKED at roadmap 2026-06-24):**
+**Named decisions (LOCKED at roadmap 2026-06-26):**
 
-- SCENARIO-DOC-LOCATION: `docs/macos-lifecycle/` (not `admin-setup-macos/`; multi-role journey docs go in `*-lifecycle/` per cross-platform parallelism; iOS/Android analog confirmed)
-- MIGRATION-WALKTHROUGH-NUMBERING: `01-psso-provisioning-walkthrough.md`, `02-mdm-migration-psso.md` (following `00-ade-lifecycle.md` existing file)
-- L2-RUNBOOK-NUMBER: #30 (`docs/l2-runbooks/30-macos-mdm-migration-failure.md`; global sequential; last = #29)
-- PSSO-SURVIVAL: PSSO re-registration ALWAYS required post-migration — Apple authoritative ("MDM unenrollment = IdP unregistration"); same-tenant key-survival hypothesis NOT documented (LOW confidence, no authoritative source)
-- MIGRATION-MECHANISM: OS-26 path is genuine unenroll+reenroll (NOT profile-swap); Intune result is profile-based enrollment; ACME cert reissued
-- PHASE-COUNT: 5 phases (89-93) per research SUMMARY recommended sequence; confirmed by dependency analysis
+- PHASE-COUNT: 2 phases (94-95) — content closure (94) + harness/close (95); no navigation-last phase (guide 02 already wired in v1.11)
+- MIGV-03-FRAMING: MEDIUM-confidence callout + pilot recommendation only (adversarial-review verdict 3-iii — locked; NOT flat assertion, NOT author-unrunnable procedure)
+- MIGV-01-CONFIDENCE: Full confidence ONLY after Microsoft Learn verification on authoring day
+- CI-3-DEFERRED: Managed-Apple-ID→Account rename remains deferred (adversarial-review ruled byte-unchanged-hazard + motivated scope-padding)
+- SCOPE-LOCKED: v1.12 patches guide 02 only; no new files; no new hub entries; no tooling refactors bundled
+- HARNESS-LINEAGE: 10th Path-A milestone (v1.4→v1.12); BASELINE_16; V111 pin; 9th CI workflow
 
 ## Performance Metrics
 
@@ -163,81 +137,58 @@ Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 - v1.8: 4 phases (71-74), 13 plans — shipped 2026-06-08
 - v1.9: 8 phases (75-82), 19 plans — shipped 2026-06-22
 - v1.10: 6 phases (83-88), 16 plans — shipped 2026-06-24
-- **v1.11 (in progress): 5 phases (89-93), plan count TBD**
+- v1.11: 5 phases (89-93), 13 plans — shipped 2026-06-26
+- **v1.12 (in progress): 2 phases (94-95), plan count TBD**
 
 ## Accumulated Context
 
 ### Decisions
 
-**Phase 93-02 decisions (2026-06-26):**
+**v1.12 roadmap decisions (LOCKED 2026-06-26):**
 
-- ATOM-2-COMMIT: 16698d2 — feat(93-02): v1.11 validators + V110 pin + CI surface — HARN-02 (atomic SC#1 Atom 2)
-- V110-PIN: a3617e9 (v1.10 close-gate) added to _lib/frozen-at-close.mjs + readAtV110Close export; no V110_CLOSEGATE key; rides Atom 2 per D-02/D-04 locked divergence
-- CHAIN-APEX-93: CHAIN_PHASES=[48..92] (45 entries); CHAIN_SKIP=new Set([]) (empty); HARNESS→v1.11-milestone-audit.mjs
-- CI-8TH-COEXISTENCE: audit-harness-v1.11-integrity.yml shipped; all 4 contract values intact; check-phase-89..93 jobs added
-- ORDERING-GATE-SATISFIED: Atom 2 pushed to origin/master (16698d2) before Plan 93-03 Axis-2 dispatch
+- Two-phase structure adopted (content closure Phase 94 + harness/close Phase 95); navigation-last phase not required because guide 02 is already nav-wired from v1.11
+- MIGV-01/02/03 grouped into single Phase 94 — all three edit the same file, are a tight thematic cluster (post-migration verification), and can proceed together once plan-time research resolves the open gaps
+- Phase 95 mirrors v1.11 Phase 93 exactly: Atom 1 (v1.12-milestone-audit.mjs + allowlist + BASELINE_16) → Atom 2 (check-phase-94..95.mjs + V111 pin + 9th CI workflow) → HARN-03 (3-axis re-audit + close artifacts)
+- Adversarial-review verdict preserved: 1-A / 2-A / 3-iii — supervision as MEDIUM-confidence callout; full Path-A close; no CI-3 bundling
 
-**v1.11 roadmap decisions (LOCKED 2026-06-24):**
+**Durable architectural decisions (carried forward from v1.11):**
 
-- Pillar A provisioning: two delivery paths in one doc (standard post-enrollment + ADE-during-SA macOS 26+); both in `01-psso-provisioning-walkthrough.md`
-- Pillar B migration: two paths in one doc (OS-26 in-place + pre-26 fallback) + dedicated L2 runbook #30
-- Pillar C nav: capability-matrix + glossary in Phase 91; nav-hubs strictly Phase 92 (navigation-last invariant)
-- Pillar D harness: Phase 93 is LAST; Atom 1 + Atom 2 two-atomic-commit pattern per v1.10 Phase 88 precedent
-- Research-summary proposed 5-phase sequence (89-93) ADOPTED as-is; dependency analysis confirms no reordering needed
-
-**Durable architectural decisions (carried forward from v1.10):**
-
-- Sequential-on-main-tree per `use_worktrees:false`; atomic harness commit (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; navigation-last invariant; pre-edit anchor inventory before matrix edits; predecessor frozen surfaces BYTE-UNCHANGED
-- V-63-08 blob hash in check-phase-63.mjs must be updated atomically with any macos-capability-matrix.md change (PITFALL DA-5)
-- Predecessor guides 00/02/07 are FROZEN for v1.11 (content additions in new files only; reciprocal See Also cross-links are permitted as append-only edits)
-- Link-not-copy architecture: scenario guides stitch the journey but do NOT inline guide 00/02/07 prose
-- Per-section `last_verified`/`review_by` stamps required on all macOS-26-gated sections (90-day review cycle per guide 07 ADE section precedent)
-- [Phase ?]: D-01/D-02/D-04: Shared pre-flight hard-fork; Stage 9 migration-delta-only PSSO re-registration; vendor-neutral Kandji/Iru authoring with both names
-- [Phase ?]: D-03 executed: L2 #30 Track C link-not-copies to L2 #27 for PSSO registration-failure investigation (no inline duplication)
-- [Phase ?]: RUN-01 satisfied: 30-macos-mdm-migration-failure.md authored with three parallel tracks, L2 #10 prereq cross-link, ABM admin recovery in MEDIUM-confidence callouts, no same-tenant key-survival claim
-- [Phase ?]: Pre-edit blob hashes re-measured 2026-06-24: V-63-08 (73f16378) and V-63-09 (2314ede7) confirmed unchanged; macos-capability-matrix.md has no ## Version History heading
+- Sequential-on-main-tree per `use_worktrees:false`; atomic harness commit (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; predecessor frozen surfaces BYTE-UNCHANGED
+- Per-section `last_verified`/`review_by` stamps required on all OS-26-gated additions (90-day review cycle)
+- Link-not-copy architecture preserved (guide 02 references guides 00/01/07 for PSSO; no inline duplication)
+- V-63-08 blob hash in check-phase-63.mjs: v1.12 does NOT edit `macos-capability-matrix.md` (no matrix update needed); no blob-hash concern for this milestone
+- Guide 01 (psso-provisioning-walkthrough.md) and the nav-hub files are FROZEN for v1.12
 
 ### Pending Todos
 
-- At Phase 89 plan time: verify ADE-during-Setup-Assistant GA status + Company Portal 5.2604.0 LOB floor against current Microsoft Learn (not late-2025 community sources)
-- At Phase 89 plan time: verify macOS 26 final GA date; apply `last_verified: <authoring-day>` / `review_by: <authoring-day+90>` stamps on all OS-26-gated sections
-- At Phase 90 plan time: resolve HIGH open gap — Intune profile-based-enrollment config requirement for OS-26-migrated macOS devices (Apple says result is profile-based; verify if Intune needs explicit config beyond ADE token assignment)
-- At Phase 90 plan time: verify Iru console post-rebrand device-deletion steps (support.kandji.io)
-- At Phase 90 plan time: supervision-status preserved post-migration — pilot-device test before stating as fact (MEDIUM confidence; Apple support guide silent on this)
-- At Phase 91 plan time: verify V-63-08 current baseline (`git hash-object docs/reference/macos-capability-matrix.md`) on authoring day before any matrix edit
-- At Phase 91 plan time: confirm blob-hash variable name for `4-platform-capability-comparison.md` in the governing `check-phase-NN.mjs` validator before editing
-- At Phase 93 plan time: confirm V110 = v1.10 close-gate SHA `a3617e9` (`git log --grep="close-gate" --grep="v1.10" --all-match -1`)
+- At Phase 94 plan time: Microsoft Learn verification — does Intune require config beyond ADE token assignment when OS-26 in-place ABM migration yields profile-based enrollment? Document at full confidence only after verification (MIGV-01)
+- At Phase 94 plan time: support.iru.io / Iru support portal — confirm current post-rebrand device-deletion UI path; confirm or correct guide 02 Kandji/Iru source-side section (MIGV-02)
+- At Phase 94 plan time: best-available sources on supervision status post-OS-26-in-place migration — collect and assess; frame as MEDIUM-confidence callout only (MIGV-03)
+- At Phase 95 plan time: confirm V111 = v1.11 close-gate SHA via `git log --grep="close-gate" --grep="v1.11" --all-match -1` (candidate: 919b23b — must verify before authoring any v1.12 validator)
+- At Phase 95 plan time: confirm chain-apex count CHAIN_PHASES=[48..93] (46 entries)
 
 ### Blockers/Concerns
 
 Execution-time checks (not blockers — must be addressed within specified phases):
 
-- Phase 89: ADE-during-Setup-Assistant GA + CP 5.2604.0 verification on authoring day (DA-1 pitfall)
-- Phase 90: HIGH confidence gap — Intune profile-based-enrollment config for migrated macOS 26 devices
-- Phase 90: MEDIUM confidence — Iru console device-deletion steps; supervision post-migration status
-- Phase 91: V-63-08 blob-hash current value must be measured on authoring day (not from research, which cites `73f16378...` as a point-in-time snapshot)
+- Phase 94: MIGV-01 — answer only at full confidence after Microsoft Learn verification; do not document as assumed
+- Phase 94: MIGV-02 — Iru console UI may have changed post-rebrand; verify against live support.iru.io
+- Phase 94: MIGV-03 — MEDIUM confidence only; adversarial-review verdict 3-iii is LOCKED; any attempt to ship as flat assertion violates the locked scope decision
+- Phase 95: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93] — mitigated by D-03 (Linux GHA apex is authoritative); do not rely on Windows local clone for chain-apex PASS/FAIL at this depth
 
 ## Session Continuity
 
-Last session: 2026-06-26T14:38:59.478Z
-Stopped at: v1.11 MILESTONE CLOSE — Phase 93 Plan 93-04 close-gate complete (15/15 Validated)
+Last session: 2026-06-26 — gsd-roadmapper created v1.12 roadmap
+Stopped at: ROADMAP.md + STATE.md + REQUIREMENTS.md traceability written
 Resume file: None
-Next action: /gsd-complete-milestone (archive phase dirs, delete stray pre-close audit, close Jira story)
+Next action: `/gsd-plan-phase 94`
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Run `/gsd-plan-phase 94` to plan the post-migration verification content closure
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
-| (v1.11 phases not yet started) | — | — | — |
-| Phase 89 P01 | 339s | 2 tasks | 1 files |
-| Phase 90 P01 | 23m | 2 tasks | 1 files |
-| Phase 90-mdm-migration-walkthrough-l2-runbook-30 P02 | 5m | 2 tasks | 1 files |
-| Phase 91 P01 | 8m | 2 tasks | 2 files |
-| Phase 91 P02 | 4m | 1 tasks | 1 files |
-| Phase 91 P03 | 5m | 1 tasks | 3 files |
-| Phase 92 P01 | 4m 42s | 5 tasks | 4 files | nav-hub integration, single atomic commit |
-| Phase 93 P02 | ~25m | 2 tasks | 7 files | HARN-02 Atom 2: validators + V110 pin + CI workflow; 16698d2 pushed |
+| (v1.12 phases not yet started) | — | — | — |
