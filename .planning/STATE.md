@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.12
 milestone_name: macOS MDM-Migration Verification Closure
-status: ready_to_plan
-last_updated: 2026-06-26T21:15:10.310Z
+status: planning
+last_updated: "2026-06-26T22:08:48.460Z"
 last_activity: 2026-06-26
 progress:
   total_phases: 2
@@ -11,7 +11,6 @@ progress:
   total_plans: 1
   completed_plans: 1
   percent: 50
-stopped_at: Phase 94 complete (1/1) — ready to discuss Phase 95
 ---
 
 # Project State
@@ -184,9 +183,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-26T21:01:48.997Z
-Stopped at: Phase 94 context gathered
-Resume file: None
+Last session: 2026-06-26T22:08:48.441Z
+Stopped at: Phase 95 context gathered
+Resume file: .planning/phases/95-harness-lineage-bump-terminal-re-audit-milestone-close/95-CONTEXT.md
 Next action: `/gsd-plan-phase 94`
 
 ## Operator Next Steps
