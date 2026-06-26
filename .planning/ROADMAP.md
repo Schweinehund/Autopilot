@@ -163,7 +163,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 93-03-PLAN.md — HARN-03 3-axis terminal re-audit (cross-OS EXACT MATCH; artifact-only)
+- [x] 93-03-PLAN.md — HARN-03 3-axis terminal re-audit (cross-OS EXACT MATCH; artifact-only)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -179,4 +179,4 @@ Plans:
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 3/3 | Complete   | 2026-06-24 |
 | 91. Glossary + Capability Matrix | 3/3 | Complete    | 2026-06-25 |
 | 92. Navigation Hub Integration | 1/1 | Complete    | 2026-06-25 |
-| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |
+| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |
