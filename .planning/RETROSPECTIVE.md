@@ -330,6 +330,39 @@ Closed the v1.9-deferred macOS Platform SSO follow-on backlog: a new Kerberos SS
 
 ---
 
+## Milestone: v1.11 — macOS PSSO End-to-End Provisioning & MDM Migration
+
+**Shipped:** 2026-06-26
+**Phases:** 5 (89-93) | **Plans:** 13 | **Requirements:** 15/15 Validated
+
+### What Was Built
+Two consolidated, operator-followable macOS scenario guides stitched together from existing surfaces: an end-to-end PSSO provisioning walkthrough (`01-psso-provisioning-walkthrough.md`, A1 standard post-enrollment + A2 ADE-during-Setup-Assistant macOS 26+ with selector-first opening, shared 8-stage spine, `app-sso platform -s` gates, link-not-copy to guides 00/02/07) and a Kandji/Iru→Intune MDM migration walkthrough (`02-mdm-migration-psso.md`, B1 wipe-free in-place macOS 26+ ABM "Assign Device Management" + Deadline + B2 ≤macOS 25 wipe fallback + mandatory post-migration PSSO re-registration), a new three-track L2 #30 migration-failure runbook, 9 glossary entries + an atomic capability-matrix migration row (V-63-08/09 blob-hash), navigation-last hub integration across 4 hubs, and the 9th Path-A audit-harness lineage bump closed by a 3-axis terminal re-audit.
+
+### What Worked
+- **Content/foundation phases (89-92) shipped their per-phase validators during their own execution** — so Phase 93's Atom 2 carried only `check-phase-89..93.mjs` cleanly, avoiding the v1.9 "8 validators in one Atom" pileup. Shipping validators-as-deliverable per phase spread the load as intended.
+- **Path-A harness discipline held for the 9th consecutive milestone** — the 4-line relabel (lines 2/4/35/79) + predecessor v1.4-v1.10 byte-unchanged invariant + two-atomic split kept the lineage bump near-mechanical and self-test 9/9 preserved.
+- **Pre-committed cross-OS authority (D-03) again made the apex deterministic** — the carried WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 cascade (now worse at depth [48..92]) was a *known* artifact; the Linux GHA apex (47/0/1) was the binding signal, not the Windows cold clone that hung 3+ min.
+- **SINGLE close-gate commit (NO Commit A)** — no v1.11 artifact forward-references the close SHA, so the chicken-and-egg Commit A was avoided entirely (`{phase_93_close_SHA}` placeholder recoverable via git log grep).
+- **Pre-emptive stray-audit deletion at complete-milestone** — deleting the lean pre-close `.planning/v1.11-MILESTONE-AUDIT.md` *before* running `milestone.complete` prevented the SDK audit-move from clobbering the rich canonical `milestones/` copy (the v1.10 failure mode, now avoided proactively).
+
+### What Was Inefficient
+- **`/gsd-complete-milestone` SDK auto-extraction emitted `One-liner:` placeholder rows for the 4th milestone running** (v1.7/v1.8/v1.10/v1.11) — content-phase SUMMARY.md `one_liner` frontmatter is still authored as a `**One-liner:**` prose bullet the extractor can't parse, so the MILESTONES.md entry was hand-curated again. Root cause remains upstream: populate machine-readable `one_liner` frontmatter at phase close.
+- **A pre-close gate audit + a separate canonical close-gate audit co-existed** — the `/gsd-audit-milestone` pre-close run (12/15 gaps_found, the gaps being Phase 93 itself) and the Phase-93 canonical audit (15/15 passed) both lived on disk until complete-milestone deleted the stray; mildly confusing to reconcile which is authoritative.
+
+### Patterns Established
+- **Delete the stray pre-close audit before `milestone.complete`, not after** — when a Phase-N close-gate already authored the canonical `milestones/vX.Y-MILESTONE-AUDIT.md`, `git rm` the loose `.planning/vX.Y-MILESTONE-AUDIT.md` *first* so the SDK's audit-move has nothing to clobber it with. Supersedes the v1.10 "restore from HEAD afterward" remedy.
+- **Validators-as-deliverable per content phase** — confirmed: when phases 89-92 each ship their own `check-phase-NN.mjs`, the harness-close phase stays small.
+
+### Key Lessons
+- The milestone-close planning docs may be *mostly pre-updated by the Phase-N close-gate* (4-doc traceability flip), leaving `/gsd-complete-milestone` to do the archival + the ROADMAP/PROJECT collapse + MILESTONES curation + tag — but the stale spots hide in plain sight (PROJECT.md "Current State" still said "Next: Phase 90"). Re-read every section, don't assume the close-gate touched it.
+- The `One-liner:` extraction bug is now a 4-milestone recurrence; downstream hand-curation is reliable but the only durable fix is machine-readable SUMMARY frontmatter.
+
+### Cost Observations
+- Model mix: orchestration on Opus; the milestone ran as `/gsd-discuss-phase --chain` auto-pipelines sequential-on-main-tree per `use_worktrees:false`.
+- Notable: 9th Path-A harness in the lineage; cross-OS EXACT MATCH with Linux GHA apex 47/0/1 authoritative; the carried Windows deep-nest cascade is now depth [48..92] (+5 vs v1.10).
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -348,6 +381,7 @@ Closed the v1.9-deferred macOS Platform SSO follow-on backlog: a new Kerberos SS
 | v1.8 | 4 | 13 | Tooling-debt closure; ARCHIVE-01 vendored extractor fix; `_lib/frozen-at-close.mjs` centralized module; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 surfaced + deferred |
 | v1.9 | 8 | 19 | macOS Platform SSO + Secure Enclave content milestone; phase-scoped cross-link assertions (D-01); post-terminal-audit count-neutral hardening; SINGLE close-gate commit (no Commit A) |
 | v1.10 | 6 | 16 | macOS Platform SSO follow-ons (Kerberos / Graph API / NUAL); dedicated chain-health phase before harness bump (frozen-aware, no CHAIN_SKIP masking); cross-OS authority rule pre-committed (D-04, Linux GHA authoritative); 8th Path-A harness lineage |
+| v1.11 | 5 | 13 | macOS end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration scenario guides; validators-as-deliverable per content phase (small harness-close); SINGLE close-gate (no Commit A); stray pre-close audit deleted *before* `milestone.complete` to prevent SDK clobber; 9th Path-A harness lineage |
 
 ### Top Lessons (Verified Across Milestones)
 
