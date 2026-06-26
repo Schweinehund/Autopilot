@@ -159,7 +159,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 93-02-PLAN.md — Atom 2 (HARN-02): check-phase-89..93.mjs + frozen-at-close V110 pin + 8th CI workflow; push to origin/master
+- [x] 93-02-PLAN.md — Atom 2 (HARN-02): check-phase-89..93.mjs + frozen-at-close V110 pin + 8th CI workflow; push to origin/master (16698d2 — 2026-06-26)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -179,4 +179,4 @@ Plans:
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 3/3 | Complete   | 2026-06-24 |
 | 91. Glossary + Capability Matrix | 3/3 | Complete    | 2026-06-25 |
 | 92. Navigation Hub Integration | 1/1 | Complete    | 2026-06-25 |
-| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 1/4 | In Progress|  |
+| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |

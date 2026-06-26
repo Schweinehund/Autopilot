@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
 status: executing
-last_updated: "2026-06-26T03:15:39.038Z"
+last_updated: "2026-06-26T14:04:00.460Z"
 last_activity: 2026-06-26 -- Phase 93 planning complete
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 13
-  completed_plans: 10
-  percent: 77
+  completed_plans: 12
+  percent: 85
 ---
 
 # Project State
@@ -25,13 +25,13 @@ See: .planning/PROJECT.md (updated 2026-06-24)
 ## Current Position
 
 Phase: 93
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-26 -- Phase 93 planning complete
+Plan: 93-02 complete (Atom 2 pushed 16698d2)
+Status: Executing — Plan 93-03 next
+Last activity: 2026-06-26 -- Phase 93 Plan 93-02 complete (HARN-02 Atom 2)
 
 ```
-Phase 89-93 Progress: [████████░░] 80%
-Phases: 4/5 complete
+Phase 89-93 Progress: [████████░░] 85%
+Phases: 4/5 complete (Phase 93 in progress — Plan 93-02/4 done)
 ```
 
 ## v1.11 Phase Dependency Summary
@@ -174,6 +174,14 @@ Phase 93 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
 
 ### Decisions
 
+**Phase 93-02 decisions (2026-06-26):**
+
+- ATOM-2-COMMIT: 16698d2 — feat(93-02): v1.11 validators + V110 pin + CI surface — HARN-02 (atomic SC#1 Atom 2)
+- V110-PIN: a3617e9 (v1.10 close-gate) added to _lib/frozen-at-close.mjs + readAtV110Close export; no V110_CLOSEGATE key; rides Atom 2 per D-02/D-04 locked divergence
+- CHAIN-APEX-93: CHAIN_PHASES=[48..92] (45 entries); CHAIN_SKIP=new Set([]) (empty); HARNESS→v1.11-milestone-audit.mjs
+- CI-8TH-COEXISTENCE: audit-harness-v1.11-integrity.yml shipped; all 4 contract values intact; check-phase-89..93 jobs added
+- ORDERING-GATE-SATISFIED: Atom 2 pushed to origin/master (16698d2) before Plan 93-03 Axis-2 dispatch
+
 **v1.11 roadmap decisions (LOCKED 2026-06-24):**
 
 - Pillar A provisioning: two delivery paths in one doc (standard post-enrollment + ADE-during-SA macOS 26+); both in `01-psso-provisioning-walkthrough.md`
@@ -216,10 +224,10 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-26T03:15:39.016Z
-Stopped at: Phase 93 context gathered
+Last session: 2026-06-26T14:30:00.000Z
+Stopped at: Phase 93 Plan 93-02 complete — Atom 2 (16698d2) pushed to origin/master
 Resume file: None
-Next action: `/gsd-plan-phase 89`
+Next action: Execute Plan 93-03 (HARN-03 3-axis terminal re-audit)
 
 ## Operator Next Steps
 
@@ -237,3 +245,4 @@ Next action: `/gsd-plan-phase 89`
 | Phase 91 P02 | 4m | 1 tasks | 1 files |
 | Phase 91 P03 | 5m | 1 tasks | 3 files |
 | Phase 92 P01 | 4m 42s | 5 tasks | 4 files | nav-hub integration, single atomic commit |
+| Phase 93 P02 | ~25m | 2 tasks | 7 files | HARN-02 Atom 2: validators + V110 pin + CI workflow; 16698d2 pushed |
