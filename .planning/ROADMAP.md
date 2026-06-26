@@ -91,4 +91,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 94. Post-Migration Verification Content Closure | 1/1 | Complete    | 2026-06-26 |
-| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete   | 2026-06-26 |
+| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete    | 2026-06-26 |
