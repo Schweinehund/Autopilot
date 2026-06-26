@@ -47,10 +47,10 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Depends on**: Nothing (first and only content phase of v1.12)
 **Requirements**: MIGV-01, MIGV-02, MIGV-03
 **Success Criteria** (what must be TRUE):
+
   1. `docs/macos-lifecycle/02-mdm-migration-psso.md` contains a source-verified addendum (post-migration verification steps or pre-migration readiness-checklist sidebar) stating — at full confidence, citing current Microsoft Learn — whether any Intune configuration beyond ADE token assignment is required once an OS-26 in-place migration resolves to profile-based enrollment; carries `last_verified: <authoring-day>` and `review_by: <+90d>` stamps; `docs/l2-runbooks/30-macos-mdm-migration-failure.md` is updated only if the answer affects migration-failure triage
   2. The Kandji/Iru source-side steps section of guide `02` reflects the verified current Iru post-rebrand console device-deletion UI path (checked against `support.iru.io` or current Iru support portal); the text confirms whether the documented secret-retrieval pre-flight (FileVault recovery key / Activation Lock bypass) is still required; both "Kandji" and "Iru" names remain present for searchability
-  3. Guide `02` contains an explicit MEDIUM-confidence callout on supervision status that (a) states the most-likely behavior with available sources, (b) recommends a pilot-device `profiles status` / `profiles list` before-and-after test without asserting unverified procedure as fact, and (c) makes no claim that the PSSO Secure Enclave key survives migration (Apple authoritative: re-registration always required); callout carries `last_verified` / `review_by` stamps; the callout is framed as MEDIUM confidence and does NOT assert supervision is preserved as a fact
-**Plans**: 1 plan
+  3. Guide `02` contains an explicit MEDIUM-confidence callout on supervision status that (a) states the most-likely behavior with available sources, (b) recommends a pilot-device `profiles status` / `profiles list` before-and-after test without asserting unverified procedure as fact, and (c) makes no claim that the PSSO Secure Enclave key survives migration (Apple authoritative: re-registration always required); callout carries `last_verified` / `review_by` stamps; the callout is framed as MEDIUM confidence and does NOT assert supervision is preserved as a fact**Plans**: 1 plan
   - [ ] 94-01-PLAN.md — Close all three MIGV gaps in docs/macos-lifecycle/02-mdm-migration-psso.md: MIGV-01 Microsoft-Learn-cited full-confidence upgrade (Stage 3/7) + MIGV-03 MEDIUM supervision callout refinement + MIGV-02 Iru/Kandji both-URL delete-path verification (Stage 2 + glossary) + D-04 hybrid freshness stamps
 
 **UI hint**: no
@@ -61,10 +61,12 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Depends on**: Phase 94
 **Requirements**: HARN-01, HARN-02, HARN-03
 **Success Criteria** (what must be TRUE):
+
   1. Atom 1 ships as one indivisible commit: `v1.12-milestone-audit.mjs` (Path-A from v1.11, C1-C16 inherited) + `v1.12-audit-allowlist.json` + BASELINE_16 freshness comment in `regenerate-supervision-pins.mjs`
   2. Atom 2 ships as one indivisible commit: `check-phase-94..95.mjs` (per-phase validators; chain-apex `CHAIN_PHASES=[48..93]`, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V111 entry (v1.11 close-gate SHA — confirm with `git log --grep="close-gate" --grep="v1.11" --all-match -1` on authoring day, candidate `919b23b`; pinned BEFORE any v1.12 validator is authored) + `audit-harness-v1.12-integrity.yml` as the 9th parallel CI coexistence workflow (predecessors v1.4–v1.11 byte-unchanged)
   3. 3-axis terminal re-audit completes: Axis 1 fresh `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>` + Axis 2 cross-OS Linux GHA (apex authoritative per D-03, given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93]) + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP counts are EXACT MATCH
   4. `v1.12-MILESTONE-AUDIT.md` and `v1.12-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 6 requirements to Validated; predecessor v1.4–v1.11 frozen surfaces BYTE-UNCHANGED
+
 **Plans**: TBD
 
 **UI hint**: no
