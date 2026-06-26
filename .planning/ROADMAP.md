@@ -38,7 +38,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 90: MDM Migration Walkthrough + L2 Runbook #30** — New `02-mdm-migration-psso.md` (ABM "Assign Device Management" + Deadline OS-26 in-place path + pre-macOS-26 fallback + mandatory PSSO re-registration) + new `30-macos-mdm-migration-failure.md` L2 runbook + `l2-runbooks/00-index.md` extension
  (completed 2026-06-24)
 - [x] **Phase 91: Glossary + Capability Matrix** — Glossary terms (MDM Migration / Assign Device Management / Deadline / Kandji→Iru rebrand), `macos-capability-matrix.md` migration row (atomic V-63-08 hash update), `4-platform-capability-comparison.md` macOS migration cells (completed 2026-06-25)
-- [x] **Phase 92: Navigation Hub Integration** — Navigation-last integration into `docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l2.md`, and `docs/decision-trees/06-macos-triage.md` (completed 2026-06-25)
+- [x] **Phase 92: Navigation Hub Integration** — Navigation-last integration into `docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l2.md`, and `docs/decision-trees/06-macos-triage.md`
+ (completed 2026-06-25)
 - [ ] **Phase 93: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A 9th lineage bump (Atom 1 + Atom 2), `frozen-at-close.mjs` V110 pin, 3-axis terminal re-audit, `v1.11-MILESTONE-AUDIT.md` + close-gate
 
 ## Phase Details
@@ -149,7 +150,11 @@ Plans:
   3. 3-axis terminal re-audit completes: Axis 1 fresh `git clone --no-hardlinks` local + Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP counts are EXACT MATCH
   4. `v1.11-MILESTONE-AUDIT.md` and `v1.11-DEFERRED-CLEANUP.md` are authored; 4-doc traceability closure (PROJECT.md / ROADMAP.md / STATE.md / REQUIREMENTS.md) flips all 15 requirements to Validated
 
-**Plans**: TBD
+**Plans**: 4 plans
+- [ ] 93-01-PLAN.md — 93-CONVENTIONS.md constants lock + Atom 1 (HARN-01): v1.11-milestone-audit.mjs + v1.11-audit-allowlist.json + BASELINE_15
+- [ ] 93-02-PLAN.md — Atom 2 (HARN-02): check-phase-89..93.mjs + frozen-at-close V110 pin + 8th CI workflow; push to origin/master
+- [ ] 93-03-PLAN.md — HARN-03 3-axis terminal re-audit (cross-OS EXACT MATCH; artifact-only)
+- [ ] 93-04-PLAN.md — HARN-03 close-gate: v1.11 MILESTONE-AUDIT + DEFERRED-CLEANUP + 4-doc traceability 15/15 + v1.11 MILESTONE CLOSE
 **UI hint**: no
 
 ## Progress
