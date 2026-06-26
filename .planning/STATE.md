@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.12
 milestone_name: macOS MDM-Migration Verification Closure
-status: planning
-last_updated: "2026-06-26T19:28:36.456Z"
-last_activity: 2026-06-26
+status: Roadmap defined; ready for `/gsd-plan-phase 94`
+last_updated: "2026-06-26T20:28:50.336Z"
+last_activity: 2026-06-26 — Roadmap created by gsd-roadmapper
 progress:
   total_phases: 2
   completed_phases: 0
@@ -83,19 +83,24 @@ Phase 95 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST BE
             `git log --grep="close-gate" --grep="v1.11" --all-match -1` on authoring day)
             pinned in _lib/frozen-at-close.mjs BEFORE any check-phase-94.mjs is authored
           Atom 1 (3 files indivisible — HARN-01):
+
             - v1.12-milestone-audit.mjs (Path-A from v1.11, C1-C16 inherited)
             - v1.12-audit-allowlist.json (sidecar repointed)
             - BASELINE_16 freshness comment in regenerate-supervision-pins.mjs
           Atom 2 (indivisible set — HARN-02):
+
             - check-phase-94.mjs + check-phase-95.mjs (per-phase validators;
               chain-apex CHAIN_PHASES=[48..93], CHAIN_SKIP=new Set([]))
+
             - _lib/frozen-at-close.mjs V111 entry (v1.11 close-gate SHA)
             - audit-harness-v1.12-integrity.yml (9th parallel CI coexistence workflow;
               predecessors v1.4-v1.11 byte-unchanged)
           3-axis terminal re-audit (HARN-03):
+
             - Axis 1: fresh git clone --no-hardlinks into $env:TEMP\v1.12-audit-<rand>
             - Axis 2: cross-OS Linux GHA (apex authoritative per D-03 — Linux GHA
               authoritative given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..93])
+
             - Axis 3: fresh zero-context sub-agent
             - cross-OS PASS/FAIL/SKIP EXACT MATCH required
           Close-gate: v1.12-MILESTONE-AUDIT.md + v1.12-DEFERRED-CLEANUP.md +
@@ -178,9 +183,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-26 — gsd-roadmapper created v1.12 roadmap
-Stopped at: ROADMAP.md + STATE.md + REQUIREMENTS.md traceability written
-Resume file: None
+Last session: 2026-06-26T20:28:50.324Z
+Stopped at: Phase 94 context gathered
+Resume file: .planning/phases/94-post-migration-verification-content-closure/94-CONTEXT.md
 Next action: `/gsd-plan-phase 94`
 
 ## Operator Next Steps
