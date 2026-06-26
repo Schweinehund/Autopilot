@@ -74,7 +74,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-  - [ ] 95-02-PLAN.md — HARN-02 Atom 2 (check-phase-94 + check-phase-95 apex [48..94] + frozen-at-close V111 + 9th CI workflow); pushed to origin/master
+  - [x] 95-02-PLAN.md — HARN-02 Atom 2 (check-phase-94 + check-phase-95 apex [48..94] + frozen-at-close V111 + 9th CI workflow); pushed to origin/master
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -91,4 +91,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 94. Post-Migration Verification Content Closure | 1/1 | Complete    | 2026-06-26 |
-| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 1/4 | In Progress|  |
+| 95. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |
