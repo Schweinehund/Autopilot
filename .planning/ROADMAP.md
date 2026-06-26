@@ -14,7 +14,7 @@
 - ✅ **v1.8 Tooling Debt Closure + Chain-Resilience Hardening** — Phases 71-74 (shipped 2026-06-08)
 - ✅ **v1.9 macOS Platform SSO & Secure Enclave Authentication Documentation** — Phases 75-82 (shipped 2026-06-22)
 - ✅ **v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL** — Phases 83-88 (shipped 2026-06-24)
-- 🚧 **v1.11 macOS PSSO End-to-End Provisioning & MDM Migration** — Phases 89-93 (in progress)
+- ✅ **v1.11 macOS PSSO End-to-End Provisioning & MDM Migration** — Phases 89-93 (shipped 2026-06-26)
 
 ## Phases
 
@@ -30,7 +30,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 ---
 
-### 🚧 v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (In Progress — started 2026-06-24)
+### ✅ v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (SHIPPED 2026-06-26 — started 2026-06-24)
 
 **Milestone Goal:** Give Intune/L1/L2 teams two consolidated, operator-followable macOS scenario guides — (1) deploying a Mac from enrollment profile to a fully PSSO-registered end user, and (2) migrating Macs from Kandji/Iru into Intune with PSSO — so the full device journey no longer requires hopping between guides 00/02/07.
 
@@ -42,7 +42,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 92: Navigation Hub Integration** — Navigation-last integration into `docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l2.md`, and `docs/decision-trees/06-macos-triage.md`
  (completed 2026-06-25)
 
-- [ ] **Phase 93: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A 9th lineage bump (Atom 1 + Atom 2), `frozen-at-close.mjs` V110 pin, 3-axis terminal re-audit, `v1.11-MILESTONE-AUDIT.md` + close-gate
+- [x] **Phase 93: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — Path-A 9th lineage bump (Atom 1 + Atom 2), `frozen-at-close.mjs` V110 pin, 3-axis terminal re-audit, `v1.11-MILESTONE-AUDIT.md` + close-gate (completed 2026-06-26)
 
 ## Phase Details
 
@@ -167,7 +167,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 93-04-PLAN.md — HARN-03 close-gate: v1.11 MILESTONE-AUDIT + DEFERRED-CLEANUP + 4-doc traceability 15/15 + v1.11 MILESTONE CLOSE
+- [x] 93-04-PLAN.md — HARN-03 close-gate: v1.11 MILESTONE-AUDIT + DEFERRED-CLEANUP + 4-doc traceability 15/15 + v1.11 MILESTONE CLOSE
 
 **UI hint**: no
 
@@ -179,4 +179,4 @@ Plans:
 | 90. MDM Migration Walkthrough + L2 Runbook #30 | 3/3 | Complete   | 2026-06-24 |
 | 91. Glossary + Capability Matrix | 3/3 | Complete    | 2026-06-25 |
 | 92. Navigation Hub Integration | 1/1 | Complete    | 2026-06-25 |
-| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |
+| 93. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete    | 2026-06-26 |

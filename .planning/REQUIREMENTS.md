@@ -53,8 +53,8 @@ Requirements for milestone v1.11. Each maps to exactly one roadmap phase.
 ### Audit Harness & Milestone Close (HARN)
 
 - [x] **HARN-01**: `v1.11-milestone-audit.mjs` + `v1.11-audit-allowlist.json` ship as Path-A copies from v1.10 (C1-C16 inherited) + `BASELINE_15` freshness comment in `regenerate-supervision-pins.mjs` (**Atom 1**, indivisible)
-- [ ] **HARN-02**: Per-phase `check-phase-89..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a **`V110`** entry (v1.10 close-gate SHA `a3617e9`, pinned BEFORE any validator is authored — confirm SHA at Phase 93) + `audit-harness-v1.11-integrity.yml` ships as the **8th** parallel CI coexistence workflow (predecessors v1.4–v1.10 byte-unchanged) (**Atom 2**, indivisible)
-- [ ] **HARN-03**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` + Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP-count **EXACT MATCH**) + `v1.11-MILESTONE-AUDIT.md` + `v1.11-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT / ROADMAP / STATE / REQUIREMENTS)
+- [x] **HARN-02**: Per-phase `check-phase-89..NN.mjs` validators ship as deliverables + `_lib/frozen-at-close.mjs` gains a **`V110`** entry (v1.10 close-gate SHA `a3617e9`, pinned BEFORE any validator is authored — confirm SHA at Phase 93) + `audit-harness-v1.11-integrity.yml` ships as the **8th** parallel CI coexistence workflow (predecessors v1.4–v1.10 byte-unchanged) (**Atom 2**, indivisible)
+- [x] **HARN-03**: 3-axis terminal re-audit (Axis 1 fresh `git clone --no-hardlinks` + Axis 2 cross-OS Linux GHA + Axis 3 fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP-count **EXACT MATCH**) + `v1.11-MILESTONE-AUDIT.md` + `v1.11-DEFERRED-CLEANUP.md` + 4-doc traceability closure (PROJECT / ROADMAP / STATE / REQUIREMENTS)
 
 ## v2 Requirements
 
@@ -99,25 +99,26 @@ Populated during roadmap creation (gsd-roadmapper). Each requirement maps to exa
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROV-01 | Phase 89 | Active |
-| PROV-02 | Phase 89 | Active |
-| PROV-03 | Phase 89 | Active |
-| PROV-04 | Phase 89 | Active |
-| MIG-01 | Phase 90 | Active |
-| MIG-02 | Phase 90 | Active |
-| MIG-03 | Phase 90 | Active |
-| MIG-04 | Phase 90 | Active |
-| RUN-01 | Phase 90 | Active |
-| REF-01 | Phase 91 | Active |
-| REF-02 | Phase 91 | Active |
-| NAV-01 | Phase 92 | Active |
-| HARN-01 | Phase 93 | Active |
-| HARN-02 | Phase 93 | Active |
-| HARN-03 | Phase 93 | Active |
+| PROV-01 | Phase 89 | Validated |
+| PROV-02 | Phase 89 | Validated |
+| PROV-03 | Phase 89 | Validated |
+| PROV-04 | Phase 89 | Validated |
+| MIG-01 | Phase 90 | Validated |
+| MIG-02 | Phase 90 | Validated |
+| MIG-03 | Phase 90 | Validated |
+| MIG-04 | Phase 90 | Validated |
+| RUN-01 | Phase 90 | Validated |
+| REF-01 | Phase 91 | Validated |
+| REF-02 | Phase 91 | Validated |
+| NAV-01 | Phase 92 | Validated |
+| HARN-01 | Phase 93 | Validated |
+| HARN-02 | Phase 93 | Validated |
+| HARN-03 | Phase 93 | Validated |
 
 **Coverage:**
 - v1 requirements: 15 total
 - Mapped to phases: 15/15 (roadmap complete 2026-06-24)
+- **Validated: 15/15** (v1.11 milestone closed 2026-06-26 — Phase 93 Plan 93-04 close-gate)
 - Unmapped: 0
 
 ---

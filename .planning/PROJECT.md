@@ -8,9 +8,9 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (STARTED 2026-06-24)
+## Current Milestone: v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (CLOSED 2026-06-26)
 
-**Status:** 🚧 IN PROGRESS — started 2026-06-24. Defining requirements → roadmap. Phase numbering continues from v1.10 close (Phase 88) → **v1.11 starts at Phase 89**.
+**Status:** ✅ SHIPPED & CLOSED 2026-06-26 — 5/5 phases (89-93) Complete; 15/15 requirements Validated via Phase 93 Plan 93-04 SINGLE close-gate commit (NO Commit A). Pending archival to `.planning/milestones/v1.11-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md` via `/gsd-complete-milestone`.
 
 **Goal:** Give Intune/L1/L2 teams two consolidated, operator-followable macOS scenario guides — (1) deploying a Mac from enrollment profile to a fully PSSO-registered end user, and (2) migrating Macs from Kandji/Iru into Intune with PSSO — so the full device journey no longer has to be assembled by hopping between docs `00`/`02`/`07`.
 
