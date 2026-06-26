@@ -16,7 +16,7 @@ This is a single-file operator walkthrough threading a Mac from enrollment throu
 
 | Path | macOS Requirement | Company Portal | PSSO Registers | Use When |
 |------|-------------------|----------------|----------------|----------|
-| **A1 — Standard post-enrollment** | macOS 13+ | 5.2404.0+ (VPP) | At desktop, after "Registration Required" notification | Most deployments; all supported macOS versions |
+| **A1 — Standard post-enrollment** | macOS 13+ | 5.2404.0+ (LOB/PKG) | At desktop, after "Registration Required" notification | Most deployments; all supported macOS versions |
 | **A2 — ADE-during-Setup-Assistant** | macOS 26+ (hard gate) | 5.2604.0+ (LOB only — NOT VPP) | Inside Setup Assistant; no desktop notification | New enrollments on macOS 26+ requiring zero-click PSSO |
 
 > **Userless devices:** Devices enrolled without user affinity never reach PSSO registration — no WPJ key is written and no Secure Enclave entry is created. This walkthrough covers user-affinity enrollments only. For userless (shared/kiosk) devices, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
@@ -69,7 +69,7 @@ graph TD
 | 1: Enrollment Profile + PSSO Policy | Admin | Intune admin center | Enrollment profile configured (user affinity, modern auth, Await Config: Yes); PSSO Settings Catalog policy created | PSSO policy assigned to device groups or wrong group type | Both |
 | 2: ADE Token Sync | System/Intune | Intune admin center | Device appears in Intune after ABM sync | Token expired; sync lag up to 24h | Both |
 | 3: PSSO Policy Assigned to Static User Groups | Admin | Intune admin center | Policy assigned to Assigned (static) user groups containing the target users | Dynamic groups or device groups break A2; also breaks A1 | Both |
-| 4: Company Portal Deployed | Admin | Intune admin center | CP deployed as required app (VPP for A1; LOB for A2) | Wrong deployment method for path; version below floor | Both |
+| 4: Company Portal Deployed | Admin | Intune admin center | CP deployed as a required LOB/PKG app (floor 5.2404.0 for A1; 5.2604.0 for A2) | Version below floor; CP not assigned as required | Both |
 | 5: ADE Setup Assistant | Device/User | On-device | Device enrolls, Entra credential prompt; ACME cert issued | Firewall blocks ADE endpoints; CP not installed before SA credential prompt (A2) | Both |
 | 6: Await Configuration | System/Intune | On-device | Device holds at "Awaiting final configuration" while PSSO policy delivers | PSSO policy not delivered before release; stuck screen | Both |
 | 7A: Desktop + "Registration Required" | User | On-device | User taps Notification Center prompt → MFA → WPJ Secure Enclave key written | User dismisses notification; wrong verification command | A1 |
@@ -169,27 +169,27 @@ In the **Intune admin center**, navigate to **Devices > Manage devices > Configu
 
 ### What the Admin Sees
 
-In the **Intune admin center**, navigate to **Apps > All Apps** and locate your Company Portal deployment. For A1, verify it is deployed via **VPP** (Apps and Books, Licenses) with a minimum version requirement of 5.2404.0. For A2, verify it is deployed as a **line-of-business (LOB) PKG app** with a minimum version of 5.2604.0 — it must NOT be deployed via VPP for the A2 group.
+In the **Intune admin center**, navigate to **Apps > All Apps** and locate your Company Portal deployment. On macOS the Company Portal is **always deployed as a PKG** — added to Intune as a **line-of-business (LOB) app** (or as an unmanaged **macOS app (PKG)**) using the Microsoft download from `https://go.microsoft.com/fwlink/?linkid=853070`. It is **never** distributed via Apple VPP / Apps and Books on macOS (that channel applies to the iOS/iPadOS Company Portal only). For A1, verify the deployed Company Portal meets a minimum version of **5.2404.0**; for A2, it must be **5.2604.0 or newer**. The only difference between the paths is the version floor — the deployment method (LOB/PKG) is the same for both.
 
 ### What Happens
 
-1. **A1 deployment (VPP).** Company Portal version 5.2404.0 or later is deployed via Apple VPP (Apps and Books) as a required app to the target user group. VPP enables silent, license-managed installation.
+1. **A1 deployment (LOB/PKG).** Company Portal version 5.2404.0 or later is deployed as a required **line-of-business (LOB) PKG app** via **Apps > All Apps > Add > Line-of-business app** with Platform: macOS, assigned to the target user group. Intune installs the PKG silently on enrolled devices.
 
-2. **A2 deployment (LOB).** Company Portal version 5.2604.0 or later is deployed as a line-of-business (LOB) PKG app via **Apps > All Apps > Add > Line-of-business app** with Platform: macOS. LOB deployment is required for A2 — VPP is not supported on the A2 path. VPP and LOB Company Portal deployments can coexist in the fleet as long as each path's group receives the correct deployment type.
+2. **A2 deployment (LOB).** Company Portal version 5.2604.0 or later is deployed as a line-of-business (LOB) PKG app via **Apps > All Apps > Add > Line-of-business app** with Platform: macOS — the same deployment method as A1, but the A2 version floor is higher (5.2604.0) because only that build carries the registration-during-Setup-Assistant capability. macOS has no VPP Company Portal, so there is no alternate channel to misconfigure here — the only A2 deployment risk is shipping a build below 5.2604.0 or not assigning Company Portal as a required app to the A2 group.
 
 3. **Assignment to static user groups.** The Company Portal app assignment must target the same Assigned (static) user groups as the PSSO Settings Catalog policy and ADE enrollment profile (A2 requirement). For A1, the Company Portal assignment must reach the target users before Stage 7A.
 
 ### Behind the Scenes
 
-- The Company Portal app serves as the delivery mechanism for the PSSO extension installation package. On A2, the LOB PKG format is required because the PSSO extension setup runs inside Setup Assistant before the App Store is available — VPP licensing requires App Store access that does not exist at that point.
+- The Company Portal app serves as the delivery mechanism for the PSSO extension installation package. On macOS the Company Portal is always a PKG installed via MDM (never an App Store / VPP app). On A2 this matters for timing: the PSSO extension setup runs inside Setup Assistant before the desktop — and before any App Store access — so the Company Portal PKG must be pushed as a required app, assigned to the A2 group, and reach the device early in enrollment.
 - On A2, if Company Portal has not finished installing when the user first attempts to sign in during Setup Assistant, the user sees "Unable to sign in" with a registration error. The user should tap "Try Again" to allow Company Portal to finish downloading and retry registration. This is expected behavior, not a failure.
 - For A1, Company Portal sign-in at Stage 6 in the ADE lifecycle completes Entra device registration. For PSSO specifically, the PSSO registration is triggered separately at Stage 7A by the "Registration Required" Notification Center prompt — they are two distinct events.
 
 ### Watch Out For
 
-- **VPP Company Portal deployed to A2 group.** This is the second-most-common A2 misconfiguration (after the three-policy group mismatch). A2 requires Company Portal as a LOB app. If VPP Company Portal is the only deployment reaching A2 devices, PSSO registration in Setup Assistant fails.
+- **Company Portal below the A2 floor, or not assigned as required.** This is the second-most-common A2 misconfiguration (after the three-policy group mismatch). A2 requires the Company Portal LOB PKG at **5.2604.0 or newer**, assigned as a **required** app to the A2 group. An older build (e.g. the 5.2404.0 that satisfies A1) or a Company Portal that is missing / Available-only on A2 devices causes PSSO registration in Setup Assistant to fail.
 - **Company Portal version below floor.** The A1 floor is 5.2404.0; the A2 floor is 5.2604.0. Verify the installed version on enrolled devices. If the version is below the floor, update the app deployment in Intune and allow time for the update to propagate.
-- **LOB deployment delay.** LOB app deployments can take longer to install than VPP apps, especially on newly-enrolled devices. If A2 enrollment fails with "Unable to sign in" and "Try Again" does not resolve it after several minutes, check Company Portal installation status in the Intune admin center under the device's app install report.
+- **Company Portal install delay.** The Company Portal PKG can take a few minutes to install on newly-enrolled devices. If A2 enrollment fails with "Unable to sign in" and "Try Again" does not resolve it after several minutes, check Company Portal installation status in the Intune admin center under the device's app install report.
 
 ---
 

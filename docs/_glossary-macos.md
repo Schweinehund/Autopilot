@@ -159,7 +159,7 @@ Cross-links: [iOS App Deployment Guide](admin-setup-ios/05-app-deployment.md) | 
 
 ### LOB app
 
-Line-of-business (LOB) app -- a PKG or DMG application uploaded directly to Intune as a managed app, as opposed to VPP/App Store ("Apps and Books") distribution. On macOS the Company Portal is deployed as a required LOB app (PKG) so it is present before the user reaches the desktop. The ADE-during-Setup-Assistant PSSO path requires the Company Portal **5.2604.0 LOB build specifically** (not the VPP build), because only the LOB build carries the registration-during-Setup-Assistant capability.
+Line-of-business (LOB) app -- a PKG or DMG application uploaded directly to Intune as a managed app, as opposed to VPP/App Store ("Apps and Books") distribution. On macOS the Company Portal is always deployed as a PKG (added to Intune as an LOB app, or as an unmanaged macOS PKG app) so it is present before the user reaches the desktop — it is never distributed via Apple VPP on macOS (that channel applies to the iOS/iPadOS Company Portal only). The ADE-during-Setup-Assistant PSSO path requires Company Portal **5.2604.0 or newer specifically**, because only that build carries the registration-during-Setup-Assistant capability.
 
 > **Windows equivalent:** Intune line-of-business apps (.msi) and Win32 apps (.intunewin) -- organization-supplied installers uploaded directly to Intune rather than sourced from a store. "LOB app" is shared Intune terminology across platforms.
 > See also: [VPP](#vpp); [PSSO Provisioning Walkthrough -- A2 path](../macos-lifecycle/01-psso-provisioning-walkthrough.md).
