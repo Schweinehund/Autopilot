@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.11
 milestone_name: macOS PSSO End-to-End Provisioning & MDM Migration
-status: completed
-last_updated: "2026-06-26T14:38:59.491Z"
-last_activity: 2026-06-26 -- v1.11 MILESTONE CLOSE (Phase 93 Plan 93-04 close-gate; HARN-01/02/03 Validated; 15/15)
+status: Awaiting next milestone
+last_updated: "2026-06-26T16:18:38.586Z"
+last_activity: 2026-06-26 — Milestone v1.11 completed and archived
 progress:
   total_phases: 5
   completed_phases: 5
@@ -17,22 +17,17 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-24)
+See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management) — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** v1.11 CLOSED — 15/15 requirements Validated (Phase 93 Plan 93-04 close-gate 2026-06-26)
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
+**Current focus:** No active milestone — v1.11 SHIPPED & ARCHIVED 2026-06-26 (tag `v1.11`, 15/15 Validated). Run `/gsd-new-milestone` to scope the next.
 
 ## Current Position
 
-Phase: 93
-Plan: 93-04 complete (close-gate)
-Status: COMPLETE — v1.11 milestone closed 2026-06-26
-Last activity: 2026-06-26 -- v1.11 MILESTONE CLOSE (Phase 93 Plan 93-04 close-gate; HARN-01/02/03 Validated; 15/15)
-
-```
-Phase 89-93 Progress: [██████████] 100%
-Phases: 5/5 complete (v1.11 CLOSED 2026-06-26)
-```
+Phase: Milestone v1.11 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-06-26 — Milestone v1.11 completed and archived
 
 ## v1.11 Phase Dependency Summary
 
@@ -231,7 +226,7 @@ Next action: /gsd-complete-milestone (archive phase dirs, delete stray pre-close
 
 ## Operator Next Steps
 
-- Plan Phase 89: `/gsd-plan-phase 89`
+- Start the next milestone with /gsd-new-milestone
 
 ## Performance Metrics
 

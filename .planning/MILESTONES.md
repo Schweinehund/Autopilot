@@ -1,5 +1,25 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (Shipped: 2026-06-26)
+
+**Phases completed:** 5 phases (89-93), 13 plans, 15/15 requirements Validated
+**Timeline:** 2026-06-24 → 2026-06-26 (~3 days)
+**Git range:** `v1.10`..`v1.11` — 89 commits; 168 files changed, +19,177 / −1,755
+**Audit status:** `passed` (.planning/milestones/v1.11-MILESTONE-AUDIT.md; Phase 93 HARN-03 3-axis terminal re-audit — Axis 1 local fresh-clone `git clone --no-hardlinks`; Axis 2 cross-OS Linux GHA run `28243312867` (authoritative apex 47/0/1 per D-03); Axis 3 fresh zero-context sub-agent; Cross-OS PASS/FAIL/SKIP EXACT MATCH; predecessor v1.4–v1.10 frozen surfaces byte-unchanged)
+
+**Key accomplishments:**
+
+- **PSSO provisioning walkthrough** (`docs/macos-lifecycle/01-psso-provisioning-walkthrough.md`, Phase 89) — consolidated A1 standard post-enrollment + A2 ADE-during-Setup-Assistant (macOS 26+) paths with selector-first opening, shared 8-stage spine, delimited A2 divergence callout (three-policy same-Assigned-static-user-group rule, Company Portal 5.2604.0 LOB floor, `EnableRegistrationDuringSetup`, SmartCard exclusion, wipe-only recovery), `app-sso platform -s` verification gates, and reciprocal See Also footers into guides 00/07/02 (PROV-01..04)
+- **MDM migration walkthrough** (`docs/macos-lifecycle/02-mdm-migration-psso.md`, Phase 90) — Kandji/Iru→Intune migration covering B1 wipe-free in-place (macOS 26+, 9-stage ABM "Assign Device Management" + Deadline flow) and B2 wipe-and-re-enroll (≤macOS 25 fallback, `profiles renew` is NOT a no-wipe shortcut), Kandji/Iru source-side secret-retrieval pre-flight, and the mandatory post-migration PSSO re-registration gate bidirectionally cross-linked to guide 01 (MIG-01..04)
+- **L2 Runbook #30** (`docs/l2-runbooks/30-macos-mdm-migration-failure.md`, Phase 90) — three-track migration-failure investigation: deadline lockout + ABM admin recovery (Track A), profile-not-delivered / enrollment-failed with leftover Kandji/Iru agent diagnostic (Track B), PSSO re-registration stuck routed link-not-copy to L2 #27 (Track C); L2 #10 log-collection prereq; indexed in `00-index.md` (RUN-01)
+- **Glossary + capability matrix** (Phase 91) — 9 minted `_glossary-macos.md` entries (MDM Migration, Assign Device Management, Deadline, Kandji-Iru, Delete Device Record, FileVault Recovery Key, Activation Lock Bypass, Profile-Based Enrollment, ACME, app-sso) + reciprocal `_glossary.md` see-also; atomic macOS-26 in-place migration row added to `macos-capability-matrix.md` + `4-platform-capability-comparison.md` with V-63-08/V-63-09 blob-hash baselines updated in the SAME commit (`check-phase-63.mjs` exits 0, 32 PASS) (REF-01/02)
+- **Navigation hub integration** (Phase 92) — single-commit navigation-last wiring of guides 01/02 + L2 #30 into all four top-level hubs (`docs/index.md` L1+L2 rows, `common-issues.md` 2 symptom entries, `quick-ref-l2.md` migration-diagnostics block, `decision-trees/06-macos-triage.md` MACE3 leaf) plus the MAC1 deadline-lockout routing fix; all referenced content files confirmed committed before the nav commit (NAV-01)
+- **9th Path-A audit harness + milestone close** (Phase 93) — Atom 1 `84cf2d4` (`v1.11-milestone-audit.mjs` C1-C16 verbatim, self-test 9/9, sidecar repointed + BASELINE_15) + Atom 2 `16698d2` (`check-phase-89..93.mjs` validators incl. chain-apex [48..92] + `frozen-at-close.mjs` V110 pin `a3617e9` + 8th CI coexistence workflow); 3-axis terminal re-audit cross-OS EXACT MATCH (Linux GHA apex 47/0/1 authoritative); single 7-file close-gate commit (NO Commit A) flipping 15/15 to Validated (HARN-01/02/03)
+
+**Known deferred items at close:** see `.planning/milestones/v1.11-DEFERRED-CLEANUP.md` — three new Phase-90 research gaps (INTUNE-PROFILE-ENROLLMENT-01 Intune profile-based-enrollment config for OS-26-migrated devices; IRU-CONSOLE-DELETE-01 Iru post-rebrand console delete steps; SUPERVISION-STATUS-POST-MIGRATION-01 supervision preservation), plus WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 carried forward and WORSE at depth `[48..92]` (mitigated by D-03 — Linux GHA apex exclusively authoritative), plus all v1.10 carried Part-B deferrals (MTPSSO-01/02/03 multi-tenant PSSO, KRBFUT-01/02) preserved verbatim.
+
+---
+
 ## v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL (Shipped: 2026-06-24)
 
 **Phases completed:** 6 phases (83-88), 16 plans, 32 tasks, 17/17 requirements Validated
