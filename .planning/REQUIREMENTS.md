@@ -28,7 +28,7 @@ Requirements for milestone v1.12. Each maps to exactly one roadmap phase.
 
 ### Audit Harness & Milestone Close (HARN)
 
-- [ ] **HARN-01**: `v1.12-milestone-audit.mjs` + `v1.12-audit-allowlist.json` ship as Path-A copies from v1.11 (C1-C16 inherited, sidecar repointed) + `BASELINE_16` freshness comment in `regenerate-supervision-pins.mjs` — **Atom 1**, indivisible (the 10th milestone in the v1.4→v1.12 Path-A lineage).
+- [x] **HARN-01**: `v1.12-milestone-audit.mjs` + `v1.12-audit-allowlist.json` ship as Path-A copies from v1.11 (C1-C16 inherited, sidecar repointed) + `BASELINE_16` freshness comment in `regenerate-supervision-pins.mjs` — **Atom 1**, indivisible (the 10th milestone in the v1.4→v1.12 Path-A lineage).
 
 - [ ] **HARN-02**: Per-phase `check-phase-94..NN.mjs` validators ship as deliverables (chain-apex `CHAIN_PHASES=[48..93]`, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` gains a **`V111`** entry (v1.11 close-gate SHA — candidate `919b23b`; confirm with `git log --grep="close-gate" --grep="v1.11" --all-match -1` at harness-phase time — pinned BEFORE any v1.12 validator is authored) + `audit-harness-v1.12-integrity.yml` ships as the **9th** parallel CI coexistence workflow (predecessors v1.4–v1.11 byte-unchanged) — **Atom 2**, indivisible.
 
@@ -80,7 +80,7 @@ Populated by gsd-roadmapper 2026-06-26. Each requirement maps to exactly one pha
 | MIGV-01 | Phase 94 | Complete |
 | MIGV-02 | Phase 94 | Complete |
 | MIGV-03 | Phase 94 | Complete |
-| HARN-01 | Phase 95 | Pending |
+| HARN-01 | Phase 95 | Complete |
 | HARN-02 | Phase 95 | Pending |
 | HARN-03 | Phase 95 | Pending |
 

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.12
 milestone_name: macOS MDM-Migration Verification Closure
 status: executing
-last_updated: "2026-06-26T22:38:23.413Z"
-last_activity: 2026-06-26 -- Phase 95 planning complete
+last_updated: "2026-06-26T22:54:55.654Z"
+last_activity: 2026-06-26
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 5
-  completed_plans: 1
-  percent: 20
+  completed_plans: 2
+  percent: 40
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 95 — harness lineage bump + terminal re audit + milestone close
+**Current focus:** Phase 95 — harness-lineage-bump-terminal-re-audit-milestone-close
 
 ## Current Position
 
-Phase: 95
-Plan: Not started
+Phase: 95 (harness-lineage-bump-terminal-re-audit-milestone-close) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-06-26 -- Phase 95 planning complete
+Last activity: 2026-06-26
 
 ## v1.12 Phase Dependency Summary
 
@@ -183,9 +183,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-26T22:08:48.441Z
+Last session: 2026-06-26T22:54:55.636Z
 Stopped at: Phase 95 context gathered
-Resume file: .planning/phases/95-harness-lineage-bump-terminal-re-audit-milestone-close/95-CONTEXT.md
+Resume file: None
 Next action: `/gsd-plan-phase 94`
 
 ## Operator Next Steps
@@ -198,3 +198,4 @@ Next action: `/gsd-plan-phase 94`
 |-------|------|----------|-------|
 | (v1.12 phases not yet started) | — | — | — |
 | Phase 94 P01 | 25m | 2 tasks | 1 files |
+| Phase 95 P01 | 690 | 2 tasks | 4 files |
