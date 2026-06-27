@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.12
 milestone_name: macOS MDM-Migration Verification Closure
-status: milestone_complete
-last_updated: 2026-06-26T23:48:55.307Z
-last_activity: 2026-06-26
+status: Awaiting next milestone
+last_updated: "2026-06-27T04:25:40.119Z"
+last_activity: 2026-06-27 — Milestone v1.12 completed and archived
 progress:
   total_phases: 2
   completed_phases: 2
   total_plans: 5
   completed_plans: 5
   percent: 100
-stopped_at: Milestone complete (Phase 95 was final phase)
 ---
 
 # Project State
@@ -25,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-06-26 after v1.11 milestone)
 
 ## Current Position
 
-Phase: 95
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-06-26
+Phase: Milestone v1.12 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-06-27 — Milestone v1.12 completed and archived
 
 ## v1.12 Phase Dependency Summary
 
@@ -191,7 +190,7 @@ Next action: `/gsd-complete-milestone v1.12`
 
 ## Operator Next Steps
 
-- Run `/gsd-complete-milestone v1.12` to archive phase dirs, clean cruft, and close Jira story
+- Start the next milestone with /gsd-new-milestone
 
 ## Performance Metrics
 

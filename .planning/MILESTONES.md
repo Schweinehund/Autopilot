@@ -1,5 +1,25 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.12 macOS MDM-Migration Verification Closure (Shipped: 2026-06-26)
+
+**Phases completed:** 2 phases (94-95), 5 plans, 6/6 requirements Validated
+**Timeline:** 2026-06-26 (single-day milestone)
+**Git range:** `v1.11`..`v1.12` — 33 commits; 39 files changed, +7,704 / −200
+**Audit status:** `passed` (.planning/milestones/v1.12-MILESTONE-AUDIT.md; Phase 95 HARN-03 3-axis terminal re-audit — Axis 1 local fresh-clone `git clone --no-hardlinks` into `$env:TEMP\v1.12-audit-<rand>`; Axis 2 cross-OS Linux GHA run `28270308253` (BOTH chain validators Linux-GHA sole-authoritative per corrected D-03 OS split — apex 49/0/1 + continuity 47/0/1); Axis 3 fresh zero-context sub-agent; Cross-OS PASS/FAIL/SKIP EXACT MATCH; predecessor v1.4–v1.11 frozen surfaces byte-unchanged)
+
+**Key accomplishments:**
+
+- **MIGV-01 — Intune profile-based-enrollment config closure** (Phase 94, `docs/macos-lifecycle/02-mdm-migration-psso.md`) — full-confidence, Microsoft-Learn-verified answer that no Intune configuration beyond ADE token assignment is required once an OS-26 in-place ABM migration resolves to profile-based enrollment; documented as a post-migration verification addendum with `last_verified`/`review_by` freshness stamps (closes v1.11-deferred INTUNE-PROFILE-ENROLLMENT-01)
+- **MIGV-02 — Iru/Kandji console delete-path verification** (Phase 94) — the Kandji/Iru source-side steps section verified against live vendor docs (`support.iru.io` + `docs.iru.com`); current post-rebrand device-deletion UI path confirmed, secret-retrieval pre-flight (FileVault recovery key / Activation Lock bypass) confirmed still required; both "Kandji" and "Iru" names + both portal URLs retained for searchability (closes IRU-CONSOLE-DELETE-01)
+- **MIGV-03 — Supervision-status MEDIUM-confidence callout** (Phase 94) — best-available inference on supervision preservation after OS-26 in-place migration shipped as an explicit MEDIUM-confidence callout with a `profiles status`/`profiles list` pilot recommendation; no flat assertion, no author-unrunnable procedure, no PSSO-Secure-Enclave-key-survival claim (Apple authoritative: re-registration always required); carries freshness stamps. Scope locked via `/adversarial-review` verdict 3-iii (closes SUPERVISION-STATUS-POST-MIGRATION-01)
+- **HARN-01 — 10th Path-A audit-harness lineage bump (Atom 1)** (Phase 95) — `v1.12-milestone-audit.mjs` (Path-A from v1.11, C1-C16 inherited verbatim, self-test 9/9) + `v1.12-audit-allowlist.json` sidecar repointed + BASELINE_16 freshness comment in `regenerate-supervision-pins.mjs`, shipped as one indivisible commit (`8efa283`)
+- **HARN-02 — Per-phase validators + frozen pin + CI surface (Atom 2)** (Phase 95) — `check-phase-94.mjs` + `check-phase-95.mjs` (chain-apex `CHAIN_PHASES=[48..94]`, 47 entries, D-01 apex correction [48..93]→[48..94]) + `_lib/frozen-at-close.mjs` `V111` entry (v1.11 close-gate SHA `919b23b`) + `audit-harness-v1.12-integrity.yml` as the 9th parallel CI coexistence workflow (predecessors v1.4–v1.11 byte-unchanged), shipped as one indivisible 4-file commit (`1de2bbb`), pushed to origin/master
+- **HARN-03 — 3-axis terminal re-audit + milestone close** (Phase 95) — 3-axis auditor-independence (fresh `git clone --no-hardlinks` + cross-OS Linux GHA run `28270308253` + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH (corrected D-03 OS split: BOTH chain validators Linux-GHA authoritative given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..94]); `v1.12-MILESTONE-AUDIT.md` + `v1.12-DEFERRED-CLEANUP.md` authored; single close-gate commit (NO Commit A) flipping 6/6 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS
+
+**Known deferred items at close:** see `.planning/milestones/v1.12-DEFERRED-CLEANUP.md` — CI-3 Managed-Apple-ID→Managed-Apple-Account corpus rename (trigger-gated on Intune portal rebrand; `/adversarial-review` ruled bundling a byte-unchanged-invariant hazard), tooling refactors (EXEC-FAIL-DETAIL-EXTRACTION-01, FROZEN-AWARE-ADOPTION-SWEEP-01, HELPER-SPAWN-STDERR-01), WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 root-cause fix (mitigated by D-03; correctness-neutral), and all v1.10/v1.11 carried Part-B deferrals (MTPSSO-01/02/03 multi-tenant PSSO, KRBFUT-01/02, MIGFUT-01/02/03) preserved verbatim.
+
+---
+
 ## v1.11 macOS PSSO End-to-End Provisioning & MDM Migration (Shipped: 2026-06-26)
 
 **Phases completed:** 5 phases (89-93), 13 plans, 15/15 requirements Validated

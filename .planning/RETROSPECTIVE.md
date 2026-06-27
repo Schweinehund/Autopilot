@@ -363,6 +363,39 @@ Two consolidated, operator-followable macOS scenario guides stitched together fr
 
 ---
 
+## Milestone: v1.12 — macOS MDM-Migration Verification Closure
+
+**Shipped:** 2026-06-26
+**Phases:** 2 (94-95) | **Plans:** 5 | **Requirements:** 6/6 Validated
+
+### What Was Built
+A tightly-scoped verification-closure milestone that resolved the three Phase-90 post-migration research gaps routed forward at the v1.11 close-gate, all in the single existing file `docs/macos-lifecycle/02-mdm-migration-psso.md` (no new files, no navigation-last phase — guide 02 was already nav-wired in v1.11). MIGV-01: Microsoft-Learn-verified full-confidence answer that ADE token assignment alone suffices for OS-26-migrated profile-based enrollment. MIGV-02: Iru/Kandji console delete-path confirmed against live vendor docs (both portal URLs + both brand names retained). MIGV-03: supervision-status shipped as a MEDIUM-confidence callout + pilot recommendation (not a flat assertion). Plus the 10th Path-A audit-harness lineage bump (Atom 1 + Atom 2), V111 frozen pin, 9th CI coexistence workflow, and a 3-axis terminal re-audit closing the milestone.
+
+### What Worked
+- **`/adversarial-review` locked the hardest scope call before any planning** — the supervision question (assert vs. callout vs. author-unrunnable pilot) resolved to a coherent 1-A / 2-A / 3-iii triple, so MIGV-03 shipped as a MEDIUM-confidence callout without re-litigation mid-execution. The same review pre-emptively ruled CI-3 and tooling refactors out (byte-unchanged hazard + scope-padding).
+- **The 10th consecutive Path-A harness held** — near-mechanical relabel + predecessor v1.4–v1.11 byte-unchanged invariant + two-atomic split (`8efa283` / `1de2bbb`); self-test 9/9; C1-C16 inherited verbatim.
+- **Corrected D-03 OS split made the apex deterministic again** — both chain validators were declared Linux-GHA sole-authoritative up front (run `28270308253`), so the carried WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 (now depth [48..94]) was a known artifact, not a close-gate blocker. Cross-OS PASS/FAIL/SKIP EXACT MATCH.
+- **D-01 apex off-by-one caught at the close-gate** — roadmap-locked `CHAIN_PHASES=[48..93]` corrected to `[48..94]` (47 entries) per the triple-confirmed [48..N-1] invariant, rather than shipping the locked-but-wrong value.
+- **SINGLE close-gate commit (NO Commit A)** — no v1.12 artifact forward-references the close SHA, so the chicken-and-egg Commit A was avoided for the 4th milestone running.
+
+### What Was Inefficient
+- **`/gsd-complete-milestone` SDK auto-extraction emitted `One-liner:` placeholder rows yet again** (5th milestone: v1.7/v1.8/v1.10/v1.11/v1.12) — MILESTONES.md accomplishments were hand-curated. Root cause is still unmached `**One-liner:**` prose-bullet SUMMARY frontmatter; only a machine-readable `one_liner:` field at phase close will fix it durably.
+- **The SDK `milestone.complete` stamped the entry `Shipped: 2026-06-27`** (UTC rollover) while every other doc says 2026-06-26 — corrected by hand. Date should be taken from the milestone's git range, not the wall clock at archive time.
+
+### Patterns Established
+- **Verification-closure as a first-class milestone shape** — when a prior close-gate routes forward genuine research gaps (not tech debt), a tiny 2-phase milestone (content closure + harness/close) cleanly retires them without padding. The content phase touches only the already-wired file; no new nav surface needed.
+- **Pre-lock the confidence framing of unverifiable claims** — for questions the authors cannot empirically settle (supervision survival), decide "MEDIUM-confidence callout + pilot recommendation" at scope time via adversarial-review, so execution never drifts toward either a false assertion or an author-unrunnable procedure.
+
+### Key Lessons
+- The Phase-N close-gate again pre-updated most of the 4-doc traceability, leaving `/gsd-complete-milestone` to do archival + ROADMAP/PROJECT collapse + MILESTONES curation + tag. Re-read every section — the stale spots (PROJECT.md "Run `/gsd-complete-milestone`" prompts) hide in plain sight.
+- The `One-liner:` extraction bug is now a 5-milestone recurrence and the UTC date stamp is a recurring annoyance; both are reliably hand-fixed but the durable fixes are upstream (machine-readable frontmatter; git-range-derived date).
+
+### Cost Observations
+- Model mix: orchestration on Opus; sequential-on-main-tree per `use_worktrees:false`.
+- Notable: smallest milestone since v1.7 (2 phases / 5 plans); 10th Path-A harness; cross-OS EXACT MATCH with both chain validators Linux-GHA authoritative; carried Windows deep-nest cascade now depth [48..94] (+2 vs v1.11).
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -382,6 +415,7 @@ Two consolidated, operator-followable macOS scenario guides stitched together fr
 | v1.9 | 8 | 19 | macOS Platform SSO + Secure Enclave content milestone; phase-scoped cross-link assertions (D-01); post-terminal-audit count-neutral hardening; SINGLE close-gate commit (no Commit A) |
 | v1.10 | 6 | 16 | macOS Platform SSO follow-ons (Kerberos / Graph API / NUAL); dedicated chain-health phase before harness bump (frozen-aware, no CHAIN_SKIP masking); cross-OS authority rule pre-committed (D-04, Linux GHA authoritative); 8th Path-A harness lineage |
 | v1.11 | 5 | 13 | macOS end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration scenario guides; validators-as-deliverable per content phase (small harness-close); SINGLE close-gate (no Commit A); stray pre-close audit deleted *before* `milestone.complete` to prevent SDK clobber; 9th Path-A harness lineage |
+| v1.12 | 2 | 5 | Verification-closure milestone (smallest since v1.7); retired 3 prior-close research gaps in one already-wired file; `/adversarial-review` pre-locked MEDIUM-confidence framing for unverifiable supervision claim; D-01 apex off-by-one corrected at close-gate ([48..93]→[48..94]); both chain validators Linux-GHA authoritative (corrected D-03); 10th Path-A harness lineage |
 
 ### Top Lessons (Verified Across Milestones)
 
