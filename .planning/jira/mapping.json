@@ -669,11 +669,31 @@
       "status": "in_progress",
       "created": "2026-06-28",
       "phases": {
-        "96": { "issueKey": "RTS-687", "status": "todo", "name": "Surgical Conflict Fixes" },
-        "97": { "issueKey": "RTS-688", "status": "todo", "name": "Enrollment & FileVault Depth Formalization" },
-        "98": { "issueKey": "RTS-689", "status": "todo", "name": "Guide 07 Comprehensive Pass" },
-        "99": { "issueKey": "RTS-690", "status": "todo", "name": "New Runbook + Navigation Wiring" },
-        "100": { "issueKey": "RTS-691", "status": "todo", "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close" }
+        "96": {
+          "issueKey": "RTS-687",
+          "status": "done",
+          "name": "Surgical Conflict Fixes"
+        },
+        "97": {
+          "issueKey": "RTS-688",
+          "status": "done",
+          "name": "Enrollment & FileVault Depth Formalization"
+        },
+        "98": {
+          "issueKey": "RTS-689",
+          "status": "in_progress",
+          "name": "Guide 07 Comprehensive Pass"
+        },
+        "99": {
+          "issueKey": "RTS-690",
+          "status": "todo",
+          "name": "New Runbook + Navigation Wiring"
+        },
+        "100": {
+          "issueKey": "RTS-691",
+          "status": "todo",
+          "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
+        }
       }
     }
   },
