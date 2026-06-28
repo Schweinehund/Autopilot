@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-14
-review_by: 2026-07-13
+last_verified: 2026-06-28
+review_by: 2026-09-28
 applies_to: ADE
 audience: L1
 platform: macOS
@@ -27,7 +27,7 @@ Use this runbook when a user cannot sign into the Company Portal app on their Ma
 
 3. **If Company Portal is not installed:** Navigate to Intune admin center > **Apps** > **macOS**. Search for "Company Portal". Open the app record and select **Device install status**. Find this device by serial number.
 
-4. If Company Portal does not have a Required assignment for this device's group: this is the root cause. Navigate to **Apps** > **macOS** > Company Portal > **Properties** > **Assignments** and confirm Company Portal is assigned as **Required** to the device group. If not, proceed to [Escalation Criteria](#escalation-criteria) — adding or correcting app assignments may require admin action.
+4. If Company Portal does not have a Required assignment for this user's group: this is the root cause. Navigate to **Apps** > **macOS** > Company Portal > **Properties** > **Assignments** and confirm Company Portal is assigned as **Required** to the user group. If not, proceed to [Escalation Criteria](#escalation-criteria) — adding or correcting app assignments may require admin action.
 
 5. If Company Portal is assigned as Required but shows "Pending" install status: trigger a sync. Navigate to **Devices** > **macOS** > [device] > **Sync**. Wait 10 minutes. Company Portal must be installed before the user can sign in.
 
@@ -74,4 +74,5 @@ See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for Company Portal and Entra
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-28 | Phase 96 (ACC-04): corrected step 4 app-assignment group type from device to user for user-affinity devices; updated last_verified and review_by | -- |
 | 2026-04-14 | Initial version | -- |
