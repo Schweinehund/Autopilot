@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-20
-review_by: 2026-09-20
+last_verified: 2026-06-28
+review_by: 2026-09-28
 applies_to: ADE
 audience: all
 platform: macOS
@@ -247,7 +247,7 @@ On the physical device, [Setup Assistant](../_glossary-macos.md#setup-assistant)
 - **Device not in ABM or wrong MDM server.** The device contacts Apple's ADE service but no MDM server is associated with its serial number (Stage 1 was not completed). Setup Assistant runs in non-managed mode.
 - **No enrollment profile assigned.** The device is in ABM and assigned to the correct MDM server, but no enrollment profile was created or assigned in Intune (Stage 3 incomplete). The device cannot enroll.
 - **APNs certificate expired on Intune side.** The Apple Push Notification certificate in Intune has expired. New enrollments may fail or experience delayed policy delivery. Renew the APNs certificate in the Intune admin center under **Tenant administration > Connectors and tokens > Apple push notification certificate**.
-- **Platform SSO extension profile must be pre-deployed for ADE enrollment-time registration.** If Platform SSO is configured for ADE enrollment-time registration (advanced path, macOS 26+ with `EnableRegistrationDuringSetup`), the SSO extension Settings Catalog profile must be assigned to a static device group and delivered before the device reaches the Entra credential screen in Setup Assistant. If Company Portal has not finished installing when the user first attempts to sign in, the user sees "Unable to sign in" with a registration error; tapping "Try Again" allows Company Portal to finish and registration to complete. For standard Platform SSO (post-enrollment), this timing constraint does not apply at Stage 4 — registration is triggered later by a "Registration required" notification at the desktop (Stage 7).
+- **Platform SSO extension profile must be pre-deployed for ADE enrollment-time registration.** If Platform SSO is configured for ADE enrollment-time registration (advanced path, macOS 26+ with `EnableRegistrationDuringSetup`), the SSO extension Settings Catalog profile must be assigned to a static user group and delivered before the device reaches the Entra credential screen in Setup Assistant. If Company Portal has not finished installing when the user first attempts to sign in, the user sees "Unable to sign in" with a registration error; tapping "Try Again" allows Company Portal to finish and registration to complete. For standard Platform SSO (post-enrollment), this timing constraint does not apply at Stage 4 — registration is triggered later by a "Registration required" notification at the desktop (Stage 7).
 
 ---
 
@@ -415,5 +415,6 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 | Date | Change |
 |------|--------|
+| 2026-06-28 | Phase 96 (ACC-01, ACC-02): corrected Stage-6 Company Portal VPP/LOB claims (lines 309, 319); removed orphaned VPP glossary quick-ref row (line 411); corrected Stage-4 SSO-extension policy group type from device to user (line 250) | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E8 Related Guides cross-link to guide 07 | -- |
 | 2026-04-14 | Initial version -- complete 7-stage ADE lifecycle narrative |
