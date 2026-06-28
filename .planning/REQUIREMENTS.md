@@ -1,7 +1,7 @@
 # Requirements — v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
 
 **Milestone:** v1.13
-**Status:** Scoped — pending roadmap
+**Status:** Roadmap defined — ready for Phase 96
 **Basis:** `SEED-001` (planted 2026-06-28). All content verified against Microsoft Learn 2026-06-27/28.
 
 ---
@@ -56,13 +56,20 @@
 
 ## Traceability
 
-REQ-ID → Phase mapping is filled by the roadmap.
-
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| ACC-01..04 | TBD | Pending |
-| TS-01..03 | TBD | Pending |
-| DEP-01..03 | TBD | Pending |
-| RUN-01 | TBD | Pending |
-| GLOS-01 | TBD | Pending |
-| HARN-01..03 | TBD | Pending |
+| ACC-01 | Phase 96 | Pending |
+| ACC-02 | Phase 96 | Pending |
+| ACC-04 | Phase 96 | Pending |
+| GLOS-01 | Phase 96 | Pending |
+| DEP-01 | Phase 97 | Pending |
+| DEP-02 | Phase 97 | Pending |
+| ACC-03 | Phase 98 | Pending |
+| TS-01 | Phase 98 | Pending |
+| TS-02 | Phase 98 | Pending |
+| TS-03 | Phase 98 | Pending |
+| DEP-03 | Phase 98 | Pending |
+| RUN-01 | Phase 99 | Pending |
+| HARN-01 | Phase 100 | Pending |
+| HARN-02 | Phase 100 | Pending |
+| HARN-03 | Phase 100 | Pending |
