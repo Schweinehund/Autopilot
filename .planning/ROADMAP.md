@@ -36,7 +36,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 ### v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth (Phases 96-100)
 
-- [ ] **Phase 96: Surgical Conflict Fixes** — Patch verified factual errors in guide 00 (VPP/device-group conflicts) + L1 runbook 15 (user-group remediation) + macOS glossary (Iru 3-URL correction)
+- [x] **Phase 96: Surgical Conflict Fixes** — Patch verified factual errors in guide 00 (VPP/device-group conflicts) + L1 runbook 15 (user-group remediation) + macOS glossary (Iru 3-URL correction) (completed 2026-06-28)
 - [ ] **Phase 97: Enrollment & FileVault Depth Formalization** — Bring guide 02 Account Settings additions and guide 03 FileVault depth under requirements + harness coverage with freshness stamps
 - [ ] **Phase 98: Guide 07 Comprehensive Pass** — Fix the remaining guide 07 VPP conflict, add the full troubleshooting section (Extension-Identifier-typo + A2 delivery requirements + diagnostic tree), and formalize the PSSO admin-setup depth additions
 - [ ] **Phase 99: New Runbook + Navigation Wiring** — Author the local-macOS-password-reset runbook for Secure-Enclave PSSO devices and wire it into all macOS navigation hubs
@@ -57,7 +57,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. `docs/_glossary-macos.md` Iru/Kandji entry lists all three URLs: `support.iru.io` (primary), `support.kandji.io` (legacy redirect), and `docs.iru.com` (documentation source), consistent with guide 02's MIGV-02 content**Plans**: 3 plans
 - [x] 96-01-PLAN.md — Guide 00: Stage-6 VPP→PKG/LOB rewrite + remove orphaned VPP row (ACC-01) and Stage-4 device→user group fix (ACC-02), stamps
 - [x] 96-02-PLAN.md — L1 runbook 15: step-4 device→user group remediation fix (ACC-04), stamps
-- [ ] 96-03-PLAN.md — Glossary: Kandji-Iru 3-URL durable replacement (GLOS-01), stamps
+- [x] 96-03-PLAN.md — Glossary: Kandji-Iru 3-URL durable replacement (GLOS-01), stamps
 
 **Cross-cutting constraints:**
 
@@ -125,7 +125,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 96. Surgical Conflict Fixes | 2/3 | In Progress|  |
+| 96. Surgical Conflict Fixes | 3/3 | Complete   | 2026-06-28 |
 | 97. Enrollment & FileVault Depth Formalization | 0/TBD | Not started | - |
 | 98. Guide 07 Comprehensive Pass | 0/TBD | Not started | - |
 | 99. New Runbook + Navigation Wiring | 0/TBD | Not started | - |

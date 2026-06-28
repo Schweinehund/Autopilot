@@ -33,7 +33,7 @@
 
 ### Glossary fix (Pillar E)
 
-- [ ] **GLOS-01**: `docs/_glossary-macos.md` Iru/Kandji entry reflects the 3-URL reality (`support.iru.io` primary / `support.kandji.io` legacy redirect / `docs.iru.com` documentation source), consistent with guide 02's MIGV-02 content — closes carried `GLOSSARY-IRU-URL-FRESHNESS-01`.
+- [x] **GLOS-01**: `docs/_glossary-macos.md` Iru/Kandji entry reflects the 3-URL reality (`support.iru.io` primary / `support.kandji.io` legacy redirect / `docs.iru.com` documentation source), consistent with guide 02's MIGV-02 content — closes carried `GLOSSARY-IRU-URL-FRESHNESS-01`.
 
 ### Audit-harness lineage bump + close (Pillar F)
 
@@ -61,7 +61,7 @@
 | ACC-01 | Phase 96 | Complete |
 | ACC-02 | Phase 96 | Complete |
 | ACC-04 | Phase 96 | Complete |
-| GLOS-01 | Phase 96 | Pending |
+| GLOS-01 | Phase 96 | Complete |
 | DEP-01 | Phase 97 | Pending |
 | DEP-02 | Phase 97 | Pending |
 | ACC-03 | Phase 98 | Pending |
