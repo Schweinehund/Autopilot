@@ -37,7 +37,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 ### v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth (Phases 96-100)
 
 - [x] **Phase 96: Surgical Conflict Fixes** — Patch verified factual errors in guide 00 (VPP/device-group conflicts) + L1 runbook 15 (user-group remediation) + macOS glossary (Iru 3-URL correction) (completed 2026-06-28)
-- [ ] **Phase 97: Enrollment & FileVault Depth Formalization** — Bring guide 02 Account Settings additions and guide 03 FileVault depth under requirements + harness coverage with freshness stamps
+- [x] **Phase 97: Enrollment & FileVault Depth Formalization** — Bring guide 02 Account Settings additions and guide 03 FileVault depth under requirements + harness coverage with freshness stamps (completed 2026-06-28)
 - [ ] **Phase 98: Guide 07 Comprehensive Pass** — Fix the remaining guide 07 VPP conflict, add the full troubleshooting section (Extension-Identifier-typo + A2 delivery requirements + diagnostic tree), and formalize the PSSO admin-setup depth additions
 - [ ] **Phase 99: New Runbook + Navigation Wiring** — Author the local-macOS-password-reset runbook for Secure-Enclave PSSO devices and wire it into all macOS navigation hubs
 - [ ] **Phase 100: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — 11th Path-A audit-harness lineage bump, per-phase chain validators, V112 pin, 10th CI coexistence workflow, 3-axis terminal re-audit, and milestone close
@@ -77,7 +77,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Plans**: 1 plan
 
-- [ ] 97-01-PLAN.md — Guides 02/03 version-history formalization rows (DEP-01/DEP-02), bounded 4-claim spot-verify confirmation, REQUIREMENTS.md flip, Phase-100 needle-spec hand-off
+- [x] 97-01-PLAN.md — Guides 02/03 version-history formalization rows (DEP-01/DEP-02), bounded 4-claim spot-verify confirmation, REQUIREMENTS.md flip, Phase-100 needle-spec hand-off
 
 ### Phase 98: Guide 07 Comprehensive Pass
 
@@ -128,7 +128,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 96. Surgical Conflict Fixes | 3/3 | Complete    | 2026-06-28 |
-| 97. Enrollment & FileVault Depth Formalization | 0/1 | Not started | - |
+| 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete   | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 0/TBD | Not started | - |
 | 99. New Runbook + Navigation Wiring | 0/TBD | Not started | - |
 | 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |

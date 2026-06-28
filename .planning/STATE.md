@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: executing
-last_updated: "2026-06-28T22:46:40.830Z"
-last_activity: 2026-06-28 -- Phase 97 planning complete
+status: verifying
+last_updated: "2026-06-28T23:13:36.520Z"
+last_activity: 2026-06-28
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
-  percent: 20
+  completed_plans: 4
+  percent: 40
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 97 — enrollment & filevault depth formalization
+**Current focus:** Phase 97 — enrollment-filevault-depth-formalization
 
 ## Current Position
 
-Phase: 97
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-28 -- Phase 97 planning complete
+Phase: 97 (enrollment-filevault-depth-formalization) — EXECUTING
+Plan: 1 of 1
+Status: Phase complete — ready for verification
+Last activity: 2026-06-28
 
 ## v1.13 Phase Dependency Summary
 
@@ -225,6 +225,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - [Phase ?]: 96-01 execution
 - [Phase ?]: 96-01 execution
 - [Phase ?]: GLOS-01 (Phase 96-03): Kandji-Iru glossary updated to 3-URL durable reality; stale 'URL is unchanged' sentence removed per D-04
+- [Phase ?]: Phase 97: DEP-01 and DEP-02 formalized with 2026-06-28 version-history rows; 4 bounded spot-verify claims CORRECT; frontmatter unchanged; 97-NEEDLE-SPEC.md recorded for Phase-100 validator authoring
 
 ### Pending Todos
 
@@ -244,9 +245,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-28T22:28:48.309Z
-Stopped at: Phase 97 context gathered
-Resume file: .planning/phases/97-enrollment-filevault-depth-formalization/97-CONTEXT.md
+Last session: 2026-06-28T23:13:36.505Z
+Stopped at: Completed 97-01-PLAN.md (DEP-01/DEP-02 formalized, REQUIREMENTS.md updated, needle-spec recorded)
+Resume file: None
 Next action: `/gsd-plan-phase 96`
 
 ## Operator Next Steps
@@ -261,3 +262,4 @@ Next action: `/gsd-plan-phase 96`
 | (v1.13 phases not yet started) | — | — | — |
 | Phase 96 P01 | 8 | 2 tasks | 1 files |
 | Phase 96 P03 | 5m | 1 tasks | 1 files |
+| Phase 97 P01 | 10m | 3 tasks | 4 files |
