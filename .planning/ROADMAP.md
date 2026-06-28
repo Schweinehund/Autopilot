@@ -75,7 +75,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. `docs/admin-setup-macos/03-configuration-profiles.md` includes a Local Password Policy (Passcode) section documenting the non-expiring best-practice and the compliance-mandated expiration alternative — with freshness stamps
   4. Both guide 02 and guide 03 additions are committed such that chain validators can assert their presence (frontmatter, section headers, or content markers as appropriate)
 
-**Plans**: TBD
+**Plans**: 1 plan
+- [ ] 97-01-PLAN.md — Guides 02/03 version-history formalization rows (DEP-01/DEP-02), bounded 4-claim spot-verify confirmation, REQUIREMENTS.md flip, Phase-100 needle-spec hand-off
 
 ### Phase 98: Guide 07 Comprehensive Pass
 
@@ -126,7 +127,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 96. Surgical Conflict Fixes | 3/3 | Complete    | 2026-06-28 |
-| 97. Enrollment & FileVault Depth Formalization | 0/TBD | Not started | - |
+| 97. Enrollment & FileVault Depth Formalization | 0/1 | Not started | - |
 | 98. Guide 07 Comprehensive Pass | 0/TBD | Not started | - |
 | 99. New Runbook + Navigation Wiring | 0/TBD | Not started | - |
 | 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
