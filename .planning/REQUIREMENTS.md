@@ -23,8 +23,8 @@
 
 ### Formalize session depth under requirements + harness (Pillar C)
 
-- [ ] **DEP-01**: `docs/admin-setup-macos/02-enrollment-profile.md` carries the verified Account Settings depth — local admin + local user account fields (account type / prefill / restrict-editing), PSSO account-creation ownership, password-prefill (passwordless/federated) behavior, and the UPN-via-Full-Name display note — freshness-stamped and harness-covered.
-- [ ] **DEP-02**: `docs/admin-setup-macos/03-configuration-profiles.md` carries the verified FileVault (Full Disk Encryption) depth — three sub-payloads (FileVault / FileVault Options / Recovery Key Escrow), required `Defer`, Setup-Assistant enforcement, the recovery-key-escrow verification procedure, the assignment target, and the Local Password Policy (Passcode) section — freshness-stamped and harness-covered.
+- [x] **DEP-01**: `docs/admin-setup-macos/02-enrollment-profile.md` carries the verified Account Settings depth — local admin + local user account fields (account type / prefill / restrict-editing), PSSO account-creation ownership, password-prefill (passwordless/federated) behavior, and the UPN-via-Full-Name display note — freshness-stamped and harness-covered.
+- [x] **DEP-02**: `docs/admin-setup-macos/03-configuration-profiles.md` carries the verified FileVault (Full Disk Encryption) depth — three sub-payloads (FileVault / FileVault Options / Recovery Key Escrow), required `Defer`, Setup-Assistant enforcement, the recovery-key-escrow verification procedure, the assignment target, and the Local Password Policy (Passcode) section — freshness-stamped and harness-covered.
 - [ ] **DEP-03**: `docs/admin-setup-macos/07-platform-sso-setup.md` carries the verified PSSO admin-setup depth — AccountName token mapping (AccountShortName vs preferred_username + LAPS), Company Portal assignment target, Non Platform SSO Accounts, Optional & Advanced Platform SSO Settings (two account models + per-setting reference), the Registration-Approach decision record, and the End-User Sign-In Experience (Secure Enclave) + local-password lifecycle — freshness-stamped and harness-covered.
 
 ### New runbook (Pillar D)
@@ -62,8 +62,8 @@
 | ACC-02 | Phase 96 | Complete |
 | ACC-04 | Phase 96 | Complete |
 | GLOS-01 | Phase 96 | Complete |
-| DEP-01 | Phase 97 | Pending |
-| DEP-02 | Phase 97 | Pending |
+| DEP-01 | Phase 97 | Complete |
+| DEP-02 | Phase 97 | Complete |
 | ACC-03 | Phase 98 | Pending |
 | TS-01 | Phase 98 | Pending |
 | TS-02 | Phase 98 | Pending |
