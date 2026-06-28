@@ -64,7 +64,7 @@ Escalate to L2 if:
 - Error message or code displayed during sign-in (exact text)
 - Whether the user was prompted to "Register" during Company Portal and whether they completed that step
 
-See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for Company Portal and Entra registration investigation. For ADE lifecycle Stage 6 context, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md#stage-6-company-portal).
+See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for Company Portal and Entra registration investigation. For ADE lifecycle Stage 6 context, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md#stage-6-company-portal-sign-in).
 
 ---
 

@@ -413,8 +413,8 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 ## Version History
 
-| Date | Change |
-|------|--------|
+| Date | Change | Author |
+|------|--------|--------|
 | 2026-06-28 | Phase 96 (ACC-01, ACC-02): corrected Stage-6 Company Portal VPP/LOB claims (lines 309, 319); removed orphaned VPP glossary quick-ref row (line 411); corrected Stage-4 SSO-extension policy group type from device to user (line 250) | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E8 Related Guides cross-link to guide 07 | -- |
-| 2026-04-14 | Initial version -- complete 7-stage ADE lifecycle narrative |
+| 2026-04-14 | Initial version -- complete 7-stage ADE lifecycle narrative | -- |
