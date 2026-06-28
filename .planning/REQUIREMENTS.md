@@ -13,7 +13,7 @@
 - [x] **ACC-01**: `docs/macos-lifecycle/00-ade-lifecycle.md` describes the macOS Company Portal as a **PKG/LOB app only (never VPP / Apps and Books)** — Stage-6 lines ~309/319 corrected, the Stage-4-vs-Stage-6 self-contradiction removed, and the Stage-6 VPP glossary-term reference reconciled.
 - [x] **ACC-02**: `docs/macos-lifecycle/00-ade-lifecycle.md` (~line 250) assigns the A2 PSSO/SSO-extension policy to a **static user group** (corrects "static device group").
 - [ ] **ACC-03**: `docs/admin-setup-macos/07-platform-sso-setup.md` (~line 126) removes the "VPP from Apps and Books" Company Portal option, and the Step 2 "Deploy to the device" callout is reworded to separate *install target* (the device) from *assignment target* (user group for affinity / device group for userless).
-- [ ] **ACC-04**: `docs/l1-runbooks/15-macos-company-portal-sign-in.md` (~line 30) corrects the remediation to **user-group** assignment for user-affinity devices.
+- [x] **ACC-04**: `docs/l1-runbooks/15-macos-company-portal-sign-in.md` (~line 30) corrects the remediation to **user-group** assignment for user-affinity devices.
 
 ### Troubleshooting captures (Pillar B)
 
@@ -60,7 +60,7 @@
 |--------|-------|--------|
 | ACC-01 | Phase 96 | Complete |
 | ACC-02 | Phase 96 | Complete |
-| ACC-04 | Phase 96 | Pending |
+| ACC-04 | Phase 96 | Complete |
 | GLOS-01 | Phase 96 | Pending |
 | DEP-01 | Phase 97 | Pending |
 | DEP-02 | Phase 97 | Pending |
