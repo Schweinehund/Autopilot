@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-24
-review_by: 2026-09-24
+last_verified: 2026-06-28
+review_by: 2026-09-28
 applies_to: both
 audience: all
 platform: all
@@ -111,7 +111,7 @@ Migration enforcement date set in Apple Business Manager (1--90 day range) after
 
 ### Kandji-Iru
 
-macOS MDM platform rebranded from Kandji to Iru in October 2025. Both names refer to the same product; this documentation uses "Kandji/Iru" throughout to be clear for readers who may know either name. The support portal URL is unchanged: support.kandji.io.
+macOS MDM platform rebranded from Kandji to Iru in October 2025. Both names refer to the same product; this documentation uses "Kandji/Iru" throughout to be clear for readers who may know either name. Three URLs serve distinct roles: `support.iru.io` is the primary rebrand target (login-gated SPA); `support.kandji.io` is the legacy redirect / Iru-branded knowledge base; `docs.iru.com` is the authoritative public documentation source.
 
 > **Windows equivalent:** No direct equivalent -- macOS MDM platforms (Kandji/Iru, Jamf, Mosyle) have no Windows analog; Windows devices enroll directly into Intune without a third-party MDM intermediary.
 
@@ -232,6 +232,7 @@ Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-28 | Phase 96 (GLOS-01): replaced Kandji-Iru support portal sentence with 3-URL reality (support.kandji.io / support.iru.io / docs.iru.com); updated last_verified and review_by | -- |
 | 2026-06-25 | v1.11 audit fix: added `### WPJ` (## Authentication) and `### LOB app` (## App Distribution) to resolve dead inbound anchors `#wpj`/`#lob-app` from guide 01 Glossary Quick Reference (lines 478, 482); updated Alphabetical Index | -- |
 | 2026-06-24 | Phase 91: added 10 new terms (MDM Migration, Assign Device Management, Deadline, Kandji-Iru, Delete Device Record, FileVault Recovery Key, Activation Lock Bypass under ## Device Management; Profile-Based Enrollment, ACME under ## Enrollment; app-sso under ## Authentication); updated Alphabetical Index with all 10 new display names; updated last_verified and review_by | -- |
 | 2026-06-22 | Phase 83 (KRB-04): added Kerberos SSO Extension entry to ## Authentication and Alphabetical Index | -- |
