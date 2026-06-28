@@ -306,7 +306,7 @@ On the device, after Await Configuration completes (or after Setup Assistant if 
 
 ### What Happens
 
-1. **Company Portal launch.** The Company Portal app must be deployed to the device as a required app via Intune. It is not pre-installed on macOS. The app can be deployed via [VPP](../_glossary-macos.md#vpp) (Apps and Books in [ABM](../_glossary-macos.md#abm)) for silent installation.
+1. **Company Portal launch.** The Company Portal app must be deployed to the device as a required app via Intune. It is not pre-installed on macOS. On macOS, it is deployed as a required PKG (line-of-business or unmanaged macOS PKG) app; silent installation is achieved via the Intune Management Extension (IME), not VPP licensing.
 
 2. **Entra sign-in.** The user opens Company Portal and signs in with their Entra credentials. This authenticates the user and registers the device with Microsoft Entra ID.
 
@@ -316,7 +316,7 @@ On the device, after Await Configuration completes (or after Setup Assistant if 
 
 ### Behind the Scenes
 
-- Company Portal must be deployed as a required app. The recommended deployment method is through VPP (Apps and Books) for silent, license-managed installation. Alternatively, it can be deployed as a DMG or PKG app through Intune.
+- Company Portal must be deployed as a required app. On macOS, deploy it as a required PKG app — added to Intune as a line-of-business (LOB) app, or as an unmanaged macOS PKG app. The Intune Management Extension (IME) handles silent installation on macOS.
 - If the user does not complete Company Portal sign-in, the device is enrolled in Intune (MDM management is active) but is not registered with Entra ID. This means Conditional Access policies that require device registration or compliance will block the user from accessing protected resources.
 - If the user skips Company Portal sign-in initially, they are redirected to it when they first attempt to open any Conditional Access-protected application (e.g., Outlook, Teams). This is a "soft block" -- the user can use the device for non-protected tasks but cannot access organizational resources.
 - Userless enrollments (without User Affinity) skip this stage entirely. These devices are managed by Intune but have no user association and cannot participate in user-based Conditional Access policies.
@@ -408,7 +408,6 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 | [ABM Token](../_glossary-macos.md#abm-token) | Server token (.p7m) connecting Intune to ABM for device sync | Stage 2 |
 | [Setup Assistant](../_glossary-macos.md#setup-assistant) | macOS first-run configuration experience | Stage 3 |
 | [Await Configuration](../_glossary-macos.md#await-configuration) | Post-Setup-Assistant hold while Intune delivers policies | Stage 5 |
-| [VPP](../_glossary-macos.md#vpp) | Volume Purchase Program (Apps and Books) for app deployment | Stage 6 |
 
 ---
 
