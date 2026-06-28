@@ -53,7 +53,10 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. `docs/macos-lifecycle/00-ade-lifecycle.md` (~line 250) correctly states the A2 PSSO/SSO-extension policy is assigned to a static user group (not device group)
   3. `docs/l1-runbooks/15-macos-company-portal-sign-in.md` (~line 30) remediation correctly directs user-affinity devices to a user-group assignment (not device group)
   4. `docs/_glossary-macos.md` Iru/Kandji entry lists all three URLs: `support.iru.io` (primary), `support.kandji.io` (legacy redirect), and `docs.iru.com` (documentation source), consistent with guide 02's MIGV-02 content
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 96-01-PLAN.md — Guide 00: Stage-6 VPP→PKG/LOB rewrite + remove orphaned VPP row (ACC-01) and Stage-4 device→user group fix (ACC-02), stamps
+- [ ] 96-02-PLAN.md — L1 runbook 15: step-4 device→user group remediation fix (ACC-04), stamps
+- [ ] 96-03-PLAN.md — Glossary: Kandji-Iru 3-URL durable replacement (GLOS-01), stamps
 
 ### Phase 97: Enrollment & FileVault Depth Formalization
 **Goal**: The Account Settings depth additions in guide 02 and the FileVault/Local-Password-Policy depth additions in guide 03 — written during the live session outside the GSD flow — are formally covered by requirement IDs and carry per-section `last_verified`/`review_by` freshness stamps, so they become harness-validated corpus
