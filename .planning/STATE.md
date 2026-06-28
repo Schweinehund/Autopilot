@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: verifying
-last_updated: "2026-06-28T21:28:48.434Z"
+status: ready_to_plan
+last_updated: 2026-06-28T21:42:55.993Z
 last_activity: 2026-06-28
 progress:
   total_phases: 5
@@ -11,6 +11,7 @@ progress:
   total_plans: 3
   completed_plans: 3
   percent: 20
+stopped_at: Phase 96 complete (3/3) — ready to discuss Phase 97
 ---
 
 # Project State
@@ -20,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 96 — surgical-conflict-fixes
+**Current focus:** Phase 97 — enrollment & filevault depth formalization
 
 ## Current Position
 
-Phase: 96 (surgical-conflict-fixes) — EXECUTING
-Plan: 3 of 3
-Status: Phase complete — ready for verification
+Phase: 97
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-28
 
 ## v1.13 Phase Dependency Summary
