@@ -76,6 +76,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. Both guide 02 and guide 03 additions are committed such that chain validators can assert their presence (frontmatter, section headers, or content markers as appropriate)
 
 **Plans**: 1 plan
+
 - [ ] 97-01-PLAN.md — Guides 02/03 version-history formalization rows (DEP-01/DEP-02), bounded 4-claim spot-verify confirmation, REQUIREMENTS.md flip, Phase-100 needle-spec hand-off
 
 ### Phase 98: Guide 07 Comprehensive Pass
