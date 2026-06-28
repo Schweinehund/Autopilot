@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: planning
-last_updated: "2026-06-28"
-last_activity: 2026-06-28
+status: Roadmap defined — ready for Phase 96
+last_updated: "2026-06-28T20:51:46.776Z"
+last_activity: 2026-06-28 — v1.13 roadmap authored (5 phases, 96-100)
 progress:
   total_phases: 5
   completed_phases: 0
@@ -136,19 +136,24 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
             any check-phase-96.mjs is authored; confirm with:
             `git log --grep="close-gate" --grep="v1.12" --all-match -1`
           Atom 1 (3 files indivisible — HARN-01):
+
             - v1.13-milestone-audit.mjs (Path-A from v1.12, C1-C16 inherited verbatim)
             - v1.13-audit-allowlist.json (sidecar repointed)
             - BASELINE_17 freshness comment in regenerate-supervision-pins.mjs
           Atom 2 (indivisible set — HARN-02):
+
             - check-phase-96.mjs through check-phase-100.mjs (per-phase validators;
               chain-apex CHAIN_PHASES=[48..100], CHAIN_SKIP=new Set([]))
+
             - _lib/frozen-at-close.mjs V112 entry (v1.12 close-gate SHA)
             - audit-harness-v1.13-integrity.yml (10th parallel CI coexistence workflow;
               predecessors v1.4-v1.12 byte-unchanged)
           3-axis terminal re-audit (HARN-03):
+
             - Axis 1: fresh git clone --no-hardlinks into $env:TEMP\v1.13-audit-<rand>
             - Axis 2: cross-OS Linux GHA (BOTH chain validators authoritative per D-03
               corrected OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..100])
+
             - Axis 3: fresh zero-context sub-agent
             - cross-OS PASS/FAIL/SKIP EXACT MATCH required
           Close-gate: v1.13-MILESTONE-AUDIT.md + v1.13-DEFERRED-CLEANUP.md +
@@ -236,9 +241,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-28
-Stopped at: Roadmap authored — v1.13 phases 96-100 defined
-Resume file: None
+Last session: 2026-06-28T20:51:46.745Z
+Stopped at: Phase 96 context gathered
+Resume file: .planning/phases/96-surgical-conflict-fixes/96-CONTEXT.md
 Next action: `/gsd-plan-phase 96`
 
 ## Operator Next Steps
