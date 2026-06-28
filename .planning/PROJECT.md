@@ -8,6 +8,27 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
+## Current Milestone: v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
+
+**Goal:** Bring the macOS Platform SSO / enrollment / FileVault admin-setup documentation to verified accuracy and operator-grade depth — under requirements + the audit harness — by fixing factual conflicts, formalizing the depth additions worked through in the 2026-06-27/28 build session, capturing that session's real-world troubleshooting, and adding the missing local-password-reset procedure.
+
+**Target features:**
+
+- **Pillar A — Conflict fixes** — correct the VPP-on-macOS-Company-Portal errors and device-vs-user-group remediation across `docs/macos-lifecycle/00-ade-lifecycle.md` (~lines 250/309/319 + self-contradiction), `docs/admin-setup-macos/07-platform-sso-setup.md` (~line 126 + Step 2 "Deploy to the device" wording), and `docs/l1-runbooks/15-macos-company-portal-sign-in.md` (~line 30).
+- **Pillar B — Troubleshooting captures** — Configuration-Caused-Failures + a consolidated A2 reference for: the Extension-Identifier-typo failure (`com.microsoft.CompanyPortalMac.ssoextension`; Intune does not validate this free-text field), during-setup (A2) Company Portal delivery requirements (LOB ≥5.2604.0, Required, same static user group, Intune-licensed user, Included-apps trimmed), and the Setup-Assistant SSO-extension diagnostic tree.
+- **Pillar C — Formalize session depth** — bring the guides 02/03/07 additions under REQ-IDs + harness: enrollment Account Settings + password-prefill behavior + UPN-via-Full-Name display; FileVault Full-Disk-Encryption depth (3 sub-payloads, Defer, Setup-Assistant enforcement, verification, assignment target) + Local Password Policy; PSSO AccountName mapping, Company Portal target, Non-PSSO-Accounts, Optional & Advanced settings, Registration-Approach decision record, End-User Sign-In Experience + local-password lifecycle.
+- **Pillar D — New runbook** — local macOS password-reset procedure for Secure-Enclave PSSO devices (recovery via escrowed FileVault key / managed admin (LAPS) / Apple ID; SSPR resets Entra not the local password; mandatory PSSO re-registration follow-up cross-linked to L1 #36).
+- **Pillar E — Glossary fix** — `GLOSSARY-IRU-URL-FRESHNESS-01` (v1.12-deferred single-line Iru/Kandji support-URL correction).
+- **Pillar F — Audit-harness lineage bump + close** — 11th Path-A milestone (v1.12→v1.13): `v1.13-milestone-audit.mjs` + allowlist + BASELINE_17, `check-phase-96..NN.mjs` validators + `_lib/frozen-at-close.mjs` V112 pin + 10th parallel CI workflow; 3-axis terminal re-audit close.
+
+**Key context:**
+
+- Single-platform **documentation** milestone (macOS) — no new platform. All content verified against Microsoft Learn 2026-06-27/28; no new research.
+- Basis: `SEED-001` (planted 2026-06-28 during the live build/troubleshooting session).
+- **Phase numbering continues from v1.12** (closed at Phase 95) → **v1.13 starts at Phase 96**.
+- Sequential-on-main-tree per `use_worktrees:false`; adversarial-review for gray-area picks at discuss-phase; per-section `last_verified`/`review_by` freshness stamps on macOS-26-gated content.
+- **Estimated scope** — content milestone; ~4–6 phases (96+), finalized at roadmap.
+
 ## Previous Milestone: v1.12 macOS MDM-Migration Verification Closure (SHIPPED 2026-06-26)
 
 **Status:** ✅ SHIPPED & ARCHIVED 2026-06-26 — 2/2 phases (94-95) Complete; 6/6 requirements Validated via Phase 95 Plan 95-04 SINGLE close-gate commit (NO Commit A); archived to `.planning/milestones/v1.12-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md` and tagged `v1.12` via `/gsd-complete-milestone`. **No active milestone** — run `/gsd-new-milestone` to scope the next.
