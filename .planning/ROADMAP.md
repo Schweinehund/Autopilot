@@ -146,10 +146,20 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. A single close-gate commit flips all 14 v1.13 requirements to Validated across PROJECT.md, ROADMAP.md, STATE.md, and REQUIREMENTS.md, and `v1.13-MILESTONE-AUDIT.md` + `v1.13-DEFERRED-CLEANUP.md` are authored
 
 **Plans**: 4 plans
+**Wave 1**
 
 - [ ] 100-01-PLAN.md — Atom 1 (HARN-01): v1.13-milestone-audit.mjs + v1.13-audit-allowlist.json + BASELINE_17 (one indivisible commit)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 100-02-PLAN.md — Atom 2 (HARN-02): check-phase-96..100.mjs + frozen-at-close V112 pin + 10th CI workflow (one indivisible commit; apex CHAIN_PHASES=[48..99])
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 100-03-PLAN.md — HARN-03 pt 1: 3-axis terminal re-audit (Windows fresh-clone leaf + Linux GHA chain + zero-context sub-agent); 7-row cross-OS EXACT MATCH
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 100-04-PLAN.md — HARN-03 pt 2: close-gate (v1.13-MILESTONE-AUDIT + DEFERRED-CLEANUP + 100-VERIFICATION + 4-doc 14/14 traceability flip)
 
 **Note**: This phase MUST execute after all content phases (96-99) are complete. Mirrors v1.12 Phase 95 / v1.11 Phase 93 close pattern. Apex internal array is CHAIN_PHASES=[48..99] (52 entries) per locked D-03 — the SC#2 [48..100] above is the milestone-range shorthand; the validator excludes its own phase per the [48..N-1] invariant.

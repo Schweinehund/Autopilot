@@ -634,16 +634,15 @@ The phase's own output (check-phase-100.mjs + CI workflow) serves as the validat
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **PSSO-FUT-03 location in v1.12-DEFERRED-CLEANUP**
    - What we know: 100-CONTEXT.md D-02 lists "MTPSSO-01/02/03 / PSSO-FUT-03" as items to carry. The v1.12 DEFERRED-CLEANUP contains MTPSSO-01/02/03 explicitly. PSSO-FUT-03 may be the same as MTPSSO-03 or a separate entry.
-   - What's unclear: Whether PSSO-FUT-03 is a distinct item or an alias.
-   - Recommendation: At close-gate authoring time, check v1.12-DEFERRED-CLEANUP for PSSO-FUT-03 explicitly; if absent, carry it as a new notation referencing the multi-tenant PSSO deferral.
+   - RESOLVED: At close-gate authoring time (plan 100-04 T1), check v1.12-DEFERRED-CLEANUP for PSSO-FUT-03 explicitly; if absent, carry it as a new notation referencing the multi-tenant PSSO deferral. Implemented in the 100-04 T1 carry-list.
 
 2. **check-phase-99 N9/N10 split decision**
    - What we know: 99-NEEDLE-SPEC.md allows either a consolidated count >= 2 assertion or two structurally-anchored checks for quick-ref-l1.md occurrences.
-   - Recommendation: Use count >= 2 (simpler, per spec guidance) unless the planner specifically wants structural anchoring for the two distinct contexts.
+   - RESOLVED: Use count >= 2 (simpler, per spec guidance). Implemented verbatim in 100-02 T2.
 
 ---
 
