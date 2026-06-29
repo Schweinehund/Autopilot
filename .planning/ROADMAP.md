@@ -54,7 +54,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   1. `docs/macos-lifecycle/00-ade-lifecycle.md` no longer describes Company Portal as VPP/Apps-and-Books deployable at the Stage-4/Stage-6 lines (~309/319/411), and the Stage-4-vs-Stage-6 self-contradiction is removed
   2. `docs/macos-lifecycle/00-ade-lifecycle.md` (~line 250) correctly states the A2 PSSO/SSO-extension policy is assigned to a static user group (not device group)
   3. `docs/l1-runbooks/15-macos-company-portal-sign-in.md` (~line 30) remediation correctly directs user-affinity devices to a user-group assignment (not device group)
-  4. `docs/_glossary-macos.md` Iru/Kandji entry lists all three URLs: `support.iru.io` (primary), `support.kandji.io` (legacy redirect), and `docs.iru.com` (documentation source), consistent with guide 02's MIGV-02 content**Plans**: 3 plans
+  4. `docs/_glossary-macos.md` Iru/Kandji entry lists all three URLs: `support.iru.io` (primary), `support.kandji.io` (legacy redirect), and `docs.iru.com` (documentation source), consistent with guide 02's MIGV-02 content
+**Plans**: 3 plans
 - [x] 96-01-PLAN.md — Guide 00: Stage-6 VPP→PKG/LOB rewrite + remove orphaned VPP row (ACC-01) and Stage-4 device→user group fix (ACC-02), stamps
 - [x] 96-02-PLAN.md — L1 runbook 15: step-4 device→user group remediation fix (ACC-04), stamps
 - [x] 96-03-PLAN.md — Glossary: Kandji-Iru 3-URL durable replacement (GLOS-01), stamps
@@ -117,7 +118,10 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. The runbook documents the mandatory PSSO re-registration follow-up after any local-password reset or FileVault-recovery-key unlock, and cross-links to L1 runbook #36
   4. The runbook is wired into the macOS navigation hubs (docs/index.md, common-issues.md, and/or quick-ref-l1.md as appropriate) so it is reachable from role-based entry points
 
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 99-01-PLAN.md — Author L1 runbook #37 (three pre-login recovery paths, SSPR inline, #36 hand-offs) + #36 reciprocal back-link (Wave 1)
+- [ ] 99-02-PLAN.md — Wire #37 into the five macOS navigation hubs (Wave 2, navigation-last)
+- [ ] 99-03-PLAN.md — Author 99-NEEDLE-SPEC.md Phase-100 hand-off (18 presence-only tokens) (Wave 3)
 
 ### Phase 100: Harness Lineage Bump + Terminal Re-Audit + Milestone Close
 
@@ -141,5 +145,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 96. Surgical Conflict Fixes | 3/3 | Complete    | 2026-06-28 |
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
-| 99. New Runbook + Navigation Wiring | 0/TBD | Not started | - |
+| 99. New Runbook + Navigation Wiring | 0/3 | Not started | - |
 | 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
