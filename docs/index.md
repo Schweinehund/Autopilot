@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-05-01
-review_by: 2026-06-30
+last_verified: 2026-06-29
+review_by: 2026-09-29
 applies_to: both
 audience: all
 platform: all
@@ -107,7 +107,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS ADE Triage Decision Tree](decision-trees/06-macos-triage.md) | Start here -- identifies the macOS ADE failure scenario and routes to the correct runbook |
 | [macOS L1 Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Scripted procedures for top macOS ADE enrollment failures (6 runbooks: device, Setup Assistant, profiles, apps, compliance, Company Portal) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#macos-ade-quick-reference) | One-page cheat sheet -- macOS top checks, escalation triggers, and runbook links |
-| [macOS Platform SSO Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Platform SSO sign-in failure (runbook #35: "Registration Required" not appearing) or Secure Enclave key loss after password reset (runbook #36) |
+| [macOS Platform SSO Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Platform SSO sign-in failure (runbook #35: "Registration Required" not appearing) or Secure Enclave key loss after password reset (runbook #36); or local password recovery for locked-out users ([runbook #37](l1-runbooks/37-macos-local-password-reset.md): FileVault recovery key / LAPS admin / Apple ID) |
 | [macOS PSSO Provisioning Walkthrough](macos-lifecycle/01-psso-provisioning-walkthrough.md) | Walk through a Mac from enrollment to PSSO-registered end user — both standard post-enrollment (A1) and ADE-during-Setup-Assistant macOS 26+ (A2) paths |
 | [macOS MDM Migration Walkthrough (Kandji/Iru → Intune)](macos-lifecycle/02-mdm-migration-psso.md) | Walk through B1 wipe-free in-place migration (macOS 26+) or B2 wipe-and-re-enroll (macOS 25 or earlier) from Kandji/Iru to Intune |
 
@@ -326,6 +326,7 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-29 | Phase 99 (RUN-01): extended line-110 macOS Platform SSO Runbooks row to reference runbook #37 (local password recovery) | -- |
 | 2026-06-24 | Phase 87 (REF-03): enriched macOS Admin Setup Platform SSO row to name guides 10/11; added macOS L2 rows for Kerberos SSO Investigation (#28) and Graph Credential Investigation (#29) | -- |
 | 2026-05-22 | Phase 65 plan 65-03: 3 surgical edits — line-9 banner clause appendix + ### Apple Business Governance Operations sub-H3 + 2 Cross-Platform References entries (ABNAV-07) | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO rows to macOS Admin Setup / L1 / L2 nav tables | -- |

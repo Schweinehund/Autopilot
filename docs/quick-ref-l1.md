@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-05-01
-review_by: 2026-06-30
+last_verified: 2026-06-29
+review_by: 2026-09-29
 applies_to: both
 audience: L1
 platform: all
@@ -100,6 +100,7 @@ platform: all
 - Device non-compliant but user believes settings are correct --> **Escalate L2** (collect: non-compliant setting names, device serial)
 - Secure Enclave key error after password reset or FileVault recovery --> **Escalate L2** via [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) first; escalate to L2 if re-registration fails (collect: serial number, macOS version, `app-sso platform -s` output)
 - Platform SSO sign-in loop or "Registration Required" notification never appeared --> **Use [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) runbook** (collect: Intune Succeeded screenshot, Company Portal version, `app-sso platform -s` output)
+- User cannot log in — local password lost or unknown --> **Use [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md) runbook** (FileVault recovery key / LAPS admin / Apple ID; PSSO re-registration via #36 required afterward)
 
 ### macOS Decision Tree
 
@@ -115,6 +116,7 @@ platform: all
 - [Company Portal Sign-In](l1-runbooks/15-macos-company-portal-sign-in.md)
 - [Platform SSO Sign-In Failure](l1-runbooks/35-macos-sso-sign-in-failure.md) — "Registration Required" not appearing, sign-in loop
 - [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) — key loss after password reset
+- [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md) — local password lost or unknown; locked out of Mac
 
 ---
 
@@ -244,6 +246,7 @@ platform: all
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-29 | Phase 99 (RUN-01): appended macOS Local Password Recovery escalation trigger and runbook link (#37) to macOS ADE Quick Reference section | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO escalation triggers (#36 Secure Enclave, #35 sign-in loop) and runbook links to macOS section | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-04; C16 edge quick_ref_l1 → l1_34 live; H2 title slug = apple-business-quick-reference) | -- |
 | 2026-05-01 | Phase 59 (CLEAN-08): added Linux Quick Reference H2 (4-part substructure: Top Checks 4 items / Linux Escalation Triggers / Linux Decision Tree single link / Linux Runbooks 4-link list) matching iOS quick-ref non-mode-tag pattern; D-25 mode-tag-free contract | -- |
