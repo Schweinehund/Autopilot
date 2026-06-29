@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.13
-milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: Awaiting next milestone
-last_updated: "2026-06-29T22:28:31.382Z"
-last_activity: 2026-06-29 — Milestone v1.13 completed and archived
+milestone: v1.14
+milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
+status: planning
+last_updated: "2026-06-29T22:52:39.139Z"
+last_activity: 2026-06-29
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 14
-  completed_plans: 14
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 ## Current Position
 
-Phase: Milestone v1.13 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-06-29 — Milestone v1.13 completed and archived
+Status: Defining requirements
+Last activity: 2026-06-29 — Milestone v1.14 started
 
 ## v1.13 Phase Dependency Summary
 
