@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: complete
-last_updated: "2026-06-29T21:30:00.000Z"
+status: verifying
+last_updated: "2026-06-29T21:17:12.308Z"
 last_activity: 2026-06-29
 progress:
   total_phases: 5
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 
 Phase: 100 (harness-lineage-bump-terminal-re-audit-milestone-close) — COMPLETE
 Plan: 4 of 4 (complete)
-Status: v1.13 MILESTONE CLOSED — 14/14 Validated (2026-06-29)
+Status: Phase complete — ready for verification
 Last activity: 2026-06-29
 
 ## v1.13 Phase Dependency Summary
