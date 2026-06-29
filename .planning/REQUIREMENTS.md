@@ -51,7 +51,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 ### Pillar E — Audit-Harness Lineage Bump & Milestone Close
 
 - [ ] **HARN-01**: 12th Path-A lineage bump (Atom 1, indivisible) — `v1.14-milestone-audit.mjs` (Path-A from v1.13, C1-C16 inherited verbatim) + `v1.14-audit-allowlist.json` sidecar repointed + BASELINE_18 freshness comment.
-- [ ] **HARN-02**: Per-phase validators + frozen pin + CI surface (Atom 2, indivisible) — `check-phase-101..NN.mjs` (chain-apex `CHAIN_PHASES=[48..N-1]`, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V113 entry (v1.13 close-gate SHA `ba24f1a`) + `audit-harness-v1.14-integrity.yml` as the 11th parallel CI coexistence workflow (predecessors v1.4–v1.13 byte-unchanged).
+- [ ] **HARN-02**: Per-phase validators + frozen pin + CI surface (Atom 2, indivisible) — `check-phase-101..NN.mjs` (chain-apex `CHAIN_PHASES=[48..111]`, 64 entries, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V113 entry (v1.13 close-gate SHA `ba24f1a`) + `audit-harness-v1.14-integrity.yml` as the 11th parallel CI coexistence workflow (predecessors v1.4–v1.13 byte-unchanged).
 - [ ] **HARN-03**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH; `v1.14-MILESTONE-AUDIT.md` + `v1.14-DEFERRED-CLEANUP.md` + 4-doc traceability closure (all Validated); predecessor frozen surfaces byte-unchanged.
 
 ---
@@ -104,38 +104,56 @@ Surfaced by research `SUMMARY.md`; these are roadmap/phase-structure decisions, 
 
 ## Traceability
 
-Populated during roadmap creation (phases 101+). Each requirement maps to exactly one phase.
+Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one phase.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DOT1X-01 | TBD (roadmap) | Pending |
-| DOT1X-02 | TBD (roadmap) | Pending |
-| DOT1X-03 | TBD (roadmap) | Pending |
-| DOT1X-04 | TBD (roadmap) | Pending |
-| DOT1X-05 | TBD (roadmap) | Pending |
-| DOT1X-06 | TBD (roadmap) | Pending |
-| DOT1X-07 | TBD (roadmap) | Pending |
-| DOT1X-08 | TBD (roadmap) | Pending |
-| DOT1X-09 | TBD (roadmap) | Pending |
-| DOT1X-10 | TBD (roadmap) | Pending |
-| DOT1X-11 | TBD (roadmap) | Pending |
-| FIX-01 | TBD (roadmap) | Pending |
-| FIX-02 | TBD (roadmap) | Pending |
-| FIX-03 | TBD (roadmap) | Pending |
-| MIGF-01 | TBD (roadmap) | Pending |
-| MIGF-02 | TBD (roadmap) | Pending |
-| TOOL-01 | TBD (roadmap) | Pending |
-| TOOL-02 | TBD (roadmap) | Pending |
-| TOOL-03 | TBD (roadmap) | Pending |
-| HARN-01 | TBD (roadmap) | Pending |
-| HARN-02 | TBD (roadmap) | Pending |
-| HARN-03 | TBD (roadmap) | Pending |
+| DOT1X-01 | Phase 101 | Pending |
+| DOT1X-02 | Phase 101 | Pending |
+| DOT1X-03 | Phase 101 | Pending |
+| DOT1X-04 | Phase 102 | Pending |
+| DOT1X-05 | Phase 103 | Pending |
+| DOT1X-06 | Phase 104 | Pending |
+| DOT1X-07 | Phase 105 | Pending |
+| DOT1X-08 | Phase 106 | Pending |
+| DOT1X-09 | Phase 107 | Pending |
+| DOT1X-10 | Phase 108 | Pending |
+| DOT1X-11 | Phase 109 | Pending |
+| FIX-01 | Phase 110 | Pending |
+| FIX-02 | Phase 110 | Pending |
+| FIX-03 | Phase 110 | Pending |
+| MIGF-01 | Phase 110 | Pending |
+| MIGF-02 | Phase 110 | Pending |
+| TOOL-01 | Phase 111 | Pending |
+| TOOL-02 | Phase 111 | Pending |
+| TOOL-03 | Phase 111 | Pending |
+| HARN-01 | Phase 112 | Pending |
+| HARN-02 | Phase 112 | Pending |
+| HARN-03 | Phase 112 | Pending |
 
 **Coverage:**
 - v1.14 requirements: 22 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 22 ⚠️ (resolved at roadmap)
+- Mapped to phases: 22/22 ✓
+- Unmapped: 0 ✓
+
+**Phase distribution:**
+| Phase | Requirements | Count |
+|-------|-------------|-------|
+| 101 | DOT1X-01, DOT1X-02, DOT1X-03 | 3 |
+| 102 | DOT1X-04 | 1 |
+| 103 | DOT1X-05 | 1 |
+| 104 | DOT1X-06 | 1 |
+| 105 | DOT1X-07 | 1 |
+| 106 | DOT1X-08 | 1 |
+| 107 | DOT1X-09 | 1 |
+| 108 | DOT1X-10 | 1 |
+| 109 | DOT1X-11 | 1 |
+| 110 | FIX-01, FIX-02, FIX-03, MIGF-01, MIGF-02 | 5 |
+| 111 | TOOL-01, TOOL-02, TOOL-03 | 3 |
+| 112 | HARN-01, HARN-02, HARN-03 | 3 |
+| **Total** | | **22** |
 
 ---
 *Requirements defined: 2026-06-29 after v1.14 research synthesis (`5150fa7`)*
-*Last updated: 2026-06-29 after initial definition*
+*Traceability populated: 2026-06-29 at roadmap creation*
+*Last updated: 2026-06-29 — traceability complete, 22/22 requirements mapped to phases 101-112*
