@@ -38,7 +38,7 @@
 ### Audit-harness lineage bump + close (Pillar F)
 
 - [x] **HARN-01**: 11th Path-A audit-harness lineage bump — `v1.13-milestone-audit.mjs` (C1-C16 inherited) + `v1.13-audit-allowlist.json` sidecar + BASELINE_17 freshness comment.
-- [ ] **HARN-02**: Per-phase validators `check-phase-96..NN.mjs` (chain-apex extended) + `_lib/frozen-at-close.mjs` `V112` pin (v1.12 close-gate SHA) + 10th parallel CI coexistence workflow (predecessors v1.4–v1.12 byte-unchanged).
+- [x] **HARN-02**: Per-phase validators `check-phase-96..NN.mjs` (chain-apex extended) + `_lib/frozen-at-close.mjs` `V112` pin (v1.12 close-gate SHA) + 10th parallel CI coexistence workflow (predecessors v1.4–v1.12 byte-unchanged).
 - [ ] **HARN-03**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP EXACT MATCH) + milestone close (`v1.13-MILESTONE-AUDIT.md` + `v1.13-DEFERRED-CLEANUP.md` + 4-doc traceability closure).
 
 ---
@@ -71,5 +71,5 @@
 | DEP-03 | Phase 98 | Complete |
 | RUN-01 | Phase 99 | Complete |
 | HARN-01 | Phase 100 | Complete |
-| HARN-02 | Phase 100 | Pending |
+| HARN-02 | Phase 100 | Complete |
 | HARN-03 | Phase 100 | Pending |

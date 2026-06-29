@@ -152,7 +152,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 100-02-PLAN.md — Atom 2 (HARN-02): check-phase-96..100.mjs + frozen-at-close V112 pin + 10th CI workflow (one indivisible commit; apex CHAIN_PHASES=[48..99])
+- [x] 100-02-PLAN.md — Atom 2 (HARN-02): check-phase-96..100.mjs + frozen-at-close V112 pin + 10th CI workflow (one indivisible commit; apex CHAIN_PHASES=[48..99])
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -172,4 +172,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
 | 99. New Runbook + Navigation Wiring | 3/3 | Complete    | 2026-06-29 |
-| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 1/4 | In Progress|  |
+| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |
