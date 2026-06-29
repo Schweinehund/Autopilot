@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-22
-review_by: 2026-09-20
+last_verified: 2026-06-29
+review_by: 2026-09-29
 applies_to: ADE
 audience: L1
 platform: macOS
@@ -45,6 +45,7 @@ graph TD
     MACSSO -->|"Yes, but key error<br/>or lost after reset"| MACR8(["See: Platform SSO —<br/>Secure Enclave Key Loss Runbook"])
     MACSSO -->|"Kerberos TGT<br/>not acquired"| MACE2(["Escalate to L2:<br/>Kerberos SSO Investigation"])
     MAC3 -->|"MDM migration /<br/>non-dismissible<br/>migration prompt"| MACE3(["Escalate to L2:<br/>MDM Migration Failure"])
+    MAC3 -->|"Local password<br/>locked out"| MACR9(["See: macOS Local<br/>Password Recovery Runbook"])
 
     click MACR1 "../l1-runbooks/10-macos-device-not-appearing.md"
     click MACR2 "../l1-runbooks/11-macos-setup-assistant-failed.md"
@@ -56,10 +57,11 @@ graph TD
     click MACR8 "../l1-runbooks/36-macos-secure-enclave-key.md"
     click MACE2 "../l2-runbooks/28-macos-kerberos-sso-investigation.md"
     click MACE3 "../l2-runbooks/30-macos-mdm-migration-failure.md"
+    click MACR9 "../l1-runbooks/37-macos-local-password-reset.md"
 
     classDef resolved fill:#28a745,color:#fff
     classDef escalateL2 fill:#dc3545,color:#fff
-    class MACR1,MACR2,MACR3,MACR4,MACR5,MACR6 resolved
+    class MACR1,MACR2,MACR3,MACR4,MACR5,MACR6,MACR9 resolved
     class MACR7,MACR8 resolved
     class MACE1,MACE2,MACE3 escalateL2
 ```
@@ -81,6 +83,7 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 | Platform SSO — Secure Enclave key error | Setup Assistant? Yes | Symptom: Platform SSO → key error | Runbook 36 |
 | Kerberos SSO — TGT not acquired | Setup Assistant? Yes | Symptom: Platform SSO → Kerberos TGT | L2 escalation (#28) |
 | MDM migration — deadline prompt | Setup Assistant? Yes | Symptom: MDM migration / non-dismissible migration prompt | L2 escalation (#30) |
+| Local password — locked out | Setup Assistant? Yes | Symptom: local password | Runbook 37 |
 
 ## How to Check
 
@@ -108,6 +111,7 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-29 | Phase 99 (RUN-01): added MACR9 local-password-locked-out leaf off MAC3 + click target + Routing Verification row; MACR9 added to resolved class | -- |
 | 2026-06-25 | Phase 92 (NAV-01): added MDM migration leaf (MACE3 → L2 #30) off MAC3; MAC1 "How to Check" disambiguation note for deadline-lockout routing; 1 Routing Verification row | -- |
 | 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO third arm under MACSSO (MACE2 → L2 #28) + 1 Routing Verification row | -- |
 | 2026-04-14 | Initial version | -- |

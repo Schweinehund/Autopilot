@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-30
-review_by: 2026-06-29
+last_verified: 2026-06-29
+review_by: 2026-09-29
 applies_to: both
 audience: all
 platform: all
@@ -239,6 +239,13 @@ Platform SSO "Registration Required" notification has not appeared after MDM mig
 - **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md)
 - **L2:** [macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-failure.md) — Track C: PSSO re-registration stuck
 
+### macOS Local Password: User Locked Out
+
+User cannot log in to their Mac — local password is unknown or forgotten. Recover access using the escrowed FileVault recovery key, the macOS LAPS managed admin account, or Apple ID (where org policy allows). Note: SSPR resets the Entra password only and does not reset the independent local password on Secure Enclave Platform SSO devices. For technical background, see [Platform SSO Setup Guide — Local password lifecycle and rotation](admin-setup-macos/07-platform-sso-setup.md#local-password-lifecycle-and-rotation).
+
+- **L1:** [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md)
+- **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md) — if PSSO re-registration fails after recovering access
+
 ## iOS/iPadOS Failure Scenarios
 
 > **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
@@ -399,6 +406,7 @@ Sub-org admin action fails with permission error due to OU scope mismatch.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-29 | Phase 99 (RUN-01): added macOS Local Password: User Locked Out H3 under macOS ADE Failure Scenarios, escalating to L1 #37 and L2 #27 | -- |
 | 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO Extension Failure entry under macOS ADE Failure Scenarios | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO Sign-In Failure entry routing to L1 #35 / L2 #27 | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Governance Failure Scenarios H2 (ABNAV-03; C16 edge common_issues → quick_ref_l1 live) | -- |
