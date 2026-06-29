@@ -666,7 +666,7 @@
     },
     "v1.13": {
       "epicKey": "RTS-686",
-      "status": "in_progress",
+      "status": "completed",
       "created": "2026-06-28",
       "phases": {
         "96": {
@@ -694,7 +694,8 @@
           "status": "done",
           "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
         }
-      }
+      },
+      "completedDate": "2026-06-29"
     }
   },
   "lastUpdated": "2026-06-28T20:05:00Z (v1.13 epic RTS-686 started → In Progress)",
