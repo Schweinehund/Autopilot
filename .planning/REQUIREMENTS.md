@@ -1,7 +1,7 @@
 # Requirements — v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
 
 **Milestone:** v1.13
-**Status:** Roadmap defined — ready for Phase 96
+**Status:** Closed — 14/14 Validated (Phase 100 close-gate 2026-06-29)
 **Basis:** `SEED-001` (planted 2026-06-28). All content verified against Microsoft Learn 2026-06-27/28.
 
 ---
@@ -58,18 +58,18 @@
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| ACC-01 | Phase 96 | Complete |
-| ACC-02 | Phase 96 | Complete |
-| ACC-04 | Phase 96 | Complete |
-| GLOS-01 | Phase 96 | Complete |
-| DEP-01 | Phase 97 | Complete |
-| DEP-02 | Phase 97 | Complete |
-| ACC-03 | Phase 98 | Complete |
-| TS-01 | Phase 98 | Complete |
-| TS-02 | Phase 98 | Complete |
-| TS-03 | Phase 98 | Complete |
-| DEP-03 | Phase 98 | Complete |
-| RUN-01 | Phase 99 | Complete |
-| HARN-01 | Phase 100 | Complete |
-| HARN-02 | Phase 100 | Complete |
-| HARN-03 | Phase 100 | Complete |
+| ACC-01 | Phase 96 | Validated |
+| ACC-02 | Phase 96 | Validated |
+| ACC-04 | Phase 96 | Validated |
+| GLOS-01 | Phase 96 | Validated |
+| DEP-01 | Phase 97 | Validated |
+| DEP-02 | Phase 97 | Validated |
+| ACC-03 | Phase 98 | Validated |
+| TS-01 | Phase 98 | Validated |
+| TS-02 | Phase 98 | Validated |
+| TS-03 | Phase 98 | Validated |
+| DEP-03 | Phase 98 | Validated |
+| RUN-01 | Phase 99 | Validated |
+| HARN-01 | Phase 100 | Validated |
+| HARN-02 | Phase 100 | Validated |
+| HARN-03 | Phase 100 | Validated |

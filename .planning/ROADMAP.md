@@ -16,7 +16,7 @@
 - ✅ **v1.10 macOS Platform SSO Follow-ons — Kerberos, Graph API & NUAL** — Phases 83-88 (shipped 2026-06-24)
 - ✅ **v1.11 macOS PSSO End-to-End Provisioning & MDM Migration** — Phases 89-93 (shipped 2026-06-26)
 - ✅ **v1.12 macOS MDM-Migration Verification Closure** — Phases 94-95 (shipped 2026-06-26)
-- 🔄 **v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth** — Phases 96-100 (active)
+- ✅ **v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth** — Phases 96-100 (shipped 2026-06-29)
 
 ## Phases
 
@@ -40,7 +40,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 97: Enrollment & FileVault Depth Formalization** — Bring guide 02 Account Settings additions and guide 03 FileVault depth under requirements + harness coverage with freshness stamps (completed 2026-06-28)
 - [x] **Phase 98: Guide 07 Comprehensive Pass** — Fix the remaining guide 07 VPP conflict, add the full troubleshooting section (Extension-Identifier-typo + A2 delivery requirements + diagnostic tree), and formalize the PSSO admin-setup depth additions (completed 2026-06-29)
 - [x] **Phase 99: New Runbook + Navigation Wiring** — Author the local-macOS-password-reset runbook for Secure-Enclave PSSO devices and wire it into all macOS navigation hubs (completed 2026-06-29)
-- [ ] **Phase 100: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — 11th Path-A audit-harness lineage bump, per-phase chain validators, V112 pin, 10th CI coexistence workflow, 3-axis terminal re-audit, and milestone close
+- [x] **Phase 100: Harness Lineage Bump + Terminal Re-Audit + Milestone Close** — 11th Path-A audit-harness lineage bump, per-phase chain validators, V112 pin, 10th CI coexistence workflow, 3-axis terminal re-audit, and milestone close (completed 2026-06-29)
 
 ## Phase Details
 
@@ -141,7 +141,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Success Criteria** (what must be TRUE):
 
   1. `v1.13-milestone-audit.mjs` (C1-C16 inherited verbatim from v1.12) + `v1.13-audit-allowlist.json` sidecar + BASELINE_17 freshness comment are shipped as one indivisible Atom 1 commit
-  2. `check-phase-96.mjs` through `check-phase-100.mjs` per-phase validators (chain-apex `CHAIN_PHASES=[48..100]`, `CHAIN_SKIP=new Set([])`), `_lib/frozen-at-close.mjs` V112 pin (v1.12 close-gate SHA), and `audit-harness-v1.13-integrity.yml` (10th parallel CI coexistence workflow; predecessors v1.4–v1.12 byte-unchanged) are shipped as one indivisible Atom 2 commit
+  2. `check-phase-96.mjs` through `check-phase-100.mjs` per-phase validators (chain-apex `CHAIN_PHASES=[48..99]`, 52 entries, `CHAIN_SKIP=new Set([])`; [48..100] was the milestone-range shorthand — the validator array follows the [48..N-1] invariant, excluding its own phase), `_lib/frozen-at-close.mjs` V112 pin (v1.12 close-gate SHA), and `audit-harness-v1.13-integrity.yml` (10th parallel CI coexistence workflow; predecessors v1.4–v1.12 byte-unchanged) are shipped as one indivisible Atom 2 commit
   3. The 3-axis terminal re-audit (Axis 1: fresh `git clone --no-hardlinks`; Axis 2: cross-OS Linux GHA; Axis 3: fresh zero-context sub-agent) produces cross-OS PASS/FAIL/SKIP EXACT MATCH
   4. A single close-gate commit flips all 14 v1.13 requirements to Validated across PROJECT.md, ROADMAP.md, STATE.md, and REQUIREMENTS.md, and `v1.13-MILESTONE-AUDIT.md` + `v1.13-DEFERRED-CLEANUP.md` are authored
 
@@ -160,9 +160,9 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 100-04-PLAN.md — HARN-03 pt 2: close-gate (v1.13-MILESTONE-AUDIT + DEFERRED-CLEANUP + 100-VERIFICATION + 4-doc 14/14 traceability flip)
+- [x] 100-04-PLAN.md — HARN-03 pt 2: close-gate (v1.13-MILESTONE-AUDIT + DEFERRED-CLEANUP + 100-VERIFICATION + 4-doc 14/14 traceability flip)
 
-**Note**: This phase MUST execute after all content phases (96-99) are complete. Mirrors v1.12 Phase 95 / v1.11 Phase 93 close pattern. Apex internal array is CHAIN_PHASES=[48..99] (52 entries) per locked D-03 — the SC#2 [48..100] above is the milestone-range shorthand; the validator excludes its own phase per the [48..N-1] invariant.
+**Note**: This phase executed after all content phases (96-99) were complete. Mirrors v1.12 Phase 95 / v1.11 Phase 93 close pattern. Apex internal array is CHAIN_PHASES=[48..99] (52 entries) per D-03 — corrected from the former [48..100] milestone-range shorthand at close-gate (D-03 reconciliation applied). The validator excludes its own phase per the [48..N-1] invariant (v1.12 apex-95=[48..94]; v1.13 apex-100=[48..99]).
 
 ## Progress
 
@@ -172,4 +172,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
 | 99. New Runbook + Navigation Wiring | 3/3 | Complete    | 2026-06-29 |
-| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |
+| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 4/4 | Complete    | 2026-06-29 |

@@ -8,7 +8,13 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, and Android devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE, iOS/iPadOS, and Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
+## Current Milestone: (none — run /gsd-new-milestone to scope the next)
+
+Previous milestone v1.13 shipped 2026-06-29 — see section below.
+
+## Previous Milestone: v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth (SHIPPED 2026-06-29)
+
+**Status:** ✅ SHIPPED & CLOSED 2026-06-29 — 5/5 phases (96-100) Complete; 14/14 requirements Validated via Phase 100 Plan 100-04 SINGLE close-gate commit (NO Commit A); close artifacts at `.planning/milestones/v1.13-{MILESTONE-AUDIT,DEFERRED-CLEANUP}.md`. Run `/gsd-complete-milestone` to archive phase dirs and tag `v1.13`.
 
 **Goal:** Bring the macOS Platform SSO / enrollment / FileVault admin-setup documentation to verified accuracy and operator-grade depth — under requirements + the audit harness — by fixing factual conflicts, formalizing the depth additions worked through in the 2026-06-27/28 build session, capturing that session's real-world troubleshooting, and adding the missing local-password-reset procedure.
 

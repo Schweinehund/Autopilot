@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: executing
-last_updated: "2026-06-29T20:55:05.964Z"
+status: complete
+last_updated: "2026-06-29T21:30:00.000Z"
 last_activity: 2026-06-29
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 14
-  completed_plans: 13
-  percent: 80
+  completed_plans: 14
+  percent: 100
 ---
 
 # Project State
@@ -24,9 +24,9 @@ See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 
 ## Current Position
 
-Phase: 100 (harness-lineage-bump-terminal-re-audit-milestone-close) — EXECUTING
-Plan: 4 of 4
-Status: Ready to execute
+Phase: 100 (harness-lineage-bump-terminal-re-audit-milestone-close) — COMPLETE
+Plan: 4 of 4 (complete)
+Status: v1.13 MILESTONE CLOSED — 14/14 Validated (2026-06-29)
 Last activity: 2026-06-29
 
 ## v1.13 Phase Dependency Summary
@@ -143,7 +143,8 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
           Atom 2 (indivisible set — HARN-02):
 
             - check-phase-96.mjs through check-phase-100.mjs (per-phase validators;
-              chain-apex CHAIN_PHASES=[48..100], CHAIN_SKIP=new Set([]))
+              chain-apex CHAIN_PHASES=[48..99], 52 entries, CHAIN_SKIP=new Set([]);
+              [48..100] was milestone-range shorthand — corrected per D-03 at close-gate)
 
             - _lib/frozen-at-close.mjs V112 entry (v1.12 close-gate SHA)
             - audit-harness-v1.13-integrity.yml (10th parallel CI coexistence workflow;
@@ -152,7 +153,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 
             - Axis 1: fresh git clone --no-hardlinks into $env:TEMP\v1.13-audit-<rand>
             - Axis 2: cross-OS Linux GHA (BOTH chain validators authoritative per D-03
-              corrected OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..100])
+              corrected OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..99])
 
             - Axis 3: fresh zero-context sub-agent
             - cross-OS PASS/FAIL/SKIP EXACT MATCH required
@@ -161,7 +162,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
           Predecessor v1.4-v1.12 frozen surfaces BYTE-UNCHANGED invariant
 ```
 
-## v1.13 Requirement Coverage (14/14 mapped; 0/14 Validated — IN PROGRESS)
+## v1.13 Requirement Coverage (14/14 Validated — CLOSED 2026-06-29)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
@@ -172,7 +173,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 | 100 | HARN-01, HARN-02, HARN-03 | 3 |
 | **Total** | **14/14 mapped** | **14** |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 100 terminal re-audit uses fresh `git clone --no-hardlinks` into `$env:TEMP\v1.13-audit-<rand>` (D-03 LOCKED — Linux GHA BOTH chain validators authoritative given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..100]; same corrected D-03 OS split as v1.12).
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 100 terminal re-audit used fresh `git clone --no-hardlinks` into `$env:TEMP\v1.13-audit-kgc00000` (D-03 LOCKED — Linux GHA BOTH chain validators authoritative given WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..99]; same corrected D-03 OS split as v1.12; [48..100] was milestone-range shorthand corrected to [48..99] at close-gate per D-03).
 
 **Named decisions (LOCKED at roadmap 2026-06-28):**
 
@@ -180,7 +181,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - GUIDE-07-GROUPING: ACC-03 + TS-01/02/03 + DEP-03 all grouped into Phase 98 — all five requirements edit the same file; single-pass grouping avoids multiple round-trips over guide 07
 - NAVIGATION-LAST: Phase 99 is navigation-last for the new local-password-reset runbook; nav hub entries committed only after the runbook file is committed (mirrors v1.11 Phase 92 pattern)
 - HARNESS-LINEAGE: 11th Path-A milestone (v1.4→v1.13); BASELINE_17; V112 pin; 10th CI workflow
-- CHAIN-APEX: CHAIN_PHASES=[48..100] — note WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 applies at this depth; Linux GHA chain validators are authoritative (same D-03 corrected split as v1.12)
+- CHAIN-APEX: CHAIN_PHASES=[48..99] (52 entries; [48..100] was milestone-range shorthand — corrected per D-03 at Phase 100 close-gate per [48..N-1] invariant); WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..99]; Linux GHA chain validators are authoritative (same D-03 corrected split as v1.12)
 - GLOS-01-PLACEMENT: GLOS-01 rides with Phase 96 (surgical corpus edits) — single-line glossary URL fix, thematically aligned with accuracy fixes, no phase fragmentation cost
 
 ## Performance Metrics
@@ -201,7 +202,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - v1.10: 6 phases (83-88), 16 plans — shipped 2026-06-24
 - v1.11: 5 phases (89-93), 13 plans — shipped 2026-06-26
 - v1.12: 2 phases (94-95), 5 plans — shipped 2026-06-26
-- **v1.13 (in progress): 5 phases (96-100), plan count TBD**
+- **v1.13: 5 phases (96-100), 14 plans — shipped 2026-06-29**
 
 ## Accumulated Context
 
@@ -220,7 +221,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commit (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; predecessor frozen surfaces BYTE-UNCHANGED
 - Per-section `last_verified`/`review_by` stamps required on all OS-26-gated additions (90-day review cycle; verified against Microsoft Learn 2026-06-27/28)
 - Link-not-copy architecture preserved; no inline duplication across guides
-- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..100]: Linux GHA BOTH chain validators are authoritative (D-03 corrected OS split, same as v1.12)
+- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..99]: Linux GHA BOTH chain validators are authoritative (D-03 corrected OS split, same as v1.12; [48..100] was milestone-range shorthand corrected at close-gate)
 - Adversarial-review invoked at discuss-phase for gray-area scoping decisions (per user memory)
 - [Phase ?]: 96-01 execution
 - [Phase ?]: 96-01 execution
@@ -239,7 +240,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - At Phase 97 plan time: confirm current state of guides 02 and 03 — assess what was written in the live session vs. what needs to be added/adjusted to match DEP-01/DEP-02 scope
 - At Phase 98 plan time: confirm guide 07 current state — assess session-written additions vs. what remains to formalize; confirm exact line for ACC-03 (~line 126)
 - At Phase 99 plan time: determine whether new runbook is standalone (new file) or extended from an existing runbook; identify correct nav hub locations
-- At Phase 100 plan time: confirm V112 (v1.12 close-gate SHA) via `git log --grep="close-gate" --grep="v1.12" --all-match -1` before authoring frozen-at-close.mjs; confirm CHAIN_PHASES=[48..100] count (53 entries)
+- At Phase 100 plan time: confirm V112 (v1.12 close-gate SHA) via `git log --grep="close-gate" --grep="v1.12" --all-match -1` before authoring frozen-at-close.mjs; confirm CHAIN_PHASES=[48..99] count (52 entries) — CONFIRMED per D-03 at close-gate (corrected from [48..100] milestone-range shorthand; 53 entries was off-by-one)
 
 ### Blockers/Concerns
 
@@ -247,14 +248,14 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 - Phase 98: Guide 07 has had session-written additions during 2026-06-27/28 outside the GSD flow — assess current file state at plan time to avoid double-adding content
 - Phase 99: Determine whether a new L1 runbook file or extension of an existing one best serves RUN-01; evaluate navigation targets at plan time
-- Phase 100: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..100] — mitigated by D-03 corrected OS split; Linux GHA BOTH chain validators are authoritative; carried in v1.13-DEFERRED-CLEANUP.md
+- Phase 100: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..99] — RESOLVED (D-03 mitigated; Linux GHA sole-authoritative; carried in v1.13-DEFERRED-CLEANUP.md Part A; close-gate complete)
 
 ## Session Continuity
 
-Last session: 2026-06-29T20:54:54.628Z
-Stopped at: Phase 100 context gathered
+Last session: 2026-06-29T21:30:00.000Z
+Stopped at: Phase 100 Plan 100-04 close-gate complete — v1.13 MILESTONE CLOSED
 Resume file: None
-Next action: Execute Plan 98-02
+Next action: Run /gsd-complete-milestone to archive v1.13 phase dirs and close the Jira story
 
 ## Operator Next Steps
 
