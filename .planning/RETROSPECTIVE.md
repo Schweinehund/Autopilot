@@ -396,6 +396,42 @@ A tightly-scoped verification-closure milestone that resolved the three Phase-90
 
 ---
 
+## Milestone: v1.13 — macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
+
+**Shipped:** 2026-06-29
+**Phases:** 5 (96-100) | **Plans:** 14 | **Requirements:** 14/14 Validated
+
+### What Was Built
+A documentation-accuracy + depth + harness-lineage milestone driven by `SEED-001` — the corrections and depth additions worked through in a live 2026-06-27/28 macOS PSSO build/troubleshooting session, brought back under the GSD flow with requirements + harness coverage. Phase 96: four surgical conflict fixes across guides 00/15 + the macOS glossary (VPP-on-Company-Portal errors, device→user-group assignment, 3-URL Iru/Kandji reality). Phase 97: formalized guide 02 Account Settings + guide 03 FileVault/FDE depth under DEP-01/02 with freshness stamps. Phase 98: a single-phase comprehensive pass over guide 07 (ACC-03 + TS-01/02/03 + DEP-03) — VPP fix, Extension-Identifier-typo failure, A2 Company Portal delivery requirements, Setup-Assistant diagnostic tree, and the full PSSO admin-setup depth. Phase 99: new L1 runbook #37 (local-macOS-password-reset for Secure-Enclave PSSO devices) + navigation-last wiring. Phase 100: the 11th Path-A audit-harness lineage bump (Atom 1 + Atom 2), V112 frozen pin, 10th CI coexistence workflow, and a 3-axis terminal re-audit close.
+
+### What Worked
+- **Single-phase grouping by shared file** — all five guide-07 requirements (ACC-03 + TS-01/02/03 + DEP-03) landed in Phase 98 across 3 waves, avoiding multiple round-trips over `07-platform-sso-setup.md`. The natural unit of work was the file, not the requirement.
+- **Formalize-don't-re-research** — Phases 97/98 brought session-written depth under REQ-IDs + harness with bounded spot-verify checks rather than net-new research; needle-spec hand-offs (97/98/99-NEEDLE-SPEC.md) let Phase 100 author content-asserting validators that stay green on the real corpus bytes.
+- **11th consecutive Path-A harness held** — 4-line relabel, C1-C16 inherited verbatim, self-test 9/9, predecessor v1.4–v1.12 byte-unchanged; check-phase-96..99 carry content/presence needles (not bare PRESENCE) since the phases patched existing files.
+- **Corrected D-03 OS split carried forward cleanly** — both chain validators declared Linux-GHA sole-authoritative up front (run `28401420634`); the carried WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 (now depth [48..99]) was a known artifact, not a blocker. Cross-OS EXACT MATCH across the 5-leaf set.
+- **D-03 apex off-by-one caught at the close-gate** — roadmap-locked `[48..100]` (milestone-range shorthand) corrected to `[48..99]` (52 entries) per the [48..N-1] invariant, the same class of correction as v1.12's D-01.
+- **GLOS-01 bundled at zero fragmentation cost** — the v1.12-deferred single-line Iru URL fix rode Phase 96's surgical accuracy edits instead of getting its own phase.
+
+### What Was Inefficient
+- **`/gsd-complete-milestone` SDK auto-extraction emitted `One-liner:` placeholder rows yet again** (6th milestone: v1.7/v1.8/v1.10/v1.11/v1.12/v1.13) — the v1.13 MILESTONES.md entry was hand-authored by REPLACEMENT from the canonical MILESTONE-AUDIT. Root cause unchanged: SUMMARYs whose schema the extractor can't parse. Only a machine-readable `one_liner:` field at phase close fixes it durably.
+- **Out-of-flow session edits required a formalization milestone** — the 2026-06-27/28 live session wrote depth and fixes directly into the corpus outside GSD, so v1.13 spent two phases (97/98) retroactively bringing that under requirements + harness. Capturing depth via the flow the first time would have avoided the double-handling.
+- **STATE.md/ROADMAP carried the apex shorthand `[48..100]`** until the close-gate caught it — the locked value should have been the [48..N-1] form from roadmap authoring.
+
+### Patterns Established
+- **Accuracy/depth milestone as a first-class shape** — when a build session produces verified corrections + depth outside the flow, a content-accuracy milestone (surgical fixes → depth formalization → comprehensive single-file pass → new runbook → harness close) retires it cleanly under requirements + harness without padding.
+- **Needle-spec hand-off from content phases to the harness phase** — content phases record presence-only token specs (NN-NEEDLE-SPEC.md) so the terminal harness phase authors per-phase validators that assert the real corpus edits rather than bare file presence.
+
+### Key Lessons
+- The Phase-100 close-gate again pre-updated most of the 4-doc traceability, leaving `/gsd-complete-milestone` to do archival + ROADMAP/PROJECT collapse + MILESTONES curation + tag. The stale spots hid in plain sight again: PROJECT.md's Active section still listed v1.12 as ACTIVE, and the v1.13 status line still said "Run `/gsd-complete-milestone`". Re-read every section.
+- The `One-liner:` extraction bug is now a 6-milestone recurrence — reliably hand-fixed but the durable fix is upstream (machine-readable `one_liner:` frontmatter at phase close).
+- Apex array off-by-one is now a 2-milestone close-gate catch (v1.12 D-01, v1.13 D-03) — the [48..N-1] invariant should be applied at roadmap authoring, not deferred to the close-gate.
+
+### Cost Observations
+- Model mix: orchestration on Opus; sequential-on-main-tree per `use_worktrees:false`.
+- Notable: 5 phases / 14 plans over ~2 days; 11th Path-A harness; cross-OS EXACT MATCH with both chain validators Linux-GHA authoritative; carried Windows deep-nest cascade now depth [48..99] (+5 vs v1.12); largest Atom 2 yet (7 files: 5 net-new validators + frozen-at-close + CI workflow).
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -416,6 +452,7 @@ A tightly-scoped verification-closure milestone that resolved the three Phase-90
 | v1.10 | 6 | 16 | macOS Platform SSO follow-ons (Kerberos / Graph API / NUAL); dedicated chain-health phase before harness bump (frozen-aware, no CHAIN_SKIP masking); cross-OS authority rule pre-committed (D-04, Linux GHA authoritative); 8th Path-A harness lineage |
 | v1.11 | 5 | 13 | macOS end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration scenario guides; validators-as-deliverable per content phase (small harness-close); SINGLE close-gate (no Commit A); stray pre-close audit deleted *before* `milestone.complete` to prevent SDK clobber; 9th Path-A harness lineage |
 | v1.12 | 2 | 5 | Verification-closure milestone (smallest since v1.7); retired 3 prior-close research gaps in one already-wired file; `/adversarial-review` pre-locked MEDIUM-confidence framing for unverifiable supervision claim; D-01 apex off-by-one corrected at close-gate ([48..93]→[48..94]); both chain validators Linux-GHA authoritative (corrected D-03); 10th Path-A harness lineage |
+| v1.13 | 5 | 14 | Documentation-accuracy + depth milestone formalizing out-of-flow build-session work under requirements + harness; single-phase grouping by shared file (guide 07 = 5 reqs); needle-spec hand-off from content phases to harness phase; D-03 apex off-by-one corrected at close-gate ([48..100]→[48..99]); carried Windows deep-nest now [48..99]; 11th Path-A harness lineage |
 
 ### Top Lessons (Verified Across Milestones)
 

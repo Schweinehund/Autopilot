@@ -2,33 +2,32 @@
 gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: milestone_complete
-last_updated: 2026-06-29T21:26:56.085Z
-last_activity: 2026-06-29
+status: Awaiting next milestone
+last_updated: "2026-06-29T22:28:31.382Z"
+last_activity: 2026-06-29 — Milestone v1.13 completed and archived
 progress:
   total_phases: 5
   completed_phases: 5
   total_plans: 14
   completed_plans: 14
   percent: 100
-stopped_at: Milestone complete (Phase 100 was final phase)
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
+See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Milestone complete
+**Current focus:** Planning next milestone — run `/gsd-new-milestone` to scope v1.14+ (v1.14+ backlog source: `.planning/milestones/v1.13-DEFERRED-CLEANUP.md`)
 
 ## Current Position
 
-Phase: 100
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-06-29
+Phase: Milestone v1.13 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-06-29 — Milestone v1.13 completed and archived
 
 ## v1.13 Phase Dependency Summary
 
@@ -260,8 +259,7 @@ Next action: Run /gsd-complete-milestone to archive v1.13 phase dirs and close t
 
 ## Operator Next Steps
 
-- Run `/gsd-plan-phase 96` to plan Phase 96: Surgical Conflict Fixes
-- At planning time for gray-area scoping decisions, invoke `/adversarial-review` per user preference
+- Start the next milestone with /gsd-new-milestone
 
 ## Performance Metrics
 
