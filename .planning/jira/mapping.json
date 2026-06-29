@@ -701,7 +701,68 @@
       "epicKey": "RTS-697",
       "status": "created",
       "created": "2026-06-29",
-      "phases": {}
+      "phases": {
+        "101": {
+          "issueKey": "RTS-698",
+          "status": "todo",
+          "name": "802.1X Foundation — Glossary, EAP Methods & Cert Delivery"
+        },
+        "102": {
+          "issueKey": "RTS-699",
+          "status": "todo",
+          "name": "Windows 802.1X Admin-Setup (Wi-Fi + Wired)"
+        },
+        "103": {
+          "issueKey": "RTS-700",
+          "status": "todo",
+          "name": "macOS 802.1X Admin-Setup (Wi-Fi + Wired)"
+        },
+        "104": {
+          "issueKey": "RTS-701",
+          "status": "todo",
+          "name": "iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)"
+        },
+        "105": {
+          "issueKey": "RTS-702",
+          "status": "todo",
+          "name": "Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)"
+        },
+        "106": {
+          "issueKey": "RTS-703",
+          "status": "todo",
+          "name": "Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)"
+        },
+        "107": {
+          "issueKey": "RTS-704",
+          "status": "todo",
+          "name": "L1 Runbooks #38-41 (802.1X Triage)"
+        },
+        "108": {
+          "issueKey": "RTS-705",
+          "status": "todo",
+          "name": "L2 Runbooks #31-33 + Decision Tree #10"
+        },
+        "109": {
+          "issueKey": "RTS-706",
+          "status": "todo",
+          "name": "802.1X Integration — Capability Matrices + Navigation Hubs"
+        },
+        "110": {
+          "issueKey": "RTS-707",
+          "status": "todo",
+          "name": "Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs"
+        },
+        "111": {
+          "issueKey": "RTS-708",
+          "status": "todo",
+          "name": "Pillar D — Chain-Validator Tooling Refactors"
+        },
+        "112": {
+          "issueKey": "RTS-709",
+          "status": "todo",
+          "name": "Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close"
+        }
+      }
     }
   },
   "lastUpdated": "2026-06-28T20:05:00Z (v1.13 epic RTS-686 started → In Progress)",
