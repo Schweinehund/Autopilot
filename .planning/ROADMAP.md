@@ -145,8 +145,14 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. The 3-axis terminal re-audit (Axis 1: fresh `git clone --no-hardlinks`; Axis 2: cross-OS Linux GHA; Axis 3: fresh zero-context sub-agent) produces cross-OS PASS/FAIL/SKIP EXACT MATCH
   4. A single close-gate commit flips all 14 v1.13 requirements to Validated across PROJECT.md, ROADMAP.md, STATE.md, and REQUIREMENTS.md, and `v1.13-MILESTONE-AUDIT.md` + `v1.13-DEFERRED-CLEANUP.md` are authored
 
-**Plans**: TBD
-**Note**: This phase MUST execute after all content phases (96-99) are complete. Mirrors v1.12 Phase 95 / v1.11 Phase 93 close pattern.
+**Plans**: 4 plans
+
+- [ ] 100-01-PLAN.md — Atom 1 (HARN-01): v1.13-milestone-audit.mjs + v1.13-audit-allowlist.json + BASELINE_17 (one indivisible commit)
+- [ ] 100-02-PLAN.md — Atom 2 (HARN-02): check-phase-96..100.mjs + frozen-at-close V112 pin + 10th CI workflow (one indivisible commit; apex CHAIN_PHASES=[48..99])
+- [ ] 100-03-PLAN.md — HARN-03 pt 1: 3-axis terminal re-audit (Windows fresh-clone leaf + Linux GHA chain + zero-context sub-agent); 7-row cross-OS EXACT MATCH
+- [ ] 100-04-PLAN.md — HARN-03 pt 2: close-gate (v1.13-MILESTONE-AUDIT + DEFERRED-CLEANUP + 100-VERIFICATION + 4-doc 14/14 traceability flip)
+
+**Note**: This phase MUST execute after all content phases (96-99) are complete. Mirrors v1.12 Phase 95 / v1.11 Phase 93 close pattern. Apex internal array is CHAIN_PHASES=[48..99] (52 entries) per locked D-03 — the SC#2 [48..100] above is the milestone-range shorthand; the validator excludes its own phase per the [48..N-1] invariant.
 
 ## Progress
 
@@ -156,4 +162,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
 | 99. New Runbook + Navigation Wiring | 3/3 | Complete    | 2026-06-29 |
-| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
+| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
