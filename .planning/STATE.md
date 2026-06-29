@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
 status: executing
-last_updated: "2026-06-29T16:39:14.967Z"
+last_updated: "2026-06-29T16:48:24.687Z"
 last_activity: 2026-06-29
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 7
-  completed_plans: 5
+  completed_plans: 6
   percent: 40
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 ## Current Position
 
 Phase: 98 (guide-07-comprehensive-pass) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-29
 
@@ -228,6 +228,8 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - [Phase ?]: Phase 97: DEP-01 and DEP-02 formalized with 2026-06-28 version-history rows; 4 bounded spot-verify claims CORRECT; frontmatter unchanged; 97-NEEDLE-SPEC.md recorded for Phase-100 validator authoring
 - [Phase 98-01]: ACC-03 — macOS Company Portal always deployed as DMG/PKG LOB app; VPP channel is iOS/iPadOS only; removed from guide 07 Step 2; Step 2 callout reworded to explicitly separate install target (device) from assignment target (user group / device group)
 - [Phase 98-01]: TS-02 — User-license row framed as standard Intune requirement per D-03 Pitfall 5 (not A2-exclusive); A1/A2 equivalence pointer placed in Advanced section body prose (not heading) linking to guide 01 Which Path Is Right for You table; D-04 lockstep stamp bump 2026-06-20→2026-06-29 / 2026-09-20→2026-09-29
+- [Phase 98-02]: TS-01 — Extension-Identifier-typo table row + H3 deep-dive added to Configuration-Caused Failures (permanent-vs-transient contrast; correct value com.microsoft.CompanyPortalMac.ssoextension; affects both A1 and A2 paths; contrast table disambiguates ssoextension from CP app bundle ID)
+- [Phase 98-02]: TS-03 — Setup-Assistant SSO-Extension Diagnostic Tree added as H2 sibling numbered bisection ladder (5 rungs: Intune device record → CP version 5.2604.0/5.2404.0 → Extension Identifier → user license → A1 bisect via disabling Enable Registration During Setup); no mermaid; all pre-existing headings byte-identical
 
 ### Pending Todos
 
@@ -247,9 +249,9 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-29T16:39:14.949Z
+Last session: 2026-06-29T16:48:24.669Z
 Stopped at: Completed 98-01-PLAN.md (ACC-03 VPP fix + TS-02 ADE Prerequisites augmentation)
-Resume file: .planning/phases/98-guide-07-comprehensive-pass/98-02-PLAN.md
+Resume file: None
 Next action: Execute Plan 98-02
 
 ## Operator Next Steps
