@@ -148,7 +148,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 4 plans
 **Wave 1**
 
-- [ ] 100-01-PLAN.md — Atom 1 (HARN-01): v1.13-milestone-audit.mjs + v1.13-audit-allowlist.json + BASELINE_17 (one indivisible commit)
+- [x] 100-01-PLAN.md — Atom 1 (HARN-01): v1.13-milestone-audit.mjs + v1.13-audit-allowlist.json + BASELINE_17 (one indivisible commit)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -172,4 +172,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
 | 99. New Runbook + Navigation Wiring | 3/3 | Complete    | 2026-06-29 |
-| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/4 | Not started | - |
+| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 1/4 | In Progress|  |
