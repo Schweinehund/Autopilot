@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-27
-review_by: 2026-09-27
+last_verified: 2026-06-29
+review_by: 2026-09-29
 applies_to: ADE
 audience: admin
 platform: macOS
@@ -417,6 +417,7 @@ There is no repair path that avoids a device wipe for this specific misconfigura
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-06-29 | Phase 98 (ACC-03 + TS-01/02/03 + DEP-03): removed VPP Company Portal option (ACC-03); added Extension-Identifier-typo Configuration-Caused-Failure (TS-01); augmented ADE Path Prerequisites table with three net-new A2 delivery requirements (TS-02); added Setup-Assistant SSO-extension diagnostic tree (TS-03); formalized PSSO admin-setup depth under DEP-03 | -- |
 | 2026-06-27 | Clarified Account Name token choice (`AccountShortName` vs `preferred_username` + LAPS-overwrite caveat) and Company Portal assignment target (device vs user); verified against Microsoft Learn | -- |
 | 2026-06-27 | Added enrollment-profile account-creation ownership callout + two Configuration-Caused-Failures rows (`Create a local primary account = No`; prefilled short-name ≠ PSSO Account Name token) with cross-links to 02-enrollment-profile.md | -- |
 | 2026-06-27 | Added `Non Platform SSO Accounts` row + break-glass-admin exclusion note; scoped the duplicate-account symptom to create-user-at-login / ADE-during-Setup flows (standard post-enrollment binds the signed-in account); verified against Microsoft Learn | -- |
