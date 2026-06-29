@@ -93,9 +93,16 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   5. Guide 07 carries the PSSO admin-setup depth: AccountName token mapping (AccountShortName vs preferred_username + LAPS), Company Portal assignment target, Non Platform SSO Accounts, Optional & Advanced settings with two account models, the Registration-Approach decision record, and the End-User Sign-In Experience (Secure Enclave) + local-password lifecycle — all freshness-stamped
 
 **Plans**: 3 plans
+**Wave 1**
 
 - [ ] 98-01-PLAN.md — ACC-03 VPP fix + Step 2 callout reword; TS-02 ADE Path Prerequisites augmentation + A1/A2 pointer (D-03) + line-311 lockstep stamp (wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 98-02-PLAN.md — TS-01 Extension-Identifier-typo failures row + deep-dive; TS-03 Setup-Assistant SSO-extension diagnostic-tree bisection ladder (wave 2)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 98-03-PLAN.md — DEP-03 formalize-only + bounded spot-verify; D-04 frontmatter bump + version-history row; Phase-100 needle-spec hand-off (wave 3)
 
 ### Phase 99: New Runbook + Navigation Wiring

@@ -427,17 +427,19 @@ The following stable tokens from guide 07 are candidates for `check-phase-98.mjs
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Exact TS-01 symptom string (on-screen text)**
    - What we know: Microsoft Learn documents "Unable to sign-in – Single sign-on application is missing" for the transient (CP still downloading) case.
    - What's unclear: Does the Extension Identifier typo produce identical or different on-screen text? Real-world session says similar but distinguishable by persistence.
    - Recommendation: Author TS-01 prose describing the observable signature (CP Installed + policy Succeeded + "Try Again" loops) rather than an exact quoted UI string. This is resilient to OS-version UI wording differences.
+   - **RESOLVED:** Author by observable signature per CONTEXT.md D-01; implemented in plan 98-02 Task 1 ("describe the symptom by observable signature, not by a hard-quoted exact UI string").
 
 2. **Whether "Intune-licensed user" is explicitly called out in A2 Microsoft docs**
    - What we know: It is a standard Intune requirement; Microsoft Learn does not explicitly list it as an A2-specific prerequisite.
    - What's unclear: Whether omitting it from the TS-02 table is more accurate than including it.
    - Recommendation: Include it as "standard Intune prerequisite, commonly overlooked as an A2 failure point" with [ASSUMED] tag. The executor should validate against current docs during the spot-verify step.
+   - **RESOLVED:** Frame as a standard Intune prerequisite (not A2-exclusive) per CONTEXT.md Pitfall-5 framing; implemented in plan 98-01 Task 2, with execution-time spot-verify of the [ASSUMED] tag.
 
 ---
 
