@@ -696,6 +696,12 @@
         }
       },
       "completedDate": "2026-06-29"
+    },
+    "v1.14": {
+      "epicKey": "RTS-697",
+      "status": "created",
+      "created": "2026-06-29",
+      "phases": {}
     }
   },
   "lastUpdated": "2026-06-28T20:05:00Z (v1.13 epic RTS-686 started → In Progress)",
