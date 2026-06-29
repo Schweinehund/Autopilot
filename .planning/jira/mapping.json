@@ -686,12 +686,12 @@
         },
         "99": {
           "issueKey": "RTS-690",
-          "status": "in_progress",
+          "status": "done",
           "name": "New Runbook + Navigation Wiring"
         },
         "100": {
           "issueKey": "RTS-691",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Harness Lineage Bump + Terminal Re-Audit + Milestone Close"
         }
       }
