@@ -140,6 +140,6 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 |-------|----------------|--------|-----------|
 | 96. Surgical Conflict Fixes | 3/3 | Complete    | 2026-06-28 |
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
-| 98. Guide 07 Comprehensive Pass | 3/3 | Complete   | 2026-06-29 |
+| 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
 | 99. New Runbook + Navigation Wiring | 0/TBD | Not started | - |
 | 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
