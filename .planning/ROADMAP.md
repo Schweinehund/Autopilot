@@ -156,7 +156,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 100-03-PLAN.md — HARN-03 pt 1: 3-axis terminal re-audit (Windows fresh-clone leaf + Linux GHA chain + zero-context sub-agent); 7-row cross-OS EXACT MATCH
+- [x] 100-03-PLAN.md — HARN-03 pt 1: 3-axis terminal re-audit (Windows fresh-clone leaf + Linux GHA chain + zero-context sub-agent); 7-row cross-OS EXACT MATCH
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -172,4 +172,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
 | 99. New Runbook + Navigation Wiring | 3/3 | Complete    | 2026-06-29 |
-| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 2/4 | In Progress|  |
+| 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 3/4 | In Progress|  |

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
 status: executing
-last_updated: "2026-06-29T20:39:13.567Z"
+last_updated: "2026-06-29T20:55:05.964Z"
 last_activity: 2026-06-29
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 14
-  completed_plans: 12
+  completed_plans: 13
   percent: 80
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 ## Current Position
 
 Phase: 100 (harness-lineage-bump-terminal-re-audit-milestone-close) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-06-29
 
@@ -231,6 +231,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - [Phase 98-02]: TS-01 — Extension-Identifier-typo table row + H3 deep-dive added to Configuration-Caused Failures (permanent-vs-transient contrast; correct value com.microsoft.CompanyPortalMac.ssoextension; affects both A1 and A2 paths; contrast table disambiguates ssoextension from CP app bundle ID)
 - [Phase 98-02]: TS-03 — Setup-Assistant SSO-Extension Diagnostic Tree added as H2 sibling numbered bisection ladder (5 rungs: Intune device record → CP version 5.2604.0/5.2404.0 → Extension Identifier → user license → A1 bisect via disabling Enable Registration During Setup); no mermaid; all pre-existing headings byte-identical
 - [Phase ?]: Phase 99-03: 99-NEEDLE-SPEC.md recorded N1-N18 presence-only tokens for Phase-100 check-phase-99.mjs
+- [Phase ?]: check-phase-95 continuity count = 50/0/0 (V-95-AUDIT PASS post-close; confirmed CHECK_PHASE_NESTED=1 + GHA chain)
 
 ### Pending Todos
 
@@ -250,7 +251,7 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-29T20:39:13.549Z
+Last session: 2026-06-29T20:54:54.628Z
 Stopped at: Phase 100 context gathered
 Resume file: None
 Next action: Execute Plan 98-02
