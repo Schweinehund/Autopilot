@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-21
-review_by: 2026-09-21
+last_verified: 2026-06-29
+review_by: 2026-09-29
 applies_to: ADE
 audience: L1
 platform: macOS
@@ -11,6 +11,8 @@ platform: macOS
 # macOS Platform SSO — Secure Enclave Key Loss
 
 Use this runbook when a user's Platform SSO stops working after a password reset, after using a FileVault recovery key to unlock the device, or when `app-sso platform -s` shows User Registration not in REGISTERED state despite the device previously being enrolled in Platform SSO.
+
+> **If the user cannot log in:** If the user does not yet have access to their Mac (local password unknown or lost), use [macOS Local Password Recovery (L1 #37)](37-macos-local-password-reset.md) first to regain access, then return here for the mandatory PSSO re-registration.
 
 ## Prerequisites
 
