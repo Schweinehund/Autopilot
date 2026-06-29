@@ -699,12 +699,12 @@
     },
     "v1.14": {
       "epicKey": "RTS-697",
-      "status": "created",
+      "status": "in_progress",
       "created": "2026-06-29",
       "phases": {
         "101": {
           "issueKey": "RTS-698",
-          "status": "todo",
+          "status": "in_progress",
           "name": "802.1X Foundation — Glossary, EAP Methods & Cert Delivery"
         },
         "102": {
