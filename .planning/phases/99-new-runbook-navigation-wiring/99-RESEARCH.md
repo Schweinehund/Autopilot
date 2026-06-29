@@ -518,17 +518,17 @@ Per-file freshness stamps for all touched files (file-level convention; +3-month
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Apple ID path eligibility in corporate ADE**
    - What we know: Apple ID reset is a standard macOS login-window feature; corporate ADE accounts may not have an Apple ID associated; D-03 gates this path as "where org policy allows."
    - What's unclear: Should #37 include a pre-check step that tells L1 to confirm with the user whether they have an Apple ID associated before attempting Path C?
-   - Recommendation: Yes — add a brief "check first" note at the top of Path C ("Confirm the user has an Apple ID associated with their macOS account before proceeding"). This is Claude's discretion on wording.
+   - RESOLVED: Yes — add a brief "check first" note at the top of Path C ("Confirm the user has an Apple ID associated with their macOS account before proceeding"). Wording is Claude's discretion (D-03).
 
 2. **LAPS admin account name at login window**
    - What we know: LAPS admin is "Managed local admin (LAPS)" per 07:74; the AccountName mapping uses `com.apple.PlatformSSO.AccountShortName` for the end-user account.
    - What's unclear: What is the display name / short name of the LAPS admin account at the macOS login window? Guide 07 mentions LAPS in the context of `preferred_username` vs LAPS account naming at 07:65, but does not document the login-window appearance.
-   - Recommendation: Executor authors this from verified knowledge; flag to verify against a test macOS LAPS-configured device.
+   - RESOLVED: Executor authors this from verified macOS knowledge; the LAPS admin display name is discretion — flag to verify against a test macOS LAPS-configured device.
 
 ---
 
