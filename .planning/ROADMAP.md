@@ -95,7 +95,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 98-01-PLAN.md — ACC-03 VPP fix + Step 2 callout reword; TS-02 ADE Path Prerequisites augmentation + A1/A2 pointer (D-03) + line-311 lockstep stamp (wave 1)
+- [x] 98-01-PLAN.md — ACC-03 VPP fix + Step 2 callout reword; TS-02 ADE Path Prerequisites augmentation + A1/A2 pointer (D-03) + line-311 lockstep stamp (wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -140,6 +140,6 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 |-------|----------------|--------|-----------|
 | 96. Surgical Conflict Fixes | 3/3 | Complete    | 2026-06-28 |
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
-| 98. Guide 07 Comprehensive Pass | 0/TBD | Not started | - |
+| 98. Guide 07 Comprehensive Pass | 1/3 | In Progress|  |
 | 99. New Runbook + Navigation Wiring | 0/TBD | Not started | - |
 | 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |

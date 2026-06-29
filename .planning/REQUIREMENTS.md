@@ -12,13 +12,13 @@
 
 - [x] **ACC-01**: `docs/macos-lifecycle/00-ade-lifecycle.md` describes the macOS Company Portal as a **PKG/LOB app only (never VPP / Apps and Books)** — Stage-6 lines ~309/319 corrected, the Stage-4-vs-Stage-6 self-contradiction removed, and the Stage-6 VPP glossary-term reference reconciled.
 - [x] **ACC-02**: `docs/macos-lifecycle/00-ade-lifecycle.md` (~line 250) assigns the A2 PSSO/SSO-extension policy to a **static user group** (corrects "static device group").
-- [ ] **ACC-03**: `docs/admin-setup-macos/07-platform-sso-setup.md` (~line 126) removes the "VPP from Apps and Books" Company Portal option, and the Step 2 "Deploy to the device" callout is reworded to separate *install target* (the device) from *assignment target* (user group for affinity / device group for userless).
+- [x] **ACC-03**: `docs/admin-setup-macos/07-platform-sso-setup.md` (~line 126) removes the "VPP from Apps and Books" Company Portal option, and the Step 2 "Deploy to the device" callout is reworded to separate *install target* (the device) from *assignment target* (user group for affinity / device group for userless).
 - [x] **ACC-04**: `docs/l1-runbooks/15-macos-company-portal-sign-in.md` (~line 30) corrects the remediation to **user-group** assignment for user-affinity devices.
 
 ### Troubleshooting captures (Pillar B)
 
 - [ ] **TS-01**: The **Extension-Identifier-typo** failure is documented as a Configuration-Caused-Failure in guide 07 — symptom ("Unable to Sign-In … necessary SSO application or extension" looping in Setup Assistant despite Company Portal Installed + PSSO policy Succeeded), root cause (typo in the free-text Extension Identifier; correct value `com.microsoft.CompanyPortalMac.ssoextension`; Intune does not validate it), fix, and note that it affects both A1 and A2.
-- [ ] **TS-02**: **During-setup (A2) Company Portal delivery requirements** are consolidated (LOB app ≥ 5.2604.0, **Required**, assigned to the **same static user group** as the PSSO policy; enrollment profile stays device/serial-targeted, bridged by user affinity; user must be **Intune-licensed**; trim LOB **Included apps** to `com.microsoft.CompanyPortalMac`) in guide 07, cross-linked from guide 01.
+- [x] **TS-02**: **During-setup (A2) Company Portal delivery requirements** are consolidated (LOB app ≥ 5.2604.0, **Required**, assigned to the **same static user group** as the PSSO policy; enrollment profile stays device/serial-targeted, bridged by user affinity; user must be **Intune-licensed**; trim LOB **Included apps** to `com.microsoft.CompanyPortalMac`) in guide 07, cross-linked from guide 01.
 - [ ] **TS-03**: The **Setup-Assistant SSO-extension diagnostic tree** is documented (Intune device record → Company Portal version ["Installed ≠ correct version"] → Extension Identifier → user license → A1 bisect via disabling `Enable Registration During Setup`).
 
 ### Formalize session depth under requirements + harness (Pillar C)
@@ -64,9 +64,9 @@
 | GLOS-01 | Phase 96 | Complete |
 | DEP-01 | Phase 97 | Complete |
 | DEP-02 | Phase 97 | Complete |
-| ACC-03 | Phase 98 | Pending |
+| ACC-03 | Phase 98 | Complete |
 | TS-01 | Phase 98 | Pending |
-| TS-02 | Phase 98 | Pending |
+| TS-02 | Phase 98 | Complete |
 | TS-03 | Phase 98 | Pending |
 | DEP-03 | Phase 98 | Pending |
 | RUN-01 | Phase 99 | Pending |

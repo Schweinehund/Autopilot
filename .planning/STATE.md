@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
 status: executing
-last_updated: "2026-06-29T16:26:36.244Z"
-last_activity: 2026-06-29 -- Phase 98 planning complete
+last_updated: "2026-06-29T16:39:14.967Z"
+last_activity: 2026-06-29
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 5
   percent: 40
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, and Kandji/Iru→Intune MDM migration — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 98 — guide 07 comprehensive pass
+**Current focus:** Phase 98 — guide-07-comprehensive-pass
 
 ## Current Position
 
-Phase: 98
-Plan: Not started
+Phase: 98 (guide-07-comprehensive-pass) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-29 -- Phase 98 planning complete
+Last activity: 2026-06-29
 
 ## v1.13 Phase Dependency Summary
 
@@ -226,6 +226,8 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - [Phase ?]: 96-01 execution
 - [Phase ?]: GLOS-01 (Phase 96-03): Kandji-Iru glossary updated to 3-URL durable reality; stale 'URL is unchanged' sentence removed per D-04
 - [Phase ?]: Phase 97: DEP-01 and DEP-02 formalized with 2026-06-28 version-history rows; 4 bounded spot-verify claims CORRECT; frontmatter unchanged; 97-NEEDLE-SPEC.md recorded for Phase-100 validator authoring
+- [Phase 98-01]: ACC-03 — macOS Company Portal always deployed as DMG/PKG LOB app; VPP channel is iOS/iPadOS only; removed from guide 07 Step 2; Step 2 callout reworded to explicitly separate install target (device) from assignment target (user group / device group)
+- [Phase 98-01]: TS-02 — User-license row framed as standard Intune requirement per D-03 Pitfall 5 (not A2-exclusive); A1/A2 equivalence pointer placed in Advanced section body prose (not heading) linking to guide 01 Which Path Is Right for You table; D-04 lockstep stamp bump 2026-06-20→2026-06-29 / 2026-09-20→2026-09-29
 
 ### Pending Todos
 
@@ -245,10 +247,10 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-29T15:59:27.282Z
-Stopped at: Phase 98 context gathered
-Resume file: .planning/phases/98-guide-07-comprehensive-pass/98-CONTEXT.md
-Next action: `/gsd-plan-phase 96`
+Last session: 2026-06-29T16:39:14.949Z
+Stopped at: Completed 98-01-PLAN.md (ACC-03 VPP fix + TS-02 ADE Prerequisites augmentation)
+Resume file: .planning/phases/98-guide-07-comprehensive-pass/98-02-PLAN.md
+Next action: Execute Plan 98-02
 
 ## Operator Next Steps
 
@@ -263,3 +265,4 @@ Next action: `/gsd-plan-phase 96`
 | Phase 96 P01 | 8 | 2 tasks | 1 files |
 | Phase 96 P03 | 5m | 1 tasks | 1 files |
 | Phase 97 P01 | 10m | 3 tasks | 4 files |
+| Phase 98 P01 | 4m | 2 tasks | 1 files |
