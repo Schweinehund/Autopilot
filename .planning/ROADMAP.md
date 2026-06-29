@@ -127,7 +127,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 99-02-PLAN.md — Wire #37 into the five macOS navigation hubs (Wave 2, navigation-last)
+- [x] 99-02-PLAN.md — Wire #37 into the five macOS navigation hubs (Wave 2, navigation-last)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -155,5 +155,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 96. Surgical Conflict Fixes | 3/3 | Complete    | 2026-06-28 |
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
-| 99. New Runbook + Navigation Wiring | 1/3 | In Progress|  |
+| 99. New Runbook + Navigation Wiring | 2/3 | In Progress|  |
 | 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |
