@@ -123,7 +123,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 99-01-PLAN.md — Author L1 runbook #37 (three pre-login recovery paths, SSPR inline, #36 hand-offs) + #36 reciprocal back-link (Wave 1)
+- [x] 99-01-PLAN.md — Author L1 runbook #37 (three pre-login recovery paths, SSPR inline, #36 hand-offs) + #36 reciprocal back-link (Wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -155,5 +155,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 96. Surgical Conflict Fixes | 3/3 | Complete    | 2026-06-28 |
 | 97. Enrollment & FileVault Depth Formalization | 1/1 | Complete    | 2026-06-28 |
 | 98. Guide 07 Comprehensive Pass | 3/3 | Complete    | 2026-06-29 |
-| 99. New Runbook + Navigation Wiring | 0/3 | Not started | - |
+| 99. New Runbook + Navigation Wiring | 1/3 | In Progress|  |
 | 100. Harness Lineage Bump + Terminal Re-Audit + Milestone Close | 0/TBD | Not started | - |

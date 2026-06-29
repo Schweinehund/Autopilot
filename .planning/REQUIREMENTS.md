@@ -29,7 +29,7 @@
 
 ### New runbook (Pillar D)
 
-- [ ] **RUN-01**: A **local-macOS-password-reset procedure** for Secure-Enclave PSSO devices exists (new or extended runbook) — recovery paths (escrowed FileVault recovery key / managed admin via macOS LAPS / Apple ID where allowed), the clarification that SSPR resets the **Entra** password but **not** the independent local password under Secure Enclave, and the mandatory **PSSO re-registration** follow-up (cross-linked to L1 #36); navigation-wired into the macOS hubs.
+- [x] **RUN-01**: A **local-macOS-password-reset procedure** for Secure-Enclave PSSO devices exists (new or extended runbook) — recovery paths (escrowed FileVault recovery key / managed admin via macOS LAPS / Apple ID where allowed), the clarification that SSPR resets the **Entra** password but **not** the independent local password under Secure Enclave, and the mandatory **PSSO re-registration** follow-up (cross-linked to L1 #36); navigation-wired into the macOS hubs.
 
 ### Glossary fix (Pillar E)
 
@@ -69,7 +69,7 @@
 | TS-02 | Phase 98 | Complete |
 | TS-03 | Phase 98 | Complete |
 | DEP-03 | Phase 98 | Complete |
-| RUN-01 | Phase 99 | Pending |
+| RUN-01 | Phase 99 | Complete |
 | HARN-01 | Phase 100 | Pending |
 | HARN-02 | Phase 100 | Pending |
 | HARN-03 | Phase 100 | Pending |
