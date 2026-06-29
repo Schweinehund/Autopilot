@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.13
 milestone_name: macOS Platform SSO Admin-Setup Documentation Accuracy & Depth
-status: executing
-last_updated: "2026-06-29T18:38:13.633Z"
+status: verifying
+last_updated: "2026-06-29T18:46:28.490Z"
 last_activity: 2026-06-29
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 10
-  completed_plans: 9
-  percent: 60
+  completed_plans: 10
+  percent: 80
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-28 for v1.13 milestone)
 
 Phase: 99 (new-runbook-navigation-wiring) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-29
 
 ## v1.13 Phase Dependency Summary
@@ -230,6 +230,7 @@ Phase 100 (Harness Lineage Bump + Terminal Re-Audit + Milestone Close — MUST B
 - [Phase 98-01]: TS-02 — User-license row framed as standard Intune requirement per D-03 Pitfall 5 (not A2-exclusive); A1/A2 equivalence pointer placed in Advanced section body prose (not heading) linking to guide 01 Which Path Is Right for You table; D-04 lockstep stamp bump 2026-06-20→2026-06-29 / 2026-09-20→2026-09-29
 - [Phase 98-02]: TS-01 — Extension-Identifier-typo table row + H3 deep-dive added to Configuration-Caused Failures (permanent-vs-transient contrast; correct value com.microsoft.CompanyPortalMac.ssoextension; affects both A1 and A2 paths; contrast table disambiguates ssoextension from CP app bundle ID)
 - [Phase 98-02]: TS-03 — Setup-Assistant SSO-Extension Diagnostic Tree added as H2 sibling numbered bisection ladder (5 rungs: Intune device record → CP version 5.2604.0/5.2404.0 → Extension Identifier → user license → A1 bisect via disabling Enable Registration During Setup); no mermaid; all pre-existing headings byte-identical
+- [Phase ?]: Phase 99-03: 99-NEEDLE-SPEC.md recorded N1-N18 presence-only tokens for Phase-100 check-phase-99.mjs
 
 ### Pending Todos
 
@@ -249,7 +250,7 @@ Execution-time checks (not blockers — must be addressed within specified phase
 
 ## Session Continuity
 
-Last session: 2026-06-29T18:38:13.616Z
+Last session: 2026-06-29T18:45:20.222Z
 Stopped at: Phase 99 context gathered
 Resume file: None
 Next action: Execute Plan 98-02
@@ -269,3 +270,4 @@ Next action: Execute Plan 98-02
 | Phase 97 P01 | 10m | 3 tasks | 4 files |
 | Phase 98 P01 | 4m | 2 tasks | 1 files |
 | Phase 98 P03 | 5m | 2 tasks | 2 files |
+| Phase 99 P03 | 4m | 1 tasks | 1 files |
