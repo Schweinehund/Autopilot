@@ -231,6 +231,62 @@ Both fields must be present in the **same policy**. Microsoft Learn documents Er
 | Enrollment profile `Create a local primary account = No` on a single-user device | Intune (enrollment profile, not this policy) | Device stuck at managed local-admin login after Setup Assistant; no Entra sign-in option; PSSO never reached. Requires profile fix + wipe/re-enroll | [Enrollment Profile → Account Settings](02-enrollment-profile.md#account-settings-local-admin-and-local-user-accounts) |
 | Prefilled primary account short name ≠ `Token To User Mapping > Account Name` value (create-user-at-login / ADE-during-Setup flows only) | Intune / device | Duplicate second local account created when PSSO provisions the account (not applicable to the standard post-enrollment path, which binds the signed-in account) | [Enrollment Profile → Account Settings](02-enrollment-profile.md#account-settings-local-admin-and-local-user-accounts) |
 | Managed local admin account omitted from `Non Platform SSO Accounts` | Intune | Break-glass admin prompted to register for PSSO and subjected to FileVault/Login/Unlock policies | [Common PSSO scenarios](https://learn.microsoft.com/intune/device-configuration/settings-catalog/configure-platform-sso-scenarios-macos) |
+| Extension Identifier field contains a typo (Intune does not validate this free-text field — correct value: `com.microsoft.CompanyPortalMac.ssoextension`) | Intune | Company Portal is Installed and the PSSO policy shows Succeeded, yet Setup Assistant sign-in loops persistently — "Try Again" never resolves it (permanent failure; contrast: if CP is still downloading, "Try Again" resolves once CP finishes) | [→ Extension Identifier typo deep-dive](#extension-identifier-typo--looping-setup-assistant-sign-in) |
+
+### Extension Identifier typo — looping Setup-Assistant sign-in
+
+**Symptom**
+
+The Setup Assistant SSO sign-in step loops persistently: the user taps "Try Again" and the prompt reappears indefinitely. The observable signature that points to this cause:
+
+- **Company Portal** shows **Installed** on the device (not "Downloading" or "Pending")
+- The PSSO Settings Catalog policy shows **Succeeded** in Intune — the policy was delivered
+- Tapping "Try Again" **never resolves** the loop — the failure is permanent
+
+**Distinguishing from the transient Company Portal case:** Microsoft Learn documents a visually similar failure in which the SSO prompt appears because Company Portal is still downloading. In that transient case, "Try Again" resolves the prompt once Company Portal finishes installing. If Company Portal is already Installed and the policy already shows Succeeded, the failure is structural — macOS cannot locate and activate the SSO extension, and no amount of retrying fixes it.
+
+**Root cause**
+
+The **Extension Identifier** field in the Settings Catalog policy (`com.apple.extensiblesso` payload) is a free-text field. Intune does not validate its contents at save time — a typo in the value produces no policy error or warning and the policy still reports Succeeded. At runtime, macOS uses the Extension Identifier to find and activate the SSO app extension on the device. If the value does not exactly match the actual extension bundle ID, the SSO extension framework cannot load the extension, causing the persistent looping failure.
+
+The correct Extension Identifier is `com.microsoft.CompanyPortalMac.ssoextension`. Note the distinction from the Company Portal app bundle ID used in other contexts (such as the LOB app's Included apps list):
+
+| Value | Used for |
+|-------|----------|
+| `com.microsoft.CompanyPortalMac.ssoextension` | **Extension Identifier** field in the PSSO Settings Catalog policy |
+| `com.microsoft.CompanyPortalMac` | Company Portal **app** bundle ID (LOB app Included apps list, etc.) |
+
+**Fix**
+
+1. In the Intune admin center, open the Settings Catalog PSSO policy.
+2. Locate the **Extension Identifier** field (`Authentication > Extensible Single Sign On > Extension Identifier`).
+3. Set the value to exactly `com.microsoft.CompanyPortalMac.ssoextension` — copy-paste to avoid re-introducing a typo.
+4. Save the policy and sync to the affected devices.
+
+**Affects both A1 and A2**
+
+The Extension Identifier is configured once in the Settings Catalog policy and applies to both the standard post-enrollment path (A1) and the ADE-during-Setup-Assistant path (A2). A typo in this field causes the looping failure on whichever path is active. If you see this symptom signature, check the Extension Identifier first regardless of path.
+
+## Setup-Assistant SSO-Extension Diagnostic Tree
+
+Use this bisection ladder when a device fails to complete SSO-extension sign-in during Setup Assistant — whether the sign-in prompt loops or never appears. Work through the rungs in order; each either confirms the item is correct or identifies the cause.
+
+1. **Check the Intune device record.** In the Intune admin center, navigate to the device's **Configuration** tab and confirm: (a) the device is enrolled, and (b) the PSSO Settings Catalog policy shows **Succeeded**. If the policy is Pending, Error, or Not Applicable, resolve the enrollment or assignment issue before proceeding — the remaining rungs assume a delivered policy. If Succeeded, continue.
+
+2. **Check the Company Portal version on the device.** Confirm the installed version meets the path's minimum floor — "Installed ≠ correct version" is the failure:
+   - A2 path (ADE-during-Setup-Assistant): `5.2604.0` or newer
+   - A1 path (standard post-enrollment): `5.2404.0` or newer
+
+   If the version is below the floor, update the Company Portal LOB app assignment to the required minimum and re-sync. If the version meets the floor, continue.
+
+3. **Check the Extension Identifier.** In the Settings Catalog PSSO policy, confirm the **Extension Identifier** field is set to exactly `com.microsoft.CompanyPortalMac.ssoextension`. This is a free-text field and Intune does not validate it — a single-character typo produces a persistent looping failure even when the policy shows Succeeded. See the [Extension Identifier typo deep-dive](#extension-identifier-typo--looping-setup-assistant-sign-in) above for the full symptom signature and fix. If the identifier is correct, continue.
+
+4. **Check the user license.** Confirm the user has an active Microsoft Intune license assigned (via direct assignment or group-based licensing in the Microsoft 365 admin center). An unlicensed user cannot receive Intune-managed policies. This is a standard Intune requirement — commonly overlooked as an A2 failure point. If the user is licensed, continue.
+
+5. **A1 path bisect.** If the PSSO policy has `Enable Registration During Setup` enabled (A2 configuration) but registration is not completing during Setup Assistant:
+   - Temporarily disable `Enable Registration During Setup` in the Settings Catalog policy.
+   - Re-sync the policy and re-test using the standard post-enrollment flow — wait for the "Registration Required" notification after the desktop loads.
+   - If registration succeeds on the A1 path, the blocking condition is A2-path-specific. Check the full [ADE Path Prerequisites](#ade-path-prerequisites) in the Advanced section: macOS 26 requirement, three-policy same-group rule, Company Portal LOB configuration (`5.2604.0`, Included apps trimmed to `com.microsoft.CompanyPortalMac`).
 
 ## Optional and Advanced Platform SSO Settings
 
