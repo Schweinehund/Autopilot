@@ -17,9 +17,9 @@
 
 ### Troubleshooting captures (Pillar B)
 
-- [ ] **TS-01**: The **Extension-Identifier-typo** failure is documented as a Configuration-Caused-Failure in guide 07 — symptom ("Unable to Sign-In … necessary SSO application or extension" looping in Setup Assistant despite Company Portal Installed + PSSO policy Succeeded), root cause (typo in the free-text Extension Identifier; correct value `com.microsoft.CompanyPortalMac.ssoextension`; Intune does not validate it), fix, and note that it affects both A1 and A2.
+- [x] **TS-01**: The **Extension-Identifier-typo** failure is documented as a Configuration-Caused-Failure in guide 07 — symptom ("Unable to Sign-In … necessary SSO application or extension" looping in Setup Assistant despite Company Portal Installed + PSSO policy Succeeded), root cause (typo in the free-text Extension Identifier; correct value `com.microsoft.CompanyPortalMac.ssoextension`; Intune does not validate it), fix, and note that it affects both A1 and A2.
 - [x] **TS-02**: **During-setup (A2) Company Portal delivery requirements** are consolidated (LOB app ≥ 5.2604.0, **Required**, assigned to the **same static user group** as the PSSO policy; enrollment profile stays device/serial-targeted, bridged by user affinity; user must be **Intune-licensed**; trim LOB **Included apps** to `com.microsoft.CompanyPortalMac`) in guide 07, cross-linked from guide 01.
-- [ ] **TS-03**: The **Setup-Assistant SSO-extension diagnostic tree** is documented (Intune device record → Company Portal version ["Installed ≠ correct version"] → Extension Identifier → user license → A1 bisect via disabling `Enable Registration During Setup`).
+- [x] **TS-03**: The **Setup-Assistant SSO-extension diagnostic tree** is documented (Intune device record → Company Portal version ["Installed ≠ correct version"] → Extension Identifier → user license → A1 bisect via disabling `Enable Registration During Setup`).
 
 ### Formalize session depth under requirements + harness (Pillar C)
 
@@ -65,9 +65,9 @@
 | DEP-01 | Phase 97 | Complete |
 | DEP-02 | Phase 97 | Complete |
 | ACC-03 | Phase 98 | Complete |
-| TS-01 | Phase 98 | Pending |
+| TS-01 | Phase 98 | Complete |
 | TS-02 | Phase 98 | Complete |
-| TS-03 | Phase 98 | Pending |
+| TS-03 | Phase 98 | Complete |
 | DEP-03 | Phase 98 | Pending |
 | RUN-01 | Phase 99 | Pending |
 | HARN-01 | Phase 100 | Pending |
