@@ -74,7 +74,7 @@ AOSP (Android Open Source Project) devices share the same Intune Wi-Fi profile p
 | Inner method (Non-EAP / inner identity) | -- (cert-only; no inner method) | None, or Microsoft CHAP Version 2 (MS-CHAP v2) | Unencrypted password (PAP) / Microsoft CHAP (MS-CHAP) / Microsoft CHAP Version 2 (MS-CHAP v2) |
 | Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
 
-For SCEP and PKCS certificate profile configuration, and the deployment ordering rule, see [Certificate Delivery Foundation](02-cert-delivery-foundation.md). The [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix) documents certificate delivery availability across all platforms.
+For SCEP and PKCS certificate profile configuration, and the deployment ordering rule, see [Certificate Delivery Foundation](02-cert-delivery-foundation.md). The [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix) documents certificate delivery availability across all platforms. For a personally owned work profile (BYOD-WP), the certificate SAN must include the UPN -- see the UPN-in-SAN deployment-failure WARNING immediately below before configuring the SCEP profile.
 
 > **WARNING -- Personally owned work profile (BYOD-WP): Wi-Fi profile deployment fails if UPN is absent from certificate SAN**
 >
