@@ -171,7 +171,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 105-01-PLAN.md — Author `06-android.md` (Common Mechanics + Wi-Fi: single-path mode-applicability matrix, per-EAP matrix, UPN-in-SAN BYOD WARNING, combined Android 11+/14+ version-gate WARNING, "Use device MAC" note; Wired gap stub) [DOT1X-07]
+- [x] 105-01-PLAN.md — Author `06-android.md` (Common Mechanics + Wi-Fi: single-path mode-applicability matrix, per-EAP matrix, UPN-in-SAN BYOD WARNING, combined Android 11+/14+ version-gate WARNING, "Use device MAC" note; Wired gap stub) [DOT1X-07]
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -310,7 +310,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 102. Windows 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 103. macOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
-| 105. Android Enterprise 802.1X Admin-Setup | 0/TBD | Not started | - |
+| 105. Android Enterprise 802.1X Admin-Setup | 1/2 | In Progress|  |
 | 106. Linux 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 107. L1 Runbooks #38-41 | 0/TBD | Not started | - |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/TBD | Not started | - |
