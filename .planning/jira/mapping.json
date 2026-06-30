@@ -719,12 +719,12 @@
         },
         "104": {
           "issueKey": "RTS-701",
-          "status": "in_progress",
+          "status": "done",
           "name": "iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)"
         },
         "105": {
           "issueKey": "RTS-702",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)"
         },
         "106": {
