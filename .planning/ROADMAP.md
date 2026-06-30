@@ -125,7 +125,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 2 plans
 **Wave 1**
 
-- [ ] 103-01-PLAN.md — Author `04-macos.md` (Common Mechanics + Wi-Fi + Wired; deployment-channel WARNING; SCEP-only wired callout; all 3 EAP methods) [DOT1X-05]
+- [x] 103-01-PLAN.md — Author `04-macos.md` (Common Mechanics + Wi-Fi + Wired; deployment-channel WARNING; SCEP-only wired callout; all 3 EAP methods) [DOT1X-05]
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -290,7 +290,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 |-------|----------------|--------|-----------|
 | 101. 802.1X Foundation | 5/5 | Complete   | 2026-06-30 |
 | 102. Windows 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
-| 103. macOS 802.1X Admin-Setup | 0/TBD | Not started | - |
+| 103. macOS 802.1X Admin-Setup | 1/2 | In Progress|  |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 105. Android Enterprise 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 106. Linux 802.1X Admin-Setup | 0/TBD | Not started | - |

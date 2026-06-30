@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-06-30T15:35:44.570Z"
-last_activity: 2026-06-30 -- Phase 103 planning complete
+last_updated: "2026-06-30T15:44:55.349Z"
+last_activity: 2026-06-30
 progress:
   total_phases: 12
   completed_phases: 2
   total_plans: 9
-  completed_plans: 7
+  completed_plans: 8
   percent: 17
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and now 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 103 — macos 802.1x admin setup (wi fi + wired)
+**Current focus:** Phase 103 — macos-802-1x-admin-setup-wi-fi-wired
 
 ## Current Position
 
-Phase: 103
-Plan: Not started
+Phase: 103 (macos-802-1x-admin-setup-wi-fi-wired) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-06-30 -- Phase 103 planning complete
+Last activity: 2026-06-30
 
 ## v1.14 Phase Dependency Summary
 
@@ -339,6 +339,9 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - [Phase ?]: D-10 enforced: see-also banners one-directional; no back-links from network glossary
 - [Phase ?]: D-11 enforced: iOS/iPadOS see-also covered by _glossary-macos.md banner; _glossary-ios.md not created
 - [Phase ?]: v1.13-audit-allowlist.json frozen; Phase 112 must apply +1 line offsets for _glossary-android.md tracked lines
+- [Phase ?]: D-01/D-03: macOS deployment-channel WARNING callout as first Common Mechanics content
+- [Phase ?]: D-11/D-12: Server validation as security requirement; dynamic-trust-dialog symptom + A-05 security-violation fact; rogue-RADIUS rationale linked not restated
+- [Phase ?]: D-06/D-07: Wired SCEP-only NOTE callout + full peer-depth per-EAP matrix (PKCS not supported for macOS wired)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -366,9 +369,9 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-06-30T15:08:03.706Z
-Stopped at: Phase 103 context gathered
-Resume file: .planning/phases/103-macos-802-1x-admin-setup-wi-fi-wired/103-CONTEXT.md
+Last session: 2026-06-30T15:44:55.330Z
+Stopped at: Completed 103-01-PLAN.md
+Resume file: None
 Next action: Run /gsd-plan-phase 101 to begin Phase 101 planning (802.1X Foundation)
 
 ## Operator Next Steps
@@ -383,3 +386,4 @@ Next action: Run /gsd-plan-phase 101 to begin Phase 101 planning (802.1X Foundat
 | (v1.14 phases not yet started) | — | — | — |
 | Phase 101 P05 | 8 | 2 tasks | 4 files |
 | Phase 102 P02 | 5m | 1 tasks | 1 files |
+| Phase 103 P01 | 7m | 2 tasks | 1 files |
