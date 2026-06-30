@@ -51,19 +51,17 @@ Populate the **Identity privacy** field in every Windows 802.1X profile to preve
 
 The domain suffix in the anonymous identity (e.g., `anonymous@contoso.com`) helps RADIUS servers route the anonymous request to the correct realm when multiple realms share infrastructure. Use a suffix that your RADIUS policy accepts; `anonymous` with no suffix is valid if realm routing is not required.
 
-### Settings Catalog
-
-The Settings Catalog (`Devices > Configuration > New policy > Settings catalog`) also exposes these Wi-Fi settings and may offer more granular options.
-
 ---
 
 ## Wi-Fi
 
-#### In Intune admin center
+### In Intune admin center
 
 Navigation: **Devices** > **Configuration** > **New policy** > **Windows 10 and later** > **Templates** > **Wi-Fi**
 
 Select **Enterprise** as the Wi-Fi type to access EAP authentication settings. The following matrix covers the key per-EAP-method configuration fields. All three EAP methods are co-equal -- no method is ranked or recommended as a default. For when to choose each method, see [01-eap-method-overview.md](01-eap-method-overview.md).
+
+The Settings Catalog (`Devices > Configuration > New policy > Settings catalog`) also exposes these Wi-Fi settings and may offer more granular options.
 
 **Wi-Fi per-EAP-method configuration matrix:**
 
@@ -74,7 +72,7 @@ Select **Enterprise** as the Wi-Fi type to access EAP authentication settings. T
 | Root cert for server validation | Trusted Certificate profile reference | Trusted Certificate profile reference | Trusted Certificate profile reference |
 | Perform server validation | Enforced via trusted root reference | Yes -- always | Yes -- always |
 | Client authentication method | SCEP cert / PKCS cert / Derived credential | Username and Password | Username and Password |
-| Inner method | -- (cert-only; no inner method) | MSCHAPv2 (always; not PAP) | PAP / MS-CHAP / MS-CHAPv2 (must match RADIUS policy) |
+| Inner method | -- (cert-only; no inner method) | MSCHAPv2 (always; not PAP) | PAP / CHAP / MS-CHAP / MS-CHAPv2 (must match RADIUS policy) |
 | Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
 | Authentication mode | See [Common Profile Mechanics](#authentication-mode) | See [Common Profile Mechanics](#authentication-mode) | See [Common Profile Mechanics](#authentication-mode) |
 
@@ -96,7 +94,7 @@ For SCEP and PKCS certificate profile configuration, and the deployment ordering
 
 ## Wired
 
-#### In Intune admin center
+### In Intune admin center
 
 Navigation: **Devices** > **Configuration** > **New policy** > **Windows 10 and later** > **Templates** > **Wired network**
 
@@ -108,7 +106,7 @@ The wired profile uses the WiredNetwork CSP. Before configuring the 802.1X setti
 >
 > The Wired AutoConfig service (`dot3svc`) must be running for Windows 802.1X wired authentication to engage. On Windows 10 and 11, `dot3svc` ships with startup type **Manual** -- it does not start automatically. Intune reports the wired network profile as **"Succeeded"** regardless of whether the service is running, creating a silent failure: the profile is applied but the supplicant never activates, and the wired port stays unauthenticated.
 >
-> **Detect:** Run `sc query dot3svc` and look for `STATE: STOPPED` or `START_TYPE: DEMAND_START` (Manual). Alternatively, use PowerShell: `Get-Service -Name dot3svc` -- check that `StartType` is `Automatic` and `Status` is `Running`.
+> **Detect:** Run `sc query dot3svc` and look for `STATE: STOPPED`; run `sc qc dot3svc` and look for `START_TYPE: 3 DEMAND_START` (Manual) -- note that `START_TYPE` is reported by `sc qc`, not `sc query`. Alternatively, use PowerShell: `Get-Service -Name dot3svc` -- check that `StartType` is `Automatic` and `Status` is `Running`.
 >
 > **Remediate:** Set the service to automatic startup and start it:
 >
