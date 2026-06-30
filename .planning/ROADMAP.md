@@ -144,7 +144,15 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. An admin can create an iOS/iPadOS wired 802.1X profile targeting M-series iPads with USB Ethernet, with the SCEP-only cert constraint and PKCS-not-supported callout documented
   3. An admin understands that PEAP inner authentication must be MS-CHAPv2 (not PAP) and that three separate Intune profiles are required (trusted root + SCEP/PKCS cert + Wi-Fi or Wired)
 
-**Plans**: TBD
+**Plans**: 2 plans
+**Wave 1**
+
+- [ ] 104-01-PLAN.md — Author `05-ios.md` (Common Mechanics three-profiles prose + Wi-Fi + Wired; MAC-randomization NAC note; B-05 PEAP=MS-CHAPv2 WARNING; SCEP-only wired callout; M-series iPad wired use case; all 3 EAP methods) [DOT1X-06]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 104-02-PLAN.md — Add the iOS/iPadOS platform-guide entry (item 5) to the local `00-overview.md` list [DOT1X-06]
+
 **UI hint**: no
 
 ### Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)
