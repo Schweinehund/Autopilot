@@ -56,145 +56,192 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 ## Phase Details
 
 ### Phase 101: 802.1X Foundation — Glossary, EAP Methods & Cert Delivery
+
 **Goal**: Operators and admins have the conceptual model, EAP-method co-equal overview, and cert-delivery ordering prerequisites that all five per-platform guides link into — without which any per-platform guide authoring violates link-not-copy
 **Depends on**: Phase 100 (v1.13 close)
 **Requirements**: DOT1X-01, DOT1X-02, DOT1X-03
 **Success Criteria** (what must be TRUE):
+
   1. A reader can learn the 802.1X 3-actor model (supplicant / authenticator / authentication server), EAPOL, and RADIUS exchange from `docs/_glossary-network.md` with see-also banners wired to all existing platform glossaries
   2. An admin can choose among EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS as co-equal paths from `01-eap-method-overview.md`, including what each method requires from the client and when each is selected
   3. An admin can follow the cert-delivery foundation (`02-cert-delivery-foundation.md`) to understand the hard deployment ordering (trusted-root profile → SCEP/PKCS client cert → network profile), EKU requirements, RADIUS server-name validation, and the per-platform cert-delivery support matrix
-  4. The scope callout template establishing the Intune-client-side-only boundary is present in the foundation and reusable by per-platform guides
-**Plans**: 5 plans
+  4. The scope callout template establishing the Intune-client-side-only boundary is present in the foundation and reusable by per-platform guides**Plans**: 5 plans
+
+**Wave 1**
+
 - [ ] 101-01-PLAN.md — Author `_glossary-network.md` (13 platform-neutral 802.1X terms, 3-actor model vocabulary) [DOT1X-01]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 101-02-PLAN.md — Author `01-eap-method-overview.md` (co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS + 3-actor Mermaid) [DOT1X-02]
-- [ ] 101-03-PLAN.md — Author `02-cert-delivery-foundation.md` (ordering rule, scope callout/SC4, EKU, server-name validation, per-platform cert matrix) [DOT1X-03]
-- [ ] 101-04-PLAN.md — Author `00-overview.md` (thin A2 navigation entry point + wired-gap flag) [DOT1X-01]
 - [ ] 101-05-PLAN.md — Insert one-directional see-also banners into the 4 existing platform glossaries [DOT1X-01]
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 101-03-PLAN.md — Author `02-cert-delivery-foundation.md` (ordering rule, scope callout/SC4, EKU, server-name validation, per-platform cert matrix) [DOT1X-03]
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 101-04-PLAN.md — Author `00-overview.md` (thin A2 navigation entry point + wired-gap flag) [DOT1X-01]
+
 **UI hint**: no
 
 ### Phase 102: Windows 802.1X Admin-Setup (Wi-Fi + Wired)
+
 **Goal**: An Intune admin can configure 802.1X on Windows devices for both Wi-Fi and wired connections across all three EAP methods, with critical pitfalls (dot3svc, enforcement staging, auth mode, server validation) prominently documented
 **Depends on**: Phase 101
 **Requirements**: DOT1X-04
 **Success Criteria** (what must be TRUE):
+
   1. An admin can create a Windows Wi-Fi 802.1X profile in Intune covering EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS at co-equal depth with user/machine/user-or-machine authentication mode selection
   2. An admin can create a Windows wired 802.1X profile with the `dot3svc` service dependency documented (including an Intune Remediation pattern to ensure the service is running) and a DANGER callout for enforcement-mode staging
   3. An admin can configure SCEP, PKCS, or PFX Import client certificate delivery and understands the `PerformServerValidation` security requirement
   4. The Hybrid Entra Joined strong certificate mapping requirement (KB5014754, SID in SAN, effective 2025-02-11) is documented with a freshness stamp
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 103: macOS 802.1X Admin-Setup (Wi-Fi + Wired)
+
 **Goal**: An Intune admin can configure 802.1X on macOS devices for both Wi-Fi and wired connections across all three EAP methods, with the immutable deployment-channel decision and wired SCEP-only constraint prominently documented before any configuration steps
 **Depends on**: Phase 101
 **Requirements**: DOT1X-05
 **Success Criteria** (what must be TRUE):
+
   1. An admin can create a macOS Wi-Fi 802.1X profile for all three EAP methods and understands the deployment-channel (User vs Device keychain) decision must be made before profile creation and cannot be changed after assignment
   2. An admin can create a macOS wired 802.1X profile using the network interface selector and understands that PKCS cert delivery is not supported for wired profiles (SCEP only)
   3. An admin knows that the RADIUS server name field should be populated on macOS to suppress the dynamic trust dialog, and understands the outer-identity/identity-privacy options per EAP method
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 104: iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)
+
 **Goal**: An Intune admin can configure 802.1X on iOS/iPadOS devices for both Wi-Fi and wired connections across all three EAP methods, with MAC-address randomization control for NAC environments and the M-series iPad wired use case clearly framed
 **Depends on**: Phase 101
 **Requirements**: DOT1X-06
 **Success Criteria** (what must be TRUE):
+
   1. An admin can create an iOS/iPadOS Wi-Fi 802.1X profile for all three EAP methods and knows to set "Disable MAC address randomization: Yes" in NAC environments (iOS 14+, freshness-stamped)
   2. An admin can create an iOS/iPadOS wired 802.1X profile targeting M-series iPads with USB Ethernet, with the SCEP-only cert constraint and PKCS-not-supported callout documented
   3. An admin understands that PEAP inner authentication must be MS-CHAPv2 (not PAP) and that three separate Intune profiles are required (trusted root + SCEP/PKCS cert + Wi-Fi or Wired)
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)
+
 **Goal**: An Intune admin can configure 802.1X Wi-Fi on Android Enterprise devices across all AE modes with version-gated RADIUS server-name requirements documented, the UPN-in-SAN deployment failure risk called out, and the no-native-wired-profile gap leading the wired section
 **Depends on**: Phase 101
 **Requirements**: DOT1X-07
 **Success Criteria** (what must be TRUE):
+
   1. An admin can configure Android Enterprise Wi-Fi 802.1X across COBO/COPE/COSU/BYOD Work Profile modes for all three EAP methods, with the UPN-in-SAN requirement (profile deployment fails if absent for personally-owned work profile) prominently documented
   2. The Android 11+ RADIUS server-name requirement and Android 14+ 256-char / no-special-chars limit are documented with `last_verified`/`review_by` freshness stamps
   3. The wired 802.1X section explicitly states no native Intune wired-network profile type exists for Android Enterprise and documents the gap with a brief explanation of alternatives
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)
+
 **Goal**: An operator can configure 802.1X on Linux (Ubuntu LTS) using the documented Bash script + nmcli (NetworkManager `802-1x`) EAP-TLS workaround, with the no-native-Intune-profile reality leading the guide and PEAP/EAP-TTLS explicitly marked out of scope
 **Depends on**: Phase 101
 **Requirements**: DOT1X-08
 **Success Criteria** (what must be TRUE):
+
   1. The guide opens with a prominent callout stating that Intune provides no native Wi-Fi, wired, or cert-delivery profiles for Linux, and that the approach documented is a shell-script workaround (not an Intune profile)
   2. An operator can follow the nmcli `802-1x.*` connection parameter steps for EAP-TLS and verify connectivity via `nmcli connection show`, `ip addr show`, and `journalctl -u NetworkManager`
   3. PEAP-MSCHAPv2 and EAP-TTLS are documented as out of scope with a one-sentence explanation (not in verifiable Microsoft/vendor sources), and the guide carries a MEDIUM-confidence callout noting the Linux Intune surface is actively developing with a freshness stamp
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 107: L1 Runbooks #38-41 (802.1X Triage)
+
 **Goal**: An L1 technician can triage any 802.1X connection failure using four new cross-platform runbooks routed by a new decision tree, with per-platform symptom leaves and clear escalation triggers to L2
 **Depends on**: Phase 106
 **Requirements**: DOT1X-09
 **Success Criteria** (what must be TRUE):
+
   1. L1 runbook #38 (cert failure) enables a technician to verify cert-profile status in Intune, check the deployment ordering constraint, and identify the platform-specific event log or diagnostic signal to examine
   2. L1 runbooks #39 (RADIUS reject), #40 (server-trust/validation failure), and #41 (EAP negotiation failure) each provide a symptom description, first-check steps, per-platform diagnostic commands, and a clear escalation trigger
   3. Decision tree `docs/decision-trees/10-8021x-triage.md` routes L1 by symptom to the correct runbook with per-platform leaves
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 108: L2 Runbooks #31-33 + Decision Tree #10
+
 **Goal**: An L2 engineer can investigate any 802.1X failure using three new runbooks covering cross-platform log collection, certificate-chain investigation, and RADIUS/EAP investigation, all anchored to a per-platform diagnostic-signal map
 **Depends on**: Phase 107
 **Requirements**: DOT1X-10
 **Success Criteria** (what must be TRUE):
+
   1. L2 runbook #31 (log collection) documents the per-platform log sources (Windows Event Viewer WLAN-AutoConfig/Dot3Svc channels, macOS Console.app/wifi.log, iOS Intune portal, Android `adb logcat` 802.1X filters, Linux `journalctl` wpa_supplicant) and serves as the prerequisite for #32 and #33
   2. L2 runbook #32 (cert investigation) enables an engineer to validate the certificate chain, check SCEP profile deployment status per platform, and identify EKU / SAN / expiry issues
   3. L2 runbook #33 (RADIUS/EAP investigation) documents what information to request from the RADIUS/NPS team (not NPS configuration steps) and how to diagnose EAP method mismatch and server-name validation failures per platform
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs
+
 **Goal**: All 802.1X content is discoverable from every existing entry point in the documentation suite — capability matrices carry 802.1X rows for all 5 platforms, and all six nav-hub files are wired (navigation-last, after all content is committed)
 **Depends on**: Phase 108
 **Requirements**: DOT1X-11
 **Success Criteria** (what must be TRUE):
+
   1. Network-Authentication rows appear in all five platform capability matrices and in the 4-platform capability comparison, deriving from per-platform guide content with accurate YES/NO/STUB entries
   2. All six navigation hubs (`docs/index.md`, `common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md`, `l1-runbooks/00-index.md`, `l2-runbooks/00-index.md`) carry entries for the new 802.1X guides, runbooks, and decision tree
   3. Glossary see-also banners in all existing platform glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-ios.md`, `_glossary-android.md`, `_glossary-linux.md`) point to the new `_glossary-network.md`
   4. All navigation edits are committed after the content files they reference are confirmed committed (navigation-last invariant)
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs
+
 **Goal**: Three v1.13-deferred accuracy nits in existing files are corrected, an iOS/iPadOS ABM Deadline migration walkthrough is authored, and Jamf Pro + Mosyle source-MDM release steps are added as an addendum — all independent of 802.1X content
 **Depends on**: Phase 100 (v1.13 close; independent of Pillar A phases)
 **Requirements**: FIX-01, FIX-02, FIX-03, MIGF-01, MIGF-02
 **Success Criteria** (what must be TRUE):
+
   1. `docs/index.md:108` reflects the correct macOS L1-runbook count (updated to include #35, #36, #37 and any 802.1X additions landed in Phase 109)
   2. `docs/quick-ref-l1.md:101` surfaces L1 #36 as an L1 "try this first" entry (not an L2 escalation target), with surrounding L1 #37 wiring confirmed correct
   3. `docs/common-issues.md:242-247` includes the L1 #36 mandatory PSSO re-registration step as an intermediate between L1 #37 (local password reset) and L2 #27 escalation
   4. An admin can follow the iOS/iPadOS ABM "Assign Device Management" + Deadline migration walkthrough covering iOS/iPadOS-specific forced-restart behavior (vs macOS full-screen lock) and post-migration enrollment verification
   5. An admin can follow source-MDM-specific release steps for Jamf Pro and Mosyle (FileVault key retrieval, Activation Lock bypass, device-record deletion) in the `02-mdm-migration-psso.md` addendum
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 111: Pillar D — Chain-Validator Tooling Refactors
+
 **Goal**: Three DRY refactors are applied to the validator chain with the byte-unchanged-invariant on all predecessor frozen surfaces maintained — TOOL-01 centralizes failure-detail extraction, TOOL-02 adopts the centralized frozen-aware module across 13 inline sites, TOOL-03 fixes helper-spawn stderr capture at 3 sites
 **Depends on**: Phase 100 (v1.13 close; isolated from content phases to protect byte-unchanged invariant)
 **Requirements**: TOOL-01, TOOL-02, TOOL-03
 **Success Criteria** (what must be TRUE):
+
   1. A new `scripts/validation/_lib/exec-fail-detail.mjs` helper exists and the `(stdout + stderr).slice(0, N).trim()` failure-detail pattern is consumed from it at all CHAIN/AUDIT/helper-spawn wrapper sites (~18-21 sites); no inline duplicates remain
   2. The ~13 inline frozen-aware helpers across `check-phase-{61,67,68,70}.mjs` are replaced with calls to the centralized `_lib/frozen-at-close.mjs` module; behavior is byte-equivalent
   3. The 3 helper-spawn stderr-only catch-block sites in `check-phase-{48,60,61}.mjs` capture both stdout and stderr with a `--self-test` discriminator; the full chain exits 0 after all three refactors
+
 **Plans**: TBD
 **UI hint**: no
 
 ### Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
+
 **Goal**: The 12th Path-A audit-harness lineage bump is complete (Atom 1 + Atom 2 indivisible commits), the 3-axis terminal re-audit passes with cross-OS EXACT MATCH, and all 22 v1.14 requirements are Validated in the single close-gate commit
 **Depends on**: Phase 111 (all content and tooling phases complete; must be the sole deliverable of this phase)
 **Requirements**: HARN-01, HARN-02, HARN-03
 **Success Criteria** (what must be TRUE):
+
   1. Atom 1 (HARN-01) is committed as one indivisible 3-file commit: `v1.14-milestone-audit.mjs` (Path-A from v1.13, C1-C16 inherited verbatim) + `v1.14-audit-allowlist.json` (sidecar repointed) + BASELINE_18 freshness comment
   2. Atom 2 (HARN-02) is committed as one indivisible set: `check-phase-101..112.mjs` per-phase validators (chain-apex `CHAIN_PHASES=[48..111]`, 64 entries, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V113 entry (v1.13 close-gate SHA `ba24f1a`) + `audit-harness-v1.14-integrity.yml` as the 11th parallel CI coexistence workflow (predecessors v1.4-v1.13 byte-unchanged)
   3. The 3-axis terminal re-audit (HARN-03) passes: Axis 1 fresh `git clone --no-hardlinks`, Axis 2 cross-OS Linux GHA, Axis 3 fresh zero-context sub-agent — with cross-OS PASS/FAIL/SKIP EXACT MATCH; `v1.14-MILESTONE-AUDIT.md` + `v1.14-DEFERRED-CLEANUP.md` authored; single close-gate commit flips all 22 requirements to Validated
   4. All predecessor v1.4-v1.13 frozen surfaces are byte-unchanged through the close-gate commit
+
 **Plans**: TBD
 **UI hint**: no
 
