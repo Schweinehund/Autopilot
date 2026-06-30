@@ -310,7 +310,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 102. Windows 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 103. macOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
-| 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete   | 2026-06-30 |
+| 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 107. L1 Runbooks #38-41 | 0/TBD | Not started | - |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/TBD | Not started | - |
