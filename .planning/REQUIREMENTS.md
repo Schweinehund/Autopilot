@@ -14,7 +14,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 ### Pillar A — 802.1X Foundation & Certificates
 
 - [x] **DOT1X-01**: An operator can learn the 802.1X conceptual model (supplicant / authenticator / authentication server; EAPOL; RADIUS exchange) at L1/L2 depth from a new cross-platform foundation guide, with terms minted in a new `docs/_glossary-network.md` (802.1X, EAP, EAPOL, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation) and see-also banners added to existing platform glossaries.
-- [ ] **DOT1X-02**: An admin can choose among the three EAP methods from a co-equal EAP-method overview — EAP-TLS (mutual cert), PEAP-MSCHAPv2 (server-cert + tunneled password), EAP-TTLS (server-cert + configurable inner auth) — including when each is chosen and what the client requires.
+- [x] **DOT1X-02**: An admin can choose among the three EAP methods from a co-equal EAP-method overview — EAP-TLS (mutual cert), PEAP-MSCHAPv2 (server-cert + tunneled password), EAP-TTLS (server-cert + configurable inner auth) — including when each is chosen and what the client requires.
 - [ ] **DOT1X-03**: An admin can follow a certificate-delivery foundation guide establishing the hard deployment ordering (trusted-root profile → SCEP/PKCS client cert → 802.1X network profile), the EKU (Client Authentication) + server-name-validation requirements, and the per-platform cert-delivery support matrix (incl. macOS/iOS wired = SCEP-only / no PKCS; Windows wired adds PFX Import; Linux = no Intune cert delivery), with Cloud PKI noted as an alternative.
 
 ### Pillar A — 802.1X Per-Platform Admin Setup
@@ -109,7 +109,7 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | DOT1X-01 | Phase 101 | Complete |
-| DOT1X-02 | Phase 101 | Pending |
+| DOT1X-02 | Phase 101 | Complete |
 | DOT1X-03 | Phase 101 | Pending |
 | DOT1X-04 | Phase 102 | Pending |
 | DOT1X-05 | Phase 103 | Pending |
