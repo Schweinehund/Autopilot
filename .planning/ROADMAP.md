@@ -99,7 +99,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. An admin can create a Windows wired 802.1X profile with the `dot3svc` service dependency documented (including an Intune Remediation pattern to ensure the service is running) and a DANGER callout for enforcement-mode staging
   3. An admin can configure SCEP, PKCS, or PFX Import client certificate delivery and understands the `PerformServerValidation` security requirement
   4. The Hybrid Entra Joined strong certificate mapping requirement (KB5014754, SID in SAN, effective 2025-02-11) is documented with a freshness stamp
-**Plans**: 2 plans
+
+**Plans**: 2 plans
 **Wave 1**
 
 - [x] 102-01-PLAN.md — Author `03-windows.md` (Common Mechanics + Wi-Fi + Wired; dot3svc/enforcement/KB5014754 callouts; all 3 EAP methods) [DOT1X-04]
@@ -121,7 +122,15 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. An admin can create a macOS wired 802.1X profile using the network interface selector and understands that PKCS cert delivery is not supported for wired profiles (SCEP only)
   3. An admin knows that the RADIUS server name field should be populated on macOS to suppress the dynamic trust dialog, and understands the outer-identity/identity-privacy options per EAP method
 
-**Plans**: TBD
+**Plans**: 2 plans
+**Wave 1**
+
+- [ ] 103-01-PLAN.md — Author `04-macos.md` (Common Mechanics + Wi-Fi + Wired; deployment-channel WARNING; SCEP-only wired callout; all 3 EAP methods) [DOT1X-05]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 103-02-PLAN.md — Add the macOS platform-guide entry (item 4) to the local `00-overview.md` list [DOT1X-05]
+
 **UI hint**: no
 
 ### Phase 104: iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)
