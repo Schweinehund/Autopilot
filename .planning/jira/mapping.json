@@ -729,7 +729,7 @@
         },
         "106": {
           "issueKey": "RTS-703",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)"
         },
         "107": {
