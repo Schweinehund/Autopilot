@@ -42,7 +42,7 @@ Always populate **Certificate server names** for every EAP method on both Wi-Fi 
 
 **Why this matters on macOS:** Without Certificate server names populated, macOS presents a dynamic trust dialog that users must click through on every connection attempt. Populating the field bypasses this dialog and eliminates the user-facing prompt. Additionally, on iOS and macOS, disabling server validation in a managed profile is flagged as a security violation by the OS.
 
-For the rogue-RADIUS / credential-harvest rationale behind server validation, see the [PEAP-MSCHAPv2 security note](01-eap-method-overview.md#peap-mschapv2) and [server-name validation](../_glossary-network.md#server-name-validation) in the glossary. **No example in this guide shows server validation disabled.**
+For the rogue-RADIUS / credential-harvest rationale behind server validation, see the [PEAP-MSCHAPv2 security note](01-eap-method-overview.md#peap-mschapv2), the [Certificate Delivery Foundation](02-cert-delivery-foundation.md), and [server-name validation](../_glossary-network.md#server-name-validation) in the glossary. **No example in this guide shows server validation disabled.**
 
 ### Anonymous Outer Identity (Identity Privacy)
 
