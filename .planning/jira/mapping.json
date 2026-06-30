@@ -724,7 +724,7 @@
         },
         "105": {
           "issueKey": "RTS-702",
-          "status": "in_progress",
+          "status": "done",
           "name": "Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)"
         },
         "106": {
