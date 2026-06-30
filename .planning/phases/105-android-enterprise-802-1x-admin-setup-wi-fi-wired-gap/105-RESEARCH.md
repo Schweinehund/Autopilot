@@ -494,22 +494,25 @@ Step 2.6: SKIPPED — this phase is a pure documentation authoring phase. The on
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Plan-time: Re-confirm UPN-in-SAN Note placement has not moved tabs**
    - What we know: Adversary, Referee, and this research session all confirmed the Note is under the personally-owned tab (2026-06-30)
    - What's unclear: Google/Android cert-SAN constraints can drift between Android releases
    - Recommendation: Executor should spot-check the live page at authoring time; carry freshness stamp on the mode matrix row that references it.
+   - **RESOLVED:** executor spot-checks the personally-owned-tab placement at authoring time per recommendation; the 90-day freshness stamp is the drift-detection mechanism.
 
 2. **Plan-time: Exact AOSP Enterprise EAP-TTLS inner method list**
    - What we know: AOSP Enterprise EAP-TTLS in the live page does not list inner methods explicitly (the live AOSP tab shows EAP-TLS, EAP-TTLS, PEAP but inner auth for EAP-TTLS under AOSP was not surfaced in the fetched content)
    - What's unclear: Whether AOSP supports the same PAP/MS-CHAP/MS-CHAPv2 list as corporate-owned
    - Recommendation: AOSP is a one-line out-of-scope stub (D-06); no EAP-TTLS inner method content needed for AOSP in this guide.
+   - **RESOLVED:** D-06 — AOSP is a one-line out-of-scope stub, no EAP-TTLS inner-method content needed.
 
 3. **Plan-time: 00-overview.md Mermaid label update scope**
    - What we know: The Mermaid diagram shows `C[3–7. Platform Guides]`; Phase 104 added item 5 and narrowed to "6–7"
    - What's unclear: Whether the Mermaid node label needs updating or just the descriptive list
    - Recommendation: Update both the list item (item 6) and the Mermaid node if the label is version-specific; otherwise leave Mermaid as-is. Pattern from Phase 104 edit (`:60`) is precedent.
+   - **RESOLVED:** Plan 105-02 leaves the Mermaid node unchanged per the 'otherwise leave Mermaid as-is' recommendation.
 
 ---
 
