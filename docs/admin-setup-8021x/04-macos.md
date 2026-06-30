@@ -80,3 +80,74 @@ Select **Wi-Fi type: Enterprise** to access EAP authentication settings. The fol
 - PKCS certificate profile
 
 For SCEP and PKCS certificate profile configuration, and the deployment ordering rule, see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md). The [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix) documents certificate delivery availability across all platforms.
+
+---
+
+## Wired
+
+macOS Wi-Fi and wired 802.1X use separate Intune profile types and are configured independently.
+
+### In Intune admin center
+
+Navigation: **Devices** > **Configuration** > **New policy** > **macOS** > **Templates** > **Wired network**
+
+> **NOTE -- Wired client certificates: SCEP only (PKCS not supported)**
+>
+> The macOS wired network profile supports only **SCEP certificate profiles** for client
+> authentication (EAP-TLS and EAP-TTLS / PEAP certificate inner auth). PKCS certificate
+> profiles are not supported for the wired profile type. Wi-Fi profiles support both SCEP
+> and PKCS.
+>
+> If your organization uses PKCS-only certificate delivery, configure your SCEP
+> infrastructure before deploying wired 802.1X on macOS. See
+> [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix)
+> for the per-platform cert-delivery support matrix.
+
+**Network Interface selector:**
+
+The **Network Interface** field determines which Ethernet interface is configured for 802.1X. Select the option that matches the target device hardware.
+
+| Option | Behavior |
+|--------|----------|
+| **First active Ethernet** (default) | Uses the first working Ethernet interface. If no active interface is found, falls to the next in service-order priority. macOS system default. |
+| Second active Ethernet | Uses the second working Ethernet interface; falls to next in service-order priority if none active. |
+| Third active Ethernet | Uses the third working Ethernet interface; falls to next in service-order priority if none active. |
+| First Ethernet | Non-active variant -- not restricted to currently working interfaces. |
+| Second Ethernet | Non-active variant. |
+| Third Ethernet | Non-active variant. |
+| Any Ethernet | Applies to any available Ethernet interface on the device. |
+
+Options with "active" in the name use interfaces that are actively working on the device. If no active interfaces exist, the next interface in service-order priority is configured.
+
+Populating **Certificate server names** also bypasses the dynamic trust window shown on user devices when they connect to the wired network -- the wired-specific expression of the behavior described in [Common Profile Mechanics](#common-profile-mechanics).
+
+**Wired per-EAP-method configuration matrix:**
+
+All three EAP methods are co-equal configuration paths -- no method is ranked or recommended as a default.
+
+| Setting | EAP-TLS | PEAP-MSCHAPv2 | EAP-TTLS |
+|---|---|---|---|
+| EAP type field value | EAP-TLS | PEAP | EAP-TTLS |
+| Server Trust -- Certificate server names | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix |
+| Root certificate for server validation | Trusted Certificate profile reference | Trusted Certificate profile reference | Trusted Certificate profile reference |
+| Client Authentication method | Certificates (SCEP only; PKCS not supported) | Username and Password | Username and Password |
+| Inner method (Non-EAP method / inner identity) | -- (cert-only; no inner method) | -- (PEAP tunnels MSCHAPv2; inner not separately selectable) | PAP / CHAP / MS-CHAP / MS-CHAP v2 |
+| Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
+
+For SCEP certificate profile configuration and the deployment ordering rule, see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md). PKCS is not available for macOS wired profiles -- see the [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix).
+
+---
+
+## See Also
+
+- [EAP Method Overview](01-eap-method-overview.md) -- co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS comparison; when-to-choose guidance
+- [Certificate Delivery Foundation](02-cert-delivery-foundation.md) -- deployment ordering rule, EKU requirements, SCEP/PKCS cert delivery, per-platform cert matrix
+- [Network Authentication Glossary](../_glossary-network.md) -- 802.1X, EAP, RADIUS, supplicant, server-name validation, inner-outer identity, SCEP, PKCS, trusted root
+
+---
+
+## Change History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-30 | Initial version -- macOS 802.1X admin setup: Wi-Fi + wired profiles for EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS; immutable deployment-channel WARNING; wired SCEP-only callout; dynamic trust dialog suppression | -- |
