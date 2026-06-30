@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-24
-review_by: 2026-09-24
+last_verified: 2026-06-29
+review_by: 2026-09-27
 applies_to: both
 audience: all
 platform: all
@@ -10,6 +10,7 @@ platform: all
 > Terms specific to one framework are labeled. See [APv1 vs APv2](apv1-vs-apv2.md) for framework selection.
 > For macOS provisioning terminology (ADE, ABM, Setup Assistant), see the [macOS Provisioning Glossary](_glossary-macos.md). For Linux terminology, see [Linux Provisioning Glossary](_glossary-linux.md).
 > **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
+> **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
 
 # Autopilot Glossary
 

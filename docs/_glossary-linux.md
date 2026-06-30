@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-05-05
-review_by: 2026-07-04
+last_verified: 2026-06-29
+review_by: 2026-09-27
 applies_to: both
 audience: all
 platform: Linux
@@ -9,6 +9,7 @@ platform: Linux
 > **Platform coverage:** This glossary covers Linux-specific terminology for Intune-managed Ubuntu LTS devices.
 > For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For Apple-platform terminology, see the [Apple Provisioning Glossary](_glossary-macos.md). For Android Enterprise terminology, see the [Android Enterprise Provisioning Glossary](_glossary-android.md).
 > **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
+> **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
 
 # Linux Provisioning Glossary
 
