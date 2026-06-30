@@ -42,7 +42,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] **Phase 101: 802.1X Foundation — Glossary, EAP Methods & Cert Delivery** - Establish the cross-platform conceptual model, EAP-method co-equal overview, and cert-delivery ordering prerequisites all per-platform guides will link into (completed 2026-06-30)
 - [x] **Phase 102: Windows 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete Windows 802.1X guide covering all three EAP methods for both Wi-Fi and wired profiles including dot3svc dependency and authentication mode (completed 2026-06-30)
-- [ ] **Phase 103: macOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete macOS 802.1X guide covering all three EAP methods with deployment-channel decision and wired SCEP-only constraint
+- [x] **Phase 103: macOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete macOS 802.1X guide covering all three EAP methods with deployment-channel decision and wired SCEP-only constraint (completed 2026-06-30)
 - [ ] **Phase 104: iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete iOS/iPadOS 802.1X guide covering all three EAP methods with MAC-randomization NAC handling and M-series iPad wired support
 - [ ] **Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)** - Android Wi-Fi 802.1X across all AE modes with version-gated RADIUS requirements and explicit no-native-wired-profile gap stub
 - [ ] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub
@@ -129,7 +129,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 103-02-PLAN.md — Add the macOS platform-guide entry (item 4) to the local `00-overview.md` list [DOT1X-05]
+- [x] 103-02-PLAN.md — Add the macOS platform-guide entry (item 4) to the local `00-overview.md` list [DOT1X-05]
 
 **UI hint**: no
 
@@ -290,7 +290,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 |-------|----------------|--------|-----------|
 | 101. 802.1X Foundation | 5/5 | Complete   | 2026-06-30 |
 | 102. Windows 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
-| 103. macOS 802.1X Admin-Setup | 1/2 | In Progress|  |
+| 103. macOS 802.1X Admin-Setup | 2/2 | Complete   | 2026-06-30 |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 105. Android Enterprise 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 106. Linux 802.1X Admin-Setup | 0/TBD | Not started | - |
