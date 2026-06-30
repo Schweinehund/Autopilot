@@ -68,7 +68,7 @@ Wired connections are unaffected -- the USB-Ethernet adapter presents its physic
 | EAP type field value | EAP-TLS | PEAP | EAP-TTLS |
 | Certificate server names | RADIUS FQDN or CN suffix (wildcard suffix supported, e.g. `*.contoso.com`) | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix |
 | Root certificate for server validation | Trusted Certificate profile reference | Trusted Certificate profile reference | Trusted Certificate profile reference |
-| Client authentication | Certificates: SCEP, PKCS, or Derived credential (see note) | Username and Password (implicit MS-CHAPv2; no inner-method selector) | Username and Password |
+| Client authentication | Certificates: SCEP, PKCS, or Derived credential (see note) | Username and Password (implicit MS-CHAPv2; no inner-method selector) | Username and Password, or Certificates (SCEP / PKCS / Derived credential) |
 | Inner method (Non-EAP method / inner identity) | -- (cert-only; no inner method) | -- (no inner-method selector; MS-CHAPv2 implicit -- see WARNING below) | PAP / CHAP / MS-CHAP / MS-CHAP v2 |
 | Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
 
