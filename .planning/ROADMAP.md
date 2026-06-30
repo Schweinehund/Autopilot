@@ -43,7 +43,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 101: 802.1X Foundation — Glossary, EAP Methods & Cert Delivery** - Establish the cross-platform conceptual model, EAP-method co-equal overview, and cert-delivery ordering prerequisites all per-platform guides will link into (completed 2026-06-30)
 - [x] **Phase 102: Windows 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete Windows 802.1X guide covering all three EAP methods for both Wi-Fi and wired profiles including dot3svc dependency and authentication mode (completed 2026-06-30)
 - [x] **Phase 103: macOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete macOS 802.1X guide covering all three EAP methods with deployment-channel decision and wired SCEP-only constraint (completed 2026-06-30)
-- [x] **Phase 104: iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete iOS/iPadOS 802.1X guide covering all three EAP methods with MAC-randomization NAC handling and M-series iPad wired support (completed 2026-06-30)
+- [x] **Phase 104: iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete iOS/iPadOS 802.1X guide covering all three EAP methods with MAC-randomization NAC handling and M-series iPad wired support
+ (completed 2026-06-30)
 - [ ] **Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)** - Android Wi-Fi 802.1X across all AE modes with version-gated RADIUS requirements and explicit no-native-wired-profile gap stub
 - [ ] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub
 - [ ] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves
@@ -166,7 +167,16 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. The Android 11+ RADIUS server-name requirement and Android 14+ 256-char / no-special-chars limit are documented with `last_verified`/`review_by` freshness stamps
   3. The wired 802.1X section explicitly states no native Intune wired-network profile type exists for Android Enterprise and documents the gap with a brief explanation of alternatives
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+**Wave 1**
+
+- [ ] 105-01-PLAN.md — Author `06-android.md` (Common Mechanics + Wi-Fi: single-path mode-applicability matrix, per-EAP matrix, UPN-in-SAN BYOD WARNING, combined Android 11+/14+ version-gate WARNING, "Use device MAC" note; Wired gap stub) [DOT1X-07]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 105-02-PLAN.md — Add the Android Enterprise platform-guide entry (item 6) to the local `00-overview.md` list [DOT1X-07]
+
 **UI hint**: no
 
 ### Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)
