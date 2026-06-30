@@ -147,7 +147,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 2 plans
 **Wave 1**
 
-- [ ] 104-01-PLAN.md — Author `05-ios.md` (Common Mechanics three-profiles prose + Wi-Fi + Wired; MAC-randomization NAC note; B-05 PEAP=MS-CHAPv2 WARNING; SCEP-only wired callout; M-series iPad wired use case; all 3 EAP methods) [DOT1X-06]
+- [x] 104-01-PLAN.md — Author `05-ios.md` (Common Mechanics three-profiles prose + Wi-Fi + Wired; MAC-randomization NAC note; B-05 PEAP=MS-CHAPv2 WARNING; SCEP-only wired callout; M-series iPad wired use case; all 3 EAP methods) [DOT1X-06]
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -299,7 +299,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 101. 802.1X Foundation | 5/5 | Complete   | 2026-06-30 |
 | 102. Windows 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 103. macOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
-| 104. iOS/iPadOS 802.1X Admin-Setup | 0/TBD | Not started | - |
+| 104. iOS/iPadOS 802.1X Admin-Setup | 1/2 | In Progress|  |
 | 105. Android Enterprise 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 106. Linux 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 107. L1 Runbooks #38-41 | 0/TBD | Not started | - |
