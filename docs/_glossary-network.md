@@ -70,3 +70,45 @@ Remote Authentication Dial-In User Service (RFC 2865) — the network protocol a
 In tunneled EAP methods (PEAP, EAP-TTLS), the "outer identity" is sent before the TLS tunnel is established and is visible in cleartext on the network segment. The "inner identity" is the real user credential, sent inside the encrypted TLS tunnel. Configure the outer identity to an anonymous value (e.g., "anonymous" or "anonymous@domain.com") to prevent credential-related PII from being observable before the tunnel is established. Known in Intune profile UI as "Identity privacy" or "Outer identity." Also applies to EAP-TLS where the outer identity is taken from the certificate subject. Conventionally abbreviated as "inner/outer identity" in protocol literature.
 
 > See also: [EAP](#eap) · [RADIUS](#radius)
+
+---
+
+## Certificate Delivery
+
+### SCEP
+
+Simple Certificate Enrollment Protocol — a protocol for requesting and automatically renewing X.509 certificates from a CA. In Microsoft environments, SCEP is served by the Network Device Enrollment Service (NDES) role. Intune SCEP profiles deliver per-device client certificates to managed devices automatically without manual PFX export. Supported platforms: Windows, macOS, iOS/iPadOS, Android Enterprise. Not available via Intune for Linux.
+
+> See also: [PKCS](#pkcs) · [trusted root](#trusted-root) · [EKU (Client Authentication)](#eku-client-authentication)
+
+### PKCS
+
+Public Key Cryptography Standards — in the Intune context, refers to PKCS certificate profiles (PKCS #12 / PFX format) delivered via the Intune Certificate Connector. PKCS client certificates are supported for 802.1X on Windows and Android Enterprise (Wi-Fi + Wired for Windows; Wi-Fi only for Android). PKCS certificates are NOT supported for wired profiles on macOS or iOS/iPadOS — SCEP only is supported for those wired profiles.
+
+> See also: [SCEP](#scep) · [trusted root](#trusted-root) · [EKU (Client Authentication)](#eku-client-authentication)
+
+### trusted root
+
+A Trusted Certificate profile in Intune that delivers a root CA certificate to managed devices. In the 802.1X context, this is the root CA that signed the RADIUS server's certificate; it must be deployed to the device so the supplicant can validate the RADIUS server's identity during TLS negotiation. Must be deployed BEFORE the SCEP/PKCS client cert profile and the 802.1X network profile (see ordering rule). Supported on Windows, macOS, iOS/iPadOS, Android Enterprise. Not supported on Linux via Intune.
+
+> See also: [SCEP](#scep) · [PKCS](#pkcs) · [server-name validation](#server-name-validation)
+
+### EKU (Client Authentication)
+
+Extended Key Usage (EKU) is an X.509 certificate extension that declares the purpose(s) for which a certificate may be used. The Client Authentication EKU (OID 1.3.6.1.5.5.7.3.2) must be present on the client certificate used for 802.1X EAP-TLS authentication. The RADIUS server checks the EKU to confirm the certificate is authorized for client authentication; a missing EKU causes the RADIUS server to return Access-Reject. Set explicitly in the Intune SCEP profile under Extended Key Usage.
+
+> See also: [SCEP](#scep) · [EAP](#eap) · [RADIUS](#radius)
+
+### server-name validation
+
+The 802.1X profile configuration that specifies the expected FQDN or CN of the RADIUS server's certificate. The supplicant validates that the RADIUS server's certificate subject matches this value during EAP TLS negotiation, preventing rogue-RADIUS man-in-the-middle attacks. Required on Android 11+ (field must be populated; profiles without it may not connect). Android 14+ constraint: total combined RADIUS server names ≤ 256 characters; no special characters. Always populate this field — leaving it blank with server validation enabled is a misconfiguration.
+
+> See also: [RADIUS](#radius) · [trusted root](#trusted-root) · [EAP](#eap)
+
+---
+
+## Change History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-29 | Initial version -- new platform-neutral 802.1X network-authentication glossary (13 terms) | -- |
