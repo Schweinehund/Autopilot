@@ -553,17 +553,17 @@ Add Change History entry:
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **iOS wired PEAP "Username and Password" path via Settings Catalog**
+1. **iOS wired PEAP "Username and Password" path via Settings Catalog** — **RESOLVED**
    - What we know: The Templates path iOS wired UI only shows Certificates (SCEP) for PEAP. Settings Catalog may expose different/more granular options.
    - What's unclear: Whether Settings Catalog surfaces a Username+Password/MS-CHAPv2 path for iOS wired PEAP.
-   - Recommendation: Out of scope for Phase 104 (Templates path is the documented standard; Settings Catalog is noted as available but not the primary path per STACK Building Block 1). Wired matrix should hedge: "via Templates path; Settings Catalog may expose additional options."
+   - **RESOLVED:** Out of scope for Phase 104 (Templates path is the documented standard; Settings Catalog is noted as available but not the primary path per STACK Building Block 1). The wired PEAP inner-method cell reads cert-only "(via Templates path)" with a cross-reference to the Wi-Fi B-05 WARNING. See D-12 + §4 wired matrix.
 
-2. **iOS wired EAP-TTLS "Username/Password" path**
+2. **iOS wired EAP-TTLS "Username/Password" path** — **RESOLVED**
    - What we know: STACK ~l.167 noted "Username/Password option exists" for iOS wired EAP-TTLS but inner methods not explicitly documented. Live 2026-06-30 verification of the Templates path shows Certificates-only.
    - What's unclear: Whether a username/password inner auth path exists for iOS wired EAP-TTLS via Settings Catalog.
-   - Recommendation: Apply D-12 hedge language in the wired EAP-TTLS cell: "Certificates: SCEP only (via Templates path); inner auth via username/password and specific inner options not exposed in the Templates Intune UI — verify in Intune console if username/password EAP-TTLS on wired is required."
+   - **RESOLVED:** Apply the D-12 hedge in the wired EAP-TTLS cell: "Certificates: SCEP only (via Templates path); inner auth via username/password and specific inner options not exposed in the Templates Intune UI — verify in Intune console if username/password EAP-TTLS on wired is required." See §4 wired matrix.
 
 ---
 
