@@ -151,9 +151,7 @@ Choose EAP-TTLS when:
 
 \*Linux: script-based EAP-TLS only via nmcli; PEAP-MSCHAPv2 and EAP-TTLS on Linux are not documented in Microsoft Learn and are out of scope for this guide set.
 
-## TEAP
-
-Tunneled EAP (TEAP, RFC 7170) is visible in the Windows Intune wired-network profile UI and is unique to Windows wired 802.1X configuration. It is not a co-equal path in this guide set -- it is a Windows-wired-only awareness item. A one-paragraph awareness note for TEAP appears in the Windows 802.1X guide (Phase 102). For all platforms other than Windows wired, TEAP is out of scope for this guide set.
+**TEAP (awareness only — not a co-equal path).** Tunneled EAP (TEAP, RFC 7170) is visible in the Windows Intune wired-network profile UI and is unique to Windows wired 802.1X configuration. It is not a co-equal path in this guide set -- it is a Windows-wired-only awareness item. A one-paragraph awareness note for TEAP appears in the Windows 802.1X guide (Phase 102). For all platforms other than Windows wired, TEAP is out of scope for this guide set.
 
 For certificate delivery requirements -- trusted root profiles, SCEP/PKCS client certificate profiles, the deployment ordering rule, and the per-platform cert-delivery support matrix -- see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md).
 
