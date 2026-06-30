@@ -66,7 +66,7 @@ Choose EAP-TLS when:
 - Certificate infrastructure (SCEP/PKCS profile via NDES or Cloud PKI) is deployed or planned
 - Machine authentication without a password dependency is required
 - Mutual authentication -- both the device and the RADIUS server verify each other's certificate -- is a security requirement
-- Highest assurance posture is needed
+- Passwordless, certificate-only authentication is a requirement
 
 ---
 
@@ -146,7 +146,7 @@ Choose EAP-TTLS when:
 | Server cert required | Yes | Yes | Yes |
 | Inner credential | None (cert-only) | Domain username/password (MSCHAPv2) | PAP / MS-CHAP / MS-CHAPv2 |
 | Identity privacy | Outer identity config | Outer identity config | Outer identity config |
-| Intune support | Win / macOS / iOS / Android / Linux* | Win / macOS / iOS / Android / Linux* | Win / macOS / iOS / Android |
+| Intune support | Win / macOS / iOS / Android / Linux* | Win / macOS / iOS / Android | Win / macOS / iOS / Android |
 | Wired support | Win / macOS / iOS | Win / macOS / iOS | Win / macOS / iOS |
 
 \*Linux: script-based EAP-TLS only via nmcli; PEAP-MSCHAPv2 and EAP-TTLS on Linux are not documented in Microsoft Learn and are out of scope for this guide set.

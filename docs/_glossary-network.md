@@ -83,7 +83,7 @@ Simple Certificate Enrollment Protocol — a protocol for requesting and automat
 
 ### PKCS
 
-Public Key Cryptography Standards — in the Intune context, refers to PKCS certificate profiles (PKCS #12 / PFX format) delivered via the Intune Certificate Connector. PKCS client certificates are supported for 802.1X on Windows and Android Enterprise (Wi-Fi + Wired for Windows; Wi-Fi only for Android). PKCS certificates are NOT supported for wired profiles on macOS or iOS/iPadOS — SCEP only is supported for those wired profiles.
+Public Key Cryptography Standards — in the Intune context, refers to PKCS certificate profiles (PKCS #12 / PFX format) delivered via the Intune Certificate Connector. PKCS client certificates are supported for 802.1X Wi-Fi on Windows, macOS, iOS/iPadOS, and Android Enterprise, and additionally for wired profiles on Windows. PKCS is NOT supported for wired profiles on macOS or iOS/iPadOS (use SCEP for those wired profiles), and is not available for Linux.
 
 > See also: [SCEP](#scep) · [trusted root](#trusted-root) · [EKU (Client Authentication)](#eku-client-authentication)
 

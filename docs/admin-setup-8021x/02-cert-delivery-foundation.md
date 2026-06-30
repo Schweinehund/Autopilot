@@ -105,8 +105,6 @@ Always configure [server-name validation](../_glossary-network.md#server-name-va
 - **Android 11+ requirement:** The RADIUS server name field is required -- not optional -- for new Wi-Fi profiles; profiles without it may fail to connect on Android 11 and later devices
 - **Android 14+ constraint:** The total combined length of all configured RADIUS server names must be 256 characters or fewer; no special characters are permitted in the server name field
 
-> *Freshness: last verified 2026-06-29 against Microsoft Learn. Review by 2026-09-27.*
-
 ## Cloud PKI (Alternative)
 
 Microsoft Intune Suite includes Cloud PKI as a managed, cloud-hosted CA alternative to on-premises ADCS/NDES.
@@ -124,9 +122,11 @@ This matrix is the single canonical home for cert-delivery support across platfo
 |---|---|---|---|---|---|
 | **Windows** | YES -- WiredNetwork CSP | Yes | Yes (wired + Wi-Fi) | **Yes -- wired only, unique to Windows wired profile UI** | Yes |
 | **macOS** | YES -- Templates > Wired network | Yes | Wi-Fi only -- **NOT supported for wired profiles** | Wi-Fi only | Yes |
-| **iOS/iPadOS** | YES -- GA on M-series iPad (USB Ethernet) | Yes | Wi-Fi only -- **NOT supported for wired profiles** | Wi-Fi only, non-AOSP | Yes |
+| **iOS/iPadOS** | YES -- GA on M-series iPad (USB Ethernet) | Yes | Wi-Fi only -- **NOT supported for wired profiles** | Wi-Fi only | Yes |
 | **Android Enterprise** | **NO native wired profile type** -- gap stub only | Yes (Wi-Fi) | Yes (Wi-Fi, non-AOSP) | Wi-Fi only, non-AOSP | Yes |
 | **Linux** | **NO native Intune profile** -- script-based only | **NO -- no Intune cert profiles for Linux** | NO | NO | **NO -- not supported via Intune** |
+
+> **Column note:** "PFX Import / PKCS Imported" covers two distinct things. **PFX Import** in the *wired* profile cert picker is unique to Windows (the "wired only" cell). The cross-platform **PKCS Imported (PFX) Wi-Fi** profile is what the "Wi-Fi only" cells refer to on macOS, iOS/iPadOS, and Android Enterprise.
 
 **Key asymmetries:**
 
