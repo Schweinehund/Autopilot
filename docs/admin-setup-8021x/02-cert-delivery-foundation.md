@@ -115,3 +115,34 @@ Microsoft Intune Suite includes Cloud PKI as a managed, cloud-hosted CA alternat
 - **Relevance:** Cloud PKI can fulfill the SCEP certificate delivery role described in the SCEP Certificate Profile section above -- the Intune 802.1X profile configuration is identical whether certificates come from Cloud PKI or on-premises NDES
 - **Scope:** Full Cloud PKI setup and configuration is out of scope for this guide set -- see Microsoft Learn for Cloud PKI deployment guidance
 - **Note:** Cloud PKI does not change the deployment ordering rule or the EKU requirement; all other guidance in this file applies regardless of the CA backend
+
+## Per-Platform Cert-Delivery Support Matrix
+
+This matrix is the single canonical home for cert-delivery support across platforms (decision B3). Per-platform guides (Phases 102--106) link back here rather than reproducing this table.
+
+| Platform | Wired Profile | SCEP (client cert) | PKCS (client cert) | PFX Import / PKCS Imported | Trusted Root |
+|---|---|---|---|---|---|
+| **Windows** | YES -- WiredNetwork CSP | Yes | Yes (wired + Wi-Fi) | **Yes -- wired only, unique to Windows wired profile UI** | Yes |
+| **macOS** | YES -- Templates > Wired network | Yes | Wi-Fi only -- **NOT supported for wired profiles** | Wi-Fi only | Yes |
+| **iOS/iPadOS** | YES -- GA on M-series iPad (USB Ethernet) | Yes | Wi-Fi only -- **NOT supported for wired profiles** | Wi-Fi only, non-AOSP | Yes |
+| **Android Enterprise** | **NO native wired profile type** -- gap stub only | Yes (Wi-Fi) | Yes (Wi-Fi, non-AOSP) | Wi-Fi only, non-AOSP | Yes |
+| **Linux** | **NO native Intune profile** -- script-based only | **NO -- no Intune cert profiles for Linux** | NO | NO | **NO -- not supported via Intune** |
+
+**Key asymmetries:**
+
+- macOS/iOS wired = SCEP-only; PKCS is **NOT supported** for wired profiles on macOS or iOS/iPadOS
+- Windows wired adds PFX Import (PKCS Imported) -- unique to the Windows wired profile UI
+- Linux = no Intune cert delivery of any kind; certificate delivery must be managed via script or out-of-band tooling
+
+> **Boundary:** This matrix shows which cert delivery methods Intune supports per platform at
+> the foundation level. Per-platform guides (Phases 102--106) document the exact Intune UI
+> fields, settings, and profile configuration steps for each platform. Do not duplicate that
+> per-platform UI detail here -- link to the appropriate guide instead.
+
+---
+
+## Change History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-29 | Initial version -- cert-delivery foundation: ordering rule, scope callout, EKU, server-name validation, per-platform cert matrix | -- |
