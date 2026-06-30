@@ -78,7 +78,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 101-03-PLAN.md — Author `02-cert-delivery-foundation.md` (ordering rule, scope callout/SC4, EKU, server-name validation, per-platform cert matrix) [DOT1X-03]
+- [x] 101-03-PLAN.md — Author `02-cert-delivery-foundation.md` (ordering rule, scope callout/SC4, EKU, server-name validation, per-platform cert matrix) [DOT1X-03]
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -270,7 +270,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 101. 802.1X Foundation | 3/5 | In Progress|  |
+| 101. 802.1X Foundation | 4/5 | In Progress|  |
 | 102. Windows 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 103. macOS 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 0/TBD | Not started | - |
