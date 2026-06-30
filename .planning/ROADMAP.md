@@ -65,7 +65,9 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   1. A reader can learn the 802.1X 3-actor model (supplicant / authenticator / authentication server), EAPOL, and RADIUS exchange from `docs/_glossary-network.md` with see-also banners wired to all existing platform glossaries
   2. An admin can choose among EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS as co-equal paths from `01-eap-method-overview.md`, including what each method requires from the client and when each is selected
   3. An admin can follow the cert-delivery foundation (`02-cert-delivery-foundation.md`) to understand the hard deployment ordering (trusted-root profile → SCEP/PKCS client cert → network profile), EKU requirements, RADIUS server-name validation, and the per-platform cert-delivery support matrix
-  4. The scope callout template establishing the Intune-client-side-only boundary is present in the foundation and reusable by per-platform guides**Plans**: 5 plans
+  4. The scope callout template establishing the Intune-client-side-only boundary is present in the foundation and reusable by per-platform guides
+
+**Plans**: 5 plans
 
 **Wave 1**
 
@@ -97,8 +99,15 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. An admin can create a Windows wired 802.1X profile with the `dot3svc` service dependency documented (including an Intune Remediation pattern to ensure the service is running) and a DANGER callout for enforcement-mode staging
   3. An admin can configure SCEP, PKCS, or PFX Import client certificate delivery and understands the `PerformServerValidation` security requirement
   4. The Hybrid Entra Joined strong certificate mapping requirement (KB5014754, SID in SAN, effective 2025-02-11) is documented with a freshness stamp
+**Plans**: 2 plans
+**Wave 1**
 
-**Plans**: TBD
+- [ ] 102-01-PLAN.md — Author `03-windows.md` (Common Mechanics + Wi-Fi + Wired; dot3svc/enforcement/KB5014754 callouts; all 3 EAP methods) [DOT1X-04]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 102-02-PLAN.md — Add the Windows platform-guide entry (item 3) to the local `00-overview.md` list [DOT1X-04]
+
 **UI hint**: no
 
 ### Phase 103: macOS 802.1X Admin-Setup (Wi-Fi + Wired)
@@ -271,7 +280,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 101. 802.1X Foundation | 5/5 | Complete   | 2026-06-30 |
-| 102. Windows 802.1X Admin-Setup | 0/TBD | Not started | - |
+| 102. Windows 802.1X Admin-Setup | 0/2 | Not started | - |
 | 103. macOS 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 105. Android Enterprise 802.1X Admin-Setup | 0/TBD | Not started | - |

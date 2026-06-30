@@ -507,17 +507,14 @@ If the table above is nearly empty (2 items), it reflects that virtually all fac
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Exact current Intune UI label for 802.1X enforcement field**
+1. **Exact current Intune UI label for 802.1X enforcement field** — **RESOLVED:** label spellings ("Do not enforce" / "Enforce") delegated to the implementer to spot-check against the live portal / Microsoft Learn at authoring time. Cosmetic only; no structural impact on SC1–SC4 or task execution.
    - What we know: STACK.md calls it "802.1x enforcement" with value "Enforce"; Microsoft Learn wired settings ref (2026-06-04) uses "802.1x" as the setting category
    - What's unclear: Whether the dropdown labels are exactly "Not configured / Do not enforce / Enforce" in the current portal
-   - Recommendation: Implementer should verify label spellings against live portal or Microsoft Learn at authoring time; they are minor cosmetic details and do not affect the structural content
 
-2. **Whether 00-overview.md "3–7" text is a single line or formatted list**
+2. **Whether 00-overview.md "3–7" text is a single line or formatted list** — **RESOLVED:** confirmed a single line (`00-overview.md` l.28, verified by direct inspection). The edit replaces that line with the item-3 entry + an updated "4–7" continuation line.
    - What we know: `00-overview.md` l.28 shows `3–7. Platform guides (Phase 102–106) -- entries added as each guide is authored.`
-   - What's unclear: Whether the edit should replace that single line or insert item 3 above a revised "4–7" line
-   - Recommendation: Planner should read the current `00-overview.md` at plan time (already read by this research — the current text is a single line); replace with item-3 entry + updated "4–7" continuation line
 
 ---
 
