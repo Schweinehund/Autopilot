@@ -654,17 +654,24 @@ These pitfalls from PITFALLS.md are directly relevant to Phase 101 authoring:
 
 ---
 
-## Open Questions / Planning Decision Points
+## Open Questions / Planning Decision Points (RESOLVED)
+
+> All five questions were resolved during planning (plans committed `6dde1e0`, plan-checker `## VERIFICATION PASSED`). Resolutions recorded inline below.
 
 1. **`00-overview.md` guide entries for Phase 101 only vs. all phases:** The macOS overview precedent shows guides were added incrementally (Phase 76 added guides 07-09, etc.). For 802.1X, Phase 101 can either: (a) create the overview with ONLY the two foundation guide entries that exist at commit time, and have Phases 102-106 add their own entries; or (b) include all seven entries as stubs (risky: C13 broken-link check will fail on files that don't exist yet). **Recommended:** option (a) — Phase 101 overview contains only foundation entries + a placeholder Mermaid node. Add explicit "update 00-overview.md" tasks to Phases 102-106 plans.
+   **RESOLVED:** Option (a) — plan 101-04 authors `00-overview.md` with only the two foundation-guide entries + a placeholder Mermaid node; per-platform entries are added by Phases 102-106.
 
 2. **`01-eap-method-overview.md` vs. `02-cert-delivery-foundation.md` as home for the canonical scope callout (C3):** CONTEXT.md D-06 says "defined once, canonically, in the foundation." Either file qualifies as "the foundation." Recommended: home it in `02-cert-delivery-foundation.md` (prerequisites are naturally the first thing in a cert-delivery guide; readers arriving at the cert file will see the scope early). `01-eap-method-overview.md` can carry a brief forward-reference.
+   **RESOLVED:** Homed in `02-cert-delivery-foundation.md` (`## Canonical Scope Callout`, anchor `#canonical-scope-callout`) — plan 101-03 T1; `00-overview.md` and the banner template link to that anchor.
 
 3. **Alphabetical index in `_glossary-network.md`:** 13 terms, A-Z order: 802.1X, authenticator, authentication server, EAP, EAPOL, EKU (Client Authentication), inner-outer identity, PKCS, RADIUS, SCEP, server-name validation, supplicant, trusted root. Confirm final sort order at authoring time (numeric "802.1X" sorts before alpha entries in most index conventions — match the pattern used in `_glossary-macos.md` where `[ABM](#abm)` leads the index).
+   **RESOLVED:** Plan 101-01 T1 specifies the explicit index string (802.1X leads, then A-Z) matching the `_glossary-macos.md` pattern; automated verify asserts 13 `### ` term headings.
 
 4. **STATE.md references `docs/_glossary-ios.md` in the Phase 101 MODIFIED list (line 47-48):** This is a STATE.md artifact written before the D-11 decision was locked. `_glossary-ios.md` DOES NOT EXIST (confirmed by glob). The executor must NOT create or edit it. The iOS see-also banner goes into `_glossary-macos.md` only. Flag for correction in STATE.md or ROADMAP.md at Phase 109 (per CONTEXT.md deferred section).
+   **RESOLVED:** Plan 101-05 enforces iOS-banner-in-`_glossary-macos.md` and verifies `[ ! -f docs/_glossary-ios.md ]`. The STATE.md/ROADMAP `_glossary-ios.md` references remain flagged for Phase 109 reconciliation (CONTEXT.md deferred section) — not actioned in Phase 101.
 
 5. **`_glossary-apple-business.md` receives no banner:** Confirmed — this is the Apple Business governance glossary, not a platform provisioning glossary. It does not need an 802.1X see-also banner.
+   **RESOLVED:** Excluded from all plans; plan 101-05 inserts banners into exactly the four platform glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-android.md`, `_glossary-linux.md`).
 
 ---
 
