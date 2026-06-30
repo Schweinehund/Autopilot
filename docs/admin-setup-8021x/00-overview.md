@@ -25,7 +25,9 @@ graph LR
 
 2. **[Certificate Delivery Foundation](02-cert-delivery-foundation.md)** -- Deployment ordering rule (trusted-root profile → SCEP/PKCS client cert → 802.1X network profile), EKU requirements, RADIUS server-name validation, and the per-platform cert-delivery support matrix.
 
-3–7. Platform guides (Phase 102–106) -- entries added as each guide is authored.
+3. **[Windows 802.1X Admin Setup (Wi-Fi + Wired)](03-windows.md)** -- Wi-Fi and wired profiles for all three EAP methods; dot3svc dependency and Remediation pattern; enforcement staging; KB5014754 strong certificate mapping.
+
+4–7. Platform guides (Phase 103–106) -- entries added as each guide is authored.
 
 > **Wired 802.1X availability note:** Android Enterprise has no native Intune wired-network profile type -- Wi-Fi only; see the Android guide for details. Linux has no native Intune Wi-Fi or wired profile -- script-based EAP-TLS only via nmcli; see the Linux guide for details.
 
@@ -49,3 +51,4 @@ Intune client-side configuration only -- RADIUS/NPS server assumed to exist. See
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-29 | Initial version -- 802.1X admin-setup folder overview (two foundation guides) | -- |
+| 2026-06-30 | Added item 3 -- Windows platform-guide entry linking 03-windows.md; narrowed placeholder range from 3--7 to 4--7 | -- |
