@@ -709,7 +709,7 @@
         },
         "102": {
           "issueKey": "RTS-699",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Windows 802.1X Admin-Setup (Wi-Fi + Wired)"
         },
         "103": {
