@@ -74,7 +74,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 101-02-PLAN.md — Author `01-eap-method-overview.md` (co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS + 3-actor Mermaid) [DOT1X-02]
-- [ ] 101-05-PLAN.md — Insert one-directional see-also banners into the 4 existing platform glossaries [DOT1X-01]
+- [x] 101-05-PLAN.md — Insert one-directional see-also banners into the 4 existing platform glossaries [DOT1X-01]
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -270,7 +270,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 101. 802.1X Foundation | 2/5 | In Progress|  |
+| 101. 802.1X Foundation | 3/5 | In Progress|  |
 | 102. Windows 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 103. macOS 802.1X Admin-Setup | 0/TBD | Not started | - |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 0/TBD | Not started | - |

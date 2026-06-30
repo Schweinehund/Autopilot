@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-06-30T03:30:03.488Z"
+last_updated: "2026-06-30T03:37:42.651Z"
 last_activity: 2026-06-30
 progress:
   total_phases: 12
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 ## Current Position
 
 Phase: 101 (802-1x-foundation-glossary-eap-methods-cert-delivery) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-06-30
 
@@ -336,6 +336,9 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..111]: Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, same as v1.12/v1.13)
 - Adversarial-review invoked at discuss-phase for gray-area scoping decisions (per user memory)
 - Navigation-last hard constraint: all nav hub edits committed after the content files they reference
+- [Phase ?]: D-10 enforced: see-also banners one-directional; no back-links from network glossary
+- [Phase ?]: D-11 enforced: iOS/iPadOS see-also covered by _glossary-macos.md banner; _glossary-ios.md not created
+- [Phase ?]: v1.13-audit-allowlist.json frozen; Phase 112 must apply +1 line offsets for _glossary-android.md tracked lines
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -363,8 +366,8 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-06-30T03:30:03.473Z
-Stopped at: Phase 101 context gathered
+Last session: 2026-06-30T03:37:42.633Z
+Stopped at: Completed 101-05-PLAN.md
 Resume file: None
 Next action: Run /gsd-plan-phase 101 to begin Phase 101 planning (802.1X Foundation)
 
@@ -378,3 +381,4 @@ Next action: Run /gsd-plan-phase 101 to begin Phase 101 planning (802.1X Foundat
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
 | (v1.14 phases not yet started) | — | — | — |
+| Phase 101 P05 | 8 | 2 tasks | 4 files |
