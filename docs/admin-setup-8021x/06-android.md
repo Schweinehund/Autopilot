@@ -75,3 +75,54 @@ AOSP (Android Open Source Project) devices share the same Intune Wi-Fi profile p
 | Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
 
 For SCEP and PKCS certificate profile configuration, and the deployment ordering rule, see [Certificate Delivery Foundation](02-cert-delivery-foundation.md). The [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix) documents certificate delivery availability across all platforms.
+
+> **WARNING -- Personally owned work profile (BYOD-WP): Wi-Fi profile deployment fails if UPN is absent from certificate SAN**
+>
+> When using any EAP type (EAP-TLS, PEAP-MSCHAPv2, or EAP-TTLS) with certificates for authentication in a **personally owned work profile**, the User Principal Name (UPN) must be present in the Subject Alternative Name (SAN) of the certificate -- for both user and device certificates within the work-profile context. If the UPN is absent from the SAN, the Wi-Fi profile shows **"Error"** in Intune and **profile deployment fails** -- the profile is not delivered to the device; this is not a post-deployment authentication failure.
+>
+> **Fix:** In the SCEP certificate profile for Android Enterprise personally owned work profile, add **User principal name (UPN)** as a SAN attribute. Once the SCEP profile includes the UPN in the SAN, the Wi-Fi profile will deploy successfully.
+
+**Certificate access for Device Owner modes (COBO, COPE, COSU):**
+
+In the SCEP certificate profile for Android Enterprise Device Owner enrollment types, configure **Certificate access** to **Grant silently for specific apps** and include the Wi-Fi supplicant in the allowed apps list. The default setting ("Require user approval for all apps") is silently rejected on fully managed devices where no user interaction is available, causing 802.1X authentication to fail even when the certificate profile shows "Succeeded" in Intune.
+
+Note: For Device Owner profiles, Intune certificate reporting is unavailable and Intune cannot revoke certificates delivered via this profile type.
+
+> **WARNING -- Android RADIUS server name version requirements (Radius server name field)**
+>
+> The following version gates apply to the **Radius server name** field in the corporate-owned and AOSP tabs. The personally-owned (BYOD-WP) tab uses the **Certificate server names** field and does not carry these version-specific sub-requirements. Server-name validation as a security requirement applies to all modes; see [Certificate Delivery Foundation](02-cert-delivery-foundation.md).
+>
+> | Android version | Behavior |
+> |---|---|
+> | Android 11+ | New Wi-Fi profiles might require the Radius server name field to be configured. Without it, devices may not connect to the Wi-Fi network. |
+> | Android 14+ | Total combined length of all configured RADIUS server names must be 256 characters or fewer; special characters not permitted. Profiles that worked on Android 11--13 may silently fail on Android 14 devices. **Use the DNS suffix** (e.g., `contoso.com`) instead of a list of full FQDNs to stay within the 256-character limit. |
+>
+> *last_verified: 2026-06-30 · review_by: 2026-09-28*
+
+**MAC address randomization (Android 13+):**
+
+For NAC (Network Access Control) environments where the RADIUS policy is keyed to device MAC address, set **Use device MAC** in the Wi-Fi profile. With this option, the device presents its actual Wi-Fi MAC address instead of the per-network randomized MAC. The full set of options is: **Use device default / Use randomized MAC / Use device MAC**. Without "Use device MAC", NAC environments will see a different MAC address each time the device joins a new network, causing RADIUS to reject devices whose MACs are not in the allow list.
+
+*last_verified: 2026-06-30 · review_by: 2026-09-28*
+
+---
+
+## Wired
+
+**Android Enterprise has no native Intune wired-network profile type.** Unlike Windows, macOS, and iOS/iPadOS -- which each have a dedicated Intune wired (Ethernet) network profile -- there is no equivalent profile type for Android Enterprise and no documented OMA-URI workaround. Organizations that require wired 802.1X authentication for Android Enterprise devices should consult their network or infrastructure team for switch-side configuration options (such as port-based authentication or alternative access policies) outside of Intune's device management surface. Android Enterprise Wi-Fi 802.1X is fully supported through Intune; see the [Wi-Fi section](#wi-fi) above.
+
+---
+
+## See Also
+
+- [EAP Method Overview](01-eap-method-overview.md) -- co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS comparison; when-to-choose guidance
+- [Certificate Delivery Foundation](02-cert-delivery-foundation.md) -- deployment ordering rule, EKU requirements, SCEP/PKCS cert delivery, per-platform cert matrix (incl. Android Enterprise BYOD UPN-in-SAN requirement)
+- [Network Authentication Glossary](../_glossary-network.md) -- 802.1X, EAP, RADIUS, supplicant, server-name validation, inner-outer identity, SCEP, PKCS, trusted root
+
+---
+
+## Change History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-30 | Initial version -- Android Enterprise 802.1X admin setup: Wi-Fi profiles for EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS across COBO/COPE/COSU/BYOD-WP modes; UPN-in-SAN deployment-failure WARNING (BYOD-WP); version-gated RADIUS server-name WARNING (Android 11+/14+); MAC randomization note (Android 13+); wired gap stub (no native Intune wired profile) | -- |
