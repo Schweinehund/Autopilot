@@ -93,3 +93,60 @@ Wired connections are unaffected -- the USB-Ethernet adapter presents its physic
 - Derived credential (iOS/iPadOS; for platforms using PIV/CAC-based credentials)
 
 For SCEP and PKCS certificate profile configuration, and the deployment ordering rule, see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md). The [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix) documents certificate delivery availability across all platforms.
+
+---
+
+## Wired
+
+The iOS/iPadOS wired 802.1X profile targets M-series iPads equipped with a USB-Ethernet adapter. The typical deployment scenario is multi-iPad shared-use environments -- classrooms, labs, and shared workstation pools -- where wired Ethernet provides more reliable connectivity than Wi-Fi. Confirm that target devices are M-series iPads before deploying this profile type, as wired 802.1X is not available on all iPad models.
+
+### In Intune admin center
+
+Navigation: **Devices** > **Configuration** > **New policy** > **iOS/iPadOS** > **Templates** > **Wired network**
+
+> **NOTE -- Wired client certificates: SCEP only (PKCS not supported)**
+>
+> The iOS/iPadOS wired network profile supports only **SCEP certificate profiles** for client
+> authentication across all three EAP types (EAP-TLS, EAP-TTLS, and PEAP). PKCS certificate
+> profiles are not supported for the wired profile type. Wi-Fi profiles support both SCEP
+> and PKCS.
+>
+> If your organization uses PKCS-only certificate delivery, configure your SCEP
+> infrastructure before deploying wired 802.1X on iOS/iPadOS. See
+> [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix)
+> for the per-platform cert-delivery support matrix.
+
+Network Interface is automatically set to **Any Ethernet** -- the iOS/iPadOS wired profile targets any available USB-Ethernet interface; no selection is required (unlike macOS, which provides a Network Interface selector).
+
+**Wired per-EAP-method configuration matrix:**
+
+All three EAP methods are co-equal configuration paths -- no method is ranked or recommended as a default.
+
+| Setting | EAP-TLS | PEAP-MSCHAPv2 | EAP-TTLS |
+|---|---|---|---|
+| EAP type field value | EAP-TLS | PEAP | EAP-TTLS |
+| Server Trust -- Certificate server names | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix |
+| Root certificate for server validation | Trusted Certificate profile reference | Trusted Certificate profile reference | Trusted Certificate profile reference |
+| Client Authentication method | Certificates: SCEP only (PKCS not supported) | Certificates: SCEP only (PKCS not supported); no Username/Password option in wired UI (via Templates path) | Certificates: SCEP only (PKCS not supported); no inner-auth-method selector in wired UI (via Templates path) |
+| Inner method (Non-EAP method / inner identity) | -- (cert-only; no inner method) | -- (cert-only in wired UI; for PEAP + username/password, use a Wi-Fi profile -- see Wi-Fi PEAP WARNING above) | -- (cert-only in wired UI via Templates path; inner auth via username/password not exposed in wired Intune UI -- verify in Intune console if username/password EAP-TTLS on wired is required) |
+| Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
+
+For PEAP inner authentication context -- the wired Intune UI (Templates path) exposes only Certificates (SCEP) as the client authentication method for wired PEAP; there is no MS-CHAPv2 or username/password path in the wired zone. For the iOS PEAP inner-auth constraint and symptom, see the [PEAP "What breaks" WARNING in the Wi-Fi section](#wi-fi).
+
+For SCEP certificate profile configuration and the deployment ordering rule, see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md). PKCS is not available for iOS/iPadOS wired profiles -- see the [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix).
+
+---
+
+## See Also
+
+- [EAP Method Overview](01-eap-method-overview.md) -- co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS comparison; when-to-choose guidance
+- [Certificate Delivery Foundation](02-cert-delivery-foundation.md) -- deployment ordering rule, EKU requirements, SCEP/PKCS cert delivery, per-platform cert matrix (incl. iOS wired PKCS not supported)
+- [Network Authentication Glossary](../_glossary-network.md) -- 802.1X, EAP, RADIUS, supplicant, server-name validation, inner-outer identity, SCEP, PKCS, trusted root
+
+---
+
+## Change History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-30 | Initial version -- iOS/iPadOS 802.1X admin setup: Wi-Fi + wired profiles for EAP-TLS / PEAP / EAP-TTLS; MAC-address randomization note (iOS 14+); M-series iPad wired use case; wired SCEP-only callout; PEAP "What breaks" callout | -- |
