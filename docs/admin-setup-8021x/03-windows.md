@@ -91,3 +91,109 @@ For SCEP and PKCS certificate profile configuration, and the deployment ordering
 - **PMK caching / pre-authentication:** Optional; reduces re-authentication overhead when roaming between APs on the same SSID.
 - **FIPS compliance mode:** Available for regulated environments requiring FIPS 140-2 validated cryptography.
 - **XML import:** For settings not exposed in the Intune UI, export a Wi-Fi profile XML from a configured Windows device and import it into the Intune profile.
+
+---
+
+## Wired
+
+#### In Intune admin center
+
+Navigation: **Devices** > **Configuration** > **New policy** > **Windows 10 and later** > **Templates** > **Wired network**
+
+The wired profile uses the WiredNetwork CSP. Before configuring the 802.1X settings, address the two high-consequence wired-only prerequisites below.
+
+### dot3svc Service Dependency
+
+> **WARNING -- dot3svc (Wired AutoConfig) service dependency:**
+>
+> The Wired AutoConfig service (`dot3svc`) must be running for Windows 802.1X wired authentication to engage. On Windows 10 and 11, `dot3svc` ships with startup type **Manual** -- it does not start automatically. Intune reports the wired network profile as **"Succeeded"** regardless of whether the service is running, creating a silent failure: the profile is applied but the supplicant never activates, and the wired port stays unauthenticated.
+>
+> **Detect:** Run `sc query dot3svc` and look for `STATE: STOPPED` or `START_TYPE: DEMAND_START` (Manual). Alternatively, use PowerShell: `Get-Service -Name dot3svc` -- check that `StartType` is `Automatic` and `Status` is `Running`.
+>
+> **Remediate:** Set the service to automatic startup and start it:
+>
+> ```powershell
+> Set-Service -Name dot3svc -StartupType Automatic
+> Start-Service -Name dot3svc
+> ```
+>
+> **Detection pattern for Intune Remediations:** Exit non-zero (issue detected) when `(Get-Service dot3svc).StartType -ne 'Automatic'` OR `(Get-Service dot3svc).Status -ne 'Running'`. Remediation action: run `Set-Service -Name dot3svc -StartupType Automatic` then `Start-Service dot3svc`.
+>
+> **Deploy via Intune Remediations:** **Devices** > **Remediations** > **+ Create** -- Platform: Windows 10 and later. Supply a detection script (exits 1 when the condition is detected) and a remediation script. Assign to the same device groups receiving the wired 802.1X profile. Run on a schedule (e.g., every hour) to catch service resets after Windows updates.
+
+### 802.1X Enforcement Staging
+
+> **DANGER -- 802.1X Enforcement Staging**
+>
+> Do not set 802.1X enforcement to **Enforce** until you have confirmed all of the following:
+>
+> 1. The RADIUS server is reachable from managed devices (test with `Test-NetConnection` or a pilot device in **Do not enforce** mode).
+> 2. All target devices have received valid client certificates (check Intune device status for the SCEP/PKCS profile -- confirm "Succeeded" with cert enrolled).
+> 3. A break-glass procedure exists and has been tested.
+>
+> Setting enforcement to **Enforce** before the cert pipeline is validated blocks **ALL wired-connected devices simultaneously**. Removing the enforcement policy to recover requires delivering a new Intune policy over the network -- which is unavailable because enforcement has already locked all wired ports (chicken-and-egg). This can take down an entire office or floor with no remote remediation path.
+>
+> **Staged rollout:** Deploy with **Do not enforce** first. Confirm authentication succeeds on a pilot set of devices across each switch and VLAN segment. Switch to **Enforce** only after validation across the full target population.
+>
+> **Break-glass procedure:** Prepare at least one of the following before enabling enforcement: (a) a non-802.1X switch port accessible to on-site staff; (b) a USB-to-Ethernet adapter that connects to a network segment not subject to 802.1X enforcement; (c) local administrator access to remove or modify the Intune device configuration manually.
+>
+> **Enforcement field values:** The wired profile 802.1X enforcement field offers three values -- **Not configured** (enforcement state unspecified; profile delivers settings without setting enforcement), **Do not enforce** (settings delivered; switch port not required to authenticate), and **Enforce** (switch port requires 802.1X; blocked access if RADIUS unreachable or device lacks a valid cert).
+
+### Wired per-EAP-method configuration matrix
+
+All three EAP methods are co-equal configuration paths -- no method is ranked or recommended as a default. The wired matrix adds three settings not present in the Wi-Fi matrix: **Disable user prompts for server validation**, **Require cryptographic binding** (PEAP only), and **PFX Import** as a client cert option for EAP-TLS.
+
+| Setting | EAP-TLS | PEAP-MSCHAPv2 | EAP-TTLS |
+|---|---|---|---|
+| EAP type field value | EAP - TLS | Protected EAP (PEAP) | EAP-TTLS |
+| Certificate server names | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix | RADIUS FQDN or CN suffix |
+| Root cert for server validation | Trusted Certificate profile reference | Trusted Certificate profile reference | Trusted Certificate profile reference |
+| Perform server validation | Enforced via trusted root reference | Yes -- always | Yes -- always |
+| Disable user prompts for server validation | Yes | Yes | Yes |
+| Require cryptographic binding | -- | Available (PEAP hardening) | -- |
+| Client authentication method | SCEP cert / PKCS cert / PFX Import (PKCS Imported) / Derived credential | Username and Password | Username and Password |
+| Inner method | -- (cert-only; no inner method) | MSCHAPv2 | PAP / CHAP / MS-CHAP / MS-CHAPv2 (must match RADIUS policy) |
+| Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
+| Authentication mode | See [Common Profile Mechanics](#authentication-mode) | See [Common Profile Mechanics](#authentication-mode) | See [Common Profile Mechanics](#authentication-mode) |
+
+**Client certificate options for EAP-TLS (Wired -- differs from Wi-Fi):**
+- SCEP certificate profile
+- PKCS certificate profile
+- **PFX Import (PKCS Imported)** -- unique to the Windows wired profile UI; imports pre-generated PFX bundles for device identity scenarios where SCEP enrollment is not available
+- Derived credential
+
+PFX Import is not available in the Windows Wi-Fi profile UI. See the [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix) for the canonical breakdown of cert-delivery options across platforms.
+
+### TEAP (Tunneled EAP -- Awareness Note)
+
+TEAP (Tunneled EAP, RFC 7170) appears in the Windows wired-network profile UI as a fourth EAP type alongside EAP-TLS, PEAP, and EAP-TTLS. It is unique to Windows wired 802.1X -- no other platform surfaces TEAP via Intune. TEAP chains machine and user credentials in a single authentication exchange using Primary EAP and Secondary EAP method selections, eliminating the need for separate machine-then-user re-authentication sequences. TEAP is not a co-equal configuration path in this guide set; for organizations evaluating TEAP, consult your RADIUS/NPS team to confirm NPS TEAP support before deployment.
+
+---
+
+## Hybrid Entra Joined -- Strong Certificate Mapping
+
+> **NOTE -- Hybrid Entra Joined: Strong Certificate Mapping Required**
+>
+> As of **2025-02-11**, Windows Domain Controllers entered enforcement mode for KB5014754 strong certificate mapping. Hybrid Entra Joined devices using EAP-TLS for 802.1X (Wi-Fi or wired) authenticate through NPS/RADIUS servers that perform Kerberos lookups against Active Directory. DC enforcement now requires the device or user **SID (Security Identifier)** to be present in the certificate's Subject Alternative Name (SAN). Without the SID in the SAN, DC-enforced authentication fails even if the certificate is otherwise valid.
+>
+> **Action required:** In Intune SCEP and PKCS certificate profiles for Hybrid Entra Joined devices, configure the Subject Alternative Name to include the device or user SID. Intune supports SID-in-SAN inclusion in both SCEP and PKCS profiles -- look for the SID variable in the SAN configuration under the certificate profile settings.
+>
+> **Cloud-only Entra Joined devices are unaffected** -- this requirement applies only when Domain Controllers are involved in the authentication chain. Devices joined exclusively to Entra ID (not Hybrid) authenticate without going through AD DC Kerberos validation.
+>
+> *last_verified: 2026-06-30 · review_by: 2026-12-27*
+
+---
+
+## See Also
+
+- [EAP Method Overview](01-eap-method-overview.md) -- co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS comparison; when-to-choose guidance
+- [Certificate Delivery Foundation](02-cert-delivery-foundation.md) -- deployment ordering rule, EKU requirements, SCEP/PKCS/PFX-Import, per-platform cert matrix
+- [Network Authentication Glossary](../_glossary-network.md) -- 802.1X, EAP, RADIUS, supplicant, server-name validation, inner-outer identity, SCEP, PKCS, trusted root
+
+---
+
+## Change History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-30 | Initial version -- Windows 802.1X admin setup: Wi-Fi + wired profiles for EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS; dot3svc Remediation pattern; enforcement-staging DANGER callout; KB5014754 strong-mapping callout | -- |
