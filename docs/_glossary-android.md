@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-05-05
-review_by: 2026-07-04
+last_verified: 2026-06-29
+review_by: 2026-09-27
 applies_to: both
 audience: all
 platform: all
@@ -11,6 +11,7 @@ phase_46_wave2_retrofit: 2026-04-25
 
 > **Platform coverage:** This glossary covers Android Enterprise provisioning and management terminology for Intune-managed Android devices. For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For Apple-platform terminology (macOS, iOS/iPadOS), see the [Apple Provisioning Glossary](_glossary-macos.md). For Linux terminology, see [Linux Provisioning Glossary](_glossary-linux.md).
 > **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
+> **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
 
 ## Alphabetical Index
 
