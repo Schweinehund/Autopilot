@@ -64,7 +64,12 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. An admin can choose among EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS as co-equal paths from `01-eap-method-overview.md`, including what each method requires from the client and when each is selected
   3. An admin can follow the cert-delivery foundation (`02-cert-delivery-foundation.md`) to understand the hard deployment ordering (trusted-root profile → SCEP/PKCS client cert → network profile), EKU requirements, RADIUS server-name validation, and the per-platform cert-delivery support matrix
   4. The scope callout template establishing the Intune-client-side-only boundary is present in the foundation and reusable by per-platform guides
-**Plans**: TBD
+**Plans**: 5 plans
+- [ ] 101-01-PLAN.md — Author `_glossary-network.md` (13 platform-neutral 802.1X terms, 3-actor model vocabulary) [DOT1X-01]
+- [ ] 101-02-PLAN.md — Author `01-eap-method-overview.md` (co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS + 3-actor Mermaid) [DOT1X-02]
+- [ ] 101-03-PLAN.md — Author `02-cert-delivery-foundation.md` (ordering rule, scope callout/SC4, EKU, server-name validation, per-platform cert matrix) [DOT1X-03]
+- [ ] 101-04-PLAN.md — Author `00-overview.md` (thin A2 navigation entry point + wired-gap flag) [DOT1X-01]
+- [ ] 101-05-PLAN.md — Insert one-directional see-also banners into the 4 existing platform glossaries [DOT1X-01]
 **UI hint**: no
 
 ### Phase 102: Windows 802.1X Admin-Setup (Wi-Fi + Wired)
