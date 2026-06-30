@@ -714,12 +714,12 @@
         },
         "103": {
           "issueKey": "RTS-700",
-          "status": "in_progress",
+          "status": "done",
           "name": "macOS 802.1X Admin-Setup (Wi-Fi + Wired)"
         },
         "104": {
           "issueKey": "RTS-701",
-          "status": "todo",
+          "status": "in_progress",
           "name": "iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)"
         },
         "105": {
