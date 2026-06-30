@@ -135,3 +135,32 @@ Choose EAP-TTLS when:
 - The RADIUS environment is configured with inner authentication methods beyond MSCHAPv2 (PAP, MS-CHAP)
 - Flexibility in inner credential type is a requirement that PEAP-MSCHAPv2 does not satisfy
 - Non-Windows platforms that support EAP-TTLS inner method options are in scope
+
+---
+
+## EAP Method Comparison
+
+| Property | EAP-TLS | PEAP-MSCHAPv2 | EAP-TTLS |
+|---|---|---|---|
+| Client cert required | Yes | No | No |
+| Server cert required | Yes | Yes | Yes |
+| Inner credential | None (cert-only) | Domain username/password (MSCHAPv2) | PAP / MS-CHAP / MS-CHAPv2 |
+| Identity privacy | Outer identity config | Outer identity config | Outer identity config |
+| Intune support | Win / macOS / iOS / Android / Linux* | Win / macOS / iOS / Android / Linux* | Win / macOS / iOS / Android |
+| Wired support | Win / macOS / iOS | Win / macOS / iOS | Win / macOS / iOS |
+
+\*Linux: script-based EAP-TLS only via nmcli; PEAP-MSCHAPv2 and EAP-TTLS on Linux are not documented in Microsoft Learn and are out of scope for this guide set.
+
+## TEAP
+
+Tunneled EAP (TEAP, RFC 7170) is visible in the Windows Intune wired-network profile UI and is unique to Windows wired 802.1X configuration. It is not a co-equal path in this guide set -- it is a Windows-wired-only awareness item. A one-paragraph awareness note for TEAP appears in the Windows 802.1X guide (Phase 102). For all platforms other than Windows wired, TEAP is out of scope for this guide set.
+
+For certificate delivery requirements -- trusted root profiles, SCEP/PKCS client certificate profiles, the deployment ordering rule, and the per-platform cert-delivery support matrix -- see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md).
+
+---
+
+## Change History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-06-29 | Initial version -- co-equal EAP method overview (EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS) | -- |
