@@ -39,6 +39,7 @@ Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS AD
 | [TPM Attestation Decision Tree](decision-trees/03-tpm-attestation.md) | Pre-provisioning [TPM](_glossary.md#tpm) attestation failure |
 | [L1 Runbooks](l1-runbooks/00-index.md) | Scripted procedures for the five highest-volume failure scenarios |
 | [L1 Quick-Reference Card](quick-ref-l1.md) | One-page cheat sheet -- top checks and escalation triggers |
+| [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) | 802.1X authentication failure symptom routing (cross-platform: cert failure / RADIUS reject / server-trust failure / EAP negotiation failure) |
 
 ### Service Desk (L1) -- APv2
 
@@ -65,6 +66,7 @@ Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS AD
 | [Registry Paths](reference/registry-paths.md) | Autopilot-relevant registry locations with confidence ratings |
 | [Network Endpoints](reference/endpoints.md) | Required endpoints with test commands |
 | [L2 Quick-Reference Card](quick-ref-l2.md) | One-page cheat sheet -- commands, log paths, event IDs |
+| [802.1X L2 Investigation](l2-runbooks/31-8021x-log-collection.md) | Cross-platform prerequisite: #31 log collection first, then [Cert Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md) or [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md) |
 
 ### Desktop Engineering (L2) -- APv2
 
@@ -110,6 +112,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS Platform SSO Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Platform SSO sign-in failure (runbook #35: "Registration Required" not appearing) or Secure Enclave key loss after password reset (runbook #36); or local password recovery for locked-out users ([runbook #37](l1-runbooks/37-macos-local-password-reset.md): FileVault recovery key / LAPS admin / Apple ID) |
 | [macOS PSSO Provisioning Walkthrough](macos-lifecycle/01-psso-provisioning-walkthrough.md) | Walk through a Mac from enrollment to PSSO-registered end user — both standard post-enrollment (A1) and ADE-during-Setup-Assistant macOS 26+ (A2) paths |
 | [macOS MDM Migration Walkthrough (Kandji/Iru → Intune)](macos-lifecycle/02-mdm-migration-psso.md) | Walk through B1 wipe-free in-place migration (macOS 26+) or B2 wipe-and-re-enroll (macOS 25 or earlier) from Kandji/Iru to Intune |
+| [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) | 802.1X authentication failure symptom routing (cross-platform: cert failure / RADIUS reject / server-trust failure / EAP negotiation failure) |
 
 ### Desktop Engineering (L2)
 
@@ -128,6 +131,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [macOS PSSO Provisioning Walkthrough](macos-lifecycle/01-psso-provisioning-walkthrough.md) | Walk through a Mac from enrollment to PSSO-registered end user — both standard post-enrollment (A1) and ADE-during-Setup-Assistant macOS 26+ (A2) paths |
 | [macOS MDM Migration Walkthrough (Kandji/Iru → Intune)](macos-lifecycle/02-mdm-migration-psso.md) | Walk through B1 wipe-free in-place migration (macOS 26+) or B2 wipe-and-re-enroll (macOS 25 or earlier) from Kandji/Iru to Intune |
 | [macOS MDM Migration Failure Runbook](l2-runbooks/30-macos-mdm-migration-failure.md) | Investigate migration failures — Track A: deadline lockout (non-dismissible full-screen prompt, ABM admin recovery), Track B: profile-not-delivered / enrollment-failed (leftover Kandji/Iru agent), Track C: PSSO re-registration stuck |
+| [802.1X L2 Investigation](l2-runbooks/31-8021x-log-collection.md) | Cross-platform prerequisite: #31 log collection first, then [Cert Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md) or [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md) |
 
 ### Admin Setup
 
@@ -137,6 +141,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 | [Network Endpoints Reference](reference/endpoints.md#macos-ade-endpoints) | Verify firewall rules for all required ADE endpoints |
 | [macOS Admin Setup Guides](admin-setup-macos/00-overview.md) | ABM configuration, enrollment profiles, configuration profiles, app deployment, compliance policies |
 | [macOS Platform SSO Admin Setup Guides](admin-setup-macos/00-overview.md) | Platform SSO deployment (guide 07: setup), authentication method selection and deep-dive (guide 08: Secure Enclave key, Password sync, Smart card), legacy SSO plug-in migration (guide 09), Kerberos SSO Extension deployment (guide 10), and Graph API Platform Credential management (guide 11) |
+| [802.1X Admin Setup](admin-setup-8021x/04-macos.md) | macOS Wi-Fi + Wired 802.1X (deployment channel: User vs Device keychain; SCEP-only wired cert auth) |
 
 ---
 
@@ -152,6 +157,7 @@ Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and m
 | [iOS Triage Decision Tree](decision-trees/07-ios-triage.md) | Identifies the iOS failure scenario from symptoms and routes to the correct runbook |
 | [iOS L1 Runbooks](l1-runbooks/00-index.md#ios-l1-runbooks) | Scripted procedures for the top iOS failure scenarios (6 runbooks: APNs expired, ADE not starting, enrollment restriction, license invalid, device cap, compliance blocked) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#iosipados-quick-reference) | One-page cheat sheet -- iOS top checks, escalation triggers, decision tree, and runbook links |
+| [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) | 802.1X authentication failure symptom routing (cross-platform: cert failure / RADIUS reject / server-trust failure / EAP negotiation failure) |
 
 ### Desktop Engineering (L2)
 
@@ -162,6 +168,7 @@ Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and m
 | [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) | Obtain iOS diagnostic data via 3 methods: MDM diagnostic report, Company Portal log upload, or Mac+cable sysdiagnose (iOS has no CLI diagnostic tool) |
 | [iOS L2 Runbooks](l2-runbooks/00-index.md#ios-l2-runbooks) | Investigation guides for ADE token/profile delivery, app install failures, and compliance/CA timing |
 | [L2 Quick-Reference Card](quick-ref-l2.md#iosipados-quick-reference) | One-page cheat sheet -- iOS diagnostic data collection methods, Intune portal paths, and sysdiagnose triggers |
+| [802.1X L2 Investigation](l2-runbooks/31-8021x-log-collection.md) | Cross-platform prerequisite: #31 log collection first, then [Cert Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md) or [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md) |
 
 ### Admin Setup
 
@@ -173,6 +180,7 @@ Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and m
 | [Configuration Profiles](admin-setup-ios/04-configuration-profiles.md) + [App Deployment](admin-setup-ios/05-app-deployment.md) + [Compliance Policy](admin-setup-ios/06-compliance-policy.md) | Configuration, app, and compliance admin guides with per-setting supervised-only callouts |
 | [Device Enrollment](admin-setup-ios/07-device-enrollment.md) + [User Enrollment](admin-setup-ios/08-user-enrollment.md) + [MAM-WE App Protection](admin-setup-ios/09-mam-app-protection.md) | BYOD and MAM paths (Company Portal / web-based / account-driven / app-layer) |
 | [iOS Capability Matrix](reference/ios-capability-matrix.md) | Compare iOS feature parity vs Windows and macOS -- scannable 5-domain table |
+| [802.1X Admin Setup](admin-setup-8021x/05-ios.md) | iOS/iPadOS Wi-Fi + M-series iPad Wired 802.1X (three-profile deployment; SCEP-only wired cert auth) |
 
 ---
 
@@ -188,6 +196,7 @@ Troubleshooting, investigation, and setup guides for Android Enterprise provisio
 | [Android Triage Decision Tree](decision-trees/08-android-triage.md) | Identifies the Android failure scenario from symptoms and routes to the correct runbook (mode-first per Phase 40 D-01) |
 | [Android L1 Runbooks](l1-runbooks/00-index.md#android-l1-runbooks) | Scripted procedures for the 8 Android Enterprise enrollment + compliance failure scenarios (runbooks 22-29) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#android-enterprise-quick-reference) | One-page cheat sheet -- top checks with mode tags, escalation triggers, decision tree, and runbook list |
+| [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) | 802.1X authentication failure symptom routing (cross-platform: cert failure / RADIUS reject / server-trust failure / EAP negotiation failure) |
 
 ### Desktop Engineering (L2)
 
@@ -197,6 +206,7 @@ Troubleshooting, investigation, and setup guides for Android Enterprise provisio
 | [Android Log Collection Guide](l2-runbooks/18-android-log-collection.md) | Prerequisite for all Android L2 investigations (3-method: Company Portal / Microsoft Intune App / adb logcat) |
 | [Android L2 Runbooks](l2-runbooks/00-index.md#android-l2-runbooks) | Investigation guides for enrollment, app install, compliance, Knox, and AOSP failures (runbooks 18-23) |
 | [L2 Quick-Reference Card](quick-ref-l2.md#android-enterprise-quick-reference) | One-page cheat sheet -- 3-method log collection, Intune portal paths, Play Integrity verdict reference, investigation runbook list |
+| [802.1X L2 Investigation](l2-runbooks/31-8021x-log-collection.md) | Cross-platform prerequisite: #31 log collection first, then [Cert Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md) or [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md) |
 
 ### Admin Setup
 
@@ -205,6 +215,7 @@ Troubleshooting, investigation, and setup guides for Android Enterprise provisio
 | [Android Admin Setup Overview](admin-setup-android/00-overview.md) | Entry point for all Android admin setup guides; tri-portal Mermaid diagram + per-mode setup-sequence enumeration lives at this overview, not at hub level |
 | [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md) | Review the enrollment pipeline before configuring Intune + MGP (admin-context entry) |
 | [Android Capability Matrix](reference/android-capability-matrix.md) | Compare Android feature parity vs Windows, macOS, iOS -- scannable 5-domain table |
+| [802.1X Admin Setup](admin-setup-8021x/06-android.md) | Android Wi-Fi 802.1X across COBO/COPE/BYOD/Dedicated/ZTE (no native Intune wired profile for Android) |
 
 ---
 
@@ -220,6 +231,7 @@ Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04
 | [Linux Triage Decision Tree](decision-trees/09-linux-triage.md) | Identifies the Linux failure scenario from symptoms (enrollment failed / non-compliant / web-app-CA-blocking-Edge / agent service not running) and routes to the correct runbook |
 | [Linux L1 Runbooks](l1-runbooks/00-index.md#linux-l1-runbooks) | Scripted procedures for the 4 Linux failure scenarios (runbooks 30-33) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#linux-quick-reference) | One-page cheat sheet -- top checks, escalation triggers, decision tree, and runbook list |
+| [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) | 802.1X authentication failure symptom routing (cross-platform: cert failure / RADIUS reject / server-trust failure / EAP negotiation failure) |
 
 ### Desktop Engineering (L2)
 
@@ -229,6 +241,7 @@ Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04
 | [Linux Log Collection Guide](l2-runbooks/24-linux-log-collection.md) | Prerequisite for all Linux L2 investigations (3-method matrix: journalctl / file-based paths / package-state queries) |
 | [Linux L2 Runbooks](l2-runbooks/00-index.md#linux-l2-runbooks) | Investigation guides for log collection + agent investigation (runbooks 24-25) |
 | [L2 Quick-Reference Card](quick-ref-l2.md#linux-quick-reference) | One-page cheat sheet -- 3-method log collection, Intune portal paths, Linux compliance category reference, investigation runbook list |
+| [802.1X L2 Investigation](l2-runbooks/31-8021x-log-collection.md) | Cross-platform prerequisite: #31 log collection first, then [Cert Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md) or [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md) |
 
 ### Admin Setup
 
@@ -237,6 +250,7 @@ Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04
 | [Linux Admin Setup Overview](admin-setup-linux/00-overview.md) | Entry point for all Linux admin setup guides; per-file setup sequence (00-05) lives at this overview, not at hub level |
 | [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Review the enrollment pipeline before configuring Intune + intune-portal package (admin-context entry) |
 | [Linux Capability Matrix](reference/linux-capability-matrix.md) | Compare Linux feature parity vs Windows, macOS, iOS, Android -- scannable 6-domain table |
+| [802.1X Admin Setup](admin-setup-8021x/07-linux.md) | Linux EAP-TLS via nmcli (no native Intune Wi-Fi, wired, or cert-delivery profiles; script-based workaround) |
 
 ---
 
@@ -321,6 +335,10 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 | [Linux Capability Matrix](reference/linux-capability-matrix.md) | Intune feature parity comparison across all 5 platforms |
 | [Apple Business Governance Glossary](_glossary-apple-business.md) | Apple Business terminology; Organizational Units; Managed Apple Accounts; rebrand mapping (ABM → Apple Business 2026-04-14) |
 | [Cross-Org Boundary Cheat Sheet](cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md) | Apple-Business-vs-Intune responsibility table; scope-boundary disambiguation |
+| [802.1X Admin Setup Overview](admin-setup-8021x/00-overview.md) | Cross-platform 802.1X network authentication — EAP method selection, cert-delivery ordering prerequisites, per-platform admin guides |
+| [EAP Method Overview](admin-setup-8021x/01-eap-method-overview.md) | Co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS comparison; when-to-choose guidance |
+| [Certificate Delivery Foundation](admin-setup-8021x/02-cert-delivery-foundation.md) | Deployment ordering rule (trusted-root → SCEP/PKCS → network profile); EKU requirements; per-platform cert matrix |
+| [Network Authentication Glossary](_glossary-network.md) | 802.1X, EAP, EAPOL, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation terms |
 
 ## Version History
 
