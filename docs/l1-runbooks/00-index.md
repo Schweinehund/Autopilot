@@ -108,6 +108,7 @@ This index covers L1 runbooks for APv1 (classic Autopilot), APv2 (Device Prepara
 - [Profile Assignment Decision Tree](../decision-trees/02-profile-assignment.md) — Profile assignment triage flowchart
 - [Master Error Code Index](../error-codes/00-index.md) — Look up any error code
 - [Autopilot Glossary](../_glossary.md) — Term definitions
+- [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md) -- 802.1X authentication failure symptom routing
 
 ---
 
@@ -119,10 +120,22 @@ L1 runbook for the Apple Business Shared iPad passcode reset scenario. Start wit
 |---------|----------|------------|
 | [34: Apple Business Shared iPad Passcode Reset](34-apple-business-shared-ipad-passcode-reset.md) | Shared iPad passcode reset via Apple Business UI (Path A primary); Paths B/C escalation to L2 | iOS+macOS+Shared iPad |
 
+## 802.1X L1 Runbooks
+
+L1 runbooks for 802.1X network authentication failure scenarios. All four runbooks are cross-platform — each covers Windows, macOS, iOS/iPadOS, Android Enterprise, and Linux with per-platform inline sections. Start with the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md) to route by symptom.
+
+| # | Runbook | When to Use |
+|---|---------|-------------|
+| 38 | [802.1X Certificate Failure](38-8021x-certificate-failure.md) | Client certificate not deploying, cert profile shows error, or authentication fails with cert-related event ID |
+| 39 | [802.1X RADIUS Reject](39-8021x-radius-reject.md) | RADIUS server explicitly rejects authentication; "Access-Reject" in logs |
+| 40 | [802.1X Server Trust Failure](40-8021x-server-trust-failure.md) | Dynamic trust dialog appears, or RADIUS server cert validation fails |
+| 41 | [802.1X EAP Negotiation Failure](41-8021x-eap-negotiation-failure.md) | Connection fails before authentication completes; EAP method mismatch |
+
 ## Version History
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-01 | Phase 109 (DOT1X-11): appended 802.1X L1 Runbooks H2 with runbooks #38-41 and 802.1X Triage Decision Tree to Related Resources | -- |
 | 2026-06-29 | Phase 99 (RUN-01): appended macOS Local Password Recovery runbook #37 to macOS ADE Runbooks table | -- |
 | 2026-06-21 | Phase 80 SSORUN-01/02: added macOS Platform SSO runbooks #35 and #36 to macOS ADE Runbooks table | -- |
 | 2026-05-22 | Phase 65 plan 65-02: appended Apple Business L1 Runbooks H2 with #34 row | -- |
