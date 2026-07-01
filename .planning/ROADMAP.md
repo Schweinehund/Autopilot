@@ -47,7 +47,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
  (completed 2026-06-30)
 
 - [x] **Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)** - Android Wi-Fi 802.1X across all AE modes with version-gated RADIUS requirements and explicit no-native-wired-profile gap stub (completed 2026-06-30)
-- [ ] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub
+- [x] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub (completed 2026-07-01)
 - [ ] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves
 - [ ] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree
 - [ ] **Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs** - Capability-matrix 802.1X rows for all 5 platforms and navigation-last hub wiring across all six hub files
@@ -198,7 +198,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 106-02-PLAN.md — Fill item 7 (Linux) in the local 00-overview.md platform-guide list linking 07-linux.md [DOT1X-08]
+- [x] 106-02-PLAN.md — Fill item 7 (Linux) in the local 00-overview.md platform-guide list linking 07-linux.md [DOT1X-08]
 
 **UI hint**: no
 
@@ -320,7 +320,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 103. macOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
-| 106. Linux 802.1X Admin-Setup | 1/2 | In Progress|  |
+| 106. Linux 802.1X Admin-Setup | 2/2 | Complete   | 2026-07-01 |
 | 107. L1 Runbooks #38-41 | 0/TBD | Not started | - |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/TBD | Not started | - |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
