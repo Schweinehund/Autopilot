@@ -218,7 +218,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 3 plans (Wave 1: 01 + 02 in parallel; Wave 2: 03)
 **Wave 1**
 
-- [ ] 107-01-PLAN.md — L1 runbooks #38 (cert failure, SC1) + #39 (RADIUS reject, SC2)
+- [x] 107-01-PLAN.md — L1 runbooks #38 (cert failure, SC1) + #39 (RADIUS reject, SC2)
 - [ ] 107-02-PLAN.md — L1 runbooks #40 (server-trust failure, SC2) + #41 (EAP negotiation, SC2)
 
 **Wave 2** *(blocked on Wave 1 completion)*
@@ -337,7 +337,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 104. iOS/iPadOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
-| 107. L1 Runbooks #38-41 | 0/TBD | Not started | - |
+| 107. L1 Runbooks #38-41 | 1/3 | In Progress|  |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/TBD | Not started | - |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
