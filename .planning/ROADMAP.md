@@ -243,7 +243,20 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. L2 runbook #32 (cert investigation) enables an engineer to validate the certificate chain, check SCEP profile deployment status per platform, and identify EKU / SAN / expiry issues
   3. L2 runbook #33 (RADIUS/EAP investigation) documents what information to request from the RADIUS/NPS team (not NPS configuration steps) and how to diagnose EAP method mismatch and server-name validation failures per platform
 
-**Plans**: TBD
+**Plans**: 4 plans (Wave 1: 01; Wave 2: 02 + 03 in parallel; Wave 3: 04 link-wiring)
+
+**Wave 1**
+
+- [ ] 108-01-PLAN.md — Author `31-8021x-log-collection.md` (cross-platform 802.1X L2 log collection; per-platform signal map; prerequisite for #32/#33) [DOT1X-10]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 108-02-PLAN.md — Author `32-8021x-cert-investigation.md` (per-platform cert chain / SCEP status / EKU-SAN-expiry) [DOT1X-10]
+- [ ] 108-03-PLAN.md — Author `33-8021x-radius-eap-investigation.md` (RADIUS-team request checklist + per-platform EAP-mismatch + server-name-validation diagnosis) [DOT1X-10]
+
+**Wave 3** *(blocked on Wave 2 completion — navigation-last)*
+
+- [ ] 108-04-PLAN.md — Wire live L2 links into `decision-trees/10-8021x-triage.md` + the four L1 runbooks #38-41 (after #31-33 commit) [DOT1X-10]
 **UI hint**: no
 
 ### Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs
@@ -338,7 +351,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
-| 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/TBD | Not started | - |
+| 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/4 | Not started | - |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
