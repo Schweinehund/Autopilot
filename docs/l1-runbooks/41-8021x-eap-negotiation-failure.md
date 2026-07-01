@@ -53,7 +53,7 @@ Perform these checks before collecting platform-specific diagnostic output. They
 
    If any cert profile is not Succeeded, this is a certificate deployment failure — route to [#38: 802.1X Certificate Failure](38-8021x-certificate-failure.md) instead.
 
-2. Open the Wi-Fi or Wired network profile in Intune (**Devices** > **Configuration** > [profile] > **Properties**). Note the **EAP type** configured (EAP-TLS, PEAP, or EAP-TTLS) and, if applicable, the **inner authentication method** (MS-CHAPv2, PAP, etc.). For EAP method definitions, supported configurations, and the co-equal path comparison, see [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md) — do not restate the method details inline.
+2. Open the Wi-Fi or Wired network profile in Intune (**Devices** > **Configuration** > [profile] > **Properties**). Note the **EAP type** configured (EAP-TLS, PEAP, or EAP-TTLS) and, if applicable, the **inner authentication method** (MS-CHAPv2, PAP, etc.). For EAP method definitions, supported configurations, and the co-equal path comparison, see [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md).
 
 3. Ask the following questions to identify the failure scope:
    - "Which EAP method is configured in the Intune profile?"
@@ -83,7 +83,7 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 
 Events in the `Microsoft-Windows-WLAN-AutoConfig/Operational` channel for EAP negotiation failures may reference the EAP method type (for example, EAP type 25 = PEAP, type 21 = EAP-TTLS, type 13 = EAP-TLS) or include method-mismatch text alongside the failure event. Do not interpret individual events — collect the complete log output and provide it to L2.
 
-For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) (read-only link; do not reproduce the service check inline).
+For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
 
 ### macOS
 

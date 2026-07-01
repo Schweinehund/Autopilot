@@ -74,7 +74,7 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 
 A RADIUS reject (Access-Reject) in the `Microsoft-Windows-WLAN-AutoConfig/Operational` channel typically appears as event 8003 (authentication failed / disconnected) **without** a preceding event referencing a certificate chain or certificate-not-found error. This pattern distinguishes a RADIUS reject from a certificate failure (#38). Do not interpret individual events — collect the complete log output and provide it to L2.
 
-For wired connections, also note whether the Wired AutoConfig service (dot3svc) is confirmed running. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) (read-only link; do not reproduce the service check inline).
+For wired connections, also note whether the Wired AutoConfig service (dot3svc) is confirmed running. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
 
 ### macOS
 

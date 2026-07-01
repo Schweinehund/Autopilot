@@ -23,7 +23,7 @@ The 802.1X connection fails because the device supplicant cannot trust the RADIU
 Common underlying causes:
 
 - The **Trusted Certificate profile** for the RADIUS server's root CA is not assigned to the device group, has not yet deployed, or shows a non-Succeeded status in Intune.
-- The **Certificate server names** field in the Wi-Fi or Wired network profile is empty. With server validation nominally enabled but no server name configured, the supplicant cannot complete server-name validation — this is a misconfiguration that produces this symptom on all platforms. See [RADIUS Server-Name Validation](../admin-setup-8021x/02-cert-delivery-foundation.md#radius-server-name-validation) for the full explanation and configuration requirement — do not restate the requirement inline.
+- The **Certificate server names** field in the Wi-Fi or Wired network profile is empty. With server validation nominally enabled but no server name configured, the supplicant cannot complete server-name validation — this is a misconfiguration that produces this symptom on all platforms. See [RADIUS Server-Name Validation](../admin-setup-8021x/02-cert-delivery-foundation.md#radius-server-name-validation) for the full explanation and configuration requirement.
 
 Differential:
 
@@ -73,7 +73,7 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 
 Server-trust failures in the `Microsoft-Windows-WLAN-AutoConfig/Operational` channel typically appear as event 8001 containing text such as "The server certificate chain couldn't be validated" or as event 8003 (authentication failed). The trust dialog ("Trust this certificate?") is a Windows-specific behavior — the user clicking through dismisses the dialog for that session but does not persistently resolve the misconfiguration. Do not interpret individual events — collect the complete log output and provide it to L2.
 
-For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) (read-only link; do not reproduce the service check inline).
+For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
 
 ### macOS
 

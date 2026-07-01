@@ -32,7 +32,7 @@ If all certificate profiles show **Succeeded** and the device is being cleanly r
 
 ## First Checks (All Platforms)
 
-Verify certificate profile deployment status in Intune **in this exact order** (deployment order matters; see the [Certificate Delivery Ordering Constraint](../admin-setup-8021x/02-cert-delivery-foundation.md) for the full explanation — link-not-copy):
+Verify certificate profile deployment status in Intune **in this exact order** (deployment order matters; see [the deployment ordering rule](../admin-setup-8021x/02-cert-delivery-foundation.md) for the full explanation):
 
 1. In Intune admin center, navigate to **Devices** > [platform] > select device by serial number > **Device configuration**.
 
@@ -63,7 +63,7 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 
 Events 8001 (auth attempted), 8002 (auth succeeded), and 8003 (auth failed) appear in both the `Microsoft-Windows-WLAN-AutoConfig/Operational` (Wi-Fi) and `Microsoft-Windows-Wired-AutoConfig/Operational` (wired) channels. A certificate failure typically surfaces alongside a reference to "certificate was not found," "chain verification failure," or similar. Do not interpret individual events — collect the complete log output and provide it to L2.
 
-For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check (read-only link; do not reproduce the check or the WARNING block inline).
+For wired connections, also confirm the Wired AutoConfig service (dot3svc) is running before reviewing the event log. See [Windows 802.1X Admin Setup — Wired Service Dependency](../admin-setup-8021x/03-windows.md) for the service dependency check.
 
 ### macOS
 
