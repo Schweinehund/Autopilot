@@ -271,7 +271,17 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. Glossary see-also banners in all existing platform glossaries (`_glossary.md`, `_glossary-macos.md`, `_glossary-ios.md`, `_glossary-android.md`, `_glossary-linux.md`) point to the new `_glossary-network.md`
   4. All navigation edits are committed after the content files they reference are confirmed committed (navigation-last invariant)
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+**Wave 1** *(independent file sets — no shared-file conflicts)*
+
+- [ ] 109-01-PLAN.md — Add Network Authentication (802.1X) rows to all 5 capability matrices (SC1) [DOT1X-11]
+- [ ] 109-02-PLAN.md — Fold 802.1X entries into the 4 prose nav hubs: index.md, common-issues.md, quick-ref-l1.md, quick-ref-l2.md (SC2) [DOT1X-11]
+- [ ] 109-03-PLAN.md — Add cross-platform 802.1X L1/L2 sections to the two runbook-catalog indexes (SC2) [DOT1X-11]
+
+**Wave 2** *(verification gate — depends on Wave 1)*
+
+- [ ] 109-04-PLAN.md — Verify SC3 glossary banners (verify-only) + SC4 navigation-last + goal-backward SC1-SC4 check [DOT1X-11]
 **UI hint**: no
 
 ### Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs
