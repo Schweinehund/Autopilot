@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-07-01T03:40:58.303Z"
-last_activity: "2026-07-01 -- Phase 107 plan 02 complete (L1 runbooks #40 server-trust-failure and #41 EAP-negotiation-failure authored)"
+last_updated: "2026-07-01T04:00:00.000Z"
+last_activity: "2026-07-01 -- Phase 107 plan 03 complete (802.1X triage decision tree #10 authored)"
 progress:
   total_phases: 12
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 18
-  completed_plans: 18
-  percent: 56
+  completed_plans: 19
+  percent: 58
 ---
 
 # Project State
@@ -25,9 +25,9 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 ## Current Position
 
 Phase: 107
-Plan: 02 complete
+Plan: 03 complete
 Status: Executing
-Last activity: 2026-07-01 -- Phase 107 plan 02 complete (L1 runbooks #40 server-trust-failure and #41 EAP-negotiation-failure authored)
+Last activity: 2026-07-01 -- Phase 107 plan 03 complete (802.1X triage decision tree #10 authored — SC3 satisfied, DOT1X-09 advanced)
 
 ## v1.14 Phase Dependency Summary
 
@@ -328,6 +328,13 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - Phase 112 is the sole deliverable of its phase — harness bump never batches with content or tooling (mirrors v1.13 Phase 100 exactly)
 - 8 discuss-phase flags from REQUIREMENTS.md are NOT resolved at roadmap — they are gray-area scoping decisions deferred to /gsd-discuss-phase with adversarial-review per project convention
 
+**Phase 107 plan 03 decisions (2026-07-01):**
+
+- D-03 confirmed: 802.1X triage tree is symptom-primary (flat shape); per-platform leaves live inside runbooks; tree stays within 6-node / 2-step budget
+- D-04 confirmed: decision tree #10 is Phase-107 deliverable; Phase 108 title mention of "Decision Tree #10" is a stale label (no action in Phase 108 for the tree)
+- D-06 applied: EAPE escalation node has no click directive; L2 Log Collection (#31) named in prose only; live links deferred to Phase 108
+- D-08 applied: 00-index.md 802.1X section consciously deferred to Phase 109 (navigation-last)
+
 **Durable architectural decisions (carried forward from v1.13):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commit (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; predecessor frozen surfaces BYTE-UNCHANGED
@@ -370,10 +377,10 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-01T03:40:58.286Z
-Stopped at: Completed 107-02-PLAN.md
+Last session: 2026-07-01T04:00:00.000Z
+Stopped at: Completed 107-03-PLAN.md
 Resume file: None
-Next action: Execute Phase 107 plan 03 (decision tree #10 — 802.1X triage)
+Next action: Phase 107 complete — execute Phase 108 (L2 runbooks #31-33)
 
 ## Operator Next Steps
 
@@ -393,3 +400,4 @@ Next action: Execute Phase 107 plan 03 (decision tree #10 — 802.1X triage)
 | Phase 106 P02 | 4m | 1 tasks | 1 files |
 | Phase 107 P01 | 8m | 2 tasks | 2 files |
 | Phase 107 P02 | 7m | 2 tasks | 2 files |
+| Phase 107 P03 | 10m | 1 tasks | 1 files |

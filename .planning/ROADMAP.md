@@ -50,7 +50,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
  (completed 2026-06-30)
 
 - [x] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub (completed 2026-07-01)
-- [ ] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves
+- [x] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves (completed 2026-07-01)
 - [ ] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree
 - [ ] **Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs** - Capability-matrix 802.1X rows for all 5 platforms and navigation-last hub wiring across all six hub files
 - [ ] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps
@@ -223,7 +223,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 107-03-PLAN.md — decision tree #10 8021x-triage (symptom-primary routing, SC3)
+- [x] 107-03-PLAN.md — decision tree #10 8021x-triage (symptom-primary routing, SC3)
 
 **Cross-cutting constraints:**
 
@@ -337,7 +337,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 104. iOS/iPadOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
-| 107. L1 Runbooks #38-41 | 2/3 | In Progress|  |
+| 107. L1 Runbooks #38-41 | 3/3 | Complete   | 2026-07-01 |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/TBD | Not started | - |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
