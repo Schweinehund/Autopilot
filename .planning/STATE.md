@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-07-01T22:12:06.652Z"
+last_updated: "2026-07-01T22:22:53.153Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 12
   completed_phases: 9
   total_plans: 30
-  completed_plans: 27
+  completed_plans: 28
   percent: 75
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 ## Current Position
 
 Phase: 110 (pillar-b-c-corpus-fixes-mdm-migration-walkthroughs) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-07-01
 
@@ -360,6 +360,7 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - [Phase ?]: FIX-01 count is 9 (6 ADE + 3 PSSO); 802.1X runbooks #38-41 excluded (separate H2)
 - [Phase ?]: FIX-01 uses 'see row below' DRY pointer — avoids re-enumerating #35/#36/#37 already listed in :112 PSSO row
 - [Phase ?]: FIX-03 inserted in User-Locked-Out block only; Post-Migration block untouched (not a fit for #36 after password reset)
+- [Phase ?]: D-01/D-02 honored: iOS migration walkthrough (MIGF-01) created with SC4 forced-restart-vs-full-screen-lock differentiator; 7-stage in-place track only; no FileVault/PSSO stages
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -387,7 +388,7 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-01T22:12:06.636Z
+Last session: 2026-07-01T22:22:41.397Z
 Stopped at: Completed 110-01-PLAN.md (FIX-01/02/03)
 Resume file: None
 Next action: Run /gsd-verify-work for Phase 109, then execute Phase 110
@@ -419,3 +420,4 @@ Next action: Run /gsd-verify-work for Phase 109, then execute Phase 110
 | Phase 109 P03 | 5m | 2 tasks | 2 files |
 | Phase 109 P04 | 8m | 2 tasks | 1 files |
 | Phase 110 P01 | 4m | 3 tasks | 3 files |
+| Phase 110 P02 | 7m | 3 tasks | 1 files |

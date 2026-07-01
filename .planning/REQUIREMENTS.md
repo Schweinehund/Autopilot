@@ -39,7 +39,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Pillar C — MDM Migration Walkthroughs
 
-- [ ] **MIGF-01**: An admin can follow an iOS/iPadOS ABM "Assign Device Management" + Deadline migration walkthrough (Kandji/Iru → Intune) covering iOS/iPadOS-specific forced-restart + deadline enforcement (vs the macOS full-screen lock) and post-migration enrollment verification.
+- [x] **MIGF-01**: An admin can follow an iOS/iPadOS ABM "Assign Device Management" + Deadline migration walkthrough (Kandji/Iru → Intune) covering iOS/iPadOS-specific forced-restart + deadline enforcement (vs the macOS full-screen lock) and post-migration enrollment verification.
 - [ ] **MIGF-02**: An admin can follow source-MDM-specific release steps for **Jamf Pro + Mosyle** (FileVault key retrieval, Activation Lock bypass, device-record deletion) as an addendum to `docs/macos-lifecycle/02-mdm-migration-psso.md`.
 
 ### Pillar D — Validator Tooling Refactors
@@ -122,7 +122,7 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 | FIX-01 | Phase 110 | Complete |
 | FIX-02 | Phase 110 | Complete |
 | FIX-03 | Phase 110 | Complete |
-| MIGF-01 | Phase 110 | Pending |
+| MIGF-01 | Phase 110 | Complete |
 | MIGF-02 | Phase 110 | Pending |
 | TOOL-01 | Phase 111 | Pending |
 | TOOL-02 | Phase 111 | Pending |
