@@ -165,6 +165,7 @@ Troubleshooting, investigation, and setup guides for iOS/iPadOS enrollment and m
 |----------|-------------|
 | [iOS Enrollment Path Overview](ios-lifecycle/00-enrollment-overview.md) | Review the 4 enrollment paths before diagnosing |
 | [iOS ADE Lifecycle](ios-lifecycle/01-ade-lifecycle.md) | End-to-end supervised ADE enrollment stages with behind-the-scenes technical detail |
+| [iOS/iPadOS MDM Migration Walkthrough (Kandji/Iru → Intune)](ios-lifecycle/02-mdm-migration.md) | Walk through in-place ABM "Assign Device Management" + Deadline migration (iOS/iPadOS 26+); includes pre-26 wipe pointer to the ADE re-enroll path |
 | [iOS Log Collection Guide](l2-runbooks/14-ios-log-collection.md) | Obtain iOS diagnostic data via 3 methods: MDM diagnostic report, Company Portal log upload, or Mac+cable sysdiagnose (iOS has no CLI diagnostic tool) |
 | [iOS L2 Runbooks](l2-runbooks/00-index.md#ios-l2-runbooks) | Investigation guides for ADE token/profile delivery, app install failures, and compliance/CA timing |
 | [L2 Quick-Reference Card](quick-ref-l2.md#iosipados-quick-reference) | One-page cheat sheet -- iOS diagnostic data collection methods, Intune portal paths, and sysdiagnose triggers |

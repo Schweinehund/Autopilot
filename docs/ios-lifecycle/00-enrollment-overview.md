@@ -80,5 +80,6 @@ MAM-WE provides selective wipe capability: managed app data and corporate accoun
 ## See Also
 
 - [iOS/iPadOS ADE Lifecycle](01-ade-lifecycle.md) -- for ADE end-to-end stages from ABM assignment through post-enrollment management
+- [iOS/iPadOS MDM Migration Walkthrough](02-mdm-migration.md) -- for migrating an already-ADE-enrolled fleet from Kandji/Iru to Intune (in-place, iOS/iPadOS 26+)
 - [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md) -- for cross-platform comparison of the ADE pipeline
 - [Apple Provisioning Glossary](../_glossary-macos.md) -- for terminology including [ADE](../_glossary-macos.md#ade), [ABM](../_glossary-macos.md#abm), and [VPP](../_glossary-macos.md#vpp)
