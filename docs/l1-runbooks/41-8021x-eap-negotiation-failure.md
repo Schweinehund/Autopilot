@@ -126,7 +126,10 @@ Escalate to L2 if:
 - For Android: Intune portal profile status screenshot (adb logcat is L2-collected; do not include adb output at this stage)
 - Results of the First Checks steps above, including confirmed EAP type and platform-scope symptom pattern
 
-See L2 Log Collection (#31) for per-platform log sources, then L2 RADIUS/EAP Investigation (#33) for EAP method mismatch diagnosis, inner-auth negotiation analysis, and per-platform EAP negotiation investigation. (Live links wired in Phase 108.)
+See [L2 Log Collection (#31)](../l2-runbooks/31-8021x-log-collection.md) for per-platform
+log sources, then [L2 RADIUS/EAP Investigation (#33)](../l2-runbooks/33-8021x-radius-eap-investigation.md)
+for EAP method mismatch diagnosis, inner-auth negotiation analysis, and per-platform EAP
+negotiation investigation.
 
 ---
 

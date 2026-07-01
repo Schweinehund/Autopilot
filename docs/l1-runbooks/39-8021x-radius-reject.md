@@ -118,7 +118,10 @@ Escalate to L2 if:
 - For Android: Intune portal profile status screenshot (adb logcat is L2-collected; do not include adb output at this stage)
 - Results of the First Checks steps above, including confirmed RADIUS server-name field status and EAP method
 
-See L2 Log Collection (#31) for per-platform log sources, then L2 RADIUS/EAP Investigation (#33) for RADIUS policy analysis, EAP method diagnosis, NPS policy rule review, and per-platform EAP negotiation investigation. (Live links wired in Phase 108.)
+See [L2 Log Collection (#31)](../l2-runbooks/31-8021x-log-collection.md) for per-platform
+log sources, then [L2 RADIUS/EAP Investigation (#33)](../l2-runbooks/33-8021x-radius-eap-investigation.md)
+for RADIUS policy analysis, EAP method diagnosis, NPS policy rule review, and per-platform
+EAP negotiation investigation.
 
 ---
 

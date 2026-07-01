@@ -115,7 +115,13 @@ Escalate to L2 if:
 - For Android: Intune portal profile status screenshot (adb logcat is L2-collected; do not include adb output at this stage)
 - Results of the First Checks steps above (Trusted Certificate profile status and Certificate server names field content)
 
-See L2 Log Collection (#31) for per-platform log sources, then L2 RADIUS/EAP Investigation (#33) for server-name validation analysis and per-platform EAPOL server-trust investigation — #33 is the primary escalation destination for this runbook. Also note L2 Certificate Chain Investigation (#32) as a cross-reference: the trusted-root certificate chain is the root-cause mechanism when the RADIUS server's root CA is not deployed to the device. (Live links wired in Phase 108.)
+See [L2 Log Collection (#31)](../l2-runbooks/31-8021x-log-collection.md) for per-platform
+log sources, then [L2 RADIUS/EAP Investigation (#33)](../l2-runbooks/33-8021x-radius-eap-investigation.md)
+for server-name validation analysis and per-platform EAPOL server-trust investigation —
+#33 is the primary escalation destination for this runbook. Also note
+[L2 Certificate Chain Investigation (#32)](../l2-runbooks/32-8021x-cert-investigation.md)
+as a cross-reference: the trusted-root certificate chain is the root-cause mechanism when
+the RADIUS server's root CA is not deployed to the device.
 
 ---
 

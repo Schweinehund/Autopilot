@@ -105,7 +105,10 @@ Escalate to L2 if:
 - For Android: Intune portal profile status screenshot (adb logcat is L2-collected; do not include adb output at this stage)
 - Which First Checks steps were completed and their results
 
-See L2 Log Collection (#31) for per-platform log sources, then L2 Certificate Chain Investigation (#32) for certificate chain validation, SCEP/PKCS profile deployment diagnosis, EKU and SAN verification, and expiry analysis. (Live links wired in Phase 108.)
+See [L2 Log Collection (#31)](../l2-runbooks/31-8021x-log-collection.md) for per-platform
+log sources, then [L2 Certificate Chain Investigation (#32)](../l2-runbooks/32-8021x-cert-investigation.md)
+for certificate chain validation, SCEP/PKCS profile deployment diagnosis, EKU and SAN
+verification, and expiry analysis.
 
 ---
 
