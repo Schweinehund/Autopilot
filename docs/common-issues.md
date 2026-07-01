@@ -154,6 +154,13 @@ Conditional Access blocking enrollment, compliance not evaluating, or security b
 - **Admin:** [Compliance Policy Timing](reference/compliance-timing.md) — "Not evaluated" vs "Non-compliant"
 - **Admin:** [Security Baseline Conflicts](reference/security-baseline-conflicts.md) — BitLocker, WDAC, reboot conflicts
 
+### 802.1X Network Authentication Failure
+
+Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollment.
+
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
+
 ## macOS ADE Failure Scenarios
 
 > **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
@@ -246,6 +253,13 @@ User cannot log in to their Mac — local password is unknown or forgotten. Reco
 - **L1:** [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md)
 - **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md) — if PSSO re-registration fails after recovering access
 
+### 802.1X Network Authentication Failure
+
+Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollment.
+
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
+
 ## iOS/iPadOS Failure Scenarios
 
 > **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
@@ -300,6 +314,13 @@ Device shows compliant in Intune but Conditional Access still blocks Microsoft 3
 ### iOS: App Protection Policies Not Applying (MAM-WE)
 
 > **Advisory:** MAM-WE-specific L1/L2 runbooks are deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](admin-setup-ios/09-mam-app-protection.md). For the MAM-WE glossary entry, see [MAM-WE in Apple Provisioning Glossary](_glossary-macos.md#mam-we).
+
+### 802.1X Network Authentication Failure
+
+Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollment.
+
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
 
 ## Android Enterprise Failure Scenarios
 
@@ -369,6 +390,13 @@ AOSP enrollment did not initiate or stalled across the 5 supported OEMs (RealWea
 
 - **L1:** [AOSP Enrollment Failed](l1-runbooks/29-android-aosp-enrollment-failed.md)
 - **L2:** [Android AOSP Investigation](l2-runbooks/23-android-aosp-investigation.md)
+
+### 802.1X Network Authentication Failure
+
+Android Enterprise device cannot connect to a 802.1X-protected Wi-Fi network after enrollment. Note: Android Enterprise has no native Intune wired-network profile type; this scenario covers Wi-Fi 802.1X only.
+
+- **L1:** [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) | [RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) | [Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) | [EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — start with [802.1X Triage Decision Tree](decision-trees/10-8021x-triage.md) to route by symptom
+- **L2:** [802.1X Log Collection](l2-runbooks/31-8021x-log-collection.md) | [Cert Investigation](l2-runbooks/32-8021x-cert-investigation.md) | [RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md)
 
 ## Apple Business Governance Failure Scenarios
 
