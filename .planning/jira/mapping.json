@@ -744,7 +744,7 @@
         },
         "109": {
           "issueKey": "RTS-706",
-          "status": "in_progress",
+          "status": "done",
           "name": "802.1X Integration — Capability Matrices + Navigation Hubs"
         },
         "110": {
