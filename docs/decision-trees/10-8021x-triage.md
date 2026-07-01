@@ -12,7 +12,7 @@ platform: windows+macos+ios+android+linux
 
 ## How to Use This Tree
 
-Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook. All terminal nodes are within 2 decision steps of the root (well under the 5-node budget). Per Phase 107 D-03, this tree uses a flat symptom-primary shape — per-platform diagnostic leaves live inside the runbooks, not this tree, so the tree stays compact. This tree is a Phase-107 deliverable per D-04.
+Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook. All terminal nodes are within 2 decision steps of the root. This tree uses a flat symptom-primary shape — per-platform diagnostic detail lives inside each runbook, not this tree, so the tree stays compact.
 
 ## Legend
 
@@ -47,7 +47,7 @@ graph TD
 
 ## Routing Verification
 
-All terminal nodes are within 2 decision steps of the root node (EAP1), well under the 5-node budget.
+All terminal nodes are within 2 decision steps of the root node (EAP1).
 
 | Path | Step 1 (root: EAP1) | Step 2 | Destination |
 |------|---------------------|--------|-------------|
@@ -91,4 +91,4 @@ Collect this information before routing to L2.
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-06-30 | Phase 107 plan 03: initial authoring — 802.1X triage decision tree (symptom-primary, D-03/D-04) | -- |
+| 2026-06-30 | Phase 107 plan 03: initial authoring — 802.1X triage decision tree (symptom-primary) | -- |
