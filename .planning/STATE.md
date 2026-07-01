@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-07-01T00:31:40.253Z"
-last_activity: 2026-07-01 -- Phase 106 planning complete
+last_updated: "2026-07-01T00:42:09.060Z"
+last_activity: 2026-07-01
 progress:
   total_phases: 12
   completed_phases: 5
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
   percent: 42
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and now 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 106 — linux 802.1x admin setup (script based eap tls + wired gap)
+**Current focus:** Phase 106 — linux-802-1x-admin-setup-script-based-eap-tls-wired-gap
 
 ## Current Position
 
-Phase: 106
-Plan: Not started
+Phase: 106 (linux-802-1x-admin-setup-script-based-eap-tls-wired-gap) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-07-01 -- Phase 106 planning complete
+Last activity: 2026-07-01
 
 ## v1.14 Phase Dependency Summary
 
@@ -342,6 +342,7 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - [Phase ?]: D-01/D-03: macOS deployment-channel WARNING callout as first Common Mechanics content
 - [Phase ?]: D-11/D-12: Server validation as security requirement; dynamic-trust-dialog symptom + A-05 security-violation fact; rogue-RADIUS rationale linked not restated
 - [Phase ?]: D-06/D-07: Wired SCEP-only NOTE callout + full peer-depth per-EAP matrix (PKCS not supported for macOS wired)
+- [Phase ?]: 106-01: Ubuntu 24.04+26.04 LTS verified; WARNING tier for SC1 lead callout; EAP-TLS-only as source-confidence boundary; two-callout separation (SC1 WARNING + SC3 NOTE)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -369,9 +370,9 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-01T00:01:11.077Z
+Last session: 2026-07-01T00:41:25.746Z
 Stopped at: Phase 106 context gathered
-Resume file: .planning/phases/106-linux-802-1x-admin-setup-script-based-eap-tls-wired-gap/106-CONTEXT.md
+Resume file: None
 Next action: Run /gsd-plan-phase 101 to begin Phase 101 planning (802.1X Foundation)
 
 ## Operator Next Steps

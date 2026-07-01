@@ -23,7 +23,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 - [x] **DOT1X-05**: An Intune admin can configure 802.1X for **macOS** devices (Wi-Fi + wired) across all three EAP methods, including the irreversible deployment-channel (user vs device keychain) caveat and the wired-profile SCEP-only / PKCS-not-supported constraint.
 - [x] **DOT1X-06**: An Intune admin can configure 802.1X for **iOS/iPadOS** devices (Wi-Fi + wired — wired GA on M-series iPad) across all three EAP methods, including MAC-address-randomization handling for NAC (iOS 14+), the wired SCEP-only constraint, and PEAP inner-auth = MS-CHAPv2.
 - [x] **DOT1X-07**: An Intune admin can configure 802.1X Wi-Fi for **Android Enterprise** devices across all three EAP methods, including the UPN-in-SAN hard requirement (missing → profile deployment fails) and the version-gated RADIUS server-name behavior (Android 11+ required; Android 14+ ≤256 chars / no special chars), with the **no-native-wired-profile gap** documented explicitly (freshness-stamped).
-- [ ] **DOT1X-08**: An operator can configure 802.1X on **Linux** (Ubuntu LTS) via the documented script/`nmcli` (NetworkManager `802-1x`) EAP-TLS workaround, with the **no-native-Intune-Wi-Fi/wired/cert-profile reality leading the guide** and PEAP/EAP-TTLS marked out of scope (MEDIUM-confidence callout; verify at plan time).
+- [x] **DOT1X-08**: An operator can configure 802.1X on **Linux** (Ubuntu LTS) via the documented script/`nmcli` (NetworkManager `802-1x`) EAP-TLS workaround, with the **no-native-Intune-Wi-Fi/wired/cert-profile reality leading the guide** and PEAP/EAP-TTLS marked out of scope (MEDIUM-confidence callout; verify at plan time).
 
 ### Pillar A — 802.1X Troubleshooting Runbooks
 
@@ -115,7 +115,7 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 | DOT1X-05 | Phase 103 | Complete |
 | DOT1X-06 | Phase 104 | Complete |
 | DOT1X-07 | Phase 105 | Complete |
-| DOT1X-08 | Phase 106 | Pending |
+| DOT1X-08 | Phase 106 | Complete |
 | DOT1X-09 | Phase 107 | Pending |
 | DOT1X-10 | Phase 108 | Pending |
 | DOT1X-11 | Phase 109 | Pending |

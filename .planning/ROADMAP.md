@@ -194,7 +194,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 2 plans
 **Wave 1**
 
-- [ ] 106-01-PLAN.md — Author the Linux 802.1X EAP-TLS-via-nmcli guide (07-linux.md): lead gap WARNING, EAP scope note, Ubuntu 24.04/26.04 applies-to, out-of-band cert prerequisites, nmcli steps + two-column reference table, verification trio, Wired H2, MEDIUM-confidence freshness callout [DOT1X-08]
+- [x] 106-01-PLAN.md — Author the Linux 802.1X EAP-TLS-via-nmcli guide (07-linux.md): lead gap WARNING, EAP scope note, Ubuntu 24.04/26.04 applies-to, out-of-band cert prerequisites, nmcli steps + two-column reference table, verification trio, Wired H2, MEDIUM-confidence freshness callout [DOT1X-08]
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -320,7 +320,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 103. macOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 104. iOS/iPadOS 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
-| 106. Linux 802.1X Admin-Setup | 0/TBD | Not started | - |
+| 106. Linux 802.1X Admin-Setup | 1/2 | In Progress|  |
 | 107. L1 Runbooks #38-41 | 0/TBD | Not started | - |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/TBD | Not started | - |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
