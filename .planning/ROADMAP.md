@@ -277,7 +277,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] 109-01-PLAN.md — Add Network Authentication (802.1X) rows to all 5 capability matrices (SC1) [DOT1X-11]
 - [x] 109-02-PLAN.md — Fold 802.1X entries into the 4 prose nav hubs: index.md, common-issues.md, quick-ref-l1.md, quick-ref-l2.md (SC2) [DOT1X-11]
-- [ ] 109-03-PLAN.md — Add cross-platform 802.1X L1/L2 sections to the two runbook-catalog indexes (SC2) [DOT1X-11]
+- [x] 109-03-PLAN.md — Add cross-platform 802.1X L1/L2 sections to the two runbook-catalog indexes (SC2) [DOT1X-11]
 
 **Wave 2** *(verification gate — depends on Wave 1)*
 
@@ -362,7 +362,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 4/4 | Complete    | 2026-07-01 |
-| 109. 802.1X Integration — Matrices + Nav Hubs | 2/4 | In Progress|  |
+| 109. 802.1X Integration — Matrices + Nav Hubs | 3/4 | In Progress|  |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
 | 112. 12th Path-A Harness Lineage Bump + Close | 0/TBD | Not started | - |
