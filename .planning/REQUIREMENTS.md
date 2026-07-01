@@ -33,9 +33,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Pillar B — Corpus Accuracy Fixes (v1.13 deferrals)
 
-- [ ] **FIX-01**: `docs/index.md:108` stale macOS L1-runbook count is corrected to the actual count (≥8 after #35/#36/#37).
-- [ ] **FIX-02**: `docs/quick-ref-l1.md:101` (WR-01) surfaces L1 #36 as an L1 "try this first" entry rather than an L2 escalation target; surrounding L1 #37 wiring confirmed.
-- [ ] **FIX-03**: `docs/common-issues.md:242-247` (IN-01) inserts the L1 #36 mandatory PSSO re-registration step as an intermediate between L1 #37 (local password reset) and L2 #27 escalation.
+- [x] **FIX-01**: `docs/index.md:108` stale macOS L1-runbook count is corrected to the actual count (≥8 after #35/#36/#37).
+- [x] **FIX-02**: `docs/quick-ref-l1.md:101` (WR-01) surfaces L1 #36 as an L1 "try this first" entry rather than an L2 escalation target; surrounding L1 #37 wiring confirmed.
+- [x] **FIX-03**: `docs/common-issues.md:242-247` (IN-01) inserts the L1 #36 mandatory PSSO re-registration step as an intermediate between L1 #37 (local password reset) and L2 #27 escalation.
 
 ### Pillar C — MDM Migration Walkthroughs
 
@@ -119,9 +119,9 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 | DOT1X-09 | Phase 107 | Complete |
 | DOT1X-10 | Phase 108 | Complete |
 | DOT1X-11 | Phase 109 | Complete |
-| FIX-01 | Phase 110 | Pending |
-| FIX-02 | Phase 110 | Pending |
-| FIX-03 | Phase 110 | Pending |
+| FIX-01 | Phase 110 | Complete |
+| FIX-02 | Phase 110 | Complete |
+| FIX-03 | Phase 110 | Complete |
 | MIGF-01 | Phase 110 | Pending |
 | MIGF-02 | Phase 110 | Pending |
 | TOOL-01 | Phase 111 | Pending |

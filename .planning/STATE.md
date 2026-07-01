@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-07-01T22:04:51.710Z"
-last_activity: 2026-07-01 -- Phase 110 planning complete
+last_updated: "2026-07-01T22:12:06.652Z"
+last_activity: 2026-07-01
 progress:
   total_phases: 12
   completed_phases: 9
   total_plans: 30
-  completed_plans: 26
+  completed_plans: 27
   percent: 75
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and now 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 110 — pillar b + c — corpus fixes + mdm migration walkthroughs
+**Current focus:** Phase 110 — pillar-b-c-corpus-fixes-mdm-migration-walkthroughs
 
 ## Current Position
 
-Phase: 110
-Plan: Not started
+Phase: 110 (pillar-b-c-corpus-fixes-mdm-migration-walkthroughs) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-07-01 -- Phase 110 planning complete
+Last activity: 2026-07-01
 
 ## v1.14 Phase Dependency Summary
 
@@ -357,6 +357,9 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - [Phase 109]: 109-04: SC3 is verify-only (D-01) — all 4 platform glossaries carry pre-existing see-also banners; _glossary-ios.md absent confirmed satisfied-by _glossary-macos.md
 - [Phase 109]: 109-04: SC4 navigation-last confirmed — Phase 109 nav commits post-date Phase 108 content commits by 10h49m; all 17 link targets exist on disk
 - [Phase 109]: DOT1X-11 satisfied — SC1 (5 matrices), SC2 (6 hubs), SC3 (4 banners), SC4 (nav-last) all PASS; 0 broken links; D-03 clean (no dedicated 802.1X H2 in prose hubs)
+- [Phase ?]: FIX-01 count is 9 (6 ADE + 3 PSSO); 802.1X runbooks #38-41 excluded (separate H2)
+- [Phase ?]: FIX-01 uses 'see row below' DRY pointer — avoids re-enumerating #35/#36/#37 already listed in :112 PSSO row
+- [Phase ?]: FIX-03 inserted in User-Locked-Out block only; Post-Migration block untouched (not a fit for #36 after password reset)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -384,9 +387,9 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-01T21:34:46.777Z
-Stopped at: Phase 110 context gathered
-Resume file: .planning/phases/110-pillar-b-c-corpus-fixes-mdm-migration-walkthroughs/110-CONTEXT.md
+Last session: 2026-07-01T22:12:06.636Z
+Stopped at: Completed 110-01-PLAN.md (FIX-01/02/03)
+Resume file: None
 Next action: Run /gsd-verify-work for Phase 109, then execute Phase 110
 
 ## Operator Next Steps
@@ -415,3 +418,4 @@ Next action: Run /gsd-verify-work for Phase 109, then execute Phase 110
 | Phase 109 P02 | 10m | 3 tasks | 4 files |
 | Phase 109 P03 | 5m | 2 tasks | 2 files |
 | Phase 109 P04 | 8m | 2 tasks | 1 files |
+| Phase 110 P01 | 4m | 3 tasks | 3 files |
