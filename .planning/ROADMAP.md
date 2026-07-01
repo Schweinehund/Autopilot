@@ -351,7 +351,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
-| 108. L2 Runbooks #31-33 + Decision Tree #10 | 4/4 | Complete   | 2026-07-01 |
+| 108. L2 Runbooks #31-33 + Decision Tree #10 | 4/4 | Complete    | 2026-07-01 |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
