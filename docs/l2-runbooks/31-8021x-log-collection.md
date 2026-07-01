@@ -41,7 +41,7 @@ signal. Skip directly to the per-platform subsection for the affected device pla
 
 ## Tool Landscape
 
-> **Tool landscape:** Each platform's 802.1X supplicant writes to a different log surface.
+> **NOTE:** Each platform's 802.1X supplicant writes to a different log surface.
 > Windows uses two dedicated Event Viewer channels (`WLAN-AutoConfig/Operational` for Wi-Fi,
 > `Wired-AutoConfig/Operational` for wired) plus the `CAPI2/Operational` channel for
 > certificate-chain diagnosis; macOS uses the unified log filtered by the `eapolclient`

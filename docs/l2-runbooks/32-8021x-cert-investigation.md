@@ -275,7 +275,7 @@ but is now expired, has the wrong EKU, or has a SAN mismatch.
 ## Linux: Certificate Inspection
 
 > **NOTE:** On Linux, 802.1X certificates are script-deployed — not delivered via an Intune
-> SCEP certificate profile. See [Linux 802.1X Admin Setup](../admin-setup-8021x/06-linux.md)
+> SCEP certificate profile. See [Linux 802.1X Admin Setup](../admin-setup-8021x/07-linux.md)
 > for the certificate deployment approach used in this environment. Intune SCEP profile status
 > check is N/A for Linux — inspect the certificate directly on the device.
 
@@ -362,7 +362,7 @@ Authentication OID `1.3.6.1.5.5.7.3.2`) and server-name validation requirements,
 | EKU — Client Authentication | OID `1.3.6.1.5.5.7.3.2` present in Extended Key Usage | Cert does not include Client Authentication EKU → RADIUS rejects authentication immediately |
 | SAN | UPN (user-cert) or device FQDN / serial (device-cert) present and matching RADIUS policy expectation | SAN mismatch → RADIUS rejects or KB5014754 strong-mapping (SID-in-SAN) fails on NPS |
 | Expiry | `Not After` date is in the future | Expired cert → RADIUS rejects authentication immediately |
-| Issuer chain | Root CA that issued the client cert is deployed to the device Trusted Root store and matches RADIUS server's trust anchor | Chain failure → trust error before EAP begins; route to [#33](33-8021x-radius-eap-investigation.md) for server-name diagnosis |
+| Issuer chain | Client cert presents a complete issuer chain on the device, and its issuing CA is trusted by the **RADIUS/NPS server** (client-cert validation happens server-side). Separately, the device Trusted Root store must hold the **RADIUS server's** root CA for server validation — see [#33](33-8021x-radius-eap-investigation.md). | Incomplete client-cert chain, or NPS distrusts the client cert's issuing CA → RADIUS rejects; device missing the RADIUS server's root CA → server-trust failure before EAP begins, route to [#33](33-8021x-radius-eap-investigation.md) |
 
 ---
 
@@ -379,7 +379,7 @@ Authentication OID `1.3.6.1.5.5.7.3.2`) and server-name validation requirements,
   for 802.1X failures; L1 runbook #38 escalates here
 - [macOS 802.1X Admin Setup](../admin-setup-8021x/04-macos.md) — deployment channel
   (User vs Device keychain, irreversible at profile assignment) and other macOS profile details
-- [Linux 802.1X Admin Setup](../admin-setup-8021x/06-linux.md) — script-based certificate
+- [Linux 802.1X Admin Setup](../admin-setup-8021x/07-linux.md) — script-based certificate
   deployment approach for Linux (no Intune SCEP profile)
 - [Network Authentication Glossary](../_glossary-network.md) — 802.1X, EAP, EAPOL, RADIUS,
   SCEP, server-name validation term definitions
