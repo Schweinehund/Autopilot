@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-06-24
-review_by: 2026-09-24
+last_verified: 2026-07-01
+review_by: 2026-09-29
 applies_to: ADE
 audience: all
 platform: macOS
@@ -562,3 +562,32 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 | Date | Change |
 |------|--------|
 | 2026-06-24 | Phase 90 (MIG-01..04): initial MDM migration walkthrough (B1 in-place + B2 wipe paths) |
+| 2026-07-01 | Phase 110 (MIGF-02): Jamf Pro and Mosyle source-MDM release steps appendix added |
+
+---
+
+## Appendix: Source-MDM Release Steps for Jamf Pro and Mosyle
+
+[Stage 2](#stage-2-intune-readiness-secret-retrieval-and-source-release) above documents the source-release steps for Kandji/Iru as the source MDM. Organizations migrating from Jamf Pro or Mosyle follow the same three-step sequencing — FileVault recovery key retrieval → Activation Lock bypass code retrieval → device-record deletion — at the conceptual-action level. Exact console paths differ between vendors; the steps for each are documented below at conceptual depth. Verify current console labels in the respective admin console on your authoring day before fleet migration.
+
+### Jamf Pro
+
+> **Important:** Retrieve the escrowed FileVault recovery key AND the Activation Lock bypass code from Jamf Pro BEFORE performing device-record deletion. Both are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
+
+**1. FileVault Recovery Key Retrieval**
+
+In the Jamf Pro console, navigate to the device record for the target Mac. Locate the FileVault management section within the device's security or management information view and retrieve the escrowed personal recovery key. Record it securely before proceeding to any deletion step.
+
+> **Note:** Jamf Pro console navigation is not live-verifiable without operator login credentials. The conceptual action is the same: open the device record, access the FileVault or security section, and retrieve the escrowed recovery key before any deletion step. Verify current console labels in the Jamf Pro admin console on your authoring day.
+
+**2. Activation Lock Bypass Code Retrieval**
+
+In the Jamf Pro console, navigate to the device record for the target Mac and locate the Activation Lock bypass code in the device's security or management information section. Retrieve and record this code before proceeding to device-record deletion. The bypass code is only available while the device remains under active management by Jamf Pro.
+
+> **Note:** The conceptual action is the same: open the device record, access the security information, and retrieve the bypass code before any deletion step. The exact label or section name may vary by Jamf Pro version. Verify current console labels on your authoring day.
+
+**3. Device-Record Deletion**
+
+After retrieving both secrets, perform the device-record deletion action in the Jamf Pro console for the target Mac. This removes the device from Jamf Pro management and triggers MDM profile removal at the device's next check-in (approximately 15 minutes). Allow approximately 15 minutes before proceeding to Stage 3 (ABM "Assign Device Management").
+
+> **Note:** The exact action label may read "Delete Computer," "Delete," "Unmanage," or similar depending on the current Jamf Pro version. Verify the current label in the Jamf Pro admin console on your authoring day.
