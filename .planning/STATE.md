@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
-status: verifying
-last_updated: "2026-07-01T00:47:12.706Z"
+status: ready_to_plan
+last_updated: 2026-07-01T01:01:08.259Z
 last_activity: 2026-07-01
 progress:
   total_phases: 12
@@ -11,6 +11,7 @@ progress:
   total_plans: 15
   completed_plans: 15
   percent: 50
+stopped_at: Phase 106 complete (2/2) — ready to discuss Phase 107
 ---
 
 # Project State
@@ -20,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and now 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 106 — linux-802-1x-admin-setup-script-based-eap-tls-wired-gap
+**Current focus:** Phase 107 — l1 runbooks #38 41 (802.1x triage)
 
 ## Current Position
 
-Phase: 106 (linux-802-1x-admin-setup-script-based-eap-tls-wired-gap) — EXECUTING
-Plan: 2 of 2
-Status: Phase complete — ready for verification
+Phase: 107
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-07-01
 
 ## v1.14 Phase Dependency Summary
