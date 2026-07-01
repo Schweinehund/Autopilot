@@ -615,28 +615,30 @@ Phase 109 SC3 task: VERIFY these lines (read each file, confirm banner text at t
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> All three questions were resolved at plan time (2026-07-01). Resolutions are implemented in the plan objectives (109-01, 109-03) and recorded inline below.
 
 1. **macOS verdict: `Supported` vs `Partial`?**
    - What we know: Both Wi-Fi and Wired profile types exist in Intune for macOS. Wired is SCEP-only (PKCS not supported).
    - What's unclear: Does the SCEP-only wired constraint reduce the overall 802.1X verdict to `Partial`, or does the existence of the native Intune profile make it `Supported` with noted constraint in the linked guide?
-   - Recommendation: Use `Supported` (consistent with cert-delivery row precedent where macOS is Supported despite wired-SCEP-only constraint). Override to `Partial` if reviewer has a consistent precedent otherwise.
+   - **RESOLVED: Use `Supported`** — per Plan 109-01 objective. Native Wi-Fi + Wired Intune profiles both exist; the SCEP-only-wired constraint is a cert nuance captured in the linked guide (link-not-copy), matching the existing cert-delivery row precedent. iOS stays `Partial` for a distinct *hardware* reason (M-series-iPad-only wired), so the split is internally consistent.
 
 2. **`## 802.1X L1 Runbooks` H2 in l1-runbooks/00-index.md — does D-03 apply?**
    - What we know: D-03 says no dedicated 802.1X H2 in any hub. l1-runbooks/00-index.md already has Apple Business L1 Runbooks H2 (topic-based, not platform).
    - What's unclear: Does "no dedicated 802.1X H2" extend to l1-runbooks/00-index.md's catalog-style file?
-   - Recommendation: Treat l1-runbooks/00-index.md as a CATALOG (not a navigation hub in the D-03 sense), and allow the `## 802.1X L1 Runbooks` H2 as consistent with the Apple Business H2 pattern. The D-03 prohibition targets navigation hub files where adding a domain H2 would disrupt hub structure.
+   - **RESOLVED: Add the cross-platform catalog H2** — per Plan 109-03 objective. D-03's "no dedicated H2" targets the four *prose* hubs; the two runbook indexes are *catalogs* already carrying the topic-based `## Apple Business L1/L2 Runbooks` precedent (Phase 65). Adding `## 802.1X L1/L2 Runbooks` is consistent with catalog structure, not a restructuring, and does not contradict D-01/D-02/D-04.
 
 3. **`4-platform-capability-comparison.md` row: link to per-platform matrix or to admin guide?**
    - What we know: D-02 says "each cell = verdict word + one hyperlink to the source per-platform matrix/guide". The existing rows all link to per-platform matrices.
    - What's unclear: For a NEW row where the per-platform matrix didn't have 802.1X before, is the admin guide or the matrix the better link?
-   - Recommendation: Link to per-platform matrix `#configuration` anchor (consistent with all other rows). The matrix then links to the admin guide. This is the established two-hop pattern.
+   - **RESOLVED: Link to the per-platform matrix `#configuration` anchor** — consistent with all other rows in the comparison file (the two-hop pattern: comparison → per-platform matrix → admin guide). The Windows column routes to `linux-capability-matrix.md#configuration` (PITFALL-1 guard in Plan 109-01).
 
 ---
 
 ## Validation Architecture
 
-> NOTE: workflow.nyquist_validation is not explicitly configured; treating as enabled.
+> NOTE: `workflow.nyquist_validation` is **disabled** for this project (`nyquist_validation_enabled: false`). No `109-VALIDATION.md` artifact is created — the plan-phase workflow skips Nyquist steps (§5.5 / §7.5) when disabled. Verification for this docs-only phase is file-read/grep based; every plan task carries an `<automated>` grep verify block. A missing VALIDATION.md is expected and correct here, not a gap.
 
 ### Test Framework
 
