@@ -54,6 +54,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree (completed 2026-07-01)
 - [x] **Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs** - Capability-matrix 802.1X rows for all 5 platforms and navigation-last hub wiring across all six hub files
  (completed 2026-07-01)
+
 - [ ] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps
 - [ ] **Phase 111: Pillar D — Chain-Validator Tooling Refactors** - Three DRY refactors to the validator chain (exec-fail-detail extraction, frozen-aware adoption sweep, helper-spawn stderr capture)
 - [ ] **Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close** - Atom 1 + Atom 2 harness bump, 3-axis terminal re-audit, and milestone close with all 22 requirements Validated
@@ -258,6 +259,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Wave 3** *(blocked on Wave 2 completion — navigation-last)*
 
 - [x] 108-04-PLAN.md — Wire live L2 links into `decision-trees/10-8021x-triage.md` + the four L1 runbooks #38-41 (after #31-33 commit) [DOT1X-10]
+
 **UI hint**: no
 
 ### Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs
@@ -283,6 +285,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Wave 2** *(verification gate — depends on Wave 1)*
 
 - [x] 109-04-PLAN.md — Verify SC3 glossary banners (verify-only) + SC4 navigation-last + goal-backward SC1-SC4 check [DOT1X-11]
+
 **UI hint**: no
 
 ### Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs
@@ -299,10 +302,16 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   5. An admin can follow source-MDM-specific release steps for Jamf Pro and Mosyle (FileVault key retrieval, Activation Lock bypass, device-record deletion) in the `02-mdm-migration-psso.md` addendum
 
 **Plans**: 4 plans
+**Wave 1**
+
 - [ ] 110-01-PLAN.md — Pillar B corpus fixes FIX-01/02/03 (index.md count, quick-ref-l1 #36 framing, common-issues #36 insertion)
 - [ ] 110-02-PLAN.md — MIGF-01 new iOS/iPadOS ABM Deadline in-place migration walkthrough (docs/ios-lifecycle/02-mdm-migration.md)
 - [ ] 110-03-PLAN.md — MIGF-02 Jamf Pro + Mosyle source-MDM release appendix (docs/macos-lifecycle/02-mdm-migration-psso.md)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 110-04-PLAN.md — navigation-last wiring for the new iOS migration file (index.md iOS section + enrollment-overview See Also)
+
 **UI hint**: no
 
 ### Phase 111: Pillar D — Chain-Validator Tooling Refactors
