@@ -46,7 +46,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 104: iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete iOS/iPadOS 802.1X guide covering all three EAP methods with MAC-randomization NAC handling and M-series iPad wired support
  (completed 2026-06-30)
 
-- [x] **Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)** - Android Wi-Fi 802.1X across all AE modes with version-gated RADIUS requirements and explicit no-native-wired-profile gap stub (completed 2026-06-30)
+- [x] **Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)** - Android Wi-Fi 802.1X across all AE modes with version-gated RADIUS requirements and explicit no-native-wired-profile gap stub
+ (completed 2026-06-30)
 - [x] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub (completed 2026-07-01)
 - [ ] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves
 - [ ] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree
@@ -213,7 +214,10 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. L1 runbooks #39 (RADIUS reject), #40 (server-trust/validation failure), and #41 (EAP negotiation failure) each provide a symptom description, first-check steps, per-platform diagnostic commands, and a clear escalation trigger
   3. Decision tree `docs/decision-trees/10-8021x-triage.md` routes L1 by symptom to the correct runbook with per-platform leaves
 
-**Plans**: TBD
+**Plans**: 3 plans (Wave 1: 01 + 02 in parallel; Wave 2: 03)
+- [ ] 107-01-PLAN.md — L1 runbooks #38 (cert failure, SC1) + #39 (RADIUS reject, SC2)
+- [ ] 107-02-PLAN.md — L1 runbooks #40 (server-trust failure, SC2) + #41 (EAP negotiation, SC2)
+- [ ] 107-03-PLAN.md — decision tree #10 8021x-triage (symptom-primary routing, SC3)
 **UI hint**: no
 
 ### Phase 108: L2 Runbooks #31-33 + Decision Tree #10
