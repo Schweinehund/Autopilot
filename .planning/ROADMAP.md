@@ -55,7 +55,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs** - Capability-matrix 802.1X rows for all 5 platforms and navigation-last hub wiring across all six hub files
  (completed 2026-07-01)
 
-- [ ] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps
+- [x] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps (completed 2026-07-01)
 - [ ] **Phase 111: Pillar D — Chain-Validator Tooling Refactors** - Three DRY refactors to the validator chain (exec-fail-detail extraction, frozen-aware adoption sweep, helper-spawn stderr capture)
 - [ ] **Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close** - Atom 1 + Atom 2 harness bump, 3-axis terminal re-audit, and milestone close with all 22 requirements Validated
 
@@ -310,7 +310,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 110-04-PLAN.md — navigation-last wiring for the new iOS migration file (index.md iOS section + enrollment-overview See Also)
+- [x] 110-04-PLAN.md — navigation-last wiring for the new iOS migration file (index.md iOS section + enrollment-overview See Also)
 
 **UI hint**: no
 
@@ -377,6 +377,6 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 4/4 | Complete    | 2026-07-01 |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 4/4 | Complete    | 2026-07-01 |
-| 110. Corpus Fixes + MDM Migration Walkthroughs | 3/4 | In Progress|  |
+| 110. Corpus Fixes + MDM Migration Walkthroughs | 4/4 | Complete   | 2026-07-01 |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
 | 112. 12th Path-A Harness Lineage Bump + Close | 0/TBD | Not started | - |

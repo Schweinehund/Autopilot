@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
-status: executing
-last_updated: "2026-07-01T22:30:02.237Z"
+status: verifying
+last_updated: "2026-07-01T22:38:57.833Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 12
-  completed_phases: 9
+  completed_phases: 10
   total_plans: 30
-  completed_plans: 29
-  percent: 75
+  completed_plans: 30
+  percent: 83
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 Phase: 110 (pillar-b-c-corpus-fixes-mdm-migration-walkthroughs) — EXECUTING
 Plan: 4 of 4
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-01
 
 ## v1.14 Phase Dependency Summary
@@ -328,6 +328,10 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - Phase 112 is the sole deliverable of its phase — harness bump never batches with content or tooling (mirrors v1.13 Phase 100 exactly)
 - 8 discuss-phase flags from REQUIREMENTS.md are NOT resolved at roadmap — they are gray-area scoping decisions deferred to /gsd-discuss-phase with adversarial-review per project convention
 
+**Phase 110 plan 04 decisions (2026-07-01):**
+
+- iOS migration walkthrough nav row placed in L2 Desktop Engineering table adjacent to iOS ADE Lifecycle row (one row total per acceptance constraint); See Also bullet added to 00-enrollment-overview.md; navigation-last invariant satisfied (110-04 post-dates 110-02 content commit)
+
 **Phase 110 plan 03 decisions (2026-07-01):**
 
 - D-03 (MIGF-02) executed: single `## Appendix: Source-MDM Release Steps for Jamf Pro and Mosyle` H2 with two bare H3s (`### Jamf Pro`, `### Mosyle`); each covers FileVault key retrieval + Activation Lock bypass retrieval + device-record deletion at conceptual-action depth with authoring-day hedge; inline `> **Important:**` / `> **Note:**` callout style; no double-hyphen slug trap
@@ -393,10 +397,10 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-01T22:30:02.218Z
-Stopped at: Completed 110-03-PLAN.md (MIGF-02 Jamf Pro + Mosyle appendix)
+Last session: 2026-07-01T22:38:57.818Z
+Stopped at: Completed 110-04-PLAN.md (MIGF-01 iOS migration nav-hub wiring — Phase 110 complete)
 Resume file: None
-Next action: Execute Phase 110 Plan 04 (nav-hub wiring for iOS migration file)
+Next action: Phase 110 verification, then proceed to Phase 111 (Pillar D — Chain-Validator Tooling Refactors)
 
 ## Operator Next Steps
 
@@ -427,3 +431,4 @@ Next action: Execute Phase 110 Plan 04 (nav-hub wiring for iOS migration file)
 | Phase 110 P01 | 4m | 3 tasks | 3 files |
 | Phase 110 P02 | 7m | 3 tasks | 1 files |
 | Phase 110 P03 | 8m | 2 tasks | 1 files |
+| Phase 110 P04 | 5m | 1 tasks | 2 files |
