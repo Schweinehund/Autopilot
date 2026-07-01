@@ -734,12 +734,12 @@
         },
         "107": {
           "issueKey": "RTS-704",
-          "status": "in_progress",
+          "status": "done",
           "name": "L1 Runbooks #38-41 (802.1X Triage)"
         },
         "108": {
           "issueKey": "RTS-705",
-          "status": "todo",
+          "status": "in_progress",
           "name": "L2 Runbooks #31-33 + Decision Tree #10"
         },
         "109": {
