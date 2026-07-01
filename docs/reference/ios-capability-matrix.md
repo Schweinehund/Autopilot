@@ -43,6 +43,7 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Per-app VPN | Yes | Yes | Yes (🔒 supervised ADE only for transparent per-app VPN) |
 | Certificate deployment | SCEP, PKCS | SCEP, PKCS, ACME (macOS 14+) | SCEP, PKCS, ACME (iOS 16+) |
 | Security baselines | Yes (curated baseline sets) | No | No |
+| Network Authentication (802.1X) | Supported — [guide](../admin-setup-8021x/03-windows.md) | Supported — [guide](../admin-setup-8021x/04-macos.md) | Partial — [guide](../admin-setup-8021x/05-ios.md) |
 
 ## App Deployment
 

@@ -29,6 +29,7 @@ For Linux admin setup guides, see [Linux Admin Setup Overview](../admin-setup-li
 | Custom configuration via scripts | Supported (Win32 / PowerShell / Intune Remediations) | Partial — Bash scripts run via app-delivery surface; settings-catalog Custom Compliance for compliance-detect only |
 | OEMConfig | n/a (Windows uses ADMX) | Not supported |
 | Hardware/firmware policies | Supported (driver/firmware updates via WUfB) | Not supported |
+| Network Authentication (802.1X) | Supported — [guide](../admin-setup-8021x/03-windows.md) | Partial — [guide](../admin-setup-8021x/07-linux.md) |
 
 ## App Deployment
 

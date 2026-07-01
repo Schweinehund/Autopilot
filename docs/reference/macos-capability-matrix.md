@@ -39,6 +39,7 @@ This document compares Intune management capabilities between Windows and macOS 
 | Platform SSO | No | Yes (macOS 14+ via Settings Catalog) — see [Authentication](#authentication) |
 | Kernel Extension policy | No | Yes (macOS-only KEXT management) |
 | Declarative Device Management (DDM) | No | Yes (macOS 14+, preferred for software updates) |
+| Network Authentication (802.1X) | Supported — [guide](../admin-setup-8021x/03-windows.md) | Supported — [guide](../admin-setup-8021x/04-macos.md) |
 
 ## App Deployment
 
