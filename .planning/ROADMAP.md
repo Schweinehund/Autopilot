@@ -252,7 +252,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 108-02-PLAN.md — Author `32-8021x-cert-investigation.md` (per-platform cert chain / SCEP status / EKU-SAN-expiry) [DOT1X-10]
-- [ ] 108-03-PLAN.md — Author `33-8021x-radius-eap-investigation.md` (RADIUS-team request checklist + per-platform EAP-mismatch + server-name-validation diagnosis) [DOT1X-10]
+- [x] 108-03-PLAN.md — Author `33-8021x-radius-eap-investigation.md` (RADIUS-team request checklist + per-platform EAP-mismatch + server-name-validation diagnosis) [DOT1X-10]
 
 **Wave 3** *(blocked on Wave 2 completion — navigation-last)*
 
@@ -351,7 +351,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
-| 108. L2 Runbooks #31-33 + Decision Tree #10 | 2/4 | In Progress|  |
+| 108. L2 Runbooks #31-33 + Decision Tree #10 | 3/4 | In Progress|  |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |

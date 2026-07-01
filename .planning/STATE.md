@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-07-01T05:31:01.209Z"
+last_updated: "2026-07-01T05:37:40.217Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 12
   completed_phases: 7
   total_plans: 22
-  completed_plans: 20
+  completed_plans: 21
   percent: 58
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 ## Current Position
 
 Phase: 108 (l2-runbooks-31-33-decision-tree-10) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-01
 
@@ -350,6 +350,7 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - [Phase ?]: D-11/D-12: Server validation as security requirement; dynamic-trust-dialog symptom + A-05 security-violation fact; rogue-RADIUS rationale linked not restated
 - [Phase ?]: D-06/D-07: Wired SCEP-only NOTE callout + full peer-depth per-EAP matrix (PKCS not supported for macOS wired)
 - [Phase ?]: 106-01: Ubuntu 24.04+26.04 LTS verified; WARNING tier for SC1 lead callout; EAP-TLS-only as source-confidence boundary; two-callout separation (SC1 WARNING + SC3 NOTE)
+- [Phase ?]: D-04: #33 framing = ask-side RADIUS checklist + per-platform EAP-mismatch + per-platform server-name-validation (SC3 clause 1/2/3)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -377,7 +378,7 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-01T05:31:01.194Z
+Last session: 2026-07-01T05:37:29.531Z
 Stopped at: Phase 108 context gathered
 Resume file: None
 Next action: Phase 107 complete — execute Phase 108 (L2 runbooks #31-33)
@@ -402,3 +403,4 @@ Next action: Phase 107 complete — execute Phase 108 (L2 runbooks #31-33)
 | Phase 107 P02 | 7m | 2 tasks | 2 files |
 | Phase 107 P03 | 10m | 1 tasks | 1 files |
 | Phase 108 P02 | 3m | 1 tasks | 1 files |
+| Phase 108 P03 | 8m | 1 tasks | 1 files |
