@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
-status: ready_to_plan
-last_updated: 2026-06-30T21:34:56.602Z
+status: planning
+last_updated: "2026-07-01T00:01:11.091Z"
 last_activity: 2026-06-30
 progress:
   total_phases: 12
@@ -11,7 +11,6 @@ progress:
   total_plans: 13
   completed_plans: 13
   percent: 42
-stopped_at: Phase 105 complete (2/2) — ready to discuss Phase 106
 ---
 
 # Project State
@@ -370,9 +369,9 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-06-30T21:18:03.831Z
-Stopped at: Phase 105 context gathered
-Resume file: None
+Last session: 2026-07-01T00:01:11.077Z
+Stopped at: Phase 106 context gathered
+Resume file: .planning/phases/106-linux-802-1x-admin-setup-script-based-eap-tls-wired-gap/106-CONTEXT.md
 Next action: Run /gsd-plan-phase 101 to begin Phase 101 planning (802.1X Foundation)
 
 ## Operator Next Steps
