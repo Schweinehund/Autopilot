@@ -45,6 +45,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 103: macOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete macOS 802.1X guide covering all three EAP methods with deployment-channel decision and wired SCEP-only constraint (completed 2026-06-30)
 - [x] **Phase 104: iOS/iPadOS 802.1X Admin-Setup (Wi-Fi + Wired)** - Complete iOS/iPadOS 802.1X guide covering all three EAP methods with MAC-randomization NAC handling and M-series iPad wired support
  (completed 2026-06-30)
+
 - [x] **Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)** - Android Wi-Fi 802.1X across all AE modes with version-gated RADIUS requirements and explicit no-native-wired-profile gap stub (completed 2026-06-30)
 - [ ] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub
 - [ ] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves
@@ -191,8 +192,14 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. PEAP-MSCHAPv2 and EAP-TTLS are documented as out of scope with a one-sentence explanation (not in verifiable Microsoft/vendor sources), and the guide carries a MEDIUM-confidence callout noting the Linux Intune surface is actively developing with a freshness stamp
 
 **Plans**: 2 plans
+**Wave 1**
+
 - [ ] 106-01-PLAN.md — Author the Linux 802.1X EAP-TLS-via-nmcli guide (07-linux.md): lead gap WARNING, EAP scope note, Ubuntu 24.04/26.04 applies-to, out-of-band cert prerequisites, nmcli steps + two-column reference table, verification trio, Wired H2, MEDIUM-confidence freshness callout [DOT1X-08]
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 106-02-PLAN.md — Fill item 7 (Linux) in the local 00-overview.md platform-guide list linking 07-linux.md [DOT1X-08]
+
 **UI hint**: no
 
 ### Phase 107: L1 Runbooks #38-41 (802.1X Triage)
