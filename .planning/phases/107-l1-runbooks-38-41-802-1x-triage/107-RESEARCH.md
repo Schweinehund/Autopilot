@@ -605,14 +605,14 @@ Source: [VERIFIED: docs/admin-setup-8021x/07-linux.md verification section, comm
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **macOS command authoritative verification**
+1. **macOS command authoritative verification** — **RESOLVED:** Plan 107-01/107-02 pin the exact predicate `log show --predicate 'subsystem contains "com.apple.eapol"' --info --last 30m` with the `--last 2h` fallback and a MEDIUM-confidence callout; flagged for independent Phase-108 re-verification when authoring L2 #31.
    - What we know: Community/Jamf-sourced command `log show --predicate 'subsystem contains "com.apple.eapol"' --info --last 30m` is consistent across multiple independent sources
    - What's unclear: No official Apple developer documentation page (like a WWDC tech talk or Apple technical note) verified this exact predicate
    - Recommendation: Planner should include the command with a MEDIUM-confidence callout and the `--last 2h` extension note in case `--last 30m` is empty. Phase 108 will need to independently verify the macOS log signal when authoring L2 #31.
 
-2. **Decision tree "Unknown / Other" escalation target**
+2. **Decision tree "Unknown / Other" escalation target** — **RESOLVED (Claude's Discretion):** Plan 107-03 authors the "Don't know / Other" branch as a prose-only escalation node naming L2 #31 (log collection) as the starting point, with NO `click` directive (per D-06 navigation-last).
    - What we know: The tree needs a "Don't know / Other" branch (per `09-linux-triage.md` pattern)
    - What's unclear: The escalation target for the unknown branch — should it go directly to L2 #31 (log collection) or to a human escalation holding state?
    - Recommendation: Planner discretion (Claude's Discretion per CONTEXT.md). Suggest: escalate to L2 and name L2 #31 as the log-collection prerequisite in prose.

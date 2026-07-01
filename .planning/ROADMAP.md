@@ -48,6 +48,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] **Phase 105: Android Enterprise 802.1X Admin-Setup (Wi-Fi + Wired Gap)** - Android Wi-Fi 802.1X across all AE modes with version-gated RADIUS requirements and explicit no-native-wired-profile gap stub
  (completed 2026-06-30)
+
 - [x] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub (completed 2026-07-01)
 - [ ] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves
 - [ ] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree
@@ -215,9 +216,20 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. Decision tree `docs/decision-trees/10-8021x-triage.md` routes L1 by symptom to the correct runbook with per-platform leaves
 
 **Plans**: 3 plans (Wave 1: 01 + 02 in parallel; Wave 2: 03)
+**Wave 1**
+
 - [ ] 107-01-PLAN.md — L1 runbooks #38 (cert failure, SC1) + #39 (RADIUS reject, SC2)
 - [ ] 107-02-PLAN.md — L1 runbooks #40 (server-trust failure, SC2) + #41 (EAP negotiation, SC2)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 107-03-PLAN.md — decision tree #10 8021x-triage (symptom-primary routing, SC3)
+
+**Cross-cutting constraints:**
+
+- Both runbooks use structure 1C per D-01: shared symptom + First Checks + compact per-platform diagnostic-signal table + per-platform escalation-divergence notes (SC2:213 four-part ordering)
+- Both runbooks carry compound frontmatter per D-02: platform: windows+macos+ios+android+linux + audience: L1 + applies_to + 90-day last_verified/review_by pair
+
 **UI hint**: no
 
 ### Phase 108: L2 Runbooks #31-33 + Decision Tree #10
