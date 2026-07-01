@@ -247,7 +247,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 108-01-PLAN.md — Author `31-8021x-log-collection.md` (cross-platform 802.1X L2 log collection; per-platform signal map; prerequisite for #32/#33) [DOT1X-10]
+- [x] 108-01-PLAN.md — Author `31-8021x-log-collection.md` (cross-platform 802.1X L2 log collection; per-platform signal map; prerequisite for #32/#33) [DOT1X-10]
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -351,7 +351,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
-| 108. L2 Runbooks #31-33 + Decision Tree #10 | 0/4 | Not started | - |
+| 108. L2 Runbooks #31-33 + Decision Tree #10 | 1/4 | In Progress|  |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
