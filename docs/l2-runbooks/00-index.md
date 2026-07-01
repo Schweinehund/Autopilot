@@ -202,6 +202,29 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 |---------|-------------|--------------|
 | [Apple Business Permission Denied Investigation](26-apple-business-permission-denied.md) | Apple Business portal returns permission error across any delegation action; includes 7-leaf triage tree routing to per-cause runbooks | None |
 
+## 802.1X L2 Runbooks
+
+These runbooks cover 802.1X network authentication investigation across all five platforms (Windows, macOS, iOS/iPadOS, Android Enterprise, Linux). For platform-specific enrollment or compliance L2 runbooks, see the per-platform sections above.
+
+The [802.1X Log Collection Guide](31-8021x-log-collection.md) is a **prerequisite for both L2 investigation runbooks** — collect per-platform 802.1X diagnostic logs before beginning any investigation.
+
+### When to Use
+
+| Runbook | When to Use | Prerequisite |
+|---------|-------------|--------------|
+| [802.1X Log Collection Guide](31-8021x-log-collection.md) | Before starting any 802.1X L2 investigation — collect Windows WLAN-AutoConfig/Dot3Svc event logs, macOS wifi.log, iOS Intune diagnostic report, Android adb logcat, or Linux journalctl wpa_supplicant logs | None |
+| [802.1X Certificate Chain Investigation](32-8021x-cert-investigation.md) | Cert profile shows Succeeded in Intune but authentication still fails; cert chain, EKU, SAN, or expiry concerns | [802.1X Log Collection](31-8021x-log-collection.md) |
+| [802.1X RADIUS/EAP Investigation](33-8021x-radius-eap-investigation.md) | Suspected RADIUS-side rejection, EAP method mismatch, or server-name validation failure requiring RADIUS team coordination | [802.1X Log Collection](31-8021x-log-collection.md) |
+
+### 802.1X L1 Escalation Mapping
+
+| L1 Runbook Source | L2 Runbook |
+|-------------------|------------|
+| [L1 38: 802.1X Certificate Failure](../l1-runbooks/38-8021x-certificate-failure.md) | [802.1X Certificate Chain Investigation](32-8021x-cert-investigation.md) |
+| [L1 39: 802.1X RADIUS Reject](../l1-runbooks/39-8021x-radius-reject.md) | [802.1X RADIUS/EAP Investigation](33-8021x-radius-eap-investigation.md) |
+| [L1 40: 802.1X Server Trust Failure](../l1-runbooks/40-8021x-server-trust-failure.md) | [802.1X RADIUS/EAP Investigation](33-8021x-radius-eap-investigation.md) |
+| [L1 41: 802.1X EAP Negotiation Failure](../l1-runbooks/41-8021x-eap-negotiation-failure.md) | [802.1X RADIUS/EAP Investigation](33-8021x-radius-eap-investigation.md) |
+
 ## Related Resources
 
 - [L1 Runbooks](../l1-runbooks/00-index.md) — scripted Service Desk procedures for the five highest-volume Autopilot failures
@@ -219,6 +242,7 @@ The [Linux Log Collection Guide](24-linux-log-collection.md) is a **prerequisite
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-01 | Phase 109 (DOT1X-11): appended 802.1X L2 Runbooks H2 with #31-33 When-to-Use table and L1 Escalation Mapping | -- |
 | 2026-06-24 | Phase 90 (RUN-01): added macOS MDM Migration Failure runbook #30 to the macOS ADE Runbooks When-to-Use table | -- |
 | 2026-06-21 | Phase 80 SSORUN-03/SC4: added macOS Platform SSO Investigation #27 to When-to-Use table; added L1 #35 and L1 #36 escalation mapping rows to macOS L1 Escalation Mapping table | -- |
 | 2026-05-22 | Phase 65 plan 65-02: appended Apple Business L2 Runbooks H2 with #26 row | -- |
