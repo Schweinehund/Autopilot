@@ -29,7 +29,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 - [x] **DOT1X-09**: An L1 technician can triage 802.1X connection failures via new cross-platform L1 runbooks (#38–41: certificate failure, RADIUS reject, server-trust/validation failure, EAP negotiation failure) routed by a new `docs/decision-trees/10-8021x-triage.md`, with per-platform leaves.
 - [x] **DOT1X-10**: An L2 engineer can investigate 802.1X failures via new L2 runbooks (#31–33: log collection, certificate-chain investigation, RADIUS/EAP investigation) using the per-platform diagnostic-signal map (Windows event channels / macOS logs / Android `adb logcat` / Linux `journalctl` wpa_supplicant — log filters verified at plan time).
-- [ ] **DOT1X-11**: A reader can discover all 802.1X content through integrated navigation — Network-Authentication rows in the 5 platform capability matrices + the 4-platform comparison, glossary see-also wiring, and nav-hub entries (`docs/index.md`, `common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md`), all committed navigation-last after content lands.
+- [x] **DOT1X-11**: A reader can discover all 802.1X content through integrated navigation — Network-Authentication rows in the 5 platform capability matrices + the 4-platform comparison, glossary see-also wiring, and nav-hub entries (`docs/index.md`, `common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md`), all committed navigation-last after content lands.
 
 ### Pillar B — Corpus Accuracy Fixes (v1.13 deferrals)
 
@@ -118,7 +118,7 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 | DOT1X-08 | Phase 106 | Complete |
 | DOT1X-09 | Phase 107 | Complete |
 | DOT1X-10 | Phase 108 | Complete |
-| DOT1X-11 | Phase 109 | Pending |
+| DOT1X-11 | Phase 109 | Complete |
 | FIX-01 | Phase 110 | Pending |
 | FIX-02 | Phase 110 | Pending |
 | FIX-03 | Phase 110 | Pending |
