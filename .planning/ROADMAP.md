@@ -51,7 +51,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub (completed 2026-07-01)
 - [x] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves (completed 2026-07-01)
-- [ ] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree
+- [x] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree (completed 2026-07-01)
 - [ ] **Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs** - Capability-matrix 802.1X rows for all 5 platforms and navigation-last hub wiring across all six hub files
 - [ ] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps
 - [ ] **Phase 111: Pillar D — Chain-Validator Tooling Refactors** - Three DRY refactors to the validator chain (exec-fail-detail extraction, frozen-aware adoption sweep, helper-spawn stderr capture)
@@ -256,7 +256,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on Wave 2 completion — navigation-last)*
 
-- [ ] 108-04-PLAN.md — Wire live L2 links into `decision-trees/10-8021x-triage.md` + the four L1 runbooks #38-41 (after #31-33 commit) [DOT1X-10]
+- [x] 108-04-PLAN.md — Wire live L2 links into `decision-trees/10-8021x-triage.md` + the four L1 runbooks #38-41 (after #31-33 commit) [DOT1X-10]
 **UI hint**: no
 
 ### Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs
@@ -351,7 +351,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 105. Android Enterprise 802.1X Admin-Setup | 2/2 | Complete    | 2026-06-30 |
 | 106. Linux 802.1X Admin-Setup | 2/2 | Complete    | 2026-07-01 |
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
-| 108. L2 Runbooks #31-33 + Decision Tree #10 | 3/4 | In Progress|  |
+| 108. L2 Runbooks #31-33 + Decision Tree #10 | 4/4 | Complete   | 2026-07-01 |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 0/TBD | Not started | - |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 0/TBD | Not started | - |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
