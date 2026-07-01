@@ -591,3 +591,25 @@ In the Jamf Pro console, navigate to the device record for the target Mac and lo
 After retrieving both secrets, perform the device-record deletion action in the Jamf Pro console for the target Mac. This removes the device from Jamf Pro management and triggers MDM profile removal at the device's next check-in (approximately 15 minutes). Allow approximately 15 minutes before proceeding to Stage 3 (ABM "Assign Device Management").
 
 > **Note:** The exact action label may read "Delete Computer," "Delete," "Unmanage," or similar depending on the current Jamf Pro version. Verify the current label in the Jamf Pro admin console on your authoring day.
+
+### Mosyle
+
+> **Important:** Retrieve the escrowed FileVault recovery key AND the Activation Lock bypass code(s) from Mosyle BEFORE performing device-record deletion. Both are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
+
+**1. FileVault Recovery Key Retrieval**
+
+Mosyle enforces FileVault via its Security profile and escrows personal recovery keys to the console. In the Mosyle console, navigate to the device record for the target Mac and retrieve the escrowed FileVault recovery key from the device's security information section. Record it securely before proceeding to any deletion step.
+
+> **Note:** Mosyle console navigation is not live-verifiable without operator login credentials. The conceptual action is the same: open the device record, locate the security or FileVault section, and retrieve the recovery key before any deletion step. Verify current console labels in the Mosyle admin console on your authoring day.
+
+**2. Activation Lock Bypass Code Retrieval**
+
+In the Mosyle console, navigate to the device record for the target Mac and locate the Activation Lock bypass codes in the device security information section. Two bypass codes may be present per device: one for user-initiated Activation Lock and one for MDM-initiated Activation Lock. Retrieve both codes before proceeding to device-record deletion.
+
+> **Note:** The conceptual navigation (for example, accessing a Security Info or equivalent tab within the device record) is consistent with documented Mosyle patterns. Exact labels may differ in the current Mosyle version. Verify current console navigation on your authoring day. Retrieve both codes if two are present — a user-initiated and an MDM-initiated bypass code.
+
+**3. Device-Record Deletion**
+
+After retrieving all secrets, perform the device-record deletion or unmanage action in the Mosyle console for the target Mac. This removes the device from Mosyle management and triggers MDM profile removal at the device's next check-in (approximately 15 minutes). Allow approximately 15 minutes before proceeding to Stage 3 (ABM "Assign Device Management").
+
+> **Note:** The exact action label in the Mosyle console may read "Delete Device," "Remove Device," "Unmanage," or similar depending on the current Mosyle version. Verify current console labels on your authoring day.
