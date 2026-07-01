@@ -739,12 +739,12 @@
         },
         "108": {
           "issueKey": "RTS-705",
-          "status": "in_progress",
+          "status": "done",
           "name": "L2 Runbooks #31-33 + Decision Tree #10"
         },
         "109": {
           "issueKey": "RTS-706",
-          "status": "todo",
+          "status": "in_progress",
           "name": "802.1X Integration — Capability Matrices + Navigation Hubs"
         },
         "110": {
