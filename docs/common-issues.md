@@ -251,6 +251,7 @@ Platform SSO "Registration Required" notification has not appeared after MDM mig
 User cannot log in to their Mac — local password is unknown or forgotten. Recover access using the escrowed FileVault recovery key, the macOS LAPS managed admin account, or Apple ID (where org policy allows). Note: SSPR resets the Entra password only and does not reset the independent local password on Secure Enclave Platform SSO devices. For technical background, see [Platform SSO Setup Guide — Local password lifecycle and rotation](admin-setup-macos/07-platform-sso-setup.md#local-password-lifecycle-and-rotation).
 
 - **L1:** [macOS Local Password Recovery](l1-runbooks/37-macos-local-password-reset.md)
+- **L1:** [Platform SSO — Secure Enclave Key Loss](l1-runbooks/36-macos-secure-enclave-key.md) — mandatory PSSO re-registration after password recovery (the reset invalidates the Secure Enclave key)
 - **L2:** [macOS Platform SSO Investigation](l2-runbooks/27-macos-sso-investigation.md) — if PSSO re-registration fails after recovering access
 
 ### 802.1X Network Authentication Failure
