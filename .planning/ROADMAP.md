@@ -190,7 +190,9 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. An operator can follow the nmcli `802-1x.*` connection parameter steps for EAP-TLS and verify connectivity via `nmcli connection show`, `ip addr show`, and `journalctl -u NetworkManager`
   3. PEAP-MSCHAPv2 and EAP-TTLS are documented as out of scope with a one-sentence explanation (not in verifiable Microsoft/vendor sources), and the guide carries a MEDIUM-confidence callout noting the Linux Intune surface is actively developing with a freshness stamp
 
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 106-01-PLAN.md — Author the Linux 802.1X EAP-TLS-via-nmcli guide (07-linux.md): lead gap WARNING, EAP scope note, Ubuntu 24.04/26.04 applies-to, out-of-band cert prerequisites, nmcli steps + two-column reference table, verification trio, Wired H2, MEDIUM-confidence freshness callout [DOT1X-08]
+- [ ] 106-02-PLAN.md — Fill item 7 (Linux) in the local 00-overview.md platform-guide list linking 07-linux.md [DOT1X-08]
 **UI hint**: no
 
 ### Phase 107: L1 Runbooks #38-41 (802.1X Triage)
