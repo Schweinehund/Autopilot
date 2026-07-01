@@ -38,6 +38,7 @@ graph TD
     click EAP39 "../l1-runbooks/39-8021x-radius-reject.md"
     click EAP40 "../l1-runbooks/40-8021x-server-trust-failure.md"
     click EAP41 "../l1-runbooks/41-8021x-eap-negotiation-failure.md"
+    click EAPE "../l2-runbooks/31-8021x-log-collection.md"
 
     classDef resolved fill:#28a745,color:#fff
     classDef escalateL2 fill:#dc3545,color:#fff
@@ -74,7 +75,7 @@ Collect this information before routing to L2.
 
 | When You Escalate | Collect This |
 |-------------------|-------------|
-| Unknown / Other (EAPE) | Device serial number, User UPN, device platform and OS version, Intune cert-profile status screenshot (Trusted Certificate + SCEP/PKCS + network profile), name of the relevant event-log channel or portal signal for the device platform (see the per-platform diagnostic signal table in the applicable runbook). Route to L2; L2 Log Collection (#31) is the shared prerequisite for all 802.1X L2 investigation. (Live links to L2 Log Collection #31 and L2 investigation runbooks #32 and #33 will be wired in Phase 108.) |
+| Unknown / Other (EAPE) | Device serial number, User UPN, device platform and OS version, Intune cert-profile status screenshot (Trusted Certificate + SCEP/PKCS + network profile), name of the relevant event-log channel or portal signal for the device platform (see the per-platform diagnostic signal table in the applicable runbook). Route to L2; [L2 Log Collection (#31)](../l2-runbooks/31-8021x-log-collection.md) is the shared prerequisite for all 802.1X L2 investigation. Also see [#32: Certificate-Chain Investigation](../l2-runbooks/32-8021x-cert-investigation.md) and [#33: RADIUS/EAP Investigation](../l2-runbooks/33-8021x-radius-eap-investigation.md). |
 
 ## Related Resources
 
