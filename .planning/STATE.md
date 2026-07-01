@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-07-01T22:22:53.153Z"
+last_updated: "2026-07-01T22:30:02.237Z"
 last_activity: 2026-07-01
 progress:
   total_phases: 12
   completed_phases: 9
   total_plans: 30
-  completed_plans: 28
+  completed_plans: 29
   percent: 75
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 ## Current Position
 
 Phase: 110 (pillar-b-c-corpus-fixes-mdm-migration-walkthroughs) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-01
 
@@ -328,6 +328,11 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - Phase 112 is the sole deliverable of its phase — harness bump never batches with content or tooling (mirrors v1.13 Phase 100 exactly)
 - 8 discuss-phase flags from REQUIREMENTS.md are NOT resolved at roadmap — they are gray-area scoping decisions deferred to /gsd-discuss-phase with adversarial-review per project convention
 
+**Phase 110 plan 03 decisions (2026-07-01):**
+
+- D-03 (MIGF-02) executed: single `## Appendix: Source-MDM Release Steps for Jamf Pro and Mosyle` H2 with two bare H3s (`### Jamf Pro`, `### Mosyle`); each covers FileVault key retrieval + Activation Lock bypass retrieval + device-record deletion at conceptual-action depth with authoring-day hedge; inline `> **Important:**` / `> **Note:**` callout style; no double-hyphen slug trap
+- Mosyle two-codes detail: two Activation Lock bypass codes per device (user-initiated + MDM-initiated) — both to be retrieved before deletion
+
 **Phase 107 plan 03 decisions (2026-07-01):**
 
 - D-03 confirmed: 802.1X triage tree is symptom-primary (flat shape); per-platform leaves live inside runbooks; tree stays within 6-node / 2-step budget
@@ -388,10 +393,10 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-01T22:22:41.397Z
-Stopped at: Completed 110-01-PLAN.md (FIX-01/02/03)
+Last session: 2026-07-01T22:30:02.218Z
+Stopped at: Completed 110-03-PLAN.md (MIGF-02 Jamf Pro + Mosyle appendix)
 Resume file: None
-Next action: Run /gsd-verify-work for Phase 109, then execute Phase 110
+Next action: Execute Phase 110 Plan 04 (nav-hub wiring for iOS migration file)
 
 ## Operator Next Steps
 
@@ -421,3 +426,4 @@ Next action: Run /gsd-verify-work for Phase 109, then execute Phase 110
 | Phase 109 P04 | 8m | 2 tasks | 1 files |
 | Phase 110 P01 | 4m | 3 tasks | 3 files |
 | Phase 110 P02 | 7m | 3 tasks | 1 files |
+| Phase 110 P03 | 8m | 2 tasks | 1 files |

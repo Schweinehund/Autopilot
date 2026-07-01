@@ -306,7 +306,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] 110-01-PLAN.md — Pillar B corpus fixes FIX-01/02/03 (index.md count, quick-ref-l1 #36 framing, common-issues #36 insertion)
 - [x] 110-02-PLAN.md — MIGF-01 new iOS/iPadOS ABM Deadline in-place migration walkthrough (docs/ios-lifecycle/02-mdm-migration.md)
-- [ ] 110-03-PLAN.md — MIGF-02 Jamf Pro + Mosyle source-MDM release appendix (docs/macos-lifecycle/02-mdm-migration-psso.md)
+- [x] 110-03-PLAN.md — MIGF-02 Jamf Pro + Mosyle source-MDM release appendix (docs/macos-lifecycle/02-mdm-migration-psso.md)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -377,6 +377,6 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 107. L1 Runbooks #38-41 | 3/3 | Complete    | 2026-07-01 |
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 4/4 | Complete    | 2026-07-01 |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 4/4 | Complete    | 2026-07-01 |
-| 110. Corpus Fixes + MDM Migration Walkthroughs | 2/4 | In Progress|  |
+| 110. Corpus Fixes + MDM Migration Walkthroughs | 3/4 | In Progress|  |
 | 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
 | 112. 12th Path-A Harness Lineage Bump + Close | 0/TBD | Not started | - |
