@@ -72,6 +72,9 @@ Microsoft-Windows-User Device Registration/Admin
 - [Full PowerShell Reference](reference/powershell-ref.md)
 - [Full Registry Paths Reference](reference/registry-paths.md)
 - [Network Endpoints](reference/endpoints.md)
+- [802.1X Log Collection Guide](l2-runbooks/31-8021x-log-collection.md) — prerequisite for all 802.1X L2 investigations; per-platform log sources (Windows WLAN-AutoConfig/Dot3Svc, macOS Console.app/wifi.log, iOS Intune portal, Android adb logcat, Linux journalctl)
+- [802.1X Certificate Chain Investigation](l2-runbooks/32-8021x-cert-investigation.md) — per-platform cert chain validation, SCEP profile status, EKU/SAN/expiry
+- [802.1X RADIUS/EAP Investigation](l2-runbooks/33-8021x-radius-eap-investigation.md) — RADIUS team request checklist; per-platform EAP mismatch + server-name validation diagnosis
 
 ---
 

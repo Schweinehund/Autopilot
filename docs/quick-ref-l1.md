@@ -38,6 +38,7 @@ platform: all
 - [ESP Failure](decision-trees/01-esp-failure.md)
 - [Profile Assignment](decision-trees/02-profile-assignment.md)
 - [TPM Attestation](decision-trees/03-tpm-attestation.md)
+- [802.1X Triage](decision-trees/10-8021x-triage.md) — 802.1X authentication failure symptom routing (cross-platform)
 
 ## Runbooks
 
@@ -47,6 +48,10 @@ platform: all
 - [Network Connectivity Failure](l1-runbooks/04-network-connectivity.md)
 - [OOBE Fails Immediately](l1-runbooks/05-oobe-failure.md)
 - [Error Code Index](error-codes/00-index.md)
+- [802.1X Certificate Failure](l1-runbooks/38-8021x-certificate-failure.md) — cross-platform
+- [802.1X RADIUS Reject](l1-runbooks/39-8021x-radius-reject.md) — cross-platform
+- [802.1X Server Trust Failure](l1-runbooks/40-8021x-server-trust-failure.md) — cross-platform
+- [802.1X EAP Negotiation Failure](l1-runbooks/41-8021x-eap-negotiation-failure.md) — cross-platform
 
 ---
 
