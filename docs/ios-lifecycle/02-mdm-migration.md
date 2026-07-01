@@ -217,3 +217,160 @@ In **Apple Business Manager (ABM)**, navigate to the device record or the pendin
 - **VPP app pre-assignment timing.** VPP apps should be assigned in Intune before the migration deadline is set (or at minimum before the deadline is reached), to maximize the chance that apps are available when the device re-enrolls.
 
 ---
+
+## Stage 5: User Notification Window
+
+### What the Admin Sees
+
+After the deadline is set in ABM, the device begins displaying migration notifications to the user according to the fixed notification cadence. In the **Intune admin center**, the device's enrollment status remains "Not enrolled" until the user initiates enrollment or the deadline is enforced. Monitor the Intune admin center for enrollment events.
+
+### What Happens
+
+1. **Notification cadence.** After the deadline is set, iOS/iPadOS sends migration notifications to the user on the following schedule:
+   - **Daily** until 24 hours before the deadline.
+   - **Hourly** in the last 24 hours before the deadline.
+   - **Every 60, 30, 10, and 1 minute(s)** in the last hour before the deadline.
+
+2. **User-initiated enrollment.** The user can tap "Start Enrollment" on any notification to begin the migration process before the deadline. Early adoption is encouraged — the notification prompt gives users an opportunity to migrate at a convenient time rather than waiting for the automatic restart at deadline.
+
+3. **Deadline approaches.** If the user takes no action, the notification cadence intensifies. No enrollment action from the user results in deadline enforcement at Stage 6.
+
+### Behind the Scenes
+
+- The notification cadence is fixed by Apple and cannot be customized. Notifications are presented via the iOS/iPadOS notification system.
+- The user can dismiss individual notifications without initiating enrollment. All dismissals are non-permanent — the next notification in the cadence will appear at the scheduled time.
+- Users who initiate enrollment voluntarily (before the deadline) proceed through the ADE re-enrollment flow without experiencing the automatic forced restart at the deadline.
+
+> **Note:** iOS/iPadOS has no PSSO Settings Catalog policy to monitor during the notification window. Enrollment readiness on iOS/iPadOS requires only the ADE enrollment policy assigned to the device serial number in Intune — no additional policy delivery verification is needed during Stage 5.
+
+### Watch Out For
+
+- **Users dismissing all notifications.** Users who habitually dismiss notifications may reach the deadline without acting. Communicate the migration timeline and the consequences of the deadline (automatic device restart) to users in advance.
+- **User-initiated enrollment before Intune readiness.** If a user attempts enrollment before the Intune ADE enrollment policy is confirmed assigned, enrollment will fail. Ensure Intune readiness (Stage 3) is complete before the first notification appears on devices.
+
+---
+
+## Stage 6: Deadline Enforcement
+
+### What the Admin Sees
+
+At the deadline time, iOS/iPadOS performs an automatic forced restart — the device reboots and re-enrolls with Intune without any user interaction. Unlike macOS, there is no visible locked screen for the admin or user to monitor; the device simply restarts and re-enrolls in the background. In the **Intune admin center**, the device's enrollment status transitions from "Not enrolled" to "Enrolled" after the restart completes and the ADE enrollment policy is applied.
+
+From **ABM**, an admin can cancel or modify the migration deadline before enforcement reaches the device (see Watch Out For for recovery options if enrollment cannot complete post-restart).
+
+### What Happens
+
+1. **Deadline enforcement on iOS/iPadOS:** At the deadline, iOS/iPadOS performs a **forced device restart** — the device reboots and completes enrollment in Intune automatically. Unlike macOS (which displays a non-dismissible full-screen prompt), there is no locked screen on iOS/iPadOS requiring active user input at deadline time. After the restart, the device re-enrolls with Intune using the ADE enrollment policy assigned to the device serial number.
+
+2. **Automatic ADE re-enrollment.** After the forced restart, the device contacts Apple's ADE endpoints and Intune during startup. The device re-enrolls under the Intune ADE enrollment policy assigned to its serial number. The process is automatic and requires no user action.
+
+3. **Admin recovery (if enrollment cannot complete after restart).** If the device restarts but cannot complete re-enrollment (for example, because the enrollment policy was not assigned):
+   - **Before the deadline (preferred):** In ABM, navigate to the device and cancel or modify the deadline to give time to fix the Intune enrollment policy assignment.
+   - **After restart (enrollment failed):** Correct the Intune-side enrollment issue (confirm ADE enrollment policy is assigned to the device serial number; confirm network connectivity). The device can attempt re-enrollment at its next check-in. If re-enrollment cannot complete, contact Apple Business Support or escalate to L2 for ABM-level recovery.
+
+   > **Note:** ABM admin recovery for an iOS/iPadOS device that has restarted but failed to re-enroll is MEDIUM confidence. Verify current ABM documentation for the exact recovery UI path, or contact Apple Business Support.
+
+### Behind the Scenes
+
+- The iOS/iPadOS 26 forced-restart enforcement is the device-platform equivalent of the macOS 26 non-dismissible full-screen prompt — both enforce MDM migration at the deadline — but the enforcement mechanism differs fundamentally. macOS presents a full-screen lock that the user must actively resolve; iOS/iPadOS reboots the device automatically and re-enrolls without user interaction.
+- After the restart, the iOS/iPadOS device contacts Apple's ADE servers (the same activation flow as initial ADE enrollment) and retrieves the Intune ADE enrollment profile assigned in ABM.
+- The forced restart is silent from the user's perspective beyond the reboot itself — the device does not display a migration prompt or enrollment wizard after restarting. Enrollment completes in the background during the boot sequence.
+
+### Watch Out For
+
+- **Enrollment policy not assigned before deadline.** If the Intune ADE enrollment policy is not assigned to the device serial number, the device will restart but cannot complete re-enrollment. The result is a device that is unmanaged post-restart, with no Kandji/Iru or Intune management profile present.
+- **Network unavailability at restart.** If the device cannot reach Apple's ADE endpoints or Intune endpoints during the restart and re-enrollment, enrollment will fail. Ensure network connectivity (Wi-Fi) is available at the expected deadline time, or adjust the deadline to a time when devices are reliably on a managed network.
+- **Assuming macOS recovery paths apply.** On macOS, a deadline-locked device can be recovered via ABM cancellation while the user is on the locked screen. On iOS/iPadOS, the enforcement is an automatic restart — there is no locked-screen state to cancel post-restart. Recovery on iOS/iPadOS after a failed re-enrollment requires fixing the Intune configuration and waiting for the next check-in.
+
+---
+
+## Stage 7: Post-Migration Enrollment Verification
+
+### What the Admin Sees
+
+After the device restarts and re-enrolls, the admin verifies enrollment status in the **Intune admin center** and the user verifies the management profile on-device. There is no terminal command available on iOS/iPadOS to check SSO or management state — all verification is portal-based and on-device via Settings.
+
+### What Happens
+
+1. **Intune admin center verification.** Navigate to **Intune admin center > Devices > iOS/iPadOS > All Devices**. Confirm:
+   - The device appears with enrollment status **Enrolled**.
+   - The device's compliance status reaches **Compliant** once compliance policies evaluate (may take up to 15 minutes after enrollment).
+   - The device serial number matches the expected device.
+
+2. **On-device Settings verification.** On the device, navigate to **Settings > General > VPN & Device Management**. Confirm:
+   - The new Intune management profile is present (labeled with your organization's name or Intune branding).
+   - The Kandji/Iru management profile is absent.
+
+3. **Company Portal verification (if deployed).** Open the **Company Portal** app on the device. Confirm:
+   - The device appears as enrolled.
+   - The organization name is visible.
+   - No compliance alerts are shown (once policies have evaluated).
+
+   > **Note:** Platform SSO is macOS-only — it does not exist on iOS/iPadOS. iOS/iPadOS enrollment verification is portal-first and on-device Settings only. No terminal or command-line enrollment verification step exists on iOS/iPadOS.
+
+4. **Pilot sign-off before fleet migration.** After verifying the pilot device through all seven stages, confirm the following before setting deadlines for the remaining fleet:
+   - Enrollment status: Enrolled.
+   - Compliance status: Compliant.
+   - Intune management profile: present in Settings.
+   - Kandji/Iru management profile: absent.
+   - Assigned VPP apps: re-delivered (if applicable).
+
+### Behind the Scenes
+
+- After the forced restart, iOS/iPadOS completes ADE enrollment using the same activation flow as initial ADE enrollment. The device serial number is looked up in ABM, and the Intune MDM enrollment profile assigned to that serial is delivered.
+- Unlike macOS migration (which results in "profile-based enrollment"), iOS/iPadOS migration results in a standard ADE enrollment — the device re-enrolls through Setup Assistant equivalents handled silently at boot.
+- Supervision state is re-established as part of the ADE re-enrollment. The device remains supervised after migration (supervision is set at ADE enrollment time on iOS/iPadOS).
+
+### Watch Out For
+
+- **VPP app re-delivery.** VPP-licensed apps assigned in Intune are re-delivered after enrollment. If apps were not pre-assigned in Intune before migration, the user may see previously managed apps become unmanaged or require re-installation. Pre-assigning apps (Stage 2) minimizes this disruption.
+- **Compliance policy evaluation delay.** After re-enrollment, the device may show as "Not compliant" for up to 15 minutes while compliance policies evaluate. This is expected — do not escalate unless the device remains non-compliant after 30 minutes.
+- **Kandji/Iru profile not removed.** If the Kandji/Iru management profile is still visible in Settings after migration, the Delete Device Record action in Stage 2 may not have completed, or the Kandji/Iru agent removal did not propagate before the migration deadline. In this case, escalate to L2 for manual MDM profile removal investigation.
+
+---
+
+## Pre-iOS/iPadOS-26: Wipe Required
+
+> **Pre-iOS/iPadOS-26 wipe-and-re-enroll — required for all devices running iOS/iPadOS 25 or earlier.**
+>
+> The in-place ABM "Assign Device Management" + Deadline migration path is not available on iOS/iPadOS 25 or earlier. For pre-26 devices, a full device erase is required; the device re-enrolls via ADE in Setup Assistant after the wipe.
+>
+> **Before wiping:** Retrieve the Activation Lock bypass code from Kandji/Iru and perform Delete Device Record (same sequencing as Stage 2 above). The bypass code is permanently destroyed on device-record deletion.
+>
+> For the complete ADE re-enroll pipeline after wipe, see [iOS/iPadOS ADE Lifecycle](01-ade-lifecycle.md).
+
+---
+
+## See Also
+
+**Terminology and Concepts:**
+
+- [Apple Provisioning Glossary](../_glossary-macos.md) -- MDM migration, ABM, Activation Lock, ADE, Kandji/Iru, Deadline terminology (shared Apple glossary covering iOS/iPadOS terms)
+
+**Related Guides:**
+
+- [iOS/iPadOS ADE Lifecycle](01-ade-lifecycle.md) -- Complete ADE enrollment pipeline; base ADE prerequisites and mechanics; pre-26 wipe re-enroll path
+- [iOS/iPadOS Enrollment Path Overview](00-enrollment-overview.md) -- Enrollment path comparison and selection guidance for iOS/iPadOS
+- [macOS MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md) -- macOS parallel migration walkthrough (B1 in-place + B2 wipe-and-re-enroll); includes macOS-specific post-migration stages for FileVault key management and Platform SSO provisioning that have no iOS/iPadOS equivalent
+
+---
+
+## Glossary Quick Reference
+
+Key terms used throughout this guide. Full definitions are in the [Apple Provisioning Glossary](../_glossary-macos.md).
+
+| Term | Definition | First Appears |
+|------|-----------|---------------|
+| [ABM "Assign Device Management"](../_glossary-macos.md#assign-device-management) | Apple Business Manager action that assigns a device's serial number to an MDM server, triggering the managed device migration workflow on iOS/iPadOS 26+ | Stage 3 |
+| [Deadline](../_glossary-macos.md#deadline) | Migration enforcement date set in ABM (1–90 day range); at the deadline, iOS/iPadOS performs a forced device restart and re-enrolls automatically | Stage 4 |
+| [Activation Lock bypass code](../_glossary-macos.md#activation-lock-bypass) | Device-specific code enabling an admin to bypass Activation Lock if the supervising MDM is removed; permanently destroyed on Delete Device Record; only available within 30 days of supervision | Stage 2 |
+| [Kandji / Iru](../_glossary-macos.md#kandji-iru) | macOS and iOS/iPadOS MDM platform; rebranded from Kandji to Iru in October 2025; `support.kandji.io` hosts Iru-branded KB articles (verified accessible 2026-07-01); `docs.iru.com` is the new authoritative public docs domain; `support.iru.io` resolves but is a login-gated SPA | Stage 2 |
+| [Delete Device Record](../_glossary-macos.md#delete-device-record) | Kandji/Iru console action that removes the device from MDM management and permanently destroys associated secrets; triggers agent self-removal at next check-in (~15 min) | Stage 2 |
+
+---
+
+## Version History
+
+| Date | Change |
+|------|--------|
+| 2026-07-01 | Phase 110: initial iOS/iPadOS MDM migration walkthrough (in-place path, iOS/iPadOS 26+) |
