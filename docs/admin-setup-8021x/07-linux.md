@@ -90,7 +90,9 @@ nmcli connection add \
 `802-1x.private-key-password-flags` controls how the private-key passphrase is managed:
 
 - `4` -- key is unencrypted; no passphrase required (`not-required` flag)
-- `0` -- system-managed; NetworkManager stores the passphrase (also add `802-1x.private-key-password "passphrase"`)
+- `0` -- system-managed; NetworkManager stores the passphrase
+
+> **WARNING --** Do not pass an encrypted key's passphrase inline as `802-1x.private-key-password "passphrase"` -- the secret is captured in shell history and `/proc/<pid>/cmdline`, readable by other local processes. Instead run the command with `nmcli --ask` (NetworkManager prompts for the passphrase interactively and never echoes it), or leave the password unset with flag `0` and let NetworkManager's secret agent prompt on first activation. Where possible, deliver an unencrypted key out-of-band and use flag `4`.
 
 Note: Older NetworkManager versions may require a `file://` prefix on certificate paths (e.g., `file:///etc/certs/ca-root.pem`). Ubuntu 24.04+ (NM 1.44+) accepts bare paths.
 
@@ -116,12 +118,14 @@ nmcli connection up "Corp-WiFi-EAP-TLS"
 
 Source: NetworkManager Reference Manual -- settings-802-1x (networkmanager.dev). Property values are illustrative placeholders; validate for your environment.
 
+The command examples above use nmcli's short property aliases (`wifi-sec.key-mgmt`, `ssid`); these are equivalent to the canonical setting names shown in the table (`802-11-wireless-security.key-mgmt`, `802-11-wireless.ssid`). nmcli accepts either form.
+
 ### Verification
 
 After activating the connection, confirm it succeeded with the following commands:
 
 ```bash
-# Show connection status and EAP-TLS authentication details
+# Show the stored connection profile (configured settings, not live EAP auth state)
 nmcli connection show "Corp-WiFi-EAP-TLS"
 
 # Confirm IP address assignment -- successful RADIUS authentication grants network access
