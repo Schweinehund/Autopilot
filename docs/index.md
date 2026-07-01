@@ -107,7 +107,7 @@ Troubleshooting, investigation, and setup guides for macOS Automated Device Enro
 |----------|-------------|
 | [macOS ADE Lifecycle](macos-lifecycle/00-ade-lifecycle.md) | Understand the 7-stage macOS enrollment pipeline from ABM registration through desktop |
 | [macOS ADE Triage Decision Tree](decision-trees/06-macos-triage.md) | Start here -- identifies the macOS ADE failure scenario and routes to the correct runbook |
-| [macOS L1 Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Scripted procedures for top macOS ADE enrollment failures (6 runbooks: device, Setup Assistant, profiles, apps, compliance, Company Portal) |
+| [macOS L1 Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Scripted procedures for top macOS ADE enrollment failures (9 macOS L1 runbooks — 6 ADE plus 3 Platform SSO; see row below) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#macos-ade-quick-reference) | One-page cheat sheet -- macOS top checks, escalation triggers, and runbook links |
 | [macOS Platform SSO Runbooks](l1-runbooks/00-index.md#macos-ade-runbooks) | Platform SSO sign-in failure (runbook #35: "Registration Required" not appearing) or Secure Enclave key loss after password reset (runbook #36); or local password recovery for locked-out users ([runbook #37](l1-runbooks/37-macos-local-password-reset.md): FileVault recovery key / LAPS admin / Apple ID) |
 | [macOS PSSO Provisioning Walkthrough](macos-lifecycle/01-psso-provisioning-walkthrough.md) | Walk through a Mac from enrollment to PSSO-registered end user — both standard post-enrollment (A1) and ADE-during-Setup-Assistant macOS 26+ (A2) paths |
