@@ -52,7 +52,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 106: Linux 802.1X Admin-Setup (Script-Based EAP-TLS + Wired Gap)** - Linux 802.1X guide leading with the platform gap then documenting the nmcli/script EAP-TLS workaround with wired gap stub (completed 2026-07-01)
 - [x] **Phase 107: L1 Runbooks #38-41 (802.1X Triage)** - Four cross-platform L1 runbooks (cert failure, RADIUS reject, server-trust failure, EAP negotiation failure) with per-platform leaves (completed 2026-07-01)
 - [x] **Phase 108: L2 Runbooks #31-33 + Decision Tree #10** - Three L2 investigation runbooks (log collection, cert investigation, RADIUS/EAP investigation) and the 802.1X triage decision tree (completed 2026-07-01)
-- [x] **Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs** - Capability-matrix 802.1X rows for all 5 platforms and navigation-last hub wiring across all six hub files (completed 2026-07-01)
+- [x] **Phase 109: 802.1X Integration — Capability Matrices + Navigation Hubs** - Capability-matrix 802.1X rows for all 5 platforms and navigation-last hub wiring across all six hub files
+ (completed 2026-07-01)
 - [ ] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps
 - [ ] **Phase 111: Pillar D — Chain-Validator Tooling Refactors** - Three DRY refactors to the validator chain (exec-fail-detail extraction, frozen-aware adoption sweep, helper-spawn stderr capture)
 - [ ] **Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close** - Atom 1 + Atom 2 harness bump, 3-axis terminal re-audit, and milestone close with all 22 requirements Validated
@@ -297,7 +298,11 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. An admin can follow the iOS/iPadOS ABM "Assign Device Management" + Deadline migration walkthrough covering iOS/iPadOS-specific forced-restart behavior (vs macOS full-screen lock) and post-migration enrollment verification
   5. An admin can follow source-MDM-specific release steps for Jamf Pro and Mosyle (FileVault key retrieval, Activation Lock bypass, device-record deletion) in the `02-mdm-migration-psso.md` addendum
 
-**Plans**: TBD
+**Plans**: 4 plans
+- [ ] 110-01-PLAN.md — Pillar B corpus fixes FIX-01/02/03 (index.md count, quick-ref-l1 #36 framing, common-issues #36 insertion)
+- [ ] 110-02-PLAN.md — MIGF-01 new iOS/iPadOS ABM Deadline in-place migration walkthrough (docs/ios-lifecycle/02-mdm-migration.md)
+- [ ] 110-03-PLAN.md — MIGF-02 Jamf Pro + Mosyle source-MDM release appendix (docs/macos-lifecycle/02-mdm-migration-psso.md)
+- [ ] 110-04-PLAN.md — navigation-last wiring for the new iOS migration file (index.md iOS section + enrollment-overview See Also)
 **UI hint**: no
 
 ### Phase 111: Pillar D — Chain-Validator Tooling Refactors
