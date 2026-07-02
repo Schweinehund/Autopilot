@@ -723,22 +723,22 @@ All A1 claims are based on direct grep output which covered all files in the dir
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **check-phase-61 Landmine C — exact preservation approach**
    - What we know: check-phase-61's inline readers omit stdio; `readAtClose` uses explicit stdio. These are behaviorally different.
    - What's unclear: Does the plan use (a) a local wrapper that preserves the no-stdio call, or (b) inline the try/catch+no-stdio pattern at each of the 2 call sites? Both preserve the behavior.
-   - Recommendation: Use approach (b) — inline the minimal try/catch at the two call sites in check-phase-61, eliminating the named function symbols while not changing git call arguments. This is the simplest approach that satisfies Landmine A and Landmine C simultaneously.
+   - RESOLVED: Plan uses approach (a) — a local `readAtV15CloseFor61(relPath)` wrapper that preserves the no-stdio git call (per PATTERNS.md; Task 3). Satisfies Landmine A + Landmine C simultaneously without leaking stderr behavior change.
 
 2. **TOOL-02 inline reader count discrepancy (14 found vs ~13 estimated)**
    - What we know: 14 function definitions found across 4 files.
    - What's unclear: Which one the CONTEXT was treating differently.
-   - Recommendation: Implement all 14 replacements. The ~13 estimate is imprecise and does not gate execution.
+   - RESOLVED: Implement all 14 replacements (must_haves truth 3). The ~13 CONTEXT estimate omitted check-phase-67's JSON-parsing `readSidecarAtV17Close`; it does not gate execution.
 
 3. **exec-fail-detail.mjs self-test invocation mechanism**
    - What we know: D-04 says "a helper self-test asserts each variant's exact bytes."
    - What's unclear: Whether the self-test is invoked via `--self-test` CLI flag (matching the existing `regenerate-supervision-pins.mjs` pattern) or via `if (import.meta.url === new URL(import.meta.url).href)` or exported as `selfTest()`.
-   - Recommendation: Export `selfTest()` function AND add `if (import.meta.url === import.meta.resolve('./exec-fail-detail.mjs')) selfTest()` for direct invocation. This matches how `regenerate-supervision-pins.mjs` handles self-test.
+   - RESOLVED: Export `selfTest()` AND guard direct invocation via `argv.includes('--self-test')` (Task 1), matching the existing `regenerate-supervision-pins.mjs` self-test convention.
 
 ---
 
