@@ -25,6 +25,10 @@ import { execFailDetail } from './_lib/exec-fail-detail.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
+// D-00: under apex nested invocation (CHECK_PHASE_NESTED=1), harness re-runs against the evolved live
+// corpus and recursive chain-guard expansion are skipped (frozen audit validates its OWN close-SHA
+// corpus, not future live corpus). Standalone still runs them fully.
+const NESTED = process.env.CHECK_PHASE_NESTED === '1';
 
 function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
@@ -298,6 +302,9 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
   checks.push({
     id, name: `V-66-${id}: check-phase-${phaseNum}.mjs exits 0 (CHAIN regression-guard)`,
     run() {
+      if (NESTED) {
+        return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip recursive chain-guard expansion' };
+      }
       // Skip phases with known pre-existing failures that are NOT Phase 66 regressions
       // (see CHAIN_SKIP documentation above for root causes and resolution path)
       if (CHAIN_SKIP.has(phaseNum)) {
@@ -327,6 +334,9 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
 checks.push({
   id: 'AUDIT', name: 'V-66-AUDIT: v1.6-milestone-audit.mjs exits 0',
   run() {
+    if (NESTED) {
+      return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip AUDIT re-run against evolved corpus (D-00)' };
+    }
     try {
       execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
       return { pass: true, detail: 'v1.6 harness exits 0' };

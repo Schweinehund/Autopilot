@@ -22,6 +22,10 @@ import { execFailDetail } from './_lib/exec-fail-detail.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
+// D-00: under apex nested invocation (CHECK_PHASE_NESTED=1), harness/self-test re-runs against the
+// evolved live corpus and recursive chain-guard expansion are skipped (frozen reproduction validates
+// its OWN close-SHA corpus, not future live corpus). Standalone still runs them fully.
+const NESTED = process.env.CHECK_PHASE_NESTED === '1';
 
 function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
@@ -331,6 +335,9 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
     id: id,
     name: `V-61-${String(id).padStart(2, '0')}: check-phase-${phaseNum}.mjs exits 0 (CHAIN regression-guard)`,
     run() {
+      if (NESTED) {
+        return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip recursive chain-guard expansion' };
+      }
       const path = `scripts/validation/check-phase-${phaseNum}.mjs`;
       if (!existsSync(join(process.cwd(), path))) {
         return { pass: true, skipped: true, detail: path + ' not present (graceful skip)' };
@@ -354,6 +361,9 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
 checks.push({
   id: 33, name: "V-61-33 (V-61-AUDIT): v1.5-milestone-audit.mjs exits 0 in fully-blocking mode (12/12 PASS)",
   run() {
+    if (NESTED) {
+      return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip AUDIT re-run against evolved corpus (D-00)' };
+    }
     try {
       execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
       return { pass: true, detail: 'harness exits 0' };
@@ -372,6 +382,9 @@ checks.push({
 checks.push({
   id: 34, name: "V-61-34 (V-61-SELF-TEST): regenerate-supervision-pins.mjs --self-test exits 0 (AUDIT-07 closure persistence)",
   run() {
+    if (NESTED) {
+      return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip self-test re-run against evolved corpus (D-00)' };
+    }
     try {
       execFileSync('node', [PIN_HELPER, '--self-test'], { stdio: 'pipe', timeout: 30000, cwd: process.cwd() });
       return { pass: true, detail: '--self-test exits 0' };

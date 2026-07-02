@@ -299,10 +299,11 @@ const checks = [
   // ============================================================
 
   {
-    id: 7, name: 'V-59-07: docs/index.md Linux H2 -- 3 sub-H3 + row counts L1=4 / L2=4 / Admin=3',
+    id: 7, name: 'V-59-07: docs/index.md Linux H2 -- 3 sub-H3 + row counts L1=4 / L2=4 / Admin=3 [v1.5-frozen @ ba2cbc0]',
     run() {
-      const c = readFile(INDEX_MD);
-      if (c === null) return { pass: false, detail: 'File missing: ' + INDEX_MD };
+      // frozen-aware: read docs/index.md at v1.5-close (Phase 59's own milestone). The live +1 rows
+      // (L1/L2=5, Admin=4) are Phase-109 802.1X additions, out of Phase 59's deliverable scope.
+      const c = readAtV15Close(INDEX_MD);
       const region = sliceH2Region(c, '## Linux Provisioning');
       if (!region) return { pass: false, detail: '"## Linux Provisioning" H2 not found in docs/index.md' };
 

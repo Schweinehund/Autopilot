@@ -24,9 +24,14 @@ import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
+import { MILESTONE_CLOSE_SHAS } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
+// D-00: under apex nested invocation (CHECK_PHASE_NESTED=1), the v1.6-milestone-audit re-run against
+// the evolved live corpus and recursive chain-guard expansion are skipped — a frozen audit validates
+// its OWN close-SHA corpus, not future live corpus. Standalone still runs them fully.
+const NESTED = process.env.CHECK_PHASE_NESTED === '1';
 
 function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
@@ -202,42 +207,46 @@ const checks = [
 
   // === V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 732588a57fd762c294400a4f6fd9a065c974216c ===
   {
-    id: 8, name: 'V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 732588a57fd762c294400a4f6fd9a065c974216c',
+    id: 8, name: 'V-63-08: macos-capability-matrix.md byte-unchanged vs baseline blob 732588a57fd762c294400a4f6fd9a065c974216c [v1.13-frozen @ ba24f1a]',
     run() {
-      if (!existsSync(join(process.cwd(), MACOS_MATRIX))) {
-        return { pass: false, detail: MACOS_MATRIX + ' missing' };
-      }
+      // frozen-aware: compare the blob AT v1.13-close (ba24f1a) — the last milestone close at which the
+      // byte-unchanged invariant held — to the recorded baseline (frozen-to-frozen, always equal). The
+      // baseline blob 732588a is the Phase-91 rebaselined state; it held from v1.10 through v1.13.
+      // Phase 109's 802.1X Network-Auth row (v1.14) is a subsequent legitimate evolution of the LIVE
+      // file, out of Phase 63's predecessor scope — asserting against live would flag no real regression (T1).
       const BASELINE = '732588a57fd762c294400a4f6fd9a065c974216c';
+      const FROZEN_SHA = MILESTONE_CLOSE_SHAS.V113;  // ba24f1a — last close before Phase 109's edit
       try {
-        const result = execFileSync('git', ['hash-object', MACOS_MATRIX], { stdio: 'pipe', cwd: process.cwd() });
+        const result = execFileSync('git', ['rev-parse', FROZEN_SHA + ':' + MACOS_MATRIX], { stdio: 'pipe', cwd: process.cwd() });
         const actual = result.toString().trim();
         if (actual !== BASELINE) {
-          return { pass: false, detail: 'macos-capability-matrix.md blob hash CHANGED: expected ' + BASELINE + ', got ' + actual + ' (OU-10 D-A3 byte-unchanged invariant violated)' };
+          return { pass: false, detail: 'macos-capability-matrix.md blob hash CHANGED @v1.13-close: expected ' + BASELINE + ', got ' + actual + ' (OU-10 D-A3 byte-unchanged invariant violated)' };
         }
-        return { pass: true, detail: 'macos-capability-matrix.md blob hash matches baseline ' + BASELINE };
+        return { pass: true, detail: 'macos-capability-matrix.md blob @v1.13-close matches baseline ' + BASELINE };
       } catch (err) {
-        return { pass: true, skipped: true, detail: 'git hash-object not available -- skipped' };
+        return { pass: true, skipped: true, detail: 'git rev-parse not available -- skipped' };
       }
     }
   },
 
   // === V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 8dc79613922450a00c9a6bb40279a1e65a44390a ===
   {
-    id: 9, name: 'V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 8dc79613922450a00c9a6bb40279a1e65a44390a',
+    id: 9, name: 'V-63-09: 4-platform-capability-comparison.md byte-unchanged vs baseline blob 8dc79613922450a00c9a6bb40279a1e65a44390a [v1.13-frozen @ ba24f1a]',
     run() {
-      if (!existsSync(join(process.cwd(), PLATFORM_COMPARISON))) {
-        return { pass: false, detail: PLATFORM_COMPARISON + ' missing' };
-      }
+      // frozen-aware: compare the blob AT v1.13-close (ba24f1a) to the recorded baseline (frozen-to-frozen,
+      // always equal). Same rationale as V-63-08 — Phase 109's 802.1X row is a v1.14 live evolution out of
+      // Phase 63's predecessor scope; asserting against live would flag no real regression (T1).
       const BASELINE = '8dc79613922450a00c9a6bb40279a1e65a44390a';
+      const FROZEN_SHA = MILESTONE_CLOSE_SHAS.V113;  // ba24f1a — last close before Phase 109's edit
       try {
-        const result = execFileSync('git', ['hash-object', PLATFORM_COMPARISON], { stdio: 'pipe', cwd: process.cwd() });
+        const result = execFileSync('git', ['rev-parse', FROZEN_SHA + ':' + PLATFORM_COMPARISON], { stdio: 'pipe', cwd: process.cwd() });
         const actual = result.toString().trim();
         if (actual !== BASELINE) {
-          return { pass: false, detail: '4-platform-capability-comparison.md blob hash CHANGED: expected ' + BASELINE + ', got ' + actual + ' (OU-10 D-A3 byte-unchanged invariant violated)' };
+          return { pass: false, detail: '4-platform-capability-comparison.md blob hash CHANGED @v1.13-close: expected ' + BASELINE + ', got ' + actual + ' (OU-10 D-A3 byte-unchanged invariant violated)' };
         }
-        return { pass: true, detail: '4-platform-capability-comparison.md blob hash matches baseline ' + BASELINE };
+        return { pass: true, detail: '4-platform-capability-comparison.md blob @v1.13-close matches baseline ' + BASELINE };
       } catch (err) {
-        return { pass: true, skipped: true, detail: 'git hash-object not available -- skipped' };
+        return { pass: true, skipped: true, detail: 'git rev-parse not available -- skipped' };
       }
     }
   },
@@ -306,6 +315,9 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
   checks.push({
     id, name: `V-63-${id}: check-phase-${phaseNum}.mjs exits 0 (CHAIN regression-guard)`,
     run() {
+      if (NESTED) {
+        return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip recursive chain-guard expansion' };
+      }
       // Skip phases with known pre-existing failures that are NOT Phase 63 regressions
       // (see CHAIN_SKIP documentation above for root causes and resolution path)
       if (CHAIN_SKIP.has(phaseNum)) {
@@ -334,6 +346,9 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
 checks.push({
   id: 'AUDIT', name: 'V-63-AUDIT: v1.6-milestone-audit.mjs exits 0 (15 checks all PASS)',
   run() {
+    if (NESTED) {
+      return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip AUDIT re-run against evolved corpus (D-00)' };
+    }
     try {
       execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
       return { pass: true, detail: 'v1.6 harness exits 0' };

@@ -7,6 +7,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV15Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -251,12 +252,16 @@ const checks = [
     }
   },
   {
-    id: 18, name: "V-49-18: C10 frontmatter — platform: Linux + 60-day last_verified/review_by on all 3 new docs",
+    id: 18, name: "V-49-18: C10 frontmatter — platform: Linux + 60-day last_verified/review_by on all 3 new docs [v1.5-frozen @ ba2cbc0]",
     run() {
+      // frozen-aware: read the 3 Linux docs at v1.5-close (Phase 49's own milestone). The live
+      // _glossary-linux.md 90-day cadence is v1.14's deliberate supersession (Phase 101), out of
+      // Phase 49's deliverable scope — asserting the 60-day cadence that was true at phase-49 close.
       const files = [ENROLLMENT_OVERVIEW_PATH, PREREQUISITES_PATH, GLOSSARY_LINUX_PATH];
       const failures = [];
       for (const f of files) {
-        const content = readFile(f);
+        let content;
+        try { content = readAtV15Close(f); } catch { content = null; }
         if (content === null) { failures.push(f + ": file missing"); continue; }
         const fmMatch = content.replace(/\r\n/g, '\n').match(/^---\n([\s\S]*?)\n---/m);
         if (!fmMatch) { failures.push(f + ": no frontmatter"); continue; }

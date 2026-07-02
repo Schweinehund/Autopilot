@@ -20,6 +20,10 @@ import { execFailDetail } from './_lib/exec-fail-detail.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
+// D-00: under apex nested invocation (CHECK_PHASE_NESTED=1), harness/self-test re-runs against the
+// evolved live corpus are skipped — a frozen reproduction validates its OWN close-SHA corpus, not
+// future live corpus. Standalone (no env var) still runs the self-test (preserved-by-design).
+const NESTED = process.env.CHECK_PHASE_NESTED === '1';
 
 function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
@@ -65,6 +69,9 @@ const checks = [
     id: 4,
     name: 'regenerate-supervision-pins.mjs --self-test exits 0 (AUDIT-07)',
     run() {
+      if (NESTED) {
+        return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip self-test re-run against evolved corpus (D-00)' };
+      }
       try {
         execFileSync('node', ['scripts/validation/regenerate-supervision-pins.mjs', '--self-test'],
           { stdio: 'pipe', timeout: 30000, cwd: process.cwd() });

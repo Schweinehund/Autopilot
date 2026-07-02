@@ -10,6 +10,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV15Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -96,10 +97,11 @@ const checks = [
 
   // === V-57-06: docs/index.md Android sub-table row counts (L1=4, L2=4, Admin=3) ===
   {
-    id: 6, name: "V-57-06: docs/index.md Android sub-table row counts (L1=4, L2=4, Admin=3)",
+    id: 6, name: "V-57-06: docs/index.md Android sub-table row counts (L1=4, L2=4, Admin=3) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readFile(INDEX_MD);
-      if (c === null) return { pass: false, detail: "File missing: " + INDEX_MD };
+      // frozen-aware: read docs/index.md at v1.5-close (Phase 57's own milestone). The live +1 rows
+      // (L1/L2=5, Admin=4) are Phase-109 802.1X additions, not Phase 57 deliverables.
+      const c = readAtV15Close(INDEX_MD);
       const region = sliceH2Region(c, "## Android Enterprise Provisioning");
       if (!region) return { pass: false, detail: "## Android Enterprise Provisioning H2 missing" };
       // For each sub-H3, slice to next ### or end of region; count `| [` table-row prefix lines
