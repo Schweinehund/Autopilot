@@ -17,6 +17,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
+import { readAtV17Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -27,28 +28,14 @@ function readFile(relPath) {
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
 }
 
-// Reads .planning/MILESTONES.md at v1.7-close SHA aa6de68 (frozen state).
-// V1.7-frozen-aware per 70-CONTEXT.md D-01 LOCKED (Option C); MILESTONES.md is post-close-mutable.
-// V-68-09 asserts cdcce23 garbage entry deletion: zero `One-liner:` placeholders in v1.5 section
-// post-Phase-68 d142c7a cleanup. Substitution: Plan 70-05 Commit A replaces aa6de68.
+// TOOL-02: body delegated to readAtV17Close (frozen-at-close.mjs); catch→null per Landmine B.
 function readMilestonesAtV17Close() {
-  try {
-    // stdio: ['ignore', 'pipe', 'pipe'] explicitly captures stderr (prevents inner git
-    // "fatal: invalid object name" leaking to parent stderr pre-Plan-70-05 Commit A substitution).
-    return execFileSync('git', ['show', 'aa6de68:.planning/MILESTONES.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close('.planning/MILESTONES.md'); } catch (e) { return null; }
 }
 
-// Reads scripts/validation/regenerate-supervision-pins.mjs at v1.7-close SHA aa6de68
-// (frozen state for V-68-05 BASELINE_9/10/11 banner-shift assertion). v1.7-frozen-aware per D-01.
+// TOOL-02: body delegated to readAtV17Close (frozen-at-close.mjs); catch→null per Landmine B.
 function readCorpusFileAtV17Close(relPath) {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close(relPath); } catch (e) { return null; }
 }
 
 const HARNESS = 'scripts/validation/v1.7-milestone-audit.mjs';
@@ -208,18 +195,21 @@ const checks = [
     }
   },
 
-  // === V-68-10 (HEAD-coupled): v1.5-frozen-aware helpers present in check-phase-61.mjs ===
+  // === V-68-10 (HEAD-coupled): v1.5-frozen-aware reader present in check-phase-61.mjs ===
+  // Tolerant-OR per Plan 111-01 Task 3 (TOOL-02 Landmine A): passes if either the unified
+  // readAtV15CloseFor61 wrapper OR both legacy inline helpers are present.
   {
-    id: 10, name: 'V-68-10: check-phase-61.mjs has readRequirementsAtV15Close + readRoadmapAtV15Close helpers',
+    id: 10, name: 'V-68-10: check-phase-61.mjs has v1.5-frozen-aware reader (readAtV15CloseFor61 or legacy helpers)',
     run() {
       const c = readFile('scripts/validation/check-phase-61.mjs');
       if (c === null) return { pass: false, detail: 'check-phase-61.mjs missing' };
+      const hasUnified = c.includes('readAtV15CloseFor61');
       const hasReq = c.includes('readRequirementsAtV15Close');
       const hasRoad = c.includes('readRoadmapAtV15Close');
-      if (!hasReq || !hasRoad) {
-        return { pass: false, detail: 'readRequirementsAtV15Close=' + hasReq + '; readRoadmapAtV15Close=' + hasRoad };
+      if (!hasUnified && (!hasReq || !hasRoad)) {
+        return { pass: false, detail: 'v1.5-frozen-aware reader absent: readAtV15CloseFor61=' + hasUnified + '; readRequirementsAtV15Close=' + hasReq + '; readRoadmapAtV15Close=' + hasRoad };
       }
-      return { pass: true, detail: 'both v1.5-frozen-aware helpers present in check-phase-61.mjs' };
+      return { pass: true, detail: hasUnified ? 'readAtV15CloseFor61 unified wrapper present (TOOL-02)' : 'both legacy inline helpers present in check-phase-61.mjs' };
     }
   },
 

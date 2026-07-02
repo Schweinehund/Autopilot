@@ -29,36 +29,12 @@ function readFile(relPath) {
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
 }
 
-// Reads REQUIREMENTS.md state at v1.5-close SHA ba2cbc0 (frozen state for V-61-01..04 structural assertions).
-// V1.5-frozen-aware per Plan 68-03 Option A pivot (gray-area-pick surfaced during execution; user approved).
-// Rationale: V-61-01..04 originally asserted post-Plan-61-04 state of `## v1.5 Requirements (Active)` section.
-// REQUIREMENTS.md has since been reorganized for v1.7 (`## v1.7 Requirements (Active)` at line 6;
-// v1.5 reqs migrated to PROJECT.md `## Validated` per Phase 61-03 commit 0302100; v1.7 active section
-// added per commit 939a8af). Reading the v1.5-close SHA preserves the original assertion semantics
-// without breaking on v1.7 reorg. Same v1.5-frozen-aware pattern as the archive-path helper from
-// Plan 68-02 CHAIN-02 (validator becomes archive-aware).
-function readRequirementsAtV15Close() {
+// TOOL-02 unified replacement for the two inline v1.5-frozen readers (removed in Plan 111-01 Task 3).
+// Reads a planning file at v1.5-close SHA ba2cbc0; returns null on failure.
+// Landmine C: deliberately omits stdio option (stderr leaks to parent) matching the removed inline-reader behavior.
+function readAtV15CloseFor61(relPath) {
   try {
-    return execFileSync('git', ['show', 'ba2cbc0:.planning/REQUIREMENTS.md'], { encoding: 'utf8', timeout: 10000 }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
-}
-
-// Reads ROADMAP.md state at v1.5-close SHA ba2cbc0 (frozen state for V-61-05..08 §Progress structural assertions).
-// V1.5-frozen-aware per Plan 69-02 Option A+ scope-gap closure (surfaced during Phase 69 SC#5 B.1 baseline).
-// Rationale: V-61-05..08 originally asserted post-Plan-61-02 state of §Progress (zero In Progress rows, zero Not started,
-// Phase 61 Complete, all 14 v1.5 phases 48-61 Complete). HEAD ROADMAP.md is mutated by every subsequent milestone's
-// tracking-update commits (e.g., Plan 69-01 `6e12a75` added an "In Progress" row for Phase 69), which legitimately
-// violates the v1.5-frozen §Progress shape. Reading the v1.5-close SHA preserves the original assertion semantics
-// without breaking on subsequent mid-flight planning-doc edits.
-//
-// Lineage: parallel to readRequirementsAtV15Close() introduced Plan 68-03 Task 1 commit d7d7d5f for V-61-01..04.
-// V-61-01..04 were made v1.5-frozen-aware in d7d7d5f; V-61-05..08 were the scope-gap (left HEAD-coupled) and are
-// closed here as Plan 68-03 Task 1 scope-gap closure surfaced during Phase 69 B.1 baseline (run 26574959797 evidence).
-function readRoadmapAtV15Close() {
-  try {
-    return execFileSync('git', ['show', 'ba2cbc0:.planning/ROADMAP.md'], { encoding: 'utf8', timeout: 10000 }).replace(/\r\n/g, '\n');
+    return execFileSync('git', ['show', 'ba2cbc0:' + relPath], { encoding: 'utf8', timeout: 10000 }).replace(/\r\n/g, '\n');
   } catch (err) {
     return null;
   }
@@ -84,7 +60,7 @@ const checks = [
   {
     id: 1, name: "V-61-01: REQUIREMENTS.md active-section has zero unchecked [ ] reqs (post-Plan-61-04 AUDIT-08 flip) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRequirementsAtV15Close();
+      const c = readAtV15CloseFor61(REQUIREMENTS);
       if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       const activeMatch = c.match(/## v1\.5 Requirements \(Active\)([\s\S]*?)## Future Requirements/);
       if (!activeMatch) return { pass: false, detail: 'Active section boundaries not found' };
@@ -97,7 +73,7 @@ const checks = [
   {
     id: 2, name: "V-61-02: REQUIREMENTS.md AUDIT-08 specifically flipped [x] (Plan 61-04 atomic close commit) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRequirementsAtV15Close();
+      const c = readAtV15CloseFor61(REQUIREMENTS);
       if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       if (!/^- \[x\] \*\*AUDIT-08\*\*/m.test(c)) return { pass: false, detail: 'AUDIT-08 not flipped to [x]' };
       return { pass: true, detail: 'AUDIT-08 flipped (v1.5-frozen @ ba2cbc0)' };
@@ -106,7 +82,7 @@ const checks = [
   {
     id: 3, name: "V-61-03: REQUIREMENTS.md active reqs all carry inline traceability comments per CONTEXT D-09 template [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRequirementsAtV15Close();
+      const c = readAtV15CloseFor61(REQUIREMENTS);
       if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       const activeMatch = c.match(/## v1\.5 Requirements \(Active\)([\s\S]*?)## Future Requirements/);
       if (!activeMatch) return { pass: false, detail: 'Active section boundaries not found' };
@@ -120,7 +96,7 @@ const checks = [
   {
     id: 4, name: "V-61-04: REQUIREMENTS.md §Future Requirements legitimately deferred items preserved (LIN-DEFER-01, RHEL-01, BYOPC-01, WEB-01, CHROMEOS-01, CODE-01) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRequirementsAtV15Close();
+      const c = readAtV15CloseFor61(REQUIREMENTS);
       if (c === null) return { pass: false, detail: 'could not read REQUIREMENTS.md at v1.5-close ba2cbc0' };
       const expected = ['LIN-DEFER-01', 'RHEL-01', 'BYOPC-01', 'WEB-01', 'CHROMEOS-01', 'CODE-01'];
       const missing = expected.filter(e => !c.includes(e));
@@ -133,7 +109,7 @@ const checks = [
   {
     id: 5, name: "V-61-05: ROADMAP §Progress has zero `In Progress` rows (4 stale rows reconciled per Plan 61-02 Task 5) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRoadmapAtV15Close();
+      const c = readAtV15CloseFor61(ROADMAP);
       if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
       const inProgress = (c.match(/In Progress/g) || []).length;
       if (inProgress !== 0) return { pass: false, detail: inProgress + ' `In Progress` rows remain (v1.5-frozen @ ba2cbc0)' };
@@ -143,7 +119,7 @@ const checks = [
   {
     id: 6, name: "V-61-06: ROADMAP §Progress has zero `Not started` rows post-Plan-61-05 (Phase 61 own row flipped at this plan close) [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRoadmapAtV15Close();
+      const c = readAtV15CloseFor61(ROADMAP);
       if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
       // Slice §Progress section only
       const progMatch = c.match(/## Progress[\s\S]*?(?=\n## |\n---|\Z)/);
@@ -156,7 +132,7 @@ const checks = [
   {
     id: 7, name: "V-61-07: ROADMAP §Progress Phase 61 row marked Complete with completion date [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRoadmapAtV15Close();
+      const c = readAtV15CloseFor61(ROADMAP);
       if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
       if (!/^\| 61\..*\| Complete\s*\| 20\d{2}-\d{2}-\d{2}/m.test(c)) return { pass: false, detail: 'Phase 61 row not marked Complete with date (v1.5-frozen @ ba2cbc0)' };
       return { pass: true, detail: 'Phase 61 row Complete + date populated (v1.5-frozen @ ba2cbc0)' };
@@ -165,7 +141,7 @@ const checks = [
   {
     id: 8, name: "V-61-08: ROADMAP §Progress all 14 v1.5 phase rows (48-61) marked Complete [v1.5-frozen @ ba2cbc0]",
     run() {
-      const c = readRoadmapAtV15Close();
+      const c = readAtV15CloseFor61(ROADMAP);
       if (c === null) return { pass: false, detail: 'could not read ROADMAP.md at v1.5-close ba2cbc0' };
       const v15Phases = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61];
       const incomplete = v15Phases.filter(n => {
@@ -401,10 +377,11 @@ checks.push({
       return { pass: true, detail: '--self-test exits 0' };
     } catch (err) {
       const stderr = err.stderr ? err.stderr.toString() : '';
+      const stdout = err.stdout ? err.stdout.toString() : '';
       const isMissing = err.code === 'ENOENT' || err.status === 127
         || stderr.includes('not found') || stderr.includes('Could not resolve');
       if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-      return { pass: false, detail: '--self-test FAIL: ' + stderr.slice(0, 200) };
+      return { pass: false, detail: execFailDetail(stdout, stderr, { n: 200, trim: false, prefix: '--self-test FAIL: ' }) };
     }
   }
 });
