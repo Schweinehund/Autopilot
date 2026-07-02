@@ -17,6 +17,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
+import { readAtV17Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -27,34 +28,14 @@ function readFile(relPath) {
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
 }
 
-// Reads <relPath> at v1.7-close SHA aa6de68 (frozen state for SWEEP corpus assertions).
-// V1.7-frozen-aware per 70-CONTEXT.md D-01 LOCKED (Option C: per-assertion-class freshness routing).
-// Rationale: V-67-01..07 assert SWEEP-01/02 corpus state which is post-close-mutable surface;
-// reading at v1.7-close SHA preserves assertion semantics under subsequent corpus edits.
-// Substitution: Plan 70-05 Commit A replaces aa6de68 via `sed -i` (per Phase 68 Plan 68-05
-// + Phase 69 Plan 69-02 precedent). Until substituted, helper returns null and callers PASS-with-degraded-detail.
+// TOOL-02: body delegated to readAtV17Close (frozen-at-close.mjs); catch→null per Landmine B.
 function readCorpusFileAtV17Close(relPath) {
-  try {
-    // stdio: ['ignore', 'pipe', 'pipe'] explicitly captures stderr (prevents inner git
-    // "fatal: invalid object name" from leaking to parent's stderr when aa6de68
-    // is still a literal placeholder pre-Plan-70-05 Commit A substitution).
-    return execFileSync('git', ['show', 'aa6de68:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close(relPath); } catch (e) { return null; }
 }
 
-// Reads scripts/validation/v1.7-audit-allowlist.json at v1.7-close SHA aa6de68.
-// V1.7-frozen-aware per 70-CONTEXT.md D-01 LOCKED. Sidecar shape post-Phase-67-revalidation is the
-// reference state; ci_1_abm_urls entries carry `last_revalidated: "2026-05-26"`, ci_2_vpp_location_token
-// entries carry `resolved_2026_05_26: true` (per Plan 70-02 Atom 1 HARNESS-02 deliverable).
+// TOOL-02: body delegated to readAtV17Close + JSON.parse; catch→null per Landmine B.
 function readSidecarAtV17Close() {
-  try {
-    const c = execFileSync('git', ['show', 'aa6de68:scripts/validation/v1.7-audit-allowlist.json'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] });
-    return JSON.parse(c);
-  } catch (err) {
-    return null;
-  }
+  try { return JSON.parse(readAtV17Close('scripts/validation/v1.7-audit-allowlist.json')); } catch (e) { return null; }
 }
 
 const HARNESS = 'scripts/validation/v1.7-milestone-audit.mjs';

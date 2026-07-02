@@ -22,6 +22,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
+import { readAtV17Close, readAtV17CloseGate } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -33,83 +34,34 @@ function readFile(relPath) {
 }
 
 // =============================================================================
-// v1.7-frozen-aware helpers (substituted at Plan 70-05 Commit A; null until substitution)
+// v1.7-frozen-aware helpers — TOOL-02 refactored to delegate to frozen-at-close.mjs
+// (Plan 111-01 Task 4). catch→null preserves SKIP semantics (Landmine B).
 // =============================================================================
 
-// Generic corpus reader at v1.7-close SHA. Used by V-70-18 / V-70-19 (audit-results doc) +
-// reusable for any v1.7-frozen corpus read. Substitution: Plan 70-05 Commit A via sed -i.
 function readCorpusFileAtV17Close(relPath) {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:' + relPath], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close(relPath); } catch (e) { return null; }
 }
-
-// Reads v1.7-MILESTONE-AUDIT.md at v1.7-close SHA (HARNESS-06 deliverable; frozen at close).
 function readMilestoneAuditAtV17Close() {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:.planning/milestones/v1.7-MILESTONE-AUDIT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close('.planning/milestones/v1.7-MILESTONE-AUDIT.md'); } catch (e) { return null; }
 }
-
-// Reads v1.7-DEFERRED-CLEANUP.md at v1.7-close SHA (HARNESS-06 deliverable; frozen at close).
 function readDeferredCleanupAtV17Close() {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:.planning/milestones/v1.7-DEFERRED-CLEANUP.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close('.planning/milestones/v1.7-DEFERRED-CLEANUP.md'); } catch (e) { return null; }
 }
-
-// Reads REQUIREMENTS.md at v1.7-close SHA (HARNESS-06 traceability closure target).
 function readRequirementsAtV17Close() {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:.planning/REQUIREMENTS.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close('.planning/REQUIREMENTS.md'); } catch (e) { return null; }
 }
-
-// Reads ROADMAP.md at v1.7-close SHA (HARNESS-06 Progress table 4/4 v1.7 phases Complete).
 function readRoadmapAtV17Close() {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:.planning/ROADMAP.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close('.planning/ROADMAP.md'); } catch (e) { return null; }
 }
-
-// Reads STATE.md at v1.7-close SHA (HARNESS-06 milestone close state).
 function readStateAtV17Close() {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:.planning/STATE.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close('.planning/STATE.md'); } catch (e) { return null; }
 }
-
-// Reads PROJECT.md at v1.7-close SHA (HARNESS-06 Validated section 12 v1.7 rows).
 function readProjectAtV17Close() {
-  try {
-    return execFileSync('git', ['show', 'aa6de68:.planning/PROJECT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17Close('.planning/PROJECT.md'); } catch (e) { return null; }
 }
-
-// Reads PROJECT.md at v1.7 true close-gate SHA 4df3a16 (Plan 70-05 Commit B).
-// Added by Plan 73-02 RETRO-02 (Rule 1 bug fix): V-70-24 used readProjectAtV17Close() (aa6de68)
-// but PROJECT.md at aa6de68 only has 7/12 v1.7 reqs (the remaining 5 were added in Commit B
-// 4df3a16 = true close-gate). ADD-not-MODIFY per D-02 carve-out (new helper alongside existing).
+// Reads PROJECT.md at v1.7 true close-gate SHA (Plan 73-02 RETRO-02 fix for V-70-24).
 function readProjectAtV17CloseGate() {
-  try {
-    return execFileSync('git', ['show', '4df3a16:.planning/PROJECT.md'], { encoding: 'utf8', timeout: 10000, stdio: ['ignore', 'pipe', 'pipe'] }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  try { return readAtV17CloseGate('.planning/PROJECT.md'); } catch (e) { return null; }
 }
 
 const HARNESS         = 'scripts/validation/v1.7-milestone-audit.mjs';
