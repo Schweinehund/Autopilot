@@ -325,7 +325,11 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. The ~13 inline frozen-aware helpers across `check-phase-{61,67,68,70}.mjs` are replaced with calls to the centralized `_lib/frozen-at-close.mjs` module; behavior is byte-equivalent
   3. The 3 helper-spawn stderr-only catch-block sites in `check-phase-{48,60,61}.mjs` capture both stdout and stderr with a `--self-test` discriminator; the full chain exits 0 after all three refactors
 
-**Plans**: TBD
+**Plans**: 1 plan
+**Wave 1**
+
+- [ ] 111-01-PLAN.md — Combined TOOL-01/02/03 refactor (5 atomic commits): exec-fail-detail helper, 40-site failure-detail extraction, Landmine-A 61/68 atomic fix, frozen-aware adoption sweep 67/68/70, 3-site --self-test stderr capture
+
 **UI hint**: no
 
 ### Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
