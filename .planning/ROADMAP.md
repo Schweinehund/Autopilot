@@ -352,7 +352,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 112-03-PLAN.md — Wave 2: Atom 2 (HARN-02) — check-phase-101..112.mjs + V113 pin + 11th CI workflow
+- [x] 112-03-PLAN.md — Wave 2: Atom 2 (HARN-02) — check-phase-101..112.mjs + V113 pin + 11th CI workflow
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -400,4 +400,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 109. 802.1X Integration — Matrices + Nav Hubs | 4/4 | Complete    | 2026-07-01 |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 4/4 | Complete    | 2026-07-01 |
 | 111. Chain-Validator Tooling Refactors | 1/1 | Complete   | 2026-07-02 |
-| 112. 12th Path-A Harness Lineage Bump + Close | 2/5 | In Progress|  |
+| 112. 12th Path-A Harness Lineage Bump + Close | 3/5 | In Progress|  |
