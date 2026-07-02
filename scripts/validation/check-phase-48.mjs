@@ -16,6 +16,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
+import { execFailDetail } from './_lib/exec-fail-detail.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -70,10 +71,11 @@ const checks = [
         return { pass: true };
       } catch (err) {
         const stderr = err.stderr ? err.stderr.toString() : '';
+        const stdout = err.stdout ? err.stdout.toString() : '';
         const isMissing = err.code === 'ENOENT' || err.status === 127
           || stderr.includes('not found') || stderr.includes('Could not resolve');
         if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-        return { pass: false, detail: '--self-test FAIL: ' + stderr.slice(0, 200) };
+        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 200, trim: false, prefix: '--self-test FAIL: ' }) };
       }
     }
   },

@@ -187,10 +187,11 @@ const checks = [
         return { pass: true, detail: '--self-test exits 0' };
       } catch (err) {
         const stderr = err.stderr ? err.stderr.toString() : '';
+        const stdout = err.stdout ? err.stdout.toString() : '';
         const isMissing = err.code === 'ENOENT' || err.status === 127
           || stderr.includes('not found') || stderr.includes('Could not resolve');
         if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-        return { pass: false, detail: '--self-test FAIL: ' + stderr.slice(0, 200) };
+        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 200, trim: false, prefix: '--self-test FAIL: ' }) };
       }
     }
   },
