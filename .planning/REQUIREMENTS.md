@@ -52,7 +52,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 - [x] **HARN-01**: 12th Path-A lineage bump (Atom 1, indivisible) — `v1.14-milestone-audit.mjs` (Path-A from v1.13, C1-C16 inherited verbatim) + `v1.14-audit-allowlist.json` sidecar repointed + BASELINE_18 freshness comment.
 - [x] **HARN-02**: Per-phase validators + frozen pin + CI surface (Atom 2, indivisible) — `check-phase-101..NN.mjs` (chain-apex `CHAIN_PHASES=[48..111]`, 64 entries, `CHAIN_SKIP=new Set([])`) + `_lib/frozen-at-close.mjs` V113 entry (v1.13 close-gate SHA `ba24f1a`) + `audit-harness-v1.14-integrity.yml` as the 11th parallel CI coexistence workflow (predecessors v1.4–v1.13 byte-unchanged).
-- [ ] **HARN-03**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH; `v1.14-MILESTONE-AUDIT.md` + `v1.14-DEFERRED-CLEANUP.md` + 4-doc traceability closure (all Validated); predecessor frozen surfaces byte-unchanged.
+- [x] **HARN-03**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH; `v1.14-MILESTONE-AUDIT.md` + `v1.14-DEFERRED-CLEANUP.md` + 4-doc traceability closure (all Validated); predecessor frozen surfaces byte-unchanged.
 
 ---
 
@@ -129,7 +129,7 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 | TOOL-03 | Phase 111 | Pending |
 | HARN-01 | Phase 112 | Complete |
 | HARN-02 | Phase 112 | Complete |
-| HARN-03 | Phase 112 | Pending |
+| HARN-03 | Phase 112 | Complete |
 
 **Coverage:**
 - v1.14 requirements: 22 total
