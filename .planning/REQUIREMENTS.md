@@ -44,9 +44,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Pillar D — Validator Tooling Refactors
 
-- [ ] **TOOL-01**: EXEC-FAIL-DETAIL-EXTRACTION-01 — a `scripts/validation/_lib/exec-fail-detail.mjs` helper DRYs the `(stdout + stderr).slice(0, N).trim()` failure-detail pattern duplicated across the CHAIN/AUDIT/helper-spawn wrapper sites.
-- [ ] **TOOL-02**: FROZEN-AWARE-ADOPTION-SWEEP-01 — the ~13 inline frozen-aware helpers across `check-phase-{61,67,68,70}.mjs` are refactored to consume the centralized `_lib/frozen-at-close.mjs` module.
-- [ ] **TOOL-03**: HELPER-SPAWN-STDERR-01 — the 3 helper-spawn stderr-only catch-block sites in `check-phase-{48,60,61}.mjs` capture both stdout and stderr with a `--self-test` discriminator.
+- [x] **TOOL-01**: EXEC-FAIL-DETAIL-EXTRACTION-01 — a `scripts/validation/_lib/exec-fail-detail.mjs` helper DRYs the `(stdout + stderr).slice(0, N).trim()` failure-detail pattern duplicated across the CHAIN/AUDIT/helper-spawn wrapper sites.
+- [x] **TOOL-02**: FROZEN-AWARE-ADOPTION-SWEEP-01 — the ~13 inline frozen-aware helpers across `check-phase-{61,67,68,70}.mjs` are refactored to consume the centralized `_lib/frozen-at-close.mjs` module.
+- [x] **TOOL-03**: HELPER-SPAWN-STDERR-01 — the 3 helper-spawn stderr-only catch-block sites in `check-phase-{48,60,61}.mjs` capture both stdout and stderr with a `--self-test` discriminator.
 
 ### Pillar E — Audit-Harness Lineage Bump & Milestone Close
 
@@ -108,32 +108,33 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DOT1X-01 | Phase 101 | Complete |
-| DOT1X-02 | Phase 101 | Complete |
-| DOT1X-03 | Phase 101 | Complete |
-| DOT1X-04 | Phase 102 | Complete |
-| DOT1X-05 | Phase 103 | Complete |
-| DOT1X-06 | Phase 104 | Complete |
-| DOT1X-07 | Phase 105 | Complete |
-| DOT1X-08 | Phase 106 | Complete |
-| DOT1X-09 | Phase 107 | Complete |
-| DOT1X-10 | Phase 108 | Complete |
-| DOT1X-11 | Phase 109 | Complete |
-| FIX-01 | Phase 110 | Complete |
-| FIX-02 | Phase 110 | Complete |
-| FIX-03 | Phase 110 | Complete |
-| MIGF-01 | Phase 110 | Complete |
-| MIGF-02 | Phase 110 | Complete |
-| TOOL-01 | Phase 111 | Pending |
-| TOOL-02 | Phase 111 | Pending |
-| TOOL-03 | Phase 111 | Pending |
-| HARN-01 | Phase 112 | Complete |
-| HARN-02 | Phase 112 | Complete |
-| HARN-03 | Phase 112 | Complete |
+| DOT1X-01 | Phase 101 | Validated |
+| DOT1X-02 | Phase 101 | Validated |
+| DOT1X-03 | Phase 101 | Validated |
+| DOT1X-04 | Phase 102 | Validated |
+| DOT1X-05 | Phase 103 | Validated |
+| DOT1X-06 | Phase 104 | Validated |
+| DOT1X-07 | Phase 105 | Validated |
+| DOT1X-08 | Phase 106 | Validated |
+| DOT1X-09 | Phase 107 | Validated |
+| DOT1X-10 | Phase 108 | Validated |
+| DOT1X-11 | Phase 109 | Validated |
+| FIX-01 | Phase 110 | Validated |
+| FIX-02 | Phase 110 | Validated |
+| FIX-03 | Phase 110 | Validated |
+| MIGF-01 | Phase 110 | Validated |
+| MIGF-02 | Phase 110 | Validated |
+| TOOL-01 | Phase 111 | Validated |
+| TOOL-02 | Phase 111 | Validated |
+| TOOL-03 | Phase 111 | Validated |
+| HARN-01 | Phase 112 | Validated |
+| HARN-02 | Phase 112 | Validated |
+| HARN-03 | Phase 112 | Validated |
 
 **Coverage:**
 - v1.14 requirements: 22 total
 - Mapped to phases: 22/22 ✓
+- **Validated: 22/22 ✓** (all requirements closed at the Phase 112 Plan 112-05 close-gate — SINGLE close-gate commit, NO Commit A)
 - Unmapped: 0 ✓
 
 **Phase distribution:**
@@ -156,4 +157,4 @@ Populated at roadmap creation 2026-06-29. Each requirement maps to exactly one p
 ---
 *Requirements defined: 2026-06-29 after v1.14 research synthesis (`5150fa7`)*
 *Traceability populated: 2026-06-29 at roadmap creation*
-*Last updated: 2026-06-29 — traceability complete, 22/22 requirements mapped to phases 101-112*
+*Last updated: 2026-07-02 — v1.14 CLOSED: 22/22 requirements Validated at the Phase 112 Plan 112-05 close-gate (SINGLE close-gate commit, NO Commit A; `{phase_112_close_SHA}` literal placeholder)*

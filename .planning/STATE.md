@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
-status: executing
-last_updated: "2026-07-02T22:15:07.408Z"
+status: shipped
+last_updated: "2026-07-02T23:00:00.000Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 12
-  completed_phases: 11
-  total_plans: 37
-  completed_plans: 35
-  percent: 92
+  completed_phases: 12
+  total_plans: 38
+  completed_plans: 38
+  percent: 100
 ---
 
 # Project State
@@ -20,13 +20,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and now 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** Phase 112 — pillar-e-12th-path-a-audit-harness-lineage-bump-milestone-cl
+**Current focus:** v1.14 SHIPPED — run `/gsd-complete-milestone` to archive + tag
 
 ## Current Position
 
-Phase: 112 (pillar-e-12th-path-a-audit-harness-lineage-bump-milestone-cl) — EXECUTING
-Plan: 5 of 5
-Status: Ready to execute
+Phase: 112 (pillar-e-12th-path-a-audit-harness-lineage-bump-milestone-cl) — COMPLETE
+Plan: 6 of 6 (112-06 chain-health remediation inserted mid-execution)
+Status: v1.14 milestone CLOSED — 22/22 requirements Validated at the Phase 112 Plan 112-05 close-gate (SINGLE close-gate commit, NO Commit A). Archival + tag deferred to `/gsd-complete-milestone`.
 Last activity: 2026-07-02
 
 ## v1.14 Phase Dependency Summary
@@ -262,7 +262,7 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
           Predecessor v1.4-v1.13 frozen surfaces BYTE-UNCHANGED invariant
 ```
 
-## v1.14 Requirement Coverage (0/22 Validated — IN PROGRESS)
+## v1.14 Requirement Coverage (22/22 Validated — SHIPPED 2026-07-02)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
@@ -312,7 +312,7 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - v1.11: 5 phases (89-93), 13 plans — shipped 2026-06-26
 - v1.12: 2 phases (94-95), 5 plans — shipped 2026-06-26
 - v1.13: 5 phases (96-100), 14 plans — shipped 2026-06-29
-- **v1.14: 12 phases (101-112), plans TBD — in progress**
+- **v1.14: 12 phases (101-112), 38 plans — shipped 2026-07-02**
 
 ## Accumulated Context
 
@@ -373,6 +373,9 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - [Phase ?]: 112-02: v1.14 harness-core Atom 1 shipped (8fb74a5); C5/C10 90d (D-01a); sidecar +1 repoint (D-04); BASELINE_18 anchored 1a0ee15; V113 deferred to Atom 2
 - [Phase ?]: 112-03: V113='ba24f1a' rides Atom 2 (same commit as check-phase-112); ordering-safe known-PAST SHA
 - [Phase ?]: 112-03: predecessor v1.12/v1.13 standalone-CI RED on 90d corpus is an accepted condition (document at 112-05)
+- [Phase 112]: 112-04: terminal re-audit RE-RUN GREEN — apex check-phase-112 [48..111] = 66/0/1 on Linux GHA run 28625158404 (headSha 2de780c); cross-OS EXACT MATCH across 12 leaf validators; first run (44/22/1, run 28621185019) DISCARDED
+- [Phase 112]: 112-06: chain-health remediation greened 22 RED predecessors nested (D-00 NESTED-guard extended to full predecessor cohort + 6 frozen-aware content conversions); NO frozen surface edited; Linux chain wall-clock 160s→2s
+- [Phase 112]: 112-05: v1.14 CLOSED — 22/22 Validated via SINGLE close-gate commit (NO Commit A); 32 frozen surfaces byte-unchanged vs 0a7699f (gate EMPTY); WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now [48..111]; C5/C10 90d supersession recorded (not deferred)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -400,15 +403,15 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-02T22:15:07.388Z
-Stopped at: Phase 112 context gathered
+Last session: 2026-07-02T23:00:00.000Z
+Stopped at: v1.14 milestone CLOSED at the Phase 112 Plan 112-05 close-gate (22/22 Validated; SINGLE close-gate commit, NO Commit A)
 Resume file: None
-Next action: Phase 110 verification, then proceed to Phase 111 (Pillar D — Chain-Validator Tooling Refactors)
+Next action: Run `/gsd-complete-milestone` to archive the v1.14 phase dirs + REQUIREMENTS/ROADMAP to `.planning/milestones/`, tag `v1.14`, close the Jira story, and sweep working-tree cruft
 
 ## Operator Next Steps
 
-- Run `/gsd-discuss-phase 101` to resolve the 8 gray-area discuss-phase flags before planning (per project adversarial-review convention), OR
-- Run `/gsd-plan-phase 101` to begin Phase 101 planning directly (discuss-phase flags surface organically during planning)
+- Run `/gsd-complete-milestone` to archive + tag v1.14 (moves phase dirs to `.planning/milestones/v1.14-phases/`, tags `v1.14`, closes the Jira story), THEN
+- Run `/gsd-new-milestone` to scope v1.15 (v1.15+ backlog is in `.planning/milestones/v1.14-DEFERRED-CLEANUP.md`)
 
 ## Performance Metrics
 

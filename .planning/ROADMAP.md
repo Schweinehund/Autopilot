@@ -17,7 +17,7 @@
 - ✅ **v1.11 macOS PSSO End-to-End Provisioning & MDM Migration** — Phases 89-93 (shipped 2026-06-26)
 - ✅ **v1.12 macOS MDM-Migration Verification Closure** — Phases 94-95 (shipped 2026-06-26)
 - ✅ **v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth** — Phases 96-100 (shipped 2026-06-29)
-- 🚧 **v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure** — Phases 101-112 (in progress)
+- ✅ **v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure** — Phases 101-112 (shipped 2026-07-02)
 
 ## Phases
 
@@ -34,7 +34,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 </details>
 
-### 🚧 v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure (In Progress)
+### ✅ v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure (Shipped 2026-07-02)
 
 **Milestone Goal:** Deliver complete 5-platform 802.1X network-authentication documentation (wired + Wi-Fi, all EAP methods, Intune client-side config) under the established admin-setup → L1/L2 → integration documentation pattern, and close the v1.14 backlog (corpus nits, iOS/iPadOS + Jamf/Mosyle migration walkthroughs, chain-validator tooling refactors) plus the 12th Path-A audit-harness lineage bump.
 
@@ -57,7 +57,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps (completed 2026-07-01)
 - [x] **Phase 111: Pillar D — Chain-Validator Tooling Refactors** - Three DRY refactors to the validator chain (exec-fail-detail extraction, frozen-aware adoption sweep, helper-spawn stderr capture) (completed 2026-07-02)
-- [ ] **Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close** - Atom 1 + Atom 2 harness bump, 3-axis terminal re-audit, and milestone close with all 22 requirements Validated
+- [x] **Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close** - Atom 1 + Atom 2 harness bump, 3-axis terminal re-audit, and milestone close with all 22 requirements Validated (completed 2026-07-02)
 
 ## Phase Details
 
@@ -344,7 +344,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. The 3-axis terminal re-audit (HARN-03) passes: Axis 1 fresh `git clone --no-hardlinks`, Axis 2 cross-OS Linux GHA, Axis 3 fresh zero-context sub-agent — with cross-OS PASS/FAIL/SKIP EXACT MATCH; `v1.14-MILESTONE-AUDIT.md` + `v1.14-DEFERRED-CLEANUP.md` authored; single close-gate commit flips all 22 requirements to Validated
   4. All predecessor v1.4-v1.13 frozen surfaces are byte-unchanged through the close-gate commit
 
-**Plans**: 5 plans (5 waves — sequential; sole-deliverable close phase)
+**Plans**: 6 plans (sequential; sole-deliverable close phase — 112-06 chain-health remediation inserted mid-execution)
 **Wave 1**
 
 - [x] 112-01-PLAN.md — Wave 0: NESTED-guard AUDIT-HARNESS step of check-phase-95/100 (D-00 chain-green precondition)
@@ -356,11 +356,12 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [x] 112-04-PLAN.md — Wave 3: HARN-03 pt.1 — 3-axis terminal re-audit (cross-OS EXACT MATCH, artifact-only)
+- [x] 112-04-PLAN.md — Wave 3: HARN-03 pt.1 — 3-axis terminal re-audit (cross-OS EXACT MATCH; first run RED 44/22/1 → remediated → re-run GREEN 66/0/1)
+- [x] 112-06-PLAN.md — Wave 3.5: chain-health remediation — extended D-00 NESTED-guard to the full predecessor cohort (22 RED → 0 nested); no frozen surface edited
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 112-05-PLAN.md — Wave 4: HARN-03 pt.2 — v1.14 MILESTONE-AUDIT + DEFERRED-CLEANUP + 22/22 close-gate
+- [x] 112-05-PLAN.md — Wave 4: HARN-03 pt.2 — v1.14 MILESTONE-AUDIT + DEFERRED-CLEANUP + 112-VERIFICATION + 22/22 close-gate (completed 2026-07-02)
 
 **UI hint**: no
 
@@ -383,7 +384,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | v1.11 macOS PSSO End-to-End Provisioning & MDM Migration | 89-93 | ✅ Shipped | 2026-06-26 |
 | v1.12 macOS MDM-Migration Verification Closure | 94-95 | ✅ Shipped | 2026-06-26 |
 | v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth | 96-100 | ✅ Shipped | 2026-06-29 |
-| v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure | 101-112 | 🚧 In Progress | — |
+| v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure | 101-112 | ✅ Shipped | 2026-07-02 |
 
 ### v1.14 Phase Progress
 
@@ -400,4 +401,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 109. 802.1X Integration — Matrices + Nav Hubs | 4/4 | Complete    | 2026-07-01 |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 4/4 | Complete    | 2026-07-01 |
 | 111. Chain-Validator Tooling Refactors | 1/1 | Complete   | 2026-07-02 |
-| 112. 12th Path-A Harness Lineage Bump + Close | 5/6 | In Progress|  |
+| 112. 12th Path-A Harness Lineage Bump + Close | 6/6 | Complete | 2026-07-02 |
