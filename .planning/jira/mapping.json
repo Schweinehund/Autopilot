@@ -754,7 +754,7 @@
         },
         "111": {
           "issueKey": "RTS-708",
-          "status": "in_progress",
+          "status": "done",
           "name": "Pillar D — Chain-Validator Tooling Refactors"
         },
         "112": {
