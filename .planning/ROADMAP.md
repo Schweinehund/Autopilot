@@ -401,4 +401,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 109. 802.1X Integration — Matrices + Nav Hubs | 4/4 | Complete    | 2026-07-01 |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 4/4 | Complete    | 2026-07-01 |
 | 111. Chain-Validator Tooling Refactors | 1/1 | Complete   | 2026-07-02 |
-| 112. 12th Path-A Harness Lineage Bump + Close | 6/6 | Complete | 2026-07-02 |
+| 112. 12th Path-A Harness Lineage Bump + Close | 6/6 | Complete   | 2026-07-02 |
