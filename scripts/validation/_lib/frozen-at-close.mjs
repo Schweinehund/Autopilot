@@ -38,6 +38,10 @@ export const MILESTONE_CLOSE_SHAS = {
                     // 4-doc traceability + v1.12 MILESTONE-AUDIT NEW + DEFERRED-CLEANUP finalize).
                     // Single entry (v1.12 closed in ONE commit; atom == close-gate;
                     // no separate closegate entry — V18/V19/V110/V111 single-entry pattern applies).
+  V113: 'ba24f1a',  // Phase 100 Plan 100-04 close-gate — v1.13 milestone close-gate (docs(100-04);
+                    // 4-doc traceability + v1.13 MILESTONE-AUDIT NEW + DEFERRED-CLEANUP finalize).
+                    // Single entry (v1.13 closed in ONE commit; atom == close-gate;
+                    // no separate closegate entry — V18/V19/V110/V111/V112 single-entry pattern applies).
   // V14 omitted — RETRO-01 must surface a v1.4-close-state assertion in check-phase-{48..66}.mjs
   // before adding (v1.4 close was Phase 42, predating chain validators).
   // Candidates if needed: b5cf529 or 671f72a (D-02 advisor pre-scan).
@@ -73,3 +77,4 @@ export const readAtV19Close       = (p) => readAtClose('V19',          p);
 export const readAtV110Close      = (p) => readAtClose('V110',         p);
 export const readAtV111Close      = (p) => readAtClose('V111',         p);
 export const readAtV112Close      = (p) => readAtClose('V112',         p);
+export const readAtV113Close      = (p) => readAtClose('V113',         p);
