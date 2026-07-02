@@ -344,7 +344,12 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. The 3-axis terminal re-audit (HARN-03) passes: Axis 1 fresh `git clone --no-hardlinks`, Axis 2 cross-OS Linux GHA, Axis 3 fresh zero-context sub-agent — with cross-OS PASS/FAIL/SKIP EXACT MATCH; `v1.14-MILESTONE-AUDIT.md` + `v1.14-DEFERRED-CLEANUP.md` authored; single close-gate commit flips all 22 requirements to Validated
   4. All predecessor v1.4-v1.13 frozen surfaces are byte-unchanged through the close-gate commit
 
-**Plans**: TBD
+**Plans**: 5 plans (5 waves — sequential; sole-deliverable close phase)
+- [ ] 112-01-PLAN.md — Wave 0: NESTED-guard AUDIT-HARNESS step of check-phase-95/100 (D-00 chain-green precondition)
+- [ ] 112-02-PLAN.md — Wave 1: Atom 1 (HARN-01) — v1.14-milestone-audit.mjs (C5/C10 90d) + v1.14-audit-allowlist.json (repointed) + BASELINE_18
+- [ ] 112-03-PLAN.md — Wave 2: Atom 2 (HARN-02) — check-phase-101..112.mjs + V113 pin + 11th CI workflow
+- [ ] 112-04-PLAN.md — Wave 3: HARN-03 pt.1 — 3-axis terminal re-audit (cross-OS EXACT MATCH, artifact-only)
+- [ ] 112-05-PLAN.md — Wave 4: HARN-03 pt.2 — v1.14 MILESTONE-AUDIT + DEFERRED-CLEANUP + 22/22 close-gate
 **UI hint**: no
 
 ## Progress
