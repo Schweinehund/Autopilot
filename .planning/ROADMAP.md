@@ -56,7 +56,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
  (completed 2026-07-01)
 
 - [x] **Phase 110: Pillar B + C — Corpus Fixes + MDM Migration Walkthroughs** - Three v1.13-deferred accuracy nits corrected plus iOS/iPadOS ABM Deadline migration walkthrough and Jamf/Mosyle source-MDM release steps (completed 2026-07-01)
-- [ ] **Phase 111: Pillar D — Chain-Validator Tooling Refactors** - Three DRY refactors to the validator chain (exec-fail-detail extraction, frozen-aware adoption sweep, helper-spawn stderr capture)
+- [x] **Phase 111: Pillar D — Chain-Validator Tooling Refactors** - Three DRY refactors to the validator chain (exec-fail-detail extraction, frozen-aware adoption sweep, helper-spawn stderr capture) (completed 2026-07-02)
 - [ ] **Phase 112: Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close** - Atom 1 + Atom 2 harness bump, 3-axis terminal re-audit, and milestone close with all 22 requirements Validated
 
 ## Phase Details
@@ -328,7 +328,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 1 plan
 **Wave 1**
 
-- [ ] 111-01-PLAN.md — Combined TOOL-01/02/03 refactor (5 atomic commits): exec-fail-detail helper, 40-site failure-detail extraction, Landmine-A 61/68 atomic fix, frozen-aware adoption sweep 67/68/70, 3-site --self-test stderr capture
+- [x] 111-01-PLAN.md — Combined TOOL-01/02/03 refactor (5 atomic commits): exec-fail-detail helper, 40-site failure-detail extraction, Landmine-A 61/68 atomic fix, frozen-aware adoption sweep 67/68/70, 3-site --self-test stderr capture
 
 **UI hint**: no
 
@@ -382,5 +382,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 108. L2 Runbooks #31-33 + Decision Tree #10 | 4/4 | Complete    | 2026-07-01 |
 | 109. 802.1X Integration — Matrices + Nav Hubs | 4/4 | Complete    | 2026-07-01 |
 | 110. Corpus Fixes + MDM Migration Walkthroughs | 4/4 | Complete    | 2026-07-01 |
-| 111. Chain-Validator Tooling Refactors | 0/TBD | Not started | - |
+| 111. Chain-Validator Tooling Refactors | 1/1 | Complete   | 2026-07-02 |
 | 112. 12th Path-A Harness Lineage Bump + Close | 0/TBD | Not started | - |
