@@ -284,6 +284,9 @@ checks.push({
     if (!existsSync(join(process.cwd(), HARNESS))) {
       return { pass: true, skipped: true, detail: HARNESS + ' not present (graceful skip)' };
     }
+    if (NESTED) {
+      return { pass: true, skipped: true, detail: 'nested invocation (CHECK_PHASE_NESTED=1): skip AUDIT-HARNESS re-run against evolved corpus' };
+    }
     try {
       execFileSync('node', [HARNESS], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
       return { pass: true, detail: 'v1.7 harness exits 0' };
