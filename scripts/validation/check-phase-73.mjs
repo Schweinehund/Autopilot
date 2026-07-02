@@ -38,6 +38,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
+import { execFailDetail } from './_lib/exec-fail-detail.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -378,7 +379,7 @@ for (const phaseNum of CHAIN_PHASES) {
         const isMissing = err.code === 'ENOENT' || err.status === 127
           || stderr.includes('not found') || stderr.includes('Could not resolve');
         if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-        return { pass: false, detail: 'check-phase-' + phaseNum + ' FAIL: ' + (stdout + stderr).slice(0, 500).trim() };
+        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 500, trim: true, prefix: 'check-phase-' + phaseNum + ' FAIL: ' }) };
       }
     }
   });
@@ -401,7 +402,7 @@ checks.push({
       const isMissing = err.code === 'ENOENT' || err.status === 127
         || stderr.includes('not found') || stderr.includes('Could not resolve');
       if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-      return { pass: false, detail: 'harness FAIL: ' + (stdout + stderr).slice(0, 300) };
+      return { pass: false, detail: execFailDetail(stdout, stderr, { n: 300, trim: false, prefix: 'harness FAIL: ' }) };
     }
   }
 });
