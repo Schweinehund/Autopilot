@@ -556,7 +556,7 @@ All validators are self-contained node scripts. No framework needed.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED — execution-time unknowns, handled in plans)
 
 1. **Exact line numbers of check-phase-101..111 needles**
    - What we know: The files to target and the phase events (from CONTEXT files)
