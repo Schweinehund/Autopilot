@@ -759,12 +759,12 @@
         },
         "112": {
           "issueKey": "RTS-709",
-          "status": "in_progress",
+          "status": "done",
           "name": "Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close"
         }
       }
     }
   },
-  "lastUpdated": "2026-07-02 (v1.14 sync: phases 101-111 Done; phase 112 now active (planning + execution started) → RTS-709 To Do → In Progress. Epic RTS-697 In Progress. 11/12 phases done; 112 is the milestone-close phase, in progress.)",
+  "lastUpdated": "2026-07-02 (v1.14 sync: phase 112 VERIFICATION passed (112-VERIFICATION.md status:passed; apex check-phase-112 [48..111] GREEN on Linux GHA 28626765351) → RTS-709 In Progress → Done. All 12/12 v1.14 phases Done; 22/22 requirements Validated. Epic RTS-697 stays In Progress — transition to Done deferred to /gsd-complete-milestone v1.14 (archive+tag).)",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending."
 }
