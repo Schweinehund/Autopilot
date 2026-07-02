@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
 status: executing
-last_updated: "2026-07-02T20:21:12.408Z"
+last_updated: "2026-07-02T20:32:03.853Z"
 last_activity: 2026-07-02
 progress:
   total_phases: 12
   completed_phases: 11
   total_plans: 36
-  completed_plans: 32
-  percent: 89
+  completed_plans: 33
+  percent: 92
 ---
 
 # Project State
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 ## Current Position
 
 Phase: 112 (pillar-e-12th-path-a-audit-harness-lineage-bump-milestone-cl) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-07-02
 
@@ -370,6 +370,7 @@ Phase 112 (Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close
 - [Phase ?]: FIX-01 uses 'see row below' DRY pointer — avoids re-enumerating #35/#36/#37 already listed in :112 PSSO row
 - [Phase ?]: FIX-03 inserted in User-Locked-Out block only; Post-Migration block untouched (not a fit for #36 after password reset)
 - [Phase ?]: D-01/D-02 honored: iOS migration walkthrough (MIGF-01) created with SC4 forced-restart-vs-full-screen-lock differentiator; 7-stage in-place track only; no FileVault/PSSO stages
+- [Phase ?]: 112-02: v1.14 harness-core Atom 1 shipped (8fb74a5); C5/C10 90d (D-01a); sidecar +1 repoint (D-04); BASELINE_18 anchored 1a0ee15; V113 deferred to Atom 2
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -397,7 +398,7 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-02T20:19:59.730Z
+Last session: 2026-07-02T20:31:37.236Z
 Stopped at: Phase 112 context gathered
 Resume file: None
 Next action: Phase 110 verification, then proceed to Phase 111 (Pillar D — Chain-Validator Tooling Refactors)
@@ -434,3 +435,4 @@ Next action: Phase 110 verification, then proceed to Phase 111 (Pillar D — Cha
 | Phase 110 P04 | 5m | 1 tasks | 2 files |
 | Phase 111 P01 | 90 | 5 tasks | 21 files |
 | Phase 112 P01 | 8min | 2 tasks | 2 files |
+| Phase 112 P02 | 10min | 2 tasks | 3 files |
