@@ -67,7 +67,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 113-02-PLAN.md — Post-conversion guard (self-test) + convert.ps1 + pipeline/deployment README (PIPE-01, PIPE-02)
+- [x] 113-02-PLAN.md — Post-conversion guard (self-test) + convert.ps1 + pipeline/deployment README (PIPE-01, PIPE-02)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -187,7 +187,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 113. Conversion Pipeline Lock + Grounding Validation | 1/4 | In Progress|  |
+| 113. Conversion Pipeline Lock + Grounding Validation | 2/4 | In Progress|  |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 0/TBD | Not started | — |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |

@@ -16,8 +16,8 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 *Research finding: `.md` is not a SharePoint knowledge-source type — the MD→.docx pipeline is mandatory, and a misconfigured pipeline corrupts all ~150 docs at once, so it is the first deliverable.*
 
-- [ ] **PIPE-01**: The Markdown→.docx conversion pipeline is defined and **locked** — a pinned Pandoc version + a `--reference-doc` Word template + a documented invocation — with a post-conversion guard that fails if raw `---` YAML frontmatter leaks into the first ~500 characters of the generated `.docx` body.
-- [ ] **PIPE-02**: A grounding-validation procedure is defined and executed on a representative 3–5-doc set (convert → upload → live Copilot Studio queries) confirming: the single-line header block is indexed as body text, document-level citations resolve, no YAML leak, and capability-matrix tables remain retrievable — and resolving the empirical open questions (citation-title source; whether `Status: Draft` is a retrieval gate or label) before the full retrofit begins. *(Discuss-flag: agent-run vs owner-run if Copilot Studio access is unavailable to the harness.)*
+- [x] **PIPE-01**: The Markdown→.docx conversion pipeline is defined and **locked** — a pinned Pandoc version + a `--reference-doc` Word template + a documented invocation — with a post-conversion guard that fails if raw `---` YAML frontmatter leaks into the first ~500 characters of the generated `.docx` body.
+- [x] **PIPE-02**: A grounding-validation procedure is defined and executed on a representative 3–5-doc set (convert → upload → live Copilot Studio queries) confirming: the single-line header block is indexed as body text, document-level citations resolve, no YAML leak, and capability-matrix tables remain retrievable — and resolving the empirical open questions (citation-title source; whether `Status: Draft` is a retrieval gate or label) before the full retrofit begins. *(Discuss-flag: agent-run vs owner-run if Copilot Studio access is unavailable to the harness.)*
 
 ### Category: EEE Standard, Templates & Doc ID Registry (STD)
 
@@ -85,8 +85,8 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| PIPE-01 | Phase 113 | Pending |
-| PIPE-02 | Phase 113 | Pending |
+| PIPE-01 | Phase 113 | Complete |
+| PIPE-02 | Phase 113 | Complete |
 | META-01 | Phase 114 | Pending |
 | META-02 | Phase 114 | Pending |
 | META-03 | Phase 114 | Pending |

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-03T18:50:24.043Z"
+last_updated: "2026-07-03T19:07:44.490Z"
 last_activity: 2026-07-03
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 4
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 113 (conversion-pipeline-lock-representative-set-grounding-valida) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-07-03
 
@@ -254,6 +254,9 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - Adversarial-review invoked at discuss-phase for gray-area scoping decisions (per user memory)
 - Navigation-last hard constraint: all nav hub edits committed after the content files they reference
 - Per-section `last_verified`/`review_by` freshness stamps on version-gated content (carried policy; v1.15 carries verbatim — does not reset the clock)
+- [Phase ?]: YAML-LEAK guard runs on decompressed extractBodyText() output -- raw byte scan always false-green (D-04 mitigation)
+- [Phase ?]: guard-docx.mjs standalone in scripts/pipeline/ (no CHAIN_PHASES); Phase-119 folds it into check-phase-113.mjs per D-07
+- [Phase ?]: convert.ps1 version-guards pandoc 3.7.0.2; PATH-then-LOCALAPPDATA resolution (T-113-01 mitigation)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -284,8 +287,8 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-03T18:50:24.025Z
-Stopped at: Phase 113 context gathered (A1/B3→SharePoint/C3/D2 locked via adversarial-review)
+Last session: 2026-07-03T19:07:44.475Z
+Stopped at: Completed 113-02-PLAN.md (guard-docx.mjs + convert.ps1 + README.md)
 Resume file: None
 Next action: `/gsd-discuss-phase 113` to plan Phase 113 (Conversion Pipeline Lock + Grounding Validation)
 
@@ -301,3 +304,4 @@ Next action: `/gsd-discuss-phase 113` to plan Phase 113 (Conversion Pipeline Loc
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
 | (v1.15 phases not yet started) | — | — | — |
+| Phase 113 P02 | 5min | 2 tasks | 3 files |
