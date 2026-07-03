@@ -767,12 +767,12 @@
     },
     "v1.15": {
       "epicKey": "RTS-715",
-      "status": "created",
+      "status": "in_progress",
       "created": "2026-07-03",
       "phases": {
         "113": {
           "issueKey": "RTS-716",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Conversion Pipeline Lock + Representative-Set Grounding Validation"
         },
         "114": {
