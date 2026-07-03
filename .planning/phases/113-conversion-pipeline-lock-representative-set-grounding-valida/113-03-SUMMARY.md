@@ -147,3 +147,18 @@ None — all mechanical legs of PIPE-02 are agent-automated. The live upload + C
 ---
 *Phase: 113-conversion-pipeline-lock-representative-set-grounding-valida*
 *Completed: 2026-07-03*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/pipeline/test-fixtures/clean-test-doc.md
+- FOUND: scripts/pipeline/test-fixtures/draft-test-doc.md
+- FOUND: scripts/pipeline/test-fixtures/01-device-not-registered.md
+- FOUND: scripts/pipeline/test-fixtures/27-macos-sso-investigation.md
+- FOUND: scripts/pipeline/test-fixtures/android-capability-matrix.md
+- FOUND: scripts/pipeline/test-fixtures/38-8021x-certificate-failure.md
+- FOUND: scripts/pipeline/test-fixtures/README.md
+- FOUND: scripts/pipeline/convert.ps1
+- FOUND: .planning/phases/113.../113-03-SUMMARY.md
+- Commit bf2257a: FOUND (Task 1 — assemble representative set)
+- Commit 169f527: FOUND (Task 2 — convert + guard all pass)
+- Commit 6bb0d71: FOUND (docs — SUMMARY.md + STATE.md + ROADMAP.md)
