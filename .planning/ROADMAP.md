@@ -56,7 +56,13 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. A post-conversion guard script fails on a test file that contains raw `---` YAML frontmatter in the first 500 characters of the generated .docx body; the guard passes on a clean conversion
   3. A 3-5 doc representative set converts without YAML leak, uploads to the test SharePoint library with Word Heading styles preserved (verified by the guard), and the deployment policy is documented (only .docx files in the indexed library; `Status: Draft` docs excluded from production library path)
   4. Live Copilot Studio queries against the uploaded test set return correct document-level citations and the single-line header block appears as body text, not a Word custom property; empirical open questions (citation title source; Status: Draft retrieval behavior; exact chunk boundary behavior) are resolved and recorded for use in Phase 114 standard authoring
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 113-01-PLAN.md — Shared OOXML helper + pandoc 3.7.0.2 pin + reference.docx (PIPE-01)
+- [ ] 113-02-PLAN.md — Post-conversion guard (self-test) + convert.ps1 + pipeline/deployment README (PIPE-01, PIPE-02)
+- [ ] 113-03-PLAN.md — Representative 5-doc set: convert + guard-pass proof, agent mechanical legs (PIPE-02)
+- [ ] 113-04-PLAN.md — Owner-run PIPE-02 grounding runbook + findings + checkpoint (PIPE-02)
 
 ### Phase 114: EEE Standard, Templates, Doc ID Registry + Metadata Rules
 **Goal**: The EEE SOP standard is locked, templates are updated, all Phase-1 Doc IDs are assigned, and C10 is confirmed lenient on the new frontmatter keys — the complete specification and scaffolding is in place before any retrofitting begins.
