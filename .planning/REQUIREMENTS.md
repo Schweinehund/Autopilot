@@ -85,19 +85,19 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| PIPE-01 | — | Pending roadmap |
-| PIPE-02 | — | Pending roadmap |
-| STD-01 | — | Pending roadmap |
-| STD-02 | — | Pending roadmap |
-| STD-03 | — | Pending roadmap |
-| META-01 | — | Pending roadmap |
-| META-02 | — | Pending roadmap |
-| META-03 | — | Pending roadmap |
-| META-04 | — | Pending roadmap |
-| RETRO-01 | — | Pending roadmap |
-| RETRO-02 | — | Pending roadmap |
-| RETRO-03 | — | Pending roadmap |
-| HARN-01 | — | Pending roadmap |
-| HARN-02 | — | Pending roadmap |
-| HARN-03 | — | Pending roadmap |
-| HARN-04 | — | Pending roadmap |
+| PIPE-01 | Phase 113 | Pending |
+| PIPE-02 | Phase 113 | Pending |
+| META-01 | Phase 114 | Pending |
+| META-02 | Phase 114 | Pending |
+| META-03 | Phase 114 | Pending |
+| META-04 | Phase 114 | Pending |
+| STD-01 | Phase 114 | Pending |
+| STD-02 | Phase 114 | Pending |
+| STD-03 | Phase 114 | Pending |
+| HARN-01 | Phase 115 | Pending |
+| RETRO-01 | Phase 116 | Pending |
+| RETRO-02 | Phase 117 | Pending |
+| RETRO-03 | Phase 118 | Pending |
+| HARN-02 | Phase 119 | Pending |
+| HARN-03 | Phase 119 | Pending |
+| HARN-04 | Phase 119 | Pending |
