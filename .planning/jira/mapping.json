@@ -699,8 +699,9 @@
     },
     "v1.14": {
       "epicKey": "RTS-697",
-      "status": "in_progress",
+      "status": "completed",
       "created": "2026-06-29",
+      "completedDate": "2026-07-02",
       "phases": {
         "101": {
           "issueKey": "RTS-698",
@@ -765,6 +766,6 @@
       }
     }
   },
-  "lastUpdated": "2026-07-02 (v1.14 sync: phase 112 VERIFICATION passed (112-VERIFICATION.md status:passed; apex check-phase-112 [48..111] GREEN on Linux GHA 28626765351) → RTS-709 In Progress → Done. All 12/12 v1.14 phases Done; 22/22 requirements Validated. Epic RTS-697 stays In Progress — transition to Done deferred to /gsd-complete-milestone v1.14 (archive+tag).)",
+  "lastUpdated": "2026-07-02 (v1.14 milestone close via /gsd-complete-milestone: Epic RTS-697 reconciled to completed/Done — was already Done in Jira (phase-112 sync/Stop-hook transitioned it); all 12/12 phase Stories RTS-698..709 Done; 22/22 requirements Validated. Milestone archived to .planning/milestones/v1.14-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md, phase dirs moved to milestones/v1.14-phases/, tagged v1.14. No active milestone until /gsd-new-milestone scopes v1.15.)",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending."
 }
