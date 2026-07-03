@@ -71,7 +71,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 113-03-PLAN.md — Representative 5-doc set: convert + guard-pass proof, agent mechanical legs (PIPE-02)
+- [x] 113-03-PLAN.md — Representative 5-doc set: convert + guard-pass proof, agent mechanical legs (PIPE-02)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -187,7 +187,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 113. Conversion Pipeline Lock + Grounding Validation | 2/4 | In Progress|  |
+| 113. Conversion Pipeline Lock + Grounding Validation | 3/4 | In Progress|  |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 0/TBD | Not started | — |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |

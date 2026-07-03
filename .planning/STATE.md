@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-03T19:07:44.490Z"
+last_updated: "2026-07-03T19:25:29.872Z"
 last_activity: 2026-07-03
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 113 (conversion-pipeline-lock-representative-set-grounding-valida) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-03
 
@@ -247,6 +247,12 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - Frozen-surface re-baseline is DELIBERATELY re-pinning Phase-1 surfaces (intentional inversion of byte-unchanged invariant); non-Phase-1 predecessor surfaces remain byte-unchanged
 - 7 discuss-phase flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to /gsd-discuss-phase per project convention
 
+**Phase 113 execution decisions (2026-07-03):**
+
+- [113-03] convert.ps1 version regex updated to `^pandoc(?:\.exe)?\s+` — Windows pandoc.exe binary banner includes `.exe` in first-line output; original `^pandoc\s+` regex was too strict; both forms are correct pandoc output; Rule 1 auto-fix, no behavior change to version-pin logic
+- [113-03] android-capability-matrix Doc Type = Reference (not Runbook) — first Reference-class doc in the representative set; correctly reflects the doc class taxonomy being established in Phase 114
+- [113-03] clean-test-doc assigned RE-T00 — avoids collision with RE-T01 used by 01-device-not-registered per RESEARCH candidate numbering
+
 **Durable architectural decisions (carried forward from v1.14):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commits (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; non-Phase-1 predecessor frozen surfaces BYTE-UNCHANGED
@@ -287,10 +293,10 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-03T19:07:44.475Z
-Stopped at: Completed 113-02-PLAN.md (guard-docx.mjs + convert.ps1 + README.md)
+Last session: 2026-07-03T19:25:29.853Z
+Stopped at: Completed 113-03-PLAN.md (representative set + pipeline proof; all 6 fixtures guard exit 0)
 Resume file: None
-Next action: `/gsd-discuss-phase 113` to plan Phase 113 (Conversion Pipeline Lock + Grounding Validation)
+Next action: Execute Plan 04 (owner grounding validation checkpoint — Phase 113 close)
 
 ## Operator Next Steps
 
@@ -305,3 +311,4 @@ Next action: `/gsd-discuss-phase 113` to plan Phase 113 (Conversion Pipeline Loc
 |-------|------|----------|-------|
 | (v1.15 phases not yet started) | — | — | — |
 | Phase 113 P02 | 5min | 2 tasks | 3 files |
+| Phase 113 P03 | 35min | 2 tasks | 8 files (7 created, 1 modified) |
