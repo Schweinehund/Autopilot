@@ -252,6 +252,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [113-03] convert.ps1 version regex updated to `^pandoc(?:\.exe)?\s+` — Windows pandoc.exe binary banner includes `.exe` in first-line output; original `^pandoc\s+` regex was too strict; both forms are correct pandoc output; Rule 1 auto-fix, no behavior change to version-pin logic
 - [113-03] android-capability-matrix Doc Type = Reference (not Runbook) — first Reference-class doc in the representative set; correctly reflects the doc class taxonomy being established in Phase 114
 - [113-03] clean-test-doc assigned RE-T00 — avoids collision with RE-T01 used by 01-device-not-registered per RESEARCH candidate numbering
+- [113-04] PIPE-02-RUNBOOK.md and PIPE-02-FINDINGS.md authored as agent deliverables; live Copilot Studio / SharePoint legs remain owner-run at the blocking checkpoint (D-01; REQUIREMENTS L77)
 
 **Durable architectural decisions (carried forward from v1.14):**
 
@@ -293,10 +294,10 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-03T19:25:29.853Z
-Stopped at: Completed 113-03-PLAN.md (representative set + pipeline proof; all 6 fixtures guard exit 0)
+Last session: 2026-07-03T19:30:04Z
+Stopped at: 113-04 Task 3 (checkpoint:human-verify — owner must run PIPE-02-RUNBOOK.md and fill PIPE-02-FINDINGS.md)
 Resume file: None
-Next action: Execute Plan 04 (owner grounding validation checkpoint — Phase 113 close)
+Next action: Owner runs the PIPE-02 grounding validation (upload 5 .docx to test SharePoint library, run Q1-Q6 in Copilot Studio, inspect Word custom properties for OQ4, fill PIPE-02-FINDINGS.md OQ1-OQ4, commit). Then type "findings recorded" to trigger continuation agent (113-04-SUMMARY + Phase 113 close).
 
 ## Operator Next Steps
 
@@ -312,3 +313,4 @@ Next action: Execute Plan 04 (owner grounding validation checkpoint — Phase 11
 | (v1.15 phases not yet started) | — | — | — |
 | Phase 113 P02 | 5min | 2 tasks | 3 files |
 | Phase 113 P03 | 35min | 2 tasks | 8 files (7 created, 1 modified) |
+| Phase 113 P04 | 5min | 2 tasks (of 3) | 2 files (paused at human-verify checkpoint) |
