@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.14
 milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
-status: verifying
-last_updated: "2026-07-02T22:53:41.548Z"
-last_activity: 2026-07-02
+status: shipped
+last_updated: "2026-07-03T04:14:22.817Z"
+last_activity: 2026-07-03
 progress:
   total_phases: 12
   completed_phases: 12
@@ -20,7 +20,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and now 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering.
-**Current focus:** v1.14 SHIPPED — run `/gsd-complete-milestone` to archive + tag
+**Current focus:** v1.14 SHIPPED & ARCHIVED (tagged `v1.14`; ROADMAP/REQUIREMENTS archived to `.planning/milestones/`; phase dirs moved to `.planning/milestones/v1.14-phases/`). **No active milestone** — run `/gsd-new-milestone` to scope v1.15.
 
 ## Current Position
 
@@ -404,14 +404,14 @@ None at roadmap stage. Execution-time checks (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-02T22:53:27.998Z
-Stopped at: v1.14 milestone CLOSED at the Phase 112 Plan 112-05 close-gate (22/22 Validated; SINGLE close-gate commit, NO Commit A)
+Last session: 2026-07-03T04:14:22.817Z
+Stopped at: v1.14 milestone ARCHIVED via `/gsd-complete-milestone` — ROADMAP/REQUIREMENTS archived to `.planning/milestones/`, MILESTONES.md entry authored, PROJECT.md evolved, ROADMAP.md collapsed, RETROSPECTIVE.md updated, phase dirs moved to `.planning/milestones/v1.14-phases/`, tagged `v1.14`, Jira story closed
 Resume file: None
-Next action: Run `/gsd-complete-milestone` to archive the v1.14 phase dirs + REQUIREMENTS/ROADMAP to `.planning/milestones/`, tag `v1.14`, close the Jira story, and sweep working-tree cruft
+Next action: Run `/gsd-new-milestone` to scope v1.15 (v1.15+ backlog in `.planning/milestones/v1.14-DEFERRED-CLEANUP.md`)
 
 ## Operator Next Steps
 
-- Run `/gsd-complete-milestone` to archive + tag v1.14 (moves phase dirs to `.planning/milestones/v1.14-phases/`, tags `v1.14`, closes the Jira story), THEN
+- ✅ `/gsd-complete-milestone` DONE — v1.14 archived + tagged `v1.14`; phase dirs at `.planning/milestones/v1.14-phases/`; Jira story closed
 - Run `/gsd-new-milestone` to scope v1.15 (v1.15+ backlog is in `.planning/milestones/v1.14-DEFERRED-CLEANUP.md`)
 
 ## Performance Metrics

@@ -432,6 +432,42 @@ A documentation-accuracy + depth + harness-lineage milestone driven by `SEED-001
 
 ---
 
+## Milestone: v1.14 — 802.1X Network Authentication Documentation + Backlog & Tooling Closure
+
+**Shipped:** 2026-07-02
+**Phases:** 12 (101-112) | **Plans:** 37 | **Requirements:** 22/22 Validated
+
+### What Was Built
+The first net-new content domain since v1.5's Linux platform, plus a multi-pillar backlog + tooling close. Pillar A (Phases 101-109): complete 5-platform 802.1X network-authentication documentation — a foundation layer (`_glossary-network.md` + EAP-method co-equal overview + cert-delivery ordering foundation), per-platform admin-setup guides for Windows/macOS/iOS/Android/Linux each covering wired + Wi-Fi across all three EAP methods, L1 runbooks #38-41 + decision-tree #10, L2 runbooks #31-33 with the per-platform diagnostic-signal map, and capability-matrix + nav-hub integration (navigation-last). Pillar B (Phase 110): three v1.13-carried corpus accuracy fixes (FIX-01/02/03 = the `index.md:108` stale count, WR-01, IN-01). Pillar C (Phase 110): two MDM-migration walkthroughs (MIGF-01 iOS/iPadOS ABM Deadline; MIGF-02 Jamf Pro + Mosyle release steps). Pillar D (Phase 111): three chain-validator DRY refactors (TOOL-01/02/03). Pillar E (Phase 112): the 12th Path-A audit-harness lineage bump (Atom 1 + Atom 2), V113 frozen pin, 11th CI coexistence workflow, and a 3-axis terminal re-audit close.
+
+### What Worked
+- **Established per-platform documentation pattern scaled to a new domain** — the foundation → per-platform admin-setup → L1/L2 → integration shape (proven since v1.3/v1.5) absorbed 802.1X across 5 platforms × (wired + Wi-Fi) × 3 EAP methods without structural invention; link-not-copy from the foundation files kept the per-platform guides thin.
+- **Pillar batching by independence** — Pillars B + C (corpus nits + migration walkthroughs) batched into one phase (110) because neither touches 802.1X content nor the validator chain; Pillar D (tooling, touches the chain) was isolated in Phase 111 to protect the byte-unchanged invariant. Grouping by shared-risk not by theme.
+- **Executor correctly HALTED on a RED terminal re-audit** — the Plan 112-04 executor refused to author `cross_os_exact_match: true` on the first Linux GHA run (44/22/1) and returned a BLOCKING divergence instead of papering over it. This is the auditor-independence design working as intended.
+- **Chain-health remediation completed the D-00 doctrine without masking** — Plan 112-06 extended the NESTED-guard to the full predecessor cohort + frozen-aware-converted 6 drifted content assertions at each validator's OWN close-SHA; NO value-masking, NO frozen surface edited, `CHAIN_SKIP` empty everywhere. 22 RED → 0, and the Linux chain wall-clock collapsed 160s → 2s as a side effect.
+- **First deliberate corpus-invariant relaxation handled cleanly** — the C5/C10 60d→90d freshness bump (discuss-flag #7) was resolved AT CLOSE via the NESTED-guard rather than carried as debt, and honestly recorded as a supersession (not a deferred item).
+
+### What Was Inefficient
+- **The full predecessor chain was not run before authoring the close** — the manifest under-counted which predecessors re-run frozen reproductions against live corpus, so 22 RED validators surfaced only at the terminal Linux GHA dispatch, forcing the mid-execution Plan 112-06 remediation. Future broad-corpus milestones should run the FULL chain before the close-gate, not just the two immediate apexes. (Added to DEFERRED-CLEANUP as the latent content-assertion class.)
+- **Accepted predecessor standalone-CI RED** — the frozen v1.12/v1.13 integrity workflows go RED standalone on the 90-day v1.14 corpus (their path-filter matches check-phase-101..112, their frozen harnesses pin 60d). Correct-by-design (a frozen audit validates its OWN close-SHA corpus) and barred from fixing by D-00a, but it is noise a reviewer must learn to discount.
+- **WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepened to [48..111]** — 12 subprocess trees deeper than v1.13; still unaddressed at root cause (O(n²) chain-runner), mitigated only by making both chain validators Linux-GHA authoritative. The mitigation keeps compounding rather than the fix landing.
+
+### Patterns Established
+- **Multi-pillar milestone as a first-class shape** — a dominant net-new content pillar (A) can coexist with small independent backlog/tooling/harness pillars (B/C/D/E) in one milestone when the non-dominant pillars are provably independent of the dominant one and of each other's risk surfaces.
+- **Run-the-full-chain-before-close for broad-corpus milestones** — when a milestone evolves the shared corpus enough to drift frozen content assertions, the close-gate precondition must include a full predecessor-chain green, not just the immediate apex + continuity validators.
+
+### Key Lessons
+- **The close-gate again pre-updated most of the 4-doc traceability**, leaving `/gsd-complete-milestone` to do archival + ROADMAP/PROJECT collapse + MILESTONES curation + tag + Jira. STATE/REQUIREMENTS/PROJECT already reflected CLOSED; the archival step is genuinely just the archive + collapse. Re-read every section anyway (the recurring trap).
+- **Honest RED accounting beats a clean-first-pass narrative** — the milestone audit records the 44/22/1 first run, the root cause, and the remediation verbatim. A close that required a mid-execution remediation is stronger for saying so.
+- **A relaxed invariant collides with frozen audits** — the first milestone to LOOSEN a corpus rule (C5/C10 90d) is also the first to force a full-cohort NESTED-guard. Relaxations are not free; budget the frozen-audit-vs-live-corpus collision at planning time.
+- **The `One-liner:` SDK-extraction bug persists** — this MILESTONES.md entry was again hand-authored by replacement from the canonical MILESTONE-AUDIT rather than trusting `milestone.complete` auto-extraction (7th recurrence: v1.7/v1.8/v1.10/v1.11/v1.12/v1.13/v1.14). Durable fix remains upstream (machine-readable `one_liner:` frontmatter at phase close).
+
+### Cost Observations
+- Model mix: orchestration on Opus; sequential-on-main-tree per `use_worktrees:false`.
+- Notable: 12 phases / 37 plans over ~3 days (largest milestone since v1.5); first net-new content domain since v1.5; 12th Path-A harness; largest Atom 2 yet (14 files: 12 net-new validators + frozen-at-close + CI workflow); first close-gate to require a mid-execution chain-health remediation; carried Windows deep-nest cascade now depth [48..111] (+12 vs v1.13).
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -453,6 +489,7 @@ A documentation-accuracy + depth + harness-lineage milestone driven by `SEED-001
 | v1.11 | 5 | 13 | macOS end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration scenario guides; validators-as-deliverable per content phase (small harness-close); SINGLE close-gate (no Commit A); stray pre-close audit deleted *before* `milestone.complete` to prevent SDK clobber; 9th Path-A harness lineage |
 | v1.12 | 2 | 5 | Verification-closure milestone (smallest since v1.7); retired 3 prior-close research gaps in one already-wired file; `/adversarial-review` pre-locked MEDIUM-confidence framing for unverifiable supervision claim; D-01 apex off-by-one corrected at close-gate ([48..93]→[48..94]); both chain validators Linux-GHA authoritative (corrected D-03); 10th Path-A harness lineage |
 | v1.13 | 5 | 14 | Documentation-accuracy + depth milestone formalizing out-of-flow build-session work under requirements + harness; single-phase grouping by shared file (guide 07 = 5 reqs); needle-spec hand-off from content phases to harness phase; D-03 apex off-by-one corrected at close-gate ([48..100]→[48..99]); carried Windows deep-nest now [48..99]; 11th Path-A harness lineage |
+| v1.14 | 12 | 37 | First net-new content domain since v1.5 (802.1X across 5 platforms × wired+Wi-Fi × 3 EAP methods); multi-pillar milestone (A content + B/C backlog + D tooling + E harness); first deliberate corpus-invariant relaxation (C5/C10 60d→90d) resolved at close via NESTED-guard; first close-gate to require a mid-execution chain-health remediation (112-06, 22 RED→0, no frozen surface edited); apex [48..111] 66/0/1 Linux-GHA authoritative; carried Windows deep-nest now [48..111]; 12th Path-A harness lineage |
 
 ### Top Lessons (Verified Across Milestones)
 
