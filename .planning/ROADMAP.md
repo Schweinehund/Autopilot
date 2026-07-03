@@ -63,7 +63,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 Plans:
 **Wave 1**
 
-- [ ] 113-01-PLAN.md — Shared OOXML helper + pandoc 3.7.0.2 pin + reference.docx (PIPE-01)
+- [x] 113-01-PLAN.md — Shared OOXML helper + pandoc 3.7.0.2 pin + reference.docx (PIPE-01)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -187,7 +187,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 113. Conversion Pipeline Lock + Grounding Validation | 0/TBD | Not started | — |
+| 113. Conversion Pipeline Lock + Grounding Validation | 1/4 | In Progress|  |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 0/TBD | Not started | — |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |
