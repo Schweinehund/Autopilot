@@ -627,7 +627,11 @@ The owner pastes findings back into the project thread. Phase 113 closes when PI
 
 ---
 
-## Open Questions
+## Open Questions (Resolved at Execution — Plan 04 deliverables, not planning gaps)
+
+> These are empirical questions that require the live Copilot Studio / Word inspection performed
+> in the Plan 04 owner checkpoint. They are intentionally unanswerable pre-execution and are the
+> phase's deliverable (recorded in PIPE-02-FINDINGS.md → Phase 114). They do NOT block planning.
 
 1. **Custom YAML key promotion behavior in pandoc 3.7.0.2**
    - What we know: Standard keys (title, author, date) → Word built-in properties. Non-standard key behavior is version-specific; tracked in Pandoc issue #3034 (SUMMARY.md L220).
