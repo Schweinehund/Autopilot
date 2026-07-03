@@ -769,7 +769,43 @@
       "epicKey": "RTS-715",
       "status": "created",
       "created": "2026-07-03",
-      "phases": {}
+      "phases": {
+        "113": {
+          "issueKey": "RTS-716",
+          "status": "todo",
+          "name": "Conversion Pipeline Lock + Representative-Set Grounding Validation"
+        },
+        "114": {
+          "issueKey": "RTS-717",
+          "status": "todo",
+          "name": "EEE Standard, Templates, Doc ID Registry + Metadata Rules"
+        },
+        "115": {
+          "issueKey": "RTS-718",
+          "status": "todo",
+          "name": "C17 Harness Check (Validator Atom)"
+        },
+        "116": {
+          "issueKey": "RTS-719",
+          "status": "todo",
+          "name": "L1/L2 Runbook Retrofit (~75 docs)"
+        },
+        "117": {
+          "issueKey": "RTS-720",
+          "status": "todo",
+          "name": "Admin-Setup Guide Retrofit (all platforms)"
+        },
+        "118": {
+          "issueKey": "RTS-721",
+          "status": "todo",
+          "name": "Reference Doc Retrofit + Table Remediation (~26 docs)"
+        },
+        "119": {
+          "issueKey": "RTS-722",
+          "status": "todo",
+          "name": "Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-audit Close"
+        }
+      }
     }
   },
   "lastUpdated": "2026-07-02 (v1.14 milestone close via /gsd-complete-milestone: Epic RTS-697 reconciled to completed/Done — was already Done in Jira (phase-112 sync/Stop-hook transitioned it); all 12/12 phase Stories RTS-698..709 Done; 22/22 requirements Validated. Milestone archived to .planning/milestones/v1.14-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md, phase dirs moved to milestones/v1.14-phases/, tagged v1.14. No active milestone until /gsd-new-milestone scopes v1.15.)",
