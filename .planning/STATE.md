@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.14
-milestone_name: 802.1X Network Authentication Documentation + Backlog & Tooling Closure
-status: shipped
-last_updated: "2026-07-03T04:14:22.817Z"
+milestone: v1.15
+milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
+status: planning
+last_updated: "2026-07-03T16:21:26.722Z"
 last_activity: 2026-07-03
 progress:
-  total_phases: 12
-  completed_phases: 12
-  total_plans: 37
-  completed_plans: 37
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-06-29 after v1.13 milestone)
 
 ## Current Position
 
-Phase: 112 (pillar-e-12th-path-a-audit-harness-lineage-bump-milestone-cl) — COMPLETE
-Plan: 6 of 6 (112-06 chain-health remediation inserted mid-execution)
-Status: Phase complete — ready for verification
-Last activity: 2026-07-02
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-03 — Milestone v1.15 started
 
 ## v1.14 Phase Dependency Summary
 
