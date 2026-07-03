@@ -1,378 +1,521 @@
-# Architecture Research: v1.14 802.1X Documentation Integration
+# Architecture Research: Metadata Representation + Header-Block Placement
 
-**Domain:** Documentation suite integration — 802.1X network authentication across 5 platforms via Intune
-**Researched:** 2026-06-29
-**Confidence:** HIGH — all findings based on direct repo inspection
+**Domain:** Markdown-to-DOCX knowledge base grounded in Copilot Studio / SharePoint
+**Researched:** 2026-07-03
+**Confidence:** HIGH (Questions 1, 2, 5); MEDIUM (Questions 3, 4)
 
 ---
 
-## Standard Architecture
+## Core Finding (Read This First)
 
-### Existing Doc-Suite Tier Structure
+**The visible EEE header block is retrieval-necessary, not merely human-facing.**
+
+YAML frontmatter and SharePoint managed-metadata columns are both effectively invisible
+to the native Copilot Studio grounding pipeline. Only visible body text gets indexed and
+embedded. The bold-inline header block rendered from frontmatter is the only metadata
+signal that the semantic retrieval layer will actually process. This validates the decided
+approach (D3-A: `# Title → block → ## Summary → gate → sections`) on retrieval grounds,
+not just readability grounds.
+
+---
+
+## Q1: What Is Actually Searchable/Filterable in Copilot Studio + SharePoint?
+
+### YAML Frontmatter — Invisible to Grounding
+
+When Markdown converts to DOCX (via Pandoc or equivalent), YAML frontmatter is parsed
+as document-property metadata and written to DOCX custom properties — it does NOT appear
+as visible body text. SharePoint's semantic index indexes file *content* (body text), not
+DOCX custom properties. Result: frontmatter keys and values are not embedded, not
+retrieved, and not cited.
+
+Additionally, Markdown (.md) files stored directly in SharePoint document libraries are
+not retrievable or citable as Copilot Studio knowledge sources at all. The semantic index
+supported file types are DOCX, PDF, PPTX, ASPX, and OneNote. The .md extension is
+explicitly confirmed unsupported: users report that .md files "don't appear to be
+discovered at all on the SharePoint site" as a knowledge source (Microsoft Community Hub
+discussion, 2026). The "Markdown→.docx" conversion in the project spec is therefore
+mandatory, not optional.
+
+**Verdict:** YAML frontmatter is invisible to grounding. Keep it as the single source of
+truth for harness validation (C10, C17), but do not rely on it for retrieval.
+
+### SharePoint Managed-Metadata Columns — Unreliably Invisible in Copilot Studio
+
+Microsoft Learn states that "column metadata can be incorporated as signals during
+retrieval when a query is scoped to a specific library or folder." In practice this
+applies only when a *user actively attaches* a library URL in a prompt — it does not
+apply to agent-level knowledge sources configured at authoring time. Multiple independent
+reports (Lee Ford, 2026; Office365Clinic, 2026-05-12) confirm that custom metadata
+columns are "never retrieved, not indexed, not stored, and not passed to the agent" in
+Copilot Studio's native SharePoint knowledge source mode.
+
+Microsoft roadmap item 516044 promises future column-metadata support for library-scoped
+queries but this is not generally available as of mid-2026.
+
+The exception path is Azure AI Search with a SharePoint indexer explicitly configured to
+pull custom columns as `filterable` + `retrievable` fields. That path works correctly but
+is an infrastructure upgrade, not the current deployment target.
+
+**Verdict:** Managed-metadata columns are unreliable for grounding with the native
+knowledge source. Do not architect citation or filtering behavior to depend on them.
+
+### Visible Body Text — The Only Grounding Signal
+
+SharePoint's semantic index embeds all body text from supported file types. The title
+(H1), all headings, the header block, the Summary, and the prose sections are all
+embedded and retrievable. Citations point to the document and the surfaced passage.
+
+**Verdict:** The visible EEE bold-inline header block, rendered from frontmatter into
+the document body, IS the metadata grounding layer. It must exist in the body.
+
+### Implications for the EEE Spec and C17
+
+C17 asserting the visible header block (rendered from frontmatter) is correct *and
+necessary for retrieval*, not a cosmetic enforcement. The block should appear between
+H1 and `## Summary` so that the heading, block, and summary all appear in the same
+lead chunk, giving the LLM both document identity and topic context in one embedding.
+
+---
+
+## Q2: Does the Header Block Before First Prose Degrade the Lead Chunk?
+
+### RAG Research Finding: Brief Metadata Headers Help, They Do Not Hurt
+
+Standard RAG chunking research (2025–2026) consistently finds that prepending structural
+metadata to a chunk improves retrieval precision. The header acts as a "breadcrumb trail
+that disambiguates the content and enriches the semantic signal available to the embedding
+model." The chunk's embedding encodes both *what the chunk says* and *where it sits in
+the knowledge structure*. Practitioners describe this as "one of the few free improvements
+available in chunking: you are not changing the content, only adding context."
+
+The risk of low-signal noise arises with *verbose* metadata blocks, not terse ones. A
+block that is mostly repeated boilerplate (same owner name and date across 150 documents
+with no discriminating content) will dilute the topic signal in the lead chunk. The D3
+layout (H1 + block + Summary in the same chunk) mitigates this by ensuring the topic
+Summary rides in the same embedding as the block.
+
+### Microsoft's Own Guidance Aligns
+
+The Microsoft Learn "Optimizing SharePoint content for Employee Self-Service agents"
+document (updated 2026-06-04) states: "A concise summary helps large language models
+quickly understand the main topic, purpose, and intended audience of the article." It
+explicitly recommends placing a summary at the top so "the LLM can ground its answers in
+the most relevant section." The structural guidance is H1 → summary → H2 sections, with
+the summary preceding the first section. The EEE layout (H1 → block → ## Summary →
+gate-blockquote → sections) is consistent with this pattern; the block is the brief
+preamble before the summary.
+
+### Terse Block Threshold
+
+Keep the visible header block to 7 lines or fewer. The right fields to include are those
+that serve as *discriminators* — they differ meaningfully across documents:
+
+| Field | Include in visible block? | Why |
+|-------|--------------------------|-----|
+| Doc ID (RE-NNN) | YES | Unique discriminator; enables "find RE-042" queries |
+| Platform | YES | High-value discriminator across 5 platform variants |
+| Doc Type | YES | Distinguishes L1 Runbook vs L2 Runbook vs Admin Setup vs Reference |
+| Status | YES | Enables "find Active policies" filtering via LLM reasoning |
+| Owner | YES (per spec) | Low retrieval value; see Q4 for noise mitigation |
+| Last Reviewed | YES (per spec) | Low retrieval value; ISO date format reduces noise |
+
+At 6–7 short bold key:value lines, the block is compact enough that the Summary
+paragraph following it dominates the chunk's topic signal.
+
+### Mitigation If Concerned About Chunk Boundaries
+
+If the SharePoint chunker (which is opaque to the author) splits mid-block:
+
+- The H1 title is the most important retrieval signal and is always in its own
+  heading element, not in the body chunk.
+- Platform and Doc Type should be the first two body lines of the block, so even a
+  split chunk retains the discriminators.
+- Summary should follow immediately — if it wraps into a second chunk, it does so
+  with the block's discriminating lines visible as preceding context.
+
+**Verdict:** LOW risk with the planned terse block. Place Platform and Doc Type first
+within the block, ensure Summary follows immediately with no blank sections between.
+
+---
+
+## Q3: Stable Document Identifiers + Registry + Supersedence
+
+### The RE-NNN Identifier Pattern
+
+Sequential stable identifiers (RE-001, RE-042, etc.) work well for knowledge base
+document management. Key properties:
+
+- **Stable across renames.** The Doc ID persists even if the document's title, file
+  path, or platform focus changes. This prevents broken cross-references.
+- **Citable by humans.** Operators can say "RE-042" and the agent can match the block.
+- **Citable by agents.** The LLM will surface the Doc ID in its response since it
+  appears in the body text, allowing humans to verify the cited doc against the registry.
+
+Starting sequence: assign IDs in one pass during the Phase-1 retrofit to avoid
+collisions. Record the confirmed starting number from the owner before authoring begins.
+
+### Registry Design
+
+The registry (flat file: RE-NNN → file path, title, status, doc type, supersedes) should
+be a maintenance document, NOT included as a knowledge source in Copilot Studio. If the
+registry is in the knowledge source, queries like "what is the status of RE-042?" will
+return the registry row rather than the actual document — creating a meta-citation layer
+that degrades answer quality.
+
+Recommended registry structure (a single Markdown table or YAML list):
 
 ```
-docs/
-├── _glossary*.md            # Per-domain glossaries (Windows / macOS / Android / Linux / Apple Business)
-├── index.md                 # Top-level nav hub (platform sections + Cross-Platform References)
-├── common-issues.md         # Symptom-based cross-platform router
-├── quick-ref-l1.md          # L1 quick-reference card (all platforms)
-├── quick-ref-l2.md          # L2 quick-reference card (all platforms)
-├── decision-trees/          # 00-09 triage trees (per-platform + Windows-mode-specific)
-├── admin-setup-{platform}/  # Per-platform numbered guide sequences (00-overview + N guides)
-│   └── 00-overview.md       # Entry point and guide index for that platform
-├── l1-runbooks/             # 00-index.md + 01..37 (current highest: #37 macOS local password reset)
-├── l2-runbooks/             # 00-index.md + 01..30 (current highest: #30 macOS MDM migration failure)
-├── reference/               # Capability matrices (per-platform + 4-platform) + reference docs
-├── macos-lifecycle/         # Scenario/journey guides (PSSO provisioning, MDM migration)
-└── cross-platform/          # Cross-platform operational content (Apple Business governance)
+| ID     | Title                              | File path                               | Status   | Doc Type   | Supersedes |
+|--------|------------------------------------|-----------------------------------------|----------|------------|------------|
+| RE-001 | Windows Autopilot Device Reg       | docs/l1-runbooks/01-ap-register.md      | Approved | L1 Runbook | —          |
+| RE-042 | macOS ADE Enrollment Overview      | docs/admin-setup-macos/00-ade-lifecycle.md | Approved | Admin Setup | —       |
 ```
 
-### Content Conventions (confirmed from repo)
+Suggested storage path: `docs/_registry/RE-index.md` — outside the knowledge source
+library or in a separate admin-only library not connected to the agent.
 
-- **link-not-copy:** Shared concepts live in one canonical file; per-platform files cross-reference with markdown links, never paste the same explanation twice.
-- **navigation-last:** Hub files (`index.md`, `quick-ref-l1.md`, etc.) are edited only after their target content files exist on disk.
-- **freshness stamps:** Every file carries YAML front matter (`last_verified`, `review_by`, `applies_to`, `audience`, `platform`). Version-gated content additionally carries per-section `last_verified`/`review_by` inline stamps.
-- **Per-platform numbering:** Admin-setup guide files are per-folder sequences (macOS: 00-11; iOS: 00-09; Linux: 00-05). L1 and L2 runbooks are globally numbered across platforms.
-- **Audit harness:** `scripts/validation/check-phase-NN.mjs` per-phase validators + `v1.N-milestone-audit.mjs` + allowlist. New phases add check-phase-NN.mjs validators that ship at harness-bump time (last, as an indivisible atom).
+### Supersedence Handling
 
----
+The strongest mitigation against stale-document citation is **scope exclusion**: move
+superseded documents out of the active knowledge source library (into an archive library
+not connected to the agent). When the LLM cannot reach the document, it cannot cite it.
 
-## File Placement Recommendation: HYBRID
-
-**Verdict: New `docs/admin-setup-8021x/` folder with shared foundation files + per-platform guide files.**
-
-### Recommendation
-
-Create `docs/admin-setup-8021x/` containing:
+When scope exclusion is not immediately possible (transition period), surface supersedence
+IN THE VISIBLE BODY BLOCK so the LLM can reason about it:
 
 ```
-docs/admin-setup-8021x/
-├── 00-overview.md               # Entry point: what 802.1X is, how this guide set is organized
-├── 01-eap-method-overview.md    # EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS — co-equal, shared across all platforms
-├── 02-cert-delivery-foundation.md # SCEP / PKCS imported-cert / trusted-root profiles + RADIUS server-name validation
-├── 03-windows.md                # Windows wired + Wi-Fi Intune profiles (all 3 EAP methods)
-├── 04-macos.md                  # macOS wired + Wi-Fi Intune profiles
-├── 05-ios.md                    # iOS/iPadOS wired + Wi-Fi Intune profiles
-├── 06-android.md                # Android wired + Wi-Fi Intune profiles
-└── 07-linux.md                  # Linux wired + Wi-Fi Intune profiles
+**Status:** Superseded — see RE-057
 ```
 
-### Rationale
+Do NOT rely on a SharePoint column Status field alone — it is invisible to grounding. The
+in-body Status line is the retrieval-visible signal.
 
-**Why not per-platform additions inside existing `admin-setup-{platform}/` folders:**
+Cross-referencing: add a `Supersedes: RE-NNN` line in the block of the new document.
+This allows an agent to surface the replacement when asked about the old topic.
 
-The existing per-platform folders are enrollment-and-provisioning-lifecycle focused (ADE, MDM enrollment, PSSO, compliance). 802.1X network authentication is orthogonal to device enrollment — it is a post-enrollment network access control feature. Distributing 802.1X across five folders would force an admin who needs to understand cross-platform 802.1X to navigate to five separate places with no shared entry point. It would also require duplicating the EAP method and cert delivery explanations in each platform folder, violating link-not-copy.
-
-Additionally, macOS `admin-setup-macos/` already runs 00-11, iOS runs 00-09, Linux runs 00-05. Appending 802.1X-specific guides (which are by nature 3 EAP methods × wired/Wi-Fi) would make these sequences significantly longer in a topically inconsistent way.
-
-**Why not purely shared (one set of cross-platform files with no per-platform split):**
-
-The Intune profile configuration is platform-specific at the Settings Catalog level — profile types, field names, payload keys, and supplicant behavior differ substantially between Windows (SCEP profile type, SSID profile, wired 802.1X policy), macOS (Wi-Fi/Ethernet MDM payloads with EAP settings dict), iOS (Wi-Fi MDM profile with EAPClientConfiguration), Android (Wi-Fi profile with enterprise settings), and Linux (NetworkManager + 802-1x configuration). Merging these into one file creates unusable, heavily conditionally-caveated content. L1/L2 diagnostic steps also differ per platform.
-
-**Why hybrid is correct:**
-
-802.1X is one concept (like "Compliance Policy" or "Configuration Profiles") that every platform implements through platform-specific Intune surfaces. The existing iOS admin-setup folder already follows this hybrid convention inside the folder: `04-configuration-profiles.md` and `05-app-deployment.md` cover iOS-specific surfaces, while cross-platform concepts (APNs certificate) live in a shared file that other platforms cross-reference. The 802.1X hybrid externalizes the shared layer into files 01-02, and makes the per-platform layer files 03-07 — cleanly exploiting link-not-copy within a single discoverable folder.
-
-The `docs/cross-platform/apple-business/` precedent shows the suite already supports dedicated topical folders for content that crosses platform boundaries without belonging inside any one platform's enrollment folder.
+**Verdict:** Registry stays outside the knowledge source. Supersedence expressed in the
+visible body block as Status + forward/back reference. Scope exclusion (archive library)
+is the primary control; body-text Status is the secondary signal during transitions.
 
 ---
 
-## Shared vs Per-Platform Boundary (Link-Not-Copy)
+## Q4: Owner/Date Repeated Across ~150 Docs — Retrieval Noise
 
-### What Lives in the Shared Foundation Files (01-02)
+### The Actual Noise Risk
 
-These topics are platform-invariant. Per-platform guides (03-07) link to these; they never restate them.
+When "Owner: Josh Anderson" appears in 150 document bodies, a semantic query containing
+"Josh Anderson" may retrieve many or all of them via keyword match or embedding proximity.
+This is a real concern for query-time precision. However, it is bounded: normal
+operational queries ("how do I reset the TPM?") do not contain the owner's name and will
+not trigger the collision. The risk materializes only when a user explicitly queries on
+the owner name — which is a low-frequency operational pattern for an IT knowledge base.
 
-**`01-eap-method-overview.md`:**
-- What 802.1X is; supplicant model (client, authenticator, RADIUS)
-- EAP-TLS: mutual certificate authentication, when to use, certificate requirements
-- PEAP-MSCHAPv2: username/password over TLS tunnel, when to use, inner identity
-- EAP-TTLS: outer TLS tunnel + inner PAP/CHAP/MSCHAPv2, when to use
-- Comparison matrix: cert requirements, user experience, security posture, Intune support across 5 platforms
-- Decision guide: which EAP method to choose
+Last Reviewed dates are lower risk because date strings ("2026-05-15") are semantically
+distant from operational queries. Use ISO 8601 format (YYYY-MM-DD) to reduce proximity
+to natural-language date mentions ("May 2026", "last month").
 
-**`02-cert-delivery-foundation.md`:**
-- Prerequisite: RADIUS server assumed to exist (scope guardrail per PROJECT.md)
-- SCEP profile: Intune SCEP connector requirements, challenge URL, profile fields, assignments
-- PKCS imported certificate profile: PKCS#12 import flow, when to use over SCEP
-- Trusted root certificate profile: RADIUS server CA, why required for server validation
-- RADIUS server-name validation: what the "Trusted server certificate names" field does and why misconfiguring it is the #1 connection failure cause
-- Certificate delivery ordering: trusted root must deploy before SCEP/PKCS must deploy before Wi-Fi/wired profile
+### Mitigation Strategies
 
-### What Lives in Per-Platform Files (03-07)
+1. **Fixed-format key:value labeling.** Use `**Owner:** Josh Anderson` not a
+   free-standing name. The key:value pair is less likely to embed close to bare "Josh
+   Anderson" queries than a free-standing name would be. The structured context reduces
+   the ambiguity of the proper noun in the embedding.
 
-These topics are platform-specific. Each per-platform file opens with a link to `01-eap-method-overview.md` and `02-cert-delivery-foundation.md` as prerequisites.
+2. **Owner as frontmatter-only (deferred option).** If retrieval noise proves problematic
+   in practice, the owner field can be moved to YAML-only (not rendered in the visible
+   block). This does not break C17 — C17 can assert frontmatter keys without requiring
+   all keys to appear in the block. The current spec renders it; the EEE spec author
+   should explicitly decide which frontmatter keys appear in the block vs. are
+   metadata-only. This escape valve should be documented in the spec as available.
 
-- Intune profile type to create (Wi-Fi / wired / 802.1X profile — differs per platform)
-- Settings Catalog path or template path (differs per platform)
-- EAP method selection within the Intune UI (field names differ)
-- Platform-specific supplicant behavior (macOS: EAP is configured in Wi-Fi MDM payload; Windows: separate wired 802.1X policy; Android: Wi-Fi enterprise block; Linux: NetworkManager 802-1x)
-- Platform-specific gotchas and version requirements
-- Wired-specific configuration (where supported: Windows, macOS, Linux, Android Ethernet-capable)
-- Wi-Fi-specific configuration for all platforms
-- Assignment targets and profile ordering for that platform
-- Freshness stamps per-section for version-gated behavior
+3. **Ordering within the block.** Place Doc ID, Platform, Doc Type, and Status BEFORE
+   Owner and Last Reviewed. This ensures high-discriminator fields lead the block
+   embedding even if chunking splits at the block boundary.
 
----
+4. **Accepted tradeoff.** For 150 docs owned by one person, some owner-noise is
+   unavoidable without removing the field. Keeping it is the right choice for
+   accountability and lifecycle governance — Microsoft's own guidance explicitly
+   recommends owner + review date metadata for content lifecycle management. Accept the
+   tradeoff; it doesn't materially harm the primary use case (operators querying runbooks
+   by topic, not by owner).
 
-## New Components Inventory
-
-### New Files
-
-| Path | Type | Depends On |
-|------|------|------------|
-| `docs/_glossary-network.md` | Glossary | None (foundation first) |
-| `docs/admin-setup-8021x/00-overview.md` | Admin setup | None |
-| `docs/admin-setup-8021x/01-eap-method-overview.md` | Shared foundation | `_glossary-network.md` |
-| `docs/admin-setup-8021x/02-cert-delivery-foundation.md` | Shared foundation | `01-eap-method-overview.md` |
-| `docs/admin-setup-8021x/03-windows.md` | Per-platform guide | Files 01-02 |
-| `docs/admin-setup-8021x/04-macos.md` | Per-platform guide | Files 01-02 |
-| `docs/admin-setup-8021x/05-ios.md` | Per-platform guide | Files 01-02 |
-| `docs/admin-setup-8021x/06-android.md` | Per-platform guide | Files 01-02 |
-| `docs/admin-setup-8021x/07-linux.md` | Per-platform guide | Files 01-02 |
-| `docs/l1-runbooks/38-8021x-cert-failure.md` | L1 runbook | Per-platform guides (cross-ref) |
-| `docs/l1-runbooks/39-8021x-radius-reject.md` | L1 runbook | Per-platform guides (cross-ref) |
-| `docs/l1-runbooks/40-8021x-server-trust-failure.md` | L1 runbook | Per-platform guides (cross-ref) |
-| `docs/l1-runbooks/41-8021x-eap-negotiation-failure.md` | L1 runbook | Per-platform guides (cross-ref) |
-| `docs/l2-runbooks/31-8021x-log-collection.md` | L2 runbook (prerequisite) | Per-platform guides |
-| `docs/l2-runbooks/32-8021x-cert-investigation.md` | L2 runbook | `31-8021x-log-collection.md` |
-| `docs/l2-runbooks/33-8021x-radius-eap-investigation.md` | L2 runbook | `31-8021x-log-collection.md` |
-| `docs/decision-trees/10-8021x-triage.md` | Decision tree | L1 runbooks #38-41 exist |
-
-### Glossary: New `docs/_glossary-network.md`
-
-Rationale for a new glossary file (not absorbed into existing platform glossaries): 802.1X terms are protocol-level and platform-neutral. The existing glossaries are organized by platform context (`_glossary.md` = Windows Autopilot; `_glossary-macos.md` = macOS ADE; `_glossary-android.md` = Android Enterprise; `_glossary-linux.md` = Linux Intune). Network authentication vocabulary (EAP-TLS, PEAP, RADIUS, supplicant, SCEP, PKCS#12, trusted root, authenticator, 802.1X port-based access control) does not belong in any one platform glossary. The Apple Business governance precedent (`_glossary-apple-business.md`) demonstrates the suite already supports domain-scoped glossary files for cross-platform topics.
-
-Each existing platform glossary should receive a `see-also` banner pointing to `_glossary-network.md` for 802.1X terms (the same pattern as the reciprocal see-also banners between `_glossary-macos.md` and `_glossary-android.md`).
-
-### L1 Runbook Numbering (verified: current highest is #37)
-
-The four 802.1X failure scenarios map to cross-platform L1 runbooks #38-41. Cross-platform (not per-platform) is correct because: (a) the failure symptoms are protocol-level and identical regardless of platform, (b) L1 Service Desk uses the decision tree to reach the runbook, and (c) the existing Apple Business L1 #34 is cross-platform (iOS+macOS+Shared iPad). Each runbook will have per-platform diagnostic steps inline, gated by a "select your platform" header — the same structure as platform-diverse runbooks in the existing suite.
-
-| Number | File | Scenario |
-|--------|------|----------|
-| 38 | `38-8021x-cert-failure.md` | Device has no valid certificate or cert expired — network access blocked before auth attempt |
-| 39 | `39-8021x-radius-reject.md` | RADIUS server returns Access-Reject — credentials or policy mismatch |
-| 40 | `40-8021x-server-trust-failure.md` | Server certificate validation failure — missing trusted root or wrong RADIUS server name in profile |
-| 41 | `41-8021x-eap-negotiation-failure.md` | EAP method mismatch or negotiation failure — supplicant and RADIUS cannot agree on method |
-
-### L2 Runbook Numbering (verified: current highest is #30)
-
-Three 802.1X L2 runbooks at #31-33. L2 #31 is the log collection prerequisite (platform-specific per-section, matching the established pattern of `10-macos-log-collection.md`, `14-ios-log-collection.md`, `18-android-log-collection.md`, `24-linux-log-collection.md`). For 802.1X, a single cross-platform log collection runbook is more appropriate than five separate ones, because the Windows + Linux log sources are command-line and the macOS + iOS + Android sources are Intune-portal or device-side — all can be documented in one file with per-platform sections.
-
-| Number | File | Scenario |
-|--------|------|----------|
-| 31 | `31-8021x-log-collection.md` | Collect 802.1X diagnostic data per platform (prerequisite for #32 and #33) |
-| 32 | `32-8021x-cert-investigation.md` | Certificate validity, SCEP delivery confirmation, trusted root chain investigation |
-| 33 | `33-8021x-radius-eap-investigation.md` | RADIUS server policy, NPS event log correlation, EAP type negotiation investigation |
-
-### Decision Tree
-
-`docs/decision-trees/10-8021x-triage.md` — next in the sequence (current highest: `09-linux-triage.md`). This is a cross-platform triage tree that routes on symptom (no network access / cert error / RADIUS reject / EAP method failure) to L1 runbooks #38-41.
+**Verdict:** Acceptable noise with ISO date format, fixed key:value labeling, and
+Doc ID / Platform / Doc Type / Status as the first four block lines (before Owner and
+Last Reviewed). Owner removal from the visible block is a documented escape valve if
+noise proves a problem at scale.
 
 ---
 
-## Integration Points Inventory
+## Q5: Normalized vs Free-Text Field Values and Filterability
 
-### Capability Matrices (files requiring new rows)
+### In the Native Copilot Studio / SharePoint Path
 
-| File | What to Add |
-|------|-------------|
-| `docs/reference/macos-capability-matrix.md` | New "Network Authentication (802.1X)" section: wired Ethernet 802.1X (MDM Ethernet payload), Wi-Fi 802.1X (Wi-Fi MDM payload EAPClientConfiguration), EAP-TLS/PEAP/EAP-TTLS support, SCEP/PKCS delivery support |
-| `docs/reference/ios-capability-matrix.md` | Same pattern: Wi-Fi 802.1X (supervised required for silent push), EAP method rows, cert delivery |
-| `docs/reference/android-capability-matrix.md` | Wi-Fi enterprise block 802.1X rows, EAP method support, SCEP/PKCS, wired (limited OEM coverage) |
-| `docs/reference/linux-capability-matrix.md` | Wi-Fi + wired 802.1X via NetworkManager 802-1x settings, EAP method rows, no MDM-delivered cert support (SCEP not available for Linux) |
-| `docs/reference/4-platform-capability-comparison.md` | New "Network Authentication" domain column across Windows/macOS/iOS/Android (Linux is not in this 4-platform file; add Linux as 5th column or add a note directing to linux-capability-matrix) |
+Column metadata is not reliably filterable in the native knowledge source (see Q1).
+However, the visible body block IS processed by the LLM, which means *LLM-assisted
+filtering* applies: when a user asks "find all macOS runbooks," the LLM can reason over
+the body text `Platform: macOS` across retrieved chunks and assemble a filtered answer.
 
-Note: Windows does not have a standalone `windows-capability-matrix.md` — Windows is the baseline column in all per-platform comparison matrices. Windows 802.1X rows (wired 802.1X policy, Wi-Fi profile, SCEP, all three EAP methods) appear as the reference column in each per-platform matrix.
+For this LLM-assisted filtering to work reliably, the Platform value must be:
 
-### Glossaries (files requiring additions)
+- **Consistent.** Every macOS document must say exactly "macOS" (not "macOS 14+",
+  "Apple macOS", "macOS (Sonoma/Sequoia/Tahoe)"). One canonical label per platform.
+- **Unambiguous.** "iOS/iPadOS" vs "iOS" vs "iPadOS" — each is a distinct label in
+  the normalized map, and the LLM will distinguish them correctly IF the body text
+  uses the normalized form consistently.
+- **Not free-text.** A free-text Platform value like "Apple macOS 14 Sonoma and later"
+  embeds differently than "macOS" and will miss LLM filter matches for "macOS" queries.
 
-| File | What to Add |
-|------|-------------|
-| `docs/_glossary-network.md` | NEW — primary home for all 802.1X/EAP/RADIUS/SCEP/PKCS/supplicant terms |
-| `docs/_glossary.md` | See-also banner pointing to `_glossary-network.md` for 802.1X terms |
-| `docs/_glossary-macos.md` | See-also banner for 802.1X terms; optionally inline macOS-specific terms (EAP settings dict, MDM Wi-Fi/Ethernet payload) |
-| `docs/_glossary-android.md` | See-also banner for 802.1X terms |
-| `docs/_glossary-linux.md` | See-also banner + possibly inline NetworkManager 802-1x term |
+The D1 hybrid-superset normalization map is architecturally correct for this reason. The
+~19–20 granular YAML variants are preserved in frontmatter (harness accuracy), and the
+C17 derivation produces the clean visible label (retrieval accuracy).
 
-### Navigation Hubs (navigation-last — edited AFTER target content exists)
+### In the Azure AI Search Path (Future Upgrade)
 
-| File | What to Add |
-|------|-------------|
-| `docs/index.md` | New `## 802.1X Network Authentication` H2 section (parallel to `## Operations`) with L1/L2/Admin Setup sub-tables; add to `## Choose Your Platform` bullet list; add glossary + decision tree to Cross-Platform References table |
-| `docs/common-issues.md` | 802.1X symptom rows: no network post-enrollment, cert failure, RADIUS reject, server trust error — routing to L1 #38-41 |
-| `docs/quick-ref-l1.md` | New `## 802.1X Quick Reference` section with 4-runbook table (#38-41) + common-first-checks cheat sheet |
-| `docs/quick-ref-l2.md` | New `## 802.1X Quick Reference` section with L2 #31-33 + per-platform log-collection commands + RADIUS event ID reference |
-| `docs/l1-runbooks/00-index.md` | New `## 802.1X Network Authentication L1 Runbooks` H2 with #38-41 table |
-| `docs/l2-runbooks/00-index.md` | New `## 802.1X Network Authentication L2 Runbooks` H2 with #31-33 table + L1 escalation mapping |
+When the knowledge source is upgraded to Azure AI Search with a SharePoint indexer:
 
----
+- Fields marked `filterable: true` in the index schema enable structured filtering (not
+  just LLM reasoning).
+- Managed metadata term sets (controlled vocabulary) are preferable to free-text for
+  filterable fields.
+- The D1 normalization map pre-adapts the corpus for this future: the normalized
+  visible-block label is also the value that should populate the SharePoint column
+  mapped to the filterable index field.
 
-## Suggested Build Order
-
-The dependency graph determines order. Navigation-last and harness-bump-last are hard constraints.
-
-### Phase Group A: Foundation (no dependencies — start here)
-
-These files have no dependencies on other 802.1X content and can be authored first. Within group, glossary before EAP overview since the overview uses the glossary terms.
-
-1. `docs/_glossary-network.md` — all 802.1X/EAP/RADIUS/SCEP/PKCS/supplicant terms
-2. `docs/admin-setup-8021x/00-overview.md` — folder entry point and guide index
-3. `docs/admin-setup-8021x/01-eap-method-overview.md` — EAP method foundation (links to glossary)
-4. `docs/admin-setup-8021x/02-cert-delivery-foundation.md` — cert delivery foundation (links to EAP overview)
-
-Glossary platform see-also banners can also be appended in this phase (they only reference the new glossary file, not the per-platform guides).
-
-### Phase Group B: Per-Platform Admin Guides (require Group A)
-
-Each per-platform guide requires files 01-02 to exist for cross-referencing. They are independent of each other, but the suite's `use_worktrees:false` constraint means they must be authored sequentially. Suggested authoring order: Windows first (most complete Intune surface, establishes the template), then macOS, then iOS, then Android, then Linux.
-
-5. `docs/admin-setup-8021x/03-windows.md`
-6. `docs/admin-setup-8021x/04-macos.md`
-7. `docs/admin-setup-8021x/05-ios.md`
-8. `docs/admin-setup-8021x/06-android.md`
-9. `docs/admin-setup-8021x/07-linux.md`
-
-Capability matrix additions for each platform can be done alongside its per-platform guide (same phase) since the matrix rows are drawn from the guide content — or consolidated into a single matrix-update phase after all guides exist. Consolidated is lower-risk (avoids partial matrix state).
-
-### Phase Group C: L1/L2 Runbooks (require Group B)
-
-L1 runbooks cross-reference the per-platform guides for configuration-step context; L2 runbooks cross-reference both per-platform guides and L1 runbooks. L2 #31 log-collection is a prerequisite for L2 #32 and #33.
-
-10. `docs/l1-runbooks/38-8021x-cert-failure.md`
-11. `docs/l1-runbooks/39-8021x-radius-reject.md`
-12. `docs/l1-runbooks/40-8021x-server-trust-failure.md`
-13. `docs/l1-runbooks/41-8021x-eap-negotiation-failure.md`
-14. `docs/l2-runbooks/31-8021x-log-collection.md` (prerequisite)
-15. `docs/l2-runbooks/32-8021x-cert-investigation.md`
-16. `docs/l2-runbooks/33-8021x-radius-eap-investigation.md`
-
-L1 and L2 log-collection (#31) can be authored in the same phase batch. L2 #32 and #33 both require #31 and can batch together.
-
-### Phase Group D: Decision Tree (require Group C)
-
-The 802.1X triage decision tree routes to L1 runbooks #38-41, so those files must exist first.
-
-17. `docs/decision-trees/10-8021x-triage.md`
-
-### Phase Group E: Capability Matrices (require Group B, can batch with Group C or D)
-
-Capability matrix rows are derived from per-platform guide content. Can be done any time after Group B. Consolidating all 5 matrix updates into one phase reduces hub-navigation fragility. This can parallelize with runbook authoring (Group C) since matrices and runbooks don't depend on each other.
-
-18. Update `docs/reference/macos-capability-matrix.md`
-19. Update `docs/reference/ios-capability-matrix.md`
-20. Update `docs/reference/android-capability-matrix.md`
-21. Update `docs/reference/linux-capability-matrix.md`
-22. Update `docs/reference/4-platform-capability-comparison.md`
-
-### Phase Group F: Navigation Hubs (navigation-last — require Groups C, D, E)
-
-Hub files must be edited only after all target content exists. All six hub files can be updated in one phase (they are additive/append-only edits).
-
-23. `docs/l1-runbooks/00-index.md` — append 802.1X L1 Runbooks section
-24. `docs/l2-runbooks/00-index.md` — append 802.1X L2 Runbooks section
-25. `docs/index.md` — new 802.1X H2 section + Cross-Platform References entries
-26. `docs/common-issues.md` — 802.1X symptom rows
-27. `docs/quick-ref-l1.md` — 802.1X quick-reference section
-28. `docs/quick-ref-l2.md` — 802.1X quick-reference section
-
-### Phase Group G: Harness Bump (last — requires all prior groups)
-
-The audit harness lineage bump is always the final indivisible atom. For v1.14 this is the 12th Path-A generation: `v1.14-milestone-audit.mjs` + `v1.14-audit-allowlist.json` + per-phase `check-phase-101..N.mjs` validators + new CI workflow + `_lib/frozen-at-close.mjs` V113 pin + 3-axis terminal re-audit close.
-
-29. Harness lineage bump + milestone close (one indivisible atomic commit per established precedent)
+**Verdict:** The D1 normalization decision is correct for both the current LLM-filtering
+path and the future Azure AI Search structured-filtering path. Free-text variants in the
+visible block would degrade both. The normalization map must be enforced by C17 (not
+just documented) to prevent drift as new platform variants appear.
 
 ---
 
-## Parallelization Notes
+## Recommended Placement Architecture
 
-The suite runs `use_worktrees:false` (sequential-on-main-tree). However, the build order above still reveals logical parallelism that informs phase batching — multiple files can be authored within one phase plan if they share the same dependency tier.
+### Document Layout (D3-A Winner)
 
-**Within-phase batching opportunities:**
+```
+# [Descriptive Action-Oriented Title]              ← H1 (appears in citations)
 
-| Group | Files That Can Batch Together |
-|-------|-------------------------------|
-| A | Glossary + admin-setup-8021x/00-overview can be one phase plan; 01-eap-method-overview + 02-cert-delivery-foundation can be one phase plan |
-| B | All 5 per-platform guides are independent of each other — can be 1-2 guides per plan, or batched as 2-3 plans of 2 guides each |
-| C | L1 #38-41 can batch as 2 per plan; L2 #31 alone (it's prerequisite); L2 #32+#33 can batch |
-| D+E | Decision tree + all 5 matrix updates are independent and can be one phase |
-| F | All 6 nav-hub edits are independent append-only edits and can be one phase |
+**Doc ID:** RE-NNN
+**Platform:** [Normalized label from D1 map]
+**Doc Type:** [L1 Runbook | L2 Runbook | Admin Setup | Reference]
+**Status:** [Draft | Approved | Superseded — see RE-NNN]
+**Owner:** [Name]
+**Last Reviewed:** YYYY-MM-DD
 
-**Anti-batching hard constraint:** Harness-bump (Group G) must be the sole deliverable of its phase. Never batch harness-bump with content files.
+## Summary
+
+[1–3 sentences: scope, audience, safety note for runbooks]
+
+> [gate-blockquote if applicable]
+
+## [First content section]
+```
+
+### Why This Order Works for Retrieval
+
+- **H1 title** appears in citations. Make it descriptive ("Reset TPM for Autopilot
+  Re-enrollment"), not generic ("Remediation Steps"). The H1 is the single most
+  important retrieval and citation signal.
+- **Block immediately after H1** means it is in the same lead chunk as the title for
+  most chunking strategies. The LLM sees identity + topic in one embedding.
+- **Doc ID first in the block** because it is the most unique discriminator. If the
+  chunk splits after two lines, the ID and Platform survive the split.
+- **Summary immediately after the block:** the topic embedding dominates the chunk.
+  A longer block separating H1 from Summary would dilute retrieval precision.
+- **Section headings (H2, H3)** within content act as additional retrieval anchors; each
+  section should be independently interpretable without requiring the lead chunk.
+
+### YAML Frontmatter (Harness Layer, Not Retrieval Layer)
+
+```yaml
+---
+doc_id: RE-NNN
+status: Approved
+owner: Josh Anderson
+doc_type: L2 Runbook
+last_verified: "2026-05-15"
+review_by: "2026-11-15"
+applies_to: "Windows 11, Windows 10"
+audience: L2
+platform: windows-autopilot
+---
+```
+
+The frontmatter `platform` key holds the granular variant (the ~20 real values); C17
+applies the D1 normalization map to derive the visible block label from it. This is the
+single source of truth: authors edit frontmatter, C17 validates that the rendered block
+matches the derived label. Humans never manually type the visible Platform label.
+
+### Registry (Outside Knowledge Source)
+
+Suggested path: `docs/_registry/RE-index.md` — NOT in the active knowledge source.
+
+Flat table: ID | Title | File | Status | Doc Type | Supersedes | Notes
+
+Maintained manually or by a script that reads all frontmatter `doc_id` + `status`
+fields. The registry is the source of truth for supersedence relationships and for
+confirming the starting sequence number before Phase-2 authoring.
 
 ---
 
-## Anti-Patterns to Avoid
+## C17 Assertion Shape (Derived from Architecture)
 
-### Anti-Pattern 1: Distributing 802.1X Across Existing Per-Platform Folders
+C17 must assert the following as a pure function of frontmatter:
 
-**What it looks like:** Adding `docs/admin-setup-macos/12-8021x-wifi.md`, `docs/admin-setup-ios/10-8021x-wifi.md`, etc. with EAP method and cert delivery content duplicated in each.
+1. `doc_id` key present and matches the `RE-\d{3}` pattern (or agreed range).
+2. `status` key present and has a valid value from the controlled set
+   (Draft | Approved | Superseded).
+3. `owner` key present and non-empty.
+4. `doc_type` key present and has a valid value from the controlled set.
+5. The visible header block is present in the document body, between H1 and `## Summary`.
+6. Each visible block field (`Doc ID`, `Platform`, `Status`, `Owner`, `Last Reviewed`,
+   `Doc Type`) matches the corresponding frontmatter value, with Platform derived via
+   the D1 normalization map. C17 FAILS on any unmapped `platform` variant — no silent
+   fallback, no default.
+7. `## Summary` heading is present and immediately follows the block (no intervening H2
+   or H3 sections between the block and the Summary).
 
-**Why wrong:** Violates link-not-copy for all shared foundation content. Breaks discoverability for admins wanting a cross-platform view. Inflates each platform folder with content topically alien to enrollment/provisioning.
-
-**Instead:** `docs/admin-setup-8021x/` hybrid with shared 01-02 + per-platform 03-07.
-
-### Anti-Pattern 2: Per-Platform L1 Runbooks (20 runbooks instead of 4)
-
-**What it looks like:** L1 #38-57, one per platform per failure type (Windows cert failure, macOS cert failure, iOS cert failure, etc.)
-
-**Why wrong:** 802.1X failure symptoms at L1 are identical regardless of platform (no network access, auth error in portal). The Service Desk does not have platform-specific diagnostic tools. The existing cross-platform L1 #34 (Apple Business, iOS+macOS+Shared iPad) proves cross-platform L1 runbooks are already established in the suite.
-
-**Instead:** 4 cross-platform L1 runbooks (#38-41) with per-platform inline sections gated by a "select your platform" header.
-
-### Anti-Pattern 3: Nav Hub Wiring Before Content Files Exist
-
-**What it looks like:** Adding 802.1X rows to `docs/index.md` in the foundation phase, before per-platform guides or runbooks are authored.
-
-**Why wrong:** Hub links to non-existent files will break the link-check harness and create a partially-broken nav state during authoring. The suite's navigation-last pattern exists precisely to prevent this.
-
-**Instead:** All hub edits in Group F, after Groups A-E are fully complete.
-
-### Anti-Pattern 4: Scoping RADIUS/NPS Server Setup Into the Guides
-
-**What it looks like:** Adding NPS configuration steps, RADIUS server policy setup, or AD Certificate Services installation to the per-platform guides.
-
-**Why wrong:** Explicitly out of scope per PROJECT.md guardrail ("Intune client-side config only — assumes RADIUS/NPS already exists"). RADIUS server documentation is a different domain owned by network/infrastructure teams.
-
-**Instead:** Each guide opens with a prerequisite callout block listing what must exist on the RADIUS/NPS side before the Intune profile steps apply. `02-cert-delivery-foundation.md` carries this callout.
+**Precondition (C10 lenient-unknown-key):** C10 must pass first to confirm that the
+harness does not reject the four new frontmatter keys (`doc_id`, `status`, `owner`,
+`doc_type`). Verify C10's unknown-key policy before authoring C17.
 
 ---
 
-## Component Responsibilities
+## System Overview
 
-| Component | Responsibility | Communicates With |
-|-----------|---------------|-------------------|
-| `docs/admin-setup-8021x/00-overview.md` | Entry point and guide-sequence index for 802.1X admin setup | `docs/index.md` (linked from), per-platform guides (linked to) |
-| `docs/admin-setup-8021x/01-eap-method-overview.md` | Canonical EAP method concepts — authoritative source for all platforms | `_glossary-network.md` (term anchors), per-platform guides (linked from), decision tree (linked from) |
-| `docs/admin-setup-8021x/02-cert-delivery-foundation.md` | Canonical cert delivery concepts — SCEP/PKCS/trusted-root prerequisites | `01-eap-method-overview.md` (prerequisite), per-platform guides (linked from) |
-| `docs/admin-setup-8021x/03-07-{platform}.md` | Platform-specific Intune profile steps | Files 01-02 (linked to for shared concepts), L1 runbooks (linked to from runbooks), L2 log collection (linked from) |
-| `docs/_glossary-network.md` | Term definitions for 802.1X/EAP/RADIUS/SCEP/PKCS/supplicant | `01-eap-method-overview.md` and `02-cert-delivery-foundation.md` (term anchors), platform glossaries (see-also banners) |
-| `docs/l1-runbooks/38-41-*.md` | L1 scripted procedures for 802.1X failure scenarios | Per-platform guides (cross-reference), `docs/decision-trees/10-8021x-triage.md` (routing target) |
-| `docs/l2-runbooks/31-33-*.md` | L2 investigation guides | L1 runbooks (L1 escalation mapping), per-platform guides (config context), L2 index |
-| `docs/decision-trees/10-8021x-triage.md` | Symptom-to-runbook routing for 802.1X failures | L1 runbooks #38-41 (routing targets), `docs/index.md` (linked from) |
-| Capability matrices (5 files) | 802.1X feature parity rows per platform | Per-platform guides (content source), `docs/index.md` Cross-Platform References |
-| Nav hubs (6 files) | Discovery and routing | All content files above (navigation-last dependency) |
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                   AUTHORING LAYER (single source of truth)           │
+│  ┌───────────────────────────────────────────────────────────────┐  │
+│  │ YAML frontmatter: doc_id, status, owner, doc_type,           │  │
+│  │ last_verified, review_by, applies_to, audience, platform     │  │
+│  └──────────────────────────┬────────────────────────────────────┘  │
+│                             │                                        │
+│           C17 asserts       │ derives visible block                  │
+│           match             ↓                                        │
+│  ┌───────────────────────────────────────────────────────────────┐  │
+│  │ VISIBLE BODY BLOCK (rendered FROM frontmatter, not authored)  │  │
+│  │ Doc ID · Platform (normalized) · Doc Type · Status           │  │
+│  │ Owner · Last Reviewed                                         │  │
+│  └──────────────────────────┬────────────────────────────────────┘  │
+└──────────────────────────── │ ───────────────────────────────────────┘
+                              │
+                              ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│                DOCX CONVERSION + SHAREPOINT UPLOAD                   │
+│  YAML frontmatter → DOCX custom properties (NOT indexed)            │
+│  Visible body text → Indexed by SharePoint semantic engine          │
+└──────────────────────────── │ ───────────────────────────────────────┘
+                              │
+                              ↓
+┌─────────────────────────────────────────────────────────────────────┐
+│           COPILOT STUDIO GROUNDING (semantic index)                  │
+│                                                                      │
+│  What the index sees:                                                │
+│  · H1 title (citation label)                                        │
+│  · Doc ID · Platform · Doc Type · Status (from visible block)       │
+│  · Summary (topic signal, discrimination)                            │
+│  · Section headings + prose (content)                                │
+│                                                                      │
+│  What the index DOES NOT see:                                        │
+│  · YAML frontmatter (custom properties, not body text)              │
+│  · SharePoint column metadata (not read in native knowledge source) │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Anti-Patterns
+
+### Anti-Pattern 1: Metadata Only in Frontmatter / Columns
+
+**What people do:** Put all metadata in YAML frontmatter or SharePoint column metadata,
+assuming the grounding system sees it.
+**Why it fails:** Both layers are invisible to Copilot Studio's semantic index. The agent
+grounds on body text only.
+**Do this instead:** Render the metadata into the visible body block. Frontmatter is for
+harness validation; body block is for retrieval.
+
+### Anti-Pattern 2: Verbose Header Block (10+ Lines)
+
+**What people do:** Include every frontmatter key in the visible block (applies_to,
+review_by, audience, platform granular value, last_verified raw, etc.).
+**Why it fails:** Dilutes topic signal in the lead chunk. The block's embedding can
+dominate over the Summary and the document's actual content.
+**Do this instead:** Limit to 6–7 lines of high-discriminator fields. Extra fields stay
+in frontmatter only.
+
+### Anti-Pattern 3: Free-Text Platform Values in Visible Block
+
+**What people do:** Write "Apple macOS 14 (Sonoma) and later" in the visible block to
+match the frontmatter granularity.
+**Why it fails:** LLM filtering ("find macOS runbooks") will miss documents with
+inconsistent labels. Embedding proximity to "macOS" decreases as the string grows longer.
+**Do this instead:** C17 derives the normalized label ("macOS") from the variant value in
+frontmatter. The visible block always shows the canonical label.
+
+### Anti-Pattern 4: Superseded Docs Left in the Active Knowledge Source
+
+**What people do:** Mark a document superseded via SharePoint column only and leave it
+in the active library.
+**Why it fails:** The column is invisible to the agent. The superseded content is still
+retrieved and cited.
+**Do this instead:** Move superseded docs to an archive library excluded from the
+knowledge source. Add `Status: Superseded — see RE-NNN` to the visible block as a
+secondary signal during any transition period.
+
+### Anti-Pattern 5: Registry in the Knowledge Source
+
+**What people do:** Include the RE-index registry document in the SharePoint knowledge
+source library.
+**Why it fails:** The LLM retrieves the registry row when users ask about a document,
+returning metadata instead of content.
+**Do this instead:** Store the registry in `docs/_registry/` or a separate admin library
+not connected to the agent.
+
+### Anti-Pattern 6: Treating .md Files as the Deployment Format
+
+**What people do:** Upload raw Markdown files to SharePoint and connect the library as a
+knowledge source.
+**Why it fails:** Markdown (.md) files are not indexed by the SharePoint semantic index
+as of mid-2026. The agent cannot read or cite them.
+**Do this instead:** Convert to DOCX (or upload as SharePoint .aspx pages) before
+connecting as a knowledge source.
+
+---
+
+## Confidence Assessment
+
+| Finding | Confidence | Sources |
+|---------|-----------|---------|
+| YAML frontmatter invisible to grounding | HIGH | Pandoc docs (issue #3034); SharePoint semantic index supported-types table; DOCX property behavior |
+| .md files not indexed by SharePoint semantic index | HIGH | MS Community Hub thread 2026; semantic index supported types list (DOCX/PDF/PPTX/ASPX/OneNote only) |
+| Custom column metadata invisible to Copilot Studio knowledge source | HIGH | Lee Ford 2026; Office365Clinic 2026-05; confirmed against MS Learn semantic index docs |
+| Column metadata works when user attaches library URL in prompt | HIGH | MS Learn semantic index docs (explicit statement, April 2026) |
+| Visible body text IS indexed | HIGH | MS Learn semantic index docs |
+| Terse header block helps retrieval (RAG research) | HIGH | Multiple 2025–2026 RAG papers and practitioner guides |
+| Owner field noise is bounded and manageable | MEDIUM | General RAG noise principles; no SharePoint-specific empirical study found |
+| Archive library exclusion prevents superseded citation | MEDIUM | General RAG lifecycle guidance (multiple KB platforms); no SharePoint-specific empirical study found |
+| Azure AI Search as structured-filtering upgrade path | HIGH | MS Learn Azure AI Search SharePoint indexer docs; Office365Clinic 2026 |
 
 ---
 
 ## Sources
 
-All findings from direct repo inspection on 2026-06-29:
-
-- `docs/index.md` — nav hub structure and platform section conventions confirmed
-- `docs/l1-runbooks/00-index.md` — L1 #37 confirmed as current highest
-- `docs/l2-runbooks/00-index.md` — L2 #30 confirmed as current highest
-- `docs/decision-trees/` directory listing — `09-linux-triage.md` confirmed as current highest
-- `docs/admin-setup-macos/` listing — numbered guide sequence pattern (00-11) confirmed
-- `docs/admin-setup-ios/` listing — numbered guide sequence (00-09) confirmed
-- `docs/admin-setup-linux/` listing — numbered guide sequence (00-05) confirmed
-- `docs/reference/` listing — per-platform matrices + `4-platform-capability-comparison.md` confirmed
-- `docs/reference/linux-capability-matrix.md` — capability matrix format and front matter conventions confirmed
-- `scripts/validation/check-phase-100.mjs` — validator pattern, CHAIN_PHASES invariant, harness-last conventions confirmed
-- `.planning/PROJECT.md` — v1.14 scope, locked constraints (5 platforms, wired+Wi-Fi, 3 EAP methods co-equal, Intune client-side only, full doc-tier), phase numbering starts at 101
+- [Semantic indexing for Microsoft 365 Copilot — Microsoft Learn](https://learn.microsoft.com/en-us/microsoftsearch/semantic-index-for-copilot) (updated 2026-04-23)
+- [Add SharePoint as a knowledge source — Microsoft Copilot Studio](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint)
+- [Optimizing SharePoint content for Employee Self-Service agents — Microsoft Learn](https://learn.microsoft.com/en-us/copilot/microsoft-365/employee-self-service/optimization-sharepoint) (updated 2026-06-04)
+- [SharePoint Knowledge Sources in Copilot Studio: The Metadata Problem — Lee Ford (2026)](https://www.lee-ford.co.uk/posts/sharepoint-knowledge-sources-in-copilot-studio-the-metadata-problem/)
+- [Filtering SharePoint Custom Metadata in Copilot Studio: Why It Breaks and How to Fix It with Azure AI Search — Office365Clinic (2026-05-12)](https://www.office365clinic.com/2026/05/12/sharepoint-custom-metadata-copilot-studio/)
+- [Copilot Studio + SharePoint: Markdown (.md) Files in Doc Libraries — Microsoft Community Hub discussion (2026)](https://techcommunity.microsoft.com/discussions/copilot-studio/copilot-studio--sharepoint-markdown--md-files-in-doc-libraries-supported-as-know/4517314)
+- [SharePoint Showcase: Metadata and the Knowledge Agent — Microsoft Community Hub](https://techcommunity.microsoft.com/blog/spblog/sharepoint-showcase-how-metadata-and-the-knowledge-agent-elevate-microsoft-365-c/4464079)
+- [Ability to convert YAML front matter into custom properties in DOCX — Pandoc GitHub issue #3034](https://github.com/jgm/pandoc/issues/3034)
+- [Boost RAG Retrieval: Chunking, Overlap, Metadata — By AI Team (2026-02-18)](https://byaiteam.com/blog/2026/02/18/boost-rag-retrieval-chunking-overlap-metadata/)
+- [How Do RAG Systems Handle Outdated Information? — Am I Cited](https://www.amicited.com/faq/how-do-rag-systems-handle-outdated-information/)
+- [SharePoint in Microsoft 365 Indexer — Azure AI Search — Microsoft Learn](https://learn.microsoft.com/en-us/azure/search/search-how-to-index-sharepoint-online)
 
 ---
 
-*Architecture research for: v1.14 802.1X Network Authentication Documentation Integration*
-*Researched: 2026-06-29*
+*Architecture research for: v1.15 EEE SOP metadata representation + header-block placement*
+*Researched: 2026-07-03*

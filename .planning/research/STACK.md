@@ -1,359 +1,283 @@
-# Stack Research: 802.1X Network Authentication — Intune Technical Building Blocks
+# Grounding Platform Behavior Research
 
-**Domain:** 802.1X enterprise network authentication (wired + Wi-Fi) via Microsoft Intune across 5 platforms
-**Researched:** 2026-06-29
-**Confidence:** HIGH (all primary findings verified against Microsoft Learn official documentation, dates confirmed)
-**Sources verified against:** learn.microsoft.com — last-modified dates 2025-05-15 to 2026-06-29
-
----
-
-## Scope Guardrail (from milestone brief)
-
-This research covers **client-side Intune configuration only**. RADIUS/NPS server build-out is explicitly out of scope. Server-name validation and trusted-root trust settings on the client ARE in scope.
+**Domain:** Copilot Studio / SharePoint knowledge-base grounding for a Markdown-sourced SOP corpus (v1.15 EEE SOP retrofit)
+**Researched:** 2026-07-03
+**Confidence:** HIGH for file-type rules and citation granularity (direct Microsoft Learn verification, docs dated 2026); MEDIUM for citation title precedence and semantic-index internals (Microsoft Learn partially silent); LOW for exact chunk boundary behavior (no public specification exists)
 
 ---
 
-## Building Block 1: Wi-Fi Profile Types Per Platform
+## Platform Stack (Grounding Pipeline)
 
-| Platform | Profile Path in Intune | Profile Mechanism | Notes |
-|---|---|---|---|
-| **Windows** | Devices > Configuration > New policy > Windows 10 and later > Templates > **Wi-Fi** | Templates > Wi-Fi (also in Settings Catalog) | XML import available for unsupported settings; uses Wi-Fi CSP |
-| **macOS** | Devices > Configuration > New policy > macOS > Templates > **Wi-Fi** | Templates > Wi-Fi (enterprise section) | Requires deployment channel selection (User vs Device) — immutable after assignment |
-| **iOS/iPadOS** | Devices > Configuration > New policy > iOS/iPadOS > Templates > **Wi-Fi** | Same template reference page as macOS (zone pivot) | MAC randomization control available (iOS 14+) |
-| **Android Enterprise** | Devices > Configuration > New policy > Android Enterprise > Templates > **Wi-Fi** | Templates > Wi-Fi; separate from basic/AOSP | All AE modes (COBO, COPE, COSU, BYOD work profile, AOSP) use same profile path |
-| **Linux** | **NOT SUPPORTED** | No Wi-Fi profile type in Intune for Linux | Shell scripts (Bash via Intune) can configure NetworkManager/nmcli, but this is not an MDM-delivered structured profile; no certificate delivery possible via Intune |
-
-**Settings Catalog note:** For Windows, the Settings Catalog (`Devices > Configuration > New policy > Settings catalog`) also exposes Wi-Fi settings and may expose more granular options than the Templates path. For macOS and iOS/iPadOS, Settings Catalog exists but the dedicated Wi-Fi template is the standard documented approach for 802.1X enterprise profiles. Android Enterprise and Linux are not relevant here (AE uses Templates; Linux has no equivalent).
+| Layer | Technology | Role in Pipeline | Why This Matters |
+|-------|------------|-----------------|-----------------|
+| Source of truth | Markdown (.md) + YAML frontmatter | Authoring surface; harness C10/C17 enforces YAML | Human-editable; validator-enforced |
+| Conversion step | MD → .docx (pandoc or equivalent) | Bridges .md to SharePoint-supported format | SharePoint knowledge source does NOT support .md natively |
+| Grounding store | SharePoint document library (.docx files) | Holds converted docs; Copilot Studio indexes them | Must be a document library (not a SharePoint list) |
+| AI agent layer | Microsoft Copilot Studio (custom agent) | Semantic retrieval + response generation + citations | Uses built-in semantic index, NOT SharePoint search |
+| Index backend | Dataverse / Microsoft Graph semantic index | Chunks and embeds .docx body text as vectors | YAML frontmatter NOT indexed; custom Word doc properties NOT indexed |
 
 ---
 
-## Building Block 2: Wired Network (Ethernet 802.1X) Profile Types Per Platform
+## Finding 1 — File Type Support: .md Is NOT a Valid SharePoint Knowledge Source
 
-| Platform | Profile Path in Intune | Profile Mechanism | Notes |
-|---|---|---|---|
-| **Windows** | Devices > Configuration > New policy > Windows 10 and later > Templates > **Wired network** | Templates > Wired network; uses WiredNetwork CSP | Supports TEAP (unique to Windows wired); 802.1x enforcement toggle |
-| **macOS** | Devices > Configuration > New policy > macOS > Templates > **Wired network** | Templates > Wired network | Network interface selector (First active Ethernet, etc.); deployment channel required |
-| **iOS/iPadOS** | Devices > Configuration > New policy > iOS/iPadOS > Templates > **Wired network** | Templates > Wired network (same ref page as macOS, iOS/iPadOS pivot) | GA as of current docs (listed in overview as supported); targets M-series iPads with Ethernet |
-| **Android Enterprise** | **NOT SUPPORTED** | No wired network profile type in Intune for Android | No Intune path; no workaround via OMA-URI documented |
-| **Linux** | **NOT SUPPORTED** | No wired network profile type in Intune for Linux | Same gap as Wi-Fi: shell scripts only; no structured 802.1X profile |
+**Verdict: The MD→.docx pipeline is correct and necessary. It is not a workaround — it is the only supported path.**
 
-**iOS/iPadOS wired GA status:** The Microsoft Learn wired network settings reference page (last updated 2026-06-04) includes iOS/iPadOS as a fully documented zone pivot. The Intune device configuration overview page (last updated 2026-06-04) lists the Wired networks feature as supporting "iOS/iPadOS, macOS, Windows." This is GA. (A prior "in development" entry has cleared the in-development page, confirming release.)
+Copilot Studio offers three distinct ingestion paths with different file type support:
 
----
+| Path | Supported Types | .md Support? | Notes |
+|------|----------------|--------------|-------|
+| Direct file upload (Upload files > Browse) | .docx, .pdf, .pptx, .xlsx, **.md**, .txt, .log, .html, .csv, .xml, .odt, .epub, .rtf, .pages, .json, .yaml, .tex | YES | Stored in Dataverse; up to 500 files / 512 MB each; no sync |
+| Upload files > SharePoint path | .doc, .docx, .ppt, .pptx, .pdf, .xls, .xlsx | NO | Syncs every 4-6 hours; up to 1,000 files / 50 folders; stored in Dataverse |
+| SharePoint site URL (full connector) | .doc/.docx, .ppt/.pptx, .pdf, modern SharePoint pages | NO | User-delegated auth; crawls site and subpaths |
 
-## Building Block 3: EAP Method Support Matrix — Wi-Fi
+.md IS a first-class type for the direct file upload path. But for SharePoint-grounded retrieval (the target for this corpus), .md is not supported. Only .docx/.pdf are practical for the SharePoint paths.
 
-| EAP Method | Windows Wi-Fi | macOS Wi-Fi | iOS/iPadOS Wi-Fi | Android Enterprise Wi-Fi | Linux Wi-Fi |
-|---|---|---|---|---|---|
-| **EAP-TLS** | Yes | Yes | Yes | Yes | Not via Intune |
-| **PEAP (MSCHAPv2 inner)** | Yes — "Protected EAP (PEAP)" | Yes — "PEAP" | Yes — "PEAP" | Yes — "PEAP" | Not via Intune |
-| **EAP-TTLS** | Yes | Yes | Yes | Yes | Not via Intune |
-| EAP-FAST | No | Yes | Yes | No | Not via Intune |
-| EAP-SIM | Yes | No | Yes | No | Not via Intune |
-| LEAP | No | Yes | Yes | No | Not via Intune |
+**Sources:**
+- [Upload files as a knowledge source](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-file-upload) — updated 2026-04-22. Confidence: HIGH.
+- [Add unstructured data as a knowledge source](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-unstructured-data) — updated 2026-06-11. Confidence: HIGH.
+- [SharePoint web app limits](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas) — updated 2026-06-30. Confidence: HIGH.
 
 ---
 
-## Building Block 4: EAP Method Support Matrix — Wired (Ethernet)
+## Finding 2 — File Size and Count Limits
 
-| EAP Method | Windows Wired | macOS Wired | iOS/iPadOS Wired | Android Wired | Linux Wired |
-|---|---|---|---|---|---|
-| **EAP-TLS** | Yes | Yes | Yes | Not supported | Not via Intune |
-| **PEAP (MSCHAPv2 inner)** | Yes — "Protected EAP (PEAP)" | Yes — "PEAP" | Yes — "PEAP" | Not supported | Not via Intune |
-| **EAP-TTLS** | Yes | Yes | Yes | Not supported | Not via Intune |
-| EAP-FAST | No | Yes | No | Not supported | Not via Intune |
-| TEAP | Yes (unique to Windows wired) | No | No | Not supported | Not via Intune |
-| EAP-SIM | Yes | No | No | Not supported | Not via Intune |
-| LEAP | No | Yes | No | Not supported | Not via Intune |
+| Constraint | Value | Path |
+|-----------|-------|------|
+| Max file size (all upload paths) | 512 MB | All |
+| Max file size without M365 Copilot license (SharePoint connector) | 7 MB | SharePoint site URL path only |
+| Files per agent (direct upload) | 500 | Direct upload |
+| Files per SharePoint knowledge source | 1,000 files / 50 folders / 10 subfolder levels | Upload > SharePoint path |
+| Knowledge sources per agent | 500 across all types | Agent-level limit |
+| Sync frequency (SharePoint upload path) | Every 4–6 hours | Not real-time |
 
----
+**Implication:** The ~150-200 doc corpus is well inside all limits. The 7 MB cap without an M365 Copilot license is unlikely to be hit by SOP runbooks. Sync lag of 4-6 hours means freshly uploaded or updated .docx files are not immediately retrievable.
 
-## Building Block 5: Certificate Delivery — Platform Support Matrix
-
-| Certificate Profile Type | Windows | macOS | iOS/iPadOS | Android Enterprise (all modes) | Android AOSP | Linux |
-|---|---|---|---|---|---|---|
-| **Trusted Certificate (Root CA)** | Yes | Yes | Yes | Yes | Yes | **No** |
-| **SCEP** | Yes | Yes | Yes | Yes | Yes | **No** |
-| **PKCS** | Yes | Yes | Yes | Yes | Yes | **No** |
-| **PKCS Imported (PFX Import)** | Yes | Yes | Yes | Yes (not AOSP) | No | **No** |
-
-Source: Microsoft Learn — "Types of certificate that are supported by Microsoft Intune" (last updated 2026-06-22, verified 2026-06-29). Linux does not appear in the platform support table.
+**Source:** [Quotas and limits](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas) — 2026-06-30. Confidence: HIGH.
 
 ---
 
-## Building Block 6: Client Certificate Options Within 802.1X Profiles
+## Finding 3 — How Content Is Chunked and Embedded
 
-Critical distinction: the certificate profile types available at the Intune level (Building Block 5) do not all map to every 802.1X profile type. The profile-level constraints are:
+Microsoft Learn does not publicly document the exact chunking algorithm, token window, or chunk boundaries used by Copilot Studio's semantic index.
 
-### Windows Wi-Fi (EAP-TLS client auth)
-- SCEP certificate
-- PKCS certificate
-- Derived credential
+What is confirmed:
+- Documents stored in Dataverse are processed via a "built-in semantic index" (not SharePoint native search).
+- The agent performs semantic vector search against this index.
+- Body text and headings from .docx files are indexed.
+- For the SharePoint URL connector path, retrieval is described as "tenant graph grounding with semantic search."
 
-### Windows Wired (EAP-TLS client auth)
-- SCEP certificate
-- PKCS certificate
-- **PFX Import certificate (PKCS Imported)** — unique explicit option in wired profile UI
-- Derived credential
+**Critical finding — custom SharePoint managed metadata is NOT indexed:**
 
-### macOS Wi-Fi (EAP-TLS client auth)
-- SCEP certificate
-- PKCS certificate
-- Deployment channel determines keychain: user channel = user keychain; device channel = system keychain
+The Copilot Studio semantic index does NOT index custom SharePoint column values (e.g., a "DocID" managed property). Mapping a custom column to a SharePoint managed search property does not make it retrievable by the agent — the agent bypasses SharePoint search entirely and uses the semantic index.
 
-### macOS Wired (EAP-TLS client auth)
-- **SCEP certificate ONLY**
-- PKCS certificate: explicitly **NOT supported** in macOS wired network profiles
-- Source: Microsoft Learn — "Add wired network settings for macOS devices" (updated 2026-06-04): "Public Key Cryptography Standards (PKCS) certificates aren't supported."
+**Source (MEDIUM confidence — community post, not official Microsoft Learn):** Lee Ford, "SharePoint Knowledge Sources in Copilot Studio: The Metadata Problem" (2024), [lee-ford.co.uk](https://www.lee-ford.co.uk/posts/sharepoint-knowledge-sources-in-copilot-studio-the-metadata-problem/). Verify at plan time against current platform behavior.
 
-### iOS/iPadOS Wi-Fi (EAP-TLS client auth)
-- SCEP certificate
-- PKCS certificate
-- Derived credential
+**Workaround confirmed by same post:** Azure AI Search as an indexing layer allows specifying which properties are indexed and returned. This is a more complex architectural alternative if property-level retrieval is required.
 
-### iOS/iPadOS Wired (EAP-TLS client auth)
-- **SCEP certificate ONLY**
-- PKCS certificates: explicitly **NOT supported** in iOS/iPadOS wired network profiles
-- Source: Same wired settings reference page as macOS, iOS/iPadOS pivot
-
-### Android Enterprise Wi-Fi (EAP-TLS client auth)
-- SCEP certificate
-- PKCS certificate
-- Derived credential (corporate-owned modes)
-- **BYOD work profile requirement:** UPN must be present in Subject Alternative Name (SAN) for both user and device certificates; profile deployment fails if SAN lacks UPN
-
-### Linux
-- No Intune certificate profile types supported
-- No client certificate delivery path via Intune
+**Implication for EEE standard:** The EEE bold header block rendered as body text (Doc ID, Platform, Doc Type, Owner, Status, Last Reviewed) WILL be indexed and semantically searchable because it is body text in the .docx. Metadata stored only in YAML frontmatter or Word document properties will NOT be indexed or retrievable.
 
 ---
 
-## Building Block 7: Server Certificate Trust — Settings Per Platform
+## Finding 4 — Citation Granularity
 
-Each 802.1X EAP method requires the client to trust the RADIUS server's certificate. Intune exposes these through two settings:
+| File Type / Path | Citation Granularity | What the Link Opens |
+|------------------|---------------------|---------------------|
+| PDF via Upload > SharePoint path | **Page-level** | PDF at the specific page where content was cited |
+| PDF via other paths (direct upload, SharePoint URL) | Document-level | Whole file |
+| .docx (any path) | **Document-level only** | Whole document link; no heading/section anchor |
+| .pptx | Document-level | Whole file |
+| .xlsx | Document-level | Whole file |
+| Direct upload .md / .txt | Document-level | Whole file |
 
-**Setting A — Certificate server names (RADIUS server name validation):**
-The common name (CN) or DNS suffix in the RADIUS server certificate. When configured, the device validates the server name and bypasses the interactive trust dialog.
+Page-level PDF citations require: (a) Upload > SharePoint path specifically, and (b) file at least ~4 KB; smaller files fall back to document-level.
 
-**Setting B — Root certificate for server validation:**
-A reference to a Trusted Certificate profile (root CA or intermediate CA) already deployed to the device. This profile must be assigned to the same device/user groups as the Wi-Fi or Wired network profile.
+**Sources:**
+- [Add unstructured data — Page-level citations section](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-unstructured-data#page-level-citations-for-pdf-files) — 2026-06-11. Confidence: HIGH.
+- [Upload SharePoint limits](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas#upload-sharepoint-limits) — 2026-06-30. Confidence: HIGH.
 
-| Platform | Server Name Field | Trusted Root Profile Reference | Additional Notes |
-|---|---|---|---|
-| **Windows Wi-Fi** | "Certificate server names" (one or more CNs) | "Root certificates for server validation" (one or more trusted cert profiles) | Bypasses dynamic trust dialog |
-| **Windows Wired** | "Certificate server names" | "Root certificate for server validation" | PEAP adds "Perform server validation" Yes/No + "Disable user prompts for server validation" + "Require cryptographic binding" |
-| **macOS Wi-Fi** | "Certificate server names" (supports wildcard suffix, e.g., `*.contoso.com`) | "Root certificate for server validation" | |
-| **macOS Wired** | "Certificate server names" (under Server Trust section) | "Root certificate for server validation" | |
-| **iOS/iPadOS Wi-Fi** | "Certificate server names" (supports wildcard suffix) | "Root certificate for server validation" | |
-| **iOS/iPadOS Wired** | "Certificate server names" | "Root certificate for server validation" | |
-| **Android Enterprise Wi-Fi** | "Radius server name" — single field (DNS suffix or FQDN) | "Root certificate for server validation" | **Android 11+ may require this field** or device may not connect; Android 14+: total all RADIUS server names ≤ 256 chars, no special characters |
-| **Linux** | Not configurable via Intune | Not configurable via Intune | Out-of-band configuration only |
+**Implications for EEE standard:**
 
----
-
-## Building Block 8: Inner Authentication (PEAP-MSCHAPv2 and EAP-TTLS)
-
-For username/password-based EAP methods (PEAP with Username/Password inner, and EAP-TTLS), the inner authentication method options differ by platform.
-
-### EAP-TTLS Inner Authentication Options
-
-| Platform | PAP | CHAP | MS-CHAP | MS-CHAPv2 |
-|---|---|---|---|---|
-| Windows Wi-Fi | Yes | Yes | Yes | Yes |
-| Windows Wired | Yes | Yes | Yes | Yes |
-| macOS Wi-Fi | Yes | Yes | Yes | Yes |
-| macOS Wired | Yes | Yes | Yes | Yes |
-| iOS/iPadOS Wi-Fi | Yes | Yes | Yes | Yes |
-| iOS/iPadOS Wired | (inner auth method not explicitly documented in wired zone; Username/Password option exists) | | | |
-| Android Enterprise Wi-Fi | Yes | **No** | Yes | Yes |
-| Android AOSP Wi-Fi | (basic EAP-TTLS with cert or PAP implied) | | | |
-
-**Android note:** Android Enterprise Wi-Fi EAP-TTLS inner options are: "Unencrypted password (PAP)", "Microsoft CHAP (MS-CHAP)", "Microsoft CHAP Version 2 (MS-CHAP v2)". Plain CHAP is not listed for Android.
-
-### PEAP Inner Authentication Options
-
-| Platform | Username/Password (MS-CHAPv2 tunnel) | SCEP/PKCS cert as inner | MS-CHAPv2 explicit inner |
-|---|---|---|---|
-| Windows Wi-Fi | Yes | Yes (SCEP or PKCS in inner) | (implied via Username/Password) |
-| Windows Wired | Yes | Yes | PEAP = "Username and Password" or cert |
-| macOS Wi-Fi | Yes | Yes (SCEP or PKCS cert as inner auth) | |
-| macOS Wired | Yes | Yes (SCEP cert only) | |
-| iOS/iPadOS Wi-Fi | Yes | Yes | |
-| iOS/iPadOS Wired | Yes | Yes (SCEP only) | |
-| Android Enterprise Wi-Fi | Yes — "Username and Password" with inner: "None" or "Microsoft CHAP Version 2 (MS-CHAP v2)" | Yes (SCEP or PKCS cert) | MS-CHAPv2 |
-| Android AOSP Wi-Fi | Yes | Yes (SCEP or PKCS cert) | MS-CHAPv2 |
-
-### Identity Privacy (Outer Identity)
-
-All platforms with tunneled EAP methods (TTLS and PEAP) support an "Identity privacy (outer identity)" field — text sent as the EAP identity before the secure tunnel is established (e.g., `anonymous` or `anonymous@contoso.com`). This prevents the real UPN from appearing in RADIUS logs during the outer exchange.
+- For .docx, citations will always link to the whole document — no heading-level or section-level deep link is possible. The "clickable citation" the milestone targets is a link to the SharePoint file, not to a section within it.
+- The EEE header block does NOT need section anchor IDs for grounding citations — they would have no effect.
+- If PDF is ever added as a second output format (MD → PDF → SharePoint), page-level citations become available, and the `## Summary`-first structure pays off further because the summary lands on page 1.
+- For the current .docx path: short, well-scoped SOPs (one topic per document) are more useful than long compound documents, because the citation lands users at the document root, not the relevant section.
 
 ---
 
-## Building Block 9: Platform-Specific Profile Mechanics and Gotchas
+## Finding 5 — YAML Frontmatter: What Happens Across the Pipeline
 
-### Windows
+### In .md (source of truth)
 
-**Wi-Fi profile:**
-- Profile path: Templates > Wi-Fi (enterprise section)
-- Authentication mode: User / Machine / User or machine / Guest — configures which credentials authenticate (user account vs device credential)
-- Single sign-on (SSO): Enable before or after user signs in (pre-logon machine auth)
-- PMK caching + pre-authentication available
-- FIPS compliance option available
-- XML import: "For any settings not available in Intune, you can export Wi-Fi settings from another Windows device" — the exported XML can be imported as a custom profile
+YAML frontmatter sits between `---` delimiters at the top of the file. Harness C10 validates it. It is the authoritative carrier of `doc_id`, `status`, `owner`, `doc_type`, `platform`, `last_verified`.
 
-**Wired network profile:**
-- Profile path: Templates > Wired network (WiredNetwork CSP)
-- 802.1x enforcement: When set to "Enforce", Wired AutoConfig requires 802.1X for all ports. Warning: if policy settings don't match network, internet access is blocked and device cannot receive updated policy — requires manual policy removal
-- Authentication mode: User / Machine / User or machine / Guest
-- TEAP (Tunnel EAP): Primary + Secondary authentication method — the only EAP type supporting simultaneous user + machine credential chain; unique to Windows wired
-- Block period: Configurable delay before retry after failed auth
-- EAPOL timing: Authentication period, retry delay, start period, max EAPOL-start, max auth failures all configurable
+### After MD → .docx conversion (pandoc behavior)
 
-### macOS
+Pandoc converts YAML frontmatter into **Word document properties, not body text**:
 
-**Wi-Fi profile:**
-- Deployment channel: Must select User channel (user certificates → user keychain) or Device channel (device certificates → system keychain) before deployment. Cannot change after the profile is assigned — must create a new profile. Cert type (user vs device) MUST align with channel. Storing user certs in system keychain increases security risk.
-- Note in docs: "We recommend rechecking the deployment channel setting in existing profiles when the linked authentication certificates are up for renewal."
+- Standard fields (`title`, `author`, `date`, `subject`, `abstract`, `keywords`) → standard Word document properties (visible in File > Properties in Word)
+- Custom fields (`doc_id`, `status`, `owner`, `doc_type`) → custom Word document properties
 
-**Wired network profile:**
-- Network interface options: First active Ethernet (default), Second active Ethernet, Third active Ethernet, First Ethernet, Second Ethernet, Third Ethernet, Any Ethernet. "Active" variants prefer interfaces that are working; if no active interface, falls to next in service-order priority.
-- PKCS certificates NOT supported for any EAP type in wired — SCEP only for client auth
-- Deployment channel: Same User/Device channel requirement as Wi-Fi
+The YAML block itself **does not appear as body text** in the .docx. A reader opening the file in Word will not see the frontmatter.
 
-### iOS/iPadOS
+**Sources:**
+- [Pandoc User's Guide — YAML metadata blocks and DOCX output](https://pandoc.org/MANUAL.html) — current. Confidence: HIGH for standard fields; MEDIUM for custom fields (test with the actual converter version used in the pipeline).
+- [Pandoc GitHub Issue #3034](https://github.com/jgm/pandoc/issues/3034) — custom fields go to custom Word properties. Confidence: MEDIUM.
 
-**Wi-Fi profile:**
-- MAC address randomization: By default, iOS 14+ randomizes MAC per network. For NAC (Network Access Control) implementations, admin MUST set "Disable MAC address randomization = Yes" or set MAC randomization to "Yes" in the profile (forces actual MAC). Without this, 802.1X + NAC setups that rely on MAC address will fail intermittently as the MAC changes per connection.
-- Security type: WPA - Enterprise or WPA/WPA2 - Enterprise selectable
+### What Copilot Studio's semantic index sees in the .docx
 
-**Wired network profile:**
-- Network interface: Automatically set to "Any Ethernet" — no interface selection
-- Target devices: M-series iPads with USB Ethernet adapter. iPadOS wired 802.1X is specifically relevant for multi-iPad shared-use scenarios where Ethernet is available.
-- PKCS certificates NOT supported — SCEP only for client auth
-- EAP types available: EAP-TLS, EAP-TTLS, PEAP (no EAP-FAST or LEAP in wired zone)
+Indexed: body text paragraphs, heading text (H1/H2/H3), table cell text.
 
-### Android Enterprise
+NOT indexed: Word document properties (standard or custom), hidden text, comments, tracked changes.
 
-**Wi-Fi profile:**
-- Enrollment modes covered: COPE, COBO, COSU (corporate-owned tab) and BYOD personally-owned work profile (separate tab) and AOSP (third tab)
-- RADIUS server name field (Android 11+): "New Wi-Fi profiles might require this setting be configured. Otherwise, the devices might not connect to your Wi-Fi network." Treat as required for Android 11+.
-- Android 14+ character constraint: Total content length of all RADIUS server names ≤ 256 characters; no special characters. Use DNS suffix instead of FQDN list when possible.
-- BYOD work profile cert SAN requirement: "When using any EAP type (EAP-TLS, PEAP, or EAP-TTLS) and certificates for authentication, it's required to include the user principal name (UPN) in the Subject Alternative Name (SAN) for user and device certificates. If the UPN isn't present in the SAN, the Wi-Fi profile deployment fails." This is a BYOD-specific constraint not noted for corporate-owned modes.
-- Trusted root cert replacement: "If you plan to change the Trusted Root Certificate of a Wi-Fi profile, before you change the certificate, make sure the device connects to another internet connection." Simultaneous multiple trusted root certs in a single Wi-Fi profile are not yet supported (documented as future update with no ETA).
-- MAC randomization (Android 13+): Use device default / Use randomized MAC / Use device MAC. Admin-enforced. Important for NAC.
-
-**No wired network profile:** Android Enterprise has no Intune wired network profile type. There is no documented OMA-URI workaround equivalent.
-
-### Linux
-
-**Complete platform gap for 802.1X:**
-- No Wi-Fi profile type for Linux in Intune
-- No Wired network profile type for Linux in Intune
-- No certificate profile types (Trusted, SCEP, PKCS) for Linux in Intune
-- The device configuration overview page does not list Linux under Wi-Fi, Wired networks, or Certificates
-- Linux devices managed by Intune only receive: compliance policies, shell scripts, Bash scripts, and endpoint security policies (MDE)
-
-**Documentation approach for Linux:** The 802.1X admin-setup guide for Linux must explain that Intune does not deliver 802.1X or certificate profiles to Linux. Network configuration is out-of-band, using the OS-level tools (NetworkManager, nmcli, wpa_supplicant). This is a fundamental platform gap, not a configuration limitation. The doc should acknowledge the gap and note what IS possible (nmcli config examples for reference) while being explicit this is outside Intune's profile surface.
-
----
-
-## Building Block 10: Trusted Certificate Profile Deployment Pattern
-
-For every 802.1X configuration requiring server certificate validation (all EAP methods on all platforms), the trusted root certificate profile must be deployed to the **same device or user groups** as the 802.1X profile that references it. This is a universal dependency:
+**Consequence chain:**
 
 ```
-Deploy together to same groups:
-  [Trusted Certificate Profile — RADIUS Root CA]
-  +
-  [SCEP or PKCS Certificate Profile — client cert for EAP-TLS]  (EAP-TLS only)
-  +
-  [Wi-Fi or Wired Network Profile]
+YAML: doc_id: RE-042
+  → pandoc →
+Word custom property: doc_id = "RE-042"  (not body text)
+  → Copilot Studio semantic index →
+NOT INDEXED — agent cannot retrieve or cite "RE-042"
 ```
 
-The Wi-Fi/Wired profile references the Trusted Certificate profile by name in the "Root certificate for server validation" field. If the Trusted Certificate profile has not yet reached the device when the network profile applies, server validation fails.
-
-For PKCS/SCEP client certs used in EAP-TLS:
-- The certificate profile must also be deployed to the same groups
-- The Wi-Fi/Wired profile references the certificate profile in the "Certificates" or "Authentication method" field
+**Implication for EEE standard:** The bold-inline header block rendered as visible body text from frontmatter is architecturally essential. The EEE decision (D3 — H1 → block → Summary → sections) is correct for grounding. If the header block were removed and only frontmatter retained, Doc ID, Platform, Owner, and Status would become invisible to the agent.
 
 ---
 
-## Building Block 11: What NOT to Configure
+## Finding 6 — What Becomes the Citation Title
 
-Per milestone scope guardrail — these are explicitly out of scope for the v1.14 documentation:
+Microsoft Learn does not explicitly document the precedence order for citation titles on SharePoint .docx files.
 
-| Out of Scope Item | Why Excluded |
-|---|---|
-| NPS/RADIUS server build-out | Scope guardrail: assumes server already exists |
-| NPS policies and connection request policies | Server-side; not Intune client config |
-| NDES server setup for SCEP | Infrastructure-side; already covered at high level in existing cert docs |
-| Certificate Connector for Microsoft Intune setup | Already exists as prerequisite context; not 802.1X-specific |
-| Conditional Access policies based on network compliance | CA is a different Intune surface; not 802.1X profile config |
-| Android Device Administrator (DA) Wi-Fi | DA is deprecated and no longer available for GMS devices |
-| Windows 8.1 SCEP profiles | End of support October 2022 |
-| TEAP deep-dive beyond awareness note | Niche; not one of the three co-equal EAP paths in scope |
+What is known:
+- The SharePoint knowledge source filter UI exposes a "Title" attribute — this refers to the **SharePoint Title column** (a list managed property).
+- When a .docx is uploaded to SharePoint, the SharePoint Title column defaults to the **filename without extension** unless explicitly set or a default column value is configured.
+- The Word document title property (populated by pandoc from the YAML `title:` field) is stored in Word's docProperties.xml. It is NOT automatically promoted to the SharePoint Title column.
+- The document's first H1 heading is NOT automatically used as the SharePoint Title column.
 
----
+**Confidence: MEDIUM.** Microsoft Learn is silent on exact precedence. Verify at plan time.
 
-## Building Block 12: Strong Mapping Requirement (Active Concern)
+**Recommended verification:** Upload a test .docx with (a) a filename like `re-042-test.docx`, (b) a SharePoint Title column set to "Test SOP Title", and (c) a Word document title property set to "Word Title Property", and (d) an H1 of `# Actual H1 Heading`. Then trigger an agent query and check which string appears as the citation label.
 
-As of February 11, 2025, Windows Domain Controllers enforce strong certificate mapping (KB5014754). This affects **Hybrid Entra Joined** devices using SCEP or PKCS certificates for 802.1X EAP-TLS authentication against NPS servers that perform Kerberos auth. The security identifier (SID) must be included in the certificate's SAN.
+**Implication for EEE standard:**
 
-**Impact on v1.14 docs:** The admin-setup guide for Windows 802.1X EAP-TLS should note the strong mapping requirement in the SCEP/PKCS profile configuration section. Intune has released the ability to include the SID in SCEP and PKCS profiles. This is not a blocker but a configuration note for Hybrid Entra Joined environments. Cloud-only Entra Joined devices are not affected.
-
-Source: Microsoft Learn in-development/notices — "Plan for Change: Implement strong mapping for SCEP and PKCS certificates."
+- The citation title is most likely the SharePoint Title column value, which defaults to the filename.
+- Teams should set the SharePoint Title column to a human-readable SOP title (matching the H1 heading) after upload, rather than relying on filename conventions.
+- If using pandoc, the YAML `title:` value goes to a Word property that does NOT auto-populate the SharePoint Title column — a post-upload step (manual, Power Automate flow, or SharePoint column default with a calculated value) is needed to surface the proper title in citations.
+- Flag for roadmap: citation title hygiene is a content-ops concern, not a doc-format concern. The EEE standard should specify the expected SharePoint Title column value and note how to set it.
 
 ---
 
-## Per-Platform Phase Grouping Recommendation
+## Finding 7 — The EEE Header Block as the First Retrievable Chunk
 
-Based on complexity and profile-surface similarity:
+Given that YAML frontmatter becomes document properties (not body text) and the semantic index processes body text, the first content seen by the indexer in a converted .docx is:
 
-**Recommended groupings:**
+```
+[H1 heading text]
+[Bold header block: Doc ID · Platform · Doc Type · Owner · Last Reviewed · Status]
+[## Summary]
+[Summary paragraph]
+[Gate blockquote (if present)]
+[Body sections...]
+```
 
-1. **Foundation phase** (cross-platform concepts): 802.1X concepts, EAP method comparison, supplicant model, cert-delivery prerequisites (SCEP/PKCS/trusted-root), RADIUS server-name validation concept. Does not require platform-specific research.
+For a typical SOP (5-20 KB), the H1, entire header block, and Summary section are very likely to land in the first semantic chunk(s).
 
-2. **Windows** (moderately complex): Two profile types (Wi-Fi + Wired), both GA, both with SCEP/PKCS support. Wired has TEAP and 802.1x enforcement. Authentication mode (User/Machine) is important. Full EAP-TLS + PEAP + TTLS.
+**Does the header block help or harm the lead chunk?**
 
-3. **macOS** (moderately complex): Two profile types (Wi-Fi + Wired), deployment channel is the critical gotcha. PKCS gap on wired. Network interface selector. Full EAP-TLS + PEAP + TTLS.
+It helps:
+- **Doc ID** (`RE-NNN`) gives the agent a unique identifier to cite and users can query by it
+- **Platform** label makes platform-scoped queries accurate without needing metadata
+- **Status** as body text allows the agent to answer "is this doc approved?" from the content itself
+- **Owner** and **Last Reviewed** are answerable as factual queries without metadata
+- **`## Summary`** immediately after provides the dense scope statement most likely to match user queries semantically
 
-4. **iOS/iPadOS** (moderate): Two profile types. Wired is newer (M-series iPad use case). PKCS gap on wired. MAC randomization for NAC. SCEP-only for wired.
+Risk to avoid: if the header block is rendered as a table with many rows or a long multi-line block, it dilutes the semantic signal near the start of the chunk. Keep it compact — a single visual paragraph of bold inline fields (`**Doc ID:** RE-042 · **Platform:** Windows · ...`) is better than a six-row key-value table.
 
-5. **Android Enterprise** (moderate): Wi-Fi only. RADIUS server name behavior changes across Android 11/13/14 require per-version callouts. BYOD cert SAN requirement. No wired.
+---
 
-6. **Linux** (simple but unusual): Document the gap explicitly. No Intune profile. Out-of-band via NetworkManager/nmcli. Practical shell script examples (not Intune profiles). Certificate out-of-band.
+## Finding 8 — SharePoint "Draft vs. Approved" State vs. EEE Status Field
+
+### SharePoint content approval (a real feature, separately configured)
+
+SharePoint document libraries can have "Require content approval" enabled (Library Settings > Versioning Settings). When enabled:
+
+- Items move through states: Pending → Approved (or Rejected)
+- **Draft/Pending items are NOT crawled by SharePoint search by default**; they are invisible to general users and the search crawl account
+- Only approved items are visible to users who cannot manage the library
+
+**Sources:**
+- [Draft items are not crawled in SharePoint](https://support.microsoft.com/en-us/office/draft-items-are-not-crawled-in-sharepoint-9198c307-13d6-425c-a174-542a60e410e4) — Microsoft Support. Confidence: HIGH.
+- [Require approval of items in a list or library](https://support.microsoft.com/en-us/office/require-approval-of-items-in-a-list-or-library-cd0761c4-8c3f-4ea2-9435-13c28aa23d08) — Microsoft Support. Confidence: HIGH.
+
+**For Copilot Studio's semantic index specifically:** Microsoft Learn does not document whether the semantic index respects SharePoint content approval states. The search crawl behavior (draft items excluded) is documented for SharePoint search; whether the Copilot Studio semantic index has the same exclusion is not explicitly confirmed. MEDIUM confidence — verify at plan time.
+
+### EEE `Status: Draft` / `Status: Approved` field
+
+The EEE `status:` frontmatter key → rendered as "**Status:** Draft" or "**Status:** Approved" in the bold header block → body text in .docx. This field:
+
+- CAN be found and reported by the agent if a user asks "which docs have Draft status?"
+- Does NOT prevent a Draft-status doc from being indexed or retrieved by Copilot Studio
+- Has NO connection to SharePoint's content approval workflow
+- Is a human-readable label only
+
+**Implication for EEE standard:**
+
+There is a gap between user expectation and platform behavior. If the requirement is that `Status: Draft` docs must NOT surface in agent responses, the EEE `status:` body-text field alone does not achieve this. SharePoint content approval must also be enabled on the library, and draft files must be kept in Pending state. The EEE body-text label is sufficient only for the requirement that users can read the status and the agent can report it when asked.
+
+This is a design decision that must be documented in the EEE standard spec: "Is `Status: Draft` intended to gate retrieval (requires SharePoint content approval + workflow) or only to label docs for human readers and agent reporting?"
 
 ---
 
 ## Alternatives Considered
 
-| Category | Recommended | Alternative | Why Not |
-|---|---|---|---|
-| Windows 802.1X Wi-Fi delivery | Templates > Wi-Fi | Settings Catalog Wi-Fi | Both are valid; Templates is more documented for 802.1X; Settings Catalog may have more options — note both in docs, use Templates as primary |
-| macOS Wi-Fi delivery | Templates > Wi-Fi (enterprise) | Custom .mobileconfig via Custom profile | Custom profile requires Apple Configurator XML authoring; Templates provides guided UI; use custom only for settings not in Templates |
-| Android EAP-TLS cert | SCEP or PKCS (both supported) | PKCS Imported (not AOSP) | PKCS Imported is for pre-existing cert scenarios (e.g., S/MIME); SCEP/PKCS are standard for device-unique certs |
-| Linux 802.1X | Shell script (nmcli) | OMA-URI custom profile | Linux has no custom OMA-URI profile type in Intune; shell scripts are the only delivery mechanism |
-| iOS wired 802.1X cert | SCEP | PKCS | PKCS is not supported for wired on iOS/iPadOS |
-| macOS wired 802.1X cert | SCEP | PKCS | PKCS is not supported for wired on macOS |
+| Recommended | Alternative | When to Use Alternative |
+|-------------|-------------|------------------------|
+| MD → .docx → SharePoint | MD → PDF → SharePoint | If page-level citation granularity outweighs edit simplicity; PDF pipeline harder to maintain for a living corpus |
+| .docx with visible body-text header block | .docx with YAML→Word properties only | Never — Word doc properties not indexed by Copilot Studio semantic index |
+| SharePoint + Copilot Studio built-in semantic index | Azure AI Search as indexing layer | If Doc ID / Status must be filterable/retrievable as properties rather than body text; significantly higher infrastructure complexity |
+| Document-level citations (.docx) | Page-level citations (PDF) | Only if PDF output is added to the pipeline and per-page layout discipline is maintained |
 
 ---
 
-## Sources
+## What NOT to Use
 
-| Source | URL | Verified | Confidence |
-|---|---|---|---|
-| Windows Wi-Fi settings reference | https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-wifi-settings-windows | 2026-06-29; doc updated 2025-05-15 | HIGH |
-| Apple Wi-Fi settings reference (iOS + macOS) | https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-wifi-settings-apple | 2026-06-29; doc updated 2026-06-23 | HIGH |
-| Apple wired network settings reference (iOS + macOS) | https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-wired-network-settings-macos | 2026-06-29; doc updated 2026-06-04 | HIGH |
-| Windows wired network settings reference | https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-wired-network-settings-windows | 2026-06-29; doc updated 2026-06-04 | HIGH |
-| Android Enterprise Wi-Fi settings reference | https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-wifi-settings-android-enterprise | 2026-06-29; doc updated 2025-06-17 | HIGH |
-| Intune device profile types overview | https://learn.microsoft.com/en-us/intune/device-configuration/overview | 2026-06-29; doc updated 2026-06-03 | HIGH |
-| Certificate platform support matrix | https://learn.microsoft.com/en-us/intune/fundamentals/certificates/overview | 2026-06-29; doc updated 2026-06-22 | HIGH |
-| In development features | https://learn.microsoft.com/en-us/intune/whats-new/in-development | 2026-06-29; doc updated 2026-06-29 | HIGH |
-| Context7 Intune docs | /websites/learn_microsoft_en-us_intune — multiple queries | 2026-06-29 | HIGH |
+| Avoid | Why | Use Instead |
+|-------|-----|-------------|
+| .md files uploaded directly to SharePoint library | Not supported as a SharePoint knowledge source file type | Convert to .docx before uploading |
+| YAML frontmatter as the sole carrier of Doc ID / Status | Becomes Word document properties after pandoc; NOT indexed by Copilot Studio semantic index | Render EEE header block as visible body text |
+| SharePoint managed metadata columns for Doc ID / Status (without Azure AI Search) | Custom properties not indexed by Copilot Studio built-in semantic index | Include metadata as visible body text in the header block |
+| EEE `Status: Draft` label as a retrieval gate | Copilot Studio ignores this body-text label for access control | SharePoint content approval feature if gating is required |
+| Heading-level anchor links in .docx citations | .docx citations are document-level only; no section/heading deep links are generated | Use short, well-titled SOPs; consider PDF pipeline if page-level granularity is needed |
 
 ---
 
-*Stack research for: v1.14 802.1X Network Authentication Documentation (Pillar A)*
-*Researched: 2026-06-29*
-*Researcher: Claude (claude-sonnet-4-6)*
+## Sources (All Verified 2026-07-03)
+
+| Source | URL | Date | Confidence |
+|--------|-----|------|------------|
+| Upload files as a knowledge source (file types, .md support) | https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-file-upload | 2026-04-22 | HIGH |
+| Add unstructured data (SharePoint/OneDrive file types, page-level PDF citations) | https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-unstructured-data | 2026-06-11 | HIGH |
+| Quotas and limits (all file size/count limits, citation fallback) | https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas | 2026-06-30 | HIGH |
+| Use SharePoint content for generative answers (semantic index, auth) | https://learn.microsoft.com/en-us/microsoft-copilot-studio/nlu-generative-answers-sharepoint-onedrive | 2026-06-17 | HIGH |
+| Add SharePoint as a knowledge source (Title filter, file types) | https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint | 2026-06-30 | HIGH |
+| Pandoc User's Guide (YAML → Word document properties) | https://pandoc.org/MANUAL.html | Current | HIGH (standard fields); MEDIUM (custom fields) |
+| Pandoc GitHub Issue #3034 (custom YAML → custom Word properties) | https://github.com/jgm/pandoc/issues/3034 | 2016 (open issue) | MEDIUM |
+| Draft items are not crawled in SharePoint | https://support.microsoft.com/en-us/office/draft-items-are-not-crawled-in-sharepoint-9198c307-13d6-425c-a174-542a60e410e4 | Current | HIGH |
+| Require approval of items in a list or library | https://support.microsoft.com/en-us/office/require-approval-of-items-in-a-list-or-library-cd0761c4-8c3f-4ea2-9435-13c28aa23d08 | Current | HIGH |
+| SharePoint Knowledge Sources — The Metadata Problem (Lee Ford) | https://www.lee-ford.co.uk/posts/sharepoint-knowledge-sources-in-copilot-studio-the-metadata-problem/ | 2024 | MEDIUM (community post; verify at plan time) |
+
+---
+
+## Verify at Plan Time (Open Questions)
+
+| Question | Why Unknown | How to Verify |
+|----------|------------|---------------|
+| Citation title precedence: SharePoint Title column vs. filename vs. Word title property | Microsoft Learn is silent on exact order | Upload test .docx with mismatched values; check citation label in agent response |
+| Whether Copilot Studio semantic index excludes SharePoint content-approval draft/pending items | Documented for SharePoint search; semantic index behavior not stated | Enable content approval on a test library; upload doc as pending; query agent |
+| Exact chunk boundaries for typical SOP length | No public specification | Empirical: ask narrow questions about content at different positions in a test SOP; observe retrieval |
+| Whether pandoc version affects custom property promotion behavior | Version-specific pandoc behavior | Pin pandoc version in pipeline; test output with `doc_id:` in YAML |
+| Whether setting Word title property via pandoc `title:` causes SharePoint to use it as Title column | Not documented | Upload test .docx with pandoc-set title property; check SharePoint Title column value |
+
+---
+
+*Grounding platform research for: v1.15 EEE SOP documentation-standard retrofit*
+*Researched: 2026-07-03*

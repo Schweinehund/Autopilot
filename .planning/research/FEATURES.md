@@ -1,352 +1,267 @@
-# Feature Research — 802.1X Network Authentication Documentation (v1.14 Pillar A)
+# Feature Research: Retrieval-Friendly Document Structure for RAG/Copilot Studio
 
-**Domain:** IT documentation — 802.1X wired + Wi-Fi authentication for Microsoft Intune-managed devices
-**Researched:** 2026-06-29
-**Confidence:** HIGH (all EAP behavior, platform settings, and PKCS gaps verified against Microsoft Learn; dates noted inline)
-
----
-
-## 1. The 802.1X Conceptual Model (Foundation layer — required for L1/L2 audience)
-
-The foundation documentation must explain the three-actor model at a depth that lets L1 triage without guessing and lets L2 read log output intelligently. No more, no less.
-
-### 1.1 Three-actor model
-
-**Supplicant** — the Intune-managed device (Windows/macOS/iOS/Android/Linux). Holds the client certificate or credentials. Drives the EAP conversation.
-
-**Authenticator** — the network switch (wired) or wireless access point (Wi-Fi). Does not evaluate credentials. Passes EAP frames between supplicant and auth server. Enforces port state (authorized / unauthorized). This actor is out of scope for configuration in these docs but must be named so L1/L2 understand why "the network" is a variable they cannot control.
-
-**Authentication server** — the RADIUS server (NPS, Cisco ISE, etc.). Validates credentials, issues Access-Accept or Access-Reject. Assumed to exist; its configuration is out of scope for this doc set.
-
-### 1.2 EAPOL exchange (conceptual, not packet-level)
-
-The documentation needs to explain EAPOL (EAP over LAN) at the level: "the switch/AP starts the exchange when the port comes up; the device responds with its identity; the switch relays this to the RADIUS server; certificates or credentials are exchanged inside a TLS session; the RADIUS server sends Accept or Reject; the switch opens or blocks the port." No raw hex, no packet captures. L1 needs to understand that authentication happens before the device has an IP address on the protected VLAN, which explains why "the network is blocked" symptoms appear at initial connection.
-
-### 1.3 EAP method selection rationale
-
-Three methods are co-equal in this doc set. Each must get equivalent treatment. Do not present one as "default." The choice is determined by what the RADIUS server is configured to accept (out of scope) and what client material is available.
+**Domain:** Markdown SOP corpus retrofit for LLM knowledge-base grounding (Copilot Studio / SharePoint)
+**Researched:** 2026-07-03
+**Confidence:** HIGH (Microsoft Learn official docs); MEDIUM (RAG best-practice literature)
+**Downstream consumer:** Requirements author + roadmapper for v1.15 EEE SOP retrofit
 
 ---
 
-## 2. EAP Method Deep-Dives (Foundation layer — one section per method)
+## Preamble: How to Read This File
 
-Each method section must cover: what authenticates, what the client needs, what trust is required, and when it is chosen. This is per the research question and quality gate.
+The five research questions map directly to the five findings sections below. The "Feature Landscape" tables then reframe each structural pattern as a retrieval feature — table stakes vs. differentiators vs. anti-features — with evidence grade and an explicit implication for the EEE standard and its retrofit acceptance criteria.
 
-### EAP-TLS
-
-**How it authenticates:** Mutual certificate authentication. The server presents a certificate to the client; the client presents a certificate to the server. Both are validated by trusted CAs on their respective sides. No password involved.
-
-**What the client needs:** (a) A trusted root certificate profile installed so the client can validate the RADIUS server cert; (b) a client certificate (SCEP or PKCS) issued to the device or user. The client cert contains the identity (typically the device UPN or computer account name in the Subject Alternative Name).
-
-**Trust requirements:** Client must trust the RADIUS server's CA (deployed via Intune trusted-root profile). RADIUS server must trust the CA that issued the client cert (CA chain configured on RADIUS server — out of scope here).
-
-**When it is chosen:** Highest security; no password to phish or replay. Chosen when the organization already has PKI infrastructure (SCEP/PKCS via Intune) and wants zero user interaction at authentication time. Preferred for device-cert-based authentication (machine auth) so devices can connect before user login.
-
-**Intune client-side notes:**
-- All 5 platforms support EAP-TLS for Wi-Fi via Intune profiles.
-- For wired (802.1X): Windows and macOS support it natively via Intune wired-network profiles; iOS/iPadOS also via wired-network profile. Android has no native wired network profile in Intune. Linux has no native Wi-Fi or wired profile (script-based workaround only).
-- **PKCS gap for wired on macOS and iOS:** macOS wired network profile and iOS wired network profile accept SCEP client certificates ONLY — PKCS is explicitly NOT supported. Wi-Fi profiles on macOS and iOS DO support both SCEP and PKCS. This is a verified doc constraint that must be called out explicitly. Source: Microsoft Learn (`ref-wired-network-settings-macos`, updated 2026-06-04).
-
-### PEAP-MSCHAPv2
-
-**How it authenticates:** Server-only certificate authentication followed by username/password exchange inside the TLS tunnel. The client validates the RADIUS server cert; the server validates the client's AD username/password credentials via MSCHAPv2.
-
-**What the client needs:** (a) A trusted root certificate profile (to validate the RADIUS server cert); (b) user credentials (username + password). No client certificate required.
-
-**Trust requirements:** Client must trust the RADIUS server's CA. Server validates credentials against AD/LDAP (server-side, out of scope).
-
-**When it is chosen:** No client cert infrastructure required. Simplest user experience in environments where users already have AD credentials. Common in BYOD scenarios where deploying client certs is impractical. The MSCHAPv2 inner method is universally supported by NPS.
-
-**Intune client-side notes:**
-- Windows Wi-Fi and Wired: PEAP with Username and Password inner method (no inner-method sub-selection required; OS implies MSCHAPv2).
-- macOS Wi-Fi and Wired: PEAP with Username and Password. macOS requires the RADIUS server name entered in the profile for the dynamic trust dialog to be suppressed.
-- iOS/iPadOS Wi-Fi and Wired: PEAP with Username and Password. Same server-name requirement.
-- Android Enterprise: PEAP with "Non-EAP method: Microsoft CHAP Version 2" explicitly selected. Android 11+ requires Radius server name; new profiles without it may fail to connect.
-- Linux: PEAP is theoretically possible via nmcli scripting but the third-party guide for Linux Intune scripted 802.1X only demonstrates EAP-TLS. PEAP via script is not natively covered in Microsoft docs. Flag as LOW confidence for Linux PEAP.
-
-### EAP-TTLS
-
-**How it authenticates:** Like PEAP — server certificate + TLS tunnel for the inner method. Unlike PEAP (which is a Microsoft-Cisco joint spec), EAP-TTLS is an IETF standard (RFC 5281) that supports a wider range of inner methods: PAP, CHAP, MS-CHAP, MS-CHAP v2. When the inner method is MS-CHAP v2, it is functionally equivalent to PEAP-MSCHAPv2 but uses a different tunnel negotiation.
-
-**What the client needs:** (a) Trusted root certificate profile; (b) inner auth material — either username/password (for MS-CHAP v2) or a client certificate (for EAP-TTLS with cert inner method).
-
-**Trust requirements:** Same as PEAP — client must trust RADIUS server's CA.
-
-**When it is chosen:** Environments using non-Microsoft RADIUS servers (FreeRADIUS, Cisco ISE) that prefer EAP-TTLS over PEAP. Also chosen when the inner method must be PAP (e.g., for integration with some LDAP directories). The outer identity (anonymous identity) is especially important for EAP-TTLS because the real username is sent only inside the tunnel, providing identity privacy for the username itself.
-
-**Intune client-side notes:**
-- Windows Wi-Fi and Wired: EAP-TTLS fully supported. Inner methods: PAP, CHAP, MS-CHAP, MS-CHAP v2. Outer identity configurable.
-- macOS Wi-Fi: EAP-TTLS supported, Username and Password inner method or Certificates inner method.
-- macOS Wired: EAP-TTLS supported; Username and Password or SCEP certificate inner method. PKCS NOT supported.
-- iOS/iPadOS: EAP-TTLS supported for both Wi-Fi and Wired.
-- Android Enterprise: EAP-TTLS supported. Inner methods: PAP, MS-CHAP, MS-CHAP v2. Note: CHAP not listed in Android Enterprise Intune UI (only PAP, MS-CHAP, MS-CHAP v2).
-- Linux: Not covered in Microsoft's Linux docs or the third-party keytos.io guide. Out of scope for this doc set on Linux (Linux docs can cover EAP-TLS only, per what's verifiable).
+**Evidence grades:**
+- **STRONG** — direct official Microsoft Learn guidance (Azure AI Search, Copilot Studio, M365 Copilot extensibility docs); verified against sources updated 2025-2026
+- **MEDIUM** — multiple credible sources corroborate but no single authoritative Microsoft statement; or mechanism is clearly derivable from official docs but not stated explicitly
+- **WEAK** — single source or reasoning from first principles; flag for later validation
 
 ---
 
-## 3. Feature Landscape
+## Finding 1: Summary / Abstract as First Content Block
 
-### 3.1 Table Stakes (Docs Audience Expects These — Missing = Doc Set Feels Incomplete)
+**Verdict: CONFIRMED positive signal; mechanism is embedding density, not a magic bullet. Evidence grade: MEDIUM-STRONG.**
 
-| Content Topic | Why Expected | Complexity | Notes |
-|---|---|---|---|
-| 802.1X conceptual overview (supplicant/authenticator/auth-server/EAPOL/RADIUS) | L1/L2 cannot diagnose without understanding the 3-actor model | LOW | ~500–700 words; no packet-level detail needed |
-| Per-EAP-method comparison: what authenticates, what client needs, trust requirements | Required to understand profile config choices | MEDIUM | 3 methods × 4 dimensions; present as a table plus short prose |
-| Certificate delivery prerequisites (trusted root + SCEP/PKCS chain) before any network profile | All 802.1X cert-based methods require certs to arrive first | MEDIUM | Must make deployment order explicit: root cert → client cert → Wi-Fi/Wired profile |
-| Per-platform Wi-Fi 802.1X admin-setup guide (5 platforms) | The core deliverable; admins cannot configure without this | HIGH | Windows / macOS / iOS / Android / Linux × 3 EAP methods each |
-| Per-platform Wired 802.1X admin-setup guide (Windows + macOS + iOS) | Wired 802.1X is a stated requirement for the milestone | HIGH | Linux and Android have no native wired profile in Intune — must be documented as out-of-scope with rationale |
-| SCEP certificate profile setup for 802.1X (how to configure a cert that lands in the Wi-Fi profile) | Without SCEP profile guidance, EAP-TLS cannot be deployed | MEDIUM | Applies to all 5 platforms; reference to NDES/Connector infra as assumed-exists prerequisite |
-| PKCS certificate profile setup for 802.1X | PKCS is widely used; omitting makes docs incomplete for PKCS shops | MEDIUM | Note macOS/iOS wired restriction (SCEP only) |
-| L1 runbook: "Device cannot connect to 802.1X Wi-Fi — where to start" | L1 teams need a scripted first-check flow | MEDIUM | Decision tree entry point; same pattern as existing runbooks #1–#37 |
-| L1 runbook: "Certificate failure on 802.1X network" | Certificate errors are the most common 802.1X failure type | MEDIUM | Cover expired cert, wrong cert, cert not present |
-| L2 runbook: "RADIUS reject investigation" | L2 needs log-based investigation for Access-Reject | HIGH | Per-platform log locations; event IDs; what to send to network team |
-| L2 runbook: "EAP negotiation failure" | EAP method mismatch is common; requires log analysis | HIGH | Per-platform diagnostic commands |
-| Server trust / RADIUS server name validation guidance | Misconfigured server trust = silent connection failure or user dialogs | MEDIUM | Platform-specific: macOS requires server name to suppress dynamic trust dialog; Android 11+ requires it |
-| Glossary entries for 802.1X domain terms | Consistent terminology across all 5 platforms | LOW | EAPOL, supplicant, authenticator, RADIUS, EAP-TLS, PEAP, EAP-TTLS, inner identity, outer identity, trusted root |
-| 802.1X rows in per-platform capability matrices | Existing doc structure requires capability matrix integration | LOW | Append-only; low risk |
-| Nav-hub wiring (docs/index.md integration) | All new docs must be reachable from the hub | LOW | Pattern established; navigation-last per PROJECT.md |
+**The mechanism.** Azure AI Search's Document Layout skill (current recommendation: the newer Content Understanding skill) chunks document content along heading boundaries, producing one chunk per Markdown section. When that first H2 chunk is a 2-4 sentence focused summary of the document topic, the embedding vector for that chunk is dense with the document's key concepts. The result is a higher cosine similarity against a wide range of user queries whose vocabulary overlaps the topic domain.
 
-### 3.2 Differentiators (Valuable, Not Strictly Expected)
+**Official source.** The Azure AI Search semantic chunking guidance (learn.microsoft.com/azure/search/search-how-to-semantic-chunking, updated 2026-06-08) states: "when those chunks are of higher quality and semantically coherent, the overall relevance of the query is improved." The Document Layout skill's design is explicitly optimized around semantically coherent sections — the `## Summary` pattern directly feeds this design.
 
-| Content Topic | Value Proposition | Complexity | Notes |
-|---|---|---|---|
-| "Which EAP method should I choose?" decision matrix (admin-facing) | Collapses a common consultation question into a scannable table | LOW | Based on: cert infra availability, user type (corporate/BYOD), RADIUS vendor |
-| Authentication mode decision (user vs machine vs user-or-machine) — Windows | Machine auth enables pre-logon network access; this is a meaningful operational choice | LOW | Windows only; the other platforms do not expose the same concept via Intune |
-| macOS deployment channel (user vs device) gotcha | Immutable after deploy; cert ends up in wrong keychain if wrong channel chosen | LOW | Critical: misconfiguration requires profile recreate + reassign |
-| iOS MAC address randomization and 802.1X NAC interaction | Randomized MAC breaks NAC-based 802.1X; must set "Yes" (real MAC) in Wi-Fi profile | LOW | iOS 14+ only; verified from Microsoft Learn (`ref-wifi-settings-apple`, updated 2026-06-24) |
-| Android Radius server name requirements by OS version | Android 11+ requires it; Android 14+ has character limit (≤256 chars, no special chars) | LOW | Verified from Microsoft Learn (`ref-wifi-settings-android-enterprise`, updated 2026-06-22) |
-| Linux 802.1X via nmcli scripts (scope-limited to EAP-TLS only) | Completes the 5-platform coverage; no native profile exists | HIGH | Must be framed as workaround with clear caveats; only EAP-TLS is documented in verifiable sources |
-| Outer identity / identity privacy configuration per EAP method | Protects username from being sent in cleartext before TLS tunnel | LOW | Applies to PEAP, EAP-TTLS; EAP-TLS also supports it for some platforms |
-| Android Enterprise SAN / UPN requirement for certificates | Android Enterprise personal work profile Wi-Fi profiles fail if cert SAN does not include UPN | LOW | Verified; applies to EAP-TLS, EAP-TTLS, PEAP with certs on personally-owned work profile |
-| Cross-platform "done / verified" state table | L1/L2 need to know what "connected and authenticated" looks like per platform | MEDIUM | Platform-specific: Windows Event Viewer, macOS Wi-Fi diagnostics, iOS Settings, Android debug, Linux ip/nmcli |
+**Corroborating evidence.** RAG chunking literature (multiple practitioner sources, MEDIUM) consistently reports that the retrieval precision of a chunk correlates with its topical focus. A 2-4 sentence summary is maximally focused by design.
 
-### 3.3 Anti-Features (Explicitly Out of Scope — Document This to Prevent Scope Creep)
+**Caveat.** No controlled A/B study comparing "Summary-first vs. no Summary" on SharePoint + Copilot Studio specifically has been published. The mechanism is well-grounded in how embedding retrieval works but the effect size is unquantified for this exact stack.
 
-| Anti-Feature | Why Requested | Why Out of Scope | What to Include Instead |
-|---|---|---|---|
-| RADIUS / NPS server configuration | Admins want end-to-end documentation | Server-side config is a network engineering function; project constraint is Intune client-side only | One-sentence "assumes RADIUS/NPS already exists" callout in every admin-setup guide |
-| Network switch port config (802.1X port auth, VLAN assignment) | 802.1X requires switch config to work | Switch config is the network team's responsibility; outside Intune MDM scope | Note in conceptual overview that switch/AP must be pre-configured |
-| MAB / MAC Auth Bypass | Common companion to 802.1X for devices that cannot do EAP | Server-side + switch-side; printers, IoT devices; no Intune profile involvement | Mention in foundation doc as "MAB is out of scope — for devices that cannot do EAP, work with your network team" |
-| PKI / CA infrastructure build-out (ADCS, NDES setup) | Needed for SCEP to work | Out of scope; link to existing Microsoft docs; project constraint is Intune client-side | Cross-link to Microsoft Learn NDES/SCEP infrastructure doc with "assumed to exist" framing |
-| Certificate Connector installation and configuration | Needed for PKCS/SCEP to work | Infrastructure scope; link to official Microsoft docs | Cross-link in prerequisites section of each cert-type admin guide |
-| WPA2/WPA3 Personal (PSK) Wi-Fi profiles | Admins configure these too | Not 802.1X; different profile type, no EAP involved | Exclude; if referenced, note "this doc covers 802.1X EAP authentication only" |
-| EAP-SIM / EAP-FAST / LEAP / TEAP | These appear in the Intune UI for Windows and macOS | Not in the locked-constraint EAP method list; primarily for cellular/Cisco-proprietary environments | Exclude from content; note "EAP-SIM, EAP-FAST, LEAP, TEAP are visible in Intune but not covered — consult your RADIUS vendor documentation" |
-| Wi-Fi profiles for personal (non-802.1X) authentication | WPA/WPA2 Personal profiles are common | Not 802.1X; PSK-based | Exclude |
-| Conditional Access network-based policies | Some admins layer CA on top of 802.1X | Entra/Intune CA policy is a separate domain | Out of scope; note as a common post-802.1X layer |
-| Android Wired 802.1X via Intune | Wired is a stated milestone requirement | Android has no native Wired Network profile type in Intune (verified; not present in the portal or Microsoft Learn) | Document explicitly as "Android does not have a wired network profile type in Intune; wired 802.1X on Android requires manual or OEMConfig configuration outside Intune scope" |
-| Linux PEAP / EAP-TTLS via Intune scripts | Logically possible with nmcli | Not documented in Microsoft Learn or verified third-party sources; would require untested script authoring | Linux coverage limited to EAP-TLS via SCEP + nmcli script; note PEAP/TTLS as theoretically possible but not covered |
+**Additional benefit specific to runbooks.** The EEE requirement that runbook Summaries open with a "one-line scope/safety banner" (naming procedure domain + platform + safety posture) further concentrates the first chunk's embedding signal, making it maximally discriminating between similar runbooks covering related but distinct scenarios. This is a structural advantage that goes beyond a generic "summary is good" claim.
+
+**Implication for EEE standard:** The `## Summary` mandate is well-grounded and should be retained as a blocking requirement. The one-line scope/safety banner for runbook Summaries is a differentiating pattern worth keeping in the spec.
+
+**Implication for retrofit acceptance criteria:** C17 must assert that `## Summary` is present as the first H2 following the bold header block. The Summary must be 2-4 sentences. This is a blocking gate.
 
 ---
 
-## 4. Feature Dependencies
+## Finding 2: Heading Hierarchy and One-Topic-Per-Document
+
+**Verdict: CRITICAL structural requirement; heading hierarchy is the primary chunk-boundary mechanism in the Azure AI Search stack. Evidence grade: STRONG.**
+
+**Heading hierarchy as chunk-boundary driver.** The Azure AI Search Document Layout skill maps heading levels to separate, independently searchable index fields: `title` (from H1), `header_1`, `header_2`, `header_3` (from H2/H3 headings). These fields are attached to every chunk produced from that section. Each H2 boundary creates a new chunk and resets the section context. A document with a clean H1 → H2 → H3 hierarchy produces chunks that are each topically coherent and carry accurate heading lineage metadata.
+
+**Source for this.** The Document Layout skill index schema (learn.microsoft.com/azure/search/search-how-to-semantic-chunking, updated 2026-06-08) shows the explicit `header_1`, `header_2`, `header_3` fields as searchable in the index — a query for "TPM reset" can match via the `header_2` field even if the term appears only in the heading, not the body.
+
+**Kitchen-sink dilution problem.** When a single document contains multiple distinct procedures under one H2, the chunk covering that H2 encompasses multiple topics. The embedding vector for that chunk represents a blend of relevance signals, reducing cosine similarity against any single query about one of the procedures. This is the classic multi-topic embedding dilution problem documented in RAG chunking literature (multiple practitioner sources, STRONG consensus).
+
+**Official Microsoft size guidance.** The M365 Copilot extensibility guidance (learn.microsoft.com/microsoft-365/copilot/extensibility/optimize-content-retrieval, updated 2025-08-07) explicitly states: keep SharePoint files to a maximum of 36,000 characters (~15-20 pages). Files larger than this cause Copilot to have trouble identifying the right content. This upper bound enforces one-topic-per-document as a natural consequence for SOP runbooks.
+
+**Implication for EEE standard:** The one-topic-per-document principle and the H1 → H2 → H3 hierarchy mandate are both well-grounded. H2 headings must be descriptive procedure/section names (not generic labels) so that `header_2` field queries are useful.
+
+**Implication for retrofit acceptance criteria:** C17 must assert that H1 appears exactly once as the first non-frontmatter line. All content sections must be at H2 or lower. H1-level prose (content that appears between the H1 and the first H2, other than the bold header block and Summary) is a smell worth flagging. This is a blocking gate.
+
+---
+
+## Finding 3: Optimal Chunk Size and Whether ~150 Modular Docs Are Well-Sized
+
+**Verdict: The 150-doc modular corpus is architecturally correct for RAG. Individual doc length is the key lever. Evidence grade: STRONG (size limit), MEDIUM (doc count).**
+
+**Official size limits (STRONG).** Microsoft M365 Copilot extensibility guidance sets a concrete upper bound: 36,000 characters (~15-20 pages) per file for SharePoint knowledge sources. Above this, Copilot has "trouble identifying the right content." For embedded file content (files uploaded directly rather than linked from SharePoint), the indexing limit is 750-1,000 pages, but the same 36,000-character practical guidance applies for retrieval quality.
+
+**Internal chunking by the Azure AI stack.** After the Document Layout skill segments the document by heading boundaries, the Text Split skill further constrains each section: default maximum 2,000 characters per chunk, 500 characters overlap. The Content Understanding skill defaults to 500 tokens per chunk. Within a 36,000-character document, this produces roughly 15-20 semantically coherent chunks, each covering one procedure step or troubleshooting scenario. This is the optimal granularity range for RAG retrieval.
+
+**Why 150 separate docs beats one monolith (MEDIUM, derived from architecture).** A single 150-procedure "master runbook" would exceed the 36,000-character limit, produce embedding-diluted chunks, and offer no citation precision — the citation would point to the whole document. 150 separate files each produce precise citations at the file level, and Copilot Studio citations link directly to the specific document. The modular corpus structure is the correct architecture for this use case.
+
+**Implication for EEE standard:** No change to corpus granularity is needed. The retrofit is an envelope change only. Any document already over ~36,000 characters should be flagged during retrofit for possible splitting, but this is expected to be rare given the existing modular design.
+
+**Implication for retrofit acceptance criteria:** An informational check (not necessarily C17-blocking) could flag documents over 36,000 characters. If added to the harness, it should be a warning, not a hard fail, to avoid blocking retrofit of otherwise-conformant docs that are marginally over the size limit.
+
+---
+
+## Finding 4: Metadata Header Block and First-Chunk Dilution
+
+**Verdict: Pre-H1 content is the danger zone. Post-H1/pre-H2 content is a mild risk, well-mitigated by the EEE structure. The D3 decision (H1 → block → Summary) is the correct mitigation. Evidence grade: STRONG for the pre-H1 danger; MEDIUM for the dilution magnitude estimate.**
+
+**How the Document Layout skill handles pre-heading content (STRONG from official schema).** The skill's output schema (learn.microsoft.com/azure/search/cognitive-search-skill-document-intelligence-layout, updated 2026-07-02) shows that each chunk carries a `sections` dictionary with `h1`, `h2`, `h3` keys reflecting the heading lineage of that chunk's position in the document. Content that appears before the first detected heading produces a chunk with an empty or null `sections` dictionary — it is an orphan chunk with no heading metadata. This is the worst possible first chunk: it has no searchable heading fields and contains whatever text appears before the first heading. If a metadata block (Doc ID / Platform / Owner / Last Reviewed / Status) appears before the H1, it forms exactly this orphan chunk.
+
+**Risk assessment for the EEE structure: H1 → bold block → ## Summary → sections.** The bold header block appears between the H1 and the first H2. In the Document Layout skill's output, this content is part of the H1 section — it carries `header_1 = "[descriptive title]"` but no `header_2`. The bold block text and the Summary text share the first content chunk. The risk is that 5-6 metadata labels (Doc ID, Platform, Owner, etc.) are embedded alongside the Summary text, adding approximately 50-80 non-topical characters to the first chunk.
+
+**Assessment of severity: LOW, well-mitigated.** At the 2,000-character chunk budget, 80 non-topical characters is 4% dilution. This is materially less harmful than the alternative designs:
+- A full metadata table before the H1 would create an orphan chunk with 0% topical content and 0% heading metadata.
+- A 10-15 row Markdown table between H1 and Summary would add ~400 non-topical characters (20% dilution) while also breaking the rendering of the visible block into a table format that the Document Layout skill may parse differently.
+
+**YAML frontmatter handling.** If documents are stored as raw .md files in a SharePoint document library (rather than as SharePoint pages), the YAML frontmatter block (`---\nkey: value\n---`) may appear as literal text in the indexed content, depending on whether the SharePoint indexer strips YAML delimiters. The EEE design decision to keep YAML frontmatter as machine-only (for harness/tooling) and render the visible block from those keys correctly separates machine metadata from indexed content. However, the SharePoint-specific handling of raw .md frontmatter should be verified against the actual deployment environment.
+
+**Implication for EEE standard:** The D3 structure (H1 → one-line inline bold block → ## Summary → sections) is the correct mitigation. The critical constraint is that the bold block must be formatted as a single inline paragraph (pipe-separated on one line), not as a multi-line Markdown table. A single inline line adds ~4% dilution; a table would add 10-20x more.
+
+**Implication for retrofit acceptance criteria:** C17 must assert: (a) H1 is the first non-frontmatter line; (b) the bold header block is a single inline paragraph (not a table — can be detected by checking that no `|---|` row follows the block); (c) `## Summary` is the first H2. These are all in scope for C17.
+
+**Open question for Phase-1.** Verify whether the SharePoint document library hosting these docs strips YAML frontmatter before indexing. If it does not strip it, the frontmatter text appears in the indexed document, adding ~100-150 non-topical characters before the H1. This would be a meaningful dilution source that needs a mitigation (e.g., SharePoint page authoring instead of raw .md file upload, or confirming that the MS Graph indexer handles YAML frontmatter).
+
+---
+
+## Finding 5: Descriptive H1 Titles vs. Bare Codes for Citation Click-Through
+
+**Verdict: Descriptive H1 titles improve both retrieval signal and citation intelligibility. Bare codes are harmful on both dimensions. Evidence grade: STRONG for retrieval; MEDIUM for citation text display.**
+
+**Retrieval dimension (STRONG).** The Azure AI Search Document Layout skill maps H1 content to the `title` index field, which is a fully searchable field in the Azure AI Search schema (confirmed from the official index schema in the semantic chunking docs). A descriptive H1 such as "Troubleshoot macOS Platform SSO Registration Failures" provides keyword and semantic retrieval signals that match natural operator queries. A bare code H1 such as "RE-042" contributes zero semantic signal. No L1/L2 operator will search for "RE-042" unless they already know the doc ID — in which case they don't need retrieval assistance.
+
+**Citation dimension (MEDIUM from community evidence + architecture inference).** For Copilot Studio agents grounded in SharePoint knowledge sources, the displayed citation text is drawn from the SharePoint document or page title property (derived from the file name or SharePoint page Title field). For SharePoint pages, the page title is the primary citation anchor. A descriptive page title produces a readable citation ("Troubleshoot macOS Platform SSO Registration Failures") vs. an unreadable one ("RE-042" or "l2-runbook-027"). Community evidence (Power Platform community, Microsoft Q&A threads) confirms that citation title = SharePoint document/page name, not H1 content extracted from the file.
+
+**Distinction: clickability vs. title text.** For properly indexed SharePoint files, the citation link is always clickable regardless of the H1 title — the link points to the SharePoint URL. The benefit of a descriptive title is the *text* shown in the citation, which drives user trust and click-through behavior. L1 operators click citations whose titles signal relevance ("Troubleshoot macOS Platform SSO Registration Failures") and skip citations they cannot decode ("RE-042"). This is a usability and adoption concern, not a technical indexing concern.
+
+**Implication for EEE standard:** The requirement for a descriptive H1 title is well-grounded on both the retrieval dimension (searchable `title` field) and the citation usability dimension. Doc IDs (RE-NNN) belong in the bold header block — they serve as machine-readable identifiers and human cross-references, not as document titles.
+
+**Implication for retrofit acceptance criteria:** C17 must assert that the H1 is not a bare Doc ID code (i.e., H1 content must not match `^RE-\d+$` or similar). A companion length/specificity heuristic (H1 must be at least N words long) is a useful quality gate. The EEE spec should state explicitly: "H1 must be a full descriptive title. Doc IDs appear in the bold header block only."
+
+**Adjacent open question.** The current corpus uses file names like `15-macos-company-portal-sign-in.md`. The citation text in Copilot Studio derives from the SharePoint file name or page title, not from the H1. A separate file naming convention review (making file names more descriptive, or ensuring SharePoint page titles are set from H1 content) would further improve citation readability — but this is a v1.16 consideration, not a Phase-1 retrofit requirement.
+
+---
+
+## Feature Landscape
+
+### Table Stakes (Retrieval Features Every Doc Must Have)
+
+These are structural properties a knowledge-base doc must have for Copilot Studio / SharePoint RAG to function at acceptable quality. Missing any of these produces worse retrieval than is achievable.
+
+| Structural Pattern | Why Expected | Evidence Grade | EEE Standard Implication | Retrofit Acceptance Criteria Impact |
+|--------------------|--------------|----------------|--------------------------|-------------------------------------|
+| **Descriptive H1 title** (not a bare code, not a filename) | Mapped to searchable `title` field in Azure AI Search; citation text intelligibility depends on it | STRONG (retrieval); MEDIUM (citation text) | H1 must be full descriptive title; Doc ID goes in bold header block | C17 must reject H1 matching bare code pattern; length heuristic recommended |
+| **H1 → H2 → H3 hierarchy** (H1 is title only; all content at H2+) | Document Layout skill chunks on heading boundaries; clean hierarchy = clean, topically coherent chunks | STRONG | H1 appears exactly once as first line; no prose at H1 level except what is explicitly allowed (bold block follows H1) | C17 must assert H1 appears exactly once; assert first heading is H1 |
+| **`## Summary` as first H2 section** | First content chunk has highest keyword density for the document topic; improves cosine similarity across query vocabulary | MEDIUM-STRONG | `## Summary` is the first H2 after the bold header block; 2-4 sentences required | C17 must assert `## Summary` appears as first H2 |
+| **One topic per document** | Multi-topic embedding dilution reduces retrieval precision; Copilot can only cite the file, not the relevant sub-section | STRONG | Existing modular corpus already satisfies this; maintain during retrofit | Audit for outliers during Phase-1; flag any multi-procedure docs for possible split |
+| **Document length ≤ 36,000 characters** | Official Microsoft Copilot content-retrieval limit for SharePoint knowledge sources; above this, Copilot has trouble finding right content | STRONG (Microsoft official) | Not a new EEE requirement; existing corpus expected to comply | Informational audit check; flag outliers; splitting is v1.16 scope |
+| **Prose text for all key information** (no key info trapped in images, tables-as-pictures, code-fenced diagrams) | Azure AI Search cannot extract text from images; Microsoft explicitly states Copilot cannot parse "tables and other special formatting" | STRONG (Microsoft explicit) | Already mandated by EEE "text as text" principle | Verify during retrofit; Mermaid diagram collision deferred to v1.16 |
+
+### Differentiators (Structural Patterns That Improve Retrieval Beyond Baseline)
+
+These improve precision, citation usability, or answer quality beyond the baseline table stakes.
+
+| Structural Pattern | Value Proposition | Evidence Grade | EEE Standard Implication | Retrofit Acceptance Criteria Impact |
+|--------------------|-------------------|----------------|--------------------------|-------------------------------------|
+| **Scope/safety banner as first sentence of runbook Summary** | Single focused sentence naming procedure domain + platform + safety posture concentrates first-chunk embedding signal and discriminates between similar runbooks | MEDIUM (EEE-specific design grounded in embedding theory) | Already mandated for runbook Summaries; retain in spec | Verify during retrofit; quality gate, not hard blocker |
+| **Frontmatter as machine-only; visible block rendered from frontmatter keys** | Separates machine metadata from indexed content; prevents YAML key-value pairs from appearing as indexed prose | MEDIUM (design pattern; recommended by AI Search practitioners for metadata separation) | D2/D3 decisions already implement this correctly | C10 lenient-unknown-key precondition verifies the frontmatter shape; C17 verifies the rendered block |
+| **Single-line inline bold header block** (not a multi-line Markdown table) | Limits metadata-text dilution of first content chunk to ~4%; a table would increase dilution to 10-20% | MEDIUM (derived from Document Layout skill output schema and chunk size analysis) | EEE spec must specify inline format, not table; one pipe-separated line | C17 should assert no table follows the bold block line |
+| **Descriptive H2/H3 headings** (procedure-named, not generic labels like "Details" or "Overview") | `header_2`/`header_3` fields are independently searchable in Azure AI Search; a query can match via heading even if the term is not in the chunk body | STRONG (derived from index schema architecture) | Style requirement for heading wording; not a C17 blocker | Quality gate; include in EEE writing style guidance |
+| **Short paragraphs** (≤ 4-5 sentences per paragraph) | Azure AI Search Text Split respects sentence boundaries within the chunk window; shorter paragraphs produce cleaner chunk splits each covering one thought | MEDIUM (RAG chunking literature consensus) | Style guidance only; not an EEE structural requirement | No acceptance criteria impact; writing guidance |
+
+### Anti-Features (Structural Patterns That Harm Retrieval or Citations)
+
+These are patterns that seem reasonable but actively reduce RAG quality. The EEE standard is correct to forbid or constrain each.
+
+| Anti-Feature | Why Harmful | Evidence Grade | EEE Mitigation | Retrofit Gate |
+|--------------|-------------|----------------|----------------|---------------|
+| **Bare code as H1** (e.g., `# RE-042`) | Zero semantic signal in the `title` field; citation text is unreadable to operators; no vocabulary overlap with natural queries | STRONG | Descriptive H1 mandatory; Doc ID in bold header block only | C17 rejects bare-code H1 |
+| **Metadata block BEFORE the H1** | Creates a pre-heading orphan chunk with no `header_1` metadata and maximum metadata-to-topical-content ratio; worst possible first chunk for retrieval | STRONG (Document Layout skill schema) | D3 decision: H1 is first non-frontmatter line; block follows H1 | C17 asserts H1 is first non-frontmatter line |
+| **Multi-line Markdown table as header block** | A 5-6 row table between H1 and `## Summary` injects ~400 non-topical characters into the first content chunk (10-20x worse than a single inline line) | MEDIUM (chunk dilution analysis) | EEE spec must require single inline format | C17 asserts no table follows the bold block |
+| **YAML frontmatter rendered as visible body prose** | If the SharePoint indexer does not strip YAML delimiters, raw `key: value` frontmatter lines appear in the indexed pre-H1 content, creating an orphan chunk of pure metadata noise | MEDIUM (SharePoint-specific; depends on indexer behavior) | Frontmatter is machine-only; visible block rendered separately from keys | Verify frontmatter stripping behavior for specific SharePoint deployment before Phase-2 |
+| **Kitchen-sink multi-procedure documents** | Multi-topic embedding dilution; citation points to the whole file, not the relevant section | STRONG | One-topic-per-doc principle; existing corpus already correct | Audit during retrofit; flag outliers |
+| **Key information in code-fenced diagrams, images, or rendered-picture tables** | Document Layout skill and Copilot's SharePoint indexer cannot extract text from these formats; information is invisible to semantic search | STRONG (Microsoft explicit guidance) | EEE "text as text" principle; Mermaid deferred to v1.16 | Verify during retrofit; flag Mermaid blocks as "text summary needed" |
+| **Generic H2/H3 headings** (`## Steps`, `## Details`, `## Overview`) | `header_2`/`header_3` fields contain generic terms that match everything and discriminate nothing; heading-field keyword search becomes noise | MEDIUM | EEE style guidance for descriptive headings | Quality gate; not a C17 blocker |
+
+---
+
+## Feature Dependencies
 
 ```
-Trusted Root Certificate Profile (all platforms)
-    └──required-by──> SCEP Client Certificate Profile
-                          └──required-by──> EAP-TLS Wi-Fi Profile
-                          └──required-by──> EAP-TLS Wired Profile
-                          └──required-by──> Linux nmcli Script (EAP-TLS)
+[Descriptive H1 title]
+    enables --> [Searchable title field in Azure AI Search]
+    enables --> [Readable citation text in Copilot Studio]
 
-Trusted Root Certificate Profile (all platforms)
-    └──required-by──> PKCS Client Certificate Profile
-                          └──required-by──> EAP-TLS Wi-Fi Profile (Windows, macOS, iOS, Android)
-                          NOTE: PKCS NOT supported for wired on macOS or iOS (SCEP only)
+[H1 → H2 → H3 hierarchy]
+    enables --> [Structure-aware heading-boundary chunk splits]
+               enables --> [Topically coherent chunks]
+                              enables --> [High cosine similarity vs. operator queries]
+               enables --> [Searchable header_1 / header_2 / header_3 fields]
 
-Trusted Root Certificate Profile (all platforms)
-    └──required-by──> Server Validation in all EAP methods
-                          (root cert must arrive before Wi-Fi/Wired profile is applied)
+[## Summary as first H2]
+    requires --> [H1 → H2 hierarchy (above)]
+    enhances --> [First chunk embedding density]
+    enhances --> [Wide-query vocabulary coverage for the document]
 
-EAP-TLS Wi-Fi Profile ──requires──> client cert (SCEP or PKCS)
-PEAP-MSCHAPv2 Wi-Fi Profile ──requires──> trusted root only (no client cert)
-EAP-TTLS Wi-Fi Profile ──requires──> trusted root; client cert optional (method-dependent)
+[Single-line inline bold header block (between H1 and ## Summary)]
+    requires --> [H1 precedes block (D3 structure)]
+    reduces-dilution-in --> [First chunk embedding vs. multi-line table alternative]
 
-macOS Wired Profile deployment-channel ──immutable-after-deploy──> cert keychain placement
-    Admin must choose user vs device channel BEFORE creating profile (cannot edit post-deploy)
+[YAML frontmatter as machine-only]
+    prevents --> [Frontmatter prose noise in pre-H1 orphan chunk]
+    enables --> [C17 deterministic render of visible block]
 
-iOS 802.1X Wi-Fi (NAC environments) ──requires──> MAC randomization disabled (iOS 14+)
-    "Disable MAC address randomization: Yes" must be set in the Wi-Fi profile
-
-Android Enterprise Wi-Fi (personally-owned work profile) ──requires──> UPN in cert SAN
-    Certificate SAN must include user principal name or Wi-Fi profile deployment fails
-
-Android 11+ Wi-Fi ──requires──> Radius server name configured in profile
-    Without it, new profiles may not connect
-
-802.1X Wi-Fi/Wired profile ──navigation-last──> docs/index.md hub wiring
-    Hub edits go in last phase after all content docs are complete
+[One-topic-per-document]
+    enables --> [All chunks stay within the document's topic domain]
+    prevents --> [Multi-topic embedding dilution]
 ```
 
 ### Dependency Notes
 
-- **Trusted root profile must deploy before the cert or network profile.** If trusted root is missing, the device cannot validate the RADIUS server certificate and 802.1X fails at the server-trust step. This ordering must be made explicit in every admin-setup guide.
-- **SCEP and PKCS profiles require NDES / Certificate Connector** infrastructure to already exist. The doc set must document this as an assumed prerequisite and link to Microsoft Learn infrastructure docs rather than explaining NDES setup.
-- **macOS deployment channel is immutable** — if the admin picks the wrong channel (user cert in device channel = wrong keychain), the profile must be deleted and recreated. This is a high-impact one-way decision that must be called out with a warning callout in the macOS admin-setup guide.
-- **iOS MAC randomization and NAC** — if the network uses NAC (Network Access Control) with MAC-based policies, randomized MAC breaks authentication. The Wi-Fi profile must set "Disable MAC address randomization: Yes." This applies iOS 14 and newer.
+- **`## Summary` requires the H1 → H2 hierarchy:** A summary can only be the "first H2 section" if there IS an H2 level. The entire EEE structure depends on the heading hierarchy being correct.
+- **Single-line bold block requires D3 ordering:** The block can only be "between H1 and Summary" if H1 precedes it. Any structure that puts metadata before H1 breaks the Document Layout skill's heading-ancestry chain for the first chunk.
+- **YAML-as-machine requires the C10 harness precondition:** C17 can only safely render the visible block from frontmatter keys if C10 has verified the frontmatter shape is valid. The C10 → C17 precondition chain is architecturally correct.
 
 ---
 
-## 5. Per-Platform Topic Matrix
+## MVP Definition for Retrofit Acceptance
 
-| Topic | Windows | macOS | iOS/iPadOS | Android Enterprise | Linux |
-|---|---|---|---|---|---|
-| Wi-Fi 802.1X profile (EAP-TLS) | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | Bash script + nmcli (no native profile) |
-| Wi-Fi 802.1X profile (PEAP-MSCHAPv2) | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | LOW confidence (theoretically possible; not in MS docs) |
-| Wi-Fi 802.1X profile (EAP-TTLS) | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | Native Intune Wi-Fi profile | OUT OF SCOPE |
-| Wired 802.1X profile | Native Intune Wired Network profile | Native Intune Wired Network profile | Native Intune Wired Network profile (iOS 14+) | NO NATIVE PROFILE in Intune | NO NATIVE PROFILE in Intune |
-| SCEP cert delivery | Full support | Full support | Full support | Full support | Full support (SCEP only; no PKCS) |
-| PKCS cert delivery | Full support | Full support for Wi-Fi; NOT for wired | Full support for Wi-Fi; NOT for wired | Full support | NOT SUPPORTED |
-| Imported PKCS cert delivery | Full support | Full support | Full support | Full support (not AOSP) | NOT SUPPORTED |
-| Trusted root profile | Full support | Full support | Full support | Full support | Full support |
-| Authentication mode (user/machine/both) | Configurable in Intune | Not exposed in Intune profile | Not exposed in Intune profile | Not exposed | N/A |
-| Deployment channel (user vs device keychain) | N/A | REQUIRED — immutable | N/A | N/A | N/A |
-| RADIUS server name for server validation | Optional (suppresses user dialog) | Required for dynamic trust suppression | Required for dynamic trust suppression | Required (Android 11+); 256 char limit (Android 14+) | Configured in script |
-| Outer identity / identity privacy | Supported (PEAP, EAP-TTLS) | Supported (EAP-TLS, EAP-TTLS, PEAP) | Supported (EAP-TLS, EAP-TTLS, PEAP) | Supported (EAP-TLS, EAP-TTLS, PEAP) | Via nmcli script parameters |
-| MAC address randomization (NAC) | N/A (not present in Intune Wi-Fi profile) | N/A | Disable-able in Wi-Fi profile (iOS 14+) | Configurable (Android 13+) | N/A (nmcli default) |
-| UPN in cert SAN requirement | Not documented as a blocker | Not documented as a blocker | Not documented as a blocker | Required for personally-owned work profile | N/A |
-| "Done / verified" diagnostic command | Event Viewer 802.1X events; `netsh wlan show profiles` | Wireless Diagnostics; System Profiler; `log show` | Settings > Wi-Fi > connected state | Android Settings > Wi-Fi | `nmcli connection show`; `ip addr show` |
-| L1 runbook applicability | Yes | Yes | Yes | Yes | Yes (limited) |
-| L2 runbook applicability | Yes (full log access) | Yes (unified log) | Limited (sysdiagnose only) | Limited (adb logcat or Company Portal) | Yes (journalctl) |
+### Blocking Requirements (C17 Hard Fails — Every Retrofitted Doc Must Pass)
 
----
+- [ ] H1 is the first non-frontmatter line; H1 content is a full descriptive title, not a bare code (not matching `^RE-\d+$` or equivalent)
+- [ ] Bold header block appears after H1 and before `## Summary`; it is a single inline paragraph (no table rows)
+- [ ] `## Summary` is the first H2 in the document body
+- [ ] All content sections are at H2 or lower (no prose in the H1 gap other than the bold block)
+- [ ] YAML frontmatter present with `doc_id`, `status`, `owner`, `doc_type`, `last_verified` keys; visible block rendered from those keys (not duplicated as separate prose in the document body)
+- [ ] `Status: Approved` for all retrofitted docs (already-live docs); `Status: Draft` for new docs born post-retrofit
 
-## 6. Content Category Structure (Maps to Roadmap Phases)
+### Quality Gates (Informational — Should Pass; Log for Follow-Up If Failing)
 
-Based on dependencies and complexity, the documentation must be structured in this order. The phase boundaries below are recommendations for the roadmap author.
+- [ ] Document length ≤ 36,000 characters (flag outliers for possible v1.16 split)
+- [ ] H2 headings are descriptive procedure/section names, not generic labels
+- [ ] Runbook Summaries open with a one-line scope/safety banner naming procedure domain + platform + safety posture
+- [ ] No Markdown tables immediately following the bold block line (detect table-as-block anti-pattern)
 
-### Category A — Foundation (earliest phase; everything else depends on this)
+### Explicitly Out of Scope for Phase-1 Retrofit
 
-A single "802.1X Concepts" document covering:
-- The three-actor model (supplicant / authenticator / authentication server) at L1/L2 depth
-- EAPOL exchange in prose (no packet captures)
-- EAP-TLS vs PEAP-MSCHAPv2 vs EAP-TTLS: what each authenticates, what clients need, when to use each
-- Certificate prerequisite chain: trusted root → client cert → network profile (ordering rule)
-- "Which EAP method?" decision matrix (admin-facing)
-- Glossary of all new 802.1X domain terms (EAPOL, supplicant, authenticator, RADIUS, EAP types, inner/outer identity, identity privacy)
-
-Complexity: MEDIUM. Research complete. No platform-specific content.
-
-### Category B — Certificate Delivery Guides (prerequisite to all network profiles)
-
-Admin-setup guides for deploying the trust chain before any Wi-Fi/Wired profile:
-- Trusted root certificate profile (all 5 platforms, one combined guide since the steps are similar)
-- SCEP client certificate profile for 802.1X (applicable to all platforms; note Linux special case)
-- PKCS client certificate profile for 802.1X (Windows, macOS, iOS, Android — NOT Linux; note wired restriction on macOS/iOS)
-
-Complexity: MEDIUM. Mostly referencing existing patterns (SCEP/PKCS delivery was already built for other purposes in this doc set).
-
-### Category C — Per-Platform Wi-Fi Admin-Setup Guides (core content, 5 guides)
-
-One guide per platform. Each guide covers:
-- Wi-Fi profile type in Intune (Enterprise, not Basic)
-- EAP-TLS configuration steps (with SCEP and PKCS cert profile linkage)
-- PEAP-MSCHAPv2 configuration steps (server cert only; no client cert)
-- EAP-TTLS configuration steps (server cert + inner method selection)
-- Server validation (RADIUS server names, trusted root linkage)
-- Outer identity / identity privacy recommendation
-- Platform-specific warnings:
-  - macOS: deployment channel (user vs device) — immutable, must choose before creating profile
-  - iOS: MAC address randomization disable (NAC environments)
-  - Android: Radius server name requirement (Android 11+), character limit (Android 14+), UPN in cert SAN (personally-owned work profile)
-  - Linux: SCEP cert prerequisite + Bash script approach + nmcli commands (EAP-TLS only)
-- "Done / verified" state per platform
-
-Complexity: HIGH. Five platforms × three EAP methods = dense content. Potential to break into sub-phases by platform or by EAP method.
-
-### Category D — Per-Platform Wired Admin-Setup Guides (Windows + macOS + iOS; not Android or Linux)
-
-Same structure as Wi-Fi guides but for wired 802.1X:
-- Windows Wired: full EAP-TLS / PEAP / EAP-TTLS coverage
-- macOS Wired: EAP-TLS / PEAP / EAP-TTLS; deployment channel; PKCS-not-supported callout for wired
-- iOS Wired: EAP-TLS / PEAP / EAP-TTLS; PKCS-not-supported callout for wired
-- Android Wired: one paragraph stub explaining no native Intune wired profile; link to network-team consultation
-- Linux Wired: not covered in Intune (no native profile; no documented script equivalent)
-
-Complexity: MEDIUM. Similar to Category C but shorter; fewer platform variations for wired.
-
-### Category E — L1 Triage Runbooks
-
-New L1 runbooks in the existing runbook series (extending L1 #37):
-- L1 #38: "Device cannot connect to 802.1X Wi-Fi" — initial triage tree (is it a cert issue? a server trust issue? a credential issue? a RADIUS reject?)
-- L1 #39: "Certificate failure on 802.1X connection" — scripted steps to check if cert is present, not expired, correct profile applied
-
-Complexity: MEDIUM. Follows established runbook pattern.
-
-### Category F — L2 Investigation Runbooks
-
-- L2 #31: "RADIUS reject investigation" — per-platform log collection; what to look for; information package to send to network team; Event IDs on Windows; macOS unified log; Android adb logcat; iOS sysdiagnose
-- L2 #32: "EAP negotiation failure" — EAP method mismatch symptoms; server trust failures; certificate chain errors; per-platform diagnostic commands
-
-Complexity: HIGH. Requires per-platform log-path knowledge and cross-referencing existing log collection runbooks.
-
-### Category G — Integration (navigation-last, final phase)
-
-- 802.1X rows appended to all 5 per-platform capability matrices
-- Glossary cross-references (add 802.1X section to `_glossary.md`, `_glossary-macos.md`, `_glossary-android.md`, `_glossary-linux.md`)
-- docs/index.md wiring: 802.1X nav hub entries per platform section
-- common-issues.md and quick-ref-l1/l2 additions
-- decision-trees integration (or new 802.1X decision tree file)
-
-Complexity: LOW per action, but many touch points. Must be last to avoid breaking in-progress docs.
+- Mermaid diagram conversion to text alternatives (deferred to v1.16 — EEE "text as text" vs. existing Mermaid diagrams is a known collision)
+- Structural docs (glossaries, decision-trees, nav-hubs, lifecycle docs): deferred to v1.16
+- File naming convention review for improved citation text (file name → descriptive title alignment): v1.16 differentiator
+- Document splitting for oversized files: only if extreme outlier; otherwise v1.16
 
 ---
 
-## 7. Complexity and Dependency Summary for Roadmap
+## Open Questions for Phase-1 Authoring or v1.16
 
-| Category | Complexity | Phase Dependencies | Risk |
-|---|---|---|---|
-| A — Foundation / Concepts | MEDIUM | None | LOW — well-understood, verified material |
-| B — Certificate Delivery Guides | MEDIUM | A must precede (concepts inform cert guide scope) | LOW — existing patterns from other platforms |
-| C — Per-Platform Wi-Fi Guides (5) | HIGH | A and B must precede | MEDIUM — macOS deployment channel + Linux script are novel; Android version quirks |
-| D — Per-Platform Wired Guides (3+stubs) | MEDIUM | A, B, C patterns established | LOW-MEDIUM — PKCS gap on macOS/iOS wired is a verified pitfall that needs explicit callout |
-| E — L1 Runbooks | MEDIUM | C and D must precede (symptoms reference profile types) | LOW |
-| F — L2 Runbooks | HIGH | E must precede; needs per-platform log-path verification | MEDIUM — Linux and Android log paths need phase-specific research |
-| G — Integration | LOW-MEDIUM | F must precede | LOW — append-only pattern established across 13 milestones |
+1. **Does the SharePoint deployment strip YAML frontmatter before indexing?** If not, the raw `---\ndoc_id: RE-042\nstatus: Approved\n---` block appears as indexed text, creating an orphan pre-H1 chunk of pure metadata noise. Verify against the actual SharePoint instance before Phase-2 retrofit authoring begins. Mitigation if stripping does not occur: either (a) confirm SharePoint page authoring (not raw .md upload) for this corpus, or (b) treat YAML frontmatter as confirmed-harmless if Microsoft Graph / SharePoint Search already excludes YAML delimiter blocks from text indexing.
 
-**Recommended phase structure:**
-1. Phase 101: Foundation doc (Category A) + glossary entries — sets vocabulary for all subsequent phases
-2. Phase 102: Certificate delivery guides (Category B) — prerequisite chain documentation before any network profile
-3. Phase 103: Windows Wi-Fi + Wired admin-setup (Category C + D subset) — most mature platform, sets the guide template
-4. Phase 104: macOS Wi-Fi + Wired admin-setup (Category C + D subset) — deployment channel complexity; PKCS wired restriction
-5. Phase 105: iOS/iPadOS Wi-Fi + Wired admin-setup (Category C + D subset) — MAC randomization + PKCS wired restriction
-6. Phase 106: Android Enterprise Wi-Fi admin-setup + wired stub (Category C + D) — version-matrix requirements
-7. Phase 107: Linux Wi-Fi admin-setup via script (Category C) — nmcli + SCEP; EAP-TLS only
-8. Phase 108: L1 Runbooks (Category E)
-9. Phase 109: L2 Runbooks (Category F)
-10. Phase 110+: Integration + navigation + capability matrices (Category G) + harness lineage bump
+2. **Does Copilot Studio citation text use the SharePoint file name, the SharePoint page Title property, or the H1 content of the document?** Community evidence and Microsoft documentation both indicate file name / page title property (not H1 text extracted from content). If so, a file-name or page-title standardization pass (separate from the EEE header retrofit) would improve citation readability independently of the H1 content change. This is a v1.16 differentiator, not a Phase-1 blocker.
 
-Total phases for Pillar A estimated at 8–10, consistent with PROJECT.md estimate of 8–12 total for v1.14 (Pillars B/C/D/E consume the remaining phases).
+3. **Mermaid diagrams as code-fenced blocks.** The v1.15 EEE spec explicitly defers the Mermaid-vs-"no key info in code-fenced diagrams" collision to v1.16. During Phase-1 retrofit, every Mermaid block in the corpus should be flagged as "text summary needed" and an issue comment (not a deletion) added. The Phase-1 acceptance criteria should note that Mermaid blocks are deferred, not resolved.
+
+4. **Heading depth for structure-aware chunking.** The Document Layout skill's `markdownHeaderDepth` parameter controls which heading levels create new sections/chunks. If the Copilot Studio / SharePoint pipeline uses `h3` depth (common default), H3 boundaries also create chunk splits. Documents with many H3 subsections under a single H2 produce more granular chunks, which is generally better for retrieval precision. Confirm the heading depth setting for the actual pipeline if possible.
 
 ---
 
-## 8. "Done / Working" Verification Criteria Per Platform
+## Confidence Assessment
 
-These criteria define the "device is successfully 802.1X authenticated" state that each admin-setup guide must document at its conclusion.
-
-| Platform | Wi-Fi Verified By | Wired Verified By |
-|---|---|---|
-| Windows | Event Viewer: `Microsoft-Windows-WLAN-AutoConfig/Operational` event IDs 8001/8002 (connected/disconnected); `netsh wlan show profiles name="SSID" key=clear` | Event Viewer: `Microsoft-Windows-Wired-AutoConfig/Operational`; `netsh lan show profiles` |
-| macOS | System Preferences / System Settings → Wi-Fi shows "connected" + IP assigned; Wireless Diagnostics (Option+click Wi-Fi menu bar) → Connection Log | `networksetup -getinfo "Ethernet"` shows IP; System Log for 802.1X events |
-| iOS/iPadOS | Settings → Wi-Fi → checkmark next to SSID; IP address visible in Wi-Fi detail view; no certificate warning dialogs | Settings → General → VPN & Device Management → Wired Network profile installed |
-| Android Enterprise | Settings → Wi-Fi → network shows "Connected"; IP assigned in Wi-Fi details | N/A (no native Intune wired profile) |
-| Linux | `nmcli connection show` shows the connection active; `ip addr show` on the interface shows IP address assigned; `journalctl -u NetworkManager` shows supplicant authentication success | N/A (no native Intune wired profile) |
-
----
-
-## 9. Sources
-
-All platform settings verified from Microsoft Learn (dates per document metadata):
-
-- Windows Wi-Fi settings: https://learn.microsoft.com/en-us/mem/intune/configuration/wi-fi-settings-windows (updated 2026-04-14)
-- Windows Wired Network settings: https://learn.microsoft.com/en-us/mem/intune/configuration/wired-network-settings-windows (updated 2026-06-04)
-- macOS and iOS Wi-Fi settings (shared page): https://learn.microsoft.com/en-us/mem/intune/configuration/wi-fi-settings-macos (updated 2026-06-24)
-- macOS and iOS Wired Network settings (shared page): https://learn.microsoft.com/en-us/mem/intune/configuration/wired-network-settings-macos (updated 2026-06-04)
-- Android Enterprise Wi-Fi settings: https://learn.microsoft.com/en-us/mem/intune/configuration/wi-fi-settings-android-enterprise (updated 2026-06-22)
-- Certificate types and platform support matrix: https://learn.microsoft.com/en-us/mem/intune/protect/certificates-configure (updated 2026-06-22)
-- SCEP infrastructure: https://learn.microsoft.com/en-us/mem/intune/protect/certificates-scep-configure (updated 2026-04-29)
-- Linux 802.1X via nmcli script (third-party, LOW confidence for PEAP/TTLS): https://www.keytos.io/docs/cloud-radius/setup-radius-in-mdm/intune/how-to-enable-certificate-wifi-authentication-in-linux-in-intune/
+| Area | Confidence | Primary Source | Date |
+|------|------------|----------------|------|
+| Azure AI Search heading-boundary chunking behavior | HIGH | learn.microsoft.com/azure/search/search-how-to-semantic-chunking | Updated 2026-06-08 |
+| Azure AI Search header_1-3 as searchable fields | HIGH | learn.microsoft.com/azure/search/search-how-to-semantic-chunking (index schema) | Updated 2026-06-08 |
+| Pre-heading orphan chunk behavior | HIGH | learn.microsoft.com/azure/search/cognitive-search-skill-document-intelligence-layout (output schema) | Updated 2026-07-02 |
+| Microsoft Copilot 36,000-char document limit | HIGH | learn.microsoft.com/microsoft-365/copilot/extensibility/optimize-content-retrieval | Updated 2025-08-07 |
+| Copilot Studio SharePoint knowledge grounding | HIGH | learn.microsoft.com/microsoft-copilot-studio/knowledge-add-sharepoint | Updated 2026-06-30 |
+| Summary-first retrieval improvement (effect size) | MEDIUM | Azure AI Search coherence docs + RAG literature; no Copilot-Studio-specific A/B data | — |
+| First-chunk dilution magnitude from inline bold block | MEDIUM | Derived from Document Layout skill output schema + chunk size analysis; not directly measured | — |
+| Citation text = SharePoint file/page title | MEDIUM | Microsoft Q&A + Power Platform community + architecture inference; not a single definitive Microsoft Learn statement | — |
 
 ---
 
-*Feature research for: 802.1X network authentication documentation — v1.14 Pillar A*
-*Researched: 2026-06-29*
-*Confidence: HIGH (platform settings verified; Linux EAP-TLS only is MEDIUM; Linux PEAP/TTLS is LOW — not in MS docs)*
+## Sources
+
+- [Azure AI Search: Chunk and Vectorize by Document Layout](https://learn.microsoft.com/en-us/azure/search/search-how-to-semantic-chunking) — official, updated 2026-06-08
+- [Azure AI Search: Document Layout Skill reference](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-document-intelligence-layout) — official, updated 2026-07-02
+- [Azure AI Search: Azure Content Understanding Skill](https://learn.microsoft.com/en-us/azure/search/cognitive-search-skill-content-understanding) — official; current recommendation for new skillsets
+- [M365 Copilot Extensibility: Optimize Content Retrieval](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/optimize-content-retrieval) — official, updated 2025-08-07
+- [Copilot Studio: Add SharePoint as a knowledge source](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-add-sharepoint) — official, updated 2026-06-30
+- [Copilot Studio: Knowledge sources summary](https://learn.microsoft.com/en-us/microsoft-copilot-studio/knowledge-copilot-studio) — official
+- [Copilot Studio: Page-Level PDF Citations (Microsoft blog)](https://microsoft.github.io/mcscatblog/posts/pdf-page-level-citations/) — Microsoft engineering blog; citation mechanism evidence
+- [Chunking Strategies for RAG (Unstructured.io)](https://unstructured.io/blog/chunking-for-rag-best-practices) — practitioner; MEDIUM confidence
+- [RAG Chunking and Metadata Enrichment (Medium)](https://medium.com/@shaikmohdhuz/beyond-fixed-chunks-how-semantic-chunking-and-metadata-enrichment-transform-rag-accuracy-07136e8cf562) — practitioner; MEDIUM confidence
+
+---
+
+*Feature research for: v1.15 EEE SOP Documentation-Standard Retrofit*
+*Researched: 2026-07-03*
+*Confidence: HIGH (Azure AI Search + Copilot Studio official docs); MEDIUM (RAG literature + citation behavior)*
