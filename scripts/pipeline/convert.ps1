@@ -36,7 +36,8 @@ if ($onPath) {
 # in the output .docx, corrupting heading styles across the entire corpus.
 $expectedVer = '3.7.0.2'
 $verOutput = & $pandocBin --version 2>&1 | Select-Object -First 1
-$verMatch = [regex]::Match($verOutput, '^pandoc\s+(\S+)')
+# Match 'pandoc 3.7.0.2' (POSIX) or 'pandoc.exe 3.7.0.2' (Windows binary banner)
+$verMatch = [regex]::Match($verOutput, '^pandoc(?:\.exe)?\s+(\S+)')
 if (-not $verMatch.Success) {
     Write-Error "Could not parse pandoc version from: $verOutput"
     exit 1

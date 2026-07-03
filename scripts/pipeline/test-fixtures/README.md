@@ -48,28 +48,42 @@ exercise the body-text grounding check (SC4). The canonical retrofit happens in 
 
 ## Conversion and Guard Results
 
-_Filled in by Task 2 (Plan 113-03)._
-
 ### Conversion + Guard Run (2026-07-03)
 
-Canonical invocation used:
+Canonical invocation:
 
 ```
-scripts/pipeline/convert.ps1 -InputMd <fixture.md> -OutputDocx .pipeline-output/<fixture.docx>
-node scripts/pipeline/guard-docx.mjs .pipeline-output/<fixture.docx>
+scripts/pipeline/convert.ps1 -InputMd <fixture.md> -OutputDocx .pipeline-output/test-fixtures/<fixture.docx>
+node scripts/pipeline/guard-docx.mjs .pipeline-output/test-fixtures/<fixture.docx>
 ```
 
-| # | Filename | Convert OK | Guard Exit | Heading StyleIds Found | Notes |
-|---|----------|-----------|------------|----------------------|-------|
-| 0 | `clean-test-doc.md` | — | — | — | Pending Task 2 |
-| 1 | `01-device-not-registered.md` | — | — | — | Pending Task 2 |
-| 2 | `27-macos-sso-investigation.md` | — | — | — | Pending Task 2 |
-| 3 | `android-capability-matrix.md` | — | — | — | Pending Task 2 |
-| 4 | `38-8021x-certificate-failure.md` | — | — | — | Pending Task 2 |
-| 5 | `draft-test-doc.md` | — | — | — | Pending Task 2 |
+Pandoc version: 3.7.0.2 (pinned — version guard PASS on all docs).
+
+Note: convert.ps1 version regex updated (`^pandoc(?:\.exe)?\s+` instead of `^pandoc\s+`) to handle
+this Windows installation's binary banner `pandoc.exe 3.7.0.2` vs. the expected `pandoc 3.7.0.2`.
+Both forms are correct pandoc output; the original regex was too strict for Windows exe-name banners
+(Rule 1 auto-fix committed in Plan 113-03 Task 2).
+
+| # | Filename | Convert OK | Guard Exit | Heading StyleIds Found | YAML-LEAK | Notes |
+|---|----------|-----------|------------|----------------------|-----------|-------|
+| 0 | `clean-test-doc.md` | YES | 0 (PASS) | [Heading1,Heading2,Heading3] | PASS | Synthetic clean baseline |
+| 1 | `01-device-not-registered.md` | YES | 0 (PASS) | [Heading1,Heading2] | PASS | Windows runbook; 2-level headings |
+| 2 | `27-macos-sso-investigation.md` | YES | 0 (PASS) | [Heading1,Heading2,Heading3] | PASS | macOS L2 runbook; 3-level headings |
+| 3 | `android-capability-matrix.md` | YES | 0 (PASS) | [Heading1,Heading2] | PASS | Android capability matrix; >25-row tables |
+| 4 | `38-8021x-certificate-failure.md` | YES | 0 (PASS) | [Heading1,Heading2,Heading3] | PASS | Compound platform label; 3-level headings |
+| 5 | `draft-test-doc.md` | YES | 0 (PASS) | [Heading1,Heading2,Heading3] | PASS | Synthetic Status:Draft |
+
+**All 6 fixtures: convert OK, guard exit 0. Pipeline is corpus-safe for this representative set.**
 
 ### SC4 Body-Text Stub Confirmation
 
-| Fixture | Stub Text Present in .docx Body | Notes |
-|---------|--------------------------------|-------|
-| `clean-test-doc.md` | — | Pending Task 2 |
+Verified via `extractBodyText()` (ooxml.mjs) on converted .docx files. Checks that `---` YAML delimiter
+did NOT leak and that stub text (`Platform:`, `Doc Type:`, `Doc ID:`) IS present as indexable body text.
+
+| Fixture | Stub Text Present in .docx Body | Platform field | Doc Type field | Notes |
+|---------|--------------------------------|----------------|----------------|-------|
+| `clean-test-doc.md` | YES (RE-T00 confirmed) | Windows | Runbook | First 300 chars include full stub line |
+| `01-device-not-registered.md` | YES (RE-T01 confirmed) | Windows | Runbook | Stub appears after title heading in body |
+| `draft-test-doc.md` | YES (RE-T05 confirmed) | macOS | Runbook | Status: Draft confirmed in body text |
+
+**SC4 precondition met:** stub EEE header indexes as body text, not Word document properties.
