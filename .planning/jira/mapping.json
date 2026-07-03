@@ -764,6 +764,12 @@
           "name": "Pillar E — 12th Path-A Audit-Harness Lineage Bump + Milestone Close"
         }
       }
+    },
+    "v1.15": {
+      "epicKey": "RTS-715",
+      "status": "created",
+      "created": "2026-07-03",
+      "phases": {}
     }
   },
   "lastUpdated": "2026-07-02 (v1.14 milestone close via /gsd-complete-milestone: Epic RTS-697 reconciled to completed/Done — was already Done in Jira (phase-112 sync/Stop-hook transitioned it); all 12/12 phase Stories RTS-698..709 Done; 22/22 requirements Validated. Milestone archived to .planning/milestones/v1.14-{ROADMAP,REQUIREMENTS,MILESTONE-AUDIT,DEFERRED-CLEANUP}.md, phase dirs moved to milestones/v1.14-phases/, tagged v1.14. No active milestone until /gsd-new-milestone scopes v1.15.)",
