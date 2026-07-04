@@ -772,7 +772,7 @@
       "phases": {
         "113": {
           "issueKey": "RTS-716",
-          "status": "in_progress",
+          "status": "done",
           "name": "Conversion Pipeline Lock + Representative-Set Grounding Validation"
         },
         "114": {
