@@ -6,6 +6,12 @@
 > return the registry row instead of the document content.
 > **Do NOT upload this file to the indexed SharePoint library.**
 
+> **Note on the `Status` column:** This column tracks the EEE **retrofit lifecycle**, not a
+> document's frontmatter `status` field. `Pending` means the ID is assigned but the doc is not
+> yet EEE-retrofitted; it becomes `Approved` once the doc is EEE-retrofitted and C17-green in
+> phases 116–118. This is distinct from the standard's frontmatter `status` vocabulary
+> ({Draft, Approved, Superseded}).
+
 | Doc ID | Path | Title | Doc Type | Status |
 |--------|------|-------|----------|--------|
 | RE-001 | docs/l1-runbooks/00-index.md | L1 Runbooks | Runbook | Pending |
