@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
-status: executing
-last_updated: "2026-07-04T14:40:20.695Z"
-last_activity: 2026-07-04 -- Phase 115 planning complete
+status: verifying
+last_updated: "2026-07-04T15:00:23.553Z"
+last_activity: 2026-07-04
 progress:
   total_phases: 7
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 9
-  completed_plans: 8
-  percent: 29
+  completed_plans: 9
+  percent: 43
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** Phase 115 — c17 harness check (validator atom)
+**Current focus:** Phase 115 — c17-harness-check-validator-atom
 
 ## Current Position
 
-Phase: 115
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-07-04 -- Phase 115 planning complete
+Phase: 115 (c17-harness-check-validator-atom) — EXECUTING
+Plan: 1 of 1
+Status: Phase complete — ready for verification
+Last activity: 2026-07-04
 
 Progress bar: `█░░░░░░░░░` 14% (1/7 phases complete)
 
@@ -260,6 +260,12 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [113-04] SC4a confirmed: document-level citations resolve as clickable SharePoint links (whole .docx, no section anchors)
 - [113-04] SC4b confirmed: single-line EEE header block indexed as body text — Q2 recited "Doc ID: RE-T01 · Platform: Windows · Doc Type: Runbook · Status: Approved" from body text; load-bearing EEE thesis proven
 
+**Phase 115 execution decisions (2026-07-04):**
+
+- [115-01] TEMPLATE-SENTINEL skip applied to assertion #12 as well as #9 — template blockquotes carry verbose scaffold instructions exceeding 200 chars (reference-template ~224 chars, admin-template ~236 chars, admin-template-ios ~437 chars); TEMPLATE-SENTINEL purpose is to skip assertions on scaffold placeholder content; consistent with established #9 skip idiom
+- [115-01] Code-fence tracking (inCodeFence mask) added to heading detection — EEE-SOP-standard.md has H1 inside ```markdown example block; l2-template.md has H1 inside ```powershell fence; without fence tracking assertion #2 fires falsely (Rule 1 auto-fix)
+- [115-01] C17 standalone validator authors as c17-eee-contract.mjs (577 lines); node:fs/path/process imports only; all 13 assertions in one checkFile function; exits 0 on 8 enrolled docs/ files; --self-test exits 0 (4/4 sub-tests pass); Phase-119 boundary intact
+
 **Durable architectural decisions (carried forward from v1.14):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commits (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; non-Phase-1 predecessor frozen surfaces BYTE-UNCHANGED
@@ -288,7 +294,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 
 - ✅ Phase 113 COMPLETE: SharePoint library access confirmed (owner-run); 5 representative docs converted + guard-passed + grounding-validated; pandoc 3.7.0.2 confirmed (2026-07-04)
 - At Phase 114 plan time: run C10 against a test file with the four new keys to confirm lenient behavior BEFORE writing the EEE standard spec; confirm the Doc Type taxonomy (Runbook / Guide / RCA / Reference) covers all Phase-1 doc classes including comparison docs and error-codes
-- At Phase 115 plan time: confirm the full C17 needle-spec (13 assertions from SUMMARY.md) is complete before authoring; review discuss-phase flag on C17 strictness/staging (informational-first vs. fully-blocking from the start)
+- ✅ Phase 115 COMPLETE: C17 blocking validator atom authored (c17-eee-contract.mjs, 13 assertions, node-builtins-only); exits 0 on 8 enrolled docs/ files; --self-test exits 0; Phase-119 boundary intact (2026-07-04)
 - At Phase 116 plan time: enumerate exact L1/L2 runbook file paths; decide L1-vs-L2 split per discuss-phase flag; confirm whether the ~75 docs warrant multiple sub-phases
 - At Phase 119 plan time: confirm V114 pin (v1.14 close-gate SHA `7d922a7`) via `git log --grep="close-gate" --grep="v1.14" --all-match -1`; confirm CHAIN_PHASES=[48..118] count (71 entries per [48..N-1] invariant)
 
@@ -304,18 +310,20 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-04T14:11:45.685Z
-Stopped at: Phase 115 context gathered
-Resume file: .planning/phases/115-c17-harness-check-validator-atom/115-CONTEXT.md
-Next action: Proceed to Phase 114 (/gsd-discuss-phase 114 or /gsd-plan-phase 114) — EEE Standard, Templates, Doc ID Registry + Metadata Rules. All four PIPE-02 empirical findings are now Phase-114 inputs.
+Last session: 2026-07-04T14:51:29Z
+Stopped at: Completed Phase 115 plan 01 (c17-eee-contract.mjs authored)
+Resume file: None
+Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
 ## Operator Next Steps
 
 - ✅ `/gsd-new-milestone` DONE — v1.15 requirements defined (2026-07-03)
 - ✅ Roadmap authored — 7 phases (113-119); ROADMAP.md + STATE.md written
 - ✅ Phase 113 COMPLETE — 4 plans, PIPE-01 + PIPE-02 requirements met; all four OQs empirically resolved; pipeline locked; grounding validated (2026-07-04)
-- Run `/gsd-discuss-phase 114` to begin Phase 114 planning (EEE Standard, Templates, Doc ID Registry + Metadata Rules)
-- Note: 6 remaining discuss-phase flags deferred from REQUIREMENTS.md — raise at the appropriate phase (PIPE-02 execution mode flag now resolved)
+- ✅ Phase 114 COMPLETE — 3 plans, META-01..04 + STD-01..03 requirements met; EEE standard, templates, registry authored (2026-07-04)
+- ✅ Phase 115 COMPLETE — 1 plan, HARN-01 requirement met; C17 blocking validator atom authored; exits 0 on 8 enrolled files + --self-test (2026-07-04)
+- Run `/gsd-execute-phase 116` to begin Phase 116 (L1/L2 Runbook Retrofit — C17 gate is live)
+- Note: 5 remaining discuss-phase flags deferred from REQUIREMENTS.md — raise at the appropriate phase
 
 ## Performance Metrics
 
@@ -326,3 +334,4 @@ Next action: Proceed to Phase 114 (/gsd-discuss-phase 114 or /gsd-plan-phase 114
 | Phase 113 P03 | 35min | 2 tasks | 8 files (7 created, 1 modified) |
 | Phase 113 P04 | multi-day (owner checkpoint) | 3 tasks | 2 files (PIPE-02-RUNBOOK.md, PIPE-02-FINDINGS.md) |
 | Phase 114 P03 | 5min | 2 tasks | 7 files |
+| Phase 115 P01 | 6min | 2 tasks | 3 files (c17-eee-contract.mjs + 2 fixtures) |
