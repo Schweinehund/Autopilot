@@ -782,12 +782,12 @@
         },
         "115": {
           "issueKey": "RTS-718",
-          "status": "in_progress",
+          "status": "done",
           "name": "C17 Harness Check (Validator Atom)"
         },
         "116": {
           "issueKey": "RTS-719",
-          "status": "todo",
+          "status": "in_progress",
           "name": "L1/L2 Runbook Retrofit (~75 docs)"
         },
         "117": {
@@ -808,6 +808,6 @@
       }
     }
   },
-  "lastUpdated": "2026-07-04 (v1.15 sync — phase 115 in EXECUTING/ready-for-verification: ROADMAP flipped 115 [x] at execution-complete (pre-verification), but RTS-718 is deliberately HELD In Progress per the verification-race rule — Story flips to Done only after VERIFICATION passes + phase.complete runs. Verified live: RTS-716/717 (113/114) Done, RTS-718 (115) In Progress, RTS-719..722 (116-119) To Do. All 7/7 phase Stories mapped; Epic RTS-715 In Progress. Prior: 2026-07-02 v1.14 milestone close via /gsd-complete-milestone: Epic RTS-697 completed/Done; 12/12 Stories RTS-698..709 Done; 22/22 requirements Validated; tagged v1.14.)",
+  "lastUpdated": "2026-07-04 (v1.15 sync — phase 115 COMPLETE: VERIFICATION passed (7/7 must-haves; HARN-01 Complete), phase.complete ran, RTS-718 transitioned In Progress→Done. STATE advanced to phase 116 (ready to plan) → RTS-719 transitioned To Do→In Progress per active-phase convention. Live state: RTS-716/717/718 (113/114/115) Done, RTS-719 (116) In Progress, RTS-720..722 (117-119) To Do; Epic RTS-715 In Progress; 7/7 mapped. Earlier this turn RTS-718 was held In Progress through the discuss→plan→execute→code-review-fix→verify chain until verification passed (race mitigation). Prior: 2026-07-02 v1.14 close; Epic RTS-697 Done; 12/12 Stories Done; 22/22 Validated; tagged v1.14.)",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending."
 }
