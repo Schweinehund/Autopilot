@@ -135,7 +135,16 @@ Plans:
   4. Each retrofitted runbook carries the "v1.15 EEE reformat — content not re-reviewed" Version-History row and `Last Reviewed` carries the file's existing `last_verified` value verbatim (D2-A; no staleness-clock reset)
   5. C17 exits 0 on every L1/L2 runbook file before phase close (NOTE: discuss-phase flag — whether the ~75 docs warrant splitting L1 and L2 into separate sub-phases; final granularity resolved at `/gsd-discuss-phase 116`)
 
-**Plans**: TBD
+**Plans**: 8 plans
+
+- [ ] 116-01-PLAN.md — Mechanical EEE retrofit helper (retrofit-runbook.mjs, node-builtins): doc_id join, block line, gate relocation, platform injection, Version-History row (D-03)
+- [ ] 116-02-PLAN.md — L1 index + Windows (RE-001..RE-010): platform: Windows injection + navigation-purpose index Summary
+- [ ] 116-03-PLAN.md — L1 macOS cluster (RE-011..RE-016, RE-036..RE-038): tailored banners for state-changing RE-037/RE-038
+- [ ] 116-04-PLAN.md — L1 iOS + Android (RE-017..RE-030): default L1 read-only banners
+- [ ] 116-05-PLAN.md — L1 Linux + apple-business + 802.1X (RE-031..RE-035, RE-039..RE-042): heavy D-05; tailored RE-035; completes L1
+- [ ] 116-06-PLAN.md — L2 index + Windows (RE-043..RE-051): Windows injection + RE-044 Version-History create + tailored RE-045/046/047
+- [ ] 116-07-PLAN.md — L2 macOS + iOS + Android (RE-052..RE-065): default L2 escalation banners
+- [ ] 116-08-PLAN.md — L2 Linux + apple-business + macOS SSO + 802.1X (RE-066..RE-075): tailored RE-068/069/071; full-corpus C17 gate on all 75
 
 ### Phase 117: Admin-Setup Guide Retrofit (all platforms)
 
