@@ -346,10 +346,10 @@ function checkFile(relPath, content) {
     let i = 0;
     while (i < bodyLines.length) {
       const trimmed = bodyLines[i].trim();
-      if (trimmed.startsWith('|')) {
+      if (!inCodeFence[i] && trimmed.startsWith('|')) {
         const tableStart = i;
         let dataRows = 0;
-        while (i < bodyLines.length && bodyLines[i].trim().startsWith('|')) {
+        while (i < bodyLines.length && !inCodeFence[i] && bodyLines[i].trim().startsWith('|')) {
           if (!isSeparator(bodyLines[i].trim())) {
             dataRows++;
           }
