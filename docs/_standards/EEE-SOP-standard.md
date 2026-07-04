@@ -287,8 +287,129 @@ docs (`docs/*-lifecycle/`), and architecture docs.
 
 These docs are not assigned RE-NNN IDs in the Phase-1 registry.
 
+## D1 Platform Normalization Map
+
+The D1 map translates raw `platform:` frontmatter values from the corpus into clean visible
+labels for the body-text header block. C17 implements this map at harness level; Phase 114
+authors the map as the authoritative specification.
+
+| Raw `platform:` value | Clean visible label |
+|-----------------------|--------------------|
+| `Windows` | Windows |
+| `windows` | Windows |
+| `macOS` | macOS |
+| `macos` | macOS |
+| `iOS` | iOS |
+| `ios` | iOS |
+| `Android` | Android |
+| `android` | Android |
+| `Linux` | Linux |
+| `linux` | Linux |
+| `all` | All Platforms |
+| `windows+macos+ios+android+linux` | All Platforms |
+| `cross-platform` | Cross-Platform |
+| `apple-tv` | Apple TV |
+| `iOS,Android` | iOS + Android |
+| `ios+macos` | iOS + macOS |
+| `ios+ipados+macos` | iOS / iPadOS / macOS |
+| `ios+ipados+macos+tvos` | iOS / iPadOS / macOS / tvOS |
+| `ios+macos+shared-ipad` | iOS + macOS + Shared iPad |
+| `ios+shared-ipad` | iOS + Shared iPad |
+
+**Total: 20 entries.** Enumerated by direct corpus grep against the repository
+(`grep -rhi "^platform:" docs --include="*.md"`) on 2026-07-04.
+
+### No-fallback rule (D-09 / META-03)
+
+> **An unmapped `platform:` value is a HARD FAILURE. There is NO silent fallback.**
+
+If a file carries a `platform:` value not in the table above, C17 FAILs that file. The
+harness does not produce a default label, a warning-only result, or a partial pass. This
+rule applies to all corpus files and templates in C17's scope.
+
+This ensures that every new platform variant — including future Apple compound platforms or
+new OS families — must be explicitly added to this map before any document using it can pass
+the gate. Undeclared variants surface immediately rather than silently reaching the indexed
+library with an incorrect or missing label.
+
+### Notes on "All Platforms" entries
+
+Both `all` and `windows+macos+ios+android+linux` map to the clean label `All Platforms`.
+They are semantically identical — both indicate a doc covering all supported platforms. The
+raw frontmatter value is preserved in YAML (so tooling can distinguish them if needed), but
+the body-text block renders the same label. C17 does not require these two raw values to
+produce different block text.
+
+### Template pipe-list placeholders (NOT in this map)
+
+The three templates (`admin-template.md`, `l1-template.md`, `l2-template.md`) previously
+carried pipe-list `platform:` values (`Windows | macOS | all`, `Windows | macOS | iOS |
+Android | all`). These are **not real corpus variants** and are **not in the D1 map**. Plan 03
+(D-07) replaces these with `platform: all` + an HTML comment. Adding pipe-list values to the
+D1 map would pollute the normalization authority with authoring-instruction strings.
+
+---
+
+## C17 Enforcement Reference (Needle-Spec for Phase 115)
+
+C17 is the machine-checkable harness check that enforces this standard across the corpus. It
+is authored as **one indivisible validator atom** in Phase 115. Phase 114 produces this
+needle-spec ONLY — no validator is wired into `scripts/validation/` in this phase.
+
+### C17 Assertion List (13 assertions)
+
+| # | Assertion | Source in this standard |
+|---|-----------|------------------------|
+| 1 | No Mermaid code fences in Phase-1 corpus files | Existing constraint (P-06 anti-pattern) |
+| 2 | H1 present exactly once; first non-frontmatter non-block content line | D3-A structure; Visible Header Block Format section |
+| 3 | H1 content ≠ bare doc-ID pattern (`^RE-\d+$`) | D3-A structure |
+| 4 | `## Summary` is first H2 (no intervening H2 or H3 between header block and Summary) | Visible Header Block Format — Structure invariant |
+| 5 | `## Summary` section body ≥ 30 words of prose content | Grounding requirement; 30-word threshold from ROADMAP Phase-115 SC2 |
+| 6 | Header block is a single inline paragraph, NOT a markdown table | Visible Header Block Format — Format specification (D-05) |
+| 7 | Platform and Doc Type appear before Doc ID and Status in the block | D-05 field order: Platform · Doc Type · Doc ID · Status |
+| 8 | Required frontmatter keys present: `doc_id`, `status`, `owner`, `doc_type`, `last_verified` | Required Frontmatter Schema section |
+| 9 | Each visible block field matches the corresponding frontmatter value; Platform resolved via D1 map | D-05; D1 Platform Normalization Map section |
+| 10 | `platform` value resolves in D1 map — HARD FAILURE on unmapped value (no fallback) | D1 Platform Normalization Map — No-fallback rule (D-09) |
+| 11 | Markdown tables with >25 rows have a prose summary paragraph within 5 lines of the table | D2 table-remediation rule (OQ3 / Phase-118 belt-and-suspenders) |
+| 12 | Gate blockquote (if present) ≤ 200 characters | Existing constraint (PITFALLS.md P-06 Sub-risk B) |
+| 13 | `status` frontmatter value ∈ `{Draft, Approved, Superseded}` | Status Values section |
+
+### Phase-114 additions to the needle-spec
+
+| Item | Needle-spec text for Phase 115 |
+|------|-------------------------------|
+| Block field set | Exactly four fields — `{Platform, Doc Type, Doc ID, Status}` — in that order; no additional fields |
+| Owner placement | `owner` required in YAML frontmatter; `owner` ABSENT from the visible block; C17 never evaluates owner against block text |
+| Block format | Single inline paragraph using `·` (U+00B7 middle-dot) as the separator; no other separator character is valid |
+| Platform resolves | `platform` frontmatter value must resolve in the 20-entry D1 map in this document; unmapped = HARD FAILURE, no fallback |
+| Status vocabulary | `status` frontmatter value ∈ `{Draft, Approved, Superseded}` (Phase 115 determines case-sensitivity handling) |
+| Summary word-count | `## Summary` section body contains ≥ 30 words of prose (not including headings or code fences) |
+
+### Template behavior note
+
+Templates (`docs/_templates/*`) carry placeholder values: `doc_id: RE-[FILL-IN]`,
+`owner: [FILL-IN]`, and `status: Draft`. On templates, C17 asserts:
+- Key **presence** for all five required frontmatter keys
+- `platform:` value **resolves in the D1 map** (templates must carry a valid mapped value, not
+  a pipe-list placeholder — D-07 ensures this)
+- **Structural rules** (H1, block format, single inline paragraph, `## Summary` first H2)
+
+C17 does NOT assert frontmatter-value-to-block-field equality on template placeholder text
+(`RE-[FILL-IN]` does not need to match the block's `RE-[NNN]`). Once a template is instantiated
+as a real corpus document and assigned an actual `doc_id`, the equality assertion applies.
+
+### Validator-atom deferral
+
+Phase 114 authors this needle-spec as the handoff artifact only. The C17 validator is
+authored as one indivisible atom in Phase 115 and registered in the harness chain. No new
+validator is wired into `scripts/validation/` during Phase 114 or during corpus-retrofit
+Phases 116–118. The validator-atom deferral convention (introduced in v1.13 Phase 100, carried
+in v1.14 Phase 112) ensures C17 is never partially live across content phases.
+
+---
+
 ## Version History
 
 | Date | Change |
 |------|--------|
-| 2026-07-04 | Initial version — EEE SOP standard for Phase-1 corpus retrofit (v1.15); core spec sections authored |
+| 2026-07-04 | Initial version — EEE SOP standard for Phase-1 corpus retrofit (v1.15); all sections authored including D1 normalization map (20 entries) and C17 needle-spec handoff |
