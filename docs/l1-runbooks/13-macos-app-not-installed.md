@@ -1,4 +1,8 @@
 ---
+doc_id: RE-014
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-014 · **Status:** Approved
 
 # macOS App Not Installed
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing macOS application deployment failures after enrollment, covering DMG/PKG managed packages, VPP App Store apps, and apps showing a Failed installation status in Intune, with device sync steps and escalation criteria for persistent failures.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when Setup Assistant completed and the user is at the macOS desktop, but an expected application is not installed. This includes apps deployed as managed packages (DMG or PKG), apps from the App Store via VPP (Volume Purchase Program / Apps and Books), and apps that show a "Failed" status in Intune.
 
@@ -122,4 +132,5 @@ See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for app installation log inv
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version | -- |

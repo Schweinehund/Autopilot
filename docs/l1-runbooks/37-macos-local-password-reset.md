@@ -1,4 +1,8 @@
 ---
+doc_id: RE-038
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-038 · **Status:** Approved
 
 # macOS Local Password Recovery: Secure Enclave PSSO Devices
+
+## Summary
+
+This runbook includes state-changing recovery paths (escrowed FileVault key reset, LAPS admin password use, and Apple-ID reset) that destroy the Secure-Enclave PSSO key binding — it is NOT read-only; run only the triage steps at L1 and escalate the destructive paths. It covers three ordered recovery options for regaining macOS login access when the local password is unknown, and mandates PSSO re-registration via L1 #36 after any successful recovery to restore Entra authentication.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a user cannot log in to their Mac because their local password is unknown or forgotten. This runbook covers three recovery paths: the escrowed FileVault recovery key (primary), the macOS LAPS managed admin account (secondary), and Apple ID reset (where org policy allows).
 
@@ -162,4 +172,5 @@ See [macOS Platform SSO Investigation (L2 #27)](../l2-runbooks/27-macos-sso-inve
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-29 | Initial version | -- |

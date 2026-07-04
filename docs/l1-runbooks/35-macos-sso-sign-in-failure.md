@@ -1,4 +1,8 @@
 ---
+doc_id: RE-036
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-06-21
 review_by: 2026-09-21
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-036 · **Status:** Approved
 
 # macOS Platform SSO Sign-In Failure
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing macOS Platform SSO sign-in failures across four root causes — outdated Company Portal version, Error 10002 legacy SSO extension conflict, mistyped registration token, and a dismissed Registration Required notification — using Intune admin center checks and user-guided repair steps before escalating to L2.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a user's Mac does not display the "Registration Required" notification despite Intune reporting a "Succeeded" status for the Platform SSO policy, or when the user cannot sign in via Platform SSO after a registration attempt.
 
@@ -105,4 +115,5 @@ See [macOS Platform SSO Investigation (L2 #27)](../l2-runbooks/27-macos-sso-inve
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-21 | Initial version | -- |

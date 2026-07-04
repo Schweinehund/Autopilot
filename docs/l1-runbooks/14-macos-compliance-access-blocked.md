@@ -1,4 +1,8 @@
 ---
+doc_id: RE-015
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-015 · **Status:** Approved
 
 # macOS Compliance Failure / Access Blocked
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through two distinct macOS scenarios — a device showing as non-compliant in Intune, and a device showing as compliant but with Microsoft 365 access still blocked — using Intune and Entra admin center checks before escalating to L2.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a Mac shows as non-compliant in Intune, OR when a user cannot access Microsoft 365 resources (email, Teams, SharePoint) despite the device appearing enrolled and compliant.
 
@@ -115,4 +125,5 @@ See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for compliance log investiga
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version | -- |

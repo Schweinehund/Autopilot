@@ -1,4 +1,8 @@
 ---
+doc_id: RE-013
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-013 · **Status:** Approved
 
 # macOS Configuration Profile Not Applied
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing missing or non-functional macOS configuration profiles after enrollment, covering profile assignment and group membership checks, as well as type-specific guidance for Wi-Fi, FileVault, VPN, and restriction profiles before escalating to L2.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when Setup Assistant completed and the user is at the macOS desktop, but an expected configuration is missing — for example, the device is not connected to the corporate Wi-Fi automatically, a VPN profile is not present, FileVault is not enabled, or restrictions are not in effect.
 
@@ -106,4 +116,5 @@ See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for profile delivery log inv
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version | -- |

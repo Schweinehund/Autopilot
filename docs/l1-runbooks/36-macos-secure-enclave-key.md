@@ -1,4 +1,8 @@
 ---
+doc_id: RE-037
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-037 · **Status:** Approved
 
 # macOS Platform SSO — Secure Enclave Key Loss
+
+## Summary
+
+This runbook includes Secure-Enclave Platform-SSO key re-registration — it is NOT purely read-only; perform L1 triage only and escalate the key re-registration steps per the guardrails below. It covers diagnosing Platform SSO failures caused by password resets or FileVault recovery key use, which destroy the Secure Enclave key binding, and guides the user through the macOS 14 Repair path or macOS 13 Company Portal re-registration to provision a new Secure Enclave key and restore SSO.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a user's Platform SSO stops working after a password reset, after using a FileVault recovery key to unlock the device, or when `app-sso platform -s` shows User Registration not in REGISTERED state despite the device previously being enrolled in Platform SSO.
 
@@ -95,4 +105,5 @@ See [macOS Platform SSO Investigation (L2 #27)](../l2-runbooks/27-macos-sso-inve
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-21 | Initial version | -- |

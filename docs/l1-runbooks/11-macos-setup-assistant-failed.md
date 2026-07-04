@@ -1,4 +1,8 @@
 ---
+doc_id: RE-012
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-012 · **Status:** Approved
 
 # macOS Setup Assistant Stuck or Failed
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing macOS Setup Assistant failures across three scenarios — authentication failure at the sign-in screen, Await Configuration stuck on the Remote Management screen, and network or connectivity issues — using Intune admin center checks and user-guided steps before escalating to L2.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a Mac is visible in Intune admin center (Devices > macOS) but Setup Assistant did not complete. The device is stuck on the Apple logo, spinning globe, Remote Management screen ("Your Mac is being configured"), or an authentication sign-in screen.
 
@@ -132,4 +142,5 @@ See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for enrollment log investiga
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version | -- |

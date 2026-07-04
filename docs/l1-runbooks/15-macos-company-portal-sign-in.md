@@ -1,4 +1,8 @@
 ---
+doc_id: RE-016
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-06-28
 review_by: 2026-09-28
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-016 · **Status:** Approved
 
 # macOS Company Portal Sign-In Failure
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing Company Portal installation failures, sign-in errors, and incomplete Entra ID device registration on macOS, covering assignment checks, sync steps, and the user-guided registration flow before escalating to L2.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a user cannot sign into the Company Portal app on their Mac, when Company Portal is not installed on the device, or when Company Portal is installed but the user's device does not appear as registered in Entra ID. Company Portal is required to complete user affinity registration, register the device in Entra ID, and access VPP "Available" apps.
 
@@ -74,5 +84,6 @@ See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for Company Portal and Entra
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-28 | Phase 96 (ACC-04): corrected step 4 app-assignment group type from device to user for user-affinity devices; updated last_verified and review_by | -- |
 | 2026-04-14 | Initial version | -- |

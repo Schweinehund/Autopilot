@@ -1,4 +1,8 @@
 ---
+doc_id: RE-011
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-011 · **Status:** Approved
 
 # macOS Device Not Appearing in Intune
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 technicians through diagnosing why a Mac does not appear in Intune after an ADE enrollment attempt, covering Apple Business Manager device lookup, MDM server assignment verification, ADE token status, and enrollment profile checks before escalating unresolvable cases to L2.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks).
 
 Use this runbook when a Mac is not found in Intune admin center after the user attempted ADE enrollment, or when a Mac is expected to enroll via [ADE](../_glossary-macos.md#ade) but the device serial number does not appear in Intune Devices > macOS.
 
@@ -73,4 +83,5 @@ See [macOS L2 Runbooks](../l2-runbooks/00-index.md) for advanced ADE enrollment 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version | -- |
