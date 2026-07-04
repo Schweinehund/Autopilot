@@ -23,7 +23,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 - [x] **STD-01**: The canonical **EEE SOP standard** document is authored in-repo (NOT in the grounded library) — defining the single-line header-block format + field vocabulary, the Doc Type taxonomy (Runbook / Guide / RCA / Reference), the D1 Platform-normalization rule, the D2 `Last Reviewed` = `last_verified` semantics, the supersedence convention, and a "grounding notes" section stating the platform realities (visible-body-only indexing; document-level-only citations; Approved-only in the indexed library).
 - [x] **STD-02**: `docs/_templates/*` (admin, L1, L2, per-platform) are updated so every **new** doc is born EEE-conformant — frontmatter keys + single-line header block + `## Summary`-first — with new docs defaulting to `Status: Draft` (only the owner promotes to Approved).
-- [ ] **STD-03**: A **Doc ID Registry** is created (flat `RE-NNN`, starting `RE-001`) mapping `RE-NNN → file + descriptive title + doc_type + status`, stored **outside** the grounded library; all Phase-1 Doc IDs are assigned in one collision-free pass before authoring; supersedence is expressed via the registry + archive-scope-exclusion (superseded docs leave the indexed library).
+- [x] **STD-03**: A **Doc ID Registry** is created (flat `RE-NNN`, starting `RE-001`) mapping `RE-NNN → file + descriptive title + doc_type + status`, stored **outside** the grounded library; all Phase-1 Doc IDs are assigned in one collision-free pass before authoring; supersedence is expressed via the registry + archive-scope-exclusion (superseded docs leave the indexed library).
 
 ### Category: Metadata Model & Platform Normalization (META)
 
@@ -93,7 +93,7 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 | META-04 | Phase 114 | Complete |
 | STD-01 | Phase 114 | Complete |
 | STD-02 | Phase 114 | Complete |
-| STD-03 | Phase 114 | Pending |
+| STD-03 | Phase 114 | Complete |
 | HARN-01 | Phase 115 | Pending |
 | RETRO-01 | Phase 116 | Pending |
 | RETRO-02 | Phase 117 | Pending |

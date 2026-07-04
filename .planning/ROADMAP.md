@@ -38,7 +38,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 ### v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1) — Phases 113-119
 
 - [x] **Phase 113: Conversion Pipeline Lock + Representative-Set Grounding Validation** — Define, lock, and empirically validate the MD→.docx conversion pipeline before the full corpus retrofit begins (completed 2026-07-04)
-- [ ] **Phase 114: EEE Standard, Templates, Doc ID Registry + Metadata Rules** — Author the EEE SOP standard, update templates, assign all Phase-1 Doc IDs, and verify the C10 precondition
+- [x] **Phase 114: EEE Standard, Templates, Doc ID Registry + Metadata Rules** — Author the EEE SOP standard, update templates, assign all Phase-1 Doc IDs, and verify the C10 precondition (completed 2026-07-04)
 - [ ] **Phase 115: C17 Harness Check (Validator Atom)** — Author C17 as one indivisible blocking validator atom asserting the full EEE contract from Markdown source
 - [ ] **Phase 116: L1/L2 Runbook Retrofit (~75 docs)** — Retrofit all L1/L2 runbooks to EEE with C17 green on every file
 - [ ] **Phase 117: Admin-Setup Guide Retrofit (all platforms)** — Retrofit all admin-setup guides (Windows / macOS / iOS / Android / Linux / 802.1X) to EEE with C17 green
@@ -104,7 +104,7 @@ Plans:
 **Wave 3** *(blocked on Wave 2 completion; the two run in parallel — no file overlap)*
 
 - [x] 114-03-PLAN.md — Templates: 6 edited + reference-template.md new, all born-EEE-conformant, D-07 platform fix (STD-02)
-- [ ] 114-04-PLAN.md — Doc ID Registry RE-index.md: 178 Phase-1 docs → RE-001..RE-178, collision-free, outside indexed library (STD-03)
+- [x] 114-04-PLAN.md — Doc ID Registry RE-index.md: 178 Phase-1 docs → RE-001..RE-178, collision-free, outside indexed library (STD-03)
 
 ### Phase 115: C17 Harness Check (Validator Atom)
 
@@ -203,7 +203,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
-| 114. EEE Standard, Templates, Registry + Metadata Rules | 3/4 | In Progress|  |
+| 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete   | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
