@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Catch-all runbook for Android devices across all GMS enrollment modes (BYOD, COBO, Dedicated, ZTE) that never appeared in Intune after an enrollment attempt with no visible restriction error or work-profile-creation failure signature. L1 uses read-only portal checks to identify the most likely failure class and documents the observed state for administrator review.
 
 > **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 

@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS devices blocked from enrolling by an Intune Enrollment Restrictions policy or by a per-user device-enrollment cap. L1 identifies which restriction policy is in scope, documents the blocking condition, and hands the configuration change packet to the Intune administrator.
 
 > **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 

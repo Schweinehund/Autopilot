@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS devices enrolled in Intune where Conditional Access is blocking access to Microsoft 365 resources due to non-compliant or unevaluated compliance status. Includes user-actionable steps such as device restart, iOS update, and passcode change where the compliance gap is user-resolvable without administrative intervention; policy configuration gaps are escalated to L2.
 
 > **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 

@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices enrolled in Intune where Conditional Access is blocking Microsoft 365 resource access due to non-compliant status, scoped to four independently diagnosable causes: Play Integrity attestation failure, OS version policy mismatch, post-enrollment CA timing gap, and passcode or encryption policy mismatch.
 
 > **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 

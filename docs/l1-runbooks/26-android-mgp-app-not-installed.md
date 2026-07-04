@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices across all enrollment modes where an expected Managed Google Play app failed to install, using read-only Intune portal checks to identify the delivery failure class. L1 does not have access to the Managed Google Play console; app approval, permission updates, and licensing corrections are administrator-only actions in that separate Google-managed portal.
 
 > **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 

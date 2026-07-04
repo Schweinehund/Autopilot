@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers fleet-wide MDM communication failure caused by an expired Apple Push Notification service (APNs) certificate, affecting all enrolled iOS/iPadOS and macOS devices simultaneously. L1 captures the certificate status and expiration details from the Intune portal and hands the renewal packet to the Intune administrator.
 
 > **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 

@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS enrollment failures caused by missing or incorrect Intune licensing on the user account, presenting as "User Name Not Recognized" or as a device that completes enrollment steps but never appears in Intune admin center. L1 verifies the user's license assignment in the Microsoft 365 or Entra admin center and hands the licensing correction to the administrator.
 
 > **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 

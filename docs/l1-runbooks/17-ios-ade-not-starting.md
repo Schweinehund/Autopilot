@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers supervised corporate ADE iOS/iPadOS devices that do not reach Intune after factory reset, stall in Setup Assistant, or never present the Microsoft sign-in screen — three failure signatures tied to token expiry, enrollment profile configuration, or legacy authentication method. The sole L1 write-action exception is a manual ADE token sync, which retries ABM-to-Intune device syncing without modifying any configuration.
 
 > **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 

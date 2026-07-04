@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Samsung Knox Mobile Enrollment (KME) failures where a Samsung corporate device was expected to auto-enroll via KME but did not appear in Intune. L1 diagnoses four documented KME-specific causes and documents the device identifiers and Samsung Knox portal state for the administrator's configuration review.
 
 > **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
