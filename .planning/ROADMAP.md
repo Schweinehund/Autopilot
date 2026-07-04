@@ -206,7 +206,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
-| 115. C17 Harness Check (Validator Atom) | 1/1 | Complete   | 2026-07-04 |
+| 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
