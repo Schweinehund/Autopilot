@@ -22,7 +22,7 @@ This runbook includes Secure-Enclave Platform-SSO key re-registration — it is 
 
 Use this runbook when a user's Platform SSO stops working after a password reset, after using a FileVault recovery key to unlock the device, or when `app-sso platform -s` shows User Registration not in REGISTERED state despite the device previously being enrolled in Platform SSO.
 
-> **If the user cannot log in:** If the user does not yet have access to their Mac (local password unknown or lost), use [macOS Local Password Recovery (L1 #37)](37-macos-local-password-reset.md) first to regain access, then return here for the mandatory PSSO re-registration.
+**If the user cannot log in:** If the user does not yet have access to their Mac (local password unknown or lost), use [macOS Local Password Recovery (L1 #37)](37-macos-local-password-reset.md) first to regain access, then return here for the mandatory PSSO re-registration.
 
 ## Prerequisites
 

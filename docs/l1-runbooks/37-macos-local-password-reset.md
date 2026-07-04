@@ -74,7 +74,11 @@ This path uses the personal FileVault recovery key that Intune automatically esc
 
 5. Once the new password is accepted, the user can log in to their Mac with the new password.
 
-> **After completing Path A:** Using the FileVault recovery key destroys the Secure Enclave key binding that Platform SSO uses for Entra authentication — this is expected macOS behavior, not a bug. Platform SSO will not function until a new Secure Enclave key is provisioned. Proceed immediately to [L1 #36 — macOS Platform SSO: Secure Enclave Key Loss](36-macos-secure-enclave-key.md) for the mandatory PSSO re-registration before closing this ticket.
+> **After completing Path A:** Using the FileVault recovery key destroys the Secure Enclave key binding that Platform SSO uses for Entra authentication — this is expected macOS behavior, not a bug.
+
+> Platform SSO will not function until a new Secure Enclave key is provisioned.
+
+> Proceed immediately to [L1 #36 — macOS Platform SSO: Secure Enclave Key Loss](36-macos-secure-enclave-key.md) for the mandatory PSSO re-registration before closing this ticket.
 
 ---
 
@@ -112,7 +116,13 @@ This path uses the Intune-managed local admin account (LAPS) that Intune provisi
 2. > **Say to the user:** "Please log in with your own account name and the temporary password: [provide the temporary password]."
 3. macOS will prompt the user to change their password at first login. Guide them to set a new password they will remember.
 
-> **After completing Path B:** Resetting the local password via the LAPS admin account destroys the Secure Enclave key binding that Platform SSO uses for Entra authentication — this is expected macOS behavior, not a bug. Platform SSO will not function until a new Secure Enclave key is provisioned. Proceed immediately to [L1 #36 — macOS Platform SSO: Secure Enclave Key Loss](36-macos-secure-enclave-key.md) for the mandatory PSSO re-registration before closing this ticket.
+> **After completing Path B:** Resetting the local password via the LAPS admin account destroys the Secure Enclave key binding that Platform SSO uses for Entra authentication —
+
+> this is expected macOS behavior, not a bug.
+
+> Platform SSO will not function until a new Secure Enclave key is provisioned.
+
+> Proceed immediately to [L1 #36 — macOS Platform SSO: Secure Enclave Key Loss](36-macos-secure-enclave-key.md) for the mandatory PSSO re-registration before closing this ticket.
 
 ---
 
@@ -122,7 +132,7 @@ This path uses the macOS login-window Apple ID password reset feature. It is onl
 
 **Pre-check — confirm eligibility before proceeding:**
 
-> **Say to the user:** "Before we try this option, I need to ask: do you have a personal Apple ID that you have linked to this Mac — for example, an iCloud account you used when setting up the computer? This would be separate from your work email."
+**Say to the user:** "Before we try this option, I need to ask: do you have a personal Apple ID that you have linked to this Mac — for example, an iCloud account you used when setting up the computer? This would be separate from your work email."
 
 - If the user has **no Apple ID associated** with their Mac account — use Path A or Path B instead. Corporate ADE accounts provisioned by Intune MDM may not have an Apple ID linked, and this path will not be available.
 - If **org policy does not permit Apple ID use** on corporate devices — use Path A or Path B instead.
@@ -141,7 +151,13 @@ Proceed with Path C only if the user confirms they have an Apple ID linked to th
 
 5. Once the new password is accepted, the user can log in to their Mac.
 
-> **After completing Path C:** Resetting the local password via Apple ID destroys the Secure Enclave key binding that Platform SSO uses for Entra authentication — this is expected macOS behavior, not a bug. Platform SSO will not function until a new Secure Enclave key is provisioned. Proceed immediately to [L1 #36 — macOS Platform SSO: Secure Enclave Key Loss](36-macos-secure-enclave-key.md) for the mandatory PSSO re-registration before closing this ticket.
+> **After completing Path C:** Resetting the local password via Apple ID destroys the Secure Enclave key binding that Platform SSO uses for Entra authentication —
+
+> this is expected macOS behavior, not a bug.
+
+> Platform SSO will not function until a new Secure Enclave key is provisioned.
+
+> Proceed immediately to [L1 #36 — macOS Platform SSO: Secure Enclave Key Loss](36-macos-secure-enclave-key.md) for the mandatory PSSO re-registration before closing this ticket.
 
 ## Escalation Criteria
 

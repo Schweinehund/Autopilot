@@ -24,12 +24,12 @@
 | RE-008 | docs/l1-runbooks/07-apv2-apps-not-installed.md | APv2 Apps and Scripts Not Installed | Runbook | Approved |
 | RE-009 | docs/l1-runbooks/08-apv2-apv1-conflict.md | APv1 Registration Conflict -- ESP Appeared During APv2 Deployment | Runbook | Approved |
 | RE-010 | docs/l1-runbooks/09-apv2-deployment-timeout.md | APv2 Deployment Timed Out | Runbook | Approved |
-| RE-011 | docs/l1-runbooks/10-macos-device-not-appearing.md | macOS Device Not Appearing in Intune | Runbook | Pending |
-| RE-012 | docs/l1-runbooks/11-macos-setup-assistant-failed.md | macOS Setup Assistant Stuck or Failed | Runbook | Pending |
-| RE-013 | docs/l1-runbooks/12-macos-profile-not-applied.md | macOS Configuration Profile Not Applied | Runbook | Pending |
-| RE-014 | docs/l1-runbooks/13-macos-app-not-installed.md | macOS App Not Installed | Runbook | Pending |
-| RE-015 | docs/l1-runbooks/14-macos-compliance-access-blocked.md | macOS Compliance Failure / Access Blocked | Runbook | Pending |
-| RE-016 | docs/l1-runbooks/15-macos-company-portal-sign-in.md | macOS Company Portal Sign-In Failure | Runbook | Pending |
+| RE-011 | docs/l1-runbooks/10-macos-device-not-appearing.md | macOS Device Not Appearing in Intune | Runbook | Approved |
+| RE-012 | docs/l1-runbooks/11-macos-setup-assistant-failed.md | macOS Setup Assistant Stuck or Failed | Runbook | Approved |
+| RE-013 | docs/l1-runbooks/12-macos-profile-not-applied.md | macOS Configuration Profile Not Applied | Runbook | Approved |
+| RE-014 | docs/l1-runbooks/13-macos-app-not-installed.md | macOS App Not Installed | Runbook | Approved |
+| RE-015 | docs/l1-runbooks/14-macos-compliance-access-blocked.md | macOS Compliance Failure / Access Blocked | Runbook | Approved |
+| RE-016 | docs/l1-runbooks/15-macos-company-portal-sign-in.md | macOS Company Portal Sign-In Failure | Runbook | Approved |
 | RE-017 | docs/l1-runbooks/16-ios-apns-expired.md | iOS APNs Certificate Expired | Runbook | Pending |
 | RE-018 | docs/l1-runbooks/17-ios-ade-not-starting.md | iOS ADE Enrollment Not Starting | Runbook | Pending |
 | RE-019 | docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md | iOS Enrollment Restriction Blocking | Runbook | Pending |
@@ -49,9 +49,9 @@
 | RE-033 | docs/l1-runbooks/32-linux-ca-blocking-web-access.md | Linux CA Blocking Web-App Access | Runbook | Pending |
 | RE-034 | docs/l1-runbooks/33-linux-agent-service-failure.md | Linux Intune Agent Service Failure | Runbook | Pending |
 | RE-035 | docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md | Apple Business Shared iPad Passcode Reset | Runbook | Pending |
-| RE-036 | docs/l1-runbooks/35-macos-sso-sign-in-failure.md | macOS Platform SSO Sign-In Failure | Runbook | Pending |
-| RE-037 | docs/l1-runbooks/36-macos-secure-enclave-key.md | macOS Platform SSO — Secure Enclave Key Loss | Runbook | Pending |
-| RE-038 | docs/l1-runbooks/37-macos-local-password-reset.md | macOS Local Password Recovery: Secure Enclave PSSO Devices | Runbook | Pending |
+| RE-036 | docs/l1-runbooks/35-macos-sso-sign-in-failure.md | macOS Platform SSO Sign-In Failure | Runbook | Approved |
+| RE-037 | docs/l1-runbooks/36-macos-secure-enclave-key.md | macOS Platform SSO — Secure Enclave Key Loss | Runbook | Approved |
+| RE-038 | docs/l1-runbooks/37-macos-local-password-reset.md | macOS Local Password Recovery: Secure Enclave PSSO Devices | Runbook | Approved |
 | RE-039 | docs/l1-runbooks/38-8021x-certificate-failure.md | 802.1X Certificate Failure | Runbook | Pending |
 | RE-040 | docs/l1-runbooks/39-8021x-radius-reject.md | 802.1X RADIUS Reject | Runbook | Pending |
 | RE-041 | docs/l1-runbooks/40-8021x-server-trust-failure.md | 802.1X Server Trust Failure | Runbook | Pending |
