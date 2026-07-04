@@ -13,7 +13,7 @@
 // Exit 1: any assertion violation
 
 // Node built-ins ONLY -- zero external npm packages (matches scripts/validation/ convention)
-import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, lstatSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
 
@@ -75,7 +75,8 @@ function walkMd(dir) {
     for (const entry of entries) {
       const full = join(current, entry);
       let stat;
-      try { stat = statSync(full); } catch { continue; }
+      try { stat = lstatSync(full); } catch { continue; }
+      if (stat.isSymbolicLink()) continue; // do not follow; avoids infinite recursion on symlink cycles
       if (stat.isDirectory()) { walk(full); }
       else if (entry.endsWith('.md')) { results.push(full); }
     }
