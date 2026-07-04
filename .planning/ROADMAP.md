@@ -103,7 +103,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion; the two run in parallel — no file overlap)*
 
-- [ ] 114-03-PLAN.md — Templates: 6 edited + reference-template.md new, all born-EEE-conformant, D-07 platform fix (STD-02)
+- [x] 114-03-PLAN.md — Templates: 6 edited + reference-template.md new, all born-EEE-conformant, D-07 platform fix (STD-02)
 - [ ] 114-04-PLAN.md — Doc ID Registry RE-index.md: 178 Phase-1 docs → RE-001..RE-178, collision-free, outside indexed library (STD-03)
 
 ### Phase 115: C17 Harness Check (Validator Atom)
@@ -203,7 +203,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
-| 114. EEE Standard, Templates, Registry + Metadata Rules | 2/4 | In Progress|  |
+| 114. EEE Standard, Templates, Registry + Metadata Rules | 3/4 | In Progress|  |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-04T05:45:20.845Z"
+last_updated: "2026-07-04T05:58:58.170Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 14
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 114 (eee-standard-templates-doc-id-registry-metadata-rules) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-04
 
@@ -270,6 +270,10 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: YAML-LEAK guard runs on decompressed extractBodyText() output -- raw byte scan always false-green (D-04 mitigation)
 - [Phase ?]: guard-docx.mjs standalone in scripts/pipeline/ (no CHAIN_PHASES); Phase-119 folds it into check-phase-113.mjs per D-07
 - [Phase ?]: convert.ps1 version-guards pandoc 3.7.0.2; PATH-then-LOCALAPPDATA resolution (T-113-01 mitigation)
+- [Phase ?]: D-07 applied: pipe-list platform placeholders replaced with platform: all in 3 templates; guidance in HTML comment block to avoid | on platform: line
+- [Phase ?]: D3-A structure enforced in all 7 templates: gate blockquotes relocated to after ## Summary; EEE block immediately after frontmatter close; ## Summary as first H2
+- [Phase ?]: D-06: reference-template.md created with Phase-118 table-remediation rule (>25 rows → prose summary within 5 lines); RCA template deferred to v1.16
+- [Phase ?]: [114-03] TEMPLATE-SENTINEL applied to all 7 templates (last_verified: 1970-01-01); ios/macos templates normalized from YYYY-MM-DD placeholder to sentinel
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -300,7 +304,7 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-04T05:45:20.831Z
+Last session: 2026-07-04T05:57:56.789Z
 Stopped at: Phase 114 context gathered
 Resume file: None
 Next action: Proceed to Phase 114 (/gsd-discuss-phase 114 or /gsd-plan-phase 114) — EEE Standard, Templates, Doc ID Registry + Metadata Rules. All four PIPE-02 empirical findings are now Phase-114 inputs.
@@ -321,3 +325,4 @@ Next action: Proceed to Phase 114 (/gsd-discuss-phase 114 or /gsd-plan-phase 114
 | Phase 113 P02 | 5min | 2 tasks | 3 files |
 | Phase 113 P03 | 35min | 2 tasks | 8 files (7 created, 1 modified) |
 | Phase 113 P04 | multi-day (owner checkpoint) | 3 tasks | 2 files (PIPE-02-RUNBOOK.md, PIPE-02-FINDINGS.md) |
+| Phase 114 P03 | 5min | 2 tasks | 7 files |
