@@ -1,27 +1,46 @@
 <!-- L1 RUNBOOK TEMPLATE
      Usage: Copy this file as your starting point for any L1 Service Desk runbook.
      Rules:
-     - Fill in all YYYY-MM-DD dates (review_by = last_verified + 90 days)
+     - Fill in last_verified and review_by dates at doc creation time (review_by = last_verified + 90 days)
+     - The `1970-01-01 # TEMPLATE-SENTINEL` value on last_verified is a harness-skip sentinel —
+       REPLACE with actual authoring date when copying this template
      - Set applies_to to APv1, APv2, or both
      - Replace all [bracketed placeholders] with actual content
+     - Fill in doc_id from docs/_registry/RE-index.md at doc creation time
+     - Set owner to the person or role responsible for this document
+     - Set doc_type: Runbook (this template is Runbook-class only)
+     - Set platform to the appropriate D1-mapped value — replace 'all' if this runbook covers a
+       specific platform. Valid values: Windows | macOS | iOS | Android | Linux | all
+     - Update the EEE block line (immediately after the frontmatter close) to match your
+       platform label and assigned Doc ID before publishing
      - Do NOT include PowerShell commands, registry paths, or log file references
      - Do NOT link to L2-audience content from within steps
      - Link to the glossary for any Autopilot-specific terms
-     - Set platform to Windows, macOS, iOS, or all
+     - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: L1 Team Lead (role, not person name)
 -->
 ---
-last_verified: YYYY-MM-DD
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
 review_by: YYYY-MM-DD
 applies_to: APv1 | APv2 | both
 audience: L1
-platform: Windows | macOS | iOS | Android | all
+doc_id: RE-[FILL-IN]
+status: Draft
+owner: [FILL-IN]
+doc_type: Runbook
+platform: all
 ---
+
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-[NNN] · **Status:** Draft
+
+# [Issue Title]
+
+## Summary
+
+[2–3 sentences: scope, audience (L1 service desk), and safety guardrail. Minimum 30 words. Open with the read-only scope banner: this runbook covers read-only diagnostic steps only — no registry edits, no PowerShell execution, no destructive actions. All remediation steps requiring elevated access or technical investigation must be escalated to L2.]
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
-
-# [Issue Title]
 
 ## Prerequisites
 

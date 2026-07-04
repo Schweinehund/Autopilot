@@ -1,28 +1,47 @@
 <!-- L2 INVESTIGATION GUIDE TEMPLATE
      Usage: Copy this file as your starting point for any L2 Desktop Engineer guide.
      Rules:
-     - Fill in all YYYY-MM-DD dates (review_by = last_verified + 90 days)
+     - Fill in last_verified and review_by dates at doc creation time (review_by = last_verified + 90 days)
+     - The `1970-01-01 # TEMPLATE-SENTINEL` value on last_verified is a harness-skip sentinel —
+       REPLACE with actual authoring date when copying this template
      - Set applies_to to APv1, APv2, both, ADE, or all
      - Replace all [bracketed placeholders] with actual content
+     - Fill in doc_id from docs/_registry/RE-index.md at doc creation time
+     - Set owner to the person or role responsible for this document
+     - Set doc_type: Runbook (this template is Runbook-class only)
+     - Set platform to the appropriate D1-mapped value — replace 'all' if this runbook covers a
+       specific platform. Valid values: Windows | macOS | iOS | Android | Linux | all
+     - Update the EEE block line (immediately after the frontmatter close) to match your
+       platform label and assigned Doc ID before publishing
      - Link to reference files for registry paths, PowerShell functions, and endpoints
        Do NOT define paths or function signatures inline
      - Include actual PowerShell commands and registry paths in investigation steps
      - Document multiple resolution scenarios where applicable
-     - Set platform to Windows, macOS, iOS, or all
+     - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: L2 Desktop Lead (role, not person name)
 -->
 ---
-last_verified: YYYY-MM-DD
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
 review_by: YYYY-MM-DD
 applies_to: APv1 | APv2 | both | ADE | all
 audience: L2
-platform: Windows | macOS | iOS | Android | all
+doc_id: RE-[FILL-IN]
+status: Draft
+owner: [FILL-IN]
+doc_type: Runbook
+platform: all
 ---
+
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-[NNN] · **Status:** Draft
+
+# [Issue Title]
+
+## Summary
+
+[2–3 sentences: scope, audience (L2 desktop engineers), and escalation context. Minimum 30 words. State what issue this runbook investigates, which diagnostic tools and commands are used (PowerShell, registry, event logs), and under what circumstances this runbook is entered (typically from L1 escalation with a pre-collected error description and device info).]
 
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
-
-# [Issue Title]
 
 ## Context
 
