@@ -136,15 +136,44 @@ Plans:
   5. C17 exits 0 on every L1/L2 runbook file before phase close (NOTE: discuss-phase flag — whether the ~75 docs warrant splitting L1 and L2 into separate sub-phases; final granularity resolved at `/gsd-discuss-phase 116`)
 
 **Plans**: 8 plans
+**Wave 1**
 
 - [ ] 116-01-PLAN.md — Mechanical EEE retrofit helper (retrofit-runbook.mjs, node-builtins): doc_id join, block line, gate relocation, platform injection, Version-History row (D-03)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 116-02-PLAN.md — L1 index + Windows (RE-001..RE-010): platform: Windows injection + navigation-purpose index Summary
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 116-03-PLAN.md — L1 macOS cluster (RE-011..RE-016, RE-036..RE-038): tailored banners for state-changing RE-037/RE-038
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 116-04-PLAN.md — L1 iOS + Android (RE-017..RE-030): default L1 read-only banners
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 116-05-PLAN.md — L1 Linux + apple-business + 802.1X (RE-031..RE-035, RE-039..RE-042): heavy D-05; tailored RE-035; completes L1
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
 - [ ] 116-06-PLAN.md — L2 index + Windows (RE-043..RE-051): Windows injection + RE-044 Version-History create + tailored RE-045/046/047
+
+**Wave 7** *(blocked on Wave 6 completion)*
+
 - [ ] 116-07-PLAN.md — L2 macOS + iOS + Android (RE-052..RE-065): default L2 escalation banners
+
+**Wave 8** *(blocked on Wave 7 completion)*
+
 - [ ] 116-08-PLAN.md — L2 Linux + apple-business + macOS SSO + 802.1X (RE-066..RE-075): tailored RE-068/069/071; full-corpus C17 gate on all 75
+
+**Cross-cutting constraints:**
+
+- Each file has D3-A structure: block line → H1 → ## Summary → gate blockquote → sections (SC3)
+- Each file carries the v1.15 EEE reformat Version-History row and Last Reviewed = last_verified verbatim (SC4)
+- C17 exits 0 on all 9 files and the enrollment precheck returns zero lines for this batch (SC5)
+- C17 exits 0 on all 14 files and the enrollment precheck returns zero lines for this batch (SC5)
 
 ### Phase 117: Admin-Setup Guide Retrofit (all platforms)
 
