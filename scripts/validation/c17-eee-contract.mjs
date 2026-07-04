@@ -331,8 +331,10 @@ function checkFile(relPath, content) {
   // ── Assertion #10: platform resolves in D1_MAP — HARD FAILURE on unmapped (D-09, no fallback) ─
   {
     const platformRaw = platformMatch?.[1];
-    if (!platformRaw || !(platformRaw in D1_MAP)) {
-      violations.push({ assertion: 10, detail: `platform: "${platformRaw ?? ''}" is not in the D1 map — unmapped value is a hard failure` });
+    if (platformRaw === undefined) {
+      violations.push({ assertion: 10, detail: 'platform key is absent from frontmatter — required for D1 resolution' });
+    } else if (!platformRaw || !(platformRaw in D1_MAP)) {
+      violations.push({ assertion: 10, detail: `platform: "${platformRaw}" is not in the D1 map — unmapped value is a hard failure` });
     }
   }
 
