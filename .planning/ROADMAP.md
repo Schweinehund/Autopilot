@@ -146,7 +146,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 116-03-PLAN.md — L1 macOS cluster (RE-011..RE-016, RE-036..RE-038): tailored banners for state-changing RE-037/RE-038
+- [x] 116-03-PLAN.md — L1 macOS cluster (RE-011..RE-016, RE-036..RE-038): tailored banners for state-changing RE-037/RE-038
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -245,7 +245,7 @@ Plans:
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
-| 116. L1/L2 Runbook Retrofit | 2/8 | In Progress|  |
+| 116. L1/L2 Runbook Retrofit | 3/8 | In Progress|  |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |

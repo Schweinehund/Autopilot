@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-04T23:08:43.499Z"
+last_updated: "2026-07-04T23:26:37.919Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 17
-  completed_plans: 11
+  completed_plans: 12
   percent: 43
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 116 (l1-l2-runbook-retrofit-75-docs) — EXECUTING
-Plan: 3 of 8
+Plan: 4 of 8
 Status: Ready to execute
 Last activity: 2026-07-04
 
@@ -280,6 +280,8 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: D3-A structure enforced in all 7 templates: gate blockquotes relocated to after ## Summary; EEE block immediately after frontmatter close; ## Summary as first H2
 - [Phase ?]: D-06: reference-template.md created with Phase-118 table-remediation rule (>25 rows → prose summary within 5 lines); RCA template deferred to v1.16
 - [Phase ?]: [114-03] TEMPLATE-SENTINEL applied to all 7 templates (last_verified: 1970-01-01); ios/macos templates normalized from YYYY-MM-DD placeholder to sentinel
+- [Phase ?]: Tasks 1+2 combined: helper writes [FILL-IN] placeholder that would be invalid state if committed before Summary prose; mirrors 116-01 pattern
+- [Phase ?]: D-05 em-dash clause split: RE-038 Path B/C first sentences split at em-dash clause boundary into 4 groups; all words preserved per D-05 rules
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -310,7 +312,7 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-04T23:08:43.484Z
+Last session: 2026-07-04T23:26:26.899Z
 Stopped at: Phase 116 context gathered
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
@@ -337,3 +339,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 115 P01 | 6min | 2 tasks | 3 files (c17-eee-contract.mjs + 2 fixtures) |
 | Phase 116 P01 | 15 | 2 tasks | 1 files |
 | Phase 116 P02 | 20min | 3 tasks | 11 files (10 runbooks + registry) |
+| Phase 116-l1-l2-runbook-retrofit-75-docs P03 | 12 | 3 tasks | 10 files |
