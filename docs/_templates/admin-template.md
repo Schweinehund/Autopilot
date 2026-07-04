@@ -59,7 +59,7 @@ audience: admin
 3. Configure **[setting name]**: [value or instruction].
 
    > **What breaks if misconfigured:** [Specific downstream failure this causes. Include: what the admin will see, what the end user will see, and link to the troubleshooting runbook that covers this failure.]
-   > See: [Troubleshooting Runbook Title](../runbooks-l1/relevant-runbook.md)
+   > See: [Troubleshooting Runbook Title](../l1-runbooks/relevant-runbook.md)
 
 4. [Next action in this step].
 
