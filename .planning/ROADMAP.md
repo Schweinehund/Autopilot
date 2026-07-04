@@ -142,7 +142,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 116-02-PLAN.md — L1 index + Windows (RE-001..RE-010): platform: Windows injection + navigation-purpose index Summary
+- [x] 116-02-PLAN.md — L1 index + Windows (RE-001..RE-010): platform: Windows injection + navigation-purpose index Summary
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -245,7 +245,7 @@ Plans:
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
-| 116. L1/L2 Runbook Retrofit | 1/8 | In Progress|  |
+| 116. L1/L2 Runbook Retrofit | 2/8 | In Progress|  |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
