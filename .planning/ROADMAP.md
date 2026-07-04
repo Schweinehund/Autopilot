@@ -99,7 +99,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 114-02-PLAN.md — EEE-SOP-standard.md: block format + D1 20-variant map + taxonomy + D2 semantics + grounding notes + C17 needle-spec (STD-01, META-02, META-03, META-04)
+- [x] 114-02-PLAN.md — EEE-SOP-standard.md: block format + D1 20-variant map + taxonomy + D2 semantics + grounding notes + C17 needle-spec (STD-01, META-02, META-03, META-04)
 
 **Wave 3** *(blocked on Wave 2 completion; the two run in parallel — no file overlap)*
 
@@ -203,7 +203,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
-| 114. EEE Standard, Templates, Registry + Metadata Rules | 1/4 | In Progress|  |
+| 114. EEE Standard, Templates, Registry + Metadata Rules | 2/4 | In Progress|  |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |

@@ -21,7 +21,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Category: EEE Standard, Templates & Doc ID Registry (STD)
 
-- [ ] **STD-01**: The canonical **EEE SOP standard** document is authored in-repo (NOT in the grounded library) — defining the single-line header-block format + field vocabulary, the Doc Type taxonomy (Runbook / Guide / RCA / Reference), the D1 Platform-normalization rule, the D2 `Last Reviewed` = `last_verified` semantics, the supersedence convention, and a "grounding notes" section stating the platform realities (visible-body-only indexing; document-level-only citations; Approved-only in the indexed library).
+- [x] **STD-01**: The canonical **EEE SOP standard** document is authored in-repo (NOT in the grounded library) — defining the single-line header-block format + field vocabulary, the Doc Type taxonomy (Runbook / Guide / RCA / Reference), the D1 Platform-normalization rule, the D2 `Last Reviewed` = `last_verified` semantics, the supersedence convention, and a "grounding notes" section stating the platform realities (visible-body-only indexing; document-level-only citations; Approved-only in the indexed library).
 - [ ] **STD-02**: `docs/_templates/*` (admin, L1, L2, per-platform) are updated so every **new** doc is born EEE-conformant — frontmatter keys + single-line header block + `## Summary`-first — with new docs defaulting to `Status: Draft` (only the owner promotes to Approved).
 - [ ] **STD-03**: A **Doc ID Registry** is created (flat `RE-NNN`, starting `RE-001`) mapping `RE-NNN → file + descriptive title + doc_type + status`, stored **outside** the grounded library; all Phase-1 Doc IDs are assigned in one collision-free pass before authoring; supersedence is expressed via the registry + archive-scope-exclusion (superseded docs leave the indexed library).
 
@@ -30,9 +30,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 *Research finding: YAML frontmatter and SharePoint managed-metadata columns are invisible to the semantic index — the visible block is retrieval-necessary, not decorative.*
 
 - [x] **META-01**: The frontmatter schema is extended with `doc_id`, `status`, `owner`, `doc_type` keys as the single source of truth for the rendered block; **C10 is confirmed lenient on the new keys before any file is edited** (precondition — a strict C10 would fail the whole corpus).
-- [ ] **META-02**: The visible EEE header block is a **single inline line rendered from the frontmatter keys**, with **Platform + Doc Type as the first fields** (survive chunk splits) and `## Summary` immediately following the block (no intervening content).
-- [ ] **META-03**: A documented **Platform-normalization map** (the D1 EEE spec-extension) covers every real `platform:` frontmatter variant (~19–20: case + separator chaos + Apple compounds + `all`/`cross-platform`) → a clean visible label; an **unmapped value is a hard failure**, not a silent fallback.
-- [ ] **META-04**: On retrofit, `Last Reviewed` carries the doc's existing `last_verified` **verbatim** (no staleness-clock reset); each retrofitted doc receives a one-time "v1.15 EEE reformat — content not re-reviewed" Version-History row so the reformat is auditable without asserting a review that did not occur.
+- [x] **META-02**: The visible EEE header block is a **single inline line rendered from the frontmatter keys**, with **Platform + Doc Type as the first fields** (survive chunk splits) and `## Summary` immediately following the block (no intervening content).
+- [x] **META-03**: A documented **Platform-normalization map** (the D1 EEE spec-extension) covers every real `platform:` frontmatter variant (~19–20: case + separator chaos + Apple compounds + `all`/`cross-platform`) → a clean visible label; an **unmapped value is a hard failure**, not a silent fallback.
+- [x] **META-04**: On retrofit, `Last Reviewed` carries the doc's existing `last_verified` **verbatim** (no staleness-clock reset); each retrofitted doc receives a one-time "v1.15 EEE reformat — content not re-reviewed" Version-History row so the reformat is auditable without asserting a review that did not occur.
 
 ### Category: Corpus Retrofit — Phase-1 Doc Classes (RETRO)
 
@@ -88,10 +88,10 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 | PIPE-01 | Phase 113 | Complete |
 | PIPE-02 | Phase 113 | Complete |
 | META-01 | Phase 114 | Complete |
-| META-02 | Phase 114 | Pending |
-| META-03 | Phase 114 | Pending |
-| META-04 | Phase 114 | Pending |
-| STD-01 | Phase 114 | Pending |
+| META-02 | Phase 114 | Complete |
+| META-03 | Phase 114 | Complete |
+| META-04 | Phase 114 | Complete |
+| STD-01 | Phase 114 | Complete |
 | STD-02 | Phase 114 | Pending |
 | STD-03 | Phase 114 | Pending |
 | HARN-01 | Phase 115 | Pending |
