@@ -1,4 +1,8 @@
 ---
+doc_id: RE-030
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-25
 review_by: 2026-06-24
 applies_to: AOSP
@@ -6,9 +10,15 @@ audience: L1
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+**Platform:** Android · **Doc Type:** Runbook · **Doc ID:** RE-030 · **Status:** Approved
 
 # Android AOSP Enrollment Failed
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for AOSP enrollment failures across the 5 supported OEMs (RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest): device was expected to enroll automatically via AOSP QR-based provisioning but did not — device booted to consumer setup, looped back to first-time setup, or never arrived in Intune. Five OEM-scoped L1-diagnosable causes (Causes A-E).
 
@@ -301,4 +311,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-25 | Initial version (Phase 45 AEAOSPFULL-07) — 5 OEM-scoped Causes A-E (RealWear / Zebra / Pico / HTC / Meta Quest) + aggregate `## Escalation Criteria` H2 per D-17. Closes Phase 40 ANDE1 escalation stub via D-19 triage tree edit (Wave 4 Plan 10). In-runbook OEM-identification step `## How to Use This Runbook` per D-20 (deliberate departure from sibling no-pre-Cause-routing precedent). Per-Cause cross-links to per-OEM admin guide `## Common Failures` and add-on anchors per D-21. Cause E (Meta Quest) cross-links explicitly to `13-aosp-meta-quest.md#meta-horizon-subscription-status` for HMS-related failures per D-17 explicit. PITFALL-7 carry-forward per D-23 (each "supported under AOSP" assertion paired with "no GMS / use AE fully managed if GMS present" framing at point-of-claim). **Sibling-departure rationale (D-22):** (1) 5-OEM Cause partitioning vs sibling 4-failure-class precedent is a scope-cardinality difference, not a methodology change — AOSP scope spans 5 OEMs whereas ZTE/KME scope spans one provisioning-method-per-runbook; the OEM-scope axis defuses F-4A-CRIT-01 (downgraded MED). (2) In-runbook OEM-identification step `## How to Use This Runbook` is necessary because L1 must first identify the device OEM before jumping to the matching Cause; this is sibling no-pre-Cause-routing precedent departure that defuses F-4A-CRIT-03 (downgraded MED). | -- |

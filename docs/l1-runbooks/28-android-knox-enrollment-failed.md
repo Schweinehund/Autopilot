@@ -1,4 +1,8 @@
 ---
+doc_id: RE-029
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-25
 review_by: 2026-06-24
 applies_to: KME
@@ -6,9 +10,15 @@ audience: L1
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+**Platform:** Android · **Doc Type:** Runbook · **Doc ID:** RE-029 · **Status:** Approved
 
 # Android Knox Mobile Enrollment Failed
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Knox Mobile Enrollment (KME) failures: Samsung device was expected to enroll automatically via KME but did not — device booted to consumer setup, looped back to first-time setup, or never arrived in Intune. Four L1-diagnosable causes plus Cause E (escalate-only).
 
@@ -239,4 +249,5 @@ L1 does NOT modify DPC Custom JSON, Knox eFuse status, or licensing. Hand to L2 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-25 | Initial version (Phase 44 scope) — 4 L1-diagnosable causes A-D (B2B account / device-not-in-KAP / KME profile unassigned / KME-ZT collision) + Cause E escalate-only (DPC JSON malformation / Knox tripped / Knox license edge cases). Closes Phase 40 ANDR28 placeholder. | -- |

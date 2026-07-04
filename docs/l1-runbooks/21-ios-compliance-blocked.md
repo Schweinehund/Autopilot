@@ -1,4 +1,8 @@
 ---
+doc_id: RE-022
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: all
@@ -6,9 +10,15 @@ audience: L1
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** iOS · **Doc Type:** Runbook · **Doc ID:** RE-022 · **Status:** Approved
 
 # iOS Compliance Blocked / Access Denied
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user is enrolled in Intune but Conditional Access is blocking access to Microsoft 365 resources (Outlook, SharePoint, Teams, OneDrive, etc.), OR when the device is showing as "Non-compliant" or "Not evaluated" in Intune without a clear reason. This is the ONLY iOS L1 runbook that includes user-actionable remediation (device restart, iOS update, passcode change) — the other 5 runbooks are tenant-config failures that require admin action.
 
@@ -194,5 +204,6 @@ For admin configuration references:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

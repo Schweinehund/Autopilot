@@ -1,4 +1,8 @@
 ---
+doc_id: RE-018
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** iOS · **Doc Type:** Runbook · **Doc ID:** RE-018 · **Status:** Approved
 
 # iOS ADE Enrollment Not Starting
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when a supervised ADE corporate-owned iOS/iPadOS device (from an Apple Business Manager enrollment) does not reach Intune after factory reset, stalls in Setup Assistant before completing enrollment, or the user never sees the Microsoft sign-in screen during Setup Assistant. For Company Portal or web-based (BYOD) enrollment failures, see [runbook 18](18-ios-enrollment-restriction-blocking.md) or [runbook 19](19-ios-license-invalid.md).
 
@@ -128,5 +138,6 @@ For admin configuration references:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

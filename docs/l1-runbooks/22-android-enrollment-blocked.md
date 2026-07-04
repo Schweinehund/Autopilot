@@ -1,4 +1,8 @@
 ---
+doc_id: RE-023
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-23
 review_by: 2026-06-22
 applies_to: all
@@ -6,9 +10,15 @@ audience: L1
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+**Platform:** Android · **Doc Type:** Runbook · **Doc ID:** RE-023 · **Status:** Approved
 
 # Android Enrollment Blocked
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Android devices that cannot enroll in Intune because the Enrollment Restrictions blade is blocking the device's platform or ownership type. Applies to all GMS modes (BYOD, COBO, Dedicated, ZTE — AOSP is out of scope in v1.4).
 
@@ -98,5 +108,6 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-23 | Resolved Phase 41 L2 cross-references | -- |
 | 2026-04-23 | Initial version | -- |

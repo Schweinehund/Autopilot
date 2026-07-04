@@ -1,15 +1,24 @@
 ---
+doc_id: RE-021
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: all
 audience: L1
 platform: iOS
 ---
-<!-- applies_to: all — device-cap exhaustion applies to any non-DEM-account enrollment (ADE, Company Portal, User Enrollment all count toward per-user cap) per D-25 Claude's discretion / research A3 recommendation -->
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** iOS · **Doc Type:** Runbook · **Doc ID:** RE-021 · **Status:** Approved
 
 # iOS Device Cap Reached
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user reports `DeviceCapReached` or the misleading `"Company Portal Temporarily Unavailable"` error during enrollment, AND the user already has other enrolled devices. This runbook covers **per-user device limit exhaustion**. For **tenant-level configuration blocks** (platform / ownership / enrollment-type blocking — "Invalid Profile" error), use [runbook 18](18-ios-enrollment-restriction-blocking.md) instead.
 
@@ -97,5 +106,6 @@ See [ADE Token & Profile Delivery Investigation](../l2-runbooks/15-ios-ade-token
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

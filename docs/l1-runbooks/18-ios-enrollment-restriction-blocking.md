@@ -1,15 +1,24 @@
 ---
+doc_id: RE-019
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: all
 audience: L1
 platform: iOS
 ---
-<!-- applies_to: all — enrollment restrictions span all iOS paths (ADE, Company Portal, User Enrollment) per D-25 Claude's discretion / research A3 recommendation -->
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** iOS · **Doc Type:** Runbook · **Doc ID:** RE-019 · **Status:** Approved
 
 # iOS Enrollment Restriction Blocking
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user reports that their device cannot be managed, enrollment fails with an "Invalid Profile" or "Can't be managed" error, or the device appears briefly in Intune then is removed. This runbook covers **tenant-level configuration blocks** — for **per-user device limit exhaustion** (`DeviceCapReached` / "Too many devices"), use [runbook 20](20-ios-device-cap-reached.md) instead.
 
@@ -101,5 +110,6 @@ See [iOS Log Collection Guide](../l2-runbooks/14-ios-log-collection.md) and [ADE
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

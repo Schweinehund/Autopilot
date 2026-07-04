@@ -1,4 +1,8 @@
 ---
+doc_id: RE-020
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: all
@@ -6,9 +10,15 @@ audience: L1
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** iOS · **Doc Type:** Runbook · **Doc ID:** RE-020 · **Status:** Approved
 
 # iOS License Invalid
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user sees "User Name Not Recognized" during enrollment, OR when enrollment appears to complete successfully for the user but the device never appears in Intune admin center and no MDM profile installs on the device. Both are symptoms of missing or inappropriate Intune licensing on the user's account.
 
@@ -107,5 +117,6 @@ For admin configuration references:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |

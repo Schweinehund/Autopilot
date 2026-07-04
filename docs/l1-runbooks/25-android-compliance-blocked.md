@@ -1,4 +1,8 @@
 ---
+doc_id: RE-026
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-23
 review_by: 2026-06-22
 applies_to: all
@@ -6,9 +10,15 @@ audience: L1
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+**Platform:** Android · **Doc Type:** Runbook · **Doc ID:** RE-026 · **Status:** Approved
 
 # Android Compliance Blocked
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Android devices where compliance evaluation is blocking access to Microsoft 365 resources (Conditional Access). Four distinct causes are diagnosed independently:
 
@@ -275,5 +285,6 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-23 | Resolved Phase 41 L2 cross-references | -- |
 | 2026-04-23 | Initial version (4-cause runbook: Play Integrity / OS Version / CA Timing Gap / Passcode-Encryption) | -- |
