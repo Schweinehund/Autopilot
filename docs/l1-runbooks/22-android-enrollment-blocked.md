@@ -18,7 +18,11 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices that cannot enroll in Intune because an Enrollment Restrictions policy is blocking the device's platform or ownership type, or the user has reached the per-user device enrollment cap. L1 identifies the active restriction policy and documents the blocking condition for the administrator's configuration change.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Android devices that cannot enroll in Intune because the Enrollment Restrictions blade is blocking the device's platform or ownership type. Applies to all GMS modes (BYOD, COBO, Dedicated, ZTE — AOSP is out of scope in v1.4).
 
@@ -32,7 +36,7 @@ One or more of the following:
 
 Routed here from the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) ANDR22 branch.
 
-> **Disambiguation:** If the user (or enrollment flow) did NOT see any "enrollment blocked" or restriction-specific message and the device simply never appeared in Intune, see [Runbook 24: Android Device Not Enrolled](24-android-device-not-enrolled.md) instead. If the device enrolled successfully (visible in Intune) but no work profile was created (BYOD only), see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md).
+**Disambiguation:** If the user (or enrollment flow) did NOT see any "enrollment blocked" or restriction-specific message and the device simply never appeared in Intune, see [Runbook 24: Android Device Not Enrolled](24-android-device-not-enrolled.md) instead. If the device enrolled successfully (visible in Intune) but no work profile was created (BYOD only), see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md).
 
 ## L1 Triage Steps
 

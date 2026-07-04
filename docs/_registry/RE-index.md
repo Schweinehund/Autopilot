@@ -30,20 +30,20 @@
 | RE-014 | docs/l1-runbooks/13-macos-app-not-installed.md | macOS App Not Installed | Runbook | Approved |
 | RE-015 | docs/l1-runbooks/14-macos-compliance-access-blocked.md | macOS Compliance Failure / Access Blocked | Runbook | Approved |
 | RE-016 | docs/l1-runbooks/15-macos-company-portal-sign-in.md | macOS Company Portal Sign-In Failure | Runbook | Approved |
-| RE-017 | docs/l1-runbooks/16-ios-apns-expired.md | iOS APNs Certificate Expired | Runbook | Pending |
-| RE-018 | docs/l1-runbooks/17-ios-ade-not-starting.md | iOS ADE Enrollment Not Starting | Runbook | Pending |
-| RE-019 | docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md | iOS Enrollment Restriction Blocking | Runbook | Pending |
-| RE-020 | docs/l1-runbooks/19-ios-license-invalid.md | iOS License Invalid | Runbook | Pending |
-| RE-021 | docs/l1-runbooks/20-ios-device-cap-reached.md | iOS Device Cap Reached | Runbook | Pending |
-| RE-022 | docs/l1-runbooks/21-ios-compliance-blocked.md | iOS Compliance Blocked / Access Denied | Runbook | Pending |
-| RE-023 | docs/l1-runbooks/22-android-enrollment-blocked.md | Android Enrollment Blocked | Runbook | Pending |
-| RE-024 | docs/l1-runbooks/23-android-work-profile-not-created.md | Android Work Profile Not Created | Runbook | Pending |
-| RE-025 | docs/l1-runbooks/24-android-device-not-enrolled.md | Android Device Not Enrolled | Runbook | Pending |
-| RE-026 | docs/l1-runbooks/25-android-compliance-blocked.md | Android Compliance Blocked | Runbook | Pending |
-| RE-027 | docs/l1-runbooks/26-android-mgp-app-not-installed.md | Android Managed Google Play App Not Installed | Runbook | Pending |
-| RE-028 | docs/l1-runbooks/27-android-zte-enrollment-failed.md | Android Zero-Touch Enrollment Failed | Runbook | Pending |
-| RE-029 | docs/l1-runbooks/28-android-knox-enrollment-failed.md | Android Knox Mobile Enrollment Failed | Runbook | Pending |
-| RE-030 | docs/l1-runbooks/29-android-aosp-enrollment-failed.md | Android AOSP Enrollment Failed | Runbook | Pending |
+| RE-017 | docs/l1-runbooks/16-ios-apns-expired.md | iOS APNs Certificate Expired | Runbook | Approved |
+| RE-018 | docs/l1-runbooks/17-ios-ade-not-starting.md | iOS ADE Enrollment Not Starting | Runbook | Approved |
+| RE-019 | docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md | iOS Enrollment Restriction Blocking | Runbook | Approved |
+| RE-020 | docs/l1-runbooks/19-ios-license-invalid.md | iOS License Invalid | Runbook | Approved |
+| RE-021 | docs/l1-runbooks/20-ios-device-cap-reached.md | iOS Device Cap Reached | Runbook | Approved |
+| RE-022 | docs/l1-runbooks/21-ios-compliance-blocked.md | iOS Compliance Blocked / Access Denied | Runbook | Approved |
+| RE-023 | docs/l1-runbooks/22-android-enrollment-blocked.md | Android Enrollment Blocked | Runbook | Approved |
+| RE-024 | docs/l1-runbooks/23-android-work-profile-not-created.md | Android Work Profile Not Created | Runbook | Approved |
+| RE-025 | docs/l1-runbooks/24-android-device-not-enrolled.md | Android Device Not Enrolled | Runbook | Approved |
+| RE-026 | docs/l1-runbooks/25-android-compliance-blocked.md | Android Compliance Blocked | Runbook | Approved |
+| RE-027 | docs/l1-runbooks/26-android-mgp-app-not-installed.md | Android Managed Google Play App Not Installed | Runbook | Approved |
+| RE-028 | docs/l1-runbooks/27-android-zte-enrollment-failed.md | Android Zero-Touch Enrollment Failed | Runbook | Approved |
+| RE-029 | docs/l1-runbooks/28-android-knox-enrollment-failed.md | Android Knox Mobile Enrollment Failed | Runbook | Approved |
+| RE-030 | docs/l1-runbooks/29-android-aosp-enrollment-failed.md | Android AOSP Enrollment Failed | Runbook | Approved |
 | RE-031 | docs/l1-runbooks/30-linux-enrollment-failed.md | Linux Enrollment Failed | Runbook | Pending |
 | RE-032 | docs/l1-runbooks/31-linux-compliance-non-compliant.md | Linux Compliance Non-Compliant | Runbook | Pending |
 | RE-033 | docs/l1-runbooks/32-linux-ca-blocking-web-access.md | Linux CA Blocking Web-App Access | Runbook | Pending |

@@ -18,7 +18,9 @@ platform: iOS
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS enrollment failures caused by the user hitting the per-user device enrollment cap, presenting as the DeviceCapReached error or the misleading "Company Portal Temporarily Unavailable" message. L1 verifies the current device count and enrollment limit for the user's group and hands the device-removal or cap-increase packet to the administrator.
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user reports `DeviceCapReached` or the misleading `"Company Portal Temporarily Unavailable"` error during enrollment, AND the user already has other enrolled devices. This runbook covers **per-user device limit exhaustion**. For **tenant-level configuration blocks** (platform / ownership / enrollment-type blocking — "Invalid Profile" error), use [runbook 18](18-ios-enrollment-restriction-blocking.md) instead.
 

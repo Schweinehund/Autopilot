@@ -18,7 +18,11 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers AOSP enrollment failures across five supported OEMs (RealWear, Zebra, Pico, HTC VIVE Focus, Meta Quest) where a device was expected to auto-enroll via AOSP QR-based provisioning but did not appear in Intune. L1 identifies the device OEM, checks portal presence, and documents the failure for the administrator's vendor-specific configuration review.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for AOSP enrollment failures across the 5 supported OEMs (RealWear / Zebra / Pico / HTC VIVE Focus / Meta Quest): device was expected to enroll automatically via AOSP QR-based provisioning but did not — device booted to consumer setup, looped back to first-time setup, or never arrived in Intune. Five OEM-scoped L1-diagnosable causes (Causes A-E).
 
@@ -36,7 +40,7 @@ Routed here from the [Android Triage Decision Tree](../decision-trees/08-android
    - **P-RWCLOUD** = RealWear Cloud admin portal — **admin-only**; OPTIONAL coexistence per [09-aosp-realwear.md](../admin-setup-android/09-aosp-realwear.md)
    - **P-MFW** = Meta for Work portal (`meta.com/meta-for-work`) — **admin-only**; REQUIRED for Meta Quest fleets per [13-aosp-meta-quest.md](../admin-setup-android/13-aosp-meta-quest.md)
 
-> **L1 scope note:** Vendor portals (RealWear Cloud, Meta for Work, PICO Business Suite) are admin-only. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the admin for vendor-portal actions. All vendor-portal click paths in this runbook are within `## Admin Action Required` sections.
+**L1 scope note:** Vendor portals (RealWear Cloud, Meta for Work, PICO Business Suite) are admin-only. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the admin for vendor-portal actions. All vendor-portal click paths in this runbook are within `## Admin Action Required` sections.
 
 ## How to Use This Runbook
 
@@ -230,7 +234,7 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 **Entry condition:** Admin reports the Meta Quest device serial is NOT visible in Intune after first power-on, OR NOT visible in the Meta for Work fleet view, OR Meta for Work account approval is incomplete, OR the admin is confused about Meta Horizon Managed Services (HMS) subscription status post-2026-02-20 transition. Meta Quest 2 / 3 / 3s / Pro is supported under AOSP because no GMS is present on the Meta Quest OS.
 
-> **Important framing on HMS (D-23 PITFALL-7 carry-forward + Phase 45 D-06/D-07 RESEARCH outcome):** As of 2026-02-20, Meta no longer **sells** commercial Quest SKUs and HMS is **free** (not shut down). HMS infrastructure remains operational in maintenance mode through 2030-01-04. Existing HMS subscribers continue uninterrupted; net-new fleets may use Intune-direct AOSP enrollment instead of HMS. If the admin says "HMS is shut down" or "wound down," correct the framing: HMS is alive in transformed (free-tier) form. See [13-aosp-meta-quest.md#meta-horizon-subscription-status](../admin-setup-android/13-aosp-meta-quest.md#meta-horizon-subscription-status).
+**Important framing on HMS (D-23 PITFALL-7 carry-forward + Phase 45 D-06/D-07 RESEARCH outcome):** As of 2026-02-20, Meta no longer **sells** commercial Quest SKUs and HMS is **free** (not shut down). HMS infrastructure remains operational in maintenance mode through 2030-01-04. Existing HMS subscribers continue uninterrupted; net-new fleets may use Intune-direct AOSP enrollment instead of HMS. If the admin says "HMS is shut down" or "wound down," correct the framing: HMS is alive in transformed (free-tier) form. See [13-aosp-meta-quest.md#meta-horizon-subscription-status](../admin-setup-android/13-aosp-meta-quest.md#meta-horizon-subscription-status).
 
 ### Symptom
 

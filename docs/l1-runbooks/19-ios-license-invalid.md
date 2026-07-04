@@ -18,11 +18,15 @@ platform: iOS
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS enrollment failures caused by missing or incorrect Intune licensing on the user account, presenting as "User Name Not Recognized" or as a device that completes enrollment steps but never appears in Intune admin center. L1 verifies the user's license assignment in the Microsoft 365 or Entra admin center and hands the licensing correction to the administrator.
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user sees "User Name Not Recognized" during enrollment, OR when enrollment appears to complete successfully for the user but the device never appears in Intune admin center and no MDM profile installs on the device. Both are symptoms of missing or inappropriate Intune licensing on the user's account.
 
-> **L1 prerequisite access:** This runbook requires either Microsoft 365 admin center OR Microsoft Entra admin center access with permission to view user license assignments. If you do not have this access, jump directly to [Escalation Criteria](#escalation-criteria) with the user's UPN documented — the Intune-only L1 agent cannot complete license verification alone.
+> **L1 prerequisite access:** This runbook requires either Microsoft 365 admin center OR Microsoft Entra admin center access with permission to view user license assignments.
+
+> If you do not have this access, jump directly to [Escalation Criteria](#escalation-criteria) with the user's UPN documented — the Intune-only L1 agent cannot complete license verification alone.
 
 ## Symptom
 

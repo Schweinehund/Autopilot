@@ -18,7 +18,11 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices enrolled in Intune where Conditional Access is blocking Microsoft 365 resource access due to non-compliant status, scoped to four independently diagnosable causes: Play Integrity attestation failure, OS version policy mismatch, post-enrollment CA timing gap, and passcode or encryption policy mismatch.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Android devices where compliance evaluation is blocking access to Microsoft 365 resources (Conditional Access). Four distinct causes are diagnosed independently:
 
@@ -59,7 +63,7 @@ Common ticket phrasings: "my device isn't compliant," "access to Outlook is bloc
 
 ## Cause A: Play Integrity Verdict Failure {#cause-a-play-integrity-verdict-failure}
 
-> See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android uses for compliance attestation (the legacy API was deprecated by Google in January 2025; Play Integrity is the current replacement).
+See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android uses for compliance attestation (the legacy API was deprecated by Google in January 2025; Play Integrity is the current replacement).
 
 **Entry condition:** Intune compliance state shows "Not compliant" AND the failing setting listed is "Play Integrity Verdict" set to "Check basic integrity & device integrity" (Basic + Device integrity) or "Check strong integrity using hardware-backed security features" (Strong integrity, hardware-backed).
 

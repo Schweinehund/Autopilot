@@ -18,7 +18,11 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Catch-all runbook for Android devices across all GMS enrollment modes (BYOD, COBO, Dedicated, ZTE) that never appeared in Intune after an enrollment attempt with no visible restriction error or work-profile-creation failure signature. L1 uses read-only portal checks to identify the most likely failure class and documents the observed state for administrator review.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 catch-all runbook for Android devices that never appeared in Intune after an enrollment attempt — no visible restriction error, no work-profile-creation failure signature. Applies to all GMS modes (BYOD, COBO, Dedicated, ZTE). Sibling runbooks cover adjacent symptoms; use the cross-links in the Symptom section to route correctly.
 
@@ -30,10 +34,10 @@ Common ticket phrasings: "my device isn't showing up in the system," "IT can't f
 
 Routed here from the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) ANDR24 branch ("device never appeared in Intune — no restriction error visible").
 
-> **Disambiguation (critical — follow the correct sibling runbook):**
-> - If the user reported a visible "enrollment blocked" or restriction-specific error (e.g., "Your organization's IT policy requires..."), see [Runbook 22: Android Enrollment Blocked](22-android-enrollment-blocked.md).
-> - If the device IS visible in Intune (enrollment succeeded) but no work profile / no briefcase badge / work apps never appeared (BYOD only), see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md).
-> - If the failure is specifically a Zero-Touch enrollment that never initiated (device booted into consumer setup despite ZTE provisioning), see [Runbook 27: Android ZTE Enrollment Failed](27-android-zte-enrollment-failed.md) for ZTE-specific Cause A-D investigation.
+**Disambiguation (critical — follow the correct sibling runbook):**
+- If the user reported a visible "enrollment blocked" or restriction-specific error (e.g., "Your organization's IT policy requires..."), see [Runbook 22: Android Enrollment Blocked](22-android-enrollment-blocked.md).
+- If the device IS visible in Intune (enrollment succeeded) but no work profile / no briefcase badge / work apps never appeared (BYOD only), see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md).
+- If the failure is specifically a Zero-Touch enrollment that never initiated (device booted into consumer setup despite ZTE provisioning), see [Runbook 27: Android ZTE Enrollment Failed](27-android-zte-enrollment-failed.md) for ZTE-specific Cause A-D investigation.
 
 ## L1 Triage Steps
 

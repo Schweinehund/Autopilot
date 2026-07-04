@@ -18,7 +18,11 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Samsung Knox Mobile Enrollment (KME) failures where a Samsung corporate device was expected to auto-enroll via KME but did not appear in Intune. L1 diagnoses four documented KME-specific causes and documents the device identifiers and Samsung Knox portal state for the administrator's configuration review.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Knox Mobile Enrollment (KME) failures: Samsung device was expected to enroll automatically via KME but did not — device booted to consumer setup, looped back to first-time setup, or never arrived in Intune. Four L1-diagnosable causes plus Cause E (escalate-only).
 
@@ -35,7 +39,7 @@ Routed here from the [Android Triage Decision Tree](../decision-trees/08-android
    - **P-INTUNE** = Intune admin center Devices / Tenant admin blades
    - **P-KAP** = Knox Admin Portal (knox.samsung.com) — **admin-only**; Samsung-specific
 
-> **L1 scope note:** Knox Admin Portal is admin-only. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the admin for KAP portal actions. All Knox Admin Portal click paths in this runbook are within `## Admin Action Required` sections.
+**L1 scope note:** Knox Admin Portal is admin-only. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the admin for KAP portal actions. All Knox Admin Portal click paths in this runbook are within `## Admin Action Required` sections.
 
 ## How to Use This Runbook
 

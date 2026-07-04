@@ -18,7 +18,9 @@ platform: iOS
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS devices enrolled in Intune where Conditional Access is blocking access to Microsoft 365 resources due to non-compliant or unevaluated compliance status. Includes user-actionable steps such as device restart, iOS update, and passcode change where the compliance gap is user-resolvable without administrative intervention; policy configuration gaps are escalated to L2.
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user is enrolled in Intune but Conditional Access is blocking access to Microsoft 365 resources (Outlook, SharePoint, Teams, OneDrive, etc.), OR when the device is showing as "Non-compliant" or "Not evaluated" in Intune without a clear reason. This is the ONLY iOS L1 runbook that includes user-actionable remediation (device restart, iOS update, passcode change) — the other 5 runbooks are tenant-config failures that require admin action.
 
@@ -105,7 +107,7 @@ If none of the above matches the observation, proceed directly to the [overall E
 - **Restricted app installed:** > **Say to the user:** "Please uninstall [App name] to meet compliance. Touch-and-hold the app icon, tap Remove App."
 - **Device restart (any persistent issue):** > **Say to the user:** "Please restart your device by holding the side button and volume up until the power-off slider appears, then power back on. Wait 15 minutes before retesting."
 
-> **Optional per D-08 extension (research open question Q4):** After the user completes a required action, L1 MAY trigger a per-device Intune sync via `Devices > All devices > [device] > Sync` to accelerate re-evaluation. This is a per-device sync (not tenant-scope) matching macOS runbook 12 step 6 precedent. If strict D-08 literal (ADE token sync only) is preferred, defer the sync to the admin.
+**Optional per D-08 extension (research open question Q4):** After the user completes a required action, L1 MAY trigger a per-device Intune sync via `Devices > All devices > [device] > Sync` to accelerate re-evaluation. This is a per-device sync (not tenant-scope) matching macOS runbook 12 step 6 precedent. If strict D-08 literal (ADE token sync only) is preferred, defer the sync to the admin.
 
 ### Admin Action Required
 

@@ -18,7 +18,11 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers BYOD Android devices where enrollment completed and the device is visible in Intune but the work profile container was never created on the device, scoped to three documented failure signatures. L1 identifies the signature and documents the observed portal state for the administrator's configuration review.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for BYOD Android devices where enrollment succeeded (device visible in Intune) but the work profile container was never created. Applies to BYOD Work Profile enrollment only — this symptom does not apply to COBO, Dedicated, or ZTE modes (they do not use a work profile container).
 
@@ -38,9 +42,9 @@ Common ticket phrasings: "my work email app disappeared," "I enrolled but nothin
 
 Routed here from the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) ANDR23 branch.
 
-> **Disambiguation — Runbook 23 vs 24:** If the device never appeared in Intune at all (not just "missing work profile" — actually invisible to admins in the Devices list), see [Runbook 24: Android Device Not Enrolled](24-android-device-not-enrolled.md) instead. The visibility distinction: Runbook 23 = device visible in Intune but work profile missing or container-creation failed; Runbook 24 = device not visible in Intune at all.
+**Disambiguation — Runbook 23 vs 24:** If the device never appeared in Intune at all (not just "missing work profile" — actually invisible to admins in the Devices list), see [Runbook 24: Android Device Not Enrolled](24-android-device-not-enrolled.md) instead. The visibility distinction: Runbook 23 = device visible in Intune but work profile missing or container-creation failed; Runbook 24 = device not visible in Intune at all.
 
-> **End-user flow reference:** For the user-facing BYOD enrollment steps (what the user should have seen during setup), see [Android Work Profile Setup (end-user guide)](../end-user-guides/android-work-profile-setup.md). L1 does NOT walk the user through these steps directly; if re-enrollment is needed after admin action, refer the user back to that guide.
+**End-user flow reference:** For the user-facing BYOD enrollment steps (what the user should have seen during setup), see [Android Work Profile Setup (end-user guide)](../end-user-guides/android-work-profile-setup.md). L1 does NOT walk the user through these steps directly; if re-enrollment is needed after admin action, refer the user back to that guide.
 
 ## L1 Triage Steps
 

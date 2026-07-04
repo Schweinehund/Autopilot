@@ -18,11 +18,15 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Android GMS devices across all enrollment modes where an expected Managed Google Play app failed to install, using read-only Intune portal checks to identify the delivery failure class. L1 does not have access to the Managed Google Play console; app approval, permission updates, and licensing corrections are administrator-only actions in that separate Google-managed portal.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Android devices where an expected Managed Google Play (MGP) app was not delivered to the device. Applies to all GMS Android modes (BYOD, COBO, Dedicated, ZTE); AOSP devices do NOT use MGP and are out of scope for this runbook.
 
-> **L1 scope note:** L1 can VIEW app install status in the Intune admin center (`Apps > All Apps > [app] > Device install status`). L1 does NOT have access to the Managed Google Play console (`play.google.com/work`) — app approval, permission updates, and licensing are admin-only actions in that separate Google-managed portal.
+**L1 scope note:** L1 can VIEW app install status in the Intune admin center (`Apps > All Apps > [app] > Device install status`). L1 does NOT have access to the Managed Google Play console (`play.google.com/work`) — app approval, permission updates, and licensing are admin-only actions in that separate Google-managed portal.
 
 ## Symptom
 
@@ -38,7 +42,7 @@ Common ticket phrasings: "the app IT assigned never appeared," "missing app in m
 
 Routed here from the [Android Triage Decision Tree](../decision-trees/08-android-triage.md) ANDR26 branch.
 
-> **Disambiguation:** If no work apps at all arrived (BYOD) and the device has no work-profile badge on any app, see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md) — that is a work-profile-container failure, not an app-delivery failure. This runbook (26) applies when the work profile exists (or the device surface is provisioned on COBO / Dedicated) but a specific assigned app is not installing.
+**Disambiguation:** If no work apps at all arrived (BYOD) and the device has no work-profile badge on any app, see [Runbook 23: Android Work Profile Not Created](23-android-work-profile-not-created.md) — that is a work-profile-container failure, not an app-delivery failure. This runbook (26) applies when the work profile exists (or the device surface is provisioned on COBO / Dedicated) but a specific assigned app is not installing.
 
 ## L1 Triage Steps
 

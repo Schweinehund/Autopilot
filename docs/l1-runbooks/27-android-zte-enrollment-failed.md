@@ -18,7 +18,11 @@ platform: Android
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers Zero-Touch Enrollment (ZTE) failures where a corporate Android device was expected to auto-enroll but booted to consumer setup, looped at first-time setup, or never appeared in Intune. L1 diagnoses four documented ZTE-specific causes and documents the device identifiers and enrollment state for the administrator's Zero-Touch portal review.
 
-> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
+> **Platform gate:** This guide covers Android enrollment/compliance troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks).
 
 L1 runbook for Zero-Touch Enrollment (ZTE) failures: device was expected to enroll automatically via Zero-Touch but did not — device booted to consumer setup, looped back to first-time setup, or never arrived in Intune. Four L1-diagnosable causes plus Cause E (escalate-only).
 
@@ -35,7 +39,7 @@ Routed here from the [Android Triage Decision Tree](../decision-trees/08-android
    - **P-KAP** = Knox Admin Portal (`knox.samsung.com`) — **admin-only**; Samsung-specific (Cause D)
    - **P-INTUNE** = Intune admin center Devices / Tenant admin blades
 
-> **L1 scope note:** ZT portal and Knox Admin Portal are admin-only portals. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the admin for ZT / KAP portal actions. All ZT portal click paths in this runbook are within `## Admin Action Required` sections.
+**L1 scope note:** ZT portal and Knox Admin Portal are admin-only portals. L1 observes Intune-side symptoms (device absence / enrollment state) and hands the packet to the admin for ZT / KAP portal actions. All ZT portal click paths in this runbook are within `## Admin Action Required` sections.
 
 ## How to Use This Runbook
 
@@ -180,7 +184,7 @@ Context: see [Reseller-Upload Handoff Workflow](../admin-setup-android/02-zero-t
 
 **Entry condition:** Samsung device only; device is registered in BOTH Knox Mobile Enrollment (KME) AND Zero-Touch. Per Google canonical rule, KME takes precedence when both are configured.
 
-> **Cross-platform note:** Knox Mobile Enrollment (KME) takes precedence over Zero-Touch Enrollment when both are configured on the same Samsung device. This is a Samsung firmware-level behavior that cannot be overridden via Intune or ZT portal. [MEDIUM: support.google.com/work/android/answer/7514005, last_verified 2026-04-23]
+**Cross-platform note:** Knox Mobile Enrollment (KME) takes precedence over Zero-Touch Enrollment when both are configured on the same Samsung device. This is a Samsung firmware-level behavior that cannot be overridden via Intune or ZT portal. [MEDIUM: support.google.com/work/android/answer/7514005, last_verified 2026-04-23]
 
 ### Symptom
 

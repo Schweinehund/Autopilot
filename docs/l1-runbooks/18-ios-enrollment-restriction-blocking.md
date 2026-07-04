@@ -18,7 +18,9 @@ platform: iOS
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. Covers iOS/iPadOS devices blocked from enrolling by an Intune Enrollment Restrictions policy or by a per-user device-enrollment cap. L1 identifies which restriction policy is in scope, documents the blocking condition, and hands the configuration change packet to the Intune administrator.
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune.
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 Use this runbook when an iOS/iPadOS user reports that their device cannot be managed, enrollment fails with an "Invalid Profile" or "Can't be managed" error, or the device appears briefly in Intune then is removed. This runbook covers **tenant-level configuration blocks** — for **per-user device limit exhaustion** (`DeviceCapReached` / "Too many devices"), use [runbook 20](20-ios-device-cap-reached.md) instead.
 
