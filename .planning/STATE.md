@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-04T23:26:37.919Z"
+last_updated: "2026-07-04T23:46:58.229Z"
 last_activity: 2026-07-04
 progress:
   total_phases: 7
   completed_phases: 3
   total_plans: 17
-  completed_plans: 12
+  completed_plans: 13
   percent: 43
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 116 (l1-l2-runbook-retrofit-75-docs) — EXECUTING
-Plan: 4 of 8
+Plan: 5 of 8
 Status: Ready to execute
 Last activity: 2026-07-04
 
@@ -282,6 +282,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: [114-03] TEMPLATE-SENTINEL applied to all 7 templates (last_verified: 1970-01-01); ios/macos templates normalized from YYYY-MM-DD placeholder to sentinel
 - [Phase ?]: Tasks 1+2 combined: helper writes [FILL-IN] placeholder that would be invalid state if committed before Summary prose; mirrors 116-01 pattern
 - [Phase ?]: D-05 em-dash clause split: RE-038 Path B/C first sentences split at em-dash clause boundary into 4 groups; all words preserved per D-05 rules
+- [Phase ?]: Transform A (sentence-boundary split) for gate blockquotes; Transform B (de-blockquote) for non-gate callouts — applied in RE-017..RE-030 EEE retrofit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -312,7 +313,7 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-04T23:26:26.899Z
+Last session: 2026-07-04T23:46:48.328Z
 Stopped at: Phase 116 context gathered
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
@@ -340,3 +341,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 116 P01 | 15 | 2 tasks | 1 files |
 | Phase 116 P02 | 20min | 3 tasks | 11 files (10 runbooks + registry) |
 | Phase 116-l1-l2-runbook-retrofit-75-docs P03 | 12 | 3 tasks | 10 files |
+| Phase 116 P04 | 50min | 3 tasks | 15 files |
