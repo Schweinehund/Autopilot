@@ -29,7 +29,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 *Research finding: YAML frontmatter and SharePoint managed-metadata columns are invisible to the semantic index — the visible block is retrieval-necessary, not decorative.*
 
-- [ ] **META-01**: The frontmatter schema is extended with `doc_id`, `status`, `owner`, `doc_type` keys as the single source of truth for the rendered block; **C10 is confirmed lenient on the new keys before any file is edited** (precondition — a strict C10 would fail the whole corpus).
+- [x] **META-01**: The frontmatter schema is extended with `doc_id`, `status`, `owner`, `doc_type` keys as the single source of truth for the rendered block; **C10 is confirmed lenient on the new keys before any file is edited** (precondition — a strict C10 would fail the whole corpus).
 - [ ] **META-02**: The visible EEE header block is a **single inline line rendered from the frontmatter keys**, with **Platform + Doc Type as the first fields** (survive chunk splits) and `## Summary` immediately following the block (no intervening content).
 - [ ] **META-03**: A documented **Platform-normalization map** (the D1 EEE spec-extension) covers every real `platform:` frontmatter variant (~19–20: case + separator chaos + Apple compounds + `all`/`cross-platform`) → a clean visible label; an **unmapped value is a hard failure**, not a silent fallback.
 - [ ] **META-04**: On retrofit, `Last Reviewed` carries the doc's existing `last_verified` **verbatim** (no staleness-clock reset); each retrofitted doc receives a one-time "v1.15 EEE reformat — content not re-reviewed" Version-History row so the reformat is auditable without asserting a review that did not occur.
@@ -87,7 +87,7 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 |--------|-------|--------|
 | PIPE-01 | Phase 113 | Complete |
 | PIPE-02 | Phase 113 | Complete |
-| META-01 | Phase 114 | Pending |
+| META-01 | Phase 114 | Complete |
 | META-02 | Phase 114 | Pending |
 | META-03 | Phase 114 | Pending |
 | META-04 | Phase 114 | Pending |

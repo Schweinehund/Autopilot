@@ -95,7 +95,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 114-01-PLAN.md — SC1 C10-leniency precondition gate: probe proves C10 lenient on the 4 new keys, then deleted (META-01)
+- [x] 114-01-PLAN.md — SC1 C10-leniency precondition gate: probe proves C10 lenient on the 4 new keys, then deleted (META-01)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -203,7 +203,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
-| 114. EEE Standard, Templates, Registry + Metadata Rules | 0/TBD | Not started | — |
+| 114. EEE Standard, Templates, Registry + Metadata Rules | 1/4 | In Progress|  |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
