@@ -37,7 +37,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 ### v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1) — Phases 113-119
 
-- [ ] **Phase 113: Conversion Pipeline Lock + Representative-Set Grounding Validation** — Define, lock, and empirically validate the MD→.docx conversion pipeline before the full corpus retrofit begins
+- [x] **Phase 113: Conversion Pipeline Lock + Representative-Set Grounding Validation** — Define, lock, and empirically validate the MD→.docx conversion pipeline before the full corpus retrofit begins (completed 2026-07-04)
 - [ ] **Phase 114: EEE Standard, Templates, Doc ID Registry + Metadata Rules** — Author the EEE SOP standard, update templates, assign all Phase-1 Doc IDs, and verify the C10 precondition
 - [ ] **Phase 115: C17 Harness Check (Validator Atom)** — Author C17 as one indivisible blocking validator atom asserting the full EEE contract from Markdown source
 - [ ] **Phase 116: L1/L2 Runbook Retrofit (~75 docs)** — Retrofit all L1/L2 runbooks to EEE with C17 green on every file
@@ -75,7 +75,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 113-04-PLAN.md — Owner-run PIPE-02 grounding runbook + findings + checkpoint (PIPE-02)
+- [x] 113-04-PLAN.md — Owner-run PIPE-02 grounding runbook + findings + checkpoint (PIPE-02)
 
 ### Phase 114: EEE Standard, Templates, Doc ID Registry + Metadata Rules
 
@@ -187,7 +187,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 113. Conversion Pipeline Lock + Grounding Validation | 3/4 | In Progress|  |
+| 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 0/TBD | Not started | — |
 | 115. C17 Harness Check (Validator Atom) | 0/TBD | Not started | — |
 | 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |

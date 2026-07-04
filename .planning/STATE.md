@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
-status: executing
-last_updated: "2026-07-03T19:25:29.872Z"
-last_activity: 2026-07-03
+status: verifying
+last_updated: "2026-07-04T03:52:52.499Z"
+last_activity: 2026-07-04
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 4
-  completed_plans: 3
-  percent: 0
+  completed_plans: 4
+  percent: 14
 ---
 
 # Project State
@@ -20,16 +20,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** Phase 113 — conversion-pipeline-lock-representative-set-grounding-valida
+**Current focus:** Phase 114 — EEE Standard, Templates, Doc ID Registry + Metadata Rules (Phase 113 complete)
 
 ## Current Position
 
-Phase: 113 (conversion-pipeline-lock-representative-set-grounding-valida) — EXECUTING
-Plan: 4 of 4
-Status: Ready to execute
-Last activity: 2026-07-03
+Phase: 114 (EEE Standard, Templates, Doc ID Registry + Metadata Rules) — NOT STARTED
+Plan: — of —
+Status: Phase 113 complete (all 4 plans, all summaries written); Phase 114 next
+Last activity: 2026-07-04
 
-Progress bar: `░░░░░░░░░░` 0% (0/7 phases complete)
+Progress bar: `█░░░░░░░░░` 14% (1/7 phases complete)
 
 ## v1.15 Phase Dependency Summary
 
@@ -253,6 +253,12 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [113-03] android-capability-matrix Doc Type = Reference (not Runbook) — first Reference-class doc in the representative set; correctly reflects the doc class taxonomy being established in Phase 114
 - [113-03] clean-test-doc assigned RE-T00 — avoids collision with RE-T01 used by 01-device-not-registered per RESEARCH candidate numbering
 - [113-04] PIPE-02-RUNBOOK.md and PIPE-02-FINDINGS.md authored as agent deliverables; live Copilot Studio / SharePoint legs remain owner-run at the blocking checkpoint (D-01; REQUIREMENTS L77)
+- [113-04] OQ1 resolved empirically: citation titles are filename-driven (.docx extension visible in every Copilot citation); v1.16 descriptive-filename normalization pass flagged and deferred
+- [113-04] OQ2 resolved empirically: Status:Draft is a label only — draft-test-doc.docx WAS indexed and retrieved; Phase 114 EEE standard must state Draft exclusion = library scoping / content-approval, never the body-text label; content-approval stays a deferred deployment-hardening lever
+- [113-04] OQ3 resolved empirically: no P-02 chunk fragmentation observed on mode-first android-capability-matrix (column/mode context intact on Q4 + Q6); Phase 118 table mitigation (<=25-row cap + prose summary, C17-lintable) remains prudent belt-and-suspenders
+- [113-04] OQ4 resolved empirically: pandoc 3.7.0.2 promotes non-standard YAML keys to invisible Word custom properties (confirmed via docProps/custom.xml: applies_to/audience/last_verified/review_by all promoted); four Phase-114 EEE keys not yet in corpus frontmatter but mechanism proven — validates the EEE architecture; body-text header block is retrieval-necessary; frontmatter is harness-only and never reaches the index
+- [113-04] SC4a confirmed: document-level citations resolve as clickable SharePoint links (whole .docx, no section anchors)
+- [113-04] SC4b confirmed: single-line EEE header block indexed as body text — Q2 recited "Doc ID: RE-T01 · Platform: Windows · Doc Type: Runbook · Status: Approved" from body text; load-bearing EEE thesis proven
 
 **Durable architectural decisions (carried forward from v1.14):**
 
@@ -267,16 +273,16 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
-- Phase 113 (PIPE-02): Verify Copilot Studio access mode before grounding validation — agent-run vs. owner-run; determine what "pass" means without programmatic access (discuss-phase flag 1)
-- Phase 113 (PIPE-01): Pin exact Pandoc version at plan time; verify custom-property promotion behavior for non-standard YAML keys (`doc_id`, `status`, `owner`, `doc_type`) with the pinned version (tracks Pandoc issue #3034)
+- ✅ Phase 113 (PIPE-02): RESOLVED — owner-run; all four OQs answered empirically; SC4 confirmed (2026-07-04)
+- ✅ Phase 113 (PIPE-01): RESOLVED — pandoc 3.7.0.2 pinned; custom-property promotion confirmed (non-standard keys go to docProps/custom.xml — invisible to Copilot index; EEE body-text header block is retrieval-necessary)
 - Phase 114 (META-01): Confirm C10 strict-vs-lenient behavior against a synthetic test file with the four new keys BEFORE any corpus edit — this is the phase-opening gate
-- Phase 114 (STD-01): Status-as-retrieval-gate vs. label-only decision is required before the EEE standard is authored (owner decision: does `Status: Draft` prevent indexing, or only label the doc? — impacts whether SharePoint content-approval must be enabled)
+- ✅ Phase 114 (STD-01): Status-as-retrieval-gate RESOLVED by PIPE-02 empirical finding (OQ2): Status:Draft = label only; Draft docs ARE indexed and retrieved. Phase 114 EEE standard must state: Draft exclusion = library scoping or content-approval (operator responsibility), never the body-text label. Content-approval stays a deferred deployment-hardening lever.
 - Phase 116 (RETRO-01): Confirm exact L1/L2 runbook count and file paths at plan time (should be 37 L1 + 33 L2 = ~70 as of v1.14 close; v1.15 does not add new runbooks)
 - Phase 118 (RETRO-03): Confirm exact reference doc file list and identify which capability matrices exceed 25 rows before authoring starts
 
 ### Pending Todos
 
-- At Phase 113 plan time: confirm test SharePoint library access for PIPE-02 grounding validation; identify the 3-5 representative docs (should span multiple platform: values and include at least one capability-matrix table); confirm Pandoc version available in project environment
+- ✅ Phase 113 COMPLETE: SharePoint library access confirmed (owner-run); 5 representative docs converted + guard-passed + grounding-validated; pandoc 3.7.0.2 confirmed (2026-07-04)
 - At Phase 114 plan time: run C10 against a test file with the four new keys to confirm lenient behavior BEFORE writing the EEE standard spec; confirm the Doc Type taxonomy (Runbook / Guide / RCA / Reference) covers all Phase-1 doc classes including comparison docs and error-codes
 - At Phase 115 plan time: confirm the full C17 needle-spec (13 assertions from SUMMARY.md) is complete before authoring; review discuss-phase flag on C17 strictness/staging (informational-first vs. fully-blocking from the start)
 - At Phase 116 plan time: enumerate exact L1/L2 runbook file paths; decide L1-vs-L2 split per discuss-phase flag; confirm whether the ~75 docs warrant multiple sub-phases
@@ -286,25 +292,26 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 
 None at roadmap stage. Execution-time watch items (not blockers — address within specified phases):
 
-- Phase 113: Live Copilot Studio access for PIPE-02 grounding validation — if unavailable to the harness, discuss-phase flag 1 resolves the owner-run vs. agent-run question
-- Phase 113: YAML frontmatter leak (P-08) and heading style loss (P-09) are HIGH-confidence risks in Pandoc conversion — the post-conversion guard script is the mitigation; must be green before proceeding
+- ✅ Phase 113: Live Copilot Studio access — RESOLVED as owner-run (D-01); all six queries passed with grounded results, clickable citations, no hallucinations (2026-07-04)
+- ✅ Phase 113: YAML frontmatter leak (P-08) and heading style loss (P-09) — RESOLVED; guard script (guard-docx.mjs) green on all 5 representative docs; pipeline locked
 - Phase 114: D1 platform normalization map must cover ALL ~19-20 real `platform:` variants in the corpus — a missed value will cause C17 to FAIL all files using it; enumerate real values at plan time
 - Phase 119: The frozen-surface re-baseline is the dominant technical risk — first milestone to deliberately re-pin ~all Phase-1 frozen surfaces at once; requires the same apex+continuity atomic-green discipline used at v1.12–v1.14 closes
 - Phase 119: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..118] (71 entries, +7 from v1.14); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
 
 ## Session Continuity
 
-Last session: 2026-07-03T19:30:04Z
-Stopped at: 113-04 Task 3 (checkpoint:human-verify — owner must run PIPE-02-RUNBOOK.md and fill PIPE-02-FINDINGS.md)
+Last session: 2026-07-04T00:00:00Z
+Stopped at: Phase 113 complete — all 4 plans done, ready for verification (Phase 119 close-gate is the second grounding-confirmation pass against the full retrofit corpus)
 Resume file: None
-Next action: Owner runs the PIPE-02 grounding validation (upload 5 .docx to test SharePoint library, run Q1-Q6 in Copilot Studio, inspect Word custom properties for OQ4, fill PIPE-02-FINDINGS.md OQ1-OQ4, commit). Then type "findings recorded" to trigger continuation agent (113-04-SUMMARY + Phase 113 close).
+Next action: Proceed to Phase 114 (/gsd-discuss-phase 114 or /gsd-plan-phase 114) — EEE Standard, Templates, Doc ID Registry + Metadata Rules. All four PIPE-02 empirical findings are now Phase-114 inputs.
 
 ## Operator Next Steps
 
 - ✅ `/gsd-new-milestone` DONE — v1.15 requirements defined (2026-07-03)
 - ✅ Roadmap authored — 7 phases (113-119); ROADMAP.md + STATE.md written
-- Run `/gsd-discuss-phase 113` to begin Phase 113 planning (pipeline lock + grounding validation)
-- Note: 7 discuss-phase flags deferred from REQUIREMENTS.md — raise at the appropriate phase
+- ✅ Phase 113 COMPLETE — 4 plans, PIPE-01 + PIPE-02 requirements met; all four OQs empirically resolved; pipeline locked; grounding validated (2026-07-04)
+- Run `/gsd-discuss-phase 114` to begin Phase 114 planning (EEE Standard, Templates, Doc ID Registry + Metadata Rules)
+- Note: 6 remaining discuss-phase flags deferred from REQUIREMENTS.md — raise at the appropriate phase (PIPE-02 execution mode flag now resolved)
 
 ## Performance Metrics
 
@@ -313,4 +320,4 @@ Next action: Owner runs the PIPE-02 grounding validation (upload 5 .docx to test
 | (v1.15 phases not yet started) | — | — | — |
 | Phase 113 P02 | 5min | 2 tasks | 3 files |
 | Phase 113 P03 | 35min | 2 tasks | 8 files (7 created, 1 modified) |
-| Phase 113 P04 | 5min | 2 tasks (of 3) | 2 files (paused at human-verify checkpoint) |
+| Phase 113 P04 | multi-day (owner checkpoint) | 3 tasks | 2 files (PIPE-02-RUNBOOK.md, PIPE-02-FINDINGS.md) |
