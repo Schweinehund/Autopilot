@@ -387,10 +387,10 @@ function checkFile(relPath, content) {
   if (!isTemplate) {
     let i = 0;
     while (i < bodyLines.length) {
-      if (/^>/.test(bodyLines[i])) {
+      if (!inCodeFence[i] && /^>/.test(bodyLines[i])) {
         // Collect consecutive blockquote lines
         const bqLines = [];
-        while (i < bodyLines.length && /^>/.test(bodyLines[i])) {
+        while (i < bodyLines.length && !inCodeFence[i] && /^>/.test(bodyLines[i])) {
           bqLines.push(bodyLines[i].replace(/^>\s?/, '')); // strip > prefix (Pitfall 6)
           i++;
         }
