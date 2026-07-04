@@ -1,9 +1,15 @@
 <!-- iOS/iPadOS ADMIN SETUP GUIDE TEMPLATE
      Usage: Copy this file as your starting point for any iOS/iPadOS admin configuration guide.
      Rules:
-     - Fill in all YYYY-MM-DD dates (review_by = last_verified + 90 days)
+     - Fill in last_verified and review_by dates at doc creation time (review_by = last_verified + 90 days)
+     - The `1970-01-01 # TEMPLATE-SENTINEL` value on last_verified is a harness-skip sentinel —
+       REPLACE with actual authoring date when copying this template
      - Set platform to iOS (this template is iOS/iPadOS-specific)
      - Replace all [bracketed placeholders] with actual content
+     - Fill in doc_id from docs/_registry/RE-index.md at doc creation time
+     - Set owner to the person or role responsible for this document
+     - Set doc_type: Guide (this template is Guide-class only)
+     - Update the EEE block line (immediately after the frontmatter close) with your assigned Doc ID
      - Every configurable setting MUST have a "What breaks if misconfigured" callout
        specifying which portal the misconfiguration occurs in AND where the symptom manifests
      - Every supervised-only setting MUST have the supervised-only callout (see pattern below)
@@ -13,14 +19,27 @@
      - No Terminal/CLI steps -- iOS has no command-line access; all admin actions are portal-based
      - Include Renewal/Maintenance section ONLY when the guide's subject has a
        renewable component (e.g., ADE token, APNs certificate). Omit otherwise.
+     - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: iOS Platform Lead (role, not person name)
 -->
 ---
-last_verified: YYYY-MM-DD
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
 review_by: YYYY-MM-DD
 audience: admin
+doc_id: RE-[FILL-IN]
+status: Draft
+owner: [FILL-IN]
+doc_type: Guide
 platform: iOS
 ---
+
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-[NNN] · **Status:** Draft
+
+# [Admin Task Title]
+
+## Summary
+
+[2–3 sentences describing the scope, target audience, and any safety or version constraints for this iOS/iPadOS admin setup guide. Minimum 30 words. State which enrollment method or feature this guide covers (e.g., ADE, supervised enrollment, APNs), the Apple Business Manager and Intune admin roles required, and any supervised-device prerequisites.]
 
 > **Platform gate:** This guide covers iOS/iPadOS configuration via Apple Business Manager and Intune.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
@@ -47,8 +66,6 @@ platform: iOS
 
      > **Privacy limit:** [what IT cannot see/do for this capability]. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 -->
-
-# [Admin Task Title]
 
 ## Prerequisites
 

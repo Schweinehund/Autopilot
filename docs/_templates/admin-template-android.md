@@ -1,10 +1,14 @@
 <!-- ANDROID ENTERPRISE ADMIN SETUP GUIDE TEMPLATE
      Usage: Copy this file as your starting point for any Android Enterprise admin configuration guide.
      Rules:
-     - Fill in all YYYY-MM-DD dates (review_by = last_verified + 60 days, NOT 90)
+     - Fill in last_verified and review_by dates at doc creation time (review_by = last_verified + 60 days, NOT 90)
      - The `1970-01-01 # TEMPLATE-SENTINEL` value on last_verified is a harness-skip sentinel — REPLACE with actual authoring date when copying this template. The harness (v1.4.1+) treats `1970-01-01` as "template placeholder, skip freshness check." Real docs MUST have a valid authoring date (never keep the sentinel value in a shipped doc).
      - Set platform to Android (this template is Android Enterprise-specific)
      - Replace all [bracketed placeholders] with actual content
+     - Fill in doc_id from docs/_registry/RE-index.md at doc creation time
+     - Set owner to the person or role responsible for this document
+     - Set doc_type: Guide (this template is Guide-class only)
+     - Update the EEE block line (immediately after the frontmatter close) with your assigned Doc ID
      - Every configurable setting MUST have a "What breaks if misconfigured" callout
        specifying which portal the misconfiguration occurs in AND where the symptom
        manifests (often a DIFFERENT portal — tri-portal cross-portal symptoms are the norm)
@@ -23,16 +27,27 @@
      - Do NOT link to cross-platform navigation surfaces: the common-issues symptom
        router, the L1 and L2 quick-reference cards, or the top-level docs index.
        Android cross-platform navigation integration is deferred post-v1.4.
+     - Owner promotes status from Draft to Approved when content is reviewed and ready
      Reviewer: Android Platform Lead (role, not person name)
 -->
 ---
 last_verified: 1970-01-01 # TEMPLATE-SENTINEL
 review_by: YYYY-MM-DD
 audience: admin
+doc_id: RE-[FILL-IN]
+status: Draft
+owner: [FILL-IN]
+doc_type: Guide
 platform: Android
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-[NNN] · **Status:** Draft
+
 # [Android Admin Guide Title — e.g., "Bind Managed Google Play" or "Configure Zero-Touch Enrollment"]
+
+## Summary
+
+[2–3 sentences describing the scope, target audience, and any safety or version constraints for this Android Enterprise admin setup guide. Minimum 30 words. State which Android Enterprise enrollment mode this guide covers (e.g., COBO, BYOD Work Profile, Dedicated, AOSP), whether it requires Managed Google Play and/or Zero-Touch portal access, and the Intune admin role required.]
 
 > **Platform gate:** This guide covers [Android Enterprise feature/mode — e.g., "Managed Google Play binding" or "Fully Managed COBO enrollment"] configuration via Intune admin center, Managed Google Play, and (where applicable) the Zero-Touch portal.
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md). For macOS ADE, see [macOS Admin Setup](../admin-setup-macos/00-overview.md). For Windows Autopilot setup, see [Windows Admin Setup](../admin-setup-apv1/00-overview.md).
