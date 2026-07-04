@@ -20,13 +20,13 @@
      Reviewer: [Platform Lead for the reference domain]
 -->
 ---
-last_verified: 1970-01-01 # TEMPLATE-SENTINEL
-review_by: YYYY-MM-DD
 doc_id: RE-[FILL-IN]
 status: Draft
 owner: [FILL-IN]
 doc_type: Reference
 platform: all
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
+review_by: YYYY-MM-DD
 ---
 
 **Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-[NNN] · **Status:** Draft

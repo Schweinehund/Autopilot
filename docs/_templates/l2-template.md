@@ -21,15 +21,15 @@
      Reviewer: L2 Desktop Lead (role, not person name)
 -->
 ---
-last_verified: 1970-01-01 # TEMPLATE-SENTINEL
-review_by: YYYY-MM-DD
-applies_to: APv1 | APv2 | both | ADE | all
-audience: L2
 doc_id: RE-[FILL-IN]
 status: Draft
 owner: [FILL-IN]
 doc_type: Runbook
 platform: all
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
+review_by: YYYY-MM-DD
+applies_to: APv1 | APv2 | both | ADE | all
+audience: L2
 ---
 
 **Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-[NNN] · **Status:** Draft

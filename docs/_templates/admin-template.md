@@ -21,15 +21,15 @@
      Reviewer: Intune Admin Lead (role, not person name)
 -->
 ---
-last_verified: 1970-01-01 # TEMPLATE-SENTINEL
-review_by: YYYY-MM-DD
-applies_to: APv1 | APv2 | both
-audience: admin
 doc_id: RE-[FILL-IN]
 status: Draft
 owner: [FILL-IN]
 doc_type: Guide
 platform: all
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
+review_by: YYYY-MM-DD
+applies_to: APv1 | APv2 | both
+audience: admin
 ---
 
 **Platform:** All Platforms · **Doc Type:** Guide · **Doc ID:** RE-[NNN] · **Status:** Draft

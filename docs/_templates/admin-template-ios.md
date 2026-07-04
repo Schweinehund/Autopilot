@@ -23,14 +23,14 @@
      Reviewer: iOS Platform Lead (role, not person name)
 -->
 ---
-last_verified: 1970-01-01 # TEMPLATE-SENTINEL
-review_by: YYYY-MM-DD
-audience: admin
 doc_id: RE-[FILL-IN]
 status: Draft
 owner: [FILL-IN]
 doc_type: Guide
 platform: iOS
+last_verified: 1970-01-01 # TEMPLATE-SENTINEL
+review_by: YYYY-MM-DD
+audience: admin
 ---
 
 **Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-[NNN] · **Status:** Draft
