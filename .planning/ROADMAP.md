@@ -60,7 +60,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. Live Copilot Studio queries against the uploaded test set return correct document-level citations and the single-line header block appears as body text, not a Word custom property; empirical open questions (citation title source; Status: Draft retrieval behavior; exact chunk boundary behavior) are resolved and recorded for use in Phase 114 standard authoring
 
 **Plans**: 4 plans
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 113-01-PLAN.md — Shared OOXML helper + pandoc 3.7.0.2 pin + reference.docx (PIPE-01)
@@ -89,7 +90,21 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. All `docs/_templates/*` produce EEE-conformant new docs out of the box — required frontmatter keys, single-line header block, `## Summary`-first, `Status: Draft` default; owner-promotes-to-Approved rule is documented
   4. `docs/_registry/RE-index.md` is committed outside the indexed SharePoint library with all Phase-1 Doc IDs assigned in one sequential collision-free pass starting at RE-001, mapping RE-NNN → file path + title + doc_type + status
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 114-01-PLAN.md — SC1 C10-leniency precondition gate: probe proves C10 lenient on the 4 new keys, then deleted (META-01)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 114-02-PLAN.md — EEE-SOP-standard.md: block format + D1 20-variant map + taxonomy + D2 semantics + grounding notes + C17 needle-spec (STD-01, META-02, META-03, META-04)
+
+**Wave 3** *(blocked on Wave 2 completion; the two run in parallel — no file overlap)*
+
+- [ ] 114-03-PLAN.md — Templates: 6 edited + reference-template.md new, all born-EEE-conformant, D-07 platform fix (STD-02)
+- [ ] 114-04-PLAN.md — Doc ID Registry RE-index.md: 178 Phase-1 docs → RE-001..RE-178, collision-free, outside indexed library (STD-03)
 
 ### Phase 115: C17 Harness Check (Validator Atom)
 
