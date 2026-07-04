@@ -1,14 +1,25 @@
 ---
+doc_id: RE-003
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-20
 review_by: 2026-06-18
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-003 · **Status:** Approved
 
 # ESP Stuck or Failed
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers three distinct Enrollment Status Page failure scenarios: the device phase stuck with no error code, the user phase stuck with no error code, and ESP displaying a hex error code. Each section provides step-by-step guidance including a single restart attempt and data collection before escalation.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 The [Enrollment Status Page](../_glossary.md#enrollment-status-page) ([ESP](../_glossary.md#esp)) is the progress screen that appears during [Autopilot](../_glossary.md#autopilot) provisioning after the user signs in or after [OOBE](../_glossary.md#oobe) completes. It tracks the installation of required apps and policies before releasing the desktop. This runbook covers two scenarios where ESP appears stuck with no error code, and one scenario where ESP displays an error code.
 
@@ -144,4 +155,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-20 | Initial version | — |

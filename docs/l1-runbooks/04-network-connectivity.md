@@ -1,14 +1,25 @@
 ---
+doc_id: RE-005
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-20
 review_by: 2026-06-18
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-005 · **Status:** Approved
 
 # Network Connectivity Failure
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides agents through browser-based connectivity checks to three critical Autopilot endpoints, device clock verification, and collection of network details. Note: network connectivity failures escalate to the Infrastructure/Network team, not to L2 engineering, with the specific endpoint failure data collected in this runbook.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 Use this runbook when a device cannot reach the services required for [Autopilot](../_glossary.md#autopilot) provisioning. It covers browser-based connectivity checks, user communication, and escalation to the Infrastructure/Network team with the correct data.
 
@@ -77,4 +88,5 @@ For endpoint-specific firewall rule requirements, see [Autopilot Network Endpoin
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-20 | Initial version | — |

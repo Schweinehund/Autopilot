@@ -1,14 +1,25 @@
 ---
+doc_id: RE-004
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-20
 review_by: 2026-06-18
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-004 · **Status:** Approved
 
 # Autopilot Profile Not Assigned
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides agents through verifying a registered Autopilot device has no deployment profile, checking group membership against the profile target group, adding the device to a static group where L1 permissions allow, and collecting portal data for L2 escalation when the profile still fails to assign.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 Use this runbook when a device is registered in the [Autopilot](../_glossary.md#autopilot) portal but no [deployment profile](../_glossary.md#apv1) is assigned to it. It covers checking group membership, adding the device to the correct group, and collecting data before escalation.
 
@@ -83,4 +94,5 @@ See [L2 Runbooks](../l2-runbooks/00-index.md) for assignment filter and Graph AP
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-20 | Initial version | — |

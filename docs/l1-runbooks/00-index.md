@@ -1,4 +1,8 @@
 ---
+doc_id: RE-001
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: all
@@ -6,9 +10,15 @@ audience: L1
 platform: all
 ---
 
-> **Version gate:** This index covers L1 runbooks for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-001 · **Status:** Approved
 
 # L1 Runbooks
+
+## Summary
+
+This is the L1 runbook index — a navigation hub listing every Level-1 troubleshooting runbook by platform; it contains no procedural or diagnostic steps of its own. Service Desk agents should start with the platform-specific triage decision tree linked in each section, then navigate directly to the matching runbook. This index covers APv1 classic Autopilot, APv2 Device Preparation, macOS ADE, iOS, Android, Linux, Apple Business Shared iPad, and 802.1X scenarios.
+
+> **Version gate:** This index covers L1 runbooks for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
 
 Scripted procedures for the five highest-volume [Autopilot](../_glossary.md#autopilot) failure scenarios. Each runbook provides step-by-step instructions for Service Desk agents with no registry access, no PowerShell execution, and no log file analysis required. Start with the [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md) to identify which runbook applies, or select directly from the list below.
 
@@ -62,7 +72,7 @@ L1 runbooks for the six most common iOS/iPadOS enrollment and compliance failure
 | [20: iOS Device Cap Reached](20-ios-device-cap-reached.md) | Device enrollment blocked at cap | User hit per-user or per-group device cap in Intune |
 | [21: iOS Compliance Blocked](21-ios-compliance-blocked.md) | Compliance / Conditional Access blocking user | Multi-cause A/B/C — OS version, jailbreak, passcode, CA timing |
 
-> **MAM-WE Note:** iOS MAM without Enrollment (app protection policy failures, selective wipe failures, PIN loop, app protection not applying) is deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](../admin-setup-ios/09-mam-app-protection.md).
+**MAM-WE Note:** iOS MAM without Enrollment (app protection policy failures, selective wipe failures, PIN loop, app protection not applying) is deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](../admin-setup-ios/09-mam-app-protection.md).
 
 ## Android L1 Runbooks
 
@@ -135,6 +145,7 @@ L1 runbooks for 802.1X network authentication failure scenarios. All four runboo
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-07-01 | Phase 109 (DOT1X-11): appended 802.1X L1 Runbooks H2 with runbooks #38-41 and 802.1X Triage Decision Tree to Related Resources | -- |
 | 2026-06-29 | Phase 99 (RUN-01): appended macOS Local Password Recovery runbook #37 to macOS ADE Runbooks table | -- |
 | 2026-06-21 | Phase 80 SSORUN-01/02: added macOS Platform SSO runbooks #35 and #36 to macOS ADE Runbooks table | -- |

@@ -1,14 +1,25 @@
 ---
+doc_id: RE-002
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-20
 review_by: 2026-06-18
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-002 · **Status:** Approved
 
 # Device Not Registered in Autopilot
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides Service Desk agents through confirming a device is genuinely unregistered in the Autopilot portal, communicating clearly with the affected user, and collecting the hardware hash import status, serial number, and deployment mode before escalating to L2 for registration completion.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 Use this runbook when a device is not found in the [Autopilot](../_glossary.md#autopilot) portal. It covers confirming the device is genuinely unregistered, communicating with the user, and collecting the correct data before escalation.
 
@@ -67,4 +78,5 @@ For related error codes, see [MDM Enrollment Errors](../error-codes/01-mdm-enrol
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-20 | Initial version | — |

@@ -14,16 +14,16 @@
 
 | Doc ID | Path | Title | Doc Type | Status |
 |--------|------|-------|----------|--------|
-| RE-001 | docs/l1-runbooks/00-index.md | L1 Runbooks | Runbook | Pending |
-| RE-002 | docs/l1-runbooks/01-device-not-registered.md | Device Not Registered in Autopilot | Runbook | Pending |
-| RE-003 | docs/l1-runbooks/02-esp-stuck-or-failed.md | ESP Stuck or Failed | Runbook | Pending |
-| RE-004 | docs/l1-runbooks/03-profile-not-assigned.md | Autopilot Profile Not Assigned | Runbook | Pending |
-| RE-005 | docs/l1-runbooks/04-network-connectivity.md | Network Connectivity Failure | Runbook | Pending |
-| RE-006 | docs/l1-runbooks/05-oobe-failure.md | OOBE Fails Immediately | Runbook | Pending |
-| RE-007 | docs/l1-runbooks/06-apv2-deployment-not-launched.md | APv2 Deployment Experience Never Launched | Runbook | Pending |
-| RE-008 | docs/l1-runbooks/07-apv2-apps-not-installed.md | APv2 Apps and Scripts Not Installed | Runbook | Pending |
-| RE-009 | docs/l1-runbooks/08-apv2-apv1-conflict.md | APv1 Registration Conflict -- ESP Appeared During APv2 Deployment | Runbook | Pending |
-| RE-010 | docs/l1-runbooks/09-apv2-deployment-timeout.md | APv2 Deployment Timed Out | Runbook | Pending |
+| RE-001 | docs/l1-runbooks/00-index.md | L1 Runbooks | Runbook | Approved |
+| RE-002 | docs/l1-runbooks/01-device-not-registered.md | Device Not Registered in Autopilot | Runbook | Approved |
+| RE-003 | docs/l1-runbooks/02-esp-stuck-or-failed.md | ESP Stuck or Failed | Runbook | Approved |
+| RE-004 | docs/l1-runbooks/03-profile-not-assigned.md | Autopilot Profile Not Assigned | Runbook | Approved |
+| RE-005 | docs/l1-runbooks/04-network-connectivity.md | Network Connectivity Failure | Runbook | Approved |
+| RE-006 | docs/l1-runbooks/05-oobe-failure.md | OOBE Fails Immediately | Runbook | Approved |
+| RE-007 | docs/l1-runbooks/06-apv2-deployment-not-launched.md | APv2 Deployment Experience Never Launched | Runbook | Approved |
+| RE-008 | docs/l1-runbooks/07-apv2-apps-not-installed.md | APv2 Apps and Scripts Not Installed | Runbook | Approved |
+| RE-009 | docs/l1-runbooks/08-apv2-apv1-conflict.md | APv1 Registration Conflict -- ESP Appeared During APv2 Deployment | Runbook | Approved |
+| RE-010 | docs/l1-runbooks/09-apv2-deployment-timeout.md | APv2 Deployment Timed Out | Runbook | Approved |
 | RE-011 | docs/l1-runbooks/10-macos-device-not-appearing.md | macOS Device Not Appearing in Intune | Runbook | Pending |
 | RE-012 | docs/l1-runbooks/11-macos-setup-assistant-failed.md | macOS Setup Assistant Stuck or Failed | Runbook | Pending |
 | RE-013 | docs/l1-runbooks/12-macos-profile-not-applied.md | macOS Configuration Profile Not Applied | Runbook | Pending |

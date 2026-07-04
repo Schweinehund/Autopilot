@@ -1,14 +1,25 @@
 ---
+doc_id: RE-006
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-20
 review_by: 2026-06-18
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-006 · **Status:** Approved
 
 # OOBE Fails Immediately
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses failures during the Out-of-Box Experience before the Enrollment Status Page appears, including device crashes, freezes, blue screens, reboots to recovery, and OOBE completing standard Windows setup without Autopilot customization. A single power cycle is the only L1 intervention; repeated or unusual failures escalate immediately to L2.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 Use this runbook when the device fails during the initial [Out-of-Box Experience](../_glossary.md#oobe) ([OOBE](../_glossary.md#oobe)) before reaching the Enrollment Status Page. This covers crashes, freezes, blue screens, reboots to recovery, and [OOBE](../_glossary.md#oobe) completing standard Windows setup without [Autopilot](../_glossary.md#autopilot) customization.
 
@@ -74,4 +85,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-20 | Initial version | — |

@@ -1,14 +1,25 @@
 ---
+doc_id: RE-008
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: L1
 ---
 
-> **Version gate:** This guide covers Autopilot Device Preparation (APv2).
-> For Windows Autopilot (classic), see [ESP Stuck or Failed runbook](02-esp-stuck-or-failed.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-008 · **Status:** Approved
 
 # APv2 Apps and Scripts Not Installed
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers APv2 Device Preparation deployments where the deployment screen completed but expected apps or scripts are missing or failed. Agents review the deployment report for Failed and Skipped statuses, verify install context and ETG group assignment for each affected app, and escalate all script failures and unresolved app failures to L2.
+
+> **Version gate:** This guide covers Autopilot Device Preparation (APv2).
+> For Windows Autopilot (classic), see [ESP Stuck or Failed runbook](02-esp-stuck-or-failed.md).
 
 Use this runbook when a device went through Device Preparation but expected apps or scripts are missing, failed to install, or were skipped. This covers LOB apps, Microsoft 365 apps, Win32 apps, Microsoft Store apps, and platform scripts assigned through the Device Preparation policy.
 
@@ -82,4 +93,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-12 | Initial version | -- |

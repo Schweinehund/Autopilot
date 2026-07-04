@@ -1,14 +1,25 @@
 ---
+doc_id: RE-010
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: L1
 ---
 
-> **Version gate:** This guide covers Autopilot Device Preparation (APv2).
-> For Windows Autopilot (classic), see [ESP Stuck or Failed runbook](02-esp-stuck-or-failed.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-010 · **Status:** Approved
 
 # APv2 Deployment Timed Out
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers APv2 Device Preparation deployments that timed out before completing. Agents check the configured timeout value against the count of assigned apps and scripts, identify whether a Windows 365 known issue applies, and escalate when the root cause cannot be confirmed from portal data alone.
+
+> **Version gate:** This guide covers Autopilot Device Preparation (APv2).
+> For Windows Autopilot (classic), see [ESP Stuck or Failed runbook](02-esp-stuck-or-failed.md).
 
 Use this runbook when a device's Device Preparation deployment exceeded the configured timeout and was marked as failed. The Device Preparation screen may have shown a timeout error or the deployment report shows a timeout status.
 
@@ -75,4 +86,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-12 | Initial version | -- |

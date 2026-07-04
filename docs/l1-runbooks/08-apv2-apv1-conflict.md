@@ -1,13 +1,26 @@
 ---
+doc_id: RE-009
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: L1
 ---
 
-> **Version gate:** This guide covers an APv2 Device Preparation conflict scenario. For Windows Autopilot (classic) troubleshooting, see [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-009 · **Status:** Approved
 
 # APv1 Registration Conflict -- ESP Appeared During APv2 Deployment
+
+## Summary
+
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It addresses APv2 deployments where an active APv1 Autopilot registration caused the Enrollment Status Page to appear instead of the Device Preparation screen. Agents confirm the APv1 registration in the portal and escalate to the admin team for deregistration; L1 does not perform device deregistration.
+
+> **Version gate:** This guide covers an APv2 Device Preparation conflict scenario.
+
+> For Windows Autopilot (classic) troubleshooting, see [Initial Triage Decision Tree](../decision-trees/00-initial-triage.md).
 
 Use this runbook when a device expected to go through APv2 Device Preparation instead showed the Enrollment Status Page (ESP). This indicates the device has an active APv1 Autopilot registration that took precedence over the APv2 Device Preparation policy.
 
@@ -65,4 +78,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-12 | Initial version | -- |
