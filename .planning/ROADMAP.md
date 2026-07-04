@@ -118,7 +118,9 @@ Plans:
   3. C17 exits 0 on the representative set validated in Phase 113 and on all `docs/_templates/*` (templates use `Status: Draft`; C17 does not gate on Approved-only for templates)
   4. Content retrofit phases (116-118) receive the C17 needle-spec only — C17 itself is not re-opened or modified during content phases; it is the enforcing gate
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+- [ ] 115-01-PLAN.md — C17 EEE-contract validator: 13-assertion blocking atom (single file) + node-builtins-only + --self-test fixture set (HARN-01)
 
 ### Phase 116: L1/L2 Runbook Retrofit (~75 docs)
 
