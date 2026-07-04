@@ -777,12 +777,12 @@
         },
         "114": {
           "issueKey": "RTS-717",
-          "status": "in_progress",
+          "status": "done",
           "name": "EEE Standard, Templates, Doc ID Registry + Metadata Rules"
         },
         "115": {
           "issueKey": "RTS-718",
-          "status": "todo",
+          "status": "in_progress",
           "name": "C17 Harness Check (Validator Atom)"
         },
         "116": {
