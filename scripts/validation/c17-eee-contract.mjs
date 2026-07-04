@@ -252,10 +252,11 @@ function checkFile(relPath, content) {
     }
 
     // #5: ## Summary prose >= 30 words (count lines from Summary+1 to next ## outside fences)
+    // Skip lines inside code fences so code tokens do not inflate the prose word count.
     const sumBodyLines = [];
     for (let i = summaryIdx + 1; i < bodyLines.length; i++) {
       if (!inCodeFence[i] && /^## /.test(bodyLines[i])) break;
-      sumBodyLines.push(bodyLines[i]);
+      if (!inCodeFence[i]) sumBodyLines.push(bodyLines[i]); // skip fenced lines
     }
     const wordCount = sumBodyLines.join(' ').split(/\s+/).filter(Boolean).length;
     if (wordCount < 30) {
