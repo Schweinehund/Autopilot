@@ -138,7 +138,7 @@ Plans:
 **Plans**: 8 plans
 **Wave 1**
 
-- [ ] 116-01-PLAN.md — Mechanical EEE retrofit helper (retrofit-runbook.mjs, node-builtins): doc_id join, block line, gate relocation, platform injection, Version-History row (D-03)
+- [x] 116-01-PLAN.md — Mechanical EEE retrofit helper (retrofit-runbook.mjs, node-builtins): doc_id join, block line, gate relocation, platform injection, Version-History row (D-03)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -245,7 +245,7 @@ Plans:
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
-| 116. L1/L2 Runbook Retrofit | 0/TBD | Not started | — |
+| 116. L1/L2 Runbook Retrofit | 1/8 | In Progress|  |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
