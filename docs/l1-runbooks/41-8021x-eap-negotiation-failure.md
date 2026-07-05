@@ -1,4 +1,8 @@
 ---
+doc_id: RE-042
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-06-30
 review_by: 2026-09-28
 applies_to: both
@@ -6,11 +10,15 @@ audience: L1
 platform: windows+macos+ios+android+linux
 ---
 
-> **Platform gate:** This guide covers 802.1X EAP-negotiation-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
-
-> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (modifying the EAP type or inner-auth method in an Intune profile, requesting RADIUS policy changes from the networking team) appear ONLY in L2 runbooks — they are not L1 actions.
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-042 · **Status:** Approved
 
 # 802.1X EAP Negotiation Failure
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers 802.1X EAP-negotiation-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
 
 ## Symptom
 
@@ -139,4 +147,5 @@ negotiation investigation.
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-30 | Phase 107 plan 02: initial authoring — 802.1X EAP negotiation failure (D-01/D-02/D-05) | -- |

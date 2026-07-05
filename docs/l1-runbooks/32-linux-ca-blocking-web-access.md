@@ -1,4 +1,8 @@
 ---
+doc_id: RE-033
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: all
@@ -6,9 +10,15 @@ audience: L1
 platform: Linux
 ---
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
+**Platform:** Linux · **Doc Type:** Runbook · **Doc ID:** RE-033 · **Status:** Approved
 
 # Linux CA Blocking Web-App Access
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
 L1 runbook for Linux endpoints where a user is blocked from accessing Microsoft 365 web applications in Microsoft Edge for Linux due to a Conditional Access (CA) policy. Three distinct causes are diagnosed independently:
 
@@ -204,4 +214,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version (Phase 51 — 3-cause runbook: Not Enrolled / Non-Compliant / Edge Not Signed In; PITFALL-2 architectural callout paraphrased per defect 4C-1 / V-51-19 mitigation) | -- |

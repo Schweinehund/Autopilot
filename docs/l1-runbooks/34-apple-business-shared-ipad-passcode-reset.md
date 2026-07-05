@@ -1,4 +1,8 @@
 ---
+doc_id: RE-035
+status: Approved
+owner: L1 Team Lead
+doc_type: Runbook
 last_verified: 2026-05-22
 review_by: 2026-07-21
 applies_to: apple-business
@@ -6,9 +10,15 @@ audience: L1
 platform: ios+macos+shared-ipad
 ---
 
-> **Platform gate:** This guide covers Apple Business Shared iPad passcode reset (iOS + iPadOS + Shared iPad). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
+**Platform:** iOS + macOS + Shared iPad · **Doc Type:** Runbook · **Doc ID:** RE-035 · **Status:** Approved
 
 # Apple Business Shared iPad Passcode Reset
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Apple Business Shared iPad passcode reset (iOS + iPadOS + Shared iPad). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
 L1 runbook for Shared iPad deployments where a user cannot access their Shared iPad partition passcode. This runbook covers the Apple Business portal path (Path A — L1-executable) and escalation pointers for the MDM paths (Paths B and C — L2 only).
 
@@ -145,4 +155,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-05-22 | Phase 65 plan 65-02: initial authoring — L1 Apple Business Shared iPad passcode reset; Path A executable (Apple Business UI); Paths B/C escalation-pointer only (OP-11); C16 edge l1_34↔admin_12 live | -- |
