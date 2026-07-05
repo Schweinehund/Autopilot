@@ -1,4 +1,8 @@
 ---
+doc_id: RE-060
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-23
 review_by: 2026-06-22
 applies_to: all
@@ -6,9 +10,15 @@ audience: L2
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+**Platform:** Android · **Doc Type:** Runbook · **Doc ID:** RE-060 · **Status:** Approved
 
 # Android Log Collection Guide
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Context
 
@@ -201,4 +211,5 @@ Use this table to see which investigation runbook consumes each artifact — it 
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-23 | Initial version — Android L2 log collection guide (mode-first tiering, 3 method sections, per-assertion adb confidence markers, USB-debug device-owner-mode callout) | -- |

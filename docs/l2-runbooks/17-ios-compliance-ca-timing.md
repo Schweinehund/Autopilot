@@ -1,4 +1,8 @@
 ---
+doc_id: RE-059
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: all
@@ -6,9 +10,15 @@ audience: L2
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** iOS · **Doc Type:** Runbook · **Doc ID:** RE-059 · **Status:** Approved
 
 # iOS Compliance & CA Timing Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Triage
 
@@ -184,4 +194,5 @@ Cross-cuts all three causes — a [DEFECT] declaration is the output of a [CONFI
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Initial version — iOS compliance & CA timing investigation | -- |

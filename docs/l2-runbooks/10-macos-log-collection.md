@@ -1,4 +1,8 @@
 ---
+doc_id: RE-052
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L2
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE log collection via Intune. For Windows Autopilot, see [Windows Log Collection Guide](01-log-collection.md).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-052 · **Status:** Approved
 
 # macOS L2 Log Collection Guide
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers macOS ADE log collection via Intune. For Windows Autopilot, see [Windows Log Collection Guide](01-log-collection.md).
 
 ## Context
 
@@ -157,4 +167,5 @@ For the complete log path reference with configuration profile filesystem locati
 
 | Date | Change |
 |------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version — IntuneMacODC-first log collection with Terminal fallback, macOS version table, macOS 15 IntuneMDMAgent caveat |

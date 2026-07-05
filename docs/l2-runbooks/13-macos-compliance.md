@@ -1,4 +1,8 @@
 ---
+doc_id: RE-055
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L2
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-055 · **Status:** Approved
 
 # macOS Compliance Evaluation Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
 ## Triage
 
@@ -214,4 +224,5 @@ Open a Microsoft support case if:
 
 | Date | Change |
 |------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version — SIP, FileVault, firewall, OS version compliance checks; Conditional Access interaction; Company Portal log investigation; 6 resolution scenarios |

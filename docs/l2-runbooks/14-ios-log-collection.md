@@ -1,4 +1,8 @@
 ---
+doc_id: RE-056
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: all
@@ -6,9 +10,15 @@ audience: L2
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** iOS · **Doc Type:** Runbook · **Doc ID:** RE-056 · **Status:** Approved
 
 # iOS Log Collection Guide
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Context
 
@@ -180,5 +190,6 @@ Use this table to see which runbook consumes each artifact — it is both a coll
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-18 | Phase 32 gap closure (UAT Test 15): rewrote Section 3 from "Mac+Cable Sysdiagnose" to AssistiveTouch-based on-device trigger + file export per Apple Support canonical URL; Mac+cable Console.app demoted to alternative for live-streaming and large-bundle retrieval; section renamed (new anchor: #section-3-sysdiagnose-trigger-and-file-export) | -- |
 | 2026-04-17 | Initial version — iOS L2 log collection runbook | -- |

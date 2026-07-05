@@ -1,4 +1,8 @@
 ---
+doc_id: RE-063
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-23
 review_by: 2026-06-22
 applies_to: all
@@ -6,9 +10,15 @@ audience: L2
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+**Platform:** Android · **Doc Type:** Runbook · **Doc ID:** RE-063 · **Status:** Approved
 
 # Android Compliance Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Triage
 
@@ -219,4 +229,5 @@ Escalate to Microsoft Support when:
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-23 | Initial version — Android L2 compliance + CA timing investigation runbook (Phase 31 D-14 hybrid axis + 4-cause Per-Cause Deep-Dive matching L1 runbook 25 Cause A/B/C/D + Play Integrity 3-tier ladder + "Not evaluated" terminal state) | -- |
