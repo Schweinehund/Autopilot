@@ -158,7 +158,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 116-06-PLAN.md — L2 index + Windows (RE-043..RE-051): Windows injection + RE-044 Version-History create + tailored RE-045/046/047
+- [x] 116-06-PLAN.md — L2 index + Windows (RE-043..RE-051): Windows injection + RE-044 Version-History create + tailored RE-045/046/047
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
@@ -245,7 +245,7 @@ Plans:
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
-| 116. L1/L2 Runbook Retrofit | 5/8 | In Progress|  |
+| 116. L1/L2 Runbook Retrofit | 6/8 | In Progress|  |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
