@@ -44,18 +44,18 @@
 | RE-028 | docs/l1-runbooks/27-android-zte-enrollment-failed.md | Android Zero-Touch Enrollment Failed | Runbook | Approved |
 | RE-029 | docs/l1-runbooks/28-android-knox-enrollment-failed.md | Android Knox Mobile Enrollment Failed | Runbook | Approved |
 | RE-030 | docs/l1-runbooks/29-android-aosp-enrollment-failed.md | Android AOSP Enrollment Failed | Runbook | Approved |
-| RE-031 | docs/l1-runbooks/30-linux-enrollment-failed.md | Linux Enrollment Failed | Runbook | Pending |
-| RE-032 | docs/l1-runbooks/31-linux-compliance-non-compliant.md | Linux Compliance Non-Compliant | Runbook | Pending |
-| RE-033 | docs/l1-runbooks/32-linux-ca-blocking-web-access.md | Linux CA Blocking Web-App Access | Runbook | Pending |
-| RE-034 | docs/l1-runbooks/33-linux-agent-service-failure.md | Linux Intune Agent Service Failure | Runbook | Pending |
-| RE-035 | docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md | Apple Business Shared iPad Passcode Reset | Runbook | Pending |
+| RE-031 | docs/l1-runbooks/30-linux-enrollment-failed.md | Linux Enrollment Failed | Runbook | Approved |
+| RE-032 | docs/l1-runbooks/31-linux-compliance-non-compliant.md | Linux Compliance Non-Compliant | Runbook | Approved |
+| RE-033 | docs/l1-runbooks/32-linux-ca-blocking-web-access.md | Linux CA Blocking Web-App Access | Runbook | Approved |
+| RE-034 | docs/l1-runbooks/33-linux-agent-service-failure.md | Linux Intune Agent Service Failure | Runbook | Approved |
+| RE-035 | docs/l1-runbooks/34-apple-business-shared-ipad-passcode-reset.md | Apple Business Shared iPad Passcode Reset | Runbook | Approved |
 | RE-036 | docs/l1-runbooks/35-macos-sso-sign-in-failure.md | macOS Platform SSO Sign-In Failure | Runbook | Approved |
 | RE-037 | docs/l1-runbooks/36-macos-secure-enclave-key.md | macOS Platform SSO — Secure Enclave Key Loss | Runbook | Approved |
 | RE-038 | docs/l1-runbooks/37-macos-local-password-reset.md | macOS Local Password Recovery: Secure Enclave PSSO Devices | Runbook | Approved |
-| RE-039 | docs/l1-runbooks/38-8021x-certificate-failure.md | 802.1X Certificate Failure | Runbook | Pending |
-| RE-040 | docs/l1-runbooks/39-8021x-radius-reject.md | 802.1X RADIUS Reject | Runbook | Pending |
-| RE-041 | docs/l1-runbooks/40-8021x-server-trust-failure.md | 802.1X Server Trust Failure | Runbook | Pending |
-| RE-042 | docs/l1-runbooks/41-8021x-eap-negotiation-failure.md | 802.1X EAP Negotiation Failure | Runbook | Pending |
+| RE-039 | docs/l1-runbooks/38-8021x-certificate-failure.md | 802.1X Certificate Failure | Runbook | Approved |
+| RE-040 | docs/l1-runbooks/39-8021x-radius-reject.md | 802.1X RADIUS Reject | Runbook | Approved |
+| RE-041 | docs/l1-runbooks/40-8021x-server-trust-failure.md | 802.1X Server Trust Failure | Runbook | Approved |
+| RE-042 | docs/l1-runbooks/41-8021x-eap-negotiation-failure.md | 802.1X EAP Negotiation Failure | Runbook | Approved |
 | RE-043 | docs/l2-runbooks/00-index.md | L2 Investigation Runbooks | Runbook | Pending |
 | RE-044 | docs/l2-runbooks/01-log-collection.md | L2 Log Collection Guide | Runbook | Pending |
 | RE-045 | docs/l2-runbooks/02-esp-deep-dive.md | ESP Deep-Dive Investigation | Runbook | Pending |

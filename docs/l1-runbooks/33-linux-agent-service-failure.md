@@ -18,7 +18,11 @@ platform: Linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of Linux endpoints where the intune-portal package is present but the intune-agent.timer systemd unit is inactive, failed, or not firing, causing the device to stop checking in to Intune.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
 L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where the Intune agent service (`intune-agent.timer`) is not running or not checking in. The `intune-portal` deb package may still be installed; this runbook covers the case where the package is present but the systemd timer is inactive, failed, or never firing.
 
@@ -33,13 +37,15 @@ One or more of the following:
 
 Routed here from the [Linux Triage Decision Tree](../decision-trees/09-linux-triage.md) LINR33 branch.
 
-> **Disambiguation:** If the device never enrolled (no `intune-portal` deb installed at all), see [Runbook 30: Linux Enrollment Failed](30-linux-enrollment-failed.md) instead. If the timer is running but compliance evaluation is reporting non-compliant, see [Runbook 31: Linux Compliance Non-Compliant](31-linux-compliance-non-compliant.md).
+> **Disambiguation:** If the device never enrolled (no `intune-portal` deb installed at all), see [Runbook 30: Linux Enrollment Failed](30-linux-enrollment-failed.md) instead.
+
+> If the timer is running but compliance evaluation is reporting non-compliant, see [Runbook 31: Linux Compliance Non-Compliant](31-linux-compliance-non-compliant.md).
 
 ## L1 Triage Steps
 
 L1 Triage Steps are read-only checks. L1 does NOT modify any service state — that is an admin action (see [Admin Action Required](#admin-action-required) below).
 
-> See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-scope check-in timer; [systemd](../_glossary-linux.md#systemd) for the unit framework; [journalctl](../_glossary-linux.md#journalctl) for the journal reader; [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for the deb package supplying the unit; [dpkg](../_glossary-linux.md#dpkg) for the package status query.
+See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-scope check-in timer; [systemd](../_glossary-linux.md#systemd) for the unit framework; [journalctl](../_glossary-linux.md#journalctl) for the journal reader; [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for the deb package supplying the unit; [dpkg](../_glossary-linux.md#dpkg) for the package status query.
 
 1. > **Say to the user:** "Let me check whether the Intune agent timer is running on your device. Please open Terminal and type: `systemctl --user status intune-agent.timer`. Read me the output."
 
@@ -111,5 +117,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version (Phase 51 — Linux Intune agent service failure single-cause L1 runbook) | -- |

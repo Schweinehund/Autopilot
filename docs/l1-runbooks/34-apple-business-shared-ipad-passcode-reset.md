@@ -18,13 +18,19 @@ platform: ios+macos+shared-ipad
 
 This runbook's L1 triage is read-only, but it documents state-changing passcode-reset paths (MDM ClearPasscode and EraseDevice) that are L2/admin actions — run only the read-only triage at L1 and escalate the reset commands per the guardrails below. It covers the Apple Business portal path (Path A — L1-executable) for routine Shared iPad partition passcode resets, with escalation pointers to MDM ClearPasscode (Path B) and MDM EraseDevice (Path C), both of which are L2-only actions.
 
-> **Platform gate:** This guide covers Apple Business Shared iPad passcode reset (iOS + iPadOS + Shared iPad). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
+> **Platform gate:** This guide covers Apple Business Shared iPad passcode reset (iOS + iPadOS + Shared iPad).
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
 L1 runbook for Shared iPad deployments where a user cannot access their Shared iPad partition passcode. This runbook covers the Apple Business portal path (Path A — L1-executable) and escalation pointers for the MDM paths (Paths B and C — L2 only).
 
 Reach this runbook directly from the Apple Business Quick Reference in [quick-ref-l1.md](../quick-ref-l1.md#apple-business-quick-reference) or via L2 escalation from [26: Apple Business Permission Denied Investigation](../l2-runbooks/26-apple-business-permission-denied.md) when Path A is confirmed available.
 
-> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing commands (MDM ClearPasscode, MDM EraseDevice) appear ONLY in the per-cause `### Admin Action Required` sections — they are not L1 actions.
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
+
+> State-changing commands (MDM ClearPasscode, MDM EraseDevice) appear ONLY in the per-cause `### Admin Action Required` sections — they are not L1 actions.
 
 ## Which Admin Owns This Pool?
 
@@ -78,7 +84,9 @@ If any of these checks fail, do not proceed to the reset action — escalate usi
 
 **Path A reset procedure (Apple Business portal):**
 
-> **Note:** Step labels marked `[CITED: training; needs live verification]` reflect AI training knowledge of Apple Business portal behavior; exact menu paths may differ in the 2026 UI. Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
+> **Note:** Step labels marked `[CITED: training; needs live verification]` reflect AI training knowledge of Apple Business portal behavior; exact menu paths may differ in the 2026 UI.
+
+> Re-verification target: within 60 days of 2026-05-22 (by 2026-07-21).
 
 | Step | Action | Who | Notes |
 |------|--------|-----|-------|
@@ -155,5 +163,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-05-22 | Phase 65 plan 65-02: initial authoring — L1 Apple Business Shared iPad passcode reset; Path A executable (Apple Business UI); Paths B/C escalation-pointer only (OP-11); C16 edge l1_34↔admin_12 live | -- |

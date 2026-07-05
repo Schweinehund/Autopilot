@@ -18,9 +18,13 @@ platform: windows+macos+ios+android+linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of 802.1X failures where all certificate profiles show Succeeded in Intune but the RADIUS server returns a clean Access-Reject, across all five platforms, with per-platform diagnostic signal collection for L2 escalation.
 
-> **Platform gate:** This guide covers 802.1X RADIUS-reject triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+> **Platform gate:** This guide covers 802.1X RADIUS-reject triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
 
-> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (modifying RADIUS policy, re-configuring the Intune Wi-Fi/Wired profile, reprovisioning certificates) appear ONLY in L2 runbooks — they are not L1 actions.
+> For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
+
+> State-changing actions (modifying RADIUS policy, re-configuring the Intune Wi-Fi/Wired profile, reprovisioning certificates) appear ONLY in L2 runbooks — they are not L1 actions.
 
 ## Symptom
 
@@ -63,7 +67,9 @@ Perform these checks **before** collecting platform-specific logs. They rule out
 
 4. Ask the user: does the failure affect this device only, or all devices on the same SSID/wired port? A single-device failure suggests a user- or device-specific RADIUS policy mismatch. An all-devices failure suggests a policy change on the RADIUS server.
 
-> **NOTE:** RADIUS-reject failures (this runbook) are distinct from certificate delivery failures (#38) and server trust failures (#40). This runbook applies when Intune shows all profiles as Succeeded and the device is actively being rejected by the RADIUS server — not when cert deployment is incomplete.
+> **NOTE:** RADIUS-reject failures (this runbook) are distinct from certificate delivery failures (#38) and server trust failures (#40).
+
+> This runbook applies when Intune shows all profiles as Succeeded and the device is actively being rejected by the RADIUS server — not when cert deployment is incomplete.
 
 ## Per-Platform Diagnostic Signal
 
@@ -78,7 +84,7 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 | **Android** | Intune portal — device configuration profile status | **L1 action: check Intune portal only.** Navigate to Intune admin center > **Devices** > [Android Enterprise] > device > **Device configuration** and confirm all profile statuses. Note the signal `adb logcat -s "wpa_supplicant"` for escalation — do **not** attempt to run it at L1; it requires USB debugging and a tethered PC and is an escalation-collected signal for L2 use only. |
 | **Linux** | NetworkManager journal (primary); wpa_supplicant journal (supplement) | Ask the user to run: `journalctl -u NetworkManager`. If the NetworkManager output is insufficient, supplement with `journalctl -u wpa_supplicant`. Copy the **complete output**; do not interpret. |
 
-> **NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
+**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
 
 ## Per-Platform Escalation Notes
 
@@ -141,5 +147,5 @@ EAP negotiation investigation.
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-30 | Phase 107 plan 01: initial authoring — 802.1X RADIUS reject (D-01/D-02/D-05) | -- |

@@ -18,7 +18,11 @@ platform: Linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It provides portal-only L1 triage of Linux endpoints blocked by Conditional Access from Microsoft 365 web-app access in Edge for Linux, across three causes: device not enrolled, device non-compliant, or Edge browser not signed in with the user's work account.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
 L1 runbook for Linux endpoints where a user is blocked from accessing Microsoft 365 web applications in Microsoft Edge for Linux due to a Conditional Access (CA) policy. Three distinct causes are diagnosed independently:
 
@@ -28,9 +32,15 @@ L1 runbook for Linux endpoints where a user is blocked from accessing Microsoft 
 
 Routed here from the [Linux Triage Decision Tree](../decision-trees/09-linux-triage.md) LINR32 branch (via the LINCA disambiguation node).
 
-> ⚠️ **Architecture: Linux is web-app CA only.** Device-level CA (the grant tied to compliance state) is not supported on Linux — only web-app sign-in via Edge for Linux 102.x+ is enforceable. See [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access) for the full architectural detail.
+> ⚠️ **Architecture: Linux is web-app CA only.** Device-level CA (the grant tied to compliance state) is not supported on Linux — only web-app sign-in via Edge for Linux 102.x+ is enforceable.
 
-> **L1 scope note:** This runbook is portal-only across all three causes. L1 inspects state in Intune and Entra; user-side terminal commands are not used here. State-changing remediation (compliance re-evaluation, CA policy adjustment, Edge re-sign-in) is admin-driven or user-driven per cause.
+> See [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access) for the full architectural detail.
+
+> **L1 scope note:** This runbook is portal-only across all three causes.
+
+> L1 inspects state in Intune and Entra; user-side terminal commands are not used here.
+
+> State-changing remediation (compliance re-evaluation, CA policy adjustment, Edge re-sign-in) is admin-driven or user-driven per cause.
 
 ## Prerequisites
 
@@ -140,7 +150,7 @@ Common ticket phrasings: "Edge says my device isn't allowed," "I can't sign in t
 
 ## Cause C: Edge Not Signed In {#cause-c-edge-not-signed-in}
 
-> See [MS Edge for Linux](../_glossary-linux.md#ms-edge-for-linux) for the supported browser version baseline; [Identity Broker](../_glossary-linux.md#identity-broker) for the cross-platform sign-in concept.
+See [MS Edge for Linux](../_glossary-linux.md#ms-edge-for-linux) for the supported browser version baseline; [Identity Broker](../_glossary-linux.md#identity-broker) for the cross-platform sign-in concept.
 
 **Entry condition:** Device appears in Intune AND P-09 shows compliance state "Compliant," but the user is still blocked accessing M365 web apps in Edge.
 
@@ -214,5 +224,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version (Phase 51 — 3-cause runbook: Not Enrolled / Non-Compliant / Edge Not Signed In; PITFALL-2 architectural callout paraphrased per defect 4C-1 / V-51-19 mitigation) | -- |

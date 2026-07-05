@@ -18,7 +18,11 @@ platform: Linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 portal-first triage of Linux compliance failures across four independently diagnosable causes: distro version out of supported range, disk encryption absent, password policy not met, and custom-compliance Bash discovery script reporting non-compliant.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
 L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where compliance evaluation is reporting `Not compliant`. Four distinct causes are diagnosed independently:
 
@@ -29,7 +33,11 @@ L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where compliance evaluat
 
 Routed here from the [Linux Triage Decision Tree](../decision-trees/09-linux-triage.md) LINR31 branch.
 
-> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing remediation (kernel upgrade, LUKS rewrap, password change, custom-script update) appears ONLY in the per-cause `### Admin Action Required` sections. Causes A/B/C are portal-first per Phase 51 D-15 — the L1 starts in Intune > P-09 to read the failing setting; user-side terminal commands are informational diagnostic only.
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
+
+> State-changing remediation (kernel upgrade, LUKS rewrap, password change, custom-script update) appears ONLY in the per-cause `### Admin Action Required` sections.
+
+> Causes A/B/C are portal-first per Phase 51 D-15 — the L1 starts in Intune > P-09 to read the failing setting; user-side terminal commands are informational diagnostic only.
 
 ## Prerequisites
 
@@ -57,7 +65,7 @@ Common ticket phrasings: "my device shows non-compliant," "Intune says my Linux 
 
 ## Cause A: Distro Version Out of Range {#cause-a-distro-version-out-of-range}
 
-> See [Ubuntu LTS](../_glossary-linux.md#ubuntu-lts) for the supported distribution baseline; [GA kernel](../_glossary-linux.md#ga-kernel) and [HWE kernel](../_glossary-linux.md#hwe-kernel) for the kernel-channel distinction; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
+See [Ubuntu LTS](../_glossary-linux.md#ubuntu-lts) for the supported distribution baseline; [GA kernel](../_glossary-linux.md#ga-kernel) and [HWE kernel](../_glossary-linux.md#hwe-kernel) for the kernel-channel distinction; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
 **Entry condition:** P-09 shows compliance state "Not compliant" with a failing setting referencing the Linux distro version (e.g., "Minimum Linux version: Ubuntu 22.04; Device version: 20.04") or "Supported distribution" mismatch.
 
@@ -99,7 +107,7 @@ Common ticket phrasings: "my device shows non-compliant," "Intune says my Linux 
 
 ## Cause B: Disk Not Encrypted {#cause-b-disk-not-encrypted}
 
-> See [LUKS](../_glossary-linux.md#luks) for the encryption framework; [dm-crypt](../_glossary-linux.md#dm-crypt) for the kernel mapper backing LUKS; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
+See [LUKS](../_glossary-linux.md#luks) for the encryption framework; [dm-crypt](../_glossary-linux.md#dm-crypt) for the kernel mapper backing LUKS; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
 **Entry condition:** P-09 shows "Not compliant" with a failing setting referencing disk encryption (e.g., "Encryption of data storage on device" or "Disk encryption").
 
@@ -182,7 +190,7 @@ Common ticket phrasings: "my device shows non-compliant," "Intune says my Linux 
 
 ## Cause D: Custom-Compliance Failure {#cause-d-custom-compliance-failure}
 
-> See [/var/log/intune-update.log](../_glossary-linux.md#varlogintune-updatelog) for the custom-compliance script log path; [journalctl](../_glossary-linux.md#journalctl) for the systemd journal reader; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
+See [/var/log/intune-update.log](../_glossary-linux.md#varlogintune-updatelog) for the custom-compliance script log path; [journalctl](../_glossary-linux.md#journalctl) for the systemd journal reader; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
 **Entry condition:** P-09 shows "Not compliant" with a failing setting that references a custom compliance script or detection name (admin-defined Bash discovery script reporting `not compliant`).
 
@@ -258,5 +266,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version (Phase 51 — 4-cause runbook: Distro Version / Disk Encryption / Password Policy / Custom-Compliance) | -- |

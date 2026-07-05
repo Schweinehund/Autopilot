@@ -18,9 +18,11 @@ platform: windows+macos+ios+android+linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of 802.1X server-trust failures — where the device supplicant cannot trust the RADIUS server certificate — across all five platforms, covering Trusted Certificate profile status and Certificate server names field validation for escalation.
 
-> **Platform gate:** This guide covers 802.1X server-trust and RADIUS-certificate-validation-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+> **Platform gate:** This guide covers 802.1X server-trust and RADIUS-certificate-validation-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
 
-> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (deploying a Trusted Certificate profile, modifying the Certificate server names field in a Wi-Fi/Wired profile, reprovisioning the profile to device groups) appear ONLY in L2 runbooks — they are not L1 actions.
+> For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+**L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (deploying a Trusted Certificate profile, modifying the Certificate server names field in a Wi-Fi/Wired profile, reprovisioning the profile to device groups) appear ONLY in L2 runbooks — they are not L1 actions.
 
 ## Symptom
 
@@ -62,7 +64,11 @@ Perform these checks before collecting platform-specific diagnostic output. They
 
    An empty Certificate server names field combined with server validation nominally enabled is a misconfiguration that produces server-trust failures on all platforms. See [RADIUS Server-Name Validation](../admin-setup-8021x/02-cert-delivery-foundation.md#radius-server-name-validation) for the full requirement and configuration detail.
 
-> **NOTE:** On macOS and iOS/iPadOS, managed configuration profiles suppress the interactive trust dialog that Windows shows. A missing or misconfigured Trusted Certificate profile causes a silent "Authentication Failed" on Apple platforms — there is no user prompt to provide a signal. The absence of a trust dialog does **not** mean the Trusted Certificate profile is correctly deployed.
+> **NOTE:** On macOS and iOS/iPadOS, managed configuration profiles suppress the interactive trust dialog that Windows shows.
+
+> A missing or misconfigured Trusted Certificate profile causes a silent "Authentication Failed" on Apple platforms — there is no user prompt to provide a signal.
+
+> The absence of a trust dialog does **not** mean the Trusted Certificate profile is correctly deployed.
 
 ## Per-Platform Diagnostic Signal
 
@@ -77,7 +83,7 @@ Collect the diagnostic output for the affected platform. Do **not** attempt to i
 | **Android** | Intune portal — Trusted Certificate profile status | **L1 action: check Intune portal only.** Navigate to Intune admin center > **Devices** > [Android Enterprise] > device > **Device configuration** and inspect the Trusted Certificate profile and Wi-Fi profile statuses. Note the signal `adb logcat -s "wpa_supplicant"` for escalation — do **not** attempt to run it at L1; it requires USB debugging and a tethered PC and is an escalation-collected signal for L2 use only. |
 | **Linux** | NetworkManager journal (primary); wpa_supplicant journal (supplement) | Ask the user to run: `journalctl -u NetworkManager`. If the NetworkManager output is insufficient, supplement with `journalctl -u wpa_supplicant`. Copy the **complete output**; do not interpret. A server-trust failure appears as a TLS handshake failure in the NM journal. |
 
-> **NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
+**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`. See the [L2 802.1X Log Collection runbook (#31)](../l2-runbooks/31-8021x-log-collection.md) for the full macOS EAPOL collection procedure.
 
 ## Per-Platform Escalation Notes
 
@@ -141,5 +147,5 @@ the RADIUS server's root CA is not deployed to the device.
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-30 | Phase 107 plan 02: initial authoring — 802.1X server trust failure (D-01/D-02/D-05/D-07) | -- |

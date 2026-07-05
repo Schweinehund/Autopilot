@@ -18,7 +18,11 @@ platform: Linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of Linux endpoint enrollment failures (Ubuntu 22.04/24.04 LTS) across three independently diagnosable causes: package install failure, Microsoft Identity Broker sign-in failure, and intune-agent.timer enrollment timeout.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+
+> For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
 L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where Intune enrollment did not complete. Three distinct causes are diagnosed independently:
 
@@ -28,7 +32,9 @@ L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where Intune enrollment 
 
 Routed here from the [Linux Triage Decision Tree](../decision-trees/09-linux-triage.md) LINR30 branch.
 
-> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing commands (`sudo apt install`, package reinstall, service restart) appear ONLY in the per-cause `### Admin Action Required` sections — they are not L1 actions.
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks.
+
+> State-changing commands (`sudo apt install`, package reinstall, service restart) appear ONLY in the per-cause `### Admin Action Required` sections — they are not L1 actions.
 
 ## Prerequisites
 
@@ -56,7 +62,7 @@ Common ticket phrasings: "intune-portal won't install," "the sign-in keeps loopi
 
 ## Cause A: Package Install Failure {#cause-a-package-install}
 
-> See [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for the package definition; [/var/log/dpkg.log](../_glossary-linux.md#varlogdpkglog) for the install-event log path; [APT repository](../_glossary-linux.md#apt-repository) for the packages.microsoft.com source; [dpkg](../_glossary-linux.md#dpkg) for the package manager itself.
+See [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for the package definition; [/var/log/dpkg.log](../_glossary-linux.md#varlogdpkglog) for the install-event log path; [APT repository](../_glossary-linux.md#apt-repository) for the packages.microsoft.com source; [dpkg](../_glossary-linux.md#dpkg) for the package manager itself.
 
 **Entry condition:** `apt list --installed | grep intune-portal` returns empty OR `dpkg -l intune-portal` shows a status other than `ii` (e.g., `un`, `iU`, `iF`).
 
@@ -97,7 +103,7 @@ Common ticket phrasings: "intune-portal won't install," "the sign-in keeps loopi
 
 ## Cause B: Sign-In Failure (Microsoft Identity Broker) {#cause-b-sign-in-failure}
 
-> See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker) for the system-scope authentication broker; [Identity Broker](../_glossary-linux.md#identity-broker) for the broader cross-platform concept; [journalctl](../_glossary-linux.md#journalctl) for the systemd journal reader.
+See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker) for the system-scope authentication broker; [Identity Broker](../_glossary-linux.md#identity-broker) for the broader cross-platform concept; [journalctl](../_glossary-linux.md#journalctl) for the systemd journal reader.
 
 **Entry condition:** Package is installed (`dpkg -l intune-portal` shows `ii`) but the user cannot complete sign-in — the work-account prompt loops, times out, or returns an authentication error.
 
@@ -141,7 +147,7 @@ Common ticket phrasings: "intune-portal won't install," "the sign-in keeps loopi
 
 ## Cause C: Enrollment Timeout (`intune-agent.timer`) {#cause-c-enrollment-timeout}
 
-> See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-scope check-in timer; [systemd](../_glossary-linux.md#systemd) for the unit framework; [journalctl](../_glossary-linux.md#journalctl) for the journal reader.
+See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-scope check-in timer; [systemd](../_glossary-linux.md#systemd) for the unit framework; [journalctl](../_glossary-linux.md#journalctl) for the journal reader.
 
 **Entry condition:** Package is installed AND sign-in completed, but `systemctl --user list-timers intune-agent.timer` shows `-` for NEXT (timer not scheduled) OR last activation > 1 hour ago AND device still not visible in Intune.
 
@@ -215,5 +221,5 @@ Escalate to L2 if:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version (Phase 51 — 3-cause runbook: Package Install / Sign-In Failure / Enrollment Timeout) | -- |
