@@ -1,4 +1,8 @@
 ---
+doc_id: RE-066
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: all
@@ -6,9 +10,19 @@ audience: L2
 platform: Linux
 ---
 
-> **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks). For Android Enterprise, see [Android L2 Runbooks](00-index.md#android-l2-runbooks).
+**Platform:** Linux · **Doc Type:** Runbook · **Doc ID:** RE-066 · **Status:** Approved
 
 # Linux Log Collection Guide
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks). For Android Enterprise, see [Android L2 Runbooks](00-index.md#android-l2-runbooks).
 
 ## Context
 
@@ -21,11 +35,11 @@ This guide is the **prerequisite for all Linux L2 investigation runbooks** — c
 
 Linux Intune client has **a single confirmed primary log surface** (`journalctl`) — unlike Android (3-method fragmentation by enrollment mode) or Windows (`mdmdiagnosticstool.exe` single-archive) or macOS (IntuneMacODC zip). The Decision Matrix below routes by data-scope need, not enrollment mode (Linux has one supported delivery path: deb from `packages.microsoft.com` on Ubuntu 22.04/24.04 LTS).
 
-> **From L1 escalation?** L1 collected the escalation packet (serial number, user UPN, `lsb_release -a`, `uname -r`, `dpkg -l intune-portal`, journalctl snapshot). Skip to the Decision Matrix to choose your method.
+**From L1 escalation?** L1 collected the escalation packet (serial number, user UPN, `lsb_release -a`, `uname -r`, `dpkg -l intune-portal`, journalctl snapshot). Skip to the Decision Matrix to choose your method.
 
 ## Tool Landscape
 
-> **Tool landscape:** Linux Intune client (`intune-portal`) has a **single confirmed primary log surface: `journalctl`** (the systemd journal). Unlike Android (3-method fragmentation gated by enrollment mode) or macOS (IntuneMacODC zip) or Windows (`mdmdiagnosticstool.exe` archive), Linux has no Intune admin center per-device diagnostic download. The decision matrix below routes by data-scope need; there is no enrollment-mode axis (Linux has one supported delivery mode: deb from `packages.microsoft.com`). File-based log paths are secondary surfaces — `/var/log/dpkg.log` and `/var/log/intune-update.log` are HIGH/MEDIUM confidence; `/var/log/microsoft/intune/` is LOW-MEDIUM confidence (see Section 2 caveat).
+**Tool landscape:** Linux Intune client (`intune-portal`) has a **single confirmed primary log surface: `journalctl`** (the systemd journal). Unlike Android (3-method fragmentation gated by enrollment mode) or macOS (IntuneMacODC zip) or Windows (`mdmdiagnosticstool.exe` archive), Linux has no Intune admin center per-device diagnostic download. The decision matrix below routes by data-scope need; there is no enrollment-mode axis (Linux has one supported delivery mode: deb from `packages.microsoft.com`). File-based log paths are secondary surfaces — `/var/log/dpkg.log` and `/var/log/intune-update.log` are HIGH/MEDIUM confidence; `/var/log/microsoft/intune/` is LOW-MEDIUM confidence (see Section 2 caveat).
 
 ## Decision Matrix
 
@@ -59,7 +73,11 @@ journalctl -u intune-agent --no-pager
 journalctl -u intune-agent --since "1 hour ago" --no-pager
 ```
 
-> **Note:** `intune-agent.timer` is the confirmed user-scope unit per Phase 51 Runbook 33 walkthrough. The `journalctl -u intune-agent` form (without `--user`) is documented in ROADMAP SC#1 and may target a system-scope unit or alias on some Ubuntu installs; if it returns "Unit not found," use the user-scope form below.
+> **Note:** `intune-agent.timer` is the confirmed user-scope unit per Phase 51 Runbook 33 walkthrough.
+
+> The `journalctl -u intune-agent` form (without `--user`) is documented in ROADMAP SC#1 and may target a system-scope unit or alias on some Ubuntu installs.
+
+> If it returns "Unit not found," use the user-scope form below.
 
 ```bash
 # User-scope timer events
@@ -97,7 +115,7 @@ sudo journalctl -u microsoft-identity-device-broker --since "1 hour ago" --no-pa
 
 File-based log paths are secondary surfaces. `/var/log/dpkg.log` and `/var/log/intune-update.log` are HIGH/MEDIUM confidence; `/var/log/microsoft/intune/` is LOW-MEDIUM confidence and carries the layered caveat below.
 
-> **Source confidence:** `/var/log/microsoft/intune/` paths are LOW-MEDIUM confidence — Microsoft Learn does not document this path for Ubuntu `intune-portal` as of 2026-04-27. `journalctl` is the confirmed primary surface (Section 1). `/var/log/dpkg.log` and `/var/log/intune-update.log` are documented or community-confirmed. Verify `/var/log/microsoft/intune/` presence on the affected device before citing any files from this path in an escalation packet, and re-verify at `review_by` cadence.
+**Source confidence:** `/var/log/microsoft/intune/` paths are LOW-MEDIUM confidence — Microsoft Learn does not document this path for Ubuntu `intune-portal` as of 2026-04-27. `journalctl` is the confirmed primary surface (Section 1). `/var/log/dpkg.log` and `/var/log/intune-update.log` are documented or community-confirmed. Verify `/var/log/microsoft/intune/` presence on the affected device before citing any files from this path in an escalation packet, and re-verify at `review_by` cadence.
 
 See [dpkg](../_glossary-linux.md#dpkg) and [APT repository](../_glossary-linux.md#apt-repository) for the Debian package toolchain context.
 
@@ -174,7 +192,7 @@ dpkg -l microsoft-identity-broker
 dpkg -l microsoft-identity-device-broker
 ```
 
-> **Note:** If `dpkg -l microsoft-identity-broker` shows version `2.0.2` or later AND L1 reports CA assignment drift, escalate via [Runbook 25 Trap D: Identity Broker v2.0.2+ Re-enrollment](25-linux-agent-investigation.md#trap-d-identity-broker).
+**Note:** If `dpkg -l microsoft-identity-broker` shows version `2.0.2` or later AND L1 reports CA assignment drift, escalate via [Runbook 25 Trap D: Identity Broker v2.0.2+ Re-enrollment](25-linux-agent-investigation.md#trap-d-identity-broker).
 
 ## Common Artifacts Cross-Reference
 
@@ -206,4 +224,5 @@ Use this table to map the artifact you collected to the investigation runbook(s)
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version (Phase 52 — Linux L2 log collection guide; 3 method sections; 3-layer LOW-MEDIUM caveat on `/var/log/microsoft/intune/` per CONTEXT D-01 / CDI-Phase52-06) | -- |

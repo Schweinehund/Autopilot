@@ -1,4 +1,8 @@
 ---
+doc_id: RE-069
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-06-21
 review_by: 2026-09-21
 applies_to: ADE
@@ -6,9 +10,17 @@ audience: L2
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS Platform SSO L2 investigation via Intune and Entra. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-069 · **Status:** Approved
 
 # macOS Platform SSO Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers macOS Platform SSO L2 investigation via Intune and Entra. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Context
 
@@ -48,7 +60,7 @@ If the output shows either `Device Registration` or `User Registration` is not i
 
 If both show `REGISTERED` but the user cannot sign in to managed apps, the registration succeeded but a post-registration failure is occurring — check Track B (Password-sync) and also review the Intune device configuration status in Step 2.
 
-> **Important:** Do not interpret the absence or unexpected value of any particular JSON field as a specific root cause without correlating with Intune portal state (Step 2) and the sysdiagnose capture (Step 3). The full JSON schema for failure states is not published in any authoritative source — collect and forward the complete output rather than matching against specific field values. See [Platform SSO Setup Guide](../admin-setup-macos/07-platform-sso-setup.md) for the confirmed healthy-state reference.
+**Important:** Do not interpret the absence or unexpected value of any particular JSON field as a specific root cause without correlating with Intune portal state (Step 2) and the sysdiagnose capture (Step 3). The full JSON schema for failure states is not published in any authoritative source — collect and forward the complete output rather than matching against specific field values. See [Platform SSO Setup Guide](../admin-setup-macos/07-platform-sso-setup.md) for the confirmed healthy-state reference.
 
 ### Step 2: Intune portal — device configuration status
 
@@ -103,7 +115,9 @@ This lets you observe events as they occur. However, the sysdiagnose archive (wi
 - Authentication failures and error domains
 - The macOS 15.0–15.2 re-registration loop error signature (see Step 5)
 
-> **Note:** The `app-sso` binary does not have a `diagnose` subcommand in any verified Apple or Microsoft source — do not reference it in escalation packets or instruct users to run it. The sysdiagnose procedure above is the verified Microsoft-documented investigation path.
+> **Note:** The `app-sso` binary does not have a `diagnose` subcommand in any verified Apple or Microsoft source — do not reference it in escalation packets or instruct users to run it.
+
+> The sysdiagnose procedure above is the verified Microsoft-documented investigation path.
 
 ### Step 4: TLS-inspection exclusion verification
 
@@ -118,16 +132,16 @@ The Microsoft identity endpoints above are the documented TLS-inspection exclusi
 
 ### Step 5: macOS 15.0–15.2 re-registration loop check
 
-> **Version gate — macOS 15.0–15.2:** If the device is running macOS 15.0, 15.1, or 15.2, repeated "Registration Required" prompts are caused by a known Apple OS bug. The root cause is a concurrency issue: simultaneous updates from AppSSOAgent and AppSSODaemon processes corrupt the device configuration plist, triggering OS re-registration remediation. The error signature in the sysdiagnose archive is:
->
-> ```
-> Error Domain=com.apple.PlatformSSO Code=-1001 "Error deserializing device config."
-> UserInfo={NSLocalizedDescription=Error deserializing device config.,
->   NSUnderlyingError=... {Error Domain=NSCocoaErrorDomain Code=3840
->   "Garbage at end around line 27, column 1."}}
-> ```
->
-> **Fixed in macOS 15.3.** Action: upgrade the device to macOS 15.3 or later. If the re-registration loop persists on macOS 15.3+, file an Apple Care case — this is no longer a Microsoft-resolvable issue and Apple must be engaged directly.
+**Version gate — macOS 15.0–15.2:** If the device is running macOS 15.0, 15.1, or 15.2, repeated "Registration Required" prompts are caused by a known Apple OS bug. The root cause is a concurrency issue: simultaneous updates from AppSSOAgent and AppSSODaemon processes corrupt the device configuration plist, triggering OS re-registration remediation. The error signature in the sysdiagnose archive is:
+
+```
+Error Domain=com.apple.PlatformSSO Code=-1001 "Error deserializing device config."
+UserInfo={NSLocalizedDescription=Error deserializing device config.,
+  NSUnderlyingError=... {Error Domain=NSCocoaErrorDomain Code=3840
+  "Garbage at end around line 27, column 1."}}
+```
+
+**Fixed in macOS 15.3.** Action: upgrade the device to macOS 15.3 or later. If the re-registration loop persists on macOS 15.3+, file an Apple Care case — this is no longer a Microsoft-resolvable issue and Apple must be engaged directly.
 
 To determine the device's macOS version: Intune admin center > Devices > [device] > Overview, or ask the user to navigate to System Settings > General > About.
 
@@ -202,5 +216,6 @@ When Track A or Track B investigation does not resolve the issue, engage Microso
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 90 (RUN-01): appended reciprocal Related Resources entry -> L2 #30 macOS MDM Migration Failure | -- |
 | 2026-06-21 | Initial version — macOS Platform SSO L2 investigation (SSORUN-03): Registration Failure track + Password-Sync Failure track; macOS 15.0–15.2 version-gate callout | -- |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-073
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-07-01
 review_by: 2026-09-29
 applies_to: both
@@ -6,11 +10,18 @@ audience: L2
 platform: windows+macos+ios+android+linux
 ---
 
-> **Platform gate:** This guide covers 802.1X L2 log collection across all five platforms
-> (Windows / macOS / iOS/iPadOS / Android / Linux). For non-802.1X Intune L2 investigation,
-> see [L2 Runbook Index](00-index.md).
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-073 · **Status:** Approved
 
 # 802.1X Log Collection
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers 802.1X L2 log collection across all five platforms
+> (Windows / macOS / iOS/iPadOS / Android / Linux).
+
+> For non-802.1X Intune L2 investigation, see [L2 Runbook Index](00-index.md).
 
 ## Context
 
@@ -41,18 +52,18 @@ signal. Skip directly to the per-platform subsection for the affected device pla
 
 ## Tool Landscape
 
-> **NOTE:** Each platform's 802.1X supplicant writes to a different log surface.
-> Windows uses two dedicated Event Viewer channels (`WLAN-AutoConfig/Operational` for Wi-Fi,
-> `Wired-AutoConfig/Operational` for wired) plus the `CAPI2/Operational` channel for
-> certificate-chain diagnosis; macOS uses the unified log filtered by the `eapolclient`
-> process or `com.apple.eapol` subsystem; iOS/iPadOS has no device-side 802.1X log
-> command — the Intune portal is the only diagnostic surface; Android requires
-> `adb logcat -s "wpa_supplicant"` with developer options and USB debugging enabled
-> (escalation-collected L2 step); Linux uses `journalctl -u NetworkManager` as the primary
-> surface and `journalctl -u wpa_supplicant` as the supplement.
-> The general device diagnostic package (MDM/Intune logs) is addressed separately in
-> the per-platform log collection guides listed in the Context section above —
-> do not duplicate those procedures here.
+**NOTE:** Each platform's 802.1X supplicant writes to a different log surface.
+Windows uses two dedicated Event Viewer channels (`WLAN-AutoConfig/Operational` for Wi-Fi,
+`Wired-AutoConfig/Operational` for wired) plus the `CAPI2/Operational` channel for
+certificate-chain diagnosis; macOS uses the unified log filtered by the `eapolclient`
+process or `com.apple.eapol` subsystem; iOS/iPadOS has no device-side 802.1X log
+command — the Intune portal is the only diagnostic surface; Android requires
+`adb logcat -s "wpa_supplicant"` with developer options and USB debugging enabled
+(escalation-collected L2 step); Linux uses `journalctl -u NetworkManager` as the primary
+surface and `journalctl -u wpa_supplicant` as the supplement.
+The general device diagnostic package (MDM/Intune logs) is addressed separately in
+the per-platform log collection guides listed in the Context section above —
+do not duplicate those procedures here.
 
 ---
 
@@ -90,10 +101,10 @@ authentication events. The Wired AutoConfig *service* is named `dot3svc`, but th
 *event channel* name is `Microsoft-Windows-Wired-AutoConfig/Operational` — use this
 exact channel name in all `wevtutil` commands and event log references.
 
-> **NOTE:** Before collecting this log, confirm the Wired AutoConfig service (`dot3svc`) is
-> running on the device. See the wired service dependency check in
-> [Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md). If `dot3svc` is not
-> running, the channel will be empty.
+**NOTE:** Before collecting this log, confirm the Wired AutoConfig service (`dot3svc`) is
+running on the device. See the wired service dependency check in
+[Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md). If `dot3svc` is not
+running, the channel will be empty.
 
 **Event Viewer path:**
 `Applications and Services Logs\Microsoft\Windows\Wired-AutoConfig\Operational`
@@ -116,10 +127,11 @@ The `Microsoft-Windows-CAPI2/Operational` channel records Windows certificate ch
 validation events. It is essential for diagnosing chain failures, revocation check failures,
 and EKU mismatches during active 802.1X authentication attempts.
 
-> **WARNING:** Enabling the CAPI2 log is **state-changing** — the channel is disabled by
-> default. Enable it immediately before reproducing the 802.1X failure, then disable it
-> after export to avoid excessive log volume. This step is required for [#32: Certificate-Chain
-> Investigation](32-8021x-cert-investigation.md).
+> **WARNING:** Enabling the CAPI2 log is **state-changing** — the channel is disabled by default.
+
+> Enable it immediately before reproducing the 802.1X failure, then disable it after export to avoid excessive log volume.
+
+> This step is required for [#32: Certificate-Chain Investigation](32-8021x-cert-investigation.md).
 
 **Enable, export, and disable:**
 
@@ -144,10 +156,10 @@ These events feed directly into [#32: Certificate-Chain Investigation](32-8021x-
 
 ## macOS: 802.1X Log Collection
 
-> **NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is
-> MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against
-> official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try
-> the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`.
+**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is
+MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against
+official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try
+the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`.
 
 ### Primary predicate: com.apple.eapol subsystem `[MEDIUM, last_verified 2026-07-01]`
 
@@ -185,8 +197,9 @@ lookback window — re-run with a longer `--last` value or collect Wireless Diag
 during a live reproduction.
 
 > **NOTE:** Modern macOS (Sierra and later) no longer writes eapolclient events to
-> `/var/log/eapolclient/` — that path is a pre-Sierra legacy location. The unified log
-> (`log show`) is the authoritative collection method on current macOS versions.
+> `/var/log/eapolclient/` — that path is a pre-Sierra legacy location.
+
+> The unified log (`log show`) is the authoritative collection method on current macOS versions.
 
 ### GUI alternative: Wireless Diagnostics `[MEDIUM, last_verified 2026-07-01]`
 
@@ -212,10 +225,10 @@ feed into #33 (RADIUS/EAP).
 
 ## iOS/iPadOS: 802.1X Log Collection
 
-> **NOTE:** No device-side 802.1X log command is available on iOS/iPadOS. All L2 diagnostic
-> surfaces for iOS/iPadOS 802.1X are read-only Intune portal paths and on-device Settings
-> inspection (user-assisted). Provide the portal paths below to the investigating engineer;
-> do not attempt to capture device-side logs.
+**NOTE:** No device-side 802.1X log command is available on iOS/iPadOS. All L2 diagnostic
+surfaces for iOS/iPadOS 802.1X are read-only Intune portal paths and on-device Settings
+inspection (user-assisted). Provide the portal paths below to the investigating engineer;
+do not attempt to capture device-side logs.
 
 ### Intune portal: device configuration profile status `[HIGH, last_verified 2026-07-01]`
 
@@ -261,10 +274,10 @@ portal's Troubleshoot view.
 
 ## Android: 802.1X Log Collection
 
-> **WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
-> **USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb` in
-> PATH**. Confirm all three prerequisites before attempting collection. This is an
-> **L2-only collection step** — do not instruct L1 to run `adb` commands.
+**WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
+**USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb` in
+PATH**. Confirm all three prerequisites before attempting collection. This is an
+**L2-only collection step** — do not instruct L1 to run `adb` commands.
 
 ### Intune portal: device configuration profile status (primary) `[HIGH, last_verified 2026-07-01]`
 
@@ -296,13 +309,13 @@ handshake messages, `EAP-NAK` (method mismatch), and `CTRL-EVENT-DISCONNECTED` f
 an incomplete EAP exchange. EAP-NAK events feed into #33 (EAP-method mismatch diagnosis);
 TLS/cert errors feed into #32.
 
-> **NOTE — OEM and Android version variability:** The `wpa_supplicant` tag behavior varies
-> by OEM firmware and Android version. It is the most stable cross-vendor filter; however,
-> some OEM builds log 802.1X events under vendor-specific tags. If `adb logcat -s "wpa_supplicant"`
-> returns no output during a reproduced failure, ask the assigned engineer to broaden the
-> logcat capture before trying alternative tag names. The supplemental `ClientModeImpl` and
-> `WifiNative` tags (Android 11+) are LOW confidence and OEM-specific — treat any output
-> from those tags as supplemental context only.
+**NOTE — OEM and Android version variability:** The `wpa_supplicant` tag behavior varies
+by OEM firmware and Android version. It is the most stable cross-vendor filter; however,
+some OEM builds log 802.1X events under vendor-specific tags. If `adb logcat -s "wpa_supplicant"`
+returns no output during a reproduced failure, ask the assigned engineer to broaden the
+logcat capture before trying alternative tag names. The supplemental `ClientModeImpl` and
+`WifiNative` tags (Android 11+) are LOW confidence and OEM-specific — treat any output
+from those tags as supplemental context only.
 
 **Verbose form (if primary output is sparse):**
 
@@ -398,4 +411,5 @@ These strings appear in wpa_supplicant journal output (via either NM or standalo
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-07-01 | Phase 108 plan 01: initial authoring — 802.1X cross-platform L2 log collection (#31) | -- |

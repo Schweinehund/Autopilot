@@ -1,4 +1,8 @@
 ---
+doc_id: RE-072
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-06-24
 review_by: 2026-09-24
 applies_to: ADE
@@ -6,9 +10,19 @@ audience: L2
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS MDM migration failure investigation via Intune and Apple Business Manager (ABM), for migrations from a prior MDM source (Kandji, rebranded Iru) to Intune using the macOS 26 in-place path (B1) or the pre-macOS-26 wipe-and-re-enroll path (B2). For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-072 · **Status:** Approved
 
 # macOS MDM Migration Failure Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers macOS MDM migration failure investigation via Intune and Apple Business Manager (ABM),
+
+> for migrations from a prior MDM source (Kandji, rebranded Iru) to Intune using the macOS 26 in-place path (B1) or the pre-macOS-26 wipe-and-re-enroll path (B2).
+
+> For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Context
 
@@ -29,7 +43,7 @@ Before starting: collect a diagnostic package per the [macOS Log Collection Guid
 
 Use this track when the device is presenting a full-screen, non-dismissible migration prompt. This occurs when the ABM migration deadline has passed and the device has not yet completed Intune enrollment. The device is unusable for work until enrollment completes or the migration is canceled by an ABM admin.
 
-> **Version gate — macOS 26:** The non-dismissible full-screen deadline enforcement behavior is specific to macOS 26 and later. Devices on macOS 25 or earlier cannot complete the in-place migration path (B1) — if a pre-macOS-26 device is stuck on an enrollment prompt, it may have been incorrectly targeted; see Track B root cause 4.
+**Version gate — macOS 26:** The non-dismissible full-screen deadline enforcement behavior is specific to macOS 26 and later. Devices on macOS 25 or earlier cannot complete the in-place migration path (B1) — if a pre-macOS-26 device is stuck on an enrollment prompt, it may have been incorrectly targeted; see Track B root cause 4.
 
 ### Step 1: Confirm the presenting state
 
@@ -76,7 +90,7 @@ This is the preferred path because it allows the device to self-recover without 
 
 **Recovery Option B — ABM admin deadline modification or migration cancellation:**
 
-> **Note:** The following steps describe ABM admin recovery at MEDIUM confidence. Apple documentation confirms that an authorized ABM admin (with Administrator or Device Enrollment Manager role) can cancel or modify a migration deadline — Apple's deployment guide states: "Apple School Manager or Apple Business holds a lock on the device; a user with the proper permissions in Apple School Manager or Apple Business can unlock it." The exact ABM UI navigation for a device currently in the locked enrollment state is not confirmed in a single authoritative source. Verify exact steps in the current ABM portal before advising the admin.
+**Note:** The following steps describe ABM admin recovery at MEDIUM confidence. Apple documentation confirms that an authorized ABM admin (with Administrator or Device Enrollment Manager role) can cancel or modify a migration deadline — Apple's deployment guide states: "Apple School Manager or Apple Business holds a lock on the device; a user with the proper permissions in Apple School Manager or Apple Business can unlock it." The exact ABM UI navigation for a device currently in the locked enrollment state is not confirmed in a single authoritative source. Verify exact steps in the current ABM portal before advising the admin.
 
 For pre-lockout cancellation (device has prompts but is not yet at the full-screen lock):
 1. In ABM: **Devices** → locate the device by serial number
@@ -89,7 +103,7 @@ For a device already at the non-dismissible lockout screen:
 2. Conceptually: locate device → cancel or undo the migration assignment
 3. The exact ABM portal path for releasing a device from the enrolled-but-locked state — verify in the current ABM portal or contact [Apple Business Support](https://support.apple.com/apple-business-support) for the exact procedure
 
-> **Important:** Do NOT assert the exact click-path for releasing a device from the mid-lockout state as a verified fact. Apple confirms that an authorized ABM admin can unlock the device, but the exact ABM navigation flow for post-lockout cancellation is not confirmed in a single authoritative source. Instruct the ABM admin to verify the current ABM portal or contact Apple Business Support.
+**Important:** Do NOT assert the exact click-path for releasing a device from the mid-lockout state as a verified fact. Apple confirms that an authorized ABM admin can unlock the device, but the exact ABM navigation flow for post-lockout cancellation is not confirmed in a single authoritative source. Instruct the ABM admin to verify the current ABM portal or contact Apple Business Support.
 
 ---
 
@@ -103,7 +117,7 @@ Before proceeding: confirm you have the IntuneMacODC diagnostic package collecte
 
 After a B1 in-place migration, the Kandji (Iru) agent should self-remove at its next 15-minute check-in following the Delete Device Record action in Kandji/Iru. If the Delete Device Record step was skipped or the agent did not receive the removal command before the ABM migration proceeded, the agent may still be present and can interfere with Intune enrollment by presenting stale MDM certificates.
 
-> **Note:** Leftover source-MDM agent as a cause of Intune enrollment failure is a MEDIUM-confidence finding (community sources and Microsoft Q&A — no single authoritative documentation directly states this as a definitive blocker). Treat as a plausible root cause to investigate alongside other causes; do not assume it is the only cause.
+**Note:** Leftover source-MDM agent as a cause of Intune enrollment failure is a MEDIUM-confidence finding (community sources and Microsoft Q&A — no single authoritative documentation directly states this as a definitive blocker). Treat as a plausible root cause to investigate alongside other causes; do not assume it is the only cause.
 
 Run the following diagnostics on the affected device:
 
@@ -141,7 +155,7 @@ The most common root cause of enrollment failure is that the device's serial num
 2. Confirm an ADE enrollment policy (profile) is assigned to this specific serial
 3. If no policy is assigned, assign the correct ADE enrollment policy and trigger a manual sync (Intune admin center > Enrollment program tokens > [token] > **Sync**)
 
-> **Note:** ABM to Intune sync can take up to 24 hours for automatic sync. A manual sync respects a 15-minute rate limit per token; a full sync has a 7-day cooldown. If the device was recently assigned the enrollment policy, allow the sync period before re-testing enrollment from the device.
+**Note:** ABM to Intune sync can take up to 24 hours for automatic sync. A manual sync respects a 15-minute rate limit per token; a full sync has a 7-day cooldown. If the device was recently assigned the enrollment policy, allow the sync period before re-testing enrollment from the device.
 
 ### Step 3: Check for ABM/Intune sync lag
 
@@ -168,7 +182,7 @@ sw_vers -productVersion
 
 If the device is running macOS 25 or earlier, it received the ABM deadline prompt but cannot complete B1 in-place enrollment. The device needs the B2 path (wipe-and-re-enroll via Intune ADE after a wipe). In the interim, the ABM admin should cancel the migration deadline for this device (Track A Recovery Option B — pre-lockout cancellation) and route it to the B2 fallback path.
 
-> **Version gate — macOS 26:** The in-place migration path (B1) requires macOS 26 or later. If your fleet contains devices on earlier macOS versions, complete an OS upgrade to macOS 26+ BEFORE triggering the ABM deadline for those devices, or route them explicitly to the B2 wipe path. Setting a deadline on a macOS 25 device without a B2 fallback plan creates an unrecoverable enrollment failure without ABM admin intervention.
+**Version gate — macOS 26:** The in-place migration path (B1) requires macOS 26 or later. If your fleet contains devices on earlier macOS versions, complete an OS upgrade to macOS 26+ BEFORE triggering the ABM deadline for those devices, or route them explicitly to the B2 wipe path. Setting a deadline on a macOS 25 device without a B2 fallback plan creates an unrecoverable enrollment failure without ABM admin intervention.
 
 ---
 
@@ -176,9 +190,9 @@ If the device is running macOS 25 or earlier, it received the ABM deadline promp
 
 Use this track when the device has successfully completed the MDM migration — Intune admin center shows the device as **Enrolled** — but Platform SSO re-registration is not completing: either the "Registration Required" notification has not appeared, or the user initiated registration but it is not completing.
 
-> **Important:** PSSO re-registration is **always required** after an MDM migration. Apple's Platform Deployment guide states: "If you unenroll a Mac from the device management service, it also unregisters from the IdP." The macOS 26 in-place migration (B1 path) is a genuine unenrollment from the source MDM and re-enrollment into Intune — not a profile swap. The Secure Enclave WPJ key is re-created on new enrollment, and ACME certification is reissued. A "Registration Required" notification appearing after migration is **expected behavior, not an error**. Do not attempt to suppress or skip this step.
+**Important:** PSSO re-registration is **always required** after an MDM migration. Apple's Platform Deployment guide states: "If you unenroll a Mac from the device management service, it also unregisters from the IdP." The macOS 26 in-place migration (B1 path) is a genuine unenrollment from the source MDM and re-enrollment into Intune — not a profile swap. The Secure Enclave WPJ key is re-created on new enrollment, and ACME certification is reissued. A "Registration Required" notification appearing after migration is **expected behavior, not an error**. Do not attempt to suppress or skip this step.
 
-> **Important:** Do NOT document or suggest that PSSO keys "survive" a same-tenant migration or that re-registration can be skipped because the Entra tenant has not changed. Apple's authoritative statement — MDM unenrollment equals IdP unregistration — applies regardless of tenant continuity. There is no supported same-tenant key-survival path.
+**Important:** Do NOT document or suggest that PSSO keys "survive" a same-tenant migration or that re-registration can be skipped because the Entra tenant has not changed. Apple's authoritative statement — MDM unenrollment equals IdP unregistration — applies regardless of tenant continuity. There is no supported same-tenant key-survival path.
 
 ### Step 1: Confirm prerequisites before investigating PSSO
 
@@ -205,7 +219,7 @@ A fully healthy post-migration PSSO state shows both of the following lines:
 
 If either line does not show `REGISTERED`, the device has not completed PSSO re-registration. Capture the full `app-sso platform -s` output — do not draw conclusions from specific combinations of partial field values, as the JSON schema for intermediate states is not published in any authoritative source, and the same partial-state appearance can arise from multiple distinct root causes. Proceed to Step 3 to route to runbook 27 for the full registration-failure investigation.
 
-> **Important:** Do not interpret the absence or unexpected value of any particular JSON field beyond the two key registration state lines as a specific root cause without additional investigation. The full JSON schema for failure states is not published in an authoritative source — collect and forward the complete output rather than drawing conclusions from specific field values. See the [Platform SSO Setup Guide](../admin-setup-macos/07-platform-sso-setup.md) for the confirmed healthy-state reference.
+**Important:** Do not interpret the absence or unexpected value of any particular JSON field beyond the two key registration state lines as a specific root cause without additional investigation. The full JSON schema for failure states is not published in an authoritative source — collect and forward the complete output rather than drawing conclusions from specific field values. See the [Platform SSO Setup Guide](../admin-setup-macos/07-platform-sso-setup.md) for the confirmed healthy-state reference.
 
 ### Step 3: Route to L2 #27 for registration failure investigation
 
@@ -245,4 +259,5 @@ When Track A, B, or C investigation does not resolve the issue, engage Microsoft
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 90 (RUN-01): initial macOS MDM migration failure runbook — Track A deadline lockout, Track B profile-not-delivered/enrollment-failed, Track C PSSO re-registration stuck | -- |

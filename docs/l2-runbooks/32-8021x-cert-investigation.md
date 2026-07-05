@@ -1,4 +1,8 @@
 ---
+doc_id: RE-074
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-07-01
 review_by: 2026-09-29
 applies_to: both
@@ -6,17 +10,25 @@ audience: L2
 platform: windows+macos+ios+android+linux
 ---
 
-> **Platform gate:** This guide covers 802.1X certificate-chain investigation across all five
-> platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For RADIUS/EAP diagnosis, see
-> [#33: 802.1X RADIUS/EAP Investigation](33-8021x-radius-eap-investigation.md). For 802.1X
-> triage routing, see the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
-
-> **Foundation references (link-not-copy):** The cert-delivery ordering rule, EKU requirement
-> (Client Authentication OID `1.3.6.1.5.5.7.3.2`), and RADIUS server-name validation are
-> documented in [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md).
-> Do not restate that theory here — link to it.
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-074 · **Status:** Approved
 
 # 802.1X Certificate-Chain Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers 802.1X certificate-chain investigation across all five
+> platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
+
+> For RADIUS/EAP diagnosis, see [#33: 802.1X RADIUS/EAP Investigation](33-8021x-radius-eap-investigation.md).
+
+> For 802.1X triage routing, see the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+**Foundation references (link-not-copy):** The cert-delivery ordering rule, EKU requirement
+(Client Authentication OID `1.3.6.1.5.5.7.3.2`), and RADIUS server-name validation are
+documented in [Certificate Delivery Foundation](../admin-setup-8021x/02-cert-delivery-foundation.md).
+Do not restate that theory here — link to it.
 
 ## Context
 
@@ -128,10 +140,10 @@ Wired-AutoConfig failure event (8003) to a specific certificate chain problem.
 
 ## macOS: Certificate Inspection
 
-> **NOTE — keychain location:** Client cert location depends on the Intune SCEP profile
-> deployment channel (device-based SCEP → System keychain; user-based SCEP → Login keychain).
-> Verify the profile scope before inspecting the wrong keychain — see
-> [macOS 802.1X Admin Setup](../admin-setup-8021x/04-macos.md) for deployment channel details.
+**NOTE — keychain location:** Client cert location depends on the Intune SCEP profile
+deployment channel (device-based SCEP → System keychain; user-based SCEP → Login keychain).
+Verify the profile scope before inspecting the wrong keychain — see
+[macOS 802.1X Admin Setup](../admin-setup-8021x/04-macos.md) for deployment channel details.
 
 ### List all certificates (all keychains)
 
@@ -251,10 +263,10 @@ detailed inspection.
 
 ### adb OMADM log (escalation-collected)
 
-> **WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
-> **USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb` in
-> PATH**. Confirm all three prerequisites before attempting collection. This is an
-> **L2-only collection step** — do not instruct L1 to run `adb` commands.
+**WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
+**USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb` in
+PATH**. Confirm all three prerequisites before attempting collection. This is an
+**L2-only collection step** — do not instruct L1 to run `adb` commands.
 
 The OMADM log on Android contains the SCEP SyncML exchange — the certificate enrollment
 request and response. Collect it to determine whether enrollment was attempted, whether the
@@ -274,10 +286,10 @@ but is now expired, has the wrong EKU, or has a SAN mismatch.
 
 ## Linux: Certificate Inspection
 
-> **NOTE:** On Linux, 802.1X certificates are script-deployed — not delivered via an Intune
-> SCEP certificate profile. See [Linux 802.1X Admin Setup](../admin-setup-8021x/07-linux.md)
-> for the certificate deployment approach used in this environment. Intune SCEP profile status
-> check is N/A for Linux — inspect the certificate directly on the device.
+**NOTE:** On Linux, 802.1X certificates are script-deployed — not delivered via an Intune
+SCEP certificate profile. See [Linux 802.1X Admin Setup](../admin-setup-8021x/07-linux.md)
+for the certificate deployment approach used in this environment. Intune SCEP profile status
+check is N/A for Linux — inspect the certificate directly on the device.
 
 ### Locate the certificate paths from NetworkManager
 
@@ -388,4 +400,5 @@ Authentication OID `1.3.6.1.5.5.7.3.2`) and server-name validation requirements,
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-07-01 | Phase 108 plan 02: initial authoring — 802.1X cross-platform L2 certificate-chain investigation (#32) | -- |

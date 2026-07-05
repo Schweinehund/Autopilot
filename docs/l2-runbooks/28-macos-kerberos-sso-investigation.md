@@ -1,4 +1,8 @@
 ---
+doc_id: RE-070
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-06-23
 review_by: 2026-09-23
 applies_to: ADE
@@ -6,9 +10,17 @@ audience: L2
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS Kerberos SSO Extension L2 investigation. For macOS Platform SSO investigation, see [macOS Platform SSO Investigation](27-macos-sso-investigation.md). For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-070 · **Status:** Approved
 
 # macOS Kerberos SSO Extension Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers macOS Kerberos SSO Extension L2 investigation. For macOS Platform SSO investigation, see [macOS Platform SSO Investigation](27-macos-sso-investigation.md).
+
+> For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Context
 
@@ -42,9 +54,9 @@ The command returns JSON output describing the current Platform SSO state, inclu
 | `ticketKeyPath: tgt_cloud` | Cloud Kerberos TGT is active — Azure Files / Entra Cloud Kerberos TGT is available |
 | Neither `tgt_ad` nor `tgt_cloud` | TGT sharing is not active — `usePlatformSSOTGT` may not be set, PSSO may not be registered, or the Kerberos profile has not yet been received |
 
-> **Important — cosmetic "Not signed in" in the menu bar:** A correctly configured and fully functioning PSSO + Kerberos TGT deployment may display **"Not signed in"** in the macOS Kerberos menu-bar extra (the key icon in the menu bar). This is a cosmetic display artifact of the `usePlatformSSOTGT` integration — the Kerberos extension is consuming a TGT from Platform SSO rather than managing its own credentials, so the menu-bar extra has no user account to display. If `app-sso platform -s` shows `tgt_ad` in the output, Kerberos SSO is functioning correctly. **Do not treat "Not signed in" in the menu bar as a failure indicator** in PSSO-integrated deployments. Trust `app-sso platform -s` over the menu-bar display.
+**Important — cosmetic "Not signed in" in the menu bar:** A correctly configured and fully functioning PSSO + Kerberos TGT deployment may display **"Not signed in"** in the macOS Kerberos menu-bar extra (the key icon in the menu bar). This is a cosmetic display artifact of the `usePlatformSSOTGT` integration — the Kerberos extension is consuming a TGT from Platform SSO rather than managing its own credentials, so the menu-bar extra has no user account to display. If `app-sso platform -s` shows `tgt_ad` in the output, Kerberos SSO is functioning correctly. **Do not treat "Not signed in" in the menu bar as a failure indicator** in PSSO-integrated deployments. Trust `app-sso platform -s` over the menu-bar display.
 
-> **Important:** Do not interpret the absence or unexpected value of any particular JSON field in isolation as a specific root cause. Collect the complete output and correlate with Intune portal state (Step 2) and the sysdiagnose capture (Step 3). See [Kerberos SSO Extension Guide](../admin-setup-macos/10-kerberos-sso-extension.md) for the confirmed healthy-state reference.
+**Important:** Do not interpret the absence or unexpected value of any particular JSON field in isolation as a specific root cause. Collect the complete output and correlate with Intune portal state (Step 2) and the sysdiagnose capture (Step 3). See [Kerberos SSO Extension Guide](../admin-setup-macos/10-kerberos-sso-extension.md) for the confirmed healthy-state reference.
 
 Also check the two basic registration states in the output:
 
@@ -113,7 +125,9 @@ The sysdiagnose archive is saved to `/private/var/tmp/` (sometimes `/var/tmp/`) 
 log stream --predicate 'subsystem == "com.apple.AppSSO"' --info
 ```
 
-> **Note:** The `app-sso` binary does not have a `diagnose` subcommand in any verified Apple or Microsoft source — do not reference it in escalation packets or instruct users to run it. The sysdiagnose procedure above is the verified Microsoft-documented investigation path.
+> **Note:** The `app-sso` binary does not have a `diagnose` subcommand in any verified Apple or Microsoft source — do not reference it in escalation packets or instruct users to run it.
+
+> The sysdiagnose procedure above is the verified Microsoft-documented investigation path.
 
 ---
 
@@ -187,4 +201,5 @@ When Track A or Track B investigation does not resolve the issue, engage Microso
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-23 | Initial version — macOS Kerberos SSO Extension L2 investigation (RUN-01): Track A (ticket acquisition / TGT not issued) + Track B (PSSO-TGT integration via `usePlatformSSOTGT`) | -- |

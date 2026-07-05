@@ -1,4 +1,8 @@
 ---
+doc_id: RE-075
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-07-01
 review_by: 2026-09-29
 applies_to: both
@@ -6,22 +10,29 @@ audience: L2
 platform: windows+macos+ios+android+linux
 ---
 
-> **Platform gate:** This guide covers RADIUS/EAP investigation for 802.1X failures across
-> all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For certificate-chain
-> investigation, see [#32: 802.1X Certificate-Chain Investigation](32-8021x-cert-investigation.md).
-> For 802.1X triage routing, see the
-> [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
-
-> **Foundation references (link-not-copy):**
-> - EAP method co-equal overview (no method is ranked or recommended as a default):
->   [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md)
-> - RADIUS server-name validation field requirement:
->   [Certificate Delivery Foundation — RADIUS Server-Name Validation](../admin-setup-8021x/02-cert-delivery-foundation.md#radius-server-name-validation)
->
-> Do not restate EAP method comparison or server-name validation theory in this runbook —
-> link to the foundation files above.
+**Platform:** All Platforms · **Doc Type:** Runbook · **Doc ID:** RE-075 · **Status:** Approved
 
 # 802.1X RADIUS/EAP Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers RADIUS/EAP investigation for 802.1X failures across
+> all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
+
+> For certificate-chain investigation, see [#32: 802.1X Certificate-Chain Investigation](32-8021x-cert-investigation.md).
+
+> For 802.1X triage routing, see the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+**Foundation references (link-not-copy):**
+- EAP method co-equal overview (no method is ranked or recommended as a default):
+  [EAP Method Overview](../admin-setup-8021x/01-eap-method-overview.md)
+- RADIUS server-name validation field requirement:
+  [Certificate Delivery Foundation — RADIUS Server-Name Validation](../admin-setup-8021x/02-cert-delivery-foundation.md#radius-server-name-validation)
+
+Do not restate EAP method comparison or server-name validation theory in this runbook —
+link to the foundation files above.
 
 ## Context
 
@@ -49,11 +60,11 @@ based on the failure pattern.
 
 ## RADIUS Team Request Checklist
 
-> **NOTE:** Every item below is a **request for information from the RADIUS/NPS team** —
-> not a configuration step. This runbook does not document NPS server configuration.
-> (Scope boundary: REQUIREMENTS.md §Out-of-Scope — "RADIUS/NPS server-side build-out out
-> of scope; Intune client-side config only." Client-side server-name validation and
-> trusted-root validation are in scope and are covered in the diagnosis sections below.)
+**NOTE:** Every item below is a **request for information from the RADIUS/NPS team** —
+not a configuration step. This runbook does not document NPS server configuration.
+(Scope boundary: REQUIREMENTS.md §Out-of-Scope — "RADIUS/NPS server-side build-out out
+of scope; Intune client-side config only." Client-side server-name validation and
+trusted-root validation are in scope and are covered in the diagnosis sections below.)
 
 Request the following from the RADIUS/NPS team before continuing to per-platform diagnosis.
 Gather as much of this information as possible before the first call to the RADIUS team
@@ -131,10 +142,10 @@ to change the NPS policy unless both sides have agreed on the target EAP type.
 
 ### macOS: EAP-Method Mismatch
 
-> **NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is
-> MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against
-> official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try
-> the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`.
+**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is
+MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against
+official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try
+the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`.
 
 Collect the eapolclient unified log per [#31](31-8021x-log-collection.md) before
 performing this diagnosis.
@@ -186,10 +197,10 @@ to match the NPS policy. For PEAP, set inner auth to MS-CHAPv2.
 
 ### Android: EAP-Method Mismatch
 
-> **WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
-> **USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb`
-> in PATH**. Confirm all three prerequisites before attempting collection. This is an
-> **L2-only collection step** — do not instruct L1 to run `adb` commands.
+**WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
+**USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb`
+in PATH**. Confirm all three prerequisites before attempting collection. This is an
+**L2-only collection step** — do not instruct L1 to run `adb` commands.
 
 Collect `adb logcat -s "wpa_supplicant"` output per [#31](31-8021x-log-collection.md)
 before performing this diagnosis.
@@ -292,10 +303,10 @@ with the exact RADIUS server CN or FQDN provided by the RADIUS team.
 
 ### macOS: Server-Name Validation Failure
 
-> **NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is
-> MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against
-> official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try
-> the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`.
+**NOTE — macOS signal confidence:** The macOS `com.apple.eapol` unified-log predicate is
+MEDIUM confidence — sourced from community/Jamf references, not yet confirmed against
+official Apple documentation. If it returns no EAPOL entries even with `--last 2h`, try
+the fallback predicate `log show --predicate 'process == "eapolclient"' --info --last 2h`.
 
 Collect the eapolclient unified log per [#31](31-8021x-log-collection.md) before
 performing this diagnosis.
@@ -354,10 +365,10 @@ iOS/iPadOS profile with the correct RADIUS server CN or FQDN.
 
 ### Android: Server-Name Validation Failure
 
-> **WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
-> **USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb`
-> in PATH**. Confirm all three prerequisites before attempting collection. This is an
-> **L2-only collection step** — do not instruct L1 to run `adb` commands.
+**WARNING:** `adb logcat` collection requires **developer options enabled** on the device,
+**USB debugging enabled**, and **a USB cable connecting the device to a PC with `adb`
+in PATH**. Confirm all three prerequisites before attempting collection. This is an
+**L2-only collection step** — do not instruct L1 to run `adb` commands.
 
 **Diagnosis steps:**
 
@@ -450,4 +461,5 @@ setup (per Phase 106), update the nmcli configuration in the deployment script.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-07-01 | Phase 108 plan 03: initial authoring — 802.1X cross-platform L2 RADIUS/EAP investigation (#33) | -- |

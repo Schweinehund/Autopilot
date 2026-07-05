@@ -1,4 +1,8 @@
 ---
+doc_id: RE-068
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-05-22
 review_by: 2026-07-21
 applies_to: apple-business
@@ -6,9 +10,19 @@ audience: L2
 platform: ios+macos+shared-ipad
 ---
 
-> **Platform gate:** This guide covers Apple Business permission errors across the Apple Business delegated governance surface (iOS/macOS/Shared iPad/Apple TV scoped via Apple Business Organizational Units). For Windows Autopilot, see [L2 Runbooks](00-index.md). For Android Enterprise, see [Android L2 Runbooks](00-index.md#android-l2-runbooks).
+**Platform:** iOS + macOS + Shared iPad · **Doc Type:** Runbook · **Doc ID:** RE-068 · **Status:** Approved
 
 # Apple Business Permission Denied Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Apple Business permission errors across the Apple Business delegated governance surface
+
+> (iOS/macOS/Shared iPad/Apple TV scoped via Apple Business Organizational Units). For Windows Autopilot, see [L2 Runbooks](00-index.md).
+
+> For Android Enterprise, see [Android L2 Runbooks](00-index.md#android-l2-runbooks).
 
 L2 investigation runbook for Apple Business permission denied errors across all delegation actions. Use this runbook when L1 escalates an Apple Business permission error, or when the Apple Business Quick Reference ([quick-ref-l2.md](../quick-ref-l2.md#apple-business-quick-reference)) routes here.
 
@@ -26,30 +40,17 @@ This runbook contains a 7-leaf Mermaid decision tree (DA-9 LOCKED — 7 leaves).
 
 ## 7-Leaf Decision Tree
 
-```mermaid
-graph TD
-    ABPD1{"What type of<br/>permission error?"}
+**Decision tree — identify the permission error type:**
 
-    ABPD1 -->|"Role lacks<br/>permission"| ABPDR1(["See: Role & Permission Model"])
-    ABPD1 -->|"OU boundary<br/>violation"| ABPDR2(["See: OUs Architecture"])
-    ABPD1 -->|"Apple Business<br/>scope error"| ABPDR3(["See: Cross-Org Boundary Cheat Sheet"])
-    ABPD1 -->|"Intune-scope<br/>path"| ABPDE1(["Scope boundary:<br/>Route to Intune-side docs"])
-    ABPD1 -->|"Federation<br/>state error"| ABPDR5(["See: Managed Apple Account Runbook"])
-    ABPD1 -->|"Quota<br/>limit reached"| ABPDR6(["See: Managed Apple Account Provisioning"])
-    ABPD1 -->|"Account Holder<br/>lockout"| ABPDR7(["See: Role Permission Model — OP-2"])
-
-    click ABPDR1 "../cross-platform/apple-business/01-role-permission-model.md"
-    click ABPDR2 "../cross-platform/apple-business/02-ous-architecture.md"
-    click ABPDR3 "../cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md"
-    click ABPDR5 "../cross-platform/apple-business/16-managed-apple-account-runbook.md"
-    click ABPDR6 "../cross-platform/apple-business/08-managed-apple-account-provisioning.md"
-    click ABPDR7 "../cross-platform/apple-business/01-role-permission-model.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    class ABPDR1,ABPDR2,ABPDR3,ABPDR5,ABPDR6,ABPDR7 resolved
-    class ABPDE1 escalateL2
-```
+| Scenario | Leaf | Resolution |
+|----------|------|-----------|
+| Role lacks permission | ABPDR1 | [Role & Permission Model](../cross-platform/apple-business/01-role-permission-model.md) |
+| OU boundary violation | ABPDR2 | [OUs Architecture](../cross-platform/apple-business/02-ous-architecture.md) |
+| Apple Business scope error | ABPDR3 | [Cross-Org Boundary Cheat Sheet](../cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md) |
+| Intune-scope path | ABPDE1 | Scope boundary — see [ABPDE1](#abpde1--intune-scope-path-out-of-apple-business-surface) below |
+| Federation state error | ABPDR5 | [Managed Apple Account Runbook](../cross-platform/apple-business/16-managed-apple-account-runbook.md) |
+| Quota limit reached | ABPDR6 | [Managed Apple Account Provisioning](../cross-platform/apple-business/08-managed-apple-account-provisioning.md) |
+| Account Holder lockout | ABPDR7 | [Role Permission Model — OP-2](../cross-platform/apple-business/01-role-permission-model.md) |
 
 ## Leaf Reference
 
@@ -73,7 +74,9 @@ The action crosses the Apple Business vs Intune scope boundary — the user is a
 
 ### ABPDE1 — Intune-scope path (out of Apple Business surface)
 
-> **Scope boundary:** This path involves MDM commands (ClearPasscode / EraseDevice) that are issued from the Intune admin center, outside the Apple Business permission surface. See [18-cross-org-boundary-cheat-sheet.md](../cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md) for the full Apple-Business-vs-Intune responsibility table.
+> **Scope boundary:** This path involves MDM commands (ClearPasscode / EraseDevice) that are issued from the Intune admin center, outside the Apple Business permission surface.
+
+> See [18-cross-org-boundary-cheat-sheet.md](../cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md) for the full Apple-Business-vs-Intune responsibility table.
 
 For Intune-side permission errors (MDM action access, device management role assignments, compliance policy authoring), engage an Intune admin center operator with the appropriate role. This runbook covers the Apple Business delegation surface only (per REQUIREMENTS.md:89 and the v1.6 scope boundary).
 
@@ -122,4 +125,5 @@ Before routing to a leaf, collect the following L2 diagnostic data:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-05-22 | Phase 65 plan 65-02: initial authoring — L2 Apple Business Permission Denied Investigation; 7-leaf Mermaid tree (DA-9 LOCKED); hybrid leaf behavior per D-02 (6 route + 1 inline Intune-scope) | -- |

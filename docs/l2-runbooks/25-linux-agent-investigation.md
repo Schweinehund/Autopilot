@@ -1,4 +1,8 @@
 ---
+doc_id: RE-067
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: all
@@ -6,9 +10,19 @@ audience: L2
 platform: Linux
 ---
 
-> **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks). For Android Enterprise, see [Android L2 Runbooks](00-index.md#android-l2-runbooks).
+**Platform:** Linux · **Doc Type:** Runbook · **Doc ID:** RE-067 · **Status:** Approved
 
 # Linux Agent Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+
+> For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks). For Android Enterprise, see [Android L2 Runbooks](00-index.md#android-l2-runbooks).
 
 ## Context
 
@@ -73,7 +87,9 @@ See [HWE kernel](../_glossary-linux.md#hwe-kernel) and [GA kernel](../_glossary-
    grep -E "intune-portal|microsoft-identity-broker" /var/log/dpkg.log | tail -50
    ```
 
-> **Note:** Microsoft Learn does not document specific HWE-kernel-related failure signatures for `intune-portal`. PITFALL-4 in `.planning/research/PITFALLS.md` establishes HWE divergence as a known risk; the L2-actionable signal is the `uname -r` output cross-referenced against the version-track matrix above.
+> **Note:** Microsoft Learn does not document specific HWE-kernel-related failure signatures for `intune-portal`.
+
+> PITFALL-4 in `.planning/research/PITFALLS.md` establishes HWE divergence as a known risk; the L2-actionable signal is the `uname -r` output cross-referenced against the version-track matrix above.
 
 ### Resolution
 
@@ -296,7 +312,9 @@ See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 
 5. Cross-reference the new device ID against Intune admin center (Devices > All devices > filter by Linux platform) to confirm the new device ID is assigned the correct CA filters / Entra groups.
 
-> **Note:** Microsoft Learn does not document specific journal log message text for re-enrollment events. The `grep -iE "register|enroll|device.id"` pattern above is an inferred broad signal; the definitive check is `dsreg --status` device ID comparison.
+> **Note:** Microsoft Learn does not document specific journal log message text for re-enrollment events.
+
+> The `grep -iE "register|enroll|device.id"` pattern above is an inferred broad signal; the definitive check is `dsreg --status` device ID comparison.
 
 ### Resolution
 
@@ -341,4 +359,5 @@ Expected: `dsreg --status` reports a stable device ID; broker package shows `ii`
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version (Phase 52 — Linux L2 agent investigation; 4 anchor-indexed Traps; CONTEXT D-05/D-06/D-08/D-09; SC#2 literal coverage per V-52-12/13/14; PITFALL-2 negative regression-guard per V-52-21) | -- |

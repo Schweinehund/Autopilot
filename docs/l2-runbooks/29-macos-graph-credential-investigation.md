@@ -1,4 +1,8 @@
 ---
+doc_id: RE-071
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
 last_verified: 2026-06-23
 review_by: 2026-09-23
 applies_to: ADE
@@ -6,9 +10,19 @@ audience: L2
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS Platform Credential L2 investigation via the Microsoft Graph API. For macOS Platform SSO investigation, see [macOS Platform SSO Investigation](27-macos-sso-investigation.md). For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+**Platform:** macOS · **Doc Type:** Runbook · **Doc ID:** RE-071 · **Status:** Approved
 
 # macOS Graph Platform Credential Investigation
+
+## Summary
+
+[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+
+> **Platform gate:** This guide covers macOS Platform Credential L2 investigation via the Microsoft Graph API.
+
+> For macOS Platform SSO investigation, see [macOS Platform SSO Investigation](27-macos-sso-investigation.md).
+
+> For other macOS ADE investigation runbooks, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Context
 
@@ -18,7 +32,7 @@ Before starting: collect a diagnostic package per the [macOS Log Collection Guid
 
 No L1 escalation exists for this failure class — begin at Step 1.
 
-> **Bulk-audit / enumerate-users-with-zero-registrations note:** This runbook is scoped to the single-user investigation workflow (enumerate, verify, delete-and-re-register, permission troubleshooting). Bulk-audit reporting across the tenant is out of scope for this runbook per D-06 — see [Graph API: Platform Credential Management](../admin-setup-macos/11-graph-api-platform-credential.md) for the leaver/offboarding automation pattern that serves as a starting point for tenant-wide scripts.
+**Bulk-audit / enumerate-users-with-zero-registrations note:** This runbook is scoped to the single-user investigation workflow (enumerate, verify, delete-and-re-register, permission troubleshooting). Bulk-audit reporting across the tenant is out of scope for this runbook per D-06 — see [Graph API: Platform Credential Management](../admin-setup-macos/11-graph-api-platform-credential.md) for the leaver/offboarding automation pattern that serves as a starting point for tenant-wide scripts.
 
 ---
 
@@ -87,8 +101,7 @@ If the credential exists but is stale (wrong device, old timestamp from a prior 
 
 ### Step 3: Delete credential (delete-and-re-register flow)
 
-> [!WARNING]
-> **Deleting a Platform Credential severs the Entra ID binding for the user's device and forces PSSO re-registration.** The user will see the "Registration Required" prompt on their next Conditional Access-gated sign-in. The Secure Enclave private key on the device is NOT remotely erased — only the Entra-side record is removed. Use with care in automation loops; test with `-WhatIf` before running against production users.
+**Deleting a Platform Credential severs the Entra ID binding for the user's device and forces PSSO re-registration.** The user will see the "Registration Required" prompt on their next Conditional Access-gated sign-in. The Secure Enclave private key on the device is NOT remotely erased — only the Entra-side record is removed. Use with care in automation loops; test with `-WhatIf` before running against production users.
 
 Delete the identified credential using its `platformCredentialAuthenticationMethodId` from Step 2.
 
@@ -188,4 +201,5 @@ When the steps above do not resolve the issue, engage Microsoft Support. Assembl
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-23 | Initial version — macOS Graph Platform Credential L2 investigation (RUN-02): enumerate/verify, delete-and-re-register (with mandatory [!WARNING]), permission/role troubleshooting | -- |
