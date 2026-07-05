@@ -1,13 +1,26 @@
 ---
+doc_id: RE-051
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: L2
 ---
 
-> **Version gate:** This guide covers Autopilot Device Preparation (APv2) deployment report interpretation. For Windows Autopilot (classic) ESP investigation, see [ESP Deep-Dive](02-esp-deep-dive.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-051 · **Status:** Approved
 
 # APv2 Deployment Report Interpretation
+
+## Summary
+
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers Intune APv2 deployment report interpretation: status value reference tables, phase breakdown mapping, and investigation paths for Entra join failure, enrollment failure, app/script failure, timeout, and the stuck-at-100% known issue.
+
+> **Version gate:** This guide covers Autopilot Device Preparation (APv2) deployment report interpretation.
+
+> For Windows Autopilot (classic) ESP investigation, see [ESP Deep-Dive](02-esp-deep-dive.md).
 
 ## Triage
 
@@ -78,8 +91,8 @@ Use the reference tables below to interpret every field in the deployment report
 | Skipped | App selected in policy but not assigned to ETG device group, or app not applicable | **Treat as configuration gap -- investigate with same urgency as Failed.** Check ETG group assignment. If ETG assignment correct: check Managed Installer policy (resolved April 2026). See [APv2 Apps Not Installed](../l1-runbooks/07-apv2-apps-not-installed.md). |
 | Failed | App failed to install | Check [BootstrapperAgent log](07-apv2-event-ids.md) and IME AppWorkload.log. See [APv2 Log Collection](06-apv2-log-collection.md). |
 
-> **Skipped is not optional.** "Skipped" means the app was selected in the Device Preparation policy
-> but was NOT delivered to the device. This is a configuration gap, not a benign skip.
+> **Skipped is not optional.** "Skipped" means the app was selected in the Device Preparation policy but was NOT delivered to the device. This is a configuration gap, not a benign skip.
+
 > Investigate every Skipped entry: verify ETG group assignment, check Managed Installer policy status.
 
 ### Scripts Tab Statuses
@@ -101,7 +114,7 @@ Map each Phase value to deployment flow step numbers from [APv2 Deployment Flow]
 | Script installation | Step 8 (PowerShell scripts) | Platform script execution | A script failed to run or timed out. Check Scripts tab for specific failure. |
 | App installation | Step 9 (Win32, Store, EAC apps) | Win32 app, Store app, and Enterprise App Catalog app installation | A Win32/Store/EAC app failed to install. Check Apps tab for specific failure. |
 
-> **Note:** The Policy installation phase is coarse-grained. It covers Steps 2-7 of the deployment flow, which includes Entra join, Intune enrollment, IME installation, AND LOB/M365 app installation. A failure in this phase requires examining the deployment details and logs to determine which specific step failed. Do not assume "Policy installation" means only policy delivery.
+**Note:** The Policy installation phase is coarse-grained. It covers Steps 2-7 of the deployment flow, which includes Entra join, Intune enrollment, IME installation, AND LOB/M365 app installation. A failure in this phase requires examining the deployment details and logs to determine which specific step failed. Do not assume "Policy installation" means only policy delivery.
 
 ---
 
@@ -230,4 +243,5 @@ No further L2 resolution available.
 
 | Date | Change |
 |------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-12 | Initial version -- deployment report interpretation with status tables, phase breakdown, five investigation paths, known issues |

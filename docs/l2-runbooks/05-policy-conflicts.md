@@ -1,14 +1,25 @@
 ---
+doc_id: RE-048
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-21
 review_by: 2026-06-19
 applies_to: APv1
 audience: L2
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-048 · **Status:** Approved
 
 # Policy Conflict Analysis
+
+## Summary
+
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers systematic identification and resolution of the five most common Autopilot provisioning policy conflicts: AutoAdminLogon, AppLocker CSP, DeviceLock, Security Baseline, and PreferredAadTenantDomainName.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -109,7 +120,7 @@ If `PreferredAadTenantDomainName` is set, verify that it matches the Azure AD te
 
 Microsoft 365 Security Baselines are a common source of policy conflicts because they contain settings that affect UAC, VBS, autologon, and password policies — all of which can interfere with Autopilot provisioning.
 
-> **Note:** Specific policy setting names should be validated against the current Microsoft 365 Security Baseline version in use. Policy names change between baseline versions. The conflict categories below are stable; individual setting names require verification at the current baseline version.
+**Note:** Specific policy setting names should be validated against the current Microsoft 365 Security Baseline version in use. Policy names change between baseline versions. The conflict categories below are stable; individual setting names require verification at the current baseline version.
 
 Investigation steps:
 1. In Intune admin center, navigate to **Endpoint security > Security baselines**.
@@ -221,4 +232,5 @@ At this point, collect the full diagnostic package from Step 1, document all reg
 
 | Date | Change |
 |------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-21 | Initial version — five policy conflict patterns (AutoAdminLogon, AppLocker CSP, DeviceLock, Security Baseline, PreferredAadTenantDomainName), five resolution scenarios, escalation ceiling |

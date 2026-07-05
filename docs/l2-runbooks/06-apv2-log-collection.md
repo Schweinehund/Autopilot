@@ -1,13 +1,24 @@
 ---
+doc_id: RE-049
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: L2
 ---
 
-> **Version gate:** This guide covers Autopilot Device Preparation (APv2). For Windows Autopilot (classic), see [APv1 Log Collection Guide](01-log-collection.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-049 · **Status:** Approved
 
 # APv2 Log Collection Guide
+
+## Summary
+
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers the prerequisite diagnostic-package collection for all APv2 L2 investigations: BootstrapperAgent event log export, IME log folder copy, and Intune auto-diagnostic download.
+
+> **Version gate:** This guide covers Autopilot Device Preparation (APv2). For Windows Autopilot (classic), see [APv1 Log Collection Guide](01-log-collection.md).
 
 ## Triage
 
@@ -25,7 +36,10 @@ This guide is the prerequisite for all APv2 L2 investigation runbooks. Before st
 The principle is **gather everything first, then investigate**. Collecting all artifacts upfront prevents having to return to the device mid-investigation when a log file is needed.
 
 > **CRITICAL: MDM Diagnostic Tool does not apply to APv2.**
-> `mdmdiagnosticstool.exe -area Autopilot -cab` is designed for APv1 (classic Autopilot) and the ESP flow. It does not capture BootstrapperAgent data. Do not use it for APv2 investigations. APv2 diagnostics are collected from: (1) the BootstrapperAgent event log, (2) the IME log folder, and (3) the Intune deployment report in the admin center.
+
+> `mdmdiagnosticstool.exe -area Autopilot -cab` is designed for APv1 (classic Autopilot) and the ESP flow. It does not capture BootstrapperAgent data. Do not use it for APv2 investigations.
+
+> APv2 diagnostics are collected from: (1) the BootstrapperAgent event log, (2) the IME log folder, and (3) the Intune deployment report in the admin center.
 
 ---
 
@@ -82,7 +96,7 @@ wevtutil el | Where-Object { $_ -match "Bootstrapper|IntuneManagement" }
 wevtutil epl "Microsoft-Windows-IntuneManagementExtension/BootstrapperAgent" "$prefix`_bootstrapper.evtx"
 ```
 
-> **Note:** If the log name is not found, the IME may not be installed yet on this device. This is expected for failures that occur before Step 4 (IME installation) of the [APv2 deployment flow](../lifecycle-apv2/02-deployment-flow.md). Proceed to Step 3 for IME log collection.
+**Note:** If the log name is not found, the IME may not be installed yet on this device. This is expected for failures that occur before Step 4 (IME installation) of the [APv2 deployment flow](../lifecycle-apv2/02-deployment-flow.md). Proceed to Step 3 for IME log collection.
 
 ### Step 3: Copy IME log folder
 
@@ -107,7 +121,7 @@ Copy-Item "$src\AgentExecutor.log" "$dest\$prefix`_agentexecutor.log"
 | AppWorkload.log | Win32 app deployment activities -- primary source for app failure investigation |
 | AgentExecutor.log | PowerShell script execution tracking -- primary source for script failure investigation |
 
-> **Note:** If the IME log folder does not exist, the IME has not installed on this device. This is expected for failures at Step 3 (Entra join / enrollment) or Step 4 (IME installation) of the deployment flow. In this case, the BootstrapperAgent event log (Step 2) and the Intune deployment report (Step 1) are the only available diagnostic sources.
+**Note:** If the IME log folder does not exist, the IME has not installed on this device. This is expected for failures at Step 3 (Entra join / enrollment) or Step 4 (IME installation) of the deployment flow. In this case, the BootstrapperAgent event log (Step 2) and the Intune deployment report (Step 1) are the only available diagnostic sources.
 
 ### Step 4: Collect Intune auto-diagnostics (if available)
 
@@ -123,7 +137,7 @@ Intune admin center (https://intune.microsoft.com)
 
 Download the auto-collected diagnostics if available. These contain additional telemetry that may not be present in the on-device logs.
 
-> **On-device export option:** The "Export logs" button displayed during a failed APv2 deployment saves logs to the first connected USB drive. Known issue: no success/failure feedback is displayed after pressing the button. Verify the USB drive contains exported files after pressing the button.
+**On-device export option:** The "Export logs" button displayed during a failed APv2 deployment saves logs to the first connected USB drive. Known issue: no success/failure feedback is displayed after pressing the button. Verify the USB drive contains exported files after pressing the button.
 
 ### Step 5: Artifact naming convention
 
@@ -167,4 +181,5 @@ No further L2 resolution available from log collection alone. Use the collected 
 
 | Date | Change |
 |------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-12 | Initial version -- APv2 log collection with BootstrapperAgent export, IME log folder, Intune auto-diagnostics, MDMDiagnosticsTool exclusion statement |

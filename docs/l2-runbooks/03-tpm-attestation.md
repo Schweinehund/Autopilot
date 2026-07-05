@@ -1,14 +1,25 @@
 ---
+doc_id: RE-046
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-21
 review_by: 2026-06-19
 applies_to: APv1
 audience: L2
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-046 · **Status:** Approved
 
 # TPM Attestation Failure Investigation
+
+## Summary
+
+This L2 investigation runbook performs change-controlled TPM remediation actions — including Clear-Tpm via Reset-TPMForAutopilot (requires device reboot) and coordinating OEM firmware reset — all actions require L2 approval. It covers hardware-specific TPM attestation failure investigation for pre-provisioning and self-deploying mode, identifying the chipset and routing to the appropriate firmware-update scenario.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -177,4 +188,5 @@ Prev: 02-device-registration.md | Next: [04-hybrid-join.md](04-hybrid-join.md)
 
 | Date | Change |
 |------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-21 | Initial creation |

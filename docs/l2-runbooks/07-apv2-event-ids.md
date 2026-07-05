@@ -1,13 +1,26 @@
 ---
+doc_id: RE-050
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: L2
 ---
 
-> **Version gate:** This guide covers Autopilot Device Preparation (APv2) BootstrapperAgent event IDs. These are NOT the same as APv1 event IDs from ModernDeployment-Diagnostics-Provider/Autopilot. For APv1 event IDs (100-172, 807-908), see the [APv1 troubleshooting FAQ](https://learn.microsoft.com/en-us/autopilot/troubleshooting-faq).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-050 · **Status:** Approved
 
 # APv2 BootstrapperAgent Event ID Reference
+
+## Summary
+
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It provides a tiered BootstrapperAgent event ID reference for APv2 provisioning failures, distinguishing actionable event IDs (2002, 3002, 4002, 5002, 6002, 9001, 9999) from informational state transitions.
+
+> **Version gate:** This guide covers Autopilot Device Preparation (APv2) BootstrapperAgent event IDs. These are NOT the same as APv1 event IDs from ModernDeployment-Diagnostics-Provider/Autopilot.
+
+> For APv1 event IDs (100-172, 807-908), see the [APv1 troubleshooting FAQ](https://learn.microsoft.com/en-us/autopilot/troubleshooting-faq).
 
 ## Triage
 
@@ -27,7 +40,12 @@ These event IDs are from the BootstrapperAgent log (APv2). They are different fr
 ## Event ID Reference
 
 > **Source Attribution (MEDIUM Confidence)**
-> The event IDs in this guide are documented from community research by [oofhours.com](https://oofhours.com) and [Call4Cloud](https://call4cloud.nl). No official Microsoft BootstrapperAgent event ID reference exists as of 2026-04-12. Treat all event ID interpretations as community-validated, not Microsoft-confirmed. If Microsoft publishes official guidance, this document will be updated.
+
+> The event IDs in this guide are documented from community research by [oofhours.com](https://oofhours.com) and [Call4Cloud](https://call4cloud.nl).
+
+> No official Microsoft BootstrapperAgent event ID reference exists as of 2026-04-12. Treat all event ID interpretations as community-validated, not Microsoft-confirmed.
+
+> If Microsoft publishes official guidance, this document will be updated.
 
 ### Key Actionable Event IDs
 
@@ -84,7 +102,7 @@ Compact reference for informational, rare, or low-actionability event IDs.
 | 9001 | Deployment timeout triggered | [oofhours.com](https://oofhours.com) |
 | 9999 | Provisioning state error (generic) | [Call4Cloud](https://call4cloud.nl) |
 
-> **Note:** Event IDs not listed here may appear in the BootstrapperAgent log. Unknown event IDs should be noted with full event XML and included in any escalation to Microsoft Premier Support. To capture full event XML: right-click the event in Event Viewer > Copy > Copy Details as XML.
+**Note:** Event IDs not listed here may appear in the BootstrapperAgent log. Unknown event IDs should be noted with full event XML and included in any escalation to Microsoft Premier Support. To capture full event XML: right-click the event in Event Viewer > Copy > Copy Details as XML.
 
 ---
 
@@ -116,4 +134,5 @@ No further L2 resolution available.
 
 | Date | Change |
 |------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-12 | Initial version -- tiered BootstrapperAgent event ID reference with MEDIUM confidence attribution |

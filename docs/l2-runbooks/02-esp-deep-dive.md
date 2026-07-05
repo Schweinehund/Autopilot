@@ -1,14 +1,25 @@
 ---
+doc_id: RE-045
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-21
 review_by: 2026-06-19
 applies_to: APv1
 audience: L2
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-045 · **Status:** Approved
 
 # ESP Deep-Dive Investigation
+
+## Summary
+
+This L2 investigation runbook performs change-controlled ESP registry edits and state reset — including clearing stale FirstSync keys via Restart-EnrollmentStatusPage and modifying Intune policy assignments — all actions require L2 approval. It covers registry-level investigation of both device-phase and user-phase Enrollment Status Page failures, including Win32 app Sidecar tracking and AppWorkload.log analysis.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -108,7 +119,9 @@ An app with a Sidecar key showing an error state or install failure is the block
 
 ### Step 5: Check app install log
 
-> **CRITICAL:** Use `AppWorkload.log` as the primary app install log. The log path changed in August 2024 — `IntuneManagementExtension.log` is no longer the primary source (it still exists but captures a different scope of events).
+> **CRITICAL:** Use `AppWorkload.log` as the primary app install log.
+
+> The log path changed in August 2024 — `IntuneManagementExtension.log` is no longer the primary source (it still exists but captures a different scope of events).
 
 ```powershell
 $appLog = "C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\AppWorkload.log"
@@ -199,4 +212,5 @@ At this point, collect the full diagnostic package from Step 1, document all reg
 
 | Date | Change |
 |------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-21 | Initial version — device/user phase registry investigation, Sidecar Win32 tracking, AppWorkload.log reference, triage block, three resolution scenarios |

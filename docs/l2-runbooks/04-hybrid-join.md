@@ -1,14 +1,25 @@
 ---
+doc_id: RE-047
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-21
 review_by: 2026-06-19
 applies_to: APv1
 audience: L2
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-047 · **Status:** Approved
 
 # Hybrid Join Failure Investigation
+
+## Summary
+
+This L2 investigation runbook performs change-controlled hybrid join registration remediation — including dsregcmd-driven re-registration and ODJ Connector reconfiguration — all actions require L2 approval. It covers hybrid Azure AD join failure investigation including ODJ Connector version verification, event log analysis, domain controller reachability, and OU permission delegation for the three distinct 0x80070774 root causes.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -47,7 +58,7 @@ Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Intune Connector for AD" -ErrorAction
     Select-Object DisplayVersion, InstallDate
 ```
 
-> **Version verification note:** If this registry path does not exist on the connector server, use the Event Viewer log path instead — the presence of the current log path (`Applications and Services Logs > Microsoft > Intune > ODJConnectorService`) itself confirms the connector version is 6.2501.2000.5 or later, since the log location changed with that version.
+**Version verification note:** If this registry path does not exist on the connector server, use the Event Viewer log path instead — the presence of the current log path (`Applications and Services Logs > Microsoft > Intune > ODJConnectorService`) itself confirms the connector version is 6.2501.2000.5 or later, since the log location changed with that version.
 
 **If connector version is below 6.2501.2000.5:** Update the connector before investigating further. Older versions produce failures that appear as configuration issues but are actually version defects. Download the current connector from the Intune admin center > Tenant administration > Connectors and tokens > On-premises AD connector.
 
@@ -62,7 +73,7 @@ Get-WinEvent -LogName "Microsoft-Intune-ODJConnectorService/Operational" -MaxEve
     Format-Table TimeCreated, Id, Message -AutoSize
 ```
 
-> **Do not use** the legacy path `Applications and Services Logs > ODJ Connector Service` — it no longer receives log entries on connectors v6.2501.2000.5 and later. Querying the legacy path will return no results and mislead the investigation.
+**Do not use** the legacy path `Applications and Services Logs > ODJ Connector Service` — it no longer receives log entries on connectors v6.2501.2000.5 and later. Querying the legacy path will return no results and mislead the investigation.
 
 Look for event IDs listed in [Hybrid Join Error Codes](../error-codes/05-hybrid-join.md): 807, 809, 815, 908, 171, 172. Do not reproduce the event ID mapping table here — the error codes file is the source of truth. Filter to events within 30 minutes of the reported failure timestamp.
 
@@ -164,4 +175,5 @@ Prev: [03-tpm-attestation.md](03-tpm-attestation.md) | Next: [05-policy-conflict
 
 | Date | Change |
 |------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-03-21 | Initial creation — ODJ Connector version, current log path, three 0x80070774 scenarios |

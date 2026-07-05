@@ -1,14 +1,25 @@
 ---
+doc_id: RE-044
+status: Approved
+owner: L2 Desktop Lead
+doc_type: Runbook
+platform: Windows
 last_verified: 2026-03-21
 review_by: 2026-06-19
 applies_to: APv1
 audience: L2
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic).
-> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Runbook · **Doc ID:** RE-044 · **Status:** Approved
 
 # L2 Log Collection Guide
+
+## Summary
+
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval and follows the escalation path documented here. It covers the prerequisite diagnostic-package collection for all APv1 Windows Autopilot L2 investigations: MDM diagnostic cab, four event log exports, registry snapshot, and artifact naming convention.
+
+> **Version gate:** This guide applies to Windows Autopilot (classic).
+> For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -86,7 +97,9 @@ Export the [ESP](../_glossary.md#esp) tracking registry key when the device is s
 reg export "HKLM\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking" "$prefix`_esp-registry.reg" /y
 ```
 
-> **When to use:** Take this snapshot on devices that are currently stuck on ESP, before any remediation or restart. For post-failure analysis on devices that have already rebooted, the `.cab` file from Section 1 contains registry state captured at diagnostic collection time.
+> **When to use:** Take this snapshot on devices that are currently stuck on ESP, before any remediation or restart.
+
+> For post-failure analysis on devices that have already rebooted, the `.cab` file from Section 1 contains registry state captured at diagnostic collection time.
 
 See [registry-paths.md](../reference/registry-paths.md) for descriptions of the ESP tracking keys including `ExpectedPolicies` and `Sidecar` subkeys.
 
@@ -122,3 +135,9 @@ if ($cabSource) {
 - [Get-AutopilotLogs](../reference/powershell-ref.md#get-autopilotlogs) — one-command collection of MDM diagnostic report and four event log exports
 - [Registry Paths](../reference/registry-paths.md) — ESP tracking keys (`EnrollmentStatusTracking`, `ExpectedPolicies`, `Sidecar`) and enrollment state paths
 - [Network Endpoints](../reference/endpoints.md) — for connectivity verification if endpoints are unreachable during diagnostic collection
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
