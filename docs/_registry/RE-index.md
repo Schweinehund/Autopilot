@@ -56,15 +56,15 @@
 | RE-040 | docs/l1-runbooks/39-8021x-radius-reject.md | 802.1X RADIUS Reject | Runbook | Approved |
 | RE-041 | docs/l1-runbooks/40-8021x-server-trust-failure.md | 802.1X Server Trust Failure | Runbook | Approved |
 | RE-042 | docs/l1-runbooks/41-8021x-eap-negotiation-failure.md | 802.1X EAP Negotiation Failure | Runbook | Approved |
-| RE-043 | docs/l2-runbooks/00-index.md | L2 Investigation Runbooks | Runbook | Pending |
-| RE-044 | docs/l2-runbooks/01-log-collection.md | L2 Log Collection Guide | Runbook | Pending |
-| RE-045 | docs/l2-runbooks/02-esp-deep-dive.md | ESP Deep-Dive Investigation | Runbook | Pending |
-| RE-046 | docs/l2-runbooks/03-tpm-attestation.md | TPM Attestation Failure Investigation | Runbook | Pending |
-| RE-047 | docs/l2-runbooks/04-hybrid-join.md | Hybrid Join Failure Investigation | Runbook | Pending |
-| RE-048 | docs/l2-runbooks/05-policy-conflicts.md | Policy Conflict Analysis | Runbook | Pending |
-| RE-049 | docs/l2-runbooks/06-apv2-log-collection.md | APv2 Log Collection Guide | Runbook | Pending |
-| RE-050 | docs/l2-runbooks/07-apv2-event-ids.md | APv2 BootstrapperAgent Event ID Reference | Runbook | Pending |
-| RE-051 | docs/l2-runbooks/08-apv2-deployment-report.md | APv2 Deployment Report Interpretation | Runbook | Pending |
+| RE-043 | docs/l2-runbooks/00-index.md | L2 Investigation Runbooks | Runbook | Approved |
+| RE-044 | docs/l2-runbooks/01-log-collection.md | L2 Log Collection Guide | Runbook | Approved |
+| RE-045 | docs/l2-runbooks/02-esp-deep-dive.md | ESP Deep-Dive Investigation | Runbook | Approved |
+| RE-046 | docs/l2-runbooks/03-tpm-attestation.md | TPM Attestation Failure Investigation | Runbook | Approved |
+| RE-047 | docs/l2-runbooks/04-hybrid-join.md | Hybrid Join Failure Investigation | Runbook | Approved |
+| RE-048 | docs/l2-runbooks/05-policy-conflicts.md | Policy Conflict Analysis | Runbook | Approved |
+| RE-049 | docs/l2-runbooks/06-apv2-log-collection.md | APv2 Log Collection Guide | Runbook | Approved |
+| RE-050 | docs/l2-runbooks/07-apv2-event-ids.md | APv2 BootstrapperAgent Event ID Reference | Runbook | Approved |
+| RE-051 | docs/l2-runbooks/08-apv2-deployment-report.md | APv2 Deployment Report Interpretation | Runbook | Approved |
 | RE-052 | docs/l2-runbooks/10-macos-log-collection.md | macOS L2 Log Collection Guide | Runbook | Pending |
 | RE-053 | docs/l2-runbooks/11-macos-profile-delivery.md | macOS Profile Delivery Investigation | Runbook | Pending |
 | RE-054 | docs/l2-runbooks/12-macos-app-install.md | macOS App Install Failure Diagnosis | Runbook | Pending |
