@@ -787,12 +787,12 @@
         },
         "116": {
           "issueKey": "RTS-719",
-          "status": "in_progress",
+          "status": "done",
           "name": "L1/L2 Runbook Retrofit (~75 docs)"
         },
         "117": {
           "issueKey": "RTS-720",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Admin-Setup Guide Retrofit (all platforms)"
         },
         "118": {
