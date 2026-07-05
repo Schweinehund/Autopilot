@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 investigation guide for macOS Platform SSO (PSSO) failures across two failure classes: registration failures (device or user not reaching REGISTERED state) and password-sync failures (sign-in loop, per-user MFA blocker). Platform SSO re-registration commands are state-changing operations that force Secure Enclave key regeneration — obtain change-control approval before running any re-registration steps in production. The sysdiagnose capture (Track A Step 3) is the primary investigation artifact.
 
 > **Platform gate:** This guide covers macOS Platform SSO L2 investigation via Intune and Entra. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 

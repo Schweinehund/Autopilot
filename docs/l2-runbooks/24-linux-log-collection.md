@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 log collection guide for Linux Intune client (`intune-portal`) on Ubuntu 22.04/24.04 LTS. All collection commands documented here require L2 authorization — do not share with end users or L1 technicians. Covers `journalctl` (primary confirmed surface), file-based log paths (`/var/log/dpkg.log`, `/var/log/intune-update.log`, `/var/log/microsoft/intune/`), and the Decision Matrix for routing by data-scope need.
 
 > **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 

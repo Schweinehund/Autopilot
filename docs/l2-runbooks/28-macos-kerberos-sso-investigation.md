@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 investigation guide for macOS Kerberos SSO Extension failures across enrollment-state verification, sysdiagnose-driven investigation, PSSO-Kerberos TGT integration, and network proxy diagnosis. All investigation steps require L2 authorization — do not share commands or findings with end users or L1 technicians. Consumed after log collection via the macOS Log Collection Guide (Runbook 10); the `app-sso platform -s` output and sysdiagnose archive are the primary investigation artifacts.
 
 > **Platform gate:** This guide covers macOS Kerberos SSO Extension L2 investigation. For macOS Platform SSO investigation, see [macOS Platform SSO Investigation](27-macos-sso-investigation.md).
 

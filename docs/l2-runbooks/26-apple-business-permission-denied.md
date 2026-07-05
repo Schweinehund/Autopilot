@@ -16,7 +16,7 @@ platform: ios+macos+shared-ipad
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 investigation runbook for Apple Business permission denied errors across all Apple Business delegation actions. The ABPDE1 path involves MDM commands (ClearPasscode, EraseDevice) issued from the Intune admin center — MDM commands are state-changing operations requiring change-control approval before use. All other paths are read-only investigation. Routes permission error types through a 7-leaf decision tree to the appropriate Apple Business runbook or Intune-side escalation.
 
 > **Platform gate:** This guide covers Apple Business permission errors across the Apple Business delegated governance surface
 

@@ -16,7 +16,7 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 certificate-chain investigation guide for 802.1X failures across all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux). All investigation steps require L2 authorization — do not share commands or certificate inspection procedures with end users or L1 technicians. Covers SCEP delivery channel verification, certificate chain validation (EKU, expiry, chain trust), revocation check failures, and RADIUS server-name validation. Used after 802.1X log collection per Runbook 31.
 
 > **Platform gate:** This guide covers 802.1X certificate-chain investigation across all five
 > platforms (Windows / macOS / iOS/iPadOS / Android / Linux).

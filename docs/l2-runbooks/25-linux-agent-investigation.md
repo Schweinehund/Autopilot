@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 investigation guide for Linux Intune client (`intune-portal`) agent failures across four trap families: kernel-track divergence (GA vs HWE), delivery-path confusion (snap vs deb), user-scope vs system-scope service mechanics, and Identity Broker re-enrollment signals. All traps documented here require L2 authorization — do not share investigation commands with end users or L1 technicians. Used after log collection via Runbook 24.
 
 > **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 

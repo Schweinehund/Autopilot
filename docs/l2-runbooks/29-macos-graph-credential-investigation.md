@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 investigation guide for macOS Secure Enclave Platform Credential failures via the Microsoft Graph API. The delete-and-re-register flow (Graph `DELETE platformCredentialMethods/{id}`) is a state-changing operation that severs the Entra ID binding for the user's device and forces PSSO re-registration — obtain change-control approval before executing any delete operation. Single-user investigation workflow only; bulk-audit across the tenant is out of scope per D-06.
 
 > **Platform gate:** This guide covers macOS Platform Credential L2 investigation via the Microsoft Graph API.
 

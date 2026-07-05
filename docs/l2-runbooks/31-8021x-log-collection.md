@@ -16,7 +16,7 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 log collection prerequisite for 802.1X certificate-chain investigation (Runbook 32) and RADIUS/EAP investigation (Runbook 33) across all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux). All collection steps require L2 authorization — do not share platform-specific commands with end users or L1 technicians. CAPI2 log enablement on Windows is state-changing; enable only immediately before reproducing the failure and disable after export.
 
 > **Platform gate:** This guide covers 802.1X L2 log collection across all five platforms
 > (Windows / macOS / iOS/iPadOS / Android / Linux).

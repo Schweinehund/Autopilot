@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 investigation guide for macOS MDM migration failures from Kandji (rebranded Iru) to Intune across three failure tracks: Track A (ABM deadline lockout with non-dismissible full-screen prompt), Track B (profile-not-delivered or enrollment-failed after deadline passes), and Track C (PSSO re-registration stuck after enrollment succeeds). All track steps require L2 authorization — do not share recovery procedures with end users or L1 technicians. ABM deadline modification requires ABM administrator credentials.
 
 > **Platform gate:** This guide covers macOS MDM migration failure investigation via Intune and Apple Business Manager (ABM),
 

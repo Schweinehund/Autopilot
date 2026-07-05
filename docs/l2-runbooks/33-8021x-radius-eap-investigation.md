@@ -16,7 +16,7 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+L2 RADIUS/EAP investigation guide for 802.1X failures where certificates are valid but the RADIUS server rejects authentication across all five platforms. All investigation steps require L2 authorization — do not share RADIUS team checklist items or diagnosis steps with end users or L1 technicians. Covers EAP-method mismatch diagnosis (EAP type 13/25/21 cross-reference with NPS policy), server-name validation failure investigation, and RADIUS team request checklist coordination.
 
 > **Platform gate:** This guide covers RADIUS/EAP investigation for 802.1X failures across
 > all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
