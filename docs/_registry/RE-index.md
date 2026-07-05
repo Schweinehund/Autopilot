@@ -79,16 +79,16 @@
 | RE-063 | docs/l2-runbooks/21-android-compliance-investigation.md | Android Compliance Investigation | Runbook | Approved |
 | RE-064 | docs/l2-runbooks/22-android-knox-investigation.md | Android Knox Mobile Enrollment Investigation | Runbook | Approved |
 | RE-065 | docs/l2-runbooks/23-android-aosp-investigation.md | Android AOSP Enrollment Investigation | Runbook | Approved |
-| RE-066 | docs/l2-runbooks/24-linux-log-collection.md | Linux Log Collection Guide | Runbook | Pending |
-| RE-067 | docs/l2-runbooks/25-linux-agent-investigation.md | Linux Agent Investigation | Runbook | Pending |
-| RE-068 | docs/l2-runbooks/26-apple-business-permission-denied.md | Apple Business Permission Denied Investigation | Runbook | Pending |
-| RE-069 | docs/l2-runbooks/27-macos-sso-investigation.md | macOS Platform SSO Investigation | Runbook | Pending |
-| RE-070 | docs/l2-runbooks/28-macos-kerberos-sso-investigation.md | macOS Kerberos SSO Extension Investigation | Runbook | Pending |
-| RE-071 | docs/l2-runbooks/29-macos-graph-credential-investigation.md | macOS Graph Platform Credential Investigation | Runbook | Pending |
-| RE-072 | docs/l2-runbooks/30-macos-mdm-migration-failure.md | macOS MDM Migration Failure Investigation | Runbook | Pending |
-| RE-073 | docs/l2-runbooks/31-8021x-log-collection.md | 802.1X Log Collection | Runbook | Pending |
-| RE-074 | docs/l2-runbooks/32-8021x-cert-investigation.md | 802.1X Certificate-Chain Investigation | Runbook | Pending |
-| RE-075 | docs/l2-runbooks/33-8021x-radius-eap-investigation.md | 802.1X RADIUS/EAP Investigation | Runbook | Pending |
+| RE-066 | docs/l2-runbooks/24-linux-log-collection.md | Linux Log Collection Guide | Runbook | Approved |
+| RE-067 | docs/l2-runbooks/25-linux-agent-investigation.md | Linux Agent Investigation | Runbook | Approved |
+| RE-068 | docs/l2-runbooks/26-apple-business-permission-denied.md | Apple Business Permission Denied Investigation | Runbook | Approved |
+| RE-069 | docs/l2-runbooks/27-macos-sso-investigation.md | macOS Platform SSO Investigation | Runbook | Approved |
+| RE-070 | docs/l2-runbooks/28-macos-kerberos-sso-investigation.md | macOS Kerberos SSO Extension Investigation | Runbook | Approved |
+| RE-071 | docs/l2-runbooks/29-macos-graph-credential-investigation.md | macOS Graph Platform Credential Investigation | Runbook | Approved |
+| RE-072 | docs/l2-runbooks/30-macos-mdm-migration-failure.md | macOS MDM Migration Failure Investigation | Runbook | Approved |
+| RE-073 | docs/l2-runbooks/31-8021x-log-collection.md | 802.1X Log Collection | Runbook | Approved |
+| RE-074 | docs/l2-runbooks/32-8021x-cert-investigation.md | 802.1X Certificate-Chain Investigation | Runbook | Approved |
+| RE-075 | docs/l2-runbooks/33-8021x-radius-eap-investigation.md | 802.1X RADIUS/EAP Investigation | Runbook | Approved |
 | RE-076 | docs/admin-setup-apv1/00-overview.md | APv1 Admin Setup: Complete Configuration Guide | Guide | Pending |
 | RE-077 | docs/admin-setup-apv1/01-hardware-hash-upload.md | Hardware Hash Upload | Guide | Pending |
 | RE-078 | docs/admin-setup-apv1/02-deployment-profile.md | Deployment Profile Configuration | Guide | Pending |
