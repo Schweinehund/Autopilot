@@ -162,7 +162,7 @@ Plans:
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
-- [ ] 116-07-PLAN.md — L2 macOS + iOS + Android (RE-052..RE-065): default L2 escalation banners
+- [x] 116-07-PLAN.md — L2 macOS + iOS + Android (RE-052..RE-065): default L2 escalation banners
 
 **Wave 8** *(blocked on Wave 7 completion)*
 
@@ -245,7 +245,7 @@ Plans:
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
-| 116. L1/L2 Runbook Retrofit | 6/8 | In Progress|  |
+| 116. L1/L2 Runbook Retrofit | 7/8 | In Progress|  |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
