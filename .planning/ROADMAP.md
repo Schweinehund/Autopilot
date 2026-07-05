@@ -40,7 +40,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 113: Conversion Pipeline Lock + Representative-Set Grounding Validation** — Define, lock, and empirically validate the MD→.docx conversion pipeline before the full corpus retrofit begins (completed 2026-07-04)
 - [x] **Phase 114: EEE Standard, Templates, Doc ID Registry + Metadata Rules** — Author the EEE SOP standard, update templates, assign all Phase-1 Doc IDs, and verify the C10 precondition (completed 2026-07-04)
 - [x] **Phase 115: C17 Harness Check (Validator Atom)** — Author C17 as one indivisible blocking validator atom asserting the full EEE contract from Markdown source (completed 2026-07-04)
-- [ ] **Phase 116: L1/L2 Runbook Retrofit (~75 docs)** — Retrofit all L1/L2 runbooks to EEE with C17 green on every file
+- [x] **Phase 116: L1/L2 Runbook Retrofit (~75 docs)** — Retrofit all L1/L2 runbooks to EEE with C17 green on every file (completed 2026-07-05)
 - [ ] **Phase 117: Admin-Setup Guide Retrofit (all platforms)** — Retrofit all admin-setup guides (Windows / macOS / iOS / Android / Linux / 802.1X) to EEE with C17 green
 - [ ] **Phase 118: Reference Doc Retrofit + Table Remediation (~26 docs)** — Retrofit all reference docs to EEE including table remediation so capability-matrix content survives chunk boundaries
 - [ ] **Phase 119: Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-audit Close** — Atomically re-pin all Phase-1 frozen surfaces, author the 13th Path-A harness lineage bump, and close with a 3-axis terminal re-audit
@@ -166,7 +166,7 @@ Plans:
 
 **Wave 8** *(blocked on Wave 7 completion)*
 
-- [ ] 116-08-PLAN.md — L2 Linux + apple-business + macOS SSO + 802.1X (RE-066..RE-075): tailored RE-068/069/071; full-corpus C17 gate on all 75
+- [x] 116-08-PLAN.md — L2 Linux + apple-business + macOS SSO + 802.1X (RE-066..RE-075): tailored RE-068/069/071; full-corpus C17 gate on all 75
 
 **Cross-cutting constraints:**
 
@@ -245,7 +245,7 @@ Plans:
 | 113. Conversion Pipeline Lock + Grounding Validation | 4/4 | Complete   | 2026-07-04 |
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
-| 116. L1/L2 Runbook Retrofit | 7/8 | In Progress|  |
+| 116. L1/L2 Runbook Retrofit | 8/8 | Complete   | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
