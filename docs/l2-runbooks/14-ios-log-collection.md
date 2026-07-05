@@ -18,7 +18,9 @@ platform: iOS
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers iOS/iPadOS diagnostic log collection across three fragmented methods — MDM diagnostic report, Company Portal upload, and Mac+cable sysdiagnose — with a decision matrix to select the appropriate method by investigation type.
 
-> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune.
+
+> For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Context
 
@@ -28,7 +30,11 @@ iOS L2 diagnostic data is split across three methods. Unlike macOS (where `Intun
 
 ## Tool Landscape
 
-> **Tool landscape:** There is **no iOS equivalent to `mdmdiagnosticstool.exe`**. iOS diagnostic data is fragmented across three methods — MDM diagnostic report, Company Portal upload, and Mac+cable sysdiagnose. Each yields different data types; the decision matrix below guides method selection.
+> **Tool landscape:** There is **no iOS equivalent to `mdmdiagnosticstool.exe`**.
+
+> iOS diagnostic data is fragmented across three methods — MDM diagnostic report, Company Portal upload, and Mac+cable sysdiagnose.
+
+> Each yields different data types; the decision matrix below guides method selection.
 
 ## Decision Matrix
 
@@ -65,7 +71,9 @@ The authoritative view of the device's management state is on the device itself.
 
 ### 1b. MAM App Protection Diagnostics (Intune admin center; MAM scope only)
 
-> **Scope note:** The Intune "Collect diagnostics" remote action for iOS/iPadOS is scoped to App Protection (MAM) logs ONLY — it does NOT produce a general MDM enrollment/config bundle. Supported apps: Outlook, Teams, OneDrive, Edge, Word, Excel, PowerPoint, OneNote, Microsoft 365.
+> **Scope note:** The Intune "Collect diagnostics" remote action for iOS/iPadOS is scoped to App Protection (MAM) logs ONLY — it does NOT produce a general MDM enrollment/config bundle.
+
+> Supported apps: Outlook, Teams, OneDrive, Edge, Word, Excel, PowerPoint, OneNote, Microsoft 365.
 
 **Breadcrumb (Intune admin center):**
 1. `https://intune.microsoft.com` → **Troubleshooting + support** > **Troubleshoot**.
@@ -109,7 +117,11 @@ Enable verbose logging BEFORE reproducing the failure for extra detail. Path: **
 
 ### L2 Retrieval (ticket-based)
 
-> **Data egress:** The iOS Company Portal log upload leaves tenant control. Logs are routed to Microsoft support infrastructure and are NOT directly downloadable from the Intune admin center. An L2 engineer with an incident ID MUST open a Microsoft Intune Support ticket and provide the incident ID — Microsoft support retrieves and returns the logs (or analysis) on the L2's behalf. Typical roundtrip: 1-3 business days. This is the signal to escalate to Tier 3 (Mac+cable sysdiagnose) when time is critical.
+> **Data egress:** The iOS Company Portal log upload leaves tenant control. Logs are routed to Microsoft support infrastructure and are NOT directly downloadable from the Intune admin center.
+
+> An L2 engineer with an incident ID MUST open a Microsoft Intune Support ticket and provide the incident ID — Microsoft support retrieves and returns the logs (or analysis) on the L2's behalf.
+
+> Typical roundtrip: 1-3 business days. This is the signal to escalate to Tier 3 (Mac+cable sysdiagnose) when time is critical.
 
 ## Section 3: Sysdiagnose Trigger and File Export
 
@@ -143,7 +155,11 @@ Apple's canonical platform-support guide documents sysdiagnose as an on-device A
    - **iCloud Drive / Files.app** — works for any size; L2 retrieves from shared iCloud folder or tenant-approved cloud storage.
    - **Any other share-extension** — OneDrive, Dropbox, Google Drive, etc. (subject to data-handling policy; see PII warning below).
 
-> **Supervised-device compatibility:** AssistiveTouch-based trigger works on supervised devices. Unlike the legacy volume + Side-button combo, it does NOT conflict with the Side Button restriction profile (`Allow Side Button = false`). This is the recommended trigger for managed-fleet troubleshooting.
+> **Supervised-device compatibility:** AssistiveTouch-based trigger works on supervised devices.
+
+> Unlike the legacy volume + Side-button combo, it does NOT conflict with the Side Button restriction profile (`Allow Side Button = false`).
+
+> This is the recommended trigger for managed-fleet troubleshooting.
 
 ### Alternative: Mac+Cable Console.app Live Streaming
 
@@ -165,7 +181,11 @@ Use this in addition to (NOT instead of) the on-device sysdiagnose when you need
 
 **Filesystem-level retrieval (fallback — large bundles or no share-extension path):** Install Apple Configurator 2 on the Mac, connect the device via cable, then browse the device filesystem under **Files** to extract the sysdiagnose bundle directly. Requires Apple ID sign-in on the Mac.
 
-> **PII warning:** Sysdiagnose bundles contain private data — device identifiers, installed app inventory, network history, location hints, user account identifiers. Before attaching to a Microsoft Support ticket OR uploading to any cloud destination, L2 MUST follow the organization's data-handling policy: redact or segregate PII per tenant policy. Sysdiagnose is NOT safe to upload to public issue trackers.
+> **PII warning:** Sysdiagnose bundles contain private data — device identifiers, installed app inventory, network history, location hints, user account identifiers.
+
+> Before attaching to a Microsoft Support ticket OR uploading to any cloud destination, L2 MUST follow the organization's data-handling policy: redact or segregate PII per tenant policy.
+
+> Sysdiagnose is NOT safe to upload to public issue trackers.
 
 ## Common Artifacts Cross-Reference
 

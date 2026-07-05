@@ -18,7 +18,9 @@ platform: Android
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise compliance evaluation failures — Play Integrity API attestation, setting-level drift, and conditional access propagation delay — using Intune compliance reports and a Play Integrity tier table to identify root cause.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Triage
 
@@ -73,7 +75,11 @@ Axis 🐛 — cross-cutting axis for non-configurable failures.
 
 ### Cause A: Play Integrity Verdict Failure {#cause-a-play-integrity-verdict-failure}
 
-> See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android compliance uses. The legacy attestation API was deprecated by Google in January 2025; Play Integrity is the current replacement. All Phase 34 and later Android documentation uses Play Integrity terminology exclusively.
+> See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android compliance uses.
+
+> The legacy attestation API was deprecated by Google in January 2025; Play Integrity is the current replacement.
+
+> All Phase 34 and later Android documentation uses Play Integrity terminology exclusively.
 
 **Typical class:** ⚙️ Config Error (policy-tier minimum mismatch) + 🐛 Defect (verdict anomaly on otherwise-compliant device)
 

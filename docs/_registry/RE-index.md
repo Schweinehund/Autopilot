@@ -65,20 +65,20 @@
 | RE-049 | docs/l2-runbooks/06-apv2-log-collection.md | APv2 Log Collection Guide | Runbook | Approved |
 | RE-050 | docs/l2-runbooks/07-apv2-event-ids.md | APv2 BootstrapperAgent Event ID Reference | Runbook | Approved |
 | RE-051 | docs/l2-runbooks/08-apv2-deployment-report.md | APv2 Deployment Report Interpretation | Runbook | Approved |
-| RE-052 | docs/l2-runbooks/10-macos-log-collection.md | macOS L2 Log Collection Guide | Runbook | Pending |
-| RE-053 | docs/l2-runbooks/11-macos-profile-delivery.md | macOS Profile Delivery Investigation | Runbook | Pending |
-| RE-054 | docs/l2-runbooks/12-macos-app-install.md | macOS App Install Failure Diagnosis | Runbook | Pending |
-| RE-055 | docs/l2-runbooks/13-macos-compliance.md | macOS Compliance Evaluation Investigation | Runbook | Pending |
-| RE-056 | docs/l2-runbooks/14-ios-log-collection.md | iOS Log Collection Guide | Runbook | Pending |
-| RE-057 | docs/l2-runbooks/15-ios-ade-token-profile.md | ADE Token & Profile Delivery Investigation | Runbook | Pending |
-| RE-058 | docs/l2-runbooks/16-ios-app-install.md | iOS App Install Failure Diagnosis | Runbook | Pending |
-| RE-059 | docs/l2-runbooks/17-ios-compliance-ca-timing.md | iOS Compliance & CA Timing Investigation | Runbook | Pending |
-| RE-060 | docs/l2-runbooks/18-android-log-collection.md | Android Log Collection Guide | Runbook | Pending |
-| RE-061 | docs/l2-runbooks/19-android-enrollment-investigation.md | Android Enrollment Investigation | Runbook | Pending |
-| RE-062 | docs/l2-runbooks/20-android-app-install-investigation.md | Android App Install Investigation | Runbook | Pending |
-| RE-063 | docs/l2-runbooks/21-android-compliance-investigation.md | Android Compliance Investigation | Runbook | Pending |
-| RE-064 | docs/l2-runbooks/22-android-knox-investigation.md | Android Knox Mobile Enrollment Investigation | Runbook | Pending |
-| RE-065 | docs/l2-runbooks/23-android-aosp-investigation.md | Android AOSP Enrollment Investigation | Runbook | Pending |
+| RE-052 | docs/l2-runbooks/10-macos-log-collection.md | macOS L2 Log Collection Guide | Runbook | Approved |
+| RE-053 | docs/l2-runbooks/11-macos-profile-delivery.md | macOS Profile Delivery Investigation | Runbook | Approved |
+| RE-054 | docs/l2-runbooks/12-macos-app-install.md | macOS App Install Failure Diagnosis | Runbook | Approved |
+| RE-055 | docs/l2-runbooks/13-macos-compliance.md | macOS Compliance Evaluation Investigation | Runbook | Approved |
+| RE-056 | docs/l2-runbooks/14-ios-log-collection.md | iOS Log Collection Guide | Runbook | Approved |
+| RE-057 | docs/l2-runbooks/15-ios-ade-token-profile.md | ADE Token & Profile Delivery Investigation | Runbook | Approved |
+| RE-058 | docs/l2-runbooks/16-ios-app-install.md | iOS App Install Failure Diagnosis | Runbook | Approved |
+| RE-059 | docs/l2-runbooks/17-ios-compliance-ca-timing.md | iOS Compliance & CA Timing Investigation | Runbook | Approved |
+| RE-060 | docs/l2-runbooks/18-android-log-collection.md | Android Log Collection Guide | Runbook | Approved |
+| RE-061 | docs/l2-runbooks/19-android-enrollment-investigation.md | Android Enrollment Investigation | Runbook | Approved |
+| RE-062 | docs/l2-runbooks/20-android-app-install-investigation.md | Android App Install Investigation | Runbook | Approved |
+| RE-063 | docs/l2-runbooks/21-android-compliance-investigation.md | Android Compliance Investigation | Runbook | Approved |
+| RE-064 | docs/l2-runbooks/22-android-knox-investigation.md | Android Knox Mobile Enrollment Investigation | Runbook | Approved |
+| RE-065 | docs/l2-runbooks/23-android-aosp-investigation.md | Android AOSP Enrollment Investigation | Runbook | Approved |
 | RE-066 | docs/l2-runbooks/24-linux-log-collection.md | Linux Log Collection Guide | Runbook | Pending |
 | RE-067 | docs/l2-runbooks/25-linux-agent-investigation.md | Linux Agent Investigation | Runbook | Pending |
 | RE-068 | docs/l2-runbooks/26-apple-business-permission-denied.md | Apple Business Permission Denied Investigation | Runbook | Pending |

@@ -18,7 +18,9 @@ platform: Android
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise app install failures for managed Google Play, LOB APK, and MAM-WE delivery channels using Intune install-status reports and Play console reads to isolate policy, assignment, and licensing gaps.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Context
 
@@ -36,7 +38,9 @@ Before starting: collect a diagnostic package per [Android Log Collection Guide]
 
 Starting fresh? Begin at Investigation — Data Collection.
 
-> **MAM-WE scope:** MAM-WE app protection policy failures (selective wipe not applying, PIN loop, conditional launch blocks) are out of Phase 41 scope — see [Android MAM-WE Investigation Advisory](00-index.md#android-mam-we-investigation-advisory) for deferred ADDTS-ANDROID-01 milestone routing.
+> **MAM-WE scope:** MAM-WE app protection policy failures (selective wipe not applying, PIN loop, conditional launch blocks) are out of Phase 41 scope
+
+> — see [Android MAM-WE Investigation Advisory](00-index.md#android-mam-we-investigation-advisory) for deferred ADDTS-ANDROID-01 milestone routing.
 
 ---
 
@@ -159,7 +163,9 @@ Common intersection failures (these are NOT app install failures — the app IS 
 - **Conditional launch rule mismatched** — app installs and launches, then exits. Check conditional launch settings (minimum OS version, minimum app version, jailbreak/root check, required PIN) against device state.
 - **Work profile container integrity** — on BYOD Work Profile, MAM policies apply within the work profile; a policy requiring device PIN on the personal side may conflict if device is not enrolled for device compliance.
 
-> **Note:** True MAM-WE (MAM without enrollment) app protection failures — selective wipe, PIN loop, protection not applying at all — are out of Phase 41 scope. See [Android MAM-WE Investigation Advisory](00-index.md#android-mam-we-investigation-advisory).
+> **Note:** True MAM-WE (MAM without enrollment) app protection failures — selective wipe, PIN loop, protection not applying at all — are out of Phase 41 scope.
+
+> See [Android MAM-WE Investigation Advisory](00-index.md#android-mam-we-investigation-advisory).
 
 ---
 

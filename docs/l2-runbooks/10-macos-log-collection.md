@@ -148,7 +148,9 @@ Use this table to locate the correct log paths for the device's operating system
 | Unified log: `com.apple.ManagedClient` | Yes | Yes | Yes | MDM command processing and profile installation events |
 | Unified log: `cloudconfigurationd` | Yes | Yes | Yes | ADE and Setup Assistant enrollment events |
 
-> **Important:** On macOS 15 (Sequoia), the `IntuneMDMAgent*.log` file may be absent. Use `log show --predicate 'subsystem == "com.apple.ManagedClient"'` as the primary investigation source for agent-level events on macOS 15 devices.
+> **Important:** On macOS 15 (Sequoia), the `IntuneMDMAgent*.log` file may be absent.
+
+> Use `log show --predicate 'subsystem == "com.apple.ManagedClient"'` as the primary investigation source for agent-level events on macOS 15 devices.
 
 For the complete log path reference with configuration profile filesystem locations and log format notes, see [macOS Log Paths Reference](../reference/macos-log-paths.md).
 

@@ -18,7 +18,9 @@ platform: iOS
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers iOS ADE token validity and enrollment profile delivery investigation using Intune admin center, Apple Business/School Manager read-only portals, and Graph API GET queries to isolate token sync and profile assignment failures.
 
-> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune.
+
+> For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Triage
 
@@ -34,7 +36,9 @@ This is the primary L2 target for iOS L1 runbooks that terminate in ADE-path fai
 
 Before starting: collect a diagnostic package per [iOS Log Collection Guide](14-ios-log-collection.md).
 
-> **Graph API scope:** Where this runbook uses the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. For deep token GUID extraction, write operations, or advanced enumeration, see **ADDTS-02** (future milestone — `L2 runbook for ADE token delivery deep-dive`).
+> **Graph API scope:** Where this runbook uses the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration.
+
+> For deep token GUID extraction, write operations, or advanced enumeration, see **ADDTS-02** (future milestone — `L2 runbook for ADE token delivery deep-dive`).
 
 ## Prerequisites
 
@@ -43,7 +47,11 @@ Before starting: collect a diagnostic package per [iOS Log Collection Guide](14-
 - **Microsoft Entra** read access — verifying user license + group assignment when ADE is license-gated. Minimum: *Directory Readers*.
 - **(Optional) Microsoft Graph API** scope `DeviceManagementServiceConfig.Read.All` (read-only) — for Pattern A sync-state numeric error code extraction (Step 1 Supplement). Acquire via an app registration with delegated permissions or via Graph Explorer.
 
-> **Access-control note:** The Graph `DeviceManagementServiceConfig.Read.All` scope grants **tenant-wide read** across all DEP tokens. Prefer delegated (user-context) over application (service-principal) credentials for L2 ad-hoc investigation — principle of least privilege. If L2 lacks all three portals, hand off to a colleague with combined read access rather than requesting elevated write scope.
+> **Access-control note:** The Graph `DeviceManagementServiceConfig.Read.All` scope grants **tenant-wide read** across all DEP tokens.
+
+> Prefer delegated (user-context) over application (service-principal) credentials for L2 ad-hoc investigation — principle of least privilege.
+
+> If L2 lacks all three portals, hand off to a colleague with combined read access rather than requesting elevated write scope.
 
 ## Investigation — Data Collection
 
@@ -159,7 +167,9 @@ Collect per the [iOS Log Collection Guide](14-ios-log-collection.md):
 
 ### Pattern D Resolution
 
-> **Destructive action:** Pattern D resolution requires a device wipe. Confirm with the device owner AND organizational policy before proceeding. User data on the device will be unrecoverable after the wipe unless backed up beforehand.
+> **Destructive action:** Pattern D resolution requires a device wipe. Confirm with the device owner AND organizational policy before proceeding.
+
+> User data on the device will be unrecoverable after the wipe unless backed up beforehand.
 
 1. Confirm tenant migration history with the admin team: was the ABM token recently re-generated, re-assigned to a new MDM server, or moved between Intune tenants?
 2. **Wipe the device** — in the *old* tenant if it is still accessible and can execute an MDM wipe; otherwise perform a physical factory reset on-device (Settings > General > Transfer or Reset iPhone > Erase All Content and Settings).

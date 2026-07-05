@@ -18,7 +18,9 @@ platform: iOS
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers iOS app install failures across MAM-WE, VPP managed, and required-assignment channels using Intune app-status reports and a supervision boundary matrix to isolate root cause by delivery type and device management mode.
 
-> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune.
+
+> For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Triage
 
@@ -38,7 +40,9 @@ Because the delivery channel is uniform, the **app licensing model** and the **d
 | Supervision | Supervised / Unsupervised | Whether silent install is possible (D-34: supervised only) |
 | Assignment | Required / Available / Available for enrolled devices | Whether install is auto vs user-initiated |
 
-> **MAM-WE scope:** MAM-WE app protection policy failures (selective wipe failures, PIN loop, app protection not applying) are **out of Phase 31 scope** — see [MAM-WE Investigation Advisory](00-index.md#mam-we-investigation-advisory) for deferred ADDTS-01 milestone routing.
+> **MAM-WE scope:** MAM-WE app protection policy failures (selective wipe failures, PIN loop, app protection not applying) are **out of Phase 31 scope**
+
+> — see [MAM-WE Investigation Advisory](00-index.md#mam-we-investigation-advisory) for deferred ADDTS-01 milestone routing.
 
 Before starting: collect a diagnostic package per [iOS Log Collection Guide](14-ios-log-collection.md).
 
@@ -120,7 +124,11 @@ The tables below enumerate the observed failure patterns per licensing model. Ea
 | Unsupervised device, silent-install expectation | [CONFIG] | Unsupervised device; IPA requires user prompt | Change assignment OR supervise the device via ADE |
 | IPA signed with dev provisioning profile (not distribution) | [CONFIG] | Install succeeds but app crashes at launch; sysdiagnose shows provisioning-profile mismatch | Re-sign with distribution provisioning profile |
 
-> **Supervision boundary (D-34 research verified 2026-04-17):** Silent install requires supervision on iOS 17+. Declarative Device Management (DDM, iOS 17.2+) changed HOW apps install (autonomous execution + activation predicates) but did NOT change the supervision-vs-prompt boundary. DDM can also "take over" management of a user-installed unmanaged app — silent on supervised, user-accept on unsupervised (a new [CONFIG] failure mode).
+> **Supervision boundary (D-34 research verified 2026-04-17):** Silent install requires supervision on iOS 17+.
+
+> Declarative Device Management (DDM, iOS 17.2+) changed HOW apps install (autonomous execution + activation predicates) but did NOT change the supervision-vs-prompt boundary.
+
+> DDM can also "take over" management of a user-installed unmanaged app — silent on supervised, user-accept on unsupervised (a new [CONFIG] failure mode).
 
 ### Genuine Defects (Declared [DEFECT])
 

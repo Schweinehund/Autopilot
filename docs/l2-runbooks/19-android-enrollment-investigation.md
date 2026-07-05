@@ -18,7 +18,9 @@ platform: Android
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise enrollment failures across five enrollment patterns — work profile BYOD, COPE, COBO, COSU, and ZTE — using a pattern-first decision matrix and per-pattern cause-and-resolution tables.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Context
 
@@ -33,7 +35,9 @@ Before starting: collect a diagnostic package per the [Android Log Collection Gu
 - L1 27 → Pattern C (ZTE Device Claim Failure)
 - No L1 escalation: begin at Data Collection Step 1
 
-> **Graph API scope:** Where this runbook references the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. No DPC extras JSON mutation. For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone — Android Graph API deep-dive).
+> **Graph API scope:** Where this runbook references the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. No DPC extras JSON mutation.
+
+> For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone — Android Graph API deep-dive).
 
 ## Investigation — Data Collection (mode-agnostic)
 

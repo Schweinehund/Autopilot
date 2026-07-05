@@ -18,7 +18,9 @@ platform: Android
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Samsung KME (Knox Mobile Enrollment) investigation for Android Enterprise deployments using Samsung Knox Portal read queries and Intune enrollment logs to isolate KME profile delivery, device-state sync, and enrollment failures.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Context
 
@@ -35,7 +37,9 @@ Before starting: collect a diagnostic package per the [Android Log Collection Gu
 - L1 28 Cause E (DPC JSON malformed / Knox license / Knox tripped) → [Pattern D](#pattern-d-knox-license-edge) (Knox license edge cases) OR [Pattern E](#pattern-e-dpc-json-malformation) (DPC custom JSON malformation)
 - No L1 escalation: begin at Investigation Data Collection Step 1
 
-> **Graph API scope:** Where this runbook references the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. No DPC extras JSON mutation. For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone — Android Graph API deep-dive).
+> **Graph API scope:** Where this runbook references the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. No DPC extras JSON mutation.
+
+> For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone — Android Graph API deep-dive).
 
 ## Investigation — Data Collection (mode-agnostic)
 

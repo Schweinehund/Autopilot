@@ -18,7 +18,9 @@ platform: iOS
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers iOS conditional access block and compliance evaluation timing failures — policy sync lag, CA token refresh, and grace-period window gaps — using Intune compliance reports and Entra ID sign-in logs.
 
-> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
+> **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune.
+
+> For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 ## Triage
 

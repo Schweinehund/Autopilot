@@ -18,7 +18,9 @@ platform: Android
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise log collection across four methods — Company Portal upload, Microsoft Intune diagnostic report, MAMCE export, and adb logcat — using a mode-first enrollment decision matrix to select the appropriate collection path.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Context
 
@@ -30,7 +32,11 @@ Android L2 diagnostic data is split across three methods. Unlike macOS (where `I
 
 ## Tool Landscape
 
-> **Tool landscape:** There is **no single Intune admin center per-device Download Diagnostics bundle for Android** (contrast with Phase 31 iOS MDM diagnostic report and Phase 24 macOS IntuneMacODC). Android diagnostic data is fragmented across three methods — Company Portal logs, Microsoft Intune app logs, and adb logcat — each yielding different data scope on different trust boundaries. The decision matrix below selects the method by enrollment mode first, data-scope need second.
+> **Tool landscape:** There is **no single Intune admin center per-device Download Diagnostics bundle for Android** (contrast with Phase 31 iOS MDM diagnostic report and Phase 24 macOS IntuneMacODC).
+
+> Android diagnostic data is fragmented across three methods — Company Portal logs, Microsoft Intune app logs, and adb logcat — each yielding different data scope on different trust boundaries.
+
+> The decision matrix below selects the method by enrollment mode first, data-scope need second.
 
 ## Decision Matrix
 
@@ -71,11 +77,17 @@ The end user triggers log collection from the device. There is no admin-side per
 4. **Save the incident ID.** This is the unique reference L2 and Microsoft Support use to locate the uploaded bundle. Without it, the upload cannot be matched to this device.
 5. Optionally tap **Email logs** to compose a support message containing the incident ID in the body.
 
-> **Verbose logging preflight:** Before reproducing a failure, enable verbose logging if the option is available: **Company Portal > Settings > Logging level > Verbose**. Reproducing the failure with verbose logging active captures more diagnostic context.
+> **Verbose logging preflight:** Before reproducing a failure, enable verbose logging if the option is available: **Company Portal > Settings > Logging level > Verbose**.
+
+> Reproducing the failure with verbose logging active captures more diagnostic context.
 
 ### L2 Retrieval (Ticket-Based)
 
-> **Data egress:** Android Company Portal log uploads are routed to Microsoft support infrastructure and are NOT directly downloadable from the Intune admin center. An L2 engineer with the incident ID MUST open a Microsoft Intune Support ticket and provide the incident ID — Microsoft Support retrieves and returns the logs (or analysis) on the L2's behalf. Typical roundtrip: hours to 1-2 business days. This is the signal to use Section 2 (self-service path) or Section 3 (direct USB path) when time is critical.
+> **Data egress:** Android Company Portal log uploads are routed to Microsoft support infrastructure and are NOT directly downloadable from the Intune admin center.
+
+> An L2 engineer with the incident ID MUST open a Microsoft Intune Support ticket and provide the incident ID — Microsoft Support retrieves and returns the logs (or analysis) on the L2's behalf.
+
+> Typical roundtrip: hours to 1-2 business days. This is the signal to use Section 2 (self-service path) or Section 3 (direct USB path) when time is critical.
 
 ### What the Logs Contain
 
@@ -106,7 +118,11 @@ The end user triggers log collection from the device via the Microsoft Intune ap
 4. **Save the incident ID** — required for Microsoft Support ticket retrieval.
 5. If self-service retrieval is available on this build, the app presents a download or share option for the bundle directly.
 
-> **AMAPI April 2025 callout:** Per Phase 37 AMAPI migration, Microsoft Intune for Android replaced Company Portal as the BYOD management app. Custom OMA-URI policies were removed. Post-AMAPI tenants should treat Microsoft Intune app logs as the BYOD primary collection method. For device-owner-mode devices (COBO/Dedicated/ZTE), the Microsoft Intune app is the primary DPC agent and the primary log source whether or not Company Portal is installed.
+> **AMAPI April 2025 callout:** Per Phase 37 AMAPI migration, Microsoft Intune for Android replaced Company Portal as the BYOD management app. Custom OMA-URI policies were removed.
+
+> Post-AMAPI tenants should treat Microsoft Intune app logs as the BYOD primary collection method.
+
+> For device-owner-mode devices (COBO/Dedicated/ZTE), the Microsoft Intune app is the primary DPC agent and the primary log source whether or not Company Portal is installed.
 
 ### L2 Retrieval Variance
 
@@ -131,9 +147,13 @@ Cross-reference: [Fully Managed COBO Admin Setup](../admin-setup-android/03-full
 
 Use adb logcat when Company Portal logs (Section 1) and Microsoft Intune app logs (Section 2) are insufficient or when immediate on-device log access is needed without a Microsoft Support ticket roundtrip. This is the USB-privileged last-resort tier.
 
-> **Device-owner-mode constraint:** On fully-managed (COBO), dedicated (COSU), and ZTE-enrolled devices, Android Enterprise device owner policy may disable USB debugging per [Phase 38 AEDED Android Enterprise device restrictions](../admin-setup-android/05-dedicated-devices.md) and equivalent Phase 36 COBO policy. If USB debugging is unavailable, adb logcat tier is unreachable — escalate to Microsoft Support for remote log retrieval via Company Portal or Microsoft Intune app upload path. [MEDIUM, last_verified 2026-04-23]
+**Device-owner-mode constraint:** On fully-managed (COBO), dedicated (COSU), and ZTE-enrolled devices, Android Enterprise device owner policy may disable USB debugging per [Phase 38 AEDED Android Enterprise device restrictions](../admin-setup-android/05-dedicated-devices.md) and equivalent Phase 36 COBO policy. If USB debugging is unavailable, adb logcat tier is unreachable — escalate to Microsoft Support for remote log retrieval via Company Portal or Microsoft Intune app upload path. [MEDIUM, last_verified 2026-04-23]
 
-> **Source confidence:** Commands in this section are sourced from Android Developer documentation and community troubleshooting guides; Microsoft Learn does not comprehensively document adb for Intune-managed Android. Section-level default confidence is **MEDIUM** unless overridden per-command. Verify command availability against current Android Developer docs at `review_by` cadence.
+> **Source confidence:** Commands in this section are sourced from Android Developer documentation and community troubleshooting guides;
+
+> Microsoft Learn does not comprehensively document adb for Intune-managed Android. Section-level default confidence is **MEDIUM** unless overridden per-command.
+
+> Verify command availability against current Android Developer docs at `review_by` cadence.
 
 L2 engineers should validate adb command output against current Android Developer documentation for the target device's Android version before relying on any output for Microsoft Support escalation packets.
 
@@ -187,7 +207,7 @@ adb shell pm list packages | grep com.google.android.apps.work
 
 Use `-f` to include APK paths (useful for confirming work-profile container boundary — personal profile apps vs work profile apps appear at different `/data/user/0/` vs `/data/user/10/` paths on GMS devices).
 
-> **Not in Phase 41 scope:** `adb bugreport` (PII-laden; requires Microsoft Support coordination outside L2 scope), `adb shell am broadcast` / `adb shell pm grant-permissions` (state-mutating; violates diagnostic/remediation boundary per Phase 24 macOS D-10 precedent), `adb shell getprop ro.build.*` (wildcard glob portability; deferred).
+**Not in Phase 41 scope:** `adb bugreport` (PII-laden; requires Microsoft Support coordination outside L2 scope), `adb shell am broadcast` / `adb shell pm grant-permissions` (state-mutating; violates diagnostic/remediation boundary per Phase 24 macOS D-10 precedent), `adb shell getprop ro.build.*` (wildcard glob portability; deferred).
 
 ## Common Artifacts Cross-Reference
 

@@ -18,7 +18,9 @@ platform: Android
 
 This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers AOSP (Android Open Source Project) device investigation for GMS-absent OEM hardware — RealWear, Zebra, Pico, HTC VIVE Focus, and Meta Quest — using Intune admin center reports and OEM-specific diagnostic tools to isolate enrollment, app install, and compliance failures.
 
-> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
+> **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
+
+> For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
 ## Context
 
@@ -37,7 +39,9 @@ Before starting: collect a diagnostic package per the [Android Log Collection Gu
 - L1 29 Cause E (Meta Quest) → [Pattern E](#pattern-e-meta-quest)
 - No L1 escalation: begin at Investigation Data Collection Step 1
 
-> **Graph API scope:** Where this runbook references the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. No DPC extras JSON mutation. For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone — Android Graph API deep-dive).
+> **Graph API scope:** Where this runbook references the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration. No DPC extras JSON mutation.
+
+> For deep Android Enterprise Graph operations, see ADDTS-ANDROID-02 (future milestone — Android Graph API deep-dive).
 
 ## Investigation — Data Collection (mode-agnostic)
 
@@ -261,7 +265,13 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 **Symptom:** Meta Quest headset is enrolled in Intune but not in Meta for Work fleet, OR vice versa, OR the admin is confused about HMS subscription status post-2026-02-20 transition. Meta Quest 2 / 3 / 3s / Pro is supported under AOSP because no GMS is present on the Meta Quest OS; if a future Quest firmware ships with GMS, switch to fully managed (COBO) instead.
 
-> **Important framing on HMS (D-23 PITFALL-7 carry-forward + D-17 explicit cross-link):** As of 2026-02-20, Meta no longer **sells** commercial Quest SKUs and HMS is **free** (not shut down). HMS infrastructure remains operational in maintenance mode through 2030-01-04. Existing HMS subscribers continue uninterrupted; net-new fleets may use Intune-direct AOSP enrollment instead of HMS. If the admin says "HMS is shut down" or "wound down," correct the framing — HMS is alive in transformed (free-tier) form. See [13-aosp-meta-quest.md#meta-horizon-subscription-status](../admin-setup-android/13-aosp-meta-quest.md#meta-horizon-subscription-status) for the full subscription-status reference.
+> **Important framing on HMS (D-23 PITFALL-7 carry-forward + D-17 explicit cross-link):** As of 2026-02-20, Meta no longer **sells** commercial Quest SKUs and HMS is **free** (not shut down).
+
+> HMS infrastructure remains operational in maintenance mode through 2030-01-04. Existing HMS subscribers continue uninterrupted; net-new fleets may use Intune-direct AOSP enrollment instead of HMS.
+
+> If the admin says "HMS is shut down" or "wound down," correct the framing — HMS is alive in transformed (free-tier) form.
+
+> See [13-aosp-meta-quest.md#meta-horizon-subscription-status](../admin-setup-android/13-aosp-meta-quest.md#meta-horizon-subscription-status) for the full subscription-status reference.
 
 **Known Indicators:**
 
