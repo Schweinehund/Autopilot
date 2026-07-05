@@ -16,9 +16,11 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of 802.1X certificate-related failures across all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux), covering Trusted Certificate and SCEP/PKCS client certificate profile deployment status and per-platform diagnostic signal collection for escalation.
 
 > **Platform gate:** This guide covers 802.1X certificate-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (removing profiles, re-issuing certificates, modifying SCEP/PKCS configuration) appear ONLY in L2 runbooks — they are not L1 actions.
 
 ## Symptom
 

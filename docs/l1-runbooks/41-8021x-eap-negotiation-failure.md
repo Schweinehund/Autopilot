@@ -16,9 +16,11 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of 802.1X EAP negotiation failures where the supplicant and RADIUS server cannot agree on an EAP method or inner-auth configuration, across all five platforms, including the iOS/iPadOS PEAP inner-auth mismatch pattern.
 
 > **Platform gate:** This guide covers 802.1X EAP-negotiation-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (modifying the EAP type or inner-auth method in an Intune profile, requesting RADIUS policy changes from the networking team) appear ONLY in L2 runbooks — they are not L1 actions.
 
 ## Symptom
 

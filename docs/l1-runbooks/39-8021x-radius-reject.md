@@ -16,9 +16,11 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of 802.1X failures where all certificate profiles show Succeeded in Intune but the RADIUS server returns a clean Access-Reject, across all five platforms, with per-platform diagnostic signal collection for L2 escalation.
 
 > **Platform gate:** This guide covers 802.1X RADIUS-reject triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (modifying RADIUS policy, re-configuring the Intune Wi-Fi/Wired profile, reprovisioning certificates) appear ONLY in L2 runbooks — they are not L1 actions.
 
 ## Symptom
 

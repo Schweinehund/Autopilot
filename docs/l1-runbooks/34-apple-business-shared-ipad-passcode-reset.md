@@ -16,7 +16,7 @@ platform: ios+macos+shared-ipad
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook's L1 triage is read-only, but it documents state-changing passcode-reset paths (MDM ClearPasscode and EraseDevice) that are L2/admin actions — run only the read-only triage at L1 and escalate the reset commands per the guardrails below. It covers the Apple Business portal path (Path A — L1-executable) for routine Shared iPad partition passcode resets, with escalation pointers to MDM ClearPasscode (Path B) and MDM EraseDevice (Path C), both of which are L2-only actions.
 
 > **Platform gate:** This guide covers Apple Business Shared iPad passcode reset (iOS + iPadOS + Shared iPad). For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 

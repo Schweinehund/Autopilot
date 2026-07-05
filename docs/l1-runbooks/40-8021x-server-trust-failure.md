@@ -16,9 +16,11 @@ platform: windows+macos+ios+android+linux
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of 802.1X server-trust failures — where the device supplicant cannot trust the RADIUS server certificate — across all five platforms, covering Trusted Certificate profile status and Certificate server names field validation for escalation.
 
 > **Platform gate:** This guide covers 802.1X server-trust and RADIUS-certificate-validation-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). For other 802.1X failure symptoms, return to the [802.1X Triage Decision Tree](../decision-trees/10-8021x-triage.md).
+
+> **L1 scope note:** L1 Triage Steps in this runbook are read-only checks. State-changing actions (deploying a Trusted Certificate profile, modifying the Certificate server names field in a Wi-Fi/Wired profile, reprovisioning the profile to device groups) appear ONLY in L2 runbooks — they are not L1 actions.
 
 ## Symptom
 
