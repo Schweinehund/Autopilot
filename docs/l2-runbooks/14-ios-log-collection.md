@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers iOS/iPadOS diagnostic log collection across three fragmented methods — MDM diagnostic report, Company Portal upload, and Mac+cable sysdiagnose — with a decision matrix to select the appropriate method by investigation type.
 
 > **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
@@ -190,6 +190,6 @@ Use this table to see which runbook consumes each artifact — it is both a coll
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-18 | Phase 32 gap closure (UAT Test 15): rewrote Section 3 from "Mac+Cable Sysdiagnose" to AssistiveTouch-based on-device trigger + file export per Apple Support canonical URL; Mac+cable Console.app demoted to alternative for live-streaming and large-bundle retrieval; section renamed (new anchor: #section-3-sysdiagnose-trigger-and-file-export) | -- |
 | 2026-04-17 | Initial version — iOS L2 log collection runbook | -- |

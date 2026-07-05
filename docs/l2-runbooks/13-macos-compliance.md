@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers macOS compliance gate investigation — SCEP certificate evaluation, conditional access signal propagation, and setting-level drill-down — to identify why a device is marked non-compliant and resolve the gap without state-changing commands.
 
 > **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
@@ -224,5 +224,5 @@ Open a Microsoft support case if:
 
 | Date | Change |
 |------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version — SIP, FileVault, firewall, OS version compliance checks; Conditional Access interaction; Company Portal log investigation; 6 resolution scenarios |

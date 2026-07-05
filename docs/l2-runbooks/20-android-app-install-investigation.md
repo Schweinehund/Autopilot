@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise app install failures for managed Google Play, LOB APK, and MAM-WE delivery channels using Intune install-status reports and Play console reads to isolate policy, assignment, and licensing gaps.
 
 > **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
@@ -194,5 +194,5 @@ Open a Microsoft Support case with the following data-collection package. Collec
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-23 | Initial version — Android L2 app install investigation runbook (Three-class disambiguation ⚙️/⏱️/🐛 across MGP / LOB / MAM intersection; MAM-WE exclusion cross-link to Android advisory; Microsoft Support escalation checklist) | -- |

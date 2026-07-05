@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers macOS ADE diagnostic log collection using IntuneMacODC, Terminal, and mdmdiagnosticstool.exe; provides the baseline diagnostic package required before any macOS L2 investigation (profile delivery, app install, or compliance).
 
 > **Platform gate:** This guide covers macOS ADE log collection via Intune. For Windows Autopilot, see [Windows Log Collection Guide](01-log-collection.md).
 
@@ -167,5 +167,5 @@ For the complete log path reference with configuration profile filesystem locati
 
 | Date | Change |
 |------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version — IntuneMacODC-first log collection with Terminal fallback, macOS version table, macOS 15 IntuneMDMAgent caveat |

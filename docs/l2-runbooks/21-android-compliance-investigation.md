@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise compliance evaluation failures — Play Integrity API attestation, setting-level drift, and conditional access propagation delay — using Intune compliance reports and a Play Integrity tier table to identify root cause.
 
 > **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
@@ -229,5 +229,5 @@ Escalate to Microsoft Support when:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-23 | Initial version — Android L2 compliance + CA timing investigation runbook (Phase 31 D-14 hybrid axis + 4-cause Per-Cause Deep-Dive matching L1 runbook 25 Cause A/B/C/D + Play Integrity 3-tier ladder + "Not evaluated" terminal state) | -- |

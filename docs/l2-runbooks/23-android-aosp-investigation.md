@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers AOSP (Android Open Source Project) device investigation for GMS-absent OEM hardware — RealWear, Zebra, Pico, HTC VIVE Focus, and Meta Quest — using Intune admin center reports and OEM-specific diagnostic tools to isolate enrollment, app install, and compliance failures.
 
 > **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
@@ -357,5 +357,5 @@ Escalate to Microsoft Support when:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-25 | Initial version (Phase 45 AEAOSPFULL-08) — 5 per-OEM Patterns A-E (1:1 routing from L1 runbook 29 Causes A-E) per D-18: Pattern A=RealWear / B=Zebra / C=Pico / D=HTC / E=Meta Quest. Per-Pattern Microsoft Support escalation packet 3-bullet shape (Token sync status / Profile assignment state / Enrollment profile GUID) per D-18 mirroring 22-android-knox-investigation.md:135-139 verbatim. Play Integrity 3-tier verdict reference (ZERO legacy-attestation-token references — Do-NOT-reference warning preserved per D-18 enforcement). Mode-agnostic Investigation Data Collection 4-step structure (Step 1 Intune registration state / Step 2 vendor portal device state with per-OEM variation / Step 3 AOSP enrollment profile + token sync state / Step 4 device-side enrollment state) mirroring 22:30-107. Graph API READ-ONLY scope blockquote per 22:28. L1→L2 Pattern routing block (1:1 OEM-scoped Cause→Pattern) per D-18. Per-Pattern cross-links to per-OEM admin guide `## Common Failures` H2 anchor + per-OEM add-on anchors per D-21 (Pattern A → `09-aosp-realwear.md#wi-fi-qr-embedding` + `#common-failures` + `#provisioning-steps`; Pattern B → `10-aosp-zebra.md#oemconfig-apk-push` + `#common-failures`; Pattern C → `11-aosp-pico.md#pico-business-suite-coexistence` + `#common-failures`; Pattern D → `12-aosp-htc-vive-focus.md#provisioning-steps` + `#common-failures`; Pattern E → `13-aosp-meta-quest.md#meta-for-work-portal-setup` + `#meta-horizon-subscription-status` + `#common-failures`). Pattern E explicitly cross-references `13-aosp-meta-quest.md#meta-horizon-subscription-status` for HMS-related failures per D-17 explicit. PITFALL-7 carry-forward per D-23 (each "supported under AOSP" assertion paired with "no GMS / use AE fully managed if GMS present" framing at point-of-claim across all 5 Pattern Resolution Steps and Pattern Symptom prose). | -- |

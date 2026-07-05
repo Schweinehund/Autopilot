@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers iOS app install failures across MAM-WE, VPP managed, and required-assignment channels using Intune app-status reports and a supervision boundary matrix to isolate root cause by delivery type and device management mode.
 
 > **Platform gate:** This guide covers iOS/iPadOS L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
@@ -183,5 +183,5 @@ Company Portal > Sync OR Intune Remote Sync from the portal. Wait 15–30 minute
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Initial version — iOS app install failure diagnosis with SC #4 three-class disambiguation ([CONFIG] / [TIMING] / [DEFECT]) covering VPP device, VPP user, LOB IPA, supervision boundary, and Microsoft Support escalation checklist | Phase 31 Wave 2 |

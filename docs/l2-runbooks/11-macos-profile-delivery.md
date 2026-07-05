@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers macOS ADE MDM profile delivery failures — stalled pushes, certificate renewal errors, and enrollment profile re-sync — using Intune admin center reads, Profiles pane inspection, and on-device MDM log review.
 
 > **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
@@ -198,5 +198,5 @@ Open a Microsoft support case if:
 
 | Date | Change |
 |------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-14 | Initial version — MDM enrollment verification, unified log query, profile conflict investigation, 5 resolution scenarios |

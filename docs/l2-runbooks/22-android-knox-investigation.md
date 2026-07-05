@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Samsung KME (Knox Mobile Enrollment) investigation for Android Enterprise deployments using Samsung Knox Portal read queries and Intune enrollment logs to isolate KME profile delivery, device-state sync, and enrollment failures.
 
 > **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
@@ -322,5 +322,5 @@ Escalate to Microsoft Support when:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-25 | Initial version — KME L2 investigation runbook (5-pattern A-E structure with D-09 Microsoft Support escalation packets; Play Integrity 3-tier verdict reference; Pattern B Strong-integrity attribution). | -- |

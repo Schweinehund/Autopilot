@@ -16,7 +16,7 @@ platform: Android
 
 ## Summary
 
-[FILL-IN: >=30 words, opens with the tier scope/safety banner]
+This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval. Covers Android Enterprise enrollment failures across five enrollment patterns — work profile BYOD, COPE, COBO, COSU, and ZTE — using a pattern-first decision matrix and per-pattern cause-and-resolution tables.
 
 > **Platform gate:** This guide covers Android Enterprise L2 investigation via Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks). For iOS/iPadOS, see [iOS L2 Runbooks](00-index.md#ios-l2-runbooks).
 
@@ -310,5 +310,5 @@ Escalate to Microsoft Support when:
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-04 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-23 | Initial version — Android L2 enrollment investigation runbook (5-pattern structure covering BYOD / COBO / ZTE / Dedicated / tenant-config-universal) | -- |
