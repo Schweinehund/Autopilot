@@ -19,6 +19,7 @@ audience: admin
 This guide covers Pre-Provisioning mode configuration for Windows Autopilot (APv1), which applies to Windows devices and requires the Intune Administrator role to configure the deployment profile plus a technician to perform the staging-facility flow. Pre-provisioning is a two-phase deployment with the strictest hardware requirements of the three modes -- physical device, TPM 2.0 with attestation, and wired ethernet are all mandatory.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -41,7 +42,9 @@ Pre-provisioning is a two-phase deployment: a technician completes device setup 
 1. Navigate to **Intune admin center** > **Devices** > **Windows** > **Enrollment** > **Windows Autopilot** > **Deployment Profiles** > [profile name].
 2. Confirm "Allow pre-provisioned deployment" = **Yes**.
 
-> **What breaks if misconfigured:** Setting to No still allows the technician to press Win+F12, but the deployment fails with error **0x80180005**. Admin sees error in Autopilot diagnostics. Technician sees a provisioning failure screen. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** Setting to No still allows the technician to press Win+F12, but the deployment fails with error **0x80180005**.
+
+> Admin sees error in Autopilot diagnostics. Technician sees a provisioning failure screen. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 2: Technician Flow (Staging Facility)
 
@@ -57,7 +60,9 @@ The technician performs these steps in the staging facility:
 7. Screen shows a green **"Device provisioned successfully"** or a red error screen.
 8. Technician selects **Reseal** -- the device shuts down and is ready for shipping to the end user.
 
-> **What breaks if misconfigured:** Using Wi-Fi instead of ethernet causes provisioning to fail at TPM attestation or the network configuration stage. The device cannot complete the pre-provisioning flow over Wi-Fi. See: [Network Connectivity](../l1-runbooks/04-network-connectivity.md)
+> **What breaks if misconfigured:** Using Wi-Fi instead of ethernet causes provisioning to fail at TPM attestation or the network configuration stage.
+
+> The device cannot complete the pre-provisioning flow over Wi-Fi. See: [Network Connectivity](../l1-runbooks/04-network-connectivity.md)
 
 > **What breaks if misconfigured:** Win+F12 not responding -- check if the BIOS is intercepting F12 (common on Dell/HP for boot menu). Use the 5x Windows button alternative instead.
 

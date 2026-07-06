@@ -19,6 +19,7 @@ audience: admin
 This guide covers Self-Deploying mode configuration for Windows Autopilot (APv1), which applies to Windows devices and requires the Intune Administrator role. Self-deploying is a fully automated deployment using TPM 2.0 as the only authentication mechanism, with no user credentials entered and no user affinity assigned, designed for shared devices, kiosks, and digital signage.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -42,7 +43,9 @@ Self-deploying mode is a fully automated deployment requiring zero user interact
    - Deployment mode: **Self-Deploying**
    - Join type: **Microsoft Entra joined** (hybrid is NOT available for self-deploying)
 
-> **What breaks if misconfigured:** Selecting hybrid join type with self-deploying mode causes the deployment to fail. Self-deploying has no user affinity and cannot create an AD computer object in the traditional hybrid flow. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** Selecting hybrid join type with self-deploying mode causes the deployment to fail.
+
+> Self-deploying has no user affinity and cannot create an AD computer object in the traditional hybrid flow. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 2: Verify Hardware Requirements
 
@@ -51,9 +54,13 @@ Before deploying, confirm the target device meets both requirements:
 - **TPM 2.0** present and functional -- run `Get-Tpm` in an admin PowerShell prompt to verify TpmPresent and TpmReady are both True
 - **Wired ethernet** connection available at the deployment location
 
-> **What breaks if misconfigured:** No TPM or TPM 1.2 means self-deploying cannot authenticate. The deployment fails at the attestation stage with no recovery option other than switching to user-driven mode. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** No TPM or TPM 1.2 means self-deploying cannot authenticate.
 
-> **What breaks if misconfigured:** Using Wi-Fi instead of wired ethernet means the device cannot reach the Autopilot service before OOBE. No network connectivity is available at the pre-authentication stage. See: [Network Connectivity](../l1-runbooks/04-network-connectivity.md)
+> The deployment fails at the attestation stage with no recovery option other than switching to user-driven mode. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+
+> **What breaks if misconfigured:** Using Wi-Fi instead of wired ethernet means the device cannot reach the Autopilot service before OOBE.
+
+> No network connectivity is available at the pre-authentication stage. See: [Network Connectivity](../l1-runbooks/04-network-connectivity.md)
 
 ### Step 3: Device Deployment Flow
 
@@ -68,8 +75,10 @@ What happens during a self-deploying deployment (no user interaction required):
 
 > [!IMPORTANT]
 > **No User Affinity**
->
-> Self-deploying devices have no primary user. Apps must be assigned to **device groups**, not user groups. User-targeted policies will not apply during deployment. Design app and policy assignments accordingly before deploying.
+
+> Self-deploying devices have no primary user. Apps must be assigned to **device groups**, not user groups.
+
+> User-targeted policies will not apply during deployment. Design app and policy assignments accordingly before deploying.
 
 ### Step 4: Post-Deployment Management
 
@@ -78,7 +87,9 @@ What happens during a self-deploying deployment (no user interaction required):
 - **User policies:** Apply via conditional access or Entra group-based assignment after first user sign-in
 - **User-targeted apps:** Assign apps that should be available to all users of the device via device groups, not user groups
 
-> **What breaks if misconfigured:** User-targeted apps assigned to self-deploying devices are not installed during deployment because there is no user context. Apps appear missing when the user signs in. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** User-targeted apps assigned to self-deploying devices are not installed during deployment because there is no user context.
+
+> Apps appear missing when the user signs in. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ## Verification
 

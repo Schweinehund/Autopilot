@@ -91,20 +91,20 @@
 | RE-075 | docs/l2-runbooks/33-8021x-radius-eap-investigation.md | 802.1X RADIUS/EAP Investigation | Runbook | Approved |
 | RE-076 | docs/admin-setup-apv1/00-overview.md | APv1 Admin Setup: Complete Configuration Guide | Guide | Pending |
 | RE-077 | docs/admin-setup-apv1/01-hardware-hash-upload.md | Hardware Hash Upload | Guide | Pending |
-| RE-078 | docs/admin-setup-apv1/02-deployment-profile.md | Deployment Profile Configuration | Guide | Pending |
-| RE-079 | docs/admin-setup-apv1/03-esp-policy.md | Enrollment Status Page (ESP) Policy | Guide | Pending |
-| RE-080 | docs/admin-setup-apv1/04-dynamic-groups.md | Dynamic Device Groups for Autopilot | Guide | Pending |
-| RE-081 | docs/admin-setup-apv1/05-deployment-modes-overview.md | APv1 Deployment Modes Overview | Guide | Pending |
-| RE-082 | docs/admin-setup-apv1/06-user-driven.md | User-Driven Mode Configuration | Guide | Pending |
-| RE-083 | docs/admin-setup-apv1/07-pre-provisioning.md | Pre-Provisioning Mode Configuration | Guide | Pending |
-| RE-084 | docs/admin-setup-apv1/08-self-deploying.md | Self-Deploying Mode Configuration | Guide | Pending |
-| RE-085 | docs/admin-setup-apv1/09-intune-connector-ad.md | Intune Connector for Active Directory | Guide | Pending |
-| RE-086 | docs/admin-setup-apv1/10-config-failures.md | APv1 Configuration-Caused Failures Reference | Guide | Pending |
+| RE-078 | docs/admin-setup-apv1/02-deployment-profile.md | Deployment Profile Configuration | Guide | Approved |
+| RE-079 | docs/admin-setup-apv1/03-esp-policy.md | Enrollment Status Page (ESP) Policy | Guide | Approved |
+| RE-080 | docs/admin-setup-apv1/04-dynamic-groups.md | Dynamic Device Groups for Autopilot | Guide | Approved |
+| RE-081 | docs/admin-setup-apv1/05-deployment-modes-overview.md | APv1 Deployment Modes Overview | Guide | Approved |
+| RE-082 | docs/admin-setup-apv1/06-user-driven.md | User-Driven Mode Configuration | Guide | Approved |
+| RE-083 | docs/admin-setup-apv1/07-pre-provisioning.md | Pre-Provisioning Mode Configuration | Guide | Approved |
+| RE-084 | docs/admin-setup-apv1/08-self-deploying.md | Self-Deploying Mode Configuration | Guide | Approved |
+| RE-085 | docs/admin-setup-apv1/09-intune-connector-ad.md | Intune Connector for Active Directory | Guide | Approved |
+| RE-086 | docs/admin-setup-apv1/10-config-failures.md | APv1 Configuration-Caused Failures Reference | Guide | Approved |
 | RE-087 | docs/admin-setup-apv2/00-overview.md | APv2 Admin Setup: Complete Configuration Guide | Guide | Pending |
-| RE-088 | docs/admin-setup-apv2/01-prerequisites-rbac.md | APv2 Setup Step 1: Prerequisites and RBAC Role | Guide | Pending |
-| RE-089 | docs/admin-setup-apv2/02-etg-device-group.md | APv2 Setup Step 2: Enrollment Time Grouping Device Group | Guide | Pending |
-| RE-090 | docs/admin-setup-apv2/03-device-preparation-policy.md | APv2 Setup Step 3: Device Preparation Policy | Guide | Pending |
-| RE-091 | docs/admin-setup-apv2/04-corporate-identifiers.md | APv2 Setup Step 4: Corporate Identifiers | Guide | Pending |
+| RE-088 | docs/admin-setup-apv2/01-prerequisites-rbac.md | APv2 Setup Step 1: Prerequisites and RBAC Role | Guide | Approved |
+| RE-089 | docs/admin-setup-apv2/02-etg-device-group.md | APv2 Setup Step 2: Enrollment Time Grouping Device Group | Guide | Approved |
+| RE-090 | docs/admin-setup-apv2/03-device-preparation-policy.md | APv2 Setup Step 3: Device Preparation Policy | Guide | Approved |
+| RE-091 | docs/admin-setup-apv2/04-corporate-identifiers.md | APv2 Setup Step 4: Corporate Identifiers | Guide | Approved |
 | RE-092 | docs/admin-setup-android/00-overview.md | Android Enterprise Admin Setup | Guide | Pending |
 | RE-093 | docs/admin-setup-android/01-managed-google-play.md | Bind Managed Google Play | Guide | Pending |
 | RE-094 | docs/admin-setup-android/02-zero-touch-portal.md | Configure Zero-Touch Portal | Guide | Pending |

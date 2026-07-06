@@ -19,6 +19,7 @@ audience: admin
 This guide covers the Windows Autopilot (APv1) deployment profile configuration, which applies to Windows devices and requires the Intune Administrator role. The deployment profile controls OOBE behavior -- including join type, license terms, privacy settings, and pre-provisioning eligibility -- with every configurable setting carrying a documented downstream consequence if misconfigured.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -91,7 +92,9 @@ Configure each setting below. Every setting includes a what-breaks callout docum
 
 Assign the profile to the dynamic device group created in [Dynamic Groups](04-dynamic-groups.md). Avoid assigning to "All Devices" -- exclusions are not supported and causes assignment conflicts when multiple profiles target the same device.
 
-> **Profile conflict resolution:** When multiple profiles target the same device, the **oldest created profile wins** (not most specific, not highest priority). Audit profile creation dates when troubleshooting unexpected profile assignment. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+> **Profile conflict resolution:** When multiple profiles target the same device, the **oldest created profile wins** (not most specific, not highest priority).
+
+> Audit profile creation dates when troubleshooting unexpected profile assignment. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
 
 ### Step 4: Verify Profile Assignment
 

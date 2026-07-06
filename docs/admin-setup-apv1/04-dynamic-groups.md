@@ -19,6 +19,7 @@ audience: admin
 This guide covers dynamic device group configuration for Windows Autopilot (APv1), which applies to Windows devices and requires the Global Administrator or Groups Administrator role in Entra ID plus an Azure AD Premium P1 or P2 license. Dynamic groups automatically collect Autopilot-registered devices by membership rule and are used to target deployment profiles, ESP policies, and app assignments.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -46,7 +47,9 @@ Dynamic device groups in Entra ID automatically collect Autopilot-registered dev
 (device.devicePhysicalIDs -any (_ -startsWith "[ZTDid]"))
 ```
 
-> **What breaks if misconfigured:** Using the wrong attribute name or syntax results in an empty group. Admin sees 0 members. End user sees standard Windows OOBE instead of Autopilot. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+> **What breaks if misconfigured:** Using the wrong attribute name or syntax results in an empty group. Admin sees 0 members.
+
+> End user sees standard Windows OOBE instead of Autopilot. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
 
 ### Step 2: Group Tag Targeting (Optional)
 
@@ -58,18 +61,23 @@ To target a subset of Autopilot devices by group tag:
 
 Replace `YOUR_GROUP_TAG` with the actual tag value assigned during hardware hash import.
 
-> **What breaks if misconfigured:** Group tag matching is **case-sensitive** and must match exactly. A mismatched tag means the device is not in the group, so no profile is assigned. Admin sees device registered but group has 0 members for that tag. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+> **What breaks if misconfigured:** Group tag matching is **case-sensitive** and must match exactly. A mismatched tag means the device is not in the group, so no profile is assigned.
+
+> Admin sees device registered but group has 0 members for that tag. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
 
 ### Step 3: Wait for Group Evaluation
 
 > [!IMPORTANT]
 > **Sync Delay Expectations**
->
+
 > - Simple rules in small tenants: **5-15 minutes**
 > - Complex rules or large tenants (10,000+ devices): **up to 24 hours** for initial evaluation
+
 > - **Do NOT power on devices for imaging until group membership is confirmed.** A device reaching OOBE before the group evaluates means no Autopilot profile -- standard Windows setup runs instead.
 
-> **What breaks if misconfigured:** Admin sees device registered in Autopilot but the dynamic group shows 0 members. End user powers on and sees standard Windows OOBE instead of the Autopilot experience. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+> **What breaks if misconfigured:** Admin sees device registered in Autopilot but the dynamic group shows 0 members.
+
+> End user powers on and sees standard Windows OOBE instead of the Autopilot experience. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
 
 ### Step 4: Verify Group Membership
 
@@ -77,7 +85,11 @@ Replace `YOUR_GROUP_TAG` with the actual tag value assigned during hardware hash
 2. Confirm target devices appear as members.
 3. Cross-check in **Intune admin center** > **Devices** > **Windows** > **Windows Autopilot** > **Devices** -- Profile Status should show "Assigning" or "Assigned" for devices in the group.
 
-> **What breaks if misconfigured:** Multiple profiles targeting the same device via different groups: the **oldest created profile wins** (not most specific, not highest priority). Audit profile creation dates when troubleshooting unexpected assignments. Avoid a broad "All Autopilot Devices" profile if targeted profiles also exist. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+> **What breaks if misconfigured:** Multiple profiles targeting the same device via different groups: the **oldest created profile wins** (not most specific, not highest priority).
+
+> Audit profile creation dates when troubleshooting unexpected assignments.
+
+> Avoid a broad "All Autopilot Devices" profile if targeted profiles also exist. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
 
 ## Verification
 

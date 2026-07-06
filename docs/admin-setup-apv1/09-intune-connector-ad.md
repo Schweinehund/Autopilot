@@ -19,6 +19,7 @@ audience: admin
 This guide covers the Intune Connector for Active Directory for Windows Autopilot (APv1), which applies to Windows Server infrastructure and requires an Intune Administrator account for installation plus local administrator and Active Directory rights on the target server. The connector is required for hybrid Entra join deployments and creates AD computer objects on behalf of enrolling Autopilot devices, serving both the User-Driven and Pre-Provisioning deployment modes.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -26,12 +27,14 @@ The Intune Connector for Active Directory is required for hybrid Entra join depl
 
 > [!CAUTION]
 > **CRITICAL: Connector Version Gate**
->
+
 > Connector versions older than **6.2501.2000.5** are **deprecated and can no longer process enrollment requests** (enforcement began late June 2025).
->
+
 > The old connector must be **manually uninstalled** before installing the updated version -- there is no automatic update path.
->
-> Current recommended version: **6.2504.2001.8** (switched from Internet Explorer WebBrowser control to WebView2/Edge -- IE Enhanced Security Configuration no longer needs to be disabled on the server).
+
+> Current recommended version: **6.2504.2001.8** (switched from Internet Explorer WebBrowser control to WebView2/Edge --
+
+> IE Enhanced Security Configuration no longer needs to be disabled on the server).
 
 ## Prerequisites
 
@@ -50,7 +53,9 @@ The Intune Connector for Active Directory is required for hybrid Entra join depl
 
 If upgrading from an older connector version: **uninstall the existing connector first** via Programs and Features. There is no in-place upgrade path.
 
-> **What breaks if misconfigured:** Installing the new connector over an existing old connector results in undefined behavior. Enrollment requests may silently fail with no error visible to the admin. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** Installing the new connector over an existing old connector results in undefined behavior.
+
+> Enrollment requests may silently fail with no error visible to the admin. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 2: Download and Install Connector
 
@@ -60,7 +65,9 @@ If upgrading from an older connector version: **uninstall the existing connector
 4. Sign in with an **Intune Administrator** account when prompted. This is a one-time authentication -- the account is not stored or used after setup.
 5. The connector automatically creates a Managed Service Account (MSA) named `msaODJ#####` (five random characters) with the necessary permissions.
 
-> **What breaks if misconfigured:** Using a non-Intune-Administrator account causes installation to fail with an access denied error. The account needs Intune service permissions, not just local admin rights on the server.
+> **What breaks if misconfigured:** Using a non-Intune-Administrator account causes installation to fail with an access denied error.
+
+> The account needs Intune service permissions, not just local admin rights on the server.
 
 ### Step 3: Verify Connector Status
 
@@ -69,7 +76,9 @@ If upgrading from an older connector version: **uninstall the existing connector
    - Connector status: **Active** (may take several minutes to appear after installation)
    - Connector version: **>= 6.2501.2000.5** (required minimum)
 
-> **What breaks if misconfigured:** Connector shows Active but the version is too old -- enrollment requests are silently rejected. Hybrid join fails with no clear error on the device side. Admin must check the connector version explicitly in the version column. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** Connector shows Active but the version is too old -- enrollment requests are silently rejected.
+
+> Hybrid join fails with no clear error on the device side. Admin must check the connector version explicitly in the version column. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 4: Configure OU for Computer Object Creation
 
@@ -92,7 +101,9 @@ For multiple OUs, use semicolon-separated values within one set of quotes:
      value="OU=Site1,DC=contoso,DC=com;OU=Site2,DC=contoso,DC=com" />
 ```
 
-> **What breaks if misconfigured:** OU not configured means computer objects land in the default Computers container. This may violate organizational OU policies and GPO targeting. Admin sees devices in the wrong OU. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** OU not configured means computer objects land in the default Computers container.
+
+> This may violate organizational OU policies and GPO targeting. Admin sees devices in the wrong OU. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 5: Multi-Domain Setup (If Applicable)
 
@@ -100,7 +111,9 @@ For multiple OUs, use semicolon-separated values within one set of quotes:
 - **Multiple connectors per domain** for redundancy -- load-distributes automatically
 - Install additional connectors on servers joined to each target domain
 
-> **What breaks if misconfigured:** Connector installed on a server in the wrong domain means requests for other domains are not processed. Hybrid join fails for devices targeting those domains. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** Connector installed on a server in the wrong domain means requests for other domains are not processed.
+
+> Hybrid join fails for devices targeting those domains. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ## Log Paths
 

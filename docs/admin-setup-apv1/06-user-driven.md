@@ -19,6 +19,7 @@ audience: admin
 This guide covers User-Driven mode configuration for Windows Autopilot (APv1), the most common deployment mode, which applies to Windows devices and requires the Intune Administrator role. It documents the end-user authentication experience, both Entra join and hybrid Entra join paths, and the deployment profile, ESP, and dynamic group prerequisites that must already be configured before a user-driven deployment succeeds.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -41,7 +42,9 @@ User-driven is the most common APv1 deployment mode. The end user authenticates 
    - Deployment mode: **User-Driven**
    - Join type: **Microsoft Entra joined** OR **Hybrid Microsoft Entra joined**
 
-> **What breaks if misconfigured:** Wrong deployment mode selected causes the user to see a different OOBE flow than expected. Self-deploying mode removes user affinity entirely. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** Wrong deployment mode selected causes the user to see a different OOBE flow than expected.
+
+> Self-deploying mode removes user affinity entirely. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 2: Configure Join Type
 
@@ -55,7 +58,9 @@ User-driven is the most common APv1 deployment mode. The end user authenticates 
 - OU for computer object creation must be configured in the connector settings
 - ESP timeout must account for **+40 minutes** connector processing delay (see [ESP Policy](03-esp-policy.md))
 
-> **What breaks if misconfigured:** Connector not installed or version too old causes hybrid join to fail silently. Admin sees device enrolled in Intune but not joined to AD. End user sees ESP timeout after extended wait. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
+> **What breaks if misconfigured:** Connector not installed or version too old causes hybrid join to fail silently. Admin sees device enrolled in Intune but not joined to AD.
+
+> End user sees ESP timeout after extended wait. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
 ### Step 3: End User Experience
 
@@ -69,7 +74,9 @@ What the end user sees during a user-driven deployment:
 6. User phase of ESP begins (user-specific apps, policies)
 7. Desktop reached -- device is enrolled and ready
 
-> **What breaks if misconfigured:** If step 3 shows standard Windows OOBE instead of Autopilot branding, the profile is not assigned. Check dynamic group membership and profile status before re-imaging. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
+> **What breaks if misconfigured:** If step 3 shows standard Windows OOBE instead of Autopilot branding, the profile is not assigned.
+
+> Check dynamic group membership and profile status before re-imaging. See: [Profile Not Assigned](../l1-runbooks/03-profile-not-assigned.md)
 
 ## Verification
 

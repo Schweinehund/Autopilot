@@ -19,6 +19,7 @@ audience: admin
 This guide covers the Enrollment Status Page (ESP) policy for Windows Autopilot (APv1) deployments, which applies to Windows devices and requires the Intune Administrator role. ESP settings control which apps block desktop access, how long provisioning waits before timing out, and whether Windows quality updates install during OOBE -- misconfiguring these settings is the most common cause of stuck-at-provisioning support tickets.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -110,10 +111,16 @@ The ESP tracks specific app types during provisioning. Only tracked app types bl
 | Available assignment apps | No | Never blocks ESP |
 
 > [!WARNING]
-> **Do NOT assign both LOB (MSI) and Win32 apps as required in the same ESP deployment.** The TrustedInstaller service cannot handle both installers simultaneously -- ESP hangs at app installation with sidecar logs showing "Another installation is in progress." Convert all apps to Win32 format, or use APv2 which supports mixed app types. See: [ESP Stuck or Failed](../l1-runbooks/02-esp-stuck-or-failed.md)
+> **Do NOT assign both LOB (MSI) and Win32 apps as required in the same ESP deployment.**
+
+> The TrustedInstaller service cannot handle both installers simultaneously -- ESP hangs at app installation with sidecar logs showing "Another installation is in progress."
+
+> Convert all apps to Win32 format, or use APv2 which supports mixed app types. See: [ESP Stuck or Failed](../l1-runbooks/02-esp-stuck-or-failed.md)
 
 > [!WARNING]
-> **Microsoft 365 Apps:** If deploying Microsoft 365 Apps alongside Win32 apps, deploy M365 Apps as **Win32 type**, not MSI type. M365 Apps as MSI + Win32 apps simultaneously causes the same TrustedInstaller hang.
+> **Microsoft 365 Apps:** If deploying Microsoft 365 Apps alongside Win32 apps, deploy M365 Apps as **Win32 type**, not MSI type.
+
+> M365 Apps as MSI + Win32 apps simultaneously causes the same TrustedInstaller hang.
 
 ### Step 4: Assign ESP Profile
 

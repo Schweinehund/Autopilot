@@ -19,6 +19,7 @@ audience: admin
 This guide covers the Device Preparation policy for Autopilot Device Preparation (APv2), which applies to Windows devices and requires a custom RBAC role or Global Administrator permissions in Intune. The policy is the central APv2 configuration object, defining deployment settings, the out-of-box experience, and the apps and scripts installed during enrollment, and depends on the prerequisites and ETG device group steps completed earlier in the setup sequence.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
+
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -174,6 +175,7 @@ The Device Preparation policy is the central APv2 configuration object. It defin
 **Policy priority note:** If multiple Device Preparation policies target the same user group, the highest priority policy (lowest priority number) wins. Manage priority by drag-and-drop in the Device preparation policies list at **Intune admin center** > **Devices** > **Windows** > **Windows enrollment** > **Device preparation policies**.
 
 > **What breaks if misconfigured:** **Admin sees:** Policy exists with correct settings, but wrong policy is applied to specific users.
+
 > **End user sees:** Unexpected settings applied during OOBE -- wrong apps, wrong account type, wrong timeout.
 > **Runbook:** [Deployment Not Launched](../l1-runbooks/06-apv2-deployment-not-launched.md)
 

@@ -19,6 +19,7 @@ audience: admin
 This guide covers the prerequisites and custom RBAC role setup for Autopilot Device Preparation (APv2), which applies to Windows devices and requires a Global Administrator or equivalent privileged Entra ID role to complete initial configuration before delegating to a scoped Intune role. It documents APv1 deregistration, Intune auto-enrollment, Entra ID device join permissions, and the five permission categories required for the custom APv2 administration role.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
+
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 

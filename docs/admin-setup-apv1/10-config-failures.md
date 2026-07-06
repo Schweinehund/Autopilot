@@ -19,6 +19,7 @@ audience: admin
 This guide covers the consolidated configuration-caused failures reference for Windows Autopilot (APv1), which applies to Windows devices and requires the Intune Administrator role to remediate. It is a reverse-lookup table linking every known APv1 misconfiguration across hardware hash upload, deployment profiles, ESP policy, dynamic groups, deployment modes, and the Intune Connector to the guide that fixes it and the runbook that triages the resulting symptom.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
+
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 

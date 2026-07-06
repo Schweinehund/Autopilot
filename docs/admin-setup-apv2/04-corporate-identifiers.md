@@ -19,6 +19,7 @@ audience: admin
 This guide covers corporate identifiers for Autopilot Device Preparation (APv2), which applies to Windows devices and requires a custom RBAC role or Global Administrator permissions in Intune, completed after the prerequisites, ETG device group, and Device Preparation policy steps. Corporate identifiers are a conditional step -- required only when enrollment restrictions block personal device enrollment -- that mark devices as corporate-owned so a personal-device restriction does not silently prevent the Device Preparation experience from launching.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
+
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
@@ -123,7 +124,9 @@ Enrollment restrictions are evaluated **BEFORE** the Device Preparation policy. 
 If a device's APv2 deployment does not launch and an enrollment restriction is suspected as the cause, follow [Deployment Not Launched](../l1-runbooks/06-apv2-deployment-not-launched.md). Step 13 of that runbook checks corporate identifiers as a specific root cause.
 
 > **What breaks if misconfigured:** **Admin sees:** Device enrolls into Intune but the Device Preparation experience does not launch. The deployment report shows no entry for the device.
+
 > **End user sees:** OOBE completes without the APv2 setup experience. The device reaches the desktop without expected apps or policies applied.
+
 > **Runbook:** [Deployment Not Launched](../l1-runbooks/06-apv2-deployment-not-launched.md)
 
 ## Verification
