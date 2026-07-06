@@ -242,7 +242,31 @@ Plans:
   3. Each reference doc has the D3-A structure (`# Title → block → ## Summary → sections`) and carries the Version-History row + `Last Reviewed` = `last_verified` verbatim (D2-A)
   4. C17 exits 0 on all reference doc files before phase close
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+**Wave 1**
+
+- [ ] 118-01-PLAN.md — Fork retrofit-reference.mjs (VH column-shape detection 2-col/3-col + 2-dir+2-file allowlist + doc_type Reference) + self-test + 34-file dry-run (RETRO-03)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 118-02-PLAN.md — Capability matrices + comparisons (9 files: 00-index, 4-platform, android/aosp-oem/ios/linux/macos matrices, apv1-vs-apv2, windows-vs-macos); D-118-1 per-table prose on all 45 tables; widest VH-branch variety; C17 green + registry Approved (RETRO-03)
+
+**Wave 3** *(blocked on Wave 2 — shared RE-index.md)*
+
+- [ ] 118-03-PLAN.md — Migration/monitoring/infra-prereq (8 files, all Windows/CREATE, 20 #12 groups; 3 Guide-titled files keep doc_type: Reference per D-118-3); C17 green + registry Approved (RETRO-03)
+
+**Wave 4** *(blocked on Wave 3 — shared RE-index.md)*
+
+- [ ] 118-04-PLAN.md — Security/infra-detail/macOS-CLI/PowerShell (10 files, heaviest #12=30 incl. win32 9 + network 7; 2 keyless→Windows: powershell-ref, registry-paths); C17 green + registry Approved (RETRO-03)
+
+**Wave 5** *(blocked on Wave 4 — shared RE-index.md)*
+
+- [ ] 118-05-PLAN.md — Error-codes (7 files, all keyless→Windows, all PREPEND-2col; 00-index mandatory double #12 split; 30-row table already #11-compliant); C17 green + registry Approved (RETRO-03)
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [ ] 118-06-PLAN.md — Phase gate: enrollment-completeness precheck scoped to 34 (RE-147 mermaid stays keyless/Pending) + full-class C17 exit 0 (RETRO-03, SC1-SC4)
 
 ### Phase 119: Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-audit Close
 
