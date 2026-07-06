@@ -163,3 +163,10 @@ None - no external service configuration required.
 ---
 *Phase: 117-admin-setup-guide-retrofit-all-platforms*
 *Completed: 2026-07-06*
+
+## Self-Check: PASSED
+
+All 6 modified guide files, RE-index.md, and this summary confirmed present on disk.
+All 4 task/summary commits (b6beb60, 55a74d8, 8f69d92, 648e430) confirmed present in
+git log. `node scripts/validation/c17-eee-contract.mjs` re-confirmed exit 0, zero
+violations across 140 enrolled files.
