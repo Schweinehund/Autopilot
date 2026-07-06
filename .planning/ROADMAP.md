@@ -42,7 +42,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 115: C17 Harness Check (Validator Atom)** — Author C17 as one indivisible blocking validator atom asserting the full EEE contract from Markdown source (completed 2026-07-04)
 - [x] **Phase 116: L1/L2 Runbook Retrofit (~75 docs)** — Retrofit all L1/L2 runbooks to EEE with C17 green on every file (completed 2026-07-05)
 - [x] **Phase 117: Admin-Setup Guide Retrofit (all platforms)** — Retrofit all admin-setup guides (Windows / macOS / iOS / Android / Linux / 802.1X) to EEE with C17 green (completed 2026-07-06)
-- [ ] **Phase 118: Reference Doc Retrofit + Table Remediation (~26 docs)** — Retrofit all reference docs to EEE including table remediation so capability-matrix content survives chunk boundaries
+- [x] **Phase 118: Reference Doc Retrofit + Table Remediation (~26 docs)** — Retrofit all reference docs to EEE including table remediation so capability-matrix content survives chunk boundaries (completed 2026-07-06)
 - [ ] **Phase 119: Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-audit Close** — Atomically re-pin all Phase-1 frozen surfaces, author the 13th Path-A harness lineage bump, and close with a 3-axis terminal re-audit
 
 ## Phase Details
@@ -266,7 +266,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5)*
 
-- [ ] 118-06-PLAN.md — Phase gate: enrollment-completeness precheck scoped to 34 (RE-147 mermaid stays keyless/Pending) + full-class C17 exit 0 (RETRO-03, SC1-SC4)
+- [x] 118-06-PLAN.md — Phase gate: enrollment-completeness precheck scoped to 34 (RE-147 mermaid stays keyless/Pending) + full-class C17 exit 0 (RETRO-03, SC1-SC4)
 
 ### Phase 119: Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-audit Close
 
@@ -312,5 +312,5 @@ Plans:
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
-| 118. Reference Doc Retrofit + Table Remediation | 5/6 | In Progress|  |
+| 118. Reference Doc Retrofit + Table Remediation | 6/6 | Complete   | 2026-07-06 |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
