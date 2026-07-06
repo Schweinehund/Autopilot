@@ -70,6 +70,7 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 4. Upload the Intune public key (.pem) downloaded in Step 1.
 5. Select **Save**, then **Download Server Token** to save the .p7m file.
 
+<!-- ABAUDIT-27: reviewed false positive — "what breaks" warning contrasting a personal vs Managed Apple ID for ADE-token renewal; not an Intune-delegation anti-pattern. C15 regex-7 tripped only because the EEE #12 blockquote split isolated this sentence outside the 160-char exempting-context window. v1.15 close, 119-05. -->
 > **What breaks if misconfigured:** If a personal Apple ID is used instead of a Managed Apple ID, the ADE token becomes unrenewable when that employee leaves.
 
 > Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop syncing after token expires).
