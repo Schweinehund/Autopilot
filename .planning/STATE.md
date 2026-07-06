@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T17:24:33.466Z"
+last_updated: "2026-07-06T17:41:28.152Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 33
-  completed_plans: 30
+  completed_plans: 31
   percent: 71
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 118 (reference-doc-retrofit-table-remediation-26-docs) — EXECUTING
-Plan: 4 of 6
+Plan: 5 of 6
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -312,6 +312,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: All 8 files exercised the VH CREATE branch (no pre-existing Version History), matching plan must_haves
 - [Phase ?]: 20 over-limit #12 blockquote groups resolved entirely via Transform A (sentence/clause split); no Transform B needed (no embedded code fences in this batch)
 - [Phase ?]: Word-set reformat-only proof must strip the leading '>' blockquote-prefix token before comparing multisets -- raw diffs show false positives from added '>' tokens per new split group
+- [Phase 118]: [118-04] Version-History date placeholder requires manual fill: retrofit-reference.mjs's CREATE branch writes a literal YYYY-MM-DD token rather than auto-filling the commit date; filled 2026-07-06 across all 10 files matching 117-02/118-02/118-03 precedent
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -342,8 +343,8 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T17:24:33.451Z
-Stopped at: Completed Phase 118 Plan 03
+Last session: 2026-07-06T17:41:28.137Z
+Stopped at: Completed 118-04-PLAN.md
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
@@ -388,3 +389,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 118 P01 | 13min | 2 tasks | 1 files |
 | Phase 118 P02 | 24min | 3 tasks | 10 files |
 | Phase 118 P03 | 30min | 3 tasks | 9 files |
+| Phase 118 P04 | 20min | 3 tasks | 11 files |

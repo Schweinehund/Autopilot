@@ -258,7 +258,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 — shared RE-index.md)*
 
-- [ ] 118-04-PLAN.md — Security/infra-detail/macOS-CLI/PowerShell (10 files, heaviest #12=30 incl. win32 9 + network 7; 2 keyless→Windows: powershell-ref, registry-paths); C17 green + registry Approved (RETRO-03)
+- [x] 118-04-PLAN.md — Security/infra-detail/macOS-CLI/PowerShell (10 files, heaviest #12=30 incl. win32 9 + network 7; 2 keyless→Windows: powershell-ref, registry-paths); C17 green + registry Approved (RETRO-03)
 
 **Wave 5** *(blocked on Wave 4 — shared RE-index.md)*
 
@@ -312,5 +312,5 @@ Plans:
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
-| 118. Reference Doc Retrofit + Table Remediation | 3/6 | In Progress|  |
+| 118. Reference Doc Retrofit + Table Remediation | 4/6 | In Progress|  |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
