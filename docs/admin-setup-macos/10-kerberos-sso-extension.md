@@ -1,4 +1,8 @@
 ---
+doc_id: RE-126
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-22
 review_by: 2026-09-22
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-126 · **Status:** Approved
+
+# macOS Kerberos SSO Extension
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS Kerberos SSO extension configuration via Intune Custom Template (.mobileconfig) for PSSO-integrated deployments.
 > For Platform SSO setup (prerequisite), see [Platform SSO Setup](07-platform-sso-setup.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Kerberos SSO Extension
 
 This guide walks an Intune administrator through deploying the Apple Kerberos SSO extension (`com.apple.AppSSOKerberos.KerberosExtension`) via Intune Custom Template (.mobileconfig) for on-premises Active Directory Kerberos authentication, integrated with Platform SSO TGT sharing.
 
@@ -335,3 +345,9 @@ The following table covers the three most common Kerberos extension misconfigura
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-22 | Phase 83 (KRB-01..04): initial Kerberos SSO Extension guide | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

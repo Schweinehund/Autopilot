@@ -1,4 +1,8 @@
 ---
+doc_id: RE-125
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-22
 review_by: 2026-09-22
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-125 · **Status:** Approved
+
+# macOS Enterprise SSO Plug-in & Migration Guide
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS Enterprise SSO plug-in migration to Platform SSO.
 > For the Platform SSO setup walk-through, see [Platform SSO Setup](07-platform-sso-setup.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Enterprise SSO Plug-in & Migration Guide
 
 This guide is for Intune administrators with existing deployments of the Microsoft Enterprise SSO plug-in (legacy SSO app extension) who need to decide whether, when, and how to migrate to Platform SSO. It provides the product-name disambiguation that prevents the most common misconfiguration, a decision matrix for the migrate/keep/coexist choice, a staged migration sequence that avoids Error 10002, the mandatory rollback procedure, and a bounded Kerberos SSO extension coexistence note.
 
@@ -174,3 +184,9 @@ For the full Kerberos SSO extension configuration guide (payload walkthrough, Ex
 |------|--------|--------|
 | 2026-06-21 | Phase 78 (SSOMIG-01..04): initial Enterprise SSO plug-in migration guide | -- |
 | 2026-06-22 | Phase 83 (KRB-04): replaced deferred-note sentence with forward link to guide 10 | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

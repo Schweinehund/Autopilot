@@ -1,4 +1,8 @@
 ---
+doc_id: RE-127
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-23
 review_by: 2026-09-23
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-127 · **Status:** Approved
+
+# Graph API: Platform Credential Management
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers programmatic management of macOS Secure Enclave Platform Credentials via the Microsoft Graph API (`platformCredentialAuthenticationMethod`, Graph v1.0).
 > For Platform SSO setup (prerequisite), see [Platform SSO Setup](07-platform-sso-setup.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# Graph API: Platform Credential Management
 
 This guide is the operations reference for administering macOS Secure Enclave Platform Credentials programmatically via the Microsoft Graph v1.0 API. It covers the `platformCredentialAuthenticationMethod` resource — how to list, retrieve, and delete credential registrations for users in your tenant, the required permissions for each operation, and the leaver/offboarding automation pattern with a mandatory dry-run step.
 
@@ -284,3 +294,9 @@ A `KeyStrength` of `normal` confirms the credential is Secure Enclave-backed. An
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-23 | Phase 84 (GRAPH-01/GRAPH-02): initial Graph API Platform Credential guide | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

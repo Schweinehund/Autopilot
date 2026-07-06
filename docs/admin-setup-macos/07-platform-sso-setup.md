@@ -1,4 +1,8 @@
 ---
+doc_id: RE-123
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-123 · **Status:** Approved
+
+# macOS Platform SSO Setup
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS Platform SSO configuration via Microsoft Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Platform SSO Setup
 
 This guide walks an Intune administrator through configuring [Platform SSO](../_glossary-macos.md#platform-sso) on macOS using the Settings Catalog `com.apple.extensiblesso` payload in Microsoft Intune.
 
@@ -426,3 +436,9 @@ There is no repair path that avoids a device wipe for this specific misconfigura
 | 2026-06-27 | Added "End-User Sign-In Experience (Secure Enclave)" section: per-stage credential table (Entra at enrollment/SSO vs local password at lock screen + drift caveat), UPN-via-Full-Name display guidance (keep AccountShortName, not preferred_username), and local-password lifecycle/rotation (3-credential distinction; non-expiring best practice + compliance expiration alternative + recovery); corrected the "Key distinction" overstatement (Create User At Login is not Password-only); verified against Microsoft Learn | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E3 See Also cross-link to macos-capability-matrix.md#authentication | -- |
 | 2026-06-20 | Phase 76 (PSSO-01/02/03/12): initial Platform SSO admin setup guide | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

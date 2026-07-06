@@ -1,4 +1,8 @@
 ---
+doc_id: RE-124
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-21
 review_by: 2026-09-21
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-124 · **Status:** Approved
+
+# macOS Platform SSO: Auth Method Selection & Deep-Dive
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS Platform SSO authentication methods in depth.
 > For the Platform SSO setup walk-through, see [Platform SSO Setup](07-platform-sso-setup.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Platform SSO: Auth Method Selection & Deep-Dive
 
 This guide helps architects and senior Intune administrators choose the right [Platform SSO](../_glossary-macos.md#platform-sso) authentication method and understand the critical interactions, constraints, and failure modes for each. It complements the setup walk-through in [Platform SSO Setup](07-platform-sso-setup.md), which covers policy creation steps.
 
@@ -328,3 +338,9 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 | 2026-06-21 | Phase 77 (PSSO-05..11): initial version -- auth method selection table and three-method deep-dive with FileVault interaction, misconceptions box, Touch ID biometric policy, Passkey/FIDO2, NUAL | -- |
 | 2026-06-21 | Phase 78: converted guide-09 code-span to live link in ## See Also | -- |
 | 2026-06-23 | Phase 84 (NUAL-01): consolidated NUAL Settings Catalog table with verified MDM plist key literals; removed v1.9 deferred blockquote (PSSO-FUT-01 closed) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
