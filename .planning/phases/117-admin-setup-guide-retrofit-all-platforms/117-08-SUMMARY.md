@@ -111,3 +111,7 @@ None - no external service configuration required.
 ---
 *Phase: 117-admin-setup-guide-retrofit-all-platforms*
 *Completed: 2026-07-06*
+
+## Self-Check: PASSED
+
+All 6 modified/created files verified present on disk; all 4 commit hashes (88bdf07, 9f2bc8d, b7e2b43, 628c382) verified present in git history.
