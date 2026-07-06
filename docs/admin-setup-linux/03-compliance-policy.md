@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+This guide covers configuring Intune compliance policies for Linux devices (Ubuntu 22.04 LTS and 24.04 LTS) across allowed distributions, custom-compliance Bash discovery scripts, device encryption, and password policy settings. It is intended for Intune administrators responsible for device compliance posture. Compliance policy on Linux is detect-only: it produces a compliance verdict for reporting purposes and does not drive Conditional Access grants, which instead use a separate web-app enforcement path.
 
 > **Platform gate:** This guide covers configuration of Intune compliance policies for Linux devices (Ubuntu 22.04/24.04 LTS) across the 4 supported settings-catalog categories.
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).

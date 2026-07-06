@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+This guide covers Conditional Access configuration for Linux devices in Microsoft Intune (Ubuntu 22.04 LTS and 24.04 LTS), where the only supported enforcement path is web-app Conditional Access via Microsoft Edge for Linux 102.x or later. It is intended for Intune and Entra ID administrators configuring Conditional Access policies. Linux does not support device-level Conditional Access grant controls such as requiring a compliant device or Hybrid Entra join.
 
 > **Platform gate:** This guide covers Conditional Access (CA) configuration for Linux devices in Intune (Ubuntu 22.04/24.04 LTS). Linux supports web-app CA via Microsoft Edge for Linux 102.x+ ONLY — there is no device-level CA grant on Linux.
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).

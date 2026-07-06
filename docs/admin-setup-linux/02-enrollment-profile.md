@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+This guide covers admin-side configuration of Linux device enrollment in Microsoft Intune, including Intune and Entra ID license verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping for Ubuntu 22.04 LTS and 24.04 LTS devices. It is intended for Intune administrators with rights to manage device enrollment restrictions and Conditional Access policies. Linux enrollment itself is user-initiated only; there is no admin-driven push enrollment profile for this platform.
 
 > **Platform gate:** This guide covers admin-side configuration of Linux device enrollment in Intune (license verification, optional CA scoping). Linux enrollment on Ubuntu 22.04/24.04 LTS is user-initiated only; there is no admin-driven push enrollment.
 > For end-user enrollment steps (install Edge, install intune-portal deb, sign in), see [Linux Intune Portal Enrollment](../end-user-guides/linux-intune-portal-enrollment.md).

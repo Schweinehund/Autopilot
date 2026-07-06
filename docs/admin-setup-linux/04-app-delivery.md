@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+This guide covers app delivery to Linux devices managed by Microsoft Intune (Ubuntu 22.04 LTS and 24.04 LTS), where delivery is script-based only: Intune delivers Bash scripts that the device executes to install or configure software, with no binary-package delivery mechanism analogous to Win32, MSIX, or `.pkg`. It is intended for Intune administrators who author, upload, and assign Bash scripts and who are responsible for verifying script provenance before deployment.
 
 > **Platform gate:** This guide covers app delivery to Linux devices managed by Intune (Ubuntu 22.04/24.04 LTS).
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).

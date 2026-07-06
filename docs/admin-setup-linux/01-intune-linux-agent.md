@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+This guide covers installing and configuring the Intune Linux Agent (the `intune-portal` deb package and Microsoft Identity Broker) on Ubuntu 22.04 LTS and 24.04 LTS devices managed by Microsoft Intune. It is intended for Intune administrators with rights to review device enrollment state, Entra ID group memberships, and Conditional Access assignments for Linux devices. Completing this guide is a prerequisite for all subsequent Linux enrollment, compliance, app-delivery, and Conditional Access configuration steps.
 
 > **Platform gate:** This guide covers installation of the `intune-portal` deb package and Microsoft Identity Broker on Ubuntu 22.04 LTS and 24.04 LTS.
 > For Linux prerequisites and supported distributions, see [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md).
