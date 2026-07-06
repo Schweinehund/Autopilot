@@ -104,3 +104,10 @@ None - no external service configuration required.
 ---
 *Phase: 118-reference-doc-retrofit-table-remediation-26-docs*
 *Completed: 2026-07-06*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/pipeline/retrofit-reference.mjs
+- FOUND: .planning/phases/118-reference-doc-retrofit-table-remediation-26-docs/118-01-SUMMARY.md
+- FOUND: commit 353d062 (Task 1)
+- FOUND: commit 7c0b6ba (SUMMARY.md)

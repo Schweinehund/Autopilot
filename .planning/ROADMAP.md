@@ -246,7 +246,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 118-01-PLAN.md — Fork retrofit-reference.mjs (VH column-shape detection 2-col/3-col + 2-dir+2-file allowlist + doc_type Reference) + self-test + 34-file dry-run (RETRO-03)
+- [x] 118-01-PLAN.md — Fork retrofit-reference.mjs (VH column-shape detection 2-col/3-col + 2-dir+2-file allowlist + doc_type Reference) + self-test + 34-file dry-run (RETRO-03)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -312,5 +312,5 @@ Plans:
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
-| 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
+| 118. Reference Doc Retrofit + Table Remediation | 1/6 | In Progress|  |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |

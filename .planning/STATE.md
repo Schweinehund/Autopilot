@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T16:22:47.425Z"
-last_activity: 2026-07-06 -- Phase 118 planning complete
+last_updated: "2026-07-06T16:40:47.913Z"
+last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 33
-  completed_plans: 27
+  completed_plans: 28
   percent: 71
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** Phase 117 — admin-setup-guide-retrofit-all-platforms
+**Current focus:** Phase 118 — reference-doc-retrofit-table-remediation-26-docs
 
 ## Current Position
 
-Phase: 117 (admin-setup-guide-retrofit-all-platforms) — READY FOR VERIFICATION
-Plan: 10 of 10
+Phase: 118 (reference-doc-retrofit-table-remediation-26-docs) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-07-06 -- Phase 118 planning complete
+Last activity: 2026-07-06
 
 Progress bar: `███████░░░` 71% (5/7 phases complete)
 
@@ -306,6 +306,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: [117-09] Confirmed dry-run span-byte-length equality (186=186, 169=169 x5) for all 6 files before writing -- this batch exercises the simple single 2-line Prerequisites-blockquote pre-H1-span case, not the multi-blockquote/HTML-comment cases seen in earlier 117 plans
 - [Phase 117-10]: This plan is verification-only by design (files_modified: [] in frontmatter) -- no per-task code commits were made; only this SUMMARY + STATE/ROADMAP metadata commit closes the plan
 - [Phase 117-10]: Confirmed RETRO-02 is genuinely complete: all three independent proofs (57-key-presence precheck, 9-keyless-mermaid confirmation, full-class C17 exit 0) passed with zero exceptions
+- [Phase 118]: [118-01] Forked retrofit-reference.mjs from retrofit-guide.mjs (protects shipped 117 deliverable); VH CREATE branch always 3-column per Open Question 1 lock; detectVhColumnCount defaults to 3-column if inconclusive
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -336,9 +337,9 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T15:37:41.813Z
+Last session: 2026-07-06T16:38:04.957Z
 Stopped at: Phase 118 context gathered
-Resume file: .planning/phases/118-reference-doc-retrofit-table-remediation-26-docs/118-CONTEXT.md
+Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
 ## Operator Next Steps
@@ -379,3 +380,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 117 P08 | 25min | 3 tasks | 6 files |
 | Phase 117 P09 | 13min | 3 tasks | 7 files |
 | Phase 117 P10 | 8min | 2 tasks | 0 files |
+| Phase 118 P01 | 13min | 2 tasks | 1 files |
