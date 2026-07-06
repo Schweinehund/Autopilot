@@ -16,7 +16,7 @@ platform: ios
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers iOS/iPadOS 802.1X Wi-Fi and wired network profile configuration via Intune, including EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS settings, MAC address randomization handling, and the M-series iPad wired use case. It requires an Intune administrator role with Apple Business Manager and Intune configuration profile permissions, and assumes ABM-enrolled supervised devices where applicable.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.

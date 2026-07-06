@@ -16,7 +16,7 @@ platform: android
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Android Enterprise 802.1X Wi-Fi network profile configuration via Intune across Fully Managed (COBO), Corporate-Owned Work Profile (COPE), Dedicated (COSU), and Personally Owned Work Profile (BYOD-WP) enrollment modes, including certificate access and UPN-in-SAN requirements. It requires an Intune administrator role and, for enrollment provisioning, Managed Google Play and Zero-Touch portal access where applicable.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.

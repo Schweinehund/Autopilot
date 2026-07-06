@@ -16,7 +16,7 @@ platform: linux
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+This guide covers Linux 802.1X EAP-TLS network authentication configuration via an OS-level nmcli / NetworkManager workaround, since Intune provides no native Wi-Fi, wired, or certificate-delivery profiles for Linux. It applies to Ubuntu 24.04 LTS and 26.04 LTS managed by Microsoft Intune and requires an Intune administrator role plus an out-of-band certificate-delivery process.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.

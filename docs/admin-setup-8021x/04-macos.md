@@ -16,7 +16,7 @@ platform: macos
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide covers macOS 802.1X Wi-Fi and wired network profile configuration via Intune, including the immutable deployment-channel selection, EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS settings, and the wired SCEP-only certificate constraint. It requires an Intune administrator role with macOS configuration profile permissions and assumes a currently supported macOS release managed via Apple Business Manager enrollment.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.

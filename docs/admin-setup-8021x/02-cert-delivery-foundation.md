@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (All Platforms) Summary lead]
+This guide establishes the shared certificate-delivery foundation for 802.1X network authentication configuration across every platform covered in this guide set. It defines the mandatory profile deployment ordering (Trusted Root, then SCEP or PKCS client certificate, then the 802.1X network profile), the required Client Authentication EKU, RADIUS server-name validation, and the per-platform certificate-delivery support matrix. Intune administrators configuring any platform's 802.1X profiles must read this foundation guide first.
 
 > **Prerequisites:** Read [EAP Method Overview](01-eap-method-overview.md) first.
 > For certificate term definitions, see [Network Authentication Glossary](../_glossary-network.md#scep).

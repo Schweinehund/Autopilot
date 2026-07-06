@@ -16,7 +16,7 @@ platform: windows
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers Windows 802.1X Wi-Fi and wired network authentication configuration via Intune, including EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS profile settings, the dot3svc Wired AutoConfig service dependency, enforcement staging, and Hybrid Entra Joined strong certificate mapping. It requires an Intune administrator role with device configuration profile permissions.
 
 > **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
 > [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
