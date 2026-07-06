@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides ESP timeout tuning guidance for Windows Autopilot deployments, covering scenario-based timeout recommendations, a calculation formula, and the consequences of setting the timeout too low or too high. It covers Windows Autopilot Enrollment Status Page configuration across hybrid join, large app payloads, and quality-update scenarios. The primary audience is Intune administrators tuning ESP timeout values.
 
 > **Version gate:** This guide extends the ESP configuration in [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) with scenario-specific timeout recommendations. For ESP setting definitions, blocking app list configuration, and "What breaks" callouts for each ESP setting, see that guide first. This guide covers the timeout value decision only.
 

@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides a migration guide for transitioning from on-premises MDT or SCCM/ConfigMgr imaging to Windows Autopilot, covering app-packaging workflow, the Autopilot for Existing Devices SCCM path, and a parallel-operation rollback model. It covers Windows Autopilot deployments using either APv1 or APv2. The primary audience is Intune administrators and desktop engineers planning the imaging-to-Autopilot transition.
 
 > **Version gate:** This guide covers migration from MDT and SCCM/ConfigMgr imaging to Windows Autopilot (APv1 or APv2). Both Autopilot frameworks are valid targets. For APv1 vs APv2 selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 

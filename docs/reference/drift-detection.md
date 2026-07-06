@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides drift-detection guidance for Windows Autopilot registration and profile assignment, covering profile assignment states, weekly and monthly proactive monitoring procedures, and remediation steps for common drift issues. It covers Windows Autopilot deployments under both APv1 and APv2. The primary audience is Intune administrators responsible for ongoing fleet health monitoring.
 
 > **Version gate:** This guide covers monitoring Autopilot registration and profile assignment health for both APv1 and APv2.
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).

@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides Entra ID prerequisite configuration guidance for Windows Autopilot, covering the required MDM user scope, auto-enrollment, device limit, and MDM authority settings along with the silent failures that occur when each is misconfigured. It covers Windows Autopilot deployments under both APv1 and APv2. The primary audience is Intune administrators configuring a new tenant for Autopilot.
 
 > **Version gate:** This guide covers Entra ID prerequisite configuration for both APv1 and APv2. For APv1 deployment profile setup, see [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 

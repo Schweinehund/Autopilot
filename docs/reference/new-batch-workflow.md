@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides an end-to-end operational workflow for onboarding a new batch of Windows Autopilot devices, covering the checkpoint sequence from OEM order through user handoff, a pre-batch checklist, and post-batch review steps. It covers Windows Autopilot deployments under both APv1 and APv2. The primary audience is Intune administrators coordinating new device batch rollouts.
 
 > **Version gate:** This workflow applies to both APv1 and APv2 device onboarding. Framework-specific differences are noted inline.
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).

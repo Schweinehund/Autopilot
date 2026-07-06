@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides a migration guide for moving Group Policy Objects to Intune using Group Policy Analytics, organized by business outcome rather than by GPO setting name, including an outcome-to-Settings-Catalog mapping table and a do-not-migrate list. It covers Windows Autopilot-managed devices under both APv1 and APv2. The primary audience is Intune administrators executing a GPO-to-Intune migration.
 
 > **Version gate:** This guide covers migrating Group Policy Objects to Intune using Group Policy Analytics. Applies to both APv1 and APv2 managed devices. Devices must be Entra joined (cloud-only or hybrid) for Intune policies to apply.
 

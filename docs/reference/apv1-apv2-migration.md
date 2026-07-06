@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides a migration playbook for transitioning devices between Windows Autopilot classic (APv1) and Autopilot Device Preparation (APv2), covering readiness criteria, feature gaps, a coexistence deployment model, and rollback procedures. It applies to Windows Autopilot environments running both frameworks simultaneously. The primary audience is Intune administrators planning or executing a phased APv1-to-APv2 migration.
 
 > **Version gate:** This guide covers migration from Windows Autopilot (classic/APv1) to Autopilot Device Preparation (APv2). This is a coexistence model, not a one-shot cutover. For feature differences, see [APv1 vs APv2](../apv1-vs-apv2.md).
 

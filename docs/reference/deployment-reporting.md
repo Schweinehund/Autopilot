@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document provides guidance on Intune deployment reporting for Windows Autopilot, covering report locations and types for both APv1 and APv2, deployment status meanings, and success-rate interpretation for fleet health monitoring. It covers Windows Autopilot deployments across both frameworks. The primary audience is Intune administrators and L2 engineers tracking fleet-wide deployment outcomes.
 
 > **Version gate:** This guide covers deployment reporting for both APv1 and APv2. APv2 reports are in a different location than APv1 — using the wrong portal path shows no data. Always confirm which framework the device uses first.
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
