@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T04:39:23.063Z"
+last_updated: "2026-07-06T04:57:43.022Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 27
-  completed_plans: 24
+  completed_plans: 25
   percent: 57
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 117 (admin-setup-guide-retrofit-all-platforms) — EXECUTING
-Plan: 8 of 10
+Plan: 9 of 10
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -300,6 +300,8 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase 117-06]: Extended the #12 sentence-split regex to recognize closing **/*/backtick markers before whitespace, and reserved Transform B (de-blockquote) for 02-enrollment-profile's 1458c multi-paragraph bullet-list callout per plan designation
 - [Phase ?]: [117-07] Transform B applied to 07's corpus-worst 1892c 'Before You Deploy' box and 6 other multi-paragraph/bulleted WARNING boxes across 08/09/10/11 (incl. 09's box containing an embedded app-sso platform -s fence, unmasked to a real top-level fence); Transform A used for all remaining single-paragraph callouts
 - [Phase ?]: [117-07] 11's [!WARNING] GitHub alert marker kept paired only with its first split sentence (no corpus precedent for splitting a marked alert under C17); word-set multiset diff against git HEAD used per-file to prove zero real-word loss across all #12 splits
+- [Phase 117]: [117-08] Transform B applied to 01's 1158c Identity Broker re-enrollment box (structured multi-paragraph admonition with numbered checklist) rather than Transform A
+- [Phase 117]: [117-08] Five single-sentence blockquotes exceeded 200 chars even alone (02/03/04/05); each split at a natural em-dash or semicolon clause boundary, preserving every word, rather than escalating
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -330,8 +332,8 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T04:39:23.048Z
-Stopped at: Completed 117-07-PLAN.md
+Last session: 2026-07-06T04:57:43.002Z
+Stopped at: Completed 117-08-PLAN.md
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
@@ -370,3 +372,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 117 P06 | 35min | 3 tasks | 7 files |
 | Phase 117 P7 | 16min | - tasks | - files |
 | Phase 117 P07 | 16min | 3 tasks | 6 files |
+| Phase 117 P08 | 25min | 3 tasks | 6 files |
