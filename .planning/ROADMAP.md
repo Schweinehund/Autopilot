@@ -281,7 +281,32 @@ Plans:
   4. 3-axis terminal re-audit passes with cross-OS EXACT MATCH: Axis 1 fresh `git clone --no-hardlinks`, Axis 2 cross-OS Linux GHA authoritative (BOTH chain validators per corrected D-03 OS split), Axis 3 fresh zero-context sub-agent
   5. PIPE-02 grounding-validation confirmation is included in the close-gate — the retrofitted corpus (or a statistically representative set) produces correct citations in live Copilot Studio queries; the single close-gate commit flips all 16 v1.15 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS
 
-**Plans**: TBD
+**Plans**: 7 plans (D1 skeleton: Wave-0 anchor → Atom 1 → Atom 2 + push → 3-axis re-audit → [conditional remediation] → PIPE-02 owner checkpoint → close-gate). Sequential-on-main (`use_worktrees:false`).
+
+**Wave 1**
+
+- [ ] 119-01-PLAN.md — Wave-0 pre-anchor + baseline reconnaissance: capture the byte-unchanged gate-base SHA, positively confirm V114=7d922a7 (disambiguate the ambiguous grep result f3959c8), run the current v1.14 harness vs HEAD to surface shifted sidecar line-pins (HARN-02, HARN-03)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 119-02-PLAN.md — Atom 1 (ONE commit): v1.15-milestone-audit.mjs (C1-C16 + C17 folded via execFileSync subprocess-spawn) + repointed v1.15-audit-allowlist.json (pins re-verified) + BASELINE_19 comment (JIT-anchored) (HARN-03)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 119-03-PLAN.md — Atom 2 (ONE commit) + push: check-phase-113..119 (6 leaves + apex [48..118]=71 entries, CHAIN_SKIP ∅) + frozen-at-close V114='7d922a7' pin + audit-harness-v1.15-integrity.yml (12th CI workflow); push triggers the authoritative Axis-2 GHA (HARN-02, HARN-03)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 119-04-PLAN.md — 3-axis terminal re-audit: authoritative Axis-2 Linux GHA (both chain validators) + Axis-1 fresh clone + Axis-3 fresh sub-agent, cross-OS EXACT MATCH; predecessor-byte-unchanged HARD gate EMPTY (HARN-02, HARN-04)
+
+**Wave 5** *(blocked on Wave 4; the two run in parallel — no file overlap)*
+
+- [ ] 119-05-PLAN.md — Emergent chain-health remediation slot (CONDITIONAL — fires only if the Axis-2 apex is RED): edits ONLY predecessor check-phase-NN validators, no value-masking, CHAIN_SKIP stays ∅, honest record, re-push to green (HARN-02)
+- [ ] 119-06-PLAN.md — PIPE-02 close-pass prep + OWNER CHECKPOINT (autonomous:false): agent authors PIPE-02-CLOSE-RUNBOOK.md + selects the real-corpus representative set (5 platforms + Approved Linux + wide post-RETRO-03 matrix + Draft-probe artifact); owner executes live in Copilot Studio, records PIPE-02-CLOSE-FINDINGS.md; close-gate BLOCKS until owner attests PASS (HARN-04)
+
+**Wave 6** *(blocked on Waves 4/5/6)*
+
+- [ ] 119-07-PLAN.md — Close-gate (ONE commit, lands only after GHA green AND owner PIPE-02 PASS): v1.15-MILESTONE-AUDIT.md + v1.15-DEFERRED-CLEANUP.md + 119-VERIFICATION.md + 4-doc traceability flipping all 16 v1.15 requirements to Validated (HARN-04)
 
 ## Progress
 
@@ -313,4 +338,4 @@ Plans:
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
 | 118. Reference Doc Retrofit + Table Remediation | 6/6 | Complete    | 2026-07-06 |
-| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
+| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/7 | Not started | — |
