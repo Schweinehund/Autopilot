@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide covers macOS compliance policies -- the detection counterpart to configuration profile enforcement -- covering System Integrity Protection, OS version/build requirements, password rules, FileVault encryption, firewall, and Gatekeeper checks. It requires the Intune Administrator role; macOS has no Intune security baselines, so all settings must be configured manually with no specific macOS version floor of its own.
 
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).

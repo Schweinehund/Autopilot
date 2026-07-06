@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide covers deploying macOS applications through Intune via three methods -- DMG, PKG (managed Line-of-Business and unmanaged), and VPP/Apps and Books. It requires the Intune Administrator role plus an active Apple Business Manager content token for VPP licensing, and applies with no specific macOS version prerequisite beyond IME agent version floors per delivery method.
 
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).

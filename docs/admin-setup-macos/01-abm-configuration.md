@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide covers configuring Automated Device Enrollment (ADE) for macOS by linking an Apple Business Manager MDM server token to Microsoft Intune. It requires the Intune Administrator role plus Apple Business Manager Device Manager or Administrator access, and applies to all ADE-eligible Mac hardware with no specific macOS version floor.
 
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).

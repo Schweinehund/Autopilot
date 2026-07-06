@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This is a consolidated reverse-lookup reference covering configuration-caused failures across all five macOS core admin-setup guides -- ABM Configuration, Enrollment Profile, Configuration Profiles, App Deployment, and Compliance Policies. It applies to the same Intune Administrator and Apple Business Manager Device Manager roles used throughout ADE, with no specific macOS version prerequisite of its own.
 
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).

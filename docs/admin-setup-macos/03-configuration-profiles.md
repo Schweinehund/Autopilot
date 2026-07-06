@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide covers macOS MDM configuration profiles delivered via the Settings Catalog -- Wi-Fi, VPN, Email, Restrictions, Local Password Policy, FileVault disk encryption, Firewall, Gatekeeper, Privacy Preferences, and Extensible/Platform SSO. It requires the Intune Administrator role and an Apple Business Manager-enrolled ADE device; FileVault Setup Assistant enforcement additionally requires macOS 14+ (14.4+ for Standard-role primary accounts).
 
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).

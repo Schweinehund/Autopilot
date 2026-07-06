@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide covers creating and configuring the macOS Automated Device Enrollment (ADE) enrollment profile in Intune -- user affinity, authentication method, Setup Assistant screens, and local Account Settings. It requires the Intune Administrator role and an active ADE token, and applies to all supported macOS versions with no specific version floor for the base profile.
 
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
