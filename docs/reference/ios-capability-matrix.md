@@ -1,4 +1,8 @@
 ---
+doc_id: RE-156
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: both
@@ -6,7 +10,13 @@ audience: admin
 platform: all
 ---
 
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-156 · **Status:** Approved
+
 # Intune: iOS/iPadOS Capability Matrix — Windows, macOS, iOS
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
 
 This matrix compares Intune management capabilities across three platforms. Apple-platform readers (admins coming from macOS ADE) will find the iOS↔macOS comparison surfaces the most meaningful differences — DDM maturity, supervision model scope, and VPP licensing behavior. Windows readers should treat iOS and macOS as structurally distinct from Windows despite being managed via the same Intune tenant. For the Windows↔macOS-only view, see the [macOS Capability Matrix](macos-capability-matrix.md). For concept-level terminology comparison, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For a side-by-side comparison of iOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
@@ -118,4 +128,5 @@ The most significant iOS capability gaps relative to Windows and macOS are:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-17 | Initial version — Phase 32: trilateral capability matrix (Windows, macOS, iOS) across 5 domains with Apple-parity framing preamble and 8-gap Key Gaps Summary | -- |

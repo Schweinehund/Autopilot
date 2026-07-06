@@ -1,4 +1,8 @@
 ---
+doc_id: RE-145
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
@@ -6,7 +10,13 @@ platform: Android
 applies_to: AOSP
 ---
 
+**Platform:** Android · **Doc Type:** Reference · **Doc ID:** RE-145 · **Status:** Approved
+
 # Intune: AOSP OEM Matrix — RealWear / Zebra / Pico / HTC / Meta Quest
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
 
 This matrix compares Microsoft Intune support across the 5 specialty-hardware OEMs in scope for AOSP enrollment: RealWear, Zebra, Pico, HTC, and Meta Quest. The matrix is organized capability-first; columns = capability dimensions, rows = OEMs. For per-OEM admin guides see [09-aosp-realwear.md](../admin-setup-android/09-aosp-realwear.md), [10-aosp-zebra.md](../admin-setup-android/10-aosp-zebra.md), [11-aosp-pico.md](../admin-setup-android/11-aosp-pico.md), [12-aosp-htc-vive-focus.md](../admin-setup-android/12-aosp-htc-vive-focus.md), [13-aosp-meta-quest.md](../admin-setup-android/13-aosp-meta-quest.md). For the broader Android capability landscape (modes, mode-vs-feature mapping) see [Android Capability Matrix](android-capability-matrix.md).
 
@@ -82,4 +92,5 @@ Per-OEM source-confidence pins for the data points across the four capability su
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-25 | Initial version (Phase 45 AEAOSPFULL-06) — 4 H2 sub-tables in fixed order (Hardware Scope / Enrollment Method and Wi-Fi Embedding / Vendor Portals and Licensing / Intune AOSP Mode); 5-OEM rows (RealWear / Zebra / Pico / HTC / Meta Quest); Meta-row footnote `[^meta-volatility]` for Feb 20, 2026 Meta Horizon wind-down volatility per D-14; `## Source Attribution` H2 per D-15 (per-OEM pins outside tables; W-3 section-level mode-confidence pin); cell-value rules literal-strings only per D-16 (no `+` notation); single `## Scope` H2 at top with PITFALL-7 framing once per D-13; `## Version History` H2 (NOT `## Changelog`) per sibling matrix convention | -- |

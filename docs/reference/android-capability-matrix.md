@@ -1,4 +1,8 @@
 ---
+doc_id: RE-144
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-25
 review_by: 2026-06-24
 applies_to: both
@@ -7,7 +11,13 @@ platform: Android
 phase_46_wave2_retrofit: 2026-04-25
 ---
 
+**Platform:** Android · **Doc Type:** Reference · **Doc ID:** RE-144 · **Status:** Approved
+
 # Intune: Android Capability Matrix — Modes by Feature
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
 
 This matrix compares Intune management capabilities across the five Android Enterprise enrollment modes: COBO (Fully Managed), BYOD (Work Profile), Dedicated (COSU), ZTE (Zero-Touch), and AOSP (stub reference). It is organized mode-first (columns = modes, rows = features) across six locked domains — Enrollment, Configuration, App Deployment, Compliance, Software Updates, and Conditional Access. For Apple↔Android capability analogs across these modes, see the [Cross-Platform Equivalences section](#cross-platform-equivalences) below, which lays out three paired rows mapping iOS/Apple enrollment concepts to Android enrollment concepts. For the sibling platform matrices, see [iOS Capability Matrix](ios-capability-matrix.md) and [macOS Capability Matrix](macos-capability-matrix.md). For the enrollment narrative that gave rise to these 5 modes (including the two-axes ownership × management-scope model), see [Android Provisioning Lifecycle](../android-lifecycle/00-enrollment-overview.md). For a side-by-side comparison of Android capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
@@ -151,6 +161,7 @@ For a side-by-side comparison of Android Enterprise capabilities against Windows
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-30 | Phase 58 D-14: `#deferred-4-platform-unified-capability-comparison` anchor preserved; H3 `Deferred:` prefix dropped; 7-line body retargeted to single-sentence forward-link prose to `4-platform-capability-comparison.md`. Phase 45 AEAOSPFULL-09 anchor-preservation precedent. Plan 58-04 also appended D-12 5C intro cross-ref sentence and W-8 domain-count rewrite (`five locked domains` → `six locked domains` enumerating Conditional Access). | -- |
 | 2026-04-25 | Phase 45 AEAOSPFULL-09: `#deferred-full-aosp-capability-mapping` anchor fill — replaced "deferred to v1.4.1" prose with cross-link to new `aosp-oem-matrix.md` per AEAOSPFULL-09 verbatim "link to" wording. Anchor preserved for backward-compat. | -- |
 | 2026-04-24 | Initial version — Phase 42: Android Enterprise capability matrix (5 domains, 5 mode rows, Cross-Platform Equivalences H2 with 3 paired rows, Key Gaps Summary, deferral footers) | -- |

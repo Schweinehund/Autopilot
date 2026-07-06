@@ -1,4 +1,8 @@
 ---
+doc_id: RE-142
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: both
@@ -6,7 +10,13 @@ audience: all
 platform: all
 ---
 
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-142 · **Status:** Approved
+
 # Reference Documentation
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
 
 Technical reference documents for Windows Autopilot and macOS ADE configuration, security, migration, and monitoring. For the deployment pipeline, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For post-deployment operations, see [Device Operations](../device-operations/00-overview.md).
 
@@ -58,6 +68,7 @@ Technical reference documents for Windows Autopilot and macOS ADE configuration,
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-04-17 | Added iOS References section with iOS Capability Matrix (NAV-03) |
 | 2026-04-14 | Added macOS Capability Matrix to macOS References section |
 | 2026-04-13 | Initial version — organizes all Phase 21 reference files by sub-domain |

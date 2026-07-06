@@ -1,4 +1,8 @@
 ---
+doc_id: RE-143
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-24
 review_by: 2026-09-24
 applies_to: both
@@ -6,7 +10,13 @@ audience: admin
 platform: all
 ---
 
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-143 · **Status:** Approved
+
 # 5-Platform Capability Comparison: Windows, macOS, iOS/iPadOS, Android, Linux
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
 
 This reference doc compares Microsoft Intune management capabilities across all five platforms in the v1.5 documentation suite — Windows (Autopilot v1 / v2), macOS (Apple Automated Device Enrollment via Apple Business Manager), iOS / iPadOS (Apple ADE + Account-Driven User Enrollment + MAM-WE), Android (Android Enterprise — COBO / COPE / BYOD / Dedicated / ZTE / AOSP), and Linux (Ubuntu 22.04 / 24.04 LTS via the `intune-portal` deb client). Each non-empty cell carries a verdict word followed by a hyperlink to the source per-platform capability matrix (link-not-copy structural reference per PITFALL-7 — no per-cell duplication of platform-specific matrix prose).
 
@@ -117,6 +127,7 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 91: add macOS 26 in-place ABM migration row under ## Enrollment; update V-63-09 BASELINE in check-phase-63.mjs atomically | -- |
 | 2026-05-01 | Initial version — Phase 58: 5-platform capability comparison (Windows, macOS, iOS, Android, Linux) across 6 domain H2s with link-not-copy cell architecture (DEFER-08 / AECOMPARE-01 close; CLEAN-05) | -- |
 | 2026-06-21 | Add `## Single Sign-On` section (7th H2) with one feature row — macOS Platform SSO cell (X3 SC2 verbatim, links matrix `#authentication`); non-macOS cells bare N/A (X2); update front-matter dates (DS-2) | -- |

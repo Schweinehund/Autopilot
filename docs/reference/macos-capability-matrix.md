@@ -1,4 +1,8 @@
 ---
+doc_id: RE-159
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-24
 review_by: 2026-09-24
 applies_to: both
@@ -6,7 +10,13 @@ audience: admin
 platform: all
 ---
 
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-159 · **Status:** Approved
+
 # Intune: macOS vs Windows Capability Matrix
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
 
 This document compares Intune management capabilities between Windows and macOS across five operational domains. This is a feature parity analysis, not a terminology comparison -- for concept mapping between platforms, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For macOS admin setup guides, see [macOS Admin Setup Overview](../admin-setup-macos/00-overview.md). For a side-by-side comparison of macOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
@@ -132,3 +142,9 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 | 2026-06-22 | Phase 81 (SSOREF-04): added E4 See Also cross-link to 07-platform-sso-setup.md | -- |
 | 2026-06-21 | Add `## Authentication` section (7 rows: auth methods, hardware gate, macOS version floor, Entra licensing, NUAL, passkey/FIDO2, hybrid Entra join anti-feature); update `## Configuration` Platform SSO row to link `#authentication` (X1); refresh DS-2 dates | -- |
 | 2026-06-23 | Phase 85 (REF-01): add Kerberos SSO Extension rows under ## Authentication | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

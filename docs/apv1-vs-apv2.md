@@ -1,13 +1,24 @@
 ---
+doc_id: RE-177
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-11
 review_by: 2026-06-09
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide applies to Windows Autopilot (classic). For Autopilot Device Preparation, see below.
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-177 · **Status:** Approved
 
 # APv1 vs APv2: Which Autopilot Are You Troubleshooting?
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide applies to Windows Autopilot (classic). For Autopilot Device Preparation, see below.
 
 Microsoft now maintains two distinct Autopilot frameworks: Windows Autopilot (APv1, the original classic framework) and Windows Autopilot Device Preparation (APv2, introduced for Windows 11). This page helps you determine which framework applies to your deployment so you follow the correct troubleshooting documentation. When in doubt, check whether hardware hash pre-staging was required to set up the device — that alone identifies APv1.
 
@@ -64,3 +75,9 @@ Microsoft now maintains two distinct Autopilot frameworks: Windows Autopilot (AP
 ---
 
 *Feature comparison sourced from [Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/device-preparation/compare), updated April 2025.*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

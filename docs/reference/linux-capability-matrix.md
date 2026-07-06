@@ -1,4 +1,8 @@
 ---
+doc_id: RE-158
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: both
@@ -6,7 +10,13 @@ audience: admin
 platform: Linux
 ---
 
+**Platform:** Linux · **Doc Type:** Reference · **Doc ID:** RE-158 · **Status:** Approved
+
 # Intune: Linux vs Windows Capability Matrix
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
 
 This document compares Intune management capabilities between Windows (Autopilot v1, Autopilot v2, manual enrollment) and Linux (Ubuntu 22.04 LTS, Ubuntu 24.04 LTS — `intune-portal` deb client). Linux Intune management is structurally narrower than Windows; this matrix quantifies the gaps and provides a Cross-Platform Equivalences section attributing the closest Apple/Android analogs for each Linux capability.
 
@@ -116,4 +126,5 @@ The most significant capability gaps for Linux compared to Windows are:
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
 | 2026-04-27 | Initial version — Linux capability matrix Win\|Linux bilateral; 6 domain H2s with CA elevated; 3-pair Cross-Platform Equivalences (Phase 50) | -- |
