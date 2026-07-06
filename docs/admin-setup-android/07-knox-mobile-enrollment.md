@@ -16,7 +16,7 @@ applies_to: KME
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Samsung Knox Mobile Enrollment (KME), which provisions Samsung hardware into existing Android Enterprise modes — Fully Managed (COBO), Dedicated, or COPE/WPCO — rather than serving as its own enrollment mode. It requires Managed Google Play binding, but not the Zero-Touch portal, since KME and Zero-Touch are mutually exclusive on Samsung fleets. Requires Knox Admin Portal access and the Intune Administrator role.
 
 > **Platform gate:** Samsung Knox Mobile Enrollment (KME) — Knox Admin Portal account setup, EMM profile, Custom JSON Data, and Knox→Intune handoff for Samsung Android Enterprise enrollment. Samsung-only.
 > For iOS, see [iOS Admin Guides](../admin-setup-ios/00-overview.md); for macOS, [macOS Admin Setup](../admin-setup-macos/00-overview.md); for terminology, [Android glossary](../_glossary-android.md).

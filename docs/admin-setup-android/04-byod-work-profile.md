@@ -17,7 +17,7 @@ phase_46_wave2_retrofit: 2026-04-25
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Android Enterprise BYOD (personally-owned) Work Profile enrollment, where a managed work-profile partition coexists with personal apps and data on the user's own device. It requires Managed Google Play binding to distribute the Microsoft Intune and Company Portal apps, but does not use the Zero-Touch portal since BYOD enrollment is user-initiated with no distributable token. Requires the Intune Administrator role, or a custom role granting enrollment-restriction and Android-configuration permissions.
 
 > **Platform gate:** This guide covers Android Enterprise BYOD (personally-owned) Work Profile enrollment through Microsoft Intune, including enrollment restrictions, work profile policy, data transfer controls, privacy boundary table, Wi-Fi certificate-based authentication, the management app change (Company Portal → Microsoft Intune app), and the AMAPI migration callout (April 2025).
 > For corporate-owned Fully Managed (COBO) enrollment, see [03-fully-managed-cobo.md](03-fully-managed-cobo.md#key-concepts).

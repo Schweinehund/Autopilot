@@ -16,7 +16,7 @@ applies_to: ZTE
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Zero-Touch Enrollment (ZTE) portal setup — creating the Zero-Touch portal account, linking it to Intune, and authoring the DPC extras JSON — used to enable Zero-Touch provisioning for Fully Managed (COBO), Dedicated, and mixed corporate fleets. It requires both Managed Google Play binding and Zero-Touch portal access, plus the Intune Administrator role.
 
 > **Platform gate:** ZT portal account setup, DPC extras JSON, and ZT↔Intune linking for Android Enterprise Zero-Touch Enrollment (ZTE).
 > For iOS, see [iOS Admin Guides](../admin-setup-ios/00-overview.md); for macOS, [macOS Admin Setup](../admin-setup-macos/00-overview.md); for terminology, [Android glossary](../_glossary-android.md).

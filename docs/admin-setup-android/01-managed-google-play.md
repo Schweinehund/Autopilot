@@ -16,7 +16,7 @@ applies_to: GMS-modes
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Managed Google Play (MGP) tenant binding, the foundational prerequisite for every Android Enterprise GMS enrollment mode — Fully Managed (COBO), BYOD Work Profile, Dedicated (COSU), and Zero-Touch Enrollment (ZTE). It requires Managed Google Play portal access (not Zero-Touch portal access), and the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
 > **Platform gate:** This guide covers Managed Google Play (MGP) tenant binding for Android
 > Enterprise GMS modes: COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), and

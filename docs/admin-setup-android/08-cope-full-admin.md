@@ -16,7 +16,7 @@ applies_to: COPE
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Android Enterprise Corporate-Owned Work Profile (COPE / WPCO) enrollment, in which a managed work-profile container is isolated from a personal-side partition on a corporate-owned device. It requires Managed Google Play binding as a hard prerequisite, and Zero-Touch portal access only if Zero-Touch is the chosen provisioning method among the five supported options. Requires the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
 > **Platform gate:** This guide covers Android Enterprise Corporate-owned devices with work profile (COPE / WPCO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all five provisioning methods (QR code, NFC, `afw#setup`, Token entry, Zero-Touch) with COPE-specific Android 11+ removal callouts, the inverse-direction COPE Migration Note back-link to the COBO sibling, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration with the COPE-specific FRP behavior table and the Settings-app-reset Google-account re-enrollment requirement, the Android 15 Private Space ⚠️ unmanaged callout, and the COPE-vs-COBO decision matrix.
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).

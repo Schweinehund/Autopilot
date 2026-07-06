@@ -17,7 +17,7 @@ phase_46_wave2_retrofit: 2026-04-25
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Android Enterprise Fully Managed (COBO) enrollment, in which the entire device is corporate-managed with no personal app surface. It requires Managed Google Play binding as a hard prerequisite, and Zero-Touch portal access only if Zero-Touch is the chosen provisioning method among the four supported options. Requires the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
 > **Platform gate:** This guide covers Android Enterprise Fully Managed (COBO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all four provisioning methods (QR code, NFC, `afw#setup`, Zero-Touch), the COPE migration note, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration, and Entra join behavior.
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).

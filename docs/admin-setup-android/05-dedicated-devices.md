@@ -16,7 +16,7 @@ applies_to: Dedicated
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers Android Enterprise Dedicated (kiosk/COSU) enrollment across four scenarios — single-app kiosk, multi-app kiosk, digital signage, and Entra shared device mode. It requires Managed Google Play binding as a hard prerequisite, and Zero-Touch portal access only if Zero-Touch is the chosen provisioning method. Requires the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
 > **Platform gate:** This guide covers Android Enterprise Dedicated (kiosk/COSU) enrollment through Microsoft Intune — including the four Dedicated scenarios (single-app kiosk, multi-app kiosk with Managed Home Screen, digital signage, and Entra shared device mode), enrollment profile creation, enrollment token lifecycle, all four provisioning methods with Dedicated-specific constraint callouts, MHS exit-PIN synchronization (the top repeated-escalation pattern for Dedicated devices), and Android 15 FRP re-provisioning behavior for kiosk fleets. Applies to Android 8.0+.
 > For Android Enterprise Fully Managed (COBO) enrollment, see [03-fully-managed-cobo.md](03-fully-managed-cobo.md#key-concepts).
