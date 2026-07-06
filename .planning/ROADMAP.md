@@ -289,11 +289,11 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 119-02-PLAN.md — Atom 1 (ONE commit): v1.15-milestone-audit.mjs (C1-C16 + C17 folded via execFileSync subprocess-spawn) + repointed v1.15-audit-allowlist.json (pins re-verified) + BASELINE_19 comment (JIT-anchored) (HARN-03)
+- [x] 119-02-PLAN.md — Atom 1 (ONE commit b530243): v1.15-milestone-audit.mjs (C1-C16 + C17 folded via execFileSync subprocess-spawn) + repointed v1.15-audit-allowlist.json (pins re-verified) + BASELINE_19 comment (JIT-anchored) (HARN-03)
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 119-03-PLAN.md — Atom 2 (ONE commit) + push: check-phase-113..119 (6 leaves + apex [48..118]=71 entries, CHAIN_SKIP ∅) + frozen-at-close V114='7d922a7' pin + audit-harness-v1.15-integrity.yml (12th CI workflow); push triggers the authoritative Axis-2 GHA (HARN-02, HARN-03)
+- [x] 119-03-PLAN.md — Atom 2 (ONE commit 5ec0f87) + push: check-phase-113..119 (6 leaves + apex [48..118]=71 entries, CHAIN_SKIP ∅) + frozen-at-close V114='7d922a7' pin + audit-harness-v1.15-integrity.yml (12th CI workflow); pushed branch phase-119-atom-2 / PR #2 → Axis-2 GHA run 28823233887 (HARN-02, HARN-03)
 
 **Wave 4** *(blocked on Wave 3)*
 
@@ -338,4 +338,4 @@ Plans:
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
 | 118. Reference Doc Retrofit + Table Remediation | 6/6 | Complete    | 2026-07-06 |
-| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 1/7 | In Progress|  |
+| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 3/7 | In Progress|  |
