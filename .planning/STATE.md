@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T20:46:47.520Z"
+last_updated: "2026-07-06T21:31:44.790Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 40
-  completed_plans: 35
-  percent: 88
+  completed_plans: 37
+  percent: 86
 ---
 
 # Project State
@@ -347,17 +347,18 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 
 ### Blockers/Concerns
 
-None at roadmap stage. Execution-time watch items (not blockers — address within specified phases):
+at roadmap stage. Execution-time watch items (not blockers — address within specified phases):
 
 - ✅ Phase 113: Live Copilot Studio access — RESOLVED as owner-run (D-01); all six queries passed with grounded results, clickable citations, no hallucinations (2026-07-04)
 - ✅ Phase 113: YAML frontmatter leak (P-08) and heading style loss (P-09) — RESOLVED; guard script (guard-docx.mjs) green on all 5 representative docs; pipeline locked
 - Phase 114: D1 platform normalization map must cover ALL ~19-20 real `platform:` variants in the corpus — a missed value will cause C17 to FAIL all files using it; enumerate real values at plan time
 - Phase 119: The frozen-surface re-baseline is the dominant technical risk — first milestone to deliberately re-pin ~all Phase-1 frozen surfaces at once; requires the same apex+continuity atomic-green discipline used at v1.12–v1.14 closes
 - Phase 119: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..118] (71 entries, +7 from v1.14); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
+- 119-05 fired: C15 harness-run greened (ABAUDIT-26/27), but Axis-2 apex RED on 3 predecessors (check-phase-50/52/65). Second predecessor-validator-only remediation required; reported for decision.
 
 ## Session Continuity
 
-Last session: 2026-07-06T21:05:00.000Z
+Last session: 2026-07-06T21:31:44.775Z
 Stopped at: Completed 119-03-PLAN.md (Atom 2: check-phase-113..119 + frozen-at-close V114 + v1.15 CI workflow; pushed branch phase-119-atom-2 / PR #2; Axis-2 v1.15 workflow run 28823233887 armed)
 Resume file: None
 Next action: Run /gsd-execute-phase 119 to continue with Plan 119-04 (predecessor-byte-unchanged HARD gate + Axis-2 cross-OS EXACT-MATCH consuming workflow run 28823233887).
