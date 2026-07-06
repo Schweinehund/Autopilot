@@ -97,3 +97,8 @@ None - no external service configuration required.
 ---
 *Phase: 117-admin-setup-guide-retrofit-all-platforms*
 *Completed: 2026-07-06*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/phases/117-admin-setup-guide-retrofit-all-platforms/117-10-SUMMARY.md
+- FOUND: 777ff8d (SUMMARY commit)

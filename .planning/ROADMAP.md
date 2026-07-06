@@ -41,7 +41,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 114: EEE Standard, Templates, Doc ID Registry + Metadata Rules** — Author the EEE SOP standard, update templates, assign all Phase-1 Doc IDs, and verify the C10 precondition (completed 2026-07-04)
 - [x] **Phase 115: C17 Harness Check (Validator Atom)** — Author C17 as one indivisible blocking validator atom asserting the full EEE contract from Markdown source (completed 2026-07-04)
 - [x] **Phase 116: L1/L2 Runbook Retrofit (~75 docs)** — Retrofit all L1/L2 runbooks to EEE with C17 green on every file (completed 2026-07-05)
-- [ ] **Phase 117: Admin-Setup Guide Retrofit (all platforms)** — Retrofit all admin-setup guides (Windows / macOS / iOS / Android / Linux / 802.1X) to EEE with C17 green
+- [x] **Phase 117: Admin-Setup Guide Retrofit (all platforms)** — Retrofit all admin-setup guides (Windows / macOS / iOS / Android / Linux / 802.1X) to EEE with C17 green (completed 2026-07-06)
 - [ ] **Phase 118: Reference Doc Retrofit + Table Remediation (~26 docs)** — Retrofit all reference docs to EEE including table remediation so capability-matrix content survives chunk boundaries
 - [ ] **Phase 119: Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-audit Close** — Atomically re-pin all Phase-1 frozen surfaces, author the 13th Path-A harness lineage bump, and close with a 3-axis terminal re-audit
 
@@ -228,7 +228,7 @@ Plans:
 
 **Wave 10** *(blocked on Wave 9)*
 
-- [ ] 117-10-PLAN.md — Phase gate: enrollment-completeness precheck scoped to 57 (9 mermaid stay keyless/Pending) + full-class C17 exit 0 (RETRO-02, SC4)
+- [x] 117-10-PLAN.md — Phase gate: enrollment-completeness precheck scoped to 57 (9 mermaid stay keyless/Pending) + full-class C17 exit 0 (RETRO-02, SC4)
 
 ### Phase 118: Reference Doc Retrofit + Table Remediation (~26 docs)
 
@@ -287,6 +287,6 @@ Plans:
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
-| 117. Admin-Setup Guide Retrofit | 9/10 | In Progress|  |
+| 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
