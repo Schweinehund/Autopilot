@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T21:31:44.790Z"
+last_updated: "2026-07-06T21:59:34.071Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 40
-  completed_plans: 37
+  completed_plans: 38
   percent: 86
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 119 (frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal) — EXECUTING
-Plan: 4 of 7
+Plan: 5 of 7
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -358,10 +358,10 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-06T21:45:00.000Z
-Stopped at: Completed 119-05-PLAN.md round-2 (predecessor chain-health remediation; frozen-aware reads for check-phase-50/52/65; commit 652f48e; authoritative Axis-2 GREEN run 28825186128)
+Last session: 2026-07-06T21:59:34.052Z
+Stopped at: Completed 119-04-PLAN.md (3-axis terminal re-audit + predecessor-byte-unchanged HARD gate; 119-04-AUDIT-RESULTS.md e02ecf7). Axis-2 authoritative GHA run 28825186128 (sha 652f48e) apex check-phase-119 [48..118] = 73/0/1 GREEN; cross-OS EXACT MATCH (harness + 6 leaves 113-118 across Axis 1/2/3); predecessor-byte-unchanged = EMPTY over 35 non-Phase-1 frozen surfaces. Composite verdict: Axis-2 GREEN + EXACT MATCH yes + byte-unchanged EMPTY.
 Resume file: None
-Next action: Run /gsd-execute-phase 119 to continue with Plan 119-06/07 (PIPE-02 owner-run grounding-confirmation + single close-gate flipping all 16 v1.15 reqs to Validated). Axis-2 apex GREEN precondition is cleared; close-gate now gated only on owner PIPE-02 PASS.
+Next action: Run /gsd-execute-phase 119 to continue with Plan 119-06 (PIPE-02 owner-run grounding-confirmation — the SOLE remaining close-gate precondition) then 119-07 (single close-gate flipping all 16 v1.15 reqs to Validated). Three of four close-gate preconditions cleared (Axis-2 GREEN, EXACT MATCH, byte-unchanged EMPTY); only owner PIPE-02 PASS pending.
 
 ## Operator Next Steps
 
@@ -410,3 +410,5 @@ Next action: Run /gsd-execute-phase 119 to continue with Plan 119-06/07 (PIPE-02
 | Phase 119 P01 | 10min | 2 tasks | 1 files |
 | Phase 119 P02 | 40min | 3 tasks | 3 files (Atom 1: harness + sidecar + BASELINE_19) |
 | Phase 119 P03 | 40min | 3 tasks | 9 files (Atom 2: check-phase-113..119 + frozen-at-close V114 + v1.15 CI workflow; pushed PR #2; Axis-2 run 28823233887) |
+| Phase 119 P05 | 55min | 2 tasks | 5 files (remediation slot: C15 FP exemptions + frozen-aware reads 50/52/65; Axis-2 GREEN run 28825186128) |
+| Phase 119 P04 | 20min | 3 tasks | 2 files (3-axis re-audit + byte-gate; Axis-2 GREEN 73/0/1; EXACT MATCH; byte-unchanged EMPTY) |
