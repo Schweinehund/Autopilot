@@ -18,7 +18,9 @@ platform: Windows
 
 This reference document provides a migration guide for moving Group Policy Objects to Intune using Group Policy Analytics, organized by business outcome rather than by GPO setting name, including an outcome-to-Settings-Catalog mapping table and a do-not-migrate list. It covers Windows Autopilot-managed devices under both APv1 and APv2. The primary audience is Intune administrators executing a GPO-to-Intune migration.
 
-> **Version gate:** This guide covers migrating Group Policy Objects to Intune using Group Policy Analytics. Applies to both APv1 and APv2 managed devices. Devices must be Entra joined (cloud-only or hybrid) for Intune policies to apply.
+> **Version gate:** This guide covers migrating Group Policy Objects to Intune using Group Policy Analytics.
+
+> Applies to both APv1 and APv2 managed devices. Devices must be Entra joined (cloud-only or hybrid) for Intune policies to apply.
 
 Organizations transitioning from on-premises Active Directory Group Policy to Intune-managed policy use Group Policy Analytics (GPA) to assess and migrate GPO settings. This guide is organized by business outcome — what the policy achieves — rather than by GPO setting name. This reduces the mapping effort and avoids migrating settings that no longer apply in a cloud-managed environment.
 
@@ -71,7 +73,11 @@ For settings with "Ready for migration" status:
 4. Assign the profile to the equivalent device or user group in Intune.
 5. Verify the policy applies to pilot devices before expanding to production groups.
 
-> **What breaks if sequenced incorrectly:** Admin migrates GPO settings to Intune but leaves the original GPO active in Active Directory. Both GPO and Intune apply the same settings. If the values differ, "last write wins" behavior is unpredictable — the admin cannot rely on which policy takes effect. Always remove the GPO from the OU scope (or block inheritance) AFTER confirming the Intune policy applies correctly to the target devices.
+> **What breaks if sequenced incorrectly:** Admin migrates GPO settings to Intune but leaves the original GPO active in Active Directory. Both GPO and Intune apply the same settings.
+
+> If the values differ, "last write wins" behavior is unpredictable — the admin cannot rely on which policy takes effect.
+
+> Always remove the GPO from the OU scope (or block inheritance) AFTER confirming the Intune policy applies correctly to the target devices.
 
 ### Step 5: Handle unsupported settings
 
@@ -109,7 +115,11 @@ Some GPO categories should not be migrated to Intune. They depend on on-premises
 | Environment-specific GPOs (printer mappings, drive mappings to on-prem servers) | References on-premises paths or servers not available to cloud devices | Universal Print for printers; OneDrive/SharePoint for file shares; Intune scripts for complex mappings |
 | Drive mapping GPOs | Maps network drives to on-premises file servers | OneDrive, SharePoint, or Intune PowerShell script for UNC path drives |
 
-> **Admin Note:** Attempting to migrate login scripts or folder redirection as Custom OMA-URI entries will technically succeed in Intune but fail at runtime on cloud-only devices because the scripts reference domain resources (SYSVOL, UNC paths, AD security groups) that are not reachable. These must be replaced with cloud-native alternatives before migration.
+> **Admin Note:** Attempting to migrate login scripts or folder redirection as Custom OMA-URI entries will technically succeed in Intune
+
+> but fail at runtime on cloud-only devices because the scripts reference domain resources (SYSVOL, UNC paths, AD security groups) that are not reachable.
+
+> These must be replaced with cloud-native alternatives before migration.
 
 ## Rollback/Recovery
 

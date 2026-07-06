@@ -159,16 +159,16 @@
 | RE-143 | docs/reference/4-platform-capability-comparison.md | 5-Platform Capability Comparison: Windows, macOS, iOS/iPadOS, Android, Linux | Reference | Approved |
 | RE-144 | docs/reference/android-capability-matrix.md | Intune: Android Capability Matrix — Modes by Feature | Reference | Approved |
 | RE-145 | docs/reference/aosp-oem-matrix.md | Intune: AOSP OEM Matrix — RealWear / Zebra / Pico / HTC / Meta Quest | Reference | Approved |
-| RE-146 | docs/reference/apv1-apv2-migration.md | APv1-to-APv2 Migration: Parallel Deployment Playbook | Reference | Pending |
+| RE-146 | docs/reference/apv1-apv2-migration.md | APv1-to-APv2 Migration: Parallel Deployment Playbook | Reference | Approved |
 | RE-147 | docs/reference/ca-enrollment-timing.md | Conditional Access Enrollment Timing: The Compliance Chicken-and-Egg Problem | Reference | Pending |
 | RE-148 | docs/reference/compliance-timing.md | Compliance Policy Timing and State Transitions | Reference | Pending |
-| RE-149 | docs/reference/deployment-reporting.md | Intune Deployment Reporting for Windows Autopilot | Reference | Pending |
-| RE-150 | docs/reference/drift-detection.md | Registration and Profile Assignment Drift Detection | Reference | Pending |
+| RE-149 | docs/reference/deployment-reporting.md | Intune Deployment Reporting for Windows Autopilot | Reference | Approved |
+| RE-150 | docs/reference/drift-detection.md | Registration and Profile Assignment Drift Detection | Reference | Approved |
 | RE-151 | docs/reference/endpoints.md | Network Endpoints Reference | Reference | Pending |
-| RE-152 | docs/reference/entra-prerequisites.md | Entra ID Prerequisite Configuration for Autopilot | Reference | Pending |
-| RE-153 | docs/reference/esp-timeout-tuning.md | ESP Timeout Tuning Guide | Reference | Pending |
-| RE-154 | docs/reference/gpo-to-intune.md | GPO-to-Intune Policy Migration Guide | Reference | Pending |
-| RE-155 | docs/reference/imaging-to-autopilot.md | On-Premises Imaging to Autopilot Migration Guide | Reference | Pending |
+| RE-152 | docs/reference/entra-prerequisites.md | Entra ID Prerequisite Configuration for Autopilot | Reference | Approved |
+| RE-153 | docs/reference/esp-timeout-tuning.md | ESP Timeout Tuning Guide | Reference | Approved |
+| RE-154 | docs/reference/gpo-to-intune.md | GPO-to-Intune Policy Migration Guide | Reference | Approved |
+| RE-155 | docs/reference/imaging-to-autopilot.md | On-Premises Imaging to Autopilot Migration Guide | Reference | Approved |
 | RE-156 | docs/reference/ios-capability-matrix.md | Intune: iOS/iPadOS Capability Matrix — Windows, macOS, iOS | Reference | Approved |
 | RE-157 | docs/reference/licensing-matrix.md | Autopilot Licensing Requirements | Reference | Pending |
 | RE-158 | docs/reference/linux-capability-matrix.md | Intune: Linux vs Windows Capability Matrix | Reference | Approved |
@@ -176,7 +176,7 @@
 | RE-160 | docs/reference/macos-commands.md | macOS Terminal Commands Reference | Reference | Pending |
 | RE-161 | docs/reference/macos-log-paths.md | macOS Log Paths and Configuration Profile Locations | Reference | Pending |
 | RE-162 | docs/reference/network-infrastructure.md | Network Infrastructure Requirements for Windows Autopilot | Reference | Pending |
-| RE-163 | docs/reference/new-batch-workflow.md | New Batch of Devices: End-to-End Operational Workflow | Reference | Pending |
+| RE-163 | docs/reference/new-batch-workflow.md | New Batch of Devices: End-to-End Operational Workflow | Reference | Approved |
 | RE-164 | docs/reference/powershell-ref.md | PowerShell Function Reference | Reference | Pending |
 | RE-165 | docs/reference/registry-paths.md | Autopilot Registry Paths Reference | Reference | Pending |
 | RE-166 | docs/reference/security-baseline-conflicts.md | Security Baseline Interactions with Autopilot Provisioning | Reference | Pending |

@@ -18,7 +18,9 @@ platform: Windows
 
 This reference document provides a migration playbook for transitioning devices between Windows Autopilot classic (APv1) and Autopilot Device Preparation (APv2), covering readiness criteria, feature gaps, a coexistence deployment model, and rollback procedures. It applies to Windows Autopilot environments running both frameworks simultaneously. The primary audience is Intune administrators planning or executing a phased APv1-to-APv2 migration.
 
-> **Version gate:** This guide covers migration from Windows Autopilot (classic/APv1) to Autopilot Device Preparation (APv2). This is a coexistence model, not a one-shot cutover. For feature differences, see [APv1 vs APv2](../apv1-vs-apv2.md).
+> **Version gate:** This guide covers migration from Windows Autopilot (classic/APv1) to Autopilot Device Preparation (APv2).
+
+> This is a coexistence model, not a one-shot cutover. For feature differences, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Both Autopilot frameworks can run in the same tenant simultaneously, targeting different device populations. This guide structures the migration as an ongoing coexistence state — APv1 and APv2 operate in parallel for weeks or months while devices are migrated by category. There is no hard cutover.
 
@@ -82,7 +84,9 @@ Categorize the existing fleet by APv2 compatibility using the Readiness Checklis
 | Kiosk/shared devices (self-deploying) | No | Stay APv1 indefinitely |
 | Devices requiring pre-provisioning | No | Stay APv1 until APv2 adds support |
 
-> **What breaks if sequenced incorrectly:** Migrating hybrid-join devices to APv2 fails silently. The device enrolls but never completes the hybrid join. The admin discovers this weeks later when Conditional Access blocks access because the device is not hybrid joined. Always complete the blocker assessment before migrating any device category.
+> **What breaks if sequenced incorrectly:** Migrating hybrid-join devices to APv2 fails silently. The device enrolls but never completes the hybrid join.
+
+> The admin discovers this weeks later when Conditional Access blocks access because the device is not hybrid joined. Always complete the blocker assessment before migrating any device category.
 
 ### Step 2: Create APv2 deployment policy for pilot group
 
@@ -96,7 +100,9 @@ Categorize the existing fleet by APv2 compatibility using the Readiness Checklis
 
 When both an APv1 profile and an APv2 policy apply to a device, APv1 silently wins. You must remove the APv1 registration or profile assignment before APv2 can take effect.
 
-> **What breaks if sequenced incorrectly:** Admin assigns APv2 policy but forgets to remove APv1 registration. The device uses APv1 silently. The admin believes APv2 is working, but it never activates. Discovery happens when APv2-specific features (near real-time monitoring, Enrollment Time Grouping) do not appear in reports.
+> **What breaks if sequenced incorrectly:** Admin assigns APv2 policy but forgets to remove APv1 registration. The device uses APv1 silently.
+
+> The admin believes APv2 is working, but it never activates. Discovery happens when APv2-specific features (near real-time monitoring, Enrollment Time Grouping) do not appear in reports.
 
 Choose one of the following approaches:
 
@@ -110,7 +116,9 @@ Choose one of the following approaches:
 2. Open the APv1 profile assigned to the pilot devices.
 3. Under Assignments, remove the pilot device group.
 
-> **Admin Note:** Option A permanently removes the hardware hash. If APv2 migration fails and the device needs to fall back to APv1, the hardware hash must be re-collected and re-imported. Option B is reversible — add the device group back to re-activate APv1 if migration fails.
+> **Admin Note:** Option A permanently removes the hardware hash. If APv2 migration fails and the device needs to fall back to APv1, the hardware hash must be re-collected and re-imported.
+
+> Option B is reversible — add the device group back to re-activate APv1 if migration fails.
 
 ### Step 4: Wipe and re-provision pilot devices with APv2
 

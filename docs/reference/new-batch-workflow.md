@@ -44,7 +44,9 @@ When a new batch of devices arrives, there is a specific sequence of steps that 
 | 7. Post-Enrollment Verification | Admin verifies in Intune portal | Compliance = Compliant (allow 15–30 minutes); Apps = Installed; Profile = Assigned | If non-compliant: see [Compliance Timing](compliance-timing.md) |
 | 8. User Handoff | Deliver device to end user with first-login instructions | User can sign in and access corporate resources (email, Teams, SharePoint) | If access blocked: check Conditional Access per [CA Enrollment Timing](ca-enrollment-timing.md) |
 
-> **Critical sequence note:** Do NOT power on devices (Stage 6) before Profile Assignment is confirmed (Stage 4). A device that reaches OOBE before the profile is assigned will go through standard Windows setup instead of Autopilot. If this happens, the device must be reset before Autopilot can run.
+> **Critical sequence note:** Do NOT power on devices (Stage 6) before Profile Assignment is confirmed (Stage 4).
+
+> A device that reaches OOBE before the profile is assigned will go through standard Windows setup instead of Autopilot. If this happens, the device must be reset before Autopilot can run.
 
 ## Pre-Batch Checklist
 

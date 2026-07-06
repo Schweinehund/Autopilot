@@ -39,7 +39,9 @@ Autopilot deployments can silently drift out of a healthy state after initial re
 | Assigned | Normal healthy state | Permanent (until deregistered) | None — device is correctly configured |
 | Fix pending | Hardware change detected on device; Intune attempting to re-register | Hours to days | If persists >24 hours: check if device hardware hash changed (motherboard/drive replacement). May need to deregister and re-register. |
 
-> **What breaks if misconfigured:** Dynamic group rule has a typo in the ZTDId attribute name (for example, `device.physicalIds -any _ -eq "[ZTDid]"` — note wrong casing). Devices never match the group. Profile stays "Not assigned." Devices go through manual OOBE instead of Autopilot.
+> **What breaks if misconfigured:** Dynamic group rule has a typo in the ZTDId attribute name (for example, `device.physicalIds -any _ -eq "[ZTDid]"` — note wrong casing).
+
+> Devices never match the group. Profile stays "Not assigned." Devices go through manual OOBE instead of Autopilot.
 > See: [Dynamic Device Groups for Autopilot](../admin-setup-apv1/04-dynamic-groups.md)
 
 ## Proactive Monitoring Procedures

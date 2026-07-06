@@ -18,13 +18,17 @@ platform: Windows
 
 This reference document provides a migration guide for transitioning from on-premises MDT or SCCM/ConfigMgr imaging to Windows Autopilot, covering app-packaging workflow, the Autopilot for Existing Devices SCCM path, and a parallel-operation rollback model. It covers Windows Autopilot deployments using either APv1 or APv2. The primary audience is Intune administrators and desktop engineers planning the imaging-to-Autopilot transition.
 
-> **Version gate:** This guide covers migration from MDT and SCCM/ConfigMgr imaging to Windows Autopilot (APv1 or APv2). Both Autopilot frameworks are valid targets. For APv1 vs APv2 selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+> **Version gate:** This guide covers migration from MDT and SCCM/ConfigMgr imaging to Windows Autopilot (APv1 or APv2).
+
+> Both Autopilot frameworks are valid targets. For APv1 vs APv2 selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Organizations running MDT task sequences or SCCM/ConfigMgr OSD can migrate to Windows Autopilot. This guide covers the migration paths, app packaging workflow, and parallel operation model to avoid service disruption during transition.
 
 ## MDT Retirement Notice
 
-> **Admin Note:** Microsoft Deployment Toolkit (MDT) receives no further updates, fixes, or support after the first ConfigMgr release following October 2025. Downloads have been removed from official channels. MDT-based task sequences must be replaced. There is no extended support timeline. If your organization still uses MDT, plan the transition now.
+> **Admin Note:** Microsoft Deployment Toolkit (MDT) receives no further updates, fixes, or support after the first ConfigMgr release following October 2025.
+
+> Downloads have been removed from official channels. MDT-based task sequences must be replaced. There is no extended support timeline. If your organization still uses MDT, plan the transition now.
 
 ## Migration Prerequisites
 
@@ -89,7 +93,9 @@ See [Win32 App Packaging Best Practices](win32-app-packaging.md) for detection r
 - **Required** — App is tracked by ESP and must install before the user reaches the desktop. Use for critical apps.
 - **Available** — App appears in Company Portal but does not block enrollment. Use for optional apps.
 
-> **What breaks if sequenced incorrectly:** Too many Required apps causes ESP timeouts. Move non-critical apps to Available assignment to keep the Required app count low. See [ESP Timeout Tuning](esp-timeout-tuning.md) for timeout thresholds by scenario.
+> **What breaks if sequenced incorrectly:** Too many Required apps causes ESP timeouts.
+
+> Move non-critical apps to Available assignment to keep the Required app count low. See [ESP Timeout Tuning](esp-timeout-tuning.md) for timeout thresholds by scenario.
 
 ### Step 5: Declare dependencies if install order matters
 
@@ -99,7 +105,9 @@ If App B requires App A to be installed first (runtime, framework, base componen
 2. Under **Dependencies**, add App A.
 3. Set **Automatically install** to Yes.
 
-> **What breaks if sequenced incorrectly:** App requires .NET Framework runtime. Runtime is not declared as a dependency. App installs before the runtime. App install fails. ESP retries the app install until the timeout is reached. The device fails enrollment with a generic app install error. Always declare runtime dependencies explicitly.
+> **What breaks if sequenced incorrectly:** App requires .NET Framework runtime. Runtime is not declared as a dependency. App installs before the runtime. App install fails.
+
+> ESP retries the app install until the timeout is reached. The device fails enrollment with a generic app install error. Always declare runtime dependencies explicitly.
 
 ## Autopilot for Existing Devices (SCCM Path)
 
@@ -121,7 +129,9 @@ For organizations with existing SCCM infrastructure that want to use Autopilot w
 3. In the task sequence, add a step to copy the JSON file to `%windir%\provisioning\autopilot\` before the OS reboot.
 4. The task sequence wipes the OS partition, installs a clean Windows image, and the device boots into OOBE where Autopilot applies the JSON profile.
 
-> **What breaks if sequenced incorrectly:** JSON file placed after the OS partition is wiped. File is lost. Device boots to OOBE without Autopilot profile. User sees a generic Windows OOBE, not an Autopilot-branded experience. The device enrolls as a standard non-Autopilot device if the user completes OOBE manually.
+> **What breaks if sequenced incorrectly:** JSON file placed after the OS partition is wiped. File is lost. Device boots to OOBE without Autopilot profile.
+
+> User sees a generic Windows OOBE, not an Autopilot-branded experience. The device enrolls as a standard non-Autopilot device if the user completes OOBE manually.
 
 ## Rollback/Recovery
 
