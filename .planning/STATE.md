@@ -354,14 +354,14 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 - Phase 114: D1 platform normalization map must cover ALL ~19-20 real `platform:` variants in the corpus — a missed value will cause C17 to FAIL all files using it; enumerate real values at plan time
 - Phase 119: The frozen-surface re-baseline is the dominant technical risk — first milestone to deliberately re-pin ~all Phase-1 frozen surfaces at once; requires the same apex+continuity atomic-green discipline used at v1.12–v1.14 closes
 - Phase 119: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..118] (71 entries, +7 from v1.14); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
-- 119-05 fired: C15 harness-run greened (ABAUDIT-26/27), but Axis-2 apex RED on 3 predecessors (check-phase-50/52/65). Second predecessor-validator-only remediation required; reported for decision.
+- 119-05 COMPLETE (2 rounds): round-1 C15 harness-run greened (ABAUDIT-26/27); round-2 predecessor chain-health greened via frozen-aware reads at V114 (7d922a7) on check-phase-50/52/65 (V-50-18/V-52-07/V-65-06) — read source only, NO value-mask, NO frozen-surface edit, CHAIN_SKIP ∅. Authoritative Axis-2 GREEN cross-OS = run 28825186128 (sha 652f48e; apex + linux-chain + 6 continuity leaves + harness-run all PASS). Axis-2 close-gate precondition CLEARED; no requirement flipped (119-07's job).
 
 ## Session Continuity
 
-Last session: 2026-07-06T21:31:44.775Z
-Stopped at: Completed 119-03-PLAN.md (Atom 2: check-phase-113..119 + frozen-at-close V114 + v1.15 CI workflow; pushed branch phase-119-atom-2 / PR #2; Axis-2 v1.15 workflow run 28823233887 armed)
+Last session: 2026-07-06T21:45:00.000Z
+Stopped at: Completed 119-05-PLAN.md round-2 (predecessor chain-health remediation; frozen-aware reads for check-phase-50/52/65; commit 652f48e; authoritative Axis-2 GREEN run 28825186128)
 Resume file: None
-Next action: Run /gsd-execute-phase 119 to continue with Plan 119-04 (predecessor-byte-unchanged HARD gate + Axis-2 cross-OS EXACT-MATCH consuming workflow run 28823233887).
+Next action: Run /gsd-execute-phase 119 to continue with Plan 119-06/07 (PIPE-02 owner-run grounding-confirmation + single close-gate flipping all 16 v1.15 reqs to Validated). Axis-2 apex GREEN precondition is cleared; close-gate now gated only on owner PIPE-02 PASS.
 
 ## Operator Next Steps
 
