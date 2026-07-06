@@ -187,7 +187,48 @@ Plans:
   3. Each retrofitted guide carries the "v1.15 EEE reformat — content not re-reviewed" Version-History row and `Last Reviewed` = `last_verified` verbatim (D2-A)
   4. C17 exits 0 on all admin-setup guide files before phase close (NOTE: discuss-phase flag — whether the ~8 guide sets across 6 platform families warrant splitting into multiple sub-phases; final granularity resolved at `/gsd-discuss-phase 117`)
 
-**Plans**: TBD
+**Plans**: 10 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 117-01-PLAN.md — Fork retrofit-guide.mjs from retrofit-runbook.mjs; FIX the whole-pre-H1-span data-loss defect; uniform owner + doc_type Guide; admin-setup allowlist + 9-mermaid exclusion; self-test + 57-file dry-run (RETRO-02)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 117-02-PLAN.md — Windows batch: apv1 02-10 + apv2 01-04 (13 files, platform: Windows injection), C17 green + registry Approved (RETRO-02)
+
+**Wave 3** *(blocked on Wave 2 — shared RE-index.md)*
+
+- [ ] 117-03-PLAN.md — Android core 01-08 (8 files, heavy #12: 76 groups), C17 green + registry Approved (RETRO-02)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 117-04-PLAN.md — Android AOSP-OEM 09-13 (5 files, all exercise the pre-H1 HTML-comment preservation fix), C17 green + registry Approved (RETRO-02)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 117-05-PLAN.md — iOS 01-09 (9 files, heaviest #12: 86 groups; 02-abm-token 2-blockquote case), C17 green + registry Approved (RETRO-02)
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [ ] 117-06-PLAN.md — macOS core 01-06 (6 files; 01-abm-configuration 2-blockquote case), C17 green + registry Approved (RETRO-02)
+
+**Wave 7** *(blocked on Wave 6)*
+
+- [ ] 117-07-PLAN.md — macOS SSO 07-11 (5 files, corpus-worst 1892c #12 group, Transform B heavy), C17 green + registry Approved (RETRO-02)
+
+**Wave 8** *(blocked on Wave 7)*
+
+- [ ] 117-08-PLAN.md — Linux 01-05 (5 files, generic scope-lead minus framework clause), C17 green + registry Approved (RETRO-02)
+
+**Wave 9** *(blocked on Wave 8)*
+
+- [ ] 117-09-PLAN.md — 802.1X 02-07 (6 files, cohesive/heterogeneous, per-file D1 label + Summary template; 1868c dot3svc Transform B), C17 green + registry Approved (RETRO-02)
+
+**Wave 10** *(blocked on Wave 9)*
+
+- [ ] 117-10-PLAN.md — Phase gate: enrollment-completeness precheck scoped to 57 (9 mermaid stay keyless/Pending) + full-class C17 exit 0 (RETRO-02, SC4)
 
 ### Phase 118: Reference Doc Retrofit + Table Remediation (~26 docs)
 
@@ -246,6 +287,6 @@ Plans:
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
-| 117. Admin-Setup Guide Retrofit | 0/TBD | Not started | — |
+| 117. Admin-Setup Guide Retrofit | 0/10 | Not started | — |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
