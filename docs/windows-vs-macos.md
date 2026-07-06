@@ -19,6 +19,7 @@ platform: all
 This reference document maps Windows Autopilot concepts and terminology to their macOS Automated Device Enrollment (ADE) equivalents, covering device registration, enrollment mechanisms, first-run experience, diagnostic tools, and platform-exclusive concepts. It is a terminology and workflow comparison, not a feature-parity analysis. The primary audience is Intune administrators and L1/L2 support staff who manage both Windows and macOS device fleets.
 
 > **Platform coverage:** This page maps Windows Autopilot concepts to macOS ADE equivalents.
+
 > It covers terminology and enrollment mechanisms, not Intune feature parity (see [Capability Matrix](reference/macos-capability-matrix.md)).
 
 Microsoft Intune manages both Windows devices through Windows Autopilot and macOS devices through Apple's Automated Device Enrollment (ADE). While both platforms achieve zero-touch provisioning via Intune, they use fundamentally different mechanisms, terminology, and portals. This page maps the key concepts between them to help admins who manage both platforms navigate the differences. This is a terminology and workflow comparison, not a feature parity analysis — for Intune capability gaps between platforms, see the [Capability Matrix](reference/macos-capability-matrix.md).

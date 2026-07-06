@@ -155,10 +155,10 @@
 | RE-139 | docs/admin-setup-8021x/05-ios.md | iOS/iPadOS 802.1X Admin Setup: Wi-Fi and Wired | Guide | Approved |
 | RE-140 | docs/admin-setup-8021x/06-android.md | Android Enterprise 802.1X Admin Setup: Wi-Fi | Guide | Approved |
 | RE-141 | docs/admin-setup-8021x/07-linux.md | Linux 802.1X Admin Setup: EAP-TLS via nmcli | Guide | Approved |
-| RE-142 | docs/reference/00-index.md | Reference Documentation | Reference | Pending |
-| RE-143 | docs/reference/4-platform-capability-comparison.md | 5-Platform Capability Comparison: Windows, macOS, iOS/iPadOS, Android, Linux | Reference | Pending |
-| RE-144 | docs/reference/android-capability-matrix.md | Intune: Android Capability Matrix — Modes by Feature | Reference | Pending |
-| RE-145 | docs/reference/aosp-oem-matrix.md | Intune: AOSP OEM Matrix — RealWear / Zebra / Pico / HTC / Meta Quest | Reference | Pending |
+| RE-142 | docs/reference/00-index.md | Reference Documentation | Reference | Approved |
+| RE-143 | docs/reference/4-platform-capability-comparison.md | 5-Platform Capability Comparison: Windows, macOS, iOS/iPadOS, Android, Linux | Reference | Approved |
+| RE-144 | docs/reference/android-capability-matrix.md | Intune: Android Capability Matrix — Modes by Feature | Reference | Approved |
+| RE-145 | docs/reference/aosp-oem-matrix.md | Intune: AOSP OEM Matrix — RealWear / Zebra / Pico / HTC / Meta Quest | Reference | Approved |
 | RE-146 | docs/reference/apv1-apv2-migration.md | APv1-to-APv2 Migration: Parallel Deployment Playbook | Reference | Pending |
 | RE-147 | docs/reference/ca-enrollment-timing.md | Conditional Access Enrollment Timing: The Compliance Chicken-and-Egg Problem | Reference | Pending |
 | RE-148 | docs/reference/compliance-timing.md | Compliance Policy Timing and State Transitions | Reference | Pending |
@@ -169,10 +169,10 @@
 | RE-153 | docs/reference/esp-timeout-tuning.md | ESP Timeout Tuning Guide | Reference | Pending |
 | RE-154 | docs/reference/gpo-to-intune.md | GPO-to-Intune Policy Migration Guide | Reference | Pending |
 | RE-155 | docs/reference/imaging-to-autopilot.md | On-Premises Imaging to Autopilot Migration Guide | Reference | Pending |
-| RE-156 | docs/reference/ios-capability-matrix.md | Intune: iOS/iPadOS Capability Matrix — Windows, macOS, iOS | Reference | Pending |
+| RE-156 | docs/reference/ios-capability-matrix.md | Intune: iOS/iPadOS Capability Matrix — Windows, macOS, iOS | Reference | Approved |
 | RE-157 | docs/reference/licensing-matrix.md | Autopilot Licensing Requirements | Reference | Pending |
-| RE-158 | docs/reference/linux-capability-matrix.md | Intune: Linux vs Windows Capability Matrix | Reference | Pending |
-| RE-159 | docs/reference/macos-capability-matrix.md | Intune: macOS vs Windows Capability Matrix | Reference | Pending |
+| RE-158 | docs/reference/linux-capability-matrix.md | Intune: Linux vs Windows Capability Matrix | Reference | Approved |
+| RE-159 | docs/reference/macos-capability-matrix.md | Intune: macOS vs Windows Capability Matrix | Reference | Approved |
 | RE-160 | docs/reference/macos-commands.md | macOS Terminal Commands Reference | Reference | Pending |
 | RE-161 | docs/reference/macos-log-paths.md | macOS Log Paths and Configuration Profile Locations | Reference | Pending |
 | RE-162 | docs/reference/network-infrastructure.md | Network Infrastructure Requirements for Windows Autopilot | Reference | Pending |
@@ -190,5 +190,5 @@
 | RE-174 | docs/error-codes/06-apv2-device-preparation.md | APv2 Device Preparation Failures | Reference | Pending |
 | RE-175 | docs/end-user-guides/android-work-profile-setup.md | Set up your personal Android device for work (BYOD Work Profile) | Guide | Pending |
 | RE-176 | docs/end-user-guides/linux-intune-portal-enrollment.md | Linux Intune Portal Enrollment — User Guide | Guide | Pending |
-| RE-177 | docs/apv1-vs-apv2.md | APv1 vs APv2: Which Autopilot Are You Troubleshooting? | Reference | Pending |
-| RE-178 | docs/windows-vs-macos.md | Windows Autopilot vs macOS ADE: Concept Comparison | Reference | Pending |
+| RE-177 | docs/apv1-vs-apv2.md | APv1 vs APv2: Which Autopilot Are You Troubleshooting? | Reference | Approved |
+| RE-178 | docs/windows-vs-macos.md | Windows Autopilot vs macOS ADE: Concept Comparison | Reference | Approved |

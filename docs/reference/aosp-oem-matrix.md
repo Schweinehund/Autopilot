@@ -22,7 +22,9 @@ This matrix compares Microsoft Intune support across the 5 specialty-hardware OE
 
 ## Scope
 
-> ⚠️ **AOSP scope reminder.** Devices listed in this matrix are supported under AOSP because they have no GMS. If GMS is present on a target device, use Android Enterprise fully managed instead — these OEMs are not supported under AOSP when GMS is available. (Phase 39 PITFALL-7 framing.)
+> ⚠️ **AOSP scope reminder.** Devices listed in this matrix are supported under AOSP because they have no GMS.
+
+> If GMS is present on a target device, use Android Enterprise fully managed instead — these OEMs are not supported under AOSP when GMS is available. (Phase 39 PITFALL-7 framing.)
 
 ## Hardware Scope
 
