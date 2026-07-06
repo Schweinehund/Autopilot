@@ -1,4 +1,8 @@
 ---
+doc_id: RE-157
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** Licensing requirements are the same for APv1 and APv2. For feature differences between frameworks, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-157 · **Status:** Approved
 
 # Autopilot Licensing Requirements
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** Licensing requirements are the same for APv1 and APv2. For feature differences between frameworks, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Autopilot requires both Microsoft Intune and Entra ID P1 (formerly Azure AD Premium P1). These are included together in all Microsoft 365 bundles and Enterprise Mobility + Security suites. A user missing either entitlement will Entra-join successfully but MDM enrollment will fail silently.
 
@@ -71,3 +81,9 @@ From Intune admin center: Navigate to **Intune admin center** > **Users** > sele
 - [Entra ID Prerequisite Configuration](entra-prerequisites.md)
 - [APv1 vs APv2](../apv1-vs-apv2.md)
 - [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

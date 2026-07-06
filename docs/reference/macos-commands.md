@@ -1,4 +1,8 @@
 ---
+doc_id: RE-160
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L2
 platform: macOS
 ---
 
-> **Version gate:** This reference documents macOS Terminal commands for Intune and ADE diagnostics. Commands are OS-shipped unless noted. Last verified against macOS 14 (Sonoma). For Windows PowerShell equivalents, see [PowerShell Reference](powershell-ref.md).
+**Platform:** macOS · **Doc Type:** Reference · **Doc ID:** RE-160 · **Status:** Approved
 
 # macOS Terminal Commands Reference
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This reference documents macOS Terminal commands for Intune and ADE diagnostics. Commands are OS-shipped unless noted. Last verified against macOS 14 (Sonoma). For Windows PowerShell equivalents, see [PowerShell Reference](powershell-ref.md).
 
 Field guide to macOS Terminal commands for Intune and ADE enrollment diagnostics. These are OS-shipped binaries and Microsoft-provided tools -- not project-owned code. The structure mirrors [PowerShell Reference](powershell-ref.md) for cross-platform consistency.
 
@@ -205,3 +215,9 @@ sudo ./IntuneMacODC.sh
 - [macOS Provisioning Glossary](../_glossary-macos.md) -- ADE and ABM terminology
 - [PowerShell Reference](powershell-ref.md) -- Windows equivalent diagnostic commands
 - [Windows vs macOS Concept Comparison](../windows-vs-macos.md) -- Cross-platform diagnostic tool mapping
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

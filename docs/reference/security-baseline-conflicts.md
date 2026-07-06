@@ -1,4 +1,8 @@
 ---
+doc_id: RE-166
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers security baseline conflicts that affect both APv1 and APv2 Autopilot deployments.
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-166 · **Status:** Approved
 
 # Security Baseline Interactions with Autopilot Provisioning
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers security baseline conflicts that affect both APv1 and APv2 Autopilot deployments.
 
 Security baselines applied too early in the Autopilot provisioning flow can block enrollment or silently skip critical settings. The Enrollment Status Page (ESP) does not distinguish "setting applied" from "setting failed silently" — admins often see "Some settings could not be applied" with no indication of which baseline setting caused it.
 
@@ -64,3 +74,9 @@ Windows devices may get stuck on the "Identifying" screen during Autopilot and B
 - [Compliance Policy Timing](compliance-timing.md) — Evaluation schedule, grace periods, state transitions
 - [Stage 4: ESP](../lifecycle/04-esp.md) — Enrollment Status Page flow and configuration
 - [APv1 Configuration-Caused Failures](../admin-setup-apv1/10-config-failures.md) — Full reverse-lookup table for configuration mistakes
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

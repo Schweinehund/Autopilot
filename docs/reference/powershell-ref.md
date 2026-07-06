@@ -1,13 +1,24 @@
 ---
+doc_id: RE-164
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-11
 review_by: 2026-06-09
 applies_to: APv1
 audience: L2
 ---
 
-> **Version gate:** This reference documents functions exported from the `AutopilotDiagnostics.psm1` and `AutopilotRemediation.psm1` modules. The source `.psm1` files are authoritative; verify this document against source when adding or modifying functions.
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-164 · **Status:** Approved
 
 # PowerShell Function Reference
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This reference documents functions exported from the `AutopilotDiagnostics.psm1` and `AutopilotRemediation.psm1` modules. The source `.psm1` files are authoritative; verify this document against source when adding or modifying functions.
 
 Field guide to the 12 exported functions in the Autopilot diagnostic and remediation modules. The source `.psm1` files are authoritative; this reference provides synopsis, parameters, and usage examples.
 
@@ -343,3 +354,9 @@ The following event logs are collected by `Get-AutopilotLogs` and are the primar
 | `Microsoft-Windows-Provisioning-Diagnostics-Provider/Admin` | OOBE and provisioning events, Autopilot profile application |
 | `Microsoft-Windows-AAD/Operational` | Azure AD join events, token acquisition, device registration |
 | `Microsoft-Windows-User Device Registration/Admin` | Device registration operations, workplace join, hybrid join events |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

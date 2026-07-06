@@ -1,4 +1,8 @@
 ---
+doc_id: RE-161
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L2
 platform: macOS
 ---
 
-> **Version gate:** This reference documents macOS log paths and configuration profile locations for Intune and ADE diagnostics. Paths verified against macOS 14 (Sonoma). Version-specific differences are noted per row. For Windows registry paths, see [Registry Paths Reference](registry-paths.md).
+**Platform:** macOS · **Doc Type:** Reference · **Doc ID:** RE-161 · **Status:** Approved
 
 # macOS Log Paths and Configuration Profile Locations
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This reference documents macOS log paths and configuration profile locations for Intune and ADE diagnostics. Paths verified against macOS 14 (Sonoma). Version-specific differences are noted per row. For Windows registry paths, see [Registry Paths Reference](registry-paths.md).
 
 Canonical reference for macOS log file locations, Intune agent paths, and configuration profile storage. Runbooks and investigation guides link here rather than defining paths inline.
 
@@ -64,3 +74,9 @@ For full command syntax, see [macOS Terminal Commands Reference](macos-commands.
 
 - [macOS Terminal Commands Reference](macos-commands.md) -- Commands that query these log paths
 - [Registry Paths Reference](registry-paths.md) -- Windows equivalent path reference
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

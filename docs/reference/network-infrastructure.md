@@ -1,4 +1,8 @@
 ---
+doc_id: RE-162
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers network requirements for both APv1 and APv2. For the endpoint URL list, see [Network Endpoints](endpoints.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-162 · **Status:** Approved
 
 # Network Infrastructure Requirements for Windows Autopilot
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers network requirements for both APv1 and APv2. For the endpoint URL list, see [Network Endpoints](endpoints.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 This doc covers firewall rules, VPN configuration, and proxy settings for the endpoints required by Windows Autopilot. It does NOT duplicate the endpoint table — see [Network Endpoints](endpoints.md) for the complete list of URLs and their criticality ratings.
 
@@ -162,3 +172,9 @@ netsh winhttp show proxy
 - [Network Endpoints](endpoints.md) — Canonical endpoint URL table with test commands
 - [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md)
 - [OOBE Stage](../lifecycle/03-oobe.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

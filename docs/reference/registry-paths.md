@@ -1,13 +1,24 @@
 ---
+doc_id: RE-165
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-11
 review_by: 2026-06-09
 applies_to: APv1
 audience: L2
 ---
 
-> **Version gate:** This reference applies to Windows Autopilot v1 (user-driven and pre-provisioning). Verify paths against current documentation before applying to Autopilot v2 (Device Preparation) deployments.
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-165 · **Status:** Approved
 
 # Autopilot Registry Paths Reference
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This reference applies to Windows Autopilot v1 (user-driven and pre-provisioning). Verify paths against current documentation before applying to Autopilot v2 (Device Preparation) deployments.
 
 Canonical reference for all Autopilot-relevant Windows registry locations. Runbooks and investigation guides link here rather than defining paths inline.
 
@@ -21,3 +32,9 @@ Canonical reference for all Autopilot-relevant Windows registry locations. Runbo
 | `HKLM:\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking` | ESP tracking info root — parent key for all ESP diagnostic data | L2 ESP investigation | MEDIUM confidence — from Microsoft Learn troubleshooting doc |
 | `HKLM:\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking\ESPTrackingInfo\Diagnostics\ExpectedPolicies` | Policies expected during ESP device phase — list of policy OMA-URIs the device is waiting for | L2 ESP investigation | MEDIUM confidence — from Microsoft Learn troubleshooting doc |
 | `HKLM:\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking\ESPTrackingInfo\Diagnostics\Sidecar` | Win32 app installation status during ESP — per-app subkeys with install state | L2 ESP investigation | MEDIUM confidence — from Microsoft Learn troubleshooting doc |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

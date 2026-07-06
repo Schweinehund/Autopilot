@@ -1,4 +1,8 @@
 ---
+doc_id: RE-151
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: all
@@ -6,9 +10,15 @@ audience: both
 platform: all
 ---
 
-> **Version gate:** This endpoint list covers Windows Autopilot (v1 and v2) and macOS ADE (Automated Device Enrollment). Some endpoints are platform-specific; see section headers. Windows TPM attestation endpoints are only required for specific deployment modes or hardware.
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-151 · **Status:** Approved
 
 # Network Endpoints Reference
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This endpoint list covers Windows Autopilot (v1 and v2) and macOS ADE (Automated Device Enrollment). Some endpoints are platform-specific; see section headers. Windows TPM attestation endpoints are only required for specific deployment modes or hardware.
 
 Canonical reference for all network endpoints required by Windows Autopilot and macOS ADE. Runbooks and connectivity troubleshooting guides link here rather than listing URLs inline.
 
@@ -123,3 +133,9 @@ curl -v --max-time 5 https://business.apple.com
 ---
 
 Windows endpoint list sourced from [Microsoft Learn: Windows Autopilot requirements](https://learn.microsoft.com/en-us/autopilot/requirements), updated July 2025. Apple endpoints sourced from [Apple Support HT101555](https://support.apple.com/en-us/HT101555), updated July 2025. Microsoft Intune endpoints from [Microsoft Learn: Intune network endpoints](https://learn.microsoft.com/en-us/mem/intune/fundamentals/intune-endpoints), updated March 2026.
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

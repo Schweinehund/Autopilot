@@ -1,4 +1,8 @@
 ---
+doc_id: RE-148
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide expands on the compliance verification in [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md) with detailed timing and state transition information.
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-148 · **Status:** Approved
 
 # Compliance Policy Timing and State Transitions
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide expands on the compliance verification in [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md) with detailed timing and state transition information.
 
 Compliance evaluation does not happen instantly after enrollment. New admins frequently escalate "Not evaluated" as a failure when it is expected behavior. This guide documents the normal timing window, the three distinct compliance states, grace period configuration, and the ongoing evaluation schedule.
 
@@ -127,3 +137,9 @@ Cross-reference: [Conditional Access Enrollment Timing](ca-enrollment-timing.md)
 - [Conditional Access Enrollment Timing](ca-enrollment-timing.md) — CA chicken-and-egg problem during new device enrollment
 - [Security Baseline Conflicts](security-baseline-conflicts.md) — Settings that cause non-compliance post-enrollment
 - [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md) — Stage 5 verification checklist; "Not evaluated" vs "Non-compliant" context
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |

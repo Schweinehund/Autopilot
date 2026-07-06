@@ -1,4 +1,8 @@
 ---
+doc_id: RE-167
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers Win32 app packaging for both APv1 and APv2 deployments. For ESP configuration settings and the blocking app list, see [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-167 · **Status:** Approved
 
 # Win32 App Packaging Best Practices for ESP Reliability
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers Win32 app packaging for both APv1 and APv2 deployments. For ESP configuration settings and the blocking app list, see [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
 
 The most common cause of ESP timeouts and hung provisioning is poorly packaged Win32 apps — wrong detection rules, missing dependency declarations, or mixed app types. This guide documents the detection rule priority order, ESP tracking requirements, dependency chain configuration, and anti-patterns that cause ESP failures.
 
@@ -132,3 +142,9 @@ Search for: `Circular dependency detected` or `dependency failed`.
 - [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) — ESP settings, blocking app list, app type compatibility
 - [ESP Timeout Tuning](esp-timeout-tuning.md) — Scenario-based timeout recommendations
 - [ESP Lifecycle Stage](../lifecycle/04-esp.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
