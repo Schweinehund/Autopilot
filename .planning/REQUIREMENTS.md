@@ -38,7 +38,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 - [x] **RETRO-01**: All **L1/L2 runbooks** (~75) are retrofitted to EEE — `# Title → single-line block → ## Summary → gate-blockquote → sections`; every runbook `## Summary` opens with a one-line scope/safety banner (pulling the read-only-scope / escalation guardrail into the lead retrieval chunk); `Status: Approved`.
 - [x] **RETRO-02**: All **admin-setup guides** (Windows / macOS / iOS / Android / Linux / 802.1X, all platforms) are retrofitted to EEE (header block + Summary-first + normalized Platform label + `Status: Approved`).
-- [ ] **RETRO-03**: All **reference docs** (capability matrices, 4-platform comparison, error-codes, cross-platform references) are retrofitted to EEE, **including table remediation** — capability-matrix tables are capped (~25 rows) and/or given a mandatory per-table prose summary so header context survives ~2,000-char chunk boundaries.
+- [x] **RETRO-03**: All **reference docs** (capability matrices, 4-platform comparison, error-codes, cross-platform references) are retrofitted to EEE, **including table remediation** — capability-matrix tables are capped (~25 rows) and/or given a mandatory per-table prose summary so header context survives ~2,000-char chunk boundaries.
 
 ### Category: Harness Enforcement & Milestone Close (HARN)
 
@@ -97,7 +97,7 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 | HARN-01 | Phase 115 | Complete |
 | RETRO-01 | Phase 116 | Complete |
 | RETRO-02 | Phase 117 | Complete |
-| RETRO-03 | Phase 118 | Pending |
+| RETRO-03 | Phase 118 | Complete |
 | HARN-02 | Phase 119 | Pending |
 | HARN-03 | Phase 119 | Pending |
 | HARN-04 | Phase 119 | Pending |

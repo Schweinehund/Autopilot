@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T17:41:28.152Z"
+last_updated: "2026-07-06T17:54:07.164Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 33
-  completed_plans: 31
+  completed_plans: 32
   percent: 71
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 118 (reference-doc-retrofit-table-remediation-26-docs) — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -313,6 +313,8 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: 20 over-limit #12 blockquote groups resolved entirely via Transform A (sentence/clause split); no Transform B needed (no embedded code fences in this batch)
 - [Phase ?]: Word-set reformat-only proof must strip the leading '>' blockquote-prefix token before comparing multisets -- raw diffs show false positives from added '>' tokens per new split group
 - [Phase 118]: [118-04] Version-History date placeholder requires manual fill: retrofit-reference.mjs's CREATE branch writes a literal YYYY-MM-DD token rather than auto-filling the commit date; filled 2026-07-06 across all 10 files matching 117-02/118-02/118-03 precedent
+- [Phase ?]: [118-05] All 7 error-codes files confirmed keyless (applies_to: both/APv1/APv2 are not platform keys) -- platform: Windows injected uniformly, resolving cleanly in D1_MAP
+- [Phase ?]: [118-05] 01-mdm-enrollment.md's corpus-worst 689c APv2 Note blockquote (with bare '>' continuation lines that do not break a C17 group) required a 6-way sentence-level Transform A split; no embedded code fence found so Transform B was not needed anywhere in this batch
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -343,8 +345,8 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T17:41:28.137Z
-Stopped at: Completed 118-04-PLAN.md
+Last session: 2026-07-06T17:54:07.148Z
+Stopped at: Completed 118-05-PLAN.md
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
@@ -390,3 +392,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 118 P02 | 24min | 3 tasks | 10 files |
 | Phase 118 P03 | 30min | 3 tasks | 9 files |
 | Phase 118 P04 | 20min | 3 tasks | 11 files |
+| Phase 118 P05 | 24min | 3 tasks | 8 files |

@@ -262,7 +262,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 — shared RE-index.md)*
 
-- [ ] 118-05-PLAN.md — Error-codes (7 files, all keyless→Windows, all PREPEND-2col; 00-index mandatory double #12 split; 30-row table already #11-compliant); C17 green + registry Approved (RETRO-03)
+- [x] 118-05-PLAN.md — Error-codes (7 files, all keyless→Windows, all PREPEND-2col; 00-index mandatory double #12 split; 30-row table already #11-compliant); C17 green + registry Approved (RETRO-03)
 
 **Wave 6** *(blocked on Wave 5)*
 
@@ -312,5 +312,5 @@ Plans:
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
-| 118. Reference Doc Retrofit + Table Remediation | 4/6 | In Progress|  |
+| 118. Reference Doc Retrofit + Table Remediation | 5/6 | In Progress|  |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
