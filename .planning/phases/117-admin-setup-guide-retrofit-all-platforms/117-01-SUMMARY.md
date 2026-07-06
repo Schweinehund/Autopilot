@@ -102,3 +102,11 @@ None - no external service configuration required. This is a pure Node.js built-
 ---
 *Phase: 117-admin-setup-guide-retrofit-all-platforms*
 *Completed: 2026-07-05*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/pipeline/retrofit-guide.mjs
+- FOUND: .planning/phases/117-admin-setup-guide-retrofit-all-platforms/117-01-SUMMARY.md
+- FOUND commit: 2d9b662 (Task 1)
+- FOUND commit: b8d52cf (Task 2)
+- FOUND commit: 4d813e5 (SUMMARY)
