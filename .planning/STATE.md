@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T20:26:20.252Z"
+last_updated: "2026-07-06T20:46:47.520Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 119 (frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -319,6 +319,11 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: [119-01] Wave-0 anchor SHA = c6ea8d25 (predecessor-byte-unchanged HARD-gate base for 119-04); DISTINCT from BASELINE_19 anchor (119-02 captures that JIT before Atom 1 per Pitfall 4)
 - [Phase ?]: [119-01] V114 = 7d922a7 positively confirmed (msg has MILESTONE-AUDIT + MILESTONE CLOSE); naive --grep recovery returns f3959c8 (wrong follow-up) — DO NOT pin f3959c8
 - [Phase ?]: [119-01] Baseline v1.14 harness RED on HEAD (11/4/0): C2/C7/C9 sidecar {file,line} pins shifted by EEE retrofit on Phase-1 surfaces; C15 a NEW EEE-Summary collision (RE-108:19). v1.15 sidecar must NOT be copied verbatim — 119-02 repoint worklist recorded in SUMMARY
+- [Phase ?]: [119-02] Atom 1 shipped as ONE indivisible commit b530243 (exactly 3 files; git show --stat verified no Atom-2 leak, no deletions)
+- [Phase ?]: [119-02] C17 folded as check id 17 via execFileSync subprocess-spawn of c17-eee-contract.mjs (argument-array, NOT inline copy); harness --self-test exits 0; --verbose 15P/1F
+- [Phase ?]: [119-02] BASELINE_19 back-anchored to JIT pre-Atom-1 HEAD a323332 (differs from Wave-0 c6ea8d2 — Jira-sync intervened, Pitfall 4); BASELINE_9 + v1.7 refs byte-unchanged
+- [Phase ?]: [119-02] Sidecar C2/C7/C9 pins repointed per live re-verification (matrix 89..99->123..135 incl 1 new RETRO-03 prose pin, cobo 36->52/54, runbook 21->33, knox 11/143/143/145->21/167/167/173, zero-touch 131->147, COPE 153->199/55->75); next_review->2026-10-01
+- [Phase ?]: [119-02] DEFERRED to 119-05 remediation slot: C15 abm-token.md:19 EEE-Summary collision + regenerate-supervision-pins --self-test pre-existing RED (both out of Atom-1 3-file scope; latter proven RED at v1.14-close 7d922a7, advisory job)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -349,7 +354,7 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T20:25:24.855Z
+Last session: 2026-07-06T20:46:01.496Z
 Stopped at: Phase 119 context gathered
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
@@ -399,3 +404,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 118 P05 | 24min | 3 tasks | 8 files |
 | Phase 118 P06 | 8min | 2 tasks | 0 files |
 | Phase 119 P01 | 10min | 2 tasks | 1 files |
+| Phase 119 P02 | 40min | 3 tasks | 3 files (Atom 1: harness + sidecar + BASELINE_19) |
