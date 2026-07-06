@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T02:01:18.615Z"
-last_activity: 2026-07-06 -- Phase 117 planning complete
+last_updated: "2026-07-06T02:16:37.221Z"
+last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 27
-  completed_plans: 17
+  completed_plans: 18
   percent: 57
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** Phase 117 — admin setup guide retrofit (all platforms)
+**Current focus:** Phase 117 — admin-setup-guide-retrofit-all-platforms
 
 ## Current Position
 
-Phase: 117
-Plan: Not started
+Phase: 117 (admin-setup-guide-retrofit-all-platforms) — EXECUTING
+Plan: 2 of 10
 Status: Ready to execute
-Last activity: 2026-07-06 -- Phase 117 planning complete
+Last activity: 2026-07-06
 
 Progress bar: `█░░░░░░░░░` 14% (1/7 phases complete)
 
@@ -286,6 +286,8 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: Transform B applied to two single-sentence over-200c blockquotes in file 18 where Transform A not applicable
 - [Phase ?]: Mermaid diagram in RE-068 converted to Markdown table — C17 #1 prohibits Mermaid fences; DA-9 locked 7-leaf count preserved in table rows
 - [Phase ?]: Transform B (de-blockquote) used for all non-gate informational notes exceeding 200c in RE-066..RE-075 — avoids fragmenting technical content while satisfying C17 #12
+- [Phase 117-01]: Forked scripts/pipeline/retrofit-guide.mjs rather than refactoring retrofit-runbook.mjs in place -- protects the shipped Phase-116 deliverable from a shared-refactor regression
+- [Phase 117-01]: Whole-pre-H1-span relocation fix: replaced 116's first-blockquote-run-only gate capture with full-span capture, trimming only leading/trailing blanks -- fixes confirmed silent-content-loss on ios/02-abm-token.md, macos/01-abm-configuration.md, and android/09..13-aosp-*.md
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -316,9 +318,9 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T01:21:54.437Z
-Stopped at: Phase 117 context gathered
-Resume file: .planning/phases/117-admin-setup-guide-retrofit-all-platforms/117-CONTEXT.md
+Last session: 2026-07-06T02:16:37.206Z
+Stopped at: Completed 117-01-PLAN.md
+Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
 ## Operator Next Steps
@@ -348,3 +350,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 116-l1-l2-runbook-retrofit-75-docs P05 | 90 | 3 tasks | 10 files |
 | Phase 116-l1-l2-runbook-retrofit-75-docs P07 | 55 | 3 tasks | 15 files |
 | Phase 116-l1-l2-runbook-retrofit-75-docs P08 | 90 | 3 tasks | 11 files |
+| Phase 117 P01 | 12min | 2 tasks | 1 files |

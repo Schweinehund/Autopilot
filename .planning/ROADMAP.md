@@ -192,7 +192,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 117-01-PLAN.md — Fork retrofit-guide.mjs from retrofit-runbook.mjs; FIX the whole-pre-H1-span data-loss defect; uniform owner + doc_type Guide; admin-setup allowlist + 9-mermaid exclusion; self-test + 57-file dry-run (RETRO-02)
+- [x] 117-01-PLAN.md — Fork retrofit-guide.mjs from retrofit-runbook.mjs; FIX the whole-pre-H1-span data-loss defect; uniform owner + doc_type Guide; admin-setup allowlist + 9-mermaid exclusion; self-test + 57-file dry-run (RETRO-02)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -287,6 +287,6 @@ Plans:
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
-| 117. Admin-Setup Guide Retrofit | 0/10 | Not started | — |
+| 117. Admin-Setup Guide Retrofit | 1/10 | In Progress|  |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
