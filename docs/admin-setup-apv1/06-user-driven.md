@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers User-Driven mode configuration for Windows Autopilot (APv1), the most common deployment mode, which applies to Windows devices and requires the Intune Administrator role. It documents the end-user authentication experience, both Entra join and hybrid Entra join paths, and the deployment profile, ESP, and dynamic group prerequisites that must already be configured before a user-driven deployment succeeds.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).

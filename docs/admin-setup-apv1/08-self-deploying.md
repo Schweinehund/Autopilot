@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers Self-Deploying mode configuration for Windows Autopilot (APv1), which applies to Windows devices and requires the Intune Administrator role. Self-deploying is a fully automated deployment using TPM 2.0 as the only authentication mechanism, with no user credentials entered and no user affinity assigned, designed for shared devices, kiosks, and digital signage.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).

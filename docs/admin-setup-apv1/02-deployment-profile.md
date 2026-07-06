@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers the Windows Autopilot (APv1) deployment profile configuration, which applies to Windows devices and requires the Intune Administrator role. The deployment profile controls OOBE behavior -- including join type, license terms, privacy settings, and pre-provisioning eligibility -- with every configurable setting carrying a documented downstream consequence if misconfigured.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).

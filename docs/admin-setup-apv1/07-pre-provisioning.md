@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers Pre-Provisioning mode configuration for Windows Autopilot (APv1), which applies to Windows devices and requires the Intune Administrator role to configure the deployment profile plus a technician to perform the staging-facility flow. Pre-provisioning is a two-phase deployment with the strictest hardware requirements of the three modes -- physical device, TPM 2.0 with attestation, and wired ethernet are all mandatory.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).

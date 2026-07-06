@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers the Enrollment Time Grouping (ETG) device group for Autopilot Device Preparation (APv2), which applies to Windows devices and requires the Global Administrator or Application Administrator role in Entra ID. The ETG group is the core mechanism that lets the Intune Provisioning Client add enrolling devices automatically during OOBE, triggering immediate delivery of the apps, scripts, and policies assigned to it.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).

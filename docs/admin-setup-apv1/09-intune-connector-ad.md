@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers the Intune Connector for Active Directory for Windows Autopilot (APv1), which applies to Windows Server infrastructure and requires an Intune Administrator account for installation plus local administrator and Active Directory rights on the target server. The connector is required for hybrid Entra join deployments and creates AD computer objects on behalf of enrolling Autopilot devices, serving both the User-Driven and Pre-Provisioning deployment modes.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).

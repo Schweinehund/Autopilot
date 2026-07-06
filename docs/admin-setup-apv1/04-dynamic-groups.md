@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers dynamic device group configuration for Windows Autopilot (APv1), which applies to Windows devices and requires the Global Administrator or Groups Administrator role in Entra ID plus an Azure AD Premium P1 or P2 license. Dynamic groups automatically collect Autopilot-registered devices by membership rule and are used to target deployment profiles, ESP policies, and app assignments.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).

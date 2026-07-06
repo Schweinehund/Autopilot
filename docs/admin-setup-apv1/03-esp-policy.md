@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers the Enrollment Status Page (ESP) policy for Windows Autopilot (APv1) deployments, which applies to Windows devices and requires the Intune Administrator role. ESP settings control which apps block desktop access, how long provisioning waits before timing out, and whether Windows quality updates install during OOBE -- misconfiguring these settings is the most common cause of stuck-at-provisioning support tickets.
 
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).

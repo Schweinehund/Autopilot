@@ -16,7 +16,7 @@ audience: admin
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+This guide covers corporate identifiers for Autopilot Device Preparation (APv2), which applies to Windows devices and requires a custom RBAC role or Global Administrator permissions in Intune, completed after the prerequisites, ETG device group, and Device Preparation policy steps. Corporate identifiers are a conditional step -- required only when enrollment restrictions block personal device enrollment -- that mark devices as corporate-owned so a personal-device restriction does not silently prevent the Device Preparation experience from launching.
 
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
