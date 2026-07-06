@@ -18,10 +18,15 @@ platform: iOS
 
 This guide covers Microsoft Intune app protection policies for iOS/iPadOS under MAM Without Enrollment (MAM-WE), which protects work data inside SDK-integrated apps such as Outlook, Teams, and Edge without enrolling the device in Intune MDM. Configuring MAM-WE requires the Intune Administrator role only — no Apple Business Manager role and no ADE token are needed, since the device itself is never enrolled. There is no supervised-device prerequisite; MAM-WE policies apply identically regardless of any device's MDM enrollment or supervision state.
 
-> **Platform gate:** This guide covers iOS/iPadOS Microsoft Intune app protection policies (MAM Without Enrollment — MAM-WE). MAM-WE protects work data inside SDK-integrated apps without enrolling the device in Intune MDM.
+> **Platform gate:** This guide covers iOS/iPadOS Microsoft Intune app protection policies (MAM Without Enrollment — MAM-WE).
+
+> MAM-WE protects work data inside SDK-integrated apps without enrolling the device in Intune MDM.
+
 > For iOS/iPadOS enrollment (MDM) setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md) — optional context, not required to follow this guide.
-> For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
-> Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
+
+> For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md). Portal navigation may vary by Intune admin center version.
+
+> See [Overview](00-overview.md#portal-navigation-note) for details.
 
 Microsoft Intune app protection policies protect work data within SDK-integrated apps without enrolling the device in Intune MDM. This is called MAM Without Enrollment (MAM-WE). On iOS, MAM-WE applies to apps like Outlook, Teams, and Microsoft Edge that integrate the Intune App SDK. The device is not enrolled; no MDM profile is installed; IT has no device-level management capability. Policy controls apply only within managed apps and govern how work data can move into, out of, and within those apps.
 
@@ -221,9 +226,19 @@ Level 2 is the recommended default for BYOD and typical enterprise users. It blo
 | **iOS-Specific Controls** | Screen capture and Apple AirPrint of work data | Block |
 | **iOS-Specific Controls** | Managed pasteboard (Intune-managed clipboard) | Enable |
 
-> **What breaks if misconfigured:** Setting "Send org data to other apps" to "All apps" instead of "Policy managed apps" allows users to share work content into personal app destinations (personal mail, personal messaging, non-managed cloud storage). The result is a Level 2 policy that functionally reverts to a more permissive posture than Level 1 while still being labelled Enhanced. Symptom appears in: no portal-visible symptom (the policy evaluates as "applied"); only visible via audit-log analysis of data-sharing events or end-user reports of unexpected data flow.
+> **What breaks if misconfigured:** Setting "Send org data to other apps" to "All apps" instead of "Policy managed apps" allows users to share work content into personal app destinations (personal mail,
 
-> **What breaks if misconfigured:** Setting "Jailbroken/rooted devices" to "Warn" instead of "Block access" allows SDK-integrated apps to continue serving work data on a jailbroken device. Level 2 policy semantics expect data access to be blocked on jailbroken devices — a warn-only posture is a compliance gap for organizations claiming Level 2 compliance. Symptom appears in: Intune admin center (device compliance status remains Compliant if no separate compliance policy blocks jailbreak); device-side symptom is simply continued access.
+> personal messaging, non-managed cloud storage).
+
+> The result is a Level 2 policy that functionally reverts to a more permissive posture than Level 1 while still being labelled Enhanced.
+
+> Symptom appears in: no portal-visible symptom (the policy evaluates as "applied"); only visible via audit-log analysis of data-sharing events or end-user reports of unexpected data flow.
+
+> **What breaks if misconfigured:** Setting "Jailbroken/rooted devices" to "Warn" instead of "Block access" allows SDK-integrated apps to continue serving work data on a jailbroken device.
+
+> Level 2 policy semantics expect data access to be blocked on jailbroken devices — a warn-only posture is a compliance gap for organizations claiming Level 2 compliance.
+
+> Symptom appears in: Intune admin center (device compliance status remains Compliant if no separate compliance policy blocks jailbreak); device-side symptom is simply continued access.
 
 ## Level 3 — Enterprise High Data Protection (Detail)
 
@@ -254,9 +269,19 @@ Level 3 is the strictest preset and targets regulated industries where misconfig
 | **iOS-Specific Controls** | Screen capture and AirPrint of work data | Block |
 | **iOS-Specific Controls** | Screen-recording detection | Enable (notify policy action on detection) |
 
-> **What breaks if misconfigured:** Setting "Max PIN attempts" action to "Reset PIN" (Level 2 default) instead of "Wipe data" on a Level 3 policy invalidates the Level 3 compliance posture. Level 3 expects that repeated failed PIN attempts result in wipe of managed app data — a PIN-reset-only response leaves corporate data accessible on devices where PIN brute-force has been attempted. Symptom appears in: no portal-visible symptom on configuration; compliance-audit-time only.
+> **What breaks if misconfigured:** Setting "Max PIN attempts" action to "Reset PIN" (Level 2 default) instead of "Wipe data" on a Level 3 policy invalidates the Level 3 compliance posture.
 
-> **What breaks if misconfigured:** Setting "Offline grace period" to a Level 2 default (720 minutes / 12 hours) on a Level 3 policy allows managed apps to remain usable for 12 hours after losing network connectivity to Intune. Level 3 expects strict online-verification of policy state; 30-minute offline grace is the recommended baseline. Symptom appears in: device (managed apps continue working offline longer than policy intent); Intune admin center shows the policy as applied but does not flag the configuration-vs-intent gap.
+> Level 3 expects that repeated failed PIN attempts result in wipe of managed app data — a PIN-reset-only response leaves corporate data accessible on devices where PIN brute-force has been attempted.
+
+> Symptom appears in: no portal-visible symptom on configuration; compliance-audit-time only.
+
+> **What breaks if misconfigured:** Setting "Offline grace period" to a Level 2 default (720 minutes / 12 hours) on a Level 3 policy
+
+> allows managed apps to remain usable for 12 hours after losing network connectivity to Intune.
+
+> Level 3 expects strict online-verification of policy state; 30-minute offline grace is the recommended baseline.
+
+> Symptom appears in: device (managed apps continue working offline longer than policy intent); Intune admin center shows the policy as applied but does not flag the configuration-vs-intent gap.
 
 ## iOS-Specific Behaviors
 

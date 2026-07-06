@@ -19,8 +19,11 @@ platform: iOS
 This guide covers configuration of the ADE enrollment profile — the final step in the ADE prerequisite chain — which governs supervision state, authentication method, Setup Assistant screens, and locked enrollment for iOS/iPadOS devices enrolling through Automated Device Enrollment. It requires the Intune Administrator role and an active ADE token synced with Apple Business Manager. Supervised mode is a prerequisite for locked enrollment and several other settings covered here, and should be set to Yes for all corporate ADE deployments.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE enrollment profile configuration in Intune.
+
 > For macOS enrollment profile setup, see [macOS Enrollment Profile](../admin-setup-macos/02-enrollment-profile.md).
+
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
 
 The enrollment profile configures how iOS/iPadOS devices enroll through Automated Device Enrollment (ADE): their supervision state, authentication method, Setup Assistant experience, and whether users can remove management. This is the final step in the ADE prerequisite chain — APNs certificate, then ABM/ADE token, then enrollment profile. The profile must be assigned to devices **before first power-on**; a device that starts Setup Assistant without an assigned profile enrolls through standard (non-managed) iOS Setup Assistant and must be factory-reset to enroll into MDM.
@@ -53,7 +56,11 @@ Supervision cannot be added after enrollment without a full device erase. See [S
 
 For all new deployments, use **Setup Assistant with modern authentication**.
 
-> **What breaks if misconfigured:** The legacy authentication method is incompatible with modern Conditional Access policies. Devices cannot authenticate during Setup Assistant if MFA or CA policies are enforced. Symptom appears in: device Setup Assistant (authentication failure screen at the sign-in step).
+> **What breaks if misconfigured:** The legacy authentication method is incompatible with modern Conditional Access policies.
+
+> Devices cannot authenticate during Setup Assistant if MFA or CA policies are enforced.
+
+> Symptom appears in: device Setup Assistant (authentication failure screen at the sign-in step).
 
 ## Steps
 
@@ -61,7 +68,11 @@ For all new deployments, use **Setup Assistant with modern authentication**.
 
 Navigate to the ADE token in the Intune admin center and create a new iOS/iPadOS enrollment profile. Enter a descriptive profile name and optional description.
 
-> **Note:** The Intune admin center is updating enrollment profile navigation. The profile creation location may appear under **Profiles** or **Enrollment policies** depending on your tenant's rollout status. The settings and their effects are the same regardless of navigation path.
+> **Note:** The Intune admin center is updating enrollment profile navigation.
+
+> The profile creation location may appear under **Profiles** or **Enrollment policies** depending on your tenant's rollout status.
+
+> The settings and their effects are the same regardless of navigation path.
 
 ### Step 2: Configure enrollment settings
 
@@ -80,17 +91,35 @@ Configure the following settings for a supervised corporate ADE deployment:
 
 Setting supervised mode to Yes ensures the enrollment profile explicitly declares supervised intent. Although iOS/iPadOS 13.0 and later devices enrolled via ADE are automatically supervised, explicitly setting this to Yes in the profile ensures consistent behavior and enables supervised-only settings such as locked enrollment.
 
-> 🔒 **Supervised only:** Supervised mode enables the full range of MDM capabilities including OS update enforcement, silent app installation, and supervised-only configuration profiles. Devices enrolled without supervision receive standard MDM management only and cannot be upgraded to supervised without a full device erase. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Supervised mode enables the full range of MDM capabilities including OS update enforcement, silent app installation, and supervised-only configuration profiles.
 
-> **What breaks if misconfigured:** Setting supervised to No on a corporate ADE deployment means locked enrollment cannot be enforced, supervised-only configuration profiles will not apply, and OS updates cannot be silently enforced. Changing to supervised later requires wiping every affected device. Symptom appears in: Intune admin center (supervised-only policies show "Not applicable" on affected devices).
+> Devices enrolled without supervision receive standard MDM management only and cannot be upgraded to supervised without a full device erase.
+
+> See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+
+> **What breaks if misconfigured:** Setting supervised to No on a corporate ADE deployment means locked enrollment cannot be enforced,
+
+> supervised-only configuration profiles will not apply, and OS updates cannot be silently enforced.
+
+> Changing to supervised later requires wiping every affected device.
+
+> Symptom appears in: Intune admin center (supervised-only policies show "Not applicable" on affected devices).
 
 #### Locked enrollment
 
 Locked enrollment prevents users from removing the management profile via **Settings > General > VPN & Device Management**. Without locked enrollment, a user can fully unenroll a corporate device without admin action, removing MDM management entirely.
 
-> 🔒 **Supervised only:** Locked enrollment requires supervised mode. On unsupervised devices, this setting has no effect and users can remove the management profile from Settings > General > VPN & Device Management. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Locked enrollment requires supervised mode.
 
-> **What breaks if misconfigured:** Locked enrollment set to No allows users to navigate to Settings > General > VPN & Device Management and remove the management profile, fully unenrolling the device. This cannot be undone remotely — the device must be factory reset and re-enrolled. Symptom appears in: Intune admin center (device shows as retired/removed).
+> On unsupervised devices, this setting has no effect and users can remove the management profile from Settings > General > VPN & Device Management.
+
+> See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+
+> **What breaks if misconfigured:** Locked enrollment set to No allows users to navigate to Settings > General > VPN & Device Management and remove the management profile, fully unenrolling the device.
+
+> This cannot be undone remotely — the device must be factory reset and re-enrolled.
+
+> Symptom appears in: Intune admin center (device shows as retired/removed).
 
 **30-day removal window for non-ABM-purchased devices:** For devices not originally purchased through ABM (added via Apple Configurator), users can see the remove management button for the first 30 days after activation even with locked enrollment set to Yes. After 30 days, the button is hidden.
 
@@ -98,13 +127,21 @@ Locked enrollment prevents users from removing the management profile via **Sett
 
 User affinity determines whether the device is associated with a specific user. For user-assigned corporate devices, select **Enroll with User Affinity**. For kiosk or shared devices with no dedicated user, select **Enroll without User Affinity**.
 
-> **What breaks if misconfigured:** Without user affinity, the device has no primary user — Company Portal will not function, user-targeted Conditional Access policies will not apply, and per-user app assignments will not deliver. Symptom appears in: Intune admin center (device shows no primary user) and Company Portal app (not functional).
+> **What breaks if misconfigured:** Without user affinity, the device has no primary user — Company Portal will not function,
+
+> user-targeted Conditional Access policies will not apply, and per-user app assignments will not deliver.
+
+> Symptom appears in: Intune admin center (device shows no primary user) and Company Portal app (not functional).
 
 #### Await final configuration
 
 Await final configuration holds the device at Setup Assistant until device configuration policies are installed before allowing the user to reach the home screen. Only device configuration policies install during this hold — apps are **not** included. There is no enforced time limit; devices are typically released within approximately 15 minutes. This setting requires iOS/iPadOS 13.0+ with modern authentication, userless, or shared mode enrollments. Not available when Shared iPad = Yes combined with Enroll without User Affinity.
 
-> **What breaks if misconfigured:** Await final configuration set to No allows users to reach the home screen before device configuration policies (Wi-Fi, VPN, restrictions, certificates) apply. Devices may be non-compliant immediately after enrollment. Symptom appears in: device (user reaches home screen without management configuration in place) and Intune admin center (non-compliant status at enrollment).
+> **What breaks if misconfigured:** Await final configuration set to No allows users to reach the home screen before device configuration policies (Wi-Fi, VPN, restrictions, certificates) apply.
+
+> Devices may be non-compliant immediately after enrollment.
+
+> Symptom appears in: device (user reaches home screen without management configuration in place) and Intune admin center (non-compliant status at enrollment).
 
 ### Step 3: Configure Setup Assistant panes
 
@@ -144,13 +181,19 @@ The enrollment profile controls which screens users see during iOS/iPadOS Setup 
 
 **Deprecated panes (do not include in new profiles):** Zoom (deprecated iOS/iPadOS 17), Display Tone (deprecated iOS/iPadOS 15), Device to Device Migration (deprecated for iOS/iPadOS 13+).
 
-> **What breaks if misconfigured:** Setup Assistant pane configuration is cosmetic — hiding or showing panes does not affect device functionality or security policies. Compliance policy enforcement happens after enrollment, not during Setup Assistant.
+> **What breaks if misconfigured:** Setup Assistant pane configuration is cosmetic — hiding or showing panes does not affect device functionality or security policies.
+
+> Compliance policy enforcement happens after enrollment, not during Setup Assistant.
 
 ### Step 4: Assign profile to devices
 
 After saving the enrollment profile, assign it to devices synced through the ADE token. You can assign a profile per-device or set the profile as the **Default profile** for the token (recommended — all synced devices automatically receive it). Profile assignment is over-the-air and does not require the device to be present or powered on.
 
-> **What breaks if misconfigured:** If no enrollment profile is assigned before the device is powered on, the device boots through standard (non-managed) iOS Setup Assistant. The device will not enroll in MDM. The fix requires a factory reset. Symptom appears in: the device (standard iOS setup with no enrollment prompt) and Intune admin center (device does not appear in the managed device list).
+> **What breaks if misconfigured:** If no enrollment profile is assigned before the device is powered on, the device boots through standard (non-managed) iOS Setup Assistant.
+
+> The device will not enroll in MDM. The fix requires a factory reset.
+
+> Symptom appears in: the device (standard iOS setup with no enrollment prompt) and Intune admin center (device does not appear in the managed device list).
 
 ## Verification
 

@@ -120,15 +120,15 @@
 | RE-104 | docs/admin-setup-android/12-aosp-htc-vive-focus.md | Configure HTC VIVE Focus AOSP Devices in Intune | Guide | Approved |
 | RE-105 | docs/admin-setup-android/13-aosp-meta-quest.md | Configure Meta Quest AOSP Devices in Intune | Guide | Approved |
 | RE-106 | docs/admin-setup-ios/00-overview.md | iOS/iPadOS Admin Setup | Guide | Pending |
-| RE-107 | docs/admin-setup-ios/01-apns-certificate.md | Apple Push Notification (APNs) Certificate | Guide | Pending |
-| RE-108 | docs/admin-setup-ios/02-abm-token.md | ABM/ADE Token Configuration for iOS/iPadOS | Guide | Pending |
-| RE-109 | docs/admin-setup-ios/03-ade-enrollment-profile.md | iOS/iPadOS ADE Enrollment Profile Configuration | Guide | Pending |
-| RE-110 | docs/admin-setup-ios/04-configuration-profiles.md | iOS/iPadOS Configuration Profiles | Guide | Pending |
-| RE-111 | docs/admin-setup-ios/05-app-deployment.md | iOS/iPadOS App Deployment | Guide | Pending |
-| RE-112 | docs/admin-setup-ios/06-compliance-policy.md | iOS/iPadOS Compliance Policies | Guide | Pending |
-| RE-113 | docs/admin-setup-ios/07-device-enrollment.md | iOS/iPadOS Device Enrollment | Guide | Pending |
-| RE-114 | docs/admin-setup-ios/08-user-enrollment.md | iOS/iPadOS Account-Driven User Enrollment | Guide | Pending |
-| RE-115 | docs/admin-setup-ios/09-mam-app-protection.md | iOS MAM-WE App Protection Policies | Guide | Pending |
+| RE-107 | docs/admin-setup-ios/01-apns-certificate.md | Apple Push Notification (APNs) Certificate | Guide | Approved |
+| RE-108 | docs/admin-setup-ios/02-abm-token.md | ABM/ADE Token Configuration for iOS/iPadOS | Guide | Approved |
+| RE-109 | docs/admin-setup-ios/03-ade-enrollment-profile.md | iOS/iPadOS ADE Enrollment Profile Configuration | Guide | Approved |
+| RE-110 | docs/admin-setup-ios/04-configuration-profiles.md | iOS/iPadOS Configuration Profiles | Guide | Approved |
+| RE-111 | docs/admin-setup-ios/05-app-deployment.md | iOS/iPadOS App Deployment | Guide | Approved |
+| RE-112 | docs/admin-setup-ios/06-compliance-policy.md | iOS/iPadOS Compliance Policies | Guide | Approved |
+| RE-113 | docs/admin-setup-ios/07-device-enrollment.md | iOS/iPadOS Device Enrollment | Guide | Approved |
+| RE-114 | docs/admin-setup-ios/08-user-enrollment.md | iOS/iPadOS Account-Driven User Enrollment | Guide | Approved |
+| RE-115 | docs/admin-setup-ios/09-mam-app-protection.md | iOS MAM-WE App Protection Policies | Guide | Approved |
 | RE-116 | docs/admin-setup-macos/00-overview.md | macOS Admin Setup: Complete Configuration Guide | Guide | Pending |
 | RE-117 | docs/admin-setup-macos/01-abm-configuration.md | ABM Configuration for Automated Device Enrollment | Guide | Pending |
 | RE-118 | docs/admin-setup-macos/02-enrollment-profile.md | macOS Enrollment Profile Configuration | Guide | Pending |

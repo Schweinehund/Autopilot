@@ -18,10 +18,11 @@ platform: iOS
 
 This guide covers account-driven User Enrollment, Apple's privacy-preserving iOS/iPadOS enrollment path for personally-owned BYOD devices that isolates work data inside a managed APFS volume. Configuring it requires the Intune Administrator role and a Managed Apple ID provisioned through Apple Business Manager or federated from Microsoft Entra ID — not a personal Apple ID. There is no supervised-device prerequisite; devices enrolled this way are never supervised, and the privacy boundaries described throughout the guide define exactly what IT cannot see or control.
 
-> **Platform gate:** This guide covers iOS/iPadOS account-driven User Enrollment (privacy-preserving BYOD).
-> For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).
-> For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
-> Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
+> **Platform gate:** This guide covers iOS/iPadOS account-driven User Enrollment (privacy-preserving BYOD). For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).
+
+> For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md). Portal navigation may vary by Intune admin center version.
+
+> See [Overview](00-overview.md#portal-navigation-note) for details.
 
 Account-driven User Enrollment is Apple's privacy-preserving iOS/iPadOS enrollment path for personally-owned devices. IT manages work apps and data within a managed APFS volume on the device; personal apps, personal data, and device-level attributes remain outside Intune's management scope. This guide covers admin prerequisites, enrollment configuration, and the explicit privacy limitations that differentiate User Enrollment from other enrollment paths. Both admins configuring the tenant and end users enrolling their devices benefit from reading the Privacy Boundaries summary below; per-capability privacy callouts appear at each capability's discussion point throughout the guide.
 
@@ -65,7 +66,13 @@ Admin prerequisites for account-driven User Enrollment:
 - **Intune Administrator role** — Or a custom RBAC role with enrollment management permissions.
 - **Tenant enrollment restrictions reviewed** — See [iOS/iPadOS Admin Setup Overview § Intune Enrollment Restrictions](00-overview.md#intune-enrollment-restrictions). Account-driven User Enrollment is subject to the tenant-level enrollment-type-blocking policy.
 
-> **Research-flag note for admins deploying to devices running iOS 15.5 or iOS 15.7–16.3:** Microsoft Learn documents MFA limitations on User Enrollment on these iOS versions (iOS 15.5 cannot enroll with any MFA on the same device; iOS 15.7–16.3 cannot enroll with MFA via text, phone-call is required). These limitations are documented as current guidance despite iOS 18 shipping. Verify current status against Microsoft Learn `ios-user-enrollment-supported-actions` before assuming these apply to your fleet.
+> **Research-flag note for admins deploying to devices running iOS 15.5 or iOS 15.7–16.3:** Microsoft Learn documents MFA limitations on User Enrollment on these iOS versions
+
+> (iOS 15.5 cannot enroll with any MFA on the same device; iOS 15.7–16.3 cannot enroll with MFA via text, phone-call is required).
+
+> These limitations are documented as current guidance despite iOS 18 shipping.
+
+> Verify current status against Microsoft Learn `ios-user-enrollment-supported-actions` before assuming these apply to your fleet.
 
 ## Steps
 
@@ -107,43 +114,63 @@ After enrollment, Intune manages work apps and data inside the managed APFS volu
 
 Intune identifies User-Enrollment-enrolled devices by the Managed Apple ID and an Apple-provided enrollment identifier. Hardware identifiers like UDID, serial number, and IMEI are not returned by Apple's User Enrollment MDM channel.
 
-> **Privacy limit:** Intune does not collect UDID, serial number, or IMEI from account-driven User Enrollment devices. Device identification is limited to the Managed Apple ID and Apple's enrollment identifier. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+> **Privacy limit:** Intune does not collect UDID, serial number, or IMEI from account-driven User Enrollment devices.
+
+> Device identification is limited to the Managed Apple ID and Apple's enrollment identifier. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ### Wipe and Retire
 
 The only wipe scope on User Enrollment is selective wipe of the managed APFS volume. Triggering a wipe from Intune removes the managed volume, corporate accounts, and managed apps; the personal side of the device is untouched.
 
-> **Privacy limit:** System-wide device wipe is not available on account-driven User Enrollment. Only the managed APFS volume can be wiped — personal apps, personal data, and the personal iCloud are unaffected by any Intune wipe action. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+> **Privacy limit:** System-wide device wipe is not available on account-driven User Enrollment.
+
+> Only the managed APFS volume can be wiped — personal apps, personal data, and the personal iCloud are unaffected by any Intune wipe action.
+
+> See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ### App Inventory
 
 Intune inventories managed apps deployed via VPP user-licensed assignment into the managed volume. Personal apps installed by the end user from the App Store to the primary device context are outside Intune's visibility.
 
-> **Privacy limit:** Intune does not inventory personal apps or personal app data. Only managed apps inside the managed APFS volume and their work data are visible to Intune. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+> **Privacy limit:** Intune does not inventory personal apps or personal app data. Only managed apps inside the managed APFS volume and their work data are visible to Intune.
+
+> See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ### Location
 
 MDM location commands are not part of Apple's User Enrollment MDM feature set. Intune cannot query the device location on a User-Enrollment-enrolled device.
 
-> **Privacy limit:** Location tracking is not available on account-driven User Enrollment. Intune cannot query or report device location on these devices. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+> **Privacy limit:** Location tracking is not available on account-driven User Enrollment. Intune cannot query or report device location on these devices.
+
+> See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ### Passcode
 
 Passcode policy on User Enrollment applies only to the managed content — for example, a passcode required to open a managed Outlook inbox. Full-device passcode enforcement is not available.
 
-> **Privacy limit:** Intune cannot enforce a passcode on the primary device context of an account-driven User Enrollment device. Passcode compliance policies apply only to managed content; whether the device itself has a passcode is governed by the end user. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+> **Privacy limit:** Intune cannot enforce a passcode on the primary device context of an account-driven User Enrollment device.
+
+> Passcode compliance policies apply only to managed content; whether the device itself has a passcode is governed by the end user.
+
+> See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ### VPN
 
 Per-app VPN scoped to managed apps is supported; configuration flows through a VPN configuration profile targeted at the managed volume. System-wide VPN — which would route all device traffic including personal apps — is not available.
 
-> **Privacy limit:** System-wide VPN is not available on account-driven User Enrollment. Only per-app VPN scoped to managed apps is supported; personal app traffic does not route through the corporate VPN. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+> **Privacy limit:** System-wide VPN is not available on account-driven User Enrollment.
+
+> Only per-app VPN scoped to managed apps is supported; personal app traffic does not route through the corporate VPN. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ### Managed Volume Separation
 
 User Enrollment stores work content in a cryptographically separate APFS volume on the device. Work apps, work accounts, and work data live in this volume; personal content lives in the primary volume and is never accessible to Intune, managed apps, or the work account.
 
-> **Privacy limit:** Account-driven User Enrollment creates a managed APFS volume that is cryptographically separate from the personal side of the device. Intune cannot reach personal content; managed apps cannot copy content into the personal side of the device except via iOS-mediated Managed Open In flows. See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
+> **Privacy limit:** Account-driven User Enrollment creates a managed APFS volume that is cryptographically separate from the personal side of the device.
+
+> Intune cannot reach personal content; managed apps cannot copy content into the personal side of the device except via iOS-mediated Managed Open In flows.
+
+> See [User Enrollment](../ios-lifecycle/00-enrollment-overview.md#user-enrollment).
 
 ## Profile-Based User Enrollment (Deprecated)
 

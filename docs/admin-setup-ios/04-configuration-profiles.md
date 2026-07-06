@@ -19,13 +19,20 @@ platform: iOS
 This guide covers configuration profile authoring for iOS/iPadOS devices enrolled through Automated Device Enrollment (ADE), covering Wi-Fi, VPN, email, certificate, Home Screen Layout, and device restriction payloads delivered over the MDM/APNs channel. It requires the Intune Administrator role in Intune admin center; Apple Business Manager access is only needed indirectly, via the prior ADE enrollment step. Many restriction settings covered here require supervised mode — devices enrolled unsupervised silently ignore supervised-only settings, so confirming supervision state before assigning profiles is essential.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
+
 > For macOS ADE setup, see [macOS Configuration Profiles](../admin-setup-macos/03-configuration-profiles.md).
-> For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
-> Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
+
+> For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md). Portal navigation may vary by Intune admin center version.
+
+> See [Overview](00-overview.md#portal-navigation-note) for details.
 
 Configuration profiles are delivered to iOS/iPadOS devices via the MDM channel over APNs (Apple Push Notification service) — not via an agent. Configuration profiles **enforce** settings on devices; compliance policies **detect** non-compliance but do not enforce. iOS/iPadOS adds the supervision axis that macOS lacks: many device restriction settings apply only to supervised devices and are silently ignored on unsupervised devices. Settings that require supervised mode are explicitly marked with a 🔒 callout; on unsupervised devices they are ignored silently.
 
-> **Settings Catalog recommended:** Create new iOS/iPadOS configuration profiles via the Settings Catalog in Intune (Devices > Manage devices > Configuration > Create > New policy > iOS/iPadOS > Settings catalog). Legacy Templates > Device restrictions remains available for settings not yet in Settings Catalog (notably Home Screen Layout) — use Templates only when a setting is unavailable in Settings Catalog.
+> **Settings Catalog recommended:** Create new iOS/iPadOS configuration profiles via the Settings Catalog in Intune
+
+> (Devices > Manage devices > Configuration > Create > New policy > iOS/iPadOS > Settings catalog).
+
+> Legacy Templates > Device restrictions remains available for settings not yet in Settings Catalog (notably Home Screen Layout) — use Templates only when a setting is unavailable in Settings Catalog.
 
 ## Prerequisites
 
@@ -51,9 +58,13 @@ Key settings:
 - **Authentication (EAP type for 802.1X):** EAP-TLS (certificate-based), PEAP, or TTLS. For enterprise WPA2/WPA3, reference an SCEP or PKCS certificate profile deployed to the same device groups.
 - **Auto-join:** Enable for corporate-owned devices so the device connects automatically without user action.
 
-> **What breaks if misconfigured:** SSID case mismatch — the device cannot find the network; the failure is silent and the user sees no matching network in Wi-Fi settings. Symptom appears in: device (no matching network in Wi-Fi list).
+> **What breaks if misconfigured:** SSID case mismatch — the device cannot find the network; the failure is silent and the user sees no matching network in Wi-Fi settings.
 
-> **What breaks if misconfigured:** Missing SCEP/PKCS certificate profile for 802.1X enterprise authentication — the device cannot complete 802.1X authentication and silently fails to connect. Symptom appears in: device (Wi-Fi authentication error) and Intune admin center (profile shows "Error" status).
+> Symptom appears in: device (no matching network in Wi-Fi list).
+
+> **What breaks if misconfigured:** Missing SCEP/PKCS certificate profile for 802.1X enterprise authentication — the device cannot complete 802.1X authentication and silently fails to connect.
+
+> Symptom appears in: device (Wi-Fi authentication error) and Intune admin center (profile shows "Error" status).
 
 ## VPN
 
@@ -68,7 +79,9 @@ Key settings:
 - **Authentication:** Certificate-based (reference a certificate profile), username and password, or machine certificate.
 - **Per-app VPN:** Optionally scope the VPN tunnel to specific managed apps by bundle ID, limiting VPN traffic to only those apps.
 
-> **What breaks if misconfigured:** Wrong VPN type or server address — the connection fails with a generic error and the user cannot establish a VPN tunnel. Symptom appears in: device (VPN shows "Not Connected" with generic error).
+> **What breaks if misconfigured:** Wrong VPN type or server address — the connection fails with a generic error and the user cannot establish a VPN tunnel.
+
+> Symptom appears in: device (VPN shows "Not Connected" with generic error).
 
 Per-app VPN requires the app to be deployed as a managed app (see [App Deployment](05-app-deployment.md)).
 
@@ -88,7 +101,11 @@ Key settings:
 - **Allow Mail Drop:** Enable or disable iCloud Mail Drop for large file attachment sharing.
 - **Block move messages to other accounts:** Prevent users from moving corporate email to personal or other non-managed mail accounts.
 
-> **What breaks if misconfigured:** Basic authentication selected when the tenant enforces Modern authentication (OAuth) — the Mail app shows "Cannot Get Mail" and the user cannot access corporate email. Symptom appears in: device (Mail app authentication error, "Cannot Get Mail").
+> **What breaks if misconfigured:** Basic authentication selected when the tenant enforces Modern authentication (OAuth) —
+
+> the Mail app shows "Cannot Get Mail" and the user cannot access corporate email.
+
+> Symptom appears in: device (Mail app authentication error, "Cannot Get Mail").
 
 ## Certificates
 
@@ -104,7 +121,11 @@ Three certificate profile types are available for iOS/iPadOS:
 
 Certificate profiles are **NOT** supervised-only — they deploy to all enrolled iOS/iPadOS devices regardless of supervision state.
 
-> **What breaks if misconfigured:** SCEP certificate profile deployed without the corresponding Trusted certificate (root CA) deployed first — the device certificate chain is incomplete and 802.1X Wi-Fi authentication fails. Symptom appears in: device (Wi-Fi authentication error) and Intune admin center (profile shows "Error" status for affected devices).
+> **What breaks if misconfigured:** SCEP certificate profile deployed without the corresponding Trusted certificate (root CA) deployed first —
+
+> the device certificate chain is incomplete and 802.1X Wi-Fi authentication fails.
+
+> Symptom appears in: device (Wi-Fi authentication error) and Intune admin center (profile shows "Error" status for affected devices).
 
 ## Home Screen Layout
 
@@ -121,9 +142,15 @@ Key settings:
 - **Folders:** Group multiple apps into a folder on a page (supervised only; requires iOS 9.3+).
 - **App references by bundle ID:** Apps are referenced by their bundle ID (works for App Store apps, VPP-licensed apps, and LOB apps by their CFBundleIdentifier).
 
-> 🔒 **Supervised only:** Home screen layout requires supervised mode. On unsupervised devices this profile type is unavailable and home screen organization remains fully user-controlled. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Home screen layout requires supervised mode. On unsupervised devices this profile type is unavailable and home screen organization remains fully user-controlled.
 
-> **What breaks if misconfigured:** A bundle ID referencing an app that is not installed on the device (uninstalled, not yet deployed, or a typo in the bundle ID) — blank icons appear on the device home screen or icon placements silently drop from the configured positions. Symptom appears in: device (blank or missing app icons on home screen).
+> See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+
+> **What breaks if misconfigured:** A bundle ID referencing an app that is not installed on the device (uninstalled, not yet deployed, or a typo in the bundle ID) —
+
+> blank icons appear on the device home screen or icon placements silently drop from the configured positions.
+
+> Symptom appears in: device (blank or missing app icons on home screen).
 
 ## Device Restrictions
 
@@ -156,7 +183,11 @@ The legacy "Defer software updates" setting in device restrictions remains super
 | Require iTunes Store password for all purchases | — | Prompts for App Store password on every purchase |
 | Block in-app purchases | — | Disables in-app purchase dialogs |
 
-> 🔒 **Supervised only:** General block settings (Block modification of account settings, Block Screen Time, Block users from erasing content and settings, Block modification of device name, Block configuration profile changes, Allow activation Lock, Block removing apps, Block app clips, Force automatic date and time, Block VPN creation, Defer software updates) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** General block settings (Block modification of account settings, Block Screen Time, Block users from erasing content and settings, Block modification of device name,
+
+> Block configuration profile changes, Allow activation Lock, Block removing apps, Block app clips, Force automatic date and time, Block VPN creation, Defer software updates) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### App Store, Doc Viewing, and Gaming
 
@@ -171,7 +202,11 @@ The legacy "Defer software updates" setting in device restrictions remains super
 | Block in-app purchases | — | Disables in-app purchase UI for all apps |
 | Require iTunes Store password for all purchases | — | Prompts for authentication on every App Store purchase |
 
-> 🔒 **Supervised only:** App Store and Game Center restrictions (Block App Store, Block installing apps, Block automatic app downloads, Block Game Center, Block multiplayer gaming, Block adding Game Center friends) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** App Store and Game Center restrictions (Block App Store, Block installing apps, Block automatic app downloads, Block Game Center, Block multiplayer gaming,
+
+> Block adding Game Center friends) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Built-in Apps
 
@@ -190,7 +225,11 @@ The legacy "Defer software updates" setting in device restrictions remains super
 | Block Siri | — | Disables Siri entirely (not supervised-only) |
 | Block screenshots and screen recording | — | Prevents screenshots and video capture |
 
-> 🔒 **Supervised only:** Built-in app blocks (Block Camera, Block FaceTime, Block Safari, Block Safari Autofill, Block Apple News, Block Apple Books, Block iMessage, Block user-generated content in Siri, Require Siri profanity filter, Block Find My iPhone) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Built-in app blocks (Block Camera, Block FaceTime, Block Safari, Block Safari Autofill, Block Apple News, Block Apple Books, Block iMessage,
+
+> Block user-generated content in Siri, Require Siri profanity filter, Block Find My iPhone) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Cloud and Storage
 
@@ -203,7 +242,9 @@ The legacy "Defer software updates" setting in device restrictions remains super
 | Block managed apps from storing data in iCloud | — | Prevents MDM-managed app data from syncing to iCloud |
 | Force encrypted backup | — | Requires iTunes/Finder backup encryption |
 
-> 🔒 **Supervised only:** iCloud storage controls (Block iCloud backup, Block iCloud document and data sync, Block iCloud Keychain sync, Block iCloud Private Relay) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** iCloud storage controls (Block iCloud backup, Block iCloud document and data sync, Block iCloud Keychain sync, Block iCloud Private Relay) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Connected Devices
 
@@ -218,7 +259,11 @@ The legacy "Defer software updates" setting in device restrictions remains super
 | Block access to USB drive in Files app (iOS/iPadOS 13.0+) | 🔒 | Prevents Files app from browsing USB storage connected via adapter |
 | Allow USB accessories while device is locked (iOS 11.4.1+) | 🔒 | Controls USB Restricted Mode; when blocked, USB accessories cannot communicate after 1 hour of lock |
 
-> 🔒 **Supervised only:** Connected device controls (Block AirDrop, Block pairing with Apple Watch, Block modifying Bluetooth settings, Block pairing with non-Configurator hosts, Block AirPrint, Disable NFC, Block access to USB drive in Files app, Allow USB accessories while locked) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Connected device controls (Block AirDrop, Block pairing with Apple Watch, Block modifying Bluetooth settings, Block pairing with non-Configurator hosts, Block AirPrint,
+
+> Disable NFC, Block access to USB drive in Files app, Allow USB accessories while locked) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Keyboard and Dictionary
 
@@ -234,7 +279,11 @@ This entire category is supervised-only. All keyboard and dictionary settings re
 | Block dictation | 🔒 | Disables voice-to-text keyboard input |
 | Block QuickPath (iOS/iPadOS 13.0+) | 🔒 | Disables swipe-to-type keyboard input |
 
-> 🔒 **Supervised only:** All keyboard and dictionary settings (Block word definition lookup, Block predictive keyboards, Block auto-correction, Block spell-check, Block keyboard shortcuts, Block dictation, Block QuickPath) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** All keyboard and dictionary settings (Block word definition lookup, Block predictive keyboards, Block auto-correction, Block spell-check, Block keyboard shortcuts,
+
+> Block dictation, Block QuickPath) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Autonomous Single App Mode (ASAM)
 
@@ -245,7 +294,9 @@ This entire category is supervised-only. ASAM locks the device to a single app t
 | App name | 🔒 | Display name of the app to run in Autonomous Single App Mode |
 | App Bundle ID | 🔒 | Bundle identifier of the app locked in ASAM; only this app can run |
 
-> 🔒 **Supervised only:** Autonomous Single App Mode (ASAM) configuration (App name, App Bundle ID) requires supervised mode. On unsupervised devices ASAM is unavailable and cannot be configured. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Autonomous Single App Mode (ASAM) configuration (App name, App Bundle ID) requires supervised mode. On unsupervised devices ASAM is unavailable and cannot be configured.
+
+> See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Kiosk / App Lock
 
@@ -264,7 +315,9 @@ This entire category is supervised-only. Kiosk mode locks the device to a single
 | Volume buttons | 🔒 | Enable/disable physical volume buttons in kiosk |
 | (plus ~10 additional accessibility controls) | 🔒 | Invert colors, mono audio, voice control, screen sleep button, etc. |
 
-> 🔒 **Supervised only:** All Kiosk / App Lock settings (app selection, all ~20 accessibility and button-lock controls) require supervised mode. On unsupervised devices kiosk mode is unavailable. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** All Kiosk / App Lock settings (app selection, all ~20 accessibility and button-lock controls) require supervised mode. On unsupervised devices kiosk mode is unavailable.
+
+> See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Password
 
@@ -279,7 +332,11 @@ This entire category is supervised-only. These settings restrict how users modif
 | Block password sharing | 🔒 | Prevents sharing saved passwords via AirDrop or Messages |
 | Require Touch ID or Face ID authentication for AutoFill (iOS 11.0+) | 🔒 | Forces biometric authentication before AutoFill provides passwords |
 
-> 🔒 **Supervised only:** All Password settings (Block passcode modification, Block modification of Touch ID/Face ID, Block password AutoFill, Block password proximity requests, Block password sharing, Require biometric for AutoFill) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** All Password settings (Block passcode modification, Block modification of Touch ID/Face ID, Block password AutoFill, Block password proximity requests, Block password sharing,
+
+> Require biometric for AutoFill) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Safari Domains
 
@@ -289,7 +346,9 @@ This entire category is supervised-only. These settings restrict how users modif
 | Allowed Safari web domains | — | Restricts Safari browsing to specified domains only |
 | Managed Safari web domains | — | Marks specified domains as corporate — documents opened from these domains become managed |
 
-> 🔒 **Supervised only:** Safari password domains configuration requires supervised mode. On unsupervised devices this setting is ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Safari password domains configuration requires supervised mode. On unsupervised devices this setting is ignored silently.
+
+> See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Show or Hide Apps
 
@@ -297,7 +356,9 @@ This entire category is supervised-only. These settings restrict how users modif
 |---------|:----------------:|---|
 | Show or hide apps allowlist/blocklist | 🔒 | The entire Show or hide apps capability — showing or hiding specific apps by bundle ID — is supervised-only |
 
-> 🔒 **Supervised only:** The entire Show or hide apps allowlist/blocklist capability requires supervised mode. On unsupervised devices app visibility cannot be controlled via this setting. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** The entire Show or hide apps allowlist/blocklist capability requires supervised mode. On unsupervised devices app visibility cannot be controlled via this setting.
+
+> See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Screen Time and Additional Restrictions
 
@@ -308,7 +369,11 @@ This entire category is supervised-only. These settings restrict how users modif
 | Block removing apps | 🔒 | Prevents users from deleting apps (same as General block above — both locations apply) |
 | Block app clips (iOS 14.0+) | 🔒 | Prevents App Clips from launching |
 
-> 🔒 **Supervised only:** Screen Time modification controls and supplementary app restrictions (Block Screen Time modification, Block user erase of content and settings, Block removing apps, Block app clips) require supervised mode. On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
+> 🔒 **Supervised only:** Screen Time modification controls and supplementary app restrictions (Block Screen Time modification, Block user erase of content and settings, Block removing apps,
+
+> Block app clips) require supervised mode.
+
+> On unsupervised devices these settings are ignored silently. See [Supervision](../ios-lifecycle/00-enrollment-overview.md#supervision).
 
 ### Key Supervised-Only Settings — Full Detail
 
@@ -320,55 +385,105 @@ Block App Store removes the App Store icon from the device and prevents users fr
 
 Common use case: Deploy all apps via Intune VPP device-licensed or LOB assignment so users cannot install unauthorized apps.
 
-> **What breaks if misconfigured:** Blocking App Store on a fleet that uses VPP user-licensed apps prevents users from accepting the Apple Business Manager invitation, which breaks the entire VPP user-licensing flow. Users never receive VPP-licensed apps. Symptom appears in: device (App Store icon missing, users cannot install assigned apps) and Intune admin center (VPP user licenses stuck in "Invitation sent" state).
+> **What breaks if misconfigured:** Blocking App Store on a fleet that uses VPP user-licensed apps prevents users from accepting the Apple Business Manager invitation,
+
+> which breaks the entire VPP user-licensing flow.
+
+> Users never receive VPP-licensed apps.
+
+> Symptom appears in: device (App Store icon missing, users cannot install assigned apps) and Intune admin center (VPP user licenses stuck in "Invitation sent" state).
 
 #### Block removing apps
 
 Block removing apps prevents users from long-pressing an app icon and deleting it. This setting protects required managed apps from user uninstallation.
 
-> **What breaks if misconfigured:** When set to Block, admins can no longer uninstall apps from devices remotely via Intune — the block applies to all removal attempts including MDM-initiated uninstall commands. Removing a deployed app while this restriction is active requires first removing the restriction, waiting for policy propagation, then reissuing the uninstall command. Symptom appears in: Intune admin center (app uninstall assignment stuck in "Pending" indefinitely with no device-side action).
+> **What breaks if misconfigured:** When set to Block, admins can no longer uninstall apps from devices remotely via Intune —
+
+> the block applies to all removal attempts including MDM-initiated uninstall commands.
+
+> Removing a deployed app while this restriction is active requires first removing the restriction, waiting for policy propagation, then reissuing the uninstall command.
+
+> Symptom appears in: Intune admin center (app uninstall assignment stuck in "Pending" indefinitely with no device-side action).
 
 #### Allow activation Lock
 
 Allow Activation Lock enables supervised Activation Lock with bypass code escrow to Intune. When enabled, if a user enables Find My iPhone, the bypass code is automatically escrowed to Intune admin center for admin recovery without requiring the user's Apple ID.
 
-> **What breaks if misconfigured:** Enabling Activation Lock without configuring bypass code escrow (or losing the escrowed code) means a device whose user forgets their iCloud password is effectively bricked — the device cannot be activated for reuse without a working Apple ID. No MDM remediation is possible. Symptom appears in: device (activation lock screen at boot; user cannot proceed without Apple ID).
+> **What breaks if misconfigured:** Enabling Activation Lock without configuring bypass code escrow (or losing the escrowed code)
+
+> means a device whose user forgets their iCloud password is effectively bricked —
+
+> the device cannot be activated for reuse without a working Apple ID.
+
+> No MDM remediation is possible. Symptom appears in: device (activation lock screen at boot; user cannot proceed without Apple ID).
 
 #### Block configuration profile changes
 
 Block configuration profile changes prevents users from navigating to Settings > General > VPN & Device Management and removing profiles installed by Intune.
 
-> **What breaks if misconfigured:** On a device without locked enrollment (see [ADE Enrollment Profile](03-ade-enrollment-profile.md)), this block alone is insufficient — users can still remove the management profile itself via Settings > General > VPN & Device Management regardless of this setting. Block configuration profile changes prevents adding unauthorized profiles, not removing the MDM management profile. Pair with locked enrollment for full protection. Symptom appears in: Intune admin center (device unenrolled by user action when locked enrollment is not configured).
+> **What breaks if misconfigured:** On a device without locked enrollment (see [ADE Enrollment Profile](03-ade-enrollment-profile.md)), this block alone is insufficient —
+
+> users can still remove the management profile itself via Settings > General > VPN & Device Management regardless of this setting.
+
+> Block configuration profile changes prevents adding unauthorized profiles, not removing the MDM management profile. Pair with locked enrollment for full protection.
+
+> Symptom appears in: Intune admin center (device unenrolled by user action when locked enrollment is not configured).
 
 #### Block modification of account settings
 
 Block modification of account settings prevents users from adding, removing, or modifying accounts (email, contacts, calendars, iCloud) in Settings > Mail/Contacts/Calendar and Settings > Passwords & Accounts.
 
-> **What breaks if misconfigured:** If a user needs to re-authenticate their Entra ID account (due to token expiry, password change, or MFA reset) and this block is active, they cannot complete re-authentication — they cannot modify their account to accept a new credential state. Resolution requires device wipe and re-enrollment. Symptom appears in: device (user cannot sign in or complete account re-auth prompt) and Intune admin center (device stale, user unable to self-remediate).
+> **What breaks if misconfigured:** If a user needs to re-authenticate their Entra ID account (due to token expiry, password change, or MFA reset) and this block is active,
+
+> they cannot complete re-authentication — they cannot modify their account to accept a new credential state.
+
+> Resolution requires device wipe and re-enrollment.
+
+> Symptom appears in: device (user cannot sign in or complete account re-auth prompt) and Intune admin center (device stale, user unable to self-remediate).
 
 #### Block iCloud backup
 
 Block iCloud backup prevents device backup to iCloud, used as a data exfiltration control in regulated environments.
 
-> **What breaks if misconfigured:** Fleet-wide blocking of iCloud backup without an alternative corporate backup strategy means users lose all device-local data on device loss, replacement, or hardware failure — no iCloud snapshot is available to restore from. The impact is highest for user-assigned devices carrying locally-stored personal work product (photos, notes, files) not synced elsewhere. Symptom appears in: device (restore flow shows no backup on new device) and help desk (tickets for lost data post-device-replacement).
+> **What breaks if misconfigured:** Fleet-wide blocking of iCloud backup without an alternative corporate backup strategy means users lose all device-local data on device loss, replacement,
+
+> or hardware failure — no iCloud snapshot is available to restore from.
+
+> The impact is highest for user-assigned devices carrying locally-stored personal work product (photos, notes, files) not synced elsewhere.
+
+> Symptom appears in: device (restore flow shows no backup on new device) and help desk (tickets for lost data post-device-replacement).
 
 #### Block AirDrop
 
 Block AirDrop prevents the device from sending or receiving files via AirDrop, used as a data exfiltration control.
 
-> **What breaks if misconfigured:** Fleet-wide AirDrop block without an alternative corporate file-transfer mechanism frustrates legitimate use cases (transferring photos and documents between a user's own managed devices). AirDrop is commonly used for photo transfers in mobile workflows. Symptom appears in: help desk (surge in tickets requesting file-transfer alternatives or workarounds for photo sharing).
+> **What breaks if misconfigured:** Fleet-wide AirDrop block without an alternative corporate file-transfer mechanism frustrates legitimate use cases
+
+> (transferring photos and documents between a user's own managed devices).
+
+> AirDrop is commonly used for photo transfers in mobile workflows. Symptom appears in: help desk (surge in tickets requesting file-transfer alternatives or workarounds for photo sharing).
 
 #### Block Camera and Block FaceTime
 
 Block Camera removes the Camera app and disables camera access in all apps. Block FaceTime removes the FaceTime app. These settings are paired and commonly deployed together in regulated environments (hospitals, classified facilities, high-security areas).
 
-> **What breaks if misconfigured:** Overly broad camera block applied fleet-wide to a general knowledge-worker fleet prevents users from participating in video meetings (Microsoft Teams, Zoom). Intended for scoped deployments where camera is genuinely prohibited — applying to standard office or remote workers breaks video calls entirely. Symptom appears in: device (camera unavailable in Teams/Zoom with a "Camera not available" error) and help desk (volume of video meeting complaints).
+> **What breaks if misconfigured:** Overly broad camera block applied fleet-wide to a general knowledge-worker fleet prevents users from participating in video meetings (Microsoft Teams, Zoom).
+
+> Intended for scoped deployments where camera is genuinely prohibited — applying to standard office or remote workers breaks video calls entirely.
+
+> Symptom appears in: device (camera unavailable in Teams/Zoom with a "Camera not available" error) and help desk (volume of video meeting complaints).
 
 #### Block pairing with non-Configurator hosts
 
 Block pairing with non-Configurator hosts prevents the device from establishing USB trust relationships with any computer not configured via Apple Configurator 2 as a trusted host. This prevents USB-based unmanagement attacks.
 
-> **What breaks if misconfigured:** Leaving this setting Off on supervised corporate devices allows any computer to pair with the device via USB trust (after user clicks "Trust" in the USB connection dialog). A malicious computer or a rogue user with a personal Mac can pair the device and use Apple Configurator to perform actions including un-supervising the device via USB. Recommended On for all corporate ADE devices. Symptom appears in: security audit finding — no user-facing symptom until compromise occurs.
+> **What breaks if misconfigured:** Leaving this setting Off on supervised corporate devices allows any computer to pair with the device via USB trust
+
+> (after user clicks "Trust" in the USB connection dialog).
+
+> A malicious computer or a rogue user with a personal Mac can pair the device and use Apple Configurator to perform actions including un-supervising the device via USB.
+
+> Recommended On for all corporate ADE devices. Symptom appears in: security audit finding — no user-facing symptom until compromise occurs.
 
 ## Verification
 

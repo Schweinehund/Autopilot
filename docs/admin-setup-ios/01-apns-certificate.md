@@ -20,7 +20,9 @@ This guide covers configuration and annual renewal of the Apple Push Notificatio
 
 > **Platform gate:** This guide covers iOS/iPadOS APNs certificate configuration for Intune MDM.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
+
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
 
 The APNs certificate enables MDM communication between Microsoft Intune and ALL Apple devices — iOS, iPadOS, and macOS. This is shared cross-platform infrastructure: a single APNs certificate covers all Apple platforms enrolled in your Intune tenant. If the certificate expires or is replaced, MDM communication to ALL enrolled iOS, iPadOS, and macOS devices stops simultaneously.
@@ -32,7 +34,11 @@ The APNs certificate enables MDM communication between Microsoft Intune and ALL 
 - Microsoft Intune Plan 1 (or higher) subscription
 - Access to the [Apple Push Certificates Portal](https://identity.apple.com)
 
-> **What breaks if misconfigured:** Using a personal Apple ID means the APNs certificate cannot be renewed if that employee leaves the organization. ALL enrolled iOS, iPadOS, and macOS devices lose MDM communication when the certificate expires. Symptom appears in: Apple Push Certificates Portal (cannot log in to renew) and Intune admin center (all Apple devices show "Not checking in" after expiration).
+> **What breaks if misconfigured:** Using a personal Apple ID means the APNs certificate cannot be renewed if that employee leaves the organization.
+
+> ALL enrolled iOS, iPadOS, and macOS devices lose MDM communication when the certificate expires.
+
+> Symptom appears in: Apple Push Certificates Portal (cannot log in to renew) and Intune admin center (all Apple devices show "Not checking in" after expiration).
 
 ## Steps
 
@@ -56,7 +62,9 @@ The APNs certificate enables MDM communication between Microsoft Intune and ALL 
 5. Upload the .csr file downloaded in Step 1.
 6. Select **Download** to save the resulting .pem certificate file locally.
 
-> **What breaks if misconfigured:** Uploading the wrong CSR file (e.g., from a different Intune tenant) creates a certificate that cannot communicate with your Intune instance. Symptom appears in: Intune admin center (certificate upload succeeds but devices cannot check in).
+> **What breaks if misconfigured:** Uploading the wrong CSR file (e.g., from a different Intune tenant) creates a certificate that cannot communicate with your Intune instance.
+
+> Symptom appears in: Intune admin center (certificate upload succeeds but devices cannot check in).
 
 ### Step 3: Upload the certificate to Intune
 
@@ -73,7 +81,13 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 
 ### Renew vs. Create: Critical Distinction
 
-> **What breaks if misconfigured:** Creating a **NEW** APNs certificate instead of **renewing** the existing one immediately breaks MDM communication to **ALL** enrolled iOS, iPadOS, and macOS devices. A new certificate has a different UID. Devices enrolled with the old certificate cannot be managed — they must be wiped and re-enrolled. This affects every Apple device in your organization simultaneously. **Always renew. Never create new.**
+> **What breaks if misconfigured:** Creating a **NEW** APNs certificate instead of **renewing** the existing one immediately breaks MDM communication to **ALL** enrolled iOS, iPadOS, and macOS devices.
+
+> A new certificate has a different UID.
+
+> Devices enrolled with the old certificate cannot be managed — they must be wiped and re-enrolled. This affects every Apple device in your organization simultaneously.
+
+> **Always renew. Never create new.**
 
 ### Renewal Steps
 
@@ -95,7 +109,11 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 8. Upload the renewed .pem file to Intune.
 9. Verify the new expiration date (should be ~365 days from renewal).
 
-> **What breaks if misconfigured:** Renewing with a DIFFERENT Apple ID than the one used to create the certificate fails. The Apple Push Certificates Portal does not allow a different Apple ID to renew an existing certificate. Symptom appears in: Apple Push Certificates Portal (certificate not visible under wrong Apple ID).
+> **What breaks if misconfigured:** Renewing with a DIFFERENT Apple ID than the one used to create the certificate fails.
+
+> The Apple Push Certificates Portal does not allow a different Apple ID to renew an existing certificate.
+
+> Symptom appears in: Apple Push Certificates Portal (certificate not visible under wrong Apple ID).
 
 ## Verification
 

@@ -19,14 +19,18 @@ platform: iOS
 This guide covers Automated Device Enrollment (ADE) token configuration, the link between Apple Business Manager (ABM) and Microsoft Intune that enables device syncing and enrollment profile assignment for iOS/iPadOS devices. Completing it requires the Intune Administrator role in Intune admin center and the Device Manager or Administrator role in Apple Business Manager, plus a Managed Apple ID (not a personal Apple ID). There is no supervised-device prerequisite for token creation itself; supervision is established later by the enrollment profile step that follows.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE token configuration via Apple Business Manager and Intune.
+
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
+
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
 
-> **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on
-> 2026-04-14. This guide retains the legacy "ABM" terminology for portal-navigation continuity
-> but uses the new "Apple Business" framing in cross-references. See the [Apple Business
-> Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
+> **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on 2026-04-14.
+
+> This guide retains the legacy "ABM" terminology for portal-navigation continuity but uses the new "Apple Business" framing in cross-references.
+
+> See the [Apple Business Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
 
 The ADE token links Apple Business Manager to Microsoft Intune, enabling device syncing and enrollment profile assignment for iOS/iPadOS devices. The steps are structurally identical to the macOS ABM token configuration — this guide cross-references the macOS guide for shared portal steps and documents only iOS-specific differences inline. Apple School Manager (ASM) is functionally identical to ABM for MDM purposes; follow the same steps if your organization uses ASM.
 
@@ -39,7 +43,9 @@ The ADE token links Apple Business Manager to Microsoft Intune, enabling device 
 - Microsoft Intune Plan 1 (or higher) subscription
 - Apple Business Manager account with verified organization
 
-> **What breaks if misconfigured:** Using a personal Apple ID means the ADE token cannot be renewed if that employee leaves. New device syncing stops when the token expires (365 days). Existing enrolled devices are unaffected. Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop appearing after token expiry).
+> **What breaks if misconfigured:** Using a personal Apple ID means the ADE token cannot be renewed if that employee leaves. New device syncing stops when the token expires (365 days).
+
+> Existing enrolled devices are unaffected. Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop appearing after token expiry).
 
 ## How iOS ADE Token Setup Differs from macOS
 
@@ -78,7 +84,11 @@ Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow
 
 **iOS-specific difference:** When filtering devices in ABM, filter by device type **iPhone** or **iPad** to locate iOS/iPadOS devices. iOS devices can also be looked up by IMEI in addition to serial number.
 
-> **What breaks if misconfigured:** Device must be assigned to the MDM server BEFORE first power-on. If powered on without assignment, the device proceeds through non-managed Setup Assistant and requires a factory reset to fix. Symptom appears in: the device (standard iOS setup, no MDM enrollment).
+> **What breaks if misconfigured:** Device must be assigned to the MDM server BEFORE first power-on.
+
+> If powered on without assignment, the device proceeds through non-managed Setup Assistant and requires a factory reset to fix.
+
+> Symptom appears in: the device (standard iOS setup, no MDM enrollment).
 
 ## Token Sync Mechanics
 
