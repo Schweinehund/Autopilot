@@ -1,4 +1,8 @@
 ---
+doc_id: RE-119
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-27
 review_by: 2026-09-27
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-119 · **Status:** Approved
+
+# macOS Configuration Profiles
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Configuration Profiles
 
 > **Settings Catalog required:** All new macOS configuration profiles should be created via the Settings Catalog in Intune (Devices > Manage devices > Configuration > Create > New policy > Settings catalog). The older Endpoint protection template is deprecated for new policies -- do not create new profiles via Templates > Endpoint protection.
 
@@ -296,3 +306,9 @@ Continue with Platform SSO setup in [07-platform-sso-setup.md](07-platform-sso-s
 | 2026-06-20 | Phase 75 (PSSO-04 / DS-5): corrected Extensible SSO section — fixed macOS version floor (13+, 14 recommended, Smart Card 14+), separated the three auth methods, removed blanket password-binding claim; replaced external fallback with deferred in-suite pointer to `07-platform-sso-setup.md` (link converted in Phase 76) | -- |
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- 9 profile types with Settings Catalog paths, what-breaks callouts, delivery channel note | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

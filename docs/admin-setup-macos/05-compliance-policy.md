@@ -1,4 +1,8 @@
 ---
+doc_id: RE-121
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-121 · **Status:** Approved
+
+# macOS Compliance Policies
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Compliance Policies
 
 > **No Intune security baselines for macOS.** Intune security baselines are available only for Windows (Windows 10/11, Microsoft Defender for Endpoint, Microsoft Edge, Microsoft 365 Apps, HoloLens 2, Windows 365). macOS has zero security baselines. Admins must configure macOS security settings manually via a combination of compliance policies (detect non-compliance) and configuration profiles (enforce settings). See [Configuration Profiles](03-configuration-profiles.md) for enforcement.
 
@@ -147,3 +157,9 @@ Assign to device groups or user groups as appropriate.
 |------|--------|--------|
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- compliance policies with no-security-baselines callout, detect vs enforce distinction, all settings | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

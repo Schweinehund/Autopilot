@@ -1,4 +1,8 @@
 ---
+doc_id: RE-118
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-27
 review_by: 2026-09-27
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-118 · **Status:** Approved
+
+# macOS Enrollment Profile Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Enrollment Profile Configuration
 
 This guide covers creating and configuring a macOS [ADE](../_glossary-macos.md#ade) enrollment profile in Intune, including user affinity, authentication method, [Await Configuration](../_glossary-macos.md#await-configuration), locked enrollment, and [Setup Assistant](../_glossary-macos.md#setup-assistant) screen customization.
 
@@ -192,3 +202,9 @@ These screens appear during the first-run experience and can be shown or hidden 
 | 2026-06-27 | Added UPN-looking-login note (login window shows Full Name → set `{{username}}` for `jsmith@contoso.com` display; keep short name `{{partialUPN}}`; don't switch PSSO mapping to `preferred_username`); cross-linked to Platform SSO end-user-experience section | -- |
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- enrollment profile with Setup Assistant screens, enrollment settings, what-breaks callouts | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

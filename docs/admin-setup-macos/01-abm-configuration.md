@@ -1,10 +1,22 @@
 ---
+doc_id: RE-117
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-05-21
 review_by: 2026-07-20
 applies_to: ADE
 audience: admin
 platform: macOS
 ---
+
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-117 · **Status:** Approved
+
+# ABM Configuration for Automated Device Enrollment
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
 
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
@@ -14,8 +26,6 @@ platform: macOS
 > 2026-04-14. This guide retains the legacy "ABM" terminology for portal-navigation continuity
 > but uses the new "Apple Business" framing in cross-references. See the [Apple Business
 > Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
-
-# ABM Configuration for Automated Device Enrollment
 
 This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to link [Apple Business Manager](../_glossary-macos.md#abm) with Microsoft Intune, assigning devices to the MDM server, and configuring token renewal. This is the first step in macOS Automated Device Enrollment and must be completed before creating an enrollment profile.
 
@@ -153,3 +163,9 @@ Up to 3,000 ADE tokens supported per Intune tenant; each token corresponds to on
 |------|--------|--------|
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- ABM configuration with ADE token creation, device assignment, renewal lifecycle | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

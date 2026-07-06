@@ -1,4 +1,8 @@
 ---
+doc_id: RE-122
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-14
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-122 · **Status:** Approved
+
+# macOS Configuration-Caused Failures Reference
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS Configuration-Caused Failures Reference
 
 This is the consolidated reverse-lookup table for all macOS admin setup configuration mistakes. Each entry links to both the guide file where the setting is configured and the troubleshooting runbook for the failure it causes. Use this page when you see a deployment or management failure and suspect a configuration mistake.
 
@@ -87,3 +97,9 @@ This is the consolidated reverse-lookup table for all macOS admin setup configur
 |------|--------|--------|
 | 2026-04-14 | Resolved all Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- consolidated config-failures from all 5 macOS admin setup guides | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-120
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-05-26
 review_by: 2026-07-13
 applies_to: ADE
@@ -6,11 +10,17 @@ audience: admin
 platform: macOS
 ---
 
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-120 · **Status:** Approved
+
+# macOS App Deployment
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+
 > **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
-
-# macOS App Deployment
 
 This guide covers deploying macOS applications through Intune using three methods: DMG, PKG (managed and unmanaged), and [VPP](../_glossary-macos.md#vpp)/Apps and Books.
 
@@ -166,3 +176,9 @@ Up to 3,000 VPP tokens supported per Intune tenant. One VPP token cannot be shar
 | 2026-04-14 | Resolved Phase 24 runbook links | -- |
 | 2026-04-14 | Initial version -- DMG, PKG (managed/unmanaged), VPP with comparison table, per-type prerequisites, VPP renewal | -- |
 | 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP location token" to "content token" per Apple 2026-04-14 rebrand (L45, L46, L113, L148); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; PITFALLS.md CI-2 closure | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |
