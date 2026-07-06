@@ -254,7 +254,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 — shared RE-index.md)*
 
-- [ ] 118-03-PLAN.md — Migration/monitoring/infra-prereq (8 files, all Windows/CREATE, 20 #12 groups; 3 Guide-titled files keep doc_type: Reference per D-118-3); C17 green + registry Approved (RETRO-03)
+- [x] 118-03-PLAN.md — Migration/monitoring/infra-prereq (8 files, all Windows/CREATE, 20 #12 groups; 3 Guide-titled files keep doc_type: Reference per D-118-3); C17 green + registry Approved (RETRO-03)
 
 **Wave 4** *(blocked on Wave 3 — shared RE-index.md)*
 
@@ -312,5 +312,5 @@ Plans:
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
-| 118. Reference Doc Retrofit + Table Remediation | 2/6 | In Progress|  |
+| 118. Reference Doc Retrofit + Table Remediation | 3/6 | In Progress|  |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |

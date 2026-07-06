@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T17:07:25.298Z"
+last_updated: "2026-07-06T17:24:33.466Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 33
-  completed_plans: 29
+  completed_plans: 30
   percent: 71
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 118 (reference-doc-retrofit-table-remediation-26-docs) — EXECUTING
-Plan: 3 of 6
+Plan: 4 of 6
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -309,6 +309,9 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase 118]: [118-01] Forked retrofit-reference.mjs from retrofit-guide.mjs (protects shipped 117 deliverable); VH CREATE branch always 3-column per Open Question 1 lock; detectVhColumnCount defaults to 3-column if inconclusive
 - [Phase ?]: [118-02] Legacy dangling changelog tables (macos-capability-matrix.md, windows-vs-macos.md) treated as in-scope D-118-1 tables to match plan must_haves table counts, not restructured
 - [Phase ?]: [118-02] Transform A truly-empty-line split applied to the batch's 2 pre-existing C17 #12 violations (aosp-oem-matrix.md 286c, windows-vs-macos.md 230c); word-preservation confirmed via git diff
+- [Phase ?]: All 8 files exercised the VH CREATE branch (no pre-existing Version History), matching plan must_haves
+- [Phase ?]: 20 over-limit #12 blockquote groups resolved entirely via Transform A (sentence/clause split); no Transform B needed (no embedded code fences in this batch)
+- [Phase ?]: Word-set reformat-only proof must strip the leading '>' blockquote-prefix token before comparing multisets -- raw diffs show false positives from added '>' tokens per new split group
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -339,8 +342,8 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T17:07:25.283Z
-Stopped at: Completed Phase 118 Plan 02
+Last session: 2026-07-06T17:24:33.451Z
+Stopped at: Completed Phase 118 Plan 03
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
@@ -384,3 +387,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 117 P10 | 8min | 2 tasks | 0 files |
 | Phase 118 P01 | 13min | 2 tasks | 1 files |
 | Phase 118 P02 | 24min | 3 tasks | 10 files |
+| Phase 118 P03 | 30min | 3 tasks | 9 files |
