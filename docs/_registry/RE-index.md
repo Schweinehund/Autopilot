@@ -130,12 +130,12 @@
 | RE-114 | docs/admin-setup-ios/08-user-enrollment.md | iOS/iPadOS Account-Driven User Enrollment | Guide | Approved |
 | RE-115 | docs/admin-setup-ios/09-mam-app-protection.md | iOS MAM-WE App Protection Policies | Guide | Approved |
 | RE-116 | docs/admin-setup-macos/00-overview.md | macOS Admin Setup: Complete Configuration Guide | Guide | Pending |
-| RE-117 | docs/admin-setup-macos/01-abm-configuration.md | ABM Configuration for Automated Device Enrollment | Guide | Pending |
-| RE-118 | docs/admin-setup-macos/02-enrollment-profile.md | macOS Enrollment Profile Configuration | Guide | Pending |
-| RE-119 | docs/admin-setup-macos/03-configuration-profiles.md | macOS Configuration Profiles | Guide | Pending |
-| RE-120 | docs/admin-setup-macos/04-app-deployment.md | macOS App Deployment | Guide | Pending |
-| RE-121 | docs/admin-setup-macos/05-compliance-policy.md | macOS Compliance Policies | Guide | Pending |
-| RE-122 | docs/admin-setup-macos/06-config-failures.md | macOS Configuration-Caused Failures Reference | Guide | Pending |
+| RE-117 | docs/admin-setup-macos/01-abm-configuration.md | ABM Configuration for Automated Device Enrollment | Guide | Approved |
+| RE-118 | docs/admin-setup-macos/02-enrollment-profile.md | macOS Enrollment Profile Configuration | Guide | Approved |
+| RE-119 | docs/admin-setup-macos/03-configuration-profiles.md | macOS Configuration Profiles | Guide | Approved |
+| RE-120 | docs/admin-setup-macos/04-app-deployment.md | macOS App Deployment | Guide | Approved |
+| RE-121 | docs/admin-setup-macos/05-compliance-policy.md | macOS Compliance Policies | Guide | Approved |
+| RE-122 | docs/admin-setup-macos/06-config-failures.md | macOS Configuration-Caused Failures Reference | Guide | Approved |
 | RE-123 | docs/admin-setup-macos/07-platform-sso-setup.md | macOS Platform SSO Setup | Guide | Pending |
 | RE-124 | docs/admin-setup-macos/08-auth-methods-deep-dive.md | macOS Platform SSO: Auth Method Selection & Deep-Dive | Guide | Pending |
 | RE-125 | docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md | macOS Enterprise SSO Plug-in & Migration Guide | Guide | Pending |

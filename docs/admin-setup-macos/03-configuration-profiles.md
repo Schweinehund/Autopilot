@@ -18,11 +18,15 @@ platform: macOS
 
 This guide covers macOS MDM configuration profiles delivered via the Settings Catalog -- Wi-Fi, VPN, Email, Restrictions, Local Password Policy, FileVault disk encryption, Firewall, Gatekeeper, Privacy Preferences, and Extensible/Platform SSO. It requires the Intune Administrator role and an Apple Business Manager-enrolled ADE device; FileVault Setup Assistant enforcement additionally requires macOS 14+ (14.4+ for Standard-role primary accounts).
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
-> For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
-> **Settings Catalog required:** All new macOS configuration profiles should be created via the Settings Catalog in Intune (Devices > Manage devices > Configuration > Create > New policy > Settings catalog). The older Endpoint protection template is deprecated for new policies -- do not create new profiles via Templates > Endpoint protection.
+> **Settings Catalog required:** All new macOS configuration profiles should be created via the Settings Catalog in Intune
+
+> (Devices > Manage devices > Configuration > Create > New policy > Settings catalog).
+
+> The older Endpoint protection template is deprecated for new policies -- do not create new profiles via Templates > Endpoint protection.
 
 ## Prerequisites
 
@@ -44,18 +48,21 @@ Key settings:
 
 - **SSID:** Must match exactly (case-sensitive).
 
-> **What breaks if misconfigured:** If SSID does not match the network name exactly (including case), the device cannot find or connect to the network. Symptom appears in: device (Wi-Fi settings show no matching network).
-> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
+> **What breaks if misconfigured:** If SSID does not match the network name exactly (including case), the device cannot find or connect to the network.
+
+> Symptom appears in: device (Wi-Fi settings show no matching network). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 - **Security type:** Must match the network's actual security type (WPA2, WPA3, etc.).
 
 > **What breaks if misconfigured:** If the security type does not match, the connection fails silently. Symptom appears in: device (Wi-Fi connection fails repeatedly).
+
 > See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 - **Certificate (for enterprise WPA2/WPA3):** Must reference a valid SCEP/PKCS certificate profile deployed to the device.
 
-> **What breaks if misconfigured:** Without a valid certificate profile, 802.1X authentication fails. Symptom appears in: device (Wi-Fi authentication error) and Intune admin center (profile shows "Error" status).
-> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
+> **What breaks if misconfigured:** Without a valid certificate profile, 802.1X authentication fails.
+
+> Symptom appears in: device (Wi-Fi authentication error) and Intune admin center (profile shows "Error" status). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## VPN
 
@@ -70,6 +77,7 @@ Key settings:
 - **Authentication method:** Certificate, username/password, or machine certificate
 
 > **What breaks if misconfigured:** Wrong VPN type or server address causes connection failure with no clear error message. Symptom appears in: device (VPN shows "Not Connected" with generic error).
+
 > See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Email
@@ -85,6 +93,7 @@ Key settings:
 - **S/MIME:** Optional encryption and signing certificates
 
 > **What breaks if misconfigured:** Incorrect email server or authentication method causes email sync failure. Symptom appears in: device (Mail app shows "Cannot Get Mail" error).
+
 > See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Restrictions
@@ -102,8 +111,9 @@ Key settings to configure per organizational policy:
 - **Password modification:** Allow or block password changes
 - **Content caching:** Allow or block local content caching
 
-> **What breaks if misconfigured:** Overly restrictive settings may block legitimate business workflows. Insufficient restrictions may allow data exfiltration via AirDrop or Screen capture. Symptom appears in: device (feature unavailable) or Intune admin center (compliance policy detects unrestricted setting).
-> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
+> **What breaks if misconfigured:** Overly restrictive settings may block legitimate business workflows. Insufficient restrictions may allow data exfiltration via AirDrop or Screen capture.
+
+> Symptom appears in: device (feature unavailable) or Intune admin center (compliance policy detects unrestricted setting). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Local Password Policy (Passcode)
 
@@ -111,7 +121,13 @@ Key settings to configure per organizational policy:
 
 Navigation: **Settings catalog > Passcode** (or **Device restrictions > Password**). This policy governs the **local macOS account password** — the credential used at the login / lock screen. It is distinct from the Entra password and from the managed LAPS admin password.
 
-> **Applies to the local account, not Entra.** With the **Secure Enclave** PSSO method the local password is independent of Entra (see [Platform SSO → End-User Sign-In Experience](07-platform-sso-setup.md#end-user-sign-in-experience-secure-enclave)). With the **Password** PSSO method the local password is synced from Entra — in that case manage expiration in **Entra**, not here, to avoid conflicts.
+> **Applies to the local account, not Entra.**
+
+> With the **Secure Enclave** PSSO method the local password is independent of Entra
+
+> (see [Platform SSO → End-User Sign-In Experience](07-platform-sso-setup.md#end-user-sign-in-experience-secure-enclave)).
+
+> With the **Password** PSSO method the local password is synced from Entra — in that case manage expiration in **Entra**, not here, to avoid conflicts.
 
 Key settings:
 
@@ -127,7 +143,10 @@ Key settings:
 
 **If a compliance regime requires expiration:** set **Password expiration (days) = 90** (or your mandated interval). The user is prompted to create a new password when it expires. *(Microsoft: "enter 90 to expire the password after 90 days… users are prompted to create a new password" — [Apple device restriction settings](https://learn.microsoft.com/intune/device-configuration/templates/ref-device-restrictions-apple#password).)* This is **user-driven expiration**, not silent rotation like the LAPS admin account.
 
-> **What breaks if misconfigured:** Forcing periodic expiration on a Secure Enclave fleet adds password friction (undermining the Touch ID / passwordless UX) and tends to weaken passwords. Setting maximum sign-in attempts too low (2–3) locks users out on ordinary typos. Symptom appears in: device (frequent change prompts / lockouts).
+> **What breaks if misconfigured:** Forcing periodic expiration on a Secure Enclave fleet adds password friction (undermining the Touch ID / passwordless UX) and tends to weaken passwords.
+
+> Setting maximum sign-in attempts too low (2–3) locks users out on ordinary typos. Symptom appears in: device (frequent change prompts / lockouts).
+
 > See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## FileVault (Disk Encryption)
@@ -179,7 +198,15 @@ The **Full Disk Encryption** category contains three sub-payloads: **FileVault**
 - **FileVault Recovery Key Escrow:** Location = a clear, plain-language retrieval message.
 - Pair with the **compliance** "Require encryption of data storage" check (see [Compliance Policies](05-compliance-policy.md)).
 
-> **Assignment target — devices, not users (for corporate Macs).** Unlike the [Platform SSO policy](07-platform-sso-setup.md), which **must** target user groups, FileVault is a **device-level** encryption setting. Assign the Settings Catalog FileVault policy to **device groups** (or All Devices) for company-owned Macs; use **user groups** only for BYOD scenarios. Setup Assistant enforcement specifically targets **devices** via a filter on the `EnrollmentProfileName` attribute. Note: admin recovery-key visibility depends on device **ownership type** (Corporate vs Personal), *not* on whether you assigned to a user or device group.
+> **Assignment target — devices, not users (for corporate Macs).**
+
+> Unlike the [Platform SSO policy](07-platform-sso-setup.md), which **must** target user groups, FileVault is a **device-level** encryption setting.
+
+> Assign the Settings Catalog FileVault policy to **device groups** (or All Devices) for company-owned Macs; use **user groups** only for BYOD scenarios.
+
+> Setup Assistant enforcement specifically targets **devices** via a filter on the `EnrollmentProfileName` attribute.
+
+> Note: admin recovery-key visibility depends on device **ownership type** (Corporate vs Personal), *not* on whether you assigned to a user or device group.
 
 **Setup Assistant enforcement (macOS 14+, optional):** To force FileVault enablement *during device setup* (instead of at the first user sign-out), configure the additional Setup-Assistant FileVault settings and meet the prerequisites: macOS 14+, ABM/ASM enrollment, **Await final configuration = Yes** in the [enrollment profile](02-enrollment-profile.md), and target via a device filter on the `EnrollmentProfileName` attribute. **Pre-macOS 14.4 caveat:** the account created interactively during Setup Assistant must have the **Administrator** role — relevant if you set the primary account to **Standard** (see [Enrollment Profile → Account Settings](02-enrollment-profile.md#account-settings-local-admin-and-local-user-accounts)). macOS 14.4+ removes this restriction.
 
@@ -198,10 +225,21 @@ The **Full Disk Encryption** category contains three sub-payloads: **FileVault**
 
 *If escrow hasn't happened:* escrow runs in two stages (key-escrow preparation → encryption). Check device network connectivity and the encryption report's escrow status. Error `-2016341107` / `0x87d1138d` means the user hasn't accepted the FileVault enablement prompt — educate the user, or use Setup Assistant enforcement to avoid the prompt.
 
-> **What breaks if misconfigured:** Enabling FileVault **without `Defer = Enabled`** often causes the profile to fail to apply (encryption never starts). Enabling FileVault **without configuring the Recovery Key Escrow Location** (or on a device Intune didn't encrypt) means that if the user forgets their password the disk may be unrecoverable. Symptom appears in: Intune admin center (no recovery key available / profile error) and on device (FileVault recovery screen shows no institutional key).
+> **What breaks if misconfigured:** Enabling FileVault **without `Defer = Enabled`** often causes the profile to fail to apply (encryption never starts).
+
+> Enabling FileVault **without configuring the Recovery Key Escrow Location** (or on a device Intune didn't encrypt) means that if the user forgets their password the disk may be unrecoverable.
+
+> Symptom appears in: Intune admin center (no recovery key available / profile error) and on device (FileVault recovery screen shows no institutional key).
+
 > See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
-> **Don't confuse this with the PSSO FileVault Policy.** This Full Disk Encryption payload controls **disk-encryption enforcement**. The separate **Platform SSO > FileVault Policy** setting (`AttemptAuthentication`, etc.) in [Platform SSO Setup](07-platform-sso-setup.md) controls whether PSSO **verifies the Entra password at the FileVault unlock screen** (macOS 15+, Password method) — a different surface entirely.
+> **Don't confuse this with the PSSO FileVault Policy.** This Full Disk Encryption payload controls **disk-encryption enforcement**.
+
+> The separate **Platform SSO > FileVault Policy** setting (`AttemptAuthentication`, etc.) in [Platform SSO Setup](07-platform-sso-setup.md)
+
+> controls whether PSSO **verifies the Entra password at the FileVault unlock screen** (macOS 15+, Password method) —
+
+> a different surface entirely.
 
 **Critical:** FileVault has TWO surfaces -- a configuration profile (enforce via Settings Catalog) AND a compliance policy (verify enabled in [Compliance Policies](05-compliance-policy.md)). Always deploy both together.
 
@@ -217,8 +255,9 @@ Key settings:
 - **Block all incoming connections:** Yes/No
 - **Stealth mode:** Enable/Disable
 
-> **What breaks if misconfigured:** Enabling "Block all incoming connections" without exceptions for management traffic (APNs, IME) can break MDM communication and app deployment. Symptom appears in: Intune admin center (device stops checking in) and on device (apps fail to install).
-> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
+> **What breaks if misconfigured:** Enabling "Block all incoming connections" without exceptions for management traffic (APNs, IME) can break MDM communication and app deployment.
+
+> Symptom appears in: Intune admin center (device stops checking in) and on device (apps fail to install). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 **Critical:** Like FileVault, firewall has configuration profile (enforce) AND compliance policy (detect). Deploy both. See [Compliance Policies](05-compliance-policy.md).
 
@@ -228,8 +267,11 @@ Key settings:
 
 Navigation: **Devices** > **Manage devices** > **Configuration** > **Create** > **New policy** > **Settings catalog** > **System Policy** > **System Policy Control** (Allow Identified Developer: True, Enable Assessment: True) + **System Policy Managed** (Disable Override: True)
 
-> **What breaks if misconfigured:** If Gatekeeper is not enforced via configuration profile, users can change the setting to allow apps from "Anywhere." Compliance policy detects the change but does not prevent it. Symptom appears in: Intune admin center (non-compliant for Gatekeeper) and device (Gatekeeper set to permissive mode).
-> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
+> **What breaks if misconfigured:** If Gatekeeper is not enforced via configuration profile, users can change the setting to allow apps from "Anywhere."
+
+> Compliance policy detects the change but does not prevent it.
+
+> Symptom appears in: Intune admin center (non-compliant for Gatekeeper) and device (Gatekeeper set to permissive mode). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Privacy Preferences (PPPC)
 
@@ -244,8 +286,11 @@ Common use cases:
 - **Screen Recording** for remote support tools
 - **Accessibility** for automation and assistive tools
 
-> **What breaks if misconfigured:** Without PPPC profiles, security tools prompt the user for permissions on first run. If the user denies, the tool cannot function until the admin deploys a PPPC profile and the user re-approves. Symptom appears in: device (security agent reports reduced functionality) and security dashboard (gaps in endpoint coverage).
-> See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
+> **What breaks if misconfigured:** Without PPPC profiles, security tools prompt the user for permissions on first run.
+
+> If the user denies, the tool cannot function until the admin deploys a PPPC profile and the user re-approves.
+
+> Symptom appears in: device (security agent reports reduced functionality) and security dashboard (gaps in endpoint coverage). See: [Profile Not Applied](../l1-runbooks/12-macos-profile-not-applied.md)
 
 ## Extensible SSO
 

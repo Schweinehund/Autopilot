@@ -18,8 +18,8 @@ platform: macOS
 
 This guide covers deploying macOS applications through Intune via three methods -- DMG, PKG (managed Line-of-Business and unmanaged), and VPP/Apps and Books. It requires the Intune Administrator role plus an active Apple Business Manager content token for VPP licensing, and applies with no specific macOS version prerequisite beyond IME agent version floors per delivery method.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
-> For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 This guide covers deploying macOS applications through Intune using three methods: DMG, PKG (managed and unmanaged), and [VPP](../_glossary-macos.md#vpp)/Apps and Books.
@@ -68,10 +68,16 @@ This guide covers deploying macOS applications through Intune using three method
 5. Configure detection rules: Bundle ID + build number from Included apps.
 6. Configure assignments: Required, Available, or Uninstall.
 
-> **What breaks if misconfigured:** Adding non-application files to the Included apps list causes Intune to report installation failure because listed items are not `.app` bundles installed to `/Applications/`. Symptom appears in: Intune admin center (app install status shows "Failed").
-> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
+> **What breaks if misconfigured:** Adding non-application files to the Included apps list causes Intune to report installation failure
 
-> **What breaks if misconfigured:** When using Uninstall assignment with `Ignore app version: No`, both bundle ID AND version must match the installed app for removal. Stale version deployments silently fail to uninstall. Symptom appears in: Intune admin center (uninstall status "Pending" indefinitely).
+> because listed items are not `.app` bundles installed to `/Applications/`.
+
+> Symptom appears in: Intune admin center (app install status shows "Failed"). See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
+
+> **What breaks if misconfigured:** When using Uninstall assignment with `Ignore app version: No`, both bundle ID AND version must match the installed app for removal.
+
+> Stale version deployments silently fail to uninstall. Symptom appears in: Intune admin center (uninstall status "Pending" indefinitely).
+
 > See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 **Limitation:** App is NOT automatically removed from device on device retirement -- must be explicitly uninstalled first.
@@ -87,11 +93,15 @@ This guide covers deploying macOS applications through Intune using three method
 5. Configure Included apps for detection.
 6. Assign to groups.
 
-> **What breaks if misconfigured:** Using managed LOB for a PKG > 2 GB causes upload failure. Use unmanaged PKG type (8 GB limit) instead, but note that Uninstall assignment is not available for unmanaged PKG. Symptom appears in: Intune admin center (upload error).
+> **What breaks if misconfigured:** Using managed LOB for a PKG > 2 GB causes upload failure.
+
+> Use unmanaged PKG type (8 GB limit) instead, but note that Uninstall assignment is not available for unmanaged PKG. Symptom appears in: Intune admin center (upload error).
+
 > See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
-> **What breaks if misconfigured:** PKG without payload (e.g., script-only packages) continuously reinstalls. Symptom appears in: Intune admin center (perpetual "Installing" status) and on device (repeated installation prompts).
-> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
+> **What breaks if misconfigured:** PKG without payload (e.g., script-only packages) continuously reinstalls.
+
+> Symptom appears in: Intune admin center (perpetual "Installing" status) and on device (repeated installation prompts). See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 ## PKG Apps (Unmanaged)
 
@@ -105,8 +115,9 @@ This guide covers deploying macOS applications through Intune using three method
 
 Supported scenarios beyond managed LOB: non-flat packages, component packages, unsigned packages, packages without payload, packages installing outside `/Applications/`, custom packages with scripts.
 
-> **What breaks if misconfigured:** Uninstall assignment type is not available for unmanaged PKG (Known Issue in Intune). If uninstall is required, use DMG or managed LOB PKG type. Symptom appears in: Intune admin center (Uninstall option missing from assignment type dropdown).
-> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
+> **What breaks if misconfigured:** Uninstall assignment type is not available for unmanaged PKG (Known Issue in Intune). If uninstall is required, use DMG or managed LOB PKG type.
+
+> Symptom appears in: Intune admin center (Uninstall option missing from assignment type dropdown). See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 ## VPP / Apps and Books
 
@@ -125,11 +136,17 @@ Supported scenarios beyond managed LOB: non-flat packages, component packages, u
 4. Select the app > **Properties** > **Assignments**.
 5. Assign as Required (device or user groups) or Available for enrolled devices (user groups only).
 
-> **What breaks if misconfigured:** VPP app assigned as Available to a device group will not appear in Company Portal. Available deployment intent for VPP works only with user groups. Use Required for device groups. Symptom appears in: Intune admin center (assignment shows succeeded) but device (Company Portal does not list the app).
+> **What breaks if misconfigured:** VPP app assigned as Available to a device group will not appear in Company Portal. Available deployment intent for VPP works only with user groups.
+
+> Use Required for device groups. Symptom appears in: Intune admin center (assignment shows succeeded) but device (Company Portal does not list the app).
+
 > See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
-> **What breaks if misconfigured:** Revoking a VPP license without Uninstall intent leaves the app installed on the device. The revoked license remains usable for a 30-day grace period (Apple policy). To fully remove: assign with Uninstall intent, which removes the app AND revokes the license. Symptom appears in: ABM (license shows revoked) but device (app still installed and usable for up to 30 days).
-> See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
+> **What breaks if misconfigured:** Revoking a VPP license without Uninstall intent leaves the app installed on the device. The revoked license remains usable for a 30-day grace period (Apple policy).
+
+> To fully remove: assign with Uninstall intent, which removes the app AND revokes the license.
+
+> Symptom appears in: ABM (license shows revoked) but device (app still installed and usable for up to 30 days). See: [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md)
 
 ## Verification
 
@@ -151,7 +168,11 @@ Supported scenarios beyond managed LOB: non-flat packages, component packages, u
 | VPP license revoked without Uninstall intent | ABM | App remains installed for 30-day grace period | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
 | Expired VPP token | Intune | VPP apps stop syncing; existing installs unaffected | [App Not Installed](../l1-runbooks/13-macos-app-not-installed.md) |
 
-> **Note:** Apple calls this artifact a "content token" (formerly "VPP location token"); Microsoft Intune labels it "Apple VPP token" under `Tenant administration > Connectors and tokens > Apple VPP tokens`. Same artifact, different vendor terminology.
+> **Note:** Apple calls this artifact a "content token" (formerly "VPP location token");
+
+> Microsoft Intune labels it "Apple VPP token" under `Tenant administration > Connectors and tokens > Apple VPP tokens`.
+
+> Same artifact, different vendor terminology.
 
 ## Renewal / Maintenance
 

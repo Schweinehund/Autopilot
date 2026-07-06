@@ -18,8 +18,8 @@ platform: macOS
 
 This guide covers creating and configuring the macOS Automated Device Enrollment (ADE) enrollment profile in Intune -- user affinity, authentication method, Setup Assistant screens, and local Account Settings. It requires the Intune Administrator role and an active ADE token, and applies to all supported macOS versions with no specific version floor for the base profile.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
-> For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 This guide covers creating and configuring a macOS [ADE](../_glossary-macos.md#ade) enrollment profile in Intune, including user affinity, authentication method, [Await Configuration](../_glossary-macos.md#await-configuration), locked enrollment, and [Setup Assistant](../_glossary-macos.md#setup-assistant) screen customization.
@@ -53,26 +53,39 @@ Configure the following enrollment settings:
 | Locked enrollment | Yes / No | -- | Prevents user from removing management profile |
 | Local account creation (LAPS) | Configure / Not configured | Not configured | Creates local admin account during setup |
 
-> **What breaks if misconfigured:** Without user affinity, Company Portal will not work and user-based Conditional Access policies do not apply. Symptom appears in: Intune admin center (device shows no primary user) and Company Portal (app not functional).
-> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+> **What breaks if misconfigured:** Without user affinity, Company Portal will not work and user-based Conditional Access policies do not apply.
 
-> **What breaks if misconfigured:** Legacy authentication method requires AD FS WS-Trust 1.3 and is incompatible with modern Conditional Access policies. Symptom appears in: Setup Assistant (authentication failure screen).
-> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+> Symptom appears in: Intune admin center (device shows no primary user) and Company Portal (app not functional). See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
-> **What breaks if misconfigured:** Await final configuration set to No allows users to reach the desktop before policies and profiles apply, causing immediate compliance failures. Symptom appears in: device (user reaches desktop without management) and Intune admin center (non-compliant status).
-> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+> **What breaks if misconfigured:** Legacy authentication method requires AD FS WS-Trust 1.3 and is incompatible with modern Conditional Access policies.
 
-> **What breaks if misconfigured:** Locked enrollment set to Yes prevents the user from removing the management profile via System Settings > Profiles. This setting cannot be changed after enrollment without a factory wipe. If set to No, the user can remove the MDM profile and become unmanaged. Symptom appears in: device (Profiles section in System Settings).
-> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+> Symptom appears in: Setup Assistant (authentication failure screen). See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
-> **What breaks if misconfigured:** Misconfigured LAPS username template causes account creation failure during Setup Assistant. Link to official LAPS documentation for full configuration. Symptom appears in: Setup Assistant (error during account creation).
-> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+> **What breaks if misconfigured:** Await final configuration set to No allows users to reach the desktop before policies and profiles apply, causing immediate compliance failures.
+
+> Symptom appears in: device (user reaches desktop without management) and Intune admin center (non-compliant status). See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+
+> **What breaks if misconfigured:** Locked enrollment set to Yes prevents the user from removing the management profile via System Settings > Profiles.
+
+> This setting cannot be changed after enrollment without a factory wipe. If set to No, the user can remove the MDM profile and become unmanaged.
+
+> Symptom appears in: device (Profiles section in System Settings). See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+
+> **What breaks if misconfigured:** Misconfigured LAPS username template causes account creation failure during Setup Assistant. Link to official LAPS documentation for full configuration.
+
+> Symptom appears in: Setup Assistant (error during account creation). See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 #### Account Settings: Local Admin and Local User Accounts
 
 The **Account Settings** section of the enrollment profile decides *which macOS accounts exist after Setup Assistant* — and, critically, **whether the end user gets a login account at all.**
 
-> **PSSO depends on this — read first:** In the standard single-user flow, **Platform SSO does not create the user's login account.** PSSO binds the user's Entra identity to an *existing* local account *after* the desktop loads (the "Registration Required" popup). The login account itself is created here, by the enrollment profile. If **Create a local primary account = No**, a single-user device is stranded at the managed local-admin login window with no way to sign in with Entra. See [Platform SSO Setup](07-platform-sso-setup.md).
+> **PSSO depends on this — read first:** In the standard single-user flow, **Platform SSO does not create the user's login account.**
+
+> PSSO binds the user's Entra identity to an *existing* local account *after* the desktop loads (the "Registration Required" popup). The login account itself is created here, by the enrollment profile.
+
+> If **Create a local primary account = No**, a single-user device is stranded at the managed local-admin login window with no way to sign in with Entra.
+
+> See [Platform SSO Setup](07-platform-sso-setup.md).
 
 **Local administrator account** — a managed break-glass admin ([macOS LAPS](https://learn.microsoft.com/intune/device-security/laps/setup-macos)):
 
@@ -83,7 +96,13 @@ The **Account Settings** section of the enrollment profile decides *which macOS 
 | Hide in Users & Groups | Yes / Not configured | **Yes** to keep the break-glass admin off the login window and out of System Settings > Users & Groups. Recommended. |
 | Admin account password rotation period (days) | blank = 6-month default / custom | Set a shorter cycle for a tighter security posture. |
 
-> **Exclude this managed admin from Platform SSO.** Add the admin account name (e.g. `admin`) to the PSSO policy's **`Non Platform SSO Accounts`** setting so the break-glass admin isn't prompted to register for PSSO and is exempt from the FileVault/Login/Unlock policies. See [Platform SSO Setup](07-platform-sso-setup.md).
+> **Exclude this managed admin from Platform SSO.**
+
+> Add the admin account name (e.g. `admin`) to the PSSO policy's **`Non Platform SSO Accounts`** setting
+
+> so the break-glass admin isn't prompted to register for PSSO and is exempt from the FileVault/Login/Unlock policies.
+
+> See [Platform SSO Setup](07-platform-sso-setup.md).
 
 **Local user account** — the end user's primary login account:
 
@@ -96,20 +115,45 @@ The **Account Settings** section of the enrollment profile decides *which macOS 
 | Primary account full name | static or tokens (`{{username}}`, `{{onPremisesSamAccountName}}`, `{{serialNumber}}`) | The account **display name**. Used only when Prefill = Yes. |
 | Restrict editing | Yes / Not configured | Available only when Prefill = Yes. Governs the **account name and full name only** — *not* the password. **Yes**: the name/full-name screen is skipped (user can't edit those fields). **Not configured**: prefilled name values are shown but editable. See the password-behavior note below. |
 
-> **Why a local-password prompt can still appear (even with `Restrict editing = Yes`).** `Restrict editing` suppresses only the **name and full-name** fields. The local account **password** is auto-filled only when the Setup Assistant Microsoft Entra sign-in produced a **reusable plaintext password**. It will **not** be auto-filled — and the user is prompted to create a local password — when the sign-in is:
-> - **Passwordless** — Temporary Access Pass (TAP), FIDO2 / security key, Authenticator passwordless / phone sign-in, or certificate-based auth (no password is entered, so none can be reused). Microsoft's passwordless walkthrough confirms: with a TAP, *"the user creates their local account with a local account password (which could be a PIN)."*
-> - **Federated** — ADFS / third-party IdP, where the password is entered on the IdP's page rather than the Entra web view, so macOS can't capture it.
->
-> This is **expected behavior, not a misconfiguration.** A fully zero-prompt account creation requires a **non-federated, password-based** Setup Assistant sign-in. Note also that Microsoft documents the fully-silent "account creation screen never appears" experience specifically for **Setup Assistant (legacy)**; with **modern authentication** the local password is tied to the Entra password sign-in. (Don't confuse this account-creation password with the later PSSO "enter your local account password" registration prompt — that one is always expected.)
+**Why a local-password prompt can still appear (even with `Restrict editing = Yes`).** `Restrict editing` suppresses only the **name and full-name** fields. The local account **password** is auto-filled only when the Setup Assistant Microsoft Entra sign-in produced a **reusable plaintext password**. It will **not** be auto-filled — and the user is prompted to create a local password — when the sign-in is:
+- **Passwordless** — Temporary Access Pass (TAP), FIDO2 / security key, Authenticator passwordless / phone sign-in, or certificate-based auth (no password is entered, so none can be reused). Microsoft's passwordless walkthrough confirms: with a TAP, *"the user creates their local account with a local account password (which could be a PIN)."*
+- **Federated** — ADFS / third-party IdP, where the password is entered on the IdP's page rather than the Entra web view, so macOS can't capture it.
 
-> **Match the prefilled short name to your PSSO Account Name mapping.** If you set **Prefill = Yes**, set the **Primary account name to the same token your PSSO `Token To User Mapping > Account Name` resolves to.** With the recommended `com.apple.PlatformSSO.AccountShortName` (UPN prefix), use **`{{partialUPN}}`** so both produce the same short name (`john`). This matters most for the flows where PSSO *creates* the account — `Enable Create User At Login` (shared device) and ADE-during-Setup-Assistant — where a mismatch produces a **second, duplicate account**. In the **standard post-enrollment** path, PSSO registers the account the user is already signed into, so an exact match isn't strictly required there — but it remains good hygiene. See [Platform SSO Setup](07-platform-sso-setup.md).
+This is **expected behavior, not a misconfiguration.** A fully zero-prompt account creation requires a **non-federated, password-based** Setup Assistant sign-in. Note also that Microsoft documents the fully-silent "account creation screen never appears" experience specifically for **Setup Assistant (legacy)**; with **modern authentication** the local password is tied to the Entra password sign-in. (Don't confuse this account-creation password with the later PSSO "enter your local account password" registration prompt — that one is always expected.)
 
-> **What breaks if misconfigured:** `Create a local primary account = No` on a single-user (user-affinity) device leaves only the managed local admin account. The device boots to a login window showing that admin account, whose password is escrowed in Intune (not known to the user), and offers no Entra sign-in option. Fix requires editing the profile and performing a **wipe + re-enroll** — Account Settings apply only during Setup Assistant. Symptom appears in: device (login window stuck on the managed-admin account after Setup Assistant).
-> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+> **Match the prefilled short name to your PSSO Account Name mapping.**
+
+> If you set **Prefill = Yes**, set the **Primary account name to the same token your PSSO `Token To User Mapping > Account Name` resolves to.**
+
+> With the recommended `com.apple.PlatformSSO.AccountShortName` (UPN prefix), use **`{{partialUPN}}`** so both produce the same short name (`john`).
+
+> This matters most for the flows where PSSO *creates* the account — `Enable Create User At Login` (shared device) and ADE-during-Setup-Assistant —
+
+> where a mismatch produces a **second, duplicate account**.
+
+> In the **standard post-enrollment** path, PSSO registers the account the user is already signed into, so an exact match isn't strictly required there — but it remains good hygiene.
+
+> See [Platform SSO Setup](07-platform-sso-setup.md).
+
+> **What breaks if misconfigured:** `Create a local primary account = No` on a single-user (user-affinity) device leaves only the managed local admin account.
+
+> The device boots to a login window showing that admin account, whose password is escrowed in Intune (not known to the user), and offers no Entra sign-in option.
+
+> Fix requires editing the profile and performing a **wipe + re-enroll** — Account Settings apply only during Setup Assistant.
+
+> Symptom appears in: device (login window stuck on the managed-admin account after Setup Assistant). See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 **Recommended for standard single-user PSSO:** Create a local admin account = **Yes** (+ Hide in Users & Groups = **Yes**); Create a local primary account = **Yes**; Account type = **Standard**; Prefill account info = **Not configured** (or **Yes** + Primary account name `{{partialUPN}}` for naming consistency that also guarantees a PSSO account match).
 
-> **UPN-looking login:** The macOS login window displays the account's **Full Name**, not the short name. Set **Primary account full name = `{{username}}`** so the login shows `jsmith@contoso.com`, while keeping the short name as `{{partialUPN}}` (`jsmith`, home folder `/Users/jsmith`). This is the supported way to get a UPN-style login on the **Secure Enclave** method — do **not** switch the PSSO `Account Name` mapping to `preferred_username` for this (it would mismatch the short name and overwrite LAPS). See [Platform SSO → End-User Sign-In Experience](07-platform-sso-setup.md#end-user-sign-in-experience-secure-enclave).
+> **UPN-looking login:** The macOS login window displays the account's **Full Name**, not the short name.
+
+> Set **Primary account full name = `{{username}}`** so the login shows `jsmith@contoso.com`, while keeping the short name as `{{partialUPN}}` (`jsmith`, home folder `/Users/jsmith`).
+
+> This is the supported way to get a UPN-style login on the **Secure Enclave** method —
+
+> do **not** switch the PSSO `Account Name` mapping to `preferred_username` for this (it would mismatch the short name and overwrite LAPS).
+
+> See [Platform SSO → End-User Sign-In Experience](07-platform-sso-setup.md#end-user-sign-in-experience-secure-enclave).
 
 ### Step 3: Configure Setup Assistant Screens
 
@@ -146,8 +190,13 @@ These screens appear during the first-run experience and can be shown or hidden 
 | Update completed | 26.1 | Show | |
 | Get started | 15.0 | Show | |
 
-> **What breaks if misconfigured:** The Restore screen on macOS 15.4+ cannot be hidden -- hiding it has no effect and users receive an alert instead. The Accessibility screen hiding blocks VoiceOver on supported devices, which may create accessibility compliance issues. Symptom appears in: device (unexpected screens during Setup Assistant or blocked assistive technology).
-> See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
+This table lists all 29 Setup Assistant screens with their minimum macOS version, the recommended visibility setting, and applicable notes.
+
+> **What breaks if misconfigured:** The Restore screen on macOS 15.4+ cannot be hidden -- hiding it has no effect and users receive an alert instead.
+
+> The Accessibility screen hiding blocks VoiceOver on supported devices, which may create accessibility compliance issues.
+
+> Symptom appears in: device (unexpected screens during Setup Assistant or blocked assistive technology). See: [Setup Assistant Failed](../l1-runbooks/11-macos-setup-assistant-failed.md)
 
 ### Step 4: Assign Profile to Devices
 

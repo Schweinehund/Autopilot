@@ -18,11 +18,19 @@ platform: macOS
 
 This guide covers macOS compliance policies -- the detection counterpart to configuration profile enforcement -- covering System Integrity Protection, OS version/build requirements, password rules, FileVault encryption, firewall, and Gatekeeper checks. It requires the Intune Administrator role; macOS has no Intune security baselines, so all settings must be configured manually with no specific macOS version floor of its own.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
-> For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
-> **No Intune security baselines for macOS.** Intune security baselines are available only for Windows (Windows 10/11, Microsoft Defender for Endpoint, Microsoft Edge, Microsoft 365 Apps, HoloLens 2, Windows 365). macOS has zero security baselines. Admins must configure macOS security settings manually via a combination of compliance policies (detect non-compliance) and configuration profiles (enforce settings). See [Configuration Profiles](03-configuration-profiles.md) for enforcement.
+> **No Intune security baselines for macOS.**
+
+> Intune security baselines are available only for Windows (Windows 10/11, Microsoft Defender for Endpoint, Microsoft Edge, Microsoft 365 Apps, HoloLens 2, Windows 365).
+
+> macOS has zero security baselines.
+
+> Admins must configure macOS security settings manually via a combination of compliance policies (detect non-compliance) and configuration profiles (enforce settings).
+
+> See [Configuration Profiles](03-configuration-profiles.md) for enforcement.
 
 ## Compliance vs. Configuration: Critical Distinction
 
@@ -34,7 +42,12 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 | Enforce SIP | No (compliance check only) | SIP cannot be enforced via MDM -- read-only |
 | Enforce encryption | No | Yes (Settings Catalog > Full Disk Encryption) |
 
-> **What breaks if misconfigured:** If compliance policies are deployed WITHOUT corresponding configuration profiles, devices will be marked non-compliant but nothing enforces the settings. Users can change settings freely, and Conditional Access may block access. Symptom appears in: Intune admin center (devices non-compliant) and on device (Conditional Access blocks user if CA policies are active).
+> **What breaks if misconfigured:** If compliance policies are deployed WITHOUT corresponding configuration profiles, devices will be marked non-compliant but nothing enforces the settings.
+
+> Users can change settings freely, and Conditional Access may block access.
+
+> Symptom appears in: Intune admin center (devices non-compliant) and on device (Conditional Access blocks user if CA policies are active).
+
 > See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 ## Prerequisites
@@ -60,8 +73,11 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 
 - **Require System Integrity Protection (SIP):** Not configured / Require
 
-> **What breaks if misconfigured:** SIP is a compliance-check-only setting. MDM CANNOT enable or disable SIP -- it is controlled only by booting to Recovery Mode. If required and SIP is disabled, the device is non-compliant with no automated remediation. User must boot to Recovery Mode and run `csrutil enable`. Symptom appears in: Intune admin center (non-compliant status with "SIP disabled" reason).
-> See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
+> **What breaks if misconfigured:** SIP is a compliance-check-only setting. MDM CANNOT enable or disable SIP -- it is controlled only by booting to Recovery Mode.
+
+> If required and SIP is disabled, the device is non-compliant with no automated remediation. User must boot to Recovery Mode and run `csrutil enable`.
+
+> Symptom appears in: Intune admin center (non-compliant status with "SIP disabled" reason). See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 **Device Properties:**
 
@@ -70,8 +86,11 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 - Minimum OS build version (supports Apple Rapid Security Response build strings)
 - Maximum OS build version
 
-> **What breaks if misconfigured:** OS version requirements that are ahead of the latest available macOS update will mark ALL devices non-compliant with no remediation path until Apple releases the update. Symptom appears in: Intune admin center (entire fleet non-compliant).
-> See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
+> **What breaks if misconfigured:** OS version requirements that are ahead of the latest available macOS update will mark ALL devices non-compliant
+
+> with no remediation path until Apple releases the update.
+
+> Symptom appears in: Intune admin center (entire fleet non-compliant). See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 **System Security -- Password:**
 
@@ -84,7 +103,12 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 - Password expiration (days)
 - Number of previous passwords to prevent reuse
 
-> **What breaks if misconfigured:** When password requirements change, the new requirement does NOT take effect until the next time the user changes their password. The device remains compliant with the old password until then. This means there is a window where the device technically meets the old policy but not the new one. Symptom appears in: Intune admin center (device may show compliant despite not meeting new password requirements until user changes password).
+> **What breaks if misconfigured:** When password requirements change, the new requirement does NOT take effect until the next time the user changes their password.
+
+> The device remains compliant with the old password until then. This means there is a window where the device technically meets the old policy but not the new one.
+
+> Symptom appears in: Intune admin center (device may show compliant despite not meeting new password requirements until user changes password).
+
 > See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 **System Security -- Encryption:**
@@ -105,7 +129,14 @@ This guide covers macOS compliance policies -- the detection counterpart to conf
 
 - Allow apps downloaded from: Not configured / Mac App Store / Mac App Store and identified developers / Anywhere
 
-> **What breaks if misconfigured:** Compliance policy checks current Gatekeeper setting but does NOT enforce it. A configuration profile (Settings Catalog > System Policy) is required to prevent users from changing the setting. If set to "Mac App Store" and user overrides to "Anywhere" without a config profile enforcing it, device becomes non-compliant immediately. Symptom appears in: Intune admin center (non-compliant for Gatekeeper) and device (Conditional Access blocks access if CA policy active).
+> **What breaks if misconfigured:** Compliance policy checks current Gatekeeper setting but does NOT enforce it.
+
+> A configuration profile (Settings Catalog > System Policy) is required to prevent users from changing the setting.
+
+> If set to "Mac App Store" and user overrides to "Anywhere" without a config profile enforcing it, device becomes non-compliant immediately.
+
+> Symptom appears in: Intune admin center (non-compliant for Gatekeeper) and device (Conditional Access blocks access if CA policy active).
+
 > See: [Compliance / Access Blocked](../l1-runbooks/14-macos-compliance-access-blocked.md)
 
 ### Step 3: Configure Actions for Noncompliance
@@ -123,7 +154,11 @@ Assign to device groups or user groups as appropriate.
 
 ## Conditional Access Cross-Reference
 
-> For macOS-specific Conditional Access enrollment timing considerations (the chicken-and-egg problem where devices are non-compliant during enrollment), see [Conditional Access Enrollment Timing](../reference/ca-enrollment-timing.md). This is a cross-platform issue documented in detail with Windows and macOS resolution patterns.
+> For macOS-specific Conditional Access enrollment timing considerations (the chicken-and-egg problem where devices are non-compliant during enrollment),
+
+> see [Conditional Access Enrollment Timing](../reference/ca-enrollment-timing.md).
+
+> This is a cross-platform issue documented in detail with Windows and macOS resolution patterns.
 
 ## Verification
 

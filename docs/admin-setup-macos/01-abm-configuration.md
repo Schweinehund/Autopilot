@@ -18,14 +18,15 @@ platform: macOS
 
 This guide covers configuring Automated Device Enrollment (ADE) for macOS by linking an Apple Business Manager MDM server token to Microsoft Intune. It requires the Intune Administrator role plus Apple Business Manager Device Manager or Administrator access, and applies to all ADE-eligible Mac hardware with no specific macOS version floor.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
-> For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
-> **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on
-> 2026-04-14. This guide retains the legacy "ABM" terminology for portal-navigation continuity
-> but uses the new "Apple Business" framing in cross-references. See the [Apple Business
-> Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
+> **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on 2026-04-14.
+
+> This guide retains the legacy "ABM" terminology for portal-navigation continuity but uses the new "Apple Business" framing in cross-references.
+
+> See the [Apple Business Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
 
 This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to link [Apple Business Manager](../_glossary-macos.md#abm) with Microsoft Intune, assigning devices to the MDM server, and configuring token renewal. This is the first step in macOS Automated Device Enrollment and must be completed before creating an enrollment profile.
 
@@ -37,7 +38,10 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 - Apple Business Manager account with verified organization
 - Managed Apple ID (NOT personal Apple ID)
 
-> **What breaks if misconfigured:** Using a personal Apple ID means the [ABM token](../_glossary-macos.md#abm-token) cannot be renewed if that employee leaves the organization. All new device syncing stops when the token expires. Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop syncing after token expires).
+> **What breaks if misconfigured:** Using a personal Apple ID means the [ABM token](../_glossary-macos.md#abm-token) cannot be renewed if that employee leaves the organization.
+
+> All new device syncing stops when the token expires. Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop syncing after token expires).
+
 > See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
 ## Steps
@@ -51,8 +55,9 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 3. Grant permission for Microsoft to send user and device information to Apple.
 4. Select **Download your public key** to save the .pem certificate file locally.
 
-> **What breaks if misconfigured:** If this step is skipped or an expired public key is used, the server token downloaded from ABM will fail validation when uploaded back to Intune. Symptom appears in: Intune admin center (token upload error).
-> See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
+> **What breaks if misconfigured:** If this step is skipped or an expired public key is used, the server token downloaded from ABM will fail validation when uploaded back to Intune.
+
+> Symptom appears in: Intune admin center (token upload error). See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
 ### Step 2: Create MDM Server and Download Server Token
 
@@ -65,7 +70,10 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 4. Upload the Intune public key (.pem) downloaded in Step 1.
 5. Select **Save**, then **Download Server Token** to save the .p7m file.
 
-> **What breaks if misconfigured:** If a personal Apple ID is used instead of a Managed Apple ID, the ADE token becomes unrenewable when that employee leaves. Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop syncing after token expires).
+> **What breaks if misconfigured:** If a personal Apple ID is used instead of a Managed Apple ID, the ADE token becomes unrenewable when that employee leaves.
+
+> Symptom appears in: ABM (cannot log in to renew token) and Intune admin center (new devices stop syncing after token expires).
+
 > See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
 ### Step 3: Upload Server Token to Intune
@@ -77,8 +85,9 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 3. Upload the server token (.p7m) file downloaded from ABM.
 4. Select **Create**.
 
-> **What breaks if misconfigured:** If the wrong .p7m file is uploaded (e.g., from a different ABM MDM server), devices assigned to the intended MDM server will not appear in Intune. Symptom appears in: Intune admin center (devices list empty after sync).
-> See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
+> **What breaks if misconfigured:** If the wrong .p7m file is uploaded (e.g., from a different ABM MDM server), devices assigned to the intended MDM server will not appear in Intune.
+
+> Symptom appears in: Intune admin center (devices list empty after sync). See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
 ### Step 4: Assign Devices to MDM Server
 
@@ -89,17 +98,25 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 3. Under **Edit MDM Server**, select the MDM server created in Step 2.
 4. Confirm assignment.
 
-> **What breaks if misconfigured:** Device must be assigned BEFORE first power-on. If powered on without assignment, device proceeds through non-managed [Setup Assistant](../_glossary-macos.md#setup-assistant) and requires factory wipe to fix. Symptom appears in: the device itself (standard macOS setup, no MDM enrollment).
+> **What breaks if misconfigured:** Device must be assigned BEFORE first power-on.
+
+> If powered on without assignment, device proceeds through non-managed [Setup Assistant](../_glossary-macos.md#setup-assistant) and requires factory wipe to fix.
+
+> Symptom appears in: the device itself (standard macOS setup, no MDM enrollment). See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
+
+> **What breaks if misconfigured:** Wrong MDM server selected in multi-server organizations (test vs production). Verify assignment at **Devices** > **[serial]** > **Edit MDM Server**.
+
+> Symptom appears in: Intune admin center (device enrolled to wrong tenant or incorrect enrollment profile applied) or device (unexpected branding or configuration at first boot).
+
 > See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
-> **What breaks if misconfigured:** Wrong MDM server selected in multi-server organizations (test vs production). Verify assignment at **Devices** > **[serial]** > **Edit MDM Server**. Symptom appears in: Intune admin center (device enrolled to wrong tenant or incorrect enrollment profile applied) or device (unexpected branding or configuration at first boot).
-> See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
+> **What breaks if misconfigured:** Device enrolled in another MDM -- previous organization must release device in ABM before reassignment.
 
-> **What breaks if misconfigured:** Device enrolled in another MDM -- previous organization must release device in ABM before reassignment. Symptom appears in: ABM (device cannot be assigned to new MDM server).
-> See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
+> Symptom appears in: ABM (device cannot be assigned to new MDM server). See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
-> **What breaks if misconfigured:** Non-ABM-linked resellers -- devices do not appear in ABM. Contact reseller or use Apple Configurator (physical access required). Symptom appears in: ABM (device not listed).
-> See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
+> **What breaks if misconfigured:** Non-ABM-linked resellers -- devices do not appear in ABM. Contact reseller or use Apple Configurator (physical access required).
+
+> Symptom appears in: ABM (device not listed). See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
 ### Step 5: Set Default Enrollment Profile
 
@@ -110,7 +127,10 @@ This guide walks through creating an [ADE](../_glossary-macos.md#ade) token to l
 3. Under **Default profile**, assign the enrollment profile (configured in [Enrollment Profile Guide](02-enrollment-profile.md)).
 4. All devices synced via this token automatically receive the default profile.
 
-> **What breaks if misconfigured:** If no enrollment profile is assigned before device first power-on, device boots through standard (non-managed) Setup Assistant. Requires wipe to fix. Symptom appears in: device itself (standard macOS setup) and Intune admin center (device does not appear in Devices > macOS).
+> **What breaks if misconfigured:** If no enrollment profile is assigned before device first power-on, device boots through standard (non-managed) Setup Assistant. Requires wipe to fix.
+
+> Symptom appears in: device itself (standard macOS setup) and Intune admin center (device does not appear in Devices > macOS).
+
 > See: [Device Not Appearing](../l1-runbooks/10-macos-device-not-appearing.md)
 
 ## Token Sync Mechanics

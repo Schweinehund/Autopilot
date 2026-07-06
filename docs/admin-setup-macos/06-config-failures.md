@@ -18,8 +18,8 @@ platform: macOS
 
 This is a consolidated reverse-lookup reference covering configuration-caused failures across all five macOS core admin-setup guides -- ABM Configuration, Enrollment Profile, Configuration Profiles, App Deployment, and Compliance Policies. It applies to the same Intune Administrator and Apple Business Manager Device Manager roles used throughout ADE, with no specific macOS version prerequisite of its own.
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
-> For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 This is the consolidated reverse-lookup table for all macOS admin setup configuration mistakes. Each entry links to both the guide file where the setting is configured and the troubleshooting runbook for the failure it causes. Use this page when you see a deployment or management failure and suspect a configuration mistake.
