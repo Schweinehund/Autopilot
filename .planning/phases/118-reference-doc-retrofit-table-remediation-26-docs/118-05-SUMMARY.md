@@ -121,3 +121,18 @@ None - no external service configuration required.
 ---
 *Phase: 118-reference-doc-retrofit-table-remediation-26-docs*
 *Completed: 2026-07-06*
+
+## Self-Check: PASSED
+
+- FOUND: docs/error-codes/00-index.md
+- FOUND: docs/error-codes/01-mdm-enrollment.md
+- FOUND: docs/error-codes/02-tpm-attestation.md
+- FOUND: docs/error-codes/03-esp-enrollment.md
+- FOUND: docs/error-codes/04-pre-provisioning.md
+- FOUND: docs/error-codes/05-hybrid-join.md
+- FOUND: docs/error-codes/06-apv2-device-preparation.md
+- FOUND: docs/_registry/RE-index.md
+- FOUND: commit f595c60 (Task 1)
+- FOUND: commit 53fad54 (Task 2)
+- FOUND: commit 44900ee (Task 3)
+- FOUND: commit 641b714 (SUMMARY.md)
