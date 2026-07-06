@@ -25,14 +25,14 @@ This guide covers Linux 802.1X EAP-TLS network authentication configuration via 
 
 ---
 
-> **WARNING -- Linux: Intune provides no native 802.1X profiles for Linux; this guide documents an OS-level nmcli workaround**
->
-> Microsoft Intune provides **no native Wi-Fi profile**, **no native wired-network profile**, and
-> **no certificate-delivery profiles** (Trusted Certificate, SCEP, or PKCS) for Linux. The approach
-> documented in this guide is an **OS-level shell-script + nmcli (NetworkManager `802-1x.*`)
-> workaround** -- not an Intune profile. Certificate delivery is handled out-of-band before the
-> nmcli commands are run; see the [Certificate Prerequisites](#certificate-prerequisites-out-of-band)
-> note below.
+**WARNING -- Linux: Intune provides no native 802.1X profiles for Linux; this guide documents an OS-level nmcli workaround**
+
+Microsoft Intune provides **no native Wi-Fi profile**, **no native wired-network profile**, and
+**no certificate-delivery profiles** (Trusted Certificate, SCEP, or PKCS) for Linux. The approach
+documented in this guide is an **OS-level shell-script + nmcli (NetworkManager `802-1x.*`)
+workaround** -- not an Intune profile. Certificate delivery is handled out-of-band before the
+nmcli commands are run; see the [Certificate Prerequisites](#certificate-prerequisites-out-of-band)
+note below.
 
 ---
 
@@ -53,31 +53,31 @@ This guide applies to **Ubuntu 24.04 LTS** and **26.04 LTS** managed by Microsof
 
 ## Certificate Prerequisites (Out-of-Band)
 
-> **Note -- Intune delivers no certificate profiles to Linux devices**
->
-> Before running any of the nmcli commands in this guide, the following certificate files must be
-> present on the device. They must be placed there by a **separate out-of-band process** -- for
-> example, an Intune Bash script, an MDT/SCCM task sequence, or a manual copy procedure. Intune
-> provides no Trusted Certificate, SCEP, or PKCS profile type for Linux.
->
-> - `/etc/certs/ca-root.pem` -- RADIUS server root CA certificate (for server validation)
-> - `/etc/certs/client-cert.pem` -- Device or user client certificate (for client authentication)
-> - `/etc/certs/private-key.pem` -- Private key for the client certificate
->
-> Adjust file paths to match your deployment. Private-key material must **never** be embedded in
-> documentation or configuration files. For certificate delivery ordering rules and EKU requirements,
-> see [Certificate Delivery Foundation](02-cert-delivery-foundation.md).
+**Note -- Intune delivers no certificate profiles to Linux devices**
+
+Before running any of the nmcli commands in this guide, the following certificate files must be
+present on the device. They must be placed there by a **separate out-of-band process** -- for
+example, an Intune Bash script, an MDT/SCCM task sequence, or a manual copy procedure. Intune
+provides no Trusted Certificate, SCEP, or PKCS profile type for Linux.
+
+- `/etc/certs/ca-root.pem` -- RADIUS server root CA certificate (for server validation)
+- `/etc/certs/client-cert.pem` -- Device or user client certificate (for client authentication)
+- `/etc/certs/private-key.pem` -- Private key for the client certificate
+
+Adjust file paths to match your deployment. Private-key material must **never** be embedded in
+documentation or configuration files. For certificate delivery ordering rules and EKU requirements,
+see [Certificate Delivery Foundation](02-cert-delivery-foundation.md).
 
 ---
 
 ## EAP-TLS via nmcli (Wi-Fi)
 
-> **Note -- Illustrative commands: validate on a test device before fleet deployment**
->
-> The nmcli commands below are illustrative. Parameters (SSID, file paths, identity string) are
-> placeholders specific to this guide. These steps are sourced from NetworkManager documentation
-> and community-verified references -- not from an official Microsoft Learn Linux 802.1X guide
-> (none exists). Validate on a representative test device before fleet deployment.
+**Note -- Illustrative commands: validate on a test device before fleet deployment**
+
+The nmcli commands below are illustrative. Parameters (SSID, file paths, identity string) are
+placeholders specific to this guide. These steps are sourced from NetworkManager documentation
+and community-verified references -- not from an official Microsoft Learn Linux 802.1X guide
+(none exists). Validate on a representative test device before fleet deployment.
 
 ### Configuration Steps
 
@@ -102,7 +102,9 @@ nmcli connection add \
 - `4` -- key is unencrypted; no passphrase required (`not-required` flag)
 - `0` -- system-managed; NetworkManager stores the passphrase
 
-> **WARNING --** Do not pass an encrypted key's passphrase inline as `802-1x.private-key-password "passphrase"` -- the secret is captured in shell history and `/proc/<pid>/cmdline`, readable by other local processes. Instead run the command with `nmcli --ask` (NetworkManager prompts for the passphrase interactively and never echoes it), or leave the password unset with flag `0` and let NetworkManager's secret agent prompt on first activation. Where possible, deliver an unencrypted key out-of-band and use flag `4`.
+**WARNING --** Do not pass an encrypted key's passphrase inline as `802-1x.private-key-password "passphrase"` -- the secret is captured in shell history and `/proc/<pid>/cmdline`, readable by other local processes.
+
+Instead run the command with `nmcli --ask` (NetworkManager prompts for the passphrase interactively and never echoes it), or leave the password unset with flag `0` and let NetworkManager's secret agent prompt on first activation. Where possible, deliver an unencrypted key out-of-band and use flag `4`.
 
 Note: Older NetworkManager versions may require a `file://` prefix on certificate paths (e.g., `file:///etc/certs/ca-root.pem`). Ubuntu 24.04+ (NM 1.44+) accepts bare paths.
 
@@ -172,16 +174,16 @@ Replace `<interface-name>` with the actual interface (e.g., `eth0`, `enp3s0` -- 
 
 ---
 
-> **Note -- Linux Intune surface is actively developing**
->
-> Intune's Linux management capabilities continue to evolve. As of this guide's `last_verified`
-> date, Intune delivers no native Wi-Fi, wired, or certificate profiles for Linux -- the nmcli
-> workaround documented here is the available approach. Verify the current feature set at the
-> [Deployment guide for Linux device management](https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux)
-> before each major fleet deployment. If Intune adds native Wi-Fi, wired, or cert-delivery
-> profiles for Linux after this guide's `review_by` date, this guide requires updating.
->
-> *last_verified: 2026-06-30 · review_by: 2026-09-28*
+**Note -- Linux Intune surface is actively developing**
+
+Intune's Linux management capabilities continue to evolve. As of this guide's `last_verified`
+date, Intune delivers no native Wi-Fi, wired, or certificate profiles for Linux -- the nmcli
+workaround documented here is the available approach. Verify the current feature set at the
+[Deployment guide for Linux device management](https://learn.microsoft.com/en-us/intune/fundamentals/platform-guide-linux)
+before each major fleet deployment. If Intune adds native Wi-Fi, wired, or cert-delivery
+profiles for Linux after this guide's `review_by` date, this guide requires updating.
+
+*last_verified: 2026-06-30 · review_by: 2026-09-28*
 
 ---
 

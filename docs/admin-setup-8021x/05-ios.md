@@ -82,20 +82,20 @@ Wired connections are unaffected -- the USB-Ethernet adapter presents its physic
 | Inner method (Non-EAP method / inner identity) | -- (cert-only; no inner method) | -- (no inner-method selector; MS-CHAPv2 implicit -- see WARNING below) | PAP / CHAP / MS-CHAP / MS-CHAP v2 |
 | Identity privacy (outer identity) | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` | `anonymous` or `anonymous@domain` |
 
-> **WARNING -- PEAP inner authentication on iOS/iPadOS: MS-CHAPv2 only (PAP not supported)**
->
-> iOS/iPadOS PEAP inner authentication is always MS-CHAPv2. The Intune Wi-Fi profile UI for
-> iOS/iPadOS PEAP does not present an inner-method selector -- **there is no PAP option to
-> select.** If PAP is injected via a custom profile or imported configuration, the result is an
-> immediate **"Authentication Failed"** error; iOS sends an EAP-NAK to the RADIUS server.
->
-> **This can mask a mixed-fleet issue:** macOS and Windows devices on the same SSID
-> configured with PEAP+PAP may authenticate successfully while iOS devices fail. The
-> surface symptom -- "Authentication Failed" on iOS only, same SSID -- is a strong
-> indicator of a PEAP inner-auth mismatch.
->
-> Always configure PEAP inner auth as MS-CHAPv2 on any SSID where iOS/iPadOS devices
-> must authenticate.
+**WARNING -- PEAP inner authentication on iOS/iPadOS: MS-CHAPv2 only (PAP not supported)**
+
+iOS/iPadOS PEAP inner authentication is always MS-CHAPv2. The Intune Wi-Fi profile UI for
+iOS/iPadOS PEAP does not present an inner-method selector -- **there is no PAP option to
+select.** If PAP is injected via a custom profile or imported configuration, the result is an
+immediate **"Authentication Failed"** error; iOS sends an EAP-NAK to the RADIUS server.
+
+**This can mask a mixed-fleet issue:** macOS and Windows devices on the same SSID
+configured with PEAP+PAP may authenticate successfully while iOS devices fail. The
+surface symptom -- "Authentication Failed" on iOS only, same SSID -- is a strong
+indicator of a PEAP inner-auth mismatch.
+
+Always configure PEAP inner auth as MS-CHAPv2 on any SSID where iOS/iPadOS devices
+must authenticate.
 
 **Client certificate options for EAP-TLS (Wi-Fi -- SCEP, PKCS, and Derived credential supported):**
 - SCEP certificate profile
@@ -114,17 +114,17 @@ The iOS/iPadOS wired 802.1X profile targets M-series iPads equipped with a USB-E
 
 Navigation: **Devices** > **Configuration** > **New policy** > **iOS/iPadOS** > **Templates** > **Wired network**
 
-> **NOTE -- Wired client certificates: SCEP only (PKCS not supported)**
->
-> The iOS/iPadOS wired network profile supports only **SCEP certificate profiles** for client
-> authentication across all three EAP types (EAP-TLS, EAP-TTLS, and PEAP). PKCS certificate
-> profiles are not supported for the wired profile type. Wi-Fi profiles support both SCEP
-> and PKCS.
->
-> If your organization uses PKCS-only certificate delivery, configure your SCEP
-> infrastructure before deploying wired 802.1X on iOS/iPadOS. See
-> [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix)
-> for the per-platform cert-delivery support matrix.
+**NOTE -- Wired client certificates: SCEP only (PKCS not supported)**
+
+The iOS/iPadOS wired network profile supports only **SCEP certificate profiles** for client
+authentication across all three EAP types (EAP-TLS, EAP-TTLS, and PEAP). PKCS certificate
+profiles are not supported for the wired profile type. Wi-Fi profiles support both SCEP
+and PKCS.
+
+If your organization uses PKCS-only certificate delivery, configure your SCEP
+infrastructure before deploying wired 802.1X on iOS/iPadOS. See
+[02-cert-delivery-foundation.md](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix)
+for the per-platform cert-delivery support matrix.
 
 Network Interface is automatically set to **Any Ethernet** -- the iOS/iPadOS wired profile targets any available USB-Ethernet interface; no selection is required (unlike macOS, which provides a Network Interface selector).
 

@@ -112,40 +112,40 @@ The wired profile uses the WiredNetwork CSP. Before configuring the 802.1X setti
 
 ### dot3svc Service Dependency
 
-> **WARNING -- dot3svc (Wired AutoConfig) service dependency:**
->
-> The Wired AutoConfig service (`dot3svc`) must be running for Windows 802.1X wired authentication to engage. On Windows 10 and 11, `dot3svc` ships with startup type **Manual** -- it does not start automatically. Intune reports the wired network profile as **"Succeeded"** regardless of whether the service is running, creating a silent failure: the profile is applied but the supplicant never activates, and the wired port stays unauthenticated.
->
-> **Detect:** Run `sc query dot3svc` and look for `STATE: STOPPED`; run `sc qc dot3svc` and look for `START_TYPE: 3 DEMAND_START` (Manual) -- note that `START_TYPE` is reported by `sc qc`, not `sc query`. Alternatively, use PowerShell: `Get-Service -Name dot3svc` -- check that `StartType` is `Automatic` and `Status` is `Running`.
->
-> **Remediate:** Set the service to automatic startup and start it:
->
-> ```powershell
-> Set-Service -Name dot3svc -StartupType Automatic
-> Start-Service -Name dot3svc
-> ```
->
-> **Detection pattern for Intune Remediations:** Exit non-zero (issue detected) when `(Get-Service dot3svc).StartType -ne 'Automatic'` OR `(Get-Service dot3svc).Status -ne 'Running'`. Remediation action: run `Set-Service -Name dot3svc -StartupType Automatic` then `Start-Service dot3svc`.
->
-> **Deploy via Intune Remediations:** **Devices** > **Remediations** > **+ Create** -- Platform: Windows 10 and later. Supply a detection script (exits 1 when the condition is detected) and a remediation script. Assign to the same device groups receiving the wired 802.1X profile. Run on a schedule (e.g., every hour) to catch service resets after Windows updates.
+**WARNING -- dot3svc (Wired AutoConfig) service dependency:**
+
+The Wired AutoConfig service (`dot3svc`) must be running for Windows 802.1X wired authentication to engage. On Windows 10 and 11, `dot3svc` ships with startup type **Manual** -- it does not start automatically. Intune reports the wired network profile as **"Succeeded"** regardless of whether the service is running, creating a silent failure: the profile is applied but the supplicant never activates, and the wired port stays unauthenticated.
+
+**Detect:** Run `sc query dot3svc` and look for `STATE: STOPPED`; run `sc qc dot3svc` and look for `START_TYPE: 3 DEMAND_START` (Manual) -- note that `START_TYPE` is reported by `sc qc`, not `sc query`. Alternatively, use PowerShell: `Get-Service -Name dot3svc` -- check that `StartType` is `Automatic` and `Status` is `Running`.
+
+**Remediate:** Set the service to automatic startup and start it:
+
+```powershell
+Set-Service -Name dot3svc -StartupType Automatic
+Start-Service -Name dot3svc
+```
+
+**Detection pattern for Intune Remediations:** Exit non-zero (issue detected) when `(Get-Service dot3svc).StartType -ne 'Automatic'` OR `(Get-Service dot3svc).Status -ne 'Running'`. Remediation action: run `Set-Service -Name dot3svc -StartupType Automatic` then `Start-Service dot3svc`.
+
+**Deploy via Intune Remediations:** **Devices** > **Remediations** > **+ Create** -- Platform: Windows 10 and later. Supply a detection script (exits 1 when the condition is detected) and a remediation script. Assign to the same device groups receiving the wired 802.1X profile. Run on a schedule (e.g., every hour) to catch service resets after Windows updates.
 
 ### 802.1X Enforcement Staging
 
-> **DANGER -- 802.1X Enforcement Staging**
->
-> Do not set 802.1X enforcement to **Enforce** until you have confirmed all of the following:
->
-> 1. The RADIUS server is reachable from managed devices (test with `Test-NetConnection` or a pilot device in **Do not enforce** mode).
-> 2. All target devices have received valid client certificates (check Intune device status for the SCEP/PKCS profile -- confirm "Succeeded" with cert enrolled).
-> 3. A break-glass procedure exists and has been tested.
->
-> Setting enforcement to **Enforce** before the cert pipeline is validated blocks **ALL wired-connected devices simultaneously**. Removing the enforcement policy to recover requires delivering a new Intune policy over the network -- which is unavailable because enforcement has already locked all wired ports (chicken-and-egg). This can take down an entire office or floor with no remote remediation path.
->
-> **Staged rollout:** Deploy with **Do not enforce** first. Confirm authentication succeeds on a pilot set of devices across each switch and VLAN segment. Switch to **Enforce** only after validation across the full target population.
->
-> **Break-glass procedure:** Prepare at least one of the following before enabling enforcement: (a) a non-802.1X switch port accessible to on-site staff; (b) a USB-to-Ethernet adapter that connects to a network segment not subject to 802.1X enforcement; (c) local administrator access to remove or modify the Intune device configuration manually.
->
-> **Enforcement field values:** The wired profile 802.1X enforcement field offers three values -- **Not configured** (enforcement state unspecified; profile delivers settings without setting enforcement), **Do not enforce** (settings delivered; switch port not required to authenticate), and **Enforce** (switch port requires 802.1X; blocked access if RADIUS unreachable or device lacks a valid cert).
+**DANGER -- 802.1X Enforcement Staging**
+
+Do not set 802.1X enforcement to **Enforce** until you have confirmed all of the following:
+
+1. The RADIUS server is reachable from managed devices (test with `Test-NetConnection` or a pilot device in **Do not enforce** mode).
+2. All target devices have received valid client certificates (check Intune device status for the SCEP/PKCS profile -- confirm "Succeeded" with cert enrolled).
+3. A break-glass procedure exists and has been tested.
+
+Setting enforcement to **Enforce** before the cert pipeline is validated blocks **ALL wired-connected devices simultaneously**. Removing the enforcement policy to recover requires delivering a new Intune policy over the network -- which is unavailable because enforcement has already locked all wired ports (chicken-and-egg). This can take down an entire office or floor with no remote remediation path.
+
+**Staged rollout:** Deploy with **Do not enforce** first. Confirm authentication succeeds on a pilot set of devices across each switch and VLAN segment. Switch to **Enforce** only after validation across the full target population.
+
+**Break-glass procedure:** Prepare at least one of the following before enabling enforcement: (a) a non-802.1X switch port accessible to on-site staff; (b) a USB-to-Ethernet adapter that connects to a network segment not subject to 802.1X enforcement; (c) local administrator access to remove or modify the Intune device configuration manually.
+
+**Enforcement field values:** The wired profile 802.1X enforcement field offers three values -- **Not configured** (enforcement state unspecified; profile delivers settings without setting enforcement), **Do not enforce** (settings delivered; switch port not required to authenticate), and **Enforce** (switch port requires 802.1X; blocked access if RADIUS unreachable or device lacks a valid cert).
 
 ### Wired per-EAP-method configuration matrix
 
@@ -181,13 +181,23 @@ TEAP (Tunneled EAP, RFC 7170) appears in the Windows wired-network profile UI as
 ## Hybrid Entra Joined -- Strong Certificate Mapping
 
 > **NOTE -- Hybrid Entra Joined: Strong Certificate Mapping Required**
->
-> As of **2025-02-11**, Windows Domain Controllers entered enforcement mode for KB5014754 strong certificate mapping. Hybrid Entra Joined devices using EAP-TLS for 802.1X (Wi-Fi or wired) authenticate through NPS/RADIUS servers that perform Kerberos lookups against Active Directory. DC enforcement now requires the device or user **SID (Security Identifier)** to be present in the certificate's Subject Alternative Name (SAN). Without the SID in the SAN, DC-enforced authentication fails even if the certificate is otherwise valid.
->
-> **Action required:** In Intune SCEP and PKCS certificate profiles for Hybrid Entra Joined devices, configure the Subject Alternative Name to include the device or user SID. Intune supports SID-in-SAN inclusion in both SCEP and PKCS profiles -- look for the SID variable in the SAN configuration under the certificate profile settings.
->
-> **Cloud-only Entra Joined devices are unaffected** -- this requirement applies only when Domain Controllers are involved in the authentication chain. Devices joined exclusively to Entra ID (not Hybrid) authenticate without going through AD DC Kerberos validation.
->
+
+> As of **2025-02-11**, Windows Domain Controllers entered enforcement mode for KB5014754 strong certificate mapping.
+
+> Hybrid Entra Joined devices using EAP-TLS for 802.1X (Wi-Fi or wired) authenticate through NPS/RADIUS servers that perform Kerberos lookups against Active Directory.
+
+> DC enforcement now requires the device or user **SID (Security Identifier)** to be present in the certificate's Subject Alternative Name (SAN).
+
+> Without the SID in the SAN, DC-enforced authentication fails even if the certificate is otherwise valid.
+
+> **Action required:** In Intune SCEP and PKCS certificate profiles for Hybrid Entra Joined devices, configure the Subject Alternative Name to include the device or user SID.
+
+> Intune supports SID-in-SAN inclusion in both SCEP and PKCS profiles -- look for the SID variable in the SAN configuration under the certificate profile settings.
+
+> **Cloud-only Entra Joined devices are unaffected** -- this requirement applies only when Domain Controllers are involved in the authentication chain.
+
+> Devices joined exclusively to Entra ID (not Hybrid) authenticate without going through AD DC Kerberos validation.
+
 > *last_verified: 2026-06-30 · review_by: 2026-12-27*
 
 ---

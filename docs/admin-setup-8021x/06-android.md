@@ -86,11 +86,11 @@ AOSP (Android Open Source Project) devices share the same Intune Wi-Fi profile p
 
 For SCEP and PKCS certificate profile configuration, and the deployment ordering rule, see [Certificate Delivery Foundation](02-cert-delivery-foundation.md). The [per-platform cert-delivery support matrix](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix) documents certificate delivery availability across all platforms. For a personally owned work profile (BYOD-WP), the certificate SAN must include the UPN -- see the UPN-in-SAN deployment-failure WARNING immediately below before configuring the SCEP profile.
 
-> **WARNING -- Personally owned work profile (BYOD-WP): Wi-Fi profile deployment fails if UPN is absent from certificate SAN**
->
-> When using any EAP type (EAP-TLS, PEAP-MSCHAPv2, or EAP-TTLS) with certificates for authentication in a **personally owned work profile**, the User Principal Name (UPN) must be present in the Subject Alternative Name (SAN) of the certificate -- for both user and device certificates within the work-profile context. If the UPN is absent from the SAN, the Wi-Fi profile shows **"Error"** in Intune and **profile deployment fails** -- the profile is not delivered to the device; this is not a post-deployment authentication failure.
->
-> **Fix:** In the SCEP certificate profile for Android Enterprise personally owned work profile, add **User principal name (UPN)** as a SAN attribute. Once the SCEP profile includes the UPN in the SAN, the Wi-Fi profile will deploy successfully.
+**WARNING -- Personally owned work profile (BYOD-WP): Wi-Fi profile deployment fails if UPN is absent from certificate SAN**
+
+When using any EAP type (EAP-TLS, PEAP-MSCHAPv2, or EAP-TTLS) with certificates for authentication in a **personally owned work profile**, the User Principal Name (UPN) must be present in the Subject Alternative Name (SAN) of the certificate -- for both user and device certificates within the work-profile context. If the UPN is absent from the SAN, the Wi-Fi profile shows **"Error"** in Intune and **profile deployment fails** -- the profile is not delivered to the device; this is not a post-deployment authentication failure.
+
+**Fix:** In the SCEP certificate profile for Android Enterprise personally owned work profile, add **User principal name (UPN)** as a SAN attribute. Once the SCEP profile includes the UPN in the SAN, the Wi-Fi profile will deploy successfully.
 
 **Certificate access for Device Owner modes (COBO, COPE, COSU):**
 
@@ -98,16 +98,16 @@ In the SCEP certificate profile for Android Enterprise Device Owner enrollment t
 
 Note: For Device Owner profiles, Intune certificate reporting is unavailable and Intune cannot revoke certificates delivered via this profile type.
 
-> **WARNING -- Android RADIUS server name version requirements (Radius server name field)**
->
-> The following version gates apply to the **Radius server name** field in the corporate-owned and AOSP tabs. The personally-owned (BYOD-WP) tab uses the **Certificate server names** field and does not carry these version-specific sub-requirements. Server-name validation as a security requirement applies to all modes; see [Certificate Delivery Foundation](02-cert-delivery-foundation.md).
->
-> | Android version | Behavior |
-> |---|---|
-> | Android 11+ | New Wi-Fi profiles might require the Radius server name field to be configured. Without it, devices may not connect to the Wi-Fi network. |
-> | Android 14+ | Total combined length of all configured RADIUS server names must be 256 characters or fewer; special characters not permitted. Profiles that worked on Android 11--13 may silently fail on Android 14 devices. **Use the DNS suffix** (e.g., `contoso.com`) instead of a list of full FQDNs to stay within the 256-character limit. |
->
-> *last_verified: 2026-06-30 · review_by: 2026-09-28*
+**WARNING -- Android RADIUS server name version requirements (Radius server name field)**
+
+The following version gates apply to the **Radius server name** field in the corporate-owned and AOSP tabs. The personally-owned (BYOD-WP) tab uses the **Certificate server names** field and does not carry these version-specific sub-requirements. Server-name validation as a security requirement applies to all modes; see [Certificate Delivery Foundation](02-cert-delivery-foundation.md).
+
+| Android version | Behavior |
+|---|---|
+| Android 11+ | New Wi-Fi profiles might require the Radius server name field to be configured. Without it, devices may not connect to the Wi-Fi network. |
+| Android 14+ | Total combined length of all configured RADIUS server names must be 256 characters or fewer; special characters not permitted. Profiles that worked on Android 11--13 may silently fail on Android 14 devices. **Use the DNS suffix** (e.g., `contoso.com`) instead of a list of full FQDNs to stay within the 256-character limit. |
+
+*last_verified: 2026-06-30 · review_by: 2026-09-28*
 
 **MAC address randomization (Android 13+):**
 

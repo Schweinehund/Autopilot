@@ -27,22 +27,22 @@ This guide covers macOS 802.1X Wi-Fi and wired network profile configuration via
 
 This section covers settings that apply to both Wi-Fi and wired 802.1X profiles on macOS. For the deployment ordering rule (trusted-root profile → SCEP/PKCS client cert → 802.1X network profile), EKU requirements, and per-platform cert-delivery options, see [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md).
 
-> **WARNING -- Deployment channel: choose before creating the profile**
->
-> The **Deployment channel** setting determines where authentication certificates are stored
-> on the device and **cannot be changed after the profile is assigned**. To correct a wrong
-> channel selection, you must delete the profile, create a new one with the correct channel,
-> and reassign it to device groups.
->
-> | Certificate type | Deployment channel | Keychain |
-> |------------------|--------------------|----------|
-> | User certificate | User channel | User keychain |
-> | Device certificate | Device channel | System keychain |
->
-> Storing user certificates in the system keychain (by selecting Device channel with a user
-> certificate) increases security risk and causes authentication failures. When authentication
-> certificates are up for renewal, recheck the deployment channel in existing profiles to
-> confirm the correct channel is still selected.
+**WARNING -- Deployment channel: choose before creating the profile**
+
+The **Deployment channel** setting determines where authentication certificates are stored
+on the device and **cannot be changed after the profile is assigned**. To correct a wrong
+channel selection, you must delete the profile, create a new one with the correct channel,
+and reassign it to device groups.
+
+| Certificate type | Deployment channel | Keychain |
+|------------------|--------------------|----------|
+| User certificate | User channel | User keychain |
+| Device certificate | Device channel | System keychain |
+
+Storing user certificates in the system keychain (by selecting Device channel with a user
+certificate) increases security risk and causes authentication failures. When authentication
+certificates are up for renewal, recheck the deployment channel in existing profiles to
+confirm the correct channel is still selected.
 
 macOS does not expose a User / Machine / User-or-machine authentication mode selector in Intune profiles. Windows-trained admins who expect this setting will not find it on macOS. The Deployment channel (User vs Device keychain) is macOS's analog to the credential-context decision: user certificate + User channel authenticates as the current user; device certificate + Device channel authenticates as the device. Machine-level pre-logon authentication (Group Policy dependency, pre-logon domain connectivity) is not available through Intune macOS 802.1X profiles.
 
@@ -101,17 +101,17 @@ macOS Wi-Fi and wired 802.1X use separate Intune profile types and are configure
 
 Navigation: **Devices** > **Configuration** > **New policy** > **macOS** > **Templates** > **Wired network**
 
-> **NOTE -- Wired client certificates: SCEP only (PKCS not supported)**
->
-> The macOS wired network profile supports only **SCEP certificate profiles** for client
-> authentication (EAP-TLS and EAP-TTLS / PEAP certificate inner auth). PKCS certificate
-> profiles are not supported for the wired profile type. Wi-Fi profiles support both SCEP
-> and PKCS.
->
-> If your organization uses PKCS-only certificate delivery, configure your SCEP
-> infrastructure before deploying wired 802.1X on macOS. See
-> [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix)
-> for the per-platform cert-delivery support matrix.
+**NOTE -- Wired client certificates: SCEP only (PKCS not supported)**
+
+The macOS wired network profile supports only **SCEP certificate profiles** for client
+authentication (EAP-TLS and EAP-TTLS / PEAP certificate inner auth). PKCS certificate
+profiles are not supported for the wired profile type. Wi-Fi profiles support both SCEP
+and PKCS.
+
+If your organization uses PKCS-only certificate delivery, configure your SCEP
+infrastructure before deploying wired 802.1X on macOS. See
+[02-cert-delivery-foundation.md](02-cert-delivery-foundation.md#per-platform-cert-delivery-support-matrix)
+for the per-platform cert-delivery support matrix.
 
 **Network Interface selector:**
 

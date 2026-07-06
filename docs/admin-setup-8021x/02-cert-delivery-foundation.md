@@ -25,14 +25,18 @@ This guide establishes the shared certificate-delivery foundation for 802.1X net
 
 > **Scope — Intune client-side configuration only.** These guides cover configuring managed
 > devices via Intune. The following are OUT OF SCOPE for this guide set:
+
 > - RADIUS/NPS server configuration (connection-request policies, network policies, server certificates)
 > - PKI/CA infrastructure build-out (ADCS installation, NDES configuration, CA hierarchy design)
+
 > - Intune Certificate Connector installation and maintenance
 > - Network switch or wireless access point port configuration (port authentication mode, VLAN assignment, dynamic ACLs)
+
 > - MAC Authentication Bypass (MAB) -- a server-side / switch-side concern
 > - Conditional Access network-based policies
+
 > - Non-co-equal EAP types: EAP-SIM, EAP-FAST, LEAP -- not verifiable against Microsoft documentation; TEAP -- Windows-wired-only awareness note, not a co-equal guide path
->
+
 > **Assumed:** A RADIUS/NPS server already exists and is reachable from managed devices before
 > any Intune 802.1X profile configuration begins.
 
@@ -46,11 +50,12 @@ The following one-line banner template is for per-platform guides (Phases 102--1
 
 > **CRITICAL — Deployment ordering:** Always assign profiles in this sequence and confirm
 > each reaches "Succeeded" across target devices before assigning the next:
->
+
 > 1. **Trusted Root Certificate profile** (RADIUS server CA) → wait for "Succeeded"
 > 2. **SCEP or PKCS client certificate profile** → wait for "Succeeded" + cert enrolled
+
 > 3. **802.1X Wi-Fi or Wired network profile**
->
+
 > Violating this order produces silent Intune "Succeeded" status while devices fail to
 > authenticate. Intune does not enforce dependency ordering between profiles.
 
@@ -136,7 +141,11 @@ This matrix is the single canonical home for cert-delivery support across platfo
 | **Android Enterprise** | **NO native wired profile type** -- gap stub only | Yes (Wi-Fi) | Yes (Wi-Fi, non-AOSP) | Wi-Fi only, non-AOSP | Yes |
 | **Linux** | **NO native Intune profile** -- script-based only | **NO -- no Intune cert profiles for Linux** | NO | NO | **NO -- not supported via Intune** |
 
-> **Column note:** "PFX Import / PKCS Imported" covers two distinct things. **PFX Import** in the *wired* profile cert picker is unique to Windows (the "wired only" cell). The cross-platform **PKCS Imported (PFX) Wi-Fi** profile is what the "Wi-Fi only" cells refer to on macOS, iOS/iPadOS, and Android Enterprise.
+> **Column note:** "PFX Import / PKCS Imported" covers two distinct things.
+
+> **PFX Import** in the *wired* profile cert picker is unique to Windows (the "wired only" cell).
+
+> The cross-platform **PKCS Imported (PFX) Wi-Fi** profile is what the "Wi-Fi only" cells refer to on macOS, iOS/iPadOS, and Android Enterprise.
 
 **Key asymmetries:**
 
@@ -145,8 +154,12 @@ This matrix is the single canonical home for cert-delivery support across platfo
 - Linux = no Intune cert delivery of any kind; certificate delivery must be managed via script or out-of-band tooling
 
 > **Boundary:** This matrix shows which cert delivery methods Intune supports per platform at
-> the foundation level. Per-platform guides (Phases 102--106) document the exact Intune UI
-> fields, settings, and profile configuration steps for each platform. Do not duplicate that
+> the foundation level.
+
+> Per-platform guides (Phases 102--106) document the exact Intune UI
+> fields, settings, and profile configuration steps for each platform.
+
+> Do not duplicate that
 > per-platform UI detail here -- link to the appropriate guide instead.
 
 ---
