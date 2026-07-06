@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document maps Windows Autopilot concepts and terminology to their macOS Automated Device Enrollment (ADE) equivalents, covering device registration, enrollment mechanisms, first-run experience, diagnostic tools, and platform-exclusive concepts. It is a terminology and workflow comparison, not a feature-parity analysis. The primary audience is Intune administrators and L1/L2 support staff who manage both Windows and macOS device fleets.
 
 > **Platform coverage:** This page maps Windows Autopilot concepts to macOS ADE equivalents.
 > It covers terminology and enrollment mechanisms, not Intune feature parity (see [Capability Matrix](reference/macos-capability-matrix.md)).
@@ -24,6 +24,8 @@ platform: all
 Microsoft Intune manages both Windows devices through Windows Autopilot and macOS devices through Apple's Automated Device Enrollment (ADE). While both platforms achieve zero-touch provisioning via Intune, they use fundamentally different mechanisms, terminology, and portals. This page maps the key concepts between them to help admins who manage both platforms navigate the differences. This is a terminology and workflow comparison, not a feature parity analysis — for Intune capability gaps between platforms, see the [Capability Matrix](reference/macos-capability-matrix.md).
 
 ## Concept Comparison
+
+The table below maps 14 Windows Autopilot concepts to their macOS ADE equivalents, from registration portal and first-run experience through platform-exclusive concepts.
 
 | Concept | Windows Autopilot | macOS ADE | Notes |
 |---------|-------------------|-----------|-------|
@@ -42,7 +44,11 @@ Microsoft Intune manages both Windows devices through Windows Autopilot and macO
 | Firewall | Windows Defender Firewall | macOS Application Firewall | Different configuration surface areas |
 | Platform-exclusive concepts | Hardware hash, ESP device/user phase, Pre-provisioning, Self-deploying mode, Hybrid Entra join, ODJ | ABM token renewal, Setup Assistant screen customization, Apple ID integration, FileVault escrow, APNs certificate | Concepts with no direct equivalent on the other platform |
 
+> **Table summary:** This table maps 14 Windows Autopilot concepts to macOS ADE equivalents; each row notes whether the mapping is conceptually equivalent or platform-exclusive.
+
 ## Diagnostic Tools
+
+The table below maps four common diagnostic tasks to their Windows and macOS command-line equivalents.
 
 | Task | Windows | macOS |
 |------|---------|-------|
@@ -50,6 +56,8 @@ Microsoft Intune manages both Windows devices through Windows Autopilot and macO
 | View installed profiles | N/A (registry inspection) | `sudo profiles show` or System Settings > Profiles |
 | Check enrollment status | `dsregcmd /status` | `profiles status -type enrollment` |
 | View MDM agent logs | Event Viewer > DeviceManagement-Enterprise-Diagnostics-Provider | `tail -f /Library/Logs/Microsoft/Intune/*IntuneMDMDaemon*.log` |
+
+> **Table summary:** This table maps 4 diagnostic tasks (log collection, profile inspection, enrollment status, agent logs) to their Windows and macOS command-line equivalents.
 
 ## Which Platform Am I Troubleshooting?
 
@@ -78,10 +86,14 @@ Return to [Documentation Hub](index.md) to find your platform and role.
 
 ---
 
+This legacy changelog table predates the `## Version History` heading convention adopted later in the corpus; it is preserved as-is below.
+
 | Version | Change | Author |
 |---------|--------|--------|
 | 2026-04-14 | Resolved capability matrix forward references to reference/macos-capability-matrix.md | -- |
 | 2026-04-13 | Initial version | -- |
+
+> **Table summary:** This table records 2 pre-v1.15 change-history entries for this document, predating the standard `## Version History` heading now used below.
 
 ## Version History
 

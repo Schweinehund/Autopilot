@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This index organizes the technical reference documentation for Windows Autopilot and macOS ADE deployments, covering network endpoints, PowerShell diagnostics, registry paths, platform capability matrices, infrastructure prerequisites, security and compliance considerations, migration guides, and monitoring operations. It spans Windows, macOS, iOS/iPadOS, Android, and Linux, and is intended for Intune administrators and L2 engineers navigating to detailed reference material.
 
 Technical reference documents for Windows Autopilot and macOS ADE configuration, security, migration, and monitoring. For the deployment pipeline, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For post-deployment operations, see [Device Operations](../device-operations/00-overview.md).
 

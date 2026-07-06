@@ -16,11 +16,13 @@ platform: all
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document is a capability matrix comparing Microsoft Intune management capabilities between Windows and macOS across enrollment, configuration, app deployment, compliance, software updates, conditional access, and macOS Platform SSO authentication domains. It is a feature parity analysis, not a terminology comparison. The primary audience is Intune administrators and L2 engineers evaluating or troubleshooting macOS management gaps relative to Windows.
 
 This document compares Intune management capabilities between Windows and macOS across five operational domains. This is a feature parity analysis, not a terminology comparison -- for concept mapping between platforms, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For macOS admin setup guides, see [macOS Admin Setup Overview](../admin-setup-macos/00-overview.md). For a side-by-side comparison of macOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ## Enrollment
+
+The table below compares zero-touch enrollment, hardware identity, ESP equivalents, and the macOS 26 in-place migration path between Windows and macOS.
 
 | Feature | Windows | macOS |
 |---------|---------|-------|
@@ -36,7 +38,11 @@ This document compares Intune management capabilities between Windows and macOS 
 | Re-enrollment fires blocking screen | Yes (every enrollment) | No (first enrollment only) |
 | macOS 26 in-place ABM migration | n/a | Supported (profile-based re-enrollment, wipe-free; PSSO re-registration always required post-migration; pre-macOS-26 devices use wipe-and-re-enroll fallback) — see [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md) |
 
+> **Table summary:** This table compares 11 enrollment features; macOS 26 adds a wipe-free in-place ABM migration path, while ESP timeout enforcement remains Windows-only.
+
 ## Configuration
+
+The table below compares security baselines, Settings Catalog, FileVault, Platform SSO, and DDM support between Windows and macOS.
 
 | Feature | Windows | macOS |
 |---------|---------|-------|
@@ -51,7 +57,11 @@ This document compares Intune management capabilities between Windows and macOS 
 | Declarative Device Management (DDM) | No | Yes (macOS 14+, preferred for software updates) |
 | Network Authentication (802.1X) | Supported — [guide](../admin-setup-8021x/03-windows.md) | Supported — [guide](../admin-setup-8021x/04-macos.md) |
 
+> **Table summary:** This table compares 10 configuration features; macOS lacks security baselines and custom OMA-URI but uniquely supports PPPC, Platform SSO, Kernel Extension policy, and DDM.
+
 ## App Deployment
+
+The table below compares packaging formats, detection rules, dependency control, and retirement behavior between Windows and macOS.
 
 | Feature | Windows | macOS |
 |---------|---------|-------|
@@ -65,7 +75,11 @@ This document compares Intune management capabilities between Windows and macOS 
 | Max app size (non-store) | 30 GB (Win32) | 8 GB (DMG/unmanaged PKG), 2 GB (managed PKG) |
 | Uninstall from device on retirement | Yes (configured) | No (app remains after device retirement) |
 
+> **Table summary:** This table compares 9 app-deployment features; macOS lacks dependency declarations, install-order control, and supersedence, and apps are not removed on retirement.
+
 ## Compliance
+
+The table below compares security baselines, compliance breadth, hardware attestation, and userless compliance support between Windows and macOS.
 
 | Feature | Windows | macOS |
 |---------|---------|-------|
@@ -77,7 +91,11 @@ This document compares Intune management capabilities between Windows and macOS 
 | Userless device compliance | Yes | Not supported ("Device compliance evaluation is not supported for userless macOS devices") |
 | Grace period after non-compliance | Yes (configurable) | Yes (configurable) |
 
+> **Table summary:** This table compares 7 compliance features; macOS compliance breadth is limited relative to Windows and does not support userless device compliance evaluation.
+
 ## Software Updates
+
+The table below compares update management method, force-OS-version, deadline enforcement, and deferral control between Windows and macOS.
 
 | Feature | Windows | macOS |
 |---------|---------|-------|
@@ -87,7 +105,11 @@ This document compares Intune management capabilities between Windows and macOS 
 | Deferral control | Yes (0-30 days) | Yes (0-30 days via Restrictions + DDM) |
 | "Update Only" app deployment | Yes (Win32 supersedence) | No (documented gap) |
 
+> **Table summary:** This table compares 5 software-update features; both platforms support force-OS-version and deadline enforcement, but macOS lacks an "Update Only" app deployment path.
+
 ## Conditional Access
+
+The table below compares device-based, web-app, per-app, and risk-based Conditional Access support between Windows and macOS.
 
 | Feature | Windows | macOS |
 |---------|---------|-------|
@@ -96,6 +118,8 @@ This document compares Intune management capabilities between Windows and macOS 
 | Per-app CA (MAM) | n/a (Windows uses Intune client) | Limited (MAM-WE is iOS-primary; macOS uses configuration profiles + DeviceID surface) |
 | App-based CA / Approved Client App | Supported | Supported (via configuration profile + native MDM enrollment) |
 | Risk-based CA | Supported (Entra ID Protection signals) | Supported (Entra ID Protection signals; macOS device state factored when user-affinity is present) |
+
+> **Table summary:** This table compares 5 Conditional Access features; per-app CA (MAM) is limited on macOS since MAM-WE is primarily an iOS pattern.
 
 ## Key Gaps Summary
 
@@ -113,6 +137,8 @@ The most significant capability gaps for macOS compared to Windows are:
 
 This section documents macOS Platform SSO (PSSO) authentication. Windows SSO configuration (Windows Hello for Business / Web Account Manager) is not covered in this matrix.
 
+The table below documents macOS Platform SSO authentication methods, hardware gates, version floors, and Kerberos SSO Extension integration; Windows SSO is out of scope for this table.
+
 | Feature | Windows | macOS |
 |---------|---------|-------|
 | Auth methods | n/a — not covered in this matrix | Three methods: Secure Enclave key (Microsoft-recommended), Password sync, Smart card — see [Auth Methods Deep Dive](../admin-setup-macos/08-auth-methods-deep-dive.md) |
@@ -125,6 +151,8 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 | Kerberos SSO Extension | n/a — not covered in this matrix | Supported (`com.apple.AppSSOKerberos.KerberosExtension`, Type: Credential) — deployed via Intune Custom Template (.mobileconfig); see [Kerberos SSO Extension Guide](../admin-setup-macos/10-kerberos-sso-extension.md) |
 | PSSO TGT integration (`usePlatformSSOTGT`) | n/a — not covered in this matrix | Supported (macOS 14.6+); enables Kerberos extension to reuse TGTs issued by Platform SSO — see [guide 10](../admin-setup-macos/10-kerberos-sso-extension.md) |
 
+> **Table summary:** This table documents 9 macOS Platform SSO authentication features spanning auth methods, hardware gates, and Kerberos SSO Extension integration; Windows SSO is out of scope.
+
 ## See Also
 
 - [Windows vs macOS Concept Comparison](../windows-vs-macos.md) -- terminology mapping (not feature parity)
@@ -135,6 +163,8 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 
 ---
 
+This legacy changelog table predates the `## Version History` heading convention adopted later in the corpus; it is preserved as-is below.
+
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-24 | Phase 91: add macOS 26 in-place ABM migration row under ## Enrollment; update V-63-08 BASELINE in check-phase-63.mjs atomically | -- |
@@ -142,6 +172,8 @@ This section documents macOS Platform SSO (PSSO) authentication. Windows SSO con
 | 2026-06-22 | Phase 81 (SSOREF-04): added E4 See Also cross-link to 07-platform-sso-setup.md | -- |
 | 2026-06-21 | Add `## Authentication` section (7 rows: auth methods, hardware gate, macOS version floor, Entra licensing, NUAL, passkey/FIDO2, hybrid Entra join anti-feature); update `## Configuration` Platform SSO row to link `#authentication` (X1); refresh DS-2 dates | -- |
 | 2026-06-23 | Phase 85 (REF-01): add Kerberos SSO Extension rows under ## Authentication | -- |
+
+> **Table summary:** This table records 5 pre-v1.15 change-history entries for this document, predating the standard `## Version History` heading now used below.
 
 ## Version History
 

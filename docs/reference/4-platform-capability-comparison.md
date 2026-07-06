@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document compares Microsoft Intune management capabilities across all five supported platforms — Windows, macOS, iOS/iPadOS, Android, and Linux — spanning six operational domains: enrollment, configuration, app deployment, compliance, software updates, and conditional access. Each table links back to the authoritative per-platform capability matrix rather than duplicating verdicts. The primary audience is Intune administrators and L2 engineers evaluating cross-platform feature parity.
 
 This reference doc compares Microsoft Intune management capabilities across all five platforms in the v1.5 documentation suite — Windows (Autopilot v1 / v2), macOS (Apple Automated Device Enrollment via Apple Business Manager), iOS / iPadOS (Apple ADE + Account-Driven User Enrollment + MAM-WE), Android (Android Enterprise — COBO / COPE / BYOD / Dedicated / ZTE / AOSP), and Linux (Ubuntu 22.04 / 24.04 LTS via the `intune-portal` deb client). Each non-empty cell carries a verdict word followed by a hyperlink to the source per-platform capability matrix (link-not-copy structural reference per PITFALL-7 — no per-cell duplication of platform-specific matrix prose).
 
@@ -27,6 +27,8 @@ Windows column links target the Windows column of [`linux-capability-matrix.md`]
 For sibling per-platform matrices, see [Linux Capability Matrix](linux-capability-matrix.md), [macOS Capability Matrix](macos-capability-matrix.md), [iOS Capability Matrix](ios-capability-matrix.md), and [Android Capability Matrix](android-capability-matrix.md).
 
 ## Enrollment
+
+The table below compares enrollment-related capabilities — zero-touch methods, hardware identity, ESP equivalents, and BYOD support — across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -42,7 +44,11 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | Windows 10 support / minimum OS | Supported — [matrix](linux-capability-matrix.md#enrollment) (APv1 only on Windows 10; APv2 requires Windows 11 22H2+ — see [APv1 vs APv2](../apv1-vs-apv2.md)) | n/a — [matrix](macos-capability-matrix.md#enrollment) | n/a — [matrix](ios-capability-matrix.md#enrollment) | n/a — [matrix](android-capability-matrix.md#enrollment) | n/a — [matrix](linux-capability-matrix.md#enrollment) |
 | macOS 26 in-place ABM migration | n/a — [matrix](linux-capability-matrix.md#enrollment) | Supported — [matrix](macos-capability-matrix.md#enrollment) | n/a — [matrix](ios-capability-matrix.md#enrollment) | n/a — [matrix](android-capability-matrix.md#enrollment) | n/a — [matrix](linux-capability-matrix.md#enrollment) |
 
+> **Table summary:** This table compares 12 enrollment capabilities across Windows, macOS, iOS, Android, and Linux; Android varies by mode while Linux lacks zero-touch and hybrid-join support entirely.
+
 ## Configuration
+
+The table below compares configuration-management capabilities — profile mechanisms, Settings Catalog breadth, DDM, and 802.1X — across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -56,7 +62,11 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | Security baselines availability | Supported — [matrix](linux-capability-matrix.md#configuration) | Not supported — [matrix](macos-capability-matrix.md#configuration) | Not supported — [matrix](ios-capability-matrix.md#configuration) | Not supported — [matrix](android-capability-matrix.md#configuration) | Not supported — [matrix](linux-capability-matrix.md#configuration) |
 | Hardware / firmware configuration policies | Supported — [matrix](linux-capability-matrix.md#configuration) | Partial — [matrix](macos-capability-matrix.md#configuration) | n/a — [matrix](ios-capability-matrix.md#configuration) | Mode-dependent — [matrix](android-capability-matrix.md#configuration) | Not supported — [matrix](linux-capability-matrix.md#configuration) |
 
+> **Table summary:** This table compares 10 configuration capabilities; Windows and macOS lead in breadth while Linux configuration is largely out-of-band from Intune.
+
 ## App Deployment
+
+The table below compares app-deployment capabilities — packaging formats, delivery mechanisms, supersedence, and app-config targeting — across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -70,7 +80,11 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | App-config (managed configurations) targeting | Supported — [matrix](linux-capability-matrix.md#app-deployment) | Supported — [matrix](macos-capability-matrix.md#app-deployment) | Supported — [matrix](ios-capability-matrix.md#app-deployment) | Mode-dependent — [matrix](android-capability-matrix.md#app-deployment) | Not supported — [matrix](linux-capability-matrix.md#app-deployment) |
 | Apps removed on retirement / unenrollment | Supported — [matrix](linux-capability-matrix.md#app-deployment) | Not supported — [matrix](macos-capability-matrix.md#app-deployment) | Supported — [matrix](ios-capability-matrix.md#app-deployment) | Mode-dependent — [matrix](android-capability-matrix.md#app-deployment) | n/a — [matrix](linux-capability-matrix.md#app-deployment) |
 
+> **Table summary:** This table compares 10 app-deployment capabilities; Windows uniquely supports supersedence and dependency graphs, while Linux is script-delivery only.
+
 ## Compliance
+
+The table below compares compliance capabilities — settings scope, custom scripts, hardware attestation, and CA grant targets — across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -84,7 +98,11 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | Default compliance posture (newly enrolled, not-yet-evaluated) | Supported — [matrix](linux-capability-matrix.md#compliance) | Supported — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Supported — [matrix](android-capability-matrix.md#compliance) | Supported — [matrix](linux-capability-matrix.md#compliance) |
 | CA grant target (compliance enforcement) | Supported — [matrix](linux-capability-matrix.md#compliance) | Supported — [matrix](macos-capability-matrix.md#compliance) | Supported — [matrix](ios-capability-matrix.md#compliance) | Mode-dependent — [matrix](android-capability-matrix.md#compliance) | Not supported — [matrix](linux-capability-matrix.md#compliance) |
 
+> **Table summary:** This table compares 10 compliance capabilities; hardware attestation and userless compliance support vary the most across platforms.
+
 ## Software Updates
+
+The table below compares software-update capabilities — update mechanisms, deferral, deadline enforcement, and reporting — across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -96,7 +114,11 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | Driver / firmware update management | Supported — [matrix](linux-capability-matrix.md#software-updates) | Not supported — [matrix](macos-capability-matrix.md#software-updates) | n/a — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
 | Update status reporting | Supported — [matrix](linux-capability-matrix.md#software-updates) | Supported — [matrix](macos-capability-matrix.md#software-updates) | Supported — [matrix](ios-capability-matrix.md#software-updates) | Mode-dependent — [matrix](android-capability-matrix.md#software-updates) | Not supported — [matrix](linux-capability-matrix.md#software-updates) |
 
+> **Table summary:** This table compares 8 software-update capabilities; Linux has no Intune-managed update mechanism, while Windows and macOS both support deferral and deadline enforcement.
+
 ## Conditional Access
+
+The table below compares Conditional Access capabilities — device-based CA, web-app CA, per-app CA, and risk-based CA — across all five platforms.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
@@ -106,11 +128,17 @@ For sibling per-platform matrices, see [Linux Capability Matrix](linux-capabilit
 | App-based CA / Approved Client App | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Not supported — [matrix](linux-capability-matrix.md#conditional-access) |
 | Risk-based CA (Entra ID Protection) | Supported — [matrix](linux-capability-matrix.md#conditional-access) | Supported — [matrix](macos-capability-matrix.md#conditional-access) | Supported — [matrix](ios-capability-matrix.md#conditional-access) | Mode-dependent — [matrix](android-capability-matrix.md#conditional-access) | Partial — [matrix](linux-capability-matrix.md#conditional-access) |
 
+> **Table summary:** This table compares 6 Conditional Access capabilities; device-based CA is unavailable on Linux, and per-app CA is mode-dependent on Android.
+
 ## Single Sign-On
+
+The table below documents OS-integrated Platform SSO support, which in this comparison set is macOS-exclusive.
 
 | Feature | Windows | macOS | iOS | Android | Linux |
 |---------|---------|-------|-----|---------|-------|
 | OS-integrated SSO (Platform SSO) | N/A | Supported (macOS 14+, incl. Kerberos SSO Extension) — [matrix](macos-capability-matrix.md#authentication) | N/A | N/A | N/A |
+
+> **Table summary:** This single-row table confirms Platform SSO is supported only on macOS 14+ among the five compared platforms; other platforms are marked N/A by deliberate scope.
 
 > Non-macOS platform SSO authentication is not covered in this documentation set; `N/A` reflects deliberate scope, not capability absence.
 

@@ -17,11 +17,13 @@ phase_46_wave2_retrofit: 2026-04-25
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document is a capability matrix comparing Intune management capabilities across the five Android Enterprise enrollment modes — COBO, COPE, BYOD Work Profile, Dedicated (COSU), and Zero-Touch, plus AOSP — organized mode-first across enrollment, configuration, app deployment, compliance, software updates, and conditional access domains. It also maps three Apple-to-Android capability equivalences. The primary audience is Intune administrators and L2 engineers managing Android Enterprise device fleets.
 
 This matrix compares Intune management capabilities across the five Android Enterprise enrollment modes: COBO (Fully Managed), BYOD (Work Profile), Dedicated (COSU), ZTE (Zero-Touch), and AOSP (stub reference). It is organized mode-first (columns = modes, rows = features) across six locked domains — Enrollment, Configuration, App Deployment, Compliance, Software Updates, and Conditional Access. For Apple↔Android capability analogs across these modes, see the [Cross-Platform Equivalences section](#cross-platform-equivalences) below, which lays out three paired rows mapping iOS/Apple enrollment concepts to Android enrollment concepts. For the sibling platform matrices, see [iOS Capability Matrix](ios-capability-matrix.md) and [macOS Capability Matrix](macos-capability-matrix.md). For the enrollment narrative that gave rise to these 5 modes (including the two-axes ownership × management-scope model), see [Android Provisioning Lifecycle](../android-lifecycle/00-enrollment-overview.md). For a side-by-side comparison of Android capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ## Enrollment
+
+The table below compares enrollment-related capabilities — admin surface, ownership model, provisioning methods, and identity — across the five Android Enterprise modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -36,9 +38,13 @@ This matrix compares Intune management capabilities across the five Android Ente
 | Factory Reset Protection (Android 15) | EFRP enforced on re-enrollment — see [Android 15 breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-breakpoint) | EFRP enforced; Android 15 Settings-app reset requires re-supplying Google account — see [08-cope-full-admin.md#android-15-frp](../admin-setup-android/08-cope-full-admin.md#android-15-frp) | Unaffected | EFRP enforced on re-provisioning — see [Android 15 breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-breakpoint) | EFRP enforced on re-enrollment | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 | Android 15 Private Space | N/A¹ | N/A¹ | N/A¹ | N/A¹ | N/A¹ | N/A¹ |
 
+> **Table summary:** This table compares 10 enrollment features across the 6 Android modes; AOSP is a stub across every row and most fields diverge by ownership model.
+
 ¹ Personal-side feature outside Intune management surface across all modes; see [glossary](../_glossary-android.md#private-space) and [version matrix breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-private-space-breakpoint).
 
 ## Configuration
+
+The table below compares configuration capabilities — Settings Catalog reach, restriction breadth, and Wi-Fi authentication — across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -52,7 +58,11 @@ This matrix compares Intune management capabilities across the five Android Ente
 | DDM (Declarative Device Management) | DDM: N/A (Android uses Play-integrated policy channel instead) | DDM: N/A (Android uses Play-integrated policy channel instead) | DDM: N/A | DDM: N/A | DDM: N/A | DDM: N/A |
 | Network Authentication (802.1X) | Partial — [guide](../admin-setup-8021x/06-android.md) | Partial — [guide](../admin-setup-8021x/06-android.md) | Partial — [guide](../admin-setup-8021x/06-android.md) | Partial — [guide](../admin-setup-8021x/06-android.md) | Partial — [guide](../admin-setup-8021x/06-android.md) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 
+> **Table summary:** This table compares 9 configuration features across the 6 Android modes; BYOD is the most restricted surface while COBO/Dedicated carry the deepest restriction sets.
+
 ## App Deployment
+
+The table below compares app-deployment capabilities — managed app channel, silent install, LOB delivery, and app-config targeting — across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -64,7 +74,11 @@ This matrix compares Intune management capabilities across the five Android Ente
 | Work-profile app isolation | N/A (device-wide; no personal side) | Yes — kernel-level container between personal and work apps on a corporate-owned device | 🔒 BYOD-only — kernel-level container between personal and work apps | N/A | N/A (device-wide post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 | AMAPI migration footnote | Unaffected | Unaffected (AMAPI April 2025 affected BYOD specifically; COPE/WPCO unaffected) | 🔒 BYOD-only — Microsoft Intune app is the DPC post-April 2025 (replaced Company Portal); custom OMA-URI removed | Unaffected | Unaffected | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 
+> **Table summary:** This table compares 8 app-deployment features across the 6 Android modes; the April 2025 AMAPI migration to the Microsoft Intune app as DPC affected BYOD specifically.
+
 ## Compliance
+
+The table below compares compliance capabilities — Play Integrity verdict levels, CA attestation, restriction enforcement, and posture — across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -75,7 +89,11 @@ This matrix compares Intune management capabilities across the five Android Ente
 | Default compliance posture (newly enrolled, not-yet-evaluated) | "Not evaluated" — CA grace period applies | "Not evaluated" — CA grace period applies | "Not evaluated" | "Not evaluated" | "Not evaluated" (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 | L2 investigation runbook | See [21-android-compliance-investigation.md](../l2-runbooks/21-android-compliance-investigation.md) | See [21-android-compliance-investigation.md](../l2-runbooks/21-android-compliance-investigation.md) | See [21-android-compliance-investigation.md](../l2-runbooks/21-android-compliance-investigation.md) | See [21-android-compliance-investigation.md](../l2-runbooks/21-android-compliance-investigation.md) | See [21-android-compliance-investigation.md](../l2-runbooks/21-android-compliance-investigation.md) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 
+> **Table summary:** This table compares 6 compliance features across the 6 Android modes; Play Integrity verdict levels are uniform across GMS modes but unavailable on non-GMS AOSP hardware.
+
 ## Software Updates
+
+The table below compares software-update capabilities — update posture, deferral windows, and OEM enforcement — across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO / Corp-Owned Work Profile) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|----------------------|---------------------|------------------|------------------|------|
@@ -84,7 +102,11 @@ This matrix compares Intune management capabilities across the five Android Ente
 | Play Store app-update control | Yes — per-app auto-update posture via MGP | Yes — per-app auto-update posture via MGP (work-profile apps) | Yes (work-profile apps only) | Yes | Yes (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) (no Play Store) |
 | OEM update enforcement | 🔒 FM/DO-only — Android OS update posture respected by OEMs in managed mode | 🔒 device-owner-side — Android OS update posture respected by OEMs in managed mode | N/A (OEM updates apply to personal device; admin has no enforcement surface) | 🔒 FM/DO-only — matches COBO (kiosk windowed posture common) | 🔒 FM/DO-only — matches COBO post-handoff | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) (OEM firmware update pipeline varies by vendor) |
 
+> **Table summary:** This table compares 4 software-update features across the 6 Android modes; BYOD update control is advisory-only since the personally-owned device remains under user control.
+
 ## Conditional Access
+
+The table below compares Conditional Access capabilities — device-based CA, web-app CA, per-app CA, and risk-based CA — across the six Android modes.
 
 | Feature | COBO (Fully Managed) | COPE (WPCO) | BYOD (Work Profile) | Dedicated (COSU) | ZTE (Zero-Touch) | AOSP |
 |---------|----------------------|-------------|---------------------|------------------|------------------|------|
@@ -93,6 +115,8 @@ This matrix compares Intune management capabilities across the five Android Ente
 | Per-app CA (MAM) | Supported (Microsoft Intune app DPC + per-app policies) | Supported (work-profile-scoped) | Supported (work-profile-scoped; MAM-WE pattern available for non-enrolled BYOD) | Limited (kiosk fleets typically not MAM-targeted) | Supported (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 | App-based CA / Approved Client App | Supported | Supported | Supported | Supported | Supported (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
 | Risk-based CA | Supported (Entra ID Protection + Microsoft Defender for Endpoint signals) | Supported | Supported | Supported | Supported (post-handoff) | AOSP stub — see [06-aosp-stub.md](../admin-setup-android/06-aosp-stub.md) |
+
+> **Table summary:** This table compares 5 Conditional Access features across the 6 Android modes; per-app CA is limited on Dedicated kiosk fleets, which are typically not MAM-targeted.
 
 ## Cross-Platform Equivalences
 
@@ -103,6 +127,8 @@ This matrix compares Intune management capabilities across the five Android Ente
 
 This section maps three Apple↔Android capability pairs called out in ROADMAP SC#1. It is NOT a 4-platform comparison — see the [4-platform deferral footer](#deferred-4-platform-unified-capability-comparison) below. Each paired row attributes the platform explicitly on both sides (e.g., "iOS Supervision" and "Android Fully Managed"); the Android side never uses Apple-attributed terms such as "supervised" or "unsupervised" as Android management states.
 
+The table below pairs three iOS/Apple concepts with their closest Android analog: supervision, zero-touch enrollment, and BYOD privacy-preserving enrollment.
+
 | iOS / Apple | Android |
 |-------------|---------|
 | **iOS Supervision (ADE-enrolled)** | **Android Fully Managed (COBO / DPC owner)** |
@@ -111,6 +137,8 @@ This section maps three Apple↔Android capability pairs called out in ROADMAP S
 | Apple ADE is hardware-vendor-chain enrollment via Apple Business Manager (ABM): Apple-authorized resellers upload device serial numbers into the organization's ABM tenant, which binds ADE-purchased iOS / iPadOS / macOS devices to a specific MDM at factory level. First-boot Setup Assistant completes enrollment automatically. Reseller relationship is implicit (Apple-authorized channel); no per-device token management. Devices enroll on first boot via ABM → MDM handoff. | Google Zero-Touch Enrollment binds hardware to the organization via the [Zero-Touch portal](../admin-setup-android/02-zero-touch-portal.md) with an explicit reseller relationship as Step 0 — a distinct tri-portal administrative surface (Intune + Managed Google Play + Zero-Touch portal). Resellers upload IMEI / serial lists to the portal; devices enroll on first boot via portal → Intune handoff into Fully Managed or Dedicated. Samsung hardware: Zero-Touch is mutually exclusive with Knox Mobile Enrollment — see the [Knox Mobile Enrollment](#knox-mobile-enrollment-row). |
 | **iOS Account-Driven User Enrollment (BYOD iOS 15+)** | **Android Work Profile (BYOD, Company Portal enrollment)** |
 | iOS Account-Driven User Enrollment (iOS 15+) is the privacy-preserving BYOD path for personally-owned devices: a Managed Apple ID creates a cryptographically-isolated APFS volume for corporate apps and data while leaving personal apps, photos, iCloud content, and device identifiers outside IT visibility. IT cannot see personal apps or inspect personal data — this is Apple-enforced. Selective wipe removes only corporate data. | Android Work Profile is the privacy-preserving BYOD path using a work-profile partition — a kernel-level container that isolates work apps, work data, work certificates, and work policies from the personal side of a personally-owned device. Post-AMAPI migration (April 2025), the Microsoft Intune app is the primary DPC (replacing Company Portal); Wi-Fi profiles in the work container require certificate-based authentication. Selective wipe removes only the work container. See [BYOD Work Profile](../admin-setup-android/04-byod-work-profile.md) and [Work Profile](../_glossary-android.md#work-profile). |
+
+> **Table summary:** This table pairs 3 iOS/Apple concepts with their closest Android analogs (Fully Managed, Zero-Touch, Work Profile); every mapping is explicitly partial, never one-to-one.
 
 ## Key Gaps Summary
 

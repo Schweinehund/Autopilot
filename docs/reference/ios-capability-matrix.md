@@ -16,11 +16,13 @@ platform: all
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document is a capability matrix comparing Intune management capabilities across Windows, macOS, and iOS/iPadOS spanning enrollment, configuration, app deployment, compliance, software updates, and conditional access domains. It highlights Apple-platform differences most relevant to admins coming from macOS ADE, including DDM maturity, supervision model scope, and VPP licensing behavior. The primary audience is Intune administrators and L2 engineers troubleshooting cross-platform deployments.
 
 This matrix compares Intune management capabilities across three platforms. Apple-platform readers (admins coming from macOS ADE) will find the iOS↔macOS comparison surfaces the most meaningful differences — DDM maturity, supervision model scope, and VPP licensing behavior. Windows readers should treat iOS and macOS as structurally distinct from Windows despite being managed via the same Intune tenant. For the Windows↔macOS-only view, see the [macOS Capability Matrix](macos-capability-matrix.md). For concept-level terminology comparison, see [Windows vs macOS Concept Comparison](../windows-vs-macos.md). For a side-by-side comparison of iOS capabilities against Windows, macOS, iOS, Android, and Linux, see [4-Platform Capability Comparison](4-platform-capability-comparison.md).
 
 ## Enrollment
+
+The table below compares enrollment methods, supervision state, and Apple TV/Shared iPad support across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -40,7 +42,11 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Shared iPad sessions | N/A | N/A | 🔒 supervised ADE only (multi-user shared sessions; requires Managed Apple Account sign-in; iPadOS 13.4+) |
 | Apple Business delegation surface | N/A | N/A | Yes (OU-scoped sub-org admin via Apple Business custom roles; see Phase 63 governance docs) |
 
+> **Table summary:** This table compares 13 enrollment features; iOS is the only platform with Apple TV, Shared iPad, and Apple Business delegation surfaces, most gated on supervision.
+
 ## Configuration
+
+The table below compares configuration capabilities — DDM, restriction scope, and certificate deployment — across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -55,7 +61,11 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Security baselines | Yes (curated baseline sets) | No | No |
 | Network Authentication (802.1X) | Supported — [guide](../admin-setup-8021x/03-windows.md) | Supported — [guide](../admin-setup-8021x/04-macos.md) | Partial — [guide](../admin-setup-8021x/05-ios.md) |
 
+> **Table summary:** This table compares 10 configuration features; iOS restriction breadth and per-app VPN are largely supervised-ADE-only, while Windows lacks DDM entirely.
+
 ## App Deployment
+
+The table below compares app-packaging formats, install behavior, and dependency/supersedence support across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -68,7 +78,11 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Managed app status reporting | Yes (Intune app deployment status) | Yes | Yes (per-app install state visible in Intune > Apps > iOS/iPadOS apps > [app] > Device install status) |
 | Apps removed on retirement | Yes | No (explicit uninstall required) | Yes (managed apps removed on unenrollment / selective wipe) |
 
+> **Table summary:** This table compares 7 app-deployment features; only Windows supports dependency ordering and supersedence, while iOS and macOS lack both.
+
 ## Compliance
+
+The table below compares compliance checks — OS version gate, disk encryption, jailbreak/root detection, and TPM attestation — across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -81,7 +95,11 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Userless device compliance | Yes (Autopilot self-deploying) | No (requires user affinity) | Partial (ADE without user affinity works; Account-Driven UE requires user) |
 | Actions for Noncompliance | Yes | Yes | Yes (email, push notification, retire after N days) |
 
+> **Table summary:** This table compares 8 compliance features; jailbreak detection is iOS-specific, and TPM attestation is Windows-only with no direct Apple equivalent.
+
 ## Software Updates
+
+The table below compares update-ring management, deferral duration, and emergency override capabilities across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -91,7 +109,11 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Emergency / critical update override | Yes (Expedited Windows Quality Updates) | Yes (DDM emergency update) | Yes (DDM emergency update on iOS 17+) |
 | Update status reporting | Windows Update report | DDM status channel (macOS 14+) | DDM status channel (iOS 17+); polling on older |
 
+> **Table summary:** This table compares 5 software-update features; macOS and iOS both use DDM status channels on their 14+/17+ floors, with legacy fallback to restriction profiles or polling.
+
 ## Conditional Access
+
+The table below compares device-based, web-app, per-app, and risk-based Conditional Access support across Windows, macOS, and iOS.
 
 | Feature | Windows | macOS | iOS |
 |---------|---------|-------|-----|
@@ -100,6 +122,8 @@ This matrix compares Intune management capabilities across three platforms. Appl
 | Per-app CA (MAM-WE) | n/a (Windows uses Intune client) | Limited | Supported (MAM-WE — Managed App Without Enrollment; selective-wipe + per-app PIN; works on devices NOT enrolled in Intune MDM) |
 | App-based CA / Approved Client App | Supported | Supported | Supported (Microsoft Authenticator / Outlook / Edge family; per-app token broker) |
 | Risk-based CA | Supported (Entra ID Protection signals) | Supported | Supported (Entra ID Protection user-risk signals; iOS device-risk signals via Microsoft Defender for Endpoint — see [Compliance](#compliance)) |
+
+> **Table summary:** This table compares 5 Conditional Access features; iOS MAM-WE uniquely extends per-app CA to devices not enrolled in Intune MDM.
 
 ## Key Gaps Summary
 

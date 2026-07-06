@@ -16,13 +16,15 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference document compares Microsoft's two Windows Autopilot frameworks — Windows Autopilot (APv1, the classic framework) and Windows Autopilot Device Preparation (APv2) — across enrollment, deployment mode, environment, and app-delivery capabilities, helping admins determine which framework and troubleshooting documentation applies to their deployment. The primary audience is Intune administrators and L1/L2 support staff triaging Windows Autopilot deployment issues.
 
 > **Version gate:** This guide applies to Windows Autopilot (classic). For Autopilot Device Preparation, see below.
 
 Microsoft now maintains two distinct Autopilot frameworks: Windows Autopilot (APv1, the original classic framework) and Windows Autopilot Device Preparation (APv2, introduced for Windows 11). This page helps you determine which framework applies to your deployment so you follow the correct troubleshooting documentation. When in doubt, check whether hardware hash pre-staging was required to set up the device — that alone identifies APv1.
 
 ## Feature Comparison
+
+The table below compares 19 features between APv1 (classic Windows Autopilot) and APv2 (Device Preparation) — enrollment prerequisites, deployment modes, environment support, and app delivery.
 
 | Feature | APv1 (Windows Autopilot) | APv2 (Device Preparation) |
 |---------|--------------------------|--------------------------|
@@ -46,6 +48,8 @@ Microsoft now maintains two distinct Autopilot frameworks: Windows Autopilot (AP
 | Simpler admin configuration | No | Yes |
 | Extensive OOBE customization | Yes | No |
 | Blocks desktop until user config applied | Yes | No |
+
+> **Table summary:** This table compares 19 features between APv1 and APv2; APv1 keeps legacy capabilities (hybrid join, HoloLens) while APv2 adds GCCH/DoD support and near real-time monitoring.
 
 ## Which Guide Do I Use?
 
