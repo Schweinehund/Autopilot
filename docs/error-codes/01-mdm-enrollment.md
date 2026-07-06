@@ -43,11 +43,17 @@ These errors occur during [OOBE](../_glossary.md#oobe) when the device attempts 
 
 Prev: [Error Code Index](00-index.md) | Next: [TPM Attestation Errors](02-tpm-attestation.md)
 
-> **APv2 Note:** The following errors in this category have also been observed in Windows Autopilot Device Preparation ([APv2](../apv1-vs-apv2.md)) deployments. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
->
+> **APv2 Note:** The following errors in this category have also been observed in Windows Autopilot Device Preparation ([APv2](../apv1-vs-apv2.md)) deployments.
+
+> For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+
 > - **0x80180018** — Licensing check behavior is the same in APv2 Device Preparation; a valid Intune license is required regardless of framework.
->
-> All other 0x8018xxxx errors in this file apply to classic Autopilot (APv1) flows. APv2 Device Preparation uses a different enrollment path and most of these codes have not been documented by Microsoft as occurring in APv2. Verify against Device Preparation known issues before tagging additional codes.
+
+> All other 0x8018xxxx errors in this file apply to classic Autopilot (APv1) flows.
+
+> APv2 Device Preparation uses a different enrollment path and most of these codes have not been documented by Microsoft as occurring in APv2.
+
+> Verify against Device Preparation known issues before tagging additional codes.
 
 ## Version History
 

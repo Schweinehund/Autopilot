@@ -65,7 +65,11 @@ If the device real-time clock is off by several minutes, TPM attestation and [ES
 
 Prev: [MDM Enrollment Errors](01-mdm-enrollment.md) | Next: [ESP and Enrollment Errors](03-esp-enrollment.md)
 
-> **APv2 Note:** Windows Autopilot Device Preparation (APv2) does not use pre-provisioning (technician flow) or self-deploying mode. TPM attestation as described in this file is not required in APv2 Device Preparation flows. The majority of codes in this file do not apply to APv2. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **APv2 Note:** Windows Autopilot Device Preparation (APv2) does not use pre-provisioning (technician flow) or self-deploying mode.
+
+> TPM attestation as described in this file is not required in APv2 Device Preparation flows.
+
+> The majority of codes in this file do not apply to APv2. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Version History
 

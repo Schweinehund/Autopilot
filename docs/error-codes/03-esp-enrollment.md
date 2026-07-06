@@ -62,7 +62,9 @@ Prev: [TPM Attestation Errors](02-tpm-attestation.md) | Next: [Pre-Provisioning 
 
 ---
 
-> **APv2 Note:** Windows Autopilot Device Preparation (APv2) does not use the Enrollment Status Page. The errors and policy conflicts in this category are specific to APv1 (classic) deployments. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **APv2 Note:** Windows Autopilot Device Preparation (APv2) does not use the Enrollment Status Page.
+
+> The errors and policy conflicts in this category are specific to APv1 (classic) deployments. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Version History
 

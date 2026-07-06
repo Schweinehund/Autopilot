@@ -18,7 +18,9 @@ audience: both
 
 This is the master error-code lookup reference for Windows Autopilot deployments, indexing hex error codes and Event IDs across MDM enrollment, TPM attestation, ESP, pre-provisioning, and hybrid join categories for classic Autopilot (APv1), with a cross-reference to APv2 Device Preparation's symptom-based failure catalog. Primary audience is L1 service desk (quick lookup and escalation triage) and L2 engineers (category drill-down for detailed causes and fixes).
 
-> **Framework coverage:** This index primarily covers Windows Autopilot (classic/APv1) error codes. APv2 (Device Preparation) failures are symptom-based rather than code-based -- see the APv2 Note at the bottom of this page.
+> **Framework coverage:** This index primarily covers Windows Autopilot (classic/APv1) error codes.
+
+> APv2 (Device Preparation) failures are symptom-based rather than code-based -- see the APv2 Note at the bottom of this page.
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 This is the master lookup table for all Windows [Autopilot](../_glossary.md#autopilot) error codes. Find your error code below and follow the link to the detailed category page for causes, L1 actions, and L2 fixes. Use Ctrl+F to search by hex code or Event ID.
@@ -73,7 +75,9 @@ Some ESP failures show "Something went wrong" without a specific error code. See
 
 ---
 
-> **APv2 Note:** For APv2 (Device Preparation) error coverage, see the [APv2 Device Preparation Failure Catalog](06-apv2-device-preparation.md). APv2 failures are symptom-based rather than hex-code-based. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **APv2 Note:** For APv2 (Device Preparation) error coverage, see the [APv2 Device Preparation Failure Catalog](06-apv2-device-preparation.md).
+
+> APv2 failures are symptom-based rather than hex-code-based. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ---
 

@@ -181,13 +181,13 @@
 | RE-165 | docs/reference/registry-paths.md | Autopilot Registry Paths Reference | Reference | Approved |
 | RE-166 | docs/reference/security-baseline-conflicts.md | Security Baseline Interactions with Autopilot Provisioning | Reference | Approved |
 | RE-167 | docs/reference/win32-app-packaging.md | Win32 App Packaging Best Practices for ESP Reliability | Reference | Approved |
-| RE-168 | docs/error-codes/00-index.md | Error Code Index | Reference | Pending |
-| RE-169 | docs/error-codes/01-mdm-enrollment.md | MDM Enrollment Errors (0x8018xxxx Series) | Reference | Pending |
-| RE-170 | docs/error-codes/02-tpm-attestation.md | TPM Attestation Errors | Reference | Pending |
-| RE-171 | docs/error-codes/03-esp-enrollment.md | ESP and Enrollment Errors | Reference | Pending |
-| RE-172 | docs/error-codes/04-pre-provisioning.md | Pre-Provisioning and Self-Deploying Mode Errors | Reference | Pending |
-| RE-173 | docs/error-codes/05-hybrid-join.md | Hybrid Join and Device Registration Errors | Reference | Pending |
-| RE-174 | docs/error-codes/06-apv2-device-preparation.md | APv2 Device Preparation Failures | Reference | Pending |
+| RE-168 | docs/error-codes/00-index.md | Error Code Index | Reference | Approved |
+| RE-169 | docs/error-codes/01-mdm-enrollment.md | MDM Enrollment Errors (0x8018xxxx Series) | Reference | Approved |
+| RE-170 | docs/error-codes/02-tpm-attestation.md | TPM Attestation Errors | Reference | Approved |
+| RE-171 | docs/error-codes/03-esp-enrollment.md | ESP and Enrollment Errors | Reference | Approved |
+| RE-172 | docs/error-codes/04-pre-provisioning.md | Pre-Provisioning and Self-Deploying Mode Errors | Reference | Approved |
+| RE-173 | docs/error-codes/05-hybrid-join.md | Hybrid Join and Device Registration Errors | Reference | Approved |
+| RE-174 | docs/error-codes/06-apv2-device-preparation.md | APv2 Device Preparation Failures | Reference | Approved |
 | RE-175 | docs/end-user-guides/android-work-profile-setup.md | Set up your personal Android device for work (BYOD Work Profile) | Guide | Pending |
 | RE-176 | docs/end-user-guides/linux-intune-portal-enrollment.md | Linux Intune Portal Enrollment — User Guide | Guide | Pending |
 | RE-177 | docs/apv1-vs-apv2.md | APv1 vs APv2: Which Autopilot Are You Troubleshooting? | Reference | Approved |

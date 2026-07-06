@@ -68,7 +68,9 @@ Prev: [Pre-Provisioning and Self-Deploying Errors](04-pre-provisioning.md) | Nex
 
 ---
 
-> **APv2 Note:** Windows Autopilot Device Preparation (APv2) does not support hybrid Entra join. The errors in this category are specific to APv1 (classic) deployments. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **APv2 Note:** Windows Autopilot Device Preparation (APv2) does not support hybrid Entra join.
+
+> The errors in this category are specific to APv1 (classic) deployments. For framework differences, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Version History
 

@@ -19,8 +19,11 @@ audience: both
 This is a symptom-based failure-lookup reference for Windows Autopilot Device Preparation (APv2) deployments, organized by deployment phase (enrollment, IME install, app installation, script execution, post-deployment) rather than hex error codes, since APv2 failures are identified by symptom and phase. Each entry follows a Symptom-Cause-Quick Check-Runbook format. Primary audience is L1 service desk and L2 engineers investigating APv2-specific deployment issues.
 
 > **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2) failure scenarios.
+
 > These failures are identified by symptom and deployment phase -- not hex error codes.
+
 > For APv1 (classic Autopilot) error codes, see [Error Code Index](00-index.md).
+
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 This is a symptom-based failure catalog for Windows Autopilot Device Preparation (APv2) deployments. Failures are organized by the deployment phase in which they occur, following the [10-step deployment flow](../lifecycle-apv2/02-deployment-flow.md). Each entry uses the Symptom-Cause-Action format: **Symptom** (what the admin observes), **Probable Cause** (why it happens), **Quick Check** (portal-only verification steps), and **Runbook** (forward reference to the L1 or L2 guide that covers resolution). This file does not contain inline resolution steps -- those are in the L1/L2 runbooks referenced in each entry.
@@ -56,7 +59,9 @@ These scenarios occur when the APv2 Device Preparation experience fails to launc
 
 **Symptom:** The Enrollment Status Page (ESP) appeared during OOBE. The device ran the classic Autopilot ESP flow instead of the APv2 Device Preparation progress screen.
 
-> **Silent failure:** This is not an error. The device silently ran APv1 instead of APv2. No error message is displayed. The admin may assume APv2 is broken, but the device simply matched an APv1 profile instead.
+> **Silent failure:** This is not an error. The device silently ran APv1 instead of APv2.
+
+> No error message is displayed. The admin may assume APv2 is broken, but the device simply matched an APv1 profile instead.
 
 **Probable Cause:** The device is registered as a Windows Autopilot device (APv1) -- it appears in the Intune admin center Windows Autopilot devices list -- or a Windows Autopilot deployment profile is assigned to the device. APv1 profiles always take precedence over APv2 Device Preparation policies. This is expected behavior; APv1 deregistration is a prerequisite for APv2 deployment.
 
