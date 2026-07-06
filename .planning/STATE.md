@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T02:16:37.221Z"
+last_updated: "2026-07-06T02:35:14.104Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 27
-  completed_plans: 18
+  completed_plans: 19
   percent: 57
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 117 (admin-setup-guide-retrofit-all-platforms) — EXECUTING
-Plan: 2 of 10
+Plan: 3 of 10
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -288,6 +288,8 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: Transform B (de-blockquote) used for all non-gate informational notes exceeding 200c in RE-066..RE-075 — avoids fragmenting technical content while satisfying C17 #12
 - [Phase 117-01]: Forked scripts/pipeline/retrofit-guide.mjs rather than refactoring retrofit-runbook.mjs in place -- protects the shipped Phase-116 deliverable from a shared-refactor regression
 - [Phase 117-01]: Whole-pre-H1-span relocation fix: replaced 116's first-blockquote-run-only gate capture with full-span capture, trimming only leading/trailing blanks -- fixes confirmed silent-content-loss on ios/02-abm-token.md, macos/01-abm-configuration.md, and android/09..13-aosp-*.md
+- [Phase 117-02]: Version-History date filled with actual commit date (2026-07-05) rather than placeholder
+- [Phase 117-02]: Transform A (blank-line split) used for all admonition boxes since none contain embedded code fences; Transform B reserved for code-bearing WARNING/DANGER boxes
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -318,7 +320,7 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T02:16:37.206Z
+Last session: 2026-07-06T02:32:42.637Z
 Stopped at: Completed 117-01-PLAN.md
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
@@ -351,3 +353,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 116-l1-l2-runbook-retrofit-75-docs P07 | 55 | 3 tasks | 15 files |
 | Phase 116-l1-l2-runbook-retrofit-75-docs P08 | 90 | 3 tasks | 11 files |
 | Phase 117 P01 | 12min | 2 tasks | 1 files |
+| Phase 117 P02 | 13min | 3 tasks | 14 files |
