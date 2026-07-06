@@ -127,3 +127,11 @@ All 13 enrolled Windows admin-setup guides are EEE-conformant, C17-green, and ma
 ---
 *Phase: 117-admin-setup-guide-retrofit-all-platforms*
 *Completed: 2026-07-05*
+
+## Self-Check: PASSED
+
+- FOUND: all 13 retrofitted guide files (docs/admin-setup-apv1/02-10, docs/admin-setup-apv2/01-04)
+- FOUND commit: b509196 (Task 1)
+- FOUND commit: 362cdd1 (Task 2)
+- FOUND commit: 7c471d1 (Task 3)
+- FOUND commit: 4927d8e (SUMMARY)
