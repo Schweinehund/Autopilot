@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers Microsoft Intune app protection policies for iOS/iPadOS under MAM Without Enrollment (MAM-WE), which protects work data inside SDK-integrated apps such as Outlook, Teams, and Edge without enrolling the device in Intune MDM. Configuring MAM-WE requires the Intune Administrator role only — no Apple Business Manager role and no ADE token are needed, since the device itself is never enrolled. There is no supervised-device prerequisite; MAM-WE policies apply identically regardless of any device's MDM enrollment or supervision state.
 
 > **Platform gate:** This guide covers iOS/iPadOS Microsoft Intune app protection policies (MAM Without Enrollment — MAM-WE). MAM-WE protects work data inside SDK-integrated apps without enrolling the device in Intune MDM.
 > For iOS/iPadOS enrollment (MDM) setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md) — optional context, not required to follow this guide.

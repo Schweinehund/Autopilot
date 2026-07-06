@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers configuration of the ADE enrollment profile — the final step in the ADE prerequisite chain — which governs supervision state, authentication method, Setup Assistant screens, and locked enrollment for iOS/iPadOS devices enrolling through Automated Device Enrollment. It requires the Intune Administrator role and an active ADE token synced with Apple Business Manager. Supervised mode is a prerequisite for locked enrollment and several other settings covered here, and should be set to Yes for all corporate ADE deployments.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE enrollment profile configuration in Intune.
 > For macOS enrollment profile setup, see [macOS Enrollment Profile](../admin-setup-macos/02-enrollment-profile.md).

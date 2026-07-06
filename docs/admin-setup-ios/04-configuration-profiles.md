@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers configuration profile authoring for iOS/iPadOS devices enrolled through Automated Device Enrollment (ADE), covering Wi-Fi, VPN, email, certificate, Home Screen Layout, and device restriction payloads delivered over the MDM/APNs channel. It requires the Intune Administrator role in Intune admin center; Apple Business Manager access is only needed indirectly, via the prior ADE enrollment step. Many restriction settings covered here require supervised mode — devices enrolled unsupervised silently ignore supervised-only settings, so confirming supervision state before assigning profiles is essential.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
 > For macOS ADE setup, see [macOS Configuration Profiles](../admin-setup-macos/03-configuration-profiles.md).

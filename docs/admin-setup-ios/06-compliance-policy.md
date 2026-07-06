@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers iOS/iPadOS compliance policy configuration — the settings that detect non-compliance and drive Conditional Access, including OS version gates, jailbreak detection, and passcode requirements — for devices enrolled via Automated Device Enrollment (ADE). Configuring compliance policies requires the Intune Administrator role in Intune admin center; no Apple Business Manager action is required directly, since compliance evaluation runs entirely within Intune after enrollment. No supervised-device prerequisite applies to the core compliance settings, though a few paired enforcement options are supervised-only.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
 > For macOS compliance policy, see [macOS Compliance Policies](../admin-setup-macos/05-compliance-policy.md).

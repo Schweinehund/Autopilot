@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers configuration and annual renewal of the Apple Push Notification (APNs) certificate, the shared cross-platform trust anchor that enables MDM communication between Microsoft Intune and every enrolled Apple device — iOS, iPadOS, and macOS alike. Configuring it requires the Intune Administrator role in Intune admin center and access to the Apple Push Certificates Portal signed in with a company-owned (non-personal) Apple ID. No supervised-device prerequisite applies; the certificate is tenant-wide infrastructure independent of any single device's enrollment or supervision state.
 
 > **Platform gate:** This guide covers iOS/iPadOS APNs certificate configuration for Intune MDM.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).

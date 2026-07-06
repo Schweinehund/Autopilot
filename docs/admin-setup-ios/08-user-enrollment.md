@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers account-driven User Enrollment, Apple's privacy-preserving iOS/iPadOS enrollment path for personally-owned BYOD devices that isolates work data inside a managed APFS volume. Configuring it requires the Intune Administrator role and a Managed Apple ID provisioned through Apple Business Manager or federated from Microsoft Entra ID — not a personal Apple ID. There is no supervised-device prerequisite; devices enrolled this way are never supervised, and the privacy boundaries described throughout the guide define exactly what IT cannot see or control.
 
 > **Platform gate:** This guide covers iOS/iPadOS account-driven User Enrollment (privacy-preserving BYOD).
 > For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).

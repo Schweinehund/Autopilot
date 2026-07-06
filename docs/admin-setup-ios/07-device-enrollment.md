@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers Device Enrollment, Intune's non-ABM iOS/iPadOS enrollment path in which users self-enroll via Company Portal or a web-based URL, for both BYOD and corporate-owned devices that did not come through Apple Business Manager. Administering this path requires only the Intune Administrator role — no Apple Business Manager admin role is needed since no ADE token is involved. Devices enrolled this way run unsupervised, so supervised-only features such as locked enrollment and silent app install are unavailable.
 
 > **Platform gate:** This guide covers iOS/iPadOS Device Enrollment via Intune (no ABM required).
 > For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).

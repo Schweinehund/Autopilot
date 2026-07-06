@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers iOS/iPadOS app deployment through Intune, spanning VPP device-licensed and user-licensed purchasing, LOB (.ipa) sideloading, and Store apps deployed without VPP for devices enrolled via Automated Device Enrollment (ADE). Deploying VPP content requires the Intune Administrator role plus a VPP token purchased through Apple Business Manager under a Content Manager or Administrator role. Device-licensed VPP and silent LOB installs additionally require supervised mode; user-licensed VPP works on unsupervised devices but needs a personal Apple Account sign-in to accept the invitation.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
 > For macOS app deployment, see [macOS App Deployment](../admin-setup-macos/04-app-deployment.md).

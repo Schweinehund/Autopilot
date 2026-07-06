@@ -16,7 +16,7 @@ platform: iOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+This guide covers Automated Device Enrollment (ADE) token configuration, the link between Apple Business Manager (ABM) and Microsoft Intune that enables device syncing and enrollment profile assignment for iOS/iPadOS devices. Completing it requires the Intune Administrator role in Intune admin center and the Device Manager or Administrator role in Apple Business Manager, plus a Managed Apple ID (not a personal Apple ID). There is no supervised-device prerequisite for token creation itself; supervision is established later by the enrollment profile step that follows.
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE token configuration via Apple Business Manager and Intune.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
