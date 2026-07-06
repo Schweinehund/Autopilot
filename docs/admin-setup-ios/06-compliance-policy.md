@@ -1,4 +1,8 @@
 ---
+doc_id: RE-112
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: ADE
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-112 · **Status:** Approved
+
+# iOS/iPadOS Compliance Policies
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
 > For macOS compliance policy, see [macOS Compliance Policies](../admin-setup-macos/05-compliance-policy.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# iOS/iPadOS Compliance Policies
 
 Compliance policies DETECT non-compliance and report status to Intune and Conditional Access. Configuration profiles ENFORCE settings and prevent user deviation. Unlike Windows, Intune has no security baselines for iOS/iPadOS — admins must configure compliance manually. This guide covers the required compliance settings (OS version gates, jailbreak detection, passcode requirements) plus iOS-specific behavior around Actions for Noncompliance and Conditional Access timing. A dedicated section below answers the question of what happens to CA access state in the window between enrollment completion and first compliance evaluation — the question can be answered from this guide alone without following cross-references.
 
@@ -250,3 +260,9 @@ The timing sequence and mitigation patterns above are sufficient to determine CA
 | 2026-04-16 | Initial version — iOS/iPadOS compliance policy guide with simplified Compliance vs. Configuration table, per-setting What-breaks callouts (jailbreak detection, OS version, passcode, restricted apps), iOS-specific Actions for Noncompliance behaviors, and dedicated Compliance Evaluation Timing and Conditional Access section covering default posture toggle, 0-30 min gap behavior, and iOS APNs considerations (answers SC #4 from the guide alone) | -- |
 
 <!-- Review scheduled: 2026-07-15. Verify against Microsoft Learn iOS/iPadOS compliance policy reference for any new settings added in iOS 18/19. Confirm DDM software update boundary remains as documented (iOS 17+). -->
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

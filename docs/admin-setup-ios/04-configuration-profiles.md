@@ -1,4 +1,8 @@
 ---
+doc_id: RE-110
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: ADE
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-110 · **Status:** Approved
+
+# iOS/iPadOS Configuration Profiles
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
 > For macOS ADE setup, see [macOS Configuration Profiles](../admin-setup-macos/03-configuration-profiles.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# iOS/iPadOS Configuration Profiles
 
 Configuration profiles are delivered to iOS/iPadOS devices via the MDM channel over APNs (Apple Push Notification service) — not via an agent. Configuration profiles **enforce** settings on devices; compliance policies **detect** non-compliance but do not enforce. iOS/iPadOS adds the supervision axis that macOS lacks: many device restriction settings apply only to supervised devices and are silently ignored on unsupervised devices. Settings that require supervised mode are explicitly marked with a 🔒 callout; on unsupervised devices they are ignored silently.
 
@@ -404,3 +414,9 @@ Block pairing with non-Configurator hosts prevents the device from establishing 
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS configuration profiles guide with Wi-Fi/VPN/Email/Certificates/Home Screen Layout payload sections and Device Restrictions section covering 12 categories with category-level 🔒 supervised-only callouts plus 9 high-impact full-detail subsections | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

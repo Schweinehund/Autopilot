@@ -1,4 +1,8 @@
 ---
+doc_id: RE-115
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: mam-we
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-115 · **Status:** Approved
+
+# iOS MAM-WE App Protection Policies
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS Microsoft Intune app protection policies (MAM Without Enrollment — MAM-WE). MAM-WE protects work data inside SDK-integrated apps without enrolling the device in Intune MDM.
 > For iOS/iPadOS enrollment (MDM) setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md) — optional context, not required to follow this guide.
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# iOS MAM-WE App Protection Policies
 
 Microsoft Intune app protection policies protect work data within SDK-integrated apps without enrolling the device in Intune MDM. This is called MAM Without Enrollment (MAM-WE). On iOS, MAM-WE applies to apps like Outlook, Teams, and Microsoft Edge that integrate the Intune App SDK. The device is not enrolled; no MDM profile is installed; IT has no device-level management capability. Policy controls apply only within managed apps and govern how work data can move into, out of, and within those apps.
 
@@ -355,3 +365,9 @@ For related MDM enrollment context (not required to use MAM-WE):
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-17 | Initial version — iOS MAM-WE app protection policies standalone guide covering three-level data protection framework, dual-targeting, selective wipe, and iOS-specific behaviors | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

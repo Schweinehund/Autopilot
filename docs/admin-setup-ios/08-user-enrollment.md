@@ -1,4 +1,8 @@
 ---
+doc_id: RE-114
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: user-enrollment
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-114 · **Status:** Approved
+
+# iOS/iPadOS Account-Driven User Enrollment
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS account-driven User Enrollment (privacy-preserving BYOD).
 > For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# iOS/iPadOS Account-Driven User Enrollment
 
 Account-driven User Enrollment is Apple's privacy-preserving iOS/iPadOS enrollment path for personally-owned devices. IT manages work apps and data within a managed APFS volume on the device; personal apps, personal data, and device-level attributes remain outside Intune's management scope. This guide covers admin prerequisites, enrollment configuration, and the explicit privacy limitations that differentiate User Enrollment from other enrollment paths. Both admins configuring the tenant and end users enrolling their devices benefit from reading the Privacy Boundaries summary below; per-capability privacy callouts appear at each capability's discussion point throughout the guide.
 
@@ -186,3 +196,9 @@ Verify the current deprecation status against Microsoft Learn `ios-user-enrollme
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-17 | Initial version — iOS/iPadOS account-driven User Enrollment admin guide with hybrid privacy-callout pattern covering all 7 D-20 privacy boundaries | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

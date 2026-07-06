@@ -1,4 +1,8 @@
 ---
+doc_id: RE-113
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: device-enrollment
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-113 · **Status:** Approved
+
+# iOS/iPadOS Device Enrollment
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS Device Enrollment via Intune (no ABM required).
 > For corporate ADE setup, see [iOS/iPadOS Admin Setup Overview](00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# iOS/iPadOS Device Enrollment
 
 Device Enrollment is Intune's non-ABM enrollment path for iOS/iPadOS devices. Users initiate enrollment themselves — either by downloading the Intune Company Portal app or by visiting a web-based enrollment URL — and the resulting enrolled device runs in unsupervised mode with the full Intune MDM management capability set minus supervised-only features. Device Enrollment covers both personal-owned BYOD devices and corporate-owned devices that did not come through Apple Business Manager.
 
@@ -279,3 +289,9 @@ Full triage trees for each symptom live in the [iOS Triage Decision Tree](../dec
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-17 | Initial version — iOS/iPadOS Device Enrollment admin guide covering Company Portal and web-based flows, capabilities available without supervision, and personal vs corporate ownership | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

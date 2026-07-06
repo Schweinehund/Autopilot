@@ -1,4 +1,8 @@
 ---
+doc_id: RE-109
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: ADE
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-109 · **Status:** Approved
+
+# iOS/iPadOS ADE Enrollment Profile Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS ADE enrollment profile configuration in Intune.
 > For macOS enrollment profile setup, see [macOS Enrollment Profile](../admin-setup-macos/02-enrollment-profile.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# iOS/iPadOS ADE Enrollment Profile Configuration
 
 The enrollment profile configures how iOS/iPadOS devices enroll through Automated Device Enrollment (ADE): their supervision state, authentication method, Setup Assistant experience, and whether users can remove management. This is the final step in the ADE prerequisite chain — APNs certificate, then ABM/ADE token, then enrollment profile. The profile must be assigned to devices **before first power-on**; a device that starts Setup Assistant without an assigned profile enrolls through standard (non-managed) iOS Setup Assistant and must be factory-reset to enroll into MDM.
 
@@ -184,3 +194,9 @@ After saving the enrollment profile, assign it to devices synced through the ADE
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version -- ADE enrollment profile with supervised-only callouts, authentication methods, Setup Assistant panes, and locked enrollment | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

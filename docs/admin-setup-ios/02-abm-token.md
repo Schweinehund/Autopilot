@@ -1,10 +1,22 @@
 ---
+doc_id: RE-108
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-05-21
 review_by: 2026-07-20
 applies_to: ADE
 audience: admin
 platform: iOS
 ---
+
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-108 · **Status:** Approved
+
+# ABM/ADE Token Configuration for iOS/iPadOS
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
 
 > **Platform gate:** This guide covers iOS/iPadOS ADE token configuration via Apple Business Manager and Intune.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
@@ -15,8 +27,6 @@ platform: iOS
 > 2026-04-14. This guide retains the legacy "ABM" terminology for portal-navigation continuity
 > but uses the new "Apple Business" framing in cross-references. See the [Apple Business
 > Governance Glossary](../_glossary-apple-business.md) for the full rebrand-mapping table.
-
-# ABM/ADE Token Configuration for iOS/iPadOS
 
 The ADE token links Apple Business Manager to Microsoft Intune, enabling device syncing and enrollment profile assignment for iOS/iPadOS devices. The steps are structurally identical to the macOS ABM token configuration — this guide cross-references the macOS guide for shared portal steps and documents only iOS-specific differences inline. Apple School Manager (ASM) is functionally identical to ABM for MDM purposes; follow the same steps if your organization uses ASM.
 
@@ -129,3 +139,9 @@ Assign iOS/iPadOS devices to the MDM server so they are synced to Intune. Follow
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version -- ABM/ADE token guide with macOS cross-references and iOS-specific differences | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

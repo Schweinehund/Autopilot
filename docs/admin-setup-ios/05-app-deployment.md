@@ -1,4 +1,8 @@
 ---
+doc_id: RE-111
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-05-26
 review_by: 2026-07-17
 applies_to: ADE
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-111 · **Status:** Approved
+
+# iOS/iPadOS App Deployment
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS ADE configuration via Apple Business Manager and Intune.
 > For macOS app deployment, see [macOS App Deployment](../admin-setup-macos/04-app-deployment.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# iOS/iPadOS App Deployment
 
 Intune supports four distinct iOS/iPadOS app deployment types: VPP device-licensed, VPP user-licensed, LOB (.ipa), and Store apps without VPP. The VPP device-licensed vs user-licensed distinction is the single most common source of admin confusion — these two license types differ fundamentally in how they relate to Apple Accounts, supervision requirements, and silent install capability. Managed apps (deployed through Intune) can be verified through the Intune admin center using three distinct views. Unmanaged apps (user-installed from the App Store without Intune intermediation) have no install status tracking in Intune.
 
@@ -228,3 +238,9 @@ Navigate to **Troubleshoot + support** > **Troubleshoot** > enter user > **Manag
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version — iOS/iPadOS app deployment guide with Key Concepts section (managed vs unmanaged, VPP device vs user licensing, silent install boundary table), 4-column deployment type comparison, per-type sections with supervised-only silent install callouts, managed app status verification in three admin-center locations, configuration-caused failures, and VPP/LOB renewal cadences | -- |
 | 2026-05-26 | Phase 67 (SWEEP-02): renamed "VPP (Apps and Books) location token" to "content token" per Apple 2026-04-14 rebrand (L71, L201); added Apple-vs-Intune label disambiguation callout above Renewal/Maintenance table; PITFALLS.md CI-2 closure | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

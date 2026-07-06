@@ -1,4 +1,8 @@
 ---
+doc_id: RE-107
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-18
 review_by: 2026-07-17
 applies_to: ADE
@@ -6,12 +10,18 @@ audience: admin
 platform: iOS
 ---
 
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-107 · **Status:** Approved
+
+# Apple Push Notification (APNs) Certificate
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
 > **Platform gate:** This guide covers iOS/iPadOS APNs certificate configuration for Intune MDM.
 > For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
 > For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 > Portal navigation may vary by Intune admin center version. See [Overview](00-overview.md#portal-navigation-note) for details.
-
-# Apple Push Notification (APNs) Certificate
 
 The APNs certificate enables MDM communication between Microsoft Intune and ALL Apple devices — iOS, iPadOS, and macOS. This is shared cross-platform infrastructure: a single APNs certificate covers all Apple platforms enrolled in your Intune tenant. If the certificate expires or is replaced, MDM communication to ALL enrolled iOS, iPadOS, and macOS devices stops simultaneously.
 
@@ -126,3 +136,9 @@ The APNs certificate is valid for **365 days**. A **30-day grace period** allows
 |------|--------|--------|
 | 2026-04-18 | Resolved iOS L1 runbook cross-references | -- |
 | 2026-04-16 | Initial version -- APNs certificate creation, renewal, and cross-platform expiry impact | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
