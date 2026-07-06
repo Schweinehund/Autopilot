@@ -285,7 +285,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 119-01-PLAN.md — Wave-0 pre-anchor + baseline reconnaissance: capture the byte-unchanged gate-base SHA, positively confirm V114=7d922a7 (disambiguate the ambiguous grep result f3959c8), run the current v1.14 harness vs HEAD to surface shifted sidecar line-pins (HARN-02, HARN-03)
+- [x] 119-01-PLAN.md — Wave-0 pre-anchor + baseline reconnaissance: capture the byte-unchanged gate-base SHA, positively confirm V114=7d922a7 (disambiguate the ambiguous grep result f3959c8), run the current v1.14 harness vs HEAD to surface shifted sidecar line-pins (HARN-02, HARN-03)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -338,4 +338,4 @@ Plans:
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
 | 118. Reference Doc Retrofit + Table Remediation | 6/6 | Complete    | 2026-07-06 |
-| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/7 | Not started | — |
+| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 1/7 | In Progress|  |

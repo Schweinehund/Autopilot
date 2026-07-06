@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T19:49:34.663Z"
-last_activity: 2026-07-06 -- Phase 119 planning complete
+last_updated: "2026-07-06T20:26:20.252Z"
+last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 40
-  completed_plans: 33
-  percent: 83
+  completed_plans: 34
+  percent: 85
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** Phase 119 — frozen surface re baseline + 13th path a lineage bump + terminal re audit close
+**Current focus:** Phase 119 — frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal
 
 ## Current Position
 
-Phase: 119
-Plan: Not started
+Phase: 119 (frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal) — EXECUTING
+Plan: 2 of 7
 Status: Ready to execute
-Last activity: 2026-07-06 -- Phase 119 planning complete
+Last activity: 2026-07-06
 
 Progress bar: `████████░░` 86% (6/7 phases complete)
 
@@ -316,6 +316,9 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: [118-05] All 7 error-codes files confirmed keyless (applies_to: both/APv1/APv2 are not platform keys) -- platform: Windows injected uniformly, resolving cleanly in D1_MAP
 - [Phase ?]: [118-05] 01-mdm-enrollment.md's corpus-worst 689c APv2 Note blockquote (with bare '>' continuation lines that do not break a C17 group) required a 6-way sentence-level Transform A split; no embedded code fence found so Transform B was not needed anywhere in this batch
 - [Phase ?]: Reference-class registry count verified as 35 (34 Approved + RE-147 Pending); full C17 run scope (174 files) intentionally re-validates all prior retrofit classes alongside the 34 new reference files
+- [Phase ?]: [119-01] Wave-0 anchor SHA = c6ea8d25 (predecessor-byte-unchanged HARD-gate base for 119-04); DISTINCT from BASELINE_19 anchor (119-02 captures that JIT before Atom 1 per Pitfall 4)
+- [Phase ?]: [119-01] V114 = 7d922a7 positively confirmed (msg has MILESTONE-AUDIT + MILESTONE CLOSE); naive --grep recovery returns f3959c8 (wrong follow-up) — DO NOT pin f3959c8
+- [Phase ?]: [119-01] Baseline v1.14 harness RED on HEAD (11/4/0): C2/C7/C9 sidecar {file,line} pins shifted by EEE retrofit on Phase-1 surfaces; C15 a NEW EEE-Summary collision (RE-108:19). v1.15 sidecar must NOT be copied verbatim — 119-02 repoint worklist recorded in SUMMARY
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -346,9 +349,9 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T19:01:12.913Z
+Last session: 2026-07-06T20:25:24.855Z
 Stopped at: Phase 119 context gathered
-Resume file: .planning/phases/119-frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal/119-CONTEXT.md
+Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
 ## Operator Next Steps
@@ -395,3 +398,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 118 P04 | 20min | 3 tasks | 11 files |
 | Phase 118 P05 | 24min | 3 tasks | 8 files |
 | Phase 118 P06 | 8min | 2 tasks | 0 files |
+| Phase 119 P01 | 10min | 2 tasks | 1 files |
