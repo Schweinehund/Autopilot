@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide walks an Intune administrator through deploying the Apple Kerberos SSO extension via an Intune Custom Template (.mobileconfig) profile for on-premises Active Directory Kerberos authentication, integrated with Platform SSO TGT sharing. It requires the Intune Policy and Profile Manager role, a Platform SSO deployment already registered on target devices (Apple Business Manager ADE enrollment), and macOS 14.6 or later for the PSSO TGT-sharing integration this guide documents.
 
 > **Platform gate:** This guide covers macOS Kerberos SSO extension configuration via Intune Custom Template (.mobileconfig) for PSSO-integrated deployments.
 > For Platform SSO setup (prerequisite), see [Platform SSO Setup](07-platform-sso-setup.md).

@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide walks an Intune administrator through configuring Platform SSO on macOS via the Settings Catalog `com.apple.extensiblesso` payload, covering the Secure Enclave registration-during-Setup-Assistant deployment model plus the standard post-enrollment alternative. It requires the Intune Policy and Profile Manager role (or equivalent Device Configuration permissions), Apple Business Manager-issued ADE enrollment, and macOS 13 minimum (macOS 14+ recommended; macOS 26 for the ADE-during-Setup-Assistant path).
 
 > **Platform gate:** This guide covers macOS Platform SSO configuration via Microsoft Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).

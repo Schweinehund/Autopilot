@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide helps Intune administrators decide whether, when, and how to migrate an existing Microsoft Enterprise SSO plug-in deployment to Platform SSO, covering the migrate/keep/coexist decision matrix, the staged rollout sequence that avoids Error 10002, and the destructive rollback procedure. It requires the Intune Policy and Profile Manager role, Apple Business Manager-enrolled devices, and macOS 13+ for the Platform SSO target state (legacy devices on macOS 10.15-12 retain the Device Features profile).
 
 > **Platform gate:** This guide covers macOS Enterprise SSO plug-in migration to Platform SSO.
 > For the Platform SSO setup walk-through, see [Platform SSO Setup](07-platform-sso-setup.md).

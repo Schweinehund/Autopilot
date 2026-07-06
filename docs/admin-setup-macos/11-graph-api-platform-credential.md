@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide is the operations reference for administering macOS Secure Enclave Platform Credentials programmatically via the Microsoft Graph v1.0 `platformCredentialAuthenticationMethod` resource, covering List, Get, and Delete operations plus the leaver/offboarding automation pattern. Delete operations require the Authentication Administrator or Privileged Authentication Administrator Entra role, and target devices must already have Platform SSO deployed with the Secure Enclave authentication method (see guide 07) before credentials exist to manage.
 
 > **Platform gate:** This guide covers programmatic management of macOS Secure Enclave Platform Credentials via the Microsoft Graph API (`platformCredentialAuthenticationMethod`, Graph v1.0).
 > For Platform SSO setup (prerequisite), see [Platform SSO Setup](07-platform-sso-setup.md).

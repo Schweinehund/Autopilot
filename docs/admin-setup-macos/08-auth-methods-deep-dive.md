@@ -16,7 +16,7 @@ platform: macOS
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (macOS) Summary lead]
+This guide helps architects and senior Intune administrators choose among the three macOS Platform SSO authentication methods — Secure Enclave key, Password sync, and Smart Card — covering FileVault interaction, Touch ID biometric policy, and New User At Login Window settings. Deploying any method requires the Intune Policy and Profile Manager role, an Apple Business Manager-issued ADE enrollment for device targeting, and macOS 13+ (macOS 14+ required for Smart Card).
 
 > **Platform gate:** This guide covers macOS Platform SSO authentication methods in depth.
 > For the Platform SSO setup walk-through, see [Platform SSO Setup](07-platform-sso-setup.md).
