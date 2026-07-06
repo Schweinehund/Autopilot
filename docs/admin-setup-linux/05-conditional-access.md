@@ -1,4 +1,8 @@
 ---
+doc_id: RE-133
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: conditional-access
@@ -6,11 +10,17 @@ audience: admin
 platform: Linux
 ---
 
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-133 · **Status:** Approved
+
+# Linux Conditional Access — Admin Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+
 > **Platform gate:** This guide covers Conditional Access (CA) configuration for Linux devices in Intune (Ubuntu 22.04/24.04 LTS). Linux supports web-app CA via Microsoft Edge for Linux 102.x+ ONLY — there is no device-level CA grant on Linux.
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 > For the locked Linux management surface, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface).
-
-# Linux Conditional Access — Admin Configuration
 
 > ⚠️ **Architecture: Web-app CA only.** Linux does NOT support device-level Conditional Access. The CA grant control `Require device to be marked as compliant` is not available on Linux. The only CA enforcement path on Linux is web-app CA via Microsoft Edge for Linux 102.x+ (the user signs into Edge with their org account; Edge surfaces the CA challenge; the org's CA policies enforce the grant or block based on user, session, and risk context). For cross-platform CA architectural reference, see [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access).
 
@@ -104,3 +114,9 @@ platform: Linux
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-27 | Initial version — Linux Conditional Access (web-app CA via Edge only) + PITFALL-2 inheritance (Phase 50) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

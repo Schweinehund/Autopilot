@@ -1,4 +1,8 @@
 ---
+doc_id: RE-130
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: enrollment
@@ -6,11 +10,17 @@ audience: admin
 platform: Linux
 ---
 
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-130 · **Status:** Approved
+
+# Linux Enrollment Profile — Admin Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+
 > **Platform gate:** This guide covers admin-side configuration of Linux device enrollment in Intune (license verification, optional CA scoping). Linux enrollment on Ubuntu 22.04/24.04 LTS is user-initiated only; there is no admin-driven push enrollment.
 > For end-user enrollment steps (install Edge, install intune-portal deb, sign in), see [Linux Intune Portal Enrollment](../end-user-guides/linux-intune-portal-enrollment.md).
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
-
-# Linux Enrollment Profile — Admin Configuration
 
 This guide covers admin-side configuration required to enable Linux device enrollment in Intune: licensing verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping.
 
@@ -101,3 +111,9 @@ This guide covers admin-side configuration required to enable Linux device enrol
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-27 | Initial version — Linux enrollment profile admin configuration (Phase 50) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

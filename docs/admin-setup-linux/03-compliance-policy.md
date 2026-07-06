@@ -1,4 +1,8 @@
 ---
+doc_id: RE-131
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: enrollment
@@ -6,11 +10,17 @@ audience: admin
 platform: Linux
 ---
 
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-131 · **Status:** Approved
+
+# Linux Compliance Policy — Admin Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+
 > **Platform gate:** This guide covers configuration of Intune compliance policies for Linux devices (Ubuntu 22.04/24.04 LTS) across the 4 supported settings-catalog categories.
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 > For the locked Linux management surface, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface).
-
-# Linux Compliance Policy — Admin Configuration
 
 > ⚠️ **Architecture callout — compliance reporting is NOT a Conditional Access grant on Linux:** A Linux device that reports `compliant` via an Intune compliance policy does NOT receive Conditional-Access-level access grants. The CA grant control `Require device to be marked as compliant` is **not available** on Linux — the only CA enforcement path on Linux is web-app CA via Microsoft Edge for Linux 102.x+. Compliance policy on Linux is **detect-only** (it produces a compliance verdict admins can monitor and use for reporting), not enforce-grant.
 >
@@ -158,3 +168,9 @@ Assign the policy to device groups or user groups as appropriate. Start with a t
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-27 | Initial version — Linux compliance policy + PITFALL-2 architectural callout (Phase 50) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-132
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: enrollment
@@ -6,10 +10,16 @@ audience: admin
 platform: Linux
 ---
 
-> **Platform gate:** This guide covers app delivery to Linux devices managed by Intune (Ubuntu 22.04/24.04 LTS).
-> For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-132 · **Status:** Approved
 
 # Linux App Delivery — Admin Overview
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+
+> **Platform gate:** This guide covers app delivery to Linux devices managed by Intune (Ubuntu 22.04/24.04 LTS).
+> For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 
 > 📋 **Scope note — Linux app delivery is script-based only.** Intune does NOT deliver binary packages to Linux. There is no Win32 / MSIX / `.pkg` / `.deb` direct-delivery analog for Linux. Intune delivers Shell/Bash scripts to the device; the script itself is responsible for downloading and installing whatever package the org needs (e.g., `apt install` from a trusted repo, `curl | sh` from a vendor URL, etc.).
 >
@@ -91,3 +101,9 @@ Linux app delivery is significantly narrower than other Intune-managed platforms
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-27 | Initial version — Linux app delivery concept overview + PITFALL-1 scope callout (Phase 50) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

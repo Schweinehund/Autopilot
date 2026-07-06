@@ -1,4 +1,8 @@
 ---
+doc_id: RE-129
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: enrollment
@@ -6,11 +10,17 @@ audience: admin
 platform: Linux
 ---
 
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-129 · **Status:** Approved
+
+# Intune Linux Agent — Install and Configure
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+
 > **Platform gate:** This guide covers installation of the `intune-portal` deb package and Microsoft Identity Broker on Ubuntu 22.04 LTS and 24.04 LTS.
 > For Linux prerequisites and supported distributions, see [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md).
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
-
-# Intune Linux Agent — Install and Configure
 
 This guide walks Intune administrators through installing the `intune-portal` deb package from `packages.microsoft.com` and verifying the Microsoft Identity Broker systemd unit. Completing this step is a prerequisite for all Linux enrollment scenarios.
 
@@ -118,3 +128,9 @@ This guide walks Intune administrators through installing the `intune-portal` de
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-27 | Initial version — Intune Linux client install + LIN-05 + PITFALL-3 callouts (Phase 50) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
