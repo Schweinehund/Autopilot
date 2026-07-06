@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T03:06:41.441Z"
+last_updated: "2026-07-06T03:25:16.042Z"
 last_activity: 2026-07-06
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 27
-  completed_plans: 20
+  completed_plans: 21
   percent: 57
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 117 (admin-setup-guide-retrofit-all-platforms) — EXECUTING
-Plan: 4 of 10
+Plan: 5 of 10
 Status: Ready to execute
 Last activity: 2026-07-06
 
@@ -291,6 +291,8 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase 117-02]: Version-History date filled with actual commit date (2026-07-05) rather than placeholder
 - [Phase 117-02]: Transform A (blank-line split) used for all admonition boxes since none contain embedded code fences; Transform B reserved for code-bearing WARNING/DANGER boxes
 - [Phase 117-03]: Transform B applied to 3 blockquote groups (05's 1080c, 08's 982c, and one unsplittable-link sentence in 08) -- de-blockquoting preferred over word-splitting when a markdown link would otherwise be broken mid-span
+- [Phase ?]: [117-04] Confirmed dry-run span-byte-length equality (orig==reloc) for all 5 AOSP-OEM files before writing -- validates the 117-01 whole-pre-H1-span fix against every confirmed HTML-comment case in the corpus
+- [Phase ?]: [117-04] Word-set diff (pre- vs post-#12-fix) confirmed zero real words added/removed across all 5 files; caught and reverted one capitalization/punctuation drift before committing Task 3
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -321,8 +323,8 @@ None at roadmap stage. Execution-time watch items (not blockers — address with
 
 ## Session Continuity
 
-Last session: 2026-07-06T03:03:29.731Z
-Stopped at: Completed 117-01-PLAN.md
+Last session: 2026-07-06T03:25:16.027Z
+Stopped at: Completed 117-04-PLAN.md
 Resume file: None
 Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrofit). C17 gate is now live.
 
@@ -356,3 +358,4 @@ Next action: Run /gsd-execute-phase 116 to begin Phase 116 (L1/L2 Runbook Retrof
 | Phase 117 P01 | 12min | 2 tasks | 1 files |
 | Phase 117 P02 | 13min | 3 tasks | 14 files |
 | Phase 117 P03 | 25min | 3 tasks | 9 files |
+| Phase 117 P04 | 45min | 3 tasks | 6 files |
