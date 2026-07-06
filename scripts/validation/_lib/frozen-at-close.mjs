@@ -42,6 +42,12 @@ export const MILESTONE_CLOSE_SHAS = {
                     // 4-doc traceability + v1.13 MILESTONE-AUDIT NEW + DEFERRED-CLEANUP finalize).
                     // Single entry (v1.13 closed in ONE commit; atom == close-gate;
                     // no separate closegate entry — V18/V19/V110/V111/V112 single-entry pattern applies).
+  V114: '7d922a7',  // Phase 112 Plan 112-05 close-gate — v1.14 milestone close-gate; atom == close-gate.
+                    // Message contains both "MILESTONE-AUDIT" and "MILESTONE CLOSE" (confirmed via
+                    // `git log -1 --format=%s 7d922a7`). Do NOT pin f3959c8 (the ambiguous SUMMARY-plan
+                    // follow-up). Single entry — same single-entry pattern as V18..V113 (back-anchor
+                    // invariant: V114 references a PAST close SHA; the next milestone pin is deferred to
+                    // v1.16 per the back-anchor rule — this phase adds only the v1.14 close pin).
   // V14 omitted — RETRO-01 must surface a v1.4-close-state assertion in check-phase-{48..66}.mjs
   // before adding (v1.4 close was Phase 42, predating chain validators).
   // Candidates if needed: b5cf529 or 671f72a (D-02 advisor pre-scan).
@@ -78,3 +84,4 @@ export const readAtV110Close      = (p) => readAtClose('V110',         p);
 export const readAtV111Close      = (p) => readAtClose('V111',         p);
 export const readAtV112Close      = (p) => readAtClose('V112',         p);
 export const readAtV113Close      = (p) => readAtClose('V113',         p);
+export const readAtV114Close      = (p) => readAtClose('V114',         p);
