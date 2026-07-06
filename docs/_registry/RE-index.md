@@ -142,11 +142,11 @@
 | RE-126 | docs/admin-setup-macos/10-kerberos-sso-extension.md | macOS Kerberos SSO Extension | Guide | Approved |
 | RE-127 | docs/admin-setup-macos/11-graph-api-platform-credential.md | Graph API: Platform Credential Management | Guide | Approved |
 | RE-128 | docs/admin-setup-linux/00-overview.md | Linux Admin Setup Overview | Guide | Pending |
-| RE-129 | docs/admin-setup-linux/01-intune-linux-agent.md | Intune Linux Agent — Install and Configure | Guide | Pending |
-| RE-130 | docs/admin-setup-linux/02-enrollment-profile.md | Linux Enrollment Profile — Admin Configuration | Guide | Pending |
-| RE-131 | docs/admin-setup-linux/03-compliance-policy.md | Linux Compliance Policy — Admin Configuration | Guide | Pending |
-| RE-132 | docs/admin-setup-linux/04-app-delivery.md | Linux App Delivery — Admin Overview | Guide | Pending |
-| RE-133 | docs/admin-setup-linux/05-conditional-access.md | Linux Conditional Access — Admin Configuration | Guide | Pending |
+| RE-129 | docs/admin-setup-linux/01-intune-linux-agent.md | Intune Linux Agent — Install and Configure | Guide | Approved |
+| RE-130 | docs/admin-setup-linux/02-enrollment-profile.md | Linux Enrollment Profile — Admin Configuration | Guide | Approved |
+| RE-131 | docs/admin-setup-linux/03-compliance-policy.md | Linux Compliance Policy — Admin Configuration | Guide | Approved |
+| RE-132 | docs/admin-setup-linux/04-app-delivery.md | Linux App Delivery — Admin Overview | Guide | Approved |
+| RE-133 | docs/admin-setup-linux/05-conditional-access.md | Linux Conditional Access — Admin Configuration | Guide | Approved |
 | RE-134 | docs/admin-setup-8021x/00-overview.md | 802.1X Network Authentication: Admin Setup Guides | Guide | Pending |
 | RE-135 | docs/admin-setup-8021x/01-eap-method-overview.md | 802.1X EAP Method Overview | Guide | Pending |
 | RE-136 | docs/admin-setup-8021x/02-cert-delivery-foundation.md | 802.1X Certificate Delivery Foundation | Guide | Pending |

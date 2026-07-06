@@ -18,13 +18,19 @@ platform: Linux
 
 This guide covers admin-side configuration of Linux device enrollment in Microsoft Intune, including Intune and Entra ID license verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping for Ubuntu 22.04 LTS and 24.04 LTS devices. It is intended for Intune administrators with rights to manage device enrollment restrictions and Conditional Access policies. Linux enrollment itself is user-initiated only; there is no admin-driven push enrollment profile for this platform.
 
-> **Platform gate:** This guide covers admin-side configuration of Linux device enrollment in Intune (license verification, optional CA scoping). Linux enrollment on Ubuntu 22.04/24.04 LTS is user-initiated only; there is no admin-driven push enrollment.
+> **Platform gate:** This guide covers admin-side configuration of Linux device enrollment in Intune (license verification, optional CA scoping).
+
+> Linux enrollment on Ubuntu 22.04/24.04 LTS is user-initiated only; there is no admin-driven push enrollment.
+
 > For end-user enrollment steps (install Edge, install intune-portal deb, sign in), see [Linux Intune Portal Enrollment](../end-user-guides/linux-intune-portal-enrollment.md).
+
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 
 This guide covers admin-side configuration required to enable Linux device enrollment in Intune: licensing verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping.
 
-> **For end users:** Personal-device or self-enrolling users follow [Linux Intune Portal Enrollment](../end-user-guides/linux-intune-portal-enrollment.md). This guide covers admin-side enrollment configuration only.
+> **For end users:** Personal-device or self-enrolling users follow [Linux Intune Portal Enrollment](../end-user-guides/linux-intune-portal-enrollment.md).
+
+> This guide covers admin-side enrollment configuration only.
 
 ## Prerequisites
 
@@ -45,8 +51,8 @@ This guide covers admin-side configuration required to enable Linux device enrol
 3. For CA-scoping in Step 3, confirm Entra ID P1 (P2 for risk-based CA).
 
 > **What breaks if misconfigured:** Without an Intune license assigned, the user cannot complete sign-in in the Intune Portal app — enrollment fails at the Intune sign-in step.
-> Symptom appears in: Intune Portal app on device (sign-in error).
-> See: [Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md)
+
+> Symptom appears in: Intune Portal app on device (sign-in error). See: [Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md)
 
 ### Step 2: (Optional) Configure user-affinity scoping via enrollment restrictions
 
@@ -60,8 +66,10 @@ This guide covers admin-side configuration required to enable Linux device enrol
    - Assign the restriction policy to the target user group.
 4. Note: Linux enrollment is user-initiated only; there is no Autopilot-style admin-driven push enrollment profile for Linux.
 
-> **What breaks if misconfigured:** If an enrollment restriction policy blocks the user (e.g., wrong OS version range or user not in assigned group), the user cannot complete enrollment — the Intune Portal app returns an enrollment-blocked error.
-> Symptom appears in: Intune Portal app on device (enrollment blocked at sign-in).
+> **What breaks if misconfigured:** If an enrollment restriction policy blocks the user (e.g., wrong OS version range or user not in assigned group), the user cannot complete enrollment
+
+> — the Intune Portal app returns an enrollment-blocked error. Symptom appears in: Intune Portal app on device (enrollment blocked at sign-in).
+
 > See: [Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md)
 
 ### Step 3: (Optional) Scope a Conditional Access policy to Linux

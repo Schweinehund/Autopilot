@@ -19,20 +19,22 @@ platform: Linux
 This guide covers installing and configuring the Intune Linux Agent (the `intune-portal` deb package and Microsoft Identity Broker) on Ubuntu 22.04 LTS and 24.04 LTS devices managed by Microsoft Intune. It is intended for Intune administrators with rights to review device enrollment state, Entra ID group memberships, and Conditional Access assignments for Linux devices. Completing this guide is a prerequisite for all subsequent Linux enrollment, compliance, app-delivery, and Conditional Access configuration steps.
 
 > **Platform gate:** This guide covers installation of the `intune-portal` deb package and Microsoft Identity Broker on Ubuntu 22.04 LTS and 24.04 LTS.
+
 > For Linux prerequisites and supported distributions, see [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md).
+
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 
 This guide walks Intune administrators through installing the `intune-portal` deb package from `packages.microsoft.com` and verifying the Microsoft Identity Broker systemd unit. Completing this step is a prerequisite for all Linux enrollment scenarios.
 
-> ⚠️ **Known admin pitfall — Identity Broker re-enrollment (intune-portal 2.0.2+):** The `intune-portal` 2.0.2 release replaced the Java-based broker with `microsoft-identity-broker` (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs. Admin action required after the rollout: review device-based Conditional Access assignments, Intune filters, and Entra ID group memberships scoped to Linux devices — old device IDs become stale and the new device IDs may not match prior assignments. See [Non-version Breakpoints](../linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints) for the full breakpoint matrix.
->
-> Back-link: `docs/linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints`
->
-> **Admin action checklist:**
-> 1. Identify Entra ID groups scoped to Linux devices via device-based filters
-> 2. After upgrade, verify membership with the new device IDs
-> 3. Re-validate device-based CA policies (if any) — note Linux supports web-app CA only
-> 4. Audit `microsoft-identity-broker` systemd-unit status post-upgrade: `systemctl status microsoft-identity-broker`
+⚠️ **Known admin pitfall — Identity Broker re-enrollment (intune-portal 2.0.2+):** The `intune-portal` 2.0.2 release replaced the Java-based broker with `microsoft-identity-broker` (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs. Admin action required after the rollout: review device-based Conditional Access assignments, Intune filters, and Entra ID group memberships scoped to Linux devices — old device IDs become stale and the new device IDs may not match prior assignments. See [Non-version Breakpoints](../linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints) for the full breakpoint matrix.
+
+Back-link: `docs/linux-lifecycle/01-linux-prerequisites.md#non-version-breakpoints`
+
+**Admin action checklist:**
+1. Identify Entra ID groups scoped to Linux devices via device-based filters
+2. After upgrade, verify membership with the new device IDs
+3. Re-validate device-based CA policies (if any) — note Linux supports web-app CA only
+4. Audit `microsoft-identity-broker` systemd-unit status post-upgrade: `systemctl status microsoft-identity-broker`
 
 ## Prerequisites
 
@@ -82,7 +84,9 @@ This guide walks Intune administrators through installing the `intune-portal` de
    dpkg -l | grep intune-portal
    ```
 
-> 📋 **Note — deb vs Snap:** The Snap package (`snap install intune-portal`) was available during preview and is **deprecated**. Use the deb package via `packages.microsoft.com` for general-availability deployments. The Snap path will not receive Identity Broker 2.0.2+ updates.
+> 📋 **Note — deb vs Snap:** The Snap package (`snap install intune-portal`) was available during preview and is **deprecated**.
+
+> Use the deb package via `packages.microsoft.com` for general-availability deployments. The Snap path will not receive Identity Broker 2.0.2+ updates.
 
 ### Step 3: Verify Microsoft Identity Broker is running
 

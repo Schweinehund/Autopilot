@@ -18,11 +18,21 @@ platform: Linux
 
 This guide covers Conditional Access configuration for Linux devices in Microsoft Intune (Ubuntu 22.04 LTS and 24.04 LTS), where the only supported enforcement path is web-app Conditional Access via Microsoft Edge for Linux 102.x or later. It is intended for Intune and Entra ID administrators configuring Conditional Access policies. Linux does not support device-level Conditional Access grant controls such as requiring a compliant device or Hybrid Entra join.
 
-> **Platform gate:** This guide covers Conditional Access (CA) configuration for Linux devices in Intune (Ubuntu 22.04/24.04 LTS). Linux supports web-app CA via Microsoft Edge for Linux 102.x+ ONLY — there is no device-level CA grant on Linux.
+> **Platform gate:** This guide covers Conditional Access (CA) configuration for Linux devices in Intune (Ubuntu 22.04/24.04 LTS).
+
+> Linux supports web-app CA via Microsoft Edge for Linux 102.x+ ONLY — there is no device-level CA grant on Linux.
+
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
+
 > For the locked Linux management surface, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface).
 
-> ⚠️ **Architecture: Web-app CA only.** Linux does NOT support device-level Conditional Access. The CA grant control `Require device to be marked as compliant` is not available on Linux. The only CA enforcement path on Linux is web-app CA via Microsoft Edge for Linux 102.x+ (the user signs into Edge with their org account; Edge surfaces the CA challenge; the org's CA policies enforce the grant or block based on user, session, and risk context). For cross-platform CA architectural reference, see [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access).
+> ⚠️ **Architecture: Web-app CA only.** Linux does NOT support device-level Conditional Access. The CA grant control `Require device to be marked as compliant` is not available on Linux.
+
+> The only CA enforcement path on Linux is web-app CA via Microsoft Edge for Linux 102.x+ (the user signs into Edge with their org account;
+
+> Edge surfaces the CA challenge; the org's CA policies enforce the grant or block based on user, session, and risk context).
+
+> For cross-platform CA architectural reference, see [Linux Capability Matrix — Conditional Access](../reference/linux-capability-matrix.md#conditional-access).
 
 ## Prerequisites
 

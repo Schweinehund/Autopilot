@@ -19,10 +19,15 @@ platform: Linux
 This guide covers app delivery to Linux devices managed by Microsoft Intune (Ubuntu 22.04 LTS and 24.04 LTS), where delivery is script-based only: Intune delivers Bash scripts that the device executes to install or configure software, with no binary-package delivery mechanism analogous to Win32, MSIX, or `.pkg`. It is intended for Intune administrators who author, upload, and assign Bash scripts and who are responsible for verifying script provenance before deployment.
 
 > **Platform gate:** This guide covers app delivery to Linux devices managed by Intune (Ubuntu 22.04/24.04 LTS).
+
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 
-> 📋 **Scope note — Linux app delivery is script-based only.** Intune does NOT deliver binary packages to Linux. There is no Win32 / MSIX / `.pkg` / `.deb` direct-delivery analog for Linux. Intune delivers Shell/Bash scripts to the device; the script itself is responsible for downloading and installing whatever package the org needs (e.g., `apt install` from a trusted repo, `curl | sh` from a vendor URL, etc.).
->
+> 📋 **Scope note — Linux app delivery is script-based only.** Intune does NOT deliver binary packages to Linux. There is no Win32 / MSIX / `.pkg` / `.deb` direct-delivery analog for Linux.
+
+> Intune delivers Shell/Bash scripts to the device;
+
+> the script itself is responsible for downloading and installing whatever package the org needs (e.g., `apt install` from a trusted repo, `curl | sh` from a vendor URL, etc.).
+
 > See [Linux Capability Matrix — App Deployment](../reference/linux-capability-matrix.md#app-deployment) for the bilateral-comparison context.
 
 ## Prerequisites
@@ -51,7 +56,9 @@ Intune delivers Bash scripts to Linux devices as the only app-delivery mechanism
 - **Configure a service:** Script writes configuration files to the appropriate path, then runs `systemctl enable --now <unit>`
 - **Remove a package:** Script runs `apt remove <package>` and cleans up associated configuration
 
-> ⚠️ **Supply-chain note:** Bash scripts run with elevated privileges on Linux devices. Orgs are responsible for verifying script sources and signatures before uploading to Intune. Scripts downloaded from vendor URLs should be verified against published checksums. There is no Win32 app catalog or Managed Google Play analog that pre-validates package provenance.
+> ⚠️ **Supply-chain note:** Bash scripts run with elevated privileges on Linux devices. Orgs are responsible for verifying script sources and signatures before uploading to Intune.
+
+> Scripts downloaded from vendor URLs should be verified against published checksums. There is no Win32 app catalog or Managed Google Play analog that pre-validates package provenance.
 
 ## Minimal Example
 
