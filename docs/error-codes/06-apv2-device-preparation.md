@@ -1,16 +1,27 @@
 ---
+doc_id: RE-174
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-04-11
 review_by: 2026-07-10
 applies_to: APv2
 audience: both
 ---
 
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-174 · **Status:** Approved
+
+# APv2 Device Preparation Failures
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2) failure scenarios.
 > These failures are identified by symptom and deployment phase -- not hex error codes.
 > For APv1 (classic Autopilot) error codes, see [Error Code Index](00-index.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv2 Device Preparation Failures
 
 This is a symptom-based failure catalog for Windows Autopilot Device Preparation (APv2) deployments. Failures are organized by the deployment phase in which they occur, following the [10-step deployment flow](../lifecycle-apv2/02-deployment-flow.md). Each entry uses the Symptom-Cause-Action format: **Symptom** (what the admin observes), **Probable Cause** (why it happens), **Quick Check** (portal-only verification steps), and **Runbook** (forward reference to the L1 or L2 guide that covers resolution). This file does not contain inline resolution steps -- those are in the L1/L2 runbooks referenced in each entry.
 
@@ -209,5 +220,6 @@ These scenarios occur after the user reaches the desktop -- the APv2 deployment 
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-04-12 | Updated forward references to real runbook links |
 | 2026-04-11 | Initial creation -- 10 failure scenarios across 5 deployment phase sections |

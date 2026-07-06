@@ -1,13 +1,24 @@
 ---
+doc_id: RE-169
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: APv1
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-169 · **Status:** Approved
 
 # MDM Enrollment Errors (0x8018xxxx Series)
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 These errors occur during [OOBE](../_glossary.md#oobe) when the device attempts [MDM](../_glossary.md#mdm) enrollment with [Intune](../_glossary.md#intune). They are most commonly seen during Stage 3 of the [Autopilot lifecycle](../lifecycle/03-oobe.md).
 
@@ -42,4 +53,5 @@ Prev: [Error Code Index](00-index.md) | Next: [TPM Attestation Errors](02-tpm-at
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial creation |

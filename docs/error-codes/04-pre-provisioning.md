@@ -1,13 +1,24 @@
 ---
+doc_id: RE-172
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: APv1
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-172 · **Status:** Approved
 
 # Pre-Provisioning and Self-Deploying Mode Errors
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 These errors affect [pre-provisioning](../_glossary.md#pre-provisioning) (formerly white glove) and [self-deploying](../_glossary.md#self-deploying) mode deployments. Both modes require physical [TPM](../_glossary.md#tpm) 2.0 attestation, so they share most error codes. See Stage 3 of the [Autopilot lifecycle](../lifecycle/03-oobe.md) for deployment mode context.
 
@@ -49,4 +60,5 @@ Prev: [ESP and Enrollment Errors](03-esp-enrollment.md) | Next: [Hybrid Join and
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version — 1 primary entry (0xc1036501), 7 cross-reference rows to 01-mdm-enrollment.md and 02-tpm-attestation.md |

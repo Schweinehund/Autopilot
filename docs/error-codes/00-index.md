@@ -1,14 +1,25 @@
 ---
+doc_id: RE-168
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
 audience: both
 ---
 
-> **Framework coverage:** This index primarily covers Windows Autopilot (classic/APv1) error codes. APv2 (Device Preparation) failures are symptom-based rather than code-based -- see the APv2 Note at the bottom of this page.
-> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-168 · **Status:** Approved
 
 # Error Code Index
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Framework coverage:** This index primarily covers Windows Autopilot (classic/APv1) error codes. APv2 (Device Preparation) failures are symptom-based rather than code-based -- see the APv2 Note at the bottom of this page.
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 This is the master lookup table for all Windows [Autopilot](../_glossary.md#autopilot) error codes. Find your error code below and follow the link to the detailed category page for causes, L1 actions, and L2 fixes. Use Ctrl+F to search by hex code or Event ID.
 
@@ -72,5 +83,6 @@ Select a category above or use Ctrl+F to find your error code in the Quick Looku
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-04-13 | Updated frontmatter and version gate for dual-framework coverage |
 | 2026-03-14 | Initial creation — 23 hex codes and 6 event IDs indexed across 5 category files |

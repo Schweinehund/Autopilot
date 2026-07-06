@@ -1,13 +1,24 @@
 ---
+doc_id: RE-170
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: APv1
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-170 · **Status:** Approved
 
 # TPM Attestation Errors
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 These errors occur during [OOBE](../_glossary.md#oobe) when the device attempts [TPM](../_glossary.md#tpm) attestation, primarily in [pre-provisioning](../_glossary.md#pre-provisioning) and [self-deploying](../_glossary.md#self-deploying) modes. They correspond to Stage 3 of the [Autopilot lifecycle](../lifecycle/03-oobe.md).
 
@@ -60,4 +71,5 @@ Prev: [MDM Enrollment Errors](01-mdm-enrollment.md) | Next: [ESP and Enrollment 
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial creation |

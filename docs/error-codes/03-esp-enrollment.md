@@ -1,13 +1,24 @@
 ---
+doc_id: RE-171
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: APv1
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-171 · **Status:** Approved
 
 # ESP and Enrollment Errors
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 These errors occur during the [Enrollment Status Page](../_glossary.md#esp) (ESP) phase when apps install, policies apply, and certificates provision. They correspond to Stage 4 of the [Autopilot lifecycle](../lifecycle/04-esp.md). Some failures produce no error code and appear only as a generic "Something went wrong" message; those patterns are documented in the Policy Conflicts section below.
 
@@ -57,4 +68,5 @@ Prev: [TPM Attestation Errors](02-tpm-attestation.md) | Next: [Pre-Provisioning 
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version — 3 coded ESP errors, 6 policy conflict patterns, 3 timeout scenarios |

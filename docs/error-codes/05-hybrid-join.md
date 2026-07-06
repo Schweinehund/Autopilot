@@ -1,13 +1,24 @@
 ---
+doc_id: RE-173
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: APv1
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-173 · **Status:** Approved
 
 # Hybrid Join and Device Registration Errors
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 Hybrid [Entra](../_glossary.md#entra) join errors combine hex codes visible on the [OOBE](../_glossary.md#oobe)/[ESP](../_glossary.md#esp) screen with Event IDs from the Windows event log. This file covers both identifier types. See [Stage 1 (Registration)](../lifecycle/01-hardware-hash.md) and [Stage 4 (ESP)](../lifecycle/04-esp.md) for lifecycle context.
 
@@ -63,4 +74,5 @@ Prev: [Pre-Provisioning and Self-Deploying Errors](04-pre-provisioning.md) | Nex
 
 | Date | Change |
 |------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version — event IDs 807, 809, 815, 908, 171, 172 mapped; 3 cause rows for 0x80070774; ODJ Connector log path and version documented |
