@@ -1,4 +1,8 @@
 ---
+doc_id: RE-099
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
@@ -6,7 +10,13 @@ platform: Android
 applies_to: KME
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-099 · **Status:** Approved
+
 # Configure Knox Mobile Enrollment
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
 
 > **Platform gate:** Samsung Knox Mobile Enrollment (KME) — Knox Admin Portal account setup, EMM profile, Custom JSON Data, and Knox→Intune handoff for Samsung Android Enterprise enrollment. Samsung-only.
 > For iOS, see [iOS Admin Guides](../admin-setup-ios/00-overview.md); for macOS, [macOS Admin Setup](../admin-setup-macos/00-overview.md); for terminology, [Android glossary](../_glossary-android.md).
@@ -228,3 +238,9 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-25 | Initial version (Phase 44 scope) — Samsung Knox B2B account approval (Step 0 1-2 business day gate per D-02), reseller bulk upload + Knox Deployment App provisioning paths, KME EMM profile + Intune DPC Custom JSON Data (flat `EXTRA_ENROLLMENT_TOKEN` key per Microsoft Learn `setup-samsung-knox-mobile`), 5-SKU disambiguation table (D-01 5-SKU H2 lock), KME/ZT mutex (reciprocal of `02-zero-touch-portal.md#kme-zt-mutual-exclusion`), D-03 anti-paste blockquote (`AEKNOX-03-shared-anti-paste-block`). | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

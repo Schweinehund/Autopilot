@@ -1,4 +1,8 @@
 ---
+doc_id: RE-094
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
@@ -6,7 +10,13 @@ platform: Android
 applies_to: ZTE
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-094 · **Status:** Approved
+
 # Configure Zero-Touch Portal
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
 
 > **Platform gate:** ZT portal account setup, DPC extras JSON, and ZT↔Intune linking for Android Enterprise Zero-Touch Enrollment (ZTE).
 > For iOS, see [iOS Admin Guides](../admin-setup-ios/00-overview.md); for macOS, [macOS Admin Setup](../admin-setup-macos/00-overview.md); for terminology, [Android glossary](../_glossary-android.md).
@@ -234,3 +244,9 @@ After ZT↔Intune linking:
 |------|--------|--------|
 | 2026-04-21 | Initial version (Phase 35 scope) — Step 0 reseller gate, ZT account creation, DPC extras JSON, ZT↔Intune linking (Methods A/B), KME/ZT Samsung mutual-exclusion. Phase 39 will append the device-claim workflow, profile-assignment at scale, dual-SIM IMEI 1 note, reseller-upload handoff, and full KME/ZT device-claim callout. | -- |
 | 2026-04-23 | Phase 39 append — `## Corporate-Scale Operations` H2 block (6 H3s): reseller-upload handoff, device-claim workflow, profile-assignment at scale (Method A default-overrule scale implication per RESEARCH.md Pitfall 5), dual-SIM IMEI 1 registration (MEDIUM marker per D-05 / D-20 citing Google AE Help and Google Developers known-issues), KME/ZT at device-claim (D-06 distinct from top-of-doc + link-step Phase 35 callouts), configuration-must-be-assigned (D-03 cross-link to `#dpc-extras-json`). Verification placeholder on line 135 resolved to `#device-claim-workflow` per D-01. 6 D-17 anchors published. D-22 append-only contract honored. | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

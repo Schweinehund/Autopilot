@@ -1,4 +1,8 @@
 ---
+doc_id: RE-100
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
@@ -6,12 +10,18 @@ platform: Android
 applies_to: COPE
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-100 · **Status:** Approved
+
+# Android Enterprise Corporate-Owned Work Profile (COPE / WPCO) Admin Setup
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+
 > **Platform gate:** This guide covers Android Enterprise Corporate-owned devices with work profile (COPE / WPCO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all five provisioning methods (QR code, NFC, `afw#setup`, Token entry, Zero-Touch) with COPE-specific Android 11+ removal callouts, the inverse-direction COPE Migration Note back-link to the COBO sibling, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration with the COPE-specific FRP behavior table and the Settings-app-reset Google-account re-enrollment requirement, the Android 15 Private Space ⚠️ unmanaged callout, and the COPE-vs-COBO decision matrix.
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
 > For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
-
-# Android Enterprise Corporate-Owned Work Profile (COPE / WPCO) Admin Setup
 
 This guide walks an Intune administrator through creating and operating an Android Enterprise Corporate-owned devices with work profile (COPE / WPCO) enrollment profile: profile and token lifecycle, all five provisioning methods with COPE-specific callouts, the inverse-direction COPE Migration Note back-link to COBO, Android 15 FRP + EFRP configuration with COPE-specific FRP behavior, the Android 15 Private Space unmanaged callout, the Samsung-admins KME-or-Zero-Touch callout under Zero-Touch, and a COPE-vs-COBO decision matrix for net-new corporate Android deployments.
 
@@ -315,3 +325,9 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-25 | Initial version — COPE/WPCO enrollment profile, default + staging-up-to-65-year tokens, all 7 naming templates, 5 provisioning methods (QR / NFC / afw#setup / Token entry / Zero-Touch) with Android 11+ removal callouts for NFC + afw#setup + Token entry (D-01..D-07 mirror; RESEARCH NEW FINDING #1), Android 15 FRP H2 with COPE-specific FRP behavior table + Settings-app re-enrollment requirement (RESEARCH NEW FINDING #2), Android 15 Private Space ⚠️ callout in Key Concepts (D-08 + D-33 Pitfall 8 Option A scope-tightened wording), COPE-vs-COBO decision matrix sub-H3 inside Provisioning method choice (D-13 / D-05 / RESEARCH Open Question #1), Samsung-admins callout in Zero-Touch H3 (D-19), inverse-direction COPE Migration Note back-link to COBO (D-03). Closes AECOPE-01 / Phase 46 Wave 1. | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

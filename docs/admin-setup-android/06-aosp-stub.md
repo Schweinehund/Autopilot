@@ -1,4 +1,8 @@
 ---
+doc_id: RE-098
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
@@ -6,7 +10,13 @@ platform: Android
 applies_to: AOSP
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-098 · **Status:** Approved
+
 # AOSP Device Management Stub — Intune
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
 
 > **Platform gate:** AOSP device management in Intune — specialty AR/VR and wearable-scanner hardware with no GMS. Other Android Enterprise modes: [Android Admin Setup Overview](00-overview.md). iOS/iPadOS: [iOS Admin Guides](../admin-setup-ios/00-overview.md). macOS: [macOS Admin Guides](../admin-setup-macos/00-overview.md). Android terminology: [Glossary](../_glossary-android.md).
 
@@ -94,3 +104,9 @@ Requires: Intune tenant with Android enrollment enabled; hardware on the [MS Lea
 | 2026-04-23 | Initial stub (Phase 39 scope) — 9-H2 whitelist; RealWear GA spotlight + 7-OEM non-RealWear enumeration; PITFALL-7 "use fully managed instead" framing; Wi-Fi credential embedding requirement; Platform note banner; deferred-content table. Full coverage deferred to v1.4.1 (AEAOSPFULL-04). | -- |
 | 2026-04-24 | v1.4.1 Phase 43 AEAUDIT-04: body trimmed toward ~700-word target; RealWear deep content + per-OEM enrollment mechanics migrated to Phase 45 prep shell; PITFALL-7 "not supported under AOSP" framing preserved; 9-H2 whitelist + 8-OEM enumeration + deferred-content table intact. | -- |
 | 2026-04-25 | Phase 45 AEAOSPFULL-09: Deferred Content table COLLAPSED — per-OEM coverage NOW SHIPPED in 09-13 admin docs + aosp-oem-matrix.md + L1 runbook 29 + L2 runbook 23. PITFALL-7 framing + 9-H2 whitelist + 8-OEM enumeration + Platform note PRESERVED per D-24 LOCKED. | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

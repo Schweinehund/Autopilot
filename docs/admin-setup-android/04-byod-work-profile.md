@@ -1,4 +1,8 @@
 ---
+doc_id: RE-096
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
@@ -7,13 +11,19 @@ applies_to: BYOD
 phase_46_wave2_retrofit: 2026-04-25
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-096 · **Status:** Approved
+
+# BYOD Work Profile — Admin Setup
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+
 > **Platform gate:** This guide covers Android Enterprise BYOD (personally-owned) Work Profile enrollment through Microsoft Intune, including enrollment restrictions, work profile policy, data transfer controls, privacy boundary table, Wi-Fi certificate-based authentication, the management app change (Company Portal → Microsoft Intune app), and the AMAPI migration callout (April 2025).
 > For corporate-owned Fully Managed (COBO) enrollment, see [03-fully-managed-cobo.md](03-fully-managed-cobo.md#key-concepts).
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
 > For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
-
-# BYOD Work Profile — Admin Setup
 
 > ⚠️ This guide covers post-AMAPI-migration BYOD Work Profile (April 2025). See [## AMAPI Migration](#amapi-migration) for the three behavioral changes (custom OMA-URI removal, Wi-Fi certificate authentication requirement, management app change from Company Portal to Microsoft Intune app). Pre-April-2025 guidance does not apply.
 
@@ -238,3 +248,9 @@ See also: [00-overview.md](00-overview.md), [01-managed-google-play.md](01-manag
 |------|--------|--------|
 | 2026-04-23 | Resolved Android L1 runbook cross-references | -- |
 | 2026-04-22 | Initial version — BYOD Work Profile admin guide: enrollment restrictions, work profile policy, 6-direction data transfer table, privacy boundary canonical table, Wi-Fi certificate authentication, management app post-AMAPI, AMAPI migration callout (April 2025). | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

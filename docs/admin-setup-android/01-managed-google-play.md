@@ -1,4 +1,8 @@
 ---
+doc_id: RE-093
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-21
 review_by: 2026-06-20
 audience: admin
@@ -6,7 +10,13 @@ platform: Android
 applies_to: GMS-modes
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-093 · **Status:** Approved
+
 # Bind Managed Google Play
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
 
 > **Platform gate:** This guide covers Managed Google Play (MGP) tenant binding for Android
 > Enterprise GMS modes: COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), and
@@ -134,3 +144,9 @@ After disconnect, app assignments, OEMConfig assignments, and LOB app availabili
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-21 | Initial version — MGP binding mechanics, account types, hybrid what-breaks table, disconnect consequences | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

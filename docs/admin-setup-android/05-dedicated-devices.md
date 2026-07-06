@@ -1,4 +1,8 @@
 ---
+doc_id: RE-097
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-23
 review_by: 2026-06-22
 audience: admin
@@ -6,14 +10,20 @@ platform: Android
 applies_to: Dedicated
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-097 · **Status:** Approved
+
+# Android Enterprise Dedicated (kiosk/COSU) Admin Setup
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+
 > **Platform gate:** This guide covers Android Enterprise Dedicated (kiosk/COSU) enrollment through Microsoft Intune — including the four Dedicated scenarios (single-app kiosk, multi-app kiosk with Managed Home Screen, digital signage, and Entra shared device mode), enrollment profile creation, enrollment token lifecycle, all four provisioning methods with Dedicated-specific constraint callouts, MHS exit-PIN synchronization (the top repeated-escalation pattern for Dedicated devices), and Android 15 FRP re-provisioning behavior for kiosk fleets. Applies to Android 8.0+.
 > For Android Enterprise Fully Managed (COBO) enrollment, see [03-fully-managed-cobo.md](03-fully-managed-cobo.md#key-concepts).
 > For BYOD Work Profile, see [04-byod-work-profile.md](04-byod-work-profile.md#key-concepts).
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
 > For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
-
-# Android Enterprise Dedicated (kiosk/COSU) Admin Setup
 
 This guide covers Dedicated (kiosk/COSU) device enrollment through Microsoft Intune: the four Dedicated scenarios, enrollment profile creation with Dedicated-specific deltas, token lifecycle and QR rotation discipline, all four provisioning methods with constraint callouts, MHS exit-kiosk PIN synchronization, and Android 15 FRP re-provisioning behavior for kiosk fleets.
 
@@ -287,3 +297,8 @@ L1 agents: confirm the device is Dedicated mode using the [Android Triage Decisi
 | 2026-04-23 | Resolved Android L1 runbook cross-references | -- |
 | 2026-04-22 | Initial version — Dedicated (kiosk/COSU) admin guide: persona callout (D-01), 4-scenario overview (D-01 + D-13 + D-14), enrollment-profile deltas via D-03 hybrid, MHS exit-PIN synchronization H2 (D-02 / AEDED-02), Android 15 FRP and re-provisioning H2 (D-04 / AEDED-03), tri-portal provisioning methods with KME/ZT callout (D-11) and Phase 39 boundary note (D-15) | -- |
 
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

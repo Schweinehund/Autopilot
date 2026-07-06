@@ -1,4 +1,8 @@
 ---
+doc_id: RE-095
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
@@ -7,12 +11,18 @@ applies_to: COBO
 phase_46_wave2_retrofit: 2026-04-25
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-095 · **Status:** Approved
+
+# Android Enterprise Fully Managed (COBO) Admin Setup
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+
 > **Platform gate:** This guide covers Android Enterprise Fully Managed (COBO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all four provisioning methods (QR code, NFC, `afw#setup`, Zero-Touch), the COPE migration note, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration, and Entra join behavior.
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
 > For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
-
-# Android Enterprise Fully Managed (COBO) Admin Setup
 
 This guide walks an Intune administrator through creating and operating a Fully Managed (COBO) enrollment profile for corporate-owned Android devices: profile and token lifecycle, all four provisioning methods with COBO-specific callouts, the COPE migration context, Android 15 FRP + EFRP configuration, and Entra-join behavior.
 
@@ -249,3 +259,9 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 |------|--------|--------|
 | 2026-04-23 | Resolved Android L1 runbook cross-references | -- |
 | 2026-04-21 | Initial version — COBO enrollment profile, token management, 4 provisioning methods (hybrid routing per D-01), COPE Migration Note (D-03), Android 15 FRP + EFRP configuration (D-05), Entra join + Chrome-tab CA exclusion (D-07), Key Concepts (D-08) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |
