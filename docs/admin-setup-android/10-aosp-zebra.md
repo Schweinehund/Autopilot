@@ -18,8 +18,13 @@ applies_to: AOSP
 
 This guide covers AOSP (Android Open Source Project) device management for the Zebra WS50 wearable scanner in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Wi-Fi embedding in the enrollment QR is optional because the WS50 has an interactive Wi-Fi UI. Configuring this guide requires the Intune Administrator role and Intune Plan 1 baseline licensing (Zebra wearable scanners are not explicitly named in the Plan 2 specialty-device list). Covers enrollment profile creation, QR generation, provisioning, and OEMConfig APK push (Powered by MX or Legacy Zebra OEMConfig, matched to the device's Android version) since AOSP has no Managed Google Play delivery channel.
 
-> **Platform gate:** Zebra AOSP device management — WS50 wearable scanner in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
-> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
+> **Platform gate:** Zebra AOSP device management — WS50 wearable scanner in Microsoft Intune.
+
+> For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
+
+> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play.
+
+> See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
 <!-- The #### In Managed Google Play subsection is intentionally omitted.
      AOSP does not use Managed Google Play (no Google Mobile Services). -->
@@ -33,7 +38,9 @@ Zebra WS50 is supported under AOSP in Intune because it has no GMS. If GMS is pr
 
 The WS50 is a wearable scanner positioned for warehouse, retail, and logistics frontline workflows — wrist-worn or clip-mounted, combining a Zebra barcode scanner head with an Android compute module so floor workers can scan-and-pick without holding a separate handheld terminal.
 
-> ⚠️ **Android 12 NOT supported.** Zebra devices don't support Android 12 per MS Learn explicit statement. The WS50 ships on Android 11 (firmware 11-49-15.00 minimum). Plan deployments accordingly. `[HIGH: MS Learn oemconfig-zebra-android-devices, last_verified 2026-04-25]`
+> ⚠️ **Android 12 NOT supported.** Zebra devices don't support Android 12 per MS Learn explicit statement.
+
+> The WS50 ships on Android 11 (firmware 11-49-15.00 minimum). Plan deployments accordingly. `[HIGH: MS Learn oemconfig-zebra-android-devices, last_verified 2026-04-25]`
 
 <a id="hardware-scope"></a>
 ## Hardware Scope
@@ -136,7 +143,13 @@ Both OEMConfig apps are deployed as APK files via Intune line-of-business app up
 
 **MX schema versioning note.** Zebra OEMConfig supports MX schema versions 13.5 (current) and 14.2 (latest); MX schema development is ongoing. Hand-authored XML drifts as MX evolves — prefer StageNow's Export to MDM workflow (which versions the schema for you) OR direct Intune OEMConfig profile authoring (which surfaces the supported settings the Intune UI knows about). `[HIGH: techdocs.zebra.com/oemconfig, last_verified 2026-04-25]`
 
-> **What breaks if misconfigured:** Wrong OEMConfig app for the device's Android version (e.g., Powered by MX on Android 10) → app fails to install or the OEMConfig profile fails to apply. Recovery: verify device Android version (Intune admin center > Devices > select WS50 > Hardware > OS version), uninstall the wrong OEMConfig app, install the matching OEMConfig app per the table above, re-assign the OEMConfig profile. Symptom appears in: Intune device profile assignment status `Failed` for the OEMConfig profile, OR LOB app status `Install failed` for the OEMConfig app.
+> **What breaks if misconfigured:** Wrong OEMConfig app for the device's Android version (e.g., Powered by MX on Android 10) → app fails to install or the OEMConfig profile fails to apply.
+
+> Recovery: verify device Android version (Intune admin center > Devices > select WS50 > Hardware > OS version), uninstall the wrong OEMConfig app,
+
+> install the matching OEMConfig app per the table above, re-assign the OEMConfig profile.
+
+> Symptom appears in: Intune device profile assignment status `Failed` for the OEMConfig profile, OR LOB app status `Install failed` for the OEMConfig app.
 
 <a id="verification"></a>
 ## Verification

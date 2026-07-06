@@ -114,11 +114,11 @@
 | RE-098 | docs/admin-setup-android/06-aosp-stub.md | AOSP Device Management Stub — Intune | Guide | Approved |
 | RE-099 | docs/admin-setup-android/07-knox-mobile-enrollment.md | Configure Knox Mobile Enrollment | Guide | Approved |
 | RE-100 | docs/admin-setup-android/08-cope-full-admin.md | Android Enterprise Corporate-Owned Work Profile (COPE / WPCO) Admin Setup | Guide | Approved |
-| RE-101 | docs/admin-setup-android/09-aosp-realwear.md | Configure RealWear AOSP Devices in Intune | Guide | Pending |
-| RE-102 | docs/admin-setup-android/10-aosp-zebra.md | Configure Zebra AOSP Devices in Intune | Guide | Pending |
-| RE-103 | docs/admin-setup-android/11-aosp-pico.md | Configure Pico AOSP Devices in Intune | Guide | Pending |
-| RE-104 | docs/admin-setup-android/12-aosp-htc-vive-focus.md | Configure HTC VIVE Focus AOSP Devices in Intune | Guide | Pending |
-| RE-105 | docs/admin-setup-android/13-aosp-meta-quest.md | Configure Meta Quest AOSP Devices in Intune | Guide | Pending |
+| RE-101 | docs/admin-setup-android/09-aosp-realwear.md | Configure RealWear AOSP Devices in Intune | Guide | Approved |
+| RE-102 | docs/admin-setup-android/10-aosp-zebra.md | Configure Zebra AOSP Devices in Intune | Guide | Approved |
+| RE-103 | docs/admin-setup-android/11-aosp-pico.md | Configure Pico AOSP Devices in Intune | Guide | Approved |
+| RE-104 | docs/admin-setup-android/12-aosp-htc-vive-focus.md | Configure HTC VIVE Focus AOSP Devices in Intune | Guide | Approved |
+| RE-105 | docs/admin-setup-android/13-aosp-meta-quest.md | Configure Meta Quest AOSP Devices in Intune | Guide | Approved |
 | RE-106 | docs/admin-setup-ios/00-overview.md | iOS/iPadOS Admin Setup | Guide | Pending |
 | RE-107 | docs/admin-setup-ios/01-apns-certificate.md | Apple Push Notification (APNs) Certificate | Guide | Pending |
 | RE-108 | docs/admin-setup-ios/02-abm-token.md | ABM/ADE Token Configuration for iOS/iPadOS | Guide | Pending |

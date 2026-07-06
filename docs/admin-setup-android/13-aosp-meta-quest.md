@@ -18,8 +18,13 @@ applies_to: AOSP
 
 This guide covers AOSP (Android Open Source Project) device management for Meta Quest 2, Quest 3, Quest 3s, and Quest Pro enterprise AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Meta Quest instead coordinates a 4-portal pattern combining Intune enrollment with the Meta for Work vendor portal for fleet mapping and Meta-specific app delivery. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing, plus a Meta for Work account for the canonical 4-portal pattern (or an Intune-direct fallback without Meta Horizon Managed Services).
 
-> **Platform gate:** Meta Quest AOSP device management — Quest 2 / Quest 3 / Quest 3s / Quest Pro enterprise XR headsets in Microsoft Intune via 4-portal pattern (Intune + Meta for Work). For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
-> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
+> **Platform gate:** Meta Quest AOSP device management — Quest 2 / Quest 3 / Quest 3s / Quest Pro enterprise XR headsets in Microsoft Intune via 4-portal pattern (Intune + Meta for Work).
+
+> For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
+
+> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play.
+
+> See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
 <!-- The #### In Managed Google Play subsection is intentionally omitted.
      AOSP does not use Managed Google Play (no Google Mobile Services). The 4-portal
@@ -37,7 +42,15 @@ Meta Quest 2, Quest 3, Quest 3s, and Quest Pro are supported under AOSP in Intun
 
 Meta's enterprise AR/VR headsets are positioned for enterprise XR — training, collaboration (Horizon Workrooms), and frontline. The Meta Quest pattern uses 4 portals: Microsoft Intune + Meta for Work (Managed Google Play and Zero-Touch portal are N/A for AOSP devices). Among the five AR/VR-class AOSP OEMs (RealWear / Zebra / Pico / HTC / Meta Quest), Meta Quest carries the heaviest portal-coexistence story because the Meta for Work portal is the vendor-side organization, fleet-mapping, app/policy delivery, and Meta Horizon Managed Services (HMS) license-administration surface — REQUIRED for the canonical 4-portal pattern. `[HIGH: AEAOSPFULL-05 + meta.com/blog/an-update-on-meta-for-work, last_verified 2026-04-25]`
 
-> ⚠️ **Meta Horizon Managed Services wind-down — Feb 20, 2026 transition.** As of February 20, 2026, Meta no longer sells commercial Quest SKUs and HMS subscriptions are FREE through January 4, 2030 (maintenance mode). The 4-portal pattern (Intune + Meta for Work) remains operational; net-new fleets may use Intune-direct AOSP enrollment as a vendor-independent fallback. Re-verify the wind-down assertion every 30 days (next: 2026-05-25). See [Meta Horizon Subscription Status](#meta-horizon-subscription-status) below. `[HIGH: meta.com/blog/an-update-on-meta-for-work + managexr.com Help Center, last_verified 2026-04-25]`
+> ⚠️ **Meta Horizon Managed Services wind-down — Feb 20, 2026 transition.**
+
+> As of February 20, 2026, Meta no longer sells commercial Quest SKUs and HMS subscriptions are FREE through January 4, 2030 (maintenance mode).
+
+> The 4-portal pattern (Intune + Meta for Work) remains operational; net-new fleets may use Intune-direct AOSP enrollment as a vendor-independent fallback.
+
+> Re-verify the wind-down assertion every 30 days (next: 2026-05-25).
+
+> See [Meta Horizon Subscription Status](#meta-horizon-subscription-status) below. `[HIGH: meta.com/blog/an-update-on-meta-for-work + managexr.com Help Center, last_verified 2026-04-25]`
 
 <a id="hardware-scope"></a>
 ## Hardware Scope
@@ -150,7 +163,9 @@ Meta for Work is the vendor-side portal where Quest organization, fleet device-m
 
 **Intune-direct fallback (parallel-path option).** For net-new fleets that prefer vendor-independent management, Intune-direct AOSP enrollment WITHOUT HMS is a parallel-path option. Existing HMS subscribers continue uninterrupted (HMS subscription becomes FREE at Feb 20, 2026 transition; existing fleets retain access through Jan 4, 2030 maintenance mode). The Intune-direct path drops Meta-for-Work coexistence; it is appropriate when the fleet does not need Meta-specific app delivery or Quest fleet management at the vendor side and prefers a single-vendor MDM surface.
 
-> **What breaks if misconfigured:** Meta for Work organization not mapped to Quest fleet → Meta-specific app delivery fails. Recovery: complete portal setup before Step 3 device enrollment. Symptom appears in: Quest fleet view in Meta for Work portal shows zero devices.
+> **What breaks if misconfigured:** Meta for Work organization not mapped to Quest fleet → Meta-specific app delivery fails.
+
+> Recovery: complete portal setup before Step 3 device enrollment. Symptom appears in: Quest fleet view in Meta for Work portal shows zero devices.
 
 <a id="meta-horizon-subscription-status"></a>
 ## Meta Horizon Subscription Status

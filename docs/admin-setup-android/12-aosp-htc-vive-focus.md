@@ -18,8 +18,13 @@ applies_to: AOSP
 
 This guide covers AOSP (Android Open Source Project) device management for HTC Vive Focus 3, Vive XR Elite, and Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Wi-Fi embedding in the enrollment QR is optional because these headsets have an interactive Wi-Fi setup UI. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing. This is the simplest of the five AR/VR AOSP OEM flows: no vendor-portal coexistence is required, and enrollment uses the verbatim in-device path Settings > Advanced > MDM setup > QR code.
 
-> **Platform gate:** HTC VIVE Focus AOSP device management — Vive Focus 3 / Vive XR Elite / Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
-> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
+> **Platform gate:** HTC VIVE Focus AOSP device management — Vive Focus 3 / Vive XR Elite / Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune.
+
+> For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
+
+> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play.
+
+> See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
 <!-- The #### In Managed Google Play subsection is intentionally omitted.
      AOSP does not use Managed Google Play (no Google Mobile Services). -->
@@ -33,7 +38,13 @@ HTC Vive Focus 3, Vive XR Elite, and Vive Focus Vision are supported under AOSP 
 
 HTC's enterprise AR/VR headsets are positioned for training, simulation, and XR collaboration — standalone six-degree-of-freedom headsets used for skills training, design review, remote-expert assistance, and immersive frontline workflows. Among the five AR/VR-class AOSP OEMs (RealWear / Zebra / Pico / HTC / Meta Quest), HTC carries the simplest direct-QR Intune enrollment flow: no vendor-portal coexistence is required (HTC has no Intune-side equivalent of RealWear Cloud, Pico Business Suite, or Meta for Work) and no per-device add-on profile delivery channel is mandated for the Intune-direct path. `[HIGH: AEAOSPFULL-04 + vive.com support, last_verified 2026-04-25]`
 
-> **Vive Business Management System is an alternative MDM, NOT Intune coexistence.** HTC offers the Vive Business Management System (a vendor-side MDM) as an alternative deployment surface for fleets that do not use Intune. Choose Intune AOSP enrollment OR Vive Business Management System per fleet need — the two surfaces are alternatives, not coexistence partners (unlike Pico Business Suite, which CAN coexist with Intune AOSP per the Pico admin guide). `[HIGH: vive.com support + ManageXR alternative, last_verified 2026-04-25]`
+> **Vive Business Management System is an alternative MDM, NOT Intune coexistence.**
+
+> HTC offers the Vive Business Management System (a vendor-side MDM) as an alternative deployment surface for fleets that do not use Intune.
+
+> Choose Intune AOSP enrollment OR Vive Business Management System per fleet need — the two surfaces are alternatives, not coexistence partners
+
+> (unlike Pico Business Suite, which CAN coexist with Intune AOSP per the Pico admin guide). `[HIGH: vive.com support + ManageXR alternative, last_verified 2026-04-25]`
 
 <a id="hardware-scope"></a>
 ## Hardware Scope

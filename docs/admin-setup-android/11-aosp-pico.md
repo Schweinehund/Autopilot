@@ -18,8 +18,13 @@ applies_to: AOSP
 
 This guide covers AOSP (Android Open Source Project) device management for Pico 4 Enterprise and Pico Neo3 Pro/Eye AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Wi-Fi embedding in the enrollment QR is optional because Pico headsets have an interactive Wi-Fi setup UI. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing (only the Enterprise SKU line is eligible for AOSP enrollment; consumer Pico hardware is unsupported). Covers Enterprise-SKU confirmation, enrollment profile creation, QR generation, provisioning, and the optional PICO Business Suite vendor-side coexistence path.
 
-> **Platform gate:** Pico AOSP device management — PICO 4 Enterprise / PICO Neo3 Pro/Eye AR/VR headsets in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
-> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
+> **Platform gate:** Pico AOSP device management — PICO 4 Enterprise / PICO Neo3 Pro/Eye AR/VR headsets in Microsoft Intune.
+
+> For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
+
+> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play.
+
+> See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
 <!-- The #### In Managed Google Play subsection is intentionally omitted.
      AOSP does not use Managed Google Play (no Google Mobile Services). -->
@@ -33,7 +38,13 @@ PICO 4 Enterprise and PICO Neo3 Pro/Eye are supported under AOSP in Intune becau
 
 Pico devices are AR/VR headsets positioned for training, simulation, and enterprise XR collaboration — standalone six-degree-of-freedom headsets used for skills training, remote-expert simulation, design review, and immersive frontline workflows. The Enterprise SKU lineup (PICO 4 Enterprise, PICO Neo3 Pro/Eye, and PICO 4 Ultra Enterprise) is distinct from the consumer Pico product line and is the only tier eligible for Intune AOSP enrollment.
 
-> ⚠️ **Enterprise SKU required.** Consumer Pico 4 and consumer Neo3 are NOT supported by Intune AOSP enrollment. Confirm hardware is the Enterprise SKU (PICO 4 Enterprise / PICO Neo3 Pro/Eye) before procurement and rollout. Procuring the wrong SKU is the most expensive failure mode in this workflow because it is only detectable after the device fails enrollment, by which point the consumer-SKU devices are already in operator hands. `[HIGH: business.picoxr.com + MACE Virtual Labs comparison, last_verified 2026-04-25]`
+> ⚠️ **Enterprise SKU required.** Consumer Pico 4 and consumer Neo3 are NOT supported by Intune AOSP enrollment.
+
+> Confirm hardware is the Enterprise SKU (PICO 4 Enterprise / PICO Neo3 Pro/Eye) before procurement and rollout.
+
+> Procuring the wrong SKU is the most expensive failure mode in this workflow because it is only detectable after the device fails enrollment,
+
+> by which point the consumer-SKU devices are already in operator hands. `[HIGH: business.picoxr.com + MACE Virtual Labs comparison, last_verified 2026-04-25]`
 
 <a id="hardware-scope"></a>
 ## Hardware Scope
@@ -119,7 +130,15 @@ PICO Business Suite is for vendor-side SDK + app delivery + Pico-specific config
 
 **License terms note.** PICO Business Suite licensing changed mid-2025. SDK access reportedly $50-$150/year/device per community sources; verify current pricing at [`business.picoxr.com`](https://business.picoxr.com) for authoritative Enterprise SKU + PICO Business Suite licensing details. The MEDIUM source-confidence marker on the price-band reflects that the figure is community-derived rather than vendor-authoritative; always re-confirm with Pico sales before budgeting. `[MEDIUM: aliexpress.com / community, last_verified 2026-04-25]`
 
-> **What breaks if misconfigured:** Attempting to deploy PICO-vendor SDK features through Intune-only path (no PICO Business Suite license) → SDK features unavailable on the device because the Intune profile cannot reach Pico-vendor-internal capabilities. Recovery: license PICO Business Suite if the SDK / kiosk-mode / controller-binding features are required for the fleet; alternatively scope the deployment to Intune-only standard MDM controls if the SDK features are out-of-scope. Symptom appears in: PICO-specific app failures on the headset, kiosk-mode configuration not applying, vendor SDK calls returning "feature not licensed" errors.
+> **What breaks if misconfigured:** Attempting to deploy PICO-vendor SDK features through Intune-only path (no PICO Business Suite license) → SDK features unavailable on the device
+
+> because the Intune profile cannot reach Pico-vendor-internal capabilities.
+
+> Recovery: license PICO Business Suite if the SDK / kiosk-mode / controller-binding features are required for the fleet;
+
+> alternatively scope the deployment to Intune-only standard MDM controls if the SDK features are out-of-scope.
+
+> Symptom appears in: PICO-specific app failures on the headset, kiosk-mode configuration not applying, vendor SDK calls returning "feature not licensed" errors.
 
 <a id="verification"></a>
 ## Verification
