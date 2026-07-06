@@ -1,4 +1,8 @@
 ---
+doc_id: RE-163
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This workflow applies to both APv1 and APv2 device onboarding. Framework-specific differences are noted inline.
-> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-163 · **Status:** Approved
 
 # New Batch of Devices: End-to-End Operational Workflow
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This workflow applies to both APv1 and APv2 device onboarding. Framework-specific differences are noted inline.
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 When a new batch of devices arrives, there is a specific sequence of steps that must be completed in order. Skipping or reordering stages — particularly powering on devices before group membership is confirmed — results in devices going through standard Windows OOBE instead of the Autopilot experience.
 
@@ -97,3 +107,9 @@ After all devices in the batch are provisioned:
 - [Entra Prerequisites](entra-prerequisites.md)
 - [Licensing Matrix](licensing-matrix.md)
 - [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

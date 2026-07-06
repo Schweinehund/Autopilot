@@ -1,4 +1,8 @@
 ---
+doc_id: RE-153
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide extends the ESP configuration in [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) with scenario-specific timeout recommendations. For ESP setting definitions, blocking app list configuration, and "What breaks" callouts for each ESP setting, see that guide first. This guide covers the timeout value decision only.
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-153 · **Status:** Approved
 
 # ESP Timeout Tuning Guide
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide extends the ESP configuration in [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) with scenario-specific timeout recommendations. For ESP setting definitions, blocking app list configuration, and "What breaks" callouts for each ESP setting, see that guide first. This guide covers the timeout value decision only.
 
 The ESP timeout is the most frequently misconfigured ESP setting. The default 60-minute timeout is sufficient for simple cloud-only deployments but fails for hybrid join, large app payloads, or deployments with Windows quality updates enabled. This guide provides scenario-based recommendations and a calculation formula.
 
@@ -94,3 +104,9 @@ When you observe ESP timeouts in the deployment report:
 - [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) — ESP settings definitions, blocking app list, all "What breaks" callouts
 - [Win32 App Packaging](win32-app-packaging.md) — Detection rules, dependencies, install order
 - [ESP Lifecycle Stage](../lifecycle/04-esp.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-152
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers Entra ID prerequisite configuration for both APv1 and APv2. For APv1 deployment profile setup, see [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-152 · **Status:** Approved
 
 # Entra ID Prerequisite Configuration for Autopilot
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers Entra ID prerequisite configuration for both APv1 and APv2. For APv1 deployment profile setup, see [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Autopilot depends on Entra ID (formerly Azure AD) settings that must be configured correctly before the first device enrollment. Several settings are silently misconfigured by default in new tenants — the device joins Entra but MDM policies never apply, and no error is shown during provisioning.
 
@@ -92,3 +102,9 @@ After completing all steps, verify each setting:
 - [APv1 Admin Setup Overview](../admin-setup-apv1/00-overview.md)
 - [Licensing Requirements](licensing-matrix.md)
 - [Hardware Hash Collection](../lifecycle/01-hardware-hash.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

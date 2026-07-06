@@ -1,4 +1,8 @@
 ---
+doc_id: RE-155
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers migration from MDT and SCCM/ConfigMgr imaging to Windows Autopilot (APv1 or APv2). Both Autopilot frameworks are valid targets. For APv1 vs APv2 selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-155 · **Status:** Approved
 
 # On-Premises Imaging to Autopilot Migration Guide
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers migration from MDT and SCCM/ConfigMgr imaging to Windows Autopilot (APv1 or APv2). Both Autopilot frameworks are valid targets. For APv1 vs APv2 selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Organizations running MDT task sequences or SCCM/ConfigMgr OSD can migrate to Windows Autopilot. This guide covers the migration paths, app packaging workflow, and parallel operation model to avoid service disruption during transition.
 
@@ -153,3 +163,9 @@ Maintain imaging infrastructure in parallel during migration. Do not decommissio
 - [APv1-to-APv2 Migration Playbook](apv1-apv2-migration.md)
 - [GPO-to-Intune Migration Guide](gpo-to-intune.md)
 - [Admin Setup Overview](../admin-setup-apv1/00-overview.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

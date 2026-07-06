@@ -1,4 +1,8 @@
 ---
+doc_id: RE-154
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers migrating Group Policy Objects to Intune using Group Policy Analytics. Applies to both APv1 and APv2 managed devices. Devices must be Entra joined (cloud-only or hybrid) for Intune policies to apply.
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-154 · **Status:** Approved
 
 # GPO-to-Intune Policy Migration Guide
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers migrating Group Policy Objects to Intune using Group Policy Analytics. Applies to both APv1 and APv2 managed devices. Devices must be Entra joined (cloud-only or hybrid) for Intune policies to apply.
 
 Organizations transitioning from on-premises Active Directory Group Policy to Intune-managed policy use Group Policy Analytics (GPA) to assess and migrate GPO settings. This guide is organized by business outcome — what the policy achieves — rather than by GPO setting name. This reduces the mapping effort and avoids migrating settings that no longer apply in a cloud-managed environment.
 
@@ -142,3 +152,9 @@ Keep GPOs active in Active Directory alongside Intune policies during transition
 - [Imaging-to-Autopilot Migration Guide](imaging-to-autopilot.md)
 - [APv1-to-APv2 Migration Playbook](apv1-apv2-migration.md)
 - [Configuration-Caused Failures Reference](../admin-setup-apv1/10-config-failures.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

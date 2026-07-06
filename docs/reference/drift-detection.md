@@ -1,4 +1,8 @@
 ---
+doc_id: RE-150
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers monitoring Autopilot registration and profile assignment health for both APv1 and APv2.
-> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-150 · **Status:** Approved
 
 # Registration and Profile Assignment Drift Detection
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers monitoring Autopilot registration and profile assignment health for both APv1 and APv2.
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Autopilot deployments can silently drift out of a healthy state after initial registration. Profile assignments can become "Not assigned," hardware changes trigger "Fix pending" states, and stale registrations accumulate. Proactive monitoring catches these issues before devices reach OOBE in a broken state.
 
@@ -91,3 +101,9 @@ Autopilot deployments can silently drift out of a healthy state after initial re
 - [New Batch of Devices Workflow](new-batch-workflow.md)
 - [Dynamic Device Groups for Autopilot](../admin-setup-apv1/04-dynamic-groups.md)
 - [Profile Assignment Lifecycle Stage](../lifecycle/02-profile-assignment.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-146
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,15 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers migration from Windows Autopilot (classic/APv1) to Autopilot Device Preparation (APv2). This is a coexistence model, not a one-shot cutover. For feature differences, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-146 · **Status:** Approved
 
 # APv1-to-APv2 Migration: Parallel Deployment Playbook
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers migration from Windows Autopilot (classic/APv1) to Autopilot Device Preparation (APv2). This is a coexistence model, not a one-shot cutover. For feature differences, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Both Autopilot frameworks can run in the same tenant simultaneously, targeting different device populations. This guide structures the migration as an ongoing coexistence state — APv1 and APv2 operate in parallel for weeks or months while devices are migrated by category. There is no hard cutover.
 
@@ -164,3 +174,9 @@ APv1-to-APv2 rollback is fleet-level, not device-level.
 - [APv1 vs APv2 Feature Comparison](../apv1-vs-apv2.md)
 - [APv1 Deployment Profile Configuration](../admin-setup-apv1/02-deployment-profile.md)
 - [Device Wipe and Retire Operations](../device-operations/02-retire-wipe.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

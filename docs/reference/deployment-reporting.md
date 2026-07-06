@@ -1,4 +1,8 @@
 ---
+doc_id: RE-149
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: Windows
 ---
 
-> **Version gate:** This guide covers deployment reporting for both APv1 and APv2. APv2 reports are in a different location than APv1 — using the wrong portal path shows no data. Always confirm which framework the device uses first.
-> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-149 · **Status:** Approved
 
 # Intune Deployment Reporting for Windows Autopilot
+
+## Summary
+
+[FILL-IN: >=30 words, reference-template Summary lead]
+
+> **Version gate:** This guide covers deployment reporting for both APv1 and APv2. APv2 reports are in a different location than APv1 — using the wrong portal path shows no data. Always confirm which framework the device uses first.
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 Deployment reports let admins verify provisioning outcomes, investigate failures, and track fleet health over time. Autopilot provides separate report locations for APv1 and APv2 — a common mistake is checking the wrong location and concluding no data exists.
 
@@ -105,3 +115,9 @@ Use deployment success rate as a fleet health indicator. Calculate by dividing S
 - [New Batch of Devices Workflow](new-batch-workflow.md)
 - [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md)
 - [GPO-to-Intune Migration](gpo-to-intune.md)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
