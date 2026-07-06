@@ -16,7 +16,7 @@ applies_to: AOSP
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers AOSP (Android Open Source Project) device management for RealWear HMT-1, HMT-1Z1, and Navigator 500 frontline AR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — required staging Wi-Fi credentials must be embedded in the enrollment QR because these headsets have no interactive text-input UI. Configuring this guide requires the Intune Administrator role, Intune Plan 2 or Suite specialty-device licensing, and optionally a RealWear Cloud account for Microsoft Teams for HMT delivery. Covers enrollment profile creation, QR generation with embedded staging Wi-Fi, provisioning, and verification.
 
 > **Platform gate:** RealWear AOSP device management — HMT-1 / HMT-1Z1 / Navigator 500 frontline AR headsets in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).

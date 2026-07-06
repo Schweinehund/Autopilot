@@ -16,7 +16,7 @@ applies_to: AOSP
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers AOSP (Android Open Source Project) device management for the Zebra WS50 wearable scanner in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Wi-Fi embedding in the enrollment QR is optional because the WS50 has an interactive Wi-Fi UI. Configuring this guide requires the Intune Administrator role and Intune Plan 1 baseline licensing (Zebra wearable scanners are not explicitly named in the Plan 2 specialty-device list). Covers enrollment profile creation, QR generation, provisioning, and OEMConfig APK push (Powered by MX or Legacy Zebra OEMConfig, matched to the device's Android version) since AOSP has no Managed Google Play delivery channel.
 
 > **Platform gate:** Zebra AOSP device management — WS50 wearable scanner in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).

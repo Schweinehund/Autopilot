@@ -16,7 +16,7 @@ applies_to: AOSP
 
 ## Summary
 
-[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+This guide covers AOSP (Android Open Source Project) device management for Pico 4 Enterprise and Pico Neo3 Pro/Eye AR/VR headsets in Microsoft Intune. AOSP enrollment is QR-only, one device at a time, and does NOT use Managed Google Play or the Zero-Touch portal — Wi-Fi embedding in the enrollment QR is optional because Pico headsets have an interactive Wi-Fi setup UI. Configuring this guide requires the Intune Administrator role and Intune Plan 2 or Suite specialty-device licensing (only the Enterprise SKU line is eligible for AOSP enrollment; consumer Pico hardware is unsupported). Covers Enterprise-SKU confirmation, enrollment profile creation, QR generation, provisioning, and the optional PICO Business Suite vendor-side coexistence path.
 
 > **Platform gate:** Pico AOSP device management — PICO 4 Enterprise / PICO Neo3 Pro/Eye AR/VR headsets in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
