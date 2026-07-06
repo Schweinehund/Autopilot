@@ -7,6 +7,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV114Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -262,11 +263,17 @@ const checks = [
   // === PITFALL CALLOUT LITERALS (V-50-18 through V-50-22) ===
   {
     id: 18, name: "V-50-18: 01-intune-linux-agent.md has LIN-05 'Known admin pitfall' blockquote (DPO-01)",
+    // FROZEN-AWARE (D-119-3, Plan 119-05): the v1.15 EEE #12 blockquote-split retrofit (Phase 117)
+    // de-blockquoted this LIN-05 callout in the LIVE corpus. Assert the Phase-50 deliverable AS IT WAS
+    // at the v1.14 close (V114=7d922a7, the pre-EEE frozen snapshot), where the `> ⚠️ **Known admin
+    // pitfall` blockquote form is intact. Expected pattern UNCHANGED (no value-mask); only the read
+    // SOURCE moved live→frozen. Honest-accounting: .planning/phases/119-*/119-05-SUMMARY.md.
     run() {
-      const c = readFile(ADMIN_AGENT);
-      if (c === null) return { pass: false, detail: "File missing" };
+      let c;
+      try { c = readAtV114Close(ADMIN_AGENT); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing (frozen V114 read failed)" };
       if (/^> ⚠️ \*\*Known admin pitfall/m.test(c)) return { pass: true };
-      return { pass: false, detail: "LIN-05 blockquote regex not found" };
+      return { pass: false, detail: "LIN-05 blockquote regex not found (frozen V114)" };
     }
   },
   {

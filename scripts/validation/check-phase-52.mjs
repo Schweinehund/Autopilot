@@ -7,6 +7,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV114Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -105,9 +106,15 @@ const checks = [
   },
   {
     id: 7, name: "V-52-07: RB24 Layer 2 — > **Source confidence:** blockquote with LOW-MEDIUM token and /var/log/microsoft/intune/ proximity",
+    // FROZEN-AWARE (D-119-3, Plan 119-05): the v1.15 EEE retrofit (Phase 116) reshaped RB24's Layer-2
+    // `> **Source confidence:**` blockquote in the LIVE corpus. Assert the Phase-52 deliverable at the
+    // pre-EEE v1.14 close (V114=7d922a7), where the blockquote form + LOW-MEDIUM token + path proximity
+    // are intact. Expected patterns UNCHANGED (no value-mask); only the read SOURCE moved live→frozen.
+    // Honest-accounting: .planning/phases/119-*/119-05-SUMMARY.md.
     run() {
-      const c = readFile(RB24);
-      if (c === null) return { pass: false, detail: "File missing: " + RB24 };
+      let c;
+      try { c = readAtV114Close(RB24); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing: " + RB24 + " (frozen V114 read failed)" };
       if (!c.includes("> **Source confidence:**")) return { pass: false, detail: "Layer 2 blockquote `> **Source confidence:**` missing" };
       if (!c.includes("LOW-MEDIUM confidence")) return { pass: false, detail: "`LOW-MEDIUM confidence` token missing in blockquote" };
       if (!c.includes("/var/log/microsoft/intune/")) return { pass: false, detail: "/var/log/microsoft/intune/ path missing" };

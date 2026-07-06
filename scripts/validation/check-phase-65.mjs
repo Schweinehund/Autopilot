@@ -21,6 +21,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
+import { readAtV114Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -135,9 +136,15 @@ const checks = [
   // === V-65-06: L2 #26 has >= 7 Mermaid leaf nodes (DA-9 7-leaf LOCKED set) ===
   {
     id: 6, name: 'V-65-06: L2 #26 Mermaid tree has >= 7 leaf nodes (([) occurrences (DA-9 LOCKED)',
+    // FROZEN-AWARE (D-119-3, Plan 119-05): the v1.15 EEE Mermaid reformat (Phase 118) reduced L2 #26's
+    // Mermaid leaf-node count in the LIVE corpus. Assert the Phase-65 DA-9 LOCKED 7-leaf set at the
+    // pre-EEE v1.14 close (V114=7d922a7). Expected threshold UNCHANGED at >= 7 (no value-mask — NOT
+    // lowered to match the evolved live state); only the read SOURCE moved live→frozen.
+    // Honest-accounting: .planning/phases/119-*/119-05-SUMMARY.md.
     run() {
-      const c = readFile(L2_26);
-      if (c === null) return { pass: false, detail: L2_26 + ' missing -- Plan 65-03 Wave 2 deliverable' };
+      let c;
+      try { c = readAtV114Close(L2_26); } catch { c = null; }
+      if (c === null) return { pass: false, detail: L2_26 + ' missing (frozen V114 read failed)' };
       const matches = c.match(/\(\[/g);
       const count = matches ? matches.length : 0;
       if (count < 7) {
