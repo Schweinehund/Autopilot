@@ -19,6 +19,7 @@ platform: macOS
 This guide is the operations reference for administering macOS Secure Enclave Platform Credentials programmatically via the Microsoft Graph v1.0 `platformCredentialAuthenticationMethod` resource, covering List, Get, and Delete operations plus the leaver/offboarding automation pattern. Delete operations require the Authentication Administrator or Privileged Authentication Administrator Entra role, and target devices must already have Platform SSO deployed with the Secure Enclave authentication method (see guide 07) before credentials exist to manage.
 
 > **Platform gate:** This guide covers programmatic management of macOS Secure Enclave Platform Credentials via the Microsoft Graph API (`platformCredentialAuthenticationMethod`, Graph v1.0).
+
 > For Platform SSO setup (prerequisite), see [Platform SSO Setup](07-platform-sso-setup.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
@@ -28,9 +29,9 @@ This guide is the operations reference for administering macOS Secure Enclave Pl
 
 ## What This Guide Is NOT
 
-> **No Create or Update operation exists for Platform Credentials.**
->
-> Platform Credentials are **device-initiated only** — they are created automatically by Company Portal during Platform SSO registration on the macOS device. There is no Graph API endpoint to create or update a Platform Credential remotely. Scripting credential creation is not possible through the Graph API. If a user's credential is missing, the device must re-register through Company Portal.
+**No Create or Update operation exists for Platform Credentials.**
+
+Platform Credentials are **device-initiated only** — they are created automatically by Company Portal during Platform SSO registration on the macOS device. There is no Graph API endpoint to create or update a Platform Credential remotely. Scripting credential creation is not possible through the Graph API. If a user's credential is missing, the device must re-register through Company Portal.
 
 This guide covers **List / Get / Delete** of existing Platform Credential registrations only. It does NOT cover:
 
@@ -126,7 +127,13 @@ Get-MgUserAuthenticationPlatformCredentialMethod `
 Removes a Platform Credential registration from Entra ID.
 
 > [!WARNING]
-> **Deleting a Platform Credential severs the Entra ID binding for the user's device and forces PSSO re-registration.** The user will see the "Registration Required" prompt on their next Conditional Access-gated sign-in. The Secure Enclave private key on the device is NOT remotely erased — only the Entra-side record is removed. Use with care in automation loops; test with `-WhatIf` before running against production users.
+> **Deleting a Platform Credential severs the Entra ID binding for the user's device and forces PSSO re-registration.**
+
+> The user will see the "Registration Required" prompt on their next Conditional Access-gated sign-in.
+
+> The Secure Enclave private key on the device is NOT remotely erased — only the Entra-side record is removed.
+
+> Use with care in automation loops; test with `-WhatIf` before running against production users.
 
 #### HTTP
 
@@ -197,7 +204,11 @@ The permissions required differ by operation (read vs delete) and calling contex
 
 The most common automation use case for Platform Credential management is the leaver/offboarding pattern: when a user leaves the organization, enumerate their Platform Credentials and delete them to sever the Entra binding on their enrolled devices.
 
-> **Forward reference:** For bulk-audit reporting (enumerating all users with zero or more Platform Credential registrations across the tenant), see [L2 Runbook #29: macOS Graph Credential Investigation](../../docs/l2-runbooks/29-macos-graph-credential-investigation.md). Bulk-audit examples are out of scope for this guide.
+> **Forward reference:** For bulk-audit reporting (enumerating all users with zero or more Platform Credential registrations across the tenant),
+
+> see [L2 Runbook #29: macOS Graph Credential Investigation](../../docs/l2-runbooks/29-macos-graph-credential-investigation.md).
+
+> Bulk-audit examples are out of scope for this guide.
 
 ### Mandatory Dry-Run Gate
 

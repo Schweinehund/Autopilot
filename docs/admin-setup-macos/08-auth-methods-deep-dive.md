@@ -20,6 +20,7 @@ This guide helps architects and senior Intune administrators choose among the th
 
 > **Platform gate:** This guide covers macOS Platform SSO authentication methods in depth.
 > For the Platform SSO setup walk-through, see [Platform SSO Setup](07-platform-sso-setup.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 This guide helps architects and senior Intune administrators choose the right [Platform SSO](../_glossary-macos.md#platform-sso) authentication method and understand the critical interactions, constraints, and failure modes for each. It complements the setup walk-through in [Platform SSO Setup](07-platform-sso-setup.md), which covers policy creation steps.
@@ -36,11 +37,11 @@ Choose your authentication method using the four dimensions below. Secure Enclav
 | **Hardware required** | Yes -- T2 Intel or Apple Silicon | No | Yes -- external smart card + reader (no built-in chip required) |
 | **macOS version gate** | macOS 13+ | macOS 13+ | macOS 14+ only |
 
-> **Selection guidance:**
->
-> - **Secure Enclave key** -- Best for most organizations. Passwordless, phishing-resistant, hardware-bound, and drives device-wide SSO via a Primary Refresh Token. Requires T2 Intel or Apple Silicon hardware; pre-2018 non-T2 Intel Macs WILL fail to provision and should fall back to Password sync.
-> - **Password sync** -- Use for legacy hardware that lacks a T2 chip or Apple Silicon, or for organizations not yet ready for full passwordless. The local macOS password is kept equal to the Entra password.
-> - **Smart card** -- Use only when your organization already operates a PKI and has Entra Certificate-Based Authentication fully configured. Requires macOS 14+. Not available during Setup Assistant.
+**Selection guidance:**
+
+- **Secure Enclave key** -- Best for most organizations. Passwordless, phishing-resistant, hardware-bound, and drives device-wide SSO via a Primary Refresh Token. Requires T2 Intel or Apple Silicon hardware; pre-2018 non-T2 Intel Macs WILL fail to provision and should fall back to Password sync.
+- **Password sync** -- Use for legacy hardware that lacks a T2 chip or Apple Silicon, or for organizations not yet ready for full passwordless. The local macOS password is kept equal to the Entra password.
+- **Smart card** -- Use only when your organization already operates a PKI and has Entra Certificate-Based Authentication fully configured. Requires macOS 14+. Not available during Setup Assistant.
 
 ---
 
@@ -77,20 +78,20 @@ Six non-negotiable facts that govern every admin and helpdesk decision for this 
 
 ### FileVault and the Secure Enclave Key
 
-> **FileVault and Platform SSO -- Cold-Boot Behavior**
->
-> FileVault uses the **local macOS account password** as its disk encryption key. After any reboot,
-> macOS presents the FileVault unlock screen and requires this local password -- regardless of which
-> Platform SSO authentication method is configured. Touch ID and SSO are only available after
-> FileVault unlocks the disk and macOS loads the login window.
->
-> The Secure Enclave PSSO key is a **parallel** mechanism to FileVault, not a replacement for it.
-> After a cold reboot, the user must enter the local account password at the FileVault screen before
-> Touch ID becomes available.
->
-> This behavior is by design: Apple's FileVault disk encryption uses the local password as its unlock
-> key. Platform SSO and the Secure Enclave key operate at the macOS login window layer -- a layer
-> that only becomes accessible after FileVault has unlocked the disk.
+**FileVault and Platform SSO -- Cold-Boot Behavior**
+
+FileVault uses the **local macOS account password** as its disk encryption key. After any reboot,
+macOS presents the FileVault unlock screen and requires this local password -- regardless of which
+Platform SSO authentication method is configured. Touch ID and SSO are only available after
+FileVault unlocks the disk and macOS loads the login window.
+
+The Secure Enclave PSSO key is a **parallel** mechanism to FileVault, not a replacement for it.
+After a cold reboot, the user must enter the local account password at the FileVault screen before
+Touch ID becomes available.
+
+This behavior is by design: Apple's FileVault disk encryption uses the local password as its unlock
+key. Platform SSO and the Secure Enclave key operate at the macOS login window layer -- a layer
+that only becomes accessible after FileVault has unlocked the disk.
 
 This is the canonical statement of the FileVault/PSSO relationship. Other sections of this guide cross-reference this sub-section rather than restating these facts.
 
@@ -98,25 +99,27 @@ This is the canonical statement of the FileVault/PSSO relationship. Other sectio
 
 ### SE Key Destruction Warning
 
-> **MDM/Recovery Password Reset Destroys the Secure Enclave Key**
->
-> Any password reset that bypasses the interactive macOS password-change UI destroys the derived
-> Secure Enclave key and requires the user to re-register Platform SSO:
->
-> - MDM-driven password reset (Intune remote action)
-> - FileVault recovery key use (user or helpdesk enters the FileVault recovery key at cold boot)
->
-> This is **expected behavior, not a bug.** The Secure Enclave key binding is tied to the user's
-> interactive password-change flow. When the password is reset by external means, the binding is
-> severed and the key becomes inaccessible.
->
-> **Resolution:** The user must complete a fresh PSSO registration after the password reset. Helpdesk
-> should inform users that Platform SSO will prompt for re-registration following any MDM-driven
-> password reset or FileVault recovery key use.
+**MDM/Recovery Password Reset Destroys the Secure Enclave Key**
+
+Any password reset that bypasses the interactive macOS password-change UI destroys the derived
+Secure Enclave key and requires the user to re-register Platform SSO:
+
+- MDM-driven password reset (Intune remote action)
+- FileVault recovery key use (user or helpdesk enters the FileVault recovery key at cold boot)
+
+This is **expected behavior, not a bug.** The Secure Enclave key binding is tied to the user's
+interactive password-change flow. When the password is reset by external means, the binding is
+severed and the key becomes inaccessible.
+
+**Resolution:** The user must complete a fresh PSSO registration after the password reset. Helpdesk
+should inform users that Platform SSO will prompt for re-registration following any MDM-driven
+password reset or FileVault recovery key use.
 
 ### Touch ID Biometric Policy
 
-> _Section provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`. High-drift content: Company Portal 2504 and macOS 14.6 version floor -- re-confirm against current Microsoft Learn / Apple documentation at each 90-day review._
+> _Section provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`._
+
+> _High-drift content: Company Portal 2504 and macOS 14.6 version floor -- re-confirm against current Microsoft Learn / Apple documentation at each 90-day review._
 
 The Touch ID biometric policy allows Secure Enclave key authentication to use Touch ID biometrics at the macOS login window. It is configured via an Extension Data key in the existing Platform SSO Settings Catalog policy.
 
@@ -132,19 +135,19 @@ The Touch ID biometric policy allows Secure Enclave key authentication to use To
 | Minimum macOS version | macOS 14.6 |
 | Minimum Company Portal version | 2504 |
 
-> **No-Password-Fallback Lockout Warning:**
->
-> "There's no option for password fallback while authenticating with User Secure Enclave Key when
-> UserSecureEnclaveKeyBiometricPolicy is enabled. Therefore, users won't be able to authenticate
-> to Microsoft Entra ID if they don't have Touch ID biometrics available."
->
-> Before enabling this policy, confirm that **all target devices** have functioning Touch ID hardware.
-> Devices with broken Touch ID sensors, external keyboards without Touch ID, or models without
-> Touch ID will have NO authentication path to Entra ID via Platform SSO once this policy is active.
->
-> See [Common Misconceptions](#common-misconceptions) for the "Touch ID means no password is ever
-> needed" myth and [FileVault and the Secure Enclave Key](#filevault-and-the-secure-enclave-key)
-> for cold-boot behavior.
+**No-Password-Fallback Lockout Warning:**
+
+"There's no option for password fallback while authenticating with User Secure Enclave Key when
+UserSecureEnclaveKeyBiometricPolicy is enabled. Therefore, users won't be able to authenticate
+to Microsoft Entra ID if they don't have Touch ID biometrics available."
+
+Before enabling this policy, confirm that **all target devices** have functioning Touch ID hardware.
+Devices with broken Touch ID sensors, external keyboards without Touch ID, or models without
+Touch ID will have NO authentication path to Entra ID via Platform SSO once this policy is active.
+
+See [Common Misconceptions](#common-misconceptions) for the "Touch ID means no password is ever
+needed" myth and [FileVault and the Secure Enclave Key](#filevault-and-the-secure-enclave-key)
+for cold-boot behavior.
 
 **Re-registration requirement:**
 
@@ -192,7 +195,11 @@ For the FileVault cold-boot behavior, see [FileVault and the Secure Enclave Key]
 
 ### Sync Timing and Common Failure Modes
 
-> _Sync timing provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`. The ~4-hour sync window is MEDIUM confidence (consistent with PITFALLS.md and SUMMARY.md research; not confirmed verbatim from the fetched Intune/Entra docs in this session). Confirm current timing against the Microsoft Learn Platform SSO troubleshooting guide at each 90-day review._
+> _Sync timing provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`._
+
+> _The ~4-hour sync window is MEDIUM confidence (consistent with PITFALLS.md and SUMMARY.md research; not confirmed verbatim from the fetched Intune/Entra docs in this session)._
+
+> _Confirm current timing against the Microsoft Learn Platform SSO troubleshooting guide at each 90-day review._
 
 **Sync timing:** Approximately 4 hours for password propagation from Entra to the local macOS account after an Entra password change. Plan helpdesk guidance around this window -- users may be unable to log in with a new password until the sync completes.
 
@@ -208,21 +215,21 @@ For the FileVault cold-boot behavior, see [FileVault and the Secure Enclave Key]
 
 ## Smart Card Method
 
-> **Prerequisite -- Entra CBA Must Be Configured First:**
->
-> Smart Card Platform SSO **silently fails** if Entra Certificate-Based Authentication (CBA) is not
-> pre-configured in the Entra tenant. Deploying the `SmartCard` Settings Catalog value without
-> completing the Entra CBA configuration produces no actionable error -- registration simply fails.
->
-> Entra CBA is a separate multi-step Entra admin task that requires the **Privileged Authentication
-> Administrator** role (to upload CA certificates) and the **Authentication Policy Administrator**
-> role (to configure authentication and username-binding policies). Allow multiple days for PKI
-> certificate upload and policy propagation before deploying the PSSO Smart Card profile.
->
-> Complete the Entra CBA configuration and verify it works (Step 5 below) before deploying any
-> Smart Card PSSO Settings Catalog policy.
->
-> Authoritative guide: [Entra ID Certificate-Based Authentication configuration](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-certificate-based-authentication)
+**Prerequisite -- Entra CBA Must Be Configured First:**
+
+Smart Card Platform SSO **silently fails** if Entra Certificate-Based Authentication (CBA) is not
+pre-configured in the Entra tenant. Deploying the `SmartCard` Settings Catalog value without
+completing the Entra CBA configuration produces no actionable error -- registration simply fails.
+
+Entra CBA is a separate multi-step Entra admin task that requires the **Privileged Authentication
+Administrator** role (to upload CA certificates) and the **Authentication Policy Administrator**
+role (to configure authentication and username-binding policies). Allow multiple days for PKI
+certificate upload and policy propagation before deploying the PSSO Smart Card profile.
+
+Complete the Entra CBA configuration and verify it works (Step 5 below) before deploying any
+Smart Card PSSO Settings Catalog policy.
+
+Authoritative guide: [Entra ID Certificate-Based Authentication configuration](https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-certificate-based-authentication)
 
 ### Entra CBA Admin Steps (Summary)
 
@@ -261,7 +268,13 @@ These five steps must be complete before deploying the Smart Card PSSO profile:
 
 **sc_auth pairing prerequisite:** Smart card certificates must be paired with the local macOS user account before PSSO Smart Card registration. This is accomplished via the macOS `sc_auth` command.
 
-> _sc_auth provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`. The sc_auth pairing step is MEDIUM confidence (confirmed as the standard Apple macOS smart card pairing command from requirements and pitfalls documentation; the exact command syntax was not confirmed from the fetched Microsoft Learn pages in this session). Confirm exact command from Apple Platform Deployment documentation before deploying at scale._
+> _sc_auth provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`._
+
+> _The sc_auth pairing step is MEDIUM confidence (confirmed as the standard Apple macOS smart card pairing command from requirements and pitfalls documentation;_
+
+> _the exact command syntax was not confirmed from the fetched Microsoft Learn pages in this session)._
+
+> _Confirm exact command from Apple Platform Deployment documentation before deploying at scale._
 
 **Not available during Setup Assistant:** "Authenticating with Smart Card in Setup Assistant is not supported. If you want to use Smart Card as the authentication method, you must complete PSSO registration after Setup Assistant is completed." Plan your enrollment workflow to complete Setup Assistant before prompting users for Smart Card PSSO registration.
 
@@ -294,11 +307,11 @@ NUAL (New User At Login Window) allows any organizational user with Entra creden
 
 ## Common Misconceptions
 
-> **Platform SSO Myth vs. Fact**
->
-> The following table addresses the most dangerous misconceptions about Platform SSO. Each of the three
-> named dangers has a canonical description in the relevant method section -- this table cross-references
-> those sections rather than restating them.
+**Platform SSO Myth vs. Fact**
+
+The following table addresses the most dangerous misconceptions about Platform SSO. Each of the three
+named dangers has a canonical description in the relevant method section -- this table cross-references
+those sections rather than restating them.
 
 | Claim | Accurate? | Nuance |
 |-------|-----------|--------|

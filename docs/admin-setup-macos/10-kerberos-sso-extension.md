@@ -19,6 +19,7 @@ platform: macOS
 This guide walks an Intune administrator through deploying the Apple Kerberos SSO extension via an Intune Custom Template (.mobileconfig) profile for on-premises Active Directory Kerberos authentication, integrated with Platform SSO TGT sharing. It requires the Intune Policy and Profile Manager role, a Platform SSO deployment already registered on target devices (Apple Business Manager ADE enrollment), and macOS 14.6 or later for the PSSO TGT-sharing integration this guide documents.
 
 > **Platform gate:** This guide covers macOS Kerberos SSO extension configuration via Intune Custom Template (.mobileconfig) for PSSO-integrated deployments.
+
 > For Platform SSO setup (prerequisite), see [Platform SSO Setup](07-platform-sso-setup.md).
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
@@ -28,9 +29,9 @@ This guide walks an Intune administrator through deploying the Apple Kerberos SS
 
 ## What This Guide Is NOT
 
-> **Terminology Trap -- Three SSO features share the same `com.apple.extensiblesso` payload type but serve distinct purposes:**
->
-> Configuring the wrong extension identifier or payload type produces a silently broken profile. Read the table below before proceeding.
+**Terminology Trap -- Three SSO features share the same `com.apple.extensiblesso` payload type but serve distinct purposes:**
+
+Configuring the wrong extension identifier or payload type produces a silently broken profile. Read the table below before proceeding.
 
 | Term | What It Is | Configuration Surface |
 |------|-----------|----------------------|
@@ -76,9 +77,15 @@ The two SSO extension identifiers are superficially similar (both live in `com.a
 | **Apple Kerberos SSO extension** -- USE THIS for Kerberos | `com.apple.AppSSOKerberos.KerberosExtension` | `Credential` | Apple (built-in to macOS) | On-prem AD Kerberos TGT acquisition |
 | **Microsoft PSSO extension** -- do NOT use in Kerberos profile | `com.microsoft.CompanyPortalMac.ssoextension` | `Redirect` | Microsoft (Company Portal) | Entra ID device registration + SSO |
 
-> **K-1 -- Wrong Extension Identifier:** Never copy the Microsoft PSSO identifier (`com.microsoft.CompanyPortalMac.ssoextension`) into the Kerberos extension profile. Every Kerberos `ExtensionIdentifier` plist value MUST use `com.apple.AppSSOKerberos.KerberosExtension`. These are distinct extensions from different vendors.
+> **K-1 -- Wrong Extension Identifier:** Never copy the Microsoft PSSO identifier (`com.microsoft.CompanyPortalMac.ssoextension`) into the Kerberos extension profile.
 
-> **K-5 -- Wrong Payload Type:** The Kerberos SSO extension uses `Type = Credential`, NOT `Redirect`. Using `Redirect` (the Platform SSO value) is the most common configuration copy-error when building a Kerberos profile from a Platform SSO template. Every plist example in this guide shows `<key>Type</key><string>Credential</string>` -- verify this value before uploading the profile to Intune.
+> Every Kerberos `ExtensionIdentifier` plist value MUST use `com.apple.AppSSOKerberos.KerberosExtension`. These are distinct extensions from different vendors.
+
+> **K-5 -- Wrong Payload Type:** The Kerberos SSO extension uses `Type = Credential`, NOT `Redirect`.
+
+> Using `Redirect` (the Platform SSO value) is the most common configuration copy-error when building a Kerberos profile from a Platform SSO template.
+
+> Every plist example in this guide shows `<key>Type</key><string>Credential</string>` -- verify this value before uploading the profile to Intune.
 
 ### On-Premises AD Kerberos Profile (.mobileconfig)
 
@@ -188,13 +195,19 @@ Upload the .mobileconfig via the Intune Custom Template profile path (NOT Settin
 
 ## Configuration: PSSO + Kerberos TGT Integration
 
-> **macOS version gate:** The features in this section require macOS 14.6 (Sonoma) or later and Company Portal 5.2408.0 or later. On earlier macOS versions, `usePlatformSSOTGT` is silently ignored and the extension acquires its own Kerberos TGT independently.
+> **macOS version gate:** The features in this section require macOS 14.6 (Sonoma) or later and Company Portal 5.2408.0 or later.
+
+> On earlier macOS versions, `usePlatformSSOTGT` is silently ignored and the extension acquires its own Kerberos TGT independently.
 
 When Platform SSO is deployed alongside the Kerberos SSO extension, the two extensions can share a TGT rather than independently acquiring separate tickets. The `usePlatformSSOTGT: true` key (in `ExtensionData` of the Kerberos .mobileconfig) tells the Kerberos extension to consume TGTs issued by Platform SSO instead of performing its own Kerberos authentication. This eliminates the secondary user-interaction prompt that would otherwise occur when the Kerberos extension needs to acquire its own ticket.
 
 **Prerequisite ordering (Pitfall 5):** PSSO must already be registered on the device before this integration takes effect. Deploying the Kerberos profile with `usePlatformSSOTGT: true` before PSSO registration completes has no effect -- the extension has no Platform SSO TGT to reuse. Complete guide 07 and verify PSSO device registration on pilot devices before assigning this Kerberos profile.
 
-> **Note -- standalone Kerberos without PSSO:** The Apple Kerberos SSO extension also supports standalone deployment (macOS 10.15+) without any Platform SSO dependency. Standalone operation is outside v1.10 scope (D-02) -- this guide focuses on the PSSO-coexistence pattern only. See [Kerberos SSO Extension](../_glossary-macos.md#kerberos-sso-extension) for a brief standalone note.
+> **Note -- standalone Kerberos without PSSO:** The Apple Kerberos SSO extension also supports standalone deployment (macOS 10.15+) without any Platform SSO dependency.
+
+> Standalone operation is outside v1.10 scope (D-02) -- this guide focuses on the PSSO-coexistence pattern only.
+
+> See [Kerberos SSO Extension](../_glossary-macos.md#kerberos-sso-extension) for a brief standalone note.
 
 ### Key Settings for PSSO-Combined Deployments
 
@@ -209,7 +222,9 @@ The following `ExtensionData` keys are relevant to PSSO-integrated deployments. 
 
 ### custom_tgt_setting -- Fine-Grained TGT Mapping Control
 
-> **Company Portal 2508+ required:** The `custom_tgt_setting` key is only available with Company Portal version 2508 or later. On earlier versions, it is silently ignored and both TGT paths are active (equivalent to value `0`).
+> **Company Portal 2508+ required:** The `custom_tgt_setting` key is only available with Company Portal version 2508 or later.
+
+> On earlier versions, it is silently ignored and both TGT paths are active (equivalent to value `0`).
 
 `custom_tgt_setting` controls which Kerberos TGT paths Platform SSO activates. This is useful in deployments that want to limit TGT sharing to on-prem AD only, or to cloud Kerberos only.
 
@@ -220,19 +235,43 @@ The following `ExtensionData` keys are relevant to PSSO-integrated deployments. 
 | `2` | Cloud Kerberos TGT only (`tgt_cloud`) -- on-prem TGT mapping disabled |
 | `3` | No TGT mapping -- disables both paths |
 
-> **Placement warning [ASSUMED -- confirm before deploying]:** The `custom_tgt_setting` key belongs in the **PSSO Settings Catalog policy's `ExtensionData` dictionary** (the `com.microsoft.CompanyPortalMac.ssoextension` profile), NOT in the Kerberos `.mobileconfig` profile. Microsoft Learn describes this key as being set "in the extension data dictionary in SSO extension configuration," which refers to the PSSO Settings Catalog policy. Placing it in the Kerberos `.mobileconfig` `ExtensionData` has no effect. This placement is tagged `[ASSUMED]` because the Microsoft Learn documentation does not show a complete plist example for this key -- confirm against the current Microsoft Learn Kerberos-PSSO article and a live Intune instance before deploying. [Source: learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration, 2026-06-15]
+> **Placement warning [ASSUMED -- confirm before deploying]:** The `custom_tgt_setting` key belongs in the **PSSO Settings Catalog policy's `ExtensionData` dictionary**
+
+> (the `com.microsoft.CompanyPortalMac.ssoextension` profile), NOT in the Kerberos `.mobileconfig` profile.
+
+> Microsoft Learn describes this key as being set "in the extension data dictionary in SSO extension configuration," which refers to the PSSO Settings Catalog policy.
+
+> Placing it in the Kerberos `.mobileconfig` `ExtensionData` has no effect.
+
+> This placement is tagged `[ASSUMED]` because the Microsoft Learn documentation does not show a complete plist example for this key --
+
+> confirm against the current Microsoft Learn Kerberos-PSSO article and a live Intune instance before deploying.
+
+> [Source: learn.microsoft.com/en-us/entra/identity/devices/device-join-macos-platform-single-sign-on-kerberos-configuration, 2026-06-15]
 
 ### Cosmetic "Not signed in" Menu-Bar Note
 
-> **Important -- do not misread this as a failure:** A correctly configured and fully functioning PSSO + Kerberos TGT deployment may display **"Not signed in"** in the macOS Kerberos menu-bar extra (the key icon in the menu bar from the Kerberos extension). This is a cosmetic display artifact of the `usePlatformSSOTGT` integration -- the Kerberos extension is consuming a TGT from Platform SSO rather than managing its own credentials, so the menu-bar extra has no user account to display. The "Not signed in" label reflects the extension's state from the perspective of the menu-bar UI only. If `app-sso platform -s` shows `tgt_ad` in the output (see Verification section), Kerberos SSO is functioning correctly. "Not signed in" in the menu bar does NOT indicate a failure condition in PSSO-integrated deployments.
+> **Important -- do not misread this as a failure:** A correctly configured and fully functioning PSSO + Kerberos TGT deployment may display **"Not signed in"**
+
+> in the macOS Kerberos menu-bar extra (the key icon in the menu bar from the Kerberos extension).
+
+> This is a cosmetic display artifact of the `usePlatformSSOTGT` integration -- the Kerberos extension is consuming a TGT from Platform SSO rather than managing its own credentials,
+
+> so the menu-bar extra has no user account to display.
+
+> The "Not signed in" label reflects the extension's state from the perspective of the menu-bar UI only.
+
+> If `app-sso platform -s` shows `tgt_ad` in the output (see Verification section), Kerberos SSO is functioning correctly.
+
+> "Not signed in" in the menu bar does NOT indicate a failure condition in PSSO-integrated deployments.
 
 ---
 
 ## Configuration: Cloud Kerberos Profile (Limited Preview)
 
-> **LIMITED PREVIEW -- NOT GA:** Azure Files Cloud Kerberos authentication via Platform SSO TGT is in **limited preview** as of 2026-06-15. This is NOT the primary configuration path covered by this guide (the on-prem `usePlatformSSOTGT` pattern above is primary and GA). The Cloud Kerberos path requires separate onboarding via `azurefiles@microsoft.com`. Do not deploy this profile to production without completing the Azure Files preview onboarding.
->
-> **[ASSUMED -- re-verify status before deploying]:** The Azure Files Cloud Kerberos feature was in limited preview at research time (2026-06-15). Verify the current GA/preview status against the Microsoft Learn Kerberos-PSSO article before publishing this section to your admin audience. If the feature has gone GA, remove the preview callout and update the onboarding instructions accordingly. [RESEARCH assumption A3]
+**LIMITED PREVIEW -- NOT GA:** Azure Files Cloud Kerberos authentication via Platform SSO TGT is in **limited preview** as of 2026-06-15. This is NOT the primary configuration path covered by this guide (the on-prem `usePlatformSSOTGT` pattern above is primary and GA). The Cloud Kerberos path requires separate onboarding via `azurefiles@microsoft.com`. Do not deploy this profile to production without completing the Azure Files preview onboarding.
+
+**[ASSUMED -- re-verify status before deploying]:** The Azure Files Cloud Kerberos feature was in limited preview at research time (2026-06-15). Verify the current GA/preview status against the Microsoft Learn Kerberos-PSSO article before publishing this section to your admin audience. If the feature has gone GA, remove the preview callout and update the onboarding instructions accordingly. [RESEARCH assumption A3]
 
 Cloud Kerberos enables macOS devices to authenticate to Azure Files (SMB shares) using a cloud-issued Kerberos TGT from Entra ID, without requiring an on-premises AD Kerberos infrastructure for those specific resources. It uses a separate Kerberos SSO extension profile targeting the `KERBEROS.MICROSOFTONLINE.COM` realm.
 
@@ -249,7 +288,9 @@ Cloud Kerberos enables macOS devices to authenticate to Azure Files (SMB shares)
 | `ExtensionData` > `usePlatformSSOTGT` | `<true/>` | Required -- cloud TGT sharing via PSSO |
 | `ExtensionData` > `performKerberosOnly` | `<true/>` | Required for cloud profile |
 
-> **Onboarding:** To join the Azure Files Cloud Kerberos limited preview, contact **azurefiles@microsoft.com**. The preview onboarding includes tenant-specific configuration guidance for the `preferredKDCs` endpoint and any additional policy requirements at the time of your enrollment.
+> **Onboarding:** To join the Azure Files Cloud Kerberos limited preview, contact **azurefiles@microsoft.com**.
+
+> The preview onboarding includes tenant-specific configuration guidance for the `preferredKDCs` endpoint and any additional policy requirements at the time of your enrollment.
 
 The Cloud Kerberos profile is deployed as a **separate** Intune Custom Template profile in addition to (not replacing) the on-prem AD profile. Devices that need both on-prem Kerberos resources and Azure Files access receive both profiles simultaneously -- they use different `Realm` values and `Hosts` arrays, so they do not conflict.
 
@@ -259,7 +300,11 @@ The Cloud Kerberos profile is deployed as a **separate** Intune Custom Template 
 
 Use the following two commands as the canonical diagnostic pair for Kerberos SSO extension health in PSSO-integrated deployments. These are read-only commands safe to run on any enrolled device.
 
-> **Diagnostics scope:** Only the two read-only commands below are documented in this guide. Do not use `kinit` as an admin diagnostic step -- it is a write-operation that acquires a new ticket and is not appropriate for verifying extension health. Use only `app-sso platform -s` and `klist` as described below.
+> **Diagnostics scope:** Only the two read-only commands below are documented in this guide.
+
+> Do not use `kinit` as an admin diagnostic step -- it is a write-operation that acquires a new ticket and is not appropriate for verifying extension health.
+
+> Use only `app-sso platform -s` and `klist` as described below.
 
 ### Step 1 -- app-sso platform -s (Platform SSO TGT State)
 

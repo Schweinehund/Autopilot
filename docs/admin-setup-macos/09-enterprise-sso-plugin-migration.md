@@ -20,6 +20,7 @@ This guide helps Intune administrators decide whether, when, and how to migrate 
 
 > **Platform gate:** This guide covers macOS Enterprise SSO plug-in migration to Platform SSO.
 > For the Platform SSO setup walk-through, see [Platform SSO Setup](07-platform-sso-setup.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 This guide is for Intune administrators with existing deployments of the Microsoft Enterprise SSO plug-in (legacy SSO app extension) who need to decide whether, when, and how to migrate to Platform SSO. It provides the product-name disambiguation that prevents the most common misconfiguration, a decision matrix for the migrate/keep/coexist choice, a staged migration sequence that avoids Error 10002, the mandatory rollback procedure, and a bounded Kerberos SSO extension coexistence note.
@@ -28,9 +29,9 @@ This guide is for Intune administrators with existing deployments of the Microso
 
 ## Product-Name Disambiguation
 
-> **Terminology Trap -- "Configure the Enterprise SSO Plug-in" Is Ambiguous:**
->
-> Writing "configure the Microsoft Enterprise SSO plug-in" does NOT specify which configuration surface to use. Admins who configure the legacy **Device Features** template (instead of the **Settings Catalog** Platform SSO policy) end up with a legacy SSO app extension profile -- and if a Platform SSO Settings Catalog policy is also assigned to the same device, both stop working (Error 10002). The confusion arises because the umbrella product name appears in both configuration paths.
+**Terminology Trap -- "Configure the Enterprise SSO Plug-in" Is Ambiguous:**
+
+Writing "configure the Microsoft Enterprise SSO plug-in" does NOT specify which configuration surface to use. Admins who configure the legacy **Device Features** template (instead of the **Settings Catalog** Platform SSO policy) end up with a legacy SSO app extension profile -- and if a Platform SSO Settings Catalog policy is also assigned to the same device, both stop working (Error 10002). The confusion arises because the umbrella product name appears in both configuration paths.
 
 The four terms have distinct meanings:
 
@@ -49,7 +50,11 @@ The four terms have distinct meanings:
 
 The matrix below covers the **migrate / keep-legacy / coexist** decision axis only. For authentication method selection within Platform SSO (Secure Enclave key vs Password sync vs Smart Card), see [Auth Methods Deep-Dive](08-auth-methods-deep-dive.md).
 
-> **"Coexist" means cross-segment fleet coexistence -- NOT same-device:** A legacy SSO app extension profile and a Platform SSO Settings Catalog policy assigned to the **same device simultaneously** is FORBIDDEN and triggers Error 10002 (see [Staged Migration Sequence](#staged-migration-sequence)). "Coexist" in the matrix below means separate device groups -- legacy-OS devices on the legacy profile, modern-OS devices on the PSSO profile -- running side-by-side in the same tenant.
+> **"Coexist" means cross-segment fleet coexistence -- NOT same-device:** A legacy SSO app extension profile and a Platform SSO Settings Catalog policy assigned to the **same device simultaneously**
+
+> is FORBIDDEN and triggers Error 10002 (see [Staged Migration Sequence](#staged-migration-sequence)).
+
+> "Coexist" in the matrix below means separate device groups -- legacy-OS devices on the legacy profile, modern-OS devices on the PSSO profile -- running side-by-side in the same tenant.
 
 | Fleet Scenario | Recommended Path |
 |----------------|-----------------|
@@ -64,19 +69,21 @@ The matrix below covers the **migrate / keep-legacy / coexist** decision axis on
 
 ## Before You Migrate -- Update Compliance Scripts First
 
-> **Before You Migrate -- Update Compliance Scripts First:**
->
-> From approximately August 2025, new Entra device registrations store the Workplace Join (WPJ) key in the **Secure Enclave** rather than the Login Keychain. The `security find-certificate` command returns **false negatives** for all PSSO-enrolled devices -- it cannot see Secure Enclave-stored keys.
->
-> If your compliance scripts or IT tooling use `security find-certificate -a | grep Microsoft` (or similar) to check whether a device has a WPJ certificate, those checks will report "device not joined / not compliant" on any correctly PSSO-enrolled device. A false negative during a **successful** migration looks identical to a failed migration and may trigger an unnecessary -- and **destructive** -- rollback (see [Rollback](#rollback)).
->
-> **Before starting migration**, replace compliance checks with:
-> ```
-> app-sso platform -s | grep "Device Registration"
-> ```
-> A healthy PSSO-enrolled device returns `Device Registration: REGISTERED`.
->
-> _Section provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`. VR-3: WPJ storage migration date sourced from Jamf Community + Microsoft apple-sso-plugin doc (updated 2026-06-15); independently confirmed in `_glossary-macos.md#secure-enclave`. Re-verify at each 90-day review. Confidence: MEDIUM._
+**Before You Migrate -- Update Compliance Scripts First:**
+
+From approximately August 2025, new Entra device registrations store the Workplace Join (WPJ) key in the **Secure Enclave** rather than the Login Keychain. The `security find-certificate` command returns **false negatives** for all PSSO-enrolled devices -- it cannot see Secure Enclave-stored keys.
+
+If your compliance scripts or IT tooling use `security find-certificate -a | grep Microsoft` (or similar) to check whether a device has a WPJ certificate, those checks will report "device not joined / not compliant" on any correctly PSSO-enrolled device. A false negative during a **successful** migration looks identical to a failed migration and may trigger an unnecessary -- and **destructive** -- rollback (see [Rollback](#rollback)).
+
+**Before starting migration**, replace compliance checks with:
+
+```
+app-sso platform -s | grep "Device Registration"
+```
+
+A healthy PSSO-enrolled device returns `Device Registration: REGISTERED`.
+
+_Section provenance -- `last_verified: 2026-06-21` / `review_by: 2026-09-21`. VR-3: WPJ storage migration date sourced from Jamf Community + Microsoft apple-sso-plugin doc (updated 2026-06-15); independently confirmed in `_glossary-macos.md#secure-enclave`. Re-verify at each 90-day review. Confidence: MEDIUM._
 
 ---
 
@@ -130,13 +137,13 @@ If both profiles coexist on a device -- even briefly during policy sync -- Error
 
 ## Rollback
 
-> **Destructive Action -- Rollback Removes the Secure Enclave WPJ Key:**
->
-> - **WPJ key removal is destructive:** When the Platform SSO Settings Catalog policy is removed (rollback), the Secure Enclave WPJ key that was created during PSSO enrollment is removed with it. This cannot be undone without re-enrolling in Platform SSO. Do not roll back on a per-device impulse -- plan for the re-enrollment burden before initiating rollback.
->
-> - **CA-blocked-until-re-registered impact window:** After rollback, affected users have **no Entra device registration**. PSSO deleted the old Login Keychain WPJ certificate during enrollment, and removing the PSSO policy removes the Secure Enclave WPJ key without reinstating the legacy Keychain certificate. Users cannot satisfy device-based Conditional Access policies until they manually open Company Portal and complete a fresh legacy WPJ registration. This is an **active service outage** for any user protected by device-based CA policies.
->
-> - **Compliance-script swap:** See the [Before You Migrate -- Update Compliance Scripts First](#before-you-migrate----update-compliance-scripts-first) prerequisite callout above -- `security find-certificate` returns false negatives for Secure Enclave-stored keys; update compliance scripts to use `app-sso platform -s` **before rollback as well as before migration**, to avoid triggering rollback unnecessarily.
+**Destructive Action -- Rollback Removes the Secure Enclave WPJ Key:**
+
+- **WPJ key removal is destructive:** When the Platform SSO Settings Catalog policy is removed (rollback), the Secure Enclave WPJ key that was created during PSSO enrollment is removed with it. This cannot be undone without re-enrolling in Platform SSO. Do not roll back on a per-device impulse -- plan for the re-enrollment burden before initiating rollback.
+
+- **CA-blocked-until-re-registered impact window:** After rollback, affected users have **no Entra device registration**. PSSO deleted the old Login Keychain WPJ certificate during enrollment, and removing the PSSO policy removes the Secure Enclave WPJ key without reinstating the legacy Keychain certificate. Users cannot satisfy device-based Conditional Access policies until they manually open Company Portal and complete a fresh legacy WPJ registration. This is an **active service outage** for any user protected by device-based CA policies.
+
+- **Compliance-script swap:** See the [Before You Migrate -- Update Compliance Scripts First](#before-you-migrate----update-compliance-scripts-first) prerequisite callout above -- `security find-certificate` returns false negatives for Secure Enclave-stored keys; update compliance scripts to use `app-sso platform -s` **before rollback as well as before migration**, to avoid triggering rollback unnecessarily.
 
 **Rollback procedure:**
 

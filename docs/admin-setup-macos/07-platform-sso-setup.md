@@ -20,6 +20,7 @@ This guide walks an Intune administrator through configuring Platform SSO on mac
 
 > **Platform gate:** This guide covers macOS Platform SSO configuration via Microsoft Intune.
 > For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
 > For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 This guide walks an Intune administrator through configuring [Platform SSO](../_glossary-macos.md#platform-sso) on macOS using the Settings Catalog `com.apple.extensiblesso` payload in Microsoft Intune.
@@ -57,7 +58,15 @@ Platform SSO can register the user's account at different points in provisioning
 | **PSSO creates the account (Password method)** | `Enable Create First User During Setup` synthesizes the local account from the Entra identity (password sync) during Setup Assistant | Requires switching from Secure Enclave to the **Password** method — gives up passwordless / phishing-resistant Secure Enclave. Not worth it for a single-user fleet. |
 | **Shared / login-window account creation** | `Enable Create User At Login` — any org user signs in at the login window and PSSO creates their account on the fly | This is the **shared / userless** (Model B) deployment; **Conditional Access isn't supported** on shared multi-user Macs. Wrong model for single-user devices. |
 
-> **Key distinction:** With **Secure Enclave**, PSSO does **not** create the macOS account — it only *registers* an account that the enrollment profile (or Setup Assistant) created. PSSO *creating* the account **during Setup Assistant** requires the **Password** method (`Enable Create First User During Setup`, a password-sync experience). The shared-device `Enable Create User At Login` *can* create accounts with any method including Secure Enclave (the user supplies a password at first login), but that is the **multi-user / userless** model — not single-user. So for this single-user Secure Enclave deployment, the account is always created upstream and PSSO registers it (just earlier in the flow, since registration-during-setup is on).
+> **Key distinction:** With **Secure Enclave**, PSSO does **not** create the macOS account — it only *registers* an account that the enrollment profile (or Setup Assistant) created.
+
+> PSSO *creating* the account **during Setup Assistant** requires the **Password** method (`Enable Create First User During Setup`, a password-sync experience).
+
+> The shared-device `Enable Create User At Login` *can* create accounts with any method including Secure Enclave (the user supplies a password at first login),
+
+> but that is the **multi-user / userless** model — not single-user.
+
+> So for this single-user Secure Enclave deployment, the account is always created upstream and PSSO registers it (just earlier in the flow, since registration-during-setup is on).
 
 ## End-User Sign-In Experience (Secure Enclave)
 
@@ -96,21 +105,39 @@ The user's local password is a low-frequency fallback (cold-boot FileVault unloc
 - **Company Portal:** Minimum version 5.2404.0 installed on target devices for the standard post-enrollment path (see Step 2).
 - **macOS version:** macOS 13 minimum (macOS 14 recommended for full Platform SSO feature set). Smart Card authentication method requires macOS 14+. For Sequoia fleets: macOS 15.0–15.2 had a re-registration loop bug — fixed in macOS 15.3; upgrade to 15.3+ before deploying.
 
-> **Account creation is owned by the enrollment profile, not this policy.** Platform SSO binds the user's Entra identity to an *existing* local account after the desktop loads — it does **not** create the user's login account. That account comes from the ADE [enrollment profile's Account Settings](02-enrollment-profile.md#account-settings-local-admin-and-local-user-accounts). If the enrollment profile has **Create a local primary account = No**, a single-user device is stranded at the managed local-admin login window with no Entra sign-in option, and PSSO is never reached. For a single-user device, set **Create a local primary account = Yes** (Account type **Standard** if a managed admin account exists), and — if you prefill the primary account name — match its short-name token to the `Token To User Mapping > Account Name` value below.
+> **Account creation is owned by the enrollment profile, not this policy.**
 
-> **Registration approach (this deployment):** This build registers PSSO **during Setup Assistant** (`Enable Registration During Setup`), which additionally requires Company Portal **5.2604.0 as a LOB app**, the three-policy same-group rule, and **Locked enrollment = Yes** — see [Registration Approach: Decision and Alternatives](#registration-approach-decision-and-alternatives). The Company Portal floor below (5.2404.0) applies to the **standard post-enrollment** alternative.
+> Platform SSO binds the user's Entra identity to an *existing* local account after the desktop loads — it does **not** create the user's login account.
+
+> That account comes from the ADE [enrollment profile's Account Settings](02-enrollment-profile.md#account-settings-local-admin-and-local-user-accounts).
+
+> If the enrollment profile has **Create a local primary account = No**, a single-user device is stranded at the managed local-admin login window with no Entra sign-in option,
+
+> and PSSO is never reached.
+
+> For a single-user device, set **Create a local primary account = Yes** (Account type **Standard** if a managed admin account exists),
+
+> and — if you prefill the primary account name — match its short-name token to the `Token To User Mapping > Account Name` value below.
+
+> **Registration approach (this deployment):** This build registers PSSO **during Setup Assistant** (`Enable Registration During Setup`),
+
+> which additionally requires Company Portal **5.2604.0 as a LOB app**, the three-policy same-group rule, and **Locked enrollment = Yes** —
+
+> see [Registration Approach: Decision and Alternatives](#registration-approach-decision-and-alternatives).
+
+> The Company Portal floor below (5.2404.0) applies to the **standard post-enrollment** alternative.
 
 ### Known Silent Blockers — Resolve Before Deployment
 
-> **Before You Deploy — Resolve These First:**
->
-> The following issues cause Platform SSO registration to fail silently — no error is displayed, and the registration flow simply stalls or is blocked. Resolve all three before configuring the Settings Catalog policy.
->
-> - **Remove legacy per-user MFA (DF-3):** Legacy per-user MFA (set in Azure AD per-user MFA settings, NOT Conditional Access) silently blocks Password sync PSSO registration. The webview authentication challenge cannot be completed by the PSSO registration host. No error is shown; the flow stalls. **Resolution:** Disable per-user MFA for all PSSO target users and use Conditional Access MFA policy instead.
->
-> - **Exclude newly-enrolled devices from strict CA "require compliant device" gating during bootstrap (DF-9):** A Conditional Access policy requiring "compliant device" blocks user PSSO registration on newly enrolled devices, because device compliance depends on PSSO being established first — a circular dependency. Device registration (Phase 1, silent) succeeds; user registration (Phase 2, interactive) fails with "compliant device required." **Resolution:** Temporarily exclude the enrollment device group or user group from strict CA "require compliant device" policies during the PSSO bootstrapping window; remove the exclusion after enrollment is confirmed.
->
-> - **Exempt PSSO / Microsoft login endpoints from TLS break-and-inspect (DF-10):** Corporate proxies performing TLS inspection on Microsoft login endpoints break PSSO token acquisition. PSSO registration and token-refresh flows use certificate-pinned requests; a proxy injecting a non-Apple-root CA breaks these flows. **Resolution:** Exempt the following endpoints from TLS inspection: `login.microsoftonline.com`, `login.microsoft.com`, `sts.windows.net`. Alternatively, use Tenant Restrictions v2 client-side signaling instead of proxy header injection.
+**Before You Deploy — Resolve These First:**
+
+The following issues cause Platform SSO registration to fail silently — no error is displayed, and the registration flow simply stalls or is blocked. Resolve all three before configuring the Settings Catalog policy.
+
+- **Remove legacy per-user MFA (DF-3):** Legacy per-user MFA (set in Azure AD per-user MFA settings, NOT Conditional Access) silently blocks Password sync PSSO registration. The webview authentication challenge cannot be completed by the PSSO registration host. No error is shown; the flow stalls. **Resolution:** Disable per-user MFA for all PSSO target users and use Conditional Access MFA policy instead.
+
+- **Exclude newly-enrolled devices from strict CA "require compliant device" gating during bootstrap (DF-9):** A Conditional Access policy requiring "compliant device" blocks user PSSO registration on newly enrolled devices, because device compliance depends on PSSO being established first — a circular dependency. Device registration (Phase 1, silent) succeeds; user registration (Phase 2, interactive) fails with "compliant device required." **Resolution:** Temporarily exclude the enrollment device group or user group from strict CA "require compliant device" policies during the PSSO bootstrapping window; remove the exclusion after enrollment is confirmed.
+
+- **Exempt PSSO / Microsoft login endpoints from TLS break-and-inspect (DF-10):** Corporate proxies performing TLS inspection on Microsoft login endpoints break PSSO token acquisition. PSSO registration and token-refresh flows use certificate-pinned requests; a proxy injecting a non-Apple-root CA breaks these flows. **Resolution:** Exempt the following endpoints from TLS inspection: `login.microsoftonline.com`, `login.microsoft.com`, `sts.windows.net`. Alternatively, use Tenant Restrictions v2 client-side signaling instead of proxy header injection.
 
 ## Steps
 
@@ -136,14 +163,14 @@ Platform SSO requires Company Portal (the Microsoft Enterprise SSO plug-in is bu
 - Deploy via Intune as a managed app (DMG/PKG line-of-business app), or verify existing deployment meets the version floor.
 - Verify: Open Company Portal on a test device and confirm version ≥ 5.2404.0 under About. If deploying the advanced ADE-during-Setup-Assistant path, see the [Advanced / Optional: ADE-during-Setup-Assistant](#advanced--optional-ade-during-setup-assistant) section at the end of this guide — that path requires Company Portal 5.2604.0 or newer (LOB app, NOT VPP).
 
-> **Deploy to the device — install target and assignment target are distinct:** The **install target is the device** — Company Portal carries the Microsoft Enterprise SSO plug-in, which Apple requires to be *present on the device* for Platform SSO to function. The end user never has to open or sign in to Company Portal — per Microsoft, "it just needs to be installed on the device." Deploy it as a **Required** app.
->
-> The **assignment target** governs which devices receive Company Portal — choose based on your fleet type:
->
-> - **Standard fleets (with user affinity):** assign Company Portal as Required to the **same user groups** as the Platform SSO Settings Catalog policy (Step 4), so the app and the policy land together. (This is also the rule for the ADE-during-Setup-Assistant path — see the three-policy same-group rule in the Advanced section.)
-> - **Shared / user-less Macs** (enrolled without user affinity): assign Company Portal to **device groups** instead — there is no user to target.
->
-> Note that an **older Company Portal version causes Platform SSO to fail** — pair the assignment with the version floor above.
+**Deploy to the device — install target and assignment target are distinct:** The **install target is the device** — Company Portal carries the Microsoft Enterprise SSO plug-in, which Apple requires to be *present on the device* for Platform SSO to function. The end user never has to open or sign in to Company Portal — per Microsoft, "it just needs to be installed on the device." Deploy it as a **Required** app.
+
+The **assignment target** governs which devices receive Company Portal — choose based on your fleet type:
+
+- **Standard fleets (with user affinity):** assign Company Portal as Required to the **same user groups** as the Platform SSO Settings Catalog policy (Step 4), so the app and the policy land together. (This is also the rule for the ADE-during-Setup-Assistant path — see the three-policy same-group rule in the Advanced section.)
+- **Shared / user-less Macs** (enrolled without user affinity): assign Company Portal to **device groups** instead — there is no user to target.
+
+Note that an **older Company Portal version causes Platform SSO to fail** — pair the assignment with the version floor above.
 
 ### Step 3: Create the Settings Catalog Policy
 
@@ -340,7 +367,11 @@ Platform SSO supports two ways the macOS login account comes into existence:
 | FileVault Policy (`AttemptAuthentication` / `RequireAuthentication` / `AllowOfflineGracePeriod` / `AllowAuthenticationGracePeriod`) | Verifies the **Entra** password at the **FileVault unlock** screen; grace-period variants bound how long a Mac stays unlockable **offline** before re-checking with Entra | Password method; enforce online password re-validation (e.g. cut off a disabled account) |
 | LoginPolicy / UnlockPolicy | Same idea for the **login window** and **lock-screen unlock** | Password method |
 
-> **Not the disk-encryption FileVault.** PSSO **FileVault Policy** only governs Entra-password verification at unlock; it does **not** enable or configure encryption — that is the separate **Full Disk Encryption** policy in [Configuration Profiles](03-configuration-profiles.md) (deployed to **devices**). With the **Secure Enclave** method these password gates don't apply at all.
+> **Not the disk-encryption FileVault.** PSSO **FileVault Policy** only governs Entra-password verification at unlock;
+
+> it does **not** enable or configure encryption — that is the separate **Full Disk Encryption** policy in [Configuration Profiles](03-configuration-profiles.md) (deployed to **devices**).
+
+> With the **Secure Enclave** method these password gates don't apply at all.
 
 **Cross-cutting (apply to any model):**
 
@@ -357,7 +388,15 @@ Platform SSO supports two ways the macOS login account comes into existence:
 | Force Touch ID for the Secure Enclave key | `enable_se_key_biometric_policy` | Secure Enclave method + require Touch ID whenever the key is accessed |
 | SSO for non-Microsoft apps | `AppPrefixAllowList`, `browser_sso_interaction_enabled`, `disable_explicit_app_prompt` | Extend SSO beyond Microsoft apps; migrating from the legacy Enterprise SSO extension |
 
-> **Standard single-user Secure Enclave build — leave these off.** With a single user, an account created by the enrollment profile (or interactively in Setup Assistant), and the Secure Enclave method, you do **not** configure the Model B settings (Create User At Login, Enable Authorization, authorization modes) or the Password-method gates (FileVault / Login / Unlock Policy). The only optional settings worth setting are **Non Platform SSO Accounts** (exclude the managed admin) and, optionally, **Account Display Name**. Reach for the rest only if you move to **shared devices**, **zero-touch during-Setup-Assistant** provisioning, or the **Password** auth method.
+> **Standard single-user Secure Enclave build — leave these off.**
+
+> With a single user, an account created by the enrollment profile (or interactively in Setup Assistant), and the Secure Enclave method,
+
+> you do **not** configure the Model B settings (Create User At Login, Enable Authorization, authorization modes) or the Password-method gates (FileVault / Login / Unlock Policy).
+
+> The only optional settings worth setting are **Non Platform SSO Accounts** (exclude the managed admin) and, optionally, **Account Display Name**.
+
+> Reach for the rest only if you move to **shared devices**, **zero-touch during-Setup-Assistant** provisioning, or the **Password** auth method.
 
 ## See Also
 
@@ -374,9 +413,19 @@ Platform SSO supports two ways the macOS login account comes into existence:
 
 ## Advanced / Optional: ADE-during-Setup-Assistant
 
-> **ADE-only path:** The following section covers Platform SSO registration during Setup Assistant — an advanced, optional configuration that requires Automated Device Enrollment (ADE / Apple Business Manager). This is NOT a supervised-only feature; it requires ADE specifically because PSSO must register before the user reaches the desktop. The **default and documented standard path is post-enrollment** (the user receives a "Registration Required" notification after reaching the desktop). Proceed here only if your organization requires zero-click PSSO registration during the ADE Setup Assistant flow.
+> **ADE-only path:** The following section covers Platform SSO registration during Setup Assistant —
 
-> _Section provenance — `last_verified: 2026-06-29` / `review_by: 2026-09-29`. This is the highest-drift content in this guide (macOS 26 GA, Company Portal 5.2604.0); re-confirm against current Microsoft Learn / Apple documentation at each 90-day review._
+> an advanced, optional configuration that requires Automated Device Enrollment (ADE / Apple Business Manager).
+
+> This is NOT a supervised-only feature; it requires ADE specifically because PSSO must register before the user reaches the desktop.
+
+> The **default and documented standard path is post-enrollment** (the user receives a "Registration Required" notification after reaching the desktop).
+
+> Proceed here only if your organization requires zero-click PSSO registration during the ADE Setup Assistant flow.
+
+> _Section provenance — `last_verified: 2026-06-29` / `review_by: 2026-09-29`._
+
+> _This is the highest-drift content in this guide (macOS 26 GA, Company Portal 5.2604.0); re-confirm against current Microsoft Learn / Apple documentation at each 90-day review._
 
 This guide's ADE-during-Setup-Assistant configuration corresponds to the **A2 path** as defined in the [macOS Platform SSO Provisioning Walkthrough's "Which Path Is Right for You?" table](../macos-lifecycle/01-psso-provisioning-walkthrough.md#which-path-is-right-for-you) — the standard post-enrollment alternative documented in Steps 1–4 is the **A1 path**.
 
@@ -405,7 +454,13 @@ In addition to all fields in Step 3, enable the following in the same Settings C
 | Authentication > Extensible single sign-on > Platform SSO > Enable Registration During Setup | Enabled | Triggers PSSO registration during Setup Assistant. **Required for this path — all auth methods, including Secure Enclave.** |
 | Authentication > Extensible single sign-on > Platform SSO > Enable Create First User During Setup | Enabled | **Password method ONLY** — the password-sync account-creation piece. **Omit on Secure Enclave / Smart Card.** |
 
-> **Secure Enclave deployments enable only `Enable Registration During Setup`.** `Enable Create First User During Setup` synthesizes the local account from the Entra password and applies solely to the **Password** method — leave it unset with Secure Enclave. The enrollment profile (or Setup Assistant) creates the account; PSSO registers it during setup. This is the configuration described in [Registration Approach: Decision and Alternatives](#registration-approach-decision-and-alternatives).
+> **Secure Enclave deployments enable only `Enable Registration During Setup`.**
+
+> `Enable Create First User During Setup` synthesizes the local account from the Entra password and applies solely to the **Password** method — leave it unset with Secure Enclave.
+
+> The enrollment profile (or Setup Assistant) creates the account; PSSO registers it during setup.
+
+> This is the configuration described in [Registration Approach: Decision and Alternatives](#registration-approach-decision-and-alternatives).
 
 ### Smart Card Exclusion
 

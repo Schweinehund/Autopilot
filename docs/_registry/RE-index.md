@@ -136,11 +136,11 @@
 | RE-120 | docs/admin-setup-macos/04-app-deployment.md | macOS App Deployment | Guide | Approved |
 | RE-121 | docs/admin-setup-macos/05-compliance-policy.md | macOS Compliance Policies | Guide | Approved |
 | RE-122 | docs/admin-setup-macos/06-config-failures.md | macOS Configuration-Caused Failures Reference | Guide | Approved |
-| RE-123 | docs/admin-setup-macos/07-platform-sso-setup.md | macOS Platform SSO Setup | Guide | Pending |
-| RE-124 | docs/admin-setup-macos/08-auth-methods-deep-dive.md | macOS Platform SSO: Auth Method Selection & Deep-Dive | Guide | Pending |
-| RE-125 | docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md | macOS Enterprise SSO Plug-in & Migration Guide | Guide | Pending |
-| RE-126 | docs/admin-setup-macos/10-kerberos-sso-extension.md | macOS Kerberos SSO Extension | Guide | Pending |
-| RE-127 | docs/admin-setup-macos/11-graph-api-platform-credential.md | Graph API: Platform Credential Management | Guide | Pending |
+| RE-123 | docs/admin-setup-macos/07-platform-sso-setup.md | macOS Platform SSO Setup | Guide | Approved |
+| RE-124 | docs/admin-setup-macos/08-auth-methods-deep-dive.md | macOS Platform SSO: Auth Method Selection & Deep-Dive | Guide | Approved |
+| RE-125 | docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md | macOS Enterprise SSO Plug-in & Migration Guide | Guide | Approved |
+| RE-126 | docs/admin-setup-macos/10-kerberos-sso-extension.md | macOS Kerberos SSO Extension | Guide | Approved |
+| RE-127 | docs/admin-setup-macos/11-graph-api-platform-credential.md | Graph API: Platform Credential Management | Guide | Approved |
 | RE-128 | docs/admin-setup-linux/00-overview.md | Linux Admin Setup Overview | Guide | Pending |
 | RE-129 | docs/admin-setup-linux/01-intune-linux-agent.md | Intune Linux Agent — Install and Configure | Guide | Pending |
 | RE-130 | docs/admin-setup-linux/02-enrollment-profile.md | Linux Enrollment Profile — Admin Configuration | Guide | Pending |
