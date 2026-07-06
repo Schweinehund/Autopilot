@@ -224,7 +224,7 @@ Plans:
 
 **Wave 9** *(blocked on Wave 8)*
 
-- [ ] 117-09-PLAN.md — 802.1X 02-07 (6 files, cohesive/heterogeneous, per-file D1 label + Summary template; 1868c dot3svc Transform B), C17 green + registry Approved (RETRO-02)
+- [x] 117-09-PLAN.md — 802.1X 02-07 (6 files, cohesive/heterogeneous, per-file D1 label + Summary template; 1868c dot3svc Transform B), C17 green + registry Approved (RETRO-02)
 
 **Wave 10** *(blocked on Wave 9)*
 
@@ -287,6 +287,6 @@ Plans:
 | 114. EEE Standard, Templates, Registry + Metadata Rules | 4/4 | Complete    | 2026-07-04 |
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
-| 117. Admin-Setup Guide Retrofit | 8/10 | In Progress|  |
+| 117. Admin-Setup Guide Retrofit | 9/10 | In Progress|  |
 | 118. Reference Doc Retrofit + Table Remediation | 0/TBD | Not started | — |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
