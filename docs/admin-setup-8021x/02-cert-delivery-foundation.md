@@ -1,4 +1,8 @@
 ---
+doc_id: RE-136
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-29
 review_by: 2026-09-27
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: all
 ---
 
-> **Prerequisites:** Read [EAP Method Overview](01-eap-method-overview.md) first.
-> For certificate term definitions, see [Network Authentication Glossary](../_glossary-network.md#scep).
+**Platform:** All Platforms · **Doc Type:** Guide · **Doc ID:** RE-136 · **Status:** Approved
 
 # 802.1X Certificate Delivery Foundation
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (All Platforms) Summary lead]
+
+> **Prerequisites:** Read [EAP Method Overview](01-eap-method-overview.md) first.
+> For certificate term definitions, see [Network Authentication Glossary](../_glossary-network.md#scep).
 
 ## Canonical Scope Callout
 
@@ -146,3 +156,9 @@ This matrix is the single canonical home for cert-delivery support across platfo
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-29 | Initial version -- cert-delivery foundation: ordering rule, scope callout, EKU, server-name validation, per-platform cert matrix | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

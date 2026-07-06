@@ -1,4 +1,8 @@
 ---
+doc_id: RE-140
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-30
 review_by: 2026-09-28
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: android
 ---
 
-> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
-> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-140 · **Status:** Approved
 
 # Android Enterprise 802.1X Admin Setup: Wi-Fi
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
+
+> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
+> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
 
 > **Scope:** Intune client-side configuration only. RADIUS/NPS server assumed to exist. [Full scope exclusion list](02-cert-delivery-foundation.md#canonical-scope-callout).
 
@@ -126,3 +136,9 @@ For NAC (Network Access Control) environments where the RADIUS policy is keyed t
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-30 | Initial version -- Android Enterprise 802.1X admin setup: Wi-Fi profiles for EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS across COBO/COPE/COSU/BYOD-WP modes; UPN-in-SAN deployment-failure WARNING (BYOD-WP); version-gated RADIUS server-name WARNING (Android 11+/14+); MAC randomization note (Android 13+); wired gap stub (no native Intune wired profile) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

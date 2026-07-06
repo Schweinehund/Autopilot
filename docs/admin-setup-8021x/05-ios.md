@@ -1,4 +1,8 @@
 ---
+doc_id: RE-139
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-30
 review_by: 2026-09-28
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: ios
 ---
 
-> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
-> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-139 · **Status:** Approved
 
 # iOS/iPadOS 802.1X Admin Setup: Wi-Fi and Wired
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (iOS) Summary lead]
+
+> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
+> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
 
 > **Scope:** Intune client-side configuration only. RADIUS/NPS server assumed to exist. [Full scope exclusion list](02-cert-delivery-foundation.md#canonical-scope-callout).
 
@@ -150,3 +160,9 @@ For SCEP certificate profile configuration and the deployment ordering rule, see
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-30 | Initial version -- iOS/iPadOS 802.1X admin setup: Wi-Fi + wired profiles for EAP-TLS / PEAP / EAP-TTLS; MAC-address randomization note (iOS 14+); M-series iPad wired use case; wired SCEP-only callout; PEAP "What breaks" callout | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

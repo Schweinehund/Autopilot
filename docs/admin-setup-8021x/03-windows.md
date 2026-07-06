@@ -1,4 +1,8 @@
 ---
+doc_id: RE-137
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-30
 review_by: 2026-09-28
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: windows
 ---
 
-> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
-> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-137 · **Status:** Approved
 
 # Windows 802.1X Admin Setup: Wi-Fi and Wired
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
+> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
+> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
 
 > **Scope:** Intune client-side configuration only. RADIUS/NPS server assumed to exist. [Full scope exclusion list](02-cert-delivery-foundation.md#canonical-scope-callout).
 
@@ -195,3 +205,9 @@ TEAP (Tunneled EAP, RFC 7170) appears in the Windows wired-network profile UI as
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-30 | Initial version -- Windows 802.1X admin setup: Wi-Fi + wired profiles for EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS; dot3svc Remediation pattern; enforcement-staging DANGER callout; KB5014754 strong-mapping callout | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-141
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-30
 review_by: 2026-09-28
 applies_to: both
@@ -6,10 +10,16 @@ audience: admin
 platform: linux
 ---
 
-> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
-> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-141 · **Status:** Approved
 
 # Linux 802.1X Admin Setup: EAP-TLS via nmcli
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Linux) Summary lead]
+
+> **Prerequisites:** Complete [EAP Method Overview](01-eap-method-overview.md) and
+> [Certificate Delivery Foundation](02-cert-delivery-foundation.md) before this guide.
 
 > **Scope:** Intune client-side configuration only. RADIUS/NPS server assumed to exist. [Full scope exclusion list](02-cert-delivery-foundation.md#canonical-scope-callout).
 
@@ -188,3 +198,9 @@ Replace `<interface-name>` with the actual interface (e.g., `eth0`, `enp3s0` -- 
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-30 | Initial version -- Linux 802.1X EAP-TLS admin setup via nmcli; platform gap lead WARNING (no native Intune Wi-Fi/wired/cert profiles); EAP method scope note (PEAP-MSCHAPv2 and EAP-TTLS out of scope); Ubuntu 24.04/26.04 LTS; out-of-band cert prerequisites; nmcli Wi-Fi EAP-TLS steps; two-column 802-1x.* reference parameter table; locked verification trio (nmcli connection show / ip addr show / journalctl -u NetworkManager); Wired H2 (same nmcli via type ethernet); MEDIUM-confidence freshness callout (Linux Intune surface actively developing) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
