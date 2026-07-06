@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This is an error-code lookup reference for Pre-Provisioning (white glove) and Self-Deploying mode failures in Windows Autopilot classic (APv1) deployments, including cross-reference rows into the MDM Enrollment and TPM Attestation categories that both modes share, plus mode-specific notes on reset-button behavior and physical TPM 2.0 requirements. APv2 Device Preparation does not support either mode. Primary audience is L1 service desk and L2 engineers.
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 

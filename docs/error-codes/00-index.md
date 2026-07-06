@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This is the master error-code lookup reference for Windows Autopilot deployments, indexing hex error codes and Event IDs across MDM enrollment, TPM attestation, ESP, pre-provisioning, and hybrid join categories for classic Autopilot (APv1), with a cross-reference to APv2 Device Preparation's symptom-based failure catalog. Primary audience is L1 service desk (quick lookup and escalation triage) and L2 engineers (category drill-down for detailed causes and fixes).
 
 > **Framework coverage:** This index primarily covers Windows Autopilot (classic/APv1) error codes. APv2 (Device Preparation) failures are symptom-based rather than code-based -- see the APv2 Note at the bottom of this page.
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).

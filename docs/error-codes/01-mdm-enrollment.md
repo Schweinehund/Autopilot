@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This is an error-code lookup reference for the MDM Enrollment (0x8018xxxx series) category of Windows Autopilot classic (APv1) errors that occur during OOBE when a device attempts MDM enrollment with Intune, including notes on where behavior carries over to APv2 Device Preparation. Primary audience is L1 service desk (triage and escalation actions) and L2 engineers (root-cause fixes).
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 

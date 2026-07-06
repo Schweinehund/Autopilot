@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This is an error-code lookup reference for Hybrid Entra Join and device registration failures in Windows Autopilot classic (APv1) deployments, mapping both hex error codes and Windows Event IDs to causes, plus ODJ Connector version and log-path notes. APv2 Device Preparation does not support hybrid Entra join. Primary audience is L1 service desk (triage and escalation) and L2 engineers (connector-level investigation).
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 

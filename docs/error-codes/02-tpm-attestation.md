@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This is an error-code lookup reference for TPM Attestation failures in Windows Autopilot classic (APv1) deployments, covering errors that occur during OOBE in pre-provisioning and self-deploying modes, plus hardware-specific known issues by TPM vendor. It notes that APv2 Device Preparation does not use these modes and so is largely unaffected. Primary audience is L1 service desk (triage and escalation) and L2 engineers (hardware/firmware investigation).
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 

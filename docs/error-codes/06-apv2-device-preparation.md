@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This is a symptom-based failure-lookup reference for Windows Autopilot Device Preparation (APv2) deployments, organized by deployment phase (enrollment, IME install, app installation, script execution, post-deployment) rather than hex error codes, since APv2 failures are identified by symptom and phase. Each entry follows a Symptom-Cause-Quick Check-Runbook format. Primary audience is L1 service desk and L2 engineers investigating APv2-specific deployment issues.
 
 > **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2) failure scenarios.
 > These failures are identified by symptom and deployment phase -- not hex error codes.

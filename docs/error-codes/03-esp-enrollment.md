@@ -16,7 +16,7 @@ audience: both
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This is an error-code lookup reference for Enrollment Status Page (ESP) and enrollment failures in Windows Autopilot classic (APv1) deployments, covering coded errors, policy-conflict patterns that produce no discrete error code, and ESP timeout scenarios. APv2 Device Preparation does not use the ESP, so this category is APv1-specific. Primary audience is L1 service desk (triage and escalation) and L2 engineers (deep-dive investigation).
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
