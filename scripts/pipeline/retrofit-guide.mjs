@@ -40,7 +40,7 @@
 //         mermaid-deferred explicit invocation)
 
 // Node built-ins ONLY -- zero external npm packages (matches scripts/pipeline/ convention)
-import { readFileSync, writeFileSync, existsSync, readdirSync, lstatSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, lstatSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
 
@@ -415,9 +415,8 @@ function processFile(absPath, docIdMap) {
 }
 
 // === Self-test mode (--self-test) ===
-// Five in-memory fixture sub-tests proving the inherited guards (adapted to admin-setup
-// paths + Guide doc_type + the D-05 mermaid-deferred hard-exclusion). A 6th sub-test
-// proving the whole-pre-H1-span fix is added in Task 2.
+// Six in-memory fixture sub-tests: the 5 inherited guard proofs (adapted to admin-setup
+// paths + Guide doc_type) plus a 6th NEW sub-test proving the whole-pre-H1-span fix.
 
 if (SELF_TEST) {
   let stPassed = 0, stFailed = 0;
@@ -509,6 +508,68 @@ if (SELF_TEST) {
       '(e) PATH-ALLOWLIST + D-05: outside paths refused, mermaid-deferred path refused, inside paths allowed',
       allOutsideRefused && allInsideAllowed && mermaidRefused,
       'outsideRefused=' + allOutsideRefused + ' insideAllowed=' + allInsideAllowed + ' mermaidRefused=' + mermaidRefused
+    );
+  }
+
+  // (f) NEW: synthetic pre-H1 span with TWO blockquotes + a trailing HTML comment
+  //     relocates after ## Summary with relocated-span byte length EQUAL to the
+  //     original span byte length (operationalizes the Pitfall-1 "warning sign" check --
+  //     diff pre-H1 span byte-for-byte against the post-Summary relocated span).
+  {
+    const synthetic =
+      '---\n' +
+      'platform: iOS\n' +
+      'last_verified: 2026-04-14\n' +
+      'review_by: 2026-07-13\n' +
+      'applies_to: iOS\n' +
+      'audience: admin\n' +
+      '---\n' +
+      '\n' +
+      '> **Platform gate:** This guide covers iOS/iPadOS ADE token configuration.\n' +
+      '> For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).\n' +
+      '\n' +
+      '> **Rebrand notice (2026-04-14):** Apple Business Manager (ABM) became **Apple Business** on\n' +
+      '> 2026-04-14. This guide retains the legacy "ABM" terminology for portal-navigation continuity.\n' +
+      '\n' +
+      '<!-- Authoring note: the MGP subsection is intentionally omitted for this device class. -->\n' +
+      '\n' +
+      '# Synthetic Span-Fix Test Title\n' +
+      '\n' +
+      'Body content here.\n';
+
+    // Write the synthetic fixture to a temp path under an allowlisted dir so processFile's
+    // guards pass, then invoke the real transform end-to-end.
+    const fixtureRel = 'docs/admin-setup-ios/__self-test-span-fixture.md';
+    const fixtureAbs = join(process.cwd(), fixtureRel);
+    let sixPassed = false;
+    let sixDetail = '';
+    try {
+      writeFileSync(fixtureAbs, synthetic, 'utf8');
+      const synMap = new Map([[fixtureRel, 'RE-T99']]);
+      const result = processFile(fixtureAbs, synMap);
+      if (!result.ok) {
+        sixDetail = 'processFile returned ERROR: ' + result.error;
+      } else {
+        const bytesMatch = result.preH1SpanOriginalBytes === result.preH1SpanRelocatedBytes;
+        const expectedLineCount = 7; // 2 blockquote lines + blank + 2 blockquote lines + blank + 1 html comment
+        const lineCountOk = result.preH1SpanLineCount === expectedLineCount;
+        // Confirm BOTH blockquotes AND the HTML comment survived in newContent (not just
+        // the first run) -- the direct proof that the defect this fork fixes is closed.
+        const hasBothBlockquotes = result.newContent.includes('Platform gate') && result.newContent.includes('Rebrand notice');
+        const hasHtmlComment = result.newContent.includes('Authoring note: the MGP subsection');
+        sixPassed = bytesMatch && lineCountOk && hasBothBlockquotes && hasHtmlComment;
+        sixDetail = 'origBytes=' + result.preH1SpanOriginalBytes + ' relocBytes=' + result.preH1SpanRelocatedBytes +
+          ' lineCount=' + result.preH1SpanLineCount + ' (expected ' + expectedLineCount + ')' +
+          ' bothBlockquotes=' + hasBothBlockquotes + ' htmlComment=' + hasHtmlComment;
+      }
+    } finally {
+      try { unlinkSync(fixtureAbs); } catch { /* best effort cleanup */ }
+    }
+
+    stAssert(
+      '(f) WHOLE-PRE-H1-SPAN FIX: 2-blockquote + trailing-HTML-comment fixture relocates with byte-length equality (no content dropped)',
+      sixPassed,
+      sixDetail
     );
   }
 
