@@ -19,9 +19,15 @@ phase_46_wave2_retrofit: 2026-04-25
 
 This guide covers Android Enterprise Fully Managed (COBO) enrollment, in which the entire device is corporate-managed with no personal app surface. It requires Managed Google Play binding as a hard prerequisite, and Zero-Touch portal access only if Zero-Touch is the chosen provisioning method among the four supported options. Requires the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
-> **Platform gate:** This guide covers Android Enterprise Fully Managed (COBO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all four provisioning methods (QR code, NFC, `afw#setup`, Zero-Touch), the COPE migration note, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration, and Entra join behavior.
+> **Platform gate:** This guide covers Android Enterprise Fully Managed (COBO) enrollment through Microsoft Intune,
+
+> including enrollment profile creation, enrollment token lifecycle, all four provisioning methods (QR code, NFC, `afw#setup`, Zero-Touch),
+
+> the COPE migration note, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration, and Entra join behavior.
+
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
 > For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
+
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 This guide walks an Intune administrator through creating and operating a Fully Managed (COBO) enrollment profile for corporate-owned Android devices: profile and token lifecycle, all four provisioning methods with COBO-specific callouts, the COPE migration context, Android 15 FRP + EFRP configuration, and Entra-join behavior.
@@ -43,7 +49,13 @@ On COBO (Fully Managed), the managed "work profile" is not a partition — it is
 
 COBO devices are Entra-joined during enrollment. The Android setup process uses a Chrome Custom Tab — an OS-launched Chrome tab — to complete Entra sign-in. This makes the Conditional Access prerequisite below load-bearing: a CA policy scoped to browsers plus the Microsoft Intune cloud app can intercept the Chrome-tab sign-in and block enrollment.
 
-> **Cross-platform note:** Android's Fully Managed is the closest analog to iOS Supervision on ADE-enrolled devices, but the mapping is partial — iOS supervision is a permanent per-device state that gates approximately 60 restriction settings on top of a normal MDM enrollment, whereas Android Fully Managed is an ownership-mode designation set at provisioning time. See [_glossary-android.md#fully-managed](../_glossary-android.md#fully-managed) for the full cross-platform framing.
+> **Cross-platform note:** Android's Fully Managed is the closest analog to iOS Supervision on ADE-enrolled devices, but the mapping is partial —
+
+> iOS supervision is a permanent per-device state that gates approximately 60 restriction settings on top of a normal MDM enrollment,
+
+> whereas Android Fully Managed is an ownership-mode designation set at provisioning time.
+
+> See [_glossary-android.md#fully-managed](../_glossary-android.md#fully-managed) for the full cross-platform framing.
 
 <a id="prerequisites"></a>
 ## Prerequisites
@@ -63,7 +75,13 @@ COBO devices are Entra-joined during enrollment. The Android setup process uses 
 
 - [ ] **Conditional Access exclusion for the Microsoft Intune cloud app — IF your tenant uses Conditional Access.** Per Microsoft Learn (verified 2026-04-21): *"The Android setup process uses a Chrome tab to authenticate your users during enrollment."* If your tenant has a Conditional Access policy using the *require a device to be marked as compliant* Grant control OR a Block policy applying to **All Cloud apps**, **Android**, and **Browsers**, you must exclude the **Microsoft Intune** cloud app from that policy. Tenants without such a CA policy are unaffected — this is not a universal hard prereq. <!-- MEDIUM confidence: Entra CA UI navigation verified 2026-04-21; re-verify at execute time per CONTEXT D-16. -->
 
-> **What breaks if misconfigured:** Missing Entra join → COBO enrollment fails at token generation with an opaque error surfaced in Intune admin center. Missing CA exclusion (when your tenant has a qualifying CA policy) → Chrome-tab sign-in fails during COBO device setup; admin sees an opaque "sign-in blocked" error on the device and correlating failures in Entra ID sign-in logs. Recovery: exclude the Microsoft Intune cloud app from the CA policy; retry the device setup from scratch.
+> **What breaks if misconfigured:** Missing Entra join → COBO enrollment fails at token generation with an opaque error surfaced in Intune admin center.
+
+> Missing CA exclusion (when your tenant has a qualifying CA policy) → Chrome-tab sign-in fails during COBO device setup;
+
+> admin sees an opaque "sign-in blocked" error on the device and correlating failures in Entra ID sign-in logs.
+
+> Recovery: exclude the Microsoft Intune cloud app from the CA policy; retry the device setup from scratch.
 
 <a id="cope-migration"></a>
 ## COPE Migration Note
@@ -127,11 +145,21 @@ After the enrollment profile is created, Intune generates the enrollment token a
 
 **Legacy "90-day" language does NOT apply to COBO.** The "up to 90-day max" enrollment-token expiry language from older documentation applies ONLY to AOSP (non-GMS) corporate user-associated tokens. It does NOT apply to COBO/Fully Managed tokens, which use the Default (no expiry) or Staging (up to 65 years) semantics above. Do not copy 90-day values from older runbooks or templates into COBO enrollment workflows.
 
-> **What breaks if misconfigured:** Staging token revoked prematurely → devices mid-enrollment flow fail at the token-check step with an opaque error on the device. Recovery: regenerate the staging token via **Replace token** and redistribute through the provisioning channel (QR image regeneration, NFC tag rewrite, or DPC extras JSON update). Symptom appears in: device setup flow (token rejected).
+> **What breaks if misconfigured:** Staging token revoked prematurely → devices mid-enrollment flow fail at the token-check step with an opaque error on the device.
 
-> **What breaks if misconfigured:** Token assigned to a group that excludes the target devices → devices fail the token-check during enrollment. Recovery: reassign the profile/token broadly or to a parent group that covers the intended device fleet.
+> Recovery: regenerate the staging token via **Replace token** and redistribute through the provisioning channel (QR image regeneration, NFC tag rewrite, or DPC extras JSON update).
 
-> **What breaks if misconfigured:** Exported token shared insecurely — email, public SharePoint, group chat — grants unauthorized enrollment capability to anyone who receives it. Recovery: **Revoke token** immediately; revocation does NOT affect already-enrolled devices, so in-flight enrollments are preserved. Rotate staging tokens on a 1-2-year cadence regardless of the 65-year ceiling to align with tenant security review.
+> Symptom appears in: device setup flow (token rejected).
+
+> **What breaks if misconfigured:** Token assigned to a group that excludes the target devices → devices fail the token-check during enrollment.
+
+> Recovery: reassign the profile/token broadly or to a parent group that covers the intended device fleet.
+
+> **What breaks if misconfigured:** Exported token shared insecurely — email, public SharePoint, group chat — grants unauthorized enrollment capability to anyone who receives it.
+
+> Recovery: **Revoke token** immediately; revocation does NOT affect already-enrolled devices, so in-flight enrollments are preserved.
+
+> Rotate staging tokens on a 1-2-year cadence regardless of the 65-year ceiling to align with tenant security review.
 
 Version tag: applies to Intune Android Enterprise enrollment per Microsoft Learn `setup-fully-managed` (ms.date 2025-05-08; updated 2026-04-16). See [Renewal / Maintenance](#renewal-maintenance) below for rotation cadence guidance.
 
@@ -140,13 +168,19 @@ Version tag: applies to Intune Android Enterprise enrollment per Microsoft Learn
 
 COBO supports all four Android Enterprise provisioning methods: QR code, NFC, `afw#setup` (DPC identifier), and Zero-Touch. The full method-availability and cross-mode support matrix lives in [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md); this section carries COBO-specific constraint callouts that the matrix does not cover. The COBO matrix row is the filtered-row target: see [02-provisioning-methods.md#cobo](../android-lifecycle/02-provisioning-methods.md#cobo).
 
-> **Conditional Access reminder:** If your tenant has a Conditional Access policy affecting the Microsoft Intune cloud app, confirm the cloud app is excluded before proceeding. The provisioning flow triggers the Chrome Custom Tab at the Entra sign-in step, and a CA policy on the Intune cloud app will block it. See [Prerequisites](#prerequisites) above.
+> **Conditional Access reminder:** If your tenant has a Conditional Access policy affecting the Microsoft Intune cloud app, confirm the cloud app is excluded before proceeding.
+
+> The provisioning flow triggers the Chrome Custom Tab at the Entra sign-in step, and a CA policy on the Intune cloud app will block it. See [Prerequisites](#prerequisites) above.
 
 ### QR code
 
 The Intune admin center generates a QR image at the enrollment profile. An admin presents the QR to the factory-reset device; the device camera decodes the payload, downloads the DPC, and begins COBO provisioning. Internet connectivity is required BEFORE scanning on earlier Android versions; the built-in QR reader arrived in a later release — see the matrix for the breakpoint. QR codes embed enrollment tokens and Wi-Fi credentials in plaintext: never commit tenant-specific QR images to git, never email them, never post them to a public SharePoint. Treat the QR image as a secret artifact, regenerated per deployment batch.
 
-> **What breaks if misconfigured:** The QR image captured from the Intune portal expires when the token is regenerated or revoked. A stale QR from an old deployment batch succeeds at the scan step but fails at the subsequent token-exchange step with an opaque error. Recovery: regenerate the QR from the current enrollment profile; redistribute to the admin-led provisioning site.
+> **What breaks if misconfigured:** The QR image captured from the Intune portal expires when the token is regenerated or revoked.
+
+> A stale QR from an old deployment batch succeeds at the scan step but fails at the subsequent token-exchange step with an opaque error.
+
+> Recovery: regenerate the QR from the current enrollment profile; redistribute to the admin-led provisioning site.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md#qr](../android-lifecycle/02-provisioning-methods.md#qr).
 
@@ -154,7 +188,9 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 COBO retains NFC provisioning support on Android 10+; the Android-11 COPE NFC removal does NOT affect COBO. NFC uses NFC Forum Type 2 Tags with an 888-byte payload limit — Wi-Fi credentials plus DPC extras can exceed the limit, so shorten SSID values and drop optional extras. NFC Beam (device-to-device tap) was removed in Android 10; NFC provisioning today uses a tag written from a provisioning app, not a peer-to-peer bump.
 
-> **What breaks if misconfigured:** NFC tag payload exceeds 888 bytes → NFC provisioning fails at the tap step with no clear error. Recovery: shorten the SSID, drop optional DPC extras, and rewrite the tag. Do not attempt to truncate the enrollment token or DPC signature values — those fields are fixed.
+> **What breaks if misconfigured:** NFC tag payload exceeds 888 bytes → NFC provisioning fails at the tap step with no clear error.
+
+> Recovery: shorten the SSID, drop optional DPC extras, and rewrite the tag. Do not attempt to truncate the enrollment token or DPC signature values — those fields are fixed.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md#nfc](../android-lifecycle/02-provisioning-methods.md#nfc).
 
@@ -162,7 +198,11 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 On the initial Google sign-in prompt during factory-reset setup, type `afw#setup` instead of a Gmail address. This triggers DPC download and provisions the device into COBO. `afw#setup` is still supported for COBO on Android 11+ (contrast: the COPE path was removed on Android 11+ — see [_glossary-android.md#afw-setup](../_glossary-android.md#afw-setup)). System apps are disabled by default on devices provisioned through `afw#setup` — the Intune device configuration profile must explicitly re-enable required system apps (Calendar, Contacts, Messaging, OEM utilities) through the system-app allow list.
 
-> **What breaks if misconfigured:** The Intune device configuration profile does not re-enable required system apps → users report broken device state post-provisioning (Calendar and Contacts missing from the launcher despite apparently being installed). Recovery: add the required system-app package names to the system-app allow list in the device configuration profile and redeploy.
+> **What breaks if misconfigured:** The Intune device configuration profile does not re-enable required system apps → users report broken device state post-provisioning
+
+> (Calendar and Contacts missing from the launcher despite apparently being installed).
+
+> Recovery: add the required system-app package names to the system-app allow list in the device configuration profile and redeploy.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md#afw-setup](../android-lifecycle/02-provisioning-methods.md#afw-setup).
 
@@ -170,9 +210,19 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 COBO provisioning via Zero-Touch requires the Phase 35 Zero-Touch portal binding. See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune) for ZT↔Intune linking and [02-zero-touch-portal.md#dpc-extras-json](02-zero-touch-portal.md#dpc-extras-json) for the DPC extras JSON. Dual-SIM IMEI 1 registration and the corporate-scale reseller-upload workflow are Phase 39 scope.
 
-> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both. Configuring both on the same devices causes out-of-sync enrollment state on Samsung hardware. See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage; [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record; and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
+> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both. Configuring both on the same devices causes out-of-sync enrollment state on Samsung hardware.
 
-> **What breaks if misconfigured:** The device connects to a captive-portal Wi-Fi at first boot → the Zero-Touch configuration download fails → the device falls through to consumer Android OOBE and must be factory-reset to retry. Recovery: ship devices with a SIM for cellular fallback, or provide an accessible open Wi-Fi network at the provisioning site without captive-portal interception.
+> See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage;
+
+> [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record;
+
+> and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
+
+> **What breaks if misconfigured:** The device connects to a captive-portal Wi-Fi at first boot → the Zero-Touch configuration download fails →
+
+> the device falls through to consumer Android OOBE and must be factory-reset to retry.
+
+> Recovery: ship devices with a SIM for cellular fallback, or provide an accessible open Wi-Fi network at the provisioning site without captive-portal interception.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md#zero-touch](../android-lifecycle/02-provisioning-methods.md#zero-touch).
 
@@ -197,7 +247,11 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 5. **Assignments:** assign to all COBO devices (or a targeted device group that covers your Android 15 COBO fleet).
 6. **Review + create**.
 
-> **What breaks if misconfigured:** EFRP not assigned to COBO devices before a factory reset → FRP locks the device post-reset → re-enrollment requires Google-account credential intervention with the pre-reset device-owner account (HIGH recovery cost). Recovery: unlock requires a device-owner account associated with the pre-reset state; otherwise contact the device vendor. Prevention: audit EFRP assignment every 60-day review cycle.
+> **What breaks if misconfigured:** EFRP not assigned to COBO devices before a factory reset → FRP locks the device post-reset →
+
+> re-enrollment requires Google-account credential intervention with the pre-reset device-owner account (HIGH recovery cost).
+
+> Recovery: unlock requires a device-owner account associated with the pre-reset state; otherwise contact the device vendor. Prevention: audit EFRP assignment every 60-day review cycle.
 
 <!-- MEDIUM confidence: Intune admin center EFRP navigation path verified against Microsoft Learn 2026-04-21. Unified admin center rollouts may reshape breadcrumbs; re-verify at execute time per CONTEXT D-16. -->
 

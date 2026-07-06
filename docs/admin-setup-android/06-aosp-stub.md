@@ -18,9 +18,15 @@ applies_to: AOSP
 
 This guide covers AOSP device management for specialty AR/VR headsets and wearable scanners that lack Google Mobile Services — a distinct surface from Android Enterprise modes such as COBO, BYOD, Dedicated, and Zero-Touch. It requires neither Managed Google Play binding nor Zero-Touch portal access, since AOSP enrollment is QR-only. Requires an Intune tenant with Android enrollment enabled and the Intune Administrator role.
 
-> **Platform gate:** AOSP device management in Intune — specialty AR/VR and wearable-scanner hardware with no GMS. Other Android Enterprise modes: [Android Admin Setup Overview](00-overview.md). iOS/iPadOS: [iOS Admin Guides](../admin-setup-ios/00-overview.md). macOS: [macOS Admin Guides](../admin-setup-macos/00-overview.md). Android terminology: [Glossary](../_glossary-android.md).
+> **Platform gate:** AOSP device management in Intune — specialty AR/VR and wearable-scanner hardware with no GMS.
 
-> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
+> Other Android Enterprise modes: [Android Admin Setup Overview](00-overview.md). iOS/iPadOS: [iOS Admin Guides](../admin-setup-ios/00-overview.md).
+
+> macOS: [macOS Admin Guides](../admin-setup-macos/00-overview.md). Android terminology: [Glossary](../_glossary-android.md).
+
+> **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play.
+
+> See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
 
 <!-- The #### In Managed Google Play subsection is intentionally omitted.
      AOSP does not use Managed Google Play (no Google Mobile Services). -->

@@ -19,9 +19,13 @@ applies_to: GMS-modes
 This guide covers Managed Google Play (MGP) tenant binding, the foundational prerequisite for every Android Enterprise GMS enrollment mode — Fully Managed (COBO), BYOD Work Profile, Dedicated (COSU), and Zero-Touch Enrollment (ZTE). It requires Managed Google Play portal access (not Zero-Touch portal access), and the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
 > **Platform gate:** This guide covers Managed Google Play (MGP) tenant binding for Android
-> Enterprise GMS modes: COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), and
-> Zero-Touch Enrollment (ZTE). MGP binding is NOT required for AOSP.
+> Enterprise GMS modes:
+
+> COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), and Zero-Touch Enrollment (ZTE).
+
+> MGP binding is NOT required for AOSP.
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
+
 > For macOS ADE, see [macOS Admin Setup](../admin-setup-macos/00-overview.md).
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
@@ -68,7 +72,9 @@ Binding is effectively one-way. Reversal is destructive — see [Disconnect Cons
 
 #### In Managed Google Play
 
-> **Account type check:** Google prefills your Microsoft Entra account. **As of August 2024, Entra is preferred.** Consumer Gmail remains supported for legacy tenants; Google Workspace accounts fail. See [Account Types](#account-types) above.
+> **Account type check:** Google prefills your Microsoft Entra account. **As of August 2024, Entra is preferred.**
+
+> Consumer Gmail remains supported for legacy tenants; Google Workspace accounts fail. See [Account Types](#account-types) above.
 
 1. Confirm the prefilled Microsoft Entra account, or switch accounts.
 2. Follow Google prompts to create the Google Admin account tied to your Entra account.

@@ -106,14 +106,14 @@
 | RE-090 | docs/admin-setup-apv2/03-device-preparation-policy.md | APv2 Setup Step 3: Device Preparation Policy | Guide | Approved |
 | RE-091 | docs/admin-setup-apv2/04-corporate-identifiers.md | APv2 Setup Step 4: Corporate Identifiers | Guide | Approved |
 | RE-092 | docs/admin-setup-android/00-overview.md | Android Enterprise Admin Setup | Guide | Pending |
-| RE-093 | docs/admin-setup-android/01-managed-google-play.md | Bind Managed Google Play | Guide | Pending |
-| RE-094 | docs/admin-setup-android/02-zero-touch-portal.md | Configure Zero-Touch Portal | Guide | Pending |
-| RE-095 | docs/admin-setup-android/03-fully-managed-cobo.md | Android Enterprise Fully Managed (COBO) Admin Setup | Guide | Pending |
-| RE-096 | docs/admin-setup-android/04-byod-work-profile.md | BYOD Work Profile — Admin Setup | Guide | Pending |
-| RE-097 | docs/admin-setup-android/05-dedicated-devices.md | Android Enterprise Dedicated (kiosk/COSU) Admin Setup | Guide | Pending |
-| RE-098 | docs/admin-setup-android/06-aosp-stub.md | AOSP Device Management Stub — Intune | Guide | Pending |
-| RE-099 | docs/admin-setup-android/07-knox-mobile-enrollment.md | Configure Knox Mobile Enrollment | Guide | Pending |
-| RE-100 | docs/admin-setup-android/08-cope-full-admin.md | Android Enterprise Corporate-Owned Work Profile (COPE / WPCO) Admin Setup | Guide | Pending |
+| RE-093 | docs/admin-setup-android/01-managed-google-play.md | Bind Managed Google Play | Guide | Approved |
+| RE-094 | docs/admin-setup-android/02-zero-touch-portal.md | Configure Zero-Touch Portal | Guide | Approved |
+| RE-095 | docs/admin-setup-android/03-fully-managed-cobo.md | Android Enterprise Fully Managed (COBO) Admin Setup | Guide | Approved |
+| RE-096 | docs/admin-setup-android/04-byod-work-profile.md | BYOD Work Profile — Admin Setup | Guide | Approved |
+| RE-097 | docs/admin-setup-android/05-dedicated-devices.md | Android Enterprise Dedicated (kiosk/COSU) Admin Setup | Guide | Approved |
+| RE-098 | docs/admin-setup-android/06-aosp-stub.md | AOSP Device Management Stub — Intune | Guide | Approved |
+| RE-099 | docs/admin-setup-android/07-knox-mobile-enrollment.md | Configure Knox Mobile Enrollment | Guide | Approved |
+| RE-100 | docs/admin-setup-android/08-cope-full-admin.md | Android Enterprise Corporate-Owned Work Profile (COPE / WPCO) Admin Setup | Guide | Approved |
 | RE-101 | docs/admin-setup-android/09-aosp-realwear.md | Configure RealWear AOSP Devices in Intune | Guide | Pending |
 | RE-102 | docs/admin-setup-android/10-aosp-zebra.md | Configure Zebra AOSP Devices in Intune | Guide | Pending |
 | RE-103 | docs/admin-setup-android/11-aosp-pico.md | Configure Pico AOSP Devices in Intune | Guide | Pending |

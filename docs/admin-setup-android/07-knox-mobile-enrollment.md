@@ -18,10 +18,19 @@ applies_to: KME
 
 This guide covers Samsung Knox Mobile Enrollment (KME), which provisions Samsung hardware into existing Android Enterprise modes — Fully Managed (COBO), Dedicated, or COPE/WPCO — rather than serving as its own enrollment mode. It requires Managed Google Play binding, but not the Zero-Touch portal, since KME and Zero-Touch are mutually exclusive on Samsung fleets. Requires Knox Admin Portal access and the Intune Administrator role.
 
-> **Platform gate:** Samsung Knox Mobile Enrollment (KME) — Knox Admin Portal account setup, EMM profile, Custom JSON Data, and Knox→Intune handoff for Samsung Android Enterprise enrollment. Samsung-only.
+> **Platform gate:** Samsung Knox Mobile Enrollment (KME) — Knox Admin Portal account setup, EMM profile, Custom JSON Data, and Knox→Intune handoff for Samsung Android Enterprise enrollment.
+
+> Samsung-only.
+
 > For iOS, see [iOS Admin Guides](../admin-setup-ios/00-overview.md); for macOS, [macOS Admin Setup](../admin-setup-macos/00-overview.md); for terminology, [Android glossary](../_glossary-android.md).
 
-> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment — never both. Configuring both causes out-of-sync enrollment state; KME takes precedence at the device firmware level. See [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the within-ZT-doc record and [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) below for the within-this-doc record.
+> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment — never both.
+
+> Configuring both causes out-of-sync enrollment state; KME takes precedence at the device firmware level.
+
+> See [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the within-ZT-doc record
+
+> and [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) below for the within-this-doc record.
 
 Phase 44 scope: Samsung Knox Admin Portal B2B account, EMM profile, Knox Custom JSON Data, and Knox→Intune handoff. KME provisions Samsung devices into existing Android Enterprise modes (COBO / Dedicated / WPCO); KME is NOT a separate enrollment mode.
 
@@ -49,7 +58,11 @@ Submit your Samsung Knox B2B account application TODAY (Day 0). Samsung approval
    - Coordinate with your authorized Samsung reseller (existing-stock route) OR plan Knox Deployment App (existing-stock retroactive route).
    - Export the Intune enrollment token for use in Step N (DPC Custom JSON Data).
 
-> **What breaks if misconfigured:** Submitting B2B late delays the entire enrollment cycle by 1-2 business days at the moment devices are needed. Recovery: submit on Day 0; if Samsung approval is delayed beyond 2 business days, contact Samsung Knox B2B support with the application ID. Symptom appears in: Knox Admin Portal sign-in returns "Account pending approval".
+> **What breaks if misconfigured:** Submitting B2B late delays the entire enrollment cycle by 1-2 business days at the moment devices are needed.
+
+> Recovery: submit on Day 0; if Samsung approval is delayed beyond 2 business days, contact Samsung Knox B2B support with the application ID.
+
+> Symptom appears in: Knox Admin Portal sign-in returns "Account pending approval".
 
 <a id="step-1-knox-portal"></a>
 ## Step 1 — Sign in to Knox Admin Portal
@@ -136,6 +149,7 @@ The Custom JSON Data field in the KME EMM profile carries the Intune enrollment 
 <!-- AEKNOX-03-shared-anti-paste-block -->
 > ⚠️ **DO NOT paste this JSON into the other portal**
 > The KME and ZT DPC-extras JSON look similar but use different field names.
+
 > Pasting ZT JSON into KME (or vice versa) silently produces a "stuck applying configuration" failure.
 > If you maintain both portals: confirm the portal name in your browser tab before pasting.
 <!-- /AEKNOX-03-shared-anti-paste-block -->
@@ -152,7 +166,13 @@ The Custom JSON Data field in the KME EMM profile carries the Intune enrollment 
 
 **Structural contrast with Zero-Touch (do NOT copy):** The Zero-Touch DPC extras JSON uses a nested provisioning-admin-extras-bundle wrapper plus three fixed provisioning-device-admin fields (component name, signature checksum, package download location). Knox's Custom JSON Data is FLAT — a single key/value pair with NO nested wrapper. Pasting the ZT-shaped JSON (with the nested wrapper) into Knox silently produces a "stuck applying configuration" failure: Knox does not recognize the wrapper structure and the device hangs at the DPC handoff step. See the anti-paste blockquote above for the per-paste warning.
 
-> **What breaks if misconfigured:** Pasting Zero-Touch DPC extras JSON (with the nested wrapper structure) into Knox Custom JSON Data silently produces a "stuck applying configuration" failure at first boot. Recovery: replace the Custom JSON Data field with the FLAT Knox JSON shown above; factory-reset affected devices. Symptom appears in: device setup flow (stuck at DPC handoff) and Intune admin center (no enrollment activity for affected serials).
+> **What breaks if misconfigured:** Pasting Zero-Touch DPC extras JSON (with the nested wrapper structure) into Knox Custom JSON Data silently produces a "stuck applying configuration" failure
+
+> at first boot.
+
+> Recovery: replace the Custom JSON Data field with the FLAT Knox JSON shown above; factory-reset affected devices.
+
+> Symptom appears in: device setup flow (stuck at DPC handoff) and Intune admin center (no enrollment activity for affected serials).
 
 <a id="step-6-first-boot"></a>
 ## Step 6 — Verify first-boot enrollment

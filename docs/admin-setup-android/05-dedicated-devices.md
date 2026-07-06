@@ -18,18 +18,22 @@ applies_to: Dedicated
 
 This guide covers Android Enterprise Dedicated (kiosk/COSU) enrollment across four scenarios — single-app kiosk, multi-app kiosk, digital signage, and Entra shared device mode. It requires Managed Google Play binding as a hard prerequisite, and Zero-Touch portal access only if Zero-Touch is the chosen provisioning method. Requires the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
-> **Platform gate:** This guide covers Android Enterprise Dedicated (kiosk/COSU) enrollment through Microsoft Intune — including the four Dedicated scenarios (single-app kiosk, multi-app kiosk with Managed Home Screen, digital signage, and Entra shared device mode), enrollment profile creation, enrollment token lifecycle, all four provisioning methods with Dedicated-specific constraint callouts, MHS exit-PIN synchronization (the top repeated-escalation pattern for Dedicated devices), and Android 15 FRP re-provisioning behavior for kiosk fleets. Applies to Android 8.0+.
-> For Android Enterprise Fully Managed (COBO) enrollment, see [03-fully-managed-cobo.md](03-fully-managed-cobo.md#key-concepts).
-> For BYOD Work Profile, see [04-byod-work-profile.md](04-byod-work-profile.md#key-concepts).
-> For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
-> For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
-> For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
+**Platform gate:** This guide covers Android Enterprise Dedicated (kiosk/COSU) enrollment through Microsoft Intune — including the four Dedicated scenarios (single-app kiosk, multi-app kiosk with Managed Home Screen, digital signage, and Entra shared device mode), enrollment profile creation, enrollment token lifecycle, all four provisioning methods with Dedicated-specific constraint callouts, MHS exit-PIN synchronization (the top repeated-escalation pattern for Dedicated devices), and Android 15 FRP re-provisioning behavior for kiosk fleets. Applies to Android 8.0+.
+For Android Enterprise Fully Managed (COBO) enrollment, see [03-fully-managed-cobo.md](03-fully-managed-cobo.md#key-concepts).
+For BYOD Work Profile, see [04-byod-work-profile.md](04-byod-work-profile.md#key-concepts).
+For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
+For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
+For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 This guide covers Dedicated (kiosk/COSU) device enrollment through Microsoft Intune: the four Dedicated scenarios, enrollment profile creation with Dedicated-specific deltas, token lifecycle and QR rotation discipline, all four provisioning methods with constraint callouts, MHS exit-kiosk PIN synchronization, and Android 15 FRP re-provisioning behavior for kiosk fleets.
 
 **How to use:** Intune administrators read linearly. L1 Service Desk uses the [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks) (Phase 40, now shipped): [22: Enrollment Blocked](../l1-runbooks/22-android-enrollment-blocked.md), [24: Device Not Enrolled](../l1-runbooks/24-android-device-not-enrolled.md), [25: Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md), [26: MGP App Not Installed](../l1-runbooks/26-android-mgp-app-not-installed.md). Note: Runbook 23 (Work Profile Not Created) is BYOD-exclusive and does not apply to Dedicated devices. L2 Desktop Engineering uses the [Android L2 investigation runbooks](../l2-runbooks/00-index.md#android-l2-runbooks). LOB Operations Owners read [Audience and stakeholders](#audience-and-stakeholders) for the persona-specific responsibilities.
 
-> **Platform note:** "Dedicated device" in Android Enterprise (COSU — Corporate-Owned, Single-Use) is single-purpose kiosk hardware with no per-user identity. This is structurally distinct from iOS Shared iPad (multi-user shared identity) and Windows Shared PC (multi-user fast-switch). For cross-platform comparison, see [Android dedicated device disambiguation](../_glossary-android.md#dedicated).
+> **Platform note:** "Dedicated device" in Android Enterprise (COSU — Corporate-Owned, Single-Use) is single-purpose kiosk hardware with no per-user identity.
+
+> This is structurally distinct from iOS Shared iPad (multi-user shared identity) and Windows Shared PC (multi-user fast-switch).
+
+> For cross-platform comparison, see [Android dedicated device disambiguation](../_glossary-android.md#dedicated).
 
 <a id="key-concepts"></a>
 ## Key Concepts
@@ -96,7 +100,11 @@ Only multi-app kiosk and digital signage scenarios use Managed Home Screen (MHS)
 - [ ] **Zero-Touch portal binding** — only required if using Zero-Touch (ZTE) as the provisioning method. See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune).
 - [ ] **Entra licenses for users + MSAL-integrated apps** — only required for the Entra shared device mode scenario. Workers who sign in/out must have Entra licenses; the apps they use must be MSAL-integrated to participate in the shared sign-in/sign-out flow per [_glossary-android.md#entra-shared-device-mode](../_glossary-android.md#entra-shared-device-mode).
 
-> **What breaks if misconfigured:** MGP not bound → MHS app cannot be assigned, multi-app and digital signage scenarios fail at the "Installing required apps" step. Recovery: re-bind MGP per [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp). Symptom appears in: Intune admin center (Managed Google Play status disconnected) and on the device during enrollment (apps fail to install).
+> **What breaks if misconfigured:** MGP not bound → MHS app cannot be assigned, multi-app and digital signage scenarios fail at the "Installing required apps" step.
+
+> Recovery: re-bind MGP per [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp).
+
+> Symptom appears in: Intune admin center (Managed Google Play status disconnected) and on the device during enrollment (apps fail to install).
 
 <a id="enrollment-profile"></a>
 ## Enrollment profile
@@ -114,13 +122,23 @@ Dedicated enrollment profiles offer two token type choices — unlike COBO's Def
 
 Cross-link to [Scenarios](#scenarios) routing paragraph for the decision flowchart. The token type selection is irreversible within the profile — wrong token type requires a new enrollment profile.
 
-> **What breaks if misconfigured:** Wrong token type means the chosen scenario is structurally unavailable. Example: choosing Standard for a multi-shift sign-in workflow eliminates per-user identity capability; all users share the same device account. Recovery: revoke the token, recreate the enrollment profile with the correct token type, redistribute the new QR/enrollment artifact. Symptom appears in: device runtime (sign-in flow missing or Entra prompts absent).
+> **What breaks if misconfigured:** Wrong token type means the chosen scenario is structurally unavailable.
+
+> Example: choosing Standard for a multi-shift sign-in workflow eliminates per-user identity capability; all users share the same device account.
+
+> Recovery: revoke the token, recreate the enrollment profile with the correct token type, redistribute the new QR/enrollment artifact.
+
+> Symptom appears in: device runtime (sign-in flow missing or Entra prompts absent).
 
 **Delta 2: Static Entra device group assignment — REQUIRED**
 
 When assigning the enrollment profile to a device group, use a **static** Entra device group. Dynamic device groups compute membership after enrollment fires — during burst provisioning (multiple devices enrolling simultaneously), membership lag causes token-check enrollment failures for devices not yet in the dynamic group.
 
-> **What breaks if misconfigured:** Dynamic device group used → token-check enrollment failures during burst provisioning when device group membership lags behind enrollment timing. Recovery: change the enrollment profile assignment to a static Entra device group; re-issue tokens if needed. Symptom appears in: Intune admin center (devices stuck at enrollment with token-check failures); on device (enrollment flow blocked at token-validation step).
+> **What breaks if misconfigured:** Dynamic device group used → token-check enrollment failures during burst provisioning when device group membership lags behind enrollment timing.
+
+> Recovery: change the enrollment profile assignment to a static Entra device group; re-issue tokens if needed.
+
+> Symptom appears in: Intune admin center (devices stuck at enrollment with token-check failures); on device (enrollment flow blocked at token-validation step).
 
 **Delta 3: Managed Home Screen (MHS) app config requirement (multi-app + digital signage scenarios only)**
 
@@ -128,7 +146,11 @@ For multi-app kiosk and digital signage scenarios, the Managed Home Screen app (
 
 Cross-link to the multi-app row in [Scenarios](#scenarios). Forward-reference: the exit-kiosk PIN MUST be configured identically in both this MHS app config policy AND the device restrictions profile — see [Exit-kiosk PIN synchronization](#exit-kiosk-pin-synchronization) for the failure pattern and remediation.
 
-> **What breaks if misconfigured:** MHS app not assigned (or assigned as Available rather than Required) → device boots to standard Android launcher instead of MHS; no kiosk lockdown applied. Recovery: in Intune admin center, set the MHS app assignment to Required for the Dedicated device group; force a policy sync. Symptom appears in: device home screen (standard Android launcher visible instead of MHS).
+> **What breaks if misconfigured:** MHS app not assigned (or assigned as Available rather than Required) → device boots to standard Android launcher instead of MHS; no kiosk lockdown applied.
+
+> Recovery: in Intune admin center, set the MHS app assignment to Required for the Dedicated device group; force a policy sync.
+
+> Symptom appears in: device home screen (standard Android launcher visible instead of MHS).
 
 **Delta 4: Token expiry and QR rotation discipline**
 
@@ -138,7 +160,11 @@ Token expiry rotation breaks any printed, laminated, or posted QR enrollment art
 
 Cross-link: see [Phase 36 enrollment token section](03-fully-managed-cobo.md#enrollment-token) for general token lifecycle operations (Replace, Revoke, Export).
 
-> **What breaks if misconfigured:** Printed/laminated QR artifacts expire silently when their underlying token expires; field provisioning succeeds at scan but fails at token-exchange. Recovery: revoke old token, generate new token with longer expiry, regenerate QR image, redistribute to field locations. Prevention: track token expiry dates centrally; rotate before expiry rather than after artifacts fail.
+> **What breaks if misconfigured:** Printed/laminated QR artifacts expire silently when their underlying token expires; field provisioning succeeds at scan but fails at token-exchange.
+
+> Recovery: revoke old token, generate new token with longer expiry, regenerate QR image, redistribute to field locations.
+
+> Prevention: track token expiry dates centrally; rotate before expiry rather than after artifacts fail.
 
 <a id="enrollment-token"></a>
 ## Enrollment token
@@ -156,9 +182,13 @@ After the enrollment profile is created, Intune generates an enrollment token. A
 
 For token lifecycle operations (Replace, Revoke, Export) — these are identical to COBO mechanics — see [Phase 36 enrollment token section](03-fully-managed-cobo.md#enrollment-token).
 
-> **What breaks if misconfigured:** Token assigned to a group that excludes the target devices → token-check fails during enrollment with an opaque error. Recovery: reassign to an inclusive static group; re-run device enrollment. Symptom appears in: Intune admin center (enrollment failures with token-check error) and device setup flow.
+> **What breaks if misconfigured:** Token assigned to a group that excludes the target devices → token-check fails during enrollment with an opaque error.
 
-> **What breaks if misconfigured:** Exported token shared insecurely (email, public SharePoint, group chat) grants unauthorized enrollment capability. Recovery: revoke token immediately (already-enrolled devices unaffected); regenerate and redistribute via secure channel.
+> Recovery: reassign to an inclusive static group; re-run device enrollment. Symptom appears in: Intune admin center (enrollment failures with token-check error) and device setup flow.
+
+> **What breaks if misconfigured:** Exported token shared insecurely (email, public SharePoint, group chat) grants unauthorized enrollment capability.
+
+> Recovery: revoke token immediately (already-enrolled devices unaffected); regenerate and redistribute via secure channel.
 
 <a id="provisioning-method-choice"></a>
 ## Provisioning method choice
@@ -169,7 +199,9 @@ Dedicated supports all four Android Enterprise provisioning methods: QR code, NF
 
 The most common Dedicated provisioning method. The Intune admin center generates a QR image at the enrollment profile; the factory-reset device camera decodes the payload, downloads the DPC, and begins provisioning. QR codes embed the enrollment token plus Wi-Fi credentials in plaintext — treat the QR image as a secret artifact and plan rotation cadence BEFORE printing or laminating (see [Enrollment profile § Delta 4](#enrollment-profile)).
 
-> **What breaks if misconfigured:** Stale QR (regenerated after print/lamination but old artifact still in field) → scan succeeds but token-exchange fails. Recovery: regenerate QR from current enrollment profile and redistribute. Cross-link [Enrollment profile § Delta 4](#enrollment-profile) for QR rotation discipline.
+> **What breaks if misconfigured:** Stale QR (regenerated after print/lamination but old artifact still in field) → scan succeeds but token-exchange fails.
+
+> Recovery: regenerate QR from current enrollment profile and redistribute. Cross-link [Enrollment profile § Delta 4](#enrollment-profile) for QR rotation discipline.
 
 ### NFC
 
@@ -181,22 +213,38 @@ Available for Dedicated provisioning. NFC uses NFC Forum Type 2 Tags with an 888
 
 On the initial Google sign-in prompt during factory-reset setup, type `afw#setup` instead of a Gmail address; this triggers DPC download and Dedicated provisioning. See [afw#setup](../_glossary-android.md#afw-setup) for historical context. System apps are disabled by default on `afw#setup`-provisioned devices — the Intune device configuration profile must explicitly re-enable required system apps via the system-app allow list.
 
-> **What breaks if misconfigured:** Required system apps not re-enabled → users report broken device state post-provisioning (Calendar, Contacts, OEM utilities missing). Recovery: add required system-app package names to the allow list in the device configuration profile and redeploy.
+> **What breaks if misconfigured:** Required system apps not re-enabled → users report broken device state post-provisioning (Calendar, Contacts, OEM utilities missing).
+
+> Recovery: add required system-app package names to the allow list in the device configuration profile and redeploy.
 
 ### Zero-Touch
 
 Dedicated supports Zero-Touch Enrollment (ZTE) provisioning. See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune) for ZT↔Intune linking and [02-zero-touch-portal.md#dpc-extras-json](02-zero-touch-portal.md#dpc-extras-json) for the DPC extras JSON configuration.
 
-> Corporate-scale ZTE content (reseller-upload handoff, device claim workflow, profile assignment at scale, dual-SIM IMEI 1 registration) is delivered separately in **Phase 39** — see [Phase 35 ZT portal doc](02-zero-touch-portal.md) as the current canonical entry point for ZT setup.
+> Corporate-scale ZTE content (reseller-upload handoff, device claim workflow, profile assignment at scale, dual-SIM IMEI 1 registration) is delivered separately in **Phase 39** —
 
-> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both. Configuring both on the same devices causes out-of-sync enrollment state on Samsung hardware. See [07-knox-mobile-enrollment.md](07-knox-mobile-enrollment.md) for full KME coverage and [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
+> see [Phase 35 ZT portal doc](02-zero-touch-portal.md) as the current canonical entry point for ZT setup.
 
-> **What breaks if misconfigured:** ZT device connects to captive-portal Wi-Fi at first boot → Zero-Touch configuration download fails → device falls through to consumer Android OOBE; must factory-reset to retry. Recovery: ship devices with a SIM for cellular fallback, or provide an open Wi-Fi network without captive-portal interception at the provisioning site.
+> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both. Configuring both on the same devices causes out-of-sync enrollment state on Samsung hardware.
+
+> See [07-knox-mobile-enrollment.md](07-knox-mobile-enrollment.md) for full KME coverage
+
+> and [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record
+
+> and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
+
+> **What breaks if misconfigured:** ZT device connects to captive-portal Wi-Fi at first boot → Zero-Touch configuration download fails →
+
+> device falls through to consumer Android OOBE; must factory-reset to retry.
+
+> Recovery: ship devices with a SIM for cellular fallback, or provide an open Wi-Fi network without captive-portal interception at the provisioning site.
 
 <a id="exit-kiosk-pin-synchronization"></a><a id="exit-kiosk-pin"></a>
 ## Exit-kiosk PIN synchronization
 
-> ⚠️ **Multi-app kiosks and digital signage:** the exit-kiosk PIN MUST be configured identically in both the device restrictions profile AND the Managed Home Screen app configuration. Mismatch causes a visible error at kiosk exit attempt — the top repeated-escalation pattern for Dedicated devices. [MEDIUM: MS Q&A community, last_verified 2026-04-22]
+> ⚠️ **Multi-app kiosks and digital signage:** the exit-kiosk PIN MUST be configured identically in both the device restrictions profile AND the Managed Home Screen app configuration.
+
+> Mismatch causes a visible error at kiosk exit attempt — the top repeated-escalation pattern for Dedicated devices. [MEDIUM: MS Q&A community, last_verified 2026-04-22]
 
 The exit-kiosk PIN requires configuration in two separate Intune policies:
 
@@ -215,15 +263,23 @@ Both must be set to the same value. If the exit-kiosk PIN is set in only one pol
 
 > **Applies to Android 15+**
 >
-> ⚠️ Dedicated devices are typically re-provisioned (factory reset + re-enroll), not re-enrolled in place — describing FRP behavior during factory-reset re-provisioning is therefore distinct from COBO's re-enrollment-in-place context. On Android 15, FRP behavior depends on which reset pathway you use. [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
+> ⚠️ Dedicated devices are typically re-provisioned (factory reset + re-enroll), not re-enrolled in place —
+
+> describing FRP behavior during factory-reset re-provisioning is therefore distinct from COBO's re-enrollment-in-place context.
+
+> On Android 15, FRP behavior depends on which reset pathway you use. [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 
 **Pathway 1 — Settings > Factory data reset:** No FRP triggered on Dedicated (COSU) devices. Safe for routine re-provisioning. This is materially different from COPE behavior, which has FRP on Settings reset. [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 
-> **What breaks:** Relying on Settings reset for offline/abandoned devices is safe for FRP, but token expiry must still be valid at re-enrollment time. If the token has expired since the QR was printed, re-enrollment fails at token-exchange — see [Enrollment token § QR rotation discipline](#enrollment-token).
+> **What breaks:** Relying on Settings reset for offline/abandoned devices is safe for FRP, but token expiry must still be valid at re-enrollment time.
+
+> If the token has expired since the QR was printed, re-enrollment fails at token-exchange — see [Enrollment token § QR rotation discipline](#enrollment-token).
 
 **Pathway 2 — Recovery/bootloader reset:** FRP applies. Enterprise FRP (EFRP) pre-configuration is required to recover; otherwise Google account credential intervention with the pre-reset device-owner account is needed (HIGH recovery cost). [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 
-> **What breaks:** Field-replacement workflow that uses recovery reset on Dedicated devices without EFRP pre-configured = device lockout requiring Google-account credential intervention. Recovery: configure EFRP per [Phase 36 EFRP configuration](03-fully-managed-cobo.md#configure-efrp) BEFORE provisioning the Dedicated fleet, not after.
+> **What breaks:** Field-replacement workflow that uses recovery reset on Dedicated devices without EFRP pre-configured = device lockout requiring Google-account credential intervention.
+
+> Recovery: configure EFRP per [Phase 36 EFRP configuration](03-fully-managed-cobo.md#configure-efrp) BEFORE provisioning the Dedicated fleet, not after.
 
 **Pathway 3 — Intune wipe:** No FRP. Cleanest re-provisioning pathway when the device is online and Intune-managed. [HIGH: MS Learn corporate methods, last_verified 2026-04-22]
 

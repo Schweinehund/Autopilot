@@ -19,13 +19,26 @@ phase_46_wave2_retrofit: 2026-04-25
 
 This guide covers Android Enterprise BYOD (personally-owned) Work Profile enrollment, where a managed work-profile partition coexists with personal apps and data on the user's own device. It requires Managed Google Play binding to distribute the Microsoft Intune and Company Portal apps, but does not use the Zero-Touch portal since BYOD enrollment is user-initiated with no distributable token. Requires the Intune Administrator role, or a custom role granting enrollment-restriction and Android-configuration permissions.
 
-> **Platform gate:** This guide covers Android Enterprise BYOD (personally-owned) Work Profile enrollment through Microsoft Intune, including enrollment restrictions, work profile policy, data transfer controls, privacy boundary table, Wi-Fi certificate-based authentication, the management app change (Company Portal → Microsoft Intune app), and the AMAPI migration callout (April 2025).
+> **Platform gate:** This guide covers Android Enterprise BYOD (personally-owned) Work Profile enrollment through Microsoft Intune,
+
+> including enrollment restrictions, work profile policy, data transfer controls,
+
+> privacy boundary table, Wi-Fi certificate-based authentication, the management app change (Company Portal → Microsoft Intune app), and the AMAPI migration callout (April 2025).
+
 > For corporate-owned Fully Managed (COBO) enrollment, see [03-fully-managed-cobo.md](03-fully-managed-cobo.md#key-concepts).
+
 > For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
 > For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
+
 > For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
-> ⚠️ This guide covers post-AMAPI-migration BYOD Work Profile (April 2025). See [## AMAPI Migration](#amapi-migration) for the three behavioral changes (custom OMA-URI removal, Wi-Fi certificate authentication requirement, management app change from Company Portal to Microsoft Intune app). Pre-April-2025 guidance does not apply.
+> ⚠️ This guide covers post-AMAPI-migration BYOD Work Profile (April 2025).
+
+> See [## AMAPI Migration](#amapi-migration) for the three behavioral changes (custom OMA-URI removal, Wi-Fi certificate authentication requirement,
+
+> management app change from Company Portal to Microsoft Intune app).
+
+> Pre-April-2025 guidance does not apply.
 
 **How to use:** Intune administrators read linearly. End users enrolling personal devices should read [docs/end-user-guides/android-work-profile-setup.md](../end-user-guides/android-work-profile-setup.md). L1 Service Desk uses the [Android L1 Runbooks](../l1-runbooks/00-index.md#android-l1-runbooks) (Phase 40, now shipped): [22: Enrollment Blocked](../l1-runbooks/22-android-enrollment-blocked.md), [23: Work Profile Not Created](../l1-runbooks/23-android-work-profile-not-created.md), [24: Device Not Enrolled](../l1-runbooks/24-android-device-not-enrolled.md), [25: Compliance Blocked](../l1-runbooks/25-android-compliance-blocked.md), [26: MGP App Not Installed](../l1-runbooks/26-android-mgp-app-not-installed.md). L2 Desktop Engineering uses the [Android L2 investigation runbooks](../l2-runbooks/00-index.md#android-l2-runbooks).
 
@@ -36,7 +49,11 @@ This guide covers Android Enterprise BYOD (personally-owned) Work Profile enroll
 
 On BYOD Work Profile (also known as 'personally-owned work profile' in Google terminology), the managed work profile is a separate partition on a personal device. Work apps, work data, work certificates, and work policies live inside this partition; personal apps, personal data, personal contacts, and personal browser history live outside it. The Android OS enforces the boundary between the two partitions at the kernel level. See [BYOD](../_glossary-android.md#byod) and [Work Profile](../_glossary-android.md#work-profile) for authoritative definitions.
 
-> **Cross-platform note:** BYOD Work Profile is the closest Android analog to iOS Account-Driven User Enrollment, but the mapping is partial — iOS User Enrollment uses a managed APFS volume and Managed Apple ID; Android uses a work-profile partition and the user's existing Google account. See [BYOD](../_glossary-android.md#byod) for the full framing.
+> **Cross-platform note:** BYOD Work Profile is the closest Android analog to iOS Account-Driven User Enrollment, but the mapping is partial —
+
+> iOS User Enrollment uses a managed APFS volume and Managed Apple ID; Android uses a work-profile partition and the user's existing Google account.
+
+> See [BYOD](../_glossary-android.md#byod) for the full framing.
 
 ### Tier inversion: the user enrolls the device
 
@@ -73,7 +90,11 @@ AMAPI introduces a web-based enrollment path: users can initiate BYOD work profi
 
 Web enrollment requires Android 10+; the legacy Company Portal path remains available for Android 8–9. [MEDIUM: techcommunity blog 4370417, last_verified 2026-04-22] See [03-android-version-matrix.md#byod](../android-lifecycle/03-android-version-matrix.md#byod) for the full minimum-OS record. [HIGH: MS Learn, last_verified 2026-04-22]
 
-> **What breaks if misconfigured:** Admin continues to rely on custom OMA-URI profiles for BYOD policy → policies silently do not apply on post-April-2025 devices; admins observe "policy configured but not enforced" divergence in device state. Recovery: re-author policy using the standard Android Enterprise (work profile) device configuration profile surface.
+> **What breaks if misconfigured:** Admin continues to rely on custom OMA-URI profiles for BYOD policy → policies silently do not apply on post-April-2025 devices;
+
+> admins observe "policy configured but not enforced" divergence in device state.
+
+> Recovery: re-author policy using the standard Android Enterprise (work profile) device configuration profile surface.
 
 <a id="prerequisites"></a>
 ## Prerequisites
@@ -86,7 +107,13 @@ Web enrollment requires Android 10+; the legacy Company Portal path remains avai
 - [ ] **User has a personal device signed into a personal Google account** (BYOD is user-initiated; the admin does not distribute or reset devices).
 - [ ] **User's Entra account is licensed for Intune** and assigned the BYOD enrollment profile (work profile policy and compliance policy) via the Intune admin center.
 
-> **What breaks if misconfigured:** MGP binding not complete → Microsoft Intune app and Company Portal cannot be distributed via Managed Google Play; BYOD enrollment stalls at "Installing required apps". Symptom appears in: end-user device during enrollment (apps fail to install from Play Store); Intune admin center (Managed Google Play status shows disconnected). Recovery: re-bind MGP per [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp).
+> **What breaks if misconfigured:** MGP binding not complete → Microsoft Intune app and Company Portal cannot be distributed via Managed Google Play;
+
+> BYOD enrollment stalls at "Installing required apps".
+
+> Symptom appears in: end-user device during enrollment (apps fail to install from Play Store); Intune admin center (Managed Google Play status shows disconnected).
+
+> Recovery: re-bind MGP per [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp).
 
 BYOD has no enrollment token — enrollment is user-initiated, not token-distributed. Contrast with COBO; see [03-fully-managed-cobo.md](03-fully-managed-cobo.md).
 
@@ -109,7 +136,13 @@ Enrollment restrictions control which device types and ownership categories can 
 
 **Recommended BYOD policy:** Allow `Android Enterprise (work profile)` + Allow `Personally owned`. Block `Android Enterprise (fully managed)` for BYOD user groups so users cannot accidentally enroll the wrong mode.
 
-> **What breaks if misconfigured:** Personal Android not blocked when the organization requires work-profile-only enrollment → users inadvertently enroll as BYOD via their personal Gmail account with no policy applied. Symptom appears in: Intune admin center Devices list (device registered but no policy assigned). Recovery: edit the enrollment restriction to block Personally owned for non-BYOD-eligible users, then advise affected users to re-enroll via Company Portal.
+> **What breaks if misconfigured:** Personal Android not blocked when the organization requires work-profile-only enrollment →
+
+> users inadvertently enroll as BYOD via their personal Gmail account with no policy applied.
+
+> Symptom appears in: Intune admin center Devices list (device registered but no policy assigned).
+
+> Recovery: edit the enrollment restriction to block Personally owned for non-BYOD-eligible users, then advise affected users to re-enroll via Company Portal.
 
 <a id="work-profile-policy"></a>
 ## Work profile policy
@@ -136,7 +169,13 @@ The work profile policy (Android Enterprise device restrictions) governs what th
 
 **Assignment:** Assign the policy to the Entra group of BYOD-enrolled users. The policy must be scoped to the same group as the enrollment restriction.
 
-> **What breaks if misconfigured:** Work profile policy assigned to a group that excludes the BYOD-enrolled user population → enrollment succeeds but no policy applies; compliance evaluation reports "policy not assigned". Symptom appears in: Intune admin center (Devices > [device] > Configuration). Recovery: re-scope the policy assignment to the Entra group receiving the enrollment restriction.
+> **What breaks if misconfigured:** Work profile policy assigned to a group that excludes the BYOD-enrolled user population → enrollment succeeds but no policy applies;
+
+> compliance evaluation reports "policy not assigned".
+
+> Symptom appears in: Intune admin center (Devices > [device] > Configuration).
+
+> Recovery: re-scope the policy assignment to the Entra group receiving the enrollment restriction.
 
 <a id="data-transfer-controls"></a>
 ## Data transfer controls
@@ -177,12 +216,18 @@ The end-user guide [docs/end-user-guides/android-work-profile-setup.md](../end-u
 
 Android 15 introduced [Private Space](../_glossary-android.md#private-space) as a personal-side feature on the work-profile partition; Intune cannot manage it. See [version matrix breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-private-space-breakpoint) for the cross-mode behavior.
 
-> **What breaks if privacy boundary is misrepresented:** Admins explain BYOD to users with inaccurate visibility claims → trust collapses when users discover the mismatch at deployment or during an audit. Recovery: correct the user-facing messaging (see [docs/end-user-guides/android-work-profile-setup.md](../end-user-guides/android-work-profile-setup.md)).
+> **What breaks if privacy boundary is misrepresented:** Admins explain BYOD to users with inaccurate visibility claims →
+
+> trust collapses when users discover the mismatch at deployment or during an audit.
+
+> Recovery: correct the user-facing messaging (see [docs/end-user-guides/android-work-profile-setup.md](../end-user-guides/android-work-profile-setup.md)).
 
 <a id="wifi-cert-auth"></a>
 ## Wi-Fi policy (certificate authentication)
 
-> **AMAPI reminder:** See [AMAPI Migration](#amapi-migration) — Wi-Fi profiles using username/password authentication are not reliable on post-April-2025 BYOD devices. Use certificate-based authentication. [MEDIUM: techcommunity blog 4370417, last_verified 2026-04-22]
+> **AMAPI reminder:** See [AMAPI Migration](#amapi-migration) — Wi-Fi profiles using username/password authentication are not reliable on post-April-2025 BYOD devices.
+
+> Use certificate-based authentication. [MEDIUM: techcommunity blog 4370417, last_verified 2026-04-22]
 
 For BYOD Work Profile, Microsoft Intune supports deploying Wi-Fi profiles to the work profile container. Post-AMAPI, only certificate-based authentication methods are reliable.
 
@@ -196,12 +241,20 @@ For BYOD Work Profile, Microsoft Intune supports deploying Wi-Fi profiles to the
 
 **Avoid username/password:** EAP-TTLS with PAP/MS-CHAP/MS-CHAPv2 and PEAP with MS-CHAPv2 are listed as options in Intune UI but break on post-AMAPI-enrolled BYOD devices. [MEDIUM: techcommunity blog 4370417, last_verified 2026-04-22]
 
-> **What breaks if misconfigured:** Wi-Fi policy uses username/password authentication → policy deploys successfully in Intune admin center but breaks at user sign-in on device post-AMAPI; users see opaque "authentication failed" errors. Symptom appears in: device Wi-Fi settings (Wi-Fi connects then repeatedly drops or fails to authenticate). Recovery: rebuild the Wi-Fi profile using EAP-TLS with SCEP/PKCS client certificate; SAN must include UPN.
+> **What breaks if misconfigured:** Wi-Fi policy uses username/password authentication → policy deploys successfully in Intune admin center but breaks at user sign-in on device post-AMAPI;
+
+> users see opaque "authentication failed" errors.
+
+> Symptom appears in: device Wi-Fi settings (Wi-Fi connects then repeatedly drops or fails to authenticate).
+
+> Recovery: rebuild the Wi-Fi profile using EAP-TLS with SCEP/PKCS client certificate; SAN must include UPN.
 
 <a id="management-app-change"></a>
 ## Management app
 
-> **AMAPI reminder:** See [AMAPI Migration](#amapi-migration) — the primary management app changed from Company Portal to the Microsoft Intune app in April 2025. [MEDIUM: techcommunity blog 4370417, last_verified 2026-04-22]
+> **AMAPI reminder:** See [AMAPI Migration](#amapi-migration) — the primary management app changed from Company Portal to the Microsoft Intune app in April 2025.
+
+> [MEDIUM: techcommunity blog 4370417, last_verified 2026-04-22]
 
 Post-AMAPI, three apps are involved in BYOD Work Profile management. Understanding each app's role is important for both admin configuration and end-user guidance:
 
@@ -213,7 +266,11 @@ Post-AMAPI, three apps are involved in BYOD Work Profile management. Understandi
 
 End users will see both Company Portal AND Microsoft Intune app installed after enrollment. The end-user guide [docs/end-user-guides/android-work-profile-setup.md](../end-user-guides/android-work-profile-setup.md) covers the user-visible experience.
 
-> **What breaks if misconfigured:** End user instructed to install Company Portal and stop there → MAM works; device management self-service (contact IT, log collection) is not discoverable because the Intune app role has shifted post-AMAPI. Recovery: update end-user guidance to highlight both apps post-AMAPI.
+> **What breaks if misconfigured:** End user instructed to install Company Portal and stop there → MAM works;
+
+> device management self-service (contact IT, log collection) is not discoverable because the Intune app role has shifted post-AMAPI.
+
+> Recovery: update end-user guidance to highlight both apps post-AMAPI.
 
 <a id="renewal-maintenance"></a>
 ## Renewal / Maintenance

@@ -19,11 +19,16 @@ applies_to: ZTE
 This guide covers Zero-Touch Enrollment (ZTE) portal setup — creating the Zero-Touch portal account, linking it to Intune, and authoring the DPC extras JSON — used to enable Zero-Touch provisioning for Fully Managed (COBO), Dedicated, and mixed corporate fleets. It requires both Managed Google Play binding and Zero-Touch portal access, plus the Intune Administrator role.
 
 > **Platform gate:** ZT portal account setup, DPC extras JSON, and ZT↔Intune linking for Android Enterprise Zero-Touch Enrollment (ZTE).
+
 > For iOS, see [iOS Admin Guides](../admin-setup-ios/00-overview.md); for macOS, [macOS Admin Setup](../admin-setup-macos/00-overview.md); for terminology, [Android glossary](../_glossary-android.md).
 
-> **Reseller prerequisite:** Devices must be purchased from an authorized Zero-Touch reseller. Self-registration of existing stock is not supported. Devices deregistered from Zero-Touch cannot be re-registered without reseller involvement. See [Step 0](#step-0-reseller) below.
+> **Reseller prerequisite:** Devices must be purchased from an authorized Zero-Touch reseller. Self-registration of existing stock is not supported.
 
-> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment — never both. Configuring both causes out-of-sync enrollment state. See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage and [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) below for the within-this-doc record.
+> Devices deregistered from Zero-Touch cannot be re-registered without reseller involvement. See [Step 0](#step-0-reseller) below.
+
+> ⚠️ **KME/ZT mutual exclusion (Samsung):** For Samsung fleets, choose either Knox Mobile Enrollment (KME) or Zero-Touch Enrollment — never both. Configuring both causes out-of-sync enrollment state.
+
+> See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage and [KME/ZT Mutual Exclusion](#kme-zt-mutual-exclusion) below for the within-this-doc record.
 
 Phase 35 scope: ZT portal setup, ZT↔Intune linking, DPC extras JSON. Corporate-scale content (device-claim workflow, profile-assignment at scale, dual-SIM IMEI 1, reseller-upload handoff) is Phase 39 and will extend this guide.
 
@@ -103,6 +108,7 @@ Paste the JSON below into the ZT portal configuration. Replace `YourEnrollmentTo
 <!-- AEKNOX-03-shared-anti-paste-block -->
 > ⚠️ **DO NOT paste this JSON into the other portal**
 > The KME and ZT DPC-extras JSON look similar but use different field names.
+
 > Pasting ZT JSON into KME (or vice versa) silently produces a "stuck applying configuration" failure.
 > If you maintain both portals: confirm the portal name in your browser tab before pasting.
 <!-- /AEKNOX-03-shared-anti-paste-block -->
@@ -169,7 +175,11 @@ Once the reseller uploads devices, they appear in the ZT portal under **Devices*
 
 Canonical UI walkthrough: [Google ZT customer-portal help](https://support.google.com/work/android/topic/9158960). <!-- verify UI at execute time -->
 
-> **What breaks if misconfigured:** Claiming devices into a Fully Managed configuration when the target mode was Dedicated or COPE causes devices to enroll as Fully Managed instead. Symptom: Intune admin center shows Fully Managed on devices intended for other modes. Recovery: unassign devices from the erroneous configuration and reassign under a correctly-authored Method B configuration.
+> **What breaks if misconfigured:** Claiming devices into a Fully Managed configuration when the target mode was Dedicated or COPE causes devices to enroll as Fully Managed instead.
+
+> Symptom: Intune admin center shows Fully Managed on devices intended for other modes.
+
+> Recovery: unassign devices from the erroneous configuration and reassign under a correctly-authored Method B configuration.
 
 <a id="profile-assignment"></a>
 ### Profile Assignment at Scale
@@ -181,7 +191,11 @@ Fleet profile assignment must respect the Method A vs Method B choice documented
 
 For fleets with mixed ownership modes, create separate configurations via Method B and assign each configuration to the appropriate device set under ZT portal **Devices**.
 
-> **What breaks if misconfigured:** A non-COBO fleet linked via Method A causes all devices to enroll as Fully Managed regardless of intended mode. Symptom: Dedicated-kiosk or COPE-intended devices boot as Fully Managed in the Intune admin center. Recovery: delete the Method-A-created configuration, re-author via Method B, and re-assign the device set.
+> **What breaks if misconfigured:** A non-COBO fleet linked via Method A causes all devices to enroll as Fully Managed regardless of intended mode.
+
+> Symptom: Dedicated-kiosk or COPE-intended devices boot as Fully Managed in the Intune admin center.
+
+> Recovery: delete the Method-A-created configuration, re-author via Method B, and re-assign the device set.
 
 <a id="dual-sim-imei-1"></a>
 ### Dual-SIM IMEI 1 Registration
@@ -201,7 +215,11 @@ Concrete check at device-claim: before selecting Samsung devices under ZT portal
 
 For broader Samsung guidance including top-of-doc framing, see [KME/ZT Mutual Exclusion (Samsung)](#kme-zt-mutual-exclusion) above.
 
-> **What breaks if misconfigured:** Samsung devices claimed in both KME and ZT silently enroll via KME, ignoring the ZT configuration. Symptom: Intune admin center shows the devices but not enrolled via Zero-Touch; ZT portal shows the claim but no first-boot activity. Recovery: remove the KME configuration for the device set, then factory-reset affected devices.
+> **What breaks if misconfigured:** Samsung devices claimed in both KME and ZT silently enroll via KME, ignoring the ZT configuration.
+
+> Symptom: Intune admin center shows the devices but not enrolled via Zero-Touch; ZT portal shows the claim but no first-boot activity.
+
+> Recovery: remove the KME configuration for the device set, then factory-reset affected devices.
 
 <a id="configuration-must-be-assigned"></a>
 ### Configuration Must Be Assigned
@@ -210,7 +228,11 @@ When you paste the DPC extras JSON (see [DPC Extras JSON Configuration](#dpc-ext
 
 Concrete admin action in the ZT portal: after creating a configuration under **Configurations** and pasting the DPC extras JSON, navigate to **Devices**, select the target device set, and explicitly assign the configuration. A configuration that exists but is not assigned to any device is inert.
 
-> **What breaks if misconfigured:** Configuration created but not assigned causes devices to boot into the consumer Setup Wizard instead of the Intune DPC (CloudDPC) enrollment flow. Symptom: devices arrive at user hands in consumer setup state; the Intune admin center shows no enrollment attempts. Recovery: assign the configuration to the correct device set in the ZT portal, then factory-reset and re-boot affected devices.
+> **What breaks if misconfigured:** Configuration created but not assigned causes devices to boot into the consumer Setup Wizard instead of the Intune DPC (CloudDPC) enrollment flow.
+
+> Symptom: devices arrive at user hands in consumer setup state; the Intune admin center shows no enrollment attempts.
+
+> Recovery: assign the configuration to the correct device set in the ZT portal, then factory-reset and re-boot affected devices.
 
 ## Verification
 

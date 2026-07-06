@@ -18,10 +18,10 @@ applies_to: COPE
 
 This guide covers Android Enterprise Corporate-Owned Work Profile (COPE / WPCO) enrollment, in which a managed work-profile container is isolated from a personal-side partition on a corporate-owned device. It requires Managed Google Play binding as a hard prerequisite, and Zero-Touch portal access only if Zero-Touch is the chosen provisioning method among the five supported options. Requires the Intune Administrator role, or a custom RBAC role granting enrollment-management permissions.
 
-> **Platform gate:** This guide covers Android Enterprise Corporate-owned devices with work profile (COPE / WPCO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all five provisioning methods (QR code, NFC, `afw#setup`, Token entry, Zero-Touch) with COPE-specific Android 11+ removal callouts, the inverse-direction COPE Migration Note back-link to the COBO sibling, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration with the COPE-specific FRP behavior table and the Settings-app-reset Google-account re-enrollment requirement, the Android 15 Private Space ⚠️ unmanaged callout, and the COPE-vs-COBO decision matrix.
-> For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
-> For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
-> For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
+**Platform gate:** This guide covers Android Enterprise Corporate-owned devices with work profile (COPE / WPCO) enrollment through Microsoft Intune, including enrollment profile creation, enrollment token lifecycle, all five provisioning methods (QR code, NFC, `afw#setup`, Token entry, Zero-Touch) with COPE-specific Android 11+ removal callouts, the inverse-direction COPE Migration Note back-link to the COBO sibling, Android 15 Factory Reset Protection + Enterprise FRP (EFRP) configuration with the COPE-specific FRP behavior table and the Settings-app-reset Google-account re-enrollment requirement, the Android 15 Private Space ⚠️ unmanaged callout, and the COPE-vs-COBO decision matrix.
+For iOS/iPadOS admin setup, see [iOS Admin Guides](../admin-setup-ios/00-overview.md).
+For macOS admin setup, see [macOS Admin Guides](../admin-setup-macos/00-overview.md).
+For Android provisioning terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 This guide walks an Intune administrator through creating and operating an Android Enterprise Corporate-owned devices with work profile (COPE / WPCO) enrollment profile: profile and token lifecycle, all five provisioning methods with COPE-specific callouts, the inverse-direction COPE Migration Note back-link to COBO, Android 15 FRP + EFRP configuration with COPE-specific FRP behavior, the Android 15 Private Space unmanaged callout, the Samsung-admins KME-or-Zero-Touch callout under Zero-Touch, and a COPE-vs-COBO decision matrix for net-new corporate Android deployments.
 
@@ -46,7 +46,11 @@ COPE devices are Entra-joined during enrollment. The Android setup process uses 
 
 COPE / WPCO has no first-class equivalent on Windows, macOS, or iOS — the "corporate device with user-separated personal partition" model is Android-specific. See [_glossary-android.md#wpco](../_glossary-android.md#wpco) for the cross-platform framing. The closest cross-platform analog for "corporate ownership with personal-side affordances" is iOS Account-Driven User Enrollment, but the structural mapping is partial (User Enrollment uses a managed APFS volume on a personally-owned device rather than a work-profile container on a corporate-owned device); do not conflate.
 
-> ⚠️ **Android 15 — Private Space (unmanaged):** Android 15+ devices include a user-controlled hidden profile partition that **Intune** cannot manage on COPE, COBO, BYOD, or any other Android Enterprise mode. See [_glossary-android.md#private-space](../_glossary-android.md#private-space) and [version matrix breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-private-space-breakpoint).
+> ⚠️ **Android 15 — Private Space (unmanaged):** Android 15+ devices include a user-controlled hidden profile partition that **Intune** cannot manage on COPE, COBO, BYOD,
+
+> or any other Android Enterprise mode.
+
+> See [_glossary-android.md#private-space](../_glossary-android.md#private-space) and [version matrix breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-private-space-breakpoint).
 
 <a id="prerequisites"></a>
 ## Prerequisites
@@ -66,7 +70,15 @@ COPE / WPCO has no first-class equivalent on Windows, macOS, or iOS — the "cor
 
 - [ ] **Conditional Access exclusion for the Microsoft Intune cloud app — IF your tenant uses Conditional Access.** Per Microsoft Learn (verified 2026-04-25): *"If you have a Microsoft Entra Conditional Access policy defined that uses the require a device to be marked as compliant Grant control or a Block policy and applies to All Cloud apps, Android, and Browsers, you must exclude the Microsoft Intune cloud app from this policy. This is because the Android setup process uses a Chrome tab to authenticate your users during enrollment."* If your tenant has a qualifying CA policy, exclude the **Microsoft Intune** cloud app from that policy. Tenants without such a CA policy are unaffected — this is not a universal hard prereq. <!-- HIGH confidence: MS Learn ref-corporate-methods.md verified 2026-04-25 [HIGH: MS Learn ref-corporate-methods, last_verified 2026-04-25] -->
 
-> **What breaks if misconfigured:** Missing Entra join → COPE token generation fails with an opaque error surfaced in Intune admin center; admins see no enrollment activity for the affected enrollment profile. Missing CA exclusion (when your tenant has a qualifying CA policy) → Chrome-tab sign-in fails during COPE device setup; admin sees an opaque "sign-in blocked" error on the device and correlating failures in Entra ID sign-in logs. Recovery: enable Entra join on the tenant; exclude the Microsoft Intune cloud app from the CA policy; retry the device setup from scratch.
+> **What breaks if misconfigured:** Missing Entra join → COPE token generation fails with an opaque error surfaced in Intune admin center;
+
+> admins see no enrollment activity for the affected enrollment profile.
+
+> Missing CA exclusion (when your tenant has a qualifying CA policy) → Chrome-tab sign-in fails during COPE device setup;
+
+> admin sees an opaque "sign-in blocked" error on the device and correlating failures in Entra ID sign-in logs.
+
+> Recovery: enable Entra join on the tenant; exclude the Microsoft Intune cloud app from the CA policy; retry the device setup from scratch.
 
 <a id="cope-migration"></a>
 ## COPE Migration Note
@@ -158,24 +170,38 @@ The staging token supports a configurable expiration date up to 65 years in the 
 - **Revoke token** — immediately expire the token. Use this after accidental sharing with an unauthorized party, or after all planned enrollments for a token are complete. Revocation does NOT affect devices that are already enrolled; only new enrollments using the revoked token are blocked.
 - **Export token** — export the token's JSON content. Needed when embedding the token in the Zero-Touch portal DPC extras JSON (see [02-zero-touch-portal.md#dpc-extras-json](02-zero-touch-portal.md#dpc-extras-json)) or feeding it to partner device-staging flows.
 
-> **What breaks if misconfigured:** Staging token revoked prematurely → devices mid-enrollment flow fail at the token-check step with an opaque error on the device. Recovery: regenerate the staging token via **Replace token** and redistribute through the provisioning channel (QR image regeneration, NFC tag rewrite, or DPC extras JSON update). Severity: CRITICAL.
+> **What breaks if misconfigured:** Staging token revoked prematurely → devices mid-enrollment flow fail at the token-check step with an opaque error on the device.
 
-> **What breaks if misconfigured:** Exported token shared insecurely — email, public SharePoint, group chat — grants unauthorized COPE enrollment capability to anyone who receives it. Recovery: **Revoke token** immediately; revocation does NOT affect already-enrolled devices, so in-flight enrollments are preserved. Severity: CRITICAL. Rotate staging tokens on a 1-2-year cadence regardless of the 65-year ceiling to align with tenant security review.
+> Recovery: regenerate the staging token via **Replace token** and redistribute through the provisioning channel (QR image regeneration, NFC tag rewrite, or DPC extras JSON update). Severity: CRITICAL.
 
-> **What breaks if misconfigured:** Token assigned to a group that excludes the target devices → devices fail the token-check during enrollment. Recovery: reassign the profile/token broadly or to a parent group that covers the intended device fleet. Severity: HIGH.
+> **What breaks if misconfigured:** Exported token shared insecurely — email, public SharePoint, group chat — grants unauthorized COPE enrollment capability to anyone who receives it.
+
+> Recovery: **Revoke token** immediately; revocation does NOT affect already-enrolled devices, so in-flight enrollments are preserved. Severity: CRITICAL.
+
+> Rotate staging tokens on a 1-2-year cadence regardless of the 65-year ceiling to align with tenant security review.
+
+> **What breaks if misconfigured:** Token assigned to a group that excludes the target devices → devices fail the token-check during enrollment.
+
+> Recovery: reassign the profile/token broadly or to a parent group that covers the intended device fleet. Severity: HIGH.
 
 <a id="provisioning-method-choice"></a>
 ## Provisioning method choice
 
 COPE supports the Android Enterprise enrollment methods documented in MS Learn `ref-corporate-methods.md`: QR code, NFC, `afw#setup` (DPC identifier), Token entry, and Zero-Touch. The full method-availability and cross-mode support matrix lives in [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md); this section carries COPE-specific constraint callouts that the matrix does not cover. **Three methods were removed for COPE on Android 11+:** NFC, `afw#setup`, and Token entry. Only QR code and Zero-Touch remain available for new COPE enrollments on Android 11+ devices; NFC, `afw#setup`, and Token entry continue to function for COPE on Android 8-10 devices. The COPE matrix row is the filtered-row target: see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md).
 
-> **Conditional Access reminder:** If your tenant has a Conditional Access policy affecting the Microsoft Intune cloud app, confirm the cloud app is excluded before proceeding. The provisioning flow triggers the Chrome Custom Tab at the Entra sign-in step, and a CA policy on the Intune cloud app will block it. See [Prerequisites](#prerequisites) above.
+> **Conditional Access reminder:** If your tenant has a Conditional Access policy affecting the Microsoft Intune cloud app, confirm the cloud app is excluded before proceeding.
+
+> The provisioning flow triggers the Chrome Custom Tab at the Entra sign-in step, and a CA policy on the Intune cloud app will block it. See [Prerequisites](#prerequisites) above.
 
 ### QR code
 
 The Intune admin center generates a QR image at the COPE enrollment profile. An admin presents the QR to the factory-reset device; the device camera decodes the payload, downloads the DPC, and begins COPE provisioning. Internet connectivity is required BEFORE scanning on earlier Android versions; the built-in QR reader arrived in Android 9 — see the matrix for the breakpoint. QR codes embed enrollment tokens and Wi-Fi credentials in plaintext: never commit tenant-specific QR images to git, never email them, never post them to a public SharePoint. Treat the QR image as a secret artifact, regenerated per deployment batch.
 
-> **What breaks if misconfigured:** The QR image captured from the Intune portal expires when the token is regenerated or revoked. A stale QR from an old deployment batch succeeds at the scan step but fails at the subsequent token-exchange step with an opaque error. Recovery: regenerate the QR from the current enrollment profile; redistribute to the admin-led provisioning site.
+> **What breaks if misconfigured:** The QR image captured from the Intune portal expires when the token is regenerated or revoked.
+
+> A stale QR from an old deployment batch succeeds at the scan step but fails at the subsequent token-exchange step with an opaque error.
+
+> Recovery: regenerate the QR from the current enrollment profile; redistribute to the admin-led provisioning site.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md).
 
@@ -183,7 +209,9 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 For corporate-owned work profile (COPE) devices, the Near Field Communication (NFC) enrollment method is only supported on devices running Android 8-10. It is not available on Android 11. NFC uses NFC Forum Type 2 Tags with an 888-byte payload limit — Wi-Fi credentials plus DPC extras can exceed the limit, so shorten SSID values and drop optional extras. NFC Beam (device-to-device tap) was removed in Android 10; NFC provisioning today uses a tag written from a provisioning app, not a peer-to-peer bump.
 
-> **What breaks if misconfigured:** Attempting NFC provisioning on a COPE-target Android 11+ device → silent failure with no DPC handoff; the device falls through to consumer Setup Wizard. Recovery: switch the COPE Android 11+ provisioning channel to QR code or Zero-Touch. Severity: HIGH.
+> **What breaks if misconfigured:** Attempting NFC provisioning on a COPE-target Android 11+ device → silent failure with no DPC handoff; the device falls through to consumer Setup Wizard.
+
+> Recovery: switch the COPE Android 11+ provisioning channel to QR code or Zero-Touch. Severity: HIGH.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md).
 
@@ -191,7 +219,11 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 For corporate-owned work profile (COPE) devices, the `afw#setup` enrollment method is only supported on devices running Android 8-10. It is not available on Android 11. On the initial Google sign-in prompt during factory-reset setup, type `afw#setup` instead of a Gmail address; on Android 8-10 COPE devices this triggers DPC download and provisions the device into the COPE work-profile-on-corporate-owned mode. See [afw#setup glossary](../_glossary-android.md#afw-setup) for the broader term definition.
 
-> **What breaks if misconfigured:** Attempting `afw#setup` provisioning on a COPE-target Android 11+ device → typing the identifier returns "no account found" or silently falls through; the device boots to consumer setup. Recovery: switch the COPE Android 11+ provisioning channel to QR code or Zero-Touch. Severity: HIGH.
+> **What breaks if misconfigured:** Attempting `afw#setup` provisioning on a COPE-target Android 11+ device → typing the identifier returns "no account found" or silently falls through;
+
+> the device boots to consumer setup.
+
+> Recovery: switch the COPE Android 11+ provisioning channel to QR code or Zero-Touch. Severity: HIGH.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md).
 
@@ -199,7 +231,9 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 Token-entry enrollment is documented in MS Learn `ref-corporate-methods.md` as an Android Enterprise corporate enrollment method. Per the MS Learn "Enroll by using a token" section: *"Note: Not supported on Android Enterprise corporate-owned devices with a work profile (COPE) running Android version 11.0."* This makes Token entry the third method (alongside NFC and `afw#setup`) that COPE loses on Android 11+. On COPE Android 8-10 devices, token-entry enrollment continues to work for the original COPE deployment shape.
 
-> **What breaks if misconfigured:** Attempting token-entry enrollment on a COPE-target Android 11+ device → token-exchange fails; the device does not provision into COPE. Recovery: switch the COPE Android 11+ provisioning channel to QR code or Zero-Touch. Severity: HIGH.
+> **What breaks if misconfigured:** Attempting token-entry enrollment on a COPE-target Android 11+ device → token-exchange fails; the device does not provision into COPE.
+
+> Recovery: switch the COPE Android 11+ provisioning channel to QR code or Zero-Touch. Severity: HIGH.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md).
 
@@ -207,9 +241,27 @@ For version-availability and cross-mode support, see [02-provisioning-methods.md
 
 COPE provisioning via Zero-Touch requires the Phase 35 Zero-Touch portal binding. See [02-zero-touch-portal.md#link-zt-to-intune](02-zero-touch-portal.md#link-zt-to-intune) for ZT↔Intune linking and [02-zero-touch-portal.md#dpc-extras-json](02-zero-touch-portal.md#dpc-extras-json) for the DPC extras JSON. The COPE doc deliberately does NOT re-state the ZT iframe DPC extras JSON — that JSON is canonical at the ZT portal admin guide and would drift if duplicated here. Note per the ZT portal admin guide that COPE / Dedicated / mixed fleets at scale must use Method B (direct ZT portal configuration) rather than Method A (iframe in Intune admin center) — Method A creates a Fully Managed default that overrides the portal default and would silently land COPE-target devices in COBO instead.
 
-> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both. Configuring both on the same Samsung devices causes out-of-sync enrollment state; KME takes precedence at the device firmware level. KME provisions Samsung corporate-owned-with-work-profile devices into the **WPCO** mode in the Knox EMM profile dropdown — WPCO is Google's modern terminology for the same deployment shape this guide calls COPE (corporate-owned device with a user-separated work profile). See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage; [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record; [_glossary-android.md#wpco](../_glossary-android.md#wpco) for the WPCO↔COPE terminology equivalence; and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
+> ⚠️ **Samsung admins:** Choose Knox Mobile Enrollment (KME) or Zero-Touch — never both.
 
-> **What breaks if misconfigured:** A non-COBO COPE fleet linked via Method A causes all devices to enroll as Fully Managed (COBO) regardless of intended COPE mode. Symptom: COPE-intended devices boot as Fully Managed in the Intune admin center. Recovery: delete the Method-A-created configuration, re-author via Method B, and re-assign the device set. Severity: HIGH.
+> Configuring both on the same Samsung devices causes out-of-sync enrollment state; KME takes precedence at the device firmware level.
+
+> KME provisions Samsung corporate-owned-with-work-profile devices into the **WPCO** mode in the Knox EMM profile dropdown —
+
+> WPCO is Google's modern terminology for the same deployment shape this guide calls COPE (corporate-owned device with a user-separated work profile).
+
+> See [Knox Mobile Enrollment](07-knox-mobile-enrollment.md) for full KME admin coverage;
+
+> [02-zero-touch-portal.md#kme-zt-mutual-exclusion](02-zero-touch-portal.md#kme-zt-mutual-exclusion) for the mutual-exclusion record;
+
+> [_glossary-android.md#wpco](../_glossary-android.md#wpco) for the WPCO↔COPE terminology equivalence;
+
+> and [_glossary-android.md#zero-touch-enrollment](../_glossary-android.md#zero-touch-enrollment) for the Zero-Touch definition and the iOS ADE cross-platform analog.
+
+> **What breaks if misconfigured:** A non-COBO COPE fleet linked via Method A causes all devices to enroll as Fully Managed (COBO) regardless of intended COPE mode.
+
+> Symptom: COPE-intended devices boot as Fully Managed in the Intune admin center.
+
+> Recovery: delete the Method-A-created configuration, re-author via Method B, and re-assign the device set. Severity: HIGH.
 
 For version-availability and cross-mode support, see [02-provisioning-methods.md](../android-lifecycle/02-provisioning-methods.md).
 
@@ -231,7 +283,9 @@ This matrix helps Intune admins choose between COBO and COPE for net-new corpora
 <a id="android-15-frp"></a>
 ## Android 15 FRP and EFRP
 
-> ⚠️ **Configure EFRP before any factory reset on Android 15 COPE devices; FRP hardening can block re-enrollment, and COPE devices on Android 15 require the pre-reset Google account at re-provisioning after a Settings-app reset.**
+> ⚠️ **Configure EFRP before any factory reset on Android 15 COPE devices; FRP hardening can block re-enrollment,**
+
+> **and COPE devices on Android 15 require the pre-reset Google account at re-provisioning after a Settings-app reset.**
 
 **What changed on Android 15.** Enabling OEM unlock no longer deactivates Factory Reset Protection (FRP). Bypassing the setup wizard no longer deactivates FRP. Accounts, passwords, and apps are blocked while FRP is active. Enterprise FRP (EFRP) is enforced after a hard factory reset regardless of OEM unlock state. (Applies to Android 15.0+.) Result: re-enrollment flows that worked on Android 13 / 14 can block on Android 15 unless EFRP is configured BEFORE devices are reset. For the authoritative narrative, see [03-android-version-matrix.md#android-15-breakpoint](../android-lifecycle/03-android-version-matrix.md#android-15-breakpoint).
 
@@ -247,7 +301,11 @@ This matrix helps Intune admins choose between COBO and COPE for net-new corpora
 
 **Android 15 COPE-specific re-enrollment requirement** (verbatim from MS Learn; this requirement applies to COPE specifically and does NOT appear in COBO's Android 15 FRP H2):
 
-> For corporate owned devices with a work profile running Android 15, you will need to re-enter the Google account associated with the configuration after any reset done via the Settings app. It's important to plan your reprovisioning workflow (such as applying an Intune wipe or resetting via the Settings app) accordingly so that you can provide the required credentials if needed. For background and guidance, see [Factory reset protection (FRP) enforcement behavior for Android Enterprise](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-configuration/factory-reset-protection-emails-not-enforced).
+> For corporate owned devices with a work profile running Android 15, you will need to re-enter the Google account associated with the configuration after any reset done via the Settings app.
+
+> It's important to plan your reprovisioning workflow (such as applying an Intune wipe or resetting via the Settings app) accordingly so that you can provide the required credentials if needed.
+
+For background and guidance, see [Factory reset protection (FRP) enforcement behavior for Android Enterprise](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-configuration/factory-reset-protection-emails-not-enforced).
 
 **Admin action required.** Configure Enterprise Factory Reset Protection (EFRP) via Intune policy **before** any device reset on Android 15 COPE devices. EFRP is an allowlist of Google account email addresses authorized to unlock a post-reset device; see [Google AE Help](https://support.google.com/work/android/answer/14549362) for the feature description. Capture the pre-reset Google account associated with the COPE configuration BEFORE issuing a Settings-app reset on Android 15 — without it, re-provisioning will block at the Google-account credential prompt per the COPE-specific re-enrollment note above.
 
@@ -263,7 +321,17 @@ This matrix helps Intune admins choose between COBO and COPE for net-new corpora
 5. **Assignments:** assign to all COPE devices (or a targeted device group that covers your Android 15 COPE fleet).
 6. **Review + create**.
 
-> **What breaks if misconfigured:** EFRP not assigned to COPE devices before a factory reset → FRP locks the device post-reset → re-enrollment requires Google-account credential intervention with the pre-reset device-owner account (HIGH recovery cost). On COPE Android 15 specifically, a Settings-app reset additionally requires the pre-reset Google account associated with the configuration per the verbatim MS Learn note above; without it, re-provisioning blocks at the credential prompt. Recovery: unlock requires a device-owner account associated with the pre-reset state; otherwise contact the device vendor. Prevention: audit EFRP assignment every 60-day review cycle; capture the pre-reset Google account for each Android 15 COPE device set.
+> **What breaks if misconfigured:** EFRP not assigned to COPE devices before a factory reset → FRP locks the device post-reset →
+
+> re-enrollment requires Google-account credential intervention with the pre-reset device-owner account (HIGH recovery cost).
+
+> On COPE Android 15 specifically, a Settings-app reset additionally requires the pre-reset Google account associated with the configuration per the verbatim MS Learn note above;
+
+> without it, re-provisioning blocks at the credential prompt.
+
+> Recovery: unlock requires a device-owner account associated with the pre-reset state; otherwise contact the device vendor.
+
+> Prevention: audit EFRP assignment every 60-day review cycle; capture the pre-reset Google account for each Android 15 COPE device set.
 
 <!-- HIGH confidence: Intune admin center EFRP navigation path verified against Microsoft Learn 2026-04-25 [HIGH: MS Learn factory-reset-protection-emails-not-enforced + Google AE Help answer/14549362, last_verified 2026-04-25] -->
 
