@@ -1,15 +1,26 @@
 ---
+doc_id: RE-083
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-083 · **Status:** Approved
+
+# Pre-Provisioning Mode Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# Pre-Provisioning Mode Configuration
 
 Pre-provisioning is a two-phase deployment: a technician completes device setup in a staging facility, then reseals the device for the end user. Also known historically as "white glove." This mode has the strictest hardware requirements of all three modes.
 
@@ -104,3 +115,9 @@ For TPM hardware investigation, fTPM vs dTPM troubleshooting, EK certificate cha
 
 ---
 *Next step: [Self-Deploying Mode](08-self-deploying.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,15 +1,26 @@
 ---
+doc_id: RE-086
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-086 · **Status:** Approved
+
+# APv1 Configuration-Caused Failures Reference
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv1 Configuration-Caused Failures Reference
 
 This is the consolidated reverse-lookup table for all Windows Autopilot (classic) configuration mistakes. Each entry links to both the guide file where the setting is configured and the troubleshooting runbook for the failure it causes. Use this page when you see a deployment failure and suspect a configuration mistake.
 
@@ -100,3 +111,9 @@ This is the consolidated reverse-lookup table for all Windows Autopilot (classic
 
 ---
 *Return to: [APv1 Admin Setup Overview](00-overview.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

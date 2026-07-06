@@ -1,15 +1,26 @@
 ---
+doc_id: RE-090
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-090 · **Status:** Approved
+
+# APv2 Setup Step 3: Device Preparation Policy
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv2 Setup Step 3: Device Preparation Policy
 
 The Device Preparation policy is the central APv2 configuration object. It defines the deployment settings, OOBE experience, and the apps and scripts to install during enrollment. This guide walks through creating the policy step by step, with troubleshooting guidance for each configurable setting.
 
@@ -199,3 +210,9 @@ The Device Preparation policy is the central APv2 configuration object. It defin
 
 ---
 *Next step: [Corporate Identifiers](04-corporate-identifiers.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

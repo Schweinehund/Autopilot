@@ -1,15 +1,26 @@
 ---
+doc_id: RE-091
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-091 · **Status:** Approved
+
+# APv2 Setup Step 4: Corporate Identifiers
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv2 Setup Step 4: Corporate Identifiers
 
 Corporate identifiers identify devices as corporate-owned during enrollment. This step is **conditional** -- corporate identifiers are only required if your organization has enrollment restrictions that block personal device enrollments. If no enrollment restrictions exist, or if restrictions allow personal device enrollment, this step can be skipped.
 
@@ -141,3 +152,9 @@ If a device's APv2 deployment does not launch and an enrollment restriction is s
 
 ---
 *Setup complete. Return to [APv2 Admin Setup Overview](00-overview.md) for the full guide index.*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

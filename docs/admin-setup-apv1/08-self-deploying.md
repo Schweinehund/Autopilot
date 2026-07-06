@@ -1,15 +1,26 @@
 ---
+doc_id: RE-084
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-084 · **Status:** Approved
+
+# Self-Deploying Mode Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# Self-Deploying Mode Configuration
 
 Self-deploying mode is a fully automated deployment requiring zero user interaction. The device enrolls using TPM 2.0 as the only authentication mechanism -- no user credentials are entered. Designed for shared devices, kiosks, and digital signage where no user affinity is needed.
 
@@ -102,3 +113,9 @@ For TPM hardware investigation, fTPM vs dTPM troubleshooting, EK certificate cha
 
 ---
 *Next step: [Intune Connector for Active Directory](09-intune-connector-ad.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,15 +1,26 @@
 ---
+doc_id: RE-089
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-089 · **Status:** Approved
+
+# APv2 Setup Step 2: Enrollment Time Grouping Device Group
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv2 Setup Step 2: Enrollment Time Grouping Device Group
 
 The Enrollment Time Grouping (ETG) device group is the core mechanism that makes APv2 work. When a user authenticates during OOBE, the Intune Provisioning Client service principal automatically adds the device to this group -- triggering immediate delivery of apps, scripts, and policies without dynamic group evaluation delays. For a full explanation of how ETG works in the APv2 model, see [ETG: The Core Mechanism](../lifecycle-apv2/00-overview.md#enrollment-time-grouping----the-core-mechanism).
 
@@ -160,3 +171,9 @@ Apps and PowerShell scripts that should install during APv2 enrollment must be *
 
 ---
 *Next step: [Device Preparation Policy](03-device-preparation-policy.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

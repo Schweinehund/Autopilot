@@ -1,15 +1,26 @@
 ---
+doc_id: RE-080
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-080 · **Status:** Approved
+
+# Dynamic Device Groups for Autopilot
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# Dynamic Device Groups for Autopilot
 
 Dynamic device groups in Entra ID automatically collect Autopilot-registered devices based on membership rules. These groups are used to target deployment profiles, ESP policies, and app assignments. Without a correctly configured group, no profile can be assigned to devices.
 
@@ -93,3 +104,9 @@ Replace `YOUR_GROUP_TAG` with the actual tag value assigned during hardware hash
 
 ---
 *Next step: [Deployment Modes Overview](05-deployment-modes-overview.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,15 +1,26 @@
 ---
+doc_id: RE-079
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-079 · **Status:** Approved
+
+# Enrollment Status Page (ESP) Policy
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# Enrollment Status Page (ESP) Policy
 
 The ESP controls what happens between Entra join and desktop access -- which apps must install before the user can proceed, how long to wait before timing out, and whether Windows quality updates are applied during provisioning. Getting ESP settings wrong is the most common cause of "stuck at provisioning" support tickets.
 
@@ -143,3 +154,9 @@ For detailed ESP registry inspection and device vs user phase troubleshooting, s
 
 ---
 *Next step: [Dynamic Device Groups](04-dynamic-groups.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

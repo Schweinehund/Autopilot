@@ -1,15 +1,26 @@
 ---
+doc_id: RE-081
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-081 · **Status:** Approved
+
+# APv1 Deployment Modes Overview
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv1 Deployment Modes Overview
 
 Windows Autopilot (classic) supports three deployment modes. Choose the mode that matches your provisioning workflow, then follow the mode-specific guide for detailed configuration.
 
@@ -59,3 +70,9 @@ Follow the guide for your selected deployment mode:
 
 ---
 *Next step: [User-Driven Mode](06-user-driven.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

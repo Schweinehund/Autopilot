@@ -1,15 +1,26 @@
 ---
+doc_id: RE-078
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-078 · **Status:** Approved
+
+# Deployment Profile Configuration
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# Deployment Profile Configuration
 
 The Autopilot deployment profile controls how the device behaves during OOBE -- which screens the user sees, what join type is used, and whether pre-provisioning is allowed. Every OOBE setting has downstream consequences documented below.
 
@@ -115,3 +126,9 @@ Assign the profile to the dynamic device group created in [Dynamic Groups](04-dy
 
 ---
 *Next step: [Enrollment Status Page Policy](03-esp-policy.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |

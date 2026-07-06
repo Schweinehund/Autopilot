@@ -1,15 +1,26 @@
 ---
+doc_id: RE-085
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-085 · **Status:** Approved
+
+# Intune Connector for Active Directory
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Windows) Summary lead]
+
 > **Version gate:** This guide covers Windows Autopilot (classic).
 > For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# Intune Connector for Active Directory
 
 The Intune Connector for Active Directory is required for hybrid Entra join deployments. The connector creates Active Directory computer objects on behalf of Autopilot devices during enrollment. This is a standalone guide because it serves two deployment modes -- [User-Driven](06-user-driven.md) and [Pre-Provisioning](07-pre-provisioning.md). Self-deploying mode does not support hybrid join and does not use the connector.
 
@@ -134,3 +145,9 @@ For ODJ connector deep-dive troubleshooting, 0x80070774 error analysis, domain r
 
 ---
 *Next step: [Configuration-Caused Failures Reference](10-config-failures.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |
