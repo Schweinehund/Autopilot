@@ -250,7 +250,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 118-02-PLAN.md — Capability matrices + comparisons (9 files: 00-index, 4-platform, android/aosp-oem/ios/linux/macos matrices, apv1-vs-apv2, windows-vs-macos); D-118-1 per-table prose on all 45 tables; widest VH-branch variety; C17 green + registry Approved (RETRO-03)
+- [x] 118-02-PLAN.md — Capability matrices + comparisons (9 files: 00-index, 4-platform, android/aosp-oem/ios/linux/macos matrices, apv1-vs-apv2, windows-vs-macos); D-118-1 per-table prose on all 45 tables; widest VH-branch variety; C17 green + registry Approved (RETRO-03)
 
 **Wave 3** *(blocked on Wave 2 — shared RE-index.md)*
 
@@ -312,5 +312,5 @@ Plans:
 | 115. C17 Harness Check (Validator Atom) | 1/1 | Complete    | 2026-07-04 |
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
-| 118. Reference Doc Retrofit + Table Remediation | 1/6 | In Progress|  |
+| 118. Reference Doc Retrofit + Table Remediation | 2/6 | In Progress|  |
 | 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 0/TBD | Not started | — |
