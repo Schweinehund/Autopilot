@@ -129,3 +129,20 @@ None - no external service configuration required.
 ---
 *Phase: 118-reference-doc-retrofit-table-remediation-26-docs*
 *Completed: 2026-07-06*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/phases/118-reference-doc-retrofit-table-remediation-26-docs/118-02-SUMMARY.md
+- FOUND: docs/reference/00-index.md
+- FOUND: docs/reference/4-platform-capability-comparison.md
+- FOUND: docs/reference/android-capability-matrix.md
+- FOUND: docs/reference/aosp-oem-matrix.md
+- FOUND: docs/reference/ios-capability-matrix.md
+- FOUND: docs/reference/linux-capability-matrix.md
+- FOUND: docs/reference/macos-capability-matrix.md
+- FOUND: docs/apv1-vs-apv2.md
+- FOUND: docs/windows-vs-macos.md
+- FOUND: commit 83f0d23 (Task 1)
+- FOUND: commit 4756e18 (Task 2)
+- FOUND: commit 493944c (Task 3)
+- FOUND: commit 4dbb453 (SUMMARY.md)
