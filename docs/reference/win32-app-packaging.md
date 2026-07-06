@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents Win32 app packaging best practices for reliable Enrollment Status Page processing on Windows Autopilot, including detection rule priority order, ESP tracking assignment types, dependency chain configuration, and common anti-patterns that cause ESP timeouts. It covers both Autopilot v1 and v2 deployments and targets Intune administrators packaging and troubleshooting Win32 application deployments.
 
 > **Version gate:** This guide covers Win32 app packaging for both APv1 and APv2 deployments. For ESP configuration settings and the blocking app list, see [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
 

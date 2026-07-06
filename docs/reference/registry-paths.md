@@ -16,7 +16,7 @@ audience: L2
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents the canonical Windows registry paths relevant to Autopilot registration state, profile assignment, MDM enrollment, and Enrollment Status Page tracking, sourced from the AutopilotDiagnostics and AutopilotRemediation PowerShell modules. It applies to Autopilot v1 deployments and is intended for L2 engineers investigating registration and enrollment issues.
 
 > **Version gate:** This reference applies to Windows Autopilot v1 (user-driven and pre-provisioning). Verify paths against current documentation before applying to Autopilot v2 (Device Preparation) deployments.
 

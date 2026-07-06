@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents the compliance-policy evaluation timeline, the three compliance states (Not Evaluated, Non-Compliant, Compliant), grace period configuration, and the ongoing evaluation schedule for Windows Autopilot device enrollment. It covers both Autopilot v1 and v2 deployments and is intended for Intune administrators troubleshooting device compliance issues and Conditional Access enforcement timing after enrollment.
 
 > **Version gate:** This guide expands on the compliance verification in [Post-Enrollment Verification](../lifecycle/05-post-enrollment.md) with detailed timing and state transition information.
 

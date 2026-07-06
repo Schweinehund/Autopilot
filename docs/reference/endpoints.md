@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents the canonical network endpoint list required by Windows Autopilot and macOS Automated Device Enrollment, including URLs, purposes, and criticality ratings for Autopilot deployment services, Entra ID authentication, Microsoft Graph, TPM attestation, and Apple Business Manager. It covers all platforms and is intended for Intune administrators and network administrators validating connectivity.
 
 > **Version gate:** This endpoint list covers Windows Autopilot (v1 and v2) and macOS ADE (Automated Device Enrollment). Some endpoints are platform-specific; see section headers. Windows TPM attestation endpoints are only required for specific deployment modes or hardware.
 

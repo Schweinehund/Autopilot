@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents known conflicts between Windows security baselines and the Autopilot provisioning flow, including BitLocker, LAPS, AppLocker/WDAC, and reboot policy timing issues that can block or silently skip settings during Enrollment Status Page processing. It covers both Autopilot v1 and v2 deployments and targets Intune administrators configuring or troubleshooting security baseline assignments.
 
 > **Version gate:** This guide covers security baseline conflicts that affect both APv1 and APv2 Autopilot deployments.
 

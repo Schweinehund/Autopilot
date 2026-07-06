@@ -16,7 +16,7 @@ audience: L2
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents the twelve exported functions in the AutopilotDiagnostics and AutopilotRemediation PowerShell modules, including synopsis, parameters, and usage examples for diagnostic and remediation operations. It applies to Autopilot v1 deployments and is intended for L2 engineers running or extending the PowerShell diagnostic toolkit.
 
 > **Version gate:** This reference documents functions exported from the `AutopilotDiagnostics.psm1` and `AutopilotRemediation.psm1` modules. The source `.psm1` files are authoritative; verify this document against source when adding or modifying functions.
 

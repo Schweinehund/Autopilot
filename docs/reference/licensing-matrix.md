@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents the Microsoft 365, Enterprise Mobility + Security, and standalone licensing SKUs that satisfy Windows Autopilot's Intune and Entra ID P1 requirements, along with a feature-to-license mapping for capabilities like Windows Subscription Activation and Endpoint Analytics. It covers both Autopilot v1 and v2 and is intended for Intune administrators verifying license assignments before provisioning.
 
 > **Version gate:** Licensing requirements are the same for APv1 and APv2. For feature differences between frameworks, see [APv1 vs APv2](../apv1-vs-apv2.md).
 

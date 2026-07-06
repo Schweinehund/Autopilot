@@ -16,7 +16,7 @@ platform: Windows
 
 ## Summary
 
-[FILL-IN: >=30 words, reference-template Summary lead]
+This reference documents the firewall, VPN, and proxy infrastructure requirements for Windows Autopilot, including port categories, split-tunnel VPN exclusions, WPAD/PAC proxy configuration, and SSL inspection considerations during OOBE. It covers both Autopilot v1 and v2 deployments and is intended for network administrators and Intune administrators configuring connectivity for provisioning devices.
 
 > **Version gate:** This guide covers network requirements for both APv1 and APv2. For the endpoint URL list, see [Network Endpoints](endpoints.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
