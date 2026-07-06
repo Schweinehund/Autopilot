@@ -1,10 +1,22 @@
 ---
+doc_id: RE-103
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: AOSP
 ---
+
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-103 · **Status:** Approved
+
+# Configure Pico AOSP Devices in Intune
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
 
 > **Platform gate:** Pico AOSP device management — PICO 4 Enterprise / PICO Neo3 Pro/Eye AR/VR headsets in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
@@ -14,8 +26,6 @@ applies_to: AOSP
 
 <!-- The #### In Zero-Touch portal subsection is intentionally omitted.
      AOSP does not use the Zero-Touch portal; AOSP enrollment is QR-only, one device at a time. -->
-
-# Configure Pico AOSP Devices in Intune
 
 ## Scope and Status
 
@@ -179,3 +189,9 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 *Wave 3 runbook 29 (Cause C) and L2 runbook 23 (Pattern C) cross-link landing targets: [`#common-failures`](#common-failures) and [`#pico-business-suite-coexistence`](#pico-business-suite-coexistence) anchors above are stable per D-05 anchor-scaffolding contract.*
 
 *Wave 2 `aosp-oem-matrix.md` consumes the Pico column data shipped here: PICO 4 Enterprise / PICO Neo3 Pro/Eye + PUI 5.6.0 / PUI 4.8.19 firmware floors (Hardware Scope row); QR-only AOSP + Wi-Fi OPTIONAL (Enrollment Method and Wi-Fi Embedding row); PICO Business Suite OPTIONAL coexistence + Plan 2 OR Suite (Vendor Portals and Licensing row); BOTH user-associated AND userless supported (Intune AOSP Mode row).*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

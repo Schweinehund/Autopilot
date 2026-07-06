@@ -1,10 +1,22 @@
 ---
+doc_id: RE-104
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: AOSP
 ---
+
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-104 · **Status:** Approved
+
+# Configure HTC VIVE Focus AOSP Devices in Intune
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
 
 > **Platform gate:** HTC VIVE Focus AOSP device management — Vive Focus 3 / Vive XR Elite / Vive Focus Vision enterprise AR/VR headsets in Microsoft Intune. For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
@@ -14,8 +26,6 @@ applies_to: AOSP
 
 <!-- The #### In Zero-Touch portal subsection is intentionally omitted.
      AOSP does not use the Zero-Touch portal; AOSP enrollment is QR-only, one device at a time. -->
-
-# Configure HTC VIVE Focus AOSP Devices in Intune
 
 ## Scope and Status
 
@@ -159,3 +169,9 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 *"Simplest of AR/VR OEMs" framing rationale (per AEAOSPFULL-04): HTC's Intune-direct AOSP flow has no vendor-portal coexistence step (contrast with RealWear Cloud REQUIRED Wi-Fi-QR-embedding, Pico Business Suite OPTIONAL coexistence, and Meta for Work + Meta Horizon Subscription Status REQUIRED add-on H2s). The 11-H2 baseline ships verbatim with NO add-on H2s per D-02 — Provisioning Steps flows directly into Verification without intermediate vendor-side configuration H2s. Per-model firmware floor variance (3 distinct firmware strings across Focus 3 / XR Elite / Focus Vision) is the only HTC-distinctive content surfaced as an inline table, NOT as an add-on H2.*
 
 *Verbatim in-device QR scan UI path **Settings > Advanced > MDM setup > QR code** (per RESEARCH.md §1 HTC sourced from `vive.com/us/support`) is reproduced at three points in this guide — Enrollment Method (definitional placement), Step 3 H3 heading (procedural placement), and Common Failures HIGH row (recovery placement) — so an admin reading any of the three primary sections can locate the on-device path without cross-section navigation.*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -1,10 +1,22 @@
 ---
+doc_id: RE-105
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: AOSP
 ---
+
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-105 · **Status:** Approved
+
+# Configure Meta Quest AOSP Devices in Intune
+
+## Summary
+
+[FILL-IN: >=30 words, per-platform-template (Android) Summary lead]
 
 > **Platform gate:** Meta Quest AOSP device management — Quest 2 / Quest 3 / Quest 3s / Quest Pro enterprise XR headsets in Microsoft Intune via 4-portal pattern (Intune + Meta for Work). For macOS ADE, see [macOS Admin](../admin-setup-macos/00-overview.md). For iOS/iPadOS, see [iOS Admin](../admin-setup-ios/00-overview.md).
 > **Platform note:** AOSP management is a distinct surface from Android Enterprise (COBO/BYOD/Dedicated/ZTE) — no GMS, no FCM push, no Managed Google Play. See [Android enrollment overview](../android-lifecycle/00-enrollment-overview.md#aosp).
@@ -18,8 +30,6 @@ applies_to: AOSP
      AOSP does not use the Zero-Touch portal; AOSP enrollment is QR-only, one device at
      a time. The 4-portal Meta Quest pattern uses Meta for Work as the 4th portal
      alongside Intune; ZT remains N/A for AOSP devices including Meta Quest. -->
-
-# Configure Meta Quest AOSP Devices in Intune
 
 ## Scope and Status
 
@@ -240,3 +250,9 @@ Inline what-breaks callouts at each decision point. Severity descending within e
 *"ALIVE in transformed form" framing rationale (per RESEARCH.md §2 D-06 plan-time gate RESOLVED + D-07 Branch 2 selected): The Feb 20, 2026 wind-down date IS verified, but the wind-down framing must be precise. This is NOT a discontinuation of HMS; it is a commercial-SKU + paid-tier discontinuation transitioning HMS into a free-tier maintenance mode with continued infrastructure support through 2030-01-04. The doc preserves the 4-portal pattern (Intune + Meta for Work) per D-08 LOCKED deliverables, frames HMS as FREE / maintenance-mode (NOT discontinued / shut down / wound down applied to HMS itself), and carries the explicit Feb 20, 2026 wind-down callout per ROADMAP SC#3 verbatim. The 30-day re-verify trigger in `## Renewal / Maintenance` per D-10 catches any post-authoring drift on the wind-down assertion (next forward re-verify: 2026-05-25).*
 
 *Two REQUIRED add-on H2s framing rationale (per D-02 LOCKED): D-02 explicitly mandates BOTH `## Meta for Work Portal Setup` AND `## Meta Horizon Subscription Status` for Meta Quest REGARDLESS of HMS alive-status. The override of F-1B-CRIT-01 (which had proposed dropping the HMS H2 if HMS were discontinued) preserves admin-doc parity for fleets that span the wind-down boundary — existing HMS subscribers need both H2s for the FREE-tier-transition story, and net-new fleets need both H2s for the decision-tree on HMS-FREE vs Intune-direct fallback. This makes Plan 45-05 Meta Quest the heaviest of the 5 Wave 1 per-OEM admin docs (13 H2s total vs 11 baseline + 0-1 add-on for siblings).*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
