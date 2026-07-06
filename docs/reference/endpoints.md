@@ -18,7 +18,9 @@ platform: all
 
 This reference documents the canonical network endpoint list required by Windows Autopilot and macOS Automated Device Enrollment, including URLs, purposes, and criticality ratings for Autopilot deployment services, Entra ID authentication, Microsoft Graph, TPM attestation, and Apple Business Manager. It covers all platforms and is intended for Intune administrators and network administrators validating connectivity.
 
-> **Version gate:** This endpoint list covers Windows Autopilot (v1 and v2) and macOS ADE (Automated Device Enrollment). Some endpoints are platform-specific; see section headers. Windows TPM attestation endpoints are only required for specific deployment modes or hardware.
+> **Version gate:** This endpoint list covers Windows Autopilot (v1 and v2) and macOS ADE (Automated Device Enrollment). Some endpoints are platform-specific; see section headers.
+
+> Windows TPM attestation endpoints are only required for specific deployment modes or hardware.
 
 Canonical reference for all network endpoints required by Windows Autopilot and macOS ADE. Runbooks and connectivity troubleshooting guides link here rather than listing URLs inline.
 
@@ -82,7 +84,9 @@ Network endpoints required for macOS Automated Device Enrollment (ADE) via Apple
 | `https://vpp.itunes.apple.com` | VPP / Apps and Books | App license operations via MDM | Required if using VPP apps |
 | `https://deviceservices-external.apple.com` | MDM Services | MDM servers disable Activation Lock on managed devices | Required for Activation Lock |
 
-> **Warning:** Apple explicitly requires that SSL/HTTPS inspection be disabled for all Apple service endpoints. SSL inspection causes ADE and APNs to fail silently. Bypass SSL inspection for all `*.apple.com` and `*.push.apple.com` domains.
+> **Warning:** Apple explicitly requires that SSL/HTTPS inspection be disabled for all Apple service endpoints.
+
+> SSL inspection causes ADE and APNs to fail silently. Bypass SSL inspection for all `*.apple.com` and `*.push.apple.com` domains.
 
 ### Microsoft Endpoints (shared with Windows)
 
@@ -138,4 +142,4 @@ Windows endpoint list sourced from [Microsoft Learn: Windows Autopilot requireme
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

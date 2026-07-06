@@ -61,7 +61,9 @@ Policy evaluated and the device passes all requirements. This is the healthy sta
 - Appears as green in the Intune portal.
 - Conditional Access policies enforcing "Require compliant device" will allow access for this device.
 
-> **Admin Note:** "Not evaluated" and "Non-compliant" both appear as non-green states in the portal. New admins frequently confuse them. Always check the timestamp — if less than 30 minutes since enrollment, "Not evaluated" is expected behavior, not a failure requiring action.
+> **Admin Note:** "Not evaluated" and "Non-compliant" both appear as non-green states in the portal. New admins frequently confuse them.
+
+> Always check the timestamp — if less than 30 minutes since enrollment, "Not evaluated" is expected behavior, not a failure requiring action.
 
 ---
 
@@ -90,7 +92,11 @@ Actions are ordered and each can have its own delay. The "Mark device as noncomp
 2. Locate the "Mark device noncompliant" action.
 3. Set **Schedule (days after noncompliance)** to at least **1** for new deployments.
 
-> **What breaks if misconfigured:** Grace period set to 0.25 days (minimum) with "Retire" as an enforcement action. Device enrolls, evaluates as non-compliant due to a pending Windows Update, and is auto-retired 6 hours later — before an admin can intervene. The user loses access to all corporate resources. There is no undo for retirement without re-enrolling the device.
+> **What breaks if misconfigured:** Grace period set to 0.25 days (minimum) with "Retire" as an enforcement action.
+
+> Device enrolls, evaluates as non-compliant due to a pending Windows Update, and is auto-retired 6 hours later — before an admin can intervene.
+
+> The user loses access to all corporate resources. There is no undo for retirement without re-enrolling the device.
 
 ---
 
@@ -117,7 +123,9 @@ Cross-reference: [Conditional Access Enrollment Timing](ca-enrollment-timing.md)
 | After device restart | Triggers check-in and re-evaluation |
 | After OS update | Triggers check-in within 15 minutes |
 
-> **Admin Note:** Compliance policy changes do not immediately re-evaluate all devices. The change propagates on the next 8-hour check-in cycle for each device. If you need immediate compliance re-evaluation (e.g., after remediating a non-compliant setting), ask the user to manually sync from Company Portal.
+> **Admin Note:** Compliance policy changes do not immediately re-evaluate all devices. The change propagates on the next 8-hour check-in cycle for each device.
+
+> If you need immediate compliance re-evaluation (e.g., after remediating a non-compliant setting), ask the user to manually sync from Company Portal.
 
 ---
 
@@ -142,4 +150,4 @@ Cross-reference: [Conditional Access Enrollment Timing](ca-enrollment-timing.md)
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

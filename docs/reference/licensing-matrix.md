@@ -22,7 +22,9 @@ This reference documents the Microsoft 365, Enterprise Mobility + Security, and 
 
 Autopilot requires both Microsoft Intune and Entra ID P1 (formerly Azure AD Premium P1). These are included together in all Microsoft 365 bundles and Enterprise Mobility + Security suites. A user missing either entitlement will Entra-join successfully but MDM enrollment will fail silently.
 
-> **What breaks if misconfigured:** User assigned a license without Intune entitlement. Auto-enrollment to MDM fails silently. Device joins Entra but MDM policies never apply. Admin sees "Managed by: None" in device properties.
+> **What breaks if misconfigured:** User assigned a license without Intune entitlement. Auto-enrollment to MDM fails silently.
+
+> Device joins Entra but MDM policies never apply. Admin sees "Managed by: None" in device properties.
 
 ## Required Licenses
 
@@ -61,7 +63,9 @@ Some Autopilot features require licenses beyond the base requirement. Verify you
 | Microsoft Defender for Endpoint (P2) | Microsoft 365 E5 or Defender for Endpoint standalone | Defender P1 included in M365 Business Premium |
 | Endpoint Analytics (Intune suite) | Intune Plan 2 or Microsoft Intune Suite add-on | Optional; required for advanced deployment reporting |
 
-> **What breaks if missing Windows Subscription Activation:** Devices provisioned with Windows 10/11 Pro remain on Pro SKU after Autopilot enrollment. Enterprise-only policies (AppLocker, Credential Guard, etc.) do not apply. Users see "Windows 11 Pro" in Settings instead of "Windows 11 Enterprise."
+> **What breaks if missing Windows Subscription Activation:** Devices provisioned with Windows 10/11 Pro remain on Pro SKU after Autopilot enrollment.
+
+> Enterprise-only policies (AppLocker, Credential Guard, etc.) do not apply. Users see "Windows 11 Pro" in Settings instead of "Windows 11 Enterprise."
 
 ## License Assignment Verification
 
@@ -86,4 +90,4 @@ From Intune admin center: Navigate to **Intune admin center** > **Users** > sele
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

@@ -18,7 +18,9 @@ platform: Windows
 
 This reference documents the firewall, VPN, and proxy infrastructure requirements for Windows Autopilot, including port categories, split-tunnel VPN exclusions, WPAD/PAC proxy configuration, and SSL inspection considerations during OOBE. It covers both Autopilot v1 and v2 deployments and is intended for network administrators and Intune administrators configuring connectivity for provisioning devices.
 
-> **Version gate:** This guide covers network requirements for both APv1 and APv2. For the endpoint URL list, see [Network Endpoints](endpoints.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+> **Version gate:** This guide covers network requirements for both APv1 and APv2.
+
+> For the endpoint URL list, see [Network Endpoints](endpoints.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 This doc covers firewall rules, VPN configuration, and proxy settings for the endpoints required by Windows Autopilot. It does NOT duplicate the endpoint table — see [Network Endpoints](endpoints.md) for the complete list of URLs and their criticality ratings.
 
@@ -36,7 +38,9 @@ All endpoints listed in [Network Endpoints](endpoints.md) must be reachable from
 
 Used for: WPAD/PAC file retrieval, initial HTTP redirects to HTTPS.
 
-> **What breaks if misconfigured:** Port 80 blocked = PAC file download fails. Device uses no proxy configuration during OOBE. If your environment requires a proxy, devices cannot resolve it and all HTTPS traffic is blocked.
+> **What breaks if misconfigured:** Port 80 blocked = PAC file download fails. Device uses no proxy configuration during OOBE.
+
+> If your environment requires a proxy, devices cannot resolve it and all HTTPS traffic is blocked.
 
 ### Port 443 (HTTPS)
 
@@ -44,13 +48,17 @@ Used for: All Autopilot enrollment traffic, Azure AD authentication, Microsoft G
 
 Port 443 must be open for all critical endpoints in [Network Endpoints](endpoints.md). This is non-negotiable — Autopilot cannot operate over any other port for HTTPS traffic.
 
-> **What breaks if misconfigured:** Any critical endpoint blocked on 443 causes enrollment failure at the step that endpoint serves. For example, `ztd.dds.microsoft.com:443` blocked = device cannot retrieve Autopilot profile. `login.microsoftonline.com:443` blocked = Entra join fails.
+> **What breaks if misconfigured:** Any critical endpoint blocked on 443 causes enrollment failure at the step that endpoint serves.
+
+> For example, `ztd.dds.microsoft.com:443` blocked = device cannot retrieve Autopilot profile. `login.microsoftonline.com:443` blocked = Entra join fails.
 
 ### UDP Port 123 (NTP)
 
 Used for: Clock synchronization with `time.windows.com`.
 
-> **What breaks if misconfigured:** Clock skew greater than 5 minutes blocks Kerberos and Azure AD token validation. Device reaches enrollment but authentication fails with clock-skew error. Enrollment fails silently — no useful message at OOBE.
+> **What breaks if misconfigured:** Clock skew greater than 5 minutes blocks Kerberos and Azure AD token validation.
+
+> Device reaches enrollment but authentication fails with clock-skew error. Enrollment fails silently — no useful message at OOBE.
 
 ## Split-Tunnel VPN Considerations
 
@@ -65,7 +73,9 @@ Autopilot must reach all required endpoints WITHOUT going through the corporate 
 
 **Recommendation:** Configure split-tunnel VPN with all Autopilot endpoints (and their underlying IP ranges) excluded. Do not use full-tunnel VPN for Autopilot-provisioned devices unless you can guarantee a pre-VPN connection path to all required endpoints before OOBE starts.
 
-> **What breaks if misconfigured:** VPN tunnel intercepts Autopilot traffic during OOBE. Device cannot reach `ztd.dds.microsoft.com` or `login.microsoftonline.com`. Enrollment fails with network connectivity error. See: [ESP Troubleshooting](../l2-runbooks/02-esp-deep-dive.md)
+> **What breaks if misconfigured:** VPN tunnel intercepts Autopilot traffic during OOBE. Device cannot reach `ztd.dds.microsoft.com` or `login.microsoftonline.com`.
+
+> Enrollment fails with network connectivity error. See: [ESP Troubleshooting](../l2-runbooks/02-esp-deep-dive.md)
 
 ### Pre-Provisioning (Technician Flow) and VPN
 
@@ -90,7 +100,9 @@ OOBE runs as the SYSTEM account. The SYSTEM account has no user credentials and 
 2. Allow anonymous/unauthenticated access for the Autopilot endpoint set
 3. Use certificate-based proxy authentication (machine certificate, not user certificate)
 
-> **What breaks if misconfigured:** Authenticated proxy blocks SYSTEM account traffic during OOBE. Device hangs at "Identifying your device" screen. No error is shown to the user — the screen appears frozen. See: [ESP Troubleshooting](../l2-runbooks/02-esp-deep-dive.md)
+> **What breaks if misconfigured:** Authenticated proxy blocks SYSTEM account traffic during OOBE. Device hangs at "Identifying your device" screen.
+
+> No error is shown to the user — the screen appears frozen. See: [ESP Troubleshooting](../l2-runbooks/02-esp-deep-dive.md)
 
 ### SSL Inspection
 
@@ -98,7 +110,9 @@ If your proxy performs SSL inspection (HTTPS decryption and re-encryption), cert
 
 During OOBE, the device uses the Windows built-in certificate store — not a custom certificate deployed via Intune. Custom CA certificates from Intune policy are not available until after enrollment completes.
 
-> **What breaks if misconfigured:** SSL inspection with an untrusted CA cert causes certificate validation errors on HTTPS connections. Device sees "unable to connect" errors at login.microsoftonline.com or ztd.dds.microsoft.com. Enrollment fails.
+> **What breaks if misconfigured:** SSL inspection with an untrusted CA cert causes certificate validation errors on HTTPS connections.
+
+> Device sees "unable to connect" errors at login.microsoftonline.com or ztd.dds.microsoft.com. Enrollment fails.
 
 **Options for SSL inspection:**
 - Deploy the proxy CA cert via a provisioning package (PPKG) loaded at OOBE
@@ -177,4 +191,4 @@ netsh winhttp show proxy
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

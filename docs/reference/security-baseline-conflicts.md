@@ -41,7 +41,9 @@ Windows devices may get stuck on the "Identifying" screen during Autopilot and B
 - **Mitigation:** Ensure the KB5065848 fix is included in the Windows image, or allow Windows Update to apply it during ESP (requires internet access during ESP and a Windows Update policy that does not defer feature/quality updates).
 - **Status:** Documented in Microsoft Learn Known Issues for Windows Autopilot. Monitor the Windows release health dashboard for resolution status.
 
-> **Admin Note:** If devices are stuck at "Identifying your device" and BitLocker shows as not encrypted post-enrollment, check the Windows build version against the KB5065848 fix before investigating other causes.
+> **Admin Note:** If devices are stuck at "Identifying your device" and BitLocker shows as not encrypted post-enrollment,
+
+> check the Windows build version against the KB5065848 fix before investigating other causes.
 
 ---
 
@@ -53,7 +55,11 @@ Windows devices may get stuck on the "Identifying" screen during Autopilot and B
 
 - **Test every security baseline change with a pilot Autopilot deployment** before fleet-wide rollout. A baseline that works correctly on an already-enrolled device may behave differently on a device going through first-run OOBE.
 
-> **What breaks if misconfigured:** A security baseline applied during ESP enables a setting that requires a reboot or blocks IME. ESP either fails or loops. The admin sees "Some settings could not be applied" in the ESP failure summary but cannot determine which baseline setting caused the failure from the ESP UI alone. Log collection from `mdmdiagnosticstool.exe` is required to identify the conflicting setting.
+> **What breaks if misconfigured:** A security baseline applied during ESP enables a setting that requires a reboot or blocks IME.
+
+> ESP either fails or loops. The admin sees "Some settings could not be applied" in the ESP failure summary but cannot determine which baseline setting caused the failure from the ESP UI alone.
+
+> Log collection from `mdmdiagnosticstool.exe` is required to identify the conflicting setting.
 
 ---
 
@@ -79,4 +85,4 @@ Windows devices may get stuck on the "Identifying" screen during Autopilot and B
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

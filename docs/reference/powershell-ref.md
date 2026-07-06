@@ -18,7 +18,9 @@ audience: L2
 
 This reference documents the twelve exported functions in the AutopilotDiagnostics and AutopilotRemediation PowerShell modules, including synopsis, parameters, and usage examples for diagnostic and remediation operations. It applies to Autopilot v1 deployments and is intended for L2 engineers running or extending the PowerShell diagnostic toolkit.
 
-> **Version gate:** This reference documents functions exported from the `AutopilotDiagnostics.psm1` and `AutopilotRemediation.psm1` modules. The source `.psm1` files are authoritative; verify this document against source when adding or modifying functions.
+> **Version gate:** This reference documents functions exported from the `AutopilotDiagnostics.psm1` and `AutopilotRemediation.psm1` modules.
+
+> The source `.psm1` files are authoritative; verify this document against source when adding or modifying functions.
 
 Field guide to the 12 exported functions in the Autopilot diagnostic and remediation modules. The source `.psm1` files are authoritative; this reference provides synopsis, parameters, and usage examples.
 
@@ -187,7 +189,9 @@ $logPath = Get-AutopilotLogs -OutputPath "\\fileserver\autopilot-logs\$env:COMPU
 
 ## Remediation Functions (AutopilotRemediation.psm1)
 
-> **Safety note:** Four of the five remediation functions support `-WhatIf` via `SupportsShouldProcess`. Always test in a non-production environment first. `Repair-AutopilotConnectivity` is the exception — see its entry.
+> **Safety note:** Four of the five remediation functions support `-WhatIf` via `SupportsShouldProcess`.
+
+> Always test in a non-production environment first. `Repair-AutopilotConnectivity` is the exception — see its entry.
 
 ---
 
@@ -359,4 +363,4 @@ The following event logs are collected by `Get-AutopilotLogs` and are the primar
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

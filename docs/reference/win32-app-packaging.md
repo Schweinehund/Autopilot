@@ -18,7 +18,9 @@ platform: Windows
 
 This reference documents Win32 app packaging best practices for reliable Enrollment Status Page processing on Windows Autopilot, including detection rule priority order, ESP tracking assignment types, dependency chain configuration, and common anti-patterns that cause ESP timeouts. It covers both Autopilot v1 and v2 deployments and targets Intune administrators packaging and troubleshooting Win32 application deployments.
 
-> **Version gate:** This guide covers Win32 app packaging for both APv1 and APv2 deployments. For ESP configuration settings and the blocking app list, see [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
+> **Version gate:** This guide covers Win32 app packaging for both APv1 and APv2 deployments.
+
+> For ESP configuration settings and the blocking app list, see [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
 
 The most common cause of ESP timeouts and hung provisioning is poorly packaged Win32 apps — wrong detection rules, missing dependency declarations, or mixed app types. This guide documents the detection rule priority order, ESP tracking requirements, dependency chain configuration, and anti-patterns that cause ESP failures.
 
@@ -40,7 +42,9 @@ Intune auto-detects the MSI product code during `.intunewin` upload — look for
 
 **How to configure:** Detection rules > Rule type = MSI. Product code is auto-filled.
 
-> **What breaks if misconfigured:** Wrong MSI product code = app detected as "not installed" even after successful install. ESP waits indefinitely for a detection that never succeeds, then times out. The app install succeeded but Intune cannot confirm it.
+> **What breaks if misconfigured:** Wrong MSI product code = app detected as "not installed" even after successful install.
+
+> ESP waits indefinitely for a detection that never succeeds, then times out. The app install succeeded but Intune cannot confirm it.
 
 ### 2. File Version Check
 
@@ -50,7 +54,9 @@ Specify: exact file path (e.g., `C:\Program Files\MyApp\myapp.exe`), version num
 
 **How to configure:** Detection rules > Rule type = File. Enter path, file or folder, detection method = Version, operator = Greater than or equal to, version string.
 
-> **What breaks if misconfigured:** Using "file exists" instead of "version >=" means any old version of the app passes detection. When the app is updated in-place, ESP considers the old version as "installed" and skips the update. Use version checks for apps that update in-place.
+> **What breaks if misconfigured:** Using "file exists" instead of "version >=" means any old version of the app passes detection.
+
+> When the app is updated in-place, ESP considers the old version as "installed" and skips the update. Use version checks for apps that update in-place.
 
 ### 3. Registry Key or Value
 
@@ -60,7 +66,11 @@ Specify: exact file path (e.g., `C:\Program Files\MyApp\myapp.exe`), version num
 
 **How to configure:** Detection rules > Rule type = Registry. Enter key path, value name, detection method = Key exists or Value exists.
 
-> **What breaks if misconfigured:** 32-bit apps installed on 64-bit Windows write registry entries to the `WOW6432Node` path, not the standard `Uninstall` path. Specifying `HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\` for a 32-bit app = detection fails on 64-bit Windows. The app installs but Intune never detects it as installed.
+> **What breaks if misconfigured:** 32-bit apps installed on 64-bit Windows write registry entries to the `WOW6432Node` path, not the standard `Uninstall` path.
+
+> Specifying `HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\` for a 32-bit app = detection fails on 64-bit Windows.
+
+> The app installs but Intune never detects it as installed.
 
 ### 4. PowerShell Custom Script (Last Resort)
 
@@ -70,7 +80,9 @@ Script must exit with code `0` to indicate detection (app is installed) and exit
 
 **Performance note:** Each PowerShell detection script adds 5-15 seconds to the detection cycle. Multiply by number of tracked apps — large app catalogs with PowerShell detection add significant time to ESP.
 
-> **What breaks if misconfigured:** Script exits with non-zero code unexpectedly (e.g., a command not found on a specific Windows version). Intune treats non-zero exit as "not installed." App re-installs on every sync check, causing repeated ESP invocations and potential conflicts with running processes.
+> **What breaks if misconfigured:** Script exits with non-zero code unexpectedly (e.g., a command not found on a specific Windows version).
+
+> Intune treats non-zero exit as "not installed." App re-installs on every sync check, causing repeated ESP invocations and potential conflicts with running processes.
 
 ## ESP Tracking Requirements
 
@@ -86,7 +98,9 @@ ESP only tracks apps with specific assignment types. Assignment type determines 
 
 **"All" mode:** Every Required app assignment blocks desktop access. Use with caution — any new Required assignment immediately becomes a blocker.
 
-> **What breaks if misconfigured:** App assigned as "Available" instead of "Required" = app is never tracked by ESP, never blocks desktop. Users reach desktop before the app installs. If the app is a dependency for user workflows, users see missing apps immediately after login.
+> **What breaks if misconfigured:** App assigned as "Available" instead of "Required" = app is never tracked by ESP, never blocks desktop.
+
+> Users reach desktop before the app installs. If the app is a dependency for user workflows, users see missing apps immediately after login.
 
 ## Install Order and Dependencies
 
@@ -115,15 +129,25 @@ C:\ProgramData\Microsoft\IntuneManagementExtension\Logs\IntuneManagementExtensio
 
 Search for: `Circular dependency detected` or `dependency failed`.
 
-> **What breaks if sequenced incorrectly:** App B depends on App A's runtime (e.g., .NET Framework). If App A is not declared as a dependency, install order is non-deterministic. Intune may install App B first — App B fails at launch because its runtime is missing. ESP retries App B, which fails again. ESP eventually times out waiting for App B to succeed.
+> **What breaks if sequenced incorrectly:** App B depends on App A's runtime (e.g., .NET Framework). If App A is not declared as a dependency, install order is non-deterministic.
+
+> Intune may install App B first — App B fails at launch because its runtime is missing.
+
+> ESP retries App B, which fails again. ESP eventually times out waiting for App B to succeed.
 
 ## Anti-Pattern Warning
 
 > [!WARNING]
-> **Do NOT mix Win32 (.intunewin) and LOB (MSI) as Required in the same ESP deployment.** The TrustedInstaller service cannot handle both installer types simultaneously — ESP hangs at app installation with IME logs showing "Another installation is in progress." Convert all apps to Win32 format, or use APv2 which supports mixed app types. See [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) for details.
+> **Do NOT mix Win32 (.intunewin) and LOB (MSI) as Required in the same ESP deployment.**
+
+> The TrustedInstaller service cannot handle both installer types simultaneously — ESP hangs at app installation with IME logs showing "Another installation is in progress."
+
+> Convert all apps to Win32 format, or use APv2 which supports mixed app types. See [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md) for details.
 
 > [!WARNING]
-> **Microsoft 365 Apps as MSI + Win32 apps simultaneously** causes the same TrustedInstaller hang. Deploy Microsoft 365 Apps as Win32 type, not MSI. See [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
+> **Microsoft 365 Apps as MSI + Win32 apps simultaneously** causes the same TrustedInstaller hang.
+
+> Deploy Microsoft 365 Apps as Win32 type, not MSI. See [ESP Policy Configuration](../admin-setup-apv1/03-esp-policy.md).
 
 ## Configuration-Caused Failures
 
@@ -147,4 +171,4 @@ Search for: `Circular dependency detected` or `dependency failed`.
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

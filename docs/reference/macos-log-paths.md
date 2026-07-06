@@ -18,7 +18,9 @@ platform: macOS
 
 This reference documents macOS log file locations and configuration profile storage paths for Intune and Automated Device Enrollment diagnostics, including the Intune management daemon and agent logs, Company Portal logs, and unified log subsystem identifiers. It covers macOS ADE deployments and is intended for L2 engineers locating and interpreting Intune-related log data on managed Macs.
 
-> **Version gate:** This reference documents macOS log paths and configuration profile locations for Intune and ADE diagnostics. Paths verified against macOS 14 (Sonoma). Version-specific differences are noted per row. For Windows registry paths, see [Registry Paths Reference](registry-paths.md).
+> **Version gate:** This reference documents macOS log paths and configuration profile locations for Intune and ADE diagnostics.
+
+> Paths verified against macOS 14 (Sonoma). Version-specific differences are noted per row. For Windows registry paths, see [Registry Paths Reference](registry-paths.md).
 
 Canonical reference for macOS log file locations, Intune agent paths, and configuration profile storage. Runbooks and investigation guides link here rather than defining paths inline.
 
@@ -79,4 +81,4 @@ For full command syntax, see [macOS Terminal Commands Reference](macos-commands.
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |

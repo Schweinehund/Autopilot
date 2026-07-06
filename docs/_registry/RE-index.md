@@ -161,26 +161,26 @@
 | RE-145 | docs/reference/aosp-oem-matrix.md | Intune: AOSP OEM Matrix — RealWear / Zebra / Pico / HTC / Meta Quest | Reference | Approved |
 | RE-146 | docs/reference/apv1-apv2-migration.md | APv1-to-APv2 Migration: Parallel Deployment Playbook | Reference | Approved |
 | RE-147 | docs/reference/ca-enrollment-timing.md | Conditional Access Enrollment Timing: The Compliance Chicken-and-Egg Problem | Reference | Pending |
-| RE-148 | docs/reference/compliance-timing.md | Compliance Policy Timing and State Transitions | Reference | Pending |
+| RE-148 | docs/reference/compliance-timing.md | Compliance Policy Timing and State Transitions | Reference | Approved |
 | RE-149 | docs/reference/deployment-reporting.md | Intune Deployment Reporting for Windows Autopilot | Reference | Approved |
 | RE-150 | docs/reference/drift-detection.md | Registration and Profile Assignment Drift Detection | Reference | Approved |
-| RE-151 | docs/reference/endpoints.md | Network Endpoints Reference | Reference | Pending |
+| RE-151 | docs/reference/endpoints.md | Network Endpoints Reference | Reference | Approved |
 | RE-152 | docs/reference/entra-prerequisites.md | Entra ID Prerequisite Configuration for Autopilot | Reference | Approved |
 | RE-153 | docs/reference/esp-timeout-tuning.md | ESP Timeout Tuning Guide | Reference | Approved |
 | RE-154 | docs/reference/gpo-to-intune.md | GPO-to-Intune Policy Migration Guide | Reference | Approved |
 | RE-155 | docs/reference/imaging-to-autopilot.md | On-Premises Imaging to Autopilot Migration Guide | Reference | Approved |
 | RE-156 | docs/reference/ios-capability-matrix.md | Intune: iOS/iPadOS Capability Matrix — Windows, macOS, iOS | Reference | Approved |
-| RE-157 | docs/reference/licensing-matrix.md | Autopilot Licensing Requirements | Reference | Pending |
+| RE-157 | docs/reference/licensing-matrix.md | Autopilot Licensing Requirements | Reference | Approved |
 | RE-158 | docs/reference/linux-capability-matrix.md | Intune: Linux vs Windows Capability Matrix | Reference | Approved |
 | RE-159 | docs/reference/macos-capability-matrix.md | Intune: macOS vs Windows Capability Matrix | Reference | Approved |
-| RE-160 | docs/reference/macos-commands.md | macOS Terminal Commands Reference | Reference | Pending |
-| RE-161 | docs/reference/macos-log-paths.md | macOS Log Paths and Configuration Profile Locations | Reference | Pending |
-| RE-162 | docs/reference/network-infrastructure.md | Network Infrastructure Requirements for Windows Autopilot | Reference | Pending |
+| RE-160 | docs/reference/macos-commands.md | macOS Terminal Commands Reference | Reference | Approved |
+| RE-161 | docs/reference/macos-log-paths.md | macOS Log Paths and Configuration Profile Locations | Reference | Approved |
+| RE-162 | docs/reference/network-infrastructure.md | Network Infrastructure Requirements for Windows Autopilot | Reference | Approved |
 | RE-163 | docs/reference/new-batch-workflow.md | New Batch of Devices: End-to-End Operational Workflow | Reference | Approved |
-| RE-164 | docs/reference/powershell-ref.md | PowerShell Function Reference | Reference | Pending |
-| RE-165 | docs/reference/registry-paths.md | Autopilot Registry Paths Reference | Reference | Pending |
-| RE-166 | docs/reference/security-baseline-conflicts.md | Security Baseline Interactions with Autopilot Provisioning | Reference | Pending |
-| RE-167 | docs/reference/win32-app-packaging.md | Win32 App Packaging Best Practices for ESP Reliability | Reference | Pending |
+| RE-164 | docs/reference/powershell-ref.md | PowerShell Function Reference | Reference | Approved |
+| RE-165 | docs/reference/registry-paths.md | Autopilot Registry Paths Reference | Reference | Approved |
+| RE-166 | docs/reference/security-baseline-conflicts.md | Security Baseline Interactions with Autopilot Provisioning | Reference | Approved |
+| RE-167 | docs/reference/win32-app-packaging.md | Win32 App Packaging Best Practices for ESP Reliability | Reference | Approved |
 | RE-168 | docs/error-codes/00-index.md | Error Code Index | Reference | Pending |
 | RE-169 | docs/error-codes/01-mdm-enrollment.md | MDM Enrollment Errors (0x8018xxxx Series) | Reference | Pending |
 | RE-170 | docs/error-codes/02-tpm-attestation.md | TPM Attestation Errors | Reference | Pending |

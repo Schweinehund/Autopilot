@@ -18,7 +18,9 @@ platform: macOS
 
 This reference documents macOS Terminal commands used for Intune and Automated Device Enrollment diagnostics, including profiles, log show/stream, system_profiler, defaults read, pgrep, and the IntuneMacODC diagnostic collection script. It covers macOS ADE deployments and is intended for L2 engineers troubleshooting Intune-managed Mac enrollment and configuration issues.
 
-> **Version gate:** This reference documents macOS Terminal commands for Intune and ADE diagnostics. Commands are OS-shipped unless noted. Last verified against macOS 14 (Sonoma). For Windows PowerShell equivalents, see [PowerShell Reference](powershell-ref.md).
+> **Version gate:** This reference documents macOS Terminal commands for Intune and ADE diagnostics. Commands are OS-shipped unless noted.
+
+> Last verified against macOS 14 (Sonoma). For Windows PowerShell equivalents, see [PowerShell Reference](powershell-ref.md).
 
 Field guide to macOS Terminal commands for Intune and ADE enrollment diagnostics. These are OS-shipped binaries and Microsoft-provided tools -- not project-owned code. The structure mirrors [PowerShell Reference](powershell-ref.md) for cross-platform consistency.
 
@@ -220,4 +222,4 @@ sudo ./IntuneMacODC.sh
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-06 | v1.15 EEE reformat — content not re-reviewed | — |
