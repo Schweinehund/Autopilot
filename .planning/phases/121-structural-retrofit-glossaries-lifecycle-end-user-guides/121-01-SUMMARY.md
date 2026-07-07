@@ -90,3 +90,11 @@ None - no external service configuration required.
 ---
 *Phase: 121-structural-retrofit-glossaries-lifecycle-end-user-guides*
 *Completed: 2026-07-07*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/pipeline/retrofit-structural.mjs
+- FOUND: docs/_registry/RE-index.md
+- FOUND: .planning/phases/121-structural-retrofit-glossaries-lifecycle-end-user-guides/121-01-SUMMARY.md
+- FOUND commit: a43d9c7
+- FOUND commit: 5a42796
