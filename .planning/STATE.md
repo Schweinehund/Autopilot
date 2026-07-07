@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-07T20:18:24.266Z"
+last_updated: "2026-07-07T20:30:47.042Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 9
-  completed_plans: 5
+  completed_plans: 6
   percent: 17
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 121 (structural-retrofit-glossaries-lifecycle-end-user-guides) — EXECUTING
-Plan: 4 of 7
+Plan: 5 of 7
 Status: Ready to execute
 Last activity: 2026-07-07
 
@@ -343,6 +343,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 121-03]: Built a reusable word-preserving greedy blockquote packer (markdown-link/backtick-aware tokenizer, prefers clause-boundary breaks) instead of hand-splitting all 31 over-200-char blockquote groups across the macos/apple-business glossaries
 - [Phase 121-03]: Discovered mid-task that a per-line-only length check is insufficient for C17 assertion #12 -- it joins ALL consecutive '>' lines into one measured group; fixed the validator to replicate C17's exact grouping algorithm before any file write occurred
 - [Phase 121-03]: Every split blockquote chunk is separated by a genuine blank line (never merely consecutive short '>' lines), and the reformat-only proof strips '>' prefixes before comparing word multisets (git HEAD vs working tree) -- only diff found was the intentional Version-History date-placeholder fill
+- [Phase 121]: 121-04: Confirmed registry mapping RE-181=_glossary-linux.md, RE-184=_glossary.md (doc_type Reference) as source of truth over an inconsistent phase-grounding note
+- [Phase 121]: 121-04: Built a reusable link/backtick-aware word-preserving greedy blockquote splitter (trailing-punctuation glue set [.,;:)]* to survive nested-paren link constructions); word-set multiset diff proof caught and fixed a first-pass spacing artifact before commit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -379,8 +381,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T20:18:24.251Z
-Stopped at: Completed 121-03-PLAN.md
+Last session: 2026-07-07T20:30:47.023Z
+Stopped at: Completed 121-04-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -435,3 +437,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 121 P01 | 20min | 2 tasks | 2 files |
 | Phase 121 P02 | 20min | 2 tasks | 2 files |
 | Phase 121 P03 | 40min | 2 tasks | 2 files |
+| Phase 121 P04 | 20min | 2 tasks | 2 files |
