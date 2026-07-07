@@ -103,3 +103,12 @@ None - no external service configuration required.
 ---
 *Phase: 121-structural-retrofit-glossaries-lifecycle-end-user-guides*
 *Completed: 2026-07-07*
+
+## Self-Check: PASSED
+
+- FOUND: docs/_glossary-macos.md
+- FOUND: docs/_glossary-apple-business.md
+- FOUND: .planning/phases/121-structural-retrofit-glossaries-lifecycle-end-user-guides/121-03-SUMMARY.md
+- FOUND commit: b9a56a2 (Task 1)
+- FOUND commit: 9f81f4d (Task 2)
+- FOUND commit: a529de1 (docs: add plan summary)
