@@ -188,7 +188,35 @@
 | RE-172 | docs/error-codes/04-pre-provisioning.md | Pre-Provisioning and Self-Deploying Mode Errors | Reference | Approved |
 | RE-173 | docs/error-codes/05-hybrid-join.md | Hybrid Join and Device Registration Errors | Reference | Approved |
 | RE-174 | docs/error-codes/06-apv2-device-preparation.md | APv2 Device Preparation Failures | Reference | Approved |
-| RE-175 | docs/end-user-guides/android-work-profile-setup.md | Set up your personal Android device for work (BYOD Work Profile) | Guide | Pending |
-| RE-176 | docs/end-user-guides/linux-intune-portal-enrollment.md | Linux Intune Portal Enrollment — User Guide | Guide | Pending |
+| RE-175 | docs/end-user-guides/android-work-profile-setup.md | Set up your personal Android device for work (BYOD Work Profile) | Guide | Approved |
+| RE-176 | docs/end-user-guides/linux-intune-portal-enrollment.md | Linux Intune Portal Enrollment — User Guide | Guide | Approved |
 | RE-177 | docs/apv1-vs-apv2.md | APv1 vs APv2: Which Autopilot Are You Troubleshooting? | Reference | Approved |
 | RE-178 | docs/windows-vs-macos.md | Windows Autopilot vs macOS ADE: Concept Comparison | Reference | Approved |
+| RE-179 | docs/_glossary-android.md | Android Enterprise Provisioning Glossary | Reference | Approved |
+| RE-180 | docs/_glossary-apple-business.md | Apple Business Governance Glossary | Reference | Approved |
+| RE-181 | docs/_glossary-linux.md | Linux Provisioning Glossary | Reference | Approved |
+| RE-182 | docs/_glossary-macos.md | Apple Provisioning Glossary | Reference | Approved |
+| RE-183 | docs/_glossary-network.md | Network Authentication Glossary | Reference | Approved |
+| RE-184 | docs/_glossary.md | Autopilot Glossary | Reference | Approved |
+| RE-185 | docs/android-lifecycle/00-enrollment-overview.md | Android Enterprise Enrollment Overview | Guide | Approved |
+| RE-186 | docs/android-lifecycle/01-android-prerequisites.md | Android Enterprise Prerequisites | Guide | Approved |
+| RE-187 | docs/android-lifecycle/02-provisioning-methods.md | Android Provisioning Methods | Guide | Approved |
+| RE-188 | docs/android-lifecycle/03-android-version-matrix.md | Android Version Matrix | Guide | Approved |
+| RE-189 | docs/ios-lifecycle/00-enrollment-overview.md | iOS/iPadOS Enrollment Path Overview | Guide | Approved |
+| RE-190 | docs/ios-lifecycle/01-ade-lifecycle.md | iOS/iPadOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Pending |
+| RE-191 | docs/ios-lifecycle/02-mdm-migration.md | iOS/iPadOS MDM Migration Walkthrough: In-Place Migration (iOS/iPadOS 26+) | Guide | Pending |
+| RE-192 | docs/lifecycle/00-overview.md | Autopilot Lifecycle Overview | Guide | Pending |
+| RE-193 | docs/lifecycle/01-hardware-hash.md | Stage 1: Hardware Hash Import and Device Registration | Guide | Approved |
+| RE-194 | docs/lifecycle/02-profile-assignment.md | Stage 2: Autopilot Profile Assignment | Guide | Approved |
+| RE-195 | docs/lifecycle/03-oobe.md | Stage 3: OOBE and Deployment Mode Selection | Guide | Pending |
+| RE-196 | docs/lifecycle/04-esp.md | Stage 4: Enrollment Status Page | Guide | Pending |
+| RE-197 | docs/lifecycle/05-post-enrollment.md | Stage 5: Post-Enrollment Verification | Guide | Approved |
+| RE-198 | docs/lifecycle-apv2/00-overview.md | APv2: Windows Autopilot Device Preparation Overview | Guide | Approved |
+| RE-199 | docs/lifecycle-apv2/01-prerequisites.md | APv2 Prerequisites Checklist | Guide | Approved |
+| RE-200 | docs/lifecycle-apv2/02-deployment-flow.md | APv2 User-Driven Deployment Flow | Guide | Pending |
+| RE-201 | docs/lifecycle-apv2/03-automatic-mode.md | APv2 Automatic Mode (Windows 365) | Guide | Approved |
+| RE-202 | docs/linux-lifecycle/00-enrollment-overview.md | Linux Device Management Enrollment Overview | Guide | Approved |
+| RE-203 | docs/linux-lifecycle/01-linux-prerequisites.md | Linux Intune Client Prerequisites | Guide | Approved |
+| RE-204 | docs/macos-lifecycle/00-ade-lifecycle.md | macOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Pending |
+| RE-205 | docs/macos-lifecycle/01-psso-provisioning-walkthrough.md | macOS Platform SSO Provisioning Walkthrough: A1 Standard and A2 ADE-during-Setup-Assistant | Guide | Pending |
+| RE-206 | docs/macos-lifecycle/02-mdm-migration-psso.md | macOS MDM Migration Walkthrough: B1 In-Place (macOS 26+) and B2 Wipe-and-Re-Enroll | Guide | Pending |
