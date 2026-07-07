@@ -19,13 +19,12 @@ audience: admin
 This guide covers APv2 Automatic mode, a preview deployment path scoped exclusively to Windows 365 Cloud PC provisioning. It explains how the Cloud PC agent triggers enrollment without user authentication at OOBE, the supported Windows 365 SKUs, the 9-step automatic deployment process, and the current app and script limits.
 
 > **Preview:** APv2 Automatic mode is in **public preview**. It applies ONLY to Windows 365 Cloud PCs.
-> It does NOT apply to physical devices or standard APv2 user-driven deployments.
-> Preview features may change before general availability.
 
-> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2) — Automatic mode.
-> For APv2 user-driven mode, see [APv2 Deployment Flow](02-deployment-flow.md).
-> For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md).
-> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+> It does NOT apply to physical devices or standard APv2 user-driven deployments. Preview features may change before general availability.
+
+> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2) — Automatic mode. For APv2 user-driven mode, see [APv2 Deployment Flow](02-deployment-flow.md).
+
+> For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 ## Overview
 
@@ -46,7 +45,9 @@ In automatic mode, the Windows 365 Cloud PC agent triggers enrollment — no use
 
 **GCCH/DoD exception:** Windows 365 Frontline in shared mode is NOT supported in GCCH and DoD environments. All other SKUs listed above are supported in GCCH and DoD.
 
-> **Preview:** SKU availability and support matrix may change. Check [What's New in Windows Autopilot Device Preparation](https://learn.microsoft.com/en-us/autopilot/device-preparation/whats-new) for updates.
+> **Preview:** SKU availability and support matrix may change.
+
+> Check [What's New in Windows Autopilot Device Preparation](https://learn.microsoft.com/en-us/autopilot/device-preparation/whats-new) for updates.
 
 ## How Automatic Mode Differs from User-Driven
 
@@ -107,4 +108,4 @@ The following is a high-level orientation of the admin setup process. For detail
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |

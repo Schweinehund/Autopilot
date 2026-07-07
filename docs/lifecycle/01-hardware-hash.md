@@ -18,7 +18,9 @@ audience: both
 
 This guide covers Stage 1 of the Windows Autopilot classic lifecycle: hardware hash import and device registration. It explains how a device's hardware fingerprint reaches the Autopilot service via CSV upload, OEM registration, PowerShell collection, or Partner Center, and what to check when a device fails to register.
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
+
+> For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -66,9 +68,15 @@ When you upload a CSV file, the portal presents a file picker followed by an upl
 > **L2 Note:**
 >
 > - The ZTD service (`ztd.dds.microsoft.com`) receives the device hardware data and creates the ZTDID by hashing the submitted device identifiers against the tenant.
+
 > - Hash data originates from the `MDM_DevDetail_Ext01` WMI class on the device; specifically the `DeviceHardwareData` property.
+
 > - After the hash upload, the ZTD service creates an Azure AD device object for the device (if one does not already exist) and marks it as an Autopilot device.
-> - The Autopilot registration registry key (`HKLM:\SOFTWARE\Microsoft\Provisioning\Diagnostics\Autopilot`) is **not** populated at import time. It is populated later, when the device downloads its Autopilot profile during OOBE (Stage 3). See [registry-paths.md](../reference/registry-paths.md) for the full path reference.
+
+> - The Autopilot registration registry key (`HKLM:\SOFTWARE\Microsoft\Provisioning\Diagnostics\Autopilot`) is **not** populated at import time.
+
+> It is populated later, when the device downloads its Autopilot profile during OOBE (Stage 3). See [registry-paths.md](../reference/registry-paths.md) for the full path reference.
+
 > - ZTDID assignment is tenant-scoped — the same device can be de-registered from one tenant and re-registered in another, but the hash changes if hardware changes occur.
 
 ---
@@ -120,7 +128,11 @@ Remediation runbooks: (available after Phase 5)
 - [Microsoft Learn: Add devices to Windows Autopilot](https://learn.microsoft.com/en-us/autopilot/add-devices)
 - [Microsoft Learn: Manually register devices with Windows Autopilot](https://learn.microsoft.com/en-us/autopilot/manual-registration)
 
-> **APv2 Note:** Windows Autopilot Device Preparation does not require hardware hash pre-staging. Devices register automatically at OOBE based on tenant-level policy without prior import steps. No CSV upload or OEM pre-registration is required. See [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md) and the [Microsoft Learn Device Preparation overview](https://learn.microsoft.com/en-us/autopilot/device-preparation/overview) for details.
+> **APv2 Note:** Windows Autopilot Device Preparation does not require hardware hash pre-staging. Devices register automatically at OOBE based on tenant-level policy without prior import steps.
+
+> No CSV upload or OEM pre-registration is required.
+
+> See [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md) and the [Microsoft Learn Device Preparation overview](https://learn.microsoft.com/en-us/autopilot/device-preparation/overview) for details.
 
 ---
 
@@ -134,5 +146,5 @@ Previous: [Lifecycle Overview](00-overview.md) | Next: [Stage 2: Profile Assignm
 
 | Date | Change |
 |------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version |

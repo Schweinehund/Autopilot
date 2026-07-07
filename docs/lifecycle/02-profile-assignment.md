@@ -18,7 +18,9 @@ audience: both
 
 This guide covers Stage 2 of the Windows Autopilot classic lifecycle: deployment profile assignment. It explains how a profile created in Intune reaches a device through Azure AD group membership, why dynamic group evaluation delay is the leading cause of missed profile delivery at OOBE, and how hybrid join adds an on-premises dependency.
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
+
+> For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -65,7 +67,9 @@ Once created, profiles appear in the list with columns for Name, Deployment Mode
 | Static group | Manual — admin adds each device | Immediate after admin adds device | Near-instant | Small batches, controlled rollouts |
 | Dynamic group | Rule-based — devices added automatically | After AAD dynamic group evaluation cycle | 5–15 min; up to 24h for complex rules in large tenants | At-scale deployments, OEM-registered devices |
 
-> **Note:** Dynamic group delays are the most common cause of "device shows Autopilot registered but receives no profile at OOBE." If a device reaches OOBE before the dynamic group has evaluated, no profile is delivered.
+> **Note:** Dynamic group delays are the most common cause of "device shows Autopilot registered but receives no profile at OOBE."
+
+> If a device reaches OOBE before the dynamic group has evaluated, no profile is delivered.
 
 ---
 
@@ -74,9 +78,18 @@ Once created, profiles appear in the list with columns for Name, Deployment Mode
 > **L2 Note:**
 >
 > - Profile assignment uses Microsoft Graph API — Intune writes the profile association to Graph, which propagates to the Autopilot service.
-> - At OOBE, the device contacts `ztd.dds.microsoft.com` (ZTD profile lookup) and `cs.dds.microsoft.com` (configuration data) to retrieve its assigned profile. Both endpoints must be reachable. See [endpoints.md](../reference/endpoints.md) for the full endpoint list and criticality ratings.
-> - The `AutopilotSettings` registry key (`HKLM:\SOFTWARE\Microsoft\Provisioning\AutopilotSettings`) is populated when the device downloads the profile. If the device cannot reach the ZTD service, this key will not be written and OOBE proceeds without Autopilot customization. See [registry-paths.md](../reference/registry-paths.md).
-> - For hybrid join deployments, the Offline Domain Join (ODJ) Connector must be installed on an on-premises server and must be able to communicate with Active Directory domain controllers. Profile assignment itself is cloud-only, but execution at OOBE depends on DC reachability for the ODJ blob. Full hybrid join detail is covered in Phase 6.
+
+> - At OOBE, the device contacts `ztd.dds.microsoft.com` (ZTD profile lookup) and `cs.dds.microsoft.com` (configuration data) to retrieve its assigned profile.
+
+> Both endpoints must be reachable. See [endpoints.md](../reference/endpoints.md) for the full endpoint list and criticality ratings.
+
+> - The `AutopilotSettings` registry key (`HKLM:\SOFTWARE\Microsoft\Provisioning\AutopilotSettings`) is populated when the device downloads the profile.
+
+> If the device cannot reach the ZTD service, this key will not be written and OOBE proceeds without Autopilot customization. See [registry-paths.md](../reference/registry-paths.md).
+
+> - For hybrid join deployments, the Offline Domain Join (ODJ) Connector must be installed on an on-premises server and must be able to communicate with Active Directory domain controllers.
+
+> Profile assignment itself is cloud-only, but execution at OOBE depends on DC reachability for the ODJ blob. Full hybrid join detail is covered in Phase 6.
 
 ---
 
@@ -128,7 +141,11 @@ Hybrid join deep-dive: [Hybrid join deep-dive](../l2-runbooks/04-hybrid-join.md)
 - [Microsoft Learn: Create an Autopilot deployment profile](https://learn.microsoft.com/en-us/autopilot/profiles)
 - [Microsoft Learn: Windows Autopilot deployment profiles](https://learn.microsoft.com/en-us/autopilot/deployment-profiles)
 
-> **APv2 Note:** Windows Autopilot Device Preparation uses Device Preparation policies, not Autopilot deployment profiles. There is no hardware hash matching step — assignment is based on Azure AD group membership evaluated at OOBE sign-in. The profile lookup via `ztd.dds.microsoft.com` does not apply. See [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md) for the full comparison.
+> **APv2 Note:** Windows Autopilot Device Preparation uses Device Preparation policies, not Autopilot deployment profiles.
+
+> There is no hardware hash matching step — assignment is based on Azure AD group membership evaluated at OOBE sign-in. The profile lookup via `ztd.dds.microsoft.com` does not apply.
+
+> See [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md) for the full comparison.
 
 ---
 
@@ -142,5 +159,5 @@ Previous: [Stage 1: Hardware Hash Import](01-hardware-hash.md) | Next: [Stage 3:
 
 | Date | Change |
 |------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version |

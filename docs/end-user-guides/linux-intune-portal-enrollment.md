@@ -103,4 +103,4 @@ Quick reference for L1 service desk staff supporting Linux Intune Portal enrollm
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
