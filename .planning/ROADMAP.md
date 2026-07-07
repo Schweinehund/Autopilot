@@ -86,7 +86,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 121-01-PLAN.md — Build retrofit-structural.mjs fork (2 doc_types, 9-file Mermaid exclusion, v1.16 VH) + author RE-179..206 registry rows
+- [x] 121-01-PLAN.md — Build retrofit-structural.mjs fork (2 doc_types, 9-file Mermaid exclusion, v1.16 VH) + author RE-179..206 registry rows
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -186,7 +186,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
-| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 0/? | Not started | - |
+| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 1/7 | In Progress|  |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |

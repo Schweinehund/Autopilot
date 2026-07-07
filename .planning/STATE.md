@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-07T19:21:10.455Z"
-last_activity: 2026-07-07 -- Phase 121 planning complete
+last_updated: "2026-07-07T19:38:15.896Z"
+last_activity: 2026-07-07
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 9
-  completed_plans: 2
+  completed_plans: 3
   percent: 17
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** Phase 121 — structural retrofit — glossaries, lifecycle & end user guides
+**Current focus:** Phase 121 — structural-retrofit-glossaries-lifecycle-end-user-guides
 
 ## Current Position
 
-Phase: 121
-Plan: Not started
+Phase: 121 (structural-retrofit-glossaries-lifecycle-end-user-guides) — EXECUTING
+Plan: 2 of 7
 Status: Ready to execute
-Last activity: 2026-07-07 -- Phase 121 planning complete
+Last activity: 2026-07-07
 
 ## v1.16 Phase Dependency Summary
 
@@ -335,6 +335,9 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 120]: Kept the 5-class illustrative Doc Type mapping table separate from the frozen 4-row Doc Type Taxonomy table (5 rows/3 cols, not merged) per RESEARCH Pitfall 2 guidance
 - [Phase 120]: Comment-only pointer added above c17-eee-contract.mjs hasMermaid line, avoiding the literal CHAIN_PHASES substring and preserving --self-test/C17 assertion-violation-counts: needle strings
 - [Phase ?]: HYG-01 verified against live grep of check-phase-{61,67,68,70,111}.mjs before finalizing corrected comment wording; 120-VERIFICATION.md cites real committed strings from 120-01 for future needle-check derivation; check-phase-120.mjs deliberately NOT authored (validator-atom deferral to Phase 125/HARN-06)
+- [Phase 121-01]: Forked retrofit-reference.mjs (not retrofit-guide.mjs) as the retrofit-structural.mjs template — it already carries the detectVhColumnCount CREATE-vs-PREPEND logic the plan mandates, and the router pattern generalizes to emit either doc_type from one resolved value
+- [Phase 121-01]: No special-case needed for docs/_glossary-android.md's reversed H1/blockquote order — the whole-pre-H1-span mechanism naturally produces the same post-Summary blockquote placement, confirmed via --dry-run --all (preH1SpanLines=0 for that file)
+- [Phase 121-01]: docs/_glossary-network.md uses ## Change History instead of ## Version History (confirmed vhBranch=CREATE on dry-run) — flagged as an executor hazard for the wave-2 plan that touches this file, to avoid spawning a duplicate section
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -371,9 +374,9 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T18:32:08.355Z
-Stopped at: Phase 121 context gathered (adversarial-review, 4 gray areas)
-Resume file: .planning/phases/121-structural-retrofit-glossaries-lifecycle-end-user-guides/121-CONTEXT.md
+Last session: 2026-07-07T19:38:15.880Z
+Stopped at: Completed 121-01-PLAN.md (retrofit-structural.mjs fork + RE-179..206 registry rows)
+Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
@@ -424,3 +427,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 119 P06 | multi-day (owner checkpoint) | 3 tasks | 3 files (PIPE-02-CLOSE-RUNBOOK/FINDINGS/TRANSCRIPT; owner PIPE-02 CLOSE: PASS attested 2026-07-06) |
 | Phase 120 P01 | 6min | 2 tasks | 2 files |
 | Phase 120 P02 | 6min | - tasks | - files |
+| Phase 121 P01 | 20min | 2 tasks | 2 files |
