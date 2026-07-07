@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: verifying
-last_updated: "2026-07-07T15:18:28.055Z"
+status: ready_to_plan
+last_updated: 2026-07-07T15:52:02.197Z
 last_activity: 2026-07-07
 progress:
   total_phases: 6
@@ -11,6 +11,7 @@ progress:
   total_plans: 2
   completed_plans: 2
   percent: 17
+stopped_at: Phase 120 complete (2/2) — ready to discuss Phase 121
 ---
 
 # Project State
@@ -20,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** Phase 120 — eee-standard-extension-mermaid-c17-policy-hygiene-fix
+**Current focus:** Phase 121 — structural retrofit — glossaries, lifecycle & end user guides
 
 ## Current Position
 
-Phase: 120 (eee-standard-extension-mermaid-c17-policy-hygiene-fix) — EXECUTING
-Plan: 2 of 2
+Phase: 121
+Plan: Not started
 Status: Phase complete — ready for verification
 Last activity: 2026-07-07
 
@@ -118,7 +119,7 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Phase complete — ready for verification
+  |             BOTH frontmatter status: AND visible **Status:** Ready to plan
   |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so

@@ -1,3 +1,40 @@
+---
+status: passed
+phase: 120-eee-standard-extension-mermaid-c17-policy-hygiene-fix
+verified: 2026-07-07
+must_haves_verified: 4/4
+requirements: [STD-04, HYG-01]
+---
+
+## Verification Verdict (goal-backward)
+
+Independent goal-backward re-verification (not trusting SUMMARY.md claims) against the four
+ROADMAP Phase 120 success criteria. All checks below were executed live against the current
+codebase state, not sourced from prior narration.
+
+| # | ROADMAP Success Criterion | Verdict | Evidence |
+|---|---|---|---|
+| SC1 | EEE-SOP-standard.md states the Mermaid-in-enrolled-classes policy (text-equivalent conversion) with rationale | PASS | `grep -n "## Mermaid-in-Enrolled-Classes Policy" docs/_standards/EEE-SOP-standard.md` → line 398, positioned before `## C17 Enforcement Reference` (line 452). Read lines 398-448 directly: D-01 (text-equivalent conversion, not a carve-out, with Copilot-grounding rationale), D-02 (C17 #1 stays unchanged), D-03 (decision-table/list + sequence-step-list conversion shapes, RE-068 / `10-8021x-triage.md` exemplars), D-04 (honesty caveat that green C17 does not attest leaf-completeness) all present verbatim. |
+| SC2 | c17-eee-contract.mjs assertion #1 updated-to-match (LOCKED: retained hard-fail, byte-unchanged logic, comment-only pointer allowed); `--self-test` exits 0; zero `CHAIN_PHASES` occurrences; full-corpus run reports 0 violations | PASS | `node scripts/validation/c17-eee-contract.mjs --self-test` → "Self-test: 4 passed, 0 failed" (exit 0). `grep -c 'CHAIN_PHASES' scripts/validation/c17-eee-contract.mjs` → `0`. `node scripts/validation/c17-eee-contract.mjs --verbose` → "C17 summary: 174 files checked, 0 with violations, 0 total violations". `git show f452856` diff confirms only a 3-line comment block was added directly above `const hasMermaid = bodyLines.some((l, i) => !inCodeFence[i] && /^```mermaid/.test(l));` — the assertion line itself and the `inCodeFence` mask are unmodified (0 lines removed from the logic, only comment insertions). Also ran `check-phase-115.mjs` (7 PASS, 0 FAIL) and `v1.15-milestone-audit.mjs` (16 passed, 0 failed) — full regression-free. |
+| SC3 | Doc Type taxonomy extended to cover glossary/decision-tree/nav-hub/lifecycle/end-user-guide (via D-02 edge rulings); controlled-vocabulary table remains EXACTLY 4 values (Runbook\|Guide\|RCA\|Reference), zero new doc_type | PASS | Read `## Doc Type Taxonomy` table (lines 123-132): exactly 4 data rows (`Runbook`, `Guide`, `RCA`, `Reference`) — unchanged row count. `### D-02 Edge-case rulings` (lines 134-156) carries the 4 new v1.16 D-07 bullets: glossary → Reference, decision-tree → Reference, nav-hub → Reference, lifecycle → Guide — each explicitly labeled `(v1.16 D-07)`. `#### Non-MECE precedence rule (D-08)` subsection (line 169) present with the 3-step directory-precedence → dominant-body-structure → tie-to-Reference tie-breaker and two worked resolutions. No 5th row was added to the controlled-vocabulary table (the 5-row mapping table at lines 161-167 is explicitly illustrative-only, outside the controlled-vocabulary table). |
+| SC4 | frozen-at-close.mjs header comment no longer claims helpers "REMAIN INLINE" for check-phase-{61,67,68,70}; zero occurrences of literal `REMAIN INLINE`; runtime byte-unchanged (comment-only); CURRENT comment factually accurate against actual reader usage | PASS | `grep -c 'REMAIN INLINE' scripts/validation/_lib/frozen-at-close.mjs` → `0`. `grep -c 'Phase 111'` → `3`. `node --check scripts/validation/_lib/frozen-at-close.mjs` → exit 0 (valid ES module). Confirmed BOTH commits exist and are comment-only: `git show 4e2cb18` (10 insertions/6 deletions, all `//` comment lines) and `git show be6b89d` (13 insertions/6 deletions, all `//` comment lines) — no change to `MILESTONE_CLOSE_SHAS`, `readAtClose()`, or any export in either diff. Cross-checked the CURRENT comment's factual claims directly against reader usage: `check-phase-67.mjs`, `check-phase-68.mjs`, `check-phase-70.mjs` each `import { readAtV17Close(...) } from './_lib/frozen-at-close.mjs'` and their local `readCorpusFileAtV17Close`/`readMilestonesAtV17Close` wrappers delegate to it (`try { return readAtV17Close(relPath); }` pattern in all three) — matches the comment's "thin wrappers that delegate" claim. `check-phase-61.mjs` defines a genuinely inline `readAtV15CloseFor61()` function (not delegating) while separately importing `readAtV15Close` only for its `.planning/MILESTONES.md` reads — matches the comment's "deliberate exception ... genuinely inline reader" claim. `check-phase-68.mjs`'s V-68-10 assertion (line 202-212) greps `check-phase-61.mjs` for the literal string `readAtV15CloseFor61`, confirming that reader is pinned in place exactly as the comment states. |
+
+**Score: 4/4 must-haves verified.**
+
+### Additional cross-checks performed
+
+- **REQUIREMENTS.md cross-reference:** Both `STD-04` (line 94) and `HYG-01` (line 39, 98) are tracked against Phase 120 and marked `Complete`. No requirement IDs map to Phase 120 in REQUIREMENTS.md beyond these two — no orphaned requirements. Plan frontmatter declares `requirements: [STD-04]` (120-01) and `requirements: [HYG-01, STD-04]` (120-02) — full coverage, no scope gap.
+- **Validator-atom deferral scope note confirmed correct:** `test -f scripts/validation/check-phase-120.mjs` → absent (confirmed). This absence is CORRECT per the validator-atom deferral convention (Phase 125 / HARN-06 deliverable) — not a gap.
+- **Anti-pattern scan:** `grep -n -E "TBD|FIXME|XXX|TODO|HACK|PLACEHOLDER"` across all three phase-modified files (`EEE-SOP-standard.md`, `c17-eee-contract.mjs`, `frozen-at-close.mjs`) returned only pre-existing, unrelated template-placeholder documentation (`RE-[FILL-IN]`, `YYYY-MM-DD` frontmatter placeholder docs) — no debt markers introduced by this phase's edits.
+- **Working tree clean:** `git status --short` on all three edited files plus `120-VERIFICATION.md` returns no output — all changes are committed, nothing lingering uncommitted that would contradict the SUMMARY narration.
+- **Out-of-scope items correctly NOT flagged as gaps:** the 9 pre-existing `check-phase-68.mjs` standalone FAILs (LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01 pattern, unrelated to Phase 120's comment/doc-only edits) and Residual Risks R1-R5 (explicitly deferred to Phases 121-122 per the pre-existing "Residual Risks Handed Forward" section below) are out of scope for this phase and are not counted against it. The authoritative gate `node scripts/validation/v1.15-milestone-audit.mjs` is confirmed 16/16 PASS independently in this verification pass.
+
+### Human verification required
+
+None. All four success criteria are objectively, mechanically checkable via file content greps and validator command exit codes — no visual, UX, or external-service-dependent behavior is in scope for this phase.
+
+---
+
 # Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix — Verification
 
 **Purpose:** Needle-check-friendly hand-off spec for a **future** `scripts/validation/check-phase-120.mjs`
@@ -147,3 +184,4 @@ Phases 121-122.
 
 *Phase: 120-eee-standard-extension-mermaid-c17-policy-hygiene-fix*
 *Verification spec authored: 2026-07-07*
+</content>

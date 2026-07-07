@@ -41,7 +41,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] **Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix** — Extend the standard + C17 contract with the resolved Mermaid-in-enrolled-classes policy and the extended Doc Type taxonomy; fix the stale frozen-at-close.mjs header comment (completed 2026-07-07)
 - [ ] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit the non-Mermaid structural classes to EEE, C17 green
-- [ ] **Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
+- [x] **Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green (completed 2026-07-07)
 - [ ] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
 - [ ] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior
 - [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
@@ -164,7 +164,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete   | 2026-07-07 |
+| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 0/? | Not started | - |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
