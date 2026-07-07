@@ -10,6 +10,8 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 
 ## Current Milestone: v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1)
 
+**Status:** ✅ SHIPPED 2026-07-06 — 7/7 phases (113-119) Complete; 16/16 requirements Validated via Phase 119 Plan 119-07 SINGLE close-gate commit (NO Commit A). Archival PENDING — run `/gsd-complete-milestone` to archive REQUIREMENTS/ROADMAP to `.planning/milestones/`, move phase dirs to `.planning/milestones/v1.15-phases/`, tag `v1.15`, and add the V115 pin (v1.16's Path-A job per the back-anchor invariant). See `.planning/milestones/v1.15-MILESTONE-AUDIT.md` + `v1.15-DEFERRED-CLEANUP.md`.
+
 **Goal:** Retrofit the operator-facing published corpus (L1/L2 runbooks + admin-setup guides + reference docs) to the **EEE SOP document standard** — descriptive H1 → bold header block (Doc ID `RE-NNN` / Platform / Doc Type / Owner / Last Reviewed / Status) rendered from frontmatter → `## Summary`-first — so the knowledge base grounds cleanly and returns clickable citations in Copilot Studio / SharePoint, enforced by a new blocking **C17** harness check and closed with the **13th Path-A** audit-harness lineage bump. Phase numbering continues from v1.14 (Phase 112) → **v1.15 starts at Phase 113**.
 
 **Target features:**

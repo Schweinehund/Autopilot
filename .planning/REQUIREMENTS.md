@@ -43,9 +43,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 ### Category: Harness Enforcement & Milestone Close (HARN)
 
 - [x] **HARN-01**: A new **blocking C17 harness check** is authored as one indivisible validator atom, asserting the EEE contract from Markdown source — the machine-checkable lint surface: required frontmatter + block keys present; block is a single inline paragraph (not a table); Platform + Doc Type first; H1 present, descriptive (not a bare `RE-NNN` code), unique; `## Summary` is the first H2 and meets a minimum word count; `platform` value resolves in the normalization map; no Mermaid fences in Phase-1 classes; reference tables within the row-cap or carrying a prose summary; `Status ∈ {Draft, Approved, Superseded}`; indexed set is Approved-only.
-- [ ] **HARN-02**: The **atomic frozen-surface re-baseline** is performed — the deliberate re-pin of all Phase-1 frozen surfaces at the new close SHAs, with the apex and continuity chain validators green together; non-Phase-1 predecessor frozen surfaces remain byte-unchanged.
-- [ ] **HARN-03**: The **13th Path-A audit-harness lineage bump** — `v1.15-milestone-audit.mjs` (C1–C17) + `v1.15-audit-allowlist.json` + BASELINE_19 + `check-phase-113..NN.mjs` + `_lib/frozen-at-close.mjs` V114 pin (v1.14 close-gate SHA `7d922a7`) + the 12th parallel CI coexistence workflow (predecessors v1.4–v1.14 byte-unchanged).
-- [ ] **HARN-04**: The milestone closes via a **3-axis terminal re-audit** (fresh clone + cross-OS Linux GHA authoritative + fresh zero-context sub-agent; cross-OS EXACT MATCH) **plus the PIPE-02 grounding-validation confirmation**, in a single close-gate commit flipping all v1.15 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS.
+- [x] **HARN-02**: The **atomic frozen-surface re-baseline** is performed — the deliberate re-pin of all Phase-1 frozen surfaces at the new close SHAs, with the apex and continuity chain validators green together; non-Phase-1 predecessor frozen surfaces remain byte-unchanged.
+- [x] **HARN-03**: The **13th Path-A audit-harness lineage bump** — `v1.15-milestone-audit.mjs` (C1–C17) + `v1.15-audit-allowlist.json` + BASELINE_19 + `check-phase-113..NN.mjs` + `_lib/frozen-at-close.mjs` V114 pin (v1.14 close-gate SHA `7d922a7`) + the 12th parallel CI coexistence workflow (predecessors v1.4–v1.14 byte-unchanged).
+- [x] **HARN-04**: The milestone closes via a **3-axis terminal re-audit** (fresh clone + cross-OS Linux GHA authoritative + fresh zero-context sub-agent; cross-OS EXACT MATCH) **plus the PIPE-02 grounding-validation confirmation**, in a single close-gate commit flipping all v1.15 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS.
 
 ---
 
@@ -85,19 +85,21 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| PIPE-01 | Phase 113 | Complete |
-| PIPE-02 | Phase 113 | Complete |
-| META-01 | Phase 114 | Complete |
-| META-02 | Phase 114 | Complete |
-| META-03 | Phase 114 | Complete |
-| META-04 | Phase 114 | Complete |
-| STD-01 | Phase 114 | Complete |
-| STD-02 | Phase 114 | Complete |
-| STD-03 | Phase 114 | Complete |
-| HARN-01 | Phase 115 | Complete |
-| RETRO-01 | Phase 116 | Complete |
-| RETRO-02 | Phase 117 | Complete |
-| RETRO-03 | Phase 118 | Complete |
-| HARN-02 | Phase 119 | Pending |
-| HARN-03 | Phase 119 | Pending |
-| HARN-04 | Phase 119 | Pending |
+| PIPE-01 | Phase 113 | Validated |
+| PIPE-02 | Phase 113 + 119 | Validated |
+| META-01 | Phase 114 | Validated |
+| META-02 | Phase 114 | Validated |
+| META-03 | Phase 114 | Validated |
+| META-04 | Phase 114 | Validated |
+| STD-01 | Phase 114 | Validated |
+| STD-02 | Phase 114 | Validated |
+| STD-03 | Phase 114 | Validated |
+| HARN-01 | Phase 115 | Validated |
+| RETRO-01 | Phase 116 | Validated |
+| RETRO-02 | Phase 117 | Validated |
+| RETRO-03 | Phase 118 | Validated |
+| HARN-02 | Phase 119 | Validated |
+| HARN-03 | Phase 119 | Validated |
+| HARN-04 | Phase 119 | Validated |
+
+**16/16 v1.15 requirements Validated** via the Phase 119 Plan 119-07 SINGLE close-gate commit (2026-07-06). See `.planning/milestones/v1.15-MILESTONE-AUDIT.md`.

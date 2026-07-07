@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
-status: executing
-last_updated: "2026-07-07T04:29:10.082Z"
-last_activity: 2026-07-07
+status: shipped
+last_updated: "2026-07-06T00:00:00.000Z"
+last_activity: 2026-07-06
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 40
-  completed_plans: 39
-  percent: 86
+  completed_plans: 40
+  percent: 100
 ---
 
 # Project State
@@ -20,16 +20,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** Phase 119 — frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal
+**Current focus:** v1.15 SHIPPED — archival pending `/gsd-complete-milestone`
 
 ## Current Position
 
-Phase: 119 (frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal) — EXECUTING
-Plan: 6 of 7 (119-06 COMPLETE; next 119-07 close-gate)
-Status: 119-06 COMPLETE — PIPE-02 CLOSE: PASS owner-attested (2026-07-06); all 4 close-gate preconditions cleared; 119-07 UNBLOCKED
-Last activity: 2026-07-07
+Phase: 119 (frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal) — COMPLETE
+Plan: 7 of 7 (119-07 close-gate COMPLETE — v1.15 MILESTONE CLOSED)
+Status: v1.15 SHIPPED 2026-07-06 — 16/16 requirements Validated via the single close-gate commit; archival pending `/gsd-complete-milestone`
+Last activity: 2026-07-06
 
-Progress bar: `████████░░` 86% (6/7 phases complete)
+Progress bar: `██████████` 100% (7/7 phases complete)
 
 ## v1.15 Phase Dependency Summary
 
@@ -184,7 +184,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
             (NON-Phase-1 surfaces only; Phase-1 surfaces deliberately re-pinned)
 ```
 
-## v1.15 Requirement Coverage (0/16 — In Progress)
+## v1.15 Requirement Coverage (16/16 — Validated ✅)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
@@ -230,7 +230,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - v1.12: 2 phases (94-95), 5 plans — shipped 2026-06-26
 - v1.13: 5 phases (96-100), 14 plans — shipped 2026-06-29
 - **v1.14: 12 phases (101-112), 38 plans — shipped 2026-07-02**
-- v1.15: 7 phases (113-119), TBD plans — in progress
+- **v1.15: 7 phases (113-119), 40 plans — shipped 2026-07-06**
 
 ## Accumulated Context
 
@@ -360,10 +360,10 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T04:29:10.062Z
-Stopped at: Completed 119-06-PLAN.md (PIPE-02 CLOSE second grounding-confirmation pass). Owner ran the real-corpus close-runbook live in Copilot Studio 2026-07-06 (~23:10–23:16) and attested **PIPE-02 CLOSE: PASS** — all 6 uploaded RE-NNN .docx grounded with clickable document-level citations, zero hallucination; KEY v1.15 wide-matrix chunk-survival (RE-143) + EEE body-text thesis (RE-129 Q8) both confirmed on the real corpus. Raw 529-line transcript captured in-repo (PIPE-02-CLOSE-TRANSCRIPT.txt; D-119-1 rider). Draft-label caveat recorded honestly (frontmatter-only mutation; literal Draft label deferred to v1.16). PIPE-02-CLOSE-FINDINGS.md finalized. Prior: 119-04 Axis-2 GREEN 73/0/1 + EXACT MATCH + byte-unchanged EMPTY.
+Last session: 2026-07-06T00:00:00.000Z
+Stopped at: Completed 119-07-PLAN.md (the SINGLE close-gate). Authored `.planning/milestones/v1.15-MILESTONE-AUDIT.md` (honest close narrative — two-round chain-health remediation, 3-axis cross-OS EXACT MATCH, PIPE-02 owner PASS, Draft caveat, 13th-lineage entry) + `v1.15-DEFERRED-CLEANUP.md` (V115-pin deferral + DEFER-119-C pandoc alias trap + v1.16 structural classes + carried v1.14 items) + `119-VERIFICATION.md` (V-119-AUDIT resolves), and flipped ALL 16 v1.15 requirements to Validated across REQUIREMENTS/ROADMAP/STATE/PROJECT in ONE indivisible close-gate commit. v1.15 SHIPPED 2026-07-06. Back-anchor invariant intact (no pin references the close-gate SHA; no V115 authored).
 Resume file: None
-Next action: Run /gsd-execute-phase 119 to execute Plan 119-07 (the single close-gate flipping all 16 v1.15 reqs to Validated). ALL FOUR close-gate preconditions now cleared: Axis-2 GREEN, cross-OS EXACT MATCH, predecessor-byte-unchanged EMPTY (119-04), and owner PIPE-02 CLOSE: PASS (119-06). 119-07 consumes PIPE-02-CLOSE-FINDINGS.md as the HARN-04/PIPE-02 grounding evidence.
+Next action: Run `/gsd-complete-milestone` (the SEPARATE archival step) — archive REQUIREMENTS/ROADMAP to `.planning/milestones/`, move phase dirs to `v1.15-phases/`, tag `v1.15`, close the Jira story, add the V115 pin (v1.16's Path-A job), and sweep working-tree cruft. Read `v1.15-DEFERRED-CLEANUP.md` as the v1.16 backlog source.
 
 ## Operator Next Steps
 
@@ -372,8 +372,12 @@ Next action: Run /gsd-execute-phase 119 to execute Plan 119-07 (the single close
 - ✅ Phase 113 COMPLETE — 4 plans, PIPE-01 + PIPE-02 requirements met; all four OQs empirically resolved; pipeline locked; grounding validated (2026-07-04)
 - ✅ Phase 114 COMPLETE — 3 plans, META-01..04 + STD-01..03 requirements met; EEE standard, templates, registry authored (2026-07-04)
 - ✅ Phase 115 COMPLETE — 1 plan, HARN-01 requirement met; C17 blocking validator atom authored; exits 0 on 8 enrolled files + --self-test (2026-07-04)
-- Run `/gsd-execute-phase 116` to begin Phase 116 (L1/L2 Runbook Retrofit — C17 gate is live)
-- Note: 5 remaining discuss-phase flags deferred from REQUIREMENTS.md — raise at the appropriate phase
+- ✅ Phase 116 COMPLETE — 8 plans, RETRO-01; ~75 L1/L2 runbooks retrofitted (2026-07-05)
+- ✅ Phase 117 COMPLETE — 10 plans, RETRO-02; all admin-setup guides retrofitted (2026-07-06)
+- ✅ Phase 118 COMPLETE — 6 plans, RETRO-03; 34 reference docs + table remediation (2026-07-06)
+- ✅ Phase 119 COMPLETE — 7 plans, HARN-02/03/04; frozen-surface re-baseline + 13th Path-A lineage bump + 3-axis terminal re-audit close (2026-07-06)
+- ✅ v1.15 SHIPPED 2026-07-06 — 16/16 requirements Validated via the Phase 119 Plan 119-07 SINGLE close-gate commit
+- **Run `/gsd-complete-milestone`** — archive v1.15, tag it, add the V115 pin (v1.16 back-anchor), close the Jira story, sweep working-tree cruft (SEPARATE next step)
 
 ## Performance Metrics
 
