@@ -19,7 +19,10 @@ platform: all
 This glossary defines platform-neutral 802.1X network-authentication terminology shared across the Windows, macOS, iOS/iPadOS, Android, and Linux 802.1X admin-setup guides and L1/L2 runbooks. It covers the protocol actor model (supplicant, authenticator, authentication server), EAP methods and inner/outer identity, and certificate-delivery mechanics (SCEP, PKCS, trusted root, server-name validation) that Intune Admin and Desktop Engineering teams reference when configuring or troubleshooting wired and wireless 802.1X deployments.
 
 > **Domain coverage:** This glossary covers platform-neutral 802.1X network authentication terminology (IEEE 802.1X port-based access control, EAP methods, RADIUS, certificate delivery).
-> For platform-specific provisioning terminology, see: [Windows Autopilot Glossary](_glossary.md) · [Apple Provisioning Glossary](_glossary-macos.md) · [Android Enterprise Glossary](_glossary-android.md) · [Linux Provisioning Glossary](_glossary-linux.md)
+
+> For platform-specific provisioning terminology, see: [Windows Autopilot Glossary](_glossary.md) · [Apple Provisioning Glossary](_glossary-macos.md) ·
+
+> [Android Enterprise Glossary](_glossary-android.md) · [Linux Provisioning Glossary](_glossary-linux.md)
 
 ## Alphabetical Index
 
@@ -121,5 +124,5 @@ The 802.1X profile configuration that specifies the expected FQDN or CN of the R
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-29 | Initial version -- new platform-neutral 802.1X network-authentication glossary (13 terms) | -- |
