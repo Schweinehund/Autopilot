@@ -302,7 +302,7 @@ Plans:
 **Wave 5** *(blocked on Wave 4; the two run in parallel — no file overlap)*
 
 - [x] 119-05-PLAN.md — Emergent chain-health remediation slot (CONDITIONAL — fires only if the Axis-2 apex is RED): edits ONLY predecessor check-phase-NN validators, no value-masking, CHAIN_SKIP stays ∅, honest record, re-push to green (HARN-02)
-- [ ] 119-06-PLAN.md — PIPE-02 close-pass prep + OWNER CHECKPOINT (autonomous:false): agent authors PIPE-02-CLOSE-RUNBOOK.md + selects the real-corpus representative set (5 platforms + Approved Linux + wide post-RETRO-03 matrix + Draft-probe artifact); owner executes live in Copilot Studio, records PIPE-02-CLOSE-FINDINGS.md; close-gate BLOCKS until owner attests PASS (HARN-04)
+- [x] 119-06-PLAN.md — PIPE-02 close-pass prep + OWNER CHECKPOINT (autonomous:false): agent authors PIPE-02-CLOSE-RUNBOOK.md + selects the real-corpus representative set (5 platforms + Approved Linux + wide post-RETRO-03 matrix + Draft-probe artifact); owner executes live in Copilot Studio, records PIPE-02-CLOSE-FINDINGS.md; close-gate BLOCKS until owner attests PASS (HARN-04)
 
 **Wave 6** *(blocked on Waves 4/5/6)*
 
@@ -338,4 +338,4 @@ Plans:
 | 116. L1/L2 Runbook Retrofit | 8/8 | Complete    | 2026-07-05 |
 | 117. Admin-Setup Guide Retrofit | 10/10 | Complete   | 2026-07-06 |
 | 118. Reference Doc Retrofit + Table Remediation | 6/6 | Complete    | 2026-07-06 |
-| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 5/7 | In Progress|  |
+| 119. Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Close | 6/7 | In Progress|  |

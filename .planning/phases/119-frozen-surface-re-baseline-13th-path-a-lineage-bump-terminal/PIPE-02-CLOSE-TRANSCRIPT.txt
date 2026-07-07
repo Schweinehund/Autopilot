@@ -1,0 +1,529 @@
+How do I troubleshoot a Windows Autopilot device that is not registered?
+
+You said: How do I troubleshoot a Windows Autopilot device that is not registered?
+Bot said:
+Here's how to troubleshoot a Windows Autopilot device that is not registered, based on our Endpoint Engineering runbook "Device Not Registered in Autopilot" (Doc ID: RE-002).
+
+Important Scope Note
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2.​1​ Also note the version gate: This guide applies to Windows Autopilot (classic). For Autopilot Device Preparation, see APv1 vs APv2 disambiguation.​1​
+
+Prerequisites
+Before starting, confirm you have:
+
+Access to Intune admin center (​https://intune.microsoft.com​) with at least read permissions to Windows Autopilot devices​1​
+Device serial number from the physical device label, BIOS screen, or user report​1​
+Verified: the device is physically powered on and connected to a network (navigate to any website from the device browser to confirm)​1​
+Diagnostic Steps
+Open the Intune admin center (​https://intune.microsoft.com).[1​]
+
+Navigate to Devices > Windows > Enrollment > Windows Autopilot devices.​1​
+
+In the search box, enter the full device serial number exactly as it appears on the device label. Do not use partial serial numbers.​1​
+
+If the device appears in the search results: it IS registered — this runbook does not apply. Return to the initial triage decision tree to identify the correct failure scenario.​1​
+
+If no results appear: confirm the serial number. Ask the user to read the serial number from Settings > System > About on the device (if accessible) or from the device label. Re-search with the confirmed serial number.​1​
+
+Check hardware hash import history: Check whether a hardware hash import was previously initiated: Navigate to Devices > Windows > Enrollment > Windows Autopilot devices > Import and check the import history for the device serial number.​1​
+
+If OEM-registered: If the device was expected to be OEM-registered (purchased from an authorized OEM with Autopilot registration): confirm with the procurement team or the device order record whether Autopilot registration was included in the purchase.​1​
+
+User Communication
+While diagnosing, keep the user informed:
+
+Say to the user: "I'm checking your device registration in our management system. This may take a few minutes while I verify the details."​1​
+Then: "Your device is not yet registered in our Autopilot system. I'm going to escalate this to our technical team who can complete the registration. They will need [time estimate based on your organization's SLA]. I'll update your ticket when registration is complete."​1​
+Escalation to L2
+Escalate to L2 if: Device serial number is confirmed correct but does not appear in the Autopilot devices portal; Hardware hash was never imported (or import status is unknown); Device was OEM-registered but does not appear (possible tenant mismatch).​1​
+
+Before escalating, collect: Device serial number; Device make and model; Deployment mode (user-driven, pre-provisioning, or self-deploying); Whether hardware hash was previously imported (yes / no / unknown); Timestamp of the search; Screenshot of the Autopilot devices search page showing no results.​1​
+
+⚠️ Manual / Escalation Note
+Any actual registration completion or hardware hash re-import is an L2 action and is not automated — See L2 Runbooks for hardware hash re-import procedures.​1​ The L1 steps above are diagnostic and read-only only.
+
+Confidence: High — this maps directly to the approved runbook RE-002.
+
+Most important thing to verify before acting: Confirm you are searching with the exact, full serial number (not a partial), since a mistyped or partial serial is the most common cause of a device appearing "unregistered" when it is actually registered.
+
+Would you like the related MDM enrollment error code guidance (e.g., error 807 ZtdDeviceIsNotRegistered) as a next step?
+
+1 reference
+1
+RE-002-01-device-not-registered.docx
+
+
+Sent at July 6 at 11:10 PM
+10 minutes ago
+Bot said: Here's how to troubleshoot a Windows Autopilot device that is not registered, based on our Endpoint Engineering runbook "Device Not Registered in Autopilot" (Doc ID: RE-002). Important Scope Note This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2.​1​ Also note the version gate: This guide applies to Windows Autopilot (classic). For Autopilot Device Preparation, see APv1 vs APv2 disambiguation.​1​Prerequisites Before starting, confirm you have: Access to Intune admin center (​https://intune.microsoft.com​) with at least read permissions to Windows Autopilot devices​1​Device serial number from the physical device label, BIOS screen, or user report​1​Verified: the device is physically powered on and connected to a network (navigate to any website from the device browser to confirm)​1​Diagnostic Steps Open the Intune admin center (​https://intune.microsoft.com).[1​] Navigate to Devices > Windows > Enrollment > Windows Autopilot devices.​1​In the search box, enter the full device serial number exactly as it appears on the device label. Do not use partial serial numbers.​1​If the device appears in the search results: it IS registered — this runbook does not apply. Return to the initial triage decision tree to identify the correct failure scenario.​1​If no results appear: confirm the serial number. Ask the user to read the serial number from Settings > System > About on the device (if accessible) or from the device label. Re-search with the confirmed serial number.​1​Check hardware hash import history: Check whether a hardware hash import was previously initiated: Navigate to Devices > Windows > Enrollment > Windows Autopilot devices > Import and check the import history for the device serial number.​1​If OEM-registered: If the device was expected to be OEM-registered (purchased from an authorized OEM with Autopilot registration): confirm with the procurement team or the device order record whether Autopilot registration was included in the purchase.​1​User Communication While diagnosing, keep the user informed: Say to the user: "I'm checking your device registration in our management system. This may take a few minutes while I verify the details."​1​Then: "Your device is not yet registered in our Autopilot system. I'm going to escalate this to our technical team who can complete the registration. They will need [time estimate based on your organization's SLA]. I'll update your ticket when registration is complete."​1​Escalation to L2 Escalate to L2 if: Device serial number is confirmed correct but does not appear in the Autopilot devices portal; Hardware hash was never imported (or import status is unknown); Device was OEM-registered but does not appear (possible tenant mismatch).​1​Before escalating, collect: Device serial number; Device make and model; Deployment mode (user-driven, pre-provisioning, or self-deploying); Whether hardware hash was previously imported (yes / no / unknown); Timestamp of the search; Screenshot of the Autopilot devices search page showing no results.​1​⚠️ Manual / Escalation Note Any actual registration completion or hardware hash re-import is an L2 action and is not automated — See L2 Runbooks for hardware hash re-import procedures.​1​ The L1 steps above are diagnostic and read-only only. Confidence: High — this maps directly to the approved runbook RE-002. Most important thing to verify before acting: Confirm you are searching with the exact, full serial number (not a partial), since a mistyped or partial serial is the most common cause of a device appearing "unregistered" when it is actually registered. Would you like the related MDM enrollment error code guidance (e.g., error 807 ZtdDeviceIsNotRegistered) as a next step?
+You said:
+Walk me through investigating a macOS Platform SSO sign-in failure.
+
+You said: Walk me through investigating a macOS Platform SSO sign-in failure.
+Bot said:
+Here's how to investigate a macOS Platform SSO (PSSO) sign-in failure, based on our Endpoint Engineering runbook "macOS Platform SSO Investigation" (Doc ID: RE-069).
+
+⚠️ Important Scope & Safety Note
+This is an L2 investigation runbook. Critically: Platform SSO re-registration commands are state-changing operations that force Secure Enclave key regeneration — obtain change-control approval before running any re-registration steps in production.​1​
+
+Per my role, I draft proposals only — any re-registration or state-changing remediation is MANUAL and must be approved and executed by a human.
+
+Platform gate: This guide covers macOS Platform SSO L2 investigation via Intune and Entra.​1​
+
+Before You Start
+Before starting: collect a diagnostic package per the macOS Log Collection Guide. For PSSO investigations, also enable AppSSO debug logging before reproducing the issue — see Track A Step 3 for the debug-enable procedure.​1​
+
+The two failure classes this runbook covers are: registration failures (device or user not reaching REGISTERED state) and Password-sync failures (sign-in loop, per-user MFA blocker, AD-bound account limitation).​2​
+
+Routing: Use Track B when the device and user registration state shows REGISTERED (confirmed via app-sso platform -s output from Track A Step 1) but the user cannot complete the Password-sync PSSO sign-in flow — for example, the webview authentication challenge does not complete, the sign-in loop repeats, or no SSO tokens appear in the app-sso platform -s output despite registration succeeding.​3​ Otherwise, start at Track A.
+
+Track A — Registration Failure Investigation
+Step 1: Confirm registration state
+Run the following command on the affected macOS device: app-sso platform -s. The command returns JSON output describing the current Platform SSO state. A healthy PSSO device shows both of the following in the output: Device Registration: REGISTERED; User Registration: REGISTERED. Additionally, the bottom of the output should show that SSO tokens are being retrieved.​1​
+
+Interpreting: If both show REGISTERED but the user cannot sign in to managed apps, the registration succeeded but a post-registration failure is occurring — check Track B (Password-sync) and also review the Intune device configuration status in Step 2.​1​
+
+A key caution: Do not interpret the absence or unexpected value of any particular JSON field as a specific root cause without correlating with Intune portal state (Step 2) and the sysdiagnose capture (Step 3). The full JSON schema for failure states is not published in any authoritative source — collect and forward the complete output rather than matching against specific field values.​1​
+
+Step 2: Intune portal — device configuration status
+Breadcrumb: Intune admin center > Devices > All devices > [device serial or name] > Configuration. Locate the Platform SSO Settings Catalog policy assigned to the device and review its status.​1​
+
+Key observations:
+
+Succeeded ≠ complete: "Succeeded" means the Settings Catalog payload was delivered and installed on the device. It does NOT mean the user responded to the "Registration Required" notification and completed the PSSO registration flow. Always correlate with app-sso platform -s output.​1​
+Error 10002: a legacy Device Features SSO extension profile and a Platform SSO Settings Catalog policy are both assigned to the device simultaneously. This is a configuration conflict that blocks registration. The admin must unassign the legacy profile.​1​
+Mistyped registration token: the literal value {{DEVICEREGISTRATION}} must be copied exactly into the Registration Token field in the Settings Catalog policy. Any deviation causes silent failure — Intune reports "Succeeded" but the "Registration Required" notification never appears.​1​
+Company Portal version: minimum version 5.2404.0 is required for PSSO registration. If the device is running an older version, registration cannot succeed regardless of policy state.​4​
+Step 3: AppSSO debug logging + sysdiagnose capture
+For cases where Step 1 and Step 2 do not identify the root cause, capture a sysdiagnose archive with AppSSO debug logging enabled. This is the Microsoft-documented deep-dive procedure and is required for any Microsoft Support escalation.​4​
+
+Procedure:
+
+Step 1: Enable persistent AppSSO debug logging: sudo log config --mode "level:debug,persist:debug" --subsystem "com.apple.AppSSO" # Step 2: Reproduce the issue (sign-in failure, registration failure, or re-registration prompt) — Note the exact timestamp of the failure for log correlation # Step 3: Capture a sysdiagnose archive: sudo sysdiagnose # Step 4: Reset AppSSO logging to defaults: sudo log config --reset --subsystem "com.apple.AppSSO"​4​The sysdiagnose archive is saved to /private/var/tmp/ (sometimes /var/tmp/) as sysdiagnose_YYYY.MM.DD_*.tar.gz.​4​
+Important: The app-sso binary does not have a diagnose subcommand in any verified Apple or Microsoft source — do not reference it in escalation packets or instruct users to run it.​4​
+
+Step 4: TLS-inspection exclusion verification
+TLS break-and-inspect (SSL interception) on a corporate proxy will silently block PSSO registration and token acquisition flows. The device side cannot detect TLS interception — verification requires the network team to inspect proxy and firewall configuration.​4​
+
+Confirm these endpoint categories are excluded from TLS inspection:
+
+Apple app-site-association domains (app-site-association.cdn-apple.com, app-site-association.networking.apple) — required for SSO extension functioning​4​
+Microsoft identity and graph endpoints (login.microsoftonline.com, login.microsoft.com, sts.windows.net) — required for token acquisition and refresh​4​
+Step 5: macOS 15.0–15.2 re-registration loop check
+Version gate — macOS 15.0–15.2: If the device is running macOS 15.0, 15.1, or 15.2, repeated "Registration Required" prompts are caused by a known Apple OS bug. The root cause is a concurrency issue: simultaneous updates from AppSSOAgent and AppSSODaemon processes corrupt the device configuration plist, triggering OS re-registration remediation.​5​ The error signature is: Error Domain=com.apple.PlatformSSO Code=-1001 "Error deserializing device config."​5​
+
+Resolution: Fixed in macOS 15.3. Action: upgrade the device to macOS 15.3 or later. If the re-registration loop persists on macOS 15.3+, file an Apple Care case — this is no longer a Microsoft-resolvable issue and Apple must be engaged directly.​5​
+
+⚠️ Note: The macOS upgrade action affects the device state — this is a MANUAL remediation requiring human approval, not automation.
+
+Track B — Password-Sync Failure Investigation
+Use this when registration shows REGISTERED but sign-in still fails.
+
+Step 1: Per-user MFA check (Entra admin center)
+Legacy per-user MFA (the Azure AD per-user MFA settings blade, distinct from Conditional Access MFA policy) silently blocks Password-sync PSSO registration. The authentication challenge in the PSSO webview cannot complete when per-user MFA is enabled, and no error is displayed to the user.​3​
+
+Breadcrumb: Entra admin center (​https://entra.microsoft.com​) > Users > All users > [affected user] > Authentication methods > Per-user MFA (or navigate directly to the legacy per-user MFA blade: ​https://account.activedirectory.windowsazure.com/usermanagement/mfasettings.aspx)[3​]
+What to check: If the affected user's per-user MFA state shows Enabled or Enforced, this is the blocker for Password-sync PSSO failures.​3​
+Proposed resolution: Disable per-user MFA for PSSO target users. Enforce MFA via Conditional Access policy instead — Conditional Access MFA is compatible with Password-sync PSSO; per-user MFA is not.​3​
+Step 2: AD-bound (mobile) account check
+macOS user accounts created by Active Directory binding (AD mobile accounts) silently fail Password-sync PSSO registration. The PSSO password synchronization API expects a standard macOS local account; AD mobile accounts do not satisfy this requirement, and no error is surfaced.​3​
+
+Device-side check: On the affected macOS device, run: dscl . -read /Users/ OriginalNodeName. Replace with the macOS login username. If the output shows an OriginalNodeName value pointing to an Active Directory domain (e.g., Active Directory/CORP), the account is an AD mobile account.​3​
+Proposed resolution: Use the Secure Enclave authentication method instead of Password-sync — SE key authentication is compatible with AD mobile accounts.​3​ Alternatively, if Password-sync is required, the device must be unbound from AD and the user account migrated to a standard local macOS account before Password-sync PSSO registration can succeed.​3​
+⚠️ Note: Both resolutions in Track B (disabling per-user MFA / unbinding from AD) change tenant or device configuration and may affect more than a single device — these are MANUAL actions requiring human approval; do not automate.
+
+Microsoft Support Escalation Packet
+When Track A or Track B investigation does not resolve the issue, engage Microsoft Support. Assemble the following before opening a case: app-sso platform -s full JSON output — captured on the affected device at the time of failure; sysdiagnose archive — captured with AppSSO debug logging enabled before reproducing the issue; Company Portal log incident ID — generated via Company Portal app > Help > Send diagnostic report > Email logs; Intune device configuration status screenshot; macOS version and Company Portal version; Entra sign-in log screenshot — filtered to the affected user, showing any MFA failures, Conditional Access policy blocks, or sign-in error codes.​6​
+
+Confidence + What to Verify
+Confidence: High — this maps directly to the approved runbook RE-069.
+
+Single most important thing to check before acting: Confirm the actual registration state via app-sso platform -s first (Track A Step 1). This determines whether you are in a registration failure (Track A) or a password-sync failure (Track B) — routing to the wrong track wastes the investigation. If both device and user show REGISTERED but sign-in still fails, go straight to Track B.
+
+Would you like me to focus the investigation on a specific symptom (e.g., a repeating sign-in loop vs. a "Registration Required" prompt that never appears)?
+
+6 references
+1
+RE-069-27-macos-sso-investigation.docx
+2
+RE-069-27-macos-sso-investigation.docx
+3
+RE-069-27-macos-sso-investigation.docx
+4
+RE-069-27-macos-sso-investigation.docx
+5
+27-macos-sso-investigation.docx
+6
+RE-069-27-macos-sso-investigation.docx
+
+
+Sent at July 6 at 11:11 PM
+8 minutes ago
+Bot said: Here's how to investigate a macOS Platform SSO (PSSO) sign-in failure, based on our Endpoint Engineering runbook "macOS Platform SSO Investigation" (Doc ID: RE-069). ⚠️ Important Scope & Safety Note This is an L2 investigation runbook. Critically: Platform SSO re-registration commands are state-changing operations that force Secure Enclave key regeneration — obtain change-control approval before running any re-registration steps in production.​1​Per my role, I draft proposals only — any re-registration or state-changing remediation is MANUAL and must be approved and executed by a human. Platform gate: This guide covers macOS Platform SSO L2 investigation via Intune and Entra.​1​Before You Start Before starting: collect a diagnostic package per the macOS Log Collection Guide. For PSSO investigations, also enable AppSSO debug logging before reproducing the issue — see Track A Step 3 for the debug-enable procedure.​1​The two failure classes this runbook covers are: registration failures (device or user not reaching REGISTERED state) and Password-sync failures (sign-in loop, per-user MFA blocker, AD-bound account limitation).​2​Routing: Use Track B when the device and user registration state shows REGISTERED (confirmed via app-sso platform -s output from Track A Step 1) but the user cannot complete the Password-sync PSSO sign-in flow — for example, the webview authentication challenge does not complete, the sign-in loop repeats, or no SSO tokens appear in the app-sso platform -s output despite registration succeeding.​3​ Otherwise, start at Track A. Track A — Registration Failure Investigation Step 1: Confirm registration state Run the following command on the affected macOS device: app-sso platform -s. The command returns JSON output describing the current Platform SSO state. A healthy PSSO device shows both of the following in the output: Device Registration: REGISTERED; User Registration: REGISTERED. Additionally, the bottom of the output should show that SSO tokens are being retrieved.​1​Interpreting: If both show REGISTERED but the user cannot sign in to managed apps, the registration succeeded but a post-registration failure is occurring — check Track B (Password-sync) and also review the Intune device configuration status in Step 2.​1​A key caution: Do not interpret the absence or unexpected value of any particular JSON field as a specific root cause without correlating with Intune portal state (Step 2) and the sysdiagnose capture (Step 3). The full JSON schema for failure states is not published in any authoritative source — collect and forward the complete output rather than matching against specific field values.​1​Step 2: Intune portal — device configuration status Breadcrumb: Intune admin center > Devices > All devices > [device serial or name] > Configuration. Locate the Platform SSO Settings Catalog policy assigned to the device and review its status.​1​Key observations: Succeeded ≠ complete: "Succeeded" means the Settings Catalog payload was delivered and installed on the device. It does NOT mean the user responded to the "Registration Required" notification and completed the PSSO registration flow. Always correlate with app-sso platform -s output.​1​Error 10002: a legacy Device Features SSO extension profile and a Platform SSO Settings Catalog policy are both assigned to the device simultaneously. This is a configuration conflict that blocks registration. The admin must unassign the legacy profile.​1​Mistyped registration token: the literal value {{DEVICEREGISTRATION}} must be copied exactly into the Registration Token field in the Settings Catalog policy. Any deviation causes silent failure — Intune reports "Succeeded" but the "Registration Required" notification never appears.​1​Company Portal version: minimum version 5.2404.0 is required for PSSO registration. If the device is running an older version, registration cannot succeed regardless of policy state.​4​Step 3: AppSSO debug logging + sysdiagnose capture For cases where Step 1 and Step 2 do not identify the root cause, capture a sysdiagnose archive with AppSSO debug logging enabled. This is the Microsoft-documented deep-dive procedure and is required for any Microsoft Support escalation.​4​Procedure: Step 1: Enable persistent AppSSO debug logging: sudo log config --mode "level:debug,persist:debug" --subsystem "com.apple.AppSSO" # Step 2: Reproduce the issue (sign-in failure, registration failure, or re-registration prompt) — Note the exact timestamp of the failure for log correlation # Step 3: Capture a sysdiagnose archive: sudo sysdiagnose # Step 4: Reset AppSSO logging to defaults: sudo log config --reset --subsystem "com.apple.AppSSO"​4​The sysdiagnose archive is saved to /private/var/tmp/ (sometimes /var/tmp/) as sysdiagnose_YYYY.MM.DD_*.tar.gz.​4​Important: The app-sso binary does not have a diagnose subcommand in any verified Apple or Microsoft source — do not reference it in escalation packets or instruct users to run it.​4​Step 4: TLS-inspection exclusion verification TLS break-and-inspect (SSL interception) on a corporate proxy will silently block PSSO registration and token acquisition flows. The device side cannot detect TLS interception — verification requires the network team to inspect proxy and firewall configuration.​4​Confirm these endpoint categories are excluded from TLS inspection: Apple app-site-association domains (app-site-association.cdn-apple.com, app-site-association.networking.apple) — required for SSO extension functioning​4​Microsoft identity and graph endpoints (login.microsoftonline.com, login.microsoft.com, sts.windows.net) — required for token acquisition and refresh​4​Step 5: macOS 15.0–15.2 re-registration loop check Version gate — macOS 15.0–15.2: If the device is running macOS 15.0, 15.1, or 15.2, repeated "Registration Required" prompts are caused by a known Apple OS bug. The root cause is a concurrency issue: simultaneous updates from AppSSOAgent and AppSSODaemon processes corrupt the device configuration plist, triggering OS re-registration remediation.​5​ The error signature is: Error Domain=com.apple.PlatformSSO Code=-1001 "Error deserializing device config."​5​Resolution: Fixed in macOS 15.3. Action: upgrade the device to macOS 15.3 or later. If the re-registration loop persists on macOS 15.3+, file an Apple Care case — this is no longer a Microsoft-resolvable issue and Apple must be engaged directly.​5​⚠️ Note: The macOS upgrade action affects the device state — this is a MANUAL remediation requiring human approval, not automation. Track B — Password-Sync Failure Investigation Use this when registration shows REGISTERED but sign-in still fails. Step 1: Per-user MFA check (Entra admin center) Legacy per-user MFA (the Azure AD per-user MFA settings blade, distinct from Conditional Access MFA policy) silently blocks Password-sync PSSO registration. The authentication challenge in the PSSO webview cannot complete when per-user MFA is enabled, and no error is displayed to the user.​3​Breadcrumb: Entra admin center (​https://entra.microsoft.com​) > Users > All users > [affected user] > Authentication methods > Per-user MFA (or navigate directly to the legacy per-user MFA blade: ​https://account.activedirectory.windowsazure.com/usermanagement/mfasettings.aspx)[3​] What to check: If the affected user's per-user MFA state shows Enabled or Enforced, this is the blocker for Password-sync PSSO failures.​3​Proposed resolution: Disable per-user MFA for PSSO target users. Enforce MFA via Conditional Access policy instead — Conditional Access MFA is compatible with Password-sync PSSO; per-user MFA is not.​3​Step 2: AD-bound (mobile) account check macOS user accounts created by Active Directory binding (AD mobile accounts) silently fail Password-sync PSSO registration. The PSSO password synchronization API expects a standard macOS local account; AD mobile accounts do not satisfy this requirement, and no error is surfaced.​3​Device-side check: On the affected macOS device, run: dscl . -read /Users/ OriginalNodeName. Replace with the macOS login username. If the output shows an OriginalNodeName value pointing to an Active Directory domain (e.g., Active Directory/CORP), the account is an AD mobile account.​3​Proposed resolution: Use the Secure Enclave authentication method instead of Password-sync — SE key authentication is compatible with AD mobile accounts.​3​ Alternatively, if Password-sync is required, the device must be unbound from AD and the user account migrated to a standard local macOS account before Password-sync PSSO registration can succeed.​3​⚠️ Note: Both resolutions in Track B (disabling per-user MFA / unbinding from AD) change tenant or device configuration and may affect more than a single device — these are MANUAL actions requiring human approval; do not automate. Microsoft Support Escalation Packet When Track A or Track B investigation does not resolve the issue, engage Microsoft Support. Assemble the following before opening a case: app-sso platform -s full JSON output — captured on the affected device at the time of failure; sysdiagnose archive — captured with AppSSO debug logging enabled before reproducing the issue; Company Portal log incident ID — generated via Company Portal app > Help > Send diagnostic report > Email logs; Intune device configuration status screenshot; macOS version and Company Portal version; Entra sign-in log screenshot — filtered to the affected user, showing any MFA failures, Conditional Access policy blocks, or sign-in error codes.​6​Confidence + What to Verify Confidence: High — this maps directly to the approved runbook RE-069. Single most important thing to check before acting: Confirm the actual registration state via app-sso platform -s first (Track A Step 1). This determines whether you are in a registration failure (Track A) or a password-sync failure (Track B) — routing to the wrong track wastes the investigation. If both device and user show REGISTERED but sign-in still fails, go straight to Track B. Would you like me to focus the investigation on a specific symptom (e.g., a repeating sign-in loop vs. a "Registration Required" prompt that never appears)?
+You said:
+How do I investigate iOS/iPadOS ADE token and enrollment profile delivery problems?
+
+You said: How do I investigate iOS/iPadOS ADE token and enrollment profile delivery problems?
+Bot said:
+Here's how to investigate iOS/iPadOS ADE token and enrollment profile delivery problems, based on our Endpoint Engineering runbook "ADE Token & Profile Delivery Investigation" (Doc ID: RE-057).
+
+⚠️ Important Scope & Safety Note
+This is an L2 investigation runbook. This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval.​1​
+
+Per my role, I draft proposals only — the actual remediations here (re-uploading tokens, reassigning MDM servers, and especially device wipes) are MANUAL actions requiring human approval and execution.
+
+Graph API guardrail: Where this runbook uses the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration.​1​
+
+Scope
+This runbook covers iOS/iPadOS Automated Device Enrollment (ADE) investigation across both sides of the enrollment pipeline: token-side issues (ABM-to-Intune sync failures, expired tokens, orphaned syncedDeviceCount anomalies) AND profile-delivery issues (Intune-to-device assignment failures, APNs/network path blockage, wrong-MDM-server mismatches from tenant migration).​1​
+
+Prerequisites (read access)
+Apple Business Manager (ABM) read access — device assignment state and MDM server association verification (Pattern B/D).​1​
+Intune admin center read access — token state, profile assignment, compliance.​1​
+Microsoft Entra read access — verifying user license + group assignment when ADE is license-gated.​1​
+(Optional) Microsoft Graph API scope DeviceManagementServiceConfig.Read.All (read-only) — for Pattern A sync-state numeric error code extraction.​1​ Note: The Graph DeviceManagementServiceConfig.Read.All scope grants tenant-wide read across all DEP tokens. Prefer delegated (user-context) over application (service-principal) credentials for L2 ad-hoc investigation — principle of least privilege.​1​
+Investigation — Data Collection
+Step 1: Token sync status (Intune admin center)
+Breadcrumb: Intune admin center > Devices > iOS/iPadOS > iOS/iPadOS enrollment > Enrollment program tokens > [token].​1​
+
+Observables to collect: Token expiration date (annually; ADE tokens are 1-year lifetime); Last sync date — expected ~12-hour cadence (delta sync); manual sync rate-limited to once per 15 min. Drift > 24 hours (2+ missed automatic cycles) is Pattern A territory; syncedDeviceCount — compare against ABM-side device count; Status label — Active / Expired / Sync error.​1​
+
+Step 1 Supplement: Graph API token snapshot (READ-ONLY)
+Use this only when Step 1 surfaces a Sync error status and the Intune UI does not expose the numeric error code, OR when a scripted audit is needed.​2​
+
+
+GET https://graph.microsoft.com/beta/deviceManagement/depOnboardingSettings
+GET https://graph.microsoft.com/beta/deviceManagement/depOnboardingSettings/{depOnboardingSettingId}
+Key response fields and the pattern they indicate: tokenExpirationDateTime → Pattern A (expired); lastModifiedDateTime → Pattern D (recent token upload/replacement); lastSuccessfulSyncDateTime → Pattern A (sync stuck — drift > 24h); lastSyncTriggeredDateTime → Pattern A (sync stuck — trigger logged but no success); lastSyncErrorCode → Pattern A (non-zero = sync error surface); syncedDeviceCount → Pattern D (sanity check against ABM count; drastically low = orphaned token); appleIdentifier → Pattern D (mismatch against ticket history = token reassignment).​2​
+
+Step 2: Profile assignment state (Intune admin center)
+Breadcrumb: Enrollment program tokens > [token] > Profiles > [profile] > Assign devices.​2​ Check: Is the failing device's serial number in the assigned list? The Assigned vs Not assigned column for that serial. Cross-check against ABM Devices view — does ABM list the same serial assigned to the Intune MDM server?​2​A device that appears in Intune (token sync succeeded) but shows "Not assigned" on the profile is the Pattern B signature.​2​
+
+Step 3: Enrollment profile GUID (Intune admin center URL extraction)
+With the profile open in the Intune admin center, inspect the browser address bar. The enrollment profile GUID is the URL segment immediately after .../enrollmentProfileId/.​2​Capture this GUID for Pattern C/D debugging — it is the primary key that you will compare against the device's MDM payload (surfaced in Step 4) and against the ABM device record's MDM server assignment.​3​
+
+Step 4: Device-side enrollment state
+Tier 1 (always): Settings > General > VPN & Device Management > Management Profile > More Details. This surfaces the device's view of the enrollment target URL, profile identifiers, and issuing organization name — all three are the signals that distinguish Pattern C (profile never arrived) from Pattern D (profile arrived, but from the wrong MDM server).​2​
+Tier 3 (sysdiagnose, when Pattern C suspected): If the device Setup Assistant never reached the "Remote Management" pane and network reachability to Apple enrollment endpoints is suspect, capture a sysdiagnose and inspect kernel.log for APNs session records and connection failures to deviceenrollment.apple.com, mdmenrollment.apple.com, or *.push.apple.com.​2​
+Analysis — Match Against Known Failure Patterns
+Pattern A: Token expired or sync stuck
+Indicators: Intune admin center shows the token as Expired OR last sync > 24 hours ago (2+ missed 12-hour cycles) OR Graph lastSyncErrorCode != 0. New ABM-added devices do NOT appear in Intune after 24 hours. Existing devices fail to enroll with "This device belongs to another organization" or "no enrollment profile found."​2​
+
+Pattern B: Profile never assigned to device in ABM
+Indicators: Device appears in Intune (ABM→Intune sync succeeded) but the profile column shows Not assigned for the device serial. User attempts enrollment and Setup Assistant skips the MDM profile step entirely.​4​
+
+Pattern C: Profile assigned but device never received it (APNs / network path)
+Indicators: Profile IS assigned per the Intune admin center but the device's Setup Assistant never shows the "Remote Management" pane. Device can reach apple.com / icloud.com (basic Apple connectivity) but cannot reach deviceenrollment.apple.com, mdmenrollment.apple.com, or *.push.apple.com. Sysdiagnose kernel.log shows connection failures to the MDM enrollment endpoints.​4​
+
+Pattern D: Wrong MDM server on device (token rotation / tenant migration)
+Indicators: Device IS enrolled but receives NO management commands. Settings > General > VPN & Device Management shows a Management Profile from a different Intune tenant URL OR from a previous MDM provider. Graph lastModifiedDateTime < 30 days ago AND appleIdentifier differs from the ticket-recorded prior state (indicates recent token replacement). ABM device record shows "Previously assigned to" with a different MDM server.​4​
+
+Critical A vs D disambiguation: Pattern A is an Intune-side token state issue (fix in Intune — re-upload token, click Sync). Pattern D is a device-side enrollment target mismatch — the device talks to the wrong MDM server because it was enrolled under a prior token assignment, and a device wipe is required to re-enroll it against the current MDM server. Intune has no command that can retarget an already-enrolled ADE device to a different MDM server without wiping.​4​
+
+Proposed Remediation (by pattern — ALL require human approval)
+Pattern A Resolution
+If expired: re-download the token from ABM (Settings > [your name] > Preferences > Your MDM Server > Download Token) and re-upload to Intune (Enrollment program tokens > [token] > Edit > upload .p7m).​2​
+If sync stuck: click Sync on the token. Wait 30 minutes, then re-check Step 1 observables. If the last-sync timestamp still hasn't advanced after two sync triggers, escalate.​2​
+If syncedDeviceCount drastically below ABM device count: the token may be orphaned (ABM reassigned the devices to a different MDM server). Verify in ABM > Devices > [serial] > MDM server assignment. If ABM shows a different MDM server, this is a Pattern D situation for those devices; address via Pattern D Resolution.​2​
+Pattern B Resolution
+In ABM: Devices > [serial] > Assign to MDM server → confirm Intune MDM server. (Requires L2 ABM write access OR escalate to an ABM admin.)​4​
+In Intune: Enrollment Program Tokens > [token] > Profiles > [profile] > Assign devices → select the device serial.​4​
+Pattern C Resolution
+Verify the network path from the device's enrollment location to Apple's device enrollment and MDM endpoints. Provide the network/firewall team the Apple-published list: ​https://support.apple.com/HT210060.[5​]
+Verify APNs certificate state: Intune admin center > Tenant administration > Connectors and tokens > Apple push notification certificate — not expired, not revoked, and the APNs Apple ID matches what your team recorded at issuance.​5​
+Try enrollment from a known-good network (mobile hotspot, home Wi-Fi) to isolate the corporate network as a variable. If enrollment succeeds off-network, the failure is corporate-network-path-side and the network/firewall team owns remediation.​5​
+Pattern D Resolution — ⚠️ DESTRUCTIVE / MANUAL — do not automate
+Destructive action: Pattern D resolution requires a device wipe. Confirm with the device owner AND organizational policy before proceeding. User data on the device will be unrecoverable after the wipe unless backed up beforehand.​5​
+
+Steps (all human-executed): Confirm tenant migration history with the admin team: was the ABM token recently re-generated, re-assigned to a new MDM server, or moved between Intune tenants? Wipe the device — in the old tenant if it is still accessible and can execute an MDM wipe; otherwise perform a physical factory reset on-device. In ABM: confirm the device is now assigned to the current Intune MDM server. Re-enroll via Setup Assistant.​5​
+
+Escalation Ceiling (open a Microsoft Intune Support case)
+Pattern A: lastSyncErrorCode != 0 after token renewal + resync, OR last-sync timestamp fails to advance after two manual syncs. Pattern B: ABM Step 1 completes but Intune Step 2 still shows "Not assigned" for the device serial after 30 minutes of sync time. Pattern C: Network path confirmed open end-to-end AND APNs certificate active AND device still never sees the profile. Pattern D: Device CANNOT be factory reset (user data constraint, no backup, physical access unavailable). Escalate to Microsoft Support for the "release device from MDM" ABM procedure — this is a destructive admin action requiring ABM admin-level permissions.​5​
+
+Confidence + What to Verify
+Confidence: High — this maps directly to the approved runbook RE-057.
+
+Single most important thing to check before acting: Determine whether you are dealing with a token-side issue (Pattern A) or a device-side enrollment target mismatch (Pattern D) by comparing the Graph lastModifiedDateTime/appleIdentifier against ticket history AND inspecting the on-device Management Profile issuer (Step 4). This distinction is decisive: Pattern A is a reversible Intune-side fix, while Pattern D requires an irreversible device wipe — do not proceed to a wipe until Pattern D is confirmed and the device owner and policy have signed off.
+
+Would you like me to walk through a specific pattern in more depth, or help assemble the escalation packet for a Microsoft Support case?
+
+5 references
+1
+RE-057-15-ios-ade-token-profile.docx
+2
+RE-057-15-ios-ade-token-profile.docx
+3
+RE-057-15-ios-ade-token-profile.docx
+4
+RE-057-15-ios-ade-token-profile.docx
+5
+RE-057-15-ios-ade-token-profile.docx
+
+
+Sent at July 6 at 11:12 PM
+7 minutes ago
+Bot said: Here's how to investigate iOS/iPadOS ADE token and enrollment profile delivery problems, based on our Endpoint Engineering runbook "ADE Token & Profile Delivery Investigation" (Doc ID: RE-057). ⚠️ Important Scope & Safety Note This is an L2 investigation runbook. This L2 investigation runbook is entered from an L1 escalation and operates under change-control and MDM-command guardrails — all state-changing remediation requires L2 approval.​1​Per my role, I draft proposals only — the actual remediations here (re-uploading tokens, reassigning MDM servers, and especially device wipes) are MANUAL actions requiring human approval and execution. Graph API guardrail: Where this runbook uses the Microsoft Graph API, usage is strictly READ-ONLY (GET requests). No modifications. No token regeneration.​1​Scope This runbook covers iOS/iPadOS Automated Device Enrollment (ADE) investigation across both sides of the enrollment pipeline: token-side issues (ABM-to-Intune sync failures, expired tokens, orphaned syncedDeviceCount anomalies) AND profile-delivery issues (Intune-to-device assignment failures, APNs/network path blockage, wrong-MDM-server mismatches from tenant migration).​1​Prerequisites (read access) Apple Business Manager (ABM) read access — device assignment state and MDM server association verification (Pattern B/D).​1​Intune admin center read access — token state, profile assignment, compliance.​1​Microsoft Entra read access — verifying user license + group assignment when ADE is license-gated.​1​(Optional) Microsoft Graph API scope DeviceManagementServiceConfig.Read.All (read-only) — for Pattern A sync-state numeric error code extraction.​1​ Note: The Graph DeviceManagementServiceConfig.Read.All scope grants tenant-wide read across all DEP tokens. Prefer delegated (user-context) over application (service-principal) credentials for L2 ad-hoc investigation — principle of least privilege.​1​Investigation — Data Collection Step 1: Token sync status (Intune admin center) Breadcrumb: Intune admin center > Devices > iOS/iPadOS > iOS/iPadOS enrollment > Enrollment program tokens > [token].​1​Observables to collect: Token expiration date (annually; ADE tokens are 1-year lifetime); Last sync date — expected ~12-hour cadence (delta sync); manual sync rate-limited to once per 15 min. Drift > 24 hours (2+ missed automatic cycles) is Pattern A territory; syncedDeviceCount — compare against ABM-side device count; Status label — Active / Expired / Sync error.​1​Step 1 Supplement: Graph API token snapshot (READ-ONLY) Use this only when Step 1 surfaces a Sync error status and the Intune UI does not expose the numeric error code, OR when a scripted audit is needed.​2​GET https://graph.microsoft.com/beta/deviceManagement/depOnboardingSettings GET https://graph.microsoft.com/beta/deviceManagement/depOnboardingSettings/{depOnboardingSettingId} Key response fields and the pattern they indicate: tokenExpirationDateTime → Pattern A (expired); lastModifiedDateTime → Pattern D (recent token upload/replacement); lastSuccessfulSyncDateTime → Pattern A (sync stuck — drift > 24h); lastSyncTriggeredDateTime → Pattern A (sync stuck — trigger logged but no success); lastSyncErrorCode → Pattern A (non-zero = sync error surface); syncedDeviceCount → Pattern D (sanity check against ABM count; drastically low = orphaned token); appleIdentifier → Pattern D (mismatch against ticket history = token reassignment).​2​Step 2: Profile assignment state (Intune admin center) Breadcrumb: Enrollment program tokens > [token] > Profiles > [profile] > Assign devices.​2​ Check: Is the failing device's serial number in the assigned list? The Assigned vs Not assigned column for that serial. Cross-check against ABM Devices view — does ABM list the same serial assigned to the Intune MDM server?​2​A device that appears in Intune (token sync succeeded) but shows "Not assigned" on the profile is the Pattern B signature.​2​Step 3: Enrollment profile GUID (Intune admin center URL extraction) With the profile open in the Intune admin center, inspect the browser address bar. The enrollment profile GUID is the URL segment immediately after .../enrollmentProfileId/.​2​Capture this GUID for Pattern C/D debugging — it is the primary key that you will compare against the device's MDM payload (surfaced in Step 4) and against the ABM device record's MDM server assignment.​3​Step 4: Device-side enrollment state Tier 1 (always): Settings > General > VPN & Device Management > Management Profile > More Details. This surfaces the device's view of the enrollment target URL, profile identifiers, and issuing organization name — all three are the signals that distinguish Pattern C (profile never arrived) from Pattern D (profile arrived, but from the wrong MDM server).​2​Tier 3 (sysdiagnose, when Pattern C suspected): If the device Setup Assistant never reached the "Remote Management" pane and network reachability to Apple enrollment endpoints is suspect, capture a sysdiagnose and inspect kernel.log for APNs session records and connection failures to deviceenrollment.apple.com, mdmenrollment.apple.com, or *.push.apple.com.​2​Analysis — Match Against Known Failure Patterns Pattern A: Token expired or sync stuck Indicators: Intune admin center shows the token as Expired OR last sync > 24 hours ago (2+ missed 12-hour cycles) OR Graph lastSyncErrorCode != 0. New ABM-added devices do NOT appear in Intune after 24 hours. Existing devices fail to enroll with "This device belongs to another organization" or "no enrollment profile found."​2​Pattern B: Profile never assigned to device in ABM Indicators: Device appears in Intune (ABM→Intune sync succeeded) but the profile column shows Not assigned for the device serial. User attempts enrollment and Setup Assistant skips the MDM profile step entirely.​4​Pattern C: Profile assigned but device never received it (APNs / network path) Indicators: Profile IS assigned per the Intune admin center but the device's Setup Assistant never shows the "Remote Management" pane. Device can reach apple.com / icloud.com (basic Apple connectivity) but cannot reach deviceenrollment.apple.com, mdmenrollment.apple.com, or *.push.apple.com. Sysdiagnose kernel.log shows connection failures to the MDM enrollment endpoints.​4​Pattern D: Wrong MDM server on device (token rotation / tenant migration) Indicators: Device IS enrolled but receives NO management commands. Settings > General > VPN & Device Management shows a Management Profile from a different Intune tenant URL OR from a previous MDM provider. Graph lastModifiedDateTime < 30 days ago AND appleIdentifier differs from the ticket-recorded prior state (indicates recent token replacement). ABM device record shows "Previously assigned to" with a different MDM server.​4​Critical A vs D disambiguation: Pattern A is an Intune-side token state issue (fix in Intune — re-upload token, click Sync). Pattern D is a device-side enrollment target mismatch — the device talks to the wrong MDM server because it was enrolled under a prior token assignment, and a device wipe is required to re-enroll it against the current MDM server. Intune has no command that can retarget an already-enrolled ADE device to a different MDM server without wiping.​4​Proposed Remediation (by pattern — ALL require human approval) Pattern A Resolution If expired: re-download the token from ABM (Settings > [your name] > Preferences > Your MDM Server > Download Token) and re-upload to Intune (Enrollment program tokens > [token] > Edit > upload .p7m).​2​If sync stuck: click Sync on the token. Wait 30 minutes, then re-check Step 1 observables. If the last-sync timestamp still hasn't advanced after two sync triggers, escalate.​2​If syncedDeviceCount drastically below ABM device count: the token may be orphaned (ABM reassigned the devices to a different MDM server). Verify in ABM > Devices > [serial] > MDM server assignment. If ABM shows a different MDM server, this is a Pattern D situation for those devices; address via Pattern D Resolution.​2​Pattern B Resolution In ABM: Devices > [serial] > Assign to MDM server → confirm Intune MDM server. (Requires L2 ABM write access OR escalate to an ABM admin.)​4​In Intune: Enrollment Program Tokens > [token] > Profiles > [profile] > Assign devices → select the device serial.​4​Pattern C Resolution Verify the network path from the device's enrollment location to Apple's device enrollment and MDM endpoints. Provide the network/firewall team the Apple-published list: ​https://support.apple.com/HT210060.[5​] Verify APNs certificate state: Intune admin center > Tenant administration > Connectors and tokens > Apple push notification certificate — not expired, not revoked, and the APNs Apple ID matches what your team recorded at issuance.​5​Try enrollment from a known-good network (mobile hotspot, home Wi-Fi) to isolate the corporate network as a variable. If enrollment succeeds off-network, the failure is corporate-network-path-side and the network/firewall team owns remediation.​5​Pattern D Resolution — ⚠️ DESTRUCTIVE / MANUAL — do not automate Destructive action: Pattern D resolution requires a device wipe. Confirm with the device owner AND organizational policy before proceeding. User data on the device will be unrecoverable after the wipe unless backed up beforehand.​5​Steps (all human-executed): Confirm tenant migration history with the admin team: was the ABM token recently re-generated, re-assigned to a new MDM server, or moved between Intune tenants? Wipe the device — in the old tenant if it is still accessible and can execute an MDM wipe; otherwise perform a physical factory reset on-device. In ABM: confirm the device is now assigned to the current Intune MDM server. Re-enroll via Setup Assistant.​5​Escalation Ceiling (open a Microsoft Intune Support case) Pattern A: lastSyncErrorCode != 0 after token renewal + resync, OR last-sync timestamp fails to advance after two manual syncs. Pattern B: ABM Step 1 completes but Intune Step 2 still shows "Not assigned" for the device serial after 30 minutes of sync time. Pattern C: Network path confirmed open end-to-end AND APNs certificate active AND device still never sees the profile. Pattern D: Device CANNOT be factory reset (user data constraint, no backup, physical access unavailable). Escalate to Microsoft Support for the "release device from MDM" ABM procedure — this is a destructive admin action requiring ABM admin-level permissions.​5​Confidence + What to Verify Confidence: High — this maps directly to the approved runbook RE-057. Single most important thing to check before acting: Determine whether you are dealing with a token-side issue (Pattern A) or a device-side enrollment target mismatch (Pattern D) by comparing the Graph lastModifiedDateTime/appleIdentifier against ticket history AND inspecting the on-device Management Profile issuer (Step 4). This distinction is decisive: Pattern A is a reversible Intune-side fix, while Pattern D requires an irreversible device wipe — do not proceed to a wipe until Pattern D is confirmed and the device owner and policy have signed off. Would you like me to walk through a specific pattern in more depth, or help assemble the escalation packet for a Microsoft Support case?
+You said:
+How do I install and configure the Intune Linux agent?
+
+You said: How do I install and configure the Intune Linux agent?
+Bot said:
+Here's how to install and configure the Intune Linux agent, based on our Endpoint Engineering guide "Intune Linux Agent — Install and Configure" (Doc ID: RE-129).
+
+Scope
+This guide covers installing and configuring the Intune Linux Agent (the intune-portal deb package and Microsoft Identity Broker) on Ubuntu 22.04 LTS and 24.04 LTS devices managed by Microsoft Intune.​1​Completing this guide is a prerequisite for all subsequent Linux enrollment, compliance, app-delivery, and Conditional Access configuration steps.​1​
+
+⚠️ Known Admin Pitfall — Read First
+The intune-portal 2.0.2 release replaced the Java-based broker with microsoft-identity-broker (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs.​1​
+
+This is significant because it affects more than a single device — it is a fleet-wide re-enrollment event. Admin action required after the rollout: review device-based Conditional Access assignments, Intune filters, and Entra ID group memberships scoped to Linux devices — old device IDs become stale and the new device IDs may not match prior assignments.​1​
+
+Admin action checklist: 1. Identify Entra ID groups scoped to Linux devices via device-based filters 2. After upgrade, verify membership with the new device IDs 3. Re-validate device-based CA policies (if any) — note Linux supports web-app CA only 4. Audit microsoft-identity-broker systemd-unit status post-upgrade: systemctl status microsoft-identity-broker​1​
+
+Prerequisites
+Ubuntu 22.04 LTS or 24.04 LTS (per Linux Prerequisites); GNOME desktop environment (per Phase 49 whitelist); Intune license assigned to user; sudo access on target device; Outbound HTTPS access to packages.microsoft.com.​1​
+
+Installation Steps
+Step 1: Add the Microsoft package signing key (on device)
+Add the Microsoft package signing key:​1​
+
+
+curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+Add the apt repository:​1​
+
+
+echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/ubuntu/$(lsb_release -rs)/prod $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/microsoft-prod.list
+Update apt package index:​1​
+
+
+sudo apt update
+Step 2: Install the intune-portal deb package (on device)
+Install the intune-portal package:​1​
+
+
+sudo apt install intune-portal
+Verify the package is installed:​1​
+
+
+dpkg -l | grep intune-portal
+📋 Note — deb vs Snap: The Snap package (snap install intune-portal) was available during preview and is deprecated. Use the deb package via packages.microsoft.com for general-availability deployments. The Snap path will not receive Identity Broker 2.0.2+ updates.​1​
+
+Step 3: Verify Microsoft Identity Broker is running
+On device: Check the system-scope broker service:​1​
+
+
+systemctl status microsoft-identity-broker
+Check the user-scope agent timer:​1​
+
+
+systemctl --user status intune-agent.timer
+What breaks if misconfigured: If microsoft-identity-broker is not running, intune-portal cannot complete Entra ID authentication and enrollment will fail at the sign-in step. Symptom appears in: intune-portal app (authentication error at sign-in).​1​
+
+In Intune admin center: Navigate to Devices > Linux and confirm the device appears after the user completes enrollment. Verify device status shows Compliant or Not compliant (not Unknown — Unknown indicates the broker is not reporting).​2​
+
+Verification Checklist
+dpkg -l | grep intune-portal shows the package installed with version 2.0.2 or later; systemctl status microsoft-identity-broker shows active (running); systemctl --user status intune-agent.timer shows active (waiting) or active (running); Device appears in Intune admin center > Devices > Linux after user completes enrollment; Device shows a primary user associated (confirms user-affinity enrollment succeeded).​2​
+
+Confidence + What to Verify
+Confidence: High — this maps directly to the approved guide RE-129.
+
+Single most important thing to check before acting: Before any fleet rollout or upgrade, confirm whether you are crossing the intune-portal 2.0.2 broker boundary. If you are upgrading devices from a pre-2.0.2 install, the automatic re-enrollment with new device IDs will break device-based CA policies, filters, and Entra group memberships scoped to Linux — so the group/filter/CA audit in the admin checklist must be planned before the rollout, not after.
+
+A related note: this guide covers the agent install only. The admin-side enrollment configuration (licensing checks, enrollment restrictions, and CA scoping) lives in a separate guide, "Linux Enrollment Profile — Admin Configuration" (RE-130). Would you like me to walk through that next?
+
+2 references
+1
+RE-129-01-intune-linux-agent.docx
+2
+RE-129-01-intune-linux-agent.docx
+
+
+Sent at July 6 at 11:14 PM
+6 minutes ago
+Bot said: Here's how to install and configure the Intune Linux agent, based on our Endpoint Engineering guide "Intune Linux Agent — Install and Configure" (Doc ID: RE-129). Scope This guide covers installing and configuring the Intune Linux Agent (the intune-portal deb package and Microsoft Identity Broker) on Ubuntu 22.04 LTS and 24.04 LTS devices managed by Microsoft Intune.​1​Completing this guide is a prerequisite for all subsequent Linux enrollment, compliance, app-delivery, and Conditional Access configuration steps.​1​⚠️ Known Admin Pitfall — Read First The intune-portal 2.0.2 release replaced the Java-based broker with microsoft-identity-broker (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs.​1​This is significant because it affects more than a single device — it is a fleet-wide re-enrollment event. Admin action required after the rollout: review device-based Conditional Access assignments, Intune filters, and Entra ID group memberships scoped to Linux devices — old device IDs become stale and the new device IDs may not match prior assignments.​1​Admin action checklist: 1. Identify Entra ID groups scoped to Linux devices via device-based filters 2. After upgrade, verify membership with the new device IDs 3. Re-validate device-based CA policies (if any) — note Linux supports web-app CA only 4. Audit microsoft-identity-broker systemd-unit status post-upgrade: systemctl status microsoft-identity-broker​1​Prerequisites Ubuntu 22.04 LTS or 24.04 LTS (per Linux Prerequisites); GNOME desktop environment (per Phase 49 whitelist); Intune license assigned to user; sudo access on target device; Outbound HTTPS access to packages.microsoft.com.​1​Installation Steps Step 1: Add the Microsoft package signing key (on device) Add the Microsoft package signing key:​1​curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc Add the apt repository:​1​echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/ubuntu/$(lsb_release -rs)/prod $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/microsoft-prod.list Update apt package index:​1​sudo apt update Step 2: Install the intune-portal deb package (on device) Install the intune-portal package:​1​sudo apt install intune-portal Verify the package is installed:​1​dpkg -l | grep intune-portal 📋 Note — deb vs Snap: The Snap package (snap install intune-portal) was available during preview and is deprecated. Use the deb package via packages.microsoft.com for general-availability deployments. The Snap path will not receive Identity Broker 2.0.2+ updates.​1​Step 3: Verify Microsoft Identity Broker is running On device: Check the system-scope broker service:​1​systemctl status microsoft-identity-broker Check the user-scope agent timer:​1​systemctl --user status intune-agent.timer What breaks if misconfigured: If microsoft-identity-broker is not running, intune-portal cannot complete Entra ID authentication and enrollment will fail at the sign-in step. Symptom appears in: intune-portal app (authentication error at sign-in).​1​In Intune admin center: Navigate to Devices > Linux and confirm the device appears after the user completes enrollment. Verify device status shows Compliant or Not compliant (not Unknown — Unknown indicates the broker is not reporting).​2​Verification Checklist dpkg -l | grep intune-portal shows the package installed with version 2.0.2 or later; systemctl status microsoft-identity-broker shows active (running); systemctl --user status intune-agent.timer shows active (waiting) or active (running); Device appears in Intune admin center > Devices > Linux after user completes enrollment; Device shows a primary user associated (confirms user-affinity enrollment succeeded).​2​Confidence + What to Verify Confidence: High — this maps directly to the approved guide RE-129. Single most important thing to check before acting: Before any fleet rollout or upgrade, confirm whether you are crossing the intune-portal 2.0.2 broker boundary. If you are upgrading devices from a pre-2.0.2 install, the automatic re-enrollment with new device IDs will break device-based CA policies, filters, and Entra group memberships scoped to Linux — so the group/filter/CA audit in the admin checklist must be planned before the rollout, not after. A related note: this guide covers the agent install only. The admin-side enrollment configuration (licensing checks, enrollment restrictions, and CA scoping) lives in a separate guide, "Linux Enrollment Profile — Admin Configuration" (RE-130). Would you like me to walk through that next?
+You said:
+Compare Conditional Access and software-update support across Windows, macOS, iOS, Android, and Linux.
+
+You said: Compare Conditional Access and software-update support across Windows, macOS, iOS, Android, and Linux.
+Bot said:
+I have the relevant reference document from earlier searches — the 5-Platform Capability Comparison (RE-143). Let me present the Conditional Access and Software Updates comparisons from it.
+
+⚠️ How to Read This Comparison
+Before the tables, an important caveat about this reference doc: Each non-empty cell carries a verdict word followed by a hyperlink to the source per-platform capability matrix (link-not-copy structural reference).​1​ The verdict vocabulary is a fixed set: cells use exactly one of Supported / Partial / Not supported / Mode-dependent / n/a. Mode-dependent applies primarily to Android (which has 5 GMS modes + AOSP) where verdicts diverge per mode; the linked source matrix carries the per-mode prose.​1​
+
+So for Android, "Mode-dependent" means you must consult the per-mode Android matrix (COBO / COPE / BYOD / Dedicated / ZTE / AOSP) for the actual verdict.
+
+Conditional Access
+The document compares 6 Conditional Access capabilities; device-based CA is unavailable on Linux, and per-app CA is mode-dependent on Android.​2​
+
+Feature	Windows	macOS	iOS	Android	Linux
+Device-based CA (Require device compliant)	Supported	Supported	Supported	Mode-dependent	Not supported
+Web-app CA via Edge / Safari / Chrome	Supported	Supported	Supported	Supported	Supported
+Per-app CA (MAM / MAM-WE / managed app)	n/a	Partial	Supported	Mode-dependent	Not supported
+App-based CA / Approved Client App	Supported	Supported	Supported	Mode-dependent	Not supported
+Risk-based CA (Entra ID Protection)	Supported	Supported	Supported	Mode-dependent	Partial
+Sourced from the Conditional Access table: Web-app CA via Edge / Safari / Chrome — Supported across Windows, macOS, iOS, Android, and Linux. Per-app CA (MAM / MAM-WE / managed app) — n/a on Windows, Partial on macOS, Supported on iOS, Mode-dependent on Android, Not supported on Linux. App-based CA / Approved Client App — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Risk-based CA (Entra ID Protection) — Supported on Windows, macOS, iOS; Mode-dependent on Android; Partial on Linux.​2​
+
+Key takeaways for CA:
+
+Linux is the outlier — it has no device-based CA. As the enrollment profile guide notes, Require device to be marked as compliant — this grant condition is not available for Linux devices.​3​ Linux relies on web-app CA via Edge instead.
+Windows shows n/a for per-app CA (MAM), reflecting that the MAM/managed-app model doesn't apply the same way on Windows.
+Web-app CA is the one capability universally supported across all five platforms.
+Software Updates
+The document compares 8 software-update capabilities; Linux has no Intune-managed update mechanism, while Windows and macOS both support deferral and deadline enforcement.​4​
+
+Feature	Windows	macOS	iOS	Android	Linux
+Update management mechanism	Supported	Supported	Supported	Mode-dependent	Not supported
+Force OS version / forced update	Supported	Supported	Supported	Mode-dependent	Not supported
+Update deferral duration	Supported	Supported	Supported	Mode-dependent	Not supported
+Update deadline enforcement	Supported	Supported	Supported	Mode-dependent	Not supported
+Emergency / critical update override	Supported	Supported	Supported	Not supported	Not supported
+Driver / firmware update management	Supported	Not supported	n/a	Mode-dependent	Not supported
+Update status reporting	Supported	Supported	Supported	Mode-dependent	Not supported
+Sourced from the Software Updates table: Update management mechanism — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Force OS version / forced update enforcement — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Update deferral duration and Update deadline enforcement — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Emergency / critical update override — Supported on Windows, macOS, iOS; Not supported on Android; Not supported on Linux. Driver / firmware update management — Supported on Windows; Not supported on macOS; n/a on iOS; Mode-dependent on Android; Not supported on Linux. Update status reporting — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux.​4​
+
+Key takeaways for Software Updates:
+
+Linux has no Intune-managed update mechanism — every row is "Not supported."
+Windows is uniquely strongest — it is the only platform supporting driver / firmware update management (macOS is "Not supported," iOS is "n/a").
+Emergency / critical update override is supported on the three Apple/Microsoft OS platforms but not on Android or Linux.
+Android is entirely "Mode-dependent" across the update domain (except emergency override) — the actual capability depends on the enrollment mode, so consult the Android matrix.
+Confidence + What to Verify
+Confidence: High — this maps directly to the approved reference RE-143 (5-Platform Capability Comparison).
+
+Single most important thing to verify before acting: For Android, do not treat "Mode-dependent" as a verdict — it is a pointer. You must consult the per-mode Android Capability Matrix (COBO / COPE / BYOD / Dedicated / ZTE / AOSP) for the actual support answer, since capabilities like update deferral and per-app CA diverge sharply between, e.g., a Fully Managed device and a BYOD Work Profile. For example, on updates, BYOD is advisory-only because the personally-owned device remains under user control.
+
+Would you like me to pull the detailed per-mode Android verdicts for either of these domains?
+
+4 references
+1
+RE-143-4-platform-capability-comparison.docx
+2
+RE-143-4-platform-capability-comparison.docx
+3
+RE-130-DRAFT-TESTARTIFACT-02-enrollment-profile.docx
+4
+RE-143-4-platform-capability-comparison.docx
+
+
+Sent at July 6 at 11:14 PM
+5 minutes ago
+Bot said: I have the relevant reference document from earlier searches — the 5-Platform Capability Comparison (RE-143). Let me present the Conditional Access and Software Updates comparisons from it. ⚠️ How to Read This Comparison Before the tables, an important caveat about this reference doc: Each non-empty cell carries a verdict word followed by a hyperlink to the source per-platform capability matrix (link-not-copy structural reference).​1​ The verdict vocabulary is a fixed set: cells use exactly one of Supported / Partial / Not supported / Mode-dependent / n/a. Mode-dependent applies primarily to Android (which has 5 GMS modes + AOSP) where verdicts diverge per mode; the linked source matrix carries the per-mode prose.​1​So for Android, "Mode-dependent" means you must consult the per-mode Android matrix (COBO / COPE / BYOD / Dedicated / ZTE / AOSP) for the actual verdict. Conditional Access The document compares 6 Conditional Access capabilities; device-based CA is unavailable on Linux, and per-app CA is mode-dependent on Android.​2​Feature Windows macOS iOS Android Linux Device-based CA (Require device compliant) Supported Supported Supported Mode-dependent Not supported Web-app CA via Edge / Safari / Chrome Supported Supported Supported Supported Supported Per-app CA (MAM / MAM-WE / managed app) n/a Partial Supported Mode-dependent Not supported App-based CA / Approved Client App Supported Supported Supported Mode-dependent Not supported Risk-based CA (Entra ID Protection) Supported Supported Supported Mode-dependent Partial Sourced from the Conditional Access table: Web-app CA via Edge / Safari / Chrome — Supported across Windows, macOS, iOS, Android, and Linux. Per-app CA (MAM / MAM-WE / managed app) — n/a on Windows, Partial on macOS, Supported on iOS, Mode-dependent on Android, Not supported on Linux. App-based CA / Approved Client App — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Risk-based CA (Entra ID Protection) — Supported on Windows, macOS, iOS; Mode-dependent on Android; Partial on Linux.​2​Key takeaways for CA: Linux is the outlier — it has no device-based CA. As the enrollment profile guide notes, Require device to be marked as compliant — this grant condition is not available for Linux devices.​3​ Linux relies on web-app CA via Edge instead. Windows shows n/a for per-app CA (MAM), reflecting that the MAM/managed-app model doesn't apply the same way on Windows. Web-app CA is the one capability universally supported across all five platforms. Software Updates The document compares 8 software-update capabilities; Linux has no Intune-managed update mechanism, while Windows and macOS both support deferral and deadline enforcement.​4​Feature Windows macOS iOS Android Linux Update management mechanism Supported Supported Supported Mode-dependent Not supported Force OS version / forced update Supported Supported Supported Mode-dependent Not supported Update deferral duration Supported Supported Supported Mode-dependent Not supported Update deadline enforcement Supported Supported Supported Mode-dependent Not supported Emergency / critical update override Supported Supported Supported Not supported Not supported Driver / firmware update management Supported Not supported n/a Mode-dependent Not supported Update status reporting Supported Supported Supported Mode-dependent Not supported Sourced from the Software Updates table: Update management mechanism — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Force OS version / forced update enforcement — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Update deferral duration and Update deadline enforcement — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux. Emergency / critical update override — Supported on Windows, macOS, iOS; Not supported on Android; Not supported on Linux. Driver / firmware update management — Supported on Windows; Not supported on macOS; n/a on iOS; Mode-dependent on Android; Not supported on Linux. Update status reporting — Supported on Windows, macOS, iOS; Mode-dependent on Android; Not supported on Linux.​4​Key takeaways for Software Updates: Linux has no Intune-managed update mechanism — every row is "Not supported." Windows is uniquely strongest — it is the only platform supporting driver / firmware update management (macOS is "Not supported," iOS is "n/a"). Emergency / critical update override is supported on the three Apple/Microsoft OS platforms but not on Android or Linux. Android is entirely "Mode-dependent" across the update domain (except emergency override) — the actual capability depends on the enrollment mode, so consult the Android matrix. Confidence + What to Verify Confidence: High — this maps directly to the approved reference RE-143 (5-Platform Capability Comparison). Single most important thing to verify before acting: For Android, do not treat "Mode-dependent" as a verdict — it is a pointer. You must consult the per-mode Android Capability Matrix (COBO / COPE / BYOD / Dedicated / ZTE / AOSP) for the actual support answer, since capabilities like update deferral and per-app CA diverge sharply between, e.g., a Fully Managed device and a BYOD Work Profile. For example, on updates, BYOD is advisory-only because the personally-owned device remains under user control. Would you like me to pull the detailed per-mode Android verdicts for either of these domains?
+You said:
+Tell me about the draft Linux enrollment profile guide — is it approved?
+
+You said: Tell me about the draft Linux enrollment profile guide — is it approved?
+Bot said:
+Good question — and there's an important distinction to draw here between the filename and the actual document status.
+
+The Short Answer: Yes, it is Approved
+Despite its filename containing "DRAFT" and "TESTARTIFACT" (RE-130-DRAFT-TESTARTIFACT-02-enrollment-profile.docx), the document's own metadata marks it as Approved. Platform: Linux · Doc Type: Guide · Doc ID: RE-130 · Status: Approved.​1​
+
+So the authoritative status field is "Approved" — the "DRAFT/TESTARTIFACT" text is part of the filename string, not the governing status.
+
+What the Document Actually Is
+The document is "Linux Enrollment Profile — Admin Configuration" (Doc ID: RE-130). This guide covers admin-side configuration of Linux device enrollment in Microsoft Intune, including Intune and Entra ID license verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping for Ubuntu 22.04 LTS and 24.04 LTS devices.​1​
+
+A key scoping point from the guide: Linux enrollment itself is user-initiated only; there is no admin-driven push enrollment profile for this platform.​1​
+
+Its version history shows: 2026-04-27 Initial version — Linux enrollment profile admin configuration (Phase 50); 2026-07-06 v1.15 EEE reformat — content not re-reviewed.​2​
+
+⚠️ Two Cautions Worth Flagging
+While the status field reads "Approved," I want to be transparent about two things I observed, so a human can judge how much to rely on this document:
+
+"Content not re-reviewed" note in the latest version entry. The most recent change is described as a v1.15 EEE reformat — content not re-reviewed​2​. This means the last edit was a formatting pass whose content was not re-verified.
+
+The filename contains "DRAFT" and "TESTARTIFACT" markers. This is a conflict between the filename and the status field that I cannot resolve from the document content alone. In this environment there is a separate synthetic Draft test fixture whose deployment policy explicitly states it must not be in production — so filename markers like these are worth a human sanity-check to confirm RE-130 is genuinely the production-intended, approved guide and not a test artifact that was mislabeled as Approved.
+
+Recommendation
+Confidence: Medium — the status field clearly says "Approved," but the filename's "DRAFT/TESTARTIFACT" markers and the "content not re-reviewed" note create ambiguity I cannot fully resolve from the document alone.
+
+Single most important thing to verify before relying on this guide: Confirm with the documentation owner that RE-130 is the production-approved version and not a test artifact — specifically reconcile the "Approved" status field against the "DRAFT-TESTARTIFACT" filename and the "content not re-reviewed" reformat note. If it is confirmed approved, the guide's steps (license verification, enrollment restrictions, and the critical "do NOT use Require device to be marked as compliant" CA rule for Linux) are safe to follow.
+
+Would you like me to walk through the actual configuration steps in RE-130, or pull the related Intune Linux Agent (RE-129) install guide alongside it?
+
+2 references
+1
+RE-130-DRAFT-TESTARTIFACT-02-enrollment-profile.docx
+2
+RE-130-DRAFT-TESTARTIFACT-02-enrollment-profile.docx
+
+
+Sent at July 6 at 11:16 PM
+4 minutes ago
+Bot said: Good question — and there's an important distinction to draw here between the filename and the actual document status. The Short Answer: Yes, it is Approved Despite its filename containing "DRAFT" and "TESTARTIFACT" (RE-130-DRAFT-TESTARTIFACT-02-enrollment-profile.docx), the document's own metadata marks it as Approved. Platform: Linux · Doc Type: Guide · Doc ID: RE-130 · Status: Approved.​1​So the authoritative status field is "Approved" — the "DRAFT/TESTARTIFACT" text is part of the filename string, not the governing status. What the Document Actually Is The document is "Linux Enrollment Profile — Admin Configuration" (Doc ID: RE-130). This guide covers admin-side configuration of Linux device enrollment in Microsoft Intune, including Intune and Entra ID license verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping for Ubuntu 22.04 LTS and 24.04 LTS devices.​1​A key scoping point from the guide: Linux enrollment itself is user-initiated only; there is no admin-driven push enrollment profile for this platform.​1​Its version history shows: 2026-04-27 Initial version — Linux enrollment profile admin configuration (Phase 50); 2026-07-06 v1.15 EEE reformat — content not re-reviewed.​2​⚠️ Two Cautions Worth Flagging While the status field reads "Approved," I want to be transparent about two things I observed, so a human can judge how much to rely on this document: "Content not re-reviewed" note in the latest version entry. The most recent change is described as a v1.15 EEE reformat — content not re-reviewed​2​. This means the last edit was a formatting pass whose content was not re-verified. The filename contains "DRAFT" and "TESTARTIFACT" markers. This is a conflict between the filename and the status field that I cannot resolve from the document content alone. In this environment there is a separate synthetic Draft test fixture whose deployment policy explicitly states it must not be in production — so filename markers like these are worth a human sanity-check to confirm RE-130 is genuinely the production-intended, approved guide and not a test artifact that was mislabeled as Approved. Recommendation Confidence: Medium — the status field clearly says "Approved," but the filename's "DRAFT/TESTARTIFACT" markers and the "content not re-reviewed" note create ambiguity I cannot fully resolve from the document alone. Single most important thing to verify before relying on this guide: Confirm with the documentation owner that RE-130 is the production-approved version and not a test artifact — specifically reconcile the "Approved" status field against the "DRAFT-TESTARTIFACT" filename and the "content not re-reviewed" reformat note. If it is confirmed approved, the guide's steps (license verification, enrollment restrictions, and the critical "do NOT use Require device to be marked as compliant" CA rule for Linux) are safe to follow. Would you like me to walk through the actual configuration steps in RE-130, or pull the related Intune Linux Agent (RE-129) install guide alongside it?
+You said:
+What does document RE-129 cover, and what is its Doc Type and Status?
+
+You said: What does document RE-129 cover, and what is its Doc Type and Status?
+Bot said:
+Based on the document metadata I already have for RE-129:
+
+Document RE-129 Overview
+Doc ID: RE-129 Title: Intune Linux Agent — Install and Configure Doc Type: Guide Status: Approved Platform: Linux
+
+The metadata header confirms: Platform: Linux · Doc Type: Guide · Doc ID: RE-129 · Status: Approved.​1​
+
+What It Covers
+This guide covers installing and configuring the Intune Linux Agent (the intune-portal deb package and Microsoft Identity Broker) on Ubuntu 22.04 LTS and 24.04 LTS devices managed by Microsoft Intune.​1​
+
+Regarding its intended audience and role in the documentation set: It is intended for Intune administrators with rights to review device enrollment state, Entra ID group memberships, and Conditional Access assignments for Linux devices. Completing this guide is a prerequisite for all subsequent Linux enrollment, compliance, app-delivery, and Conditional Access configuration steps.​1​
+
+More specifically on the mechanics it walks through: This guide walks Intune administrators through installing the intune-portal deb package from packages.microsoft.com and verifying the Microsoft Identity Broker systemd unit.​1​
+
+The Three Core Steps
+The guide is structured around three steps:
+
+Step 1: Add the Microsoft package signing key​1​
+Step 2: Install the intune-portal deb package​1​
+Step 3: Verify Microsoft Identity Broker is running​1​
+Notable Callout
+It also includes an important upgrade warning: The intune-portal 2.0.2 release replaced the Java-based broker with microsoft-identity-broker (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs.​1​
+
+Summary of your direct question: RE-129 is a Guide with a status of Approved, and it covers the installation and configuration of the Intune Linux Agent (the intune-portal deb package and Microsoft Identity Broker) on Ubuntu 22.04 / 24.04 LTS.
+
+Unlike RE-130 (which had "DRAFT/TESTARTIFACT" in its filename), RE-129 has a clean filename and its "Approved" status has no conflicting signals — so this one is unambiguous.
+
+Would you like me to walk through the full installation steps in detail?
+
+1 reference
+1
+RE-129-01-intune-linux-agent.docx
+
+
+Sent at July 6 at 11:16 PM
+3 minutes ago
+Bot said: Based on the document metadata I already have for RE-129: Document RE-129 Overview Doc ID: RE-129 Title: Intune Linux Agent — Install and Configure Doc Type: Guide Status: Approved Platform: Linux The metadata header confirms: Platform: Linux · Doc Type: Guide · Doc ID: RE-129 · Status: Approved.​1​What It Covers This guide covers installing and configuring the Intune Linux Agent (the intune-portal deb package and Microsoft Identity Broker) on Ubuntu 22.04 LTS and 24.04 LTS devices managed by Microsoft Intune.​1​Regarding its intended audience and role in the documentation set: It is intended for Intune administrators with rights to review device enrollment state, Entra ID group memberships, and Conditional Access assignments for Linux devices. Completing this guide is a prerequisite for all subsequent Linux enrollment, compliance, app-delivery, and Conditional Access configuration steps.​1​More specifically on the mechanics it walks through: This guide walks Intune administrators through installing the intune-portal deb package from packages.microsoft.com and verifying the Microsoft Identity Broker systemd unit.​1​The Three Core Steps The guide is structured around three steps: Step 1: Add the Microsoft package signing key​1​Step 2: Install the intune-portal deb package​1​Step 3: Verify Microsoft Identity Broker is running​1​Notable Callout It also includes an important upgrade warning: The intune-portal 2.0.2 release replaced the Java-based broker with microsoft-identity-broker (systemd unit). Updating from a pre-2.0.2 install triggers AUTOMATIC RE-ENROLLMENT of all already-enrolled Linux devices with NEW device IDs.​1​Summary of your direct question: RE-129 is a Guide with a status of Approved, and it covers the installation and configuration of the Intune Linux Agent (the intune-portal deb package and Microsoft Identity Broker) on Ubuntu 22.04 / 24.04 LTS. Unlike RE-130 (which had "DRAFT/TESTARTIFACT" in its filename), RE-129 has a clean filename and its "Approved" status has no conflicting signals — so this one is unambiguous. Would you like me to walk through the full installation steps in detail?
+You said:
+What is the recommended Autopilot hardware-hash upload procedure for ChromeOS devices?
+
+You said: What is the recommended Autopilot hardware-hash upload procedure for ChromeOS devices?
+Bot said:
+I searched the Endpoint Engineering runbook set specifically for ChromeOS Autopilot hardware-hash guidance, and I need to be direct with you about what I found.
+
+No ChromeOS Autopilot Procedure Exists in Our Documentation
+The runbook set does not contain a ChromeOS Autopilot hardware-hash upload procedure, and I would not expect it to — because the premise doesn't align with how Autopilot works.
+
+Here's the key issue: Windows Autopilot and hardware-hash upload are Windows-only concepts. The relevant runbook, "Device Not Registered in Autopilot" (RE-002), is explicitly scoped to Windows: Platform: Windows · Doc Type: Runbook · Doc ID: RE-002 · Status: Approved. Version gate: This guide applies to Windows Autopilot (classic).​1​ Its steps are entirely Windows-portal-based — e.g., Navigate to Devices > Windows > Enrollment > Windows Autopilot devices.​1​
+
+Furthermore, ChromeOS is not one of the platforms our fleet documentation covers. Our cross-platform reference set spans exactly five platforms, and ChromeOS is not among them: This reference doc compares Microsoft Intune management capabilities across all five platforms in the v1.5 documentation suite — Windows (Autopilot v1 / v2), macOS (Apple Automated Device Enrollment via Apple Business Manager), iOS / iPadOS (Apple ADE + Account-Driven User Enrollment + MAM-WE), Android (Android Enterprise — COBO / COPE / BYOD / Dedicated / ZTE / AOSP), and Linux (Ubuntu 22.04 / 24.04 LTS via the intune-portal deb client).​2​
+
+What This Means
+I want to be careful not to invent a procedure that doesn't exist in our documentation and isn't technically applicable. Specifically:
+
+"Autopilot" is a Windows deployment technology. The hardware-hash → CSV upload → Autopilot service registration flow applies to Windows devices only. There is no ChromeOS equivalent of the Windows Autopilot hardware-hash procedure in our runbooks.
+ChromeOS devices are typically managed through the Google Admin console, not through Intune Autopilot — but that is outside the scope of our Endpoint Engineering documentation, so I can't cite an approved internal procedure for it.
+Recommendation
+Confidence: High (that no such internal procedure exists) — I searched the runbook set and found only the Windows-scoped Autopilot runbook (RE-002) and the five-platform reference (RE-143), neither of which covers ChromeOS.
+
+Single most important thing to clarify before acting: Confirm the actual intent behind the request. A few possibilities worth reconciling with the requester:
+
+If the devices are genuinely ChromeOS/Chromebooks, they fall outside the Intune/Autopilot documentation set entirely and would be managed via the Google Admin console — I'd recommend routing that to whoever owns ChromeOS management, as it's out of scope here.
+If this was a mistaken platform reference and the devices are actually Windows, then the correct procedure is the Windows Autopilot hardware-hash flow, and RE-002 ("Device Not Registered in Autopilot") is the relevant runbook.
+Would you like me to walk through the Windows Autopilot hardware-hash/registration guidance in RE-002 instead, in case that's what was actually intended?
+
+2 references
+1
+RE-002-01-device-not-registered.docx
+2
+RE-143-4-platform-capability-comparison.docx
+

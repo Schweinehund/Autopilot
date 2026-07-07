@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
 status: executing
-last_updated: "2026-07-06T21:59:34.071Z"
-last_activity: 2026-07-06
+last_updated: "2026-07-07T04:29:10.082Z"
+last_activity: 2026-07-07
 progress:
   total_phases: 7
   completed_phases: 6
   total_plans: 40
-  completed_plans: 38
+  completed_plans: 39
   percent: 86
 ---
 
@@ -25,9 +25,9 @@ See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
 ## Current Position
 
 Phase: 119 (frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal) — EXECUTING
-Plan: 5 of 7
-Status: Ready to execute
-Last activity: 2026-07-06
+Plan: 6 of 7 (119-06 COMPLETE; next 119-07 close-gate)
+Status: 119-06 COMPLETE — PIPE-02 CLOSE: PASS owner-attested (2026-07-06); all 4 close-gate preconditions cleared; 119-07 UNBLOCKED
+Last activity: 2026-07-07
 
 Progress bar: `████████░░` 86% (6/7 phases complete)
 
@@ -327,6 +327,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: [119-03] Atom 2 = ONE indivisible commit 5ec0f87 (exactly 9 files; git show --stat verified no Atom-1 leak, no deletions): check-phase-113..118 leaves (CHAIN_PHASES=[], CHAIN_SKIP empty) + check-phase-119 apex (CHAIN_PHASES=[48..118] 71 entries, CHAIN_SKIP empty, module-load bound assertion) + frozen-at-close V114='7d922a7'+readAtV114Close (no V115) + audit-harness-v1.15-integrity.yml (12th workflow; dual-apex + LF-fidelity preserved)
 - [Phase ?]: [119-03] check-phase-115 leaf asserts standalone c17-eee-contract.mjs (no CHAIN_PHASES) NOT chain registration (115-VERIFICATION Deferred Items → chain fold is Phase-119 Atom-1's job)
 - [Phase ?]: [119-03] Axis-2 armed: pushed branch phase-119-atom-2 + PR #2; v1.15 workflow run 28823233887 fired on pull_request (all 11 coexistence workflows triggered). Do NOT run full recursive apex locally on Windows (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01); NESTED-mode run enumerated 74 checks + V-119-SELF PASS. 119-04 consumes run 28823233887
+- [Phase ?]: [119-06] PIPE-02 CLOSE: PASS owner-attested (2026-07-06, ~23:10–23:16 live Copilot Studio) on the REAL retrofitted corpus — 6 uploaded RE-NNN .docx all grounded with clickable document-level citations, zero hallucination (incl. negative ChromeOS control). KEY v1.15 wide/flat 5-platform matrix (RE-143) chunk-survival CONFIRMED (the leg Phase 113 could NOT disprove); EEE body-text header-block thesis (RE-129 Q8) confirmed on the real corpus; Q4 surfaced the exact V-50-18 "Known Admin Pitfall" blockquote (content-survival proof). Draft-probe = Option A (test-artifact-only frontmatter mutation of RE-130); honest caveat: mutation flipped ONLY frontmatter status:, not the visible **Status:** block, so the literal Draft label was not exercised — accepted as artifact-prep gap NOT a grounding failure; deferred to v1.16 (mutate BOTH frontmatter + visible block). Android folded into the wide-matrix probe (6 docs, not 7). 529-line raw transcript captured in-repo (PIPE-02-CLOSE-TRANSCRIPT.txt; D-119-1 rider; T-119-06-ASSERTED mitigation). 4th/final close-gate precondition cleared; NO requirement flipped (119-07's exclusive job)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -355,13 +356,14 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 - Phase 119: The frozen-surface re-baseline is the dominant technical risk — first milestone to deliberately re-pin ~all Phase-1 frozen surfaces at once; requires the same apex+continuity atomic-green discipline used at v1.12–v1.14 closes
 - Phase 119: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..118] (71 entries, +7 from v1.14); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
 - 119-05 COMPLETE (2 rounds): round-1 C15 harness-run greened (ABAUDIT-26/27); round-2 predecessor chain-health greened via frozen-aware reads at V114 (7d922a7) on check-phase-50/52/65 (V-50-18/V-52-07/V-65-06) — read source only, NO value-mask, NO frozen-surface edit, CHAIN_SKIP ∅. Authoritative Axis-2 GREEN cross-OS = run 28825186128 (sha 652f48e; apex + linux-chain + 6 continuity leaves + harness-run all PASS). Axis-2 close-gate precondition CLEARED; no requirement flipped (119-07's job).
+- ✅ 119-06 COMPLETE: owner PIPE-02 CLOSE: PASS attested (2026-07-06) — the SOLE remaining close-gate precondition. ALL FOUR close-gate preconditions now cleared (Axis-2 GREEN, cross-OS EXACT MATCH, predecessor-byte-unchanged EMPTY, owner PIPE-02 PASS). 119-07 (single close-gate flipping all 16 v1.15 reqs to Validated) is UNBLOCKED. No requirement flipped in 119-06 (119-07's exclusive authority).
 
 ## Session Continuity
 
-Last session: 2026-07-06T21:59:34.052Z
-Stopped at: Completed 119-04-PLAN.md (3-axis terminal re-audit + predecessor-byte-unchanged HARD gate; 119-04-AUDIT-RESULTS.md e02ecf7). Axis-2 authoritative GHA run 28825186128 (sha 652f48e) apex check-phase-119 [48..118] = 73/0/1 GREEN; cross-OS EXACT MATCH (harness + 6 leaves 113-118 across Axis 1/2/3); predecessor-byte-unchanged = EMPTY over 35 non-Phase-1 frozen surfaces. Composite verdict: Axis-2 GREEN + EXACT MATCH yes + byte-unchanged EMPTY.
+Last session: 2026-07-07T04:29:10.062Z
+Stopped at: Completed 119-06-PLAN.md (PIPE-02 CLOSE second grounding-confirmation pass). Owner ran the real-corpus close-runbook live in Copilot Studio 2026-07-06 (~23:10–23:16) and attested **PIPE-02 CLOSE: PASS** — all 6 uploaded RE-NNN .docx grounded with clickable document-level citations, zero hallucination; KEY v1.15 wide-matrix chunk-survival (RE-143) + EEE body-text thesis (RE-129 Q8) both confirmed on the real corpus. Raw 529-line transcript captured in-repo (PIPE-02-CLOSE-TRANSCRIPT.txt; D-119-1 rider). Draft-label caveat recorded honestly (frontmatter-only mutation; literal Draft label deferred to v1.16). PIPE-02-CLOSE-FINDINGS.md finalized. Prior: 119-04 Axis-2 GREEN 73/0/1 + EXACT MATCH + byte-unchanged EMPTY.
 Resume file: None
-Next action: Run /gsd-execute-phase 119 to continue with Plan 119-06 (PIPE-02 owner-run grounding-confirmation — the SOLE remaining close-gate precondition) then 119-07 (single close-gate flipping all 16 v1.15 reqs to Validated). Three of four close-gate preconditions cleared (Axis-2 GREEN, EXACT MATCH, byte-unchanged EMPTY); only owner PIPE-02 PASS pending.
+Next action: Run /gsd-execute-phase 119 to execute Plan 119-07 (the single close-gate flipping all 16 v1.15 reqs to Validated). ALL FOUR close-gate preconditions now cleared: Axis-2 GREEN, cross-OS EXACT MATCH, predecessor-byte-unchanged EMPTY (119-04), and owner PIPE-02 CLOSE: PASS (119-06). 119-07 consumes PIPE-02-CLOSE-FINDINGS.md as the HARN-04/PIPE-02 grounding evidence.
 
 ## Operator Next Steps
 
@@ -412,3 +414,4 @@ Next action: Run /gsd-execute-phase 119 to continue with Plan 119-06 (PIPE-02 ow
 | Phase 119 P03 | 40min | 3 tasks | 9 files (Atom 2: check-phase-113..119 + frozen-at-close V114 + v1.15 CI workflow; pushed PR #2; Axis-2 run 28823233887) |
 | Phase 119 P05 | 55min | 2 tasks | 5 files (remediation slot: C15 FP exemptions + frozen-aware reads 50/52/65; Axis-2 GREEN run 28825186128) |
 | Phase 119 P04 | 20min | 3 tasks | 2 files (3-axis re-audit + byte-gate; Axis-2 GREEN 73/0/1; EXACT MATCH; byte-unchanged EMPTY) |
+| Phase 119 P06 | multi-day (owner checkpoint) | 3 tasks | 3 files (PIPE-02-CLOSE-RUNBOOK/FINDINGS/TRANSCRIPT; owner PIPE-02 CLOSE: PASS attested 2026-07-06) |
