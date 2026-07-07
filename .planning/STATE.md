@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: planning
-last_updated: "2026-07-07T13:33:47.122Z"
-last_activity: 2026-07-07
+status: mutated; literal
+last_updated: "2026-07-07T14:34:14.509Z"
+last_activity: 2026-07-07 — v1.16 ROADMAP.md + REQUIREMENTS.md traceability written
 progress:
   total_phases: 6
   completed_phases: 0
@@ -138,21 +138,28 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
           V115 pin (v1.15 close-gate SHA, recovered via git log --all --grep) rides
             the Atom-2-equivalent commit; BASELINE_20; 13th CI coexistence workflow
           DELIVERS:
+
             - _lib/frozen-at-close.mjs V115 entry + readAtV115Close export — the
               MANDATORY back-anchor invariant deferred by v1.15 (V115-PIN-DEFERRAL)
+
             - v1.16-milestone-audit.mjs (Path-A from v1.15, C1-C17 inherited) +
               v1.16-audit-allowlist.json + BASELINE_20
+
             - check-phase-120..NN.mjs per-phase validators (chain-apex
               CHAIN_PHASES=[48..119], continuing the [48..N-1] invariant)
+
             - audit-harness-v1.16-integrity.yml (13th parallel CI coexistence
               workflow; predecessors v1.4-v1.15 byte-unchanged)
+
             - Any predecessor content-assertion validator reading a now-retrofitted
               structural doc at live HEAD converted frozen-aware (readAtV115Close)
               as in-scope close-gate remediation — NO value-masking, CHAIN_SKIP empty
           3-axis terminal re-audit + PIPE-02 grounding confirmation (HARN-07):
+
             - Axis 1: fresh git clone --no-hardlinks
             - Axis 2: cross-OS Linux GHA (BOTH chain validators authoritative per
               the D-03 OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now [48..119])
+
             - Axis 3: fresh zero-context sub-agent
             - Cross-OS PASS/FAIL/SKIP EXACT MATCH required
             - PIPE-02 grounding-validation confirmation on the retrofitted
@@ -357,9 +364,9 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T13:33:47.000Z
-Stopped at: v1.16 roadmap created (6 phases, 120-125; 14/14 requirements mapped, 0 unmapped).
-Resume file: None
+Last session: 2026-07-07T14:34:14.495Z
+Stopped at: Phase 120 context gathered
+Resume file: .planning/phases/120-eee-standard-extension-mermaid-c17-policy-hygiene-fix/120-CONTEXT.md
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
