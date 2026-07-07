@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-07T15:00:26.187Z"
-last_activity: 2026-07-07 -- Phase 120 planning complete
+last_updated: "2026-07-07T15:10:25.387Z"
+last_activity: 2026-07-07
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 2
-  completed_plans: 0
+  completed_plans: 1
   percent: 0
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** v1.16 roadmap created 2026-07-07 — 6 phases (120-125); ready for `/gsd-discuss-phase 120`
+**Current focus:** Phase 120 — eee-standard-extension-mermaid-c17-policy-hygiene-fix
 
 ## Current Position
 
-Phase: 120 (EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix) — Not started
-Plan: —
+Phase: 120 (eee-standard-extension-mermaid-c17-policy-hygiene-fix) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-07-07 -- Phase 120 planning complete
+Last activity: 2026-07-07
 
 ## v1.16 Phase Dependency Summary
 
@@ -328,6 +328,9 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: [119-03] check-phase-115 leaf asserts standalone c17-eee-contract.mjs (no CHAIN_PHASES) NOT chain registration (115-VERIFICATION Deferred Items → chain fold is Phase-119 Atom-1's job)
 - [Phase ?]: [119-03] Axis-2 armed: pushed branch phase-119-atom-2 + PR #2; v1.15 workflow run 28823233887 fired on pull_request (all 11 coexistence workflows triggered). Do NOT run full recursive apex locally on Windows (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01); NESTED-mode run enumerated 74 checks + V-119-SELF PASS. 119-04 consumes run 28823233887
 - [Phase ?]: [119-06] PIPE-02 CLOSE: PASS owner-attested (2026-07-06, ~23:10-23:16 live Copilot Studio) on the REAL retrofitted corpus — 6 uploaded RE-NNN .docx all grounded with clickable document-level citations, zero hallucination (incl. negative ChromeOS control). KEY v1.15 wide/flat 5-platform matrix (RE-143) chunk-survival CONFIRMED (the leg Phase 113 could NOT disprove); EEE body-text header-block thesis (RE-129 Q8) confirmed on the real corpus; Q4 surfaced the exact V-50-18 "Known Admin Pitfall" blockquote (content-survival proof). Draft-probe = Option A (test-artifact-only frontmatter mutation of RE-130); honest caveat: mutation flipped ONLY frontmatter status:, not the visible **Status:** block, so the literal Draft label was not exercised — accepted as artifact-prep gap NOT a grounding failure; deferred to v1.16 (mutate BOTH frontmatter + visible block, now PIPE-05/Phase 124's job). Android folded into the wide-matrix probe (6 docs, not 7). 529-line raw transcript captured in-repo (PIPE-02-CLOSE-TRANSCRIPT.txt; D-119-1 rider; T-119-06-ASSERTED mitigation). 4th/final close-gate precondition cleared; NO requirement flipped (119-07's exclusive job)
+- [Phase 120]: Written the D-04 honesty caveat as plain prose (no blockquote) to avoid any risk of tripping C17 assertion #12's 200-char blockquote limit
+- [Phase 120]: Kept the 5-class illustrative Doc Type mapping table separate from the frozen 4-row Doc Type Taxonomy table (5 rows/3 cols, not merged) per RESEARCH Pitfall 2 guidance
+- [Phase 120]: Comment-only pointer added above c17-eee-contract.mjs hasMermaid line, avoiding the literal CHAIN_PHASES substring and preserving --self-test/C17 assertion-violation-counts: needle strings
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -364,9 +367,9 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T14:34:14.495Z
-Stopped at: Phase 120 context gathered
-Resume file: .planning/phases/120-eee-standard-extension-mermaid-c17-policy-hygiene-fix/120-CONTEXT.md
+Last session: 2026-07-07T15:10:25.368Z
+Stopped at: Completed 120-01-PLAN.md
+Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
@@ -415,3 +418,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 119 P05 | 55min | 2 tasks | 5 files (remediation slot: C15 FP exemptions + frozen-aware reads 50/52/65; Axis-2 GREEN run 28825186128) |
 | Phase 119 P04 | 20min | 3 tasks | 2 files (3-axis re-audit + byte-gate; Axis-2 GREEN 73/0/1; EXACT MATCH; byte-unchanged EMPTY) |
 | Phase 119 P06 | multi-day (owner checkpoint) | 3 tasks | 3 files (PIPE-02-CLOSE-RUNBOOK/FINDINGS/TRANSCRIPT; owner PIPE-02 CLOSE: PASS attested 2026-07-06) |
+| Phase 120 P01 | 6min | 2 tasks | 2 files |

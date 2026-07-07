@@ -26,7 +26,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Category: EEE Standard Extension — Mermaid/C17 Policy (STD, continues v1.15 STD-01/02/03)
 
-- [ ] **STD-04**: The canonical **EEE SOP standard** and the **C17 contract** are extended with the resolved **Mermaid-in-enrolled-classes policy** — the decision (text-equivalent conversion vs. a defined permitted form) is set at discuss-phase via `/adversarial-review`; C17 assertion #1 (currently a hard-fail on top-level ```mermaid) is updated to match (either retained hard-fail with all enrolled diagrams converted, or a documented carve-out), with the standard doc stating the rule and rationale. Any newly-enrolled structural Doc Types (glossary / decision-tree / nav-hub / lifecycle / end-user guide) are added to the standard's Doc Type taxonomy.
+- [x] **STD-04**: The canonical **EEE SOP standard** and the **C17 contract** are extended with the resolved **Mermaid-in-enrolled-classes policy** — the decision (text-equivalent conversion vs. a defined permitted form) is set at discuss-phase via `/adversarial-review`; C17 assertion #1 (currently a hard-fail on top-level ```mermaid) is updated to match (either retained hard-fail with all enrolled diagrams converted, or a documented carve-out), with the standard doc stating the rule and rationale. Any newly-enrolled structural Doc Types (glossary / decision-tree / nav-hub / lifecycle / end-user guide) are added to the standard's Doc Type taxonomy.
 
 ### Category: Conversion Pipeline & Filename (PIPE, continues v1.15 PIPE-01/02)
 
@@ -91,7 +91,7 @@ REQ-ID → Phase mapping, assigned by the roadmapper 2026-07-07 (6 phases, 120-1
 | RETRO-07 | Phase 121 | Pending |
 | RETRO-08 | Phase 122 | Pending |
 | RETRO-09 | Phase 121 | Pending |
-| STD-04 | Phase 120 | Pending |
+| STD-04 | Phase 120 | Complete |
 | PIPE-03 | Phase 124 | Pending |
 | PIPE-04 | Phase 124 | Pending |
 | PIPE-05 | Phase 124 | Pending |

@@ -64,7 +64,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 Plans:
 **Wave 1**
 
-- [ ] 120-01-PLAN.md — STD-04: EEE standard Mermaid policy (text-equivalent conversion) + 4 D-02 rulings + D-08 precedence rule + C17 comment-only cross-ref
+- [x] 120-01-PLAN.md — STD-04: EEE standard Mermaid policy (text-equivalent conversion) + 4 D-02 rulings + D-08 precedence rule + C17 comment-only cross-ref
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -164,7 +164,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 0/2 | Not started | - |
+| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 1/2 | In Progress|  |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 0/? | Not started | - |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
