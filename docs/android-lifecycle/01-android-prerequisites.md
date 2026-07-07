@@ -1,4 +1,8 @@
 ---
+doc_id: RE-186
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-21
 review_by: 2026-06-20
 applies_to: all
@@ -6,7 +10,13 @@ audience: all
 platform: Android
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-186 · **Status:** Approved
+
 # Android Enterprise Prerequisites
+
+## Summary
+
+This guide explains the three administrative portals Android Enterprise coordination requires — Intune admin center, Managed Google Play, and the Zero-Touch portal — the GMS-versus-AOSP split that governs which portals apply, and the Android 12+ corporate-identifier restriction Intune admins must plan around before enrollment.
 
 > **Platform gate:** This guide covers Android Enterprise prerequisites: the tri-portal surface, GMS-vs-AOSP split, and Android 12+ corporate-identifier behavior. For iOS/iPadOS enrollment, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md). For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
@@ -58,3 +68,9 @@ What still works on Android 12+: COBO, Dedicated (COSU), and WPCO modes continue
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-21 | Initial version — concept-only orientation to tri-portal surface, GMS/AOSP split, Android 12+ identifiers | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

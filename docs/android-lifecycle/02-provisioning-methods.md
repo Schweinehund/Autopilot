@@ -1,4 +1,8 @@
 ---
+doc_id: RE-187
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 applies_to: both
@@ -6,7 +10,13 @@ audience: admin
 platform: Android
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-187 · **Status:** Approved
+
 # Android Provisioning Methods
+
+## Summary
+
+This mode-first reference matrix maps the four Android Enterprise provisioning methods — NFC, QR code, the `afw#setup` DPC identifier string, and Zero-Touch — against all five enrollment modes, so Intune admins and downstream admin-setup-guide authors can confirm which method applies before configuring a deployment.
 
 > **Platform gate:** This reference matrix covers the four Android Enterprise provisioning methods supported in Microsoft Intune — NFC, QR code, DPC identifier (`afw#setup`), and Zero-Touch — across all five enrollment modes (Fully Managed COBO, BYOD Work Profile, Dedicated COSU, Zero-Touch Enrollment, AOSP).
 > For iOS/iPadOS enrollment methods, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md). For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
@@ -72,3 +82,9 @@ Both ceilings must be considered separately when planning AOSP fleet enrollment 
 - [Android Version Matrix](03-android-version-matrix.md) — minimum Intune-supported Android OS per mode; version breakpoint narratives (Android 11, 12, 15)
 - [Android Enterprise Provisioning Glossary](../_glossary-android.md) — definitions for [afw#setup](../_glossary-android.md#afw-setup), [Zero-Touch Enrollment](../_glossary-android.md#zero-touch-enrollment), [Managed Home Screen](../_glossary-android.md#managed-home-screen)
 - [AOSP OEM Matrix](../reference/aosp-oem-matrix.md) — per-OEM AOSP capability mapping (Phase 45)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

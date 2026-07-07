@@ -1,4 +1,8 @@
 ---
+doc_id: RE-189
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-16
 review_by: 2026-07-15
 applies_to: all
@@ -6,9 +10,15 @@ audience: all
 platform: iOS
 ---
 
-> **Version gate:** This guide covers iOS/iPadOS enrollment paths in Microsoft Intune. For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md). For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-189 · **Status:** Approved
 
 # iOS/iPadOS Enrollment Path Overview
+
+## Summary
+
+This guide orients Intune admins, L1 Service Desk, and L2 Desktop Engineering to the four iOS/iPadOS enrollment paths — Automated Device Enrollment, Device Enrollment, account-driven User Enrollment, and MAM Without Enrollment — and the permanent supervision state each path establishes at enrollment time.
+
+> **Version gate:** This guide covers iOS/iPadOS enrollment paths in Microsoft Intune. For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md). For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 
 ## How to Use This Guide
 
@@ -83,3 +93,9 @@ MAM-WE provides selective wipe capability: managed app data and corporate accoun
 - [iOS/iPadOS MDM Migration Walkthrough](02-mdm-migration.md) -- for migrating an already-ADE-enrolled fleet from Kandji/Iru to Intune (in-place, iOS/iPadOS 26+)
 - [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md) -- for cross-platform comparison of the ADE pipeline
 - [Apple Provisioning Glossary](../_glossary-macos.md) -- for terminology including [ADE](../_glossary-macos.md#ade), [ABM](../_glossary-macos.md#abm), and [VPP](../_glossary-macos.md#vpp)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

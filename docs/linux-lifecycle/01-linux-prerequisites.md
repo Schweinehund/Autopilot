@@ -1,4 +1,8 @@
 ---
+doc_id: RE-203
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-26
 review_by: 2026-06-25
 applies_to: both
@@ -6,7 +10,13 @@ audience: admin
 platform: Linux
 ---
 
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-203 · **Status:** Approved
+
 # Linux Intune Client Prerequisites
+
+## Summary
+
+This guide documents the supported Ubuntu LTS versions, the dropped Ubuntu 20.04 release and its upgrade path, GA-versus-HWE kernel-track breakpoints, the Identity Broker v2.0.2+ re-enrollment behavior, and the hardware, software, and networking prerequisites a device must satisfy before enrolling in Microsoft Intune.
 
 > **Platform gate:** This reference shows the supported Ubuntu LTS versions (22.04 / 24.04), the dropped Ubuntu version (20.04 — Intune 2508 / August 2025 end-of-support), GA vs HWE kernel-track breakpoints, and one non-version breakpoint (Identity Broker v2.0.2+ re-enrollment behavior) that affects all supported Ubuntu versions.
 > For enrollment overview and capability whitelist, see [Linux Device Management Enrollment Overview](00-enrollment-overview.md). For Linux terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
@@ -80,3 +90,9 @@ Beyond the supported Ubuntu LTS versions in the matrix above, the Microsoft Intu
 - [Linux Provisioning Glossary](../_glossary-linux.md) — terminology including [HWE kernel](../_glossary-linux.md#hwe-kernel), [GA kernel](../_glossary-linux.md#ga-kernel), [Identity Broker](../_glossary-linux.md#identity-broker), [intune-portal (package)](../_glossary-linux.md#intune-portal-package), [packages.microsoft.com](../_glossary-linux.md#packagesmicrosoftcom)
 - Microsoft Learn — [Set up enrollment for Linux devices](https://learn.microsoft.com/mem/intune/enrollment/linux-enroll) — authoritative source for enrollment endpoint configuration (apply 60-day `last_verified` discipline)
 - Microsoft Learn — [Linux device management overview](https://learn.microsoft.com/mem/intune/fundamentals/deployment-guide-platform-linux) — authoritative source for the Identity Broker v2.0.2+ re-registration behavior cited in [Non-version Breakpoints](#non-version-breakpoints)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-188
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 applies_to: both
@@ -7,7 +11,13 @@ platform: Android
 phase_46_wave2_retrofit: 2026-04-25
 ---
 
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-188 · **Status:** Approved
+
 # Android Version Matrix
+
+## Summary
+
+This guide records the minimum Intune-supported Android OS per enrollment mode alongside notable version breakpoints — the Android 11 COPE NFC removal, Android 12 corporate-identifier restriction, and Android 15 FRP hardening — plus policy-gated non-version breakpoints admins should account for during rollout planning.
 
 > **Platform gate:** This reference shows the minimum Intune-supported Android OS per enrollment mode and three notable Android version breakpoints (Android 11 COPE NFC removal, Android 12 corporate-identifier IMEI/serial removal, Android 15 FRP hardening) plus policy-gated non-version breakpoints (Play Integrity attestation cutover January 2025, AMAPI migration for BYOD April 2025).
 > For provisioning-method version availability per mode × method, see [02-provisioning-methods.md](02-provisioning-methods.md). For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
@@ -124,3 +134,9 @@ Microsoft migrated Android personally-owned work profile (BYOD Work Profile) man
 - [Android Enterprise Enrollment Overview](00-enrollment-overview.md) — two-axes model and 5-mode comparison with cross-references to this matrix for mode-level minimums
 - [Android Provisioning Methods](02-provisioning-methods.md) — mode × method × version cells; cite this file for method-level version gating, NOT for mode-level Intune minimums
 - [Android Enterprise Provisioning Glossary](../_glossary-android.md) — definitions for [Play Integrity](../_glossary-android.md#play-integrity), [AMAPI](../_glossary-android.md#amapi), [COPE](../_glossary-android.md#cope), [WPCO](../_glossary-android.md#wpco), [Corporate Identifiers](../_glossary-android.md#corporate-identifiers), [Fully Managed](../_glossary-android.md#fully-managed)
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
