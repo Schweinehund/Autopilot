@@ -127,4 +127,4 @@ Cross-platform mental-model bridges below help admins onboarding from a differen
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |

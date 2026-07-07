@@ -150,4 +150,4 @@ Microsoft migrated Android personally-owned work profile (BYOD Work Profile) man
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |

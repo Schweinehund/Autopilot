@@ -102,4 +102,4 @@ Beyond the supported Ubuntu LTS versions in the matrix above, the Microsoft Intu
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |

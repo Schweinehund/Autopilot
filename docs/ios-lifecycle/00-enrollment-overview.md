@@ -102,4 +102,4 @@ MAM-WE provides selective wipe capability: managed app data and corporate accoun
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |

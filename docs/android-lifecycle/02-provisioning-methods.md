@@ -96,4 +96,4 @@ Both ceilings must be considered separately when planning AOSP fleet enrollment 
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |

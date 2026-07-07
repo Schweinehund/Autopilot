@@ -77,4 +77,4 @@ What still works on Android 12+: COBO, Dedicated (COSU), and WPCO modes continue
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
