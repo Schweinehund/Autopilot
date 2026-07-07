@@ -90,7 +90,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 121-02-PLAN.md — Glossaries: android + network (EEE retrofit, R1 Change-History reconcile, #12 splits)
+- [x] 121-02-PLAN.md — Glossaries: android + network (EEE retrofit, R1 Change-History reconcile, #12 splits)
 - [ ] 121-03-PLAN.md — Glossaries: macos + apple-business (EEE retrofit, #12 splits, Kandji-Iru slug)
 - [ ] 121-04-PLAN.md — Glossaries: linux + base (EEE retrofit, #12 splits) — RETRO-04 complete
 - [ ] 121-05-PLAN.md — Mermaid-free lifecycle batch 1: android-lifecycle (4) + ios/00 + linux (2)
@@ -186,7 +186,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
-| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 1/7 | In Progress|  |
+| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 2/7 | In Progress|  |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
