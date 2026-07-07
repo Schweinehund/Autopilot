@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.15
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-1)
-status: shipped
-last_updated: "2026-07-06T00:00:00.000Z"
-last_activity: 2026-07-06
+status: completed
+last_updated: "2026-07-07T12:50:38.871Z"
+last_activity: 2026-07-07 — Milestone v1.15 completed and archived
 progress:
   total_phases: 7
   completed_phases: 7
@@ -17,19 +17,17 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-03 after v1.14 milestone)
+See: .planning/PROJECT.md (updated 2026-07-07 after v1.15 milestone)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** v1.15 SHIPPED — archival pending `/gsd-complete-milestone`
+**Current focus:** v1.15 shipped & archived 2026-07-06 — planning next milestone (run `/gsd-new-milestone`)
 
 ## Current Position
 
-Phase: 119 (frozen-surface-re-baseline-13th-path-a-lineage-bump-terminal) — COMPLETE
-Plan: 7 of 7 (119-07 close-gate COMPLETE — v1.15 MILESTONE CLOSED)
-Status: v1.15 SHIPPED 2026-07-06 — 16/16 requirements Validated via the single close-gate commit; archival pending `/gsd-complete-milestone`
-Last activity: 2026-07-06
-
-Progress bar: `██████████` 100% (7/7 phases complete)
+Phase: Milestone v1.15 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-07 — Milestone v1.15 completed and archived
 
 ## v1.15 Phase Dependency Summary
 
@@ -361,23 +359,13 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 ## Session Continuity
 
 Last session: 2026-07-06T00:00:00.000Z
-Stopped at: Completed 119-07-PLAN.md (the SINGLE close-gate). Authored `.planning/milestones/v1.15-MILESTONE-AUDIT.md` (honest close narrative — two-round chain-health remediation, 3-axis cross-OS EXACT MATCH, PIPE-02 owner PASS, Draft caveat, 13th-lineage entry) + `v1.15-DEFERRED-CLEANUP.md` (V115-pin deferral + DEFER-119-C pandoc alias trap + v1.16 structural classes + carried v1.14 items) + `119-VERIFICATION.md` (V-119-AUDIT resolves), and flipped ALL 16 v1.15 requirements to Validated across REQUIREMENTS/ROADMAP/STATE/PROJECT in ONE indivisible close-gate commit. v1.15 SHIPPED 2026-07-06. Back-anchor invariant intact (no pin references the close-gate SHA; no V115 authored).
+Stopped at: v1.15 milestone completed and archived (2026-07-07).
 Resume file: None
-Next action: Run `/gsd-complete-milestone` (the SEPARATE archival step) — archive REQUIREMENTS/ROADMAP to `.planning/milestones/`, move phase dirs to `v1.15-phases/`, tag `v1.15`, close the Jira story, add the V115 pin (v1.16's Path-A job), and sweep working-tree cruft. Read `v1.15-DEFERRED-CLEANUP.md` as the v1.16 backlog source.
+Next action: v1.15 archived & tagged via `/gsd-complete-milestone` (2026-07-07) — ROADMAP/REQUIREMENTS archived, phase dirs → `milestones/v1.15-phases/`, research → `milestones/v1.15-research/`, `v1.15` tag created. Run `/gsd-new-milestone` to scope v1.16 (backlog: `.planning/milestones/v1.15-DEFERRED-CLEANUP.md`).
 
 ## Operator Next Steps
 
-- ✅ `/gsd-new-milestone` DONE — v1.15 requirements defined (2026-07-03)
-- ✅ Roadmap authored — 7 phases (113-119); ROADMAP.md + STATE.md written
-- ✅ Phase 113 COMPLETE — 4 plans, PIPE-01 + PIPE-02 requirements met; all four OQs empirically resolved; pipeline locked; grounding validated (2026-07-04)
-- ✅ Phase 114 COMPLETE — 3 plans, META-01..04 + STD-01..03 requirements met; EEE standard, templates, registry authored (2026-07-04)
-- ✅ Phase 115 COMPLETE — 1 plan, HARN-01 requirement met; C17 blocking validator atom authored; exits 0 on 8 enrolled files + --self-test (2026-07-04)
-- ✅ Phase 116 COMPLETE — 8 plans, RETRO-01; ~75 L1/L2 runbooks retrofitted (2026-07-05)
-- ✅ Phase 117 COMPLETE — 10 plans, RETRO-02; all admin-setup guides retrofitted (2026-07-06)
-- ✅ Phase 118 COMPLETE — 6 plans, RETRO-03; 34 reference docs + table remediation (2026-07-06)
-- ✅ Phase 119 COMPLETE — 7 plans, HARN-02/03/04; frozen-surface re-baseline + 13th Path-A lineage bump + 3-axis terminal re-audit close (2026-07-06)
-- ✅ v1.15 SHIPPED 2026-07-06 — 16/16 requirements Validated via the Phase 119 Plan 119-07 SINGLE close-gate commit
-- **Run `/gsd-complete-milestone`** — archive v1.15, tag it, add the V115 pin (v1.16 back-anchor), close the Jira story, sweep working-tree cruft (SEPARATE next step)
+- Start the next milestone with /gsd-new-milestone
 
 ## Performance Metrics
 

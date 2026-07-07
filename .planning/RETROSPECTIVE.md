@@ -468,6 +468,44 @@ The first net-new content domain since v1.5's Linux platform, plus a multi-pilla
 
 ---
 
+## Milestone: v1.15 — EEE SOP Documentation-Standard Retrofit (Phase-1)
+
+**Shipped:** 2026-07-06
+**Phases:** 7 (113-119) | **Plans:** 40 | **Requirements:** 16/16 Validated
+
+### What Was Built
+The first *envelope* milestone — it reshaped the metadata/format envelope around the existing operator corpus rather than adding content, so the knowledge base grounds cleanly in Copilot Studio / SharePoint. Phase 113 locked the MD→.docx conversion pipeline (`convert.ps1` + `--reference-doc` template + `guard-docx.mjs` YAML-leak guard) and ran an owner-executed PIPE-02 live Copilot Studio grounding validation answering four empirical open questions (citation-title is filename-driven; `Status: Draft` is a label not a retrieval gate; no chunk fragmentation; pandoc promotes non-standard YAML keys to invisible Word custom properties — proving the visible header block is retrieval-necessary). Phase 114 authored `EEE-SOP-standard.md` (single-line header block, the D1 20-variant platform-normalization map with no silent fallback, D2 verbatim-`last_verified` semantics, the Doc Type taxonomy), the EEE-conformant templates, and a 178-ID Doc Registry. Phase 115 shipped the blocking **C17** validator atom (`c17-eee-contract.mjs`, 13 assertions). Phases 116-118 retrofitted the three Phase-1 doc classes — ~75 L1/L2 runbooks, all admin-setup guides, 34 reference docs + table remediation — to C17-green across 174 files. Phase 119 performed the deliberate frozen-surface re-baseline + 13th Path-A lineage bump + 3-axis terminal close.
+
+### What Worked
+- **Grounding-first ordering de-risked a corpus-wide format change** — validating the conversion pipeline + Copilot grounding on a 6-doc representative set (Phase 113) BEFORE retrofitting ~150 docs meant the load-bearing EEE thesis (visible body-text header block indexed; document-level clickable citations) was proven empirically, not assumed.
+- **C17 as an indivisible validator atom** — authoring the full 13-assertion gate once (Phase 115) and handing content phases a needle-spec only kept the enforcement surface stable while 174 files churned; content phases never re-opened the validator (the v1.13 validator-atom convention held again).
+- **Fork-per-phase retrofit helpers protected shipped deliverables** — each content phase forked its own mechanical helper (`retrofit-runbook.mjs` → `retrofit-guide.mjs` → `retrofit-reference.mjs`) rather than refactoring the prior phase's helper in place, so a shared-refactor regression could never touch an already-shipped doc class; the 117 fork also FIXED a confirmed silent whole-pre-H1-span content-loss defect discovered in the 116 helper.
+- **Word-preserving blockquote splits with per-file multiset diffs** — the heavy C17-#12 (≤200-char blockquote) tax was cleared across hundreds of groups via Transform A (sentence-split) / Transform B (de-blockquote) with a git-HEAD word-set multiset diff proving zero real-word loss on every file — reformat-only integrity, machine-checked.
+- **The deliberate byte-unchanged inversion executed atomically** — the milestone's dominant risk (re-pinning ALL Phase-1 frozen surfaces at once, inverting the invariant every prior milestone protected) landed with apex + continuity chain validators green together and non-Phase-1 predecessor surfaces byte-unchanged.
+
+### What Was Inefficient
+- **The terminal re-audit did not pass on first push** — the pre-authorized Plan 119-05 remediation slot fired across two rounds (a C15 EEE-Summary false-positive; three drifted predecessor content assertions converted to frozen-aware reads at V114). Same root pattern as v1.14: broad-corpus churn drifts predecessor content assertions that only surface at the terminal Linux GHA dispatch — the "run the full chain before close" lesson from v1.14 was only partially internalized.
+- **The Draft-label grounding probe was under-specified** — the PIPE-02 close Draft probe mutated only frontmatter `status:`, not the visible `**Status:**` block, so the literal Draft label was never exercised; accepted as an artifact-prep gap and deferred to v1.16.
+- **Mermaid + structural doc classes carved out mid-flight** — C17 #1 prohibits Mermaid fences in Phase-1 classes, so 10 mermaid-bearing files (+ end-user guides RE-175/176) were carved to v1.16 rather than converted in-phase; enumerating these up front would have avoided repeated per-phase carve-out decisions.
+- **`convert.ps1` doesn't auto-chain `guard-docx.mjs`** — the pipeline is a documented two-step operator sequence, not a structurally-enforced one; flagged fragile.
+
+### Patterns Established
+- **The *envelope* milestone as a first-class shape** — a milestone can deliver zero net-new operator content and still be substantial: reshaping the metadata/format envelope of the existing corpus for a downstream retrieval platform, enforced by a new harness check.
+- **Deliberate frozen-surface re-baseline** — the byte-unchanged invariant is now known to be *invertible under discipline*: a milestone MAY re-pin all of its own frozen surfaces at new close SHAs provided apex + continuity go green together and non-owned predecessor surfaces stay byte-unchanged.
+- **Owner-checkpointed empirical validation** — a phase (113/119 PIPE-02) can gate on an owner-run live-platform attestation when the harness lacks platform access; the agent authors the runbook + findings skeleton and the close-gate BLOCKS until the owner attests PASS.
+
+### Key Lessons
+- **Validate the grounding platform's actual behavior before designing around it** — the four PIPE-02 open questions (filename-derived citations; Draft-is-a-label; custom-property promotion) would each have produced a wrong architecture if assumed. Empirical-first paid for itself.
+- **Broad-corpus milestones must run the FULL predecessor chain before the close-gate** — recurred from v1.14; the immediate apex + continuity greens are necessary but not sufficient when shared-corpus churn drifts predecessor content assertions.
+- **The `One-liner:` SDK-extraction bug persists (8th recurrence)** — this MILESTONES.md entry was again hand-authored by replacement from the canonical MILESTONE-AUDIT; durable fix remains upstream (machine-readable `one_liner:` frontmatter at phase close). New this run: `milestone.complete` also naively string-mangled a long STATE.md decision line — verify STATE after the SDK step.
+- **Successor-pins-predecessor is a deferred obligation** — no V115 frozen pin is authored at v1.15 close (the back-anchor invariant); v1.16 Atom 2 MUST add it. Recorded MANDATORY in the deferred-cleanup.
+
+### Cost Observations
+- Model mix: orchestration on Opus; sequential-on-main-tree per `use_worktrees:false`.
+- Notable: 7 phases / 40 plans over ~4 days; first envelope milestone; 174 files under C17; heaviest single mechanical tax was the C17-#12 blockquote split across the admin-setup + reference classes (hundreds of groups, all word-preserving); 13th Path-A harness; deliberate re-pin of all Phase-1 frozen surfaces; carried Windows deep-nest cascade now depth [48..118] (+7 vs v1.14).
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
