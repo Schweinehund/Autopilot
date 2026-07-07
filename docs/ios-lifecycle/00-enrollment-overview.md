@@ -18,7 +18,9 @@ platform: iOS
 
 This guide orients Intune admins, L1 Service Desk, and L2 Desktop Engineering to the four iOS/iPadOS enrollment paths — Automated Device Enrollment, Device Enrollment, account-driven User Enrollment, and MAM Without Enrollment — and the permanent supervision state each path establishes at enrollment time.
 
-> **Version gate:** This guide covers iOS/iPadOS enrollment paths in Microsoft Intune. For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md). For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+> **Version gate:** This guide covers iOS/iPadOS enrollment paths in Microsoft Intune. For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md).
+
+> For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 
 ## How to Use This Guide
 
@@ -85,7 +87,9 @@ MAM-WE applies app protection policies to Microsoft 365 apps using the Intune Ap
 
 MAM-WE provides selective wipe capability: managed app data and corporate accounts are removed without affecting personal data or other apps. MAM-WE is appropriate for unmanaged personal devices needing M365 app access, contractor or partner devices, or devices already managed by another MDM.
 
-> **Not an MDM enrollment path:** MAM-WE applies app protection policies at the application layer without installing an MDM management profile. The device is not enrolled in Intune. IT has no device-level management capabilities -- only data protection within managed apps.
+> **Not an MDM enrollment path:** MAM-WE applies app protection policies at the application layer without installing an MDM management profile. The device is not enrolled in Intune.
+
+> IT has no device-level management capabilities -- only data protection within managed apps.
 
 ## See Also
 

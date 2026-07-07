@@ -19,8 +19,15 @@ phase_46_wave2_retrofit: 2026-04-25
 
 This guide records the minimum Intune-supported Android OS per enrollment mode alongside notable version breakpoints — the Android 11 COPE NFC removal, Android 12 corporate-identifier restriction, and Android 15 FRP hardening — plus policy-gated non-version breakpoints admins should account for during rollout planning.
 
-> **Platform gate:** This reference shows the minimum Intune-supported Android OS per enrollment mode and three notable Android version breakpoints (Android 11 COPE NFC removal, Android 12 corporate-identifier IMEI/serial removal, Android 15 FRP hardening) plus policy-gated non-version breakpoints (Play Integrity attestation cutover January 2025, AMAPI migration for BYOD April 2025).
-> For provisioning-method version availability per mode × method, see [02-provisioning-methods.md](02-provisioning-methods.md). For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
+> **Platform gate:** This reference shows the minimum Intune-supported Android OS per enrollment mode
+
+> and three notable Android version breakpoints (Android 11 COPE NFC removal, Android 12 corporate-identifier IMEI/serial removal, Android 15 FRP hardening)
+
+> plus policy-gated non-version breakpoints (Play Integrity attestation cutover January 2025, AMAPI migration for BYOD April 2025).
+
+> For provisioning-method version availability per mode × method, see [02-provisioning-methods.md](02-provisioning-methods.md).
+
+> For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 This matrix captures two distinct version axes:
 
@@ -98,7 +105,11 @@ Each breakpoint below documents a Google-driven behavior change that materially 
 
 **Admin action required:** None — Private Space is an OS-level personal-side feature without an admin policy lever in Intune. **Intune** cannot manage Private Space content, visibility, or installed apps on COPE, COBO, BYOD, or any other Android Enterprise mode. Admins should adjust user-facing privacy messaging to acknowledge that Private Space content is outside IT visibility regardless of enrollment mode. (Applies to Android 15.0+.)
 
-> **EMM-tier nuance:** AMAPI-native EMMs may apply application allowlist/blocklist policies that originate at the parent profile within Private Space on COPE deployments per Google AMAPI behavior; this is outside Intune's customDPC management surface. [MEDIUM: Bayton Private Space article, last_verified: 2026-04-25]
+> **EMM-tier nuance:** AMAPI-native EMMs may apply application allowlist/blocklist policies that originate at the parent profile within Private Space on COPE deployments per Google AMAPI behavior;
+
+> this is outside Intune's customDPC management surface.
+
+> [MEDIUM: Bayton Private Space article, last_verified: 2026-04-25]
 
 **References:**
 - [Microsoft Learn — Set up Android Enterprise corporate-owned work profile (Limitations)](https://learn.microsoft.com/en-us/intune/device-enrollment/android/setup-corporate-work-profile)

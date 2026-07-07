@@ -18,7 +18,11 @@ platform: Android
 
 This guide orients Intune admins, L1 Service Desk, and L2 Desktop Engineering to the five Android Enterprise enrollment modes (Zero-Touch, Fully Managed COBO, BYOD Work Profile, Dedicated COSU, AOSP) and the ownership-by-management-scope axes that determine which mode a given device deployment should use.
 
-> **Platform gate:** This guide covers Android Enterprise enrollment modes in Microsoft Intune. For iOS/iPadOS enrollment, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md). For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
+> **Platform gate:** This guide covers Android Enterprise enrollment modes in Microsoft Intune.
+
+> For iOS/iPadOS enrollment, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md).
+
+> For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 ## How to Use This Guide
 

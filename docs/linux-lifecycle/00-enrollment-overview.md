@@ -18,7 +18,15 @@ platform: Linux
 
 This guide is the canonical capability gate for Ubuntu LTS Linux device management in Microsoft Intune, defining the supported management surface, the explicit out-of-scope exclusions, and the enrollment constraints admins, L1 responders, and L2 engineers need before configuring or troubleshooting a Linux deployment.
 
-> **Platform gate:** This guide covers Microsoft Intune device management for Ubuntu LTS Linux endpoints (22.04 / 24.04). For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md). For iOS/iPadOS, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md). For Android Enterprise, see [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md). For Linux terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md). For prerequisites and version matrix, see [Linux Intune Client Prerequisites](01-linux-prerequisites.md).
+> **Platform gate:** This guide covers Microsoft Intune device management for Ubuntu LTS Linux endpoints (22.04 / 24.04).
+
+> For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md).
+
+> For iOS/iPadOS, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md).
+
+> For Android Enterprise, see [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md). For Linux terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
+
+> For prerequisites and version matrix, see [Linux Intune Client Prerequisites](01-linux-prerequisites.md).
 
 ## How to Use This Guide
 
@@ -74,7 +82,19 @@ Linux enrollment in Intune is exclusively user-initiated via the `intune-portal`
 
 ### BYOD vs Corporate-Owned Caveat
 
-> ⚠️ **Known caveat:** Microsoft Learn documentation for Linux device management uses the BYOD vs corporate-owned framing inconsistently across pages. Some Microsoft Learn pages describe Linux Intune enrollment as a BYOD path; other pages describe it as appropriate for corporate-owned Linux workstations. **In practice, both ownership models share the same enrollment mechanism** (user-initiated `intune-portal` install + sign-in). There is no API, MDM payload, or compliance setting that distinguishes a BYOD Linux device from a corporate-owned Linux device in Intune. Admins designing CA / compliance / asset-tracking flows should treat all Linux enrollments as a single ownership category and rely on Entra group membership, device tagging, or upstream procurement records for ownership classification — not on Intune's enrollment-time framing.
+> ⚠️ **Known caveat:** Microsoft Learn documentation for Linux device management uses the BYOD vs corporate-owned framing inconsistently across pages.
+
+> Some Microsoft Learn pages describe Linux Intune enrollment as a BYOD path; other pages describe it as appropriate for corporate-owned Linux workstations.
+
+> **In practice, both ownership models share the same enrollment mechanism** (user-initiated `intune-portal` install + sign-in).
+
+> There is no API, MDM payload, or compliance setting that distinguishes a BYOD Linux device from a corporate-owned Linux device in Intune.
+
+> Admins designing CA / compliance / asset-tracking flows should treat all Linux enrollments as a single ownership category
+
+> and rely on Entra group membership, device tagging, or upstream procurement records for ownership classification —
+
+> not on Intune's enrollment-time framing.
 
 This caveat is a documentation-framing artifact, not a product behavior gap. The capability whitelist in [Supported Management Surface](#supported-management-surface) is the authoritative scope; this H3 records the framing inconsistency so admins do not architect compliance policies that assume Intune knows the difference.
 
@@ -97,7 +117,11 @@ Cross-platform mental-model bridges below help admins onboarding from a differen
 - [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md) — iOS analog
 - [Android Enrollment Overview](../android-lifecycle/00-enrollment-overview.md) — Android analog
 
-> **Note for Phase 50 plan authors (DPO-03):** Do not duplicate the cross-platform bridge subsection above in `docs/admin-setup-linux/00-overview.md`. Phase 50 overview back-links to the Phase 49 anchor [#for-admins-familiar-with-windows--macos--android](#for-admins-familiar-with-windows--macos--android) instead. Anti-Pattern 1 (single-canonical-doc) discipline per Phase 34 D-26.
+> **Note for Phase 50 plan authors (DPO-03):** Do not duplicate the cross-platform bridge subsection above in `docs/admin-setup-linux/00-overview.md`.
+
+> Phase 50 overview back-links to the Phase 49 anchor [#for-admins-familiar-with-windows--macos--android](#for-admins-familiar-with-windows--macos--android) instead.
+
+> Anti-Pattern 1 (single-canonical-doc) discipline per Phase 34 D-26.
 
 ## Version History
 

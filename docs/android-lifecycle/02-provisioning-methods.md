@@ -18,15 +18,24 @@ platform: Android
 
 This mode-first reference matrix maps the four Android Enterprise provisioning methods — NFC, QR code, the `afw#setup` DPC identifier string, and Zero-Touch — against all five enrollment modes, so Intune admins and downstream admin-setup-guide authors can confirm which method applies before configuring a deployment.
 
-> **Platform gate:** This reference matrix covers the four Android Enterprise provisioning methods supported in Microsoft Intune — NFC, QR code, DPC identifier (`afw#setup`), and Zero-Touch — across all five enrollment modes (Fully Managed COBO, BYOD Work Profile, Dedicated COSU, Zero-Touch Enrollment, AOSP).
-> For iOS/iPadOS enrollment methods, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md). For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
+> **Platform gate:** This reference matrix covers the four Android Enterprise provisioning methods supported in Microsoft Intune — NFC, QR code, DPC identifier (`afw#setup`), and Zero-Touch —
+
+> across all five enrollment modes (Fully Managed COBO, BYOD Work Profile, Dedicated COSU, Zero-Touch Enrollment, AOSP).
+
+> For iOS/iPadOS enrollment methods, see [iOS/iPadOS Enrollment Overview](../ios-lifecycle/00-enrollment-overview.md).
+
+> For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
 
 This matrix is organized mode-first — readers locate their target enrollment mode (COBO, BYOD Work Profile, Dedicated, Zero-Touch Enrollment, AOSP) in the row list, then scan across to see which provisioning methods are supported and at which Android version. Cells carry both the support indicator and the version gate; the Notes column captures mode-level constraints that apply regardless of method (e.g., dual-SIM IMEI registration for COBO, Managed Home Screen exit-PIN sync for Dedicated, OEM firmware dependency for AOSP).
 
 This is the SINGLE canonical provisioning-method reference for v1.4. Downstream admin guides in [admin-setup-android/](../admin-setup-android/) (Phase 35-39) reference filtered rows from this matrix via anchor links rather than duplicating the grid. If you are authoring a mode-specific admin guide, link to the appropriate row in this file rather than copying the matrix.
 
 <a id="samsung-kme-mutual-exclusion"></a>
-> **Samsung devices:** Knox Mobile Enrollment (KME) is mutually exclusive with Zero-Touch on the same Samsung device. Configure only one. For full KME admin coverage, see [Knox Mobile Enrollment](../admin-setup-android/07-knox-mobile-enrollment.md); for the within-this-doc record, see [Knox Mobile Enrollment](#knox-mobile-enrollment) below.
+> **Samsung devices:** Knox Mobile Enrollment (KME) is mutually exclusive with Zero-Touch on the same Samsung device. Configure only one.
+
+> For full KME admin coverage, see [Knox Mobile Enrollment](../admin-setup-android/07-knox-mobile-enrollment.md);
+
+> for the within-this-doc record, see [Knox Mobile Enrollment](#knox-mobile-enrollment) below.
 
 ## Mode × Method Matrix
 
