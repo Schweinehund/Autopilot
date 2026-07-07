@@ -35,11 +35,15 @@ committed file content (no interpretation required).
   controlled-vocabulary `## Doc Type Taxonomy` table itself still lists **exactly 4 values**
   (`Runbook | Guide | RCA | Reference`) — unchanged row count and unchanged values.
 - **SC4 — frozen-at-close.mjs comment corrected (HYG-01):** `scripts/validation/_lib/frozen-at-close.mjs`
-  lines 5-13 header comment no longer claims helpers "REMAIN INLINE" for
-  `check-phase-{61,67,68,70}.mjs`; it now states these four files consume centralized readers
-  from this module (v1.14 Phase 111 centralization) (commit `4e2cb18`). Runtime behavior
-  (`MILESTONE_CLOSE_SHAS`, `readAtClose()`, all convenience exports) is byte-unchanged — `git
-  diff` for this commit touches only comment lines.
+  header comment no longer claims helpers "REMAIN INLINE" for `check-phase-{61,67,68,70}.mjs`
+  (commit `4e2cb18`). The comment was further corrected in commit `be6b89d` (code-review finding
+  WR-01) to record the **accurate per-file state**: `check-phase-{67,68,70}` consume this module's
+  readers (their local helpers delegate to `readAtV17Close`, centralized by v1.14 Phase 111), while
+  `check-phase-61` is a deliberate exception that keeps a genuinely inline reader
+  (`readAtV15CloseFor61`, SHA `ba2cbc0`) pinned by check-phase-68's V-68 assertion. Runtime behavior
+  (`MILESTONE_CLOSE_SHAS`, `readAtClose()`, all convenience exports) is byte-unchanged across both
+  commits — each `git diff` touches only comment lines; `Phase 111` remains PRESENT and `REMAIN
+  INLINE` remains ABSENT.
 
 ## Required Artifacts
 
