@@ -82,7 +82,27 @@ Plans:
   3. RE-175 and RE-176 (end-user Guides) carry the EEE header block + `## Summary`-first + correct `doc_type`; C17 exits 0 on both
   4. Every retrofitted file in this phase carries the "v1.16 EEE reformat — content not re-reviewed" Version-History row and `Last Reviewed` = `last_verified` verbatim
 
-**Plans**: TBD
+**Plans**: 7 plans
+Plans:
+**Wave 1**
+
+- [ ] 121-01-PLAN.md — Build retrofit-structural.mjs fork (2 doc_types, 9-file Mermaid exclusion, v1.16 VH) + author RE-179..206 registry rows
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 121-02-PLAN.md — Glossaries: android + network (EEE retrofit, R1 Change-History reconcile, #12 splits)
+- [ ] 121-03-PLAN.md — Glossaries: macos + apple-business (EEE retrofit, #12 splits, Kandji-Iru slug)
+- [ ] 121-04-PLAN.md — Glossaries: linux + base (EEE retrofit, #12 splits) — RETRO-04 complete
+- [ ] 121-05-PLAN.md — Mermaid-free lifecycle batch 1: android-lifecycle (4) + ios/00 + linux (2)
+- [ ] 121-06-PLAN.md — Mermaid-free lifecycle batch 2 (6) + 2 end-user guides — RETRO-09 complete
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 121-07-PLAN.md — Phase verification: C17 195/0, registry 19-Approved/9-Pending, RETRO attestation
+
+**Cross-cutting constraints:**
+
+- The coverage blockquote is relocated byte-preserved below ## Summary and every blockquote (relocated coverage + all in-body See-also cross-refs) is ≤200 chars — C17 #12 green
 
 ### Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files
 
