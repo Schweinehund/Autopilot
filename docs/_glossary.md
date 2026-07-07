@@ -18,11 +18,15 @@ platform: all
 
 This reference defines the core terminology for Windows Autopilot deployment across both APv1 (classic, hardware-hash based) and APv2 (Device Preparation, Enrollment Time Grouping) frameworks, covering enrollment concepts (OOBE, ESP, device and user phase), hardware and security terms (hardware hash, TPM, TPM attestation, Secure Boot), network components (WinHTTP proxy, NCSI), deployment modes (self-deploying, pre-provisioning, user-driven), and device lifecycle actions (Autopilot Reset, tenant migration, retirement, wipe).
 
-> **Framework coverage:** This glossary covers terminology for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
-> Terms specific to one framework are labeled. See [APv1 vs APv2](apv1-vs-apv2.md) for framework selection.
-> For macOS provisioning terminology (ADE, ABM, Setup Assistant), see the [macOS Provisioning Glossary](_glossary-macos.md). For Linux terminology, see [Linux Provisioning Glossary](_glossary-linux.md).
-> **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
-> **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
+> **Framework coverage:** This glossary covers terminology for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2). Terms specific to one framework are labeled. See
+
+> [APv1 vs APv2](apv1-vs-apv2.md) for framework selection. For macOS provisioning terminology (ADE, ABM, Setup Assistant), see the [macOS Provisioning Glossary](_glossary-macos.md). For Linux
+
+> terminology, see [Linux Provisioning Glossary](_glossary-linux.md). **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed
+
+> Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md). **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS,
+
+> supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
 
 ## Alphabetical Index
 
@@ -42,8 +46,9 @@ Windows Autopilot — Microsoft's cloud-based deployment service that provisions
 
 Out-of-Box Experience — the first-run setup screens a device presents after power-on, before a user profile exists.
 
-> **Cross-platform note:** On macOS, the equivalent first-run configuration experience is Setup Assistant, which is customizable via the ADE enrollment profile in Intune. iOS/iPadOS also uses Setup Assistant. Android uses a Setup Wizard with the DPC download flow for enterprise provisioning.
-> See also: [Setup Assistant](_glossary-macos.md#setup-assistant) (Apple/macOS+iOS).
+> **Cross-platform note:** On macOS, the equivalent first-run configuration experience is Setup Assistant, which is customizable via the ADE enrollment profile in Intune. iOS/iPadOS also uses Setup
+
+> Assistant. Android uses a Setup Wizard with the DPC download flow for enterprise provisioning. See also: [Setup Assistant](_glossary-macos.md#setup-assistant) (Apple/macOS+iOS).
 
 ### ESP
 
@@ -51,8 +56,11 @@ Enrollment Status Page — the progress screen during Autopilot provisioning tha
 
 > **APv2 note:** APv2 does not use ESP. See [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) for the APv2 equivalent mechanism.
 
-> **Cross-platform note:** On macOS, the functional analog is Await Configuration ("Awaiting final configuration" screen), which holds the device at the end of Setup Assistant until critical configuration policies are installed. Both ESP and Await Configuration serve as enrollment hold gates, but ESP has explicit device-phase and user-phase stages while Await Configuration is a single hold point.
-> See also: [Await Configuration](_glossary-macos.md#await-configuration) (Apple/macOS+iOS).
+> **Cross-platform note:** On macOS, the functional analog is Await Configuration ("Awaiting final configuration" screen), which holds the device at the end of Setup Assistant until critical
+
+> configuration policies are installed. Both ESP and Await Configuration serve as enrollment hold gates, but ESP has explicit device-phase and user-phase stages while Await Configuration is a single
+
+> hold point. See also: [Await Configuration](_glossary-macos.md#await-configuration) (Apple/macOS+iOS).
 
 ### MDM
 
@@ -80,7 +88,9 @@ A component of the Intune Management Extension (IME) that orchestrates APv2 Devi
 
 The core APv2 mechanism that replaces APv1 hardware hash pre-staging and ESP. A two-phase model: the admin creates a security group owned by the [Intune Provisioning Client](#intune-provisioning-client); at enrollment time, the device is added to the group automatically, enabling policy and app delivery during the deployment experience.
 
-> **APv2 only.** Replaces the role of both [hardware hash](#hardware-hash) registration (device pre-staging) and [ESP](#esp) (policy/app delivery tracking) in APv1. See also: [Device Preparation policy](#device-preparation-policy).
+> **APv2 only.** Replaces the role of both [hardware hash](#hardware-hash) registration (device pre-staging) and [ESP](#esp) (policy/app delivery tracking) in APv1. See also:
+
+> [Device Preparation policy](#device-preparation-policy).
 
 ### Intune Management Extension (IME)
 
@@ -106,10 +116,15 @@ An Intune tool that imports GPO XML exports and reports MDM support percentage, 
 
 A 4K-byte device fingerprint derived from hardware identifiers, used by APv1 to match a physical device to its Autopilot profile before OOBE.
 
-> **APv2 note:** APv2 does not require hardware hash registration. See [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) and [corporate identifiers](#corporate-identifiers) for APv2 alternatives.
+> **APv2 note:** APv2 does not require hardware hash registration. See [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) and [corporate identifiers](#corporate-identifiers) for APv2
 
-> **Cross-platform note:** Hardware hash is a Windows Autopilot-specific concept with no direct equivalent on other platforms. macOS and iOS use ABM device assignment via serial number for zero-touch enrollment; Android uses ZTE IMEI/serial upload or Corporate Identifiers; Linux has no zero-touch enrollment at all. The Linux Provisioning Glossary maintains a callout entry for this term for cross-reference navigation.
-> See also: [Hardware Hash](_glossary-linux.md#hardware-hash) (Linux).
+> alternatives.
+
+> **Cross-platform note:** Hardware hash is a Windows Autopilot-specific concept with no direct equivalent on other platforms. macOS and iOS use ABM device assignment via serial number for zero-touch
+
+> enrollment; Android uses ZTE IMEI/serial upload or Corporate Identifiers; Linux has no zero-touch enrollment at all. The Linux Provisioning Glossary maintains a callout entry for this term for
+
+> cross-reference navigation. See also: [Hardware Hash](_glossary-linux.md#hardware-hash) (Linux).
 
 ### ZTD
 
@@ -147,10 +162,15 @@ The minimum time (0.25 days / 6 hours) after a device is first evaluated as non-
 
 Device identifiers (serial number, manufacturer, model) uploaded to Intune to mark devices as corporate-owned at enrollment time. Used in APv2 as an alternative to hardware hash registration for enrollment restriction scenarios.
 
-> **APv2 primarily.** APv1 equivalent: [hardware hash](#hardware-hash) (both identify devices as corporate-owned, but hardware hash is required for APv1 profile assignment while corporate identifiers are optional for APv2 enrollment restrictions).
+> **APv2 primarily.** APv1 equivalent: [hardware hash](#hardware-hash) (both identify devices as corporate-owned, but hardware hash is required for APv1 profile assignment while corporate identifiers
 
-> **Cross-platform note:** On Android, the equivalent is Corporate Identifiers — pre-loaded IMEI, serial, or MEID lists in Intune that tag devices as corporate-owned at enrollment. All achieve the same enrollment-time corporate tagging effect but use different identity plumbing (serial/manufacturer/model on Windows; IMEI/serial on Android; ABM device assignment on Apple platforms).
-> See also: [Corporate Identifiers](_glossary-android.md#corporate-identifiers) (Android).
+> are optional for APv2 enrollment restrictions).
+
+> **Cross-platform note:** On Android, the equivalent is Corporate Identifiers — pre-loaded IMEI, serial, or MEID lists in Intune that tag devices as corporate-owned at enrollment. All achieve the same
+
+> enrollment-time corporate tagging effect but use different identity plumbing (serial/manufacturer/model on Windows; IMEI/serial on Android; ABM device assignment on Apple platforms). See also:
+
+> [Corporate Identifiers](_glossary-android.md#corporate-identifiers) (Android).
 
 ---
 
@@ -172,7 +192,11 @@ Network Connection Status Indicator — the Windows component that tests interne
 
 Microsoft Entra ID single sign-on on Windows devices: when a user signs in to an Entra-joined or Entra-registered device, the Web Account Manager (WAM) obtains a Primary Refresh Token (PRT) that silently authenticates the user to apps and browsers without requiring repeated credential entry. The PRT is hardware-bound (via TPM when available) and carries device compliance claims evaluated by Conditional Access policies.
 
-> See also: [Enterprise SSO Plug-in](_glossary-macos.md#enterprise-sso-plug-in) (macOS equivalent via Microsoft Enterprise SSO plug-in and Platform SSO); [Kerberos SSO Extension](_glossary-macos.md#kerberos-sso-extension) (macOS on-premises Kerberos TGT extension, coexisting with PSSO); [Graph API: Platform Credential Management](admin-setup-macos/11-graph-api-platform-credential.md) (programmatic management of macOS Platform Credentials).
+> See also: [Enterprise SSO Plug-in](_glossary-macos.md#enterprise-sso-plug-in) (macOS equivalent via Microsoft Enterprise SSO plug-in and Platform SSO);
+
+> [Kerberos SSO Extension](_glossary-macos.md#kerberos-sso-extension) (macOS on-premises Kerberos TGT extension, coexisting with PSSO);
+
+> [Graph API: Platform Credential Management](admin-setup-macos/11-graph-api-platform-credential.md) (programmatic management of macOS Platform Credentials).
 
 ### Secure Boot
 
@@ -206,7 +230,9 @@ See also: [APv1 vs APv2 disambiguation](apv1-vs-apv2.md).
 
 The central APv2 configuration object in Intune that defines deployment settings, OOBE customization, apps and scripts to install during enrollment, and the [ETG](#enrollment-time-grouping-etg) device group reference. Created in the Intune admin center under Devices > Windows > Enrollment > Device Preparation policies.
 
-> **APv2 only.** APv1 equivalent: Autopilot deployment profile (different scope -- the deployment profile controls OOBE settings while the Device Preparation policy also controls app/script installation). See [APv1](#apv1).
+> **APv2 only.** APv1 equivalent: Autopilot deployment profile (different scope -- the deployment profile controls OOBE settings while the Device Preparation policy also controls app/script
+
+> installation). See [APv1](#apv1).
 
 ### User-driven mode
 
