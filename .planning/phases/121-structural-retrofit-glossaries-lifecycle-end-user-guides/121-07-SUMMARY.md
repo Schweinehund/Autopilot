@@ -113,3 +113,9 @@ None — no external service configuration required.
 ---
 *Phase: 121-structural-retrofit-glossaries-lifecycle-end-user-guides*
 *Completed: 2026-07-07*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/phases/121-structural-retrofit-glossaries-lifecycle-end-user-guides/121-07-SUMMARY.md
+- FOUND: .planning/phases/121-structural-retrofit-glossaries-lifecycle-end-user-guides/deferred-items.md
+- FOUND commit: 9d2a1ef
