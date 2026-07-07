@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-07T20:30:47.042Z"
+last_updated: "2026-07-07T20:44:01.984Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 9
-  completed_plans: 6
+  completed_plans: 7
   percent: 17
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 121 (structural-retrofit-glossaries-lifecycle-end-user-guides) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-07-07
 
@@ -345,6 +345,9 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 121-03]: Every split blockquote chunk is separated by a genuine blank line (never merely consecutive short '>' lines), and the reformat-only proof strips '>' prefixes before comparing word multisets (git HEAD vs working tree) -- only diff found was the intentional Version-History date-placeholder fill
 - [Phase 121]: 121-04: Confirmed registry mapping RE-181=_glossary-linux.md, RE-184=_glossary.md (doc_type Reference) as source of truth over an inconsistent phase-grounding note
 - [Phase 121]: 121-04: Built a reusable link/backtick-aware word-preserving greedy blockquote splitter (trailing-punctuation glue set [.,;:)]* to survive nested-paren link constructions); word-set multiset diff proof caught and fixed a first-pass spacing artifact before commit
+- [Phase 121]: [121-05] Pre-flight --dry-run --verbose confirmed doc_id/platform resolution (RE-185..188/RE-189/RE-202..203, Android/iOS/Linux) before writing any of the 7 lifecycle Guide files
+- [Phase 121]: [121-05] C17 #12's real join-then-measure grouping algorithm caught 3 single-sentence over-200-char blockquotes that a naive per-line length check missed; hand-split at em-dash/clause boundaries down to 3-way splits in the worst cases
+- [Phase 121]: [121-05] Did NOT run requirements.mark-complete for RETRO-07 despite it being in this plan's frontmatter requirements field -- REQUIREMENTS.md explicitly scopes RETRO-07 as spanning Phase 121 (13 Mermaid-free files) + Phase 122 (9 Mermaid-bearing files), closing only when all 22 lifecycle files are C17-green; this plan completes 7 of the 13 Mermaid-free files, so RETRO-07 correctly remains Pending in the traceability table
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -381,8 +384,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T20:30:47.023Z
-Stopped at: Completed 121-04-PLAN.md
+Last session: 2026-07-07T20:42:48.466Z
+Stopped at: Completed 121-05-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -438,3 +441,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 121 P02 | 20min | 2 tasks | 2 files |
 | Phase 121 P03 | 40min | 2 tasks | 2 files |
 | Phase 121 P04 | 20min | 2 tasks | 2 files |
+| Phase 121 P05 | 20min | 2 tasks | 7 files |
