@@ -2,6 +2,7 @@
 
 ## Milestones
 
+- 🔄 **v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing** — Phases 120-125 (planning)
 - ✅ **v1.0 Autopilot Documentation & Troubleshooting Guides** — Phases 1-10 (shipped 2026-04-10)
 - ✅ **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-19 (shipped 2026-04-13)
 - ✅ **v1.2 Cross-Platform Provisioning & Operational Gaps** — Phases 20-25 (shipped 2026-04-15)
@@ -36,6 +37,100 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 </details>
 
+### v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing — Phases 120-125
+
+- [ ] **Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix** — Extend the standard + C17 contract with the resolved Mermaid-in-enrolled-classes policy and the extended Doc Type taxonomy; fix the stale frozen-at-close.mjs header comment
+- [ ] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit the non-Mermaid structural classes to EEE, C17 green
+- [ ] **Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
+- [ ] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
+- [ ] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior
+- [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
+
+## Phase Details
+
+### Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix
+
+**Goal**: The EEE standard and C17 contract state a clear, codified policy for Mermaid diagrams in enrolled classes, and the Doc Type taxonomy covers the remaining structural classes — unblocking the two Mermaid-dependent retrofits; the stale `frozen-at-close.mjs` header comment is corrected.
+**Depends on**: Nothing (first phase of v1.16; extends the v1.15 `docs/_standards/EEE-SOP-standard.md` and `c17-eee-contract.mjs` artifacts)
+**Requirements**: STD-04, HYG-01
+**Success Criteria** (what must be TRUE):
+
+  1. `docs/_standards/EEE-SOP-standard.md` states the resolved Mermaid-in-enrolled-classes policy (text-equivalent conversion, or a defined permitted form) with rationale, decided via `/adversarial-review` at discuss-phase
+  2. `scripts/validation/c17-eee-contract.mjs` assertion #1 (currently a hard-fail on top-level ```mermaid) is updated to match the resolved policy (retained hard-fail requiring conversion, or a documented carve-out), and `--self-test` still exits 0
+  3. The EEE standard's Doc Type taxonomy is extended to explicitly cover glossary / decision-tree / nav-hub / lifecycle / end-user guide doc classes (mapped to existing types or newly added)
+  4. `scripts/validation/_lib/frozen-at-close.mjs:5-9` no longer claims helpers "REMAIN INLINE" across `check-phase-{61,67,68,70}` — the comment is corrected to reflect the v1.14 Phase 111 centralization
+
+**Plans**: TBD
+
+### Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides
+
+**Goal**: Glossaries, lifecycle docs, and end-user guides — the structural classes with no Mermaid dependency — are retrofitted to EEE and green under C17.
+**Depends on**: Phase 120 (Doc Type taxonomy extension informs `doc_type` assignment for these classes)
+**Requirements**: RETRO-04, RETRO-07, RETRO-09
+**Success Criteria** (what must be TRUE):
+
+  1. All `docs/_glossary-*.md` files carry the EEE header block + `## Summary`-first + normalized Platform label; the term-surface shape (definition lists / anchor slugs) is preserved and existing plain-GitHub anchor slugs are not broken; C17 exits 0
+  2. All lifecycle docs carry the EEE header block + `## Summary`-first + normalized Platform label + `Status: Approved`; C17 exits 0
+  3. RE-175 and RE-176 (end-user Guides) carry the EEE header block + `## Summary`-first + correct `doc_type`; C17 exits 0 on both
+  4. Every retrofitted file in this phase carries the "v1.16 EEE reformat — content not re-reviewed" Version-History row and `Last Reviewed` = `last_verified` verbatim
+
+**Plans**: TBD
+
+### Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files
+
+**Goal**: Decision-tree docs and the carved-mermaid files deferred from v1.15 are retrofitted to EEE, with their Mermaid diagrams resolved per the Phase 120 policy, moving from Pending/keyless to Approved.
+**Depends on**: Phase 120 (the Mermaid policy must be locked before any diagram is converted or retained under a carve-out)
+**Requirements**: RETRO-05, RETRO-08
+**Success Criteria** (what must be TRUE):
+
+  1. All `docs/decision-trees/*` files carry the EEE header block + `## Summary`-first; their Mermaid diagrams are resolved per the STD-04 policy with every decision leaf preserved (text-equivalent table/structured list, or the permitted form the policy defines); C17 exits 0
+  2. RE-128 (linux overview) and RE-147 (`ca-enrollment-timing.md`) move from Pending/keyless to `Status: Approved` with a registry `doc_id`, Mermaid resolved per STD-04
+  3. The 9 Phase-117 admin-setup mermaid carve-outs are retrofitted to EEE with Mermaid resolved per STD-04; each moves to `Status: Approved`
+  4. C17 exits 0 on every file in this phase's class (decision-trees + all carved-mermaid files, including RE-128/RE-147 and the 9 carve-outs)
+
+**Plans**: TBD
+
+### Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)
+
+**Goal**: The orphan nav-hubs (`index.md`, `common-issues.md`, `quick-ref-l1.md`, `quick-ref-l2.md`) are retrofitted to EEE last among the content phases, honoring navigation-last discipline — their edits reference content already committed in Phases 121-122.
+**Depends on**: Phase 121, Phase 122 (navigation-last: nav-hub edits must commit after the content they reference)
+**Requirements**: RETRO-06
+**Success Criteria** (what must be TRUE):
+
+  1. `docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l1.md`, `docs/quick-ref-l2.md` all carry the EEE header block + `## Summary`-first appropriate to an index/quick-ref Doc Type; C17 exits 0 on all four
+  2. Every routing/link-table entry in the four nav-hubs remains accurate — no broken links, and entries pointing at Phase 121/122-retrofitted files still resolve
+  3. Git history confirms all nav-hub commits post-date the content commits they reference (navigation-last discipline preserved, mirrors the v1.15 Phase 109/117 precedent)
+
+**Plans**: TBD
+
+### Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
+
+**Goal**: The pandoc conversion pipeline is fixed for the nav-footer YAML-alias failure class, filenames are normalized for citation-friendly display, and the true Draft-label grounding behavior is confirmed empirically.
+**Depends on**: Phase 123 (exercises the pipeline against the full retrofitted corpus, including the nav-hub class)
+**Requirements**: PIPE-03, PIPE-04, PIPE-05
+**Success Criteria** (what must be TRUE):
+
+  1. Docs with the italic `*Previous:` / `*Next step:` `---`…`---` nav-footer shape convert cleanly through `scripts/pipeline/convert.ps1` (exit 0, no `Unknown alias` error), proven on a representative sample from the previously-failing class (e.g. an admin-setup guide)
+  2. The OQ4 frontmatter → Word custom-property promotion path still functions correctly after the pipeline/footer fix (regression-tested, not broken by PIPE-03)
+  3. A descriptive-filename rename map is applied (corpus-wide or the defined scope) with pipeline output-name wiring updated and the RE-NNN ↔ file mapping kept intact in the registry
+  4. The owner confirms via a live Copilot Studio session that mutating BOTH the frontmatter `status:` AND the visible `**Status:**` block renders and surfaces the literal Draft label in a query result
+
+**Plans**: TBD
+
+### Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close
+
+**Goal**: The V115 back-anchor pin freezes the v1.15 corpus, the 14th Path-A audit-harness lineage bump ships, and the milestone closes with a 3-axis terminal re-audit — the sole deliverable of this phase, mirroring v1.15 Phase 119 / v1.14 Phase 112 exactly (never batches with content or retrofit).
+**Depends on**: Phase 124 (all structural retrofit + pipeline work must be complete and green before the closing lineage bump + re-audit)
+**Requirements**: HARN-05, HARN-06, HARN-07
+**Success Criteria** (what must be TRUE):
+
+  1. `scripts/validation/_lib/frozen-at-close.mjs` gains a `V115` entry (v1.15 close-gate SHA, recovered via `git log --all --grep="MILESTONE-AUDIT" --grep="MILESTONE CLOSE" --all-match -1 --format=%H`) + `readAtV115Close` export, freezing the v1.15 corpus as the mandatory back-anchor invariant
+  2. `v1.16-milestone-audit.mjs` (Path-A, C1-C17 inherited) + `v1.16-audit-allowlist.json` + BASELINE_20 + `check-phase-120..NN.mjs` validators (chain-apex `CHAIN_PHASES=[48..119]`) + the 13th parallel CI coexistence workflow (`audit-harness-v1.16-integrity.yml`) all ship; predecessor v1.4–v1.15 frozen surfaces remain byte-unchanged, except any predecessor content-assertion validator reading a now-retrofitted structural doc, converted frozen-aware (`readAtV115Close`) as in-scope close-gate remediation
+  3. The milestone closes via a 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH, plus a PIPE-02 grounding-validation confirmation on the retrofitted structural corpus
+  4. A single close-gate commit flips all 14 v1.16 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS
+
+**Plans**: TBD
+
 ## Progress
 
 | Milestone | Phases | Status | Shipped |
@@ -57,3 +152,13 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth | 96-100 | ✅ Shipped | 2026-06-29 |
 | v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure | 101-112 | ✅ Shipped | 2026-07-02 |
 | v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1) | 113-119 | ✅ Shipped | 2026-07-06 |
+| v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing | 120-125 | 🔄 Planning | - |
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 0/? | Not started | - |
+| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 0/? | Not started | - |
+| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
+| 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
+| 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
+| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |

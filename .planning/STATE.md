@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-07-07T13:33:47.122Z"
 last_activity: 2026-07-07
 progress:
-  total_phases: 0
+  total_phases: 6
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,196 +17,178 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-07 after v1.15 milestone)
+See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering. NEW in v1.15: the knowledge base grounds cleanly in Copilot Studio / SharePoint and returns clickable citations to L1/L2/Intune-Admin audiences.
-**Current focus:** v1.15 shipped & archived 2026-07-06 — planning next milestone (run `/gsd-new-milestone`)
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
+**Current focus:** v1.16 roadmap created 2026-07-07 — 6 phases (120-125); ready for `/gsd-discuss-phase 120`
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 120 (EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix) — Not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-07 — Milestone v1.16 started
+Status: Roadmap created; ready to plan
+Last activity: 2026-07-07 — v1.16 ROADMAP.md + REQUIREMENTS.md traceability written
 
-## v1.15 Phase Dependency Summary
+## v1.16 Phase Dependency Summary
 
 ```
-Phase 113 (Conversion Pipeline Lock + Representative-Set Grounding Validation)
-  |       PIPE-01, PIPE-02
+Phase 120 (EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix)
+  |       STD-04, HYG-01
   |       DELIVERS:
-  |         - Pandoc version pinned + --reference-doc Word template committed
-  |         - Post-conversion guard script (YAML-leak assertion in first 500 chars)
-  |         - 3-5 representative docs: convert → upload → live Copilot Studio queries
-  |         - Empirical open questions resolved: citation title source; Status:Draft
-  |             retrieval behavior; chunk boundary behavior
-  |         - Deployment policy documented (only .docx in indexed library; Draft excluded)
+  |         - docs/_standards/EEE-SOP-standard.md: resolved Mermaid-in-enrolled-classes
+  |             policy (text-equivalent conversion vs. a documented permitted carve-out)
+  |             + rationale, decided via /adversarial-review at discuss-phase
+  |         - c17-eee-contract.mjs assertion #1 updated to match the resolved policy;
+  |             --self-test still exits 0
+  |         - EEE standard Doc Type taxonomy extended: glossary / decision-tree /
+  |             nav-hub / lifecycle / end-user guide classes mapped or added
+  |         - frozen-at-close.mjs:5-9 stale "REMAIN INLINE" header comment corrected
   |       HARD CONSTRAINTS:
-  |         - FIRST content phase; no doc file may be retrofitted before this exits
-  |         - PIPE-02 grounding validation runs here (not deferred to close);
-  |             close-gate at Phase 119 requires a SECOND grounding-confirmation pass
-  |             against the full retrofit corpus
-  |         - Research says this is the ONLY phase requiring live platform testing;
-  |             all other phases are standard authoring/harness patterns
-  |       DISCUSS-PHASE FLAG (PIPE-02): agent-run vs. owner-run if harness lacks
-  |         live Copilot Studio access; what "pass" means without programmatic access
+  |         - FIRST content phase of v1.16; RETRO-05 (decision-trees) and RETRO-08
+  |             (carved-mermaid) cannot start until the Mermaid policy is locked here
+  |         - HYG-01 folded in as a trivial single-comment fix — does not warrant
+  |             its own phase
+  |         - The Mermaid-vs-C17-#1 collision is the dominant design gray area —
+  |             resolved via /adversarial-review, NOT pre-decided at roadmap
+  |       DISCUSS-PHASE FLAGS: Mermaid-vs-C17-#1 resolution (dominant); Doc Type
+  |         taxonomy mapping for the 5 new structural classes
   |
   v
-Phase 114 (EEE Standard, Templates, Doc ID Registry + Metadata Rules)
-  |       META-01, META-02, META-03, META-04, STD-01, STD-02, STD-03
+Phase 121 (Structural Retrofit — Glossaries, Lifecycle & End-User Guides)
+  |       RETRO-04, RETRO-07, RETRO-09
   |       DELIVERS:
-  |         - C10 lenient-unknown-key precondition verified BEFORE any file is edited
-  |         - docs/_standards/EEE-SOP-standard.md (single-line format; D1 normalization
-  |             map; D2 last_verified semantics; Doc Type taxonomy; Version-History rule)
-  |         - docs/_templates/* updated (all new docs born EEE-conformant; Status:Draft default)
-  |         - docs/_registry/RE-index.md (outside indexed library; all Phase-1 Doc IDs
-  |             assigned collision-free from RE-001)
+  |         - All docs/_glossary-*.md: EEE header block + Summary-first + normalized
+  |             Platform label; term-surface shape (definition lists/anchor slugs)
+  |             preserved; C17 green
+  |         - All lifecycle docs: EEE header block + Summary-first + Status: Approved;
+  |             C17 green
+  |         - RE-175/RE-176 (end-user Guides): EEE header block + Summary-first +
+  |             correct doc_type; C17 green
   |       HARD CONSTRAINTS:
-  |         - META-01 (C10 lenient check) is a PRECONDITION — must be verified before
-  |             any file in the corpus gains the new frontmatter keys
-  |         - EEE standard doc itself lives OUTSIDE the grounded SharePoint library
-  |             (it is meta-documentation, not an operator runbook)
-  |         - Doc ID Registry lives OUTSIDE the grounded library (if included, queries
-  |             about a specific doc return the registry row instead of doc content)
-  |         - All Phase-1 Doc IDs assigned in ONE collision-free pass before authoring
-  |             (prevents RE-NNN conflicts across the three retrofit phases)
-  |         - D1 normalization map must cover ALL ~19-20 real platform: variants
-  |             (case/separator chaos + Apple compounds + all/cross-platform); unmapped
-  |             value = hard failure (C17 FAILS, no silent fallback)
-  |       DISCUSS-PHASE FLAG: Owner field placement — render Owner in the visible
-  |         block vs. frontmatter-only (research escape-valve for citation noise);
-  |         C17 asserts key presence regardless
+  |         - No Mermaid dependency — can proceed independent of Phase 122's
+  |             mermaid-consuming retrofits (both depend only on Phase 120)
+  |         - Retrofit-only: no content re-review; last_verified carried verbatim +
+  |             one-time "v1.16 EEE reformat" Version-History row (v1.15 D2/META-04 rule)
+  |         - Existing plain-GitHub glossary anchor slugs must not break
+  |       DISCUSS-PHASE FLAG: structural retrofit phase granularity (whether these
+  |         3 classes warrant further splitting) — resolved at /gsd-discuss-phase 121
   |
   v
-Phase 115 (C17 Harness Check — Validator Atom)
-  |       HARN-01
+Phase 122 (Structural Retrofit — Decision-Trees & Carved-Mermaid Files)
+  |       RETRO-05, RETRO-08
   |       DELIVERS:
-  |         - C17 blocking harness check as ONE indivisible validator atom
-  |             (all 13 needle-spec assertions in a single atomic commit)
-  |         - C17 registered in harness chain alongside C1-C16
-  |         - C17 exits 0 on Phase 113 representative set and on docs/_templates/*
+  |         - All docs/decision-trees/*: EEE header block + Summary-first; Mermaid
+  |             resolved per the Phase 120 policy, every decision leaf preserved
+  |         - RE-128 (linux overview) + RE-147 (ca-enrollment-timing.md): Pending/
+  |             keyless -> Status: Approved with registry doc_id, Mermaid resolved
+  |         - The 9 Phase-117 admin-setup mermaid carve-outs: retrofitted, Mermaid
+  |             resolved, moved to Status: Approved
   |       HARD CONSTRAINTS:
-  |         - C17 is ONE indivisible atom — content phases 116-118 hand off a
-  |             needle-spec only; the validator is NEVER re-opened during content phases
-  |             (per v1.13 validator-atom deferral pattern)
-  |         - C17 must be live BEFORE any retrofitted file is merged to main
-  |         - DISCUSS-PHASE FLAG: C17 strictness / staging — ship fully blocking from
-  |             the start, or informational-then-graduate (v1.5 C9/C11/C13 precedent)
-  |             given ~150 docs must conform before it can be green
+  |         - BLOCKED on Phase 120 — the Mermaid policy must be locked before any
+  |             diagram in this phase is converted or retained under a carve-out
+  |         - Every decision-tree leaf must be preserved through the text-equivalent
+  |             conversion (the v1.15 RE-068 precedent: leaf-count preserved)
+  |       DISCUSS-PHASE FLAG: none additional beyond the Phase 120 Mermaid resolution
+  |         (this phase consumes the STD-04 decision, does not re-litigate it)
   |
   v
-Phase 116 (L1/L2 Runbook Retrofit — ~75 docs)
-  |       RETRO-01
+Phase 123 (Orphan Nav-Hub Retrofit — Navigation-Last)
+  |       RETRO-06
   |       DELIVERS:
-  |         - All L1/L2 runbooks: EEE header block + D3-A structure + scope/safety Summary
-  |             banner + Version-History row + Last Reviewed = last_verified verbatim
-  |         - C17 green on every L1/L2 runbook file before phase close
+  |         - docs/index.md, common-issues.md, quick-ref-l1.md, quick-ref-l2.md:
+  |             EEE header block + Summary-first appropriate to an index/quick-ref
+  |             Doc Type; C17 green on all four
+  |         - Routing/link-table accuracy preserved across all four hubs
   |       HARD CONSTRAINTS:
-  |         - L1/L2 runbooks are highest operator-impact doc class → retrofit first
-  |         - No content re-review (v1.15 is reformat-only; last_verified carried verbatim)
-  |         - C17 must gate every file before merge
-  |         - DISCUSS-PHASE FLAG: whether the ~75 docs warrant splitting L1 vs L2 into
-  |             separate sub-phases (discuss-phase 116 resolves)
+  |         - NAVIGATION-LAST: nav-hub commits MUST post-date the content commits
+  |             in Phases 121-122 they reference (mirrors v1.15 Phase 109/117)
+  |         - Nav-hubs are indexes, not operator runbooks — header block + Summary
+  |             application differs from a runbook Summary
+  |       DISCUSS-PHASE FLAG: nav-hub EEE application — how the header block +
+  |         Summary applies to an index/quick-ref page; correct Doc Type (Reference
+  |         vs. a new nav Doc Type)
   |
   v
-Phase 117 (Admin-Setup Guide Retrofit — all platforms)
-  |       RETRO-02
+Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe)
+  |       PIPE-03, PIPE-04, PIPE-05
   |       DELIVERS:
-  |         - All admin-setup guides (Windows / macOS / iOS / Android / Linux / 802.1X):
-  |             EEE header block + D3-A structure + Version-History row + verbatim dates
-  |         - C17 green on all admin-setup guide files before phase close
+  |         - Pandoc YAML-metadata alias defect (DEFER-119-C) fixed: nav-footer
+  |             *Previous:/*Next step: shape converts clean (exit 0, no Unknown
+  |             alias); OQ4 custom-property promotion regression-tested clean
+  |         - Descriptive-filename rename map + pipeline output-name wiring +
+  |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
+  |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
+  |             BOTH frontmatter status: AND visible **Status:** mutated; literal
+  |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
-  |         - Admin-setup guides retrofit SECOND (after runbooks, before reference docs)
-  |         - Platform normalization via D1 map — no unmapped platform: values survive
-  |         - DISCUSS-PHASE FLAG: whether ~8 guide sets across 6 platform families warrant
-  |             sub-phases (discuss-phase 117 resolves)
+  |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
+  |             the pipeline fix + filename pass exercise every enrolled class
+  |         - PIPE-05 is owner-run (autonomous:false checkpoint), mirrors v1.15
+  |             Phase 119 Wave-5 PIPE-02 pattern
+  |       DISCUSS-PHASE FLAGS: pandoc alias fix approach (canonical invocation fix
+  |         vs. corpus-wide nav-footer normalization); descriptive-filename scheme
+  |         (naming convention, rename-map source of truth, in-milestone vs.
+  |         bulk-upload-time renaming)
   |
   v
-Phase 118 (Reference Doc Retrofit + Table Remediation — ~26 docs)
-  |       RETRO-03
-  |       DELIVERS:
-  |         - All reference docs: EEE header block + D3-A structure + Version-History row
-  |         - Capability-matrix table remediation: prose summary within 5 lines of any
-  |             table >25 rows (P-02 chunk-boundary protection)
-  |         - C17 green on all reference doc files before phase close
-  |       HARD CONSTRAINTS:
-  |         - Reference docs retrofit LAST — highest table-chunking risk (P-02)
-  |         - C17 table-row-cap assertion enforces ~25-row cap or prose-summary gate
-  |         - DISCUSS-PHASE FLAG: row-cap threshold + whether to split oversized matrices
-  |             vs. add prose summaries only (discuss-phase 118 resolves)
-  |         - DISCUSS-PHASE FLAG: Doc Type edge cases (comparison docs, error-codes,
-  |             end-user guides: Reference vs Guide) — resolve before registry phase for
-  |             these files to get correct doc_type assigned
-  |
-  v
-Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-audit Close)
-          HARN-02, HARN-03, HARN-04
-          SOLE DELIVERABLE CLUSTER OF THIS PHASE — never batch with content or retrofit
-          DELIBERATE INVERSION: this milestone INTENTIONALLY re-pins all Phase-1 frozen
-            surfaces at the new close SHAs — the first milestone to invert the
-            byte-unchanged invariant every prior milestone protected
-          V114 pin (v1.14 close-gate SHA 7d922a7) rides Atom 2 (same commit as
-            check-phase-119); BASELINE_19; 12th CI coexistence workflow
-          Atom 1 (3 files indivisible — HARN-03 partial):
-
-            - v1.15-milestone-audit.mjs (Path-A from v1.14, C1-C17 inherited)
-            - v1.15-audit-allowlist.json (sidecar repointed)
-            - BASELINE_19 freshness comment in regenerate-supervision-pins.mjs
-          Atom 2 (indivisible set — HARN-02 + HARN-03 partial):
-
-            - check-phase-113.mjs through check-phase-119.mjs (per-phase validators;
-              chain-apex CHAIN_PHASES=[48..118], CHAIN_SKIP=new Set([]))
-
-            - _lib/frozen-at-close.mjs V114 entry (v1.14 close-gate SHA 7d922a7)
-            - audit-harness-v1.15-integrity.yml (12th parallel CI coexistence workflow;
-              predecessors v1.4–v1.14 byte-unchanged)
-          Frozen-surface re-baseline (HARN-02):
-
-            - Phase-1 frozen surfaces are DELIBERATELY RE-PINNED at new close SHAs
-            - Apex + continuity chain validators MUST exit 0 TOGETHER atomically
-            - Non-Phase-1 predecessor frozen surfaces remain BYTE-UNCHANGED
-          3-axis terminal re-audit + PIPE-02 grounding confirmation (HARN-04):
-
-            - Axis 1: fresh git clone --no-hardlinks into $env:TEMP\v1.15-audit-<rand>
-            - Axis 2: cross-OS Linux GHA (BOTH chain validators Linux-GHA authoritative
-              per corrected D-03 OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at
-              depth [48..118])
-
+Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
+          HARN-05, HARN-06, HARN-07
+          SOLE DELIVERABLE CLUSTER OF THIS PHASE — never batches with content or
+            retrofit (mirrors v1.15 Phase 119 / v1.14 Phase 112 exactly)
+          V115 pin (v1.15 close-gate SHA, recovered via git log --all --grep) rides
+            the Atom-2-equivalent commit; BASELINE_20; 13th CI coexistence workflow
+          DELIVERS:
+            - _lib/frozen-at-close.mjs V115 entry + readAtV115Close export — the
+              MANDATORY back-anchor invariant deferred by v1.15 (V115-PIN-DEFERRAL)
+            - v1.16-milestone-audit.mjs (Path-A from v1.15, C1-C17 inherited) +
+              v1.16-audit-allowlist.json + BASELINE_20
+            - check-phase-120..NN.mjs per-phase validators (chain-apex
+              CHAIN_PHASES=[48..119], continuing the [48..N-1] invariant)
+            - audit-harness-v1.16-integrity.yml (13th parallel CI coexistence
+              workflow; predecessors v1.4-v1.15 byte-unchanged)
+            - Any predecessor content-assertion validator reading a now-retrofitted
+              structural doc at live HEAD converted frozen-aware (readAtV115Close)
+              as in-scope close-gate remediation — NO value-masking, CHAIN_SKIP empty
+          3-axis terminal re-audit + PIPE-02 grounding confirmation (HARN-07):
+            - Axis 1: fresh git clone --no-hardlinks
+            - Axis 2: cross-OS Linux GHA (BOTH chain validators authoritative per
+              the D-03 OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now [48..119])
             - Axis 3: fresh zero-context sub-agent
             - Cross-OS PASS/FAIL/SKIP EXACT MATCH required
-            - PIPE-02 grounding-validation confirmation: retrofitted corpus queried via
-              live Copilot Studio; correct citations returned
-          Close-gate: v1.15-MILESTONE-AUDIT.md + v1.15-DEFERRED-CLEANUP.md +
-            4-doc traceability closure (16/16 Validated)
-          Predecessor v1.4–v1.14 frozen surfaces BYTE-UNCHANGED invariant
-            (NON-Phase-1 surfaces only; Phase-1 surfaces deliberately re-pinned)
+            - PIPE-02 grounding-validation confirmation on the retrofitted
+              structural corpus
+          Close-gate: v1.16-MILESTONE-AUDIT.md + v1.16-DEFERRED-CLEANUP.md +
+            4-doc traceability closure (14/14 Validated)
+          Predecessor v1.4-v1.15 frozen surfaces BYTE-UNCHANGED invariant, except
+            in-scope frozen-aware conversions per HARN-06 remediation clause
 ```
 
-## v1.15 Requirement Coverage (16/16 — Validated ✅)
+## v1.16 Requirement Coverage (0/14 — Pending)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
-| 113 | PIPE-01, PIPE-02 | 2 |
-| 114 | META-01, META-02, META-03, META-04, STD-01, STD-02, STD-03 | 7 |
-| 115 | HARN-01 | 1 |
-| 116 | RETRO-01 | 1 |
-| 117 | RETRO-02 | 1 |
-| 118 | RETRO-03 | 1 |
-| 119 | HARN-02, HARN-03, HARN-04 | 3 |
-| **Total** | **16/16 mapped** | **16** |
+| 120 | STD-04, HYG-01 | 2 |
+| 121 | RETRO-04, RETRO-07, RETRO-09 | 3 |
+| 122 | RETRO-05, RETRO-08 | 2 |
+| 123 | RETRO-06 | 1 |
+| 124 | PIPE-03, PIPE-04, PIPE-05 | 3 |
+| 125 | HARN-05, HARN-06, HARN-07 | 3 |
+| **Total** | **14/14 mapped** | **14** |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 119 chain-apex CHAIN_PHASES=[48..118] (per [48..N-1] invariant where N=119; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..118] — Linux GHA BOTH chain validators authoritative per corrected D-03 OS split, same as v1.12–v1.14).
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 125 chain-apex CHAIN_PHASES=[48..119] (per [48..N-1] invariant where N=125; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..119], +1 deeper than v1.15's [48..118] — Linux GHA BOTH chain validators authoritative per corrected D-03 OS split, same as v1.12-v1.15).
 
-**Named decisions (LOCKED at roadmap 2026-07-03):**
+**Named decisions (LOCKED at roadmap 2026-07-07):**
 
-- PHASE-COUNT: 7 phases (113-119) — derived from natural delivery boundaries: pipeline gate (113) → standard+preconditions (114) → C17 atom (115) → L1/L2 retrofit (116) → admin-setup retrofit (117) → reference retrofit (118) → harness+close (119)
-- PIPE-02-PLACEMENT: folded into Phase 113 (not its own gate phase) — the representative-set validation is a direct output of pipeline lock; a separate gate phase would be artificially thin; close-gate (Phase 119) provides the SECOND grounding-validation pass against the full corpus
-- META-04-ASSIGNMENT: assigned to Phase 114 (standard phase) — META-04 specifies the rule ("verbatim last_verified + Version-History row"); the rule is authored in the EEE standard document; its application in RETRO-01/02/03 is a natural consequence of following the standard
-- RETRO-ORDER: L1/L2 runbooks (Phase 116) → admin-setup guides (Phase 117) → reference docs (Phase 118) — ordered by operator impact and table-chunking risk; reference docs last per research P-02 severity
-- HARNESS-PHASE: Phase 119 is the sole deliverable of the closing cluster — harness lineage bump never batches with content or retrofit (mirrors v1.13 Phase 100 / v1.14 Phase 112 exactly)
-- FROZEN-SURFACE-INVERSION: Phase 119 DELIBERATELY re-pins all Phase-1 frozen surfaces — this is the stated dominant risk of this milestone and the intentional inversion of the byte-unchanged invariant; non-Phase-1 predecessor surfaces remain byte-unchanged
-- HARNESS-LINEAGE: 13th Path-A milestone (v1.4→v1.15); BASELINE_19; V114 pin (7d922a7); 12th CI workflow; CHAIN_PHASES=[48..118] (71 entries)
-- DISCUSS-PHASE-FLAGS: 7 gray-area flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` per project convention (PIPE-02 execution mode; C17 strictness/staging; RETRO-02/03 sub-phase splits; Owner field placement; reference table remediation depth; Summary authoring method; Doc Type edge cases)
+- PHASE-COUNT: 6 phases (120-125) — derived from natural delivery boundaries: standard-extension + preconditions (120) → non-Mermaid structural retrofit (121) → Mermaid-resolved structural retrofit (122) → nav-hub retrofit navigation-last (123) → pipeline/filename/grounding pass (124) → harness+close (125)
+- MERMAID-GATE-FIRST: Phase 120 (STD-04) precedes both Mermaid-consuming retrofits (RETRO-05 decision-trees, RETRO-08 carved-mermaid in Phase 122) — the Mermaid-vs-C17-#1 decision is authored/decided in the standard-extension phase; the mermaid-bearing retrofits only consume it. The gray-area resolution itself is NOT made at roadmap — deferred to `/gsd-discuss-phase 120` + `/adversarial-review`
+- HYG-01-FOLD: HYG-01 (stale header comment) folded into Phase 120 as a trivial single-comment fix — does not warrant its own phase
+- STRUCTURAL-SPLIT: the 6 RETRO requirements split across 3 phases by Mermaid dependency and navigation-last ordering, not by document-class similarity alone — RETRO-04/07/09 (no Mermaid, Phase 121) vs. RETRO-05/08 (Mermaid-dependent, Phase 122) vs. RETRO-06 (navigation-last, Phase 123, depends on both 121 and 122)
+- NAV-LAST: RETRO-06 (nav-hub retrofit) is its own phase, sequenced after BOTH structural retrofit phases (121, 122) complete — nav-hub edits must commit after the content they reference, matching the v1.15 Phase 109/117 navigation-last precedent
+- PIPE-BATCH: PIPE-03 (pandoc alias fix) + PIPE-04 (descriptive-filename pass) + PIPE-05 (Draft-label probe, owner-run) share Phase 124 — all three touch the pipeline/citation surface and PIPE-05 needs the full retrofitted + renamed corpus to probe against
+- HARNESS-PHASE: Phase 125 is the sole deliverable of the closing cluster — harness lineage bump never batches with content or retrofit (mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15 Phase 119 exactly)
+- V115-PIN-MANDATORY: Phase 125 adds the `V115` frozen-at-close pin deferred by v1.15 close (`V115-PIN-DEFERRAL`) — the mandatory back-anchor invariant; freezes the v1.15 corpus
+- HARNESS-LINEAGE: 14th Path-A milestone (v1.4→v1.16); BASELINE_20; V115 pin; 13th CI workflow; CHAIN_PHASES=[48..119]
+- DISCUSS-PHASE-FLAGS: 7 gray-area flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` per project convention (Mermaid-vs-C17-#1 resolution — dominant; structural retrofit phase granularity; nav-hub EEE application; pandoc alias fix approach; descriptive-filename scheme; predecessor chain-health-before-close process lesson; Doc Type for structural classes)
 
 ## Performance Metrics
 
@@ -227,20 +209,33 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - v1.11: 5 phases (89-93), 13 plans — shipped 2026-06-26
 - v1.12: 2 phases (94-95), 5 plans — shipped 2026-06-26
 - v1.13: 5 phases (96-100), 14 plans — shipped 2026-06-29
-- **v1.14: 12 phases (101-112), 38 plans — shipped 2026-07-02**
-- **v1.15: 7 phases (113-119), 40 plans — shipped 2026-07-06**
+- v1.14: 12 phases (101-112), 38 plans — shipped 2026-07-02
+- v1.15: 7 phases (113-119), 40 plans — shipped 2026-07-06
+- **v1.16: 6 phases (120-125), planning — roadmap created 2026-07-07**
 
 ## Accumulated Context
 
 ### Decisions
 
+**v1.16 roadmap decisions (LOCKED 2026-07-07):**
+
+- Six-phase structure: Standard extension + Mermaid/C17 policy + hygiene fix (120) → Structural retrofit non-Mermaid classes (121) → Structural retrofit Mermaid-resolved classes (122) → Nav-hub retrofit navigation-last (123) → Pipeline fix + descriptive-filename pass + Draft-label probe (124) → V115 pin + 14th Path-A lineage bump + terminal close (125)
+- STD-04 sequenced first (Phase 120) because it is a hard precondition for RETRO-05 and RETRO-08 (Phase 122) — the Mermaid-vs-C17-#1 policy must exist before any mermaid-bearing file is retrofitted; the gray-area DECISION itself is explicitly NOT made at roadmap, only the sequencing
+- HYG-01 folded into Phase 120 (not its own phase) — trivial single-comment documentation fix, no functional change
+- RETRO requirements split by Mermaid dependency, not just document-class grouping: RETRO-04 (glossaries) + RETRO-07 (lifecycle) + RETRO-09 (end-user guides) have no Mermaid content and can proceed in parallel with Phase 120's policy-drafting risk; RETRO-05 (decision-trees) + RETRO-08 (carved-mermaid) are hard-blocked on the Phase 120 policy
+- RETRO-06 (nav-hubs) isolated into its own phase (123) specifically to enforce navigation-last discipline as an explicit phase boundary — depends on BOTH Phase 121 and Phase 122 so nav-hub edits always post-date every piece of content they reference
+- PIPE-03/04/05 batched into Phase 124 — all three touch the pipeline/citation surface; PIPE-05 (Draft-label probe) needs the fully-retrofitted, correctly-filenamed corpus to be a meaningful probe, so it runs after the structural + filename work, not folded into the close-gate
+- Phase 125 is the sole closing cluster: V115 pin + lineage bump + close; never batches with content or retrofit; mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15 Phase 119
+- V115 pin is MANDATORY at this close per `V115-PIN-DEFERRAL` (v1.15-DEFERRED-CLEANUP.md) — v1.15's close-gate deliberately did NOT add its own pin (back-anchor invariant: a close-gate cannot reference its own not-yet-existing SHA); v1.16 Phase 125 adds it
+- 7 discuss-phase flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` per project convention (dominant: Mermaid-vs-C17-#1 resolution)
+
 **v1.15 roadmap decisions (LOCKED 2026-07-03):**
 
 - Seven-phase structure: Pipeline lock + grounding (113) → Standard + templates + registry + preconditions (114) → C17 validator atom (115) → L1/L2 runbook retrofit (116) → Admin-setup guide retrofit (117) → Reference doc retrofit + table remediation (118) → Frozen-surface re-baseline + 13th Path-A lineage bump + 3-axis close (119)
 - PIPE-02 folded into Phase 113: representative-set grounding validation is a direct output of pipeline lock; close-gate (Phase 119) provides the second grounding-confirmation pass against the full retrofit corpus
-- Phase 114 batches all seven META/STD requirements: the EEE standard document (STD-01), templates (STD-02), and registry (STD-03) are co-authored with the metadata rules (META-01–04) they enforce; META-01 C10 lenient check is a phase-opening precondition before any file is edited
+- Phase 114 batches all seven META/STD requirements: the EEE standard document (STD-01), templates (STD-02), and registry (STD-03) are co-authored with the metadata rules (META-01-04) they enforce; META-01 C10 lenient check is a phase-opening precondition before any file is edited
 - Phase 115 is the C17 indivisible validator atom: follows the v1.13 validator-atom deferral convention; content phases hand off a needle-spec only; C17 is never re-opened during content phases
-- Retrofit phases (116–118) follow RETRO-01→02→03 mandatory ordering: L1/L2 first (highest operator impact), admin-setup second, reference docs last (highest table-chunking risk per research P-02)
+- Retrofit phases (116-118) follow RETRO-01→02→03 mandatory ordering: L1/L2 first (highest operator impact), admin-setup second, reference docs last (highest table-chunking risk per research P-02)
 - Phase 119 is the sole closing cluster: frozen-surface re-baseline + lineage bump + close; never batches with content or retrofit; mirrors v1.13 Phase 100 / v1.14 Phase 112
 - Frozen-surface re-baseline is DELIBERATELY re-pinning Phase-1 surfaces (intentional inversion of byte-unchanged invariant); non-Phase-1 predecessor surfaces remain byte-unchanged
 - 7 discuss-phase flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to /gsd-discuss-phase per project convention
@@ -267,10 +262,10 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 **Durable architectural decisions (carried forward from v1.14):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commits (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; non-Phase-1 predecessor frozen surfaces BYTE-UNCHANGED
-- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 at depth [48..118]: Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, same as v1.12–v1.14)
+- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..119] (v1.16): Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, same as v1.12-v1.15)
 - Adversarial-review invoked at discuss-phase for gray-area scoping decisions (per user memory)
 - Navigation-last hard constraint: all nav hub edits committed after the content files they reference
-- Per-section `last_verified`/`review_by` freshness stamps on version-gated content (carried policy; v1.15 carries verbatim — does not reset the clock)
+- Per-section `last_verified`/`review_by` freshness stamps on version-gated content (carried policy; v1.15/v1.16 carry verbatim — does not reset the clock)
 - [Phase ?]: YAML-LEAK guard runs on decompressed extractBodyText() output -- raw byte scan always false-green (D-04 mitigation)
 - [Phase ?]: guard-docx.mjs standalone in scripts/pipeline/ (no CHAIN_PHASES); Phase-119 folds it into check-phase-113.mjs per D-07
 - [Phase ?]: convert.ps1 version-guards pandoc 3.7.0.2; PATH-then-LOCALAPPDATA resolution (T-113-01 mitigation)
@@ -282,7 +277,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: D-05 em-dash clause split: RE-038 Path B/C first sentences split at em-dash clause boundary into 4 groups; all words preserved per D-05 rules
 - [Phase ?]: Transform A (sentence-boundary split) for gate blockquotes; Transform B (de-blockquote) for non-gate callouts — applied in RE-017..RE-030 EEE retrofit
 - [Phase ?]: Transform B applied to two single-sentence over-200c blockquotes in file 18 where Transform A not applicable
-- [Phase ?]: Mermaid diagram in RE-068 converted to Markdown table — C17 #1 prohibits Mermaid fences; DA-9 locked 7-leaf count preserved in table rows
+- [Phase ?]: Mermaid diagram in RE-068 converted to Markdown table — C17 #1 prohibits Mermaid fences; DA-9 locked 7-leaf count preserved in table rows (v1.16 precedent candidate for RETRO-05/08 if the Mermaid policy lands on text-equivalent conversion)
 - [Phase ?]: Transform B (de-blockquote) used for all non-gate informational notes exceeding 200c in RE-066..RE-075 — avoids fragmenting technical content while satisfying C17 #12
 - [Phase 117-01]: Forked scripts/pipeline/retrofit-guide.mjs rather than refactoring retrofit-runbook.mjs in place -- protects the shipped Phase-116 deliverable from a shared-refactor regression
 - [Phase 117-01]: Whole-pre-H1-span relocation fix: replaced 116's first-blockquote-run-only gate capture with full-span capture, trimming only leading/trailing blanks -- fixes confirmed silent-content-loss on ios/02-abm-token.md, macos/01-abm-configuration.md, and android/09..13-aosp-*.md
@@ -315,7 +310,7 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: [118-05] 01-mdm-enrollment.md's corpus-worst 689c APv2 Note blockquote (with bare '>' continuation lines that do not break a C17 group) required a 6-way sentence-level Transform A split; no embedded code fence found so Transform B was not needed anywhere in this batch
 - [Phase ?]: Reference-class registry count verified as 35 (34 Approved + RE-147 Pending); full C17 run scope (174 files) intentionally re-validates all prior retrofit classes alongside the 34 new reference files
 - [Phase ?]: [119-01] Wave-0 anchor SHA = c6ea8d25 (predecessor-byte-unchanged HARD-gate base for 119-04); DISTINCT from BASELINE_19 anchor (119-02 captures that JIT before Atom 1 per Pitfall 4)
-- [Phase ?]: [119-01] V114 = 7d922a7 positively confirmed (msg has MILESTONE-AUDIT + MILESTONE CLOSE); naive --grep recovery returns f3959c8 (wrong follow-up) — DO NOT pin f3959c8
+- [Phase ?]: [119-01] V114 = 7d922a7 positively confirmed (msg has MILESTONE-AUDIT + MILESTONE CLOSE); naive --grep recovery returns f3959c8 (wrong follow-up) — DO NOT pin f3959c8; the SAME positive-confirmation method must be used to recover V115 at Phase 125
 - [Phase ?]: [119-01] Baseline v1.14 harness RED on HEAD (11/4/0): C2/C7/C9 sidecar {file,line} pins shifted by EEE retrofit on Phase-1 surfaces; C15 a NEW EEE-Summary collision (RE-108:19). v1.15 sidecar must NOT be copied verbatim — 119-02 repoint worklist recorded in SUMMARY
 - [Phase ?]: [119-02] Atom 1 shipped as ONE indivisible commit b530243 (exactly 3 files; git show --stat verified no Atom-2 leak, no deletions)
 - [Phase ?]: [119-02] C17 folded as check id 17 via execFileSync subprocess-spawn of c17-eee-contract.mjs (argument-array, NOT inline copy); harness --self-test exits 0; --verbose 15P/1F
@@ -325,53 +320,59 @@ Phase 119 (Frozen-Surface Re-baseline + 13th Path-A Lineage Bump + Terminal Re-a
 - [Phase ?]: [119-03] Atom 2 = ONE indivisible commit 5ec0f87 (exactly 9 files; git show --stat verified no Atom-1 leak, no deletions): check-phase-113..118 leaves (CHAIN_PHASES=[], CHAIN_SKIP empty) + check-phase-119 apex (CHAIN_PHASES=[48..118] 71 entries, CHAIN_SKIP empty, module-load bound assertion) + frozen-at-close V114='7d922a7'+readAtV114Close (no V115) + audit-harness-v1.15-integrity.yml (12th workflow; dual-apex + LF-fidelity preserved)
 - [Phase ?]: [119-03] check-phase-115 leaf asserts standalone c17-eee-contract.mjs (no CHAIN_PHASES) NOT chain registration (115-VERIFICATION Deferred Items → chain fold is Phase-119 Atom-1's job)
 - [Phase ?]: [119-03] Axis-2 armed: pushed branch phase-119-atom-2 + PR #2; v1.15 workflow run 28823233887 fired on pull_request (all 11 coexistence workflows triggered). Do NOT run full recursive apex locally on Windows (WINDOWS-CLONE-DEEPNEST-TIMEOUT-01); NESTED-mode run enumerated 74 checks + V-119-SELF PASS. 119-04 consumes run 28823233887
-- [Phase ?]: [119-06] PIPE-02 CLOSE: PASS owner-attested (2026-07-06, ~23:10–23:16 live Copilot Studio) on the REAL retrofitted corpus — 6 uploaded RE-NNN .docx all grounded with clickable document-level citations, zero hallucination (incl. negative ChromeOS control). KEY v1.15 wide/flat 5-platform matrix (RE-143) chunk-survival CONFIRMED (the leg Phase 113 could NOT disprove); EEE body-text header-block thesis (RE-129 Q8) confirmed on the real corpus; Q4 surfaced the exact V-50-18 "Known Admin Pitfall" blockquote (content-survival proof). Draft-probe = Option A (test-artifact-only frontmatter mutation of RE-130); honest caveat: mutation flipped ONLY frontmatter status:, not the visible **Status:** block, so the literal Draft label was not exercised — accepted as artifact-prep gap NOT a grounding failure; deferred to v1.16 (mutate BOTH frontmatter + visible block). Android folded into the wide-matrix probe (6 docs, not 7). 529-line raw transcript captured in-repo (PIPE-02-CLOSE-TRANSCRIPT.txt; D-119-1 rider; T-119-06-ASSERTED mitigation). 4th/final close-gate precondition cleared; NO requirement flipped (119-07's exclusive job)
+- [Phase ?]: [119-06] PIPE-02 CLOSE: PASS owner-attested (2026-07-06, ~23:10-23:16 live Copilot Studio) on the REAL retrofitted corpus — 6 uploaded RE-NNN .docx all grounded with clickable document-level citations, zero hallucination (incl. negative ChromeOS control). KEY v1.15 wide/flat 5-platform matrix (RE-143) chunk-survival CONFIRMED (the leg Phase 113 could NOT disprove); EEE body-text header-block thesis (RE-129 Q8) confirmed on the real corpus; Q4 surfaced the exact V-50-18 "Known Admin Pitfall" blockquote (content-survival proof). Draft-probe = Option A (test-artifact-only frontmatter mutation of RE-130); honest caveat: mutation flipped ONLY frontmatter status:, not the visible **Status:** block, so the literal Draft label was not exercised — accepted as artifact-prep gap NOT a grounding failure; deferred to v1.16 (mutate BOTH frontmatter + visible block, now PIPE-05/Phase 124's job). Android folded into the wide-matrix probe (6 docs, not 7). 529-line raw transcript captured in-repo (PIPE-02-CLOSE-TRANSCRIPT.txt; D-119-1 rider; T-119-06-ASSERTED mitigation). 4th/final close-gate precondition cleared; NO requirement flipped (119-07's exclusive job)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
-- ✅ Phase 113 (PIPE-02): RESOLVED — owner-run; all four OQs answered empirically; SC4 confirmed (2026-07-04)
-- ✅ Phase 113 (PIPE-01): RESOLVED — pandoc 3.7.0.2 pinned; custom-property promotion confirmed (non-standard keys go to docProps/custom.xml — invisible to Copilot index; EEE body-text header block is retrieval-necessary)
-- Phase 114 (META-01): Confirm C10 strict-vs-lenient behavior against a synthetic test file with the four new keys BEFORE any corpus edit — this is the phase-opening gate
-- ✅ Phase 114 (STD-01): Status-as-retrieval-gate RESOLVED by PIPE-02 empirical finding (OQ2): Status:Draft = label only; Draft docs ARE indexed and retrieved. Phase 114 EEE standard must state: Draft exclusion = library scoping or content-approval (operator responsibility), never the body-text label. Content-approval stays a deferred deployment-hardening lever.
-- Phase 116 (RETRO-01): Confirm exact L1/L2 runbook count and file paths at plan time (should be 37 L1 + 33 L2 = ~70 as of v1.14 close; v1.15 does not add new runbooks)
-- Phase 118 (RETRO-03): Confirm exact reference doc file list and identify which capability matrices exceed 25 rows before authoring starts
+- Phase 120 (STD-04): resolve the Mermaid-vs-C17-#1 collision via `/adversarial-review` before authoring the standard-doc rule and C17 assertion #1 change — this is the DOMINANT discuss-phase flag for the whole milestone
+- Phase 120 (Doc Type taxonomy): enumerate the exact set of `doc_type` values already used for nav-hub-adjacent pages (if any) before deciding whether nav-hubs get a new Doc Type or map to Reference
+- Phase 121 (RETRO-04/07/09): confirm exact glossary / lifecycle / end-user-guide file counts and paths at plan time; confirm anchor-slug inventory for glossaries before retrofit (do not break existing plain-GitHub slugs)
+- Phase 122 (RETRO-05/08): enumerate the exact decision-tree file list + confirm the 9 Phase-117 carve-out file paths + RE-128/RE-147 status before authoring; each Mermaid diagram's decision-leaf count must be captured BEFORE conversion (v1.15 RE-068 precedent: leaf-count preserved)
+- Phase 123 (RETRO-06): confirm the routing/link-table inventory in all 4 nav-hubs before retrofit, so post-retrofit link-accuracy can be verified against a known-good baseline
+- Phase 124 (PIPE-03): confirm which approach (canonical `--from=markdown-yaml_metadata_block` invocation fix vs. corpus-wide nav-footer normalization) at discuss-phase before implementation; both legs must be regression-tested against OQ4
+- Phase 124 (PIPE-04): confirm rename-map source of truth and whether renaming happens in-milestone vs. at bulk-upload time, at discuss-phase
+- Phase 124 (PIPE-05): confirm owner SharePoint/Copilot Studio access availability at plan time (mirrors the v1.15 Phase 113/119 owner-checkpoint pattern)
+- Phase 125 (HARN-05): confirm V115 SHA via the SAME positive-confirmation method used for V114 at 119-01 (do not trust a naive `--grep` result)
+- Phase 125 (HARN-06): run the FULL predecessor chain BEFORE authoring the close-gate (not just the two immediate apexes) per the reaffirmed process lesson (`LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`) — scope which validators need frozen-aware conversion at plan time, not at the close
 
 ### Pending Todos
 
-- ✅ Phase 113 COMPLETE: SharePoint library access confirmed (owner-run); 5 representative docs converted + guard-passed + grounding-validated; pandoc 3.7.0.2 confirmed (2026-07-04)
-- At Phase 114 plan time: run C10 against a test file with the four new keys to confirm lenient behavior BEFORE writing the EEE standard spec; confirm the Doc Type taxonomy (Runbook / Guide / RCA / Reference) covers all Phase-1 doc classes including comparison docs and error-codes
-- ✅ Phase 115 COMPLETE: C17 blocking validator atom authored (c17-eee-contract.mjs, 13 assertions, node-builtins-only); exits 0 on 8 enrolled docs/ files; --self-test exits 0; Phase-119 boundary intact (2026-07-04)
-- At Phase 116 plan time: enumerate exact L1/L2 runbook file paths; decide L1-vs-L2 split per discuss-phase flag; confirm whether the ~75 docs warrant multiple sub-phases
-- At Phase 119 plan time: confirm V114 pin (v1.14 close-gate SHA `7d922a7`) via `git log --grep="close-gate" --grep="v1.14" --all-match -1`; confirm CHAIN_PHASES=[48..118] count (71 entries per [48..N-1] invariant)
+- At Phase 120 plan time: run `/adversarial-review` (Finder/Adversary/Referee) on the Mermaid-vs-C17-#1 collision before authoring the standard-doc rule and the C17 assertion #1 change
+- At Phase 121 plan time: enumerate exact glossary / lifecycle / end-user-guide file paths; confirm anchor-slug inventory
+- At Phase 122 plan time: enumerate exact decision-tree file list + confirm 9 Phase-117 carve-out paths + RE-128/RE-147 current status; capture each Mermaid diagram's decision-leaf count before conversion
+- At Phase 123 plan time: confirm routing/link-table inventory in all 4 nav-hubs before retrofit
+- At Phase 124 plan time: resolve PIPE-03 approach + PIPE-04 rename scheme at discuss-phase before implementation; confirm owner availability for the PIPE-05 live Copilot Studio probe
+- At Phase 125 plan time: confirm V115 SHA via positive-confirmation grep; run the FULL predecessor chain before authoring the close-gate; confirm CHAIN_PHASES=[48..119] entry count
 
 ### Blockers/Concerns
 
 at roadmap stage. Execution-time watch items (not blockers — address within specified phases):
 
-- ✅ Phase 113: Live Copilot Studio access — RESOLVED as owner-run (D-01); all six queries passed with grounded results, clickable citations, no hallucinations (2026-07-04)
-- ✅ Phase 113: YAML frontmatter leak (P-08) and heading style loss (P-09) — RESOLVED; guard script (guard-docx.mjs) green on all 5 representative docs; pipeline locked
-- Phase 114: D1 platform normalization map must cover ALL ~19-20 real `platform:` variants in the corpus — a missed value will cause C17 to FAIL all files using it; enumerate real values at plan time
-- Phase 119: The frozen-surface re-baseline is the dominant technical risk — first milestone to deliberately re-pin ~all Phase-1 frozen surfaces at once; requires the same apex+continuity atomic-green discipline used at v1.12–v1.14 closes
-- Phase 119: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..118] (71 entries, +7 from v1.14); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
-- 119-05 COMPLETE (2 rounds): round-1 C15 harness-run greened (ABAUDIT-26/27); round-2 predecessor chain-health greened via frozen-aware reads at V114 (7d922a7) on check-phase-50/52/65 (V-50-18/V-52-07/V-65-06) — read source only, NO value-mask, NO frozen-surface edit, CHAIN_SKIP ∅. Authoritative Axis-2 GREEN cross-OS = run 28825186128 (sha 652f48e; apex + linux-chain + 6 continuity leaves + harness-run all PASS). Axis-2 close-gate precondition CLEARED; no requirement flipped (119-07's job).
-- ✅ 119-06 COMPLETE: owner PIPE-02 CLOSE: PASS attested (2026-07-06) — the SOLE remaining close-gate precondition. ALL FOUR close-gate preconditions now cleared (Axis-2 GREEN, cross-OS EXACT MATCH, predecessor-byte-unchanged EMPTY, owner PIPE-02 PASS). 119-07 (single close-gate flipping all 16 v1.15 reqs to Validated) is UNBLOCKED. No requirement flipped in 119-06 (119-07's exclusive authority).
+- Phase 120: the Mermaid-vs-C17-#1 resolution is the dominant design gray area for the entire milestone — if `/adversarial-review` lands on a carve-out rather than conversion, RETRO-05/RETRO-08 (Phase 122) success criteria may need revision at discuss-phase 122
+- Phase 122: Mermaid decision-leaf preservation is a correctness risk — any leaf dropped during text-equivalent conversion is a silent content-loss defect (same class as the v1.15 117-01 whole-pre-H1-span defect); capture leaf counts before conversion
+- Phase 123: navigation-last discipline is a HARD constraint, not a preference — nav-hub commits must be provably sequenced after Phase 121/122 content commits (git history check, same as v1.15 Phase 109/117)
+- Phase 124: PIPE-03's OQ4 regression risk — any invocation change to `convert.ps1` must be proven NOT to break the frontmatter → Word custom-property promotion path that OQ4 (v1.15 Phase 113) depends on
+- Phase 125: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..119] (+1 deeper than v1.15); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
+- Phase 125: HARN-06's frozen-aware conversion clause (predecessor content-assertion validators reading now-retrofitted structural docs) must be scoped at Phase 122/123 plan time per the reaffirmed process lesson, not discovered late at close (the v1.15 119-05 two-round remediation is the cautionary precedent)
 
 ## Session Continuity
 
-Last session: 2026-07-06T00:00:00.000Z
-Stopped at: v1.15 milestone completed and archived (2026-07-07).
+Last session: 2026-07-07T13:33:47.000Z
+Stopped at: v1.16 roadmap created (6 phases, 120-125; 14/14 requirements mapped, 0 unmapped).
 Resume file: None
-Next action: v1.15 archived & tagged via `/gsd-complete-milestone` (2026-07-07) — ROADMAP/REQUIREMENTS archived, phase dirs → `milestones/v1.15-phases/`, research → `milestones/v1.15-research/`, `v1.15` tag created. Run `/gsd-new-milestone` to scope v1.16 (backlog: `.planning/milestones/v1.15-DEFERRED-CLEANUP.md`).
+Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Review `.planning/ROADMAP.md` (v1.16 section) and `.planning/REQUIREMENTS.md` (Traceability table)
+- Run `/gsd-discuss-phase 120` to resolve gray-area flags for the first phase
+- Then `/gsd-plan-phase 120` to produce executable plans
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
-| (v1.15 phases not yet started) | — | — | — |
+| (v1.16 phases not yet started) | — | — | — |
 | Phase 113 P02 | 5min | 2 tasks | 3 files |
 | Phase 113 P03 | 35min | 2 tasks | 8 files (7 created, 1 modified) |
 | Phase 113 P04 | multi-day (owner checkpoint) | 3 tasks | 2 files (PIPE-02-RUNBOOK.md, PIPE-02-FINDINGS.md) |

@@ -81,30 +81,30 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 
 ## Traceability
 
-*(Filled by the roadmapper — REQ-ID → Phase mapping. Phases 120+.)*
+REQ-ID → Phase mapping, assigned by the roadmapper 2026-07-07 (6 phases, 120-125).
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| RETRO-04 | Phase [N] | Pending |
-| RETRO-05 | Phase [N] | Pending |
-| RETRO-06 | Phase [N] | Pending |
-| RETRO-07 | Phase [N] | Pending |
-| RETRO-08 | Phase [N] | Pending |
-| RETRO-09 | Phase [N] | Pending |
-| STD-04 | Phase [N] | Pending |
-| PIPE-03 | Phase [N] | Pending |
-| PIPE-04 | Phase [N] | Pending |
-| PIPE-05 | Phase [N] | Pending |
-| HYG-01 | Phase [N] | Pending |
-| HARN-05 | Phase [N] | Pending |
-| HARN-06 | Phase [N] | Pending |
-| HARN-07 | Phase [N] | Pending |
+| RETRO-04 | Phase 121 | Pending |
+| RETRO-05 | Phase 122 | Pending |
+| RETRO-06 | Phase 123 | Pending |
+| RETRO-07 | Phase 121 | Pending |
+| RETRO-08 | Phase 122 | Pending |
+| RETRO-09 | Phase 121 | Pending |
+| STD-04 | Phase 120 | Pending |
+| PIPE-03 | Phase 124 | Pending |
+| PIPE-04 | Phase 124 | Pending |
+| PIPE-05 | Phase 124 | Pending |
+| HYG-01 | Phase 120 | Pending |
+| HARN-05 | Phase 125 | Pending |
+| HARN-06 | Phase 125 | Pending |
+| HARN-07 | Phase 125 | Pending |
 
 **Coverage:**
 - v1.16 requirements: 14 total
-- Mapped to phases: 0 (roadmapper fills)
-- Unmapped: 14 ⚠️ (until roadmap)
+- Mapped to phases: 14
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-07*
-*Last updated: 2026-07-07 after initial definition (milestone v1.16 start)*
+*Last updated: 2026-07-07 after roadmap creation (milestone v1.16 — 6 phases, 120-125; 14/14 requirements mapped, 100% coverage)*
