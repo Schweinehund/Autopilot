@@ -50,3 +50,12 @@ C17 (195/0), registry status (19 Approved/9 Pending), enrollment, or content int
 `2026-07-07`, matching the sibling files retrofitted the same day), ideally folded into Phase 122
 or done as a quick standalone hygiene commit before Phase 125 close — do not let it reach the
 frozen-surface re-baseline unfilled.
+
+## DEFER-121-07-B — retrofit-structural.mjs idempotency + CRLF-write gaps (from 121-REVIEW.md)
+
+**Source:** advisory code review (gsd-code-reviewer), 2026-07-07. Non-blocking — Phase 121 output is verified-clean (C17 195/0); these are robustness gaps for FUTURE re-runs, not defects in the shipped docs.
+
+- **CR-01 (Critical for re-run safety):** `processFile()` has no "already retrofitted" guard. Re-running `node scripts/pipeline/retrofit-structural.mjs --all` in write mode over already-enrolled files would silently duplicate frontmatter keys, embed a second stale EEE block mid-body, and inject a spurious `[FILL-IN] ## Summary` ahead of the real one — while `main()` reports `OK, 0 ERROR(S)`. Inherited from the template forks (retrofit-reference.mjs / retrofit-guide.mjs share the gap).
+- **WR-01 (latent):** `readFile()` normalizes CRLF→LF but `writeFileSync` never restores CRLF, contradicting the script's own "Windows repo files contain \r\n" comment. Not currently manifesting (targets are LF-only).
+
+**Recommended remediation:** Phase 122 forks this script per the "fork, don't refactor in place" convention — add an idempotency guard (skip/error if `doc_id` already present) and symmetric line-ending handling in the Phase-122 fork. Full detail in `121-REVIEW.md`.

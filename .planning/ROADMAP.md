@@ -186,7 +186,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
-| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete   | 2026-07-07 |
+| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
