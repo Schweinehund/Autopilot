@@ -820,12 +820,12 @@
         },
         "121": {
           "issueKey": "RTS-725",
-          "status": "in_progress",
+          "status": "done",
           "name": "Structural Retrofit — Glossaries, Lifecycle & End-User Guides"
         },
         "122": {
           "issueKey": "RTS-726",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Structural Retrofit — Decision-Trees & Carved-Mermaid Files"
         },
         "123": {
