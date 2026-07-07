@@ -320,7 +320,7 @@ Total Phase-1 scope: ~178 documents. All receive RE-NNN Doc IDs assigned in `doc
 
 ### Out of scope (D-04 — deferred to v1.16)
 
-The following directories are **outside Phase-1** and will be brought under EEE + C17 in v1.16:
+The following directories are **outside Phase-1** and remain deferred to a **future whole-class enrollment milestone (v1.17+)** — enrolled by directory, never cherry-picked by filename. *(2026-07-07 correction: v1.16 was owner-narrowed to the six structural doc classes below and does NOT enroll these directories; a `-lifecycle` filename inside one of them — e.g. `operations/app-lifecycle/`, `cross-platform/apple-business/*-lifecycle.md` — does not confer lifecycle-class membership, per D-08 directory precedence.)*
 
 - `docs/operations/` (~20 documents) — owner-confirmed 2026-07-04
 - `docs/device-operations/` (~5 documents) — owner-confirmed 2026-07-04

@@ -40,8 +40,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 ### v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing — Phases 120-125
 
 - [x] **Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix** — Extend the standard + C17 contract with the resolved Mermaid-in-enrolled-classes policy and the extended Doc Type taxonomy; fix the stale frozen-at-close.mjs header comment (completed 2026-07-07)
-- [ ] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit the non-Mermaid structural classes to EEE, C17 green
-- [x] **Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green (completed 2026-07-07)
+- [ ] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit glossaries, end-user guides, and the 13 Mermaid-free lifecycle docs to EEE, C17 green (the 9 Mermaid-bearing lifecycle docs are deferred to Phase 122 — RETRO-07 spans 121+122)
+- [ ] **Phase 122: Structural Retrofit — Decision-Trees, Carved-Mermaid Files & the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder)** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
 - [ ] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
 - [ ] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior
 - [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
@@ -72,13 +72,13 @@ Plans:
 
 ### Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides
 
-**Goal**: Glossaries, lifecycle docs, and end-user guides — the structural classes with no Mermaid dependency — are retrofitted to EEE and green under C17.
+**Goal**: Glossaries (6), end-user guides (RE-175/176), and the 13 **Mermaid-free** lifecycle docs are retrofitted to EEE and green under C17. The 9 Mermaid-bearing lifecycle docs are deferred to Phase 122 (where the leaf-parity conversion discipline lives) — **RETRO-07 spans Phase 121 + Phase 122**.
 **Depends on**: Phase 120 (Doc Type taxonomy extension informs `doc_type` assignment for these classes)
-**Requirements**: RETRO-04, RETRO-07, RETRO-09
+**Requirements**: RETRO-04, RETRO-07 *(13 of 22 lifecycle files here; the 9 Mermaid-bearing files complete in Phase 122)*, RETRO-09
 **Success Criteria** (what must be TRUE):
 
   1. All `docs/_glossary-*.md` files carry the EEE header block + `## Summary`-first + normalized Platform label; the term-surface shape (definition lists / anchor slugs) is preserved and existing plain-GitHub anchor slugs are not broken; C17 exits 0
-  2. All lifecycle docs carry the EEE header block + `## Summary`-first + normalized Platform label + `Status: Approved`; C17 exits 0
+  2. All **13 Mermaid-free** lifecycle docs (of the 22-file lifecycle class — the 6 canonical `docs/{lifecycle,lifecycle-apv2,android-lifecycle,ios-lifecycle,macos-lifecycle,linux-lifecycle}/` directories) carry the EEE header block + `## Summary`-first + normalized Platform label + `Status: Approved`; C17 exits 0. The 9 Mermaid-bearing lifecycle docs are enrolled at `Status: Pending` in the registry (path-order-preserving IDs) and retrofitted in Phase 122 — RETRO-07 does not close until all 22 are green
   3. RE-175 and RE-176 (end-user Guides) carry the EEE header block + `## Summary`-first + correct `doc_type`; C17 exits 0 on both
   4. Every retrofitted file in this phase carries the "v1.16 EEE reformat — content not re-reviewed" Version-History row and `Last Reviewed` = `last_verified` verbatim
 
@@ -86,15 +86,16 @@ Plans:
 
 ### Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files
 
-**Goal**: Decision-tree docs and the carved-mermaid files deferred from v1.15 are retrofitted to EEE, with their Mermaid diagrams resolved per the Phase 120 policy, moving from Pending/keyless to Approved.
-**Depends on**: Phase 120 (the Mermaid policy must be locked before any diagram is converted or retained under a carve-out)
-**Requirements**: RETRO-05, RETRO-08
+**Goal**: Decision-tree docs, the carved-mermaid files deferred from v1.15, **and the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder, deferred here from Phase 121)** are retrofitted to EEE, with their Mermaid diagrams resolved per the Phase 120 policy, moving from Pending/keyless to Approved.
+**Depends on**: Phase 120 (the Mermaid policy must be locked before any diagram is converted or retained under a carve-out); Phase 121 (which pre-enrolls the 9 lifecycle docs at `Status: Pending` with their registry IDs — Phase 122 flips them to Approved without minting new IDs)
+**Requirements**: RETRO-05, RETRO-08, RETRO-07 *(remainder — the 9 Mermaid-bearing lifecycle files; shared with Phase 121)*
 **Success Criteria** (what must be TRUE):
 
   1. All `docs/decision-trees/*` files carry the EEE header block + `## Summary`-first; their Mermaid diagrams are resolved per the STD-04 policy with every decision leaf preserved (text-equivalent table/structured list, or the permitted form the policy defines); C17 exits 0
   2. RE-128 (linux overview) and RE-147 (`ca-enrollment-timing.md`) move from Pending/keyless to `Status: Approved` with a registry `doc_id`, Mermaid resolved per STD-04
   3. The 9 Phase-117 admin-setup mermaid carve-outs are retrofitted to EEE with Mermaid resolved per STD-04; each moves to `Status: Approved`
   4. C17 exits 0 on every file in this phase's class (decision-trees + all carved-mermaid files, including RE-128/RE-147 and the 9 carve-outs)
+  5. The 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder — `docs/lifecycle/{00-overview,03-oobe,04-esp}.md`, `docs/lifecycle-apv2/02-deployment-flow.md`, `docs/ios-lifecycle/{01-ade-lifecycle,02-mdm-migration}.md`, `docs/macos-lifecycle/{00-ade-lifecycle,01-psso-provisioning-walkthrough,02-mdm-migration-psso}.md`) have their Mermaid resolved per STD-04 with every decision leaf preserved, flip from `Status: Pending` to `Approved`, and C17 exits 0; RETRO-07 closes only when all 22 lifecycle files are green
 
 **Plans**: TBD
 

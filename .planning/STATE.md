@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 Phase: 121
 Plan: Not started
-Status: Phase complete — ready for verification
+Status: Context gathered (adversarial-review) — ready to plan
 Last activity: 2026-07-07
 
 ## v1.16 Phase Dependency Summary
@@ -61,13 +61,16 @@ Phase 121 (Structural Retrofit — Glossaries, Lifecycle & End-User Guides)
   |         - All docs/_glossary-*.md: EEE header block + Summary-first + normalized
   |             Platform label; term-surface shape (definition lists/anchor slugs)
   |             preserved; C17 green
-  |         - All lifecycle docs: EEE header block + Summary-first + Status: Approved;
-  |             C17 green
+  |         - The 13 Mermaid-free lifecycle docs (of the 22-file canonical lifecycle
+  |             class): EEE header block + Summary-first + Status: Approved; C17 green.
+  |             The 9 Mermaid-bearing lifecycle docs are pre-enrolled at Status: Pending
+  |             (path-order IDs) and completed in Phase 122 — RETRO-07 spans 121+122
   |         - RE-175/RE-176 (end-user Guides): EEE header block + Summary-first +
   |             correct doc_type; C17 green
   |       HARD CONSTRAINTS:
-  |         - No Mermaid dependency — can proceed independent of Phase 122's
-  |             mermaid-consuming retrofits (both depend only on Phase 120)
+  |         - Mermaid-collision (discovered at discuss-phase 121): 9 of 22 lifecycle
+  |             files carry ```mermaid — deferred to Phase 122 (adversarial-review D1=B,
+  |             HIGH). Phase 121 stays a zero-content-loss reformat (no diagram touch)
   |         - Retrofit-only: no content re-review; last_verified carried verbatim +
   |             one-time "v1.16 EEE reformat" Version-History row (v1.15 D2/META-04 rule)
   |         - Existing plain-GitHub glossary anchor slugs must not break
@@ -190,7 +193,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - PHASE-COUNT: 6 phases (120-125) — derived from natural delivery boundaries: standard-extension + preconditions (120) → non-Mermaid structural retrofit (121) → Mermaid-resolved structural retrofit (122) → nav-hub retrofit navigation-last (123) → pipeline/filename/grounding pass (124) → harness+close (125)
 - MERMAID-GATE-FIRST: Phase 120 (STD-04) precedes both Mermaid-consuming retrofits (RETRO-05 decision-trees, RETRO-08 carved-mermaid in Phase 122) — the Mermaid-vs-C17-#1 decision is authored/decided in the standard-extension phase; the mermaid-bearing retrofits only consume it. The gray-area resolution itself is NOT made at roadmap — deferred to `/gsd-discuss-phase 120` + `/adversarial-review`
 - HYG-01-FOLD: HYG-01 (stale header comment) folded into Phase 120 as a trivial single-comment fix — does not warrant its own phase
-- STRUCTURAL-SPLIT: the 6 RETRO requirements split across 3 phases by Mermaid dependency and navigation-last ordering, not by document-class similarity alone — RETRO-04/07/09 (no Mermaid, Phase 121) vs. RETRO-05/08 (Mermaid-dependent, Phase 122) vs. RETRO-06 (navigation-last, Phase 123, depends on both 121 and 122)
+- STRUCTURAL-SPLIT: the 6 RETRO requirements split across 3 phases by Mermaid dependency and navigation-last ordering, not by document-class similarity alone — RETRO-04/09 + the 13 Mermaid-free lifecycle files (Phase 121) vs. RETRO-05/08 + the 9 Mermaid-bearing lifecycle files (Mermaid-dependent, Phase 122) vs. RETRO-06 (navigation-last, Phase 123, depends on both 121 and 122). **2026-07-07 correction (discuss-phase 121, adversarial-review D1=B HIGH):** the roadmap's original premise that RETRO-07/lifecycle = "no Mermaid" was FALSE — 9 of 22 lifecycle files carry ```mermaid. Per this axis's own Mermaid-dependency principle, RETRO-07 splits: Mermaid-free lifecycle → 121, Mermaid-bearing lifecycle → 122. RETRO-07 spans 121+122.
 - NAV-LAST: RETRO-06 (nav-hub retrofit) is its own phase, sequenced after BOTH structural retrofit phases (121, 122) complete — nav-hub edits must commit after the content they reference, matching the v1.15 Phase 109/117 navigation-last precedent
 - PIPE-BATCH: PIPE-03 (pandoc alias fix) + PIPE-04 (descriptive-filename pass) + PIPE-05 (Draft-label probe, owner-run) share Phase 124 — all three touch the pipeline/citation surface and PIPE-05 needs the full retrofitted + renamed corpus to probe against
 - HARNESS-PHASE: Phase 125 is the sole deliverable of the closing cluster — harness lineage bump never batches with content or retrofit (mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15 Phase 119 exactly)
