@@ -1,4 +1,8 @@
 ---
+doc_id: RE-180
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-05-21
 review_by: 2026-07-20
 applies_to: apple-business
@@ -6,14 +10,20 @@ audience: all
 platform: ios+macos
 ---
 
+**Platform:** iOS + macOS · **Doc Type:** Reference · **Doc ID:** RE-180 · **Status:** Approved
+
+# Apple Business Governance Glossary
+
+## Summary
+
+This reference defines the Apple Business Manager governance and administration terminology used for organizational delegation and content distribution, spanning role-based access (Account Holder, IT Administrator, Custom Roles), organizational structure (Organizational Units, Sub-OUs), content distribution (content tokens, Apple Business Token, VPP), and federated identity operations (SCIM Provisioning, OIDC+JIT, Federation Collision). Each entry documents the 2026-04-14 Apple Business rebrand mapping where applicable.
+
 > **Apple Business governance:** This glossary covers Apple Business delegated permission and
 > governance terminology introduced with the 2026-04-14 Apple Business launch (formerly Apple
 > Business Manager). For Apple platform provisioning terminology (ADE, Supervision, VPP, APNs,
 > ABM), see the [Apple Provisioning Glossary](_glossary-macos.md).
 >
 > See also: [Windows Autopilot Glossary](_glossary.md) · [Android Enterprise Glossary](_glossary-android.md) · [Linux Provisioning Glossary](_glossary-linux.md)
-
-# Apple Business Governance Glossary
 
 ## Rebrand Mapping Table
 
@@ -197,4 +207,5 @@ Residual risk: Apple periodically restructures documentation at major platform r
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-05-21 | Phase 62 (Plan 62-02): initial Apple Business Governance Glossary — rebrand-mapping table (8 pairs, 2026-04-14 effective), 4 H2 category sections (Roles & Permissions, Organizational Units, Content Distribution, Federated Identity & Governance Operations), 21 H3 entries with clean slugs per D-04 anchor-stability contract, first-mention parentheticals in body prose (not headings), N-way reciprocal blockquote to 4 sibling glossaries, T-62-C threat residual noted (Apple URL article-ID stability). | — |

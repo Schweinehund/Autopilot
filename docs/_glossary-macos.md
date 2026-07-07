@@ -1,4 +1,8 @@
 ---
+doc_id: RE-182
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-27
 applies_to: both
@@ -6,12 +10,18 @@ audience: all
 platform: all
 ---
 
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-182 · **Status:** Approved
+
+# Apple Provisioning Glossary
+
+## Summary
+
+This reference defines the Apple provisioning terminology used across macOS and iOS/iPadOS deployment documentation, spanning device enrollment (ADE, ABM tokens, Setup Assistant, Supervision), authentication (Platform SSO, Secure Enclave, Kerberos SSO Extension, WPJ), and MDM lifecycle concepts (MDM Migration, Assign Device Management, Deadline, Kandji/Iru source-side terminology). Each entry cross-references the closest Windows Autopilot equivalent where one exists.
+
 > **Platform coverage:** This glossary covers Apple-platform provisioning and management terminology for macOS and iOS/iPadOS.
 > For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For Android Enterprise terminology, see the [Android Enterprise Provisioning Glossary](_glossary-android.md). For Linux terminology, see [Linux Provisioning Glossary](_glossary-linux.md).
 > **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
 > **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
-
-# Apple Provisioning Glossary
 
 ## Alphabetical Index
 
@@ -233,6 +243,7 @@ Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-28 | Phase 96 (GLOS-01): replaced Kandji-Iru support portal sentence with 3-URL reality (support.kandji.io / support.iru.io / docs.iru.com); updated last_verified and review_by | -- |
 | 2026-06-25 | v1.11 audit fix: added `### WPJ` (## Authentication) and `### LOB app` (## App Distribution) to resolve dead inbound anchors `#wpj`/`#lob-app` from guide 01 Glossary Quick Reference (lines 478, 482); updated Alphabetical Index | -- |
 | 2026-06-24 | Phase 91: added 10 new terms (MDM Migration, Assign Device Management, Deadline, Kandji-Iru, Delete Device Record, FileVault Recovery Key, Activation Lock Bypass under ## Device Management; Profile-Based Enrollment, ACME under ## Enrollment; app-sso under ## Authentication); updated Alphabetical Index with all 10 new display names; updated last_verified and review_by | -- |
