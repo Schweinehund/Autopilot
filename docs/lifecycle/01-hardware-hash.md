@@ -1,13 +1,24 @@
 ---
+doc_id: RE-193
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-193 · **Status:** Approved
 
 # Stage 1: Hardware Hash Import and Device Registration
+
+## Summary
+
+This guide covers Stage 1 of the Windows Autopilot classic lifecycle: hardware hash import and device registration. It explains how a device's hardware fingerprint reaches the Autopilot service via CSV upload, OEM registration, PowerShell collection, or Partner Center, and what to check when a device fails to register.
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -123,4 +134,5 @@ Previous: [Lifecycle Overview](00-overview.md) | Next: [Stage 2: Profile Assignm
 
 | Date | Change |
 |------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version |

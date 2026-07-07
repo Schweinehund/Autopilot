@@ -1,9 +1,22 @@
 ---
+doc_id: RE-201
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-11
 review_by: 2026-07-10
 applies_to: APv2
 audience: admin
 ---
+
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-201 · **Status:** Approved
+
+# APv2 Automatic Mode (Windows 365)
+
+## Summary
+
+This guide covers APv2 Automatic mode, a preview deployment path scoped exclusively to Windows 365 Cloud PC provisioning. It explains how the Cloud PC agent triggers enrollment without user authentication at OOBE, the supported Windows 365 SKUs, the 9-step automatic deployment process, and the current app and script limits.
 
 > **Preview:** APv2 Automatic mode is in **public preview**. It applies ONLY to Windows 365 Cloud PCs.
 > It does NOT apply to physical devices or standard APv2 user-driven deployments.
@@ -13,8 +26,6 @@ audience: admin
 > For APv2 user-driven mode, see [APv2 Deployment Flow](02-deployment-flow.md).
 > For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv2 Automatic Mode (Windows 365)
 
 ## Overview
 
@@ -91,3 +102,9 @@ The following is a high-level orientation of the admin setup process. For detail
 ---
 
 *Content sourced from [Microsoft Learn — APv2 Automatic Mode Workflow](https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/automatic/automatic-workflow), verified April 2026.*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

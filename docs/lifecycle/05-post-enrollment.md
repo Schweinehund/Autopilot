@@ -1,13 +1,24 @@
 ---
+doc_id: RE-197
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-197 · **Status:** Approved
 
 # Stage 5: Post-Enrollment Verification
+
+## Summary
+
+This guide covers Stage 5 of the Windows Autopilot classic lifecycle: post-enrollment verification. It walks through the admin checklist that confirms a device reached the desktop in a healthy, compliant, fully-managed state, and explains the compliance-evaluation and Intune-sync delays that can make a freshly enrolled device look unhealthy when it is not.
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -140,5 +151,6 @@ Previous: [Stage 4: ESP](04-esp.md) | Next: [Lifecycle Overview](00-overview.md)
 
 | Date | Change |
 |------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed |
 | 2026-04-13 | Added device-operations See Also section per D-09 |
 | 2026-03-14 | Initial version |

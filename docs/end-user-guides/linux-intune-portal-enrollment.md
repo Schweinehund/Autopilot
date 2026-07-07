@@ -1,4 +1,8 @@
 ---
+doc_id: RE-176
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-27
 review_by: 2026-06-26
 audience: end-user
@@ -6,9 +10,15 @@ platform: Linux
 applies_to: enrollment
 ---
 
-> **For administrators:** If you administer Intune and are configuring Linux enrollment policy, see [admin-setup-linux/02-enrollment-profile.md](../admin-setup-linux/02-enrollment-profile.md).
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-176 · **Status:** Approved
 
 # Linux Intune Portal Enrollment — User Guide
+
+## Summary
+
+This guide walks you through enrolling your Ubuntu Linux laptop or workstation in Microsoft Intune so you can access work email, files, and apps. It covers installing Microsoft Edge and the Intune Portal app, signing in and resolving compliance items, verifying enrollment succeeded, and what to do if a step fails.
+
+> **For administrators:** If you administer Intune and are configuring Linux enrollment policy, see [admin-setup-linux/02-enrollment-profile.md](../admin-setup-linux/02-enrollment-profile.md).
 
 This guide shows you how to enroll your Ubuntu Linux laptop or workstation in your organization's Microsoft Intune so you can access work email, files, and apps. Allow about 15–20 minutes the first time.
 
@@ -88,3 +98,9 @@ Quick reference for L1 service desk staff supporting Linux Intune Portal enrollm
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-27 | Initial version — Linux Intune Portal enrollment end-user walkthrough (LIN-06; Phase 50) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

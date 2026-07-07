@@ -1,15 +1,26 @@
 ---
+doc_id: RE-199
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-11
 review_by: 2026-07-10
 applies_to: APv2
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-199 · **Status:** Approved
+
+# APv2 Prerequisites Checklist
+
+## Summary
+
+This checklist covers the prerequisites that must be satisfied before deploying Windows Autopilot Device Preparation (APv2). It walks through deregistering the device from classic Autopilot, the Windows 11 OS version gate, Entra automatic enrollment, join permissions, licensing, network connectivity, and the RBAC permissions an APv2 administrator needs.
+
 > **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv2 Prerequisites Checklist
 
 ALL prerequisites below must be met before attempting an APv2 Device Preparation deployment. If any prerequisite is missing, the deployment will fail silently or produce unclear errors that are difficult to diagnose after the fact. Work through this checklist in order — prerequisite 0 is the most critical and must be completed first.
 
@@ -87,3 +98,9 @@ ALL prerequisites below must be met before attempting an APv2 Device Preparation
 ---
 
 *Prerequisites sourced from [Microsoft Learn -- APv2 Requirements](https://learn.microsoft.com/en-us/autopilot/device-preparation/requirements), verified April 2026.*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

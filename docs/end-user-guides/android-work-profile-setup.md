@@ -1,4 +1,8 @@
 ---
+doc_id: RE-175
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-22
 review_by: 2026-06-21
 audience: end-user
@@ -6,9 +10,15 @@ platform: Android
 applies_to: BYOD
 ---
 
-> **For personal-device users:** This guide is for personal-device users enrolling in BYOD Work Profile. If you administer Intune and are configuring BYOD policy, see [docs/admin-setup-android/04-byod-work-profile.md](../admin-setup-android/04-byod-work-profile.md).
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-175 · **Status:** Approved
 
 # Set up your personal Android device for work (BYOD Work Profile)
+
+## Summary
+
+This guide walks you through setting up a personal Android device for work using BYOD Work Profile. It covers what a work profile is, how to enroll through Company Portal or web enrollment, exactly what your IT team can and cannot see once enrolled, and what to do if enrollment runs into trouble.
+
+> **For personal-device users:** This guide is for personal-device users enrolling in BYOD Work Profile. If you administer Intune and are configuring BYOD policy, see [docs/admin-setup-android/04-byod-work-profile.md](../admin-setup-android/04-byod-work-profile.md).
 
 ## What is BYOD Work Profile?
 
@@ -120,3 +130,9 @@ For configuration settings, portal-step navigation, and policy templates, see th
 **For enrollment-flow questions:** The user-facing steps in **Enroll your device** above reflect the current flow. If a user is on an older management app version or the tenant uses web enrollment only, the flow may differ — refer them to your organization's specific guidance.
 
 If the issue is beyond L1 scope, follow your standard L2 escalation path.
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

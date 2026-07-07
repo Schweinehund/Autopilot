@@ -1,15 +1,26 @@
 ---
+doc_id: RE-198
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-11
 review_by: 2026-07-10
 applies_to: APv2
 audience: admin
 ---
 
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-198 · **Status:** Approved
+
+# APv2: Windows Autopilot Device Preparation Overview
+
+## Summary
+
+This guide introduces Windows Autopilot Device Preparation (APv2), the streamlined deployment model built around Enrollment Time Grouping (ETG) instead of hardware-hash pre-staging. It covers what APv2 is, how ETG assigns a device to its security group at enrollment time, the key differences from APv1 classic Autopilot, and the user-driven and automatic deployment modes.
+
 > **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2).
 > For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
-
-# APv2: Windows Autopilot Device Preparation Overview
 
 ## How to Use This Guide
 
@@ -102,3 +113,9 @@ The BootstrapperAgent process manages the APv2 deployment flow on-device. Event 
 ---
 
 *Content sourced from [Microsoft Learn -- Autopilot Device Preparation Overview](https://learn.microsoft.com/en-us/autopilot/device-preparation/overview), verified April 2026.*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |

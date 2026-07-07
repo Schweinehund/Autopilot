@@ -1,13 +1,24 @@
 ---
+doc_id: RE-194
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-194 · **Status:** Approved
 
 # Stage 2: Autopilot Profile Assignment
+
+## Summary
+
+This guide covers Stage 2 of the Windows Autopilot classic lifecycle: deployment profile assignment. It explains how a profile created in Intune reaches a device through Azure AD group membership, why dynamic group evaluation delay is the leading cause of missed profile delivery at OOBE, and how hybrid join adds an on-premises dependency.
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -131,4 +142,5 @@ Previous: [Stage 1: Hardware Hash Import](01-hardware-hash.md) | Next: [Stage 3:
 
 | Date | Change |
 |------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version |
