@@ -1,4 +1,8 @@
 ---
+doc_id: RE-184
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-27
 applies_to: both
@@ -6,13 +10,19 @@ audience: all
 platform: all
 ---
 
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-184 · **Status:** Approved
+
+# Autopilot Glossary
+
+## Summary
+
+This reference defines the core terminology for Windows Autopilot deployment across both APv1 (classic, hardware-hash based) and APv2 (Device Preparation, Enrollment Time Grouping) frameworks, covering enrollment concepts (OOBE, ESP, device and user phase), hardware and security terms (hardware hash, TPM, TPM attestation, Secure Boot), network components (WinHTTP proxy, NCSI), deployment modes (self-deploying, pre-provisioning, user-driven), and device lifecycle actions (Autopilot Reset, tenant migration, retirement, wipe).
+
 > **Framework coverage:** This glossary covers terminology for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2).
 > Terms specific to one framework are labeled. See [APv1 vs APv2](apv1-vs-apv2.md) for framework selection.
 > For macOS provisioning terminology (ADE, ABM, Setup Assistant), see the [macOS Provisioning Glossary](_glossary-macos.md). For Linux terminology, see [Linux Provisioning Glossary](_glossary-linux.md).
 > **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
 > **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
-
-# Autopilot Glossary
 
 ## Alphabetical Index
 
@@ -244,6 +254,7 @@ The second half of ESP (after user login) that applies user-targeted apps and po
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 91: added reciprocal `> See also:` to ### Tenant migration pointing to _glossary-macos.md#mdm-migration | -- |
 | 2026-06-20 | Phase 75 (SSOREF-01 / XC-1): added `### Entra ID SSO` term (Security section) and a reciprocal `> See also:` to Secure Enclave inside the existing `### TPM` body; Alphabetical Index updated | -- |
 | 2026-05-05 | Phase 59 (CLEAN-08): added NEW `> **Cross-platform note:**` blockquotes with reciprocal see-also lines for collision-matrix terms (OOBE / Setup Assistant, ESP / Await Configuration, Hardware hash, Corporate identifiers) per D-15 pattern alignment normalization | -- |

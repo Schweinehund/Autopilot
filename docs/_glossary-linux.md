@@ -1,4 +1,8 @@
 ---
+doc_id: RE-181
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-27
 applies_to: both
@@ -6,12 +10,18 @@ audience: all
 platform: Linux
 ---
 
+**Platform:** Linux · **Doc Type:** Reference · **Doc ID:** RE-181 · **Status:** Approved
+
+# Linux Provisioning Glossary
+
+## Summary
+
+This reference defines the terminology used across Linux device management in Microsoft Intune, covering Ubuntu 22.04 and 24.04 LTS enrollment via the intune-portal package, systemd-managed services such as microsoft-identity-broker and intune-agent.timer, disk-encryption concepts (dm-crypt, LUKS), APT/deb package delivery from packages.microsoft.com, and the compliance and Conditional Access model unique to Linux endpoints. Cross-platform collision terms absent from Linux management are also indexed for navigation.
+
 > **Platform coverage:** This glossary covers Linux-specific terminology for Intune-managed Ubuntu LTS devices.
 > For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For Apple-platform terminology, see the [Apple Provisioning Glossary](_glossary-macos.md). For Android Enterprise terminology, see the [Android Enterprise Provisioning Glossary](_glossary-android.md).
 > **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
 > **802.1X / Network authentication:** For 802.1X protocol terminology (EAP methods, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation), see the [Network Authentication Glossary](_glossary-network.md).
-
-# Linux Provisioning Glossary
 
 ## Alphabetical Index
 
@@ -183,5 +193,6 @@ The H3 entries below are concepts that exist on other platforms but DO NOT EXIST
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-05-05 | Phase 59 (CLEAN-08): appended `> See also:` lines INSIDE existing `> **Cross-platform note:**` and `> **Linux note:**` blockquotes for collision-matrix terms (Web-app CA, ABM callout, COBO/COPE/WPCO callout, DPC callout, Hardware Hash callout, Managed Google Play callout, Supervision callout, VPP callout, Work Profile callout, Zero-Touch Enrollment (ZTE) callout); existing 9 `> **Cross-platform note:**` blockquotes preserved verbatim | — |
 | 2026-04-26 | Phase 49 Foundation: initial Linux Provisioning Glossary — 5 H2 content categories (Distro & Lifecycle, Agent & Service, Compliance & Encryption, Operations & Diagnostics, Cross-Platform Collisions); ~20 native term H3s; 9 absent-concept callout-only H3s (Supervision, DPC, Work Profile, COBO/COPE/WPCO, MGP, ZTE, VPP, Hardware Hash, ABM); GA + HWE kernel disambiguation pair per D-16; per-term `> **Cross-platform note:**` blockquotes on collision-risk Linux-native terms per D-12 + D-23. Reciprocal links from existing 3 glossaries land in Phase 49 commit-2. | — |
