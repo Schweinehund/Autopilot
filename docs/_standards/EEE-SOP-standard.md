@@ -141,6 +141,51 @@ The controlled vocabulary for `doc_type` contains exactly four values:
   they share the Guide classification with admin-setup guides. `doc_type` is **audience-agnostic
   by design** — the admin-vs-end-user audience distinction is discriminated by `platform`, the H1
   title, and the `## Summary` content, not by `doc_type`.
+- **Glossary documents** (`docs/_glossary*.md`) → `Reference` (v1.16 D-07). A glossary is a
+  paradigm lookup case — alphabetical term definitions with no procedural walkthrough.
+- **Decision-tree documents** (`docs/decision-trees/*`) → `Reference` (v1.16 D-07). This extends
+  the "lookup and decision-support material" language above to name decision trees explicitly:
+  a decision tree enumerates resolution paths for a reader to look up, it does not walk an
+  operator through a single linear procedure, so the "no procedural walkthrough" phrasing in the
+  `Reference` row is not in tension with a branching decision structure.
+- **Navigation / index hubs** (`index.md`, `common-issues.md`, `quick-ref-l1.md`,
+  `quick-ref-l2.md`) → `Reference` (v1.16 D-07). A nav-hub's function is routing and lookup, not
+  a procedure; `Reference` is the non-procedural default for this class.
+- **Lifecycle documents** (`*-lifecycle/*`) → `Guide` (v1.16 D-07). Lifecycle docs walk a reader
+  through an end-to-end procedural setup or migration journey; classifying them `Reference` would
+  be definitionally wrong for content whose entire structure is a procedure.
+
+The five structural classes newly mapped in v1.16 (D-05) are summarized here for reference; this
+table is illustrative only and does not add a `doc_type` value to the four-value taxonomy above:
+
+| Class | Doc Type | Note |
+|---|---|---|
+| glossary (`docs/_glossary*.md`) | Reference | Paradigm lookup — alphabetical term definitions |
+| decision-tree (`docs/decision-trees/*`) | Reference | Decision-support material, not a linear walkthrough |
+| nav-hub (`index.md`, `common-issues.md`, `quick-ref-l1/l2.md`) | Reference | Non-procedural default |
+| lifecycle (`*-lifecycle/*`) | Guide | End-to-end procedural setup |
+| end-user guide (already settled) | Guide | Audience-agnostic (see above) |
+
+#### Non-MECE precedence rule (D-08)
+
+The five structural classes above are not a clean partition — a document can plausibly belong to
+more than one class (for example, `decision-trees/05-device-lifecycle.md` is both a decision-tree
+and a lifecycle document; `quick-ref-l1.md` is both a navigation hub and arguably procedural in
+places). C17 assertion #9 cannot catch a *wrong* `doc_type` value — it only asserts the block and
+frontmatter agree with each other, not that either is correct. This is an authoring-time
+precedence rule, enforced by registry review, not by the harness:
+
+1. **Directory precedence.** A document in a class-dedicated directory takes that directory's
+   type regardless of topical overlap: `decision-trees/*` → `Reference`; `*-lifecycle/*` → `Guide`.
+2. **Else, dominant body structure.** If directory precedence does not apply, classify by what
+   the document's body actually does: an executable end-to-end procedure → `Runbook`/`Guide`;
+   otherwise → `Reference`.
+3. **Tie → `Reference`.** If neither rule resolves the classification, default to `Reference`,
+   the least-wrong bucket.
+
+Worked resolutions: `docs/decision-trees/05-device-lifecycle.md` → `Reference` (directory
+precedence: it lives in `decision-trees/`, so rule 1 wins over its lifecycle-flavored content).
+`quick-ref-l1.md` → `Reference` (nav-hub directory precedence / non-procedural default).
 
 ### RCA forward-compat note
 
@@ -347,6 +392,60 @@ carried pipe-list `platform:` values (`Windows | macOS | all`, `Windows | macOS 
 Android | all`). These are **not real corpus variants** and are **not in the D1 map**. Plan 03
 (D-07) replaces these with `platform: all` + an HTML comment. Adding pipe-list values to the
 D1 map would pollute the normalization authority with authoring-instruction strings.
+
+---
+
+## Mermaid-in-Enrolled-Classes Policy (STD-04)
+
+This section resolves the Mermaid-vs-C17-#1 collision surfaced by the v1.16 structural retrofit
+(decision-trees, carved-mermaid admin-setup files) via `/adversarial-review`. It governs every
+enrolled Mermaid diagram going forward.
+
+### D-01: Text-equivalent conversion, not a carve-out
+
+Every enrolled Mermaid diagram is **converted to a C17-compliant text equivalent**. This is a
+conversion rule, not a permitted-exception carve-out for C17 assertion #1. The decisive rationale
+is grounding, not stylistic preference: the sole indexed surface for Copilot Studio / SharePoint
+retrieval is the Pandoc `MD→.docx` body text (see Grounding Notes above); Mermaid does not render
+in that body text. A raw ` ```mermaid ` fence — its `graph TD` / `sequenceDiagram` opener,
+`classDef` styling lines, and edge-only branch logic — lands verbatim as garbage in the citation
+body, and for a flowchart the decision-relevant branch logic lives *only* on the edges, so the
+single most decision-relevant content becomes the least prose-like, least retrievable text in the
+document. A carve-out would poison the exact surface this program exists to clean. Converting
+also leaves C17 assertion #1 byte-unchanged (see D-02), avoiding any mid-milestone edit to the
+indivisible validator atom. `docs/l2-runbooks/26-apple-business-permission-denied.md` (RE-068)
+already converted its decision tree to a `Scenario | Leaf | Resolution` table under this same
+reasoning — this policy ratifies that shipped precedent as corpus law.
+
+### D-02: C17 assertion #1 stays unchanged
+
+C17 assertion #1 (the `hasMermaid` opener-regex hard-fail on `^```mermaid` for enrolled files)
+is **not** scoped, relaxed, or carved out by this policy. It remains a hard-fail. Any touch to
+`scripts/validation/c17-eee-contract.mjs` in service of this policy is comment-only, and even
+that is optional; `--self-test` must still exit 0 after any such change.
+
+### D-03: Conversion shapes
+
+- **Decision graphs / flowcharts** convert to a decision table (`Scenario | Leaf | Resolution`)
+  or a nested decision list. Every node/leaf and every labeled edge in the original diagram MUST
+  appear as a row or list item; the routing target for each resolution is a relative Markdown
+  link; the leaf count is annotated as a LOCKED invariant (the pattern `LOCKED — N leaves`,
+  already used at RE-068). `docs/decision-trees/10-8021x-triage.md`'s "Routing Verification"
+  table is the in-corpus exemplar for this shape.
+- **Sequence diagrams** convert to an ordered numbered step list describing the actor exchange
+  in the same sequence the diagram encoded.
+- Any legend, node-shape glossary, `classDef` color explanation, or "click the leaf to navigate"
+  prose that described the removed diagram must be removed or rewritten to describe the
+  replacement table or list instead — stale diagram-referencing prose left behind after a
+  conversion is a defect, not an acceptable residue.
+
+### D-04: Honesty caveat — green C17 does not attest leaf-completeness
+
+C17 assertion #1 is an opener-regex with no diagram parser. It guarantees that a Mermaid fence is
+*absent* from an enrolled file; it cannot verify that the replacement table or list preserved
+every node, leaf, and labeled edge from the original diagram. Leaf-completeness after conversion
+is a human authoring-and-review obligation, checked at the point of conversion — it is not
+something a green C17 run attests, and it is not something the harness can catch after the fact.
 
 ---
 
