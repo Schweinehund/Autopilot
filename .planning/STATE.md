@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-07T20:44:01.984Z"
+last_updated: "2026-07-07T21:01:38.563Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 9
-  completed_plans: 7
+  completed_plans: 8
   percent: 17
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 121 (structural-retrofit-glossaries-lifecycle-end-user-guides) — EXECUTING
-Plan: 6 of 7
+Plan: 7 of 7
 Status: Ready to execute
 Last activity: 2026-07-07
 
@@ -348,6 +348,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 121]: [121-05] Pre-flight --dry-run --verbose confirmed doc_id/platform resolution (RE-185..188/RE-189/RE-202..203, Android/iOS/Linux) before writing any of the 7 lifecycle Guide files
 - [Phase 121]: [121-05] C17 #12's real join-then-measure grouping algorithm caught 3 single-sentence over-200-char blockquotes that a naive per-line length check missed; hand-split at em-dash/clause boundaries down to 3-way splits in the worst cases
 - [Phase 121]: [121-05] Did NOT run requirements.mark-complete for RETRO-07 despite it being in this plan's frontmatter requirements field -- REQUIREMENTS.md explicitly scopes RETRO-07 as spanning Phase 121 (13 Mermaid-free files) + Phase 122 (9 Mermaid-bearing files), closing only when all 22 lifecycle files are C17-green; this plan completes 7 of the 13 Mermaid-free files, so RETRO-07 correctly remains Pending in the traceability table
+- [Phase 121-06]: RETRO-09 marked complete -- RE-175/176 now carry real EEE frontmatter (doc_id/status/owner/doc_type), not just the registry Approved flip from 121-01; RETRO-07 correctly left Pending (spans Phase 121 + 122)
+- [Phase 121-06]: C17 #12 grouping requires a genuine blank (non-'>') line to break a blockquote group -- a bare '>' continuation line still joins with adjacent '>' lines; caught and fixed one 249-char false-negative in 05-post-enrollment.md's L2 Note header
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -384,8 +386,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T20:42:48.466Z
-Stopped at: Completed 121-05-PLAN.md
+Last session: 2026-07-07T21:01:38.548Z
+Stopped at: Completed 121-06-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -442,3 +444,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 121 P03 | 40min | 2 tasks | 2 files |
 | Phase 121 P04 | 20min | 2 tasks | 2 files |
 | Phase 121 P05 | 20min | 2 tasks | 7 files |
+| Phase 121 P06 | 40min | 2 tasks | 8 files |
