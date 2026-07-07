@@ -203,6 +203,9 @@ function checkFile(relPath, content) {
   // a ```markdown or ```text fence does not trigger a false positive.  The opening fence line
   // itself is NOT marked inCodeFence (by design), so a real ```mermaid fence that opens
   // outside any enclosing fence is still correctly detected.
+  // [v1.16 Phase-120 addition, comment-only]: policy + rationale for why this stays a hard-fail
+  // (text-equivalent conversion, not a carve-out) documented in
+  // docs/_standards/EEE-SOP-standard.md § "Mermaid-in-Enrolled-Classes Policy" (STD-04).
   const hasMermaid = bodyLines.some((l, i) => !inCodeFence[i] && /^```mermaid/.test(l));
   if (hasMermaid) {
     violations.push({ assertion: 1, detail: 'Mermaid code fence found (```mermaid)' });

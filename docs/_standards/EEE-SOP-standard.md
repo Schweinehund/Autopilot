@@ -459,7 +459,7 @@ needle-spec ONLY — no validator is wired into `scripts/validation/` in this ph
 
 | # | Assertion | Source in this standard |
 |---|-----------|------------------------|
-| 1 | No Mermaid code fences in Phase-1 corpus files | Existing constraint (P-06 anti-pattern) |
+| 1 | No Mermaid code fences in Phase-1 corpus files | Mermaid-in-Enrolled-Classes Policy (STD-04) section above |
 | 2 | H1 present exactly once; first non-frontmatter non-block content line | D3-A structure; Visible Header Block Format section |
 | 3 | H1 content ≠ bare doc-ID pattern (`^RE-\d+$`) | D3-A structure |
 | 4 | `## Summary` is first H2 (no intervening H2 or H3 between header block and Summary) | Visible Header Block Format — Structure invariant |
@@ -512,3 +512,4 @@ in v1.14 Phase 112) ensures C17 is never partially live across content phases.
 | Date | Change |
 |------|--------|
 | 2026-07-04 | Initial version — EEE SOP standard for Phase-1 corpus retrofit (v1.15); all sections authored including D1 normalization map (20 entries) and C17 needle-spec handoff |
+| 2026-07-07 | v1.16 STD-04 — added Mermaid-in-Enrolled-Classes Policy (D-01..D-04: text-equivalent conversion, C17 #1 unchanged, conversion shapes, honesty caveat); added 4 new D-02 Edge-case rulings (glossary, decision-tree, nav-hub, lifecycle) and the D-08 Non-MECE precedence rule; Doc Type Taxonomy 4-value table unchanged |
