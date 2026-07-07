@@ -60,7 +60,11 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. The EEE standard's Doc Type taxonomy is extended to explicitly cover glossary / decision-tree / nav-hub / lifecycle / end-user guide doc classes (mapped to existing types or newly added)
   4. `scripts/validation/_lib/frozen-at-close.mjs:5-9` no longer claims helpers "REMAIN INLINE" across `check-phase-{61,67,68,70}` — the comment is corrected to reflect the v1.14 Phase 111 centralization
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 120-01-PLAN.md — STD-04: EEE standard Mermaid policy (text-equivalent conversion) + 4 D-02 rulings + D-08 precedence rule + C17 comment-only cross-ref
+- [ ] 120-02-PLAN.md — HYG-01: correct frozen-at-close.mjs stale header comment + author 120-VERIFICATION.md needle-spec
 
 ### Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides
 
@@ -156,7 +160,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 0/? | Not started | - |
+| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 0/2 | Not started | - |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 0/? | Not started | - |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
