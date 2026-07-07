@@ -1,4 +1,8 @@
 ---
+doc_id: RE-179
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-27
 applies_to: both
@@ -7,7 +11,13 @@ platform: all
 phase_46_wave2_retrofit: 2026-04-25
 ---
 
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-179 · **Status:** Approved
+
 # Android Enterprise Provisioning Glossary
+
+## Summary
+
+This glossary defines the Android Enterprise provisioning and management terminology used across Intune admin-setup guides, L1/L2 runbooks, and lifecycle documentation for Android devices. It disambiguates enrollment modes (BYOD Work Profile, COBO, COPE, WPCO, Dedicated, Zero-Touch Enrollment), Samsung Knox SKUs, OEMConfig delivery, and compliance/attestation concepts (AMAPI, Play Integrity) for IT Service Desk, Desktop Engineering, and Intune Admin audiences configuring or troubleshooting Android Enterprise deployments.
 
 > **Platform coverage:** This glossary covers Android Enterprise provisioning and management terminology for Intune-managed Android devices. For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For Apple-platform terminology (macOS, iOS/iPadOS), see the [Apple Provisioning Glossary](_glossary-macos.md). For Linux terminology, see [Linux Provisioning Glossary](_glossary-linux.md).
 > **Apple Business governance:** For Apple Business delegated permission terminology (Organizational Units, custom roles, Managed Apple Account, content tokens), see the [Apple Business Governance Glossary](_glossary-apple-business.md).
@@ -194,6 +204,7 @@ Play Integrity is Google's device-attestation API, successor to the SafetyNet At
 
 | Date | Change | Author |
 |------|--------|--------|
+| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-05-05 | Phase 59 (CLEAN-08): appended `> See also:` lines INSIDE existing `> **Cross-platform note:**` and `> **Android note:**` blockquotes for collision-matrix terms (BYOD, User Enrollment, Zero-Touch Enrollment, COBO, COPE, Supervision, Work Profile, WPCO, DPC, Corporate Identifiers, Managed Google Play); pre-existing standalone see-also lines in COPE and WPCO entries moved inside adjacent blockquotes (Rule 1 A3 fix); existing 23 blockquotes preserved verbatim | -- |
 | 2026-04-25 | Phase 45 AEAOSPFULL-09: 1 new alphabetical-index entry (OEMConfig) + 1 new H3 entry under Provisioning Methods H2; AOSP-mode delivery path documented (APK push via Intune line-of-business app — distinct from GMS-mode MGP path). | -- |
 | 2026-04-25 | Phase 44 (AEKNOX-06): 3 new Provisioning Methods H2 entries (Knox / KME / KPE) + 3 new alphabetical-index entries between Fully Managed and Managed Google Play; AMAPI cross-link added FROM Knox entry (no new AMAPI entry — single existing line preserved); WPCO single-instance preserved (no duplicate). | — |
