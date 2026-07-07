@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-07T19:54:01.711Z"
+last_updated: "2026-07-07T20:18:24.266Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 9
-  completed_plans: 4
+  completed_plans: 5
   percent: 17
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 121 (structural-retrofit-glossaries-lifecycle-end-user-guides) — EXECUTING
-Plan: 3 of 7
+Plan: 4 of 7
 Status: Ready to execute
 Last activity: 2026-07-07
 
@@ -340,6 +340,9 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 121-01]: docs/_glossary-network.md uses ## Change History instead of ## Version History (confirmed vhBranch=CREATE on dry-run) — flagged as an executor hazard for the wave-2 plan that touches this file, to avoid spawning a duplicate section
 - [Phase 121]: R1 network Change-History reconciled to Version-History via a pre-fork rename (not a post-fork merge) so insertVersionHistoryRow PREPENDs the v1.16 row instead of CREATE-ing a duplicate section
 - [Phase 121]: All 26 over-200-char blockquote splits used word-preserving Transform A (sentence/clause-boundary); one network see-also link-list group hand-split at middle-dot separators to avoid breaking a markdown link mid-span
+- [Phase 121-03]: Built a reusable word-preserving greedy blockquote packer (markdown-link/backtick-aware tokenizer, prefers clause-boundary breaks) instead of hand-splitting all 31 over-200-char blockquote groups across the macos/apple-business glossaries
+- [Phase 121-03]: Discovered mid-task that a per-line-only length check is insufficient for C17 assertion #12 -- it joins ALL consecutive '>' lines into one measured group; fixed the validator to replicate C17's exact grouping algorithm before any file write occurred
+- [Phase 121-03]: Every split blockquote chunk is separated by a genuine blank line (never merely consecutive short '>' lines), and the reformat-only proof strips '>' prefixes before comparing word multisets (git HEAD vs working tree) -- only diff found was the intentional Version-History date-placeholder fill
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -376,8 +379,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T19:54:01.695Z
-Stopped at: Completed 121-02-PLAN.md
+Last session: 2026-07-07T20:18:24.251Z
+Stopped at: Completed 121-03-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -431,3 +434,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 120 P02 | 6min | - tasks | - files |
 | Phase 121 P01 | 20min | 2 tasks | 2 files |
 | Phase 121 P02 | 20min | 2 tasks | 2 files |
+| Phase 121 P03 | 40min | 2 tasks | 2 files |
