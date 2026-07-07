@@ -3,18 +3,25 @@
 // Centralized frozen-aware readers for chain validators (Phase 73 onward).
 //
 // STATUS (corrected v1.16 Phase 120 HYG-01 — see .planning/REQUIREMENTS.md HYG-01):
-//   - ALL chain validators, including check-phase-{61, 67, 68, 70}.mjs, now consume readers
-//     from this centralized module. The prior inline-helper duplication in those four files
-//     was refactored away and centralized here by v1.14 Phase 111
-//     ("Pillar D — Chain Validator Tooling Refactors").
+//   - check-phase-{67, 68, 70}.mjs consume this module's readers: their local read helpers
+//     (readCorpusFileAtV17Close, readMilestonesAtV17Close, etc.) are thin wrappers that
+//     delegate to readAtV17Close here. The raw git-show read duplication in those three files
+//     was centralized here by v1.14 Phase 111 ("Pillar D — Chain Validator Tooling Refactors").
+//   - check-phase-61.mjs is a deliberate exception: it keeps a genuinely inline reader
+//     (readAtV15CloseFor61, hardcoded v1.5-close SHA ba2cbc0) for its REQUIREMENTS/ROADMAP
+//     reads — that inline reader's presence is asserted by check-phase-68 (V-68), so it is
+//     pinned in place — and consumes this module's readAtV15Close only for its MILESTONES.md reads.
+//   - The prior header's blanket "all four keep their helpers inline" claim was stale: 67/68/70
+//     were centralized in Phase 111; only 61 stays intentionally inline. The lines above record
+//     the actual per-file state.
 //   - FROZEN-AWARE-ADOPTION-SWEEP-01 (the broader sweep beyond these four files) remains a
 //     separate, still-deferred item — see `.planning/milestones/v1.8-DEFERRED-CLEANUP.md`
 //     and the v1.16 Future Requirements section (durable tooling debt).
 //
 // Lineage: parallel to inline readRequirementsAtV15Close() introduced
 // Plan 68-03 Task 1 commit d7d7d5f + readCorpusFileAtV17Close() introduced
-// Plan 70-02 Atom 1 commit 26a1ae9; centralized per D-02 LOCKED Option C; consolidated into
-// check-phase-{61,67,68,70}.mjs by v1.14 Phase 111.
+// Plan 70-02 Atom 1 commit 26a1ae9; readers centralized into this module per D-02 LOCKED
+// Option C, adopted by check-phase-{67,68,70} in v1.14 Phase 111 (check-phase-61 excepted).
 
 import { execFileSync } from 'node:child_process';
 
