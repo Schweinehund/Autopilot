@@ -61,9 +61,13 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. `scripts/validation/_lib/frozen-at-close.mjs:5-9` no longer claims helpers "REMAIN INLINE" across `check-phase-{61,67,68,70}` — the comment is corrected to reflect the v1.14 Phase 111 centralization
 
 **Plans**: 2 plans
-
 Plans:
+**Wave 1**
+
 - [ ] 120-01-PLAN.md — STD-04: EEE standard Mermaid policy (text-equivalent conversion) + 4 D-02 rulings + D-08 precedence rule + C17 comment-only cross-ref
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 120-02-PLAN.md — HYG-01: correct frozen-at-close.mjs stale header comment + author 120-VERIFICATION.md needle-spec
 
 ### Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides
