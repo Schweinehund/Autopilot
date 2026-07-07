@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: executing
-last_updated: "2026-07-07T21:01:38.563Z"
+status: verifying
+last_updated: "2026-07-07T21:13:11.282Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 9
-  completed_plans: 8
-  percent: 17
+  completed_plans: 9
+  percent: 33
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 Phase: 121 (structural-retrofit-glossaries-lifecycle-end-user-guides) — EXECUTING
 Plan: 7 of 7
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-07
 
 ## v1.16 Phase Dependency Summary
@@ -121,7 +121,7 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Ready to execute
+  |             BOTH frontmatter status: AND visible **Status:** Phase complete — ready for verification
   |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
@@ -350,6 +350,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 121]: [121-05] Did NOT run requirements.mark-complete for RETRO-07 despite it being in this plan's frontmatter requirements field -- REQUIREMENTS.md explicitly scopes RETRO-07 as spanning Phase 121 (13 Mermaid-free files) + Phase 122 (9 Mermaid-bearing files), closing only when all 22 lifecycle files are C17-green; this plan completes 7 of the 13 Mermaid-free files, so RETRO-07 correctly remains Pending in the traceability table
 - [Phase 121-06]: RETRO-09 marked complete -- RE-175/176 now carry real EEE frontmatter (doc_id/status/owner/doc_type), not just the registry Approved flip from 121-01; RETRO-07 correctly left Pending (spans Phase 121 + 122)
 - [Phase 121-06]: C17 #12 grouping requires a genuine blank (non-'>') line to break a blockquote group -- a bare '>' continuation line still joins with adjacent '>' lines; caught and fixed one 249-char false-negative in 05-post-enrollment.md's L2 Note header
+- [Phase 121-07]: Verified C17 195/0 exit-0, registry 19-Approved/9-Pending split, 9-Mermaid-unenrolled invariant, VH-row/anchor-slug discipline; RETRO-04/09 CLOSED, RETRO-07 PARTIAL (13/22) handed to Phase 122
+- [Phase 121-07]: Logged DEFER-121-07-A: 9 files (2 glossaries from 121-04, 7 lifecycle files from 121-05) carry an unfilled YYYY-MM-DD Version-History date placeholder -- pre-existing, out of scope for this read-only verification plan, logged to deferred-items.md
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -386,8 +388,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T21:01:38.548Z
-Stopped at: Completed 121-06-PLAN.md
+Last session: 2026-07-07T21:13:11.262Z
+Stopped at: Completed 121-07-PLAN.md (Phase 121 all 7 plans complete, ready for verification)
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -445,3 +447,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 121 P04 | 20min | 2 tasks | 2 files |
 | Phase 121 P05 | 20min | 2 tasks | 7 files |
 | Phase 121 P06 | 40min | 2 tasks | 8 files |
+| Phase 121 P07 | 12min | 2 tasks | 0 files |

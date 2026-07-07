@@ -40,7 +40,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 ### v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing — Phases 120-125
 
 - [x] **Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix** — Extend the standard + C17 contract with the resolved Mermaid-in-enrolled-classes policy and the extended Doc Type taxonomy; fix the stale frozen-at-close.mjs header comment (completed 2026-07-07)
-- [ ] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit glossaries, end-user guides, and the 13 Mermaid-free lifecycle docs to EEE, C17 green (the 9 Mermaid-bearing lifecycle docs are deferred to Phase 122 — RETRO-07 spans 121+122)
+- [x] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit glossaries, end-user guides, and the 13 Mermaid-free lifecycle docs to EEE, C17 green (the 9 Mermaid-bearing lifecycle docs are deferred to Phase 122 — RETRO-07 spans 121+122) (completed 2026-07-07)
 - [ ] **Phase 122: Structural Retrofit — Decision-Trees, Carved-Mermaid Files & the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder)** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
 - [ ] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
 - [ ] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior
@@ -98,7 +98,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 121-07-PLAN.md — Phase verification: C17 195/0, registry 19-Approved/9-Pending, RETRO attestation
+- [x] 121-07-PLAN.md — Phase verification: C17 195/0, registry 19-Approved/9-Pending, RETRO attestation
 
 **Cross-cutting constraints:**
 
@@ -186,7 +186,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
-| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 6/7 | In Progress|  |
+| 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete   | 2026-07-07 |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
