@@ -18,11 +18,10 @@ platform: ios+macos
 
 This reference defines the Apple Business Manager governance and administration terminology used for organizational delegation and content distribution, spanning role-based access (Account Holder, IT Administrator, Custom Roles), organizational structure (Organizational Units, Sub-OUs), content distribution (content tokens, Apple Business Token, VPP), and federated identity operations (SCIM Provisioning, OIDC+JIT, Federation Collision). Each entry documents the 2026-04-14 Apple Business rebrand mapping where applicable.
 
-> **Apple Business governance:** This glossary covers Apple Business delegated permission and
-> governance terminology introduced with the 2026-04-14 Apple Business launch (formerly Apple
-> Business Manager). For Apple platform provisioning terminology (ADE, Supervision, VPP, APNs,
-> ABM), see the [Apple Provisioning Glossary](_glossary-macos.md).
->
+> **Apple Business governance:** This glossary covers Apple Business delegated permission and governance terminology introduced with the 2026-04-14 Apple Business launch
+
+> (formerly Apple Business Manager). For Apple platform provisioning terminology (ADE, Supervision, VPP, APNs, ABM), see the [Apple Provisioning Glossary](_glossary-macos.md).
+
 > See also: [Windows Autopilot Glossary](_glossary.md) · [Android Enterprise Glossary](_glossary-android.md) · [Linux Provisioning Glossary](_glossary-linux.md)
 
 ## Rebrand Mapping Table
@@ -52,13 +51,17 @@ The following terms were renamed as part of Apple's 2026-04-14 rebrand of Apple 
 
 The tenant-level Apple Business owner with irrevocable lockout-recovery authority. The Account Holder role is the sole role that can recover an Apple Business tenancy after all IT Administrators are locked out; it cannot be delegated to a sub-organization admin (see [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md#account-holder-do-not-delegate) for the OP-2 / DA-2 pitfall callout). The Account Holder Managed Apple Account must use a dedicated email address that is NOT shared with any IT Administrator account to prevent single-point-of-lockout. Apple article: [axm97dd59159](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web).
 
-> **DO NOT DELEGATE:** The Account Holder role must be held by a named individual (not a shared mailbox, not a service account) per the OP-2 prevention strategy in `.planning/research/PITFALLS.md`. Delegating or sharing the Account Holder Managed Apple Account is the single highest-severity operational risk in Apple Business administration.
+> **DO NOT DELEGATE:** The Account Holder role must be held by a named individual (not a shared mailbox, not a service account) per the OP-2 prevention strategy in `.planning/research/PITFALLS.md`.
+
+> Delegating or sharing the Account Holder Managed Apple Account is the single highest-severity operational risk in Apple Business administration.
 
 ### Apple Business
 
 The post-2026-04-14 name for what was previously called Apple Business Manager (ABM). Apple Business is the all-in-one web portal accessed at [business.apple.com](https://business.apple.com) for managing device enrollment (ADE), app distribution (Apps and Books / VPP), Organizational Units, Managed Apple Accounts, and delegated role assignments across an organization's Apple device fleet. See the Rebrand Mapping Table at the top of this file for the full set of renamed terms. For ABM provisioning terminology (ADE token, VPP token, APNs certificate, Supervision), see the [Apple Provisioning Glossary](_glossary-macos.md#abm-apple-business-manager). Apple article: [axmd79d79dea](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web).
 
-> See also: [ABM](_glossary-macos.md#abm) in the Apple Provisioning Glossary for legacy ABM provisioning surface terminology (ADE, Supervision, ABM token) that remains unchanged despite the portal rename.
+> See also: [ABM](_glossary-macos.md#abm) in the Apple Provisioning Glossary for legacy ABM provisioning surface terminology (ADE, Supervision, ABM token)
+
+> that remains unchanged despite the portal rename.
 
 ### IT Administrator
 
@@ -104,7 +107,13 @@ A Sub-Org Admin is an IT Administrator or Managed Apple Account holder assigned 
 
 Organizational Unit (OU) (formerly Location in Apple Business Manager) is the primary administrative boundary in Apple Business. OUs are used to partition devices, content tokens (formerly VPP location tokens), MDM server assignments, and user accounts into independently administrable groups. Apple Business ships with a default flat OU structure; sub-OUs are supported for organizations needing a second level of hierarchy. Each OU carries its own set of delegated Custom Role assignments, its own content tokens, and its own MDM server bindings — see [02-ous-architecture.md](cross-platform/apple-business/02-ous-architecture.md) for the full OU scoping model and delegation tree. Apple article: [axm79d79dea](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web).
 
-> **Cross-platform note:** OUs in Apple Business are not the same as Active Directory Organizational Units or Entra ID Management Units. Apple Business OUs are purely an Apple-side administrative construct that maps to your organization's logical structure. Intune-side policy scoping (via Entra groups and assignment filters) is a separate layer — see the Intune-Apple terminology mapping in [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md#intune-side-labels-preserved).
+> **Cross-platform note:** OUs in Apple Business are not the same as Active Directory Organizational Units or Entra ID Management Units.
+
+> Apple Business OUs are purely an Apple-side administrative construct that maps to your organization's logical structure.
+
+> Intune-side policy scoping (via Entra groups and assignment filters) is a separate layer — see the Intune-Apple terminology mapping in
+
+> [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md#intune-side-labels-preserved).
 
 ### Sub-OU
 
@@ -122,7 +131,11 @@ OU Scope refers to the 5-resource scope boundary that an Organizational Unit con
 
 Content token (formerly VPP location token in Apple Business Manager) is the OU-scoped authentication token issued by Apple Business that enables app license purchases and assignments via the Apps and Books surface. Each Organizational Unit can hold one or more content tokens; a single content token cannot span multiple OUs. Content tokens have a 1-year validity period and must be renewed annually — a lapsed content token stops app assignment for all devices in that OU. Content tokens replace the previous VPP location token model as of 2026-04-14; the Intune admin center UI label "Apple VPP tokens" remains unchanged on the Intune side (see [_glossary-macos.md](_glossary-macos.md#vpp) for the Intune-side label). Forward-reference: content token lifecycle runbook is forthcoming in Phase 64. Apple article: [axme0f8659ec](https://support.apple.com/guide/apple-business-manager/manage-content-tokens-axme0f8659ec/web).
 
-> **Intune-side label preserved:** Intune admin center continues to display "Apple VPP tokens" under `Tenant administration > Connectors and tokens > Apple VPP tokens`. This is an intentional Intune-side label lag (CI-2 / CI-3 pattern per `.planning/research/PITFALLS.md`). Do not rename Intune UI labels in admin documentation — annotate the discrepancy parenthetically where needed.
+> **Intune-side label preserved:** Intune admin center continues to display "Apple VPP tokens" under `Tenant administration > Connectors and tokens > Apple VPP tokens`.
+
+> This is an intentional Intune-side label lag (CI-2 / CI-3 pattern per `.planning/research/PITFALLS.md`).
+
+> Do not rename Intune UI labels in admin documentation — annotate the discrepancy parenthetically where needed.
 
 ### Managed Apple Account
 
@@ -150,13 +163,17 @@ OpenID Connect with Just-in-Time (JIT) provisioning is the federation pattern wh
 
 A Federation Collision is a conflict that occurs when an Apple ID (personal or organizational) that an employee previously created is claimed by the same domain being federated in Apple Business. When a tenant domain is federated, all Apple IDs ending in that domain become subject to organizational control — users who created personal Apple IDs with their corporate email address hit the collision. Apple Business surfaces a 60-day grace period for affected users to merge or migrate their personal Apple ID before the domain federation becomes irrevocable. This is the OP-7 callout in `.planning/research/PITFALLS.md` — failing to notify affected users BEFORE federation causes data loss (personal iCloud content irreversibly transferred to organizational control). Apple article: [axmb19317543](https://support.apple.com/guide/apple-business-manager/intro-to-federated-authentication-axmb19317543/web).
 
-> **60-day window:** The grace period is 60 days from the moment domain federation is confirmed. After the grace period, personal Apple IDs on the federated domain are converted to Managed Apple Accounts without further notice. Communicate to all affected users before initiating federation.
+> **60-day window:** The grace period is 60 days from the moment domain federation is confirmed.
+
+> After the grace period, personal Apple IDs on the federated domain are converted to Managed Apple Accounts without further notice. Communicate to all affected users before initiating federation.
 
 ### Audit Log
 
 The Apple Business Audit Log records administrative actions taken within Apple Business (role assignments, OU changes, content token operations, device reassignments, federation events). Apple does not publish a retention SLA for Audit Log data; community reports indicate 90–365 days of available history depending on tenant activity volume. For compliance horizons greater than 1 year, configure periodic SIEM export from the Apple Business Audit Log API before the retention window elapses. Forward-reference: audit log scoping and SIEM export runbook is forthcoming in Phase 64 `17-audit-log-scoping-runbook.md`.
 
-> **Retention hedge:** Apple's official documentation does not specify an Audit Log retention period. Do not design compliance workflows that depend on Audit Log availability beyond 90 days without a verified SIEM export pipeline in place.
+> **Retention hedge:** Apple's official documentation does not specify an Audit Log retention period.
+
+> Do not design compliance workflows that depend on Audit Log availability beyond 90 days without a verified SIEM export pipeline in place.
 
 ---
 
@@ -207,5 +224,5 @@ Residual risk: Apple periodically restructures documentation at major platform r
 
 | Date | Change | Author |
 |------|--------|--------|
-| YYYY-MM-DD | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-05-21 | Phase 62 (Plan 62-02): initial Apple Business Governance Glossary — rebrand-mapping table (8 pairs, 2026-04-14 effective), 4 H2 category sections (Roles & Permissions, Organizational Units, Content Distribution, Federated Identity & Governance Operations), 21 H3 entries with clean slugs per D-04 anchor-stability contract, first-mention parentheticals in body prose (not headings), N-way reciprocal blockquote to 4 sibling glossaries, T-62-C threat residual noted (Apple URL article-ID stability). | — |
