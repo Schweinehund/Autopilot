@@ -36,7 +36,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Category: Harness Hygiene (HYG, new)
 
-- [ ] **HYG-01**: The **stale header comment** at `scripts/validation/_lib/frozen-at-close.mjs:5-9` (`STALE-FROZEN-AT-CLOSE-HEADER-01`) is corrected — it still asserts helpers "REMAIN INLINE" across `check-phase-{61,67,68,70}`, factually false since v1.14 Phase 111 centralized them. Single-comment fix, no functional change.
+- [x] **HYG-01**: The **stale header comment** at `scripts/validation/_lib/frozen-at-close.mjs:5-9` (`STALE-FROZEN-AT-CLOSE-HEADER-01`) is corrected — it still asserts helpers "REMAIN INLINE" across `check-phase-{61,67,68,70}`, factually false since v1.14 Phase 111 centralized them. Single-comment fix, no functional change.
 
 ### Category: Frozen-Surface Pin & Milestone Close (HARN, continues v1.15 HARN-01..04)
 
@@ -95,7 +95,7 @@ REQ-ID → Phase mapping, assigned by the roadmapper 2026-07-07 (6 phases, 120-1
 | PIPE-03 | Phase 124 | Pending |
 | PIPE-04 | Phase 124 | Pending |
 | PIPE-05 | Phase 124 | Pending |
-| HYG-01 | Phase 120 | Pending |
+| HYG-01 | Phase 120 | Complete |
 | HARN-05 | Phase 125 | Pending |
 | HARN-06 | Phase 125 | Pending |
 | HARN-07 | Phase 125 | Pending |

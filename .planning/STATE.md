@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: executing
-last_updated: "2026-07-07T15:10:25.387Z"
+status: verifying
+last_updated: "2026-07-07T15:18:28.055Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 0
+  completed_plans: 2
+  percent: 17
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 Phase: 120 (eee-standard-extension-mermaid-c17-policy-hygiene-fix) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-07
 
 ## v1.16 Phase Dependency Summary
@@ -118,7 +118,7 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Ready to execute
+  |             BOTH frontmatter status: AND visible **Status:** Phase complete — ready for verification
   |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
@@ -331,6 +331,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 120]: Written the D-04 honesty caveat as plain prose (no blockquote) to avoid any risk of tripping C17 assertion #12's 200-char blockquote limit
 - [Phase 120]: Kept the 5-class illustrative Doc Type mapping table separate from the frozen 4-row Doc Type Taxonomy table (5 rows/3 cols, not merged) per RESEARCH Pitfall 2 guidance
 - [Phase 120]: Comment-only pointer added above c17-eee-contract.mjs hasMermaid line, avoiding the literal CHAIN_PHASES substring and preserving --self-test/C17 assertion-violation-counts: needle strings
+- [Phase ?]: HYG-01 verified against live grep of check-phase-{61,67,68,70,111}.mjs before finalizing corrected comment wording; 120-VERIFICATION.md cites real committed strings from 120-01 for future needle-check derivation; check-phase-120.mjs deliberately NOT authored (validator-atom deferral to Phase 125/HARN-06)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -367,7 +368,7 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T15:10:25.368Z
+Last session: 2026-07-07T15:18:17.900Z
 Stopped at: Completed 120-01-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
@@ -419,3 +420,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 119 P04 | 20min | 3 tasks | 2 files (3-axis re-audit + byte-gate; Axis-2 GREEN 73/0/1; EXACT MATCH; byte-unchanged EMPTY) |
 | Phase 119 P06 | multi-day (owner checkpoint) | 3 tasks | 3 files (PIPE-02-CLOSE-RUNBOOK/FINDINGS/TRANSCRIPT; owner PIPE-02 CLOSE: PASS attested 2026-07-06) |
 | Phase 120 P01 | 6min | 2 tasks | 2 files |
+| Phase 120 P02 | 6min | - tasks | - files |

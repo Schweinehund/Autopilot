@@ -39,7 +39,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 ### v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing — Phases 120-125
 
-- [ ] **Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix** — Extend the standard + C17 contract with the resolved Mermaid-in-enrolled-classes policy and the extended Doc Type taxonomy; fix the stale frozen-at-close.mjs header comment
+- [x] **Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix** — Extend the standard + C17 contract with the resolved Mermaid-in-enrolled-classes policy and the extended Doc Type taxonomy; fix the stale frozen-at-close.mjs header comment (completed 2026-07-07)
 - [ ] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit the non-Mermaid structural classes to EEE, C17 green
 - [ ] **Phase 122: Structural Retrofit — Decision-Trees & Carved-Mermaid Files** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
 - [ ] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
@@ -68,7 +68,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 120-02-PLAN.md — HYG-01: correct frozen-at-close.mjs stale header comment + author 120-VERIFICATION.md needle-spec
+- [x] 120-02-PLAN.md — HYG-01: correct frozen-at-close.mjs stale header comment + author 120-VERIFICATION.md needle-spec
 
 ### Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides
 
@@ -164,7 +164,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 1/2 | In Progress|  |
+| 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete   | 2026-07-07 |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 0/? | Not started | - |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
