@@ -1,4 +1,8 @@
 ---
+doc_id: RE-214
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: all
@@ -6,9 +10,17 @@ audience: L1
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md). For macOS ADE, see [macOS ADE Triage](06-macos-triage.md).
+**Platform:** iOS · **Doc Type:** Reference · **Doc ID:** RE-214 · **Status:** Approved
 
 # iOS/iPadOS Triage
+
+## Summary
+
+Reference decision table for iOS/iPadOS triage via Intune, gating first on whether the device is visible in the Intune admin center, then routing by what the user saw or attempted (if not visible) or by primary symptom (if visible) to an L1 runbook or L2 escalation within 2 decision steps.
+
+> **Platform gate:** This guide covers iOS/iPadOS troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+
+> For macOS ADE, see [macOS ADE Triage](06-macos-triage.md).
 
 ## How to Use This Tree
 
@@ -16,46 +28,9 @@ Start here when a user reports an issue with an iOS or iPadOS device enrolled (o
 
 No network reachability gate is included at the root because Setup Assistant completion implies basic Apple connectivity for ADE, and Company Portal launching implies network for BYOD/User Enrollment paths. If the device cannot reach any network at all, use the [APNs Expired runbook](../l1-runbooks/16-ios-apns-expired.md) or escalate to Infrastructure directly.
 
-## Legend
-
-| Symbol | Meaning |
-|--------|---------|
-| Diamond `{...}` | Decision -- answer the question |
-| Green rounded `([...])` | Resolved -- follow the linked L1 runbook |
-| Red rounded `([...])` | Escalate to L2 -- collect data listed in Escalation Data table and hand off |
-
 ## Decision Tree
 
-```mermaid
-graph TD
-    IOS1{"Is the device visible<br/>in Intune admin center<br/>Devices &gt; iOS/iPadOS?"}
-
-    IOS1 -->|No| IOS2{"What did the user<br/>see or attempt?"}
-    IOS1 -->|Yes| IOS3{"What is the<br/>primary symptom?"}
-
-    IOS2 -->|"Fleetwide outage<br/>(all Apple devices<br/>affected)"| IOSR1(["See: APNs Expired Runbook"])
-    IOS2 -->|"ADE Setup Assistant<br/>stuck or no MDM profile"| IOSR2(["See: ADE Not Starting Runbook"])
-    IOS2 -->|"'Invalid Profile' or<br/>'Can't be managed'"| IOSR3(["See: Enrollment Restriction<br/>Blocking Runbook"])
-    IOS2 -->|"'User Name Not Recognized'<br/>or 'License not assigned'"| IOSR4(["See: License Invalid Runbook"])
-    IOS2 -->|"'Device limit reached'<br/>or 'Too many devices'"| IOSR5(["See: Device Cap Reached Runbook"])
-    IOS2 -->|"Other / unclear"| IOSE1(["Escalate L2:<br/>Collect serial, UPN,<br/>error screenshot"])
-
-    IOS3 -->|"Non-compliant or<br/>access blocked"| IOSR6(["See: Compliance Blocked Runbook"])
-    IOS3 -->|"Profile / config /<br/>app not working"| IOSE2(["Escalate L2:<br/>See iOS L2 Runbooks index"])
-    IOS3 -->|"Other / unclear"| IOSE3(["Escalate L2:<br/>Collect serial, UPN,<br/>symptom description"])
-
-    click IOSR1 "../l1-runbooks/16-ios-apns-expired.md"
-    click IOSR2 "../l1-runbooks/17-ios-ade-not-starting.md"
-    click IOSR3 "../l1-runbooks/18-ios-enrollment-restriction-blocking.md"
-    click IOSR4 "../l1-runbooks/19-ios-license-invalid.md"
-    click IOSR5 "../l1-runbooks/20-ios-device-cap-reached.md"
-    click IOSR6 "../l1-runbooks/21-ios-compliance-blocked.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    class IOSR1,IOSR2,IOSR3,IOSR4,IOSR5,IOSR6 resolved
-    class IOSE1,IOSE2,IOSE3 escalateL2
-```
+**LOCKED — 23 (nodes + labeled edges)** — 12 nodes + 11 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 3 diamonds (IOS1, IOS2, IOS3) are represented below; each row traces one complete path from the root question to a terminal action, and no cell collapses more than one incoming labeled edge.
 
 ## Routing Verification
 
@@ -102,6 +77,8 @@ All terminal nodes are within 2 decision steps of the root node (IOS1), well und
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 04: converted Mermaid decision graph to the pre-existing Routing Verification decision table (LOCKED — 23, nodes + labeled edges); removed the mermaid fence and the Legend section (stale diagram-shape prose); split the 1 pre-existing over-200-char blockquote; enrolled as RE-214. | -- |
 | 2026-04-17 | Phase 32: resolved glossary placeholder; updated Apple glossary cross-reference to list iOS and macOS terms | -- |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references | -- |
 | 2026-04-17 | Initial version | -- |
