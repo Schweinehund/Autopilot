@@ -96,3 +96,10 @@ None - no external service configuration required.
 ---
 *Phase: 123-orphan-nav-hub-retrofit-navigation-last*
 *Completed: 2026-07-08*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/pipeline/retrofit-nav-hub.mjs
+- FOUND: .planning/phases/123-orphan-nav-hub-retrofit-navigation-last/123-01-SUMMARY.md
+- FOUND: a06048e (Task 1 commit)
+- FOUND: 1f93868 (Task 2 commit)
