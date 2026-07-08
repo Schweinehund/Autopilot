@@ -220,3 +220,25 @@
 | RE-204 | docs/macos-lifecycle/00-ade-lifecycle.md | macOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Pending |
 | RE-205 | docs/macos-lifecycle/01-psso-provisioning-walkthrough.md | macOS Platform SSO Provisioning Walkthrough: A1 Standard and A2 ADE-during-Setup-Assistant | Guide | Pending |
 | RE-206 | docs/macos-lifecycle/02-mdm-migration-psso.md | macOS MDM Migration Walkthrough: B1 In-Place (macOS 26+) and B2 Wipe-and-Re-Enroll | Guide | Pending |
+| RE-207 | docs/decision-trees/00-initial-triage.md | Initial Triage Decision Tree | Reference | Pending |
+| RE-208 | docs/decision-trees/01-esp-failure.md | ESP Failure Decision Tree | Reference | Pending |
+| RE-209 | docs/decision-trees/02-profile-assignment.md | Profile Assignment Failure Decision Tree | Reference | Pending |
+| RE-210 | docs/decision-trees/03-tpm-attestation.md | TPM Attestation Failure Decision Tree | Reference | Pending |
+| RE-211 | docs/decision-trees/04-apv2-triage.md | APv2 Device Preparation Triage | Reference | Pending |
+| RE-212 | docs/decision-trees/05-device-lifecycle.md | Device Lifecycle Action Decision Tree | Reference | Pending |
+| RE-213 | docs/decision-trees/06-macos-triage.md | macOS ADE Triage | Reference | Pending |
+| RE-214 | docs/decision-trees/07-ios-triage.md | iOS/iPadOS Triage | Reference | Pending |
+| RE-215 | docs/decision-trees/08-android-triage.md | Android Triage Decision Tree | Reference | Pending |
+| RE-216 | docs/decision-trees/09-linux-triage.md | Linux Triage Decision Tree | Reference | Pending |
+| RE-217 | docs/decision-trees/10-8021x-triage.md | 802.1X Triage Decision Tree | Reference | Pending |
+
+## Review Notes
+
+- **RE-212 (`docs/decision-trees/05-device-lifecycle.md`) — Doc Type = Reference, not Guide.**
+  Directory precedence is categorical: `EEE-SOP-standard.md:178-179` states a document in a
+  class-dedicated directory takes that directory's type regardless of topical overlap
+  (`decision-trees/*` → Reference), and `EEE-SOP-standard.md:186-187` names this exact file as
+  the LOCKED worked resolution — rule-1 directory-precedence beats the `-lifecycle` filename's
+  lifecycle-flavored naming (122-CONTEXT.md D-04(a), same rule that makes RE-068 a Runbook
+  despite containing a converted decision tree). Recorded here so a future reviewer does not
+  re-litigate the filename-vs-directory question.
