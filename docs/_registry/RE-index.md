@@ -225,7 +225,7 @@
 | RE-209 | docs/decision-trees/02-profile-assignment.md | Profile Assignment Failure Decision Tree | Reference | Approved |
 | RE-210 | docs/decision-trees/03-tpm-attestation.md | TPM Attestation Failure Decision Tree | Reference | Approved |
 | RE-211 | docs/decision-trees/04-apv2-triage.md | APv2 Device Preparation Triage | Reference | Approved |
-| RE-212 | docs/decision-trees/05-device-lifecycle.md | Device Lifecycle Action Decision Tree | Reference | Pending |
+| RE-212 | docs/decision-trees/05-device-lifecycle.md | Device Lifecycle Action Decision Tree | Reference | Approved |
 | RE-213 | docs/decision-trees/06-macos-triage.md | macOS ADE Triage | Reference | Pending |
 | RE-214 | docs/decision-trees/07-ios-triage.md | iOS/iPadOS Triage | Reference | Pending |
 | RE-215 | docs/decision-trees/08-android-triage.md | Android Triage Decision Tree | Reference | Approved |
