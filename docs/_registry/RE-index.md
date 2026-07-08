@@ -90,7 +90,7 @@
 | RE-074 | docs/l2-runbooks/32-8021x-cert-investigation.md | 802.1X Certificate-Chain Investigation | Runbook | Approved |
 | RE-075 | docs/l2-runbooks/33-8021x-radius-eap-investigation.md | 802.1X RADIUS/EAP Investigation | Runbook | Approved |
 | RE-076 | docs/admin-setup-apv1/00-overview.md | APv1 Admin Setup: Complete Configuration Guide | Guide | Pending |
-| RE-077 | docs/admin-setup-apv1/01-hardware-hash-upload.md | Hardware Hash Upload | Guide | Pending |
+| RE-077 | docs/admin-setup-apv1/01-hardware-hash-upload.md | Hardware Hash Upload | Guide | Approved |
 | RE-078 | docs/admin-setup-apv1/02-deployment-profile.md | Deployment Profile Configuration | Guide | Approved |
 | RE-079 | docs/admin-setup-apv1/03-esp-policy.md | Enrollment Status Page (ESP) Policy | Guide | Approved |
 | RE-080 | docs/admin-setup-apv1/04-dynamic-groups.md | Dynamic Device Groups for Autopilot | Guide | Approved |

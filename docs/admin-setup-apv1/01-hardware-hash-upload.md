@@ -1,26 +1,36 @@
 ---
+doc_id: RE-077
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: APv1
 audience: admin
 ---
 
-> **Version gate:** This guide covers Windows Autopilot (classic).
-> For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
-> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-077 · **Status:** Approved
 
 # Hardware Hash Upload
 
-Every Windows Autopilot (classic) deployment begins with registering devices by uploading their hardware hashes to your Intune tenant. The hash uniquely identifies each device and is required before any deployment profile can be assigned. Use the decision tree below to determine which upload path applies to your scenario.
+## Summary
 
-```mermaid
-flowchart TD
-  START([How were devices acquired?]) --> OEM{Purchased from<br/>authorized OEM with<br/>Autopilot registration?}
-  OEM -->|Yes| OEMPATH[OEM Path: Verify hashes appeared]
-  OEM -->|No| BATCH{How many devices<br/>to register?}
-  BATCH -->|Bulk: >10 devices| CSVPATH[CSV Path: Export + bulk import]
-  BATCH -->|Few devices or<br/>one-at-a-time| PSPATH[PowerShell Path: Get-WindowsAutopilotInfo]
-```
+Routes Intune administrators to the correct Windows Autopilot (classic) hardware-hash upload path — OEM Delivery (hashes pre-registered by an authorized OEM), CSV Bulk Import (manual export and import via the Autopilot device list), or the PowerShell script `Get-WindowsAutopilotInfo` (local capture or direct online upload) — by mapping the acquisition source and device count to the correct destination path and its prerequisites.
+
+> **Version gate:** This guide covers Windows Autopilot (classic). For Autopilot Device Preparation (APv2), see [APv2 Admin Setup Guides](../admin-setup-apv2/00-overview.md).
+
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+
+Every Windows Autopilot (classic) deployment begins with registering devices by uploading their hardware hashes to your Intune tenant. The hash uniquely identifies each device and is required before any deployment profile can be assigned. Use the decision table below to determine which upload path applies to your scenario.
+
+**LOCKED — 10 (nodes + labeled edges)** — 6 nodes (START, OEM, OEMPATH, BATCH, CSVPATH, PSPATH) + 4 labeled edges (OEM→OEMPATH "Yes", OEM→BATCH "No", BATCH→CSVPATH "Bulk: >10 devices", BATCH→PSPATH "Few devices or one-at-a-time"), independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). Both decision points (`OEM`, `BATCH`) are preserved as table rows below.
+
+| Path | Step 1: Purchased from authorized OEM with Autopilot registration? | Step 2: How many devices to register? | Destination |
+|------|------|------|------|
+| OEM Path | Yes | (terminal) | Verify hashes appeared — Path 1 below |
+| CSV Bulk Import | No | Bulk: >10 devices | Export + bulk import — Path 2 below |
+| PowerShell Script | No | Few devices or one-at-a-time | Get-WindowsAutopilotInfo — Path 3 below |
 
 ## Prerequisites
 
@@ -40,7 +50,9 @@ When devices are purchased from an authorized OEM with Autopilot registration in
 4. Confirm **Profile Status** shows the expected state (Unassigned or the assigned profile name).
 5. If the device is missing, contact your procurement team to confirm Autopilot registration was included in the purchase order.
 
-> **What breaks if misconfigured:** Admin sees device not in the Autopilot device list. End user sees standard Windows OOBE instead of the Autopilot experience. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+> **What breaks if misconfigured:** Admin sees device not in the Autopilot device list. End user sees standard Windows OOBE instead of the Autopilot experience.
+
+> See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
 
 ## Path 2: CSV Bulk Import
 
@@ -80,9 +92,13 @@ Rules:
 | InvalidZtdHardwareHash | Missing manufacturer or serial number in hash | Re-capture hash from the device |
 | Incorrect header / silent failure | CSV is not ANSI-encoded | Re-save as ANSI encoding in Notepad (Save As > Encoding: ANSI) |
 
-> **What breaks if misconfigured:** Admin sees import errors or devices not appearing after import. End user sees standard Windows OOBE instead of Autopilot. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+> **What breaks if misconfigured:** Admin sees import errors or devices not appearing after import. End user sees standard Windows OOBE instead of Autopilot.
 
-> **What breaks if misconfigured:** CSV opened in Excel before import -- column formatting is silently corrupted. Admin sees "incorrect header" or partial import. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+> See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+
+> **What breaks if misconfigured:** CSV opened in Excel before import -- column formatting is silently corrupted. Admin sees "incorrect header" or partial import.
+
+> See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
 
 ## Path 3: PowerShell Script (Get-WindowsAutopilotInfo)
 
@@ -126,13 +142,25 @@ When prompted, sign in with an Intune Administrator account. Agree to the NuGet 
 
 ### Common Errors
 
-> **What breaks if misconfigured:** Execution policy blocks script. Admin sees red error text: "running scripts is disabled on this system." Fix: the `Set-ExecutionPolicy -Scope Process` command above is process-scoped only (no machine-wide impact). Run it before `Install-Script`. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+> **What breaks if misconfigured:** Execution policy blocks script. Admin sees red error text: "running scripts is disabled on this system."
 
-> **What breaks if misconfigured:** NuGet provider "no match found" error. `Install-Script` fails because TLS 1.2 is not set. Fix: the `[Net.ServicePointManager]::SecurityProtocol` line **must** be the first command in the session. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+> Fix: the `Set-ExecutionPolicy -Scope Process` command above is process-scoped only (no machine-wide impact). Run it before `Install-Script`.
 
-> **What breaks if misconfigured:** Graph authentication errors. The `-Online` flag uses Microsoft Graph PowerShell modules (updated July 2023, not the deprecated AzureAD module). May require approving enterprise app permissions on first run. Admin sees authentication popup that errors. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+> See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
 
-> **What breaks if misconfigured:** Stale hash from reimaged device. Hash must be captured from the final hardware state -- hardware changes, BIOS updates, or driver updates after capture invalidate the hash. Admin sees device registered but end user sees standard OOBE instead of Autopilot. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+> **What breaks if misconfigured:** NuGet provider "no match found" error. `Install-Script` fails because TLS 1.2 is not set.
+
+> Fix: the `[Net.ServicePointManager]::SecurityProtocol` line **must** be the first command in the session. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+
+> **What breaks if misconfigured:** Graph authentication errors. The `-Online` flag uses Microsoft Graph PowerShell modules (updated July 2023, not the deprecated AzureAD module).
+
+> May require approving enterprise app permissions on first run. Admin sees authentication popup that errors. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
+
+> **What breaks if misconfigured:** Stale hash from reimaged device.
+
+> Hash must be captured from the final hardware state -- hardware changes, BIOS updates, or driver updates after capture invalidate the hash.
+
+> Admin sees device registered but end user sees standard OOBE instead of Autopilot. See: [Device Not Registered](../l1-runbooks/01-device-not-registered.md)
 
 ## Verification
 
@@ -160,3 +188,10 @@ After uploading via any path, confirm registration:
 
 ---
 *Next step: [Deployment Profile](02-deployment-profile.md)*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | Phase 122 plan 07: converted Mermaid flowchart to a Step 1 / Step 2 / Destination decision table (both OEM and BATCH decision points preserved); removed the mermaid fence; LOCKED — 10 (nodes + labeled edges, R1 convention); reworded "decision tree" to "decision table"; split 8 pre-existing over-200-char blockquote groups into 15 word-preserving paragraphs; enrolled as RE-077. | -- |
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
