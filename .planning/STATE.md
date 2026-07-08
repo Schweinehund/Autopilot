@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T13:54:40.107Z"
+last_updated: "2026-07-08T14:06:09.012Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 28
-  completed_plans: 25
+  completed_plans: 26
   percent: 50
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 123 (orphan-nav-hub-retrofit-navigation-last) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -381,6 +381,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: [123-01] Forked retrofit-nav-hub.mjs from retrofit-mermaid-structural.mjs (Phase-122 chain tip) per D-03 -- strict superset (auto-filled VH date, DOC-ID-ALREADY-PRESENT idempotency guard)
 - [Phase ?]: [123-01] Left main()'s --all enumeration untouched; invoked the fork with the 4 explicit nav-hub paths instead, sidestepping the noisy-ERROR --all hazard entirely (RESEARCH Pattern 1)
 - [Phase ?]: [123-01] Did NOT run requirements.mark-complete for RETRO-06 -- this plan is tooling+registry prep only (writes no doc file); RETRO-06 stays Pending until 123-03 closes it, mirroring the 121-05 precedent
+- [Phase 123-02]: check-nav-hub-links.mjs built standalone (no CHAIN_PHASES), fence-masked GitHub-exact slugify with encounter-order dedup and {#id}-override-first anchor resolution; true-positive proof against the un-fixed corpus flags exactly the 12 known pre-existing broken links
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -417,7 +418,7 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T13:54:40.091Z
+Last session: 2026-07-08T14:04:24.075Z
 Stopped at: Completed 123-01-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
@@ -493,3 +494,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P14 | 35min | 2 tasks | 0 files |
 | Phase 122 P15 | 40min | 3 tasks | 2 files |
 | Phase 123 P01 | 25min | 2 tasks | 2 files |
+| Phase 123 P02 | 20min | 2 tasks | 1 files |
