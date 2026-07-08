@@ -1,4 +1,8 @@
 ---
+doc_id: RE-190
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: ADE
@@ -6,9 +10,19 @@ audience: all
 platform: iOS
 ---
 
-> **Version gate:** This guide covers iOS/iPadOS Automated Device Enrollment (ADE) via Apple Business Manager and Microsoft Intune. For the enrollment path overview, see [iOS/iPadOS Enrollment Path Overview](00-enrollment-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md). For terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-190 · **Status:** Approved
 
 # iOS/iPadOS ADE Lifecycle: Automated Device Enrollment End-to-End
+
+## Summary
+
+This guide narrates the complete iOS/iPadOS Automated Device Enrollment (ADE) pipeline end to end, from Apple Business Manager device registration through ADE token sync, enrollment profile assignment, Setup Assistant, and the single user-affinity decision point, ending at ongoing MDM management via APNs. It serves L1 Service Desk, L2 Desktop Engineering, and Intune Admins with stage-specific troubleshooting and configuration guidance.
+
+> **Version gate:** This guide covers iOS/iPadOS Automated Device Enrollment (ADE) via Apple Business Manager and Microsoft Intune.
+
+> For the enrollment path overview, see [iOS/iPadOS Enrollment Path Overview](00-enrollment-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md).
+
+> For terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
 
 ## How to Use This Guide
 
@@ -31,7 +45,7 @@ Each of the seven stages below contains four subsections:
 
 - Start at **Stage 1** if you are setting up ADE for the first time.
 - Jump to a **specific stage** if you are troubleshooting a failure at a known point in the enrollment pipeline.
-- Use the **Stage Summary Table** below the pipeline diagram for a quick overview of all stages.
+- Use the **Stage Summary Table** below the ADE Pipeline table for a quick overview of all stages.
 - See the **See Also** section at the bottom for cross-references to related guides and the enrollment overview.
 
 ### Prerequisites
@@ -73,19 +87,16 @@ Subsequent admin setup guides mark supervised-only settings with the supervised-
 
 ---
 
-## The ADE Pipeline
+## The ADE Pipeline (LOCKED — 10 (8 nodes + 2 labeled edges))
 
-```mermaid
-graph TD
-    S1[Stage 1: ABM Device Registration] --> S2[Stage 2: ADE Token Sync]
-    S2 --> S3[Stage 3: Enrollment Profile Assignment]
-    S3 --> S4[Stage 4: Setup Assistant]
-    S4 --> S5[Stage 5: Await Final Configuration]
-    S5 --> S6{User Affinity?}
-    S6 -->|With User Affinity| S7[Stage 6: Company Portal Sign-In]
-    S6 -->|Userless| S8[Stage 7: Home Screen and Ongoing MDM]
-    S7 --> S8
-```
+The pipeline runs through five trunk stages before a single decision point (User Affinity?); both branches of that decision reconverge at Stage 7.
+
+**Trunk edges (outside the decision):** Stage 1: ABM Device Registration → Stage 2: ADE Token Sync → Stage 3: Enrollment Profile Assignment → Stage 4: Setup Assistant → Stage 5: Await Final Configuration → User Affinity? (decision).
+
+| Path | User Affinity? (root decision) | Step 6 outcome | Destination |
+|------|----------------------------------|-----------------|-------------|
+| With User Affinity | With User Affinity | Stage 6: Company Portal Sign-In | Stage 7: Home Screen and Ongoing MDM |
+| Userless | Userless | (skipped — no Stage 6) | Stage 7: Home Screen and Ongoing MDM |
 
 > Stage 6 only applies when the enrollment profile is configured for "Enroll with User Affinity" and modern authentication. Userless enrollments skip directly to Stage 7.
 
@@ -178,7 +189,9 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
 
 In the **Intune admin center**, navigate to the enrollment program tokens blade and select your token to view and create iOS/iPadOS enrollment profiles. Here you create profiles that define supervised mode, user affinity, authentication method, and which Setup Assistant screens to show or hide. A default profile can be set for the token so all synced devices receive it automatically.
 
-> **Note:** Portal navigation for iOS/iPadOS enrollment profiles may vary by Intune admin center version. A new "Enrollment policies" experience was in preview as of early 2026. Phase 27 admin setup guides verify current portal navigation before documenting click-paths.
+> **Note:** Portal navigation for iOS/iPadOS enrollment profiles may vary by Intune admin center version.
+
+> A new "Enrollment policies" experience was in preview as of early 2026. Phase 27 admin setup guides verify current portal navigation before documenting click-paths.
 
 ### What Happens
 
@@ -402,5 +415,6 @@ Key terms used throughout this guide.
 
 | Date | Change |
 |------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-04-17 | Resolved Phase 31 L2 cross-references |
 | 2026-04-16 | Initial version — complete 7-stage iOS/iPadOS ADE lifecycle narrative |
