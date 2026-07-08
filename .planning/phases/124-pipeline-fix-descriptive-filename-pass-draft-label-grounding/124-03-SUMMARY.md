@@ -119,3 +119,14 @@ None - no external service configuration required (the owner's live Copilot Stud
 ---
 *Phase: 124-pipeline-fix-descriptive-filename-pass-draft-label-grounding*
 *Completed: 2026-07-08*
+
+## Self-Check: PASSED
+
+- FOUND: `.planning/phases/124-.../PIPE-05-FINDINGS.md`
+- FOUND: `.planning/phases/124-.../PIPE-05-RUNBOOK.md`
+- FOUND: `.planning/phases/124-.../124-03-SUMMARY.md`
+- FOUND: `scripts/pipeline/test-fixtures/draft-test-doc.md`
+- FOUND commit: `a479550` (Task 1)
+- FOUND commit: `faa85fa` (Task 2)
+- FOUND commit: `96fa456` (FINDINGS + RUNBOOK closing edit)
+- FOUND commit: `d452b5a` (SUMMARY)
