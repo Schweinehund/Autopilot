@@ -231,6 +231,10 @@
 | RE-215 | docs/decision-trees/08-android-triage.md | Android Triage Decision Tree | Reference | Approved |
 | RE-216 | docs/decision-trees/09-linux-triage.md | Linux Triage Decision Tree | Reference | Approved |
 | RE-217 | docs/decision-trees/10-8021x-triage.md | 802.1X Triage Decision Tree | Reference | Approved |
+| RE-218 | docs/common-issues.md | Common Provisioning Issues | Reference | Approved |
+| RE-219 | docs/index.md | Device Provisioning Documentation | Reference | Approved |
+| RE-220 | docs/quick-ref-l1.md | L1 Quick-Reference Card | Reference | Approved |
+| RE-221 | docs/quick-ref-l2.md | L2 Quick-Reference Card | Reference | Approved |
 
 ## Review Notes
 
