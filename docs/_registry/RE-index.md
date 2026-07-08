@@ -105,7 +105,7 @@
 | RE-089 | docs/admin-setup-apv2/02-etg-device-group.md | APv2 Setup Step 2: Enrollment Time Grouping Device Group | Guide | Approved |
 | RE-090 | docs/admin-setup-apv2/03-device-preparation-policy.md | APv2 Setup Step 3: Device Preparation Policy | Guide | Approved |
 | RE-091 | docs/admin-setup-apv2/04-corporate-identifiers.md | APv2 Setup Step 4: Corporate Identifiers | Guide | Approved |
-| RE-092 | docs/admin-setup-android/00-overview.md | Android Enterprise Admin Setup | Guide | Pending |
+| RE-092 | docs/admin-setup-android/00-overview.md | Android Enterprise Admin Setup | Guide | Approved |
 | RE-093 | docs/admin-setup-android/01-managed-google-play.md | Bind Managed Google Play | Guide | Approved |
 | RE-094 | docs/admin-setup-android/02-zero-touch-portal.md | Configure Zero-Touch Portal | Guide | Approved |
 | RE-095 | docs/admin-setup-android/03-fully-managed-cobo.md | Android Enterprise Fully Managed (COBO) Admin Setup | Guide | Approved |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-092
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-25
 review_by: 2026-06-24
 applies_to: all
@@ -6,35 +10,39 @@ audience: admin
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android Enterprise admin setup across all enrollment modes: COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), Zero-Touch Enrollment (ZTE), and AOSP.
-> For iOS/iPadOS admin setup, see [iOS Admin Setup Guides](../admin-setup-ios/00-overview.md).
-> For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
-> For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-092 · **Status:** Approved
 
 # Android Enterprise Admin Setup
 
-This overview routes Intune administrators to the correct Android Enterprise admin setup path. Android Enterprise management depends on a tri-portal surface — the Intune admin center, Managed Google Play (MGP), and the Zero-Touch portal (ZT portal) — and which portals an admin must configure depends entirely on the chosen enrollment mode. Corporate-owned fully managed deployments (COBO), BYOD Work Profile, and Dedicated devices all converge through MGP binding; Zero-Touch Enrollment (ZTE) adds the ZT portal on top of MGP; AOSP uses neither portal. Choose a mode from the diagram below, then follow the guide for that mode.
+## Summary
+
+Routes Intune administrators to the correct Android Enterprise admin setup path across all five enrollment modes — COBO, BYOD Work Profile, Dedicated (COSU), Zero-Touch Enrollment (ZTE), AOSP, and Samsung Knox Mobile Enrollment (KME) — by mapping each mode to its required portal(s) (Intune admin center, Managed Google Play, Zero-Touch portal, or Samsung Knox Admin Portal) and destination admin guide.
+
+> **Platform gate:** This guide covers Android Enterprise admin setup across all enrollment modes: COBO (Fully Managed), BYOD Work Profile, Dedicated (COSU), Zero-Touch Enrollment (ZTE), and AOSP.
+
+> For iOS/iPadOS admin setup, see [iOS Admin Setup Guides](../admin-setup-ios/00-overview.md). For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
+
+> For Android terminology, see the [Android Enterprise Provisioning Glossary](../_glossary-android.md).
+
+This overview routes Intune administrators to the correct Android Enterprise admin setup path. Android Enterprise management depends on a tri-portal surface — the Intune admin center, Managed Google Play (MGP), and the Zero-Touch portal (ZT portal) — and which portals an admin must configure depends entirely on the chosen enrollment mode. Corporate-owned fully managed deployments (COBO), BYOD Work Profile, and Dedicated devices all converge through MGP binding; Zero-Touch Enrollment (ZTE) adds the ZT portal on top of MGP; AOSP uses neither portal. Choose a mode from the table below, then follow the guide for that mode.
 
 For help choosing an enrollment mode, see the [Android Enterprise Enrollment Overview](../android-lifecycle/00-enrollment-overview.md) (five-mode comparison on ownership × management-scope axes) and the [Android Enterprise Prerequisites](../android-lifecycle/01-android-prerequisites.md) concept-only orientation. This page assumes the mode choice has been made.
 
 ## Setup Sequence
 <a id="choose-your-mode"></a>
 
-The diagram below shows every Android Enterprise admin setup path. Each branch from "Choose your mode" converges on the portal(s) required for that mode, then terminates at the mode-specific admin guide (authored in Phase 36–39). Read down the branch that matches your chosen mode; each leaf names the downstream admin guide that covers enrollment profile creation, app and policy assignment, and compliance for that mode.
+The table below shows every Android Enterprise admin setup path. Each mode routes to the portal(s) required for that mode, then terminates at the mode-specific admin guide (authored in Phase 36–39). Find the row that matches your chosen mode; each row names the downstream admin guide that covers enrollment profile creation, app and policy assignment, and compliance for that mode.
 
-```mermaid
-flowchart TD
-    START[Admin lands here] --> CHOOSE{Choose your mode}
-    CHOOSE -->|COBO / BYOD WP / Dedicated| MGP[01-managed-google-play.md]
-    MGP --> COBO_PATH[Phase 36 — COBO admin guide]
-    MGP --> BYOD_PATH[Phase 37 — BYOD Work Profile guide]
-    MGP --> DED_PATH[Phase 38 — Dedicated devices guide]
-    CHOOSE -->|Zero-Touch Enrollment| MGPZTE[01-managed-google-play.md]
-    MGPZTE --> ZT[02-zero-touch-portal.md]
-    ZT --> ZTE_PATH[Phase 39 — ZTE admin content]
-    CHOOSE -->|AOSP| AOSP_PATH[Phase 39 — AOSP stub]
-    CHOOSE -->|Knox - KME Samsung-only| KNOX[07-knox-mobile-enrollment.md]
-```
+**LOCKED — 15 (nodes + labeled edges)** — 11 nodes + 4 labeled edges, independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). The single decision point (`Choose your mode`) is represented below as one row per outcome — all 6 outcomes (COBO, BYOD Work Profile, Dedicated, Zero-Touch Enrollment, AOSP, Knox — KME) preserved.
+
+| Mode | Required Portal(s) | Destination Guide |
+|------|---------------------|--------------------|
+| COBO (Fully Managed) | Managed Google Play | Phase 36 — COBO admin guide |
+| BYOD Work Profile | Managed Google Play | Phase 37 — BYOD Work Profile guide |
+| Dedicated (COSU) | Managed Google Play | Phase 38 — Dedicated devices guide |
+| Zero-Touch Enrollment (ZTE) | Managed Google Play + Zero-Touch portal | Phase 39 — ZTE admin content |
+| AOSP | None (no portal) | Phase 39 — AOSP stub |
+| Knox Mobile Enrollment (KME, Samsung-only) | Samsung Knox Admin Portal | [07-knox-mobile-enrollment.md](07-knox-mobile-enrollment.md) |
 
 1. **[Managed Google Play Binding](01-managed-google-play.md)** — Bind the Intune tenant to Managed Google Play using an Entra account. Required for all GMS modes (COBO, BYOD WP, Dedicated, ZTE). Complete before any GMS enrollment profile.
 
@@ -44,7 +52,7 @@ flowchart TD
 
 ## Prerequisites
 
-Each admin path has its own prerequisite set. Determine your path from the diagram above, then confirm the prerequisites for that path.
+Each admin path has its own prerequisite set. Determine your path from the table above, then confirm the prerequisites for that path.
 
 ### GMS-Path Prerequisites
 
@@ -109,3 +117,10 @@ Portal paths in these guides reflect the current documented experience. If menu 
 |------|--------|--------|
 | 2026-04-21 | Initial version — tri-portal setup sequence, 5-mode mermaid, per-path prerequisites, Portal Navigation Note | -- |
 | 2026-04-25 | Phase 44: added 6th Mermaid branch (Knox - KME Samsung-only) terminating at 07-knox-mobile-enrollment.md; appended Setup Sequence item 3; inserted KME-Path Prerequisites H3 between ZTE-Path and AOSP-Path. | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | Phase 122 plan 06: converted Mermaid flowchart to a Mode / Required Portal(s) / Destination Guide decision table (all 6 CHOOSE outcomes preserved); removed the mermaid fence; LOCKED — 15 (nodes + labeled edges, R1 convention); reworded 2 stale "diagram above/below" references to "table"; split the 1 pre-existing over-200-char Platform-gate blockquote into 3 word-preserving groups; enrolled as RE-092. | -- |
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
