@@ -1,10 +1,10 @@
 # PIPE-05 Empirical Findings
 
 **Phase 124 (Plan 03) close artifact — Phase 125 HARN-07 partial input**
-**Template authored by:** Agent (2026-07-08) — BLANK, to be completed by the owner at the
-Phase 124 terminal checkpoint.
-**Procedure:** `PIPE-05-RUNBOOK.md` executed end-to-end; owner runs the two fixed queries
-live in Copilot Studio and records the outcome below.
+**Template authored by:** Agent (2026-07-08) — BLANK, completed by the owner at the
+Phase 124 terminal checkpoint. **OUTCOME: PASS (owner-confirmed 2026-07-08, "approved").**
+**Procedure:** `PIPE-05-RUNBOOK.md` executed end-to-end; owner ran the two fixed queries
+live in Copilot Studio and recorded the outcome below.
 
 ---
 
@@ -12,13 +12,22 @@ live in Copilot Studio and records the outcome below.
 
 | Field | Value |
 |-------|-------|
-| Date of test | _(owner fills in)_ |
-| Tester | _(owner fills in)_ |
-| Test SharePoint library URL | _(owner fills in — not recorded in-repo if sensitive)_ |
-| Copilot Studio agent name / URL | _(owner fills in — not recorded in-repo if sensitive)_ |
+| Date of test | 2026-07-08 |
+| Tester | Josh Anderson (owner) |
+| Test SharePoint library URL | owner tenant (recorded out-of-band) |
+| Copilot Studio agent name / URL | owner tenant (recorded out-of-band) |
 | Pandoc version tested | 3.7.0.2 (pinned, per Task 1 local conversion proof) |
 | Fixture uploaded | `draft-test-doc.docx` (Doc ID RE-T05) |
-| Raw transcript (optional) | _(owner fills in, local path or "not captured")_ |
+| Raw transcript (optional) | not captured verbatim — outcome + response snippets recorded below in-thread |
+
+**Two-stage run note:** the FIRST run indexed a STALE v1.15 copy of `draft-test-doc.docx`
+(the bot cited "Phase 113 Plan 04" and a Doc-ID-first `.`-separated header — the old stub
+shape, not the shipped format under test). Substance still PASSed on that run, but it was
+not proving the shipped format. The owner RE-RAN the same two queries against the
+freshly-regenerated shipped-format build (`.pipeline-output/draft-test-doc.docx` — verified
+Platform-first `·`-separated block, Phase-124 body) after re-uploading, and CONFIRMED on the
+shipped format. See `PIPE-05-RUNBOOK.md` "⚠ Re-index gotcha" for the mechanism and the
+prevention steps for future re-runs.
 
 ---
 
@@ -28,18 +37,30 @@ Record the binary outcome for each of the two fixed queries from `PIPE-05-RUNBOO
 §Section 3. PASS = the literal "Draft" label appears in the response/citation, attributable
 to the visible `**Status:** Draft` body-text block.
 
-- [ ] **RENDER query PASS** — `Tell me about the draft macOS test document` retrieved
+- [x] **RENDER query PASS** — `Tell me about the draft macOS test document` retrieved
   `draft-test-doc.docx` and the response/citation surfaced the literal "Draft" label.
-  - Citation / response snippet: _(owner fills in)_
-- [ ] **QUERYABLE query PASS** — `What is the status of the RE-T05 document?` returned a
+  - Citation / response snippet: Copilot retrieved and CITED `draft-test-doc.docx` (footnote),
+    surfaced the literal "Status: Draft" from the visible body-text block, and correctly
+    identified it as a Draft/under-review test fixture — contrasting it in the same response
+    with RE-130's "Approved" status. Confirmed against the re-uploaded shipped-format build.
+- [x] **QUERYABLE query PASS** — `What is the status of the RE-T05 document?` returned a
   response naming RE-T05 with `Status: Draft`.
-  - Response snippet: _(owner fills in)_
+  - Response snippet: Copilot answered "The status of RE-T05 is Draft." — sourced from the
+    visible `**Status:**` body-text block. Confirmed against the re-uploaded shipped-format
+    build.
+
+**Mechanism confirmation:** frontmatter `status:` promotes to an invisible Word custom
+property (OQ4) and is never surfaced by Copilot Studio's semantic index. The fact that both
+queries above surfaced "Draft" therefore proves the answer came from the visible `**Status:**
+Draft` body-text block, not the frontmatter — this is the D-17 re-confirmation of the v1.15
+finding, now empirically re-proven against the shipped `·`-separated Platform-first block
+format (not just the v1.15 `.`-separated Doc-ID-first stub format).
 
 ---
 
 ## Outcome (select exactly one)
 
-- [ ] **PASS** — both queries above are checked PASS. The Draft label renders and is
+- [x] **PASS** — both queries above are checked PASS. The Draft label renders and is
   queryable against the shipped EEE header-block format, re-confirming the v1.15 Phase-113
   finding (`PIPE-02-FINDINGS.md` OQ2) on the new format shape. **SC4 closes cleanly.**
 

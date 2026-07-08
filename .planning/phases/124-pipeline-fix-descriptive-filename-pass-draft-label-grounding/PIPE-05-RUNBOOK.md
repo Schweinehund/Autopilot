@@ -102,6 +102,31 @@ The Copilot Studio knowledge source connector reindexes on a schedule. Wait 15-3
 after upload before running queries. If the connector has a manual "Sync" button in the
 Copilot Studio admin panel, trigger it and wait for the sync to complete.
 
+**⚠ Re-index gotcha (confirmed 2026-07-08 during the live PIPE-05 run):** uploading a
+same-filename `draft-test-doc.docx` on top of a previously-indexed copy (e.g. a stale v1.15
+build already sitting in the test library from an earlier probe) can leave SharePoint /
+Copilot Studio still serving the OLD indexed blob instead of the freshly-uploaded one — even
+after the file appears replaced in the library UI. The queries in Section 3 key off content
+inside the document body (RE-T05 / the doc title), NOT off the filename, so a stale index
+answers with the OLD document's content under the SAME filename, silently.
+
+**Tell-tale of a stale index:** the response cites an older phase/plan reference (e.g. "Phase
+113 Plan 04") or shows a Doc-ID-first `.`-separated header (`RE-T05. Doc Type: Runbook....`)
+instead of the current phase reference ("PIPE-05 (Phase 124)") and the shipped Platform-first
+`·`-separated block. If you see either tell-tale, the run is NOT proving the shipped format —
+do not record it as the PASS/FAIL evidence.
+
+**Prevention — do ONE of the following before re-uploading a changed fixture:**
+1. DELETE the old `draft-test-doc.docx` from the test library (and empty the SharePoint
+   recycle bin) before uploading the fresh build, then wait for the connector to fully
+   de-index the deletion before re-uploading; or
+2. Upload the fresh build under a distinct filename (the queries key off RE-T05 / the title
+   in the body, not the filename, so a new filename does not invalidate the query sequence).
+
+If a stale-index run is detected, re-run Section 2 (upload) and Section 3 (queries) after
+applying one of the two preventions above, and record only the confirmed re-run in
+`PIPE-05-FINDINGS.md`.
+
 ---
 
 ## Section 3: Query Sequence
