@@ -1,4 +1,8 @@
 ---
+doc_id: RE-215
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-25
 review_by: 2026-06-24
 applies_to: all
@@ -6,9 +10,17 @@ audience: L1
 platform: Android
 ---
 
-> **Platform gate:** This guide covers Android Enterprise troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md). For macOS ADE, see [macOS ADE Triage](06-macos-triage.md). For iOS/iPadOS, see [iOS Triage](07-ios-triage.md).
+**Platform:** Android · **Doc Type:** Reference · **Doc ID:** RE-215 · **Status:** Approved
 
 # Android Triage Decision Tree
+
+## Summary
+
+Reference decision table for Android enrollment and compliance triage across all Intune-managed Android modes (BYOD Work Profile, COBO, Dedicated/COSU, corporate Zero-Touch, and AOSP specialty hardware). Identifies the enrollment mode first, then routes by symptom to the matching L1 runbook or an L2 escalation, preserving both corpus-heaviest reconvergence merges from the original decision graph.
+
+> **Platform gate:** This guide covers Android Enterprise troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+
+> For macOS ADE, see [macOS ADE Triage](06-macos-triage.md). For iOS/iPadOS, see [iOS Triage](07-ios-triage.md).
 
 ## How to Use This Tree
 
@@ -16,67 +28,11 @@ Start here when a user reports an issue with an Android device enrolled (or expe
 
 No network reachability gate is included at the root (Phase 30 D-03): mode-specific runbooks handle connectivity prerequisites within their own L1 Triage Steps.
 
-## Legend
-
-| Symbol | Meaning |
-|--------|---------|
-| Diamond `{...}` | Decision -- answer the question |
-| Green rounded `([...])` | Resolved -- follow the linked L1 runbook |
-| Red rounded `([...])` | Escalate to L2 -- collect data listed in Escalation Data table and hand off |
-
-## Decision Tree
-
-```mermaid
-graph TD
-    AND1{"What type of Android enrollment<br/>does this device use?"}
-
-    AND1 -->|"Personal phone,<br/>work profile (BYOD)"| AND2{"What is the primary symptom?"}
-    AND1 -->|"Corporate phone,<br/>fully managed (COBO)"| AND3{"What is the primary symptom?"}
-    AND1 -->|"Kiosk or single-purpose<br/>device (Dedicated / COSU)"| AND4{"What is the primary symptom?"}
-    AND1 -->|"Corporate Zero-Touch<br/>enrolled (ZTE)"| AND5{"What is the primary symptom?"}
-    AND1 -->|"Specialty hardware<br/>(AOSP)"| ANDR29(["See: AOSP Enrollment Failed<br/>(Runbook 29)"])
-    AND1 -->|"Don't know /<br/>Can't tell"| ANDE2(["Escalate L2 —<br/>Collect serial, UPN,<br/>screenshots for<br/>mode identification"])
-
-    AND2 -->|"Enrollment-restriction error<br/>('blocked' / 'can't enroll')"| ANDR22(["See: Enrollment Blocked<br/>(Runbook 22)"])
-    AND2 -->|"Device enrolled but<br/>work profile missing"| ANDR23(["See: Work Profile Not Created<br/>(Runbook 23)"])
-    AND2 -->|"Device never appeared<br/>in Intune (no error)"| ANDR24(["See: Device Not Enrolled<br/>(Runbook 24)"])
-    AND2 -->|"Non-compliant /<br/>access blocked"| ANDR25(["See: Compliance Blocked<br/>(Runbook 25)"])
-    AND2 -->|"Expected work app<br/>not installed"| ANDR26(["See: MGP App Not Installed<br/>(Runbook 26)"])
-    AND2 -->|"Other / unclear"| ANDE3(["Escalate L2:<br/>Collect serial, UPN,<br/>symptom description"])
-
-    AND3 -->|"Enrollment-restriction error<br/>('blocked' / 'can't enroll')"| ANDR22
-    AND3 -->|"Device never appeared<br/>in Intune (no error)"| ANDR24
-    AND3 -->|"Non-compliant /<br/>access blocked"| ANDR25
-    AND3 -->|"Expected work app<br/>not installed"| ANDR26
-    AND3 -->|"Other / unclear"| ANDE3
-
-    AND4 -->|"Enrollment-restriction error<br/>('blocked' / 'can't enroll')"| ANDR22
-    AND4 -->|"Device never appeared<br/>in Intune (no error)"| ANDR24
-    AND4 -->|"Non-compliant /<br/>access blocked"| ANDR25
-    AND4 -->|"Expected work app<br/>not installed"| ANDR26
-    AND4 -->|"Other / unclear"| ANDE3
-
-    AND5 -->|"Enrollment never started<br/>or stalled (ZTE-specific)"| ANDR27(["See: ZTE Enrollment Failed<br/>(Runbook 27)"])
-    AND5 -->|"Post-enrollment<br/>non-compliant / access blocked"| ANDR25
-    AND5 -->|"Other / unclear"| ANDE3
-
-    click ANDR22 "../l1-runbooks/22-android-enrollment-blocked.md"
-    click ANDR23 "../l1-runbooks/23-android-work-profile-not-created.md"
-    click ANDR24 "../l1-runbooks/24-android-device-not-enrolled.md"
-    click ANDR25 "../l1-runbooks/25-android-compliance-blocked.md"
-    click ANDR26 "../l1-runbooks/26-android-mgp-app-not-installed.md"
-    click ANDR27 "../l1-runbooks/27-android-zte-enrollment-failed.md"
-    click ANDR29 "../l1-runbooks/29-android-aosp-enrollment-failed.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    class ANDR22,ANDR23,ANDR24,ANDR25,ANDR26,ANDR27,ANDR29 resolved
-    class ANDE2,ANDE3 escalateL2
-```
-
 ## Routing Verification
 
 All terminal nodes are within 2 decision steps of the root node (AND1), well under the SC #1 5-node budget (Phase 40 D-05).
+
+**LOCKED — 39 (nodes + labeled edges)** — 14 nodes + 25 labeled edges, independently re-derived from the pre-conversion decision graph. Both 4-way reconvergence merges (into ANDR25 and ANDE3) are preserved below as explicit per-mode rows — no row collapses more than one incoming edge.
 
 | Path | Step 1 (mode) | Step 2 (symptom) | Destination |
 |------|---------------|------------------|-------------|
@@ -90,15 +46,17 @@ All terminal nodes are within 2 decision steps of the root node (AND1), well und
 | COBO device not enrolled | Corporate phone, fully managed (COBO) | Device never appeared in Intune | Runbook 24 |
 | COBO compliance blocked | Corporate phone, fully managed (COBO) | Non-compliant / access-blocked | Runbook 25 |
 | COBO MGP app missing | Corporate phone, fully managed (COBO) | Expected app not installed | Runbook 26 |
+| COBO other / unclear | Corporate phone, fully managed (COBO) | Symptom doesn't match a runbook | Escalate ANDE3 (unclear symptom) |
 | Dedicated enrollment blocked | Kiosk or single-purpose (Dedicated/COSU) | Enrollment-restriction error visible | Runbook 22 |
 | Dedicated device not enrolled | Kiosk or single-purpose (Dedicated/COSU) | Device never appeared in Intune | Runbook 24 |
 | Dedicated compliance blocked | Kiosk or single-purpose (Dedicated/COSU) | Non-compliant / access-blocked | Runbook 25 |
 | Dedicated MGP app missing | Kiosk or single-purpose (Dedicated/COSU) | Expected app not installed | Runbook 26 |
+| Dedicated other / unclear | Kiosk or single-purpose (Dedicated/COSU) | Symptom doesn't match a runbook | Escalate ANDE3 (unclear symptom) |
 | ZTE enrollment failed | Corporate Zero-Touch enrolled (ZTE) | Enrollment never started or stalled | Runbook 27 |
 | ZTE post-enrollment compliance | Corporate Zero-Touch enrolled (ZTE) | Non-compliant / access-blocked post-ZTE | Runbook 25 |
+| ZTE other / unclear | Corporate Zero-Touch enrolled (ZTE) | Symptom doesn't match a runbook | Escalate ANDE3 (unclear symptom) |
 | AOSP all paths | Specialty hardware (AOSP) | (any) | Runbook 29 |
 | Unknown mode | Don't know / Can't tell | (any) | Escalate ANDE2 (mode identification) |
-| Other / unclear within GMS mode | Any GMS mode (BYOD/COBO/Dedicated/ZTE) | Symptom doesn't match a runbook | Escalate ANDE3 |
 
 ## How to Check
 
@@ -136,5 +94,7 @@ Collect this information before routing to L2.
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-04-25 | Phase 45 AEAOSPFULL-09: Mermaid AOSP edge now routes to ANDR29 single click target (preserves Phase 40 D-05 LOCK + ROADMAP SC#4 verbatim "single click target"); legacy AOSP-out-of-scope escalation node retired across classDef + Routing Verification table + Escalation Data table per D-19 (in-runbook OEM-id step now lives inside Runbook 29 per D-20); Related Resources cross-link to Runbook 29 added. | -- |
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-04-25 | Phase 45 AEAOSPFULL-09: Mermaid AOSP edge now routes to ANDR29 single click target (preserves Phase 40 D-05 LOCK + ROADMAP SC#4 verbatim "single click target"); legacy AOSP-out-of-scope escalation node retired across the diagram's color-class styling, Routing Verification table, and Escalation Data table per D-19 (in-runbook OEM-id step now lives inside Runbook 29 per D-20); Related Resources cross-link to Runbook 29 added. | -- |
+| 2026-07-08 | Phase 122 plan 02: converted Mermaid decision graph to a C17-compliant text-equivalent decision table (LOCKED — 39, nodes + labeled edges); removed the Legend section and the mermaid fence; both 4-way reconvergence merges (into ANDR25 and ANDE3) preserved as explicit per-mode rows; split the >200-char Platform gate blockquote into two groups. | -- |
 | 2026-04-23 | Initial version (Phase 40 — Android L1 triage tree) | -- |

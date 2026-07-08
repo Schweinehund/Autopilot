@@ -228,7 +228,7 @@
 | RE-212 | docs/decision-trees/05-device-lifecycle.md | Device Lifecycle Action Decision Tree | Reference | Pending |
 | RE-213 | docs/decision-trees/06-macos-triage.md | macOS ADE Triage | Reference | Pending |
 | RE-214 | docs/decision-trees/07-ios-triage.md | iOS/iPadOS Triage | Reference | Pending |
-| RE-215 | docs/decision-trees/08-android-triage.md | Android Triage Decision Tree | Reference | Pending |
+| RE-215 | docs/decision-trees/08-android-triage.md | Android Triage Decision Tree | Reference | Approved |
 | RE-216 | docs/decision-trees/09-linux-triage.md | Linux Triage Decision Tree | Reference | Pending |
 | RE-217 | docs/decision-trees/10-8021x-triage.md | 802.1X Triage Decision Tree | Reference | Pending |
 
