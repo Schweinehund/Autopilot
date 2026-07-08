@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T01:12:42.425Z"
+last_updated: "2026-07-08T01:23:11.394Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 24
-  completed_plans: 11
+  completed_plans: 12
   percent: 33
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
-Plan: 3 of 15
+Plan: 4 of 15
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -356,6 +356,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: [122-01] Recorded the RE-212 (05-device-lifecycle.md) directory-precedence rationale in a new Review Notes section in RE-index.md -- no prior per-row rationale-note precedent existed in that file
 - [Phase ?]: 122-02: Corrected 08-android-triage.md LOCKED-N from the plan's precomputed 38 to the independently re-derived 39 (14 nodes + 25 labeled edges), and fixed a collapsed reconvergence row that had dropped 3 of ANDE3's 4 incoming edges -- both caught by the D-01 independent re-derivation discipline during Task 1.
 - [Phase ?]: 122-02: Established a grouped multi-stage decision-table shape (headed Stage-N sub-tables) for decision graphs lacking a pre-existing routing-table analog (00-initial-triage.md, 01-esp-failure.md).
+- [Phase ?]: [122-03] Verified all 3 files' (02/03/04) plan-precomputed LOCKED-N counts (35/33/23) were correct against git-show 71be4ab bytes -- no corrections needed, unlike 122-02's 08-android off-by-one
+- [Phase ?]: [122-03] Deleted 04-apv2-triage.md's Legend section and mermaid click-navigation directives together as one stale-prose removal -- first file in the roster confirmed to carry both anti-pattern classes simultaneously; reworded a freshly-authored VH row to clear a stale-prose grep false-positive on the word 'click'
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -392,8 +394,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T01:12:42.409Z
-Stopped at: Completed 122-02-PLAN.md
+Last session: 2026-07-08T01:23:11.378Z
+Stopped at: Completed 122-03-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -454,3 +456,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 121 P07 | 12min | 2 tasks | 0 files |
 | Phase 122 P01 | 25min | 3 tasks | 2 files |
 | Phase 122 P02 | 45min | 3 tasks | 4 files |
+| Phase 122 P03 | 25min | 3 tasks | 4 files |

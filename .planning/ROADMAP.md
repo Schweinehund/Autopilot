@@ -127,7 +127,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1)* — hand-convert + fork-enroll all 30 files
 
 - [x] 122-02-PLAN.md — Decision-trees 08/00/01 (heaviest reconvergence; front-loaded)
-- [ ] 122-03-PLAN.md — Decision-trees 02/03/04 (keyless-Windows)
+- [x] 122-03-PLAN.md — Decision-trees 02/03/04 (keyless-Windows)
 - [ ] 122-04-PLAN.md — Decision-trees 05/06/07 (05 = Reference directory-precedence; nested MACSSO)
 - [ ] 122-05-PLAN.md — Decision-trees 09/10 (10 = delete fence + stale Legend, upgrade to LOCKED-11)
 - [ ] 122-06-PLAN.md — Carved FULL: admin-setup android/00, ios/00, macos/00
@@ -215,7 +215,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
-| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 2/15 | In Progress|  |
+| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 3/15 | In Progress|  |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
 | 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
