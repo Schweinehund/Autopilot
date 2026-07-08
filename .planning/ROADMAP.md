@@ -41,7 +41,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] **Phase 120: EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix** — Extend the standard + C17 contract with the resolved Mermaid-in-enrolled-classes policy and the extended Doc Type taxonomy; fix the stale frozen-at-close.mjs header comment (completed 2026-07-07)
 - [x] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit glossaries, end-user guides, and the 13 Mermaid-free lifecycle docs to EEE, C17 green (the 9 Mermaid-bearing lifecycle docs are deferred to Phase 122 — RETRO-07 spans 121+122) (completed 2026-07-07)
-- [x] **Phase 122: Structural Retrofit — Decision-Trees, Carved-Mermaid Files & the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder)** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green (completed 2026-07-08)
+- [x] **Phase 122: Structural Retrofit — Decision-Trees, Carved-Mermaid Files & the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder)** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
+ (completed 2026-07-08)
 - [ ] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
 - [ ] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior
 - [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
@@ -158,7 +159,21 @@ Plans:
   2. Every routing/link-table entry in the four nav-hubs remains accurate — no broken links, and entries pointing at Phase 121/122-retrofitted files still resolve
   3. Git history confirms all nav-hub commits post-date the content commits they reference (navigation-last discipline preserved, mirrors the v1.15 Phase 109/117 precedent)
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 123-01-PLAN.md — Mint RE-218..221 registry rows + fork retrofit-nav-hub.mjs (NAV_HUB_PATHS + resolveDocType Reference branch)
+- [ ] 123-02-PLAN.md — Build check-nav-hub-links.mjs (GitHub-exact slugify + {#id}-first + double-hyphen + dedup; outbound+inbound; --self-test)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 123-03-PLAN.md — Run fork + author 4 net-new Summaries + 13 #12 reflows (11 A-split incl index.md:9 3-way + 2 de-blockquote) -> C17 green on 4 hubs (SC1)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 123-04-PLAN.md — Fix 12 pre-existing broken links (separate git-blame commit) + link-checker green (SC2) + full-corpus C17 + navigation-last attestation (SC3) + mark RETRO-06 complete
 
 ### Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
 
