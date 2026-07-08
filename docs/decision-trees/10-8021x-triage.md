@@ -1,4 +1,8 @@
 ---
+doc_id: RE-217
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-30
 review_by: 2026-09-28
 applies_to: both
@@ -6,45 +10,25 @@ audience: L1
 platform: windows+macos+ios+android+linux
 ---
 
-> **Platform gate:** This guide routes 802.1X connection-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). Identify the failure symptom and follow the matching branch to the correct L1 runbook. For non-802.1X Intune issues, return to the [Initial Triage Decision Tree](00-initial-triage.md).
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-217 · **Status:** Approved
 
 # 802.1X Triage Decision Tree
+
+## Summary
+
+Reference decision table for 802.1X Wi-Fi and wired network authentication-failure triage spanning all five platforms (Windows, macOS, iOS/iPadOS, Android, Linux). Gates on a single primary failure symptom — certificate profile error, server trust failure, EAP negotiation mismatch, RADIUS reject, or unknown — and routes to the matching L1 runbook or an L2 escalation with per-platform data to collect, all within 2 decision steps of the root.
+
+> **Platform gate:** This guide routes 802.1X connection-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).
+
+> Identify the failure symptom and follow the matching branch to the correct L1 runbook. For non-802.1X Intune issues, return to the [Initial Triage Decision Tree](00-initial-triage.md).
 
 ## How to Use This Tree
 
 Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook. All terminal nodes are within 2 decision steps of the root. This tree uses a flat symptom-primary shape — per-platform diagnostic detail lives inside each runbook, not this tree, so the tree stays compact.
 
-## Legend
-
-| Symbol | Meaning |
-|--------|---------|
-| Diamond `{...}` | Decision -- answer the question |
-| Green rounded `([...])` | Resolved -- follow the linked L1 runbook |
-| Red rounded `([...])` | Escalate to L2 -- collect data listed in Escalation Data table and hand off |
-
 ## Decision Tree
 
-```mermaid
-graph TD
-    EAP1{"What is the user's<br/>802.1X failure symptom?"}
-
-    EAP1 -->|"Intune cert profile shows<br/>Error or Pending"| EAP38(["See: 802.1X Certificate Failure<br/>(Runbook 38)"])
-    EAP1 -->|"Trust prompt or untrusted<br/>server / RADIUS root CA missing"| EAP40(["See: 802.1X Server Trust Failure<br/>(Runbook 40)"])
-    EAP1 -->|"EAP method or inner-auth<br/>mismatch (e.g., iOS fails,<br/>others succeed)"| EAP41(["See: 802.1X EAP Negotiation Failure<br/>(Runbook 41)"])
-    EAP1 -->|"Cert profiles Succeeded,<br/>RADIUS rejects auth"| EAP39(["See: 802.1X RADIUS Reject<br/>(Runbook 39)"])
-    EAP1 -->|"Don't know / Other"| EAPE(["Escalate L2 -- collect<br/>per-platform signal;<br/>start with L2 Log Collection (#31)"])
-
-    click EAP38 "../l1-runbooks/38-8021x-certificate-failure.md"
-    click EAP39 "../l1-runbooks/39-8021x-radius-reject.md"
-    click EAP40 "../l1-runbooks/40-8021x-server-trust-failure.md"
-    click EAP41 "../l1-runbooks/41-8021x-eap-negotiation-failure.md"
-    click EAPE "../l2-runbooks/31-8021x-log-collection.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    class EAP38,EAP39,EAP40,EAP41 resolved
-    class EAPE escalateL2
-```
+**LOCKED — 11 (nodes + labeled edges)** — 6 nodes + 5 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The single diamond (`EAP1`) is represented below; the Routing Verification table already carries one row per labeled edge, upgraded here from the older 5-leaf-count convention to the R1 nodes-plus-labeled-edges convention.
 
 ## Routing Verification
 
@@ -92,4 +76,6 @@ Collect this information before routing to L2.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 05: converted Mermaid decision graph to the pre-existing Routing Verification decision table; removed the mermaid fence and the Legend section (stale diagram-shape prose); upgraded the LOCKED-N annotation from the older 5-leaf-count convention to LOCKED — 11 (nodes + labeled edges, R1 convention); split the 1 pre-existing over-200-char blockquote; enrolled as RE-217. | -- |
 | 2026-06-30 | Phase 107 plan 03: initial authoring — 802.1X triage decision tree (symptom-primary) | -- |
