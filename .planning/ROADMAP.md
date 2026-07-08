@@ -141,7 +141,7 @@ Plans:
 
 - [x] 122-12-PLAN.md — D-01 verify 11 decision-trees (git-show re-derivation vs converted tables)
 - [x] 122-13-PLAN.md — D-01 verify 10 carved-mermaid files
-- [ ] 122-14-PLAN.md — D-01 verify 9 Mermaid-bearing lifecycle files
+- [x] 122-14-PLAN.md — D-01 verify 9 Mermaid-bearing lifecycle files
 
 **Wave 4** *(blocked on Wave 3)* — close
 
@@ -215,7 +215,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
-| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 13/15 | In Progress|  |
+| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 14/15 | In Progress|  |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
 | 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
