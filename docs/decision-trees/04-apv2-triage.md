@@ -1,13 +1,24 @@
 ---
+doc_id: RE-211
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-04-12
 review_by: 2026-07-11
 applies_to: APv2
 audience: L1
 ---
 
-> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2). For Windows Autopilot (classic), see [Initial Triage Decision Tree](00-initial-triage.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-211 · **Status:** Approved
 
 # APv2 Device Preparation Triage
+
+## Summary
+
+Reference decision table for Windows Autopilot Device Preparation (APv2) post-OOBE triage. Gates on whether the ESP or Device Preparation screen appeared, then routes by primary failure symptom (apps/scripts, timeout, Entra join, enrollment, or IME) to the matching L1 runbook or an L2 escalation point with data to collect.
+
+> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2). For Windows Autopilot (classic), see [Initial Triage Decision Tree](00-initial-triage.md).
 
 ## How to Use This Tree
 
@@ -15,50 +26,28 @@ Start here when a user reports an issue with a device that was expected to go th
 
 Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree will route you to a specific L1 runbook or to an L2 escalation point with data collection instructions.
 
-## Legend
-
-| Symbol | Meaning |
-|--------|---------|
-| Diamond `{...}` | Decision -- answer the question shown |
-| Rectangle `[...]` | Action -- perform this step before continuing |
-| Green rounded `([...])` | Resolved -- issue is fixed or within expected parameters |
-| Red rounded `([...])` | Escalate to L2 -- collect data listed in Escalation Data table and hand off |
-| Orange rounded `([...])` | Escalate to Infrastructure/Network -- collect data listed in Escalation Data table and hand off |
-
 ## Decision Tree
 
-```mermaid
-graph TD
-    APD1{"Did the Enrollment Status Page\n(ESP) display during OOBE?"}
-    APD1 -->|Yes| APA1["Possible APv1 registration conflict"]
-    APD1 -->|No| APD2{"Did the Device Preparation\nscreen appear?"}
+**LOCKED — 23 (nodes + labeled edges)** — 14 nodes + 9 labeled edges (plus 4 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The tree is grouped below into two stages that mirror the graph's own branch structure; each answer column is one of the graph's labeled edges — no row collapses more than one incoming edge.
 
-    APD2 -->|No| APA2["Deployment experience never launched"]
-    APD2 -->|Yes| APD3{"What is the primary\nfailure symptom?"}
+### Stage 1: ESP / Device Preparation Screen Gate (APD1 → APD2)
 
-    APD3 -->|"Apps or scripts\nnot installed"| APA3["Check app assignment and deployment report"]
-    APD3 -->|"Deployment\ntimed out"| APA4["Check timeout settings and app count"]
-    APD3 -->|"Entra join\nfailed"| APE1(["Escalate L2:\nCollect deployment report\nand Entra join error"])
-    APD3 -->|"Enrollment\nfailed"| APE2(["Escalate L2:\nCollect device status\nand license info"])
-    APD3 -->|"IME failed\nor other"| APE3(["Escalate L2:\nCollect deployment report\nphase details"])
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 1 | Did the Enrollment Status Page (ESP) display during OOBE? (APD1) | Yes | Possible APv1 registration conflict (APA1) → See: APv1 Registration Conflict Runbook (APR1) |
+| 1 | Did the Enrollment Status Page (ESP) display during OOBE? (APD1) | No | Continue to Step 2 |
+| 2 | Did the Device Preparation screen appear? (APD2) | No | Deployment experience never launched (APA2) → See: Deployment Not Launched Runbook (APR2) |
+| 2 | Did the Device Preparation screen appear? (APD2) | Yes | Continue to Step 3 (primary failure symptom) |
 
-    APA1 --> APR1(["See: APv1 Registration Conflict Runbook"])
-    APA2 --> APR2(["See: Deployment Not Launched Runbook"])
-    APA3 --> APR3(["See: Apps Not Installed Runbook"])
-    APA4 --> APR4(["See: Deployment Timeout Runbook"])
+### Stage 2: Primary Failure Symptom Routing (APD3)
 
-    click APR1 "../l1-runbooks/08-apv2-apv1-conflict.md"
-    click APR2 "../l1-runbooks/06-apv2-deployment-not-launched.md"
-    click APR3 "../l1-runbooks/07-apv2-apps-not-installed.md"
-    click APR4 "../l1-runbooks/09-apv2-deployment-timeout.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    classDef escalateInfra fill:#fd7e14,color:#fff
-
-    class APR1,APR2,APR3,APR4 resolved
-    class APE1,APE2,APE3 escalateL2
-```
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 3 | What is the primary failure symptom? (APD3) | Apps or scripts not installed | Check app assignment and deployment report (APA3) → See: Apps Not Installed Runbook (APR3) |
+| 3 | What is the primary failure symptom? (APD3) | Deployment timed out | Check timeout settings and app count (APA4) → See: Deployment Timeout Runbook (APR4) |
+| 3 | What is the primary failure symptom? (APD3) | Entra join failed | Escalate L2: Collect deployment report and Entra join error (APE1) |
+| 3 | What is the primary failure symptom? (APD3) | Enrollment failed | Escalate L2: Collect device status and license info (APE2) |
+| 3 | What is the primary failure symptom? (APD3) | IME failed or other | Escalate L2: Collect deployment report phase details (APE3) |
 
 ## How to Check
 
@@ -87,4 +76,6 @@ graph TD
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 03: converted Mermaid decision graph to 2 grouped C17-compliant decision tables (LOCKED — 23, nodes + labeled edges); removed the mermaid fence, the Legend section, and the diagram's node-navigation link directives (stale diagram-interaction prose); all 3 decision points preserved as explicit table rows across the 2 stages. | -- |
 | 2026-04-12 | Initial version | -- |
