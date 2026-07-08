@@ -1,4 +1,8 @@
 ---
+doc_id: RE-205
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-24
 review_by: 2026-09-24
 applies_to: ADE
@@ -6,9 +10,21 @@ audience: all
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS Platform SSO provisioning via Microsoft Intune and Apple Business Manager, for both the standard post-enrollment path (A1, all supported macOS) and the ADE-during-Setup-Assistant zero-click path (A2, macOS 26+ only). For the underlying ADE enrollment pipeline, see [macOS ADE Lifecycle](00-ade-lifecycle.md). For Platform SSO policy configuration, see [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md).
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-205 · **Status:** Approved
 
 # macOS Platform SSO Provisioning Walkthrough: A1 Standard and A2 ADE-during-Setup-Assistant
+
+## Summary
+
+This guide walks an operator through macOS Platform SSO (PSSO) provisioning via Microsoft Intune and Apple Business Manager, covering both the standard post-enrollment path (A1, all supported macOS) and the zero-click ADE-during-Setup-Assistant path (A2, macOS 26+ only), including prerequisites, the shared six-stage spine, the macOS-26+ branch decision, and per-path verification with `app-sso platform -s`.
+
+> **Platform gate:** This guide covers macOS Platform SSO provisioning via Microsoft Intune and Apple Business Manager,
+
+> for both the standard post-enrollment path (A1, all supported macOS) and the ADE-during-Setup-Assistant zero-click path (A2, macOS 26+ only).
+
+> For the underlying ADE enrollment pipeline, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
+
+> For Platform SSO policy configuration, see [Platform SSO Setup](../admin-setup-macos/07-platform-sso-setup.md).
 
 This is a single-file operator walkthrough threading a Mac from enrollment through PSSO registration, serving all three roles: **L1 Service Desk** (use "What the Admin Sees" and "Watch Out For" for orientation and failure identification), **L2 Desktop Engineering** (use "Behind the Scenes" for endpoint and daemon detail), and **Intune Admins** (use "What Happens" for the complete configuration workflow).
 
@@ -19,7 +35,9 @@ This is a single-file operator walkthrough threading a Mac from enrollment throu
 | **A1 — Standard post-enrollment** | macOS 13+ | 5.2404.0+ (LOB/PKG) | At desktop, after "Registration Required" notification | Most deployments; all supported macOS versions |
 | **A2 — ADE-during-Setup-Assistant** | macOS 26+ (hard gate) | 5.2604.0+ (LOB only — NOT VPP) | Inside Setup Assistant; no desktop notification | New enrollments on macOS 26+ requiring zero-click PSSO |
 
-> **Userless devices:** Devices enrolled without user affinity never reach PSSO registration — no WPJ key is written and no Secure Enclave entry is created. This walkthrough covers user-affinity enrollments only. For userless (shared/kiosk) devices, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
+> **Userless devices:** Devices enrolled without user affinity never reach PSSO registration — no WPJ key is written and no Secure Enclave entry is created.
+
+> This walkthrough covers user-affinity enrollments only. For userless (shared/kiosk) devices, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
 
 ### Prerequisites
 
@@ -44,21 +62,18 @@ All prerequisites must be met before Stage 1. The ADE pipeline prerequisites (AB
 
 ## The PSSO Provisioning Pipeline
 
-```mermaid
-graph TD
-    S1[Stage 1: Enrollment Profile + PSSO Policy] --> S2[Stage 2: ADE Token Sync]
-    S2 --> S3[Stage 3: PSSO Policy Assigned to Static User Groups]
-    S3 --> S4[Stage 4: Company Portal Deployed]
-    S4 --> S5[Stage 5: ADE Setup Assistant]
-    S5 --> S6[Stage 6: Await Configuration]
-    S6 --> Branch{macOS 26+ A2?}
-    Branch -->|A1 — all supported macOS| S7[Stage 7A: Desktop + Registration Required]
-    Branch -->|A2 — macOS 26+ only| S8[Stage 7B: PSSO Registers Inside Setup Assistant]
-    S7 --> S9[Stage 8A: Verify at Desktop]
-    S8 --> S10[Stage 8B: Verify After Setup Assistant Exits]
-```
+**LOCKED — 13 (nodes + labeled edges)** — 11 nodes (Stages 1-6, the Branch decision, and terminal Stages 7A/7B/8A/8B) + 2 labeled edges, independently re-derived from the pre-conversion pipeline diagram (`git show 71be4ab`). The single diamond (`Branch` -- the psso decision node explicitly named in this phase's CONTEXT D-01 riders) is represented below; both branches terminate at distinct, non-converging terminals (Stage 8A for A1, Stage 8B for A2) -- there is no reconvergence.
 
-> Stages 1–6 are the shared spine, applicable to both paths. The pipeline branches at the macOS 26+ check: A1 devices continue to Stage 7A (desktop "Registration Required" notification), while A2 devices complete PSSO registration inside Setup Assistant before the desktop is delivered (Stage 7B). The A2 path requires all prerequisites — especially the three-policy same-static-user-group rule — to be met before enrollment starts.
+| Path | Stages 1-6 (shared spine) | Branch: macOS 26+ A2? | Branch outcome | Terminal |
+|------|----------------------------|-------------------------|-------------------|----------|
+| A1 -- all supported macOS | Stage 1: Enrollment Profile + PSSO Policy -> Stage 2: ADE Token Sync -> Stage 3: PSSO Policy Assigned to Static User Groups -> Stage 4: Company Portal Deployed -> Stage 5: ADE Setup Assistant -> Stage 6: Await Configuration | A1 -- all supported macOS | Stage 7A: Desktop + Registration Required | Stage 8A: Verify at Desktop (terminal, no merge) |
+| A2 -- macOS 26+ only | Stage 1: Enrollment Profile + PSSO Policy -> Stage 2: ADE Token Sync -> Stage 3: PSSO Policy Assigned to Static User Groups -> Stage 4: Company Portal Deployed -> Stage 5: ADE Setup Assistant -> Stage 6: Await Configuration | A2 -- macOS 26+ only | Stage 7B: PSSO Registers Inside Setup Assistant | Stage 8B: Verify After Setup Assistant Exits (terminal, no merge) |
+
+> Stages 1–6 are the shared spine, applicable to both paths. The pipeline branches at the macOS 26+ check: A1 devices continue to Stage 7A (desktop "Registration Required" notification),
+
+> while A2 devices complete PSSO registration inside Setup Assistant before the desktop is delivered (Stage 7B).
+
+> The A2 path requires all prerequisites — especially the three-policy same-static-user-group rule — to be met before enrollment starts.
 
 ---
 
@@ -358,87 +373,87 @@ If either line shows a different value, wait and re-run. If REGISTERED does not 
 
 ## A2 Path: ADE-during-Setup-Assistant (macOS 26+)
 
-> **macOS 26+ ADE-during-Setup-Assistant path (A2) — diverges at Stage 4 (Company Portal) and extends through Stage 7B.**
->
-> All requirements below must be met BEFORE enrollment starts. A single misconfiguration requires a **device wipe** to recover — there is no in-place fix.
->
-> ---
->
-> **Most prominent risk — three-policy same-Assigned-static-user-group rule:**
->
-> The Platform SSO Settings Catalog policy, the Company Portal LOB app assignment, and the ADE enrollment profile must all be assigned to the **same Assigned (static) user groups**. This is a hard constraint with no workaround:
->
-> - **Dynamic groups break this.** Microsoft explicitly states this feature does not work with dynamic groups.
-> - **Device groups break this.** Microsoft explicitly states this feature does not work with device groups.
-> - **Different groups for different policies break this.** All three policies must share exactly the same group membership.
-> - **Recovery: wipe and re-enroll.** There is no in-place fix for a group mismatch. The device must be wiped and re-enrolled with correct group assignments.
->
-> Create dedicated Assigned (static) user groups for the A2 path before any device enrolls. Assign all three policies to exactly those groups.
->
-> ---
->
-> **A2 Requirements Summary:**
->
-> | A2 Requirement | Value |
-> |----------------|-------|
-> | macOS version | macOS 26+ (hard gate — A2 does not function on earlier macOS) |
-> | Company Portal version | 5.2604.0+ (LOB app — NOT VPP) |
-> | Company Portal deployment method | Line-of-business (LOB) PKG app via **Apps > All Apps > Add > Line-of-business app** |
-> | Additional Settings Catalog field | Authentication > Extensible single sign-on > Platform SSO > Enable Registration During Setup: Enabled |
-> | Group type | Assigned (static) user groups only |
-> | Three-policy same-group | PSSO Settings Catalog policy + Company Portal LOB app + ADE enrollment profile → same Assigned (static) user groups |
-> | SmartCard | NOT supported on A2 path — use Secure Enclave (recommended) or Password |
-> | Misconfiguration recovery | Device wipe required — no in-place fix |
-> | PSSO registration event | Inside Setup Assistant — no "Registration Required" notification at desktop |
->
-> For Company Portal LOB setup detail and the `Enable Registration During Setup` Settings Catalog field configuration, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md#advanced--optional-ade-during-setup-assistant).
->
-> ---
->
-> **A2 Stage 7B: PSSO Registers Inside Setup Assistant**
->
-> On A2 devices (macOS 26+ with `EnableRegistrationDuringSetup` enabled and all three policies aligned to the same static user groups), PSSO registration completes **inside Setup Assistant before the desktop is delivered**. This is the defining behavioral difference from A1:
->
-> - There is **no "Registration Required" notification** on A2 devices. The registration happens silently inside Setup Assistant.
-> - The user arrives at the desktop **already signed in** with PSSO active.
-> - Verification runs **after Setup Assistant exits** (Stage 8B below), not at a Notification Center prompt.
->
-> **What the user experiences during A2 Setup Assistant:**
->
-> The user is prompted for their Microsoft Entra organizational credentials at least twice during Setup Assistant — once for the standard enrollment authentication and once in the Company Portal authentication flow for the SSO extension. For the exact screen-by-screen flow, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md#advanced--optional-ade-during-setup-assistant). If the user sees "Unable to sign in" during Setup Assistant, tap "Try Again" — Company Portal may still be downloading. If "Try Again" does not resolve the error after several retries, verify the Company Portal LOB deployment and the three-policy group alignment before wiping the device.
->
-> **SmartCard exclusion:** SmartCard authentication is not available on the A2 path. If SmartCard is required for a user population, those devices must use the A1 standard path. For A2 devices, configure Secure Enclave (recommended) or Password as the authentication method in the Platform SSO Settings Catalog policy. Attempting SmartCard on A2 causes enrollment to stall during Setup Assistant.
->
-> ---
->
-> **A2 Stage 8B: Verify After Setup Assistant Exits**
->
-> **What the user sees:** The user arrives at the standard macOS desktop already signed in — there is no "Registration Required" notification. PSSO is already active.
->
-> After the desktop is delivered, open Terminal and run:
->
-> ```bash
-> app-sso platform -s
-> ```
->
-> Confirm both lines appear in the output:
->
-> ```
-> Device Registration: REGISTERED
-> User Registration: REGISTERED
-> ```
->
-> If either line shows a different value after the desktop is delivered, the A2 registration did not complete during Setup Assistant. Common causes: three-policy group mismatch (most likely — requires wipe), Company Portal LOB not deployed or below version floor, `EnableRegistrationDuringSetup` not enabled, SmartCard configured. Review the A2 requirements table above. If a group mismatch is confirmed, wipe the device and re-enroll with corrected group assignments. For investigation guidance, escalate to:
->
-> - [L1 #35 macOS SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md)
-> - [L1 #36 macOS Secure Enclave Key](../l1-runbooks/36-macos-secure-enclave-key.md)
-> - [L2 #27 macOS SSO Investigation](../l2-runbooks/27-macos-sso-investigation.md)
->
-> Do not attempt inline triage — wipe-only recovery means early escalation is essential.
->
-> ---
->
-> _Section provenance — `last_verified: 2026-06-24` / `review_by: 2026-09-24`. This section covers macOS 26-gated features (ADE-during-Setup-Assistant PSSO, Company Portal 5.2604.0 LOB floor). Re-confirm macOS 26 GA status and CP 5.2604.0 LOB floor against current Microsoft Learn / Apple documentation at each 90-day review._
+**macOS 26+ ADE-during-Setup-Assistant path (A2) — diverges at Stage 4 (Company Portal) and extends through Stage 7B.**
+
+All requirements below must be met BEFORE enrollment starts. A single misconfiguration requires a **device wipe** to recover — there is no in-place fix.
+
+---
+
+**Most prominent risk — three-policy same-Assigned-static-user-group rule:**
+
+The Platform SSO Settings Catalog policy, the Company Portal LOB app assignment, and the ADE enrollment profile must all be assigned to the **same Assigned (static) user groups**. This is a hard constraint with no workaround:
+
+- **Dynamic groups break this.** Microsoft explicitly states this feature does not work with dynamic groups.
+- **Device groups break this.** Microsoft explicitly states this feature does not work with device groups.
+- **Different groups for different policies break this.** All three policies must share exactly the same group membership.
+- **Recovery: wipe and re-enroll.** There is no in-place fix for a group mismatch. The device must be wiped and re-enrolled with correct group assignments.
+
+Create dedicated Assigned (static) user groups for the A2 path before any device enrolls. Assign all three policies to exactly those groups.
+
+---
+
+**A2 Requirements Summary:**
+
+| A2 Requirement | Value |
+|----------------|-------|
+| macOS version | macOS 26+ (hard gate — A2 does not function on earlier macOS) |
+| Company Portal version | 5.2604.0+ (LOB app — NOT VPP) |
+| Company Portal deployment method | Line-of-business (LOB) PKG app via **Apps > All Apps > Add > Line-of-business app** |
+| Additional Settings Catalog field | Authentication > Extensible single sign-on > Platform SSO > Enable Registration During Setup: Enabled |
+| Group type | Assigned (static) user groups only |
+| Three-policy same-group | PSSO Settings Catalog policy + Company Portal LOB app + ADE enrollment profile → same Assigned (static) user groups |
+| SmartCard | NOT supported on A2 path — use Secure Enclave (recommended) or Password |
+| Misconfiguration recovery | Device wipe required — no in-place fix |
+| PSSO registration event | Inside Setup Assistant — no "Registration Required" notification at desktop |
+
+For Company Portal LOB setup detail and the `Enable Registration During Setup` Settings Catalog field configuration, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md#advanced--optional-ade-during-setup-assistant).
+
+---
+
+**A2 Stage 7B: PSSO Registers Inside Setup Assistant**
+
+On A2 devices (macOS 26+ with `EnableRegistrationDuringSetup` enabled and all three policies aligned to the same static user groups), PSSO registration completes **inside Setup Assistant before the desktop is delivered**. This is the defining behavioral difference from A1:
+
+- There is **no "Registration Required" notification** on A2 devices. The registration happens silently inside Setup Assistant.
+- The user arrives at the desktop **already signed in** with PSSO active.
+- Verification runs **after Setup Assistant exits** (Stage 8B below), not at a Notification Center prompt.
+
+**What the user experiences during A2 Setup Assistant:**
+
+The user is prompted for their Microsoft Entra organizational credentials at least twice during Setup Assistant — once for the standard enrollment authentication and once in the Company Portal authentication flow for the SSO extension. For the exact screen-by-screen flow, see [Platform SSO Setup — ADE-during-Setup-Assistant section](../admin-setup-macos/07-platform-sso-setup.md#advanced--optional-ade-during-setup-assistant). If the user sees "Unable to sign in" during Setup Assistant, tap "Try Again" — Company Portal may still be downloading. If "Try Again" does not resolve the error after several retries, verify the Company Portal LOB deployment and the three-policy group alignment before wiping the device.
+
+**SmartCard exclusion:** SmartCard authentication is not available on the A2 path. If SmartCard is required for a user population, those devices must use the A1 standard path. For A2 devices, configure Secure Enclave (recommended) or Password as the authentication method in the Platform SSO Settings Catalog policy. Attempting SmartCard on A2 causes enrollment to stall during Setup Assistant.
+
+---
+
+**A2 Stage 8B: Verify After Setup Assistant Exits**
+
+**What the user sees:** The user arrives at the standard macOS desktop already signed in — there is no "Registration Required" notification. PSSO is already active.
+
+After the desktop is delivered, open Terminal and run:
+
+```bash
+app-sso platform -s
+```
+
+Confirm both lines appear in the output:
+
+```
+Device Registration: REGISTERED
+User Registration: REGISTERED
+```
+
+If either line shows a different value after the desktop is delivered, the A2 registration did not complete during Setup Assistant. Common causes: three-policy group mismatch (most likely — requires wipe), Company Portal LOB not deployed or below version floor, `EnableRegistrationDuringSetup` not enabled, SmartCard configured. Review the A2 requirements table above. If a group mismatch is confirmed, wipe the device and re-enroll with corrected group assignments. For investigation guidance, escalate to:
+
+- [L1 #35 macOS SSO Sign-In Failure](../l1-runbooks/35-macos-sso-sign-in-failure.md)
+- [L1 #36 macOS Secure Enclave Key](../l1-runbooks/36-macos-secure-enclave-key.md)
+- [L2 #27 macOS SSO Investigation](../l2-runbooks/27-macos-sso-investigation.md)
+
+Do not attempt inline triage — wipe-only recovery means early escalation is essential.
+
+---
+
+_Section provenance — `last_verified: 2026-06-24` / `review_by: 2026-09-24`. This section covers macOS 26-gated features (ADE-during-Setup-Assistant PSSO, Company Portal 5.2604.0 LOB floor). Re-confirm macOS 26 GA status and CP 5.2604.0 LOB floor against current Microsoft Learn / Apple documentation at each 90-day review._
 
 ---
 
@@ -488,5 +503,6 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 | Date | Change |
 |------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-06-24 | Phase 90 (MIG-04): added reciprocal See Also link to 02-mdm-migration-psso.md (bidirectional PSSO re-registration junction) |
 | 2026-06-24 | Phase 89 (PROV-01..04): initial PSSO provisioning walkthrough (A1 + A2 paths) |
