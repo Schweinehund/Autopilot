@@ -22,7 +22,17 @@ import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import process from 'node:process';
 // Internal lib only (not npm)
-import { extractBodyText, findHeadingStyleIds } from './lib/ooxml.mjs';
+import { extractBodyText, findHeadingStyleIds, extractCustomProperties } from './lib/ooxml.mjs';
+
+// PIPE-03/D-04 OQ4: the confirmed 9-key EEE custom-property set (uniform across
+// every sampled doc class -- runbook, admin-setup guide, decision-tree, glossary,
+// nav-hub). CUSTOM-PROPS is a LENIENT permanent check: any legitimately-promoted
+// doc carrying a subset of these keys still passes; only a name OUTSIDE this set
+// signals a promotion regression.
+const KNOWN_CUSTOM_PROPERTY_KEYS = [
+  'applies_to', 'audience', 'doc_id', 'doc_type',
+  'last_verified', 'owner', 'platform', 'review_by', 'status'
+];
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -75,6 +85,37 @@ function runHeadingStyleCheck(path) {
     return { pass: true, detail: 'heading pStyle IDs present: [' + found.join(',') + ']' };
   } catch (err) {
     return { pass: false, detail: 'findHeadingStyleIds error: ' + err.message };
+  }
+}
+
+/**
+ * CUSTOM-PROPS (D-04 OQ4 non-regression): docProps/custom.xml property names must
+ * all be within the known EEE key set -- a name outside that set is a promotion-
+ * regression signal (e.g. leaked/renamed frontmatter key). LENIENT: passes on any
+ * legitimately-promoted doc regardless of how many of the 9 keys are present; also
+ * passes (trivially) when docProps/custom.xml is absent entirely (zero custom
+ * properties promoted -- not a regression by itself). The no-body-leak half of
+ * D-04's OQ4 assertion is already covered by YAML-LEAK; not duplicated here.
+ * @param {string} path - path to .docx file
+ * @returns {{ pass: boolean, detail: string }}
+ */
+function runCustomPropsCheck(path) {
+  try {
+    const names = extractCustomProperties(path);
+    const unknown = names.filter(n => !KNOWN_CUSTOM_PROPERTY_KEYS.includes(n));
+    if (unknown.length > 0) {
+      return {
+        pass: false,
+        detail: 'unexpected custom property name(s) outside the known EEE key set: [' +
+          unknown.join(',') + '] (all found: [' + names.join(',') + '])'
+      };
+    }
+    return { pass: true, detail: 'custom properties within known EEE key set: [' + names.join(',') + ']' };
+  } catch (err) {
+    if (err.message && err.message.includes("not found in")) {
+      return { pass: true, detail: 'docProps/custom.xml absent -- zero custom properties promoted (not a regression)' };
+    }
+    return { pass: false, detail: 'extractCustomProperties error: ' + err.message };
   }
 }
 
@@ -138,6 +179,12 @@ checks.push({
   id: 'HEADING-STYLE',
   name: 'V-GUARD-HEADING-STYLE: Heading1/Heading2/Heading3 pStyle IDs present in .docx body',
   run() { return runHeadingStyleCheck(docxPath); }
+});
+
+checks.push({
+  id: 'CUSTOM-PROPS',
+  name: 'V-GUARD-CUSTOM-PROPS: docProps/custom.xml property names within the known EEE key set (D-04 OQ4)',
+  run() { return runCustomPropsCheck(docxPath); }
 });
 
 // ─── Runner helpers ───────────────────────────────────────────────────────────

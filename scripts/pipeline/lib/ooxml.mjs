@@ -120,3 +120,21 @@ export function findHeadingStyleIds(docxPath) {
   }
   return found;
 }
+
+/**
+ * Extract the set of custom document-property names promoted from YAML frontmatter.
+ * Reads docProps/custom.xml and returns every <property ... name="X"> attribute value.
+ * Use case — D-04 OQ4 non-regression proof: confirms pandoc's YAML-frontmatter-to-Word-
+ * custom-property promotion path is unaffected by the PIPE-03 nav-footer preprocessing.
+ *
+ * @param {string} docxPath - absolute or repo-relative path to .docx file
+ * @returns {string[]} property names found (e.g. ['applies_to','audience','doc_id', ...])
+ */
+export function extractCustomProperties(docxPath) {
+  const xml = extractEntry(docxPath, 'docProps/custom.xml');
+  const names = [];
+  const re = /<property[^>]*\bname="([^"]+)"/g;
+  let m;
+  while ((m = re.exec(xml)) !== null) names.push(m[1]);
+  return names;
+}
