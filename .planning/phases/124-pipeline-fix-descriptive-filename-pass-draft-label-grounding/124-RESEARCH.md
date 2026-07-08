@@ -597,9 +597,9 @@ template's *shape* transfers; its *content* must be re-authored to match D-15's 
 **If this table is empty:** N/A — see above; all four items are low-risk implementation-detail
 assumptions, not load-bearing factual claims about the locked decisions themselves.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Should the D-04 OQ4 regression check become a permanent `guard-docx.mjs` check, or a one-off proof script?**
+1. **Should the D-04 OQ4 regression check become a permanent `guard-docx.mjs` check, or a one-off proof script?** **RESOLVED (124-01):** the permanent CUSTOM-PROPS guard was adopted (see 124-01 Task 2).
    - What we know: the 9-key set is confirmed uniform across every sampled doc class this session
      (runbook, admin-setup guide, decision-tree, glossary, nav-hub) — safe to hard-code either way.
    - What's unclear: whether making it a PERMANENT check (applied to every future conversion)
@@ -611,7 +611,7 @@ assumptions, not load-bearing factual claims about the locked decisions themselv
      extension, not a chain/validator-atom addition, and directly serves D-04's own stated intent
      ("both paths regression-tested"). Low risk either way; planner should just decide explicitly.
 
-2. **Exact output format for the PIPE-04 committed map (`.md` table vs `.json`)?**
+2. **Exact output format for the PIPE-04 committed map (`.md` table vs `.json`)?** **RESOLVED (124-02):** the `.md` table map format was adopted (see 124-02 Task 2).
    - What we know: D-09 names the file `build-filename-map.mjs` and describes the map's logical
      columns; it does not lock a serialization format.
    - What's unclear: which format is easier for the (deferred, v1.17+) batch driver to consume.
@@ -619,7 +619,7 @@ assumptions, not load-bearing factual claims about the locked decisions themselv
      a PR diff) unless the planner has a reason to prefer machine-readable `.json` for the future
      batch driver. Either is fine — decide once, don't leave open through implementation.
 
-3. **Does `draft-test-doc.md`'s frontmatter need the full 9-key set, or just the D-14-mandated `status: draft`?**
+3. **Does `draft-test-doc.md`'s frontmatter need the full 9-key set, or just the D-14-mandated `status: draft`?** **RESOLVED (124-03):** the full 9-key set was adopted; the fixture key-count decision is recorded in 124-03 Task 1.
    - What we know: D-14's locked text only requires the visible block reformat + `status: draft`
      (already present). The fixture currently has only 4 frontmatter keys (`title, last_verified,
      platform, status`).
