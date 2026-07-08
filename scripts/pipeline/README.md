@@ -21,6 +21,18 @@ pandoc <input.md> -o <output.docx> --reference-doc=scripts/pipeline/reference.do
   handling and causes leaks into the document body.
 - `--from markdown` is auto-detected from the `.md` extension.
 
+**Pre-pandoc source-normalization step (PIPE-03, not a pandoc flag):** Before this
+invocation runs, `convert.ps1` copies the input `.md` to an **ephemeral temp file** and,
+on that copy only, rewrites a blank-preceded standalone `---` line to `* * *` — but
+**only** when it opens a nav-footer bracket (i.e. the next non-blank line matches
+`*Previous:` or `*Next step:`). This fixes pandoc's `Unknown alias 'Previous'/'Next'`
+YAML-metadata misparse (`DEFER-119-C`) for the admin-setup nav-footer shape. The **source
+`.md` on disk is never mutated** — only the ephemeral temp copy is rewritten, and it is
+deleted after conversion. The pandoc invocation itself (above) stays **flag-identical**;
+the temp copy is fed to pandoc in place of the original path, nothing else changes. A
+fail-closed guard aborts the conversion (non-zero exit) if the temp copy ever differs
+from the source in any way other than this specific rewrite.
+
 Use the wrapper script for convenience (it also runs the version guard):
 
 ```powershell
