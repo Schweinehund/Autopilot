@@ -119,7 +119,7 @@
 | RE-103 | docs/admin-setup-android/11-aosp-pico.md | Configure Pico AOSP Devices in Intune | Guide | Approved |
 | RE-104 | docs/admin-setup-android/12-aosp-htc-vive-focus.md | Configure HTC VIVE Focus AOSP Devices in Intune | Guide | Approved |
 | RE-105 | docs/admin-setup-android/13-aosp-meta-quest.md | Configure Meta Quest AOSP Devices in Intune | Guide | Approved |
-| RE-106 | docs/admin-setup-ios/00-overview.md | iOS/iPadOS Admin Setup | Guide | Pending |
+| RE-106 | docs/admin-setup-ios/00-overview.md | iOS/iPadOS Admin Setup | Guide | Approved |
 | RE-107 | docs/admin-setup-ios/01-apns-certificate.md | Apple Push Notification (APNs) Certificate | Guide | Approved |
 | RE-108 | docs/admin-setup-ios/02-abm-token.md | ABM/ADE Token Configuration for iOS/iPadOS | Guide | Approved |
 | RE-109 | docs/admin-setup-ios/03-ade-enrollment-profile.md | iOS/iPadOS ADE Enrollment Profile Configuration | Guide | Approved |

@@ -1,4 +1,8 @@
 ---
+doc_id: RE-106
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-17
 review_by: 2026-07-16
 applies_to: all
@@ -6,29 +10,30 @@ audience: admin
 platform: iOS
 ---
 
-> **Platform gate:** This guide covers iOS/iPadOS admin setup across all enrollment paths: corporate ADE, Device Enrollment, account-driven User Enrollment, and MAM-WE.
-> For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md).
-> For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+**Platform:** iOS · **Doc Type:** Guide · **Doc ID:** RE-106 · **Status:** Approved
 
 # iOS/iPadOS Admin Setup
 
-This overview routes Intune administrators to the correct iOS/iPadOS admin setup path. Corporate devices purchased through Apple Business Manager follow the Automated Device Enrollment (ADE) chain (guides 01-06). Personal-device and non-ABM paths — Device Enrollment (diagram: "BYOD w/o ABM"), account-driven User Enrollment (diagram: "Privacy-preserving BYOD"), and app-layer MAM-WE (diagram: "App-layer only") — are parallel alternatives, each with its own prerequisites and trade-offs. Choose a path from the diagram below, then follow the guide for that path.
+## Summary
+
+Routes Intune administrators to the correct iOS/iPadOS admin setup path across all four enrollment approaches — corporate ADE (guides 1–6), Device Enrollment without ABM, account-driven User Enrollment for privacy-preserving BYOD, and app-layer MAM-WE — by mapping each path to its ordered guide chain, including the Corporate ADE branch's fan-out into parallel Configuration Profiles, App Deployment, and Compliance Policies guides.
+
+> **Platform gate:** This guide covers iOS/iPadOS admin setup across all enrollment paths: corporate ADE, Device Enrollment, account-driven User Enrollment, and MAM-WE.
+
+> For macOS ADE setup, see [macOS Admin Setup Guides](../admin-setup-macos/00-overview.md). For iOS/iPadOS enrollment terminology, see the [Apple Provisioning Glossary](../_glossary-macos.md).
+
+This overview routes Intune administrators to the correct iOS/iPadOS admin setup path. Corporate devices purchased through Apple Business Manager follow the Automated Device Enrollment (ADE) chain (guides 01-06). Personal-device and non-ABM paths — Device Enrollment ("BYOD w/o ABM" below), account-driven User Enrollment ("Privacy-preserving BYOD" below), and app-layer MAM-WE ("App-layer only" below) — are parallel alternatives, each with its own prerequisites and trade-offs. Choose a path from the table below, then follow the guide for that path.
 
 ## Setup Sequence
 
-```mermaid
-flowchart TD
-    START[Admin lands here] --> CHOOSE{Choose path}
-    CHOOSE -->|Corporate ADE| A[1. APNs Certificate]
-    A --> B[2. ABM/ADE Token]
-    B --> C[3. ADE Enrollment Profile]
-    C --> D[4. Configuration Profiles]
-    C --> E[5. App Deployment]
-    C --> F[6. Compliance Policies]
-    CHOOSE -->|BYOD w/o ABM| G[7. Device Enrollment]
-    CHOOSE -->|Privacy-preserving BYOD| H[8. User Enrollment]
-    CHOOSE -->|App-layer only| I[9. MAM App Protection]
-```
+**LOCKED — 15 (nodes + labeled edges)** — 11 nodes + 4 labeled edges, independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). The single decision point (`Choose path`) is represented below as one row per outcome — all 4 outcomes (Corporate ADE, BYOD w/o ABM, Privacy-preserving BYOD, App-layer only) preserved, including the Corporate ADE branch's internal fan-out (guide 3 continues into 3 parallel guides 4/5/6).
+
+| Path | Step 1 | Step 2 | Step 3 (then parallel) | Destination Guide(s) |
+|------|--------|--------|--------------------------|------------------------|
+| Corporate ADE | [1. APNs Certificate](01-apns-certificate.md) | [2. ABM/ADE Token](02-abm-token.md) | [3. ADE Enrollment Profile](03-ade-enrollment-profile.md) → then in parallel: [4. Configuration Profiles](04-configuration-profiles.md), [5. App Deployment](05-app-deployment.md), [6. Compliance Policies](06-compliance-policy.md) | Guides 1–6 |
+| BYOD w/o ABM | [7. Device Enrollment](07-device-enrollment.md) | (terminal) | — | Guide 7 |
+| Privacy-preserving BYOD | [8. User Enrollment](08-user-enrollment.md) | (terminal) | — | Guide 8 |
+| App-layer only | [9. MAM App Protection](09-mam-app-protection.md) | (terminal) | — | Guide 9 |
 
 1. **[APNs Certificate](01-apns-certificate.md)** -- Create and maintain the Apple Push Notification certificate that enables all Apple MDM communication. This certificate is shared infrastructure -- one expired certificate breaks iOS, iPadOS, AND macOS management simultaneously.
 
@@ -50,7 +55,7 @@ flowchart TD
 
 ## Prerequisites
 
-Each enrollment path has its own prerequisite set. Determine your path from the diagram above, then confirm the prerequisites for that path.
+Each enrollment path has its own prerequisite set. Determine your path from the table above, then confirm the prerequisites for that path.
 
 ### ADE-Path Prerequisites
 
@@ -126,3 +131,10 @@ Tenant administrators can block specific enrollment types at the policy layer: b
 | 2026-04-17 | Restructured to cover all iOS admin paths (ADE + Device Enrollment + User Enrollment + MAM-WE) — added BYOD-path prerequisites, Intune Enrollment Restrictions shared section, branching Mermaid path-selector diagram; `applies_to` widened from ADE to all | -- |
 | 2026-04-16 | Extended overview to include Phase 28 guides 04/05/06 and updated Mermaid diagram to 6-node graph | -- |
 | 2026-04-16 | Initial version -- iOS admin setup overview with Mermaid diagram and 3-guide setup sequence | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | Phase 122 plan 06: converted Mermaid flowchart to a Path / Step 1 / Step 2 / Step 3 / Destination decision table (all 4 CHOOSE outcomes preserved, incl. the Corporate ADE branch's fan-out into 3 parallel guides); removed the mermaid fence; LOCKED — 15 (nodes + labeled edges, R1 convention); reworded 4 stale "diagram" references to "table"; split the 1 pre-existing over-200-char Platform-gate blockquote into 2 word-preserving groups; enrolled as RE-106. | -- |
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
