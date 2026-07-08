@@ -19,6 +19,7 @@ platform: all
 This one-page cheat sheet gives Desktop Engineering (L2) staff the commands, log paths, event IDs, and investigation-runbook references needed for deeper technical diagnosis, spanning Windows Autopilot (classic APv1 and Device Preparation APv2), macOS ADE, iOS/iPadOS, Android Enterprise, Linux, and Apple Business investigation scenarios.
 
 > **Platform coverage:** This card covers Windows [Autopilot](_glossary.md#autopilot) (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
+
 > Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 ## Log Collection
@@ -131,7 +132,9 @@ Microsoft-Windows-DeviceManagement-Enterprise-Diagnostics-Provider/Admin
 | 6xxx | Script execution | 6000 script started, 6001 completed, 6002 failed |
 | 9xxx | Errors | 9000+ error events |
 
-> **Confidence:** MEDIUM -- event ID ranges sourced from community research (oofhours.com, Call4Cloud), not official Microsoft documentation. See [APv2 Event ID Reference](l2-runbooks/07-apv2-event-ids.md) for full details.
+> **Confidence:** MEDIUM -- event ID ranges sourced from community research (oofhours.com, Call4Cloud), not official Microsoft documentation.
+
+> See [APv2 Event ID Reference](l2-runbooks/07-apv2-event-ids.md) for full details.
 
 ### APv2 Investigation Runbooks
 
@@ -244,7 +247,11 @@ See [L2 #30 macOS MDM Migration Failure](l2-runbooks/30-macos-mdm-migration-fail
 
 **Platform:** iOS/iPadOS through Microsoft Intune
 
-> **Important:** iOS has NO CLI diagnostic tool. No equivalent to `mdmdiagnosticstool.exe` (Windows) or `profiles` / `log show` / `system_profiler` (macOS). Diagnostic data is fragmented across three tiered methods — see below.
+> **Important:** iOS has NO CLI diagnostic tool.
+
+> No equivalent to `mdmdiagnosticstool.exe` (Windows) or `profiles` / `log show` / `system_profiler` (macOS).
+
+> Diagnostic data is fragmented across three tiered methods — see below.
 
 ### iOS Diagnostic Data Collection (3 methods)
 
@@ -280,7 +287,11 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 4. **Locate output file:** Settings > Privacy & Security > Analytics & Improvements > Analytics Data. Scroll to the `sysdiagnose_` prefixed entry matching today's date/time.
 5. **Export from device:** tap the sysdiagnose file > tap the share button (top-right) > send via AirDrop, Email, iCloud, Files.app, or any installed share extension. (For bundles >25 MB, prefer AirDrop or iCloud over Mail.)
 
-> **Supervised-device compatibility:** AssistiveTouch-based trigger works on supervised devices. Unlike the legacy volume + Side-button combo, it does NOT conflict with the Side Button restriction profile (Allow Side Button = false). This is the recommended trigger for managed-fleet troubleshooting.
+> **Supervised-device compatibility:** AssistiveTouch-based trigger works on supervised devices.
+
+> Unlike the legacy volume + Side-button combo, it does NOT conflict with the Side Button restriction profile (Allow Side Button = false).
+
+> This is the recommended trigger for managed-fleet troubleshooting.
 
 *(Full procedure with Mac+cable alternative: [iOS Log Collection §Section 3](l2-runbooks/14-ios-log-collection.md#section-3-sysdiagnose-trigger-and-file-export). Authoritative source: Apple Support — [Use Diagnostics to research device issues](https://support.apple.com/guide/platform-support/use-diagnostics-to-research-device-issues-supd3f43814e/web). Verified 2026-04-18 per UAT Test 15 resolution; replaces prior Phase 31 D-30 physical-button research-flag marker.)*
 
@@ -295,7 +306,11 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 
 **Platform:** Android Enterprise through Microsoft Intune
 
-> **Important:** Android L2 diagnostic data collection is mode-dependent. AMAPI April 2025 changed the primary log mechanism for managed-Android modes — see the table below for the per-mode primary tool. Play Integrity verdict interpretation lives at the Phase 54 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
+> **Important:** Android L2 diagnostic data collection is mode-dependent.
+
+> AMAPI April 2025 changed the primary log mechanism for managed-Android modes — see the table below for the per-mode primary tool.
+
+> Play Integrity verdict interpretation lives at the Phase 54 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
 
 ### Android Diagnostic Data Collection (3 methods)
 
@@ -327,7 +342,7 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 | MEETS_DEVICE_INTEGRITY | Device passed integrity + has Google Play Services (a recognized app-distribution surface) | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
 | MEETS_STRONG_INTEGRITY | Device passed integrity + has Google Play Services + has hardware-backed key attestation + meets the Android security patch age requirement | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
 
-> ⚠️ **Cascade deadlines and the full enforcement-cascade migration playbook are owned by [Phase 54 SSoT — Android Patch Delivery — Deadlines](../operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).**
+⚠️ **Cascade deadlines and the full enforcement-cascade migration playbook are owned by [Phase 54 SSoT — Android Patch Delivery — Deadlines](../operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).**
 
 Full cascade timeline and remediation playbook: see [Android Patch Delivery — Deadlines](../operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).
 
@@ -346,7 +361,9 @@ Full cascade timeline and remediation playbook: see [Android Patch Delivery — 
 
 **Platform:** Linux (Ubuntu 22.04 / 24.04 LTS) through Microsoft Intune
 
-> **Important:** Linux L2 diagnostic data collection follows a 3-tier methodology (journalctl primary / file-based paths secondary / package-state queries supplemental) per the Phase 52 Decision Matrix. Compliance category configuration content lives at the Phase 50 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
+> **Important:** Linux L2 diagnostic data collection follows a 3-tier methodology (journalctl primary / file-based paths secondary / package-state queries supplemental) per the Phase 52 Decision Matrix.
+
+> Compliance category configuration content lives at the Phase 50 SSoT — this H2 carries pointer-only references (PITFALL-7 firewall).
 
 ### Linux Diagnostic Data Collection (3 methods)
 
@@ -378,7 +395,7 @@ Full cascade timeline and remediation playbook: see [Android Patch Delivery — 
 | Device Encryption | dm-crypt + LUKS full-disk encryption signal as compliance prerequisite (encryption-compliance triple analog: BitLocker / FileVault / dm-crypt) | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-4-configure-device-encryption-dm-crypt-luks) |
 | Password Policy | Minimum length / complexity rules; enforced via PAM `pwquality` configuration on enrolled devices | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-5-configure-password-policy) |
 
-> ⚠️ **Bash discovery script authoring, compliance-evaluation cadence, and per-category remediation playbooks are owned by [Phase 50 SSoT — Linux Compliance Policy](../admin-setup-linux/03-compliance-policy.md).**
+⚠️ **Bash discovery script authoring, compliance-evaluation cadence, and per-category remediation playbooks are owned by [Phase 50 SSoT — Linux Compliance Policy](../admin-setup-linux/03-compliance-policy.md).**
 
 Full configuration details and per-category remediation: see the [Linux Compliance Policy admin guide](../admin-setup-linux/03-compliance-policy.md).
 

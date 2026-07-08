@@ -19,6 +19,7 @@ platform: all
 This is the cross-platform symptom-based triage router for provisioning failures, mapping observed symptoms across Windows Autopilot (APv1/APv2), macOS ADE, iOS/iPadOS, and Android Enterprise deployments to the correct L1 runbook or L2 investigation guide. Intended for Service Desk and Desktop Engineering teams diagnosing an active enrollment or compliance failure by platform and scenario.
 
 > **Platform coverage:** This guide covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, and Android Enterprise provisioning issues.
+
 > Not sure which platform or framework? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 ## Choose Your Platform
@@ -34,7 +35,9 @@ This is the cross-platform symptom-based triage router for provisioning failures
 
 > **macOS:** For macOS ADE troubleshooting, see [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios).
 
-> **Not sure which framework?** If you don't know whether the device is using APv1 (classic) or APv2 (Device Preparation), see [APv1 vs APv2](apv1-vs-apv2.md) to identify the framework before selecting a runbook.
+> **Not sure which framework?** If you don't know whether the device is using APv1 (classic) or APv2 (Device Preparation),
+
+> see [APv1 vs APv2](apv1-vs-apv2.md) to identify the framework before selecting a runbook.
 
 Symptom-based index routing to the appropriate L1 and L2 runbooks.
 
@@ -43,6 +46,7 @@ Symptom-based index routing to the appropriate L1 and L2 runbooks.
 ### Device Registration Issues
 
 > **macOS:** For macOS device not appearing in Intune, see [macOS: Device Not Appearing](#device-not-appearing-in-intune).
+
 > **iOS:** For iOS enrollment failures, see [iOS: Device Not Appearing in Intune](#ios-device-not-appearing-in-intune).
 
 Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) portal after [OOBE](_glossary.md#oobe).
@@ -60,6 +64,7 @@ Device serial number not appearing in the [Autopilot](_glossary.md#autopilot) po
 ### Profile Assignment Issues
 
 > **macOS:** For macOS configuration profile issues, see [macOS: Profile Not Applied](#configuration-profile-not-applied).
+
 > **iOS:** For iOS configuration and restriction issues, see [iOS: Enrollment Blocked by Configuration](#ios-enrollment-blocked-by-configuration).
 
 Device goes through manual setup instead of Autopilot, or wrong profile assigned.
@@ -101,7 +106,9 @@ Device not appearing in both on-premises AD and Azure AD after Autopilot provisi
 
 Old device name shows in Intune or Azure AD after Autopilot rename.
 
-> **Tip:** This is typically a sync delay — allow up to 24 hours for the name to propagate through Azure AD Connect and Intune. If the naming template in the Autopilot profile is correct and 24 hours have passed, force a device sync from the Intune portal.
+> **Tip:** This is typically a sync delay — allow up to 24 hours for the name to propagate through Azure AD Connect and Intune.
+
+> If the naming template in the Autopilot profile is correct and 24 hours have passed, force a device sync from the Intune portal.
 
 ---
 
@@ -156,6 +163,7 @@ Problems during APv1-to-APv2 migration, imaging-to-Autopilot transition, or GPO-
 ### Security and Enrollment Issues
 
 > **macOS:** Conditional Access enrollment timing applies cross-platform. See [macOS: Compliance / Access Blocked](#compliance-failure-or-access-blocked) for macOS-specific guidance.
+
 > **iOS:** For iOS Conditional Access and compliance timing issues, see [iOS: Compliance / Access Blocked](#ios-compliance--access-blocked).
 
 Conditional Access blocking enrollment, compliance not evaluating, or security baseline conflicts.
@@ -274,6 +282,7 @@ Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollm
 ## iOS/iPadOS Failure Scenarios
 
 > **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
+
 > **macOS:** For macOS ADE troubleshooting, see [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios).
 
 **Platform:** iOS/iPadOS through Microsoft Intune
@@ -324,7 +333,11 @@ Device shows compliant in Intune but Conditional Access still blocks Microsoft 3
 
 ### iOS: App Protection Policies Not Applying (MAM-WE)
 
-> **Advisory:** MAM-WE-specific L1/L2 runbooks are deferred to the **ADDTS-01** future milestone. No L1 runbook exists. For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](admin-setup-ios/09-mam-app-protection.md). For the MAM-WE glossary entry, see [MAM-WE in Apple Provisioning Glossary](_glossary-macos.md#mam-we).
+> **Advisory:** MAM-WE-specific L1/L2 runbooks are deferred to the **ADDTS-01** future milestone. No L1 runbook exists.
+
+> For the MAM-WE configuration guide, see [MAM-WE App Protection Policies](admin-setup-ios/09-mam-app-protection.md).
+
+> For the MAM-WE glossary entry, see [MAM-WE in Apple Provisioning Glossary](_glossary-macos.md#mam-we).
 
 ### 802.1X Network Authentication Failure
 
@@ -336,12 +349,16 @@ Device cannot connect to a 802.1X-protected Wi-Fi or wired network after enrollm
 ## Android Enterprise Failure Scenarios
 
 > **Windows:** For Windows Autopilot issues, see [Windows Autopilot Issues](#windows-autopilot-issues).
+
 > **macOS:** For macOS ADE troubleshooting, see [macOS ADE Failure Scenarios](#macos-ade-failure-scenarios).
+
 > **iOS:** For iOS/iPadOS issues, see [iOS/iPadOS Failure Scenarios](#iosipados-failure-scenarios).
 
 **Platform:** Android Enterprise through Microsoft Intune
 
-> **Not sure which Android scenario?** Start with the [Android Triage Decision Tree](decision-trees/08-android-triage.md) — it disambiguates by enrollment mode (BYOD / COBO / Dedicated / ZTE / Knox / AOSP) and symptom in 2-3 steps.
+> **Not sure which Android scenario?** Start with the [Android Triage Decision Tree](decision-trees/08-android-triage.md)
+
+> — it disambiguates by enrollment mode (BYOD / COBO / Dedicated / ZTE / Knox / AOSP) and symptom in 2-3 steps.
 
 ### Android: Enrollment Blocked
 
@@ -367,6 +384,7 @@ Device never appeared in Intune after enrollment attempt and there is no enrollm
 ### Android: Compliance Blocked
 
 > **iOS:** For iOS compliance and CA timing issues, see [iOS: Compliance / Access Blocked](#ios-compliance--access-blocked).
+
 > **macOS:** For macOS compliance issues, see [macOS: Compliance / Access Blocked](#compliance-access-blocked) (where applicable).
 
 Device shows non-compliant in Intune OR Conditional Access blocks Microsoft 365 access. Causes: Play Integrity verdict change (Android 13+ MEETS_STRONG_INTEGRITY enforcement; cross-platform jailbreak/integrity equivalence with iOS), OS version drift, passcode/encryption settings, or CA timing window.
@@ -411,7 +429,9 @@ Android Enterprise device cannot connect to a 802.1X-protected Wi-Fi network aft
 
 ## Apple Business Governance Failure Scenarios
 
-> **Apple Business:** For Apple Business permission errors and Shared iPad issues, use the runbooks below. For L1 quick reference, see [Apple Business Quick Reference](quick-ref-l1.md#apple-business-quick-reference).
+> **Apple Business:** For Apple Business permission errors and Shared iPad issues, use the runbooks below.
+
+> For L1 quick reference, see [Apple Business Quick Reference](quick-ref-l1.md#apple-business-quick-reference).
 
 ### Shared iPad Passcode Reset
 

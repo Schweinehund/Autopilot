@@ -19,6 +19,7 @@ platform: all
 This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalation triggers, decision-tree links, and runbook references needed to triage a provisioning issue quickly, spanning Windows Autopilot (classic APv1 and Device Preparation APv2), macOS ADE, iOS/iPadOS, Android Enterprise, Linux, and Apple Business scenarios.
 
 > **Platform coverage:** This card covers Windows Autopilot (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
+
 > Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 ## Top 5 Checks

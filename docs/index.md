@@ -18,7 +18,12 @@ platform: all
 
 This is the master routing hub for the entire documentation suite, indexing troubleshooting, investigation, and admin-setup content for Windows Autopilot (APv1/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, Linux, cross-platform Operations, and Apple Business governance. Intended for Service Desk (L1), Desktop Engineering (L2), and Intune Admin audiences selecting a starting point by platform and role.
 
-> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning, plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration), and Apple Business delegated governance (Apple Business-managed device pools, shared iPad passcode reset, sub-org admin onboarding).
+> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning,
+
+> plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration),
+
+> and Apple Business delegated governance (Apple Business-managed device pools, shared iPad passcode reset, sub-org admin onboarding).
+
 > Not sure which framework applies? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS ADE, and iOS/iPadOS Intune provisioning deployments. Choose your platform below, then follow the path for your role.
@@ -350,6 +355,8 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 | [EAP Method Overview](admin-setup-8021x/01-eap-method-overview.md) | Co-equal EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS comparison; when-to-choose guidance |
 | [Certificate Delivery Foundation](admin-setup-8021x/02-cert-delivery-foundation.md) | Deployment ordering rule (trusted-root → SCEP/PKCS → network profile); EKU requirements; per-platform cert matrix |
 | [Network Authentication Glossary](_glossary-network.md) | 802.1X, EAP, EAPOL, RADIUS, supplicant, SCEP, PKCS, trusted root, server-name validation terms |
+
+This table cross-links glossaries, capability matrices, lifecycle overviews, and shared references spanning all five platforms plus the cross-platform 802.1X authentication class.
 
 ## Version History
 
