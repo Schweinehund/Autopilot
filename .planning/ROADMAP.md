@@ -186,7 +186,7 @@ Plans:
   1. Docs with the italic `*Previous:` / `*Next step:` `---`…`---` nav-footer shape convert cleanly through `scripts/pipeline/convert.ps1` (exit 0, no `Unknown alias` error), proven on a representative sample from the previously-failing class (e.g. an admin-setup guide)
   2. The OQ4 frontmatter → Word custom-property promotion path still functions correctly after the pipeline/footer fix (regression-tested, not broken by PIPE-03)
   3. A descriptive-filename rename map is applied (corpus-wide or the defined scope) with pipeline output-name wiring updated and the RE-NNN ↔ file mapping kept intact in the registry
-  4. The owner confirms via a live Copilot Studio session that mutating BOTH the frontmatter `status:` AND the visible `**Status:**` block renders and surfaces the literal Draft label in a query result
+  4. PIPE-05 probe executed against the shipped EEE header-block format; the Draft label's render + queryability recorded in `PIPE-05-FINDINGS.md`. A PASS (expected) or a tenant-unavailable deferred result closes this criterion cleanly; a recorded surfacing FAIL does NOT auto-close it — it escalates as a genuine defect requiring triage before Phase 124 close
 
 **Plans**: 3 plans (sequential — `use_worktrees:false`; order PIPE-03 -> PIPE-04 -> PIPE-05 invariant per D-20)
 
