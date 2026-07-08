@@ -1,4 +1,8 @@
 ---
+doc_id: RE-219
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: both
@@ -6,10 +10,16 @@ audience: all
 platform: all
 ---
 
-> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning, plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration), and Apple Business delegated governance (Apple Business-managed device pools, shared iPad passcode reset, sub-org admin onboarding).
-> Not sure which framework applies? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-219 · **Status:** Approved
 
 # Device Provisioning Documentation
+
+## Summary
+
+This is the master routing hub for the entire documentation suite, indexing troubleshooting, investigation, and admin-setup content for Windows Autopilot (APv1/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, Linux, cross-platform Operations, and Apple Business governance. Intended for Service Desk (L1), Desktop Engineering (L2), and Intune Admin audiences selecting a starting point by platform and role.
+
+> **Platform coverage:** This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning, plus cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration), and Apple Business delegated governance (Apple Business-managed device pools, shared iPad passcode reset, sub-org admin onboarding).
+> Not sure which framework applies? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS ADE, and iOS/iPadOS Intune provisioning deployments. Choose your platform below, then follow the path for your role.
 
@@ -345,6 +355,7 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-29 | Phase 99 (RUN-01): extended line-110 macOS Platform SSO Runbooks row to reference runbook #37 (local password recovery) | -- |
 | 2026-06-24 | Phase 87 (REF-03): enriched macOS Admin Setup Platform SSO row to name guides 10/11; added macOS L2 rows for Kerberos SSO Investigation (#28) and Graph Credential Investigation (#29) | -- |
 | 2026-05-22 | Phase 65 plan 65-03: 3 surgical edits — line-9 banner clause appendix + ### Apple Business Governance Operations sub-H3 + 2 Cross-Platform References entries (ABNAV-07) | -- |

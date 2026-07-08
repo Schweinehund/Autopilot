@@ -1,4 +1,8 @@
 ---
+doc_id: RE-220
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: both
@@ -6,10 +10,16 @@ audience: L1
 platform: all
 ---
 
-> **Platform coverage:** This card covers Windows Autopilot (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
-> Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-220 · **Status:** Approved
 
 # L1 Quick-Reference Card
+
+## Summary
+
+This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalation triggers, decision-tree links, and runbook references needed to triage a provisioning issue quickly, spanning Windows Autopilot (classic APv1 and Device Preparation APv2), macOS ADE, iOS/iPadOS, Android Enterprise, Linux, and Apple Business scenarios.
+
+> **Platform coverage:** This card covers Windows Autopilot (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
+> Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 ## Top 5 Checks
 
@@ -251,6 +261,7 @@ platform: all
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-29 | Phase 99 (RUN-01): appended macOS Local Password Recovery escalation trigger and runbook link (#37) to macOS ADE Quick Reference section | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO escalation triggers (#36 Secure Enclave, #35 sign-in loop) and runbook links to macOS section | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-04; C16 edge quick_ref_l1 → l1_34 live; H2 title slug = apple-business-quick-reference) | -- |

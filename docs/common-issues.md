@@ -1,4 +1,8 @@
 ---
+doc_id: RE-218
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: both
@@ -6,10 +10,16 @@ audience: all
 platform: all
 ---
 
-> **Platform coverage:** This guide covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, and Android Enterprise provisioning issues.
-> Not sure which platform or framework? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-218 · **Status:** Approved
 
 # Common Provisioning Issues
+
+## Summary
+
+This is the cross-platform symptom-based triage router for provisioning failures, mapping observed symptoms across Windows Autopilot (APv1/APv2), macOS ADE, iOS/iPadOS, and Android Enterprise deployments to the correct L1 runbook or L2 investigation guide. Intended for Service Desk and Desktop Engineering teams diagnosing an active enrollment or compliance failure by platform and scenario.
+
+> **Platform coverage:** This guide covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, and Android Enterprise provisioning issues.
+> Not sure which platform or framework? See [APv1 vs APv2](apv1-vs-apv2.md) for Windows or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 ## Choose Your Platform
 
@@ -435,6 +445,7 @@ Sub-org admin action fails with permission error due to OU scope mismatch.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-29 | Phase 99 (RUN-01): added macOS Local Password: User Locked Out H3 under macOS ADE Failure Scenarios, escalating to L1 #37 and L2 #27 | -- |
 | 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO Extension Failure entry under macOS ADE Failure Scenarios | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO Sign-In Failure entry routing to L1 #35 / L2 #27 | -- |

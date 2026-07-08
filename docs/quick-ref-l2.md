@@ -1,4 +1,8 @@
 ---
+doc_id: RE-221
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-05-01
 review_by: 2026-06-30
 applies_to: both
@@ -6,10 +10,16 @@ audience: L2
 platform: all
 ---
 
-> **Platform coverage:** This card covers Windows [Autopilot](_glossary.md#autopilot) (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
-> Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
+**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-221 · **Status:** Approved
 
 # L2 Quick-Reference Card
+
+## Summary
+
+This one-page cheat sheet gives Desktop Engineering (L2) staff the commands, log paths, event IDs, and investigation-runbook references needed for deeper technical diagnosis, spanning Windows Autopilot (classic APv1 and Device Preparation APv2), macOS ADE, iOS/iPadOS, Android Enterprise, Linux, and Apple Business investigation scenarios.
+
+> **Platform coverage:** This card covers Windows [Autopilot](_glossary.md#autopilot) (classic/APv1), Autopilot Device Preparation (APv2), macOS ADE, and iOS/iPadOS.
+> Sections are labeled by platform/framework. See [APv1 vs APv2](apv1-vs-apv2.md) for Windows framework selection or [Windows vs macOS](windows-vs-macos.md) for cross-platform.
 
 ## Log Collection
 
@@ -403,6 +413,7 @@ Full configuration details and per-category remediation: see the [Linux Complian
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO Diagnostics block (klist) + Kerberos SSO Investigation runbook bullet to macOS section | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): appended Platform SSO Log Paths section + app-sso platform -s attestation command + L2 #27 investigation runbook bullet to macOS section | -- |
 | 2026-05-22 | Phase 65 plan 65-03: appended Apple Business Quick Reference H2 (ABNAV-05; L2 command/log-collection voice) | -- |
