@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T02:54:44.789Z"
+last_updated: "2026-07-08T03:14:38.368Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 24
-  completed_plans: 18
+  completed_plans: 19
   percent: 33
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
-Plan: 10 of 15
+Plan: 11 of 15
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -371,6 +371,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 122]: [Phase 122-08] admin-setup-linux/00 B->C/D/E fan-out preserved via explicit parallel-step annotations; ca-enrollment-timing.md LOCKED-N corrected from plan's stated 8 messages to independently re-derived 7 (same off-by-one class as 122-02/06/07); RETRO-08 CLOSED -- all 10 carved-mermaid files now converted, enrolled, Approved
 - [Phase 122]: lifecycle/03-oobe.md's 2-diamond decision graph resolved to two linked decision tables (primary Path table + secondary ESP-Result sub-table) preserving both diamonds' branch structure and the 3-way ESP4 merge
 - [Phase 122]: Bare '>' lines do NOT break a C17 assertion #12 blockquote group -- only a genuinely blank line does; corrected mid-Task-1 of 122-09 before Tasks 2/3
+- [Phase 122]: Phase 122 (122-10): D-01 independent re-derivation caught a 4th planning-input correction -- ios-lifecycle/01-ade-lifecycle.md's diamond (S6 User Affinity?) was missed by RESEARCH/PLAN (stated 0 diamonds); converted to a Path decision table (LOCKED-10) per D-02 bright-line and CONTEXT's own LOCK note naming this file
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -407,8 +408,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T02:54:44.768Z
-Stopped at: Completed 122-09-PLAN.md
+Last session: 2026-07-08T03:14:38.348Z
+Stopped at: Completed 122-10-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -476,3 +477,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P07 | 45m | 3 tasks | 4 files |
 | Phase 122 P08 | 40min | 3 tasks | 5 files |
 | Phase 122 P09 | 65min | 3 tasks | 4 files |
+| Phase 122 P10 | 70min | 3 tasks | 4 files |
