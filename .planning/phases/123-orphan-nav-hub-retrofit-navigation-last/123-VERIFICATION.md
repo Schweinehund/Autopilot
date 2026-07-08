@@ -1,127 +1,89 @@
-# Phase 123 Verification: Orphan Nav-Hub Retrofit (Navigation-Last)
-
-**Verified:** 2026-07-08
-**Verifier:** 123-04 (Phase 123 close plan)
-**Verdict:** PASS — all 3 ROADMAP Success Criteria confirmed TRUE. Phase 123 is closed. RETRO-06 is Complete.
-
+---
+phase: 123-orphan-nav-hub-retrofit-navigation-last
+verified: 2026-07-08T00:00:00Z
+status: passed
+score: 3/3 Success Criteria verified; 8/8 must_haves verified
+overrides_applied: 0
 ---
 
-## Roadmap Success Criteria — Evidence
+# Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last) — Independent Verification Report
 
-### SC1 — C17 exits 0 on the FULL corpus (the 4 new hubs green AND all previously-enrolled files still green)
+**Phase Goal:** The 4 orphan nav-hubs (`docs/index.md`, `docs/common-issues.md`, `docs/quick-ref-l1.md`, `docs/quick-ref-l2.md`) are EEE-retrofitted last among content phases (navigation-last), each green under the blocking C17 validator, with routing/link tables remaining accurate.
 
-**TRUE.**
+**Verified:** 2026-07-08 (independent re-verification — commands re-run directly against the live tree, not sourced from the executor-authored `123-VERIFICATION.md`)
+**Status:** passed
+**Re-verification:** No — this is an independent goal-backward pass superseding the prior self-authored VERIFICATION.md (same file path; prior content was executor-authored self-attestation, treated here as an unverified claim and re-derived from scratch)
 
-```
-node scripts/validation/c17-eee-contract.mjs
-C17 assertion-violation-counts: #1=0 #2=0 #3=0 #4=0 #5=0 #6=0 #7=0 #8=0 #9=0 #10=0 #11=0 #12=0 #13=0
-C17 summary: 229 files checked, 0 with violations, 0 total violations
-```
+## Goal Achievement
 
-229 files checked (up from 225 at Phase 122 close — the +4 delta is exactly the 4 nav-hubs enrolled in Plan 123-03). Re-run **after** this plan's Task 1 pre-existing-rot link fixes (commit `5b28c88`) to confirm the link fixes did not regress C17 — confirmed 0 violations, same as pre-fix. This is a full-corpus run (no path args); it re-validates every previously-enrolled Phase-1/Phase-2 file alongside the 4 new hubs, matching the Phase-122-15 "225/0" full-corpus discipline (here: "229/0").
+### Observable Truths / Success Criteria (independently re-run)
 
-### SC2 — check-nav-hub-links.mjs exits 0 — zero broken links in BOTH outbound and inbound scans, across the final (post-123-03) corpus
+| # | Truth / SC | Status | Evidence |
+|---|---|---|---|
+| SC1 | `c17-eee-contract.mjs` exits 0 across full corpus; 4 hubs carry EEE header + `## Summary` first-H2; no `[FILL-IN]` | VERIFIED | Re-ran command myself: `C17 assertion-violation-counts: #1=0 ... #13=0` / `229 files checked, 0 with violations`. Grepped all 4 hubs directly: each has `doc_id: RE-218..221`, `**Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-2xx · **Status:** Approved` header line, `# Title` then `## Summary` immediately after. Zero `FILL-IN` matches in any of the 4 files. |
+| SC2 | `check-nav-hub-links.mjs` exits 0 (outbound + inbound); 12 pre-existing broken links fixed | VERIFIED | Re-ran command myself: `check-nav-hub-links: 0 failures (outbound + inbound clean)` / `0 outbound failure(s), 0 inbound failure(s), 0 total`. Independently grepped `\.\./operations/\|\.\./admin-setup-linux/` in `quick-ref-l2.md` — zero matches (old bad prefixes gone). Independently inspected `common-issues.md` — the dead `#compliance-access-blocked` anchor is now repointed to `#compliance-failure-or-access-blocked`, which resolves to an actual `### Compliance Failure or Access Blocked` heading (line 224) whose GitHub slug matches exactly. |
+| SC3 | Navigation-last: earliest Phase-123 hub commit post-dates latest Phase 121/122 content commit | VERIFIED | Re-ran both git log queries myself (not copy-pasted from SUMMARY). Latest 121/122 content commit: `e2ec2a5` @ `2026-07-07T23:19:51-05:00` ("fix(122): correct macos-setup/00 topology description"). Full reverse-chronological log of all commits touching the 4 hub files shows the tip-of-history additions are `15b1b20` @ `2026-07-08T09:09:13-05:00` (feat: EEE-enroll), `d2ea0c8` @ `09:18:36` (#12 reflow), `5b28c88` @ `09:28:32` (link fix) — all three strictly after `e2ec2a5`. Confirmed via full unfiltered `git log --reverse -- <4 hub paths>` (69 commits total), not a pre-filtered query — no Phase-123 commit appears before the cutoff. |
 
-**TRUE.**
+**Score:** 3/3 Success Criteria independently verified.
 
-```
-node scripts/validation/check-nav-hub-links.mjs --verbose
-check-nav-hub-links: 0 failures (outbound + inbound clean)
-check-nav-hub-links summary: 0 outbound failure(s), 0 inbound failure(s), 0 total
-```
+### Required Artifacts
 
-**Before-state (true-positive baseline, re-confirmed this plan before any fix was applied):** the checker (built standalone in Plan 123-02) reported exactly 12 outbound failures and 0 inbound failures against the post-123-03 corpus:
+| Artifact | Expected | Status | Details |
+|---|---|---|---|
+| `docs/index.md` | EEE-enrolled, `doc_id: RE-219` | VERIFIED | Frontmatter confirmed; header block confirmed; `## Summary` (154-word paragraph, well over 30-word floor) confirmed; coverage blockquote relocated below Summary (lines 21-27) retaining `[APv1 vs APv2]`/`[Windows vs macOS]` links, split into 3 sub-200c blocks (was one 459c block per CONTEXT). |
+| `docs/common-issues.md` | EEE-enrolled, `doc_id: RE-218` | VERIFIED | Same pattern confirmed; Summary 91 words; coverage blockquote retained with both see-also links; dead anchor repointed (SC2 above). |
+| `docs/quick-ref-l1.md` | EEE-enrolled, `doc_id: RE-220` | VERIFIED | Same pattern confirmed; Summary 82 words; coverage blockquote retained with both see-also links. |
+| `docs/quick-ref-l2.md` | EEE-enrolled, `doc_id: RE-221` | VERIFIED | Same pattern confirmed; Summary 80 words; coverage blockquote retained; the 2 ⚠️ ownership-pointer callouts (lines 345, 398) confirmed de-blockquoted to bold-led paragraphs, no leading `>`, word-preserved verbatim text matching CONTEXT's quoted sentences. |
+| `scripts/pipeline/retrofit-nav-hub.mjs` | New fork per D-03 | VERIFIED (exists, committed) | Present, executable, 42767 bytes, tracked clean in git. |
+| `scripts/validation/check-nav-hub-links.mjs` | New standalone validator per D-01 | VERIFIED (exists, runs, exits 0) | Present, executable, ran successfully with expected output. |
+| `docs/_registry/RE-index.md` rows RE-218..221 | Path-keyed, Reference/Approved | VERIFIED | Grepped directly: all 4 rows present with correct path→title mapping, `Reference`/`Approved` in both columns. |
 
-```
-docs/common-issues.md:388 -> [macOS: Compliance / Access Blocked](#compliance-access-blocked)  -- anchor not found: #compliance-access-blocked
-docs/quick-ref-l2.md:341,342,343,345,347 -> [...](../operations/patch-management/04-android-patch-delivery.md...)  -- target file not found
-docs/quick-ref-l2.md:393,394,395,396,398,400 -> [...](../admin-setup-linux/03-compliance-policy.md...)  -- target file not found
-check-nav-hub-links summary: 12 outbound failure(s), 0 inbound failure(s), 12 total
-```
+### Key Link Verification
 
-This exactly matches the 12 pre-existing broken links enumerated in `123-CONTEXT.md` D-01 and re-verified byte-level in `123-RESEARCH.md` — proving (a) the checker is not a no-op, and (b) 123-03's retrofit did not introduce or shift the count (line numbers shifted from the RESEARCH-era 316-373/360 range to 341-400/388 due to 123-03's Summary insertion + `#12` blockquote splits, but the link targets and count are identical).
+| From | To | Via | Status | Details |
+|---|---|---|---|---|
+| `docs/quick-ref-l2.md` (11 links) | `operations/patch-management/...`, `admin-setup-linux/...` | relative path (no `../`) | WIRED | Grep for old `../` prefix returns zero matches; `check-nav-hub-links.mjs` confirms 0 outbound failures. |
+| `docs/common-issues.md:388` | `#compliance-failure-or-access-blocked` (same-file anchor) | GitHub-slug on `### Compliance Failure or Access Blocked` | WIRED | Anchor text and heading both confirmed present; checker confirms 0 outbound failures. |
+| Corpus-wide → 4 hubs | inbound anchors into hub headings | GitHub-slug resolution | WIRED | `check-nav-hub-links.mjs --verbose` reports `0 inbound failure(s)`. |
 
-**Fix applied (separate git-blame-attributed commit, per D-01):** `5b28c88` — `fix(123-04): pre-existing-rot cleanup — 12 broken nav-hub links (predates Phases 121/122)`. This commit is distinct from the 123-03 EEE-retrofit commits (`15b1b20` feat, `d2ea0c8` fix). Git-blame evidence cited in the commit message:
+### Requirements Coverage
 
-| File:Line (post-123-03) | git blame commit | git blame date |
+| Requirement | Source Plan | Description | Status | Evidence |
+|---|---|---|---|---|
+| RETRO-06 | 123-01, 123-02, 123-03, 123-04 | All orphan nav-hubs retrofitted to EEE with navigation-last discipline; C17 exits 0; routing/link tables accurate | SATISFIED | Both halves independently confirmed: (1) EEE + C17-green — SC1 above; (2) navigation-last — SC3 above; (3) routing/link accuracy — SC2 above. `REQUIREMENTS.md:22` marked `[x]` and traceability table (`:90`) shows `RETRO-06 \| Phase 123 \| Complete` — matches actual codebase state, not just a claim. |
+
+No orphaned requirements found — RETRO-06 is the sole requirement mapped to Phase 123 per `123-CONTEXT.md` and `REQUIREMENTS.md`.
+
+### Locked-Decision Fidelity Spot-Checks
+
+| Decision | Check | Result |
 |---|---|---|
-| `quick-ref-l2.md:341` (1st of 3 `play-integrity-attestation` rows) | `d1ecbaef` | 2026-04-30 |
-| `quick-ref-l2.md:393` (1st of 4 Linux compliance-category rows) | `ff42fd6d` | 2026-05-05 |
-| `common-issues.md:388` (dead anchor) | `caf45241` | 2026-04-30 |
+| D-02 (13 over-length callouts) | Full-corpus C17 #12 = 0 violations across 229 files (includes all 4 hubs) | VERIFIED — programmatic proof, not a manual per-line character count, but sufficient: if any callout in any hub exceeded 200c post-split, #12 would be nonzero. |
+| D-02 (2 ⚠️ ownership pointers de-blockquoted) | Grepped `quick-ref-l2.md` for `⚠️` — both found as bold-led paragraphs, no leading `>`, wording matches CONTEXT's quoted text verbatim (word-preserving) | VERIFIED |
+| D-02 (index.md 459c callout split) | Inspected `docs/index.md:21-27` — now 3 separate blockquote paragraphs across blank lines, all content and both see-also links intact | VERIFIED |
+| D-04 (net-new ≥30-word Summary, not promoted blockquote) | Summary paragraphs (80-154 words) read as scope/audience prose distinct from the "Platform coverage:" blockquote that follows; blockquote confirmed still present below Summary in all 4 files with its links intact | VERIFIED |
 
-All predate Phases 121/122's 2026-07-07 content commits by 2+ months — confirming these are pre-existing corpus rot, not retrofit-induced regressions.
+### Anti-Patterns Found
 
-**The 12 fixes:**
-- 11 `../`-over-escape links in `quick-ref-l2.md` (dirs `operations/` and `admin-setup-linux/` live directly under `docs/`, as siblings of `quick-ref-l2.md`, not one level up) — dropped the `../` prefix on all 11.
-- 1 dead same-file anchor in `common-issues.md` (`#compliance-access-blocked` → repointed to the real GitHub slug `#compliance-failure-or-access-blocked` of the existing `### Compliance Failure or Access Blocked` heading) — per the RESEARCH-recommended repoint (content is legitimate; the anchor was a hand-typed typo).
-- One target anchor required the GitHub double-hyphen slug correction: `### Step 4: Configure Device Encryption (dm-crypt + LUKS)` slugifies to `step-4-configure-device-encryption-dm-crypt--luks` (double hyphen — the `+` is surrounded by spaces on both sides, so its in-place removal leaves two adjacent spaces, which become two hyphens), not the single-hyphen form RESEARCH's table listed. Caught by running the checker against the corrected link and observing 1 residual failure before the double-hyphen correction.
+| File | Line | Pattern | Severity | Impact |
+|---|---|---|---|---|
+| `docs/index.md` | 377, 379 | "TBD placeholders" / "placeholder sections" text | Info (non-blocking) | Historical narrative inside the Version History log describing a *past* Phase-24 fix, not a live debt marker in the current document body. Predates this phase; not introduced by it; does not affect C17 or link-checker gates. |
 
-### SC3 — Git history confirms the earliest Phase-123 hub commit post-dates the latest Phase-121/122 content commit (navigation-last)
+No FIXME/XXX/HACK markers found in any of the 4 hub files. No empty-implementation or stub patterns applicable (these are documentation files, not code).
 
-**TRUE.**
+### Behavioral Spot-Checks
 
-**Step 1 — latest commit touching any Phase-121/122 content class** (decision-trees, lifecycle directories, glossaries, and the named admin-setup/reference overview files):
+Not applicable in the code-execution sense — this is a documentation retrofit phase. The two governing validators (`c17-eee-contract.mjs`, `check-nav-hub-links.mjs`) were independently executed above and both exited clean, which is the phase's actual behavioral contract.
 
-```
-git log -1 --format='%H %cI %s' -- docs/decision-trees/ docs/lifecycle/ docs/lifecycle-apv2/ \
-  docs/android-lifecycle/ docs/ios-lifecycle/ docs/macos-lifecycle/ docs/linux-lifecycle/ \
-  docs/end-user-guides/ docs/_glossary*.md \
-  docs/admin-setup-apv1/00-overview.md docs/admin-setup-apv1/01-hardware-hash-upload.md \
-  docs/admin-setup-apv2/00-overview.md docs/admin-setup-android/00-overview.md \
-  docs/admin-setup-ios/00-overview.md docs/admin-setup-macos/00-overview.md \
-  docs/admin-setup-linux/00-overview.md docs/admin-setup-8021x/00-overview.md \
-  docs/admin-setup-8021x/01-eap-method-overview.md docs/reference/ca-enrollment-timing.md
+### Human Verification Required
 
-=> e2ec2a5e93874ebc07dd22b44605bc6a706b33db  2026-07-07T23:19:51-05:00  fix(122): correct macos-setup/00 topology description (D-01 finding)
-```
+None. All 3 Success Criteria and all locked-decision spot-checks were mechanically verifiable via direct file inspection, grep, and independent re-execution of both governing validator scripts. No visual/UX/real-time/external-service judgment calls remain open.
 
-**Step 2 — earliest commit touching any of the 4 nav-hubs that lands after the Step-1 cutoff:**
+### Gaps Summary
 
-```
-git log --reverse --format='%H %cI %s' -- docs/index.md docs/common-issues.md docs/quick-ref-l1.md docs/quick-ref-l2.md \
-  | awk -v cutoff="2026-07-07" '$2 > cutoff' | head -1
-
-=> 15b1b20dbd879c795bac6bcf3b019cbf5d46f062  2026-07-08T09:09:13-05:00  feat(123-03): EEE-enroll the 4 orphan nav-hubs with net-new Summaries
-```
-
-**Comparison:** `2026-07-08T09:09:13-05:00` (earliest Phase-123 hub commit, `15b1b20`) is strictly later than `2026-07-07T23:19:51-05:00` (latest Phase-121/122 content commit, `e2ec2a5`) — **navigation-last confirmed by construction and by git history.** No Phase-123 nav-hub commit exists before this cutoff; the phase's own registry-prep commits (Plan 123-01) and link-checker-build commits (Plan 123-02) do not touch the 4 hub files themselves (123-01 only touches `docs/_registry/RE-index.md` + `scripts/pipeline/`; 123-02 only touches `scripts/validation/`), so they are correctly excluded from this hub-file-scoped query.
+None. All must-haves across the 4 plans (123-01 registry-prep, 123-02 checker-build, 123-03 retrofit+Summary authoring, 123-04 link-fix+close) were independently re-verified against the live codebase, not inferred from SUMMARY.md narrative. Both governing scripts (C17, nav-hub-link-checker) were re-run fresh in this verification pass and both returned clean exits. Git history was independently re-queried (not copied from the prior self-attestation) and confirms navigation-last ordering. RETRO-06 traceability in REQUIREMENTS.md matches the actual repository state.
 
 ---
 
-## Registry Confirmation (RE-218..221)
-
-```
-grep -E '\| RE-(218|219|220|221) \|' docs/_registry/RE-index.md
-| RE-218 | docs/common-issues.md | Common Provisioning Issues | Reference | Approved |
-| RE-219 | docs/index.md | Device Provisioning Documentation | Reference | Approved |
-| RE-220 | docs/quick-ref-l1.md | L1 Quick-Reference Card | Reference | Approved |
-| RE-221 | docs/quick-ref-l2.md | L2 Quick-Reference Card | Reference | Approved |
-```
-
-All 4 confirmed `Doc Type: Reference`, `Status: Approved` — matching the D-01/Registry LOCK in `123-CONTEXT.md`.
-
----
-
-## Requirement Completion
-
-`RETRO-06`'s full text (`REQUIREMENTS.md:22`) requires BOTH:
-1. "All orphan nav-hubs retrofitted to EEE with navigation-last discipline; C17 exits 0" — satisfied by Plan 123-03 (SC1 above re-confirms it holds post-link-fixes).
-2. "Routing/link tables remain accurate" — satisfied by this plan's Task 1 (the 12 pre-existing-rot fixes) + Task 2 (SC2 link-checker green, SC3 navigation-last attestation).
-
-Both halves are now TRUE. `RETRO-06` is flipped to `Complete` in `.planning/REQUIREMENTS.md`'s traceability table as part of this plan's close (see REQUIREMENTS.md diff in this plan's commits).
-
----
-
-## Conclusion
-
-All 3 Phase-123 Success Criteria are demonstrably TRUE:
-
-1. **SC1** — Full-corpus C17 exits 0 (229 files, 0 violations, all 13 assertions) — the 4 hubs plus every previously-enrolled file. ✅
-2. **SC2** — `check-nav-hub-links.mjs` exits 0 (outbound + inbound); the 12 pre-existing broken links fixed in a separate git-blame-attributed commit (`5b28c88`), distinct from the 123-03 retrofit commits. ✅
-3. **SC3** — Navigation-last git-history attestation: earliest Phase-123 hub commit (`15b1b20`, 2026-07-08T09:09:13-05:00) strictly post-dates the latest Phase-121/122 content commit (`e2ec2a5`, 2026-07-07T23:19:51-05:00). ✅
-
-**Phase 123 is CLOSED.** RETRO-06 is Complete.
-
----
-*Phase: 123-orphan-nav-hub-retrofit-navigation-last*
-*Verified: 2026-07-08*
+_Verified: 2026-07-08_
+_Verifier: Claude (gsd-verifier, independent goal-backward pass)_
