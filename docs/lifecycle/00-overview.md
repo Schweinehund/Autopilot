@@ -1,13 +1,26 @@
 ---
+doc_id: RE-192
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-192 · **Status:** Approved
 
 # Autopilot Lifecycle Overview
+
+## Summary
+
+This overview orients Intune administrators and L1/L2 support to the five sequential stages of the Windows Autopilot (classic) deployment lifecycle — hardware hash import, profile assignment, OOBE and deployment-mode selection, the Enrollment Status Page, and post-enrollment verification — showing how the three OOBE paths (user-driven, pre-provisioning, self-deploying) diverge and reconverge before ESP, and where common failures surface across the pipeline.
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
+
+> For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## How to Use This Guide
 
@@ -15,54 +28,33 @@ This overview provides the end-to-end picture of the Windows Autopilot deploymen
 
 ## The Deployment Pipeline
 
-### Level 1 — Happy Path
+### Level 1 — Happy Path (LOCKED — 12 (9 nodes + 3 labeled edges))
 
-```mermaid
-graph TD
-    S1[Stage 1: Hardware Hash Import] --> S2[Stage 2: Profile Assignment]
-    S2 --> M{Deployment Mode}
-    M -->|User-Driven| S3a[Stage 3: OOBE — User signs in]
-    M -->|Pre-Provisioning| S3b[Stage 3: OOBE — Technician phase]
-    M -->|Self-Deploying| S3c[Stage 3: OOBE — No user interaction]
-    S3b --> RESEAL[Reseal + Ship to user]
-    RESEAL --> S3a
-    S3a --> S4[Stage 4: ESP]
-    S3c --> S4
-    S4 --> S5[Stage 5: Post-Enrollment]
+The pipeline runs through five stages. After Stage 2 (Profile Assignment), the deployment mode (the single decision point) determines which of three paths OOBE takes; the pre-provisioning and self-deploying paths both reconverge before Stage 4 (ESP).
 
-    click S1 "01-hardware-hash.md"
-    click S2 "02-profile-assignment.md"
-    click S3a "03-oobe.md"
-    click S3b "03-oobe.md"
-    click S3c "03-oobe.md"
-    click S4 "04-esp.md"
-    click S5 "05-post-enrollment.md"
-```
+**Trunk edges (outside the decision):** Stage 1: Hardware Hash Import → Stage 2: Profile Assignment → Deployment Mode (decision); Stage 4: ESP → Stage 5: Post-Enrollment.
 
-> This diagram shows the [APv1](../_glossary.md#apv1) (classic) flow. For the [APv2](../_glossary.md#apv2) (Device Preparation) flow, see [APv1 vs APv2](../apv1-vs-apv2.md).
+| Path | Deployment Mode (root decision) | Stage 3 outcome | Reconvergence | Destination |
+|------|----------------------------------|-------------------|-----------------|-------------|
+| User-Driven | User-Driven | Stage 3: OOBE — User signs in | — | Stage 4: ESP |
+| Pre-Provisioning | Pre-Provisioning | Stage 3: OOBE — Technician phase → Reseal + Ship to user | Rejoins Stage 3: OOBE — User signs in (Reseal + Ship to user → Stage 3: OOBE — User signs in) | Stage 4: ESP (via the rejoined User-Driven path) |
+| Self-Deploying | Self-Deploying | Stage 3: OOBE — No user interaction | Converges directly into Stage 4 (Stage 3: OOBE — No user interaction → Stage 4: ESP) | Stage 4: ESP |
 
-### Level 2 — Failure Points
+Stage guide links: [Stage 1](01-hardware-hash.md) · [Stage 2](02-profile-assignment.md) · [Stage 3](03-oobe.md) · [Stage 4](04-esp.md) · [Stage 5](05-post-enrollment.md)
 
-The following diagram shows where common failures surface across the pipeline. Green nodes are stages; red nodes are failure categories that connect to the stage where they first appear.
+> This table shows the [APv1](../_glossary.md#apv1) (classic) flow. For the [APv2](../_glossary.md#apv2) (Device Preparation) flow, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-```mermaid
-graph TD
-    S1[S1: Hash Import] --> S2[S2: Profile Assignment]
-    S2 --> S3[S3: OOBE]
-    S3 --> S4[S4: ESP]
-    S4 --> S5[S5: Post-Enrollment]
+### Level 2 — Failure Points (LOCKED — 10 (10 nodes + 0 labeled edges))
 
-    F_HASH[Hash not found / stale record] -.-> S1
-    F_PROFILE[Profile not assigned / sync delay] -.-> S2
-    F_CONN[Network unreachable] -.-> S3
-    F_ESP[ESP timeout / app failure] -.-> S4
-    F_COMP[Compliance not met] -.-> S5
+The following table shows where common failures surface across the pipeline. The five stages progress linearly (S1: Hash Import → S2: Profile Assignment → S3: OOBE → S4: ESP → S5: Post-Enrollment); each stage has one associated failure category.
 
-    classDef stage fill:#d4edda,stroke:#28a745
-    classDef failure fill:#f8d7da,stroke:#dc3545
-    class S1,S2,S3,S4,S5 stage
-    class F_HASH,F_PROFILE,F_CONN,F_ESP,F_COMP failure
-```
+| Stage | Failure Mode |
+|-------|--------------|
+| S1: Hash Import | Hash not found / stale record |
+| S2: Profile Assignment | Profile not assigned / sync delay |
+| S3: OOBE | Network unreachable |
+| S4: ESP | ESP timeout / app failure |
+| S5: Post-Enrollment | Compliance not met |
 
 ## Stage Summary
 
@@ -98,5 +90,6 @@ All prerequisites must be met before Stage 1. Missing any prerequisite causes fa
 
 | Date | Change |
 |------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-04-13 | Added APv2 lifecycle overview cross-reference | -- |
 | 2026-03-14 | Initial version |

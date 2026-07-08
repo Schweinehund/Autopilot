@@ -205,7 +205,7 @@
 | RE-189 | docs/ios-lifecycle/00-enrollment-overview.md | iOS/iPadOS Enrollment Path Overview | Guide | Approved |
 | RE-190 | docs/ios-lifecycle/01-ade-lifecycle.md | iOS/iPadOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Pending |
 | RE-191 | docs/ios-lifecycle/02-mdm-migration.md | iOS/iPadOS MDM Migration Walkthrough: In-Place Migration (iOS/iPadOS 26+) | Guide | Pending |
-| RE-192 | docs/lifecycle/00-overview.md | Autopilot Lifecycle Overview | Guide | Pending |
+| RE-192 | docs/lifecycle/00-overview.md | Autopilot Lifecycle Overview | Guide | Approved |
 | RE-193 | docs/lifecycle/01-hardware-hash.md | Stage 1: Hardware Hash Import and Device Registration | Guide | Approved |
 | RE-194 | docs/lifecycle/02-profile-assignment.md | Stage 2: Autopilot Profile Assignment | Guide | Approved |
 | RE-195 | docs/lifecycle/03-oobe.md | Stage 3: OOBE and Deployment Mode Selection | Guide | Pending |
