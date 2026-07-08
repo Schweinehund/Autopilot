@@ -825,8 +825,8 @@
         },
         "122": {
           "issueKey": "RTS-726",
-          "status": "in_progress",
-          "name": "Structural Retrofit — Decision-Trees & Carved-Mermaid Files"
+          "status": "done",
+          "name": "Structural Retrofit — Decision-Trees, Carved-Mermaid Files & the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder)"
         },
         "123": {
           "issueKey": "RTS-727",
