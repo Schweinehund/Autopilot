@@ -1,4 +1,8 @@
 ---
+doc_id: RE-204
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-28
 review_by: 2026-09-28
 applies_to: ADE
@@ -6,9 +10,17 @@ audience: all
 platform: macOS
 ---
 
-> **Version gate:** This guide covers macOS Automated Device Enrollment (ADE) via Apple Business Manager and Microsoft Intune. For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For terminology, see the [macOS Provisioning Glossary](../_glossary-macos.md).
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-204 · **Status:** Approved
 
 # macOS ADE Lifecycle: Automated Device Enrollment End-to-End
+
+## Summary
+
+This guide narrates the complete macOS Automated Device Enrollment (ADE) pipeline end to end: Apple Business Manager device registration, ADE token sync, enrollment profile assignment, Setup Assistant, Await Configuration, the single User-Affinity decision point, and Company Portal sign-in through to ongoing dual-channel MDM management. It serves L1 Service Desk, L2 Desktop Engineering, and Intune Admins across the seven-stage linear pipeline with one conditional branch.
+
+> **Version gate:** This guide covers macOS Automated Device Enrollment (ADE) via Apple Business Manager and Microsoft Intune.
+
+> For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For terminology, see the [macOS Provisioning Glossary](../_glossary-macos.md).
 
 ## How to Use This Guide
 
@@ -50,17 +62,12 @@ All prerequisites must be met before Stage 1. Missing any prerequisite causes fa
 
 ## The ADE Pipeline
 
-```mermaid
-graph TD
-    S1[Stage 1: ABM Device Registration] --> S2[Stage 2: ADE Token Sync]
-    S2 --> S3[Stage 3: Enrollment Profile Assignment]
-    S3 --> S4[Stage 4: Setup Assistant]
-    S4 --> S5[Stage 5: Await Configuration]
-    S5 --> S6{User Affinity?}
-    S6 -->|With User Affinity| S7[Stage 6: Company Portal Sign-In]
-    S6 -->|Userless| S8[Stage 7: Desktop and Ongoing MDM]
-    S7 --> S8
-```
+**LOCKED — 10 (nodes + labeled edges)** — 8 nodes (Stages 1-7 plus the Stage 6 User Affinity decision) + 2 labeled edges, independently re-derived from the pre-conversion pipeline diagram (`git show 71be4ab`). The single diamond (Stage 6: User Affinity?) is represented below; both branches reconverge at Stage 7 -- the Userless branch's direct edge to Stage 7 and the With-User-Affinity branch's Stage 6->Stage 7 edge both terminate at the same node.
+
+| Path | Stages 1-5 (shared) | Stage 6: User Affinity? | Stage 6 outcome | Stage 7 (merge target) |
+|------|----------------------|--------------------------|-------------------|--------------------------|
+| With User Affinity | Stage 1: ABM Device Registration -> Stage 2: ADE Token Sync -> Stage 3: Enrollment Profile Assignment -> Stage 4: Setup Assistant -> Stage 5: Await Configuration | With User Affinity | Stage 6: Company Portal Sign-In | Stage 7: Desktop and Ongoing MDM (merge) |
+| Userless | Stage 1: ABM Device Registration -> Stage 2: ADE Token Sync -> Stage 3: Enrollment Profile Assignment -> Stage 4: Setup Assistant -> Stage 5: Await Configuration | Userless | (skip directly -- no Stage 6 substage) | Stage 7: Desktop and Ongoing MDM (merge) |
 
 > Stage 6 only applies when the enrollment profile is configured for "Enroll with User Affinity" and modern authentication. Userless enrollments skip directly to Stage 7.
 
@@ -415,6 +422,7 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-28 | Phase 96 (ACC-01, ACC-02): corrected Stage-6 Company Portal VPP/LOB claims (lines 309, 319); removed orphaned VPP glossary quick-ref row (line 411); corrected Stage-4 SSO-extension policy group type from device to user (line 250) | -- |
 | 2026-06-22 | Phase 81 (SSOREF-04): added E8 Related Guides cross-link to guide 07 | -- |
 | 2026-04-14 | Initial version -- complete 7-stage ADE lifecycle narrative | -- |
