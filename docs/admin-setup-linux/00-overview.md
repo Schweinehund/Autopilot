@@ -1,4 +1,8 @@
 ---
+doc_id: RE-128
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: enrollment
@@ -6,27 +10,42 @@ audience: admin
 platform: Linux
 ---
 
-> **Platform gate:** This guide covers Linux device management in Microsoft Intune for Ubuntu 22.04 LTS and 24.04 LTS.
-> For macOS ADE setup, see [macOS Admin Setup](../admin-setup-macos/00-overview.md).
-> For Android Enterprise setup, see [Android Admin Setup](../admin-setup-android/00-overview.md).
-> For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
-> For the locked Linux management surface (whitelist) + out-of-scope callouts, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface).
+**Platform:** Linux · **Doc Type:** Guide · **Doc ID:** RE-128 · **Status:** Approved
 
 # Linux Admin Setup Overview
 
+## Summary
+
+This guide is the index for configuring Linux device management in Microsoft Intune across Ubuntu 22.04 LTS and 24.04 LTS, spanning agent installation, enrollment profile configuration, compliance policy, app delivery, and Conditional Access. It is intended for Intune administrators, including those already familiar with the Windows, macOS, or Android admin-setup surfaces, and the agent install and enrollment profile steps must be completed before any subsequent configuration.
+
+> **Platform gate:** This guide covers Linux device management in Microsoft Intune for Ubuntu 22.04 LTS and 24.04 LTS.
+
+> For macOS ADE setup, see [macOS Admin Setup](../admin-setup-macos/00-overview.md).
+> For Android Enterprise setup, see [Android Admin Setup](../admin-setup-android/00-overview.md).
+
+> For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
+
+> For the locked Linux management surface (whitelist) + out-of-scope callouts, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface).
+
 This guide walks Intune administrators through configuring Linux device management in Microsoft Intune. Complete the guides in order — agent install and enrollment profile are prerequisites for all subsequent configuration.
 
-> **For admins familiar with Windows, macOS, or Android:** see the cross-platform bridge subsection in [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android). That subsection covers what carries over and what does not from your existing Intune mental model.
+> **For admins familiar with Windows, macOS, or Android:**
+
+> see the cross-platform bridge subsection in [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android).
+
+> That subsection covers what carries over and what does not from your existing Intune mental model.
 
 ## Setup Sequence
 
-```mermaid
-flowchart TD
-  A[1. Intune Linux Agent<br/>install deb] --> B[2. Enrollment<br/>Profile]
-  B --> C[3. Compliance<br/>Policy]
-  B --> D[4. App<br/>Delivery]
-  B --> E[5. Conditional<br/>Access]
-```
+(LOCKED — 5 nodes + labeled edges: fan-out only, one parent B -> three children C/D/E, not a reconvergence)
+
+1. Intune Linux Agent
+2. Enrollment Profile
+3. Compliance Policy (parallel with 4, 5 -- all three follow directly from step 2)
+4. App Delivery (parallel with 3, 5)
+5. Conditional Access (parallel with 3, 4)
+
+Full detail for each stage:
 
 1. **[Intune Linux Agent](01-intune-linux-agent.md)** — Install the `intune-portal` deb package from `packages.microsoft.com` and configure the Microsoft Identity Broker.
 
@@ -56,3 +75,9 @@ flowchart TD
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-04-27 | Initial version — Linux admin setup overview (Phase 50) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |

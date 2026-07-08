@@ -141,7 +141,7 @@
 | RE-125 | docs/admin-setup-macos/09-enterprise-sso-plugin-migration.md | macOS Enterprise SSO Plug-in & Migration Guide | Guide | Approved |
 | RE-126 | docs/admin-setup-macos/10-kerberos-sso-extension.md | macOS Kerberos SSO Extension | Guide | Approved |
 | RE-127 | docs/admin-setup-macos/11-graph-api-platform-credential.md | Graph API: Platform Credential Management | Guide | Approved |
-| RE-128 | docs/admin-setup-linux/00-overview.md | Linux Admin Setup Overview | Guide | Pending |
+| RE-128 | docs/admin-setup-linux/00-overview.md | Linux Admin Setup Overview | Guide | Approved |
 | RE-129 | docs/admin-setup-linux/01-intune-linux-agent.md | Intune Linux Agent — Install and Configure | Guide | Approved |
 | RE-130 | docs/admin-setup-linux/02-enrollment-profile.md | Linux Enrollment Profile — Admin Configuration | Guide | Approved |
 | RE-131 | docs/admin-setup-linux/03-compliance-policy.md | Linux Compliance Policy — Admin Configuration | Guide | Approved |
