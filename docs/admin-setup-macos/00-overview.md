@@ -1,4 +1,8 @@
 ---
+doc_id: RE-116
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-22
 review_by: 2026-09-22
 applies_to: ADE
@@ -6,31 +10,23 @@ audience: admin
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune.
-> For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
-> For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-116 · **Status:** Approved
 
 # macOS Admin Setup: Complete Configuration Guide
+
+## Summary
+
+Guide roadmap for a complete macOS Automated Device Enrollment deployment, ordering 11 configuration guides from ABM setup and enrollment profile through Configuration Profiles, App Deployment, Compliance Policies, Config-Failures troubleshooting, and the Platform SSO / Enterprise SSO / Kerberos SSO / Graph API Platform Credential chain, preserving the reconvergence where 3 parallel guides feed into the shared Config-Failures reference.
+
+> **Platform gate:** This guide covers macOS ADE configuration via Apple Business Manager and Intune. For Windows Autopilot setup, see [Windows Admin Setup Guides](../admin-setup-apv1/00-overview.md).
+
+> For macOS provisioning terminology, see the [macOS Glossary](../_glossary-macos.md).
 
 This guide walks Intune administrators through configuring a complete macOS Automated Device Enrollment deployment from scratch. Complete the guides in order -- ABM configuration and enrollment profile are prerequisites for all subsequent configuration.
 
 ## Setup Sequence
 
-```mermaid
-graph LR
-  A[1. ABM<br/>Configuration] --> B[2. Enrollment<br/>Profile]
-  B --> C[3. Configuration<br/>Profiles]
-  B --> D[4. App<br/>Deployment]
-  B --> E[5. Compliance<br/>Policies]
-  C --> F[6. Config<br/>Failures]
-  D --> F
-  E --> F
-  C --> G[7. Platform SSO<br/>Setup]
-  G --> H[8. Auth Methods<br/>Deep-Dive]
-  G --> I[9. Enterprise SSO<br/>Migration]
-  G --> J[10. Kerberos SSO<br/>Extension]
-  J --> K[11. Graph API<br/>Platform Credential]
-```
+**LOCKED — 11 (nodes + labeled edges)** — 11 nodes + 0 labeled edges (12 plain edges total), independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). No decision diamond is present in this diagram — per the D-02 bright-line, it converts to the ordered numbered stage list below (not a decision table). The list preserves the diagram's load-bearing reconvergence: Step 2 (Enrollment Profile) fans out to Steps 3, 4, and 5 (Configuration Profiles, App Deployment, Compliance Policies), which all three feed back into Step 6 (Configuration-Caused Failures Reference); Step 3 also continues independently into the linear Platform SSO chain, Steps 7 → 8 → 9 → 10 → 11.
 
 1. **[ABM Configuration](01-abm-configuration.md)** -- Create ADE token in Apple Business Manager and Intune, assign devices to MDM server, configure token renewal. This must be complete before any enrollment profile can be created.
 
@@ -78,3 +74,10 @@ graph LR
 | 2026-06-21 | Phase 78: converted guide-09 code-span to live link with description | -- |
 | 2026-06-22 | Phase 83 (KRB-04): added guide 10 node to Mermaid diagram and item 10 to numbered list | -- |
 | 2026-06-23 | Phase 84 (GRAPH-01): added guide 11 node to Mermaid diagram and item 11 to numbered list | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | Phase 122 plan 06: converted Mermaid flowchart (no decision diamond) to the pre-existing numbered stage list, annotated with an explicit reconvergence note (Steps 3/4/5 fan-in to Step 6; Step 3 also continues into the linear Step 7→8→9→10→11 chain); removed the mermaid fence; LOCKED — 11 (nodes + labeled edges, R1 convention); split the 1 pre-existing over-200-char Platform-gate blockquote into 2 word-preserving groups; enrolled as RE-116. | -- |
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |

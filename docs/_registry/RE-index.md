@@ -129,7 +129,7 @@
 | RE-113 | docs/admin-setup-ios/07-device-enrollment.md | iOS/iPadOS Device Enrollment | Guide | Approved |
 | RE-114 | docs/admin-setup-ios/08-user-enrollment.md | iOS/iPadOS Account-Driven User Enrollment | Guide | Approved |
 | RE-115 | docs/admin-setup-ios/09-mam-app-protection.md | iOS MAM-WE App Protection Policies | Guide | Approved |
-| RE-116 | docs/admin-setup-macos/00-overview.md | macOS Admin Setup: Complete Configuration Guide | Guide | Pending |
+| RE-116 | docs/admin-setup-macos/00-overview.md | macOS Admin Setup: Complete Configuration Guide | Guide | Approved |
 | RE-117 | docs/admin-setup-macos/01-abm-configuration.md | ABM Configuration for Automated Device Enrollment | Guide | Approved |
 | RE-118 | docs/admin-setup-macos/02-enrollment-profile.md | macOS Enrollment Profile Configuration | Guide | Approved |
 | RE-119 | docs/admin-setup-macos/03-configuration-profiles.md | macOS Configuration Profiles | Guide | Approved |
