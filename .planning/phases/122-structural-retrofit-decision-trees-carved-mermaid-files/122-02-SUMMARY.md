@@ -144,3 +144,15 @@ None — no external service configuration required.
 ---
 *Phase: 122-structural-retrofit-decision-trees-carved-mermaid-files*
 *Completed: 2026-07-08*
+
+## Self-Check: PASSED
+
+- FOUND: `docs/decision-trees/08-android-triage.md` (doc_id RE-215 present)
+- FOUND: `docs/decision-trees/00-initial-triage.md` (doc_id RE-207 present)
+- FOUND: `docs/decision-trees/01-esp-failure.md` (doc_id RE-208 present)
+- FOUND: registry rows RE-215/RE-207/RE-208 all flipped to Approved in `docs/_registry/RE-index.md`
+- FOUND: commit `39c8ae8` (Task 1)
+- FOUND: commit `09055ad` (Task 2)
+- FOUND: commit `5ef36ad` (Task 3)
+- FOUND: commit `60da40c` (Summary)
+- C17 exits 0 on the full 198-file corpus (verified post-Task-3)
