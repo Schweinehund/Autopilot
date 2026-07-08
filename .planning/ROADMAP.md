@@ -45,7 +45,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
  (completed 2026-07-08)
 - [x] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
  (completed 2026-07-08)
-- [ ] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior
+- [x] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior (completed 2026-07-08)
 - [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
 
 ## Phase Details
@@ -201,7 +201,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 — terminal owner-gate)*
 
-- [ ] 124-03-PLAN.md — PIPE-05: reformat draft-test-doc.md to shipped EEE block (D-14) + PIPE-05-RUNBOOK/FINDINGS (D-15) + REQUIREMENTS.md:35 (D-17) + ROADMAP SC4 reword (D-18) + owner-run blocking checkpoint (D-16) (SC4)
+- [x] 124-03-PLAN.md — PIPE-05: reformat draft-test-doc.md to shipped EEE block (D-14) + PIPE-05-RUNBOOK/FINDINGS (D-15) + REQUIREMENTS.md:35 (D-17) + ROADMAP SC4 reword (D-18) + owner-run blocking checkpoint (D-16) (SC4)
 
 ### Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close
 
@@ -246,5 +246,5 @@ Plans:
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
-| 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 2/3 | In Progress|  |
+| 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 3/3 | Complete   | 2026-07-08 |
 | 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |

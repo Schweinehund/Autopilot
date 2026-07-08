@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: executing
-last_updated: "2026-07-08T19:17:03.598Z"
+status: verifying
+last_updated: "2026-07-08T23:53:52.936Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 31
-  completed_plans: 30
-  percent: 67
+  completed_plans: 31
+  percent: 83
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 Phase: 124 (pipeline-fix-descriptive-filename-pass-draft-label-grounding) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-08
 
 ## v1.16 Phase Dependency Summary
@@ -121,7 +121,7 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Ready to execute
+  |             BOTH frontmatter status: AND visible **Status:** Phase complete — ready for verification
   |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
@@ -391,6 +391,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 124]: PIPE-03 byte-equivalence baseline generated via direct pandoc invocation (same flags as convert.ps1 line 74) rather than reverting code, since the fix is strictly additive
 - [Phase 124-02]: PIPE-04: D-08 collision disambiguation uses nearest-first Path parent-directory segments (reversed to natural order), proven via synthetic 2-row collision + a directory-less fail-closed proof; 0 of 221 real titles collide
 - [Phase 124-02]: PIPE-04: filename-map.md format locked to committed markdown table (3-col Doc ID | Path | Output Filename); resolver returns {ok,error} instead of calling process.exit so --self-test can prove the fail-closed collision path directly
+- [Phase 124]: 124-03: PIPE-05 owner-run Draft-label probe closed PASS (both queries surfaced literal Draft from the visible body-text block, not frontmatter — D-17 re-confirmed against the shipped Platform-first block format)
+- [Phase 124]: 124-03: Two-stage probe run discovered a live stale-index gotcha (same-filename re-upload served a previously-indexed v1.15-shape copy on the first run); owner re-uploaded the verified shipped-format build and re-ran to confirm PASS; documented in PIPE-05-RUNBOOK.md
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -427,8 +429,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T19:17:03.581Z
-Stopped at: Completed 124-02-PLAN.md
+Last session: 2026-07-08T23:53:52.915Z
+Stopped at: Completed 124-03-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -508,3 +510,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 123 P04 | 35min | 2 tasks | 3 files |
 | Phase 124 P01 | 9min | 3 tasks | 4 files |
 | Phase 124 P02 | 7min | 3 tasks | 2 files |
+| Phase 124 P03 | 35min | 3 tasks | 5 files |
