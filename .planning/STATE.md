@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T19:05:17.014Z"
+last_updated: "2026-07-08T19:17:03.598Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 31
-  completed_plans: 29
+  completed_plans: 30
   percent: 67
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 124 (pipeline-fix-descriptive-filename-pass-draft-label-grounding) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -389,6 +389,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 123]: [123-04] Phase 123 CLOSED: SC1 (full-corpus C17 229/0), SC2 (check-nav-hub-links.mjs 0/0), SC3 (navigation-last git attestation: 15b1b20 2026-07-08 post-dates e2ec2a5 2026-07-07) all proven in 123-VERIFICATION.md; RETRO-06 Complete
 - [Phase 124]: PIPE-03 CUSTOM-PROPS check treats absent docProps/custom.xml as trivial PASS (no custom properties promoted is not itself a regression); fails only on a property name outside the known 9-key EEE set
 - [Phase 124]: PIPE-03 byte-equivalence baseline generated via direct pandoc invocation (same flags as convert.ps1 line 74) rather than reverting code, since the fix is strictly additive
+- [Phase 124-02]: PIPE-04: D-08 collision disambiguation uses nearest-first Path parent-directory segments (reversed to natural order), proven via synthetic 2-row collision + a directory-less fail-closed proof; 0 of 221 real titles collide
+- [Phase 124-02]: PIPE-04: filename-map.md format locked to committed markdown table (3-col Doc ID | Path | Output Filename); resolver returns {ok,error} instead of calling process.exit so --self-test can prove the fail-closed collision path directly
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -425,8 +427,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T19:05:16.997Z
-Stopped at: Completed 124-01-PLAN.md
+Last session: 2026-07-08T19:17:03.581Z
+Stopped at: Completed 124-02-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -505,3 +507,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 123 P03 | 40min | 2 tasks | 4 files |
 | Phase 123 P04 | 35min | 2 tasks | 3 files |
 | Phase 124 P01 | 9min | 3 tasks | 4 files |
+| Phase 124 P02 | 7min | 3 tasks | 2 files |

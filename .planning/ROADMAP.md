@@ -197,7 +197,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 124-02-PLAN.md — PIPE-04: build-filename-map.mjs (D-05 slug + D-08 fail-closed collision) + committed filename-map.md (221 rows, output-only; RE-index.md untouched) (SC3)
+- [x] 124-02-PLAN.md — PIPE-04: build-filename-map.mjs (D-05 slug + D-08 fail-closed collision) + committed filename-map.md (221 rows, output-only; RE-index.md untouched) (SC3)
 
 **Wave 3** *(blocked on Wave 2 — terminal owner-gate)*
 
@@ -246,5 +246,5 @@ Plans:
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
-| 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 1/3 | In Progress|  |
+| 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 2/3 | In Progress|  |
 | 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
