@@ -148,6 +148,12 @@ function computeAnchorSetFromContent(content) {
     if (fenceMask[i]) continue;
     const m = lines[i].match(/^#{1,6}\s+(.*)$/);
     if (!m) continue;
+    // A heading carrying a trailing {#id} override renders with that id as its ONLY
+    // anchor (Pandoc/kramdown semantics): the heading-text auto-slug is NOT generated,
+    // and the heading does NOT consume an auto-slug dedup count. The override was already
+    // added verbatim in loop (a). Registering the auto-slug too would be a phantom anchor
+    // that lets a link to the (non-existent) auto-slug falsely resolve -- a false-negative.
+    if (/\s*\{#[a-zA-Z0-9_-]+\}\s*$/.test(m[1])) continue;
     const headingText = stripHeadingText(m[1]);
     const base = githubSlug(headingText);
     const count = seen.get(base) ?? 0;
@@ -332,12 +338,14 @@ if (SELF_TEST) {
     dupOk ? 'all 4 variants present' : `set: [${[...dupSet].join(', ')}]`
   );
 
-  // D: {#id} override resolves VERBATIM -- the override wins over the heading-text slug
+  // D: {#id} override resolves VERBATIM and SUPPRESSES the heading-text auto-slug --
+  // the override is the heading's ONLY anchor (Pandoc/kramdown); the auto-slug "foo-bar"
+  // is a phantom that must NOT be registered, else a link to it would false-negative.
   const overrideContent = '### Foo Bar {#custom-anchor}\n\nsome prose';
   const overrideSet = computeAnchorSetFromContent(overrideContent);
   stAssert(
-    '{#id} override resolves verbatim: "### Foo Bar {#custom-anchor}" -> has "custom-anchor"',
-    overrideSet.has('custom-anchor'),
+    '{#id} override verbatim + auto-slug suppressed: has "custom-anchor", NOT "foo-bar"',
+    overrideSet.has('custom-anchor') && !overrideSet.has('foo-bar'),
     `set: [${[...overrideSet].join(', ')}]`
   );
 
