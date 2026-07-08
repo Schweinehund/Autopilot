@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T02:06:14.996Z"
+last_updated: "2026-07-08T02:22:25.795Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 24
-  completed_plans: 15
+  completed_plans: 16
   percent: 33
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
-Plan: 7 of 15
+Plan: 8 of 15
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -366,6 +366,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 122-06]: Independently re-derived admin-setup-android/00-overview.md's LOCKED-N as 15 (11 nodes + 4 labeled edges via git-show-verified grep extraction), correcting the plan's precomputed 16
 - [Phase 122-06]: Independently re-derived admin-setup-ios/00-overview.md's LOCKED-N as 15 (11 nodes + 4 labeled edges), correcting the plan's precomputed 18; macos/00's LOCKED-11 matched the plan exactly, confirming the counting methodology
 - [Phase 122-06]: macos/00's diamond-free C/D/E->F reconvergence documented as explicit prose directly under the LOCKED-N line (not folded into an existing list item), keeping it maximally visible for the D-01 verification pass
+- [Phase ?]: [Phase 122-07] 8021x/01's sequenceDiagram LOCKED-N corrected to 8 messages (not the plan's stated 10) via independent re-derivation against git show 71be4ab; Note annotation folded inline on step 6 rather than counted as a message
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -402,8 +403,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T02:06:14.981Z
-Stopped at: Completed 122-06-PLAN.md
+Last session: 2026-07-08T02:22:25.779Z
+Stopped at: Completed 122-07-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -468,3 +469,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P04 | 15min | 3 tasks | 4 files |
 | Phase 122 P05 | 20min | 2 tasks | 3 files |
 | Phase 122 P06 | 25min | 3 tasks | 4 files |
+| Phase 122 P07 | 45m | 3 tasks | 4 files |
