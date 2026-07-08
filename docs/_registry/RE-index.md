@@ -223,7 +223,7 @@
 | RE-207 | docs/decision-trees/00-initial-triage.md | Initial Triage Decision Tree | Reference | Approved |
 | RE-208 | docs/decision-trees/01-esp-failure.md | ESP Failure Decision Tree | Reference | Approved |
 | RE-209 | docs/decision-trees/02-profile-assignment.md | Profile Assignment Failure Decision Tree | Reference | Approved |
-| RE-210 | docs/decision-trees/03-tpm-attestation.md | TPM Attestation Failure Decision Tree | Reference | Pending |
+| RE-210 | docs/decision-trees/03-tpm-attestation.md | TPM Attestation Failure Decision Tree | Reference | Approved |
 | RE-211 | docs/decision-trees/04-apv2-triage.md | APv2 Device Preparation Triage | Reference | Pending |
 | RE-212 | docs/decision-trees/05-device-lifecycle.md | Device Lifecycle Action Decision Tree | Reference | Pending |
 | RE-213 | docs/decision-trees/06-macos-triage.md | macOS ADE Triage | Reference | Pending |

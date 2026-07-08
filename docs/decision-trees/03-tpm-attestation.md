@@ -1,50 +1,55 @@
 ---
+doc_id: RE-210
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-20
 review_by: 2026-06-18
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-210 · **Status:** Approved
 
 # TPM Attestation Failure Decision Tree
+
+## Summary
+
+Reference decision table for Windows Autopilot (classic APv1 and self-deploying mode) TPM attestation triage. Gates on whether the failure is TPM-related, then branches on BIOS enablement, TPM version, and error-code presence, routing each outcome to a Resolved state, an L1 error-code lookup, or an L2 escalation point with data to collect.
+
+> **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 Use this tree to triage [TPM](../_glossary.md#tpm) (Trusted Platform Module) failures that occur during [pre-provisioning](../_glossary.md#pre-provisioning) or self-deploying mode provisioning. Both modes require TPM 2.0 attestation before the device can complete enrollment. This tree covers the checks an L1 agent can perform — BIOS settings verification and error code lookup — before escalating. Every branch ends at a Resolved outcome or an escalation point with data to collect before handing off.
 
 ## Decision Tree
 
-```mermaid
-graph TD
-    TPD1{Did the device fail during\npre-provisioning or self-deploying\nmode with a TPM-related error?}
-    TPD1 -->|No| TPR0([Return to Initial Triage])
-    TPD1 -->|Yes| TPD2{Is TPM enabled\nin BIOS?}
+**LOCKED — 33 (nodes + labeled edges)** — 18 nodes + 15 labeled edges (plus 2 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). The tree is grouped below into two stages that mirror the graph's own branch structure; each answer column is one of the graph's labeled edges — no row collapses more than one incoming edge.
 
-    TPD2 -->|No - TPM disabled| TPA1[Enable TPM in BIOS\nand save settings]
-    TPA1 --> TPD3{Retry provisioning -\ndid it succeed?}
-    TPD3 -->|Yes| TPR1([Resolved: TPM enabled,\nprovisioning complete])
-    TPD3 -->|No| TPE1([Escalate L2: TPM issue\npersists after enabling])
+### Stage 1: TPM Failure & BIOS Gate (TPD1 → TPD2 → TPD3)
 
-    TPD2 -->|Yes - TPM enabled| TPD4{Is TPM version 2.0?}
-    TPD2 -->|Don't know - cannot access BIOS| TPE5([Escalate L2: Cannot verify\nBIOS TPM settings])
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 1 | Did the device fail during pre-provisioning or self-deploying mode with a TPM-related error? (TPD1) | No | Return to Initial Triage (TPR0) |
+| 1 | Did the device fail during pre-provisioning or self-deploying mode with a TPM-related error? (TPD1) | Yes | Continue to Step 2 |
+| 2 | Is TPM enabled in BIOS? (TPD2) | No - TPM disabled | Enable TPM in BIOS and save settings (TPA1) → continue to Step 2b |
+| 2 | Is TPM enabled in BIOS? (TPD2) | Yes - TPM enabled | Continue to Step 3 (TPM version check) |
+| 2 | Is TPM enabled in BIOS? (TPD2) | Don't know - cannot access BIOS | Escalate L2: Cannot verify BIOS TPM settings (TPE5) |
+| 2b | Retry provisioning - did it succeed? (TPD3) | Yes | Resolved: TPM enabled, provisioning complete (TPR1) |
+| 2b | Retry provisioning - did it succeed? (TPD3) | No | Escalate L2: TPM issue persists after enabling (TPE1) |
 
-    TPD4 -->|No - version 1.2 or older| TPE2([Escalate L2: TPM version\ntoo old - hardware replacement needed])
-    TPD4 -->|Yes - version 2.0| TPD5{Does the error screen\nshow an error code?}
+### Stage 2: TPM Version & Error Code Routing (TPD4 → TPD5 → TPD6)
 
-    TPD5 -->|Yes| TPA2[Look up error code\nin TPM error table]
-    TPA2 -->|Code found| TPR2([Resolved: Follow L1 Action\ncolumn in TPM error table])
-    TPA2 -->|Code not found| TPE3([Escalate L2: TPM error code\nnot found in table])
-
-    TPD5 -->|No - no error code| TPA3[Power off device,\nwait 30 seconds,\nthen retry provisioning]
-    TPA3 --> TPD6{Did provisioning\nsucceed after retry?}
-    TPD6 -->|Yes| TPR3([Resolved: Provisioning\nsucceeded on retry])
-    TPD6 -->|No| TPE4([Escalate L2: TPM attestation\nfails without error code])
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    classDef escalateInfra fill:#fd7e14,color:#fff
-    class TPR0,TPR1,TPR2,TPR3 resolved
-    class TPE1,TPE2,TPE3,TPE4,TPE5 escalateL2
-```
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 3 | Is TPM version 2.0? (TPD4) | No - version 1.2 or older | Escalate L2: TPM version too old - hardware replacement needed (TPE2) |
+| 3 | Is TPM version 2.0? (TPD4) | Yes - version 2.0 | Continue to Step 4 (error-code check) |
+| 4 | Does the error screen show an error code? (TPD5) | Yes | Look up error code in TPM error table (TPA2) → continue to Step 4b |
+| 4 | Does the error screen show an error code? (TPD5) | No - no error code | Power off device, wait 30 seconds, then retry provisioning (TPA3) → continue to Step 4c |
+| 4b | Code found in TPM error table? | Code found | Resolved: Follow L1 Action column in TPM error table (TPR2) |
+| 4b | Code found in TPM error table? | Code not found | Escalate L2: TPM error code not found in table (TPE3) |
+| 4c | Did provisioning succeed after retry? (TPD6) | Yes | Resolved: Provisioning succeeded on retry (TPR3) |
+| 4c | Did provisioning succeed after retry? (TPD6) | No | Escalate L2: TPM attestation fails without error code (TPE4) |
 
 ## How to Check
 
@@ -81,4 +86,6 @@ graph TD
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 03: converted Mermaid decision graph to 2 grouped C17-compliant decision tables (LOCKED — 33, nodes + labeled edges); removed the mermaid fence; all 6 decision points preserved as explicit table rows across the 2 stages. | -- |
 | 2026-03-20 | Initial version | — |
