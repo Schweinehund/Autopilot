@@ -34,6 +34,12 @@ of the form:
 This stub is TEMPORARY — it exists only in the `scripts/pipeline/test-fixtures/` copies to
 exercise the body-text grounding check (SC4). The canonical retrofit happens in Phases 116-118.
 
+**Phase 124 update (PIPE-05, D-14):** `draft-test-doc.md` now follows the **shipped EEE
+single-line block format** (`·`-separated, Platform-first, placed BEFORE the H1, per
+`docs/_standards/EEE-SOP-standard.md`) instead of the stub shape above — it was reformatted
+for the Phase 124 Draft-label grounding probe. The other 5 fixtures in this directory are
+untouched and legitimately keep the stub shape described in this section.
+
 ---
 
 ## Deployment Note
