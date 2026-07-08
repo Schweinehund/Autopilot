@@ -83,7 +83,8 @@ Plans:
   4. Every retrofitted file in this phase carries the "v1.16 EEE reformat — content not re-reviewed" Version-History row and `Last Reviewed` = `last_verified` verbatim
 
 **Plans**: 7 plans
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 121-01-PLAN.md — Build retrofit-structural.mjs fork (2 doc_types, 9-file Mermaid exclusion, v1.16 VH) + author RE-179..206 registry rows
@@ -117,7 +118,34 @@ Plans:
   4. C17 exits 0 on every file in this phase's class (decision-trees + all carved-mermaid files, including RE-128/RE-147 and the 9 carve-outs)
   5. The 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder — `docs/lifecycle/{00-overview,03-oobe,04-esp}.md`, `docs/lifecycle-apv2/02-deployment-flow.md`, `docs/ios-lifecycle/{01-ade-lifecycle,02-mdm-migration}.md`, `docs/macos-lifecycle/{00-ade-lifecycle,01-psso-provisioning-walkthrough,02-mdm-migration-psso}.md`) have their Mermaid resolved per STD-04 with every decision leaf preserved, flip from `Status: Pending` to `Approved`, and C17 exits 0; RETRO-07 closes only when all 22 lifecycle files are green
 
-**Plans**: TBD
+**Plans**: 15 plans
+Plans:
+**Wave 1** — foundation
+
+- [ ] 122-01-PLAN.md — Build retrofit-mermaid-structural.mjs fork (delete MERMAID_DEFERRED, add mermaid-absence + doc_id-idempotency + keyless-Windows guards, explicit-Set router, auto-date VH) + mint RE-207..217 + plan-time rulings R1/R2/R3
+
+**Wave 2** *(blocked on Wave 1)* — hand-convert + fork-enroll all 30 files
+
+- [ ] 122-02-PLAN.md — Decision-trees 08/00/01 (heaviest reconvergence; front-loaded)
+- [ ] 122-03-PLAN.md — Decision-trees 02/03/04 (keyless-Windows)
+- [ ] 122-04-PLAN.md — Decision-trees 05/06/07 (05 = Reference directory-precedence; nested MACSSO)
+- [ ] 122-05-PLAN.md — Decision-trees 09/10 (10 = delete fence + stale Legend, upgrade to LOCKED-11)
+- [ ] 122-06-PLAN.md — Carved FULL: admin-setup android/00, ios/00, macos/00
+- [ ] 122-07-PLAN.md — Carved: apv1/01 (8 blockquotes) + 8021x/00, 8021x/01 (seq->step list)
+- [ ] 122-08-PLAN.md — Carved LIGHT: apv1/00, apv2/00, linux/00 (RE-128), ca-enrollment-timing (RE-147) — SC2
+- [ ] 122-09-PLAN.md — Lifecycle: lifecycle/00 (2 blocks), /03 (ESP4 merge), /04 (subgraph partition)
+- [ ] 122-10-PLAN.md — Lifecycle: lifecycle-apv2/02 (2 blocks, 5-edge failure map) + ios-lifecycle/01, /02 (10 blockquotes)
+- [ ] 122-11-PLAN.md — Lifecycle: macos-lifecycle 00/01/02 (dual pipelines; corpus-max 5877c + 16 blockquotes)
+
+**Wave 3** *(blocked on Wave 2)* — independent D-01 leaf-parity verification (read-only)
+
+- [ ] 122-12-PLAN.md — D-01 verify 11 decision-trees (git-show re-derivation vs converted tables)
+- [ ] 122-13-PLAN.md — D-01 verify 10 carved-mermaid files
+- [ ] 122-14-PLAN.md — D-01 verify 9 Mermaid-bearing lifecycle files
+
+**Wave 4** *(blocked on Wave 3)* — close
+
+- [ ] 122-15-PLAN.md — Flip all 30 rows Pending->Approved + full-corpus C17 + 122-VERIFICATION.md + mark RETRO-05/07/08 complete
 
 ### Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)
 
