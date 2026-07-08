@@ -43,7 +43,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit glossaries, end-user guides, and the 13 Mermaid-free lifecycle docs to EEE, C17 green (the 9 Mermaid-bearing lifecycle docs are deferred to Phase 122 — RETRO-07 spans 121+122) (completed 2026-07-07)
 - [x] **Phase 122: Structural Retrofit — Decision-Trees, Carved-Mermaid Files & the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder)** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
  (completed 2026-07-08)
-- [x] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed (completed 2026-07-08)
+- [x] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
+ (completed 2026-07-08)
 - [ ] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior
 - [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
 
@@ -187,7 +188,20 @@ Plans:
   3. A descriptive-filename rename map is applied (corpus-wide or the defined scope) with pipeline output-name wiring updated and the RE-NNN ↔ file mapping kept intact in the registry
   4. The owner confirms via a live Copilot Studio session that mutating BOTH the frontmatter `status:` AND the visible `**Status:**` block renders and surfaces the literal Draft label in a query result
 
-**Plans**: TBD
+**Plans**: 3 plans (sequential — `use_worktrees:false`; order PIPE-03 -> PIPE-04 -> PIPE-05 invariant per D-20)
+
+Plans:
+**Wave 1** *(gating)*
+
+- [ ] 124-01-PLAN.md — PIPE-03: convert.ps1 pre-pandoc nav-footer preprocessing (D-01/D-03) + extractCustomProperties/CUSTOM-PROPS guard (D-04 OQ4) + README SC1 + D-04 3-part regression (SC1/SC2)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 124-02-PLAN.md — PIPE-04: build-filename-map.mjs (D-05 slug + D-08 fail-closed collision) + committed filename-map.md (221 rows, output-only; RE-index.md untouched) (SC3)
+
+**Wave 3** *(blocked on Wave 2 — terminal owner-gate)*
+
+- [ ] 124-03-PLAN.md — PIPE-05: reformat draft-test-doc.md to shipped EEE block (D-14) + PIPE-05-RUNBOOK/FINDINGS (D-15) + REQUIREMENTS.md:35 (D-17) + ROADMAP SC4 reword (D-18) + owner-run blocking checkpoint (D-16) (SC4)
 
 ### Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close
 
@@ -232,5 +246,5 @@ Plans:
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
-| 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
+| 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/3 | Not started | - |
 | 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
