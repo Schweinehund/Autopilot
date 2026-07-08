@@ -1,13 +1,26 @@
 ---
+doc_id: RE-196
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-196 · **Status:** Approved
 
 # Stage 4: Enrollment Status Page
+
+## Summary
+
+This guide covers Stage 4 of the Windows Autopilot (classic) deployment lifecycle — the Enrollment Status Page, which runs two sequential phases (device phase before any user logs in, then user phase after authentication) to track and block on required policy and app installation before releasing the desktop.
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
+
+> For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -70,29 +83,49 @@ Not all app types block the ESP. The following table shows which app types are t
 
 **Available apps do NOT block the ESP. Only required apps configured to track in ESP block the desktop. This is the most frequent source of confusion.**
 
-### Process Flow
+### Process Flow (LOCKED — 8 (8 nodes + 0 labeled edges))
 
-```mermaid
-flowchart LR
-  subgraph Device Phase
-    D1[MDM enrollment] --> D2[Device policies] --> D3[Device apps] --> D4[Device phase complete]
-  end
-  subgraph User Phase
-    U1[User logs in] --> U2[User policies] --> U3[User apps] --> U4[Desktop unlocked]
-  end
-  D4 --> U1
-```
+The process flow is partitioned into two sequential phases — Device Phase runs to completion before User Phase begins.
+
+**Device Phase**
+
+1. MDM enrollment
+2. Device policies
+3. Device apps
+4. Device phase complete
+
+**User Phase**
+
+1. User logs in
+2. User policies
+3. User apps
+4. Desktop unlocked
+
+**Transition:** Device phase completes before user phase begins — Device phase complete → User logs in.
 
 ---
 
 ## Behind the Scenes
 
 > **L2 Note:** Technical details for deeper investigation.
->
-> - **FirstSync checkpoint:** `HKLM:\SOFTWARE\Microsoft\Enrollments\{GUID}\FirstSync` tracks whether the server has finished provisioning the device side. When `IsServerProvisioningDone` becomes `true`, the device phase is considered complete. See [registry paths reference](../reference/registry-paths.md) for full path details.
-> - **ESP tracking root:** `HKLM:\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking` is the root key where the ESP tracks expected vs. received policies and apps. Subkeys like `ExpectedPolicies` and `Sidecar` contain diagnostic data. See [registry paths reference](../reference/registry-paths.md).
-> - **IME/Sidecar process:** Win32 app installation and tracking is handled by the Intune Management Extension (also called the sidecar process). It runs as a background service and reports installation status back to the ESP. If Win32 apps stall, the sidecar log at `%ProgramData%\Microsoft\IntuneManagementExtension\Logs\` is the first diagnostic target.
-> - **ExpectedPolicies subkey:** The ESP compares received policy GUIDs against the `ExpectedPolicies` list. Apps and policies are only tracked if their assignment is configured for ESP enrollment tracking. This is why available-assignment apps never appear in this key.
+
+> - **FirstSync checkpoint:** `HKLM:\SOFTWARE\Microsoft\Enrollments\{GUID}\FirstSync` tracks whether the server has finished provisioning the device side.
+
+> - When `IsServerProvisioningDone` becomes `true`, the device phase is considered complete. See [registry paths reference](../reference/registry-paths.md) for full path details.
+
+> - **ESP tracking root:** `HKLM:\SOFTWARE\Microsoft\Windows\Autopilot\EnrollmentStatusTracking` is the root key where the ESP tracks expected vs. received policies and apps.
+
+> - Subkeys like `ExpectedPolicies` and `Sidecar` contain diagnostic data. See [registry paths reference](../reference/registry-paths.md).
+
+> - **IME/Sidecar process:** Win32 app installation and tracking is handled by the Intune Management Extension (also called the sidecar process).
+
+> - It runs as a background service and reports installation status back to the ESP.
+
+> - If Win32 apps stall, the sidecar log at `%ProgramData%\Microsoft\IntuneManagementExtension\Logs\` is the first diagnostic target.
+
+> - **ExpectedPolicies subkey:** The ESP compares received policy GUIDs against the `ExpectedPolicies` list.
+
+> - Apps and policies are only tracked if their assignment is configured for ESP enrollment tracking. This is why available-assignment apps never appear in this key.
 
 ---
 
@@ -155,7 +188,9 @@ Timeline variability increases significantly with large Win32 app counts or slow
 
 ---
 
-> **APv2 Note:** APv2 (Device Preparation) does not have an ESP in the APv1 sense. Progress tracking is integrated directly into the deployment policy configuration. The desktop unlocks immediately after enrollment and apps install in the background without blocking user access. For details, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+> **APv2 Note:** APv2 (Device Preparation) does not have an ESP in the APv1 sense. Progress tracking is integrated directly into the deployment policy configuration.
+
+> The desktop unlocks immediately after enrollment and apps install in the background without blocking user access. For details, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ---
 
@@ -169,4 +204,5 @@ Previous: [Stage 3: OOBE](03-oobe.md) | Next: [Stage 5: Post-Enrollment Verifica
 
 | Date | Change |
 |------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version |

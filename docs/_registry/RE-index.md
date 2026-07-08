@@ -209,7 +209,7 @@
 | RE-193 | docs/lifecycle/01-hardware-hash.md | Stage 1: Hardware Hash Import and Device Registration | Guide | Approved |
 | RE-194 | docs/lifecycle/02-profile-assignment.md | Stage 2: Autopilot Profile Assignment | Guide | Approved |
 | RE-195 | docs/lifecycle/03-oobe.md | Stage 3: OOBE and Deployment Mode Selection | Guide | Approved |
-| RE-196 | docs/lifecycle/04-esp.md | Stage 4: Enrollment Status Page | Guide | Pending |
+| RE-196 | docs/lifecycle/04-esp.md | Stage 4: Enrollment Status Page | Guide | Approved |
 | RE-197 | docs/lifecycle/05-post-enrollment.md | Stage 5: Post-Enrollment Verification | Guide | Approved |
 | RE-198 | docs/lifecycle-apv2/00-overview.md | APv2: Windows Autopilot Device Preparation Overview | Guide | Approved |
 | RE-199 | docs/lifecycle-apv2/01-prerequisites.md | APv2 Prerequisites Checklist | Guide | Approved |
