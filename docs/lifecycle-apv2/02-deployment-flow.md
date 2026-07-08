@@ -1,74 +1,63 @@
 ---
+doc_id: RE-200
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-04-11
 review_by: 2026-07-10
 applies_to: APv2
 audience: admin
 ---
 
-> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2).
-> For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md).
-> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-200 · **Status:** Approved
 
 # APv2 User-Driven Deployment Flow
+
+## Summary
+
+This guide walks through the 10-step Windows Autopilot Device Preparation (APv2) user-driven deployment flow, from OEM device boot through Enrollment Time Grouping, Entra join, IME installation, app and script delivery, and final desktop sign-in. It also maps the five stages where deployment failures most commonly surface, giving admins and L1/L2 support a quick reference for isolating where a stalled or failed APv2 deployment broke down.
+
+> **Version gate:** This guide covers Windows Autopilot Device Preparation (APv2).
+
+> For Windows Autopilot (classic), see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md).
+> For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
 ## How to Use This Guide
 
 This is the 10-step deployment process for Windows Autopilot Device Preparation (APv2) in user-driven mode. Each step is explained below with what happens, what can fail, and where to look when it does. For prerequisites and configuration requirements, see [APv2 Prerequisites](01-prerequisites.md). For automatic mode (Windows 365 Cloud PCs), see [APv2 Automatic Mode](03-automatic-mode.md).
 
-## Level 1 — Happy Path
+## Level 1 — Happy Path (LOCKED — 11 (11 nodes + 0 labeled edges))
 
-```mermaid
-graph TD
-    S1[Step 1: Device boots — OEM Windows 11] --> S2[Step 2: User connects to network + authenticates to Entra ID]
-    S2 --> ETG["Enrollment Time Grouping (ETG) — device added to security group"]
-    ETG --> S3[Step 3: Entra join + Intune enrollment]
-    S3 --> S4[Step 4: IME installs]
-    S4 --> S5[Step 5: Standard user enforcement]
-    S5 --> S6[Step 6: MDM sync + policy delivery]
-    S6 --> S7[Step 7: LOB and M365 apps install]
-    S7 --> S8[Step 8: PowerShell scripts run]
-    S8 --> S9[Step 9: Win32, Store, EAC apps install]
-    S9 --> S10[Step 10: Required setup complete — user signs in to desktop]
+The 10-step deployment sequence runs as a single linear chain with no decision branches.
 
-    click S1 "#step-1-device-boots-with-oem-preinstalled-windows-11"
-    click S2 "#step-2-user-connects-to-network-and-authenticates"
-    click S3 "#step-3-entra-join-and-intune-enrollment"
-    click S4 "#step-4-intune-management-extension-ime-installs"
-    click S5 "#step-5-standard-user-enforcement"
-    click S6 "#step-6-mdm-sync-and-policy-delivery"
-    click S7 "#step-7-lob-and-microsoft-365-apps-install"
-    click S8 "#step-8-powershell-scripts-run"
-    click S9 "#step-9-win32-store-and-eac-apps-install"
-    click S10 "#step-10-required-setup-complete"
-```
+1. Step 1: Device boots — OEM Windows 11
+2. Step 2: User connects to network + authenticates to Entra ID
+3. Enrollment Time Grouping (ETG) — device added to security group
+4. Step 3: Entra join + Intune enrollment
+5. Step 4: IME installs
+6. Step 5: Standard user enforcement
+7. Step 6: MDM sync + policy delivery
+8. Step 7: LOB and M365 apps install
+9. Step 8: PowerShell scripts run
+10. Step 9: Win32, Store, EAC apps install
+11. Step 10: Required setup complete — user signs in to desktop
 
-> ETG (Enrollment Time Grouping) is the core mechanism that replaces APv1's hardware hash pre-staging. The device is added to a pre-defined security group at enrollment time — no prior device registration required.
+> ETG (Enrollment Time Grouping) is the core mechanism that replaces APv1's hardware hash pre-staging.
 
-## Level 2 — Failure Points
+> The device is added to a pre-defined security group at enrollment time — no prior device registration required.
 
-The following diagram shows where common failures surface across the deployment flow. Green nodes are steps; red nodes are failure categories connected to the step where they first appear.
+## Level 2 — Failure Points (LOCKED — 13 (13 nodes + 0 labeled edges))
 
-```mermaid
-graph TD
-    S3[Step 3: Entra join + Intune enrollment] --> S4[Step 4: IME installs]
-    S4 --> S5[Step 5: User enforcement]
-    S5 --> S6[Step 6: MDM sync]
-    S6 --> S7[Step 7: LOB and M365 apps]
-    S7 --> S8[Step 8: PowerShell scripts]
-    S8 --> S9[Step 9: Win32, Store, EAC apps]
-    S9 --> S10[Step 10: Setup complete]
+The following table shows where common failures surface across the deployment flow. Each row names the stage and the failure category that first appears at that stage.
 
-    F_REG[Enrollment fails / APv1 conflict] -.-> S3
-    F_IME[IME install fails] -.-> S4
-    F_APP1[LOB or M365 app install fails] -.-> S7
-    F_SCRIPT[PowerShell script fails] -.-> S8
-    F_APP2[Win32 or Store app install fails] -.-> S9
-
-    classDef stage fill:#d4edda,stroke:#28a745
-    classDef failure fill:#f8d7da,stroke:#dc3545
-    class S3,S4,S5,S6,S7,S8,S9,S10 stage
-    class F_REG,F_IME,F_APP1,F_SCRIPT,F_APP2 failure
-```
+| Stage | Failure Mode |
+|-------|--------------|
+| Step 3: Entra join + Intune enrollment | Enrollment fails / APv1 conflict |
+| Step 4: IME installs | IME install fails |
+| Step 7: LOB and M365 apps install | LOB or M365 app install fails |
+| Step 8: PowerShell scripts run | PowerShell script fails |
+| Step 9: Win32, Store, EAC apps install | Win32 or Store app install fails |
 
 ## Step-by-Step Breakdown
 
@@ -186,3 +175,9 @@ In the Intune admin center, the APv2 deployment status shows progress for app in
 ---
 
 *Deployment flow sourced from [Microsoft Learn — APv2 User-Driven Workflow](https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/user-driven/entra-join-workflow), verified April 2026.*
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
