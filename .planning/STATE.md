@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T01:23:11.394Z"
+last_updated: "2026-07-08T01:37:58.174Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 24
-  completed_plans: 12
+  completed_plans: 13
   percent: 33
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
-Plan: 4 of 15
+Plan: 5 of 15
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -358,6 +358,9 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 122-02: Established a grouped multi-stage decision-table shape (headed Stage-N sub-tables) for decision graphs lacking a pre-existing routing-table analog (00-initial-triage.md, 01-esp-failure.md).
 - [Phase ?]: [122-03] Verified all 3 files' (02/03/04) plan-precomputed LOCKED-N counts (35/33/23) were correct against git-show 71be4ab bytes -- no corrections needed, unlike 122-02's 08-android off-by-one
 - [Phase ?]: [122-03] Deleted 04-apv2-triage.md's Legend section and mermaid click-navigation directives together as one stale-prose removal -- first file in the roster confirmed to carry both anti-pattern classes simultaneously; reworded a freshly-authored VH row to clear a stale-prose grep false-positive on the word 'click'
+- [Phase 122-04]: 05-device-lifecycle.md's Q1-Q4 decision graph converted to a single 5-row ordinal-column decision table (one row per terminal action/path) rather than a per-edge table -- matches the shipped 10-8021x-triage.md / 06 / 07 Routing Verification precedent
+- [Phase 122-04]: 06/07 already carried a pre-existing Routing Verification table built under the same shape convention prior to this phase; conversion work was fence + Legend removal, LOCKED-N annotation, and (for 06) explicit nested-MACSSO row labeling -- not a from-scratch table author
+- [Phase 122-04]: All 3 files' LOCKED-N counts (18/31/23) independently re-derived against git show 71be4ab bytes and found to match the plan's precomputed values exactly -- no corrections needed
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -394,8 +397,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T01:23:11.378Z
-Stopped at: Completed 122-03-PLAN.md
+Last session: 2026-07-08T01:37:58.154Z
+Stopped at: Completed 122-04-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -457,3 +460,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P01 | 25min | 3 tasks | 2 files |
 | Phase 122 P02 | 45min | 3 tasks | 4 files |
 | Phase 122 P03 | 25min | 3 tasks | 4 files |
+| Phase 122 P04 | 15min | 3 tasks | 4 files |
