@@ -203,8 +203,8 @@
 | RE-187 | docs/android-lifecycle/02-provisioning-methods.md | Android Provisioning Methods | Guide | Approved |
 | RE-188 | docs/android-lifecycle/03-android-version-matrix.md | Android Version Matrix | Guide | Approved |
 | RE-189 | docs/ios-lifecycle/00-enrollment-overview.md | iOS/iPadOS Enrollment Path Overview | Guide | Approved |
-| RE-190 | docs/ios-lifecycle/01-ade-lifecycle.md | iOS/iPadOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Pending |
-| RE-191 | docs/ios-lifecycle/02-mdm-migration.md | iOS/iPadOS MDM Migration Walkthrough: In-Place Migration (iOS/iPadOS 26+) | Guide | Pending |
+| RE-190 | docs/ios-lifecycle/01-ade-lifecycle.md | iOS/iPadOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Approved |
+| RE-191 | docs/ios-lifecycle/02-mdm-migration.md | iOS/iPadOS MDM Migration Walkthrough: In-Place Migration (iOS/iPadOS 26+) | Guide | Approved |
 | RE-192 | docs/lifecycle/00-overview.md | Autopilot Lifecycle Overview | Guide | Approved |
 | RE-193 | docs/lifecycle/01-hardware-hash.md | Stage 1: Hardware Hash Import and Device Registration | Guide | Approved |
 | RE-194 | docs/lifecycle/02-profile-assignment.md | Stage 2: Autopilot Profile Assignment | Guide | Approved |
@@ -213,7 +213,7 @@
 | RE-197 | docs/lifecycle/05-post-enrollment.md | Stage 5: Post-Enrollment Verification | Guide | Approved |
 | RE-198 | docs/lifecycle-apv2/00-overview.md | APv2: Windows Autopilot Device Preparation Overview | Guide | Approved |
 | RE-199 | docs/lifecycle-apv2/01-prerequisites.md | APv2 Prerequisites Checklist | Guide | Approved |
-| RE-200 | docs/lifecycle-apv2/02-deployment-flow.md | APv2 User-Driven Deployment Flow | Guide | Pending |
+| RE-200 | docs/lifecycle-apv2/02-deployment-flow.md | APv2 User-Driven Deployment Flow | Guide | Approved |
 | RE-201 | docs/lifecycle-apv2/03-automatic-mode.md | APv2 Automatic Mode (Windows 365) | Guide | Approved |
 | RE-202 | docs/linux-lifecycle/00-enrollment-overview.md | Linux Device Management Enrollment Overview | Guide | Approved |
 | RE-203 | docs/linux-lifecycle/01-linux-prerequisites.md | Linux Intune Client Prerequisites | Guide | Approved |
