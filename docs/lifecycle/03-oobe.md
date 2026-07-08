@@ -1,13 +1,26 @@
 ---
+doc_id: RE-195
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
+platform: Windows
 last_verified: 2026-03-14
 review_by: 2026-06-12
 applies_to: both
 audience: both
 ---
 
-> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-195 · **Status:** Approved
 
 # Stage 3: OOBE and Deployment Mode Selection
+
+## Summary
+
+This guide covers Stage 3 of the Windows Autopilot (classic) deployment lifecycle — the Out-of-Box Experience where the device becomes visible to the end user or technician and the deployment mode branches into user-driven, pre-provisioning, or self-deploying, each with different actors, steps, and TPM requirements, all converging into Stage 4 (Enrollment Status Page).
+
+> **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline.
+
+> For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 ## Context
 
@@ -19,7 +32,9 @@ Every path eventually produces a managed, enrolled device — but the steps, act
 
 **Feeds into:** Stage 4 — Enrollment Status Page (ESP).
 
-> **Autopilot Reset note:** [Autopilot Reset](../_glossary.md#autopilot-reset) re-enters at Stage 3, skipping Stages 1 and 2. The device already has its registration and profile; Reset re-triggers OOBE provisioning on an already-deployed device.
+> **Autopilot Reset note:** [Autopilot Reset](../_glossary.md#autopilot-reset) re-enters at Stage 3, skipping Stages 1 and 2.
+
+> The device already has its registration and profile; Reset re-triggers OOBE provisioning on an already-deployed device.
 
 ---
 
@@ -72,29 +87,26 @@ The user (or automated process) powers on the device and sees minimal OOBE scree
 - [MDM enrollment](../_glossary.md#mdm-enrollment) begins immediately after device join.
 - Only the device phase of ESP runs — no user phase (no user to log in).
 
-### Deployment Mode Comparison
+### Deployment Mode Comparison (LOCKED — 20 (15 nodes + 5 labeled edges))
 
-The following diagram shows how the three paths diverge at mode selection and where they reconverge at ESP.
+The following table shows how the three paths diverge at mode selection and where they reconverge at ESP.
 
-```mermaid
-flowchart LR
-    START([Device powers on]) --> NET[Network + ZTD profile lookup]
-    NET --> M{Deployment Mode?}
-    M -->|User-Driven| UD[User enters AAD credentials]
-    M -->|Pre-Provisioning| PP[Technician Win+F12]
-    M -->|Self-Deploying| SD[TPM attestation - no credentials]
-    UD --> AADUD[AAD join with user context]
-    PP --> PPDEV[Device-side ESP runs]
-    SD --> AADSD[AAD join as device - no user affinity]
-    PPDEV --> PPRESULT{ESP result?}
-    PPRESULT -->|Success| RESEAL[Technician reseals device]
-    PPRESULT -->|Failure| PPFAIL([Investigate and retry])
-    RESEAL --> SHIP[Ship to user]
-    SHIP --> UDOOBE[User completes user-driven OOBE]
-    AADUD --> ESP4([Stage 4: ESP])
-    UDOOBE --> ESP4
-    AADSD --> ESP4
-```
+**Trunk edges (outside the decision):** Device powers on → Network + ZTD profile lookup → Deployment Mode? (decision).
+
+| Path | Deployment Mode (root: M) | Step 2 | Step 3 | Destination |
+|------|----------------------------|--------|--------|-------------|
+| User-Driven | User-Driven | User enters AAD credentials | AAD join with user context | Stage 4: ESP (AAD join with user context → Stage 4: ESP) |
+| Pre-Provisioning | Pre-Provisioning | Technician Win+F12 | Device-side ESP runs → ESP result? (decision — see below) | See ESP Result table below |
+| Self-Deploying | Self-Deploying | TPM attestation — no credentials | AAD join as device — no user affinity | Stage 4: ESP (AAD join as device — no user affinity → Stage 4: ESP) |
+
+The Pre-Provisioning path's device-side ESP run resolves through a second decision, `ESP result?`:
+
+| ESP Result (root: PPRESULT) | Outcome | Destination |
+|-------------------------------|---------|-------------|
+| Success | Technician reseals device → Ship to user → User completes user-driven OOBE | Stage 4: ESP (User completes user-driven OOBE → Stage 4: ESP) |
+| Failure | Investigate and retry | (terminal — returns to troubleshooting, does not reach ESP) |
+
+All three converging edges into Stage 4: ESP are preserved above: `AAD join with user context → Stage 4: ESP`, `User completes user-driven OOBE → Stage 4: ESP` (via the Pre-Provisioning reseal/ship path), and `AAD join as device — no user affinity → Stage 4: ESP` — a 3-way merge into the same terminal node.
 
 ### TPM Requirements
 
@@ -109,11 +121,24 @@ flowchart LR
 ## Behind the Scenes
 
 > **L2 Note:**
->
-> - At OOBE start, the device contacts `ztd.dds.microsoft.com` to look up its profile by hardware hash. If no profile is found, standard Windows setup proceeds. See [endpoints.md](../reference/endpoints.md).
+
+> - At OOBE start, the device contacts `ztd.dds.microsoft.com` to look up its profile by hardware hash.
+
+> - If no profile is found, standard Windows setup proceeds. See [endpoints.md](../reference/endpoints.md).
+
 > - Azure AD join (user-driven and pre-provisioning user phase) authenticates against `login.microsoftonline.com`. Credential prompts, MFA, and Conditional Access policies apply at this step.
-> - TPM attestation (pre-provisioning and self-deploying) contacts `*.microsoftaik.azure.net` to validate the device's TPM endorsement key certificate. [Firmware TPM (fTPM)](../_glossary.md#firmware-tpm-ftpm) devices may also require manufacturer-specific EK certificate endpoints (Intel, AMD, Qualcomm). See [endpoints.md](../reference/endpoints.md) for the full list.
-> - For [hybrid join](../_glossary.md#hybrid-join) scenarios, the device additionally requires line-of-sight to an on-premises domain controller during OOBE to complete the Offline Domain Join ([ODJ](../_glossary.md#odj)) blob exchange. Hybrid join detail is covered in Phase 6.
+
+> - TPM attestation (pre-provisioning and self-deploying) contacts `*.microsoftaik.azure.net` to validate the device's TPM endorsement key certificate.
+
+> - [Firmware TPM (fTPM)](../_glossary.md#firmware-tpm-ftpm) devices may also require manufacturer-specific EK certificate endpoints (Intel, AMD, Qualcomm).
+
+> - See [endpoints.md](../reference/endpoints.md) for the full list.
+
+> - For [hybrid join](../_glossary.md#hybrid-join) scenarios, the device additionally requires line-of-sight to an on-premises domain controller during OOBE
+
+> - to complete the Offline Domain Join ([ODJ](../_glossary.md#odj)) blob exchange.
+
+> - Hybrid join detail is covered in Phase 6.
 
 ---
 
@@ -171,7 +196,11 @@ Hybrid join deep-dive: [Hybrid join deep-dive](../l2-runbooks/04-hybrid-join.md)
 - [Microsoft Learn: Windows Autopilot for pre-provisioned deployment](https://learn.microsoft.com/en-us/autopilot/pre-provision)
 - [Microsoft Learn: Windows Autopilot self-deploying mode](https://learn.microsoft.com/en-us/autopilot/self-deploying)
 
-> **APv2 Note:** Windows Autopilot Device Preparation does not include a pre-provisioning mode. There is no Win+F12 technician flow. The technician provisioning scenario is handled through assignment policy rather than a separate deployment mode. Self-deploying mode is also not available in APv2. See [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md) for a full feature comparison.
+> **APv2 Note:** Windows Autopilot Device Preparation does not include a pre-provisioning mode. There is no Win+F12 technician flow.
+
+> The technician provisioning scenario is handled through assignment policy rather than a separate deployment mode. Self-deploying mode is also not available in APv2.
+
+> See [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md) for a full feature comparison.
 
 ---
 
@@ -185,4 +214,5 @@ Previous: [Stage 2: Profile Assignment](02-profile-assignment.md) | Next: [Stage
 
 | Date | Change |
 |------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-03-14 | Initial version |
