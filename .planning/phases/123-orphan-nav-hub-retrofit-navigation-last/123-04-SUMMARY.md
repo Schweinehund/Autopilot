@@ -136,3 +136,13 @@ None - no external service configuration required.
 ---
 *Phase: 123-orphan-nav-hub-retrofit-navigation-last*
 *Completed: 2026-07-08*
+
+## Self-Check: PASSED
+
+- FOUND: docs/quick-ref-l2.md
+- FOUND: docs/common-issues.md
+- FOUND: .planning/phases/123-orphan-nav-hub-retrofit-navigation-last/123-VERIFICATION.md
+- FOUND: .planning/phases/123-orphan-nav-hub-retrofit-navigation-last/123-04-SUMMARY.md
+- FOUND commit: 5b28c88 (Task 1)
+- FOUND commit: ca048df (Task 2)
+- FOUND commit: aca601d (SUMMARY)
