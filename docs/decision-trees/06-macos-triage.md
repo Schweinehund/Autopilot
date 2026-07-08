@@ -1,4 +1,8 @@
 ---
+doc_id: RE-213
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-06-29
 review_by: 2026-09-29
 applies_to: ADE
@@ -6,9 +10,15 @@ audience: L1
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+**Platform:** macOS · **Doc Type:** Reference · **Doc ID:** RE-213 · **Status:** Approved
 
 # macOS ADE Triage
+
+## Summary
+
+Reference decision table for macOS ADE triage via Intune, gating first on whether Setup Assistant completed, then routing by primary symptom to an L1 runbook or L2 escalation within 3 decision steps. Includes a nested Platform SSO sub-decision (registration prompt, Secure Enclave key loss, Kerberos TGT) reached from the primary-symptom gate.
+
+> **Platform gate:** This guide covers macOS ADE troubleshooting via Intune. For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
 
 ## How to Use This Tree
 
@@ -16,55 +26,9 @@ Start here when a user reports an issue with a Mac enrolled (or expected to enro
 
 No network reachability gate is included at the root because Setup Assistant completion already confirms basic network and Apple connectivity. If the device cannot reach any network at all and Setup Assistant never appeared, use the [Device Not Appearing in Intune runbook](../l1-runbooks/10-macos-device-not-appearing.md) directly.
 
-## Legend
-
-| Symbol | Meaning |
-|--------|---------|
-| Diamond `{...}` | Decision -- answer the question |
-| Green rounded `([...])` | Resolved -- follow the linked L1 runbook |
-| Red rounded `([...])` | Escalate to L2 -- collect data listed in Escalation Data table and hand off |
-
 ## Decision Tree
 
-```mermaid
-graph TD
-    MAC1{"Did Setup Assistant<br/>complete?"}
-    MAC1 -->|No| MAC2{"Is the device visible<br/>in Intune admin center<br/>Devices &gt; macOS?"}
-    MAC1 -->|Yes| MAC3{"What is the<br/>primary symptom?"}
-
-    MAC2 -->|No| MACR1(["See: Device Not Appearing<br/>in Intune Runbook"])
-    MAC2 -->|Yes| MACR2(["See: Setup Assistant<br/>Stuck or Failed Runbook"])
-
-    MAC3 -->|"Profile not<br/>applied"| MACR3(["See: Profile Not Applied Runbook"])
-    MAC3 -->|"App not<br/>installed"| MACR4(["See: App Not Installed Runbook"])
-    MAC3 -->|"Non-compliant /<br/>access blocked"| MACR5(["See: Compliance / Access<br/>Blocked Runbook"])
-    MAC3 -->|"Company Portal<br/>sign-in issue"| MACR6(["See: Company Portal<br/>Sign-In Runbook"])
-    MAC3 -->|"Other / unclear"| MACE1(["Escalate to L2:<br/>Collect serial number,<br/>stage of failure, screenshots"])
-    MAC3 -->|"Platform SSO<br/>sign-in issue"| MACSSO{"Did a 'Registration Required'<br/>notification ever appear?"}
-    MACSSO -->|"No — notification<br/>never appeared"| MACR7(["See: Platform SSO<br/>Sign-In Failure Runbook"])
-    MACSSO -->|"Yes, but key error<br/>or lost after reset"| MACR8(["See: Platform SSO —<br/>Secure Enclave Key Loss Runbook"])
-    MACSSO -->|"Kerberos TGT<br/>not acquired"| MACE2(["Escalate to L2:<br/>Kerberos SSO Investigation"])
-    MAC3 -->|"MDM migration /<br/>non-dismissible<br/>migration prompt"| MACE3(["Escalate to L2:<br/>MDM Migration Failure"])
-    MAC3 -->|"Local password<br/>locked out"| MACR9(["See: macOS Local<br/>Password Recovery Runbook"])
-
-    click MACR1 "../l1-runbooks/10-macos-device-not-appearing.md"
-    click MACR2 "../l1-runbooks/11-macos-setup-assistant-failed.md"
-    click MACR3 "../l1-runbooks/12-macos-profile-not-applied.md"
-    click MACR4 "../l1-runbooks/13-macos-app-not-installed.md"
-    click MACR5 "../l1-runbooks/14-macos-compliance-access-blocked.md"
-    click MACR6 "../l1-runbooks/15-macos-company-portal-sign-in.md"
-    click MACR7 "../l1-runbooks/35-macos-sso-sign-in-failure.md"
-    click MACR8 "../l1-runbooks/36-macos-secure-enclave-key.md"
-    click MACE2 "../l2-runbooks/28-macos-kerberos-sso-investigation.md"
-    click MACE3 "../l2-runbooks/30-macos-mdm-migration-failure.md"
-    click MACR9 "../l1-runbooks/37-macos-local-password-reset.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    class MACR1,MACR2,MACR3,MACR4,MACR5,MACR6,MACR9 resolved
-    class MACR7,MACR8 resolved
-    class MACE1,MACE2,MACE3 escalateL2
-```
+**LOCKED — 31 (nodes + labeled edges)** — 16 nodes + 15 labeled edges, independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). All 4 diamonds are represented, including the nested `MACSSO` diamond (the Platform SSO sub-decision reached from `MAC3`) -- its 3 outgoing labeled edges are enumerated as their own explicit rows below, not flattened into the parent symptom row.
 
 ## Routing Verification
 
@@ -79,9 +43,9 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 | Compliance / access blocked | Setup Assistant? Yes | Symptom: non-compliant | Runbook 14 |
 | Company Portal sign-in | Setup Assistant? Yes | Symptom: CP sign-in | Runbook 15 |
 | Other / unclear | Setup Assistant? Yes | Symptom: other | L2 escalation |
-| Platform SSO — registration not appearing | Setup Assistant? Yes | Symptom: Platform SSO | Runbook 35 |
-| Platform SSO — Secure Enclave key error | Setup Assistant? Yes | Symptom: Platform SSO → key error | Runbook 36 |
-| Kerberos SSO — TGT not acquired | Setup Assistant? Yes | Symptom: Platform SSO → Kerberos TGT | L2 escalation (#28) |
+| Platform SSO — registration not appearing (nested MACSSO node) | Setup Assistant? Yes | Symptom: Platform SSO -> MACSSO: registration notification never appeared | Runbook 35 |
+| Platform SSO — Secure Enclave key error (nested MACSSO node) | Setup Assistant? Yes | Symptom: Platform SSO -> MACSSO: key error or lost after reset | Runbook 36 |
+| Kerberos SSO — TGT not acquired (nested MACSSO node) | Setup Assistant? Yes | Symptom: Platform SSO -> MACSSO: Kerberos TGT not acquired | L2 escalation (#28) |
 | MDM migration — deadline prompt | Setup Assistant? Yes | Symptom: MDM migration / non-dismissible migration prompt | L2 escalation (#30) |
 | Local password — locked out | Setup Assistant? Yes | Symptom: local password | Runbook 37 |
 
@@ -111,6 +75,8 @@ All terminal nodes are within 3 edges of the root node (MAC1):
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 04: converted Mermaid decision graph to the pre-existing Routing Verification decision table (LOCKED — 31, nodes + labeled edges); removed the mermaid fence and the Legend section (stale diagram-shape prose); enumerated the nested MACSSO diamond's 3 outgoing edges as explicit "(nested MACSSO node)" rows; enrolled as RE-213. | -- |
 | 2026-06-29 | Phase 99 (RUN-01): added MACR9 local-password-locked-out leaf off MAC3 + click target + Routing Verification row; MACR9 added to resolved class | -- |
 | 2026-06-25 | Phase 92 (NAV-01): added MDM migration leaf (MACE3 → L2 #30) off MAC3; MAC1 "How to Check" disambiguation note for deadline-lockout routing; 1 Routing Verification row | -- |
 | 2026-06-24 | Phase 87 (REF-03): added Kerberos SSO third arm under MACSSO (MACE2 → L2 #28) + 1 Routing Verification row | -- |
