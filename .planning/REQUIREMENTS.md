@@ -87,7 +87,7 @@ REQ-ID → Phase mapping, assigned by the roadmapper 2026-07-07 (6 phases, 120-1
 |--------|-------|--------|
 | RETRO-04 | Phase 121 | Complete |
 | RETRO-05 | Phase 122 | Complete |
-| RETRO-06 | Phase 123 | Pending |
+| RETRO-06 | Phase 123 | Pending (123-03: EEE+Summary+C17-green done; 123-04 closes routing/link accuracy) |
 | RETRO-07 | Phase 121 + 122 | Complete |
 | RETRO-08 | Phase 122 | Complete |
 | RETRO-09 | Phase 121 | Complete |

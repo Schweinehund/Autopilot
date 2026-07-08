@@ -38,7 +38,7 @@ key-decisions:
   - "Did NOT fix the 12 pre-existing broken links (11 '../' over-escapes in quick-ref-l2.md + 1 dead anchor in common-issues.md) -- explicitly out of scope per D-01/plan constraint, deferred to 123-04's separate git-blame-attributed commit"
   - "Did NOT run the link-checker to green here -- also 123-04's job; C17 has no link/anchor assertion so this plan's SC1 proof is unaffected by the still-broken links"
 
-requirements-completed: [RETRO-06]
+requirements-completed: []  # RETRO-06 spans 123-03 (EEE+Summary+C17-green, this plan) + 123-04 (routing/link accuracy, deferred); NOT marked complete here -- see Deviations
 
 # Metrics
 duration: ~40min
@@ -113,6 +113,10 @@ See `key-decisions` in frontmatter. Most significant: RESEARCH's 13-callout #12 
 **Total deviations:** 3 auto-fixed/corrected (all Rule 1 -- bugs in the plan's/RESEARCH's pre-enrollment measurement, not architectural changes)
 **Impact on plan:** All three were necessary to satisfy the plan's own stated done-criterion ("C17 exits 0 on all 4 hubs"). No scope creep -- no link fixes, no content re-review, no #12 rewording occurred; every fix was a word-preserving blank-line separation or a single net-new prose sentence required by a distinct C17 assertion (#11).
 
+## Requirement Completion Note
+
+`RETRO-06`'s own text (`REQUIREMENTS.md:22`) requires BOTH "C17 exits 0 on every nav-hub file" (satisfied by this plan) AND "Routing/link tables remain accurate" (the 12 pre-existing broken links + the link-checker green-run, both explicitly deferred to 123-04 per this plan's constraints). `requirements.mark-complete RETRO-06` was run once, then reverted (REQUIREMENTS.md checkbox + traceability row restored to Pending) upon recognizing the link-accuracy half of the requirement is not yet satisfied. RETRO-06 stays Pending until 123-04 closes it — mirrors the 121-05/123-01 precedent of not completing a requirement that spans multiple plans until every plan lands.
+
 ## Issues Encountered
 - Mid-Task-2, an initial attempt to split `index.md:9`'s 3-way landmine used bare `>` continuation lines (`>` with no content) as group separators. Re-read of `c17-eee-contract.mjs:393-402` confirmed an empty `>` line does NOT break a blockquote group (only a truly blank line does) -- caught before committing, corrected to genuine blank lines, re-verified via the standalone grouping script before proceeding.
 
@@ -128,3 +132,14 @@ None - no external service configuration required.
 ---
 *Phase: 123-orphan-nav-hub-retrofit-navigation-last*
 *Completed: 2026-07-08*
+
+## Self-Check: PASSED
+
+- FOUND: docs/index.md
+- FOUND: docs/common-issues.md
+- FOUND: docs/quick-ref-l1.md
+- FOUND: docs/quick-ref-l2.md
+- FOUND: .planning/phases/123-orphan-nav-hub-retrofit-navigation-last/123-03-SUMMARY.md
+- FOUND: 15b1b20 (Task 1 commit)
+- FOUND: d2ea0c8 (Task 2 commit)
+- FOUND: 30a9771 (SUMMARY commit)

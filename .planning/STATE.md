@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T14:06:09.012Z"
+last_updated: "2026-07-08T14:22:53.325Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 28
-  completed_plans: 26
+  completed_plans: 27
   percent: 50
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 123 (orphan-nav-hub-retrofit-navigation-last) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -382,6 +382,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: [123-01] Left main()'s --all enumeration untouched; invoked the fork with the 4 explicit nav-hub paths instead, sidestepping the noisy-ERROR --all hazard entirely (RESEARCH Pattern 1)
 - [Phase ?]: [123-01] Did NOT run requirements.mark-complete for RETRO-06 -- this plan is tooling+registry prep only (writes no doc file); RETRO-06 stays Pending until 123-03 closes it, mirroring the 121-05 precedent
 - [Phase 123-02]: check-nav-hub-links.mjs built standalone (no CHAIN_PHASES), fence-masked GitHub-exact slugify with encounter-order dedup and {#id}-override-first anchor resolution; true-positive proof against the un-fixed corpus flags exactly the 12 known pre-existing broken links
+- [Phase ?]: [Phase 123-03] RESEARCH's 13-callout #12 inventory was incomplete -- 8 additional over-length blockquote groups (shared Platform-coverage intro blockquote + 6 common-issues.md cross-reference banner pairs) discovered post-enrollment since C17 silently skips unenrolled files; fixed all to satisfy the plan's actual C17-exits-0 done-criterion
+- [Phase ?]: [Phase 123-03] index.md:9's 459c landmine resolved via the RESEARCH-precomputed internal 3-way clause split (182c/143c/132c); word-preservation confirmed via git-diff word-multiset check stripping '>' prefixes across all 4 hubs
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -418,8 +420,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T14:04:24.075Z
-Stopped at: Completed 123-01-PLAN.md
+Last session: 2026-07-08T14:22:53.303Z
+Stopped at: Completed 123-03-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -495,3 +497,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P15 | 40min | 3 tasks | 2 files |
 | Phase 123 P01 | 25min | 2 tasks | 2 files |
 | Phase 123 P02 | 20min | 2 tasks | 1 files |
+| Phase 123 P03 | 40min | 2 tasks | 4 files |
