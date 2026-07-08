@@ -16,7 +16,7 @@
 
 // Node built-ins ONLY -- zero external npm packages (matches scripts/validation/ convention)
 import { readFileSync, existsSync, readdirSync, lstatSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, dirname, resolve } from 'node:path';
 import process from 'node:process';
 
 const argv = process.argv.slice(2);
@@ -170,6 +170,118 @@ function resolvableAnchorSet(relPath) {
   return set;
 }
 
+// ── Task 2: outbound + inbound scan, path resolution, file:line failure report ──────────────
+
+function toAbs(relPath) {
+  return join(process.cwd(), relPath);
+}
+
+// extractLinks: scan non-fenced lines for [text](target), 1-based line numbers.
+function extractLinks(lines, fenceMask) {
+  const links = [];
+  const linkRe = /\[([^\]]*)\]\(([^)]+)\)/g;
+  for (let i = 0; i < lines.length; i++) {
+    if (fenceMask[i]) continue;
+    linkRe.lastIndex = 0;
+    let m;
+    while ((m = linkRe.exec(lines[i])) !== null) {
+      links.push({ text: m[1], target: m[2], line: i + 1 });
+    }
+  }
+  return links;
+}
+
+// resolveLinkTarget: path resolution is ALWAYS relative to the LINKING file's own directory
+// (path.dirname(linkingFileAbs)) -- never process.cwd(). This is the exact bug class the 11
+// pre-existing `../`-over-escape links in quick-ref-l2.md exhibit; the checker itself must
+// not repeat the mistake it exists to detect. Returns null for http(s)/mailto (out of scope).
+// Never throws on a pathological `../../../../etc/passwd`-style target -- path.resolve() is
+// pure string math, and the caller's existsSync() simply reports "not found."
+function resolveLinkTarget(linkingAbsPath, target) {
+  if (/^(https?:|mailto:)/.test(target)) return null;
+  const hashIdx = target.indexOf('#');
+  const filePart = hashIdx === -1 ? target : target.slice(0, hashIdx);
+  const fragPart = hashIdx === -1 ? '' : target.slice(hashIdx + 1);
+  const linkingDir = dirname(linkingAbsPath);
+  const resolvedAbs = filePart === '' ? linkingAbsPath : resolve(linkingDir, filePart);
+  const resolvedRel = relNormalize(resolvedAbs);
+  return { resolvedAbs, resolvedRel, fragPart };
+}
+
+// checkOutboundLinks: every link FROM a hub -- resolved relative to that hub's own directory.
+function checkOutboundLinks() {
+  const failures = [];
+  for (const hubRel of HUB_PATHS) {
+    const content = readFile(hubRel);
+    if (content === null) {
+      failures.push({ file: hubRel, line: 0, text: '', target: '', reason: 'hub file not found' });
+      continue;
+    }
+    const hubAbs = toAbs(hubRel);
+    const lines = content.split('\n');
+    const fenceMask = buildFenceMask(lines);
+    const links = extractLinks(lines, fenceMask);
+    for (const { text, target, line } of links) {
+      const resolved = resolveLinkTarget(hubAbs, target);
+      if (resolved === null) continue; // http(s)/mailto -- out of scope
+      const { resolvedAbs, resolvedRel, fragPart } = resolved;
+      if (!existsSync(resolvedAbs)) {
+        failures.push({ file: hubRel, line, text, target, reason: `target file not found: ${resolvedRel}` });
+        continue;
+      }
+      if (fragPart) {
+        const anchors = resolvableAnchorSet(resolvedRel);
+        if (!anchors.has(fragPart)) {
+          failures.push({ file: hubRel, line, text, target, reason: `anchor not found: #${fragPart}` });
+        }
+      }
+    }
+  }
+  return failures;
+}
+
+// checkInboundLinks: corpus-wide links whose resolved target is one of the 4 hubs. The 4 hub
+// files themselves are excluded as SOURCES here (their own outbound links, including any
+// hub-to-hub links, are already fully covered by checkOutboundLinks -- this avoids double
+// reporting the exact same failure under both directions).
+function checkInboundLinks() {
+  const failures = [];
+  const hubSet = new Set(HUB_PATHS);
+  const allMd = walkMd('docs');
+  for (const abs of allMd) {
+    const relPath = relNormalize(abs);
+    if (hubSet.has(relPath)) continue;
+    const content = readFile(relPath);
+    if (content === null) continue;
+    const lines = content.split('\n');
+    const fenceMask = buildFenceMask(lines);
+    const links = extractLinks(lines, fenceMask);
+    for (const { text, target, line } of links) {
+      const resolved = resolveLinkTarget(abs, target);
+      if (resolved === null) continue;
+      const { resolvedAbs, resolvedRel, fragPart } = resolved;
+      if (!hubSet.has(resolvedRel)) continue; // only care about links targeting a hub
+      if (!existsSync(resolvedAbs)) {
+        failures.push({ file: relPath, line, text, target, reason: `target file not found: ${resolvedRel}` });
+        continue;
+      }
+      if (fragPart) {
+        const anchors = resolvableAnchorSet(resolvedRel);
+        if (!anchors.has(fragPart)) {
+          failures.push({ file: relPath, line, text, target, reason: `anchor not found: #${fragPart}` });
+        }
+      }
+    }
+  }
+  return failures;
+}
+
+function printFailures(failures) {
+  for (const f of failures) {
+    process.stdout.write(`${f.file}:${f.line} -> [${f.text}](${f.target})  -- ${f.reason}\n`);
+  }
+}
+
 // ── Self-test mode (c17-eee-contract.mjs --self-test analog) ────────────────────────────────
 if (SELF_TEST) {
   let stPassed = 0, stFailed = 0;
@@ -253,10 +365,51 @@ if (SELF_TEST) {
     `set: [${[...fencedSet].join(', ')}]`
   );
 
+  // G: path traversal never throws -- a pathological ../../../../etc/passwd-style target
+  // resolves to a not-found FAIL via existsSync, not an unhandled exception.
+  let traversalThrew = false;
+  let traversalResolved = null;
+  try {
+    traversalResolved = resolveLinkTarget(toAbs('docs/quick-ref-l2.md'), '../../../../../../etc/passwd');
+  } catch {
+    traversalThrew = true;
+  }
+  const traversalNotFound = !traversalThrew && traversalResolved !== null && !existsSync(traversalResolved.resolvedAbs);
+  stAssert(
+    'path traversal: ../../../../../../etc/passwd resolves to not-found, no throw',
+    traversalNotFound,
+    traversalThrew ? 'threw an exception' : `resolved: ${traversalResolved?.resolvedRel}`
+  );
+
   process.stdout.write('\nSelf-test: ' + stPassed + ' passed, ' + stFailed + ' failed\n');
   process.exit(stFailed > 0 ? 1 : 0);
 }
 
-// ── Task 2 (next commit) wires the outbound/inbound scan + CLI report here ──────────────────
-process.stdout.write('check-nav-hub-links: resolver-only build (Task 1) -- run with --self-test\n');
-process.exit(0);
+// ── Main runner (normal mode) ─────────────────────────────────────────────────────────────────
+// Scans BOTH directions: outbound (every link FROM the 4 hubs) and inbound (corpus-wide links
+// whose resolved target is one of the 4 hubs). Exit 0 iff zero failures across both.
+
+const outboundFailures = checkOutboundLinks();
+const inboundFailures = checkInboundLinks();
+const allFailures = [...outboundFailures, ...inboundFailures];
+
+if (VERBOSE || allFailures.length > 0) {
+  if (outboundFailures.length > 0) {
+    process.stdout.write('\nOutbound failures (links FROM the 4 nav-hubs):\n');
+    printFailures(outboundFailures);
+  }
+  if (inboundFailures.length > 0) {
+    process.stdout.write('\nInbound failures (corpus-wide links INTO the 4 nav-hubs):\n');
+    printFailures(inboundFailures);
+  }
+  if (allFailures.length === 0) {
+    process.stdout.write('\ncheck-nav-hub-links: 0 failures (outbound + inbound clean)\n');
+  }
+}
+
+process.stdout.write(
+  `\ncheck-nav-hub-links summary: ${outboundFailures.length} outbound failure(s), ` +
+  `${inboundFailures.length} inbound failure(s), ${allFailures.length} total\n`
+);
+
+process.exit(allFailures.length > 0 ? 1 : 0);
