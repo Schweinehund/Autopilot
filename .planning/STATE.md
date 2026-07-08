@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: executing
-last_updated: "2026-07-08T14:22:53.325Z"
+status: verifying
+last_updated: "2026-07-08T14:35:29.004Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 28
-  completed_plans: 27
-  percent: 50
+  completed_plans: 28
+  percent: 67
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 Phase: 123 (orphan-nav-hub-retrofit-navigation-last) — EXECUTING
 Plan: 4 of 4
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-08
 
 ## v1.16 Phase Dependency Summary
@@ -121,7 +121,7 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Ready to execute
+  |             BOTH frontmatter status: AND visible **Status:** Phase complete — ready for verification
   |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
@@ -384,6 +384,9 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 123-02]: check-nav-hub-links.mjs built standalone (no CHAIN_PHASES), fence-masked GitHub-exact slugify with encounter-order dedup and {#id}-override-first anchor resolution; true-positive proof against the un-fixed corpus flags exactly the 12 known pre-existing broken links
 - [Phase ?]: [Phase 123-03] RESEARCH's 13-callout #12 inventory was incomplete -- 8 additional over-length blockquote groups (shared Platform-coverage intro blockquote + 6 common-issues.md cross-reference banner pairs) discovered post-enrollment since C17 silently skips unenrolled files; fixed all to satisfy the plan's actual C17-exits-0 done-criterion
 - [Phase ?]: [Phase 123-03] index.md:9's 459c landmine resolved via the RESEARCH-precomputed internal 3-way clause split (182c/143c/132c); word-preservation confirmed via git-diff word-multiset check stripping '>' prefixes across all 4 hubs
+- [Phase 123]: [123-04] Fixed the 12 pre-existing broken nav-hub links (11 quick-ref-l2.md ../ over-escapes + 1 common-issues.md dead anchor) in a SEPARATE git-blame-attributed commit (5b28c88), distinct from 123-03's retrofit commits, per D-01 -- git blame confirms all 12 predate Phases 121/122 by 2+ months
+- [Phase 123]: [123-04] Corrected RESEARCH's single-hyphen slug error for the dm-crypt+LUKS heading -- the + is surrounded by spaces on both sides, producing a double-hyphen GitHub slug (dm-crypt--luks) per the same artifact class as the previously-known / case
+- [Phase 123]: [123-04] Phase 123 CLOSED: SC1 (full-corpus C17 229/0), SC2 (check-nav-hub-links.mjs 0/0), SC3 (navigation-last git attestation: 15b1b20 2026-07-08 post-dates e2ec2a5 2026-07-07) all proven in 123-VERIFICATION.md; RETRO-06 Complete
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -420,7 +423,7 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T14:22:53.303Z
+Last session: 2026-07-08T14:32:38.694Z
 Stopped at: Completed 123-03-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
@@ -498,3 +501,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 123 P01 | 25min | 2 tasks | 2 files |
 | Phase 123 P02 | 20min | 2 tasks | 1 files |
 | Phase 123 P03 | 40min | 2 tasks | 4 files |
+| Phase 123 P04 | 35min | 2 tasks | 3 files |
