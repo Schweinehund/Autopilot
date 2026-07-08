@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T01:37:58.174Z"
+last_updated: "2026-07-08T01:50:27.332Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 24
-  completed_plans: 13
+  completed_plans: 14
   percent: 33
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
-Plan: 5 of 15
+Plan: 6 of 15
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -361,6 +361,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 122-04]: 05-device-lifecycle.md's Q1-Q4 decision graph converted to a single 5-row ordinal-column decision table (one row per terminal action/path) rather than a per-edge table -- matches the shipped 10-8021x-triage.md / 06 / 07 Routing Verification precedent
 - [Phase 122-04]: 06/07 already carried a pre-existing Routing Verification table built under the same shape convention prior to this phase; conversion work was fence + Legend removal, LOCKED-N annotation, and (for 06) explicit nested-MACSSO row labeling -- not a from-scratch table author
 - [Phase 122-04]: All 3 files' LOCKED-N counts (18/31/23) independently re-derived against git show 71be4ab bytes and found to match the plan's precomputed values exactly -- no corrections needed
+- [Phase ?]: [Phase 122-05] 09-linux-triage.md's pre-existing Routing Verification table already covered all 6 edges (5 labeled root branches + LINCA->LINR32 continuation folded into the CA-disambiguation row); conversion work was fence + Legend removal, LOCKED-N annotation, and blockquote split, not from-scratch table authoring
+- [Phase ?]: [Phase 122-05] 10-8021x-triage.md's LOCKED-N annotation upgraded from the older 5-leaf-count convention to LOCKED — 11 (nodes + labeled edges, R1 convention) since this file, being the STD-04-cited exemplar, sets precedent for all decision-trees; both LOCKED-N counts (12/11) independently re-derived against git show 71be4ab bytes and matched the plan's precomputed values exactly
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -397,8 +399,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T01:37:58.154Z
-Stopped at: Completed 122-04-PLAN.md
+Last session: 2026-07-08T01:50:27.316Z
+Stopped at: Completed 122-05-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -461,3 +463,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P02 | 45min | 3 tasks | 4 files |
 | Phase 122 P03 | 25min | 3 tasks | 4 files |
 | Phase 122 P04 | 15min | 3 tasks | 4 files |
+| Phase 122 P05 | 20min | 2 tasks | 3 files |
