@@ -1,4 +1,8 @@
 ---
+doc_id: RE-147
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-13
 review_by: 2026-07-12
 applies_to: both
@@ -6,9 +10,17 @@ audience: admin
 platform: Windows
 ---
 
-> **Cross-platform:** This guide covers the Windows enrollment scenario. For macOS Conditional Access enrollment timing, see [macOS Compliance Policy](../admin-setup-macos/05-compliance-policy.md). See also: [Compliance Policy Timing](compliance-timing.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-147 · **Status:** Approved
 
 # Conditional Access Enrollment Timing: The Compliance Chicken-and-Egg Problem
+
+## Summary
+
+This reference explains the Conditional Access compliance chicken-and-egg problem, where a policy requiring device compliance can permanently block Windows Autopilot enrollment before a device has any chance to become compliant. It documents the exact enrollment message sequence that fails, the three common admin misconfigurations that break Microsoft's default exclusions, and four resolution patterns including exclusion-list configuration and grace-period staging.
+
+> **Cross-platform:** This guide covers the Windows enrollment scenario. For macOS Conditional Access enrollment timing, see [macOS Compliance Policy](../admin-setup-macos/05-compliance-policy.md).
+
+> See also: [Compliance Policy Timing](compliance-timing.md).
 
 ## The Problem
 
@@ -22,21 +34,15 @@ Conditional Access policies that require a compliant device can accidentally blo
 4. Enrollment requires access to the Intune service → blocked by CA → enrollment fails.
 5. Without enrollment, the device can **never** become compliant → permanent chicken-and-egg loop.
 
-```mermaid
-sequenceDiagram
-  participant Device
-  participant Entra as Entra ID
-  participant CA as Conditional Access
-  participant Intune
-  Device->>Entra: Join request
-  Entra->>Device: Joined
-  Device->>Intune: MDM enrollment request
-  Intune->>CA: Check Conditional Access policies
-  CA->>CA: Evaluate: Is device compliant?
-  CA-->>Intune: BLOCKED (device not compliant)
-  Intune-->>Device: Enrollment failed
-  Note over Device: Cannot become compliant without enrollment
-```
+**Message sequence (LOCKED — 7 messages):**
+
+1. Device -> Entra ID: Join request
+2. Entra ID -> Device: Joined
+3. Device -> Intune: MDM enrollment request
+4. Intune -> Conditional Access: Check Conditional Access policies
+5. Conditional Access -> Conditional Access: Evaluate: Is device compliant?
+6. Conditional Access -> Intune: BLOCKED (device not compliant)
+7. Intune -> Device: Enrollment failed (the device cannot become compliant without enrollment, closing the loop)
 
 The error surfaces at OOBE as an authentication failure — not as a compliance error — which makes the root cause non-obvious. Admins commonly diagnose this as a network or credential issue before identifying the CA misconfiguration.
 
@@ -61,19 +67,27 @@ These exclusions solve the enrollment loop without any admin action — **as lon
 
 Admin creates a CA policy that explicitly includes **"Microsoft Intune Enrollment"** or **"Microsoft Intune"** cloud app in the assignment and requires device compliance.
 
-> **What breaks if misconfigured:** Every new device fails enrollment. Existing devices are unaffected. The error appears as an authentication failure during OOBE, not as a compliance error — making root cause non-obvious. There is no warning in the CA policy editor that these app IDs are enrollment-critical.
+> **What breaks if misconfigured:** Every new device fails enrollment.
+
+> Existing devices are unaffected. The error appears as an authentication failure during OOBE, not as a compliance error — making root cause non-obvious.
+
+> There is no warning in the CA policy editor that these app IDs are enrollment-critical.
 
 ### Scenario 2: All Cloud Apps Without an Exclusion List
 
 Admin creates a policy targeting **"All cloud apps"** with "Require compliant device" grant control and no exclusion list.
 
-> **What breaks if misconfigured:** Same enrollment loop as Scenario 1. The "All cloud apps" target implicitly includes Microsoft Intune Enrollment unless that app is explicitly excluded. New devices will fail enrollment with the same authentication error.
+> **What breaks if misconfigured:** Same enrollment loop as Scenario 1. The "All cloud apps" target implicitly includes Microsoft Intune Enrollment unless that app is explicitly excluded.
+
+> New devices will fail enrollment with the same authentication error.
 
 ### Scenario 3: Removing the Default Intune Enrollment Exclusion
 
 Admin manually removes the default Microsoft Intune Enrollment exclusion from an existing CA policy (typically to "clean up" what appears to be an unnecessary exception).
 
-> **What breaks if misconfigured:** Breaks enrollment for all new devices immediately. No warning is shown in the CA policy editor when removing this exclusion. Existing enrolled devices are not affected — only new enrollments fail.
+> **What breaks if misconfigured:** Breaks enrollment for all new devices immediately. No warning is shown in the CA policy editor when removing this exclusion.
+
+> Existing enrolled devices are not affected — only new enrollments fail.
 
 ---
 
@@ -147,3 +161,9 @@ Target CA policies to specific device groups that are already enrolled, excludin
 ---
 
 > **macOS:** For macOS Conditional Access enrollment timing, see [macOS Compliance Policy](../admin-setup-macos/05-compliance-policy.md).
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |

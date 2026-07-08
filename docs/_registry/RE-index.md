@@ -160,7 +160,7 @@
 | RE-144 | docs/reference/android-capability-matrix.md | Intune: Android Capability Matrix — Modes by Feature | Reference | Approved |
 | RE-145 | docs/reference/aosp-oem-matrix.md | Intune: AOSP OEM Matrix — RealWear / Zebra / Pico / HTC / Meta Quest | Reference | Approved |
 | RE-146 | docs/reference/apv1-apv2-migration.md | APv1-to-APv2 Migration: Parallel Deployment Playbook | Reference | Approved |
-| RE-147 | docs/reference/ca-enrollment-timing.md | Conditional Access Enrollment Timing: The Compliance Chicken-and-Egg Problem | Reference | Pending |
+| RE-147 | docs/reference/ca-enrollment-timing.md | Conditional Access Enrollment Timing: The Compliance Chicken-and-Egg Problem | Reference | Approved |
 | RE-148 | docs/reference/compliance-timing.md | Compliance Policy Timing and State Transitions | Reference | Approved |
 | RE-149 | docs/reference/deployment-reporting.md | Intune Deployment Reporting for Windows Autopilot | Reference | Approved |
 | RE-150 | docs/reference/drift-detection.md | Registration and Profile Assignment Drift Detection | Reference | Approved |
