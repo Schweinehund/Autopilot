@@ -135,11 +135,11 @@ Plans:
 - [x] 122-08-PLAN.md — Carved LIGHT: apv1/00, apv2/00, linux/00 (RE-128), ca-enrollment-timing (RE-147) — SC2
 - [x] 122-09-PLAN.md — Lifecycle: lifecycle/00 (2 blocks), /03 (ESP4 merge), /04 (subgraph partition)
 - [x] 122-10-PLAN.md — Lifecycle: lifecycle-apv2/02 (2 blocks, 5-edge failure map) + ios-lifecycle/01, /02 (10 blockquotes)
-- [ ] 122-11-PLAN.md — Lifecycle: macos-lifecycle 00/01/02 (dual pipelines; corpus-max 5877c + 16 blockquotes)
+- [x] 122-11-PLAN.md — Lifecycle: macos-lifecycle 00/01/02 (dual pipelines; corpus-max 5877c + 16 blockquotes)
 
 **Wave 3** *(blocked on Wave 2)* — independent D-01 leaf-parity verification (read-only)
 
-- [ ] 122-12-PLAN.md — D-01 verify 11 decision-trees (git-show re-derivation vs converted tables)
+- [x] 122-12-PLAN.md — D-01 verify 11 decision-trees (git-show re-derivation vs converted tables)
 - [ ] 122-13-PLAN.md — D-01 verify 10 carved-mermaid files
 - [ ] 122-14-PLAN.md — D-01 verify 9 Mermaid-bearing lifecycle files
 
@@ -215,7 +215,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
-| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 10/15 | In Progress|  |
+| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 12/15 | In Progress|  |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
 | 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |

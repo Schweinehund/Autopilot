@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T03:45:03.863Z"
+last_updated: "2026-07-08T03:55:35.799Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 24
-  completed_plans: 19
+  completed_plans: 21
   percent: 33
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
-Plan: 12 of 15
+Plan: 13 of 15
 Status: Ready to execute
 Last activity: 2026-07-08
 
@@ -375,6 +375,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: [Phase 122-11]: All 3 macos-lifecycle LOCKED-N counts (10/13/17) independently re-derived against git show 71be4ab bytes and matched the plan's precomputed values exactly -- no corrections needed, unlike several prior 122 plans
 - [Phase ?]: [Phase 122-11]: Fixed a word-preserving greedy blockquote packer bug mid-task: after a break, internal clause/sentence markers within the retained tail were being reset to -1 instead of rescanned, causing hard mid-sentence breaks; rescanning the tail restored clean sentence/clause-boundary splits across all 21 blockquote groups in this plan
 - [Phase ?]: [Phase 122-11]: Transform B (de-blockquote) applied to macos/01's corpus-max 5877c A2 Path section and macos/02's 1480c B2 Requirements Summary section -- both carry embedded tables/nested code fences; RETRO-07 CLOSED -- all 9 Mermaid-bearing lifecycle files (22/22 total across Phases 121+122) now C17-green
+- [Phase 122]: [Phase 122-12] Independent D-01 re-derivation confirms all 11 decision-tree LOCKED-N annotations (36/43/35/33/23/18/31/23/39/12/11) match git-show 71be4ab base bytes exactly, including independent re-confirmation of two prior corrections (08's 39, 10's upgraded 11); zero gaps, zero stale prose, zero narrowed edge semantics found
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -411,7 +412,7 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T03:45:03.848Z
+Last session: 2026-07-08T03:53:46.976Z
 Stopped at: Completed 122-11-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
@@ -482,3 +483,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P09 | 65min | 3 tasks | 4 files |
 | Phase 122 P10 | 70min | 3 tasks | 4 files |
 | Phase 122 P11 | 50min | 3 tasks | 3 files |
+| Phase 122 P12 | 45min | 2 tasks | 1 files |

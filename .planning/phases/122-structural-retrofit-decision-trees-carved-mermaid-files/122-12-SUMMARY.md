@@ -126,3 +126,8 @@ None -- no external service configuration required.
 ---
 *Phase: 122-structural-retrofit-decision-trees-carved-mermaid-files*
 *Completed: 2026-07-08*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/phases/122-structural-retrofit-decision-trees-carved-mermaid-files/122-12-SUMMARY.md
+- FOUND commit: e4f0d06
