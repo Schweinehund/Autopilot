@@ -89,7 +89,7 @@
 | RE-073 | docs/l2-runbooks/31-8021x-log-collection.md | 802.1X Log Collection | Runbook | Approved |
 | RE-074 | docs/l2-runbooks/32-8021x-cert-investigation.md | 802.1X Certificate-Chain Investigation | Runbook | Approved |
 | RE-075 | docs/l2-runbooks/33-8021x-radius-eap-investigation.md | 802.1X RADIUS/EAP Investigation | Runbook | Approved |
-| RE-076 | docs/admin-setup-apv1/00-overview.md | APv1 Admin Setup: Complete Configuration Guide | Guide | Pending |
+| RE-076 | docs/admin-setup-apv1/00-overview.md | APv1 Admin Setup: Complete Configuration Guide | Guide | Approved |
 | RE-077 | docs/admin-setup-apv1/01-hardware-hash-upload.md | Hardware Hash Upload | Guide | Approved |
 | RE-078 | docs/admin-setup-apv1/02-deployment-profile.md | Deployment Profile Configuration | Guide | Approved |
 | RE-079 | docs/admin-setup-apv1/03-esp-policy.md | Enrollment Status Page (ESP) Policy | Guide | Approved |
@@ -100,7 +100,7 @@
 | RE-084 | docs/admin-setup-apv1/08-self-deploying.md | Self-Deploying Mode Configuration | Guide | Approved |
 | RE-085 | docs/admin-setup-apv1/09-intune-connector-ad.md | Intune Connector for Active Directory | Guide | Approved |
 | RE-086 | docs/admin-setup-apv1/10-config-failures.md | APv1 Configuration-Caused Failures Reference | Guide | Approved |
-| RE-087 | docs/admin-setup-apv2/00-overview.md | APv2 Admin Setup: Complete Configuration Guide | Guide | Pending |
+| RE-087 | docs/admin-setup-apv2/00-overview.md | APv2 Admin Setup: Complete Configuration Guide | Guide | Approved |
 | RE-088 | docs/admin-setup-apv2/01-prerequisites-rbac.md | APv2 Setup Step 1: Prerequisites and RBAC Role | Guide | Approved |
 | RE-089 | docs/admin-setup-apv2/02-etg-device-group.md | APv2 Setup Step 2: Enrollment Time Grouping Device Group | Guide | Approved |
 | RE-090 | docs/admin-setup-apv2/03-device-preparation-policy.md | APv2 Setup Step 3: Device Preparation Policy | Guide | Approved |
