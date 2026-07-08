@@ -1,4 +1,8 @@
 ---
+doc_id: RE-135
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-06-29
 review_by: 2026-09-27
 applies_to: both
@@ -6,13 +10,17 @@ audience: admin
 platform: all
 ---
 
-> **Prerequisites:** Read the [Network Authentication Glossary](../_glossary-network.md)
-> for [802.1X](../_glossary-network.md#8021x), [EAP](../_glossary-network.md#eap),
-> [RADIUS](../_glossary-network.md#radius), [supplicant](../_glossary-network.md#supplicant),
-> and [authentication server](../_glossary-network.md#authentication-server) definitions
-> before this guide.
+**Platform:** All Platforms · **Doc Type:** Guide · **Doc ID:** RE-135 · **Status:** Approved
 
 # 802.1X EAP Method Overview
+
+## Summary
+
+Compares the three co-equal EAP methods for 802.1X network authentication on Intune-managed platforms — EAP-TLS (mutual certificate), PEAP-MSCHAPv2 (server certificate + domain credentials), and EAP-TTLS (server certificate + flexible inner method) — covering what authenticates, client requirements, trust requirements, and when to choose each, with no method ranked as a default.
+
+> **Prerequisites:** Read the [Network Authentication Glossary](../_glossary-network.md) for [802.1X](../_glossary-network.md#8021x), [EAP](../_glossary-network.md#eap),
+
+> [RADIUS](../_glossary-network.md#radius), [supplicant](../_glossary-network.md#supplicant), and [authentication server](../_glossary-network.md#authentication-server) definitions before this guide.
 
 This guide compares the three EAP methods supported for 802.1X across Intune-managed platforms -- EAP-TLS, PEAP-MSCHAPv2, and EAP-TTLS -- as co-equal paths. No method is ranked or recommended as a default; each is appropriate for specific infrastructure and credential environments. See [02-cert-delivery-foundation.md](02-cert-delivery-foundation.md) for certificate delivery prerequisites.
 
@@ -22,21 +30,16 @@ This guide compares the three EAP methods supported for 802.1X across Intune-man
 
 The exchange begins with [EAPOL](../_glossary-network.md#eapol) frames between supplicant and authenticator -- this happens before the device has an IP address. The authenticator proxies the [EAP](../_glossary-network.md#eap) payload to the RADIUS server over UDP/IP. The EAP method exchange (TLS handshake, PEAP tunnel, or TTLS tunnel) occurs inside this relay path.
 
-```mermaid
-sequenceDiagram
-    participant S as Supplicant (Device)
-    participant A as Authenticator (Switch/AP)
-    participant R as Authentication Server (RADIUS)
-    S->>A: EAPOL-Start
-    A->>S: EAP-Request/Identity
-    S->>A: EAP-Response/Identity
-    A->>R: RADIUS Access-Request (EAP payload)
-    R-->>A: RADIUS Access-Challenge
-    A-->>S: EAP-Request (method negotiation)
-    Note over S,R: [EAP method exchange -- TLS/PEAP/TTLS]
-    R-->>A: RADIUS Access-Accept
-    A-->>S: EAP-Success + port open
-```
+**LOCKED — 8 (messages)** — 3 actors (Supplicant, Authenticator, Authentication Server/RADIUS), 8 messages, independently re-derived from the pre-conversion sequence diagram (`git show 71be4ab`; corrects an earlier 10-message estimate -- the diagram carries exactly 8 message arrows plus 1 non-message annotation, folded into step 6 below). Per D-02, a sequenceDiagram converts to an ordered numbered step list, not a table.
+
+1. Supplicant -> Authenticator: EAPOL-Start
+2. Authenticator -> Supplicant: EAP-Request/Identity
+3. Supplicant -> Authenticator: EAP-Response/Identity
+4. Authenticator -> Authentication Server (RADIUS): RADIUS Access-Request (EAP payload)
+5. Authentication Server (RADIUS) -> Authenticator: RADIUS Access-Challenge
+6. Authenticator -> Supplicant: EAP-Request (method negotiation) -- *the EAP method exchange (TLS/PEAP/TTLS) occurs here, spanning the Supplicant and the Authentication Server*
+7. Authentication Server (RADIUS) -> Authenticator: RADIUS Access-Accept
+8. Authenticator -> Supplicant: EAP-Success + port open
 
 ---
 
@@ -90,7 +93,13 @@ No client certificate is required.
 
 The client must validate the RADIUS server's certificate before the MSCHAPv2 credential exchange begins inside the tunnel. Server validation must be enabled and the [server-name validation](../_glossary-network.md#server-name-validation) field must be populated with the RADIUS server's FQDN or CN.
 
-> **Security note:** Server validation is REQUIRED for PEAP-MSCHAPv2. The default Windows EAP XML profile skeleton ships with server validation disabled -- this setting must be explicitly overridden to enable server validation and to populate the RADIUS server name field. Without server validation and a populated server name, a rogue RADIUS server can complete the outer TLS handshake before the device detects a certificate mismatch, exposing the MSCHAPv2 credential exchange. Always enable server validation and always populate the server name before deploying PEAP-MSCHAPv2 profiles.
+> **Security note:** Server validation is REQUIRED for PEAP-MSCHAPv2. The default Windows EAP XML profile skeleton ships with server validation disabled --
+
+> this setting must be explicitly overridden to enable server validation and to populate the RADIUS server name field. Without server validation and a populated server name,
+
+> a rogue RADIUS server can complete the outer TLS handshake before the device detects a certificate mismatch, exposing the MSCHAPv2 credential exchange.
+
+> Always enable server validation and always populate the server name before deploying PEAP-MSCHAPv2 profiles.
 
 Configure the outer identity (see [inner-outer identity](../_glossary-network.md#inner-outer-identity)) in the profile to an anonymous value so the domain username is not visible in cleartext before the TLS tunnel is established. The Intune profile field is labeled "Identity privacy" or "Outer identity" depending on platform.
 
@@ -162,3 +171,10 @@ For certificate delivery requirements -- trusted root profiles, SCEP/PKCS client
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-06-29 | Initial version -- co-equal EAP method overview (EAP-TLS / PEAP-MSCHAPv2 / EAP-TTLS) | -- |
+
+## Version History
+
+| Date | Change | Author |
+|------|--------|--------|
+| 2026-07-08 | Phase 122 plan 07: converted Mermaid sequenceDiagram to an ordered numbered step list per D-02 (sequence diagrams -> step list, not table), preserving all 8 messages and the actor->actor direction; removed the mermaid fence; LOCKED — 8 (messages, R1 convention — corrects the plan/RESEARCH's 10-message estimate, independently re-derived against git show 71be4ab); split 2 pre-existing over-200-char blockquote groups into 6 word-preserving paragraphs; enrolled as RE-135. | -- |
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |

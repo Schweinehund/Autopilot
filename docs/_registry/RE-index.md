@@ -148,7 +148,7 @@
 | RE-132 | docs/admin-setup-linux/04-app-delivery.md | Linux App Delivery — Admin Overview | Guide | Approved |
 | RE-133 | docs/admin-setup-linux/05-conditional-access.md | Linux Conditional Access — Admin Configuration | Guide | Approved |
 | RE-134 | docs/admin-setup-8021x/00-overview.md | 802.1X Network Authentication: Admin Setup Guides | Guide | Approved |
-| RE-135 | docs/admin-setup-8021x/01-eap-method-overview.md | 802.1X EAP Method Overview | Guide | Pending |
+| RE-135 | docs/admin-setup-8021x/01-eap-method-overview.md | 802.1X EAP Method Overview | Guide | Approved |
 | RE-136 | docs/admin-setup-8021x/02-cert-delivery-foundation.md | 802.1X Certificate Delivery Foundation | Guide | Approved |
 | RE-137 | docs/admin-setup-8021x/03-windows.md | Windows 802.1X Admin Setup: Wi-Fi and Wired | Guide | Approved |
 | RE-138 | docs/admin-setup-8021x/04-macos.md | macOS 802.1X Admin Setup: Wi-Fi and Wired | Guide | Approved |
