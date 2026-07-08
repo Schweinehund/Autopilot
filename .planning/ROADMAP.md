@@ -122,7 +122,7 @@ Plans:
 Plans:
 **Wave 1** — foundation
 
-- [ ] 122-01-PLAN.md — Build retrofit-mermaid-structural.mjs fork (delete MERMAID_DEFERRED, add mermaid-absence + doc_id-idempotency + keyless-Windows guards, explicit-Set router, auto-date VH) + mint RE-207..217 + plan-time rulings R1/R2/R3
+- [x] 122-01-PLAN.md — Build retrofit-mermaid-structural.mjs fork (delete MERMAID_DEFERRED, add mermaid-absence + doc_id-idempotency + keyless-Windows guards, explicit-Set router, auto-date VH) + mint RE-207..217 + plan-time rulings R1/R2/R3
 
 **Wave 2** *(blocked on Wave 1)* — hand-convert + fork-enroll all 30 files
 
@@ -215,7 +215,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 120. EEE Standard Extension — Mermaid/C17 Policy + Hygiene Fix | 2/2 | Complete    | 2026-07-07 |
 | 121. Structural Retrofit — Glossaries, Lifecycle & End-User Guides | 7/7 | Complete    | 2026-07-07 |
-| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 0/? | Not started | - |
+| 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 1/15 | In Progress|  |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 0/? | Not started | - |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 0/? | Not started | - |
 | 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |

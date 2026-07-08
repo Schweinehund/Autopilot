@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T00:35:29.775Z"
-last_activity: 2026-07-08 -- Phase 122 planning complete
+last_updated: "2026-07-08T00:54:09.255Z"
+last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 24
-  completed_plans: 9
+  completed_plans: 10
   percent: 33
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** Phase 122 — structural retrofit — decision trees & carved mermaid files
+**Current focus:** Phase 122 — structural-retrofit-decision-trees-carved-mermaid-files
 
 ## Current Position
 
-Phase: 122
-Plan: Not started
+Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
+Plan: 2 of 15
 Status: Ready to execute
-Last activity: 2026-07-08 -- Phase 122 planning complete
+Last activity: 2026-07-08
 
 ## v1.16 Phase Dependency Summary
 
@@ -352,6 +352,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 121-06]: C17 #12 grouping requires a genuine blank (non-'>') line to break a blockquote group -- a bare '>' continuation line still joins with adjacent '>' lines; caught and fixed one 249-char false-negative in 05-post-enrollment.md's L2 Note header
 - [Phase 121-07]: Verified C17 195/0 exit-0, registry 19-Approved/9-Pending split, 9-Mermaid-unenrolled invariant, VH-row/anchor-slug discipline; RETRO-04/09 CLOSED, RETRO-07 PARTIAL (13/22) handed to Phase 122
 - [Phase 121-07]: Logged DEFER-121-07-A: 9 files (2 glossaries from 121-04, 7 lifecycle files from 121-05) carry an unfilled YYYY-MM-DD Version-History date placeholder -- pre-existing, out of scope for this read-only verification plan, logged to deferred-items.md
+- [Phase ?]: [122-01] Expanded KNOWN_WINDOWS_KEYLESS_PATHS from the plan's proposed 5-entry (decision-trees 00-04 only) allowlist to the verified 12-file union across the 30-file roster -- live frontmatter grep found 3 admin-setup APv1/APv2 carve-outs + 4 lifecycle files also genuinely keyless-Windows, matching CONTEXT D-03's own broader claim
+- [Phase ?]: [122-01] Recorded the RE-212 (05-device-lifecycle.md) directory-precedence rationale in a new Review Notes section in RE-index.md -- no prior per-row rationale-note precedent existed in that file
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -388,9 +390,9 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-07T23:40:51.910Z
-Stopped at: Phase 122 context gathered
-Resume file: .planning/phases/122-structural-retrofit-decision-trees-carved-mermaid-files/122-CONTEXT.md
+Last session: 2026-07-08T00:54:09.240Z
+Stopped at: Completed 122-01-PLAN.md
+Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
@@ -448,3 +450,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 121 P05 | 20min | 2 tasks | 7 files |
 | Phase 121 P06 | 40min | 2 tasks | 8 files |
 | Phase 121 P07 | 12min | 2 tasks | 0 files |
+| Phase 122 P01 | 25min | 3 tasks | 2 files |
