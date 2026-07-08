@@ -1,59 +1,74 @@
 ---
+doc_id: RE-208
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-03-20
 review_by: 2026-06-18
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-208 · **Status:** Approved
 
 # ESP Failure Decision Tree
+
+## Summary
+
+Reference decision table for triaging Windows Autopilot Enrollment Status Page (ESP) failures — the corpus's most decision-dense tree at 8 diamonds. Routes a visible error code to a lookup table, or a stuck device with no error through phase identification (device vs. user) and a 30/60-minute timeout-and-reboot check to a Resolved or L2 escalation outcome.
+
+> **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
 Use this tree to triage failures that occur on the [ESP](../_glossary.md#esp) (Enrollment Status Page) during Windows Autopilot provisioning. It routes you through two primary scenarios: a visible error code you can look up, or a device stuck with no error — where the correct path depends on which phase of [OOBE](../_glossary.md#oobe) is shown on screen. Every branch ends at a Resolved outcome or an escalation point with data to collect before handing off.
 
 ## Decision Tree
 
-```mermaid
-graph TD
-    ESD1{Is the device stuck on the\nEnrollment Status Page?}
-    ESD1 -->|No| ESR0([Return to Initial Triage])
-    ESD1 -->|Yes| ESD2{Does ESP show an error code?}
+**LOCKED — 43 (nodes + labeled edges)** — 24 nodes + 19 labeled edges (plus 4 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph. The tree has no reconvergence (every branch reaches a distinct terminal outcome) but carries the most decision points (8 diamonds) in the corpus; it is grouped below into five stages mirroring the graph's own gate structure.
 
-    ESD2 -->|Yes| ESD3{Can you read the\nerror code on screen?}
-    ESD3 -->|Yes| ESA1[Look up error code in\nESP error table]
-    ESA1 -->|Code found| ESR1([Resolved: Follow L1 Action\ncolumn in ESP error table])
-    ESA1 -->|Code not found| ESE1([Escalate L2: Error code\nnot found in table])
+### Stage 1: Entry Gate (ESD1)
 
-    ESD3 -->|No - screen unreadable| ESE2([Escalate L2: Cannot read\nerror code - send screenshot])
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 1 | Is the device stuck on the Enrollment Status Page? | No | Return to Initial Triage (ESR0) |
+| 1 | Is the device stuck on the Enrollment Status Page? | Yes | Continue to Step 2 |
 
-    ESD2 -->|No - stuck with no error| ESD4{What does the\nscreen say?}
+### Stage 2: Error Code Path (ESD2 → ESD3 → error lookup)
 
-    ESD4 -->|Setting up your device...| ESD5{Stuck more than\n30 minutes?}
-    ESD4 -->|Setting up for name...| ESD7{Stuck more than\n60 minutes?}
-    ESD4 -->|Cannot tell| ESE3([Escalate L2: Cannot identify\nESP phase - note both phases])
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 2 | Does ESP show an error code? | Yes | Continue to Step 3 |
+| 2 | Does ESP show an error code? | No — stuck with no error | Go to Stage 3 (phase identification) |
+| 3 | Can you read the error code on screen? | Yes | Look up error code in ESP error table |
+| 3 | Can you read the error code on screen? | No — screen unreadable | Escalate L2: Cannot read error code — send screenshot (ESE2) |
+| 3 (lookup) | Look up error code in ESP error table | Code found | Resolved: Follow L1 Action column in ESP error table (ESR1) |
+| 3 (lookup) | Look up error code in ESP error table | Code not found | Escalate L2: Error code not found in table (ESE1) |
 
-    ESD5 -->|No - under 30 min| ESA5[Wait - device phase\ntakes up to 30 minutes]
-    ESA5 --> ESR5([Resolved: Still within\nexpected device phase time])
+### Stage 3: Stuck With No Error — Phase Identification (ESD4)
 
-    ESD5 -->|Yes - over 30 min| ESA2[Reboot device and retry]
-    ESA2 --> ESD6{Did ESP proceed\nafter reboot?}
-    ESD6 -->|Yes| ESR2([Resolved: ESP continued\nafter reboot])
-    ESD6 -->|No| ESE4([Escalate L2: Device phase\ntimeout persists after reboot])
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 4 | What does the screen say? | "Setting up your device..." (Device Phase) | Go to Stage 4 (Device Phase Timeout) |
+| 4 | What does the screen say? | "Setting up for [username]..." (User Phase) | Go to Stage 5 (User Phase Timeout) |
+| 4 | What does the screen say? | Cannot tell | Escalate L2: Cannot identify ESP phase — note both phases (ESE3) |
 
-    ESD7 -->|No - under 60 min| ESA4[Wait - user phase may\ntake up to 60 minutes]
-    ESA4 --> ESR4([Resolved: Still within\nexpected user phase time])
+### Stage 4: Device Phase Timeout — 30-Minute Threshold (ESD5 → ESD6)
 
-    ESD7 -->|Yes - over 60 min| ESA3[Reboot device and retry]
-    ESA3 --> ESD8{Did ESP proceed\nafter reboot?}
-    ESD8 -->|Yes| ESR3([Resolved: ESP continued\nafter reboot])
-    ESD8 -->|No| ESE5([Escalate L2: User phase\ntimeout persists after reboot])
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 5 | Stuck more than 30 minutes? | No — under 30 min | Wait — device phase takes up to 30 minutes → Resolved: Still within expected device phase time (ESA5 → ESR5) |
+| 5 | Stuck more than 30 minutes? | Yes — over 30 min | Reboot device and retry (ESA2) |
+| 6 | Did ESP proceed after reboot? | Yes | Resolved: ESP continued after reboot (ESR2) |
+| 6 | Did ESP proceed after reboot? | No | Escalate L2: Device phase timeout persists after reboot (ESE4) |
 
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    classDef escalateInfra fill:#fd7e14,color:#fff
-    class ESR0,ESR1,ESR2,ESR3,ESR4,ESR5 resolved
-    class ESE1,ESE2,ESE3,ESE4,ESE5 escalateL2
-```
+### Stage 5: User Phase Timeout — 60-Minute Threshold (ESD7 → ESD8)
+
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 7 | Stuck more than 60 minutes? | No — under 60 min | Wait — user phase may take up to 60 minutes → Resolved: Still within expected user phase time (ESA4 → ESR4) |
+| 7 | Stuck more than 60 minutes? | Yes — over 60 min | Reboot device and retry (ESA3) |
+| 8 | Did ESP proceed after reboot? | Yes | Resolved: ESP continued after reboot (ESR3) |
+| 8 | Did ESP proceed after reboot? | No | Escalate L2: User phase timeout persists after reboot (ESE5) |
 
 ## How to Check
 
@@ -94,4 +109,6 @@ graph TD
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 02: converted Mermaid decision graph to 5 grouped C17-compliant decision tables (LOCKED — 43, nodes + labeled edges); removed the mermaid fence; all 8 decision points (the most in the corpus) preserved as explicit table rows across the 5 stages. | -- |
 | 2026-03-20 | Initial version | — |
