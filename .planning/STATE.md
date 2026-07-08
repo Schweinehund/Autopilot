@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: executing
-last_updated: "2026-07-08T04:15:38.196Z"
+status: verifying
+last_updated: "2026-07-08T04:33:28.152Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 24
-  completed_plans: 23
-  percent: 33
+  completed_plans: 24
+  percent: 50
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 Phase: 122 (structural-retrofit-decision-trees-carved-mermaid-files) — EXECUTING
 Plan: 15 of 15
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-08
 
 ## v1.16 Phase Dependency Summary
@@ -121,7 +121,7 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Ready to execute
+  |             BOTH frontmatter status: AND visible **Status:** Phase complete — ready for verification
   |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
@@ -377,6 +377,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: [Phase 122-11]: Transform B (de-blockquote) applied to macos/01's corpus-max 5877c A2 Path section and macos/02's 1480c B2 Requirements Summary section -- both carry embedded tables/nested code fences; RETRO-07 CLOSED -- all 9 Mermaid-bearing lifecycle files (22/22 total across Phases 121+122) now C17-green
 - [Phase 122]: [Phase 122-12] Independent D-01 re-derivation confirms all 11 decision-tree LOCKED-N annotations (36/43/35/33/23/18/31/23/39/12/11) match git-show 71be4ab base bytes exactly, including independent re-confirmation of two prior corrections (08's 39, 10's upgraded 11); zero gaps, zero stale prose, zero narrowed edge semantics found
 - [Phase 122]: [Phase 122-14] Independent D-01 leaf-parity re-derivation confirms all 9 Mermaid-bearing lifecycle files' LOCKED-N annotations (12/10 lifecycle/00 blocks; 20 lifecycle/03; 8 lifecycle/04; 11/13 lifecycle-apv2/02 blocks; 10 ios-lifecycle/01; 7 ios-lifecycle/02; 10 macos-lifecycle/00; 13 macos-lifecycle/01; 17 macos-lifecycle/02) match git-show 71be4ab base bytes exactly, re-confirming the 122-10 ios-lifecycle/01 missed-diamond correction; zero gaps, zero stale prose, zero dropped reconvergence/subgraph/dual-pipeline structures -- RETRO-07 D-01 leaf-parity gate fully closed
+- [Phase 122]: [Phase 122-15] Phase 122 CLOSED: 30/30 target files Approved (RE-001..217 contiguous), full-corpus C17 225/0, D-01 ledgers 30/30 PASS (122-13's macos/00 finding resolved pre-close via e2ec2a5), RETRO-05/07/08 confirmed Complete (already marked by 122-05/122-08/122-11)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -413,8 +414,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T04:11:30.327Z
-Stopped at: Completed 122-11-PLAN.md
+Last session: 2026-07-08T04:33:28.136Z
+Stopped at: Completed 122-15-PLAN.md (Phase 122 CLOSED)
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -487,3 +488,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 122 P12 | 45min | 2 tasks | 1 files |
 | Phase 122 PP13 | 50min | 2 tasks | 0 files |
 | Phase 122 P14 | 35min | 2 tasks | 0 files |
+| Phase 122 P15 | 40min | 3 tasks | 2 files |
