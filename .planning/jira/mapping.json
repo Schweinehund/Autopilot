@@ -830,12 +830,12 @@
         },
         "123": {
           "issueKey": "RTS-727",
-          "status": "todo",
+          "status": "done",
           "name": "Orphan Nav-Hub Retrofit (Navigation-Last)"
         },
         "124": {
           "issueKey": "RTS-728",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe"
         },
         "125": {
