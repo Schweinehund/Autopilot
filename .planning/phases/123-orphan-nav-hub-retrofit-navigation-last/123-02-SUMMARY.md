@@ -130,3 +130,11 @@ None - no external service configuration required. Zero new dependencies (Node b
 ---
 *Phase: 123-orphan-nav-hub-retrofit-navigation-last*
 *Completed: 2026-07-08*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/validation/check-nav-hub-links.mjs
+- FOUND: .planning/phases/123-orphan-nav-hub-retrofit-navigation-last/123-02-SUMMARY.md
+- FOUND commit: eee079c (Task 1)
+- FOUND commit: 3177529 (Task 2)
+- FOUND commit: 9380731 (SUMMARY)
