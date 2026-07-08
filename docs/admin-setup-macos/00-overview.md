@@ -26,7 +26,7 @@ This guide walks Intune administrators through configuring a complete macOS Auto
 
 ## Setup Sequence
 
-**LOCKED — 11 (nodes + labeled edges)** — 11 nodes + 0 labeled edges (12 plain edges total), independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). No decision diamond is present in this diagram — per the D-02 bright-line, it converts to the ordered numbered stage list below (not a decision table). The list preserves the diagram's load-bearing reconvergence: Step 2 (Enrollment Profile) fans out to Steps 3, 4, and 5 (Configuration Profiles, App Deployment, Compliance Policies), which all three feed back into Step 6 (Configuration-Caused Failures Reference); Step 3 also continues independently into the linear Platform SSO chain, Steps 7 → 8 → 9 → 10 → 11.
+**LOCKED — 11 (nodes + labeled edges)** — 11 nodes + 0 labeled edges (12 plain edges total), independently re-derived from the pre-conversion flowchart (`git show 71be4ab`). No decision diamond is present in this diagram — per the D-02 bright-line, it converts to the ordered numbered stage list below (not a decision table). The list preserves the diagram's load-bearing reconvergence: Step 2 (Enrollment Profile) fans out to Steps 3, 4, and 5 (Configuration Profiles, App Deployment, Compliance Policies), which all three feed back into Step 6 (Configuration-Caused Failures Reference); Step 3 also continues into Step 7 (Platform SSO Setup), which fans out to Steps 8, 9, and 10 (Auth Methods, Enterprise SSO Migration, Kerberos SSO Extension) as parallel branches, with Step 10 continuing to Step 11 (Graph API Platform Credential).
 
 1. **[ABM Configuration](01-abm-configuration.md)** -- Create ADE token in Apple Business Manager and Intune, assign devices to MDM server, configure token renewal. This must be complete before any enrollment profile can be created.
 
@@ -79,5 +79,5 @@ This guide walks Intune administrators through configuring a complete macOS Auto
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-07-08 | Phase 122 plan 06: converted Mermaid flowchart (no decision diamond) to the pre-existing numbered stage list, annotated with an explicit reconvergence note (Steps 3/4/5 fan-in to Step 6; Step 3 also continues into the linear Step 7→8→9→10→11 chain); removed the mermaid fence; LOCKED — 11 (nodes + labeled edges, R1 convention); split the 1 pre-existing over-200-char Platform-gate blockquote into 2 word-preserving groups; enrolled as RE-116. | -- |
+| 2026-07-08 | Phase 122 plan 06: converted Mermaid flowchart (no decision diamond) to the pre-existing numbered stage list, annotated with an explicit reconvergence note (Steps 3/4/5 fan-in to Step 6; Step 3 also continues into Step 7, which fans out to parallel Steps 8/9/10, with Step 10→11); removed the mermaid fence; LOCKED — 11 (nodes + labeled edges, R1 convention); split the 1 pre-existing over-200-char Platform-gate blockquote into 2 word-preserving groups; enrolled as RE-116. | -- |
 | 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
