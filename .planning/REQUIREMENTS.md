@@ -30,7 +30,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Category: Conversion Pipeline & Filename (PIPE, continues v1.15 PIPE-01/02)
 
-- [ ] **PIPE-03**: The **pandoc YAML-metadata alias conversion defect** (`DEFER-119-C`) is fixed — retrofitted docs whose nav-footer is the italic `*Previous:` / `*Next step:` `---`…`---` shape convert clean through the locked pipeline (`scripts/pipeline/convert.ps1`, exit 0, no `Unknown alias` error) — **without regressing** the top-of-file frontmatter → Word custom-property promotion that OQ4 depends on (both paths regression-tested). Approach (canonical invocation fix vs. corpus-wide nav-footer normalization) resolved at discuss-phase.
+- [x] **PIPE-03**: The **pandoc YAML-metadata alias conversion defect** (`DEFER-119-C`) is fixed — retrofitted docs whose nav-footer is the italic `*Previous:` / `*Next step:` `---`…`---` shape convert clean through the locked pipeline (`scripts/pipeline/convert.ps1`, exit 0, no `Unknown alias` error) — **without regressing** the top-of-file frontmatter → Word custom-property promotion that OQ4 depends on (both paths regression-tested). Approach (canonical invocation fix vs. corpus-wide nav-footer normalization) resolved at discuss-phase.
 - [ ] **PIPE-04**: A **descriptive-filename normalization pass** (`V1.16-DESCRIPTIVE-FILENAME-PASS`, PIPE-02 OQ1) is defined and applied — a rename map + pipeline output-name wiring + RE-registry sync — so Copilot Studio citation titles (which derive from the SharePoint `.docx` filename, not the H1) read descriptively (e.g. `01-device-not-registered` rather than `RE-001`); the RE-NNN ↔ file mapping stays intact in the registry.
 - [ ] **PIPE-05**: A **true Draft-label grounding probe** (`PIPE-02-DRAFT-LABEL-PROBE`, owner-run) is executed — mutate BOTH the frontmatter `status:` AND the visible `**Status:**` header-block text of an uploaded test artifact, then confirm the literal **Draft** label renders and is queryable in Copilot Studio (v1.15's Option-A probe exercised only the frontmatter leg). *(Discuss-flag: agent-run vs owner-run if the harness lacks live Copilot Studio access.)*
 
@@ -92,7 +92,7 @@ REQ-ID → Phase mapping, assigned by the roadmapper 2026-07-07 (6 phases, 120-1
 | RETRO-08 | Phase 122 | Complete |
 | RETRO-09 | Phase 121 | Complete |
 | STD-04 | Phase 120 | Complete |
-| PIPE-03 | Phase 124 | Pending |
+| PIPE-03 | Phase 124 | Complete |
 | PIPE-04 | Phase 124 | Pending |
 | PIPE-05 | Phase 124 | Pending |
 | HYG-01 | Phase 120 | Complete |

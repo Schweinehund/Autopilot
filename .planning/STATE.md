@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-08T18:51:14.346Z"
-last_activity: 2026-07-08 -- Phase 124 planning complete
+last_updated: "2026-07-08T19:05:17.014Z"
+last_activity: 2026-07-08
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 31
-  completed_plans: 28
+  completed_plans: 29
   percent: 67
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** Phase 124 — pipeline fix, descriptive filename pass & draft label grounding probe
+**Current focus:** Phase 124 — pipeline-fix-descriptive-filename-pass-draft-label-grounding
 
 ## Current Position
 
-Phase: 124
-Plan: Not started
+Phase: 124 (pipeline-fix-descriptive-filename-pass-draft-label-grounding) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-07-08 -- Phase 124 planning complete
+Last activity: 2026-07-08
 
 ## v1.16 Phase Dependency Summary
 
@@ -387,6 +387,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 123]: [123-04] Fixed the 12 pre-existing broken nav-hub links (11 quick-ref-l2.md ../ over-escapes + 1 common-issues.md dead anchor) in a SEPARATE git-blame-attributed commit (5b28c88), distinct from 123-03's retrofit commits, per D-01 -- git blame confirms all 12 predate Phases 121/122 by 2+ months
 - [Phase 123]: [123-04] Corrected RESEARCH's single-hyphen slug error for the dm-crypt+LUKS heading -- the + is surrounded by spaces on both sides, producing a double-hyphen GitHub slug (dm-crypt--luks) per the same artifact class as the previously-known / case
 - [Phase 123]: [123-04] Phase 123 CLOSED: SC1 (full-corpus C17 229/0), SC2 (check-nav-hub-links.mjs 0/0), SC3 (navigation-last git attestation: 15b1b20 2026-07-08 post-dates e2ec2a5 2026-07-07) all proven in 123-VERIFICATION.md; RETRO-06 Complete
+- [Phase 124]: PIPE-03 CUSTOM-PROPS check treats absent docProps/custom.xml as trivial PASS (no custom properties promoted is not itself a regression); fails only on a property name outside the known 9-key EEE set
+- [Phase 124]: PIPE-03 byte-equivalence baseline generated via direct pandoc invocation (same flags as convert.ps1 line 74) rather than reverting code, since the fix is strictly additive
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -423,9 +425,9 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T17:58:47.029Z
-Stopped at: Phase 124 context gathered
-Resume file: .planning/phases/124-pipeline-fix-descriptive-filename-pass-draft-label-grounding/124-CONTEXT.md
+Last session: 2026-07-08T19:05:16.997Z
+Stopped at: Completed 124-01-PLAN.md
+Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
@@ -502,3 +504,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 123 P02 | 20min | 2 tasks | 1 files |
 | Phase 123 P03 | 40min | 2 tasks | 4 files |
 | Phase 123 P04 | 35min | 2 tasks | 3 files |
+| Phase 124 P01 | 9min | 3 tasks | 4 files |
