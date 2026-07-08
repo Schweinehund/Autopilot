@@ -338,13 +338,13 @@ Per Apple's canonical platform support guide, sysdiagnose is triggered via **Ass
 
 | Verdict | One-line Meaning | SSoT |
 |---------|------------------|------|
-| MEETS_BASIC_INTEGRITY | Device passed basic integrity check (running on a real Android device, not heavily-modified) | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
-| MEETS_DEVICE_INTEGRITY | Device passed integrity + has Google Play Services (a recognized app-distribution surface) | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
-| MEETS_STRONG_INTEGRITY | Device passed integrity + has Google Play Services + has hardware-backed key attestation + meets the Android security patch age requirement | [Phase 54 SSoT](../operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
+| MEETS_BASIC_INTEGRITY | Device passed basic integrity check (running on a real Android device, not heavily-modified) | [Phase 54 SSoT](operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
+| MEETS_DEVICE_INTEGRITY | Device passed integrity + has Google Play Services (a recognized app-distribution surface) | [Phase 54 SSoT](operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
+| MEETS_STRONG_INTEGRITY | Device passed integrity + has Google Play Services + has hardware-backed key attestation + meets the Android security patch age requirement | [Phase 54 SSoT](operations/patch-management/04-android-patch-delivery.md#play-integrity-attestation) |
 
-⚠️ **Cascade deadlines and the full enforcement-cascade migration playbook are owned by [Phase 54 SSoT — Android Patch Delivery — Deadlines](../operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).**
+⚠️ **Cascade deadlines and the full enforcement-cascade migration playbook are owned by [Phase 54 SSoT — Android Patch Delivery — Deadlines](operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).**
 
-Full cascade timeline and remediation playbook: see [Android Patch Delivery — Deadlines](../operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).
+Full cascade timeline and remediation playbook: see [Android Patch Delivery — Deadlines](operations/patch-management/04-android-patch-delivery.md#deadlines-cutover-dates).
 
 ### Android Investigation Runbooks
 
@@ -390,14 +390,14 @@ Full cascade timeline and remediation playbook: see [Android Patch Delivery — 
 
 | Category | One-line role | SSoT |
 |----------|---------------|------|
-| Allowed Distributions | Restricts compliance to Ubuntu 22.04 / 24.04 LTS; Ubuntu 20.04 dropped from Intune 2508 (August 2025) | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-2-configure-allowed-distributions) |
-| Custom Compliance | Bash discovery scripts evaluate device state at scheduled intervals; per-device exit codes drive compliance verdict | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-3-configure-custom-compliance-bash-discovery-scripts) |
-| Device Encryption | dm-crypt + LUKS full-disk encryption signal as compliance prerequisite (encryption-compliance triple analog: BitLocker / FileVault / dm-crypt) | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-4-configure-device-encryption-dm-crypt-luks) |
-| Password Policy | Minimum length / complexity rules; enforced via PAM `pwquality` configuration on enrolled devices | [Phase 50 SSoT](../admin-setup-linux/03-compliance-policy.md#step-5-configure-password-policy) |
+| Allowed Distributions | Restricts compliance to Ubuntu 22.04 / 24.04 LTS; Ubuntu 20.04 dropped from Intune 2508 (August 2025) | [Phase 50 SSoT](admin-setup-linux/03-compliance-policy.md#step-2-configure-allowed-distributions) |
+| Custom Compliance | Bash discovery scripts evaluate device state at scheduled intervals; per-device exit codes drive compliance verdict | [Phase 50 SSoT](admin-setup-linux/03-compliance-policy.md#step-3-configure-custom-compliance-bash-discovery-scripts) |
+| Device Encryption | dm-crypt + LUKS full-disk encryption signal as compliance prerequisite (encryption-compliance triple analog: BitLocker / FileVault / dm-crypt) | [Phase 50 SSoT](admin-setup-linux/03-compliance-policy.md#step-4-configure-device-encryption-dm-crypt--luks) |
+| Password Policy | Minimum length / complexity rules; enforced via PAM `pwquality` configuration on enrolled devices | [Phase 50 SSoT](admin-setup-linux/03-compliance-policy.md#step-5-configure-password-policy) |
 
-⚠️ **Bash discovery script authoring, compliance-evaluation cadence, and per-category remediation playbooks are owned by [Phase 50 SSoT — Linux Compliance Policy](../admin-setup-linux/03-compliance-policy.md).**
+⚠️ **Bash discovery script authoring, compliance-evaluation cadence, and per-category remediation playbooks are owned by [Phase 50 SSoT — Linux Compliance Policy](admin-setup-linux/03-compliance-policy.md).**
 
-Full configuration details and per-category remediation: see the [Linux Compliance Policy admin guide](../admin-setup-linux/03-compliance-policy.md).
+Full configuration details and per-category remediation: see the [Linux Compliance Policy admin guide](admin-setup-linux/03-compliance-policy.md).
 
 ### Linux Investigation Runbooks
 

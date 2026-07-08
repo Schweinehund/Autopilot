@@ -385,7 +385,7 @@ Device never appeared in Intune after enrollment attempt and there is no enrollm
 
 > **iOS:** For iOS compliance and CA timing issues, see [iOS: Compliance / Access Blocked](#ios-compliance--access-blocked).
 
-> **macOS:** For macOS compliance issues, see [macOS: Compliance / Access Blocked](#compliance-access-blocked) (where applicable).
+> **macOS:** For macOS compliance issues, see [macOS: Compliance / Access Blocked](#compliance-failure-or-access-blocked) (where applicable).
 
 Device shows non-compliant in Intune OR Conditional Access blocks Microsoft 365 access. Causes: Play Integrity verdict change (Android 13+ MEETS_STRONG_INTEGRITY enforcement; cross-platform jailbreak/integrity equivalence with iOS), OS version drift, passcode/encryption settings, or CA timing window.
 
