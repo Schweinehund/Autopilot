@@ -217,9 +217,9 @@
 | RE-201 | docs/lifecycle-apv2/03-automatic-mode.md | APv2 Automatic Mode (Windows 365) | Guide | Approved |
 | RE-202 | docs/linux-lifecycle/00-enrollment-overview.md | Linux Device Management Enrollment Overview | Guide | Approved |
 | RE-203 | docs/linux-lifecycle/01-linux-prerequisites.md | Linux Intune Client Prerequisites | Guide | Approved |
-| RE-204 | docs/macos-lifecycle/00-ade-lifecycle.md | macOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Pending |
-| RE-205 | docs/macos-lifecycle/01-psso-provisioning-walkthrough.md | macOS Platform SSO Provisioning Walkthrough: A1 Standard and A2 ADE-during-Setup-Assistant | Guide | Pending |
-| RE-206 | docs/macos-lifecycle/02-mdm-migration-psso.md | macOS MDM Migration Walkthrough: B1 In-Place (macOS 26+) and B2 Wipe-and-Re-Enroll | Guide | Pending |
+| RE-204 | docs/macos-lifecycle/00-ade-lifecycle.md | macOS ADE Lifecycle: Automated Device Enrollment End-to-End | Guide | Approved |
+| RE-205 | docs/macos-lifecycle/01-psso-provisioning-walkthrough.md | macOS Platform SSO Provisioning Walkthrough: A1 Standard and A2 ADE-during-Setup-Assistant | Guide | Approved |
+| RE-206 | docs/macos-lifecycle/02-mdm-migration-psso.md | macOS MDM Migration Walkthrough: B1 In-Place (macOS 26+) and B2 Wipe-and-Re-Enroll | Guide | Approved |
 | RE-207 | docs/decision-trees/00-initial-triage.md | Initial Triage Decision Tree | Reference | Approved |
 | RE-208 | docs/decision-trees/01-esp-failure.md | ESP Failure Decision Tree | Reference | Approved |
 | RE-209 | docs/decision-trees/02-profile-assignment.md | Profile Assignment Failure Decision Tree | Reference | Approved |

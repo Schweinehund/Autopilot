@@ -1,4 +1,8 @@
 ---
+doc_id: RE-206
+status: Approved
+owner: Intune Admin Lead
+doc_type: Guide
 last_verified: 2026-07-01
 review_by: 2026-09-29
 applies_to: ADE
@@ -6,9 +10,21 @@ audience: all
 platform: macOS
 ---
 
-> **Platform gate:** This guide covers macOS MDM migration from Kandji/Iru to Microsoft Intune with Platform SSO (PSSO), for both the wipe-free in-place path (B1, macOS 26+) and the wipe-and-re-enroll fallback path (B2, macOS 25 or earlier). For the underlying ADE enrollment pipeline, see [macOS ADE Lifecycle](00-ade-lifecycle.md). For post-migration PSSO registration on a fresh enrollment, see [macOS Platform SSO Provisioning Walkthrough](01-psso-provisioning-walkthrough.md).
+**Platform:** macOS · **Doc Type:** Guide · **Doc ID:** RE-206 · **Status:** Approved
 
 # macOS MDM Migration Walkthrough: B1 In-Place (macOS 26+) and B2 Wipe-and-Re-Enroll
+
+## Summary
+
+This guide walks an operator through macOS MDM migration from Kandji/Iru to Microsoft Intune with Platform SSO (PSSO) re-registration, covering both the wipe-free in-place path (B1, macOS 26+) and the wipe-and-re-enroll fallback path (B2, macOS 25 or earlier), including shared pre-flight secret retrieval, the macOS-26+ gate, and both non-reconverging pipelines through to fresh or re-registered PSSO.
+
+> **Platform gate:** This guide covers macOS MDM migration from Kandji/Iru to Microsoft Intune with Platform SSO (PSSO),
+
+> for both the wipe-free in-place path (B1, macOS 26+) and the wipe-and-re-enroll fallback path (B2, macOS 25 or earlier).
+
+> For the underlying ADE enrollment pipeline, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
+
+> For post-migration PSSO registration on a fresh enrollment, see [macOS Platform SSO Provisioning Walkthrough](01-psso-provisioning-walkthrough.md).
 
 This is a single-file operator walkthrough threading a Mac through MDM migration from Kandji/Iru to Intune with PSSO, serving all three roles: **L1 Service Desk** (use "What the Admin Sees" and "Watch Out For" for orientation and failure identification), **L2 Desktop Engineering** (use "Behind the Scenes" for endpoint and daemon detail), and **Intune Admins** (use "What Happens" for the complete configuration workflow).
 
@@ -19,7 +35,9 @@ This is a single-file operator walkthrough threading a Mac through MDM migration
 | **B1 — macOS 26 in-place** | macOS 26 or later (hard gate) | Wipe-free in-place; genuine unenroll + reenroll via profile-based enrollment | Always required — MDM unenrollment = IdP unregistration; new Secure Enclave key created | Target devices confirmed running macOS 26+; wipe is operationally unacceptable |
 | **B2 — Pre-macOS-26 wipe** | macOS 25 or earlier | Retire/wipe/re-enroll; fresh ADE enrollment via Intune | Fresh PSSO provisioning from scratch (link to guide 01) | Target devices running macOS 25 or earlier; B1 in-place path not available |
 
-> **Userless devices:** Devices enrolled without user affinity never reach PSSO registration — no WPJ key is written and no Secure Enclave entry is created. This walkthrough covers user-affinity enrollments only. For userless (shared/kiosk) devices, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
+> **Userless devices:** Devices enrolled without user affinity never reach PSSO registration — no WPJ key is written and no Secure Enclave entry is created.
+
+> This walkthrough covers user-affinity enrollments only. For userless (shared/kiosk) devices, see [macOS ADE Lifecycle](00-ade-lifecycle.md).
 
 ### Prerequisites
 
@@ -48,25 +66,20 @@ All prerequisites must be met before Stage 1. The ADE pipeline prerequisites (AB
 
 ## The MDM Migration Pipeline
 
-```mermaid
-graph TD
-    PF1[Pre-flight 1: Fleet Assessment & OS Gate] --> PF2[Pre-flight 2: Intune Readiness + Secret Retrieval & Source Release]
-    PF2 --> Gate{macOS 26+?}
-    Gate -->|B1 — macOS 26+ in-place| B1S1[B1 Stage 3: ABM Assign Device Management]
-    Gate -->|B2 — macOS 25 or earlier| B2S1[B2 Stage 1: OS Gate Confirmed — Wipe Required]
-    B1S1 --> B1S2[B1 Stage 4: Set Deadline]
-    B1S2 --> B1S3[B1 Stage 5: User Notification Window]
-    B1S3 --> B1S4[B1 Stage 6: Deadline Enforcement]
-    B1S4 --> B1S5[B1 Stage 7: Post-Migration Profile-Based Enrollment]
-    B1S5 --> B1S6[B1 Stage 8: FileVault Key Rotation]
-    B1S6 --> B1S7[B1 Stage 9: PSSO Re-Registration]
-    B2S1 --> B2S2[B2 Stage 2: Secret Retrieval]
-    B2S2 --> B2S3[B2 Stage 3: Retire & Wipe in Kandji/Iru]
-    B2S3 --> B2S4[B2 Stage 4: ADE Re-Enroll via Intune]
-    B2S4 --> B2S5[B2 Stage 5: Fresh PSSO Provisioning — guide 01]
-```
+**LOCKED — 17 (nodes + labeled edges)** — 15 nodes (2 shared pre-flight stages, the Gate decision, 7 B1 stages, and 5 B2 stages) + 2 labeled edges, independently re-derived from the pre-conversion pipeline diagram (`git show 71be4ab`). The single diamond (`Gate`) is represented below; the two branches are confirmed dual non-reconverging pipelines -- B1's 7-stage in-place track and B2's 5-stage retire/wipe/re-enroll track never merge back together.
 
-> Stages 1–2 (fleet assessment + Intune readiness, secret retrieval, source release) are the shared pre-flight, applicable to both paths. The pipeline forks at the macOS 26+ gate: B1 devices continue to the 9-stage in-place track; B2 devices (macOS 25 or earlier) follow the 5-stage retire/wipe/re-enroll track ending with a link-not-copy handoff to [macOS Platform SSO Provisioning Walkthrough](01-psso-provisioning-walkthrough.md).
+| Path | Pre-flight (shared) | Gate: macOS 26+? | Pipeline stages | Terminal |
+|------|----------------------|---------------------|-------------------|----------|
+| B1 -- macOS 26+ in-place | Pre-flight 1: Fleet Assessment & OS Gate -> Pre-flight 2: Intune Readiness + Secret Retrieval & Source Release | B1 -- macOS 26+ in-place | B1 Stage 3: ABM Assign Device Management -> B1 Stage 4: Set Deadline -> B1 Stage 5: User Notification Window -> B1 Stage 6: Deadline Enforcement -> B1 Stage 7: Post-Migration Profile-Based Enrollment -> B1 Stage 8: FileVault Key Rotation -> B1 Stage 9: PSSO Re-Registration | B1 Stage 9: PSSO Re-Registration (terminal, no merge with B2) |
+| B2 -- macOS 25 or earlier | Pre-flight 1: Fleet Assessment & OS Gate -> Pre-flight 2: Intune Readiness + Secret Retrieval & Source Release | B2 -- macOS 25 or earlier | B2 Stage 1: OS Gate Confirmed -- Wipe Required -> B2 Stage 2: Secret Retrieval -> B2 Stage 3: Retire & Wipe in Kandji/Iru -> B2 Stage 4: ADE Re-Enroll via Intune -> B2 Stage 5: Fresh PSSO Provisioning -- guide 01 | B2 Stage 5: Fresh PSSO Provisioning (terminal, no merge with B1; link-not-copy handoff to [macOS Platform SSO Provisioning Walkthrough](01-psso-provisioning-walkthrough.md)) |
+
+> Stages 1–2 (fleet assessment + Intune readiness, secret retrieval, source release) are the shared pre-flight, applicable to both paths.
+
+> The pipeline forks at the macOS 26+ gate: B1 devices continue to the 9-stage in-place track;
+
+> B2 devices (macOS 25 or earlier) follow the 5-stage retire/wipe/re-enroll track ending with a link-not-copy handoff to
+
+> [macOS Platform SSO Provisioning Walkthrough](01-psso-provisioning-walkthrough.md).
 
 ---
 
@@ -131,7 +144,11 @@ In the **Intune admin center**, navigate to **Devices > macOS > All Devices** to
 
 In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab > Enrollment program tokens > [your token] > Devices** to confirm the target device serial numbers appear and have an enrollment policy assigned. In the **Kandji/Iru console**, navigate to the device record to retrieve FileVault recovery keys and Activation Lock bypass codes before initiating any deletion or migration action.
 
-> **Important:** Retrieve ALL secrets from Kandji/Iru BEFORE performing Delete Device Record. FileVault recovery keys and Activation Lock bypass codes are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion. Activation Lock bypass codes are only available within 30 days of the device being supervised — do not delay retrieval.
+> **Important:** Retrieve ALL secrets from Kandji/Iru BEFORE performing Delete Device Record.
+
+> FileVault recovery keys and Activation Lock bypass codes are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
+
+> Activation Lock bypass codes are only available within 30 days of the device being supervised — do not delay retrieval.
 
 ### What Happens
 
@@ -188,7 +205,9 @@ In the **Intune admin center**, navigate to **Devices > Enrollment > Apple tab >
 
 In **Apple Business Manager (ABM)**, navigate to **Devices** and locate the target device by serial number. Select the device, open the action menu (typically an ellipsis or "More" button), and select **"Assign Device Management"** (the action may be labeled "Re-assign Device Management" depending on the device's current assignment state — verify in the current ABM portal).
 
-> **Note:** The ABM button label may read "Assign Device Management" or "Re-assign Device Management" depending on whether the device was previously assigned to another MDM server. Verify the current label in your ABM portal on authoring day. The conceptual action is the same regardless of label: assign the device's serial number to the Intune MDM server.
+> **Note:** The ABM button label may read "Assign Device Management" or "Re-assign Device Management" depending on whether the device was previously assigned to another MDM server.
+
+> Verify the current label in your ABM portal on authoring day. The conceptual action is the same regardless of label: assign the device's serial number to the Intune MDM server.
 
 ### What Happens
 
@@ -222,7 +241,11 @@ In **Apple Business Manager (ABM)**, navigate to **Devices** and locate the targ
 
 In **Apple Business Manager (ABM)**, navigate to the device record or the pending migration entry. Set a migration deadline within the 1–90 day range. The deadline triggers a countdown on the device with notifications leading up to enforcement.
 
-> **Note:** Set the deadline ONLY after confirming Intune readiness (Stage 3 pre-deadline check): the ADE enrollment policy must be assigned to the device serial number in Intune, and the PSSO Settings Catalog policy must be assigned to the target user groups. A deadline on a device without a valid enrollment policy results in a lockout with no in-place recovery (see L2 #30 Track A).
+> **Note:** Set the deadline ONLY after confirming Intune readiness (Stage 3 pre-deadline check): the ADE enrollment policy must be assigned to the device serial number in Intune,
+
+> and the PSSO Settings Catalog policy must be assigned to the target user groups.
+
+> A deadline on a device without a valid enrollment policy results in a lockout with no in-place recovery (see L2 #30 Track A).
 
 ### What Happens
 
@@ -436,26 +459,26 @@ _Section provenance — `last_verified: 2026-06-26` / `review_by: 2026-09-24`. T
 
 ## B2 Path: Pre-macOS-26 Wipe-and-Re-Enroll
 
-> **Pre-macOS-26 wipe-and-re-enroll path (B2) — required for all devices running macOS 25 or earlier.**
->
-> The B1 in-place migration path is not available on macOS 25 or earlier. This path requires a full device wipe. The device will go through a standard ADE enrollment via Intune's Setup Assistant, followed by a fresh PSSO provisioning flow.
->
-> ---
->
-> **`sudo profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled macOS devices.** macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe. Using `profiles renew` on an ADE-enrolled device results in enrollment failure — the SSO extension profile cannot be installed because MDM enrollment is a prerequisite for that profile, creating a circular dependency. There is no no-wipe shortcut for ADE-enrolled devices on macOS 25 or earlier.
->
-> ---
->
-> **B2 Requirements Summary:**
->
-> | B2 Requirement | Value |
-> |----------------|-------|
-> | macOS version | macOS 25 or earlier (B1 in-place not available; wipe required) |
-> | Migration mechanism | Retire/wipe in Kandji/Iru → ADE re-enroll via Intune Setup Assistant |
-> | Secret retrieval | Required BEFORE Delete Device Record and wipe (see Stage 2) |
-> | Profiles renew shortcut | NOT supported — wipe is mandatory for ADE-enrolled devices |
-> | PSSO provisioning | Fresh provisioning via guide 01 (A1 standard path) — not documented here |
-> | Post-wipe enrollment | Device contacts ABM during Setup Assistant; receives Intune enrollment profile |
+**Pre-macOS-26 wipe-and-re-enroll path (B2) — required for all devices running macOS 25 or earlier.**
+
+The B1 in-place migration path is not available on macOS 25 or earlier. This path requires a full device wipe. The device will go through a standard ADE enrollment via Intune's Setup Assistant, followed by a fresh PSSO provisioning flow.
+
+---
+
+**`sudo profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled macOS devices.** macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe. Using `profiles renew` on an ADE-enrolled device results in enrollment failure — the SSO extension profile cannot be installed because MDM enrollment is a prerequisite for that profile, creating a circular dependency. There is no no-wipe shortcut for ADE-enrolled devices on macOS 25 or earlier.
+
+---
+
+**B2 Requirements Summary:**
+
+| B2 Requirement | Value |
+|----------------|-------|
+| macOS version | macOS 25 or earlier (B1 in-place not available; wipe required) |
+| Migration mechanism | Retire/wipe in Kandji/Iru → ADE re-enroll via Intune Setup Assistant |
+| Secret retrieval | Required BEFORE Delete Device Record and wipe (see Stage 2) |
+| Profiles renew shortcut | NOT supported — wipe is mandatory for ADE-enrolled devices |
+| PSSO provisioning | Fresh provisioning via guide 01 (A1 standard path) — not documented here |
+| Post-wipe enrollment | Device contacts ABM during Setup Assistant; receives Intune enrollment profile |
 
 ### B2 Stage 1: OS Gate — Wipe Required
 
@@ -483,7 +506,13 @@ For full detail on the secret-retrieval process and Kandji/Iru console steps, se
 
 **What the Admin Sees:** After secrets are retrieved and the device record is deleted in Kandji/Iru, initiate an Erase Mac command (or equivalent wipe action) from the Kandji/Iru console or directly on the device via System Settings > General > Transfer or Reset > Erase All Content and Settings.
 
-> **Important:** Do NOT use `sudo profiles renew -type enrollment` on ADE-enrolled macOS devices as a wipe alternative. `profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled devices — macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe. Using `profiles renew` on an ADE-enrolled device results in enrollment failure because the SSO extension profile cannot be installed when MDM enrollment (its prerequisite) has not completed — creating a circular dependency.
+> **Important:** Do NOT use `sudo profiles renew -type enrollment` on ADE-enrolled macOS devices as a wipe alternative.
+
+> `profiles renew -type enrollment` is NOT a supported migration path for ADE-enrolled devices — macOS only queries ABM for MDM assignment during Setup Assistant after a device wipe.
+
+> Using `profiles renew` on an ADE-enrolled device results in enrollment failure because the SSO extension profile cannot be installed when MDM enrollment (its prerequisite) has not completed —
+
+> creating a circular dependency.
 
 **What Happens:**
 
@@ -561,6 +590,7 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 | Date | Change |
 |------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed |
 | 2026-06-24 | Phase 90 (MIG-01..04): initial MDM migration walkthrough (B1 in-place + B2 wipe paths) |
 | 2026-07-01 | Phase 110 (MIGF-02): Jamf Pro and Mosyle source-MDM release steps appendix added |
 
@@ -572,44 +602,66 @@ Key terms used throughout this guide. Full definitions with Windows equivalents 
 
 ### Jamf Pro
 
-> **Important:** Retrieve the escrowed FileVault recovery key AND the Activation Lock bypass code from Jamf Pro BEFORE performing device-record deletion. Both are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
+> **Important:** Retrieve the escrowed FileVault recovery key AND the Activation Lock bypass code from Jamf Pro BEFORE performing device-record deletion.
+
+> Both are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
 
 **1. FileVault Recovery Key Retrieval**
 
 In the Jamf Pro console, navigate to the device record for the target Mac. Locate the FileVault management section within the device's security or management information view and retrieve the escrowed personal recovery key. Record it securely before proceeding to any deletion step.
 
-> **Note:** Jamf Pro console navigation is not live-verifiable without operator login credentials. The conceptual action is the same: open the device record, access the FileVault or security section, and retrieve the escrowed recovery key before any deletion step. Verify current console labels in the Jamf Pro admin console on your authoring day.
+> **Note:** Jamf Pro console navigation is not live-verifiable without operator login credentials.
+
+> The conceptual action is the same: open the device record, access the FileVault or security section, and retrieve the escrowed recovery key before any deletion step.
+
+> Verify current console labels in the Jamf Pro admin console on your authoring day.
 
 **2. Activation Lock Bypass Code Retrieval**
 
 In the Jamf Pro console, navigate to the device record for the target Mac and locate the Activation Lock bypass code in the device's security or management information section. Retrieve and record this code before proceeding to device-record deletion. The bypass code is only available while the device remains under active management by Jamf Pro.
 
-> **Note:** The conceptual action is the same: open the device record, access the security information, and retrieve the bypass code before any deletion step. The exact label or section name may vary by Jamf Pro version. Verify current console labels on your authoring day.
+> **Note:** The conceptual action is the same: open the device record, access the security information, and retrieve the bypass code before any deletion step.
+
+> The exact label or section name may vary by Jamf Pro version. Verify current console labels on your authoring day.
 
 **3. Device-Record Deletion**
 
 After retrieving both secrets, perform the device-record deletion action in the Jamf Pro console for the target Mac. This removes the device from Jamf Pro management and triggers MDM profile removal at the device's next check-in (approximately 15 minutes). Allow approximately 15 minutes before proceeding to Stage 3 (ABM "Assign Device Management").
 
-> **Note:** The exact action label may read "Delete Computer," "Delete," "Unmanage," or similar depending on the current Jamf Pro version. Verify the current label in the Jamf Pro admin console on your authoring day.
+> **Note:** The exact action label may read "Delete Computer," "Delete," "Unmanage," or similar depending on the current Jamf Pro version.
+
+> Verify the current label in the Jamf Pro admin console on your authoring day.
 
 ### Mosyle
 
-> **Important:** Retrieve the escrowed FileVault recovery key AND the Activation Lock bypass code(s) from Mosyle BEFORE performing device-record deletion. Both are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
+> **Important:** Retrieve the escrowed FileVault recovery key AND the Activation Lock bypass code(s) from Mosyle BEFORE performing device-record deletion.
+
+> Both are **permanently destroyed** when the device record is deleted. There is no recovery path after deletion.
 
 **1. FileVault Recovery Key Retrieval**
 
 Mosyle enforces FileVault via its Security profile and escrows personal recovery keys to the console. In the Mosyle console, navigate to the device record for the target Mac and retrieve the escrowed FileVault recovery key from the device's security information section. Record it securely before proceeding to any deletion step.
 
-> **Note:** Mosyle console navigation is not live-verifiable without operator login credentials. The conceptual action is the same: open the device record, locate the security or FileVault section, and retrieve the recovery key before any deletion step. Verify current console labels in the Mosyle admin console on your authoring day.
+> **Note:** Mosyle console navigation is not live-verifiable without operator login credentials.
+
+> The conceptual action is the same: open the device record, locate the security or FileVault section, and retrieve the recovery key before any deletion step.
+
+> Verify current console labels in the Mosyle admin console on your authoring day.
 
 **2. Activation Lock Bypass Code Retrieval**
 
 In the Mosyle console, navigate to the device record for the target Mac and locate the Activation Lock bypass codes in the device security information section. Two bypass codes may be present per device: one for user-initiated Activation Lock and one for MDM-initiated Activation Lock. Retrieve both codes before proceeding to device-record deletion.
 
-> **Note:** The conceptual navigation (for example, accessing a Security Info or equivalent tab within the device record) is consistent with documented Mosyle patterns. Exact labels may differ in the current Mosyle version. Verify current console navigation on your authoring day. Retrieve both codes if two are present — a user-initiated and an MDM-initiated bypass code.
+> **Note:** The conceptual navigation (for example, accessing a Security Info or equivalent tab within the device record) is consistent with documented Mosyle patterns.
+
+> Exact labels may differ in the current Mosyle version. Verify current console navigation on your authoring day.
+
+> Retrieve both codes if two are present — a user-initiated and an MDM-initiated bypass code.
 
 **3. Device-Record Deletion**
 
 After retrieving all secrets, perform the device-record deletion or unmanage action in the Mosyle console for the target Mac. This removes the device from Mosyle management and triggers MDM profile removal at the device's next check-in (approximately 15 minutes). Allow approximately 15 minutes before proceeding to Stage 3 (ABM "Assign Device Management").
 
-> **Note:** The exact action label in the Mosyle console may read "Delete Device," "Remove Device," "Unmanage," or similar depending on the current Mosyle version. Verify current console labels on your authoring day.
+> **Note:** The exact action label in the Mosyle console may read "Delete Device," "Remove Device," "Unmanage," or similar depending on the current Mosyle version.
+
+> Verify current console labels on your authoring day.
