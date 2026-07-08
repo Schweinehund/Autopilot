@@ -1,33 +1,38 @@
 ---
+doc_id: RE-207
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
+platform: Windows
 last_verified: 2026-04-23
 review_by: 2026-07-22
 applies_to: APv1
 audience: L1
 ---
 
-> **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
-> **macOS:** For macOS ADE troubleshooting, see [macOS ADE Triage](06-macos-triage.md).
-> **iOS/iPadOS:** For iOS/iPadOS troubleshooting, see [iOS Triage](07-ios-triage.md).
-> **Android:** For Android enrollment/compliance troubleshooting, see [Android Triage](08-android-triage.md).
-> **Linux:** For Linux Intune client troubleshooting (Ubuntu LTS), see [Linux Triage](09-linux-triage.md).
+**Platform:** Windows · **Doc Type:** Reference · **Doc ID:** RE-207 · **Status:** Approved
 
 # Initial Triage Decision Tree
+
+## Summary
+
+Reference decision table for Windows Autopilot (classic APv1) initial triage — the entry point for all Windows Autopilot deployment issues. Gates on network connectivity, then deployment mode and portal registration (a 4-way reconvergence across all four modes), then routes by symptom to a scenario tree, an L1 error code, or an L2/Infrastructure escalation.
+
+> **Version gate:** This guide covers Windows Autopilot (classic). For Device Preparation (APv2), see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
+
+> **macOS:** For macOS ADE troubleshooting, see [macOS ADE Triage](06-macos-triage.md).
+
+> **iOS/iPadOS:** For iOS/iPadOS troubleshooting, see [iOS Triage](07-ios-triage.md).
+
+> **Android:** For Android enrollment/compliance troubleshooting, see [Android Triage](08-android-triage.md).
+
+> **Linux:** For Linux Intune client troubleshooting (Ubuntu LTS), see [Linux Triage](09-linux-triage.md).
 
 ## How to Use These Trees
 
 Start here when a user reports an [Autopilot](../_glossary.md#autopilot) deployment issue. Follow each decision point, answering the question shown using only what you can observe on the device screen or look up in the Intune admin center. The tree will route you to a specific scenario tree or to an escalation point with data collection instructions.
 
 > **Note:** These decision trees cover Autopilot (classic / APv1). For Device Preparation (APv2) issues, see the [APv2 Device Preparation Triage Tree](04-apv2-triage.md).
-
-## Legend
-
-| Symbol | Meaning |
-|--------|---------|
-| Diamond `{...}` | Decision — answer the question shown |
-| Rectangle `[...]` | Action — perform this step before continuing |
-| Green rounded `([...])` | Resolved — issue is fixed or within expected parameters |
-| Red rounded `([...])` | Escalate to L2 — collect data listed in Escalation Data table and hand off |
-| Orange rounded `([...])` | Escalate to Infrastructure/Network — collect data listed in Escalation Data table and hand off |
 
 ## Scenario Trees
 
@@ -43,49 +48,41 @@ Use these links after this triage tree routes you to a specific scenario:
 
 ## Decision Tree
 
-```mermaid
-graph TD
-    TRD1{"Can the device reach\nany website?"}
-    TRD1 -->|No| TRE1(["Escalate Infrastructure:\nNo network connectivity"])
-    TRD1 -->|Yes| TRD2{"Can the device reach\nlogin.microsoftonline.com?"}
+**LOCKED — 36 (nodes + labeled edges)** — 18 nodes + 18 labeled edges (plus 2 unlabeled continuation edges), independently re-derived from the pre-conversion decision graph. The tree is grouped below into three stages that mirror the graph's own gate structure; the table `Yes`/`No`/mode answer columns are the graph's labeled edges. The 4-way reconvergence into TRD4 (all four deployment modes route to the same registration question) is preserved as four explicit rows in the Deployment Mode & Registration stage — no row collapses more than one incoming edge.
 
-    TRD2 -->|No| TRE2(["Escalate Infrastructure:\nAutopilot endpoints blocked\nby firewall or proxy"])
-    TRD2 -->|Yes| TRD3{"What deployment mode\nis being used?"}
+### Stage 1: Connectivity Gate (TRD1 → TRD2)
 
-    TRD3 -->|User-Driven| TRD4{"Is the device registered\nin the Autopilot portal?"}
-    TRD3 -->|Pre-Provisioning| TRD4
-    TRD3 -->|Self-Deploying| TRD4
-    TRD3 -->|Don't know| TRD4
+| Step | Question | Answer | Result |
+|------|----------|--------|--------|
+| 1 | Can the device reach any website? | No | Escalate Infrastructure: No network connectivity (TRE1) |
+| 1 | Can the device reach any website? | Yes | Continue to Step 2 |
+| 2 | Can the device reach login.microsoftonline.com? | No | Escalate Infrastructure: Autopilot endpoints blocked by firewall or proxy (TRE2) |
+| 2 | Can the device reach login.microsoftonline.com? | Yes | Continue to Step 3 (deployment mode) |
 
-    TRD4 -->|No| TRA1["Check if hardware hash\nwas imported"]
-    TRA1 --> TRE3(["Escalate L2:\nDevice not registered\nin Autopilot"])
+### Stage 2: Deployment Mode & Registration (TRD3 → TRD4 — the 4-way reconvergence)
 
-    TRD4 -->|Yes| TRD5{"What is the\nmain symptom?"}
+| Deployment mode (Step 3) | Registered in Autopilot portal? (Step 4) | Result |
+|---------------------------|--------------------------------------------|--------|
+| User-Driven | No | Check if hardware hash was imported → Escalate L2: Device not registered in Autopilot (TRA1 → TRE3) |
+| User-Driven | Yes | Continue to Step 5 (symptom routing) |
+| Pre-Provisioning | No | Check if hardware hash was imported → Escalate L2: Device not registered in Autopilot (TRA1 → TRE3) |
+| Pre-Provisioning | Yes | Continue to Step 5 (symptom routing) |
+| Self-Deploying | No | Check if hardware hash was imported → Escalate L2: Device not registered in Autopilot (TRA1 → TRE3) |
+| Self-Deploying | Yes | Continue to Step 5 (symptom routing) |
+| Don't know | No | Check if hardware hash was imported → Escalate L2: Device not registered in Autopilot (TRA1 → TRE3) |
+| Don't know | Yes | Continue to Step 5 (symptom routing) |
 
-    TRD5 -->|"ESP stuck or error"| TRA2["Go to ESP Failure Tree"]
-    TRD5 -->|"No profile assigned"| TRA3["Go to Profile Assignment Tree"]
-    TRD5 -->|"TPM or provisioning error"| TRA4["Go to TPM Attestation Tree"]
-    TRD5 -->|"Error code on screen"| TRD6{"Can you find the error\ncode in the error tables?"}
-    TRD5 -->|"OOBE crash or other"| TRA5["Note symptoms and\ncollect basic info"]
-    TRD5 -->|"Don't know"| TRE6(["Escalate L2:\nUnclear symptom —\ncollect all available data"])
+### Stage 3: Symptom Routing (TRD5 → TRD6 — applies once registered, regardless of mode)
 
-    TRD6 -->|Yes| TRR1(["Resolved: Follow L1 Action\ncolumn in error table"])
-    TRD6 -->|No| TRE4(["Escalate L2:\nUnknown error code"])
-
-    TRA5 --> TRE5(["Escalate L2:\nOOBE failure —\nnon-standard scenario"])
-
-    click TRA2 "01-esp-failure.md"
-    click TRA3 "02-profile-assignment.md"
-    click TRA4 "03-tpm-attestation.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    classDef escalateInfra fill:#fd7e14,color:#fff
-
-    class TRR1 resolved
-    class TRE3,TRE4,TRE5,TRE6 escalateL2
-    class TRE1,TRE2 escalateInfra
-```
+| Symptom (Step 5) | Sub-check (Step 6) | Result |
+|-------------------|----------------------|--------|
+| ESP stuck or error | — | Go to ESP Failure Tree (TRA2) |
+| No profile assigned | — | Go to Profile Assignment Tree (TRA3) |
+| TPM or provisioning error | — | Go to TPM Attestation Tree (TRA4) |
+| Error code on screen | Can you find the error code in the error tables? Yes | Resolved: Follow L1 Action column in error table (TRR1) |
+| Error code on screen | Can you find the error code in the error tables? No | Escalate L2: Unknown error code (TRE4) |
+| OOBE crash or other | — | Note symptoms and collect basic info → Escalate L2: OOBE failure — non-standard scenario (TRA5 → TRE5) |
+| Don't know | — | Escalate L2: Unclear symptom — collect all available data (TRE6) |
 
 ## How to Check
 
@@ -140,6 +137,8 @@ graph TD
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 02: converted Mermaid decision graph to a C17-compliant text-equivalent decision table, grouped into 3 stages (LOCKED — 36, nodes + labeled edges); removed the Legend section and the mermaid fence; the 4-way reconvergence into TRD4 preserved as four explicit per-mode rows; split the multi-line Version/macOS/iOS/Android/Linux gate blockquotes into separate groups. | -- |
 | 2026-04-27 | Added Linux banner + triage link (Scenario Trees, See Also, Version History) | -- |
 | 2026-04-23 | Added Android banner + triage link (Scenario Trees, See Also, Version History) | -- |
 | 2026-04-17 | Added iOS/iPadOS triage cross-reference banner | -- |
