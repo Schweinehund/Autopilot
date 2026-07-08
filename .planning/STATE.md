@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: planning
-last_updated: "2026-07-08T17:58:47.089Z"
-last_activity: 2026-07-08
+status: executing
+last_updated: "2026-07-08T18:51:14.346Z"
+last_activity: 2026-07-08 -- Phase 124 planning complete
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 28
+  total_plans: 31
   completed_plans: 28
   percent: 67
 ---
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 Phase: 124
 Plan: Not started
-Status: Phase complete — ready for verification
-Last activity: 2026-07-08
+Status: Ready to execute
+Last activity: 2026-07-08 -- Phase 124 planning complete
 
 ## v1.16 Phase Dependency Summary
 
@@ -121,7 +121,7 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Ready to plan
+  |             BOTH frontmatter status: AND visible **Status:** Ready to execute
   |             Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
