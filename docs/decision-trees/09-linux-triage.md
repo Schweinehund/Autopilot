@@ -1,4 +1,8 @@
 ---
+doc_id: RE-216
+status: Approved
+owner: Intune Admin Lead
+doc_type: Reference
 last_verified: 2026-04-27
 review_by: 2026-06-26
 applies_to: all
@@ -6,49 +10,25 @@ audience: L1
 platform: Linux
 ---
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md). For macOS ADE, see [macOS ADE Triage](06-macos-triage.md). For iOS/iPadOS, see [iOS Triage](07-ios-triage.md). For Android, see [Android Triage](08-android-triage.md).
+**Platform:** Linux · **Doc Type:** Reference · **Doc ID:** RE-216 · **Status:** Approved
 
 # Linux Triage Decision Tree
+
+## Summary
+
+Reference decision table for Linux Intune client triage (Ubuntu 22.04/24.04 LTS), gating on a flat set of symptoms — enrollment failure, non-compliance, web-app conditional access blocking behind an Edge-for-Linux disambiguation node, agent service failure, or unknown — and routing each to the matching L1 runbook or an L2 escalation, all within 2 decision steps of the root.
+
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+
+> For macOS ADE, see [macOS ADE Triage](06-macos-triage.md). For iOS/iPadOS, see [iOS Triage](07-ios-triage.md). For Android, see [Android Triage](08-android-triage.md).
 
 ## How to Use This Tree
 
 Start here when a user reports an issue with a Linux device enrolled (or expected to enroll) in Intune. Identify the failure symptom, then follow the matching branch to an L1 runbook or L2 escalation. All terminal nodes are within 2 decision steps of the root (well under the SC #1 5-node budget). Per Phase 51 D-01 + PITFALL-1 mitigation, this tree uses a flat-symptom shape (no enrollment-mode pre-gate) — Linux Intune supports a single management mode (Ubuntu 22.04/24.04 LTS via packages.microsoft.com), so the mode-axis question that gates Android does not apply.
 
-## Legend
-
-| Symbol | Meaning |
-|--------|---------|
-| Diamond `{...}` | Decision -- answer the question |
-| Green rounded `([...])` | Resolved -- follow the linked L1 runbook |
-| Red rounded `([...])` | Escalate to L2 -- collect data listed in Escalation Data table and hand off |
-| Orange rounded `([...])` | Architectural callout -- web-app CA only on Linux (PITFALL-2) |
-
 ## Decision Tree
 
-```mermaid
-graph TD
-    LIN1{"What is the user's<br/>Linux Intune symptom?"}
-
-    LIN1 -->|"Device cannot enroll<br/>into Intune"| LINR30(["See: Linux Enrollment Failed<br/>(Runbook 30)"])
-    LIN1 -->|"Device shows non-compliant<br/>in Intune"| LINR31(["See: Linux Compliance Non-Compliant<br/>(Runbook 31)"])
-    LIN1 -->|"User cannot access M365<br/>in Edge for Linux<br/>(PITFALL-2: web-app CA only)"| LINCA{"Web-app CA via Edge —<br/>device-level CA<br/>not supported on Linux.<br/>See linux-capability-matrix<br/>#conditional-access"}
-    LIN1 -->|"Linux Intune agent<br/>service not running"| LINR33(["See: Linux Agent Service Failure<br/>(Runbook 33)"])
-    LIN1 -->|"Don't know / Other"| LINE1(["Escalate L2 — collect<br/>serial, UPN, dpkg-l output,<br/>journalctl --user 1d snapshot,<br/>distro+kernel version"])
-
-    LINCA --> LINR32(["See: Linux CA Blocking<br/>Web-App Access (Runbook 32)"])
-
-    click LINR30 "../l1-runbooks/30-linux-enrollment-failed.md"
-    click LINR31 "../l1-runbooks/31-linux-compliance-non-compliant.md"
-    click LINR32 "../l1-runbooks/32-linux-ca-blocking-web-access.md"
-    click LINR33 "../l1-runbooks/33-linux-agent-service-failure.md"
-
-    classDef resolved fill:#28a745,color:#fff
-    classDef escalateL2 fill:#dc3545,color:#fff
-    classDef pitfallCallout fill:#fd7e14,color:#fff
-    class LINR30,LINR31,LINR32,LINR33 resolved
-    class LINE1 escalateL2
-    class LINCA pitfallCallout
-```
+**LOCKED — 12 (nodes + labeled edges)** — 7 nodes + 5 labeled edges (plus 1 unlabeled continuation edge from `LINCA` to `LINR32`), independently re-derived from the pre-conversion decision graph (`git show 71be4ab`). Both diamonds (`LIN1`, `LINCA`) are represented in the Routing Verification table below; the CA-disambiguation row folds the `LINCA` -> `LINR32` continuation edge into its own Step 2 cell so no incoming edge is collapsed or dropped.
 
 ## Routing Verification
 
@@ -97,4 +77,6 @@ Collect this information before routing to L2.
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-07-08 | v1.16 EEE reformat — content not re-reviewed | — |
+| 2026-07-08 | Phase 122 plan 05: converted Mermaid decision graph to the pre-existing Routing Verification decision table (LOCKED — 12, nodes + labeled edges); removed the mermaid fence and the Legend section (stale diagram-shape prose); split the 1 pre-existing over-200-char blockquote; enrolled as RE-216. | -- |
 | 2026-04-27 | Initial version (Phase 51 — Linux L1 triage tree, flat-symptom shape per D-01 / PITFALL-1) | -- |
