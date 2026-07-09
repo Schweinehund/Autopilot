@@ -13,8 +13,23 @@ findings:
   warning: 5
   info: 3
   total: 10
-status: issues_found
+status: resolved
+resolution_commit: e9d7055
+resolved: 2026-07-09
 ---
+
+> **RESOLUTION (2026-07-09, commit `e9d7055`).** All actioned findings addressed.
+> **CR-01 / CR-02 are runtime-conditional false-positives for the actual pipeline
+> runtime** — verified live under pwsh 7.5.8: `convert.ps1` provably rewrites
+> (`1 nav-footer rewrite(s)`, exit 0) on a previously-failing file, matching the
+> verifier's 12/12 exit-0 + 14 byte-identical proof. They only bite under Windows
+> PowerShell 5.1. Hardened anyway: added `#Requires -Version 7.0` (fail loudly, no
+> silent no-op under 5.1) + explicit `-Encoding utf8` on both `Get-Content` reads.
+> **WR-01** (dormant collision-resolver edge) fixed with a globally-unique Doc-ID
+> fallback in both resolver branches; self-test (e) retargeted to duplicate-Doc-ID,
+> new (g) regression guard added; `filename-map.md` byte-identical (0 collisions on
+> the live registry). Remaining WR-02..WR-05 / Info items are low-severity notes
+> (see below); not blocking. All self-tests green post-fix.
 
 # Phase 124: Code Review Report
 
