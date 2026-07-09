@@ -429,9 +429,9 @@ This is a harness/close phase, not a rename — but it does touch validator-runt
 
 ## Open Questions
 
-1. **Exact BASELINE_20 back-anchor SHA** — unknowable until execution (the JIT pre-Atom-1 HEAD). *Recommendation:* capture with `git rev-parse HEAD` immediately before Atom 1; do not pre-fill.
-2. **Whether any predecessor validator actually drifts** — determined by the plan-time flag-#6 chain run + the GHA apex. *Recommendation:* run the scoping chain in Wave 1 (delegate to a sub-agent — full chain ~5–9 min, background runs die at turn boundaries per `reference_chain_baseline_run_kill`); record the result to size the Wave-5 slot.
-3. **Whether the harness is green on HEAD before Atom 1** — expected green (sidecar verbatim), unlike v1.15's 11/4/0 RED. *Recommendation:* confirm in Wave 1; if RED, the drift is in the §4a live-reader set and rides the emergent slot.
+1. **Exact BASELINE_20 back-anchor SHA** — unknowable until execution (the JIT pre-Atom-1 HEAD). *Recommendation:* capture with `git rev-parse HEAD` immediately before Atom 1; do not pre-fill. **RESOLVED:** Plan 125-02 Task 3 resolves via JIT `git rev-parse HEAD` capture immediately before authoring Atom 1 (BASELINE_20 back-anchor), per Pitfall 2.
+2. **Whether any predecessor validator actually drifts** — determined by the plan-time flag-#6 chain run + the GHA apex. *Recommendation:* run the scoping chain in Wave 1 (delegate to a sub-agent — full chain ~5–9 min, background runs die at turn boundaries per `reference_chain_baseline_run_kill`); record the result to size the Wave-5 slot. **RESOLVED:** Plan 125-01 Task 2 resolves via the flag-#6 full-chain scoping run (delegated sub-agent) that enumerates the actual drift set to size the Wave-5 emergent slot.
+3. **Whether the harness is green on HEAD before Atom 1** — expected green (sidecar verbatim), unlike v1.15's 11/4/0 RED. *Recommendation:* confirm in Wave 1; if RED, the drift is in the §4a live-reader set and rides the emergent slot. **RESOLVED:** Plan 125-01 Task 2 resolves via the harness-on-HEAD baseline reconnaissance that confirms green-on-HEAD before Atom 1 (drift, if any, rides the emergent slot).
 
 ---
 
