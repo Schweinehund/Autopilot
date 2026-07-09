@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-09T16:30:16.418Z"
+last_updated: "2026-07-09T22:25:18.517Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 38
-  completed_plans: 32
+  completed_plans: 33
   percent: 83
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
 Status: Ready to execute
 Last activity: 2026-07-09
 
@@ -397,6 +397,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 125]: V115 = 29a3599 positively confirmed via dual-token git log method (message carries both MILESTONE-AUDIT and MILESTONE CLOSE)
 - [Phase 125]: flag-#6 chain-scoping run found 4 genuinely drifting predecessor validators (check-phase-30/51/92/99), all caused by Phase 122's Mermaid-to-text-equivalent decision-tree conversion; sizes the Wave-5 emergent slot
 - [Phase 125]: v1.16-audit-allowlist.json cannot be a pure verbatim copy of v1.15's sidecar -- docs/_glossary-android.md and 2 android-lifecycle files need C2/C7/C9 pin-repoint in Plan 125-02 (correcting the RESEARCH's clean-copy expectation)
+- [Phase 125]: [125-02] v1.16-audit-allowlist.json required a targeted C2/C7/C9 repoint (not verbatim copy): 3 android files retrofitted by Phase 121/122 EEE reformat needed live-verified line-pins; supervision_exemptions grew 22->26 (all growth confined to docs/_glossary-android.md, caused by C17 #12 blockquote-splitting fragmenting 2 old single-line disambiguation blockquotes); Atom 1 landed as one indivisible 3-file commit c0e3626; BASELINE_20 back-anchored to JIT pre-Atom-1 HEAD 0d01eae (distinct from Wave-0 anchor 42b31c5)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -433,8 +434,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-09T16:30:16.401Z
-Stopped at: Completed 125-01-PLAN.md
+Last session: 2026-07-09T22:25:18.498Z
+Stopped at: Completed 125-02-PLAN.md
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -516,3 +517,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 124 P02 | 7min | 3 tasks | 2 files |
 | Phase 124 P03 | 35min | 3 tasks | 5 files |
 | Phase 125 P01 | 14min | 2 tasks | 1 files |
+| Phase 125 P02 | 55min | 3 tasks | 3 files |

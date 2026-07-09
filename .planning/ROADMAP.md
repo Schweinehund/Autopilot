@@ -223,7 +223,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 125-02-PLAN.md — Atom 1: v1.16-milestone-audit.mjs + v1.16-audit-allowlist.json (verbatim) + BASELINE_20 (JIT-anchored)
+- [x] 125-02-PLAN.md — Atom 1: v1.16-milestone-audit.mjs + v1.16-audit-allowlist.json (verbatim) + BASELINE_20 (JIT-anchored)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -272,4 +272,4 @@ Plans:
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 3/3 | Complete   | 2026-07-08 |
-| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 1/7 | In Progress|  |
+| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 2/7 | In Progress|  |
