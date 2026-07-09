@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-09T16:04:13.141Z"
-last_activity: 2026-07-09 -- Phase 125 planning complete
+last_updated: "2026-07-09T16:30:16.418Z"
+last_activity: 2026-07-09
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 38
-  completed_plans: 31
-  percent: 82
+  completed_plans: 32
+  percent: 83
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** Phase 124 — pipeline-fix-descriptive-filename-pass-draft-label-grounding
+**Current focus:** Phase 125 — v115-pin-14th-path-a-lineage-bump-terminal-close
 
 ## Current Position
 
-Phase: 124 (pipeline-fix-descriptive-filename-pass-draft-label-grounding) — EXECUTING
-Plan: 3 of 3
+Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — EXECUTING
+Plan: 2 of 7
 Status: Ready to execute
-Last activity: 2026-07-09 -- Phase 125 planning complete
+Last activity: 2026-07-09
 
 ## v1.16 Phase Dependency Summary
 
@@ -393,6 +393,10 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 124-02]: PIPE-04: filename-map.md format locked to committed markdown table (3-col Doc ID | Path | Output Filename); resolver returns {ok,error} instead of calling process.exit so --self-test can prove the fail-closed collision path directly
 - [Phase 124]: 124-03: PIPE-05 owner-run Draft-label probe closed PASS (both queries surfaced literal Draft from the visible body-text block, not frontmatter — D-17 re-confirmed against the shipped Platform-first block format)
 - [Phase 124]: 124-03: Two-stage probe run discovered a live stale-index gotcha (same-filename re-upload served a previously-indexed v1.15-shape copy on the first run); owner re-uploaded the verified shipped-format build and re-ran to confirm PASS; documented in PIPE-05-RUNBOOK.md
+- [Phase 125]: Wave-0 anchor SHA (42b31c5) captured, distinct from the future BASELINE_20 JIT anchor
+- [Phase 125]: V115 = 29a3599 positively confirmed via dual-token git log method (message carries both MILESTONE-AUDIT and MILESTONE CLOSE)
+- [Phase 125]: flag-#6 chain-scoping run found 4 genuinely drifting predecessor validators (check-phase-30/51/92/99), all caused by Phase 122's Mermaid-to-text-equivalent decision-tree conversion; sizes the Wave-5 emergent slot
+- [Phase 125]: v1.16-audit-allowlist.json cannot be a pure verbatim copy of v1.15's sidecar -- docs/_glossary-android.md and 2 android-lifecycle files need C2/C7/C9 pin-repoint in Plan 125-02 (correcting the RESEARCH's clean-copy expectation)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -429,9 +433,9 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-09T15:21:12.065Z
-Stopped at: Phase 125 context gathered
-Resume file: .planning/phases/125-v115-pin-14th-path-a-lineage-bump-terminal-close/125-CONTEXT.md
+Last session: 2026-07-09T16:30:16.401Z
+Stopped at: Completed 125-01-PLAN.md
+Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
@@ -511,3 +515,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 124 P01 | 9min | 3 tasks | 4 files |
 | Phase 124 P02 | 7min | 3 tasks | 2 files |
 | Phase 124 P03 | 35min | 3 tasks | 5 files |
+| Phase 125 P01 | 14min | 2 tasks | 1 files |

@@ -241,3 +241,8 @@ None — this plan is reconnaissance-only; no code, harness, or validator file w
 ---
 *Phase: 125-v115-pin-14th-path-a-lineage-bump-terminal-close*
 *Completed: 2026-07-09*
+
+## Self-Check: PASSED
+
+- FOUND: `.planning/phases/125-v115-pin-14th-path-a-lineage-bump-terminal-close/125-01-SUMMARY.md`
+- FOUND: commit `3b19bd1`
