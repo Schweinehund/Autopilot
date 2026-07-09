@@ -215,7 +215,14 @@ Plans:
   3. The milestone closes via a 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH, plus a PIPE-02 grounding-validation confirmation on the retrofitted structural corpus
   4. A single close-gate commit flips all 14 v1.16 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS
 
-**Plans**: TBD
+**Plans**: 7 plans
+- [ ] 125-01-PLAN.md — Wave-0 pre-anchor + flag-#6 full-chain scoping run + V115 positive-confirm (29a3599) + sidecar byte-unchanged recon
+- [ ] 125-02-PLAN.md — Atom 1: v1.16-milestone-audit.mjs + v1.16-audit-allowlist.json (verbatim) + BASELINE_20 (JIT-anchored)
+- [ ] 125-03-PLAN.md — Atom 2: check-phase-120..125 (apex [48..124]/77) + frozen-at-close V115 pin + audit-harness-v1.16-integrity.yml → PUSH
+- [ ] 125-04-PLAN.md — 3-axis re-audit + 9-workflow cascade RED scan + predecessor-byte-unchanged HARD gate
+- [ ] 125-05-PLAN.md — Emergent remediation slot (fires only if cascade RED; ABAUDIT/readAtV115Close/NESTED-guard)
+- [ ] 125-06-PLAN.md — PIPE-02 owner-run grounding confirmation (retargeted v1.16-delta probes; autonomous:false)
+- [ ] 125-07-PLAN.md — Close-gate: correct [48..119]→[48..124] + flip all 14 reqs Validated + v1.16 MILESTONE CLOSE
 
 ## Progress
 
@@ -247,4 +254,4 @@ Plans:
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 3/3 | Complete   | 2026-07-08 |
-| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
+| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 7 plans | Ready to execute | - |
