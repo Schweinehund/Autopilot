@@ -43,8 +43,10 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - [x] **Phase 121: Structural Retrofit — Glossaries, Lifecycle & End-User Guides** — Retrofit glossaries, end-user guides, and the 13 Mermaid-free lifecycle docs to EEE, C17 green (the 9 Mermaid-bearing lifecycle docs are deferred to Phase 122 — RETRO-07 spans 121+122) (completed 2026-07-07)
 - [x] **Phase 122: Structural Retrofit — Decision-Trees, Carved-Mermaid Files & the 9 Mermaid-bearing lifecycle docs (RETRO-07 remainder)** — Retrofit the Mermaid-bearing classes to EEE using the Phase 120 policy, C17 green
  (completed 2026-07-08)
+
 - [x] **Phase 123: Orphan Nav-Hub Retrofit (Navigation-Last)** — Retrofit index/common-issues/quick-ref hubs last, after all referenced content is committed
  (completed 2026-07-08)
+
 - [x] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior (completed 2026-07-08)
 - [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
 
@@ -214,14 +216,30 @@ Plans:
   2. `v1.16-milestone-audit.mjs` (Path-A, C1-C17 inherited) + `v1.16-audit-allowlist.json` + BASELINE_20 + `check-phase-120..NN.mjs` validators (chain-apex `CHAIN_PHASES=[48..119]`) + the 13th parallel CI coexistence workflow (`audit-harness-v1.16-integrity.yml`) all ship; predecessor v1.4–v1.15 frozen surfaces remain byte-unchanged, except any predecessor content-assertion validator reading a now-retrofitted structural doc, converted frozen-aware (`readAtV115Close`) as in-scope close-gate remediation
   3. The milestone closes via a 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH, plus a PIPE-02 grounding-validation confirmation on the retrofitted structural corpus
   4. A single close-gate commit flips all 14 v1.16 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS
+**Plans**: 7 plans
+**Wave 1**
 
-**Plans**: 7 plans
 - [ ] 125-01-PLAN.md — Wave-0 pre-anchor + flag-#6 full-chain scoping run + V115 positive-confirm (29a3599) + sidecar byte-unchanged recon
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 125-02-PLAN.md — Atom 1: v1.16-milestone-audit.mjs + v1.16-audit-allowlist.json (verbatim) + BASELINE_20 (JIT-anchored)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 125-03-PLAN.md — Atom 2: check-phase-120..125 (apex [48..124]/77) + frozen-at-close V115 pin + audit-harness-v1.16-integrity.yml → PUSH
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 125-04-PLAN.md — 3-axis re-audit + 9-workflow cascade RED scan + predecessor-byte-unchanged HARD gate
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 125-05-PLAN.md — Emergent remediation slot (fires only if cascade RED; ABAUDIT/readAtV115Close/NESTED-guard)
 - [ ] 125-06-PLAN.md — PIPE-02 owner-run grounding confirmation (retargeted v1.16-delta probes; autonomous:false)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
 - [ ] 125-07-PLAN.md — Close-gate: correct [48..119]→[48..124] + flip all 14 reqs Validated + v1.16 MILESTONE CLOSE
 
 ## Progress
