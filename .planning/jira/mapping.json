@@ -835,7 +835,7 @@
         },
         "124": {
           "issueKey": "RTS-728",
-          "status": "in_progress",
+          "status": "done",
           "name": "Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe"
         },
         "125": {
