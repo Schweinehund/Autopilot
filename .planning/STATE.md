@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-09T22:25:18.517Z"
+last_updated: "2026-07-09T22:42:32.327Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 38
-  completed_plans: 33
+  completed_plans: 34
   percent: 83
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 3 of 7
+Plan: 4 of 7
 Status: Ready to execute
 Last activity: 2026-07-09
 
@@ -398,6 +398,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 125]: flag-#6 chain-scoping run found 4 genuinely drifting predecessor validators (check-phase-30/51/92/99), all caused by Phase 122's Mermaid-to-text-equivalent decision-tree conversion; sizes the Wave-5 emergent slot
 - [Phase 125]: v1.16-audit-allowlist.json cannot be a pure verbatim copy of v1.15's sidecar -- docs/_glossary-android.md and 2 android-lifecycle files need C2/C7/C9 pin-repoint in Plan 125-02 (correcting the RESEARCH's clean-copy expectation)
 - [Phase 125]: [125-02] v1.16-audit-allowlist.json required a targeted C2/C7/C9 repoint (not verbatim copy): 3 android files retrofitted by Phase 121/122 EEE reformat needed live-verified line-pins; supervision_exemptions grew 22->26 (all growth confined to docs/_glossary-android.md, caused by C17 #12 blockquote-splitting fragmenting 2 old single-line disambiguation blockquotes); Atom 1 landed as one indivisible 3-file commit c0e3626; BASELINE_20 back-anchored to JIT pre-Atom-1 HEAD 0d01eae (distinct from Wave-0 anchor 42b31c5)
+- [Phase 125]: Atom 2 (check-phase-120..125 + frozen-at-close V115 pin + v1.16 CI workflow) authored and committed as one indivisible 8-file commit (47b5493); PUSH HELD by explicit owner override -- Axis-2 GHA re-audit (Plan 125-04) blocked until owner authorizes the push
+- [Phase 125]: check-phase-125 apex authored with CHAIN_PHASES=[48..124] (77 entries), correcting the [48..119] transcription error in ROADMAP/REQUIREMENTS/STATE per the [48..(closephase-1)] invariant
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -434,8 +436,8 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-09T22:25:18.498Z
-Stopped at: Completed 125-02-PLAN.md
+Last session: 2026-07-09T22:42:32.311Z
+Stopped at: Completed 125-03-PLAN.md (Atom 2 authored + committed 47b5493; push held pending owner authorization)
 Resume file: None
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
@@ -518,3 +520,4 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 124 P03 | 35min | 3 tasks | 5 files |
 | Phase 125 P01 | 14min | 2 tasks | 1 files |
 | Phase 125 P02 | 55min | 3 tasks | 3 files |
+| Phase 125 P03 | 48min | 2 tasks | 8 files |

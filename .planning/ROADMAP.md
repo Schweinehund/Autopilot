@@ -227,7 +227,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 125-03-PLAN.md — Atom 2: check-phase-120..125 (apex [48..124]/77) + frozen-at-close V115 pin + audit-harness-v1.16-integrity.yml → PUSH
+- [x] 125-03-PLAN.md — Atom 2: check-phase-120..125 (apex [48..124]/77) + frozen-at-close V115 pin + audit-harness-v1.16-integrity.yml → PUSH
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -272,4 +272,4 @@ Plans:
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 3/3 | Complete   | 2026-07-08 |
-| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 2/7 | In Progress|  |
+| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 3/7 | In Progress|  |
