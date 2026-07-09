@@ -62,11 +62,27 @@ retrofitted (that's v1.16 Phases 121–123). No precedent for this collision exi
 **DEFERRED** — a meaningful 3-axis EXACT-MATCH + byte-gate runs against the *final green* close SHA, not a RED
 tree (v1.15 precedent). Pending the Class-B resolution.
 
-## Decision required (OWNER — not autonomously resolvable)
-Class A is a bounded Shape-1 remediation. **Class B is the blocker** and stems from `origin/master` being 187
-commits behind: the v1.16 content phases (120–124) were built local-only and never pushed as PRs, so their
-per-phase CI reconciliation never happened, and the close PR does 5 phases' CI at once against frozen
-predecessor harnesses. Resolution is architectural (advance master with the content phases first? adjust the
-predecessor `paths:`/replay model? a sanctioned frozen-aware mechanism for predecessor harness-replay?) and
-must be decided before any remediation — forcing green by editing a frozen sidecar or value-masking would
-violate the core integrity contract.
+## CORRECTION (2026-07-09, post-investigation) — Class B is NOT a blocker
+The initial "Class B is the blocker / owner decision required" framing above was a **mis-classification**.
+Investigation (git forensics + primary sources) established that Class B is the repo's already-named,
+already-sanctioned **`ACCEPTED-STANDALONE-CI-RED-01`** condition governed by decision **D-00a**:
+
+- `v1.14-MILESTONE-AUDIT.md:81-84`: *"ACCEPTED PREDECESSOR STANDALONE-CI RED … Editing those frozen
+  workflows/harnesses is barred by D-00a. A frozen milestone-audit validates its OWN close-SHA corpus, not
+  future evolved corpus."* Carried verbatim into `v1.15-MILESTONE-AUDIT.md:350`.
+- **Empirical proof:** `v1.14-milestone-audit.mjs` run against the v1.15-ship tree `3780c6f` = **EXIT 1
+  (12 passed / 3 failed)**. v1.15 SHIPPED with predecessor harnesses already red — the current milestone's own
+  harness (v1.16 = 16/0/0) + the chain apex are the authoritative gate, NOT the predecessor standalone jobs.
+
+**Correct resolution (in-doctrine, no owner architectural decision needed):**
+- **Class A** — remediate `check-phase-51/92/99` via Shape-1 `readAtV115Close` frozen-aware conversion (exact
+  mirror of v1.15's `652f48e` for 50/52/65). In-class `check-phase-NN` maintenance (D-00a-permitted); no
+  value-mask; `CHAIN_SKIP` empty. Greens the authoritative apex `check-phase-125` [48..124].
+- **Class B** — RECORD as `ACCEPTED-STANDALONE-CI-RED-01` in `v1.16-MILESTONE-AUDIT.md` honest-accounting +
+  `v1.16-DEFERRED-CLEANUP.md` (cite v1.14/v1.15 precedent). Do NOT fix. No frozen surface touched.
+- **Authoritative green** = v1.16-milestone-audit (already 16/0/0) + chain apex green after Class A.
+
+**Separate, genuinely owner-facing item (process, not architecture):** the canonical close shape is
+content-phases→master → a harness-only Atom-2 PR → a planning-only close-gate. Phases 120–124 being built
+local-only inflated PR #3 to the whole milestone. Advancing master with the content first restores the
+canonical shape but does NOT change the Class-B acceptance (predecessor harnesses stay red regardless).
