@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: verifying
-last_updated: "2026-07-08T23:53:52.936Z"
+last_updated: "2026-07-09T15:21:12.079Z"
 last_activity: 2026-07-08
 progress:
   total_phases: 6
@@ -429,9 +429,9 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-08T23:53:52.915Z
-Stopped at: Completed 124-03-PLAN.md
-Resume file: None
+Last session: 2026-07-09T15:21:12.065Z
+Stopped at: Phase 125 context gathered
+Resume file: .planning/phases/125-v115-pin-14th-path-a-lineage-bump-terminal-close/125-CONTEXT.md
 Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
 
 ## Operator Next Steps
