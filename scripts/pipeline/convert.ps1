@@ -10,6 +10,12 @@
 # After conversion, run the guard:
 #   node scripts/pipeline/guard-docx.mjs <OutputDocx>
 
+# PowerShell 7+ required: the PIPE-03 preprocessing writes the temp copy with
+# `Set-Content -Encoding utf8NoBOM`, a token introduced in PowerShell 6.0. Under
+# Windows PowerShell 5.1 that parameter throws, which would otherwise leave the
+# temp file un-rewritten and silently no-op the nav-footer fix. Fail loudly instead.
+#Requires -Version 7.0
+
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)][string]$InputMd,
@@ -79,7 +85,7 @@ if ($outputDir -and -not (Test-Path $outputDir)) {
 $tempMd = [System.IO.Path]::GetTempFileName() -replace '\.tmp$', '.md'
 Copy-Item -Path $InputMd -Destination $tempMd -Force
 
-$lines = Get-Content -LiteralPath $tempMd
+$lines = Get-Content -LiteralPath $tempMd -Encoding utf8
 $inFence = $false
 $fenceChar = $null
 $rewriteCount = 0
@@ -111,7 +117,7 @@ Set-Content -LiteralPath $tempMd -Value $lines -Encoding utf8NoBOM
 
 # D-03(b): fail-closed guard -- the ONLY diff between source and temp must be
 # the intended --- -> * * * rewrites on anchor-matched lines.
-$origLines = Get-Content -LiteralPath $InputMd
+$origLines = Get-Content -LiteralPath $InputMd -Encoding utf8
 $diffCount = 0
 for ($i = 0; $i -lt [Math]::Max($origLines.Count, $lines.Count); $i++) {
     $o = if ($i -lt $origLines.Count) { $origLines[$i] } else { $null }

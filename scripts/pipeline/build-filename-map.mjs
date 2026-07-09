@@ -123,12 +123,20 @@ function buildFilenameMap(rows) {
   for (const [base, group] of bySlug) {
     if (group.length === 1) {
       const r = group[0];
-      const name = base + '.docx';
+      let name = base + '.docx';
       if (finalNames.has(name)) {
-        return {
-          ok: false,
-          error: 'FILENAME-COLLISION-UNRESOLVED: ' + r.docId + ' (' + r.title + ') -> ' + name
-        };
+        // WR-01: this unique base slug coincides with a name already claimed by a
+        // *different* collision group's disambiguation -- a naming coincidence between
+        // unrelated docs, not a duplicate title. Fall back to the globally-unique Doc ID
+        // (never a silent duplicate) rather than aborting the whole generator.
+        name = base + '-' + r.docId.toLowerCase() + '.docx';
+        if (finalNames.has(name)) {
+          return {
+            ok: false,
+            error: 'FILENAME-COLLISION-UNRESOLVED: ' + r.docId + ' (' + r.title + ') -> ' + name +
+              ' (Doc ID fallback also claimed -- duplicate Doc ID in registry?)'
+          };
+        }
       }
       finalNames.add(name);
       out.push({ ...r, outputFilename: name });
@@ -147,11 +155,19 @@ function buildFilenameMap(rows) {
         if (!finalNames.has(candidate)) resolvedName = candidate;
       }
       if (!resolvedName) {
-        return {
-          ok: false,
-          error: 'FILENAME-COLLISION-UNRESOLVED: ' + r.docId + ' (' + r.title +
-            ') -- exhausted ' + segs.length + ' path segment(s), still colliding on base "' + base + '"'
-        };
+        // WR-01: path-segment disambiguation exhausted (e.g. a shallow path whose only
+        // candidate coincides with an unrelated doc's already-claimed name). Fall back to
+        // the globally-unique Doc ID before declaring the collision unresolvable.
+        const fallback = base + '-' + r.docId.toLowerCase() + '.docx';
+        if (finalNames.has(fallback)) {
+          return {
+            ok: false,
+            error: 'FILENAME-COLLISION-UNRESOLVED: ' + r.docId + ' (' + r.title +
+              ') -- exhausted ' + segs.length + ' path segment(s) and the Doc ID fallback on base "' +
+              base + '" (duplicate Doc ID in registry?)'
+          };
+        }
+        resolvedName = fallback;
       }
       finalNames.add(resolvedName);
       out.push({ ...r, outputFilename: resolvedName });
@@ -276,22 +292,41 @@ if (SELF_TEST) {
     );
   }
 
-  // (e) A synthetic UNRESOLVABLE collision (identical title AND identical path, with NO
-  //     parent-directory segments available to disambiguate) triggers the fail-closed path:
-  //     buildFilenameMap() returns { ok: false, error } carrying FILENAME-COLLISION-UNRESOLVED
-  //     -- never a silent duplicate. (Function itself never calls process.exit -- only main()
-  //     does -- so this is provable without a subprocess.)
+  // (e) A synthetic UNRESOLVABLE collision. After the WR-01 Doc-ID fallback, the only
+  //     genuinely-unresolvable case is a DUPLICATE Doc ID (a registry-integrity error):
+  //     identical title+path AND identical Doc ID, so even the Doc-ID fallback suffix
+  //     coincides. This MUST still fail closed with FILENAME-COLLISION-UNRESOLVED --
+  //     never a silent duplicate. (Function never calls process.exit -- only main() does.)
   {
     const rows = [
       { docId: 'RE-T03', path: 'overview.md', title: 'Overview', docType: 'Guide', status: 'Approved' },
-      { docId: 'RE-T04', path: 'overview.md', title: 'Overview', docType: 'Guide', status: 'Approved' },
+      { docId: 'RE-T03', path: 'overview.md', title: 'Overview', docType: 'Guide', status: 'Approved' },
     ];
     const result = buildFilenameMap(rows);
     const ok = result.ok === false && /FILENAME-COLLISION-UNRESOLVED/.test(result.error);
     stAssert(
-      '(e) synthetic unresolvable collision (identical title+path) -> fail-closed FILENAME-COLLISION-UNRESOLVED',
+      '(e) duplicate Doc ID (identical title+path+docId) -> fail-closed FILENAME-COLLISION-UNRESOLVED',
       ok,
       result.ok ? 'unexpectedly resolved (BUG)' : result.error
+    );
+  }
+
+  // (g) WR-01 regression guard: a unique singleton whose slug coincides with what a
+  //     *different* collision group's disambiguation produces must NOT spuriously hard-fail.
+  //     The Doc-ID fallback resolves it deterministically (never a silent duplicate).
+  {
+    const rows = [
+      { docId: 'RE-S01', path: 'zzz/unrelated.md', title: 'Foo A', docType: 'Guide', status: 'Approved' }, // -> foo-a
+      { docId: 'RE-G01', path: 'a/x.md', title: 'Foo', docType: 'Guide', status: 'Approved' },             // group w/ RE-G02
+      { docId: 'RE-G02', path: 'b/x.md', title: 'Foo', docType: 'Guide', status: 'Approved' },
+    ];
+    const result = buildFilenameMap(rows);
+    const names = result.ok ? result.rows.map((r) => r.outputFilename) : [];
+    const unique = new Set(names).size === names.length;
+    stAssert(
+      '(g) WR-01 coincidence (singleton "foo-a" vs group "foo" disambiguation) -> resolves via Doc-ID fallback, no spurious hard-fail',
+      result.ok === true && unique && names.length === 3,
+      result.ok ? names.join(', ') : ('unexpected hard-fail: ' + result.error)
     );
   }
 
