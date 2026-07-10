@@ -45,12 +45,12 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convention:
 
-1. **Automated-trigger detection mechanism (dominant, HOOK-01)** — a Stop-hook that inspects STATE for the milestone-close transition (mirrors the existing Jira milestone hook) vs. a git `post-tag` / `post-commit` hook keyed on the `vX.Y` tag or the `MILESTONE CLOSE` commit vs. folding the invocation directly into the close-gate phase. Trade-offs: visibility, gate-on-failure, portability (Windows-local pandoc), and not corrupting the close flow. Via `/adversarial-review`.
-2. **Zip artifact location + retention** — where `docs-library-vX.Y.zip` lands and whether it is committed to the repo, written to a gitignored `build/`/`dist/` dir, or emitted as a release asset; per-milestone retention vs. overwrite-latest. (Large binary-in-git hazard vs. easy retrieval.)
-3. **Manifest format + contents** — Markdown vs. JSON vs. CSV inside the zip; which columns (RE-ID, filename, status, `last_verified`, source path, checksum); whether a top-level `README`/upload-instructions file is bundled alongside.
-4. **Batch conversion performance/resilience** — 221 sequential `convert.ps1`/pandoc invocations vs. a batched/parallelized single pass; per-doc failure isolation vs. fail-fast; incremental (only-changed) rebuild vs. always-full. Ties to PUB-02's fail-closed contract.
-5. **HYG-03 date-fill policy** — which date to write into the unfilled Version-History placeholders (the original reformat commit date recovered per file vs. a single v1.17 fill date vs. the file's `last_verified`), and confirmation that the fill does not reset any freshness clock (v1.15 D2/META-04 rule).
-6. **Publish-set boundary confirmation** — reconfirm at plan time that registry `Status: Approved` is the exact publish set (today 221 = all registered), and how the pipeline behaves when a future milestone leaves docs at `Draft`/`Pending` (must silently exclude, per deployment policy, and the manifest must record the exclusion count).
+1. **Automated-trigger detection mechanism (dominant, HOOK-01 — Phase 127)** — a Stop-hook that inspects STATE for the milestone-close transition (mirrors the existing Jira milestone hook) vs. a git `post-tag` / `post-commit` hook keyed on the `vX.Y` tag or the `MILESTONE CLOSE` commit vs. folding the invocation directly into the close-gate phase. Trade-offs: visibility, gate-on-failure, portability (Windows-local pandoc), and not corrupting the close flow. Via `/adversarial-review`.
+2. **Zip artifact location + retention (Phase 126)** — where `docs-library-vX.Y.zip` lands and whether it is committed to the repo, written to a gitignored `build/`/`dist/` dir, or emitted as a release asset; per-milestone retention vs. overwrite-latest. (Large binary-in-git hazard vs. easy retrieval.)
+3. **Manifest format + contents (Phase 126)** — Markdown vs. JSON vs. CSV inside the zip; which columns (RE-ID, filename, status, `last_verified`, source path, checksum); whether a top-level `README`/upload-instructions file is bundled alongside.
+4. **Batch conversion performance/resilience (Phase 126)** — 221 sequential `convert.ps1`/pandoc invocations vs. a batched/parallelized single pass; per-doc failure isolation vs. fail-fast; incremental (only-changed) rebuild vs. always-full. Ties to PUB-02's fail-closed contract.
+5. **HYG-03 date-fill policy (Phase 126)** — which date to write into the unfilled Version-History placeholders (the original reformat commit date recovered per file vs. a single v1.17 fill date vs. the file's `last_verified`), and confirmation that the fill does not reset any freshness clock (v1.15 D2/META-04 rule).
+6. **Publish-set boundary confirmation (Phase 126)** — reconfirm at plan time that registry `Status: Approved` is the exact publish set (today 221 = all registered), and how the pipeline behaves when a future milestone leaves docs at `Draft`/`Pending` (must silently exclude, per deployment policy, and the manifest must record the exclusion count).
 
 ---
 
@@ -89,26 +89,26 @@ Explicitly excluded. Documented to prevent scope creep.
 
 ## Traceability
 
-Which phases cover which requirements. Populated during roadmap creation.
+Which phases cover which requirements. Populated during roadmap creation (2026-07-10).
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PUB-01 | TBD | Pending |
-| PUB-02 | TBD | Pending |
-| PUB-03 | TBD | Pending |
-| PUB-04 | TBD | Pending |
-| HYG-02 | TBD | Pending |
-| HYG-03 | TBD | Pending |
-| HOOK-01 | TBD | Pending |
-| HARN-08 | TBD | Pending |
-| HARN-09 | TBD | Pending |
-| HARN-10 | TBD | Pending |
+| PUB-01 | Phase 126 | Pending |
+| PUB-02 | Phase 126 | Pending |
+| PUB-03 | Phase 126 | Pending |
+| PUB-04 | Phase 126 | Pending |
+| HYG-02 | Phase 126 | Pending |
+| HYG-03 | Phase 126 | Pending |
+| HOOK-01 | Phase 127 | Pending |
+| HARN-08 | Phase 128 | Pending |
+| HARN-09 | Phase 128 | Pending |
+| HARN-10 | Phase 128 | Pending |
 
 **Coverage:**
 - v1.17 requirements: 10 total
-- Mapped to phases: 0 (roadmap pending) ⚠️
-- Unmapped: 10 (filled by roadmapper)
+- Mapped to phases: 10 ✓ (Phase 126: 6 · Phase 127: 1 · Phase 128: 3)
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-10*
-*Last updated: 2026-07-10 after initial v1.17 definition*
+*Last updated: 2026-07-10 after v1.17 roadmap creation (traceability mapped to Phases 126-128)*
