@@ -506,6 +506,42 @@ The first *envelope* milestone — it reshaped the metadata/format envelope arou
 
 ---
 
+## Milestone: v1.16 — EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
+
+**Shipped:** 2026-07-10
+**Phases:** 6 (120-125) | **Plans:** 38 | **Requirements:** 14/14 Validated
+
+### What Was Built
+The second *envelope* milestone — it extended the v1.15 EEE SOP standard + blocking C17 gate to the *remaining* structural doc classes and cleared the v1.15 shelf, with zero net-new operator content. Phase 120 codified the dominant gray area: the Mermaid-in-enrolled-classes policy resolved via `/adversarial-review` to **text-equivalent conversion** (every enrolled diagram becomes a leaf-preserving table/list; C17 assertion #1 stays a hard-fail), plus the Doc Type taxonomy extension and the HYG-01 stale-comment fix. Phases 121-123 retrofitted all six structural classes — 6 glossaries, 22 lifecycle docs (13 Mermaid-free + 9 Mermaid-bearing), 11 decision-trees, 10 carved-mermaid files, 4 orphan nav-hubs, 2 end-user guides — to C17-green across 229 files, with a purpose-built `check-nav-hub-links.mjs` catching (and fixing) 12 pre-existing broken nav-hub links under navigation-last discipline. Phase 124 fixed the systemic pandoc nav-footer YAML-alias defect (`DEFER-119-C`) via ephemeral-temp-copy preprocessing, generated a 221-row descriptive-filename map, and ran the owner-executed Draft-label grounding confirmation. Phase 125 added the mandatory **V115 back-anchor pin** (freezing the v1.15 corpus), the 14th Path-A audit-harness lineage bump (apex `check-phase-125` `[48..124]`, 77 entries), and the 3-axis terminal close.
+
+### What Worked
+- **Mermaid→text-equivalent conversion with independent git-base re-derivation** — every one of the 30 converted diagrams had its pre-conversion node/edge/leaf set re-derived directly from `git show 71be4ab` base bytes and diffed against the converted table; this D-01 discipline caught a real silent-edge-drop (a collapsed reconvergence row in 08-android-triage), an off-by-one LOCKED-N in several files, and a diamond RESEARCH's table had missed entirely — defects a leaf-count assertion alone would have shipped.
+- **Fork-per-phase retrofit helpers held again** — `retrofit-structural.mjs` → `retrofit-mermaid-structural.mjs` → `retrofit-nav-hub.mjs`, each forked from the prior phase's chain tip with the fail-closed guards (Mermaid-absence, doc_id-idempotency, keyless-Windows) added rather than refactored in place; no shipped deliverable was exposed to a shared-refactor regression (the v1.15 pattern, 3rd milestone running).
+- **The pandoc fix touched zero source `.md`** — the ephemeral-temp-copy preprocess in `convert.ps1` resolved the exit-64 YAML-alias failure entirely inside the pipeline, keeping the now-frozen content corpus byte-clean while the OQ4 custom-property promotion path stayed regression-clean (proven by the D-04 three-part regression).
+- **The flag-#6 predecessor-chain scoping pass ran BEFORE the close** — Plan 125-01 ran the full predecessor chain up front and found exactly the 4 drifting validators caused by the Phase-122 Mermaid conversion, so the frozen-aware conversions were scoped at plan time; the v1.14/v1.15 "run the full chain before close" lesson was finally internalized as a first-class plan step.
+
+### What Was Inefficient
+- **The terminal re-audit still fired its remediation slot** — despite the up-front scoping pass, the pre-authorized Plan 125-05 slot still fired for a Phase-122 Mermaid-drift cascade (Class-A: check-phase-51/92/99 → frozen-aware); the drift is now understood as intrinsic to broad-corpus conversion milestones, but the two-round close remains the norm rather than the exception (3rd consecutive milestone).
+- **The apex-range transcription error rode from roadmap to close** — `[48..119]` was carried in ROADMAP SC2 / REQUIREMENTS HARN-06 / STATE from roadmap creation and only corrected at the close-gate to `[48..124]`; the `[48..(closephase-1)]` invariant should be validated at roadmap authoring, not discovered at close (recurs from the v1.12/v1.13 apex off-by-one pattern).
+- **Draft-label probe remained owner-gated** — PIPE-05 again required a live owner-run Copilot Studio pass (the harness lacks tenant access), and a stale-index false start forced a re-run; the empirical leg is durable but not automatable in-harness.
+
+### Patterns Established
+- **Text-equivalent conversion as the standing Mermaid policy** — code-fenced diagrams carrying no key info are converted to leaf-preserving tables/lists under a retained C17 hard-fail; this is now the corpus-wide rule, not a per-file carve-out decision.
+- **Independent base-byte re-derivation as the conversion-integrity gate** — for any lossy-looking transform (Mermaid→table, blockquote split), re-derive the source structure from `git show <base>` and multiset/leaf-diff against the output; leaf-count parity alone is insufficient.
+- **Successor-pins-predecessor obligation discharged on schedule** — the V115 pin v1.15 deferred was added in v1.16 Atom 2 (positively confirmed via dual-grep recovery), closing the back-anchor invariant; the deferred-obligation-carries-forward mechanism works across milestone boundaries.
+
+### Key Lessons
+- **Scope the frozen-aware conversions at plan time, from a full-chain pre-run** — running the entire predecessor chain in the FIRST plan of the harness phase (not at the close) turns close-time surprises into planned work; do this on every broad-corpus milestone.
+- **Validate structural invariants (apex range, closephase-1) at roadmap authoring** — carrying a transcription error from roadmap to close is avoidable with a one-line check when the harness phase's success criteria are written.
+- **The `One-liner:` SDK-extraction bug persists (9th recurrence)** — `milestone.complete` again produced accomplishment lines from SUMMARY prose; verify MILESTONES.md + STATE.md after the SDK step. Durable fix still upstream (machine-readable `one_liner:` at phase close).
+- **Envelope milestones compound** — two envelope milestones (v1.15 Phase-1, v1.16 Phase-2) have now taken the entire published corpus C17-green; the format/metadata envelope is a legitimate multi-milestone workstream, and the downstream Copilot-grounding payoff is realized incrementally.
+
+### Cost Observations
+- Model mix: orchestration on Opus; sequential-on-main-tree per `use_worktrees:false`.
+- Notable: 6 phases / 38 plans over ~4 days; second envelope milestone; full corpus now 229 files under C17; heaviest mechanical work was the 30 Mermaid→text conversions with independent re-derivation + the C17-#12 blockquote splits across glossaries/lifecycle/nav-hubs; 14th Path-A harness; V115 back-anchor pin discharged; carried Windows deep-nest cascade now depth [48..124] (+6 vs v1.15).
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -528,6 +564,8 @@ The first *envelope* milestone — it reshaped the metadata/format envelope arou
 | v1.12 | 2 | 5 | Verification-closure milestone (smallest since v1.7); retired 3 prior-close research gaps in one already-wired file; `/adversarial-review` pre-locked MEDIUM-confidence framing for unverifiable supervision claim; D-01 apex off-by-one corrected at close-gate ([48..93]→[48..94]); both chain validators Linux-GHA authoritative (corrected D-03); 10th Path-A harness lineage |
 | v1.13 | 5 | 14 | Documentation-accuracy + depth milestone formalizing out-of-flow build-session work under requirements + harness; single-phase grouping by shared file (guide 07 = 5 reqs); needle-spec hand-off from content phases to harness phase; D-03 apex off-by-one corrected at close-gate ([48..100]→[48..99]); carried Windows deep-nest now [48..99]; 11th Path-A harness lineage |
 | v1.14 | 12 | 37 | First net-new content domain since v1.5 (802.1X across 5 platforms × wired+Wi-Fi × 3 EAP methods); multi-pillar milestone (A content + B/C backlog + D tooling + E harness); first deliberate corpus-invariant relaxation (C5/C10 60d→90d) resolved at close via NESTED-guard; first close-gate to require a mid-execution chain-health remediation (112-06, 22 RED→0, no frozen surface edited); apex [48..111] 66/0/1 Linux-GHA authoritative; carried Windows deep-nest now [48..111]; 12th Path-A harness lineage |
+| v1.15 | 7 | 40 | First *envelope* milestone (zero net-new content; reshaped metadata/format envelope of the operator corpus for Copilot grounding); grounding-first ordering (PIPE-02 on a 6-doc set before retrofitting ~150); C17 as an indivisible validator atom; fork-per-phase retrofit helpers (117 fork fixed a 116 silent content-loss defect); deliberate byte-unchanged inversion (re-pinned ALL Phase-1 frozen surfaces atomically); word-preserving blockquote splits with per-file multiset diffs; carried Windows deep-nest now [48..118]; 13th Path-A harness lineage |
+| v1.16 | 6 | 38 | Second *envelope* milestone (extended EEE+C17 to the remaining structural classes; 229 files C17-green); Mermaid→text-equivalent conversion policy (STD-04) with independent `git show` base-byte re-derivation catching real silent-edge-drops; fork-per-phase helpers held (3rd milestone); pandoc nav-footer fix touched zero source `.md`; flag-#6 full-predecessor-chain scoping pass run BEFORE the close (frozen-aware conversions scoped at plan time); mandatory V115 back-anchor pin discharged (v1.15's deferred obligation); apex-range transcription error [48..119]→[48..124] corrected at close; carried Windows deep-nest now [48..124]; 14th Path-A harness lineage |
 
 ### Top Lessons (Verified Across Milestones)
 
