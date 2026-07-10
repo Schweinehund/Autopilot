@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: shipped
-last_updated: "2026-07-10T15:42:53.431Z"
-last_activity: 2026-07-10
+status: completed
+last_updated: "2026-07-10T16:47:39.548Z"
+last_activity: 2026-07-10 — Milestone v1.16 completed and archived
 progress:
   total_phases: 6
   completed_phases: 6
@@ -20,15 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-10 — v1.16 milestone shipped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** v1.16 SHIPPED — no active milestone; run `/gsd-complete-milestone` to archive, then `/gsd-new-milestone` to scope v1.17
+**Current focus:** v1.16 SHIPPED & ARCHIVED 2026-07-10 (tag `v1.16`) — no active milestone; run `/gsd-new-milestone` to scope v1.17 (backlog: `.planning/milestones/v1.16-DEFERRED-CLEANUP.md`)
 
 ## Current Position
 
-Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — COMPLETE
-Plan: 7 of 7 done (125-01..07 all COMPLETE) — the close-gate has landed
-Status: v1.16 SHIPPED 2026-07-10. All 14/14 v1.16 requirements Validated via the single Plan 125-07 close-gate commit (NO Commit A). Axis-2 GHA GREEN (run 29068069953) + owner PIPE-02 PASS (54f5e62) + predecessor-byte-unchanged EMPTY (38 surfaces) all held before the close-gate landed. Next actionable = `/gsd-complete-milestone` (archival, a SEPARATE step)
-Last activity: 2026-07-10
-Stopped at: 125-07 close-gate COMPLETE — authored v1.16-MILESTONE-AUDIT.md + v1.16-DEFERRED-CLEANUP.md + 125-VERIFICATION.md, corrected the apex-range transcription error to CHAIN_PHASES=[48..124] (77 entries) in ROADMAP/REQUIREMENTS/STATE, flipped ALL 14 v1.16 reqs to Validated, marked v1.16 shipped 2026-07-10 — ONE indivisible close-gate commit. Next: /gsd-complete-milestone (separate).
+Phase: Milestone v1.16 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-10 — Milestone v1.16 completed and archived
 
 ## v1.16 Phase Dependency Summary
 
@@ -122,8 +121,8 @@ Phase 124 (Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe
   |         - Descriptive-filename rename map + pipeline output-name wiring +
   |             RE-registry sync (V1.16-DESCRIPTIVE-FILENAME-PASS)
   |         - True Draft-label grounding probe (PIPE-02-DRAFT-LABEL-PROBE):
-  |             BOTH frontmatter status: AND visible **Status:** Ready to execute
-  |             Draft label confirmed queryable in live Copilot Studio (owner-run)
+  |             BOTH frontmatter status: AND the visible **Status:** block — the
+  |             literal Draft label confirmed queryable in live Copilot Studio (owner-run)
   |       HARD CONSTRAINTS:
   |         - Runs against the FULL retrofitted corpus (Phases 121-123 complete) so
   |             the pipeline fix + filename pass exercise every enrolled class
@@ -454,9 +453,7 @@ Next action: Run `/gsd-complete-milestone` to archive v1.16 (moves phase dirs to
 
 ## Operator Next Steps
 
-- Run `/gsd-complete-milestone` to archive v1.16 and close out the milestone
-- Review `.planning/milestones/v1.16-MILESTONE-AUDIT.md` and `.planning/milestones/v1.16-DEFERRED-CLEANUP.md` (the v1.17 backlog source)
-- Then `/gsd-new-milestone` to scope v1.17
+- Start the next milestone with /gsd-new-milestone
 
 ## Performance Metrics
 
