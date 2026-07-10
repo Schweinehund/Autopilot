@@ -57,14 +57,14 @@ function padLabel(s) {
 }
 
 // === readFile() -- CRLF-normalizing helper (matches retrofit-nav-hub.mjs lines 207-211) ===
-function readFile(relPath) {
+export function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
   if (!existsSync(abs)) return null;
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
 }
 
 // === D-05 slug algorithm -- exact 5-step order, do NOT paraphrase ===
-function slug(title) {
+export function slug(title) {
   let s = title.toLowerCase();                    // 1. lowercase
   s = s.replace(/[/\s]+/g, '-');                   // 2. "/" and whitespace runs -> single "-"
   s = s.replace(/[^a-z0-9-]/g, '');                // 3. delete everything else (incl. ".", ":", "—", "(", ")")
@@ -92,7 +92,7 @@ function dirSegmentsNearestFirst(path) {
 // === Registry parser (5-column pipe-table row idiom, RESEARCH.md Pattern 3 / PATTERNS.md) ===
 // Excludes header/separator/prose rows (e.g. "## Review Notes") by construction --
 // only lines beginning with "| RE-<digits> |" match.
-function parseRegistry(content) {
+export function parseRegistry(content) {
   return content
     .split(/\r?\n/)
     .filter(l => /^\|\s*RE-\d+\s*\|/.test(l))
