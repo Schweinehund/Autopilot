@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.17
 milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
-status: active
-last_updated: "2026-07-10T18:30:02.972Z"
-last_activity: 2026-07-10
+status: planning
+last_updated: "2026-07-10T20:55:13.595Z"
+last_activity: 2026-07-10 — v1.17 roadmap created (Phases 126-128)
 progress:
   total_phases: 3
   completed_phases: 0
@@ -108,13 +108,16 @@ Phase 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close)
 
             - HARN-10: 3-axis terminal re-audit (fresh git clone --no-hardlinks +
               cross-OS Linux GHA authoritative for both chain validators per D-03 OS split
+
               + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP EXACT MATCH) +
               single close-gate commit flipping all 10 v1.17 reqs to Validated across
               PROJECT/ROADMAP/STATE/REQUIREMENTS + v1.17-MILESTONE-AUDIT.md +
               v1.17-DEFERRED-CLEANUP.md
           HARD CONSTRAINTS:
+
             - BLOCKED on Phase 127 — all pipeline + auto-trigger work complete and green
               before the closing lineage bump + re-audit
+
             - WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepens to [48..(closephase-1)]; Linux GHA
               BOTH chain validators remain authoritative (D-03 OS split unchanged)
           DISCUSS-PHASE FLAG: none (closing cluster; consumes prior decisions)
@@ -211,9 +214,9 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-10
-Stopped at: v1.17 roadmap created (Phases 126-128); 10/10 requirements mapped, coverage validated
-Resume file: None
+Last session: 2026-07-10T20:55:13.567Z
+Stopped at: Phase 126 context gathered
+Resume file: .planning/phases/126-publish-bundle-pipeline-guard-blocker-corpus-fixes/126-CONTEXT.md
 Next action: Run `/gsd-plan-phase 126` to plan the Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes phase. Run `/gsd-discuss-phase 126` first if resolving the Phase-126 gray areas (zip location, manifest format, batch resilience, HYG-03 date policy, publish-set boundary) before planning.
 
 ## Operator Next Steps
