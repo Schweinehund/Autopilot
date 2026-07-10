@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
 status: executing
-last_updated: "2026-07-09T22:42:32.327Z"
+last_updated: "2026-07-09T23:59:00.000Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 38
-  completed_plans: 34
-  percent: 83
+  completed_plans: 35
+  percent: 92
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 5 of 7 (125-05 emergent remediation slot COMPLETE — re-pushed; 125-04 Axis-2 awaits fresh cascade)
-Status: 125-05 done (Class-A readAtV115Close remediation, re-pushed to phase-125-atom-2 @ ce62fe5); next actionable = 125-06 (PIPE-02 owner-run) once cascade GREEN confirmed
+Plan: 5 of 7 done (125-01/02/03/04/05 COMPLETE); 125-06 (owner checkpoint) + 125-07 (close-gate) remain
+Status: 125-04 formally closed via safe-resume — Axis-2 GHA cascade GREEN (run 29068069953, tip ce62fe5; apex check-phase-125 [48..124] + Linux chain + v1.16 harness 16/0/0); Class-B = ACCEPTED-STANDALONE-CI-RED-01 (D-00a); byte-gate holds. 125-05 done. Next actionable = 125-06 (PIPE-02 owner-run grounding pass)
 Last activity: 2026-07-09
-Stopped at: Completed 125-05-PLAN.md — awaiting fresh Axis-2 GHA cascade verdict (orchestrator's next step; do NOT block on CI)
+Stopped at: 125-06 Wave-5 owner checkpoint — agent prepares PIPE-02-CLOSE-RUNBOOK + representative .docx set + empty FINDINGS template, then BLOCKS for the owner to run live Copilot Studio and attest "PIPE-02 CLOSE: PASS". 125-07 close-gate blocks until that attestation.
 
 ## v1.16 Phase Dependency Summary
 
