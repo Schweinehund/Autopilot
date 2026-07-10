@@ -17,10 +17,10 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 *The hero cluster: a deterministic batch orchestrator that converts the Approved corpus to `.docx`, guards it fail-closed, and bundles it into one versioned, upload-ready zip with a coverage manifest.*
 
-- [ ] **PUB-01**: A batch orchestrator converts **every `docs/_registry/RE-index.md` `Status: Approved` doc** to `.docx` via `scripts/pipeline/convert.ps1` (pandoc 3.7.0.2 + Word reference doc + the v1.16 PIPE-03 YAML-alias temp-copy fix), naming each output from `scripts/pipeline/filename-map.md`, into a flat build directory. Draft/Pending docs and unregistered `docs/` files are excluded by construction.
-- [ ] **PUB-02**: The orchestrator runs `scripts/pipeline/guard-docx.mjs` on **every** converted `.docx` and **fails closed** — a non-zero exit with no zip produced — if any doc leaks YAML frontmatter, carries a stale custom-property key, or has a wrong heading style. No un-guarded `.docx` can reach the bundle.
-- [ ] **PUB-03**: On a clean guard pass, the pipeline emits a **single versioned `docs-library-vX.Y.zip`** with a flat internal layout of descriptively-named `.docx` files (citation title = filename), ready for one-shot SharePoint bulk upload.
-- [ ] **PUB-04**: The zip includes a **manifest** (RE-ID → output `.docx` filename → status) and the pipeline asserts **registry parity** — every Approved registry row appears exactly once in the bundle, with no missing docs and no orphan files — logging the count so a partial bundle can never masquerade as complete.
+- [x] **PUB-01**: A batch orchestrator converts **every `docs/_registry/RE-index.md` `Status: Approved` doc** to `.docx` via `scripts/pipeline/convert.ps1` (pandoc 3.7.0.2 + Word reference doc + the v1.16 PIPE-03 YAML-alias temp-copy fix), naming each output from `scripts/pipeline/filename-map.md`, into a flat build directory. Draft/Pending docs and unregistered `docs/` files are excluded by construction.
+- [x] **PUB-02**: The orchestrator runs `scripts/pipeline/guard-docx.mjs` on **every** converted `.docx` and **fails closed** — a non-zero exit with no zip produced — if any doc leaks YAML frontmatter, carries a stale custom-property key, or has a wrong heading style. No un-guarded `.docx` can reach the bundle.
+- [x] **PUB-03**: On a clean guard pass, the pipeline emits a **single versioned `docs-library-vX.Y.zip`** with a flat internal layout of descriptively-named `.docx` files (citation title = filename), ready for one-shot SharePoint bulk upload.
+- [x] **PUB-04**: The zip includes a **manifest** (RE-ID → output `.docx` filename → status) and the pipeline asserts **registry parity** — every Approved registry row appears exactly once in the bundle, with no missing docs and no orphan files — logging the count so a partial bundle can never masquerade as complete.
 
 ### Category: Guard-Blocker Corpus Fixes (HYG, continues v1.16 HYG-01)
 
@@ -93,10 +93,10 @@ Which phases cover which requirements. Populated during roadmap creation (2026-0
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PUB-01 | Phase 126 | Pending |
-| PUB-02 | Phase 126 | Pending |
-| PUB-03 | Phase 126 | Pending |
-| PUB-04 | Phase 126 | Pending |
+| PUB-01 | Phase 126 | Complete |
+| PUB-02 | Phase 126 | Complete |
+| PUB-03 | Phase 126 | Complete |
+| PUB-04 | Phase 126 | Complete |
 | HYG-02 | Phase 126 | Complete |
 | HYG-03 | Phase 126 | Complete |
 | HOOK-01 | Phase 127 | Pending |

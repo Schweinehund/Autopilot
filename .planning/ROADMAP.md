@@ -41,7 +41,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 ### v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) — Phases 126-128
 
-- [ ] **Phase 126: Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes** — Batch-convert the entire Approved corpus to guard-clean `.docx`, fold in the two known guard blockers, and emit one versioned, manifest-bearing, upload-ready `docs-library-v1.17.zip`
+- [x] **Phase 126: Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes** — Batch-convert the entire Approved corpus to guard-clean `.docx`, fold in the two known guard blockers, and emit one versioned, manifest-bearing, upload-ready `docs-library-v1.17.zip` (completed 2026-07-10)
 - [ ] **Phase 127: Automated Milestone-Completion Trigger** — Regenerate the publish bundle automatically at milestone close by invoking the Phase-126 pipeline, degrading gracefully when prerequisites are absent (carries the dominant automated-trigger gray area)
 - [ ] **Phase 128: V116 Pin + 15th Path-A Lineage Bump + Terminal Close** — Freeze the v1.16 corpus with the mandatory V116 back-anchor pin, bump the audit-harness lineage, and close via 3-axis terminal re-audit (sole deliverable of the closing cluster)
 
@@ -65,7 +65,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 126-02-PLAN.md — batch publish-bundle orchestrator: convert 221 Approved docs, fail-closed guard, versioned zip + CSV manifest + registry parity (PUB-01..04)
+- [x] 126-02-PLAN.md — batch publish-bundle orchestrator: convert 221 Approved docs, fail-closed guard, versioned zip + CSV manifest + registry parity (PUB-01..04)
 
 **UI hint**: no
 **Discuss-phase flags** (resolve via `/gsd-discuss-phase` + `/adversarial-review`, NOT at roadmap): zip artifact location + retention (committed vs. gitignored `build/`/`dist/` vs. release asset; per-milestone vs. overwrite-latest); manifest format + contents (Markdown vs. JSON vs. CSV; which columns; whether a top-level upload-instructions README is bundled); batch conversion performance/resilience (221 sequential `convert.ps1` calls vs. batched/parallel; per-doc failure isolation vs. fail-fast; incremental vs. always-full — ties to the PUB-02 fail-closed contract); HYG-03 date-fill policy (original reformat commit date per file vs. single v1.17 fill date vs. `last_verified`; confirm no freshness-clock reset per v1.15 D2/META-04); publish-set boundary confirmation (reconfirm registry `Status: Approved` = exact publish set; silent Draft/Pending exclusion with a recorded exclusion count)
@@ -127,6 +127,6 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 126. Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes | 1/2 | In Progress|  |
+| 126. Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes | 2/2 | Complete   | 2026-07-10 |
 | 127. Automated Milestone-Completion Trigger | 0/TBD | Not started | - |
 | 128. V116 Pin + 15th Path-A Lineage Bump + Terminal Close | 0/TBD | Not started | - |
