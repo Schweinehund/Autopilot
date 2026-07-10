@@ -138,3 +138,14 @@ None. All security-relevant surface (subprocess invocation, path validation, fil
 ---
 *Phase: 126-publish-bundle-pipeline-guard-blocker-corpus-fixes*
 *Completed: 2026-07-10*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/pipeline/build-publish-bundle.mjs
+- FOUND: scripts/pipeline/build-filename-map.mjs
+- FOUND: dist/docs-library-v1.17.zip
+- FOUND: .planning/phases/126-publish-bundle-pipeline-guard-blocker-corpus-fixes/126-02-SUMMARY.md
+- FOUND: commit 241aad8
+- FOUND: commit f68fde3
+- FOUND: commit 3c0f6d6
+- FOUND: commit 736b85e
