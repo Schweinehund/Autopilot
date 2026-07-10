@@ -24,7 +24,7 @@
 //         dependency -- no zip written
 
 // Node built-ins ONLY -- zero external npm packages (matches scripts/pipeline/ convention)
-import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -433,13 +433,22 @@ function runBatch() {
 
   // Promote + zip (D-07 atomic promote: dist/ zip is only ever written after every pass
   // above has succeeded -- a failure at any earlier stage leaves any prior zip untouched).
+  // WR-02: Compress-Archive writes directly to the final path with -Force, so a failure
+  // partway through THIS step (disk full, process killed, AV lock) could leave the
+  // previous valid zip truncated/corrupt instead of preserved. Compress to a temp path
+  // in the same directory first, then rename into place only on success -- node:fs
+  // rename is atomic on the same volume, so the final zip is only ever the old file or
+  // the fully-written new one, never a partial write.
   const distDirAbs = join(process.cwd(), DIST_DIR_REL);
   if (!existsSync(distDirAbs)) mkdirSync(distDirAbs, { recursive: true });
   const zipDest = join(distDirAbs, ZIP_NAME);
-  const psCmd = 'Compress-Archive -Path "' + stagingDir + '\\*" -DestinationPath "' + zipDest + '" -Force';
+  const zipTmp = zipDest + '.tmp';
+  const psCmd = 'Compress-Archive -Path "' + stagingDir + '\\*" -DestinationPath "' + zipTmp + '" -Force';
   try {
     execFileSync('pwsh', ['-NoProfile', '-Command', psCmd], { stdio: 'pipe', cwd: process.cwd(), timeout: 120000 });
+    renameSync(zipTmp, zipDest);
   } catch (err) {
+    try { rmSync(zipTmp, { force: true }); } catch (_cleanupErr) { /* best-effort */ }
     process.stderr.write('FATAL: Compress-Archive failed: ' + ((err.stdout || '') + (err.stderr || '')).toString() + '\n');
     process.exit(1);
   }
