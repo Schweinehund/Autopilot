@@ -8,7 +8,6 @@ review_by: 2026-09-27
 applies_to: both
 audience: all
 platform: all
-phase_46_wave2_retrofit: 2026-04-25
 ---
 
 **Platform:** All Platforms · **Doc Type:** Reference · **Doc ID:** RE-179 · **Status:** Approved

@@ -8,7 +8,6 @@ review_by: 2026-06-24
 applies_to: both
 audience: admin
 platform: Android
-phase_46_wave2_retrofit: 2026-04-25
 ---
 
 **Platform:** Android · **Doc Type:** Reference · **Doc ID:** RE-144 · **Status:** Approved

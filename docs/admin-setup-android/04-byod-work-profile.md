@@ -8,7 +8,6 @@ review_by: 2026-06-24
 audience: admin
 platform: Android
 applies_to: BYOD
-phase_46_wave2_retrofit: 2026-04-25
 ---
 
 **Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-096 · **Status:** Approved
