@@ -848,12 +848,12 @@
     },
     "v1.17": {
       "epicKey": "RTS-730",
-      "status": "created",
+      "status": "in_progress",
       "created": "2026-07-10",
       "phases": {
         "126": {
           "issueKey": "RTS-731",
-          "status": "in_progress",
+          "status": "done",
           "name": "Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes"
         },
         "127": {
