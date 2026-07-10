@@ -608,5 +608,16 @@ if (isMainModule && SELF_TEST) {
 
 // ─── Main (non-self-test): run the full batch ─────────────────────────────────
 if (isMainModule && !SELF_TEST) {
-  runBatch();
+  // WR-04: every EXPECTED failure path already uses a structured FATAL:/=== FAILURES ===
+  // message before process.exit(1). This try/catch is the backstop for an UNEXPECTED
+  // exception (e.g. a permission-denied read, or a bug in a helper) so it goes through
+  // the tool's own reporting format instead of a raw Node stack trace -- Node's default
+  // behavior already exits non-zero on an uncaught throw, so the fail-closed *exit code*
+  // contract already held; this fixes the *reporting* contract.
+  try {
+    runBatch();
+  } catch (err) {
+    process.stderr.write('FATAL: unexpected error: ' + (err.stack || err.message) + '\n');
+    process.exit(1);
+  }
 }
