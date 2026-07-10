@@ -249,7 +249,11 @@ function guardOne(docxPath) {
       { stdio: 'pipe', cwd: process.cwd(), timeout: 30000 });
     return { ok: true };
   } catch (err) {
-    return { ok: false, detail: (err.stdout || '').toString() };
+    // WR-03: mirror convertOne's capture. guard-docx.mjs currently writes all its
+    // diagnostics to stdout, but if it (or an ./lib/ooxml.mjs import) ever throws
+    // an uncaught exception, times out, or writes to stderr, stdout-only capture
+    // would silently drop that detail from the GUARD-FAIL message.
+    return { ok: false, detail: ((err.stdout || '') + (err.stderr || '')).toString() };
   }
 }
 
