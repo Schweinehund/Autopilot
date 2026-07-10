@@ -25,9 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
 ## Current Position
 
 Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 4 of 7
-Status: Ready to execute
+Plan: 5 of 7 (125-05 emergent remediation slot COMPLETE — re-pushed; 125-04 Axis-2 awaits fresh cascade)
+Status: 125-05 done (Class-A readAtV115Close remediation, re-pushed to phase-125-atom-2 @ ce62fe5); next actionable = 125-06 (PIPE-02 owner-run) once cascade GREEN confirmed
 Last activity: 2026-07-09
+Stopped at: Completed 125-05-PLAN.md — awaiting fresh Axis-2 GHA cascade verdict (orchestrator's next step; do NOT block on CI)
 
 ## v1.16 Phase Dependency Summary
 
@@ -400,6 +401,8 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 125]: [125-02] v1.16-audit-allowlist.json required a targeted C2/C7/C9 repoint (not verbatim copy): 3 android files retrofitted by Phase 121/122 EEE reformat needed live-verified line-pins; supervision_exemptions grew 22->26 (all growth confined to docs/_glossary-android.md, caused by C17 #12 blockquote-splitting fragmenting 2 old single-line disambiguation blockquotes); Atom 1 landed as one indivisible 3-file commit c0e3626; BASELINE_20 back-anchored to JIT pre-Atom-1 HEAD 0d01eae (distinct from Wave-0 anchor 42b31c5)
 - [Phase 125]: Atom 2 (check-phase-120..125 + frozen-at-close V115 pin + v1.16 CI workflow) authored and committed as one indivisible 8-file commit (47b5493); PUSH HELD by explicit owner override -- Axis-2 GHA re-audit (Plan 125-04) blocked until owner authorizes the push
 - [Phase 125]: check-phase-125 apex authored with CHAIN_PHASES=[48..124] (77 entries), correcting the [48..119] transcription error in ROADMAP/REQUIREMENTS/STATE per the [48..(closephase-1)] invariant
+- [Phase 125]: [125-04] Authoritative Axis-2 GHA cascade came back CASCADE RED (apex check-phase-125 = 76P/3F/1S; v1.16 run 29055800797; base 29055800813; branch tip 4ab30e8) — Class A = check-phase-51/92/99 Phase-122 Mermaid-drift; Class B = ACCEPTED-STANDALONE-CI-RED-01 (D-00a, not a blocker, recorded at close-gate)
+- [Phase 125]: [125-05] Emergent slot FIRED (CASCADE RED). Applied Shape-1 readAtV115Close ONLY (Shapes 2/3 not tripped): check-phase-51 V-51-06..11 → readTreeFrozen(09-linux-triage.md), check-phase-92 V-92-CROSSLINK-E8 → frozen 06-macos-triage.md, check-phase-99 V-99-N12/N13 → read06Frozen(06-macos-triage.md). Only the DRIFTED assertions converted; passing sub-checks left LIVE (Class-A-only). NO value-mask (needles/regex/counts unchanged), NO frozen surface edited, CHAIN_SKIP empty (92/99; 51 has none), out-of-scope check-phase-30/31 untouched. All 3 exit 0 in NESTED mode. Committed ce62fe5, re-pushed to phase-125-atom-2 (4ab30e8..ce62fe5); awaiting fresh Axis-2 cascade verdict (orchestrator's step)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 

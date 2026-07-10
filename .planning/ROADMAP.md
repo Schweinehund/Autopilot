@@ -235,7 +235,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 125-05-PLAN.md — Emergent remediation slot (fires only if cascade RED; ABAUDIT/readAtV115Close/NESTED-guard)
+- [x] 125-05-PLAN.md — Emergent remediation slot FIRED (cascade RED): Shape-1 readAtV115Close on check-phase-51/92/99 (Class-A Phase-122 Mermaid-drift); no value-mask, no frozen surface, CHAIN_SKIP ∅; committed ce62fe5, re-pushed phase-125-atom-2 — awaiting fresh Axis-2 cascade
 - [ ] 125-06-PLAN.md — PIPE-02 owner-run grounding confirmation (retargeted v1.16-delta probes; autonomous:false)
 
 **Wave 6** *(blocked on Wave 5 completion)*
@@ -272,4 +272,4 @@ Plans:
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 3/3 | Complete   | 2026-07-08 |
-| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 3/7 | In Progress|  |
+| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 4/7 | In Progress|  |
