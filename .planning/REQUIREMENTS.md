@@ -26,8 +26,8 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 *Two known `guard-docx.mjs` blockers in the Approved corpus, folded in so PUB-02 passes end-to-end rather than tripping on pre-existing debt.*
 
-- [ ] **HYG-02**: The stale `phase_46_wave2_retrofit` frontmatter key is removed from `docs/_glossary-android.md` (RE-179) so its converted `.docx` passes the `guard-docx.mjs` CUSTOM-PROPS check like its sibling glossaries. Closes `DEFER-125-06-A`. Reformat-only (harmless historical artifact; the retrofit it marked is long complete) — no content change, `last_verified` untouched.
-- [ ] **HYG-03**: The **unfilled Version-History `YYYY-MM-DD` date placeholders** (the 9 files logged as `DEFER-121-07-A`: 2 glossaries from Phase 121-04 + 7 lifecycle files from Phase 121-05) are filled with real dates, so no literal `YYYY-MM-DD` placeholder remains in the Approved corpus. Closes `DEFER-121-07-A`.
+- [x] **HYG-02**: The stale `phase_46_wave2_retrofit` frontmatter key is removed from `docs/_glossary-android.md` (RE-179) so its converted `.docx` passes the `guard-docx.mjs` CUSTOM-PROPS check like its sibling glossaries. Closes `DEFER-125-06-A`. Reformat-only (harmless historical artifact; the retrofit it marked is long complete) — no content change, `last_verified` untouched.
+- [x] **HYG-03**: The **unfilled Version-History `YYYY-MM-DD` date placeholders** (the 9 files logged as `DEFER-121-07-A`: 2 glossaries from Phase 121-04 + 7 lifecycle files from Phase 121-05) are filled with real dates, so no literal `YYYY-MM-DD` placeholder remains in the Approved corpus. Closes `DEFER-121-07-A`.
 
 ### Category: Automated Milestone-Completion Trigger (HOOK, new)
 
@@ -97,8 +97,8 @@ Which phases cover which requirements. Populated during roadmap creation (2026-0
 | PUB-02 | Phase 126 | Pending |
 | PUB-03 | Phase 126 | Pending |
 | PUB-04 | Phase 126 | Pending |
-| HYG-02 | Phase 126 | Pending |
-| HYG-03 | Phase 126 | Pending |
+| HYG-02 | Phase 126 | Complete |
+| HYG-03 | Phase 126 | Complete |
 | HOOK-01 | Phase 127 | Pending |
 | HARN-08 | Phase 128 | Pending |
 | HARN-09 | Phase 128 | Pending |
