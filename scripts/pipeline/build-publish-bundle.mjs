@@ -84,6 +84,23 @@ export function checkFilenameMapCoverage(approvedRows, filenameMap) {
   return { missing };
 }
 
+// checkDocIdUniqueness (CR-01, D-11/PUB-04): every downstream join in this file
+// (filenameMap, approvedIds/stagedIds) is Map/Set-keyed on Doc ID, which silently
+// collapses duplicate keys. A duplicate Doc ID among Approved rows must fail closed
+// BEFORE any of that Map/Set-keyed work runs -- otherwise one source document's
+// converted output silently overwrites another's while the Set-based PUB-04 parity
+// check reports clean (a partial bundle masquerading as complete).
+export function checkDocIdUniqueness(approvedRows) {
+  const counts = new Map();
+  for (const r of approvedRows) {
+    counts.set(r.docId, (counts.get(r.docId) || 0) + 1);
+  }
+  const duplicateDocIds = [...counts.entries()]
+    .filter(([, count]) => count > 1)
+    .map(([docId]) => docId);
+  return { duplicateDocIds };
+}
+
 // checkParity (PUB-04): every Approved RE-ID staged exactly once, no missing, no orphan.
 export function checkParity(approvedIds, stagedIds) {
   const missing = [...approvedIds].filter(id => !stagedIds.has(id));
@@ -253,6 +270,18 @@ function runBatch() {
 
   if (approvedRows.length === 0) {
     process.stderr.write('FATAL: 0 Approved rows parsed from ' + REGISTRY_REL_PATH + ' -- refusing to build an empty bundle\n');
+    process.exit(1);
+  }
+
+  // CR-01 (D-11/PUB-04): assert Doc ID uniqueness among Approved rows BEFORE any
+  // Map/Set-keyed work below -- fail closed instead of letting a partial bundle
+  // masquerade as complete.
+  const docIdUniqueness = checkDocIdUniqueness(approvedRows);
+  if (docIdUniqueness.duplicateDocIds.length > 0) {
+    process.stderr.write(
+      'FATAL: duplicate Doc ID(s) among Approved rows: ' + docIdUniqueness.duplicateDocIds.join(', ') +
+      ' -- refusing to build (ambiguous filename-map join, PUB-04 cannot prove parity)\n'
+    );
     process.exit(1);
   }
 
@@ -464,6 +493,35 @@ if (isMainModule && SELF_TEST) {
       '(c) filename-map join fails closed on synthetic missing RE-ID',
       coverage.missing.length === 1 && coverage.missing[0].docId === 'RE-902',
       'missing=' + coverage.missing.map(m => m.docId).join(',')
+    );
+  });
+
+  // (c2) CR-01: Doc ID uniqueness check fails closed on a synthetic duplicate Doc ID
+  stTry('(c2) CR-01 Doc ID uniqueness fails closed on synthetic duplicate', () => {
+    const approvedSynthetic = [
+      { docId: 'RE-901', path: 'docs/x.md' },
+      { docId: 'RE-902', path: 'docs/y.md' },
+      { docId: 'RE-901', path: 'docs/z.md' }, // duplicate Doc ID, distinct path
+    ];
+    const result = checkDocIdUniqueness(approvedSynthetic);
+    stAssert(
+      '(c2) CR-01 Doc ID uniqueness fails closed on synthetic duplicate',
+      result.duplicateDocIds.length === 1 && result.duplicateDocIds[0] === 'RE-901',
+      'duplicateDocIds=' + result.duplicateDocIds.join(',')
+    );
+  });
+
+  // (c3) CR-01: Doc ID uniqueness check passes clean on all-unique Approved rows
+  stTry('(c3) CR-01 Doc ID uniqueness passes clean on all-unique rows', () => {
+    const approvedSynthetic = [
+      { docId: 'RE-801', path: 'docs/a.md' },
+      { docId: 'RE-802', path: 'docs/b.md' },
+    ];
+    const result = checkDocIdUniqueness(approvedSynthetic);
+    stAssert(
+      '(c3) CR-01 Doc ID uniqueness passes clean on all-unique rows',
+      result.duplicateDocIds.length === 0,
+      'duplicateDocIds=' + result.duplicateDocIds.join(',')
     );
   });
 
