@@ -2,7 +2,7 @@
 
 ## Milestones
 
-- 🔄 **v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing** — Phases 120-125 (planning)
+- ✅ **v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing** — Phases 120-125 (shipped 2026-07-10)
 - ✅ **v1.0 Autopilot Documentation & Troubleshooting Guides** — Phases 1-10 (shipped 2026-04-10)
 - ✅ **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-19 (shipped 2026-04-13)
 - ✅ **v1.2 Cross-Platform Provisioning & Operational Gaps** — Phases 20-25 (shipped 2026-04-15)
@@ -48,7 +48,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
  (completed 2026-07-08)
 
 - [x] **Phase 124: Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe** — Fix the pandoc nav-footer YAML-alias defect, normalize filenames for citation quality, and confirm the true Draft-label grounding behavior (completed 2026-07-08)
-- [ ] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit
+- [x] **Phase 125: V115 Pin + 14th Path-A Lineage Bump + Terminal Close** — Freeze the v1.15 corpus, bump the audit-harness lineage, and close via 3-axis terminal re-audit (completed 2026-07-10)
 
 ## Phase Details
 
@@ -213,7 +213,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
 
   1. `scripts/validation/_lib/frozen-at-close.mjs` gains a `V115` entry (v1.15 close-gate SHA, recovered via `git log --all --grep="MILESTONE-AUDIT" --grep="MILESTONE CLOSE" --all-match -1 --format=%H`) + `readAtV115Close` export, freezing the v1.15 corpus as the mandatory back-anchor invariant
-  2. `v1.16-milestone-audit.mjs` (Path-A, C1-C17 inherited) + `v1.16-audit-allowlist.json` + BASELINE_20 + `check-phase-120..NN.mjs` validators (chain-apex `CHAIN_PHASES=[48..119]`) + the 13th parallel CI coexistence workflow (`audit-harness-v1.16-integrity.yml`) all ship; predecessor v1.4–v1.15 frozen surfaces remain byte-unchanged, except any predecessor content-assertion validator reading a now-retrofitted structural doc, converted frozen-aware (`readAtV115Close`) as in-scope close-gate remediation
+  2. `v1.16-milestone-audit.mjs` (Path-A, C1-C17 inherited) + `v1.16-audit-allowlist.json` + BASELINE_20 + `check-phase-120..NN.mjs` validators (chain-apex `CHAIN_PHASES=[48..124]`, 77 entries — corrected at close-gate from the prior apex-range transcription error per the `[48..(closephase-1)]` invariant, closephase=125) + the 13th parallel CI coexistence workflow (`audit-harness-v1.16-integrity.yml`) all ship; predecessor v1.4–v1.15 frozen surfaces remain byte-unchanged, except any predecessor content-assertion validator reading a now-retrofitted structural doc, converted frozen-aware (`readAtV115Close`) as in-scope close-gate remediation
   3. The milestone closes via a 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP EXACT MATCH, plus a PIPE-02 grounding-validation confirmation on the retrofitted structural corpus
   4. A single close-gate commit flips all 14 v1.16 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS
 **Plans**: 7 plans
@@ -240,7 +240,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 125-07-PLAN.md — Close-gate: correct [48..119]→[48..124] + flip all 14 reqs Validated + v1.16 MILESTONE CLOSE
+- [x] 125-07-PLAN.md — Close-gate: corrected apex-range transcription error to [48..124] + flipped all 14 reqs Validated + v1.16 MILESTONE CLOSE
 
 ## Progress
 
@@ -263,7 +263,7 @@ Plans:
 | v1.13 macOS Platform SSO Admin-Setup Documentation Accuracy & Depth | 96-100 | ✅ Shipped | 2026-06-29 |
 | v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure | 101-112 | ✅ Shipped | 2026-07-02 |
 | v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1) | 113-119 | ✅ Shipped | 2026-07-06 |
-| v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing | 120-125 | 🔄 Planning | - |
+| v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing | 120-125 | ✅ Shipped | 2026-07-10 |
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -272,4 +272,4 @@ Plans:
 | 122. Structural Retrofit — Decision-Trees & Carved-Mermaid Files | 15/15 | Complete   | 2026-07-08 |
 | 123. Orphan Nav-Hub Retrofit (Navigation-Last) | 4/4 | Complete    | 2026-07-08 |
 | 124. Pipeline Fix, Descriptive-Filename Pass & Draft-Label Grounding Probe | 3/3 | Complete   | 2026-07-08 |
-| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 6/7 | In Progress|  |
+| 125. V115 Pin + 14th Path-A Lineage Bump + Terminal Close | 7/7 | Complete    | 2026-07-10 |

@@ -40,9 +40,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Category: Frozen-Surface Pin & Milestone Close (HARN, continues v1.15 HARN-01..04)
 
-- [ ] **HARN-05**: The **V115 back-anchor pin** is added — `scripts/validation/_lib/frozen-at-close.mjs` gains a `V115: '<v1.15 close-gate SHA>'` entry + `readAtV115Close` export (recover the SHA via `git log --all --grep="MILESTONE-AUDIT" --grep="MILESTONE CLOSE" --all-match -1 --format=%H`), following the V18..V114 single-entry pattern. This **freezes the v1.15 corpus** — the mandatory back-anchor invariant that the v1.15 close deliberately left to its successor (`V115-PIN-DEFERRAL`).
-- [ ] **HARN-06**: The **14th Path-A audit-harness lineage bump** — `v1.16-milestone-audit.mjs` (Path-A from v1.15, C1–C17 inherited) + `v1.16-audit-allowlist.json` + BASELINE_20 + `check-phase-120..NN.mjs` per-phase validators (chain-apex `CHAIN_PHASES=[48..119]`, continuing the `[48..N-1]` invariant) + the 13th parallel CI coexistence workflow (`audit-harness-v1.16-integrity.yml`). Predecessor v1.4–v1.15 frozen surfaces remain **byte-unchanged**; any predecessor content-assertion validator that reads a now-retrofitted structural doc at live HEAD is converted frozen-aware (`readAtV115Close`) as in-scope close-gate remediation — NO value-masking, NO frozen-surface edit, `CHAIN_SKIP` empty.
-- [ ] **HARN-07**: The milestone closes via a **3-axis terminal re-audit** (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP **EXACT MATCH**) **plus a PIPE-02 grounding-validation confirmation** on the retrofitted structural corpus, in a single close-gate commit flipping all v1.16 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS.
+- [x] **HARN-05**: The **V115 back-anchor pin** is added — `scripts/validation/_lib/frozen-at-close.mjs` gains a `V115: '<v1.15 close-gate SHA>'` entry + `readAtV115Close` export (recover the SHA via `git log --all --grep="MILESTONE-AUDIT" --grep="MILESTONE CLOSE" --all-match -1 --format=%H`), following the V18..V114 single-entry pattern. This **freezes the v1.15 corpus** — the mandatory back-anchor invariant that the v1.15 close deliberately left to its successor (`V115-PIN-DEFERRAL`).
+- [x] **HARN-06**: The **14th Path-A audit-harness lineage bump** — `v1.16-milestone-audit.mjs` (Path-A from v1.15, C1–C17 inherited) + `v1.16-audit-allowlist.json` + BASELINE_20 + `check-phase-120..NN.mjs` per-phase validators (chain-apex `CHAIN_PHASES=[48..124]`, 77 entries — corrected at close-gate per the `[48..(closephase-1)]` invariant, closephase=125) + the 13th parallel CI coexistence workflow (`audit-harness-v1.16-integrity.yml`). Predecessor v1.4–v1.15 frozen surfaces remain **byte-unchanged**; any predecessor content-assertion validator that reads a now-retrofitted structural doc at live HEAD is converted frozen-aware (`readAtV115Close`) as in-scope close-gate remediation — NO value-masking, NO frozen-surface edit, `CHAIN_SKIP` empty.
+- [x] **HARN-07**: The milestone closes via a **3-axis terminal re-audit** (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP **EXACT MATCH**) **plus a PIPE-02 grounding-validation confirmation** on the retrofitted structural corpus, in a single close-gate commit flipping all v1.16 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS.
 
 ---
 
@@ -64,7 +64,7 @@ Gray-area scoping decisions deferred to `/gsd-discuss-phase` per project convent
 
 *Carried from `.planning/milestones/v1.15-DEFERRED-CLEANUP.md`; not folded into this envelope milestone per owner scope confirmation.*
 
-- **Durable tooling debt** — the O(n²) chain-runner subprocess-caching rewrite (`O(n²)-CHAIN-RUNNER-REMEDIATION-01`, the durable fix for `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, increasingly attractive as the chain deepens past [48..119]) + the broad frozen-aware adoption sweep (`FROZEN-AWARE-ADOPTION-SWEEP-01` residual / `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01` cohort beyond in-scope close-gate remediation). Deferred to a v1.17+ chain-validator retrospective.
+- **Durable tooling debt** — the O(n²) chain-runner subprocess-caching rewrite (`O(n²)-CHAIN-RUNNER-REMEDIATION-01`, the durable fix for `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, increasingly attractive as the chain deepens past [48..124]) + the broad frozen-aware adoption sweep (`FROZEN-AWARE-ADOPTION-SWEEP-01` residual / `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01` cohort beyond in-scope close-gate remediation). Deferred to a v1.17+ chain-validator retrospective.
 - **`regenerate-supervision-pins.mjs --self-test` frozen-aware classifier** (`DEFER-119-A`) — accepted advisory-RED; convert to `readAtClose` only if it becomes operationally noisy.
 - **Deployment — SharePoint content-approval** — if `Status: Draft` must actually gate retrieval (not just label), enabling + maintaining SharePoint content approval on the indexed library (tenant/ops config, pairs with PIPE-05).
 - **Infra — Azure AI Search structured index** — upgrade from the native SharePoint knowledge source to an Azure AI Search + SharePoint indexer to make `platform`/`doc_type` filterable metadata.
@@ -85,26 +85,27 @@ REQ-ID → Phase mapping, assigned by the roadmapper 2026-07-07 (6 phases, 120-1
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| RETRO-04 | Phase 121 | Complete |
-| RETRO-05 | Phase 122 | Complete |
-| RETRO-06 | Phase 123 | Complete |
-| RETRO-07 | Phase 121 + 122 | Complete |
-| RETRO-08 | Phase 122 | Complete |
-| RETRO-09 | Phase 121 | Complete |
-| STD-04 | Phase 120 | Complete |
-| PIPE-03 | Phase 124 | Complete |
-| PIPE-04 | Phase 124 | Complete |
-| PIPE-05 | Phase 124 | Complete |
-| HYG-01 | Phase 120 | Complete |
-| HARN-05 | Phase 125 | Pending |
-| HARN-06 | Phase 125 | Pending |
-| HARN-07 | Phase 125 | Pending |
+| RETRO-04 | Phase 121 | Validated |
+| RETRO-05 | Phase 122 | Validated |
+| RETRO-06 | Phase 123 | Validated |
+| RETRO-07 | Phase 121 + 122 | Validated |
+| RETRO-08 | Phase 122 | Validated |
+| RETRO-09 | Phase 121 | Validated |
+| STD-04 | Phase 120 | Validated |
+| PIPE-03 | Phase 124 | Validated |
+| PIPE-04 | Phase 124 | Validated |
+| PIPE-05 | Phase 124 | Validated |
+| HYG-01 | Phase 120 | Validated |
+| HARN-05 | Phase 125 | Validated |
+| HARN-06 | Phase 125 | Validated |
+| HARN-07 | Phase 125 | Validated |
 
 **Coverage:**
 - v1.16 requirements: 14 total
 - Mapped to phases: 14
 - Unmapped: 0 ✓
+- **Validated (close-gate 2026-07-10): 14/14 — see `.planning/milestones/v1.16-MILESTONE-AUDIT.md`**
 
 ---
 *Requirements defined: 2026-07-07*
-*Last updated: 2026-07-07 after roadmap creation (milestone v1.16 — 6 phases, 120-125; 14/14 requirements mapped, 100% coverage)*
+*Last updated: 2026-07-10 — Phase 125 Plan 125-07 close-gate: all 14/14 v1.16 requirements flipped to Validated; milestone shipped (see `.planning/milestones/v1.16-MILESTONE-AUDIT.md`)*

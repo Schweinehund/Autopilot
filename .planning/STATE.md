@@ -2,33 +2,33 @@
 gsd_state_version: 1.0
 milestone: v1.16
 milestone_name: EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing
-status: executing
-last_updated: "2026-07-09T23:59:00.000Z"
-last_activity: 2026-07-09
+status: shipped
+last_updated: "2026-07-10T00:00:00.000Z"
+last_activity: 2026-07-10
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 38
-  completed_plans: 36
-  percent: 95
+  completed_plans: 38
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-07 — v1.16 milestone scoped)
+See: .planning/PROJECT.md (updated 2026-07-10 — v1.16 milestone shipped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices — including Apple-platform single sign-on (macOS Platform SSO + Kerberos SSO + programmatic Platform Credential management), end-to-end PSSO provisioning, Kandji/Iru→Intune MDM migration, and 802.1X enterprise network authentication across all five platforms — through Microsoft Intune / Entra ID without escalating to engineering, finding those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16).
-**Current focus:** Phase 125 — v115-pin-14th-path-a-lineage-bump-terminal-close
+**Current focus:** v1.16 SHIPPED — no active milestone; run `/gsd-complete-milestone` to archive, then `/gsd-new-milestone` to scope v1.17
 
 ## Current Position
 
-Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 6 of 7 done (125-01..06 COMPLETE); 125-07 (close-gate) is the FINAL plan
-Status: 125-06 PIPE-02 owner grounding pass COMPLETE — owner attested "PIPE-02 CLOSE: PASS" (54f5e62; all 10 probes green, transcript in-repo). All 125-07 preconditions now hold: Axis-2 GHA GREEN + owner PIPE-02 PASS + predecessor-byte-unchanged EMPTY. Next actionable = 125-07 close-gate (the single terminal commit)
+Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — COMPLETE
+Plan: 7 of 7 done (125-01..07 all COMPLETE) — the close-gate has landed
+Status: v1.16 SHIPPED 2026-07-10. All 14/14 v1.16 requirements Validated via the single Plan 125-07 close-gate commit (NO Commit A). Axis-2 GHA GREEN (run 29068069953) + owner PIPE-02 PASS (54f5e62) + predecessor-byte-unchanged EMPTY (38 surfaces) all held before the close-gate landed. Next actionable = `/gsd-complete-milestone` (archival, a SEPARATE step)
 Last activity: 2026-07-10
-Stopped at: About to run 125-07 close-gate — author v1.16-MILESTONE-AUDIT.md + v1.16-DEFERRED-CLEANUP.md + 125-VERIFICATION.md, correct [48..119]→[48..124] (77 entries) in ROADMAP/REQUIREMENTS/STATE, flip ALL 14 v1.16 reqs to Validated, mark v1.16 shipped — ONE indivisible commit. Then /gsd-complete-milestone (separate).
+Stopped at: 125-07 close-gate COMPLETE — authored v1.16-MILESTONE-AUDIT.md + v1.16-DEFERRED-CLEANUP.md + 125-VERIFICATION.md, corrected the apex-range transcription error to CHAIN_PHASES=[48..124] (77 entries) in ROADMAP/REQUIREMENTS/STATE, flipped ALL 14 v1.16 reqs to Validated, marked v1.16 shipped 2026-07-10 — ONE indivisible close-gate commit. Next: /gsd-complete-milestone (separate).
 
 ## v1.16 Phase Dependency Summary
 
@@ -150,7 +150,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
               v1.16-audit-allowlist.json + BASELINE_20
 
             - check-phase-120..NN.mjs per-phase validators (chain-apex
-              CHAIN_PHASES=[48..119], continuing the [48..N-1] invariant)
+              CHAIN_PHASES=[48..124], 77 entries, continuing the [48..N-1] invariant)
 
             - audit-harness-v1.16-integrity.yml (13th parallel CI coexistence
               workflow; predecessors v1.4-v1.15 byte-unchanged)
@@ -162,7 +162,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 
             - Axis 1: fresh git clone --no-hardlinks
             - Axis 2: cross-OS Linux GHA (BOTH chain validators authoritative per
-              the D-03 OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now [48..119])
+              the D-03 OS split — WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now [48..124])
 
             - Axis 3: fresh zero-context sub-agent
             - Cross-OS PASS/FAIL/SKIP EXACT MATCH required
@@ -174,7 +174,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
             in-scope frozen-aware conversions per HARN-06 remediation clause
 ```
 
-## v1.16 Requirement Coverage (0/14 — Pending)
+## v1.16 Requirement Coverage (14/14 — Validated)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
@@ -184,9 +184,9 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 | 123 | RETRO-06 | 1 |
 | 124 | PIPE-03, PIPE-04, PIPE-05 | 3 |
 | 125 | HARN-05, HARN-06, HARN-07 | 3 |
-| **Total** | **14/14 mapped** | **14** |
+| **Total** | **14/14 Validated** | **14** |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 125 chain-apex CHAIN_PHASES=[48..119] (per [48..N-1] invariant where N=125; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..119], +1 deeper than v1.15's [48..118] — Linux GHA BOTH chain validators authoritative per corrected D-03 OS split, same as v1.12-v1.15).
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase 125 chain-apex CHAIN_PHASES=[48..124] (77 entries, per [48..N-1] invariant where N=125 — corrected at the close-gate from the prior transcription error; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..124], +6 deeper than v1.15's [48..118] — Linux GHA BOTH chain validators authoritative per corrected D-03 OS split, same as v1.12-v1.15).
 
 **Named decisions (LOCKED at roadmap 2026-07-07):**
 
@@ -198,7 +198,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - PIPE-BATCH: PIPE-03 (pandoc alias fix) + PIPE-04 (descriptive-filename pass) + PIPE-05 (Draft-label probe, owner-run) share Phase 124 — all three touch the pipeline/citation surface and PIPE-05 needs the full retrofitted + renamed corpus to probe against
 - HARNESS-PHASE: Phase 125 is the sole deliverable of the closing cluster — harness lineage bump never batches with content or retrofit (mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15 Phase 119 exactly)
 - V115-PIN-MANDATORY: Phase 125 adds the `V115` frozen-at-close pin deferred by v1.15 close (`V115-PIN-DEFERRAL`) — the mandatory back-anchor invariant; freezes the v1.15 corpus
-- HARNESS-LINEAGE: 14th Path-A milestone (v1.4→v1.16); BASELINE_20; V115 pin; 13th CI workflow; CHAIN_PHASES=[48..119]
+- HARNESS-LINEAGE: 14th Path-A milestone (v1.4→v1.16); BASELINE_20; V115 pin; 13th CI workflow; CHAIN_PHASES=[48..124] (77 entries, corrected at close-gate)
 - DISCUSS-PHASE-FLAGS: 7 gray-area flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` per project convention (Mermaid-vs-C17-#1 resolution — dominant; structural retrofit phase granularity; nav-hub EEE application; pandoc alias fix approach; descriptive-filename scheme; predecessor chain-health-before-close process lesson; Doc Type for structural classes)
 
 ## Performance Metrics
@@ -222,11 +222,19 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - v1.13: 5 phases (96-100), 14 plans — shipped 2026-06-29
 - v1.14: 12 phases (101-112), 38 plans — shipped 2026-07-02
 - v1.15: 7 phases (113-119), 40 plans — shipped 2026-07-06
-- **v1.16: 6 phases (120-125), planning — roadmap created 2026-07-07**
+- v1.16: 6 phases (120-125), 38 plans — shipped 2026-07-10
 
 ## Accumulated Context
 
 ### Decisions
+
+**v1.16 close-gate decisions (Plan 125-07, 2026-07-10):**
+
+- All 14/14 v1.16 requirements (STD-04, HYG-01, RETRO-04..09, PIPE-03..05, HARN-05..07) flipped to Validated in ONE indivisible close-gate commit across PROJECT/ROADMAP/STATE/REQUIREMENTS, per the single-commit protocol (no Commit A)
+- The `[48..119]` apex-range transcription error (present in ROADMAP SC2, REQUIREMENTS HARN-06, and STATE.md since roadmap creation) corrected to `[48..124]` (77 entries) per the `[48..(closephase-1)]` invariant, closephase=125 — matching the authored `check-phase-125.mjs`
+- Axis-1 (fresh `git clone --no-hardlinks`) + Axis-3 (independent second clone, substituting for the unavailable sub-agent tool) fresh-clone reproduction run AT THIS CLOSE-GATE (both HEAD `dcf73c0` == source; harness 16/0/0 + all 5 leaves 6/6/6/6/5 green) — confirms the Axis-2 GHA authoritative GREEN result (run 29068069953, headSha `ce62fe5`) covers the current HEAD code state (`git diff ce62fe5 dcf73c0` = `.planning/`-only, zero scripts/.github/docs differs)
+- Predecessor-byte-unchanged HARD gate independently re-confirmed at the close-gate: `git diff --quiet 42b31c5 HEAD` over all 38 non-v1.16 frozen surfaces (13 milestone-audit `.mjs` + 13 sidecar JSON + 12 integrity workflows) exits 0 (EMPTY)
+- v1.16 milestone marked SHIPPED 2026-07-10; next step is `/gsd-complete-milestone` (archival, a separate step) then `/gsd-new-milestone` to scope v1.17
 
 **v1.16 roadmap decisions (LOCKED 2026-07-07):**
 
@@ -273,7 +281,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 **Durable architectural decisions (carried forward from v1.14):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commits (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; non-Phase-1 predecessor frozen surfaces BYTE-UNCHANGED
-- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..119] (v1.16): Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, same as v1.12-v1.15)
+- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..124] (v1.16): Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, same as v1.12-v1.15)
 - Adversarial-review invoked at discuss-phase for gray-area scoping decisions (per user memory)
 - Navigation-last hard constraint: all nav hub edits committed after the content files they reference
 - Per-section `last_verified`/`review_by` freshness stamps on version-gated content (carried policy; v1.15/v1.16 carry verbatim — does not reset the clock)
@@ -400,7 +408,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - [Phase 125]: v1.16-audit-allowlist.json cannot be a pure verbatim copy of v1.15's sidecar -- docs/_glossary-android.md and 2 android-lifecycle files need C2/C7/C9 pin-repoint in Plan 125-02 (correcting the RESEARCH's clean-copy expectation)
 - [Phase 125]: [125-02] v1.16-audit-allowlist.json required a targeted C2/C7/C9 repoint (not verbatim copy): 3 android files retrofitted by Phase 121/122 EEE reformat needed live-verified line-pins; supervision_exemptions grew 22->26 (all growth confined to docs/_glossary-android.md, caused by C17 #12 blockquote-splitting fragmenting 2 old single-line disambiguation blockquotes); Atom 1 landed as one indivisible 3-file commit c0e3626; BASELINE_20 back-anchored to JIT pre-Atom-1 HEAD 0d01eae (distinct from Wave-0 anchor 42b31c5)
 - [Phase 125]: Atom 2 (check-phase-120..125 + frozen-at-close V115 pin + v1.16 CI workflow) authored and committed as one indivisible 8-file commit (47b5493); PUSH HELD by explicit owner override -- Axis-2 GHA re-audit (Plan 125-04) blocked until owner authorizes the push
-- [Phase 125]: check-phase-125 apex authored with CHAIN_PHASES=[48..124] (77 entries), correcting the [48..119] transcription error in ROADMAP/REQUIREMENTS/STATE per the [48..(closephase-1)] invariant
+- [Phase 125]: check-phase-125 apex authored with CHAIN_PHASES=[48..124] (77 entries), correcting the prior apex-range transcription error in ROADMAP/REQUIREMENTS/STATE per the [48..(closephase-1)] invariant
 - [Phase 125]: [125-04] Authoritative Axis-2 GHA cascade came back CASCADE RED (apex check-phase-125 = 76P/3F/1S; v1.16 run 29055800797; base 29055800813; branch tip 4ab30e8) — Class A = check-phase-51/92/99 Phase-122 Mermaid-drift; Class B = ACCEPTED-STANDALONE-CI-RED-01 (D-00a, not a blocker, recorded at close-gate)
 - [Phase 125]: [125-05] Emergent slot FIRED (CASCADE RED). Applied Shape-1 readAtV115Close ONLY (Shapes 2/3 not tripped): check-phase-51 V-51-06..11 → readTreeFrozen(09-linux-triage.md), check-phase-92 V-92-CROSSLINK-E8 → frozen 06-macos-triage.md, check-phase-99 V-99-N12/N13 → read06Frozen(06-macos-triage.md). Only the DRIFTED assertions converted; passing sub-checks left LIVE (Class-A-only). NO value-mask (needles/regex/counts unchanged), NO frozen surface edited, CHAIN_SKIP empty (92/99; 51 has none), out-of-scope check-phase-30/31 untouched. All 3 exit 0 in NESTED mode. Committed ce62fe5, re-pushed to phase-125-atom-2 (4ab30e8..ce62fe5); awaiting fresh Axis-2 cascade verdict (orchestrator's step)
 
@@ -424,7 +432,7 @@ Phase 125 (V115 Pin + 14th Path-A Lineage Bump + Terminal Close)
 - At Phase 122 plan time: enumerate exact decision-tree file list + confirm 9 Phase-117 carve-out paths + RE-128/RE-147 current status; capture each Mermaid diagram's decision-leaf count before conversion
 - At Phase 123 plan time: confirm routing/link-table inventory in all 4 nav-hubs before retrofit
 - At Phase 124 plan time: resolve PIPE-03 approach + PIPE-04 rename scheme at discuss-phase before implementation; confirm owner availability for the PIPE-05 live Copilot Studio probe
-- At Phase 125 plan time: confirm V115 SHA via positive-confirmation grep; run the FULL predecessor chain before authoring the close-gate; confirm CHAIN_PHASES=[48..119] entry count
+- At Phase 125 plan time: confirm V115 SHA via positive-confirmation grep; run the FULL predecessor chain before authoring the close-gate; confirm CHAIN_PHASES=[48..124] entry count (77 entries, corrected apex-range value)
 
 ### Blockers/Concerns
 
@@ -434,21 +442,21 @@ at roadmap stage. Execution-time watch items (not blockers — address within sp
 - Phase 122: Mermaid decision-leaf preservation is a correctness risk — any leaf dropped during text-equivalent conversion is a silent content-loss defect (same class as the v1.15 117-01 whole-pre-H1-span defect); capture leaf counts before conversion
 - Phase 123: navigation-last discipline is a HARD constraint, not a preference — nav-hub commits must be provably sequenced after Phase 121/122 content commits (git history check, same as v1.15 Phase 109/117)
 - Phase 124: PIPE-03's OQ4 regression risk — any invocation change to `convert.ps1` must be proven NOT to break the frontmatter → Word custom-property promotion path that OQ4 (v1.15 Phase 113) depends on
-- Phase 125: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..119] (+1 deeper than v1.15); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
+- Phase 125: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 now at depth [48..124] (+6 deeper than v1.15); Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged)
 - Phase 125: HARN-06's frozen-aware conversion clause (predecessor content-assertion validators reading now-retrofitted structural docs) must be scoped at Phase 122/123 plan time per the reaffirmed process lesson, not discovered late at close (the v1.15 119-05 two-round remediation is the cautionary precedent)
 
 ## Session Continuity
 
-Last session: 2026-07-09T22:42:32.311Z
-Stopped at: Completed 125-03-PLAN.md (Atom 2 authored + committed 47b5493; push held pending owner authorization)
+Last session: 2026-07-10T00:00:00.000Z
+Stopped at: Completed 125-07-PLAN.md (the v1.16 close-gate) — all 14/14 requirements Validated, milestone shipped 2026-07-10
 Resume file: None
-Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase flags (dominant: Mermaid-vs-C17-#1 resolution via `/adversarial-review`; Doc Type taxonomy mapping) before planning begins.
+Next action: Run `/gsd-complete-milestone` to archive v1.16 (moves phase dirs to `.planning/milestones/v1.16-phases/`, archives ROADMAP/REQUIREMENTS, tags `v1.16`, closes the Jira story). Then `/gsd-new-milestone` to scope v1.17.
 
 ## Operator Next Steps
 
-- Review `.planning/ROADMAP.md` (v1.16 section) and `.planning/REQUIREMENTS.md` (Traceability table)
-- Run `/gsd-discuss-phase 120` to resolve gray-area flags for the first phase
-- Then `/gsd-plan-phase 120` to produce executable plans
+- Run `/gsd-complete-milestone` to archive v1.16 and close out the milestone
+- Review `.planning/milestones/v1.16-MILESTONE-AUDIT.md` and `.planning/milestones/v1.16-DEFERRED-CLEANUP.md` (the v1.17 backlog source)
+- Then `/gsd-new-milestone` to scope v1.17
 
 ## Performance Metrics
 
@@ -524,3 +532,7 @@ Next action: Run `/gsd-discuss-phase 120` to resolve the Phase 120 discuss-phase
 | Phase 125 P01 | 14min | 2 tasks | 1 files |
 | Phase 125 P02 | 55min | 3 tasks | 3 files |
 | Phase 125 P03 | 48min | 2 tasks | 8 files |
+| Phase 125 P04 | ~5h (incl. remediation wait) | 3 tasks | 1 files |
+| Phase 125 P05 | 55min | 2 tasks | 5 files |
+| Phase 125 P06 | multi-day (owner checkpoint) | 2 tasks | 3 files (PIPE-02-CLOSE-RUNBOOK/FINDINGS/TRANSCRIPT; owner PIPE-02 CLOSE: PASS attested 2026-07-10) |
+| Phase 125 P07 | ~40min | 3 tasks | 9 files (125-VERIFICATION.md + v1.16-MILESTONE-AUDIT.md + v1.16-DEFERRED-CLEANUP.md + PROJECT/ROADMAP/STATE/REQUIREMENTS + SUMMARY; close-gate flips 14/14) |
