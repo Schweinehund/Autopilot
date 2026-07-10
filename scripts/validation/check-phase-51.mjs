@@ -7,6 +7,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV115Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -15,6 +16,19 @@ function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
   if (!existsSync(abs)) return null;
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');  // CRLF normalization (CHAIN-01; mirrors check-phase-48.mjs:25)
+}
+
+// FROZEN-AWARE (D-125-1, Plan 125-05): Phase-122 (v1.16) converted the 09-linux-triage.md
+// Mermaid decision tree to a text-equivalent Routing Verification table, removing the
+// ```mermaid block, `graph TD`, the LIN1 root diamond, the 4 `click` directives, the
+// PITFALL-2 / web-app CA in-diagram callouts, and the "Don't know / Other -> escalateL2" edge
+// that V-51-06..11 assert. Assert the Phase-51 deliverable at the frozen v1.15 close
+// (V115=29a3599 — the last state BEFORE the Phase-122 retrofit), where the Mermaid tree is
+// intact. Expected patterns UNCHANGED (no value-mask); only the read SOURCE moved live→frozen.
+// File-existence / frontmatter checks (V-51-01..05) intentionally stay LIVE (they pass on HEAD).
+// Honest-accounting: .planning/phases/125-*/125-05-SUMMARY.md.
+function readTreeFrozen() {
+  try { return readAtV115Close(TREE); } catch { return null; }
 }
 
 // CDI-02: Pinned H2 strings — Phase 52+ renaming requires same-commit validator update.
@@ -102,7 +116,7 @@ const checks = [
   {
     id: 6, name: "V-51-06: 09-linux-triage.md has Mermaid block + graph TD + LIN1 root",
     run() {
-      const c = readFile(TREE);
+      const c = readTreeFrozen();
       if (c === null) return { pass: false, detail: "File missing" };
       const mermaidBlock = c.match(/```mermaid\n([\s\S]*?)```/);
       if (!mermaidBlock) return { pass: false, detail: "No Mermaid block found" };
@@ -115,7 +129,7 @@ const checks = [
   {
     id: 7, name: "V-51-07: 09-linux-triage.md has NO Android mode-axis tokens (PITFALL-1 regression guard)",
     run() {
-      const c = readFile(TREE);
+      const c = readTreeFrozen();
       if (c === null) return { pass: false, detail: "File missing" };
       const mermaidBlock = c.match(/```mermaid\n([\s\S]*?)```/);
       if (!mermaidBlock) return { pass: false, detail: "No Mermaid block found" };
@@ -132,7 +146,7 @@ const checks = [
   {
     id: 8, name: "V-51-08: 09-linux-triage.md has 4 click directives to runbooks 30-33",
     run() {
-      const c = readFile(TREE);
+      const c = readTreeFrozen();
       if (c === null) return { pass: false, detail: "File missing" };
       const required = [
         /click \w+ "\.\.\/l1-runbooks\/30-linux-enrollment-failed\.md"/,
@@ -148,7 +162,7 @@ const checks = [
   {
     id: 9, name: "V-51-09: 09-linux-triage.md tree-level PITFALL-2 + web-app CA callout",
     run() {
-      const c = readFile(TREE);
+      const c = readTreeFrozen();
       if (c === null) return { pass: false, detail: "File missing" };
       const mermaid = c.match(/```mermaid\n([\s\S]*?)```/);
       if (!mermaid) return { pass: false, detail: "No Mermaid block" };
@@ -162,7 +176,7 @@ const checks = [
   {
     id: 10, name: "V-51-10: 09-linux-triage.md has CA deep-link to capability matrix",
     run() {
-      const c = readFile(TREE);
+      const c = readTreeFrozen();
       if (c === null) return { pass: false, detail: "File missing" };
       if (c.includes("../reference/linux-capability-matrix.md#conditional-access")) return { pass: true };
       return { pass: false, detail: "CA deep-link literal not found" };
@@ -171,7 +185,7 @@ const checks = [
   {
     id: 11, name: "V-51-11: 09-linux-triage.md has Don't know / Other -> LINE1 escalation node",
     run() {
-      const c = readFile(TREE);
+      const c = readTreeFrozen();
       if (c === null) return { pass: false, detail: "File missing" };
       const hasEdge = /-->\|"Don't know[\s\S]*?Other"\|/.test(c) || /-->\|"Other[\s\S]*?Unclear"\|/.test(c);
       const hasTerminal = /(Escalate L2|escalateL2)/.test(c);

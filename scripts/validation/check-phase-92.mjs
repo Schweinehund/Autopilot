@@ -24,6 +24,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV115Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -51,7 +52,12 @@ const NAV_EDGES = [
   { id: 'E5', file: 'docs/common-issues.md',                        needle: 'l2-runbooks/27-macos-sso-investigation.md' },
   { id: 'E6', file: 'docs/quick-ref-l2.md',                         needle: 'l2-runbooks/30-macos-mdm-migration-failure.md' },
   { id: 'E7', file: 'docs/quick-ref-l2.md',                         needle: '#platform-sso-attestation-command' },
-  { id: 'E8', file: 'docs/decision-trees/06-macos-triage.md',       needle: '../l2-runbooks/30-macos-mdm-migration-failure.md' },
+  // E8 reads FROZEN (D-125-1, Plan 125-05): Phase-122 (v1.16) text-equiv-converted the
+  // 06-macos-triage.md Mermaid tree, removing the in-diagram `click`/cross-link line that
+  // carries this needle. Assert the Phase-92 deliverable at the frozen v1.15 close
+  // (V115=29a3599 — the last state BEFORE the retrofit). Needle UNCHANGED (no value-mask);
+  // only the read SOURCE moved live→frozen. Edges E1..E7 stay LIVE (they pass on HEAD).
+  { id: 'E8', file: 'docs/decision-trees/06-macos-triage.md',       needle: '../l2-runbooks/30-macos-mdm-migration-failure.md', frozenV115: true },
 ];
 
 const checks = [];
@@ -65,7 +71,11 @@ for (const e of NAV_EDGES) {
     id: `CROSSLINK-${e.id}`,
     name: `V-92-CROSSLINK-${e.id}: ${e.file} contains nav-edge needle ${e.needle}`,
     run() {
-      const c = readFile(e.file);              // readFile CRLF-normalizes (.replace(/\r\n/g,'\n'))
+      // frozenV115 edges read at the v1.15 close (git show 29a3599:<path>, CRLF-normalized by
+      // readAtV115Close); all others read LIVE. readFile CRLF-normalizes (.replace(/\r\n/g,'\n')).
+      let c;
+      if (e.frozenV115) { try { c = readAtV115Close(e.file); } catch { c = null; } }
+      else c = readFile(e.file);
       if (c === null) return { pass: false, detail: e.file + ' missing' };
       if (!c.includes(e.needle)) return { pass: false, detail: `${e.id} needle absent: ${e.needle}` };
       return { pass: true, detail: `${e.id} edge present (${e.needle})` };

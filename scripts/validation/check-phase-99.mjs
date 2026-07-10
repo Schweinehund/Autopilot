@@ -49,6 +49,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV115Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -57,6 +58,18 @@ function readFile(relPath) {
   const abs = join(process.cwd(), relPath);
   if (!existsSync(abs)) return null;
   return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
+}
+
+// FROZEN-AWARE (D-125-1, Plan 125-05): Phase-122 (v1.16) text-equiv-converted the
+// 06-macos-triage.md Mermaid tree, removing the in-diagram `click MACR9` directive (N12) and
+// its click-target URL `../l1-runbooks/37-macos-local-password-reset.md` (N13). Assert those
+// two needles at the frozen v1.15 close (V115=29a3599 — the last state BEFORE the retrofit),
+// where the Mermaid click directive is intact. Needles UNCHANGED (no value-mask); only the read
+// SOURCE moved live→frozen. N11 ('MACR9'), N14 ('Runbook 37') and PRESENCE-06 survive the
+// text-equiv conversion and intentionally stay LIVE (they pass on HEAD).
+// Honest-accounting: .planning/phases/125-*/125-05-SUMMARY.md.
+function read06Frozen() {
+  try { return readAtV115Close(DELIVERABLE_06); } catch { return null; }
 }
 
 // Lightweight: NO chain (chain lives only in apex check-phase-100.mjs).
@@ -244,8 +257,8 @@ checks.push({
   id: 'CONTENT-N12',
   name: "V-99-CONTENT-N12: 06-macos-triage.md contains 'click MACR9' (click target directive)",
   run() {
-    const c = readFile(DELIVERABLE_06);
-    if (c === null) return { pass: false, detail: DELIVERABLE_06 + ' missing' };
+    const c = read06Frozen();
+    if (c === null) return { pass: false, detail: DELIVERABLE_06 + ' missing (frozen V115 read failed)' };
     if (!c.includes('click MACR9')) return { pass: false, detail: "N12 needle absent: 'click MACR9'" };
     return { pass: true, detail: 'N12 needle present' };
   }
@@ -255,8 +268,8 @@ checks.push({
   id: 'CONTENT-N13',
   name: "V-99-CONTENT-N13: 06-macos-triage.md contains '../l1-runbooks/37-macos-local-password-reset.md' (click target URL)",
   run() {
-    const c = readFile(DELIVERABLE_06);
-    if (c === null) return { pass: false, detail: DELIVERABLE_06 + ' missing' };
+    const c = read06Frozen();
+    if (c === null) return { pass: false, detail: DELIVERABLE_06 + ' missing (frozen V115 read failed)' };
     if (!c.includes('../l1-runbooks/37-macos-local-password-reset.md')) return { pass: false, detail: 'N13 needle absent' };
     return { pass: true, detail: 'N13 needle present' };
   }
