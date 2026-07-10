@@ -123,11 +123,21 @@ export function checkDivergence(approvedRows, sourceStatusLookup) {
   return { divergent };
 }
 
+// csvField (WR-01): quote+escape a CSV field if it contains a comma, quote, or
+// newline. docId/outputFilename are already regex-constrained upstream and can't
+// contain these, but status/lastVerified come straight from each doc's frontmatter
+// with no charset restriction -- an unescaped comma/quote/newline there would
+// silently shift that row's columns.
+function csvField(v) {
+  const s = String(v ?? '');
+  return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+}
+
 // writeManifestCsv (D-03): {RE-ID, Output Filename, Status, Last Verified} only --
 // NO source path, NO sha256 (docx bytes/hash are provably non-deterministic).
 export function writeManifestCsv(rows, outPath) {
   const header = 'RE-ID,Output Filename,Status,Last Verified';
-  const lines = rows.map(r => [r.docId, r.outputFilename, r.status, r.lastVerified].join(','));
+  const lines = rows.map(r => [r.docId, r.outputFilename, r.status, r.lastVerified].map(csvField).join(','));
   writeFileSync(outPath, [header, ...lines].join('\n') + '\n', 'utf8');
 }
 
@@ -476,6 +486,19 @@ if (isMainModule && SELF_TEST) {
     const written = readFileSync(tmpPath, 'utf8');
     const expected = 'RE-ID,Output Filename,Status,Last Verified\nRE-001,foo.docx,Approved,2026-01-01\n';
     stAssert('(b) CSV manifest join shape correct', written === expected, 'got: ' + JSON.stringify(written));
+    rmSync(tmpPath, { force: true });
+  });
+
+  // (b2) WR-01: CSV manifest escapes a comma/quote in a frontmatter-sourced field
+  stTry('(b2) WR-01 CSV manifest escapes comma/quote fields', () => {
+    const rows = [{ docId: 'RE-002', outputFilename: 'bar.docx', status: 'Approved, pending review', lastVerified: '2026-01-01' }];
+    const tmpDir = join(process.cwd(), '.pipeline-output');
+    if (!existsSync(tmpDir)) mkdirSync(tmpDir, { recursive: true });
+    const tmpPath = join(tmpDir, 'st-manifest-escape-test.csv');
+    writeManifestCsv(rows, tmpPath);
+    const written = readFileSync(tmpPath, 'utf8');
+    const expected = 'RE-ID,Output Filename,Status,Last Verified\nRE-002,bar.docx,"Approved, pending review",2026-01-01\n';
+    stAssert('(b2) WR-01 CSV manifest escapes comma/quote fields', written === expected, 'got: ' + JSON.stringify(written));
     rmSync(tmpPath, { force: true });
   });
 
