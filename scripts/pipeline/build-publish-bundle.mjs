@@ -9,7 +9,8 @@
 // names each output from scripts/pipeline/filename-map.md, runs guard-docx.mjs on every
 // converted .docx, and -- on a 100% clean pass -- writes a CSV manifest + static README
 // + a single versioned dist/docs-library-v1.17.zip. Any conversion/guard/parity/naming/
-// divergence failure -> collect ALL failures, print the full list, exit 1, NO zip (D-07).
+// divergence failure -> collect ALL failures, print the full list, exit 1, NO zip (D-07,
+// always-full rebuild D-05, sequential D-06).
 //
 // Zero-dependency Node code (built-ins only), following the scripts/pipeline/*.mjs family
 // conventions (padLabel/stAssert self-test harness, argv flags, fail-closed exit contract).
@@ -19,11 +20,13 @@
 //   node scripts/pipeline/build-publish-bundle.mjs --self-test  (runs the self-test harness)
 //
 // Exit 0: batch complete, zip written (or self-test all-pass)
-// Exit 1: any conversion/guard/parity/naming/divergence failure -- no zip written
+// Exit 1: any conversion/guard/parity/naming/divergence failure, or a missing preflight
+//         dependency -- no zip written
 
 // Node built-ins ONLY -- zero external npm packages (matches scripts/pipeline/ convention)
 import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 // Reuse, don't re-derive (RESEARCH.md Pattern 1) -- Task 1 added these exports.
@@ -31,12 +34,14 @@ import { parseRegistry, readFile } from './build-filename-map.mjs';
 
 const argv = process.argv.slice(2);
 const SELF_TEST = argv.includes('--self-test');
+const isMainModule = process.argv[1] === fileURLToPath(import.meta.url);
 
 const REGISTRY_REL_PATH = 'docs/_registry/RE-index.md';
 const FILENAME_MAP_REL_PATH = 'scripts/pipeline/filename-map.md';
 const STAGING_DIR_REL = '.pipeline-output/publish-staging';
 const DIST_DIR_REL = 'dist';
 const ZIP_NAME = 'docs-library-v1.17.zip';
+const OUTPUT_FILENAME_RE = /^[a-z0-9-]+\.docx$/;
 
 // === Padded-label console output (matches guard-docx.mjs / build-filename-map.mjs) ===
 const LABEL_WIDTH = 72;
@@ -45,44 +50,368 @@ function padLabel(s) {
   return s + ' ' + '.'.repeat(LABEL_WIDTH - s.length) + ' ';
 }
 
-// ─── RED: stub functions -- not yet implemented (TDD RED phase) ──────────────
-// Each throws NOT_IMPLEMENTED so the self-test harness below reports FAIL, not a
-// silent false-green. Implemented in the following GREEN commit.
+// ─── Pure helper functions (all self-test-exercised, T-126-02-01/02/03) ──────
 
-export function parseFilenameMap(_mdContent) {
-  throw new Error('NOT_IMPLEMENTED: parseFilenameMap');
+// parseFilenameMap: 3-column filename-map.md table parser -- DISTINCT from parseRegistry
+// (which reads RE-index.md's 5-column table where cols[3]=Title/cols[5]=Status).
+// filename-map.md's shape is `| Doc ID | Path | Output Filename |` -> cols[1]=Doc ID,
+// cols[3]=Output Filename after split('|'). Header/separator rows do not match
+// `^\|\s*RE-\d+\s*\|` and are excluded by construction (WARNING-1 fix).
+export function parseFilenameMap(mdContent) {
+  const map = new Map();
+  const lines = mdContent.split(/\r?\n/).filter(l => /^\|\s*RE-\d+\s*\|/.test(l));
+  for (const l of lines) {
+    const cols = l.split('|').map(s => s.trim());
+    map.set(cols[1], cols[3]);
+  }
+  return map;
 }
 
-export function readFrontmatterField(_mdContent, _key) {
-  throw new Error('NOT_IMPLEMENTED: readFrontmatterField');
+// readFrontmatterField: lighter-weight than a full YAML parser, matches this repo's
+// zero-dependency convention (126-PATTERNS.md Pattern 2). Used for the manifest's
+// status/last_verified columns and the D-12 divergence guard.
+export function readFrontmatterField(mdContent, key) {
+  const fmMatch = mdContent.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!fmMatch) return null;
+  const line = fmMatch[1].split(/\r?\n/).find(l => l.startsWith(key + ':'));
+  return line ? line.slice(key.length + 1).trim() : null;
 }
 
-export function checkFilenameMapCoverage(_approvedRows, _filenameMap) {
-  throw new Error('NOT_IMPLEMENTED: checkFilenameMapCoverage');
+// checkFilenameMapCoverage (PUB-03): fail closed if any Approved row has no
+// filename-map.md entry -- a real divergence, never silently tolerated.
+export function checkFilenameMapCoverage(approvedRows, filenameMap) {
+  const missing = approvedRows.filter(r => !filenameMap.has(r.docId));
+  return { missing };
 }
 
-export function checkParity(_approvedIds, _stagedIds) {
-  throw new Error('NOT_IMPLEMENTED: checkParity');
+// checkParity (PUB-04): every Approved RE-ID staged exactly once, no missing, no orphan.
+export function checkParity(approvedIds, stagedIds) {
+  const missing = [...approvedIds].filter(id => !stagedIds.has(id));
+  const orphans = [...stagedIds].filter(id => !approvedIds.has(id));
+  return { missing, orphans };
 }
 
-export function checkDivergence(_approvedRows, _sourceStatusLookup) {
-  throw new Error('NOT_IMPLEMENTED: checkDivergence');
+// checkDivergence (D-12): registry Status (EEE lifecycle) is a DIFFERENT vocabulary
+// than each source doc's frontmatter `status:` key. Fail closed if any registry-
+// Approved row's frontmatter status is literally Draft. sourceStatusLookup(docId)
+// returns the frontmatter status string for that row (injected for self-test).
+export function checkDivergence(approvedRows, sourceStatusLookup) {
+  const divergent = [];
+  for (const row of approvedRows) {
+    const fmStatus = sourceStatusLookup(row.docId);
+    if (fmStatus === 'Draft') {
+      divergent.push({ docId: row.docId, path: row.path, frontmatterStatus: fmStatus });
+    }
+  }
+  return { divergent };
 }
 
-export function writeManifestCsv(_rows, _outPath) {
-  throw new Error('NOT_IMPLEMENTED: writeManifestCsv');
+// writeManifestCsv (D-03): {RE-ID, Output Filename, Status, Last Verified} only --
+// NO source path, NO sha256 (docx bytes/hash are provably non-deterministic).
+export function writeManifestCsv(rows, outPath) {
+  const header = 'RE-ID,Output Filename,Status,Last Verified';
+  const lines = rows.map(r => [r.docId, r.outputFilename, r.status, r.lastVerified].join(','));
+  writeFileSync(outPath, [header, ...lines].join('\n') + '\n', 'utf8');
 }
 
-export function validateSourcePathUnderDocs(_p) {
-  throw new Error('NOT_IMPLEMENTED: validateSourcePathUnderDocs');
+// validateSourcePathUnderDocs (T-126-02-02): resolved source Path must stay under docs/,
+// reject any ".." traversal segment.
+export function validateSourcePathUnderDocs(p) {
+  if (typeof p !== 'string' || !p.startsWith('docs/')) return false;
+  if (p.split('/').includes('..')) return false;
+  return true;
 }
 
-export function validateOutputFilename(_name) {
-  throw new Error('NOT_IMPLEMENTED: validateOutputFilename');
+// validateOutputFilename (T-126-02-03): output filename must match the D-05 slug charset.
+export function validateOutputFilename(name) {
+  return typeof name === 'string' && OUTPUT_FILENAME_RE.test(name);
+}
+
+// writeReadme (D-04): static, deterministic upload-instructions Markdown -- NO new Date(),
+// no per-run timestamps, so the bundle contents stay reproducible in structure if not bytes.
+export function readmeContent() {
+  return [
+    '# Docs Library -- Upload Instructions',
+    '',
+    'This bundle contains the entire Approved documentation corpus, converted to `.docx`',
+    'for upload to the SharePoint document library that grounds Copilot Studio.',
+    '',
+    '## Contents',
+    '',
+    '- `*.docx` -- one file per Approved document. The filename IS the citation title shown',
+    '  in Copilot Studio search results. Do not rename these files after upload.',
+    '- `manifest.csv` -- RE-ID, Output Filename, Status, Last Verified for every bundled',
+    '  document (operator reference only).',
+    '- `README.md` -- this file (operator reference only).',
+    '',
+    '## Upload Steps',
+    '',
+    '1. Open the target SharePoint document library.',
+    '2. Upload every `.docx` file in this bundle (drag-and-drop, or "Upload > Files").',
+    '   Do **NOT** upload `manifest.csv` or `README.md` -- the SharePoint connector indexes',
+    '   `.docx` files only; these two files exist purely for operator reference and, if',
+    '   indexed, could surface as spurious search/citation results.',
+    '3. Wait for the Copilot Studio connector to finish indexing the uploaded files.',
+    '4. Spot-check a citation in Copilot Studio to confirm new/updated documents surface',
+    '   with the expected filename as the citation title.',
+    '',
+    '## Notes',
+    '',
+    '- This is a full-corpus replacement bundle, not an incremental delta -- every run',
+    '  regenerates every `.docx` from the current Approved registry (always-full rebuild).',
+    '- `.docx` file bytes are not byte-for-byte reproducible across runs (pandoc embeds a',
+    '  build timestamp in document properties); this is expected and does not affect',
+    '  document content.',
+    '',
+  ].join('\n');
+}
+
+// ─── Subprocess helpers (T-126-02-01: argv-array execFileSync only) ──────────
+
+function resolvePandocBin() {
+  try {
+    execFileSync('pandoc', ['--version'], { stdio: 'pipe', timeout: 10000 });
+    return 'pandoc';
+  } catch (e) {
+    if (e.code === 'ENOENT' || e.status === 127) {
+      const localAppData = process.env.LOCALAPPDATA;
+      if (localAppData) {
+        const fallback = join(localAppData, 'Pandoc', 'pandoc.exe');
+        if (existsSync(fallback)) return fallback;
+      }
+      return null;
+    }
+    return 'pandoc';
+  }
+}
+
+function preflightCheck() {
+  const missing = [];
+  try {
+    execFileSync('pwsh', ['-NoProfile', '-Command', '$PSVersionTable.PSVersion.Major'], { stdio: 'pipe', timeout: 10000 });
+  } catch (_e) {
+    missing.push('pwsh (PowerShell 7+)');
+  }
+  if (!resolvePandocBin()) {
+    missing.push('pandoc (PATH or %LOCALAPPDATA%\\Pandoc\\pandoc.exe)');
+  }
+  if (missing.length > 0) {
+    process.stderr.write('FATAL: missing required tool(s) before starting the batch: ' + missing.join(', ') + '\n');
+    process.exit(1);
+  }
+}
+
+function convertOne(inputMd, outputDocx) {
+  try {
+    execFileSync('pwsh', [
+      '-NoProfile', '-File', 'scripts/pipeline/convert.ps1',
+      '-InputMd', inputMd, '-OutputDocx', outputDocx
+    ], { stdio: 'pipe', cwd: process.cwd(), timeout: 60000 });
+    return { ok: true };
+  } catch (err) {
+    return {
+      ok: false,
+      detail: ((err.stdout || '') + (err.stderr || '')).toString().slice(0, 500)
+    };
+  }
+}
+
+function guardOne(docxPath) {
+  try {
+    execFileSync('node', ['scripts/pipeline/guard-docx.mjs', docxPath],
+      { stdio: 'pipe', cwd: process.cwd(), timeout: 30000 });
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, detail: (err.stdout || '').toString() };
+  }
+}
+
+// ─── Batch orchestrator (main, non-self-test) ─────────────────────────────────
+
+function runBatch() {
+  process.stdout.write('build-publish-bundle -- Phase 126 PUB-01..04 batch orchestrator\n\n');
+
+  preflightCheck();
+
+  // T-126-02-03: regenerate filename-map.md as a build step -- never trust a stale copy.
+  process.stdout.write('Regenerating filename-map.md...\n');
+  try {
+    execFileSync('node', ['scripts/pipeline/build-filename-map.mjs'], { stdio: 'inherit', cwd: process.cwd(), timeout: 30000 });
+  } catch (_err) {
+    process.stderr.write('FATAL: filename-map.md regeneration failed -- aborting (no zip)\n');
+    process.exit(1);
+  }
+
+  const registryContent = readFile(REGISTRY_REL_PATH);
+  if (!registryContent) {
+    process.stderr.write('FATAL: registry not found at ' + REGISTRY_REL_PATH + '\n');
+    process.exit(1);
+  }
+  const allRows = parseRegistry(registryContent);
+  const approvedRows = allRows.filter(r => r.status === 'Approved');
+  const excludedRows = allRows.filter(r => r.status !== 'Approved');
+
+  if (approvedRows.length === 0) {
+    process.stderr.write('FATAL: 0 Approved rows parsed from ' + REGISTRY_REL_PATH + ' -- refusing to build an empty bundle\n');
+    process.exit(1);
+  }
+
+  const filenameMapContent = readFile(FILENAME_MAP_REL_PATH);
+  if (!filenameMapContent) {
+    process.stderr.write('FATAL: ' + FILENAME_MAP_REL_PATH + ' not found\n');
+    process.exit(1);
+  }
+  const filenameMap = parseFilenameMap(filenameMapContent);
+
+  // PUB-03: fail closed if any Approved RE-ID has no filename-map.md row.
+  const coverage = checkFilenameMapCoverage(approvedRows, filenameMap);
+  if (coverage.missing.length > 0) {
+    process.stderr.write('FATAL: ' + coverage.missing.length + ' Approved RE-ID(s) missing from ' +
+      FILENAME_MAP_REL_PATH + ': ' + coverage.missing.map(r => r.docId).join(', ') + '\n');
+    process.exit(1);
+  }
+
+  // T-126-02-02/03 + D-12: validate paths/filenames and the frontmatter-status divergence
+  // guard, all up front (input-integrity validation, not per-doc conversion failure).
+  const sourceStatusCache = new Map();
+  function sourceStatusLookup(docId) {
+    if (sourceStatusCache.has(docId)) return sourceStatusCache.get(docId);
+    const row = approvedRows.find(r => r.docId === docId);
+    const src = row ? readFile(row.path) : null;
+    const status = src ? readFrontmatterField(src, 'status') : null;
+    sourceStatusCache.set(docId, status);
+    return status;
+  }
+
+  const integrityFailures = [];
+  for (const row of approvedRows) {
+    if (!validateSourcePathUnderDocs(row.path)) {
+      integrityFailures.push(row.docId + ': source Path "' + row.path + '" is not under docs/ or contains ".." (T-126-02-02)');
+    }
+    const outName = filenameMap.get(row.docId);
+    if (!validateOutputFilename(outName)) {
+      integrityFailures.push(row.docId + ': output filename "' + outName + '" fails the slug charset ^[a-z0-9-]+\\.docx$ (T-126-02-03)');
+    }
+    if (readFile(row.path) === null) {
+      integrityFailures.push(row.docId + ': source file not found at ' + row.path);
+    }
+  }
+  const divergence = checkDivergence(approvedRows, sourceStatusLookup);
+  for (const d of divergence.divergent) {
+    integrityFailures.push(d.docId + ': registry Status:Approved but frontmatter status:Draft (D-12 divergence guard)');
+  }
+  if (integrityFailures.length > 0) {
+    process.stderr.write('\n=== INTEGRITY FAILURES ===\n');
+    for (const f of integrityFailures) process.stderr.write('  ' + f + '\n');
+    process.stderr.write('\n' + integrityFailures.length + ' integrity failure(s) -- fail-closed: NO zip written.\n');
+    process.exit(1);
+  }
+
+  // Fresh staging dir every run (D-05 always-full rebuild -- never trust a stale staging dir).
+  const stagingDir = join(process.cwd(), STAGING_DIR_REL);
+  if (existsSync(stagingDir)) rmSync(stagingDir, { recursive: true, force: true });
+  mkdirSync(stagingDir, { recursive: true });
+
+  // Convert pass (D-06 sequential, D-07 collect-all-failures)
+  process.stdout.write('\nConverting ' + approvedRows.length + ' Approved doc(s)...\n');
+  const conversionFailures = [];
+  const convertedDocs = [];
+  for (const row of approvedRows) {
+    const outName = filenameMap.get(row.docId);
+    const outPath = join(stagingDir, outName);
+    const result = convertOne(row.path, outPath);
+    if (result.ok) {
+      convertedDocs.push({ docId: row.docId, outName, outPath, srcPath: row.path });
+      process.stdout.write(padLabel(row.docId) + 'CONVERT-OK\n');
+    } else {
+      conversionFailures.push({ docId: row.docId, path: row.path, detail: result.detail });
+      process.stdout.write(padLabel(row.docId) + 'CONVERT-FAIL -- ' + result.detail + '\n');
+    }
+  }
+
+  // Guard pass (sequential, one path per call, D-07 collect-all-failures)
+  process.stdout.write('\nGuarding ' + convertedDocs.length + ' converted .docx...\n');
+  const guardFailures = [];
+  for (const doc of convertedDocs) {
+    const result = guardOne(doc.outPath);
+    if (result.ok) {
+      process.stdout.write(padLabel(doc.docId) + 'GUARD-OK\n');
+    } else {
+      guardFailures.push({ docId: doc.docId, path: doc.outPath, detail: result.detail });
+      process.stdout.write(padLabel(doc.docId) + 'GUARD-FAIL -- ' + result.detail + '\n');
+    }
+  }
+
+  const totalFailures = conversionFailures.length + guardFailures.length;
+  if (totalFailures > 0) {
+    process.stderr.write('\n=== FAILURES ===\n');
+    for (const f of conversionFailures) process.stderr.write('[CONVERT-FAIL] ' + f.docId + ' (' + f.path + '): ' + f.detail + '\n');
+    for (const f of guardFailures) process.stderr.write('[GUARD-FAIL] ' + f.docId + ' (' + f.path + '): ' + f.detail + '\n');
+    process.stderr.write('\n' + totalFailures + ' failure(s) -- fail-closed: NO zip written.\n');
+    process.exit(1);
+  }
+
+  const guardFailedIds = new Set(guardFailures.map(f => f.docId));
+  const stagedDocs = convertedDocs.filter(d => !guardFailedIds.has(d.docId));
+
+  // Parity (PUB-04)
+  const approvedIds = new Set(approvedRows.map(r => r.docId));
+  const stagedIds = new Set(stagedDocs.map(d => d.docId));
+  const parity = checkParity(approvedIds, stagedIds);
+  if (parity.missing.length > 0 || parity.orphans.length > 0) {
+    process.stderr.write('\nPARITY FAIL: missing=[' + parity.missing.join(',') + '] orphans=[' + parity.orphans.join(',') + '] -- fail-closed: NO zip written.\n');
+    process.exit(1);
+  }
+
+  // Naming parity (PUB-03): staged basename must equal the committed filename-map.md value;
+  // the staged/zipped set must equal EXACTLY the Approved rows' committed Output Filenames.
+  const namingMismatches = stagedDocs.filter(d => d.outName !== filenameMap.get(d.docId));
+  if (namingMismatches.length > 0) {
+    process.stderr.write('\nNAMING PARITY FAIL: ' + namingMismatches.map(d => d.docId).join(', ') + ' -- fail-closed: NO zip written.\n');
+    process.exit(1);
+  }
+
+  process.stdout.write(
+    '\nRegistry parity: ' + approvedRows.length + ' Approved rows, ' + stagedIds.size +
+    ' staged, ' + excludedRows.length + ' excluded, ' + parity.missing.length + ' missing, ' +
+    parity.orphans.length + ' orphan.\n'
+  );
+
+  // Manifest (D-03)
+  const manifestRows = stagedDocs.map(doc => {
+    const srcContent = readFile(doc.srcPath);
+    return {
+      docId: doc.docId,
+      outputFilename: doc.outName,
+      status: readFrontmatterField(srcContent, 'status') || '',
+      lastVerified: readFrontmatterField(srcContent, 'last_verified') || '',
+    };
+  });
+  writeManifestCsv(manifestRows, join(stagingDir, 'manifest.csv'));
+
+  // README (D-04)
+  writeFileSync(join(stagingDir, 'README.md'), readmeContent(), 'utf8');
+
+  // Promote + zip (D-07 atomic promote: dist/ zip is only ever written after every pass
+  // above has succeeded -- a failure at any earlier stage leaves any prior zip untouched).
+  const distDirAbs = join(process.cwd(), DIST_DIR_REL);
+  if (!existsSync(distDirAbs)) mkdirSync(distDirAbs, { recursive: true });
+  const zipDest = join(distDirAbs, ZIP_NAME);
+  const psCmd = 'Compress-Archive -Path "' + stagingDir + '\\*" -DestinationPath "' + zipDest + '" -Force';
+  try {
+    execFileSync('pwsh', ['-NoProfile', '-Command', psCmd], { stdio: 'pipe', cwd: process.cwd(), timeout: 120000 });
+  } catch (err) {
+    process.stderr.write('FATAL: Compress-Archive failed: ' + ((err.stdout || '') + (err.stderr || '')).toString() + '\n');
+    process.exit(1);
+  }
+
+  process.stdout.write('\nWrote ' + zipDest + '\n');
+  process.stdout.write('Batch complete: ' + stagedIds.size + ' docx converted+guarded+staged, 0 errors.\n');
+  process.exit(0);
 }
 
 // ─── Self-test mode (--self-test) ─────────────────────────────────────────────
-if (SELF_TEST) {
+if (isMainModule && SELF_TEST) {
   let stPassed = 0, stFailed = 0;
 
   function stAssert(label, pass, detail) {
@@ -163,10 +492,27 @@ if (SELF_TEST) {
     );
   });
 
+  // (e) T-126-02-02/03 defense-in-depth validators reject bad input, accept good input
+  stTry('(e1) validateSourcePathUnderDocs rejects traversal / non-docs paths', () => {
+    const ok = validateSourcePathUnderDocs('docs/foo/bar.md') === true &&
+      validateSourcePathUnderDocs('docs/../secrets.md') === false &&
+      validateSourcePathUnderDocs('../etc/passwd') === false &&
+      validateSourcePathUnderDocs('scripts/pipeline/evil.md') === false;
+    stAssert('(e1) validateSourcePathUnderDocs rejects traversal / non-docs paths', ok);
+  });
+  stTry('(e2) validateOutputFilename enforces the D-05 slug charset', () => {
+    const ok = validateOutputFilename('device-not-registered.docx') === true &&
+      validateOutputFilename('Bad Name.docx') === false &&
+      validateOutputFilename('no-extension') === false &&
+      validateOutputFilename('../escape.docx') === false;
+    stAssert('(e2) validateOutputFilename enforces the D-05 slug charset', ok);
+  });
+
   process.stdout.write('\n' + stPassed + ' passed, ' + stFailed + ' failed\n');
   process.exit(stFailed > 0 ? 1 : 0);
 }
 
-// ─── Main (non-self-test): not yet implemented (GREEN phase) ────────────────
-process.stderr.write('NOT_IMPLEMENTED: full batch run (GREEN phase pending)\n');
-process.exit(1);
+// ─── Main (non-self-test): run the full batch ─────────────────────────────────
+if (isMainModule && !SELF_TEST) {
+  runBatch();
+}
