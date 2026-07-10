@@ -2,7 +2,13 @@
 
 **Date:** 2026-07-09
 **PR:** #3 (`phase-125-atom-2` → `master`), commit tip `4ab30e8`
-**Verdict:** **CASCADE RED — remediation required; NOT a simple pre-scoped Shape-1 fix.**
+**Verdict (initial push `4ab30e8`):** CASCADE RED — Class A (chain drift) + Class B (accepted predecessor standalone red).
+**Verdict (after Class-A remediation `ce62fe5`, run 29068069953):** **AUTHORITATIVE AXIS-2 GREEN.** The v1.16
+workflow passed — `check-phase-125` apex (recurses 48..124) + `Validator chain on Linux LF` + `Run v1.16
+milestone audit harness` (16/0/0) all SUCCESS. Predecessor workflows (v1.5–v1.15) remain red ONLY on their
+standalone milestone-audit-harness job (`ACCEPTED-STANDALONE-CI-RED-01` / D-00a); their chain jobs are
+`skipped` via the `needs:` gate, and the chain is proven green through the v1.16 apex's superset recursion.
+Class B recorded (not fixed) at the close-gate (125-07). **Axis-2 close-gate precondition CLEARED.**
 
 ## Axis-2 GHA cascade — all 13 firing workflows RED
 
