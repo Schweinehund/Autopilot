@@ -85,72 +85,81 @@ if ($outputDir -and -not (Test-Path $outputDir)) {
 $rawTempFile = [System.IO.Path]::GetTempFileName()   # this call creates the orphan on disk
 $tempMd = $rawTempFile -replace '\.tmp$', '.md'
 Remove-Item -LiteralPath $rawTempFile -Force -ErrorAction SilentlyContinue  # clean it up immediately
-Copy-Item -Path $InputMd -Destination $tempMd -Force
 
-$lines = Get-Content -LiteralPath $tempMd -Encoding utf8
-$inFence = $false
-$fenceChar = $null
-$rewriteCount = 0
+# WR-06: wrap the ephemeral $tempMd copy's entire lifetime (creation through pandoc
+# invocation) in try/finally so it is cleaned up unconditionally -- same bug class as
+# the neighboring $rawTempFile leak fixed above. Under the default
+# $ErrorActionPreference = 'Continue' most cmdlet failures in this range won't actually
+# terminate the script, but any genuinely terminating error (a .NET exception, or a
+# future edit adding -ErrorAction Stop) would otherwise skip both of the old inline
+# Remove-Item call sites and leak the temp .md copy across all 221 sequential calls.
+try {
+    Copy-Item -Path $InputMd -Destination $tempMd -Force
 
-for ($i = 0; $i -lt $lines.Count; $i++) {
-    $line = $lines[$i]
+    $lines = Get-Content -LiteralPath $tempMd -Encoding utf8
+    $inFence = $false
+    $fenceChar = $null
+    $rewriteCount = 0
 
-    # D-03(a): track ```/~~~ fenced-code state; never rewrite inside a fence
-    if ($line -match '^\s*(```|~~~)') {
-        if (-not $inFence) { $inFence = $true; $fenceChar = $Matches[1] }
-        elseif ($line.TrimStart().StartsWith($fenceChar)) { $inFence = $false }
-        continue
-    }
-    if ($inFence) { continue }
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $line = $lines[$i]
 
-    # Standalone "---" line, blank-preceded
-    if ($line -match '^---\s*$' -and $i -gt 0 -and $lines[$i-1].Trim() -eq '') {
-        # Peek forward past blank lines for the anchor
-        $j = $i + 1
-        while ($j -lt $lines.Count -and $lines[$j].Trim() -eq '') { $j++ }
-        if ($j -lt $lines.Count -and $lines[$j] -match '^\s*\*(Previous|Next step)\b') {
-            $lines[$i] = '* * *'
-            $rewriteCount++
+        # D-03(a): track ```/~~~ fenced-code state; never rewrite inside a fence
+        if ($line -match '^\s*(```|~~~)') {
+            if (-not $inFence) { $inFence = $true; $fenceChar = $Matches[1] }
+            elseif ($line.TrimStart().StartsWith($fenceChar)) { $inFence = $false }
+            continue
+        }
+        if ($inFence) { continue }
+
+        # Standalone "---" line, blank-preceded
+        if ($line -match '^---\s*$' -and $i -gt 0 -and $lines[$i-1].Trim() -eq '') {
+            # Peek forward past blank lines for the anchor
+            $j = $i + 1
+            while ($j -lt $lines.Count -and $lines[$j].Trim() -eq '') { $j++ }
+            if ($j -lt $lines.Count -and $lines[$j] -match '^\s*\*(Previous|Next step)\b') {
+                $lines[$i] = '* * *'
+                $rewriteCount++
+            }
         }
     }
-}
 
-Set-Content -LiteralPath $tempMd -Value $lines -Encoding utf8NoBOM
+    Set-Content -LiteralPath $tempMd -Value $lines -Encoding utf8NoBOM
 
-# D-03(b): fail-closed guard -- the ONLY diff between source and temp must be
-# the intended --- -> * * * rewrites on anchor-matched lines.
-$origLines = Get-Content -LiteralPath $InputMd -Encoding utf8
-$diffCount = 0
-for ($i = 0; $i -lt [Math]::Max($origLines.Count, $lines.Count); $i++) {
-    $o = if ($i -lt $origLines.Count) { $origLines[$i] } else { $null }
-    $n = if ($i -lt $lines.Count) { $lines[$i] } else { $null }
-    if ($o -ne $n) {
-        $diffCount++
-        # Assert this diff is an expected rewrite: orig was "---", new is "* * *"
-        if (-not ($o -match '^---\s*$' -and $n -eq '* * *')) {
-            Write-Error "PIPE-03 guard: unexpected diff at line $($i+1): '$o' -> '$n'. Aborting."
-            Remove-Item $tempMd -Force -ErrorAction SilentlyContinue
-            exit 1
+    # D-03(b): fail-closed guard -- the ONLY diff between source and temp must be
+    # the intended --- -> * * * rewrites on anchor-matched lines.
+    $origLines = Get-Content -LiteralPath $InputMd -Encoding utf8
+    $diffCount = 0
+    for ($i = 0; $i -lt [Math]::Max($origLines.Count, $lines.Count); $i++) {
+        $o = if ($i -lt $origLines.Count) { $origLines[$i] } else { $null }
+        $n = if ($i -lt $lines.Count) { $lines[$i] } else { $null }
+        if ($o -ne $n) {
+            $diffCount++
+            # Assert this diff is an expected rewrite: orig was "---", new is "* * *"
+            if (-not ($o -match '^---\s*$' -and $n -eq '* * *')) {
+                Write-Error "PIPE-03 guard: unexpected diff at line $($i+1): '$o' -> '$n'. Aborting."
+                exit 1
+            }
         }
     }
-}
-Write-Host "PIPE-03 preprocessing: $rewriteCount nav-footer rewrite(s), guard PASS" -ForegroundColor Green
+    Write-Host "PIPE-03 preprocessing: $rewriteCount nav-footer rewrite(s), guard PASS" -ForegroundColor Green
 
-# ─── Canonical conversion (SC1) ───────────────────────────────────────────────
-# This is the SINGLE SOURCE OF TRUTH for the invocation. No other flags.
-# --standalone is auto-applied for docx output: YAML frontmatter goes into Word
-# document properties, not body text. Do not add extra flags to this invocation.
-# NOTE: feeds $tempMd (the PIPE-03-preprocessed ephemeral copy), not $InputMd --
-# this is the ONLY change to the invocation; the flag set stays identical.
-Write-Host "Converting $InputMd -> $OutputDocx ..." -ForegroundColor Cyan
-& $pandocBin $tempMd -o $OutputDocx "--reference-doc=$ReferenceDoc"
-$pandocExit = $LASTEXITCODE
+    # ─── Canonical conversion (SC1) ───────────────────────────────────────────
+    # This is the SINGLE SOURCE OF TRUTH for the invocation. No other flags.
+    # --standalone is auto-applied for docx output: YAML frontmatter goes into Word
+    # document properties, not body text. Do not add extra flags to this invocation.
+    # NOTE: feeds $tempMd (the PIPE-03-preprocessed ephemeral copy), not $InputMd --
+    # this is the ONLY change to the invocation; the flag set stays identical.
+    Write-Host "Converting $InputMd -> $OutputDocx ..." -ForegroundColor Cyan
+    & $pandocBin $tempMd -o $OutputDocx "--reference-doc=$ReferenceDoc"
+    $pandocExit = $LASTEXITCODE
 
-Remove-Item $tempMd -Force -ErrorAction SilentlyContinue
-
-if ($pandocExit -ne 0) {
-    Write-Error "pandoc conversion failed (exit $pandocExit)"
-    exit 1
+    if ($pandocExit -ne 0) {
+        Write-Error "pandoc conversion failed (exit $pandocExit)"
+        exit 1
+    }
+} finally {
+    Remove-Item -LiteralPath $tempMd -Force -ErrorAction SilentlyContinue
 }
 
 Write-Host "Conversion complete." -ForegroundColor Green
