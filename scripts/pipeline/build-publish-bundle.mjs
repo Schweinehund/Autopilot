@@ -142,10 +142,14 @@ export function writeManifestCsv(rows, outPath) {
 }
 
 // validateSourcePathUnderDocs (T-126-02-02): resolved source Path must stay under docs/,
-// reject any ".." traversal segment.
+// reject any ".." traversal segment. WR-05: normalize backslash separators before
+// splitting -- a mixed-separator Path (e.g. "docs/foo\..\..\Windows\..") starts with
+// "docs/" and has no standalone ".." token after splitting on "/" alone, yet join()/
+// readFileSync/pwsh all treat "\" as a valid separator on this Windows-first repo and
+// would resolve outside docs/.
 export function validateSourcePathUnderDocs(p) {
   if (typeof p !== 'string' || !p.startsWith('docs/')) return false;
-  if (p.split('/').includes('..')) return false;
+  if (p.replace(/\\/g, '/').split('/').includes('..')) return false;
   return true;
 }
 
@@ -593,6 +597,11 @@ if (isMainModule && SELF_TEST) {
       validateSourcePathUnderDocs('../etc/passwd') === false &&
       validateSourcePathUnderDocs('scripts/pipeline/evil.md') === false;
     stAssert('(e1) validateSourcePathUnderDocs rejects traversal / non-docs paths', ok);
+  });
+  stTry('(e1b) WR-05 validateSourcePathUnderDocs rejects backslash-mixed traversal', () => {
+    const ok = validateSourcePathUnderDocs('docs/foo\\..\\..\\Windows\\System32') === false &&
+      validateSourcePathUnderDocs('docs/foo/bar\\baz.md') === true;
+    stAssert('(e1b) WR-05 validateSourcePathUnderDocs rejects backslash-mixed traversal', ok);
   });
   stTry('(e2) validateOutputFilename enforces the D-05 slug charset', () => {
     const ok = validateOutputFilename('device-not-registered.docx') === true &&
