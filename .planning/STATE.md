@@ -28,7 +28,7 @@ Phase: 125 (v115-pin-14th-path-a-lineage-bump-terminal-close) — EXECUTING
 Plan: 5 of 7 done (125-01/02/03/04/05 COMPLETE); 125-06 (owner checkpoint) + 125-07 (close-gate) remain
 Status: 125-04 formally closed via safe-resume — Axis-2 GHA cascade GREEN (run 29068069953, tip ce62fe5; apex check-phase-125 [48..124] + Linux chain + v1.16 harness 16/0/0); Class-B = ACCEPTED-STANDALONE-CI-RED-01 (D-00a); byte-gate holds. 125-05 done. Next actionable = 125-06 (PIPE-02 owner-run grounding pass)
 Last activity: 2026-07-09
-Stopped at: 125-06 Wave-5 owner checkpoint — agent prepares PIPE-02-CLOSE-RUNBOOK + representative .docx set + empty FINDINGS template, then BLOCKS for the owner to run live Copilot Studio and attest "PIPE-02 CLOSE: PASS". 125-07 close-gate blocks until that attestation.
+Stopped at: 125-06 Wave-5 owner checkpoint — BLOCKING ON OWNER. Agent-side Task 1 COMPLETE (e470ff1 runbook + a94cd74 empty FINDINGS template; 8 real Approved RE-NNN docs converted+guarded in .pipeline-output/pipe-02-close-125/; RE-179 guard-failed on stale phase_46 custom-prop → substituted RE-185, logged DEFER-125-06-A). Owner must run the 10 queries in PIPE-02-CLOSE-RUNBOOK.md §3 live in Copilot Studio, record + paste transcript into PIPE-02-CLOSE-FINDINGS.md, and attest "PIPE-02 CLOSE: PASS". THEN resume: 125-06-SUMMARY + 125-07 close-gate (flip 14 reqs, correct [48..119]→[48..124]). 125-07 HARD-blocks until PASS.
 
 ## v1.16 Phase Dependency Summary
 
