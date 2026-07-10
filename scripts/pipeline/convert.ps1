@@ -82,7 +82,9 @@ if ($outputDir -and -not (Test-Path $outputDir)) {
 # rewritten inside. D-03(b): a fail-closed guard aborts (non-zero exit) if the
 # temp copy differs from the source in any way other than an anchor-matched
 # `---` -> `* * *` rewrite.
-$tempMd = [System.IO.Path]::GetTempFileName() -replace '\.tmp$', '.md'
+$rawTempFile = [System.IO.Path]::GetTempFileName()   # this call creates the orphan on disk
+$tempMd = $rawTempFile -replace '\.tmp$', '.md'
+Remove-Item -LiteralPath $rawTempFile -Force -ErrorAction SilentlyContinue  # clean it up immediately
 Copy-Item -Path $InputMd -Destination $tempMd -Force
 
 $lines = Get-Content -LiteralPath $tempMd -Encoding utf8
