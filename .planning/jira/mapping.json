@@ -845,8 +845,30 @@
           "name": "V115 Pin + 14th Path-A Lineage Bump + Terminal Close"
         }
       }
+    },
+    "v1.17": {
+      "epicKey": "RTS-730",
+      "status": "created",
+      "created": "2026-07-10",
+      "phases": {
+        "126": {
+          "issueKey": "RTS-731",
+          "status": "todo",
+          "name": "Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes"
+        },
+        "127": {
+          "issueKey": "RTS-732",
+          "status": "todo",
+          "name": "Automated Milestone-Completion Trigger"
+        },
+        "128": {
+          "issueKey": "RTS-733",
+          "status": "todo",
+          "name": "V116 Pin + 15th Path-A Lineage Bump + Terminal Close"
+        }
+      }
     }
   },
-  "lastUpdated": "2026-07-10 (v1.16 COMPLETE — milestone close: Phase 125 Story RTS-729 transitioned In Progress→Done; Epic RTS-723 commented (14/14 Validated, 6/6 phases, close-gate 3dd2512, one-round Class-A readAtV115Close remediation + Class-B ACCEPTED-STANDALONE-CI-RED-01, 3-axis re-audit run 29068069953 + owner PIPE-02 CLOSE PASS) and transitioned In Progress→Done; milestones[v1.16].status=completed, completedDate=2026-07-10, phases.125.status=done. All 6 Stories RTS-724..729 Done. Live: Epic RTS-723 Done. Pending: /gsd-complete-milestone (archival + tag; V116 pin deferred to v1.17). Prior note follows.)\\n\\nARCHIVED: 2026-07-07 (v1.16 sync — Phase 121 (RTS-725) context gathered via /gsd-discuss-phase --chain: 4 gray areas resolved via /adversarial-review (D1=B lifecycle Mermaid split → RETRO-07 spans 121↔122; D2=22-file scope; D3=A; D4=A+pre-authored Pending rows). Roadmap re-scoped + ROADMAP L44 checkbox data-bug fixed (Phase 122 was wrongly [x] — corrected to [ ], preventing an erroneous RTS-726 Done transition this sync). RTS-725 transitioned To Do→In Progress per active-phase convention (STATE Phase: 121, ready to plan); phases.121.status=todo→in_progress. Completed phases: only 120 (RTS-724, already Done) — no change. Epic RTS-723 remains In Progress. 6/6 phases mapped; user paused before /gsd-plan-phase 121. Prior note follows.)\n\nARCHIVED: 2026-07-07 (v1.16 START/sync — Epic RTS-723 transitioned To Do→In Progress (milestone execution begun); Phase 120 (RTS-724) verified-complete via full discuss(--chain)→plan→execute→verify chain (4/4 must-haves; STD-04 + HYG-01; both gray areas resolved via /adversarial-review; code-review WR-01 fixed) → RTS-724 transitioned To Do→Done. milestones[v1.16].status=created→in_progress, phases.120.status=todo→done. STATE advanced to Phase 121 (Ready to plan; RTS-725 stays To Do until 121 activity). Phases 121-125 (RTS-725..729) remain To Do. Prior note follows.)\n\nARCHIVED: 2026-07-07 (v1.16 CREATE — milestone Epic RTS-723 created (Maintenance/account 5, mirrors v1.15; labels autopilot-docs/v1/v1.16; start 2026-07-07, due 2026-07-21) + 6 phase Stories RTS-724..729 (phases 120-125) all created and transitioned Backlog→To Do, parent=RTS-723, assignee Joshua Anderson. milestones[v1.16].status=created. Epic still To Do (start nudges In Progress at first phase activity). Prior note follows.)\n\nARCHIVED: 2026-07-06 (v1.15 COMPLETE — milestone close: Phase 119 (RTS-722) transitioned In Progress→Done; Epic RTS-715 commented (16/16 Validated, 7/7 phases, close-gate 29a3599, honest 2-round remediation, 3-axis re-audit + PIPE-02 owner PASS) and transitioned In Progress→Done; milestones[v1.15].status=completed, completedDate=2026-07-06. All 7 Stories (RTS-716..722) Done. Live state: Epic RTS-715 Done. Pending: /gsd-complete-milestone (tag v1.15 + V115 pin + archive). Prior note follows.)\n\nARCHIVED: 2026-07-06 (v1.15 sync — phase 118 COMPLETE: full discuss(--chain)→plan→execute→verify chain ran; VERIFICATION passed (4/4 must-haves; RETRO-03 Complete); C17 exits 0 on full 174-file enrolled corpus; 34 reference docs Approved + RE-147 mermaid carve-out to v1.16; phase.complete advanced STATE to phase 119 (Ready to plan). RTS-721 (118) transitioned To Do→Done; RTS-722 (119, active per STATE) transitioned To Do→In Progress per active-phase convention. Live state: RTS-716..721 (113-118) Done, RTS-722 (119) In Progress; Epic RTS-715 In Progress; 7/7 mapped, 6 Done. All 3 Phase-1 retrofit classes (116/117/118) complete; only Phase 119 close remains. Prior: 2026-07-04 phase 115 close.\n\nARCHIVED prior note: 2026-07-04 (v1.15 sync — phase 115 COMPLETE: VERIFICATION passed (7/7 must-haves; HARN-01 Complete), phase.complete ran, RTS-718 transitioned In Progress→Done. STATE advanced to phase 116 (ready to plan) → RTS-719 transitioned To Do→In Progress per active-phase convention. Live state: RTS-716/717/718 (113/114/115) Done, RTS-719 (116) In Progress, RTS-720..722 (117-119) To Do; Epic RTS-715 In Progress; 7/7 mapped. Earlier this turn RTS-718 was held In Progress through the discuss→plan→execute→code-review-fix→verify chain until verification passed (race mitigation). Prior: 2026-07-02 v1.14 close; Epic RTS-697 Done; 12/12 Stories Done; 22/22 Validated; tagged v1.14.)",
+  "lastUpdated": "2026-07-10",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending."
 }
