@@ -40,11 +40,19 @@
 // Node built-ins ONLY -- zero external npm packages (matches scripts/pipeline/ convention)
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import process from 'node:process';
 
 const argv = process.argv.slice(2);
 const DRY_RUN = argv.includes('--dry-run');
 const SELF_TEST = argv.includes('--self-test');
+
+// Only run the CLI (self-test OR main generate-mode) side effects when this file is the
+// directly-invoked entry script -- NOT when it is `import`-ed as a library (Phase 126
+// 126-02 T-126-02 fix: build-publish-bundle.mjs imports parseRegistry/readFile/slug from
+// this module; without this guard, merely importing it would trigger this file's own
+// self-test or its unconditional registry-parse-and-write main-mode side effect).
+const isMainModule = process.argv[1] === fileURLToPath(import.meta.url);
 
 const REGISTRY_REL_PATH = 'docs/_registry/RE-index.md';
 const OUTPUT_REL_PATH = 'scripts/pipeline/filename-map.md';
@@ -205,7 +213,7 @@ function writeMapFile(rows) {
 }
 
 // === Self-test mode (--self-test) ===
-if (SELF_TEST) {
+if (isMainModule && SELF_TEST) {
   let stPassed = 0, stFailed = 0;
 
   function stAssert(label, pass, detail) {
@@ -353,35 +361,37 @@ if (SELF_TEST) {
 }
 
 // === Main (non-self-test) ===
-const registryContent = readFile(REGISTRY_REL_PATH);
-if (!registryContent) {
-  process.stderr.write('ERROR: registry not found at ' + REGISTRY_REL_PATH + '\n');
-  process.exit(1);
-}
+if (isMainModule && !SELF_TEST) {
+  const registryContent = readFile(REGISTRY_REL_PATH);
+  if (!registryContent) {
+    process.stderr.write('ERROR: registry not found at ' + REGISTRY_REL_PATH + '\n');
+    process.exit(1);
+  }
 
-const parsedRows = parseRegistry(registryContent);
-if (parsedRows.length === 0) {
-  process.stderr.write('FILENAME-COLLISION-UNRESOLVED: 0 rows parsed from ' + REGISTRY_REL_PATH +
-    ' (parser broken or registry empty) -- refusing to write an empty map\n');
-  process.exit(1);
-}
+  const parsedRows = parseRegistry(registryContent);
+  if (parsedRows.length === 0) {
+    process.stderr.write('FILENAME-COLLISION-UNRESOLVED: 0 rows parsed from ' + REGISTRY_REL_PATH +
+      ' (parser broken or registry empty) -- refusing to write an empty map\n');
+    process.exit(1);
+  }
 
-const mapResult = buildFilenameMap(parsedRows);
-if (!mapResult.ok) {
-  process.stderr.write(mapResult.error + '\n');
-  process.exit(1);
-}
+  const mapResult = buildFilenameMap(parsedRows);
+  if (!mapResult.ok) {
+    process.stderr.write(mapResult.error + '\n');
+    process.exit(1);
+  }
 
-process.stdout.write(
-  'Parsed ' + parsedRows.length + ' registry rows -> ' + mapResult.rows.length +
-  ' output filenames, 0 unresolved collisions.\n'
-);
+  process.stdout.write(
+    'Parsed ' + parsedRows.length + ' registry rows -> ' + mapResult.rows.length +
+    ' output filenames, 0 unresolved collisions.\n'
+  );
 
-if (DRY_RUN) {
-  process.stdout.write('[dry-run] would write ' + OUTPUT_REL_PATH + ' (no file written)\n');
+  if (DRY_RUN) {
+    process.stdout.write('[dry-run] would write ' + OUTPUT_REL_PATH + ' (no file written)\n');
+    process.exit(0);
+  }
+
+  const writtenPath = writeMapFile(mapResult.rows);
+  process.stdout.write('Wrote ' + writtenPath + '\n');
   process.exit(0);
 }
-
-const writtenPath = writeMapFile(mapResult.rows);
-process.stdout.write('Wrote ' + writtenPath + '\n');
-process.exit(0);
