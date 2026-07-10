@@ -1,0 +1,459 @@
+What does the Autopilot Glossary say ESP stands for, and how is it defined?
+
+You said: What does the Autopilot Glossary say ESP stands for, and how is it defined?
+Bot said:
+Here's what the Autopilot Glossary (RE-184) says about ESP:
+
+ESP — Enrollment Status Page
+Definition: Enrollment Status Page — the progress screen during Autopilot provisioning that blocks desktop access until required apps and policies are applied (APv1 only).​1​
+
+Key Notes from the Glossary
+APv2 exception: APv2 does not use ESP. See Enrollment Time Grouping (ETG) for the APv2 equivalent mechanism.​1​
+
+Cross-platform analog: On macOS, the functional analog is Await Configuration ("Awaiting final configuration" screen), which holds the device at the end of Setup Assistant until critical configuration policies are installed. Both ESP and Await Configuration serve as enrollment hold gates, but ESP has explicit device-phase and user-phase stages while Await Configuration is a single hold point.​1​
+
+Related ESP Terms in the Same Glossary
+Device phase: The first half of ESP that applies device-targeted apps and policies before any user logs in.​1​
+User phase: The second half of ESP (after user login) that applies user-targeted apps and policies.​1​
+FirstSync: The ESP device-phase checkpoint tracked at HKLM:\SOFTWARE\Microsoft\Enrollments{GUID}\FirstSync that signals server provisioning is complete.​1​
+Would you like me to pull up the ESP Failure Decision Tree or the related runbooks for troubleshooting ESP issues?
+
+1 reference
+1
+RE-184-autopilot-glossary.docx
+
+
+Sent at July 10 at 9:43 AM
+19 minutes ago
+Bot said: Here's what the Autopilot Glossary (RE-184) says about ESP: ESP — Enrollment Status Page Definition: Enrollment Status Page — the progress screen during Autopilot provisioning that blocks desktop access until required apps and policies are applied (APv1 only).​1​Key Notes from the Glossary APv2 exception: APv2 does not use ESP. See Enrollment Time Grouping (ETG) for the APv2 equivalent mechanism.​1​Cross-platform analog: On macOS, the functional analog is Await Configuration ("Awaiting final configuration" screen), which holds the device at the end of Setup Assistant until critical configuration policies are installed. Both ESP and Await Configuration serve as enrollment hold gates, but ESP has explicit device-phase and user-phase stages while Await Configuration is a single hold point.​1​Related ESP Terms in the Same Glossary Device phase: The first half of ESP that applies device-targeted apps and policies before any user logs in.​1​User phase: The second half of ESP (after user login) that applies user-targeted apps and policies.​1​FirstSync: The ESP device-phase checkpoint tracked at HKLM:\SOFTWARE\Microsoft\Enrollments{GUID}\FirstSync that signals server provisioning is complete.​1​Would you like me to pull up the ESP Failure Decision Tree or the related runbooks for troubleshooting ESP issues?
+You said:
+What does the Apple Provisioning Glossary say about ABM?
+
+You said: What does the Apple Provisioning Glossary say about ABM?
+Bot said:
+Here's what the Apple Provisioning Glossary (RE-182) says about ABM:
+
+ABM — Apple Business Manager
+Definition: Apple Business Manager – Apple's web portal for managing device enrollment, app distribution (Apps and Books), and Managed Apple IDs for organizations. ABM is the single Apple-side portal for all device management administration. Accessed at business.apple.com.​1​
+
+Windows Equivalent
+No direct single equivalent. Device enrollment is managed in the Intune admin center under Devices > Windows > Enrollment. ABM is Apple-side while Intune is Microsoft-side; macOS admins work across both portals.​1​
+
+Cross-References
+The glossary also notes two related "See also" pointers:
+
+See also: ABM (Apple Business Manager) (Linux).​2​
+See also: Apple Business (renamed 2026-04-14; ABM Token → content token rebrand mapping).​2​
+Closely Related Term — ABM Token
+The glossary distinguishes ABM (the portal) from the ABM Token: The server token (.p7m file) downloaded from Apple Business Manager that enables communication between Intune and ABM for device sync and enrollment profile deployment. Also called "enrollment program token" or "ADE token" in Microsoft documentation. Must be renewed annually – a lapsed token silently stops new device syncing.​3​
+
+Would you like the definition of a related term such as ADE, VPP, or the ABM Token renewal lifecycle?
+
+3 references
+1
+RE-182-apple-provisioning-glossary.docx
+2
+RE-182-apple-provisioning-glossary.docx
+3
+RE-182-apple-provisioning-glossary.docx
+
+
+Sent at July 10 at 9:44 AM
+18 minutes ago
+Bot said: Here's what the Apple Provisioning Glossary (RE-182) says about ABM: ABM — Apple Business Manager Definition: Apple Business Manager – Apple's web portal for managing device enrollment, app distribution (Apps and Books), and Managed Apple IDs for organizations. ABM is the single Apple-side portal for all device management administration. Accessed at business.apple.com.​1​Windows Equivalent No direct single equivalent. Device enrollment is managed in the Intune admin center under Devices > Windows > Enrollment. ABM is Apple-side while Intune is Microsoft-side; macOS admins work across both portals.​1​Cross-References The glossary also notes two related "See also" pointers: See also: ABM (Apple Business Manager) (Linux).​2​See also: Apple Business (renamed 2026-04-14; ABM Token → content token rebrand mapping).​2​Closely Related Term — ABM Token The glossary distinguishes ABM (the portal) from the ABM Token: The server token (.p7m file) downloaded from Apple Business Manager that enables communication between Intune and ABM for device sync and enrollment profile deployment. Also called "enrollment program token" or "ADE token" in Microsoft documentation. Must be renewed annually – a lapsed token silently stops new device syncing.​3​Would you like the definition of a related term such as ADE, VPP, or the ABM Token renewal lifecycle?
+You said:
+Walk me through the iOS/iPadOS enrollment path overview — what enrollment methods are available?
+
+You said: Walk me through the iOS/iPadOS enrollment path overview — what enrollment methods are available?
+Bot said:
+Based on the iOS/iPadOS Enrollment Path Overview (RE-189) I retrieved earlier, here's the walkthrough.
+
+Overview
+iOS/iPadOS supports four distinct enrollment approaches, each with fundamentally different management scopes, ownership models, and supervision states. Selecting the wrong enrollment path at deployment time can result in over-collection of personal data or under-management of corporate assets.​1​
+
+A key organizing principle is supervision: The choice of enrollment path determines supervision state, which is permanent once set. Supervised mode grants the MDM server expanded control capabilities unavailable on unsupervised devices — OS update enforcement, silent app installation, and supervised-only restrictions. Supervision cannot be layered onto an existing enrollment.​1​
+
+It's also worth noting the split between MDM and app-layer paths: Three of the four paths involve MDM enrollment, installing a device management profile that gives Intune device-level control. The fourth path, MAM Without Enrollment (MAM-WE), operates at the application layer only — no device enrollment, no MDM profile installed.​1​
+
+The Four Enrollment Paths
+1. Automated Device Enrollment (ADE)
+ADE is the zero-touch corporate enrollment path for iOS/iPadOS. Devices assigned to an MDM server in Apple Business Manager (ABM) enroll automatically during Setup Assistant — no user interaction required. All ADE-enrolled iOS/iPadOS devices are supervised, enabling the full range of Intune MDM capabilities including OS update enforcement, silent app installation, and supervised-only restrictions.​2​
+
+Ownership: Corporate-owned | Supervision: Supervised
+ADE requires corporate device ownership and prior ABM assignment. It is appropriate for new or wiped devices only — existing devices cannot be re-enrolled via ADE without a full device erase.​2​
+2. Device Enrollment
+Device Enrollment uses Company Portal or web-based enrollment to install an MDM profile. Enrollment is user-initiated and does not require ABM. Enrolled devices are unsupervised, limiting management to standard MDM capabilities: policies, certificates, Wi-Fi, VPN, and compliance evaluation. Supervised-only restrictions and silent app installation are not available.​2​
+
+Ownership: Personal or corporate | Supervision: Unsupervised
+Device Enrollment is appropriate for BYOD or corporate devices not eligible for ADE. Personal devices enrolled through this path are subject to full device-level management — admins should evaluate whether User Enrollment provides a better privacy boundary.​2​
+3. User Enrollment (Account-Driven)
+Account-driven User Enrollment is the privacy-preserving BYOD path for iOS 15 and later. The user enrolls by adding a work account via Settings > VPN & Device Management, creating a separate managed APFS volume that isolates managed apps and data from personal content. Enrolled devices are unsupervised.​2​
+
+Ownership: Personal (BYOD) | Supervision: Unsupervised
+Intune does not collect UDID, serial number, or IMEI. Management is limited to apps, per-app VPN, Wi-Fi, and compliance within the managed volume. Profile-based user enrollment via Company Portal is deprecated as of iOS 18 and is no longer available for newly enrolled devices — account-driven User Enrollment is the current standard.​2​
+4. MAM Without Enrollment (MAM-WE)
+MAM-WE applies app protection policies to Microsoft 365 apps using the Intune App SDK — no MDM profile is installed and the device is not enrolled in Intune. Policy controls apply only within SDK-integrated apps (Outlook, Teams, Microsoft Edge, and others). IT has no device-level management: no inventory, no compliance evaluation, no device wipe.​2​
+
+Ownership: Any | Supervision: N/A (no enrollment)
+MAM-WE provides selective wipe capability: managed app data and corporate accounts are removed without affecting personal data or other apps. MAM-WE is appropriate for unmanaged personal devices needing M365 app access, contractor or partner devices, or devices already managed by another MDM.​2​
+Quick Comparison Table
+Enrollment Path	Ownership	Supervision	Management Scope	Use Case
+ADE	Corporate-owned	Supervised	Full device (all MDM capabilities including supervised-only restrictions, remote wipe, OS update enforcement, silent app install)​3​	Corporate fleet; zero-touch deployment via ABM; new or wiped devices only​3​
+Device Enrollment	Personal or corporate	Unsupervised	Device (MDM-managed policies, certificates, Wi-Fi, VPN, compliance – no supervised-only capabilities)​3​	BYOD or legacy corporate devices not eligible for ADE; no ABM required​3​
+User Enrollment	Personal (BYOD)	Unsupervised	App-layer + limited device (separate managed APFS volume; per-app VPN, Wi-Fi; no UDID, serial, or IMEI collection)​3​	Privacy-preserving BYOD; iOS 15+ required​3​
+MAM-WE	Any	N/A	App-layer only (policy controls within SDK-integrated apps; no MDM profile installed)​3​	Unmanaged personal devices needing M365 app access; contractor/partner devices​3​
+The Supervision Axis (Key Constraint)
+Since supervision drives capability, here are the important rules:
+
+When it's set: Supervision is set at enrollment time, exclusively through Automated Device Enrollment (ADE). For iOS/iPadOS 13.0 and later, devices enrolled via ADE are automatically supervised. Supervision cannot be added to a device that was enrolled without it — a device enrolled through Device Enrollment or User Enrollment is unsupervised for the lifetime of that enrollment.​4​
+
+Changing it: Changing a device from unsupervised to supervised requires a full device erase and re-enrollment via ADE. A full device erase removes ALL data on the device, including personal data, installed apps, accounts, and settings. This is not a selective wipe — it restores the device to factory state.​4​
+
+How to verify: Settings > General > About shows "This iPhone is supervised and managed by [organization name]" on supervised devices.​4​
+
+Would you like me to go deeper on any single path — for example, the ADE end-to-end lifecycle, or the MDM Migration Walkthrough for moving an already-ADE-enrolled fleet into Intune?
+
+4 references
+1
+RE-189-ios-ipados-enrollment-path-overview.docx
+2
+RE-189-ios-ipados-enrollment-path-overview.docx
+3
+RE-189-ios-ipados-enrollment-path-overview.docx
+4
+Apple Business Manager and MDM: what changes in 2026
+
+
+Sent at July 10 at 9:47 AM
+15 minutes ago
+Bot said: Based on the iOS/iPadOS Enrollment Path Overview (RE-189) I retrieved earlier, here's the walkthrough. Overview iOS/iPadOS supports four distinct enrollment approaches, each with fundamentally different management scopes, ownership models, and supervision states. Selecting the wrong enrollment path at deployment time can result in over-collection of personal data or under-management of corporate assets.​1​A key organizing principle is supervision: The choice of enrollment path determines supervision state, which is permanent once set. Supervised mode grants the MDM server expanded control capabilities unavailable on unsupervised devices — OS update enforcement, silent app installation, and supervised-only restrictions. Supervision cannot be layered onto an existing enrollment.​1​It's also worth noting the split between MDM and app-layer paths: Three of the four paths involve MDM enrollment, installing a device management profile that gives Intune device-level control. The fourth path, MAM Without Enrollment (MAM-WE), operates at the application layer only — no device enrollment, no MDM profile installed.​1​The Four Enrollment Paths 1. Automated Device Enrollment (ADE) ADE is the zero-touch corporate enrollment path for iOS/iPadOS. Devices assigned to an MDM server in Apple Business Manager (ABM) enroll automatically during Setup Assistant — no user interaction required. All ADE-enrolled iOS/iPadOS devices are supervised, enabling the full range of Intune MDM capabilities including OS update enforcement, silent app installation, and supervised-only restrictions.​2​Ownership: Corporate-owned | Supervision: Supervised ADE requires corporate device ownership and prior ABM assignment. It is appropriate for new or wiped devices only — existing devices cannot be re-enrolled via ADE without a full device erase.​2​2. Device Enrollment Device Enrollment uses Company Portal or web-based enrollment to install an MDM profile. Enrollment is user-initiated and does not require ABM. Enrolled devices are unsupervised, limiting management to standard MDM capabilities: policies, certificates, Wi-Fi, VPN, and compliance evaluation. Supervised-only restrictions and silent app installation are not available.​2​Ownership: Personal or corporate | Supervision: Unsupervised Device Enrollment is appropriate for BYOD or corporate devices not eligible for ADE. Personal devices enrolled through this path are subject to full device-level management — admins should evaluate whether User Enrollment provides a better privacy boundary.​2​3. User Enrollment (Account-Driven) Account-driven User Enrollment is the privacy-preserving BYOD path for iOS 15 and later. The user enrolls by adding a work account via Settings > VPN & Device Management, creating a separate managed APFS volume that isolates managed apps and data from personal content. Enrolled devices are unsupervised.​2​Ownership: Personal (BYOD) | Supervision: Unsupervised Intune does not collect UDID, serial number, or IMEI. Management is limited to apps, per-app VPN, Wi-Fi, and compliance within the managed volume. Profile-based user enrollment via Company Portal is deprecated as of iOS 18 and is no longer available for newly enrolled devices — account-driven User Enrollment is the current standard.​2​4. MAM Without Enrollment (MAM-WE) MAM-WE applies app protection policies to Microsoft 365 apps using the Intune App SDK — no MDM profile is installed and the device is not enrolled in Intune. Policy controls apply only within SDK-integrated apps (Outlook, Teams, Microsoft Edge, and others). IT has no device-level management: no inventory, no compliance evaluation, no device wipe.​2​Ownership: Any | Supervision: N/A (no enrollment) MAM-WE provides selective wipe capability: managed app data and corporate accounts are removed without affecting personal data or other apps. MAM-WE is appropriate for unmanaged personal devices needing M365 app access, contractor or partner devices, or devices already managed by another MDM.​2​Quick Comparison Table Enrollment Path Ownership Supervision Management Scope Use Case ADE Corporate-owned Supervised Full device (all MDM capabilities including supervised-only restrictions, remote wipe, OS update enforcement, silent app install)​3​Corporate fleet; zero-touch deployment via ABM; new or wiped devices only​3​Device Enrollment Personal or corporate Unsupervised Device (MDM-managed policies, certificates, Wi-Fi, VPN, compliance – no supervised-only capabilities)​3​BYOD or legacy corporate devices not eligible for ADE; no ABM required​3​User Enrollment Personal (BYOD) Unsupervised App-layer + limited device (separate managed APFS volume; per-app VPN, Wi-Fi; no UDID, serial, or IMEI collection)​3​Privacy-preserving BYOD; iOS 15+ required​3​MAM-WE Any N/A App-layer only (policy controls within SDK-integrated apps; no MDM profile installed)​3​Unmanaged personal devices needing M365 app access; contractor/partner devices​3​The Supervision Axis (Key Constraint) Since supervision drives capability, here are the important rules: When it's set: Supervision is set at enrollment time, exclusively through Automated Device Enrollment (ADE). For iOS/iPadOS 13.0 and later, devices enrolled via ADE are automatically supervised. Supervision cannot be added to a device that was enrolled without it — a device enrolled through Device Enrollment or User Enrollment is unsupervised for the lifetime of that enrollment.​4​Changing it: Changing a device from unsupervised to supervised requires a full device erase and re-enrollment via ADE. A full device erase removes ALL data on the device, including personal data, installed apps, accounts, and settings. This is not a selective wipe — it restores the device to factory state.​4​How to verify: Settings > General > About shows "This iPhone is supervised and managed by [organization name]" on supervised devices.​4​Would you like me to go deeper on any single path — for example, the ADE end-to-end lifecycle, or the MDM Migration Walkthrough for moving an already-ADE-enrolled fleet into Intune?
+You said:
+Give me an overview of the Android Enterprise enrollment process.
+
+You said: Give me an overview of the Android Enterprise enrollment process.
+Bot said:
+Here's an overview of the Android Enterprise Enrollment process from the internal guide (RE-185).
+
+Overview
+This guide orients Intune admins, L1 Service Desk, and L2 Desktop Engineering to the five Android Enterprise enrollment modes (Zero-Touch, Fully Managed COBO, BYOD Work Profile, Dedicated COSU, AOSP) and the ownership-by-management-scope axes that determine which mode a given device deployment should use.​1​
+
+The Two Organizing Axes
+Unlike iOS (which is organized around supervision), Android is organized by two independent dimensions. Android Enterprise enrollment is defined by two orthogonal axes: ownership model × management scope. The five modes above are named combinations of these axes.​2​
+
+Axis 1 — Ownership Model. Who owns the hardware, which governs acceptable management postures: Corporate-owned: The organization provides the device; full-device management is acceptable from first boot. Personally-owned: The user owns the device; the organization provisions only a containerized work profile and the personal side remains private.​2​
+
+Axis 2 — Management Scope. What the admin can configure and what data the admin can see: Fully managed: The whole device is managed — all apps, settings, restrictions. No personal profile. Work profile (containerized): Only the work-profile container is managed; personal side is invisible to the admin. Dedicated (COSU): Device is locked to a curated app set via Managed Home Screen for kiosk scenarios. AOSP (unmanaged — no GMS): Device runs Android without Google Mobile Services; management is OEM-gated and narrower than any GMS-based mode.​2​ Notably, AOSP is structurally outside both axes — it lacks Managed Google Play binding.​2​
+
+The Five Enrollment Modes
+1. Zero-Touch Enrollment (ZTE)
+Zero-Touch Enrollment is Android's corporate-scale, reseller-mediated provisioning pipeline — the closest structural analog to Apple's Automated Device Enrollment. Devices purchased from a participating reseller are pre-registered against the organization's Zero-Touch portal tenant; on first boot they contact the portal, match to the configured enrollment profile, and hand off to Intune for Fully Managed (or Dedicated) enrollment with no user steps. ZTE requires a one-time reseller relationship (Step 0) and a ZT tenant linked to Intune.​3​
+
+Ownership: Corporate-owned | Provisioning: Zero-Touch portal + Intune
+Samsung note: On Samsung hardware, Zero-Touch and Knox Mobile Enrollment are mutually exclusive.​3​
+2. Fully Managed (COBO)
+Fully Managed — Corporate-Owned, Business-Only (COBO) — is Android Enterprise's highest-control posture. The entire device is managed, there is no personal profile, and the admin governs apps, settings, restrictions, OS update behavior, and certificates. All four provisioning methods are supported: QR, NFC, afw#setup (DPC identifier), and Zero-Touch. COBO fits single-user corporate devices that should carry no personal content.​3​
+
+3. BYOD Work Profile
+BYOD Work Profile is the personally-owned, work-profile-only mode — users keep their device and add a managed container that isolates corporate apps and data from the personal side. End users install the Microsoft Intune app (the primary management surface post-2025) and complete provisioning through it; Intune sees only work-profile telemetry and can selectively wipe only the work container.​3​
+
+Important migration note: AMAPI migration (April 2025): Microsoft moved personally-owned work-profile management to the Android Management API; custom OMA-URI profiles are no longer supported — configure via AMAPI-backed templates.​3​
+4. Dedicated (COSU)
+Dedicated — Corporate-Owned, Single-Use (COSU) — locks the device to a curated set of apps through Managed Home Screen (MHS), which replaces the default launcher. Scenarios include single-app and multi-app kiosks, digital signage, warehouse scanners, and Entra shared device mode for frontline workers.​3​
+
+Critical configuration gate: A critical configuration gate is the MHS exit-PIN sync requirement: the exit-PIN in the MHS app-configuration profile must match the exit-PIN in the parent device-restrictions profile, or admins are locked out of MHS settings on the device. Dedicated supports QR, NFC, afw#setup, and Zero-Touch.​3​
+5. AOSP (Android Open Source Project)
+AOSP — Android Open Source Project — is structurally different from every other mode here. AOSP devices run Android without Google Mobile Services: no Managed Google Play binding, no work profile, no GMS-backed management APIs. Only QR provisioning is supported, and only on OEMs that have implemented the AOSP management enrollment handshake.​3​AOSP fits AR/VR headsets, rugged specialty devices, and similar out-of-GMS hardware — never mainstream phones or tablets (use COBO, BYOD Work Profile, or Dedicated).​3​
+
+Quick Comparison Table
+Mode	Ownership	Management Scope	Provisioning Surface	Use Case
+Zero-Touch (ZTE)	Corporate-owned	Fully managed (or Dedicated via portal)​2​	Zero-Touch portal + Intune	Corporate-scale automated enrollment via reseller; devices enroll on first boot​2​
+Fully Managed (COBO)	Corporate-owned	Fully managed	QR, NFC, afw#setup, Zero-Touch​2​	Corporate single-user device; maximum admin control; no personal profile​2​
+BYOD Work Profile	Personally-owned	Work profile (containerized)​2​	Company Portal (user-initiated)​2​	BYOD with data separation; user keeps personal side; admin sees only work-profile telemetry​2​
+Dedicated (COSU)	Corporate-owned	Dedicated (COSU — locked kiosk)​2​	QR, NFC, afw#setup, Zero-Touch​2​	Kiosk, digital signage, shared shift devices with Managed Home Screen​2​
+AOSP	Corporate-owned (specialty)​2​	AOSP (unmanaged — no GMS)​2​	QR only, OEM-gated, out-of-GMS​2​	AR/VR headsets, rugged specialty devices without Google Mobile Services​2​
+Cross-Platform Note (for iOS-familiar admins)
+Android's Fully Managed mode is the closest analog to iOS Supervision, but the mapping is partial — iOS supervision is a permanent per-device state gating ~60 restriction settings; Android Fully Managed is an ownership-mode designation.​3​ Importantly, "Supervision" is not an Android management term — Android does not use "supervised" or "unsupervised" as device states.​3​ Also, Android BYOD Work Profile is closer in intent to iOS account-driven User Enrollment than to anything involving supervision — both isolate corporate data in a container on a personally-owned device while leaving the personal side private.​3​
+
+Would you like me to go deeper on any specific mode — for example, the provisioning methods matrix (QR / NFC / afw#setup / Zero-Touch), Samsung Knox Mobile Enrollment (KME), or the AMAPI migration impact on BYOD?
+
+3 references
+1
+RE-185-android-enterprise-enrollment-overview.docx
+2
+RE-185-android-enterprise-enrollment-overview.docx
+3
+RE-185-android-enterprise-enrollment-overview.docx
+
+
+Sent at July 10 at 9:49 AM
+13 minutes ago
+Bot said: Here's an overview of the Android Enterprise Enrollment process from the internal guide (RE-185). Overview This guide orients Intune admins, L1 Service Desk, and L2 Desktop Engineering to the five Android Enterprise enrollment modes (Zero-Touch, Fully Managed COBO, BYOD Work Profile, Dedicated COSU, AOSP) and the ownership-by-management-scope axes that determine which mode a given device deployment should use.​1​The Two Organizing Axes Unlike iOS (which is organized around supervision), Android is organized by two independent dimensions. Android Enterprise enrollment is defined by two orthogonal axes: ownership model × management scope. The five modes above are named combinations of these axes.​2​Axis 1 — Ownership Model. Who owns the hardware, which governs acceptable management postures: Corporate-owned: The organization provides the device; full-device management is acceptable from first boot. Personally-owned: The user owns the device; the organization provisions only a containerized work profile and the personal side remains private.​2​Axis 2 — Management Scope. What the admin can configure and what data the admin can see: Fully managed: The whole device is managed — all apps, settings, restrictions. No personal profile. Work profile (containerized): Only the work-profile container is managed; personal side is invisible to the admin. Dedicated (COSU): Device is locked to a curated app set via Managed Home Screen for kiosk scenarios. AOSP (unmanaged — no GMS): Device runs Android without Google Mobile Services; management is OEM-gated and narrower than any GMS-based mode.​2​ Notably, AOSP is structurally outside both axes — it lacks Managed Google Play binding.​2​The Five Enrollment Modes 1. Zero-Touch Enrollment (ZTE) Zero-Touch Enrollment is Android's corporate-scale, reseller-mediated provisioning pipeline — the closest structural analog to Apple's Automated Device Enrollment. Devices purchased from a participating reseller are pre-registered against the organization's Zero-Touch portal tenant; on first boot they contact the portal, match to the configured enrollment profile, and hand off to Intune for Fully Managed (or Dedicated) enrollment with no user steps. ZTE requires a one-time reseller relationship (Step 0) and a ZT tenant linked to Intune.​3​Ownership: Corporate-owned | Provisioning: Zero-Touch portal + Intune Samsung note: On Samsung hardware, Zero-Touch and Knox Mobile Enrollment are mutually exclusive.​3​2. Fully Managed (COBO) Fully Managed — Corporate-Owned, Business-Only (COBO) — is Android Enterprise's highest-control posture. The entire device is managed, there is no personal profile, and the admin governs apps, settings, restrictions, OS update behavior, and certificates. All four provisioning methods are supported: QR, NFC, afw#setup (DPC identifier), and Zero-Touch. COBO fits single-user corporate devices that should carry no personal content.​3​3. BYOD Work Profile BYOD Work Profile is the personally-owned, work-profile-only mode — users keep their device and add a managed container that isolates corporate apps and data from the personal side. End users install the Microsoft Intune app (the primary management surface post-2025) and complete provisioning through it; Intune sees only work-profile telemetry and can selectively wipe only the work container.​3​Important migration note: AMAPI migration (April 2025): Microsoft moved personally-owned work-profile management to the Android Management API; custom OMA-URI profiles are no longer supported — configure via AMAPI-backed templates.​3​4. Dedicated (COSU) Dedicated — Corporate-Owned, Single-Use (COSU) — locks the device to a curated set of apps through Managed Home Screen (MHS), which replaces the default launcher. Scenarios include single-app and multi-app kiosks, digital signage, warehouse scanners, and Entra shared device mode for frontline workers.​3​Critical configuration gate: A critical configuration gate is the MHS exit-PIN sync requirement: the exit-PIN in the MHS app-configuration profile must match the exit-PIN in the parent device-restrictions profile, or admins are locked out of MHS settings on the device. Dedicated supports QR, NFC, afw#setup, and Zero-Touch.​3​5. AOSP (Android Open Source Project) AOSP — Android Open Source Project — is structurally different from every other mode here. AOSP devices run Android without Google Mobile Services: no Managed Google Play binding, no work profile, no GMS-backed management APIs. Only QR provisioning is supported, and only on OEMs that have implemented the AOSP management enrollment handshake.​3​AOSP fits AR/VR headsets, rugged specialty devices, and similar out-of-GMS hardware — never mainstream phones or tablets (use COBO, BYOD Work Profile, or Dedicated).​3​Quick Comparison Table Mode Ownership Management Scope Provisioning Surface Use Case Zero-Touch (ZTE) Corporate-owned Fully managed (or Dedicated via portal)​2​Zero-Touch portal + Intune Corporate-scale automated enrollment via reseller; devices enroll on first boot​2​Fully Managed (COBO) Corporate-owned Fully managed QR, NFC, afw#setup, Zero-Touch​2​Corporate single-user device; maximum admin control; no personal profile​2​BYOD Work Profile Personally-owned Work profile (containerized)​2​Company Portal (user-initiated)​2​BYOD with data separation; user keeps personal side; admin sees only work-profile telemetry​2​Dedicated (COSU) Corporate-owned Dedicated (COSU — locked kiosk)​2​QR, NFC, afw#setup, Zero-Touch​2​Kiosk, digital signage, shared shift devices with Managed Home Screen​2​AOSP Corporate-owned (specialty)​2​AOSP (unmanaged — no GMS)​2​QR only, OEM-gated, out-of-GMS​2​AR/VR headsets, rugged specialty devices without Google Mobile Services​2​Cross-Platform Note (for iOS-familiar admins) Android's Fully Managed mode is the closest analog to iOS Supervision, but the mapping is partial — iOS supervision is a permanent per-device state gating ~60 restriction settings; Android Fully Managed is an ownership-mode designation.​3​ Importantly, "Supervision" is not an Android management term — Android does not use "supervised" or "unsupervised" as device states.​3​ Also, Android BYOD Work Profile is closer in intent to iOS account-driven User Enrollment than to anything involving supervision — both isolate corporate data in a container on a personally-owned device while leaving the personal side private.​3​Would you like me to go deeper on any specific mode — for example, the provisioning methods matrix (QR / NFC / afw#setup / Zero-Touch), Samsung Knox Mobile Enrollment (KME), or the AMAPI migration impact on BYOD?
+You said:
+What does the Linux Provisioning Glossary say about COBO, COPE, and WPCO ownership modes?
+
+You said: What does the Linux Provisioning Glossary say about COBO, COPE, and WPCO ownership modes?
+Bot said:
+Here's what the Linux Provisioning Glossary (RE-181) says about COBO, COPE, and WPCO.
+
+Context: These Are "Cross-Platform Collision" Entries
+Importantly, these terms are not native Linux concepts. They appear in the Linux glossary only as a redirect. The H3 entries below are concepts that exist on other platforms but DO NOT EXIST on Linux device management in Intune. Each entry is a callout-only redirect — there is no Linux-native definition because the concept does not apply. The H3s remain present so downstream Phase 50-52 runbooks can cross-link _glossary-linux.md#term-anchor and have the link resolve.​1​
+
+The three terms are grouped under a single combined entry titled "COBO / COPE / WPCO."
+
+The Entry Itself
+Linux note: COBO (Corporate-Owned, Business-Only), COPE (Corporate-Owned, Personally-Enabled), and WPCO (Work Profile on Corporate-Owned) are Android Enterprise ownership-mode designations that do not apply to Linux device management. Linux endpoints have a single ownership category — see the BYOD vs corporate-owned framing caveat in 00-enrollment-overview.md#enrollment-constraints. For the Android definitions, see the Android Enterprise Provisioning Glossary.​1​
+
+The entry closes with cross-reference pointers: See also: COBO (Android); COPE (Android); WPCO (Android).​2​
+
+Key Takeaways
+What they expand to: COBO = Corporate-Owned, Business-Only; COPE = Corporate-Owned, Personally-Enabled; WPCO = Work Profile on Corporate-Owned.
+Why they don't apply to Linux: These are Android Enterprise ownership-mode designations that do not apply to Linux device management. Linux endpoints have a single ownership category.​1​
+Reason Linux lacks the distinction: As a related collision entry explains, Linux endpoints are personally provisioned via intune-portal regardless of ownership model.​3​
+If you'd like, I can pull the full Android definitions of COBO, COPE, and WPCO from the Android Enterprise Provisioning Glossary (where these terms are natively defined, including the COPE→WPCO successor guidance). Would that be helpful?
+
+3 references
+1
+RE-181-linux-provisioning-glossary.docx
+2
+RE-182-apple-provisioning-glossary.docx
+3
+RE-181-linux-provisioning-glossary.docx
+
+
+Sent at July 10 at 9:51 AM
+10 minutes ago
+Bot said: Here's what the Linux Provisioning Glossary (RE-181) says about COBO, COPE, and WPCO. Context: These Are "Cross-Platform Collision" Entries Importantly, these terms are not native Linux concepts. They appear in the Linux glossary only as a redirect. The H3 entries below are concepts that exist on other platforms but DO NOT EXIST on Linux device management in Intune. Each entry is a callout-only redirect — there is no Linux-native definition because the concept does not apply. The H3s remain present so downstream Phase 50-52 runbooks can cross-link _glossary-linux.md#term-anchor and have the link resolve.​1​The three terms are grouped under a single combined entry titled "COBO / COPE / WPCO." The Entry Itself Linux note: COBO (Corporate-Owned, Business-Only), COPE (Corporate-Owned, Personally-Enabled), and WPCO (Work Profile on Corporate-Owned) are Android Enterprise ownership-mode designations that do not apply to Linux device management. Linux endpoints have a single ownership category — see the BYOD vs corporate-owned framing caveat in 00-enrollment-overview.md#enrollment-constraints. For the Android definitions, see the Android Enterprise Provisioning Glossary.​1​The entry closes with cross-reference pointers: See also: COBO (Android); COPE (Android); WPCO (Android).​2​Key Takeaways What they expand to: COBO = Corporate-Owned, Business-Only; COPE = Corporate-Owned, Personally-Enabled; WPCO = Work Profile on Corporate-Owned. Why they don't apply to Linux: These are Android Enterprise ownership-mode designations that do not apply to Linux device management. Linux endpoints have a single ownership category.​1​Reason Linux lacks the distinction: As a related collision entry explains, Linux endpoints are personally provisioned via intune-portal regardless of ownership model.​3​If you'd like, I can pull the full Android definitions of COBO, COPE, and WPCO from the Android Enterprise Provisioning Glossary (where these terms are natively defined, including the COPE→WPCO successor guidance). Would that be helpful?
+You said:
+Walk me through the 802.1X triage decision tree — if a device fails 802.1X authentication, what are all the possible diagnostic paths and outcomes?
+
+You said: Walk me through the 802.1X triage decision tree — if a device fails 802.1X authentication, what are all the possible diagnostic paths and outcomes?
+Bot said:
+I already have the full 802.1X Triage Decision Tree (RE-217) from earlier searches. Here's the complete walkthrough.
+
+Purpose & Scope
+Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook. All terminal nodes are within 2 decision steps of the root.​1​
+
+The tree is deliberately compact and symptom-driven. This tree uses a flat symptom-primary shape — per-platform diagnostic detail lives inside each runbook, not this tree, so the tree stays compact.​1​ It spans all five platforms: this guide routes 802.1X connection-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).​1​
+
+The Decision Structure
+The tree gates on a single primary symptom. Gates on a single primary failure symptom — certificate profile error, server trust failure, EAP negotiation mismatch, RADIUS reject, or unknown — and routes to the matching L1 runbook or an L2 escalation.​1​ The root decision node is labeled EAP1.
+
+The Five Diagnostic Paths & Outcomes
+Here is the complete routing table — each path is a terminal outcome within 2 steps of the root:
+
+#	Symptom (Step 1 → Step 2)	Outcome / Destination
+1	Certificate profile error — Intune cert profile shows Error or Pending (terminal)​1​	Runbook 38
+2	Server trust / validation failure — Trust prompt or untrusted server / RADIUS root CA missing (terminal)​1​	Runbook 40
+3	EAP negotiation failure — EAP method or inner-auth mismatch (terminal)​1​	Runbook 41
+4	RADIUS reject — Cert profiles Succeeded, RADIUS rejects auth (terminal)​1​	Runbook 39
+5	Unknown / Other — Don't know / Other (terminal)​1​	Escalate (EAPE node)
+How to Identify Which Branch Applies
+The tree provides diagnostic questions to pin down the symptom before routing:
+
+Path 1 → Runbook 38 (Certificate Profile Error)
+Does Intune show a cert profile as Error or Pending? Open Intune admin center > Devices > [platform] > select device > Device configuration. If the Trusted Certificate profile OR the SCEP/PKCS client-certificate profile shows "Error," "Pending," or "Not applicable," the symptom is cert profile failure → Runbook 38.​1​
+
+Path 2 → Runbook 40 (Server Trust Failure)
+Is there a trust prompt, or is the Trusted Certificate profile for the RADIUS root CA missing or failed? On Windows, the user may see an intermittent dialog "Do you want to connect?" or "Trust this certificate?" On managed macOS/iOS the failure is silent (no prompt). Check Intune: if the Trusted Certificate profile for the RADIUS server CA shows "Error" or is not assigned, or the Wi-Fi profile Certificate server names field is empty → Runbook 40.​1​
+
+Path 3 → Runbook 41 (EAP Negotiation Failure)
+Is the failure EAP-method or inner-auth specific (e.g., iOS fails on an SSID where Windows/macOS succeed)? Ask: "Does this affect only one device type or platform?" iOS PEAP with PAP inner-auth is a common example — iOS PEAP mandates MS-CHAPv2, so PAP causes an immediate EAP-NAK; other platforms succeed on the same SSID. An EAP method or inner-auth mismatch → Runbook 41.​1​
+
+Path 4 → Runbook 39 (RADIUS Reject)
+Do all cert profiles show Succeeded, but auth still fails with no trust prompt? If Trusted Certificate, SCEP/PKCS, and the Wi-Fi/Wired network profiles all show "Succeeded" in Intune, yet the device is rejected by RADIUS with no trust dialog and no cert-error event → Runbook 39.​1​
+
+Path 5 → Escalate (EAPE)
+This is the catch-all when none of the above symptoms clearly match (Unknown / Other).
+
+Escalation Data (Path 5)
+When you cannot resolve the symptom and must escalate, collect the following first. When You Escalate (EAPE), collect: Device serial number, User UPN, device platform and OS version, Intune cert-profile status screenshot (Trusted Certificate + SCEP/PKCS + network profile), name of the relevant event-log channel or portal signal for the device platform.​1​
+
+For L2 investigation: Route to L2; L2 Log Collection (#31) is the shared prerequisite for all 802.1X L2 investigation. Also see #32: Certificate-Chain Investigation and #33: RADIUS/EAP Investigation.​1​
+
+Related Runbooks (Reference)
+The tree points to these terminal L1 runbooks:
+
+802.1X Certificate Failure (L1 Runbook 38) — Intune cert profile Error/Pending; cert not deployed​1​
+802.1X RADIUS Reject (L1 Runbook 39) — Cert profiles Succeeded; RADIUS rejects auth​1​
+802.1X Server Trust Failure (L1 Runbook 40) — Trust prompt / RADIUS root CA not trusted on device​1​
+802.1X EAP Negotiation Failure (L1 Runbook 41) — EAP method or inner-auth mismatch​1​
+Would you like me to dig into any specific branch — for example, the certificate-chain investigation (#32) for cert failures, or the RADIUS/EAP investigation (#33) for RADIUS rejects — or pull the EAP Method Overview for the negotiation-failure path?
+
+1 reference
+1
+RE-217-8021x-triage-decision-tree.docx
+
+
+Sent at July 10 at 9:54 AM
+8 minutes ago
+Bot said: I already have the full 802.1X Triage Decision Tree (RE-217) from earlier searches. Here's the complete walkthrough. Purpose & Scope Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook. All terminal nodes are within 2 decision steps of the root.​1​The tree is deliberately compact and symptom-driven. This tree uses a flat symptom-primary shape — per-platform diagnostic detail lives inside each runbook, not this tree, so the tree stays compact.​1​ It spans all five platforms: this guide routes 802.1X connection-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux).​1​The Decision Structure The tree gates on a single primary symptom. Gates on a single primary failure symptom — certificate profile error, server trust failure, EAP negotiation mismatch, RADIUS reject, or unknown — and routes to the matching L1 runbook or an L2 escalation.​1​ The root decision node is labeled EAP1. The Five Diagnostic Paths & Outcomes Here is the complete routing table — each path is a terminal outcome within 2 steps of the root: # Symptom (Step 1 → Step 2) Outcome / Destination 1 Certificate profile error — Intune cert profile shows Error or Pending (terminal)​1​Runbook 38 2 Server trust / validation failure — Trust prompt or untrusted server / RADIUS root CA missing (terminal)​1​Runbook 40 3 EAP negotiation failure — EAP method or inner-auth mismatch (terminal)​1​Runbook 41 4 RADIUS reject — Cert profiles Succeeded, RADIUS rejects auth (terminal)​1​Runbook 39 5 Unknown / Other — Don't know / Other (terminal)​1​Escalate (EAPE node) How to Identify Which Branch Applies The tree provides diagnostic questions to pin down the symptom before routing: Path 1 → Runbook 38 (Certificate Profile Error) Does Intune show a cert profile as Error or Pending? Open Intune admin center > Devices > [platform] > select device > Device configuration. If the Trusted Certificate profile OR the SCEP/PKCS client-certificate profile shows "Error," "Pending," or "Not applicable," the symptom is cert profile failure → Runbook 38.​1​Path 2 → Runbook 40 (Server Trust Failure) Is there a trust prompt, or is the Trusted Certificate profile for the RADIUS root CA missing or failed? On Windows, the user may see an intermittent dialog "Do you want to connect?" or "Trust this certificate?" On managed macOS/iOS the failure is silent (no prompt). Check Intune: if the Trusted Certificate profile for the RADIUS server CA shows "Error" or is not assigned, or the Wi-Fi profile Certificate server names field is empty → Runbook 40.​1​Path 3 → Runbook 41 (EAP Negotiation Failure) Is the failure EAP-method or inner-auth specific (e.g., iOS fails on an SSID where Windows/macOS succeed)? Ask: "Does this affect only one device type or platform?" iOS PEAP with PAP inner-auth is a common example — iOS PEAP mandates MS-CHAPv2, so PAP causes an immediate EAP-NAK; other platforms succeed on the same SSID. An EAP method or inner-auth mismatch → Runbook 41.​1​Path 4 → Runbook 39 (RADIUS Reject) Do all cert profiles show Succeeded, but auth still fails with no trust prompt? If Trusted Certificate, SCEP/PKCS, and the Wi-Fi/Wired network profiles all show "Succeeded" in Intune, yet the device is rejected by RADIUS with no trust dialog and no cert-error event → Runbook 39.​1​Path 5 → Escalate (EAPE) This is the catch-all when none of the above symptoms clearly match (Unknown / Other). Escalation Data (Path 5) When you cannot resolve the symptom and must escalate, collect the following first. When You Escalate (EAPE), collect: Device serial number, User UPN, device platform and OS version, Intune cert-profile status screenshot (Trusted Certificate + SCEP/PKCS + network profile), name of the relevant event-log channel or portal signal for the device platform.​1​For L2 investigation: Route to L2; L2 Log Collection (#31) is the shared prerequisite for all 802.1X L2 investigation. Also see #32: Certificate-Chain Investigation and #33: RADIUS/EAP Investigation.​1​Related Runbooks (Reference) The tree points to these terminal L1 runbooks: 802.1X Certificate Failure (L1 Runbook 38) — Intune cert profile Error/Pending; cert not deployed​1​802.1X RADIUS Reject (L1 Runbook 39) — Cert profiles Succeeded; RADIUS rejects auth​1​802.1X Server Trust Failure (L1 Runbook 40) — Trust prompt / RADIUS root CA not trusted on device​1​802.1X EAP Negotiation Failure (L1 Runbook 41) — EAP method or inner-auth mismatch​1​Would you like me to dig into any specific branch — for example, the certificate-chain investigation (#32) for cert failures, or the RADIUS/EAP investigation (#33) for RADIUS rejects — or pull the EAP Method Overview for the negotiation-failure path?
+You said:
+I'm troubleshooting an 802.1X authentication failure — where should I start according to the documentation index?
+
+You said: I'm troubleshooting an 802.1X authentication failure — where should I start according to the documentation index?
+Bot said:
+According to the Device Provisioning Documentation master routing hub (RE-219), here's where to start.
+
+Starting Point
+The 802.1X issue has a dedicated entry point that appears across every platform's Service Desk (L1) section. Your starting point is the 802.1X Triage Decision Tree, described as: 802.1X authentication failure symptom routing (cross-platform: cert failure / RADIUS reject / server-trust failure / EAP negotiation failure).​1​
+
+The triage tree itself confirms this is the intended entry point: Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook.​2​
+
+Why This Is the Right Door
+The tree is deliberately built as a cross-platform front door: This guide routes 802.1X connection-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). Identify the failure symptom and follow the matching branch to the correct L1 runbook.​2​
+
+Note the important distinction on scope: For non-802.1X Intune issues, return to the Initial Triage Decision Tree.​2​ In other words — the general Initial Triage Decision Tree is the entry point for all Intune device issues, but for a confirmed 802.1X authentication failure specifically, you go straight to the 802.1X Triage Decision Tree.
+
+What Happens Next (Quick Orientation)
+Once you're in the tree, you identify the single primary symptom and it routes you to a terminal L1 runbook:
+
+Symptom	Destination
+Certificate profile error — Intune cert profile shows Error or Pending​2​	Runbook 38
+Server trust / validation failure — Trust prompt or untrusted server / RADIUS root CA missing​2​	Runbook 40
+EAP negotiation failure — EAP method or inner-auth mismatch​2​	Runbook 41
+RADIUS reject — Cert profiles Succeeded, RADIUS rejects auth​2​	Runbook 39
+Unknown / Other — Don't know / Other​2​	Escalate (EAPE)
+If You Need to Escalate to L2
+If the symptom is unclear and you escalate, the documentation points to a shared prerequisite first: L2 Log Collection (#31) is the shared prerequisite for all 802.1X L2 investigation. Also see #32: Certificate-Chain Investigation and #33: RADIUS/EAP Investigation.​3​
+
+In short: Start at the 802.1X Triage Decision Tree — it's listed as the 802.1X entry point in every platform's L1 section of the documentation index. Identify your failure symptom there, and it will route you to the correct L1 runbook (38, 39, 40, or 41) or to L2 escalation.
+
+Would you like me to walk through the diagnostic questions that help you pin down which symptom branch applies?
+
+3 references
+1
+RE-219-device-provisioning-documentation.docx
+2
+RE-217-8021x-triage-decision-tree.docx
+3
+RE-217-8021x-triage-decision-tree.docx
+
+
+Sent at July 10 at 9:55 AM
+7 minutes ago
+Bot said: According to the Device Provisioning Documentation master routing hub (RE-219), here's where to start. Starting Point The 802.1X issue has a dedicated entry point that appears across every platform's Service Desk (L1) section. Your starting point is the 802.1X Triage Decision Tree, described as: 802.1X authentication failure symptom routing (cross-platform: cert failure / RADIUS reject / server-trust failure / EAP negotiation failure).​1​The triage tree itself confirms this is the intended entry point: Start here when a user reports an 802.1X Wi-Fi or wired network authentication failure on any platform. Identify the failure symptom, then follow the matching branch to the correct L1 runbook.​2​Why This Is the Right Door The tree is deliberately built as a cross-platform front door: This guide routes 802.1X connection-failure triage across all five platforms (Windows / macOS / iOS/iPadOS / Android / Linux). Identify the failure symptom and follow the matching branch to the correct L1 runbook.​2​Note the important distinction on scope: For non-802.1X Intune issues, return to the Initial Triage Decision Tree.​2​ In other words — the general Initial Triage Decision Tree is the entry point for all Intune device issues, but for a confirmed 802.1X authentication failure specifically, you go straight to the 802.1X Triage Decision Tree. What Happens Next (Quick Orientation) Once you're in the tree, you identify the single primary symptom and it routes you to a terminal L1 runbook: Symptom Destination Certificate profile error — Intune cert profile shows Error or Pending​2​Runbook 38 Server trust / validation failure — Trust prompt or untrusted server / RADIUS root CA missing​2​Runbook 40 EAP negotiation failure — EAP method or inner-auth mismatch​2​Runbook 41 RADIUS reject — Cert profiles Succeeded, RADIUS rejects auth​2​Runbook 39 Unknown / Other — Don't know / Other​2​Escalate (EAPE) If You Need to Escalate to L2 If the symptom is unclear and you escalate, the documentation points to a shared prerequisite first: L2 Log Collection (#31) is the shared prerequisite for all 802.1X L2 investigation. Also see #32: Certificate-Chain Investigation and #33: RADIUS/EAP Investigation.​3​In short: Start at the 802.1X Triage Decision Tree — it's listed as the 802.1X entry point in every platform's L1 section of the documentation index. Identify your failure symptom there, and it will route you to the correct L1 runbook (38, 39, 40, or 41) or to L2 escalation. Would you like me to walk through the diagnostic questions that help you pin down which symptom branch applies?
+You said:
+Give me an overview of the Autopilot lifecycle stages.
+
+You said: Give me an overview of the Autopilot lifecycle stages.
+Bot said:
+I have the Autopilot Lifecycle Overview (RE-192) from earlier searches. Here's the overview.
+
+Purpose
+This overview orients Intune administrators and L1/L2 support to the five sequential stages of the Windows Autopilot (classic) deployment lifecycle — hardware hash import, profile assignment, OOBE and deployment-mode selection, the Enrollment Status Page, and post-enrollment verification — showing how the three OOBE paths (user-driven, pre-provisioning, self-deploying) diverge and reconverge before ESP, and where common failures surface across the pipeline.​1​
+
+A version note to keep in mind: This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see APv1 vs APv2 disambiguation.​1​
+
+The Five Sequential Stages
+Stage	Primary Actor	What Happens
+1: Hardware Hash Import	Admin / OEM / Partner​2​	Device fingerprint uploaded to Intune​2​
+2: Profile Assignment	Admin	Autopilot profile matched to device via AAD group​2​
+3: OOBE	User / Technician / None​2​	Deployment mode activates; device joins Azure AD​2​
+4: ESP	Background (MDM)​2​	Device and user apps/policies installed​2​
+5: Post-Enrollment	Admin verifies​2​	Deployment confirmed; device handed off​2​
+The Deployment Pipeline & The Decision Point
+The pipeline is mostly linear, but Stage 3 introduces a branch. The pipeline runs through five stages. After Stage 2 (Profile Assignment), the deployment mode (the single decision point) determines which of three paths OOBE takes; the pre-provisioning and self-deploying paths both reconverge before Stage 4 (ESP).​1​
+
+The three OOBE paths at the decision point are:
+
+User-Driven: Stage 3: OOBE — User signs in → Stage 4: ESP​1​
+Pre-Provisioning: Stage 3: OOBE — Technician phase → Reseal + Ship to user​1​, which then rejoins the user-driven path when the user signs in, leading into Stage 4 (ESP).
+Self-Deploying: Stage 3: OOBE — No user interaction​1​, which converges directly into Stage 4​1​ (ESP).
+Where Failures Surface (Failure Points)
+Each stage has one associated failure category. The five stages progress linearly (S1: Hash Import → S2: Profile Assignment → S3: OOBE → S4: ESP → S5: Post-Enrollment); each stage has one associated failure category.​1​
+
+Stage	Failure Mode
+S1: Hash Import	Hash not found / stale record​1​
+S2: Profile Assignment	Profile not assigned / sync delay​1​
+S3: OOBE	Network unreachable​1​
+S4: ESP	ESP timeout / app failure​1​
+S5: Post-Enrollment	Compliance not met​1​
+Prerequisites (Before Stage 1)
+All prerequisites must be satisfied up front. All prerequisites must be met before Stage 1. Missing any prerequisite causes failures that surface at Stage 2 or 3.​3​ They are:
+
+Azure AD tenant configured with Intune​3​
+Appropriate licenses assigned (Microsoft 365 Business Premium, E3, E5, or standalone Intune)​3​
+Autopilot deployment profile created and assigned to a group​3​
+Network connectivity to required Autopilot endpoints​3​
+Device hardware hash registered in Autopilot service​3​
+How to Use This Guide
+This overview provides the end-to-end picture of the Windows Autopilot deployment lifecycle across five sequential stages. Each stage has a dedicated guide linked from the diagrams and table below — when troubleshooting a reported failure, identify which stage the failure occurred in and navigate directly to that guide.​1​ For depth, L2 technical details (registry keys, API calls, log paths) appear as callout blocks within each stage guide, keeping the main narrative accessible to L1 readers.​1​
+
+Would you like me to go deeper on any single stage, walk through the three OOBE deployment modes (user-driven, pre-provisioning, self-deploying), or pull the APv2 (Device Preparation) lifecycle for comparison?
+
+3 references
+1
+RE-192-autopilot-lifecycle-overview.docx
+2
+RE-182-apple-provisioning-glossary.docx
+3
+RE-192-autopilot-lifecycle-overview.docx
+
+
+Sent at July 10 at 9:56 AM
+6 minutes ago
+Bot said: I have the Autopilot Lifecycle Overview (RE-192) from earlier searches. Here's the overview. Purpose This overview orients Intune administrators and L1/L2 support to the five sequential stages of the Windows Autopilot (classic) deployment lifecycle — hardware hash import, profile assignment, OOBE and deployment-mode selection, the Enrollment Status Page, and post-enrollment verification — showing how the three OOBE paths (user-driven, pre-provisioning, self-deploying) diverge and reconverge before ESP, and where common failures surface across the pipeline.​1​A version note to keep in mind: This guide primarily covers Windows Autopilot (classic). APv2 (Device Preparation) differences are noted inline. For a full comparison, see APv1 vs APv2 disambiguation.​1​The Five Sequential Stages Stage Primary Actor What Happens 1: Hardware Hash Import Admin / OEM / Partner​2​Device fingerprint uploaded to Intune​2​2: Profile Assignment Admin Autopilot profile matched to device via AAD group​2​3: OOBE User / Technician / None​2​Deployment mode activates; device joins Azure AD​2​4: ESP Background (MDM)​2​Device and user apps/policies installed​2​5: Post-Enrollment Admin verifies​2​Deployment confirmed; device handed off​2​The Deployment Pipeline & The Decision Point The pipeline is mostly linear, but Stage 3 introduces a branch. The pipeline runs through five stages. After Stage 2 (Profile Assignment), the deployment mode (the single decision point) determines which of three paths OOBE takes; the pre-provisioning and self-deploying paths both reconverge before Stage 4 (ESP).​1​The three OOBE paths at the decision point are: User-Driven: Stage 3: OOBE — User signs in → Stage 4: ESP​1​Pre-Provisioning: Stage 3: OOBE — Technician phase → Reseal + Ship to user​1​, which then rejoins the user-driven path when the user signs in, leading into Stage 4 (ESP). Self-Deploying: Stage 3: OOBE — No user interaction​1​, which converges directly into Stage 4​1​ (ESP). Where Failures Surface (Failure Points) Each stage has one associated failure category. The five stages progress linearly (S1: Hash Import → S2: Profile Assignment → S3: OOBE → S4: ESP → S5: Post-Enrollment); each stage has one associated failure category.​1​Stage Failure Mode S1: Hash Import Hash not found / stale record​1​S2: Profile Assignment Profile not assigned / sync delay​1​S3: OOBE Network unreachable​1​S4: ESP ESP timeout / app failure​1​S5: Post-Enrollment Compliance not met​1​Prerequisites (Before Stage 1) All prerequisites must be satisfied up front. All prerequisites must be met before Stage 1. Missing any prerequisite causes failures that surface at Stage 2 or 3.​3​ They are: Azure AD tenant configured with Intune​3​Appropriate licenses assigned (Microsoft 365 Business Premium, E3, E5, or standalone Intune)​3​Autopilot deployment profile created and assigned to a group​3​Network connectivity to required Autopilot endpoints​3​Device hardware hash registered in Autopilot service​3​How to Use This Guide This overview provides the end-to-end picture of the Windows Autopilot deployment lifecycle across five sequential stages. Each stage has a dedicated guide linked from the diagrams and table below — when troubleshooting a reported failure, identify which stage the failure occurred in and navigate directly to that guide.​1​ For depth, L2 technical details (registry keys, API calls, log paths) appear as callout blocks within each stage guide, keeping the main narrative accessible to L1 readers.​1​Would you like me to go deeper on any single stage, walk through the three OOBE deployment modes (user-driven, pre-provisioning, self-deploying), or pull the APv2 (Device Preparation) lifecycle for comparison?
+You said:
+What is the Doc ID, Platform, and Status of the Autopilot Glossary document?
+
+You said: What is the Doc ID, Platform, and Status of the Autopilot Glossary document?
+Bot said:
+I've now confirmed the full metadata header for the Autopilot Glossary.
+
+Autopilot Glossary — Document Metadata
+Platform: All Platforms · Doc Type: Reference · Doc ID: RE-184 · Status: Approved​1​
+
+Field	Value
+Doc ID	RE-184
+Platform	All Platforms
+Status	Approved
+(Doc Type)	Reference
+So to directly answer your three questions: the Doc ID is RE-184, the Platform is All Platforms, and the Status is Approved.
+
+Would you like me to look up the metadata for any of the other documents we've discussed?
+
+1 reference
+1
+RE-184-autopilot-glossary.docx
+
+
+Sent at July 10 at 9:57 AM
+5 minutes ago
+Bot said: I've now confirmed the full metadata header for the Autopilot Glossary. Autopilot Glossary — Document Metadata Platform: All Platforms · Doc Type: Reference · Doc ID: RE-184 · Status: Approved​1​Field Value Doc ID RE-184 Platform All Platforms Status Approved (Doc Type) Reference So to directly answer your three questions: the Doc ID is RE-184, the Platform is All Platforms, and the Status is Approved. Would you like me to look up the metadata for any of the other documents we've discussed?
+You said:
+What is the recommended Autopilot hardware-hash upload procedure for ChromeOS devices?
+
+You said: What is the recommended Autopilot hardware-hash upload procedure for ChromeOS devices?
+Bot said:
+I've now searched the documentation, and the search confirms my initial flag: there is no Autopilot hardware-hash upload procedure for ChromeOS, because Autopilot does not support ChromeOS at all.
+
+The Premise Doesn't Hold — Here's Why
+1. ChromeOS is not a covered platform in this documentation suite
+The master routing hub (RE-219) enumerates every platform this documentation covers, and ChromeOS is not among them. This index covers Windows Autopilot (classic/APv1 and Device Preparation/APv2), macOS ADE, iOS/iPadOS, Android Enterprise, and Linux (Ubuntu LTS) provisioning, plus cross-platform operational depth and Apple Business delegated governance.​1​
+
+The five supported provisioning platforms are Windows, macOS, iOS/iPadOS, Android Enterprise, and Linux — ChromeOS/Chromebook appears nowhere in the platform selector or any of the platform sections.
+
+2. Autopilot is Windows-only by definition
+Autopilot is defined as a strictly Windows service. Windows Autopilot — Microsoft's cloud-based deployment service that provisions corporate-owned Windows devices directly from the factory or OEM.​2​
+
+3. The hardware hash itself is a Windows-Autopilot-specific concept
+The Autopilot Glossary is explicit that the hardware hash has no equivalent outside Windows — and it enumerates the other platforms without listing ChromeOS: Hardware hash is a Windows Autopilot-specific concept with no direct equivalent on other platforms. macOS and iOS use ABM device assignment via serial number for zero-touch enrollment; Android uses ZTE IMEI/serial upload or Corporate Identifiers; Linux has no zero-touch enrollment at all.​3​
+
+Bottom Line
+There is no recommended Autopilot hardware-hash upload procedure for ChromeOS, because:
+
+Autopilot provisions Windows devices only — it is not a ChromeOS mechanism.
+The hardware hash is a Windows-specific device-identification primitive with no cross-platform equivalent.
+ChromeOS is not a supported platform anywhere in this Retail Engineering documentation suite.
+ChromeOS/Chromebook fleet enrollment is handled entirely outside the Microsoft Intune/Autopilot ecosystem (typically via the Google Admin Console and ChromeOS zero-touch enrollment), which falls outside the scope of the documentation I have access to.
+
+If you're working a ticket involving Chromebooks in the ~13,000-device fleet, that would fall outside the platforms this endpoint documentation covers, and I'd recommend routing it to whichever team owns Google Workspace / ChromeOS management. Is there anything I can help with on one of the five supported platforms — Windows, macOS, iOS/iPadOS, Android, or Linux?
+
+3 references
+1
+RE-219-device-provisioning-documentation.docx
+2
+RE-184-autopilot-glossary.docx
+3
+RE-184-autopilot-glossary.docx
+
