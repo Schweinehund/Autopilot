@@ -113,7 +113,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 128-02-PLAN.md — Atom 1: v1.17-milestone-audit.mjs (Path-A copy) + v1.17-audit-allowlist.json (35-pin -1 line-shift) + BASELINE_21 (one commit)
+- [x] 128-02-PLAN.md — Atom 1: v1.17-milestone-audit.mjs (Path-A copy) + v1.17-audit-allowlist.json (35-pin -1 line-shift) + BASELINE_21 (one commit)
 
 **Wave 3** *(blocked on Wave 2)*
 
@@ -166,4 +166,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 |-------|----------------|--------|-----------|
 | 126. Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes | 2/2 | Complete    | 2026-07-10 |
 | 127. Automated Milestone-Completion Trigger | 2/2 | Complete   | 2026-07-11 |
-| 128. V116 Pin + 15th Path-A Lineage Bump + Terminal Close | 0/TBD | Not started | - |
+| 128. V116 Pin + 15th Path-A Lineage Bump + Terminal Close | 2/7 | In progress | - |

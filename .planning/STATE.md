@@ -24,11 +24,11 @@ See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 ## Current Position
 
-Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — IN EXECUTION (1/7 plans complete)
+Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — IN EXECUTION (2/7 plans complete)
 Plan: 7 plans in 7 sequential waves (Wave-0 anchor → Atom 1 → Atom 2a/2b → PUSH → emergent slot → close-gate)
-Status: Plan 128-01 (Wave-0 anchor) COMPLETE — Wave-0 pre-anchor SHA f0e1f163 captured; V116 positively confirmed = 3dd251249a812e31147cd653a7ad01e6878c091b via dual-token grep; D-128-C conversion set independently re-verified exhaustive (8 validators/14 checks: check-phase-49/58/59/62/101/109/118/121); HYG-02 diff-scope proven single-line-per-file across all 5 files; 35-pin sidecar allowlist -1 line-shift worklist independently re-derived (exact match with RESEARCH). Zero remaining discovery for 128-02/128-03.
+Status: Plan 128-02 (Atom 1) COMPLETE — v1.17-milestone-audit.mjs (Path-A byte-copy of v1.16, C1-C17 inherited) + v1.17-audit-allowlist.json (35-pin -1 line-shift across 4 HYG-02 files, empirically re-verified against live corpus for all 4 sidecar categories C1/C2/C7/C9) + BASELINE_21 (back-anchored to JIT pre-Atom-1 HEAD a96f3b7) landed as ONE indivisible 3-file commit (fac3bc2); harness confirmed GREEN (16/16 PASS, exit 0) against live HEAD both pre- and post-commit. HARN-09 remains Pending in REQUIREMENTS.md (Atom 1 only — validators + CI workflow land in 128-03 Atom 2; full HARN-09 flips at the close-gate per D-128-A). Zero remaining discovery for 128-03.
 Last activity: 2026-07-11
-Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-02-PLAN.md
+Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-03-PLAN.md
 
 ## v1.17 Phase Dependency Summary
 
@@ -197,6 +197,9 @@ Phase 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close)
 - [Phase 128 P01]: V116 positively confirmed = 3dd251249a812e31147cd653a7ad01e6878c091b (short 3dd2512) via dual-token recover-not-assume grep — matches CONTEXT.md's candidate exactly, independently verified not assumed
 - [Phase 128 P01]: D-128-C conversion set independently re-verified exhaustive at 8 files/14 checks (check-phase-49/58/59/62/101/109/118/121); check-phase-57.mjs re-confirmed OUT (string-literal cross-ref only)
 - [Phase 128 P01]: NEW landmine independently re-derived (JSON walk, exact match with RESEARCH) — 35 {file,line} sidecar allowlist pins across 4 HYG-02 files are stale by exactly -1 line; full old-line->new-line worklist recorded in 128-01-SUMMARY.md for 128-02 Atom-1 authoring
+- [Phase 128 P02]: Applied the 35-pin -1 shift programmatically (multiset-consumption Node script matching exact (file,line) pairs, including the duplicate _glossary-android.md:221 entry) rather than manual JSON editing — asserted zero leftover/unconsumed spec entries before writing
+- [Phase 128 P02]: Empirically re-verified all 35 shifts against live corpus (not just arithmetic old-1) by independently recomputing C1/C2/C7/C9 match positions with the OLD unshifted sidecar; confirmed 2 of the 4 safetynet_exemptions pins were already orphaned/dead relative to live content (C1 passes via nearby-keyword-window fallback regardless) — shifted anyway per the plan's uniform-shift mandate
+- [Phase 128 P02]: Did NOT mark HARN-09 complete in REQUIREMENTS.md — Atom 1 (harness+sidecar+BASELINE_21) is only part of HARN-09's full scope (validators+CI workflow land in 128-03 Atom 2); full HARN-09 flips at the close-gate per D-128-A single-commit-flip rider, mirroring 128-01's HARN-08/09/10 deferral decision
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -226,10 +229,10 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-11T07:02:00.000Z
-Stopped at: Phase 128 Plan 01 complete (Wave-0 anchor + V116 recovery + D-128-C full-chain scoping; recon-only, zero remaining discovery for downstream plans)
-Resume file: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-02-PLAN.md
-Next action: Execute Plan 128-02 (Atom 1 — v1.17-milestone-audit.mjs + v1.17-audit-allowlist.json with the 35-pin -1 line-shift + BASELINE_21), consuming the facts recorded in 128-01-SUMMARY.md.
+Last session: 2026-07-11T17:33:00.000Z
+Stopped at: Phase 128 Plan 02 complete (Atom 1 — v1.17-milestone-audit.mjs + v1.17-audit-allowlist.json 35-pin -1 shift + BASELINE_21, landed as one 3-file commit fac3bc2; harness GREEN 16/16 PASS exit 0)
+Resume file: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-03-PLAN.md
+Next action: Execute Plan 128-03 (Atom 2 — V116 pin + readAtV116Close export + check-phase-126/127/128.mjs + 8 frozen-aware validator conversions + audit-harness-v1.17-integrity.yml), consuming the facts recorded in 128-01-SUMMARY.md and 128-02-SUMMARY.md.
 
 ## Operator Next Steps
 
@@ -246,3 +249,4 @@ Next action: Execute Plan 128-02 (Atom 1 — v1.17-milestone-audit.mjs + v1.17-a
 | Phase 127 P01 | 4min | 2 tasks | 1 files |
 | Phase 127 P02 | 13min | 3 tasks | 2 files |
 | Phase 128 P01 | 12min | 2 tasks | 1 files |
+| Phase 128 P02 | 28min | 3 tasks | 3 files |
