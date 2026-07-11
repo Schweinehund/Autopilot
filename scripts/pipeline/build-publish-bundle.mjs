@@ -35,13 +35,38 @@ import { parseRegistry, readFile } from './build-filename-map.mjs';
 const argv = process.argv.slice(2);
 const SELF_TEST = argv.includes('--self-test');
 const isMainModule = process.argv[1] === fileURLToPath(import.meta.url);
+const versionArg = argv.find(a => a.startsWith('--version='));
+const VERSION = versionArg ? versionArg.slice('--version='.length) : 'v1.17'; // fallback preserves current behavior when the flag is absent
 
 const REGISTRY_REL_PATH = 'docs/_registry/RE-index.md';
 const FILENAME_MAP_REL_PATH = 'scripts/pipeline/filename-map.md';
 const STAGING_DIR_REL = '.pipeline-output/publish-staging';
 const DIST_DIR_REL = 'dist';
-const ZIP_NAME = 'docs-library-v1.17.zip';
 const OUTPUT_FILENAME_RE = /^[a-z0-9-]+\.docx$/;
+
+// deriveZipName (D-05): pure helper -- validates `version` against the ANCHORED
+// `^v\d+\.\d+(\.\d+)?$` regex (leading `v` required, optional 3rd numeric segment
+// for versions like v1.4.1). The trailing `$` is load-bearing security (T-127-05):
+// an UNANCHORED `^v?\d+\.\d+` fragment would admit a trailing `/../` path-traversal
+// sequence into the zipDest filename. The anchored charset (v + digits + dots only)
+// excludes `/`, `\`, and `..` by construction.
+export function deriveZipName(version) {
+  if (!/^v\d+\.\d+(\.\d+)?$/.test(version)) {
+    throw new Error('--version must look like v1.17 or v1.4.1 (got: ' + version + ')');
+  }
+  return `docs-library-${version}.zip`;
+}
+
+// Fail-closed at module load (before runBatch/self-test dispatch, line ~618) so both
+// a real run and --self-test see a validated ZIP_NAME. No zip is produced on a
+// malformed --version value.
+let ZIP_NAME;
+try {
+  ZIP_NAME = deriveZipName(VERSION);
+} catch (err) {
+  process.stderr.write('FATAL: ' + err.message + '\n');
+  process.exit(1);
+}
 
 // === Padded-label console output (matches guard-docx.mjs / build-filename-map.mjs) ===
 const LABEL_WIDTH = 72;
