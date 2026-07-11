@@ -105,7 +105,36 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. The milestone closes via a 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent) with cross-OS PASS/FAIL/SKIP **EXACT MATCH**
   4. A single close-gate commit flips all 10 v1.17 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS, with `v1.17-MILESTONE-AUDIT.md` + `v1.17-DEFERRED-CLEANUP.md` authored
 
-**Plans**: TBD
+**Plans**: 7 plans
+
+**Wave 1**
+
+- [ ] 128-01-PLAN.md — recon + Wave-0 pre-anchor: capture anchor SHA, positively confirm V116=3dd2512 (dual-token grep), full-chain D-128-C scoping + HYG-02 diff-scope + 35-pin worklist
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 128-02-PLAN.md — Atom 1: v1.17-milestone-audit.mjs (Path-A copy) + v1.17-audit-allowlist.json (35-pin -1 line-shift) + BASELINE_21 (one commit)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 128-03-PLAN.md — Atom 2a: V116 pin + readAtV116Close export (HARN-08) + the 8 D-128-C frozen-aware conversions / 14 checks (one commit)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 128-04-PLAN.md — Atom 2b: check-phase-126/127 (non-apex) + check-phase-128 apex (48..127=80, throw 80/127) + 14th CI workflow, then PUSH (one commit)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 128-05-PLAN.md — 3-axis terminal re-audit + cascade RED scan + predecessor-byte-unchanged HARD gate (Axis-2 Linux GHA authoritative)
+
+**Wave 6** *(blocked on Wave 5; conditional)*
+
+- [ ] 128-06-PLAN.md — emergent remediation slot (fires only if Axis-2 cascade RED; expected no-op; no value-mask, no frozen-surface edit, CHAIN_SKIP empty)
+
+**Wave 7** *(blocked on Waves 5-6)*
+
+- [ ] 128-07-PLAN.md — close-gate: v1.17-MILESTONE-AUDIT.md + v1.17-DEFERRED-CLEANUP.md + flip all 10 v1.17 reqs to Validated (single dual-token close commit)
+
 **UI hint**: no
 **Discuss-phase flags**: none (closing cluster; consumes prior decisions, does not open new gray areas)
 
