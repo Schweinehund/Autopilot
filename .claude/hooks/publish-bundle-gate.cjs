@@ -29,7 +29,11 @@ function readStdin(){ try { return fs.readFileSync(0,'utf8'); } catch { return '
 function allow(){ process.exit(0); }
 function block(reason){ process.stdout.write(JSON.stringify({decision:'block',reason})); process.exit(0); }
 
-// ANCHORED ($-terminated) version validation -- mirrors 127-01's deriveZipName() exactly.
+// ANCHORED ($-terminated) version validation. Same anchoring + shape as 127-01's
+// deriveZipName() (`^v\d+\.\d+(\.\d+)?$`); the ONLY intentional difference is the optional
+// `v` prefix (`v?`) here, because STATE's `milestone:` field is not guaranteed to carry the
+// leading `v` -- it is normalized to a `v`-prefixed string (see normalizedVersion below)
+// BEFORE it ever reaches zipName, so both forms converge on the same validated output.
 // The trailing $ is load-bearing security (T-127-02): an UNANCHORED `^v?\d+\.\d+` prefix
 // form would admit a traversal-shaped value like `v1.17/../../secrets`, which would then
 // flow unsanitized into normalizedVersion -> zipName -> the dist/<zipName> existsSync,
@@ -57,8 +61,12 @@ function probePandoc() {
       }
       return false;
     }
-    return true; // non-ENOENT error (e.g. wrong-version banner) still means the binary exists;
-                 // the pipeline's own convert.ps1 version-pin guard is authoritative for that check
+    // Probe timed out / was killed (hung binary): treat as UNAVAILABLE, not present. A hung
+    // pandoc would only hang the nudged pipeline too, so degrade to the warn-and-allow path
+    // (conservative, matching probePwsh's catch-all-returns-false posture).
+    if (e.killed === true || e.signal === 'SIGTERM' || e.code === 'ETIMEDOUT') return false;
+    return true; // non-ENOENT, non-timeout error (e.g. wrong-version banner) still means the
+                 // binary exists; the pipeline's convert.ps1 version-pin guard is authoritative
   }
 }
 
@@ -73,7 +81,7 @@ function probePwsh() {
 
 // computeDecision -- PURE, module-scope, exported. Touches NO I/O. This is the contract
 // the --self-test harness exercises (SC#3).
-function computeDecision({ stopHookActive, version, status, percent, completedPhases, zipExists, pandocOk, pwshOk }) {
+function computeDecision({ stopHookActive, version, status, percent, zipExists, pandocOk, pwshOk }) {
   if (stopHookActive) return { action: 'allow' };
   // ANCHORED validation duplicated here (in addition to main()'s STATE-parse gate) so the
   // pure decision function is safe to call standalone from the self-test with synthetic,
@@ -101,7 +109,6 @@ function main(){
   const grab=(re,src=fm)=>{ const m=src.match(re); return m?m[1].trim().replace(/^["']|["']$/g,''):null; };
   const version = grab(/^milestone:\s*(.+)$/m);
   const status = (grab(/^status:\s*(.+)$/m)||'').toLowerCase();
-  const completedPhases = parseInt(grab(/completed_phases:\s*(\d+)/)||'0',10);
   const percent = parseInt(grab(/percent:\s*(\d+)/)||'0',10);
   if (!version || !VERSION_RE.test(version)) allow(); // ANCHORED -- see VERSION_RE comment above
 
@@ -122,7 +129,7 @@ function main(){
 
   const decision = computeDecision({
     stopHookActive: false,
-    version, status, percent, completedPhases,
+    version, status, percent,
     zipExists, pandocOk, pwshOk,
   });
 
@@ -173,7 +180,7 @@ function runSelfTest() {
 
   process.stdout.write('publish-bundle-gate --self-test (127-02 computeDecision proof, SC#3)\n\n');
 
-  const BASE = { stopHookActive:false, version:'v1.17', status:'shipped', percent:100, completedPhases:1, zipExists:false, pandocOk:true, pwshOk:true };
+  const BASE = { stopHookActive:false, version:'v1.17', status:'shipped', percent:100, zipExists:false, pandocOk:true, pwshOk:true };
   const allResults = [];
   function run(fixture) {
     const r = computeDecision(fixture);
