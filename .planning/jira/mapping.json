@@ -858,7 +858,7 @@
         },
         "127": {
           "issueKey": "RTS-732",
-          "status": "in_progress",
+          "status": "done",
           "name": "Automated Milestone-Completion Trigger"
         },
         "128": {
