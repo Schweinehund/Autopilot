@@ -21,6 +21,7 @@ import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { resolveArchivedPhasePath } from './_lib/archive-path.mjs';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
+import { readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -185,7 +186,15 @@ const checks = [
     run() {
       const missing = [];
       for (const g of GLOSSARIES_4) {
-        const c = readFile(g);
+        // Phase 128 D-128-C frozen-aware conversion: docs/_glossary-android.md is HYG-02-touched;
+        // read it frozen (V116=3dd2512), the other 3 glossaries stay live. Expected pattern
+        // UNCHANGED (no value-mask). Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+        let c;
+        if (g === 'docs/_glossary-android.md') {
+          try { c = readAtV116Close(g); } catch { c = null; }
+        } else {
+          c = readFile(g);
+        }
         if (c === null) { missing.push(g + ' (file missing)'); continue; }
         if (!c.includes('_glossary-apple-business.md') && !c.includes('Apple Business Governance')) {
           missing.push(g + ' (no banner)');

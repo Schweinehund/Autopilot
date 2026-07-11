@@ -11,7 +11,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
-import { readAtV15Close } from './_lib/frozen-at-close.mjs';
+import { readAtV15Close, readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -238,8 +238,12 @@ const checks = [
   {
     id: 13, name: "V-58-13: android-capability-matrix.md contains '## Conditional Access' H2 (D-04 retrofit)",
     run() {
-      const c = readFile(ANDROID_MATRIX);
-      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+      // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+      // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let c;
+      try { c = readAtV116Close(ANDROID_MATRIX); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing (frozen V116 read failed): " + ANDROID_MATRIX };
       if (!/^## Conditional Access\s*$/m.test(c)) return { pass: false, detail: "## Conditional Access H2 missing — D-04 retrofit incomplete" };
       return { pass: true, detail: "## Conditional Access H2 present" };
     }
@@ -270,8 +274,12 @@ const checks = [
   {
     id: 16, name: "V-58-16: android-capability-matrix.md intro contains 4-platform-capability-comparison.md link (D-12)",
     run() {
-      const c = readFile(ANDROID_MATRIX);
-      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+      // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+      // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let c;
+      try { c = readAtV116Close(ANDROID_MATRIX); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing (frozen V116 read failed): " + ANDROID_MATRIX };
       const intro = c.split('\n').slice(0, 30).join('\n');
       if (!intro.includes("4-platform-capability-comparison.md")) return { pass: false, detail: "intro missing 4-platform-capability-comparison.md link" };
       if (!intro.includes("4-Platform Capability Comparison")) return { pass: false, detail: "intro missing '4-Platform Capability Comparison' link text" };
@@ -283,8 +291,12 @@ const checks = [
   {
     id: 17, name: "V-58-17: android-capability-matrix.md preserves anchor #deferred-4-platform-unified-capability-comparison (D-14)",
     run() {
-      const c = readFile(ANDROID_MATRIX);
-      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+      // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+      // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let c;
+      try { c = readAtV116Close(ANDROID_MATRIX); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing (frozen V116 read failed): " + ANDROID_MATRIX };
       if (!c.includes('<a id="deferred-4-platform-unified-capability-comparison"></a>')) {
         return { pass: false, detail: 'Android footer anchor "#deferred-4-platform-unified-capability-comparison" missing — D-14 anchor-preservation contract violated' };
       }
@@ -294,8 +306,12 @@ const checks = [
   {
     id: 18, name: "V-58-18: android-capability-matrix.md footer block has forward-link to 4-platform-capability-comparison.md within 800 chars after anchor (D-14)",
     run() {
-      const c = readFile(ANDROID_MATRIX);
-      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+      // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+      // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let c;
+      try { c = readAtV116Close(ANDROID_MATRIX); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing (frozen V116 read failed): " + ANDROID_MATRIX };
       const idx = c.indexOf('<a id="deferred-4-platform-unified-capability-comparison"></a>');
       if (idx < 0) return { pass: false, detail: "anchor not found (V-58-17 should have caught this)" };
       const block = c.slice(idx, idx + 800);
@@ -308,8 +324,12 @@ const checks = [
   {
     id: 19, name: "V-58-19: NEGATIVE — Android footer block does NOT contain pre-Phase-58 deferral wording (deferred to v1.5 OR AECOMPARE-01)",
     run() {
-      const c = readFile(ANDROID_MATRIX);
-      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+      // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+      // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let c;
+      try { c = readAtV116Close(ANDROID_MATRIX); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing (frozen V116 read failed): " + ANDROID_MATRIX };
       const idx = c.indexOf('<a id="deferred-4-platform-unified-capability-comparison"></a>');
       if (idx < 0) return { pass: false, detail: "anchor not found" };
       const block = c.slice(idx, idx + 800);
@@ -344,8 +364,12 @@ const checks = [
   {
     id: 22, name: "V-58-22: NEGATIVE regression-guard — android-capability-matrix.md preserves Phase 45 AEAOSPFULL-09 anchor #deferred-full-aosp-capability-mapping",
     run() {
-      const c = readFile(ANDROID_MATRIX);
-      if (c === null) return { pass: false, detail: "File missing: " + ANDROID_MATRIX };
+      // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+      // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+      // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let c;
+      try { c = readAtV116Close(ANDROID_MATRIX); } catch { c = null; }
+      if (c === null) return { pass: false, detail: "File missing (frozen V116 read failed): " + ANDROID_MATRIX };
       if (!c.includes('<a id="deferred-full-aosp-capability-mapping"></a>')) {
         return { pass: false, detail: "Phase 45 anchor regression — '#deferred-full-aosp-capability-mapping' missing" };
       }

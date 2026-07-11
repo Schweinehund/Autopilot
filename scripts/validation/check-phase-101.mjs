@@ -27,6 +27,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -73,8 +74,12 @@ checks.push({
   id: 'BANNER',
   name: 'V-101-BANNER: 802.1X see-also banner present in ' + GLOSSARY_ANDROID,
   run() {
-    const c = readFile(GLOSSARY_ANDROID);
-    if (c === null) return { pass: false, detail: GLOSSARY_ANDROID + ' missing' };
+    // Phase 128 D-128-C frozen-aware conversion: docs/_glossary-android.md is HYG-02-touched;
+    // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+    // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+    let c;
+    try { c = readAtV116Close(GLOSSARY_ANDROID); } catch { c = null; }
+    if (c === null) return { pass: false, detail: GLOSSARY_ANDROID + ' missing (frozen V116 read failed)' };
     const needle = '> **802.1X / Network authentication:** For 802.1X protocol terminology';
     if (!c.includes(needle)) return { pass: false, detail: 'BANNER needle absent: ' + needle };
     return { pass: true, detail: '802.1X see-also banner present' };

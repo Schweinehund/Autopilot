@@ -11,7 +11,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import process from 'node:process';
-import { readAtV15Close } from './_lib/frozen-at-close.mjs';
+import { readAtV15Close, readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -279,7 +279,16 @@ const checks = [
     run() {
       const missing = [];
       for (const f of [GLOSSARY_WIN, GLOSSARY_MACOS, GLOSSARY_AND]) {
-        if (readFile(f) === null) missing.push('File missing: ' + f);
+        // Phase 128 D-128-C frozen-aware conversion: docs/_glossary-android.md is HYG-02-touched;
+        // read it frozen (V116=3dd2512), the other two glossaries stay live. Expected pattern
+        // UNCHANGED (no value-mask). Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+        let content;
+        if (f === GLOSSARY_AND) {
+          try { content = readAtV116Close(f); } catch { content = null; }
+        } else {
+          content = readFile(f);
+        }
+        if (content === null) missing.push('File missing: ' + f);
       }
       if (missing.length) return { pass: false, detail: missing.join(' | ') };
       return { pass: true, detail: 'all 3 Windows/macOS/Android glossary files present' };
@@ -923,7 +932,15 @@ const checks = [
       const re = /\b(TBD|TODO|FIXME|XXX|PLACEHOLDER)\b/;
       const failures = [];
       for (const f of [GLOSSARY_AND, GLOSSARY_LIN]) {
-        const c = readFile(f);
+        // Phase 128 D-128-C frozen-aware conversion: docs/_glossary-android.md is HYG-02-touched;
+        // read it frozen (V116=3dd2512), _glossary-linux.md stays live. Expected pattern UNCHANGED
+        // (no value-mask). Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+        let c;
+        if (f === GLOSSARY_AND) {
+          try { c = readAtV116Close(f); } catch { c = null; }
+        } else {
+          c = readFile(f);
+        }
         if (c === null) continue;
         const stripped = stripCodeAndHistory(c);
         if (re.test(stripped)) {

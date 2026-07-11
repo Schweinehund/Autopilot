@@ -28,6 +28,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -54,7 +55,16 @@ function presence(id, path, req) {
     id,
     name: 'V-118-' + id + ': ' + path + ' exists and is non-empty' + (req ? ' (' + req + ')' : ''),
     run() {
-      const c = readFile(path);
+      // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+      // read it frozen (V116=3dd2512) when this presence() call targets that path, all other
+      // targets (e.g. error-codes/00-index.md) stay live. Expected behavior UNCHANGED (no value-mask).
+      // Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let c;
+      if (path === DELIVERABLE_MATRIX) {
+        try { c = readAtV116Close(path); } catch { c = null; }
+      } else {
+        c = readFile(path);
+      }
       if (c === null) return { pass: false, detail: path + ' missing' };
       if (c.trim().length === 0) return { pass: false, detail: path + ' is empty' };
       return { pass: true, detail: path + ' present (' + c.length + ' bytes)' };
@@ -70,8 +80,12 @@ checks.push({
   id: 'ENROLL',
   name: 'V-118-ENROLL: RE-144 enrollment + Status: Approved present in ' + DELIVERABLE_MATRIX,
   run() {
-    const c = readFile(DELIVERABLE_MATRIX);
-    if (c === null) return { pass: false, detail: DELIVERABLE_MATRIX + ' missing' };
+    // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+    // read frozen (V116=3dd2512) instead of live HEAD. Expected needles UNCHANGED (no value-mask);
+    // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+    let c;
+    try { c = readAtV116Close(DELIVERABLE_MATRIX); } catch { c = null; }
+    if (c === null) return { pass: false, detail: DELIVERABLE_MATRIX + ' missing (frozen V116 read failed)' };
     if (!c.includes('doc_id: RE-144')) return { pass: false, detail: 'ENROLL needle absent: doc_id: RE-144' };
     if (!c.includes('status: Approved')) return { pass: false, detail: 'ENROLL needle absent: status: Approved' };
     return { pass: true, detail: 'RE-144 enrolled + Status: Approved (registry-flip-to-Approved event)' };
@@ -95,8 +109,12 @@ checks.push({
   id: 'REFORMAT',
   name: 'V-118-REFORMAT: EEE-reformat Version-History row present in ' + DELIVERABLE_MATRIX,
   run() {
-    const c = readFile(DELIVERABLE_MATRIX);
-    if (c === null) return { pass: false, detail: DELIVERABLE_MATRIX + ' missing' };
+    // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+    // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+    // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+    let c;
+    try { c = readAtV116Close(DELIVERABLE_MATRIX); } catch { c = null; }
+    if (c === null) return { pass: false, detail: DELIVERABLE_MATRIX + ' missing (frozen V116 read failed)' };
     if (!c.includes(REFORMAT_ROW)) return { pass: false, detail: 'REFORMAT needle absent: ' + REFORMAT_ROW };
     return { pass: true, detail: 'one-time "v1.15 EEE reformat" Version-History row present' };
   }
@@ -107,8 +125,12 @@ checks.push({
   id: 'TABLE-REMEDIATION',
   name: 'V-118-TABLE-REMEDIATION: per-table prose summary present in ' + DELIVERABLE_MATRIX,
   run() {
-    const c = readFile(DELIVERABLE_MATRIX);
-    if (c === null) return { pass: false, detail: DELIVERABLE_MATRIX + ' missing' };
+    // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+    // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+    // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+    let c;
+    try { c = readAtV116Close(DELIVERABLE_MATRIX); } catch { c = null; }
+    if (c === null) return { pass: false, detail: DELIVERABLE_MATRIX + ' missing (frozen V116 read failed)' };
     const needle = 'Table summary:';
     if (!c.includes(needle)) return { pass: false, detail: 'TABLE-REMEDIATION needle absent: ' + needle };
     return { pass: true, detail: 'per-table prose summary present (D-118-1 P-02 chunk-boundary protection)' };

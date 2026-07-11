@@ -21,6 +21,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -58,8 +59,12 @@ checks.push({
   id: 'ROW-ANDROID',
   name: 'V-109-ROW-ANDROID: Network-Auth (802.1X) row landed in android-capability-matrix.md',
   run() {
-    const c = readFile(MATRIX_ANDROID);
-    if (c === null) return { pass: false, detail: MATRIX_ANDROID + ' missing' };
+    // Phase 128 D-128-C frozen-aware conversion: android-capability-matrix.md is HYG-02-touched;
+    // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+    // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+    let c;
+    try { c = readAtV116Close(MATRIX_ANDROID); } catch { c = null; }
+    if (c === null) return { pass: false, detail: MATRIX_ANDROID + ' missing (frozen V116 read failed)' };
     const needle = '| Network Authentication (802.1X) | Partial — [guide](../admin-setup-8021x/06-android.md)';
     if (!c.includes(needle)) return { pass: false, detail: 'ROW-ANDROID needle absent: ' + needle };
     return { pass: true, detail: 'Network-Auth row present in android matrix' };

@@ -20,6 +20,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+import { readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -101,8 +102,12 @@ checks.push({
   id: 'VHROW',
   name: 'V-121-VHROW: "' + VHROW + '" Version-History row present in ' + DELIVERABLE_GLOSSARY_ANDROID,
   run() {
-    const c = readFile(DELIVERABLE_GLOSSARY_ANDROID);
-    if (c === null) return { pass: false, detail: DELIVERABLE_GLOSSARY_ANDROID + ' missing' };
+    // Phase 128 D-128-C frozen-aware conversion: docs/_glossary-android.md is HYG-02-touched;
+    // read frozen (V116=3dd2512) instead of live HEAD. Expected needle UNCHANGED (no value-mask);
+    // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+    let c;
+    try { c = readAtV116Close(DELIVERABLE_GLOSSARY_ANDROID); } catch { c = null; }
+    if (c === null) return { pass: false, detail: DELIVERABLE_GLOSSARY_ANDROID + ' missing (frozen V116 read failed)' };
     if (!c.includes(VHROW)) return { pass: false, detail: 'VHROW needle absent: ' + VHROW };
     return { pass: true, detail: 'one-time "' + VHROW + '" Version-History row present' };
   }

@@ -7,7 +7,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
-import { readAtV15Close } from './_lib/frozen-at-close.mjs';
+import { readAtV15Close, readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -290,7 +290,11 @@ const checks = [
       if (linuxContent === null) return { pass: false, detail: "Linux glossary missing" };
       const winContent = readFile(GLOSSARY_WIN_PATH) || "";
       const macosContent = readFile(GLOSSARY_MACOS_PATH) || "";
-      const androidContent = readFile(GLOSSARY_ANDROID_PATH) || "";
+      // Phase 128 D-128-C frozen-aware conversion: docs/_glossary-android.md is HYG-02-touched;
+      // read frozen (V116=3dd2512) instead of live HEAD. Expected pattern UNCHANGED (no value-mask);
+      // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let androidContent;
+      try { androidContent = readAtV116Close(GLOSSARY_ANDROID_PATH); } catch { androidContent = ""; }
       const siblingTerms = new Set();
       for (const t of extractH3Terms(winContent)) siblingTerms.add(t.toLowerCase());
       for (const t of extractH3Terms(macosContent)) siblingTerms.add(t.toLowerCase());
@@ -323,8 +327,12 @@ const checks = [
     id: 21, name: "V-49-21: docs/_glossary-android.md contains reciprocal Linux glossary link",
     run() {
       if (SKIP_RECIPROCAL) return { pass: true, skipped: true, detail: "--skip-reciprocal flag set; check deferred to commit-2" };
-      const content = readFile(GLOSSARY_ANDROID_PATH);
-      if (content === null) return { pass: false, detail: "File does not exist: " + GLOSSARY_ANDROID_PATH };
+      // Phase 128 D-128-C frozen-aware conversion: read docs/_glossary-android.md frozen (V116=3dd2512)
+      // instead of live HEAD. Expected pattern UNCHANGED (no value-mask); only the read SOURCE moved
+      // live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
+      let content;
+      try { content = readAtV116Close(GLOSSARY_ANDROID_PATH); } catch { content = null; }
+      if (content === null) return { pass: false, detail: "File does not exist (frozen V116 read failed): " + GLOSSARY_ANDROID_PATH };
       if (content.includes(RECIPROCAL_LINK_LITERAL)) return { pass: true };
       return { pass: false, detail: "Reciprocal link literal not found in " + GLOSSARY_ANDROID_PATH };
     }
