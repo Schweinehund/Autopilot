@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.17
 milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
-status: executing
-last_updated: "2026-07-11T04:57:03.025Z"
+status: verifying
+last_updated: "2026-07-11T05:17:46.474Z"
 last_activity: 2026-07-11
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
-  percent: 33
+  completed_plans: 4
+  percent: 67
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 Phase: 127 (Automated Milestone-Completion Trigger) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-11
 
 ## v1.17 Phase Dependency Summary
@@ -191,6 +191,8 @@ Phase 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close)
 - [Phase 126]: Task 2 discovered build-filename-map.mjs had unconditional top-level self-test/main side effects on import; added an isMainModule guard (fileURLToPath check) so build-publish-bundle.mjs can safely import parseRegistry/readFile/slug per the plan's mandated reuse pattern — Rule 3 blocking-issue fix -- merely importing the module for its exports was triggering its own CLI behavior and process.exit() before the importer's code ran
 - [Phase 127]: D-05 implemented as a --version= CLI flag (not env var), consistent with --self-test argv convention
 - [Phase 127]: deriveZipName uses the ANCHORED ^v\d+\.\d+(\.\d+)?$ regex, closing the T-127-05 path-traversal vector an unanchored form would admit
+- [Phase 127]: publish-bundle-gate.cjs computeDecision() gates completeSignal on percent===100 only (no ROADMAP phase-count re-derivation, which is Jira-specific)
+- [Phase 127]: Hook probes (pandoc/pwsh) only run when completeSignal is true AND the zip is absent, keeping the common allow() path free of subprocess spawns
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -220,8 +222,8 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-11T04:57:03.009Z
-Stopped at: Completed 127-01-PLAN.md
+Last session: 2026-07-11T05:17:46.458Z
+Stopped at: Completed 127-02-PLAN.md
 Resume file: None
 Next action: Run `/gsd-plan-phase 126` to plan the Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes phase. Run `/gsd-discuss-phase 126` first if resolving the Phase-126 gray areas (zip location, manifest format, batch resilience, HYG-03 date policy, publish-set boundary) before planning.
 
@@ -238,3 +240,4 @@ Next action: Run `/gsd-plan-phase 126` to plan the Publish-Bundle Pipeline + Gua
 | Phase 126 P01 | 4min | 3 tasks | 6 files |
 | Phase 126 P02 | 32min | 3 tasks | 2 files |
 | Phase 127 P01 | 4min | 2 tasks | 1 files |
+| Phase 127 P02 | 13min | 3 tasks | 2 files |

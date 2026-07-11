@@ -31,7 +31,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Category: Automated Milestone-Completion Trigger (HOOK, new)
 
-- [ ] **HOOK-01**: The publish bundle **regenerates automatically at milestone completion** with no manual step — closing a milestone produces/refreshes `docs-library-vX.Y.zip` (invoking the PUB pipeline). The **detection/invocation mechanism** (a Stop-hook that inspects STATE like the existing Jira milestone hook, vs. a git post-tag hook on the `vX.Y` tag, vs. folding the invocation into the close-gate phase) is resolved at discuss-phase via `/adversarial-review`. The mechanism must degrade gracefully when its prerequisites (pandoc, Node) are absent and must not block or corrupt the milestone-close flow. Mirrors the existing Jira hook pattern under `.claude/hooks/` + gitignored `settings.local.json` activation.
+- [x] **HOOK-01**: The publish bundle **regenerates automatically at milestone completion** with no manual step — closing a milestone produces/refreshes `docs-library-vX.Y.zip` (invoking the PUB pipeline). The **detection/invocation mechanism** (a Stop-hook that inspects STATE like the existing Jira milestone hook, vs. a git post-tag hook on the `vX.Y` tag, vs. folding the invocation into the close-gate phase) is resolved at discuss-phase via `/adversarial-review`. The mechanism must degrade gracefully when its prerequisites (pandoc, Node) are absent and must not block or corrupt the milestone-close flow. Mirrors the existing Jira hook pattern under `.claude/hooks/` + gitignored `settings.local.json` activation.
 
 ### Category: V116 Pin + 15th Path-A Lineage Bump + Milestone Close (HARN, continues v1.16 HARN-05/06/07)
 
@@ -99,7 +99,7 @@ Which phases cover which requirements. Populated during roadmap creation (2026-0
 | PUB-04 | Phase 126 | Complete |
 | HYG-02 | Phase 126 | Complete |
 | HYG-03 | Phase 126 | Complete |
-| HOOK-01 | Phase 127 | Pending |
+| HOOK-01 | Phase 127 | Complete |
 | HARN-08 | Phase 128 | Pending |
 | HARN-09 | Phase 128 | Pending |
 | HARN-10 | Phase 128 | Pending |

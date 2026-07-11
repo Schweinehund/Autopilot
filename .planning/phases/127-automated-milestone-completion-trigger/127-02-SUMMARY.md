@@ -109,3 +109,12 @@ None for the committed hook itself. Two activation facts for the gitignored `set
 ---
 *Phase: 127-automated-milestone-completion-trigger*
 *Completed: 2026-07-11*
+
+## Self-Check: PASSED
+
+- FOUND: .claude/hooks/publish-bundle-gate.cjs
+- FOUND: .claude/settings.local.json
+- FOUND: .planning/phases/127-automated-milestone-completion-trigger/127-02-SUMMARY.md
+- FOUND: d57bf31 (Task 1 commit)
+- FOUND: f5c0d75 (Task 2 commit)
+- FOUND: 734a416 (SUMMARY commit)

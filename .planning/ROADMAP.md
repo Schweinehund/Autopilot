@@ -42,7 +42,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 ### v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) — Phases 126-128
 
 - [x] **Phase 126: Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes** — Batch-convert the entire Approved corpus to guard-clean `.docx`, fold in the two known guard blockers, and emit one versioned, manifest-bearing, upload-ready `docs-library-v1.17.zip` (completed 2026-07-10)
-- [ ] **Phase 127: Automated Milestone-Completion Trigger** — Regenerate the publish bundle automatically at milestone close by invoking the Phase-126 pipeline, degrading gracefully when prerequisites are absent (carries the dominant automated-trigger gray area)
+- [x] **Phase 127: Automated Milestone-Completion Trigger** — Regenerate the publish bundle automatically at milestone close by invoking the Phase-126 pipeline, degrading gracefully when prerequisites are absent (carries the dominant automated-trigger gray area) (completed 2026-07-11)
 - [ ] **Phase 128: V116 Pin + 15th Path-A Lineage Bump + Terminal Close** — Freeze the v1.16 corpus with the mandatory V116 back-anchor pin, bump the audit-harness lineage, and close via 3-axis terminal re-audit (sole deliverable of the closing cluster)
 
 ## Phase Details
@@ -89,7 +89,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 127-02-PLAN.md — STATE-inspecting Stop-hook (publish-bundle-gate.cjs) + --self-test dry-run + settings.local.json activation (D-01..D-04, SC#1-3)
+- [x] 127-02-PLAN.md — STATE-inspecting Stop-hook (publish-bundle-gate.cjs) + --self-test dry-run + settings.local.json activation (D-01..D-04, SC#1-3)
 **UI hint**: no
 **Discuss-phase flags** (resolve via `/gsd-discuss-phase` + `/adversarial-review`, NOT at roadmap): **automated-trigger detection mechanism (DOMINANT design gray area, HOOK-01)** — STATE-inspecting Stop-hook (mirrors the Jira milestone hook) vs. git `post-tag`/`post-commit` hook keyed on the `vX.Y` tag or `MILESTONE CLOSE` commit vs. folding the invocation directly into the close-gate phase; trade-offs across visibility, gate-on-failure, Windows-local pandoc portability, and not corrupting the close flow
 
@@ -136,5 +136,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 126. Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes | 2/2 | Complete    | 2026-07-10 |
-| 127. Automated Milestone-Completion Trigger | 1/2 | In Progress|  |
+| 127. Automated Milestone-Completion Trigger | 2/2 | Complete   | 2026-07-11 |
 | 128. V116 Pin + 15th Path-A Lineage Bump + Terminal Close | 0/TBD | Not started | - |
