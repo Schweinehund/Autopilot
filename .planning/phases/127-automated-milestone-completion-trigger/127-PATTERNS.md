@@ -8,14 +8,14 @@
 
 | New/Modified File | Role | Data Flow | Closest Analog | Match Quality |
 |-------------------|------|-----------|----------------|---------------|
-| `.claude/hooks/bundle-trigger-gate.cjs` (NEW; name is planner's discretion, e.g. `bundle-trigger-gate.cjs`) | middleware (Stop-hook gate) | event-driven (stdin JSON → stdout JSON decision) | `.claude/hooks/jira-milestone-gate.cjs` | exact (same role, same data flow, same STATE.md read, same fail-open contract) |
+| `.claude/hooks/publish-bundle-gate.cjs` (NEW; name is planner's discretion, e.g. `publish-bundle-gate.cjs`) | middleware (Stop-hook gate) | event-driven (stdin JSON → stdout JSON decision) | `.claude/hooks/jira-milestone-gate.cjs` | exact (same role, same data flow, same STATE.md read, same fail-open contract) |
 | `scripts/pipeline/build-publish-bundle.mjs` (MODIFIED — argv parsing + `ZIP_NAME`) | config/utility (CLI orchestrator) | batch / transform | itself — extend the existing `--self-test` argv block (lines 35-37) and the `ZIP_NAME` const (line 43) | exact (self-referential edit, no external analog needed) |
 | `.claude/settings.local.json` (MODIFIED — add second `Stop[]` entry) | config | event-driven (hook activation registry) | itself — mirror the existing `Stop[0]` entry (lines 3-13) | exact |
 | Self-test / dry-run harness for the new hook (embedded `--self-test` branch, satisfies SC#3) | test | transform (pure `computeDecision()` over synthetic fixtures) | `scripts/pipeline/build-publish-bundle.mjs` self-test block (lines 470-616, `stAssert`/`stTry`/`padLabel`) | role-match (pipeline convention transplanted into a `.cjs` hook — first precedent of this kind per RESEARCH.md Open Question #3) |
 
 ## Pattern Assignments
 
-### `.claude/hooks/bundle-trigger-gate.cjs` (middleware, event-driven)
+### `.claude/hooks/publish-bundle-gate.cjs` (middleware, event-driven)
 
 **Analog:** `.claude/hooks/jira-milestone-gate.cjs` (read in full — 95 lines)
 
@@ -157,7 +157,7 @@ const argv = process.argv.slice(2);
 const SELF_TEST = argv.includes('--self-test');
 const versionArg = argv.find(a => a.startsWith('--version='));
 const VERSION = versionArg ? versionArg.slice('--version='.length) : 'v1.17'; // fallback preserves current behavior
-if (!/^v\d+\.\d+/.test(VERSION)) {
+if (!/^v\d+\.\d+(\.\d+)?$/.test(VERSION)) {  // anchored: $ rejects a trailing /../ path-traversal into the zip filename
   process.stderr.write('FATAL: --version must look like v1.17 or v1.4.1 (got: ' + VERSION + ')\n');
   process.exit(1);
 }
@@ -216,7 +216,7 @@ This is a structural anchor — the new `--version=` flag parsing must happen *b
       },
       {
         "hooks": [
-          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/bundle-trigger-gate.cjs\"", "timeout": 15 }
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/publish-bundle-gate.cjs\"", "timeout": 15 }
         ]
       }
     ]
@@ -272,7 +272,7 @@ if (require.main === module) {
 
 ### Fail-open Stop-hook contract
 **Source:** `.claude/hooks/jira-milestone-gate.cjs:24-28,94`
-**Apply to:** `.claude/hooks/bundle-trigger-gate.cjs` (the entire file)
+**Apply to:** `.claude/hooks/publish-bundle-gate.cjs` (the entire file)
 ```javascript
 function allow(){ process.exit(0); }
 function block(reason){ process.stdout.write(JSON.stringify({decision:'block',reason})); process.exit(0); }
@@ -283,7 +283,7 @@ Any parse/IO error or missing file → `exit 0` (allow). Never emit `exit 2` or 
 
 ### STATE.md frontmatter parsing
 **Source:** `.claude/hooks/jira-milestone-gate.cjs:37-39`
-**Apply to:** `.claude/hooks/bundle-trigger-gate.cjs`
+**Apply to:** `.claude/hooks/publish-bundle-gate.cjs`
 ```javascript
 const fmMatch = stateText.match(/^---\s*([\s\S]*?)\s*---/);
 const fm = fmMatch ? fmMatch[1] : stateText;
@@ -293,7 +293,7 @@ Do not reimplement — copy verbatim so both hooks parse STATE.md identically.
 
 ### `completeSignal` computation
 **Source:** `.claude/hooks/jira-milestone-gate.cjs:72`
-**Apply to:** `.claude/hooks/bundle-trigger-gate.cjs`
+**Apply to:** `.claude/hooks/publish-bundle-gate.cjs`
 ```javascript
 /milestone[_\s-]*complete|awaiting next milestone|shipped|archived/.test(status) && (percent===100 || (totalPhases>0 && completedPhases>=totalPhases))
 ```
@@ -306,7 +306,7 @@ No new dependencies anywhere in this phase — `node:fs`, `node:path`, `node:chi
 
 ### argv-array subprocess spawning (never shell-string interpolation)
 **Source:** `scripts/pipeline/build-publish-bundle.mjs:202-217` (`resolvePandocBin`), CLAUDE.md Security Notes
-**Apply to:** `.claude/hooks/bundle-trigger-gate.cjs` probes
+**Apply to:** `.claude/hooks/publish-bundle-gate.cjs` probes
 ```javascript
 execFileSync('pandoc', ['--version'], { stdio: 'pipe', timeout: PROBE_TIMEOUT_MS });
 ```
