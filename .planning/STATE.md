@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.17
 milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
 status: ready_to_execute
-last_updated: "2026-07-11T17:52:00.000Z"
+last_updated: "2026-07-11T18:40:00.000Z"
 last_activity: 2026-07-11
 progress:
   total_phases: 3
@@ -24,11 +24,12 @@ See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 ## Current Position
 
-Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — IN EXECUTION, PAUSED PRE-PUSH (Waves 1-3 + pre-scoped emergent fix done; Wave 4 push pending)
+Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — IN EXECUTION, PAUSED PRE-PUSH (Waves 1-4 authoring done; PUSH itself still pending — orchestrator-owned next step)
 Plan: 7 plans in 7 sequential waves (Wave-0 anchor → Atom 1 → Atom 2a/2b → PUSH → emergent slot → close-gate)
-Status: Waves 1-3 COMPLETE (V116='3dd2512' pin + readAtV116Close; Atom-1 harness+allowlist 35-pin −1 shift+BASELINE_21, v1.17-milestone-audit exit 0; 8 D-128-C conversions). PRE-PUSH ADVERSARIAL REVIEW (2026-07-11) found + FIXED the sole apex-128 close-blocker: check-phase-124.mjs V-124-PIPE05-OUTCOME read the archived .planning/phases/124-.../PIPE-05-FINDINGS.md at live HEAD (complete-milestone moved it to milestones/ AFTER v1.16 close; NOT NESTED-gated → apex-128 [48..127] would go RED on Axis-2 GHA). Converted to readAtV116Close (commit 76d147b); now exits 0 standalone+nested. This is archival drift (LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01), NOT HYG-02 — D-128-C's HYG-doc-scoped plan-time scan structurally couldn't catch it; applied pre-scoped as emergent-slot remediation per STATE plan-time discipline. The HYG-02 −1 line-shift drift (regenerate-supervision-pins --self-test + v1.4..v1.16 audit sidecars, via check-phase-48/60/61/62/63) is NESTED-masked/non-blocking → deferred v1.18 FROZEN-AWARE-ADOPTION-SWEEP-01 (see deferred-items.md). Adversary confirmed via full CHECK_PHASE_NESTED=1 sweep of [48..125]: check-phase-124 was the ONLY nested-failing child; now green. REMAINING: Wave 4 (author check-phase-126/127/128 [apex CHAIN_PHASES=[48..127]=80, throw 77→80/124→127] + audit-harness-v1.17-integrity.yml → git PUSH, fires CI), Wave 5 (Linux-GHA 3-axis re-audit, authoritative both chain validators), Wave 6 (emergent slot — now expected NO-OP, blocker pre-fixed), Wave 7 (close-gate: single commit flips all 10 v1.17 reqs Validated + v1.17-MILESTONE-AUDIT.md + v1.17-DEFERRED-CLEANUP.md).
+Status: Waves 1-3 COMPLETE (V116='3dd2512' pin + readAtV116Close; Atom-1 harness+allowlist 35-pin −1 shift+BASELINE_21, v1.17-milestone-audit exit 0; 8 D-128-C conversions). PRE-PUSH ADVERSARIAL REVIEW (2026-07-11) found + FIXED the sole apex-128 close-blocker: check-phase-124.mjs V-124-PIPE05-OUTCOME read the archived .planning/phases/124-.../PIPE-05-FINDINGS.md at live HEAD (complete-milestone moved it to milestones/ AFTER v1.16 close; NOT NESTED-gated → apex-128 [48..127] would go RED on Axis-2 GHA). Converted to readAtV116Close (commit 76d147b); now exits 0 standalone+nested. This is archival drift (LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01), NOT HYG-02 — D-128-C's HYG-doc-scoped plan-time scan structurally couldn't catch it; applied pre-scoped as emergent-slot remediation per STATE plan-time discipline. The HYG-02 −1 line-shift drift (regenerate-supervision-pins --self-test + v1.4..v1.16 audit sidecars, via check-phase-48/60/61/62/63) is NESTED-masked/non-blocking → deferred v1.18 FROZEN-AWARE-ADOPTION-SWEEP-01 (see deferred-items.md). Adversary confirmed via full CHECK_PHASE_NESTED=1 sweep of [48..125]: check-phase-124 was the ONLY nested-failing child; now green.
+Wave 4 AUTHORING COMPLETE, PUSH PENDING (2026-07-11, commit 5da45802): check-phase-126.mjs + check-phase-127.mjs (non-apex, both exit 0 standalone) + check-phase-128.mjs (apex, CHAIN_PHASES=[48..127]=80 entries, throws corrected 77→80/124→127, HARNESS=v1.17-milestone-audit.mjs, standalone --verbose EXIT 0: 82 PASS/0 FAIL/1 SKIPPED) + audit-harness-v1.17-integrity.yml (14th CI coexistence workflow, Path-A repoint from v1.16, linux-chain-ubuntu-latest preserved verbatim) landed as ONE local commit, exactly the 4 named files, NOT pushed (explicit scope directive — the orchestrator pushes Atom-2a 066a906 + Atom-2b 5da45802 together after confirming apex-128 green locally, which this execution already confirmed). REMAINING: PUSH (fires the 14th workflow's paths trigger, produces the Axis-2 GHA run ID), Wave 5 (Linux-GHA 3-axis re-audit, authoritative both chain validators), Wave 6 (emergent slot — expected NO-OP, blocker pre-fixed in Wave 3), Wave 7 (close-gate: single commit flips all 10 v1.17 reqs Validated + v1.17-MILESTONE-AUDIT.md + v1.17-DEFERRED-CLEANUP.md).
 Last activity: 2026-07-11
-Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-04-PLAN.md (Wave 4 — the PUSH; user checkpoint before this)
+Resume: orchestrator PUSH of commits 066a906 (Atom-2a) + 5da45802 (Atom-2b) to fire audit-harness-v1.17-integrity.yml, then .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-05-PLAN.md (3-axis terminal re-audit, consumes the resulting GHA run ID)
 
 ## v1.17 Phase Dependency Summary
 
@@ -203,6 +204,7 @@ Phase 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close)
 - [Phase 128 P03]: check-phase-118.mjs's shared presence() helper made path-conditional (readAtV116Close only for DELIVERABLE_MATRIX) rather than duplicated, so the co-located DELIVERABLE_ERRCODES presence check correctly stays live (not a HYG-02 file)
 - [Phase 128 P03]: check-phase-62.mjs's own converted check (V-62-06..09) passes; the file's overall standalone exit remains 1 due to 4 pre-existing, unrelated chain-subprocess failures (check-phase-48/60/61.mjs + v1.6-milestone-audit.mjs C2) — proven byte-identical FAIL set before/after this plan's edit; out of D-128-C scope, logged to 128-*/deferred-items.md, not fixed
 - [Phase 128 P03]: Did NOT mark HARN-08/09 complete in REQUIREMENTS.md — pin + 8/14 validator conversions land in Atom 2a (this plan), but check-phase-126/127/128.mjs + the CI workflow land in 128-04 Atom 2b; full HARN-09 (and HARN-08's requirement-flip) happens at the close-gate per D-128-A
+- [Phase 128 P04]: Authored + locally committed the Atom-2b 4-file set (check-phase-126/127/128.mjs + audit-harness-v1.17-integrity.yml, commit 5da45802) per an orchestrator-directed scope change — did NOT push, did NOT open a PR, did NOT wait on any GHA run. check-phase-128.mjs --verbose proven green standalone (82 PASS/0 FAIL/1 SKIPPED, exit 0) as the local pre-push proof the orchestrator requested. Push of 066a906+5da45802 together (to fire the 14th workflow's paths trigger and produce the Axis-2 GHA run ID for 128-05) is the orchestrator's own next step, not executed here. Did NOT mark HARN-09/HARN-10 complete — flips only at the 128-07 close-gate per D-128-A.
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -232,10 +234,10 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-11T17:52:00.000Z
-Stopped at: Phase 128 Plan 03 complete (Atom 2a — V116='3dd2512' pin + readAtV116Close export + 8 D-128-C validator conversions / 14 checks, landed as one 9-file commit 066a906; 7/8 exit 0 standalone, 8th's own converted check passes with pre-existing unrelated chain failures documented)
-Resume file: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-04-PLAN.md
-Next action: Execute Plan 128-04 (Atom 2b — check-phase-126/127/128.mjs + audit-harness-v1.17-integrity.yml, the 14th CI coexistence workflow), then PUSH both Atom 2a + Atom 2b to fire the authoritative Axis-2 GHA run.
+Last session: 2026-07-11T18:40:00.000Z
+Stopped at: Phase 128 Plan 04 authoring complete, PUSH pending (Atom 2b — check-phase-126/127/128.mjs + audit-harness-v1.17-integrity.yml, landed as one 4-file commit 5da45802; check-phase-128.mjs --verbose exits 0 standalone: 82 PASS/0 FAIL/1 SKIPPED). Push explicitly deferred to the orchestrator per scope directive — NOT executed by this agent.
+Resume file: orchestrator PUSH step, then .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-05-PLAN.md
+Next action: Orchestrator pushes commits 066a906 (Atom-2a) + 5da45802 (Atom-2b) to a branch/PR to fire audit-harness-v1.17-integrity.yml's paths trigger, records the resulting Axis-2 GHA run ID, then Plan 128-05 (3-axis terminal re-audit) consumes it.
 
 ## Operator Next Steps
 
@@ -254,3 +256,4 @@ Next action: Execute Plan 128-04 (Atom 2b — check-phase-126/127/128.mjs + audi
 | Phase 128 P01 | 12min | 2 tasks | 1 files |
 | Phase 128 P02 | 28min | 3 tasks | 3 files |
 | Phase 128 P03 | 17min | 3 tasks | 9 files |
+| Phase 128 P04 | 35min | 2.5 tasks (authoring half of Task 3; push deferred to orchestrator) | 4 files |

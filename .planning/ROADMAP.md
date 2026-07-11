@@ -121,7 +121,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 128-04-PLAN.md — Atom 2b: check-phase-126/127 (non-apex) + check-phase-128 apex (48..127=80, throw 80/127) + 14th CI workflow, then PUSH (one commit)
+- [ ] 128-04-PLAN.md — Atom 2b: check-phase-126/127 (non-apex) + check-phase-128 apex (48..127=80, throw 80/127) + 14th CI workflow, then PUSH (one commit) — **AUTHORING + LOCAL COMMIT DONE (5da45802, check-phase-128.mjs --verbose exits 0: 82 PASS/0 FAIL/1 SKIPPED); PUSH deferred to orchestrator per scope directive, checkbox remains unchecked until push completes**
 
 **Wave 5** *(blocked on Wave 4)*
 
