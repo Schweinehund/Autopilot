@@ -88,3 +88,11 @@ None - no external service configuration required.
 ---
 *Phase: 127-automated-milestone-completion-trigger*
 *Completed: 2026-07-11*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/pipeline/build-publish-bundle.mjs
+- FOUND: .planning/phases/127-automated-milestone-completion-trigger/127-01-SUMMARY.md
+- FOUND: 8a7c0c4 (Task 1 commit)
+- FOUND: 2eae465 (Task 2 commit)
+- FOUND: 9c35068 (SUMMARY commit)
