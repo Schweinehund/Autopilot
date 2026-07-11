@@ -117,7 +117,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 128-03-PLAN.md — Atom 2a: V116 pin + readAtV116Close export (HARN-08) + the 8 D-128-C frozen-aware conversions / 14 checks (one commit)
+- [x] 128-03-PLAN.md — Atom 2a: V116 pin + readAtV116Close export (HARN-08) + the 8 D-128-C frozen-aware conversions / 14 checks (one commit)
 
 **Wave 4** *(blocked on Wave 3)*
 

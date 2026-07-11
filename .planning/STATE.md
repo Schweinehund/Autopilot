@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.17
 milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
 status: ready_to_execute
-last_updated: "2026-07-11T06:45:00.000Z"
+last_updated: "2026-07-11T17:52:00.000Z"
 last_activity: 2026-07-11
 progress:
   total_phases: 3
@@ -24,11 +24,11 @@ See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 ## Current Position
 
-Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — IN EXECUTION (2/7 plans complete)
+Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — IN EXECUTION (3/7 plans complete)
 Plan: 7 plans in 7 sequential waves (Wave-0 anchor → Atom 1 → Atom 2a/2b → PUSH → emergent slot → close-gate)
-Status: Plan 128-02 (Atom 1) COMPLETE — v1.17-milestone-audit.mjs (Path-A byte-copy of v1.16, C1-C17 inherited) + v1.17-audit-allowlist.json (35-pin -1 line-shift across 4 HYG-02 files, empirically re-verified against live corpus for all 4 sidecar categories C1/C2/C7/C9) + BASELINE_21 (back-anchored to JIT pre-Atom-1 HEAD a96f3b7) landed as ONE indivisible 3-file commit (fac3bc2); harness confirmed GREEN (16/16 PASS, exit 0) against live HEAD both pre- and post-commit. HARN-09 remains Pending in REQUIREMENTS.md (Atom 1 only — validators + CI workflow land in 128-03 Atom 2; full HARN-09 flips at the close-gate per D-128-A). Zero remaining discovery for 128-03.
+Status: Plan 128-03 (Atom 2a) COMPLETE — V116='3dd2512' pin + readAtV116Close export added to frozen-at-close.mjs (SHA re-confirmed via dual-token grep), then the 8 D-128-C predecessor validators / 14 checks (check-phase-49/58/59/62/101/109/118/121) converted to readAtV116Close, landed as ONE indivisible 9-file commit (066a906); needle text byte-unchanged (no value-masking), CHAIN_SKIP empty and CHAIN_PHASES untouched in all 8 files (confirmed via git diff). 7/8 converted validators exit 0 standalone; check-phase-62.mjs's own converted check (V-62-06..09) PASSES but the file's overall exit is 1 due to pre-existing unrelated chain-subprocess failures (byte-identical before/after this plan, logged to deferred-items.md, out of scope). HARN-08 pin structurally complete; HARN-09 remains Pending in REQUIREMENTS.md (validators land here in Atom 2a, but check-phase-126/127/128.mjs + CI workflow land in 128-04 Atom 2b; full HARN-09 flips at the close-gate per D-128-A). Not pushed yet (push happens in 128-04 alongside Atom 2b).
 Last activity: 2026-07-11
-Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-03-PLAN.md
+Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-04-PLAN.md
 
 ## v1.17 Phase Dependency Summary
 
@@ -200,6 +200,9 @@ Phase 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close)
 - [Phase 128 P02]: Applied the 35-pin -1 shift programmatically (multiset-consumption Node script matching exact (file,line) pairs, including the duplicate _glossary-android.md:221 entry) rather than manual JSON editing — asserted zero leftover/unconsumed spec entries before writing
 - [Phase 128 P02]: Empirically re-verified all 35 shifts against live corpus (not just arithmetic old-1) by independently recomputing C1/C2/C7/C9 match positions with the OLD unshifted sidecar; confirmed 2 of the 4 safetynet_exemptions pins were already orphaned/dead relative to live content (C1 passes via nearby-keyword-window fallback regardless) — shifted anyway per the plan's uniform-shift mandate
 - [Phase 128 P02]: Did NOT mark HARN-09 complete in REQUIREMENTS.md — Atom 1 (harness+sidecar+BASELINE_21) is only part of HARN-09's full scope (validators+CI workflow land in 128-03 Atom 2); full HARN-09 flips at the close-gate per D-128-A single-commit-flip rider, mirroring 128-01's HARN-08/09/10 deferral decision
+- [Phase 128 P03]: check-phase-118.mjs's shared presence() helper made path-conditional (readAtV116Close only for DELIVERABLE_MATRIX) rather than duplicated, so the co-located DELIVERABLE_ERRCODES presence check correctly stays live (not a HYG-02 file)
+- [Phase 128 P03]: check-phase-62.mjs's own converted check (V-62-06..09) passes; the file's overall standalone exit remains 1 due to 4 pre-existing, unrelated chain-subprocess failures (check-phase-48/60/61.mjs + v1.6-milestone-audit.mjs C2) — proven byte-identical FAIL set before/after this plan's edit; out of D-128-C scope, logged to 128-*/deferred-items.md, not fixed
+- [Phase 128 P03]: Did NOT mark HARN-08/09 complete in REQUIREMENTS.md — pin + 8/14 validator conversions land in Atom 2a (this plan), but check-phase-126/127/128.mjs + the CI workflow land in 128-04 Atom 2b; full HARN-09 (and HARN-08's requirement-flip) happens at the close-gate per D-128-A
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -229,10 +232,10 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-11T17:33:00.000Z
-Stopped at: Phase 128 Plan 02 complete (Atom 1 — v1.17-milestone-audit.mjs + v1.17-audit-allowlist.json 35-pin -1 shift + BASELINE_21, landed as one 3-file commit fac3bc2; harness GREEN 16/16 PASS exit 0)
-Resume file: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-03-PLAN.md
-Next action: Execute Plan 128-03 (Atom 2 — V116 pin + readAtV116Close export + check-phase-126/127/128.mjs + 8 frozen-aware validator conversions + audit-harness-v1.17-integrity.yml), consuming the facts recorded in 128-01-SUMMARY.md and 128-02-SUMMARY.md.
+Last session: 2026-07-11T17:52:00.000Z
+Stopped at: Phase 128 Plan 03 complete (Atom 2a — V116='3dd2512' pin + readAtV116Close export + 8 D-128-C validator conversions / 14 checks, landed as one 9-file commit 066a906; 7/8 exit 0 standalone, 8th's own converted check passes with pre-existing unrelated chain failures documented)
+Resume file: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-04-PLAN.md
+Next action: Execute Plan 128-04 (Atom 2b — check-phase-126/127/128.mjs + audit-harness-v1.17-integrity.yml, the 14th CI coexistence workflow), then PUSH both Atom 2a + Atom 2b to fire the authoritative Axis-2 GHA run.
 
 ## Operator Next Steps
 
@@ -250,3 +253,4 @@ Next action: Execute Plan 128-03 (Atom 2 — V116 pin + readAtV116Close export +
 | Phase 127 P02 | 13min | 3 tasks | 2 files |
 | Phase 128 P01 | 12min | 2 tasks | 1 files |
 | Phase 128 P02 | 28min | 3 tasks | 3 files |
+| Phase 128 P03 | 17min | 3 tasks | 9 files |
