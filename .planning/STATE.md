@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.17
 milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
-status: verifying
-last_updated: "2026-07-11T05:17:46.474Z"
+status: ready_to_plan
+last_updated: "2026-07-11T05:40:00.000Z"
 last_activity: 2026-07-11
 progress:
   total_phases: 3
@@ -20,13 +20,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16). v1.17 delivers the publish/export capability: a single upload-ready `.docx` bundle of the entire Approved corpus, quality-gated fail-closed and auto-regenerated at milestone close.
-**Current focus:** Phase 127 — Automated Milestone-Completion Trigger
+**Current focus:** Phase 128 — V116 Pin + 15th Path-A Lineage Bump + Terminal Close (Phase 127 complete + verified)
 
 ## Current Position
 
-Phase: 127 (Automated Milestone-Completion Trigger) — EXECUTING
-Plan: 2 of 2
-Status: Phase complete — ready for verification
+Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — READY TO PLAN
+Plan: —
+Status: Phase 127 complete + verified (8/8 must-haves, code review 0 blockers); Phase 128 is the v1.17 closing cluster
 Last activity: 2026-07-11
 
 ## v1.17 Phase Dependency Summary
@@ -222,10 +222,10 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-11T05:17:46.458Z
-Stopped at: Completed 127-02-PLAN.md
+Last session: 2026-07-11T05:40:00.000Z
+Stopped at: Phase 127 complete + verified (HOOK-01 auto-trigger shipped; 2/2 plans, VERIFICATION passed 8/8, code review 0 blockers)
 Resume file: None
-Next action: Run `/gsd-plan-phase 126` to plan the Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes phase. Run `/gsd-discuss-phase 126` first if resolving the Phase-126 gray areas (zip location, manifest format, batch resilience, HYG-03 date policy, publish-set boundary) before planning.
+Next action: Run `/gsd-plan-phase 128` (or `/gsd-discuss-phase 128 --chain`) to begin the v1.17 closing cluster — V116 pin + 15th Path-A lineage bump + 3-axis terminal re-audit (HARN-08/09/10). Phase 128 has no discuss-phase gray areas (closing cluster; consumes prior decisions).
 
 ## Operator Next Steps
 
