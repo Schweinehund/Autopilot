@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.17
 milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
-status: ready_to_plan
-last_updated: "2026-07-11T06:30:00.000Z"
+status: ready_to_execute
+last_updated: "2026-07-11T06:45:00.000Z"
 last_activity: 2026-07-11
 progress:
   total_phases: 3
@@ -24,11 +24,11 @@ See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 ## Current Position
 
-Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — CONTEXT GATHERED, READY TO PLAN
-Plan: —
-Status: Phase 128 context gathered (128-CONTEXT.md) — 4 gray areas (A/B/C/D) adjudicated via three-agent adversarial review, converged HIGH on all four; 7 load-bearing grounding corrections captured vs a naive Phase-125 copy
+Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — PLANNED, READY TO EXECUTE
+Plan: 7 plans in 7 sequential waves (Wave-0 anchor → Atom 1 → Atom 2a/2b → PUSH → emergent slot → close-gate)
+Status: Phase 128 planned + plan-checker VERIFICATION PASSED (0 blockers, 1 cosmetic warning). Research surfaced a new landmine: v1.16-audit-allowlist.json carries 35 {file,line} pins across 4 HYG-02 files now stale by −1 (128-02 T2 fixes). D-128-C conversion set = 8 validators/14 checks (check-phase-49/58/59/62/101/109/118/121). HARN-08/09/10 all covered.
 Last activity: 2026-07-11
-Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-CONTEXT.md
+Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-01-PLAN.md
 
 ## v1.17 Phase Dependency Summary
 
