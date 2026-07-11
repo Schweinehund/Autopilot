@@ -148,4 +148,102 @@ function main(){
   allow();
 }
 
-try { main(); } catch { process.exit(0); }
+module.exports = { computeDecision };
+
+// === Self-test (--self-test): pure, synthetic-fixture-driven proof of the full decision
+// matrix, including the mandatory absent-prerequisite warn-and-allow path (SC#3). Gated
+// behind require.main === module (the CJS equivalent of the .mjs isMainModule check) so a
+// self-test run never reads real stdin/STATE and never spawns a real Stop-hook flow, and
+// performs no fs/subprocess I/O at all -- computeDecision() is pure. ===
+function runSelfTest() {
+  let stPassed = 0, stFailed = 0;
+  const LABEL_WIDTH = 72;
+  function padLabel(s) {
+    if (s.length >= LABEL_WIDTH) return s + ' ';
+    return s + ' ' + '.'.repeat(LABEL_WIDTH - s.length) + ' ';
+  }
+  function stAssert(label, pass, detail) {
+    const tag = pass ? 'PASS' : 'FAIL';
+    process.stdout.write(padLabel('[ST] ' + label) + tag + (detail ? ' -- ' + detail : '') + '\n');
+    if (pass) stPassed++; else stFailed++;
+  }
+  function stTry(label, fn) {
+    try { fn(); } catch (err) { stAssert(label, false, err.message); }
+  }
+
+  process.stdout.write('publish-bundle-gate --self-test (127-02 computeDecision proof, SC#3)\n\n');
+
+  const BASE = { stopHookActive:false, version:'v1.17', status:'shipped', percent:100, completedPhases:1, zipExists:false, pandocOk:true, pwshOk:true };
+  const allResults = [];
+  function run(fixture) {
+    const r = computeDecision(fixture);
+    allResults.push(r);
+    return r;
+  }
+
+  stTry('(a) nudge fires: complete + zip absent + prereqs present', () => {
+    const r = run(BASE);
+    stAssert('(a) nudge fires: complete + zip absent + prereqs present', r.action==='block' && r.kind==='nudge', JSON.stringify(r));
+  });
+
+  stTry('(b1) warn-and-allow: pandoc absent', () => {
+    const r = run({ ...BASE, pandocOk:false });
+    stAssert('(b1) warn-and-allow: pandoc absent', r.action==='block' && r.kind==='warn' && r.missing.includes('pandoc'), JSON.stringify(r));
+  });
+
+  stTry('(b2) warn-and-allow: pwsh absent', () => {
+    const r = run({ ...BASE, pwshOk:false });
+    stAssert('(b2) warn-and-allow: pwsh absent', r.action==='block' && r.kind==='warn' && r.missing.includes('pwsh'), JSON.stringify(r));
+  });
+
+  stTry('(c) allow: zip already exists (D-04 idempotency)', () => {
+    const r = run({ ...BASE, zipExists:true });
+    stAssert('(c) allow: zip already exists (D-04 idempotency)', r.action==='allow', JSON.stringify(r));
+  });
+
+  stTry('(d) allow: stop_hook_active', () => {
+    const r = run({ ...BASE, stopHookActive:true });
+    stAssert('(d) allow: stop_hook_active', r.action==='allow', JSON.stringify(r));
+  });
+
+  stTry('(e1) allow: completeSignal false (status not complete-shaped)', () => {
+    const r = run({ ...BASE, status:'planning' });
+    stAssert('(e1) allow: completeSignal false (status not complete-shaped)', r.action==='allow', JSON.stringify(r));
+  });
+
+  stTry('(e2) allow: completeSignal false (percent < 100)', () => {
+    const r = run({ ...BASE, percent:99 });
+    stAssert('(e2) allow: completeSignal false (percent < 100)', r.action==='allow', JSON.stringify(r));
+  });
+
+  stTry('(f1) allow: version missing', () => {
+    const r = run({ ...BASE, version:null });
+    stAssert('(f1) allow: version missing', r.action==='allow', JSON.stringify(r));
+  });
+
+  stTry('(f2) allow: version malformed', () => {
+    const r = run({ ...BASE, version:'not-a-version' });
+    stAssert('(f2) allow: version malformed', r.action==='allow', JSON.stringify(r));
+  });
+
+  stTry('(g) allow: traversal-shaped version rejected by anchored validation', () => {
+    const r = run({ ...BASE, version:'v1.17/../../secrets' });
+    stAssert('(g) allow: traversal-shaped version rejected by anchored validation', r.action==='allow', JSON.stringify(r));
+  });
+
+  stTry('(h) invariant: no result has a continue key; action is always allow or block', () => {
+    const ok = allResults.every(r => !('continue' in r) && (r.action==='allow' || r.action==='block'));
+    stAssert('(h) invariant: no result has a continue key; action is always allow or block', ok, `results=${allResults.length}`);
+  });
+
+  process.stdout.write('\n' + stPassed + ' passed, ' + stFailed + ' failed\n');
+  process.exit(stFailed > 0 ? 1 : 0);
+}
+
+if (require.main === module) {
+  if (process.argv.slice(2).includes('--self-test')) {
+    runSelfTest();
+  } else {
+    try { main(); } catch { process.exit(0); }
+  }
+}
