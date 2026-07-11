@@ -376,9 +376,9 @@ const SELF_TEST = argv.includes('--self-test');
 const versionArg = argv.find(a => a.startsWith('--version='));
 const VERSION = versionArg ? versionArg.slice('--version='.length) : 'v1.17'; // fallback preserves current behavior if invoked with no flag
 // Validate: must start with v<digit> and at least one dot, mirroring the Jira hook's
-// milestone validation regex /^v?\d+\.\d+/ so a malformed --version never produces a
+// milestone validation regex but ANCHORED as /^v?\d+\.\d+(\.\d+)?$/ (the trailing $ is required — an unanchored prefix-only form would admit a path-traversal sequence like v1.17/../../secrets) so a malformed --version never produces a
 // silently-wrong or path-unsafe zip filename.
-if (!/^v\d+\.\d+/.test(VERSION)) {
+if (!/^v\d+\.\d+(\.\d+)?$/.test(VERSION)) {
   process.stderr.write('FATAL: --version must look like v1.17 or v1.4.1 (got: ' + VERSION + ')\n');
   process.exit(1);
 }
@@ -393,7 +393,7 @@ const fmMatch = stateText.match(/^---\s*([\s\S]*?)\s*---/);
 const fm = fmMatch ? fmMatch[1] : stateText;
 const grab=(re,src=fm)=>{ const m=src.match(re); return m?m[1].trim().replace(/^["']|["']$/g,''):null; };
 const version = grab(/^milestone:\s*(.+)$/m);
-if (!version || !/^v?\d+\.\d+/.test(version)) allow(); // same validation the Jira hook already applies
+if (!version || !/^v?\d+\.\d+(\.\d+)?$/.test(version)) allow(); // ANCHORED ($-terminated): rejects traversal-shaped values like v1.17/../../secrets before they reach the dist/<zipName> path
 const normalizedVersion = version.startsWith('v') ? version : 'v' + version;
 const zipName = `docs-library-${normalizedVersion}.zip`;
 ```
@@ -425,22 +425,25 @@ Not applicable in the usual "library API changed" sense — this is a small, sel
 
 **If this table is empty:** N/A — two low-risk assumptions logged above; both are corroborating/confidence-building rather than decision-driving. All D-01..D-05 mechanics claims in this document are `[VERIFIED]` (direct file reads, git history, or official Claude Code docs fetch) or `[CITED: code.claude.com/docs/en/hooks]`.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Exact hook filename**
    - What we know: CONTEXT.md refers to it generically as "a new Stop-hook, sibling to `.claude/hooks/jira-milestone-gate.cjs`" without naming it.
    - What's unclear: whether the planner should name it `bundle-trigger-gate.cjs`, `publish-bundle-gate.cjs`, or something else.
    - Recommendation: any name consistent with the `<noun>-gate.cjs` convention works; this research uses `bundle-trigger-gate.cjs` as a placeholder throughout — not a locked choice.
+   - **RESOLVED:** `publish-bundle-gate.cjs` (locked in 127-02 Task 1, for parity with `jira-milestone-gate.cjs`).
 
 2. **Env var vs. CLI flag for D-05's version override**
    - What we know: CONTEXT.md explicitly leaves this to discretion; this research recommends a `--version=vX.Y[.Z]` CLI flag for consistency with the existing `--self-test` argv convention (argv flags are already the pipeline's established idiom; no other `.mjs` in `scripts/pipeline/` reads `process.env` for configuration).
    - What's unclear: whether the planner might prefer an env var (`ZIP_VERSION`) instead, e.g. to avoid the agent needing to construct the exact flag string in its nudge-response command.
    - Recommendation: CLI flag, as the nudge's `block(reason)` text can simply state the exact full command (`node scripts/pipeline/build-publish-bundle.mjs --version=v1.17`) with the version already substituted in — no extra indirection needed either way.
+   - **RESOLVED:** `--version=` CLI flag (locked in 127-01 Task 1).
 
 3. **Self-test harness structure for the new hook (SC#3's mandatory dry-run test)**
    - What we know: the pipeline's `.mjs` scripts follow a `--self-test` argv convention with pure, exported, synthetic-input-driven assertion functions (`stAssert`/`stTry` pattern in `build-publish-bundle.mjs`). `jira-milestone-gate.cjs` itself has **no** self-test mode — it has never needed one before this phase.
    - What's unclear: whether the planner should introduce a `--self-test` mode for the new `.cjs` hook (first precedent of this kind for a `.claude/hooks/*.cjs` file), structured as pure `computeDecision({...})` helper functions separate from the stdin/fs I/O, exercised with synthetic STATE-fixture inputs covering: zip-exists / zip-missing × prereqs-present / prereqs-missing × `completeSignal` true/false × `stop_hook_active` true/false.
    - Recommendation: yes — extract the decision logic into a pure, exported function (mirrors `build-publish-bundle.mjs`'s already-proven pattern of pure functions tested via synthetic fixtures) and gate a `--self-test` branch behind `require.main === module` (the CJS equivalent of the `.mjs` files' `isMainModule` check), so `node .claude/hooks/bundle-trigger-gate.cjs --self-test` can be run standalone by a developer/CI without needing a live Claude Code Stop event. This directly satisfies SC#3's "prove the trigger does not block, fail, or corrupt the close when pandoc/pwsh/Node are absent" via synthetic prereq-presence fixtures rather than requiring an environment with actually-uninstalled tools.
+   - **RESOLVED:** embedded `--self-test` branch gated behind `require.main === module`, exercising a pure exported `computeDecision()` over synthetic fixtures (locked in 127-02 Task 2).
 
 ## Environment Availability
 
@@ -466,7 +469,7 @@ Not applicable in the usual "library API changed" sense — this is a small, sel
 | V2 Authentication | No | No auth surface — local hook, local filesystem only |
 | V3 Session Management | No | N/A |
 | V4 Access Control | No | N/A — runs with the same local-user privileges as the Claude Code session itself |
-| V5 Input Validation | Yes (narrow) | STATE.md's `milestone:` field is the only "external" input the hook parses. It must be validated (`^v?\d+\.\d+`, reusing the Jira hook's exact regex) before being used to construct either a filesystem path (`dist/docs-library-<version>.zip`) or a subprocess argv element (`--version=<version>` passed to the pipeline in the nudge text) |
+| V5 Input Validation | Yes (narrow) | STATE.md's `milestone:` field is the only "external" input the hook parses. It must be validated with an ANCHORED `^v?\d+\.\d+(\.\d+)?$` (the trailing `$` is required to reject traversal sequences; mirrors 127-01's `deriveZipName`) before being used to construct either a filesystem path (`dist/docs-library-<version>.zip`) or a subprocess argv element (`--version=<version>` passed to the pipeline in the nudge text) |
 | V6 Cryptography | No | N/A — no secrets, no crypto operations in this phase |
 
 ### Known Threat Patterns for this stack
@@ -474,7 +477,7 @@ Not applicable in the usual "library API changed" sense — this is a small, sel
 | Pattern | STRIDE | Standard Mitigation |
 |---------|--------|----------------------|
 | Command injection via STATE.md `milestone:` value flowing into a shell string | Tampering | Never build a shell command via string concatenation of the parsed version; use `execFileSync(cmd, [argv...])` array form throughout (matches `T-126-02-01`'s established convention) — this applies both to the hook's own probe calls and to any subprocess spawn added to `build-publish-bundle.mjs` for the new `--version=` flag (which itself only needs `argv` parsing, no subprocess spawn at all) |
-| Path traversal via a malformed `milestone:` value producing a `dist/../../something.zip` existence check | Tampering / Information Disclosure | The same `^v?\d+\.\d+` validation regex that gates the version string also excludes `/`, `\`, and `..` sequences by construction (it only matches digit/dot characters after an optional `v`) — no additional path-sanitization needed beyond reusing this existing validation |
+| Path traversal via a malformed `milestone:` value producing a `dist/../../something.zip` existence check | Tampering / Information Disclosure | The version string must be gated by an ANCHORED `^v?\d+\.\d+(\.\d+)?$` regex (note the trailing `$`). The `$` terminator is what excludes `/`, `\`, and `..` sequences — an UNANCHORED `^v?\d+\.\d+` (as an earlier draft of this row wrongly claimed was sufficient) matches only the *prefix* and would admit `v1.17/../../secrets`, turning the read-only `dist/<version>.zip` existsSync into an arbitrary-file-existence oracle outside `dist/`. Use the same anchored form as 127-01's `deriveZipName`; the hook's self-test must assert a traversal-shaped milestone fails validation (resolves to `allow`) |
 | A future, differently-configured Stop hook silently corrupting the close flow via `continue:false` | Tampering / Denial of Service | This phase's own hook must never emit `{"continue":false}` — verify this explicitly in the self-test harness (assert the hook's output never contains a `continue` key at all, since `false` "takes precedence over decision" per the official Stop-hook contract and would abort the entire session, directly violating D-03's "must not block or corrupt the milestone-close flow") |
 
 ## Sources
