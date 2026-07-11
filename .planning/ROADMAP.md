@@ -85,7 +85,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 127-01-PLAN.md — parameterize the pipeline ZIP_NAME via a validated `--version=vX.Y[.Z]` flag + deriveZipName() (D-05)
+- [x] 127-01-PLAN.md — parameterize the pipeline ZIP_NAME via a validated `--version=vX.Y[.Z]` flag + deriveZipName() (D-05)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -136,5 +136,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 126. Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes | 2/2 | Complete    | 2026-07-10 |
-| 127. Automated Milestone-Completion Trigger | 0/2 | Not started | - |
+| 127. Automated Milestone-Completion Trigger | 1/2 | In Progress|  |
 | 128. V116 Pin + 15th Path-A Lineage Bump + Terminal Close | 0/TBD | Not started | - |

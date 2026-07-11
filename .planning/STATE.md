@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.17
 milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
 status: executing
-last_updated: "2026-07-11T04:45:08.609Z"
-last_activity: 2026-07-11 -- Phase 127 planning complete
+last_updated: "2026-07-11T04:57:03.025Z"
+last_activity: 2026-07-11
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 3
   percent: 33
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base (grounding envelope established v1.15, extended to the remaining structural doc classes in v1.16). v1.17 delivers the publish/export capability: a single upload-ready `.docx` bundle of the entire Approved corpus, quality-gated fail-closed and auto-regenerated at milestone close.
-**Current focus:** Phase 127 — automated milestone completion trigger
+**Current focus:** Phase 127 — Automated Milestone-Completion Trigger
 
 ## Current Position
 
-Phase: 127
-Plan: Not started
+Phase: 127 (Automated Milestone-Completion Trigger) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-07-11 -- Phase 127 planning complete
+Last activity: 2026-07-11
 
 ## v1.17 Phase Dependency Summary
 
@@ -189,6 +189,8 @@ Phase 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close)
 - [Phase 126]: HYG-02 scope expanded to all 5 files sharing the identical stale phase_46_wave2_retrofit key (requirement text named only 1) — PUB-02 fail-closed batch gate never produces a zip until all 5 are fixed; RESEARCH Pitfall 1 confirmed the identical defect on 4 siblings
 - [Phase 126]: HYG-03 executed strictly verify-only per D-08/D-09 — No corpus-wide YYYY-MM-DD gate added; scoped to the 9 named DEFER-121-07-A files only, confirmed pure no-op (already fixed in commit 9031056)
 - [Phase 126]: Task 2 discovered build-filename-map.mjs had unconditional top-level self-test/main side effects on import; added an isMainModule guard (fileURLToPath check) so build-publish-bundle.mjs can safely import parseRegistry/readFile/slug per the plan's mandated reuse pattern — Rule 3 blocking-issue fix -- merely importing the module for its exports was triggering its own CLI behavior and process.exit() before the importer's code ran
+- [Phase 127]: D-05 implemented as a --version= CLI flag (not env var), consistent with --self-test argv convention
+- [Phase 127]: deriveZipName uses the ANCHORED ^v\d+\.\d+(\.\d+)?$ regex, closing the T-127-05 path-traversal vector an unanchored form would admit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -218,9 +220,9 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-11T03:51:08.900Z
-Stopped at: Phase 127 context gathered
-Resume file: .planning/phases/127-automated-milestone-completion-trigger/127-CONTEXT.md
+Last session: 2026-07-11T04:57:03.009Z
+Stopped at: Completed 127-01-PLAN.md
+Resume file: None
 Next action: Run `/gsd-plan-phase 126` to plan the Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes phase. Run `/gsd-discuss-phase 126` first if resolving the Phase-126 gray areas (zip location, manifest format, batch resilience, HYG-03 date policy, publish-set boundary) before planning.
 
 ## Operator Next Steps
@@ -235,3 +237,4 @@ Next action: Run `/gsd-plan-phase 126` to plan the Publish-Bundle Pipeline + Gua
 | (v1.17 phases not yet started) | — | — | — |
 | Phase 126 P01 | 4min | 3 tasks | 6 files |
 | Phase 126 P02 | 32min | 3 tasks | 2 files |
+| Phase 127 P01 | 4min | 2 tasks | 1 files |
