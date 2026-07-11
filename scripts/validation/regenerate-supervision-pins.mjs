@@ -489,6 +489,17 @@ function doEmitStubs() {
 // this comment records the audit-trail event that line-positions were re-verified at Phase 125
 // close and remain valid for the v1.16 corpus. Resolution path: BASELINE_21 will refresh at
 // the next milestone close per the Path-A inheritance pattern (... -> v1.15 -> BASELINE_19 -> v1.16 -> BASELINE_20).
+// BASELINE_21 refreshed 2026-07-11 (Phase 128 Plan 128-02): closes BASELINE_20 v1.16 carry-over
+// per HARN-09 contract (REQUIREMENTS.md + ROADMAP.md Phase 128 SC#2); v1.17 line positions
+// verified against HEAD a96f3b7687b3ef8092599500097e9b0613dfa6cd (JIT pre-Atom-1 HEAD -- captured
+// via `git rev-parse HEAD` immediately before authoring Atom 1, NOT the Wave-0 anchor f0e1f163
+// (f0e1f1632d708160cd7148f0ec91b0411fbee48d); an automated Jira-sync commit (a96f3b7, "docs(128-01):
+// complete Wave-0 anchor plan") landed between Wave-0 and Atom 1, so the true pre-Atom-1 predecessor
+// is a96f3b7, per the Phase 119/125 recorded Wave-0-vs-pre-Atom-1-anchor distinction).
+// BASELINE_9 entries above remain unchanged -- Phase 128 does NOT alter the line-coord array;
+// this comment records the audit-trail event that line-positions were re-verified at Phase 128
+// close and remain valid for the v1.17 corpus. Resolution path: BASELINE_22 will refresh at the
+// next milestone close per the Path-A inheritance pattern (... -> v1.16 -> BASELINE_20 -> v1.17 -> BASELINE_21).
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 80],   // ### Supervision heading (was 79 at Phase 59; +1 Phase 62-07 banner shift; H3 sits before line 127)
   ['docs/_glossary-android.md', 82],   // Supervision disambiguation blockquote (was 81 at Phase 59; +1 Phase 62-07 banner shift)
