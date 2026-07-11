@@ -24,11 +24,11 @@ See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 ## Current Position
 
-Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — PLANNED, READY TO EXECUTE
+Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — IN EXECUTION (1/7 plans complete)
 Plan: 7 plans in 7 sequential waves (Wave-0 anchor → Atom 1 → Atom 2a/2b → PUSH → emergent slot → close-gate)
-Status: Phase 128 planned + plan-checker VERIFICATION PASSED (0 blockers, 1 cosmetic warning). Research surfaced a new landmine: v1.16-audit-allowlist.json carries 35 {file,line} pins across 4 HYG-02 files now stale by −1 (128-02 T2 fixes). D-128-C conversion set = 8 validators/14 checks (check-phase-49/58/59/62/101/109/118/121). HARN-08/09/10 all covered.
+Status: Plan 128-01 (Wave-0 anchor) COMPLETE — Wave-0 pre-anchor SHA f0e1f163 captured; V116 positively confirmed = 3dd251249a812e31147cd653a7ad01e6878c091b via dual-token grep; D-128-C conversion set independently re-verified exhaustive (8 validators/14 checks: check-phase-49/58/59/62/101/109/118/121); HYG-02 diff-scope proven single-line-per-file across all 5 files; 35-pin sidecar allowlist -1 line-shift worklist independently re-derived (exact match with RESEARCH). Zero remaining discovery for 128-02/128-03.
 Last activity: 2026-07-11
-Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-01-PLAN.md
+Resume: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-02-PLAN.md
 
 ## v1.17 Phase Dependency Summary
 
@@ -194,6 +194,9 @@ Phase 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close)
 - [Phase 127]: deriveZipName uses the ANCHORED ^v\d+\.\d+(\.\d+)?$ regex, closing the T-127-05 path-traversal vector an unanchored form would admit
 - [Phase 127]: publish-bundle-gate.cjs computeDecision() gates completeSignal on percent===100 only (no ROADMAP phase-count re-derivation, which is Jira-specific)
 - [Phase 127]: Hook probes (pandoc/pwsh) only run when completeSignal is true AND the zip is absent, keeping the common allow() path free of subprocess spawns
+- [Phase 128 P01]: V116 positively confirmed = 3dd251249a812e31147cd653a7ad01e6878c091b (short 3dd2512) via dual-token recover-not-assume grep — matches CONTEXT.md's candidate exactly, independently verified not assumed
+- [Phase 128 P01]: D-128-C conversion set independently re-verified exhaustive at 8 files/14 checks (check-phase-49/58/59/62/101/109/118/121); check-phase-57.mjs re-confirmed OUT (string-literal cross-ref only)
+- [Phase 128 P01]: NEW landmine independently re-derived (JSON walk, exact match with RESEARCH) — 35 {file,line} sidecar allowlist pins across 4 HYG-02 files are stale by exactly -1 line; full old-line->new-line worklist recorded in 128-01-SUMMARY.md for 128-02 Atom-1 authoring
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -223,10 +226,10 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-11T05:40:00.000Z
-Stopped at: Phase 127 complete + verified (HOOK-01 auto-trigger shipped; 2/2 plans, VERIFICATION passed 8/8, code review 0 blockers)
-Resume file: None
-Next action: Run `/gsd-plan-phase 128` (or `/gsd-discuss-phase 128 --chain`) to begin the v1.17 closing cluster — V116 pin + 15th Path-A lineage bump + 3-axis terminal re-audit (HARN-08/09/10). Phase 128 has no discuss-phase gray areas (closing cluster; consumes prior decisions).
+Last session: 2026-07-11T07:02:00.000Z
+Stopped at: Phase 128 Plan 01 complete (Wave-0 anchor + V116 recovery + D-128-C full-chain scoping; recon-only, zero remaining discovery for downstream plans)
+Resume file: .planning/phases/128-v116-pin-15th-path-a-lineage-bump-terminal-close/128-02-PLAN.md
+Next action: Execute Plan 128-02 (Atom 1 — v1.17-milestone-audit.mjs + v1.17-audit-allowlist.json with the 35-pin -1 line-shift + BASELINE_21), consuming the facts recorded in 128-01-SUMMARY.md.
 
 ## Operator Next Steps
 
@@ -242,3 +245,4 @@ Next action: Run `/gsd-plan-phase 128` (or `/gsd-discuss-phase 128 --chain`) to 
 | Phase 126 P02 | 32min | 3 tasks | 2 files |
 | Phase 127 P01 | 4min | 2 tasks | 1 files |
 | Phase 127 P02 | 13min | 3 tasks | 2 files |
+| Phase 128 P01 | 12min | 2 tasks | 1 files |

@@ -109,7 +109,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 128-01-PLAN.md — recon + Wave-0 pre-anchor: capture anchor SHA, positively confirm V116=3dd2512 (dual-token grep), full-chain D-128-C scoping + HYG-02 diff-scope + 35-pin worklist
+- [x] 128-01-PLAN.md — recon + Wave-0 pre-anchor: capture anchor SHA, positively confirm V116=3dd2512 (dual-token grep), full-chain D-128-C scoping + HYG-02 diff-scope + 35-pin worklist
 
 **Wave 2** *(blocked on Wave 1)*
 
