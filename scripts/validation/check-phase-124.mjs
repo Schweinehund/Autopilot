@@ -20,6 +20,12 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import process from 'node:process';
+// Phase 128 (v1.17 close) emergent-slot remediation: V-124-PIPE05-OUTCOME reads a
+// PLANNING artifact that /gsd-complete-milestone archived from .planning/phases/124-...
+// to .planning/milestones/v1.16-phases/124-... after the v1.16 close-gate. Read it at the
+// frozen v1.16 close snapshot (V116=3dd2512) where it still lived at the phases/ path.
+// LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01; needle unchanged (no value-masking).
+import { readAtV116Close } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -85,8 +91,11 @@ checks.push({
   id: 'PIPE05-OUTCOME',
   name: 'V-124-PIPE05-OUTCOME: owner-confirmed OUTCOME: PASS present in ' + DELIVERABLE_PIPE05,
   run() {
-    const c = readFile(DELIVERABLE_PIPE05);
-    if (c === null) return { pass: false, detail: DELIVERABLE_PIPE05 + ' missing' };
+    // Frozen-aware read (V116=3dd2512): the PIPE-05 owner-confirmation is a v1.16 deliverable
+    // archived to milestones/ post-close; assert its frozen v1.16-close state, not live HEAD.
+    let c;
+    try { c = readAtV116Close(DELIVERABLE_PIPE05); } catch { c = null; }
+    if (c === null) return { pass: false, detail: DELIVERABLE_PIPE05 + ' missing at V116 close (3dd2512)' };
     if (!c.includes('OUTCOME: PASS')) return { pass: false, detail: 'PIPE05-OUTCOME needle absent: OUTCOME: PASS' };
     return { pass: true, detail: 'owner-confirmed Draft-label grounding OUTCOME: PASS present (PIPE-05)' };
   }
