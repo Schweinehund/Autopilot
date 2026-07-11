@@ -8,9 +8,10 @@
 // Converts EVERY docs/_registry/RE-index.md Status:Approved doc (221 today) to .docx,
 // names each output from scripts/pipeline/filename-map.md, runs guard-docx.mjs on every
 // converted .docx, and -- on a 100% clean pass -- writes a CSV manifest + static README
-// + a single versioned dist/docs-library-v1.17.zip. Any conversion/guard/parity/naming/
-// divergence failure -> collect ALL failures, print the full list, exit 1, NO zip (D-07,
-// always-full rebuild D-05, sequential D-06).
+// + a single versioned dist/docs-library-v<version>.zip (--version=, defaults to v1.17;
+// 127-CONTEXT.md D-05). Any conversion/guard/parity/naming/divergence failure -> collect
+// ALL failures, print the full list, exit 1, NO zip (D-07, always-full rebuild D-05,
+// sequential D-06).
 //
 // Zero-dependency Node code (built-ins only), following the scripts/pipeline/*.mjs family
 // conventions (padLabel/stAssert self-test harness, argv flags, fail-closed exit contract).
@@ -634,6 +635,26 @@ if (isMainModule && SELF_TEST) {
       validateOutputFilename('no-extension') === false &&
       validateOutputFilename('../escape.docx') === false;
     stAssert('(e2) validateOutputFilename enforces the D-05 slug charset', ok);
+  });
+
+  // (f1)-(f4) D-05: deriveZipName() derivation + fail-closed validation (127-01 Task 2)
+  stTry('(f1) deriveZipName derives the 2-part default version', () => {
+    stAssert('(f1) deriveZipName derives the 2-part default version',
+      deriveZipName('v1.17') === 'docs-library-v1.17.zip');
+  });
+  stTry('(f2) deriveZipName derives a 3-part version verbatim', () => {
+    stAssert('(f2) deriveZipName derives a 3-part version verbatim',
+      deriveZipName('v1.4.1') === 'docs-library-v1.4.1.zip');
+  });
+  stTry('(f3) deriveZipName throws on malformed version', () => {
+    let threw = false;
+    try { deriveZipName('garbage'); } catch { threw = true; }
+    stAssert('(f3) deriveZipName throws on malformed version', threw);
+  });
+  stTry('(f4) deriveZipName throws on traversal-shaped version (T-127-05)', () => {
+    let threw = false;
+    try { deriveZipName('v1.17/../etc'); } catch { threw = true; }
+    stAssert('(f4) deriveZipName throws on traversal-shaped version (T-127-05)', threw);
   });
 
   process.stdout.write('\n' + stPassed + ' passed, ' + stFailed + ' failed\n');
