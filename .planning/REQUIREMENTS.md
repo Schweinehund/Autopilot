@@ -35,9 +35,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase (phases 
 
 ### Category: V116 Pin + 15th Path-A Lineage Bump + Milestone Close (HARN, continues v1.16 HARN-05/06/07)
 
-- [ ] **HARN-08**: The **V116 back-anchor pin** is added — `scripts/validation/_lib/frozen-at-close.mjs` gains a `V116: '<v1.16 close-gate SHA>'` entry + `readAtV116Close` export (recover the SHA via `git log --all --grep="MILESTONE-AUDIT" --grep="MILESTONE CLOSE" --all-match -1 --format=%H`), following the V18..V115 single-entry pattern. This **freezes the v1.16 corpus** — the mandatory back-anchor invariant that the v1.16 close deliberately left to its successor (`V116-PIN-DEFERRAL`).
-- [ ] **HARN-09**: The **15th Path-A audit-harness lineage bump** — `v1.17-milestone-audit.mjs` (Path-A from v1.16, C1–C17 inherited) + `v1.17-audit-allowlist.json` + BASELINE_21 + `check-phase-126..NN.mjs` per-phase validators (chain-apex `CHAIN_PHASES=[48..(closephase-1)]`, continuing the `[48..N-1]` invariant) + the 14th parallel CI coexistence workflow (`audit-harness-v1.17-integrity.yml`). Predecessor v1.4–v1.16 frozen surfaces remain **byte-unchanged** (except the 2 guard-motivated content edits in HYG-02/03, which are content docs, not frozen validator/harness surfaces); any predecessor content-assertion validator that reads a HYG-touched doc at live HEAD is converted frozen-aware (`readAtV116Close`) as in-scope close-gate remediation — NO value-masking, `CHAIN_SKIP` empty.
-- [ ] **HARN-10**: The milestone closes via a **3-axis terminal re-audit** (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP **EXACT MATCH**), in a single close-gate commit flipping all v1.17 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS, with `v1.17-MILESTONE-AUDIT.md` + `v1.17-DEFERRED-CLEANUP.md` authored.
+- [x] **HARN-08**: The **V116 back-anchor pin** is added — `scripts/validation/_lib/frozen-at-close.mjs` gains a `V116: '<v1.16 close-gate SHA>'` entry + `readAtV116Close` export (recover the SHA via `git log --all --grep="MILESTONE-AUDIT" --grep="MILESTONE CLOSE" --all-match -1 --format=%H`), following the V18..V115 single-entry pattern. This **freezes the v1.16 corpus** — the mandatory back-anchor invariant that the v1.16 close deliberately left to its successor (`V116-PIN-DEFERRAL`).
+- [x] **HARN-09**: The **15th Path-A audit-harness lineage bump** — `v1.17-milestone-audit.mjs` (Path-A from v1.16, C1–C17 inherited) + `v1.17-audit-allowlist.json` + BASELINE_21 + `check-phase-126..NN.mjs` per-phase validators (chain-apex `CHAIN_PHASES=[48..(closephase-1)]`, continuing the `[48..N-1]` invariant) + the 14th parallel CI coexistence workflow (`audit-harness-v1.17-integrity.yml`). Predecessor v1.4–v1.16 frozen surfaces remain **byte-unchanged** (except the 2 guard-motivated content edits in HYG-02/03, which are content docs, not frozen validator/harness surfaces); any predecessor content-assertion validator that reads a HYG-touched doc at live HEAD is converted frozen-aware (`readAtV116Close`) as in-scope close-gate remediation — NO value-masking, `CHAIN_SKIP` empty.
+- [x] **HARN-10**: The milestone closes via a **3-axis terminal re-audit** (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per the D-03 OS split + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP **EXACT MATCH**), in a single close-gate commit flipping all v1.17 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS, with `v1.17-MILESTONE-AUDIT.md` + `v1.17-DEFERRED-CLEANUP.md` authored.
 
 ---
 
@@ -93,22 +93,23 @@ Which phases cover which requirements. Populated during roadmap creation (2026-0
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PUB-01 | Phase 126 | Complete |
-| PUB-02 | Phase 126 | Complete |
-| PUB-03 | Phase 126 | Complete |
-| PUB-04 | Phase 126 | Complete |
-| HYG-02 | Phase 126 | Complete |
-| HYG-03 | Phase 126 | Complete |
-| HOOK-01 | Phase 127 | Complete |
-| HARN-08 | Phase 128 | Pending |
-| HARN-09 | Phase 128 | Pending |
-| HARN-10 | Phase 128 | Pending |
+| PUB-01 | Phase 126 | Validated |
+| PUB-02 | Phase 126 | Validated |
+| PUB-03 | Phase 126 | Validated |
+| PUB-04 | Phase 126 | Validated |
+| HYG-02 | Phase 126 | Validated |
+| HYG-03 | Phase 126 | Validated |
+| HOOK-01 | Phase 127 | Validated |
+| HARN-08 | Phase 128 | Validated |
+| HARN-09 | Phase 128 | Validated |
+| HARN-10 | Phase 128 | Validated |
 
 **Coverage:**
 - v1.17 requirements: 10 total
 - Mapped to phases: 10 ✓ (Phase 126: 6 · Phase 127: 1 · Phase 128: 3)
 - Unmapped: 0 ✓
+- **10/10 Validated — v1.17 milestone shipped 2026-07-11** (see `.planning/milestones/v1.17-MILESTONE-AUDIT.md`)
 
 ---
 *Requirements defined: 2026-07-10*
-*Last updated: 2026-07-10 after v1.17 roadmap creation (traceability mapped to Phases 126-128)*
+*Last updated: 2026-07-11 — Phase 128 close-gate: all 10 v1.17 requirements flipped to Validated*

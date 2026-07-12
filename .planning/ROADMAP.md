@@ -2,7 +2,7 @@
 
 ## Milestones
 
-- 🔄 **v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)** — Phases 126-128 (in progress)
+- ✅ **v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)** — Phases 126-128 (shipped 2026-07-11)
 - ✅ **v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing** — Phases 120-125 (shipped 2026-07-10)
 - ✅ **v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1)** — Phases 113-119 (shipped 2026-07-06)
 - ✅ **v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure** — Phases 101-112 (shipped 2026-07-02)
@@ -43,7 +43,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] **Phase 126: Publish-Bundle Pipeline + Guard-Blocker Corpus Fixes** — Batch-convert the entire Approved corpus to guard-clean `.docx`, fold in the two known guard blockers, and emit one versioned, manifest-bearing, upload-ready `docs-library-v1.17.zip` (completed 2026-07-10)
 - [x] **Phase 127: Automated Milestone-Completion Trigger** — Regenerate the publish bundle automatically at milestone close by invoking the Phase-126 pipeline, degrading gracefully when prerequisites are absent (carries the dominant automated-trigger gray area) (completed 2026-07-11)
-- [ ] **Phase 128: V116 Pin + 15th Path-A Lineage Bump + Terminal Close** — Freeze the v1.16 corpus with the mandatory V116 back-anchor pin, bump the audit-harness lineage, and close via 3-axis terminal re-audit (sole deliverable of the closing cluster)
+- [x] **Phase 128: V116 Pin + 15th Path-A Lineage Bump + Terminal Close** — Freeze the v1.16 corpus with the mandatory V116 back-anchor pin, bump the audit-harness lineage, and close via 3-axis terminal re-audit (sole deliverable of the closing cluster) (completed 2026-07-11)
 
 ## Phase Details
 
@@ -121,19 +121,19 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 128-04-PLAN.md — Atom 2b: check-phase-126/127 (non-apex) + check-phase-128 apex (48..127=80, throw 80/127) + 14th CI workflow, then PUSH (one commit) — **AUTHORING + LOCAL COMMIT DONE (5da45802, check-phase-128.mjs --verbose exits 0: 82 PASS/0 FAIL/1 SKIPPED); PUSH deferred to orchestrator per scope directive, checkbox remains unchecked until push completes**
+- [x] 128-04-PLAN.md — Atom 2b: check-phase-126/127 (non-apex) + check-phase-128 apex (48..127=80, throw 80/127) + 14th CI workflow, then PUSH (one commit) — authoring+local commit `5da45802` (check-phase-128.mjs --verbose exits 0: 82 PASS/0 FAIL/1 SKIPPED); pushed by the orchestrator as branch `phase-128-atom-2` (PR #4) alongside Atom 2a `066a906`
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 128-05-PLAN.md — 3-axis terminal re-audit + cascade RED scan + predecessor-byte-unchanged HARD gate (Axis-2 Linux GHA authoritative)
+- [x] 128-05-PLAN.md — 3-axis terminal re-audit + cascade RED scan + predecessor-byte-unchanged HARD gate (Axis-2 Linux GHA authoritative, run 29165955062, GREEN)
 
 **Wave 6** *(blocked on Wave 5; conditional)*
 
-- [ ] 128-06-PLAN.md — emergent remediation slot (fires only if Axis-2 cascade RED; expected no-op; no value-mask, no frozen-surface edit, CHAIN_SKIP empty)
+- [x] 128-06-PLAN.md — emergent remediation slot (fires only if Axis-2 cascade RED; expected no-op; no value-mask, no frozen-surface edit, CHAIN_SKIP empty) — confirmed NO-OP (sole Class-A blocker pre-fixed pre-push)
 
 **Wave 7** *(blocked on Waves 5-6)*
 
-- [ ] 128-07-PLAN.md — close-gate: v1.17-MILESTONE-AUDIT.md + v1.17-DEFERRED-CLEANUP.md + flip all 10 v1.17 reqs to Validated (single dual-token close commit)
+- [x] 128-07-PLAN.md — close-gate: v1.17-MILESTONE-AUDIT.md + v1.17-DEFERRED-CLEANUP.md + flip all 10 v1.17 reqs to Validated (single dual-token close commit)
 
 **UI hint**: no
 **Discuss-phase flags**: none (closing cluster; consumes prior decisions, does not open new gray areas)
@@ -160,7 +160,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | v1.14 802.1X Network Authentication Documentation + Backlog & Tooling Closure | 101-112 | ✅ Shipped | 2026-07-02 |
 | v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1) | 113-119 | ✅ Shipped | 2026-07-06 |
 | v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing | 120-125 | ✅ Shipped | 2026-07-10 |
-| v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) | 126-128 | 🔄 In progress | - |
+| v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) | 126-128 | ✅ Shipped | 2026-07-11 |
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|

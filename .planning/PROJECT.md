@@ -8,7 +8,9 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE (incl. Platform SSO + Secure Enclave + Kerberos SSO + Graph API Platform Credential management + end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration), iOS/iPadOS, Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP), and Linux (Ubuntu 22.04/24.04 LTS) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
+## Previous Milestone: v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) (SHIPPED 2026-07-11)
+
+**Status:** ✅ SHIPPED 2026-07-11 — 3/3 phases (126-128) Complete; 10/10 requirements Validated via the Phase 128 Plan 128-07 SINGLE close-gate commit (NO Commit A); see `.planning/milestones/v1.17-MILESTONE-AUDIT.md` + `.planning/milestones/v1.17-DEFERRED-CLEANUP.md` (the v1.18 backlog source). **No active milestone** — run `/gsd-complete-milestone` to archive, then `/gsd-new-milestone` to scope v1.18.
 
 **Goal:** Produce a single upload-ready zip of the entire publishable corpus converted to `.docx` (descriptive, citation-friendly filenames), quality-gated fail-closed, and regenerated automatically at every milestone completion — so the Copilot Studio knowledge base can be refreshed with one SharePoint bulk upload.
 
