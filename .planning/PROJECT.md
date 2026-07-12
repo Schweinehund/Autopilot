@@ -10,7 +10,7 @@ IT teams can independently provision, troubleshoot, and manage Windows, macOS, i
 
 ## Previous Milestone: v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) (SHIPPED 2026-07-11)
 
-**Status:** ✅ SHIPPED 2026-07-11 — 3/3 phases (126-128) Complete; 10/10 requirements Validated via the Phase 128 Plan 128-07 SINGLE close-gate commit (NO Commit A); see `.planning/milestones/v1.17-MILESTONE-AUDIT.md` + `.planning/milestones/v1.17-DEFERRED-CLEANUP.md` (the v1.18 backlog source). **No active milestone** — run `/gsd-complete-milestone` to archive, then `/gsd-new-milestone` to scope v1.18.
+**Status:** ✅ SHIPPED & ARCHIVED 2026-07-11 — 3/3 phases (126-128) Complete; 10/10 requirements Validated via the Phase 128 Plan 128-07 SINGLE close-gate commit (NO Commit A); see `.planning/milestones/v1.17-MILESTONE-AUDIT.md` (close-gate narrative) + `.planning/milestones/v1.17-DoD-AUDIT.md` (retroactive definition-of-done, PASSED 10/10) + `.planning/milestones/v1.17-DEFERRED-CLEANUP.md` (the v1.18 backlog source). **ARCHIVED & TAGGED** (`v1.17`) via `/gsd-complete-milestone` 2026-07-12 — ROADMAP/REQUIREMENTS archived to `.planning/milestones/v1.17-{ROADMAP,REQUIREMENTS}.md`, phase dirs moved to `.planning/milestones/v1.17-phases/`. **No active milestone** — run `/gsd-new-milestone` to scope v1.18.
 
 **Goal:** Produce a single upload-ready zip of the entire publishable corpus converted to `.docx` (descriptive, citation-friendly filenames), quality-gated fail-closed, and regenerated automatically at every milestone completion — so the Copilot Studio knowledge base can be refreshed with one SharePoint bulk upload.
 

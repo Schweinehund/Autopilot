@@ -1,5 +1,25 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) (Shipped: 2026-07-11)
+
+**Phases completed:** 3 phases, 11 plans, 24 tasks
+
+**Key accomplishments:**
+
+- Built `build-publish-bundle.mjs`, a zero-npm-dependency batch orchestrator that converts all 221 registry `Status:Approved` docs to `.docx` via the existing `convert.ps1`, guards every output with `guard-docx.mjs`, and — on a 100%-clean pass — emits a single flat `dist/docs-library-v1.17.zip` (221 `.docx` + `manifest.csv` + `README.md`) with asserted registry parity and PUB-03 naming parity; the fail-closed contract proven both by unit self-test and a genuine isolated negative-path run (PUB-01..04).
+- Cleared both known guard blockers ahead of the batch run: removed the stale `phase_46_wave2_retrofit` frontmatter key from 5 Approved docs (HYG-02 scope expanded from the 1 named to all 5 identical-key siblings), fixed a `.tmp`-file leak in `convert.ps1`'s `GetTempFileName()` call, and verified the 9 DEFER-121-07-A files already carry no literal `YYYY-MM-DD` placeholder (HYG-03 confirmed a pure verify-only no-op).
+- Hardened `build-filename-map.mjs` with an `isMainModule` (`fileURLToPath`) guard so `build-publish-bundle.mjs` can safely import `parseRegistry`/`slug` without triggering the module's own CLI side-effects and `process.exit()`.
+- Parameterized the pipeline's hardcoded zip name into a validated `--version=` CLI flag via a pure `deriveZipName()` helper, closing a path-traversal vector with an anchored `^v?\d+\.\d+(\.\d+)?$` regex and adding 4 new self-test assertions (127-01, D-05).
+- Shipped `.claude/hooks/publish-bundle-gate.cjs`, a STATE-inspecting Stop-hook (sibling to `jira-milestone-gate.cjs`) that nudges the agent to regenerate the bundle on the milestone-complete transition when the zip is absent and pandoc/pwsh are present, degrades to warn-and-allow when a prerequisite is missing, and proves its full decision matrix via an embedded `--self-test` (11/11) — the automated-trigger mechanism resolved via `/adversarial-review` (HOOK-01).
+- Added the mandatory `V116='3dd2512'` back-anchor pin (positively confirmed via dual-token recover-not-assume grep) + `readAtV116Close` export to `frozen-at-close.mjs`, freezing the v1.16 corpus and closing `V116-PIN-DEFERRAL` (HARN-08).
+- Authored the 15th Path-A `v1.17-milestone-audit.mjs` (C1-C17 inherited byte-identical) + a `v1.17-audit-allowlist.json` sidecar carrying a targeted −1 line-shift on exactly 35 pins across 4 HYG-02-touched files (multiset-consumption script, zero leftover spec entries) + BASELINE_21 — harness GREEN 16/16, landed as one indivisible 3-file commit (HARN-09).
+- Converted the 8 predecessor validators (14 checks) that read a HYG-02-touched doc at live HEAD to the frozen `readAtV116Close` reader — needle text byte-unchanged, `CHAIN_SKIP` empty, using path-conditional `presence()` helpers so co-located live checks stay intact.
+- Shipped the v1.17 validator trio (check-phase-126/127 non-apex + check-phase-128 apex, 80-entry chain `[48..127]`) + the 14th CI coexistence workflow `audit-harness-v1.17-integrity.yml`; check-phase-128 green standalone (82 PASS / 0 FAIL / 1 SKIPPED).
+- Closed via a 3-axis terminal re-audit — Axis-2 authoritative Linux GHA run 29165955062 GREEN on first push (no reactive remediation round), Axis-1 fresh-clone + Axis-3 zero-context reproduction both 82/0/1 EXACT MATCH; a pre-push adversarial review caught and fixed the sole apex close-blocker (check-phase-124 archival drift, commit 76d147b) before the push (HARN-10).
+- Flipped all 10 v1.17 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS in ONE indivisible close-gate commit (`b56bba5e`); documented a new recover-not-assume caveat — the dual-token close-SHA grep returned a false positive once a commit body quoted the recovery command, so v1.18 planners must verify the returned commit's SUBJECT LINE carries both tokens, not trust `-1` blindly.
+
+---
+
 ## v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing (Shipped: 2026-07-10)
 
 **Phases completed:** 6 phases, 38 plans, 89 tasks

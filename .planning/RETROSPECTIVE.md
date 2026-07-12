@@ -542,6 +542,42 @@ The second *envelope* milestone — it extended the v1.15 EEE SOP standard + blo
 
 ---
 
+## Milestone: v1.17 — Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
+
+**Shipped:** 2026-07-11
+**Phases:** 3 (126-128) | **Plans:** 11 | **Requirements:** 10/10 Validated
+
+### What Was Built
+A tooling/pipeline milestone (zero net-new content) that shipped a *publish/export* capability on the now-frozen v1.15/v1.16 corpus. Phase 126 built `build-publish-bundle.mjs` — a zero-dependency batch orchestrator that converts all 221 registry `Status:Approved` docs to `.docx` via the existing `convert.ps1`, guards every output with `guard-docx.mjs`, and on a 100%-clean pass emits a single flat `dist/docs-library-v1.17.zip` (221 `.docx` + `manifest.csv` + `README.md`) with asserted registry parity — folding in the two known guard blockers (HYG-02 stale-key removal, expanded from the 1 named to all 5 identical-key siblings; HYG-03 confirmed a verify-only no-op) plus a `convert.ps1` `.tmp`-leak fix. Phase 127 parameterized the zip name (`--version=` flag, anchored regex closing a path-traversal vector) and shipped `.claude/hooks/publish-bundle-gate.cjs`, a STATE-inspecting Stop-hook (sibling to the Jira milestone hook) that auto-regenerates the bundle on the milestone-complete transition and degrades to warn-and-allow when pandoc/Node are absent (11/11 self-test) — the dominant automated-trigger gray area resolved via `/adversarial-review`. Phase 128 added the mandatory **V116 back-anchor pin** (freezing the v1.16 corpus), the 15th Path-A audit-harness lineage bump (apex `check-phase-128` `[48..127]`, 80 entries + a 35-pin −1 sidecar line-shift + the 14th CI coexistence workflow), and the 3-axis terminal close.
+
+### What Worked
+- **The existing pipeline surface was orchestrated, not reimplemented** — `build-publish-bundle.mjs` composed the already-proven `convert.ps1` + `guard-docx.mjs` + `filename-map.md` rather than re-deriving conversion; the fail-closed contract was proven both by `--self-test` AND a genuine isolated negative-path run, not just a unit assertion.
+- **The full-predecessor-chain scoping pass ran in the FIRST plan again (128-01)** — both the 8 D-128-C frozen-aware conversions AND the 35-pin −1 line-shift landmine were discovered at plan time; the v1.16 "scope frozen-aware conversions up front" lesson held.
+- **Pre-push adversarial review caught the sole close-blocker before the authoritative push** — `check-phase-124`'s archival drift (it read a file that `complete-milestone` had moved to `milestones/` after the v1.16 close) was found and fixed (`readAtV116Close`, commit 76d147b) *pre-push*, so the Axis-2 Linux GHA went GREEN on the FIRST push with NO reactive remediation round — breaking the 3-consecutive-milestone two-round-close streak.
+- **The guard contract forced the correct HYG-02 scope** — the requirement named 1 file, but the fail-closed batch gate would never emit a zip until all 5 identical-`phase_46_wave2_retrofit`-key siblings were fixed; the guard's own semantics surfaced the true scope.
+
+### What Was Inefficient
+- **HYG-03 was a pure no-op** — the 9 DEFER-121-07-A date placeholders were already filled (commit 9031056, pre-v1.17); a requirement was written for work already done and only found so at execution. Carried-forward defer items should be re-verified before being scoped as requirements.
+- **The dual-token close-SHA recovery grep produced a false positive** — once the close commit's own body quoted the recovery command, `git log --grep … -1` matched *that* commit; the recover-not-assume method needs a subject-line check, not blind `-1` trust (new v1.18 caveat).
+- **A −1 sidecar line-shift landmine** — the HYG-02 edits shifted 35 pinned `{file,line}` allowlist entries by exactly one line across 4 files; a content edit and its predecessor validator pins are coupled and must be reconciled in the same milestone (recurs whenever a frozen-adjacent content doc is touched).
+
+### Patterns Established
+- **Pre-push adversarial review as the close-blocker gate** — running the adversarial review BEFORE the authoritative push (not after a RED cascade) turned the historically two-round harness close into one round; adopt on every harness-close phase.
+- **Publish/export as a first-class capability on a frozen corpus** — the envelope work (v1.15/v1.16) is now consumable as a single upload-ready bundle; a tooling milestone can ship real value without touching content.
+- **Stop-hook-as-automation generalizes beyond Jira** — a second STATE-inspecting Stop-hook (`publish-bundle-gate.cjs`) confirms the `.claude/hooks/` + gitignored `settings.local.json` activation pattern is reusable for any milestone-transition automation.
+
+### Key Lessons
+- **Re-verify carried-forward defer items before writing them as requirements** — HYG-03 was already done; a quick check at requirements time would have caught the no-op.
+- **The dual-token close-SHA grep needs a subject-line assertion** — verify the returned commit's SUBJECT carries both tokens; a commit body quoting the command produces a false `-1` match.
+- **Content edits couple to predecessor validator pins** — any frozen-adjacent doc edit (here HYG-02) shifts sidecar `{file,line}` pins; scope the reconciliation in the same milestone, at plan time.
+- **SDK write-verbs hang on this repo** — MILESTONES.md, the archives, and the ROADMAP collapse were hand-authored (not via `milestone.complete`), sidestepping both the SDK hang and the recurring `One-liner:` extraction bug; verify hand-authored entries against the SUMMARY one-liners.
+
+### Cost Observations
+- Model mix: Opus orchestration; sequential-on-main-tree per `use_worktrees:false`.
+- Notable: smallest milestone since v1.12 (3 phases / 11 plans, ~1.5 days); tooling/pipeline (zero net-new content); **first single-round harness close since v1.11** (pre-push adversarial review caught the sole apex blocker); 15th Path-A harness; V116 back-anchor pin discharged; carried Windows deep-nest now [48..127] (+3 vs v1.16); Class-B `ACCEPTED-STANDALONE-CI-RED` accepted, `FROZEN-AWARE-ADOPTION-SWEEP-01` deferred to v1.18.
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -566,6 +602,7 @@ The second *envelope* milestone — it extended the v1.15 EEE SOP standard + blo
 | v1.14 | 12 | 37 | First net-new content domain since v1.5 (802.1X across 5 platforms × wired+Wi-Fi × 3 EAP methods); multi-pillar milestone (A content + B/C backlog + D tooling + E harness); first deliberate corpus-invariant relaxation (C5/C10 60d→90d) resolved at close via NESTED-guard; first close-gate to require a mid-execution chain-health remediation (112-06, 22 RED→0, no frozen surface edited); apex [48..111] 66/0/1 Linux-GHA authoritative; carried Windows deep-nest now [48..111]; 12th Path-A harness lineage |
 | v1.15 | 7 | 40 | First *envelope* milestone (zero net-new content; reshaped metadata/format envelope of the operator corpus for Copilot grounding); grounding-first ordering (PIPE-02 on a 6-doc set before retrofitting ~150); C17 as an indivisible validator atom; fork-per-phase retrofit helpers (117 fork fixed a 116 silent content-loss defect); deliberate byte-unchanged inversion (re-pinned ALL Phase-1 frozen surfaces atomically); word-preserving blockquote splits with per-file multiset diffs; carried Windows deep-nest now [48..118]; 13th Path-A harness lineage |
 | v1.16 | 6 | 38 | Second *envelope* milestone (extended EEE+C17 to the remaining structural classes; 229 files C17-green); Mermaid→text-equivalent conversion policy (STD-04) with independent `git show` base-byte re-derivation catching real silent-edge-drops; fork-per-phase helpers held (3rd milestone); pandoc nav-footer fix touched zero source `.md`; flag-#6 full-predecessor-chain scoping pass run BEFORE the close (frozen-aware conversions scoped at plan time); mandatory V115 back-anchor pin discharged (v1.15's deferred obligation); apex-range transcription error [48..119]→[48..124] corrected at close; carried Windows deep-nest now [48..124]; 14th Path-A harness lineage |
+| v1.17 | 3 | 11 | Tooling/pipeline milestone (zero net-new content); shipped a publish/export capability — `build-publish-bundle.mjs` converts the 221-doc Approved corpus → guard-clean `.docx` → single upload-ready `docs-library-v1.17.zip` (manifest + asserted registry parity, fail-closed, proven via a genuine negative-path run); second STATE-inspecting Stop-hook (`publish-bundle-gate.cjs`) auto-regenerates at close (the Jira-hook pattern generalizes); **pre-push adversarial review caught the sole apex close-blocker** (check-phase-124 archival drift) → first single-round harness close since v1.11 (broke the 3-milestone two-round streak); mandatory V116 back-anchor pin discharged; carried Windows deep-nest now [48..127]; 15th Path-A harness lineage |
 
 ### Top Lessons (Verified Across Milestones)
 
