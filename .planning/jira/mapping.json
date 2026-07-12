@@ -848,7 +848,7 @@
     },
     "v1.17": {
       "epicKey": "RTS-730",
-      "status": "in_progress",
+      "status": "completed",
       "created": "2026-07-10",
       "phases": {
         "126": {
@@ -863,10 +863,11 @@
         },
         "128": {
           "issueKey": "RTS-733",
-          "status": "in_progress",
+          "status": "done",
           "name": "V116 Pin + 15th Path-A Lineage Bump + Terminal Close"
         }
-      }
+      },
+      "completedDate": "2026-07-11"
     }
   },
   "lastUpdated": "2026-07-10",
