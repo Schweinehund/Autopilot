@@ -92,32 +92,32 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CLASS-01 | — | Pending |
-| CLASS-02 | — | Pending |
-| CLASS-03 | — | Pending |
-| CLASS-04 | — | Pending |
-| AVD-01 | — | Pending |
-| AVD-02 | — | Pending |
-| AVD-03 | — | Pending |
-| AVD-04 | — | Pending |
-| AVD-05 | — | Pending |
-| IPAD-01 | — | Pending |
-| IPAD-02 | — | Pending |
-| IPAD-03 | — | Pending |
-| IPAD-04 | — | Pending |
-| HYG-04 | — | Pending |
-| TOOL-04 | — | Pending |
-| TOOL-05 | — | Pending |
-| TOOL-06 | — | Pending |
-| HARN-11 | — | Pending |
-| HARN-12 | — | Pending |
-| HARN-13 | — | Pending |
+| CLASS-01 | 129 | Pending |
+| CLASS-02 | 129 | Pending |
+| CLASS-03 | 132 | Pending |
+| CLASS-04 | 132 | Pending |
+| AVD-01 | 130 | Pending |
+| AVD-02 | 130 | Pending |
+| AVD-03 | 130 | Pending |
+| AVD-04 | 130 | Pending |
+| AVD-05 | 130 | Pending |
+| IPAD-01 | 131 | Pending |
+| IPAD-02 | 131 | Pending |
+| IPAD-03 | 131 | Pending |
+| IPAD-04 | 131 | Pending |
+| HYG-04 | 130 | Pending |
+| TOOL-04 | 133 | Pending |
+| TOOL-05 | 133 | Pending |
+| TOOL-06 | 133 | Pending |
+| HARN-11 | 134 | Pending |
+| HARN-12 | 134 | Pending |
+| HARN-13 | 134 | Pending |
 
 **Coverage:**
 - v1.18 requirements: 20 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 20 ⚠️ (expected — roadmap not yet created)
+- Mapped to phases: 20/20 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-07-16*
-*Last updated: 2026-07-16 after initial definition*
+*Last updated: 2026-07-16 after roadmap creation (Phases 129-134)*
