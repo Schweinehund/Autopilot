@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.17
-milestone_name: Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)
-status: shipped
-last_updated: "2026-07-12T04:30:00.000Z"
-last_activity: 2026-07-12
+milestone: v1.18
+milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
+status: planning
+last_updated: "2026-07-16T05:37:30.240Z"
+last_activity: 2026-07-16
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 11
-  completed_plans: 11
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -24,11 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-10 — v1.17 milestone scoped)
 
 ## Current Position
 
-Phase: 128 (V116 Pin + 15th Path-A Lineage Bump + Terminal Close) — COMPLETE. v1.17 milestone SHIPPED 2026-07-11.
-Plan: 7/7 plans complete across 7 sequential waves (Wave-0 anchor → Atom 1 → Atom 2a/2b → PUSH → 3-axis re-audit → emergent slot → close-gate)
-Status: All 7 waves COMPLETE. Waves 1-3: V116='3dd2512' pin + readAtV116Close; Atom-1 harness+allowlist 35-pin −1 shift+BASELINE_21; 8 D-128-C conversions. PRE-PUSH ADVERSARIAL REVIEW (2026-07-11) found + FIXED the sole apex-128 close-blocker: check-phase-124.mjs V-124-PIPE05-OUTCOME read the archived .planning/phases/124-.../PIPE-05-FINDINGS.md at live HEAD (complete-milestone moved it to milestones/ AFTER v1.16 close; NOT NESTED-gated → apex-128 [48..127] would go RED on Axis-2 GHA). Converted to readAtV116Close (commit 76d147b); now exits 0 standalone+nested. This is archival drift (LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01), NOT HYG-02 — D-128-C's HYG-doc-scoped plan-time scan structurally couldn't catch it; applied pre-scoped as emergent-slot remediation per STATE plan-time discipline. The HYG-02 −1 line-shift drift (regenerate-supervision-pins --self-test + v1.4..v1.16 audit sidecars, via check-phase-48/60/61/62/63) is NESTED-masked/non-blocking → deferred v1.18 FROZEN-AWARE-ADOPTION-SWEEP-01 (see v1.17-DEFERRED-CLEANUP.md). Wave 4 (commit 5da45802): check-phase-126/127/128.mjs (apex CHAIN_PHASES=[48..127]=80 entries) + audit-harness-v1.17-integrity.yml (14th CI coexistence workflow) authored, standalone --verbose EXIT 0 (82 PASS/0 FAIL/1 SKIPPED); the orchestrator pushed Atom-2a 066a906 + Atom-2b 5da45802 as branch phase-128-atom-2 (PR #4), firing the CI cascade. Wave 5 (128-05): Axis-2 Linux GHA run 29165955062 GREEN (apex + both leaves + chain + harness all success); Axis-1 fresh clone (Windows) + Axis-3 independent reproduction both 82/0/1 EXACT MATCH; predecessor byte-unchanged HARD gate EMPTY; predecessor cascade scan found only Class-B ACCEPTED-STANDALONE-CI-RED (harness-job drift only, zero chain failures), owner-accepted 2026-07-11, deferred v1.18. Wave 6 (128-06): emergent slot confirmed NO-OP (sole Class-A blocker pre-fixed pre-push in Wave 3). Wave 7 (128-07, this close-gate): v1.17-MILESTONE-AUDIT.md + v1.17-DEFERRED-CLEANUP.md + 128-VERIFICATION.md authored; all 10 v1.17 requirements flipped to Validated in ONE close-gate commit.
-Last activity: 2026-07-11
-Resume: v1.17 milestone ARCHIVED & TAGGED (`v1.17`) 2026-07-12 — ROADMAP/REQUIREMENTS archived to `.planning/milestones/`, phase dirs moved to `.planning/milestones/v1.17-phases/`, REQUIREMENTS.md removed (fresh for next milestone). Run /gsd-new-milestone to scope v1.18.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-16 — Milestone v1.18 started
 
 ## v1.17 Phase Dependency Summary
 
