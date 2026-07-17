@@ -13,7 +13,10 @@
      - Set doc_type: Guide -- docs/recipes/* is always Guide (EEE-SOP-standard.md D-02 Edge-case
        ruling); never introduce a new "Recipe" doc_type value, the taxonomy is a closed 4-value enum
      - Set platform to the appropriate D1-mapped value -- replace 'all' if this recipe covers a
-       specific platform. Valid values: Windows | macOS | iOS | Android | Linux | all
+       specific platform. Any raw value in the D1 Platform Normalization Map
+       (docs/_standards/EEE-SOP-standard.md, ~20 entries) is valid -- including compound values
+       such as ios+shared-ipad (renders as "iOS + Shared iPad"). Do not treat any shorter list
+       as exhaustive
      - Update the EEE block line (immediately after the frontmatter close) to match your
        platform label and assigned Doc ID before publishing
      - Every admin decision point MUST use the STD-05 composite block format -- see
