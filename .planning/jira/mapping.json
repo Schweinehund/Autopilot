@@ -868,6 +868,43 @@
         }
       },
       "completedDate": "2026-07-11"
+    },
+    "v1.18": {
+      "epicKey": "RTS-738",
+      "status": "in_progress",
+      "created": "2026-07-16",
+      "phases": {
+        "129": {
+          "issueKey": "RTS-742",
+          "status": "done",
+          "name": "Device Recipe Doc-Class Foundation"
+        },
+        "130": {
+          "issueKey": "RTS-743",
+          "status": "in_progress",
+          "name": "Recipe #1 — Shared Windows AVD-Client Device"
+        },
+        "131": {
+          "issueKey": "RTS-744",
+          "status": "todo",
+          "name": "Recipe #2 — Shared iPad Full Provisioning"
+        },
+        "132": {
+          "issueKey": "RTS-745",
+          "status": "todo",
+          "name": "Integration & Navigation-Last Close"
+        },
+        "133": {
+          "issueKey": "RTS-746",
+          "status": "todo",
+          "name": "Chain-Validator Tooling Debt Closure"
+        },
+        "134": {
+          "issueKey": "RTS-747",
+          "status": "todo",
+          "name": "V117 Pin + 16th Path-A Lineage Bump + Terminal Close"
+        }
+      }
     }
   },
   "lastUpdated": "2026-07-10",
