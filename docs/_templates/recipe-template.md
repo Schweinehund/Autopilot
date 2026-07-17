@@ -69,13 +69,13 @@ words total -- C17 #5 fires on templates.]
 
 **Example 2 -- Enumerable-value decision (Case 2, illustrative synthetic field -- not a real Intune setting):**
 
-> **Ask the admin:** What retention period should apply to cached session data?
+> **Ask the admin:** Which support-contact card should the lock screen display?
 
 | Option | When to choose | Recorded as |
 |--------|-----------------|-------------|
-| 1 day | High-turnover shared kiosks | `RetentionDays: 1` |
-| 7 days | Standard shared desktops | `RetentionDays: 7` |
-| 30 days | Low-turnover dedicated pools | `RetentionDays: 30` |
+| HQ card | Devices deployed at headquarters sites | `SupportCard: HQ` |
+| Regional card | Devices at regional branch offices | `SupportCard: Regional` |
+| MSP card | Devices supported by an outsourced managed service provider | `SupportCard: MSP` |
 
 **Example 3 -- Free-value prompt (Case 3, no table needed):**
 
