@@ -4,8 +4,8 @@ status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Windows
-last_verified: 2026-04-13
-review_by: 2026-07-12
+last_verified: 2026-07-17
+review_by: 2026-10-15
 applies_to: APv1
 audience: admin
 ---
@@ -129,3 +129,4 @@ For TPM hardware investigation, fTPM vs dTPM troubleshooting, EK certificate cha
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-07-05 | v1.15 EEE reformat — content not re-reviewed | — |
+| 2026-07-17 | v1.18 HYG-04: corrected Wi-Fi-at-OOBE claim at 6 sites (L31/55/61/63/69/108) -- Wi-Fi is supported but not zero-touch per current Microsoft Learn; removed fabricated pre-authentication-stage mechanism; Ethernet-recommended-for-zero-touch guidance preserved; Configuration-Caused Failures Wi-Fi row removed (no longer a failure) | — |
