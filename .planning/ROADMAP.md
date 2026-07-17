@@ -63,7 +63,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 129-01-PLAN.md — Author STD-05 decision-point spec + D-02 recipe ruling in EEE-SOP-standard.md; fix ARCHITECTURE.md:61 (CLASS-01)
+- [x] 129-01-PLAN.md — Author STD-05 decision-point spec + D-02 recipe ruling in EEE-SOP-standard.md; fix ARCHITECTURE.md:61 (CLASS-01)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -170,7 +170,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 129. Device Recipe Doc-Class Foundation | 0/2 | Not started | - |
+| 129. Device Recipe Doc-Class Foundation | 1/2 | In Progress|  |
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 0/? | Not started | - |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
