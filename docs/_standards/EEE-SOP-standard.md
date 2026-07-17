@@ -154,6 +154,10 @@ The controlled vocabulary for `doc_type` contains exactly four values:
 - **Lifecycle documents** (`*-lifecycle/*`) → `Guide` (v1.16 D-07). Lifecycle docs walk a reader
   through an end-to-end procedural setup or migration journey; classifying them `Reference` would
   be definitionally wrong for content whose entire structure is a procedure.
+- **Device Recipe documents** (`docs/recipes/*`) → `Guide` (v1.18 STD-05). Recipes are
+  end-to-end procedural provisioning walkthroughs, the same directory-precedence logic as
+  lifecycle docs; see the Admin Decision-Point Block Format (STD-05) section below for the full
+  admin decision-point block spec these recipes must follow.
 
 The five structural classes newly mapped in v1.16 (D-05) are summarized here for reference; this
 table is illustrative only and does not add a `doc_type` value to the four-value taxonomy above:
@@ -449,6 +453,103 @@ something a green C17 run attests, and it is not something the harness can catch
 
 ---
 
+## Admin Decision-Point Block Format (STD-05)
+
+This section defines the composite decision-point block format for the new Device Recipe doc
+class (`docs/recipes/*`, v1.18) and any future document that needs to prompt an admin for a
+choice mid-procedure. It was resolved via `/adversarial-review` against two hard mechanical
+constraints: C17 assertion #12 (contiguous top-level blockquote runs capped at 200 characters)
+and the standing no-key-info-in-code-fences rule (fenced content is invisible to the Copilot
+Studio / SharePoint retrieval body text — see Grounding Notes above). The composite documents a
+combination of already-shipped corpus patterns, not a novel construct: the decision-table shape
+(`docs/l2-runbooks/26-apple-business-permission-denied.md`) and the short blockquote callout
+shape (`docs/admin-setup-apv1/04-dynamic-groups.md`) are both already production-proven.
+
+### D-01: The three-case composite block
+
+Every decision point opens with a **one-sentence** `> **Ask the admin:**` blockquote lead-in
+carrying the prompt ONLY. Options and their consequences never go inside the blockquote — a
+faithful options-plus-consequence blockquote measures roughly 228 characters and hard-fails C17
+#12's 200-character contiguous top-level blockquote cap. What follows the lead-in depends on the
+decision's case:
+
+- **Case 1 — branching decision** (each option is a fully-worked downstream path): lead-in, then
+  a `| Option | When to choose | Consequence if wrong | Branch |` table, with each `Branch` cell
+  linking to the corresponding branch section.
+- **Case 2 — enumerable-value decision** (pick one of a fixed set, no procedure fork): lead-in,
+  then a `| Option | When to choose | Recorded as |` table.
+- **Case 3 — free-value prompt** (an open value, e.g. a naming prefix): lead-in alone, no table —
+  a one-row table would tabulate nothing.
+
+### D-02: Mandatory blank line before a table
+
+A blank line between the lead-in blockquote and any following table is **mandatory**. Without it,
+GFM lazy continuation absorbs the pipe row into the blockquote — this silently destroys the table
+(it renders as blockquote text, not a table) and inflates the run past the C17 #12 200-character
+cap. This is not a style preference; it is a required line between the lead-in and the table in
+every Case 1 and Case 2 decision block.
+
+### D-03: Case-boundary rule
+
+Use a table only when the decision has more than one dimension to convey per option (what to
+choose, why, and either a consequence/branch or a recorded value); a Case 3 free-value prompt
+never gets a table. Decision content is never placed inside a code fence in a live recipe — fenced
+content is invisible to the retrieval body text (see Grounding Notes), so putting the prompt,
+options, or consequences in a fence would silently remove the decision from what Copilot can
+ground on. The one exception is this standard's own fenced worked example below (D-11), which is
+a spec sample in an index-excluded meta-document, not live decision content in an indexed recipe.
+
+### D-04: The three-rule normative branch floor
+
+MUST/NORMATIVE language in this section is reserved exclusively for these three rules:
+
+1. Decision blocks use the D-01 composite shape; code fences are never used for decision content.
+2. Branch bodies are prose step sequences — never tables-as-procedure, never fenced
+   pseudo-config.
+3. Branch headings live at H2 or H3 only, never deeper. Boolean decisions (for example, a Shared
+   iPad guest-sessions on/off toggle) may skip branch headings entirely and instead use an
+   if/then prose pair.
+
+### D-05: RECOMMENDED branch idiom
+
+The RECOMMENDED (not normative) branch idiom is the shape already shipped in
+`docs/macos-lifecycle/01-psso-provisioning-walkthrough.md`: a shared provisioning spine leads into
+a decision block, which routes into sibling H3 branch sections (`### Branch A — …` /
+`### Branch B — …`), each opening with a bold pseudo-heading and a plain routing sentence. This
+spec does not mandate a rejoin point — non-converging forks are explicitly permitted, mirroring
+the PSSO walkthrough's own "no reconvergence" precedent at line ~65. Authors are free to reconverge
+branches when the underlying procedure naturally does so, but nothing in this section requires it.
+
+### D-13: Recipe Summary end-state statement
+
+Every recipe's `## Summary` opens with a one-line concrete end-state statement — REQUIRED;
+enforced by registry review, not by the harness (mirroring the D-08 Non-MECE precedence rule's
+own enforcement posture above). The opening sentence names the specific, concrete device
+configuration the recipe produces (for example, "Following this recipe yields a self-deploying
+Entra-joined shared Windows AVD-client device, provisioned end-to-end from zero through Intune"),
+so a reader can confirm applicability before starting the procedure.
+
+### D-11: Worked example
+
+The composite shape below is a compact, fenced spec sample — the same house style STD-04 D-03
+uses to describe a live-content shape in prose backed by a small illustrative block. A fenced spec
+sample in this Approved, index-excluded standard is NOT the same as fenced decision content in a
+live indexed recipe, which remains banned under D-03 above; the inCodeFence mask exempts this
+sample from C17 assertions #11/#12 on this document, but the same fence in an enrolled recipe
+would silently hide the decision from retrieval.
+
+```markdown
+> **Ask the admin:** Kiosk (Assigned Access, single Windows App) or Shared PC (full shared
+> desktop)? This choice selects the branch for every step below.
+
+| Option | When to choose | Consequence if wrong | Branch |
+|--------|-----------------|----------------------|--------|
+| Kiosk | Single-purpose fixed-app device | Users get full shell instead | [Step 5a](#step-5a) |
+| Shared PC | Multi-app shared desktop | Locked to one app unexpectedly | [Step 5b](#step-5b) |
+```
+
+---
+
 ## C17 Enforcement Reference (Needle-Spec for Phase 115)
 
 C17 is the machine-checkable harness check that enforces this standard across the corpus. It
@@ -513,3 +614,4 @@ in v1.14 Phase 112) ensures C17 is never partially live across content phases.
 |------|--------|
 | 2026-07-04 | Initial version — EEE SOP standard for Phase-1 corpus retrofit (v1.15); all sections authored including D1 normalization map (20 entries) and C17 needle-spec handoff |
 | 2026-07-07 | v1.16 STD-04 — added Mermaid-in-Enrolled-Classes Policy (D-01..D-04: text-equivalent conversion, C17 #1 unchanged, conversion shapes, honesty caveat); added 4 new D-02 Edge-case rulings (glossary, decision-tree, nav-hub, lifecycle) and the D-08 Non-MECE precedence rule; Doc Type Taxonomy 4-value table unchanged |
+| 2026-07-17 | v1.18 STD-05 — added Admin Decision-Point Block Format (D-01..D-05: 3-case composite block, mandatory blank line, case-boundary rule, 3-rule branch floor + RECOMMENDED PSSO-idiom); added Device Recipe documents D-02 Edge-case ruling row (`docs/recipes/*` → `Guide`) |
