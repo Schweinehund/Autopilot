@@ -201,3 +201,41 @@ Both branches use a maintenance-window concept, but the underlying CSP differs p
 If devices stay on wired Ethernet after enrollment, no additional network profile is required — the connection used for zero-touch deployment continues to work.
 
 If devices need Wi-Fi after enrollment, rather than only at OOBE, configure 802.1X — see [Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md) for the profile configuration and [802.1X Admin Setup Guides](../admin-setup-8021x/00-overview.md) for the overview. This recipe never configures 802.1X directly; this is a separate, later stage from the Wi-Fi-at-OOBE anti-pattern covered above.
+
+## Verification
+
+Both branches — confirm first:
+
+- [ ] Device completed OOBE unattended (no manual credential entry during device deployment)
+- [ ] Device is Entra joined (not hybrid) and enrolled in Intune
+- [ ] Device is a member of the dynamic device group (expected latency: minutes to hours)
+- [ ] Windows App is present on the device BEFORE any user has signed in
+
+**Kiosk branch:**
+
+- [ ] Device boots directly into Windows App in full-screen kiosk mode via the autologon local account
+- [ ] After a session reset, Windows App relaunches automatically and the next end user authenticates the feed interactively inside the app
+
+**Shared PC branch:**
+
+- [ ] A second, distinct, app-group-assigned Entra user signs in and the AVD feed auto-repopulates for that user
+- [ ] Local Storage is confirmed restricted (File Explorer save/view to local disk is blocked)
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Symptom | Runbook |
+|------------------|---------|---------|
+| (Both) Windows App assigned Available instead of Required, or to a user group instead of a device group | App absent at first sign-in; feed never appears | [Step 4](#step-4-deploy-windows-app-device-context) |
+| (Kiosk) Autologon account has no offline Store license | Windows App fails to launch after autologon; blank or error screen | [Step 5a](#step-5a-kiosk-configuration) |
+| (Kiosk) `KioskModeApp` and `ShellLauncher` both configured | Device fails to apply the Assigned Access profile | [Step 5a](#step-5a-kiosk-configuration) |
+| (Shared PC) Guest account left at default (Guest, not Domain) | AVD feed is empty for every signed-in user — no Entra token | [Step 5b](#step-5b-shared-pc-configuration) |
+| (Shared PC) Inactive account threshold field not visible in Intune | Account Deletion not set to "storage space and inactive threshold," or Account management left Disabled | [Step 5b](#step-5b-shared-pc-configuration) |
+| (Both) Dynamic device group rule does not match the device | Device never receives the deployment profile, ESP policy, or Windows App assignment | [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) |
+
+## See Also
+
+- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this recipe's decision blocks instantiate
+- [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) — full self-deploying field reference, TPM 2.0, and network prerequisites
+- [APv1 vs APv2](../apv1-vs-apv2.md) — framework selection reference
+- [Windows 802.1X Admin Setup](../admin-setup-8021x/03-windows.md) — post-enrollment Wi-Fi/wired profile configuration
+- [802.1X Admin Setup Guides](../admin-setup-8021x/00-overview.md) — 802.1X overview and setup sequence
