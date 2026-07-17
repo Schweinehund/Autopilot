@@ -26,7 +26,7 @@
 ## Phases
 
 - [x] **Phase 129: Device Recipe Doc-Class Foundation** - New "Device Recipe" doc class + template + decision-point block spec locked before content authoring (completed 2026-07-17)
-- [ ] **Phase 130: Recipe #1 — Shared Windows AVD-Client Device** - Self-deploying Entra-joined shared Windows device running Windows App as an AVD client, plus RE-084 Wi-Fi-claim hygiene fix
+- [x] **Phase 130: Recipe #1 — Shared Windows AVD-Client Device** - Self-deploying Entra-joined shared Windows device running Windows App as an AVD client, plus RE-084 Wi-Fi-claim hygiene fix (completed 2026-07-17)
 - [ ] **Phase 131: Recipe #2 — Shared iPad Full Provisioning** - Fully-provisioned Shared iPad from ADE enrollment through verification
 - [ ] **Phase 132: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable
 - [ ] **Phase 133: Chain-Validator Tooling Debt Closure** - Frozen-aware adoption sweep + O(n²) chain-runner fix + carried nits
@@ -180,7 +180,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 129. Device Recipe Doc-Class Foundation | 2/2 | Complete    | 2026-07-17 |
-| 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete   | 2026-07-17 |
+| 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete    | 2026-07-17 |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
 | 133. Chain-Validator Tooling Debt Closure | 0/? | Not started | - |
