@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
-status: executing
-last_updated: "2026-07-17T13:30:10.475Z"
+status: verifying
+last_updated: "2026-07-17T13:39:28.999Z"
 last_activity: 2026-07-17
 progress:
   total_phases: 6
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
-  percent: 0
+  completed_plans: 2
+  percent: 17
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 
 Phase: 129 (Device Recipe Doc-Class Foundation) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-17
 
 ## v1.18 Phase Dependency Summary
@@ -290,6 +290,8 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 
 *(Full v1.0–v1.17 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md` and `.planning/MILESTONES.md`.)*
 
+- [Phase 129]: Recipe template built from admin-template.md base with D-06/D-07/D-08/D-13 diffs; three worked STD-05 examples (branching/enumerable/free-value) in one delete-marked HTML comment; corpus C17-green at 230/0
+
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
 - Phase 129 (CLASS-01): resolve the decision-point block format via `/adversarial-review` BEFORE authoring the template; ground against C17 #12's 200-char blockquote cap and the no-code-fence rule (research provides a grounded option space — blockquote-lead-in + decision-table composite — but does not resolve it)
@@ -321,7 +323,7 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-17T13:30:10.459Z
+Last session: 2026-07-17T13:36:43.579Z
 Stopped at: Phase 129 context gathered
 Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
@@ -336,3 +338,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 |-------|------|----------|-------|
 | (v1.18 phases not yet started) | — | — | — |
 | Phase 129 P01 | 25min | 2 tasks | 2 files |
+| Phase 129 P02 | 20min | 1 tasks | 1 files |

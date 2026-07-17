@@ -67,7 +67,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 129-02-PLAN.md — Create C17-green recipe-template.md with worked decision-point examples (CLASS-02)
+- [x] 129-02-PLAN.md — Create C17-green recipe-template.md with worked decision-point examples (CLASS-02)
 
 **Discuss-phase flags**: CLASS-01 decision-point block format (dominant gray area for the content pillar — decision table vs. blockquote vs. composite, constrained by C17 #12's 200-char cap and the no-code-fence rule).
 
@@ -170,7 +170,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 129. Device Recipe Doc-Class Foundation | 1/2 | In Progress|  |
+| 129. Device Recipe Doc-Class Foundation | 2/2 | Complete   | 2026-07-17 |
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 0/? | Not started | - |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
