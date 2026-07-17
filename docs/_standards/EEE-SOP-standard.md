@@ -539,8 +539,7 @@ sample from C17 assertions #11/#12 on this document, but the same fence in an en
 would silently hide the decision from retrieval.
 
 ```markdown
-> **Ask the admin:** Kiosk (Assigned Access, single Windows App) or Shared PC (full shared
-> desktop)? This choice selects the branch for every step below.
+> **Ask the admin:** Kiosk (Assigned Access, single Windows App) or Shared PC (full shared desktop)?
 
 | Option | When to choose | Consequence if wrong | Branch |
 |--------|-----------------|----------------------|--------|
