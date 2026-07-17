@@ -28,7 +28,7 @@ Self-deploying mode is a fully automated deployment requiring zero user interact
 ## Prerequisites
 
 - **TPM 2.0** with attestation capability -- TPM is the ONLY authentication mechanism (no user credentials are used)
-- **Wired ethernet** mandatory -- network connection is required before any user input; Wi-Fi is NOT supported
+- **Wired ethernet** strongly recommended for a fully unattended, zero-touch deployment; Wi-Fi is supported but requires the user to manually select language, locale, and keyboard, then join the wireless network -- see Step 2
 - **No user affinity** -- device joins as a device object only, with no primary user assignment
 - Deployment profile with Deployment mode = **Self-Deploying** (see [Deployment Profile](02-deployment-profile.md))
 - ESP policy configured -- only the device phase runs (there is no user phase of ESP)
@@ -52,21 +52,21 @@ Self-deploying mode is a fully automated deployment requiring zero user interact
 Before deploying, confirm the target device meets both requirements:
 
 - **TPM 2.0** present and functional -- run `Get-Tpm` in an admin PowerShell prompt to verify TpmPresent and TpmReady are both True
-- **Wired ethernet** connection available at the deployment location
+- **Wired ethernet** connection available at the deployment location (recommended for zero-touch); if unavailable, built-in Wi-Fi is supported but requires manual language/locale/keyboard selection and network join at OOBE
 
 > **What breaks if misconfigured:** No TPM or TPM 1.2 means self-deploying cannot authenticate.
 
 > The deployment fails at the attestation stage with no recovery option other than switching to user-driven mode. See: [OOBE Failure](../l1-runbooks/05-oobe-failure.md)
 
-> **What breaks if misconfigured:** Using Wi-Fi instead of wired ethernet means the device cannot reach the Autopilot service before OOBE.
+> **Wi-Fi at OOBE:** Supported, but not zero-touch -- the user must manually pick language, locale, keyboard, and join the network before provisioning continues.
 
-> No network connectivity is available at the pre-authentication stage. See: [Network Connectivity](../l1-runbooks/04-network-connectivity.md)
+> Ethernet remains recommended for unattended deployment. See Step 2 above for the full prerequisite list.
 
 ### Step 3: Device Deployment Flow
 
 What happens during a self-deploying deployment (no user interaction required):
 
-1. Device powers on, connected to wired ethernet.
+1. Device powers on, connected to wired ethernet (or Wi-Fi, with manual language/locale/keyboard selection and network join -- see Prerequisites).
 2. Device performs TPM attestation with the Autopilot service.
 3. Device joins Entra ID as a device object (no user affinity).
 4. Device phase of ESP runs (device apps, policies, certificates).
@@ -105,7 +105,6 @@ What happens during a self-deploying deployment (no user interaction required):
 |------------------|---------|---------|
 | Hybrid join selected with self-deploying | Deployment fails; hybrid not supported | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | TPM 2.0 not available | Attestation fails; no authentication mechanism | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
-| Wi-Fi used instead of wired ethernet | No network at pre-authentication stage | [Network Connectivity](../l1-runbooks/04-network-connectivity.md) |
 | User-targeted apps on self-deploying device | Apps not installed during deployment | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 | Device-based license not configured | M365 Apps fail to activate after deployment | [OOBE Failure](../l1-runbooks/05-oobe-failure.md) |
 
