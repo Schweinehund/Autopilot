@@ -58,7 +58,9 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   1. `docs/_standards/EEE-SOP-standard.md` carries a D-02 edge-case ruling row classifying `docs/recipes/*` as `doc_type: Guide` (the closed 4-value enum is not extended), plus a written spec for the admin decision-point block format.
   2. A canonical `docs/_templates/recipe-template.md` exists, is C17-green, and contains a worked decision-point block example with the TEMPLATE-SENTINEL convention.
   3. The decision-point block format (resolved via `/adversarial-review`) is documented precisely enough that Phases 130/131 apply it without further design decisions.
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 129-01-PLAN.md — Author STD-05 decision-point spec + D-02 recipe ruling in EEE-SOP-standard.md; fix ARCHITECTURE.md:61 (CLASS-01)
+- [ ] 129-02-PLAN.md — Create C17-green recipe-template.md with worked decision-point examples (CLASS-02)
 **Discuss-phase flags**: CLASS-01 decision-point block format (dominant gray area for the content pillar — decision table vs. blockquote vs. composite, constrained by C17 #12's 200-char cap and the no-code-fence rule).
 
 ### Phase 130: Recipe #1 — Shared Windows AVD-Client Device
@@ -145,7 +147,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 129. Device Recipe Doc-Class Foundation | 0/? | Not started | - |
+| 129. Device Recipe Doc-Class Foundation | 0/2 | Not started | - |
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 0/? | Not started | - |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
