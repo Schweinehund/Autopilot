@@ -485,9 +485,9 @@ decision's case:
 
 A blank line between the lead-in blockquote and any following table is **mandatory**. Without it,
 GFM lazy continuation absorbs the pipe row into the blockquote — this silently destroys the table
-(it renders as blockquote text, not a table) and inflates the run past the C17 #12 200-character
-cap. This is not a style preference; it is a required line between the lead-in and the table in
-every Case 1 and Case 2 decision block.
+in the rendered `.docx` body (it becomes blockquote text, not a table), removing the decision
+table from the indexed retrieval surface. This is not a style preference; it is a required line
+between the lead-in and the table in every Case 1 and Case 2 decision block.
 
 ### D-03: Case-boundary rule
 
