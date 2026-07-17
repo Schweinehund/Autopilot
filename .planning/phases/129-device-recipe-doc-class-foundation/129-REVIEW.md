@@ -11,7 +11,10 @@ findings:
   warning: 4
   info: 1
   total: 6
-status: issues_found
+status: fixed
+fixed_at: 2026-07-17T00:00:00Z
+fixed: 6
+skipped: 0
 ---
 
 # Phase 129: Code Review Report
@@ -19,7 +22,7 @@ status: issues_found
 **Reviewed:** 2026-07-17
 **Depth:** standard
 **Files Reviewed:** 2
-**Status:** issues_found
+**Status:** fixed (all 6 findings resolved — see Fixes Applied)
 
 ## Summary
 
@@ -159,6 +162,62 @@ lands first.
 
 ---
 
+## Fixes Applied
+
+All 6 findings fixed 2026-07-17, one atomic commit per finding. Post-fix verification:
+`--self-test` 4/4 PASS; full corpus run **230 files checked, 0 violations**; every
+`> **Ask the admin:**` lead-in run measures 68–98 chars as C17 #12 counts (Scope blockquote
+168) — all ≤200. `last_verified: 2026-07-04` remains unbumped (D-12); no validator/allowlist
+file touched (D-10).
+
+### CR-01 — fixed (`f24e617b`)
+
+`recipe-template.md` platform instruction no longer enumerates a closed 6-value list; it now
+points at the authoritative ~20-entry D1 Platform Normalization Map in
+`docs/_standards/EEE-SOP-standard.md`, explicitly naming compound values such as
+`ios+shared-ipad` (→ "iOS + Shared iPad", Phase 131's required value) and warning against
+treating any shorter list as exhaustive.
+
+### WR-01 — fixed (`4d998e93`)
+
+Resolved in favor of the LOCKED one-sentence D-01 rule (spec text untouched): trimmed all four
+worked-example lead-ins — the STD-05 fenced sample and the template's three examples — to a
+single prompt sentence. The routing/recording clauses were redundant with the `Branch` /
+`Recorded as` table columns and were dropped; the Case-3 (no-table) example now models the
+recording sentence as plain prose outside the blockquote, teaching the correct placement.
+
+### WR-02 — fixed (`8e2678ba`)
+
+Deleted the false "inflates the run past the C17 #12 200-character cap" clause from the D-02
+rationale (the #12 run collector stops at the non-`>` table row). The blank-line rule remains
+MANDATORY on the true rationale: GFM lazy continuation destroys the rendered table (blockquote
+text, not a table) and removes the decision table from the indexed retrieval surface.
+
+### WR-03 — fixed (`0742f649`)
+
+Renumbered STD-05 subsections sequentially per the STD-04 house pattern: D-13 → **D-06**
+(Recipe Summary end-state statement), D-11 → **D-07** (Worked example). Updated the intra-file
+cross-reference in D-03 ("(D-11)" → "(D-07)"). Grep of both the standard and the template
+confirmed no other references to the old subsection IDs.
+
+### WR-04 — fixed (`cd79f8eb`)
+
+Swapped the synthetic enumerable example from `RetentionDays` (semantically a description of
+SharedPC cached-account retention / `InactiveThreshold`, which Phase 130 documents under
+AVD-04) to a support-contact lock-screen card (`SupportCard: HQ | Regional | MSP`) — no
+shared-device/session/cache CSP analog, no AVD-01..05/IPAD-01..04 field. Table shape
+(`| Option | When to choose | Recorded as |`), synthetic-field flag, and one-sentence lead-in
+(77 chars) preserved.
+
+### IN-01 — fixed (`4ebc0dc0`)
+
+Version-History row now enumerates D-01..D-07 (post-WR-03 numbering) including the REQUIRED
+recipe-Summary end-state rule and the fenced worked example + index-excluded-standard
+carve-out.
+
+---
+
 _Reviewed: 2026-07-17_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
+_Fixed: 2026-07-17 — Claude (gsd-code-fixer), 6/6 findings, commits f24e617b..4ebc0dc0_
