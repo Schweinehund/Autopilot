@@ -88,7 +88,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 130-01-PLAN.md — HYG-04: correct RE-084's stale Wi-Fi-unsupported claim (6 sites) + freshness/changelog
+- [x] 130-01-PLAN.md — HYG-04: correct RE-084's stale Wi-Fi-unsupported claim (6 sites) + freshness/changelog
 
 **Wave 2** *(blocked on Wave 1 — recipe links the corrected RE-084)*
 
@@ -180,7 +180,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 129. Device Recipe Doc-Class Foundation | 2/2 | Complete    | 2026-07-17 |
-| 130. Recipe #1 — Shared Windows AVD-Client Device | 0/2 | Ready to execute | - |
+| 130. Recipe #1 — Shared Windows AVD-Client Device | 1/2 | In Progress|  |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
 | 133. Chain-Validator Tooling Debt Closure | 0/? | Not started | - |

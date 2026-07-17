@@ -31,7 +31,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 129+).
 
 ### Corpus Hygiene (HYG)
 
-- [ ] **HYG-04**: The RE-084 (`docs/admin-setup-apv1/08-self-deploying.md`) "Wi-Fi unsupported for self-deploying" claim is verified against current Microsoft Learn at plan time; if confirmed stale, RE-084 is corrected (freshness-stamp rules per the v1.15 D2/META-04 reformat-only convention do NOT apply — this is a content correction, so `last_verified` updates). If confirmed still accurate, no edit is made and the verification result is recorded.
+- [x] **HYG-04**: The RE-084 (`docs/admin-setup-apv1/08-self-deploying.md`) "Wi-Fi unsupported for self-deploying" claim is verified against current Microsoft Learn at plan time; if confirmed stale, RE-084 is corrected (freshness-stamp rules per the v1.15 D2/META-04 reformat-only convention do NOT apply — this is a content correction, so `last_verified` updates). If confirmed still accurate, no edit is made and the verification result is recorded.
 
 ### Chain-Validator Tooling Debt (TOOL)
 
@@ -105,7 +105,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | IPAD-02 | 131 | Pending |
 | IPAD-03 | 131 | Pending |
 | IPAD-04 | 131 | Pending |
-| HYG-04 | 130 | Pending |
+| HYG-04 | 130 | Complete |
 | TOOL-04 | 133 | Pending |
 | TOOL-05 | 133 | Pending |
 | TOOL-06 | 133 | Pending |
