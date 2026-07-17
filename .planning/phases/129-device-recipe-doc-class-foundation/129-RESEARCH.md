@@ -253,7 +253,7 @@ Note the blank line splitting what is conceptually one callout into two independ
 
 **All other claims in this research are VERIFIED** — confirmed via direct file reads (`EEE-SOP-standard.md`, `c17-eee-contract.mjs`, `admin-template.md`, `ARCHITECTURE.md`, live corpus exemplars) and live tool execution (`--self-test`, `--verbose`, `v1.17-milestone-audit.mjs`). No package-provenance claims exist in this phase (no packages installed), so the package-name `[ASSUMED]` provenance rule does not apply.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 None blocking. One minor style choice is left to the planner/executor:
 
