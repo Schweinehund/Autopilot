@@ -92,7 +92,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 — recipe links the corrected RE-084)*
 
-- [ ] 130-02-PLAN.md — Author docs/recipes/01-shared-windows-avd-client.md (AVD-01..05: spine, kiosk/SharedPC forks, anti-feature table, session-hygiene, 802.1X cross-link)
+- [x] 130-02-PLAN.md — Author docs/recipes/01-shared-windows-avd-client.md (AVD-01..05: spine, kiosk/SharedPC forks, anti-feature table, session-hygiene, 802.1X cross-link)
 
 **Discuss-phase flags**: AVD-02 kiosk-path depth (MEDIUM-confidence `Azure/WindowsAppKiosk` sourcing needs plan-time verification); AVD-01 feed-subscription mechanism (device-context vs. user-context `AutoSubscription` CSP scope conflict); HYG-04 disposition (fix-or-record, decided by the plan-time verification result).
 
@@ -180,7 +180,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 129. Device Recipe Doc-Class Foundation | 2/2 | Complete    | 2026-07-17 |
-| 130. Recipe #1 — Shared Windows AVD-Client Device | 1/2 | In Progress|  |
+| 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete   | 2026-07-17 |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
 | 133. Chain-Validator Tooling Debt Closure | 0/? | Not started | - |

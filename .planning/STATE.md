@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
-status: executing
-last_updated: "2026-07-17T19:29:35.303Z"
+status: verifying
+last_updated: "2026-07-17T19:46:56.091Z"
 last_activity: 2026-07-17
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 4
-  completed_plans: 3
-  percent: 17
+  completed_plans: 4
+  percent: 33
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 
 Phase: 130 (recipe-1-shared-windows-avd-client-device) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-17
 
 ## v1.18 Phase Dependency Summary
@@ -292,6 +292,9 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 
 - [Phase 129]: Recipe template built from admin-template.md base with D-06/D-07/D-08/D-13 diffs; three worked STD-05 examples (branching/enumerable/free-value) in one delete-marked HTML comment; corpus C17-green at 230/0
 - [Phase 130]: L108 Configuration-Caused Failures Wi-Fi row removed entirely (not reframed) - non-failure row would contradict the table's frozen Misconfiguration|Symptom|Runbook semantics
+- [Phase 130]: RE-222 assigned now at status Draft; registry row + Approved flip deferred to Phase 132 CLASS-03
+- [Phase 130]: AVD-04 maintenance-window/update-ring rendered as a single shared Step 6 block (not per-branch), with explicit per-branch-CSP-differs caveat
+- [Phase 130]: Session-reset field names carried as [ASSUMED] Case-2 enumerable options with explicit author-time Settings-Catalog verification caveat
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -324,8 +327,8 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-17T19:29:35.286Z
-Stopped at: Completed 130-01-PLAN.md
+Last session: 2026-07-17T19:46:56.075Z
+Stopped at: Completed 130-02-PLAN.md
 Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
 
@@ -341,3 +344,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 129 P01 | 25min | 2 tasks | 2 files |
 | Phase 129 P02 | 20min | 1 tasks | 1 files |
 | Phase 130 P01 | 15min | 2 tasks | 1 files |
+| Phase 130 P02 | 45min | 3 tasks | 1 files |

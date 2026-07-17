@@ -16,11 +16,11 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 129+).
 
 ### Recipe #1 — Shared Windows AVD-Client Device (AVD)
 
-- [ ] **AVD-01**: An Intune admin can follow a linear happy-path recipe from zero to a working self-deploying Entra-joined shared AVD-client device: APv1 self-deploying deployment profile (Entra-join only) → device-phase-only ESP → dynamic device group → Windows App deployed as Microsoft Store app, Required to a device group → AVD feed/workspace subscription URL configured device-context → verification steps. Link-not-copy to existing RE-084 (self-deploying), ESP policy, dynamic groups, and RE-177 (apv1-vs-apv2) docs. Plan-time verification flags: `RemoteDesktop/AutoSubscription` device-vs-user CSP scope (research conflict), MSRDC retirement date first-party citation.
-- [ ] **AVD-02**: The recipe's dominant fork — **Assigned Access kiosk lockdown vs. Shared PC mode shared desktop** — is an embedded admin decision-point block, and BOTH paths are worked fully as step-by-step branches: the kiosk path (Assigned Access packaging for Windows App, autologon — MEDIUM-confidence `Azure/WindowsAppKiosk` sourcing needs plan-time verification) and the Shared PC path (SharedPC CSP: `EnableSharedPCMode`, `AccountModel`, `DeletionPolicy`, `RestrictLocalStorage`, cleanup exemptions, guest sign-in decision points). The Shell-Launcher/Assigned-Access mutual-exclusion constraint is stated.
-- [ ] **AVD-03**: The recipe carries explicit anti-feature callouts for the four highest-cost mistakes: hybrid Entra join (fails self-deploying), APv2/Device Preparation (no self-deploying support), Wi-Fi at OOBE (pending plan-time verification of current behavior), and the retired legacy Remote Desktop client (MSRDC, retired 2026-03-27 — Windows-App-only guidance).
-- [ ] **AVD-04**: Session hygiene and patch cadence are covered as admin decision points: Windows App session-reset behaviors (`ResetAppOnCloseOnly`/`ResetAppAfterConnection`/`ResetAppOnIdle`), Shared PC `InactiveThreshold` idle handling, and a kiosk-tuned update ring / maintenance window aligned with `MaintenanceStartTime`.
-- [ ] **AVD-05**: The wired-vs-Wi-Fi-post-enrollment decision point conditionally routes to the existing v1.14 802.1X corpus (`docs/admin-setup-8021x/*`) as an if-then cross-link branch — 802.1X content is linked, never inlined.
+- [x] **AVD-01**: An Intune admin can follow a linear happy-path recipe from zero to a working self-deploying Entra-joined shared AVD-client device: APv1 self-deploying deployment profile (Entra-join only) → device-phase-only ESP → dynamic device group → Windows App deployed as Microsoft Store app, Required to a device group → AVD feed/workspace subscription URL configured device-context → verification steps. Link-not-copy to existing RE-084 (self-deploying), ESP policy, dynamic groups, and RE-177 (apv1-vs-apv2) docs. Plan-time verification flags: `RemoteDesktop/AutoSubscription` device-vs-user CSP scope (research conflict), MSRDC retirement date first-party citation.
+- [x] **AVD-02**: The recipe's dominant fork — **Assigned Access kiosk lockdown vs. Shared PC mode shared desktop** — is an embedded admin decision-point block, and BOTH paths are worked fully as step-by-step branches: the kiosk path (Assigned Access packaging for Windows App, autologon — MEDIUM-confidence `Azure/WindowsAppKiosk` sourcing needs plan-time verification) and the Shared PC path (SharedPC CSP: `EnableSharedPCMode`, `AccountModel`, `DeletionPolicy`, `RestrictLocalStorage`, cleanup exemptions, guest sign-in decision points). The Shell-Launcher/Assigned-Access mutual-exclusion constraint is stated.
+- [x] **AVD-03**: The recipe carries explicit anti-feature callouts for the four highest-cost mistakes: hybrid Entra join (fails self-deploying), APv2/Device Preparation (no self-deploying support), Wi-Fi at OOBE (pending plan-time verification of current behavior), and the retired legacy Remote Desktop client (MSRDC, retired 2026-03-27 — Windows-App-only guidance).
+- [x] **AVD-04**: Session hygiene and patch cadence are covered as admin decision points: Windows App session-reset behaviors (`ResetAppOnCloseOnly`/`ResetAppAfterConnection`/`ResetAppOnIdle`), Shared PC `InactiveThreshold` idle handling, and a kiosk-tuned update ring / maintenance window aligned with `MaintenanceStartTime`.
+- [x] **AVD-05**: The wired-vs-Wi-Fi-post-enrollment decision point conditionally routes to the existing v1.14 802.1X corpus (`docs/admin-setup-8021x/*`) as an if-then cross-link branch — 802.1X content is linked, never inlined.
 
 ### Recipe #2 — Shared iPad (IPAD)
 
@@ -96,11 +96,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLASS-02 | 129 | Complete |
 | CLASS-03 | 132 | Pending |
 | CLASS-04 | 132 | Pending |
-| AVD-01 | 130 | Pending |
-| AVD-02 | 130 | Pending |
-| AVD-03 | 130 | Pending |
-| AVD-04 | 130 | Pending |
-| AVD-05 | 130 | Pending |
+| AVD-01 | 130 | Complete |
+| AVD-02 | 130 | Complete |
+| AVD-03 | 130 | Complete |
+| AVD-04 | 130 | Complete |
+| AVD-05 | 130 | Complete |
 | IPAD-01 | 131 | Pending |
 | IPAD-02 | 131 | Pending |
 | IPAD-03 | 131 | Pending |
