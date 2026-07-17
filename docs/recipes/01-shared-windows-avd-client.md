@@ -30,7 +30,6 @@ app assignment this recipe walks through.
 - **RBAC:** Intune Administrator role (or an equivalent custom role covering device configuration profiles, app assignment, and enrollment configuration).
 - **Licensing:** target users already hold the Azure Virtual Desktop / Windows 365 entitlement that grants access to the AVD host pool this device will connect to.
 - **Autopilot-registered device** — hardware hash uploaded and matched to a deployment profile; see [Hardware Hash Upload](../admin-setup-apv1/01-hardware-hash-upload.md).
-- **Dynamic device group** ready to receive the self-deploying devices — see [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) for the ZTDId membership rule.
 - **TPM 2.0** with attestation capability — the sole self-deploying authentication mechanism; see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md).
 - **Wired Ethernet** at the deployment location for a fully unattended, zero-touch enrollment; built-in Wi-Fi at OOBE is an alternative but requires manually selecting language, locale, and keyboard, then joining the network — see [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) for the full prerequisite detail. Post-enrollment wired-vs-Wi-Fi network access is a separate, later stage — see [Step 7](#step-7-wired-vs-wi-fi-network-access-post-enrollment).
 - **Device-phase-only Enrollment Status Page (ESP)** policy configured — see [ESP Policy](../admin-setup-apv1/03-esp-policy.md).
@@ -48,16 +47,26 @@ app assignment this recipe walks through.
 
 ## Steps
 
-### Step 1: Create the self-deploying deployment profile
+### Step 1: Create the dynamic device group
+
+1. Navigate to **Azure portal** > **Microsoft Entra ID** > **Groups** > **New group**.
+2. Set **Membership type**: **Dynamic Device**.
+3. Add the ZTDId-based membership rule.
+
+Create this group first — the deployment profile, ESP, and Windows App assignments in the following steps all target it.
+
+See [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) for the exact membership-rule syntax — do not recreate the rule here.
+
+### Step 2: Create the self-deploying deployment profile
 
 1. Navigate to **Intune admin center** > **Devices** > **Windows** > **Enrollment** > **Windows Autopilot** > **Deployment Profiles** > **Create profile** > **Windows PC**.
 2. Set **Deployment mode**: **Self-Deploying**.
 3. Set **Join type**: **Microsoft Entra joined** (hybrid join is not available for self-deploying mode).
-4. Assign the profile to the dynamic device group created in [Step 3](#step-3-create-the-dynamic-device-group).
+4. Assign the profile to the dynamic device group created in [Step 1](#step-1-create-the-dynamic-device-group).
 
 See [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) for the full field reference, the TPM 2.0 requirement, and network prerequisites — this recipe links rather than repeats that detail.
 
-### Step 2: Configure the device-phase-only Enrollment Status Page
+### Step 3: Configure the device-phase-only Enrollment Status Page
 
 1. Navigate to **Intune admin center** > **Devices** > **Enrollment** (Windows enrollment) > **Enrollment Status Page** > **Create**.
 2. Assign the policy to the same dynamic device group.
@@ -66,20 +75,12 @@ See [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md
 
 See [ESP Policy](../admin-setup-apv1/03-esp-policy.md) for the full field reference.
 
-### Step 3: Create the dynamic device group
-
-1. Navigate to **Azure portal** > **Microsoft Entra ID** > **Groups** > **New group**.
-2. Set **Membership type**: **Dynamic Device**.
-3. Add the ZTDId-based membership rule.
-
-See [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) for the exact membership-rule syntax — do not recreate the rule here.
-
 ### Step 4: Deploy Windows App (device-context)
 
 1. Navigate to **Intune admin center** > **Apps** > **All apps** > **Add**.
 2. **App type**: **Microsoft Store app (new)** > **Select**.
 3. Search for **Windows App** and select it.
-4. On **Assignments**, add the dynamic device group from [Step 3](#step-3-create-the-dynamic-device-group) under **Required**.
+4. On **Assignments**, add the dynamic device group from [Step 1](#step-1-create-the-dynamic-device-group) under **Required**.
 
 > **What breaks if misconfigured:** Assigning Windows App as Available instead of Required, or to a user group instead of a device group, means it is not present before anyone signs in.
 
