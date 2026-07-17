@@ -496,7 +496,7 @@ choose, why, and either a consequence/branch or a recorded value); a Case 3 free
 never gets a table. Decision content is never placed inside a code fence in a live recipe — fenced
 content is invisible to the retrieval body text (see Grounding Notes), so putting the prompt,
 options, or consequences in a fence would silently remove the decision from what Copilot can
-ground on. The one exception is this standard's own fenced worked example below (D-11), which is
+ground on. The one exception is this standard's own fenced worked example below (D-07), which is
 a spec sample in an index-excluded meta-document, not live decision content in an indexed recipe.
 
 ### D-04: The three-rule normative branch floor
@@ -520,7 +520,7 @@ spec does not mandate a rejoin point — non-converging forks are explicitly per
 the PSSO walkthrough's own "no reconvergence" precedent at line ~65. Authors are free to reconverge
 branches when the underlying procedure naturally does so, but nothing in this section requires it.
 
-### D-13: Recipe Summary end-state statement
+### D-06: Recipe Summary end-state statement
 
 Every recipe's `## Summary` opens with a one-line concrete end-state statement — REQUIRED;
 enforced by registry review, not by the harness (mirroring the D-08 Non-MECE precedence rule's
@@ -529,7 +529,7 @@ configuration the recipe produces (for example, "Following this recipe yields a 
 Entra-joined shared Windows AVD-client device, provisioned end-to-end from zero through Intune"),
 so a reader can confirm applicability before starting the procedure.
 
-### D-11: Worked example
+### D-07: Worked example
 
 The composite shape below is a compact, fenced spec sample — the same house style STD-04 D-03
 uses to describe a live-content shape in prose backed by a small illustrative block. A fenced spec
