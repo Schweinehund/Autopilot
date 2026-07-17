@@ -84,7 +84,16 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. Session-hygiene/patch-cadence decision points (session-reset behaviors, `InactiveThreshold`, kiosk-tuned update ring) are documented, and the wired-vs-Wi-Fi decision point cross-links the existing 802.1X corpus without duplicating it.
   5. RE-084's "Wi-Fi unsupported for self-deploying" claim is independently re-verified against current Microsoft Learn; corrected with an updated `last_verified` if stale, or the verification result is recorded as a no-op if still accurate.
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+**Wave 1**
+
+- [ ] 130-01-PLAN.md — HYG-04: correct RE-084's stale Wi-Fi-unsupported claim (6 sites) + freshness/changelog
+
+**Wave 2** *(blocked on Wave 1 — recipe links the corrected RE-084)*
+
+- [ ] 130-02-PLAN.md — Author docs/recipes/01-shared-windows-avd-client.md (AVD-01..05: spine, kiosk/SharedPC forks, anti-feature table, session-hygiene, 802.1X cross-link)
+
 **Discuss-phase flags**: AVD-02 kiosk-path depth (MEDIUM-confidence `Azure/WindowsAppKiosk` sourcing needs plan-time verification); AVD-01 feed-subscription mechanism (device-context vs. user-context `AutoSubscription` CSP scope conflict); HYG-04 disposition (fix-or-record, decided by the plan-time verification result).
 
 ### Phase 131: Recipe #2 — Shared iPad Full Provisioning
@@ -171,7 +180,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 129. Device Recipe Doc-Class Foundation | 2/2 | Complete    | 2026-07-17 |
-| 130. Recipe #1 — Shared Windows AVD-Client Device | 0/? | Not started | - |
+| 130. Recipe #1 — Shared Windows AVD-Client Device | 0/2 | Ready to execute | - |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
 | 133. Chain-Validator Tooling Debt Closure | 0/? | Not started | - |
