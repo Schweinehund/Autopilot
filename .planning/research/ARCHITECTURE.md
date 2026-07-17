@@ -56,9 +56,6 @@ The entire pipeline is **data-driven off the registry**, not code-driven off dir
 ```
 docs/
 ├── recipes/                              # NEW top-level doc-class directory
-│   ├── 00-overview.md                    # NEW — index page (mirrors l1-runbooks/00-index.md,
-│   │                                      #   admin-setup-apv1/00-overview.md, device-operations/00-overview.md
-│   │                                      #   convention: every doc-class directory has an 00-* index)
 │   ├── 01-windows-avd-shared-device.md   # NEW — Recipe #1
 │   └── 02-shared-ipad-full-provisioning.md # NEW — Recipe #2
 ├── _templates/
