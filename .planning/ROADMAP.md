@@ -112,7 +112,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 131-01-PLAN.md — Scaffold RE-223 + all-unsupported anti-feature table/passcode note (IPAD-02) + ADE-enrollment/sizing/sign-in/VPP happy-path front (IPAD-01, IPAD-04)
+- [x] 131-01-PLAN.md — Scaffold RE-223 + all-unsupported anti-feature table/passcode note (IPAD-02) + ADE-enrollment/sizing/sign-in/VPP happy-path front (IPAD-01, IPAD-04)
 
 **Wave 2** *(blocked on Wave 1 — same single recipe file, serialized)*
 
@@ -189,7 +189,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 |-------|----------------|--------|-----------|
 | 129. Device Recipe Doc-Class Foundation | 2/2 | Complete    | 2026-07-17 |
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete    | 2026-07-17 |
-| 131. Recipe #2 — Shared iPad Full Provisioning | 0/? | Not started | - |
+| 131. Recipe #2 — Shared iPad Full Provisioning | 1/2 | In Progress|  |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
 | 133. Chain-Validator Tooling Debt Closure | 0/? | Not started | - |
 | 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
