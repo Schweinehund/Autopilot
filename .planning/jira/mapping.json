@@ -886,12 +886,12 @@
         },
         "131": {
           "issueKey": "RTS-744",
-          "status": "in_progress",
+          "status": "done",
           "name": "Recipe #2 — Shared iPad Full Provisioning"
         },
         "132": {
           "issueKey": "RTS-745",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Integration & Navigation-Last Close"
         },
         "133": {
