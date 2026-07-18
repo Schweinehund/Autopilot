@@ -151,3 +151,108 @@ See [App Deployment](../admin-setup-ios/05-app-deployment.md#vpp-device-licensed
 VPP mechanics, and its [device-centric view](../admin-setup-ios/05-app-deployment.md#2-device-centric-view)
 for install-status verification — Shared iPad has no Company Portal, so use the device-centric
 path, not the app-centric/Company Portal view.
+
+### Step 4: Review the device-vs-user applicability boundary
+
+Before assigning the layered configuration below, confirm which of this recipe's setting types are
+device-group-assignable versus user-group-assignable. This table is scoped only to the settings the
+worked example in Steps 6–7 touches.
+
+| Profile type | Setting | Device group assignment | User group assignment |
+|---|---|---|---|
+| Device features | Home screen layout | Device | User |
+| Device restrictions | Block Shared iPad temporary sessions | Device | Not applicable |
+| Device restrictions | All other device-restriction settings | Device | User |
+| Networking | Wi-Fi, VPN, Certificate (all settings) | Device | Not applicable |
+| Email | All settings | Device | User (⚠ unsupported here — see [Unsupported and Anti-Feature Callouts](#unsupported-and-anti-feature-callouts) above) |
+
+See [Configuration Profiles](../admin-setup-ios/04-configuration-profiles.md) for the full
+device-vs-user applicability matrix across every iOS/iPadOS profile type — this table does not
+reproduce it in full.
+
+### Step 5: Configure device restrictions and decide on guest (temporary) sessions
+
+1. Navigate to **Intune admin center** > **Devices** > **Manage devices** > **Configuration** >
+   **Create** > **New policy** > **iOS/iPadOS** > device restrictions (Templates or the equivalent
+   Settings Catalog profile).
+2. Assign the profile to the device group — device restrictions are Device-assignable, per the
+   table in [Step 4](#step-4-review-the-device-vs-user-applicability-boundary).
+
+> **Ask the admin:** Should this Shared iPad allow guest (temporary) sessions without a Managed Apple Account?
+
+Temporary sessions are allowed by default. To disable them, set **Block Shared iPad temporary
+sessions** to **Yes** in this device restrictions profile. Leaving it **No** or **Not configured**
+keeps guest sign-in available — the inverted-polarity default: the Block setting's off state is
+what enables guests, not a positive "enable guest sessions" toggle.
+
+Do not assert an exact Settings Catalog category or navigation breadcrumb for this setting beyond
+"an iOS/iPadOS device restrictions profile" — spot-check the exact path in your own tenant before
+configuring.
+
+A separate, out-of-scope third mode exists: the ADE enrollment-profile setting **Require Shared
+iPad temporary session only** (set at [Step 1](#step-1-configure-the-ade-enrollment-policy)) forces
+every session on the device to be a guest session, with no Managed Apple Account sign-in ever
+allowed. That mode lives on the enrollment profile, not this device-restrictions Block toggle, and
+is not implemented by this named-user recipe.
+
+Guest (temporary) sessions receive only the device-group baseline configured in
+[Step 6](#step-6-apply-the-device-group-baseline) — the per-role user-group overlay in
+[Step 7](#step-7-apply-the-per-role-user-group-overlay) never applies during a temporary session,
+since there is no signed-in named user to match either user group's membership.
+
+### Step 6: Apply the device-group baseline
+
+1. **Wi-Fi:** Navigate to **Intune admin center** > **Devices** > **Manage devices** >
+   **Configuration** > **Create** > **New policy** > **iOS/iPadOS** > **Wi-Fi**. Configure the
+   common Wi-Fi network for this deployment and assign it to the device group.
+
+   > **Wi-Fi, VPN, and Certificate profiles are Not applicable to user groups on Shared iPad.**
+
+   > Device-group assignment here is a platform constraint, not a best-practice preference (see [Step 4](#step-4-review-the-device-vs-user-applicability-boundary)).
+
+2. **Apps:** assign every device-licensed VPP/LOB app used by any role as **Required** to the
+   device group, per [Step 3](#step-3-deploy-device-licensed-vpp-apps). Never assign an app
+   per-role to a user group.
+
+   > **What breaks if misconfigured:** Assigning an app to a user group instead of the device group leaves it absent for every role signed in on this Shared iPad.
+
+   > Shared iPad apps are Required, device-licensed, and device-group-only — there is no per-role app-assignment path.
+
+3. **Device restrictions:** the common restrictions profile and guest-session decision from
+   [Step 5](#step-5-configure-device-restrictions-and-decide-on-guest-temporary-sessions) apply
+   here as the baseline for every role.
+
+### Step 7: Apply the per-role user-group overlay
+
+Two Entra ID user groups differentiate the shared experience per signed-in role on this Shared
+iPad — **Nurse** and **Clinician**. Each role signs in and receives its own Home Screen layout and
+app visibility for the duration of that session; this is per-signed-in-**role**, not per-physical-
+user persistence.
+
+1. Navigate to **Intune admin center** > **Devices** > **Manage devices** > **Configuration** >
+   **Create** > **New policy** > **iOS/iPadOS** > **Templates** > **Device features** > **Home
+   Screen Layout**.
+2. Create one layout profile per role and assign each to its own user group.
+3. Within each layout, use the **Show or hide apps** allow-list to scope which of the device-group-
+   Required apps (Step 6) appear on that role's Home Screen and Dock. This allow-list only controls
+   visibility — the apps themselves stay Required and installed at the device group regardless of
+   which role is signed in.
+
+| Role | User group | Home Screen Dock | Show/hide allow-list |
+|------|-----------|-------------------|----------------------|
+| Nurse | Nurses-iPad | Med Administration, Nurse Call, Secure Messaging | Med Administration, Nurse Call, Secure Messaging, EHR Mobile |
+| Clinician | Clinicians-iPad | EHR Mobile, e-Prescribing, Secure Messaging | EHR Mobile, e-Prescribing, Secure Messaging, Med Administration |
+
+Home screen layout is user-applicable for this per-role differentiation, and it is also
+device-applicable when assigned directly to a device group — it is not a user-only setting; this
+worked example simply uses the user-group path so each role's layout can differ.
+
+> **What breaks if misconfigured:** Assigning the same setting to both a device group and a user group does not resolve deterministically.
+
+> A conflicting value "can't be pre-determined."
+
+> When it happens, Intune applies "the first setting assigned."
+
+> If one group type carries a setting and another group type also carries that same setting, the outcome is "chosen by the operating system."
+
+> Assign Wi-Fi, VPN, Certificate, and apps to the device group only, and Home Screen Layout / show-hide-apps to the user group only, to avoid this outcome entirely.
