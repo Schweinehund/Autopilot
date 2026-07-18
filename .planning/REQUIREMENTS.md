@@ -24,9 +24,9 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 129+).
 
 ### Recipe #2 — Shared iPad (IPAD)
 
-- [ ] **IPAD-01**: An Intune admin can follow a linear happy-path recipe from zero to a working Shared iPad: ADE enrollment profile (Shared iPad = Yes + Supervised + no user affinity, with the wipe-if-changed-post-enrollment warning) → device eligibility floors (32 GB min / 64 GB+ recommended, iPadOS 13.4+) → federated Managed Apple Account sign-in (cross-link OU-06, not re-authored) → device-licensed VPP apps Required to device groups → the device-vs-user profile-applicability split reproduced as a table → home screen layout → verification. Cross-references (does not duplicate) the OU-07 Shared iPad lifecycle doc.
-- [ ] **IPAD-02**: The recipe leads with the **unsupported-feature callouts** — compliance policies, Conditional Access, app protection policies, email profiles, Company Portal, "Available" app intent, and user-licensed VPP are all explicitly unsupported on Shared iPad, documented with WHY (not silently omitted; the fixed 8-char passcode behavior noted, grace period as the only knob) — and embeds the **temporary/guest sessions on-or-off** admin decision-point block (enabled by default; the admin must explicitly decide).
-- [ ] **IPAD-03**: A per-role layered-configuration worked example shows the device-group baseline + user-group overlay pattern (common Wi-Fi/apps on the device group; per-role home screen layout / allow-lists on user groups) including the never-set-the-same-setting-twice conflict warning.
+- [x] **IPAD-01**: An Intune admin can follow a linear happy-path recipe from zero to a working Shared iPad: ADE enrollment profile (Shared iPad = Yes + Supervised + no user affinity, with the wipe-if-changed-post-enrollment warning) → device eligibility floors (32 GB min / 64 GB+ recommended, iPadOS 13.4+) → federated Managed Apple Account sign-in (cross-link OU-06, not re-authored) → device-licensed VPP apps Required to device groups → the device-vs-user profile-applicability split reproduced as a table → home screen layout → verification. Cross-references (does not duplicate) the OU-07 Shared iPad lifecycle doc.
+- [x] **IPAD-02**: The recipe leads with the **unsupported-feature callouts** — compliance policies, Conditional Access, app protection policies, email profiles, Company Portal, "Available" app intent, and user-licensed VPP are all explicitly unsupported on Shared iPad, documented with WHY (not silently omitted; the fixed 8-char passcode behavior noted, grace period as the only knob) — and embeds the **temporary/guest sessions on-or-off** admin decision-point block (enabled by default; the admin must explicitly decide).
+- [x] **IPAD-03**: A per-role layered-configuration worked example shows the device-group baseline + user-group overlay pattern (common Wi-Fi/apps on the device group; per-role home screen layout / allow-lists on user groups) including the never-set-the-same-setting-twice conflict warning.
 - [x] **IPAD-04**: Storage/session sizing is covered as admin decision points: per-user storage quota (`QuotaSize`, iPadOS 17+ — Settings Catalog exposure path is a plan-time verification flag), session idle timeout + offline grace period values, and cached-users-per-device planning guidance (framed as a planning decision, not a config field).
 
 ### Corpus Hygiene (HYG)
@@ -101,9 +101,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AVD-03 | 130 | Complete |
 | AVD-04 | 130 | Complete |
 | AVD-05 | 130 | Complete |
-| IPAD-01 | 131 | Pending |
-| IPAD-02 | 131 | Pending |
-| IPAD-03 | 131 | Pending |
+| IPAD-01 | 131 | Complete |
+| IPAD-02 | 131 | Complete |
+| IPAD-03 | 131 | Complete |
 | IPAD-04 | 131 | Complete |
 | HYG-04 | 130 | Complete |
 | TOOL-04 | 133 | Pending |

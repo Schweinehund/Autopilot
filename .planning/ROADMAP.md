@@ -116,7 +116,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on Wave 1 — same single recipe file, serialized)*
 
-- [ ] 131-02-PLAN.md — Per-role layered-config worked example + conflict warning (IPAD-03), on-device verification/failures/See-Also, full-corpus C17 green gate (IPAD-01)
+- [x] 131-02-PLAN.md — Per-role layered-config worked example + conflict warning (IPAD-03), on-device verification/failures/See-Also, full-corpus C17 green gate (IPAD-01)
 
 ### Phase 132: Integration & Navigation-Last Close
 
@@ -189,7 +189,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 |-------|----------------|--------|-----------|
 | 129. Device Recipe Doc-Class Foundation | 2/2 | Complete    | 2026-07-17 |
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete    | 2026-07-17 |
-| 131. Recipe #2 — Shared iPad Full Provisioning | 1/2 | In Progress|  |
+| 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete   | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 0/? | Not started | - |
 | 133. Chain-Validator Tooling Debt Closure | 0/? | Not started | - |
 | 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
