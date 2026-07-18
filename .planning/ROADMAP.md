@@ -108,7 +108,15 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. A per-role layered-configuration worked example shows the device-group baseline + user-group overlay pattern, including the never-set-the-same-setting-twice conflict warning.
   4. Storage/session sizing decision points (per-user storage quota, session idle timeout + offline grace period, cached-users-per-device planning) are documented as admin decisions, not bare config fields.
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+**Wave 1**
+
+- [ ] 131-01-PLAN.md — Scaffold RE-223 + all-unsupported anti-feature table/passcode note (IPAD-02) + ADE-enrollment/sizing/sign-in/VPP happy-path front (IPAD-01, IPAD-04)
+
+**Wave 2** *(blocked on Wave 1 — same single recipe file, serialized)*
+
+- [ ] 131-02-PLAN.md — Per-role layered-config worked example + conflict warning (IPAD-03), on-device verification/failures/See-Also, full-corpus C17 green gate (IPAD-01)
 
 ### Phase 132: Integration & Navigation-Last Close
 

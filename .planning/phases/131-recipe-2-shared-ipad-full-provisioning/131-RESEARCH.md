@@ -310,17 +310,17 @@ Not meaningfully applicable — this is a fixed-scope MDM feature (Shared iPad),
 
 **If this table is empty:** Not applicable — see rows above. All three items are low-risk refinements that do not affect any LOCKED decision in CONTEXT.md; they are authoring-time in-tenant spot-checks, not design gray areas.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Exact Settings Catalog breadcrumb for "Block Shared iPad temporary sessions"**
    - What we know: The setting exists (named in the shared-ipad applicability table), applies Device-only, and is confirmed absent from the general device-restrictions reference article's documented-settings prose.
    - What's unclear: Whether the Intune tenant surfaces it under a "Shared iPad" Settings Catalog category, a general "Restrictions" category, or only via the legacy Templates path.
-   - Recommendation: The recipe can safely say "configure in an iOS/iPadOS device restrictions profile" (matches CONTEXT.md B3 exactly) without committing to a specific breadcrumb; if the plan wants a precise navigation string, flag it as a one-line in-tenant verification step at authoring time (not a blocker).
+   - **RESOLVED:** The recipe says "configure in an iOS/iPadOS device restrictions profile" (matches CONTEXT.md B3 exactly) without committing to a specific breadcrumb; the exact navigation string is a one-line in-tenant authoring-time spot-check, not a blocker. Reflected in 131-01/131-02 (neither asserts an exact Settings-Catalog breadcrumb).
 
 2. **RE-109's stale "Profiles" navigation vs. the newer "Enrollment policies" experience**
    - What we know: `setup-automated-ios` (dated 2026-05-18) documents the new **Enrollment policies** navigation as current, noting the older **Profiles** path "won't receive new features." RE-109 (last verified 2026-04-18) still uses the older navigation.
    - What's unclear: Whether the recipe should use the new navigation exclusively (recommended) or hedge with a "navigation may differ" note like RE-109 and RE-110 already do.
-   - Recommendation: Use the new **Enrollment policies** navigation as primary (it's what live Learn docs show today), optionally with the same soft "navigation may vary by tenant rollout" hedge the existing iOS corpus already uses elsewhere (e.g., RE-109's Step 1 note) — this is a Claude's Discretion prose matter, not a locked-decision conflict.
+   - **RESOLVED:** Use the new **Enrollment policies** navigation as primary (what live Learn shows today), with the same soft "navigation may vary by tenant rollout" hedge the existing iOS corpus already uses — a Claude's Discretion prose matter, not a locked-decision conflict. Reflected in 131-01 Task 2's action text.
 
 ## Security Domain
 
