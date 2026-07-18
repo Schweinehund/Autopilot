@@ -30,10 +30,10 @@ enrollment policy, configuration profiles, and app assignments this recipe walks
 
 ## Prerequisites
 
-- **Eligibility floor:** iPadOS 13.4 or later with at least 32 GB of storage. (First-party text
-  also says "iPadOS 13.3 and later" in the wipe-trigger context specifically — treat 13.4+ as the
-  floor to plan for, and 13.3 as the narrower boundary for which devices trigger a wipe if
-  targeted, covered at the enrollment-policy step below.)
+- **Eligibility floor:** iPadOS 13.4 or later with at least 32 GB of storage — treat 13.4+ as the
+  floor to plan for. (First-party text also says "iPadOS 13.3 and later" specifically in the
+  wipe-trigger context: 13.3 is the narrower boundary for which devices trigger a wipe if targeted,
+  covered at the enrollment-policy step below.)
 - **RBAC:** Intune Administrator role (or an equivalent custom role covering enrollment policy,
   configuration profiles, and app assignment).
 - **ADE / ABM:** a completed Automated Device Enrollment token synced with Apple Business Manager,
@@ -91,7 +91,11 @@ The Shared iPad passcode is a fixed limitation, not a table row:
 
    > These are two distinct facts, not one "any change wipes" rule: the wipe is tied to targeting an unsupported device; the factory reset is tied to changing an existing policy.
 
-   > **Entra shared device mode is not the Shared iPad feature.** [ADE Enrollment Profile](../admin-setup-ios/03-ade-enrollment-profile.md#step-2-configure-enrollment-settings) lists "Microsoft Entra shared mode" as a separate User Affinity enum value for general ADE fields — that row does not describe this Shared-iPad toggle.
+   > **Entra shared device mode is not the Shared iPad feature.**
+
+   > The [ADE Enrollment Profile](../admin-setup-ios/03-ade-enrollment-profile.md#step-2-configure-enrollment-settings) lists "Microsoft Entra shared mode" as a separate User Affinity value.
+
+   > That row describes general ADE fields, not this Shared-iPad toggle.
 
 3. Set the enrollment-policy sizing fields on the same policy:
 
@@ -99,7 +103,6 @@ The Shared iPad passcode is a fixed limitation, not a table row:
 
    Enter a whole number up to 24 on a 32-GB or 64-GB device. A low number can delay a new user's
    data appearing after their first sign-in; a high number risks running out of on-device storage.
-   This is a real, settable enrollment-policy field, not prose-only planning guidance.
 
    > **Ask the admin:** How many seconds after screen lock should this Shared iPad require a password to unlock?
 
@@ -164,7 +167,6 @@ worked example in Steps 6–7 touches.
 | Device restrictions | Block Shared iPad temporary sessions | Device | Not applicable |
 | Device restrictions | All other device-restriction settings | Device | User |
 | Networking | Wi-Fi, VPN, Certificate (all settings) | Device | Not applicable |
-| Email | All settings | Device | User (⚠ unsupported here — see [Unsupported and Anti-Feature Callouts](#unsupported-and-anti-feature-callouts) above) |
 
 See [Configuration Profiles](../admin-setup-ios/04-configuration-profiles.md) for the full
 device-vs-user applicability matrix across every iOS/iPadOS profile type — this table does not
