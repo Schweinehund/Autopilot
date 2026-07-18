@@ -256,3 +256,32 @@ worked example simply uses the user-group path so each role's layout can differ.
 > If one group type carries a setting and another group type also carries that same setting, the outcome is "chosen by the operating system."
 
 > Assign Wi-Fi, VPN, Certificate, and apps to the device group only, and Home Screen Layout / show-hide-apps to the user group only, to avoid this outcome entirely.
+
+## Verification
+
+- [ ] Device completed ADE enrollment as Supervised, Shared iPad, with no user affinity — confirmed in Intune admin center device properties.
+- [ ] All device-group-Required apps are present on the device BEFORE any user signs in — confirmed by starting a guest (temporary) session and observing the Home Screen.
+- [ ] The common Wi-Fi network connects automatically at every sign-in, for every role.
+- [ ] Signing in as the Nurse role shows the Nurse Dock (Med Administration, Nurse Call, Secure Messaging) and only the Nurse show/hide allow-list of apps.
+- [ ] Signing in as the Clinician role shows the Clinician Dock (EHR Mobile, e-Prescribing, Secure Messaging) and only the Clinician show/hide allow-list of apps.
+- [ ] Starting a guest (temporary) session shows only the device-group baseline layout and app set — no per-role overlay applies.
+
+Verification is on-device (sign in as each role and observe the layout/app set directly) — user-assigned policy status does not surface in Intune reports for Shared iPad, so no Intune user-status-report check and no Company Portal check apply here (Shared iPad has no Company Portal).
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Symptom | Runbook |
+|------------------|---------|---------|
+| VPP app assigned Available or user-licensed instead of Required + device-licensed | App is absent for every role at sign-in — App Store installs are disabled on Shared iPad | [Step 3](#step-3-deploy-device-licensed-vpp-apps) |
+| An email profile assigned to the Shared iPad device or a user group | An assignment error occurs when the profile is applied | [Unsupported and Anti-Feature Callouts](#unsupported-and-anti-feature-callouts) |
+| Block Shared iPad temporary sessions left in the wrong polarity | Guest sign-in unexpectedly available (No/Not configured) or unexpectedly blocked (Yes) | [Step 5](#step-5-configure-device-restrictions-and-decide-on-guest-temporary-sessions) |
+| The same setting assigned to both the device group and a user group | Outcome is chosen by the operating system, not deterministic — the wrong role may see the wrong layout or app set | [Step 7](#step-7-apply-the-per-role-user-group-overlay) |
+
+## See Also
+
+- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this recipe's decision blocks instantiate
+- [ADE Enrollment Profile](../admin-setup-ios/03-ade-enrollment-profile.md) — general ADE enrollment-policy field reference
+- [Configuration Profiles](../admin-setup-ios/04-configuration-profiles.md) — full Wi-Fi / Home Screen Layout / device-restrictions applicability matrix
+- [App Deployment](../admin-setup-ios/05-app-deployment.md) — exhaustive VPP mechanics and device-centric verification
+- [Managed Apple Account Provisioning](../cross-platform/apple-business/08-managed-apple-account-provisioning.md) — federated Managed Apple Account setup and provisioning-method decision matrix
+- [Shared iPad Lifecycle](../cross-platform/apple-business/09-shared-ipad-lifecycle.md) — ABM-side lifecycle and session mechanics
