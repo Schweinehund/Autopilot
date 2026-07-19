@@ -896,12 +896,12 @@
         },
         "133": {
           "issueKey": "RTS-746",
-          "status": "in_progress",
+          "status": "done",
           "name": "Chain-Validator Tooling Debt Closure"
         },
         "134": {
           "issueKey": "RTS-747",
-          "status": "todo",
+          "status": "in_progress",
           "name": "V117 Pin + 16th Path-A Lineage Bump + Terminal Close"
         }
       }
