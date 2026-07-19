@@ -342,17 +342,19 @@ Un-exempted counts shrink from v1.4→v1.16 (51→33) not because content shrank
 
 No other claims in this document are unverified — all TOOL-05/TOOL-06/DEFER-119-A findings are grounded in direct code reads, direct JSON diffs, direct git-log queries, and a direct local harness run captured this session.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Exact per-pin coordinates for `v1.4`, `v1.4.1`, Group S (`v1.5`-`v1.13`), and `v1.14`/`v1.15`'s remaining files**
    - What we know: the method (match `reason` text against `v1.17-audit-allowlist.json`'s current pins; `v1.16`'s case is fully solved as a worked example) and the exact scope (which files, how many pins per sidecar, per Appendix C).
    - What's unclear: the literal old→new line table for these ~5 remaining reconciliation targets was not hand-computed pin-by-pin in this research session (time-boxed; `v1.16` was solved and verified as the reference case, and the C17 #12 fragmentation risk was surfaced from the v1.17 reason-text evidence rather than resolved).
    - Recommendation: scope a dedicated plan task (or Wave 0 recon step, mirroring Phase 128's own Plan 128-01 "recon-only, eliminates remaining discovery for Atom 1/2" pattern) to walk each of the ~65 remaining pins (18+18+20+~2 unique to v1.14+~4 unique to v1.15) against `v1.17-audit-allowlist.json` using the reason-text-matching method demonstrated here, before authoring the atomic re-pin commit.
+   - RESOLVED: Plan 133-01 Tasks 1-2 produce the full coordinate table before any edit.
 
 2. **Whether TOOL-04's "made green" success criterion should be written per-check-category or per-workflow-exit-code**
    - What we know: a per-workflow-exit-code reading cannot be satisfied for `v1.4`/`v1.4.1` (C4/C5) or `v1.5`-`v1.13` (C10) without touching non-coordinate content, which is out of scope.
    - What's unclear: whether the plan should explicitly amend/narrow SC#1's wording, or just document the category-scoped interpretation in the plan's acceptance criteria without touching REQUIREMENTS.md wording.
    - Recommendation: narrow at plan-acceptance-criteria level (not by editing the locked requirement text), citing this research's Appendix D as the evidence base.
+   - RESOLVED: Plan 133-02 must_haves/acceptance_criteria scope 'made green' to C2/C7/C9/safetynet per-category; pre-existing C4/C5/C10 stays ACCEPTED-STANDALONE-CI-RED.
 
 ## Environment Availability
 
