@@ -161,7 +161,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on 133-01 — needs the coordinate tables)*
 
-- [ ] 133-02-PLAN.md — TOOL-04 apply re-pin to 14 sidecars, per-category green, atomic D-00a-exception commit; CARVE-1 hand-off (TOOL-04)
+- [x] 133-02-PLAN.md — TOOL-04 apply re-pin to 14 sidecars, per-category green, atomic D-00a-exception commit; CARVE-1 hand-off (TOOL-04)
 
 **Discuss-phase flags**: TOOL-04 approach (dominant gray area for the tooling pillar — (a) targeted frozen-sidecar re-pin vs. (b) frozen-aware own-close-snapshot reads; a genuine D-00a frozen-surface-edit exception decision).
 
@@ -210,5 +210,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete    | 2026-07-17 |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 2/2 | Complete    | 2026-07-19 |
-| 133. Chain-Validator Tooling Debt Closure | 3/4 | In Progress|  |
+| 133. Chain-Validator Tooling Debt Closure | 4/4 | Complete   | 2026-07-19 |
 | 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |

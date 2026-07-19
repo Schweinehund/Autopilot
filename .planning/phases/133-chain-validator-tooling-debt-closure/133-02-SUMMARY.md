@@ -167,3 +167,7 @@ This residual exactly matches the local harness-replay results captured in `133-
 ---
 *Phase: 133-chain-validator-tooling-debt-closure*
 *Completed: 2026-07-19*
+
+## Self-Check: PASSED
+
+All 14 modified sidecar files and the SUMMARY.md verified present via `[ -f ... ]`. Both commits (`aaf0d2f` atomic re-pin, `3f978d2d` summary) verified present via `git log --oneline --all`.

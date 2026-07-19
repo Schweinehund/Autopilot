@@ -35,7 +35,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 129+).
 
 ### Chain-Validator Tooling Debt (TOOL)
 
-- [ ] **TOOL-04**: `FROZEN-AWARE-ADOPTION-SWEEP-01` is resolved — the 11 standalone-RED predecessor CI workflows (v1.4–v1.16 harness jobs + base harness-replay, HYG-02 −1 line-shift root cause) are made green or formally re-dispositioned. The approach — (a) targeted re-pin of the affected frozen `-audit-allowlist.json` sidecar `{file,line}` pins vs. (b) frozen-aware own-close-snapshot reads for `v1.4-v1.16-milestone-audit.mjs` + `regenerate-supervision-pins.mjs` — is a **discuss-phase gray area resolved via `/adversarial-review`** (a genuine D-00a frozen-surface-edit exception decision).
+- [x] **TOOL-04**: `FROZEN-AWARE-ADOPTION-SWEEP-01` is resolved — the 11 standalone-RED predecessor CI workflows (v1.4–v1.16 harness jobs + base harness-replay, HYG-02 −1 line-shift root cause) are made green or formally re-dispositioned. The approach — (a) targeted re-pin of the affected frozen `-audit-allowlist.json` sidecar `{file,line}` pins vs. (b) frozen-aware own-close-snapshot reads for `v1.4-v1.16-milestone-audit.mjs` + `regenerate-supervision-pins.mjs` — is a **discuss-phase gray area resolved via `/adversarial-review`** (a genuine D-00a frozen-surface-edit exception decision).
 - [x] **TOOL-05**: `O(n²)-CHAIN-RUNNER-REMEDIATION-01` is resolved — chain-validator subprocess results are cached within a single apex invocation so the deepening chain apex ([48..128] at this close) stops O(n²) cold-spawning; Windows cold-clone apex behavior verified post-fix (Linux GHA remains authoritative per D-03).
 - [x] **TOOL-06**: Smaller carried chain-validator retrospective nits are closed: `HELPER-SPAWN-STDERR-01` residual slice-budget tuning at the 3 helper-spawn stderr sites (`check-phase-{48,60,61}.mjs`), plus any `DEFER-119-A` advisory-RED resolution that falls out of the TOOL-04 approach decision.
 
@@ -106,7 +106,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | IPAD-03 | 131 | Complete |
 | IPAD-04 | 131 | Complete |
 | HYG-04 | 130 | Complete |
-| TOOL-04 | 133 | Pending |
+| TOOL-04 | 133 | Complete |
 | TOOL-05 | 133 | Complete |
 | TOOL-06 | 133 | Complete |
 | HARN-11 | 134 | Pending |
