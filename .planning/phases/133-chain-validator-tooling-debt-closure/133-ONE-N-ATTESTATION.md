@@ -56,4 +56,40 @@ This entire TOOL-05 deliverable is verification + attestation prose plus capture
 
 ## Windows cold-clone verification (Task 2)
 
-See the "Cold-clone capture" section below, appended after Task 1's source attestation.
+### Method
+
+```
+git clone --no-hardlinks . <scratchpad>/cold-133
+cd <scratchpad>/cold-133
+node scripts/validation/check-phase-128.mjs
+```
+
+Run performed in the session scratchpad directory (Windows, current branch `master` HEAD at the time of clone = `aabdf03f`, the commit that landed Task 1 of this plan). The scratch clone was deleted immediately after the run completed (`rm -rf <scratchpad>/cold-133`) per D-06/D-07 — no persistent artifact, no cache, nothing left on disk beyond this attestation's captured text.
+
+### Captured result
+
+```
+[CHAIN-127/83] V-128-CHAIN-127: check-phase-127.mjs exits 0 (CHAIN regression-guard) PASS
+[AUDIT-HARNESS/83] V-128-AUDIT-HARNESS: v1.17-milestone-audit.mjs exits 0 (current-milestone harness) PASS
+[SELF/83] V-128-SELF: CHAIN_PHASES does NOT include 128; CHAIN_SKIP is empty Set PASS
+
+Result: 82 PASS, 0 FAIL, 1 SKIPPED
+```
+
+- **Exit code:** 0
+- **PASS/FAIL/SKIP tuple:** 82 PASS, 0 FAIL, 1 SKIPPED (83 total checks: 1 AUDIT + 80 CHAIN + 1 AUDIT-HARNESS + 1 SELF; the AUDIT check SKIP-passes because `128-VERIFICATION.md` has not yet been authored — expected, matches `check-phase-128.mjs` lines 88-89)
+- **Wall-clock:** ~22.4s for 80 real subprocess spawns (~280ms/spawn average)
+
+### Comparison against the RESEARCH baseline
+
+`133-RESEARCH.md`'s "Windows evidence captured this session" section records a prior non-fresh-clone (working-tree) run at **~14.9s / 82 PASS, 0 FAIL, 1 SKIPPED**. This cold-clone run reproduces the identical PASS/FAIL/SKIP tuple (82/0/1) at **~22.4s** — the difference in wall-clock (22.4s vs 14.9s) is consistent with the extra cost of a fresh `git clone` cold-starting Node's module cache and filesystem caches for a brand-new working directory, not with a change in algorithmic shape. Both runs land in the same low-double-digit-seconds band for 80+1 real subprocess spawns (~185-280ms/spawn average either way) — the signature RESEARCH identified as linear (O(depth)), not quadratic: an O(n²) design would have the 80th child itself spawning ~79 further children (each spawning their own further sub-chains), which would push wall-clock into minutes, not seconds, on either a warm or cold tree.
+
+**This evidence is explicitly NON-AUTHORITATIVE (D-08).** Linux GHA remains the authoritative platform for both chain validators (D-03); Phase 134's HARN-13 3-axis re-audit (fresh clone + cross-OS Linux GHA + fresh zero-context sub-agent, cross-OS PASS/FAIL/SKIP EXACT MATCH) is the *final* exact-match check, not this session's Windows capture. This section documents a Phase-133 build-time verification step only.
+
+## CARVE-2 — Phase-134 hand-off note
+
+Recorded verbatim in intent per `133-CONTEXT.md` D-06/D-07/CARVE-2:
+
+> The "cache within a single apex ... stops O(n²)" wording is already satisfied by the shipped `CHECK_PHASE_NESTED` guard. The residual within-apex O(n²) that requirement text imagined does not exist — traced and confirmed in the source-cited evidence above. TOOL-05's success criterion is re-scoped to "verify + attest the existing single-apex O(n) property cross-OS." **No cache code was, or should be, authored** — the correct *shape* for such a fix (an in-process memo) would be a no-op given the guard already in place, and authoring even a no-op would require editing the frozen apex `check-phase-128.mjs`, which is a D-00a violation with no legal exception scoped to it in Phase 133 (the only new, non-frozen apex — `check-phase-129.mjs` — is a Phase-134/HARN-12 deliverable, not something this phase may create or touch).
+>
+> Phase 134 (HARN-12/HARN-13) should treat TOOL-05 as CLOSED via this attestation, not reopen it as a code task. If Phase 134's own new apex (`check-phase-129.mjs`, extending the chain to `[48..128]`) is authored, it should simply repeat the same NESTED-guard pattern already proven here (Path-A copy from `check-phase-128.mjs`) — that is ordinary apex construction, not a TOOL-05 remediation.
