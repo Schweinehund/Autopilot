@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
 status: executing
-last_updated: "2026-07-19T14:14:28.558Z"
-last_activity: 2026-07-19 -- Phase 133 planning complete
+last_updated: "2026-07-19T14:31:46.585Z"
+last_activity: 2026-07-19
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 12
-  completed_plans: 8
+  completed_plans: 9
   percent: 67
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.18 adds reproducible device-configuration *recipes* (step-by-step provisioning with embedded admin decision points), starting with a self-deploying shared Windows AVD-client device and a fully-provisioned Shared iPad, and closes the accumulated chain-validator tooling debt.
-**Current focus:** Phase 133 — chain validator tooling debt closure
+**Current focus:** Phase 133 — chain-validator-tooling-debt-closure
 
 ## Current Position
 
-Phase: 133
-Plan: Not started
+Phase: 133 (chain-validator-tooling-debt-closure) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-07-19 -- Phase 133 planning complete
+Last activity: 2026-07-19
 
 ## v1.18 Phase Dependency Summary
 
@@ -300,6 +300,7 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - [Phase 131]: Guest decision block (B3) recorded the real inverted Block Shared iPad temporary sessions polarity as plain prose outside the blockquote to avoid C17 #12 risk
 - [Phase 132]: Registry Title column reused each recipe's H1 text verbatim, consistent with existing RE-row title style
 - [Phase 132]: Recipe entry blurbs in index.md drawn from each recipe's H1 + Summary opening sentence, matching existing table convention
+- [Phase 133]: [Phase 133 P01]: TOOL-04 re-pin coordinates fully derived via reason-text semantic matching (not arithmetic); R-1 orphaned v1.4/v1.4.1 MHS pin recommended left unmoved; Phase-119 cobo.md split treated with same identity-preserving expansion principle as C17 #12
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -332,9 +333,9 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-19T13:22:21.012Z
-Stopped at: Phase 133 context gathered
-Resume file: .planning/phases/133-chain-validator-tooling-debt-closure/133-CONTEXT.md
+Last session: 2026-07-19T14:31:46.568Z
+Stopped at: Completed 133-01-PLAN.md
+Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
 
 ## Operator Next Steps
@@ -354,3 +355,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 131 P02 | 25min | 2 tasks | 2 files |
 | Phase 132 P01 | 3min | 2 tasks | 4 files |
 | Phase 132 P02 | 6min | 2 tasks | 1 files |
+| Phase 133 P01 | 15min | 2 tasks | 1 files |
