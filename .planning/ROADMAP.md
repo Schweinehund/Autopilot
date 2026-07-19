@@ -157,7 +157,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 - [x] 133-01-PLAN.md — TOOL-04 pin recon: freshness-guard + 6-target old->new coordinate tables + identity-preserving fragmentation list, no edits (TOOL-04)
 - [x] 133-03-PLAN.md — TOOL-05 verify-and-attest single-apex O(n) + Windows cold-clone, no code; CARVE-2 hand-off (TOOL-05)
-- [ ] 133-04-PLAN.md — TOOL-06 raise 3 --self-test stderr slice budgets, separate D-00a commit; DEFER-119-A ACCEPTED-ADVISORY (TOOL-06)
+- [x] 133-04-PLAN.md — TOOL-06 raise 3 --self-test stderr slice budgets, separate D-00a commit; DEFER-119-A ACCEPTED-ADVISORY (TOOL-06)
 
 **Wave 2** *(blocked on 133-01 — needs the coordinate tables)*
 
@@ -210,5 +210,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete    | 2026-07-17 |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 2/2 | Complete    | 2026-07-19 |
-| 133. Chain-Validator Tooling Debt Closure | 2/4 | In Progress|  |
+| 133. Chain-Validator Tooling Debt Closure | 3/4 | In Progress|  |
 | 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
