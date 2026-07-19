@@ -230,3 +230,5 @@
 | RE-219 | docs/index.md | device-provisioning-documentation.docx |
 | RE-220 | docs/quick-ref-l1.md | l1-quick-reference-card.docx |
 | RE-221 | docs/quick-ref-l2.md | l2-quick-reference-card.docx |
+| RE-222 | docs/recipes/01-shared-windows-avd-client.md | shared-windows-avd-client-device-self-deploying-provisioning.docx |
+| RE-223 | docs/recipes/02-shared-ipad-full-provisioning.md | shared-ipad-full-provisioning-federated-sign-in-to-verified-end-state.docx |
