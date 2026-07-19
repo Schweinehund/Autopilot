@@ -151,7 +151,18 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   2. Chain-validator subprocess results are cached within a single apex invocation — the deepening chain apex stops O(n²) cold-spawning — with Windows cold-clone apex behavior verified post-fix (Linux GHA remains authoritative per D-03).
   3. `HELPER-SPAWN-STDERR-01`'s residual slice-budget tuning at the 3 helper-spawn stderr sites is closed, along with any `DEFER-119-A` resolution that falls out of the TOOL-04 approach decision.
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+**Wave 1** *(parallel-eligible — zero file overlap; run sequentially on main tree per use_worktrees:false)*
+
+- [ ] 133-01-PLAN.md — TOOL-04 pin recon: freshness-guard + 6-target old->new coordinate tables + identity-preserving fragmentation list, no edits (TOOL-04)
+- [ ] 133-03-PLAN.md — TOOL-05 verify-and-attest single-apex O(n) + Windows cold-clone, no code; CARVE-2 hand-off (TOOL-05)
+- [ ] 133-04-PLAN.md — TOOL-06 raise 3 --self-test stderr slice budgets, separate D-00a commit; DEFER-119-A ACCEPTED-ADVISORY (TOOL-06)
+
+**Wave 2** *(blocked on 133-01 — needs the coordinate tables)*
+
+- [ ] 133-02-PLAN.md — TOOL-04 apply re-pin to 14 sidecars, per-category green, atomic D-00a-exception commit; CARVE-1 hand-off (TOOL-04)
+
 **Discuss-phase flags**: TOOL-04 approach (dominant gray area for the tooling pillar — (a) targeted frozen-sidecar re-pin vs. (b) frozen-aware own-close-snapshot reads; a genuine D-00a frozen-surface-edit exception decision).
 
 ### Phase 134: V117 Pin + 16th Path-A Lineage Bump + Terminal Close
