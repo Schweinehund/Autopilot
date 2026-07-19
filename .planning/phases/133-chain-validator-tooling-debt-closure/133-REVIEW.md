@@ -26,6 +26,9 @@ findings:
   info: 1
   total: 2
 status: issues_found
+orchestrator_disposition:
+  WR-01: FALSE-POSITIVE — verified against git show aaf0d2f~1. v1.4.1's MHS pin kept its OWN original reason text ("re-verified 2026-04-25 post Plan 46-02 Wave 2 ... +13", line 172→303); it did NOT adopt v1.4's distinct text ("verified 2026-04-24"). D-01 "reason text never altered" holds. No fix applied.
+  IN-01: ACKNOWLEDGED — check-phase-48 intentionally left at n:200 (frozen V-111-TOOL03 contract, ba6d53f4); already documented in 133-04-SUMMARY Post-Execution Correction.
 ---
 
 # Phase 133: Code Review Report
@@ -33,7 +36,7 @@ status: issues_found
 **Reviewed:** 2026-07-19
 **Depth:** standard
 **Files Reviewed:** 16
-**Status:** issues_found
+**Status:** issues_found (both findings dispositioned — see orchestrator_disposition: WR-01 false-positive, IN-01 already-handled)
 
 ## Summary
 
