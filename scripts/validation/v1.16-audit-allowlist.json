@@ -5,89 +5,89 @@
   "safetynet_exemptions": [
     {
       "file": "docs/_glossary-android.md",
-      "line": 187,
+      "line": 186,
       "reason": "Phase 62 carry-over: line 185 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 183 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 176 shifted +7 (Phase 59 CLEAN-08 see-also normalization added 11 lines, net +7 before Play Integrity section); Play Integrity prose references SafetyNet as predecessor (historical context)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 202,
+      "line": 201,
       "reason": "Phase 62 carry-over: line 200 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 198 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 190 shifted +8 (Phase 59 CLEAN-08 see-also normalization + Version History row added); SafetyNet API sunset Version History entry (2025-01 historical changelog)"
     },
     {
       "file": "docs/android-lifecycle/03-android-version-matrix.md",
-      "line": 102,
+      "line": 101,
       "reason": "v1.5 inherit baseline 2026-04-26"
     },
     {
       "file": "docs/android-lifecycle/03-android-version-matrix.md",
-      "line": 104,
+      "line": 103,
       "reason": "v1.5 inherit baseline 2026-04-26"
     }
   ],
   "supervision_exemptions": [
     {
       "file": "docs/_glossary-android.md",
-      "line": 38,
+      "line": 37,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 18): Alphabetical Index entry -- [Supervision](#supervision) link (2 raw matches on one line: display text + anchor fragment)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 90,
+      "line": 89,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 51, single blockquote): C17 #12 word-preserving split fragmented the old single-line COBO Cross-platform-note blockquote into 3 lines (88/90/92/94); this fragment -- 'the closest analog is iOS ADE-supervised corporate-owned enrollment ... (see [iOS Supervision](...)) or macOS ADE-enrolled supervised' -- carries 4 of the original line's raw matches. Companion fragment now at line 94 (see next entry). Apple-attributed disambiguation context, same reason as the pre-split v1.15 pin."
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 94,
+      "line": 93,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 51, single blockquote, second half after the #12 split): 'Do not conflate COBO with iOS supervision state; supervision is a permanent per-device gating state on iOS, whereas COBO is an ownership-mode designation on Android.' -- 2 raw matches; same COBO cross-platform disambiguation content as the line-90 companion fragment, both descending from the single v1.15 line-51 pin"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 126,
+      "line": 125,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 71, single blockquote): C17 #12 split fragmented the old single-line Fully-Managed Cross-platform-note blockquote into 4 lines (126/128/130/132); this fragment -- '**Cross-platform note:** The closest iOS analog is [Supervision](...) state on ADE-enrolled devices, but the mapping is partial --' -- carries 2 of the original line's raw matches (Apple-attributed iOS Supervision citation)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 128,
+      "line": 127,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 71, second #12-split fragment): 'iOS supervision is a permanent per-device state that gates roughly 60 restriction settings on top of a normal MDM enrollment,' -- iOS-attributed definitional prose, same origin as the line-71 v1.15 pin"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 130,
+      "line": 129,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 71, third #12-split fragment): 'whereas Android Fully Managed is an ownership-mode designation set at provisioning time. See [_glossary-macos.md#supervision](_glossary-macos.md#supervision).' -- 2 raw matches (Apple-attributed cross-reference)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 132,
+      "line": 131,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 71, fourth #12-split fragment): 'On Windows, the closest analog is Autopilot corporate deployment with a restrictive device configuration profile -- no separate \"supervised\" state layer. Do not conflate.' -- Windows-attributed contrast prose, final fragment of the old single-line pin"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 146,
+      "line": 145,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 81, +65): ### Supervision H3 heading (term being defined; iOS supervision callout; intentional AEAUDIT-04 pattern) -- heading itself did not split (H3 headings are single lines), only the shift amount changed"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 148,
+      "line": 147,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 83): Android note blockquote for Supervision H3 -- explains iOS/iPadOS supervision concept (see [Apple Glossary -- Supervision]...). Android does not use this term. The #12 split moved the non-matching 'closest analog is Fully Managed...' continuation to a separate line (150) that carries no supervision match and therefore needs no pin."
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 152,
+      "line": 151,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 84, +68): '> See also:' line added inside Supervision H3 Android-note blockquote by Plan 59-05 Task 3 -- cross-platform reciprocal links to macOS Supervision + Linux Supervision (Apple-attributed and Linux-attributed citations; AEAUDIT-04 scope)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 331,
+      "line": 330,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 197, +134): Version History row -- Phase 59 (CLEAN-08) changelog entry listing 'Supervision' as one of 11 collision-matrix terms with see-also additions -- historical change documentation, not an Android management term reference; table row, single line preserved"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 304,
+      "line": 303,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 183, +121 cumulative from EEE header-block + Summary-first insertion + C17 #12 blockquote splits earlier in the file): C17 #12 split fragmented the old single-line MHS Cross-platform-note blockquote into 3 lines (304/306/308); this fragment -- 'On iOS/iPadOS, the analog is Apple's Single App Mode or Autonomous Single App Mode configured through a supervised MDM profile --' -- carries the one supervision match (Apple-attributed cross-platform comparison to ASAM); the two continuation fragments (306/308) carry no supervision match and need no pin"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 334,
+      "line": 333,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 200, +134): Phase 34 Foundation Version History entry -- 'supervision as callout-only' historical description of initial glossary scope; Version History table row, single line preserved (no #12 split applies to table rows)"
     },
     {
@@ -107,12 +107,12 @@
     },
     {
       "file": "docs/admin-setup-android/03-fully-managed-cobo.md",
-      "line": 52,
+      "line": 51,
       "reason": "v1.5 inherit baseline 2026-04-26; Phase 119 repoint: was line 36, +16 from Phase-118 RETRO-03 EEE header-block + ## Summary insertion -- 'closest analog to iOS Supervision' cross-platform note (iOS-attributed, intentional disambiguation); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
       "file": "docs/admin-setup-android/03-fully-managed-cobo.md",
-      "line": 54,
+      "line": 53,
       "reason": "Phase 119 repoint: EEE-retrofit split the cross-platform note across two lines -- 'iOS supervision is a permanent per-device state' (iOS-attributed continuation of the line-52 blockquote; second pinned line, new this milestone); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
@@ -122,37 +122,37 @@
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 123,
+      "line": 122,
       "reason": "Phase 119 repoint (was line 89; +34 from Phase-118 RETRO-03 EEE header-block + Version-History-row insertion): AEAUDIT-04 doctrine HTML comment header -- 'supervision in this section MUST appear only as an iOS-attributed reference'; byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 125,
+      "line": 124,
       "reason": "Phase 119 repoint (was line 91; +34): AEAUDIT-04 doctrine HTML comment continuation -- 'never supervised' (intentional iOS-attribution rule statement); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 126,
+      "line": 125,
       "reason": "Phase 119 repoint (was line 92; +34): AEAUDIT-04 doctrine HTML comment continuation -- 'iOS Supervision' contrasted with bare 'Supervision' (column-header attribution rule); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 128,
+      "line": 127,
       "reason": "Phase 119 repoint (was line 94): Cross-Platform Equivalences intro -- 'iOS Supervision' Apple-attributed citation + 'supervised'/'unsupervised' quoted as Apple-attributed terms (intentional disambiguation prose); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 130,
+      "line": 129,
       "reason": "Phase 119 NEW pin: Phase-118 RETRO-03 table-remediation added a prose summary line ('The table below pairs three iOS/Apple concepts ... supervision, zero-touch enrollment, and BYOD ...') within 5 lines of the wide matrix -- new iOS-attributed 'supervision' occurrence introduced by the P-02 chunk-boundary mitigation; block grew 6->7 pinned lines; byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 134,
+      "line": 133,
       "reason": "Phase 119 repoint (was line 98; +36): Cross-Platform Equivalences row header -- '**iOS Supervision (ADE-enrolled)**' Apple-attributed pairing (column-header iOS attribution per AEAUDIT-04 rule); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 135,
+      "line": 134,
       "reason": "Phase 119 repoint (was line 99; +36): Cross-Platform Equivalences row body -- 'iOS Supervision' definitional prose (multiple Apple-attributed citations describing supervised-only iOS surface; Android side explicitly avoids 'supervised' terminology; 6 raw matches on this line, one pin exempts all); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
     }
   ],
@@ -194,49 +194,49 @@
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 219,
+      "line": 218,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 123, +96): '### Knox' heading (term being defined in glossary; cannot have SKU suffix)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 221,
+      "line": 220,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 125, +96): 'Knox is Samsung's mobile-device security platform' (definitional sentence; first bare occurrence on this line -- plain paragraph, not a blockquote, so this multi-clause sentence was NOT #12-split and both bare occurrences remain on one line)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 221,
+      "line": 220,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 125, +96): 'Knox Vault) and software (Knox Platform for Enterprise' -- 'Knox Vault' compound (Knox Vault is a hardware component, not a managed-device SKU; second bare occurrence same line)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 225,
+      "line": 224,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 127, +98): 'Samsung Knox security features apply only to Samsung hardware' (cross-platform note; not a SKU reference)"
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 333,
+      "line": 332,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 199, +134): 'Knox entry' in changelog (refers to glossary entry; not a SKU reference) -- Version History table row, single line preserved"
     }
   ],
   "c9_exemptions": [
     {
       "file": "docs/android-lifecycle/03-android-version-matrix.md",
-      "line": 58,
+      "line": 57,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 41, +17 from EEE header-block + anchor-id + ## Summary insertion): ### Android 11 -- COPE NFC Provisioning Removed H3 heading documents Google-driven Android-11 NFC + afw#setup provisioning-method removal for COPE / WPCO; PITFALL-13 disambiguation: Google has NOT formally deprecated COPE per _glossary-android.md:338 2023+ entry. Match-text is HISTORICAL prose about a provisioning-method removal, NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 01 60-CALIBRATION.md Section A."
     },
     {
       "file": "docs/_glossary-android.md",
-      "line": 338,
+      "line": 337,
       "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 204, +134): Phase 34 Foundation Version History row (2023+ entry): 'COPE -> WPCO terminology drift recorded. Google has NOT formally deprecated COPE; community shorthand incorrectly conflates recommended-against with deprecated.' Match-text is the canonical PITFALL-13 disambiguation prose itself -- the row LITERALLY clarifies that COPE is NOT deprecated. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate: pin if outside window)."
     },
     {
       "file": "docs/admin-setup-android/03-fully-managed-cobo.md",
-      "line": 199,
+      "line": 198,
       "reason": "Phase 119 repoint (was line 153; +46 from Phase-118 RETRO-03 EEE header-block + ## Summary insertion). Phase 36 AECOBO-02 COBO afw#setup section: 'afw#setup is still supported for COBO on Android 11+ (contrast: the COPE path was removed on Android 11+ -- see _glossary-android.md#afw-setup).' Match-text is HISTORICAL prose about Android-11 COPE-path removal cross-referencing the canonical PITFALL-13 entry; NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone."
     },
     {
       "file": "docs/reference/android-capability-matrix.md",
-      "line": 75,
+      "line": 74,
       "reason": "Phase 119 repoint (was line 55; +20 from Phase-118 RETRO-03 EEE header-block + Version-History-row). Phase 34 Foundation AMAPI migration footnote row: 'Unaffected (AMAPI April 2025 affected BYOD specifically; COPE/WPCO unaffected)' followed by BYOD-column note 'custom OMA-URI removed'. Match-text spans table cells where COPE is in the COPE/WPCO-unaffected disambiguation note and 'removed' refers to OMA-URI removal in the BYOD column -- NOT a COPE-mode deprecation. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone."
     }
   ],
