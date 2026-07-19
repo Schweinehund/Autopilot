@@ -29,7 +29,7 @@
 - [x] **Phase 130: Recipe #1 — Shared Windows AVD-Client Device** - Self-deploying Entra-joined shared Windows device running Windows App as an AVD client, plus RE-084 Wi-Fi-claim hygiene fix (completed 2026-07-17)
 - [x] **Phase 131: Recipe #2 — Shared iPad Full Provisioning** - Fully-provisioned Shared iPad from ADE enrollment through verification (completed 2026-07-18)
 - [x] **Phase 132: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable (completed 2026-07-19)
-- [ ] **Phase 133: Chain-Validator Tooling Debt Closure** - Frozen-aware adoption sweep + O(n²) chain-runner fix + carried nits
+- [x] **Phase 133: Chain-Validator Tooling Debt Closure** - Frozen-aware adoption sweep + O(n²) chain-runner fix + carried nits (completed 2026-07-19)
 - [ ] **Phase 134: V117 Pin + 16th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate
 
 <details>
@@ -210,5 +210,5 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete    | 2026-07-17 |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 2/2 | Complete    | 2026-07-19 |
-| 133. Chain-Validator Tooling Debt Closure | 4/4 | Complete   | 2026-07-19 |
+| 133. Chain-Validator Tooling Debt Closure | 4/4 | Complete    | 2026-07-19 |
 | 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
