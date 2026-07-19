@@ -270,6 +270,17 @@ Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04
 
 ---
 
+## Device Configuration Recipes
+
+Step-by-step, admin-decision-point-driven provisioning recipes -- each yields a concrete, reproducible device configuration end-to-end through Intune, from zero to verified end state.
+
+| Resource | When to Use |
+|----------|-------------|
+| [Shared Windows AVD-Client Device: Self-Deploying Provisioning](recipes/01-shared-windows-avd-client.md) | Provision a self-deploying, Entra-joined shared Windows device running the Windows App as its Azure Virtual Desktop client -- device/Intune config only, assumes AVD host pools and session hosts already exist |
+| [Shared iPad Full Provisioning: Federated Sign-In to Verified End State](recipes/02-shared-ipad-full-provisioning.md) | Provision a supervised Shared iPad end-to-end -- ADE enrollment, federated Managed Apple Account sign-in, device-licensed Required apps, and per-role layered configuration |
+
+---
+
 ## Operations
 
 Cross-platform operational guidance for Intune-managed fleets -- co-management, patch and update management, app lifecycle automation, and compliance drift detection plus tenant migration. For the full operations index, see [Operations Index](operations/00-index.md).
