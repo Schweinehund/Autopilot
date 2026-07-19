@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
 status: executing
-last_updated: "2026-07-19T04:05:13.041Z"
-last_activity: 2026-07-19 -- Phase 132 planning complete
+last_updated: "2026-07-19T04:12:05.291Z"
+last_activity: 2026-07-19
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 50
 ---
 
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.18 adds reproducible device-configuration *recipes* (step-by-step provisioning with embedded admin decision points), starting with a self-deploying shared Windows AVD-client device and a fully-provisioned Shared iPad, and closes the accumulated chain-validator tooling debt.
-**Current focus:** Phase 132 — integration & navigation last close
+**Current focus:** Phase 132 — Integration & Navigation-Last Close
 
 ## Current Position
 
-Phase: 132
-Plan: Not started
+Phase: 132 (Integration & Navigation-Last Close) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-07-19 -- Phase 132 planning complete
+Last activity: 2026-07-19
 
 ## v1.18 Phase Dependency Summary
 
@@ -298,6 +298,7 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - [Phase 131]: Followed the 6 requirement-inversion traps (T-1..T-6) verbatim per CONTEXT.md — cached users is a real settable field (T-1), wipe-vs-factory-reset kept as two distinct facts (T-6), Entra shared-device-mode distinction stated correctly without inheriting RE-109's conflation (T-4)
 - [Phase 131]: T-2/T-3 carried verbatim in layered-config worked example: all apps Required device-group-only, conflict warning uses the three verbatim first-party phrases (never last-writer-wins)
 - [Phase 131]: Guest decision block (B3) recorded the real inverted Block Shared iPad temporary sessions polarity as plain prose outside the blockquote to avoid C17 #12 risk
+- [Phase 132]: Registry Title column reused each recipe's H1 text verbatim, consistent with existing RE-row title style
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -330,9 +331,9 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-19T03:49:27.449Z
+Last session: 2026-07-19T04:10:26.392Z
 Stopped at: Phase 132 context gathered
-Resume file: .planning/phases/132-integration-navigation-last-close/132-CONTEXT.md
+Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
 
 ## Operator Next Steps
@@ -350,3 +351,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 130 P02 | 45min | 3 tasks | 1 files |
 | Phase 131 P01 | 35min | 2 tasks | 1 files |
 | Phase 131 P02 | 25min | 2 tasks | 2 files |
+| Phase 132 P01 | 3min | 2 tasks | 4 files |

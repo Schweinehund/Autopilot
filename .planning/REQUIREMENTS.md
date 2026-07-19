@@ -11,7 +11,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 129+).
 
 - [x] **CLASS-01**: The Device Recipe doc class is formally defined — `docs/_standards/EEE-SOP-standard.md` gains a D-02 edge-case ruling row (recipe → `doc_type: Guide`; the closed 4-value enum is NOT extended) plus a written spec for the **admin decision-point block** format. The block format itself (decision table vs. `> **Ask the admin:**` blockquote vs. composite — grounded option space in `.planning/research/ARCHITECTURE.md`) is a **discuss-phase gray area resolved via `/adversarial-review`**, constrained by C17 #12 (200-char top-level blockquote cap) and the no-key-info-in-code-fences rule.
 - [x] **CLASS-02**: A canonical recipe template exists in `docs/_templates/` — EEE-conformant (frontmatter → rendered header block → `## Summary`-first), C17-green, containing a worked decision-point block example and the TEMPLATE-SENTINEL convention.
-- [ ] **CLASS-03**: Both recipes live in a new top-level `docs/recipes/` directory, carry RE-NNN registry rows in `docs/_registry/RE-index.md`, flip to `Status: Approved` when done, and enter the publish set via a regenerated (never hand-edited) `filename-map.md` — zero pipeline code changes.
+- [x] **CLASS-03**: Both recipes live in a new top-level `docs/recipes/` directory, carry RE-NNN registry rows in `docs/_registry/RE-index.md`, flip to `Status: Approved` when done, and enter the publish set via a regenerated (never hand-edited) `filename-map.md` — zero pipeline code changes.
 - [ ] **CLASS-04**: Recipes are reachable from `docs/index.md` via a new recipes section (navigation-last discipline; troubleshooting hubs `common-issues.md`/`quick-ref-l1/l2.md` are NOT wired — recipes are provisioning Guides, not troubleshooting docs).
 
 ### Recipe #1 — Shared Windows AVD-Client Device (AVD)
@@ -94,7 +94,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | CLASS-01 | 129 | Complete |
 | CLASS-02 | 129 | Complete |
-| CLASS-03 | 132 | Pending |
+| CLASS-03 | 132 | Complete |
 | CLASS-04 | 132 | Pending |
 | AVD-01 | 130 | Complete |
 | AVD-02 | 130 | Complete |

@@ -134,7 +134,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1**
 
-- [ ] 132-01-PLAN.md — Register RE-222/223: flip Draft->Approved, append registry rows, regenerate filename-map (CLASS-03)
+- [x] 132-01-PLAN.md — Register RE-222/223: flip Draft->Approved, append registry rows, regenerate filename-map (CLASS-03)
 
 **Wave 2** *(blocked on Wave 1 completion — navigation-last)*
 
@@ -198,6 +198,6 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 129. Device Recipe Doc-Class Foundation | 2/2 | Complete    | 2026-07-17 |
 | 130. Recipe #1 — Shared Windows AVD-Client Device | 2/2 | Complete    | 2026-07-17 |
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
-| 132. Integration & Navigation-Last Close | 0/? | Not started | - |
+| 132. Integration & Navigation-Last Close | 1/2 | In Progress|  |
 | 133. Chain-Validator Tooling Debt Closure | 0/? | Not started | - |
 | 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
