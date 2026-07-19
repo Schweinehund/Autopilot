@@ -43,7 +43,15 @@ completed: 2026-07-19
 
 # Phase 133 Plan 04: TOOL-06 Stderr Slice-Budget Tuning Summary
 
-**Raised the `--self-test` catch-block stderr slice budget from n:200 to n:1000 at the 3 frozen `HELPER-SPAWN-STDERR-01` call sites (check-phase-48.mjs:85, check-phase-60.mjs:201, check-phase-61.mjs:397), landed as its own atomic D-00a-exception commit, and confirmed DEFER-119-A stays ACCEPTED-ADVISORY.**
+**Raised the `--self-test` catch-block stderr slice budget from n:200 to n:1000 at the frozen `HELPER-SPAWN-STDERR-01` call sites, landed as its own atomic D-00a-exception commit, and confirmed DEFER-119-A stays ACCEPTED-ADVISORY.**
+
+> ## ⚠ Post-Execution Correction (regression-gate finding — user decision, Option A)
+>
+> The initial commit `74939dfb` bumped **all 3** sites (48/60/61) to `n:1000`. The execute-phase regression gate then found this **reddened the current-milestone chain apex** (`check-phase-128` → `CHAIN-111` FAIL): `check-phase-111.mjs`'s `V-111-TOOL03` (a frozen Phase-111/v1.14 validator) pins the **exact** check-phase-48 call-site string `execFailDetail(stdout, stderr, { n: 200, trim: false, prefix: '--self-test FAIL: ' })` verbatim (Phase 111's TOOL-03 refactor deliberately fixed that budget at 200). check-phase-60/61 are **not** pinned by any validator.
+>
+> **Disposition (user-chosen Option A):** commit `ba6d53f4` reverts check-phase-48 to `n:200`; the tuning is delivered only at **check-phase-60/61 (`n:1000`)**. check-phase-48's site is now recorded as **ACCEPTED-FROZEN-CONTRACT** (pinned by V-111-TOOL03), dispositioned exactly like DEFER-119-A — honors D-00a "nothing broader" (rejected broadening the exception to a 3rd frozen file, check-phase-111, which would rewrite Phase 111's locked contract value). Chain apex re-verified GREEN: **82 PASS, 0 FAIL, 1 SKIPPED**.
+>
+> **Phase-134 hand-off:** raising check-phase-48's self-test budget requires editing check-phase-111's V-111-TOOL03 needle in lock-step — a coupled frozen-validator change that belongs in the same future dedicated tooling milestone as the CARVE-1 `readAtClose` sweep, not a pre-close scramble.
 
 ## Performance
 
@@ -67,7 +75,7 @@ _Note: Task 1 (edit) and Task 2 (commit + document) are two steps of one atomic 
 **Plan metadata:** commit for this SUMMARY + STATE/ROADMAP updates (separate, see final commit below).
 
 ## Files Created/Modified
-- `scripts/validation/check-phase-48.mjs` - `--self-test` catch-block `execFailDetail` call: `n: 200` -> `n: 1000` (line 85)
+- `scripts/validation/check-phase-48.mjs` - `--self-test` catch-block `execFailDetail` call: **kept at `n: 200`** (line 85) — bumped in `74939dfb` then reverted in `ba6d53f4`; ACCEPTED-FROZEN-CONTRACT (pinned verbatim by check-phase-111 V-111-TOOL03). See Post-Execution Correction above.
 - `scripts/validation/check-phase-60.mjs` - `--self-test` catch-block `execFailDetail` call: `n: 200` -> `n: 1000` (line 201); the two separate `n: 500` CHAIN/harness sites (lines 247, 269) untouched
 - `scripts/validation/check-phase-61.mjs` - `--self-test` catch-block `execFailDetail` call: `n: 200` -> `n: 1000` (line 397); the two separate `n: 500` CHAIN/harness sites (lines 354, 376) untouched
 
