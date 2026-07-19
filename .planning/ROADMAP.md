@@ -130,7 +130,15 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. `common-issues.md` / `quick-ref-l1.md` / `quick-ref-l2.md` are confirmed NOT wired to the recipes (recipes are provisioning Guides, not troubleshooting docs).
   4. C17 exits 0 on the full corpus including both new recipe files.
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+**Wave 1**
+
+- [ ] 132-01-PLAN.md — Register RE-222/223: flip Draft->Approved, append registry rows, regenerate filename-map (CLASS-03)
+
+**Wave 2** *(blocked on Wave 1 completion — navigation-last)*
+
+- [ ] 132-02-PLAN.md — Add dedicated recipes section to index.md, confirm hubs not wired, C17 green (CLASS-04)
 
 ### Phase 133: Chain-Validator Tooling Debt Closure
 
