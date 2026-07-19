@@ -198,7 +198,7 @@ const checks = [
         const isMissing = err.code === 'ENOENT' || err.status === 127
           || stderr.includes('not found') || stderr.includes('Could not resolve');
         if (isMissing) return { pass: true, skipped: true, detail: 'node not found -- skipped' };
-        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 200, trim: false, prefix: '--self-test FAIL: ' }) };
+        return { pass: false, detail: execFailDetail(stdout, stderr, { n: 1000, trim: false, prefix: '--self-test FAIL: ' }) };
       }
     }
   },
