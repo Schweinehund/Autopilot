@@ -1,6 +1,6 @@
 ---
 doc_id: RE-223
-status: Draft
+status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: ios+shared-ipad
@@ -10,7 +10,7 @@ applies_to: Shared iPad full provisioning (federated Managed Apple Account, devi
 audience: admin
 ---
 
-**Platform:** iOS + Shared iPad · **Doc Type:** Guide · **Doc ID:** RE-223 · **Status:** Draft
+**Platform:** iOS + Shared iPad · **Doc Type:** Guide · **Doc ID:** RE-223 · **Status:** Approved
 
 # Shared iPad Full Provisioning: Federated Sign-In to Verified End State
 

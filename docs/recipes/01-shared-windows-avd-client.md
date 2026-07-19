@@ -1,6 +1,6 @@
 ---
 doc_id: RE-222
-status: Draft
+status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Windows
@@ -10,7 +10,7 @@ applies_to: Shared Windows AVD-client device (self-deploying, kiosk or Shared PC
 audience: admin
 ---
 
-**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-222 · **Status:** Draft
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-222 · **Status:** Approved
 
 # Shared Windows AVD-Client Device: Self-Deploying Provisioning
 
