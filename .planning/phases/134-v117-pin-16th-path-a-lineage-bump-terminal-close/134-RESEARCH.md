@@ -337,14 +337,14 @@ git log --all --grep="MILESTONE-AUDIT" --grep="MILESTONE CLOSE" --all-match --fo
 
 **If this table were empty:** it isn't — 3 items above need light confirmation at plan/execution time, none block planning.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Does the CONTEXT guardrail "every one of the 6 validators' VERIFICATION.md reads through the resolver" mean all 6 must have an AUDIT check, or only whichever ones do such a read?**
+1. **Does the CONTEXT guardrail "every one of the 6 validators' VERIFICATION.md reads through the resolver" mean all 6 must have an AUDIT check, or only whichever ones do such a read?** RESOLVED: Plan 134-03 Task 1 — leaves 129-133 stay needle-based (no resolver/AUDIT); only apex 134 (Task 2) reads its own VERIFICATION.md via the resolver.
    - What we know: Precedent (126/127/120-124) shows non-apex validators do NOT read their own VERIFICATION.md at all — they check deliverable files directly. Only the apex (100/112/119/125/128) has an AUDIT check.
    - What's unclear: Whether CONTEXT's phrasing was written assuming all 6 would have such a check (a deviation from precedent) or was describing "wherever this pattern occurs, resolver required" (consistent with precedent, applies only to 134).
    - Recommendation: Follow precedent — only `check-phase-134.mjs` gets an AUDIT/resolver check; 129-133 stay needle-based leaf validators. This is the reading that keeps HARN-12's "byte-unchanged except..." scope minimal and matches every prior close's actual shape. If the planner/executor disagrees, flag explicitly rather than silently deviating either direction.
 
-2. **Exact apex check count for check-phase-134.mjs (89 checks: AUDIT + 86 CHAIN + AUDIT-HARNESS + SELF)?**
+2. **Exact apex check count for check-phase-134.mjs (89 checks: AUDIT + 86 CHAIN + AUDIT-HARNESS + SELF)?** RESOLVED: Plan 134-03 Task 2 — derive from the actual --verbose checks.push() count, do NOT hardcode 89; assert once authored.
    - What we know: 128's apex had 83 total checks (AUDIT + 80 CHAIN + AUDIT-HARNESS + SELF = 83, confirmed by the `[AUDIT/83]` label observed when running it). 134's chain is 86 (vs 80), so total should be 89.
    - What's unclear: Nothing structurally — this is arithmetic, not a real open question — but the planner should NOT hardcode "89" anywhere without re-deriving it from the actual authored `checks.push()` count, since an off-by-one here would itself be a silent bug of exactly the kind this research flagged in Pitfall 2.
    - Recommendation: Derive, don't hardcode; assert via `--verbose` run once authored.
