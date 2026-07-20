@@ -156,3 +156,8 @@ Pre-push evidence base is complete: full chain 0-FAIL, byte-unchanged gate clean
 ---
 *Phase: 134-v117-pin-16th-path-a-lineage-bump-terminal-close*
 *Completed: 2026-07-20*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/phases/134-v117-pin-16th-path-a-lineage-bump-terminal-close/134-04-SUMMARY.md
+- FOUND: 82e142c8 (SUMMARY commit)
