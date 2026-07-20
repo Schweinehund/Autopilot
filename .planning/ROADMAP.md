@@ -186,7 +186,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 2** *(blocked on 134-02 — apex AUDIT-HARNESS spawns the v1.18 harness)*
 
-- [ ] 134-03-PLAN.md — HARN-12 Atom 2: 5 leaf validators check-phase-129..133 + apex check-phase-134 (chain [48..133], corrected ['v1.18-phases'] token, empty CHAIN_SKIP) + 15th CI workflow; prove apex green standalone (HARN-12)
+- [x] 134-03-PLAN.md — HARN-12 Atom 2: 5 leaf validators check-phase-129..133 + apex check-phase-134 (chain [48..133], corrected ['v1.18-phases'] token, empty CHAIN_SKIP) + 15th CI workflow; prove apex green standalone (HARN-12)
 
 **Wave 3** *(blocked on 134-01/02/03 — needs V117 pin, harness, apex all present)*
 
@@ -228,4 +228,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 2/2 | Complete    | 2026-07-19 |
 | 133. Chain-Validator Tooling Debt Closure | 4/4 | Complete    | 2026-07-19 |
-| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 2/5 | In Progress|  |
+| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 3/5 | In Progress|  |

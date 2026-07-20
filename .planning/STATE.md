@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
 status: executing
-last_updated: "2026-07-20T05:16:05.447Z"
+last_updated: "2026-07-20T05:32:01.322Z"
 last_activity: 2026-07-20
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 17
-  completed_plans: 14
-  percent: 82
+  completed_plans: 15
+  percent: 83
 ---
 
 # Project State
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 ## Current Position
 
 Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-07-20
 
@@ -307,6 +307,8 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - [Phase 134]: V117 SHA recovered via dual-token positive-confirmation grep, subject-line verified per the v1.17 false-positive caveat
 - [Phase 134]: v1.18-audit-allowlist.json copied byte-verbatim from v1.17's; regenerate-supervision-pins.mjs --report positively confirmed zero pin drift (26 pinned, 0/0/0) rather than assumed
 - [Phase 134]: BASELINE_22 pre-Atom-1 HEAD captured as b54043aa (Task 1's own commit), not the Wave-0 anchor 18fd8b63, per the Phase 119/125/128 anchor-capture discipline
+- [Phase 134]: check-phase-134 apex uses corrected ['v1.18-phases'] archive-root token (own milestone root) instead of copying check-phase-128's frozen ['v1.16-phases'] predecessor-root bug forward a 4th time
+- [Phase 134]: Leaf validators 129-133 check only durable docs/scripts deliverables, never .planning/phases/ ephemeral artifacts, avoiding archival-drift risk; only apex 134 uses resolveArchivedPhasePath
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -339,8 +341,8 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-20T05:16:05.429Z
-Stopped at: Completed 134-02-PLAN.md
+Last session: 2026-07-20T05:32:01.305Z
+Stopped at: Completed 134-03-PLAN.md
 Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
 
@@ -367,3 +369,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 133 P02 | 45min | 2 tasks | 14 files |
 | Phase 134 P01 | 3min | 2 tasks | 1 files |
 | Phase 134 P02 | 8min | 2 tasks | 3 files |
+| Phase 134 P03 | 25min | 2 tasks | 7 files |
