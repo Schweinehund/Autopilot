@@ -177,7 +177,24 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context sub-agent) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH.
   4. A single close-gate commit flips all 20 v1.18 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, alongside `v1.18-MILESTONE-AUDIT.md` and `v1.18-DEFERRED-CLEANUP.md`.
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+**Wave 1** *(parallel-eligible — zero file overlap; run sequentially on main tree per use_worktrees:false)*
+
+- [ ] 134-01-PLAN.md — HARN-11: recover + subject-verify V117 SHA (b56bba5), capture Wave-0 anchor, add V117 pin + readAtV117Close export to frozen-at-close.mjs (HARN-11)
+- [ ] 134-02-PLAN.md — HARN-12 Atom 1: Path-A 16th harness v1.18-milestone-audit.mjs + v1.18-audit-allowlist.json (--report zero-drift confirm) + BASELINE_22 comment (HARN-12)
+
+**Wave 2** *(blocked on 134-02 — apex AUDIT-HARNESS spawns the v1.18 harness)*
+
+- [ ] 134-03-PLAN.md — HARN-12 Atom 2: 5 leaf validators check-phase-129..133 + apex check-phase-134 (chain [48..133], corrected ['v1.18-phases'] token, empty CHAIN_SKIP) + 15th CI workflow; prove apex green standalone (HARN-12)
+
+**Wave 3** *(blocked on 134-01/02/03 — needs V117 pin, harness, apex all present)*
+
+- [ ] 134-04-PLAN.md — HARN-13 pre-push: full predecessor chain [48..133] 0-FAIL + byte-unchanged HARD gate (TOOL-04 14 sidecars + TOOL-06 60/61, 48 net-zero) + Axis 1/Axis 3 local re-audit (HARN-13)
+
+**Wave 4** *(blocked on 134-04 — close-gate lands on the proven re-audit)*
+
+- [ ] 134-05-PLAN.md — HARN-13 close-gate: author v1.18-MILESTONE-AUDIT.md + v1.18-DEFERRED-CLEANUP.md (CARVE-1+CARVE-2+V118-PIN-DEFERRAL) + 134-VERIFICATION.md + single atomic 20-req Validated flip + Axis-2 GHA capture + GA-4 cascade disposition (HARN-13)
 
 ## Progress
 
