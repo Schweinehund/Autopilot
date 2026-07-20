@@ -181,7 +181,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 1** *(parallel-eligible — zero file overlap; run sequentially on main tree per use_worktrees:false)*
 
-- [ ] 134-01-PLAN.md — HARN-11: recover + subject-verify V117 SHA (b56bba5), capture Wave-0 anchor, add V117 pin + readAtV117Close export to frozen-at-close.mjs (HARN-11)
+- [x] 134-01-PLAN.md — HARN-11: recover + subject-verify V117 SHA (b56bba5), capture Wave-0 anchor, add V117 pin + readAtV117Close export to frozen-at-close.mjs (HARN-11)
 - [ ] 134-02-PLAN.md — HARN-12 Atom 1: Path-A 16th harness v1.18-milestone-audit.mjs + v1.18-audit-allowlist.json (--report zero-drift confirm) + BASELINE_22 comment (HARN-12)
 
 **Wave 2** *(blocked on 134-02 — apex AUDIT-HARNESS spawns the v1.18 harness)*
@@ -228,4 +228,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 2/2 | Complete    | 2026-07-19 |
 | 133. Chain-Validator Tooling Debt Closure | 4/4 | Complete    | 2026-07-19 |
-| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 0/? | Not started | - |
+| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 1/5 | In Progress|  |

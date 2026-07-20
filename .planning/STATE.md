@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
-status: planning
-last_updated: "2026-07-20T04:18:17.911Z"
-last_activity: 2026-07-19
+status: executing
+last_updated: "2026-07-20T05:05:21.664Z"
+last_activity: 2026-07-20
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 12
-  completed_plans: 12
-  percent: 83
+  total_plans: 17
+  completed_plans: 13
+  percent: 76
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.18 adds reproducible device-configuration *recipes* (step-by-step provisioning with embedded admin decision points), starting with a self-deploying shared Windows AVD-client device and a fully-provisioned Shared iPad, and closes the accumulated chain-validator tooling debt.
-**Current focus:** Phase 134 — v117 pin + 16th path a lineage bump + terminal close
+**Current focus:** Phase 134 — v117-pin-16th-path-a-lineage-bump-terminal-close
 
 ## Current Position
 
-Phase: 134
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-07-19
+Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-07-20
 
 ## v1.18 Phase Dependency Summary
 
@@ -304,6 +304,7 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - [Phase 133]: TOOL-05 closed via source-cited attestation (81-spawn O(depth)); CARVE-2 hand-off recorded for Phase 134 — no cache code authored
 - [Phase 133]: [Phase 133 P04]: TOOL-06 stderr slice budget raised n:200 -> n:1000 at the 3 --self-test call sites (check-phase-48/60/61.mjs); DEFER-119-A confirmed ACCEPTED-ADVISORY, no independent action
 - [Phase 133]: [Phase 133 P02]: R-1 recon claim corrected (v1.4/v1.4.1 MHS pin content still lives at glossary:303, moved not left orphaned); R-2/R-3/R-4 content-timeline-gap pins added via verbatim ground-truth reason text; all 14 sidecars converged to v1.17's exact pin counts (26/10/4/4)
+- [Phase 134]: V117 SHA recovered via dual-token positive-confirmation grep, subject-line verified per the v1.17 false-positive caveat
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -336,9 +337,9 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-20T04:18:17.892Z
-Stopped at: Phase 134 context gathered
-Resume file: .planning/phases/134-v117-pin-16th-path-a-lineage-bump-terminal-close/134-CONTEXT.md
+Last session: 2026-07-20T05:05:21.647Z
+Stopped at: Completed 134-01-PLAN.md
+Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
 
 ## Operator Next Steps
@@ -362,3 +363,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 133 P03 | 12min | 2 tasks | 1 files |
 | Phase 133 P04 | 8min | 2 tasks | 3 files |
 | Phase 133 P02 | 45min | 2 tasks | 14 files |
+| Phase 134 P01 | 3min | 2 tasks | 1 files |
