@@ -127,3 +127,17 @@ All 6 new validators exist and are green; the apex (`check-phase-134.mjs`) is pr
 ---
 *Phase: 134-v117-pin-16th-path-a-lineage-bump-terminal-close*
 *Completed: 2026-07-20*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/validation/check-phase-129.mjs
+- FOUND: scripts/validation/check-phase-130.mjs
+- FOUND: scripts/validation/check-phase-131.mjs
+- FOUND: scripts/validation/check-phase-132.mjs
+- FOUND: scripts/validation/check-phase-133.mjs
+- FOUND: scripts/validation/check-phase-134.mjs
+- FOUND: .github/workflows/audit-harness-v1.18-integrity.yml
+- FOUND: .planning/phases/134-v117-pin-16th-path-a-lineage-bump-terminal-close/134-03-SUMMARY.md
+- FOUND: 63bb0665 (Task 1 commit)
+- FOUND: 71f1509a (Task 2 commit)
+- FOUND: 608d1bca (Summary commit)
