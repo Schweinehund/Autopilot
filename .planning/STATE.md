@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
 status: executing
-last_updated: "2026-07-20T05:32:01.322Z"
+last_updated: "2026-07-20T05:41:35.571Z"
 last_activity: 2026-07-20
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 17
-  completed_plans: 15
+  completed_plans: 16
   percent: 83
 ---
 
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 ## Current Position
 
 Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-07-20
 
@@ -309,6 +309,9 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - [Phase 134]: BASELINE_22 pre-Atom-1 HEAD captured as b54043aa (Task 1's own commit), not the Wave-0 anchor 18fd8b63, per the Phase 119/125/128 anchor-capture discipline
 - [Phase 134]: check-phase-134 apex uses corrected ['v1.18-phases'] archive-root token (own milestone root) instead of copying check-phase-128's frozen ['v1.16-phases'] predecessor-root bug forward a 4th time
 - [Phase 134]: Leaf validators 129-133 check only durable docs/scripts deliverables, never .planning/phases/ ephemeral artifacts, avoiding archival-drift risk; only apex 134 uses resolveArchivedPhasePath
+- [Phase 134]: Byte-unchanged gate computed against WAVE0_ANCHOR; TOOL-04/TOOL-06 sanctioned exceptions independently confirmed via git merge-base --is-ancestor as pre-dating the anchor
+- [Phase 134]: Axis 3 dispatched on same Windows host (no subagent-dispatch tool or second runner available) — dispositioned honestly as corroborating-only, not independent; Axis 2 (Linux GHA) remains sole cross-OS-authoritative per D-03
+- [Phase 134]: Axis 1 completed the full non-nested [48..133] apex recursion without hitting WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 this cycle (depth 86) — recorded as an honest completed PASS, not assumed
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -341,7 +344,7 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-20T05:32:01.305Z
+Last session: 2026-07-20T05:41:35.553Z
 Stopped at: Completed 134-03-PLAN.md
 Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
@@ -370,3 +373,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 134 P01 | 3min | 2 tasks | 1 files |
 | Phase 134 P02 | 8min | 2 tasks | 3 files |
 | Phase 134 P03 | 25min | 2 tasks | 7 files |
+| Phase 134 P04 | 12min | 2 tasks | 1 files |

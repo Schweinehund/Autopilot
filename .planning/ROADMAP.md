@@ -190,7 +190,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 3** *(blocked on 134-01/02/03 — needs V117 pin, harness, apex all present)*
 
-- [ ] 134-04-PLAN.md — HARN-13 pre-push: full predecessor chain [48..133] 0-FAIL + byte-unchanged HARD gate (TOOL-04 14 sidecars + TOOL-06 60/61, 48 net-zero) + Axis 1/Axis 3 local re-audit (HARN-13)
+- [x] 134-04-PLAN.md — HARN-13 pre-push: full predecessor chain [48..133] 0-FAIL + byte-unchanged HARD gate (TOOL-04 14 sidecars + TOOL-06 60/61, 48 net-zero) + Axis 1/Axis 3 local re-audit (HARN-13)
 
 **Wave 4** *(blocked on 134-04 — close-gate lands on the proven re-audit)*
 
@@ -228,4 +228,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 2/2 | Complete    | 2026-07-19 |
 | 133. Chain-Validator Tooling Debt Closure | 4/4 | Complete    | 2026-07-19 |
-| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 3/5 | In Progress|  |
+| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 4/5 | In Progress|  |
