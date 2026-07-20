@@ -171,3 +171,12 @@ v1.18 is SHIPPED (2026-07-20) — all 20 requirements Validated, close-gate comm
 ---
 *Phase: 134-v117-pin-16th-path-a-lineage-bump-terminal-close*
 *Completed: 2026-07-20*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/milestones/v1.18-MILESTONE-AUDIT.md
+- FOUND: .planning/milestones/v1.18-DEFERRED-CLEANUP.md
+- FOUND: .planning/phases/134-v117-pin-16th-path-a-lineage-bump-terminal-close/134-VERIFICATION.md
+- FOUND: .planning/phases/134-v117-pin-16th-path-a-lineage-bump-terminal-close/134-05-SUMMARY.md
+- FOUND: 7af8a147 (close-gate commit)
+- FOUND: bcbeaf98 (SUMMARY commit)
