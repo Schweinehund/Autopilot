@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
 status: executing
-last_updated: "2026-07-20T05:05:21.664Z"
+last_updated: "2026-07-20T05:16:05.447Z"
 last_activity: 2026-07-20
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 17
-  completed_plans: 13
-  percent: 76
+  completed_plans: 14
+  percent: 82
 ---
 
 # Project State
@@ -25,7 +25,7 @@ See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 ## Current Position
 
 Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-07-20
 
@@ -305,6 +305,8 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - [Phase 133]: [Phase 133 P04]: TOOL-06 stderr slice budget raised n:200 -> n:1000 at the 3 --self-test call sites (check-phase-48/60/61.mjs); DEFER-119-A confirmed ACCEPTED-ADVISORY, no independent action
 - [Phase 133]: [Phase 133 P02]: R-1 recon claim corrected (v1.4/v1.4.1 MHS pin content still lives at glossary:303, moved not left orphaned); R-2/R-3/R-4 content-timeline-gap pins added via verbatim ground-truth reason text; all 14 sidecars converged to v1.17's exact pin counts (26/10/4/4)
 - [Phase 134]: V117 SHA recovered via dual-token positive-confirmation grep, subject-line verified per the v1.17 false-positive caveat
+- [Phase 134]: v1.18-audit-allowlist.json copied byte-verbatim from v1.17's; regenerate-supervision-pins.mjs --report positively confirmed zero pin drift (26 pinned, 0/0/0) rather than assumed
+- [Phase 134]: BASELINE_22 pre-Atom-1 HEAD captured as b54043aa (Task 1's own commit), not the Wave-0 anchor 18fd8b63, per the Phase 119/125/128 anchor-capture discipline
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -337,8 +339,8 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-20T05:05:21.647Z
-Stopped at: Completed 134-01-PLAN.md
+Last session: 2026-07-20T05:16:05.429Z
+Stopped at: Completed 134-02-PLAN.md
 Resume file: None
 Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
 
@@ -364,3 +366,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 133 P04 | 8min | 2 tasks | 3 files |
 | Phase 133 P02 | 45min | 2 tasks | 14 files |
 | Phase 134 P01 | 3min | 2 tasks | 1 files |
+| Phase 134 P02 | 8min | 2 tasks | 3 files |
