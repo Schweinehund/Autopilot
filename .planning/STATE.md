@@ -20,13 +20,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.18 adds reproducible device-configuration *recipes* (step-by-step provisioning with embedded admin decision points), starting with a self-deploying shared Windows AVD-client device and a fully-provisioned Shared iPad, and closes the accumulated chain-validator tooling debt.
-**Current focus:** v1.18 SHIPPED 2026-07-20 (close-gate local/unpushed) — no active milestone; run `/gsd-complete-milestone` to archive/push, then `/gsd-new-milestone` to scope v1.19.
+**Current focus:** v1.18 SHIPPED, ARCHIVED & TAGGED 2026-07-20 (close-gate + `v1.18` tag local/unpushed pending owner PIPE-02 push, which fires the deferred Axis-2 GHA) — no active milestone; run `/gsd-new-milestone` to scope v1.19.
 
 ## Current Position
 
 Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — COMPLETE
 Plan: 5 of 5
-Status: Milestone shipped (close-gate committed local/unpushed; Axis-2 GHA + archival deferred to owner PIPE-02 checkpoint)
+Status: Milestone shipped, ARCHIVED & TAGGED 2026-07-20 (close-gate + tag local/unpushed; Axis-2 GHA fires on owner PIPE-02 push)
 Last activity: 2026-07-20
 
 ## v1.18 Phase Dependency Summary
@@ -349,11 +349,11 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 Last session: 2026-07-20T06:00:00.000Z
 Stopped at: Completed 134-05-PLAN.md (v1.18 close-gate — milestone shipped, local/unpushed)
 Resume file: None
-Next action: Run `/gsd-complete-milestone` to push (completing the deferred Axis-2 GHA capture + GA-4 cascade disposition per `v1.18-MILESTONE-AUDIT.md`'s command block), archive phase dirs, and tag `v1.18`; then `/gsd-new-milestone` to scope v1.19.
+Next action: v1.18 archived + tagged locally. Owner: push the close-gate + `v1.18` tag at the PIPE-02 checkpoint (fires the deferred Axis-2 GHA cross-OS confirmation + GA-4 cascade disposition per `v1.18-MILESTONE-AUDIT.md`'s command block). Then `/gsd-new-milestone` to scope v1.19.
 
 ## Operator Next Steps
 
-- Run `/gsd-complete-milestone` to archive v1.18, push the close-gate (firing the deferred Axis-2 GHA cross-OS confirmation), and tag the release
+- Push the close-gate commit + `v1.18` tag (owner PIPE-02) — fires the deferred Axis-2 Linux-GHA cross-OS confirmation
 - Run `/gsd-new-milestone` to scope v1.19
 
 ## Performance Metrics

@@ -578,6 +578,42 @@ A tooling/pipeline milestone (zero net-new content) that shipped a *publish/expo
 
 ---
 
+## Milestone: v1.18 — Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
+
+**Shipped:** 2026-07-20
+**Phases:** 6 (129-134) | **Plans:** 17 | **Requirements:** 20/20 Validated
+
+### What Was Built
+The first net-new *content* since v1.14's 802.1X, plus a tooling-debt pillar and the mandatory harness close. Phase 129 founded a new **Device Recipe doc class** WITHOUT extending the closed 4-value `doc_type` enum — a D-02 edge ruling (`docs/recipes/* → Guide`) + the STD-05 admin decision-point block spec (the `> **Ask the admin:**` composite, resolved via `/adversarial-review` against C17 #12's 200-char cap) + a C17-green `recipe-template.md` with the TEMPLATE-SENTINEL convention. Phases 130/131 authored the two recipes: a self-deploying shared **Windows AVD-client** device (RE-222 — happy path + kiosk/SharedPC forks + 4 anti-features + 802.1X cross-link, plus the HYG-04 6-site RE-084 Wi-Fi-claim correction) and a fully-provisioned **Shared iPad** (RE-223 — unsupported-feature-led, layered config, sizing decisions, following 6 requirement-inversion traps verbatim). Phase 132 registered/published/wired both (Approved rows, regenerated filename-map, index.md nav-last, hubs deliberately unwired). Phase 133 closed the chain-validator debt (14-sidecar TOOL-04 re-pin; TOOL-05 re-scoped to a source-cited O(n) attestation, no dead cache code; TOOL-06 stderr budgets). Phase 134 landed the **V117 back-anchor pin**, the 16th Path-A lineage bump (apex `check-phase-134` `[48..133]`, corrected `['v1.18-phases']` token, 15th CI workflow), the 3-axis terminal re-audit, and the single 20-req close-gate.
+
+### What Worked
+- **Foundation-first paid off exactly as scoped** — locking the STD-05 decision-point format + template in Phase 129 meant both recipes were authored with zero retrofitting; the RESEARCH Pitfall #3/#4 bet held.
+- **Requirement-inversion traps caught factual regressions before authoring** — the Phase 131 CONTEXT.md pre-recorded 6 traps (cached-users-is-a-real-field, wipe-vs-factory-reset as two facts, Entra-shared-device-mode ≠ Shared iPad) that the recipe correctly inverted rather than copying the requirement's literal (wrong) wording.
+- **Code review caught what the C17 gate could not** — Phase 131's review found a 323-char indented blockquote (C17 #12 blind spot) and a Step-4 Email row contradicting the T-5 unsupported claim; Phase 130's review caught a dynamic-group forward-reference ordering bug. Structural validators don't catch semantic contradictions.
+- **The corrected `['v1.18-phases']` archive-root token** — Phase 134 refused to copy check-phase-128's frozen `['v1.16-phases']` predecessor-root bug forward a 4th time, fixing the archival-drift class at its source for the current apex.
+- **Pre-archive `/gsd-audit-milestone` earned its place** — it caught a dropped-and-untracked hand-off (the `build-filename-map --self-test` 221→223 drift) that had slipped BOTH the phase that deferred it (132) and the phase it was deferred to (133).
+
+### What Was Inefficient
+- **A cross-phase deferral was dropped silently** — Phase 132 deferred the `--self-test` row-count fix to Phase 133, but 133's scope (TOOL-04..06) never covered `build-filename-map.mjs` and the item was never re-logged in DEFERRED-CLEANUP. A deferral from phase A to phase B needs an explicit landing spot IN phase B's scope, or it evaporates.
+- **3 per-plan SUMMARYs (130-02, 131-01, 131-02) omit the `requirements-completed` frontmatter** — coverage was verified via the VERIFICATION tables and the close-gate SUMMARY, but the missing field forced a manual cross-check the 3-source matrix is meant to automate.
+
+### Patterns Established
+- **New doc *class* without new taxonomy value** — a doc-format innovation (the recipe shape with embedded admin decision points) rode entirely on a D-02 edge ruling + `doc_type: Guide`, proving the closed 4-value enum absorbs new shapes via rulings, not enum growth.
+- **Symptom-close vs. root-cause carve-out discipline** — TOOL-04's 14-sidecar re-pin closed the acute standalone-RED symptom while CARVE-1 explicitly tracked the un-fixed root cause (ref-less GHA `harness-run` checkouts) forward to a dedicated tooling milestone, refusing to let a symptom fix masquerade as a root-cause fix.
+- **Re-scope a mis-specified requirement to what's real, and attest it** — TOOL-05's original "cache subprocess results" imagined redundancy that didn't exist; Phase 133 re-scoped it to verify-and-attest the pre-existing `CHECK_PHASE_NESTED` O(n) property rather than author dead code.
+
+### Key Lessons
+- **A phase→phase deferral must land inside the receiving phase's scope, or re-log it** — the `--self-test` drift proves an out-of-scope hand-off silently evaporates; the audit gate is the safety net, not the plan.
+- **C17 (structural) never substitutes for a semantic code review** — every real Phase 130/131 defect (indented-blockquote overflow, contradictory table row, forward-reference ordering) was invisible to the gate and visible to review.
+- **Don't copy a frozen predecessor's bug forward** — the `['v1.16-phases']`→`['v1.18-phases']` correction shows a copy-Path-A lineage must audit inherited tokens, not clone them blind.
+- **SDK write-verbs still hang on this repo** — MILESTONES.md, the two archives, the ROADMAP collapse, and the phase-dir moves were hand-authored (not via `milestone.complete`), consistent with the v1.17 close; use `git` directly.
+
+### Cost Observations
+- Model mix: Opus orchestration; sequential-on-main-tree per `use_worktrees:false`.
+- Notable: full `--chain` discuss→plan→execute→verify cadence; 16th Path-A harness; V117 back-anchor pin discharged; carried Windows deep-nest now [48..133] (+6 vs v1.17); TOOL-04 was the **first milestone to actually close** (symptom) the `FROZEN-AWARE-ADOPTION-SWEEP-01` standalone-RED class rather than accept it, with the root cause carved out as CARVE-1; Axis-2 (Linux GHA) deferred to owner PIPE-02 push per the local-commit convention.
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
