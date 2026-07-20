@@ -43,7 +43,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 129+).
 
 - [x] **HARN-11**: `_lib/frozen-at-close.mjs` gains the **V117** entry (v1.17 close-gate SHA recovered via the dual-token positive-confirmation `git log --all --grep` method, verifying the returned commit's SUBJECT LINE carries both tokens per the v1.17 false-positive caveat) + `readAtV117Close` export — the mandatory back-anchor invariant freezing the v1.17 corpus per `V117-PIN-DEFERRAL`.
 - [x] **HARN-12**: 16th Path-A audit-harness lineage bump — `v1.18-milestone-audit.mjs` (Path-A from v1.17, C1-C17 inherited) + `v1.18-audit-allowlist.json` + BASELINE_22 + `check-phase-129..NN.mjs` validators (chain-apex continues the `[48..N-1]` invariant) + `audit-harness-v1.18-integrity.yml` (15th parallel CI coexistence workflow). Predecessor frozen surfaces byte-unchanged EXCEPT the explicitly-scoped TOOL-04 remediation (whichever approach wins at discuss-phase) — NO value-masking, `CHAIN_SKIP` empty. Full predecessor chain run BEFORE authoring the close-gate per `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`.
-- [ ] **HARN-13**: Milestone closed via 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per D-03 + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP EXACT MATCH) + SINGLE close-gate commit flipping all v1.18 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS + `v1.18-MILESTONE-AUDIT.md` + `v1.18-DEFERRED-CLEANUP.md`.
+- [x] **HARN-13**: Milestone closed via 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per D-03 + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP EXACT MATCH) + SINGLE close-gate commit flipping all v1.18 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS + `v1.18-MILESTONE-AUDIT.md` + `v1.18-DEFERRED-CLEANUP.md`. Axis 1 (Windows fresh-clone) + Axis 3 (same-host, corroborating-only) exact-match locally at 88/0/1; Axis 2 (Linux GHA, sole cross-OS-authoritative per D-03) explicitly DEFERRED to the owner's PIPE-02 push checkpoint per this repository's local-commit-then-owner-push convention — see `v1.18-MILESTONE-AUDIT.md`'s "Axis 2 / GA-4" section for the exact command block.
 
 ## Future Requirements
 
@@ -92,32 +92,33 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CLASS-01 | 129 | Complete |
-| CLASS-02 | 129 | Complete |
-| CLASS-03 | 132 | Complete |
-| CLASS-04 | 132 | Complete |
-| AVD-01 | 130 | Complete |
-| AVD-02 | 130 | Complete |
-| AVD-03 | 130 | Complete |
-| AVD-04 | 130 | Complete |
-| AVD-05 | 130 | Complete |
-| IPAD-01 | 131 | Complete |
-| IPAD-02 | 131 | Complete |
-| IPAD-03 | 131 | Complete |
-| IPAD-04 | 131 | Complete |
-| HYG-04 | 130 | Complete |
-| TOOL-04 | 133 | Complete |
-| TOOL-05 | 133 | Complete |
-| TOOL-06 | 133 | Complete |
-| HARN-11 | 134 | Complete |
-| HARN-12 | 134 | Complete |
-| HARN-13 | 134 | Pending |
+| CLASS-01 | 129 | Validated |
+| CLASS-02 | 129 | Validated |
+| CLASS-03 | 132 | Validated |
+| CLASS-04 | 132 | Validated |
+| AVD-01 | 130 | Validated |
+| AVD-02 | 130 | Validated |
+| AVD-03 | 130 | Validated |
+| AVD-04 | 130 | Validated |
+| AVD-05 | 130 | Validated |
+| IPAD-01 | 131 | Validated |
+| IPAD-02 | 131 | Validated |
+| IPAD-03 | 131 | Validated |
+| IPAD-04 | 131 | Validated |
+| HYG-04 | 130 | Validated |
+| TOOL-04 | 133 | Validated |
+| TOOL-05 | 133 | Validated |
+| TOOL-06 | 133 | Validated |
+| HARN-11 | 134 | Validated |
+| HARN-12 | 134 | Validated |
+| HARN-13 | 134 | Validated |
 
 **Coverage:**
 - v1.18 requirements: 20 total
 - Mapped to phases: 20/20 ✓
 - Unmapped: 0
+- **Validated: 20/20 — v1.18 milestone CLOSED 2026-07-20** (close-gate commit local/unpushed; see `.planning/milestones/v1.18-MILESTONE-AUDIT.md`)
 
 ---
 *Requirements defined: 2026-07-16*
-*Last updated: 2026-07-16 after roadmap creation (Phases 129-134)*
+*Last updated: 2026-07-20 — Phase 134 Plan 134-05 close-gate: all 20 v1.18 requirements flipped to Validated*

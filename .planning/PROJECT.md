@@ -8,7 +8,9 @@ A comprehensive diagnostic toolkit and documentation suite for Windows Autopilot
 
 IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — covering APv1, APv2, macOS ADE (incl. Platform SSO + Secure Enclave + Kerberos SSO + Graph API Platform Credential management + end-to-end PSSO provisioning + Kandji/Iru→Intune MDM migration), iOS/iPadOS, Android Enterprise (COBO / BYOD Work Profile / Dedicated / Zero-Touch / AOSP), and Linux (Ubuntu 22.04/24.04 LTS) enrollment frameworks with role-appropriate documentation.
 
-## Current Milestone: v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
+## Previous Milestone: v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure (SHIPPED 2026-07-20)
+
+**Status:** ✅ SHIPPED 2026-07-20 — 6/6 phases (129-134) Complete; 20/20 requirements Validated via the Phase 134 Plan 134-05 SINGLE close-gate commit (NO Commit A); see `.planning/milestones/v1.18-MILESTONE-AUDIT.md` (close-gate narrative, Axis 1/3 local-authoritative, Axis 2 explicitly deferred to the owner's PIPE-02 push) + `.planning/milestones/v1.18-DEFERRED-CLEANUP.md` (the v1.19 backlog source, V118-PIN-DEFERRAL + CARVE-1/CARVE-2). **Not yet archived** — run `/gsd-complete-milestone` to push (completing the deferred Axis-2 GHA capture + GA-4 cascade disposition per the command block in the milestone audit), archive, and tag; then `/gsd-new-milestone` to scope v1.19. **No active milestone.**
 
 **Goal:** Introduce a new "Device Recipe" doc class — step-by-step, admin-decision-point-driven provisioning recipes — with its first two recipes (a self-deploying Entra-joined shared Windows AVD-client device, and a fully-provisioned Shared iPad), and close the accumulated chain-validator tooling debt (frozen-aware sweep + O(n²) chain-runner + carried nits).
 

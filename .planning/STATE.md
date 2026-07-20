@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.18
 milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
-status: executing
-last_updated: "2026-07-20T05:41:35.571Z"
+status: shipped
+last_updated: "2026-07-20T06:00:00.000Z"
 last_activity: 2026-07-20
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 17
-  completed_plans: 16
-  percent: 83
+  completed_plans: 17
+  percent: 100
 ---
 
 # Project State
@@ -20,13 +20,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.18 adds reproducible device-configuration *recipes* (step-by-step provisioning with embedded admin decision points), starting with a self-deploying shared Windows AVD-client device and a fully-provisioned Shared iPad, and closes the accumulated chain-validator tooling debt.
-**Current focus:** Phase 134 — v117-pin-16th-path-a-lineage-bump-terminal-close
+**Current focus:** v1.18 SHIPPED 2026-07-20 (close-gate local/unpushed) — no active milestone; run `/gsd-complete-milestone` to archive/push, then `/gsd-new-milestone` to scope v1.19.
 
 ## Current Position
 
-Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — EXECUTING
+Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — COMPLETE
 Plan: 5 of 5
-Status: Ready to execute
+Status: Milestone shipped (close-gate committed local/unpushed; Axis-2 GHA + archival deferred to owner PIPE-02 checkpoint)
 Last activity: 2026-07-20
 
 ## v1.18 Phase Dependency Summary
@@ -312,6 +312,8 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - [Phase 134]: Byte-unchanged gate computed against WAVE0_ANCHOR; TOOL-04/TOOL-06 sanctioned exceptions independently confirmed via git merge-base --is-ancestor as pre-dating the anchor
 - [Phase 134]: Axis 3 dispatched on same Windows host (no subagent-dispatch tool or second runner available) — dispositioned honestly as corroborating-only, not independent; Axis 2 (Linux GHA) remains sole cross-OS-authoritative per D-03
 - [Phase 134]: Axis 1 completed the full non-nested [48..133] apex recursion without hitting WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 this cycle (depth 86) — recorded as an honest completed PASS, not assumed
+- [Phase 134 P05]: Close-gate lands SINGLE atomic commit, local/unpushed on master (this repo's standing convention — push is an owner PIPE-02 decision, not an autonomous-run action); Axis 2 (Linux GHA, sole cross-OS-authoritative per D-03) and the GA-4 Class-B cascade disposition are explicitly DEFERRED with a machine-verification command block recorded in v1.18-MILESTONE-AUDIT.md, never silently skipped or assumed green
+- [Phase 134 P05]: v1.18-DEFERRED-CLEANUP.md logs CARVE-1 (FROZEN-AWARE-ADOPTION-SWEEP-01 durable debt — TOOL-04 re-pin closed only the acute symptom, root cause unscheduled to a future dedicated tooling milestone) and CARVE-2 (TOOL-05 re-scope, CLOSED) per the 133-CONTEXT dual-carve-out mandate; V118-PIN-DEFERRAL added (v1.19's back-anchor job)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -344,14 +346,15 @@ At roadmap stage. Execution-time watch items (not blockers — address within sp
 
 ## Session Continuity
 
-Last session: 2026-07-20T05:41:35.553Z
-Stopped at: Completed 134-03-PLAN.md
+Last session: 2026-07-20T06:00:00.000Z
+Stopped at: Completed 134-05-PLAN.md (v1.18 close-gate — milestone shipped, local/unpushed)
 Resume file: None
-Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-class foundation.
+Next action: Run `/gsd-complete-milestone` to push (completing the deferred Axis-2 GHA capture + GA-4 cascade disposition per `v1.18-MILESTONE-AUDIT.md`'s command block), archive phase dirs, and tag `v1.18`; then `/gsd-new-milestone` to scope v1.19.
 
 ## Operator Next Steps
 
-- Run `/gsd-plan-phase 129` to plan Phase 129 (Device Recipe Doc-Class Foundation)
+- Run `/gsd-complete-milestone` to archive v1.18, push the close-gate (firing the deferred Axis-2 GHA cross-OS confirmation), and tag the release
+- Run `/gsd-new-milestone` to scope v1.19
 
 ## Performance Metrics
 
@@ -374,3 +377,4 @@ Next action: Run `/gsd-plan-phase 129` to begin planning the Device Recipe doc-c
 | Phase 134 P02 | 8min | 2 tasks | 3 files |
 | Phase 134 P03 | 25min | 2 tasks | 7 files |
 | Phase 134 P04 | 12min | 2 tasks | 1 files |
+| Phase 134 P05 | ~20min | 2 tasks | 7 files |

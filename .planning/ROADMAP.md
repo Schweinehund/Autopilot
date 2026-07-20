@@ -2,7 +2,7 @@
 
 ## Milestones
 
-- 🔄 **v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure** — Phases 129-134 (in progress)
+- ✅ **v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure** — Phases 129-134 (shipped 2026-07-20)
 - ✅ **v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)** — Phases 126-128 (shipped 2026-07-11)
 - ✅ **v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing** — Phases 120-125 (shipped 2026-07-10)
 - ✅ **v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1)** — Phases 113-119 (shipped 2026-07-06)
@@ -30,7 +30,7 @@
 - [x] **Phase 131: Recipe #2 — Shared iPad Full Provisioning** - Fully-provisioned Shared iPad from ADE enrollment through verification (completed 2026-07-18)
 - [x] **Phase 132: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable (completed 2026-07-19)
 - [x] **Phase 133: Chain-Validator Tooling Debt Closure** - Frozen-aware adoption sweep + O(n²) chain-runner fix + carried nits (completed 2026-07-19)
-- [ ] **Phase 134: V117 Pin + 16th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate
+- [x] **Phase 134: V117 Pin + 16th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate (completed 2026-07-20)
 
 <details>
 <summary>✅ v1.0–v1.17 (Phases 1-128) — SHIPPED</summary>
@@ -194,7 +194,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Wave 4** *(blocked on 134-04 — close-gate lands on the proven re-audit)*
 
-- [ ] 134-05-PLAN.md — HARN-13 close-gate: author v1.18-MILESTONE-AUDIT.md + v1.18-DEFERRED-CLEANUP.md (CARVE-1+CARVE-2+V118-PIN-DEFERRAL) + 134-VERIFICATION.md + single atomic 20-req Validated flip + Axis-2 GHA capture + GA-4 cascade disposition (HARN-13)
+- [x] 134-05-PLAN.md — HARN-13 close-gate: author v1.18-MILESTONE-AUDIT.md + v1.18-DEFERRED-CLEANUP.md (CARVE-1+CARVE-2+V118-PIN-DEFERRAL) + 134-VERIFICATION.md + single atomic 20-req Validated flip + Axis-2 GHA capture deferred to owner PIPE-02 push + GA-4 cascade disposition command block (HARN-13)
 
 ## Progress
 
@@ -219,7 +219,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | v1.15 EEE SOP Documentation-Standard Retrofit (Phase-1) | 113-119 | ✅ Shipped | 2026-07-06 |
 | v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing | 120-125 | ✅ Shipped | 2026-07-10 |
 | v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) | 126-128 | ✅ Shipped | 2026-07-11 |
-| v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure | 129-134 | 🔄 In Progress | - |
+| v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure | 129-134 | ✅ Shipped | 2026-07-20 |
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -228,4 +228,4 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 131. Recipe #2 — Shared iPad Full Provisioning | 2/2 | Complete    | 2026-07-18 |
 | 132. Integration & Navigation-Last Close | 2/2 | Complete    | 2026-07-19 |
 | 133. Chain-Validator Tooling Debt Closure | 4/4 | Complete    | 2026-07-19 |
-| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 4/5 | In Progress|  |
+| 134. V117 Pin + 16th Path-A Lineage Bump + Terminal Close | 5/5 | Complete    | 2026-07-20 |
