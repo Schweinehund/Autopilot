@@ -271,13 +271,15 @@ if (isMainModule && SELF_TEST) {
     );
   }
 
-  // (c) Parsing the REAL docs/_registry/RE-index.md yields exactly 221 rows
+  // (c) Parsing the REAL docs/_registry/RE-index.md yields exactly 223 rows
+  //     (bumped 221 -> 223 at v1.18 close: RE-222/RE-223 recipes added in Phase 132;
+  //      deliberate drift-canary, bump on each registry-row addition)
   {
     const content = readFile(REGISTRY_REL_PATH);
     const rows = content ? parseRegistry(content) : [];
     stAssert(
-      '(c) parseRegistry(docs/_registry/RE-index.md) yields exactly 221 rows',
-      rows.length === 221,
+      '(c) parseRegistry(docs/_registry/RE-index.md) yields exactly 223 rows',
+      rows.length === 223,
       'rows.length=' + rows.length
     );
   }
