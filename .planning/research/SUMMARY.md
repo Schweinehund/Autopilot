@@ -1,154 +1,250 @@
 # Project Research Summary
 
-**Project:** Windows Autopilot & macOS Provisioning Documentation Suite — v1.18 "Device Configuration Recipes" (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
-**Domain:** Intune/Entra/Apple device-configuration documentation (EEE-conformant Markdown → .docx corpus) — a new "Device Recipe" doc-class shape plus two new content recipes, alongside a separately-scoped validator-tooling-debt pillar
-**Researched:** 2026-07-16
-**Confidence:** HIGH — all four research files are grounded in directly-fetched Microsoft Learn / Apple Support pages and direct repo reads; a small number of items are explicitly flagged MEDIUM/LOW and called out below.
+**Project:** Windows Autopilot & macOS Provisioning Documentation Suite — v1.19 "Device Configuration Recipes #3 & #4" (Windows Multi-App Kiosk + Android Dedicated MHS Multi-App)
+**Domain:** Intune/Entra device-configuration documentation (EEE-conformant Markdown to .docx corpus) — two new Device Recipe docs, each scoped as a **delta over corpus that already ships**, plus integration/nav and mandatory harness-close phases
+**Researched:** 2026-07-25
+**Confidence:** HIGH overall — the two hard gates that could have re-scoped or cancelled either recipe both came back CONFIRMED against directly-fetched, dated Microsoft Learn pages. A small number of items remain honestly MEDIUM (flagged throughout, not smoothed over) and one open format tension is surfaced for discuss-phase, not resolved here.
+
+---
+
+## Gate Verdicts (Read First)
+
+Both hard gates PROJECT.md put to this research round came back **CONFIRMED**, not refuted. Neither recipe is cancelled or re-scoped in scope; RE-224's *shape* changes materially, described below.
+
+### GATE 1 — Windows 11 multi-app kiosk mechanism: CONFIRMED
+
+**Verdict:** The Intune **Templates -> Kiosk** GUI's "Multi app kiosk" option is documented by Microsoft as **Windows-10-only**. Windows 11 multi-app kiosk has **no first-party GUI path** — it requires the **AssignedAccess CSP `Configuration` node** (`./Vendor/MSFT/AssignedAccess/Configuration`), delivered via an Intune **Custom profile (OMA-URI)**, carrying a **hand-authored `AssignedAccessConfiguration` XML** payload.
+
+**Citation:** `learn.microsoft.com/en-us/intune/device-configuration/templates/configure-kiosk` (ms.date 2026-02-10, updated 2026-07-01) — verbatim: *"Currently, you can use Intune to configure a multi-app kiosk on Windows 10 devices... For more information about Windows 11 multi-app kiosk support, go to [Set up a multi-app kiosk on Windows 11 devices]."* Corroborated by `windows/configuration/assigned-access/configure-multi-app-kiosk` (*"This option isn't available using Settings"*) and `assigned-access/configuration-file` (XML schema, namespace versions). All HIGH confidence, fetched directly 2026-07-25.
+
+**Consequence for scope:** RE-224 is authorable — the internal note it verifies (`130-RESEARCH.md:340`) is confirmed, not refuted. But this re-shapes the recipe materially: RE-224's central deliverable is a hand-authored XML file pushed via OMA-URI, a longer and structurally different Steps section than RE-222's Step 5a (pure GUI/Templates single-app kiosk). ~50% conceptual overlap with RE-222 (AUMID discovery, autologon model) is cross-link-only; the delivery mechanism itself is wholly new content.
+
+**FORMAT TENSION — stated explicitly, not resolved here:** This corpus's STD-05/C17 gate bars decision content inside code fences and bars fenced pseudo-config in branch bodies. RE-224's entire reason to exist is a schema-exact, namespace-versioned (v4=21H2, v5=22H2) XML configuration file — content that in nearly any other technical-writing context would be presented as a fenced code block. **None of the four research files propose a resolution.** PITFALLS.md's Pitfall 18 comes closest (C17 assertion #12's 200-char blockquote cap colliding with a richly-worded decision-cell) but addresses table-cell severity prose, not fenced-XML placement. How RE-224 presents the actual XML artifact — worked example inline as plain prose/pre-formatted non-fenced text, a linked-out artifact, a table-decomposed field list, or something else — is a genuine open question that must be resolved at discuss-phase, not discovered mid-authoring in Phase 135. Flag this as the single highest-leverage open question for requirements.
+
+### GATE 2 — Android Managed Home Screen configuration depth: CONFIRMED
+
+**Verdict:** First-party documented depth **exists and is extensive** — far beyond the exit-PIN setting already covered in `05-dedicated-devices.md`. Microsoft Learn publishes exact JSON keys for grid/layout (`grid_size`, `app_orders`, `lock_home_screen`), allow-list (`applications`), folders (`managed_folders`), widgets, screensaver/digital-signage (`show_screen_saver` + timing keys), and sign-in/sign-out (`enable_mhs_signin`, `signin_type`, session-PIN keys).
+
+**Citation:** `learn.microsoft.com/en-us/intune/app-management/configuration/configure-managed-home-screen` (ms.date 2026-04-21, **updated_at 2026-06-22** — fresher than `05-dedicated-devices.md`'s `last_verified: 2026-04-23`). HIGH, fetched directly 2026-07-25.
+
+**Consequence for scope:** RE-225 is authorable as a genuine delta over `05-dedicated-devices.md`, which stops at "MHS must be Required-assigned" and never documents what's configurable inside the app. RE-225 is not redundant with a generic Android app-deployment guide, and there is no Plan-1-equivalent research gate blocking its core mechanism — the only design decision RE-225 faces is a missing-target problem for its app-deployment *step*, resolved below (Integration section), not a mechanism-existence gate like RE-224's.
+
+---
 
 ## Executive Summary
 
-This milestone adds two new provisioning walkthroughs — a self-deploying Entra-joined shared Windows device that runs Windows App as an Azure Virtual Desktop client, and a fully-provisioned Shared iPad — under a brand-new "Device Recipe" doc class. Both recipes are well-supported by first-party Microsoft/Apple documentation (HIGH confidence throughout), and the doc-class integration itself is a pure content-plane change: the existing registry-driven pipeline (`RE-index.md` → `filename-map.md` → publish-bundle) needs zero code changes, `doc_type: Guide` already fits (no new taxonomy value), and `docs/recipes/` as a new top-level directory follows the corpus's own `decision-trees/`/`*-lifecycle/` precedent. The dominant technical risk in both recipes is scope conflation: Recipe #1 must not bleed AVD session-host rules (no Autopilot/ESP, ADMX limits) into the client-endpoint device it actually documents, and must not scope-creep into FSLogix/session-host territory the milestone explicitly excludes; Recipe #2 must not silently promise compliance-policy/Conditional-Access/email-profile support that Apple's Shared iPad platform simply does not have.
+Both hard-gate questions this milestone was built around came back confirmed: Windows 11 multi-app kiosk has a real, first-party, non-GUI mechanism (AssignedAccess CSP `Configuration` node via Custom OMA-URI + hand-authored XML), and Android Managed Home Screen has genuine, undocumented-in-corpus configuration depth at the JSON-key level. Neither recipe is cancelled; RE-224 is re-shaped rather than re-scoped, and its shape now collides with a corpus formatting rule (STD-05/C17 bars fenced code in decision content) that no research file resolves — this is the single most consequential open item for requirements and roadmap to carry forward explicitly rather than let Phase 135 discover unplanned.
 
-The research surfaced four load-bearing conflicts the roadmap/requirements must resolve explicitly rather than let a content-authoring phase discover them late: (1) the milestone brief lists "compliance policy" as a Recipe #2 ingredient, but Shared iPad has compliance policies, Conditional Access, app protection, and email profiles all explicitly unsupported per Microsoft Learn — the recipe's compliance section must document that gap, not implement working compliance gating; (2) doc_type must be Guide, never a new Recipe taxonomy value — C17 won't catch this silently-wrong choice (it only checks presence, not the enum), so it needs a written D-02 standard ruling locked before either recipe's content phase starts; (3) the AVD AutoSubscription feed-URL CSP is documented in most community sources as user-context (./User/Vendor/MSFT/...), which directly collides with Recipe #1's "device-context targeting for everything" table-stakes rule for a no-primary-user device — this is a genuine open technical question, not just a documentation nit, and needs a phase-time spot-check against policy-csp-remotedesktop before the recipe asserts either way; (4) the corpus's existing 08-self-deploying.md (RE-084) states Wi-Fi is unsupported for self-deploying OOBE, but current Microsoft Learn says Wi-Fi is supported (with two extra prompts) — Recipe #1 must independently re-verify rather than copy RE-084 verbatim, and the stale claim should be flagged as a separate RE-084 correction backlog item rather than silently patched as a side effect.
+Both recipes are designed, per PROJECT.md's own adversarial-review-confirmed scoping, as **deltas over corpus that already ships**: RE-224 cross-links RE-222's Step 5a single-app kiosk (one line, zero edits — frozen by `check-phase-130.mjs`'s literal-string pin) and owns only the multi-app delivery mechanism itself; RE-225 cross-links nearly all of `05-dedicated-devices.md`'s enrollment/provisioning/exit-PIN-sync content and owns only the missing `## Steps`/Verification/Anti-Feature structural scaffold plus MHS app-config-level detail. This delta discipline is both recipes' dominant design constraint and their dominant pitfall-exposure surface: PITFALLS.md documents 26 pitfalls, and a majority trace back to either re-deriving content a sibling doc already owns (Pitfalls 2, 10, 13, 14) or silently upgrading a MEDIUM-confidence anchor-doc fact to a flat imperative once it's reformatted as a numbered recipe Step (Pitfalls 9, 20 — most notably, the Android MHS exit-PIN dual-policy synchronization requirement has **no first-party Microsoft source on this research pass either**, and must ship as `[MEDIUM: MS Q&A community]`, never silently promoted).
 
-The recommended approach is: lock the doc-class standard and template first (including the decision-point block format, which must be designed against C17 assertion #12's 200-character blockquote cap from day one, not discovered after drafting), then author the two recipes in parallel (they have no cross-dependency), then close with mandatory C17-gate + registry + filename-map + navigation-last integration steps — each of which has a known "looks done but isn't" failure mode documented in PITFALLS.md. The chain-validator debt pillar (V117 pin, 16th Path-A lineage bump, frozen-surface adoption sweep) is a structurally separate work-stream that happens to share scripts/validation/ with the new recipe validators; PITFALLS.md flags real risk of accidentally touching frozen pre-v1.18 sidecar files via copy-paste habit, so roadmap phase sequencing should keep these two work-streams in clearly separated phases even if interleaved in number order.
+The recommended approach: resolve the RE-224 XML-presentation format tension and the remaining PROJECT.md gray areas (Windows enrollment-path fork, multi-app+SharedPC layering, shared conceptual anchor, hubs-not-wired disposition) at discuss-phase via `/adversarial-review` before Phase 135/136 content authoring begins; author RE-224 and RE-225 in parallel (zero cross-dependency, per architecture research); integrate and wire navigation last, closing the WR-01 defect class (table-without-quick-nav-bullet) proactively via a new validator needle rather than relying on code-review to catch it again; and treat the mandatory harness-close phase as strictly final and gated on the owner's push landing (the V118 back-anchor pin has no valid target until then — this is a hard go/no-go precondition, not a soft assumption).
+
+---
 
 ## Key Findings
 
-### Recommended Stack
+### Stack Additions — What Must Be Documented, Per Recipe
 
-The two recipes rest entirely on first-party, version-gated Microsoft/Apple features rather than new code libraries (this is a documentation project). Recipe #1's spine is Windows Autopilot self-deploying mode (Entra-join only, TPM 2.0 + physical hardware mandatory) plus the SharedPC CSP (Settings Catalog "Shared PC" category, EnableSharedPCModeWithOneDriveSync gated to Windows 11 22H2+) plus Windows App (Store ID 9N1F85V9T8BN, the mandatory successor to the legacy Remote Desktop/MSRDC client retired 2026-03-27) plus the RemoteDesktop/AutoSubscription policy CSP for feed auto-discovery. Recipe #2's spine is the ADE enrollment profile's Shared iPad toggle (Supervised = Yes, no user affinity, iPadOS 13.3+/32GB minimum per Microsoft's own floor) plus Managed Apple Account via federated Entra sign-in plus device-licensed, Required-only VPP app assignment.
+**RE-224 — Windows 11 Multi-App Kiosk (new content, genuinely not covered anywhere in the corpus):**
 
-**Core technologies:**
-- Windows Autopilot self-deploying (APv1 only — APv2/Device Preparation has no self-deploying path) — zero/low-touch provisioning of the physical shared kiosk device
-- SharedPC CSP / Settings Catalog "Shared PC" — multi-user account lifecycle (single-session enforcement, cache/delete policy) for both Entra and on-prem AD accounts identically
-- Windows App (Store app, not Win32/MSRDC) — the AVD client itself; Store deployment gets auto-update and matches Microsoft's current distribution guidance
-- RemoteDesktop/AutoSubscription CSP — auto-feeds the AVD workspace URL per signed-in Entra user (device-vs-user CSP scope is an open verification item — see Gaps)
-- ADE enrollment profile Shared iPad toggle + Managed Apple Account federation — the entire Shared iPad provisioning spine; changing this on an already-enrolled device forces a factory wipe
+| Feature / Profile Type | Version Floor | Role |
+|---|---|---|
+| AssignedAccess CSP — `Configuration` node, via Intune Custom profile (OMA-URI) | Pro/Enterprise/Education/IoT Enterprise (not Home); Windows 10 1709+ base, Windows 11 confirmed compatible | The sole first-party mechanism — this **is** GATE 1 |
+| `AssignedAccessConfiguration` XML — `AllAppList` profile type | Namespace-versioned: base 2017; **v4 (21H2+)** adds `ClassicAppPath`/`StartLayout`; **v5 (22H2+)** adds `StartPins`/`TaskbarLayout` | Defines allow-list, Start/taskbar layout, File Explorer namespace restrictions — do not imply v5 fields work on 21H2 |
+| `Configs` -> `Account`/`UserGroup` binding | Same | Associates the XML profile to a local/AD/Entra user or group — **group Configs require `AllAppList`; `KioskModeApp` (single-app) is user-only, never group** |
+| `AssignedAccess/Status` node (read-only) | Since Windows 10 1809+ | Recommended Verification-section mechanism (Running/AppNotFound/ActivationFailed/AppNoResponse) |
+| AUMID discovery via `Get-StartApps` | N/A | Cross-link RE-222's existing pattern verbatim, never re-author |
 
-### Expected Features
+**RE-225 — Android Dedicated, MHS Multi-App (new content — MHS app-config-level detail, not enrollment):**
 
-**Must have (table stakes):**
-- Recipe #1: APv1 self-deploying, Entra-join-only, TPM 2.0 + wired Ethernet realism, device-phase-only ESP, Windows App as Store app assigned Required/device-context, feed-URL configuration, explicit "assumes AVD host pools/session hosts/FSLogix already exist" scope boundary
-- Recipe #1: explicit anti-feature callouts (hybrid join, APv2, Wi-Fi-at-OOBE-as-a-hard-block, legacy MSRDC) — cheap to write, highest cost to omit
-- Recipe #2: Supervised + ADE + no-user-affinity + Shared iPad = Yes, >=32GB storage, Managed Apple Account federation as a gating prerequisite (not a mid-recipe step), device-licensed Required-only VPP apps, correct device-vs-user profile-applicability split
-- Recipe #2: explicit unsupported-feature callouts (compliance policy/CA/app protection/email profiles/user-licensed VPP/"Available" assignment) — MS Learn flags all of these as silent-failure traps
+| Feature / Profile Type | Version Floor | Role |
+|---|---|---|
+| MHS App Configuration policy — Apps -> Configuration -> Managed devices (Android) -> Managed Home Screen (`com.microsoft.launcher.enterprise`) | Android 8.0+ | The configuration surface itself — this **is** GATE 2 |
+| `applications` allow-list + `managed_folders`/`widgets` keys | Same policy | Curated multi-app grid — the delta content `05-dedicated-devices.md` stops short of |
+| Screensaver/digital-signage keys (`show_screen_saver`, timing) | Requires Overlay + exact-alarm (Android 14+) permission | Digital-signage variant, named as a scenario in `05` but never configured at key-level anywhere in the corpus |
+| Sign-in/sign-out keys (`enable_mhs_signin`, `signin_type`, session-PIN, auto-signout) | Same policy | Backs the existing "Entra shared device mode" scenario row with first-party JSON-key detail |
+| OEMConfig permission auto-grant (`configure-managed-home-screen-permissions-android`) | Samsung-specific tabs shown; general OEMConfig elsewhere | Avoids a Settings-app breakout path — new prerequisite content |
 
-**Should have (differentiators):**
-- Recipe #1: kiosk-vs-shared-desktop admin decision point (Assigned Access/multi-app kiosk vs. SharedPC full desktop — mutually exclusive, must be a forced binary choice); 802.1X Wi-Fi cross-link for post-enrollment wireless operation (reuses existing v1.14 corpus)
-- Recipe #2: per-role layered configuration (device-group baseline + user-group overlays), temporary/guest-session decision point, storage-quota (QuotaSize, iPadOS 17+) sizing guidance
+**Already covered — do NOT re-document (either recipe):** RE-224 must not re-author single-app kiosk/AUMID discovery/Shell-Launcher exclusion (all RE-222 Step 5a, zero-edit-frozen) or Autopilot self-deploying/dynamic groups/ESP (`admin-setup-apv1/*`). RE-225 must not re-author enrollment-profile Deltas 1-4, all four provisioning methods + Knox/ZT mutual exclusion, the exit-PIN sync *requirement itself*, Android 15 FRP pathways (all `05-dedicated-devices.md`), or MGP binding (`01-managed-google-play.md`). One RE-224-owned nuance is genuinely new and not covered by RE-222: the `Configuration` node **supersedes** the legacy `KioskModeApp` node as a silent No-Op (still returns SUCCESS to the MDM server) — this must be stated by RE-224 itself.
 
-**Defer (v2+):**
-- Recipe #1: full kiosk-lockdown implementation depth (only GitHub-reference-sourced, MEDIUM confidence), Shared PC as a fully-worked alternative path, Windows 365 Boot as a sibling recipe, multi-workspace subscription scenarios
-- Recipe #2: SCIM/OIDC+JIT automated account-provisioning depth (already owned by existing OU-06 doc), bulk Graph/PowerShell automation layer beyond the manual admin-center walkthrough
+### Feature Table Stakes, Differentiators, Anti-Features — Per Recipe
 
-### Architecture Approach
+**RE-224 table stakes:** Custom-OMA-URI delivery on Windows 11 (not the GUI); standard non-admin kiosk account; apps pre-installed before the XML applies (`AppNotFound` is a documented runtime status); kiosk account excluded from interactive Conditional Access (hard sign-in failure, Event ID 1098 / `AADSTS50076`/`50158`, "by design," no workaround); complete app-dependency lists in `AllowedApps`; group Configs require `AllAppList`; no nested `UserGroup`; AUMID via `Get-StartApps` only; `Configuration` supersedes `KioskModeApp` silently.
 
-The doc-class integration is entirely data-plane: a new docs/recipes/ top-level directory (following the decision-trees//*-lifecycle/ "new shape -> new directory" precedent, not nested inside admin-setup-apv1/ or admin-setup-ios/), doc_type: Guide (the closed 4-value taxonomy already covers this shape, per the same D-02 reasoning that classified *-lifecycle/* as Guide in v1.16), and registry rows that flow automatically through the existing generic build-filename-map.mjs/build-publish-bundle.mjs scripts with no code changes. The only genuinely new artifact is the admin decision-point block format, which must compose a short "Ask the admin:" blockquote lead-in (kept under C17's 200-char cap) with a Question/Options/Recorded-As decision table for anything with more than one option — never a code fence (breaks the corpus's body-text-only indexing invariant).
+**RE-224 differentiators:** Autologon shared account (breaks under EAS password policy — anti-feature interaction); runtime health monitoring via `Status`/`StatusConfiguration`; SharedPC layered under multi-app kiosk (Microsoft-documented pattern, MEDIUM confidence on combined field-level steps — this is PROJECT.md's own "multi-app+SharedPC layering" gray area, present as a genuine decision); custom `BreakoutSequence`; managed folders + Start/taskbar layout.
 
-**Major components:**
-1. EEE-SOP-standard.md amendment — new D-02 ruling (docs/recipes/* -> Guide) + resolved decision-point block spec, must land before the template
-2. docs/_templates/recipe-template.md — built from admin-template.md's skeleton (Prerequisites -> Steps with "What breaks if misconfigured" callouts -> Verification -> Configuration-Caused Failures -> See Also) plus the decision-point block pattern and TEMPLATE-SENTINEL scaffold discipline
-3. docs/_registry/RE-index.md rows (RE-222/223[/224]) — Draft -> Approved gate, drives the entire downstream pipeline
-4. Navigation-last wiring — docs/index.md only (recipes are provisioning Guides, not troubleshooting Runbooks, so they do NOT get rows in common-issues.md/quick-ref-*)
+**RE-224 anti-features:** GUI Kiosk-template wizard on Windows 11 (silently wrong platform); group Config + single-app profile mismatch; interactive CA/MFA on the kiosk account; EAS password policy on an autologon kiosk; nested `UserGroup`; hardcoded AUMID.
 
-### Critical Pitfalls
+**RE-225 table stakes:** Standard token + MHS Required-assigned (05-owned); static device group (05-owned); exit-PIN identical in both policies (05-owned, cross-link only); apps allow-listed on the MHS grid must already be Required-assigned first (RE-225-owned delta); Overlay + exact-alarm permissions auto-granted via OEMConfig, never manual (RE-225-owned); Device Restrictions "Notification windows" must not be Disabled if any Overlay-dependent MHS feature is used; `Enable sign in = FALSE` is the structural default matching the Standard token — this is the direct, honest answer to "how does sign-in work outside Entra SDM": there is none by default.
 
-1. Recipe #1 conflates the AVD client endpoint with the AVD session host — Microsoft's multi-session-with-Intune doc (no Autopilot/ESP support, ADMX-limited) targets a different Intune-managed object than this recipe's client device; open Recipe #1 with an explicit scope banner disambiguating the two.
-2. Self-deploying's Wi-Fi-unsupported claim is stale — the corpus's own RE-084 says Wi-Fi is not supported at OOBE; current Microsoft Learn says it is (with 2 extra prompts). Recipe #1 must independently re-verify, not copy RE-084 verbatim.
-3. doc_type: Recipe would silently pass C17 but violate the locked 4-value taxonomy — C17 only checks presence, not the enum, so this mistake goes undetected by automation; lock Guide in the template/standard before content authoring starts.
-4. Decision-point blockquotes will blow the 200-char C17 #12 cap on first draft if rendered like the existing "What breaks if misconfigured" idiom with real explanatory prose — design the format's length discipline before drafting, not after (this is the exact historical retrofit-tax pattern already paid once in this corpus).
-5. Shared iPad app-licensing/compliance assumptions inherited from 1:1 iPad habits fail silently — user-licensed VPP, "Available" assignment, compliance policy/CA, and email profiles are all unsupported on Shared iPad with no useful console error; Recipe #2 must state this explicitly rather than let an admin discover it via a non-installing app.
+**RE-225 differentiators:** `Enable sign in = TRUE` + `Sign in type = Other` (lightweight accountability without SDM — MEDIUM confidence on realistic non-Entra IdP wiring); debug-menu lockout hardening (`Enable easy access debug menu = FALSE` + max-attempts + retry-delay — genuine new hardening layer over `05`'s base PIN-sync coverage); managed folders/grid/branding; offline/no-sign-in allow-lists; auto-relaunch on inactivity.
+
+**RE-225 anti-features (intentionally large, per milestone framing):** `Sign in type = Microsoft Entra ID` without the SDM token (login prompt, zero SSO payoff — a genuine trap); exposed system navigation bypassing the sign-in/session-PIN gate; Notification-windows=Disable silently breaking screensaver/virtual-home-button/auto-signout; expecting per-identity personalization on a sign-in-disabled Standard-token device (structurally impossible); Wi-Fi radio toggle and first-time Enterprise-network connection both unavailable to end users from inside MHS; folder reorder/rename never available to end users; Zero-Touch + Knox simultaneously on Samsung (05-owned CRITICAL); digital-signage/single-app-kiosk guidance treated as in-scope (it isn't).
+
+**Decision points ranked by consequence-if-wrong (both recipes, from FEATURES.md):**
+
+| Recipe | # | Severity | Decision |
+|---|---|---|---|
+| RE-224 | 1 | CRITICAL | Delivery mechanism: Custom OMA-URI/XML (Win11-capable) vs. Templates GUI (Win10-only) — this **is** GATE 1, stated as prerequisite fact, not a genuine choice |
+| RE-224 | 2 | CRITICAL | Kiosk account model: shared local autologon vs. named/grouped Entra account — PROJECT.md's Windows enrollment-path gray area |
+| RE-224 | 3 | HIGH | Config target type (individual vs. group; `AllAppList`-only for groups) |
+| RE-224 | 4 | HIGH | SharedPC layered under multi-app kiosk vs. alone — PROJECT.md's SharedPC-layering gray area |
+| RE-225 | 1 | CRITICAL (already locked, Case-1) | Token type: Standard (worked) vs. Entra SDM (routing cross-link only) — irreversible, field-site QR redistribution cost |
+| RE-225 | 2 | HIGH (Case-2, 05-owned) | Provisioning method, Knox/ZT mutual exclusion |
+| RE-225 | 3 | HIGH | `Enable sign in`: FALSE (default) / TRUE+Other / TRUE+Entra-ID-trap |
+| RE-225 | 4 | HIGH | Debug-menu exposure + attempt/retry-delay hardening |
+
+### Architecture — Integration, Cross-Links, Ripple, Guardrails
+
+**Cross-link topology:** RE-224 is the corpus's **first recipe-to-recipe cross-link** — one outbound line to `01-shared-windows-avd-client.md#step-5a-kiosk-configuration`, protected on the target side by `check-phase-130.mjs`'s literal-string pin on the Step 5a/5b headings; every other RE-224 prerequisite link (self-deploying, dynamic groups, ESP, APv1-vs-APv2) goes **directly** to `admin-setup-apv1/*`, never chained through recipe 01. RE-225 cross-links multiple pre-verified anchors in `05-dedicated-devices.md` (`#scenarios`, `#enrollment-profile`, `#provisioning-method-choice`, `#exit-kiosk-pin-synchronization`, `#android-15-frp-reprovisioning`) plus `01-managed-google-play.md#bind-mgp` and existing glossary/capability-matrix anchors — link to existing anchors only, add nothing new to either target.
+
+**The Android app-deployment missing-target problem — resolved recommendation: INLINE.** `admin-setup-android/` has no app-deployment or configuration-profiles guide (unlike iOS, which has one — an incidental asymmetry, not a rule to generalize from). Architecture research assessed three options and recommends **inlining a recipe-scoped "Deploy the MHS app (device-context)" step** in RE-225 with the concrete click-path, directly mirroring RE-222's own precedent for the identical Windows-side gap (`admin-setup-apv1/` also has no app-deployment guide, and RE-222 solved it by inlining Step 4). Cross-linking `01-managed-google-play.md` was explicitly rejected (it covers binding/pre-approval, not assignment — sends the reader to a page that doesn't answer the question). Deferring the step as future work was also rejected (would ship RE-225 broken at its own structural centerpiece). A future `admin-setup-android` app-deployment guide is noted as a `v1.20+`-scope `DEFERRED-CLEANUP` candidate, not something RE-225 should wait on.
+
+**Registry/pipeline ripple (complete enumeration):** `RE-index.md` two new rows (RE-224/225, Draft->Approved); `filename-map.md` regeneration (never hand-edited); `build-filename-map.mjs --self-test` row-count canary **must bump 223->225** in the same commit as the regeneration (mirrors the exact Phase-133 precedent for the prior bump); `docs/index.md` recipes table **and** the line-38 quick-nav bullet (both surfaces, same commit — this is the WR-01 defect class from Phase 132, proactively closed this time via a new validator needle); `common-issues.md`/`quick-ref-l1.md`/`quick-ref-l2.md` explicit hubs-not-wired re-confirmation (not silent carry-forward — PROJECT.md names this a live gray area); C17 auto-enrollment (zero code change expected); link-checker 0/0; `build-publish-bundle.mjs --version=v1.19` (zero code change, registry-data-driven); a new integration-phase validator with needles for both new registry rows, filename-map regeneration, both `index.md` table rows, **and** the line-38 bullet text specifically; the apex chain validator extending `[48..N-1]`; and the terminal `v1.19-milestone-audit.mjs` + allowlist + BASELINE_23, run as its own final phase, never batched with content.
+
+**Frozen-surface guardrails:** `docs/_glossary-android.md` (365 pin coordinates) and `docs/reference/android-capability-matrix.md` (139 pin coordinates), aggregated across 16 frozen sidecars, must receive **zero edits** from v1.19. All three concepts RE-225 needs (`Dedicated`, `Managed Home Screen`, `Entra Shared Device Mode`) already have glossary anchors; the capability-matrix's existing "Dedicated (COSU)" column already covers MHS. If a line-shift edit somehow proves unavoidable, the only licensed remedy is a scoped **CARVE-1 option (a)** coordinate-only re-pin, budgeted explicitly, never discovered mid-execution, never CARVE-1 option (b) (reserved for its own dedicated tooling milestone). A third, unresolved gray area — a "shared conceptual anchor" for the kiosk/dedicated-device taxonomy both recipes and `05-dedicated-devices.md`'s own Platform note gesture at — has a documented option space (duplicate locally / new small Reference doc / fold into an already-pinned comparison file) but is explicitly **not resolved** by this research; Option C (folding into the already-pinned `4-platform-capability-comparison.md`) should be ruled out regardless of how the gray area resolves, since it carries the identical pin-invalidation hazard under a different name.
+
+---
+
+## Watch Out For
+
+The pitfalls below are the highest-severity items from PITFALLS.md's 26, selected for consequence and for the honest confidence gaps that must not be silently smoothed over.
+
+| # | Pitfall | Severity driver | Phase | Confidence |
+|---|---|---|---|---|
+| 1 | Plan-1 gate authored around without fresh citation | Would force a rewrite if the Windows-11 mechanism assumption were wrong | 135 (blocking precondition) | HIGH — but re-verify at authoring time regardless, per the pitfall's own instruction |
+| 3 | Frozen Step 5a/5b headings touched indirectly (corpus-wide text ops) | Fails the apex chain at a *different* phase's close | 135 + 137 | HIGH |
+| 4 | Edition-floor stated more restrictively than current reality (Pro is now unified with Enterprise/Education for both single- and multi-app) | Wrongly blocks Pro-edition fleets — a stale-training-data trap | 135 | HIGH (live-fetched 6 days before this research) |
+| 7 | Kiosk-lockout recovery path omitted (Settings-app self-service removal is NOT available once multi-app is configured) | Admin with no documented recovery path may resort to unnecessary full wipe | 135 | HIGH |
+| **9** | **MHS exit-PIN dual-policy synchronization requirement — no first-party source found on THIS research pass either** | **Must ship as `[MEDIUM: MS Q&A community]`; upgrading to HIGH/VERIFIED without a genuinely new citation is the exact trap this pitfall names** | 136 | **MEDIUM — explicit, honest, not resolved, must not be silently promoted to a step-level imperative** |
+| 20 | MEDIUM-confidence anchor-doc facts flattened into flat numbered recipe Steps generally (exit-PIN sync, token-expiry-no-never-expires, the entire enrollment-profile Delta block) | Recipe format reads more authoritative than the source Guide; strips the confidence signal the source deliberately preserved | 136 | HIGH (the flattening risk itself is well-documented; the underlying facts vary MEDIUM/HIGH per-fact) |
+| 21 | `05-dedicated-devices.md` is past its own `review_by` date — RE-225 authored on a stale anchor without spot-verification | Recurrence of v1.18's exact Pitfall #2 pattern (RE-084's stale Wi-Fi claim) | 136 + 138 | HIGH |
+| 22 | WR-01 recurrence — `index.md` table lands without the line-38 quick-nav bullet | Already happened once (Phase 132), caught only by code-review after the fact | 137 | HIGH |
+| 26 | V118 pin attempted before the owner's push lands, or Phase-134's apex value copied forward unaudited | Structural failure or a pin against an unreachable SHA — a hard go/no-go gate, named BLOCKING PRECONDITION in PROJECT.md | 138 | HIGH |
+
+Full pitfall set (26 items, Groups A-D) is in `PITFALLS.md`; every item there carries an explicit phase assignment and a "warning signs" grep-able tell.
+
+---
 
 ## Implications for Roadmap
 
-Based on research, suggested phase structure (dependency-ordered per ARCHITECTURE.md's "Suggested Build Order," cross-checked against PITFALLS.md's phase-mapping table):
+### Suggested Phase Structure (dependency-ordered, mirrors v1.18's Phase 129->134 shape)
 
-### Phase A: Device Recipe doc-class foundation
-**Rationale:** Both recipes and their C17 self-test fixtures need a citable standard ruling and a locked template before content authoring — retrofitting the template after the gray area resolves is more expensive than deciding first.
-**Delivers:** EEE-SOP-standard.md D-02 amendment (docs/recipes/* -> Guide), resolved admin decision-point block format (routed through /gsd-discuss-phase + /adversarial-review per PROJECT.md — explicitly not resolved by research), docs/_templates/recipe-template.md with TEMPLATE-SENTINEL, registry ID reservation (RE-222/223[/224], Status: Draft).
-**Addresses:** Doc-class integration requirement; decision-point block feature.
-**Avoids:** Pitfall #7 (doc_type: Recipe taxonomy violation), Pitfall #8 (C17 #12 blockquote overflow discovered late).
+**Phase 135 — RE-224 Windows multi-app kiosk content.**
+*Depends on:* the Plan-1 gate having passed (it has — GATE 1 above — but the recipe's own authoring must still re-cite fresh, not lean on this SUMMARY as its source).
+*Delivers:* `docs/recipes/03-*.md` — Custom OMA-URI/XML mechanism as the recipe's central content, one-line cross-link to RE-222 Step 5a, Prerequisites with a same-milestone-dated edition-floor citation, decision blocks for account model + SharedPC layering, "This recipe is NOT" disambiguation for kiosk/digital-signage/Lock-Task-Mode/COSU terminology collisions, Recovery subsection, Verification exercising secondary app flows.
+*Must resolve first (discuss-phase):* the RE-224 XML-presentation format tension (GATE 1's open item, above) — this could shape the Steps section structurally and should not be decided ad hoc mid-authoring.
+*Avoids:* Pitfalls 1-8, 15, 18, 25.
 
-### Phase B: Recipe #1 — Shared Windows AVD-client device
-**Rationale:** No dependency on Recipe #2; can run in parallel with Phase C once Phase A's template lands.
-**Delivers:** docs/recipes/01-windows-avd-shared-device.md — self-deploying profile -> ESP device phase -> Entra join -> Windows App device-context install -> feed-URL configuration -> kiosk-vs-shared-desktop decision point -> verification (including an interactive end-user Windows App sign-in check).
-**Addresses:** Recipe #1 table stakes + kiosk/shared-desktop decision point + anti-feature callouts from FEATURES.md.
-**Avoids:** Pitfalls #1 (session-host conflation), #2 (stale Wi-Fi claim), #3 (VM/vTPM confusion), #4 (single-app kiosk failure), #5 (no-primary-user AVD entitlement gap), #6 (FSLogix scope-creep).
+**Phase 136 — RE-225 Android Dedicated MHS multi-app content.**
+*Depends on:* nothing from Phase 135 (different platform, zero cross-dependency — parallelizable in principle, sequential in practice per `use_worktrees:false`).
+*Delivers:* `docs/recipes/04-*.md` — the missing `## Steps`/Verification/Anti-Feature scaffold `05-dedicated-devices.md` lacks, inlined MHS app-deployment step, `Enable sign in` decision block as the dominant fork, debug-menu hardening, Case-1 token-type block preserving the full revoke/recreate/redistribute-to-every-field-site severity language, exit-PIN sync content cross-linked (never re-derived) and carrying its `[MEDIUM]` tag forward unchanged, spot-verification of stale-anchor-doc facts.
+*Avoids:* Pitfalls 9-14, 15, 16, 19, 20, 21, 25.
 
-### Phase C: Recipe #2 — Shared iPad full provisioning
-**Rationale:** No dependency on Recipe #1; parallelizable with Phase B.
-**Delivers:** docs/recipes/02-shared-ipad-full-provisioning.md — ADE profile Shared iPad toggle -> Managed Apple Account federation (linked, not re-derived) -> device-group Required VPP apps -> device/user profile split -> temporary-session decision point -> compliance/CA/email non-support callout -> home screen layout -> verification.
-**Addresses:** Recipe #2 table stakes + temporary-session decision point + unsupported-feature callouts.
-**Avoids:** Pitfalls #9 (duplicating existing OU-07 lifecycle doc instead of linking), #10 (VPP user-licensed/Available trap), #11 (1:1-iPad-assumption cluster: CP/CA/email/passcode), #12 (storage/federation as Prerequisites not Steps), #13 (temporary-session policy gap).
+**Phase 137 — Integration & navigation-last close.**
+*Depends on:* both content phases complete and C17-clean.
+*Delivers:* registry rows + Draft->Approved flip, filename-map regeneration + `--self-test` 223->225 bump in the same commit, `index.md` table rows **and** line-38 quick-nav bullet in the same commit, explicit hubs-not-wired ruling (named decision, not silent carry-forward), link-checker 0/0, publish-bundle regeneration `--version=v1.19`.
+*Avoids:* Pitfalls 22, 23, 24.
 
-### Phase D: Integration & navigation-last close
-**Rationale:** Must follow both content phases (needs stable content to gate C17/registry-status-flip), and navigation wiring is explicitly a project convention to do last, never mid-content.
-**Delivers:** C17 gate pass on both new files, registry Draft -> Approved flip (owner-gated), filename-map.md regeneration (never hand-edited), docs/index.md nav section, decision-tree cross-links, check-nav-hub-links.mjs green.
-**Addresses:** Publish-pipeline integration.
-**Avoids:** Pitfall #14 (filename-map drift), Pitfall #16 (navigation-last skipped because "it's just two docs").
+**Phase 138 — Harness-close cluster (MANDATORY, structurally separate, never batched with content).**
+*Depends on:* the owner's push landing on `origin/master` — a hard go/no-go precondition, not a soft assumption.
+*Delivers:* V118 pin (`readAtV118Close`, dual-token subject-line-confirmed SHA), 17th Path-A lineage bump (`v1.19-milestone-audit.mjs`, allowlist, BASELINE_23), `check-phase-135..138.mjs` extending the `[48..N-1]` apex invariant (independently derived, not copied from Phase 134), 3-axis terminal re-audit, 16th parallel CI coexistence workflow.
+*Avoids:* Pitfall 26.
 
-### Phase E (separately scoped, per PROJECT.md): Chain-validator debt closure
-**Rationale:** Structurally independent of the two content recipes; research (Pitfall #15) flags real risk of this pillar's scripts/validation/ work colliding with new recipe validators via copy-paste habit if interleaved carelessly.
-**Delivers:** V117 pin + readAtV117Close, 16th Path-A lineage bump (v1.18-milestone-audit.mjs, v1.18-audit-allowlist.json, BASELINE_22), check-phase-129..NN.mjs validators, 15th CI coexistence workflow, 3-axis terminal re-audit, FROZEN-AWARE-ADOPTION-SWEEP-01 + O(n^2) chain-runner remediation (per PROJECT.md's already-scoped tooling-debt items).
-**Addresses:** Milestone's mandatory-close requirements (not covered by this content research — carried from PROJECT.md).
-**Avoids:** Pitfall #15 (accidental frozen-surface edits).
+### Build Order and Dependency Edges
 
-### Phase Ordering Rationale
+```
+[GATE 1 + GATE 2 verdicts]  -- already resolved, this research round
+        |
+        v
+[discuss-phase: resolve remaining gray areas incl. RE-224 XML-format tension]  -- /adversarial-review
+        |
+        +--------------+--------------+
+        v              v              |
+   Phase 135        Phase 136         |  (zero mutual dependency, parallelizable in
+   RE-224 content   RE-225 content    |   principle, sequential in practice)
+        |              |              |
+        +------+-------+              |
+               v                      |
+          Phase 137                   |
+     Integration & nav-last close     |
+     (registry, filename-map,         |
+      index.md table + bullet,        |
+      hubs-not-wired ruling)          |
+               |                      |
+               v                      |
+          Phase 138  <----------------+  gated on: owner's push landed on origin/master
+     Harness-close cluster
+     (V118 pin, 17th lineage bump,
+      terminal re-audit) -- NEVER
+     batched with content or nav
+```
 
-- Phase A must precede B/C: both recipes inherit the template's decision-point format and doc_type ruling; changing either after content lands means retrofitting two files instead of designing once.
-- Phases B and C have zero mutual dependency and should be authored in parallel or either order — architecture research explicitly confirms this.
-- Phase D must follow B and C: registry-status-flip and nav wiring are terminal, content-gated steps by convention (navigation-last discipline), not something to interleave mid-authoring.
-- Phase E should be sequenced as its own isolated set of phases rather than interleaved step-by-step with B/C, purely to keep the frozen-surface blast radius clean — PITFALLS.md's #15 is explicit that this is a real, not hypothetical, risk given both work-streams touch scripts/validation/.
+**Ordering rationale beyond raw dependency:** discuss-phase must lead because the RE-224 format tension and the remaining PROJECT.md gray areas (account model, SharedPC layering, shared conceptual anchor, hubs-not-wired disposition) shape Steps-section structure in ways that are expensive to retrofit after drafting. 135/136 are content-parallel by architecture but content-first by convention (`use_worktrees:false`). 137 is strictly content-gated (needs stable, C17-clean files to flip registry status). 138 is strictly last and gated on an external precondition (owner push) that is outside this milestone's own control — do not schedule it optimistically.
 
 ### Research Flags
 
-Phases likely needing deeper research during planning:
-- **Phase B (Recipe #1):** the RemoteDesktop/AutoSubscription device-vs-user CSP scope conflict is unresolved (MEDIUM confidence in STACK.md, explicitly flagged as a genuine phase-time verification item in FEATURES.md) — needs a direct fetch of policy-csp-remotedesktop before the recipe asserts device-context-only targeting works for feed discovery. Also needs re-verification of the MSRDC retirement date (2026-03-27, currently only MEDIUM/community-corroborated) against a first-party Microsoft retirement notice.
-- **Phase B (Recipe #1):** kiosk-lockdown implementation depth (Assigned Access packaging, auto-logoff behaviors) is sourced only from the Azure/WindowsAppKiosk GitHub reference, not a first-party how-to — treat as MEDIUM confidence pending a dedicated verification pass if the roadmap pulls this into v1 scope rather than deferring it.
-- **Phase C (Recipe #2):** the "maximum resident users" Settings Catalog exposure path (discrete toggle vs. custom OMA-URI-equivalent) needs a live-verification spot-check against the corpus's existing 2026-05-21 [CITED: training; needs live verification] OU-07 doc.
+**Needs continued verification during planning/authoring, not blocking roadmap:**
+- Phase 135: re-confirm the Plan-1 mechanism claim with a citation dated inside the phase itself (not this SUMMARY) before Step content is drafted — the underlying Learn pages are proven to update asymmetrically (one sub-page touched 16+ months apart from a sibling page in the same feature area).
+- Phase 135: the SharedPC + multi-app layering interaction has zero first-party source either way — treat as mutually exclusive unless discuss-phase's `/adversarial-review` finds and cites an affirmative source.
+- Phase 136: the MHS exit-PIN synchronization requirement (Pitfall 9) — actively re-search during authoring in case a first-party source surfaces that this research pass missed; if not found, ship `[MEDIUM]` as-is.
+- Phase 136: spot-verify specific `05-dedicated-devices.md` facts RE-225's decision points depend on against current Learn, given the anchor doc is past its own `review_by` date.
 
-Phases with standard patterns (skip research-phase):
-- **Phase A:** doc-class integration is fully grounded in direct repo reads with zero external unknowns — no additional research needed, only the discuss-phase gray area (decision-point block shape) which is a design decision, not a research gap.
-- **Phase D:** the registry -> filename-map -> publish-bundle pipeline is unchanged, generic, and already proven across every prior milestone — standard mechanical execution.
+**Standard patterns, low research need:**
+- Phase 137: the registry->filename-map->publish-bundle pipeline is unchanged, generic, and proven across five prior milestones — mechanical execution, not research.
+- Phase 138: the V118-pin mechanism itself (dual-token grep, subject-line confirmation) is fully precedented from V117 — the only open item is the external push-landed precondition, not the mechanism.
+
+---
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
-|------|------------|-------|
-| Stack | HIGH | Nearly every claim fetched directly from Microsoft Learn / Apple Support; only the AutoSubscription CSP scope and the Azure/WindowsAppKiosk reference-repo details are MEDIUM |
-| Features | HIGH | Cross-checked against both first-party docs and the existing corpus's own docs (RE-084, OU-06/OU-07, existing app-deployment/compliance guides); MEDIUM confidence isolated to the same AutoSubscription scope question and MSRDC retirement date |
-| Architecture | HIGH | Every claim grounded in direct local-repo reads (EEE-SOP-standard.md, c17-eee-contract.mjs, RE-index.md, templates, pipeline scripts) — no external/web sourcing was needed or used |
-| Pitfalls | HIGH | Microsoft Learn verified for all product-behavior claims, repo-verified for all doc-integration claims; MEDIUM only on community-sourced Windows App kiosk failure reports and the AVD per-user-licensing commentary |
+|---|---|---|
+| Stack | HIGH | Both gate-defining facts fetched directly from current, dated Microsoft Learn pages 2026-07-25; edition-floor unification and namespace-version table are HIGH; Pro Education's inclusion is explicitly flagged LOW/inferred, not asserted |
+| Features | HIGH | Both load-bearing facts (Plan-1 gate; MHS-outside-SDM sign-in behavior) independently verified HIGH; individual differentiators carry their own MEDIUM tags where community-only (SharedPC+kiosk field-level steps; Win32-under-autologon reliability) |
+| Architecture | HIGH for registry/pipeline/frozen-surface mechanics (direct repo reads); MEDIUM for RE-224's exact spine shape (not yet authored) and explicitly unresolved for the "shared conceptual anchor" gray area (option space only) |
+| Pitfalls | HIGH for all repo-governance and Windows system-requirement claims; explicit, honest MEDIUM on the MHS exit-PIN synchronization pitfall and the screensaver-PIN userless-device inference — neither smoothed to HIGH |
 
-**Overall confidence:** HIGH
+**Overall confidence:** HIGH, with two named, deliberate MEDIUM exceptions (MHS exit-PIN sync; SharedPC+kiosk layering) that must ship as MEDIUM in the recipes themselves, not get promoted during authoring.
 
 ### Gaps to Address
 
-- **AVD AutoSubscription device-vs-user CSP scope:** most community sources document this as user-context (./User/Vendor/MSFT/...), which conflicts with Recipe #1's device-context-only table stakes for a no-primary-user device. Resolve via a direct fetch of policy-csp-remotedesktop during Phase B planning, and design the recipe's Verification step to explicitly re-apply-per-sign-in-check regardless of which scope wins.
-- **Compliance policy vs. milestone brief:** PROJECT.md's v1.18 footer lists "compliance" as a Recipe #2 ingredient, but Microsoft Learn is unambiguous that compliance policies/CA/app protection are unsupported on Shared iPad. This must be resolved explicitly in REQUIREMENTS.md — the recipe's compliance section should document the gap and rely on device-restriction profiles instead, not attempt to implement working compliance-driven access gating.
-- **RE-084 stale Wi-Fi claim:** the existing self-deploying admin guide's "Wi-Fi is NOT supported" statement is out of date relative to current Microsoft Learn. Decide during requirements/discuss-phase whether correcting RE-084 is in-scope for this milestone or tracked as a separate backlog item — do not let Recipe #1 silently fix it as a side effect without a REQ line.
-- **Decision-point block format:** explicitly named a discuss-phase gray area in PROJECT.md; research provides a grounded option space (blockquote-lead-in + decision-table composite) but does not resolve it. Must be locked in Phase A before Recipe #1/#2 content authoring.
-- **Max resident/cached users per Shared iPad:** Apple does not publish a hard maximum and the exact Intune Settings Catalog exposure is unverified against a live page since the corpus's own OU-07 doc's 2026-05-21 citation — needs a phase-time check.
-- **Frozen-surface adjacency risk (Pitfall #15):** the chain-validator debt pillar and the new recipe validators share scripts/validation/; roadmap phase sequencing should keep these separated explicitly, not rely on author discipline alone.
+- **RE-224 XML-presentation format tension (GATE 1's open item).** No research file resolves how a schema-exact, hand-authored XML artifact is presented inside a standard that bars fenced code in decision/branch content. Must be a named discuss-phase decision before Phase 135 Steps-section drafting begins.
+- **MHS exit-PIN dual-policy synchronization — still no first-party source.** Two independent research passes (this one and the corpus's own prior finding) have both failed to locate a Microsoft Learn page stating the two PIN values must match. Ship `[MEDIUM: MS Q&A community]`, refresh only the date, never the confidence level, unless a genuinely new citation is found during Phase 136 authoring.
+- **SharedPC + multi-app Assigned Access coexistence — genuinely unresolved, not merely unresearched further.** No first-party page confirms or denies running both simultaneously. Treat as a permanent mutually-exclusive admin-decision-point fork (mirroring recipe 01's own single-app-vs-SharedPC fork) unless discuss-phase's `/adversarial-review` finds an affirmative source.
+- **Shared conceptual anchor for the kiosk/dedicated-device taxonomy.** Option space documented (duplicate locally / new small Reference doc / fold into an already-pinned file — the last ruled out regardless), not resolved. Route to discuss-phase.
+- **`05-dedicated-devices.md` is past its own `review_by` date.** Spot-verify any fact RE-225 cross-links against current Learn before relying on it; if drift is found, do not silently patch the frozen/Approved anchor doc as a side effect — give it an explicit landing spot (a named requirement or a `DEFERRED-CLEANUP.md` entry), mirroring how v1.18 handled the RE-084 Wi-Fi correction (HYG-04) rather than an unlogged drive-by edit.
+- **The V118 push precondition.** Not a research gap but a hard external blocker: Phase 138 cannot begin its close-gate work until the owner's push of v1.18's 198 unpushed commits lands on `origin/master`. Roadmap should carry this as an explicit phase-138 gate, not an assumption.
+
+---
 
 ## Sources
 
-### Primary (HIGH confidence)
-- Microsoft Learn — autopilot/self-deploying, windows/client-management/mdm/sharedpc-csp, windows/configuration/shared-pc/set-up-shared-or-guest-pc, intune/device-configuration/templates/ref-shared-device-settings-windows, intune/intune-service/fundamentals/azure-virtual-desktop, windows-app/whats-new, windows-app/get-started-connect-devices-desktops-apps, windows/configuration/kiosk/, windows-365/enterprise/install-windows-365-app-intune, intune/solutions/azure-virtual-desktop-multi-session
-- Apple Support — guide/deployment/shared-ipad-overview-dep9a34c2ba2/web, guide/deployment/prepare-shared-ipad-dep6fa9dd532/web, guide/business/federated-authentication-microsoft-entra-axm8c1cac980/web
-- Microsoft Learn — intune/device-enrollment/apple/shared-ipad, intune/intune-service/enrollment/device-enrollment-shared-ipad, intune/intune-service/enrollment/device-enrollment-shared-ios
-- Repo (direct reads) — docs/_standards/EEE-SOP-standard.md, scripts/validation/c17-eee-contract.mjs, docs/_registry/RE-index.md, docs/_templates/*.md, scripts/pipeline/build-filename-map.mjs, docs/index.md, docs/admin-setup-apv1/08-self-deploying.md (RE-084), docs/cross-platform/apple-business/09-shared-ipad-lifecycle.md, .planning/PROJECT.md
+### Primary (HIGH confidence, fetched directly 2026-07-25)
+- `learn.microsoft.com/en-us/intune/device-configuration/templates/configure-kiosk` — GATE 1 primary source (Windows-10-only multi-app GUI statement)
+- `learn.microsoft.com/en-us/windows/configuration/assigned-access/configure-multi-app-kiosk` — CSP/OMA-URI mechanism, "not available using Settings," recovery/removal behavior
+- `learn.microsoft.com/en-us/windows/configuration/assigned-access/configuration-file` — XML schema, `AllAppList` vs `KioskModeApp`, namespace/version table (v4=21H2, v5=22H2), account/group binding rules
+- `learn.microsoft.com/en-us/windows/client-management/mdm/assignedaccess-csp` — edition/OS tables, `Status`/`StatusConfiguration`, `KioskModeApp` No-Op behavior
+- `learn.microsoft.com/en-us/windows/client-management/mdm/sharedpc-csp` — `KioskModeAUMID` hook; no coexistence statement found (documented as a gap)
+- `learn.microsoft.com/en-us/windows/configuration/assigned-access/overview` — unified Pro/Enterprise/Education/IoT edition floor (ms.date 2026-07-15, updated 2026-07-21)
+- `learn.microsoft.com/en-us/troubleshoot/mem/intune/device-configuration/users-cannot-logon-windows-multi-app-kiosk` — CA/MFA anti-feature, verbatim Event Viewer signatures
+- `learn.microsoft.com/en-us/intune/solutions/frontline-worker/windows` — self-deploying-as-recommended-enrollment, SharedPC+kiosk layering pattern (individual-CSP level only)
+- `learn.microsoft.com/en-us/intune/app-management/configuration/configure-managed-home-screen` — GATE 2 primary source, full JSON-key tables (ms.date 2026-04-21, updated 2026-06-22)
+- `learn.microsoft.com/en-us/intune/app-management/configuration/configure-launcher-android` — fetched to positively rule out as the wrong package (`com.microsoft.launcher` vs `com.microsoft.launcher.enterprise`)
+
+### Repo (direct reads)
+- `.planning/PROJECT.md` (v1.19 section) — scope, 8 gray areas, BLOCKING PRECONDITION language
+- `docs/recipes/01-shared-windows-avd-client.md` (RE-222, Approved) — cross-link patterns, Step 4/5a/5b structure, `[ASSUMED]` tag idiom
+- `docs/recipes/02-shared-ipad-full-provisioning.md` (RE-223) — app-deployment cross-link pattern where a target guide exists
+- `docs/admin-setup-android/05-dedicated-devices.md` (RE-097, `last_verified: 2026-04-23`, `review_by: 2026-06-22` — past due) — anchor doc for RE-225's delta
+- `docs/admin-setup-android/01-managed-google-play.md` — confirmed scope is binding + auto-approval, not general assignment
+- `docs/_registry/RE-index.md`, `docs/index.md`, `scripts/pipeline/build-filename-map.mjs`, `scripts/validation/check-phase-130.mjs`, `scripts/validation/check-phase-132.mjs`, `scripts/validation/README-supervision-pins.md`, `docs/_glossary-android.md`, `docs/reference/android-capability-matrix.md` — pipeline/registry/frozen-surface mechanics
+- `.planning/milestones/v1.18-ROADMAP.md`, `.planning/RETROSPECTIVE.md`, `.planning/milestones/v1.18-DEFERRED-CLEANUP.md` — phase-sequencing precedent, Key Lessons (deferral-evaporation, don't-copy-a-frozen-bug-forward)
 
 ### Secondary (MEDIUM confidence)
-- RemoteDesktop Policy CSP (policy-csp-remotedesktop) — device-vs-user AutoSubscription scope corroborated by two independent community walkthroughs (Rozemuller, LetsConfigMgr), not fully first-party confirmed
-- Azure/WindowsAppKiosk GitHub repo (Microsoft org) — kiosk packaging, autologon, session-reset behaviors; Microsoft-authored reference tooling, not a Learn how-to page
-- Windows App / MSRDC retirement date (2026-03-27) — cross-corroborated across multiple independent secondary sources (Zoho, Starwind, 4sysops, 9to5azure), not yet re-confirmed against a single first-party retirement-notice page
-- "Manage shared devices for frontline workers" (Entra Shared Device Mode is iOS/Android only, not Windows) — WebSearch-summarized, recommend a direct-fetch spot-check given how consequential this scope-narrowing finding is
-
-### Tertiary (LOW confidence)
-- AVD/Windows 365 per-user licensing model commentary (Redress Compliance, TechTarget, Bridgeall) — general market commentary, not a primary Microsoft billing source; verify against azure/virtual-desktop/licensing before Recipe #1 finalizes any SKU-specific claim
+- Community walkthroughs (petervanderwoude.nl, hiraniconfigmgr.com, cloudinfra.net, quantem.io, cloudwisdom.co.uk) — Windows 11 multi-app kiosk OMA-URI deployment workflow specifics; the CSP node itself is independently HIGH via Microsoft Learn
+- Microsoft Q&A community threads — MHS exit-PIN dual-policy synchronization requirement; **no first-party page found on this or the prior research pass**
 
 ---
-*Research completed: 2026-07-16*
-*Ready for roadmap: yes*
+*Research completed: 2026-07-25*
+*Ready for roadmap: yes, contingent on discuss-phase resolving the RE-224 XML-presentation format tension and PROJECT.md's remaining gray areas before Phase 135 content authoring begins*

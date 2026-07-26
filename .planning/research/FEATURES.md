@@ -1,225 +1,292 @@
 # Feature Research
 
-**Domain:** Intune/Autopilot device-configuration "recipe" documentation — two new recipes: (1) self-deploying Entra-joined shared Windows AVD-client device, (2) fully-provisioned Shared iPad
-**Researched:** 2026-07-16
-**Confidence:** HIGH (both recipes verified against current Microsoft Learn + Apple Support pages, cross-checked against existing corpus docs; a small number of items flagged MEDIUM where only community/GitHub reference sources were found)
+**Domain:** Intune/Autopilot device-configuration "recipe" documentation — two new recipes, each authored as a **delta over corpus that already ships**: (3) Windows multi-app kiosk (RE-224, cross-links single-app to RE-222 Step 5a — zero edits to RE-222), (4) Android Dedicated MHS multi-app (RE-225, delta over `docs/admin-setup-android/05-dedicated-devices.md`)
+**Researched:** 2026-07-25
+**Confidence:** HIGH for the two load-bearing facts the milestone gates on (Windows 11 multi-app kiosk mechanism; MHS sign-in-without-SDM behavior) — both verified against current, dated Microsoft Learn pages fetched in this session. MEDIUM/LOW flagged inline where only community sources exist.
 
-## Feature Landscape
+## Plan-1 Hard Gate — RESOLVED
 
-Two independent recipes. Each is broken into Table Stakes / Differentiators / Anti-Features below, then a combined **Admin Decision Points** section (the downstream consumer's primary ask) follows both.
+PROJECT.md flags a hard gate: `130-RESEARCH.md:340`'s claim that Windows 11 multi-app kiosk uses "a separate, non-Intune-Templates mechanism" carried **no `[VERIFIED:]` tag**. This research **verifies the claim as TRUE, HIGH confidence** — the recipe is authorizable. Do not re-run this gate at plan time; cite the sources below instead.
+
+- Intune's own Kiosk template (**Devices > Configuration > Create > Templates > Kiosk > Multi app kiosk**) states explicitly: *"Currently, you can use Intune to configure a multi-app kiosk on Windows 10 devices. For more information about Windows 11 multi-app kiosk support, go to [Set up a multi-app kiosk on Windows 11 devices]."* [HIGH: Microsoft Learn `intune/device-configuration/templates/configure-kiosk`, ms.date 2026-02-10, updated_at 2026-07-01]
+- The Windows 11 mechanism is the **Assigned Access configuration XML** (`AssignedAccessConfiguration` schema), pushed to the device through the **`./Vendor/MSFT/AssignedAccess/Configuration`** CSP node — deployed via an **Intune Custom profile (Windows 10 and later > Templates > Custom > OMA-URI)**, not the Kiosk-template GUI wizard. [HIGH: Microsoft Learn `windows/client-management/mdm/assignedaccess-csp`, ms.date 2025-03-12; `windows/configuration/assigned-access/configuration-file`, ms.date 2025-03-07, updated_at 2025-09-26; corroborated by 6+ independent community walkthroughs describing the identical OMA-URI path — MEDIUM corroboration on the deployment-workflow specifics, HIGH on the CSP node itself]
+- Microsoft's own Windows-frontline-worker guidance shows a **Windows 10-era Kiosk-template screenshot** for "multi app" without a platform caveat in that specific article — an internal Microsoft-docs seam the recipe should not silently inherit. [HIGH: `intune/solutions/frontline-worker/windows`, ms.date 2025-05-29, updated_at 2026-07-01 — flag this divergence in the recipe rather than copy the screenshot's implied GUI path for Windows 11]
+
+This is the single most load-bearing freshness fact in RE-224 — state it explicitly, the way RE-222 called out the MSRDC retirement.
 
 ---
 
-## Recipe 1 — Shared Windows AVD-Client Device (Autopilot Self-Deploying + Windows App)
+## Recipe 3 — Windows Multi-App Kiosk (RE-224)
+
+**Scope lock (per PROJECT.md, not re-litigated here):** multi-app only; single-app is a one-line cross-link to `docs/recipes/01-shared-windows-avd-client.md#step-5a-kiosk-configuration`. Zero edits to RE-222.
 
 ### Table Stakes (Recipe Fails Without These)
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| Autopilot **APv1** (classic) self-deploying deployment profile, **Entra-joined only** | Self-deploying mode does not exist in APv2 (Device Preparation) — APv2 ships user-driven only today. Hybrid join is also unsupported in self-deploying. | LOW | Corpus already has `docs/admin-setup-apv1/08-self-deploying.md` (RE-084) stating this; confirmed against `docs/apv1-vs-apv2.md` feature table row "Self-deploying mode: APv1 Yes / APv2 No" and current MS Learn/community sources. HIGH confidence. |
-| **TPM 2.0 + wired Ethernet at OOBE**, zero Wi-Fi option pre-authentication | Self-deploying uses TPM attestation as the *only* auth mechanism; Wi-Fi requires a language/keyboard selection step that self-deploying skips, so Wi-Fi literally cannot be used to reach the Autopilot service pre-auth. | LOW | HIGH confidence — Microsoft Learn Q&A and existing corpus doc both state this as a hard constraint, not a preference. This directly feeds Admin Decision Point #2 below (what happens post-enrollment if the kiosk site is Wi-Fi-only). |
-| ESP configured for **device phase only** (no user phase) | Self-deploying has no user affinity, so ESP never runs a user phase. | LOW | Reuses existing `admin-setup-apv1/03-esp-policy.md`; recipe should link, not re-document ESP mechanics. |
-| **Windows App** as the AVD client (not legacy Remote Desktop / MSRDC) | The classic Remote Desktop client (MSRDC, Store + MSI) was retired for AVD/W365/Dev Box on **March 27, 2026** — already past as of this research date (2026-07-16). Any recipe authored today that references the old client is broken on day one. | LOW | HIGH confidence, multiple independent sources confirm the March 27, 2026 retirement and Windows App as the mandated successor. This is the single most load-bearing freshness fact in the recipe — call it out explicitly rather than let a reader infer it. |
-| Windows App deployed via Intune as **Microsoft Store app (new)**, assigned **Required to a device group** | Device-group + Required install lands the app before any user signs in — required on a no-user-affinity device. User-group assignment only installs after a user signs in to a Cloud PC/session, which doesn't fit a walk-up shared kiosk. | LOW | Official MS Learn steps (`install-windows-365-app-intune`) confirm the exact admin-center flow; corpus's dynamic-groups doc (`04-dynamic-groups.md`) is the natural target-group mechanism. |
-| **Device-context targeting for everything** (apps, feed/workspace URL, Wi-Fi, update ring) | Self-deploying has no primary user; any user-targeted policy silently never applies during/after deployment unless a specific user later signs into the box. | LOW | Directly reinforced by existing self-deploying doc's "No User Affinity" callout — this recipe inherits and extends that constraint to the AVD-specific pieces (feed URL, kiosk shell). |
-| AVD host pool **feed/workspace subscription URL** configured for the device (Settings Catalog "RemoteApp and Desktop Connections" / `RemoteDesktop/AutoSubscription` policy area, `https://rdweb.wvd.microsoft.com/api/arm/feeddiscovery` or organization's custom feed URL) | Without this, Windows App launches with no subscribed resources — the user sees an empty app with nothing to click. | MEDIUM | MEDIUM confidence on device-vs-user CSP scope: most documented examples (community blogs, MS Q&A) show the `AutoSubscription` policy at `./User/Vendor/MSFT/Policy/Config/RemoteDesktop/AutoSubscription` (user-scoped, `HKEY_CURRENT_USER`). This directly collides with the "device-context only" table-stakes row above and is flagged as a genuine phase-time verification item — see Anti-Features and Gaps below. |
-| **Assumes AVD infrastructure already exists** (host pools, session hosts, FSLogix) | Per PROJECT.md v1.18 scope guardrail — mirrors the v1.14 802.1X "assumes RADIUS exists" pattern. | N/A (scope boundary, not a build item) | This bounds the recipe to Intune/device-side config only; no host-pool or FSLogix authoring in scope. |
+| Multi-app config deployed via **Custom OMA-URI** (`./Vendor/MSFT/AssignedAccess/Configuration`, raw `AssignedAccessConfiguration` XML) on Windows 11 | The Intune Kiosk-template GUI's "Multi app kiosk" option is Windows 10-only; using it on Windows 11 targets the wrong mechanism entirely (see Plan-1 gate above) | MEDIUM | HIGH confidence, first-party. This is the doc's central mechanical fact — state it before any step content, mirroring how RE-222 leads with the MSRDC retirement. |
+| Kiosk account/group is a **standard (non-admin) user or group** | Assigned Access explicitly does not support associating an admin account with a profile | LOW | HIGH confidence, MS Learn `configuration-file`. |
+| Apps in the `AllowedApps` list are **already installed/provisioned on the device before the XML applies** | Assigned Access only *restricts access* to apps that exist — it does not install them. `AppNotFound` is a documented runtime status code for this exact failure. | LOW | HIGH confidence, MS Learn `assignedaccess-csp` (Status node) + `assigned-access/configuration-file`. Reuses RE-222's Step 4 "Required + device-context" app-deployment pattern — cross-link, don't re-author app-deployment mechanics. |
+| **Config account/group excluded from any interactive Conditional Access policy** (MFA, Terms of Use) | CA policies that require user interaction hard-fail Assigned Access sign-in — the user never reaches the desktop | LOW | HIGH confidence, first-party MS troubleshooting article with verbatim Event Viewer signatures (Event ID 1098, `AADSTS50076`/`AADSTS50158`, error `0xCAA2000C`). "This behavior is by design." No workaround except exclusion. |
+| **App dependency completeness** in `AllowedApps` — if App A depends on App B, both must be listed | AppLocker rules are generated only from the listed apps; a missing dependency breaks the app that needs it, silently | LOW | HIGH confidence, MS Learn. |
+| **Group Configs require an `AllAppList` (restricted user experience) profile** — `KioskModeApp` (single-app) profiles cannot be assigned to a group, only to an individual account | Structural CSP limitation | LOW | HIGH confidence, MS Learn `configuration-file`: *"Configs that specify group accounts can't use a kiosk profile, only a restricted user experience profile."* Directly shapes Decision Point 3 below. |
+| **No nested groups** in `UserGroup` Configs | If User A ∈ Group A ∈ Group B, and Group B is the Config target, User A does NOT get the kiosk experience | LOW | HIGH confidence, MS Learn, explicit worked counter-example in the docs. |
+| **AUMID discovered via `Get-StartApps`**, never hardcoded | Store package identifiers can shift across releases | LOW | Reuses RE-222's exact existing pattern verbatim — cross-link, do not re-author. |
+| **`Configuration` node supersedes the legacy standalone `KioskModeApp` node** — once `Configuration` is set, `KioskModeApp` becomes a silent No-Op even though it still returns SUCCESS to the MDM server | A stale/legacy `KioskModeApp` CSP write left in place from an old policy will appear to succeed but do nothing once the multi-app `Configuration` XML is deployed | LOW | HIGH confidence, MS Learn `assignedaccess-csp` — this is Configuration-node-specific and is **not** covered by RE-222 (which only documents the GUI Kiosk-template `KioskModeApp`/`ShellLauncher` exclusion); RE-224 must state this itself, not assume it's already covered. |
 
 ### Differentiators (Hardening / UX Polish)
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| Full kiosk lockdown via **Assigned Access** (single-app or multi-app "restricted user experience") locking the shell to Windows App only | Prevents users from reaching the desktop, Settings, or other apps — turns the PC into a true single-purpose AVD terminal. | MEDIUM | HIGH confidence this capability exists (official MS Learn kiosk docs); MEDIUM confidence on exact Windows-App-specific packaging steps, sourced from a Microsoft-org GitHub reference implementation (`Azure/WindowsAppKiosk`) rather than a first-party how-to doc — flag for phase-time deep-dive if this path is chosen. |
-| **Shared PC mode** (`SharedPC` CSP / Settings Catalog "Shared PC" category) as the alternative "real desktop, multiple named users" flavor | Lets each user sign in with their own Entra account, get a normal (if optimized/cleaned-up) Windows desktop, and use Windows App alongside other assigned apps — instead of a hard single-app kiosk. | MEDIUM | HIGH confidence — official, fully-documented CSP with concrete settings (`EnableSharedPCMode`, `AccountModel`, `DeletionPolicy`, `DiskLevelDeletion/Caching`, `InactiveThreshold`, `MaintenanceStartTime`, `RestrictLocalStorage`). This is the direct implementation of Admin Decision Point #1 (kiosk vs. shared desktop). |
-| Windows App **auto-logoff / session-reset behaviors** (`ResetAppOnCloseOnly`, `ResetAppAfterConnection`, `ResetAppOnIdle`) | Ensures the next walk-up user doesn't inherit the prior user's AVD session state — session hygiene without a full sign-out flow. | LOW-MEDIUM | MEDIUM confidence — sourced from the `Azure/WindowsAppKiosk` reference repo, not yet cross-verified in first-party Windows App admin docs at time of research. Worth a documentation-freshness callout in the recipe (similar to the corpus's existing `[CITED: training; needs live verification]` convention used in the Shared iPad lifecycle doc). |
-| Local **autologon** into a dedicated kiosk account so the box boots straight to the Windows App sign-in screen with no Windows credential prompt | Removes a manual step for a walk-up-and-use terminal. | LOW | MEDIUM confidence, same GitHub-reference-sourced caveat as above. |
-| Post-enrollment **certificate-based Wi-Fi (802.1X EAP-TLS)** profile, for sites that can't run permanent wired Ethernet to the kiosk | Wired Ethernet is mandatory only at OOBE/enrollment time; ongoing operation can move to Wi-Fi once the device has an Intune-delivered Wi-Fi profile + cert. | MEDIUM | Directly reuses the existing `docs/admin-setup-8021x/*` corpus (v1.14) — a genuine cross-milestone dependency, not net-new research. This is Admin Decision Point #2. |
-| **Update ring** / Windows Update for Business policy tuned for a kiosk (deferral, active hours, maintenance window aligned with `SharedPC` `MaintenanceStartTime`) | Shared/always-on kiosks need a deliberate patch cadence — default consumer-style update behavior can interrupt active sessions. | LOW | MEDIUM confidence — general Windows Update for Business guidance is well-established; the specific "recommended ring for kiosks" number is a judgment call, not a documented Microsoft default. Frame as an admin decision, not a fixed table-stakes value. |
+| **Autologon (`AutoLogonAccount`)** into a shared local standard account running the `AllAppList`/`DefaultProfile` | Zero-touch walk-up experience — no credential entry ever, works for multi-app exactly as it does for RE-222's single-app kiosk branch | LOW | HIGH confidence the mechanism exists and applies to multi-app (not single-app-only, contrary to a plausible-but-wrong assumption); MS Learn `configuration-file`. **Anti-feature interaction:** breaks if EAS password policy is active on the device — see Anti-Features. |
+| **Runtime health monitoring** via `./Vendor/MSFT/AssignedAccess/Status` + `StatusConfiguration` (On/OnWithAlerts) | Admin-observable, MDM-server-queryable status codes (`Running`/`AppNotFound`/`ActivationFailed`/`AppNoResponse`) instead of relying on a site visit to discover a broken kiosk | MEDIUM | HIGH confidence, MS Learn `assignedaccess-csp`, full XSD documented. Feeds directly into the Verification section below. |
+| **`SharedPC` layered under the multi-app kiosk** (`EnableSharedPCMode` + kiosk settings together) | Microsoft's own documented pattern for frontline-worker shared multi-app devices: *"You can create a Shared PC profile and configure it be a kiosk using the kiosk settings in Intune."* Adds automatic account cleanup/exemption on top of the app lockdown RE-222's pure-Kiosk branch lacks. | MEDIUM-HIGH | HIGH confidence the pattern is Microsoft-documented; MEDIUM confidence on exact combined-config field-level steps (not spelled out in the source, flagged for phase-time verification). **This is the "multi-app+SharedPC layering" gray area PROJECT.md left open — present it as a genuine decision, not a foregone default.** |
+| **Custom `BreakoutSequence`** to exit Assigned Access, replacing the default CTRL+ALT+DEL | Default breakout is publicly documented and defeats lockdown intent for a public-facing kiosk; a custom sequence keeps maintenance access while raising the bar for casual escape | LOW | HIGH confidence, MS Learn `configuration-file`. |
+| **Managed folders + custom Start/taskbar layout** (`StartPins`/`TaskbarLayout` for Windows 11) | Curated, organized presentation when the allow-list has many apps rather than a flat unsorted grid | LOW-MEDIUM | HIGH confidence, MS Learn, full worked JSON/XML examples fetched. |
 
 ### Anti-Features (Common Mistakes That Break This Scenario)
 
 | Feature/Mistake | Why Attempted | Why It Breaks | Alternative |
 |------------------|----------------|-----------------|-------------|
-| Selecting **hybrid Entra join** with a self-deploying profile | Admin assumes hybrid join is always safer/more compatible with on-prem policy | Self-deploying has no user affinity and cannot complete a hybrid join flow — deployment fails at attestation/join. Already documented as a hard failure in the corpus's RE-084 guide. | Entra-joined only; if hybrid/on-prem AD integration is required, this device does not fit the self-deploying recipe. |
-| Deploying via **APv2 (Device Preparation)** expecting self-deploying support | APv2 is Microsoft's newer, "simpler" Autopilot experience — admins reach for it by default | APv2 supports user-driven only today; there is no self-deploying or pre-provisioning path in APv2. | Use APv1 (classic Windows Autopilot) for this recipe — reuse the corpus's `apv1-vs-apv2.md` decision reference. |
-| Relying on **Wi-Fi during OOBE/enrollment** | Site has no wired drop near the kiosk location | Self-deploying cannot use Wi-Fi pre-authentication (no language/keyboard step) — enrollment simply won't proceed. | Stage the device over wired Ethernet once (even temporarily) for enrollment; move to Wi-Fi post-enrollment via an Intune Wi-Fi profile if needed for ongoing operation. |
-| Still packaging/deploying the **legacy Remote Desktop client (MSRDC)** | Older internal runbooks, blog posts, and muscle memory still reference `RemoteDesktop_x64.msi` | Retired March 27, 2026 for AVD/W365 — no further updates/support; recipe would ship already-broken guidance. | Windows App only. |
-| Assigning the **AVD feed/workspace URL as a user-targeted policy** on a no-user-affinity device | Most public walkthroughs (and the underlying CSP's documented default location) configure `AutoSubscription` as a per-user setting | On a self-deploying device there's no primary user during ESP, so a user-targeted feed policy may never apply until/unless someone happens to sign in — the terminal can sit "empty." | Prefer device-context configuration where available, or explicitly design the recipe around a bootstrap first-sign-in step; flag as a phase-time verification item (see Gaps). |
-| Configuring **both Shell Launcher and Assigned Access (multi-app kiosk) simultaneously** | Admin tries to "layer" lockdown mechanisms for extra safety | Microsoft explicitly states you cannot configure both on the same system — one will conflict with/override the other. | Pick one shell-replacement mechanism per the kiosk-vs-shared-desktop decision (Decision Point #1) and commit to it. |
-| Assigning apps to this device using **user-licensed VPP / user groups** | Habit from standard user-driven Windows deployments | No primary user exists for app-license attribution to resolve against during/after self-deploying provisioning. | Device-based licensing / device-group assignment throughout, exactly as the existing self-deploying guide (RE-084) already documents for non-AVD apps. |
+| Using the **Intune Templates > Kiosk > "Multi app kiosk"** GUI wizard on Windows 11 devices | It's the visible, documented, click-through path — and Microsoft's own frontline-worker overview article shows a "kiosk-multi-app.png" screenshot without a platform caveat | Silently unsupported for Windows 11 per the canonical Kiosk-template doc itself; the recipe author must not follow the screenshot's implied path uncritically | Custom OMA-URI / `AssignedAccessConfiguration` XML — see Plan-1 gate above |
+| Targeting a **group** Config with a **single-app (`KioskModeApp`)** profile | Admin assumes group targeting works the same for single- and multi-app | Structural CSP limitation — group Configs require an `AllAppList` profile | Use individual account Configs for single-app (already RE-222's pattern), groups only with multi-app `AllAppList` |
+| Applying an **interactive Conditional Access policy** (MFA, TOU) to the kiosk account/group | Standard org security-baseline reflex — "every account needs MFA" | Hard sign-in failure, by design; verbatim Event ID 1098 / `AADSTS50076` or `AADSTS50158` | Exclude the kiosk account/group from any CA policy requiring interaction |
+| Applying an **EAS (Exchange ActiveSync) password policy** to an autologon kiosk device | Org mail-security baseline applied blanket-wide | Documented to break the autologon feature outright | Exclude autologon kiosk devices/accounts from EAS password-restriction scope |
+| **Nesting** the Config `UserGroup` (group-of-groups) | Natural org-chart modeling instinct | Explicitly unsupported — nested membership resolution does not occur; affected users silently get no kiosk experience | Flatten to a single, directly-membered group |
+| Assuming **Win32 app installs succeed normally** under a self-deploying + multi-app + autologon local account | The pattern looks identical to RE-222's single-app autologon branch | A local autologon account has no Intune user token; community reports indicate this can affect Win32 app deployment reliability in this specific combination | MEDIUM confidence, single community source (Microsoft Q&A) — flag as a plan-time/authoring-time verification item, not an asserted fact |
+| **Hardcoding** a specific Windows App/Store AUMID string | Looks stable, seen once and reused | Store package identifiers can shift across app updates/regions | `Get-StartApps` discovery — reuses RE-222's existing pattern verbatim |
 
 ---
 
-## Recipe 2 — Shared iPad (Full Provisioning)
+## Recipe 4 — Android Dedicated, MHS Multi-App (RE-225)
+
+**Scope lock (per PROJECT.md, not re-litigated here):** delta over `docs/admin-setup-android/05-dedicated-devices.md`, which has no `## Steps`, no Verification checklist, no Anti-Feature table — that gap is the recipe. Case-1 = Standard-vs-SDM token (irreversible); Entra SDM is a routing cross-link only, never a worked branch here. Second fork = the four-way provisioning method (already fully documented in `05-dedicated-devices.md` — cross-link, don't re-author).
 
 ### Table Stakes (Recipe Fails Without These)
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| **Supervised + ADE enrollment**, `User affinity = Enroll without user affinity`, `Shared iPad = Yes`, `Supervised = Yes` in the ADE enrollment profile | Shared iPad is only supported on supervised devices enrolled via Automated Device Enrollment; a device wipe is required if Shared iPad is enabled on an already-enrolled non-supervised device. | LOW | HIGH confidence, verbatim from Microsoft Learn (`intune/device-enrollment/apple/shared-ipad`). Corpus already has the base ADE enrollment profile doc (`admin-setup-ios/03-ade-enrollment-profile.md`) with supervised-only callouts — this recipe layers Shared iPad-specific toggles on top, doesn't duplicate ADE-profile mechanics. |
-| Minimum **32 GB storage**, **iPadOS 13.3+** (13.4+ needed for the tap-to-guest temporary-session flow) | Apple's hard device-eligibility floor. | N/A (prerequisite, not built) | HIGH confidence, Apple Support official. |
-| **Managed Apple Account via federated Entra sign-in** (auto-provisioned matching UPN at first sign-in) | This is what makes "sign in with your work identity" work on the lock screen without a separate manual account-creation step. | MEDIUM | HIGH confidence (MS Learn). Depends on Apple Business federation already being configured — the existing corpus's `docs/cross-platform/apple-business/08-managed-apple-account-provisioning.md` (OU-06) is the natural dependency/cross-link, not something to re-author. |
-| Apps assigned as **Required to device groups** (never "Available", never user-licensed VPP) | Shared iPad disables self-service App Store installs by design, and Company Portal / the Company Portal website are explicitly **not supported** on Shared iPad. | LOW | HIGH confidence, direct MS Learn quotes: "App Store installations disabled... recommended disabling the App Store", "Company Portal and available apps not supported", "You must assign apps as required to device groups. Available apps are not supported", and the app-type table showing user-licensed VPP = Not applicable. This corrects a default assumption inherited from the existing non-Shared-iPad app-deployment guide (`admin-setup-ios/05-app-deployment.md`) — the recipe must call out that Shared iPad narrows the model, not link that guide as-is. |
-| Correct **device-vs-user profile applicability** split | Wi-Fi/VPN/certificates/email settings are device-only; Home screen layout, notifications, and SSO extension are device-scoped on device-group assignment but user-scoped on user-group assignment; most device-restriction settings follow the same device/user duality. Getting this backwards produces a configuration that silently doesn't apply to the right sessions. | MEDIUM | HIGH confidence — this is the single most mechanically important table in MS Learn's Shared iPad doc and should be reproduced/summarized directly in the recipe rather than paraphrased loosely. |
-| **Compliance policies, Conditional Access (device- and app-based), and app protection policies are NOT supported** on Shared iPad | Admins commonly assume "compliance policy" is table stakes for any managed device — on Shared iPad it's actively unsupported. | N/A (must-document constraint) | HIGH confidence, explicit MS Learn "Known limitations" statement. This directly contradicts the milestone's existing-corpus assumption that "compliance policy guides" apply as-is (`admin-setup-ios/06-compliance-policy.md`) — the recipe must flag this divergence rather than link that guide as a normal dependency. |
+| **Standard token type**, `AllowedApps`... i.e. MHS Required-assigned to the device group | 05-dedicated-devices.md Delta 3: without a Required assignment, device boots to the standard Android launcher, no lockdown | LOW | Already fully documented in `05-dedicated-devices.md` (Delta 3 + What-breaks table) — cross-link, do NOT re-author. |
+| **Static Entra device group** for enrollment profile assignment | 05-dedicated-devices.md Delta 2: dynamic groups lag during burst provisioning, causing token-check failures | LOW | Cross-link, don't re-author. |
+| **Exit-kiosk PIN identical in both Device Restrictions and MHS app config** | Top repeated-escalation pattern per 05-dedicated-devices.md's own H2 | LOW | Cross-link, don't re-author the sync requirement itself — RE-225 only owns the *delta* detail below. |
+| **Apps allow-listed on the MHS grid must already be Required-assigned and installed on the device first** | MHS controls visibility/access, not installation — `Create Managed Folder for grouping apps` explicitly requires the grouped apps to already be Required-assigned | LOW | HIGH confidence, MS Learn `configure-managed-home-screen`, ms.date 2026-04-21, updated_at 2026-06-22. This delta is not stated in `05-dedicated-devices.md` and belongs in RE-225. |
+| **Overlay + exact-alarm permissions auto-granted to MHS via OEMConfig** (not manual Settings-app grant) | Screensaver, virtual home button, notification badges, auto-relaunch, and auto-sign-out all require these permissions; manual grant means routing the end user through the Settings app — itself a lockdown-escape vector | MEDIUM | HIGH confidence, MS Learn (multiple settings sections repeat this warning verbatim). |
+| **Device Restrictions "Notification windows" must NOT be set to Disable** if any Overlay-dependent MHS feature is used | Disabling notification windows silently breaks screensaver, virtual home button, and auto sign-out | LOW | HIGH confidence, MS Learn, explicitly repeated per-feature. |
+| **`Enable sign in` = FALSE is the structural default matching the Standard (no-identity) token** | With no per-user Entra identity at the enrollment layer, MHS's own sign-in gate defaults off — device presents one shared curated grid to anyone | LOW | HIGH confidence, MS Learn — default value table confirms `Enable sign in: FALSE` by default. Directly answers the research question "how do sessions/sign-in work when NOT in Entra SDM": the honest default answer is *there is no sign-in at all*. |
 
-### Differentiators (Optimal-Configuration Polish)
+### Differentiators (Hardening / UX Polish)
 
 | Feature | Value Proposition | Complexity | Notes |
-|---------|--------------------|------------|-------|
-| **Per-role layered configuration** — common apps/profiles on the device group, role-specific overlays (home screen layout, allow/block app lists) on user groups | Lets one physical iPad pool serve multiple job roles/classes with a differentiated experience per signed-in identity, without provisioning separate device pools per role. | MEDIUM | HIGH confidence — this is Microsoft's own documented "recommended policy and app assignment" pattern, including the explicit worked examples (Wi-Fi + VPP common to device group, home screen layout varies by user group). |
-| **Per-user storage quota** (`QuotaSize` key, iPadOS 17+) | Bounds how much of the shared device's storage a single signed-in session can consume, protecting session-eviction fairness on a heavily-shared device. | LOW | MEDIUM/HIGH confidence — confirmed via Apple Support; exact Intune Settings Catalog exposure path not yet verified against a live MS Learn page (flag for phase-time verification). |
-| **Home screen layout** profile scoped per role via user groups | Gives each role a curated, distraction-free app layout rather than the full device app list. | LOW | HIGH confidence, directly documented. |
-| Deliberate **temporary/guest session policy tuning** (leave enabled for walk-up/visitor use vs. block entirely) | Temporary sessions are enabled by default with Shared iPad — many orgs will want to explicitly decide rather than inherit the default. | LOW | HIGH confidence — MS Learn: "Temporary sessions are allowed by default with Shared iPad," configurable via the `Block Shared iPad temporary sessions` device restriction. This is Admin Decision Point #1 below. |
+|---------|-------------------|------------|-------|
+| **`Enable sign in = TRUE` + `Sign in type = Other`** (non-Entra) | Gives individual-session accountability (who used the device, session PIN, auto-sign-out) without requiring the Entra SDM token at all — a genuinely useful middle ground between "no identity" and "full SDM" | MEDIUM | HIGH confidence the setting exists and behaves this way; MEDIUM on which non-Entra identity providers are realistically wired to "Other" in a typical tenant — flag for phase-time verification if this branch is chosen. |
+| **Debug-menu lockout hardening**: `Enable easy access debug menu = FALSE` (keep the back-button-~15-times gesture as the only path to the exit-PIN prompt) + `Maximum number of attempts to exit lock task mode` + `Time before exit lock task mode password can be retried` | Brute-force mitigation on the exit-PIN itself — a genuine hardening layer `05-dedicated-devices.md`'s PIN-sync H2 does not cover | LOW-MEDIUM | HIGH confidence, MS Learn, full setting descriptions fetched. This is new content for RE-225, not a re-statement of the 05 doc's sync requirement. |
+| **Managed folders, grid size, app ordering, org branding (wallpaper + logo)** | Curated, organized multi-app presentation for larger app portfolios (the differentiator that makes "multi-app" worth choosing over single-app Lock Task Mode at all) | LOW-MEDIUM | HIGH confidence, MS Learn, full JSON examples fetched. |
+| **Offline app access + "app access without sign-in" allow-lists** (only meaningful if `Enable sign in = TRUE`) | Resilience for network-poor retail/warehouse sites — specific apps remain reachable during an outage or before the user authenticates | LOW-MEDIUM | HIGH confidence, MS Learn. |
+| **Auto-relaunch on inactivity** (`Enable MAX inactive time outside of MHS` / `Enable MAX time outside MHS`) | Self-healing session hygiene if a user wanders into an allowed non-MHS surface (e.g. a permitted system app) and leaves the device idle | LOW | HIGH confidence, MS Learn; requires `Exit lock task mode password` to be configured to be usable. |
 
 ### Anti-Features (Common Mistakes That Break This Scenario)
 
+Per the milestone's own framing, this set is intentionally large for Android Dedicated — enumerate exhaustively, each with its reason.
+
 | Feature/Mistake | Why Attempted | Why It Breaks | Alternative |
 |------------------|----------------|-----------------|-------------|
-| Assigning apps as **"Available"** instead of Required | Habit from standard iOS/iPadOS app deployment (Available = self-service via Company Portal) | Not supported on Shared iPad at all — Company Portal itself isn't supported on Shared iPad. | Required, device-group assignment only. |
-| Assigning **user-licensed VPP apps** | Looks equivalent to device-licensed VPP in the admin center | Explicitly "Not applicable" for Shared iPad per MS Learn's app-type applicability table — silently doesn't deploy. | Device-licensed VPP apps, device-group assigned. |
-| Assigning a **compliance policy / Conditional Access policy / app protection policy** to the Shared iPad device or app | Standard org security baseline reflex — "every managed device needs a compliance policy" | Not supported on Shared iPad; gives a false sense of enforced security posture. | Document this explicitly as a known gap/limitation in the recipe rather than silently omitting compliance coverage — the recipe should say *why* compliance isn't part of this configuration, not just leave it out. |
-| Assigning an **email profile** | Reasonable assumption that shared-use devices still need mail access | MS Learn: "Email profiles aren't supported with Shared iPad. An error occurs when you assign an email profile." | Direct users to a browser-based or app-based (e.g., Outlook app inside the user's own session) mail experience instead, if required. |
-| Trying to manage **passcode complexity** through the standard iOS device-restriction passcode policy | Standard hardening reflex | Shared iPad enforces a fixed 8-character alphanumeric passcode that ignores the standard passcode-complexity/length settings; only the sign-in **grace period** is admin-configurable. | Set the grace period only; don't author a passcode-complexity section for this recipe. |
-| Setting the **same setting to different values** across a device-group assignment and a user-group assignment | Admin wants slightly different behavior for different roles and layers profiles without checking for overlap | MS Learn explicitly warns the applied value "can't be pre-determined" when conflicting, and Intune's conflict resolution (apply first-assigned) may not match the admin's intent. | Configure each setting exactly once, in either the device-group baseline or a role-specific user-group overlay — never both. |
+| Setting **`Sign in type = Microsoft Entra ID`** without the Entra SDM enrollment token | Admin wants "real" Entra accountability and picks the option literally named Microsoft Entra ID | Users get a login prompt but **no** single sign-on to other apps — SSO propagation is explicitly gated to apps that participate in Entra shared device mode, which this Standard-token scenario is not enrolled under. Friction with zero payoff. | Use `Sign in type = Other` for lightweight non-SSO accountability, or route to the SDM cross-link if true per-worker SSO is actually needed (Case-1 re-decision — irreversible, see 05:129) |
+| Assuming **system navigation (Home/Overview buttons or status bar)** can be exposed for usability without weakening the sign-in gate | Admin wants a friendlier, less-locked-down feel | If Device Restrictions' "Enabled System Navigation Features" = Home and Overview buttons, or "System notifications and information" is shown, end users can **ignore and skip** the MHS sign-in screen *and* the Session PIN screen entirely | Keep system navigation fully restricted (default Dedicated posture) if `Enable sign in` or Session PIN protection is meant to be enforced |
+| Setting **Device Restrictions "Notification windows" = Disable** as a blanket hardening move | Looks like a reasonable additional lockdown | Silently breaks screensaver, virtual home button, and auto sign-out (all Overlay-permission dependent) with no error surfaced to the admin | Leave Notification windows enabled if any of these MHS features are configured; document the dependency explicitly |
+| Expecting **per-signed-in-identity personalization** (different app sets per user) on a Standard-token, sign-in-disabled device | Natural expectation carried over from the Shared iPad recipe's per-role layering pattern | Structurally impossible — there is no distinguishing identity at the device layer at all when `Enable sign in = FALSE`; every user of the device sees the identical shared configuration | If per-role differentiation is required, this is a routing signal toward Entra SDM (cross-link, not this recipe's worked path) |
+| Assuming end users can **toggle Wi-Fi on/off** from the MHS settings menu | Looks like a standard network-settings surface | Users can switch between already-visible networks but cannot enable/disable Wi-Fi itself | Manage Wi-Fi radio state via device policy, not end-user MHS interaction |
+| Assuming end users can **initiate a first-time connection to an Intune-preconfigured Enterprise Wi-Fi network** from inside MHS | The network appears to be "available" in the MHS network list | The device can use a preconfigured Enterprise network automatically, but end users cannot manually initiate that connection from within MHS itself | Preconfigure and let the device connect automatically — don't rely on end-user-initiated connection from MHS for Enterprise networks |
+| Expecting end users to be able to **reorder, rename, or move folders/apps** on the Managed Home Screen | Consumer Android launcher habit | `Lock Home Screen` defaults to TRUE; folders specifically can never be renamed/reordered/moved by end users regardless of this setting | If reordering is a real requirement, use `Application order enabled` + `Application order` at the admin/policy layer, not end-user drag-and-drop |
+| Configuring **Zero-Touch and Knox Mobile Enrollment simultaneously** on Samsung hardware | Admin tries to "cover both bases" for a mixed-OEM fleet | Already documented in `05-dedicated-devices.md` as a CRITICAL severity mutual exclusion | Cross-link, don't re-author — pick one per Samsung device |
+| Treating **digital signage or single-app kiosk** guidance as applicable to this recipe | Superficially similar Dedicated scenarios | Out of RE-225's scope by design (multi-app only, per PROJECT.md); digital signage and single-app kiosk have different locking mechanisms (screensaver mode; Lock Task Mode without MHS respectively) | `05-dedicated-devices.md` Scenarios table — cross-link, don't re-author |
 
 ---
 
 ## Admin Decision Points ("Ask the Admin" Moments)
 
-These are the concrete, org-specific choices each recipe's decision-point blocks should surface — verified as genuinely admin-choice-shaped (not resolvable by the recipe author) rather than settings with an obvious universal default.
+Ranked by **consequence-if-wrong severity**, categorized per STD-05: **branching** (two worked paths), **enumerable** (fixed set), **free-value** (admin-supplied name/number).
 
-### Recipe 1 — Shared Windows AVD-Client Device
+### Recipe 3 — Windows Multi-App Kiosk (RE-224)
 
-1. **Kiosk full lockdown vs. shared desktop.** Assigned Access (single-app or multi-app, shell restricted to Windows App only) vs. Shared PC mode (real Windows desktop, multiple named Entra users sign in, other apps available, `AccountModel`/`DeletionPolicy` govern account cleanup). This is the dominant fork — it determines which entire config path (kiosk CSPs vs. SharedPC CSP) the rest of the recipe follows. Cannot configure both simultaneously (confirmed conflict).
-2. **Permanent wired Ethernet vs. Wi-Fi after enrollment.** Determines whether the recipe needs to layer in an 802.1X Wi-Fi + certificate profile (dependency: existing `admin-setup-8021x` corpus) for ongoing operation, since wired Ethernet is mandatory only at OOBE.
-3. **Which AVD host pool(s)/workspace feed URL** the device should point to — inherently environment-specific, no universal default; also determines single-workspace vs. multi-workspace subscription.
-4. **Update ring / patch cadence and maintenance window** for an always-on shared kiosk — org patch-policy dependent, ties into `SharedPC` `MaintenanceStartTime` if Shared PC mode is chosen.
-5. **Session reset/auto-logoff behavior and idle timeout** (`ResetAppOnCloseOnly` / `ResetAppAfterConnection` / `ResetAppOnIdle`, and any Shared PC `InactiveThreshold`) — a session-hygiene policy call, not a technical constraint.
-6. **Account exemption from Shared PC cleanup** (if Shared PC mode is chosen) — whether any local/diagnostic account should be exempted from the automatic deletion policy via the `SharedPC\Exemptions` registry mechanism.
-7. **Guest/anonymous sign-in allowed?** (`AccountModel` Guest/Kiosk options, if Shared PC mode is chosen) — whether the device should permit fully anonymous local sign-in or require every session to be tied to an Entra account.
+| # | Severity | Type | Decision | Consequence if wrong |
+|---|----------|------|----------|----------------------|
+| 1 | **CRITICAL** | Branching | Multi-app config delivery mechanism: **Custom OMA-URI/`AssignedAccessConfiguration` XML** (Windows 11-capable) vs. the **Intune Templates > Kiosk GUI wizard** (Windows 10 only for multi-app) | Following the GUI path on Windows 11 silently targets an unsupported OS combination — device never enters multi-app kiosk mode; this is the Plan-1 hard-gate fact itself, not optional |
+| 2 | **CRITICAL** | Branching | Kiosk account model: **shared local account via `AutoLogonAccount`** (zero-touch, no per-user identity) vs. **named/grouped Entra account(s)** via `Configs`/`UserGroup` (accountability, no autologon) | Local-account choice loses any per-user audit trail and is vulnerable to the EAS-autologon breakage; Entra-account choice requires CA-policy exclusion or sign-in hard-fails (Event ID 1098) — this is PROJECT.md's "Windows enrollment-path fork" gray area |
+| 3 | **HIGH** | Enumerable | Config target type: **individual local account** / **individual Entra user** / **Entra AD group** / **local group** / **AD domain group** / **`GlobalProfile`** (all non-admin accounts) | Only `AllAppList` (multi-app) profiles support group Configs; attempting a group Config with a single-app profile fails outright |
+| 4 | **HIGH** | Branching | Layer **`SharedPC` (`EnableSharedPCMode`) underneath the multi-app kiosk** vs. multi-app kiosk alone | Without SharedPC layering, no automatic account cleanup/exemption policy exists — accumulating local accounts/cached data over time on a shared device; PROJECT.md's "multi-app+SharedPC layering" gray area |
+| 5 | **MEDIUM** | Enumerable | Breakout sequence: **default CTRL+ALT+DEL** vs. **custom `BreakoutSequence`** | Default sequence is publicly documented, weakening lockdown for a public-facing kiosk; custom sequence must be communicated to authorized maintenance staff |
+| 6 | **MEDIUM** | Free-value | Exact `AllowedApps` set (AUMID/DesktopAppPath list) + Start/taskbar pin layout | No universal default; a missing dependency app silently breaks the app that needs it (AppLocker rule generation) |
+| 7 | **LOW-MEDIUM** | Enumerable | `FileExplorerNamespaceRestrictions` level: block everything / Downloads only / Removable drives only / both / no restriction | Governs data-exfiltration vs. usability tradeoff for the kiosk session |
+| 8 | **LOW** | Free-value | Taskbar visibility (`ShowTaskbar`) and custom taskbar pin layout | Cosmetic/workflow choice, low blast radius if wrong |
 
-### Recipe 2 — Shared iPad
+### Recipe 4 — Android Dedicated, MHS Multi-App (RE-225)
 
-1. **Temporary/guest sessions on or off.** Enabled by default; the recipe must make the admin explicitly decide (walk-up/visitor access convenience vs. strict managed-account-only policy) rather than silently inherit the default.
-2. **Per-role layered configuration vs. one-size-fits-all.** Does every user of a given iPad pool get an identical experience (single device-group baseline, no user-group overlays), or do different roles get different home screen layouts / allow-lists via user-group overlays layered on the device-group baseline?
-3. **Per-user storage quota value** (`QuotaSize`, iPadOS 17+) — a sizing decision based on device storage, expected concurrent user count, and per-user app/data footprint; no universal default exists.
-4. **Session idle timeout** value (minimum 30 seconds; 0 = no timeout) and **offline re-authentication grace period** — org security-policy call.
-5. **App portfolio and licensing model** — which apps ship to the device group as Required device-licensed VPP apps (the only supported model) — a content/procurement decision, not a technical one.
-6. **Home screen layout** — single shared layout vs. per-role layout via user-group overlay.
-7. **Max resident/cached user sessions per device** — an implicit storage-vs-headcount sizing tradeoff Apple deliberately leaves uncapped by policy; the recipe should frame this as a planning decision (how many named users will realistically use one physical iPad) rather than a config field, since Apple does not publish a hard maximum and Intune does not expose a direct "max sessions" setting. **Flag for phase-time verification** — confirm whether the currently-exposed Settings Catalog surface has changed since the corpus's existing (2026-05-21, `[CITED: training; needs live verification]`) OU-07 lifecycle doc was authored.
+| # | Severity | Type | Decision | Consequence if wrong |
+|---|----------|------|----------|----------------------|
+| 1 | **CRITICAL** (already locked as Case-1 per PROJECT.md) | Branching | Token type: **Standard** (this recipe's worked path) vs. **Entra shared device mode** (routing cross-link only) | Irreversible within the enrollment profile — revoke token, recreate profile, redistribute QR/enrollment artifact to every field site (`05:129`) |
+| 2 | **HIGH** (Case-2 per PROJECT.md) | Enumerable | Provisioning method: QR / NFC / `afw#setup` / Zero-Touch, with Knox/ZT Samsung mutual exclusion | Fully documented in `05-dedicated-devices.md` — cross-link; wrong choice on Samsung hardware causes out-of-sync enrollment state (CRITICAL per that doc's own severity table) |
+| 3 | **HIGH** | Enumerable | MHS `Enable sign in`: **FALSE** (default, no identity, matches Standard token) / **TRUE + `Sign in type = Other`** (lightweight accountability, no SSO) / **TRUE + `Sign in type = Microsoft Entra ID`** (a trap without the SDM token — login prompt, zero SSO benefit) | Choosing Entra-ID sign-in type without the SDM token adds user friction with no payoff; this directly answers the research question on sign-in behavior outside Entra SDM |
+| 4 | **HIGH** | Enumerable | Debug-menu exposure: `Enable easy access debug menu` (True/False) + `Maximum number of attempts` + `Time before retry` | Leaving the debug menu easily accessible or attempts unlimited weakens the exit-PIN's brute-force resistance — a genuine delta over `05-dedicated-devices.md`'s base PIN-sync coverage |
+| 5 | **MEDIUM** | Branching | Offline/no-network app access + "app access without sign-in" allow-lists | Only meaningful if `Enable sign in = TRUE`; wrong scoping leaves the wrong apps reachable during outages or pre-authentication |
+| 6 | **MEDIUM** | Free-value | Grid size (`columns;rows`), managed-folder grouping/icon style, wallpaper URL, screensaver timing | Content/branding decision, no universal default |
+| 7 | **MEDIUM** | Enumerable | Virtual home button: disabled / `swipe_up` / `float` | Governs whether users have any way back to the MHS root without the exit-PIN flow; interacts with the system-navigation anti-feature above |
+| 8 | **LOW** | Enumerable | Session PIN complexity: simple / complex / complex numeric only / alphanumeric complex | Only relevant if `Enable sign in = TRUE`; low blast radius, easily changed later |
+
+---
+
+## Already Covered — Do NOT Re-Document
+
+### RE-224 (Windows Multi-App Kiosk) — already shipped in RE-222, cross-link only
+
+- Single-app kiosk configuration in full (RE-222 Step 5a) — **one-line cross-link**, zero edits to RE-222 per `check-phase-130.mjs:64/67` literal-string assertion.
+- AUMID discovery via `Get-StartApps` — identical pattern, reuse verbatim.
+- Self-deploying prerequisites (TPM 2.0, wired Ethernet at OOBE, device-phase-only ESP) — cross-link to `admin-setup-apv1/08-self-deploying.md` and `admin-setup-apv1/03-esp-policy.md`.
+- Dynamic device group creation — cross-link to `admin-setup-apv1/04-dynamic-groups.md`.
+- Windows App / AVD feed-subscription mechanics — RE-224 is **not** AVD-scoped; do not assume Windows App is one of the allow-listed apps unless the org's specific deployment calls for it.
+- 802.1X post-enrollment Wi-Fi — cross-link to `admin-setup-8021x/*` if relevant.
+- The general `KioskModeApp`/`ShellLauncher` mutual-exclusion statement (already in RE-222) — but the `Configuration`-node-supersedes-`KioskModeApp` No-Op nuance is **new** and belongs in RE-224.
+
+### RE-225 (Android Dedicated MHS Multi-App) — already shipped in `05-dedicated-devices.md`, cross-link only
+
+- Persona/scenario overview (Intune Admin + LOB Operations Owner split, 4-scenario table).
+- Enrollment profile Deltas 1-4 (token type choice mechanics, static device group requirement, MHS Required-assignment requirement, token expiry/QR rotation discipline).
+- All four provisioning methods (QR, NFC, `afw#setup`, Zero-Touch) and the Knox/ZT Samsung mutual exclusion.
+- The exit-kiosk PIN **dual-location synchronization requirement itself** (device restrictions + MHS app config must match) — RE-225 only *adds* the debug-menu-gesture and max-attempts/retry-delay lockout delta, never re-explains the base sync requirement.
+- Android 15 FRP re-provisioning 3-pathway table — a lifecycle/re-provisioning concern, out of RE-225's "reach a working configuration" scope.
+- MGP (Managed Google Play) binding prerequisite — cross-link to `01-managed-google-play.md`.
+- Glossary terms (Dedicated, MHS, Entra SDM, Play Integrity, DPC, `afw#setup`) — cross-link only; **never redefine inline** (glossary coordinate-freeze guardrail, CARVE-1 contingency in PROJECT.md).
+
+---
+
+## Verification — What an Admin Can Actually Observe
+
+### RE-224 Windows Multi-App Kiosk
+
+- [ ] Device signs in (autologon, no prompt — or named Entra user/group, prompted) and lands directly in the restricted Start menu showing **only** the allow-listed apps/tiles.
+- [ ] Taskbar matches configuration: hidden if `ShowTaskbar=false`, or showing only the configured pinned apps if a custom `TaskbarLayout` is set.
+- [ ] File Explorer access (if reachable) matches the configured `FileExplorerNamespaceRestrictions` — Downloads and/or Removable drives browsable only if explicitly allowed.
+- [ ] Attempting to launch any app **not** in `AllowedApps` fails or is unreachable — confirms the generated AppLocker rules are active.
+- [ ] `./Device/Vendor/MSFT/AssignedAccess/Status` (queried via MDM diagnostics, with `StatusConfiguration` set to On/OnWithAlerts) reports status code `1` (Running) — not `2` (AppNotFound) or `3` (ActivationFailed).
+- [ ] The configured breakout sequence (default CTRL+ALT+DEL, or custom) successfully exits Assigned Access for authorized maintenance staff.
+- [ ] Signing in with the kiosk Entra account/group produces **no** `interaction_required` entry in `Microsoft-Windows-AAD/Operational` (Event ID 1098) — confirms the CA exclusion is correctly scoped.
+
+### RE-225 Android Dedicated MHS Multi-App
+
+- [ ] Device boots directly into the MHS grid showing exactly the allow-listed apps — either with no sign-in prompt (`Enable sign in=FALSE`, the Standard-token default) or the configured sign-in screen if `TRUE` was chosen.
+- [ ] Pressing Home/Overview/back-navigation does **not** surface the standard Android launcher or any app outside the allow-list — confirms Lock Task Mode is actually engaged, not just MHS installed.
+- [ ] Entering the exit-kiosk PIN via the back-button-~15-times debug-menu gesture, with the **same** PIN configured on both the Device Restrictions and MHS app config policies, successfully exits lock-task mode.
+- [ ] Entering a **mismatched** PIN reproduces the documented error string ("A PIN to exit kiosk mode has not been set by your IT admin") — a genuine negative-case check confirming the sync requirement.
+- [ ] If a max-attempts/retry-delay lockout is configured, deliberately failing the PIN the configured number of times triggers the retry-delay window.
+- [ ] Folder/app icons cannot be dragged, renamed, or reordered by a test user (`Lock Home Screen=TRUE` default).
+- [ ] End users can switch between already-visible Wi-Fi networks from the MHS settings menu but cannot toggle the Wi-Fi radio itself, and cannot manually initiate a connection to an Intune-preconfigured Enterprise network (device connects to it automatically instead).
+- [ ] Intune admin center confirms the device enrolled under the **Standard** Dedicated token type, not Entra shared device mode — confirms Case-1 was applied correctly.
 
 ---
 
 ## Feature Dependencies
 
 ```
-[Recipe 1: Shared Windows AVD device]
-    └──requires──> [Existing: Autopilot APv1 self-deploying profile doc (RE-084)]
-    └──requires──> [Existing: ESP device-phase policy doc]
+[Recipe 3: Windows Multi-App Kiosk (RE-224)]
+    └──cross-links, never re-authors──> [RE-222 Step 5a: single-app kiosk configuration]
+    └──requires──> [Existing: Autopilot self-deploying profile doc (RE-084) — IF autologon/local-account branch chosen]
     └──requires──> [Existing: Dynamic device groups doc]
-    └──requires──> [Existing: apv1-vs-apv2.md decision reference (RE-177) — rules out APv2]
-    └──conditionally requires──> [Existing v1.14: 802.1X Wi-Fi/cert admin-setup docs]
-                                      (only if Decision Point #2 = "move to Wi-Fi post-enrollment")
-    └──conflicts with──> [Legacy Remote Desktop client / MSRDC guidance] (retired 2026-03-27)
+    └──requires──> [Existing: apv1-vs-apv2.md — self-deploying is APv1-only, same as RE-222]
+    └──shares mechanism with, does NOT duplicate──> [RE-222 Step 5b: SharedPC configuration]
+                        (IF the SharedPC-layering differentiator is chosen)
+    └──new, RE-224-owned──> [Custom OMA-URI / AssignedAccessConfiguration XML mechanism —
+                        genuinely new content, no existing corpus doc covers this]
+    └──conflicts with──> [Intune Templates > Kiosk > Multi app kiosk GUI on Windows 11]
+                        (Windows-10-only per first-party doc — anti-feature, not a valid alternate path)
 
-[Recipe 2: Shared iPad]
-    └──requires──> [Existing: iOS/iPadOS ADE enrollment profile doc, supervised-only callout]
-    └──requires──> [Existing: Apple Business federated Managed Apple Account provisioning (OU-06)]
-    └──narrows/overrides──> [Existing: iOS app-deployment doc's VPP device/user-licensing model]
-                                 (user-licensed VPP + "Available" assignment do NOT apply to Shared iPad)
-    └──excludes──> [Existing: iOS compliance-policy guide]
-                       (compliance policies, CA, app protection are unsupported on Shared iPad —
-                        recipe must explain the gap, not link the guide as applicable)
-    └──cross-references, does not duplicate──> [Existing: docs/cross-platform/apple-business/
-                       09-shared-ipad-lifecycle.md (OU-07 sub-org-admin operational lifecycle)]
-                       (different audience/scope: ongoing OU-scoped operations vs. this recipe's
-                        one-time full-provisioning walkthrough with embedded decision points)
+[Recipe 4: Android Dedicated MHS Multi-App (RE-225)]
+    └──requires, cross-links, never re-authors──> [05-dedicated-devices.md: scenarios, enrollment-profile
+                        deltas, provisioning methods, exit-PIN sync base requirement, FRP re-provisioning]
+    └──requires──> [Existing: 01-managed-google-play.md MGP binding]
+    └──routes to but does NOT worked-branch──> [Entra shared device mode — Case-1 alternate, out of scope]
+    └──new, RE-225-owned──> [## Steps + ## Verification + Anti-Feature table structure —
+                        the exact structural gap 05-dedicated-devices.md has today]
+    └──new, RE-225-owned──> [MHS app-config-level detail: Enable sign in / Sign in type / debug-menu
+                        lockout hardening / grid & folder curation — none of this lives in 05-dedicated-devices.md,
+                        which stops at the enrollment-profile and exit-PIN-sync layer]
 
 [Both recipes]
-    └──share doc-class dependency on──> [v1.18 Device Recipe doc-class + template
-                       (RE-NNN registry, decision-point block format — resolved at discuss-phase,
-                        not by this research)]
+    └──share doc-class dependency on──> [v1.18 Device Recipe doc-class + template (STD-05 decision-point
+                        block format) — already resolved, not re-litigated by this research]
 ```
 
 ### Dependency Notes
 
-- **Recipe 1 requires the APv1 vs. APv2 reference doc as a decided-not-a-choice input**: self-deploying is APv1-only. The recipe should state this as a fact up front (not re-litigate it as a decision point), citing RE-177.
-- **Recipe 1 conditionally requires the 802.1X corpus**: only pulled in if the admin's answer to "wired or Wi-Fi post-enrollment" is Wi-Fi. Keep this as an *if-then* cross-link in the recipe rather than always inlining 802.1X content.
-- **Recipe 2 narrows the existing app-deployment and compliance-policy guides**: this is the most important "watch out" for planning — the recipe cannot simply link those guides as generic dependencies the way Recipe 1 links ESP/dynamic-groups. It must actively call out where Shared iPad diverges from the general iOS guidance those docs describe.
-- **Recipe 2 cross-references but does not duplicate the existing OU-07 Shared iPad lifecycle doc**: that doc is Apple Business Manager sub-org-admin governance (OU-scoped enrollment/session/sign-in/wipe operations); the new recipe is an Intune-admin-facing, one-time "get to a working configuration" walkthrough with embedded decision points. Overlapping content (e.g., Managed Apple Account provisioning, Find My pre-deployment disable) should link outward, not be re-authored.
-- **Both recipes depend on the not-yet-resolved Device Recipe doc-class/template** (decision-point block format) — a discuss-phase gray area per PROJECT.md, out of scope for this research file.
+- **RE-224's central new fact is the delivery mechanism, not a new Windows feature.** Assigned Access itself, the multi-app AllAppList profile type, and the CA/EAS anti-features are all first-party, well-established Windows capabilities — what's genuinely load-bearing and previously unverified in this corpus is *which Intune surface reaches Windows 11*.
+- **RE-224 must resolve two PROJECT.md-flagged gray areas as worked decision blocks, not silent defaults:** the enrollment-path/account-model fork (Decision 2) and the multi-app+SharedPC layering choice (Decision 4). Both have genuine, MS-documented alternate paths — neither should be collapsed to a single "obvious" answer.
+- **RE-225's job is almost entirely structural, not factual.** `05-dedicated-devices.md` already contains nearly all the mechanical facts (enrollment, provisioning, exit-PIN sync); RE-225's real content contribution is (a) the missing Steps/Verification/Anti-Feature structure the parent doc lacks, and (b) the MHS-*app-config*-level detail (sign-in behavior, debug-menu hardening, curation settings) that sits one layer below what the parent doc covers.
+- **Both recipes must state their anti-features with the reason, not omit unsupported behavior silently** — this is the explicit quality bar from the milestone's downstream consumer, and is especially large for RE-225 per the milestone's own framing.
 
 ## MVP Definition
 
 ### Launch With (v1 — both recipes)
 
-- [ ] Recipe 1: linear happy-path steps (APv1 self-deploying profile → ESP device phase → Entra join → Windows App device-context install → feed URL configuration → verification) — table-stakes only
-- [ ] Recipe 1: Decision Point #1 (kiosk lockdown vs. shared desktop) as an embedded "Ask the admin" block, since it forks the entire remaining config path
-- [ ] Recipe 1: explicit anti-feature callouts for hybrid join, APv2, Wi-Fi-at-OOBE, and legacy MSRDC — these are the highest-cost mistakes and are cheap to document
-- [ ] Recipe 2: linear happy-path steps (ADE profile Shared iPad toggle → Managed Apple Account federation → device-group Required VPP apps → device/user profile split → home screen layout → verification) — table-stakes only
-- [ ] Recipe 2: Decision Point #1 (temporary sessions on/off) and the compliance-policy/Company-Portal/email anti-feature callouts — these are the mistakes MS Learn explicitly flags as silent failures
+- [ ] RE-224: linear happy-path steps (self-deploying or user-driven enrollment → Custom OMA-URI Assigned Access XML deployment → app pre-provisioning → verification) — table-stakes only
+- [ ] RE-224: Decision 1 (delivery mechanism) stated as fact/prerequisite, not a genuine choice — the GUI path is simply wrong for Windows 11, this is the Plan-1 gate finding
+- [ ] RE-224: Decision 2 (account model) and Decision 4 (SharedPC layering) as embedded STD-05 decision blocks — these are the genuine forks
+- [ ] RE-224: anti-feature callouts for CA/MFA exclusion, EAS-autologon interaction, GUI-on-Windows-11, group+single-app mismatch — cheap to document, high consequence if missed
+- [ ] RE-225: `## Steps` + `## Verification` + Anti-Feature table sections — the structural gap that IS the recipe
+- [ ] RE-225: Decision 3 (`Enable sign in` mode) as the dominant embedded decision block — this is the direct answer to "how does sign-in work outside Entra SDM"
+- [ ] RE-225: anti-feature callouts for Entra-ID-sign-in-without-SDM trap, system-navigation sign-in bypass, Notification-windows/Overlay-permission interaction, Wi-Fi toggle/connect limitations, folder-reorder limitation
 
 ### Add After Validation (v1.x)
 
-- [ ] Recipe 1: kiosk-lockdown implementation depth (Assigned Access packaging specifics, auto-logoff behaviors) — currently only MEDIUM-confidence, GitHub-reference-sourced; worth a dedicated phase-time verification pass before treating as authoritative
-- [ ] Recipe 1: Shared PC mode as the fully-worked alternative path (if the org's decision leans shared-desktop over kiosk)
-- [ ] Recipe 2: per-role layered configuration worked example (device-group baseline + user-group overlays)
-- [ ] Recipe 2: storage quota (`QuotaSize`) sizing guidance
+- [ ] RE-224: SharedPC+multi-app-kiosk combined field-level configuration steps, once phase-time-verified against a live tenant
+- [ ] RE-224: full `Status`/`StatusConfiguration` runtime-monitoring worked example
+- [ ] RE-225: debug-menu max-attempts/retry-delay hardening as a fully worked example, not just a decision block
+- [ ] RE-225: offline/no-sign-in app-access allow-list worked example (only relevant if `Enable sign in=TRUE` is chosen)
 
 ### Future Consideration (v2+)
 
-- [ ] Recipe 1: Windows 365 Boot as a distinct sibling recipe (Cloud PC-specific boot-to-sign-in experience) — explicitly out of scope for this milestone, which targets AVD host pools, not Windows 365 Cloud PCs; do not conflate the two in this recipe
-- [ ] Recipe 1: multi-host-pool / multi-workspace subscription scenarios
-- [ ] Recipe 2: SCIM/OIDC+JIT automated Managed Apple Account provisioning depth (tenant-level, largely out of an Intune-admin-scoped recipe's hands — already covered at OU-06)
-- [ ] Both: automation/scripting layer (e.g., bulk `QuotaSize` or Shared PC CSP configuration via Graph/PowerShell) beyond the manual admin-center walkthrough
+- [ ] RE-224: digital-signage-style Windows kiosk variant (out of this milestone's scope)
+- [ ] RE-225: Entra shared device mode as a fully-worked sibling recipe (explicitly deferred, cross-link only in this milestone)
+- [ ] Both: automation/scripting layer (Graph/PowerShell bulk deployment of the OMA-URI XML or MHS app-config JSON) beyond the manual admin-center walkthrough
 
 ## Feature Prioritization Matrix
 
 | Feature | User Value | Implementation Cost | Priority |
 |---------|------------|---------------------|----------|
-| Recipe 1 happy-path (self-deploying → Windows App → feed URL) | HIGH | MEDIUM | P1 |
-| Recipe 1 kiosk-vs-shared-desktop decision block | HIGH | LOW | P1 |
-| Recipe 1 anti-feature callouts (hybrid/APv2/Wi-Fi/MSRDC) | HIGH | LOW | P1 |
-| Recipe 1 kiosk lockdown implementation depth | MEDIUM | HIGH | P2 |
-| Recipe 1 Shared PC mode worked example | MEDIUM | MEDIUM | P2 |
-| Recipe 2 happy-path (ADE toggle → Managed Apple Account → apps → profiles) | HIGH | MEDIUM | P1 |
-| Recipe 2 unsupported-feature callouts (compliance/CA/email/Available apps) | HIGH | LOW | P1 |
-| Recipe 2 temporary-session decision block | HIGH | LOW | P1 |
-| Recipe 2 per-role layered configuration example | MEDIUM | MEDIUM | P2 |
-| Recipe 2 storage quota guidance | LOW-MEDIUM | LOW | P3 |
-| Windows 365 Boot sibling recipe | LOW (out of stated scope) | HIGH | P3 (defer) |
+| RE-224 Plan-1 gate fact (OMA-URI mechanism, stated as prerequisite) | HIGH | LOW (already verified) | P1 |
+| RE-224 Decision 2 (account model) + Decision 4 (SharedPC layering) blocks | HIGH | MEDIUM | P1 |
+| RE-224 anti-feature callouts (CA/EAS/GUI-trap/group-mismatch) | HIGH | LOW | P1 |
+| RE-224 happy-path steps | HIGH | MEDIUM | P1 |
+| RE-224 Status/StatusConfiguration monitoring worked example | MEDIUM | MEDIUM | P2 |
+| RE-224 SharedPC+kiosk combined field-level steps | MEDIUM | HIGH | P2 |
+| RE-225 Steps + Verification + Anti-Feature structural sections | HIGH | MEDIUM | P1 |
+| RE-225 Decision 3 (`Enable sign in` mode) block | HIGH | LOW | P1 |
+| RE-225 anti-feature callouts (large set) | HIGH | LOW-MEDIUM | P1 |
+| RE-225 debug-menu hardening worked example | MEDIUM | LOW | P2 |
+| RE-225 offline/no-sign-in allow-list worked example | LOW-MEDIUM | LOW | P3 |
+| Entra SDM as a full sibling recipe | LOW (out of stated scope) | HIGH | P3 (defer) |
 
 **Priority key:**
-- P1: Must have for a working recipe (both recipes ship broken without these)
-- P2: Should have — meaningfully improves the recipe but the device still works without it
+- P1: Must have — both recipes ship broken/incomplete without these
+- P2: Should have — meaningfully improves the recipe but the core device still works without it
 - P3: Nice to have / explicitly out of this milestone's stated scope
 
 ## Precedent / Reference Implementations Reviewed
 
-Not a commercial-competitor landscape (this is internal Intune documentation), but the following precedents informed table-stakes vs. differentiator framing:
-
 | Source | What it covers | How it informed this research |
 |--------|-----------------|-------------------------------|
-| Microsoft Learn — Windows Autopilot self-deploying, SharedPC CSP, Windows App/W365 Intune install, Shared iPad devices | First-party authoritative baseline for both recipes | Primary source for all HIGH-confidence table-stakes rows |
-| `Azure/WindowsAppKiosk` (Microsoft-org GitHub reference solution) | Reference scripts for locking a Windows thin client to Windows App via Assigned Access/Shell Launcher | Only found source for kiosk-specific Windows App packaging detail — marked MEDIUM confidence, flagged for phase-time deep verification |
-| Ivanti / IBM MaaS360 / Cortado / Meraki third-party Shared iPad admin guides | Third-party MDM vendor documentation of the same Apple Shared iPad feature | Cross-checked (not primary-sourced) against Apple/MS first-party docs; used only to confirm no first-party detail was missed, not cited as authoritative |
+| Microsoft Learn — Kiosk template, AssignedAccess CSP, Assigned Access configuration-file guide, multi-app-kiosk troubleshooting article, frontline-worker Windows guide, Managed Home Screen app-config reference | First-party authoritative baseline for both recipes | Primary source for essentially all HIGH-confidence table-stakes, decision-point, and anti-feature rows |
+| Community walkthroughs (petervanderwoude.nl, hiraniconfigmgr.com, cloudinfra.net, and others) for Windows 11 multi-app kiosk OMA-URI deployment | Practical step-by-step confirmation of the exact OMA-URI/Custom-profile deployment workflow | Corroborates the deployment mechanism at MEDIUM confidence; the CSP node itself is confirmed HIGH via MS Learn directly |
+| Corpus (verified directly, not web research): `docs/recipes/01-shared-windows-avd-client.md`, `docs/admin-setup-android/05-dedicated-devices.md`, `docs/_templates/recipe-template.md`, `.planning/milestones/v1.18-phases/130-recipe-1-shared-windows-avd-client-device/130-RESEARCH.md`, `.planning/milestones/v1.4-phases/38-dedicated-devices-admin/38-RESEARCH.md` | Existing corpus shape, prior research assumptions log, and the specific unverified claim this session resolves | Established the exact delta-scope boundary and confirmed which facts are already covered vs. genuinely new |
 
 ## Sources
 
-- [Windows Autopilot self-deploying mode | Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/self-deploying) — HIGH
-- [Windows Autopilot scenarios and capabilities | Microsoft Learn](https://learn.microsoft.com/en-us/autopilot/windows-autopilot-scenarios) — HIGH
-- [Configure a shared or guest Windows device | Microsoft Learn](https://learn.microsoft.com/en-us/windows/configuration/shared-pc/set-up-shared-or-guest-pc) — HIGH (fetched in full; SharedPC CSP settings, PowerShell sample, exemption mechanism)
-- [SharedPC CSP | Microsoft Learn](https://learn.microsoft.com/en-us/windows/client-management/mdm/sharedpc-csp) — HIGH
-- [Using Intune, install the Windows app on devices | Microsoft Learn](https://learn.microsoft.com/en-us/windows-365/enterprise/install-windows-365-app-intune) — HIGH (fetched in full)
-- [RemoteDesktop Policy CSP | Microsoft Learn](https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-remotedesktop) — MEDIUM (device-vs-user AutoSubscription scope not fully confirmed)
-- [Windows Single-App and Multi-App Kiosk Configuration Options Overview | Microsoft Learn](https://learn.microsoft.com/en-us/windows/configuration/kiosk/) — HIGH (Shell Launcher vs. Assigned Access mutual exclusivity)
-- [Azure/WindowsAppKiosk (GitHub, Microsoft org)](https://github.com/Azure/WindowsAppKiosk) — MEDIUM (fetched in full; kiosk packaging, autologon, session-reset behaviors)
-- [Shared iPad devices - Microsoft Intune | Microsoft Learn](https://learn.microsoft.com/en-us/intune/intune-service/enrollment/device-enrollment-shared-ipad) — HIGH (fetched in full; this is the primary source for essentially all of Recipe 2's table stakes/anti-features)
-- [Shared iPad overview - Apple Support](https://support.apple.com/guide/deployment/shared-ipad-overview-dep9a34c2ba2/web) — HIGH (fetched in full; device eligibility, storage floor, QuotaSize)
-- Remote Desktop client (MSRDC) retirement (March 27, 2026) — MEDIUM, corroborated across multiple independent secondary sources (Zoho, Starwind, 4sysops, Fabs Solutions, 9to5azure) but not directly re-confirmed against a single first-party MS Learn retirement-notice page in this research pass; recommend a phase-time direct citation of the official Microsoft retirement announcement before publishing.
-- Existing corpus (verified directly, not web research): `docs/admin-setup-apv1/08-self-deploying.md` (RE-084), `docs/apv1-vs-apv2.md` (RE-177), `docs/cross-platform/apple-business/09-shared-ipad-lifecycle.md`, `docs/admin-setup-ios/03-ade-enrollment-profile.md`, `docs/admin-setup-ios/05-app-deployment.md`, `docs/admin-setup-ios/06-compliance-policy.md`, `docs/admin-setup-apv1/03-esp-policy.md`, `docs/admin-setup-apv1/04-dynamic-groups.md`, `docs/admin-setup-8021x/*`
+- [Kiosk settings for Windows and Holographic devices in Microsoft Intune | Microsoft Learn](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-kiosk) — HIGH (fetched in full; ms.date 2026-02-10, updated_at 2026-07-01; the Plan-1 gate's primary source)
+- [AssignedAccess CSP | Microsoft Learn](https://learn.microsoft.com/en-us/windows/client-management/mdm/assignedaccess-csp) — HIGH (fetched in full; ms.date 2025-03-12; OMA-URI node, Status/StatusConfiguration, KioskModeApp No-Op behavior)
+- [Create an Assigned Access configuration file | Microsoft Learn](https://learn.microsoft.com/en-us/windows/configuration/assigned-access/configuration-file) — HIGH (fetched in full; ms.date 2025-03-07, updated_at 2025-09-26; Profiles/Configs, AutoLogonAccount, group/nested-group limitations, EAS-autologon interaction)
+- [Users can't log on to Windows 10 or Windows 11 computers with multi-app kiosk profile assigned | Microsoft Learn](https://learn.microsoft.com/en-us/troubleshoot/mem/intune/device-configuration/users-cannot-logon-windows-multi-app-kiosk) — HIGH (fetched in full; ms.date 2026-03-30, updated_at 2026-04-17; CA/MFA anti-feature, verbatim Event Viewer signatures)
+- [Get started with Windows frontline worker devices - Microsoft Intune | Microsoft Learn](https://learn.microsoft.com/en-us/intune/solutions/frontline-worker/windows) — HIGH (fetched in full; ms.date 2025-05-29, updated_at 2026-07-01; self-deploying-as-recommended-enrollment, SharedPC+kiosk layering pattern)
+- [Configure the Microsoft Managed Home Screen App - Microsoft Intune | Microsoft Learn](https://learn.microsoft.com/en-us/intune/app-management/configuration/configure-managed-home-screen) — HIGH (fetched in full; ms.date 2026-04-21, updated_at 2026-06-22; every MHS setting, sign-in/SDM interaction, debug-menu/exit-PIN detail, Wi-Fi/system-navigation anti-features)
+- Windows 11 multi-app kiosk OMA-URI deployment workflow (community corroboration: petervanderwoude.nl, hiraniconfigmgr.com, cloudinfra.net, quantem.io, cloudwisdom.co.uk) — MEDIUM (deployment-workflow specifics; CSP node itself independently HIGH via MS Learn)
+- Existing corpus (verified directly): `docs/recipes/01-shared-windows-avd-client.md` (RE-222), `docs/recipes/02-shared-ipad-full-provisioning.md` (RE-223), `docs/admin-setup-android/05-dedicated-devices.md` (RE-097), `docs/_templates/recipe-template.md`, `.planning/milestones/v1.18-phases/130-recipe-1-shared-windows-avd-client-device/130-RESEARCH.md`, `.planning/milestones/v1.4-phases/38-dedicated-devices-admin/38-RESEARCH.md`, `.planning/PROJECT.md`
 
 ---
-*Feature research for: Device Configuration Recipes (Shared Windows AVD-client device + Shared iPad) — v1.18*
-*Researched: 2026-07-16*
+*Feature research for: Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated MMHS Multi-App) — v1.19*
+*Researched: 2026-07-25*
