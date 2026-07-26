@@ -1,33 +1,35 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.18
-milestone_name: Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
-status: shipped
-last_updated: "2026-07-20T06:00:00.000Z"
-last_activity: 2026-07-20
+milestone: v1.19
+milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
+status: planning
+last_updated: "2026-07-26T03:00:44.185Z"
+last_activity: 2026-07-26
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 17
-  completed_plans: 17
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-16 — v1.18 milestone scoped)
+See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.18 adds reproducible device-configuration *recipes* (step-by-step provisioning with embedded admin decision points), starting with a self-deploying shared Windows AVD-client device and a fully-provisioned Shared iPad, and closes the accumulated chain-validator tooling debt.
-**Current focus:** v1.18 SHIPPED, ARCHIVED & TAGGED 2026-07-20 (close-gate + `v1.18` tag local/unpushed pending owner PIPE-02 push, which fires the deferred Axis-2 GHA) — no active milestone; run `/gsd-new-milestone` to scope v1.19.
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MMHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
+**Current focus:** v1.19 STARTED 2026-07-25 — defining requirements. Content-only milestone (4 phases, 135-138). Scope resolved via `/adversarial-review` (104 findings, 84 confirmed), which overruled both initial "both branches" picks in favour of delta-scoped single-path recipes.
+
+> **BLOCKING PRECONDITION — owner action required before Phase 138.** The v1.18 close-gate SHA `7af8a147` is on **no remote** and 198 commits are unpushed, so the mandatory V118 back-anchor pin has no valid target. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been repointed to `origin/master` (2026-07-25). The owner's PIPE-02 push must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has zero call sites; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false`, a FAIL not a skip. The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `.planning/milestones/v1.18-MILESTONE-AUDIT.md`.
 
 ## Current Position
 
-Phase: 134 (v117-pin-16th-path-a-lineage-bump-terminal-close) — COMPLETE
-Plan: 5 of 5
-Status: Milestone shipped, ARCHIVED & TAGGED 2026-07-20 (close-gate + tag local/unpushed; Axis-2 GHA fires on owner PIPE-02 push)
-Last activity: 2026-07-20
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-26 — Milestone v1.19 started
 
 ## v1.18 Phase Dependency Summary
 
