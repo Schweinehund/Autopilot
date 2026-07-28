@@ -34,7 +34,7 @@ This document supersedes `v1.18`'s `PITFALLS.md` in place. Pitfalls #17 (frozen-
 
 **How to avoid:** Treat the one-line cross-link as a literal deliverable shape: a single sentence + markdown link, no restated mechanism, no restated table. If RE-224 needs a comparison point (e.g., "unlike single-app, multi-app does not require a dedicated autologon account"), phrase the delta only — never restate the base fact recipe 01 already owns.
 
-**Warning signs:** RE-224 draft containing the strings "Shell Launcher," "AUMID," "autologon," or "Get-StartApps" anywhere outside the one link sentence.
+**Warning signs:** RE-224 draft containing the strings "Shell Launcher," "AUMID," "autologon," or "Get-StartApps" anywhere outside the one link sentence. **Note (added 2026-07-25, adversarial review):** this is a **human-review warning sign, not an automated gate**, and the AssignedAccess XML payload uses the attribute spelling `AppUserModelId=` — not the token "AUMID" — so a bounded worked XML does not trip it. Do not read this as a constraint on the payload, and do not carry an "AUMID carve-out" into the discuss-phase must-land list.
 
 **Phase to address:** 135.
 
@@ -189,6 +189,8 @@ This document supersedes `v1.18`'s `PITFALLS.md` in place. Pitfalls #17 (frozen-
 **Phase to address:** 136.
 
 **Confidence:** MEDIUM (the individual setting's existence and behavior is corroborated across the MHS app-configuration documentation surface reviewed for this research; the specific "strands a userless device" consequence is this research's own inference from combining that setting with the existing corpus's Standard-token no-identity fact, not an explicit first-party statement of the combined failure).
+
+**STATUS: CLOSED 2026-07-25 (adversarial review) — do NOT carry this pitfall into Phase 136.** The first-party row settles it verbatim: *"Require PIN code after returning from screensaver | bool | FALSE | … **This setting can only be used if Enable sign in is set to True.**"* RE-225 ships `enable_mhs_signin = FALSE` (the documented default, matching `05:72`'s "No user identity" on a Standard token), so the setting is **inert** and the stranding scenario is **structurally unreachable** on this recipe's path. Close it with the citation rather than inheriting a MEDIUM self-labelled inference. (E7 screensaver is also OUT of RE-225 independently — see the E7 verdict — which removes the precondition a second way.)
 
 ---
 

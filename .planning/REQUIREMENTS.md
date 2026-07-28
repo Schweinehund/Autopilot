@@ -1,67 +1,71 @@
-# Requirements: v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure
+# Requirements: v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)
 
-**Defined:** 2026-07-16
-**Core Value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — v1.18 adds reproducible device-configuration *recipes* (step-by-step provisioning with embedded admin decision points) and clears the chain-validator tooling debt.
+**Defined:** 2026-07-25
+**Core Value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Intune without escalating to engineering — v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes (a Windows 11 multi-app kiosk and an MMHS multi-app Android dedicated device), each authored as a **delta over the corpus that already ships**.
 
-## v1.18 Requirements
+**Scope resolved via `/adversarial-review` (2026-07-25):** 104 findings → 84 confirmed on milestone shape; then `/grill-me` + a second adversarial pass (Finder 186 / Adversary 59 / Referee) on the 8 optional-depth elements. The review **overruled two initial branch picks** (both recipes drop to single-path deltas) and **overruled three of eight optional-depth selections** (E3, E7, E8 — each retained as an anti-feature row rather than a procedure). 18 corrections to the research files were applied before these requirements were written.
 
-Requirements for this milestone. Each maps to roadmap phases (Phase 129+).
+## v1.19 Requirements
 
-### Device Recipe Doc Class (CLASS)
+Requirements for this milestone. Each maps to roadmap phases (Phase 135+).
 
-- [x] **CLASS-01**: The Device Recipe doc class is formally defined — `docs/_standards/EEE-SOP-standard.md` gains a D-02 edge-case ruling row (recipe → `doc_type: Guide`; the closed 4-value enum is NOT extended) plus a written spec for the **admin decision-point block** format. The block format itself (decision table vs. `> **Ask the admin:**` blockquote vs. composite — grounded option space in `.planning/research/ARCHITECTURE.md`) is a **discuss-phase gray area resolved via `/adversarial-review`**, constrained by C17 #12 (200-char top-level blockquote cap) and the no-key-info-in-code-fences rule.
-- [x] **CLASS-02**: A canonical recipe template exists in `docs/_templates/` — EEE-conformant (frontmatter → rendered header block → `## Summary`-first), C17-green, containing a worked decision-point block example and the TEMPLATE-SENTINEL convention.
-- [x] **CLASS-03**: Both recipes live in a new top-level `docs/recipes/` directory, carry RE-NNN registry rows in `docs/_registry/RE-index.md`, flip to `Status: Approved` when done, and enter the publish set via a regenerated (never hand-edited) `filename-map.md` — zero pipeline code changes.
-- [x] **CLASS-04**: Recipes are reachable from `docs/index.md` via a new recipes section (navigation-last discipline; troubleshooting hubs `common-issues.md`/`quick-ref-l1/l2.md` are NOT wired — recipes are provisioning Guides, not troubleshooting docs).
+### Recipe #3 — Windows 11 Multi-App Kiosk (KIOSK)
 
-### Recipe #1 — Shared Windows AVD-Client Device (AVD)
+- [ ] **KIOSK-01**: An Intune admin can follow a linear happy-path recipe from zero to a working Windows 11 multi-app kiosk: Autopilot enrollment → kiosk account → apps pre-installed → `AssignedAccessConfiguration` XML authored → pushed via an Intune **Custom profile (OMA-URI)** to `./Vendor/MSFT/AssignedAccess/Configuration` → verification. **There is no first-party Intune GUI path for Windows 11 multi-app kiosk** — the Templates → Kiosk "Multi app kiosk" option is documented as Windows-10-only. The **single-app case is a one-line cross-link** to `docs/recipes/01-shared-windows-avd-client.md#step-5a-kiosk-configuration`, never re-authored. **Zero edits to recipe 01** (its Step 5a/5b headings are literal-string assertions in `check-phase-130.mjs:64,67` reading live HEAD inside every apex chain; `A-LOCK-1`/ROADMAP SC2 bars trimming the bodies). The Plan-1 mechanism gate at `PROJECT.md:17` is **already discharged** by the `[VERIFIED HIGH]` first-party fetches at `.planning/research/STACK.md:13-16` — the phase records the discharge, it does not re-litigate it.
+- [ ] **KIOSK-02**: The recipe carries a **bounded** worked XML field set that is schema-valid and behaviourally precedented, and no more: `AllAppsList`/`AllowedApps` (the core), `Taskbar`/`ShowTaskbar` (the genuinely mandatory element — `minOccurs="1"`, `use="required"`), and a minimal `v5:StartPins` (2-3 pins) with the **Windows 11 22H2 floor stated explicitly**. Excluded on correctness grounds, not preference: **`BreakoutSequence`** (the XSD `profile_t` is an `xs:choice`; it exists only in the `KioskModeApp` branch, never in `AllAppsList`), **managed folders** (the Win11 `pinnedList` key set is closed at four keys with no folder key; folders are Windows-10-only `start:Folder`), `v5:TaskbarLayout` (polish), and `ClassicAppPath`/`ClassicAppArguments` (scope-dependent). `rs5:FileExplorerNamespaceRestrictions` keeps one decision-table row, out of the worked XML. A 3-row namespace table states the version floors and the aliasing rule (base 2017 — **`StartLayout` lives here, not v4** — / v4 21H2+ / v5 22H2+) and **must NOT assert a mismatch failure mode**, which is genuinely undocumented; it notes the published table's own defect of binding alias `v5` to two namespaces.
+- [ ] **KIOSK-03**: The recipe embeds the **kiosk account model** decision block (shared local autologon vs. named/grouped Entra account) and an anti-feature table covering, at minimum: **interactive Conditional Access / MFA hard-breaking Assigned Access sign-in "by design"** (Event ID 1098, `AADSTS50076`/`50158`); the Templates GUI wizard being the silently-wrong platform on Windows 11; group `Configs` requiring `AllAppList`; nested `UserGroup`; hardcoded AUMIDs; **`Configuration` silently superseding the legacy `KioskModeApp` node while still returning SUCCESS to the MDM server**; and one row each for the two elements cut from procedure to warning — **SharedPC layering** (NOT-FOUND: no first-party statement exists either way on combining SharedPC with a multi-app Assigned Access profile; SharedPC's own kiosk hook `KioskModeAUMID` is single-app by construction) and **`AssignedAccess/Status` health monitoring** (not deliverable as a custom OMA-URI row — `Status` is `Get`-only and Intune requires Add/Replace/Get; do **not** write "impossible").
+- [ ] **KIOSK-04**: The recipe carries a **`## Rollback/Recovery`** section (corpus-native heading — `^## Recovery` has zero matches in `docs/`; `## Rollback/Recovery` ships in three Reference docs), placed between `## Verification` and `## Configuration-Caused Failures`, and declared as a **named divergence** from `docs/_templates/recipe-template.md`, which has no such slot. Content is bounded to first-party facts: the Settings self-service removal path is closed for a restricted user experience; removal is channel-scoped; **removal is not rollback** (*"it can't revert all the changes… the Start menu configuration is maintained"*); the un-blockable shortcuts (Alt+F4 / Alt+Tab / Alt+Shift+Tab / Ctrl+Alt+Del) reach the security screen but Remove-Logoff strips the sign-out affordance; and Autopilot Reset gets **one negative sentence** (it retains provisioning packages and MDM enrollment and re-applies the lockdown — unassign the policy first). The autologon-vs-Entra recovery differential ships as **two separately-cited facts under `[ASSUMED]`**, never as a synthesized claim. The `Clear-AssignedAccess` single-app scoping claim is **excluded — unsourced**.
+- [ ] **KIOSK-05**: Verification is executable by the admin who followed the recipe: the device signs in and lands in the restricted Start menu showing only allow-listed apps; a non-allow-listed app fails to launch (confirming the generated AppLocker rules); a representative allow-listed app's **secondary** flow (file picker, print, OAuth redirect) completes without an app-blocked error; and — admin-at-console, secondary — the `AssignedAccess > Operational` event log is clean. This follows RE-223's own precedent at `02:271` (*"Verification is on-device… does not surface in Intune reports"*). `AppNotFound` appears as a **named symptom** under the apps-must-be-pre-installed prerequisite, not as a status check.
 
-- [x] **AVD-01**: An Intune admin can follow a linear happy-path recipe from zero to a working self-deploying Entra-joined shared AVD-client device: APv1 self-deploying deployment profile (Entra-join only) → device-phase-only ESP → dynamic device group → Windows App deployed as Microsoft Store app, Required to a device group → AVD feed/workspace subscription URL configured device-context → verification steps. Link-not-copy to existing RE-084 (self-deploying), ESP policy, dynamic groups, and RE-177 (apv1-vs-apv2) docs. Plan-time verification flags: `RemoteDesktop/AutoSubscription` device-vs-user CSP scope (research conflict), MSRDC retirement date first-party citation.
-- [x] **AVD-02**: The recipe's dominant fork — **Assigned Access kiosk lockdown vs. Shared PC mode shared desktop** — is an embedded admin decision-point block, and BOTH paths are worked fully as step-by-step branches: the kiosk path (Assigned Access packaging for Windows App, autologon — MEDIUM-confidence `Azure/WindowsAppKiosk` sourcing needs plan-time verification) and the Shared PC path (SharedPC CSP: `EnableSharedPCMode`, `AccountModel`, `DeletionPolicy`, `RestrictLocalStorage`, cleanup exemptions, guest sign-in decision points). The Shell-Launcher/Assigned-Access mutual-exclusion constraint is stated.
-- [x] **AVD-03**: The recipe carries explicit anti-feature callouts for the four highest-cost mistakes: hybrid Entra join (fails self-deploying), APv2/Device Preparation (no self-deploying support), Wi-Fi at OOBE (pending plan-time verification of current behavior), and the retired legacy Remote Desktop client (MSRDC, retired 2026-03-27 — Windows-App-only guidance).
-- [x] **AVD-04**: Session hygiene and patch cadence are covered as admin decision points: Windows App session-reset behaviors (`ResetAppOnCloseOnly`/`ResetAppAfterConnection`/`ResetAppOnIdle`), Shared PC `InactiveThreshold` idle handling, and a kiosk-tuned update ring / maintenance window aligned with `MaintenanceStartTime`.
-- [x] **AVD-05**: The wired-vs-Wi-Fi-post-enrollment decision point conditionally routes to the existing v1.14 802.1X corpus (`docs/admin-setup-8021x/*`) as an if-then cross-link branch — 802.1X content is linked, never inlined.
+### Recipe #4 — Android Dedicated, Managed Home Screen Multi-App (MHS)
 
-### Recipe #2 — Shared iPad (IPAD)
+- [ ] **MHS-01**: An Intune admin can follow a linear happy-path recipe from zero to a working MHS multi-app dedicated device. The recipe supplies the **`## Steps` / `## Verification` / Unsupported-and-Anti-Feature scaffold that `docs/admin-setup-android/05-dedicated-devices.md` structurally lacks** (that guide has no `## Steps` section, no verification checklist, no anti-feature table, and a divergent `| Misconfiguration | Section | Severity |` failure table), plus an **inlined, recipe-scoped MHS app-deployment step** with the concrete click-path — mirroring RE-222's own precedent for the identical Windows-side gap, since `01-managed-google-play.md` covers Managed Google Play *binding* and approval, not general assignment. Everything the anchor already owns — enrollment-profile deltas, token types, all four provisioning methods, Knox/Zero-Touch mutual exclusion, the exit-PIN synchronization requirement, Android 15 FRP — is **cross-linked, never re-authored**.
+- [ ] **MHS-02**: The recipe's Case-1 decision block is the **irreversible token-type choice** (Standard vs. Entra shared-device mode), with the SDM path as a **routing cross-link, not a worked branch** — the one decision in this area with a severe consequence if wrong (`05:129`: revoke the token, recreate the profile, redistribute the QR to every field site). A second fork covers the four-way provisioning method with its CRITICAL Knox/Zero-Touch mutual exclusion. The exit-PIN synchronization requirement ships **`[MEDIUM: MS Q&A community]` with only the date refreshed** — three independent research passes have now failed to find a first-party source, and the *"must be configured through a device configuration profile"* sentence is **not** corroboration (it concerns where the password is set, not that two values must match).
+- [ ] **MHS-03**: A **Case-2** block (not Case-1) covers sign-in mode: `enable_mhs_signin = FALSE` (the worked value — the documented default, matching `05:72`'s "No user identity" on a Standard token) / `TRUE + signin_type = Other` / `TRUE + signin_type = Microsoft Entra ID`. One anti-feature row anchors on the **documented default** — `signin_type` defaults to "Microsoft Entra ID", so an admin who flips sign-in on and touches nothing else lands there — and quotes the real first-party negative with its **account-type** scope (*"Users who sign in with a non-Microsoft Entra ID account don't get single sign-on… but they still sign in to Managed Home Screen"*). The recipe **must not claim `TRUE` is unavailable on a Standard token** (NOT-FOUND in both directions). Any `[ASSUMED]` note ships as a **split blockquote** across two blank-line-separated sub-200-character runs per the shipped idiom at `01:101`/`01:103` — not as plain prose.
+- [ ] **MHS-04**: Exit-lock-task hardening ships as an extension of the exit-PIN step, **physically separated** from the sign-in section (the two `max_number_of_attempts_*` settings have near-identical names, opposite gates, and different consequences — blocked-from-retry vs. automatic logout; note both zeros mean "no limit"). It carries the **silent no-op dependency verbatim** — *"Time before exit lock task mode password can be retried must be set to utilize this setting"* — as a `What breaks if misconfigured` callout, since setting max-attempts alone does nothing with no error and no admin-side signal. **No unit is stated for the retry-delay integer** (undocumented; sibling timers say "in seconds", this one does not). `Enable easy access debug menu = FALSE` demotes from a Step to a **Verification line** — it is already the default on both surfaces, so instructing it is a no-op; state that only the easy-access entry point can be closed and the 15-press back-button gesture remains.
+- [ ] **MHS-05**: The recipe leads with its unsupported/anti-feature set, documented **with the reason**, never silently omitted — including the two elements cut from procedure to warning: **Notification windows = Disable** breaking Overlay-dependent features, phrased conditionally (*"if you later enable screensaver, virtual home button, or automatic sign-out"*) because zero dependents exist among the settings this recipe sets; and **folders**, trimmed to the uncontradicted user-capability half (*"End users can't move folders, rename the folders, or move the apps within the folders"*) with the alphabetical-ordering clause dropped, since `apps_in_folder_ordered_by_name` is a configurable default rather than a constraint. Also covered: exposed system navigation bypassing the sign-in gate; per-identity personalization on a sign-in-disabled Standard-token device; Wi-Fi radio toggle and first-time Enterprise-network connection unavailable from inside MHS.
 
-- [x] **IPAD-01**: An Intune admin can follow a linear happy-path recipe from zero to a working Shared iPad: ADE enrollment profile (Shared iPad = Yes + Supervised + no user affinity, with the wipe-if-changed-post-enrollment warning) → device eligibility floors (32 GB min / 64 GB+ recommended, iPadOS 13.4+) → federated Managed Apple Account sign-in (cross-link OU-06, not re-authored) → device-licensed VPP apps Required to device groups → the device-vs-user profile-applicability split reproduced as a table → home screen layout → verification. Cross-references (does not duplicate) the OU-07 Shared iPad lifecycle doc.
-- [x] **IPAD-02**: The recipe leads with the **unsupported-feature callouts** — compliance policies, Conditional Access, app protection policies, email profiles, Company Portal, "Available" app intent, and user-licensed VPP are all explicitly unsupported on Shared iPad, documented with WHY (not silently omitted; the fixed 8-char passcode behavior noted, grace period as the only knob) — and embeds the **temporary/guest sessions on-or-off** admin decision-point block (enabled by default; the admin must explicitly decide).
-- [x] **IPAD-03**: A per-role layered-configuration worked example shows the device-group baseline + user-group overlay pattern (common Wi-Fi/apps on the device group; per-role home screen layout / allow-lists on user groups) including the never-set-the-same-setting-twice conflict warning.
-- [x] **IPAD-04**: Storage/session sizing is covered as admin decision points: per-user storage quota (`QuotaSize`, iPadOS 17+ — Settings Catalog exposure path is a plan-time verification flag), session idle timeout + offline grace period values, and cached-users-per-device planning guidance (framed as a planning decision, not a config field).
+### Integration & Navigation-Last (CLASS)
+
+- [ ] **CLASS-05**: Both recipes carry RE-NNN registry rows in `docs/_registry/RE-index.md` (IDs read from the registry at plan time — it currently ends at RE-223), flip to `Status: Approved` when content-complete, and enter the publish set via a **regenerated, never hand-edited** `filename-map.md`. The `build-filename-map.mjs --self-test` row-count drift-canary is **bumped 223 → 225 in the same commit as the regeneration** — this is a named deliverable, not a post-close audit finding, per the milestone's own #1 recurring lesson (*"a deferral from phase A to phase B needs an explicit landing spot IN phase B's scope, or it evaporates"*). Descriptive filenames are settled here, since they drive Copilot citation titles.
+- [ ] **CLASS-06**: Recipes are reachable from `docs/index.md` via **both** surfaces in the same commit — the Device Configuration Recipes table **and** the prose quick-nav bullet near `index.md:38` (the WR-01 defect class from Phase 132, closed proactively via a validator needle asserting both, rather than relying on code-review to catch it again). Navigation-last discipline holds (nav commits post-date content commits). The troubleshooting-hub disposition is an **explicit recorded ruling**, not a silent carry-forward: `check-phase-132.mjs:91` `V-132-HUBSNOTWIRED` bars `docs/recipes` from `common-issues.md`/`quick-ref-l1.md`/`quick-ref-l2.md` generically, and kiosk lockout / MHS exit-PIN lockout are materially more L1-adjacent than AVD/iPad were. Full-corpus C17 green; link-checker 0/0.
 
 ### Corpus Hygiene (HYG)
 
-- [x] **HYG-04**: The RE-084 (`docs/admin-setup-apv1/08-self-deploying.md`) "Wi-Fi unsupported for self-deploying" claim is verified against current Microsoft Learn at plan time; if confirmed stale, RE-084 is corrected (freshness-stamp rules per the v1.15 D2/META-04 reformat-only convention do NOT apply — this is a content correction, so `last_verified` updates). If confirmed still accurate, no edit is made and the verification result is recorded.
-
-### Chain-Validator Tooling Debt (TOOL)
-
-- [x] **TOOL-04**: `FROZEN-AWARE-ADOPTION-SWEEP-01` is resolved — the 11 standalone-RED predecessor CI workflows (v1.4–v1.16 harness jobs + base harness-replay, HYG-02 −1 line-shift root cause) are made green or formally re-dispositioned. The approach — (a) targeted re-pin of the affected frozen `-audit-allowlist.json` sidecar `{file,line}` pins vs. (b) frozen-aware own-close-snapshot reads for `v1.4-v1.16-milestone-audit.mjs` + `regenerate-supervision-pins.mjs` — is a **discuss-phase gray area resolved via `/adversarial-review`** (a genuine D-00a frozen-surface-edit exception decision).
-- [x] **TOOL-05**: `O(n²)-CHAIN-RUNNER-REMEDIATION-01` is resolved — chain-validator subprocess results are cached within a single apex invocation so the deepening chain apex ([48..128] at this close) stops O(n²) cold-spawning; Windows cold-clone apex behavior verified post-fix (Linux GHA remains authoritative per D-03).
-- [x] **TOOL-06**: Smaller carried chain-validator retrospective nits are closed: `HELPER-SPAWN-STDERR-01` residual slice-budget tuning at the 3 helper-spawn stderr sites (`check-phase-{48,60,61}.mjs`), plus any `DEFER-119-A` advisory-RED resolution that falls out of the TOOL-04 approach decision.
+- [ ] **HYG-05**: `docs/_standards/EEE-SOP-standard.md`'s fenced-content rationale is corrected. The claim *"fenced content is invisible to the … retrieval body text"* (stated at `:462` and `:496-497`) is **empirically false in this pipeline** — fence-only strings were verified present in a built `.docx`'s `word/document.xml` as `SourceCode`/`VerbatimChar` runs — and is **self-contradicted at `:415`**, where STD-04 D-01 states a raw fence *"lands verbatim as garbage in the citation body."* Replace the false mechanism with the true one (fenced content **is** indexed, but as non-prose runs that retrieve poorly). Scoped to the rationale only; the normative D-03/D-04 rules are untouched by this requirement. The three validators reading this file (`check-phase-114/120/129.mjs`) assert content strings, not line coordinates — confirm before editing.
+- [ ] **HYG-06**: `docs/admin-setup-android/05-dedicated-devices.md` is **33+ days past its `review_by: 2026-06-22`**. The specific facts RE-225 cross-links (token-type semantics `05:116-131`, MHS Required-assignment `05:143-153`, the exit-PIN two-policy locations `05:249-255`) are spot-verified against current Microsoft Learn **before** authoring depends on them. Disposition follows the v1.18 HYG-04 pattern: if drift is found it becomes a **named correction with its own landing spot**, never an unlogged drive-by edit to an Approved doc; if no drift, the verification result is recorded as a no-op.
 
 ### Harness Close (HARN)
 
-- [x] **HARN-11**: `_lib/frozen-at-close.mjs` gains the **V117** entry (v1.17 close-gate SHA recovered via the dual-token positive-confirmation `git log --all --grep` method, verifying the returned commit's SUBJECT LINE carries both tokens per the v1.17 false-positive caveat) + `readAtV117Close` export — the mandatory back-anchor invariant freezing the v1.17 corpus per `V117-PIN-DEFERRAL`.
-- [x] **HARN-12**: 16th Path-A audit-harness lineage bump — `v1.18-milestone-audit.mjs` (Path-A from v1.17, C1-C17 inherited) + `v1.18-audit-allowlist.json` + BASELINE_22 + `check-phase-129..NN.mjs` validators (chain-apex continues the `[48..N-1]` invariant) + `audit-harness-v1.18-integrity.yml` (15th parallel CI coexistence workflow). Predecessor frozen surfaces byte-unchanged EXCEPT the explicitly-scoped TOOL-04 remediation (whichever approach wins at discuss-phase) — NO value-masking, `CHAIN_SKIP` empty. Full predecessor chain run BEFORE authoring the close-gate per `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`.
-- [x] **HARN-13**: Milestone closed via 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per D-03 + fresh zero-context sub-agent; cross-OS PASS/FAIL/SKIP EXACT MATCH) + SINGLE close-gate commit flipping all v1.18 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS + `v1.18-MILESTONE-AUDIT.md` + `v1.18-DEFERRED-CLEANUP.md`. Axis 1 (Windows fresh-clone) + Axis 3 (same-host, corroborating-only) exact-match locally at 88/0/1; Axis 2 (Linux GHA, sole cross-OS-authoritative per D-03) explicitly DEFERRED to the owner's PIPE-02 push checkpoint per this repository's local-commit-then-owner-push convention — see `v1.18-MILESTONE-AUDIT.md`'s "Axis 2 / GA-4" section for the exact command block.
+- [ ] **HARN-14**: `scripts/validation/_lib/frozen-at-close.mjs` gains the **`V118`** entry + `readAtV118Close` export, freezing the v1.18 corpus per `V118-PIN-DEFERRAL` — the mandatory back-anchor invariant. The SHA is recovered via the dual-token `git log --all --grep` method with the returned commit's **SUBJECT LINE positively confirmed** to carry both tokens (the v1.17 false-positive caveat, re-confirmed at v1.18's own close). **BLOCKED on the owner's PIPE-02 push** — see Blocking Precondition below.
+- [ ] **HARN-15**: 17th Path-A audit-harness lineage bump — `v1.19-milestone-audit.mjs` (Path-A from v1.18, C1-C17 inherited) + `v1.19-audit-allowlist.json` + BASELINE_23 + `check-phase-135..138.mjs` leaf/apex validators (the apex continues the `[48..N-1]` invariant, **independently derived, not copied from Phase 134**) + `audit-harness-v1.19-integrity.yml` (16th parallel CI coexistence workflow). Predecessor frozen surfaces BYTE-UNCHANGED — no value-masking, `CHAIN_SKIP` empty. The **full predecessor chain runs BEFORE** the close-gate is authored, per `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`.
+- [ ] **HARN-16**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per D-03 + fresh zero-context reproduction; cross-OS PASS/FAIL/SKIP EXACT MATCH) + the publish bundle regenerated `--version=v1.19` under the `publish-bundle-gate.cjs` Stop-hook (note `build-publish-bundle.mjs:40` still defaults to `v1.17` without the flag; both new recipes must be pandoc-convertible and `guard-docx.mjs`-clean) + a **SINGLE close-gate commit** flipping all v1.19 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, plus `v1.19-MILESTONE-AUDIT.md` and `v1.19-DEFERRED-CLEANUP.md`.
+
+## Blocking Precondition (owner action — gates HARN-14)
+
+The v1.18 close-gate SHA `7af8a147` is on **no remote** (`git branch -r --contains` → empty) and 198 commits are unpushed, so the mandatory V118 pin has **no valid target**. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been **repointed to `origin/master` (2026-07-25)**. V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has **zero call sites**; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false` — a **FAIL, not a skip**. The owner's push must land before Phase 138 authors `readAtV118Close`, and must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `v1.18-MILESTONE-AUDIT.md`.
 
 ## Future Requirements
 
-Deferred to future milestones. Tracked but not in the current roadmap.
+Deferred beyond v1.19.
 
 ### Recipes (future)
 
-- **RCPFUT-01**: Windows 365 Boot sibling recipe (Cloud PC boot-to-sign-in) — distinct product surface from AVD host pools; do not conflate.
-- **RCPFUT-02**: Multi-host-pool / multi-workspace subscription scenarios for the AVD recipe.
-- **RCPFUT-03**: Automation/scripting layer (Graph/PowerShell bulk configuration) beyond the manual admin-center walkthrough.
+- **RCPFUT-01/02/03** — Windows 365 Boot, multi-host-pool AVD, recipe automation (carried from v1.18)
+- **RCPFUT-04** — a digital-signage Android recipe (or an MHS reference guide): the screensaver / `show_screen_saver` surface cut from MHS-05. **Trigger:** a signage recipe or MHS reference guide is scoped. Blocked today by a reproducibility gap, not by effort — Legacy Zebra OEMConfig grants Overlay + Notification but **not** Alarms & Reminders, which the screensaver requires on Android 14+, so the feature is structurally undeliverable on a documented in-scope OEM without naming a single vendor.
+- **RCPFUT-05** — MHS widgets and branding (wallpaper / logo). **Trigger:** the RE-224 fenced-artifact format question is resolved corpus-wide (widgets are JSON-only and would drag RE-225 into that tension for a cosmetic feature) **and** first-party hosting requirements for branding assets exist (hosting location, file size, dimensions and resolution are all currently zero-match).
+- **ANDROID-APPDEPLOY-01** — a `docs/admin-setup-android/` app-deployment guide (and possibly a configuration-profiles guide), closing the asymmetry with `docs/admin-setup-ios/`, which has both. MHS-01 inlines a recipe-scoped step rather than waiting on this.
 
-### Carried backlog (unchanged from v1.17-DEFERRED-CLEANUP.md)
+### Carried backlog (unchanged from v1.18-DEFERRED-CLEANUP.md)
 
+- **CARVE-1 / FROZEN-AWARE-ADOPTION-SWEEP-01** — root cause OPEN; wants its **own dedicated tooling milestone** per its authored routing. Escalation trigger: the coordinate re-pin repeating 2+ more milestones, or standalone-RED noise obscuring genuine regressions.
 - **MTPSSO-01/02/03 + PSSO-FUT-03** — multi-tenant Platform SSO (own architectural milestone)
 - **KRBFUT-01/02** — on-prem-AD-only Kerberos deep-dive + Azure Files Cloud-Kerberos GA
-- **CI-3** — Managed Apple ID → Managed Apple Account corpus rename (gated on Intune portal adoption)
+- **CI-3** — Managed Apple ID → Managed Apple Account corpus rename. Gated on Intune adopting the rebrand portal-side (no in-repo evidence it has). **Live scope is 57 occurrences / 17 files, not the recorded 45/16** — the sidecar-derived figure is stale by +27%. When it fires: per-site human judgment only, never a `sed` — `check-phase-62.mjs:96` requires the literal string `'Managed Apple ID'` in a rebrand-mapping table inside every apex chain.
 - **AOSP-wired 802.1X + Cloud PKI / Certificate Connector deep-dive**
-- **Deployment/infra:** SharePoint content-approval gating, Azure AI Search structured index, Graph-API auto-upload of the publish bundle
+- **WINDOWS-CLONE-DEEPNEST-TIMEOUT-01** — apex deepens to `[48..137]`
+- **Deployment/infra:** SharePoint content-approval gating, Azure AI Search structured index, Graph-API auto-upload of the publish bundle (unmet trigger; would be the first `secrets.` in any workflow at tenant-wide `Sites.ReadWrite.All`)
+- **C17-vs-pipeline fence-mask divergence** — `c17-eee-contract.mjs:158` masks fences at **column 0** while `convert.ps1:108` allows leading whitespace. Latent for an XML payload (whose lines begin `<` or whitespace); live the moment an indented fence contains a `>` or `|` line. Log in `v1.19-DEFERRED-CLEANUP.md`.
 
 ## Out of Scope
 
@@ -69,22 +73,30 @@ Explicitly excluded. Documented to prevent scope creep.
 
 | Feature | Reason |
 |---------|--------|
-| AVD infrastructure setup (host pools, session hosts, FSLogix, RDP host properties) | Scope guardrail — recipe is device/Intune config only; assumes AVD exists (mirrors v1.14 802.1X "assumes RADIUS exists") |
-| Windows 365 Cloud PC / Windows 365 Boot | Different product surface than AVD host pools; deferred as RCPFUT-01 |
-| Entra "Shared device mode" (SDM/Global Sign-Out) for the Windows recipe | iOS/Android-only feature — a name-collision trap; Windows uses SharedPC CSP (the recipe documents this explicitly as an anti-feature) |
-| Compliance policy / Conditional Access / app protection configuration on Shared iPad | Unsupported by the platform per Microsoft Learn known limitations — the recipe documents the limitation and why, never configures it |
-| Shared iPad SCIM/OIDC+JIT Managed Apple Account provisioning depth | Tenant-level ABM concern already covered at OU-06; recipe cross-links |
-| `doc_type` enum extension (a 5th "Recipe" value) | Closed 4-value taxonomy locked by v1.15/v1.16 precedent; recipes are `doc_type: Guide` with a D-02 ruling row |
-| Editing frozen predecessor harness/sidecar surfaces beyond the TOOL-04 scoped remediation | D-00a doctrine; any exception is exactly the TOOL-04 discuss-phase decision, nothing broader |
-| V118 pin (freezing the v1.18 corpus) | Back-anchor circularity — the successor milestone's job (V118-PIN-DEFERRAL will be recorded at close) |
+| Single-app Windows kiosk procedure | Already ships complete and Approved at `01:114-143`; RE-224 cross-links it in one line and re-authors nothing |
+| Any edit to `docs/recipes/01-shared-windows-avd-client.md` | `check-phase-130.mjs:64,67` pins its Step 5a/5b headings as literal strings against live HEAD inside every apex chain; `A-LOCK-1`/ROADMAP SC2 bars trimming the bodies |
+| `BreakoutSequence`, managed folders, `v5:TaskbarLayout` in RE-224 | First two are **not authorable** (schema-illegal in an `AllAppsList` profile / no Win11 folder key); the third is polish that adds namespace surface for zero reproducibility gain |
+| A SharedPC-layered-under-multi-app-kiosk decision block | No first-party statement exists either way; a Case-1 branch whose second arm cannot be authored fails STD-05 D-01 and D-06. Ships as one anti-feature row instead |
+| `AssignedAccess/Status` as a verification mechanism | `Get`-only; not deliverable as an Intune custom OMA-URI row; WMI bridge exposes no Status property. Ships as one anti-feature row |
+| A Windows-kiosk L1/L2 runbook | None exists corpus-wide, and creating one means a new doc + EEE enrollment + RE-NNN row + filename-map regeneration + C17 enrollment — a second phase, not a subsection. (Note: `V-132-HUBSNOTWIRED` would **not** bar it — that check reads the hubs for `docs/recipes` references only) |
+| Screensaver / digital-signage configuration in RE-225 | Reproducibility gap, not taxonomy — Legacy Zebra OEMConfig cannot auto-grant Alarms & Reminders, and the manual path routes an end user through Settings on a locked kiosk, which Learn itself calls a *"possible breakout scenario"*. Deferred as RCPFUT-04 |
+| MHS widgets, wallpaper and branding | Widgets are JSON-only (format tension for a cosmetic feature); branding hosting/size/dimension requirements are entirely undocumented, so a step saying "enter the URL" is not reproducible. Deferred as RCPFUT-05 |
+| Re-authoring anything `05-dedicated-devices.md` already owns | Delta discipline — the dominant review failure mode for this recipe |
+| Any line-shifting edit to `docs/_glossary-android.md` or `docs/reference/android-capability-matrix.md` | 365 and 139 pin coordinates aggregated across 16 frozen sidecars. All three concepts RE-225 needs already have anchors. If unavoidable, a scoped **CARVE-1 option (a)** coordinate re-pin is the named budgeted contingency — never option (b), never discovered mid-execution |
+| CARVE-1 root cause, CI-3 rename, Graph/SharePoint auto-upload | All three trigger-gated and unmet; CARVE-1 is barred verbatim by its own routing from folding into a content/close milestone |
+| V119 pin (freezing the v1.19 corpus) | Back-anchor circularity — the successor milestone's job (`V119-PIN-DEFERRAL` recorded at close) |
 
 ## Discuss-Phase Gray Areas (NOT resolved at roadmap — project convention)
 
-1. **CLASS-01 decision-point block format** (DOMINANT for the content pillar): decision table vs. short blockquote vs. composite — resolve via `/adversarial-review` against the C17 #12 / no-code-fence constraints.
-2. **TOOL-04 approach** (DOMINANT for the tooling pillar): (a) targeted frozen-sidecar re-pin vs. (b) frozen-aware own-snapshot reads — resolve via `/adversarial-review`; genuine D-00a exception decision.
-3. AVD-02 kiosk-path depth: how far the Assigned Access packaging steps go given MEDIUM-confidence sourcing (verify `Azure/WindowsAppKiosk` guidance against first-party docs at plan time).
-4. AVD-01 feed-subscription mechanism: device-context vs. user-context `AutoSubscription` + bootstrap-first-sign-in fallback design (plan-time verification feeds this).
-5. HYG-04 disposition: fix-or-record decided by the plan-time verification result.
+1. **RE-224 XML presentation format** (DOMINANT). Given that D-03/D-04 bind only *decision content*; that the unscoped "no-key-info-in-code-fences" phrase occurs in `docs/` **exactly once**, is defined nowhere, and is called a **parked** premise at `PROJECT.md:888`; that its rationale is empirically false and self-contradicted at `:415`; and that neither shipped recipe contained payload-shaped content to fence — does the `AllAppsList` payload ship in a **column-0** code fence, or as a field-decomposition table plus assembly prose? Must also rule that if fenced, the fence sits at column 0 (the validator's mask is column-0-anchored). **This is a recipe decision, not a standard amendment.**
+2. **`## Rollback/Recovery` template divergence** (RE-224). Does `recipe-template.md` gain the slot, or does RE-224 diverge with a named documented exception? A template amendment is foundation-class work v1.19 is not scoped for — but the answer must be ruled, not assumed.
+3. **E2's replacement verification mechanism** (RE-224). Is the AssignedAccess Operational event log admin-reachable enough to be a Verification-checklist line, or is observable device behaviour the only admissible line?
+4. **Windows enrollment-path fork** (RE-224). Self-deploying (userless, autologon) vs. user-driven (per-user Entra sign-in) — determines the logon type, whether ESP has a user phase, device- vs. user-context app assignment, and the group rule. Interacts with the CA/MFA anti-feature.
+5. **Per-branch Windows edition floors** (RE-224). Whether Prerequisites splits by branch; note a recent page revision **unified** the multi-app and single-app edition floors (Pro/Enterprise/Education/IoT), so stale sources produce a wrongly restrictive claim.
+6. **RE-225 fork taxonomy.** `PROJECT.md`'s footer calls the provisioning fork "Case-1b"; `FEATURES.md:127` classes it "Case-2". Case-1b is not a defined STD-05 case type — pick one.
+7. **C17 `#11` row budget** (RE-225). Do the surviving anti-feature rows merge into one settings table, and does that cross the >25-data-row threshold in `c17-eee-contract.mjs`?
+8. **Shared conceptual anchor.** Both recipes are locked-down single-purpose-device scenarios; is a shared kiosk/dedicated taxonomy anchor needed, and where can it live given the pinned-file minefield? (Folding it into `4-platform-capability-comparison.md` is ruled out regardless — same pin hazard under a different name.)
+9. **First-lander precedent.** Whichever recipe lands first silently sets the delta-vs-anchor and branch-presentation convention for the second; v1.19 has no foundation phase to carry it, so make the edge explicit.
 
 ## Traceability
 
@@ -92,33 +104,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CLASS-01 | 129 | Validated |
-| CLASS-02 | 129 | Validated |
-| CLASS-03 | 132 | Validated |
-| CLASS-04 | 132 | Validated |
-| AVD-01 | 130 | Validated |
-| AVD-02 | 130 | Validated |
-| AVD-03 | 130 | Validated |
-| AVD-04 | 130 | Validated |
-| AVD-05 | 130 | Validated |
-| IPAD-01 | 131 | Validated |
-| IPAD-02 | 131 | Validated |
-| IPAD-03 | 131 | Validated |
-| IPAD-04 | 131 | Validated |
-| HYG-04 | 130 | Validated |
-| TOOL-04 | 133 | Validated |
-| TOOL-05 | 133 | Validated |
-| TOOL-06 | 133 | Validated |
-| HARN-11 | 134 | Validated |
-| HARN-12 | 134 | Validated |
-| HARN-13 | 134 | Validated |
-
-**Coverage:**
-- v1.18 requirements: 20 total
-- Mapped to phases: 20/20 ✓
-- Unmapped: 0
-- **Validated: 20/20 — v1.18 milestone CLOSED 2026-07-20** (close-gate commit local/unpushed; see `.planning/milestones/v1.18-MILESTONE-AUDIT.md`)
-
----
-*Requirements defined: 2026-07-16*
-*Last updated: 2026-07-20 — Phase 134 Plan 134-05 close-gate: all 20 v1.18 requirements flipped to Validated*
+| KIOSK-01 | 135 | Pending |
+| KIOSK-02 | 135 | Pending |
+| KIOSK-03 | 135 | Pending |
+| KIOSK-04 | 135 | Pending |
+| KIOSK-05 | 135 | Pending |
+| HYG-05 | 135 | Pending |
+| MHS-01 | 136 | Pending |
+| MHS-02 | 136 | Pending |
+| MHS-03 | 136 | Pending |
+| MHS-04 | 136 | Pending |
+| MHS-05 | 136 | Pending |
+| HYG-06 | 136 | Pending |
+| CLASS-05 | 137 | Pending |
+| CLASS-06 | 137 | Pending |
+| HARN-14 | 138 | Pending |
+| HARN-15 | 138 | Pending |
+| HARN-16 | 138 | Pending |
+| **Total** | **17 requirements** | **4 phases (135-138)** |
