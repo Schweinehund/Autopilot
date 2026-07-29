@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
-status: planning
-last_updated: "2026-07-26T03:00:44.185Z"
-last_activity: 2026-07-26
+status: roadmap
+last_updated: "2026-07-28T00:00:00.000Z"
+last_activity: 2026-07-28
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -19,235 +19,239 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MMHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
-**Current focus:** v1.19 STARTED 2026-07-25 — defining requirements. Content-only milestone (4 phases, 135-138). Scope resolved via `/adversarial-review` (104 findings, 84 confirmed), which overruled both initial "both branches" picks in favour of delta-scoped single-path recipes.
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
+**Current focus:** v1.19 roadmap created 2026-07-28 (4 phases, 135-138). Content-only milestone. Scope resolved via `/adversarial-review` (104 findings, 84 confirmed), which overruled both initial "both branches" picks in favour of delta-scoped single-path recipes. Research complete (`.planning/research/SUMMARY.md`) — both hard gates (Windows 11 multi-app kiosk mechanism; Android MHS configuration depth) CONFIRMED, neither recipe cancelled or re-scoped. Next: `/gsd-discuss-phase 135` to resolve the dominant RE-224 XML-presentation-format gray area before Phase 135 content authoring begins.
 
 > **BLOCKING PRECONDITION — owner action required before Phase 138.** The v1.18 close-gate SHA `7af8a147` is on **no remote** and 198 commits are unpushed, so the mandatory V118 back-anchor pin has no valid target. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been repointed to `origin/master` (2026-07-25). The owner's PIPE-02 push must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has zero call sites; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false`, a FAIL not a skip. The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `.planning/milestones/v1.18-MILESTONE-AUDIT.md`.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 135 (Recipe #3 — Windows 11 Multi-App Kiosk) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-26 — Milestone v1.19 started
+Status: Roadmap created, ready to plan
+Last activity: 2026-07-28 — v1.19 ROADMAP.md + STATE.md written
 
-## v1.18 Phase Dependency Summary
+## v1.19 Phase Dependency Summary
 
 ```
-Phase 129 (Device Recipe Doc-Class Foundation)
-  |       CLASS-01, CLASS-02
+Phase 135 (Recipe #3 — Windows 11 Multi-App Kiosk)
+  |       KIOSK-01, KIOSK-02, KIOSK-03, KIOSK-04, KIOSK-05, HYG-05
   |       DELIVERS:
-  |         - EEE-SOP-standard.md D-02 ruling: docs/recipes/* -> doc_type Guide
-  |             (closed 4-value enum NOT extended) + written admin decision-point
-  |             block spec
-  |         - docs/_templates/recipe-template.md — EEE-conformant, C17-green,
-  |             worked decision-point block example, TEMPLATE-SENTINEL convention
+  |         - docs/recipes/03-*.md: Autopilot enrollment -> kiosk account -> apps
+  |             pre-installed -> AssignedAccessConfiguration XML authored ->
+  |             pushed via Intune Custom profile (OMA-URI) to
+  |             ./Vendor/MSFT/AssignedAccess/Configuration -> verification;
+  |             single-app case is a one-line cross-link to recipe 01 Step 5a,
+  |             never re-authored
+  |         - Bounded worked XML field set (AllAppsList/AllowedApps,
+  |             Taskbar/ShowTaskbar, minimal v5:StartPins, Win11 22H2 floor
+  |             stated); BreakoutSequence/managed folders/v5:TaskbarLayout
+  |             excluded on correctness grounds; 3-row namespace table with
+  |             no asserted mismatch failure mode
+  |         - Kiosk account model decision block + anti-feature table
+  |             (CA/MFA hard-break, wrong-GUI trap, group-Configs-requires-
+  |             AllAppList, nested UserGroup, hardcoded AUMID, Configuration-
+  |             supersedes-KioskModeApp silent No-Op, SharedPC layering,
+  |             AssignedAccess/Status not-a-verification-mechanism)
+  |         - ## Rollback/Recovery section (named template divergence) +
+  |             admin-executable Verification incl. secondary app flow +
+  |             clean AssignedAccess Operational event log
+  |         - HYG-05: EEE-SOP-standard.md fenced-content rationale corrected
+  |             (empirically false claim at :462/:496-497, self-contradicted
+  |             at :415) — rationale only, D-03/D-04 rules untouched
   |       HARD CONSTRAINTS:
-  |         - FIRST phase of v1.18; must land before EITHER recipe is authored —
-  |             retrofitting the template after content lands is more expensive
-  |             than deciding first (RESEARCH: Pitfalls #3, #4)
-  |         - doc_type MUST be Guide, never a new "Recipe" taxonomy value — C17
-  |             only checks presence, not the enum, so this mistake goes
-  |             undetected by automation if not locked here
-  |       DISCUSS-PHASE FLAGS (resolve via /adversarial-review, NOT at roadmap):
-  |         CLASS-01 decision-point block format (DOMINANT, content pillar) —
-  |         decision table vs. `> **Ask the admin:**` blockquote vs. composite,
-  |         constrained by C17 #12 (200-char top-level blockquote cap) and the
-  |         no-key-info-in-code-fences rule
+  |         - FIRST phase of v1.19; zero edits to
+  |             docs/recipes/01-shared-windows-avd-client.md — check-phase-
+  |             130.mjs:64,67 pins its Step 5a/5b headings as literal strings
+  |             against live HEAD inside every apex chain; A-LOCK-1/v1.18
+  |             ROADMAP SC2 bars trimming the bodies
+  |         - Plan-1 mechanism gate at PROJECT.md:17 already DISCHARGED by
+  |             STACK.md:13-16 (GATE 1 CONFIRMED) — this phase records the
+  |             discharge and re-cites fresh at authoring time; does NOT
+  |             re-litigate the gate and gets no dedicated gate plan
+  |         - HYG-05 validators (check-phase-114/120/129.mjs) assert content
+  |             strings, not line coordinates — confirm before editing
+  |       DISCUSS-PHASE FLAGS (resolve via /adversarial-review, NOT at
+  |       roadmap):
+  |         RE-224 XML presentation format (DOMINANT) — column-0 code fence
+  |         vs. field-decomposition table+prose; must be ruled before Steps-
+  |         section drafting, since fenced content in decision/branch bodies
+  |         is barred by STD-05/C17 and no research file resolves this;
+  |         ## Rollback/Recovery template-divergence disposition; E2's
+  |         verification mechanism (event log vs. observable-behavior-only);
+  |         Windows enrollment-path fork (self-deploying vs. user-driven);
+  |         per-branch Windows edition floors (recent unification of Pro/
+  |         Enterprise/Education/IoT floors — stale sources trap);
+  |         first-lander precedent — this phase sets the delta-vs-anchor and
+  |         branch-presentation convention Phase 136 inherits (v1.19 has no
+  |         foundation phase to carry it, so the edge is explicit here)
   |
   v
-Phase 130 (Recipe #1 — Shared Windows AVD-Client Device)
-  |       AVD-01, AVD-02, AVD-03, AVD-04, AVD-05, HYG-04
+Phase 136 (Recipe #4 — Android Dedicated, MHS Multi-App)
+  |       MHS-01, MHS-02, MHS-03, MHS-04, MHS-05, HYG-06
   |       DELIVERS:
-  |         - docs/recipes/01-*.md: self-deploying profile (Entra-join only) ->
-  |             device-phase-only ESP -> dynamic device group -> Windows App
-  |             (Store, Required, device-context) -> AVD feed/workspace
-  |             subscription -> verification
-  |         - Embedded decision point: kiosk (Assigned Access) vs. Shared PC
-  |             (SharedPC CSP) — BOTH worked fully as step-by-step branches;
-  |             Shell-Launcher/Assigned-Access mutual-exclusion stated
-  |         - Anti-feature callouts: hybrid Entra join, APv2/Device Preparation,
-  |             Wi-Fi at OOBE, retired legacy MSRDC client
-  |         - Session hygiene/patch cadence decision points; wired-vs-Wi-Fi fork
-  |             cross-links the existing v1.14 802.1X corpus (link, never inline)
-  |         - HYG-04: RE-084 "Wi-Fi unsupported for self-deploying" claim
-  |             independently re-verified against current Microsoft Learn;
-  |             corrected (with last_verified update) if stale, or verification
-  |             result recorded as a no-op if still accurate
+  |         - docs/recipes/04-*.md: the missing ## Steps/Verification/Anti-
+  |             Feature scaffold 05-dedicated-devices.md structurally lacks,
+  |             plus an inlined recipe-scoped MHS app-deployment step
+  |             (concrete click-path, mirrors RE-222 Step 4 precedent);
+  |             enrollment-profile deltas, token types, all 4 provisioning
+  |             methods, Knox/Zero-Touch mutual exclusion, exit-PIN sync,
+  |             Android 15 FRP all cross-linked, never re-authored
+  |         - Case-1 irreversible token-type decision block (Standard vs.
+  |             Entra SDM, SDM as routing cross-link only); second fork =
+  |             four-way provisioning method + CRITICAL Knox/ZT exclusion;
+  |             exit-PIN sync ships [MEDIUM: MS Q&A community], date-only
+  |             refresh, never promoted
+  |         - Case-2 sign-in-mode block (FALSE worked default / TRUE+Other /
+  |             TRUE+Entra-ID-documented-default), anti-feature row anchored
+  |             on the real first-party account-type-scoped negative; any
+  |             [ASSUMED] note as a split blockquote per 01:101/01:103 idiom
+  |         - Exit-lock-task hardening physically separated from sign-in
+  |             section, silent no-op dependency verbatim as a "What breaks"
+  |             callout, no unit stated for retry-delay, debug-menu setting
+  |             demoted Step->Verification line
+  |         - Unsupported/anti-feature set leads the recipe, each WITH
+  |             reason: Notification-windows=Disable phrased conditionally,
+  |             folders trimmed to uncontradicted user-capability half, plus
+  |             exposed nav bypass / per-identity personalization impossible
+  |             on Standard token / Wi-Fi and first-time Enterprise-network
+  |             unavailable from inside MHS
+  |         - HYG-06: 05-dedicated-devices.md facts RE-225 cross-links
+  |             (token-type semantics 05:116-131, MHS Required-assignment
+  |             05:143-153, exit-PIN two-policy locations 05:249-255)
+  |             spot-verified against current Microsoft Learn BEFORE
+  |             authoring depends on them
   |       HARD CONSTRAINTS:
-  |         - BLOCKED on Phase 129 — template + decision-point format must be
-  |             locked first
-  |         - Device/Intune config ONLY — assumes AVD host pools/session
-  |             hosts/FSLogix already exist (mirrors v1.14 802.1X guardrail)
-  |         - Must NOT conflate the AVD client endpoint with the AVD session
-  |             host (different Intune-managed object; RESEARCH Pitfall #1)
-  |         - HYG-04 is the milestone's only edit to an EXISTING doc (RE-084) —
-  |             scope the frozen-surface/validator reconciliation once, here
+  |         - No technical cross-dependency on Phase 135 (different
+  |             platform); sequenced AFTER 135 per use_worktrees:false
+  |             sequential-on-main-tree execution and the first-lander
+  |             precedent set there
+  |         - Zero line-shifting edits to docs/_glossary-android.md and
+  |             docs/reference/android-capability-matrix.md (365 and 139 pin
+  |             coordinates across 16 frozen sidecars). If unavoidable, a
+  |             scoped CARVE-1 option (a) coordinate re-pin is the named
+  |             budgeted contingency — never option (b), never discovered
+  |             mid-execution
+  |         - Any HYG-06 drift found must get an explicit landing spot (a
+  |             named correction or a DEFERRED-CLEANUP entry, v1.18 HYG-04
+  |             pattern) — never an unlogged drive-by edit to an Approved doc
   |       DISCUSS-PHASE FLAGS:
-  |         AVD-02 kiosk-path depth (MEDIUM-confidence Azure/WindowsAppKiosk
-  |         sourcing needs plan-time verification against first-party docs);
-  |         AVD-01 feed-subscription mechanism (device-context vs. user-context
-  |         RemoteDesktop/AutoSubscription CSP scope — genuine open conflict,
-  |         needs a direct policy-csp-remotedesktop fetch at plan time);
-  |         HYG-04 disposition (fix-or-record, decided by verification result)
+  |         RE-225 fork taxonomy ("Case-1b" PROJECT.md footer vs. "Case-2"
+  |         FEATURES.md:127 — pick one, Case-1b is not a defined STD-05 case
+  |         type); C17 #11 row budget (do surviving anti-feature rows merge
+  |         into one settings table and cross the >25-data-row threshold);
+  |         shared conceptual anchor (kiosk/dedicated taxonomy — where it can
+  |         live given the pin minefield; folding into 4-platform-
+  |         capability-comparison.md ruled out regardless); first-lander
+  |         precedent (inherited from Phase 135's landing)
   |
   v
-Phase 131 (Recipe #2 — Shared iPad Full Provisioning)
-  |       IPAD-01, IPAD-02, IPAD-03, IPAD-04
+Phase 137 (Integration & Navigation-Last Close)
+  |       CLASS-05, CLASS-06
   |       DELIVERS:
-  |         - docs/recipes/02-*.md: ADE enrollment profile (Shared iPad = Yes +
-  |             Supervised + no user affinity, wipe-if-changed-post-enrollment
-  |             warning) -> device eligibility floors (32GB min/64GB+
-  |             recommended, iPadOS 13.4+) -> federated Managed Apple Account
-  |             sign-in (cross-linked to OU-06, not re-authored) -> device-
-  |             licensed VPP apps Required to device groups -> device-vs-user
-  |             profile-applicability split table -> home screen layout ->
-  |             verification
-  |         - Leads with unsupported-feature callouts (compliance policy, CA,
-  |             app protection, email profiles, Company Portal, "Available"
-  |             intent, user-licensed VPP) documented WITH WHY, not silently
-  |             omitted; embeds the temporary/guest-session on-or-off admin
-  |             decision-point block
-  |         - Per-role layered-configuration worked example (device-group
-  |             baseline + user-group overlay), never-set-the-same-setting-
-  |             twice conflict warning
-  |         - Storage/session sizing decision points: per-user QuotaSize
-  |             (iPadOS 17+), session idle timeout + offline grace period,
-  |             cached-users-per-device planning guidance
+  |         - Both recipes: RE-NNN registry rows (IDs read at plan time,
+  |             starting after RE-223), Status: Approved flip, regenerated
+  |             (never hand-edited) filename-map.md
+  |         - build-filename-map.mjs --self-test row-count drift-canary
+  |             bumped 223 -> 225 in the SAME commit as the regeneration
+  |             (named deliverable, not a post-close audit finding)
+  |         - docs/index.md recipes table AND the prose quick-nav bullet
+  |             near line 38, same commit (closes the WR-01/Phase-132
+  |             defect pattern via a new validator needle asserting both)
+  |         - Explicit recorded ruling on the troubleshooting-hub
+  |             disposition (V-132-HUBSNOTWIRED re-confirmed or revised,
+  |             given kiosk-lockout/MHS exit-PIN-lockout are more
+  |             L1-adjacent than AVD/iPad were) — not a silent carry-forward
+  |         - Full-corpus C17 green; link-checker 0/0
   |       HARD CONSTRAINTS:
-  |         - BLOCKED on Phase 129 — template + decision-point format must be
-  |             locked first; NO dependency on Phase 130 (parallelizable in
-  |             principle; executed sequentially per use_worktrees:false)
-  |         - Cross-references (does not duplicate) the existing OU-07 Shared
-  |             iPad lifecycle doc
-  |         - Compliance policy/CA/app protection are UNSUPPORTED per Microsoft
-  |             Learn — the recipe documents the gap, never implements gating
-  |             (RESEARCH-surfaced conflict against the original milestone brief)
-  |       DISCUSS-PHASE FLAGS: none dominant (IPAD-04's Settings Catalog
-  |         exposure path for QuotaSize is a plan-time verification item, not a
-  |         design gray area)
+  |         - BLOCKED on Phase 135 AND Phase 136 — both recipes must be
+  |             content-complete and C17-clean first (CLOSE-AFTER-CONTENT,
+  |             navigation-last discipline)
+  |         - Nav commits must post-date content commits (verified via git
+  |             history at close)
+  |       DISCUSS-PHASE FLAGS: none dominant — hubs-not-wired disposition is
+  |         a named ruling task at this phase, not an open design question
   |
   v
-Phase 132 (Integration & Navigation-Last Close)
-  |       CLASS-03, CLASS-04
-  |       DELIVERS:
-  |         - Both recipes in docs/recipes/, RE-NNN registry rows at
-  |             Status: Approved, regenerated (never hand-edited) filename-map.md
-  |             — zero pipeline code changes
-  |         - docs/index.md new recipes section (navigation-last — committed
-  |             after both recipes are content-complete)
-  |         - Confirms common-issues.md/quick-ref-l1/l2.md are NOT wired
-  |             (recipes are provisioning Guides, not troubleshooting docs)
-  |       HARD CONSTRAINTS:
-  |         - BLOCKED on Phase 130 AND Phase 131 — registry-status-flip and nav
-  |             wiring are terminal, content-gated steps by convention
-  |         - Navigation-last discipline: nav commits must post-date content
-  |             commits (project convention, verified via git history at close)
-  |       DISCUSS-PHASE FLAGS: none
-  |
-  v
-Phase 133 (Chain-Validator Tooling Debt Closure)
-  |       TOOL-04, TOOL-05, TOOL-06
-  |       DELIVERS:
-  |         - FROZEN-AWARE-ADOPTION-SWEEP-01: the 11 standalone-RED predecessor
-  |             CI workflows (v1.4-v1.16 harness jobs + base harness-replay,
-  |             HYG-02 -1 line-shift root cause) made green or formally
-  |             re-dispositioned per the winning TOOL-04 approach
-  |         - O(n^2)-CHAIN-RUNNER-REMEDIATION-01: chain-validator subprocess
-  |             results cached within a single apex invocation; Windows
-  |             cold-clone apex behavior verified post-fix (Linux GHA remains
-  |             authoritative per D-03)
-  |         - HELPER-SPAWN-STDERR-01 residual slice-budget tuning at the 3
-  |             helper-spawn stderr sites (check-phase-{48,60,61}.mjs) + any
-  |             DEFER-119-A resolution falling out of the TOOL-04 decision
-  |       HARD CONSTRAINTS:
-  |         - STRUCTURALLY ISOLATED from Phases 129-132 — no dependency, but
-  |             sequenced AFTER content per RESEARCH Pitfall #15 (real risk of
-  |             this pillar's scripts/validation/ work colliding with new
-  |             recipe validators via copy-paste habit if interleaved)
-  |         - Touches ALREADY-frozen predecessor sidecars/harnesses — apply
-  |             byte-unchanged-invariant care; D-00a doctrine governs any
-  |             exception, scoped exactly to the TOOL-04 decision, nothing
-  |             broader
-  |       DISCUSS-PHASE FLAGS (DOMINANT for the tooling pillar):
-  |         TOOL-04 approach — (a) targeted re-pin of the affected frozen
-  |         `-audit-allowlist.json` sidecar {file,line} pins vs. (b) frozen-
-  |         aware own-close-snapshot reads for v1.4-v1.16-milestone-audit.mjs +
-  |         regenerate-supervision-pins.mjs; a genuine D-00a frozen-surface-edit
-  |         exception decision
-  |
-  v
-Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
-          HARN-11, HARN-12, HARN-13
-          SOLE DELIVERABLE CLUSTER OF THIS PHASE — never batches with content
-            or tooling work (mirrors v1.13 Phase 100 / v1.14 Phase 112 /
-            v1.15 Phase 119 / v1.16 Phase 125 / v1.17 Phase 128 exactly)
+Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
+          HARN-14, HARN-15, HARN-16
+          SOLE DELIVERABLE CLUSTER OF THIS PHASE — never batches with
+            content (mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15
+            Phase 119 / v1.16 Phase 125 / v1.17 Phase 128 / v1.18 Phase 134
+            exactly)
           DELIVERS:
 
-            - HARN-11: _lib/frozen-at-close.mjs V117 entry (v1.17 close-gate
-              SHA recovered via dual-token positive-confirm grep, SUBJECT LINE
-              verified per the v1.17 false-positive caveat) + readAtV117Close
-              export — the mandatory back-anchor invariant per V117-PIN-DEFERRAL
+            - HARN-14: _lib/frozen-at-close.mjs V118 entry (v1.18 close-gate
+              SHA 7af8a147, positively confirmed reachable post-push via
+              dual-token grep, SUBJECT LINE verified per the v1.17
+              false-positive caveat) + readAtV118Close export — only after
+              the owner's plain push has landed
 
-            - HARN-12: v1.18-milestone-audit.mjs (Path-A from v1.17, C1-C17
-              inherited) + v1.18-audit-allowlist.json + BASELINE_22 +
-              check-phase-129..134.mjs validators (chain-apex continues the
-              [48..N-1] invariant) + audit-harness-v1.18-integrity.yml (15th
-              parallel CI coexistence workflow); predecessor frozen surfaces
-              BYTE-UNCHANGED except the explicitly-scoped TOOL-04 remediation
-              (whichever approach wins at Phase 133 discuss-phase) — NO
-              value-masking, CHAIN_SKIP empty; full predecessor chain run
+            - HARN-15: v1.19-milestone-audit.mjs (Path-A from v1.18, C1-C17
+              inherited) + v1.19-audit-allowlist.json + BASELINE_23 +
+              check-phase-135..138.mjs (apex extends [48..137],
+              INDEPENDENTLY DERIVED, not copied from Phase 134) + 16th
+              parallel CI coexistence workflow; predecessor frozen surfaces
+              BYTE-UNCHANGED, CHAIN_SKIP empty; full predecessor chain run
               BEFORE authoring the close-gate per
               LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01
 
-            - HARN-13: 3-axis terminal re-audit (fresh git clone
-              --no-hardlinks + cross-OS Linux GHA authoritative for both chain
-              validators per D-03 + fresh zero-context sub-agent; cross-OS
-              PASS/FAIL/SKIP EXACT MATCH) + SINGLE close-gate commit flipping
-              all 20 v1.18 requirements to Validated across
-              PROJECT/ROADMAP/STATE/REQUIREMENTS + v1.18-MILESTONE-AUDIT.md +
-              v1.18-DEFERRED-CLEANUP.md
+            - HARN-16: 3-axis terminal re-audit (fresh git clone
+              --no-hardlinks + cross-OS Linux GHA authoritative for both
+              chain validators + fresh zero-context reproduction; cross-OS
+              PASS/FAIL/SKIP EXACT MATCH) + publish bundle regenerated
+              --version=v1.19 under the Stop-hook gate (both new recipes
+              pandoc-convertible, guard-docx.mjs-clean) + SINGLE close-gate
+              commit flipping all 17 v1.19 requirements to Validated across
+              PROJECT/ROADMAP/STATE/REQUIREMENTS + v1.19-MILESTONE-AUDIT.md
+              + v1.19-DEFERRED-CLEANUP.md
           HARD CONSTRAINTS:
 
-            - BLOCKED on Phase 133 — all content + tooling work complete and
-              green before the closing lineage bump + re-audit
+            - BLOCKED on Phase 137 — all content + integration work
+              complete and green before the closing lineage bump + re-audit
 
-            - WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepens to [48..133]; Linux
+            - BLOCKED on the owner's PIPE-02 push landing on origin/master —
+              hard go/no-go precondition, not a soft assumption; the v1.18
+              close-gate SHA has no valid target until then
+
+            - Apex extends to [48..137], INDEPENDENTLY DERIVED — do NOT
+              copy Phase 134's array forward unaudited
+
+            - WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepens to [48..137]; Linux
               GHA BOTH chain validators remain authoritative (D-03 OS split
               unchanged)
 
-            - V118 pin (freezing the v1.18 corpus) is explicitly OUT OF SCOPE
-              — back-anchor circularity, the successor milestone's job
-              (V118-PIN-DEFERRAL recorded at this close)
-          DISCUSS-PHASE FLAG: none (closing cluster; consumes prior decisions)
+            - V119 pin (freezing the v1.19 corpus) is explicitly OUT OF
+              SCOPE — back-anchor circularity, the successor milestone's
+              job (V119-PIN-DEFERRAL recorded at this close)
+          DISCUSS-PHASE FLAG: none (closing cluster; consumes prior
+            decisions)
 ```
 
-## v1.18 Requirement Coverage (20/20 mapped — Pending, roadmap created 2026-07-16)
+## v1.19 Requirement Coverage (17/17 mapped — Pending, roadmap created 2026-07-28)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
-| 129 | CLASS-01, CLASS-02 | 2 |
-| 130 | AVD-01, AVD-02, AVD-03, AVD-04, AVD-05, HYG-04 | 6 |
-| 131 | IPAD-01, IPAD-02, IPAD-03, IPAD-04 | 4 |
-| 132 | CLASS-03, CLASS-04 | 2 |
-| 133 | TOOL-04, TOOL-05, TOOL-06 | 3 |
-| 134 | HARN-11, HARN-12, HARN-13 | 3 |
-| **Total** | **20/20 mapped (0 orphaned)** | **20** |
+| 135 | KIOSK-01, KIOSK-02, KIOSK-03, KIOSK-04, KIOSK-05, HYG-05 | 6 |
+| 136 | MHS-01, MHS-02, MHS-03, MHS-04, MHS-05, HYG-06 | 6 |
+| 137 | CLASS-05, CLASS-06 | 2 |
+| 138 | HARN-14, HARN-15, HARN-16 | 3 |
+| **Total** | **17/17 mapped (0 orphaned)** | **17** |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase numbering continues from v1.17 (closed at Phase 128) → v1.18 starts at Phase 129.
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase numbering continues from v1.18 (closed at Phase 134) → v1.19 starts at Phase 135.
 
-**Named decisions (LOCKED at roadmap 2026-07-16):**
+**Named decisions (LOCKED at roadmap 2026-07-28):**
 
-- PHASE-COUNT: 6 phases (129-134). Derived from natural delivery boundaries per research: doc-class foundation (129) → two parallelizable-but-sequential content recipes (130, 131) → integration/nav close (132) → tooling debt (133) → harness close (134). Matches research's suggested Phase A-E structure, with research's Phase E split into two phases (133 tooling, 134 harness) to honor the project's standing convention that the harness-close cluster is ALWAYS its own final phase and never batches with tooling or content work.
-- FOUNDATION-FIRST: Phase 129 must precede both recipe phases — both recipes inherit the template's decision-point format and doc_type ruling; deciding once here is cheaper than retrofitting two files after content lands (RESEARCH Pitfalls #3/#4).
-- RECIPE-ORDER: AVD recipe (130) sequenced before Shared iPad recipe (131) — no cross-dependency exists (research confirms both are parallelizable), order follows requirements-doc listing order; both are genuinely independent and could execute in either order.
-- HYG-04-FOLD: HYG-04 (RE-084 Wi-Fi-claim verification/fix) lands WITH the AVD recipe in Phase 130, not the tooling phase or its own phase — Recipe #1 must independently re-verify the same claim as part of its own content anyway (RESEARCH Pitfall #2), so folding the fix in scopes the frozen-surface/validator reconciliation exactly once, on the phase already touching adjacent Windows content.
-- CLOSE-AFTER-CONTENT: Phase 132 (integration/nav) is BLOCKED on both 130 and 131 — registry-status-flip and nav wiring are terminal, content-gated steps by convention (navigation-last discipline), never interleaved mid-authoring.
-- TOOLING-ISOLATED: Phase 133 (chain-validator debt) carries NO dependency edge on Phases 129-132 but is sequenced after all content work, specifically to avoid RESEARCH Pitfall #15 (real risk of the tooling pillar's scripts/validation/ work colliding with new recipe validators via copy-paste habit if interleaved) — matches the structural-isolation instruction from the roadmap brief.
-- HARNESS-PHASE: Phase 134 is the sole deliverable of the closing cluster — the harness lineage bump NEVER batches with content/tooling work (mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15 Phase 119 / v1.16 Phase 125 / v1.17 Phase 128).
-- V117-PIN-MANDATORY: Phase 134 adds the `V117` frozen-at-close pin (v1.17 close-gate SHA) — the mandatory back-anchor invariant that freezes the v1.17 corpus.
-- HARNESS-LINEAGE: 16th Path-A milestone (v1.4→v1.18); BASELINE_22; V117 pin; 15th CI workflow; CHAIN_PHASES=[48..133] (continuing the [48..N-1] invariant; exact entry count confirmed at close-gate).
-- DISCUSS-PHASE-FLAGS: the 5 gray-area flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` per project convention (2 dominant: CLASS-01 decision-point block format at Phase 129, TOOL-04 approach at Phase 133; plus AVD-02 kiosk depth, AVD-01 AutoSubscription mechanism, and HYG-04 disposition all at Phase 130).
+- PHASE-COUNT: 4 phases (135-138), pre-determined by adversarial review recorded in REQUIREMENTS.md's Traceability table — not re-derived here. Derived from natural delivery boundaries: two content-parallel-but-sequential recipes (135, 136) → integration/nav close (137) → mandatory harness close (138). Between v1.17 (3 phases) and v1.18 (6 phases) in scope.
+- CONTENT-FIRST-NO-FOUNDATION: unlike v1.18 (which needed a doc-class foundation phase before either recipe), v1.19 has NO foundation phase — the Device Recipe doc class + template already exist from v1.18 Phase 129. Both recipes inherit that template directly; the first-lander precedent gray area (Phase 135 sets the delta-vs-anchor/branch-presentation convention Phase 136 inherits) exists precisely because there is no foundation phase to carry it explicitly.
+- RECIPE-ORDER: Windows kiosk (135) sequenced before Android MHS (136) — no cross-dependency exists (different platforms, architecture research confirms zero mutual dependency), order follows requirements-doc listing order and the roadmap-brief-mandated sequencing; parallelizable in principle, sequential in practice per `use_worktrees:false`.
+- HYG-05-FOLD / HYG-06-FOLD: HYG-05 (EEE-SOP-standard.md fenced-content rationale fix) lands WITH the Windows kiosk recipe in Phase 135 because RE-224's own XML-presentation-format gray area is what surfaces the rationale defect; HYG-06 (anchor spot-verification) lands WITH the Android recipe in Phase 136 as Plan 1, since RE-225's decision points directly depend on the facts being verified — mirrors the v1.18 HYG-04-FOLD precedent (fold a hygiene fix into the content phase that actually depends on it, scoping the reconciliation exactly once).
+- CLOSE-AFTER-CONTENT: Phase 137 (integration/nav) is BLOCKED on BOTH 135 and 136 — registry-status-flip and nav wiring are terminal, content-gated steps by convention (navigation-last discipline), never interleaved mid-authoring.
+- NO-TOOLING-PILLAR: unlike v1.18, v1.19 carries no dedicated tooling-debt phase — CARVE-1/FROZEN-AWARE-ADOPTION-SWEEP-01 is explicitly OUT (barred verbatim by its own routing, requires its own dedicated tooling milestone) and no other tooling debt is in scope this milestone.
+- HARNESS-PHASE: Phase 138 is the sole deliverable of the closing cluster — the harness lineage bump NEVER batches with content work (mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15 Phase 119 / v1.16 Phase 125 / v1.17 Phase 128 / v1.18 Phase 134).
+- V118-PIN-MANDATORY-AND-GATED: Phase 138 adds the `V118` frozen-at-close pin (v1.18 close-gate SHA `7af8a147`) — the mandatory back-anchor invariant — but this is explicitly BLOCKED on the owner's PIPE-02 push landing first, since the SHA is currently unreachable on any remote. This is a hard go/no-go gate recorded in the phase, not a soft assumption.
+- HARNESS-LINEAGE: 17th Path-A milestone (v1.4→v1.19); BASELINE_23; V118 pin; 16th CI workflow; CHAIN_PHASES=[48..137] (continuing the [48..N-1] invariant, independently derived — not copied from Phase 134's array — exact entry count confirmed at close-gate).
+- DISCUSS-PHASE-FLAGS: the 9 gray-area flags from REQUIREMENTS.md are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` + `/adversarial-review` per project convention. Dominant: RE-224 XML presentation format at Phase 135. Also at Phase 135: `## Rollback/Recovery` template divergence, E2 verification mechanism, Windows enrollment-path fork, per-branch edition floors. At Phase 136: RE-225 fork taxonomy, C17 #11 row budget. Cross-cutting both content phases: shared conceptual anchor, first-lander precedent.
 
 ## Performance Metrics
 
@@ -272,97 +276,77 @@ Phase 134 (V117 Pin + 16th Path-A Lineage Bump + Terminal Close)
 - v1.15: 7 phases (113-119), 40 plans — shipped 2026-07-06
 - v1.16: 6 phases (120-125), 38 plans — shipped 2026-07-10
 - v1.17: 3 phases (126-128), 11 plans — shipped 2026-07-11
-- v1.18: 6 phases (129-134) — in progress
+- v1.18: 6 phases (129-134), 17 plans — shipped 2026-07-20
+- v1.19: 4 phases (135-138) — in progress
 
 ## Accumulated Context
 
 ### Decisions
 
-**v1.18 roadmap decisions (LOCKED 2026-07-16):** see "Named decisions" above.
+**v1.19 roadmap decisions (LOCKED 2026-07-28):** see "Named decisions" above.
 
-**Carried-forward durable architectural decisions (from v1.14–v1.17):**
+**Carried-forward durable architectural decisions (from v1.14–v1.18):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commits (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; non-current-milestone predecessor frozen surfaces BYTE-UNCHANGED except explicitly-scoped exceptions (D-00a doctrine)
-- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01: Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, held v1.12–v1.17); depth deepens each milestone
+- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01: Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, held v1.12–v1.18); depth deepens each milestone, now heading to `[48..137]`
 - Adversarial-review invoked at discuss-phase for gray-area scoping decisions (per user memory `feedback_adversarial_review_preference.md`)
-- V116 pin recovery precedent (carried to V117): recover the close-gate SHA via the dual-token positive-confirmation `git log --all --grep` method — but v1.17 close discovered a false-positive trap (a later commit's BODY quoting the recovery command matched the naive `--grep -1`); v1.18 planners MUST verify the returned commit's SUBJECT LINE carries both tokens, not trust `-1` blindly
-- Registry -> filename-map -> publish-bundle pipeline (v1.15-v1.17) is unchanged, generic, and proven across every prior milestone — Phase 132 is standard mechanical execution, zero pipeline code changes expected
-- Class-B cascade precedent: a close PR firing the full CI cascade with predecessor vN-harness RED is ACCEPTED-STANDALONE-CI-RED (non-blocking) IFF all failures are harness jobs & zero chain failures & the current-milestone run is green — TOOL-04 (Phase 133) is the first milestone attempting to actually CLOSE this class of debt rather than accept it
-- Archival-drift close blocker: `complete-milestone` archiving `.planning/phases/NNN/` can break predecessor check-phase validators reading hardcoded `phases/` paths — scan nested-fail children pre-push at Phase 134's close-gate (recurs every close per memory `reference_archival_drift_close_blocker.md`)
+- V117 pin recovery precedent (carries to V118): recover the close-gate SHA via the dual-token positive-confirmation `git log --all --grep` method, with the returned commit's SUBJECT LINE verified to carry both tokens (not `-1` trusted blindly) per the v1.17 false-positive caveat, re-confirmed at v1.18's own close
+- Registry -> filename-map -> publish-bundle pipeline (v1.15-v1.18) is unchanged, generic, and proven across every prior milestone — Phase 137 is standard mechanical execution, zero pipeline code changes expected
+- A later check-phase-N validator can pin an earlier check-phase's EXACT call-site string verbatim — grep before editing any frozen validator line (memory `reference_frozen_callsite_pinning.md`, surfaced at v1.18 Phase 133)
+- Archival-drift close blocker: `complete-milestone` archiving `.planning/phases/NNN/` can break predecessor check-phase validators reading hardcoded `phases/` paths — scan nested-fail children pre-push at Phase 138's close-gate (recurs every close per memory `reference_archival_drift_close_blocker.md`)
+- A deferral from phase A to phase B needs an explicit landing spot IN phase B's scope, or it evaporates — the milestone's own #1 recurring lesson, directly governing HYG-06's Plan-1 gating and CLASS-05's canary-bump-same-commit requirement
+- complete-milestone on THIS repo must NOT `git rm REQUIREMENTS.md` — check-phase-54 live-reads it; deferred owner push means deletion breaks Axis-2 GHA apex (memory `reference_complete_milestone_keep_requirements.md`)
 
-*(Full v1.0–v1.17 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md` and `.planning/MILESTONES.md`.)*
-
-- [Phase 129]: Recipe template built from admin-template.md base with D-06/D-07/D-08/D-13 diffs; three worked STD-05 examples (branching/enumerable/free-value) in one delete-marked HTML comment; corpus C17-green at 230/0
-- [Phase 130]: L108 Configuration-Caused Failures Wi-Fi row removed entirely (not reframed) - non-failure row would contradict the table's frozen Misconfiguration|Symptom|Runbook semantics
-- [Phase 130]: RE-222 assigned now at status Draft; registry row + Approved flip deferred to Phase 132 CLASS-03
-- [Phase 130]: AVD-04 maintenance-window/update-ring rendered as a single shared Step 6 block (not per-branch), with explicit per-branch-CSP-differs caveat
-- [Phase 130]: Session-reset field names carried as [ASSUMED] Case-2 enumerable options with explicit author-time Settings-Catalog verification caveat
-- [Phase 131]: Followed the 6 requirement-inversion traps (T-1..T-6) verbatim per CONTEXT.md — cached users is a real settable field (T-1), wipe-vs-factory-reset kept as two distinct facts (T-6), Entra shared-device-mode distinction stated correctly without inheriting RE-109's conflation (T-4)
-- [Phase 131]: T-2/T-3 carried verbatim in layered-config worked example: all apps Required device-group-only, conflict warning uses the three verbatim first-party phrases (never last-writer-wins)
-- [Phase 131]: Guest decision block (B3) recorded the real inverted Block Shared iPad temporary sessions polarity as plain prose outside the blockquote to avoid C17 #12 risk
-- [Phase 132]: Registry Title column reused each recipe's H1 text verbatim, consistent with existing RE-row title style
-- [Phase 132]: Recipe entry blurbs in index.md drawn from each recipe's H1 + Summary opening sentence, matching existing table convention
-- [Phase 133]: [Phase 133 P01]: TOOL-04 re-pin coordinates fully derived via reason-text semantic matching (not arithmetic); R-1 orphaned v1.4/v1.4.1 MHS pin recommended left unmoved; Phase-119 cobo.md split treated with same identity-preserving expansion principle as C17 #12
-- [Phase 133]: TOOL-05 closed via source-cited attestation (81-spawn O(depth)); CARVE-2 hand-off recorded for Phase 134 — no cache code authored
-- [Phase 133]: [Phase 133 P04]: TOOL-06 stderr slice budget raised n:200 -> n:1000 at the 3 --self-test call sites (check-phase-48/60/61.mjs); DEFER-119-A confirmed ACCEPTED-ADVISORY, no independent action
-- [Phase 133]: [Phase 133 P02]: R-1 recon claim corrected (v1.4/v1.4.1 MHS pin content still lives at glossary:303, moved not left orphaned); R-2/R-3/R-4 content-timeline-gap pins added via verbatim ground-truth reason text; all 14 sidecars converged to v1.17's exact pin counts (26/10/4/4)
-- [Phase 134]: V117 SHA recovered via dual-token positive-confirmation grep, subject-line verified per the v1.17 false-positive caveat
-- [Phase 134]: v1.18-audit-allowlist.json copied byte-verbatim from v1.17's; regenerate-supervision-pins.mjs --report positively confirmed zero pin drift (26 pinned, 0/0/0) rather than assumed
-- [Phase 134]: BASELINE_22 pre-Atom-1 HEAD captured as b54043aa (Task 1's own commit), not the Wave-0 anchor 18fd8b63, per the Phase 119/125/128 anchor-capture discipline
-- [Phase 134]: check-phase-134 apex uses corrected ['v1.18-phases'] archive-root token (own milestone root) instead of copying check-phase-128's frozen ['v1.16-phases'] predecessor-root bug forward a 4th time
-- [Phase 134]: Leaf validators 129-133 check only durable docs/scripts deliverables, never .planning/phases/ ephemeral artifacts, avoiding archival-drift risk; only apex 134 uses resolveArchivedPhasePath
-- [Phase 134]: Byte-unchanged gate computed against WAVE0_ANCHOR; TOOL-04/TOOL-06 sanctioned exceptions independently confirmed via git merge-base --is-ancestor as pre-dating the anchor
-- [Phase 134]: Axis 3 dispatched on same Windows host (no subagent-dispatch tool or second runner available) — dispositioned honestly as corroborating-only, not independent; Axis 2 (Linux GHA) remains sole cross-OS-authoritative per D-03
-- [Phase 134]: Axis 1 completed the full non-nested [48..133] apex recursion without hitting WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 this cycle (depth 86) — recorded as an honest completed PASS, not assumed
-- [Phase 134 P05]: Close-gate lands SINGLE atomic commit, local/unpushed on master (this repo's standing convention — push is an owner PIPE-02 decision, not an autonomous-run action); Axis 2 (Linux GHA, sole cross-OS-authoritative per D-03) and the GA-4 Class-B cascade disposition are explicitly DEFERRED with a machine-verification command block recorded in v1.18-MILESTONE-AUDIT.md, never silently skipped or assumed green
-- [Phase 134 P05]: v1.18-DEFERRED-CLEANUP.md logs CARVE-1 (FROZEN-AWARE-ADOPTION-SWEEP-01 durable debt — TOOL-04 re-pin closed only the acute symptom, root cause unscheduled to a future dedicated tooling milestone) and CARVE-2 (TOOL-05 re-scope, CLOSED) per the 133-CONTEXT dual-carve-out mandate; V118-PIN-DEFERRAL added (v1.19's back-anchor job)
+*(Full v1.0–v1.18 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md` and `.planning/MILESTONES.md`.)*
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
-- Phase 129 (CLASS-01): resolve the decision-point block format via `/adversarial-review` BEFORE authoring the template; ground against C17 #12's 200-char blockquote cap and the no-code-fence rule (research provides a grounded option space — blockquote-lead-in + decision-table composite — but does not resolve it)
-- Phase 130 (AVD-01): direct-fetch `policy-csp-remotedesktop` to resolve the device-vs-user `RemoteDesktop/AutoSubscription` CSP scope conflict before the recipe asserts device-context-only targeting; design the Verification step to re-apply-per-sign-in-check regardless of which scope wins; re-verify the MSRDC retirement date (2026-03-27, currently only community-corroborated) against a first-party Microsoft retirement notice
-- Phase 130 (AVD-02): treat the Assigned Access kiosk packaging/autologon/session-reset guidance as MEDIUM confidence (sourced only from the Azure/WindowsAppKiosk GitHub reference, not a first-party how-to) — verify or explicitly flag before finalizing recipe depth
-- Phase 130 (HYG-04): independently re-verify RE-084's Wi-Fi-unsupported claim against current Microsoft Learn — do not copy the existing (possibly stale) text verbatim into the new recipe
-- Phase 131 (IPAD-04): the "maximum resident users"/per-user storage `QuotaSize` Settings Catalog exposure path (discrete toggle vs. custom OMA-URI-equivalent) needs a live-verification spot-check against the corpus's existing OU-07 doc's 2026-05-21 citation
-- Phase 133 (TOOL-04): resolve the DOMINANT approach — (a) targeted frozen-sidecar re-pin vs. (b) frozen-aware own-close-snapshot reads — via `/adversarial-review` BEFORE implementation; genuine D-00a frozen-surface-edit exception decision
-- Phase 134 (HARN-11): recover the V117 SHA via the dual-token positive-confirmation `git log --all --grep` method; explicitly verify the SUBJECT LINE (not just `-1` output) carries both tokens per the v1.17 false-positive caveat
-- Phase 134 (HARN-12): run the FULL predecessor chain BEFORE authoring the close-gate (not just the immediate apexes) per `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`; scope which predecessor validators need frozen-aware conversion given whatever TOOL-04 touched at Phase 133; confirm the exact CHAIN_PHASES entry count for closephase
+- Phase 135 (KIOSK-01): re-confirm the Plan-1 mechanism claim (Windows 11 multi-app kiosk = Custom OMA-URI/XML, no GUI path) with a citation dated inside the phase itself, not the SUMMARY — Learn pages proven to update asymmetrically
+- Phase 135 (KIOSK-02): edition-floor citation must be same-milestone-dated — a recent Learn revision unified Pro/Enterprise/Education/IoT floors for both single- and multi-app; stale sources produce a wrongly restrictive claim
+- Phase 135 (KIOSK-03): the SharedPC + multi-app layering interaction has zero first-party source either way — treat as mutually exclusive unless discuss-phase's `/adversarial-review` finds and cites an affirmative source
+- Phase 135 (HYG-05): the three validators reading EEE-SOP-standard.md (check-phase-114/120/129.mjs) assert content strings, not line coordinates — confirm before editing
+- Phase 136 (MHS-02): actively re-search the MHS exit-PIN dual-policy synchronization requirement during authoring in case a first-party source surfaces that this research pass missed; if not found, ship `[MEDIUM]` as-is, never silently promoted
+- Phase 136 (HYG-06/MHS-01): spot-verify specific `05-dedicated-devices.md` facts RE-225's decision points depend on against current Learn before Plan 2 authoring begins, given the anchor doc is past its own `review_by` date (33+ days)
+- Phase 138 (HARN-14): recover the V118 SHA via the dual-token positive-confirmation `git log --all --grep` method; explicitly verify the SUBJECT LINE (not just `-1` output) carries both tokens per the v1.17 false-positive caveat; do not attempt before the owner's push has landed
+- Phase 138 (HARN-15): run the FULL predecessor chain BEFORE authoring the close-gate (not just the immediate apexes); independently derive the exact CHAIN_PHASES entry count for `[48..137]` rather than copying Phase 134's array forward
 
 ### Pending Todos
 
-- At Phase 129 plan time: run `/gsd-discuss-phase 129` + `/adversarial-review` on the decision-point block format (dominant gray area) before authoring the template
-- At Phase 130 plan time: run `/adversarial-review` (or targeted verification) on AVD-02 kiosk depth and AVD-01 AutoSubscription mechanism; resolve HYG-04 disposition from the verification result
-- At Phase 133 plan time: run `/adversarial-review` on the TOOL-04 approach (dominant gray area for the tooling pillar) before implementation
-- At Phase 134 plan time: confirm V117 SHA via positive-confirmation grep (subject-line verified); run the FULL predecessor chain before authoring the close-gate; scope frozen-aware conversion for whatever TOOL-04 touched
+- At Phase 135 plan time: run `/gsd-discuss-phase 135` + `/adversarial-review` on the RE-224 XML-presentation-format gray area (DOMINANT) before authoring the Steps section; also resolve the `## Rollback/Recovery` template-divergence disposition, the E2 verification-mechanism question, the Windows enrollment-path fork, and per-branch edition floors
+- At Phase 136 plan time: run Plan 1 (anchor spot-verification + landing-spot decisions for every cut element) before Plan 2 authoring; resolve the RE-225 fork-taxonomy naming and the C17 #11 row-budget question via `/adversarial-review`
+- Across Phase 135/136: resolve the shared-conceptual-anchor gray area and record the first-lander precedent explicitly once Phase 135 lands
+- At Phase 137 plan time: confirm the hubs-not-wired disposition is recorded as an explicit ruling (not silently carried forward), reassessing given kiosk-lockout/MHS-lockout's higher L1-adjacency than AVD/iPad
+- At Phase 138 plan time: verify the owner's PIPE-02 push has landed on `origin/master` BEFORE beginning any V118-pin work; confirm V118 SHA via positive-confirmation grep (subject-line verified); run the FULL predecessor chain before authoring the close-gate
 
 ### Blockers/Concerns
 
-At roadmap stage. Execution-time watch items (not blockers — address within specified phases):
+At roadmap stage. Execution-time watch items (not blockers unless noted — address within specified phases):
 
-- Phase 130: must not conflate the AVD client endpoint with the AVD session host — open the recipe with an explicit scope-disambiguation banner (RESEARCH Pitfall #1)
-- Phase 130: the milestone brief's Recipe #1 ingredient list must stay device/Intune-config-only — no AVD host-pool/session-host/FSLogix content (explicit Out-of-Scope row in REQUIREMENTS.md)
-- Phase 131: the milestone brief lists "compliance policy" as a Recipe #2 ingredient, but Shared iPad has compliance policies/CA/app protection/email profiles all unsupported per Microsoft Learn — the recipe's compliance section must document the gap, never implement working compliance gating (REQUIREMENTS.md IPAD-02 already reflects this correction)
-- Phase 132: registry-parity + filename-map regeneration is the guard against a silent partial bundle — confirm both recipes resolve cleanly with zero pipeline code changes
-- Phase 133: touches ALREADY-frozen predecessor sidecars/harnesses — apply the same byte-unchanged-invariant care used at every prior harness-adjacent change; any exception is exactly the TOOL-04 discuss-phase decision, nothing broader
-- Phase 134: WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepens again; Linux GHA BOTH chain validators remain authoritative (D-03 OS split unchanged); V118 pin is explicitly out of scope (successor milestone's job)
+- **HARD BLOCKER, Phase 138 only:** the owner's PIPE-02 push of the v1.18 close-gate + tag must land on `origin/master` before any V118-pin work begins — Phases 135-137 are NOT blocked by this and can proceed independently
+- Phase 135: zero edits to `docs/recipes/01-shared-windows-avd-client.md` — `check-phase-130.mjs:64,67` pins its Step 5a/5b headings as literal strings inside every apex chain; any corpus-wide text operation must verify it doesn't touch this file indirectly
+- Phase 135: the RE-224 XML-presentation-format tension is a genuine, currently-unresolved corpus rule conflict (STD-05/C17 bars fenced decision content; RE-224's core deliverable is a schema-exact XML payload) — must be ruled at discuss-phase before Steps-section drafting, not discovered mid-authoring
+- Phase 136: zero line-shifting edits to `docs/_glossary-android.md` / `docs/reference/android-capability-matrix.md` — 365 and 139 pin coordinates across 16 frozen sidecars; CARVE-1 option (a) coordinate re-pin is the only licensed remedy if unavoidable
+- Phase 136: `05-dedicated-devices.md` is 33+ days past its `review_by` date — any drift found must get a named landing spot (requirement or DEFERRED-CLEANUP entry), never an unlogged drive-by edit to an Approved doc
+- Phase 137: the `build-filename-map.mjs --self-test` canary bump (223→225) must land in the SAME commit as the filename-map regeneration, and the `index.md` table + line-38 quick-nav bullet must land in the SAME commit — both are named deliverables per the WR-01 recurrence risk, not implicit side effects
+- Phase 138: apex extends to `[48..137]`, independently derived — do NOT copy Phase 134's `['v1.18-phases']`-style array forward unaudited; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepens again; V119 pin is explicitly out of scope (successor milestone's job)
 
 ## Session Continuity
 
-Last session: 2026-07-20T06:00:00.000Z
-Stopped at: Completed 134-05-PLAN.md (v1.18 close-gate — milestone shipped, local/unpushed)
+Last session: 2026-07-28T00:00:00.000Z
+Stopped at: v1.19 ROADMAP.md + STATE.md written (roadmap creation complete)
 Resume file: None
-Next action: v1.18 archived + tagged locally. Owner: push the close-gate + `v1.18` tag at the PIPE-02 checkpoint (fires the deferred Axis-2 GHA cross-OS confirmation + GA-4 cascade disposition per `v1.18-MILESTONE-AUDIT.md`'s command block). Then `/gsd-new-milestone` to scope v1.19.
+Next action: `/gsd-discuss-phase 135` to resolve the dominant RE-224 XML-presentation-format gray area (and the other Phase-135 flags) before content authoring begins.
 
 ## Operator Next Steps
 
-- Push the close-gate commit + `v1.18` tag (owner PIPE-02) — fires the deferred Axis-2 Linux-GHA cross-OS confirmation
-- Run `/gsd-new-milestone` to scope v1.19
+- Run `/gsd-discuss-phase 135` (+ `/adversarial-review` on the dominant RE-224 XML-format gray area) before Phase 135 authoring
+- Push the v1.18 close-gate commit + `v1.18` tag (owner PIPE-02) at some point before Phase 138 begins — not blocking Phases 135-137
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
-| (v1.18 phases not yet started) | — | — | — |
+| (v1.19 phases not yet started) | — | — | — |
 | Phase 129 P01 | 25min | 2 tasks | 2 files |
 | Phase 129 P02 | 20min | 1 tasks | 1 files |
 | Phase 130 P01 | 15min | 2 tasks | 1 files |
