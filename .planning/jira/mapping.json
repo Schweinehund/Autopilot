@@ -906,8 +906,35 @@
           "name": "V117 Pin + 16th Path-A Lineage Bump + Terminal Close"
         }
       }
+    },
+    "v1.19": {
+      "epicKey": "RTS-760",
+      "status": "created",
+      "created": "2026-07-28",
+      "phases": {
+        "135": {
+          "issueKey": "RTS-761",
+          "status": "todo",
+          "name": "Recipe #3 — Windows 11 Multi-App Kiosk"
+        },
+        "136": {
+          "issueKey": "RTS-762",
+          "status": "todo",
+          "name": "Recipe #4 — Android Dedicated MHS Multi-App"
+        },
+        "137": {
+          "issueKey": "RTS-763",
+          "status": "todo",
+          "name": "Integration & Navigation-Last Close"
+        },
+        "138": {
+          "issueKey": "RTS-764",
+          "status": "todo",
+          "name": "V118 Pin + 17th Path-A Lineage Bump + Terminal Close"
+        }
+      }
     }
   },
-  "lastUpdated": "2026-07-20",
+  "lastUpdated": "2026-07-28",
   "notes": "Full backfill sync 2026-05-30: closed RTS-430/431 (Phase 6+7, stale Backlog → Done) and created 63 retroactive epics RTS-552..RTS-614 covering Phases 8-70 across v1.0/v1.1/v1.2/v1.3/v1.4/v1.4.1/v1.5/v1.6/v1.7 milestones. All epics in Done state with retroactive closure comments. Per-milestone labels added (autopilot-docs, v1, v1.X). Non-contiguous epic key allocation in some ranges reflects concurrent agent creation. v1.6 phase details reconstructed from v1.6-MILESTONE-AUDIT.md Pillar sections (no v1.6-ROADMAP archived). v1.8 milestone planning pending."
 }
