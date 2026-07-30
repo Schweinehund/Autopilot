@@ -4,16 +4,16 @@ milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
 current_phase: 135
 current_phase_name: "Recipe #3 — Windows 11 Multi-App Kiosk"
-status: executing
-stopped_at: Completed 135-01-PLAN.md
-last_updated: "2026-07-30T05:52:21.129Z"
+status: verifying
+stopped_at: Completed 135-02-PLAN.md
+last_updated: "2026-07-30T06:12:30.015Z"
 last_activity: 2026-07-30
 last_activity_desc: Phase 135 execution started
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 Phase: 135 (Recipe #3 — Windows 11 Multi-App Kiosk) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-07-30 — Phase 135 execution started
 
 ## v1.19 Phase Dependency Summary
@@ -288,6 +288,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 135 P01 | 12min | 3 tasks | 6 files |
+| Phase 135 P02 | 38min | 4 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -311,6 +312,8 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 
 - [Phase ?]: HYG-05 corrected at all three sites (including additive D-07 site); RE-224 slug/H1 ruled in Plan 135-01 for Plan 135-02/Phase 137 to inherit
 - [Phase ?]: D8.2: Operational-channel enable-before-first-sign-in precondition landed as appends to 4 research sites (augment, not substitute); FEATURES.md/REQUIREMENTS.md GPO-name and namespace-alias defects corrected
+- [Phase ?]: Phase 135 D3.1 ratified augment-not-substitute: RE-224 Verification retains ROADMAP SC5's clean AssignedAccess > Operational line verbatim and ADDS the enable-before-first-kiosk-sign-in precondition plus Admin-channel Event 31000
+- [Phase ?]: RE-224 ships the worked payload on BOTH surfaces (one column-0 xml fence + a 22-row decomposition table) — the corpus payload-artifact convention Phase 136 inherits, minus the CDATA-JSON tension which is native to RE-224
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -345,8 +348,8 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-07-30T05:52:21.107Z
-Stopped at: Completed 135-01-PLAN.md
+Last session: 2026-07-30T06:12:28.286Z
+Stopped at: Completed 135-02-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 135` to resolve the dominant RE-224 XML-presentation-format gray area (and the other Phase-135 flags) before content authoring begins.
 
