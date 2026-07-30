@@ -252,3 +252,77 @@ Assign the profile to a **device** group. `Configuration` is a device-scope node
 > An admin without the **Device configurations** Create, Read and Update permissions, or the Intune Administrator role, cannot read the XML back out of the portal.
 
 > Keep the authored file in source control — the portal is not a reliable copy of it.
+
+## Verification
+
+**Admin at the console, before the first kiosk sign-in:**
+
+- [ ] The `AssignedAccess > Operational` channel is enabled — in Event Viewer open **Applications and Services Logs** > **Microsoft** > **Windows** > **AssignedAccess** > **Operational**, right-click **Operational**, and select **Enable Log**. It is disabled by default, so do this before the first kiosk sign-in: for some failures events are captured only once, and logging enabled after an issue occurs may not capture them.
+- [ ] The profile arrived on the device: the key `HKLM\Software\Microsoft\Windows\AssignedAccessCsp` is present. This is device-scope and readable without the kiosk account signing in, which is what separates *the policy never arrived* from *the policy arrived but the signing-in identity is not in the configuration's scope*.
+
+**During and after the kiosk account's first sign-in:**
+
+- [ ] The kiosk account signs in and lands in the restricted Start menu, showing only allow-listed apps. An empty or partial pin set on the very first sign-in is the [Step 3](#step-3-pre-install-the-allow-listed-apps) timing hazard, not necessarily a failure — sign out, sign back in, and re-check before treating it as one.
+- [ ] A non-allow-listed app fails to launch, which confirms the generated AppLocker rules are in force.
+- [ ] A representative allow-listed app's **secondary** flow completes without an app-blocked error — a file picker, a print dialog, or an OAuth redirect.
+- [ ] Blocked keyboard shortcuts are blocked: `Ctrl + Shift + Esc` (Task Manager), `WIN + R` (Run), `WIN + E` (File Explorer) and `WIN + I` (Settings) all do nothing.
+- [ ] The `AssignedAccess > Operational` event log is clean — meaning no profile parse error and no profile apply error for the kiosk identity, which is what the channel records when the payload is malformed or schema-invalid.
+- [ ] Check `Microsoft-Windows-AssignedAccess/Admin` for **Event ID 31000** ("Unspecified error applying assigned access for current user, signing out") and confirm it is absent.
+- [ ] **Entra account/group only:** check `Microsoft-Windows-AAD/Operational` for **Event ID 1098** carrying `AADSTS50076` (MFA) or `AADSTS50158` (Terms of Use) and confirm both are absent. Interactive Conditional Access — MFA *or* Terms of Use — hard-breaks this sign-in by design. This check has no referent on the local autologon arm.
+
+The Assigned Access configuration takes effect the next time the targeted user signs in. If that account is already signed in when the configuration applies, sign out and sign back in before validating.
+
+## Rollback/Recovery
+
+Removing the Assigned Access configuration is not the same as returning the device to its prior state.
+
+**Exiting a running session (temporary):**
+
+- Alt+F4, Alt+Tab, Alt+Shift+Tab and Ctrl+Alt+Del are not blocked for a restricted-user-experience account. Ctrl+Alt+Del is the documented way to exit the kiosk experience, and deploying the profile automatically applies the `Ctrl+Alt+Del Options` policies `Remove Logoff`, `Remove Task Manager` and `Remove Change Password`, which strip those affordances. Those three are consequences of the profile, not steps an admin performs.
+- Ctrl+Alt+Del exits the **running session only**. The kiosk relaunches when the Assigned Access account signs in again, or after the sign-in-screen time-out elapses.
+- On the multi-app kiosk page Microsoft documents a 30-second sign-in-screen time-out after which the kiosk relaunches, adjustable by adding `IdleTimeOut` (DWORD, milliseconds in hexadecimal) under `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI`. `IdleTimeOut` does not apply to the Microsoft Edge kiosk mode.
+
+**Removing the configuration (permanent):**
+
+- Unassign or delete the Intune policy that carries the configuration. The device needs network connectivity to receive that change, so an offline kiosk stays locked down until it checks in.
+- Removal is channel-scoped: unassign the policy where Intune delivered it; uninstall the provisioning package where a package delivered it.
+- **Removal is not rollback.** Deleting the Assigned Access configuration removes the policy settings associated with the users, but it cannot revert all the changes — in a multi-app kiosk scenario the Start menu configuration is maintained.
+- Self-service removal through **Settings** is not available once a restricted user experience is configured.
+
+**Reimaging and re-enrollment:**
+
+- Autopilot Reset retains provisioning packages and MDM enrollment and re-applies the lockdown, so unassign the policy before resetting rather than after.
+- A device cannot automatically re-enroll through Windows Autopilot after an initial deployment with self-deploying mode. Delete the device record instead, in the Microsoft Intune admin center under **Devices** > **All devices** > select the device > **Delete**.
+
+**Two separate account-model facts, not a recovery ranking:**
+
+- The autologon account is a local standard user that Assigned Access creates and manages.
+- An Entra-group `Config` requires the device to have internet connectivity when a member of the group signs in.
+- Nothing first-party states which arm recovers more easily. Treat the two facts above as separate; the comparison between them is `[ASSUMED]`.
+
+**One device-scope side effect worth knowing before you deploy:**
+
+- Deploying this profile applies device-level policy settings to every user of the device, administrator accounts included — not only to the kiosk identity.
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Symptom | Runbook |
+|------------------|---------|---------|
+| Backslashes doubled inside an XML attribute such as `App/@DesktopAppPath` | The path never resolves, so the app is effectively not allow-listed even though the payload looks right | [Step 5](#step-5-author-the-assignedaccessconfiguration-xml) |
+| The `AssignedAccess > Operational` channel left disabled, then read as clean | An empty channel reads as a pass and hides the real parse or apply error — a guaranteed false pass | [Verification](#verification) |
+| `UserGroup/@Name` filled with the group's display name instead of its object ID | Intune reports the policy applied and no restricted experience ever appears on the device | [Step 4](#step-4-separate-policy-delivery-scope-from-effective-configuration-scope) |
+| Apps assigned Available, or to a user group, or simply not installed before the first kiosk sign-in | The Start menu is partial or empty at first sign-in and nothing surfaces an error | [Step 3](#step-3-pre-install-the-allow-listed-apps) |
+| `Profile Id` or `DefaultProfile Id` written without the enclosing braces, or the two values differing | Silently schema-invalid; the device rejects the payload rather than partially applying it | [Step 5](#step-5-author-the-assignedaccessconfiguration-xml) |
+| Reading "policy applied" in Intune as "the kiosk is configured" | Delivery succeeded while the signing-in identity sits outside the configuration's own scope | [Step 4](#step-4-separate-policy-delivery-scope-from-effective-configuration-scope) |
+| The named Entra group contains administrative principals | Associating an admin user with an Assigned Access profile is not supported, and self-deploying enrollment does not prevent it | [Step 4](#step-4-separate-policy-delivery-scope-from-effective-configuration-scope) |
+| Start layout not as expected | Check whether the apps in the Start layout are installed for the assigned-access user, and whether the `.lnk` that a desktop pin points at exists on the device | [Step 3](#step-3-pre-install-the-allow-listed-apps) |
+| The **Templates** > **Kiosk** > **Multi app kiosk** profile used against a Windows 11 device | Documented for Windows 10 devices; the option is reachable but there is no supported Windows 11 multi-app path there | [Step 6](#step-6-deliver-the-configuration-through-a-custom-oma-uri-profile) |
+
+## See Also
+
+- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this recipe's decision block instantiates
+- [Self-Deploying Mode Configuration](../admin-setup-apv1/08-self-deploying.md) — full self-deploying field reference, TPM 2.0, and network prerequisites
+- [ESP Policy](../admin-setup-apv1/03-esp-policy.md) — device-phase-only Enrollment Status Page configuration
+- [Dynamic Device Groups](../admin-setup-apv1/04-dynamic-groups.md) — the membership-rule syntax for the kiosk device group
+- [APv1 vs APv2](../apv1-vs-apv2.md) — framework selection reference
+- [Step 5a: Kiosk configuration](../recipes/01-shared-windows-avd-client.md#step-5a-kiosk-configuration) — the single-app case, which this recipe does not work
