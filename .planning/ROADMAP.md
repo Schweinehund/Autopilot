@@ -64,7 +64,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   5. Verification is admin-executable end-to-end: restricted Start menu with only allow-listed apps, a non-allow-listed app failing to launch, a secondary app flow completing without an app-blocked error, and a clean `AssignedAccess > Operational` event log — with `AppNotFound` named as a prerequisite symptom, not a status check.
   6. `docs/_standards/EEE-SOP-standard.md`'s fenced-content rationale at `:462`/`:496-497` is corrected to state the true mechanism (fenced content is indexed but as poorly-retrieving non-prose runs), resolving the self-contradiction at `:415`, with the normative D-03/D-04 rules untouched.
 
-**Plans**: 2/2 plans executed
+**Plans**: 2/2 plans complete
 
 - [x] 135-01-PLAN.md
 - [x] 135-02-PLAN.md
