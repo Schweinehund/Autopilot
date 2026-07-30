@@ -459,8 +459,8 @@ This section defines the composite decision-point block format for the new Devic
 class (`docs/recipes/*`, v1.18) and any future document that needs to prompt an admin for a
 choice mid-procedure. It was resolved via `/adversarial-review` against two hard mechanical
 constraints: C17 assertion #12 (contiguous top-level blockquote runs capped at 200 characters)
-and the standing no-key-info-in-code-fences rule (fenced content is invisible to the Copilot
-Studio / SharePoint retrieval body text — see Grounding Notes above). The composite documents a
+and the standing no-key-info-in-code-fences rule (fenced content **is** indexed, but as non-prose
+runs that retrieve poorly — see Grounding Notes above). The composite documents a
 combination of already-shipped corpus patterns, not a novel construct: the decision-table shape
 (`docs/l2-runbooks/26-apple-business-permission-denied.md`) and the short blockquote callout
 shape (`docs/admin-setup-apv1/04-dynamic-groups.md`) are both already production-proven.
@@ -494,10 +494,11 @@ between the lead-in and the table in every Case 1 and Case 2 decision block.
 Use a table only when the decision has more than one dimension to convey per option (what to
 choose, why, and either a consequence/branch or a recorded value); a Case 3 free-value prompt
 never gets a table. Decision content is never placed inside a code fence in a live recipe — fenced
-content is invisible to the retrieval body text (see Grounding Notes), so putting the prompt,
-options, or consequences in a fence would silently remove the decision from what Copilot can
-ground on. The one exception is this standard's own fenced worked example below (D-07), which is
-a spec sample in an index-excluded meta-document, not live decision content in an indexed recipe.
+content **is** indexed, but as non-prose runs that retrieve poorly (see Grounding Notes), so
+putting the prompt, options, or consequences in a fence leaves the decision retrievable only as
+non-prose, rather than as body-text prose Copilot can ground on. The one exception is this
+standard's own fenced worked example below (D-07), which is a spec sample in an index-excluded
+meta-document, not live decision content in an indexed recipe.
 
 ### D-04: The three-rule normative branch floor
 
@@ -536,7 +537,7 @@ uses to describe a live-content shape in prose backed by a small illustrative bl
 sample in this Approved, index-excluded standard is NOT the same as fenced decision content in a
 live indexed recipe, which remains banned under D-03 above; the inCodeFence mask exempts this
 sample from C17 assertions #11/#12 on this document, but the same fence in an enrolled recipe
-would silently hide the decision from retrieval.
+would leave the decision indexed only as non-prose runs that retrieve poorly.
 
 ```markdown
 > **Ask the admin:** Kiosk (Assigned Access, single Windows App) or Shared PC (full shared desktop)?
@@ -614,3 +615,4 @@ in v1.14 Phase 112) ensures C17 is never partially live across content phases.
 | 2026-07-04 | Initial version — EEE SOP standard for Phase-1 corpus retrofit (v1.15); all sections authored including D1 normalization map (20 entries) and C17 needle-spec handoff |
 | 2026-07-07 | v1.16 STD-04 — added Mermaid-in-Enrolled-Classes Policy (D-01..D-04: text-equivalent conversion, C17 #1 unchanged, conversion shapes, honesty caveat); added 4 new D-02 Edge-case rulings (glossary, decision-tree, nav-hub, lifecycle) and the D-08 Non-MECE precedence rule; Doc Type Taxonomy 4-value table unchanged |
 | 2026-07-17 | v1.18 STD-05 — added Admin Decision-Point Block Format (D-01..D-07: 3-case composite block, mandatory blank line, case-boundary rule, 3-rule branch floor + RECOMMENDED PSSO-idiom, REQUIRED recipe-Summary end-state rule, fenced worked example + index-excluded-standard carve-out); added Device Recipe documents D-02 Edge-case ruling row (`docs/recipes/*` → `Guide`) |
+| 2026-07-30 | v1.19 HYG-05 — corrected the fenced-content rationale at three sites (STD-05 section intro, D-03 case-boundary rule, D-07 worked-example preamble): the prior claim that fenced content is invisible to retrieval was empirically false; fenced content is indexed but reaches Copilot only as non-prose runs that retrieve poorly. The normative D-03/D-04 rules are unchanged in force, and the Grounding Notes pointers are retained and now cite a correct proposition |
