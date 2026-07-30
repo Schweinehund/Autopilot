@@ -130,6 +130,10 @@ None - no external service configuration required.
 - Plan 135-02 (wave 2, `depends_on: ["135-01"]`) can now author the RE-224 recipe body — the file identity, slug, H1, and C17-green enrollment (233/0) are all in place, and HYG-05 landed before any payload fence exists (D7.7 structurally satisfied at wave granularity).
 - No blockers. Registry, navigation, and validator surfaces are all untouched, as required — Phase 137 will handle the registry row and Draft→Approved flip after both recipes are content-complete.
 
+## Self-Check: PASSED
+
+All created/modified files confirmed present on disk (`docs/_standards/EEE-SOP-standard.md`, `docs/recipes/03-windows-11-multi-app-kiosk.md`, this SUMMARY.md). All four task/summary commit hashes (`91fd1647`, `fc47bef6`, `ef155268`, `f01033bf`) confirmed present in `git log`.
+
 ---
 *Phase: 135-recipe-3-windows-11-multi-app-kiosk*
 *Completed: 2026-07-30*

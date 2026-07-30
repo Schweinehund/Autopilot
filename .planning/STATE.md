@@ -4,16 +4,16 @@ milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
 current_phase: 135
 current_phase_name: "Recipe #3 — Windows 11 Multi-App Kiosk"
-status: roadmap
-stopped_at: Phase 135 context gathered
-last_updated: "2026-07-30T04:41:06.838Z"
-last_activity: 2026-07-28
-last_activity_desc: v1.19 ROADMAP.md + STATE.md written
+status: executing
+stopped_at: Completed 135-01-PLAN.md
+last_updated: "2026-07-30T05:52:21.129Z"
+last_activity: 2026-07-30
+last_activity_desc: Phase 135 execution started
 progress:
   total_phases: 1
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
 ---
 
 # Project State
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
-**Current focus:** v1.19 roadmap created 2026-07-28 (4 phases, 135-138). Content-only milestone. Scope resolved via `/adversarial-review` (104 findings, 84 confirmed), which overruled both initial "both branches" picks in favour of delta-scoped single-path recipes. Research complete (`.planning/research/SUMMARY.md`) — both hard gates (Windows 11 multi-app kiosk mechanism; Android MHS configuration depth) CONFIRMED, neither recipe cancelled or re-scoped. Next: `/gsd-discuss-phase 135` to resolve the dominant RE-224 XML-presentation-format gray area before Phase 135 content authoring begins.
+**Current focus:** Phase 135 — Recipe #3 — Windows 11 Multi-App Kiosk
 
 > **BLOCKING PRECONDITION — owner action required before Phase 138.** The v1.18 close-gate SHA `7af8a147` is on **no remote** and 198 commits are unpushed, so the mandatory V118 back-anchor pin has no valid target. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been repointed to `origin/master` (2026-07-25). The owner's PIPE-02 push must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has zero call sites; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false`, a FAIL not a skip. The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `.planning/milestones/v1.18-MILESTONE-AUDIT.md`.
 
 ## Current Position
 
-Phase: 135 (Recipe #3 — Windows 11 Multi-App Kiosk) — not started
-Plan: —
-Status: Roadmap created, ready to plan
-Last activity: 2026-07-28 — v1.19 ROADMAP.md + STATE.md written
+Phase: 135 (Recipe #3 — Windows 11 Multi-App Kiosk) — EXECUTING
+Plan: 2 of 2
+Status: Ready to execute
+Last activity: 2026-07-30 — Phase 135 execution started
 
 ## v1.19 Phase Dependency Summary
 
@@ -283,6 +283,12 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - v1.18: 6 phases (129-134), 17 plans — shipped 2026-07-20
 - v1.19: 4 phases (135-138) — in progress
 
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 135 P01 | 12min | 3 tasks | 6 files |
+
 ## Accumulated Context
 
 ### Decisions
@@ -302,6 +308,9 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - complete-milestone on THIS repo must NOT `git rm REQUIREMENTS.md` — check-phase-54 live-reads it; deferred owner push means deletion breaks Axis-2 GHA apex (memory `reference_complete_milestone_keep_requirements.md`)
 
 *(Full v1.0–v1.18 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md` and `.planning/MILESTONES.md`.)*
+
+- [Phase ?]: HYG-05 corrected at all three sites (including additive D-07 site); RE-224 slug/H1 ruled in Plan 135-01 for Plan 135-02/Phase 137 to inherit
+- [Phase ?]: D8.2: Operational-channel enable-before-first-sign-in precondition landed as appends to 4 research sites (augment, not substitute); FEATURES.md/REQUIREMENTS.md GPO-name and namespace-alias defects corrected
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -336,9 +345,9 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-07-30T04:41:06.805Z
-Stopped at: Phase 135 context gathered
-Resume file: .planning/phases/135-recipe-3-windows-11-multi-app-kiosk/135-CONTEXT.md
+Last session: 2026-07-30T05:52:21.107Z
+Stopped at: Completed 135-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 135` to resolve the dominant RE-224 XML-presentation-format gray area (and the other Phase-135 flags) before content authoring begins.
 
 ## Operator Next Steps

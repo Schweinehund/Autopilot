@@ -64,7 +64,10 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   5. Verification is admin-executable end-to-end: restricted Start menu with only allow-listed apps, a non-allow-listed app failing to launch, a secondary app flow completing without an app-blocked error, and a clean `AssignedAccess > Operational` event log — with `AppNotFound` named as a prerequisite symptom, not a status check.
   6. `docs/_standards/EEE-SOP-standard.md`'s fenced-content rationale at `:462`/`:496-497` is corrected to state the true mechanism (fenced content is indexed but as poorly-retrieving non-prose runs), resolving the self-contradiction at `:415`, with the normative D-03/D-04 rules untouched.
 
-**Plans**: 2 plans
+**Plans**: 1/2 plans executed
+
+- [x] 135-01-PLAN.md
+- [ ] 135-02-PLAN.md
 
 - [ ] `135-01-PLAN.md` — wave 1. HYG-05's three fenced-content-rationale sites in `EEE-SOP-standard.md` (incl. the additive `:538-539` site) + the dated v1.19 `## Version History` row; the four D8.2 `Operational`-precondition appends and the three named requirement/research corrections; and the RE-224 file identity — sentinel-free frontmatter, EEE block, H1 and Summary, proving C17 goes 232 → 233 files at 0 violations.
 - [ ] `135-02-PLAN.md` — wave 2, `depends_on: 135-01`. Authors the recipe body: Scope banner, Prerequisites, the anti-feature table, `## Steps` (account-model Case-1 block, two-scope step, the single column-0 `xml` payload fence plus the field-decomposition and 3-row namespace tables, the custom-OMA-URI delivery step), `## Verification`, the named `## Rollback/Recovery` divergence, `## Configuration-Caused Failures` and `## See Also`.
