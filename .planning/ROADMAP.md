@@ -26,7 +26,7 @@
 
 ## Phases
 
-- [ ] **Phase 135: Recipe #3 — Windows 11 Multi-App Kiosk** - Custom OMA-URI / hand-authored AssignedAccess XML recipe, cross-linking recipe 01's single-app case without touching it
+- [x] **Phase 135: Recipe #3 — Windows 11 Multi-App Kiosk** - Custom OMA-URI / hand-authored AssignedAccess XML recipe, cross-linking recipe 01's single-app case without touching it (completed 2026-08-02)
 - [ ] **Phase 136: Recipe #4 — Android Dedicated MHS Multi-App** - Anchor spot-verification + MHS app-configuration recipe filling the `## Steps`/Verification/Anti-Feature gap in `05-dedicated-devices.md`
 - [ ] **Phase 137: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable
 - [ ] **Phase 138: V118 Pin + 17th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate (BLOCKED on owner's PIPE-02 push)
@@ -66,11 +66,8 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Plans**: 2/2 plans complete
 
-- [x] 135-01-PLAN.md
-- [x] 135-02-PLAN.md
-
-- [ ] `135-01-PLAN.md` — wave 1. HYG-05's three fenced-content-rationale sites in `EEE-SOP-standard.md` (incl. the additive `:538-539` site) + the dated v1.19 `## Version History` row; the four D8.2 `Operational`-precondition appends and the three named requirement/research corrections; and the RE-224 file identity — sentinel-free frontmatter, EEE block, H1 and Summary, proving C17 goes 232 → 233 files at 0 violations.
-- [ ] `135-02-PLAN.md` — wave 2, `depends_on: 135-01`. Authors the recipe body: Scope banner, Prerequisites, the anti-feature table, `## Steps` (account-model Case-1 block, two-scope step, the single column-0 `xml` payload fence plus the field-decomposition and 3-row namespace tables, the custom-OMA-URI delivery step), `## Verification`, the named `## Rollback/Recovery` divergence, `## Configuration-Caused Failures` and `## See Also`.
+- [x] `135-01-PLAN.md` — wave 1. HYG-05's three fenced-content-rationale sites in `EEE-SOP-standard.md` (incl. the additive `:538-539` site) + the dated v1.19 `## Version History` row; the four D8.2 `Operational`-precondition appends and the three named requirement/research corrections; and the RE-224 file identity — sentinel-free frontmatter, EEE block, H1 and Summary, proving C17 goes 232 → 233 files at 0 violations.
+- [x] `135-02-PLAN.md` — wave 2, `depends_on: 135-01`. Authors the recipe body: Scope banner, Prerequisites, the anti-feature table, `## Steps` (account-model Case-1 block, two-scope step, the single column-0 `xml` payload fence plus the field-decomposition and 3-row namespace tables, the custom-OMA-URI delivery step), `## Verification`, the named `## Rollback/Recovery` divergence, `## Configuration-Caused Failures` and `## See Also`.
 
 **Discuss-phase flags**: RE-224 XML presentation format (DOMINANT — column-0 fence vs. field-decomposition table; must be ruled before Steps-section drafting); `## Rollback/Recovery` template-divergence disposition; E2's verification mechanism (event log vs. observable-behavior-only); Windows enrollment-path fork (self-deploying vs. user-driven); per-branch Windows edition floors; first-lander precedent (this phase sets the delta-vs-anchor convention Phase 136 inherits, since v1.19 has no foundation phase).
 

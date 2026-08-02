@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
-current_phase: 135
-current_phase_name: "Recipe #3 — Windows 11 Multi-App Kiosk"
-status: verifying
+current_phase: 136
+current_phase_name: "Recipe #4 — Android Dedicated, MHS Multi-App"
+status: planning
 stopped_at: Completed 135-02-PLAN.md
-last_updated: "2026-07-30T06:12:30.015Z"
-last_activity: 2026-07-30
-last_activity_desc: Phase 135 execution started
+last_updated: "2026-08-02T20:03:14.944Z"
+last_activity: 2026-08-02
+last_activity_desc: Phase 135 complete, transitioned to Phase 136
 progress:
-  total_phases: 1
+  total_phases: 4
   completed_phases: 1
   total_plans: 2
   completed_plans: 2
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
-**Current focus:** Phase 135 — Recipe #3 — Windows 11 Multi-App Kiosk
+**Current focus:** Phase 136 — Recipe #4 — Android Dedicated, MHS Multi-App
 
 > **BLOCKING PRECONDITION — owner action required before Phase 138.** The v1.18 close-gate SHA `7af8a147` is on **no remote** and 198 commits are unpushed, so the mandatory V118 back-anchor pin has no valid target. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been repointed to `origin/master` (2026-07-25). The owner's PIPE-02 push must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has zero call sites; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false`, a FAIL not a skip. The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `.planning/milestones/v1.18-MILESTONE-AUDIT.md`.
 
 ## Current Position
 
-Phase: 135 (Recipe #3 — Windows 11 Multi-App Kiosk) — EXECUTING
-Plan: 2 of 2
-Status: Phase complete — ready for verification
-Last activity: 2026-07-30 — Phase 135 execution started
+Phase: 136 — Recipe #4 — Android Dedicated, MHS Multi-App
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-02 — Phase 135 complete, transitioned to Phase 136
 
 ## v1.19 Phase Dependency Summary
 
@@ -310,17 +310,13 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 
 *(Full v1.0–v1.18 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md` and `.planning/MILESTONES.md`.)*
 
-- [Phase ?]: HYG-05 corrected at all three sites (including additive D-07 site); RE-224 slug/H1 ruled in Plan 135-01 for Plan 135-02/Phase 137 to inherit
-- [Phase ?]: D8.2: Operational-channel enable-before-first-sign-in precondition landed as appends to 4 research sites (augment, not substitute); FEATURES.md/REQUIREMENTS.md GPO-name and namespace-alias defects corrected
-- [Phase ?]: Phase 135 D3.1 ratified augment-not-substitute: RE-224 Verification retains ROADMAP SC5's clean AssignedAccess > Operational line verbatim and ADDS the enable-before-first-kiosk-sign-in precondition plus Admin-channel Event 31000
-- [Phase ?]: RE-224 ships the worked payload on BOTH surfaces (one column-0 xml fence + a 22-row decomposition table) — the corpus payload-artifact convention Phase 136 inherits, minus the CDATA-JSON tension which is native to RE-224
+- [Phase 135]: HYG-05 corrected at all three sites (including additive D-07 site); RE-224 slug/H1 ruled in Plan 135-01 for Plan 135-02/Phase 137 to inherit
+- [Phase 135]: D8.2: Operational-channel enable-before-first-sign-in precondition landed as appends to 4 research sites (augment, not substitute); FEATURES.md/REQUIREMENTS.md GPO-name and namespace-alias defects corrected
+- [Phase 135]: Phase 135 D3.1 ratified augment-not-substitute: RE-224 Verification retains ROADMAP SC5's clean AssignedAccess > Operational line verbatim and ADDS the enable-before-first-kiosk-sign-in precondition plus Admin-channel Event 31000
+- [Phase 135]: RE-224 ships the worked payload on BOTH surfaces (one column-0 xml fence + a 22-row decomposition table) — the corpus payload-artifact convention Phase 136 inherits, minus the CDATA-JSON tension which is native to RE-224
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
-- Phase 135 (KIOSK-01): re-confirm the Plan-1 mechanism claim (Windows 11 multi-app kiosk = Custom OMA-URI/XML, no GUI path) with a citation dated inside the phase itself, not the SUMMARY — Learn pages proven to update asymmetrically
-- Phase 135 (KIOSK-02): edition-floor citation must be same-milestone-dated — a recent Learn revision unified Pro/Enterprise/Education/IoT floors for both single- and multi-app; stale sources produce a wrongly restrictive claim
-- Phase 135 (KIOSK-03): the SharedPC + multi-app layering interaction has zero first-party source either way — treat as mutually exclusive unless discuss-phase's `/adversarial-review` finds and cites an affirmative source
-- Phase 135 (HYG-05): the three validators reading EEE-SOP-standard.md (check-phase-114/120/129.mjs) assert content strings, not line coordinates — confirm before editing
 - Phase 136 (MHS-02): actively re-search the MHS exit-PIN dual-policy synchronization requirement during authoring in case a first-party source surfaces that this research pass missed; if not found, ship `[MEDIUM]` as-is, never silently promoted
 - Phase 136 (HYG-06/MHS-01): spot-verify specific `05-dedicated-devices.md` facts RE-225's decision points depend on against current Learn before Plan 2 authoring begins, given the anchor doc is past its own `review_by` date (33+ days)
 - Phase 138 (HARN-14): recover the V118 SHA via the dual-token positive-confirmation `git log --all --grep` method; explicitly verify the SUBJECT LINE (not just `-1` output) carries both tokens per the v1.17 false-positive caveat; do not attempt before the owner's push has landed
@@ -328,9 +324,9 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 
 ### Pending Todos
 
-- At Phase 135 plan time: run `/gsd-discuss-phase 135` + `/adversarial-review` on the RE-224 XML-presentation-format gray area (DOMINANT) before authoring the Steps section; also resolve the `## Rollback/Recovery` template-divergence disposition, the E2 verification-mechanism question, the Windows enrollment-path fork, and per-branch edition floors
 - At Phase 136 plan time: run Plan 1 (anchor spot-verification + landing-spot decisions for every cut element) before Plan 2 authoring; resolve the RE-225 fork-taxonomy naming and the C17 #11 row-budget question via `/adversarial-review`
-- Across Phase 135/136: resolve the shared-conceptual-anchor gray area and record the first-lander precedent explicitly once Phase 135 lands
+- At Phase 136 plan time: consume Phase 135's D6.1 first-lander handoff table (`135-02-SUMMARY.md`) — items (a)(b)(c)(e) INHERIT, (d) inherits the fence convention but NOT the CDATA-JSON tension, (f)(g) are named non-inheritances Phase 136 rules for itself. Do not re-litigate D4.2's three grounds for a Case-1 block with a routing-cross-link arm
+- At Phase 136: gray area #8 (shared conceptual anchor / kiosk-dedicated taxonomy) is still chartered here — Phase 135 ruled the taxonomy sentence for RE-224's own Scope banner only and deliberately did not duplicate it into RE-225
 - At Phase 137 plan time: confirm the hubs-not-wired disposition is recorded as an explicit ruling (not silently carried forward), reassessing given kiosk-lockout/MHS-lockout's higher L1-adjacency than AVD/iPad
 - At Phase 138 plan time: verify the owner's PIPE-02 push has landed on `origin/master` BEFORE beginning any V118-pin work; confirm V118 SHA via positive-confirmation grep (subject-line verified); run the FULL predecessor chain before authoring the close-gate
 
@@ -339,8 +335,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 At roadmap stage. Execution-time watch items (not blockers unless noted — address within specified phases):
 
 - **HARD BLOCKER, Phase 138 only:** the owner's PIPE-02 push of the v1.18 close-gate + tag must land on `origin/master` before any V118-pin work begins — Phases 135-137 are NOT blocked by this and can proceed independently
-- Phase 135: zero edits to `docs/recipes/01-shared-windows-avd-client.md` — `check-phase-130.mjs:64,67` pins its Step 5a/5b headings as literal strings inside every apex chain; any corpus-wide text operation must verify it doesn't touch this file indirectly
-- Phase 135: the RE-224 XML-presentation-format tension is a genuine, currently-unresolved corpus rule conflict (STD-05/C17 bars fenced decision content; RE-224's core deliverable is a schema-exact XML payload) — must be ruled at discuss-phase before Steps-section drafting, not discovered mid-authoring
+- Phases 136-138: the recipe-01 zero-edit guard still applies corpus-wide — `check-phase-130.mjs:64,67` pins `docs/recipes/01-shared-windows-avd-client.md`'s Step 5a/5b headings as literal strings inside every apex chain; any corpus-wide text operation must verify it doesn't touch this file indirectly (held clean through Phase 135)
 - Phase 136: zero line-shifting edits to `docs/_glossary-android.md` / `docs/reference/android-capability-matrix.md` — 365 and 139 pin coordinates across 16 frozen sidecars; CARVE-1 option (a) coordinate re-pin is the only licensed remedy if unavoidable
 - Phase 136: `05-dedicated-devices.md` is 33+ days past its `review_by` date — any drift found must get a named landing spot (requirement or DEFERRED-CLEANUP entry), never an unlogged drive-by edit to an Approved doc
 - Phase 137: the `build-filename-map.mjs --self-test` canary bump (223→225) must land in the SAME commit as the filename-map regeneration, and the `index.md` table + line-38 quick-nav bullet must land in the SAME commit — both are named deliverables per the WR-01 recurrence risk, not implicit side effects
@@ -348,21 +343,22 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-07-30T06:12:28.286Z
-Stopped at: Completed 135-02-PLAN.md
+Last session: 2026-08-02
+Stopped at: Phase 135 complete (UAT 10/10 passed, verification passed), ready to plan Phase 136
 Resume file: None
-Next action: `/gsd-discuss-phase 135` to resolve the dominant RE-224 XML-presentation-format gray area (and the other Phase-135 flags) before content authoring begins.
+Next action: `/gsd-discuss-phase 136` to resolve the RE-225 fork-taxonomy naming and C17 #11 row-budget gray areas, plus gray area #8 (shared conceptual anchor), before content authoring begins.
 
 ## Operator Next Steps
 
-- Run `/gsd-discuss-phase 135` (+ `/adversarial-review` on the dominant RE-224 XML-format gray area) before Phase 135 authoring
-- Push the v1.18 close-gate commit + `v1.18` tag (owner PIPE-02) at some point before Phase 138 begins — not blocking Phases 135-137
+- Run `/gsd-discuss-phase 136` (+ `/adversarial-review`) before Phase 136 authoring; carry Phase 135's D6.1 handoff table in rather than re-deriving it
+- Push the v1.18 close-gate commit + `v1.18` tag (owner PIPE-02) at some point before Phase 138 begins — not blocking Phases 136-137
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
-| (v1.19 phases not yet started) | — | — | — |
+| Phase 135 P01 | 12min | 3 tasks | 6 files (HYG-05 + D8.2 appends + RE-224 identity) |
+| Phase 135 P02 | 38min | 3 tasks + 1 checkpoint | 1 file (RE-224 body, 20→328 lines) |
 | Phase 129 P01 | 25min | 2 tasks | 2 files |
 | Phase 129 P02 | 20min | 1 tasks | 1 files |
 | Phase 130 P01 | 15min | 2 tasks | 1 files |
