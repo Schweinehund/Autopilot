@@ -914,12 +914,12 @@
       "phases": {
         "135": {
           "issueKey": "RTS-761",
-          "status": "in_progress",
+          "status": "done",
           "name": "Recipe #3 — Windows 11 Multi-App Kiosk"
         },
         "136": {
           "issueKey": "RTS-762",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Recipe #4 — Android Dedicated MHS Multi-App"
         },
         "137": {
