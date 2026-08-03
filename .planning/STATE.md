@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
-current_phase: 136
-current_phase_name: "Recipe #4 — Android Dedicated, MHS Multi-App"
+current_phase: 137
+current_phase_name: Integration & Navigation-Last Close
 status: executing
 stopped_at: Phase 137 context gathered
-last_updated: "2026-08-03T22:16:42.707Z"
+last_updated: "2026-08-03T22:17:37.960Z"
 last_activity: 2026-08-03
-last_activity_desc: Phase 136 execution complete (both plans)
+last_activity_desc: Phase 137 execution started
 progress:
   total_phases: 3
   completed_phases: 2
@@ -23,16 +23,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
-**Current focus:** Phase 136 — Recipe #4 — Android Dedicated, MHS Multi-App
+**Current focus:** Phase 137 — Integration & Navigation-Last Close
 
 > **BLOCKING PRECONDITION — owner action required before Phase 138.** The v1.18 close-gate SHA `7af8a147` is on **no remote** and 198 commits are unpushed, so the mandatory V118 back-anchor pin has no valid target. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been repointed to `origin/master` (2026-07-25). The owner's PIPE-02 push must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has zero call sites; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false`, a FAIL not a skip. The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `.planning/milestones/v1.18-MILESTONE-AUDIT.md`.
 
 ## Current Position
 
-Phase: 136 (Recipe #4 — Android Dedicated, MHS Multi-App) — EXECUTING
-Plan: 2 of 2
-Status: Ready to execute
-Last activity: 2026-08-03 — Phase 136 execution complete (both plans)
+Phase: 137 (Integration & Navigation-Last Close) — EXECUTING
+Plan: 1 of 2
+Status: Executing Phase 137
+Last activity: 2026-08-03 — Phase 137 execution started
 
 ## v1.19 Phase Dependency Summary
 
