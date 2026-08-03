@@ -919,17 +919,17 @@
         },
         "136": {
           "issueKey": "RTS-762",
-          "status": "in_progress",
+          "status": "done",
           "name": "Recipe #4 — Android Dedicated MHS Multi-App"
         },
         "137": {
           "issueKey": "RTS-763",
-          "status": "todo",
+          "status": "done",
           "name": "Integration & Navigation-Last Close"
         },
         "138": {
           "issueKey": "RTS-764",
-          "status": "todo",
+          "status": "in_progress",
           "name": "V118 Pin + 17th Path-A Lineage Bump + Terminal Close"
         }
       }

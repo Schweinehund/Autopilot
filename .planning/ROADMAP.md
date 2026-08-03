@@ -27,7 +27,7 @@
 ## Phases
 
 - [x] **Phase 135: Recipe #3 — Windows 11 Multi-App Kiosk** - Custom OMA-URI / hand-authored AssignedAccess XML recipe, cross-linking recipe 01's single-app case without touching it (completed 2026-08-02)
-- [ ] **Phase 136: Recipe #4 — Android Dedicated MHS Multi-App** - Anchor spot-verification + MHS app-configuration recipe filling the `## Steps`/Verification/Anti-Feature gap in `05-dedicated-devices.md`
+- [x] **Phase 136: Recipe #4 — Android Dedicated MHS Multi-App** - Anchor spot-verification + MHS app-configuration recipe filling the `## Steps`/Verification/Anti-Feature gap in `05-dedicated-devices.md` (completed 2026-08-03)
 - [x] **Phase 137: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable (completed 2026-08-03)
 - [ ] **Phase 138: V118 Pin + 17th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate (BLOCKED on owner's PIPE-02 push)
 
