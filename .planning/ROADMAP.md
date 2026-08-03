@@ -109,7 +109,7 @@ If Plan 1 surfaces material drift, it is handled as a named requirement in the v
 **Success Criteria** (what must be TRUE):
 
   1. Both recipes carry RE-NNN registry rows in `docs/_registry/RE-index.md` (IDs read from the registry at plan time, starting after RE-223), flip to `Status: Approved`, and enter the publish set via a regenerated (never hand-edited) `filename-map.md`.
-  2. `build-filename-map.mjs --self-test`'s row-count drift-canary is bumped 223 → 225 in the SAME commit as the filename-map regeneration.
+  2. BOTH registry-row-count drift canaries are bumped in the SAME commit as the filename-map regeneration — `build-filename-map.mjs --self-test` 223 -> 225 and `build-publish-bundle.mjs --self-test` 221 -> 225 (the latter has been failing since the v1.18 close).
   3. `docs/index.md` gains both the Device Configuration Recipes table rows AND the prose quick-nav bullet near line 38, landed in the same commit (closing the WR-01/Phase-132 defect pattern via a validator needle asserting both).
   4. The troubleshooting-hub disposition (`common-issues.md`/`quick-ref-l1.md`/`quick-ref-l2.md` staying not-wired to `docs/recipes`) is an explicit recorded ruling, not a silent carry-forward — reassessed given kiosk-lockout and MHS exit-PIN lockout are materially more L1-adjacent than AVD/iPad were.
   5. Full-corpus C17 exits 0; link-checker exits 0/0.
