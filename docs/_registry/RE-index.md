@@ -237,6 +237,8 @@
 | RE-221 | docs/quick-ref-l2.md | L2 Quick-Reference Card | Reference | Approved |
 | RE-222 | docs/recipes/01-shared-windows-avd-client.md | Shared Windows AVD-Client Device: Self-Deploying Provisioning | Guide | Approved |
 | RE-223 | docs/recipes/02-shared-ipad-full-provisioning.md | Shared iPad Full Provisioning: Federated Sign-In to Verified End State | Guide | Approved |
+| RE-224 | docs/recipes/03-windows-11-multi-app-kiosk.md | Windows 11 Multi-App Kiosk: Assigned Access Provisioning | Guide | Approved |
+| RE-225 | docs/recipes/04-android-dedicated-mhs-multi-app.md | Android Dedicated Multi-App Kiosk: Managed Home Screen Provisioning | Guide | Approved |
 
 ## Review Notes
 

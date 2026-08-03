@@ -5,7 +5,7 @@
 //   build-filename-map.mjs (registry parse + filename regen), convert.ps1 (MD->.docx),
 //   guard-docx.mjs (post-conversion guard). No new conversion or guard logic here.
 //
-// Converts EVERY docs/_registry/RE-index.md Status:Approved doc (221 today) to .docx,
+// Converts EVERY docs/_registry/RE-index.md Status:Approved doc (225 today) to .docx,
 // names each output from scripts/pipeline/filename-map.md, runs guard-docx.mjs on every
 // converted .docx, and -- on a 100% clean pass -- writes a CSV manifest + static README
 // + a single versioned dist/docs-library-v<version>.zip (--version=, defaults to v1.17;
@@ -512,11 +512,15 @@ if (isMainModule && SELF_TEST) {
 
   process.stdout.write('build-publish-bundle --self-test (Phase 126 PUB-01..04 orchestrator proof)\n\n');
 
-  // (a) Approved selection yields exactly 221 rows (reuses the imported, self-test-proven parser)
-  stTry('(a) Approved selection yields exactly 221 rows', () => {
+  // (a) Approved selection yields exactly 225 rows (reuses the imported, self-test-proven parser)
+  //     (bumped 221 -> 223 at v1.18 close: RE-222/RE-223 recipes added in Phase 132, but this
+  //      canary was MISSED then -- RED since the v1.18 close per FILENAME-MAP-SELFTEST-DRIFT
+  //      (see 6acc429b, which only bumped build-filename-map.mjs's canary, not this one);
+  //      bumped 223 -> 225 in Phase 137: RE-224/RE-225 recipes added, both canaries now bumped together)
+  stTry('(a) Approved selection yields exactly 225 rows', () => {
     const content = readFile(REGISTRY_REL_PATH);
     const rows = content ? parseRegistry(content).filter(r => r.status === 'Approved') : [];
-    stAssert('(a) Approved selection yields exactly 221 rows', rows.length === 221, 'rows.length=' + rows.length);
+    stAssert('(a) Approved selection yields exactly 225 rows', rows.length === 225, 'rows.length=' + rows.length);
   });
 
   // (b) CSV manifest join shape is correct (header + 1 row, exact match, D-03 columns only)

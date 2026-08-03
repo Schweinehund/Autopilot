@@ -232,3 +232,5 @@
 | RE-221 | docs/quick-ref-l2.md | l2-quick-reference-card.docx |
 | RE-222 | docs/recipes/01-shared-windows-avd-client.md | shared-windows-avd-client-device-self-deploying-provisioning.docx |
 | RE-223 | docs/recipes/02-shared-ipad-full-provisioning.md | shared-ipad-full-provisioning-federated-sign-in-to-verified-end-state.docx |
+| RE-224 | docs/recipes/03-windows-11-multi-app-kiosk.md | windows-11-multi-app-kiosk-assigned-access-provisioning.docx |
+| RE-225 | docs/recipes/04-android-dedicated-mhs-multi-app.md | android-dedicated-multi-app-kiosk-managed-home-screen-provisioning.docx |
