@@ -123,3 +123,137 @@ When `enable_mhs_signin` is TRUE, two further decision points become meaningful 
 > **What breaks if misconfigured:** Choosing `signin_type: Microsoft Entra ID` without confirming Entra licensing for every worker adds friction, not a broken sign-in.
 
 `enable_mhs_signin` stays FALSE unless a specific accountability need justifies turning it on — flipping it with no plan for `signin_type` lands users on the Entra-ID default by surprise.
+
+### Step 5: Author and assign the App Configuration policy
+
+Declined from the payload below, each for a stated reason: the screensaver keys (deferred, RCPFUT-04); the widgets, wallpaper and branding keys (deferred, RCPFUT-05); the cosmetic ordering and icon keys — `app_orders`, `app_order_enabled`, `icon_size`, `app_folder_icon`, `screen_orientation` (out of scope; an anti-feature "Do this instead" cell may still name `Application order enabled` at the admin/policy layer); the virtual home button (declined — it was a Case-2 candidate and stays out of this recipe's bounded key set); and `enable_app_offline` plus `app_available_prior_to_sign_in`, the two `applications` sub-keys that are only meaningful when sign-in is TRUE and are therefore inert here — a named carve-out from the general rule that sign-in sub-keys are out, since `app_available_prior_to_sign_in` sits inside `applications`, a key that is in. Also declined: the OEMConfig Overlay and exact-alarm permission grant, because every dependent feature — screensaver, virtual home button, automatic sign-out, notification badges, auto-relaunch — is itself deferred or scoped to a non-worked sign-in arm.
+
+1. **Apps** > **Configuration** > **Create** > **Managed devices**.
+2. **Basics:** enter a **Name** and **Description** (**Device enrollment type** is fixed to **Managed devices**).
+3. **Platform:** select **Android Enterprise**.
+4. **Targeted app:** select **Select app** > choose **Managed Home Screen** > **OK**.
+5. Select **Next** to reach **Settings**.
+6. **Configuration settings format:** select **Enter JSON data** and paste the payload below. The equivalent UI path is the **Configuration designer**, which exposes the same settings as individual fields.
+7. Select **Next** through **Scope tags**.
+8. On **Assignments**, set **Assign to** to **Add groups** and select the static Entra device group from [Prerequisites](#prerequisites) — a separate Intune blade from [Step 2](#step-2-deploy-managed-home-screen-as-a-required-app)'s app assignment, and the action that makes the payload below take effect.
+9. Select **Next** to **Review + create**, then select **Create**.
+
+`[MEDIUM: MS Learn app-configuration-policies-use-android, last_verified 2026-08-03]` This article's own introductory prose says user groups, while its wizard's **Assign to** dropdown also offers **Add groups** and **Add all devices** — do not let the stale introductory phrasing narrow this instruction; verify against your own tenant at author time.
+
+Paste the JSON below into the **Enter JSON data** editor.
+
+```json
+{
+    "kind": "androidenterprise#managedConfiguration",
+    "productId": "app:com.microsoft.launcher.enterprise",
+    "managedProperty": [
+        {
+            "key": "lock_home_screen",
+            "valueBool": true
+        },
+        {
+            "key": "grid_size",
+            "valueString": "4;5"
+        },
+        {
+            "key": "applications",
+            "valueBundleArray": [
+                {
+                    "managedProperty": [
+                        {
+                            "key": "package",
+                            "valueString": "com.contoso.warehousescanner"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "managed_folders",
+            "valueBundleArray": [
+                {
+                    "managedProperty": [
+                        {
+                            "key": "folder_name",
+                            "valueString": "Store Apps"
+                        },
+                        {
+                            "key": "applications",
+                            "valueBundleArray": [
+                                {
+                                    "managedProperty": [
+                                        {
+                                            "key": "package",
+                                            "valueString": "com.contoso.warehousescanner"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "exit_lock_task_mode_code",
+            "valueString": "PLACEHOLDER-SET-PER-TENANT"
+        },
+        {
+            "key": "max_number_of_attempts_for_exit_PIN",
+            "valueInteger": 5
+        },
+        {
+            "key": "amount_of_time_before_try_exit_PIN_again",
+            "valueInteger": 300
+        },
+        {
+            "key": "enable_mhs_signin",
+            "valueBool": false
+        }
+    ]
+}
+```
+
+> **[MEDIUM: MS Learn, last_verified 2026-08-03]:** Microsoft's field description states this password "must be configured through a device configuration profile."
+
+Set the matching value in the Device Restrictions profile too, per [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization) — do not rely on this JSON entry alone.
+
+| # | Setting / JSON key | Configuration designer label | What it does | Worked value |
+|---|---|---|---|---|
+| 1 | `lock_home_screen` | Lock Home Screen | Prevents end users from rearranging or removing apps and folders on the grid | `true` |
+| 2 | `grid_size` | Set Grid Size | Sets the number of columns and rows in `columns;rows` format; defaults to Auto | `"4;5"` |
+| 3 | `applications` | Set allow-listed applications | Defines the apps visible on the home screen, from among the apps already installed on the device | one app (`com.contoso.warehousescanner`) |
+| 4 | `managed_folders` | Create Managed Folder for grouping apps | Groups allow-listed apps into a named folder on the grid | one folder ("Store Apps") |
+| 5 | `exit_lock_task_mode_code` | Exit lock task mode password | Sets the PIN used to temporarily exit lock-task mode for troubleshooting; must match the Device Restrictions PIN | placeholder — set per tenant |
+| 6 | `max_number_of_attempts_for_exit_PIN` | Maximum number of attempts to exit lock task mode | Attempts allowed before the user is blocked from retrying; 0 means no limit; usable only if the exit PIN is configured | `5` |
+| 7 | `amount_of_time_before_try_exit_PIN_again` | Time before exit lock task password can be retried | The retry-delay after the max-attempts limit is hit; no unit is documented for the integer; 0 means no limit | `300` |
+| 8 | `enable_mhs_signin` | Enable sign in | Turns end-user sign-in to Managed Home Screen on or off; defaults to FALSE | `false` |
+| 9 | — | Enable easy access debug menu | Controls whether the easy-access entry point to the debug menu is shown; the 15-press back-button gesture reaches the exit-PIN prompt regardless — see [Verification](#verification) | not in the payload |
+
+Every key above ships in the fence except row 9, which is GUI-only and demoted to a Verification line — see [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries) for the exit-PIN and retry-hardening detail this table decomposes.
+
+> **Ask the admin:** What grid size (`columns;rows`) should the allow-listed apps use?
+
+The supplied value is recorded directly as the `grid_size` string in the fence above.
+
+> **Ask the admin:** Should the allow-listed apps be grouped into named folders, and if so, what should each folder contain?
+
+The supplied grouping is recorded directly as `managed_folders` entries in the fence above; omit the key entirely if no grouping is needed.
+
+> **What breaks if misconfigured:** Authoring the JSON payload without also assigning the policy on the **Assignments** page leaves it created but never delivered to any device.
+
+That is the same failure class the anchor documents one Intune blade over, for the app assignment in [Step 2](#step-2-deploy-managed-home-screen-as-a-required-app).
+
+### Step 6: Set the exit-kiosk PIN and harden exit retries
+
+The Device Restrictions profile's **Leave kiosk mode code** and this policy's **Exit lock task mode password** name the same field and must be set to the same value. `[MEDIUM: MS Q&A community, last_verified 2026-08-03]` See [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization) for the two policy locations and the remediation if they drift.
+
+The retry-hardening keys are already set in [Step 5](#step-5-author-and-assign-the-app-configuration-policy)'s payload; this step explains and verifies them.
+
+> **What breaks if misconfigured:** Setting `max_number_of_attempts_for_exit_PIN` alone does nothing.
+
+Time before exit lock task mode password can be retried must also be set for the max-attempts limit to take effect — with no error and no admin-side signal if it isn't. No unit is documented for the retry-delay integer: sibling timers on the same page state seconds, this one does not. Both values at 0 mean no limit.
+
+Two settings share nearly the same name but gate on different conditions and produce different consequences. `max_number_of_attempts_for_exit_PIN` ("Maximum number of attempts to exit lock task mode") is usable only if the exit lock task mode password is configured, and blocks further exit attempts once exceeded. `max_number_of_attempts_for_session_PIN` ("Maximum number of attempts for session PIN") is usable only if session PIN and sign-in are both enabled, and automatically logs the user out of Managed Home Screen once exceeded. The session-PIN key stays out of the payload above — it is inert under this recipe's worked `enable_mhs_signin: false`.
+
+Microsoft's own labels do not spell the setting name the same way across the two retry fields: the max-attempts label reads "Maximum number of attempts to exit lock task **mode**," while the retry-delay label reads "Time before exit lock task **password** can be retried" — carried here as published, not normalized.
