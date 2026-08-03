@@ -4,16 +4,16 @@ milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
 current_phase: 136
 current_phase_name: "Recipe #4 — Android Dedicated, MHS Multi-App"
-status: executing
-stopped_at: Completed 136-01-PLAN.md
-last_updated: "2026-08-03T18:21:40.265Z"
-last_activity: 2026-08-02
-last_activity_desc: Phase 135 complete, transitioned to Phase 136
+status: verifying
+stopped_at: Completed 136-02-PLAN.md
+last_updated: "2026-08-03T20:10:00.000Z"
+last_activity: 2026-08-03
+last_activity_desc: Phase 136 execution complete (both plans), ready for verification
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 ## Current Position
 
-Phase: 136 — Recipe #4 — Android Dedicated, MHS Multi-App
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-08-02 — Phase 135 complete, transitioned to Phase 136
+Phase: 136 (Recipe #4 — Android Dedicated, MHS Multi-App) — EXECUTING
+Plan: 2 of 2
+Status: Phase complete — ready for verification
+Last activity: 2026-08-03 — Phase 136 execution complete (both plans)
 
 ## v1.19 Phase Dependency Summary
 
@@ -290,6 +290,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 | Phase 135 P01 | 12min | 3 tasks | 6 files |
 | Phase 135 P02 | 38min | 4 tasks | 1 files |
 | Phase 136 P01 | 45min | 3 tasks | 2 files |
+| Phase 136 P02 | 55min | 4 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -315,7 +316,8 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - [Phase 135]: D8.2: Operational-channel enable-before-first-sign-in precondition landed as appends to 4 research sites (augment, not substitute); FEATURES.md/REQUIREMENTS.md GPO-name and namespace-alias defects corrected
 - [Phase 135]: Phase 135 D3.1 ratified augment-not-substitute: RE-224 Verification retains ROADMAP SC5's clean AssignedAccess > Operational line verbatim and ADDS the enable-before-first-kiosk-sign-in precondition plus Admin-channel Event 31000
 - [Phase 135]: RE-224 ships the worked payload on BOTH surfaces (one column-0 xml fence + a 22-row decomposition table) — the corpus payload-artifact convention Phase 136 inherits, minus the CDATA-JSON tension which is native to RE-224
-- [Phase ?]: Phase 136 Plan 1: HYG-06 NO DRIFT (all clusters); Ruling A takes 05:253 branch (exit_lock_task_mode_code ships in Plan 2's fence with placeholder); Ruling B CLOSED (sibling key max_number_of_attempts_for_session_PIN sourced); STACK.md:55 corrected in-flight; RE-225 shell C17-clean at 234 files
+- [Phase 136]: Phase 136 Plan 1: HYG-06 NO DRIFT (all clusters); Ruling A takes 05:253 branch (exit_lock_task_mode_code ships in Plan 2's fence with placeholder); Ruling B CLOSED (sibling key max_number_of_attempts_for_session_PIN sourced); STACK.md:55 corrected in-flight; RE-225 shell C17-clean at 234 files
+- [Phase 136]: Phase 136 Plan 2: RE-225 body authored — closure-table counts hold exactly (8 H2/6 Step/5 Ask/6 Breaks/9 anti-feature rows/10 decomposition rows/7 Verification/1 json fence); D2.9a window closed via callout-plus-failures-row; M-A OEMConfig disposition landed as a Step-5 lead-in sentence, not a row; offline-allow-list Rollback bullet dropped (uncited); D0.1 satisfied by exactly one MEDIUM host sentence in Step 6; full-corpus C17 green at 234 files
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -345,14 +347,14 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-08-03T18:21:40.236Z
-Stopped at: Completed 136-01-PLAN.md
+Last session: 2026-08-03T20:10:00.000Z
+Stopped at: Completed 136-02-PLAN.md
 Resume file: None
-Next action: `/gsd-discuss-phase 136` to resolve the RE-225 fork-taxonomy naming and C17 #11 row-budget gray areas, plus gray area #8 (shared conceptual anchor), before content authoring begins.
+Next action: Run verification/UAT on Phase 136 (both plans complete, RE-225 body C17-green at 234 files); then transition to Phase 137 (Integration & Navigation-Last Close).
 
 ## Operator Next Steps
 
-- Run `/gsd-discuss-phase 136` (+ `/adversarial-review`) before Phase 136 authoring; carry Phase 135's D6.1 handoff table in rather than re-deriving it
+- Verify Phase 136 (RE-225 recipe body complete, closure-table counts hold exactly per `136-02-SUMMARY.md`); then advance to Phase 137
 - Push the v1.18 close-gate commit + `v1.18` tag (owner PIPE-02) at some point before Phase 138 begins — not blocking Phases 136-137
 
 ## Performance Metrics
