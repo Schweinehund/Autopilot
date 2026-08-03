@@ -33,7 +33,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 135+).
 ### Corpus Hygiene (HYG)
 
 - [x] **HYG-05**: `docs/_standards/EEE-SOP-standard.md`'s fenced-content rationale is corrected. The claim *"fenced content is invisible to the … retrieval body text"* (stated at `:462` and `:496-497`) is **empirically false in this pipeline** — fence-only strings were verified present in a built `.docx`'s `word/document.xml` as `SourceCode`/`VerbatimChar` runs — and is **self-contradicted at `:415`**, where STD-04 D-01 states a raw fence *"lands verbatim as garbage in the citation body."* Replace the false mechanism with the true one (fenced content **is** indexed, but as non-prose runs that retrieve poorly). Scoped to the rationale only; the normative D-03/D-04 rules are untouched by this requirement. The three validators reading this file (`check-phase-114/120/129.mjs`) assert content strings, not line coordinates — confirm before editing.
-- [ ] **HYG-06**: `docs/admin-setup-android/05-dedicated-devices.md` is **33+ days past its `review_by: 2026-06-22`**. The specific facts RE-225 cross-links (token-type semantics `05:116-131`, MHS Required-assignment `05:143-153`, the exit-PIN two-policy locations `05:249-255`) are spot-verified against current Microsoft Learn **before** authoring depends on them. Disposition follows the v1.18 HYG-04 pattern: if drift is found it becomes a **named correction with its own landing spot**, never an unlogged drive-by edit to an Approved doc; if no drift, the verification result is recorded as a no-op.
+- [x] **HYG-06**: `docs/admin-setup-android/05-dedicated-devices.md` is **33+ days past its `review_by: 2026-06-22`**. The specific facts RE-225 cross-links (token-type semantics `05:116-131`, MHS Required-assignment `05:143-153`, the exit-PIN two-policy locations `05:249-255`) are spot-verified against current Microsoft Learn **before** authoring depends on them. Disposition follows the v1.18 HYG-04 pattern: if drift is found it becomes a **named correction with its own landing spot**, never an unlogged drive-by edit to an Approved doc; if no drift, the verification result is recorded as a no-op.
 
 ### Harness Close (HARN)
 
@@ -115,7 +115,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MHS-03 | 136 | Pending |
 | MHS-04 | 136 | Pending |
 | MHS-05 | 136 | Pending |
-| HYG-06 | 136 | Pending |
+| HYG-06 | 136 | Complete |
 | CLASS-05 | 137 | Pending |
 | CLASS-06 | 137 | Pending |
 | HARN-14 | 138 | Pending |

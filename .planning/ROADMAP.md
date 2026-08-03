@@ -87,7 +87,10 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   5. The recipe leads with its unsupported/anti-feature set documented with reasons — Notification-windows=Disable phrased conditionally, folders trimmed to the uncontradicted user-capability half, plus exposed system navigation, per-identity personalization on a sign-in-disabled device, and unavailable Wi-Fi/first-time-Enterprise-network actions.
   6. `05-dedicated-devices.md`'s specific cross-linked facts (token-type semantics, MHS Required-assignment, exit-PIN two-policy locations) are spot-verified against current Microsoft Learn before authoring depends on them, with any drift landing as a named correction (v1.18 HYG-04 pattern) or the no-op recorded explicitly.
 
-**Plans**: 2 plans
+**Plans**: 1/2 plans executed
+
+- [x] 136-01-PLAN.md
+- [ ] 136-02-PLAN.md
 
 - [ ] `136-01-PLAN.md` — wave 1. HYG-06 spot-verification of the three SC6 clusters plus the PLUS list against current Microsoft Learn, with a NO-DRIFT/DRIFT branch taken and the no-op recorded explicitly; the two surviving Plan-1-gated conditionals closed (the `exit_lock_task_mode_code` fence-key branch with both conflicting live Learn statements quoted, and the `max_number_of_attempts_for_session_PIN` sibling closure); four flagged `v1.19-DEFERRED-CLEANUP.md` contributions drafted so no deferral leaves the phase without a landing spot; and the RE-225 file-identity shell, proving full-corpus C17 goes 233 → 234 at 0 violations between waves.
 - [ ] `136-02-PLAN.md` — wave 2, `depends_on: 136-01`. Authors the recipe body: Scope banner, Prerequisites with the `This recipe is NOT` opener, the 9-10-row anti-feature table, six `### Step` sections carrying five STD-05 decision blocks (1 Case-1 token type, 2 Case-2 provisioning/sign-in, 2 Case-3), the inlined MHS and app-deployment click-paths, the single column-0 ```` ```json ```` fence in the confirmed `kind`/`productId`/`managedProperty` envelope plus its decomposition table, the exit-PIN cross-link with one marked host sentence and the hardening delta, then `## Verification` (7 lines), the named `## Rollback/Recovery` divergence, `## Configuration-Caused Failures` and `## See Also`.
