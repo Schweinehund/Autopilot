@@ -5,15 +5,15 @@ milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk +
 current_phase: 137
 current_phase_name: Integration & Navigation-Last Close
 status: executing
-stopped_at: Phase 137 context gathered
-last_updated: "2026-08-03T22:17:37.960Z"
+stopped_at: Completed 137-01-PLAN.md
+last_updated: "2026-08-03T22:25:18.106Z"
 last_activity: 2026-08-03
 last_activity_desc: Phase 137 execution started
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 ## Current Position
 
 Phase: 137 (Integration & Navigation-Last Close) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 137
+Plan: 2 of 2
+Status: Ready to execute
 Last activity: 2026-08-03 — Phase 137 execution started
 
 ## v1.19 Phase Dependency Summary
@@ -291,6 +291,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 | Phase 135 P02 | 38min | 4 tasks | 1 files |
 | Phase 136 P01 | 45min | 3 tasks | 2 files |
 | Phase 136 P02 | 55min | 4 tasks | 1 files |
+| Phase 137 P01 | 4min | 4 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -318,6 +319,9 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - [Phase 135]: RE-224 ships the worked payload on BOTH surfaces (one column-0 xml fence + a 22-row decomposition table) — the corpus payload-artifact convention Phase 136 inherits, minus the CDATA-JSON tension which is native to RE-224
 - [Phase 136]: Phase 136 Plan 1: HYG-06 NO DRIFT (all clusters); Ruling A takes 05:253 branch (exit_lock_task_mode_code ships in Plan 2's fence with placeholder); Ruling B CLOSED (sibling key max_number_of_attempts_for_session_PIN sourced); STACK.md:55 corrected in-flight; RE-225 shell C17-clean at 234 files
 - [Phase 136]: Phase 136 Plan 2: RE-225 body authored — closure-table counts hold exactly (8 H2/6 Step/5 Ask/6 Breaks/9 anti-feature rows/10 decomposition rows/7 Verification/1 json fence); D2.9a window closed via callout-plus-failures-row; M-A OEMConfig disposition landed as a Step-5 lead-in sentence, not a row; offline-allow-list Rollback bullet dropped (uncited); D0.1 satisfied by exactly one MEDIUM host sentence in Step 6; full-corpus C17 green at 234 files
+- [Phase ?]: D-24 pre-flight ran BEFORE the flip and passed clean on both recipes on the first attempt (RE-225's JSON fence included) - no remediation round needed
+- [Phase ?]: Commit B bundled registry rows + regen + BOTH canary bumps as one atom (D-15) per the FILENAME-MAP-SELFTEST-DRIFT lesson
+- [Phase ?]: build-publish-bundle.mjs's canary was already RED at HEAD (14 passed/1 failed, rows.length=223 vs expected 221) - known pre-existing drift this plan closed, not a regression
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -347,9 +351,9 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-08-03T21:38:18.200Z
-Stopped at: Phase 137 context gathered
-Resume file: .planning/phases/137-integration-navigation-last-close/137-CONTEXT.md
+Last session: 2026-08-03T22:25:18.077Z
+Stopped at: Completed 137-01-PLAN.md
+Resume file: None
 Next action: Run verification/UAT on Phase 136 (both plans complete, RE-225 body C17-green at 234 files); then transition to Phase 137 (Integration & Navigation-Last Close).
 
 ## Operator Next Steps
