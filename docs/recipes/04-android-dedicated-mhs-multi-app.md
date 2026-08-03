@@ -257,3 +257,45 @@ Time before exit lock task mode password can be retried must also be set for the
 Two settings share nearly the same name but gate on different conditions and produce different consequences. `max_number_of_attempts_for_exit_PIN` ("Maximum number of attempts to exit lock task mode") is usable only if the exit lock task mode password is configured, and blocks further exit attempts once exceeded. `max_number_of_attempts_for_session_PIN` ("Maximum number of attempts for session PIN") is usable only if session PIN and sign-in are both enabled, and automatically logs the user out of Managed Home Screen once exceeded. The session-PIN key stays out of the payload above — it is inert under this recipe's worked `enable_mhs_signin: false`.
 
 Microsoft's own labels do not spell the setting name the same way across the two retry fields: the max-attempts label reads "Maximum number of attempts to exit lock task **mode**," while the retry-delay label reads "Time before exit lock task **password** can be retried" — carried here as published, not normalized.
+
+## Verification
+
+- [ ] The MHS grid shows exactly the allow-listed apps from [Step 3](#step-3-deploy-the-allow-listed-apps) — nothing more, nothing less.
+- [ ] Home, Overview, and the back-navigation gesture do not surface the standard Android launcher or any app outside the allow-list.
+- [ ] Pressing back roughly 15 times reaches the exit-PIN prompt, and the PIN configured in [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries) exits lock-task mode.
+- [ ] Folders and apps on the grid cannot be dragged, renamed, or reordered by a test user.
+- [ ] Test users can switch between already-visible Wi-Fi networks, but the Wi-Fi radio toggle itself is unavailable from inside MHS.
+- [ ] The Intune admin center confirms the device enrolled under the Standard Corporate-owned dedicated device token, not Entra shared device mode.
+- [ ] The easy-access entry point to the debug menu is closed by the fence's default — only the back-button gesture above still reaches the exit-PIN prompt.
+
+For Android 15 re-provisioning behavior, see [Android 15 FRP and re-provisioning](../admin-setup-android/05-dedicated-devices.md#android-15-frp-reprovisioning) — cross-link only; the three-pathway table is not re-authored here.
+
+## Rollback/Recovery
+
+Returning a device to its prior state is not the same as removing this recipe's own configuration — the two procedures below are the ones the anchor does not already cover.
+
+**Returning a device to the standard launcher:**
+
+- Unassign the MHS App Configuration policy, or set the Managed Home Screen app assignment to Uninstall for the device group — either removes the Required assignment that keeps the device in the MHS grid.
+
+**A forgotten exit PIN:**
+
+- The anchor's own remediation — verify both policies carry the same code — presupposes a known code. If the code itself is forgotten, set a new value in both the Device Restrictions profile and the MHS App Configuration policy and force a policy sync; there is no separate "reveal" path once a PIN is set, since its value is obfuscated after saving.
+
+## Configuration-Caused Failures
+
+| Misconfiguration | Symptom | Runbook |
+|---|---|---|
+| The Device Restrictions PIN and the MHS App Configuration PIN set to different values | Users see "A PIN to exit kiosk mode has not been set by your IT admin" at exit attempt | [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries) |
+| `max_number_of_attempts_for_exit_PIN` reached without a correct retry | Further exit attempts are blocked until the retry-delay window elapses, or indefinitely if the delay is also 0 | [Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries) |
+| The Managed Home Screen policy assigned Required ([Step 2](#step-2-deploy-managed-home-screen-as-a-required-app)) before an exit PIN exists on either policy ([Step 6](#step-6-set-the-exit-kiosk-pin-and-harden-exit-retries)) | No exit affordance exists at all until both PIN surfaces are set and synced | [Step 2](#step-2-deploy-managed-home-screen-as-a-required-app) |
+| An allow-listed app assigned Available, or to the wrong group, before the first kiosk boot | The app is absent from the MHS grid with no error surfaced | [L2: Android App Install Investigation](../l2-runbooks/20-android-app-install-investigation.md) |
+
+## See Also
+
+- [Admin Decision-Point Block Format (STD-05)](../_standards/EEE-SOP-standard.md) — the full spec this recipe's decision blocks instantiate
+- [Android 15 FRP and re-provisioning](../admin-setup-android/05-dedicated-devices.md#android-15-frp-reprovisioning) — re-provisioning behavior for kiosk fleets, additive to its Verification placement
+- [Managed Google Play binding](../admin-setup-android/01-managed-google-play.md#bind-mgp) — the hard prerequisite this recipe assumes is already complete
+- [Android dedicated device disambiguation](../_glossary-android.md#dedicated) — cross-platform terminology comparison
+- [Enrollment profile](../admin-setup-android/05-dedicated-devices.md#enrollment-profile) — token-type creation and the static-device-group requirement this recipe assumes
+- [Exit-kiosk PIN synchronization](../admin-setup-android/05-dedicated-devices.md#exit-kiosk-pin-synchronization) — the two-policy PIN requirement Step 6 cross-links
