@@ -35,7 +35,7 @@ Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS AD
 - [iOS/iPadOS Provisioning](#iosipados-provisioning) -- iOS/iPadOS device provisioning via Microsoft Intune (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE)
 - [Android Enterprise Provisioning](#android-enterprise-provisioning) -- Android device provisioning via Intune (Zero-Touch, Fully Managed, Work Profile, Dedicated, AOSP stub)
 - [Linux Provisioning](#linux-provisioning) -- Linux device provisioning via Microsoft Intune Linux client (Ubuntu 22.04 / 24.04 LTS, intune-portal package, web-app conditional access)
-- [Device Configuration Recipes](#device-configuration-recipes) -- End-to-end provisioning recipes with embedded admin decision points (shared Windows AVD-client device, Shared iPad full provisioning)
+- [Device Configuration Recipes](#device-configuration-recipes) -- End-to-end provisioning recipes with embedded admin decision points (shared Windows AVD-client device, Shared iPad full provisioning, Windows 11 multi-app kiosk, Android Dedicated multi-app kiosk)
 - [Operations](#operations) -- Cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration)
 - [Cross-Platform References](#cross-platform-references) -- Glossaries, concept comparison, and shared resources
 
@@ -279,6 +279,8 @@ Step-by-step, admin-decision-point-driven provisioning recipes -- each yields a 
 |----------|-------------|
 | [Shared Windows AVD-Client Device: Self-Deploying Provisioning](recipes/01-shared-windows-avd-client.md) | Provision a self-deploying, Entra-joined shared Windows device running the Windows App as its Azure Virtual Desktop client -- device/Intune config only, assumes AVD host pools and session hosts already exist |
 | [Shared iPad Full Provisioning: Federated Sign-In to Verified End State](recipes/02-shared-ipad-full-provisioning.md) | Provision a supervised Shared iPad end-to-end -- ADE enrollment, federated Managed Apple Account sign-in, device-licensed Required apps, and per-role layered configuration |
+| [Windows 11 Multi-App Kiosk: Assigned Access Provisioning](recipes/03-windows-11-multi-app-kiosk.md) | Lock a Windows 11 device to a restricted user experience -- a multi-app allow-list, Start layout, and Taskbar -- delivered through an AssignedAccess CSP custom OMA-URI profile, with no Templates GUI path available |
+| [Android Dedicated Multi-App Kiosk: Managed Home Screen Provisioning](recipes/04-android-dedicated-mhs-multi-app.md) | Lock an Android Enterprise Dedicated device to a curated Managed Home Screen app grid -- MHS assigned as Required, an App Configuration policy carrying the worked JSON payload, and exit-PIN hardening |
 
 ---
 
