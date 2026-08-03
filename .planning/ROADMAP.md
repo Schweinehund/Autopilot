@@ -114,10 +114,10 @@ If Plan 1 surfaces material drift, it is handled as a named requirement in the v
   4. The troubleshooting-hub disposition (`common-issues.md`/`quick-ref-l1.md`/`quick-ref-l2.md` staying not-wired to `docs/recipes`) is an explicit recorded ruling, not a silent carry-forward — reassessed given kiosk-lockout and MHS exit-PIN lockout are materially more L1-adjacent than AVD/iPad were.
   5. Full-corpus C17 exits 0; link-checker exits 0/0.
 
-**Plans**: 1/2 plans executed
+**Plans**: 2/2 plans executed
 
 - [x] 137-01-PLAN.md
-- [ ] 137-02-PLAN.md
+- [x] 137-02-PLAN.md
 
 - [ ] `137-01-PLAN.md` — wave 1. CLASS-05. Commits A and B of the flip-first topology: the pandoc + `guard-docx.mjs` pre-flight of both recipes gating the flip; the two-site `Draft → Approved` flip on `docs/recipes/03-*.md` and `04-*.md`; then, as one atomic commit, the RE-224/RE-225 registry rows, the regenerated `filename-map.md`, and BOTH row-count drift canaries (`build-filename-map.mjs` 223 → 225 and `build-publish-bundle.mjs` 221 → 225, the latter RED since the v1.18 close). Closes with the CLASS-05/SC2/STATE prose corrections that named only one canary.
 - [ ] `137-02-PLAN.md` — wave 2, `depends_on: 137-01` (this dependency is what makes navigation-last structural). CLASS-06. Commit C: both `docs/index.md` surfaces — the two Device Configuration Recipes table rows and the line-38 quick-nav bullet — in one commit; the hubs-not-wired ruling with its correction of record that `V-132-HUBSNOTWIRED` does not actually cover recipes 03/04; the outbound-link sweep no tool covers; and the `check-phase-137.mjs` needle-spec handed to Phase 138.

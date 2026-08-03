@@ -28,7 +28,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 135+).
 ### Integration & Navigation-Last (CLASS)
 
 - [x] **CLASS-05**: Both recipes carry RE-NNN registry rows in `docs/_registry/RE-index.md` (IDs read from the registry at plan time — it currently ends at RE-223), flip to `Status: Approved` when content-complete, and enter the publish set via a **regenerated, never hand-edited** `filename-map.md`. Both registry-row-count drift canaries are **bumped in the same commit as the regeneration** — `build-filename-map.mjs --self-test` 223 -> 225 and `build-publish-bundle.mjs --self-test` 221 -> 225 (the second canary was missed at the v1.18 close and has been failing ever since) — this is a named deliverable, not a post-close audit finding, per the milestone's own #1 recurring lesson (*"a deferral from phase A to phase B needs an explicit landing spot IN phase B's scope, or it evaporates"*). Descriptive filenames are settled here, since they drive Copilot citation titles.
-- [ ] **CLASS-06**: Recipes are reachable from `docs/index.md` via **both** surfaces in the same commit — the Device Configuration Recipes table **and** the prose quick-nav bullet near `index.md:38` (the WR-01 defect class from Phase 132, closed proactively via a validator needle asserting both, rather than relying on code-review to catch it again). Navigation-last discipline holds (nav commits post-date content commits). The troubleshooting-hub disposition is an **explicit recorded ruling**, not a silent carry-forward: `check-phase-132.mjs:91` `V-132-HUBSNOTWIRED` bars `docs/recipes` from `common-issues.md`/`quick-ref-l1.md`/`quick-ref-l2.md` generically, and kiosk lockout / MHS exit-PIN lockout are materially more L1-adjacent than AVD/iPad were. Full-corpus C17 green; link-checker 0/0.
+- [x] **CLASS-06**: Recipes are reachable from `docs/index.md` via **both** surfaces in the same commit — the Device Configuration Recipes table **and** the prose quick-nav bullet near `index.md:38` (the WR-01 defect class from Phase 132, closed proactively via a validator needle asserting both, rather than relying on code-review to catch it again). Navigation-last discipline holds (nav commits post-date content commits). The troubleshooting-hub disposition is an **explicit recorded ruling**, not a silent carry-forward: `check-phase-132.mjs:91` `V-132-HUBSNOTWIRED` bars `docs/recipes` from `common-issues.md`/`quick-ref-l1.md`/`quick-ref-l2.md` generically, and kiosk lockout / MHS exit-PIN lockout are materially more L1-adjacent than AVD/iPad were. Full-corpus C17 green; link-checker 0/0.
 
 ### Corpus Hygiene (HYG)
 
@@ -117,7 +117,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MHS-05 | 136 | Complete |
 | HYG-06 | 136 | Complete |
 | CLASS-05 | 137 | Complete |
-| CLASS-06 | 137 | Pending |
+| CLASS-06 | 137 | Complete |
 | HARN-14 | 138 | Pending |
 | HARN-15 | 138 | Pending |
 | HARN-16 | 138 | Pending |

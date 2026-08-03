@@ -4,16 +4,16 @@ milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
 current_phase: 137
 current_phase_name: Integration & Navigation-Last Close
-status: executing
-stopped_at: Completed 137-01-PLAN.md
-last_updated: "2026-08-03T22:25:18.106Z"
+status: verifying
+stopped_at: Completed 137-02-PLAN.md
+last_updated: "2026-08-03T22:32:13.579Z"
 last_activity: 2026-08-03
 last_activity_desc: Phase 137 execution started
 progress:
   total_phases: 3
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 Phase: 137 (Integration & Navigation-Last Close) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-03 — Phase 137 execution started
 
 ## v1.19 Phase Dependency Summary
@@ -292,6 +292,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 | Phase 136 P01 | 45min | 3 tasks | 2 files |
 | Phase 136 P02 | 55min | 4 tasks | 1 files |
 | Phase 137 P01 | 4min | 4 tasks | 9 files |
+| Phase 137 P02 | 4min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -322,6 +323,9 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: D-24 pre-flight ran BEFORE the flip and passed clean on both recipes on the first attempt (RE-225's JSON fence included) - no remediation round needed
 - [Phase ?]: Commit B bundled registry rows + regen + BOTH canary bumps as one atom (D-15) per the FILENAME-MAP-SELFTEST-DRIFT lesson
 - [Phase ?]: build-publish-bundle.mjs's canary was already RED at HEAD (14 passed/1 failed, rows.length=223 vs expected 221) - known pre-existing drift this plan closed, not a regression
+- [Phase ?]: Both index.md surfaces (table rows + line-38 bullet) landed in one commit (Commit C, b694254f) to close the WR-01 defect class that recurred at Phase 132
+- [Phase ?]: Hubs stay NOT-wired; the v1.18 hub-enforcement regex's false-coverage claim (REQUIREMENTS.md:31) is corrected on the record (D-02), not silently carried forward
+- [Phase ?]: check-phase-137.mjs is NOT authored this phase; the needle-spec is handed to Phase 138 (D-18), appended to STATE.md's existing Plan-Time Research Flags block rather than a parallel entry
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -352,8 +356,8 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-08-03T22:25:18.077Z
-Stopped at: Completed 137-01-PLAN.md
+Last session: 2026-08-03T22:32:13.550Z
+Stopped at: Completed 137-02-PLAN.md
 Resume file: None
 Next action: Run verification/UAT on Phase 136 (both plans complete, RE-225 body C17-green at 234 files); then transition to Phase 137 (Integration & Navigation-Last Close).
 

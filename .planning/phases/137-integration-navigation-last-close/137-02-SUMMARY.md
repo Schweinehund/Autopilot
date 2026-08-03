@@ -231,3 +231,7 @@ Phase 137 is complete: CLASS-05 (plan 137-01) and CLASS-06 (this plan) are both 
 ---
 *Phase: 137-integration-navigation-last-close*
 *Completed: 2026-08-03*
+
+## Self-Check: PASSED
+
+All modified files confirmed present on disk (`docs/index.md`, `.planning/STATE.md`, this SUMMARY); all three commit hashes (`b694254f`, `5f48a829`, `93be0a64`) confirmed present in `git log`.
