@@ -28,7 +28,7 @@
 
 - [x] **Phase 135: Recipe #3 — Windows 11 Multi-App Kiosk** - Custom OMA-URI / hand-authored AssignedAccess XML recipe, cross-linking recipe 01's single-app case without touching it (completed 2026-08-02)
 - [ ] **Phase 136: Recipe #4 — Android Dedicated MHS Multi-App** - Anchor spot-verification + MHS app-configuration recipe filling the `## Steps`/Verification/Anti-Feature gap in `05-dedicated-devices.md`
-- [ ] **Phase 137: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable
+- [x] **Phase 137: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable (completed 2026-08-03)
 - [ ] **Phase 138: V118 Pin + 17th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate (BLOCKED on owner's PIPE-02 push)
 
 <details>
@@ -114,7 +114,7 @@ If Plan 1 surfaces material drift, it is handled as a named requirement in the v
   4. The troubleshooting-hub disposition (`common-issues.md`/`quick-ref-l1.md`/`quick-ref-l2.md` staying not-wired to `docs/recipes`) is an explicit recorded ruling, not a silent carry-forward — reassessed given kiosk-lockout and MHS exit-PIN lockout are materially more L1-adjacent than AVD/iPad were.
   5. Full-corpus C17 exits 0; link-checker exits 0/0.
 
-**Plans**: 2/2 plans executed
+**Plans**: 2/2 plans complete
 
 - [x] 137-01-PLAN.md
 - [x] 137-02-PLAN.md
