@@ -1,6 +1,6 @@
 ---
 doc_id: RE-225
-status: Draft
+status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Android
@@ -10,7 +10,7 @@ applies_to: Android Enterprise Dedicated multi-app kiosk (Managed Home Screen cu
 audience: admin
 ---
 
-**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-225 · **Status:** Draft
+**Platform:** Android · **Doc Type:** Guide · **Doc ID:** RE-225 · **Status:** Approved
 
 # Android Dedicated Multi-App Kiosk: Managed Home Screen Provisioning
 

@@ -1,6 +1,6 @@
 ---
 doc_id: RE-224
-status: Draft
+status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Windows
@@ -10,7 +10,7 @@ applies_to: Windows 11 multi-app kiosk (restricted user experience via the Assig
 audience: admin
 ---
 
-**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-224 · **Status:** Draft
+**Platform:** Windows · **Doc Type:** Guide · **Doc ID:** RE-224 · **Status:** Approved
 
 # Windows 11 Multi-App Kiosk: Assigned Access Provisioning
 
