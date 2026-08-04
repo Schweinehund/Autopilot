@@ -81,6 +81,16 @@ export const MILESTONE_CLOSE_SHAS = {
                     // CLOSE"). Single entry — same single-entry pattern as V18..V116 (back-anchor
                     // invariant: V117 references a PAST close SHA; the V118 pin is deferred to v1.19 per
                     // the back-anchor rule).
+  V118: '7af8a147',  // Phase 134 Plan 134-05 close-gate — v1.18 milestone close-gate; atom == close-gate.
+                    // Message contains both "v1.18" and "MILESTONE CLOSE" — the naive dual-token
+                    // `--grep --all-match -1` form is BARRED here: it returns 2 candidates (also matches
+                    // the v1.17 close-gate b56bba5e), so recovery used the SUBJECT-LINE pair discriminator
+                    // instead (confirmed via `git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.18/ &&
+                    // $2 ~ /MILESTONE CLOSE/'` -> count=1 -> 7af8a14766d346a348f7adf05d260676dbe4c1b2,
+                    // subject: "docs(134-05): v1.18 MILESTONE CLOSE — single close-gate commit, 20/20
+                    // requirements Validated"). Single entry — same single-entry pattern as V18..V117
+                    // (back-anchor invariant: V118 references a PAST close SHA; the V119 pin is deferred
+                    // to the v1.20 close per the back-anchor rule).
   // V14 omitted — RETRO-01 must surface a v1.4-close-state assertion in check-phase-{48..66}.mjs
   // before adding (v1.4 close was Phase 42, predating chain validators).
   // Candidates if needed: b5cf529 or 671f72a (D-02 advisor pre-scan).
@@ -121,3 +131,4 @@ export const readAtV114Close      = (p) => readAtClose('V114',         p);
 export const readAtV115Close      = (p) => readAtClose('V115',         p);
 export const readAtV116Close      = (p) => readAtClose('V116',         p);
 export const readAtV117Close      = (p) => readAtClose('V117',         p);
+export const readAtV118Close      = (p) => readAtClose('V118',         p);
