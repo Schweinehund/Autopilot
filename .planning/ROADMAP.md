@@ -138,14 +138,14 @@ If Plan 1 surfaces material drift, it is handled as a named requirement in the v
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and the publish bundle regenerates `--version=v1.19` under the `publish-bundle-gate.cjs` Stop-hook with both new recipes pandoc-convertible and `guard-docx.mjs`-clean.
   4. A single close-gate commit flips all 17 v1.19 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, alongside `v1.19-MILESTONE-AUDIT.md` and `v1.19-DEFERRED-CLEANUP.md`.
 
-**Plans**: 3/6 plans executed
+**Plans**: 4/6 plans executed
 
 Plans:
 
 - [x] 138-01-PLAN.md
 - [x] 138-02-PLAN.md
 - [x] 138-03-PLAN.md
-- [ ] 138-04-PLAN.md
+- [x] 138-04-PLAN.md
 - [ ] 138-05-PLAN.md
 - [ ] 138-06-PLAN.md
 - [ ] `138-01-PLAN.md` — wave 1, `depends_on: []`. HARN-14. V118 back-anchor pin + `readAtV118Close` (append-only, subject-line-confirmed SHA, proven end-to-end by a real frozen read); Wave-0 anchor captured and the 47-surface frozen-set inventory independently derived for the terminal HARD gate.
