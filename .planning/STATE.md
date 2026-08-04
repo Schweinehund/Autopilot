@@ -1,19 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.19
-milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
-status: Awaiting next milestone
-stopped_at: Completed 138-06-PLAN.md — v1.19 MILESTONE CLOSE
-last_updated: "2026-08-04T15:52:18.504Z"
+milestone: v1.20
+milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
+status: planning
+last_updated: "2026-08-04T18:33:48.997Z"
 last_activity: 2026-08-04
-last_activity_desc: Milestone v1.19 completed and archived
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 12
-  completed_plans: 12
-current_phase: 138
-current_phase_name: V118 Pin + 17th Path-A Lineage Bump + Terminal Close
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -43,10 +40,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — after the v1.19 milestone clos
 
 ## Current Position
 
-Phase: Milestone v1.19 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-08-04 — Milestone v1.19 completed and archived
+Status: Defining requirements
+Last activity: 2026-08-04 — Milestone v1.20 started
 
 ## v1.19 Phase Dependency Summary
 
