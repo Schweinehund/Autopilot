@@ -934,6 +934,43 @@
           "name": "V118 Pin + 17th Path-A Lineage Bump + Terminal Close"
         }
       }
+    },
+    "v1.20": {
+      "epicKey": "RTS-782",
+      "status": "created",
+      "created": "2026-08-04",
+      "phases": {
+        "139": {
+          "issueKey": "RTS-783",
+          "status": "todo",
+          "name": "Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair"
+        },
+        "140": {
+          "issueKey": "RTS-784",
+          "status": "todo",
+          "name": "Frozen-Aware Harness Conversion"
+        },
+        "141": {
+          "issueKey": "RTS-785",
+          "status": "todo",
+          "name": "Standalone-RED Validator Set — Chain Members Green"
+        },
+        "142": {
+          "issueKey": "RTS-786",
+          "status": "todo",
+          "name": "Archival-Path Fix, Chain Adoption & Cold-Clone Threshold"
+        },
+        "143": {
+          "issueKey": "RTS-787",
+          "status": "todo",
+          "name": "Link Coverage & Fence-Mask Unification"
+        },
+        "144": {
+          "issueKey": "RTS-788",
+          "status": "todo",
+          "name": "V119 Pin + 18th Path-A Lineage Bump + Terminal Close"
+        }
+      }
     }
   },
   "lastUpdated": "2026-07-30",
