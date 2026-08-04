@@ -5,15 +5,15 @@ milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk +
 current_phase: 138
 current_phase_name: V118 Pin + 17th Path-A Lineage Bump + Terminal Close
 status: executing
-stopped_at: Completed 138-01-PLAN.md
-last_updated: "2026-08-04T05:06:45.321Z"
+stopped_at: Completed 138-02-PLAN.md
+last_updated: "2026-08-04T05:13:22.938Z"
 last_activity: 2026-08-04
 last_activity_desc: Phase 138 execution started
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 12
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 ## Current Position
 
 Phase: 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-08-04 — Phase 138 execution started
 
@@ -302,6 +302,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 | Phase 137 P01 | 4min | 4 tasks | 9 files |
 | Phase 137 P02 | 4min | 3 tasks | 2 files |
 | Phase 138 P01 | 3min | 2 tasks | 1 files |
+| Phase 138 P02 | 4min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -338,6 +339,9 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: V118 recovered via subject-line pair discriminator (count=1), not the dual-token --grep --all-match form (2-candidate false positive)
 - [Phase ?]: 47-surface frozen-set inventory derived fresh by listing at Wave 0 (16+16+15=47), not carried from predecessor's 44 — predecessor enumeration silent on scripts/pipeline/ and the four shared _lib dependencies
 - [Phase ?]: scripts/pipeline/ exclusion recorded as a v1.19 ruling, not an inherited fact (only prior citation is inside commit 6acc429b's message)
+- [Phase ?]: 17th Path-A harness v1.19-milestone-audit.mjs + v1.19-audit-allowlist.json authored, C1-C17 inherited verbatim, exits 0 --verbose (16/16 PASS)
+- [Phase ?]: Pinned-file zero-drift positively proven across all 59 sidecar pins via sidecar-derived 16-file set x git diff --name-only 7af8a147..HEAD intersection (empty) — not the flawed 26-pin --report instrument
+- [Phase ?]: BASELINE_23 appended to regenerate-supervision-pins.mjs citing JIT pre-Atom-1 HEAD 470387ff (distinct from Wave-0 anchor 64ee54dd), coordinate array byte-unchanged
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -373,8 +377,8 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-08-04T05:06:45.289Z
-Stopped at: Completed 138-01-PLAN.md
+Last session: 2026-08-04T05:13:22.903Z
+Stopped at: Completed 138-02-PLAN.md
 Resume file: None
 Next action: Run verification/UAT on Phase 136 (both plans complete, RE-225 body C17-green at 234 files); then transition to Phase 137 (Integration & Navigation-Last Close).
 

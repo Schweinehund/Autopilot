@@ -38,7 +38,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 135+).
 ### Harness Close (HARN)
 
 - [x] **HARN-14**: `scripts/validation/_lib/frozen-at-close.mjs` gains the **`V118`** entry + `readAtV118Close` export, freezing the v1.18 corpus per `V118-PIN-DEFERRAL` — the mandatory back-anchor invariant. The SHA is recovered via the dual-token `git log --all --grep` method with the returned commit's **SUBJECT LINE positively confirmed** to carry both tokens (the v1.17 false-positive caveat, re-confirmed at v1.18's own close). **BLOCKED on the owner's PIPE-02 push** — see Blocking Precondition below.
-- [ ] **HARN-15**: 17th Path-A audit-harness lineage bump — `v1.19-milestone-audit.mjs` (Path-A from v1.18, C1-C17 inherited) + `v1.19-audit-allowlist.json` + BASELINE_23 + `check-phase-135..138.mjs` leaf/apex validators (the apex continues the `[48..N-1]` invariant, **independently derived, not copied from Phase 134**) + `audit-harness-v1.19-integrity.yml` (16th parallel CI coexistence workflow). Predecessor frozen surfaces BYTE-UNCHANGED — no value-masking, `CHAIN_SKIP` empty. The **full predecessor chain runs BEFORE** the close-gate is authored, per `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`.
+- [x] **HARN-15**: 17th Path-A audit-harness lineage bump — `v1.19-milestone-audit.mjs` (Path-A from v1.18, C1-C17 inherited) + `v1.19-audit-allowlist.json` + BASELINE_23 + `check-phase-135..138.mjs` leaf/apex validators (the apex continues the `[48..N-1]` invariant, **independently derived, not copied from Phase 134**) + `audit-harness-v1.19-integrity.yml` (16th parallel CI coexistence workflow). Predecessor frozen surfaces BYTE-UNCHANGED — no value-masking, `CHAIN_SKIP` empty. The **full predecessor chain runs BEFORE** the close-gate is authored, per `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`.
 - [ ] **HARN-16**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per D-03 + fresh zero-context reproduction; cross-OS PASS/FAIL/SKIP EXACT MATCH) + the publish bundle regenerated `--version=v1.19` under the `publish-bundle-gate.cjs` Stop-hook (note `build-publish-bundle.mjs:40` still defaults to `v1.17` without the flag; both new recipes must be pandoc-convertible and `guard-docx.mjs`-clean) + a **SINGLE close-gate commit** flipping all v1.19 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, plus `v1.19-MILESTONE-AUDIT.md` and `v1.19-DEFERRED-CLEANUP.md`.
 
 ## Blocking Precondition (owner action — gates HARN-14)
@@ -119,6 +119,6 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLASS-05 | 137 | Complete |
 | CLASS-06 | 137 | Complete |
 | HARN-14 | 138 | Complete |
-| HARN-15 | 138 | Pending |
+| HARN-15 | 138 | Complete |
 | HARN-16 | 138 | Pending |
 | **Total** | **17 requirements** | **4 phases (135-138)** |
