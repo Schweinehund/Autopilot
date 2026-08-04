@@ -23,9 +23,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
-**Current focus:** Phase 137 — Integration & Navigation-Last Close
+**Current focus:** Phase 138 — V118 Pin + 17th Path-A Lineage Bump + Terminal Close
 
-> **BLOCKING PRECONDITION — owner action required before Phase 138.** The v1.18 close-gate SHA `7af8a147` is on **no remote** and 198 commits are unpushed, so the mandatory V118 back-anchor pin has no valid target. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been repointed to `origin/master` (2026-07-25). The owner's PIPE-02 push must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has zero call sites; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false`, a FAIL not a skip. The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `.planning/milestones/v1.18-MILESTONE-AUDIT.md`.
+> **PIPE-02 PRECONDITION — DISCHARGED 2026-08-03.** The owner's push landed as a plain fast-forward (`237158c5..042d6559`, 257 commits) plus the `v1.18` annotated tag. `origin/master` and local `master` are now 0/0. **Both back-anchor SHAs are confirmed reachable on `origin/master`:** V118 `7af8a147` and V117 `b56bba5`. No rebase/squash/force was used, so neither SHA is dangling.
+>
+> **HARN-14 recovery method, verified at discharge time.** The dual-token `git log --all --grep` method has a live false-positive: `--grep="close-gate" --grep="v1.18" --all-match` returns 5 commits with `1deb8412` FIRST, so a naive `-1` returns the wrong commit (it matches on the body). Even subject-line filtering on `v1.18` + `close-gate` returns 2. **The unique discriminator is the subject-line pair `<version>` + `MILESTONE CLOSE`:**
+> ```
+> git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.18/ && $2 ~ /MILESTONE CLOSE/'
+> ```
+> This resolves to exactly `7af8a14766d346a348f7adf05d260676dbe4c1b2` (count=1), and the same method regression-checks clean against V117 → `b56bba5ea19f9b3fea6376a48dcc24f4ea1d3428`.
+>
+> The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `.planning/milestones/v1.18-MILESTONE-AUDIT.md` — check those runs before authoring the close-gate.
 
 ## Current Position
 
