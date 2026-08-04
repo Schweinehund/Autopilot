@@ -5,15 +5,15 @@ milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk +
 current_phase: 138
 current_phase_name: V118 Pin + 17th Path-A Lineage Bump + Terminal Close
 status: executing
-stopped_at: Phase 138 context gathered
-last_updated: "2026-08-04T05:01:04.761Z"
-last_activity: 2026-08-03
-last_activity_desc: Phase 137 complete, transitioned to Phase 138
+stopped_at: Completed 138-01-PLAN.md
+last_updated: "2026-08-04T05:06:45.321Z"
+last_activity: 2026-08-04
+last_activity_desc: Phase 138 execution started
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 12
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -37,10 +37,10 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 ## Current Position
 
-Phase: 138 — V118 Pin + 17th Path-A Lineage Bump + Terminal Close
-Plan: Not started
+Phase: 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-08-03 — Phase 137 complete, transitioned to Phase 138
+Last activity: 2026-08-04 — Phase 138 execution started
 
 ## v1.19 Phase Dependency Summary
 
@@ -301,6 +301,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 | Phase 136 P02 | 55min | 4 tasks | 1 files |
 | Phase 137 P01 | 4min | 4 tasks | 9 files |
 | Phase 137 P02 | 4min | 3 tasks | 2 files |
+| Phase 138 P01 | 3min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -334,6 +335,9 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: Both index.md surfaces (table rows + line-38 bullet) landed in one commit (Commit C, b694254f) to close the WR-01 defect class that recurred at Phase 132
 - [Phase ?]: Hubs stay NOT-wired; the v1.18 hub-enforcement regex's false-coverage claim (REQUIREMENTS.md:31) is corrected on the record (D-02), not silently carried forward
 - [Phase ?]: check-phase-137.mjs is NOT authored this phase; the needle-spec is handed to Phase 138 (D-18), appended to STATE.md's existing Plan-Time Research Flags block rather than a parallel entry
+- [Phase ?]: V118 recovered via subject-line pair discriminator (count=1), not the dual-token --grep --all-match form (2-candidate false positive)
+- [Phase ?]: 47-surface frozen-set inventory derived fresh by listing at Wave 0 (16+16+15=47), not carried from predecessor's 44 — predecessor enumeration silent on scripts/pipeline/ and the four shared _lib dependencies
+- [Phase ?]: scripts/pipeline/ exclusion recorded as a v1.19 ruling, not an inherited fact (only prior citation is inside commit 6acc429b's message)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -369,9 +373,9 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-08-04T04:16:25.074Z
-Stopped at: Phase 138 context gathered
-Resume file: .planning/phases/138-v118-pin-17th-path-a-lineage-bump-terminal-close/138-CONTEXT.md
+Last session: 2026-08-04T05:06:45.289Z
+Stopped at: Completed 138-01-PLAN.md
+Resume file: None
 Next action: Run verification/UAT on Phase 136 (both plans complete, RE-225 body C17-green at 234 files); then transition to Phase 137 (Integration & Navigation-Last Close).
 
 ## Operator Next Steps
