@@ -2,28 +2,34 @@
 gsd_state_version: 1.0
 milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
-current_phase: 138
-current_phase_name: V118 Pin + 17th Path-A Lineage Bump + Terminal Close
-status: shipped
+status: Awaiting next milestone
 stopped_at: Completed 138-06-PLAN.md — v1.19 MILESTONE CLOSE
-last_updated: "2026-08-04T13:12:44.319Z"
+last_updated: "2026-08-04T15:52:18.504Z"
 last_activity: 2026-08-04
-last_activity_desc: Phase 138 close-gate landed; post-close-gate confirmatory apex asserted V-138-AUDIT PASS (not SKIP)
+last_activity_desc: Milestone v1.19 completed and archived
 progress:
   total_phases: 4
   completed_phases: 4
   total_plans: 12
   completed_plans: 12
+current_phase: 138
+current_phase_name: V118 Pin + 17th Path-A Lineage Bump + Terminal Close
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
+See: .planning/PROJECT.md (updated 2026-08-04 — after the v1.19 milestone close)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
-**Current focus:** v1.19 SHIPPED 2026-08-04 (Phase 138 close-gate complete, 17/17 requirements Validated) — next: `/gsd-complete-milestone` or `/gsd-new-milestone`
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base.
+**Current focus:** **No active milestone.** v1.19 SHIPPED, ARCHIVED & TAGGED 2026-08-04 (17/17 requirements Validated; archived with zero drift, apex 93/0/0 before and after). Next: `/gsd-new-milestone` to scope v1.20 — backlog source `.planning/milestones/v1.19-DEFERRED-CLEANUP.md`, whose `V119-PIN-DEFERRAL` is v1.20's mandatory back-anchor.
+
+> **v1.20 BACK-ANCHOR RECOVERY.** The V119 pin needs the v1.19 close-gate SHA `a7bda73e`. Recover it with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
+> ```
+> git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.19/ && $2 ~ /MILESTONE CLOSE/'
+> ```
+> This is the same method that resolved V118 and regression-checks clean against V117.
 
 > **PIPE-02 PRECONDITION — DISCHARGED 2026-08-03.** The owner's push landed as a plain fast-forward (`237158c5..042d6559`, 257 commits) plus the `v1.18` annotated tag. `origin/master` and local `master` are now 0/0. **Both back-anchor SHAs are confirmed reachable on `origin/master`:** V118 `7af8a147` and V117 `b56bba5`. No rebase/squash/force was used, so neither SHA is dangling.
 >
@@ -37,12 +43,10 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 ## Current Position
 
-Phase: 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close) — COMPLETE
-Plan: 6 of 6
-Status: v1.19 SHIPPED — 17/17 requirements Validated via the Phase 138 Plan 138-06 single close-gate commit
-Last activity: 2026-08-04 — Phase 138 close-gate landed; post-close-gate confirmatory apex asserted V-138-AUDIT PASS (not SKIP)
-
-**Next step:** `/gsd-complete-milestone` (archive v1.19, tag, close Jira story) or `/gsd-new-milestone` to scope v1.20. The close-gate commit stays local — pushing it is the owner's call, out of this phase's scope.
+Phase: Milestone v1.19 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-08-04 — Milestone v1.19 completed and archived
 
 ## v1.19 Phase Dependency Summary
 
@@ -373,34 +377,34 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 
 ### Pending Todos
 
-- At Phase 136 plan time: run Plan 1 (anchor spot-verification + landing-spot decisions for every cut element) before Plan 2 authoring; resolve the RE-225 fork-taxonomy naming and the C17 #11 row-budget question via `/adversarial-review`
-- At Phase 136 plan time: consume Phase 135's D6.1 first-lander handoff table (`135-02-SUMMARY.md`) — items (a)(b)(c)(e) INHERIT, (d) inherits the fence convention but NOT the CDATA-JSON tension, (f)(g) are named non-inheritances Phase 136 rules for itself. Do not re-litigate D4.2's three grounds for a Case-1 block with a routing-cross-link arm
-- At Phase 136: gray area #8 (shared conceptual anchor / kiosk-dedicated taxonomy) is still chartered here — Phase 135 ruled the taxonomy sentence for RE-224's own Scope banner only and deliberately did not duplicate it into RE-225
-- At Phase 137 plan time: confirm the hubs-not-wired disposition is recorded as an explicit ruling (not silently carried forward), reassessing given kiosk-lockout/MHS-lockout's higher L1-adjacency than AVD/iPad
-- At Phase 138 plan time: verify the owner's PIPE-02 push has landed on `origin/master` BEFORE beginning any V118-pin work; confirm V118 SHA via positive-confirmation grep (subject-line verified); run the FULL predecessor chain before authoring the close-gate
+All v1.19 phase-time todos are discharged (Phases 135-138 complete, verified, archived). Carried forward to v1.20 scoping:
+
+- **V119 pin is v1.20's mandatory back-anchor** — recover close-gate SHA `a7bda73e` via the subject-line pair discriminator documented under Project Reference above, never the dual-token `--all-match` form
+- The apex will extend to `[48..138]` — derive the entry count independently (generate by arithmetic per D-29), never copy `check-phase-138.mjs`'s array forward unaudited
+- Read `.planning/milestones/v1.19-DEFERRED-CLEANUP.md` at scoping time — it is the v1.20 backlog source (`V119-PIN-DEFERRAL` + nine new entries)
 
 ### Blockers/Concerns
 
-At roadmap stage. Execution-time watch items (not blockers unless noted — address within specified phases):
+No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 93/0/0, zero archival drift. Durable watch items that survive the milestone boundary:
 
-- **HARD BLOCKER, Phase 138 only:** the owner's PIPE-02 push of the v1.18 close-gate + tag must land on `origin/master` before any V118-pin work begins — Phases 135-137 are NOT blocked by this and can proceed independently
-- Phases 136-138: the recipe-01 zero-edit guard still applies corpus-wide — `check-phase-130.mjs:64,67` pins `docs/recipes/01-shared-windows-avd-client.md`'s Step 5a/5b headings as literal strings inside every apex chain; any corpus-wide text operation must verify it doesn't touch this file indirectly (held clean through Phase 135)
-- Phase 136: zero line-shifting edits to `docs/_glossary-android.md` / `docs/reference/android-capability-matrix.md` — 365 and 139 pin coordinates across 16 frozen sidecars; CARVE-1 option (a) coordinate re-pin is the only licensed remedy if unavoidable
-- Phase 136: `05-dedicated-devices.md` is 33+ days past its `review_by` date — any drift found must get a named landing spot (requirement or DEFERRED-CLEANUP entry), never an unlogged drive-by edit to an Approved doc
-- Phase 137: the `build-filename-map.mjs --self-test` canary bump (223→225) must land in the SAME commit as the filename-map regeneration, and the `index.md` table + line-38 quick-nav bullet must land in the SAME commit — both are named deliverables per the WR-01 recurrence risk, not implicit side effects
-- Phase 138: apex extends to `[48..137]`, independently derived — do NOT copy Phase 134's `['v1.18-phases']`-style array forward unaudited; WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepens again; V119 pin is explicitly out of scope (successor milestone's job)
+- **`.planning/REQUIREMENTS.md` must not be deleted at any milestone close** — `check-phase-54.mjs:30,349,568` live-reads it outside the frozen-at-close mechanism, so `git rm` takes the whole apex chain red. Retained deliberately at the v1.17, v1.18 and v1.19 closes; `/gsd-new-milestone` overwrites it anyway
+- The recipe-01 zero-edit guard applies corpus-wide and permanently — `check-phase-130.mjs:64,67` pins `docs/recipes/01-shared-windows-avd-client.md`'s Step 5a/5b headings as literal strings inside every apex chain; any corpus-wide text operation must verify it doesn't touch that file indirectly
+- Zero line-shifting edits to `docs/_glossary-android.md` / `docs/reference/android-capability-matrix.md` — 365 and 139 pin coordinates across 16 frozen sidecars
+- **CARVE-1 / `FROZEN-AWARE-ADOPTION-SWEEP-01` remains OUT** — barred verbatim by its own routing from folding into a content/close milestone; it requires its own dedicated tooling milestone. Neither escalation trigger has fired
+- The ten-member standalone-RED validator set `{30,31,48,60..66}` stays `ACCEPTED-SCOPED-RED` (four root causes, zero chain failures) — red standalone, green under the apex; not a close blocker
+- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01 deepens every milestone; Linux GHA remains authoritative for BOTH chain validators per the D-03 OS split
+- Workflows fire on `pull_request` + schedule + `workflow_dispatch` only — a push to `master` fires nothing. Axis-2 needs an explicit `gh workflow run --ref master`, and CI must never be read while the remote is behind
 
 ## Session Continuity
 
-Last session: 2026-08-04T13:12:44.282Z
-Stopped at: Completed 138-06-PLAN.md — v1.19 MILESTONE CLOSE
+Last session: 2026-08-04 — `/gsd-complete-milestone v1.19`
+Stopped at: v1.19 archived and tagged; no active milestone
 Resume file: None
-Next action: Run verification/UAT on Phase 136 (both plans complete, RE-225 body C17-green at 234 files); then transition to Phase 137 (Integration & Navigation-Last Close).
+Next action: `/gsd-new-milestone` to scope v1.20.
 
 ## Operator Next Steps
 
-- Verify Phase 136 (RE-225 recipe body complete, closure-table counts hold exactly per `136-02-SUMMARY.md`); then advance to Phase 137
-- Push the v1.18 close-gate commit + `v1.18` tag (owner PIPE-02) at some point before Phase 138 begins — not blocking Phases 136-137
+- Start the next milestone with /gsd-new-milestone
 
 ## Performance Metrics
 

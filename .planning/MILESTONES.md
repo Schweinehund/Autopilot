@@ -1,5 +1,26 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) (Shipped: 2026-08-04)
+
+**Phases completed:** 4 phases, 12 plans, 35 tasks
+
+**Key accomplishments:**
+
+- Corrected EEE-SOP-standard.md's false "fenced content is invisible to retrieval" claim at all three sites (including the additive D-07 one ROADMAP SC6 doesn't name), appended the four D8.2 Operational-channel preconditions plus three sourced requirement/research corrections, and created the sentinel-free RE-224 recipe shell that proves C17 goes 232 to 233 files at 0 violations before any body content exists.
+- Authored the complete RE-224 recipe body — a 328-line linear path from self-deploying Autopilot enrollment to a verified Windows 11 restricted user experience delivered through the AssignedAccess CSP `Configuration` node via a custom OMA-URI profile — shipping the worked payload on both surfaces with all eight anti-regression traps held, and de-risking HARN-16 in-phase on a real pandoc run.
+- HYG-06 spot-verification (all NO DRIFT) + the two Plan-1-gated conditionals ruled (exit-PIN key ships in the fence, D2.7 sibling closed) + the sentinel-free RE-225 shell, C17-clean at 234 files.
+- RE-225's full body authored over Plan 1's shell — 6 Steps carrying 3 decision blocks + 2 Case-3 prompts, one confirmed-envelope JSON payload fence with its decomposition table, and the four closing sections — every closure-table count from CONTEXT holds exactly on the finished, C17-green 234-file corpus.
+- Both recipes proven pandoc-convertible then flipped Draft to Approved, registered at 225 rows, filename-map regenerated, and both independent row-count drift canaries (build-filename-map.mjs and the previously-forgotten build-publish-bundle.mjs) bumped green in one atomic commit.
+- Both recipes wired onto both `docs/index.md` navigation surfaces in one commit, hubs-not-wired ruling recorded with its correction of record, all 42 uncovered outbound recipe links proven to resolve, and the Phase-138 leaf-validator needle-spec handed off with measured literals.
+- Appended the V118 back-anchor pin (SHA 7af8a147, subject-line-recovered, remote-reachable) plus readAtV118Close to `_lib/frozen-at-close.mjs`, and recorded the Wave-0 anchor SHA and the independently derived 47-surface frozen-set inventory that Plan 138-04's byte-unchanged HARD gate will diff against.
+- Authored `v1.19-milestone-audit.mjs` (17th Path-A copy, C1-C17 inherited verbatim) + `v1.19-audit-allowlist.json` sidecar, positively proved zero drift across all 59 line-pins via the sidecar-derived-set × `git diff --name-only` instrument (not the flawed 26-pin report-mode path), and appended the BASELINE_23 audit-trail comment to `regenerate-supervision-pins.mjs`.
+- Authored the HARN-15 validator atom (three needle-based leaf validators + the new v1.19 chain-apex with three fixed inherited hazards) plus the 16th CI coexistence workflow, and proved the apex green standalone with 93/93 checks (92 PASS / 1 legitimate SKIP / 0 FAIL) before anything leaves this machine.
+- Complete local pre-push evidence base assembled: apex-138 green non-nested (92/0/1) with the ten-member standalone-RED set named and classified into four root causes, a clean byte-unchanged HARD gate extended over the shared `_lib` dependencies, a two-class archival-drift pre-scan, a third consecutive clean Windows fresh-clone cycle, a best-effort (and honestly-flagged) Axis-3 proxy, and a regenerated `dist/docs-library-v1.19.zip` with both new recipes GUARD-OK.
+- Owner-directed push landed the v1.19 lineage at `0fd5589c`; the cross-OS apex matched both local axes exactly (92 PASS/0 FAIL/1 SKIPPED, 93 checks) on independent job-level GHA log inspection, the v1.18 predecessor apex confirmed green (89/0/0) and excluded from fallback, and the cascade disposition over all sixteen dispatched workflows resolved to ACCEPTED-STANDALONE-CI-RED with a corrected 5-pass/10-fail baseline — verified per-run from job-level JSON, never from a top-level run colour.
+- v1.19 SHIPPED: single atomic close-gate commit `a7bda73e` flips all 17 requirements to Validated, both terminal milestone documents authored with a root-cause double-booking guard, and the post-close-gate confirmatory apex proves `V-138-AUDIT` is a real PASS (93 PASS / 0 FAIL / 0 SKIPPED) — closing the resolver-null hole at the one moment it matters.
+
+---
+
 ## v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure (Shipped: 2026-07-20)
 
 **Phases completed:** 6 phases (129-134), 17 plans
