@@ -5,10 +5,10 @@ milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk +
 current_phase: 138
 current_phase_name: V118 Pin + 17th Path-A Lineage Bump + Terminal Close
 status: shipped
-stopped_at: "Completed 138-06-PLAN.md — v1.19 MILESTONE CLOSE, 17/17 requirements Validated"
-last_updated: "2026-08-04T13:30:00.000Z"
+stopped_at: Completed 138-06-PLAN.md — v1.19 MILESTONE CLOSE
+last_updated: "2026-08-04T13:12:44.319Z"
 last_activity: 2026-08-04
-last_activity_desc: Phase 138 close-gate landed — v1.19 SHIPPED
+last_activity_desc: Phase 138 close-gate landed; post-close-gate confirmatory apex asserted V-138-AUDIT PASS (not SKIP)
 progress:
   total_phases: 4
   completed_phases: 4
@@ -308,6 +308,7 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 | Phase 138 P03 | 20min | 3 tasks | 5 files |
 | Phase 138 P04 | 25min | 3 tasks | 0 files |
 | Phase 138 P05 | 20min | 2 tasks | 1 files |
+| Phase 138 P06 | 35min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -353,6 +354,9 @@ Phase 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: audit-harness-v1.19-integrity.yml DUAL-APEX header kept byte-identical to predecessor apart from renumbered apex citation, which reproduces the predecessor's own CHECK_PHASE_NESTED=1 substring in prose (grep count 1, matching predecessor) -- resolved in favor of the more heavily-specified byte-identical requirement
 - [Phase ?]: 138-04: HARN-15 gate parts 1-3 proven (apex 92/0/1 non-nested idle-machine, ten-member standalone-RED set 30/31/48/60/61/62/63/64/65/66 enumerated with four root-cause classes, exponential 90-entry sweep non-attempt stated with measured doubling); byte-unchanged HARD gate clean (47-surface+87-file+3 shared _lib deps zero-diff, frozen-at-close.mjs additions-only); archival-drift PRE-scan widened to both phase-path and live REQUIREMENTS/ROADMAP classes (check-phase-54 flagged as the live-reading exposure); Axis 1 third consecutive clean Windows cycle (92/0/1, 19s); Axis 3 could not be dispatched as a true isolated sub-agent (no agent-dispatch tool in this executor's toolset) so a same-host proxy run was recorded honestly with an explicit human-confirmation flag rather than claimed as satisfied; publish bundle regenerated --version=v1.19 (225 docx, 0 errors, RE-224/RE-225 GUARD-OK); HARN-16 NOT marked complete (pre-push half only)
 - [Phase ?]: 138-05: Task-2 owner-directed push/dispatch deviation disclosed; cross-OS apex matched local axes exactly (92/0/1) at shared SHA 0fd5589c; cascade baseline corrected to 5 PASS/10 FAIL (superseding the 7/10 figure at STATE.md:346/361); ACCEPTED-STANDALONE-CI-RED confirmed per-run for all 10 red runs; HARN-16 still incomplete pending 138-06 close-gate
+- [Phase ?]: v1.19 SHIPPED: single close-gate commit a7bda73e flips all 17 requirements to Validated; all 3 re-audit axes captured in-phase (Axis-2 owner-directed push/dispatch, disclosed deviation); post-close-gate confirmatory apex confirms V-138-AUDIT PASS not SKIP (93/0/0)
+- [Phase ?]: Root-cause double-booking guard resolved one real double-book: ACCEPTED-SCOPED-RED class-(a) and DEFER-119-A are the same self-test defect; DEFER-119-A ruled sole owner
+- [Phase ?]: ACCEPTED-STANDALONE-CI-RED discharged with live evidence (corrected 5 PASS/10 FAIL baseline, superseding the arithmetically-impossible 7/10 figure) before being re-extended to span v1.4-v1.18
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -388,8 +392,8 @@ At roadmap stage. Execution-time watch items (not blockers unless noted — addr
 
 ## Session Continuity
 
-Last session: 2026-08-04T12:45:49.298Z
-Stopped at: Completed 138-05-PLAN.md
+Last session: 2026-08-04T13:12:44.282Z
+Stopped at: Completed 138-06-PLAN.md — v1.19 MILESTONE CLOSE
 Resume file: None
 Next action: Run verification/UAT on Phase 136 (both plans complete, RE-225 body C17-green at 234 files); then transition to Phase 137 (Integration & Navigation-Last Close).
 
