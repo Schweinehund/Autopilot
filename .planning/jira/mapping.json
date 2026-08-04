@@ -909,8 +909,9 @@
     },
     "v1.19": {
       "epicKey": "RTS-760",
-      "status": "in_progress",
+      "status": "completed",
       "created": "2026-07-28",
+      "completedDate": "2026-08-04",
       "phases": {
         "135": {
           "issueKey": "RTS-761",
@@ -929,7 +930,7 @@
         },
         "138": {
           "issueKey": "RTS-764",
-          "status": "in_progress",
+          "status": "done",
           "name": "V118 Pin + 17th Path-A Lineage Bump + Terminal Close"
         }
       }
