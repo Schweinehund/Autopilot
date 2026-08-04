@@ -2,6 +2,7 @@
 
 ## Milestones
 
+- 🚧 **v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure** — Phases 139-144 (in progress)
 - ✅ **v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)** — Phases 135-138 (shipped 2026-08-04)
 - ✅ **v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure** — Phases 129-134 (shipped 2026-07-20)
 - ✅ **v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)** — Phases 126-128 (shipped 2026-07-11)
@@ -24,9 +25,14 @@
 - ✅ **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-19 (shipped 2026-04-13)
 - ✅ **v1.0 Autopilot Documentation & Troubleshooting Guides** — Phases 1-10 (shipped 2026-04-10)
 
-**No active milestone** — run `/gsd-new-milestone` to scope v1.20. The backlog source is `.planning/milestones/v1.19-DEFERRED-CLEANUP.md` (`V119-PIN-DEFERRAL` is v1.20's mandatory back-anchor).
-
 ## Phases
+
+- [ ] **Phase 139: Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair** - GOV-01/02 CARVE + `fetch-depth: 0` on the 3 depth-1 workflows + shallow-job repair + `lsTreeAtClose()` enumeration API — the hard prerequisite for all frozen-aware conversion work that follows
+- [ ] **Phase 140: Frozen-Aware Harness Conversion** - v1.4–v1.19 milestone-audit harnesses converted to read their own close-SHA corpus instead of live HEAD, within the check-phase-60 60-second subprocess budget
+- [ ] **Phase 141: Standalone-RED Validator Set — Chain Members Green** - check-phase-48/60/61/62-66 exit 0 standalone; freshness, self-test classifier, and cascade root causes closed
+- [ ] **Phase 142: Archival-Path Fix, Chain Adoption & Cold-Clone Threshold** - check-phase-30/31 fixed and adopted into the apex chain; cold-clone apex cost gets a falsifiable threshold
+- [ ] **Phase 143: Link Coverage & Fence-Mask Unification** - corpus-wide relative-link + anchor checker green with zero accepted-violation baseline; fence-masking unified across all 15 call sites
+- [ ] **Phase 144: V119 Pin + 18th Path-A Lineage Bump + Terminal Close** - mandatory harness lineage bump + 3-axis re-audit + all 17 integrity workflows dispatched green — sole deliverable of this phase
 
 <details>
 <summary>✅ v1.0–v1.19 (Phases 1-138) — SHIPPED</summary>
@@ -45,6 +51,118 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - ✅ v1.0–v1.10 (Phases 1-88) — see milestone entries and `.planning/milestones/`
 
 </details>
+
+## Phase Details
+
+### Phase 139: Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair
+
+**Goal**: One named milestone-scoped CARVE authorizes and bounds every frozen-surface edit in the milestone, and every checkout that performs or transitively triggers a frozen read carries `fetch-depth: 0` — the hard prerequisite for all frozen-aware conversion work that follows.
+**Depends on**: Nothing (first phase of v1.20)
+**Requirements**: GOV-01, GOV-02, SWEEP-01, SWEEP-02, SWEEP-03, SWEEP-04
+**Success Criteria** (what must be TRUE):
+
+  1. A single named milestone-scoped CARVE document records an explicit file allowlist covering the frozen harnesses, the workflows, and the nine Pillar-C files (`c17-eee-contract.mjs`, `convert.ps1`, `check-nav-hub-links.mjs`, 6× `retrofit-*.mjs`), with a byte-unchanged gate proven on everything off-list (GOV-01), and every edit landed this phase is preceded by a recorded grep-before-edit + regression-gate check per the `check-phase-111.mjs` `V-111-TOOL03` precedent (GOV-02).
+  2. All three depth-1 checkout workflows — `audit-harness-integrity.yml` (4 checkouts), `audit-harness-v1.5-integrity.yml` (18), `audit-harness-v1.6-integrity.yml` (10) — carry `fetch-depth: 0` on every checkout, proven by a dispatched CI run in which a `git show <old-sha>:<path>` frozen read succeeds where it previously threw `fatal: invalid object name` (SWEEP-01).
+  3. The 11 validators that already import `frozen-at-close` but sit in previously-shallow jobs complete their frozen reads successfully in a dispatched CI run, not just locally (SWEEP-02).
+  4. `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, and `check-phase-51.mjs:31` fail loud on a missing/invalid frozen read instead of silently returning `null`/`""`, proven by a negative test (SWEEP-03).
+  5. `_lib/frozen-at-close.mjs` exports a working `lsTreeAtClose()` enumeration API, proven by a self-test that enumerates a known frozen tree's file list at a real close SHA (SWEEP-04).
+
+**Plans**: TBD
+
+**Discuss-phase flags**: The exact `lsTreeAtClose()` API shape (return type, error semantics on a missing path, whether it mirrors `readAtClose`'s per-milestone reader-function pattern or takes a SHA parameter directly) is a genuine design fork — not resolved at roadmap.
+
+**Hard constraints**: GOV-01's file allowlist and byte-unchanged gate govern every edit landed across Phases 139–143, not just this phase's edits — the CARVE recorded here is the milestone-wide contract. Zero-margin hazard, carried from the milestone's own context: both glossaries sit at exactly 90 days against a `>90` freshness test; do not touch either glossary's `last_verified`/`review_by` to satisfy any assertion anywhere in the milestone (explicitly barred — see REQUIREMENTS.md Out of Scope). Without this phase, SWEEP-05 (Phase 140) converts 9 clean two-assertion failures into hard crashes.
+
+### Phase 140: Frozen-Aware Harness Conversion
+
+**Goal**: Each frozen milestone-audit harness v1.4–v1.19 reads its own corpus at its own close SHA instead of live HEAD, resolving the frozen-vs-evolved mismatch class at its root, within budget.
+**Depends on**: Phase 139 (needs the `fetch-depth: 0` retrofit so frozen reads execute in CI, the `lsTreeAtClose()` enumeration API so a harness can derive its scope without walking live HEAD, and the governance CARVE authorizing these edits)
+**Requirements**: SWEEP-05, SWEEP-06, SWEEP-07, SWEEP-08
+**Success Criteria** (what must be TRUE):
+
+  1. Every `vX.Y-milestone-audit.mjs` harness for v1.4 through v1.19 derives its file scope and reads its content at its own close SHA rather than live HEAD, proven by re-running each harness and confirming it no longer reports the frozen-vs-evolved C5/C10 60d-vs-90d mismatch (SWEEP-05).
+  2. `check-phase-60.mjs`'s subprocess re-run of the converted v1.5 harness completes inside its 60-second timeout, verified by a real measured run across all 282 `.md` files in scope (SWEEP-06).
+  3. The v1.4 `TEMPLATE-SENTINEL` assertion (`docs/_templates/admin-template-android.md`'s `last_verified: 1970-01-01 # TEMPLATE-SENTINEL`, present before v1.4 closed) has a named, recorded remedy distinct from frozen-awareness — since `readAtV14Close()` returns byte-identical content and the assertion was never green at v1.4's own close — proven by the assertion passing under the new remedy (SWEEP-07).
+  4. A `V14` entry exists in `_lib/frozen-at-close.mjs` with an explicitly chosen SHA and a recorded rationale for the choice, satisfying the `frozen-at-close.mjs:94-96` pin-gate (SWEEP-08).
+
+**Plans**: TBD
+
+**Discuss-phase flags**: The SWEEP-07 remedy for the v1.4 `TEMPLATE-SENTINEL` assertion (a third failure class distinct from both frozen-vs-evolved and archival-path drift) is a genuine design fork, not resolved at roadmap. The `V14` SHA choice between `b5cf529` (commit v1.4 milestone archive files, 22:02:56) and `671f72a` (archive v1.4 phase directories, 22:02:22) — 34 seconds apart and NOT equivalent, the latter predates the ROADMAP/REQUIREMENTS archive commit — is also a genuine fork, not resolved at roadmap.
+
+**Hard constraints**: Corpus edits are authorized but expected near-zero — a corpus edit requires proof the document is wrong, not merely that a frozen assertion disagrees with it (standing project rule). `check-phase-30`/`check-phase-31` are v1.3-era, so the `V14` pin decided here does not serve them (see Phase 142).
+
+### Phase 141: Standalone-RED Validator Set — Chain Members Green
+
+**Goal**: The eight chain-member validators (`check-phase-48`, `-60`, `-61`, `-62` through `-66`) exit 0 standalone, closing the freshness and self-test root causes and the cascade they drive.
+**Depends on**: Phase 140 (the freshness leg — RED-01 — is resolved by the frozen-aware harness conversion applied to v1.5–v1.13: at their own close SHAs both glossaries read exactly 60 days and pass, live they read 90 days)
+**Requirements**: RED-01, RED-02, RED-03
+**Success Criteria** (what must be TRUE):
+
+  1. The v1.5–v1.13 C5/C10 freshness assertions pass with zero edits to either glossary's metadata, verified by running each affected harness directly (RED-01 — the true prerequisite for 60, 61, and all five of 62–66, per the MEASURED finding that the self-test alone greens only `check-phase-48`).
+  2. `regenerate-supervision-pins.mjs --self-test` exits 0 via a corrected classifier context window (the backward-only scan at `regenerate-supervision-pins.mjs:204-238` misses the iOS token at line 147, two lines after the heading), with the v1.7 fixture byte-unchanged and no classifier relaxation (RED-02).
+  3. `check-phase-48.mjs`, `check-phase-60.mjs`, `check-phase-61.mjs`, and `check-phase-62.mjs` through `check-phase-66.mjs` each exit 0 when invoked standalone (not nested), proven by 8 independent direct invocations, with the cascade classes (48→60→61→62..66's own `CHAIN-*` sub-checks) confirmed cleared as a consequence rather than patched individually (RED-03).
+
+**Plans**: TBD
+
+**Discuss-phase flags**: None dominant — RED-02's method is already ruled (classifier context-window investigation, per path D-12; editing `v1.7-audit-allowlist.json` or relaxing the classifier's thresholds is barred).
+
+**Hard constraints**: `check-phase-61.mjs` alone carries three of the four root-cause classes (self-test, freshness, cascade) — fixing RED-01+RED-02 does not by itself clear 62–66's `CHAIN-*` legs; those clear only once 48/60/61 are each independently green. Class (d) — the pre-chain content drift in `check-phase-30`/`check-phase-31` — is structurally independent of this phase's fixes and is NOT addressed here (see Phase 142); a plan that "fixes" only this phase's scope will still find 30 and 31 red.
+
+### Phase 142: Archival-Path Fix, Chain Adoption & Cold-Clone Threshold
+
+**Goal**: `check-phase-30`/`check-phase-31` exit 0 standalone and become real, enforced members of the apex chain with `check-phase-68`'s regression guard intact, and the chain-apex's cold-clone cost carries a measured, falsifiable threshold.
+**Depends on**: Phase 141 (this phase's `check-phase-31.mjs` edit is regression-guarded by `check-phase-68.mjs`, which is already inside the chain that Phase 141 greened; sequencing after the chain-member cascade is resolved avoids compounding two independent red classes in one diagnosis)
+**Requirements**: RED-04, RED-05, RED-06, RED-07, NEST-01
+**Success Criteria** (what must be TRUE):
+
+  1. `check-phase-30.mjs` exits 0 standalone — both the Mermaid-conversion-driven "0 decision-diamond nodes" assertion and the `l1-template.md` `"Windows | macOS | iOS | all"` literal mismatch resolved (RED-04).
+  2. `check-phase-31.mjs` exits 0 standalone, including `V-31-23` resolved via `resolveArchivedPhasePath(..., ['v1.3-phases'])` (the pattern already used at `check-phase-31.mjs:33`, not a corpus read), plus `V-31-25` and `V-31-29` (RED-05).
+  3. `check-phase-30` and `check-phase-31` are members of the apex's `CHAIN_PHASES` array and execute under it, proven by an apex run showing both firing (not absent), at a measured cost of roughly +0.35s on a ~17s apex run under the `CHECK_PHASE_NESTED` guard (RED-06).
+  4. `check-phase-68.mjs`'s `V-68-04` (check-phase-31 remains one of the `archive-path` helper's 5 import call-sites) and `V-68-08` (the `_missing` discriminator marker) both still pass after the check-phase-31 edit (RED-07).
+  5. Cold-clone apex cost is measured on Windows with a stated method (clone depth, cache state, Defender state, runner) and a recorded pass/fail threshold plus an explicit "if over threshold then mechanism X" rule — distinct from, and not re-collapsed with, the healthy within-apex curve (~17s, 93 PASS/0 FAIL/0 SKIPPED at HEAD) (NEST-01).
+
+**Plans**: TBD
+
+**Discuss-phase flags**: Whether RED-04/RED-05 need a separate v1.3 pin (since `check-phase-30`/`check-phase-31` are v1.3-era and the `V14` pin from Phase 140 does not serve them) is a genuine design fork, not resolved at roadmap. The NEST-01 pass/fail threshold value is also not resolved at roadmap.
+
+**Hard constraints**: `check-phase-68.mjs:97-115` (`V-68-04`) and `:166-176` (`V-68-08`) are in every apex chain — breaking either converts a scoped-red orphan into an apex chain failure; grep both call-sites before editing `check-phase-31.mjs`.
+
+### Phase 143: Link Coverage & Fence-Mask Unification
+
+**Goal**: The corpus has durable, enforced relative-link and anchor coverage with zero accepted-violation baseline, and fence-masking behaves identically across all 15 call sites in 9 files.
+**Depends on**: Phase 139 (the governance CARVE covers the nine Pillar-C files this phase touches); no technical dependency on Phases 140–142's chain-validator work — sequenced after per the project's `use_worktrees:false` sequential-on-main-tree convention, not a hard blocking requirement
+**Requirements**: LINK-01, LINK-02, LINK-03, LINK-04, LINK-05, LINK-06
+**Success Criteria** (what must be TRUE):
+
+  1. `computeAnchorSetFromContent` recognises HTML `<a id="…">` anchors, proven by anchor failures dropping from the measured 271 to the measured 70 (LINK-01 — must land before LINK-02/04, since 201 of 271 (74%) are model gaps, not real breaks).
+  2. A corpus-wide checker validates every relative link and anchor across `docs/` (excluding `docs/_templates/`, masking inline code spans) and exits 0 with no accepted-violation baseline of any kind (LINK-02, LINK-04).
+  3. All 13 genuine broken links (11 `../` over-escapes in `docs/_glossary-macos.md`, 2 in `docs/admin-setup-ios/`) are fixed, verified by the checker re-run finding zero remaining genuine breaks (LINK-03).
+  4. Fence-mask behavior is unified across all 15 call sites in the 9 named files, including both c17 sites (`:158` opening, `:166` closing), covering the measured 74 fences indented 1–3 spaces across 11 files via a `^ {0,3}` CommonMark-equivalent rule (LINK-05).
+  5. c17 reports identical file and violation counts before and after the fence-mask change, and a sampled check of the newly-masked lines confirms none hides a suppressed violation (LINK-06).
+
+**Plans**: TBD
+
+**Discuss-phase flags**: None dominant — LINK-01's precedence over LINK-02/LINK-04 and LINK-04's no-baseline rule are already settled by the requirement text itself.
+
+**Hard constraints**: LINK-01 must precede LINK-02 and LINK-04 — running the corpus-wide checker before the anchor model is complete would freeze 201 of 271 anchor failures as a false, permanently-accepted baseline, the exact disposition class this milestone exists to delete. LINK-06 must land in the same phase as LINK-05 (it is the before/after regression gate on that exact change) — both are satisfied together here. `scripts/pipeline/convert.ps1`'s fence mask governs only the D-03(a) nav-footer rewrite on an ephemeral temp copy, not `.docx` code-block rendering (pandoc decides that) — its unification is hygiene, not correctness.
+
+### Phase 144: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
+
+**Goal**: The milestone closes with the mandatory V119 back-anchor pin, the 18th harness lineage bump, and a 3-axis re-audit with all 17 integrity workflows dispatched green — the sole deliverable cluster of this phase, per project convention.
+**Depends on**: Phase 139, Phase 140, Phase 141, Phase 142, Phase 143 (ALL other v1.20 phases must be complete and green — harness close never batches with other work, mirrors Phase 100/112/119/125/128/134/138 exactly)
+**Requirements**: HARN-17, HARN-18, HARN-19
+**Success Criteria** (what must be TRUE):
+
+  1. `_lib/frozen-at-close.mjs` gains the **V119** entry (`a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`, positively re-confirmed via the subject-line pair discriminator, count=1 — never the naive dual-token `--grep --all-match` form) + `readAtV119Close` export (HARN-17).
+  2. `v1.20-milestone-audit.mjs` (Path-A from v1.19, C1-C17 inherited) + `v1.20-audit-allowlist.json` + BASELINE_24 + `check-phase-139..NN.mjs` validators exist and pass, with the apex's `CHAIN_PHASES` array generated by arithmetic (never transcribed) and accounting for RED-06's addition of `check-phase-30`/`check-phase-31` to the chain, plus the 17th CI coexistence workflow born with `fetch-depth: 0` (HARN-18).
+  3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and all 17 `audit-harness-*` integrity workflows are dispatched (`gh workflow run --ref master`, since a push fires nothing) and confirmed green from job-level JSON, not the checks-UI colour (HARN-19).
+  4. The publish bundle regenerates `--version=v1.20`, and a single close-gate commit flips all 27 v1.20 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS — with `ACCEPTED-STANDALONE-CI-RED` and `ACCEPTED-SCOPED-RED` **deleted** from the backlog rather than carried a seventh milestone, discharging the milestone bar stated in REQUIREMENTS.md (HARN-19).
+
+**Plans**: TBD
+
+**Discuss-phase flags**: None (closing cluster; consumes prior decisions).
+
+**Hard constraints**: BLOCKED on Phases 139–143 all being complete and green — mirrors every prior harness-close phase exactly (100/112/119/125/128/134/138). Workflows fire on `pull_request` + `schedule` + `workflow_dispatch` only — a push to `master` fires nothing; Axis-2 needs an explicit `gh workflow run --ref master` per workflow, and CI must never be read while the remote is behind. A "green" run is compatible with a cron-skipped quarterly job and a `continue-on-error: true` advisory job, so evidence must be job-level JSON.
 
 ## Progress
 
@@ -71,6 +189,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) | 126-128 | ✅ Shipped | 2026-07-11 |
 | v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure | 129-134 | ✅ Shipped | 2026-07-20 |
 | v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) | 135-138 | ✅ Shipped | 2026-08-04 |
+| v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure | 139-144 | 🚧 In Progress | - |
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -78,3 +197,9 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 136. Recipe #4 — Android Dedicated MHS Multi-App | v1.19 | 2/2 | Complete | 2026-08-03 |
 | 137. Integration & Navigation-Last Close | v1.19 | 2/2 | Complete | 2026-08-03 |
 | 138. V118 Pin + 17th Path-A Lineage Bump + Terminal Close | v1.19 | 6/6 | Complete | 2026-08-04 |
+| 139. Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair | v1.20 | 0/TBD | Not started | - |
+| 140. Frozen-Aware Harness Conversion | v1.20 | 0/TBD | Not started | - |
+| 141. Standalone-RED Validator Set — Chain Members Green | v1.20 | 0/TBD | Not started | - |
+| 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 0/TBD | Not started | - |
+| 143. Link Coverage & Fence-Mask Unification | v1.20 | 0/TBD | Not started | - |
+| 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 0/TBD | Not started | - |

@@ -121,39 +121,39 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SWEEP-01 | TBD | Pending |
-| SWEEP-02 | TBD | Pending |
-| SWEEP-03 | TBD | Pending |
-| SWEEP-04 | TBD | Pending |
-| SWEEP-05 | TBD | Pending |
-| SWEEP-06 | TBD | Pending |
-| SWEEP-07 | TBD | Pending |
-| SWEEP-08 | TBD | Pending |
-| RED-01 | TBD | Pending |
-| RED-02 | TBD | Pending |
-| RED-03 | TBD | Pending |
-| RED-04 | TBD | Pending |
-| RED-05 | TBD | Pending |
-| RED-06 | TBD | Pending |
-| RED-07 | TBD | Pending |
-| LINK-01 | TBD | Pending |
-| LINK-02 | TBD | Pending |
-| LINK-03 | TBD | Pending |
-| LINK-04 | TBD | Pending |
-| LINK-05 | TBD | Pending |
-| LINK-06 | TBD | Pending |
-| NEST-01 | TBD | Pending |
-| GOV-01 | TBD | Pending |
-| GOV-02 | TBD | Pending |
-| HARN-17 | TBD | Pending |
-| HARN-18 | TBD | Pending |
-| HARN-19 | TBD | Pending |
+| SWEEP-01 | Phase 139 | Pending |
+| SWEEP-02 | Phase 139 | Pending |
+| SWEEP-03 | Phase 139 | Pending |
+| SWEEP-04 | Phase 139 | Pending |
+| SWEEP-05 | Phase 140 | Pending |
+| SWEEP-06 | Phase 140 | Pending |
+| SWEEP-07 | Phase 140 | Pending |
+| SWEEP-08 | Phase 140 | Pending |
+| RED-01 | Phase 141 | Pending |
+| RED-02 | Phase 141 | Pending |
+| RED-03 | Phase 141 | Pending |
+| RED-04 | Phase 142 | Pending |
+| RED-05 | Phase 142 | Pending |
+| RED-06 | Phase 142 | Pending |
+| RED-07 | Phase 142 | Pending |
+| LINK-01 | Phase 143 | Pending |
+| LINK-02 | Phase 143 | Pending |
+| LINK-03 | Phase 143 | Pending |
+| LINK-04 | Phase 143 | Pending |
+| LINK-05 | Phase 143 | Pending |
+| LINK-06 | Phase 143 | Pending |
+| NEST-01 | Phase 142 | Pending |
+| GOV-01 | Phase 139 | Pending |
+| GOV-02 | Phase 139 | Pending |
+| HARN-17 | Phase 144 | Pending |
+| HARN-18 | Phase 144 | Pending |
+| HARN-19 | Phase 144 | Pending |
 
 **Coverage:**
 - v1.20 requirements: 27 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 27 ⚠️
+- Mapped to phases: 27 (100%)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-08-04*
-*Last updated: 2026-08-04 at v1.20 milestone scoping (`/gsd-new-milestone`), corrected by `/grill-me` + `/adversarial-review`*
+*Last updated: 2026-08-04 — traceability populated at ROADMAP.md creation (6 phases, 139-144, 27/27 requirements mapped)*
