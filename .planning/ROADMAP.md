@@ -138,7 +138,15 @@ If Plan 1 surfaces material drift, it is handled as a named requirement in the v
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and the publish bundle regenerates `--version=v1.19` under the `publish-bundle-gate.cjs` Stop-hook with both new recipes pandoc-convertible and `guard-docx.mjs`-clean.
   4. A single close-gate commit flips all 17 v1.19 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, alongside `v1.19-MILESTONE-AUDIT.md` and `v1.19-DEFERRED-CLEANUP.md`.
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] `138-01-PLAN.md` — wave 1, `depends_on: []`. HARN-14. V118 back-anchor pin + `readAtV118Close` (append-only, subject-line-confirmed SHA, proven end-to-end by a real frozen read); Wave-0 anchor captured and the 47-surface frozen-set inventory independently derived for the terminal HARD gate.
+- [ ] `138-02-PLAN.md` — wave 2, `depends_on: 138-01` (anchor-before-any-edit). HARN-15 Atom 1. 17th Path-A harness + sidecar (C1–C17 inherited verbatim, 59 pins carried) + BASELINE_23; pinned-file zero-drift proven by the all-59-pin diff instrument, not by the report mode that reads the wrong sidecar.
+- [ ] `138-03-PLAN.md` — wave 3, `depends_on: 138-02`. HARN-15 Atom 2. Three leaf validators (135/136/137, line-scoped needles) + the apex `check-phase-138.mjs` (chain `[48..137]`, 90 entries and 93 checks independently derived, guarded at module load, three latent hazards fixed not inherited, own archive-root token) + the 16th CI coexistence workflow; apex proven green standalone non-nested.
+- [ ] `138-04-PLAN.md` — wave 4, `depends_on: 138-01, 138-02, 138-03`. HARN-15 + HARN-16 pre-push. The four-part HARN-15 gate in parts 1–3 (apex green non-nested; drift band run non-nested with the ten-member RED set named and four root causes classified; the exponential full-sweep non-attempt stated), the 47-surface byte-unchanged HARD gate extended over the four shared `_lib` dependencies, the widened archival-drift pre-scan, Axis 1 + Axis 3, and the publish bundle regenerated `--version=v1.19`.
+- [ ] `138-05-PLAN.md` — wave 5, `depends_on: 138-04`, `autonomous: false`. HARN-16 cross-OS. **The owner checkpoint is this plan boundary** — a blocking pre-push go/no-go decision followed by a blocking `checkpoint:human-action` where the OWNER (never the executor) runs `git push origin master` and dispatches all 16 integrity workflows; then the post-push assertions, the Axis-2 capture as PASS/FAIL/SKIP triples at ONE shared SHA, and the machine-verified GA-4 cascade disposition at the corrected 5 PASS / 10 FAIL baseline.
+- [ ] `138-06-PLAN.md` — wave 6, `depends_on: 138-05`. HARN-16 close-gate. `v1.19-DEFERRED-CLEANUP.md` (six mandatory additions, verbatim handover entries, DROPPED-and-Closed section, root-cause double-booking guard) + `v1.19-MILESTONE-AUDIT.md` + `138-VERIFICATION.md` + a SINGLE atomic commit flipping all 17 v1.19 requirements to Validated, followed by HARN-15 gate part 4 — the post-close-gate confirmatory apex asserting `V-138-AUDIT` is PASS, not SKIP.
 
 **Discuss-phase flags**: None (closing cluster; consumes prior decisions).
 
