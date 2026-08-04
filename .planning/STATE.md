@@ -4,16 +4,16 @@ milestone: v1.19
 milestone_name: "Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)"
 current_phase: 138
 current_phase_name: V118 Pin + 17th Path-A Lineage Bump + Terminal Close
-status: executing
-stopped_at: Completed 138-05-PLAN.md
-last_updated: "2026-08-04T12:45:49.333Z"
+status: shipped
+stopped_at: "Completed 138-06-PLAN.md — v1.19 MILESTONE CLOSE, 17/17 requirements Validated"
+last_updated: "2026-08-04T13:30:00.000Z"
 last_activity: 2026-08-04
-last_activity_desc: Phase 138 execution started
+last_activity_desc: Phase 138 close-gate landed — v1.19 SHIPPED
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 12
-  completed_plans: 11
+  completed_plans: 12
 ---
 
 # Project State
@@ -23,7 +23,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.19 extends the v1.18 Device Recipe doc class with two more reproducible recipes — a Windows multi-app kiosk and an MHS multi-app Android dedicated device — each scoped as a *delta* over the corpus that already exists.
-**Current focus:** Phase 138 — V118 Pin + 17th Path-A Lineage Bump + Terminal Close
+**Current focus:** v1.19 SHIPPED 2026-08-04 (Phase 138 close-gate complete, 17/17 requirements Validated) — next: `/gsd-complete-milestone` or `/gsd-new-milestone`
 
 > **PIPE-02 PRECONDITION — DISCHARGED 2026-08-03.** The owner's push landed as a plain fast-forward (`237158c5..042d6559`, 257 commits) plus the `v1.18` annotated tag. `origin/master` and local `master` are now 0/0. **Both back-anchor SHAs are confirmed reachable on `origin/master`:** V118 `7af8a147` and V117 `b56bba5`. No rebase/squash/force was used, so neither SHA is dangling.
 >
@@ -37,10 +37,12 @@ See: .planning/PROJECT.md (updated 2026-07-25 — v1.19 milestone scoped)
 
 ## Current Position
 
-Phase: 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close) — EXECUTING
+Phase: 138 (V118 Pin + 17th Path-A Lineage Bump + Terminal Close) — COMPLETE
 Plan: 6 of 6
-Status: Ready to execute
-Last activity: 2026-08-04 — Phase 138 execution started
+Status: v1.19 SHIPPED — 17/17 requirements Validated via the Phase 138 Plan 138-06 single close-gate commit
+Last activity: 2026-08-04 — Phase 138 close-gate landed; post-close-gate confirmatory apex asserted V-138-AUDIT PASS (not SKIP)
+
+**Next step:** `/gsd-complete-milestone` (archive v1.19, tag, close Jira story) or `/gsd-new-milestone` to scope v1.20. The close-gate commit stays local — pushing it is the owner's call, out of this phase's scope.
 
 ## v1.19 Phase Dependency Summary
 

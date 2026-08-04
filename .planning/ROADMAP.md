@@ -2,7 +2,7 @@
 
 ## Milestones
 
-- 🚧 **v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)** — Phases 135-138 (in progress)
+- ✅ **v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)** — Phases 135-138 (shipped 2026-08-04)
 - ✅ **v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure** — Phases 129-134 (shipped 2026-07-20)
 - ✅ **v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)** — Phases 126-128 (shipped 2026-07-11)
 - ✅ **v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing** — Phases 120-125 (shipped 2026-07-10)
@@ -29,7 +29,7 @@
 - [x] **Phase 135: Recipe #3 — Windows 11 Multi-App Kiosk** - Custom OMA-URI / hand-authored AssignedAccess XML recipe, cross-linking recipe 01's single-app case without touching it (completed 2026-08-02)
 - [x] **Phase 136: Recipe #4 — Android Dedicated MHS Multi-App** - Anchor spot-verification + MHS app-configuration recipe filling the `## Steps`/Verification/Anti-Feature gap in `05-dedicated-devices.md` (completed 2026-08-03)
 - [x] **Phase 137: Integration & Navigation-Last Close** - Both recipes registered, published, and discoverable (completed 2026-08-03)
-- [ ] **Phase 138: V118 Pin + 17th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate (BLOCKED on owner's PIPE-02 push)
+- [x] **Phase 138: V118 Pin + 17th Path-A Lineage Bump + Terminal Close** - Mandatory harness lineage bump + 3-axis re-audit + close-gate (completed 2026-08-04)
 
 <details>
 <summary>✅ v1.0–v1.18 (Phases 1-134) — SHIPPED</summary>
@@ -138,7 +138,7 @@ If Plan 1 surfaces material drift, it is handled as a named requirement in the v
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and the publish bundle regenerates `--version=v1.19` under the `publish-bundle-gate.cjs` Stop-hook with both new recipes pandoc-convertible and `guard-docx.mjs`-clean.
   4. A single close-gate commit flips all 17 v1.19 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, alongside `v1.19-MILESTONE-AUDIT.md` and `v1.19-DEFERRED-CLEANUP.md`.
 
-**Plans**: 5/6 plans executed
+**Plans**: 6/6 plans complete
 
 Plans:
 
@@ -147,7 +147,7 @@ Plans:
 - [x] 138-03-PLAN.md
 - [x] 138-04-PLAN.md
 - [x] 138-05-PLAN.md
-- [ ] 138-06-PLAN.md
+- [x] 138-06-PLAN.md
 - [ ] `138-01-PLAN.md` — wave 1, `depends_on: []`. HARN-14. V118 back-anchor pin + `readAtV118Close` (append-only, subject-line-confirmed SHA, proven end-to-end by a real frozen read); Wave-0 anchor captured and the 47-surface frozen-set inventory independently derived for the terminal HARD gate.
 - [ ] `138-02-PLAN.md` — wave 2, `depends_on: 138-01` (anchor-before-any-edit). HARN-15 Atom 1. 17th Path-A harness + sidecar (C1–C17 inherited verbatim, 59 pins carried) + BASELINE_23; pinned-file zero-drift proven by the all-59-pin diff instrument, not by the report mode that reads the wrong sidecar.
 - [ ] `138-03-PLAN.md` — wave 3, `depends_on: 138-02`. HARN-15 Atom 2. Three leaf validators (135/136/137, line-scoped needles) + the apex `check-phase-138.mjs` (chain `[48..137]`, 90 entries and 93 checks independently derived, guarded at module load, three latent hazards fixed not inherited, own archive-root token) + the 16th CI coexistence workflow; apex proven green standalone non-nested.
@@ -183,11 +183,11 @@ Plans:
 | v1.16 EEE SOP Documentation-Standard Retrofit (Phase-2) + Pipeline/Structural Shelf-Clearing | 120-125 | ✅ Shipped | 2026-07-10 |
 | v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) | 126-128 | ✅ Shipped | 2026-07-11 |
 | v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure | 129-134 | ✅ Shipped | 2026-07-20 |
-| v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) | 135-138 | 🚧 In progress | - |
+| v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) | 135-138 | ✅ Shipped | 2026-08-04 |
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 135. Recipe #3 — Windows 11 Multi-App Kiosk | 0/2 | Not started | - |
-| 136. Recipe #4 — Android Dedicated MHS Multi-App | 0/2 | Not started | - |
-| 137. Integration & Navigation-Last Close | 0/TBD | Not started | - |
-| 138. V118 Pin + 17th Path-A Lineage Bump + Terminal Close | 0/TBD | Not started | - |
+| 135. Recipe #3 — Windows 11 Multi-App Kiosk | 2/2 | Complete | 2026-08-02 |
+| 136. Recipe #4 — Android Dedicated MHS Multi-App | 2/2 | Complete | 2026-08-03 |
+| 137. Integration & Navigation-Last Close | 2/2 | Complete | 2026-08-03 |
+| 138. V118 Pin + 17th Path-A Lineage Bump + Terminal Close | 6/6 | Complete | 2026-08-04 |

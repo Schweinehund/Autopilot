@@ -39,11 +39,13 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 135+).
 
 - [x] **HARN-14**: `scripts/validation/_lib/frozen-at-close.mjs` gains the **`V118`** entry + `readAtV118Close` export, freezing the v1.18 corpus per `V118-PIN-DEFERRAL` — the mandatory back-anchor invariant. The SHA is recovered via the dual-token `git log --all --grep` method with the returned commit's **SUBJECT LINE positively confirmed** to carry both tokens (the v1.17 false-positive caveat, re-confirmed at v1.18's own close). **BLOCKED on the owner's PIPE-02 push** — see Blocking Precondition below.
 - [x] **HARN-15**: 17th Path-A audit-harness lineage bump — `v1.19-milestone-audit.mjs` (Path-A from v1.18, C1-C17 inherited) + `v1.19-audit-allowlist.json` + BASELINE_23 + `check-phase-135..138.mjs` leaf/apex validators (the apex continues the `[48..N-1]` invariant, **independently derived, not copied from Phase 134**) + `audit-harness-v1.19-integrity.yml` (16th parallel CI coexistence workflow). Predecessor frozen surfaces BYTE-UNCHANGED — no value-masking, `CHAIN_SKIP` empty. The **full predecessor chain runs BEFORE** the close-gate is authored, per `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`.
-- [ ] **HARN-16**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per D-03 + fresh zero-context reproduction; cross-OS PASS/FAIL/SKIP EXACT MATCH) + the publish bundle regenerated `--version=v1.19` under the `publish-bundle-gate.cjs` Stop-hook (note `build-publish-bundle.mjs:40` still defaults to `v1.17` without the flag; both new recipes must be pandoc-convertible and `guard-docx.mjs`-clean) + a **SINGLE close-gate commit** flipping all v1.19 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, plus `v1.19-MILESTONE-AUDIT.md` and `v1.19-DEFERRED-CLEANUP.md`.
+- [x] **HARN-16**: 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators per D-03 + fresh zero-context reproduction; cross-OS PASS/FAIL/SKIP EXACT MATCH) + the publish bundle regenerated `--version=v1.19` under the `publish-bundle-gate.cjs` Stop-hook (note `build-publish-bundle.mjs:40` still defaults to `v1.17` without the flag; both new recipes must be pandoc-convertible and `guard-docx.mjs`-clean) + a **SINGLE close-gate commit** flipping all v1.19 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, plus `v1.19-MILESTONE-AUDIT.md` and `v1.19-DEFERRED-CLEANUP.md`.
 
-## Blocking Precondition (owner action — gates HARN-14)
+## Blocking Precondition (owner action — gates HARN-14) — **DISCHARGED 2026-08-03**
 
 The v1.18 close-gate SHA `7af8a147` is on **no remote** (`git branch -r --contains` → empty) and 198 commits are unpushed, so the mandatory V118 pin has **no valid target**. `master`'s upstream was mis-set to `origin/phase-125-atom-2` and has been **repointed to `origin/master` (2026-07-25)**. V117 (`b56bba5`) is equally unreachable today and survives only because `readAtV117Close` has **zero call sites**; `check-phase-118.mjs:87-88` shows the failure mode is `pass: false` — a **FAIL, not a skip**. The owner's push must land before Phase 138 authors `readAtV118Close`, and must be a **plain push — no rebase, squash, or force** (either dangles both the V117 and V118 SHAs). The push also fires the deferred Axis-2 Linux-GHA cross-OS confirmation + GA-4 cascade disposition per `v1.18-MILESTONE-AUDIT.md`.
+
+**Discharge evidence:** the owner's push landed 2026-08-03 as a plain fast-forward (`237158c5..042d6559`, 257 commits) plus the `v1.18` annotated tag. `origin/master` and local `master` confirmed 0/0. Both back-anchor SHAs (V118 `7af8a147`, V117 `b56bba5`) confirmed reachable on `origin/master`. HARN-14 landed at Plan 138-01 (`d46b8704`); the Axis-2 confirmation + GA-4 cascade disposition landed at Plan 138-05.
 
 ## Future Requirements
 
@@ -104,21 +106,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| KIOSK-01 | 135 | Complete |
-| KIOSK-02 | 135 | Complete |
-| KIOSK-03 | 135 | Complete |
-| KIOSK-04 | 135 | Complete |
-| KIOSK-05 | 135 | Complete |
-| HYG-05 | 135 | Complete |
-| MHS-01 | 136 | Complete |
-| MHS-02 | 136 | Complete |
-| MHS-03 | 136 | Complete |
-| MHS-04 | 136 | Complete |
-| MHS-05 | 136 | Complete |
-| HYG-06 | 136 | Complete |
-| CLASS-05 | 137 | Complete |
-| CLASS-06 | 137 | Complete |
-| HARN-14 | 138 | Complete |
-| HARN-15 | 138 | Complete |
-| HARN-16 | 138 | Pending |
-| **Total** | **17 requirements** | **4 phases (135-138)** |
+| KIOSK-01 | 135 | Validated |
+| KIOSK-02 | 135 | Validated |
+| KIOSK-03 | 135 | Validated |
+| KIOSK-04 | 135 | Validated |
+| KIOSK-05 | 135 | Validated |
+| HYG-05 | 135 | Validated |
+| MHS-01 | 136 | Validated |
+| MHS-02 | 136 | Validated |
+| MHS-03 | 136 | Validated |
+| MHS-04 | 136 | Validated |
+| MHS-05 | 136 | Validated |
+| HYG-06 | 136 | Validated |
+| CLASS-05 | 137 | Validated |
+| CLASS-06 | 137 | Validated |
+| HARN-14 | 138 | Validated |
+| HARN-15 | 138 | Validated |
+| HARN-16 | 138 | Validated |
+| **Total** | **17/17 requirements Validated** | **4 phases (135-138) — MILESTONE CLOSED** |
