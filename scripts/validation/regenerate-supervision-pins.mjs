@@ -512,6 +512,24 @@ function doEmitStubs() {
 // this comment records the audit-trail event that line-positions were re-verified at Phase 134
 // close and remain valid for the v1.18 corpus. Resolution path: BASELINE_23 will refresh at the
 // next milestone close per the Path-A inheritance pattern (... -> v1.17 -> BASELINE_21 -> v1.18 -> BASELINE_22).
+// BASELINE_23 refreshed 2026-08-04 (Phase 138 Plan 138-02): closes BASELINE_22 v1.18 carry-over
+// per HARN-15 contract (REQUIREMENTS.md + ROADMAP.md Phase 138 SC#2); v1.19 line positions
+// verified against HEAD 470387ff7f80bba06cc120f133be641ef1833ac3 (JIT pre-Atom-1 HEAD -- captured
+// via `git rev-parse HEAD` immediately before authoring Atom 1 (this comment), NOT the Wave-0
+// anchor 64ee54dd6a4d7ec7617521a988912e10df781808 recorded in 138-01-SUMMARY.md; Plan 138-02
+// Task 1's own harness-authoring commit (470387ff, "feat(138-02): author 17th Path-A harness
+// v1.19-milestone-audit.mjs + sidecar") landed between Wave-0 and this Atom 1, so the true
+// pre-Atom-1 predecessor is 470387ff, per the Phase 119/125/128/134 recorded Wave-0-vs-
+// pre-Atom-1-anchor distinction).
+// Pin validity for the v1.19 corpus positively proven via the sidecar-derived pinned-file-set
+// (16 files across all 5 arrays / 59 pins) x `git diff --name-only 7af8a147..HEAD -- docs scripts
+// .github` intersection -- ZERO pinned files changed (NOT via `regenerate-supervision-pins.mjs
+// --report`, which hardcodes the v1.7 sidecar and walks only 26 of 59 pins; see 138-CONTEXT.md D-20
+// and 138-02-SUMMARY.md).
+// BASELINE_9 entries above remain unchanged -- Phase 138 does NOT alter the line-coord array;
+// this comment records the audit-trail event that line-positions were re-verified at Phase 138
+// close and remain valid for the v1.19 corpus. Resolution path: BASELINE_24 will refresh at the
+// next milestone close per the Path-A inheritance pattern (... -> v1.18 -> BASELINE_22 -> v1.19 -> BASELINE_23).
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 80],   // ### Supervision heading (was 79 at Phase 59; +1 Phase 62-07 banner shift; H3 sits before line 127)
   ['docs/_glossary-android.md', 82],   // Supervision disambiguation blockquote (was 81 at Phase 59; +1 Phase 62-07 banner shift)
