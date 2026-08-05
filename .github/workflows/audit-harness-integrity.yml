@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'scripts/validation/**'
+      - '.github/workflows/**'
       - 'docs/_glossary-android.md'
       - 'docs/reference/android-capability-matrix.md'
       - 'docs/android-lifecycle/**'
@@ -20,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
       - name: Validate v1.4 sidecar
@@ -40,6 +42,7 @@ jobs:
     needs: parse
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - name: Assert v1.4 harness sidecar path
         run: |
           if ! grep -q "scripts/validation/v1.4-audit-allowlist.json" scripts/validation/v1.4-milestone-audit.mjs; then
@@ -57,6 +60,7 @@ jobs:
     needs: [parse, path-match]
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
       - name: Run v1.4 harness (historical replay)
@@ -71,6 +75,7 @@ jobs:
     continue-on-error: true   # D-14 / D-15: advisory only; never fails build
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
       - name: Run regenerate-supervision-pins.mjs --report
@@ -90,3 +95,31 @@ jobs:
               repo: context.repo.repo,
               body: '## Supervision Pin Helper (Advisory)\n\n```\n' + report + '\n```\n\n*Advisory only — D-14.*'
             });
+  frozen-read-probe:
+    name: Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Raw frozen git show (v1.5 close ba2cbc0)
+        run: git show ba2cbc0:docs/_glossary-linux.md | head -5
+      - name: Real reader -- readAtV15Close
+        run: |
+          node -e "
+            import('./scripts/validation/_lib/frozen-at-close.mjs').then(m => {
+              const c = m.readAtV15Close('docs/_glossary-linux.md');
+              if (!c || c.length === 0) { console.error('readAtV15Close returned empty'); process.exit(1); }
+              console.log('readAtV15Close OK: ' + c.length + ' bytes');
+            }).catch(e => { console.error(e); process.exit(1); });
+          "
+      - name: Real enumeration -- lsTreeAtV15Close
+        run: |
+          node -e "
+            import('./scripts/validation/_lib/frozen-at-close.mjs').then(m => {
+              const a = m.lsTreeAtV15Close('docs/l1-runbooks');
+              if (a.length !== 34) { console.error('expected 34 entries, got ' + a.length); process.exit(1); }
+              console.log('lsTreeAtV15Close OK: 34 entries');
+            }).catch(e => { console.error(e); process.exit(1); });
+          "
