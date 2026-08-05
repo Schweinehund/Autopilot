@@ -2,17 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
-current_phase_name: roadmap created, ready to plan
+current_phase: 139
+current_phase_name: governance-carve-fetch-depth-retrofit-shallow-job-repair
 status: executing
-stopped_at: Phase 139 context gathered
-last_updated: "2026-08-05T13:02:27.151Z"
-last_activity: 2026-08-04
-last_activity_desc: v1.20 ROADMAP.md created (6 phases, 27/27 requirements mapped)
+stopped_at: Completed 139-01-PLAN.md
+last_updated: "2026-08-05T13:58:52.417Z"
+last_activity: 2026-08-05
+last_activity_desc: Phase 139 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 6
-  completed_plans: 0
+  completed_plans: 1
 ---
 
 # Project State
@@ -22,7 +23,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` + `/adversarial-review`)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.20 protects that corpus by repairing the validator chain and CI harness lineage that guards it.
-**Current focus:** Roadmap created 2026-08-04 (6 phases, 139-144, 27/27 requirements mapped). Next: `/gsd-discuss-phase 139`.
+**Current focus:** Phase 139 — governance-carve-fetch-depth-retrofit-shallow-job-repair
 
 > **v1.20 BACK-ANCHOR RECOVERY (Phase 144 / HARN-17).** The V119 pin needs the v1.19 close-gate SHA `a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`. Recover it with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
 > ```
@@ -32,12 +33,12 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: Not started (roadmap created, ready to plan)
-Plan: —
+Phase: 139 (governance-carve-fetch-depth-retrofit-shallow-job-repair) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-08-04 — v1.20 ROADMAP.md created (6 phases, 27/27 requirements mapped)
+Last activity: 2026-08-05 — Phase 139 execution started
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 17%
 
 ## v1.20 Phase Dependency Summary
 
@@ -274,6 +275,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 138 P04 | 25min | 3 tasks | 0 files |
 | Phase 138 P05 | 20min | 2 tasks | 1 files |
 | Phase 138 P06 | 35min | 3 tasks | 7 files |
+| Phase 139 P01 | 16min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -292,6 +294,9 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - `.planning/REQUIREMENTS.md` must not be deleted at milestone close — `check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism (memory `reference_complete_milestone_keep_requirements.md`)
 
 *(Full v1.0–v1.19 execution-decision logs are archived in `.planning/milestones/vX.Y-MILESTONE-AUDIT.md` and `.planning/MILESTONES.md`.)*
+
+- [Phase ?]: D-09 amendment check needs a genesis-commit exemption (git show --name-status 'A' / working-tree '??') so the bootstrap commit landing CARVE+gate+ledger together does not self-trip the amendment rule
+- [Phase ?]: Pre-existing untracked docs/graphify-out/ cache pollution (unrelated skill output) blocked carve-gate.mjs verification; fixed via one .gitignore line, not a frozen-surface edit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -320,9 +325,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-05T00:15:08.345Z
-Stopped at: Phase 139 context gathered
-Resume file: .planning/phases/139-governance-carve-fetch-depth-retrofit-shallow-job-repair/139-CONTEXT.md
+Last session: 2026-08-05T13:58:52.389Z
+Stopped at: Completed 139-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
 ## Operator Next Steps

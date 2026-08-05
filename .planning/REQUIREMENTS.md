@@ -68,8 +68,8 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 
 ### Gov — frozen-surface governance (GOV)
 
-- [ ] **GOV-01**: One named milestone-scoped CARVE records an explicit file allowlist covering the frozen harnesses, the workflows **and the nine Pillar-C files**, with a byte-unchanged gate on everything off-list
-- [ ] **GOV-02**: Every frozen-surface edit is preceded by a grep for pinning call-sites and guarded by a regression gate
+- [x] **GOV-01**: One named milestone-scoped CARVE records an explicit file allowlist covering the frozen harnesses, the workflows **and the nine Pillar-C files**, with a byte-unchanged gate on everything off-list
+- [x] **GOV-02**: Every frozen-surface edit is preceded by a grep for pinning call-sites and guarded by a regression gate
 
 **Why GOV-02 is separate.** The documented expensive failure is the reverse of unlisted drift: a later frozen validator pinning an earlier file's exact call-site string verbatim. `check-phase-111.mjs`'s `V-111-TOOL03` pins `check-phase-48`'s `{ n: 200, trim: false, prefix: '--self-test FAIL: ' }` literally, and it was caught only mid-execution by the v1.18 Phase 133 regression gate.
 
@@ -144,14 +144,15 @@ Which phases cover which requirements. Populated during roadmap creation.
 | LINK-05 | Phase 143 | Pending |
 | LINK-06 | Phase 143 | Pending |
 | NEST-01 | Phase 142 | Pending |
-| GOV-01 | Phase 139 | Pending |
-| GOV-02 | Phase 139 | Pending |
+| GOV-01 | Phase 139 | Complete |
+| GOV-02 | Phase 139 | Complete |
 | HARN-17 | Phase 144 | Pending |
 | HARN-18 | Phase 144 | Pending |
 | HARN-19 | Phase 144 | Pending |
 | SWEEP-09 | Phase 141 | Pending |
 
 **Coverage:**
+
 - v1.20 requirements: 28 total
 - Mapped to phases: 28 (100%)
 - Unmapped: 0
