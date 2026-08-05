@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 139
 current_phase_name: governance-carve-fetch-depth-retrofit-shallow-job-repair
 status: executing
-stopped_at: Completed 139-02-PLAN.md
-last_updated: "2026-08-05T14:11:16.813Z"
+stopped_at: Completed 139-03-PLAN.md
+last_updated: "2026-08-05T14:38:15.606Z"
 last_activity: 2026-08-05
 last_activity_desc: Phase 139 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 6
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 139 (governance-carve-fetch-depth-retrofit-shallow-job-repair) — EXECUTING
-Plan: 3 of 6
+Plan: 4 of 6
 Status: Ready to execute
 Last activity: 2026-08-05 — Phase 139 execution started
 
-Progress: [███░░░░░░░] 33%
+Progress: [█████░░░░░] 50%
 
 ## v1.20 Phase Dependency Summary
 
@@ -277,6 +277,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 138 P06 | 35min | 3 tasks | 7 files |
 | Phase 139 P01 | 16min | 3 tasks | 8 files |
 | Phase 139 P02 | 8min | 3 tasks | 2 files |
+| Phase 139 P03 | 25min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -299,6 +300,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: D-09 amendment check needs a genesis-commit exemption (git show --name-status 'A' / working-tree '??') so the bootstrap commit landing CARVE+gate+ledger together does not self-trip the amendment rule
 - [Phase ?]: Pre-existing untracked docs/graphify-out/ cache pollution (unrelated skill output) blocked carve-gate.mjs verification; fixed via one .gitignore line, not a frozen-surface edit
 - [Phase ?]: SWEEP-04 landed: lsTreeAtClose + 16 convenience exports + frozenCause (six-pattern classifier, cause at FRONT of err.message) + --self-test (6/6, incl. real file:// shallow-clone arm) added to _lib/frozen-at-close.mjs; D-42 blast-radius gate confirmed zero drift across all 21 real importers and the full apex (93/0/0)
+- [Phase ?]: SWEEP-03 landed: four fail-loud frozen-read sites (check-phase-49.mjs V-49-18/19/21, check-phase-51.mjs readTreeFrozen) delete their inline try/catch so the throw propagates to the runner's outer catch; proven end-to-end by a real file:// shallow-clone negative harness (7/7 assertions) and a D-42 region-scoped V-68-01 gate
+- [Phase ?]: Verification-method note: bare check-phase-68.mjs has pre-existing 24 PASS/9 FAIL (standalone-red chain members 48/60-66, Phase 141-142 scope) unrelated to this plan's edit -- use CHECK_PHASE_NESTED=1 to confirm V-68-01/10/11
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -327,8 +330,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-05T14:11:16.784Z
-Stopped at: Completed 139-02-PLAN.md
+Last session: 2026-08-05T14:38:15.576Z
+Stopped at: Completed 139-03-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
