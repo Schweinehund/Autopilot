@@ -68,3 +68,6 @@ desktop.ini
 
 # Pipeline working output (converted .docx files — never committed)
 .pipeline-output/
+
+# graphify skill cache/output (generated, session-local — never committed)
+graphify-out/
