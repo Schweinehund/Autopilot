@@ -397,14 +397,16 @@ The runner in both files already wraps each check's `run()` in its own try/catch
 
 **This table is empty by design** — this is a same-repo, tooling-only phase with no third-party libraries, no external API, and no ambiguous design surface left unresolved by CONTEXT.md's prior adversarial-review pass. The two genuinely new findings this session produced (Finding 9's 21-vs-24 resolution, Finding 10's exact 11-validator enumeration) are both derived facts, not assumptions — each is backed by a `grep`/`Read` command executed and shown above.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Where exactly does the `frozen-read-probe` job's `git show` target land — which SHA and which path?**
+   - **RESOLVED:** the `V15` tag pair, applied uniformly to all 16 probes — each probe runs raw `git show`, then calls `readAtV15Close` and `lsTreeAtV15Close` for real, so the probe exercises the library rather than only raw git. This follows the recommendation below. See `139-05-PLAN.md` Task 2.
    - What we know: D-24 specifies "a `git show <old-sha>:<path>` frozen read plus one real `readAtClose` call," one job per retrofitted workflow, no `needs:`.
    - What's unclear: CONTEXT.md leaves the exact `<old-sha>:<path>` pair to Claude's discretion (not listed in "Claude's Discretion" explicitly, but no locked value given either). A natural choice is `ba2cbc0:docs/_glossary-linux.md` for the v1.5 probe (the exact pair this research reproduced live and confirmed throws `invalid object name` under depth-1) and an equivalent v1.6/base-era SHA:path pair for the other two probes.
    - Recommendation: the planner should pick one already-`MILESTONE_CLOSE_SHAS`-pinned tag per workflow (`V15` for the v1.5 probe, `V16` for v1.6, and for the base/v1.4 workflow — which has no chain validators and thus no natural frozen-read consumer — either the `V141` tag or a purely-synthetic `git show <any-old-sha>:.planning/REQUIREMENTS.md` probe) so the probe step doubles as a real exercise of `readAtClose`, not just a raw git command.
 
 2. **Does the CARVE Stop-hook need registration in `.claude/settings.json` (tracked) or only `.claude/settings.local.json` (gitignored)?**
+   - **RESOLVED:** `.claude/settings.local.json` only, following the existing precedent of both current Stop-hooks. The machine-local consequence (hook activation does not travel with `git clone`) is recorded in the hook's header comment and asserted in the plan's acceptance criteria rather than left implicit. See `139-01-PLAN.md` Task 2.
    - What we know: `[VERIFIED this session]` both existing Stop-hooks (`jira-milestone-gate.cjs`, `publish-bundle-gate.cjs`) are registered exclusively in `.claude/settings.local.json`, which is gitignored — meaning a fresh clone of this repo does not activate either hook until a human manually re-adds the entry.
    - What's unclear: whether this is intentional (avoid committing machine-specific hook config) or an oversight the milestone should not further compound.
    - Recommendation: follow the existing precedent exactly (register in `settings.local.json`) for consistency, but the plan's verification step should explicitly note that hook activation is machine-local and does not travel with `git clone` — this is a known, accepted repo convention, not a defect to fix in this phase.
