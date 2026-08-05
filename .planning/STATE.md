@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 139
 current_phase_name: governance-carve-fetch-depth-retrofit-shallow-job-repair
 status: executing
-stopped_at: Completed 139-03-PLAN.md
-last_updated: "2026-08-05T14:38:15.606Z"
+stopped_at: Completed 139-04-PLAN.md
+last_updated: "2026-08-05T15:10:22.065Z"
 last_activity: 2026-08-05
 last_activity_desc: Phase 139 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 6
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 139 (governance-carve-fetch-depth-retrofit-shallow-job-repair) — EXECUTING
-Plan: 4 of 6
+Plan: 5 of 6
 Status: Ready to execute
 Last activity: 2026-08-05 — Phase 139 execution started
 
-Progress: [█████░░░░░] 50%
+Progress: [███████░░░] 67%
 
 ## v1.20 Phase Dependency Summary
 
@@ -278,6 +278,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 139 P01 | 16min | 3 tasks | 8 files |
 | Phase 139 P02 | 8min | 3 tasks | 2 files |
 | Phase 139 P03 | 25min | 2 tasks | 5 files |
+| Phase 139 P04 | 63min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -302,6 +303,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: SWEEP-04 landed: lsTreeAtClose + 16 convenience exports + frozenCause (six-pattern classifier, cause at FRONT of err.message) + --self-test (6/6, incl. real file:// shallow-clone arm) added to _lib/frozen-at-close.mjs; D-42 blast-radius gate confirmed zero drift across all 21 real importers and the full apex (93/0/0)
 - [Phase ?]: SWEEP-03 landed: four fail-loud frozen-read sites (check-phase-49.mjs V-49-18/19/21, check-phase-51.mjs readTreeFrozen) delete their inline try/catch so the throw propagates to the runner's outer catch; proven end-to-end by a real file:// shallow-clone negative harness (7/7 assertions) and a D-42 region-scoped V-68-01 gate
 - [Phase ?]: Verification-method note: bare check-phase-68.mjs has pre-existing 24 PASS/9 FAIL (standalone-red chain members 48/60-66, Phase 141-142 scope) unrelated to this plan's edit -- use CHECK_PHASE_NESTED=1 to confirm V-68-01/10/11
+- [Phase ?]: Phase 139 Plan 04: converted V-69-08/V-70-17 to frozen-to-frozen blob comparison (D-18/D-19/D-20/D-22), proven immune to a dirty edit on any of the three SWEEP-01 workflows -- unblocks Plan 05's fetch-depth retrofit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -330,8 +332,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-05T14:38:15.576Z
-Stopped at: Completed 139-03-PLAN.md
+Last session: 2026-08-05T15:10:22.033Z
+Stopped at: Completed 139-04-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
