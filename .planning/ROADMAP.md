@@ -67,7 +67,15 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, and `check-phase-51.mjs:31` fail loud on a missing/invalid frozen read instead of silently returning `null`/`""`, proven by a negative test (SWEEP-03).
   5. `_lib/frozen-at-close.mjs` exports a working `lsTreeAtClose()` enumeration API, proven by a self-test that enumerates a known frozen tree's file list at a real close SHA (SWEEP-04).
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 139-01-PLAN.md — Governance CARVE + `carve-gate.mjs` + Stop-hook + GOV-02 ledger + the four scope-of-record amendments (D-41 atom 1)
+- [ ] 139-02-PLAN.md — `_lib/frozen-at-close.mjs`: `lsTreeAtClose`, typed `frozenCause`, six-assertion `--self-test`, 21-importer blast-radius gate (D-41 atom 2)
+- [ ] 139-03-PLAN.md — Four fail-loud frozen-read sites + `file://` shallow-clone negative harness (D-41 atom 3)
+- [ ] 139-04-PLAN.md — `check-phase-69/70` `PRED_BLOBS` converted to frozen-to-frozen + worktree-independence proof (D-41 atom 4)
+- [ ] 139-05-PLAN.md — 97-checkout `fetch-depth: 0` sweep across 16 workflows + 16 `frozen-read-probe` jobs + `paths:` fix, one commit (D-41 atom 5)
+- [ ] 139-06-PLAN.md — Feature-branch push, 16-workflow dispatch, job-level JSON evidence, owner checkpoint
 
 **Discuss-phase flags**: The exact `lsTreeAtClose()` API shape (return type, error semantics on a missing path, whether it mirrors `readAtClose`'s per-milestone reader-function pattern or takes a SHA parameter directly) is a genuine design fork — not resolved at roadmap.
 
@@ -197,7 +205,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 136. Recipe #4 — Android Dedicated MHS Multi-App | v1.19 | 2/2 | Complete | 2026-08-03 |
 | 137. Integration & Navigation-Last Close | v1.19 | 2/2 | Complete | 2026-08-03 |
 | 138. V118 Pin + 17th Path-A Lineage Bump + Terminal Close | v1.19 | 6/6 | Complete | 2026-08-04 |
-| 139. Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair | v1.20 | 0/TBD | Not started | - |
+| 139. Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair | v1.20 | 0/6 | Ready to execute | - |
 | 140. Frozen-Aware Harness Conversion | v1.20 | 0/TBD | Not started | - |
 | 141. Standalone-RED Validator Set — Chain Members Green | v1.20 | 0/TBD | Not started | - |
 | 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 0/TBD | Not started | - |
