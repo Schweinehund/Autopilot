@@ -24,6 +24,10 @@
 // Option C, adopted by check-phase-{67,68,70} in v1.14 Phase 111 (check-phase-61 excepted).
 
 import { execFileSync } from 'node:child_process';
+import { mkdtempSync, rmSync, existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // SWEEP-04 (v1.20 Phase 139 Plan 02, D-28/D-29): typed frozen-read cause classifier, shared by
 // both readAtClose and lsTreeAtClose. Two properties of this taxonomy must be recorded, not
@@ -246,3 +250,113 @@ export const lsTreeAtV115Close      = (dir, opts) => lsTreeAtClose('V115',      
 export const lsTreeAtV116Close      = (dir, opts) => lsTreeAtClose('V116',          dir, opts);
 export const lsTreeAtV117Close      = (dir, opts) => lsTreeAtClose('V117',          dir, opts);
 export const lsTreeAtV118Close      = (dir, opts) => lsTreeAtClose('V118',          dir, opts);
+
+// ---------------------------------------------------------------------------------------------
+// --self-test CLI entry point (D-39/D-40). Six assertions, numbered, one line each, a trailing
+// "N/6 PASS" summary, non-zero exit on any failure -- mirrors the repo's existing self-test
+// shape (regenerate-supervision-pins.mjs --self-test). Import-safe: the block below only runs
+// when this file is executed directly (node scripts/validation/_lib/frozen-at-close.mjs
+// --self-test); it is a no-op on `import`, so all 21 real importers are unaffected.
+//
+// Per D-07 no chain validator invokes this flag, so it adds nothing to apex runtime.
+// Assertion (v) performs a REAL `git clone --depth 1 file://...` into a temp directory and
+// therefore takes tens of seconds -- this is expected, not a hang.
+// ---------------------------------------------------------------------------------------------
+
+function runAssertion(n, label, fn) {
+  try {
+    const detail = fn();
+    process.stdout.write(`[${n}/6] ${label}${detail ? ' -- ' + detail : ''} PASS\n`);
+    return true;
+  } catch (err) {
+    process.stdout.write(`[${n}/6] ${label} FAIL -- ${err.message}\n`);
+    return false;
+  }
+}
+
+function selfTest() {
+  let passCount = 0;
+
+  // (i) + (ii): exact-count assertion (not a lower bound -- the same prefix holds 42 entries at
+  // HEAD, so only the exact count catches a regression to live-HEAD enumeration) + known member.
+  passCount += runAssertion(1, "lsTreeAtV15Close('docs/l1-runbooks') exact count", () => {
+    const a = lsTreeAtV15Close('docs/l1-runbooks');
+    if (a.length !== 34) throw new Error(`expected 34, got ${a.length}`);
+    return `count=${a.length}`;
+  }) ? 1 : 0;
+
+  passCount += runAssertion(2, 'known member docs/l1-runbooks/00-index.md present', () => {
+    const a = lsTreeAtV15Close('docs/l1-runbooks');
+    if (!a.includes('docs/l1-runbooks/00-index.md')) throw new Error('known member absent from result');
+    return 'member present';
+  }) ? 1 : 0;
+
+  // (iii): V14 is the deliberately-unpinned tag (see the V14 omission comment above).
+  passCount += runAssertion(3, "unpinned milestone tag 'V14' throws", () => {
+    let threw = false;
+    try { lsTreeAtClose('V14', 'docs'); } catch { threw = true; }
+    if (!threw) throw new Error('V14 did not throw');
+    return 'threw as expected';
+  }) ? 1 : 0;
+
+  // (iv): a valid-but-empty prefix returns [], not a throw.
+  passCount += runAssertion(4, 'valid-but-empty prefix returns []', () => {
+    const a = lsTreeAtClose('V15', 'docs/no-such-dir-xyz');
+    if (!Array.isArray(a) || a.length !== 0) throw new Error('expected []');
+    return 'returned []';
+  }) ? 1 : 0;
+
+  // (v): the only environment where D-36 actually matters. `git clone --depth 1 <local-path>`
+  // (no file:// scheme) silently ignores --depth and produces a FULL clone -- file:// is
+  // mandatory to force the shallow code path. HARD-GUARD on .git/shallow existing before
+  // trusting the assertion body, per D-31/RESEARCH.md Pitfall 2.
+  passCount += runAssertion(5, 'file:// shallow clone: frozen read throws unreachable-sha', () => {
+    const cloneDir = mkdtempSync(join(tmpdir(), 'frozen-at-close-selftest-'));
+    const repoUrl = 'file://' + process.cwd().replace(/\\/g, '/');
+    try {
+      execFileSync('git', ['clone', '--depth', '1', repoUrl, cloneDir], {
+        stdio: ['ignore', 'pipe', 'pipe'],
+        timeout: 60000,
+      });
+      if (!existsSync(join(cloneDir, '.git', 'shallow'))) {
+        throw new Error('.git/shallow absent after clone -- shallow-clone HARD GUARD failed (not a real shallow clone)');
+      }
+      const prevCwd = process.cwd();
+      try {
+        process.chdir(cloneDir);
+        try {
+          lsTreeAtV15Close('docs/l1-runbooks');
+          throw new Error('expected a throw inside the shallow clone, got success');
+        } catch (err) {
+          if (err.frozenCause !== 'unreachable-sha') {
+            throw new Error(`expected frozenCause=unreachable-sha, got ${err.frozenCause ?? 'undefined'} (${err.message})`);
+          }
+          return `frozenCause=${err.frozenCause}`;
+        }
+      } finally {
+        process.chdir(prevCwd);
+      }
+    } finally {
+      rmSync(cloneDir, { recursive: true, force: true });
+    }
+  }) ? 1 : 0;
+
+  // (vi): SWEEP-06 (Phase 140 SC#2) is pinned to check-phase-60.mjs:261's 60000ms subprocess
+  // timeout -- a single unguarded outlier vs. every peer's 300000. This prints the measured
+  // number so Phase 140 does not have to discover it via its own probe.
+  passCount += runAssertion(6, 'full-corpus docs/ enumeration + 1 read wall-clock', () => {
+    const start = Date.now();
+    const all = lsTreeAtV15Close('docs');
+    readAtV15Close(all[0]);
+    const elapsed = Date.now() - start;
+    return `${all.length} entries + 1 read in ${elapsed}ms`;
+  }) ? 1 : 0;
+
+  process.stdout.write(`\n${passCount}/6 PASS\n`);
+  process.exitCode = passCount === 6 ? 0 : 1;
+}
+
+const isMainModule = process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1]);
+if (isMainModule && process.argv.includes('--self-test')) {
+  selfTest();
+}
