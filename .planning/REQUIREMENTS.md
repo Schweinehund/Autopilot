@@ -16,7 +16,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 - [ ] **SWEEP-01**: **[SUCCESS-CRITERION AMENDMENT, D-13/D-14]** Every `actions/checkout@v4` step across all 16 `audit-harness-*.yml` workflows carries `fetch-depth: 0` — 97 previously-shallow checkouts of 182 total (85 already deep): 32 in the three originally-named files (`audit-harness-integrity.yml` 4 checkouts, `audit-harness-v1.5-integrity.yml` 18, `audit-harness-v1.6-integrity.yml` 10) plus exactly 5 per file in the other 13 workflows, all depth-1 today. This is an owner-ratified extension of the original 4/18/10-count wording, recorded in `.planning/milestones/v1.20-CARVE.md`.
 - [ ] **SWEEP-02**: **[SUCCESS-CRITERION AMENDMENT, D-24]** A dedicated `frozen-read-probe` job (no `needs:`), one per retrofitted workflow, executes a frozen `git show` read plus one real `readAtClose` call successfully in a dispatched CI run — replacing the original "the 11 validators that already import `frozen-at-close` execute their frozen reads in their existing `needs: harness-run` jobs" wording, which is structurally unobtainable in Phase 139 (D-23): both v1.5/v1.6 harnesses exit 1 at HEAD, so those jobs report `skipped` on any ref until Phase 141
 - [ ] **SWEEP-03**: **[SUCCESS-CRITERION AMENDMENT, D-30]** FOUR silent-swallow fallbacks, not three — `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, `check-phase-49.mjs:334`, and `check-phase-51.mjs:31` — fail loud instead of returning `null` / `""`, proven by a negative test
-- [ ] **SWEEP-04**: `_lib/frozen-at-close.mjs` exposes a frozen enumeration API (`lsTreeAtClose()`) so a harness can derive its file scope at a close SHA instead of walking live HEAD
+- [x] **SWEEP-04**: `_lib/frozen-at-close.mjs` exposes a frozen enumeration API (`lsTreeAtClose()`) so a harness can derive its file scope at a close SHA instead of walking live HEAD
 - [ ] **SWEEP-05**: Each frozen milestone-audit harness v1.4–v1.19 reads its corpus at its own close SHA rather than live HEAD
 - [ ] **SWEEP-06**: The converted harnesses complete inside `check-phase-60.mjs`'s 60-second subprocess timeout, verified by measurement
 - [ ] **SWEEP-07**: The v1.4 `TEMPLATE-SENTINEL` assertion has a named, recorded remedy distinct from frozen-awareness
@@ -125,7 +125,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | SWEEP-01 | Phase 139 | Pending |
 | SWEEP-02 | Phase 139 | Pending |
 | SWEEP-03 | Phase 139 | Pending |
-| SWEEP-04 | Phase 139 | Pending |
+| SWEEP-04 | Phase 139 | Complete |
 | SWEEP-05 | Phase 140 | Pending |
 | SWEEP-06 | Phase 140 | Pending |
 | SWEEP-07 | Phase 140 | Pending |

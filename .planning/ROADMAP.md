@@ -67,7 +67,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. **[SUCCESS-CRITERION AMENDMENT, D-30]** FOUR fail-loud sites, not three: `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, `check-phase-49.mjs:334`, and `check-phase-51.mjs:31` fail loud on a missing/invalid frozen read instead of silently returning `null`/`""`, proven by a negative test (SWEEP-03).
   5. `_lib/frozen-at-close.mjs` exports a working `lsTreeAtClose()` enumeration API, proven by a self-test that enumerates a known frozen tree's file list at a real close SHA (SWEEP-04).
 
-**Plans**: 1/6 plans executed
+**Plans**: 2/6 plans executed
 
 Plans:
 **Wave 1**
@@ -76,7 +76,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 139-02-PLAN.md — `_lib/frozen-at-close.mjs`: `lsTreeAtClose`, typed `frozenCause`, six-assertion `--self-test`, 21-importer blast-radius gate (D-41 atom 2)
+- [x] 139-02-PLAN.md — `_lib/frozen-at-close.mjs`: `lsTreeAtClose`, typed `frozenCause`, six-assertion `--self-test`, 21-importer blast-radius gate (D-41 atom 2)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 

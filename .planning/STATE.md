@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 139
 current_phase_name: governance-carve-fetch-depth-retrofit-shallow-job-repair
 status: executing
-stopped_at: Completed 139-01-PLAN.md
-last_updated: "2026-08-05T13:58:52.417Z"
+stopped_at: Completed 139-02-PLAN.md
+last_updated: "2026-08-05T14:11:16.813Z"
 last_activity: 2026-08-05
 last_activity_desc: Phase 139 execution started
 progress:
   total_phases: 1
   completed_phases: 0
   total_plans: 6
-  completed_plans: 1
+  completed_plans: 2
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 139 (governance-carve-fetch-depth-retrofit-shallow-job-repair) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-08-05 — Phase 139 execution started
 
-Progress: [██░░░░░░░░] 17%
+Progress: [███░░░░░░░] 33%
 
 ## v1.20 Phase Dependency Summary
 
@@ -276,6 +276,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 138 P05 | 20min | 2 tasks | 1 files |
 | Phase 138 P06 | 35min | 3 tasks | 7 files |
 | Phase 139 P01 | 16min | 3 tasks | 8 files |
+| Phase 139 P02 | 8min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -297,6 +298,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 
 - [Phase ?]: D-09 amendment check needs a genesis-commit exemption (git show --name-status 'A' / working-tree '??') so the bootstrap commit landing CARVE+gate+ledger together does not self-trip the amendment rule
 - [Phase ?]: Pre-existing untracked docs/graphify-out/ cache pollution (unrelated skill output) blocked carve-gate.mjs verification; fixed via one .gitignore line, not a frozen-surface edit
+- [Phase ?]: SWEEP-04 landed: lsTreeAtClose + 16 convenience exports + frozenCause (six-pattern classifier, cause at FRONT of err.message) + --self-test (6/6, incl. real file:// shallow-clone arm) added to _lib/frozen-at-close.mjs; D-42 blast-radius gate confirmed zero drift across all 21 real importers and the full apex (93/0/0)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -325,8 +327,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-05T13:58:52.389Z
-Stopped at: Completed 139-01-PLAN.md
+Last session: 2026-08-05T14:11:16.784Z
+Stopped at: Completed 139-02-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
