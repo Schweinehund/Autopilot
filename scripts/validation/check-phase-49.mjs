@@ -260,9 +260,10 @@ const checks = [
       const files = [ENROLLMENT_OVERVIEW_PATH, PREREQUISITES_PATH, GLOSSARY_LINUX_PATH];
       const failures = [];
       for (const f of files) {
-        let content;
-        try { content = readAtV15Close(f); } catch { content = null; }
-        if (content === null) { failures.push(f + ": file missing"); continue; }
+        // SWEEP-03 (v1.20 Phase 139 Plan 03, D-27/D-30): fail loud -- the readAtV15Close throw
+        // now propagates to the runner's outer catch instead of being swallowed into a
+        // wrong-diagnosis "file missing" detail string. Accounting record: 139-03-SUMMARY.md.
+        const content = readAtV15Close(f);
         const fmMatch = content.replace(/\r\n/g, '\n').match(/^---\n([\s\S]*?)\n---/m);
         if (!fmMatch) { failures.push(f + ": no frontmatter"); continue; }
         const fm = fmMatch[1];
@@ -293,8 +294,10 @@ const checks = [
       // Phase 128 D-128-C frozen-aware conversion: docs/_glossary-android.md is HYG-02-touched;
       // read frozen (V116=3dd2512) instead of live HEAD. Expected pattern UNCHANGED (no value-mask);
       // only the read SOURCE moved live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
-      let androidContent;
-      try { androidContent = readAtV116Close(GLOSSARY_ANDROID_PATH); } catch { androidContent = ""; }
+      // SWEEP-03 (v1.20 Phase 139 Plan 03, D-27/D-30): fail loud -- the readAtV116Close throw
+      // now propagates instead of being swallowed to "", which previously masked ~25% of
+      // sibling-term coverage on a shallow clone. Accounting record: 139-03-SUMMARY.md.
+      const androidContent = readAtV116Close(GLOSSARY_ANDROID_PATH);
       const siblingTerms = new Set();
       for (const t of extractH3Terms(winContent)) siblingTerms.add(t.toLowerCase());
       for (const t of extractH3Terms(macosContent)) siblingTerms.add(t.toLowerCase());
@@ -330,9 +333,10 @@ const checks = [
       // Phase 128 D-128-C frozen-aware conversion: read docs/_glossary-android.md frozen (V116=3dd2512)
       // instead of live HEAD. Expected pattern UNCHANGED (no value-mask); only the read SOURCE moved
       // live -> frozen. Honest-accounting: .planning/phases/128-*/128-03-SUMMARY.md.
-      let content;
-      try { content = readAtV116Close(GLOSSARY_ANDROID_PATH); } catch { content = null; }
-      if (content === null) return { pass: false, detail: "File does not exist (frozen V116 read failed): " + GLOSSARY_ANDROID_PATH };
+      // SWEEP-03 (v1.20 Phase 139 Plan 03, D-27/D-30): fail loud -- the readAtV116Close throw
+      // now propagates instead of being swallowed into a wrong-diagnosis "does not exist"
+      // detail string. Accounting record: 139-03-SUMMARY.md.
+      const content = readAtV116Close(GLOSSARY_ANDROID_PATH);
       if (content.includes(RECIPROCAL_LINK_LITERAL)) return { pass: true };
       return { pass: false, detail: "Reciprocal link literal not found in " + GLOSSARY_ANDROID_PATH };
     }

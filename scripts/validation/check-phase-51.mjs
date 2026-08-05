@@ -28,7 +28,14 @@ function readFile(relPath) {
 // File-existence / frontmatter checks (V-51-01..05) intentionally stay LIVE (they pass on HEAD).
 // Honest-accounting: .planning/phases/125-*/125-05-SUMMARY.md.
 function readTreeFrozen() {
-  try { return readAtV115Close(TREE); } catch { return null; }
+  // SWEEP-03 (v1.20 Phase 139 Plan 03, D-27/D-30): fail loud -- the readAtV115Close throw now
+  // propagates to the runner's outer catch instead of being swallowed to null, which was the
+  // same wrong-diagnosis defect as check-phase-49.mjs:264 (a real shallow-clone run produced
+  // "V-51-06..11 FAIL -- File missing" for what was actually an unreachable-SHA fault). The six
+  // null guards in V-51-06..11 below are deliberately left in place: they become unreachable
+  // but mislead nobody, and touching six more frozen call sites would multiply the GOV-02 grep
+  // surface for zero behavioural gain. Accounting record: 139-03-SUMMARY.md.
+  return readAtV115Close(TREE);
 }
 
 // CDI-02: Pinned H2 strings — Phase 52+ renaming requires same-commit validator update.
