@@ -25,6 +25,43 @@
 
 import { execFileSync } from 'node:child_process';
 
+// SWEEP-04 (v1.20 Phase 139 Plan 02, D-28/D-29): typed frozen-read cause classifier, shared by
+// both readAtClose and lsTreeAtClose. Two properties of this taxonomy must be recorded, not
+// assumed away by a later reader:
+//   - Classification is WORKTREE-DEPENDENT: the identical call classifies differently in a
+//     clean checkout (unreachable-sha inside a shallow clone) versus one where the target path
+//     was deleted from disk but is still reachable at the frozen SHA (absent-path never fires).
+//   - The taxonomy works today only because every entry in MILESTONE_CLOSE_SHAS below is a
+//     7-8 character ABBREVIATED SHA. A future full-length (40-char) pin changes git's stderr
+//     wording for the unreachable-sha case; do not assume abbreviation is permanent.
+const SUBPROCESS_MAX_BUFFER = 20 * 1024 * 1024; // mirrors check-phase-138.mjs's SUBPROCESS_MAX_BUFFER; a full-tree `-r` already emits ~203 KB, so Node's 1 MB default maxBuffer must not be relied on.
+
+/**
+ * Classify a git-command failure into a typed cause, using a SIX-pattern union across two
+ * classes (D-28). Coerces both `stderr` and `message` to strings before matching so a Buffer
+ * stderr cannot silently fall through to `other`.
+ *
+ * @param {Error & { stderr?: unknown }} err
+ * @returns {'unreachable-sha' | 'absent-path' | 'other'}
+ */
+export function frozenCause(err) {
+  const text = String(err?.stderr ?? '') + String(err?.message ?? '');
+  if (
+    text.includes('invalid object name') ||
+    text.includes('Not a valid object name') ||
+    text.includes('not a tree object')
+  ) {
+    return 'unreachable-sha';
+  }
+  if (
+    text.includes('does not exist in') ||
+    text.includes('exists on disk, but not in')
+  ) {
+    return 'absent-path';
+  }
+  return 'other';
+}
+
 export const MILESTONE_CLOSE_SHAS = {
   V141: '5c976ec',  // Phase 47 close 2026-04-25 (D-04 advisor empirical discovery)
   V15:  'ba2cbc0',  // Phase 61 close — canonical (matches inline helper in check-phase-61.mjs:40)
@@ -108,11 +145,21 @@ export const MILESTONE_CLOSE_SHAS = {
 export function readAtClose(milestoneTag, relPath) {
   const sha = MILESTONE_CLOSE_SHAS[milestoneTag];
   if (!sha) throw new Error(`No frozen SHA for milestone ${milestoneTag}`);
-  return execFileSync('git', ['show', sha + ':' + relPath], {
-    encoding: 'utf8',
-    timeout: 10000,
-    stdio: ['ignore', 'pipe', 'pipe'],
-  }).replace(/\r\n/g, '\n');
+  try {
+    return execFileSync('git', ['show', sha + ':' + relPath], {
+      encoding: 'utf8',
+      timeout: 10000,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).replace(/\r\n/g, '\n');
+  } catch (err) {
+    // D-27/D-28: enrichment, not a swallow -- the cause is prepended to the FRONT of the
+    // message (check-phase-60.mjs:247 truncates detail strings at 500 chars, so an appended
+    // cause would be silently cut off) and the error always rethrows.
+    const cause = frozenCause(err);
+    err.frozenCause = cause;
+    err.message = `[${cause}] ${err.message}`;
+    throw err;
+  }
 }
 
 // Convenience exports for readability at call-sites
@@ -132,3 +179,70 @@ export const readAtV115Close      = (p) => readAtClose('V115',         p);
 export const readAtV116Close      = (p) => readAtClose('V116',         p);
 export const readAtV117Close      = (p) => readAtClose('V117',         p);
 export const readAtV118Close      = (p) => readAtClose('V118',         p);
+
+/**
+ * Enumerate repo-relative file paths under `dirPrefix` at a frozen milestone-close SHA, via
+ * `git ls-tree -r -z --name-only <sha> -- <dirPrefix>` (D-34..D-38). Reuses the same
+ * MILESTONE_CLOSE_SHAS pin gate as readAtClose verbatim -- there is deliberately NO raw-SHA
+ * form, which would bypass the gate that is this module's entire governance value.
+ *
+ * NOT a drop-in replacement for `walkMd` (scripts/validation/v1.5-milestone-audit.mjs:50-66):
+ * walkMd returns ABSOLUTE paths and applies its own `.md` filter internally; lsTreeAtClose
+ * returns REPO-RELATIVE paths and applies `ext` only when the caller explicitly supplies it
+ * (D-35) -- every Phase-140 call-site conversion must also strip its `relNormalize` wrapper.
+ *
+ * Error semantics (D-36): throws on ANY git failure, with a typed `err.frozenCause` attached
+ * exactly as in readAtClose. Returns `[]` ONLY when git exits 0 with empty stdout (a
+ * valid-but-empty prefix) -- returning `[]` on failure is forbidden, because a shallow CI job
+ * would then enumerate zero files, pass every per-file assertion vacuously, and report green
+ * while auditing nothing (SWEEP-04 prohibition).
+ *
+ * @param {keyof MILESTONE_CLOSE_SHAS} milestoneTag
+ * @param {string} dirPrefix - repo-relative directory prefix (e.g. 'docs/l1-runbooks')
+ * @param {{ ext?: string }} [opts] - optional extension filter (e.g. { ext: '.md' })
+ * @returns {string[]} repo-relative paths
+ * @throws if milestoneTag is unpinned, or on any git ls-tree failure
+ */
+export function lsTreeAtClose(milestoneTag, dirPrefix, { ext } = {}) {
+  const sha = MILESTONE_CLOSE_SHAS[milestoneTag];
+  if (!sha) throw new Error(`No frozen SHA for milestone ${milestoneTag}`);
+  let stdout;
+  try {
+    stdout = execFileSync('git', ['ls-tree', '-r', '-z', '--name-only', sha, '--', dirPrefix], {
+      encoding: 'utf8',
+      timeout: 10000,
+      stdio: ['ignore', 'pipe', 'pipe'],
+      cwd: process.cwd(),
+      maxBuffer: SUBPROCESS_MAX_BUFFER,
+    });
+  } catch (err) {
+    const cause = frozenCause(err);
+    err.frozenCause = cause;
+    err.message = `[${cause}] ${err.message}`;
+    throw err;
+  }
+  // -z NUL-TERMINATES the final entry too (not just delimits between entries) -- a naive
+  // split('\0') therefore yields a phantom trailing empty element. .filter(Boolean) is
+  // mandatory, not an implementer choice (D-37): without it, a 34-entry tree reports 35.
+  let paths = stdout.split('\0').filter(Boolean);
+  if (ext) paths = paths.filter((p) => p.endsWith(ext));
+  return paths;
+}
+
+// Per-milestone convenience exports mirroring the readAtVxxClose pattern above (D-34).
+export const lsTreeAtV141Close      = (dir, opts) => lsTreeAtClose('V141',          dir, opts);
+export const lsTreeAtV15Close       = (dir, opts) => lsTreeAtClose('V15',           dir, opts);
+export const lsTreeAtV16Close       = (dir, opts) => lsTreeAtClose('V16',           dir, opts);
+export const lsTreeAtV17Close       = (dir, opts) => lsTreeAtClose('V17',           dir, opts);
+export const lsTreeAtV17CloseGate   = (dir, opts) => lsTreeAtClose('V17_CLOSEGATE', dir, opts);
+export const lsTreeAtV18Close       = (dir, opts) => lsTreeAtClose('V18',           dir, opts);
+export const lsTreeAtV19Close       = (dir, opts) => lsTreeAtClose('V19',           dir, opts);
+export const lsTreeAtV110Close      = (dir, opts) => lsTreeAtClose('V110',          dir, opts);
+export const lsTreeAtV111Close      = (dir, opts) => lsTreeAtClose('V111',          dir, opts);
+export const lsTreeAtV112Close      = (dir, opts) => lsTreeAtClose('V112',          dir, opts);
+export const lsTreeAtV113Close      = (dir, opts) => lsTreeAtClose('V113',          dir, opts);
+export const lsTreeAtV114Close      = (dir, opts) => lsTreeAtClose('V114',          dir, opts);
+export const lsTreeAtV115Close      = (dir, opts) => lsTreeAtClose('V115',          dir, opts);
+export const lsTreeAtV116Close      = (dir, opts) => lsTreeAtClose('V116',          dir, opts);
+export const lsTreeAtV117Close      = (dir, opts) => lsTreeAtClose('V117',          dir, opts);
+export const lsTreeAtV118Close      = (dir, opts) => lsTreeAtClose('V118',          dir, opts);
