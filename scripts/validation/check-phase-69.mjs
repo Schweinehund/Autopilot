@@ -4,9 +4,11 @@
 // Assertions: .planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-CONVENTIONS.md (V-69-01..V-69-08 + V-69-CHAIN + V-69-AUDIT + V-69-SELF)
 //
 // HARNESS-03 sub-deliverable C — V-69-01..08 workflow YAML structure + FETCH-DEPTH-01 inheritance + CHAIN_TIMING_LINUX
-// + predecessor byte-unchanged. ALL HEAD-coupled per D-01 LOCKED — V-69-NN read .github/workflows/audit-harness-v1.7-integrity.yml
-// at HEAD (live workflow YAML integrity is a HEAD invariant per D-01 matrix). V-69-08 uses git hash-object blob
-// comparison against documented predecessor blob SHAs.
+// + predecessor byte-unchanged. V-69-01..07 are HEAD-coupled per D-01 LOCKED — they read
+// .github/workflows/audit-harness-v1.7-integrity.yml at HEAD (live workflow YAML integrity is a HEAD
+// invariant per D-01 matrix). V-69-08 is frozen-to-frozen (v1.20 Phase 139 Plan 04, D-18/D-19/D-20/D-22):
+// it compares the recorded PRED_BLOBS baseline against the blob AT the frozen v1.7-close SHA via
+// `git rev-parse <sha>:<path>`, never the worktree — see the PRED_BLOBS comment below.
 //
 // Lineage: Phase 48 D-25 -> ... -> Phase 68 CHAIN-01..03 -> Phase 69 CILINUX-01 (Pillar C)
 //
@@ -18,6 +20,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
+import { MILESTONE_CLOSE_SHAS } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -32,8 +35,14 @@ const HARNESS = 'scripts/validation/v1.7-milestone-audit.mjs';
 const V17_WORKFLOW = '.github/workflows/audit-harness-v1.7-integrity.yml';
 
 // Documented predecessor blob SHAs at Phase 70 Wave-3 authoring (2026-05-28).
-// These are HEAD blob hashes of the BYTE-UNCHANGED predecessor workflow YAMLs;
-// V-69-08 asserts the live blobs match these documented values (anti-regression invariant).
+// These are the BYTE-UNCHANGED predecessor workflow YAML blob hashes, unchanged since
+// authoring. V-69-08 asserts the blob at the frozen v1.7-close SHA still matches these
+// documented values (anti-regression invariant) — frozen-to-frozen, never the worktree.
+// Converted from a live-worktree blob-hash read to this frozen-to-frozen form in
+// v1.20 Phase 139 Plan 04 (D-18/D-19/D-20/D-22): the worktree comparison went red the
+// instant a SWEEP-01 workflow edit was saved, before any commit, taking this apex chain
+// member down with it. The baseline VALUES below are byte-unchanged from before this
+// conversion — only the read source moved. Accounting record: 139-04-SUMMARY.md.
 const PRED_BLOBS = {
   '.github/workflows/audit-harness-integrity.yml':       '08449a338b6ce87de946ad9d8e58af544cae01d8',
   '.github/workflows/audit-harness-v1.5-integrity.yml':  '6990de2894b026551aba62d1f5ce9c95c0ff88e9',
@@ -135,29 +144,32 @@ const checks = [
     }
   },
 
-  // === V-69-08 (HEAD-coupled): Predecessor workflows (v1.4/v1.5/v1.6) BYTE-UNCHANGED via git hash-object blob comparison ===
+  // === V-69-08 (frozen-to-frozen): Predecessor workflows (v1.4/v1.5/v1.6) BYTE-UNCHANGED at v1.7-close [v1.7-frozen @ aa6de68] ===
+  // Converted from a live-worktree blob-hash comparison in v1.20 Phase 139 Plan 04
+  // (D-18/D-19/D-20/D-22, adopting the check-phase-63.mjs V-63-08 precedent). Both sides of
+  // the comparison are now immutable: the recorded PRED_BLOBS baseline and the blob at the
+  // frozen v1.7-close SHA. A `git rev-parse` failure fails loud (pushed into the drift list,
+  // never a skip-pass) per the D-22 amendment to the check-phase-63 precedent. Accounting
+  // record: 139-04-SUMMARY.md.
   {
-    id: 8, name: 'V-69-08: Predecessor workflows v1.4/v1.5/v1.6 BYTE-UNCHANGED (git hash-object blob comparison)',
+    id: 8, name: 'V-69-08: Predecessor workflows v1.4/v1.5/v1.6 BYTE-UNCHANGED at v1.7-close (frozen-to-frozen blob comparison) [v1.7-frozen @ aa6de68]',
     run() {
+      const V17 = MILESTONE_CLOSE_SHAS.V17;
       const drift = [];
       for (const [path, expected] of Object.entries(PRED_BLOBS)) {
-        if (!existsSync(join(process.cwd(), path))) {
-          drift.push(path + ' (missing)');
-          continue;
-        }
         try {
-          const actual = execFileSync('git', ['hash-object', path], { encoding: 'utf8', timeout: 10000 }).trim();
+          const actual = execFileSync('git', ['rev-parse', V17 + ':' + path], { encoding: 'utf8', timeout: 10000 }).trim();
           if (actual !== expected) {
-            drift.push(path + ' (expected ' + expected.slice(0, 7) + '; got ' + actual.slice(0, 7) + ')');
+            drift.push(path + ' (expected ' + expected.slice(0, 7) + '; got ' + actual.slice(0, 7) + ' @v1.7-close)');
           }
         } catch (err) {
-          drift.push(path + ' (hash-object failed: ' + err.message.slice(0, 80) + ')');
+          drift.push(path + ' (rev-parse ' + V17 + ':' + path + ' failed: ' + err.message.slice(0, 80) + ')');
         }
       }
       if (drift.length > 0) {
-        return { pass: false, detail: drift.length + ' predecessor workflow(s) drifted: ' + drift.join('; ') };
+        return { pass: false, detail: drift.length + ' predecessor workflow(s) drifted at v1.7-close (' + V17 + '): ' + drift.join('; ') };
       }
-      return { pass: true, detail: '3/3 predecessor workflows BYTE-UNCHANGED (v1.4 + v1.5 + v1.6)' };
+      return { pass: true, detail: '3/3 predecessor workflows BYTE-UNCHANGED at v1.7-close (' + V17 + ') (v1.4 + v1.5 + v1.6)' };
     }
   },
 ];

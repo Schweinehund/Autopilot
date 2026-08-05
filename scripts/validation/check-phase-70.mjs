@@ -6,7 +6,10 @@
 // HARNESS-03 sub-deliverable D — V-70-01..27 FULL bodies (post-Wave-3 upgrade from Wave-1 scaffold per Plan 70-03 Task 4).
 //
 // Per-assertion-class freshness routing per 70-CONTEXT.md D-01 LOCKED (Option C):
-//   V-70-01..17 -> HEAD-coupled (live deliverables: HARNESS-01/02/03/04 surface)
+//   V-70-01..16 -> HEAD-coupled (live deliverables: HARNESS-01/02/03/04 surface)
+//   V-70-17 -> frozen-to-frozen at v1.7-close (aa6de68), converted from a live-worktree
+//     blob-hash read in v1.20 Phase 139 Plan 04 (D-18/D-19/D-20/D-22) — see the
+//     PRED_BLOBS comment below. Both sides of the comparison are now immutable.
 //   V-70-18..27 -> v1.7-frozen-aware via aa6de68 placeholder (HARNESS-05/06 + traceability)
 //
 // Plan 70-05 Commit A substitutes aa6de68 via `sed -i` across this file + check-phase-67/68/69.mjs
@@ -22,7 +25,7 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';
-import { readAtV17Close, readAtV17CloseGate } from './_lib/frozen-at-close.mjs';
+import { readAtV17Close, readAtV17CloseGate, MILESTONE_CLOSE_SHAS } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
@@ -69,7 +72,13 @@ const ALLOWLIST       = 'scripts/validation/v1.7-audit-allowlist.json';
 const PIN_HELPER      = 'scripts/validation/regenerate-supervision-pins.mjs';
 const CI_WORKFLOW     = '.github/workflows/audit-harness-v1.7-integrity.yml';
 
-// Documented predecessor blob SHAs (parallel to check-phase-69.mjs V-69-08).
+// Documented predecessor blob SHAs (parallel to check-phase-69.mjs V-69-08). Frozen-to-frozen:
+// the recorded baseline below is compared against the blob AT the frozen v1.7-close SHA, never
+// the worktree. Converted from a live-worktree blob-hash read in v1.20 Phase 139 Plan 04
+// (D-18/D-19/D-20/D-22, adopting the check-phase-63.mjs V-63-08 precedent) — the worktree
+// comparison went red the instant a SWEEP-01 workflow edit was saved, before any commit, taking
+// this apex chain member down with it. The baseline VALUES below are byte-unchanged from before
+// this conversion — only the read source moved. Accounting record: 139-04-SUMMARY.md.
 const PRED_BLOBS = {
   '.github/workflows/audit-harness-integrity.yml':       '08449a338b6ce87de946ad9d8e58af544cae01d8',
   '.github/workflows/audit-harness-v1.5-integrity.yml':  '6990de2894b026551aba62d1f5ce9c95c0ff88e9',
@@ -339,27 +348,30 @@ checks.push({
   }
 });
 
-// === V-70-17: HARNESS-04 Predecessor workflows (v1.4/v1.5/v1.6) BYTE-UNCHANGED via HEAD blob comparison ===
+// === V-70-17 (frozen-to-frozen): HARNESS-04 Predecessor workflows (v1.4/v1.5/v1.6) BYTE-UNCHANGED at v1.7-close [v1.7-frozen @ aa6de68] ===
+// Converted from a live-worktree blob-hash comparison in v1.20 Phase 139 Plan 04
+// (D-18/D-19/D-20/D-22, adopting the check-phase-63.mjs V-63-08 precedent). Both sides of
+// the comparison are now immutable: the recorded PRED_BLOBS baseline and the blob at the
+// frozen v1.7-close SHA. A `git rev-parse` failure fails loud (pushed into the drift list,
+// never a skip-pass) per the D-22 amendment to the check-phase-63 precedent. Accounting
+// record: 139-04-SUMMARY.md.
 checks.push({
-  id: 17, name: 'V-70-17: HARNESS-04 Predecessor workflows v1.4/v1.5/v1.6 BYTE-UNCHANGED (git hash-object blob comparison)',
+  id: 17, name: 'V-70-17: HARNESS-04 Predecessor workflows v1.4/v1.5/v1.6 BYTE-UNCHANGED at v1.7-close (frozen-to-frozen blob comparison) [v1.7-frozen @ aa6de68]',
   run() {
+    const V17 = MILESTONE_CLOSE_SHAS.V17;
     const drift = [];
     for (const [path, expected] of Object.entries(PRED_BLOBS)) {
-      if (!existsSync(join(process.cwd(), path))) {
-        drift.push(path + ' (missing)');
-        continue;
-      }
       try {
-        const actual = execFileSync('git', ['hash-object', path], { encoding: 'utf8', timeout: 10000 }).trim();
+        const actual = execFileSync('git', ['rev-parse', V17 + ':' + path], { encoding: 'utf8', timeout: 10000 }).trim();
         if (actual !== expected) {
-          drift.push(path + ' (expected ' + expected.slice(0, 7) + '; got ' + actual.slice(0, 7) + ')');
+          drift.push(path + ' (expected ' + expected.slice(0, 7) + '; got ' + actual.slice(0, 7) + ' @v1.7-close)');
         }
       } catch (err) {
-        drift.push(path + ' (hash-object failed: ' + err.message.slice(0, 80) + ')');
+        drift.push(path + ' (rev-parse ' + V17 + ':' + path + ' failed: ' + err.message.slice(0, 80) + ')');
       }
     }
-    if (drift.length > 0) return { pass: false, detail: drift.length + ' predecessor workflow(s) drifted: ' + drift.join('; ') };
-    return { pass: true, detail: '3/3 predecessor workflows BYTE-UNCHANGED' };
+    if (drift.length > 0) return { pass: false, detail: drift.length + ' predecessor workflow(s) drifted at v1.7-close (' + V17 + '): ' + drift.join('; ') };
+    return { pass: true, detail: '3/3 predecessor workflows BYTE-UNCHANGED at v1.7-close (' + V17 + ')' };
   }
 });
 
