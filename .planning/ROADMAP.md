@@ -70,11 +70,28 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Plans**: 6 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 139-01-PLAN.md — Governance CARVE + `carve-gate.mjs` + Stop-hook + GOV-02 ledger + the four scope-of-record amendments (D-41 atom 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 139-02-PLAN.md — `_lib/frozen-at-close.mjs`: `lsTreeAtClose`, typed `frozenCause`, six-assertion `--self-test`, 21-importer blast-radius gate (D-41 atom 2)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 139-03-PLAN.md — Four fail-loud frozen-read sites + `file://` shallow-clone negative harness (D-41 atom 3)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 139-04-PLAN.md — `check-phase-69/70` `PRED_BLOBS` converted to frozen-to-frozen + worktree-independence proof (D-41 atom 4)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 139-05-PLAN.md — 97-checkout `fetch-depth: 0` sweep across 16 workflows + 16 `frozen-read-probe` jobs + `paths:` fix, one commit (D-41 atom 5)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
 - [ ] 139-06-PLAN.md — Feature-branch push, 16-workflow dispatch, job-level JSON evidence, owner checkpoint
 
 **Discuss-phase flags**: The exact `lsTreeAtClose()` API shape (return type, error semantics on a missing path, whether it mirrors `readAtClose`'s per-milestone reader-function pattern or takes a SHA parameter directly) is a genuine design fork — not resolved at roadmap.
