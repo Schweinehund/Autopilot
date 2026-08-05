@@ -62,9 +62,9 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 **Success Criteria** (what must be TRUE):
 
   1. A single named milestone-scoped CARVE document records an explicit file allowlist covering the frozen harnesses, the workflows, and the nine Pillar-C files (`c17-eee-contract.mjs`, `convert.ps1`, `check-nav-hub-links.mjs`, 6× `retrofit-*.mjs`), with a byte-unchanged gate proven on everything off-list (GOV-01), and every edit landed this phase is preceded by a recorded grep-before-edit + regression-gate check per the `check-phase-111.mjs` `V-111-TOOL03` precedent (GOV-02).
-  2. All three depth-1 checkout workflows — `audit-harness-integrity.yml` (4 checkouts), `audit-harness-v1.5-integrity.yml` (18), `audit-harness-v1.6-integrity.yml` (10) — carry `fetch-depth: 0` on every checkout, proven by a dispatched CI run in which a `git show <old-sha>:<path>` frozen read succeeds where it previously threw `fatal: invalid object name` (SWEEP-01).
-  3. The 11 validators that already import `frozen-at-close` but sit in previously-shallow jobs complete their frozen reads successfully in a dispatched CI run, not just locally (SWEEP-02).
-  4. `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, and `check-phase-51.mjs:31` fail loud on a missing/invalid frozen read instead of silently returning `null`/`""`, proven by a negative test (SWEEP-03).
+  2. **[SUCCESS-CRITERION AMENDMENT, D-13/D-14]** Every `actions/checkout@v4` step across all 16 `audit-harness-*.yml` workflows carries `fetch-depth: 0` — 97 previously-shallow checkouts of 182 total (85 already deep), not only the 32 checkouts in the three originally-named files (`audit-harness-integrity.yml` 4 checkouts, `audit-harness-v1.5-integrity.yml` 18, `audit-harness-v1.6-integrity.yml` 10) — proven by a dispatched CI run in which a `git show <old-sha>:<path>` frozen read succeeds where it previously threw `fatal: invalid object name` (SWEEP-01). This is an owner-ratified extension of the phase's originally-roadmapped scope, recorded in `.planning/milestones/v1.20-CARVE.md`; Phase 144's close-gate reads it as authorized, not as drift.
+  3. **[SUCCESS-CRITERION AMENDMENT, D-24]** A dedicated `frozen-read-probe` job (no `needs:`), one per retrofitted workflow, performs a frozen `git show` read plus one real `readAtClose` call, evidenced by job-level JSON from a single dispatch (SWEEP-02). This replaces the original "the 11 validators that already import `frozen-at-close` complete their frozen reads in their existing `needs: harness-run` jobs" wording, which is structurally unobtainable in Phase 139 (D-23): all 14 `check-phase-48..61` jobs in the v1.5 workflow and all 7 in the v1.6 workflow are `needs: harness-run`, and both harnesses exit 1 at HEAD, so those jobs report `skipped` on any ref until Phase 141's RED-01 greens the harnesses.
+  4. **[SUCCESS-CRITERION AMENDMENT, D-30]** FOUR fail-loud sites, not three: `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, `check-phase-49.mjs:334`, and `check-phase-51.mjs:31` fail loud on a missing/invalid frozen read instead of silently returning `null`/`""`, proven by a negative test (SWEEP-03).
   5. `_lib/frozen-at-close.mjs` exports a working `lsTreeAtClose()` enumeration API, proven by a self-test that enumerates a known frozen tree's file list at a real close SHA (SWEEP-04).
 
 **Plans**: 6 plans
@@ -96,7 +96,7 @@ Plans:
 
 **Discuss-phase flags**: The exact `lsTreeAtClose()` API shape (return type, error semantics on a missing path, whether it mirrors `readAtClose`'s per-milestone reader-function pattern or takes a SHA parameter directly) is a genuine design fork — not resolved at roadmap.
 
-**Hard constraints**: GOV-01's file allowlist and byte-unchanged gate govern every edit landed across Phases 139–143, not just this phase's edits — the CARVE recorded here is the milestone-wide contract. Zero-margin hazard, carried from the milestone's own context: both glossaries sit at exactly 90 days against a `>90` freshness test; do not touch either glossary's `last_verified`/`review_by` to satisfy any assertion anywhere in the milestone (explicitly barred — see REQUIREMENTS.md Out of Scope). Without this phase, SWEEP-05 (Phase 140) converts 9 clean two-assertion failures into hard crashes.
+**Hard constraints**: **[SUCCESS-CRITERION AMENDMENT, D-04]** GOV-01's file allowlist and byte-unchanged gate govern every edit landed across Phases 139–144 (extended from the original 139–143 — Phase 144 makes the milestone's largest frozen-surface edits, the V119 pin, the new v1.20 harness, apex regeneration, and the 17th workflow, and would otherwise be ungoverned), not just this phase's edits — the CARVE recorded here is the milestone-wide contract. Zero-margin hazard, carried from the milestone's own context: both glossaries sit at exactly 90 days against a `>90` freshness test; do not touch either glossary's `last_verified`/`review_by` to satisfy any assertion anywhere in the milestone (explicitly barred — see REQUIREMENTS.md Out of Scope). Without this phase, SWEEP-05 (Phase 140) converts 9 clean two-assertion failures into hard crashes.
 
 ### Phase 140: Frozen-Aware Harness Conversion
 
@@ -120,12 +120,13 @@ Plans:
 
 **Goal**: The eight chain-member validators (`check-phase-48`, `-60`, `-61`, `-62` through `-66`) exit 0 standalone, closing the freshness and self-test root causes and the cascade they drive.
 **Depends on**: Phase 140 (the freshness leg — RED-01 — is resolved by the frozen-aware harness conversion applied to v1.5–v1.13: at their own close SHAs both glossaries read exactly 60 days and pass, live they read 90 days)
-**Requirements**: RED-01, RED-02, RED-03
+**Requirements**: RED-01, RED-02, RED-03, SWEEP-09
 **Success Criteria** (what must be TRUE):
 
   1. The v1.5–v1.13 C5/C10 freshness assertions pass with zero edits to either glossary's metadata, verified by running each affected harness directly (RED-01 — the true prerequisite for 60, 61, and all five of 62–66, per the MEASURED finding that the self-test alone greens only `check-phase-48`).
   2. `regenerate-supervision-pins.mjs --self-test` exits 0 via a corrected classifier context window (the backward-only scan at `regenerate-supervision-pins.mjs:204-238` misses the iOS token at line 147, two lines after the heading), with the v1.7 fixture byte-unchanged and no classifier relaxation (RED-02).
   3. `check-phase-48.mjs`, `check-phase-60.mjs`, `check-phase-61.mjs`, and `check-phase-62.mjs` through `check-phase-66.mjs` each exit 0 when invoked standalone (not nested), proven by 8 independent direct invocations, with the cascade classes (48→60→61→62..66's own `CHAIN-*` sub-checks) confirmed cleared as a consequence rather than patched individually (RED-03).
+  4. **[NEW REQUIREMENT, D-33]** The remaining silent-swallow frozen-read sites — beyond the 4 SWEEP-03 already fixed in Phase 139 — fail loud, scoped to the ~19 validators already open for RED-03 in this phase (SWEEP-09).
 
 **Plans**: TBD
 
@@ -181,7 +182,7 @@ Plans:
   1. `_lib/frozen-at-close.mjs` gains the **V119** entry (`a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`, positively re-confirmed via the subject-line pair discriminator, count=1 — never the naive dual-token `--grep --all-match` form) + `readAtV119Close` export (HARN-17).
   2. `v1.20-milestone-audit.mjs` (Path-A from v1.19, C1-C17 inherited) + `v1.20-audit-allowlist.json` + BASELINE_24 + `check-phase-139..NN.mjs` validators exist and pass, with the apex's `CHAIN_PHASES` array generated by arithmetic (never transcribed) and accounting for RED-06's addition of `check-phase-30`/`check-phase-31` to the chain, plus the 17th CI coexistence workflow born with `fetch-depth: 0` (HARN-18).
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and all 17 `audit-harness-*` integrity workflows are dispatched (`gh workflow run --ref master`, since a push fires nothing) and confirmed green from job-level JSON, not the checks-UI colour (HARN-19).
-  4. The publish bundle regenerates `--version=v1.20`, and a single close-gate commit flips all 27 v1.20 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS — with `ACCEPTED-STANDALONE-CI-RED` and `ACCEPTED-SCOPED-RED` **deleted** from the backlog rather than carried a seventh milestone, discharging the milestone bar stated in REQUIREMENTS.md (HARN-19).
+  4. The publish bundle regenerates `--version=v1.20`, and a single close-gate commit flips all **28** v1.20 requirements (27 original + `SWEEP-09`, added per D-33) to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS — with `ACCEPTED-STANDALONE-CI-RED` and `ACCEPTED-SCOPED-RED` **deleted** from the backlog rather than carried a seventh milestone, discharging the milestone bar stated in REQUIREMENTS.md (HARN-19).
 
 **Plans**: TBD
 

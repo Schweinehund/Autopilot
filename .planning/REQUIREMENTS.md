@@ -13,14 +13,15 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 
 ### Sweep — CARVE-1 frozen-aware conversion (SWEEP)
 
-- [ ] **SWEEP-01**: Every checkout that performs or transitively triggers a frozen read carries `fetch-depth: 0` — `audit-harness-integrity.yml` (4 checkouts), `audit-harness-v1.5-integrity.yml` (18), `audit-harness-v1.6-integrity.yml` (10), all depth-1 today
-- [ ] **SWEEP-02**: The 11 validators that already import `frozen-at-close` but sit in previously-shallow jobs execute their frozen reads successfully in CI, proven by a dispatched run
-- [ ] **SWEEP-03**: Silent-swallow fallbacks (`check-phase-49.mjs:264`, `check-phase-49.mjs:297`, `check-phase-51.mjs:31`) fail loud instead of returning `null` / `""`, proven by a negative test
+- [ ] **SWEEP-01**: **[SUCCESS-CRITERION AMENDMENT, D-13/D-14]** Every `actions/checkout@v4` step across all 16 `audit-harness-*.yml` workflows carries `fetch-depth: 0` — 97 previously-shallow checkouts of 182 total (85 already deep): 32 in the three originally-named files (`audit-harness-integrity.yml` 4 checkouts, `audit-harness-v1.5-integrity.yml` 18, `audit-harness-v1.6-integrity.yml` 10) plus exactly 5 per file in the other 13 workflows, all depth-1 today. This is an owner-ratified extension of the original 4/18/10-count wording, recorded in `.planning/milestones/v1.20-CARVE.md`.
+- [ ] **SWEEP-02**: **[SUCCESS-CRITERION AMENDMENT, D-24]** A dedicated `frozen-read-probe` job (no `needs:`), one per retrofitted workflow, executes a frozen `git show` read plus one real `readAtClose` call successfully in a dispatched CI run — replacing the original "the 11 validators that already import `frozen-at-close` execute their frozen reads in their existing `needs: harness-run` jobs" wording, which is structurally unobtainable in Phase 139 (D-23): both v1.5/v1.6 harnesses exit 1 at HEAD, so those jobs report `skipped` on any ref until Phase 141
+- [ ] **SWEEP-03**: **[SUCCESS-CRITERION AMENDMENT, D-30]** FOUR silent-swallow fallbacks, not three — `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, `check-phase-49.mjs:334`, and `check-phase-51.mjs:31` — fail loud instead of returning `null` / `""`, proven by a negative test
 - [ ] **SWEEP-04**: `_lib/frozen-at-close.mjs` exposes a frozen enumeration API (`lsTreeAtClose()`) so a harness can derive its file scope at a close SHA instead of walking live HEAD
 - [ ] **SWEEP-05**: Each frozen milestone-audit harness v1.4–v1.19 reads its corpus at its own close SHA rather than live HEAD
 - [ ] **SWEEP-06**: The converted harnesses complete inside `check-phase-60.mjs`'s 60-second subprocess timeout, verified by measurement
 - [ ] **SWEEP-07**: The v1.4 `TEMPLATE-SENTINEL` assertion has a named, recorded remedy distinct from frozen-awareness
 - [ ] **SWEEP-08**: A `V14` pin exists with an explicitly chosen SHA and recorded rationale, satisfying the `frozen-at-close.mjs:94-96` gate
+- [ ] **SWEEP-09**: **[NEW REQUIREMENT, D-33, scoped to Phase 141]** The remaining silent-swallow frozen-read sites (measured at roughly 38 `catch`-to-null/empty frozen-read sites across 20 validators, of which Phase 139's SWEEP-03 fixes 4) fail loud. Explicit note: `check-phase-61.mjs:39-45`'s `readAtV15CloseFor61` **cannot** be fixed at the library root — it carries its own inline reader, does not import `_lib/frozen-at-close.mjs` for these reads, is one of the 11 SWEEP-02 validators, and is pinned in place by `check-phase-68.mjs:202` `V-68-10`.
 
 **Why SWEEP-01 is first and mandatory.** `readAtClose()` (`_lib/frozen-at-close.mjs:111`) is `execFileSync('git', ['show', sha + ':' + path])`, and `actions/checkout@v4` defaults to `fetch-depth: 1`. `[MEASURED]` `git clone --depth 1` followed by `git show ba2cbc0:docs/_glossary-linux.md` → `fatal: invalid object name`. The `FETCH-DEPTH-01` contract arrived at v1.7 and was never retrofitted to the three oldest workflows. Without SWEEP-01, SWEEP-05 converts 9 clean two-assertion failures into hard crashes.
 
@@ -148,12 +149,13 @@ Which phases cover which requirements. Populated during roadmap creation.
 | HARN-17 | Phase 144 | Pending |
 | HARN-18 | Phase 144 | Pending |
 | HARN-19 | Phase 144 | Pending |
+| SWEEP-09 | Phase 141 | Pending |
 
 **Coverage:**
-- v1.20 requirements: 27 total
-- Mapped to phases: 27 (100%)
+- v1.20 requirements: 28 total
+- Mapped to phases: 28 (100%)
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-08-04*
-*Last updated: 2026-08-04 — traceability populated at ROADMAP.md creation (6 phases, 139-144, 27/27 requirements mapped)*
+*Last updated: 2026-08-05 — Phase 139 Plan 01 amendment: SWEEP-01/02/03 re-worded to the ratified scope (D-13/D-14, D-24, D-30), new SWEEP-09 added and scoped to Phase 141 (D-33), requirement count 27 → 28 (28/28 mapped)*
