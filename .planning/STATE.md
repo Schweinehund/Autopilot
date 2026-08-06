@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
-current_phase: 139
-current_phase_name: governance-carve-fetch-depth-retrofit-shallow-job-repair
-status: verifying
+current_phase: 140
+current_phase_name: Frozen-Aware Harness Conversion
+status: planning
 stopped_at: Completed 139-06-PLAN.md (owner-gated CI dispatch, approved)
-last_updated: "2026-08-06T03:42:05.020Z"
+last_updated: "2026-08-06T04:19:57.251Z"
 last_activity: 2026-08-05
-last_activity_desc: Phase 139 execution started
+last_activity_desc: Phase 139 complete, transitioned to Phase 140
 progress:
   total_phases: 1
   completed_phases: 1
@@ -33,10 +33,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: 139 (governance-carve-fetch-depth-retrofit-shallow-job-repair) — EXECUTING
-Plan: 6 of 6
-Status: Phase complete — ready for verification
-Last activity: 2026-08-05 — Phase 139 execution started
+Phase: 140 — Frozen-Aware Harness Conversion
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-05 — Phase 139 complete, transitioned to Phase 140
 
 Progress: [██████████] 100%
 

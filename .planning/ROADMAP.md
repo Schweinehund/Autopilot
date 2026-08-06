@@ -27,7 +27,7 @@
 
 ## Phases
 
-- [ ] **Phase 139: Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair** - GOV-01/02 CARVE + `fetch-depth: 0` on the 3 depth-1 workflows + shallow-job repair + `lsTreeAtClose()` enumeration API — the hard prerequisite for all frozen-aware conversion work that follows
+- [x] **Phase 139: Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair** - GOV-01/02 CARVE + `fetch-depth: 0` on the 3 depth-1 workflows + shallow-job repair + `lsTreeAtClose()` enumeration API — the hard prerequisite for all frozen-aware conversion work that follows (completed 2026-08-05)
 - [ ] **Phase 140: Frozen-Aware Harness Conversion** - v1.4–v1.19 milestone-audit harnesses converted to read their own close-SHA corpus instead of live HEAD, within the check-phase-60 60-second subprocess budget
 - [ ] **Phase 141: Standalone-RED Validator Set — Chain Members Green** - check-phase-48/60/61/62-66 exit 0 standalone; freshness, self-test classifier, and cascade root causes closed
 - [ ] **Phase 142: Archival-Path Fix, Chain Adoption & Cold-Clone Threshold** - check-phase-30/31 fixed and adopted into the apex chain; cold-clone apex cost gets a falsifiable threshold
@@ -223,7 +223,7 @@ Plans:
 | 136. Recipe #4 — Android Dedicated MHS Multi-App | v1.19 | 2/2 | Complete | 2026-08-03 |
 | 137. Integration & Navigation-Last Close | v1.19 | 2/2 | Complete | 2026-08-03 |
 | 138. V118 Pin + 17th Path-A Lineage Bump + Terminal Close | v1.19 | 6/6 | Complete | 2026-08-04 |
-| 139. Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair | v1.20 | 0/6 | Ready to execute | - |
+| 139. Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair | v1.20 | 6/6 | Complete | 2026-08-05 |
 | 140. Frozen-Aware Harness Conversion | v1.20 | 0/TBD | Not started | - |
 | 141. Standalone-RED Validator Set — Chain Members Green | v1.20 | 0/TBD | Not started | - |
 | 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 0/TBD | Not started | - |
