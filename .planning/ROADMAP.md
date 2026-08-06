@@ -110,7 +110,14 @@ Plans:
   3. The v1.4 `TEMPLATE-SENTINEL` assertion (`docs/_templates/admin-template-android.md`'s `last_verified: 1970-01-01 # TEMPLATE-SENTINEL`, present before v1.4 closed) has a named, recorded remedy distinct from frozen-awareness — since `readAtV14Close()` returns byte-identical content and the assertion was never green at v1.4's own close — proven by the assertion passing under the new remedy (SWEEP-07).
   4. A `V14` entry exists in `_lib/frozen-at-close.mjs` with an explicitly chosen SHA and a recorded rationale for the choice, satisfying the `frozen-at-close.mjs:94-96` pin-gate (SWEEP-08).
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 140-01-PLAN.md — Scope amendments (D-14 range, SC#2 evidence path, SC#3 reconciliation) + GOV-02 pre-edit census and baseline
+- [ ] 140-02-PLAN.md — Batched frozen corpus reader + V14 pin + self-test retarget + v1.4 tracer conversion + SWEEP-07 sentinel backport
+- [ ] 140-03-PLAN.md — Frozen-aware conversion: v1.4.1, v1.5, v1.6-v1.10
+- [ ] 140-04-PLAN.md — Frozen-aware conversion: v1.11-v1.14, v1.15-v1.18 (C17 leg excepted)
+- [ ] 140-05-PLAN.md — SWEEP-06 budget evidence on the non-apex path, coverage deltas, Stop-hook hardening, owner review
 
 **Discuss-phase flags**: The SWEEP-07 remedy for the v1.4 `TEMPLATE-SENTINEL` assertion (a third failure class distinct from both frozen-vs-evolved and archival-path drift) is a genuine design fork, not resolved at roadmap. The `V14` SHA choice between `b5cf529` (commit v1.4 milestone archive files, 22:02:56) and `671f72a` (archive v1.4 phase directories, 22:02:22) — 34 seconds apart and NOT equivalent, the latter predates the ROADMAP/REQUIREMENTS archive commit — is also a genuine fork, not resolved at roadmap.
 
