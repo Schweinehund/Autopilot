@@ -31,11 +31,17 @@ files_reviewed_list:
   - scripts/validation/check-phase-70.mjs
   - scripts/validation/frozen-read-negative-test.mjs
 findings:
+  critical: 0
+  warning: 2
+  info: 1
+  total: 3
+findings_at_review:
   critical: 1
   warning: 3
   info: 1
   total: 5
-status: issues_found
+resolved_in_phase: [CR-01, WR-01]
+status: issues_found_partially_resolved
 ---
 
 # Phase 139: Code Review Report
@@ -247,3 +253,17 @@ indefinitely.
 _Reviewed: 2026-08-06T03:51:18Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
+
+---
+
+## Resolution (applied in-phase, commit follows this report)
+
+| ID | Severity at review | Disposition |
+|----|--------------------|-------------|
+| CR-01 | blocker | **FIXED** — `commitsInRange()` no longer swallows a `git log` failure into `[]`; it propagates, and `main()` now wraps `checkAmendmentViolations()` in a fail-closed `try/catch` that exits 1, matching the diff/status read above it. Verified: a bogus `--base` now exits **1** instead of silently reporting zero D-09 violations. |
+| WR-01 | warning | **FIXED** — the genesis exemption now asks the tree (`git ls-tree --name-only <sha>^ -- <CARVE_PATH>`) instead of trusting the per-commit status letter, closing the delete-then-recreate smuggling path. Verified on real commits: `8d4235bf` (bootstrap) reads as genesis, `1bf0a65f` (Category-9 amendment) reads as an amendment. Note: `git cat-file -e` was rejected for this probe — it exits 128, not 1, for a path missing from a tree, which would have failed the genesis commit closed. |
+| WR-02 | warning | **DEFERRED** — diagnostic-quality only: the gate emits no JSON on non-off-list failure paths, so the hook message degrades rather than misreports. No enforcement impact. |
+| WR-03 | warning | **DEFERRED** — the unreproducible `not a tree object` sub-pattern in `frozenCause()` is inert: an extra pattern that never matches cannot misclassify anything. Flagged for Phase 140, which is `lsTreeAtClose`s first real consumer. |
+| IN-01 | info | **ACCEPTED** — documented forward scaffolding. |
+
+Apex `check-phase-138.mjs` re-run after the fix: **93 PASS, 0 FAIL, 0 SKIPPED** (unchanged). `carve-gate.mjs --self-test`: 7/7.
