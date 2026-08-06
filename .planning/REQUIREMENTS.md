@@ -19,8 +19,8 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 - [x] **SWEEP-04**: `_lib/frozen-at-close.mjs` exposes a frozen enumeration API (`lsTreeAtClose()`) so a harness can derive its file scope at a close SHA instead of walking live HEAD
 - [ ] **SWEEP-05**: **[SUCCESS-CRITERION AMENDMENT, D-13/D-14]** Phase 140 converts the v1.4 through v1.18 frozen milestone-audit harnesses to read their corpus at their own close SHA rather than live HEAD; the v1.19 harness converts in Phase 144, in the same plan as HARN-17's `V119` pin, because `MILESTONE_CLOSE_SHAS` carries no `V119` entry today. Named limitation: in v1.15 through v1.18 the C17 contract-presence `existsSync` guard and the `c17-eee-contract.mjs` subprocess spawn it gates stay on live HEAD, so those four harnesses are frozen-aware for every check except C17 — `c17-eee-contract.mjs` is CARVE Category 3, owned by Phase 143 (LINK-01..06)
 - [ ] **SWEEP-06**: The converted harnesses complete inside `check-phase-60.mjs`'s 60-second subprocess timeout, verified by measurement
-- [ ] **SWEEP-07**: The v1.4 `TEMPLATE-SENTINEL` assertion has a named, recorded remedy distinct from frozen-awareness
-- [ ] **SWEEP-08**: A `V14` pin exists with an explicitly chosen SHA and recorded rationale, satisfying the `frozen-at-close.mjs:94-96` gate
+- [x] **SWEEP-07**: The v1.4 `TEMPLATE-SENTINEL` assertion has a named, recorded remedy distinct from frozen-awareness
+- [x] **SWEEP-08**: A `V14` pin exists with an explicitly chosen SHA and recorded rationale, satisfying the `frozen-at-close.mjs:94-96` gate
 - [ ] **SWEEP-09**: **[NEW REQUIREMENT, D-33, scoped to Phase 141]** The remaining silent-swallow frozen-read sites (measured at roughly 38 `catch`-to-null/empty frozen-read sites across 20 validators, of which Phase 139's SWEEP-03 fixes 4) fail loud. Explicit note: `check-phase-61.mjs:39-45`'s `readAtV15CloseFor61` **cannot** be fixed at the library root — it carries its own inline reader, does not import `_lib/frozen-at-close.mjs` for these reads, is one of the 11 SWEEP-02 validators, and is pinned in place by `check-phase-68.mjs:202` `V-68-10`.
 
 **Why SWEEP-01 is first and mandatory.** `readAtClose()` (`_lib/frozen-at-close.mjs:111`) is `execFileSync('git', ['show', sha + ':' + path])`, and `actions/checkout@v4` defaults to `fetch-depth: 1`. `[MEASURED]` `git clone --depth 1` followed by `git show ba2cbc0:docs/_glossary-linux.md` → `fatal: invalid object name`. The `FETCH-DEPTH-01` contract arrived at v1.7 and was never retrofitted to the three oldest workflows. Without SWEEP-01, SWEEP-05 converts 9 clean two-assertion failures into hard crashes.
@@ -128,8 +128,8 @@ Which phases cover which requirements. Populated during roadmap creation.
 | SWEEP-04 | Phase 139 | Complete |
 | SWEEP-05 | Phase 140, Phase 144 | Pending |
 | SWEEP-06 | Phase 140 | Pending |
-| SWEEP-07 | Phase 140 | Pending |
-| SWEEP-08 | Phase 140 | Pending |
+| SWEEP-07 | Phase 140 | Complete |
+| SWEEP-08 | Phase 140 | Complete |
 | RED-01 | Phase 141 | Pending |
 | RED-02 | Phase 141 | Pending |
 | RED-03 | Phase 141 | Pending |
