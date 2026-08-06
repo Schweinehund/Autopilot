@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 140
 current_phase_name: Frozen-Aware Harness Conversion
 status: executing
-stopped_at: Phase 140 context gathered
-last_updated: "2026-08-06T21:15:33.432Z"
+stopped_at: Completed 140-01-PLAN.md
+last_updated: "2026-08-06T21:50:39.795Z"
 last_activity: 2026-08-06
 last_activity_desc: Phase 140 execution started
 progress:
   total_phases: 2
   completed_phases: 1
   total_plans: 11
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 140 (Frozen-Aware Harness Conversion) — EXECUTING
-Plan: 1 of 5
-Status: Executing Phase 140
+Plan: 2 of 5
+Status: Ready to execute
 Last activity: 2026-08-06 — Phase 140 execution started
 
-Progress: [██████████] 100%
+Progress: [██████░░░░] 64%
 
 ## v1.20 Phase Dependency Summary
 
@@ -281,6 +281,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 139 P04 | 63min | 2 tasks | 3 files |
 | Phase 139 P05 | 15min | 2 tasks | 17 files |
 | Phase 139 P06 | 25min | 2 tasks | 1 files |
+| Phase 140 P01 | 30min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -310,6 +311,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 139-06: Owner pre-authorized push+dispatch in advance; Task 2's blocking checkpoint still honored as a real gate (halted, no self-approval) — orchestrator independently re-verified origin/master, branch head, and all 16 frozen-read-probe conclusions before approving
 - [Phase ?]: 139-06: Branch phase-139-atom-5 kept (not deleted) until Phase 144 close audit, per owner instruction
 - [Phase ?]: 139-06: Recorded (not fixed) a job-name filter trap in the plan's own verify command — .jobs[].name is the display name, not the YAML job key frozen-read-probe; flagged for Phase 144 close audit
+- [Phase ?]: 140-01: Scope amendments (D-13/D-14 v1.4-v1.18 range, D-09 SC#2 evidence path, D-26 SC#3 skip-vs-pass reconciliation) landed alone as the D-30 amendment-first prerequisite; GOV-02 pre-edit census confirmed zero exact-line-index pins across 13 validators
+- [Phase ?]: 140-01: Recorded (not fixed) an environment limitation — frozen-at-close.mjs --self-test measures 5/6 PASS on this machine (shallow-clone assertion times out against a slow git object store, confirmed via git count-objects -v exceeding 100s), same hazard class as WINDOWS-CLONE-DEEPNEST-TIMEOUT-01/NEST-01, out of Phase 140 scope
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -338,9 +341,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-06T20:16:35.280Z
-Stopped at: Phase 140 context gathered
-Resume file: .planning/phases/140-frozen-aware-harness-conversion/140-CONTEXT.md
+Last session: 2026-08-06T21:50:39.758Z
+Stopped at: Completed 140-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
 ## Operator Next Steps
