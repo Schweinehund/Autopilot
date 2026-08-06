@@ -255,12 +255,13 @@ const checks = [
           continue;
         }
         const fm = fmMatch[1];
-        const lvMatch = fm.match(/^last_verified:\s*(\d{4}-\d{2}-\d{2})\s*$/m);
-        const rbMatch = fm.match(/^review_by:\s*(\d{4}-\d{2}-\d{2})\s*$/m);
+        const lvMatch = fm.match(/^last_verified:\s*(\d{4}-\d{2}-\d{2})\s*(#.*)?$/m);
+        const rbMatch = fm.match(/^review_by:\s*(\d{4}-\d{2}-\d{2})\s*(#.*)?$/m);
         if (!lvMatch) {
           violations.push({ file: relPath, reason: 'last_verified missing or malformed' });
           continue;
         }
+        if (lvMatch[1] === '1970-01-01') continue;  // SWEEP-07/D-24 TEMPLATE-SENTINEL — skip
         if (!rbMatch) {
           violations.push({ file: relPath, reason: 'review_by missing or malformed' });
           continue;
