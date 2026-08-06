@@ -132,9 +132,29 @@ export const MILESTONE_CLOSE_SHAS = {
                     // requirements Validated"). Single entry — same single-entry pattern as V18..V117
                     // (back-anchor invariant: V118 references a PAST close SHA; the V119 pin is deferred
                     // to the v1.20 close per the back-anchor rule).
-  // V14 omitted — RETRO-01 must surface a v1.4-close-state assertion in check-phase-{48..66}.mjs
-  // before adding (v1.4 close was Phase 42, predating chain validators).
-  // Candidates if needed: b5cf529 or 671f72a (D-02 advisor pre-scan).
+  V14: '0b3be9ab',  // Phase 43 terminal commit of the viable window 2574c794..ba9ecd87 — subject
+                    // "docs(phase-43): validation audit - 4 predicate fixes, 27/27 green,
+                    // nyquist_compliant" (v1.20 Phase 140 SWEEP-08/D-19). No `MILESTONE CLOSE`
+                    // subject-line discriminator exists for v1.4 (confirmed: `git log --all
+                    // --format="%H|%s" | awk -F'|' '$2 ~ /v1\.4/ && $2 ~ /MILESTONE CLOSE/'`
+                    // returns empty), so the V117/V118 recovery method does NOT apply here — the
+                    // pin is chosen instead as the state the v1.4 sidecar's supervision line-pins
+                    // were generated against (D-20). Superseding the prior decision record below:
+                    // both candidates it named, b5cf529 and 671f72a, were tested against the
+                    // frozen tree and REJECTED on measured evidence (each leaves converted v1.4's
+                    // C2 check failing at count 33; three other tested SHAs — 3c3a140, 13d2c883,
+                    // 5355b3b9 — leave the sidecar itself absent, C2 FAIL 45, see D-07). This SHA
+                    // is the one candidate that reaches a fully green v1.4 harness (D-19,
+                    // orchestrator-verified five times). AUDIT-CLOSE PIN, not a milestone
+                    // close-gate: v1.4's own `.planning/*` tree was deleted before this SHA, so
+                    // reads of `.planning/*` at `V14` are barred — a future validator needing
+                    // v1.4's planning-close state must add a SECOND entry, `V14_ARCHIVE`
+                    // (candidate: 13d2c883, the V17/V17_CLOSEGATE precedent), rather than moving
+                    // this one (D-21). Prior decision record (superseded, kept for history, not
+                    // silently deleted): "V14 omitted — RETRO-01 must surface a v1.4-close-state
+                    // assertion in check-phase-{48..66}.mjs before adding (v1.4 close was Phase
+                    // 42, predating chain validators). Candidates if needed: b5cf529 or 671f72a
+                    // (D-02 advisor pre-scan)."
 };
 
 /**
@@ -167,6 +187,7 @@ export function readAtClose(milestoneTag, relPath) {
 }
 
 // Convenience exports for readability at call-sites
+export const readAtV14Close       = (p) => readAtClose('V14',          p);
 export const readAtV141Close      = (p) => readAtClose('V141',         p);
 export const readAtV15Close       = (p) => readAtClose('V15',          p);
 export const readAtV16Close       = (p) => readAtClose('V16',          p);
@@ -251,6 +272,85 @@ export const lsTreeAtV116Close      = (dir, opts) => lsTreeAtClose('V116',      
 export const lsTreeAtV117Close      = (dir, opts) => lsTreeAtClose('V117',          dir, opts);
 export const lsTreeAtV118Close      = (dir, opts) => lsTreeAtClose('V118',          dir, opts);
 
+/**
+ * Batch-read many repo-relative paths at a frozen close SHA via ONE `git cat-file --batch`
+ * call (D-03, SWEEP-05/06 Phase 140). Callers must have already proven the SHA reachable
+ * (normally via a prior lsTreeAtClose call, D-05) -- this function does its own per-path
+ * missing/absent handling only and does not re-derive frozenCause='unreachable-sha' from a
+ * batch-level failure (a batch spawn failure here is genuinely 'other', e.g. a malformed
+ * input line).
+ *
+ * @param {keyof MILESTONE_CLOSE_SHAS} milestoneTag
+ * @param {string[]} relPaths - repo-relative paths; may include paths outside docs/ (e.g. the sidecar)
+ * @returns {Map<string, string|null>} content keyed by relPath; null = absent-at-this-SHA (D-06)
+ */
+export function readManyAtClose(milestoneTag, relPaths) {
+  const sha = MILESTONE_CLOSE_SHAS[milestoneTag];
+  if (!sha) throw new Error(`No frozen SHA for milestone ${milestoneTag}`);
+  const uniquePaths = [...new Set(relPaths)];
+  const result = new Map();
+  if (uniquePaths.length === 0) return result;
+  const input = uniquePaths.map((p) => `${sha}:${p}`).join('\n') + '\n';
+  let stdout;
+  try {
+    stdout = execFileSync('git', ['cat-file', '--batch'], {
+      input,
+      timeout: 20000,
+      maxBuffer: SUBPROCESS_MAX_BUFFER, // reuse the existing 20MB constant -- the full v1.5
+      stdio: ['pipe', 'pipe', 'pipe'],  // docs/ tree measures ~2.7MB, ~150ms warm
+      // NO `encoding` option -- must stay a Buffer so the byte-length slicing below is exact (D-04)
+    });
+  } catch (err) {
+    const cause = frozenCause(err);
+    err.frozenCause = cause;
+    err.message = `[${cause}] ${err.message}`;
+    throw err;
+  }
+  const NL = 0x0a;
+  let offset = 0;
+  for (const p of uniquePaths) {
+    const headerEnd = stdout.indexOf(NL, offset);
+    if (headerEnd === -1) throw new Error(`cat-file --batch: truncated output before header for ${p}`);
+    const header = stdout.toString('utf8', offset, headerEnd); // header line is ASCII -- safe to decode
+    offset = headerEnd + 1;
+    if (header.endsWith(' missing')) {
+      result.set(p, null);           // D-06: absent-at-reachable-SHA
+      continue;
+    }
+    const size = parseInt(header.split(' ')[2], 10);           // '<sha> blob <size>'
+    const content = stdout.subarray(offset, offset + size)     // BYTE slice, never a string slice (D-04)
+      .toString('utf8').replace(/\r\n/g, '\n');
+    offset += size + 1;             // +1 skips the trailing LF cat-file appends after every object
+    result.set(p, content);
+  }
+  return result;
+}
+
+/**
+ * Per-harness frozen-corpus reader: one lsTreeAtClose('docs') enumeration (throws first if the
+ * SHA is unreachable, D-05) + one readManyAtClose batch fetch over the whole tree, memoized for
+ * the life of the returned object. Each harness runs as its own `node harness.mjs` subprocess,
+ * so there is no cross-invocation cache to build -- a closure-scoped Map is sufficient (ponytail:
+ * skip a persistent/disk cache, add one only if a future harness needs to share state across
+ * separate process invocations, which none does today).
+ *
+ * @param {keyof MILESTONE_CLOSE_SHAS} milestoneTag
+ * @param {{ extraPaths?: string[] }} [opts] - non-docs/ paths to fetch in the same batch (the sidecar)
+ * @returns {{ has(relPath:string): boolean, get(relPath:string): string|null|undefined, paths: string[] }}
+ */
+export function createFrozenCorpusReader(milestoneTag, { extraPaths = [] } = {}) {
+  const docPaths = lsTreeAtClose(milestoneTag, 'docs', { ext: '.md' });
+  const content = readManyAtClose(milestoneTag, [...docPaths, ...extraPaths]);
+  const docSet = new Set(docPaths);
+  return {
+    has: (relPath) => docSet.has(relPath),   // tree-derived existence only (D-06); the sidecar is
+                                              // NOT in docSet even though it's in `content` -- callers
+                                              // that need sidecar presence check `.get(path) != null`
+    get: (relPath) => content.get(relPath),  // string | null (absent-at-SHA) | undefined (never requested)
+    paths: docPaths,
+  };
+}
+
 // ---------------------------------------------------------------------------------------------
 // --self-test CLI entry point (D-39/D-40). Six assertions, numbered, one line each, a trailing
 // "N/6 PASS" summary, non-zero exit on any failure -- mirrors the repo's existing self-test
@@ -291,11 +391,18 @@ function selfTest() {
     return 'member present';
   }) ? 1 : 0;
 
-  // (iii): V14 is the deliberately-unpinned tag (see the V14 omission comment above).
-  passCount += runAssertion(3, "unpinned milestone tag 'V14' throws", () => {
+  // (iii): VUNPINNED is a deliberately synthetic tag, never a real milestone identifier -- see
+  // SWEEP-08/D-22 (Phase 140): V14 is now pinned, so this assertion can no longer use 'V14' as
+  // its known-absent probe. Every real tag (V15, V110, ...) will eventually be pinned by some
+  // future milestone's back-anchor rule, so a tag guaranteed to never collide must sit
+  // structurally outside this project's `V` + digits-of-the-version naming convention.
+  // Phase 139's SWEEP-04 evidence (the original 6/6 PASS) is preserved by substitution here,
+  // not invalidated -- the assertion still proves "an unpinned tag throws," just against a new
+  // probe tag now that V14 is no longer unpinned.
+  passCount += runAssertion(3, "unpinned milestone tag 'VUNPINNED' throws", () => {
     let threw = false;
-    try { lsTreeAtClose('V14', 'docs'); } catch { threw = true; }
-    if (!threw) throw new Error('V14 did not throw');
+    try { lsTreeAtClose('VUNPINNED', 'docs'); } catch { threw = true; }
+    if (!threw) throw new Error('VUNPINNED did not throw');
     return 'threw as expected';
   }) ? 1 : 0;
 
