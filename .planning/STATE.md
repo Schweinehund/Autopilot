@@ -4,16 +4,16 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 139
 current_phase_name: governance-carve-fetch-depth-retrofit-shallow-job-repair
-status: executing
-stopped_at: Completed 139-05-PLAN.md
-last_updated: "2026-08-05T15:23:00.595Z"
+status: verifying
+stopped_at: Completed 139-06-PLAN.md (owner-gated CI dispatch, approved)
+last_updated: "2026-08-06T03:42:05.020Z"
 last_activity: 2026-08-05
 last_activity_desc: Phase 139 execution started
 progress:
   total_phases: 1
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 6
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -35,10 +35,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 Phase: 139 (governance-carve-fetch-depth-retrofit-shallow-job-repair) — EXECUTING
 Plan: 6 of 6
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-05 — Phase 139 execution started
 
-Progress: [████████░░] 83%
+Progress: [██████████] 100%
 
 ## v1.20 Phase Dependency Summary
 
@@ -280,6 +280,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 139 P03 | 25min | 2 tasks | 5 files |
 | Phase 139 P04 | 63min | 2 tasks | 3 files |
 | Phase 139 P05 | 15min | 2 tasks | 17 files |
+| Phase 139 P06 | 25min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -306,6 +307,9 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: Verification-method note: bare check-phase-68.mjs has pre-existing 24 PASS/9 FAIL (standalone-red chain members 48/60-66, Phase 141-142 scope) unrelated to this plan's edit -- use CHECK_PHASE_NESTED=1 to confirm V-68-01/10/11
 - [Phase ?]: Phase 139 Plan 04: converted V-69-08/V-70-17 to frozen-to-frozen blob comparison (D-18/D-19/D-20/D-22), proven immune to a dirty edit on any of the three SWEEP-01 workflows -- unblocks Plan 05's fetch-depth retrofit
 - [Phase ?]: Phase 139 Plan 05: swept all 97 previously-shallow checkouts across 16 workflows to fetch-depth:0 (182/182 deep, adjacency-verified), added .github/workflows/** to the base paths filter (D-17), and added one dependency-free frozen-read-probe job per workflow (D-24, no needs:) exercising a real readAtV15Close + lsTreeAtV15Close(34 entries) -- landed as one D-41 atom-5 commit; check-phase-66/69/70 (nested) and the top-level apex all green
+- [Phase ?]: 139-06: Owner pre-authorized push+dispatch in advance; Task 2's blocking checkpoint still honored as a real gate (halted, no self-approval) — orchestrator independently re-verified origin/master, branch head, and all 16 frozen-read-probe conclusions before approving
+- [Phase ?]: 139-06: Branch phase-139-atom-5 kept (not deleted) until Phase 144 close audit, per owner instruction
+- [Phase ?]: 139-06: Recorded (not fixed) a job-name filter trap in the plan's own verify command — .jobs[].name is the display name, not the YAML job key frozen-read-probe; flagged for Phase 144 close audit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -334,8 +338,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-05T15:23:00.563Z
-Stopped at: Completed 139-05-PLAN.md
+Last session: 2026-08-06T03:41:54.814Z
+Stopped at: Completed 139-06-PLAN.md (owner-gated CI dispatch, approved)
 Resume file: None
 Next action: `/gsd-discuss-phase 139`
 

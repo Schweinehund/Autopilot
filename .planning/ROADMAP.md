@@ -67,7 +67,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. **[SUCCESS-CRITERION AMENDMENT, D-30]** FOUR fail-loud sites, not three: `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, `check-phase-49.mjs:334`, and `check-phase-51.mjs:31` fail loud on a missing/invalid frozen read instead of silently returning `null`/`""`, proven by a negative test (SWEEP-03).
   5. `_lib/frozen-at-close.mjs` exports a working `lsTreeAtClose()` enumeration API, proven by a self-test that enumerates a known frozen tree's file list at a real close SHA (SWEEP-04).
 
-**Plans**: 5/6 plans executed
+**Plans**: 6/6 plans executed
 
 Plans:
 **Wave 1**
@@ -92,7 +92,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 139-06-PLAN.md — Feature-branch push, 16-workflow dispatch, job-level JSON evidence, owner checkpoint
+- [x] 139-06-PLAN.md — Feature-branch push, 16-workflow dispatch, job-level JSON evidence, owner checkpoint
 
 **Discuss-phase flags**: The exact `lsTreeAtClose()` API shape (return type, error semantics on a missing path, whether it mirrors `readAtClose`'s per-milestone reader-function pattern or takes a SHA parameter directly) is a genuine design fork — not resolved at roadmap.
 
