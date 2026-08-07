@@ -110,7 +110,7 @@ Plans:
   3. The v1.4 `TEMPLATE-SENTINEL` assertion (`docs/_templates/admin-template-android.md`'s `last_verified: 1970-01-01 # TEMPLATE-SENTINEL`, present before v1.4 closed) has a named, recorded remedy distinct from frozen-awareness — since `readAtV14Close()` returns byte-identical content and the assertion was never green at v1.4's own close — proven by the C5 check's own `pass: true` after the remedy (SWEEP-07). Reconciliation (D-26): the remedy is a per-file `continue` inside C5's frontmatter parse that suppresses only the sentinel file's violation record — it does not mark the check `skipped`, and C5 still evaluates every other Android doc normally; the same `continue` additionally suppresses a genuinely malformed `review_by` placeholder that template carries at the pin. This is stated explicitly because skip-counts-as-pass is the masking class D-08 refuses elsewhere.
   4. A `V14` entry exists in `_lib/frozen-at-close.mjs` with an explicitly chosen SHA and a recorded rationale for the choice, satisfying the `frozen-at-close.mjs:94-96` pin-gate (SWEEP-08).
 
-**Plans**: 3/5 plans executed
+**Plans**: 4/5 plans executed
 
 Plans:
 **Wave 1**
@@ -127,7 +127,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 140-04-PLAN.md — Frozen-aware conversion: v1.11-v1.14, v1.15-v1.18 (C17 leg excepted)
+- [x] 140-04-PLAN.md — Frozen-aware conversion: v1.11-v1.14, v1.15-v1.18 (C17 leg excepted)
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
