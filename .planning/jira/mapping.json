@@ -947,12 +947,12 @@
         },
         "140": {
           "issueKey": "RTS-784",
-          "status": "in_progress",
+          "status": "done",
           "name": "Frozen-Aware Harness Conversion"
         },
         "141": {
           "issueKey": "RTS-785",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Standalone-RED Validator Set — Chain Members Green"
         },
         "142": {
