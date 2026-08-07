@@ -41,46 +41,48 @@ import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';  // Phase 119: C17 fold spawns c17-eee-contract.mjs (see check id 17)
 import process from 'node:process';
 import { execFailDetail } from './_lib/exec-fail-detail.mjs';  // Phase 119: C17 failure-detail formatting (DRY, per check-phase-112.mjs precedent)
+import { createFrozenCorpusReader } from './_lib/frozen-at-close.mjs';
 
 const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
 const SELF_TEST = argv.includes('--self-test');
+
+// SWEEP-05 (v1.20 Phase 140): this harness reads its corpus and its sidecar frozen at its own
+// milestone-close SHA (V118 = 7af8a147, see _lib/frozen-at-close.mjs MILESTONE_CLOSE_SHAS for the
+// pin) instead of live HEAD -- EXCEPT the C17 contract-presence guard below (check id 17), which
+// intentionally stays live-HEAD (see that check's own comment for why); the `node:fs`
+// existsSync/readFileSync import stays in place for exactly this reason.
+const MILESTONE_TAG = 'V118';
+const SIDECAR_PATH = 'scripts/validation/v1.18-audit-allowlist.json'; // UNCHANGED literal -- GOV-02
+                                                                       // pins search for this exact string
+const FROZEN = createFrozenCorpusReader(MILESTONE_TAG, { extraPaths: [SIDECAR_PATH] });
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
 function readFile(relPath) {
-  const abs = join(process.cwd(), relPath);
-  if (!existsSync(abs)) return null;
-  return readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');  // CRLF normalization per Phase 31 ca40eb9
-}
+  const c = FROZEN.get(relPath);
+  return c === undefined ? null : c;   // undefined (never enumerated) and null (absent-at-SHA)
+}                                       // both read as "missing" to every existing caller
 
-// walkMd: recursive .md file walker (verbatim from scripts/validation/check-phase-30.mjs lines 21-38)
+// walkMd: enumerate frozen paths under `dir` (D-01/D-02) -- re-absolutized because every call
+// site immediately runs relNormalize(abs), which strips process.cwd() back off (Pitfall 2).
 function walkMd(dir) {
-  const abs = join(process.cwd(), dir);
-  if (!existsSync(abs)) return [];
-  const results = [];
-  function walk(current) {
-    let entries;
-    try { entries = readdirSync(current); } catch { return; }
-    for (const entry of entries) {
-      const full = join(current, entry);
-      let stat;
-      try { stat = statSync(full); } catch { continue; }
-      if (stat.isDirectory()) { walk(full); }
-      else if (entry.endsWith('.md')) { results.push(full); }
-    }
-  }
-  walk(abs);
-  return results;
+  const prefix = dir.endsWith('/') ? dir : dir + '/';
+  return FROZEN.paths
+    .filter((p) => p.startsWith(prefix))
+    .map((p) => join(process.cwd(), p));
 }
 
-// parseAllowlist: load and parse the committed JSON sidecar (D-26 contract).
-// Follows check-phase-31.mjs parseInventory() degradation pattern -- degrade to empty arrays on parse failure.
+// parseAllowlist: load and parse the committed JSON sidecar (D-26 contract) frozen at MILESTONE_TAG.
+// D-07: absence at the pinned SHA fails loud (never a silent degrade to empty arrays); a
+// malformed-but-present sidecar still degrades, per check-phase-31.mjs parseInventory() precedent.
 function parseAllowlist() {
-  const raw = readFile('scripts/validation/v1.18-audit-allowlist.json');
-  if (!raw) return { safetynet_exemptions: [], supervision_exemptions: [] };
+  const raw = FROZEN.get(SIDECAR_PATH);
+  if (raw === undefined || raw === null) {
+    throw new Error(`Sidecar absent at frozen SHA (${MILESTONE_TAG}): ${SIDECAR_PATH} -- D-07 fail-loud`);
+  }
   try {
     return JSON.parse(raw);
   } catch (err) {
@@ -100,7 +102,7 @@ function appleBusinessDocPaths() {
   for (const p of [
     'docs/_glossary-apple-business.md',
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walk: all .md under docs/cross-platform/apple-business/
@@ -113,7 +115,7 @@ function appleBusinessDocPaths() {
     'docs/admin-setup-macos/01-abm-configuration.md',
     'docs/admin-setup-ios/02-abm-token.md',
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // D-24 scope-filter: exclude any DIRECTORY segment starting with "_"
@@ -161,7 +163,7 @@ function androidDocPaths() {
     'docs/reference/android-capability-matrix.md',
     'docs/decision-trees/08-android-triage.md'
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walks (all .md under these two lifecycle and admin trees are Android-scoped by construction)
@@ -212,7 +214,7 @@ function linuxDocPaths() {
     'docs/reference/linux-capability-matrix.md',
     'docs/decision-trees/09-linux-triage.md'
   ]) {
-    if (existsSync(join(process.cwd(), p))) paths.add(p);
+    if (FROZEN.has(p)) paths.add(p);
   }
 
   // Directory walks
@@ -824,6 +826,10 @@ const checks = [
     // Don't-Hand-Roll).
     run() {
       const CONTRACT = 'scripts/validation/c17-eee-contract.mjs';
+      // SWEEP-05 EXCEPTION (Phase 140, deferred per CONTEXT.md <deferred>): this guard and the C17
+      // spawn below intentionally stay LIVE-HEAD. c17-eee-contract.mjs is CARVE Category 3, owned by
+      // Phase 143 -- converting this leg here would collide two phases' scopes. Recorded as a named
+      // SWEEP-05 limitation via the D-14 amendment, not a code comment alone.
       if (!existsSync(join(process.cwd(), CONTRACT))) {
         return { pass: false, detail: 'C17 FAIL: ' + CONTRACT + ' not present (EEE contract validator missing)' };
       }
