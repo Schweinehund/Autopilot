@@ -82,20 +82,28 @@ function writeScratch(projectDir, obj) {
 
 function runGate(projectDir) {
   const gatePath = path.join(projectDir, 'scripts', 'validation', 'carve-gate.mjs');
-  if (!fs.existsSync(gatePath)) return { exitCode: 0, offList: [] }; // not landed yet -- allow
+  if (!fs.existsSync(gatePath)) return { exitCode: 0, offList: [], parsed: true }; // not landed yet -- allow
 
   let stdout = '';
   try {
     stdout = execFileSync('node', [gatePath, '--json'], {
       cwd: projectDir, stdio: 'pipe', timeout: PROBE_TIMEOUT_MS, encoding: 'utf8',
     });
-    return { exitCode: 0, offList: [] };
+    return { exitCode: 0, offList: [], parsed: true };
   } catch (err) {
     const out = err.stdout ? err.stdout.toString() : stdout;
+    // `parsed` tracks whether we actually recovered a real offList from the gate's own JSON,
+    // as distinct from defaulting to [] because the output was unreadable (D-31). A caller must
+    // never treat an unparsed [] the same as a confirmed-empty [] -- see the D-31 guard in main().
     let offList = [];
-    try { offList = JSON.parse(out).offList || []; } catch { offList = []; }
+    let parsed = false;
+    try {
+      const j = JSON.parse(out);
+      offList = Array.isArray(j.offList) ? j.offList : [];
+      parsed = true;
+    } catch { offList = []; parsed = false; }
     const exitCode = typeof err.status === 'number' ? err.status : 1;
-    return { exitCode, offList };
+    return { exitCode, offList, parsed };
   }
 }
 
@@ -104,11 +112,28 @@ function main() {
   if (input.stop_hook_active === true) allow();
   const projectDir = input.cwd || process.env.CLAUDE_PROJECT_DIR || process.cwd();
 
-  const { exitCode, offList } = runGate(projectDir);
+  const { exitCode, offList, parsed } = runGate(projectDir);
 
   if (exitCode === 0) {
     const d = computeDecision({ stopHookActive: false, gateExitCode: 0, priorFireCount: 0 });
     if (d.action === 'allow') allow();
+  }
+
+  // D-31 hardening: a non-zero gate exit is only real off-list evidence if we actually parsed a
+  // non-empty offList out of its JSON. An unparseable result, an unexpected shape, or a genuine
+  // empty list on a non-zero exit all mean we cannot confidently name any off-list path -- in
+  // every one of those cases this must fail open with a diagnostic, never fall through to a
+  // populated nudge/warn message built from data we don't actually have (the reported defect
+  // this hardens against: "0 off-list path(s) ... HARD-BLOCKING" on a tree the gate itself
+  // passed). This does not change enforcement semantics -- the hook stays advisory (D-10) and
+  // carve-gate.mjs's own exit code remains the real gate.
+  if (!parsed || offList.length === 0) {
+    process.stderr.write(
+      'v1.20-carve-gate: gate exited non-zero (code=' + exitCode + ') but ' +
+      (parsed ? 'reported zero off-list paths' : 'its output could not be parsed as JSON') +
+      ' -- failing open, no off-list path can be confidently named (D-31).\n'
+    );
+    allow();
   }
 
   const scratch = readScratch(projectDir);
