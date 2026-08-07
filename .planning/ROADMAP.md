@@ -110,7 +110,7 @@ Plans:
   3. The v1.4 `TEMPLATE-SENTINEL` assertion (`docs/_templates/admin-template-android.md`'s `last_verified: 1970-01-01 # TEMPLATE-SENTINEL`, present before v1.4 closed) has a named, recorded remedy distinct from frozen-awareness — since `readAtV14Close()` returns byte-identical content and the assertion was never green at v1.4's own close — proven by the C5 check's own `pass: true` after the remedy (SWEEP-07). Reconciliation (D-26): the remedy is a per-file `continue` inside C5's frontmatter parse that suppresses only the sentinel file's violation record — it does not mark the check `skipped`, and C5 still evaluates every other Android doc normally; the same `continue` additionally suppresses a genuinely malformed `review_by` placeholder that template carries at the pin. This is stated explicitly because skip-counts-as-pass is the masking class D-08 refuses elsewhere.
   4. A `V14` entry exists in `_lib/frozen-at-close.mjs` with an explicitly chosen SHA and a recorded rationale for the choice, satisfying the `frozen-at-close.mjs:94-96` pin-gate (SWEEP-08).
 
-**Plans**: 4/5 plans executed
+**Plans**: 5/5 plans executed
 
 Plans:
 **Wave 1**
@@ -131,7 +131,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 140-05-PLAN.md — SWEEP-06 budget evidence on the non-apex path, coverage deltas, Stop-hook hardening, owner review
+- [x] 140-05-PLAN.md — SWEEP-06 budget evidence on the non-apex path, coverage deltas, Stop-hook hardening, owner review
 
 **Discuss-phase flags**: The SWEEP-07 remedy for the v1.4 `TEMPLATE-SENTINEL` assertion (a third failure class distinct from both frozen-vs-evolved and archival-path drift) is a genuine design fork, not resolved at roadmap. The `V14` SHA choice between `b5cf529` (commit v1.4 milestone archive files, 22:02:56) and `671f72a` (archive v1.4 phase directories, 22:02:22) — 34 seconds apart and NOT equivalent, the latter predates the ROADMAP/REQUIREMENTS archive commit — is also a genuine fork, not resolved at roadmap.
 

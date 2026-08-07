@@ -4,16 +4,16 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 140
 current_phase_name: Frozen-Aware Harness Conversion
-status: executing
-stopped_at: Completed 140-04-PLAN.md
-last_updated: "2026-08-07T00:14:19.677Z"
+status: verifying
+stopped_at: Completed 140-05-PLAN.md — Phase 140 complete, owner approved
+last_updated: "2026-08-07T04:51:50.341Z"
 last_activity: 2026-08-06
 last_activity_desc: Phase 140 execution started
 progress:
   total_phases: 2
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
 ---
 
 # Project State
@@ -35,10 +35,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 Phase: 140 (Frozen-Aware Harness Conversion) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-06 — Phase 140 execution started
 
-Progress: [█████████░] 91%
+Progress: [██████████] 100%
 
 ## v1.20 Phase Dependency Summary
 
@@ -285,6 +285,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 140 P02 | 97min | 4 tasks | 3 files |
 | Phase 140 P03 | 20min | 3 tasks | 8 files |
 | Phase 140 P04 | 20min | 3 tasks | 9 files |
+| Phase 140 P05 | 25min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -320,6 +321,11 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: v1.4.1 discovered fully green (8/0/0) after conversion — undetermined going in per plan, recorded as measured not assumed
 - [Phase ?]: Treated plan's literal 'grep -c audit-allowlist.json returns 0' acceptance text as testing the wrong shape; verified sidecar literal byte-identical across the diff instead, matching Plan 02's own tracer precedent
 - [Phase ?]: Phase 140 Plan 04: converted the final 8 of 16 in-scope harnesses (v1.11-v1.18); Family C remainder (v1.11-v1.14) fully green, Family D (v1.15-v1.18) converts 4 of 5 chokepoints with the C17 contract-presence guard deliberately left live-HEAD, owned by Phase 143; sixteen-of-sixteen completeness confirmed, v1.19 untouched; SWEEP-05 correctly stays Pending (spans Phase 140+144 per its own amended text)
+- [Phase ?]: 140-05: SWEEP-06 evidenced on the non-apex path (sixteen wall-clock figures under budget + V-60-23 verbatim PASS); apex is structurally blind to this criterion (D-09 NESTED-guard short-circuit)
+- [Phase ?]: 140-05: Corrected 140-CONTEXT.md D-18's 'identical sets' claim -- measured per-harness coverage delta widens from 2 dropped files at v1.18 to 115 at v1.4
+- [Phase ?]: 140-05: Stop-hook (.claude/hooks/v1.20-carve-gate.cjs) hardened to fail open with a diagnostic on any unparseable gate result rather than emit a hard-block message on a passing tree; enforcement semantics (D-10) unchanged
+- [Phase ?]: 140-05: SWEEP-05/SWEEP-06 left Pending in REQUIREMENTS.md -- both span Phase 140 and Phase 144 (v1.19 harness conversion), flip together at Phase 144 close
+- [Phase ?]: 140-05: Owner approved phase close -- all four checkpoint items (budget evidence, three discovered harness outcomes, coverage-delta table, C17-deferred-to-143 limitation) accepted as framed, incl. the warm-cache-only measurement gap
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -348,8 +354,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-07T00:14:19.636Z
-Stopped at: Completed 140-04-PLAN.md
+Last session: 2026-08-07T04:51:50.298Z
+Stopped at: Completed 140-05-PLAN.md — Phase 140 complete, owner approved
 Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
