@@ -12,6 +12,11 @@
 // Usage: node scripts/validation/frozen-read-negative-test.mjs
 // Exit code: 0 if all assertions PASS; 1 if any FAIL.
 //
+// SWEEP-09 (v1.20 Phase 141 Plan 03, D-13/D-14/D-21): assertions 8-10 (of 10 total, up from 7)
+// prove the thirteen SWEEP-09 reader sites (check-phase-61's readAtV15CloseFor61 delegation +
+// check-phase-68/70's twelve chicken-and-egg call-site conversions) fail loud inside a genuine
+// shallow clone, reusing this file's existing clone + .git/shallow hard guard.
+//
 // Why file:// is MANDATORY (D-31, RESEARCH.md Pitfall 2): `git clone --depth 1 <local-path>`
 // WITHOUT the file:// scheme silently ignores --depth, prints a warning, and produces a FULL
 // (non-shallow) clone -- no `.git/shallow` is created and every frozen read SUCCEEDS. As
@@ -32,6 +37,13 @@ import {
 
 const REPO_49 = 'scripts/validation/check-phase-49.mjs';
 const REPO_51 = 'scripts/validation/check-phase-51.mjs';
+// SWEEP-09 (v1.20 Phase 141 Plan 03, D-13/D-14/D-21): three new path constants for the three
+// validators whose frozen-read call-sites were converted from skip-to-pass to fail-loud in this
+// plan (check-phase-61.mjs's readAtV15CloseFor61 delegation, check-phase-68/70.mjs's twelve
+// chicken-and-egg call-site conversions).
+const REPO_61 = 'scripts/validation/check-phase-61.mjs';
+const REPO_68 = 'scripts/validation/check-phase-68.mjs';
+const REPO_70 = 'scripts/validation/check-phase-70.mjs';
 const CORPUS_FILE = 'docs/_glossary-linux.md';
 const ABSENT_EVERYWHERE = 'docs/this-path-truly-does-not-exist-139-03-negative-test.md';
 const NEW_FILE = 'NEW-FILE-139-03-negative-test.md';
@@ -72,7 +84,7 @@ function main() {
   const cloneDir = mkdtempSync(join(tmpdir(), 'frozen-read-negative-test-'));
   const repoUrl = 'file://' + originalCwd.replace(/\\/g, '/');
   let passCount = 0;
-  const total = 7;
+  const total = 10;
 
   try {
     execFileSync('git', ['clone', '--depth', '1', repoUrl, cloneDir], {
@@ -196,6 +208,83 @@ function main() {
     }) ? 1 : 0;
 
     process.chdir(originalCwd);
+
+    // === SWEEP-09 (Phase 141 Plan 03, D-13/D-14/D-21): the thirteen SWEEP-09 sites fail loud ===
+    // Each subprocess sets CHECK_PHASE_NESTED=1. Nesting is required and is the point: it
+    // short-circuits the CHAIN-* regression guards, which would otherwise expand the full
+    // 48-through-66 sub-chain inside the clone and cost tens of minutes (D-32's exponential
+    // curve), while leaving the frozen-read checks under test fully live -- none of
+    // check-phase-61/68/70's readAtV15CloseFor61 / chicken-and-egg call-sites are gated by
+    // CHECK_PHASE_NESTED.
+    passCount += runAssertion(8, `${REPO_61} (CHECK_PHASE_NESTED=1) exits non-zero inside the shallow clone with the library's unreachable-SHA cause token in its output`, () => {
+      try {
+        execFileSync('node', [join(originalCwd, REPO_61)], {
+          cwd: cloneDir,
+          env: { ...process.env, CHECK_PHASE_NESTED: '1' },
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+          timeout: 30000,
+        });
+        throw new Error('expected non-zero exit inside the shallow clone, got success (pre-Task-1 this would have been the silent-green failure mode: the inline reader swallowed the throw into null and reported the doc as merely absent)');
+      } catch (err) {
+        if (err.status === undefined) throw err;
+        const combined = (err.stdout || '') + (err.stderr || '');
+        if (!combined.includes('unreachable-sha')) {
+          throw new Error(`exit code ${err.status} but 'unreachable-sha' not found in output -- this is the direct proof that Task 1's delegation surfaces the real git cause where the pre-edit code reported the planning documents as merely absent`);
+        }
+        return `exit ${err.status}, 'unreachable-sha' present in output (readAtV15CloseFor61 now delegates to the library reader's typed frozenCause)`;
+      }
+    }) ? 1 : 0;
+
+    passCount += runAssertion(9, `${REPO_68} (CHECK_PHASE_NESTED=1) exits non-zero inside the shallow clone with a FAIL count >= 2`, () => {
+      // NOTE (asymmetry, D-15): unlike check-phase-61's inline reader, check-phase-68's wrapper
+      // reader functions (readCorpusFileAtV17Close etc.) still flatten their own throw to null
+      // by design -- so no typed frozenCause reaches this validator's detail string. Assert only
+      // on exit code + FAIL count, not on a cause token.
+      try {
+        execFileSync('node', [join(originalCwd, REPO_68)], {
+          cwd: cloneDir,
+          env: { ...process.env, CHECK_PHASE_NESTED: '1' },
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+          timeout: 30000,
+        });
+        throw new Error('expected non-zero exit inside the shallow clone, got success (pre-Task-2 this would have been the silent-green failure mode: both chicken-and-egg call-sites reported pass:true/skipped:true on an unreachable SHA)');
+      } catch (err) {
+        if (err.status === undefined) throw err;
+        const combined = (err.stdout || '') + (err.stderr || '');
+        const m = combined.match(/Result:\s*(\d+)\s*PASS,\s*(\d+)\s*FAIL/);
+        const failCount = m ? Number(m[2]) : -1;
+        if (failCount < 2) {
+          throw new Error(`exit code ${err.status} but FAIL count ${failCount} < 2 (expected both converted chicken-and-egg call-sites to fail on the unreachable SHA)`);
+        }
+        return `exit ${err.status}, FAIL count ${failCount} >= 2 (no cause token asserted -- check-phase-68.mjs's wrapper still flattens to null by design)`;
+      }
+    }) ? 1 : 0;
+
+    passCount += runAssertion(10, `${REPO_70} (CHECK_PHASE_NESTED=1) exits non-zero inside the shallow clone with a FAIL count >= 10`, () => {
+      // Same asymmetry note as assertion 9 (D-15): no cause-token assertion, check-phase-70.mjs's
+      // wrapper reader functions also flatten their throw to null by design.
+      try {
+        execFileSync('node', [join(originalCwd, REPO_70)], {
+          cwd: cloneDir,
+          env: { ...process.env, CHECK_PHASE_NESTED: '1' },
+          encoding: 'utf8',
+          stdio: ['ignore', 'pipe', 'pipe'],
+          timeout: 30000,
+        });
+        throw new Error('expected non-zero exit inside the shallow clone, got success (pre-Task-2 this would have been the silent-green failure mode: all ten chicken-and-egg call-sites reported pass:true/skipped:true on an unreachable SHA)');
+      } catch (err) {
+        if (err.status === undefined) throw err;
+        const combined = (err.stdout || '') + (err.stderr || '');
+        const m = combined.match(/Result:\s*(\d+)\s*PASS,\s*(\d+)\s*FAIL/);
+        const failCount = m ? Number(m[2]) : -1;
+        if (failCount < 10) {
+          throw new Error(`exit code ${err.status} but FAIL count ${failCount} < 10 (expected all ten converted chicken-and-egg call-sites to fail on the unreachable SHA)`);
+        }
+        return `exit ${err.status}, FAIL count ${failCount} >= 10 (no cause token asserted -- check-phase-70.mjs's wrapper still flattens to null by design)`;
+      }
+    }) ? 1 : 0;
   } finally {
     try { process.chdir(originalCwd); } catch { /* already there or cwd gone; best-effort */ }
     rmSync(cloneDir, { recursive: true, force: true });
