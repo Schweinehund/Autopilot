@@ -66,6 +66,12 @@ function readProjectAtV17Close() {
 function readProjectAtV17CloseGate() {
   try { return readAtV17CloseGate('.planning/PROJECT.md'); } catch (e) { return null; }
 }
+// General-path close-gate reader (Phase 141-03 addendum, OWNER-RATIFIED 2026-08-08): mirrors
+// readProjectAtV17CloseGate() above but accepts any repo-relative path, for V-70-18..22's two
+// corpus documents authored in Plan 70-05 Commit B (4df3a16), not at Atom 2 (aa6de68).
+function readCorpusFileAtV17CloseGate(relPath) {
+  try { return readAtV17CloseGate(relPath); } catch (e) { return null; }
+}
 
 const HARNESS         = 'scripts/validation/v1.7-milestone-audit.mjs';
 const ALLOWLIST       = 'scripts/validation/v1.7-audit-allowlist.json';
@@ -379,45 +385,55 @@ checks.push({
 // V-70-18..V-70-27 — v1.7-frozen-aware (chicken-and-egg via aa6de68 placeholder)
 // =============================================================================
 
-// === V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-frozen @ aa6de68] ===
+// V-70-18..22 repointed from the aa6de68 (v1.7-frozen Atom-2) reader to the V17_CLOSEGATE
+// (4df3a16) reader (Phase 141-03 addendum, OWNER-RATIFIED 2026-08-08), mirroring the V-70-24
+// precedent above. MEASURED (Plan 141-03): both 70-04-AUDIT-RESULTS.md and
+// v1.7-MILESTONE-AUDIT.md were authored in Plan 70-05 Commit B, not at Atom 2 -- they are
+// ABSENT at aa6de68 and PRESENT at 4df3a16, the identical situation V-70-24's comment already
+// documents for PROJECT.md. Before Plan 141-03 these five call-sites returned
+// {pass:true, skipped:true} on the null aa6de68 read, so they had been vacuously passing since
+// Phase 70 and had never verified anything on any clone -- see RETRO-02 (the V-70-24 fix) for
+// the precedent this addendum applies to the remaining five sites.
+
+// === V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-close-gate @ 4df3a16] ===
 checks.push({
-  id: 18, name: 'V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-frozen @ aa6de68]',
+  id: 18, name: 'V-70-18: HARNESS-05 70-04-AUDIT-RESULTS.md exists in phase dir [v1.7-close-gate @ 4df3a16]',
   run() {
     const PATH = '.planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-04-AUDIT-RESULTS.md';
-    const c = readCorpusFileAtV17Close(PATH);
+    const c = readCorpusFileAtV17CloseGate(PATH);
     if (c === null) {
-      return { pass: false, detail: 'frozen read of 70-04-AUDIT-RESULTS.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
+      return { pass: false, detail: 'frozen read of 70-04-AUDIT-RESULTS.md at v1.7-close-gate (4df3a16) failed -- distinct SHA from the aa6de68 arm, no longer chicken-and-egg, see frozenCause' };
     }
     if (c.length < 100) return { pass: false, detail: '70-04-AUDIT-RESULTS.md too short (< 100 chars)' };
-    return { pass: true, detail: '70-04-AUDIT-RESULTS.md present at v1.7-close SHA' };
+    return { pass: true, detail: '70-04-AUDIT-RESULTS.md present at v1.7-close-gate SHA' };
   }
 });
 
-// === V-70-19: HARNESS-05 audit-results document contains B.1 + B.2 sections [v1.7-frozen @ aa6de68] ===
+// === V-70-19: HARNESS-05 audit-results document contains B.1 + B.2 sections [v1.7-close-gate @ 4df3a16] ===
 checks.push({
-  id: 19, name: 'V-70-19: HARNESS-05 audit-results doc contains B.1 (local fresh-clone) + B.2 (Linux GHA cross-OS) [v1.7-frozen @ aa6de68]',
+  id: 19, name: 'V-70-19: HARNESS-05 audit-results doc contains B.1 (local fresh-clone) + B.2 (Linux GHA cross-OS) [v1.7-close-gate @ 4df3a16]',
   run() {
     const PATH = '.planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-04-AUDIT-RESULTS.md';
-    const c = readCorpusFileAtV17Close(PATH);
+    const c = readCorpusFileAtV17CloseGate(PATH);
     if (c === null) {
-      return { pass: false, detail: 'frozen read of 70-04-AUDIT-RESULTS.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
+      return { pass: false, detail: 'frozen read of 70-04-AUDIT-RESULTS.md at v1.7-close-gate (4df3a16) failed -- distinct SHA from the aa6de68 arm, no longer chicken-and-egg, see frozenCause' };
     }
     const hasB1 = /##?\s*B\.?1\b/i.test(c) || /Section\s*B\.1/i.test(c);
     const hasB2 = /##?\s*B\.?2\b/i.test(c) || /Section\s*B\.2/i.test(c);
     if (!hasB1 || !hasB2) {
       return { pass: false, detail: 'B.1=' + hasB1 + '; B.2=' + hasB2 + ' (expected both)' };
     }
-    return { pass: true, detail: 'audit-results doc contains B.1 + B.2 sections (v1.7-frozen)' };
+    return { pass: true, detail: 'audit-results doc contains B.1 + B.2 sections (v1.7-close-gate)' };
   }
 });
 
-// === V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md exists with YAML frontmatter [v1.7-frozen @ aa6de68] ===
+// === V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md exists with YAML frontmatter [v1.7-close-gate @ 4df3a16] ===
 checks.push({
-  id: 20, name: 'V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md frontmatter (milestone:v1.7, status:passed, requirements:12/12, phases:4/4) [v1.7-frozen @ aa6de68]',
+  id: 20, name: 'V-70-20: HARNESS-06 v1.7-MILESTONE-AUDIT.md frontmatter (milestone:v1.7, status:passed, requirements:12/12, phases:4/4) [v1.7-close-gate @ 4df3a16]',
   run() {
-    const c = readMilestoneAuditAtV17Close();
+    const c = readCorpusFileAtV17CloseGate('.planning/milestones/v1.7-MILESTONE-AUDIT.md');
     if (c === null) {
-      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
+      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close-gate (4df3a16) failed -- distinct SHA from the aa6de68 arm, no longer chicken-and-egg, see frozenCause' };
     }
     const REQUIRED = ['milestone: v1.7', 'status: passed', 'requirements: 12/12', 'phases: 4/4'];
     const missing = REQUIRED.filter(s => !c.includes(s));
@@ -426,13 +442,13 @@ checks.push({
   }
 });
 
-// === V-70-21: HARNESS-06 milestone audit doc has performed_by + Auditor-Independence + Command Verification Table sections ===
+// === V-70-21: HARNESS-06 milestone audit doc has performed_by + Auditor-Independence + Command Verification Table sections [v1.7-close-gate @ 4df3a16] ===
 checks.push({
-  id: 21, name: 'V-70-21: HARNESS-06 milestone audit doc has performed_by + Auditor-Independence + Command Verification Table [v1.7-frozen @ aa6de68]',
+  id: 21, name: 'V-70-21: HARNESS-06 milestone audit doc has performed_by + Auditor-Independence + Command Verification Table [v1.7-close-gate @ 4df3a16]',
   run() {
-    const c = readMilestoneAuditAtV17Close();
+    const c = readCorpusFileAtV17CloseGate('.planning/milestones/v1.7-MILESTONE-AUDIT.md');
     if (c === null) {
-      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
+      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close-gate (4df3a16) failed -- distinct SHA from the aa6de68 arm, no longer chicken-and-egg, see frozenCause' };
     }
     const REQUIRED = ['performed_by:', 'Auditor-Independence', 'Command Verification'];
     const missing = REQUIRED.filter(s => !c.includes(s));
@@ -441,13 +457,13 @@ checks.push({
   }
 });
 
-// === V-70-22: HARNESS-06 milestone audit doc has NEW "Discoveries Surfaced During Execution" section with 5 discoveries ===
+// === V-70-22: HARNESS-06 milestone audit doc has NEW "Discoveries Surfaced During Execution" section with 5 discoveries [v1.7-close-gate @ 4df3a16] ===
 checks.push({
-  id: 22, name: 'V-70-22: HARNESS-06 milestone audit doc has Discoveries Surfaced During Execution (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01 + CHAIN-WRAPPER-01 + ARCHIVE-01) [v1.7-frozen @ aa6de68]',
+  id: 22, name: 'V-70-22: HARNESS-06 milestone audit doc has Discoveries Surfaced During Execution (FETCH-DEPTH-01 + SCOPE-GAP-61 + D-04-OVERSPEC-01 + CHAIN-WRAPPER-01 + ARCHIVE-01) [v1.7-close-gate @ 4df3a16]',
   run() {
-    const c = readMilestoneAuditAtV17Close();
+    const c = readCorpusFileAtV17CloseGate('.planning/milestones/v1.7-MILESTONE-AUDIT.md');
     if (c === null) {
-      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
+      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close-gate (4df3a16) failed -- distinct SHA from the aa6de68 arm, no longer chicken-and-egg, see frozenCause' };
     }
     if (!/Discoveries Surfaced/i.test(c)) return { pass: false, detail: '"Discoveries Surfaced During Execution" section absent' };
     const FIVE = ['FETCH-DEPTH-01', 'SCOPE-GAP-61', 'D-04-OVERSPEC-01', 'CHAIN-WRAPPER-01', 'ARCHIVE-01'];
