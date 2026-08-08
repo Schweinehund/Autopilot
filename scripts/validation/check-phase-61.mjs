@@ -34,14 +34,16 @@ function readFile(relPath) {
 }
 
 // TOOL-02 unified replacement for the two inline v1.5-frozen readers (removed in Plan 111-01 Task 3).
-// Reads a planning file at v1.5-close SHA ba2cbc0; returns null on failure.
-// Landmine C: deliberately omits stdio option (stderr leaks to parent) matching the removed inline-reader behavior.
+// SWEEP-09 (v1.20 Phase 141 Plan 03, D-09): fail loud -- this used to be a genuinely inline
+// git-subprocess call wrapped in its own try/catch-to-null, so a failed frozen read
+// was silently reported as "file missing" instead of the real cause. It now delegates to the
+// already-imported library reader (readAtV15Close, used unwrapped elsewhere in this file at
+// :271,282,297,313), so a failed read THROWS with a typed frozenCause and reaches the runner's
+// outer catch instead of being flattened to null. This function's own name is kept
+// byte-identical -- check-phase-68.mjs:206 (V-68-10) tests for it inside a tolerant-OR.
+// Accounting record: 141-03-SUMMARY.md.
 function readAtV15CloseFor61(relPath) {
-  try {
-    return execFileSync('git', ['show', 'ba2cbc0:' + relPath], { encoding: 'utf8', timeout: 10000 }).replace(/\r\n/g, '\n');
-  } catch (err) {
-    return null;
-  }
+  return readAtV15Close(relPath);
 }
 
 const HARNESS = 'scripts/validation/v1.5-milestone-audit.mjs';
