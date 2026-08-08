@@ -120,7 +120,11 @@ const checks = [
     run() {
       const c = readCorpusFileAtV17Close('scripts/validation/regenerate-supervision-pins.mjs');
       if (c === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        // SWEEP-09 (v1.20 Phase 141 Plan 03, D-11/D-14): fail loud -- the aa6de68 bootstrap
+        // race this branch tolerated no longer exists (both guarded SHAs resolve today), so a
+        // null read here is a real failure (unreachable SHA on a shallow clone, absent path,
+        // git missing from PATH, a read timeout, or a corrupt pack -- see frozenCause).
+        return { pass: false, detail: 'frozen read of scripts/validation/regenerate-supervision-pins.mjs at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
       }
       const hasB10 = c.includes('BASELINE_10');
       const hasB11 = c.includes('BASELINE_11');
@@ -182,7 +186,9 @@ const checks = [
     run() {
       const c = readMilestonesAtV17Close();
       if (c === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        // SWEEP-09 (v1.20 Phase 141 Plan 03, D-11/D-14): fail loud -- see the rationale at
+        // V-68-05 above; the same bootstrap-race branch, now a real read failure.
+        return { pass: false, detail: 'frozen read of MILESTONES.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
       }
       // Find v1.5 H2 section and look for "One-liner:" placeholder strings within it
       const v15Match = c.match(/##\s*v1\.5[\s\S]*?(?=^##\s|\Z)/m);

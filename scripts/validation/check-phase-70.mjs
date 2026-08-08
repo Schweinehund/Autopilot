@@ -386,7 +386,7 @@ checks.push({
     const PATH = '.planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-04-AUDIT-RESULTS.md';
     const c = readCorpusFileAtV17Close(PATH);
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of 70-04-AUDIT-RESULTS.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     if (c.length < 100) return { pass: false, detail: '70-04-AUDIT-RESULTS.md too short (< 100 chars)' };
     return { pass: true, detail: '70-04-AUDIT-RESULTS.md present at v1.7-close SHA' };
@@ -400,7 +400,7 @@ checks.push({
     const PATH = '.planning/phases/70-v1-7-audit-harness-lineage-bump-milestone-close-pillar-d-clo/70-04-AUDIT-RESULTS.md';
     const c = readCorpusFileAtV17Close(PATH);
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of 70-04-AUDIT-RESULTS.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     const hasB1 = /##?\s*B\.?1\b/i.test(c) || /Section\s*B\.1/i.test(c);
     const hasB2 = /##?\s*B\.?2\b/i.test(c) || /Section\s*B\.2/i.test(c);
@@ -417,7 +417,7 @@ checks.push({
   run() {
     const c = readMilestoneAuditAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     const REQUIRED = ['milestone: v1.7', 'status: passed', 'requirements: 12/12', 'phases: 4/4'];
     const missing = REQUIRED.filter(s => !c.includes(s));
@@ -432,7 +432,7 @@ checks.push({
   run() {
     const c = readMilestoneAuditAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     const REQUIRED = ['performed_by:', 'Auditor-Independence', 'Command Verification'];
     const missing = REQUIRED.filter(s => !c.includes(s));
@@ -447,7 +447,7 @@ checks.push({
   run() {
     const c = readMilestoneAuditAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of v1.7-MILESTONE-AUDIT.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     if (!/Discoveries Surfaced/i.test(c)) return { pass: false, detail: '"Discoveries Surfaced During Execution" section absent' };
     const FIVE = ['FETCH-DEPTH-01', 'SCOPE-GAP-61', 'D-04-OVERSPEC-01', 'CHAIN-WRAPPER-01', 'ARCHIVE-01'];
@@ -463,7 +463,7 @@ checks.push({
   run() {
     const c = readDeferredCleanupAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of v1.7-DEFERRED-CLEANUP.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     // Look for carry-forward markers + Phase 69 discoveries
     const REQUIRED = ['HARNESS-FORWARD-01', 'CI-3'];
@@ -482,7 +482,7 @@ checks.push({
   run() {
     const c = readProjectAtV17CloseGate();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: 4df3a16 (Plan 70-05 Commit B) not resolvable; check git history' };
+      return { pass: false, detail: 'frozen read of PROJECT.md at v1.7-close-gate (4df3a16) failed -- distinct SHA from the aa6de68 arm, no longer chicken-and-egg, see frozenCause' };
     }
     // Identify v1.7 requirement IDs (SWEEP-01/02 + CHAIN-01/02/03 + CILINUX-01 + HARNESS-01..06 = 12)
     const REQS_V17 = ['SWEEP-01', 'SWEEP-02', 'CHAIN-01', 'CHAIN-02', 'CHAIN-03', 'CILINUX-01', 'HARNESS-01', 'HARNESS-02', 'HARNESS-03', 'HARNESS-04', 'HARNESS-05', 'HARNESS-06'];
@@ -498,7 +498,7 @@ checks.push({
   run() {
     const c = readRoadmapAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of ROADMAP.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     // Look for Phase 67/68/69/70 + "Complete" markers
     const PHASES = ['Phase 67', 'Phase 68', 'Phase 69', 'Phase 70'];
@@ -514,7 +514,7 @@ checks.push({
   run() {
     const c = readStateAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of STATE.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     // STATE.md at v1.7-close should record milestone completion. Tolerant pattern check.
     const hasStatus = /status:\s*(complete|completed|closed)/i.test(c) || /milestone:\s*v1\.7/i.test(c);
@@ -529,7 +529,7 @@ checks.push({
   run() {
     const c = readRequirementsAtV17Close();
     if (c === null) {
-      return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      return { pass: false, detail: 'frozen read of REQUIREMENTS.md at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
     }
     const REQS_V17 = ['SWEEP-01', 'SWEEP-02', 'CHAIN-01', 'CHAIN-02', 'CHAIN-03', 'CILINUX-01', 'HARNESS-01', 'HARNESS-02', 'HARNESS-03', 'HARNESS-04', 'HARNESS-05', 'HARNESS-06'];
     const present = REQS_V17.filter(r => c.includes(r));
