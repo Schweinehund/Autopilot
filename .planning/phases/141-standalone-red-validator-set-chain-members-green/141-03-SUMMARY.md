@@ -310,6 +310,58 @@ this plan's edits (none of those five files were touched).
 - FOUND: commit `112510fb`
 - FOUND: commit `547f813b`
 
+## Addendum: SHA repoint for the V-70-18..22 divergence (OWNER-RATIFIED 2026-08-08)
+
+**Discovery, recapped:** this plan's Task 2 measured that `check-phase-70.mjs`'s nested tally
+diverged from its pre-edit baseline (23 PASS/5 FAIL/23 SKIPPED, exit 1, vs. the predicted
+23/0/28, exit 0) because 5 of the 10 converted chicken-and-egg call-sites --
+V-70-18/19/20/21/22 -- read `70-04-AUDIT-RESULTS.md` and `v1.7-MILESTONE-AUDIT.md` through the
+`aa6de68` (v1.7-frozen Atom-2) reader, but both documents were authored later, in Plan 70-05
+Commit B. Before this plan's fail-loud conversion, these five sites had returned
+`{pass:true, skipped:true}` on the null `aa6de68` read since Phase 70 -- vacuously passing and
+never verifying anything on any clone, an instance of the exact defect class SWEEP-09 exists to
+delete. This plan's own scope (a return-field flip only, no new reader function) explicitly did
+not authorize the SHA-repointing fix, and recorded it as a deferred item for Phase 142/144.
+
+**Owner ratification:** the owner ratified fixing this immediately as a scoped addendum to this
+plan, rather than waiting for Phase 142/144, since the underlying pattern (repoint to
+`V17_CLOSEGATE` / `4df3a16`) was already fully proven by `V-70-24`'s existing
+`readProjectAtV17CloseGate()` precedent (Plan 73-02 RETRO-02) -- the identical situation for
+`PROJECT.md`.
+
+**Fix applied:** added `readCorpusFileAtV17CloseGate(relPath)`, the general-path equivalent of
+`readProjectAtV17CloseGate()`, to `check-phase-70.mjs`. Repointed V-70-18..22 to it. Updated each
+of the five checks' `name` string and null-branch `detail` string from
+`[v1.7-frozen @ aa6de68]` to `[v1.7-close-gate @ 4df3a16]`, matching V-70-24's existing wording
+convention. Added a comment above the repointed group, in V-70-24's own comment style, recording
+that Phase 141 SWEEP-09 exposed these as vacuous-since-Phase-70 and citing the RETRO-02
+precedent. V-70-23/24/25/26/27 and all nine other SWEEP-09 call-sites (in `check-phase-61.mjs`
+and `check-phase-68.mjs`, plus the other five `aa6de68`-arm sites in `check-phase-70.mjs`) were
+left untouched -- confirmed via `git diff scripts/validation/check-phase-70.mjs`, which shows
+edits scoped exactly to the new reader function and the five named checks. The `null`-branch
+`pass: false` stays fail-loud throughout; no site was reverted to `skipped: true`.
+
+**Before/after tallies:**
+
+| Metric | Before (post-141-03) | After (this addendum) |
+|---|---|---|
+| `CHECK_PHASE_NESTED=1 check-phase-70.mjs` | 23 PASS / 5 FAIL / 23 SKIPPED, exit 1 | **28 PASS / 0 FAIL / 23 SKIPPED, exit 0** |
+| V-70-18..22 individually | FAIL (frozen read of absent-at-`aa6de68` docs) | **PASS** (frozen read of present-at-`4df3a16` docs) |
+| `grep -c "skipped: true" check-phase-70.mjs` | 7 | 7 (unchanged) |
+| `node scripts/validation/carve-gate.mjs` | PASS, 42/42 | PASS, 42/42 (unchanged -- no new path, no CARVE amendment) |
+| `CHECK_PHASE_NESTED=1 check-phase-68.mjs` | 12 PASS / 0 FAIL / 21 SKIPPED, exit 0 | 12 PASS / 0 FAIL / 21 SKIPPED, exit 0 (unchanged; not in this addendum's scope) |
+
+**Corrected Phase-142 RED-07 baseline:** this addendum supersedes the "Next Phase Readiness"
+section above's handoff figure for `check-phase-70`. The authoritative post-addendum nested
+baseline for Phase 142's RED-07 comparison is now **`check-phase-70` = 28 PASS / 0 FAIL /
+23 SKIPPED, exit 0** (not the 23/5/23, exit 1 figure this plan originally recorded).
+`check-phase-68` remains **12 PASS / 0 FAIL / 21 SKIPPED, exit 0**, unchanged. The deferred item
+flagged in "Next Phase Readiness" above (repoint V-70-18..22 to a `*CloseGate`-style reader) is
+now **closed** -- no outstanding action remains for Phase 142/144 on this specific finding.
+
+**Commit:** `671b9d49` (fix) -- code change only, staged and committed individually
+(`scripts/validation/check-phase-70.mjs`), per this addendum's own atomic-commit requirement.
+
 ---
 *Phase: 141-standalone-red-validator-set-chain-members-green*
 *Completed: 2026-08-08*
