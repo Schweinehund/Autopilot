@@ -3,17 +3,17 @@ gsd_state_version: 1.0
 milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
-current_phase_name: Standalone-RED Validator Set — Chain Members Green
-status: planning
-stopped_at: Phase 141 context gathered
-last_updated: "2026-08-08T03:35:06.357Z"
+status: executing
+stopped_at: Completed 141-01-PLAN.md
+last_updated: "2026-08-08T04:56:49.997Z"
 last_activity: 2026-08-07
-last_activity_desc: Phase 140 complete, transitioned to Phase 141
+last_activity_desc: Phase 141 execution resumed (wave continue)
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 17
+  completed_plans: 12
+current_phase_name: Standalone-RED Validator Set — Chain Members Green
 ---
 
 # Project State
@@ -33,12 +33,12 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: 141 — Standalone-RED Validator Set — Chain Members Green
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-08-07 — Phase 140 complete, transitioned to Phase 141
+Phase: 141 — EXECUTING
+Plan: 2 of 6
+Status: Ready to execute
+Last activity: 2026-08-07 — Phase 141 execution resumed (wave continue)
 
-Progress: [██████████] 100%
+Progress: [███████░░░] 71%
 
 ## v1.20 Phase Dependency Summary
 
@@ -286,6 +286,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 140 P03 | 20min | 3 tasks | 8 files |
 | Phase 140 P04 | 20min | 3 tasks | 9 files |
 | Phase 140 P05 | 25min | 3 tasks | 2 files |
+| Phase 141 P01 | 15min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -326,6 +327,9 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 140-05: Stop-hook (.claude/hooks/v1.20-carve-gate.cjs) hardened to fail open with a diagnostic on any unparseable gate result rather than emit a hard-block message on a passing tree; enforcement semantics (D-10) unchanged
 - [Phase ?]: 140-05: SWEEP-05/SWEEP-06 left Pending in REQUIREMENTS.md -- both span Phase 140 and Phase 144 (v1.19 harness conversion), flip together at Phase 144 close
 - [Phase ?]: 140-05: Owner approved phase close -- all four checkpoint items (budget evidence, three discovered harness outcomes, coverage-delta table, C17-deferred-to-143 limitation) accepted as framed, incl. the warm-cache-only measurement gap
+- [Phase ?]: 141-01: Applied [SUCCESS-CRITERION AMENDMENT, D-28] bracket marker to SC#2/SC#4/SWEEP-09/Discuss-phase-flags, annotating and superseding rather than deleting original wording
+- [Phase ?]: 141-01: SC#1 marked [DISCHARGED, D-29] rather than amended-as-false — satisfied, not falsified, preserving evidence the ratified ordering was correct
+- [Phase ?]: 141-01: CARVE Category 5 header count corrected fifteen->sixteen only after confirming zero grep hits on the literal phrase across scripts/ and .github/
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -354,9 +358,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-08T03:35:06.048Z
-Stopped at: Phase 141 context gathered
-Resume file: .planning/phases/141-standalone-red-validator-set-chain-members-green/141-CONTEXT.md
+Last session: 2026-08-08T04:56:49.953Z
+Stopped at: Completed 141-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
 ## Operator Next Steps
