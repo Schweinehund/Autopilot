@@ -23,7 +23,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` + `/adversarial-review`)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.20 protects that corpus by repairing the validator chain and CI harness lineage that guards it.
-**Current focus:** Phase 140 — Frozen-Aware Harness Conversion
+**Current focus:** Phase 141 — Standalone-RED Validator Set — Chain Members Green
 
 > **v1.20 BACK-ANCHOR RECOVERY (Phase 144 / HARN-17).** The V119 pin needs the v1.19 close-gate SHA `a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`. Recover it with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
 > ```
@@ -98,15 +98,15 @@ Phase 140 (Frozen-Aware Harness Conversion)
   |
   v
 Phase 141 (Standalone-RED Validator Set — Chain Members Green)
-  |       RED-01, RED-02, RED-03
+  |       RED-01, RED-02, RED-03, SWEEP-09
   |       DELIVERS:
   |         - v1.5-v1.13 C5/C10 freshness assertions pass with zero glossary
   |             edits, via the Phase-140 frozen-aware conversion (RED-01 —
   |             the TRUE prerequisite for 60/61/62-66, not the self-test)
   |         - regenerate-supervision-pins.mjs --self-test exits 0 via a
-  |             corrected classifier context window (backward-only scan
-  |             misses the iOS token 2 lines after the heading); v1.7
-  |             fixture byte-unchanged, classifier NOT relaxed (RED-02)
+  |             rebase of the stale BASELINE_9 coordinate array to its live
+  |             descendants; classify() byte-unchanged, v1.7 fixture
+  |             byte-unchanged, classifier NOT relaxed (RED-02)
   |         - check-phase-48/60/61/62/63/64/65/66 all exit 0 standalone,
   |             cascade classes cleared as a consequence (RED-03)
   |       HARD CONSTRAINTS:
@@ -192,7 +192,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
               all 17 audit-harness-* workflows dispatched (gh workflow run
               --ref master) and confirmed green from job-level JSON + publish
               bundle regenerated --version=v1.20 + SINGLE close-gate commit
-              flipping all 27 v1.20 requirements to Validated +
+              flipping all 28 v1.20 requirements to Validated +
               ACCEPTED-STANDALONE-CI-RED and ACCEPTED-SCOPED-RED DELETED
               from the backlog (not carried a 7th milestone)
           HARD CONSTRAINTS:
@@ -207,17 +207,17 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
             decisions)
 ```
 
-## v1.20 Requirement Coverage (27/27 mapped — roadmap created 2026-08-04)
+## v1.20 Requirement Coverage (28/28 mapped — roadmap created 2026-08-04)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
 | 139 | GOV-01, GOV-02, SWEEP-01, SWEEP-02, SWEEP-03, SWEEP-04 | 6 |
 | 140 | SWEEP-05, SWEEP-06, SWEEP-07, SWEEP-08 | 4 |
-| 141 | RED-01, RED-02, RED-03 | 3 |
+| 141 | RED-01, RED-02, RED-03, SWEEP-09 | 4 |
 | 142 | RED-04, RED-05, RED-06, RED-07, NEST-01 | 5 |
 | 143 | LINK-01, LINK-02, LINK-03, LINK-04, LINK-05, LINK-06 | 6 |
 | 144 | HARN-17, HARN-18, HARN-19 | 3 |
-| **Total** | **27/27 mapped (0 orphaned)** | **27** |
+| **Total** | **28/28 mapped (0 orphaned)** | **28** |
 
 **Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase numbering continues from v1.19 (closed at Phase 138) → v1.20 starts at Phase 139.
 
