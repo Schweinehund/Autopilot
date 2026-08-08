@@ -149,7 +149,15 @@ Plans:
   3. `check-phase-48.mjs`, `check-phase-60.mjs`, `check-phase-61.mjs`, and `check-phase-62.mjs` through `check-phase-66.mjs` each exit 0 when invoked standalone (not nested), proven by 8 independent direct invocations, with the cascade classes (48→60→61→62..66's own `CHAIN-*` sub-checks) confirmed cleared as a consequence rather than patched individually (RED-03).
   4. **[NEW REQUIREMENT, D-33]** The remaining silent-swallow frozen-read sites — beyond the 4 SWEEP-03 already fixed in Phase 139 — fail loud, scoped to the ~19 validators already open for RED-03 in this phase (SWEEP-09).
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 141-01-PLAN.md — Governance gate: six D-28 document amendments (alone, first) + the D-12 CARVE amendment adding `check-phase-67.mjs`
+- [ ] 141-02-PLAN.md — TRACER: rebase the stale `BASELINE_9` array, `--self-test` exits 0, `check-phase-48` exits 0 standalone (RED-02)
+- [ ] 141-03-PLAN.md — SWEEP-09: thirteen frozen-read sites fail loud (61 delegation + 68/70 call-sites) proven by a `file://` shallow-clone harness
+- [ ] 141-04-PLAN.md — Timeout root causes: raise the two chain-spawn caps, `if: always()` on 29 fan-out jobs, raise the four exposed CI job caps
+- [ ] 141-05-PLAN.md — Evidence: nine harnesses (RED-01) + eight ascending quiesced standalone runs and one verbose composition run (RED-03)
+- [ ] 141-06-PLAN.md — First-ever CI fan-out: push, dispatch at one shared SHA, triage every job, flip four requirements to Complete
 
 **Discuss-phase flags**: None dominant — RED-02's method is already ruled (classifier context-window investigation, per path D-12; editing `v1.7-audit-allowlist.json` or relaxing the classifier's thresholds is barred).
 
