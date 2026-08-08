@@ -149,12 +149,12 @@ Plans:
   3. `check-phase-48.mjs`, `check-phase-60.mjs`, `check-phase-61.mjs`, and `check-phase-62.mjs` through `check-phase-66.mjs` each exit 0 when invoked standalone (not nested), proven by 8 independent direct invocations, with the cascade classes (48→60→61→62..66's own `CHAIN-*` sub-checks) confirmed cleared as a consequence rather than patched individually (RED-03).
   4. **[NEW REQUIREMENT, D-33]** The remaining silent-swallow frozen-read sites — beyond the 4 SWEEP-03 already fixed in Phase 139 — fail loud, scoped to the ~19 validators already open for RED-03 in this phase (SWEEP-09). **[SUCCESS-CRITERION AMENDMENT, D-28]** Corrected census on the requirement's own unit — reader SITES, not validators: 19 `chicken-and-egg` return sites measured (`check-phase-67.mjs` 7, `check-phase-68.mjs` 2, `check-phase-70.mjs` 10) plus `check-phase-61.mjs:39-45`'s inline reader. Phase 141 lands 13 of them (61's 1, 68's 2, 70's 10); `check-phase-67.mjs`'s 7 defer to Phase 144, with its CARVE amendment landing in Phase 141 (D-11/D-12).
 
-**Plans**: 1/6 plans executed
+**Plans**: 2/6 plans executed
 
 Plans:
 
 - [x] 141-01-PLAN.md — Governance gate: six D-28 document amendments (alone, first) + the D-12 CARVE amendment adding `check-phase-67.mjs`
-- [ ] 141-02-PLAN.md — TRACER: rebase the stale `BASELINE_9` array, `--self-test` exits 0, `check-phase-48` exits 0 standalone (RED-02)
+- [x] 141-02-PLAN.md — TRACER: rebase the stale `BASELINE_9` array, `--self-test` exits 0, `check-phase-48` exits 0 standalone (RED-02)
 - [ ] 141-03-PLAN.md — SWEEP-09: thirteen frozen-read sites fail loud (61 delegation + 68/70 call-sites) proven by a `file://` shallow-clone harness
 - [ ] 141-04-PLAN.md — Timeout root causes: raise the two chain-spawn caps, `if: always()` on 29 fan-out jobs, raise the four exposed CI job caps
 - [ ] 141-05-PLAN.md — Evidence: nine harnesses (RED-01) + eight ascending quiesced standalone runs and one verbose composition run (RED-03)

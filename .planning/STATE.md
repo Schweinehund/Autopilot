@@ -4,15 +4,15 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
 status: executing
-stopped_at: Completed 141-01-PLAN.md
-last_updated: "2026-08-08T04:56:49.997Z"
+stopped_at: Completed 141-02-PLAN.md
+last_updated: "2026-08-08T05:09:40.152Z"
 last_activity: 2026-08-07
 last_activity_desc: Phase 141 execution resumed (wave continue)
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 17
-  completed_plans: 12
+  completed_plans: 13
 current_phase_name: Standalone-RED Validator Set — Chain Members Green
 ---
 
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 141 — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-08-07 — Phase 141 execution resumed (wave continue)
 
-Progress: [███████░░░] 71%
+Progress: [████████░░] 76%
 
 ## v1.20 Phase Dependency Summary
 
@@ -287,6 +287,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 140 P04 | 20min | 3 tasks | 9 files |
 | Phase 140 P05 | 25min | 3 tasks | 2 files |
 | Phase 141 P01 | 15min | 2 tasks | 5 files |
+| Phase 141 P02 | 35min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -330,6 +331,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 141-01: Applied [SUCCESS-CRITERION AMENDMENT, D-28] bracket marker to SC#2/SC#4/SWEEP-09/Discuss-phase-flags, annotating and superseding rather than deleting original wording
 - [Phase ?]: 141-01: SC#1 marked [DISCHARGED, D-29] rather than amended-as-false — satisfied, not falsified, preserving evidence the ratified ordering was correct
 - [Phase ?]: 141-01: CARVE Category 5 header count corrected fifteen->sixteen only after confirming zero grep hits on the literal phrase across scripts/ and .github/
+- [Phase ?]: 141-02: Rebased all 9 BASELINE_9 coordinates to live descendants (re-verified against live content, not the research file, per D-31); recorded the cobo.md 1-to-2 cardinality change honestly rather than claiming a bijection; classify() and v1.7-audit-allowlist.json byte-unchanged; self-test and bare check-phase-48/60/61 all green; nested pre-SWEEP-09 baselines recorded for check-phase-68/70 (12/0/21, 23/0/28) for Plan 03/Phase 142
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -358,8 +360,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-08T04:56:49.953Z
-Stopped at: Completed 141-01-PLAN.md
+Last session: 2026-08-08T05:09:40.117Z
+Stopped at: Completed 141-02-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
