@@ -530,16 +530,31 @@ function doEmitStubs() {
 // this comment records the audit-trail event that line-positions were re-verified at Phase 138
 // close and remain valid for the v1.19 corpus. Resolution path: BASELINE_24 will refresh at the
 // next milestone close per the Path-A inheritance pattern (... -> v1.18 -> BASELINE_22 -> v1.19 -> BASELINE_23).
+// BASELINE_9 refreshed 2026-08-08 (Phase 141 Plan 02): all nine coordinates were stale --
+// commit aaf0d2ff (TOOL-04 coordinate-only re-pin of v1.4-v1.16 audit sidecars) moved the
+// v1.7-audit-allowlist.json supervision_exemptions[] coordinates without touching this array,
+// so none of the 9 pre-existing entries landed on a line containing "supervis" (four pointed
+// at blank lines). Rebased to their live descendants: 8 of the 9 are clean lineage rebases
+// (_glossary-android.md 80/82/182/199 -> 145/147/303/333; 00-enrollment-overview.md 51/53/83
+// -> 65/67/97; 20-android-app-install-investigation.md 21 -> 33). The ninth
+// (03-fully-managed-cobo.md) is a content-side cardinality change, not a lineage rebase: the
+// file now carries TWO Tier-1 supervision occurrences (51 and 53) where the old baseline
+// tracked only one (36); only 51 is carried forward here. This is safe because the self-test's
+// invariant is a set equality after subtraction (sidecar minus BASELINE_9 == classifier minus
+// BASELINE_9) -- line 53 sits in both sidecarPins and classifierTier1Keys today regardless of
+// whether BASELINE_9 names it, so it cancels out of the subtraction either way. Not a lossless
+// 9-of-9 bijection -- classify() untouched, v1.7-audit-allowlist.json untouched. See
+// 141-02-SUMMARY.md and 141-RESEARCH.md Pitfall 1.
 const BASELINE_9 = [
-  ['docs/_glossary-android.md', 80],   // ### Supervision heading (was 79 at Phase 59; +1 Phase 62-07 banner shift; H3 sits before line 127)
-  ['docs/_glossary-android.md', 82],   // Supervision disambiguation blockquote (was 81 at Phase 59; +1 Phase 62-07 banner shift)
-  ['docs/_glossary-android.md', 182],  // MHS cross-platform note (was 181 at Phase 60-06; +1 Phase 62-07 banner shift)
-  ['docs/_glossary-android.md', 199],  // Version History row (was 198 at Phase 60-06; +1 Phase 62-07 banner shift)
-  ['docs/android-lifecycle/00-enrollment-overview.md', 51],
-  ['docs/android-lifecycle/00-enrollment-overview.md', 53],
-  ['docs/android-lifecycle/00-enrollment-overview.md', 83],
-  ['docs/admin-setup-android/03-fully-managed-cobo.md', 36],
-  ['docs/l2-runbooks/20-android-app-install-investigation.md', 21]
+  ['docs/_glossary-android.md', 145],  // ### Supervision heading (was 80 pre-rebase; live content verified 2026-08-07)
+  ['docs/_glossary-android.md', 147],  // Supervision disambiguation blockquote (was 82 pre-rebase)
+  ['docs/_glossary-android.md', 303],  // MHS cross-platform note (was 182 pre-rebase)
+  ['docs/_glossary-android.md', 333],  // Version History row (was 199 pre-rebase)
+  ['docs/android-lifecycle/00-enrollment-overview.md', 65],
+  ['docs/android-lifecycle/00-enrollment-overview.md', 67],
+  ['docs/android-lifecycle/00-enrollment-overview.md', 97],
+  ['docs/admin-setup-android/03-fully-managed-cobo.md', 51],
+  ['docs/l2-runbooks/20-android-app-install-investigation.md', 33]
 ];
 
 function doSelfTest() {
