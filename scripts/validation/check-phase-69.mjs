@@ -197,8 +197,12 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
       if (!existsSync(join(process.cwd(), path))) {
         return { pass: true, skipped: true, detail: path + ' not present (graceful skip)' };
       }
+      // v1.20 Phase 141 Plan 04 Task 1a (owner-ratified 2026-08-08): CHECK_PHASE_NESTED=1 now
+      // propagates unconditionally, matching the 14-validator precedent (check-phase-72 et al.)
+      // -- the prior isPeer-gated form left 48-66 running bare under the non-peer 300000ms cap,
+      // which a real 65/66 child (305-335s / ~665s) exceeds. isPeer still selects subTimeout only.
       const isPeer = phaseNum >= 67;
-      const subEnv = isPeer ? { ...process.env, CHECK_PHASE_NESTED: '1' } : process.env;
+      const subEnv = { ...process.env, CHECK_PHASE_NESTED: '1' };
       const subTimeout = isPeer ? 600000 : 300000;
       try {
         execFileSync('node', [path], { stdio: 'pipe', timeout: subTimeout, cwd: process.cwd(), env: subEnv });
