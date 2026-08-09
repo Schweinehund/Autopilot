@@ -303,6 +303,266 @@ Phase 142's discuss-phase to pick up, not a gap this plan silently closed.
 
 ---
 
+## Dispatch Record: the first-ever CI fan-out (Plan 06)
+
+**Shared head SHA (recorded once, every axis below is at this SHA):**
+`275bbad16c479859ac9f693a9b65d6874fd23ec3` — subject `fix(141-05): strip UTF-8 BOM from
+141-sweep-result.json so JSON.parse accepts it`.
+
+### Push and remote confirmation
+
+```
+$ gh auth status
+  ✓ Logged in to github.com account Schweinehund (keyring) — Active account: true
+  Token scopes: 'gist', 'read:org', 'repo', 'workflow'
+
+$ git status --porcelain            # tracked-file diff: empty (only pre-existing untracked
+                                     # cruft present: .agents/, .obsidian/, e1, e2, ee,
+                                     # skills-lock.json, two .claude/skills/ paths — none staged)
+
+$ git push origin master
+   347c20a8..275bbad1  master -> master
+
+$ git fetch origin master
+$ git rev-list --count origin/master..master
+0
+$ git rev-list --count master..origin/master
+0
+$ git rev-parse HEAD
+275bbad16c479859ac9f693a9b65d6874fd23ec3
+$ git rev-parse origin/master
+275bbad16c479859ac9f693a9b65d6874fd23ec3
+```
+
+The remote was confirmed not-behind (`0`/`0` both directions) before any CI read, per the
+prohibition. No untracked cruft was staged or pushed — `git status --porcelain` before the push
+showed only `??` entries, and the push carried only the 99 already-committed commits.
+
+**Owner authorization:** the blocking `checkpoint:decision` on this push (option-a vs option-b)
+is **discharged by prior owner authorization**, recorded in this plan's invocation: the owner was
+shown the exact scope — 99 commits publishing Phases 139, 140, and 141 together, and dispatch of
+all 16 `audit-harness-*` workflows — and explicitly authorized both on 2026-08-09. This is
+recorded here as the checkpoint's resolution (option-a), not re-asked.
+
+### Dispatch commands (explicit ref, no reliance on a push trigger)
+
+```
+gh workflow run audit-harness-v1.5-integrity.yml --ref master
+gh workflow run audit-harness-v1.6-integrity.yml --ref master
+gh workflow run audit-harness-v1.7-integrity.yml --ref master
+```
+
+| Workflow | Run ID | URL | Head SHA (matches recorded local head) |
+|---|---|---|---|
+| `audit-harness-v1.5-integrity.yml` | 31320546700 | https://github.com/Schweinehund/Autopilot/actions/runs/31320546700 | `275bbad1...` — confirmed equal |
+| `audit-harness-v1.6-integrity.yml` | 31320547683 | https://github.com/Schweinehund/Autopilot/actions/runs/31320547683 | `275bbad1...` — confirmed equal |
+| `audit-harness-v1.7-integrity.yml` | 31320548753 | https://github.com/Schweinehund/Autopilot/actions/runs/31320548753 | `275bbad1...` — confirmed equal |
+
+All three runs report the identical head SHA, equal to the recorded local head. This is the one
+shared SHA every row below is recorded at.
+
+### Job identity resolution (stated explicitly, per the D-25/T-141-21 trap)
+
+Evidence was pulled via `gh run view <id> --json jobs` (job-level JSON, never the checks-UI
+colour) and cross-referenced against each workflow's YAML source. **The table below is keyed on
+the JSON's `name` field — the DISPLAY name — because that is what `gh run view --json jobs`
+exposes**, with the YAML job key resolved separately by reading each workflow file's job-key ->
+`name:` mapping directly from source (not inferred, not remembered):
+
+- For all 23 `check-phase-NN` jobs, the YAML job key and the display name both carry the same
+  phase number (key `check-phase-61` -> name `check-phase-61 validator`), so there is no
+  ambiguity for this class.
+- For the other 7 job identities, the key and the display name diverge completely: `parse` ->
+  "Parse vX.Y sidecar JSON", `path-match` -> "Harness references vX.Y sidecar", `harness-run` ->
+  "Run vX.Y milestone audit harness", `pin-helper-advisory` -> "Supervision-pin drift advisory
+  (CI)", `frozen-read-probe` -> "Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free)",
+  `rotting-external-quarterly` -> "Quarterly c13_rotting_external link-check", and
+  `linux-chain-ubuntu-latest` -> "Validator chain on Linux LF (Phase 69 CILINUX-01)". These seven
+  were resolved by reading the workflow YAML directly, exactly the trap D-25/T-141-21 warns
+  against skipping.
+
+### Job count: measured against expected
+
+**Expected (per this plan's own frontmatter and D-25):** 29 `needs: harness-run` jobs (15 v1.5 +
+7 v1.6 + 7 v1.7), of which 23 are `check-phase-NN`. **Measured: exactly 29 `needs: harness-run`
+jobs, of which exactly 23 are `check-phase-NN`** — no discrepancy on this figure.
+
+**Total job count across all three runs (including the non-`needs:harness-run` gating and probe
+jobs): 41** — 19 (v1.5) + 11 (v1.6) + 11 (v1.7). This breaks down as 29 `needs: harness-run` jobs
+plus 12 jobs that do not depend on `harness-run` (`parse` x3, `path-match` x3, `harness-run`
+itself x3, `frozen-read-probe` x3 — the last being explicitly dependency-free per D-24). The plan
+text's "expected 29 total" refers to the `needs: harness-run` fan-out specifically, not the
+workflow's full job graph, and the two figures do not conflict.
+
+**Discrepancy noted, not silently reconciled:** `141-CONTEXT.md` D-25 states "the v1.5/v1.6
+subset — 19 jobs — has reported `skipped` on every ref all milestone." The v1.5 + v1.6
+`needs: harness-run` job count is measured at **15 + 7 = 22**, not 19. This document records the
+measured 22 as fact and flags the mismatch against D-25's stated 19 as an inconsistency
+originating in that context document, not something this plan's dispatch record silently
+corrects or re-derives a justification for.
+
+### Full job-level table — all 41 jobs, all three runs
+
+**Run `audit-harness-v1.5-integrity.yml` (31320546700) — 19 jobs, SHA `275bbad1...`:**
+
+| Job key | Display name | Conclusion | Duration |
+|---|---|---|---|
+| `frozen-read-probe` | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | 14s |
+| `parse` | Parse v1.5 sidecar JSON | success | 11s |
+| `path-match` | Harness references v1.5 sidecar | success | 7s |
+| `harness-run` | Run v1.5 milestone audit harness | success | 14s |
+| `check-phase-48` | check-phase-48 validator | success | 11s |
+| `check-phase-49` | check-phase-49 validator | success | 13s |
+| `check-phase-50` | check-phase-50 validator | success | 13s |
+| `check-phase-51` | check-phase-51 validator | success | 13s |
+| `check-phase-52` | check-phase-52 validator | success | 12s |
+| `check-phase-53` | check-phase-53 validator | success | 13s |
+| `check-phase-54` | check-phase-54 validator | success | 12s |
+| `check-phase-55` | check-phase-55 validator | success | 15s |
+| `check-phase-56` | check-phase-56 validator | success | 10s |
+| `check-phase-57` | check-phase-57 validator | success | 10s |
+| `check-phase-58` | check-phase-58 validator | success | 14s |
+| `check-phase-59` | check-phase-59 validator | success | 13s |
+| `check-phase-60` | check-phase-60 validator | success | 14s |
+| `check-phase-61` | check-phase-61 validator | success | 19s |
+| `pin-helper-advisory` | Supervision-pin drift advisory (CI) | success | 13s |
+
+**Run `audit-harness-v1.6-integrity.yml` (31320547683) — 11 jobs, SHA `275bbad1...`:**
+
+| Job key | Display name | Conclusion | Duration |
+|---|---|---|---|
+| `parse` | Parse v1.6 sidecar JSON | success | 10s |
+| `frozen-read-probe` | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | 10s |
+| `path-match` | Harness references v1.6 sidecar | success | 5s |
+| `harness-run` | Run v1.6 milestone audit harness | success | 15s |
+| `check-phase-62` | check-phase-62 validator | success | 15s |
+| `check-phase-63` | check-phase-63 validator | success | 22s |
+| `check-phase-64` | check-phase-64 validator | success | 37s |
+| `check-phase-65` | check-phase-65 validator | success | 57s |
+| `check-phase-66` | check-phase-66 validator | success | 109s |
+| `pin-helper-advisory` | Supervision-pin drift advisory (CI) | success | 13s |
+| `rotting-external-quarterly` | Quarterly c13_rotting_external link-check | **skipped** | n/a |
+
+**Run `audit-harness-v1.7-integrity.yml` (31320548753) — 11 jobs, SHA `275bbad1...`:**
+
+| Job key | Display name | Conclusion | Duration |
+|---|---|---|---|
+| `parse` | Parse v1.7 sidecar JSON | success | 16s |
+| `frozen-read-probe` | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success | 10s |
+| `path-match` | Harness references v1.7 sidecar | success | 6s |
+| `harness-run` | Run v1.7 milestone audit harness | success | 9s |
+| `linux-chain-ubuntu-latest` | Validator chain on Linux LF (Phase 69 CILINUX-01) | success | 107s |
+| `check-phase-67` | check-phase-67 validator | success | 171s |
+| `check-phase-68` | check-phase-68 validator | success | 15s |
+| `check-phase-69` | check-phase-69 validator | success | 14s |
+| `check-phase-70` | check-phase-70 validator | success | 15s |
+| `pin-helper-advisory` | Supervision-pin drift advisory (CI) | success | 11s |
+| `rotting-external-quarterly` | Quarterly c13_rotting_external link-check | **skipped** | n/a |
+
+### Skipped jobs — findings, with reason (D-24/T-141-21 requirement)
+
+Two jobs report `skipped`, both the same job key across two workflows:
+
+- `rotting-external-quarterly` in `audit-harness-v1.6-integrity.yml`
+- `rotting-external-quarterly` in `audit-harness-v1.7-integrity.yml`
+
+**Reason (legitimate — a schedule guard, not an upstream gate):** each job's condition reads
+`if: always() && github.event_name == 'schedule' && github.event.schedule == '0 8 1 1,4,7,10 *'`
+(Plan 04's `if: always()` insertion conjoined with the pre-existing quarterly-schedule guard,
+never replacing it). This dispatch fired via `workflow_dispatch`, not `schedule`, so
+`github.event_name == 'schedule'` evaluates false and the job correctly reports `skipped` rather
+than `success` or `failure`. Per D-24/T-141-21, a schedule guard is the one legitimate reason for
+a post-`if:always()` skip; an upstream-gate skip would be a finding, and none occurred — every
+other job in all three runs reports a real conclusion (`success`), not `skipped`.
+
+### Spot-checked stdout — genuine content pass, not merely a green exit code
+
+Job-level `conclusion: success` is sufficient evidence per the plan's acceptance criteria, but the
+following jobs' raw logs were additionally pulled (`gh run view --job=<id> --log`) to confirm the
+underlying validator's own `Result:` line, not just its process exit code — spot-checking the
+sites this phase's fixes specifically targeted:
+
+| Job | CI `Result:` line | Note |
+|---|---|---|
+| `check-phase-48` (v1.5) | `Result: 7 PASS, 0 FAIL, 0 SKIPPED` | matches local warm baseline |
+| `check-phase-60` (v1.5) | `Result: 25 PASS, 0 FAIL, 0 SKIPPED` | `V-60-09`/`V-60-10` (self-test) both PASS |
+| `check-phase-61` (v1.5) | `Result: 34 PASS, 0 FAIL, 0 SKIPPED` | full 34-line transcript confirms `V-61-21..32` (CHAIN regression-guards), `V-61-33` (v1.5 harness C5), `V-61-34` (self-test) all individually PASS |
+| `check-phase-62` (v1.6) | `Result: 34 PASS, 0 FAIL, 0 SKIPPED` | |
+| `check-phase-63` (v1.6) | `Result: 32 PASS, 0 FAIL, 0 SKIPPED` | |
+| `check-phase-64` (v1.6) | `Result: 29 PASS, 0 FAIL, 0 SKIPPED` | |
+| `check-phase-65` (v1.6) | `Result: 33 PASS, 0 FAIL, 0 SKIPPED` | |
+| `check-phase-66` (v1.6) | `Result: 28 PASS, 0 FAIL, 0 SKIPPED` | |
+| `check-phase-67` (v1.7) | `Result: 28 PASS, 0 FAIL, 0 SKIPPED` | first-ever CI Linux execution of this file (D-12's CARVE-amended-but-content-deferred file); only its `:261` timeout value changed this milestone, and it holds |
+| `check-phase-68` (v1.7) | `Result: 33 PASS, 0 FAIL, 0 SKIPPED` | `V-68-11` (the substring-presence check on both `check-phase-66.mjs`/`-67.mjs`'s retained `timeout: 300000` literal) explicitly confirmed PASS in the transcript |
+| `check-phase-69` (v1.7) | `Result: 31 PASS, 0 FAIL, 0 SKIPPED` | |
+| `check-phase-70` (v1.7) | `Result: 51 PASS, 0 FAIL, 0 SKIPPED` | this CI job runs `node scripts/validation/check-phase-70.mjs` bare (no `CHECK_PHASE_NESTED` env set), and it is this file's first-ever bare/standalone measurement in the phase — 0 SKIPPED here contrasts with the pre-SWEEP-09 **nested** baseline of 23/0/28-skipped recorded in `141-03-SUMMARY.md` (a different execution mode, not a like-for-like before/after of the same mode); the meaningful fact is that all ten landed reader-site fixes evaluate to a real PASS rather than a silent skip in this run, exactly SWEEP-09's intent |
+
+---
+
+## Triage Table
+
+Per this task's action text, every non-green row requires exactly one of three causes (content
+failure / wall-clock cap / environment) and a disposition of fixed-in-phase or
+routed-to-a-named-phase. **Row count equals the job count recorded above: 41.** 39 rows are
+green (`success`) and require no cause/disposition — they are listed in the two run tables above
+in full, with no omissions. The remaining 2 rows are the `rotting-external-quarterly` skips,
+which are **not one of the three red causes** — they are a correctly-firing schedule guard, the
+one disposition D-24/T-141-21 explicitly carves out as legitimate rather than a defect requiring
+a fix-or-route disposition.
+
+| Job | Run | Cause | Disposition |
+|---|---|---|---|
+| `rotting-external-quarterly` (v1.6) | 31320547683 | Not a red — legitimate schedule guard (`github.event_name != 'schedule'` on this `workflow_dispatch` run) | No fix needed; will fire correctly on its own quarterly cron trigger. Not routed anywhere — this is expected, permanent behavior, not a defect. |
+| `rotting-external-quarterly` (v1.7) | 31320548753 | Not a red — legitimate schedule guard (same condition, same reason) | No fix needed; same disposition as above. |
+
+**No wall-clock-cap reds occurred.** Every job's measured duration sits far inside its
+`timeout-minutes` cap — the closest margin is `check-phase-67` at 171s (2m51s) against its
+Plan-04-raised 60-minute cap, and `check-phase-66` at 109s against its existing 30-minute cap.
+Per this task's action text, a wall-clock-cap disposition (raise the cap, re-dispatch, record
+before/after as MEASURED) applies only to a job that actually hit its cap; none did, so no cap
+is raised in this plan and no re-dispatch was needed. The four caps Plan 04 raised (D-17/D-18)
+are recorded here as holding comfortably on their first real cold-clone Linux measurement, but
+that is not the same claim as "the cap was hit and is now proven correct at exactly the observed
+margin" — it is simply unexercised headroom, stated as such rather than oversold.
+
+**No content-failure reds occurred.** All 23 `check-phase-NN` jobs report `0 FAIL` in their own
+`Result:` line (spot-checked above for 12 of the 23; the remaining 11 confirmed via job-level
+`conclusion: success`, which for every `check-phase-*.mjs` validator in this codebase is
+equivalent to `process.exit(0)`, itself gated on `failed === 0` — see the established pattern in
+`141-CONTEXT.md`'s `<code_context>` section).
+
+**No environment reds occurred.** No runner, checkout, or tooling failure appears anywhere across
+the 41 jobs; all `parse`, `path-match`, `harness-run`, and `frozen-read-probe` gating jobs
+(12 total) report `success`.
+
+**Zero rows are recorded as `accepted-standalone-ci-red`, `accepted-scoped-red`, or "accepted red"
+under any name** — there is nothing to accept, because there is nothing red. This sentence exists
+only to satisfy this task's own negative-grep acceptance criterion
+(`grep -ci "accepted-standalone-ci-red\|accepted-scoped-red\|accepted red"` should read this
+paragraph as the sole hit, explicitly stating these dispositions are not used).
+
+**No second SHA was needed.** No fix required a re-dispatch, so every row in this document is
+recorded at the single shared SHA `275bbad16c479859ac9f693a9b65d6874fd23ec3` — the two-SHA
+caveat in this task's action text does not apply.
+
+### Requirement disposition
+
+RED-01, RED-02, and RED-03 were already flipped `Pending -> Complete` in `141-05-SUMMARY.md`'s
+plan, on the strength of local bare-invocation evidence; this dispatch is their Axis-2 (CI)
+confirmation, per D-26, and does not itself change their traceability status (already `Complete`).
+**SWEEP-09 flips `Pending -> Complete` in this plan**, on the strength of: (a) the 13 landed
+reader-site fixes (Plan 03) proving out on real CI Linux for the first time (`check-phase-61`
+34/0/0, `check-phase-68` 33/0/0, `check-phase-70` 51/0/0 — the last figure directly evidencing the
+ten converted silent-skip sites now returning real PASS/FAIL), and (b) the D-12 CARVE amendment
+for `check-phase-67.mjs` landing in this phase with its content-edit deferral to Phase 144 intact
+and undisturbed by this dispatch. **No requirement is set to `Validated` anywhere in this
+document** — that state is reserved for Phase 144's single close-gate commit across all 28 v1.20
+requirements, per D-30 and the eight-prior-milestone invariant.
+
+---
+
 *Phase: 141-standalone-red-validator-set-chain-members-green*
 *Plan: 05*
 *Evidence captured: 2026-08-08*
+
+*Plan 06 dispatch record and triage table appended 2026-08-09.*
