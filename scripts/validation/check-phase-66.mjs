@@ -315,7 +315,10 @@ for (let i = 0; i < CHAIN_PHASES.length; i++) {
         return { pass: true, skipped: true, detail: path + ' not present (graceful skip)' };
       }
       try {
-        execFileSync('node', [path], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() });
+        // v1.20 Phase 141 Plan 04 Task 2 (D-17): raised from 300000 -- the largest child in
+        // this slot (check-phase-65) measured ~335s warm, straddling the old cap; on timeout
+        // the catch below cannot classify ETIMEDOUT, so it returned a false content FAIL.
+        execFileSync('node', [path], { stdio: 'pipe', timeout: 1800000, cwd: process.cwd() });
         return { pass: true, detail: 'check-phase-' + phaseNum + ' exits 0' };
       } catch (err) {
         const stderr = err.stderr ? err.stderr.toString() : '';
