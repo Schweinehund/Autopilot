@@ -1,0 +1,123 @@
+﻿{
+    "cacheStateDeclared":  "warm",
+    "preSweepProcessCount":  0,
+    "postSweepProcessCount":  0,
+    "serialExecution":  true,
+    "ascendingOrder":  [
+                           48,
+                           60,
+                           61,
+                           62,
+                           63,
+                           64,
+                           65,
+                           66
+                       ],
+    "totalWallClockMs":  764807,
+    "results":  [
+                    {
+                        "member":  48,
+                        "script":  "scripts/validation/check-phase-48.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  289,
+                        "pass":  7,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 7 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  500,
+                        "anomaly":  false
+                    },
+                    {
+                        "member":  60,
+                        "script":  "scripts/validation/check-phase-60.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  5755,
+                        "pass":  25,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 25 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  10000,
+                        "anomaly":  false
+                    },
+                    {
+                        "member":  61,
+                        "script":  "scripts/validation/check-phase-61.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  12547,
+                        "pass":  34,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 34 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  22000,
+                        "anomaly":  false
+                    },
+                    {
+                        "member":  62,
+                        "script":  "scripts/validation/check-phase-62.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  24576,
+                        "pass":  34,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 34 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  43000,
+                        "anomaly":  false
+                    },
+                    {
+                        "member":  63,
+                        "script":  "scripts/validation/check-phase-63.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  46129,
+                        "pass":  32,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 32 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  84000,
+                        "anomaly":  false
+                    },
+                    {
+                        "member":  64,
+                        "script":  "scripts/validation/check-phase-64.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  94794,
+                        "pass":  29,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 29 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  171000,
+                        "anomaly":  false
+                    },
+                    {
+                        "member":  65,
+                        "script":  "scripts/validation/check-phase-65.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  194372,
+                        "pass":  33,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 33 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  335000,
+                        "anomaly":  false
+                    },
+                    {
+                        "member":  66,
+                        "script":  "scripts/validation/check-phase-66.mjs",
+                        "exitCode":  0,
+                        "wallClockMs":  386235,
+                        "pass":  28,
+                        "fail":  0,
+                        "skipped":  0,
+                        "tallyLine":  "Result: 28 PASS, 0 FAIL, 0 SKIPPED",
+                        "cacheState":  "warm",
+                        "expectedWarmMs":  665000,
+                        "anomaly":  false
+                    }
+                ]
+}
