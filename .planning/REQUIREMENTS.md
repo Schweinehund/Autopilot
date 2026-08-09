@@ -29,9 +29,9 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 
 ### Red — ten-member standalone-RED validator set (RED)
 
-- [ ] **RED-01**: The v1.5–v1.13 C5/C10 freshness assertions pass **without editing either glossary's metadata**
-- [ ] **RED-02**: `regenerate-supervision-pins.mjs --self-test` exits 0 via a classifier fix, with the v1.7 fixture unedited and the classifier not relaxed
-- [ ] **RED-03**: `check-phase-{48,60,61,62,63,64,65,66}` all exit 0 standalone
+- [x] **RED-01**: The v1.5–v1.13 C5/C10 freshness assertions pass **without editing either glossary's metadata**
+- [x] **RED-02**: `regenerate-supervision-pins.mjs --self-test` exits 0 via a classifier fix, with the v1.7 fixture unedited and the classifier not relaxed
+- [x] **RED-03**: `check-phase-{48,60,61,62,63,64,65,66}` all exit 0 standalone
 - [ ] **RED-04**: `check-phase-30` exits 0 standalone
 - [ ] **RED-05**: `check-phase-31` exits 0 standalone, including V-31-23 resolved via `resolveArchivedPhasePath(..., ['v1.3-phases'])`
 - [ ] **RED-06**: `check-phase-30` and `check-phase-31` are members of the apex `CHAIN_PHASES` array and execute under it
@@ -132,9 +132,9 @@ Which phases cover which requirements. Populated during roadmap creation.
 | SWEEP-06 | Phase 140 | Pending |
 | SWEEP-07 | Phase 140 | Complete |
 | SWEEP-08 | Phase 140 | Complete |
-| RED-01 | Phase 141 | Pending |
-| RED-02 | Phase 141 | Pending |
-| RED-03 | Phase 141 | Pending |
+| RED-01 | Phase 141 | Complete |
+| RED-02 | Phase 141 | Complete |
+| RED-03 | Phase 141 | Complete |
 | RED-04 | Phase 142 | Pending |
 | RED-05 | Phase 142 | Pending |
 | RED-06 | Phase 142 | Pending |

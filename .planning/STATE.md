@@ -4,8 +4,8 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
 status: executing
-stopped_at: Completed 141-04-PLAN.md
-last_updated: "2026-08-09T04:23:49.749Z"
+stopped_at: Completed 141-05-PLAN.md
+last_updated: "2026-08-09T04:56:46.727Z"
 last_activity: 2026-08-07
 last_activity_desc: Phase 141 execution resumed (wave continue)
 progress:
@@ -34,7 +34,7 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 141 — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-08-07 — Phase 141 execution resumed (wave continue)
 
@@ -290,6 +290,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 141 P02 | 35min | 2 tasks | 2 files |
 | Phase 141 P03 | ~50min | 3 tasks | 5 files |
 | Phase 141 P04 | 65min | 4 tasks | 9 files |
+| Phase 141 P05 | ~90min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -337,6 +338,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 141-03: SWEEP-09 lands 13 sites (check-phase-61 reader delegation + 12 chicken-and-egg call-sites in 68/70); check-phase-67's 7 sites deferred to Phase 144 per D-12. Discovered check-phase-70's nested tally diverges post-edit (23/5/23 vs pre-edit 23/0/28) -- 5 sites read documents genuinely absent at aa6de68 (authored later in Plan 70-05); recorded as the new RED-07 baseline for Phase 142, not silently reconciled, per the plan's own flagged_assumptions license.
 - [Phase ?]: 141-04: Halted Task 1 per its own halt instruction on non-zero-FAIL bare check-phase-68 (926520ms/exit1); owner ratified Task 1a scope extension aligning check-phase-68/69/70's subEnv to unconditional CHECK_PHASE_NESTED propagation (14-validator precedent), dropping the bare floor to 42633ms/exit0 (33/0/0) -- new Phase-142 RED-07 baseline
 - [Phase ?]: 141-04: Landed D-17 chain-spawn timeout raises (check-phase-66.mjs:318, check-phase-67.mjs:261, 300000->1800000ms) and enabled if:always() on all 29 CI fan-out jobs across audit-harness-v1.5/6/7-integrity.yml; sized check-phase-67's job cap to 60min (derived, unaffected by Task 1a) while leaving check-phase-68/69/70 at their existing 15min (now sufficient post-Task-1a, owner-ratified departure from the plan's original blanket-raise acceptance text)
+- [Phase ?]: 141-05: RED-01 nine-harness evidence re-executed this session (v1.5=12/0/0, v1.6-v1.13=15/0/0 each), zero glossary edits; RED-03 form (a) 141-sweep.ps1 ascending bare sweep of check-phase-{48,60,61,62,63,64,65,66} all exit 0/0-FAIL/non-zero-PASS warm-cache, form (b) check-phase-66.mjs --verbose all 18 V-66-CHAIN-N (48-65) PASS in composition; false-green trap + grandfather clause + Phase-142 handoff written into 141-EVIDENCE.md
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -365,8 +367,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-09T04:23:49.713Z
-Stopped at: Completed 141-04-PLAN.md
+Last session: 2026-08-09T04:56:46.688Z
+Stopped at: Completed 141-05-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 139`
 
