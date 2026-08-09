@@ -3,16 +3,16 @@ gsd_state_version: 1.0
 milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
-status: executing
-stopped_at: Completed 141-05-PLAN.md
-last_updated: "2026-08-09T04:56:46.727Z"
-last_activity: 2026-08-07
-last_activity_desc: Phase 141 execution resumed (wave continue)
+status: verifying
+stopped_at: Completed 141-06-PLAN.md -- Phase 141 all 6 plans complete, ready for phase verification
+last_updated: "2026-08-09T15:28:06.390Z"
+last_activity: 2026-08-09
+last_activity_desc: Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green
 progress:
   total_phases: 3
   completed_phases: 2
   total_plans: 17
-  completed_plans: 15
+  completed_plans: 16
 current_phase_name: Standalone-RED Validator Set — Chain Members Green
 ---
 
@@ -33,12 +33,12 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: 141 — EXECUTING
+Phase: 141 — COMPLETE (all 6 plans executed), awaiting phase verification
 Plan: 6 of 6
-Status: Ready to execute
-Last activity: 2026-08-07 — Phase 141 execution resumed (wave continue)
+Status: Phase complete — ready for verification
+Last activity: 2026-08-09 — Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green
 
-Progress: [█████████░] 88%
+Progress: [█████████░] 94%
 
 ## v1.20 Phase Dependency Summary
 
@@ -291,6 +291,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 141 P03 | ~50min | 3 tasks | 5 files |
 | Phase 141 P04 | 65min | 4 tasks | 9 files |
 | Phase 141 P05 | ~90min | 2 tasks | 3 files |
+| Phase 141 P06 | ~45min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -339,6 +340,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 141-04: Halted Task 1 per its own halt instruction on non-zero-FAIL bare check-phase-68 (926520ms/exit1); owner ratified Task 1a scope extension aligning check-phase-68/69/70's subEnv to unconditional CHECK_PHASE_NESTED propagation (14-validator precedent), dropping the bare floor to 42633ms/exit0 (33/0/0) -- new Phase-142 RED-07 baseline
 - [Phase ?]: 141-04: Landed D-17 chain-spawn timeout raises (check-phase-66.mjs:318, check-phase-67.mjs:261, 300000->1800000ms) and enabled if:always() on all 29 CI fan-out jobs across audit-harness-v1.5/6/7-integrity.yml; sized check-phase-67's job cap to 60min (derived, unaffected by Task 1a) while leaving check-phase-68/69/70 at their existing 15min (now sufficient post-Task-1a, owner-ratified departure from the plan's original blanket-raise acceptance text)
 - [Phase ?]: 141-05: RED-01 nine-harness evidence re-executed this session (v1.5=12/0/0, v1.6-v1.13=15/0/0 each), zero glossary edits; RED-03 form (a) 141-sweep.ps1 ascending bare sweep of check-phase-{48,60,61,62,63,64,65,66} all exit 0/0-FAIL/non-zero-PASS warm-cache, form (b) check-phase-66.mjs --verbose all 18 V-66-CHAIN-N (48-65) PASS in composition; false-green trap + grandfather clause + Phase-142 handoff written into 141-EVIDENCE.md
+- [Phase ?]: 141-06: First-ever CI fan-out dispatched at shared SHA 275bbad1 (owner pre-authorized 99-commit push publishing Phases 139-141 + all 16 workflow dispatch); all 41 jobs across 3 runs green (2 legitimate rotting-external-quarterly schedule-guard skips, zero content/timeout/environment reds); all 23 check-phase-NN validators including first-ever CI execution of check-phase-67 pass with 0 FAIL
+- [Phase ?]: 141-06: SWEEP-09 flipped Pending->Complete on the strength of the CI-Linux confirmation of the 13 landed reader-site fixes (check-phase-61 34/0/0, check-phase-68 33/0/0, check-phase-70 51/0/0 bare/standalone, first-ever measurement for -70); RED-01/02/03 already Complete from Plan 05. No requirement set to Validated -- reserved for Phase 144's single close-gate commit per D-30
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -367,12 +370,12 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-09T04:56:46.688Z
-Stopped at: Completed 141-05-PLAN.md
+Last session: 2026-08-09T15:28:06.339Z
+Stopped at: Completed 141-06-PLAN.md -- Phase 141 all 6 plans complete, ready for phase verification
 Resume file: None
-Next action: `/gsd-discuss-phase 139`
+Next action: Phase 141 verification, then `/gsd-discuss-phase 142`
 
 ## Operator Next Steps
 
-- Review the v1.20 ROADMAP.md phase structure and approve or request revision
-- Start Phase 139 with `/gsd-discuss-phase 139`
+- Verify Phase 141 (all 6 plans complete; first-ever CI fan-out green — see `141-06-SUMMARY.md`)
+- Start Phase 142 with `/gsd-discuss-phase 142` (Archival-Path Fix, Chain Adoption & Cold-Clone Threshold — RED-04/05/06/07, NEST-01)

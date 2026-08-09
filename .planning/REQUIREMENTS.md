@@ -21,7 +21,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 - [ ] **SWEEP-06**: The converted harnesses complete inside `check-phase-60.mjs`'s 60-second subprocess timeout, verified by measurement
 - [x] **SWEEP-07**: The v1.4 `TEMPLATE-SENTINEL` assertion has a named, recorded remedy distinct from frozen-awareness
 - [x] **SWEEP-08**: A `V14` pin exists with an explicitly chosen SHA and recorded rationale, satisfying the `frozen-at-close.mjs:94-96` gate
-- [ ] **SWEEP-09**: **[NEW REQUIREMENT, D-33, scoped to Phase 141]** **[SUCCESS-CRITERION AMENDMENT, D-28]** The remaining silent-swallow frozen-read sites (measured at roughly 38 `catch`-to-null/empty frozen-read sites across 20 validators, of which Phase 139's SWEEP-03 fixes 4) fail loud. Corrected census on the requirement's own reader-site unit: 19 `chicken-and-egg` return sites measured (`check-phase-67.mjs` 7, `check-phase-68.mjs` 2, `check-phase-70.mjs` 10) plus `check-phase-61.mjs:39-45`'s inline reader. Phase 141 lands 13 of them (61's 1, 68's 2, 70's 10); `check-phase-67.mjs`'s 7 defer to Phase 144, with its CARVE amendment landing in Phase 141 (D-11/D-12). Explicit note: `check-phase-61.mjs:39-45`'s `readAtV15CloseFor61` **cannot** be fixed at the library root — it carries its own inline reader, does not import `_lib/frozen-at-close.mjs` for these reads, is one of the 11 SWEEP-02 validators, and is pinned in place by `check-phase-68.mjs:202` `V-68-10`.
+- [x] **SWEEP-09**: **[NEW REQUIREMENT, D-33, scoped to Phase 141]** **[SUCCESS-CRITERION AMENDMENT, D-28]** The remaining silent-swallow frozen-read sites (measured at roughly 38 `catch`-to-null/empty frozen-read sites across 20 validators, of which Phase 139's SWEEP-03 fixes 4) fail loud. Corrected census on the requirement's own reader-site unit: 19 `chicken-and-egg` return sites measured (`check-phase-67.mjs` 7, `check-phase-68.mjs` 2, `check-phase-70.mjs` 10) plus `check-phase-61.mjs:39-45`'s inline reader. Phase 141 lands 13 of them (61's 1, 68's 2, 70's 10); `check-phase-67.mjs`'s 7 defer to Phase 144, with its CARVE amendment landing in Phase 141 (D-11/D-12). Explicit note: `check-phase-61.mjs:39-45`'s `readAtV15CloseFor61` **cannot** be fixed at the library root — it carries its own inline reader, does not import `_lib/frozen-at-close.mjs` for these reads, is one of the 11 SWEEP-02 validators, and is pinned in place by `check-phase-68.mjs:202` `V-68-10`.
 
 **Why SWEEP-01 is first and mandatory.** `readAtClose()` (`_lib/frozen-at-close.mjs:111`) is `execFileSync('git', ['show', sha + ':' + path])`, and `actions/checkout@v4` defaults to `fetch-depth: 1`. `[MEASURED]` `git clone --depth 1` followed by `git show ba2cbc0:docs/_glossary-linux.md` → `fatal: invalid object name`. The `FETCH-DEPTH-01` contract arrived at v1.7 and was never retrofitted to the three oldest workflows. Without SWEEP-01, SWEEP-05 converts 9 clean two-assertion failures into hard crashes.
 
@@ -151,7 +151,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | HARN-17 | Phase 144 | Pending |
 | HARN-18 | Phase 144 | Pending |
 | HARN-19 | Phase 144 | Pending |
-| SWEEP-09 | Phase 141 | Pending |
+| SWEEP-09 | Phase 141 | Complete |
 
 **Coverage:**
 
@@ -162,3 +162,4 @@ Which phases cover which requirements. Populated during roadmap creation.
 ---
 *Requirements defined: 2026-08-04*
 *Last updated: 2026-08-05 — Phase 139 Plan 01 amendment: SWEEP-01/02/03 re-worded to the ratified scope (D-13/D-14, D-24, D-30), new SWEEP-09 added and scoped to Phase 141 (D-33), requirement count 27 → 28 (28/28 mapped)*
+*2026-08-09 — Phase 141 Plan 06: SWEEP-09 flipped Pending → Complete after the first-ever CI fan-out dispatch (three runs, one shared SHA `275bbad1`, 41 jobs, zero content/timeout/environment reds — see `141-EVIDENCE.md`'s Dispatch Record and Triage Table). RED-01/RED-02/RED-03 were already Complete (Plan 05). No requirement in this milestone is Validated by this update — that state is reserved for Phase 144's single close-gate commit.*

@@ -29,7 +29,7 @@
 
 - [x] **Phase 139: Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair** - GOV-01/02 CARVE + `fetch-depth: 0` on the 3 depth-1 workflows + shallow-job repair + `lsTreeAtClose()` enumeration API — the hard prerequisite for all frozen-aware conversion work that follows (completed 2026-08-05)
 - [x] **Phase 140: Frozen-Aware Harness Conversion** - v1.4–v1.18 milestone-audit harnesses converted to read their own close-SHA corpus instead of live HEAD (v1.19 converts in Phase 144 with the V119 pin; the C17 live-HEAD leg in v1.15–v1.18 stays unconverted, owned by Phase 143), within the check-phase-60 60-second subprocess budget (completed 2026-08-07)
-- [ ] **Phase 141: Standalone-RED Validator Set — Chain Members Green** - check-phase-48/60/61/62-66 exit 0 standalone; freshness, self-test classifier, and cascade root causes closed
+- [x] **Phase 141: Standalone-RED Validator Set — Chain Members Green** - check-phase-48/60/61/62-66 exit 0 standalone; freshness, self-test classifier, and cascade root causes closed; first-ever CI fan-out dispatched at one shared SHA, all 41 jobs green (completed 2026-08-09)
 - [ ] **Phase 142: Archival-Path Fix, Chain Adoption & Cold-Clone Threshold** - check-phase-30/31 fixed and adopted into the apex chain; cold-clone apex cost gets a falsifiable threshold
 - [ ] **Phase 143: Link Coverage & Fence-Mask Unification** - corpus-wide relative-link + anchor checker green with zero accepted-violation baseline; fence-masking unified across all 15 call sites
 - [ ] **Phase 144: V119 Pin + 18th Path-A Lineage Bump + Terminal Close** - mandatory harness lineage bump + 3-axis re-audit + all 17 integrity workflows dispatched green — sole deliverable of this phase
@@ -149,7 +149,7 @@ Plans:
   3. `check-phase-48.mjs`, `check-phase-60.mjs`, `check-phase-61.mjs`, and `check-phase-62.mjs` through `check-phase-66.mjs` each exit 0 when invoked standalone (not nested), proven by 8 independent direct invocations, with the cascade classes (48→60→61→62..66's own `CHAIN-*` sub-checks) confirmed cleared as a consequence rather than patched individually (RED-03).
   4. **[NEW REQUIREMENT, D-33]** The remaining silent-swallow frozen-read sites — beyond the 4 SWEEP-03 already fixed in Phase 139 — fail loud, scoped to the ~19 validators already open for RED-03 in this phase (SWEEP-09). **[SUCCESS-CRITERION AMENDMENT, D-28]** Corrected census on the requirement's own unit — reader SITES, not validators: 19 `chicken-and-egg` return sites measured (`check-phase-67.mjs` 7, `check-phase-68.mjs` 2, `check-phase-70.mjs` 10) plus `check-phase-61.mjs:39-45`'s inline reader. Phase 141 lands 13 of them (61's 1, 68's 2, 70's 10); `check-phase-67.mjs`'s 7 defer to Phase 144, with its CARVE amendment landing in Phase 141 (D-11/D-12).
 
-**Plans**: 5/6 plans executed
+**Plans**: 6/6 plans executed
 
 Plans:
 
@@ -158,7 +158,7 @@ Plans:
 - [x] 141-03-PLAN.md — SWEEP-09: thirteen frozen-read sites fail loud (61 delegation + 68/70 call-sites) proven by a `file://` shallow-clone harness
 - [x] 141-04-PLAN.md — Timeout root causes: raise the two chain-spawn caps, `if: always()` on 29 fan-out jobs, raise the four exposed CI job caps
 - [x] 141-05-PLAN.md — Evidence: nine harnesses (RED-01) + eight ascending quiesced standalone runs and one verbose composition run (RED-03)
-- [ ] 141-06-PLAN.md — First-ever CI fan-out: push, dispatch at one shared SHA, triage every job, flip four requirements to Complete
+- [x] 141-06-PLAN.md — First-ever CI fan-out: push, dispatch at one shared SHA, triage every job, flip four requirements to Complete — all 41 jobs green (2 legitimate schedule-guard skips), zero content/timeout/environment reds
 
 **Discuss-phase flags**: **[SUCCESS-CRITERION AMENDMENT, D-28]** Corrected — RED-02's root cause and SWEEP-09's scope were both live forks requiring owner ratification, resolved 2026-08-07 by `/grill-me` plus a scored `/adversarial-review` that reversed three headline recommendations. Superseded original text: "None dominant — RED-02's method is already ruled (classifier context-window investigation, per path D-12; editing `v1.7-audit-allowlist.json` or relaxing the classifier's thresholds is barred)."
 
@@ -255,7 +255,7 @@ Plans:
 | 138. V118 Pin + 17th Path-A Lineage Bump + Terminal Close | v1.19 | 6/6 | Complete | 2026-08-04 |
 | 139. Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair | v1.20 | 6/6 | Complete | 2026-08-05 |
 | 140. Frozen-Aware Harness Conversion | v1.20 | 0/TBD | Not started | - |
-| 141. Standalone-RED Validator Set — Chain Members Green | v1.20 | 0/TBD | Not started | - |
+| 141. Standalone-RED Validator Set — Chain Members Green | v1.20 | 6/6 | Complete | 2026-08-09 |
 | 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 0/TBD | Not started | - |
 | 143. Link Coverage & Fence-Mask Unification | v1.20 | 0/TBD | Not started | - |
 | 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 0/TBD | Not started | - |
