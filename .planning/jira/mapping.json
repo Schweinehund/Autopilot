@@ -952,7 +952,7 @@
         },
         "141": {
           "issueKey": "RTS-785",
-          "status": "in_progress",
+          "status": "done",
           "name": "Standalone-RED Validator Set — Chain Members Green"
         },
         "142": {
