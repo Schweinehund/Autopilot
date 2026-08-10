@@ -962,7 +962,7 @@
         },
         "143": {
           "issueKey": "RTS-787",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Link Coverage & Fence-Mask Unification"
         },
         "144": {
