@@ -108,15 +108,47 @@ const checks = [
   // V-31-22: D-22 target specificity
   { id: 22, name: "V-31-22: Every retrofitted L1 link points to specific 14-17 file (not bare 00-index.md)", type: "link-graph", required: true,
     run() { const files = ['docs/l1-runbooks/16-ios-apns-expired.md','docs/l1-runbooks/17-ios-ade-not-starting.md','docs/l1-runbooks/18-ios-enrollment-restriction-blocking.md','docs/l1-runbooks/19-ios-license-invalid.md','docs/l1-runbooks/20-ios-device-cap-reached.md','docs/l1-runbooks/21-ios-compliance-blocked.md']; const bad = []; for (const f of files) { const c = readFile(f); if (!c) continue; const bareIndex = /\.\.\/l2-runbooks\/00-index\.md(?!#)/.test(c); if (bareIndex) bad.push(f); } return { pass: bad.length === 0, detail: bad.length ? `bare 00-index.md link in: ${bad.join(', ')}` : "all specific" }; } },
-  // V-31-23: D-23 prose diff against expected-d23.txt
-  { id: 23, name: "V-31-23: 06-compliance-policy.md line 182 matches expected-d23.txt", type: "structural", required: true,
-    run() { const c = readFile('docs/admin-setup-ios/06-compliance-policy.md'); const expected = readFile('.planning/phases/31-ios-l2-investigation/expected-d23.txt'); if (!c || !expected) return { pass: false, detail: "file or fixture missing" }; const lines = c.split('\n'); const actual = (lines[181] || '').trim(); const exp = expected.trim(); return { pass: actual === exp, detail: actual === exp ? "match" : `MISMATCH — actual[0:80]='${actual.slice(0,80)}' expected[0:80]='${exp.slice(0,80)}'` }; } },
+  // V-31-23: D-20/D-21/D-22/D-23 successor. The fixture directory was archived at milestone
+  // close (v1.3), so this check needs its own resolver call site -- the existing
+  // call inside parseInventory() (:33) resolves a different fixture, sits inside a different
+  // function, and returns a different discriminator shape (D-23). The target prose itself
+  // relocated during Phase 122's EEE reorganization (06-compliance-policy.md's Step-3 section
+  // was restructured; the sole surviving match now sits under "iOS-Specific Timing
+  // Considerations"), so a hardcoded zero-based line index is brittle by construction --
+  // replaced with a presence-only content anchor. PRESENCE, never uniqueness: the target file
+  // is EEE-enrolled (doc_type: Guide, ## Summary, ## Version History) and one of its own
+  // commits is a hand-authored Summary addition, so an "exactly once" clause would re-break
+  // the moment a future retrofit summarises or quotes the bullet, adding a failure mode
+  // without adding coverage (D-21). The prose is byte-identical to the fixture and unmoved in
+  // substance -- only relocated -- so the current location DOES satisfy D-23's original intent
+  // (D-22 ruling). Keeps the `_missing`-style discriminator: it distinguishes a resolver miss
+  // from a resolved-but-unreadable fixture in the detail string of the check being rewritten.
+  { id: 23, name: "V-31-23: expected-d23.txt prose present in 06-compliance-policy.md", type: "structural", required: true,
+    run() {
+      const targetRel = resolveArchivedPhasePath('31-ios-l2-investigation/expected-d23.txt', ['v1.3-phases']);
+      if (targetRel === null) return { pass: false, _missing: true, detail: "expected-d23.txt not resolvable at .planning/phases/ or .planning/milestones/v1.3-phases/" };
+      const expected = readFile(targetRel);
+      if (!expected) return { pass: false, _missing: true, detail: "expected-d23.txt resolved at " + targetRel + " but unreadable" };
+      const c = readFile('docs/admin-setup-ios/06-compliance-policy.md');
+      if (!c) return { pass: false, detail: "docs/admin-setup-ios/06-compliance-policy.md missing" };
+      const present = c.includes(expected.trim());
+      return { pass: present, detail: present ? "expected D-23 prose present in 06-compliance-policy.md" : "expected D-23 prose not found anywhere in the file" };
+    } },
   // V-31-24: D-25 Version History entries
   { id: 24, name: "V-31-24: Each of 9 retrofit files has 'Resolved Phase 31 L2 cross-references' in Version History", type: "structural", required: true,
     run() { const inv = parseInventory(); if (inv._missing) return { pass: false, detail: 'placeholder-inventory.json not resolvable at .planning/phases/ or .planning/milestones/v1.3-phases/' }; if (inv._parseError) return { pass: false, detail: 'inventory JSON invalid: ' + inv._parseError }; const files = [...new Set(inv.placeholders.map(p => p.file))]; const missing = []; for (const f of files) { const c = readFile(f); if (!c || !/Resolved Phase 31 L2 cross-references/.test(c)) missing.push(f); } return { pass: missing.length === 0, detail: missing.length ? `missing in: ${missing.join(', ')}` : "all present" }; } },
-  // V-31-25: D-27 L2 template enum
-  { id: 25, name: "V-31-25: L2 template platform enum includes iOS", type: "grep", required: true,
-    run() { const c = readFile('docs/_templates/l2-template.md'); if (!c) return { pass: false, detail: "l2-template.md missing" }; return { pass: /^platform: Windows \| macOS \| iOS \| all$/m.test(c), detail: "enum present" }; } },
+  // V-31-25: D-27 L2 template enum successor. The current check tests a frontmatter platform
+  // line for a pipe-enum that never lived there -- frontmatter carries a single value
+  // (Phase 114 D-07 replaced the pipe-list `platform:` placeholder with a single frontmatter
+  // value; a DIFFERENT cause from the sibling V-30-10 assertion's break commit, which is one
+  // whole milestone earlier, D-06/D-07). The pipe-enum lives in the template's author-guidance
+  // comment. Uses the IDENTICAL line-anchored regex check-phase-30.mjs's V-30-10 successor
+  // applies to l1-template.md, so the two validators stop diverging (D-07): a bare whole-file
+  // substring test and a line-anchored test have different bypass surfaces, which is how they
+  // drifted apart. Deliberately one leg only -- no "resolves in C17's D1 map" leg, which runs
+  // unconditionally on all 234 EEE-enrolled files and could never fail (D-08).
+  { id: 25, name: "V-31-25: l2-template.md author-guidance enum includes iOS", type: "structural", required: true,
+    run() { const c = readFile('docs/_templates/l2-template.md'); if (!c) return { pass: false, detail: "l2-template.md missing" }; const ok = /^\s*specific platform\. Valid values: Windows \| macOS \| iOS \| Android \| Linux \| all\s*$/m.test(c); return { pass: ok, detail: ok ? "iOS present in author-guidance enum" : "author-guidance enum line not found or iOS missing" }; } },
   // V-31-26: D-28 frontmatter on each new runbook
   { id: 26, name: "V-31-26: Each of 14-17 has platform/audience/last_verified/review_by frontmatter", type: "frontmatter", required: true,
     run() { const runbooks = resolveL2Runbooks(); const failures = []; for (const r of runbooks) { if (!r.path) { failures.push(`${r.num}: missing file`); continue; } const content = readFileSync(r.path, 'utf8').replace(/\r\n/g, '\n'); const first20 = content.split('\n').slice(0, 20).join('\n'); const fm = first20.match(/^---\n([\s\S]*?)\n---/m); if (!fm) { failures.push(`${r.num}: no frontmatter`); continue; } const f = fm[1]; if (!/^platform: iOS$/m.test(f)) failures.push(`${r.num}: platform`); if (!/^audience: L2$/m.test(f)) failures.push(`${r.num}: audience`); if (!/^last_verified:\s*\d{4}-\d{2}-\d{2}/m.test(f)) failures.push(`${r.num}: last_verified`); if (!/^review_by:\s*\d{4}-\d{2}-\d{2}/m.test(f)) failures.push(`${r.num}: review_by`); } return { pass: failures.length === 0, detail: failures.length ? failures.join('; ') : "all 4 files valid frontmatter" }; } },
