@@ -177,7 +177,15 @@ Plans:
   4. `check-phase-68.mjs`'s `V-68-04` (check-phase-31 remains one of the `archive-path` helper's 5 import call-sites) and `V-68-08` (the `_missing` discriminator marker) both still pass after the check-phase-31 edit (RED-07).
   5. Cold-clone apex cost is measured on Windows with a stated method (clone depth, cache state, Defender state, runner) and a recorded pass/fail threshold plus an explicit "if over threshold then mechanism X" rule — distinct from, and not re-collapsed with, the healthy within-apex curve (~17s, 93 PASS/0 FAIL/0 SKIPPED at HEAD) (NEST-01).
 
-**Plans**: TBD
+**Plans**: 6 plans
+
+Plans:
+- [ ] 142-01-PLAN.md — Commit 1: success-criterion amendments across ROADMAP/REQUIREMENTS/PROJECT/STATE + the archived band spec, and all twelve deferrals routed to `v1.20-DEFERRED-CLEANUP.md`
+- [ ] 142-02-PLAN.md — Commit 2: CARVE amendment, alone — `check-phase-138.mjs` onto Category 5 + the Phase-141 D-27/D-28 back-fill
+- [ ] 142-03-PLAN.md — `check-phase-30.mjs` exits 0 standalone: V-30-01, V-30-02 and V-30-10 successors plus the external-tool classifier arm (RED-04)
+- [ ] 142-04-PLAN.md — `check-phase-31.mjs` exits 0 standalone: V-31-23, V-31-25 and V-31-29 successors, with `check-phase-68`'s guards unchanged (RED-05, RED-07)
+- [ ] 142-05-PLAN.md — Chain adoption, last: `CHAIN_EXTRA` sidecar spliced into the apex loop, 95/0/0 (RED-06)
+- [ ] 142-06-PLAN.md — Cold-clone measurement, ratio threshold and two-tier mechanism X in `142-EVIDENCE.md` (NEST-01)
 
 **Discuss-phase flags**: Whether RED-04/RED-05 need a separate v1.3 pin (since `check-phase-30`/`check-phase-31` are v1.3-era and the `V14` pin from Phase 140 does not serve them) is a genuine design fork, not resolved at roadmap. The NEST-01 pass/fail threshold value is also not resolved at roadmap.
 
