@@ -957,7 +957,7 @@
         },
         "142": {
           "issueKey": "RTS-786",
-          "status": "in_progress",
+          "status": "done",
           "name": "Archival-Path Fix, Chain Adoption & Cold-Clone Threshold"
         },
         "143": {
