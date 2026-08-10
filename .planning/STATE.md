@@ -5,12 +5,12 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
 current_phase_name: Standalone-RED Validator Set — Chain Members Green
 status: verifying
-stopped_at: Phase 141 complete — verified 8/8
-last_updated: "2026-08-09T15:43:11.112Z"
+stopped_at: Phase 142 context gathered
+last_updated: "2026-08-10T17:29:25.100Z"
 last_activity: 2026-08-09
 last_activity_desc: "Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green"
 progress:
-  total_phases: 3
+  total_phases: 4
   completed_phases: 3
   total_plans: 17
   completed_plans: 17
@@ -370,9 +370,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-09T15:43:11.070Z
-Stopped at: Phase 141 complete — verified 8/8
-Resume file: .planning/phases/141-standalone-red-validator-set-chain-members-green/141-VERIFICATION.md
+Last session: 2026-08-10T17:29:24.689Z
+Stopped at: Phase 142 context gathered
+Resume file: .planning/phases/142-archival-path-fix-chain-adoption-cold-clone-threshold/142-CONTEXT.md
 Next action: Phase 141 verification, then `/gsd-discuss-phase 142`
 
 ## Operator Next Steps
