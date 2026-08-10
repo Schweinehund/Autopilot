@@ -128,7 +128,11 @@ Phase 142 (Archival-Path Fix, Chain Adoption & Cold-Clone Threshold)
   |             resolveArchivedPhasePath(..., ['v1.3-phases']) (RED-05)
   |         - check-phase-30/31 adopted into the apex CHAIN_PHASES array,
   |             ~+0.35s cost on a ~17s apex under CHECK_PHASE_NESTED
-  |             (RED-06)
+  |             (RED-06) [DISCHARGED, D-15] -- figure confirmed correct,
+  |             grandfathered by 141-EVIDENCE.md:276-281.
+  |             [SUCCESS-CRITERION AMENDMENT, D-11] -- mechanism is a
+  |             hand-authored CHAIN_EXTRA = [30, 31] sidecar excluded
+  |             from CHAIN_PHASES itself, not literal array entries
   |         - check-phase-68.mjs's V-68-04/V-68-08 regression guard still
   |             passes after the check-phase-31 edit (RED-07)
   |         - Cold-clone apex cost measured on Windows with a stated method
@@ -302,7 +306,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 **Carried-forward durable architectural decisions (from v1.14–v1.19):**
 
 - Sequential-on-main-tree per `use_worktrees:false`; atomic harness commits (Atom 1 + Atom 2); frozen-aware via `_lib/frozen-at-close.mjs`; non-current-milestone predecessor frozen surfaces BYTE-UNCHANGED except explicitly-scoped exceptions (D-00a doctrine) — v1.20 is the milestone that finally converts the broad predecessor cohort, per its own GOV-01 CARVE, not a blanket exception
-- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01: Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, held v1.12–v1.19); the within-apex curve is healthy (~17s, 93/0/0 at HEAD) — v1.20's NEST-01 (Phase 142) is the COLD-CLONE curve specifically, kept distinct per `v1.19-DEFERRED-CLEANUP.md:252`'s explicit non-collapse rule
+- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01: Linux GHA BOTH chain validators authoritative (D-03 corrected OS split, held v1.12–v1.19); the within-apex curve is healthy (~17s, 93/0/0 at HEAD) — v1.20's NEST-01 (Phase 142) is the COLD-CLONE curve specifically, kept distinct per `v1.19-DEFERRED-CLEANUP.md:252`'s explicit non-collapse rule. **[DISCHARGED, D-15]** The `~17s`, 93/0/0 figure above is CORRECT and grandfathered by `141-EVIDENCE.md:276-281` — not amended, only discharged as satisfied.
 - Adversarial-review invoked at discuss-phase for gray-area scoping decisions (per user memory `feedback_adversarial_review_preference.md`)
 - V117/V118 pin recovery precedent (carries to V119, Phase 144): recover the close-gate SHA via the subject-line pair discriminator `git log --all --format="%H|%s" | awk -F'|' '$2 ~ /vX\.Y/ && $2 ~ /MILESTONE CLOSE/'`, count=1 — NOT the dual-token `--grep --all-match` form, which returns multiple candidates
 - A later check-phase-N validator can pin an earlier check-phase's EXACT call-site string verbatim — grep before editing any frozen validator line (memory `reference_frozen_callsite_pinning.md`); this is the literal shape of GOV-02 and the RED-07/check-phase-68 guard
