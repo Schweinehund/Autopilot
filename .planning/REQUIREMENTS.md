@@ -64,7 +64,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 
 ### Nest — cold-clone cost (NEST)
 
-- [ ] **NEST-01**: Cold-clone apex cost at `[48..138]` **[SUCCESS-CRITERION AMENDMENT, D-25]** (`[48..138]` is a drafting error at this ratified site, OWNER-RATIFIED — corrected to `[48..143]`: one validator per phase over an unbroken 30, 31, 48 through 138 sequence, the `[48..N-1]` invariant explicit in every prior apex's source, v1.20 spanning phases 139 through 144, so Phase 144's apex is `check-phase-144` at `[48..143]`, 96 entries) is measured on Windows with a stated method (clone depth, cache state, Defender state, runner), a recorded pass/fail threshold, and an explicit "if over threshold then mechanism X" rule
+- [x] **NEST-01**: Cold-clone apex cost at `[48..138]` **[SUCCESS-CRITERION AMENDMENT, D-25]** (`[48..138]` is a drafting error at this ratified site, OWNER-RATIFIED — corrected to `[48..143]`: one validator per phase over an unbroken 30, 31, 48 through 138 sequence, the `[48..N-1]` invariant explicit in every prior apex's source, v1.20 spanning phases 139 through 144, so Phase 144's apex is `check-phase-144` at `[48..143]`, 96 entries) is measured on Windows with a stated method (clone depth, cache state, Defender state, runner), a recorded pass/fail threshold, and an explicit "if over threshold then mechanism X" rule
 
 **Scoped cold-clone-only.** Per `v1.19-DEFERRED-CLEANUP.md:252` the cold-clone and within-apex curves are distinct and must not be re-collapsed. The within-apex curve is healthy: `[MEASURED]` `check-phase-138.mjs` runs all 90 children in ~**17s, 93 PASS / 0 FAIL / 0 SKIPPED** on Windows at HEAD. The threshold and decision rule are mandatory so the phase can carry falsifiable success criteria at plan time — "measure then decide" without one is how this item survived six milestones. **[DISCHARGED, D-15]** The `~17s`, 93/0/0 within-apex figure above is CORRECT and grandfathered by `141-EVIDENCE.md:276-281` — not amended, only discharged as satisfied. **[SUCCESS-CRITERION AMENDMENT, D-27/D-28/D-29]** The stated method restores all four named elements (clone depth — full/`fetch-depth: 0` only, since a depth-1 clone fatals `readAtClose()` per SWEEP-01 — cache state, Defender state, runner) plus tree identity and an explicit `--verbose`-or-not declaration; the threshold is a ratio at ≥8x a declared same-tree same-session warm median (n≥3), with the absolute "50% of the 30-minute CI cap" leg DROPPED (no Windows CI runner exists to bind it to — every job is `ubuntu-latest`); mechanism X is two-tier (in-phase advisory per-child marginal-cost publication, plus a structural tier attributed to CARVE-1/SWEEP-01, not double-booked into Phase 142), and the timeout-raise leg is withdrawn because it moves zero wall-clock cost. Per D-30 the disposition is Advisory and does not breach the milestone bar.
 
@@ -145,7 +145,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | LINK-04 | Phase 143 | Pending |
 | LINK-05 | Phase 143 | Pending |
 | LINK-06 | Phase 143 | Pending |
-| NEST-01 | Phase 142 | Pending |
+| NEST-01 | Phase 142 | Complete |
 | GOV-01 | Phase 139 | Complete |
 | GOV-02 | Phase 139 | Complete |
 | HARN-17 | Phase 144 | Pending |

@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
 current_phase_name: Standalone-RED Validator Set — Chain Members Green
 status: verifying
-stopped_at: Completed 142-05-PLAN.md
-last_updated: "2026-08-10T19:23:35.308Z"
+stopped_at: Completed 142-06-PLAN.md
+last_updated: "2026-08-10T19:38:05.914Z"
 last_activity: 2026-08-09
 last_activity_desc: "Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green"
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 23
-  completed_plans: 22
+  completed_plans: 23
 ---
 
 # Project State
@@ -38,7 +38,7 @@ Plan: 6 of 6
 Status: Phase complete — ready for verification
 Last activity: 2026-08-09 — Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green
 
-Progress: [█████████░] 91%
+Progress: [██████████] 100%
 
 ## v1.20 Phase Dependency Summary
 
@@ -301,6 +301,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 142 P03 | 25min | 3 tasks | 2 files |
 | Phase 142 P04 | 26min | 3 tasks | 2 files |
 | Phase 142 P05 | 35min | 2 tasks | 2 files |
+| Phase 142 P06 | 45 min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -360,6 +361,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: V-31-29 required BOTH the wc -l metric fix AND the documented-target band re-derivation (+31 EEE-retrofit delta, then re-applied +/-15%-per-endpoint rule) -- RESEARCH.md's originally-recommended KNOWN_EXCEPTION/continue exemption was rejected as vacuous (D-24)
 - [Phase ?]: V-31-23 needs its own resolveArchivedPhasePath call site (not a reuse of parseInventory()'s) and a presence-only content anchor (never uniqueness) replacing the brittle lines[181] index, since the target prose relocated during Phase 122's EEE reorganization but is byte-identical (D-20/D-21/D-22/D-23)
 - [Phase ?]: RED-06: CHAIN_EXTRA=[30,31] sidecar adopts check-phase-30/31 into apex chain, excluded from arithmetic span guards (D-11); apex flips 93->95 PASS
+- [Phase ?]: NEST-01: cold-clone/warm ratio measured at 1.333x (22720ms/17044ms, n=3 each, full-depth clone), well under the 8x fail threshold — PASS
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -388,8 +390,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-10T19:23:35.256Z
-Stopped at: Completed 142-05-PLAN.md
+Last session: 2026-08-10T19:38:05.856Z
+Stopped at: Completed 142-06-PLAN.md
 Resume file: None
 Next action: Phase 141 verification, then `/gsd-discuss-phase 142`
 
