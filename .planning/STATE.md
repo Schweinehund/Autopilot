@@ -4,16 +4,16 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
 current_phase_name: Standalone-RED Validator Set — Chain Members Green
-status: executing
-stopped_at: Phase 142 context gathered
-last_updated: "2026-08-10T18:22:06.816Z"
+status: verifying
+stopped_at: Completed 142-01-PLAN.md
+last_updated: "2026-08-10T18:39:06.343Z"
 last_activity: 2026-08-09
 last_activity_desc: "Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green"
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 23
-  completed_plans: 17
+  completed_plans: 18
 ---
 
 # Project State
@@ -35,10 +35,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 Phase: 141 — COMPLETE (all 6 plans executed), awaiting phase verification
 Plan: 6 of 6
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-09 — Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green
 
-Progress: [█████████░] 94%
+Progress: [████████░░] 78%
 
 ## v1.20 Phase Dependency Summary
 
@@ -296,6 +296,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 141 P04 | 65min | 4 tasks | 9 files |
 | Phase 141 P05 | ~90min | 2 tasks | 3 files |
 | Phase 141 P06 | ~45min | 2 tasks | 4 files |
+| Phase 142 P01 | ~25min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -346,6 +347,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 141-05: RED-01 nine-harness evidence re-executed this session (v1.5=12/0/0, v1.6-v1.13=15/0/0 each), zero glossary edits; RED-03 form (a) 141-sweep.ps1 ascending bare sweep of check-phase-{48,60,61,62,63,64,65,66} all exit 0/0-FAIL/non-zero-PASS warm-cache, form (b) check-phase-66.mjs --verbose all 18 V-66-CHAIN-N (48-65) PASS in composition; false-green trap + grandfather clause + Phase-142 handoff written into 141-EVIDENCE.md
 - [Phase ?]: 141-06: First-ever CI fan-out dispatched at shared SHA 275bbad1 (owner pre-authorized 99-commit push publishing Phases 139-141 + all 16 workflow dispatch); all 41 jobs across 3 runs green (2 legitimate rotting-external-quarterly schedule-guard skips, zero content/timeout/environment reds); all 23 check-phase-NN validators including first-ever CI execution of check-phase-67 pass with 0 FAIL
 - [Phase ?]: 141-06: SWEEP-09 flipped Pending->Complete on the strength of the CI-Linux confirmation of the 13 landed reader-site fixes (check-phase-61 34/0/0, check-phase-68 33/0/0, check-phase-70 51/0/0 bare/standalone, first-ever measurement for -70); RED-01/02/03 already Complete from Plan 05. No requirement set to Validated -- reserved for Phase 144's single close-gate commit per D-30
+- [Phase ?]: 142-01: Commit message must never literally quote v1.20-CARVE.md in prose — git show --name-only HEAD includes the message body, and the plan's own CARVE-exclusion check greps that combined output
+- [Phase ?]: 142-01: markdown table separator rows need a space after each leading pipe (| --- | not |---|) when a downstream grep -c '^| ' acceptance check counts the separator as a row
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -374,9 +377,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-10T17:29:24.689Z
-Stopped at: Phase 142 context gathered
-Resume file: .planning/phases/142-archival-path-fix-chain-adoption-cold-clone-threshold/142-CONTEXT.md
+Last session: 2026-08-10T18:39:06.286Z
+Stopped at: Completed 142-01-PLAN.md
+Resume file: None
 Next action: Phase 141 verification, then `/gsd-discuss-phase 142`
 
 ## Operator Next Steps
