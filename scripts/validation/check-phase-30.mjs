@@ -67,7 +67,14 @@ const checks = [
       const content = readFile("docs/decision-trees/00-initial-triage.md");
       if (content === null) return { pass: false, detail: "File does not exist: docs/decision-trees/00-initial-triage.md" };
       const mermaidBlocks = [];
-      const re = new RegExp("```mermaid\n([\s\S]*?)\n```", "g");
+      // V-30-02 supersedes the double-quoted-string RegExp construction: `\s`/`\S` are not
+      // recognized JS string escapes inside a double-quoted literal, so they collapsed to the
+      // bare letters `s`/`S`, compiling the intended any-character class as `[sS]`. blockText has
+      // therefore always been '' -- this check has never inspected a real Mermaid block since
+      // Phase 30, and the target file has carried no Mermaid fence since Phase 122's STD-04
+      // conversion, so it is doubly vacuous. A regex literal sidesteps the double-escaping trap.
+      // RED-04's scope extended to cover this via the SC#1 amendment landed in Commit 1 (D-35).
+      const re = /```mermaid\n([\s\S]*?)\n```/g;
       let m;
       while ((m = re.exec(content)) !== null) mermaidBlocks.push(m[1]);
       const blockText = mermaidBlocks.join("\n");
