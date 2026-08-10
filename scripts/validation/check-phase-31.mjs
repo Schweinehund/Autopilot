@@ -167,8 +167,8 @@ const checks = [
   // 15/16/17 grew +21/+19/+13 and their documented targets are equally stale, but their bounds
   // still hold, so they are annotated-not-changed (D-23 discipline; only runbook 14's interval
   // changed). The assertion stays live: no per-runbook exemption, no early loop exit keyed on
-  // a runbook number -- it still fails if runbook 14 collapses or explodes (D-24, withdrawn
-  // KNOWN_EXCEPTION mechanism).
+  // a runbook number -- it still fails if runbook 14 collapses or explodes (D-24; the
+  // originally-proposed hardcoded per-file skip mechanism was rejected as vacuous).
   { id: 29, name: "V-31-29: Runbook line counts within ±15% of targets (wc -l)", type: "structural", required: false,
     run() { const bounds = { '14': [162, 242], '15': [187, 322], '16': [161, 241], '17': [170, 287] }; const runbooks = resolveL2Runbooks(); const failures = []; for (const r of runbooks) { if (!r.path) { failures.push(`${r.num}: missing`); continue; } const c = readFileSync(r.path, 'utf8').replace(/\r\n/g, '\n'); const n = c.split('\n').length - 1; const [lo, hi] = bounds[r.num]; if (n < lo || n > hi) failures.push(`${r.num}: ${n} lines (bound ${lo}-${hi})`); } return { pass: failures.length === 0, detail: failures.length ? failures.join('; ') : "all within bounds" }; } },
   // V-31-30: cross-ref anchor integrity (simplified — external check)
