@@ -48,16 +48,31 @@ function resolveRunbooks() {
 }
 
 const checks = [
+  // V-30-01 supersedes the pre-conversion Mermaid-diamond count: Phase 122 converted this file
+  // from Mermaid to a text decision table under STD-04 (07-ios-triage.md:81 records the change,
+  // "converted Mermaid decision graph to the pre-existing Routing Verification decision table").
+  // The old regex matched Mermaid `IOSn{...}` diamond syntax, which no longer exists -- count was
+  // always 0. Successor asserts the Routing Verification table itself (>=3 data rows, scoped to
+  // the section between its heading and the next), the three IOS decision-node tokens, and the
+  // file's own LOCKED literal. The ROW COUNT is the leg carrying the anti-vacuity weight (D-04):
+  // the rejected alternative -- a distinct IOS\d+ token count -- passes with the entire table
+  // deleted, because all four token occurrences sit on two prose lines (:33, :37) and the table
+  // cells contain none. Assert the file's actual literal, not the generic STD-04 "LOCKED — N
+  // leaves" pattern (D-05) -- this corpus carries six incompatible LOCKED shapes across 36 files.
   {
-    id: 1, name: "Decision tree <=5 decision-diamond nodes",
-    type: "file-match-count", required: true,
+    id: 1, name: "07-ios-triage.md Routing Verification table has >=3 rows with IOS1/IOS2/IOS3 and the LOCKED literal",
+    type: "structural", required: true,
     run() {
       const content = readFile("docs/decision-trees/07-ios-triage.md");
       if (content === null) return { pass: false, detail: "File does not exist: docs/decision-trees/07-ios-triage.md" };
-      const matches = content.match(/^\s*IOS\d+\{/gm) || [];
-      const count = matches.length;
-      if (count >= 1 && count <= 5) return { pass: true, detail: count + " decision-diamond node(s) found" };
-      return { pass: false, detail: "Expected 1-5 decision-diamond nodes, found " + count };
+      const hasLocked = content.includes("**LOCKED — 23 (nodes + labeled edges)**");
+      const hasIOS = ["IOS1", "IOS2", "IOS3"].every((tok) => content.includes(tok));
+      const section = content.split(/^## Routing Verification\s*$/m)[1] || "";
+      const beforeNextHeading = section.split(/^## /m)[0];
+      const tableLines = beforeNextHeading.match(/^\|.*\|\s*$/gm) || [];
+      const rowCount = Math.max(0, tableLines.length - 2); // minus header + separator
+      const pass = hasLocked && hasIOS && rowCount >= 3;
+      return { pass, detail: "LOCKED=" + hasLocked + " IOS-tokens=" + hasIOS + " table-rows=" + rowCount };
     }
   },
   {
@@ -189,14 +204,23 @@ const checks = [
       return { pass: false, detail: "Expected exactly 1 occurrence, found " + count };
     }
   },
+  // V-30-10 supersedes the pre-Android enum removed at 600eabd6 (Phase 40-01, v1.4) -- NOT Phase
+  // 114 D-07, which is the correct cause for the sibling V-31-25 assertion only (D-06). The bare
+  // whole-file substring test can never match again because Android | Linux now sits between iOS
+  // and all. Successor is line-anchored on the author-guidance comment line, identical regex to
+  // V-31-25's l2-template.md successor so the two validators stop diverging (D-07). One leg only
+  // -- deliberately NOT asserting that the value resolves in C17's D1 platform map, which runs
+  // unconditionally on all 234 enrolled files and could never fail (D-08). Asserting on this
+  // Pandoc-stripped comment is WEAKER than the pre-D-07 live frontmatter affordance, not
+  // equivalent coverage.
   {
-    id: 10, name: "l1-template.md contains Windows | macOS | iOS | all",
-    type: "file-contains", required: true,
+    id: 10, name: "l1-template.md author-guidance enum includes iOS",
+    type: "structural", required: true,
     run() {
       const content = readFile("docs/_templates/l1-template.md");
       if (content === null) return { pass: false, detail: "File does not exist: docs/_templates/l1-template.md" };
-      if (content.includes("Windows | macOS | iOS | all")) return { pass: true, detail: "Enum string present" };
-      return { pass: false, detail: "\"Windows | macOS | iOS | all\" not found in l1-template.md" };
+      const ok = /^\s*specific platform\. Valid values: Windows \| macOS \| iOS \| Android \| Linux \| all\s*$/m.test(content);
+      return { pass: ok, detail: ok ? "iOS present in author-guidance enum" : "author-guidance enum line not found or iOS missing" };
     }
   },
   {
@@ -280,7 +304,8 @@ const checks = [
           const stderr = err.stderr ? err.stderr.toString() : "";
           const isMissing = err.code === "ENOENT" || err.status === 127
             || stderr.includes("not found") || stderr.includes("Could not resolve")
-            || stderr.includes("npm error could not determine executable");
+            || stderr.includes("npm error could not determine executable")
+            || stderr.includes("npm error npx canceled due to missing packages and no YES option");
           results.linkCheck = isMissing ? "SKIPPED" : "FAIL";
         }
       } else { results.linkCheck = "SKIPPED"; }
@@ -293,7 +318,8 @@ const checks = [
           const stderr = err.stderr ? err.stderr.toString() : "";
           const isMissing = err.code === "ENOENT" || err.status === 127
             || stderr.includes("not found") || stderr.includes("Could not resolve")
-            || stderr.includes("npm error could not determine executable");
+            || stderr.includes("npm error could not determine executable")
+            || stderr.includes("npm error npx canceled due to missing packages and no YES option");
           results.mermaid = isMissing ? "SKIPPED" : "FAIL";
         }
       } else { results.mermaid = "SKIPPED"; }
