@@ -180,12 +180,33 @@ Plans:
 **Plans**: 6 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 142-01-PLAN.md — Commit 1: success-criterion amendments across ROADMAP/REQUIREMENTS/PROJECT/STATE + the archived band spec, and all twelve deferrals routed to `v1.20-DEFERRED-CLEANUP.md`
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 142-02-PLAN.md — Commit 2: CARVE amendment, alone — `check-phase-138.mjs` onto Category 5 + the Phase-141 D-27/D-28 back-fill
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 142-03-PLAN.md — `check-phase-30.mjs` exits 0 standalone: V-30-01, V-30-02 and V-30-10 successors plus the external-tool classifier arm (RED-04)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 142-04-PLAN.md — `check-phase-31.mjs` exits 0 standalone: V-31-23, V-31-25 and V-31-29 successors, with `check-phase-68`'s guards unchanged (RED-05, RED-07)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 142-05-PLAN.md — Chain adoption, last: `CHAIN_EXTRA` sidecar spliced into the apex loop, 95/0/0 (RED-06)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
 - [ ] 142-06-PLAN.md — Cold-clone measurement, ratio threshold and two-tier mechanism X in `142-EVIDENCE.md` (NEST-01)
+
+**Cross-cutting constraints:**
+
+- `git status --porcelain docs/` prints nothing — zero corpus edits
 
 **Discuss-phase flags**: Whether RED-04/RED-05 need a separate v1.3 pin (since `check-phase-30`/`check-phase-31` are v1.3-era and the `V14` pin from Phase 140 does not serve them) is a genuine design fork, not resolved at roadmap. The NEST-01 pass/fail threshold value is also not resolved at roadmap.
 
