@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
 current_phase_name: Standalone-RED Validator Set — Chain Members Green
 status: verifying
-stopped_at: Completed 142-03-PLAN.md
-last_updated: "2026-08-10T18:57:23.738Z"
+stopped_at: Completed 142-04-PLAN.md
+last_updated: "2026-08-10T19:11:12.841Z"
 last_activity: 2026-08-09
 last_activity_desc: "Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green"
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 23
-  completed_plans: 20
+  completed_plans: 21
 ---
 
 # Project State
@@ -38,7 +38,7 @@ Plan: 6 of 6
 Status: Phase complete — ready for verification
 Last activity: 2026-08-09 — Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green
 
-Progress: [█████████░] 87%
+Progress: [█████████░] 91%
 
 ## v1.20 Phase Dependency Summary
 
@@ -299,6 +299,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 142 P01 | ~25min | 3 tasks | 7 files |
 | Phase 142 P02 | ~9min | 2 tasks | 1 files |
 | Phase 142 P03 | 25min | 3 tasks | 2 files |
+| Phase 142 P04 | 26min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -355,6 +356,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 142-02: Rationale comment above the new check-phase-138.mjs glob line repeats the filename literally once (matching the check-phase-67.mjs precedent), satisfying the plan's grep -c == 2 acceptance criterion by design
 - [Phase ?]: V-30-01's row-count leg carries the anti-vacuity weight for RED-04 (D-04) — the token-count leg alone would pass with the Routing Verification table deleted
 - [Phase ?]: V-30-10's root cause is 600eabd6 (Phase 40-01, v1.4 Android enum addition), not Phase 114 D-07 (D-06)
+- [Phase ?]: V-31-29 required BOTH the wc -l metric fix AND the documented-target band re-derivation (+31 EEE-retrofit delta, then re-applied +/-15%-per-endpoint rule) -- RESEARCH.md's originally-recommended KNOWN_EXCEPTION/continue exemption was rejected as vacuous (D-24)
+- [Phase ?]: V-31-23 needs its own resolveArchivedPhasePath call site (not a reuse of parseInventory()'s) and a presence-only content anchor (never uniqueness) replacing the brittle lines[181] index, since the target prose relocated during Phase 122's EEE reorganization but is byte-identical (D-20/D-21/D-22/D-23)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -383,8 +386,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-10T18:57:23.682Z
-Stopped at: Completed 142-03-PLAN.md
+Last session: 2026-08-10T19:11:12.787Z
+Stopped at: Completed 142-04-PLAN.md
 Resume file: None
 Next action: Phase 141 verification, then `/gsd-discuss-phase 142`
 
