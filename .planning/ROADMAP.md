@@ -177,7 +177,7 @@ Plans:
   4. `check-phase-68.mjs`'s `V-68-04` (check-phase-31 remains one of the `archive-path` helper's 5 import call-sites) and `V-68-08` (the `_missing` discriminator marker) both still pass after the check-phase-31 edit (RED-07).
   5. **[DISCHARGED, D-15]** The `~17s` within-apex reference figure below is CORRECT and grandfathered by `141-EVIDENCE.md:276-281` — not amended, only discharged as satisfied. **[SUCCESS-CRITERION AMENDMENT, D-27]** Restoring all four named method elements: clone depth (full / `fetch-depth: 0` is the ONLY admissible value — a depth-1 clone fatals `readAtClose()` per SWEEP-01), cache state, Defender state, and runner — plus tree identity and an explicit `--verbose`-or-not declaration as additional declared variables. **[SUCCESS-CRITERION AMENDMENT, D-28]** The threshold is fixed as a RATIO at 8x or greater against a declared same-tree same-session warm median at n of 3 or more; the absolute "50% of the 30-minute CI cap" leg is DROPPED — it binds a Windows measurement to a Linux job cap on a runner class that does not exist (all CI jobs are `ubuntu-latest`). **[SUCCESS-CRITERION AMENDMENT, D-29]** Mechanism X is two-tier: in-phase advisory per-child marginal-cost publication, plus a structural tier attributed to CARVE-1/SWEEP-01 and explicitly NOT double-booked into Phase 142; the timeout-raise leg is withdrawn because a timeout raise moves zero wall-clock cost and can never satisfy a cost threshold. Per D-30 the disposition is Advisory and does not breach the milestone bar, since the two dispositions the bar requires deleting (`ACCEPTED-STANDALONE-CI-RED`, `ACCEPTED-SCOPED-RED`) are named elsewhere and this item is neither. Cold-clone apex cost is measured on Windows with a stated method (clone depth, cache state, Defender state, runner) and a recorded pass/fail threshold plus an explicit "if over threshold then mechanism X" rule — distinct from, and not re-collapsed with, the healthy within-apex curve (~17s, 93 PASS/0 FAIL/0 SKIPPED at HEAD) (NEST-01).
 
-**Plans**: 1/6 plans executed
+**Plans**: 2/6 plans executed
 
 Plans:
 **Wave 1**
@@ -186,7 +186,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 142-02-PLAN.md — Commit 2: CARVE amendment, alone — `check-phase-138.mjs` onto Category 5 + the Phase-141 D-27/D-28 back-fill
+- [x] 142-02-PLAN.md — Commit 2: CARVE amendment, alone — `check-phase-138.mjs` onto Category 5 + the Phase-141 D-27/D-28 back-fill
 
 **Wave 3** *(blocked on Wave 2 completion)*
 

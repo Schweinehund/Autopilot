@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 141
 current_phase_name: Standalone-RED Validator Set — Chain Members Green
 status: verifying
-stopped_at: Completed 142-01-PLAN.md
-last_updated: "2026-08-10T18:39:06.343Z"
+stopped_at: Completed 142-02-PLAN.md
+last_updated: "2026-08-10T18:46:45.977Z"
 last_activity: 2026-08-09
 last_activity_desc: "Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green"
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 23
-  completed_plans: 18
+  completed_plans: 19
 ---
 
 # Project State
@@ -38,7 +38,7 @@ Plan: 6 of 6
 Status: Phase complete — ready for verification
 Last activity: 2026-08-09 — Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green
 
-Progress: [████████░░] 78%
+Progress: [████████░░] 83%
 
 ## v1.20 Phase Dependency Summary
 
@@ -297,6 +297,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 141 P05 | ~90min | 2 tasks | 3 files |
 | Phase 141 P06 | ~45min | 2 tasks | 4 files |
 | Phase 142 P01 | ~25min | 3 tasks | 7 files |
+| Phase 142 P02 | ~9min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -349,6 +350,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 141-06: SWEEP-09 flipped Pending->Complete on the strength of the CI-Linux confirmation of the 13 landed reader-site fixes (check-phase-61 34/0/0, check-phase-68 33/0/0, check-phase-70 51/0/0 bare/standalone, first-ever measurement for -70); RED-01/02/03 already Complete from Plan 05. No requirement set to Validated -- reserved for Phase 144's single close-gate commit per D-30
 - [Phase ?]: 142-01: Commit message must never literally quote v1.20-CARVE.md in prose — git show --name-only HEAD includes the message body, and the plan's own CARVE-exclusion check greps that combined output
 - [Phase ?]: 142-01: markdown table separator rows need a space after each leading pipe (| --- | not |---|) when a downstream grep -c '^| ' acceptance check counts the separator as a row
+- [Phase ?]: 142-02: Commit message names CARVE/check-phase-138 but never spells out the literal amended-file path, applying Plan 01's lesson that git show --name-only prints message-then-files
+- [Phase ?]: 142-02: Rationale comment above the new check-phase-138.mjs glob line repeats the filename literally once (matching the check-phase-67.mjs precedent), satisfying the plan's grep -c == 2 acceptance criterion by design
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -377,8 +380,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-10T18:39:06.286Z
-Stopped at: Completed 142-01-PLAN.md
+Last session: 2026-08-10T18:46:45.925Z
+Stopped at: Completed 142-02-PLAN.md
 Resume file: None
 Next action: Phase 141 verification, then `/gsd-discuss-phase 142`
 
