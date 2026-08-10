@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
-current_phase: 141
-current_phase_name: Standalone-RED Validator Set — Chain Members Green
-status: verifying
+current_phase: 143
+current_phase_name: Link Coverage & Fence-Mask Unification
+status: planning
 stopped_at: Completed 142-06-PLAN.md
-last_updated: "2026-08-10T19:38:05.914Z"
-last_activity: 2026-08-09
-last_activity_desc: "Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green"
+last_updated: "2026-08-10T19:46:45.106Z"
+last_activity: 2026-08-10
+last_activity_desc: Phase 142 complete, transitioned to Phase 143
 progress:
   total_phases: 4
   completed_phases: 4
@@ -33,10 +33,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: 141 — COMPLETE (all 6 plans executed), awaiting phase verification
-Plan: 6 of 6
-Status: Phase complete — ready for verification
-Last activity: 2026-08-09 — Phase 141 Plan 06 (terminal): first-ever CI fan-out dispatched and triaged, all 41 jobs green
+Phase: 143 — Link Coverage & Fence-Mask Unification
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-10 — Phase 142 complete, transitioned to Phase 143
 
 Progress: [██████████] 100%
 
