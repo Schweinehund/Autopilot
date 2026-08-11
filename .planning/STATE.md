@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
-current_phase: 143
-current_phase_name: Link Coverage & Fence-Mask Unification
-status: executing
+current_phase: 144
+current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
+status: planning
 stopped_at: Completed 143-08-PLAN.md — Phase 143 execution complete (9/9 plans)
-last_updated: "2026-08-11T21:12:00.231Z"
+last_updated: "2026-08-11T21:42:23.829Z"
 last_activity: 2026-08-11
-last_activity_desc: Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
+last_activity_desc: Phase 143 complete, transitioned to Phase 144
 progress:
   total_phases: 5
   completed_phases: 5
@@ -33,10 +33,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: 143 — Link Coverage & Fence-Mask Unification
-Plan: 9 of 9 complete
-Status: In progress — governance gate landed, Plan 02 (TRACER) next
-Last activity: 2026-08-11 — Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
+Phase: 144 — V119 Pin + 18th Path-A Lineage Bump + Terminal Close
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-11 — Phase 143 complete, transitioned to Phase 144
 
 Progress: [██████████] 100%
 

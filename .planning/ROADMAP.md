@@ -31,7 +31,7 @@
 - [x] **Phase 140: Frozen-Aware Harness Conversion** - v1.4–v1.18 milestone-audit harnesses converted to read their own close-SHA corpus instead of live HEAD (v1.19 converts in Phase 144 with the V119 pin; the C17 live-HEAD leg in v1.15–v1.18 stays unconverted, owned by Phase 143), within the check-phase-60 60-second subprocess budget (completed 2026-08-07)
 - [x] **Phase 141: Standalone-RED Validator Set — Chain Members Green** - check-phase-48/60/61/62-66 exit 0 standalone; freshness, self-test classifier, and cascade root causes closed; first-ever CI fan-out dispatched at one shared SHA, all 41 jobs green (completed 2026-08-09)
 - [x] **Phase 142: Archival-Path Fix, Chain Adoption & Cold-Clone Threshold** - check-phase-30/31 fixed and adopted into the apex chain; cold-clone apex cost gets a falsifiable threshold (completed 2026-08-10)
-- [ ] **Phase 143: Link Coverage & Fence-Mask Unification** - corpus-wide relative-link + anchor checker green with zero accepted-violation baseline; fence-masking unified across all 15 call sites
+- [x] **Phase 143: Link Coverage & Fence-Mask Unification** - corpus-wide relative-link + anchor checker green with zero accepted-violation baseline; fence-masking unified across all 15 call sites (completed 2026-08-11)
 - [ ] **Phase 144: V119 Pin + 18th Path-A Lineage Bump + Terminal Close** - mandatory harness lineage bump + 3-axis re-audit + all 17 integrity workflows dispatched green — sole deliverable of this phase
 
 <details>
@@ -225,7 +225,7 @@ Plans:
   4. Fence-mask behavior is unified across all 15 call sites in the 9 named files, including both c17 sites (`:158` opening, `:166` closing), covering the measured 74 fences indented 1–3 spaces across 11 files via a `^ {0,3}` CommonMark-equivalent rule (LINK-05).
   5. c17 reports identical file and violation counts before and after the fence-mask change, and a sampled check of the newly-masked lines confirms none hides a suppressed violation (LINK-06).
 
-**Plans**: 9/9 plans executed
+**Plans**: 9/9 plans complete
 
 Plans:
 
