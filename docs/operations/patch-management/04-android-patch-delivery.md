@@ -47,7 +47,8 @@ via Play Integrity attestation.
 Android Enterprise > Create) controls minimum security patch level and Play Integrity verdict
 requirement. Devices failing the compliance policy enter Conditional Access non-compliant state.
 
-## Play Integrity Attestation {#play-integrity-attestation}
+<a id="play-integrity-attestation"></a>
+## Play Integrity Attestation
 
 Play Integrity is Google's device-attestation API. Intune compliance policy queries the verdict
 to determine device trust. The verdicts and Intune mapping:
@@ -73,7 +74,8 @@ compliance signal.
 > longer appears in current Intune Android compliance blade options. Tenants using SafetyNet
 > compliance settings should migrate to Play Integrity verdicts.
 
-## Deadlines & Cutover Dates {#deadlines-cutover-dates}
+<a id="deadlines-cutover-dates"></a>
+## Deadlines & Cutover Dates
 
 The MEETS_STRONG_INTEGRITY enforcement cascade affects all Android tenants. Zebra LifeGuard +
 Samsung KSP are soft cutovers (feature additions; no fleet-wide failure mode).
