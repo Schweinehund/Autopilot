@@ -505,6 +505,30 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   down** — that the checker's anchor model matches the corpus's renderer. Findings are not true
   because they are confident, and premises are not true because they are old.
 
+### Governance (continued) — D-38, owner ruling 2026-08-11
+
+- **D-38, owner discharge of D-01's one-way gate — convert all 87 `{#id}` overrides.**
+  **The ruling.** Convert ALL 87 `{#id}` overrides to `<a id="…"></a>` anchors, across all 29
+  files. Not the 22 that happen to be link targets — all 87.
+  **The rationale the owner accepted.** The `{#…}` token renders as visible literal junk text in
+  the heading on github.com, confirmed first-party against GitHub's own rendering API
+  (`143-RESEARCH.md` Open Question 3). It is therefore a rendering defect in all 87 places, not
+  only in the 22 that are link targets. Converting all 87 ends the class rather than pruning it,
+  and leaves exactly one anchor convention corpus-wide.
+  **What it supersedes.** D-04's source-side Class-B routing for the 26 (target-file, fragment)
+  pairs whose target heading carries an override. D-38 does not weaken D-04 — it delivers the same
+  links through the target-side branch D-04 already sanctions. The remaining pairs stay on D-04's
+  per-class routing unchanged.
+  **What it does NOT change.** D-04's bar on "add the missing section", D-11's rename prohibition,
+  D-12's two-condition deletion, D-14's checker ordering, D-23's Phase-144 hand-off, D-31's
+  three-step commit sequence, D-33's ledger-before-edit rule, and both CARVE Standing bars. D-38
+  authors no prose — it removes junk text and adds an anchor.
+  **Reversibility.** The owner ruling DISCHARGES D-01's one-way blocking checkpoint — the
+  reversibility RATING is unchanged (still one-way, per Task 2's own reversibility block); only the
+  gate that would otherwise have stopped execution here is discharged, not the underlying risk.
+  Full evidence — the measured blast radius, the zero-regression finding, the ordering hazard, the
+  c17 null result and the `<a id>` placement ruling — is recorded in `143-EVIDENCE.md`.
+
 ### Claude's Discretion
 
 - Plan/atom decomposition, subject to D-31's commit sequence, D-14's ordering, and D-33's
