@@ -20,7 +20,7 @@ This is an error-code lookup reference for Hybrid Entra Join and device registra
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-Hybrid [Entra](../_glossary.md#entra) join errors combine hex codes visible on the [OOBE](../_glossary.md#oobe)/[ESP](../_glossary.md#esp) screen with Event IDs from the Windows event log. This file covers both identifier types. See [Stage 1 (Registration)](../lifecycle/01-hardware-hash.md) and [Stage 4 (ESP)](../lifecycle/04-esp.md) for lifecycle context.
+Hybrid [Entra](../_glossary.md#entra-id-sso) join errors combine hex codes visible on the [OOBE](../_glossary.md#oobe)/[ESP](../_glossary.md#esp) screen with Event IDs from the Windows event log. This file covers both identifier types. See [Stage 1 (Registration)](../lifecycle/01-hardware-hash.md) and [Stage 4 (ESP)](../lifecycle/04-esp.md) for lifecycle context.
 
 **Phase:** Reg=Registration · OOBE=Out-of-Box Experience · ESP=Enrollment Status Page · Post=Post-enrollment
 **Mode:** UD=User-Driven · PP=Pre-Provisioning · SD=Self-Deploying · All=All modes

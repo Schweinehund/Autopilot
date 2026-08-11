@@ -71,7 +71,7 @@ Run this first. It produces a single `IntuneMacODC.zip` archive that covers the 
 - Process list
 - System log excerpts
 
-> **Note:** For full command reference including parameters and expected output, see [macOS Terminal Commands Reference](../reference/macos-commands.md#intunemacODC).
+> **Note:** For full command reference including parameters and expected output, see [macOS Terminal Commands Reference](../reference/macos-commands.md#intunemacodc).
 
 ---
 

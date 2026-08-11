@@ -21,7 +21,7 @@ This runbook covers read-only L1 diagnostic steps only — no registry edits, no
 > **Version gate:** This guide applies to Windows Autopilot (classic).
 > For Autopilot Device Preparation, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-The [Enrollment Status Page](../_glossary.md#enrollment-status-page) ([ESP](../_glossary.md#esp)) is the progress screen that appears during [Autopilot](../_glossary.md#autopilot) provisioning after the user signs in or after [OOBE](../_glossary.md#oobe) completes. It tracks the installation of required apps and policies before releasing the desktop. This runbook covers two scenarios where ESP appears stuck with no error code, and one scenario where ESP displays an error code.
+The [Enrollment Status Page](../_glossary.md#esp) ([ESP](../_glossary.md#esp)) is the progress screen that appears during [Autopilot](../_glossary.md#autopilot) provisioning after the user signs in or after [OOBE](../_glossary.md#oobe) completes. It tracks the installation of required apps and policies before releasing the desktop. This runbook covers two scenarios where ESP appears stuck with no error code, and one scenario where ESP displays an error code.
 
 ## Prerequisites
 

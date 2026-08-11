@@ -23,7 +23,7 @@ This guide covers the Enrollment Time Grouping (ETG) device group for Autopilot 
 > For Windows Autopilot (classic), see [APv1 Admin Setup Guides](../admin-setup-apv1/00-overview.md).
 > For framework selection, see [APv1 vs APv2](../apv1-vs-apv2.md).
 
-The Enrollment Time Grouping (ETG) device group is the core mechanism that makes APv2 work. When a user authenticates during OOBE, the Intune Provisioning Client service principal automatically adds the device to this group -- triggering immediate delivery of apps, scripts, and policies without dynamic group evaluation delays. For a full explanation of how ETG works in the APv2 model, see [ETG: The Core Mechanism](../lifecycle-apv2/00-overview.md#enrollment-time-grouping----the-core-mechanism).
+The Enrollment Time Grouping (ETG) device group is the core mechanism that makes APv2 work. When a user authenticates during OOBE, the Intune Provisioning Client service principal automatically adds the device to this group -- triggering immediate delivery of apps, scripts, and policies without dynamic group evaluation delays. For a full explanation of how ETG works in the APv2 model, see [ETG: The Core Mechanism](../lifecycle-apv2/00-overview.md#enrollment-time-grouping-etg----the-core-mechanism).
 
 ## Prerequisites
 
@@ -165,7 +165,7 @@ Apps and PowerShell scripts that should install during APv2 enrollment must be *
 
 ## See Also
 
-- [ETG Mechanism Explained](../lifecycle-apv2/00-overview.md#enrollment-time-grouping----the-core-mechanism)
+- [ETG Mechanism Explained](../lifecycle-apv2/00-overview.md#enrollment-time-grouping-etg----the-core-mechanism)
 - [APv2 Deployment Flow](../lifecycle-apv2/02-deployment-flow.md)
 - [APv1 vs APv2 Comparison](../apv1-vs-apv2.md)
 - [APv2 Failure Catalog](../error-codes/06-apv2-device-preparation.md)

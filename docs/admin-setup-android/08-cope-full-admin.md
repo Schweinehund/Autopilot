@@ -61,7 +61,7 @@ COPE / WPCO has no first-class equivalent on Windows, macOS, or iOS — the "cor
 - [ ] **Managed Google Play (MGP) binding complete** — see [01-managed-google-play.md#bind-mgp](01-managed-google-play.md#bind-mgp); the [Account Types](01-managed-google-play.md#account-types) table covers the Entra-vs-Gmail binding decision. This guide references, never duplicates.
 - [ ] <a id="entra-join-prerequisite"></a>**Entra join enabled** on the tenant — without this, COPE enrollment fails at token generation. The Chrome Custom Tab sign-in during device setup is the surface that depends on it.
 - [ ] **Factory-reset or new device** — COPE requires out-of-box state. A device already past Setup Wizard without the correct provisioning path must be reset before COPE enrollment.
-- [ ] **Android 8.0+** — hard minimum (LOWER than COBO's Android 10.0 floor; per MS Learn `setup-corporate-work-profile.md`). See [03-android-version-matrix.md#cope](../android-lifecycle/03-android-version-matrix.md#cope) for the version-support detail; this guide does not restate the matrix.
+- [ ] **Android 8.0+** — hard minimum (LOWER than COBO's Android 10.0 floor; per MS Learn `setup-corporate-work-profile.md`). See [03-android-version-matrix.md#cope](../android-lifecycle/03-android-version-matrix.md#android-11--cope-nfc-provisioning-removed) for the version-support detail; this guide does not restate the matrix.
 - [ ] **Google Mobile Services (GMS) connectivity** on the device and on the out-of-box network — Play Services must reach `play.google.com` and the Android Enterprise endpoints for DPC download during provisioning.
 
 **Tenant-conditional prerequisite:**
@@ -274,7 +274,7 @@ This matrix helps Intune admins choose between COBO and COPE for net-new corpora
 |---|---|---|
 | **Personal apps on the device** | None — corporate-only device | Yes — separated work profile container; user installs personal apps in the personal partition |
 | **Profile boundary model** | No profile boundary — entire device is managed scope | Work-profile container isolated from personal-side apps and data |
-| **Android version floor for new provisioning** | See [03-android-version-matrix.md#cobo](../android-lifecycle/03-android-version-matrix.md#cobo) | See [03-android-version-matrix.md#cope](../android-lifecycle/03-android-version-matrix.md#cope) |
+| **Android version floor for new provisioning** | See [03-android-version-matrix.md#cobo](../android-lifecycle/03-android-version-matrix.md#cobo) | See [03-android-version-matrix.md#cope](../android-lifecycle/03-android-version-matrix.md#android-11--cope-nfc-provisioning-removed) |
 | **Samsung KME compatibility** | KME provisions COBO directly — see [KME](../_glossary-android.md#kme) and [07-knox-mobile-enrollment.md](07-knox-mobile-enrollment.md) | KME provisions WPCO (the modern COPE shape) — see [KME](../_glossary-android.md#kme), [WPCO glossary](../_glossary-android.md#wpco), and [07-knox-mobile-enrollment.md](07-knox-mobile-enrollment.md) |
 | **Recommended for net-new in 2026** | Yes — when no personal-app allowance is needed | Yes — provision as WPCO per current Google guidance |
 

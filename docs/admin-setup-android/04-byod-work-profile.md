@@ -291,7 +291,7 @@ See also: [00-overview.md](00-overview.md), [01-managed-google-play.md](01-manag
 - [Managed Google Play Binding](01-managed-google-play.md) — MGP binding prerequisite
 - [Fully Managed (COBO) Admin Setup](03-fully-managed-cobo.md) — corporate-ownership contrast
 - [Android Enterprise Enrollment Overview](../android-lifecycle/00-enrollment-overview.md)
-- [Android Provisioning Methods — BYOD filtered row](../android-lifecycle/02-provisioning-methods.md#byod)
+- [Android Provisioning Methods — BYOD filtered row](../android-lifecycle/02-provisioning-methods.md#byod-work-profile)
 - [Android Version Matrix — BYOD](../android-lifecycle/03-android-version-matrix.md#byod)
 - [Android Enterprise Provisioning Glossary — BYOD](../_glossary-android.md#byod)
 - [Android Enterprise Provisioning Glossary — AMAPI](../_glossary-android.md#amapi)

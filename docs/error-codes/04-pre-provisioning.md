@@ -20,7 +20,7 @@ This is an error-code lookup reference for Pre-Provisioning (white glove) and Se
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-These errors affect [pre-provisioning](../_glossary.md#pre-provisioning) (formerly white glove) and [self-deploying](../_glossary.md#self-deploying) mode deployments. Both modes require physical [TPM](../_glossary.md#tpm) 2.0 attestation, so they share most error codes. See Stage 3 of the [Autopilot lifecycle](../lifecycle/03-oobe.md) for deployment mode context.
+These errors affect [pre-provisioning](../_glossary.md#pre-provisioning) (formerly white glove) and [self-deploying](../_glossary.md#self-deploying-mode) mode deployments. Both modes require physical [TPM](../_glossary.md#tpm) 2.0 attestation, so they share most error codes. See Stage 3 of the [Autopilot lifecycle](../lifecycle/03-oobe.md) for deployment mode context.
 
 **Phase:** Reg=Registration · OOBE=Out-of-Box Experience · ESP=Enrollment Status Page · Post=Post-enrollment
 **Mode:** UD=User-Driven · PP=Pre-Provisioning · SD=Self-Deploying · All=All modes

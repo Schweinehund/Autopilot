@@ -48,7 +48,7 @@ Use this runbook when the device fails during the initial [Out-of-Box Experience
 
 6. **Perform a single power cycle.** Ask the user to: hold the power button for 10 seconds until the device powers off, wait 30 seconds, then press the power button to turn it on. Let the device boot back to OOBE.
 
-7. **If OOBE proceeds normally after the power cycle:** Monitor until the user reaches the desktop or the [ESP](../_glossary.md#enrollment-status-page). The failure may have been transient.
+7. **If OOBE proceeds normally after the power cycle:** Monitor until the user reaches the desktop or the [ESP](../_glossary.md#esp). The failure may have been transient.
    > **Say to the user:** "The restart appears to have resolved the issue. Your device is continuing setup. Please let me know if you encounter any further problems."
 
 8. **If OOBE fails again in the same way:** Proceed to [Escalation Criteria](#escalation-criteria).

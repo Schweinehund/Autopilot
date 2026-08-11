@@ -20,7 +20,7 @@ This is an error-code lookup reference for TPM Attestation failures in Windows A
 
 > **Version gate:** This guide primarily covers Windows Autopilot (classic). APv2 differences are noted inline. For a full comparison, see [APv1 vs APv2 disambiguation](../apv1-vs-apv2.md).
 
-These errors occur during [OOBE](../_glossary.md#oobe) when the device attempts [TPM](../_glossary.md#tpm) attestation, primarily in [pre-provisioning](../_glossary.md#pre-provisioning) and [self-deploying](../_glossary.md#self-deploying) modes. They correspond to Stage 3 of the [Autopilot lifecycle](../lifecycle/03-oobe.md).
+These errors occur during [OOBE](../_glossary.md#oobe) when the device attempts [TPM](../_glossary.md#tpm) attestation, primarily in [pre-provisioning](../_glossary.md#pre-provisioning) and [self-deploying](../_glossary.md#self-deploying-mode) modes. They correspond to Stage 3 of the [Autopilot lifecycle](../lifecycle/03-oobe.md).
 
 **Phase:** Reg=Registration · OOBE=Out-of-Box Experience · ESP=Enrollment Status Page · Post=Post-enrollment
 **Mode:** UD=User-Driven · PP=Pre-Provisioning · SD=Self-Deploying · All=All modes
