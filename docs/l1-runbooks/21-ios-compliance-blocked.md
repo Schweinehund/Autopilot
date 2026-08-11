@@ -45,7 +45,6 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 <a id="cause-a-ca-gap"></a>
 
-<a id="cause-a-ca-gap"></a>
 ## Cause A: CA Gap (First Compliance Evaluation Pending)
 
 **Entry condition:** User completed enrollment within the last 30 minutes AND is being denied access to Microsoft 365 resources. Intune P-09 shows compliance state "Not evaluated" or "In grace period".
@@ -80,7 +79,6 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 <a id="cause-b-policy-mismatch"></a>
 
-<a id="cause-b-policy-mismatch"></a>
 ## Cause B: Actual Policy Mismatch
 
 **Entry condition:** Intune P-09 shows compliance state "Non-compliant" with at least one specific failing setting listed.
@@ -126,7 +124,6 @@ If none of the above matches the observation, proceed directly to the [overall E
 
 <a id="cause-c-default-posture"></a>
 
-<a id="cause-c-default-posture"></a>
 ## Cause C: Default Posture "Not Compliant" Configuration
 
 **Entry condition:** User has NO compliance policy assigned AND tenant-wide default-posture setting is "Not compliant" AND CA "Require compliant device" is active → user is blocked without any failing-setting signal.

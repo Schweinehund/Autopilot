@@ -40,7 +40,6 @@ Go directly to the section that matches the current device screen:
 
 <a id="authentication-failure"></a>
 
-<a id="authentication-failure"></a>
 ## Authentication Failure
 
 **Entry condition:** Setup Assistant displays a sign-in screen (Microsoft or Apple ID) that returns an error or loops back to the same screen.
@@ -65,7 +64,6 @@ Go directly to the section that matches the current device screen:
 
 <a id="await-configuration-stuck"></a>
 
-<a id="await-configuration-stuck"></a>
 ## Await Configuration Stuck
 
 **Entry condition:** Setup Assistant shows "Your Mac is being configured" (the Remote Management screen) and has not advanced after more than 30 minutes.
@@ -88,7 +86,6 @@ Go directly to the section that matches the current device screen:
 
 <a id="network-connectivity"></a>
 
-<a id="network-connectivity"></a>
 ## Network / Connectivity Issue
 
 **Entry condition:** Device shows a spinning globe icon, cannot advance past the Wi-Fi selection screen, or displays an error about contacting Apple or Microsoft.

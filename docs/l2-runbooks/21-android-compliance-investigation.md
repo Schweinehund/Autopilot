@@ -73,7 +73,6 @@ Axis 🐛 — cross-cutting axis for non-configurable failures.
 
 <a id="cause-a-play-integrity-verdict-failure"></a>
 
-<a id="cause-a-play-integrity-verdict-failure"></a>
 ### Cause A: Play Integrity Verdict Failure
 
 > See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android compliance uses.
@@ -114,7 +113,6 @@ Axis 🐛 — cross-cutting axis for non-configurable failures.
 
 <a id="cause-b-os-version-policy-mismatch"></a>
 
-<a id="cause-b-os-version-policy-mismatch"></a>
 ### Cause B: OS Version Policy Mismatch
 
 **Typical class:** ⚙️ Config Error
@@ -131,7 +129,6 @@ Compliance policy sets a `minAndroidVersion` (or max) that the device fails. Ver
 
 <a id="cause-c-ca-timing-gap"></a>
 
-<a id="cause-c-ca-timing-gap"></a>
 ### Cause C: CA Timing Gap (First Compliance Evaluation Pending)
 
 **Typical class:** ⏱️ Timing (first-evaluation window) + 🐛 Defect (stuck-state terminal)
@@ -190,7 +187,6 @@ If compliance state remains "Not evaluated" beyond 30 minutes after enrollment c
 
 <a id="cause-d-passcode-encryption-policy-mismatch"></a>
 
-<a id="cause-d-passcode-encryption-policy-mismatch"></a>
 ### Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch
 
 **Typical class:** ⚙️ Config Error

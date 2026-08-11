@@ -40,7 +40,6 @@ Go directly to the section that matches the situation:
 
 <a id="dmg-pkg-missing"></a>
 
-<a id="dmg-pkg-missing"></a>
 ## DMG or PKG App Missing
 
 **Entry condition:** A managed app (uploaded to Intune as a macOS app DMG or LOB PKG) is not installed on the device.
@@ -65,7 +64,6 @@ Go directly to the section that matches the situation:
 
 <a id="vpp-missing"></a>
 
-<a id="vpp-missing"></a>
 ## VPP App Missing
 
 **Entry condition:** An App Store app distributed via Apps and Books (VPP) is not visible in Company Portal or is not installed.
@@ -88,7 +86,6 @@ Go directly to the section that matches the situation:
 
 <a id="app-install-failed"></a>
 
-<a id="app-install-failed"></a>
 ## App Install Failed
 
 **Entry condition:** The app appears in Intune device install status with a "Failed" status.

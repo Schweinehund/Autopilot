@@ -39,7 +39,6 @@ Go directly to the section that matches the observation:
 
 <a id="profile-not-showing"></a>
 
-<a id="profile-not-showing"></a>
 ## Profile Not Showing
 
 **Entry condition:** A profile that should be assigned to this device is absent from the Intune device profile list.
@@ -66,7 +65,6 @@ Go directly to the section that matches the observation:
 
 <a id="profile-showing-not-working"></a>
 
-<a id="profile-showing-not-working"></a>
 ## Profile Showing but Not Working
 
 **Entry condition:** The profile is listed in the device's Configuration profiles view in Intune with a "Succeeded" or "Applied" status, but the setting is not active on the device.
