@@ -259,16 +259,17 @@ function relNormalize(abs) {
 // method (assertion #1's inCodeFence mask) -- the opening fence line itself is NOT marked
 // "inside" (structural marker), so a real ```mermaid opening fence is still correctly detected
 // by the caller's regex test against the unmasked line.
+// LINK-05 (Phase 143, D-16/D-21): ` {0,3}` leading allowance = CommonMark indented-fence rule, copied verbatim from check-nav-hub-links.mjs:85-112 (reference instance).
 function buildFenceMask(lines) {
   const mask = new Array(lines.length).fill(false);
   let fenced = false, fenceChar = '', fenceLen = 0;
   for (let i = 0; i < lines.length; i++) {
     const t = lines[i];
     if (!fenced) {
-      const m = t.match(/^(`{3,}|~{3,})/);
+      const m = t.match(/^ {0,3}(`{3,}|~{3,})/);
       if (m) { fenced = true; fenceChar = m[1][0]; fenceLen = m[1].length; }
     } else {
-      const m = t.match(/^(`{3,}|~{3,})/);
+      const m = t.match(/^ {0,3}(`{3,}|~{3,})/);
       if (m && m[1][0] === fenceChar && m[1].length >= fenceLen) {
         fenced = false;
       } else {
@@ -490,10 +491,11 @@ function processFile(absPath, docIdMap) {
   const bodyLines = bodyContent.split('\n');
 
   // Find first H1 (not inside a code fence)
+  // LINK-05 (Phase 143, D-16/D-21): ` {0,3}` leading allowance, copied verbatim from check-nav-hub-links.mjs:85-112 (reference instance).
   let inFence = false, fenceChar = '', fenceLen = 0;
   let firstH1Idx = -1;
   for (let i = 0; i < bodyLines.length; i++) {
-    const mf = bodyLines[i].match(/^(`{3,}|~{3,})/);
+    const mf = bodyLines[i].match(/^ {0,3}(`{3,}|~{3,})/);
     if (!inFence && mf) {
       inFence = true; fenceChar = mf[1][0]; fenceLen = mf[1].length;
     } else if (inFence && mf && mf[1][0] === fenceChar && mf[1].length >= fenceLen) {
