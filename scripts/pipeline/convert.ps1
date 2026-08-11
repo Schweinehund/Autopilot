@@ -105,7 +105,11 @@ try {
         $line = $lines[$i]
 
         # D-03(a): track ```/~~~ fenced-code state; never rewrite inside a fence
-        if ($line -match '^\s*(```|~~~)') {
+        # LINK-05 (Phase 143, D-16/D-17): the 15th fence-mask site -- a TIGHTENING, not a
+        # widening. '^\s*' matched 4+-space/tab indents and Unicode-separator whitespace;
+        # '^ {0,3}' narrows to the CommonMark indented-fence bound (0 live instances of any
+        # wider form existed pre-edit, so behaviour is unchanged on the current corpus).
+        if ($line -match '^ {0,3}(```|~~~)') {
             if (-not $inFence) { $inFence = $true; $fenceChar = $Matches[1] }
             elseif ($line.TrimStart().StartsWith($fenceChar)) { $inFence = $false }
             continue

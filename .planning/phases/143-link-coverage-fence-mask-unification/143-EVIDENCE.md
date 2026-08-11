@@ -1145,3 +1145,193 @@ a trailing `\r` would sit after the matched prefix, outside the regex's scan win
 prevent a match. Both arguments — explicit normalization (8 of 9 files) and terminator-stripping
 by contract (`convert.ps1`) — independently discharge D-35; the anchored-regex argument is a third,
 belt-and-suspenders line of defense that would hold even if the first two were wrong.
+
+## Plan 07 — 14 JS fence sites landed (Task 2)
+
+All 14 JS sites edited: `^(`{3,}|~{3,})` -> `^ {0,3}(`{3,}|~{3,})`, byte-identical everywhere
+else. `[MEASURED]` post-edit corpus count: `grep -ro '\^ {0,3}(`{3,}\|~{3,})' scripts/` -> exactly
+**14**; the un-widened literal `grep -o '\^(`{3,}\|~{3,})'` returns **0** in all 8 edited JS files.
+Both paired sites (c17 `:158/:166`; `check-nav-hub-links.mjs:100/:103` — the plan's cited `:91/:94`
+drifted +9 lines from Plan 06's own edits, located by regex text not line number, per the plan's
+own instruction; `retrofit-mermaid-structural.mjs:268/:271`; `retrofit-nav-hub.mjs:252/:255`)
+changed together in the same edit, never one alone.
+
+One-line provenance comment landed at each site citing `check-nav-hub-links.mjs:85-112`
+(`buildFenceMask`) as the reference instance, per D-16. First attempt used 3-line comments;
+corrected to one line each in a follow-up commit (`e9a505be`) once the plan's own "one-line"
+instruction was re-read — recorded as a self-caught deviation, not left uncorrected.
+
+No shared `_lib/fence-mask.mjs` created (`test ! -f` confirmed). No detection regex touched —
+`c17:209`'s mermaid detector and every `retrofit-*`'s `/^```mermaid/` stay column-0.
+
+**Post-edit regression gates, all green:**
+```
+c17: 234 files checked, 0 with violations, 0 total violations (byte-identical to baseline)
+c17 --self-test: 4 passed, 0 failed
+check-nav-hub-links: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total, exit 0
+check-nav-hub-links --self-test: 10 passed, 0 failed
+check-phase-113/115/120/123/124: all exit 0
+grep -c 'CHAIN_PHASES' c17-eee-contract.mjs -> 0 (required-absent, confirmed)
+```
+
+**Measured deviations from the plan's own literal acceptance-criteria text (D-36 — recorded, not
+silently forced):**
+- `grep -c 'C17 assertion-violation-counts:' scripts/validation/c17-eee-contract.mjs` returns
+  **2**, not the plan's expected **1** — a pre-existing self-test fixture at `:544` hardcodes the
+  literal expected-output string alongside the real summary-printing call at `:583`; both existed
+  before this plan's edit, confirmed by `git blame`-equivalent reasoning (neither line is inside
+  this plan's diff). Not a regression; the plan's authored figure was simply wrong.
+- `git diff --numstat -- scripts/` per-file added/removed counts are NOT uniformly equal — the
+  plan's acceptance text says "equal added and removed line counts per file except where a
+  provenance comment was added"; the actual shape is: single-toggle-form files 2 added/1 removed
+  (1 comment line + 1 regex-line replacement); paired-form files 5 added/3 removed (2 sites: one
+  comment + 2-line replacement, plus one comment + 1-line replacement). This is the arithmetically
+  correct shape for "one comment line added per site, plus one added/one removed per changed regex
+  line" — the plan's "equal except comments" phrasing undercounted paired sites' second regex line.
+
+## Plan 07 — convert.ps1 tightening + LINK-06's four legs (Task 3)
+
+### Part 1 — the 15th site, `convert.ps1:108`
+
+`'^\s*(```|~~~)'` -> `'^ {0,3}(```|~~~)'`. Framed as a **tightening on three axes** (D-17), never
+as "the same change applied a fifteenth time": the old pattern matched (a) 4+-space and tab
+indents and (b) NBSP/U+2000-U+200A/U+3000 (`.NET \s` = `\p{Z}`); `^ {0,3}` narrows all three.
+`[MEASURED]` 0 live instances of any of the three exist in `docs/` today (established by the
+Task 2 corpus scan — every one of the 46 newly-masked lines is a plain literal-space indent), so
+behaviour is identical on the current corpus.
+
+**Convert.ps1 fixture exercise (discharging D-17's evidence-asymmetry, per D-08's bundle-re-run
+standard applied here as a targeted fixture instead of a full 221-doc build):** three fixtures
+built this session, each with a decoy `---`/`*Previous:` pair INSIDE a fence (to prove masking
+still suppresses it) plus one real nav-footer pair outside any fence (to prove the rewrite still
+fires):
+
+| Fixture | Fence shape | BEFORE (pre-edit) | AFTER (post-edit) |
+|---|---|---|---|
+| `fixture-indented-fence.md` | 2-space-indented ` ```text ` | `PIPE-03 preprocessing: 1 nav-footer rewrite(s), guard PASS` | identical |
+| `fixture-column0-fence.md` | column-0 ` ```text ` | `PIPE-03 preprocessing: 1 nav-footer rewrite(s), guard PASS` | identical |
+| `fixture-no-fence.md` | none | `PIPE-03 preprocessing: 1 nav-footer rewrite(s), guard PASS` | identical |
+
+All three produce **exactly 1 rewrite** (the real footer) both before and after — the decoy inside
+each fence is correctly suppressed in both states, confirming the tightened regex still recognizes
+0-3-space indents identically to the old regex's broader match on this axis. `pandoc 3.7.0.2
+(pinned 3.7.0.2) -- version guard PASS` and `Conversion complete.` on all six runs (3 fixtures x
+2 states). The resulting `.docx` files are NOT byte-identical (differ at byte 11, a zip-container
+timestamp pandoc embeds per invocation — a known non-determinism unrelated to content); the
+substantive signal is the stdout rewrite-count + guard-PASS line, which matches exactly.
+**Stated plainly: no full 221-document bundle build was run in this plan; the fixture exercise is
+the discharge D-17 calls for, not a bundle-build claim.**
+
+### Part 2 — LINK-06's four legs
+
+**Leg (a) — count equality, byte-compared.**
+```
+BEFORE (Task 1 baseline): C17 assertion-violation-counts: #1=0 ... #13=0
+                           C17 summary: 234 files checked, 0 with violations, 0 total violations
+AFTER  (all 15 sites landed): C17 assertion-violation-counts: #1=0 ... #13=0
+                               C17 summary: 234 files checked, 0 with violations, 0 total violations
+```
+Identical on every field: file count, violation count, all 13 per-assertion counters, exit 0 both.
+
+**Leg (b) — the mask-state diff, all `docs/` `.md` files (excluding `docs/_templates/`), old rule
+vs new rule, per-line comparison.** Method: a standalone script builds both masks per file with
+the identical `buildFenceMask` algorithm (old regex `^(`{3,}|~{3,})`, new regex
+`^ {0,3}(`{3,}|~{3,})`), diffs per-line state, and tests every changed line against a 12-pattern
+c17-relevance set (heading `/^#{1,6}\s/`, table row `.trim().startsWith('|')` matching `c17:352,
+355`'s trim-before-test convention, blockquote `/^>/`, mermaid opener `/^```mermaid/`,
+front-matter key `/^[a-zA-Z_][\w-]*:\s/`, citation tag `/\[(HIGH|MEDIUM|LOW):/`, list marker,
+link syntax, bold/emphasis run (single-word-scoped to avoid a false match on underscore-delimited
+placeholder text like `<source_folder>`), code span, horizontal rule, `## Summary` marker).
+
+```
+Files scanned: 274
+Files with changed lines: 11
+Total changed lines: 46
+Newly masked: 46
+Newly unmasked: 0
+Lines matching >= 1 of the 12 patterns: 0
+```
+
+**Files (11):** `docs/admin-setup-apv2/04-corporate-identifiers.md` (4 lines), `docs/admin-setup-
+linux/01-intune-linux-agent.md` (7), `docs/admin-setup-macos/11-graph-api-platform-credential.md`
+(1), `docs/end-user-guides/linux-intune-portal-enrollment.md` (1), `docs/l1-runbooks/35-macos-sso-
+sign-in-failure.md` (1), `docs/l1-runbooks/36-macos-secure-enclave-key.md` (2), `docs/l2-runbooks/
+10-macos-log-collection.md` (3), `docs/l2-runbooks/25-linux-agent-investigation.md` (22),
+`docs/l2-runbooks/33-8021x-radius-eap-investigation.md` (3), `docs/macos-lifecycle/00-ade-
+lifecycle.md` (1), `docs/reference/imaging-to-autopilot.md` (1). Sum: 4+7+1+1+1+2+3+22+3+1+1 = 46.
+
+**All 46 lines, verbatim, file:line:**
+```
+docs/admin-setup-apv2/04-corporate-identifiers.md:57,61,62,63
+docs/admin-setup-linux/01-intune-linux-agent.md:56,62,68,78,84,98,104
+docs/admin-setup-macos/11-graph-api-platform-credential.md:261
+docs/end-user-guides/linux-intune-portal-enrollment.md:53
+docs/l1-runbooks/35-macos-sso-sign-in-failure.md:39
+docs/l1-runbooks/36-macos-secure-enclave-key.md:41,72
+docs/l2-runbooks/10-macos-log-collection.md:45,50,55
+docs/l2-runbooks/25-linux-agent-investigation.md:69,70,82,88,141,142,150,158,159,206,214,215,
+  216,224,232,238,239,291,292,300,308,314
+docs/l2-runbooks/33-8021x-radius-eap-investigation.md:241,412,425
+docs/macos-lifecycle/00-ade-lifecycle.md:376
+docs/reference/imaging-to-autopilot.md:74
+```
+Every line is a shell command or CLI output example inside a 3-space-indented (numbered-list
+continuation) fenced code block — e.g. `curl -sSL https://...`, `systemctl status ...`,
+`app-sso platform -s`. None is a heading, table row, blockquote, mermaid opener, front-matter key,
+citation, list marker, real markdown link, bold/emphasis run, code span, horizontal rule, or
+Summary marker. **Fence marker lines never flip under either rule** (0 of the 46 changed lines are
+fence markers themselves — the marker lines stay `mask=false` under both rules by construction,
+confirmed by the script's own `isFenceMarkerLine` check on every changed line, all 46 `false`).
+
+**Leg (c) — the assertion-#5 leg the pattern set cannot reach.** `c17:259-264`'s word count is
+content-agnostic: it sums words across every unmasked line between `## Summary` and the next `##`,
+regardless of markdown shape. The relevant question the 12-pattern set cannot answer is whether
+any of the 46 newly-masked lines sit inside a `## Summary` section. `[MEASURED]`: **0** of the 46
+lines carry `summary=true` (tracked per-line during the same scan by remembering the most recent
+`## ` heading and testing whether it was `## Summary`). All 46 lines sit inside ordinary body
+sections (Prerequisites/Steps/Verification-style H2s in the affected runbooks/guides), never
+inside a Summary section — confirmed by direct inspection of the 11 files' section structure.
+
+**Leg (d) — the null result for `check-nav-hub-links.mjs:91,94` (drifted to `:100,103`).**
+`node scripts/validation/check-nav-hub-links.mjs` post-edit: `0 hub-presence failure(s),
+0 corpus-link failure(s), 0 total`, exit 0 — byte-identical to the pre-edit baseline. The corpus
+scan (274 files, all `docs/` as both source and target) is unaffected by widening this file's own
+`buildFenceMask`; no link or anchor computation changes because none of the 46 newly-masked lines
+in the 11 affected files contains a link or an anchor definition (confirmed: none of the 46 lines'
+text matches the `linkSyntax` pattern in the leg-(b) scan above — 0 hits).
+
+### Part 3 — out-of-census divergent fence sites (D-20), confirmed untouched
+
+The census is scoped to the regex literal `^(`{3,}|~{3,})`/`^\s*(```|~~~)`, not to fence behaviour
+generally. `[MEASURED]` after this plan, the repo still holds four out-of-census divergent-fence
+classes, none touched by this plan (`git diff --name-only` for this plan lists exactly the 9
+Pillar-C files plus `.planning/` paths — confirmed below):
+
+1. **`check-phase-66.mjs:274`** — `if (/^\s*```/.test(ln)) { ... }`, a bare toggle with no
+   `fenceChar`/`fenceLen` tracking, in a **frozen chain validator** (CARVE Category 5, runs in
+   every apex). Confirmed present, unedited.
+2. **12 unanchored strip sites** across `check-phase-54.mjs` (3), `-55.mjs` (3), `-56.mjs` (3),
+   `-57.mjs` (1), `-58.mjs` (1), `-59.mjs` (1) — `.replace(/```.../g,'')`-shaped, no line-anchor
+   at all. `[MEASURED]` `grep -c 'replace(/```' scripts/validation/check-phase-5{4..9}.mjs` sums
+   to exactly **12**, matching D-20's count. Confirmed present, unedited.
+3. **`carve-gate.mjs:65`** — `text.match(/```carve-allowlist\n([\s\S]*?)\n```/)`, the allowlist
+   parser's own fence extraction, column-0-anchored implicitly (multiline mode, no leading-space
+   allowance), with a hard-throw on parse failure. Confirmed present, unedited.
+4. **Column-0-only mermaid/fence detectors** at `check-phase-135.mjs:128` (`/^```xml$/gm`),
+   `check-phase-136.mjs:216` (`/^```json$/gm`), `check-phase-55.mjs:345`
+   (`const MERMAID_FENCE = '```mermaid';`, a literal-string constant not a regex), and
+   `check-phase-122.mjs:44` (`/^```mermaid/gm`). Confirmed present, unedited.
+
+Each is a named carry-forward, not claimed by LINK-05's unification — routed to Plan 08's
+carry-forward token per D-20's explicit instruction not to let this phase claim a unification the
+repo does not have.
+
+### Final regression gates (all four legs' shared baseline)
+
+```
+node scripts/validation/c17-eee-contract.mjs -> 234 files checked, 0 with violations, 0 total violations
+node scripts/validation/check-nav-hub-links.mjs -> 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total, exit 0
+node scripts/validation/check-phase-113.mjs -> exit 0
+node scripts/validation/check-phase-124.mjs -> exit 0
+node scripts/validation/carve-gate.mjs -> carve-gate PASS: 106 in-scope path(s), all on-list, exit 0
+```
