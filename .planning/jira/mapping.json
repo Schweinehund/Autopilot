@@ -962,12 +962,12 @@
         },
         "143": {
           "issueKey": "RTS-787",
-          "status": "in_progress",
+          "status": "done",
           "name": "Link Coverage & Fence-Mask Unification"
         },
         "144": {
           "issueKey": "RTS-788",
-          "status": "todo",
+          "status": "in_progress",
           "name": "V119 Pin + 18th Path-A Lineage Bump + Terminal Close"
         }
       }
