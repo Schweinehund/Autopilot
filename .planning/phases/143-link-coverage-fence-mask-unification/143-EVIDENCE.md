@@ -1335,3 +1335,90 @@ node scripts/validation/check-phase-113.mjs -> exit 0
 node scripts/validation/check-phase-124.mjs -> exit 0
 node scripts/validation/carve-gate.mjs -> carve-gate PASS: 106 in-scope path(s), all on-list, exit 0
 ```
+
+## Enforcement: what this phase does and does not deliver
+
+**Opened:** Plan 08, Task 2 (2026-08-11), the phase's closing hand-off plan. This section names the
+enforcement gap plainly, per D-25/D-27 (`143-CONTEXT.md:379-404`) and per the plan's own explicit
+instruction not to let "durable, enforced" (ROADMAP Phase 143's goal wording) be misread as
+per-change CI blocking.
+
+### Trigger-blindness survives D-23
+
+D-23 (`143-CONTEXT.md:351-368`) hands off a needle-spec so Phase 144 can wire this checker into
+`check-phase-143.mjs`, inside the apex chain, without an unauthorized C18 harness fold. That wiring
+answers "does the checker run", not "does it run on every link-breaking change". Those are separate
+questions, and the second one is NOT answered by D-23.
+
+`[MEASURED, this session]` a direct read of all 16 `audit-harness-*-integrity.yml`
+`pull_request.paths` blocks: exactly **3 of 16** (`audit-harness-integrity.yml`,
+`audit-harness-v1.5-integrity.yml`, `audit-harness-v1.6-integrity.yml`) carry any `docs/`-scoped
+path filter at all, each restricted to a narrow platform-family subtree (Android/Linux/Apple
+Business respectively — none is corpus-wide). **13 of 16 workflows carry zero `docs/` path filter
+of any kind**, including the v1.19 template `audit-harness-v1.19-integrity.yml:22-33` that the
+17th (Phase 144's own) workflow copies — its filter list is `scripts/validation/v1.19-*`,
+`scripts/validation/check-phase-*.mjs`, the workflow file itself, and `.planning/REQUIREMENTS.md`,
+with no `docs/` entry. A `docs/**`-only pull request — i.e. every link-breaking change this checker
+exists to catch — matches no path filter on 13 of the 16 workflows and fires nothing on
+`pull_request`. Real cadence for those 13 is weekly cron (`0 8 * * 1`) plus manual
+`workflow_dispatch`, not per-change. Nobody may read "enforced" as "per-change".
+
+**Correction of the record:** `143-CONTEXT.md:379-387` (D-25) states this figure as "10 of 16
+workflows carry zero `docs/` path filters". A direct re-count this session against the live
+`.github/workflows/audit-harness-*.yml` files measures **13 of 16**, not 10 of 16 — the 3 workflows
+that DO carry a `docs/` filter (base/v1.5/v1.6) is a smaller set than the "6 that do" the D-25
+figure implies. Per this phase's own D-36 discipline (record a measured value with its derivation
+shown, not silently reconciled to an earlier figure): the substantive claim D-25 makes —
+trigger-blindness is real and survives D-23 — is UNCHANGED and, if anything, stronger under the
+corrected count (13 of 16 is a larger blind fraction than 10 of 16). The discrepancy in the exact
+count is not chased further here (it does not change which workflows fire on a `docs/`-only PR,
+only how many); Phase 144's own HARN-19 dispatch work should use the measurement in this section
+(13 of 16, directly re-derivable via `grep -c "docs/" <(awk '/^on:/{f=1} f{print} f&&/workflow_dispatch:/{exit}' <file>)` per workflow), not the D-25 figure, since this section supersedes it with a live count.
+
+### A Stop-hook is rejected as the remedy
+
+`v1.20-CARVE.md:83-85`: "The `.claude/hooks/v1.20-carve-gate.cjs` Stop-hook nudges on the first fire
+and warns on subsequent fires for the same off-list set (D-08), as an early, session-level signal —
+it is advisory, **not the enforcement mechanism itself**." A fourth hook is not the fix for
+trigger-blindness: `[MEASURED]` `ls .claude/hooks/` lists exactly three entries
+(`jira-milestone-gate.cjs`, `publish-bundle-gate.cjs`, `v1.20-carve-gate.cjs`) — a new
+link-checker hook would be the fourth, and per the CARVE ruling above would carry the same
+advisory, session-scoped limitation as the other three: it fires only in a Claude Code session,
+never in CI, and never for an edit made outside this tooling.
+
+### Two struck premises, corrected rather than repeated
+
+- **"Inert for 20 phases" is FALSE.** `[MEASURED, 143-CONTEXT.md:370-377 (D-24)]` the checker has
+  been run as a plan-level automated gate and verifier spot-check in Phases **123, 130, 135 and
+  137**. `.planning/milestones/v1.19-phases/137-integration-navigation-last-close/137-VERIFICATION.md:27`
+  scores SC5 on it directly (`node scripts/validation/check-nav-hub-links.mjs` → `0 outbound
+  failure(s), 0 inbound failure(s), 0 total`) and `:70` lists the same run as a PASS behavioral
+  spot-check. The real gap this phase closes is CI wiring only — never a missing hand-off.
+- **"All 16 CI workflows run c17" is FALSE.** `[MEASURED, this session]` `grep -l c17-eee-contract
+  scripts/validation/*.mjs` returns exactly **5** files: `v1.15-milestone-audit.mjs` through
+  `v1.19-milestone-audit.mjs` (plus the contract file and its own two direct chain-validator
+  callers, `check-phase-115.mjs`/`check-phase-120.mjs`, which are not milestone-audit harnesses).
+  A C18 harness fold would therefore have bought reach into **one** of the 16 CI-dispatched
+  workflows (the current-milestone one), not all sixteen. The true claim about the checker's reach
+  today is **zero executing references outside `.planning/`** — its only citations are this
+  phase's own artifacts and the presence-only `V-123-LINKCHECKER` check
+  (`check-phase-123.mjs:83`), which asserts the file exists and is non-empty, never that it runs.
+
+### The D-27 goal-backward position
+
+ROADMAP Phase 143's goal states the corpus has "durable, **enforced**" coverage, and `gsd-verifier`
+scores Goal Achievement and Observable Truths against the goal line, not only the success-criteria
+list (`142-VERIFICATION.md` is the precedent for this scoring behavior). This phase's evidence for
+"enforced" is (a) a live, manual, exit-0 run of `check-nav-hub-links.mjs` against the full corpus
+at commit time, plus (b) a written, routed hand-off (`143-NEEDLE-SPEC.md` +
+`v1.20-DEFERRED-CLEANUP.md` items 13-15) that carries the contract to the phase that CAN wire it
+into CI. A live manual run IS an accepted evidence standard on this project:
+`142-VERIFICATION.md` discharges "check-phase-30 exits 0 standalone" by exactly a live `node
+scripts/validation/check-phase-30.mjs` run, not by a CI dispatch. The two requirements this phase
+carries are not identical in exposure: **LINK-04**'s wording is "exits 0" — satisfied here, in
+full, by the committed corpus scan. **LINK-02** carries no exit-0 clause at all (it is the
+corpus-wide scan's existence and scope, not a pass/fail assertion) and is therefore the requirement
+most exposed by the trigger-blindness gap named above — LINK-02 describes what the checker covers,
+and coverage that never runs on the covering PR is coverage in name only until Phase 144's wiring
+and, more importantly, a future `docs/` path-filter widening (not scoped to this phase, not named
+by any v1.20 requirement) actually lands.
