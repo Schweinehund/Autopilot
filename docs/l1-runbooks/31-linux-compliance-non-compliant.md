@@ -63,7 +63,8 @@ Common ticket phrasings: "my device shows non-compliant," "Intune says my Linux 
 
 ---
 
-## Cause A: Distro Version Out of Range {#cause-a-distro-version-out-of-range}
+<a id="cause-a-distro-version-out-of-range"></a>
+## Cause A: Distro Version Out of Range
 
 See [Ubuntu LTS](../_glossary-linux.md#ubuntu-lts) for the supported distribution baseline; [GA kernel](../_glossary-linux.md#ga-kernel) and [HWE kernel](../_glossary-linux.md#hwe-kernel) for the kernel-channel distinction; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
@@ -105,7 +106,8 @@ See [Ubuntu LTS](../_glossary-linux.md#ubuntu-lts) for the supported distributio
 
 ---
 
-## Cause B: Disk Not Encrypted {#cause-b-disk-not-encrypted}
+<a id="cause-b-disk-not-encrypted"></a>
+## Cause B: Disk Not Encrypted
 
 See [LUKS](../_glossary-linux.md#luks) for the encryption framework; [dm-crypt](../_glossary-linux.md#dm-crypt) for the kernel mapper backing LUKS; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
@@ -147,7 +149,8 @@ See [LUKS](../_glossary-linux.md#luks) for the encryption framework; [dm-crypt](
 
 ---
 
-## Cause C: Password Policy Not Met {#cause-c-password-policy-not-met}
+<a id="cause-c-password-policy-not-met"></a>
+## Cause C: Password Policy Not Met
 
 > See [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
@@ -188,7 +191,8 @@ See [LUKS](../_glossary-linux.md#luks) for the encryption framework; [dm-crypt](
 
 ---
 
-## Cause D: Custom-Compliance Failure {#cause-d-custom-compliance-failure}
+<a id="cause-d-custom-compliance-failure"></a>
+## Cause D: Custom-Compliance Failure
 
 See [/var/log/intune-update.log](../_glossary-linux.md#varlogintune-updatelog) for the custom-compliance script log path; [journalctl](../_glossary-linux.md#journalctl) for the systemd journal reader; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 

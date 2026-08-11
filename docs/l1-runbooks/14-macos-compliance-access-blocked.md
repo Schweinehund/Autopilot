@@ -42,7 +42,8 @@ Go directly to the section that matches the observation:
 
 <a id="device-non-compliant"></a>
 
-## Device Non-Compliant {#device-non-compliant}
+<a id="device-non-compliant"></a>
+## Device Non-Compliant
 
 **Entry condition:** Intune admin center shows this macOS device with a "Not compliant" status.
 
@@ -70,7 +71,8 @@ Go directly to the section that matches the observation:
 
 <a id="compliant-access-blocked"></a>
 
-## Compliant but Access Blocked {#compliant-access-blocked}
+<a id="compliant-access-blocked"></a>
+## Compliant but Access Blocked
 
 **Entry condition:** Intune shows the device status as "Compliant" but the user receives an "Access blocked" or "This device is not recognized" error when accessing Microsoft 365 resources.
 

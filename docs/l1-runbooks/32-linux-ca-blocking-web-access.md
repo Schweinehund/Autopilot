@@ -65,7 +65,8 @@ Common ticket phrasings: "Edge says my device isn't allowed," "I can't sign in t
 
 ---
 
-## Cause A: Not Enrolled {#cause-a-not-enrolled}
+<a id="cause-a-not-enrolled"></a>
+## Cause A: Not Enrolled
 
 > See [web-app CA](../_glossary-linux.md#web-app-ca) for the architectural definition; [MS Edge for Linux](../_glossary-linux.md#ms-edge-for-linux) for the supported browser.
 
@@ -107,7 +108,8 @@ Common ticket phrasings: "Edge says my device isn't allowed," "I can't sign in t
 
 ---
 
-## Cause B: Non-Compliant {#cause-b-non-compliant}
+<a id="cause-b-non-compliant"></a>
+## Cause B: Non-Compliant
 
 > See [web-app CA](../_glossary-linux.md#web-app-ca) for the architectural definition; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
@@ -148,7 +150,8 @@ Common ticket phrasings: "Edge says my device isn't allowed," "I can't sign in t
 
 ---
 
-## Cause C: Edge Not Signed In {#cause-c-edge-not-signed-in}
+<a id="cause-c-edge-not-signed-in"></a>
+## Cause C: Edge Not Signed In
 
 See [MS Edge for Linux](../_glossary-linux.md#ms-edge-for-linux) for the supported browser version baseline; [Identity Broker](../_glossary-linux.md#identity-broker) for the cross-platform sign-in concept.
 

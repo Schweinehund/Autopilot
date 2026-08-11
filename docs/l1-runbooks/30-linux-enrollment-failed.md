@@ -60,7 +60,8 @@ Common ticket phrasings: "intune-portal won't install," "the sign-in keeps loopi
 
 ---
 
-## Cause A: Package Install Failure {#cause-a-package-install}
+<a id="cause-a-package-install"></a>
+## Cause A: Package Install Failure
 
 See [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for the package definition; [/var/log/dpkg.log](../_glossary-linux.md#varlogdpkglog) for the install-event log path; [APT repository](../_glossary-linux.md#apt-repository) for the packages.microsoft.com source; [dpkg](../_glossary-linux.md#dpkg) for the package manager itself.
 
@@ -101,7 +102,8 @@ See [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for t
 
 ---
 
-## Cause B: Sign-In Failure (Microsoft Identity Broker) {#cause-b-sign-in-failure}
+<a id="cause-b-sign-in-failure"></a>
+## Cause B: Sign-In Failure (Microsoft Identity Broker)
 
 See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker) for the system-scope authentication broker; [Identity Broker](../_glossary-linux.md#identity-broker) for the broader cross-platform concept; [journalctl](../_glossary-linux.md#journalctl) for the systemd journal reader.
 
@@ -145,7 +147,8 @@ See [microsoft-identity-broker](../_glossary-linux.md#microsoft-identity-broker)
 
 ---
 
-## Cause C: Enrollment Timeout (`intune-agent.timer`) {#cause-c-enrollment-timeout}
+<a id="cause-c-enrollment-timeout"></a>
+## Cause C: Enrollment Timeout (`intune-agent.timer`)
 
 See [intune-agent.timer](../_glossary-linux.md#intune-agenttimer) for the user-scope check-in timer; [systemd](../_glossary-linux.md#systemd) for the unit framework; [journalctl](../_glossary-linux.md#journalctl) for the journal reader.
 

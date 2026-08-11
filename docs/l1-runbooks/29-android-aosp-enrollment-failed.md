@@ -58,7 +58,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 <a id="cause-a-realwear"></a>
 
-## Cause A: RealWear enrollment failed {#cause-a-realwear}
+<a id="cause-a-realwear"></a>
+## Cause A: RealWear enrollment failed
 
 **Entry condition:** Admin reports the RealWear device serial is NOT visible in Intune after first power-on, OR the QR scan returned an error at first boot, OR the device cannot join the staging Wi-Fi network embedded in the QR. RealWear is supported under AOSP because no GMS is present on HMT-1 / HMT-1Z1 / Navigator 500.
 
@@ -102,7 +103,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 <a id="cause-b-zebra"></a>
 
-## Cause B: Zebra WS50 enrollment failed {#cause-b-zebra}
+<a id="cause-b-zebra"></a>
+## Cause B: Zebra WS50 enrollment failed
 
 **Entry condition:** Admin reports the Zebra WS50 wearable scanner serial is NOT visible in Intune after first power-on, OR the OEMConfig profile assignment shows Failed in Intune, OR the device is on Android 12 (NOT supported per MS Learn). Zebra WS50 is supported under AOSP because no GMS is present on the wearable scanner; if GMS is later added by Zebra, use Android Enterprise fully managed (COBO) instead.
 
@@ -145,7 +147,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 <a id="cause-c-pico"></a>
 
-## Cause C: Pico enrollment failed {#cause-c-pico}
+<a id="cause-c-pico"></a>
+## Cause C: Pico enrollment failed
 
 **Entry condition:** Admin reports the PICO device serial is NOT visible in Intune after first power-on, OR the device is a consumer Pico SKU (not Enterprise / Pro/Eye), OR PUI firmware is below floor. Pico is supported under AOSP because no GMS is present on the PICO 4 Enterprise / PICO Neo3 Pro/Eye; if a consumer Pico variant accidentally entered the fleet, AOSP enrollment will not work.
 
@@ -187,7 +190,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 <a id="cause-d-htc"></a>
 
-## Cause D: HTC VIVE Focus enrollment failed {#cause-d-htc}
+<a id="cause-d-htc"></a>
+## Cause D: HTC VIVE Focus enrollment failed
 
 **Entry condition:** Admin reports the HTC VIVE Focus device serial is NOT visible in Intune after first power-on, OR the in-device path `Settings > Advanced > MDM setup > QR code` is missing on older firmware, OR the admin attempted Vive Business Management System (VBMS) AND Intune simultaneously. HTC VIVE Focus 3 / XR Elite / Focus Vision is supported under AOSP because no GMS is present on these enterprise headsets.
 
@@ -230,7 +234,8 @@ If the OEM is not in this list (DigiLens, Lenovo ThinkReality VRX, Vuzix), or if
 
 <a id="cause-e-meta-quest"></a>
 
-## Cause E: Meta Quest enrollment failed {#cause-e-meta-quest}
+<a id="cause-e-meta-quest"></a>
+## Cause E: Meta Quest enrollment failed
 
 **Entry condition:** Admin reports the Meta Quest device serial is NOT visible in Intune after first power-on, OR NOT visible in the Meta for Work fleet view, OR Meta for Work account approval is incomplete, OR the admin is confused about Meta Horizon Managed Services (HMS) subscription status post-2026-02-20 transition. Meta Quest 2 / 3 / 3s / Pro is supported under AOSP because no GMS is present on the Meta Quest OS.
 

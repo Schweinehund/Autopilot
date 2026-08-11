@@ -61,7 +61,8 @@ Common ticket phrasings: "my device isn't compliant," "access to Outlook is bloc
 
 <a id="cause-a-play-integrity-verdict-failure"></a>
 
-## Cause A: Play Integrity Verdict Failure {#cause-a-play-integrity-verdict-failure}
+<a id="cause-a-play-integrity-verdict-failure"></a>
+## Cause A: Play Integrity Verdict Failure
 
 See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation mechanism Android uses for compliance attestation (the legacy API was deprecated by Google in January 2025; Play Integrity is the current replacement).
 
@@ -110,7 +111,8 @@ See [Play Integrity](../_glossary-android.md#play-integrity) for the attestation
 
 <a id="cause-b-os-version-policy-mismatch"></a>
 
-## Cause B: OS Version Policy Mismatch {#cause-b-os-version-policy-mismatch}
+<a id="cause-b-os-version-policy-mismatch"></a>
+## Cause B: OS Version Policy Mismatch
 
 **Entry condition:** P-09 shows "Not compliant" with a failing setting referencing the Android OS version (e.g., "Minimum OS version").
 
@@ -154,7 +156,8 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 <a id="cause-c-ca-timing-gap"></a>
 
-## Cause C: CA Timing Gap (First Compliance Evaluation Pending) {#cause-c-ca-timing-gap}
+<a id="cause-c-ca-timing-gap"></a>
+## Cause C: CA Timing Gap (First Compliance Evaluation Pending)
 
 **Entry condition:** User completed enrollment within the last 30 minutes AND is being denied access to Microsoft 365 resources. P-09 shows compliance state "Not evaluated" or "In grace period"; OR the state is "Not compliant" but the failing-settings list is EMPTY (default posture "Not compliant" toggle is active in P-08 and no policy is assigned to the user's group).
 
@@ -202,7 +205,8 @@ Cross-reference: [Android Version Matrix](../android-lifecycle/03-android-versio
 
 <a id="cause-d-passcode-encryption-policy-mismatch"></a>
 
-## Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch {#cause-d-passcode-encryption-policy-mismatch}
+<a id="cause-d-passcode-encryption-policy-mismatch"></a>
+## Cause D: Passcode / Encryption / Work Profile Security Policy Mismatch
 
 **Entry condition:** P-09 shows "Not compliant" with a failing setting referencing passcode or PIN complexity, device encryption, or work-profile password requirements.
 

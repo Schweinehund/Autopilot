@@ -45,7 +45,8 @@ This runbook has three sections based on the ESP symptom. Go directly to the sec
 
 <a id="device-phase-steps"></a>
 
-## Device Phase Steps {#device-phase-steps}
+<a id="device-phase-steps"></a>
+## Device Phase Steps
 
 **Entry condition:** ESP shows "Setting up your device..." and the device has been on this screen for more than 30 minutes.
 
@@ -74,7 +75,8 @@ The device phase installs security settings, policies, and apps required for the
 
 <a id="user-phase-steps"></a>
 
-## User Phase Steps {#user-phase-steps}
+<a id="user-phase-steps"></a>
+## User Phase Steps
 
 **Entry condition:** ESP shows "Setting up for [username]..." and the device has been on this screen for more than 60 minutes.
 
@@ -101,7 +103,8 @@ The user phase installs apps and settings assigned to the user's account. It typ
 
 <a id="error-code-steps"></a>
 
-## Error Code Steps {#error-code-steps}
+<a id="error-code-steps"></a>
+## Error Code Steps
 
 **Entry condition:** ESP displayed an error code — typically a hex code starting with `0x` (for example, `0x81036502`) or a descriptive failure message.
 

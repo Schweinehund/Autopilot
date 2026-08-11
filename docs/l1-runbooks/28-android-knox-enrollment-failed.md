@@ -56,7 +56,8 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 <a id="cause-a-b2b-account-pending"></a>
 
-## Cause A: Samsung Knox B2B Account Approval Pending {#cause-a-b2b-account-pending}
+<a id="cause-a-b2b-account-pending"></a>
+## Cause A: Samsung Knox B2B Account Approval Pending
 
 **Entry condition:** Admin reports they cannot sign in to Knox Admin Portal at knox.samsung.com — sign-in returns "Account pending approval" OR admin has not yet submitted the B2B application.
 
@@ -96,7 +97,8 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 <a id="cause-b-device-not-in-kap"></a>
 
-## Cause B: Device Not in Knox Admin Portal {#cause-b-device-not-in-kap}
+<a id="cause-b-device-not-in-kap"></a>
+## Cause B: Device Not in Knox Admin Portal
 
 **Entry condition:** Admin confirms the device serial is NOT visible in Knox Admin Portal Devices view. Device boots to consumer Setup Wizard on first power-on.
 
@@ -135,7 +137,8 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 <a id="cause-c-profile-unassigned"></a>
 
-## Cause C: KME Profile Not Assigned to Device Set {#cause-c-profile-unassigned}
+<a id="cause-c-profile-unassigned"></a>
+## Cause C: KME Profile Not Assigned to Device Set
 
 **Entry condition:** Admin confirms device IS in Knox Admin Portal Devices view but Profile column is EMPTY.
 
@@ -173,7 +176,8 @@ If none of Causes A-D match and enrollment still fails, see [Escalation Criteria
 
 <a id="cause-d-kme-zt-mutex-collision"></a>
 
-## Cause D: KME/ZT Mutual-Exclusion Conflict (Samsung) {#cause-d-kme-zt-mutex-collision}
+<a id="cause-d-kme-zt-mutex-collision"></a>
+## Cause D: KME/ZT Mutual-Exclusion Conflict (Samsung)
 
 **Entry condition:** Samsung device registered in BOTH Knox Mobile Enrollment AND Zero-Touch portal. KME takes precedence at the device firmware level when both are configured (this is Samsung firmware-level behavior; cannot be overridden via Intune or ZT portal).
 
