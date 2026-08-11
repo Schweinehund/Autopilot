@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 143
 current_phase_name: Link Coverage & Fence-Mask Unification
 status: executing
-stopped_at: Completed 143-03-PLAN.md
-last_updated: "2026-08-11T19:20:35.767Z"
+stopped_at: Completed 143-04-PLAN.md
+last_updated: "2026-08-11T19:41:32.103Z"
 last_activity: 2026-08-11
 last_activity_desc: Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 32
-  completed_plans: 27
+  completed_plans: 28
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 143 — Link Coverage & Fence-Mask Unification
-Plan: 4 of 9 complete
+Plan: 5 of 9 complete
 Status: In progress — governance gate landed, Plan 02 (TRACER) next
 Last activity: 2026-08-11 — Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 
-Progress: [████████░░] 84%
+Progress: [█████████░] 88%
 
 ## v1.20 Phase Dependency Summary
 
@@ -306,6 +306,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 143 P02 | ~40min | 3 tasks | 6 files |
 | Phase 143 P09 | ~3h | 3 tasks | 35 files |
 | Phase 143 P03 | 45min | 3 tasks | 16 files |
+| Phase 143 P04 | ~20min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -372,6 +373,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 143-03: Located every Task 2 edit by link text/target, not the plan's cited pre-conversion line numbers -- one citation was already stale relative to the plan's own projection
 - [Phase ?]: 143-03: Two admin-setup-macos self-links (K-1/K-5) confirmed to target a bold-lead blockquote, not a heading -- degraded to plain text instead of an empty () link target
 - [Phase ?]: 143-03: LINK-04 NOT marked complete -- it is a multi-plan requirement (also in Plans 04/05/06 frontmatter) discharged only when the corpus-wide checker exits 0; 49 broken anchors remain after this plan
+- [Phase ?]: 143-04: Measured the live 49-broken-anchor dry-run directly rather than reconstructing from prior plans' narrative figures -- 38-pair/49-link split reconciles the 51/67 post-conversion invariant exactly
+- [Phase ?]: 143-04: All 4 contested D-05 pairs confirmed against live files this session (entra/edit-without-view-dependency-table->Class B via rule 1, byod->Class B via exclusion 2, aosp remains Class D)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -400,8 +403,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-11T19:20:35.699Z
-Stopped at: Completed 143-03-PLAN.md
+Last session: 2026-08-11T19:41:32.034Z
+Stopped at: Completed 143-04-PLAN.md
 Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 

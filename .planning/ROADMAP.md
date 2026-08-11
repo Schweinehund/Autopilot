@@ -225,7 +225,7 @@ Plans:
   4. Fence-mask behavior is unified across all 15 call sites in the 9 named files, including both c17 sites (`:158` opening, `:166` closing), covering the measured 74 fences indented 1–3 spaces across 11 files via a `^ {0,3}` CommonMark-equivalent rule (LINK-05).
   5. c17 reports identical file and violation counts before and after the fence-mask change, and a sampled check of the newly-masked lines confirms none hides a suppressed violation (LINK-06).
 
-**Plans**: 4/9 plans executed
+**Plans**: 5/9 plans executed
 
 Plans:
 
@@ -247,7 +247,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 143-04-PLAN.md — The D-05 disjoint precedence rule + Class-C target-side `<a id>` anchors, error-code family plus the two registry-path rows
+- [x] 143-04-PLAN.md — The D-05 disjoint precedence rule + Class-C target-side `<a id>` anchors, error-code family plus the two registry-path rows
 
 **Wave 6** *(blocked on Wave 5)*
 
