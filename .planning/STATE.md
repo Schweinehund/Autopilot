@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 143
 current_phase_name: Link Coverage & Fence-Mask Unification
 status: executing
-stopped_at: Completed 143-06-PLAN.md
-last_updated: "2026-08-11T20:20:59.983Z"
+stopped_at: Completed 143-07-PLAN.md
+last_updated: "2026-08-11T20:56:30.174Z"
 last_activity: 2026-08-11
 last_activity_desc: Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 32
-  completed_plans: 30
+  completed_plans: 31
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 143 — Link Coverage & Fence-Mask Unification
-Plan: 7 of 9 complete
+Plan: 8 of 9 complete
 Status: In progress — governance gate landed, Plan 02 (TRACER) next
 Last activity: 2026-08-11 — Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 
-Progress: [█████████░] 94%
+Progress: [██████████] 97%
 
 ## v1.20 Phase Dependency Summary
 
@@ -309,6 +309,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 143 P04 | ~20min | 3 tasks | 8 files |
 | Phase 143 P05 | ~25min | 2 tasks | 13 files |
 | Phase 143 P06 | 20min | 3 tasks | 3 files |
+| Phase 143 P07 | ~45min | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -383,6 +384,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: GOV-02 row appended pre-edit-census-only (row modeled on Plan 09's precedent) to satisfy both the append-before-edit rule and the append-only ledger discipline
 - [Phase ?]: checkOutboundLinks per-link loop retired entirely (not kept redundant); checkInboundLinks now covers the hubs' outbound links as corpus-wide source
 - [Phase ?]: Summary line buckets reworded to hub-presence/corpus-link while keeping the check-nav-hub-links summary: prefix byte-identical for Phase 144's needle-spec
+- [Phase ?]: 143-07: All 15 fence-mask sites unified under ^ {0,3} CommonMark rule (14 JS + 1 PowerShell tightening); LINK-06's four legs measured (46/0/0 mask-diff, 0 Summary hits); D-20 out-of-census residual routed to Plan 08
+- [Phase ?]: 143-07: Compressed provenance comments from 3-line to plan-specified one-line form in a self-caught follow-up commit (e9a505be)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -411,8 +414,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-11T20:20:59.934Z
-Stopped at: Completed 143-06-PLAN.md
+Last session: 2026-08-11T20:56:30.129Z
+Stopped at: Completed 143-07-PLAN.md
 Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 

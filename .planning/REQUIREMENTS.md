@@ -53,8 +53,8 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 - [x] **LINK-02**: A corpus-wide checker validates every relative link and anchor across `docs/`, excluding `docs/_templates/` and masking inline code spans
 - [x] **LINK-03**: The 13 genuine broken links are fixed **[SUCCESS-CRITERION AMENDMENT, D-29]** Amended to name the two populations separately: the 13 genuine broken **file targets** and the **132** genuine broken **anchors** — 145 total.
 - [x] **LINK-04**: The checker exits 0 on the corpus with **no accepted-violation baseline**
-- [ ] **LINK-05**: Fence-mask behaviour is unified across all 15 call sites in 9 files, including **both** c17 sites
-- [ ] **LINK-06**: c17 reports identical file and violation counts before and after the fence-mask change, and the newly-masked lines are proven to hide no suppressed violation
+- [x] **LINK-05**: Fence-mask behaviour is unified across all 15 call sites in 9 files, including **both** c17 sites
+- [x] **LINK-06**: c17 reports identical file and violation counts before and after the fence-mask change, and the newly-masked lines are proven to hide no suppressed violation
 
 **Sequencing is load-bearing.** `[MEASURED]` a prototype corpus-wide checker scanned 6311 relative links → 40 broken file targets, of which **26** are `docs/_templates/*` placeholders, **1** is a false positive (`docs/recipes/03-windows-11-multi-app-kiosk.md:173`, a PowerShell `[xml](Get-Content …)` cast read as a markdown link), leaving **13 genuine** — 11 `../` over-escapes in `docs/_glossary-macos.md` and 2 in `docs/admin-setup-ios/`. Anchor direction: **271 failures → 70** once HTML `<a id>` anchors are recognised, i.e. **201 of 271 (74%) are pure model gaps**. LINK-01 must therefore precede LINK-02, and LINK-04 forbids a baseline: a day-one ratchet would freeze 201 false positives as permanently accepted *and invisible* — the very disposition class this milestone exists to delete. **[SUCCESS-CRITERION AMENDMENT, D-29]** The figures above (6311 links / 40 broken file targets / 271 → 70 anchors / 74%) are the **prototype** scope (`docs/_templates/` INCLUDED, inline masking OFF). The LINK-02 deliverable scope is: 274 files / 6252 links / 13 broken file targets / 268 → 67 (Pandoc `{#id}` model) → **132** (GitHub model, the shipped checker). `[DERIVED]` templates add 58 links and 26 broken targets, and dropping inline masking adds exactly 1 link and 1 target, so `13 + 26 + 1 = 40` and `6252 + 58 + 1 = 6311` reconcile the two scopes with zero unexplained residue. Correct "74%" to **75%** (201 of 271 = 74.2%; the ratified figure is 75% per D-29).
 
@@ -143,8 +143,8 @@ Which phases cover which requirements. Populated during roadmap creation.
 | LINK-02 | Phase 143 | Complete |
 | LINK-03 | Phase 143 | Complete |
 | LINK-04 | Phase 143 | Complete |
-| LINK-05 | Phase 143 | Pending |
-| LINK-06 | Phase 143 | Pending |
+| LINK-05 | Phase 143 | Complete |
+| LINK-06 | Phase 143 | Complete |
 | NEST-01 | Phase 142 | Complete |
 | GOV-01 | Phase 139 | Complete |
 | GOV-02 | Phase 139 | Complete |
