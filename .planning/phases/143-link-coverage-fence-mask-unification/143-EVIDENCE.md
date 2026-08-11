@@ -424,3 +424,135 @@ rewrite) can proceed against this measured 49-broken-anchor ground truth. `docs/
 is now cleared (Class D, landed this plan) and no longer among Plans 04/05's remaining work; the
 ETG pair remains Plan 05's sole confirmed Class-B item pending its own investigation of the other
 broken-anchor pairs in this dry-run's failure list above.
+
+## Plan 04 — D-05 precedence rule, per-pair ledger, four contested-pair adjudication (Task 1)
+
+**Opened:** 2026-08-11 (this session), before any code edit this plan makes. Tree: main worktree
+at HEAD `599a996b` (post-Plan-03). Node: v24.17.0. OS: Windows 10 Pro 19045.
+
+### The D-05 precedence rule (fixed order, three branches, two exclusions)
+
+D-05 requires the classes be defined disjointly or a fixed precedence rule be stated, because D-04
+routes Class B and Class C to opposite remedies and an order-dependent split silently picks the
+remedy (`[MEASURED]` D-05: testing C before B moves nine anchors — `{A:1,B:3,C:48,D:15}` vs
+`{A:1,B:12,C:46,D:8}` — `#intune` alone satisfies both tests under an unordered read). The rule
+below is evaluated in this fixed order for every (target-file, fragment) pair; the FIRST branch
+that holds assigns the class, so every pair belongs to exactly one class and no ordering artifact
+can pick the remedy silently.
+
+1. **Class A/B — source-side link rewrite.** An anchor already exists in the target file that is a
+   *semantic* match for the link's intent (judged from the link text plus the target heading's own
+   text), not merely a prefix/substring match (D-06's `#intune` false-friend rule). If this holds:
+   rewrite the source fragment to the existing anchor.
+2. **Class C — target-side `<a id>`.** No semantic match exists under rule 1, but the fragment
+   names a **content** row that exists in a table in the target file: the row's key cell carries
+   the fragment's token, hyphen-exact, on a non-fence-masked line. If this holds: prepend
+   `<a id="FRAGMENT-VERBATIM"></a>` to that row's first cell.
+3. **Class D — de-anchor.** Neither holds. Drop the `#fragment`, keep the file link.
+
+**Exclusion 1 — a changelog/revision-history row is never a Class-C anchor site.** Those tables
+record edit history, not the concept the fragment names; anchoring there would produce a link that
+jumps to a provenance table instead of the content it names. The mechanical token locator proposes
+exactly this for three pairs, all adjudicated below.
+
+**Exclusion 2 — a row whose first cell already carries an `<a id>` is a rule-1 candidate, not a
+rule-2 site.** `docs/android-lifecycle/02-provisioning-methods.md:45` already carries
+`<a id="byod-work-profile"></a>` on its BYOD Work Profile row, so the incoming `#byod` fragment is
+a Class-B rewrite target (`#byod-work-profile`), not a second anchor stacked on the same row —
+confirmed below.
+
+### Four contested pairs — each ruling confirmed against the live file this session
+
+| pair | mechanical locator says | ruling | evidence (confirmed this session) | remedy |
+|---|---|---|---|---|
+| `docs/_glossary.md#entra` (2 links) | TABLE `:285` (changelog row: "Phase 75 (SSOREF-01/XC-1): added `### Entra ID SSO` term...") | **Class B** | `sed -n '188,193p' docs/_glossary.md` confirms `### Entra ID SSO` heading present at `:190` (GitHub slug `entra-id-sso`) — a real semantic-match heading exists, rule 1 fires before rule 2 ever gets a turn | rewrite source fragment `#entra` → `#entra-id-sso` at `docs/error-codes/03-esp-enrollment.md:32` and `docs/error-codes/05-hybrid-join.md:23`; **deferred to Plan 05** |
+| `docs/_glossary-android.md#aosp` (2 links) | TABLE `:331` (changelog row: "Phase 45 AEAOSPFULL-09...") | **Class D** | `grep -n 'AOSP' docs/_glossary-android.md` confirmed this session: every hit is prose (`:57,:63,:222,:245,:247,:249,:277`) or the changelog row (`:331`) — zero `#{1,6}` heading lines mention AOSP | de-anchor; **already landed in Plan 03** (this pair does not appear in this plan's live 49-failure dry-run — confirms Plan 03's remedy is durable) |
+| `docs/android-lifecycle/02-provisioning-methods.md#byod` (1 link) | TABLE `:45` (already anchored) | **Class B** | `sed -n '43,47p' docs/android-lifecycle/02-provisioning-methods.md` confirms the row's first cell reads `<a id="byod-work-profile"></a>BYOD Work Profile` at `:45` — exclusion 2 fires: an anchor already exists on this row, so the pair is a rule-1 rewrite target, not a second `<a id>` | rewrite source fragment `#byod` → `#byod-work-profile` at `docs/admin-setup-android/04-byod-work-profile.md:294`; **deferred to Plan 05** |
+| `docs/cross-platform/apple-business/01-role-permission-model.md#edit-without-view-dependency-table` (1 link) | TABLE `:395` (changelog row: "Phase 62 plan 62-04: initial authoring...") | **Class B** | `sed -n '340,346p;390,398p'` confirms the real heading `## Edit-without-View Dependency Table (OP-3 Prevention)` exists at `:343` (GitHub slug `edit-without-view-dependency-table-op-3-prevention`) — rule 1 fires; the incoming fragment is simply missing the heading's parenthetical, not a Class-C table-row site | rewrite source at `docs/_glossary-apple-business.md:96` to `#edit-without-view-dependency-table-op-3-prevention`; **deferred to Plan 05** |
+
+The last ruling is the one that moved from an earlier draft's Class-C guess: the mechanical locator
+proposed a changelog row, but the section already HAS a heading and the incoming fragment is merely
+missing that heading's parenthetical suffix — exactly why the fixed-order rule matters (rule 1 fires
+before rule 2 is ever consulted).
+
+### Per-pair remedy ledger — measured live (not transcribed), fully reconciles the 51/67 invariant
+
+**Method:** the same temporary-widening procedure as Plans 03/09 — `checkInboundLinks`'s two
+`continue` guards (`check-nav-hub-links.mjs:284` `if (hubSet.has(relPath)) continue;` and `:297`
+`if (!hubSet.has(resolvedRel)) continue;`) deleted in the working tree only, `node
+scripts/validation/check-nav-hub-links.mjs --verbose` run, full output captured and programmatically
+resolved (source file + relative target → absolute target path, grouped by (target-file, fragment)),
+then `git checkout -- scripts/validation/check-nav-hub-links.mjs` reverted. `git status --porcelain`
+confirmed empty afterward. This measurement is the ground truth for this plan's Task 2/3 edits — not
+projected from any earlier plan's narrative figure.
+
+**Headline measurement, live at this plan's start:** 0 broken file targets, **49** broken anchors
+across **38** distinct (target-file, fragment) pairs — an exact match to Plan 03's own closing
+figure, confirming zero drift between plans.
+
+**Class split of the current 38 live pairs / 49 live links (Class D's 12 pairs/16 links already
+resolved by Plan 03 and so absent from this live scan):**
+
+| Class | Pairs | Links | Disposition |
+|---|---|---|---|
+| C (target-side `<a id>`, this plan) | 30 | 36 | error-code family 28 pairs/34 links (Task 2) + registry-paths 2 pairs/2 links (Task 3) |
+| B (source-side rewrite, Plan 05) | 8 | 13 | listed below, deferred |
+| **Live total** | **38** | **49** | matches the dry-run summary exactly |
+
+**The 8 live Class-B pairs (deferred to Plan 05), measured this session:**
+
+| pair | links |
+|---|---|
+| `docs/_glossary.md#enrollment-status-page` | 2 |
+| `docs/_glossary.md#entra` | 2 |
+| `docs/_glossary.md#self-deploying` | 2 |
+| `docs/android-lifecycle/02-provisioning-methods.md#byod` | 1 |
+| `docs/android-lifecycle/03-android-version-matrix.md#cope` | 2 |
+| `docs/cross-platform/apple-business/01-role-permission-model.md#edit-without-view-dependency-table` | 1 |
+| `docs/lifecycle-apv2/00-overview.md#enrollment-time-grouping----the-core-mechanism` (ETG) | 2 |
+| `docs/reference/macos-commands.md#intunemacODC` | 1 |
+| **Total** | **8 pairs / 13 links** |
+
+`grep -c 'deferred to Plan 05' .planning/phases/143-link-coverage-fence-mask-unification/143-EVIDENCE.md`
+returns at least 4 (the three contested-pair rows above plus this section's own summary references).
+
+**The 30 live Class-C pairs (this plan's Task 2/3 scope), measured this session:**
+
+| File | Pairs | Links |
+|---|---|---|
+| `docs/error-codes/01-mdm-enrollment.md` | 9 | 9 |
+| `docs/error-codes/02-tpm-attestation.md` | 8 | 14 (5 double-linked: `0x800705b4`, `0x801C03F3`, `0x801c03ea`, `0x81039001`, `0x81039023`, `0x81039024` each link from both `00-index.md` and `04-pre-provisioning.md`) |
+| `docs/error-codes/03-esp-enrollment.md` | 3 | 3 |
+| `docs/error-codes/04-pre-provisioning.md` | 1 | 1 |
+| `docs/error-codes/05-hybrid-join.md` | 7 | 7 |
+| `docs/reference/registry-paths.md` | 2 | 2 |
+| **Total** | **30** | **36** |
+
+### Reconciling the full 51-pair / 67-link post-conversion invariant
+
+The plan's own frontmatter/action text states the invariant as: **51 distinct (target-file,
+fragment) pairs, 67 links, every pair in exactly one class, class sets summing to Class C 31/38,
+Class D 12/16, Class B 8/13.** Adding the tracer's already-resolved 1 pair/2 links (Plan 02, Task 2
+— `docs/error-codes/01-mdm-enrollment.md#0x80180014`, landed before this plan and so absent from
+the live scan above) to this session's live-measured 30 pairs/36 links gives Class C = 31 pairs/38
+links exactly. Class D's 12 pairs/16 links (Plan 03, absent from the live scan since already
+resolved) plus this session's measured Class C (31) and Class B (8) sum to 12+31+8 = **51 pairs**,
+and 16+38+13 = **67 links** — the invariant holds, reconciled against a live measurement rather than
+transcribed from the plan.
+
+**Pre-conversion defect census, recorded with its own distinct scope (not superseding the
+post-conversion figures above):** `[MEASURED, Plan 02]` the pre-D-38-conversion corpus carried
+**77 pairs / 132 links** broken (the full defect census against the pre-conversion, `{#id}`-override
+Pandoc-model corpus). `[MEASURED, Plan 09]` the D-38 all-87 `{#id}`-to-`<a id>` conversion closed
+**26 pairs / 65 links** of that census target-side (zero new prose, zero regressions — the AFTER
+pair set was a strict subset of the BEFORE pair set). 77 − 26 = 51 pairs; 132 − 65 = 67 links —
+the post-conversion invariant this plan's ledger reconciles above descends directly from this
+defect census and its D-38 closure, not a separately-derived figure.
+
+### Verification
+
+`node scripts/validation/carve-gate.mjs` — this task edits `.planning/` only, outside
+`IN_SCOPE_PREFIXES`, so the gate is unaffected: exit 0, off-list=0 (unchanged from Plan 03's
+closing state).
+
+## Plan 04 — Task 2/3 dry-run checkpoint (measured after the corpus edits land)
