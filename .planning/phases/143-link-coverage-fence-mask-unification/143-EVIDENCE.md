@@ -873,3 +873,119 @@ scope, strictly after this row lands.
 **Result: PASS** — grep and the D-13 ruling both precede any code edit; zero frozen call-site
 conflicts found; `HUB_PATHS` consciously ruled to stay live with a split role, never left as dead
 code by omission.
+
+## LINK-04 no-baseline discharge
+
+**Opened:** 2026-08-11 (this session), after Task 2's flip commit (`db576147`). Tree: main worktree
+at HEAD `db576147`. Node: v24.17.0. OS: Windows 10 Pro 19045. Cache: warm.
+
+Discharging LINK-04's "no accepted-violation baseline of any kind" with five independent positive
+checks, not a zero count alone — a zero count is compatible with a baseline that happens to be
+empty, and an invisible disposition class is exactly what this milestone exists to delete.
+
+**1. Absence of any baseline artifact.**
+
+```
+$ git status --porcelain scripts/validation/
+(empty)
+```
+
+No new file under `scripts/validation/` from this phase's work — the phase creates no `.json`,
+`.txt` or `.md` sidecar consumed by the checker. (The working tree does carry pre-existing,
+session-opening untracked clutter elsewhere — `.agents/`, `.claude/skills/fireworks-tech-graph/`,
+`.claude/skills/jira-milestone/install-jira-milestone-hook.cjs`, `.obsidian/`,
+`142-PATTERNS.md`, `.143-edge-coverage.json`, `e1`, `e2`, `ee`, `skills-lock.json` — none of it
+under `scripts/validation/`, none of it consumed by this checker, all pre-dating this plan's
+session per Plan 05's own recorded deviation.)
+
+**2. Absence of any in-source baseline structure.**
+
+```
+$ grep -inE 'baseline|allowlist|accepted|expected|ratchet|skip|ignore|known' scripts/validation/check-nav-hub-links.mjs
+7:// failures, with NO accepted-violation baseline, allowlist, ratchet file or expected-failure list
+270:// no hub-only filter here (D-12 removed both the source-side skip and the target-side filter that
+347:  const expectedDup = [
+353:  const dupOk = expectedDup.every(s => dupSet.has(s));
+455:// no accepted-violation baseline, allowlist, ratchet file or expected-failure list of any kind
+```
+
+Every hit classified by direct read: `:7` and `:455` are header/main-runner prose ASSERTING no
+baseline exists (the words appear inside a negation, not a structure). `:270` is a comment
+describing what D-12's edit *removed* (the historical `hubSet`-based source-side skip condition) —
+prose recounting a deletion, not a live structure. `:347`/`:353` are the `--self-test` block's Case
+C fixture (`expectedDup`, a local array of the four expected duplicate-heading slug variants used
+to assert the dedup counter works) — synthetic test data scoped to one self-test assertion, not a
+corpus-violation baseline consumed by the normal-mode scan. **Zero hits are identifiers, arrays or
+file reads that gate or suppress a reported corpus failure.**
+
+**3. No committed red interval.**
+
+```
+$ git log --oneline -3
+db576147 feat(143-06): flip check-nav-hub-links.mjs to corpus-wide scan (LINK-02/LINK-04)
+50913c0b docs(143-06): GOV-02 pre-edit census + D-13 HUB_PATHS ruling for corpus flip
+a291d693 docs(143-05): complete Class-B source-side link rewrites + dry-run-to-zero plan
+```
+
+`50913c0b` (Task 1) makes no code edit — the checker's default scope is still the pre-flip 4-hub
+scan there, itself green (0/0/0, confirmed in the same commit's pre-edit baseline). `db576147`
+(Task 2) is the flip commit itself, and by the time it lands the corpus was already fully repaired
+(Plans 02-05 drove the widened dry-run to 0/0/0 before this plan ever ran) — so the very first
+commit in which the corpus-wide scan is the checker's DEFAULT scope is also the first commit in
+which it reports 0. No commit in this sequence, or in the phase's full sequence back to Plan 01,
+ever lands a corpus-wide red state. This is the structural reason no baseline was ever tempting,
+and it is what D-14's ordering (LINK-01 → `_templates` exclusion → inline-code masking → corpus
+flip, flip last) bought.
+
+**4. Exit-code semantics.**
+
+```
+$ grep -n "process.exit" scripts/validation/check-nav-hub-links.mjs
+449:  process.exit(stFailed > 0 ? 1 : 0);
+481:process.exit(allFailures.length > 0 ? 1 : 0);
+```
+
+Exactly two `process.exit` call sites in the entire file. Normal mode (`:481`): exit 0 iff
+`allFailures.length === 0` (zero hub-presence failures AND zero corpus-link failures combined),
+exit 1 otherwise. `--self-test` mode (`:449`): exit 0 iff `stFailed === 0` (zero failed
+assertions), exit 1 otherwise. No third exit code exists anywhere in the file — every other
+control-flow path either falls through to one of these two lines or is a `return`/`continue`
+inside a function that contributes to the counts these two lines test.
+
+**5. The dry-run ladder, closed.**
+
+| stage | broken file targets | broken anchors | total |
+|---|---|---|---|
+| bare flip (pre-LINK-01, pre-repair, D-14's rejected ordering) | — | — | **311** |
+| Plan 02 post-LINK-01 | — | — | 175 |
+| Plan 02 post-`_templates`+inline-mask | — | — | 173 → 143 |
+| Plan 09 post-D-38 conversion (dry-run) | 13 | 65 | 78 |
+| Plan 03 post-LINK-03+Class-D (dry-run) | 0 | 49 | 49 |
+| Plan 04 post-Class-C (dry-run) | 0 | 13 | 13 |
+| Plan 05 post-Class-B (dry-run) | 0 | 0 | 0 |
+| **Plan 06 committed state (this task, not a dry-run — the checker's own default scope)** | **0** | **0** | **0** |
+
+Full sequence: 175 → 173 → 143 → 78 → 49 → 13 → 0 (dry-run) → **0 (committed)**. The final row is
+the qualitative change this plan makes: every prior 0 was produced by temporarily widening the
+checker in the working tree and reverting before commit (`git checkout -- scripts/validation/
+check-nav-hub-links.mjs`, confirmed empty every time). This row's 0 is the checker's own default,
+landed and committed — `node scripts/validation/check-nav-hub-links.mjs` with zero flags reports
+`0 hub-presence failure(s), 0 corpus-link failure(s), 0 total`, exit 0.
+
+**Runtime of the committed corpus scan, measured n=3 on a quiesced main worktree (no concurrent
+build/test running), tree at HEAD `db576147`, cache warm, Node v24.17.0, Windows 10 Pro 19045:**
+
+```
+run 1: 754 ms
+run 2: 738 ms
+run 3: 754 ms
+```
+
+**Range: ~738-754 ms.** Recorded as a range across 3 runs, never a single value, per this phase's
+own D-36 discipline. This figure is what Phase 144 needs when it wires the spawn into
+`check-phase-143.mjs` under a job timeout — sub-second on this machine, leaving wide margin under
+any plausible CI job budget.
+
+**Result: PASS** — all five checks confirm positive absence of any accepted-violation baseline;
+the dry-run ladder is closed at 0 (committed); exit-code semantics are fully enumerated (two sites,
+no third code); the runtime range is recorded for Phase 144's job-timeout sizing.
