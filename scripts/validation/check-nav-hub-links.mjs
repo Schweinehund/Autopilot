@@ -91,16 +91,19 @@ function relNormalize(abs) {
 // buildFenceMask: mask code-fence-interior lines (retrofit-mermaid-structural.mjs:262-280,
 // verbatim) -- excludes fenced ```markdown/```text example headings and links from both
 // the anchor-set builder and the link scanner.
+// LINK-05 (Phase 143, D-16/D-21): the ` {0,3}` leading allowance is the CommonMark
+// indented-fence rule (0-3 leading spaces still open/close a fence) -- this is the
+// reference instance the other 14 fence-mask call sites in the repo copy verbatim.
 function buildFenceMask(lines) {
   const mask = new Array(lines.length).fill(false);
   let fenced = false, fenceChar = '', fenceLen = 0;
   for (let i = 0; i < lines.length; i++) {
     const t = lines[i];
     if (!fenced) {
-      const m = t.match(/^(`{3,}|~{3,})/);
+      const m = t.match(/^ {0,3}(`{3,}|~{3,})/);
       if (m) { fenced = true; fenceChar = m[1][0]; fenceLen = m[1].length; }
     } else {
-      const m = t.match(/^(`{3,}|~{3,})/);
+      const m = t.match(/^ {0,3}(`{3,}|~{3,})/);
       if (m && m[1][0] === fenceChar && m[1].length >= fenceLen) {
         fenced = false;
       } else {

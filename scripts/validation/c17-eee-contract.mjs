@@ -147,6 +147,9 @@ function checkFile(relPath, content) {
   // Lines inside a code fence (``` or ~~~) must be excluded from heading checks (#2,#3,#4,#5)
   // so that H1/H2 examples inside code blocks (e.g. EEE-SOP-standard.md example section,
   // l2-template.md powershell fences) do not trigger false violations.
+  // LINK-05 (Phase 143, D-16/D-21): ` {0,3}` leading allowance is the CommonMark
+  // indented-fence rule, copied verbatim from check-nav-hub-links.mjs:85-112
+  // (buildFenceMask, the reference instance).
   const inCodeFence = (() => {
     const mask = new Array(bodyLines.length).fill(false);
     let fenced = false;
@@ -155,7 +158,7 @@ function checkFile(relPath, content) {
     for (let i = 0; i < bodyLines.length; i++) {
       const t = bodyLines[i];
       if (!fenced) {
-        const m = t.match(/^(`{3,}|~{3,})/);
+        const m = t.match(/^ {0,3}(`{3,}|~{3,})/);
         if (m) {
           fenced = true;
           fenceChar = m[1][0];
@@ -163,7 +166,7 @@ function checkFile(relPath, content) {
           // Opening fence line is a structural marker — not "inside"
         }
       } else {
-        const m = t.match(/^(`{3,}|~{3,})/);
+        const m = t.match(/^ {0,3}(`{3,}|~{3,})/);
         if (m && m[1][0] === fenceChar && m[1].length >= fenceLen) {
           fenced = false;
           // Closing fence line is a structural marker — not "inside"
