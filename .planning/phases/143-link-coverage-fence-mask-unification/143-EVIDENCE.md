@@ -1422,3 +1422,48 @@ most exposed by the trigger-blindness gap named above — LINK-02 describes what
 and coverage that never runs on the covering PR is coverage in name only until Phase 144's wiring
 and, more importantly, a future `docs/` path-filter widening (not scoped to this phase, not named
 by any v1.20 requirement) actually lands.
+
+## Post-execution regression: v1.19 C9 banned-phrase, caught by the apex chain
+
+**Found by the orchestrator's regression gate, after all 9 plans reported complete and after the
+verifier returned PASSED.** The verifier was explicitly told not to run `check-phase-138.mjs` (the
+apex chain) because the orchestrator was running it in parallel; the apex is what caught this. Had
+neither run it, the phase would have sealed green on a real red.
+
+`[MEASURED]` `node scripts/validation/check-phase-138.mjs` → **94 PASS / 1 FAIL / 0 SKIPPED**, the
+single failure being `V-138-AUDIT-HARNESS: v1.19-milestone-audit.mjs exits 0`. Running that harness
+directly: `[9/16] C9: COPE banned-phrase check FAIL — 2 un-exempted hit(s):
+docs/admin-setup-android/08-cope-full-admin.md:64, :277`.
+
+**Root cause — this phase caused it.** C9 bans `\bCOPE\b[^.]*\bremoved\b`
+(`v1.19-audit-allowlist.json` `cope_banned_phrases[2]`). Plan 143-05's Class-B rewrite repointed
+those two links from `#cope` to the true slug `#android-11--cope-nfc-provisioning-removed`. The
+links were correct and resolved; the new fragment simply placed the literal word `removed` after
+`COPE` on both lines, with no intervening period. A correct link repair tripped a prose guard.
+
+**Remedy — target-side, per the ratified D-04 hierarchy.**
+`docs/android-lifecycle/03-android-version-matrix.md` carries a mode-anchor block for its mode
+table — `<a id="cobo">`, `byod`, `dedicated`, `zte`, `aosp` — and **`cope` was the one mode
+missing**. That omission is why `#cope` was broken in the first place. Added `cope` to the block and
+reverted both links to `#cope`. This removes the false positive at source rather than exempting it,
+and touches no frozen v1.19 artifact.
+
+**Second-order defect, caught on re-run — the line-index-drift class.** The first attempt placed
+`<a id="cope"></a>` on its own new line. That shifted `### Android 11 — COPE NFC Provisioning
+Removed` from line 57 to 58, and C9's own `c9_exemptions[0]` is **pinned to line 57** of that file.
+Result: `2 hits → 1 hit`, at the newly-shifted line — one false positive converted into another.
+Corrected by appending the anchor to the existing `<a id="cobo"></a>` line, leaving the file's line
+count unchanged so the pin holds. `[MEASURED]` the heading is back at line 57. The corpus already
+carries multi-anchor lines (`docs/admin-setup-android/05-dedicated-devices.md:242`, noted in Plan
+09's summary) and the checker uses `matchAll`, so both ids are recognised.
+
+**Post-fix state**, `[MEASURED]`: `v1.19-milestone-audit.mjs` **16 passed / 0 failed** (was 15/1);
+`check-nav-hub-links.mjs` `0 hub-presence / 0 corpus-link / 0 total` exit 0; `--self-test` 10/10;
+`c17-eee-contract.mjs` `234 files, 0 with violations, 0 total`, all 13 counters 0; `carve-gate.mjs`
+`107 in-scope, all on-list`; `check-phase-51/52/54/113/115/120/123/124` all exit 0. Commit `ea8f5d9e`.
+
+**Lesson for Phase 144 and beyond.** A link repair is not a prose-neutral edit. Changing a URL
+fragment changes the *text of the line*, and this corpus has eight banned-phrase regexes (C9) plus
+another eight (C15) that scan raw line text. Any future anchor-slug change must be re-run against
+the milestone harnesses, not only against the link checker. Equally: inserting a line into a file
+that any allowlist pins by line number is a breaking change — prefer appending to an existing line.
