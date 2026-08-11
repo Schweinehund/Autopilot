@@ -556,3 +556,44 @@ defect census and its D-38 closure, not a separately-derived figure.
 closing state).
 
 ## Plan 04 — Task 2/3 dry-run checkpoint (measured after the corpus edits land)
+
+**Method:** identical to Task 1's — `checkInboundLinks`'s two `continue` guards
+(`check-nav-hub-links.mjs:284`/`:297`) deleted in the working tree only, `node
+scripts/validation/check-nav-hub-links.mjs --verbose` run, full output captured, then
+`git checkout -- scripts/validation/check-nav-hub-links.mjs` reverted. `git status --porcelain`
+confirmed empty afterward.
+
+**Headline measurement — matches the plan's own projection exactly:**
+
+| metric | before this plan (Task 1) | after Tasks 2+3 |
+|---|---|---|
+| broken file targets | 0 | **0** |
+| broken anchors | 49 | **13** |
+| **total** | 49 | **13** |
+
+Delta: 49 − 13 = 36 links closed — exactly the 34 error-code links (Task 2) plus the 2
+registry-path links (Task 3), matching the plan's own "34 + 2 = 36" projection with no divergence
+to reconcile. The 13 that remain are Plan 05's entire Class-B set, confirmed identical to the
+8-pair/13-link table recorded in Task 1's ledger above (`enrollment-status-page` x2, `entra` x2,
+`self-deploying` x2, `byod` x1, `cope` x2, `edit-without-view-dependency-table` x1, ETG x2,
+`intunemacODC` x1 — 8 pairs, 13 links, sum confirmed).
+
+**Dry-run ladder:** 175 → 173 → 143 → 78 → 49 → **13** (this plan).
+
+**Regression gates, all unchanged from Task 2's closing state:** `node
+scripts/validation/c17-eee-contract.mjs` → `234 files checked, 0 with violations, 0 total
+violations`, all 13 counters 0. `node scripts/validation/check-nav-hub-links.mjs` (unpatched) →
+`0 outbound failure(s), 0 inbound failure(s), 0 total`, exit 0. `grep -rc '{#' docs/ --include=*.md`
+summed → 0 (the D-38 conversion's zero-`{#id}`-remaining invariant still holds). `git status
+--porcelain scripts/validation/check-nav-hub-links.mjs` → empty, confirming the dry-run widening
+was never committed.
+
+**Not committed:** the widened checker file was reverted immediately after each measurement in
+this plan (Task 1's pre-edit measurement and this Task 3 post-edit measurement); no intermediate
+commit ever carried the widened guards.
+
+**Next-plan readiness:** Plan 05 owns the remaining 8 pairs / 13 links, all Class B, all already
+identified and their remedy stated in Task 1's contested-pair table and per-pair ledger above (4
+contested pairs fully adjudicated with file:line evidence; the remaining 4 — `esp`,
+`self-deploying-mode`, `cope`, `intunemacODC` — still need Plan 05's own per-link semantic-match
+read, per D-04 rule 1's "judged from the link text plus the target heading's own text" test).

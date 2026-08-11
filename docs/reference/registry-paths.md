@@ -26,8 +26,8 @@ Canonical reference for all Autopilot-relevant Windows registry locations. Runbo
 
 | Registry Path | Purpose | Referenced By | Notes |
 |---------------|---------|---------------|-------|
-| `HKLM:\SOFTWARE\Microsoft\Provisioning\Diagnostics\Autopilot` | Registration state — stores TenantId, TenantDomain, ProfileName after successful Autopilot profile download | `Get-AutopilotRegistrationState`, `Reset-AutopilotRegistration` | HIGH confidence — extracted from .psm1 source |
-| `HKLM:\SOFTWARE\Microsoft\Provisioning\AutopilotSettings` | Assigned Autopilot profile details — populated after profile assignment syncs to device | `Get-AutopilotProfileAssignment`, `Reset-AutopilotRegistration` | HIGH confidence — extracted from .psm1 source |
+| <a id="provisioning-diagnostics"></a>`HKLM:\SOFTWARE\Microsoft\Provisioning\Diagnostics\Autopilot` | Registration state — stores TenantId, TenantDomain, ProfileName after successful Autopilot profile download | `Get-AutopilotRegistrationState`, `Reset-AutopilotRegistration` | HIGH confidence — extracted from .psm1 source |
+| <a id="autopilotsettings"></a>`HKLM:\SOFTWARE\Microsoft\Provisioning\AutopilotSettings` | Assigned Autopilot profile details — populated after profile assignment syncs to device | `Get-AutopilotProfileAssignment`, `Reset-AutopilotRegistration` | HIGH confidence — extracted from .psm1 source |
 | `HKLM:\SOFTWARE\Microsoft\Enrollments` | MDM enrollment state root; subkeys per enrollment GUID | `Restart-EnrollmentStatusPage`, `Remove-AutopilotDevice` | HIGH confidence — extracted from .psm1 source |
 | `HKLM:\SOFTWARE\Microsoft\Enrollments\{GUID}\FirstSync` | ESP device phase completion tracking; `IsServerProvisioningDone` value indicates device phase status | `Restart-EnrollmentStatusPage` | HIGH confidence — extracted from .psm1 source |
 | `HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM` | MDM sync scheduling; presence indicates EnterpriseMgmt scheduled tasks are available | `Restart-EnrollmentStatusPage` | HIGH confidence — extracted from .psm1 source |
