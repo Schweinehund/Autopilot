@@ -829,26 +829,48 @@ here — CONTEXT already closes this question definitively.
 
 ## Open Questions
 
-1. **Does the corpus contain any `{#id}`-shaped token mid-heading or with unusual spacing (e.g.
-   zero preceding spaces)?**
-   - What we know: D-02's grep confirms all 87 occurrences are "on heading lines"; this research
-     did not verify *positional* placement within those lines beyond the one worked example.
-   - What's unclear: whether the self-test needs a mid-heading edge case or whether trailing-only
-     coverage is sufficient.
-   - Recommendation: run `grep -n '\{#[a-zA-Z0-9_-]+\}[^$]' docs -r` at plan time (a `{#id}` NOT
-     immediately followed by end-of-line) before finalizing the self-test case list; this is a
-     30-second check that removes the residual uncertainty in A2.
+**All open questions are RESOLVED. No question blocks planning.**
 
-2. **Should the widened checker's report format change beyond the label wording, or stay
-   byte-identical apart from wording, ahead of Phase 144's not-yet-authored pin?**
-   - What we know: the c17 precedent shows Phase 144 will very likely pin something concrete
-     about this file's output (three pins on the c17 sibling).
-   - What's unclear: exactly what Phase 144 will choose to pin, since `check-phase-143.mjs` does
-     not exist yet.
-   - Recommendation: keep the summary line's *shape* stable (Pitfall 4) and let Phase 144 make its
-     own pinning decision against whatever this phase ships — do not attempt to pre-guess Phase
-     144's needle-spec, per D-23's explicit "hands off a needle-spec" framing (the needle-spec is
-     Phase 144's artifact to write, not this phase's to anticipate).
+1. **Does the corpus contain any `{#id}`-shaped token mid-heading or with unusual spacing?
+   — (RESOLVED)** `[MEASURED]` by the orchestrator at HEAD, main worktree:
+   `grep -rhoE '^#{1,6}\s.*$' docs/ --include=*.md | grep -cE '\{#[a-zA-Z0-9_-]+\}'` = **87**;
+   the same pipe filtered to trailing-only (`\{#[a-zA-Z0-9_-]+\}[[:space:]]*$`) = **87**. A
+   non-trailing search (`\{#[a-zA-Z0-9_-]+\}[^[:space:]]`) returns **zero** files.
+   **Every one of the 87 overrides is trailing.** The self-test needs no mid-heading case; a
+   trailing-only case plus a negative (no-override) case is sufficient coverage. Assumption A2 is
+   discharged.
+
+2. **What will Phase 144 pin on the widened summary line? — (RESOLVED — deliberately out of
+   scope, not unknown.)** CONTEXT D-23 makes the needle-spec Phase 144's artifact to write, not
+   this phase's to anticipate. The binding obligation on Phase 143 is only that the summary line
+   keep a stable, greppable shape (Pitfall 4). That is an implementable requirement today and
+   needs no answer from Phase 144. Nothing blocks planning.
+
+3. **Does `<a id>` in a table cell survive GitHub's sanitizer, and is the GitHub slug model
+   correct? — (RESOLVED — upgraded from CITED to VERIFIED.)** The research rated these MEDIUM
+   because no live test was run. The orchestrator ran one against **GitHub's own rendering API**
+   (`gh api -X POST markdown`), which applies the exact pipeline and sanitizer github.com uses:
+
+   ```
+   <td>
+   <a id="user-content-0x80180014"></a><code>0x80180014</code>
+   </td>
+   ...
+   <h2 class="heading-element">Cause A: Package Install Failure {#cause-a-package-install}</h2>
+   <a id="user-content-cause-a-package-install-failure-cause-a-package-install" class="anchor"
+      href="#cause-a-package-install-failure-cause-a-package-install">
+   ```
+
+   Three facts, all first-party: (a) **`<a id>` inside a `<td>` survives** — D-04's class-C
+   remedy for 46 anchors is viable; (b) **the `{#…}` renders as literal visible heading text and
+   participates in the slug**, and GitHub's own permalink `href` is
+   `#cause-a-package-install-failure-cause-a-package-install` — CONTEXT D-01 confirmed exactly;
+   (c) **NEW — GitHub rewrites every authored `id` to `user-content-<id>` while heading permalink
+   `href`s stay unprefixed.** GitHub's client-side JS reconciles the two, which is why authored
+   `#x` → `<a id="x">` works on github.com.
+   **Implementation consequence:** the checker MUST model the **un-prefixed** id — it compares the
+   authored fragment against the authored `id`, and both omit the prefix. Do not "correct" the
+   checker to expect `user-content-`; record this so a future maintainer does not.
 
 ## Environment Availability
 
