@@ -225,39 +225,43 @@ Plans:
   4. Fence-mask behavior is unified across all 15 call sites in the 9 named files, including both c17 sites (`:158` opening, `:166` closing), covering the measured 74 fences indented 1–3 spaces across 11 files via a `^ {0,3}` CommonMark-equivalent rule (LINK-05).
   5. c17 reports identical file and violation counts before and after the fence-mask change, and a sampled check of the newly-masked lines confirms none hides a suppressed violation (LINK-06).
 
-**Plans**: 8 plans
+**Plans**: 9 plans
 
 Plans:
 
 **Wave 1**
 
-- [ ] 143-01-PLAN.md — Governance gate: D-29's seven-surface SC amendment (alone, first) + the CARVE Category-10 amendment enumerating 49 corpus paths (D-31 steps 1 and 2)
+- [ ] 143-01-PLAN.md — Governance gate: D-29's seven-surface SC amendment (alone, first) + the CARVE Category-10 amendment enumerating 63 corpus paths (D-31 steps 1 and 2, D-38)
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 143-02-PLAN.md — TRACER: D-01 one-way checkpoint, then the GitHub anchor model end-to-end on one real path, plus `docs/_templates/` exclusion and inline-code masking (D-14 steps 1-3)
+- [ ] 143-02-PLAN.md — Record D-38 (owner ruling discharging D-01's one-way gate), then TRACER: the GitHub anchor model end-to-end on one real path, plus `docs/_templates/` exclusion and inline-code masking (D-14 steps 1-3)
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 143-03-PLAN.md — LINK-03's 13 `../` over-escaped file targets + the Class-D de-anchor set (D-04/D-06)
+- [ ] 143-09-PLAN.md — D-38: convert all 87 `{#id}` overrides across 29 files to own-line `<a id>` anchors; closes 65 links target-side, 143 -> 78
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 143-04-PLAN.md — The D-05 disjoint precedence rule + Class-C target-side `<a id>` anchors, error-code family and beyond
+- [ ] 143-03-PLAN.md — LINK-03's 13 `../` over-escaped file targets + the Class-D de-anchor set (D-04/D-06)
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 143-05-PLAN.md — Class-B source-side rewrites to true GitHub slugs; dry-run reaches zero
+- [ ] 143-04-PLAN.md — The D-05 disjoint precedence rule + Class-C target-side `<a id>` anchors, error-code family plus the two registry-path rows
 
 **Wave 6** *(blocked on Wave 5)*
 
-- [ ] 143-06-PLAN.md — The corpus flip: delete `:259` + `:269` (D-12), preserve the hub-existence hard-fail (D-13), LINK-04 no-baseline discharge
+- [ ] 143-05-PLAN.md — Class-B source-side rewrites to true GitHub slugs; dry-run reaches zero
 
 **Wave 7** *(blocked on Wave 6)*
 
-- [ ] 143-07-PLAN.md — LINK-05 fence unification across all 15 sites + LINK-06's four evidence legs
+- [ ] 143-06-PLAN.md — The corpus flip: delete `:259` + `:269` (D-12), preserve the hub-existence hard-fail (D-13), LINK-04 no-baseline discharge
 
 **Wave 8** *(blocked on Wave 7)*
+
+- [ ] 143-07-PLAN.md — LINK-05 fence unification across all 15 sites + LINK-06's four evidence legs
+
+**Wave 9** *(blocked on Wave 8)*
 
 - [ ] 143-08-PLAN.md — Hand-off: the `check-phase-143.mjs` needle-spec (D-23), the D-26 deferred-cleanup row, `FENCE-AXIS-02`, and the enforcement-gap record
 
