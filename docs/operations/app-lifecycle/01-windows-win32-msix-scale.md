@@ -27,7 +27,8 @@ overview, see [App Lifecycle Overview](00-overview.md). For detection-rule prior
 broader Win32 packaging reference, see
 [Win32 App Packaging Reference](../../reference/win32-app-packaging.md).
 
-## Supersedence {#supersedence}
+<a id="supersedence"></a>
+## Supersedence
 
 Win32 app supersedence chains let an admin replace an installed Win32 app with a different Win32
 app while preserving install context. This section covers the supersedence behavior matrix, the
@@ -77,7 +78,8 @@ the primary supersedence behavior section, which makes it easy to miss during in
 Plan supersedence chains for Available-assigned apps; for Required-assigned apps, use the manual
 re-targeting workflow.
 
-## Dependency Graphs {#dependency-graphs}
+<a id="dependency-graphs"></a>
+## Dependency Graphs
 
 Win32 app dependencies let an admin declare that App B requires App A, so Intune Management
 Extension (IME) installs App A before App B. Dependencies are processed before the main app,
@@ -151,7 +153,8 @@ determines what install replaces what; the dependency tree determines what insta
 For detection rule priority and the broader Win32 dependency-chain behavior reference, see
 [Win32 App Packaging Reference](../../reference/win32-app-packaging.md).
 
-## ContentPrepTool Packaging {#contentpreptool-packaging}
+<a id="contentpreptool-packaging"></a>
+## ContentPrepTool Packaging
 
 Win32 app delivery via Intune requires the source application to be packaged into the
 `.intunewin` format using **Win32ContentPrepTool**. This section covers the current GA version,

@@ -30,7 +30,8 @@ to fully cloud-managed updates typically migrate the Windows Update Policies wor
 first, then enable Autopatch to take over ring management. Co-management's Pilot Intune state is
 acceptable for Autopatch enablement (devices in pilot collection are eligible).
 
-## Autopatch Prerequisites {#autopatch-prerequisites}
+<a id="autopatch-prerequisites"></a>
+## Autopatch Prerequisites
 
 Windows Autopatch requires co-management with the following **three workloads** set to
 **Pilot Intune** or **Intune** before Autopatch can be enabled:

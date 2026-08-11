@@ -89,7 +89,8 @@ The portal report shows the summary status only. The detection and remediation s
 Analytics workspace if the Intune-Log-Analytics connector is configured. See the next section
 for canonical script-authoring patterns and the Log Analytics surface for L2-level investigation.
 
-## Canonical script-authoring pattern {#canonical-script-authoring}
+<a id="canonical-script-authoring"></a>
+## Canonical script-authoring pattern
 
 The canonical Intune Remediations script-authoring pattern is intentionally minimalist: two
 PowerShell scripts, exit-code semantics, and stdout output captured for L2 investigation.
@@ -183,7 +184,8 @@ summary state, Log Analytics is the canonical surface.
   scripts require `Bypass` execution policy override at the per-script setting level (less
   secure).
 
-## Microsoft Graph Compliance Reports {#graph-compliance-reports}
+<a id="graph-compliance-reports"></a>
+## Microsoft Graph Compliance Reports
 
 For fleet-wide drift signal analysis beyond the per-device status report, Microsoft Graph
 `exportJobs` exposes compliance reports that can be pulled programmatically or consumed via

@@ -100,7 +100,8 @@ Two workloads are implicitly switched when the Device Configuration workload's s
 > [Workload Slider Migration > Endpoint Protection HIGH-RISK](02-windows-workload-sliders.md) for
 > the full HIGH-RISK callout.
 
-## Resource Access Deprecation {#resource-access-deprecation}
+<a id="resource-access-deprecation"></a>
+## Resource Access Deprecation
 
 The Resource Access workload is **deprecated since CB 2203** and was mandated to Intune in
 **CB 2403**. Starting in CB 2403:

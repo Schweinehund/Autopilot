@@ -86,7 +86,8 @@ even though the broader direction was set in April 2024.
 For Microsoft Learn's current MGP / private-app publishing surface, see [Add Managed Google
 Play apps to Microsoft Intune](https://learn.microsoft.com/en-us/intune/intune-service/apps/apps-add-android-for-work).
 
-## Zebra OEMConfig APK Side-Load (NOT via MGP) {#zebra-oemconfig}
+<a id="zebra-oemconfig"></a>
+## Zebra OEMConfig APK Side-Load (NOT via MGP)
 
 Zebra wearable scanners (WS50, etc.) and other Zebra AOSP devices have NO GMS (Google Mobile
 Services) and therefore NO Managed Google Play delivery channel. The OEMConfig profile delivery
