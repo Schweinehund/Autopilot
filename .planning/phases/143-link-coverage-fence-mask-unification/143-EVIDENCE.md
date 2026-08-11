@@ -364,3 +364,63 @@ every downstream edit by heading/content text, never by a pre-conversion line nu
 
 **Not committed:** `git status --porcelain scripts/validation/check-nav-hub-links.mjs` confirmed
 empty after both widened runs (BEFORE and AFTER) were reverted.
+
+## Plan 03 — LINK-03 + Class-D per-class remedy ledger, dry-run checkpoint (Task 3)
+
+**Method:** identical to Plan 09's Task 3 — `checkInboundLinks`'s two `continue` guards
+(`:284` `if (hubSet.has(relPath)) continue;` and `:297` `if (!hubSet.has(resolvedRel)) continue;`
+at this plan's tree state) deleted in the working tree only, `node scripts/validation/
+check-nav-hub-links.mjs --verbose` run, full output captured, then
+`git checkout -- scripts/validation/check-nav-hub-links.mjs` reverted. `git status --porcelain`
+confirmed empty afterward.
+
+**Per-class remedy ledger, keyed to Plan 09's 51-pair / 67-link post-conversion split:**
+
+| Class | Count landed this plan | Mechanism |
+|---|---|---|
+| LINK-03 file targets | 13 links / 10 lines (11 total links, one line carries 2) | `../` level dropped, destination unchanged (Task 1) |
+| Class D (de-anchor) | 12 pairs / 16 links | `#fragment` dropped, file target kept; 2 of the 16 are self-links degraded to plain text (Task 2) |
+| Class B (ETG) | 0 (explicitly excluded) | Left untouched — Plan 05's Class-B rewrite |
+
+**Headline measurement:**
+
+| metric | measured | Plan 09 baseline |
+|---|---|---|
+| files scanned | 274 (unchanged — no file added/removed this plan) | 274 |
+| relative links | 6252 (unchanged — every edit rewrites an existing link's target in place, none added/removed; `git diff --numstat` across both tasks confirms per-file added==removed) | 6252 |
+| broken file targets | **0** | 13 |
+| broken anchors | **49** | 65 |
+| **total** | **49** | 78 |
+
+`grep -c "target file not found"` on the captured dry-run output returns **0**, confirming LINK-03's
+13 are fully cleared and Task 1's zero-file-target claim independently — the three Stage
+fragments (`#stage-2-...`, `#stage-7-...`, `#stage-9-...`) that only became evaluable once the
+paths resolved add zero new anchor failures, matching D-09's stability claim.
+
+**Dry-run ladder:** 175 → 173 → 143 → 78 → **49** (this plan; 78 → 49 is a drop of 29 — the 13
+file-target links plus the 16 de-anchored Class-D links).
+
+**Reconciliation against the plan's own acceptance text:** two of the plan's literal grep
+patterns produced a measured value different from the plan's authored number, both recorded (not
+silently forced) per D-36:
+- `grep -c '](macos-lifecycle/02-mdm-migration-psso.md' docs/_glossary-macos.md` measures **9**,
+  not the plan's authored **7** — the plan's own repair table names exactly 9 rows targeting that
+  file (`:103,111,151,161,171,189,199,207,327`), so 9 is what the table itself implies.
+- `git diff -- docs/ | grep '^+' | grep -cE '^\+#{1,6} |^\+\|'` measures **4**, not the plan's
+  expected **0** — all 4 are pre-existing table rows in `docs/error-codes/*.md` whose fragment sat
+  mid-row; a same-line edit inside an existing `|`-delimited row reproduces a line starting with
+  `|` in the unified diff, indistinguishable by this grep from a genuinely new row. The substantive
+  no-new-content prohibition is verified instead by `git diff --numstat -- docs/`, which shows
+  equal added/removed line counts in every one of the 15 files this plan touched (13 in Task 1 + 11
+  in Task 2, with `docs/_glossary-macos.md`/`docs/_glossary-apple-business.md` appearing once
+  each with their own totals) — confirming every edit is a same-line replacement, nothing added.
+
+**Not committed:** `git status --porcelain scripts/validation/check-nav-hub-links.mjs` confirmed
+empty after the widened run was reverted; the unpatched checker still reports
+`0 outbound failure(s), 0 inbound failure(s), 0 total`, exit 0.
+
+**Next-plan readiness:** Plans 04 (Class C target-side `<a id>`) and 05 (Class B source-side
+rewrite) can proceed against this measured 49-broken-anchor ground truth. `docs/_glossary-android.md#aosp`
+is now cleared (Class D, landed this plan) and no longer among Plans 04/05's remaining work; the
+ETG pair remains Plan 05's sole confirmed Class-B item pending its own investigation of the other
+broken-anchor pairs in this dry-run's failure list above.
