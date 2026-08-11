@@ -197,15 +197,25 @@ function toAbs(relPath) {
   return join(process.cwd(), relPath);
 }
 
-// extractLinks: scan non-fenced lines for [text](target), 1-based line numbers.
+// extractLinks: scan non-fenced lines for [text](target), 1-based line numbers. Inline
+// single-backtick code spans are masked (replaced with an equal-length run of spaces) before
+// the link regex runs, so a link-shaped construct inside a code span -- e.g. a PowerShell
+// `[xml](Get-Content ...)` cast -- is never misread as a markdown link. Masking preserves line
+// length so column arithmetic elsewhere stays exact. LINK-02:
+// docs/recipes/03-windows-11-multi-app-kiosk.md:173 is the real corpus instance this leg exists
+// to fix. A single-backtick-run regex is sufficient -- RESEARCH.md Q2 measured zero
+// multi-backtick spans anywhere in docs/, so a CommonMark-conformant tokenizer would be unused
+// complexity.
 function extractLinks(lines, fenceMask) {
   const links = [];
   const linkRe = /\[([^\]]*)\]\(([^)]+)\)/g;
+  const codeSpanRe = /`[^`\n]*`/g;
   for (let i = 0; i < lines.length; i++) {
     if (fenceMask[i]) continue;
+    const maskedLine = lines[i].replace(codeSpanRe, (span) => ' '.repeat(span.length));
     linkRe.lastIndex = 0;
     let m;
-    while ((m = linkRe.exec(lines[i])) !== null) {
+    while ((m = linkRe.exec(maskedLine)) !== null) {
       links.push({ text: m[1], target: m[2], line: i + 1 });
     }
   }
@@ -428,6 +438,20 @@ if (SELF_TEST) {
     '<a id> double-tag line: both ids present (global loop, not a single match)',
     doubleTagSet.has('exit-kiosk-pin-synchronization') && doubleTagSet.has('exit-kiosk-pin'),
     `set: [${[...doubleTagSet].join(', ')}]`
+  );
+
+  // J: inline-code-span masking -- a link-shaped construct inside a single-backtick span is
+  // never extracted, but an ordinary link on the same line still is. This is the
+  // docs/recipes/03-windows-11-multi-app-kiosk.md:173 failure mode D-14 names as the
+  // load-bearing evidence for this leg.
+  const inlineMaskLine = '`$x = [xml](Get-Content .\\kiosk.xml -Raw)` and [real link](target.md)';
+  const inlineMaskLines = [inlineMaskLine];
+  const inlineMaskFenceMask = buildFenceMask(inlineMaskLines);
+  const inlineMaskLinks = extractLinks(inlineMaskLines, inlineMaskFenceMask);
+  stAssert(
+    'inline-code-span masking: backtick-spanned [xml](...) not extracted, real link still is',
+    inlineMaskLinks.length === 1 && inlineMaskLinks[0].target === 'target.md',
+    `links: [${inlineMaskLinks.map(l => l.target).join(', ')}]`
   );
 
   process.stdout.write('\nSelf-test: ' + stPassed + ' passed, ' + stFailed + ' failed\n');
