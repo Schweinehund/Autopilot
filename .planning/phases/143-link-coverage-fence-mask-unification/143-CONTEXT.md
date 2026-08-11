@@ -123,8 +123,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
 
 ### Area 1 — the anchor model (OWNER-RATIFIED 2026-08-11)
 
-- **D-01: The checker models Pandoc, the corpus is authored for GitHub, and 65 links are green in
-  the checker while broken on GitHub. Adopt the GitHub model and fix all 65. (OWNER-RATIFIED)**
+- **D-01:** The checker models Pandoc, the corpus is authored for GitHub, and 65 links are green in
+  the checker while broken on GitHub. Adopt the GitHub model and fix all 65. (OWNER-RATIFIED)
   `computeAnchorSetFromContent` (`check-nav-hub-links.mjs:137-143,151-156`) registers a `{#id}`
   override verbatim **and suppresses the heading's auto-slug** — Pandoc/kramdown semantics. GitHub
   does neither: the `{#…}` renders as literal text and *participates in* the slug. `[MEASURED]`
@@ -144,7 +144,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   — **Reversibility:** one-way — the model change is what makes the 65 visible; reverting it after
   the corpus is repaired would re-hide nothing but would silently re-admit the class.
 
-- **D-02: DELETE the draft's "`{#id}` is barred" `[MEASURED]` row — it is false about the corpus.**
+- **D-02:** DELETE the draft's "`{#id}` is barred" `[MEASURED]` row — it is false about the corpus.
   `[MEASURED]` `grep -rcE '\{#[a-zA-Z0-9_-]+\}' docs` → **87 occurrences across 29 files**, all on
   heading lines. The convention (plain GitHub auto-slug, no `{#id}` overrides) is genuinely
   ratified — `102-RESEARCH.md:360`, `103-RESEARCH.md:408`, and `91-RESEARCH.md:88` which states
@@ -153,8 +153,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   CR-01 fix justified itself on "Kramdown/GFM anchor semantics generally" — wrong for GFM, and
   that is the root cause of D-01.
 
-- **D-03: The residual anchors are genuine corpus defects — do NOT attempt a further model
-  widening.** Verified on four cases independently. This is the `V-132-HUBSNOTWIRED` false-negative
+- **D-03:** The residual anchors are genuine corpus defects — do NOT attempt a further model
+  widening. Verified on four cases independently. This is the `V-132-HUBSNOTWIRED` false-negative
   class: a model change that "resolved" a genuine break would be a false-negative generator.
   **Correction to the draft:** its fourth cited case was wrong —
   `docs/lifecycle-apv2/00-overview.md:40` **does** carry
@@ -162,15 +162,15 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   inserted token (`etg`), not pointing at an absent heading. Re-audit every "no target" claim
   before acting on it; a stale-by-one-token anchor and a missing section have opposite remedies.
 
-- **D-04: Remedy direction is per-class, and "add the missing section" is BARRED.
-  (OWNER-RATIFIED)** Class C (token present in an existing table row) → **target-side `<a id>`** on
+- **D-04:** Remedy direction is per-class, and "add the missing section" is BARRED.
+  (OWNER-RATIFIED) Class C (token present in an existing table row) → **target-side `<a id>`** on
   that row: a repair to an existing row, not new content, and `<a id>` is precisely what LINK-01
   teaches the checker to resolve. Class B/A (a correct target exists under a different slug) →
   **source-side link rewrite**. Class D (no correct target exists) → **drop the fragment and link
   to the file**. Nothing in this phase authors prose. See D-12 for the governing bar.
 
-- **D-05: Class B and C are NOT disjoint, and the draft's 46/12 split was an if/else ORDERING
-  artifact.** `[MEASURED]` re-running the classifier with C tested before B moves nine anchors:
+- **D-05:** Class B and C are NOT disjoint, and the draft's 46/12 split was an if/else ORDERING
+  artifact. `[MEASURED]` re-running the classifier with C tested before B moves nine anchors:
   `{A:1, B:3, C:48, D:15}` vs `{A:1, B:12, C:46, D:8}`. `#intune` satisfies both tests. Since D-04
   routes B and C to **opposite** remedies, the planner must define the classes disjointly or state
   an explicit precedence rule — an order-dependent split silently picks the remedy.
@@ -178,7 +178,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   prose-only 6, both 5 — so **6 members have no table row to anchor** and D-04's class-C remedy
   does not reach them.
 
-- **D-06: `#intune` is a false friend — the prefix match is not a semantic match.** `[MEASURED]`
+- **D-06:** `#intune` is a false friend — the prefix match is not a semantic match. `[MEASURED]`
   `docs/_glossary.md` has **no** `### Intune` entry; it carries `### Intune Management Extension
   (IME)` and `### Intune Provisioning Client`. Under D-04 and D-12 the remedy is de-anchor, not
   "add a real `### Intune` entry". Clean class-B substitutions that DO hold:
@@ -187,15 +187,15 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   `#enrollment-status-page` the classifier's prefix match is `## Enrollment`, not `### ESP`. The
   false-friend count is **5 of 12**, not 4.
 
-- **D-07: `<a id>` precedent is BROADER than the draft claimed, which strengthens D-04.**
+- **D-07:** `<a id>` precedent is BROADER than the draft claimed, which strengthens D-04.
   `[MEASURED]` **201** `<a id=` in the corpus, **146** in `admin-setup-android/` +
   `android-lifecycle/` and **55 outside**, including macOS runbooks 11–14,
   `l1-runbooks/02-esp-stuck-or-failed.md`, `21-ios-compliance-blocked.md` and
   `ios-lifecycle/01-ade-lifecycle.md`. It is a corpus-wide convention, not an Android-family one.
   `[MEASURED]` **0** `<a name=` anywhere.
 
-- **D-08: `<a id>` insertions are c17-safe (measured, not hedged) but are NOT proven in the
-  `.docx`.** `[MEASURED]` 10 real `<a id>` applied to `docs/error-codes/01-mdm-enrollment.md` left
+- **D-08:** `<a id>` insertions are c17-safe (measured, not hedged) but are NOT proven in the
+  `.docx`. `[MEASURED]` 10 real `<a id>` applied to `docs/error-codes/01-mdm-enrollment.md` left
   c17 at `234 files / 0 violations / 0 total` and dropped residual anchors 67→56; neither
   assertion #11 (table rows) nor #12 (blockquote length) is sensitive to raw HTML in a cell.
   **But** `[MEASURED]` pandoc 3.7.0.2 emits **no `w:bookmarkStart`** for a table-cell `<a id>`,
@@ -203,14 +203,14 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   deliverable uses no section anchors at all, so this is **not a defect** — but a bundle build
   exiting 0 must never be presented as evidence the anchor works in the deliverable.
 
-- **D-09: 132 is stable across LINK-03 — verified, not assumed.** `[MEASURED]` 6 of the 11
+- **D-09:** 132 is stable across LINK-03 — verified, not assumed. `[MEASURED]` 6 of the 11
   `docs/_glossary-macos.md` over-escapes carry anchor fragments that are **never evaluated today**
   (`check-nav-hub-links.mjs:236-241` `continue`s when the target file is missing), so the figure
   was structurally a pre-LINK-03 count. All three target headings resolve under the GitHub model at
   `docs/macos-lifecycle/02-mdm-migration-psso.md`, so LINK-03 adds **0** new anchor failures.
   Re-measure after LINK-03 anyway before writing any number into a permanent amendment.
 
-- **D-10: Class C is not purely mechanical — name the editorial calls.** `[MEASURED]`
+- **D-10:** Class C is not purely mechanical — name the editorial calls. `[MEASURED]`
   `0x80180014` occupies two rows (`01-mdm-enrollment.md:33,34`) and `0x801c03ea` two rows
   (`02-tpm-attestation.md:34,35`); which row carries the anchor is an editorial choice.
   `[DERIVED]` the 36 error-code deep links need only **29** distinct anchors (7 codes are linked
@@ -220,8 +220,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
 
 ### Area 2 — checker vessel
 
-- **D-11: Extend `check-nav-hub-links.mjs` IN PLACE. Do not create a net-new file. Do NOT rename
-  it.** It already walks and fence-masks the whole corpus; coverage is condition removal, not new
+- **D-11:** Extend `check-nav-hub-links.mjs` IN PLACE. Do not create a net-new file. Do NOT rename
+  it. It already walks and fence-masks the whole corpus; coverage is condition removal, not new
   machinery. It is already CARVE Category 3, so no allowlist amendment is needed *for the vessel*
   — avoiding a third recurrence of the absent-from-allowlist trap (Phase 141 D-12
   `check-phase-67`, Phase 142 D-10 `check-phase-138`). `check-phase-123.mjs:40` pins its **path
@@ -234,8 +234,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   `:410`, `:414`, `:419-420`, which would otherwise print "N inbound failure(s)" for a 274-file
   corpus scan.
 
-- **D-12: Corpus coverage requires deleting TWO conditions — `:269` AND `:259` — and the plan must
-  name which function survives. The draft's D-08 was WRONG and is withdrawn.**
+- **D-12:** Corpus coverage requires deleting TWO conditions — `:269` AND `:259` — and the plan must
+  name which function survives. The draft's D-08 was WRONG and is withdrawn.
   `:269` (`if (!hubSet.has(resolvedRel)) continue;`) filters by *target*; `:259`
   (`if (hubSet.has(relPath)) continue;`) skips the 4 hubs as *sources*. The draft said "retire the
   inbound pass" — but `checkInboundLinks()` **is** the only corpus scan, and retiring it collapses
@@ -249,7 +249,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   — **Reversibility:** costly — the surviving pass's report format and exit semantics are what
   Phase 144's needle-spec pins.
 
-- **D-13: Preserve the `hub file not found` hard-fail and rule on `HUB_PATHS`.**
+- **D-13:** Preserve the `hub file not found` hard-fail and rule on `HUB_PATHS`.
   `checkOutboundLinks:222-224` pushes a failure when a hub file is missing; `checkInboundLinks:261`
   merely `continue`s. Collapsing to one pass silently deletes the only assertion that the four
   ratified hubs **exist**, and makes the "D-01 locked" `HUB_PATHS` roster (`:26-32`) dead code.
@@ -257,7 +257,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   `[MEASURED]` the `--self-test` is unaffected: all 7 assertions exercise only `githubSlug`,
   `computeAnchorSetFromContent` and `resolveLinkTarget`; none touches `HUB_PATHS` or either scan.
 
-- **D-14: Ordering is LINK-01 → `_templates` exclusion → inline-code masking → corpus flip.**
+- **D-14:** Ordering is LINK-01 → `_templates` exclusion → inline-code masking → corpus flip.
   Flipping first produces a **311**-finding red interval with no diagnostic value. `[MEASURED]` the
   inline-mask leg is load-bearing: without it broken file targets go 13 → **14**, the extra being
   `docs/recipes/03-windows-11-multi-app-kiosk.md:173`'s
@@ -265,7 +265,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   as a markdown link. **Correction:** the draft's "268 + 40" mixed processed and raw counts; the
   real bare-flip figure is **311** (271 anchor + 40 file).
 
-- **D-15: Two scan-scope hazards the draft missed, both currently masked by `:269`.**
+- **D-15:** Two scan-scope hazards the draft missed, both currently masked by `:269`.
   (a) `[MEASURED]` **14** links resolve outside `docs/` and exactly **one** target exists —
   `docs/_glossary-linux.md → ../.planning/research/PITFALLS.md`. `.planning/` is *deliberately*
   outside `carve-gate`'s `IN_SCOPE_PREFIXES`; rule on whether it is in the checker's scope.
@@ -275,8 +275,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
 
 ### Area 3 — fence-mask unification
 
-- **D-16: Verbatim `^ {0,3}` into all 15 sites; do NOT create `_lib/fence-mask.mjs` — but the
-  draft's REASONS are struck.** `[MEASURED]` `scripts/validation/_lib/` already holds three shared
+- **D-16:** Verbatim `^ {0,3}` into all 15 sites; do NOT create `_lib/fence-mask.mjs` — but the
+  draft's REASONS are struck. `[MEASURED]` `scripts/validation/_lib/` already holds three shared
   modules imported **92 times** (`frozen-at-close.mjs` 43, `exec-fail-detail.mjs` 33,
   `archive-path.mjs` 24), plus `scripts/pipeline/lib/ooxml.mjs` — the shared-lib idiom is the
   **incumbent** one for small pure helpers, not a novel structure. And "PowerShell cannot import an
@@ -290,7 +290,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   — **Reversibility:** costly — undoing means touching all 15 sites again across 9 frozen files,
   each needing its own GOV-02 ledger row (D-19).
 
-- **D-17: `convert.ps1` is a TIGHTENING on three axes, not a widening — its own ledger row.**
+- **D-17:** `convert.ps1` is a TIGHTENING on three axes, not a widening — its own ledger row.
   `[MEASURED]` `convert.ps1:108` is `'^\s*(```|~~~)'`, which already matches (a) 4+-space and
   (b) tab indents, and — because .NET `\s` covers `\p{Z}` — (c) NBSP / U+2000–U+200A / U+3000.
   `^ {0,3}` narrows all three. `[MEASURED]` 0 live instances of any, so it is behaviourally
@@ -299,7 +299,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   while proposing none for editing `convert.ps1`'s fence loop, which feeds the D-03(b) fail-closed
   guard at `:129`.
 
-- **D-18: Two further unification axes exist and are DEFERRED with names.**
+- **D-18:** Two further unification axes exist and are DEFERRED with names.
   (a) **Fence length** — `[MEASURED]` `convert.ps1:110` closes via
   `TrimStart().StartsWith($fenceChar)` where `$fenceChar` holds only the 3-char prefix, so a
   4-backtick opener is closed by a 3-backtick line; the 14 JS sites track `fenceLen` and require
@@ -309,10 +309,10 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   token **`FENCE-AXIS-02`** (every other carry-forward in this repo has a token: `SWEEP-09`,
   `DEFER-121-07-B`, `CARVE-1`).
 
-- **D-19 → renumbered, see Governance. D-19 below is the fence-census correction.**
+- **D-19:** → renumbered, see Governance. D-19 below is the fence-census correction.
 
-- **D-20: The fence census is scoped to a REGEX LITERAL, not to fence behaviour — record the
-  divergent sites it misses.** `[MEASURED]` after this phase the repo still holds:
+- **D-20:** The fence census is scoped to a REGEX LITERAL, not to fence behaviour — record the
+  divergent sites it misses. `[MEASURED]` after this phase the repo still holds:
   `check-phase-66.mjs:274` — `if (/^\s*```/.test(ln)) { inFence = !inFence; return; }`, a live
   fence tracker in a **frozen chain validator** (CARVE Category 5, runs in every apex) using `^\s*`
   and a bare toggle with no `fenceChar`/`fenceLen`; **12** unanchored strip sites
@@ -322,8 +322,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   `-136:216`, `-55:345`, `-122:44`. Rule each in-scope or as a named carry-forward — do not let
   LINK-05 claim a unification the repo does not have.
 
-- **D-21: Unify the MASK only; leave detection regexes at column 0. The "widening creates an
-  evasion" objection is PRE-ANSWERED and must not recur.** `[MEASURED]` on unmodified HEAD c17, a
+- **D-21:** Unify the MASK only; leave detection regexes at column 0. The "widening creates an
+  evasion" objection is PRE-ANSWERED and must not recur. `[MEASURED]` on unmodified HEAD c17, a
   **column-0** `~~~` wrapper already suppresses assertions #1–#5 today with zero code changes — the
   capability is pre-existing and `^ {0,3}` only adds an indented spelling of it. Further, `^ {0,3}`
   is a **CommonMark conformance fix**: an indented fence *is* a real fence and its interior *is*
@@ -334,7 +334,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   ```` ```mermaid ```` opens a mask but escapes assertion #1 — `[MEASURED]` **0** mermaid fences of
   any indentation exist in `docs/`.
 
-- **D-22: LINK-06's evidence needs THREE legs, not the draft's ranking of two.**
+- **D-22:** LINK-06's evidence needs THREE legs, not the draft's ranking of two.
   (a) c17 count-equality before/after (234/0/0, all 13 counters 0). (b) The 46-line mask-state diff
   with 0 c17-relevant matches. (c) **NEW — an assertion-#5 leg the draft's pattern set cannot
   reach:** `c17:259-264` is a *content-agnostic word count* over any unmasked line in a
@@ -348,8 +348,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
 
 ### Area 4 — enforcement surface (OWNER-RATIFIED 2026-08-11)
 
-- **D-23: Phase 143 authors + self-tests + runs the checker to green; Phase 144 wires it into
-  `check-phase-143.mjs`, NOT into the harness as a C18. (OWNER-RATIFIED)** `check-phase-139..NN.mjs`
+- **D-23:** Phase 143 authors + self-tests + runs the checker to green; Phase 144 wires it into
+  `check-phase-143.mjs`, NOT into the harness as a C18. (OWNER-RATIFIED) `check-phase-139..NN.mjs`
   is booked **verbatim** by HARN-18, and `check-phase-119.mjs:148` is the validator-layer spawn
   idiom (`execFileSync('node', [TOOL], { stdio: 'pipe', timeout: 300000, cwd: process.cwd() })`).
   This needs **no** scope amendment, runs inside the apex chain, and adds **no** second permanent
@@ -367,7 +367,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   — **Reversibility:** costly — Phase 144's validator must carry the spawn forward or enforcement
   evaporates, exactly as it did for this checker between Phases 123 and 143.
 
-- **D-24: "Inert for 20 phases" is FALSE — the draft's causal premise is struck.** `[MEASURED]`
+- **D-24:** "Inert for 20 phases" is FALSE — the draft's causal premise is struck. `[MEASURED]`
   the checker has been run as a plan-level `<automated>` gate and verifier spot-check in Phases
   **123, 130, 135 and 137**; `137-VERIFICATION.md:27` scores **SC5** on it
   (`0 outbound / 0 inbound / 0 total`) and `:70` lists it as a PASS gate. The real gap is **CI
@@ -376,7 +376,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   workflow, not 16; and "its only reference anywhere is check-phase-123's presence check" is false
   — the true claim is **zero *executing* references outside `.planning/`**.
 
-- **D-25: Trigger-blindness is the real enforcement gap, and it survives D-23. Name it.**
+- **D-25:** Trigger-blindness is the real enforcement gap, and it survives D-23. Name it.
   `[MEASURED]` `audit-harness-v1.19-integrity.yml:22-33` — the template the 17th workflow copies —
   filters `pull_request` on `scripts/validation/v1.19-*`, `check-phase-*.mjs`, the workflow file
   and `.planning/REQUIREMENTS.md`; **10 of 16 workflows carry zero `docs/` path filters**. A
@@ -386,7 +386,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   Stop-hook "is advisory, **not the enforcement mechanism itself**", and `[MEASURED]` three hooks
   already exist, so a new one would be the **fourth**.
 
-- **D-26: Add the late-discovery mitigation the draft missed.** Phase 144 is terminal and blocked
+- **D-26:** Add the late-discovery mitigation the draft missed. Phase 144 is terminal and blocked
   on 139–143; if the wiring turns the checker red there, no phase remains to absorb it and the
   milestone bar ("both accepted-red dispositions **deleted**") is what would give. `[MEASURED]` at
   0.34–0.81 s the checker can ride HARN-19's 3-axis terminal re-audit as a spot-check **regardless**
@@ -394,8 +394,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   success. Route the hand-off through a row in `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`,
   the established instrument, not through prose.
 
-- **D-27: Phase 143's own verification is goal-backward — "enforced" is a real risk, not
-  hygiene.** ROADMAP Phase 143's goal says the corpus has "durable, **enforced**" coverage, and
+- **D-27:** Phase 143's own verification is goal-backward — "enforced" is a real risk, not
+  hygiene. ROADMAP Phase 143's goal says the corpus has "durable, **enforced**" coverage, and
   `gsd-verifier` scores Goal Achievement / Observable Truths against the *goal*, not only the SC
   list (see `142-VERIFICATION.md`). Deferring enforcement risks failing Phase 143 itself, which
   hard-blocks Phase 144. Also separate the two requirements: "exits 0" is **LINK-04's** wording
@@ -405,13 +405,13 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
 
 ### Governance (OWNER-RATIFIED 2026-08-11 — amend and absorb in Phase 143)
 
-- **D-28: The roadmap's "Discuss-phase flags: None dominant" is FALSE and is amended.** It rested
+- **D-28:** The roadmap's "Discuss-phase flags: None dominant" is FALSE and is amended. It rested
   on "LINK-01's precedence and LINK-04's no-baseline rule are already settled by the requirement
   text". Both *are* settled. What no requirement, success criterion or CARVE category addressed is
   the **145 genuine breaks** (13 file targets + 132 anchors) that LINK-04 requires be cleared with
   no baseline — of which 65 were invisible to the checker entirely (D-01).
 
-- **D-29: Amendment surfaces — SEVEN statements, not one.** The draft named only LINK-03.
+- **D-29:** Amendment surfaces — SEVEN statements, not one. The draft named only LINK-03.
   Amend: (1) `REQUIREMENTS.md` **LINK-03** (from "the 13 genuine broken links" to "the 13 genuine
   broken **file targets** and the **132** genuine broken **anchors**"); (2) `REQUIREMENTS.md:59`'s
   sequencing note (the 6311 / 40 / 271 / 70 / 74% figures); (3) ROADMAP Phase 143 **SC#1**;
@@ -422,21 +422,21 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   GitHub model). Under D-14's own ordering **no state of the shipped checker ever emits 271 or
   70**, so a verifier re-deriving SC#1 from the deliverable reads it as unmet. Update "74%" → 75%.
 
-- **D-30: Use the ratified amendment INSTRUMENT, on all three surfaces.** The in-line marker pair
+- **D-30:** Use the ratified amendment INSTRUMENT, on all three surfaces. The in-line marker pair
   `**[SUCCESS-CRITERION AMENDMENT, D-NN]**` (mechanism withdrawn) and `**[DISCHARGED, D-NN]**`
   (met as written); the **annotate-and-supersede, never overwrite** rule (Phase 141 D-23); **and**
   a bullet per amendment in `v1.20-CARVE.md`'s "Recorded scope amendments" section — which is what
   Phase 144's close-gate actually reads, not the in-line markers (Phase 142 D-33).
 
-- **D-31: Commit sequence is D-19's THREE steps, not the draft's fused two.**
+- **D-31:** Commit sequence is D-19's THREE steps, not the draft's fused two.
   (1) SC-amendment commit → (2) CARVE amendment commit touching **only** `v1.20-CARVE.md` →
   (3) the edits. Phase 142 D-19 exists precisely because a draft claimed "alone and first" for two
   commits without ordering them; this draft went further and fused them. `carve-gate` **cannot**
   detect the fold — `.planning/` is outside `IN_SCOPE_PREFIXES` (`carve-gate.mjs:36`) — so the
   discipline is not gate-enforced and must be executed deliberately.
 
-- **D-32: CARVE Category 10 roster — `[MEASURED]` 50-file union, of which 3 are already on
-  Category 8, so ~**46-47** need listing.** The draft's "35 distinct after overlap" was wrong on
+- **D-32:** CARVE Category 10 roster — `[MEASURED]` 50-file union, of which 3 are already on
+  Category 8, so ~46-47** need listing.** The draft's "35 distinct after overlap" was wrong on
   both legs (the anchors-only union is 30 with overlap 6, not 35 with overlap 1; and it omitted
   the file-target set entirely). Directory spread of the Category-10 roster: `l1-runbooks` 8,
   `l2-runbooks` 7, `error-codes` 6, `docs/` root 4, `admin-setup-android` 3,
@@ -450,7 +450,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   (`carve-gate.mjs:37`) with **no** matching allowlist category — if the phase touches either it
   hard-blocks.
 
-- **D-33: The GOV-02 ledger is MANDATORY and the draft omitted it entirely.** CARVE D-12
+- **D-33:** The GOV-02 ledger is MANDATORY and the draft omitted it entirely. CARVE D-12
   (`v1.20-CARVE.md:93-113`) requires a target-scoped **path-string grep** *and* a row in
   `.planning/milestones/v1.20-GOV-02-LEDGER.md` (schema
   `File | Grep command | Hit count | Regression gate run | Result | Plan`) **before** editing any
@@ -460,7 +460,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   retrofits 2–7 each). The draft performed the D-12 grep for **1 of 9** files and generalised from
   it. This is the milestone's documented most-expensive failure class.
 
-- **D-34: Standing bars that constrain this phase and were never named.** (a)
+- **D-34:** Standing bars that constrain this phase and were never named. (a)
   `v1.20-CARVE.md:183-185` — "**No new content documentation.** … This CARVE authorizes
   tooling/governance/CI edits only, **never new documentation content**", restated in
   `REQUIREMENTS.md` Out of Scope. A Category-10 amendment **cannot** cure this: the Standing bars
@@ -477,7 +477,7 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   `docs/macos-lifecycle/01-psso-provisioning-walkthrough.md`), and the breaks are plain `../`
   over-escapes. Record this — the draft never discharged it.
 
-- **D-35: CRLF hazard — unverified on 8 of 9 edited files.** `[MEASURED]` `core.autocrlf=true` and
+- **D-35:** CRLF hazard — unverified on 8 of 9 edited files. `[MEASURED]` `core.autocrlf=true` and
   `.gitattributes` contains only `scripts/pipeline/reference.docx binary` — **no `*.md`
   normalization**. `check-nav-hub-links.mjs:47` normalizes CRLF on read; the other 8 Pillar-C fence
   sites are unverified on this axis. A bare-LF regex that works in the authoring worktree can break
@@ -485,8 +485,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
 
 ### Recorded method failures — carry these, do not repeat them
 
-- **D-36: This phase's draft shipped a defect the four prior phases' warnings did not cover — a
-  false *premise* row, not a false *number* row.** Every count in the draft reproduced under
+- **D-36:** This phase's draft shipped a defect the four prior phases' warnings did not cover — a
+  false *premise* row, not a false *number* row. Every count in the draft reproduced under
   independent re-derivation; what failed were **assertions about the repo**: "`{#id}` is barred"
   (87 exist), "all 200 `<a id>` are Android-family" (55 are not), "copy-verbatim is the established
   idiom" (`_lib/` is imported 92 times), "inert for 20 phases" (run in 4 phases), "all 16 CI
@@ -496,8 +496,8 @@ pinned**, so it must not be renamed. `c17-eee-contract.mjs` carries **four** liv
   by an executed command; every claim about what the repo contains or what the project does must
   cite a file:line or carry no tag at all.** Tag arithmetic over measurements `[DERIVED]`.
 
-- **D-37: The adversarial review reversed five draft recommendations and the Referee reversed the
-  Adversary twice.** The Adversary correctly disproved the draft's biggest self-flagged worry
+- **D-37:** The adversarial review reversed five draft recommendations and the Referee reversed the
+  Adversary twice. The Adversary correctly disproved the draft's biggest self-flagged worry
   (mask-widening-creates-an-evasion — pre-existing at column 0) and two convention findings; it
   then over-reached on F-13 and F-06, and the Referee caught both by asking a question neither
   agent had: not "is the number wrong?" but "can anyone reproduce it from the shipped artifact?".

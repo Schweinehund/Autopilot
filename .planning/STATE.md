@@ -4,15 +4,15 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 143
 current_phase_name: Link Coverage & Fence-Mask Unification
-status: planning
+status: executing
 stopped_at: Phase 143 context gathered
-last_updated: "2026-08-11T13:24:36.025Z"
+last_updated: "2026-08-11T16:54:07.268Z"
 last_activity: 2026-08-10
 last_activity_desc: Phase 142 complete, transitioned to Phase 143
 progress:
   total_phases: 5
   completed_phases: 4
-  total_plans: 23
+  total_plans: 32
   completed_plans: 23
 ---
 
@@ -35,7 +35,7 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 Phase: 143 — Link Coverage & Fence-Mask Unification
 Plan: Not started
-Status: Ready to plan
+Status: Ready to execute
 Last activity: 2026-08-10 — Phase 142 complete, transitioned to Phase 143
 
 Progress: [██████████] 100%
