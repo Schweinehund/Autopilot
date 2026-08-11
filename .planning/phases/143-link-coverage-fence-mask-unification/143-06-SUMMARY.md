@@ -172,3 +172,9 @@ None - no external service configuration required.
 ---
 *Phase: 143-link-coverage-fence-mask-unification*
 *Completed: 2026-08-11*
+
+## Self-Check: PASSED
+
+- FOUND: `scripts/validation/check-nav-hub-links.mjs`, `.planning/milestones/v1.20-GOV-02-LEDGER.md`,
+  `143-EVIDENCE.md`, this SUMMARY
+- FOUND commits: `50913c0b`, `db576147`, `47fa447b` in `git log --oneline`
