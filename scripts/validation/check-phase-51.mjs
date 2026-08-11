@@ -208,9 +208,9 @@ const checks = [
       const c = readFile(RB30);
       if (c === null) return { pass: false, detail: "File missing" };
       const required = [
-        /^## Cause A: [^\n]*\{#cause-a-package-install\}\s*$/m,
-        /^## Cause B: [^\n]*\{#cause-b-sign-in-failure\}\s*$/m,
-        /^## Cause C: [^\n]*\{#cause-c-enrollment-timeout\}\s*$/m
+        /^<a id="cause-a-package-install"><\/a>\n## Cause A: [^\n]*$/m,
+        /^<a id="cause-b-sign-in-failure"><\/a>\n## Cause B: [^\n]*$/m,
+        /^<a id="cause-c-enrollment-timeout"><\/a>\n## Cause C: [^\n]*$/m
       ];
       const missing = required.filter(r => !r.test(c)).map(r => r.source);
       if (missing.length === 0) return { pass: true };
@@ -223,10 +223,10 @@ const checks = [
       const c = readFile(RB31);
       if (c === null) return { pass: false, detail: "File missing" };
       const required = [
-        /^## Cause A: [^\n]*\{#cause-a-distro-version-out-of-range\}\s*$/m,
-        /^## Cause B: [^\n]*\{#cause-b-disk-not-encrypted\}\s*$/m,
-        /^## Cause C: [^\n]*\{#cause-c-password-policy-not-met\}\s*$/m,
-        /^## Cause D: [^\n]*\{#cause-d-custom-compliance-failure\}\s*$/m
+        /^<a id="cause-a-distro-version-out-of-range"><\/a>\n## Cause A: [^\n]*$/m,
+        /^<a id="cause-b-disk-not-encrypted"><\/a>\n## Cause B: [^\n]*$/m,
+        /^<a id="cause-c-password-policy-not-met"><\/a>\n## Cause C: [^\n]*$/m,
+        /^<a id="cause-d-custom-compliance-failure"><\/a>\n## Cause D: [^\n]*$/m
       ];
       const missing = required.filter(r => !r.test(c)).map(r => r.source);
       if (missing.length === 0) return { pass: true };
@@ -239,9 +239,9 @@ const checks = [
       const c = readFile(RB32);
       if (c === null) return { pass: false, detail: "File missing" };
       const required = [
-        /^## Cause A: [^\n]*\{#cause-a-not-enrolled\}\s*$/m,
-        /^## Cause B: [^\n]*\{#cause-b-non-compliant\}\s*$/m,
-        /^## Cause C: [^\n]*\{#cause-c-edge-not-signed-in\}\s*$/m
+        /^<a id="cause-a-not-enrolled"><\/a>\n## Cause A: [^\n]*$/m,
+        /^<a id="cause-b-non-compliant"><\/a>\n## Cause B: [^\n]*$/m,
+        /^<a id="cause-c-edge-not-signed-in"><\/a>\n## Cause C: [^\n]*$/m
       ];
       const missing = required.filter(r => !r.test(c)).map(r => r.source);
       if (missing.length === 0) return { pass: true };

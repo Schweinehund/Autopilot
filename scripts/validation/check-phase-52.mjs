@@ -172,10 +172,10 @@ const checks = [
       const c = readFile(RB25);
       if (c === null) return { pass: false, detail: "File missing: " + RB25 };
       const required = [
-        /^## Trap A: [^\n]*\{#trap-a-kernel-track\}\s*$/m,
-        /^## Trap B: [^\n]*\{#trap-b-delivery-path\}\s*$/m,
-        /^## Trap C: [^\n]*\{#trap-c-service-state\}\s*$/m,
-        /^## Trap D: [^\n]*\{#trap-d-identity-broker\}\s*$/m
+        /^<a id="trap-a-kernel-track"><\/a>\r?\n## Trap A: [^\n]*$/m,
+        /^<a id="trap-b-delivery-path"><\/a>\r?\n## Trap B: [^\n]*$/m,
+        /^<a id="trap-c-service-state"><\/a>\r?\n## Trap C: [^\n]*$/m,
+        /^<a id="trap-d-identity-broker"><\/a>\r?\n## Trap D: [^\n]*$/m
       ];
       const missing = required.filter(r => !r.test(c)).map(r => r.toString());
       if (missing.length > 0) return { pass: false, detail: "missing Trap H2 anchors: " + missing.join(" / ") };
