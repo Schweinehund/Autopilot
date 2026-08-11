@@ -48,7 +48,8 @@ Check the trap that matches your observation. Traps are independently diagnosabl
 - [Trap C: Service-State User-Scope Confusion](#trap-c-service-state)
 - [Trap D: Identity Broker v2.0.2+ Re-enrollment](#trap-d-identity-broker)
 
-## Trap A: Ubuntu HWE vs GA Kernel Mismatch {#trap-a-kernel-track}
+<a id="trap-a-kernel-track"></a>
+## Trap A: Ubuntu HWE vs GA Kernel Mismatch
 
 **Entry condition:** L1 escalation packet shows `uname -r` output with a kernel version that does not match the Ubuntu release's GA kernel band, AND the user reports `intune-portal` deb install failure or `intune-agent.timer` activation failure.
 
@@ -118,7 +119,8 @@ systemctl --user status intune-agent.timer
 
 Expected: `uname -r` matches GA or HWE band per the version-track matrix; `dpkg -l intune-portal` shows `ii` (installed+configured); `intune-agent.timer` is `active (waiting)`. If still failing, escalate to L1 [30-linux-enrollment-failed.md#cause-a-package-install](../l1-runbooks/30-linux-enrollment-failed.md#cause-a-package-install) for return-route triage.
 
-## Trap B: Snap-vs-Deb Delivery Path Confusion {#trap-b-delivery-path}
+<a id="trap-b-delivery-path"></a>
+## Trap B: Snap-vs-Deb Delivery Path Confusion
 
 **Entry condition:** L1 escalation packet shows enrollment failed at package-install stage AND `dpkg -l intune-portal` returns no rows OR shows an unexpected version. The user may have followed deprecated preview-era instructions referencing a snap installation path.
 
@@ -183,7 +185,8 @@ snap list 2>/dev/null | grep -i intune
 
 Expected: `which intune-portal` resolves to the deb system path; `dpkg -l intune-portal` shows `ii`; snap detection returns empty. If still failing, escalate to L1 [30-linux-enrollment-failed.md#cause-a-package-install](../l1-runbooks/30-linux-enrollment-failed.md#cause-a-package-install).
 
-## Trap C: Service-State User-Scope Confusion {#trap-c-service-state}
+<a id="trap-c-service-state"></a>
+## Trap C: Service-State User-Scope Confusion
 
 **Entry condition:** L1 escalation packet (typically from L1 [33-linux-agent-service-failure.md](../l1-runbooks/33-linux-agent-service-failure.md)) shows that the user reports `intune-agent` is "not running," but the L1 responder may have queried the wrong systemd scope (system vs user). `intune-agent.timer` is a USER-scope unit; querying it with `systemctl status intune-agent` (no `--user`) returns "Unit not found" or wrong information.
 
@@ -267,7 +270,8 @@ journalctl --user -u intune-agent.timer --since "5 minutes ago" --no-pager
 
 Expected: `is-active` returns `active`; `list-timers` shows a non-empty NEXT column; recent journal entries show timer firing successfully.
 
-## Trap D: Identity Broker v2.0.2+ Re-enrollment {#trap-d-identity-broker}
+<a id="trap-d-identity-broker"></a>
+## Trap D: Identity Broker v2.0.2+ Re-enrollment
 
 **Entry condition:** Admin reports CA assignment drift, Intune filter regression, or Entra group membership not applying for a previously-working Linux endpoint, AND `dpkg -l microsoft-identity-broker` shows version 2.0.2 or later. The Identity Broker v2.0.2+ architecture automatically re-registers and re-enrolls devices, creating new Intune device IDs and new Microsoft Entra device IDs — silently — when the broker package crosses the v2.0.2 threshold.
 

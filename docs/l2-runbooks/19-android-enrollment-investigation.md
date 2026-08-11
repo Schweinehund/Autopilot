@@ -125,7 +125,8 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 
 ## Analysis — Match Against Known Patterns
 
-### Pattern A: Work Profile Not Created (BYOD) {#pattern-a-work-profile-not-created-byod}
+<a id="pattern-a-work-profile-not-created-byod"></a>
+### Pattern A: Work Profile Not Created (BYOD)
 
 **Typical class:** ⚙️ Config Error (enrollment restriction / work profile policy misalignment) — occasionally 🐛 Defect (AMAPI transition bug)
 
@@ -157,7 +158,8 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 
 ---
 
-### Pattern B: COBO Enrollment Stuck {#pattern-b-cobo-enrollment-stuck}
+<a id="pattern-b-cobo-enrollment-stuck"></a>
+### Pattern B: COBO Enrollment Stuck
 
 **Typical class:** ⚙️ Config Error (enrollment profile / token) + ⏱️ Timing (post-scan propagation)
 
@@ -187,7 +189,8 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 
 ---
 
-### Pattern C: ZTE Device Claim Failure {#pattern-c-zte-device-claim-failure}
+<a id="pattern-c-zte-device-claim-failure"></a>
+### Pattern C: ZTE Device Claim Failure
 
 **Typical class:** ⚙️ Config Error (configuration not assigned; reseller upload gap) + 🐛 Defect (reseller handoff edge cases)
 
@@ -219,7 +222,8 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 
 ---
 
-### Pattern D: Dedicated QR Scan Failure {#pattern-d-dedicated-qr-scan-failure}
+<a id="pattern-d-dedicated-qr-scan-failure"></a>
+### Pattern D: Dedicated QR Scan Failure
 
 **Typical class:** ⚙️ Config Error (QR profile / COSU token) + ⏱️ Timing (QR token rotation window)
 
@@ -249,7 +253,8 @@ After completing Steps 1-4, proceed to Analysis — Match Against Known Patterns
 
 ---
 
-### Pattern E: Tenant-Config-Universal (Enrollment Restriction) {#pattern-e-tenant-config-universal}
+<a id="pattern-e-tenant-config-universal"></a>
+### Pattern E: Tenant-Config-Universal (Enrollment Restriction)
 
 **Typical class:** ⚙️ Config Error (enrollment restriction blade — platform/ownership gate blocks Android Enterprise or specific ownership type)
 

@@ -131,7 +131,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 <a id="pattern-a-realwear"></a>
 
-### Pattern A: RealWear enrollment failure {#pattern-a-realwear}
+<a id="pattern-a-realwear"></a>
+### Pattern A: RealWear enrollment failure
 
 **Typical class:** ⚙️ Config Error (staging Wi-Fi PSK auth-type misconfig) — occasionally 🔐 Auth (token expiry) or ⏱️ Timing (Wi-Fi credential rotation)
 
@@ -163,7 +164,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 <a id="pattern-b-zebra"></a>
 
-### Pattern B: Zebra enrollment failure {#pattern-b-zebra}
+<a id="pattern-b-zebra"></a>
+### Pattern B: Zebra enrollment failure
 
 **Typical class:** ⚙️ Config Error (wrong OEMConfig app for Android version OR Android 12 deployment attempt)
 
@@ -197,7 +199,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 <a id="pattern-c-pico"></a>
 
-### Pattern C: Pico enrollment failure {#pattern-c-pico}
+<a id="pattern-c-pico"></a>
+### Pattern C: Pico enrollment failure
 
 **Typical class:** ⚙️ Config Error (consumer SKU procured by mistake) — occasionally 🔌 Hardware (PUI firmware below floor)
 
@@ -228,7 +231,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 <a id="pattern-d-htc"></a>
 
-### Pattern D: HTC enrollment failure {#pattern-d-htc}
+<a id="pattern-d-htc"></a>
+### Pattern D: HTC enrollment failure
 
 **Typical class:** ⚙️ Config Error (in-device path missing on older firmware) — occasionally 🔌 Hardware (firmware floor)
 
@@ -259,7 +263,8 @@ Match observed indicators to one of five per-OEM Patterns below. Patterns are in
 
 <a id="pattern-e-meta-quest"></a>
 
-### Pattern E: Meta Quest enrollment failure {#pattern-e-meta-quest}
+<a id="pattern-e-meta-quest"></a>
+### Pattern E: Meta Quest enrollment failure
 
 **Typical class:** 🔐 Auth (Meta for Work account approval gate) — occasionally ⚙️ Config Error (HMS subscription state confusion) or ⏱️ Timing (B2B approval lag)
 

@@ -126,7 +126,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 <a id="pattern-a-kme-profile-misconfiguration"></a>
 
-### Pattern A: KME Profile Misconfiguration {#pattern-a-kme-profile-misconfiguration}
+<a id="pattern-a-kme-profile-misconfiguration"></a>
+### Pattern A: KME Profile Misconfiguration
 
 **Typical class:** ⚙️ Config Error (KME profile EMM choice / Custom JSON Data field-name) — occasionally ⏱️ Timing (B2B approval lag)
 
@@ -158,7 +159,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 <a id="pattern-b-knox-tripped"></a>
 
-### Pattern B: Knox Tripped {#pattern-b-knox-tripped}
+<a id="pattern-b-knox-tripped"></a>
+### Pattern B: Knox Tripped
 
 **Typical class:** ⚙️ Config Error (firmware-state non-recoverable)
 
@@ -189,7 +191,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 <a id="pattern-c-kme-zt-collision"></a>
 
-### Pattern C: KME→ZT Collision {#pattern-c-kme-zt-collision}
+<a id="pattern-c-kme-zt-collision"></a>
+### Pattern C: KME→ZT Collision
 
 **Typical class:** ⚙️ Config Error (dual-portal misconfiguration)
 
@@ -220,7 +223,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 <a id="pattern-d-knox-license-edge"></a>
 
-### Pattern D: Knox License Edge {#pattern-d-knox-license-edge}
+<a id="pattern-d-knox-license-edge"></a>
+### Pattern D: Knox License Edge
 
 **Typical class:** ⚙️ Config Error (license activation drift)
 
@@ -250,7 +254,8 @@ Match observed indicators to one of five Patterns below. Patterns are independen
 
 <a id="pattern-e-dpc-json-malformation"></a>
 
-### Pattern E: DPC JSON Malformation {#pattern-e-dpc-json-malformation}
+<a id="pattern-e-dpc-json-malformation"></a>
+### Pattern E: DPC JSON Malformation
 
 **Typical class:** ⚙️ Config Error (D-03 anti-paste violation)
 

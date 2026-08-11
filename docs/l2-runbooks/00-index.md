@@ -182,7 +182,8 @@ The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequi
 
 **Note:** Android L2 runbook 19 has a D-11 L1 handoff block that routes by L1 runbook number to the matching Pattern. Android L2 runbook 21 has a Per-Cause Deep-Dive that matches L1 runbook 25's Cause A/B/C/D labels — a ticket arriving with a pre-classified cause routes directly to that section.
 
-### Android MAM-WE Investigation Advisory {#android-mam-we-investigation-advisory}
+<a id="android-mam-we-investigation-advisory"></a>
+### Android MAM-WE Investigation Advisory
 
 > **Android MAM-WE investigation is out of Phase 41 scope** -- deferred to **ADDTS-ANDROID-01** future milestone.
 
