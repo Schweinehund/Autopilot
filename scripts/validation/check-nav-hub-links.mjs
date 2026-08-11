@@ -115,45 +115,59 @@ function githubSlug(text) {
   return s;
 }
 
-// stripHeadingText: strip a trailing {#id} override token, then inline emphasis markers
-// (backticks/**), mirroring c17-eee-contract.mjs:191's `.replace(/\*\*/g, '')` precedent --
-// GitHub slugifies RENDERED text, not raw markdown source.
+// stripHeadingText: strip inline emphasis markers (backticks/**) before slugifying, mirroring
+// c17-eee-contract.mjs:191's `.replace(/\*\*/g, '')` precedent -- GitHub slugifies RENDERED
+// text, not raw markdown source. A trailing {#id} token is deliberately NOT stripped here:
+// GitHub does not implement Pandoc/kramdown heading-attribute syntax, so `{#id}` renders as
+// literal heading text and flows into githubSlug() exactly like any other characters (its
+// `{`, `#`, `}` punctuation is stripped there by the existing [^a-z0-9 _-] filter).
 function stripHeadingText(raw) {
   return raw
-    .replace(/\s*\{#[a-zA-Z0-9_-]+\}\s*$/, '')
     .replace(/\*\*/g, '')
     .replace(/`/g, '')
     .trim();
 }
 
 // computeAnchorSetFromContent: pure function over a content string (fence-masked internally).
-// Union of (a) every explicit {#id} override, added VERBATIM, and (b) every heading's
-// GitHub-slug with Map<slugBase,count> encounter-order dedup (2nd occurrence -> -1, 3rd -> -2, ...).
+// GitHub anchor model: union of (a) every explicit <a id="..."></a> value, added VERBATIM, and
+// (b) every heading's GitHub-slug with Map<slugBase,count> encounter-order dedup (2nd
+// occurrence -> -1, 3rd -> -2, ...). A trailing `{#id}` token on a heading is deliberately NOT
+// special-cased: GitHub does not support Pandoc/kramdown heading-attribute syntax, so the token
+// renders as literal heading text and simply flows through the same slug pipeline as any other
+// heading text -- exactly as GitHub itself renders it (see
+// docs/l1-runbooks/30-linux-enrollment-failed.md:53,63 and 143-RESEARCH.md's worked example).
+// Do not re-add a `{#id}`-recognition branch under a different name (143-CONTEXT.md D-01/D-02,
+// RESEARCH.md Pitfall 1) -- the GitHub model is the ABSENCE of special-casing, not a rewrite of it.
+//
+// NOTE ON <a id> PREFIXING: GitHub rewrites every authored `id` to `user-content-<id>` at
+// render time, while heading permalink `href`s stay UNPREFIXED -- GitHub's client-side JS
+// reconciles the two. This checker deliberately models the un-prefixed authored id (comparing
+// the authored link fragment against the authored `id`/heading slug, both unprefixed) and MUST
+// NOT be "corrected" to expect the `user-content-` prefix (143-RESEARCH.md Open Question 3,
+// verified against GitHub's own rendering API).
 function computeAnchorSetFromContent(content) {
   const set = new Set();
   const lines = content.split('\n');
   const fenceMask = buildFenceMask(lines);
 
-  // (a) {#id} overrides -- whole content, fence-masked, verbatim
+  // (a) <a id="..."></a> anchors -- whole content, fence-masked, verbatim. matchAll (not
+  // .match()) is required: docs/admin-setup-android/05-dedicated-devices.md:242 carries two
+  // adjacent tags on one line, and a single-match implementation would silently drop the second.
   for (let i = 0; i < lines.length; i++) {
     if (fenceMask[i]) continue;
-    for (const m of lines[i].matchAll(/\{#([a-zA-Z0-9_-]+)\}/g)) {
+    for (const m of lines[i].matchAll(/<a\s+id\s*=\s*"([a-zA-Z0-9_-]+)"\s*>\s*<\/a>/g)) {
       set.add(m[1]);
     }
   }
 
-  // (b) headings -> slugify with per-file encounter-order dedup
+  // (b) headings -> slugify with per-file encounter-order dedup. Every heading ALWAYS produces
+  // an auto-slug and ALWAYS consumes a dedup count -- there is no suppression branch (GitHub
+  // never suppresses a heading's auto-slug, regardless of a trailing {#id}-shaped token).
   const seen = new Map(); // slugBase -> occurrence count so far
   for (let i = 0; i < lines.length; i++) {
     if (fenceMask[i]) continue;
     const m = lines[i].match(/^#{1,6}\s+(.*)$/);
     if (!m) continue;
-    // A heading carrying a trailing {#id} override renders with that id as its ONLY
-    // anchor (Pandoc/kramdown semantics): the heading-text auto-slug is NOT generated,
-    // and the heading does NOT consume an auto-slug dedup count. The override was already
-    // added verbatim in loop (a). Registering the auto-slug too would be a phantom anchor
-    // that lets a link to the (non-existent) auto-slug falsely resolve -- a false-negative.
-    if (/\s*\{#[a-zA-Z0-9_-]+\}\s*$/.test(m[1])) continue;
     const headingText = stripHeadingText(m[1]);
     const base = githubSlug(headingText);
     const count = seen.get(base) ?? 0;
@@ -338,14 +352,14 @@ if (SELF_TEST) {
     dupOk ? 'all 4 variants present' : `set: [${[...dupSet].join(', ')}]`
   );
 
-  // D: {#id} override resolves VERBATIM and SUPPRESSES the heading-text auto-slug --
-  // the override is the heading's ONLY anchor (Pandoc/kramdown); the auto-slug "foo-bar"
-  // is a phantom that must NOT be registered, else a link to it would false-negative.
+  // D: GitHub model -- {#id} is NOT special-cased. It renders as literal heading text and
+  // participates in the normal slug pipeline; the bare override string is never registered on
+  // its own, and the heading's auto-slug is never suppressed.
   const overrideContent = '### Foo Bar {#custom-anchor}\n\nsome prose';
   const overrideSet = computeAnchorSetFromContent(overrideContent);
   stAssert(
-    '{#id} override verbatim + auto-slug suppressed: has "custom-anchor", NOT "foo-bar"',
-    overrideSet.has('custom-anchor') && !overrideSet.has('foo-bar'),
+    'GitHub model: {#id} renders as literal text -- has "foo-bar-custom-anchor", NOT bare "custom-anchor"',
+    overrideSet.has('foo-bar-custom-anchor') && !overrideSet.has('custom-anchor'),
     `set: [${[...overrideSet].join(', ')}]`
   );
 
@@ -387,6 +401,29 @@ if (SELF_TEST) {
     'path traversal: ../../../../../../etc/passwd resolves to not-found, no throw',
     traversalNotFound,
     traversalThrew ? 'threw an exception' : `resolved: ${traversalResolved?.resolvedRel}`
+  );
+
+  // H: <a id> recognition -- a table-row-embedded anchor tag registers its id verbatim.
+  const tableAnchorContent = [
+    '| Code | Detail |',
+    '|------|--------|',
+    '| <a id="0x80180014"></a>`0x80180014` | detail |',
+  ].join('\n');
+  const tableAnchorSet = computeAnchorSetFromContent(tableAnchorContent);
+  stAssert(
+    '<a id> table-row recognition: has "0x80180014"',
+    tableAnchorSet.has('0x80180014'),
+    `set: [${[...tableAnchorSet].join(', ')}]`
+  );
+
+  // I: <a id> matchAll -- two adjacent tags on one line both register, not just the first
+  // (docs/admin-setup-android/05-dedicated-devices.md:242 is the real corpus instance).
+  const doubleTagContent = '<a id="exit-kiosk-pin-synchronization"></a><a id="exit-kiosk-pin"></a>';
+  const doubleTagSet = computeAnchorSetFromContent(doubleTagContent);
+  stAssert(
+    '<a id> double-tag line: both ids present (matchAll, not a single .match())',
+    doubleTagSet.has('exit-kiosk-pin-synchronization') && doubleTagSet.has('exit-kiosk-pin'),
+    `set: [${[...doubleTagSet].join(', ')}]`
   );
 
   process.stdout.write('\nSelf-test: ' + stPassed + ' passed, ' + stFailed + ' failed\n');
