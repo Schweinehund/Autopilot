@@ -597,3 +597,204 @@ identified and their remedy stated in Task 1's contested-pair table and per-pair
 contested pairs fully adjudicated with file:line evidence; the remaining 4 — `esp`,
 `self-deploying-mode`, `cope`, `intunemacODC` — still need Plan 05's own per-link semantic-match
 read, per D-04 rule 1's "judged from the link text plus the target heading's own text" test).
+
+## Plan 05 — All 8 Class-B rewrites landed, dry-run to zero, ledger closed (Tasks 1-2)
+
+**Opened:** 2026-08-11 (this session), before any code edit this plan makes. Tree: main worktree at
+HEAD `599a996b` (post-Plan-04). Node: v24.17.0. OS: Windows 10 Pro 19045.
+
+### Task 1 — the 8 rewrites, each confirmed against the live target heading before editing
+
+Every target heading was re-read this session and its `githubSlug` derivation confirmed by hand
+before the corresponding source fragment was rewritten — none accepted from the plan's own table
+without a live check:
+
+| pair (old fragment -> new) | target heading confirmed | derivation |
+|---|---|---|
+| `docs/_glossary.md#enrollment-status-page` -> `#esp` | `### ESP` at `:53` | `githubSlug("ESP")` = `esp` |
+| `docs/_glossary.md#entra` -> `#entra-id-sso` | `### Entra ID SSO` at `:191` | `githubSlug("Entra ID SSO")` = `entra-id-sso` |
+| `docs/_glossary.md#self-deploying` -> `#self-deploying-mode` | `### Self-deploying mode` at `:241` | `githubSlug("Self-deploying mode")` = `self-deploying-mode` |
+| `docs/android-lifecycle/02-provisioning-methods.md#byod` -> `#byod-work-profile` | `<a id="byod-work-profile"></a>BYOD Work Profile` row at `:45` | explicit `<a id>` target, not a heading — verbatim id used |
+| `docs/android-lifecycle/03-android-version-matrix.md#cope` -> `#android-11--cope-nfc-provisioning-removed` | `### Android 11 — COPE NFC Provisioning Removed` at `:57` | the em dash is deleted in place (surrounded by spaces on both sides) leaving two adjacent spaces, each converted to its own hyphen -> the double-hyphen artifact, confirmed intact |
+| `docs/reference/macos-commands.md#intunemacODC` -> `#intunemacodc` | `## IntuneMacODC` at `:184` | pure case fix — `githubSlug` lowercases before stripping |
+| `docs/lifecycle-apv2/00-overview.md#enrollment-time-grouping----the-core-mechanism` -> `#enrollment-time-grouping-etg----the-core-mechanism` | `## Enrollment Time Grouping (ETG) -- The Core Mechanism` at `:40` | parens deleted in place; the literal ` -- ` (space-hyphen-hyphen-space) becomes four consecutive hyphens when each of its two flanking spaces is independently converted — confirmed four hyphens landed, not collapsed |
+| `docs/cross-platform/apple-business/01-role-permission-model.md#edit-without-view-dependency-table` -> `#edit-without-view-dependency-table-op-3-prevention` | `## Edit-without-View Dependency Table (OP-3 Prevention)` at `:343` | parens deleted, remaining text hyphen-joined — the fragment was simply missing the heading's parenthetical suffix |
+
+**`#intune` and `#aosp` confirmed absent from this edit set** — both remain de-anchored per Plan
+03/D-06; neither appears in any of the 12 files this plan touches.
+
+**The three D-38-resolved doubled-slug rewrites confirmed NOT re-added:**
+`grep -rcE '#(contentpreptool-packaging-contentpreptool-packaging|resource-access-deprecation-resource-access-deprecation|ddm-update-keys-ddm-update-keys)' docs/` -> **0**.
+
+**Edit shape:** all 13 rewrites landed as same-line `#fragment` substring replacements across 12
+files (`docs/error-codes/{02,03,04,05}-*.md`, `docs/l1-runbooks/{02,05}-*.md`,
+`docs/admin-setup-android/{04,08}-*.md`, `docs/l2-runbooks/10-macos-log-collection.md`,
+`docs/admin-setup-apv2/02-etg-device-group.md`, `docs/_glossary-apple-business.md`) — no heading,
+no `<a id>`, no `{#id}` token touched. `git diff -- docs/ | grep '^+' | grep -cE '^\+#{1,6} |^\+<a id='`
+-> **0**. `git diff --numstat -- docs/` shows equal added/removed line counts in every one of the 12
+files (1 or 2 lines each). `grep -rc '{#' docs/ --include=*.md | awk -F: '{s+=$2} END {print s+0}'`
+-> **0**, the post-D-38 invariant unchanged.
+
+**GOV-02 ledger:** one row appended (target-scoped + symbol-scoped grep across all 8 old fragment
+strings and their target-file:fragment pairs — zero frozen call-site conflicts found; this plan
+touches `docs/` and `.planning/milestones/v1.20-GOV-02-LEDGER.md` only, no `scripts/` file).
+
+**Regression gates, all green:** `node scripts/validation/c17-eee-contract.mjs` -> `234 files
+checked, 0 with violations, 0 total violations`. `node scripts/validation/carve-gate.mjs` ->
+`carve-gate PASS: 98 in-scope path(s), all on-list`, exit 0.
+
+### Task 2 — dry-run to zero, ledger closed
+
+**Method:** identical to Plans 02/03/04/09's — `checkInboundLinks`'s two `continue` guards
+(`check-nav-hub-links.mjs:284` `if (hubSet.has(relPath)) continue;` and `:297`
+`if (!hubSet.has(resolvedRel)) continue;`) deleted in the working tree only, `node
+scripts/validation/check-nav-hub-links.mjs --verbose` run, full output captured, then
+`git checkout -- scripts/validation/check-nav-hub-links.mjs` reverted. `git status --porcelain`
+confirmed empty afterward.
+
+**Headline measurement:**
+
+| metric | before this plan (Task 1 start) | after Task 1 |
+|---|---|---|
+| broken file targets | 0 | **0** |
+| broken anchors | 13 | **0** |
+| **total** | 13 | **0** |
+
+`node scripts/validation/check-nav-hub-links.mjs` (unpatched) -> `0 outbound failure(s), 0 inbound
+failure(s), 0 total`, exit 0.
+
+**Dry-run ladder, seven measured rows ending at 0:** 175 -> 173 -> 143 -> 78 -> 49 -> 13 -> **0**.
+
+**File/link-count measurement, recorded per D-36 (not silently forced to the plan's authored
+figure):** a direct instrumented count over the same `walkMd`/`extractLinks`/`resolveLinkTarget`
+functions the checker itself uses (docs/ excluding `docs/_templates/`, counting every link whose
+target resolves non-null, i.e. every relative link corpus-wide) measures **274 files, 6250
+relative links** at this plan's closing state. The file count (274) matches the plan's own stated
+figure exactly. The relative-link count (6250) differs from the plan's stated **6252** by exactly
+2 — not attributable to this plan's own edits, which are confirmed link-count-neutral (`git diff
+--numstat` shows equal added/removed lines in every touched file, i.e. no link added or removed).
+The discrepancy is not chased further here: it predates this plan (274/6252 was already the
+carried figure at Plan 04's own close, itself descended from Plan 09's measurement), the file
+count independently corroborates the counting method is sound, and the 0/0/0 failure total — the
+substantive criterion — is independently confirmed both by the widened dry-run and by the
+unpatched checker's own exit-0 summary line.
+
+**Not committed:** `git status --porcelain scripts/validation/check-nav-hub-links.mjs` confirmed
+empty after the widened run was reverted.
+
+### The 51-pair / 67-link post-conversion ledger — CLOSED
+
+Every pair below is one of the 51 (target-file, fragment) pairs measured post-D-38-conversion
+(`77 pairs / 132 links` pre-conversion minus D-38's `26 pairs / 65 links` closed target-side —
+`77 - 26 = 51`, `132 - 65 = 67`). Each row's remedy is the one that actually landed, confirmed
+against this plan's own dry-run (0/0/0) and Plans 03/04's own closing dry-runs (49, then 13).
+
+**Class D — de-anchor, 12 pairs / 16 links (Plan 03 Task 2):**
+
+| Target-file#fragment | Links | Remedy |
+|---|---|---|
+| `docs/_glossary.md#intune` | 4 | de-anchor (false friend, D-06) |
+| `docs/_glossary-android.md#aosp` | 2 | de-anchor (false friend, D-06) |
+| `docs/_glossary-macos.md#abm-apple-business-manager` | 1 | de-anchor |
+| `docs/_glossary-macos.md#managed-apple-id` | 1 | de-anchor |
+| `docs/cross-platform/apple-business/01-role-permission-model.md#account-holder-do-not-delegate` | 1 | de-anchor |
+| `docs/cross-platform/apple-business/01-role-permission-model.md#intune-side-labels-preserved` | 1 | de-anchor |
+| `docs/admin-setup-linux/01-intune-linux-agent.md#identity-broker-v202-re-enrollment` | 1 | de-anchor |
+| `docs/admin-setup-macos/10-kerberos-sso-extension.md#k-1-wrong-extension-identifier` | 1 | de-anchor, degraded to plain text (self-link to a blockquote, not a heading) |
+| `docs/admin-setup-macos/10-kerberos-sso-extension.md#k-5-wrong-payload-type` | 1 | de-anchor, degraded to plain text |
+| `docs/reference/linux-capability-matrix.md#monitoring` | 1 | de-anchor |
+| `docs/reference/linux-capability-matrix.md#supported-management-surface` | 1 | de-anchor |
+| `docs/reference/registry-paths.md#winlogon` | 1 | de-anchor |
+
+Subtotal: 12 pairs / 16 links.
+
+**Class C — target-side `<a id>`, 31 pairs / 38 links (Plan 02 tracer + Plan 04 Tasks 2-3):**
+
+| Target-file#fragment | Links | Remedy |
+|---|---|---|
+| `docs/error-codes/01-mdm-enrollment.md#0x80180014` | 2 | target-side `<a id>` (Plan 02 tracer) |
+| `docs/error-codes/01-mdm-enrollment.md#0x8007064c` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x80180005` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x8018000a` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x80180018` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x80180019` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x80180020` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x80180022` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x80180026` | 1 | target-side `<a id>` |
+| `docs/error-codes/01-mdm-enrollment.md#0x8018002b` | 1 | target-side `<a id>` |
+| `docs/error-codes/02-tpm-attestation.md#0x80070490` | 1 | target-side `<a id>` |
+| `docs/error-codes/02-tpm-attestation.md#0x800705b4` | 2 | target-side `<a id>` (double-linked) |
+| `docs/error-codes/02-tpm-attestation.md#0x80190190` | 1 | target-side `<a id>` |
+| `docs/error-codes/02-tpm-attestation.md#0x801C03F3` | 2 | target-side `<a id>` (double-linked, case-exact) |
+| `docs/error-codes/02-tpm-attestation.md#0x801c03ea` | 2 | target-side `<a id>` (double-linked, case-exact, numerically-first row only) |
+| `docs/error-codes/02-tpm-attestation.md#0x81039001` | 2 | target-side `<a id>` (double-linked) |
+| `docs/error-codes/02-tpm-attestation.md#0x81039023` | 2 | target-side `<a id>` (double-linked) |
+| `docs/error-codes/02-tpm-attestation.md#0x81039024` | 2 | target-side `<a id>` (double-linked) |
+| `docs/error-codes/03-esp-enrollment.md#0x80004005` | 1 | target-side `<a id>` |
+| `docs/error-codes/03-esp-enrollment.md#0x81036501` | 1 | target-side `<a id>` |
+| `docs/error-codes/03-esp-enrollment.md#0x81036502` | 1 | target-side `<a id>` |
+| `docs/error-codes/04-pre-provisioning.md#0xc1036501` | 1 | target-side `<a id>` |
+| `docs/error-codes/05-hybrid-join.md#event-807` | 1 | target-side `<a id>` |
+| `docs/error-codes/05-hybrid-join.md#event-809` | 1 | target-side `<a id>` |
+| `docs/error-codes/05-hybrid-join.md#event-815` | 1 | target-side `<a id>` |
+| `docs/error-codes/05-hybrid-join.md#event-908` | 1 | target-side `<a id>` |
+| `docs/error-codes/05-hybrid-join.md#event-171` | 1 | target-side `<a id>` |
+| `docs/error-codes/05-hybrid-join.md#event-172` | 1 | target-side `<a id>` |
+| `docs/error-codes/05-hybrid-join.md#0x80070774` | 1 | target-side `<a id>` |
+| `docs/reference/registry-paths.md#provisioning-diagnostics` | 1 | target-side `<a id>` |
+| `docs/reference/registry-paths.md#autopilotsettings` | 1 | target-side `<a id>` |
+
+Subtotal: 31 pairs / 38 links (1 tracer pair/2 links + 30 Plan-04 pairs/36 links).
+
+**Class B — source-side rewrite, 8 pairs / 13 links (Plan 05 Task 1, this plan):**
+
+| Target-file#fragment (new) | Links | Remedy |
+|---|---|---|
+| `docs/_glossary.md#esp` | 2 | source-side rewrite (D-06) |
+| `docs/_glossary.md#entra-id-sso` | 2 | source-side rewrite (D-06) |
+| `docs/_glossary.md#self-deploying-mode` | 2 | source-side rewrite (D-06) |
+| `docs/android-lifecycle/02-provisioning-methods.md#byod-work-profile` | 1 | source-side rewrite (exclusion 2) |
+| `docs/android-lifecycle/03-android-version-matrix.md#android-11--cope-nfc-provisioning-removed` | 2 | source-side rewrite |
+| `docs/reference/macos-commands.md#intunemacodc` | 1 | source-side rewrite (case fix) |
+| `docs/lifecycle-apv2/00-overview.md#enrollment-time-grouping-etg----the-core-mechanism` | 2 | source-side rewrite (Plan 04 adjudication) |
+| `docs/cross-platform/apple-business/01-role-permission-model.md#edit-without-view-dependency-table-op-3-prevention` | 1 | source-side rewrite (Plan 04 adjudication) |
+
+Subtotal: 8 pairs / 13 links.
+
+**Reconciliation:** 12 + 31 + 8 = **51 pairs**; 16 + 38 + 13 = **67 links** — matches the
+post-conversion invariant exactly. Against the original pre-conversion defect census: 51 + 26 = **77
+pairs**; 67 + 65 = **132 links** — reconciles to zero unexplained residue, D-38's conversion (26
+pairs/65 links, target-side, zero regressions per Plan 02's Finding 1) plus this 51-pair ledger
+(closed across Plans 02-05) accounting for the entire original census.
+
+### D-15 rulings, recorded now that the flip in Plan 06 makes both live
+
+**(a) `docs/_glossary-linux.md:157` -> `../.planning/research/PITFALLS.md`.** The single link in the
+corpus that resolves outside `docs/` to an existing target. It carries no `#fragment`, so under the
+widened scan it resolves as a plain file-existence check and passes. **Ruling: in scope, not
+excluded.** The checker validates that a relative link resolves to a file that exists on disk;
+`.planning/` sitting outside `carve-gate`'s `IN_SCOPE_PREFIXES` governs what may be **edited** by
+this milestone's CARVE, not what documentation may **link to**. Recorded so a later maintainer does
+not add a speculative `.planning/`-exclusion to the checker for this link — none is needed, and none
+would be correct (the checker is not itself a frozen-surface edit target, and the link is genuinely
+valid).
+
+**(b) `relNormalize` (`check-nav-hub-links.mjs:75-80`) strips only a `cwd` prefix, so a target
+resolving ABOVE `cwd` would remain an absolute path and the anchor lookup would report a bogus
+"anchor not found" (comparing an absolute path against the relative keys `resolvableAnchorSet`
+expects).** Zero instances exist in the live corpus today: of the 14 total links resolving outside
+`docs/`, 13 were repaired in Plan 03 (LINK-03 `../`-over-escape fixes, now resolving correctly
+inside `cwd`) and the 14th is D-15(a) above (fragment-free, so the anchor-lookup code path this
+latent bug lives in is never reached). Recorded as a known latent class with zero live instances
+— no speculative handling added, per this plan's own "no accepted-violation baseline" discipline
+(this is a documented code-path limitation, not a corpus violation being excused).
+
+### Status
+
+Phase 143's dry-run corpus scan is at **0 broken file targets, 0 broken anchors, 0 total** as of
+this plan's close. LINK-04 (`the corpus-wide checker itself exits 0 with no baseline`) is **NOT**
+marked complete by this plan — that requirement's own text names the corpus-wide checker's exit
+code as the trigger, and the *unpatched* `check-nav-hub-links.mjs` was already exiting 0 before this
+plan started (its 4-hub-scoped default scan has been green since Phase 123). LINK-04's remaining
+work — widening the checker's default (unpatched) scope to the full corpus-wide scan this plan's
+dry-run only exercises temporarily — is Plan 06's scope, per this phase's own plan sequencing.
