@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 143
 current_phase_name: Link Coverage & Fence-Mask Unification
 status: executing
-stopped_at: Phase 143 context gathered
-last_updated: "2026-08-11T16:54:07.268Z"
+stopped_at: Completed 143-01-PLAN.md
+last_updated: "2026-08-11T17:11:57.334Z"
 last_activity: 2026-08-10
 last_activity_desc: Phase 142 complete, transitioned to Phase 143
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 32
-  completed_plans: 23
+  completed_plans: 24
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 143 — Link Coverage & Fence-Mask Unification
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-08-10 — Phase 142 complete, transitioned to Phase 143
+Plan: 01 of 9 complete
+Status: In progress — governance gate landed, Plan 02 (TRACER) next
+Last activity: 2026-08-11 — Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 
-Progress: [██████████] 100%
+Progress: [████████░░] 75%
 
 ## v1.20 Phase Dependency Summary
 
@@ -302,6 +302,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 142 P04 | 26min | 3 tasks | 2 files |
 | Phase 142 P05 | 35min | 2 tasks | 2 files |
 | Phase 142 P06 | 45 min | 2 tasks | 1 files |
+| Phase 143 P01 | 35min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -362,6 +363,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: V-31-23 needs its own resolveArchivedPhasePath call site (not a reuse of parseInventory()'s) and a presence-only content anchor (never uniqueness) replacing the brittle lines[181] index, since the target prose relocated during Phase 122's EEE reorganization but is byte-identical (D-20/D-21/D-22/D-23)
 - [Phase ?]: RED-06: CHAIN_EXTRA=[30,31] sidecar adopts check-phase-30/31 into apex chain, excluded from arithmetic span guards (D-11); apex flips 93->95 PASS
 - [Phase ?]: NEST-01: cold-clone/warm ratio measured at 1.333x (22720ms/17044ms, n=3 each, full-depth clone), well under the 8x fail threshold — PASS
+- [Phase ?]: 143-01: D-29 seven-surface SC amendment + CARVE Category 10 (63-path anchor-remedy roster, D-32/D-38) landed as two separate commits per D-31; reconciled a premature D-28 marker on the Discuss-phase-flags line (from an earlier plan-authoring commit) by appending a D-29 cross-reference rather than overwriting
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -390,12 +392,12 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-11T13:24:35.705Z
-Stopped at: Phase 143 context gathered
-Resume file: .planning/phases/143-link-coverage-fence-mask-unification/143-CONTEXT.md
-Next action: Phase 141 verification, then `/gsd-discuss-phase 142`
+Last session: 2026-08-11T17:11:57.276Z
+Stopped at: Completed 143-01-PLAN.md
+Resume file: None
+Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 
 ## Operator Next Steps
 
-- Verify Phase 141 (all 6 plans complete; first-ever CI fan-out green — see `141-06-SUMMARY.md`)
-- Start Phase 142 with `/gsd-discuss-phase 142` (Archival-Path Fix, Chain Adoption & Cold-Clone Threshold — RED-04/05/06/07, NEST-01)
+- Execute 143-02-PLAN.md — Wave 2, blocked on Wave 1 (this plan) which is now complete
+- Phase 143 has 9 plans across 9 sequential waves (139-01 governance gate done; 02 TRACER; 03-09 the corpus repair + fence-mask + hand-off plans)
