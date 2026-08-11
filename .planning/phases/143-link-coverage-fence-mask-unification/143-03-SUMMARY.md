@@ -197,3 +197,10 @@ None - no external service configuration required.
 ---
 *Phase: 143-link-coverage-fence-mask-unification*
 *Completed: 2026-08-11*
+
+## Self-Check: PASSED
+
+- FOUND: `docs/_glossary-macos.md`, `docs/admin-setup-ios/04-configuration-profiles.md`,
+  `docs/admin-setup-ios/07-device-enrollment.md`, this SUMMARY, `143-EVIDENCE.md`,
+  `.planning/milestones/v1.20-GOV-02-LEDGER.md`
+- FOUND commits: `61c580a3`, `2d5b8d02`, `4500f7e3`, `0e226cc1` in `git log --oneline`
