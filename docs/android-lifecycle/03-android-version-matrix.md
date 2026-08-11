@@ -35,7 +35,7 @@ This matrix captures two distinct version axes:
 
 These two axes are related but not equivalent. Per-method × per-mode version gating (e.g., "NFC requires Android 8+; QR built-in reader requires Android 9+") lives in [02-provisioning-methods.md](02-provisioning-methods.md) cells, not this matrix. If you are authoring admin guidance that references a specific Android version requirement, cite THIS matrix for mode-level Intune minimums and [02-provisioning-methods.md](02-provisioning-methods.md) for method-level gates. Do not restate version numbers inline in admin guides — that creates drift-surface (Pitfall 1).
 
-<a id="cobo"></a>
+<a id="cobo"></a><a id="cope"></a>
 <a id="byod"></a>
 <a id="dedicated"></a>
 <a id="zte"></a>
