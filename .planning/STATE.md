@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 143
 current_phase_name: Link Coverage & Fence-Mask Unification
 status: executing
-stopped_at: Completed 143-01-PLAN.md
-last_updated: "2026-08-11T17:11:57.334Z"
-last_activity: 2026-08-10
-last_activity_desc: Phase 142 complete, transitioned to Phase 143
+stopped_at: Completed 143-02-PLAN.md
+last_updated: "2026-08-11T17:43:38.041Z"
+last_activity: 2026-08-11
+last_activity_desc: Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 32
-  completed_plans: 24
+  completed_plans: 25
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 143 — Link Coverage & Fence-Mask Unification
-Plan: 01 of 9 complete
+Plan: 2 of 9 complete
 Status: In progress — governance gate landed, Plan 02 (TRACER) next
 Last activity: 2026-08-11 — Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 
-Progress: [████████░░] 75%
+Progress: [████████░░] 78%
 
 ## v1.20 Phase Dependency Summary
 
@@ -303,6 +303,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 142 P05 | 35min | 2 tasks | 2 files |
 | Phase 142 P06 | 45 min | 2 tasks | 1 files |
 | Phase 143 P01 | 35min | 2 tasks | 4 files |
+| Phase 143 P02 | ~40min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -364,6 +365,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: RED-06: CHAIN_EXTRA=[30,31] sidecar adopts check-phase-30/31 into apex chain, excluded from arithmetic span guards (D-11); apex flips 93->95 PASS
 - [Phase ?]: NEST-01: cold-clone/warm ratio measured at 1.333x (22720ms/17044ms, n=3 each, full-depth clone), well under the 8x fail threshold — PASS
 - [Phase ?]: 143-01: D-29 seven-surface SC amendment + CARVE Category 10 (63-path anchor-remedy roster, D-32/D-38) landed as two separate commits per D-31; reconciled a premature D-28 marker on the Discuss-phase-flags line (from an earlier plan-authoring commit) by appending a D-29 cross-reference rather than overwriting
+- [Phase ?]: 143-02: D-38 owner ruling recorded (convert all 87 {#id} overrides, not just 22 targets) and evidence artifact opened; GitHub anchor model landed as a net deletion + one <a id> matchAll addition, proved end-to-end on the 0x80180014 tracer; docs/_templates/ exclusion + inline-code masking narrowed the corpus scan to 274 files/6252 links/13 broken file targets; a Rule-1 deviation converted 2 hub-linked {#id} headings early to keep the hub-scope scan green (2 of D-38's 87, Plan 09 does the remaining 85)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -392,8 +394,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-11T17:11:57.276Z
-Stopped at: Completed 143-01-PLAN.md
+Last session: 2026-08-11T17:43:37.979Z
+Stopped at: Completed 143-02-PLAN.md
 Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 

@@ -49,8 +49,8 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 
 ### Link — corpus link coverage + fence-mask unification (LINK)
 
-- [ ] **LINK-01**: `computeAnchorSetFromContent` (`check-nav-hub-links.mjs:132-166`) recognises HTML `<a id="…">` anchors
-- [ ] **LINK-02**: A corpus-wide checker validates every relative link and anchor across `docs/`, excluding `docs/_templates/` and masking inline code spans
+- [x] **LINK-01**: `computeAnchorSetFromContent` (`check-nav-hub-links.mjs:132-166`) recognises HTML `<a id="…">` anchors
+- [x] **LINK-02**: A corpus-wide checker validates every relative link and anchor across `docs/`, excluding `docs/_templates/` and masking inline code spans
 - [ ] **LINK-03**: The 13 genuine broken links are fixed **[SUCCESS-CRITERION AMENDMENT, D-29]** Amended to name the two populations separately: the 13 genuine broken **file targets** and the **132** genuine broken **anchors** — 145 total.
 - [ ] **LINK-04**: The checker exits 0 on the corpus with **no accepted-violation baseline**
 - [ ] **LINK-05**: Fence-mask behaviour is unified across all 15 call sites in 9 files, including **both** c17 sites
@@ -139,8 +139,8 @@ Which phases cover which requirements. Populated during roadmap creation.
 | RED-05 | Phase 142 | Complete |
 | RED-06 | Phase 142 | Complete |
 | RED-07 | Phase 142 | Complete |
-| LINK-01 | Phase 143 | Pending |
-| LINK-02 | Phase 143 | Pending |
+| LINK-01 | Phase 143 | Complete |
+| LINK-02 | Phase 143 | Complete |
 | LINK-03 | Phase 143 | Pending |
 | LINK-04 | Phase 143 | Pending |
 | LINK-05 | Phase 143 | Pending |
