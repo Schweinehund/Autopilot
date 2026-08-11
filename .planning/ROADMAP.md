@@ -225,9 +225,43 @@ Plans:
   4. Fence-mask behavior is unified across all 15 call sites in the 9 named files, including both c17 sites (`:158` opening, `:166` closing), covering the measured 74 fences indented 1–3 spaces across 11 files via a `^ {0,3}` CommonMark-equivalent rule (LINK-05).
   5. c17 reports identical file and violation counts before and after the fence-mask change, and a sampled check of the newly-masked lines confirms none hides a suppressed violation (LINK-06).
 
-**Plans**: TBD
+**Plans**: 8 plans
 
-**Discuss-phase flags**: None dominant — LINK-01's precedence over LINK-02/LINK-04 and LINK-04's no-baseline rule are already settled by the requirement text itself.
+Plans:
+
+**Wave 1**
+
+- [ ] 143-01-PLAN.md — Governance gate: D-29's seven-surface SC amendment (alone, first) + the CARVE Category-10 amendment enumerating 49 corpus paths (D-31 steps 1 and 2)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 143-02-PLAN.md — TRACER: D-01 one-way checkpoint, then the GitHub anchor model end-to-end on one real path, plus `docs/_templates/` exclusion and inline-code masking (D-14 steps 1-3)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 143-03-PLAN.md — LINK-03's 13 `../` over-escaped file targets + the Class-D de-anchor set (D-04/D-06)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 143-04-PLAN.md — The D-05 disjoint precedence rule + Class-C target-side `<a id>` anchors, error-code family and beyond
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 143-05-PLAN.md — Class-B source-side rewrites to true GitHub slugs; dry-run reaches zero
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [ ] 143-06-PLAN.md — The corpus flip: delete `:259` + `:269` (D-12), preserve the hub-existence hard-fail (D-13), LINK-04 no-baseline discharge
+
+**Wave 7** *(blocked on Wave 6)*
+
+- [ ] 143-07-PLAN.md — LINK-05 fence unification across all 15 sites + LINK-06's four evidence legs
+
+**Wave 8** *(blocked on Wave 7)*
+
+- [ ] 143-08-PLAN.md — Hand-off: the `check-phase-143.mjs` needle-spec (D-23), the D-26 deferred-cleanup row, `FENCE-AXIS-02`, and the enforcement-gap record
+
+**Discuss-phase flags**: **[SUCCESS-CRITERION AMENDMENT, D-28]** The original claim below is FALSE and is amended. LINK-01's precedence and LINK-04's no-baseline rule *are* settled by the requirement text — but no requirement, success criterion or CARVE category addressed the **145 genuine breaks** (13 file targets + 132 anchors) that LINK-04 requires be cleared with no baseline, of which **65** were invisible to the checker entirely because `computeAnchorSetFromContent` models Pandoc `{#id}` semantics against a GitHub-rendered corpus (D-01, OWNER-RATIFIED). Superseded original text: "None dominant — LINK-01's precedence over LINK-02/LINK-04 and LINK-04's no-baseline rule are already settled by the requirement text itself."
 
 **Hard constraints**: LINK-01 must precede LINK-02 and LINK-04 — running the corpus-wide checker before the anchor model is complete would freeze 201 of 271 anchor failures as a false, permanently-accepted baseline, the exact disposition class this milestone exists to delete. LINK-06 must land in the same phase as LINK-05 (it is the before/after regression gate on that exact change) — both are satisfied together here. `scripts/pipeline/convert.ps1`'s fence mask governs only the D-03(a) nav-footer rewrite on an ephemeral temp copy, not `.docx` code-block rendering (pandoc decides that) — its unification is hygiene, not correctness.
 
