@@ -42,8 +42,8 @@ Configuring the wrong extension identifier or payload type produces a silently b
 **Key distinctions for this guide:**
 - The Kerberos SSO extension (`com.apple.AppSSOKerberos.KerberosExtension`) does **NOT** handle Entra ID authentication -- that is the PSSO extension's role.
 - The Kerberos SSO extension is **NOT** shipped or owned by Microsoft -- it is an Apple-native, Apple-built extension.
-- Using the PSSO identifier (`com.microsoft.CompanyPortalMac.ssoextension`) in the Kerberos profile is the most common configuration error -- see [K-1 callout](#k-1-wrong-extension-identifier) below.
-- Using `Type: Redirect` (the PSSO value) instead of `Type: Credential` in the Kerberos profile causes silent TGT acquisition failure -- see [K-5 callout](#k-5-wrong-payload-type) below.
+- Using the PSSO identifier (`com.microsoft.CompanyPortalMac.ssoextension`) in the Kerberos profile is the most common configuration error -- see K-1 callout below.
+- Using `Type: Redirect` (the PSSO value) instead of `Type: Credential` in the Kerberos profile causes silent TGT acquisition failure -- see K-5 callout below.
 
 ---
 

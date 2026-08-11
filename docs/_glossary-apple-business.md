@@ -49,7 +49,7 @@ The following terms were renamed as part of Apple's 2026-04-14 rebrand of Apple 
 
 ### Account Holder
 
-The tenant-level Apple Business owner with irrevocable lockout-recovery authority. The Account Holder role is the sole role that can recover an Apple Business tenancy after all IT Administrators are locked out; it cannot be delegated to a sub-organization admin (see [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md#account-holder-do-not-delegate) for the OP-2 / DA-2 pitfall callout). The Account Holder Managed Apple Account must use a dedicated email address that is NOT shared with any IT Administrator account to prevent single-point-of-lockout. Apple article: [axm97dd59159](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web).
+The tenant-level Apple Business owner with irrevocable lockout-recovery authority. The Account Holder role is the sole role that can recover an Apple Business tenancy after all IT Administrators are locked out; it cannot be delegated to a sub-organization admin (see [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md) for the OP-2 / DA-2 pitfall callout). The Account Holder Managed Apple Account must use a dedicated email address that is NOT shared with any IT Administrator account to prevent single-point-of-lockout. Apple article: [axm97dd59159](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web).
 
 > **DO NOT DELEGATE:** The Account Holder role must be held by a named individual (not a shared mailbox, not a service account) per the OP-2 prevention strategy in `.planning/research/PITFALLS.md`.
 
@@ -57,7 +57,7 @@ The tenant-level Apple Business owner with irrevocable lockout-recovery authorit
 
 ### Apple Business
 
-The post-2026-04-14 name for what was previously called Apple Business Manager (ABM). Apple Business is the all-in-one web portal accessed at [business.apple.com](https://business.apple.com) for managing device enrollment (ADE), app distribution (Apps and Books / VPP), Organizational Units, Managed Apple Accounts, and delegated role assignments across an organization's Apple device fleet. See the Rebrand Mapping Table at the top of this file for the full set of renamed terms. For ABM provisioning terminology (ADE token, VPP token, APNs certificate, Supervision), see the [Apple Provisioning Glossary](_glossary-macos.md#abm-apple-business-manager). Apple article: [axmd79d79dea](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web).
+The post-2026-04-14 name for what was previously called Apple Business Manager (ABM). Apple Business is the all-in-one web portal accessed at [business.apple.com](https://business.apple.com) for managing device enrollment (ADE), app distribution (Apps and Books / VPP), Organizational Units, Managed Apple Accounts, and delegated role assignments across an organization's Apple device fleet. See the Rebrand Mapping Table at the top of this file for the full set of renamed terms. For ABM provisioning terminology (ADE token, VPP token, APNs certificate, Supervision), see the [Apple Provisioning Glossary](_glossary-macos.md). Apple article: [axmd79d79dea](https://support.apple.com/guide/apple-business-manager/apple-business-manager-is-now-apple-business-axmd79d79dea/web).
 
 > See also: [ABM](_glossary-macos.md#abm) in the Apple Provisioning Glossary for legacy ABM provisioning surface terminology (ADE, Supervision, ABM token)
 
@@ -113,7 +113,7 @@ Organizational Unit (OU) (formerly Location in Apple Business Manager) is the pr
 
 > Intune-side policy scoping (via Entra groups and assignment filters) is a separate layer — see the Intune-Apple terminology mapping in
 
-> [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md#intune-side-labels-preserved).
+> [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md).
 
 ### Sub-OU
 
@@ -141,7 +141,7 @@ Content token (formerly VPP location token in Apple Business Manager) is the OU-
 
 Managed Apple Account (formerly Managed Apple ID; renamed 2024, predates Apple Business rebrand) is the organization-owned Apple identity for employees and students in Apple Business. Managed Apple Accounts are provisioned by the organization (via Apple Business direct creation, SCIM provisioning, or federation) and are homed in an Organizational Unit. They grant the user access to Apple platform services (iCloud for Work, FaceTime for Work, App Store purchases) under organizational control. Managed Apple Accounts are required for Account-Driven User Enrollment (BYOD) and are the identity surface for federated sign-in (OIDC+JIT or SCIM).
 
-> See also: [Managed Apple ID](_glossary-macos.md#managed-apple-id) in the Apple Provisioning Glossary for the provisioning and enrollment-flow context (renamed 2024, predates Apple Business rebrand).
+> See also: [Managed Apple ID](_glossary-macos.md) in the Apple Provisioning Glossary for the provisioning and enrollment-flow context (renamed 2024, predates Apple Business rebrand).
 
 ### Apple Business Token
 

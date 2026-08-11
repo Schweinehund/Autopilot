@@ -67,7 +67,7 @@ When the `intune-portal` package updates to include Identity Broker v2.0.2+, the
 
 **Source:** Microsoft Learn — Linux deployment guide (verified 2026-04, HIGH confidence).
 
-**Admin action required:** See the [Phase 50 LIN-05 admin pitfall callout](../admin-setup-linux/01-intune-linux-agent.md#identity-broker-v202-re-enrollment) for the step-by-step review checklist (audit CA assignments, filters, Entra group membership; re-target post-re-enrollment device IDs). Phase 49 anchors the breakpoint in this matrix-doc context; Phase 50 owns the detailed admin-action callout.
+**Admin action required:** See the [Phase 50 LIN-05 admin pitfall callout](../admin-setup-linux/01-intune-linux-agent.md) for the step-by-step review checklist (audit CA assignments, filters, Entra group membership; re-target post-re-enrollment device IDs). Phase 49 anchors the breakpoint in this matrix-doc context; Phase 50 owns the detailed admin-action callout.
 
 ## Hardware and Software Prerequisites
 

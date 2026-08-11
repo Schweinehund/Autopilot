@@ -215,7 +215,7 @@ Use this table to map the artifact you collected to the investigation runbook(s)
 - [Linux Agent Investigation (Runbook 25)](25-linux-agent-investigation.md) — Trap-by-trap investigation; consumes log surfaces collected here
 - [Linux Provisioning Glossary](../_glossary-linux.md) — Canonical Linux Intune terminology (`journalctl`, `systemd`, `dpkg`, `apt`, `intune-portal`, `microsoft-identity-broker`)
 - [Linux L1 Triage Decision Tree](../decision-trees/09-linux-triage.md) — Phase 51 L1 routing surface
-- [Linux Capability Matrix — Monitoring](../reference/linux-capability-matrix.md#monitoring) — Architectural detail for Linux monitoring surface narrowness
+- [Linux Capability Matrix — Monitoring](../reference/linux-capability-matrix.md) — Architectural detail for Linux monitoring surface narrowness
 - [L1 30: Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md) — L1 escalation source
 - [L1 31: Linux Compliance Non-Compliant](../l1-runbooks/31-linux-compliance-non-compliant.md) — L1 escalation source (custom-compliance Bash)
 - [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md) — L1 escalation source (primary route to Runbook 25 Trap C)

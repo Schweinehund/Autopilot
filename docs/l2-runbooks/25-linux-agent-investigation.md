@@ -353,7 +353,7 @@ Expected: `dsreg --status` reports a stable device ID; broker package shows `ii`
 - [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md) — prerequisite for this runbook; Section 1 journalctl output is consumed by all 4 traps
 - [Linux Provisioning Glossary](../_glossary-linux.md) — `microsoft-identity-broker`, `intune-agent.timer`, `systemd`, `journalctl`, `hwe-kernel`, `ga-kernel`, `deb-repository`, `snap`
 - [Linux L1 Triage Decision Tree](../decision-trees/09-linux-triage.md) — Phase 51 L1 routing surface
-- [Linux Capability Matrix — Supported Management Surface](../reference/linux-capability-matrix.md#supported-management-surface) — Ubuntu 22.04/24.04 LTS scope and version-track context for Trap A
+- [Linux Capability Matrix — Supported Management Surface](../reference/linux-capability-matrix.md) — Ubuntu 22.04/24.04 LTS scope and version-track context for Trap A
 - [L1 30: Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md) — L1 escalation source; Cause A (package install) → Trap A or Trap B; Cause B (sign-in) → Trap D; Cause C (timeout) → Trap C
 - [L1 31: Linux Compliance Non-Compliant](../l1-runbooks/31-linux-compliance-non-compliant.md) — L1 escalation source (custom-compliance Bash via Runbook 24 Section 2)
 - [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md) — L1 escalation source (primary route to Trap C)

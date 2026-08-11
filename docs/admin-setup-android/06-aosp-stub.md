@@ -98,7 +98,7 @@ Requires: Intune tenant with Android enrollment enabled; hardware on the [MS Lea
 - [Android Enterprise Admin Setup Overview](00-overview.md)
 - [Managed Google Play Binding](01-managed-google-play.md)
 - [Zero-Touch Portal Configuration](02-zero-touch-portal.md)
-- [Android Enterprise Provisioning Glossary — AOSP](../_glossary-android.md#aosp)
+- [Android Enterprise Provisioning Glossary — AOSP](../_glossary-android.md)
 - [Android Enterprise Enrollment Overview — AOSP](../android-lifecycle/00-enrollment-overview.md#aosp)
 - [Android Provisioning Methods Matrix](../android-lifecycle/02-provisioning-methods.md)
 - [MS Learn — AOSP Supported Devices](https://learn.microsoft.com/en-us/intune/fundamentals/aosp-supported-devices)

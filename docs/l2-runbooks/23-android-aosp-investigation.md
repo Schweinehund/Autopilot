@@ -359,7 +359,7 @@ Escalate to Microsoft Support when:
 - [Pico Admin Setup (11)](../admin-setup-android/11-aosp-pico.md)
 - [HTC VIVE Focus Admin Setup (12)](../admin-setup-android/12-aosp-htc-vive-focus.md)
 - [Meta Quest Admin Setup (13)](../admin-setup-android/13-aosp-meta-quest.md)
-- [Glossary — AOSP](../_glossary-android.md#aosp)
+- [Glossary — AOSP](../_glossary-android.md)
 - [Glossary — OEMConfig](../_glossary-android.md#oemconfig)
 - [Glossary — Play Integrity](../_glossary-android.md#play-integrity)
 
