@@ -100,7 +100,7 @@ Apple's formal management designation for organization-owned iOS/iPadOS devices 
 
 ### Profile-Based Enrollment
 
-The enrollment type resulting from the macOS 26 in-place ABM migration (B1 path). Apple describes the B1 outcome as the device unenrolling from ADE and re-enrolling with profile-based enrollment. From Intune's perspective, no separate configuration is required -- the existing ADE enrollment policy handles the migrated device's re-enrollment. The result is functionally equivalent to a fresh ADE enrollment, including ACME certificate issuance and PSSO Settings Catalog delivery. PSSO re-registration is always required after migration. See [Stage 7](../macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
+The enrollment type resulting from the macOS 26 in-place ABM migration (B1 path). Apple describes the B1 outcome as the device unenrolling from ADE and re-enrolling with profile-based enrollment. From Intune's perspective, no separate configuration is required -- the existing ADE enrollment policy handles the migrated device's re-enrollment. The result is functionally equivalent to a fresh ADE enrollment, including ACME certificate issuance and PSSO Settings Catalog delivery. PSSO re-registration is always required after migration. See [Stage 7](macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
 
 > **Windows equivalent:** No direct equivalent -- this is a macOS-specific enrollment-type distinction.
 
@@ -108,7 +108,7 @@ The enrollment type resulting from the macOS 26 in-place ABM migration (B1 path)
 
 ### ACME
 
-Automated Certificate Management Environment -- certificate protocol used by Intune to issue device identity certificates during genuine MDM enrollment on macOS 13.1 and later. The ACME certificate is reissued on every genuine re-enrollment (including the macOS 26 in-place migration via the B1 path); it is NOT reissued on profile renewal or MDM refresh without a full unenroll/reenroll. See [Stage 7](../macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
+Automated Certificate Management Environment -- certificate protocol used by Intune to issue device identity certificates during genuine MDM enrollment on macOS 13.1 and later. The ACME certificate is reissued on every genuine re-enrollment (including the macOS 26 in-place migration via the B1 path); it is NOT reissued on profile renewal or MDM refresh without a full unenroll/reenroll. See [Stage 7](macos-lifecycle/02-mdm-migration-psso.md#stage-7-post-migration-profile-based-enrollment-b1-path).
 
 > **Windows equivalent:** No direct equivalent -- Windows Intune device certificates use SCEP/PKCS protocols; ACME is macOS-specific in the Intune context.
 
@@ -148,7 +148,7 @@ Apple Push Notification service -- Apple's push notification service used by all
 
 ### MDM Migration
 
-The process by which a Mac enrolled in a source MDM (such as Kandji/Iru) is moved to a target MDM (such as Microsoft Intune) without requiring a full device wipe. On macOS 26+, the "Assign Device Management" action in Apple Business Manager triggers an in-place migration (B1 path) that unenrolls the device from the source MDM and re-enrolls it in the target MDM via profile-based enrollment. Pre-macOS-26 devices require a wipe-and-re-enroll fallback (B2 path). PSSO re-registration is always required post-migration regardless of path. See [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md).
+The process by which a Mac enrolled in a source MDM (such as Kandji/Iru) is moved to a target MDM (such as Microsoft Intune) without requiring a full device wipe. On macOS 26+, the "Assign Device Management" action in Apple Business Manager triggers an in-place migration (B1 path) that unenrolls the device from the source MDM and re-enrolls it in the target MDM via profile-based enrollment. Pre-macOS-26 devices require a wipe-and-re-enroll fallback (B2 path). PSSO re-registration is always required post-migration regardless of path. See [MDM Migration Walkthrough](macos-lifecycle/02-mdm-migration-psso.md).
 
 > **Windows equivalent:** No direct equivalent --
 
@@ -158,7 +158,7 @@ The process by which a Mac enrolled in a source MDM (such as Kandji/Iru) is move
 
 ### Assign Device Management
 
-The Apple Business Manager action that assigns a device's serial number to a new MDM server, triggering the managed device migration workflow on macOS 26+. Once executed in ABM, the source MDM receives a migration signal at its next check-in; the device transitions to the target MDM enrollment profile without requiring a wipe. The Deadline must be configured before or alongside this action to set the migration enforcement window. See [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md).
+The Apple Business Manager action that assigns a device's serial number to a new MDM server, triggering the managed device migration workflow on macOS 26+. Once executed in ABM, the source MDM receives a migration signal at its next check-in; the device transitions to the target MDM enrollment profile without requiring a wipe. The Deadline must be configured before or alongside this action to set the migration enforcement window. See [MDM Migration Walkthrough](macos-lifecycle/02-mdm-migration-psso.md).
 
 > **Windows equivalent:** No direct equivalent --
 
@@ -168,7 +168,7 @@ The Apple Business Manager action that assigns a device's serial number to a new
 
 ### Deadline
 
-Migration enforcement date set in Apple Business Manager (1--90 day range) after which macOS displays a non-dismissible full-screen prompt until migration enrollment completes. See [MDM Migration Walkthrough](../macos-lifecycle/02-mdm-migration-psso.md) for the full lockout UX and [L2 Runbook #30](../l2-runbooks/30-macos-mdm-migration-failure.md) for deadline-lockout recovery.
+Migration enforcement date set in Apple Business Manager (1--90 day range) after which macOS displays a non-dismissible full-screen prompt until migration enrollment completes. See [MDM Migration Walkthrough](macos-lifecycle/02-mdm-migration-psso.md) for the full lockout UX and [L2 Runbook #30](l2-runbooks/30-macos-mdm-migration-failure.md) for deadline-lockout recovery.
 
 > **Windows equivalent:** No direct equivalent --
 
@@ -186,7 +186,7 @@ macOS MDM platform rebranded from Kandji to Iru in October 2025. Both names refe
 
 ### Delete Device Record
 
-Kandji/Iru console action that removes a Mac from MDM management and permanently destroys all MDM-held secrets (FileVault recovery key and Activation Lock bypass code). After deletion, the Kandji/Iru agent (`/Library/Kandji/Kandji Agent.app`) receives an uninstall command at its next MDM check-in (~15 minutes) and removes itself. **Retrieve all secrets BEFORE performing this action -- there is no recovery path after deletion.** See [Stage 2: Secret Retrieval](../macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
+Kandji/Iru console action that removes a Mac from MDM management and permanently destroys all MDM-held secrets (FileVault recovery key and Activation Lock bypass code). After deletion, the Kandji/Iru agent (`/Library/Kandji/Kandji Agent.app`) receives an uninstall command at its next MDM check-in (~15 minutes) and removes itself. **Retrieve all secrets BEFORE performing this action -- there is no recovery path after deletion.** See [Stage 2: Secret Retrieval](macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
 
 > **Windows equivalent:** No direct equivalent.
 
@@ -196,7 +196,7 @@ Kandji/Iru console action that removes a Mac from MDM management and permanently
 
 ### FileVault Recovery Key
 
-MDM-held cryptographic key that allows decryption of a FileVault-encrypted Mac startup disk. Each MDM enrollment holds its own escrow copy; the key is permanently destroyed when the MDM device record is deleted. During Kandji/Iru-to-Intune migration, the source MDM copy is destroyed on Delete Device Record -- retrieve it BEFORE deletion. See [Stage 2: Secret Retrieval](../macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
+MDM-held cryptographic key that allows decryption of a FileVault-encrypted Mac startup disk. Each MDM enrollment holds its own escrow copy; the key is permanently destroyed when the MDM device record is deleted. During Kandji/Iru-to-Intune migration, the source MDM copy is destroyed on Delete Device Record -- retrieve it BEFORE deletion. See [Stage 2: Secret Retrieval](macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
 
 > **Windows equivalent:** [BitLocker recovery key](https://learn.microsoft.com/en-us/mem/intune/protect/encrypt-devices) escrowed in Intune -- conceptually analogous (MDM holds the decryption key);
 
@@ -204,7 +204,7 @@ MDM-held cryptographic key that allows decryption of a FileVault-encrypted Mac s
 
 ### Activation Lock Bypass
 
-Device-specific code enabling an administrator to bypass Activation Lock if the supervising MDM is removed. Generated at device supervision time; only available within 30 days of supervision. Permanently destroyed on Delete Device Record in the source MDM -- retrieve before any device record deletion. See [Stage 2: Secret Retrieval](../macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
+Device-specific code enabling an administrator to bypass Activation Lock if the supervising MDM is removed. Generated at device supervision time; only available within 30 days of supervision. Permanently destroyed on Delete Device Record in the source MDM -- retrieve before any device record deletion. See [Stage 2: Secret Retrieval](macos-lifecycle/02-mdm-migration-psso.md#stage-2-intune-readiness-secret-retrieval-and-source-release).
 
 > **Windows equivalent:** No direct equivalent. Activation Lock is an Apple-specific iCloud-linked device lock; Windows has no hardware-anchored device-lock mechanism requiring an MDM-held bypass code.
 
@@ -249,7 +249,7 @@ Line-of-business (LOB) app -- a PKG or DMG application uploaded directly to Intu
 
 > "LOB app" is shared Intune terminology across platforms.
 
-> See also: [VPP](#vpp); [PSSO Provisioning Walkthrough -- A2 path](../macos-lifecycle/01-psso-provisioning-walkthrough.md).
+> See also: [VPP](#vpp); [PSSO Provisioning Walkthrough -- A2 path](macos-lifecycle/01-psso-provisioning-walkthrough.md).
 
 ---
 
@@ -324,7 +324,7 @@ Device Registration: REGISTERED
 User Registration: REGISTERED
 ```
 
-Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and at the final stage of any PSSO provisioning flow. See [Platform SSO](#platform-sso) for the full PSSO entry; see [Stage 9](../macos-lifecycle/02-mdm-migration-psso.md#stage-9-psso-re-registration-b1-path) for migration context.
+Used as the authoritative PSSO verification gate at Stage 9 of MDM migration and at the final stage of any PSSO provisioning flow. See [Platform SSO](#platform-sso) for the full PSSO entry; see [Stage 9](macos-lifecycle/02-mdm-migration-psso.md#stage-9-psso-re-registration-b1-path) for migration context.
 
 > **Windows equivalent:** No direct equivalent. The closest Windows analog is the `dsregcmd /status` command, which returns Entra ID device join state and PRT status --
 
