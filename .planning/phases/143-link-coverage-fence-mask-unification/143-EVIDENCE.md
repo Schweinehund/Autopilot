@@ -798,3 +798,78 @@ code as the trigger, and the *unpatched* `check-nav-hub-links.mjs` was already e
 plan started (its 4-hub-scoped default scan has been green since Phase 123). LINK-04's remaining
 work — widening the checker's default (unpatched) scope to the full corpus-wide scan this plan's
 dry-run only exercises temporarily — is Plan 06's scope, per this phase's own plan sequencing.
+
+## Plan 06 — D-13 ruling on `HUB_PATHS` + the corpus-flip GOV-02 pre-edit census (Task 1)
+
+**Opened:** 2026-08-11 (this session), before any code edit this plan makes. Tree: main worktree at
+HEAD `599a996b` (post-Plan-05). Node: v24.17.0. OS: Windows 10 Pro 19045.
+
+### D-13 ruling
+
+**Ruling: preserve both, with roles split.** `checkInboundLinks` becomes the single corpus-wide
+link scan — both `:259` and `:269` are deleted, so it scans every one of the 274 files as a source
+and accepts every file as a target. `checkOutboundLinks` retains its `hub file not found`
+hard-fail at `:222-224`, which is the ONLY assertion anywhere that the four ratified nav-hubs
+exist (`checkInboundLinks:261` merely `continue`s on a missing file, so collapsing to one pass
+would silently delete that assertion). Its per-link scanning role is retired as redundant — with
+`:259` gone, the corpus pass already covers the hubs' 484 relative links as a source, and keeping
+both scans would double-report every hub-link failure. `HUB_PATHS` therefore stays live as the
+hub-existence roster, not as dead code.
+
+**Consequence, recorded explicitly:** the first reported bucket (`checkOutboundLinks`'s failures)
+now counts hub-presence failures only and is expected to be 0 in every healthy state — the four
+hub files are the whole corpus content, they are never going to go missing without every other
+gate failing first. The second bucket (`checkInboundLinks`'s failures) counts every corpus link
+failure — the substantive, load-bearing scan LINK-02 requires.
+
+### GOV-02 pre-edit census — no edit made in this row
+
+Copying row 55's four-part shape (`v1.20-GOV-02-LEDGER.md:55`, `check-phase-67.mjs`):
+
+1. **Target-scoped path-literal grep** for `check-nav-hub-links.mjs` across `scripts/`, `.github/`,
+   `.planning/`: `grep -rn "check-nav-hub-links\.mjs" scripts/ .github/ .planning/ | grep -v
+   '^\.claude/' | grep -v '^\.planning/milestones/v1.20-GOV-02-LEDGER.md'`.
+2. **Symbol-scoped grep** for `checkInboundLinks`, `checkOutboundLinks`, `HUB_PATHS`, `hubSet` and
+   the literal `check-nav-hub-links summary:` across `scripts/`: `grep -rn
+   "checkInboundLinks\|checkOutboundLinks\|HUB_PATHS\|hubSet\|check-nav-hub-links summary:"
+   scripts/`.
+3. **Cross-reference check**, re-confirming `check-phase-123.mjs:40,83` pins only the path string:
+   `check-phase-123.mjs:40` declares `const DELIVERABLE_LINKCHECKER =
+   'scripts/validation/check-nav-hub-links.mjs';` and `:82-84` calls `presence('LINKCHECKER',
+   DELIVERABLE_LINKCHECKER, ...)`, whose `run()` body (`:26-33`) does `readFile(path)` and checks
+   only `c === null` / `c.trim().length === 0` — a file-existence + non-empty check on the path
+   string, never a `String.includes()` content assertion on the summary line or on either scan
+   function. Confirmed by direct read, not inferred.
+
+**Results, measured this session:**
+
+- Path-literal grep in `scripts/`+`.github/`: **5** hits — 2 inside `check-nav-hub-links.mjs` itself
+  (header comment `:2`, usage line `:9`), 3 inside `check-phase-123.mjs` (header-comment citations
+  `:7,14` + the `presence()` path-string constant `:40`). 0 hits in `.github/workflows/`. 361
+  further hits in `.planning/` (historical prose across Plans 02-05's own SUMMARY/EVIDENCE/PLAN
+  artifacts and the GOV-02 ledger's own prior rows — narrative, not active assertions).
+- Symbol-scoped grep: `checkInboundLinks`/`checkOutboundLinks`/`HUB_PATHS`/`hubSet`/`check-nav-hub-
+  links summary:` — all hits confined to `scripts/validation/check-nav-hub-links.mjs` itself (the
+  definitions and their own internal call sites). One unrelated near-miss noted and dismissed:
+  `scripts/pipeline/retrofit-nav-hub.mjs` declares its OWN distinct `NAV_HUB_PATHS` (a `Set`, plural
+  different identifier, different file, EEE-SOP doc-type router) — not the same symbol as this
+  file's `HUB_PATHS` array, zero collision.
+- Cross-reference check: confirmed as stated above — `presence()` is a file-existence check on the
+  path-string constant only.
+- **No frozen call-site conflict found.**
+
+**Pre-edit regression baseline:**
+
+- `node scripts/validation/check-phase-123.mjs` → `Result: 6 PASS, 0 FAIL, 0 SKIPPED`, exit 0.
+- `node scripts/validation/check-nav-hub-links.mjs` → `check-nav-hub-links summary: 0 outbound
+  failure(s), 0 inbound failure(s), 0 total`, exit 0.
+
+**No edit made in this row.** `git status --porcelain .planning/milestones/v1.20-GOV-02-LEDGER.md`
+and `git diff --numstat -- .planning/milestones/v1.20-GOV-02-LEDGER.md` (against the pre-append
+state) both confirmed empty/zero before this row was appended; `git diff --numstat --
+scripts/validation/check-nav-hub-links.mjs` is `0 0` at row-append time — the code edit is Task 2's
+scope, strictly after this row lands.
+
+**Result: PASS** — grep and the D-13 ruling both precede any code edit; zero frozen call-site
+conflicts found; `HUB_PATHS` consciously ruled to stay live with a split role, never left as dead
+code by omission.
