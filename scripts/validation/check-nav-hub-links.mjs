@@ -272,6 +272,9 @@ function checkInboundLinks() {
   for (const abs of allMd) {
     const relPath = relNormalize(abs);
     if (hubSet.has(relPath)) continue;
+    // LINK-02: docs/_templates/ holds placeholder scaffolding (26 template link targets that
+    // are never meant to resolve), excluded from the corpus-wide scan entirely.
+    if (relPath.startsWith('docs/_templates/')) continue;
     const content = readFile(relPath);
     if (content === null) continue;
     const lines = content.split('\n');
