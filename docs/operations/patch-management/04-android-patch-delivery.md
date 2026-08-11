@@ -133,7 +133,8 @@ Zebra-side mechanism.
 
 Plan firmware-update orchestration with the slowest OEM in your fleet as the pacing constraint.
 
-## Zebra LifeGuard OTA (Zebra Fleets) {#zebra-lifeguard}
+<a id="zebra-lifeguard"></a>
+## Zebra LifeGuard OTA (Zebra Fleets)
 
 **Zebra LifeGuard OTA** firmware management via Intune (GA **January 2026**) is a Zebra-specific
 OEM mechanism for Zebra Android Enterprise rugged devices. Zebra LifeGuard delivers OEM firmware
@@ -161,7 +162,8 @@ requirement window. Most Zebra firmware releases include a roll-up of recent mon
 security patches, but the Q-to-Q gap means a missed quarterly release can slip the 12-month
 window — schedule LifeGuard campaigns conservatively against the Oct 31 2026 deadline.
 
-## Samsung Knox Service Plugin (Samsung Fleets) {#samsung-ksp}
+<a id="samsung-ksp"></a>
+## Samsung Knox Service Plugin (Samsung Fleets)
 
 **Samsung KSP** (**Knox Service Plugin**) is the analogous Samsung-side OEM mechanism for
 firmware update enforcement and Knox-specific configuration on Samsung Android Enterprise

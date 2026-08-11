@@ -60,7 +60,8 @@ all four platforms; both are detailed (with the three-layer callout pattern) in 
 per-platform guides at [macOS Update Enforcement](02-macos-update-enforcement.md) and
 [Android Patch Delivery](04-android-patch-delivery.md).
 
-## Ring Terminology {#ring-terminology}
+<a id="ring-terminology"></a>
+## Ring Terminology
 
 The word "ring" is overloaded in Microsoft Windows update tooling. **WUfB deployment ring** and
 **Autopatch ring** are mutually exclusive concepts; they cannot coexist on the same device. This

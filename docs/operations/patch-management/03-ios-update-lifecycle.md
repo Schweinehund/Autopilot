@@ -43,7 +43,8 @@ Profile uses the DDM update keys enumerated in [DDM Update Keys](#ddm-update-key
 they continue to use legacy MDM device-restriction "Defer software updates" (supervised-only) and
 the legacy `ScheduleOSUpdate` MDM command. Both legacy mechanisms are being deprecated by Apple.
 
-## DDM Update Keys {#ddm-update-keys}
+<a id="ddm-update-keys"></a>
+## DDM Update Keys
 
 The DDM iOS update assertion uses four basic keys to declare the enforcement target:
 

@@ -25,7 +25,8 @@ update policy surface.
 For the cross-platform comparison and Ring Terminology hub, see
 [Patch Management Overview](00-overview.md).
 
-## WUfB Deployment Rings {#wufb-deployment-rings}
+<a id="wufb-deployment-rings"></a>
+## WUfB Deployment Rings
 
 A **WUfB deployment ring** is a Windows Update for Business policy in Intune (Intune > Devices >
 Update rings) that configures deferral periods, deadlines, and restart behavior for Windows quality
@@ -57,7 +58,8 @@ are open. The Broad WUfB deployment ring inherits the validated content; the WUf
 policy object itself is not promoted (each WUfB deployment ring is a fixed policy object), only
 the content advances by virtue of the longer deferral on the Broad WUfB deployment ring.
 
-## Windows Autopatch Rings (Disambiguation) {#autopatch-disambiguation}
+<a id="autopatch-disambiguation"></a>
+## Windows Autopatch Rings (Disambiguation)
 
 A **Windows Autopatch ring** is a service-managed device cohort (Test, First, Fast, and Broad
 Autopatch rings) that Windows Autopatch automatically rotates and gates on Microsoft's behalf.
@@ -101,7 +103,8 @@ When migrating from WUfB deployment rings to Autopatch:
    each WUfB deployment ring assignment at the device level, retaining a stale policy object on
    any WUfB deployment ring in Intune invites future re-assignment errors.
 
-## Hotpatch {#hotpatch}
+<a id="hotpatch"></a>
+## Hotpatch
 
 Windows 11 Enterprise 24H2+ ships with **Hotpatch as the default servicing model from May 2026**
 onwards. Hotpatch eliminates reboot-on-most-updates by patching kernel and OS-mode binaries
@@ -145,7 +148,8 @@ per Microsoft's Hotpatch + LCU servicing model, so admins should distinguish "re
 to re-baseline reboot-based alerting after the May 2026 cutover causes false-quiet alarms (no
 monthly reboot signal does not mean devices are unpatched — it means Hotpatch is working).
 
-## Driver and Firmware Update Policy {#driver-firmware-policy}
+<a id="driver-firmware-policy"></a>
+## Driver and Firmware Update Policy
 
 Driver and firmware updates are configured **separately** from quality and feature update policy.
 A driver/firmware policy is not part of any WUfB deployment ring or any Autopatch ring; it is a

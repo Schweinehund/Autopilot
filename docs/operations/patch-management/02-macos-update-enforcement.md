@@ -24,7 +24,8 @@ deprecated and removed with Apple OS 26.
 
 For the cross-platform comparison, see [Patch Management Overview](00-overview.md).
 
-## DDM Software Update Enforcement {#ddm-enforcement}
+<a id="ddm-enforcement"></a>
+## DDM Software Update Enforcement
 
 DDM "**Software Update Enforce Latest**" (configured in **Intune Settings Catalog** under macOS
 configuration profiles) is the **DDM** declarative-management primitive for macOS update
@@ -74,7 +75,8 @@ force" pattern. Post-Apple-OS-26, neither primitive functions. The DDM Settings 
 is the singular replacement and must encode both delay and enforcement deadline as a single
 declarative target.
 
-## Deadlines & Cutover Dates {#deadlines-cutover-dates}
+<a id="deadlines-cutover-dates"></a>
+## Deadlines & Cutover Dates
 
 The Apple OS 26 release deprecates and removes legacy MDM update primitives. Tenants must migrate
 to DDM "Software Update Enforce Latest" before Apple OS 26 ships.
