@@ -150,9 +150,10 @@ function computeAnchorSetFromContent(content) {
   const lines = content.split('\n');
   const fenceMask = buildFenceMask(lines);
 
-  // (a) <a id="..."></a> anchors -- whole content, fence-masked, verbatim. matchAll (not
-  // .match()) is required: docs/admin-setup-android/05-dedicated-devices.md:242 carries two
-  // adjacent tags on one line, and a single-match implementation would silently drop the second.
+  // (a) <a id="..."></a> anchors -- whole content, fence-masked, verbatim. A per-line global
+  // loop (not a single-match call) is required: docs/admin-setup-android/05-dedicated-devices.md:242
+  // carries two adjacent tags on one line, and a single-match implementation would silently drop
+  // the second.
   for (let i = 0; i < lines.length; i++) {
     if (fenceMask[i]) continue;
     for (const m of lines[i].matchAll(/<a\s+id\s*=\s*"([a-zA-Z0-9_-]+)"\s*>\s*<\/a>/g)) {
@@ -416,12 +417,12 @@ if (SELF_TEST) {
     `set: [${[...tableAnchorSet].join(', ')}]`
   );
 
-  // I: <a id> matchAll -- two adjacent tags on one line both register, not just the first
-  // (docs/admin-setup-android/05-dedicated-devices.md:242 is the real corpus instance).
+  // I: <a id> global recognition -- two adjacent tags on one line both register, not just the
+  // first (docs/admin-setup-android/05-dedicated-devices.md:242 is the real corpus instance).
   const doubleTagContent = '<a id="exit-kiosk-pin-synchronization"></a><a id="exit-kiosk-pin"></a>';
   const doubleTagSet = computeAnchorSetFromContent(doubleTagContent);
   stAssert(
-    '<a id> double-tag line: both ids present (matchAll, not a single .match())',
+    '<a id> double-tag line: both ids present (global loop, not a single match)',
     doubleTagSet.has('exit-kiosk-pin-synchronization') && doubleTagSet.has('exit-kiosk-pin'),
     `set: [${[...doubleTagSet].join(', ')}]`
   );
