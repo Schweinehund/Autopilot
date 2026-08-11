@@ -1,18 +1,24 @@
 #!/usr/bin/env node
-// check-nav-hub-links.mjs -- net-new file+anchor link-integrity checker for the 4 orphan
-// nav-hubs (Phase 123 RETRO-06, D-01 locked spec). Standalone validator -- no chained
-// per-phase registration array (mirrors the Phase-115 c17-eee-contract.mjs standalone
-// precedent). This script builds + self-tests the tool only: it does NOT fix any link
-// and does NOT mutate the 4 hub docs. Phase 123-04 runs this against the final corpus
-// after the 12 pre-existing broken links are fixed.
+// check-nav-hub-links.mjs -- corpus-wide relative-link and anchor checker for docs/, excluding
+// docs/_templates/ (Phase 123 RETRO-06 origin, D-01 locked spec; widened to full corpus coverage
+// by Phase 143 LINK-02/LINK-04, D-11/D-12). Standalone validator -- no chained per-phase
+// registration array (mirrors the Phase-115 c17-eee-contract.mjs standalone precedent). Models
+// GitHub's own anchor-slug semantics (see computeAnchorSetFromContent below). Exits 0 iff zero
+// failures, with NO accepted-violation baseline, allowlist, ratchet file or expected-failure list
+// of any kind (LINK-04) -- every failure reported is either fixed or the checker's model is wrong.
+//
+// The absence of `{#id}` (Pandoc/kramdown heading-attribute) recognition is DELIBERATE and
+// PERMANENT: GitHub does not implement that syntax, so a `{#id}` token renders as literal heading
+// text and is correctly modelled by the ordinary heading-slug pipeline, not a special-cased
+// override. This holds regardless of how many (if any) `{#id}` tokens the corpus currently
+// contains -- do not re-add a recognition branch under a different name if a future corpus count
+// reaches zero; that would silently re-admit the 65-link false-negative class this model closes
+// (143-CONTEXT.md D-01/D-02, RESEARCH.md Pitfall 1).
 //
 // Usage:  node scripts/validation/check-nav-hub-links.mjs [--verbose] [--self-test]
-// Exit 0: zero broken links across both outbound + inbound scans (normal mode), or all
-//         self-test assertions pass (--self-test mode)
+// Exit 0: zero failures across the corpus-wide scan (normal mode), or all self-test assertions
+//         pass (--self-test mode)
 // Exit 1: at least one broken link/anchor found, or a self-test assertion failed
-//
-// Task 1 (this commit): GitHub-exact slugify + resolvable-anchor-set builder + --self-test.
-// Task 2 (next commit): outbound/inbound scan wiring, path resolution, CLI report + exit code.
 
 // Node built-ins ONLY -- zero external npm packages (matches scripts/validation/ convention)
 import { readFileSync, existsSync, readdirSync, lstatSync } from 'node:fs';
@@ -23,7 +29,10 @@ const argv = process.argv.slice(2);
 const VERBOSE = argv.includes('--verbose');
 const SELF_TEST = argv.includes('--self-test');
 
-// D-01 locked roster: the 4 orphan nav-hubs (outbound source set; inbound target set)
+// D-01 locked roster: the 4 orphan nav-hubs. Their outbound links are covered by the corpus-wide
+// scan (checkInboundLinks) like every other file; this roster's live role is now solely the
+// hub-existence assertion in checkOutboundLinks below (D-13 -- preserved consciously, not dead
+// code).
 const HUB_PATHS = [
   'docs/index.md',
   'docs/common-issues.md',
@@ -239,49 +248,32 @@ function resolveLinkTarget(linkingAbsPath, target) {
   return { resolvedAbs, resolvedRel, fragPart };
 }
 
-// checkOutboundLinks: every link FROM a hub -- resolved relative to that hub's own directory.
+// checkOutboundLinks: hub-existence assertion ONLY (D-13). This is the sole check anywhere that
+// the four ratified nav-hubs exist -- checkInboundLinks's own `content === null` branch below
+// merely `continue`s on a missing file, so this hard-fail is not redundant with it. The per-link
+// scanning role this function used to carry is retired: with checkInboundLinks now scanning every
+// file (including the 4 hubs) as a source, keeping a second per-link loop here would
+// double-report every hub-link failure.
 function checkOutboundLinks() {
   const failures = [];
   for (const hubRel of HUB_PATHS) {
     const content = readFile(hubRel);
     if (content === null) {
       failures.push({ file: hubRel, line: 0, text: '', target: '', reason: 'hub file not found' });
-      continue;
-    }
-    const hubAbs = toAbs(hubRel);
-    const lines = content.split('\n');
-    const fenceMask = buildFenceMask(lines);
-    const links = extractLinks(lines, fenceMask);
-    for (const { text, target, line } of links) {
-      const resolved = resolveLinkTarget(hubAbs, target);
-      if (resolved === null) continue; // http(s)/mailto -- out of scope
-      const { resolvedAbs, resolvedRel, fragPart } = resolved;
-      if (!existsSync(resolvedAbs)) {
-        failures.push({ file: hubRel, line, text, target, reason: `target file not found: ${resolvedRel}` });
-        continue;
-      }
-      if (fragPart) {
-        const anchors = resolvableAnchorSet(resolvedRel);
-        if (!anchors.has(fragPart)) {
-          failures.push({ file: hubRel, line, text, target, reason: `anchor not found: #${fragPart}` });
-        }
-      }
     }
   }
   return failures;
 }
 
-// checkInboundLinks: corpus-wide links whose resolved target is one of the 4 hubs. The 4 hub
-// files themselves are excluded as SOURCES here (their own outbound links, including any
-// hub-to-hub links, are already fully covered by checkOutboundLinks -- this avoids double
-// reporting the exact same failure under both directions).
+// checkInboundLinks: the corpus-wide relative-link and anchor scan (LINK-02). Every .md file
+// under docs/, excluding docs/_templates/, is scanned as both a source and a target -- there is
+// no hub-only filter here (D-12 removed both the source-side skip and the target-side filter that
+// used to restrict this scan to the 4 nav-hubs).
 function checkInboundLinks() {
   const failures = [];
-  const hubSet = new Set(HUB_PATHS);
   const allMd = walkMd('docs');
   for (const abs of allMd) {
     const relPath = relNormalize(abs);
-    if (hubSet.has(relPath)) continue;
     // LINK-02: docs/_templates/ holds placeholder scaffolding (26 template link targets that
     // are never meant to resolve), excluded from the corpus-wide scan entirely.
     if (relPath.startsWith('docs/_templates/')) continue;
@@ -294,7 +286,6 @@ function checkInboundLinks() {
       const resolved = resolveLinkTarget(abs, target);
       if (resolved === null) continue;
       const { resolvedAbs, resolvedRel, fragPart } = resolved;
-      if (!hubSet.has(resolvedRel)) continue; // only care about links targeting a hub
       if (!existsSync(resolvedAbs)) {
         failures.push({ file: relPath, line, text, target, reason: `target file not found: ${resolvedRel}` });
         continue;
@@ -459,30 +450,32 @@ if (SELF_TEST) {
 }
 
 // ── Main runner (normal mode) ─────────────────────────────────────────────────────────────────
-// Scans BOTH directions: outbound (every link FROM the 4 hubs) and inbound (corpus-wide links
-// whose resolved target is one of the 4 hubs). Exit 0 iff zero failures across both.
+// Two checks: hub-presence (do the 4 ratified nav-hubs exist, D-13) and the corpus-wide link/
+// anchor scan (274 files, every relative link, LINK-02). Exit 0 iff zero failures across both --
+// no accepted-violation baseline, allowlist, ratchet file or expected-failure list of any kind
+// (LINK-04).
 
-const outboundFailures = checkOutboundLinks();
-const inboundFailures = checkInboundLinks();
-const allFailures = [...outboundFailures, ...inboundFailures];
+const hubPresenceFailures = checkOutboundLinks();
+const corpusLinkFailures = checkInboundLinks();
+const allFailures = [...hubPresenceFailures, ...corpusLinkFailures];
 
 if (VERBOSE || allFailures.length > 0) {
-  if (outboundFailures.length > 0) {
-    process.stdout.write('\nOutbound failures (links FROM the 4 nav-hubs):\n');
-    printFailures(outboundFailures);
+  if (hubPresenceFailures.length > 0) {
+    process.stdout.write('\nHub-presence failures (the 4 ratified nav-hubs, D-13):\n');
+    printFailures(hubPresenceFailures);
   }
-  if (inboundFailures.length > 0) {
-    process.stdout.write('\nInbound failures (corpus-wide links INTO the 4 nav-hubs):\n');
-    printFailures(inboundFailures);
+  if (corpusLinkFailures.length > 0) {
+    process.stdout.write('\nCorpus-link failures (every relative link under docs/):\n');
+    printFailures(corpusLinkFailures);
   }
   if (allFailures.length === 0) {
-    process.stdout.write('\ncheck-nav-hub-links: 0 failures (outbound + inbound clean)\n');
+    process.stdout.write('\ncheck-nav-hub-links: 0 failures (hub-presence + corpus-link clean)\n');
   }
 }
 
 process.stdout.write(
-  `\ncheck-nav-hub-links summary: ${outboundFailures.length} outbound failure(s), ` +
-  `${inboundFailures.length} inbound failure(s), ${allFailures.length} total\n`
+  `\ncheck-nav-hub-links summary: ${hubPresenceFailures.length} hub-presence failure(s), ` +
+  `${corpusLinkFailures.length} corpus-link failure(s), ${allFailures.length} total\n`
 );
 
 process.exit(allFailures.length > 0 ? 1 : 0);
