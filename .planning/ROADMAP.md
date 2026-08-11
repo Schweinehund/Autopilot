@@ -225,7 +225,7 @@ Plans:
   4. Fence-mask behavior is unified across all 15 call sites in the 9 named files, including both c17 sites (`:158` opening, `:166` closing), covering the measured 74 fences indented 1–3 spaces across 11 files via a `^ {0,3}` CommonMark-equivalent rule (LINK-05).
   5. c17 reports identical file and violation counts before and after the fence-mask change, and a sampled check of the newly-masked lines confirms none hides a suppressed violation (LINK-06).
 
-**Plans**: 8/9 plans executed
+**Plans**: 9/9 plans executed
 
 Plans:
 
@@ -263,7 +263,7 @@ Plans:
 
 **Wave 9** *(blocked on Wave 8)*
 
-- [ ] 143-08-PLAN.md — Hand-off: the `check-phase-143.mjs` needle-spec (D-23), the D-26 deferred-cleanup row, `FENCE-AXIS-02`, and the enforcement-gap record
+- [x] 143-08-PLAN.md — Hand-off: the `check-phase-143.mjs` needle-spec (D-23), the D-26 deferred-cleanup row, `FENCE-AXIS-02`, and the enforcement-gap record
 
 **Discuss-phase flags**: **[SUCCESS-CRITERION AMENDMENT, D-28]** The original claim below is FALSE and is amended. LINK-01's precedence and LINK-04's no-baseline rule *are* settled by the requirement text — but no requirement, success criterion or CARVE category addressed the **145 genuine breaks** (13 file targets + 132 anchors) that LINK-04 requires be cleared with no baseline, of which **65** were invisible to the checker entirely because `computeAnchorSetFromContent` models Pandoc `{#id}` semantics against a GitHub-rendered corpus (D-01, OWNER-RATIFIED). Superseded original text: "None dominant — LINK-01's precedence over LINK-02/LINK-04 and LINK-04's no-baseline rule are already settled by the requirement text itself." **[SUCCESS-CRITERION AMENDMENT, D-29]** This line is amendment surface (7) of D-29's seven-surface enumeration (`143-CONTEXT.md` D-29) — recorded here to align with the other six surfaces landed together in Plan 143-01 Task 1; the D-28 diagnosis above is unchanged.
 
