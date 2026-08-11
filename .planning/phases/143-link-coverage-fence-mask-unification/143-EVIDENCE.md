@@ -989,3 +989,159 @@ any plausible CI job budget.
 **Result: PASS** — all five checks confirm positive absence of any accepted-violation baseline;
 the dry-run ladder is closed at 0 (committed); exit-code semantics are fully enumerated (two sites,
 no third code); the runtime range is recorded for Phase 144's job-timeout sizing.
+
+## Plan 07 — GOV-02 pre-edit census (9 Pillar-C files) + D-35 CRLF discharge (Task 1)
+
+**Opened:** 2026-08-11 (this session), before any code edit this plan makes. Tree: main worktree
+at HEAD `884be630` (post-Plan-06). Node: v24.17.0. OS: Windows 10 Pro 19045.
+
+### Pre-edit regression baseline (cited by every row below)
+
+```
+node scripts/validation/c17-eee-contract.mjs
+  -> C17 assertion-violation-counts: #1=0 #2=0 #3=0 #4=0 #5=0 #6=0 #7=0 #8=0 #9=0 #10=0 #11=0 #12=0 #13=0
+  -> C17 summary: 234 files checked, 0 with violations, 0 total violations
+node scripts/validation/c17-eee-contract.mjs --self-test -> exit 0 (Self-test: 4 passed, 0 failed)
+node scripts/validation/check-nav-hub-links.mjs
+  -> check-nav-hub-links summary: 0 hub-presence failure(s), 0 corpus-link failure(s), 0 total, exit 0
+node scripts/validation/check-nav-hub-links.mjs --self-test -> Self-test: 10 passed, 0 failed, exit 0
+check-phase-113.mjs -> exit 0
+check-phase-115.mjs -> exit 0
+check-phase-120.mjs -> exit 0
+check-phase-123.mjs -> exit 0
+check-phase-124.mjs -> exit 0
+node scripts/validation/carve-gate.mjs -> carve-gate PASS: 98 in-scope path(s), all on-list, exit 0
+```
+
+### D-33 systematic grep — the fence-mask literal and its symbols are confined to the 9 files
+
+`[MEASURED]` before any per-file row below, two corpus-wide greps establish the shared ground
+every row cites:
+
+1. `grep -rn '`{3,}|~{3,}' scripts/` excluding the 9 Pillar-C files themselves — **0 hits**. The
+   fence-regex literal `` `{3,}|~{3,} `` appears nowhere in `scripts/` outside the 9 files this
+   plan edits.
+2. `grep -rln 'buildFenceMask|inCodeFence|fenceChar|fenceLen' scripts/` — exactly the 9 files:
+   `c17-eee-contract.mjs`, `check-nav-hub-links.mjs`, `convert.ps1`, and the 6
+   `retrofit-*.mjs` files. No tenth file references any of the four symbol names (PowerShell's
+   `$fenceChar` is caught by the same substring grep).
+
+Both results discharge the cross-reference-check requirement for the fence-mask edit itself: no
+external validator anywhere in `scripts/` reads or asserts on the fence-regex literal or its
+carrier variables. The nine per-file rows below still perform the full four-part D-12/D-33 shape
+(path-literal, symbol-scoped, cross-reference, diff-size result) because each file also carries
+*other* pinned literals unrelated to the fence site (pandoc version, `CHAIN_PHASES`-absence, the
+counts-summary string, etc.) that a careless fence-only grep would miss — this is exactly the
+"1 of 9, generalised" failure D-33 names.
+
+### Nine per-file rows — external-reference counts (scoped `scripts/`+`.github/`, excluding self)
+
+`[MEASURED]` `grep -rln "<basename>" scripts/ .github/ | grep -v "/<basename>$" | wc -l` (files) and
+the line-count form (`grep -rn ... | grep -v "^<own-path>:"`), reproducing D-33's cited figures
+exactly:
+
+| File | External files | External lines (excl. self) |
+|---|---|---|
+| `c17-eee-contract.mjs` | 14 | **74** |
+| `check-nav-hub-links.mjs` | 1 | 3 |
+| `convert.ps1` | 5 | **19** |
+| `retrofit-guide.mjs` | 2 | 5 |
+| `retrofit-mermaid-structural.mjs` | 2 | 5 |
+| `retrofit-nav-hub.mjs` | 1 | 2 |
+| `retrofit-reference.mjs` | 1 | 7 |
+| `retrofit-runbook.mjs` | 1 | 5 |
+| `retrofit-structural.mjs` | 1 | 4 |
+
+`c17-eee-contract.mjs` (74) and `convert.ps1` (19) match D-33's cited figures exactly; the six
+retrofits fall in D-33's cited 2-7 range exactly. `check-nav-hub-links.mjs` (3) is the checker
+vessel itself, already given its own row (row 73, Plan 06) — its 3 hits are `check-phase-123.mjs`
+(header comments `:7,14` + the `presence()` path-string constant `:40`), all path-string-only,
+confirmed in Plan 06's row.
+
+**c17-eee-contract.mjs's 14 external files, read (not inferred):** the 6 `retrofit-*.mjs` files
+cite it only in header-comment provenance prose (`// buildFenceMask: mask code-fence-interior
+lines (retrofit-mermaid-structural.mjs:262-280, verbatim)` and reverse citations); `check-nav-hub-
+links.mjs` cites it once in a header comment (the copy-verbatim provenance note this plan's Task 2
+extends); `check-phase-115.mjs` and `check-phase-120.mjs` carry the four live pins enumerated
+below; the 5 `v1.15`-`v1.19`-milestone-audit.mjs` files each `execFileSync('node', ['scripts/
+validation/c17-eee-contract.mjs'], ...)` and gate on **exit code only** — none reads or asserts on
+file content, so an internal regex edit cannot trip them (confirmed by direct read of all 5 at
+their `CONTRACT = 'scripts/validation/c17-eee-contract.mjs'` call sites, all identical in shape).
+
+**convert.ps1's 19 external lines, 5 files, read (not inferred):** `check-phase-113.mjs:75`
+(pandoc-version-pin) and `check-phase-124.mjs:70` (nav-footer-marker-pin), both confirmed below;
+`build-publish-bundle.mjs:264` invokes it by **path** (`'-File', 'scripts/pipeline/convert.ps1'`),
+never reads its content; `scripts/pipeline/README.md` and `scripts/pipeline/test-fixtures/
+README.md` are prose documentation, not executable assertions.
+
+### Cross-reference check — the four c17 pins + two convert.ps1 pins, read live
+
+`[MEASURED]`, each opened and read this session, not inferred from a prior citation:
+
+- `check-phase-115.mjs:74` `SELFTEST-MODE` — `c.includes('--self-test')`. Unaffected: the fence
+  edit touches only the two regex literals inside `inCodeFence`, never the `--self-test` flag
+  string.
+- `check-phase-115.mjs:87` `COUNTS-SUMMARY` — `c.includes('C17 assertion-violation-counts:')`.
+  Unaffected: this string lives in the summary-printing block (`:573+`), far from the fence site
+  (`:150-176`).
+- `check-phase-115.mjs:102` `STANDALONE` — `c.includes('CHAIN_PHASES')` must be **false** (the one
+  required-ABSENT pin in this milestone). Unaffected: the fence edit adds two ` {0,3}` insertions
+  and a provenance comment, introduces no new identifier text, and `CHAIN_PHASES` does not appear
+  in either.
+- `check-phase-120.mjs:96` `C17-COMMENT` — `c.includes('[v1.16 Phase-120 addition, comment-only]')`,
+  the assertion-#1 mermaid-detector marker at `:206-208`. Unaffected: LINK-05's subject is the mask
+  (`:150-176`), not detection (`:209`), per D-21 — the marker comment sits three lines above the
+  code this plan does not touch.
+- `check-phase-113.mjs:74` `PANDOC-PIN` — `c.includes("$expectedVer = '3.7.0.2'")` (`convert.ps1`
+  line ~43). Unaffected: the fence site is `:108`, 65 lines below the version guard.
+- `check-phase-124.mjs:70` `NAVFOOTER-FIX` — `c.includes('nav-footer')`, matching the header-comment
+  prose at `convert.ps1:75-84` (`PIPE-03: Nav-footer YAML-alias preprocessing`) and the fence loop's
+  own comment lines. `[MEASURED]` this plan's Task 3 edit touches only the match pattern on line
+  108 (`'^\s*(```|~~~)'` -> `'^ {0,3}(```|~~~)'`); the word "nav-footer" appears in surrounding
+  comments this edit does not touch, confirmed by the post-edit acceptance criterion re-run in
+  Task 3.
+
+**Result, all nine rows:** `git diff --numstat` = 0/0 for all nine files at this row-append time
+(Task 1 is census-only, no code edit) — recorded as the row's own "concrete diff figure" per the
+Plan-09/Plan-06 precedent, matching D-33's own instruction that the ledger row must precede the
+edit.
+
+### D-35 CRLF hazard — discharged per file, not carried
+
+`[MEASURED]` `git config core.autocrlf` -> `true`. `[MEASURED]` `.gitattributes` contents in full:
+`scripts/pipeline/reference.docx binary` — one line, no `*.md` normalization rule. A fresh clone
+on a machine with a different `core.autocrlf` setting could therefore present `docs/**/*.md` with
+CRLF line endings even though this authoring worktree's git config normalizes them to LF on
+checkout here.
+
+**Per-file discharge, read (not assumed) at each file's actual read site:**
+
+| File | Read call | CRLF-safe? | Basis |
+|---|---|---|---|
+| `check-nav-hub-links.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:56`) | Yes — normalizes | explicit `.replace(/\r\n/g, '\n')` before any line-split |
+| `c17-eee-contract.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:64`) | Yes — normalizes | identical explicit normalization, confirmed by direct read |
+| `retrofit-guide.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:123`) | Yes — normalizes | identical |
+| `retrofit-mermaid-structural.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:226`) | Yes — normalizes | identical |
+| `retrofit-nav-hub.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:210`) | Yes — normalizes | identical |
+| `retrofit-reference.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:122`) | Yes — normalizes | identical |
+| `retrofit-runbook.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:83`) | Yes — normalizes | identical |
+| `retrofit-structural.mjs` | `readFileSync(abs, 'utf8').replace(/\r\n/g, '\n')` (`:155`) | Yes — normalizes | identical |
+| `convert.ps1` | `Get-Content -LiteralPath $tempMd -Encoding utf8` (`:99`) | Yes — line-terminator-agnostic | PowerShell's `Get-Content` splits into a line array and strips both `\r\n` and bare `\n` terminators before returning each element; no trailing `\r` ever reaches `$line` |
+
+`[MEASURED]` correction to D-35's premise: D-35 stated only `check-nav-hub-links.mjs:47`
+normalizes and the other 8 are "unverified". Direct read this session shows **all 7 JS retrofit/
+c17 files already carry the identical explicit `.replace(/\r\n/g, '\n')` normalization** as
+`check-nav-hub-links.mjs` (a shared copy-verbatim idiom across the corpus reader helpers, not a
+one-off) — `check-nav-hub-links.mjs` is not the sole exception, it is one of eight files sharing
+one convention. `convert.ps1` is CRLF-safe by a different mechanism (`Get-Content`'s own
+line-splitting contract, which returns line content with terminators already stripped regardless
+of which terminator was present).
+
+**Independent second argument (the one D-35 itself named, still true and now redundant-but-kept
+as belt-and-suspenders):** every one of the 15 fence regexes is anchored at start-of-line
+(`^` or `^ {0,3}`) and asserts nothing about end-of-line — the match consumes only leading spaces
+followed by a run of fence characters. Even on a hypothetical reader that did NOT normalize CRLF,
+a trailing `\r` would sit after the matched prefix, outside the regex's scan window, and could not
+prevent a match. Both arguments — explicit normalization (8 of 9 files) and terminator-stripping
+by contract (`convert.ps1`) — independently discharge D-35; the anchored-regex argument is a third,
+belt-and-suspenders line of defense that would hold even if the first two were wrong.
