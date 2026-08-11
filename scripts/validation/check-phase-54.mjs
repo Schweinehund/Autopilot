@@ -180,6 +180,7 @@ const checks = [
         .replace(/```[\s\S]*?```/g, '')                  // fenced code
         .replace(/`[^`\n]*`/g, '')                       // inline code
         .replace(/\{#[a-z0-9-]+\}/g, '')                  // {#anchor-id}
+        .replace(/^<a id="[a-zA-Z0-9_-]+"><\/a>$/gm, '')  // <a id="anchor-id"></a> (D-38 own-line anchor)
         .replace(/\(#[a-z0-9-]+\)/g, '')                  // (#anchor-link)
         .replace(/^#+ .*$/gm, '');                        // headings
       // Find all 'ring' word-boundary tokens (singular or plural)

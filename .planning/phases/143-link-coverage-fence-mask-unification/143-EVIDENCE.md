@@ -188,9 +188,36 @@ from the allowlist entirely" until the phase that needed to edit them added them
 frozen validator hard-pins any of the other 71 anchor ids (verified by the same systematic
 per-id grep across all 85 ids — zero hits outside these 14).
 
+## D-38 remediation class 2 — prose-scanning validators reading the new `<a id>` tag as body text
+
+Discovered empirically during Task 2's family-by-family conversion (not by the pre-flight grep,
+since this class has no literal `{#id}` text to find): a frozen validator that scans body prose
+for a bare/unqualified word, stripping the OLD `\{#[a-z0-9-]+\}` form from its input but not the
+NEW own-line `<a id="ID"></a>` tag, can misread the anchor id's own text as unqualified content.
+
+**Instance 1 (found):** `check-phase-54.mjs`'s `V-54-11` scans
+`docs/operations/patch-management/01-windows-wufb-rings.md` for every occurrence of the word
+"ring" and requires each to be qualified (e.g. "WUfB deployment ring"). After converting
+`## WUfB Deployment Rings {#wufb-deployment-rings}`, the new `<a id="wufb-deployment-rings"></a>`
+line contains "rings" in its id attribute, unqualified by any preceding qualifier phrase within
+the check's 40-character window — a false-positive FAIL. Fixed by adding an `<a id>` strip to the
+same regex chain that already stripped the old form (`check-phase-54.mjs`, GOV-02 ledger, this
+plan's Task 2).
+
+**General rule for the two remaining families (co-management, drift-migration):** after each
+family's conversion, re-run every validator that reads a converted file — not just the three gates
+named in this plan's own `<verify>` blocks — since a bare-word/prose-scanning check is a class of
+false positive the pre-flight grep (which looks for literal `{#id}` text) structurally cannot
+detect in advance. `check-phase-51/52/54.mjs` are now confirmed clean; `check-phase-53.mjs`
+(co-management) and `check-phase-55/56.mjs` (app-lifecycle, drift-migration) were inspected ahead
+of their conversion and found to use either optional-group heading matches (`(\s+\{#id\})?`,
+tolerant of removal) or presence/positive-literal checks unrelated to the new anchor's id text —
+no further strip-chain gaps expected, but each is re-run after its family lands rather than
+assumed clean.
+
 ## Status
 
 This artifact is opened by Task 1 (Plan 02) and D-38's conversion pre-flight (Task 1, Plan 09),
 carrying D-38's supporting evidence forward for Plan 09's wave-3 conversion and for Phase 144's
-close-gate review. Plan 09 Task 2 lands the 85-token corpus conversion plus the two-file validator
-remediation this pre-flight surfaced.
+close-gate review. Plan 09 Task 2 lands the 85-token corpus conversion plus the validator
+remediation this pre-flight and Task 2's own family-by-family re-verification surfaced.
