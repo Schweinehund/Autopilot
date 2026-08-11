@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 143
 current_phase_name: Link Coverage & Fence-Mask Unification
 status: executing
-stopped_at: Completed 143-02-PLAN.md
-last_updated: "2026-08-11T17:43:38.041Z"
+stopped_at: Completed 143-09-PLAN.md
+last_updated: "2026-08-11T18:48:26.492Z"
 last_activity: 2026-08-11
 last_activity_desc: Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 32
-  completed_plans: 25
+  completed_plans: 26
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 143 — Link Coverage & Fence-Mask Unification
-Plan: 2 of 9 complete
+Plan: 3 of 9 complete
 Status: In progress — governance gate landed, Plan 02 (TRACER) next
 Last activity: 2026-08-11 — Plan 143-01 complete (D-29 SC amendment + CARVE Category 10)
 
-Progress: [████████░░] 78%
+Progress: [████████░░] 81%
 
 ## v1.20 Phase Dependency Summary
 
@@ -304,6 +304,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 142 P06 | 45 min | 2 tasks | 1 files |
 | Phase 143 P01 | 35min | 2 tasks | 4 files |
 | Phase 143 P02 | ~40min | 3 tasks | 6 files |
+| Phase 143 P09 | ~3h | 3 tasks | 35 files |
 
 ## Accumulated Context
 
@@ -366,6 +367,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: NEST-01: cold-clone/warm ratio measured at 1.333x (22720ms/17044ms, n=3 each, full-depth clone), well under the 8x fail threshold — PASS
 - [Phase ?]: 143-01: D-29 seven-surface SC amendment + CARVE Category 10 (63-path anchor-remedy roster, D-32/D-38) landed as two separate commits per D-31; reconciled a premature D-28 marker on the Discuss-phase-flags line (from an earlier plan-authoring commit) by appending a D-29 cross-reference rather than overwriting
 - [Phase ?]: 143-02: D-38 owner ruling recorded (convert all 87 {#id} overrides, not just 22 targets) and evidence artifact opened; GitHub anchor model landed as a net deletion + one <a id> matchAll addition, proved end-to-end on the 0x80180014 tracer; docs/_templates/ exclusion + inline-code masking narrowed the corpus scan to 274 files/6252 links/13 broken file targets; a Rule-1 deviation converted 2 hub-linked {#id} headings early to keep the hub-scope scan green (2 of D-38's 87, Plan 09 does the remaining 85)
+- [Phase ?]: 143-09: D-38 all-87 {#id}-to-<a id> conversion landed (85 this plan + 2 Plan 02 early); discovered+fixed check-phase-51/52/54.mjs validator conflicts (2 CARVE Category 5 amendments, D-09); cleaned up 47 pre-existing duplicate anchors; measured zero-regression dry-run (74->50 pairs, 0 added), apex 95/0/0
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -394,8 +396,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-11T17:43:37.979Z
-Stopped at: Completed 143-02-PLAN.md
+Last session: 2026-08-11T18:48:26.448Z
+Stopped at: Completed 143-09-PLAN.md
 Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 

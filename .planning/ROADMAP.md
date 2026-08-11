@@ -225,7 +225,7 @@ Plans:
   4. Fence-mask behavior is unified across all 15 call sites in the 9 named files, including both c17 sites (`:158` opening, `:166` closing), covering the measured 74 fences indented 1–3 spaces across 11 files via a `^ {0,3}` CommonMark-equivalent rule (LINK-05).
   5. c17 reports identical file and violation counts before and after the fence-mask change, and a sampled check of the newly-masked lines confirms none hides a suppressed violation (LINK-06).
 
-**Plans**: 2/9 plans executed
+**Plans**: 3/9 plans executed
 
 Plans:
 
@@ -239,7 +239,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 143-09-PLAN.md — D-38: convert all 87 `{#id}` overrides across 29 files to own-line `<a id>` anchors; closes 65 links target-side, 143 -> 78
+- [x] 143-09-PLAN.md — D-38: convert all 87 `{#id}` overrides across 29 files to own-line `<a id>` anchors; closes 65 links target-side, 143 -> 78
 
 **Wave 4** *(blocked on Wave 3)*
 
