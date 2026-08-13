@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 status: executing
-stopped_at: Completed 144-07-PLAN.md
-last_updated: "2026-08-13T05:52:46.421Z"
+stopped_at: Completed 144-08-PLAN.md
+last_updated: "2026-08-13T06:11:39.138Z"
 last_activity: 2026-08-12
 last_activity_desc: Phase 144 execution started
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 44
-  completed_plans: 39
+  completed_plans: 40
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — EXECUTING
-Plan: 8 of 12
+Plan: 9 of 12
 Status: Ready to execute
 Last activity: 2026-08-12 — Phase 144 execution started
 
-Progress: [█████████░] 89%
+Progress: [█████████░] 91%
 
 ## v1.20 Phase Dependency Summary
 
@@ -318,6 +318,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 144 P05 | ~40min | 2 tasks | 2 files |
 | Phase 144 P06 | ~5min | 3 tasks | 5 files |
 | Phase 144 P07 | 35m | 3 tasks | 2 files |
+| Phase 144 P08 | 45min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -409,6 +410,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 144-06: BASELINE_24 appended at the chronological end of the comment chain (after the Phase 141 addendum), not immediately after BASELINE_23's own forward-reference line, matching the file's established append order
 - [Phase ?]: CHAIN_EXTRA disjointness guard declared immediately after CHAIN_EXTRA itself, grouped with but structurally distinct from the three CHAIN_PHASES-only guards that precede it
 - [Phase ?]: Archive-root token 'v1.20-phases' asserted as a bare literal-string constant passed to the resolver, satisfying both the grep acceptance criterion and the D-15 replacement guardrail
+- [Phase ?]: 144-08: followed 144-PATTERNS.md's verbatim five-entry paths: filter over PLAN.md's stated six-entry acceptance criterion (documented conflict, arithmetic reconciled in 144-EVIDENCE.md)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -437,8 +439,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-13T05:52:46.348Z
-Stopped at: Completed 144-07-PLAN.md
+Last session: 2026-08-13T06:11:39.073Z
+Stopped at: Completed 144-08-PLAN.md
 Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 

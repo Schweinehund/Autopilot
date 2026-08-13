@@ -143,6 +143,10 @@ None - no external service configuration required.
 ## Next Phase Readiness
 The 17th workflow is authored, structurally sound, and internally consistent with the harness, sidecar, apex, and leaves this phase built (Plans 04-07). It is not yet pushed or dispatched — that is Plan 09's owner-gated work. Plan 10's evidence pass can consume the job-key-to-display-name table recorded in `144-EVIDENCE.md`.
 
+## Self-Check: PASSED
+
+All claimed files found on disk (6/6) and all claimed commit hashes found in git log (4/4).
+
 ---
 *Phase: 144-v119-pin-18th-path-a-lineage-bump-terminal-close*
 *Completed: 2026-08-13*
