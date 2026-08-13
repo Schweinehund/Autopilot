@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 status: executing
-stopped_at: Completed 144-01-PLAN.md
-last_updated: "2026-08-13T04:18:18.260Z"
+stopped_at: Completed 144-02-PLAN.md
+last_updated: "2026-08-13T04:34:02.261Z"
 last_activity: 2026-08-12
 last_activity_desc: Phase 144 execution started
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 44
-  completed_plans: 33
+  completed_plans: 34
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — EXECUTING
-Plan: 2 of 12
+Plan: 3 of 12
 Status: Ready to execute
 Last activity: 2026-08-12 — Phase 144 execution started
 
-Progress: [████████░░] 75%
+Progress: [████████░░] 77%
 
 ## v1.20 Phase Dependency Summary
 
@@ -312,6 +312,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 143 P07 | ~45min | 3 tasks | 11 files |
 | Phase 143 P08 | ~35min | 2 tasks | 3 files |
 | Phase 144 P01 | 5min | 2 tasks | 2 files |
+| Phase 144 P02 | 13min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -390,6 +391,9 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 143-07: Compressed provenance comments from 3-line to plan-specified one-line form in a self-caught follow-up commit (e9a505be)
 - [Phase ?]: 143-08: Corrected D-25's stated 10-of-16 zero-docs-path-filter workflow figure to a measured 13-of-16 (D-36 discipline); needle-spec + 3 DEFERRED-CLEANUP rows route the check-phase-143.mjs hand-off to Phase 144, decoupled via HARN-19's sub-second spot-check
 - [Phase ?]: 144-01: Category 11 amendment landed alone-and-first with 10 literal paths (no glob), pattern-level proof recorded in new 144-EVIDENCE.md ledger
+- [Phase ?]: 144-02: V119 pinned as the abbreviated form 'a7bda73e' between V118 and V14 (V14 stays last); readAtV119Close/lsTreeAtV119Close exported; the one carved :10-13 comment correction landed alongside (D-31)
+- [Phase ?]: 144-02: v1.19-milestone-audit.mjs converted to frozen-aware reads via createFrozenCorpusReader('V119', ...) following the v1.18-converted exemplar literally; C17 leg stays live-HEAD (5-of-5 residue, SWEEP-05 D-02 amendment)
+- [Phase ?]: 144-02: SWEEP-06 measured, not inferred -- seventeenth harness median 1,260ms across 3 runs, 4.75x faster than Phase 140's slowest-of-sixteen (4,177ms), 97.9% headroom under the 60,000ms check-phase-60.mjs budget
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -418,8 +422,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-13T04:18:18.187Z
-Stopped at: Completed 144-01-PLAN.md
+Last session: 2026-08-13T04:34:02.183Z
+Stopped at: Completed 144-02-PLAN.md
 Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 

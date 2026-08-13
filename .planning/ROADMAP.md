@@ -281,7 +281,7 @@ Plans:
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and all 17 `audit-harness-*` integrity workflows are dispatched (`gh workflow run --ref master`, since a push fires nothing) and confirmed green from job-level JSON, not the checks-UI colour (HARN-19).
   4. The publish bundle regenerates `--version=v1.20`, and a single close-gate commit flips all **28** v1.20 requirements (27 original + `SWEEP-09`, added per D-33) to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS — with `ACCEPTED-STANDALONE-CI-RED` and `ACCEPTED-SCOPED-RED` **deleted** from the backlog rather than carried a seventh milestone, discharging the milestone bar stated in REQUIREMENTS.md (HARN-19).
 
-**Plans**: 1/12 plans executed
+**Plans**: 2/12 plans executed
 
 Plans:
 **Wave 1**
@@ -290,7 +290,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 144-02-PLAN.md — TRACER: V119 pin + `readAtV119Close` + v1.19 harness frozen-aware conversion + SWEEP-06 measurement
+- [x] 144-02-PLAN.md — TRACER: V119 pin + `readAtV119Close` + v1.19 harness frozen-aware conversion + SWEEP-06 measurement
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
