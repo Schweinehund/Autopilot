@@ -285,3 +285,90 @@ idempotency claim independent of the two runs' own byte-identical stdout.
 **Separate from the verifier pass (D-35):** this run was executed standalone, not chained with
 `carve-gate.mjs` or any banned-phrase/prose-guard pass in the same invocation — `carve-gate.mjs`
 was run independently in Task 1's verification, not re-run here.
+
+## Plan 08, Task 3 — the 17th workflow: structural proof and regression sweep
+
+**Source:** `.github/workflows/audit-harness-v1.20-integrity.yml`, authored this plan (Task 2),
+plus the two one-line stale-figure corrections in `audit-harness-v1.7-integrity.yml` (line 96) and
+`audit-harness-v1.8-integrity.yml` (line 95).
+
+### Job-key -> display-name table (all 13 jobs)
+
+The GitHub API's `.jobs[].name` field returns the DISPLAY name (the `name:` value), not the YAML
+job key — Plan 10's evidence pass must filter on the right-hand column, not the left.
+
+| Job key | Display name |
+|---|---|
+| `parse` | Parse v1.20 sidecar JSON |
+| `path-match` | Harness references v1.20 sidecar |
+| `harness-run` | Run v1.20 milestone audit harness |
+| `linux-chain-ubuntu-latest` | Validator chain on Linux LF (Phase 69 CILINUX-01) |
+| `check-phase-139` | check-phase-139 validator |
+| `check-phase-140` | check-phase-140 validator |
+| `check-phase-141` | check-phase-141 validator |
+| `check-phase-142` | check-phase-142 validator |
+| `check-phase-143` | check-phase-143 validator |
+| `check-phase-144` | check-phase-144 validator (apex; recursively spawns 48..143) |
+| `rotting-external-quarterly` | Quarterly c13_rotting_external link-check |
+| `pin-helper-advisory` | Supervision-pin drift advisory (CI) |
+| `frozen-read-probe` | Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) |
+
+### Cross-file literal resolution (every job that names a script path, run locally)
+
+| Job | Command / assertion | Result | Exit code |
+|---|---|---|---|
+| `parse` | `node -e` inline JSON check against `scripts/validation/v1.20-audit-allowlist.json` | `v1.20 sidecar OK: 26 supervision pins` | 0 |
+| `path-match` | `grep -q "scripts/validation/v1.20-audit-allowlist.json" scripts/validation/v1.20-milestone-audit.mjs` (verbatim job step) | `OK: harness references v1.20 sidecar` | 0 |
+| `harness-run` | `node scripts/validation/v1.20-milestone-audit.mjs --verbose` | `Summary: 16 passed, 0 failed, 0 skipped` | 0 |
+| `check-phase-139` | `node scripts/validation/check-phase-139.mjs` | `5 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| `check-phase-140` | `node scripts/validation/check-phase-140.mjs` | `5 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| `check-phase-141` | `node scripts/validation/check-phase-141.mjs` | `6 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| `check-phase-142` | `node scripts/validation/check-phase-142.mjs` | `6 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| `check-phase-143` | `node scripts/validation/check-phase-143.mjs` | `9 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| `check-phase-144` (standalone + `linux-chain-ubuntu-latest`'s chain-apex step) | `node scripts/validation/check-phase-144.mjs` | `100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)` | 0 |
+
+Every script path named by a job exists on disk and exits 0 run with the job's own arguments. The
+`path-match` job's grep, run verbatim outside the workflow, exits 0.
+
+### Regression sweep — every validator Task 1's census identified as pinning either edited workflow path
+
+| Validator | Pins | Result | Exit code |
+|---|---|---|---|
+| `check-phase-69.mjs` | `.github/workflows/audit-harness-v1.7-integrity.yml` (V-69-01..08, structural + frozen-to-frozen) | `31 PASS, 0 FAIL, 0 SKIPPED` — unchanged from the Task 1 pre-edit baseline | 0 |
+| `check-phase-70.mjs` | same file (`CI_WORKFLOW` constant, V-70-09/10 path-filter content) | `51 PASS, 0 FAIL, 0 SKIPPED` — unchanged from the Task 1 pre-edit baseline | 0 |
+| `check-phase-66.mjs` (Task 2's own `<verify>`, the v1.7 chain apex — no direct census pin, run as the plan's regression net) | none directly; exercises `check-phase-67/68/69/70` as chain members | `28 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+
+No validator pins the `v1.8-integrity.yml` path externally (Task 1's census found exactly 1
+path-scoped hit — the file's own self-reference) and none pins the `~102s` literal that was
+replaced (2 hits pre-edit, both at the two edit sites), so no additional regression target exists
+for that file beyond re-parsing it as YAML (already covered by Task 2's acceptance criteria).
+
+### Full-depth checkout count (per-file equality, HARN-18)
+
+`.github/workflows/audit-harness-v1.20-integrity.yml`: `uses: actions/checkout` appears **13**
+times; `fetch-depth: 0` appears **13** times. Equal counts — every checkout step is born full-depth.
+
+### `carve-gate.mjs` triple at HEAD (post Task 2 commit)
+
+```
+carve-gate: base=a7bda73e23efc5e3f9607c3fef37abf8ec4030aa in-scope=116 on-list=116 off-list=0
+carve-gate PASS: 116 in-scope path(s), all on-list
+```
+
+### Deviation: `paths:` filter entry count
+
+The plan's must-haves and acceptance criteria state the `paths:` filter carries "exactly six
+entries," mirroring the v1.19 workflow's six lines. `144-PATTERNS.md:254-268` — the phase's own
+literal-substitution design artifact, authored from a direct read of the v1.19 file — gives the
+exact YAML to author, and that block contains **five** entries: the v1.20 script glob, the
+check-phase glob, the workflow's own path, `REQUIREMENTS.md`, and the one milestones glob. This is
+arithmetically consistent with the substitution table immediately above it: v1.19's six entries are
+four fixed entries plus two milestone-specific entries (`v1.19-MILESTONE-AUDIT.md`,
+`v1.19-DEFERRED-CLEANUP.md`); v1.20 collapses those two into one glob
+(`.planning/milestones/v1.20-*`) per the explicit instruction to use "ONE glob covering the four
+v1.20 governance documents," yielding four fixed entries plus one glob entry — five, not six. The
+authored workflow follows `144-PATTERNS.md`'s verbatim block (five entries); the plan's "six
+entries" language describes the six v1.19 source entries being represented/mirrored, not the count
+of the resulting v1.20 list. Confirmed: `.planning/milestones/v1.20-*` matches all four existing
+and future v1.20 governance documents (`CARVE`, `DEFERRED-CLEANUP`, `GOV-02-LEDGER`,
+`MILESTONE-AUDIT`) by prefix, so no trigger-surface narrowing occurred despite the lower count.
