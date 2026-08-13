@@ -343,6 +343,195 @@ path-scoped hit — the file's own self-reference) and none pins the `~102s` lit
 replaced (2 hits pre-edit, both at the two edit sites), so no additional regression target exists
 for that file beyond re-parsing it as YAML (already covered by Task 2's acceptance criteria).
 
+## Plan 09, Task 1 — Pre-push readiness census
+
+Zero code changes. HEAD at start of this plan: `7ad104bf23140fc709ea1cfb7b01906849353ae6` (139
+commits landed since the discuss-phase measurement session at `1c474898`, all confined to
+`.planning/`, `scripts/validation/`, `.github/workflows/` per HARN-17/18's own scope — no corpus
+content touched, per the D-01 harness-only constraint).
+
+### Ten standalone-red members, re-run fresh at HEAD (not inherited from Phase 141/142/discuss-phase evidence)
+
+| Member | Result | Exit | Notes |
+|---|---|---|---|
+| check-phase-30 | 12 PASS, 0 FAIL, **1 SKIPPED** | 0 | Skip = `markdown-link-check`/`mermaid-cli` unavailable |
+| check-phase-31 | 29 PASS, 0 FAIL, **1 SKIPPED** | 0 | Skip = V-31-30 `markdown-link-check` unavailable |
+| check-phase-48 | 7 PASS, 0 FAIL, 0 SKIPPED | 0 | |
+| check-phase-60 | 25 PASS, 0 FAIL, 0 SKIPPED | 0 | |
+| check-phase-61 | 34 PASS, 0 FAIL, 0 SKIPPED | 0 | |
+| check-phase-62 | 34 PASS, 0 FAIL, 0 SKIPPED | 0 | |
+| check-phase-63 | 32 PASS, 0 FAIL, 0 SKIPPED | 0 | |
+| check-phase-64 | 29 PASS, 0 FAIL, 0 SKIPPED | 0 | |
+| check-phase-65 | 33 PASS, 0 FAIL, 0 SKIPPED | 0 | wall-clock 5m19s (Windows non-nested chain-expansion cost, pre-existing hazard class) |
+| check-phase-66 | 28 PASS, 0 FAIL, 0 SKIPPED | 0 | wall-clock 10m36s (same hazard class; ran via background task after exceeding the 600s foreground cap) |
+
+**All ten exit 0.** Exactly two SKIPs across the ten runs, both classified: `check-phase-30`'s and
+`check-phase-31`'s skips are deterministic environment skips on an absent optional
+`markdown-link-check` (npm package, not in `package.json`) and an absent optional `mermaid-cli`
+binary — neither is a project dependency, and `check-phase-31.mjs`'s own invocation form
+(`npx --yes --no-install`) means these skip on Linux CI too, not only this Windows box. A skip that
+is classified this way is evidence of a deterministic environment gap, not a coverage hole.
+
+**`regenerate-supervision-pins.mjs --self-test`** (RED-02 closure, re-confirmed): `Diff: identical`,
+`Self-test: PASS`, exit 0.
+
+### Class-1 archival drift — static census
+
+**Population, re-measured (not carried from the discuss-phase-time figure of 51):**
+`grep -rl '\.planning/phases/' scripts/validation/` → **71** files at current HEAD (up from the
+144-CONTEXT.md `<specifics>` baseline of 51 — the increase is expected and accounted for: Phase 144
+Plans 02–08 landed `check-phase-144.mjs`, `v1.20-milestone-audit.mjs`, and touched/added other
+`scripts/validation/*.mjs` files since that measurement, several of which carry a `Source of truth:`
+header comment naming their originating `.planning/phases/NNN-.../` doc). The population count
+itself is not the gate — Class 1 acts only on the subset of that population whose reads are LIVE
+(non-frozen) AND target a phase in the 139–144 range.
+
+**Narrowing to the 139–144 range:** `grep -rn '\.planning/phases/(139|140|141|142|143|144)-'
+scripts/validation/` → exactly 3 lines, all in 2 files:
+
+| File:Line | Content | Classification |
+|---|---|---|
+| `check-phase-144.mjs:10` | `// Source of truth: .planning/phases/144-.../144-CONTEXT.md` | Comment only — not a runtime `PATH` constant, never passed to any read function |
+| `check-phase-144.mjs:11` | `// and .planning/phases/144-.../144-PATTERNS.md` | Comment only, same as above |
+| `v1.20-milestone-audit.mjs:3` | `// Source of truth: .planning/phases/144-.../144-CONTEXT.md (D-17)` | Comment only, same as above |
+
+None of the three is a `readFile`/`readFileSync`/`readAtClose`/`readCorpusFileAt*` argument — each
+is a header-comment provenance note (matching the pattern already established at
+`check-phase-134.mjs:9-10` and `check-phase-138.mjs:9-10`, neither of which is a survivor either).
+Confirmed by reading the surrounding lines directly: no `PATH =` or function-call site anywhere in
+either file targets a `139`–`144` phase directory.
+
+**Frozen-reader call sites subtracted from the general population (named per the plan's read_first,
+though moot here since zero literal-path survivors exist in the 139–144 range regardless of reader
+type):** `check-phase-70.mjs:398,414` (`readCorpusFileAtV17CloseGate`, targets the v1.7 close-gate
+phase dir 70, not 139–144) and `check-phase-124.mjs:46,97` (`readAtV116Close`, targets the v1.16
+close-gate phase dir 124, not 139–144).
+
+**Class-1 census result: ZERO survivors reading phases 139–144**, confirmed live, matching the
+`144-CONTEXT.md` D-30 baseline disposition even though the underlying reference-population count
+grew from 51 to 71 between the discuss-phase measurement and this plan's execution. `D-14`'s "zero
+`.planning/phases/` reads in the five new leaves" is independently confirmed: `check-phase-139.mjs`
+through `check-phase-143.mjs` appear nowhere in either the 71-file population or the 3-line
+139–144-range grep.
+
+### Working-tree hygiene — RULING
+
+| Metric | Count |
+|---|---|
+| `git status --porcelain --untracked-files=all` (all porcelain entries) | **105** |
+| `git worktree list` | **8** (1 main + 7 linked agent worktrees) |
+| `git branch --no-merged master` (unmerged local branches with a linked worktree) | **7** (`worktree-agent-a30e3c02`, `-a7060637`, `-a78a3e75`, `-a7915453`, `-aa31f5d9`, `-adf4846f`, `-af6387cf`) |
+| `git status --porcelain --untracked-files=all -- scripts .github docs` (in-scope-prefix subset) | **0** |
+
+**Ruling:** none of the 105 porcelain entries, 8 worktrees, or 7 unmerged branches sits inside the
+CARVE gate's scope (`scripts/`, `.github/`, `docs/` — confirmed 0 hits when the porcelain scan is
+restricted to those prefixes). This is a ruling, not a silence: Axis-1 (fresh clone) and Axis-3
+(zero-context reproduction) both run against a remote state that is a push of local `master` only —
+untracked working-tree files and unmerged local/linked-worktree branches are never pushed and do
+not enter either axis's evaluated state. The figures are recorded here so a later reader can
+confirm the ruling was made with the numbers in view, not assumed.
+
+### Apex, run separately from any verifier or prose-guard pass (D-35)
+
+```
+node scripts/validation/check-phase-144.mjs
+Result: 100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)
+```
+Exit 0. Unchanged from the Plan 07 idempotency baseline (`AUDIT` is the sole pre-close-gate SKIP).
+
+## Plan 09, Task 2 — Live 17-workflow enumeration, freshness pre-flight, atom-branch audit
+
+### Live workflow-directory listing (both extensions, at this moment — never a carried count)
+
+`ls .github/workflows/*.yml .github/workflows/*.yaml` → **17** files (`*.yaml` = 0, a durability
+guard confirming no file exists under the alternate extension):
+
+```
+audit-harness-integrity.yml
+audit-harness-v1.10-integrity.yml
+audit-harness-v1.11-integrity.yml
+audit-harness-v1.12-integrity.yml
+audit-harness-v1.13-integrity.yml
+audit-harness-v1.14-integrity.yml
+audit-harness-v1.15-integrity.yml
+audit-harness-v1.16-integrity.yml
+audit-harness-v1.17-integrity.yml
+audit-harness-v1.18-integrity.yml
+audit-harness-v1.19-integrity.yml
+audit-harness-v1.20-integrity.yml
+audit-harness-v1.5-integrity.yml
+audit-harness-v1.6-integrity.yml
+audit-harness-v1.7-integrity.yml
+audit-harness-v1.8-integrity.yml
+audit-harness-v1.9-integrity.yml
+```
+
+Count asserted as 17 (sixteen predecessors + the one this phase authored) — **confirmed, not a
+finding.**
+
+### Ready-to-paste dispatch command block (17 lines, deterministic `ls` order, targeting the default branch — FOR THE OWNER TO RUN, not run by the executor)
+
+```
+gh workflow run "audit-harness-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.10-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.11-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.12-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.13-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.14-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.15-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.16-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.17-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.18-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.19-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.20-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.5-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.6-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.7-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.8-integrity.yml" --ref master
+gh workflow run "audit-harness-v1.9-integrity.yml" --ref master
+```
+
+Run each ONLY after the push lands, since `workflow_dispatch` requires the workflow file to already
+exist on the default branch it targets.
+
+### Freshness pre-flight (read-only fetch + count, executed fresh this session — the stored
+`.git/FETCH_HEAD` state was days stale and was never re-measured before now)
+
+| Quantity | Value |
+|---|---|
+| `origin/master` before fetch | `f89a68d7cd3fdf9bbfc9debd5d640e3462484b8c` |
+| `git fetch origin` | ran clean, no new refs (remote unchanged since the last fetch) |
+| `origin/master` after fetch | `f89a68d7cd3fdf9bbfc9debd5d640e3462484b8c` |
+| local `master` (= HEAD) | `7ad104bf23140fc709ea1cfb7b01906849353ae6` |
+| **ahead** (`git rev-list --count origin/master..master`) | **139** |
+| **behind** (`git rev-list --count master..origin/master`) | **0** |
+
+**The behind-count is fresh and is 0.** The ahead-count has grown from the discuss-phase-session
+figure of 96 to **139** — expected, since Plans 02 through 08 landed in between and this plan's own
+census work adds zero commits of its own until the SUMMARY/state-update commit. The local head SHA
+`7ad104bf23140fc709ea1cfb7b01906849353ae6` is the prospective shared close SHA for all three audit
+axes once the owner pushes — it will change again if any further commit (including this plan's own
+SUMMARY commit) lands before the push, so the owner must re-read `git rev-parse master` at push time
+rather than trust this recorded value verbatim.
+
+### Atom-branch audit (report only — NOT deleted, NOT modified)
+
+| Quantity | Value |
+|---|---|
+| `git rev-list --count master..phase-139-atom-5` | **0** (fully merged) |
+| Local branch tip | `c2450efa0c498777aa0c03f5ed90c52b8d2da38f` |
+| `origin/phase-139-atom-5` | exists, resolves to the same `c2450efa...` — local and remote tips match |
+| Run-evidence coupling | `c2450efa` is the head SHA of the **16 recorded 2026-08-06 CI runs** on which SWEEP-01/SWEEP-02's completion evidence rests (per `139-06-SUMMARY.md:119,142`, which instructs KEEP + re-confirm, not delete) |
+
+The keep/delete disposition is NOT decided here — it is presented to the owner at the Task 3
+checkpoint as an explicit option, per D-23 (REVERSED from "delete at close" during Phase 144's own
+discuss-phase review). The branch was neither deleted nor modified by this plan.
+
+### `git rev-parse origin/master` — unchanged across this plan's own work
+
+Before Task 1: `f89a68d7cd3fdf9bbfc9debd5d640e3462484b8c`. After Task 2 (immediately before this
+append): `f89a68d7cd3fdf9bbfc9debd5d640e3462484b8c`. Identical — this plan pushed nothing.
+
 ### Full-depth checkout count (per-file equality, HARN-18)
 
 `.github/workflows/audit-harness-v1.20-integrity.yml`: `uses: actions/checkout` appears **13**
