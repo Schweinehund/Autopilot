@@ -1,0 +1,561 @@
+{
+  "schema_version": "1.1",
+  "generated": "2026-08-13T00:00:00Z",
+  "phase": "144-v119-pin-18th-path-a-lineage-bump-terminal-close",
+  "safetynet_exemptions": [
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 186,
+      "reason": "Phase 128 HYG-02 repoint (was line 187): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 62 carry-over: line 185 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 183 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 176 shifted +7 (Phase 59 CLEAN-08 see-also normalization added 11 lines, net +7 before Play Integrity section); Play Integrity prose references SafetyNet as predecessor (historical context)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 201,
+      "reason": "Phase 128 HYG-02 repoint (was line 202): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 62 carry-over: line 200 shifted +1 (Phase 62 Plan 62-07 added Apple Business banner line at line 13); Phase 60 Plan 06: line 198 shifted +2 (Phase 60 #kme/#kpe HTML-shim insert at lines 127 and 134); Phase 59 carry-over: line 190 shifted +8 (Phase 59 CLEAN-08 see-also normalization + Version History row added); SafetyNet API sunset Version History entry (2025-01 historical changelog)"
+    },
+    {
+      "file": "docs/android-lifecycle/03-android-version-matrix.md",
+      "line": 101,
+      "reason": "Phase 128 HYG-02 repoint (was line 102): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). v1.5 inherit baseline 2026-04-26"
+    },
+    {
+      "file": "docs/android-lifecycle/03-android-version-matrix.md",
+      "line": 103,
+      "reason": "Phase 128 HYG-02 repoint (was line 104): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). v1.5 inherit baseline 2026-04-26"
+    }
+  ],
+  "supervision_exemptions": [
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 37,
+      "reason": "Phase 128 HYG-02 repoint (was line 38): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 18): Alphabetical Index entry -- [Supervision](#supervision) link (2 raw matches on one line: display text + anchor fragment)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 89,
+      "reason": "Phase 128 HYG-02 repoint (was line 90): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 51, single blockquote): C17 #12 word-preserving split fragmented the old single-line COBO Cross-platform-note blockquote into 3 lines (88/90/92/94); this fragment -- 'the closest analog is iOS ADE-supervised corporate-owned enrollment ... (see [iOS Supervision](...)) or macOS ADE-enrolled supervised' -- carries 4 of the original line's raw matches. Companion fragment now at line 94 (see next entry). Apple-attributed disambiguation context, same reason as the pre-split v1.15 pin."
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 93,
+      "reason": "Phase 128 HYG-02 repoint (was line 94): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 51, single blockquote, second half after the #12 split): 'Do not conflate COBO with iOS supervision state; supervision is a permanent per-device gating state on iOS, whereas COBO is an ownership-mode designation on Android.' -- 2 raw matches; same COBO cross-platform disambiguation content as the line-90 companion fragment, both descending from the single v1.15 line-51 pin"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 125,
+      "reason": "Phase 128 HYG-02 repoint (was line 126): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 71, single blockquote): C17 #12 split fragmented the old single-line Fully-Managed Cross-platform-note blockquote into 4 lines (126/128/130/132); this fragment -- '**Cross-platform note:** The closest iOS analog is [Supervision](...) state on ADE-enrolled devices, but the mapping is partial --' -- carries 2 of the original line's raw matches (Apple-attributed iOS Supervision citation)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 127,
+      "reason": "Phase 128 HYG-02 repoint (was line 128): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 71, second #12-split fragment): 'iOS supervision is a permanent per-device state that gates roughly 60 restriction settings on top of a normal MDM enrollment,' -- iOS-attributed definitional prose, same origin as the line-71 v1.15 pin"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 129,
+      "reason": "Phase 128 HYG-02 repoint (was line 130): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 71, third #12-split fragment): 'whereas Android Fully Managed is an ownership-mode designation set at provisioning time. See [_glossary-macos.md#supervision](_glossary-macos.md#supervision).' -- 2 raw matches (Apple-attributed cross-reference)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 131,
+      "reason": "Phase 128 HYG-02 repoint (was line 132): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 71, fourth #12-split fragment): 'On Windows, the closest analog is Autopilot corporate deployment with a restrictive device configuration profile -- no separate \"supervised\" state layer. Do not conflate.' -- Windows-attributed contrast prose, final fragment of the old single-line pin"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 145,
+      "reason": "Phase 128 HYG-02 repoint (was line 146): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 81, +65): ### Supervision H3 heading (term being defined; iOS supervision callout; intentional AEAUDIT-04 pattern) -- heading itself did not split (H3 headings are single lines), only the shift amount changed"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 147,
+      "reason": "Phase 128 HYG-02 repoint (was line 148): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 83): Android note blockquote for Supervision H3 -- explains iOS/iPadOS supervision concept (see [Apple Glossary -- Supervision]...). Android does not use this term. The #12 split moved the non-matching 'closest analog is Fully Managed...' continuation to a separate line (150) that carries no supervision match and therefore needs no pin."
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 151,
+      "reason": "Phase 128 HYG-02 repoint (was line 152): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 84, +68): '> See also:' line added inside Supervision H3 Android-note blockquote by Plan 59-05 Task 3 -- cross-platform reciprocal links to macOS Supervision + Linux Supervision (Apple-attributed and Linux-attributed citations; AEAUDIT-04 scope)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 330,
+      "reason": "Phase 128 HYG-02 repoint (was line 331): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 197, +134): Version History row -- Phase 59 (CLEAN-08) changelog entry listing 'Supervision' as one of 11 collision-matrix terms with see-also additions -- historical change documentation, not an Android management term reference; table row, single line preserved"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 303,
+      "reason": "Phase 128 HYG-02 repoint (was line 304): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 183, +121 cumulative from EEE header-block + Summary-first insertion + C17 #12 blockquote splits earlier in the file): C17 #12 split fragmented the old single-line MHS Cross-platform-note blockquote into 3 lines (304/306/308); this fragment -- 'On iOS/iPadOS, the analog is Apple's Single App Mode or Autonomous Single App Mode configured through a supervised MDM profile --' -- carries the one supervision match (Apple-attributed cross-platform comparison to ASAM); the two continuation fragments (306/308) carry no supervision match and need no pin"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 333,
+      "reason": "Phase 128 HYG-02 repoint (was line 334): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 200, +134): Phase 34 Foundation Version History entry -- 'supervision as callout-only' historical description of initial glossary scope; Version History table row, single line preserved (no #12 split applies to table rows)"
+    },
+    {
+      "file": "docs/android-lifecycle/00-enrollment-overview.md",
+      "line": 65,
+      "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 51, +14 from EEE header-block + Platform-gate blockquote + ## Summary + ## How to Use This Guide insertion): 'For Admins Familiar with iOS' section -- 'Android's Fully Managed mode is the closest analog to iOS Supervision...' (single plain paragraph, not a blockquote, so no #12 split applies)"
+    },
+    {
+      "file": "docs/android-lifecycle/00-enrollment-overview.md",
+      "line": 67,
+      "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 53, +14): '\"Supervision\" is not an Android management term -- Android does not use \"supervised\" or \"unsupervised\" as device states...' (plain paragraph, single line preserved)"
+    },
+    {
+      "file": "docs/android-lifecycle/00-enrollment-overview.md",
+      "line": 97,
+      "reason": "Phase 125 v1.16 EEE-retrofit repoint (was line 83, +14): See Also entry -- '[Apple Provisioning Glossary](../_glossary-macos.md) -- for iOS/macOS terminology including [supervision](../_glossary-macos.md#supervision)' (single line preserved)"
+    },
+    {
+      "file": "docs/admin-setup-android/03-fully-managed-cobo.md",
+      "line": 51,
+      "reason": "Phase 128 HYG-02 repoint (was line 52): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). v1.5 inherit baseline 2026-04-26; Phase 119 repoint: was line 36, +16 from Phase-118 RETRO-03 EEE header-block + ## Summary insertion -- 'closest analog to iOS Supervision' cross-platform note (iOS-attributed, intentional disambiguation); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/admin-setup-android/03-fully-managed-cobo.md",
+      "line": 53,
+      "reason": "Phase 128 HYG-02 repoint (was line 54): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint: EEE-retrofit split the cross-platform note across two lines -- 'iOS supervision is a permanent per-device state' (iOS-attributed continuation of the line-52 blockquote; second pinned line, new this milestone); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/l2-runbooks/20-android-app-install-investigation.md",
+      "line": 33,
+      "reason": "v1.5 inherit baseline 2026-04-26; Phase 119 repoint: was line 21, +12 from Phase-118 RETRO-03 EEE header-block + ## Summary insertion -- 'where supervision state and licensing model are the primary failure axes' (iOS-attributed contrast prose); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 122,
+      "reason": "Phase 128 HYG-02 repoint (was line 123): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 89; +34 from Phase-118 RETRO-03 EEE header-block + Version-History-row insertion): AEAUDIT-04 doctrine HTML comment header -- 'supervision in this section MUST appear only as an iOS-attributed reference'; byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 124,
+      "reason": "Phase 128 HYG-02 repoint (was line 125): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 91; +34): AEAUDIT-04 doctrine HTML comment continuation -- 'never supervised' (intentional iOS-attribution rule statement); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 125,
+      "reason": "Phase 128 HYG-02 repoint (was line 126): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 92; +34): AEAUDIT-04 doctrine HTML comment continuation -- 'iOS Supervision' contrasted with bare 'Supervision' (column-header attribution rule); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 127,
+      "reason": "Phase 128 HYG-02 repoint (was line 128): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 94): Cross-Platform Equivalences intro -- 'iOS Supervision' Apple-attributed citation + 'supervised'/'unsupervised' quoted as Apple-attributed terms (intentional disambiguation prose); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 129,
+      "reason": "Phase 128 HYG-02 repoint (was line 130): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 NEW pin: Phase-118 RETRO-03 table-remediation added a prose summary line ('The table below pairs three iOS/Apple concepts ... supervision, zero-touch enrollment, and BYOD ...') within 5 lines of the wide matrix -- new iOS-attributed 'supervision' occurrence introduced by the P-02 chunk-boundary mitigation; block grew 6->7 pinned lines; byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 133,
+      "reason": "Phase 128 HYG-02 repoint (was line 134): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 98; +36): Cross-Platform Equivalences row header -- '**iOS Supervision (ADE-enrolled)**' Apple-attributed pairing (column-header iOS attribution per AEAUDIT-04 rule); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 134,
+      "reason": "Phase 128 HYG-02 repoint (was line 135): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 99; +36): Cross-Platform Equivalences row body -- 'iOS Supervision' definitional prose (multiple Apple-attributed citations describing supervised-only iOS surface; Android side explicitly avoids 'supervised' terminology; 6 raw matches on this line, one pin exempts all); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    }
+  ],
+  "cope_banned_phrases": [
+    "\\bCOPE\\b[^.]*\\bdeprecated\\b",
+    "\\bCOPE\\b[^.]*\\bend of life\\b",
+    "\\bCOPE\\b[^.]*\\bremoved\\b",
+    "\\bCOPE\\b[^.]*\\bEOL\\b",
+    "\\bCOPE\\b[^.]*\\bno longer supported\\b",
+    "\\bCOPE\\b[^.]*\\bobsolete\\b",
+    "\\bCOPE\\b[^.]*\\bsunset\\b",
+    "\\bCOPE\\b[^.]*\\bretired\\b"
+  ],
+  "c7_knox_allowlist": [
+    {
+      "file": "docs/admin-setup-android/07-knox-mobile-enrollment.md",
+      "line": 21,
+      "reason": "v1.5 graduation baseline; Phase 119 repoint (was line 11; +10 from Phase-118 EEE header-block + Platform-gate blockquote) -- Knox→Intune shorthand (arrow-symbol compound; not a SKU reference); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/admin-setup-android/07-knox-mobile-enrollment.md",
+      "line": 167,
+      "reason": "v1.5 graduation baseline; Phase 119 repoint (was line 143; +24) -- 'Knox silently produces' (Knox as platform subject; unambiguous in KME context); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/admin-setup-android/07-knox-mobile-enrollment.md",
+      "line": 167,
+      "reason": "v1.5 graduation baseline; Phase 119 repoint (was line 143; +24) -- 'Knox does not recognize' (Knox as platform subject; second bare occurrence same line); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/admin-setup-android/07-knox-mobile-enrollment.md",
+      "line": 173,
+      "reason": "v1.5 graduation baseline; Phase 119 repoint (was line 145; +28) -- 'Knox JSON shown above' (short reference to Knox Custom JSON Data; unambiguous in KME context); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/admin-setup-android/02-zero-touch-portal.md",
+      "line": 147,
+      "reason": "v1.5 graduation baseline; Phase 119 repoint (was line 131; +16 from Phase-118 EEE header-block + Version-History-row) -- 'Samsung Knox docs' (documentation reference; not a SKU); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 218,
+      "reason": "Phase 128 HYG-02 repoint (was line 219): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 123, +96): '### Knox' heading (term being defined in glossary; cannot have SKU suffix)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 220,
+      "reason": "Phase 128 HYG-02 repoint (was line 221): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 125, +96): 'Knox is Samsung's mobile-device security platform' (definitional sentence; first bare occurrence on this line -- plain paragraph, not a blockquote, so this multi-clause sentence was NOT #12-split and both bare occurrences remain on one line)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 220,
+      "reason": "Phase 128 HYG-02 repoint (was line 221): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 125, +96): 'Knox Vault) and software (Knox Platform for Enterprise' -- 'Knox Vault' compound (Knox Vault is a hardware component, not a managed-device SKU; second bare occurrence same line)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 224,
+      "reason": "Phase 128 HYG-02 repoint (was line 225): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 127, +98): 'Samsung Knox security features apply only to Samsung hardware' (cross-platform note; not a SKU reference)"
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 332,
+      "reason": "Phase 128 HYG-02 repoint (was line 333): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 199, +134): 'Knox entry' in changelog (refers to glossary entry; not a SKU reference) -- Version History table row, single line preserved"
+    }
+  ],
+  "c9_exemptions": [
+    {
+      "file": "docs/android-lifecycle/03-android-version-matrix.md",
+      "line": 57,
+      "reason": "Phase 128 HYG-02 repoint (was line 58): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 41, +17 from EEE header-block + anchor-id + ## Summary insertion): ### Android 11 -- COPE NFC Provisioning Removed H3 heading documents Google-driven Android-11 NFC + afw#setup provisioning-method removal for COPE / WPCO; PITFALL-13 disambiguation: Google has NOT formally deprecated COPE per _glossary-android.md:338 2023+ entry. Match-text is HISTORICAL prose about a provisioning-method removal, NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 01 60-CALIBRATION.md Section A."
+    },
+    {
+      "file": "docs/_glossary-android.md",
+      "line": 337,
+      "reason": "Phase 128 HYG-02 repoint (was line 338): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 125 v1.16 EEE-retrofit repoint (was line 204, +134): Phase 34 Foundation Version History row (2023+ entry): 'COPE -> WPCO terminology drift recorded. Google has NOT formally deprecated COPE; community shorthand incorrectly conflates recommended-against with deprecated.' Match-text is the canonical PITFALL-13 disambiguation prose itself -- the row LITERALLY clarifies that COPE is NOT deprecated. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate: pin if outside window)."
+    },
+    {
+      "file": "docs/admin-setup-android/03-fully-managed-cobo.md",
+      "line": 198,
+      "reason": "Phase 128 HYG-02 repoint (was line 199): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 153; +46 from Phase-118 RETRO-03 EEE header-block + ## Summary insertion). Phase 36 AECOBO-02 COBO afw#setup section: 'afw#setup is still supported for COBO on Android 11+ (contrast: the COPE path was removed on Android 11+ -- see _glossary-android.md#afw-setup).' Match-text is HISTORICAL prose about Android-11 COPE-path removal cross-referencing the canonical PITFALL-13 entry; NOT a COPE-mode deprecation claim. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone."
+    },
+    {
+      "file": "docs/reference/android-capability-matrix.md",
+      "line": 74,
+      "reason": "Phase 128 HYG-02 repoint (was line 75): -1 from HYG-02 frontmatter-line deletion (commit 7dda1f7). Phase 119 repoint (was line 55; +20 from Phase-118 RETRO-03 EEE header-block + Version-History-row). Phase 34 Foundation AMAPI migration footnote row: 'Unaffected (AMAPI April 2025 affected BYOD specifically; COPE/WPCO unaffected)' followed by BYOD-column note 'custom OMA-URI removed'. Match-text spans table cells where COPE is in the COPE/WPCO-unaffected disambiguation note and 'removed' refers to OMA-URI removal in the BYOD column -- NOT a COPE-mode deprecation. legitimate-disambiguation per Plan 08 atomic-commit live-corpus refinement (CONTEXT D-05 mandate); byte-unchanged since v1.15 close (0 commits since 29a3599) -- verbatim carry, not repointed this milestone."
+    }
+  ],
+  "c11_ops_exemptions": [],
+  "c13_broken_link_allowlist": [
+    {
+      "file": "docs/admin-setup-android/02-zero-touch-portal.md",
+      "line": 160,
+      "target": "https://support.google.com/work/android/topic/9158960",
+      "reason": "PITFALL-14 transient external; Google support URL non-MS domain; REQUIREMENTS Out-of-Scope spirit",
+      "category": "transient_external"
+    },
+    {
+      "file": "docs/admin-setup-android/07-knox-mobile-enrollment.md",
+      "line": 51,
+      "target": "https://knox.samsung.com",
+      "reason": "PITFALL-14 transient external; Samsung Knox redirect chain; REQUIREMENTS Out-of-Scope spirit",
+      "category": "transient_external"
+    },
+    {
+      "file": "docs/admin-setup-android/09-aosp-realwear.md",
+      "line": 125,
+      "target": "https://portal.realwear.com",
+      "reason": "PITFALL-14 transient external; RealWear portal non-MS domain; REQUIREMENTS Out-of-Scope spirit",
+      "category": "transient_external"
+    },
+    {
+      "file": "docs/l1-runbooks/04-network-connectivity.md",
+      "line": 35,
+      "target": "https://ztd.dds.microsoft.com",
+      "reason": "PITFALL-14 transient external; ZTD endpoint reachability transient; REQUIREMENTS Out-of-Scope spirit (MS endpoint URL not docs.microsoft.com)",
+      "category": "transient_external"
+    },
+    {
+      "file": "docs/l1-runbooks/28-android-knox-enrollment-failed.md",
+      "line": 69,
+      "target": "https://knox.samsung.com",
+      "reason": "PITFALL-14 transient external; Samsung Knox redirect chain; REQUIREMENTS Out-of-Scope spirit",
+      "category": "transient_external"
+    },
+    {
+      "file": "docs/reference/endpoints.md",
+      "line": 125,
+      "target": "https://support.apple.com/en-us/HT101555",
+      "reason": "PITFALL-14 transient external; Apple support URL redirect chain; REQUIREMENTS Out-of-Scope spirit",
+      "category": "transient_external"
+    },
+    {
+      "file": "docs/_templates/admin-template.md",
+      "line": 23,
+      "target": "link",
+      "reason": "intentional template stub by design (placeholder)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template.md",
+      "line": 43,
+      "target": "../runbooks-l1/relevant-runbook.md",
+      "reason": "intentional template stub by design (placeholder for runbook ref)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template-android.md",
+      "line": 51,
+      "target": "../l1-runbooks/[filename].md",
+      "reason": "intentional template stub by design (placeholder)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template-android.md",
+      "line": 111,
+      "target": "../l1-runbooks/[runbook-filename].md",
+      "reason": "intentional template stub by design (placeholder)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template-android.md",
+      "line": 113,
+      "target": "../l1-runbooks/26-mgp-app-not-installed.md",
+      "reason": "intentional template stub by design (placeholder for not-yet-authored runbook)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template-ios.md",
+      "line": 71,
+      "target": "../l1-runbooks/[runbook-filename].md",
+      "reason": "intentional template stub by design (placeholder)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template-ios.md",
+      "line": 57,
+      "target": "link",
+      "reason": "intentional template stub by design (placeholder)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template-macos.md",
+      "line": 49,
+      "target": "../l1-runbooks/[runbook-filename].md",
+      "reason": "intentional template stub by design (placeholder)",
+      "category": "template_placeholder"
+    },
+    {
+      "file": "docs/_templates/admin-template-macos.md",
+      "line": 13,
+      "target": "link",
+      "reason": "intentional template stub by design (placeholder)",
+      "category": "template_placeholder"
+    }
+  ],
+  "c13_rotting_external": {
+    "ci_1_abm_urls": [
+      {
+        "url": "https://business.apple.com",
+        "file": "docs/admin-setup-ios/05-app-deployment.md",
+        "line": 92,
+        "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand; included for completeness — quarterly check confirms reachability",
+        "category": "live_url_quarterly_check",
+        "last_revalidated": "2026-05-26"
+      },
+      {
+        "url": "https://business.apple.com",
+        "file": "docs/admin-setup-macos/01-abm-configuration.md",
+        "line": 52,
+        "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand",
+        "category": "live_url_quarterly_check",
+        "last_revalidated": "2026-05-26"
+      },
+      {
+        "url": "https://business.apple.com",
+        "file": "docs/admin-setup-macos/04-app-deployment.md",
+        "line": 105,
+        "reason": "ABM live portal URL; retained per Apple newsroom post-rebrand",
+        "category": "live_url_quarterly_check",
+        "last_revalidated": "2026-05-26"
+      },
+      {
+        "url": "https://business.apple.com",
+        "file": "docs/_glossary-macos.md",
+        "line": 64,
+        "reason": "ABM live portal URL in definitional prose; retained per Apple newsroom post-rebrand",
+        "category": "live_url_quarterly_check",
+        "last_revalidated": "2026-05-26"
+      }
+    ],
+    "ci_2_vpp_location_token": [
+      {
+        "file": "docs/admin-setup-ios/05-app-deployment.md",
+        "line": 71,
+        "term": "VPP (Apps and Books) location token",
+        "context": "prerequisites bullet",
+        "reason": "legacy 'VPP location token' term retained per Q5(b) no-corpus-sweep contract; rename deferred to v1.7+ CI-2",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_05_26": true
+      },
+      {
+        "file": "docs/admin-setup-ios/05-app-deployment.md",
+        "line": 201,
+        "term": "VPP (Apps and Books) location token",
+        "context": "Renewal/Maintenance table row",
+        "reason": "PITFALLS.md:642 canonical CI-2 site #1",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_05_26": true
+      },
+      {
+        "file": "docs/admin-setup-macos/04-app-deployment.md",
+        "line": 45,
+        "term": "VPP location token",
+        "context": "prerequisites bullet",
+        "reason": "legacy term; rename deferred to v1.7+",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_05_26": true
+      },
+      {
+        "file": "docs/admin-setup-macos/04-app-deployment.md",
+        "line": 46,
+        "term": "VPP location token",
+        "context": "prerequisites bullet",
+        "reason": "legacy term; rename deferred to v1.7+",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_05_26": true
+      },
+      {
+        "file": "docs/admin-setup-macos/04-app-deployment.md",
+        "line": 113,
+        "term": "VPP location token",
+        "context": "verification step",
+        "reason": "legacy term; rename deferred to v1.7+",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_05_26": true
+      },
+      {
+        "file": "docs/admin-setup-macos/04-app-deployment.md",
+        "line": 148,
+        "term": "VPP location token",
+        "context": "Renewal/Maintenance table row",
+        "reason": "PITFALLS.md:642 canonical CI-2 site #2",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_05_26": true
+      },
+      {
+        "file": "docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+        "line": 115,
+        "term": "VPP location token",
+        "context": "VPP H2 first mention",
+        "reason": "Phase 74 VPP-01 4-site rename; renamed to content token at 74-01 commit be48583",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_06_08": true
+      },
+      {
+        "file": "docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+        "line": 149,
+        "term": "VPP location token",
+        "context": "Mac App Store H2 first mention",
+        "reason": "Phase 74 VPP-01 4-site rename; renamed to content token at 74-01 commit be48583",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_06_08": true
+      },
+      {
+        "file": "docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+        "line": 155,
+        "term": "VPP location token",
+        "context": "Mac App Store H2 ABM token expiry callout",
+        "reason": "Phase 74 VPP-01 4-site rename; renamed to content token at 74-01 commit be48583",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_06_08": true
+      },
+      {
+        "file": "docs/operations/app-lifecycle/02-macos-pkg-dmg-pipeline.md",
+        "line": 160,
+        "term": "VPP location token",
+        "context": "Mac App Store H2 Token-sharing constraint",
+        "reason": "Phase 74 VPP-01 4-site rename (4th occurrence, D-02 approved); renamed to content token at 74-01 commit be48583",
+        "category": "legacy_term_surgical_rename_candidate",
+        "resolved_2026_06_08": true
+      }
+    ],
+    "ci_3_managed_apple_id": [
+      {
+        "file": "docs/admin-setup-android/04-byod-work-profile.md",
+        "count": 1,
+        "reason": "Managed Apple ID legacy term; rename deferred to v1.7+ contingent on Microsoft Intune adopting rebrand per REQUIREMENTS.md:74"
+      },
+      {
+        "file": "docs/admin-setup-ios/00-overview.md",
+        "count": 2
+      },
+      {
+        "file": "docs/admin-setup-ios/02-abm-token.md",
+        "count": 2
+      },
+      {
+        "file": "docs/admin-setup-ios/08-user-enrollment.md",
+        "count": 17,
+        "reason": "PITFALLS.md:665 canonical CI-3 pervasive-site; highest density"
+      },
+      {
+        "file": "docs/admin-setup-ios/09-mam-app-protection.md",
+        "count": 1
+      },
+      {
+        "file": "docs/admin-setup-macos/01-abm-configuration.md",
+        "count": 5
+      },
+      {
+        "file": "docs/cross-platform/apple-business/02-ous-architecture.md",
+        "count": 1,
+        "reason": "Phase 62 deliverable — uses legacy term in cross-reference context only"
+      },
+      {
+        "file": "docs/cross-platform/apple-business/09-shared-ipad-lifecycle.md",
+        "count": 1,
+        "reason": "Phase 63 deliverable"
+      },
+      {
+        "file": "docs/ios-lifecycle/01-ade-lifecycle.md",
+        "count": 2
+      },
+      {
+        "file": "docs/l1-runbooks/17-ios-ade-not-starting.md",
+        "count": 2
+      },
+      {
+        "file": "docs/macos-lifecycle/00-ade-lifecycle.md",
+        "count": 2
+      },
+      {
+        "file": "docs/reference/android-capability-matrix.md",
+        "count": 1
+      },
+      {
+        "file": "docs/_glossary-android.md",
+        "count": 1
+      },
+      {
+        "file": "docs/_glossary-apple-business.md",
+        "count": 3,
+        "reason": "Phase 62 glossary — intentional legacy↔new term reciprocity per AB-01"
+      },
+      {
+        "file": "docs/_glossary-linux.md",
+        "count": 1
+      },
+      {
+        "file": "docs/_glossary-macos.md",
+        "count": 3
+      },
+      {
+        "total_corpus_count": 45,
+        "files_count": 16
+      }
+    ],
+    "quarterly_audit": {
+      "cadence": "0 8 1 1,4,7,10 *",
+      "scope": "external-url-link-check (ci_1_abm_urls only — ci_2 + ci_3 are line-ref tracking, no URL probe)",
+      "tool": "markdown-link-check",
+      "next_review": "2026-10-01"
+    }
+  },
+  "c16_missing_endpoint_exemptions": []
+}
