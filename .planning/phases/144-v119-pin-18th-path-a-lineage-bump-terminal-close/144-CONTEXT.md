@@ -56,16 +56,14 @@ are recorded in `<specifics>`.
   SOLE unconverted harness — 16 of 17 already import `_lib/frozen-at-close.mjs`. This is therefore
   the **seventeenth** application of the pattern, not the sixteenth.
 
-- **D-02: The v1.19 C17 leg stays on live HEAD — and that extension is recorded as a
-  `[SUCCESS-CRITERION AMENDMENT, D-NN]` on SWEEP-05, not as a sentence in the harness header.**
+- **D-02: The v1.19 C17 leg stays on live HEAD — and that extension is recorded as a `[SUCCESS-CRITERION AMENDMENT, D-NN]` on SWEEP-05, not as a sentence in the harness header.**
   SWEEP-05's named limitation is textually scoped "in v1.15 through v1.18"; v1.19 is not in it, so
   extending it is a change to ratified requirement text and needs this repo's own instrument (inline
   marker, superseded text preserved). `[MEASURED CORRECTION]` the residue is **5 of the 5
   C17-bearing harnesses**, not 5 of 17 — only v1.15–v1.19 carry a C17 check at all. Register that
   residue as a NEW deferred item (see D-27).
 
-- **D-03: `check-phase-67.mjs`'s remaining fail-loud sites land here — TEN sites in TWO classes, not
-  seven. OWNER-RATIFIED 2026-08-12.** `v1.20-CARVE.md:272-274` states the obligation as "7
+- **D-03: `check-phase-67.mjs`'s remaining fail-loud sites land here — TEN sites in TWO classes, not seven. OWNER-RATIFIED 2026-08-12.** `v1.20-CARVE.md:272-274` states the obligation as "7
   chicken-and-egg guards **plus 3 partial-null silent passes**". `[MEASURED]` the 7
   chicken-and-egg returns are at `:73, :88, :117, :132, :165, :199, :227`; of the five `nullCount`
   accumulator blocks, exactly **three** can silently pass (V-67-01/03/06) — V-67-05/07 already
@@ -78,8 +76,7 @@ are recorded in `<specifics>`.
   — **Reversibility:** costly — check-phase-67 is a chain member in every apex; a broken pin takes
   the whole chain red.
 
-- **D-04: The SWEEP-09 provenance remedy is the traceability CELL plus an inline amendment marker —
-  never a footer annotation.** `[MEASURED]` `REQUIREMENTS.md:154` reads
+- **D-04: The SWEEP-09 provenance remedy is the traceability CELL plus an inline amendment marker — never a footer annotation.** `[MEASURED]` `REQUIREMENTS.md:154` reads
   `| SWEEP-09 | Phase 141 | Complete |`; the repo's own two-phase form is one row away at `:131`
   (`| SWEEP-05 | Phase 140, Phase 144 | Pending |`). Correct `:154` to `Phase 141, Phase 144`.
   **Correction of record:** the real provenance defect is `REQUIREMENTS.md:165`, which justified the
@@ -87,9 +84,7 @@ are recorded in `<specifics>`.
   census — so SWEEP-09's own amended text already names Phase 144 and the "silently extending a
   Complete requirement" framing is withdrawn.
 
-- **D-05: `check-phase-143.mjs` implements `143-NEEDLE-SPEC.md` §1–§5 verbatim, HONOURS §6 (no C18
-  harness fold), and DECLINES the §"corpus-level invariant worth pinning too" recommendation.
-  OWNER-RATIFIED 2026-08-12.** The decline is a REVERSAL of the draft ruling: a live-HEAD,
+- **D-05: `check-phase-143.mjs` implements `143-NEEDLE-SPEC.md` §1–§5 verbatim, HONOURS §6 (no C18 harness fold), and DECLINES the §"corpus-level invariant worth pinning too" recommendation. OWNER-RATIFIED 2026-08-12.** The decline is a REVERSAL of the draft ruling: a live-HEAD,
   `docs/`-wide "zero `{#`" assertion inside a permanent apex member is the exact class
   `carve-gate.mjs:8-12` names in its own words — *"A live-HEAD diff assertion frozen into a permanent
   apex member would go RED at the first v1.21 content commit and stay red forever — manufacturing
@@ -100,8 +95,7 @@ are recorded in `<specifics>`.
   Correction to the draft's reasoning: the apex's termini assert is **numeric-only** — a missing leaf
   is caught by HAZARD FIX 3 (`check-phase-138.mjs:182-186`), not by the module-load guard.
 
-- **D-06: FIX the stale `~102s` figure — in BOTH files. REVERSED from "carry it". OWNER-RATIFIED
-  2026-08-12.** Both cost legs of the draft's carry ruling are falsified:
+- **D-06: FIX the stale `~102s` figure — in BOTH files. REVERSED from "carry it". OWNER-RATIFIED 2026-08-12.** Both cost legs of the draft's carry ruling are falsified:
   (i) `[MEASURED]` `audit-harness-v1.7-integrity.yml:14-22` already carries `pull_request.paths`
   filters for `scripts/validation/check-phase-*.mjs` and `.planning/REQUIREMENTS.md`; Phase 144
   authors six check-phase files and rewrites REQUIREMENTS.md, so v1.7 fires on the close PR whether
@@ -115,8 +109,7 @@ are recorded in `<specifics>`.
   v1.8 line. A sed keyed to `:95` edits the wrong file. Land both edits in the same commit as the
   17th workflow's authoring, never alone.
 
-- **D-07: Plan 01 is a CARVE amendment, alone, first. This is a hard blocker on every other edit in
-  the phase.** `[MEASURED]` the v1.20 allowlist contains no entry for `check-phase-139.mjs` …
+- **D-07: Plan 01 is a CARVE amendment, alone, first. This is a hard blocker on every other edit in the phase.** `[MEASURED]` the v1.20 allowlist contains no entry for `check-phase-139.mjs` …
   `check-phase-144.mjs` and no glob for `scripts/validation/*-audit-allowlist.json`; Category 2's
   glob is `.mjs`-only and Category 5's 19 literals stop at `check-phase-138.mjs`. `[MEASURED]`
   `carve-gate.mjs` catches brand-new off-list files under `scripts/` via
@@ -137,21 +130,17 @@ are recorded in `<specifics>`.
 
 ### Area B — Apex `check-phase-144.mjs`, the five leaves, the sidecar, the 17th workflow
 
-- **D-08: `CHAIN_START = 48`, `CHAIN_END = 143`, `CHAIN_PHASES` generated by `Array.from`, length
-  assert `!== 96`, termini assert `48..143`, `CHAIN_SKIP = new Set([])`.** This is the D-25
+- **D-08: `CHAIN_START = 48`, `CHAIN_END = 143`, `CHAIN_PHASES` generated by `Array.from`, length assert `!== 96`, termini assert `48..143`, `CHAIN_SKIP = new Set([])`.** This is the D-25
   owner-ratified correction of the `[48..138]` drafting error surviving at two ratified sites.
   Never transcribe the array.
 
-- **D-09: `CHAIN_EXTRA = [30, 31]` carries forward verbatim, including its exclusion from all three
-  module-load guards and from the SELF dual-invariant.** `[MEASURED]` apex-138 keeps it out of the
+- **D-09: `CHAIN_EXTRA = [30, 31]` carries forward verbatim, including its exclusion from all three module-load guards and from the SELF dual-invariant.** `[MEASURED]` apex-138 keeps it out of the
   dedup guard (`:114`), the length guard (`:120`), the termini guard (`:123`) and `V-138-SELF`
   (`:249-255`) — replicate exactly; D-11 forbids collapsing it into the span. Add one line the
   predecessor lacks: `assert CHAIN_EXTRA.every(n => !CHAIN_PHASES.includes(n))` — `CHAIN_EXTRA` is
   declared at `:165`, AFTER all three guards, and is structurally uncoverable by them.
 
-- **D-10: Expected apex-144 result — 98 executed children, 101 total checks; `101/0/0` once
-  `144-VERIFICATION.md` exists, `100/0/1` before it, and `99/1/1` if run before
-  `v1.20-milestone-audit.mjs` lands.** The third case is the one the draft missed: `[MEASURED]` the
+- **D-10: Expected apex-144 result — 98 executed children, 101 total checks; `101/0/0` once `144-VERIFICATION.md` exists, `100/0/1` before it, and `99/1/1` if run before `v1.20-milestone-audit.mjs` lands.** The third case is the one the draft missed: `[MEASURED]` the
   AUDIT-HARNESS `existsSync`→FAIL branch sits at `:220-224`, BEFORE the NESTED guard at `:225`.
   Under 138 D-05's exact-match PASS/FAIL/SKIP table an ordering slip becomes a recorded FAIL.
   Arithmetic verified by execution: `check-phase-138.mjs` → `95 PASS, 0 FAIL, 0 SKIPPED` = 1 AUDIT +
@@ -161,8 +150,7 @@ are recorded in `<specifics>`.
   hard FAIL, so apex-first yields exactly 5 FAILs indistinguishable from a real regression. This
   ordering constraint appears in no prior artifact.
 
-- **D-12: Inherit apex-138's three HAZARD FIXes as MECHANISM, and re-derive every count and span
-  string.** Not "verbatim with header comments" — `[MEASURED]` `check-phase-138.mjs:185` emits
+- **D-12: Inherit apex-138's three HAZARD FIXes as MECHANISM, and re-derive every count and span string.** Not "verbatim with header comments" — `[MEASURED]` `check-phase-138.mjs:185` emits
   `"the fixed 90-entry CHAIN_PHASES span"` at RUNTIME, `:70` carries `[48..137]`, `:256` prints
   `CHAIN_PHASES = [48..137] (90 entries)`, and `:41` says "17-check v1.19 harness" when the harness
   registers **16** (C8 absent). Copied literally, the new apex prints stale numbers into close-audit
@@ -170,12 +158,9 @@ are recorded in `<specifics>`.
   127`; absent child ⇒ FAIL; `isPeer` at `phaseNum >= 67`; 600 s peer / 300 s per-subprocess /
   300 s AUDIT-HARNESS.
 
-- **D-13: `V-144-AUDIT-HARNESS` points at `scripts/validation/v1.20-milestone-audit.mjs` — absent ⇒
-  FAIL (regression, not skip), NESTED ⇒ skip the re-run.** Copy apex-138's shape exactly.
+- **D-13: `V-144-AUDIT-HARNESS` points at `scripts/validation/v1.20-milestone-audit.mjs` — absent ⇒ FAIL (regression, not skip), NESTED ⇒ skip the re-run.** Copy apex-138's shape exactly.
 
-- **D-14: The five leaves are LIGHTWEIGHT — `CHAIN_PHASES = []`, no AUDIT check, no AUDIT-HARNESS
-  check, no NESTED guard, deliverable/content needles + a SELF dual-invariant. REVERSED from the
-  apex template.** `[MEASURED]` `check-phase-135.mjs:44`, `-136.mjs:40`, `-137.mjs:36` all set
+- **D-14: The five leaves are LIGHTWEIGHT — `CHAIN_PHASES = []`, no AUDIT check, no AUDIT-HARNESS check, no NESTED guard, deliverable/content needles + a SELF dual-invariant. REVERSED from the apex template.** `[MEASURED]` `check-phase-135.mjs:44`, `-136.mjs:40`, `-137.mjs:36` all set
   `const CHAIN_PHASES = [];` and contain **zero** AUDIT, AUDIT-HARNESS or `CHECK_PHASE_NESTED`
   references (7 / 11 / 5 checks each); their header line 4 reads *"LIGHTWEIGHT base (NO chain —
   chain lives ONLY in apex)"*, restated at `check-phase-132.mjs:4`. Building them on the apex
@@ -188,8 +173,7 @@ are recorded in `<specifics>`.
   SHA (the `check-phase-63.mjs:208-250` pattern), never a live diff — `carve-gate.mjs:8-12` instructs
   this in its own header.
 
-- **D-15: Zero `.planning/phases/` reads in the five new leaves — and the archival-token guardrail is
-  REPLACED, because the drafted one does not work.** The sidestep is the only option available:
+- **D-15: Zero `.planning/phases/` reads in the five new leaves — and the archival-token guardrail is REPLACED, because the drafted one does not work.** The sidestep is the only option available:
   `MILESTONE_CLOSE_SHAS` tops out at `V118`, phases 139–143 exist at no pin, and the back-anchor
   invariant defers V120 to v1.21, so own-milestone leaves cannot be frozen-aware against their own
   not-yet-existing close.
@@ -206,9 +190,7 @@ are recorded in `<specifics>`.
   **Named trap, unchanged:** `check-phase-54.mjs:30-31` live-reads `.planning/REQUIREMENTS.md` and
   `.planning/ROADMAP.md` with a negative assertion at `:347`, and the close-gate rewrites both.
 
-- **D-16: The 17th workflow is a Path-A copy of `audit-harness-v1.19-integrity.yml` with every
-  hardcoded v1.19 string re-derived, all SIX `paths:` entries mirrored, and NO standalone
-  `check-phase-138` job.** `[MEASURED]` the v1.19 workflow is the only carrier of a standalone
+- **D-16: The 17th workflow is a Path-A copy of `audit-harness-v1.19-integrity.yml` with every hardcoded v1.19 string re-derived, all SIX path-filter entries mirrored, and NO standalone `check-phase-138` job.** The path-filter block is the workflow's `paths:` key. `[MEASURED]` the v1.19 workflow is the only carrier of a standalone
   `check-phase-138` job (`:147`) and `check-phase-134` appears only in the v1.18 workflow — the real
   Path-A precedent is *the predecessor apex is never duplicated forward*.
   **Must re-derive:** the `parse` job's sidecar path (`:37`, twice); the `path-match` job's literal
@@ -227,9 +209,7 @@ are recorded in `<specifics>`.
   **Topology note:** every job except `frozen-read-probe` is `needs: harness-run`, so a v1.20 harness
   failure SKIPs the apex job and all five leaf jobs — six silent skips, not one visible red.
 
-- **D-17: Sidecar = header-fields-only copy (`generated`, `phase`); append BASELINE_24 following
-  BASELINE_23's shape; repoint the v1.20 harness's sidecar `readFile(...)`. NEVER cite
-  `regenerate-supervision-pins.mjs --report` as pin-drift proof** — it hardcodes the **v1.7** sidecar
+- **D-17: Sidecar = header-fields-only copy (`generated`, `phase`); append BASELINE_24 following BASELINE_23's shape; repoint the v1.20 harness's sidecar `readFile(...)`. NEVER cite `regenerate-supervision-pins.mjs --report` as pin-drift proof** — it hardcodes the **v1.7** sidecar
   (`:290`, `:336`, `:563`) and walks only 26 of 59 line-pins. `regenerate-supervision-pins.mjs:531-532`
   already names BASELINE_24 as next in the Path-A chain.
   **The pin-drift result is MEASURED, not speculative — real drift is ZERO.** See `<specifics>` for
@@ -237,8 +217,7 @@ are recorded in `<specifics>`.
 
 ### Area C — Push, dispatch, evidence, the red path
 
-- **D-18: The OWNER executes `git push origin master` at a named blocking checkpoint, after the
-  harness/validator/workflow atoms land and before the close-gate is authored.** `v1.18-MILESTONE-AUDIT.md:254`
+- **D-18: The OWNER executes `git push origin master` at a named blocking checkpoint, after the harness/validator/workflow atoms land and before the close-gate is authored.** `v1.18-MILESTONE-AUDIT.md:254`
   bars pushing and firing Actions from inside an unattended execution run; authorization alone does
   not move the executor across that boundary. Phase 139-06's precedent — owner pre-authorized in
   advance, checkpoint still honoured as a real halt with no self-approval — is the shape to copy.
@@ -251,18 +230,17 @@ are recorded in `<specifics>`.
   — **Reversibility:** one-way — there is no un-push, and the push is the precondition for
   `workflow_dispatch` (the workflow file must be on the default branch).
 
-- **D-19: Dispatch all 17, enumerated BY NAME from a live `ls .github/workflows/*.yml` + `*.yaml` at
-  dispatch time — never from a carried count.** Dispatch is not a stricter standard chosen for
-  comfort: ROADMAP SC#3 requires it explicitly ("`gh workflow run --ref master`, since a push fires
-  nothing"), and the weekly cron cannot supply SHA-controlled evidence at the close SHA.
+- **D-19: Dispatch all 17, enumerated BY NAME from a live workflow-directory listing at dispatch time — never from a carried count.** The listing must cover both extensions —
+  `ls .github/workflows/*.yml` and `*.yaml` — since GitHub accepts either (zero `.yaml` files exist
+  today, so this is a durability guard, not a live gap). Dispatch is not a stricter standard chosen
+  for comfort: ROADMAP SC#3 requires it explicitly ("`gh workflow run --ref master`, since a push
+  fires nothing"), and the weekly cron cannot supply SHA-controlled evidence at the close SHA.
 
-- **D-20: ONE shared SHA across all three axes — `origin/master` HEAD at dispatch time — AND a
-  read-back assertion.** After dispatch, assert every one of the 17 runs' `.headSha` equals the
+- **D-20: ONE shared SHA across all three axes — `origin/master` HEAD at dispatch time — AND a read-back assertion.** After dispatch, assert every one of the 17 runs' `.headSha` equals the
   recorded value. The v1.17 precedent this rule cites as defective (`gha_authoritative_sha` ≠ Axis-1
   clone SHA yet `cross_os_exact_match: true`) is precisely a missing read-back.
 
-- **D-21: Evidence is job-level JSON matched on the DISPLAY-name field, with four rules the draft
-  lacked.**
+- **D-21: Evidence is job-level JSON matched on the DISPLAY-name field, with four rules the draft lacked.**
   (a) **Run-ID acquisition is explicit:** `gh workflow run` returns no run ID, and `gh run list`
   blends dispatch and schedule runs under identical workflow names (v1.5 appears as both, one day
   apart). Filter on `event == "workflow_dispatch"` AND `headSha == <recorded>`.
@@ -275,8 +253,7 @@ are recorded in `<specifics>`.
   The `139-06-SUMMARY.md` trap stands: `.jobs[].name` is the display name, not the YAML job key, so
   a literal `test("<job-key>")` filter returns EMPTY even when the job succeeded.
 
-- **D-22: Exactly ONE remediation round. If a job is still red after it, HARN-19 is recorded UNMET
-  and the milestone does not ship this phase. OWNER-RATIFIED 2026-08-12.** Never "satisfied by
+- **D-22: Exactly ONE remediation round. If a job is still red after it, HARN-19 is recorded UNMET and the milestone does not ship this phase. OWNER-RATIFIED 2026-08-12.** Never "satisfied by
   fallback" (138 D-07). The adversarial review upheld that no fallback exists: `REQUIREMENTS.md:6`
   and `ROADMAP:282` are unconditional, and none of the carried items
   (`WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, `LATENT-NON-FROZEN-AWARE-CONTENT-ASSERTION-01`,
@@ -288,8 +265,7 @@ are recorded in `<specifics>`.
   (`[MEASURED]` `grep -ri 'reddest' .planning/` → zero hits repo-wide; the red set of record is
   base + v1.5..v1.13, and 7 of those 10 were outside Phase 141's sample).
 
-- **D-23: `origin/phase-139-atom-5` — audit and report; the delete/keep call goes to the OWNER at the
-  same checkpoint as the push. REVERSED from "delete at close". OWNER-RATIFIED 2026-08-12.**
+- **D-23: `origin/phase-139-atom-5` — audit and report; the delete/keep call goes to the OWNER at the same checkpoint as the push. REVERSED from "delete at close". OWNER-RATIFIED 2026-08-12.**
   `139-06-SUMMARY.md:119` says "**KEEP** … **Not deleted**" and `:142` says its disposition "should
   be **re-confirmed**" — not deleted. It is a REMOTE ref (`remotes/origin/phase-139-atom-5` at
   `c2450efa`), so D-18's own boundary applies and there is no reflog to recover from. `c2450efa` is
@@ -302,14 +278,12 @@ are recorded in `<specifics>`.
 
 ### Area D — Close-gate, dispositions, terminal ordering
 
-- **D-24: A SINGLE close-gate commit flips all 28 requirements to Validated across
-  PROJECT / ROADMAP / STATE / REQUIREMENTS.** D-24 rules the FLIP atomic, not the phase — a later
+- **D-24: A SINGLE close-gate commit flips all 28 requirements to Validated across PROJECT / ROADMAP / STATE / REQUIREMENTS.** D-24 rules the FLIP atomic, not the phase — a later
   non-gate commit recording the post-gate confirmatory apex result is permitted and expected (v1.19
   needed one). The `.planning/` artifacts sit outside the CARVE gate's scope
   (`IN_SCOPE_PREFIXES = ['scripts/', '.github/', 'docs/']`), so there is no conflict with D-07.
 
-- **D-25: SWEEP-05 flips on its own amended text; SWEEP-06 needs a MEASUREMENT first, and both
-  traceability cells get corrected.** `[MEASURED]` SWEEP-06 (`REQUIREMENTS.md:21`) carries NO
+- **D-25: SWEEP-05 flips on its own amended text; SWEEP-06 needs a MEASUREMENT first, and both traceability cells get corrected.** `[MEASURED]` SWEEP-06 (`REQUIREMENTS.md:21`) carries NO
   amendment marker and NO Phase-144 mention, and its row `:132` reads "Phase 140" alone — the
   authority is `140-05-SUMMARY.md:38/:110`, not an inline amendment, so the draft's "both span…
   by their own amended text" was false for SWEEP-06. Before flipping it, measure the newly-converted
@@ -318,17 +292,14 @@ are recorded in `<specifics>`.
   owner-acknowledged, that SWEEP-06's edge coverage "is unclassified and stays unresolved".
   Correct `:132` → `Phase 140, Phase 144` and `:154` → `Phase 141, Phase 144`.
 
-- **D-26: `ACCEPTED-STANDALONE-CI-RED` is discharged by all 17 green at the shared SHA (job-level
-  JSON, every skip classified); `ACCEPTED-SCOPED-RED` by re-running all ten members standalone at
-  the close SHA.** `[MEASURED]` the premise holds at HEAD — all ten exit 0 (see `<specifics>`) —
+- **D-26: `ACCEPTED-STANDALONE-CI-RED` is discharged by all 17 green at the shared SHA (job-level JSON, every skip classified); `ACCEPTED-SCOPED-RED` by re-running all ten members standalone at the close SHA.** `[MEASURED]` the premise holds at HEAD — all ten exit 0 (see `<specifics>`) —
   but those runs must be repeated at the close SHA rather than inherited from Phase 141/142 evidence,
   because 96 commits including Phase 143's 145 corpus repairs have landed since. Note the arithmetic:
   the disposition spans 15 workflows (v1.4–v1.18) and the bar is 17, so all-17-green entails
   discharge. Consume routed item 7 explicitly — the 13-workflow `pull_request.paths` cascade fires on
   the close PR, which is the disposition's own named trigger surface.
 
-- **D-27: The v1.20 deferred-cleanup close artifact is ABSORB-AND-APPEND at the existing path, not a
-  wholesale rewrite.** `[MEASURED]` `.planning/milestones/v1.20-DEFERRED-CLEANUP.md` already exists
+- **D-27: The v1.20 deferred-cleanup close artifact is ABSORB-AND-APPEND at the existing path, not a wholesale rewrite.** `[MEASURED]` `.planning/milestones/v1.20-DEFERRED-CLEANUP.md` already exists
   (13,566 bytes, authored 2026-08-10 by Phase 142 Plan 01, **extended 2026-08-11 by Phase 143 Plan 08
   Task 2 with rows 13-15**, now 15 routed rows). Its own header offers both the same-path and the
   successor-named option and says the close artifact supersedes "where the two overlap" — only 4 of
@@ -372,8 +343,7 @@ are recorded in `<specifics>`.
   correction findable.
   Also NEW: `V120-PIN-DEFERRAL`.
 
-- **D-29: Terminal ordering — the publish bundle moves BEFORE the close-gate. OWNER-RATIFIED
-  2026-08-12.**
+- **D-29: Terminal ordering — the publish bundle moves BEFORE the close-gate. OWNER-RATIFIED 2026-08-12.**
   `harness/validator/workflow atoms → owner push → 17-workflow dispatch → Axis-1 fresh clone +
   Axis-3 zero-context reproduction at the SAME SHA → milestone-audit + deferred-cleanup authoring →
   publish bundle --version=v1.20 → SINGLE close-gate commit → post-close-gate confirmatory apex run.`
@@ -402,8 +372,7 @@ are recorded in `<specifics>`.
 
 ### Cross-cutting guardrails
 
-- **D-31: `_lib/frozen-at-close.mjs` is APPEND-ONLY, with ONE carved exception. OWNER-RATIFIED
-  2026-08-12.** Append the V119 entry + `readAtV119Close` + whatever convenience exports the v1.19
+- **D-31: `_lib/frozen-at-close.mjs` is APPEND-ONLY, with ONE carved exception. OWNER-RATIFIED 2026-08-12.** Append the V119 entry + `readAtV119Close` + whatever convenience exports the v1.19
   harness conversion needs — plus the routed comment correction at `:10-13`, whose description of
   `check-phase-61` as "a deliberate exception: it keeps a genuinely inline reader" is stale after
   Phase 141 Task 1's delegation (`141-03-SUMMARY.md:223-231`, "Recorded here for Phase 144's
@@ -417,8 +386,7 @@ are recorded in `<specifics>`.
   `git show --name-only HEAD` prints the message body followed by the file list, and the CARVE
   exclusion check greps that combined output (142-01 / 142-02 decisions).
 
-- **D-34: Never touch either glossary's `last_verified` / `review_by` — and the stated mechanism is
-  CORRECTED.** `[MEASURED]` `v1.19-milestone-audit.mjs:408-412`:
+- **D-34: Never touch either glossary's `last_verified` / `review_by` — and the stated mechanism is CORRECTED.** `[MEASURED]` `v1.19-milestone-audit.mjs:408-412`:
   `diffDays = Math.round((review_by - last_verified)/86400000); if (diffDays > 90)` — **static
   frontmatter arithmetic with no wall-clock term**. The margin therefore cannot decay through the
   passage of time; the reason to hold the line is that any edit to either field flips the difference.
