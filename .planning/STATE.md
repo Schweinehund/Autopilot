@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 status: executing
-stopped_at: Completed 144-05-PLAN.md
-last_updated: "2026-08-13T05:27:20.783Z"
+stopped_at: Completed 144-06-PLAN.md
+last_updated: "2026-08-13T05:40:21.886Z"
 last_activity: 2026-08-12
 last_activity_desc: Phase 144 execution started
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 44
-  completed_plans: 37
+  completed_plans: 38
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — EXECUTING
-Plan: 6 of 12
+Plan: 7 of 12
 Status: Ready to execute
 Last activity: 2026-08-12 — Phase 144 execution started
 
-Progress: [████████░░] 84%
+Progress: [█████████░] 86%
 
 ## v1.20 Phase Dependency Summary
 
@@ -316,6 +316,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 144 P03 | ~50min | 3 tasks | 3 files |
 | Phase 144 P04 | ~35min | 3 tasks | 3 files |
 | Phase 144 P05 | ~40min | 2 tasks | 2 files |
+| Phase 144 P06 | ~5min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -402,6 +403,9 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: check-phase-141.mjs pins measured occurrence counts (9/2/11) rather than estimated ones after the leaf's own first standalone run caught a miscount
 - [Phase ?]: check-phase-142.mjs hosts the NEST-01 cold-clone ratio threshold as its own literal since 142-EVIDENCE.md is off-limits to leaf runtime reads (D-15)
 - [Phase ?]: Both new leaves scope required-ABSENT substring scans to non-comment code lines after the target files' own explanatory headers tripped false FAILs
+- [Phase ?]: 144-06: Copy source for the 18th harness is v1.19's pre-conversion form (git show at the commit before Plan 02's frozen-aware conversion), so the new generation reads its own live corpus rather than v1.19's frozen one
+- [Phase ?]: 144-06: c13_rotting_external recursive-vs-naive trap measured directly: naive top-level-arrays-only walk (skipping the object) finds 16 distinct docs/ files; recursing into its 3 nested arrays reaches the true 33
+- [Phase ?]: 144-06: BASELINE_24 appended at the chronological end of the comment chain (after the Phase 141 addendum), not immediately after BASELINE_23's own forward-reference line, matching the file's established append order
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -430,8 +434,8 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-13T05:27:20.716Z
-Stopped at: Completed 144-05-PLAN.md
+Last session: 2026-08-13T05:40:21.817Z
+Stopped at: Completed 144-06-PLAN.md
 Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 
