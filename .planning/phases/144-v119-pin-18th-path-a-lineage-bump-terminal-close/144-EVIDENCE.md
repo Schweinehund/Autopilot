@@ -90,3 +90,61 @@ class, not closed here.
 SWEEP-06's measurement precondition (D-25) is now satisfied for all seventeen harnesses; the
 requirement flips at Phase 144's close-gate commit alongside SWEEP-05, per the same
 premature-Validated-drift discipline Phase 140 Plan 05 already established.
+
+## Plan 03, Task 3 — negative proof and chain regression gate
+
+**Method:** a fail-loud assertion never observed failing is only an assertion, not a proof. A
+standalone script (`check-phase-67-negative-proof.mjs`) lives OUTSIDE the repository working
+tree, in the session scratchpad — never under `scripts/`. It verbatim-copies the post-Task-2
+`run()` bodies of one Class-1 site (`V-67-07`, return-flip-only) and one Class-2 site (`V-67-03`,
+restructured accumulator), swapping only the reader implementation for a real `git show
+aa6de68:<path>` call scoped via `cwd` at the real repo root (never mutating anything there) and
+the `FILES` list for a mix of genuinely absent paths.
+
+**Class 1 (`V-67-07`, all three `FILES` entries pointed at absent paths):**
+
+```
+pass=false
+detail=frozen read of all 3 file(s) at v1.7-close (aa6de68) failed: docs/this-path-truly-does-not-exist-144-03-negative-test-a.md, docs/this-path-truly-does-not-exist-144-03-negative-test-b.md, docs/this-path-truly-does-not-exist-144-03-negative-test-c.md -- no longer chicken-and-egg, see frozenCause
+```
+
+Reports a failure naming all three unreadable files — not `{pass:true, skipped:true}` (the
+pre-Task-2 behaviour). Confirms the early-return flip for the Class-1 site class.
+
+**Class 2 (`V-67-03`, `FILES` = one absent path + `docs/admin-setup-macos/04-app-deployment.md`,
+which alone carries 7 "content token" mentions at `aa6de68` — clears the `>= 6` threshold on its
+own):**
+
+```
+pass=false
+detail=1 of 2 file(s) unreadable at v1.7-close (aa6de68); full readability required before evaluating content token mentions: docs/this-path-truly-does-not-exist-144-03-negative-test-d.md
+```
+
+This is the exact real-world exploit shape the restructure closes: pre-Task-2, a single readable
+file whose own count already clears the threshold would have silently PASSED the aggregate
+despite the sibling file being genuinely unreadable. Post-Task-2, the `unreadable.length > 0`
+branch fires first and names the specific unreadable file, proving the restructure — not merely
+the numeric threshold — is what makes this fail.
+
+**Process exit code:** the negative-proof script mirrors the real validator's own exit
+convention — a genuinely failing check exits non-zero. Both sites report `pass: false` as
+expected, so the script exits **1** (not 0). `git status --porcelain --untracked-files=all --
+scripts` is empty throughout — no file under `scripts/` was created or mutated to stage this.
+
+**Chain regression gate (re-run after Task 2's commit):**
+
+| Command | Result | Exit code |
+|---|---|---|
+| `node scripts/validation/check-phase-67.mjs` (bare, own checks 1-7) | own-check inventory confirmed identical (7 checks + SELF, same `V-67-NN` ids, all PASS) before the bare run's `CHAIN-65`/`CHAIN-66` legs hit this repo's well-documented Windows non-nested exponential-cost hazard (`WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, pre-existing, unrelated to this edit — see memory `reference_apex_is_linear_17s.md`: "the exponential cost lives only in non-nested standalone check-phase-66"). Observed PASS through `CHAIN-64` before this session's time budget required moving on; the nested + apex rows below are the authoritative confirmation per this project's own standing OS-split ruling (Linux GHA authoritative for the full non-nested chain). | not observed to completion this session (own-check inventory: 0, confirmed via the nested row) |
+| `CHECK_PHASE_NESTED=1 node scripts/validation/check-phase-67.mjs` | **8 PASS, 0 FAIL, 20 SKIPPED** — identical to the Task-1 GOV-02 pre-edit baseline (all 7 own checks PASS since the real corpus is fully readable; only the vulnerable branches' *logic* changed, not their live outcome) | 0 |
+| `node scripts/validation/check-phase-73.mjs` (the direct four-literal pin) | **40 PASS, 0 FAIL, 0 SKIPPED** — unchanged from the pre-edit baseline; all four pinned literals (`frozen-at-close`, `V-67-05.*v1\.7-frozen`, `Apple calls this artifact`, `SWEEP-02`) survive | 0 |
+| `node scripts/validation/check-phase-138.mjs` (the predecessor apex, spawns 67 nested as a chain member) | **95 PASS, 0 FAIL, 0 SKIPPED** — this IS a bare invocation of check-phase-138 that nested-invokes check-phase-67 as CHAIN-67, so 67's own 7 checks + SELF are exercised inside a real (non-simulated) chain run and still roll up green | 0 |
+
+The nested + apex rows reproduce their pre-edit baselines exactly, and the apex row is itself a
+real chain execution of check-phase-67 (nested), not merely a standalone nested run. The bare
+non-nested full-chain-expansion run of check-phase-67 alone was not waited out to completion this
+session (Windows-only cost, pre-existing); its own-check inventory (the part this plan's edit can
+affect) was directly confirmed unchanged and green through CHAIN-64 with zero deviation from the
+pre-edit progression. The ten-site conversion is proven to change ONLY the never-before-exercised
+failure branches, with zero effect on the currently-green corpus state, and the cross-validator
+pin survives byte-identical.
