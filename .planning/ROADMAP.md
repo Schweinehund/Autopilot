@@ -281,7 +281,21 @@ Plans:
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and all 17 `audit-harness-*` integrity workflows are dispatched (`gh workflow run --ref master`, since a push fires nothing) and confirmed green from job-level JSON, not the checks-UI colour (HARN-19).
   4. The publish bundle regenerates `--version=v1.20`, and a single close-gate commit flips all **28** v1.20 requirements (27 original + `SWEEP-09`, added per D-33) to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS — with `ACCEPTED-STANDALONE-CI-RED` and `ACCEPTED-SCOPED-RED` **deleted** from the backlog rather than carried a seventh milestone, discharging the milestone bar stated in REQUIREMENTS.md (HARN-19).
 
-**Plans**: TBD
+**Plans**: 12 plans
+
+Plans:
+- [ ] 144-01-PLAN.md — CARVE allowlist amendment (alone, first; ten literal paths)
+- [ ] 144-02-PLAN.md — TRACER: V119 pin + `readAtV119Close` + v1.19 harness frozen-aware conversion + SWEEP-06 measurement
+- [ ] 144-03-PLAN.md — `check-phase-67.mjs` ten fail-loud sites (7 returns + 3 accumulators) behind a GOV-02 census row
+- [ ] 144-04-PLAN.md — lightweight leaves `check-phase-139/140/141.mjs`
+- [ ] 144-05-PLAN.md — lightweight leaves `check-phase-142/143.mjs` (needle-spec implemented, corpus invariant declined)
+- [ ] 144-06-PLAN.md — 18th Path-A harness + `v1.20-audit-allowlist.json` + BASELINE_24 + pin-drift adjudication
+- [ ] 144-07-PLAN.md — apex `check-phase-144.mjs` `[48..143]`, four module-load guards, literal archive-root token
+- [ ] 144-08-PLAN.md — 17th CI coexistence workflow (born `fetch-depth: 0`) + both stale-figure corrections
+- [ ] 144-09-PLAN.md — pre-push readiness census + OWNER checkpoint (push, dispatch, atom-branch disposition)
+- [ ] 144-10-PLAN.md — job-level evidence for all 17 runs at one shared SHA + Axis-1 + Axis-3 + human verify
+- [ ] 144-11-PLAN.md — `v1.20-MILESTONE-AUDIT.md` + deferred-cleanup absorb-and-append (Part A/B/C)
+- [ ] 144-12-PLAN.md — publish bundle `--version=v1.20` → SINGLE close-gate commit (28 Validated) → post-gate apex run
 
 **Discuss-phase flags**: None (closing cluster; consumes prior decisions).
 

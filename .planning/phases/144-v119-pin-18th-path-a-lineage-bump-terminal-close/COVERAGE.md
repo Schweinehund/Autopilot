@@ -1,0 +1,3 @@
+No external API integration: this phase authors Node validator scripts, a CI workflow YAML and planning documents; its only external touch is reading already-public GitHub Actions run/job JSON through the pre-existing `gh` CLI as one-off close evidence (HARN-19), which builds no integration surface and adds no capability the project can later call.
+
+The detector fired on the phrase "CI API response" inside a `<threat_model>` trust-boundary row in `144-10-PLAN.md` — prose about where evidence comes from, not an integration task. Re-read of the phase scope confirms: zero new dependencies (`144-RESEARCH.md` Standard Stack), zero `secrets.` references in any workflow, and no client, wrapper, endpoint or SDK is created or consumed as a capability surface.
