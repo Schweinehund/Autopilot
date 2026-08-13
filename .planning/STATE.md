@@ -4,15 +4,15 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
-status: planning
+status: executing
 stopped_at: Phase 144 context gathered
-last_updated: "2026-08-12T11:26:07.881Z"
+last_updated: "2026-08-13T04:12:58.531Z"
 last_activity: 2026-08-11
 last_activity_desc: Phase 143 complete, transitioned to Phase 144
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 32
+  total_plans: 44
   completed_plans: 32
 ---
 
@@ -35,7 +35,7 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 Phase: 144 — V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 Plan: Not started
-Status: Ready to plan
+Status: Ready to execute
 Last activity: 2026-08-11 — Phase 143 complete, transitioned to Phase 144
 
 Progress: [██████████] 100%

@@ -284,18 +284,51 @@ Plans:
 **Plans**: 12 plans
 
 Plans:
+**Wave 1**
+
 - [ ] 144-01-PLAN.md — CARVE allowlist amendment (alone, first; ten literal paths)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 144-02-PLAN.md — TRACER: V119 pin + `readAtV119Close` + v1.19 harness frozen-aware conversion + SWEEP-06 measurement
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 144-03-PLAN.md — `check-phase-67.mjs` ten fail-loud sites (7 returns + 3 accumulators) behind a GOV-02 census row
 - [ ] 144-04-PLAN.md — lightweight leaves `check-phase-139/140/141.mjs`
 - [ ] 144-05-PLAN.md — lightweight leaves `check-phase-142/143.mjs` (needle-spec implemented, corpus invariant declined)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 144-06-PLAN.md — 18th Path-A harness + `v1.20-audit-allowlist.json` + BASELINE_24 + pin-drift adjudication
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 144-07-PLAN.md — apex `check-phase-144.mjs` `[48..143]`, four module-load guards, literal archive-root token
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
 - [ ] 144-08-PLAN.md — 17th CI coexistence workflow (born `fetch-depth: 0`) + both stale-figure corrections
+
+**Wave 7** *(blocked on Wave 6 completion)*
+
 - [ ] 144-09-PLAN.md — pre-push readiness census + OWNER checkpoint (push, dispatch, atom-branch disposition)
+
+**Wave 8** *(blocked on Wave 7 completion)*
+
 - [ ] 144-10-PLAN.md — job-level evidence for all 17 runs at one shared SHA + Axis-1 + Axis-3 + human verify
+
+**Wave 9** *(blocked on Wave 8 completion)*
+
 - [ ] 144-11-PLAN.md — `v1.20-MILESTONE-AUDIT.md` + deferred-cleanup absorb-and-append (Part A/B/C)
+
+**Wave 10** *(blocked on Wave 9 completion)*
+
 - [ ] 144-12-PLAN.md — publish bundle `--version=v1.20` → SINGLE close-gate commit (28 Validated) → post-gate apex run
+
+**Cross-cutting constraints:**
+
+- Each leaf exits 0 standalone and prints an `N PASS, 0 FAIL, K SKIPPED` summary with N equal to its registered check count.
 
 **Discuss-phase flags**: None (closing cluster; consumes prior decisions).
 
