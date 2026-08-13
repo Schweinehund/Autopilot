@@ -545,6 +545,25 @@ function doEmitStubs() {
 // whether BASELINE_9 names it, so it cancels out of the subtraction either way. Not a lossless
 // 9-of-9 bijection -- classify() untouched, v1.7-audit-allowlist.json untouched. See
 // 141-02-SUMMARY.md and 141-RESEARCH.md Pitfall 1.
+// BASELINE_24 refreshed 2026-08-13 (Phase 144 Plan 06): closes BASELINE_23 v1.19 carry-over
+// per HARN-18 contract (REQUIREMENTS.md:83 + ROADMAP.md Phase 144); v1.20 line positions
+// verified against HEAD 785d9c6768800fb5a0bd87fc720c511d0656850e (JIT pre-Atom-3 HEAD -- captured
+// via `git rev-parse HEAD` immediately before authoring this Atom (this comment), i.e. after
+// Task 1's GOV-02 census + sidecar commits and Task 2's harness-authoring commit, both of which
+// landed earlier in this same plan and therefore precede the true pre-Atom-3 predecessor).
+// BASELINE_9 entries above remain unchanged -- Phase 144 does NOT alter the line-coord array;
+// this comment records the audit-trail event that line-positions were re-verified at Phase 144
+// close and remain valid for the v1.20 corpus. Pin validity for the v1.20 corpus is positively
+// proven via the sidecar-derived pinned-file-set (33 distinct docs/ files across all 6 sidecar
+// sections, recursing into the nested c13_rotting_external object) x `git diff --name-only
+// a7bda73e..HEAD -- docs scripts .github` intersection (106 changed files; candidate intersection
+// 5, 3 line-pinned; all 21 hunks 1:1 line-neutral under `git diff -U0`) -- real drift is ZERO,
+// adjudicated line-granular (NOT via `regenerate-supervision-pins.mjs`'s report-mode flag, which
+// hardcodes the v1.7 sidecar and walks only 26 of 59 pins; see 144-CONTEXT.md D-17 and
+// 144-EVIDENCE.md's Plan 06 Task 3 section). Resolution path: BASELINE_25 will refresh at the
+// next milestone close per the Path-A inheritance pattern (... -> v1.19 -> BASELINE_23 -> v1.20
+// -> BASELINE_24). This is the terminal close of v1.20; v1.20 itself carries no back-anchor pin
+// of its own (V120-PIN-DEFERRAL) -- the next refresh belongs to v1.21.
 const BASELINE_9 = [
   ['docs/_glossary-android.md', 145],  // ### Supervision heading (was 80 pre-rebase; live content verified 2026-08-07)
   ['docs/_glossary-android.md', 147],  // Supervision disambiguation blockquote (was 82 pre-rebase)

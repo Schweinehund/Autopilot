@@ -148,3 +148,42 @@ affect) was directly confirmed unchanged and green through CHAIN-64 with zero de
 pre-edit progression. The ten-site conversion is proven to change ONLY the never-before-exercised
 failure branches, with zero effect on the currently-green corpus state, and the cross-validator
 pin survives byte-identical.
+
+## Plan 06, Task 3 — pin-drift adjudication (the correct instrument, transcribed not re-derived)
+
+**Method:** the sidecar-derived pinned-file set intersected with the changed-file set since the
+predecessor close SHA (V119, `a7bda73e`), adjudicated LINE-granular under a zero-context diff.
+File-granular intersection is only the candidate set; the verdict is line-granular. The pin
+generator's report-mode instrument (its advisory diff flag) is explicitly **not** cited as proof
+here — it hardcodes the v1.7 sidecar and walks only 26 of the 59 line-pins, so it cannot speak to
+the other 33 and cannot speak to the `c13_rotting_external` file set at all.
+
+These figures were measured during Phase 144's `/gsd-discuss-phase` session (recorded in
+`144-CONTEXT.md` D-17 and `<specifics>`) and are transcribed here, not recomputed:
+
+| Quantity | Value |
+|---|---|
+| Sidecar-derived pinned-file set (whole sidecar, recursing into `c13_rotting_external`) | **33** distinct `docs/` files (not the 16 a naive top-level-arrays-only walk reports — confirmed independently this plan at Task 1, same 33-vs-16 split) |
+| Changed-file set since V119 close (`git diff --name-only a7bda73e..HEAD -- docs scripts .github`) | **106** files |
+| Candidate intersection (pinned ∩ changed) | **5** files, **3** of them line-pinned |
+| Hunks in the candidate set under `git diff -U0` | **21**, all 1:1 line-neutral (added-line-count equals deleted-line-count at identical line coordinates — the Phase 143 anchor-id insertions and `{#id}` removals) |
+
+**Line-granular verdict: real pin drift is ZERO.** The file-granular candidate set of 5 is not
+itself the answer — three of those five files carry actual line-pins in the sidecar, and every
+hunk touching them is a net-zero, same-coordinate substitution, not a line-shifting edit. No pin
+coordinate in `scripts/validation/v1.20-audit-allowlist.json` (or its v1.19 predecessor, from
+which it was copied header-fields-only) points at a line whose content moved.
+
+**Self-test regression gate (BASELINE_24 append):**
+
+| Command | Result | Exit code |
+|---|---|---|
+| `grep -c 'BASELINE_24' scripts/validation/regenerate-supervision-pins.mjs` | `3` (1 pre-existing forward-reference + 2 new: the block's own header line and its own forward pointer to BASELINE_25) | n/a |
+| `git diff HEAD~1 --numstat -- scripts/validation/regenerate-supervision-pins.mjs` | `19  0` (0 deletions, append-only) | n/a |
+| `node scripts/validation/regenerate-supervision-pins.mjs --self-test` | `Diff: identical`, `Self-test: PASS` — unaffected, since the append touches no `BASELINE_9` coordinate | 0 |
+| `node scripts/validation/check-phase-141.mjs` (the Plan 04 leaf that spawns the self-test as `V-141-PINSELFTEST`) | 6 PASS, 0 FAIL, 0 SKIPPED — identical to the pre-edit baseline | 0 |
+| `node scripts/validation/carve-gate.mjs` | in-scope=114, on-list=114, off-list=0 | 0 |
+
+BASELINE_24 closes the forward reference BASELINE_23 named at its own authoring (`:531-532`); the
+append is comment-only, disturbs no coordinate, and the self-test's `Diff: identical` result
+confirms it.
