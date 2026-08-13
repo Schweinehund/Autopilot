@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 status: executing
-stopped_at: Phase 144 context gathered
-last_updated: "2026-08-13T04:12:58.531Z"
-last_activity: 2026-08-11
-last_activity_desc: Phase 143 complete, transitioned to Phase 144
+stopped_at: Completed 144-01-PLAN.md
+last_updated: "2026-08-13T04:18:18.260Z"
+last_activity: 2026-08-12
+last_activity_desc: Phase 144 execution started
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 44
-  completed_plans: 32
+  completed_plans: 33
 ---
 
 # Project State
@@ -23,7 +23,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` + `/adversarial-review`)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.20 protects that corpus by repairing the validator chain and CI harness lineage that guards it.
-**Current focus:** Phase 141 — Standalone-RED Validator Set — Chain Members Green
+**Current focus:** Phase 144 — V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 
 > **v1.20 BACK-ANCHOR RECOVERY (Phase 144 / HARN-17).** The V119 pin needs the v1.19 close-gate SHA `a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`. Recover it with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
 > ```
@@ -33,12 +33,12 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: 144 — V119 Pin + 18th Path-A Lineage Bump + Terminal Close
-Plan: Not started
+Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — EXECUTING
+Plan: 2 of 12
 Status: Ready to execute
-Last activity: 2026-08-11 — Phase 143 complete, transitioned to Phase 144
+Last activity: 2026-08-12 — Phase 144 execution started
 
-Progress: [██████████] 100%
+Progress: [████████░░] 75%
 
 ## v1.20 Phase Dependency Summary
 
@@ -311,6 +311,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 143 P06 | 20min | 3 tasks | 3 files |
 | Phase 143 P07 | ~45min | 3 tasks | 11 files |
 | Phase 143 P08 | ~35min | 2 tasks | 3 files |
+| Phase 144 P01 | 5min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -388,6 +389,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 143-07: All 15 fence-mask sites unified under ^ {0,3} CommonMark rule (14 JS + 1 PowerShell tightening); LINK-06's four legs measured (46/0/0 mask-diff, 0 Summary hits); D-20 out-of-census residual routed to Plan 08
 - [Phase ?]: 143-07: Compressed provenance comments from 3-line to plan-specified one-line form in a self-caught follow-up commit (e9a505be)
 - [Phase ?]: 143-08: Corrected D-25's stated 10-of-16 zero-docs-path-filter workflow figure to a measured 13-of-16 (D-36 discipline); needle-spec + 3 DEFERRED-CLEANUP rows route the check-phase-143.mjs hand-off to Phase 144, decoupled via HARN-19's sub-second spot-check
+- [Phase ?]: 144-01: Category 11 amendment landed alone-and-first with 10 literal paths (no glob), pattern-level proof recorded in new 144-EVIDENCE.md ledger
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -416,9 +418,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-12T11:26:03.521Z
-Stopped at: Phase 144 context gathered
-Resume file: .planning/phases/144-v119-pin-18th-path-a-lineage-bump-terminal-close/144-CONTEXT.md
+Last session: 2026-08-13T04:18:18.187Z
+Stopped at: Completed 144-01-PLAN.md
+Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 
 ## Operator Next Steps
