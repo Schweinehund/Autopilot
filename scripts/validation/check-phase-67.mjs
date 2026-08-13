@@ -61,16 +61,24 @@ const checks = [
         { path: 'docs/_glossary-macos.md', line: 64 },
       ];
       const missing = [];
-      let nullCount = 0;
+      const unreadable = [];
       for (const { path, line } of FILES) {
         const c = readCorpusFileAtV17Close(path);
-        if (c === null) { nullCount++; continue; }
+        if (c === null) { unreadable.push(path); continue; }
         if (!c.includes('https://business.apple.com')) {
           missing.push(path);
         }
       }
-      if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes (' + nullCount + ' files unreadable)' };
+      if (unreadable.length === FILES.length) {
+        // SWEEP-09 (v1.20 Phase 144, D-03): fail loud -- the aa6de68 bootstrap race this branch
+        // tolerated no longer exists, so an all-unreadable read here is a real failure, not a skip.
+        return { pass: false, detail: 'frozen read of all ' + FILES.length + ' file(s) at v1.7-close (aa6de68) failed: ' + unreadable.join(', ') + ' -- no longer chicken-and-egg, see frozenCause' };
+      }
+      if (unreadable.length > 0) {
+        // v1.20 Phase 144 (D-03): a partial-null read must not let the readable files alone
+        // satisfy the "0 missing" pass condition -- full readability is required first, or an
+        // unreadable file silently absorbs into a passing aggregate (SWEEP-09's target class).
+        return { pass: false, detail: unreadable.length + ' of ' + FILES.length + ' file(s) unreadable at v1.7-close (aa6de68); full readability required before evaluating ABM URL refs: ' + unreadable.join(', ') };
       }
       if (missing.length > 0) {
         return { pass: false, detail: missing.length + ' file(s) missing ABM URL ref: ' + missing.join(', ') };
@@ -85,7 +93,8 @@ const checks = [
     run() {
       const j = readSidecarAtV17Close();
       if (j === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        // SWEEP-09 (v1.20 Phase 144, D-03): fail loud -- see V-67-01's comment.
+        return { pass: false, detail: 'frozen read of scripts/validation/v1.7-audit-allowlist.json at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
       }
       const ci1 = j.c13_rotting_external && j.c13_rotting_external.ci_1_abm_urls;
       if (!Array.isArray(ci1)) return { pass: false, detail: 'sidecar.c13_rotting_external.ci_1_abm_urls is not an array' };
@@ -105,16 +114,23 @@ const checks = [
         'docs/admin-setup-macos/04-app-deployment.md',
       ];
       let totalMentions = 0;
-      let nullCount = 0;
+      const unreadable = [];
       for (const path of FILES) {
         const c = readCorpusFileAtV17Close(path);
-        if (c === null) { nullCount++; continue; }
+        if (c === null) { unreadable.push(path); continue; }
         // Count occurrences of the renamed term "content token" (post-SWEEP-02 rename)
         const matches = (c.match(/content token/gi) || []).length;
         totalMentions += matches;
       }
-      if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      if (unreadable.length === FILES.length) {
+        // SWEEP-09 (v1.20 Phase 144, D-03): fail loud -- see V-67-01's comment.
+        return { pass: false, detail: 'frozen read of all ' + FILES.length + ' file(s) at v1.7-close (aa6de68) failed: ' + unreadable.join(', ') + ' -- no longer chicken-and-egg, see frozenCause' };
+      }
+      if (unreadable.length > 0) {
+        // v1.20 Phase 144 (D-03): a single readable file can reach the >= 6 threshold alone
+        // (measured: one of the two files carries 8 mentions), silently absorbing an unread
+        // sibling into a passing aggregate. Full readability required before evaluating the sum.
+        return { pass: false, detail: unreadable.length + ' of ' + FILES.length + ' file(s) unreadable at v1.7-close (aa6de68); full readability required before evaluating content token mentions: ' + unreadable.join(', ') };
       }
       if (totalMentions < 6) {
         return { pass: false, detail: 'expected >= 6 content token mentions across 2 files; got ' + totalMentions };
@@ -129,7 +145,8 @@ const checks = [
     run() {
       const j = readSidecarAtV17Close();
       if (j === null) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        // SWEEP-09 (v1.20 Phase 144, D-03): fail loud -- see V-67-01's comment.
+        return { pass: false, detail: 'frozen read of scripts/validation/v1.7-audit-allowlist.json at v1.7-close (aa6de68) failed -- no longer chicken-and-egg, see frozenCause' };
       }
       const ci2 = j.c13_rotting_external && j.c13_rotting_external.ci_2_vpp_location_token;
       if (!Array.isArray(ci2)) return { pass: false, detail: 'sidecar.c13_rotting_external.ci_2_vpp_location_token is not an array' };
@@ -162,7 +179,10 @@ const checks = [
         }
       }
       if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        // SWEEP-09 (v1.20 Phase 144, D-03): fail loud -- see V-67-01's comment. Structurally
+        // unchanged otherwise: threshold (2) equals file count, so a partial-null read already
+        // forces total < 2 below.
+        return { pass: false, detail: 'frozen read of all ' + FILES.length + ' file(s) at v1.7-close (aa6de68) failed: ' + FILES.join(', ') + ' -- no longer chicken-and-egg, see frozenCause' };
       }
       if (total < 2) {
         return { pass: false, detail: 'expected content-token callouts in 2 files; got ' + total + ' [v1.7-frozen @ aa6de68]' };
@@ -185,23 +205,29 @@ const checks = [
         'docs/_glossary-macos.md',
       ];
       let withVH = 0;
-      let nullCount = 0;
+      const unreadable = [];
       for (const path of FILES) {
         const c = readCorpusFileAtV17Close(path);
-        if (c === null) { nullCount++; continue; }
+        if (c === null) { unreadable.push(path); continue; }
         // Deploy docs: tail table row with 2026-05-26 SWEEP-02 change
         // Glossary: ## Version History heading
         if (/2026-05-26.*SWEEP-02/.test(c) || /## Version History/.test(c)) {
           withVH++;
         }
       }
-      if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+      if (unreadable.length === FILES.length) {
+        // SWEEP-09 (v1.20 Phase 144, D-03): fail loud -- see V-67-01's comment.
+        return { pass: false, detail: 'frozen read of all ' + FILES.length + ' file(s) at v1.7-close (aa6de68) failed: ' + unreadable.join(', ') + ' -- no longer chicken-and-egg, see frozenCause' };
+      }
+      if (unreadable.length > 0) {
+        // v1.20 Phase 144 (D-03): threshold (2) is below file count (3) -- two readable files
+        // could otherwise reach it while a third sits unread. Full readability required first.
+        return { pass: false, detail: unreadable.length + ' of ' + FILES.length + ' file(s) unreadable at v1.7-close (aa6de68); full readability required before evaluating Version History rows: ' + unreadable.join(', ') };
       }
       if (withVH < 2) {
         return { pass: false, detail: 'expected >= 2 files with SWEEP-02 VH entries; got ' + withVH + ' [v1.7-frozen @ aa6de68]' };
       }
-      return { pass: true, detail: withVH + '/' + (FILES.length - nullCount) + ' files carry SWEEP-02 VH entries [v1.7-frozen @ aa6de68]' };
+      return { pass: true, detail: withVH + '/' + FILES.length + ' files carry SWEEP-02 VH entries [v1.7-frozen @ aa6de68]' };
     }
   },
 
@@ -224,7 +250,10 @@ const checks = [
         }
       }
       if (nullCount === FILES.length) {
-        return { pass: true, skipped: true, detail: 'chicken-and-egg: aa6de68 placeholder unresolved; Plan 70-05 Commit A substitutes' };
+        // SWEEP-09 (v1.20 Phase 144, D-03): fail loud -- see V-67-01's comment. Structurally
+        // unchanged otherwise: threshold (3) equals file count, so a partial-null read already
+        // forces withBump < 3 below.
+        return { pass: false, detail: 'frozen read of all ' + FILES.length + ' file(s) at v1.7-close (aa6de68) failed: ' + FILES.join(', ') + ' -- no longer chicken-and-egg, see frozenCause' };
       }
       if (withBump < 3) {
         return { pass: false, detail: 'expected 3 files carrying 2026-05-26; got ' + withBump };
