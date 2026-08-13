@@ -7,10 +7,10 @@
 //     (readCorpusFileAtV17Close, readMilestonesAtV17Close, etc.) are thin wrappers that
 //     delegate to readAtV17Close here. The raw git-show read duplication in those three files
 //     was centralized here by v1.14 Phase 111 ("Pillar D — Chain Validator Tooling Refactors").
-//   - check-phase-61.mjs is a deliberate exception: it keeps a genuinely inline reader
-//     (readAtV15CloseFor61, hardcoded v1.5-close SHA ba2cbc0) for its REQUIREMENTS/ROADMAP
-//     reads — that inline reader's presence is asserted by check-phase-68 (V-68), so it is
-//     pinned in place — and consumes this module's readAtV15Close only for its MILESTONES.md reads.
+//   - check-phase-61.mjs's readAtV15CloseFor61 no longer keeps a genuinely inline reader:
+//     v1.20 Phase 141 Task 1 routed it through a one-line delegation to this module's
+//     readAtV15Close, the same thin-wrapper shape 67/68/70 already use — its REQUIREMENTS/
+//     ROADMAP reads and its MILESTONES.md reads both go through readAtV15Close now.
 //   - The prior header's blanket "all four keep their helpers inline" claim was stale: 67/68/70
 //     were centralized in Phase 111; only 61 stays intentionally inline. The lines above record
 //     the actual per-file state.
@@ -132,6 +132,18 @@ export const MILESTONE_CLOSE_SHAS = {
                     // requirements Validated"). Single entry — same single-entry pattern as V18..V117
                     // (back-anchor invariant: V118 references a PAST close SHA; the V119 pin is deferred
                     // to the v1.20 close per the back-anchor rule).
+  V119: 'a7bda73e',  // Phase 138 Plan 138-06 close-gate — v1.19 milestone close-gate; atom == close-gate.
+                    // Message contains both "v1.19" and "MILESTONE CLOSE". The naive dual-token
+                    // `--grep --all-match -1` form is BARRED here (same trap as V118): recovery used
+                    // the SUBJECT-LINE pair discriminator instead (confirmed via `git log --all
+                    // --format="%H|%s" | awk -F'|' '$2 ~ /v1\.19/ && $2 ~ /MILESTONE CLOSE/'` ->
+                    // count=1 -> a7bda73e23efc5e3f9607c3fef37abf8ec4030aa, subject: "docs(138-06):
+                    // v1.19 MILESTONE CLOSE — single close-gate commit, 17/17 requirements
+                    // Validated"). Abbreviated (7-8 char) form stored, matching every
+                    // V15..V118 entry -- load-bearing for frozenCause()'s stderr taxonomy, not a style
+                    // choice. Single entry — same single-entry pattern as V18..V118 (back-anchor
+                    // invariant: V119 references a PAST close SHA; the V120 pin is deferred to the
+                    // v1.21 close per the back-anchor rule — V120-PIN-DEFERRAL).
   V14: '0b3be9ab',  // Phase 43 terminal commit of the viable window 2574c794..ba9ecd87 — subject
                     // "docs(phase-43): validation audit - 4 predicate fixes, 27/27 green,
                     // nyquist_compliant" (v1.20 Phase 140 SWEEP-08/D-19). No `MILESTONE CLOSE`
@@ -204,6 +216,7 @@ export const readAtV115Close      = (p) => readAtClose('V115',         p);
 export const readAtV116Close      = (p) => readAtClose('V116',         p);
 export const readAtV117Close      = (p) => readAtClose('V117',         p);
 export const readAtV118Close      = (p) => readAtClose('V118',         p);
+export const readAtV119Close      = (p) => readAtClose('V119',         p);
 
 /**
  * Enumerate repo-relative file paths under `dirPrefix` at a frozen milestone-close SHA, via
@@ -271,6 +284,7 @@ export const lsTreeAtV115Close      = (dir, opts) => lsTreeAtClose('V115',      
 export const lsTreeAtV116Close      = (dir, opts) => lsTreeAtClose('V116',          dir, opts);
 export const lsTreeAtV117Close      = (dir, opts) => lsTreeAtClose('V117',          dir, opts);
 export const lsTreeAtV118Close      = (dir, opts) => lsTreeAtClose('V118',          dir, opts);
+export const lsTreeAtV119Close      = (dir, opts) => lsTreeAtClose('V119',          dir, opts);
 
 /**
  * Batch-read many repo-relative paths at a frozen close SHA via ONE `git cat-file --batch`
