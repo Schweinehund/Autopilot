@@ -92,7 +92,7 @@ jobs:
           START=$(date +%s)
           node scripts/validation/check-phase-74.mjs --verbose
           END=$(date +%s)
-          echo "::notice title=CHAIN_TIMING_LINUX::Full chain wall-clock: $((END-START))s (Windows reference: ~102s; subprocess timeout: 300s)"
+          echo "::notice title=CHAIN_TIMING_LINUX::Full chain wall-clock: $((END-START))s (Windows reference: 664,979 ms; subprocess timeout: 300s)"
 
   check-phase-71:
     name: check-phase-71 validator
