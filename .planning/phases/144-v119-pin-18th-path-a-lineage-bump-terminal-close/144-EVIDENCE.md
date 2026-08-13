@@ -253,3 +253,35 @@ them. `check-phase-144.mjs` closes that gap.
 - `git status --porcelain --untracked-files=all -- scripts` printed nothing before or after the
   guard-proof session — all four mutants and their `_lib/` copies lived only in the session
   scratchpad (`.../scratchpad/144-guard-proofs/`), never under `scripts/`.
+
+## Plan 07, Task 3 — apex run, twice, at the same commit (idempotency evidence)
+
+**Method:** `node scripts/validation/check-phase-144.mjs`, run twice consecutively at the same
+commit, wall-clock timed from spawn to exit, output captured to separate files and diffed. Run
+separately from any verifier or prose-guard pass, per D-35. At this point in the phase,
+`144-VERIFICATION.md` does not exist, so the expected triple is `100 PASS, 0 FAIL, 1 SKIPPED`.
+
+| Run | Result | Duration (ms) | Exit code |
+|-----|--------|----------------|-----------|
+| 1   | `100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)` | 24419 | 0 |
+| 2   | `100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)` | 24498 | 0 |
+
+**`diff run1.txt run2.txt` → no output (byte-identical).** Both runs produced the exact same
+per-check PASS/FAIL/SKIPPED lines in the exact same order and the exact same summary line — no
+hidden write, no stateful child, no ordering nondeterminism.
+
+**Skipped check:** `AUDIT` — detail: `144-VERIFICATION.md not yet authored (PASS-via-skip until
+the Phase 144 close-gate lands; correct-token resolver-null is legitimate pre-close-gate)`.
+
+**Arithmetic reconciling the 101 total checks:** 1 `AUDIT` + 96 `CHAIN_PHASES` (48..143) + 2
+`CHAIN_EXTRA` (30, 31) + 1 `AUDIT-HARNESS` + 1 `SELF` = 101. Of those, `AUDIT` is the sole SKIPPED
+(pre-close-gate); the remaining 100 (96 + 2 + 1 + 1) all PASS; 0 FAIL — matching D-10's exact
+pre-`144-VERIFICATION.md` expected triple.
+
+**Tree unchanged:** `git status --porcelain` captured before the first run and after the second
+run are identical (`diff` returns no output) — the apex performs no write, confirming the
+idempotency claim independent of the two runs' own byte-identical stdout.
+
+**Separate from the verifier pass (D-35):** this run was executed standalone, not chained with
+`carve-gate.mjs` or any banned-phrase/prose-guard pass in the same invocation — `carve-gate.mjs`
+was run independently in Task 1's verification, not re-run here.
