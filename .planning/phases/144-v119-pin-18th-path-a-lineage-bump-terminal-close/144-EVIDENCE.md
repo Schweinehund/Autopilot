@@ -850,3 +850,63 @@ node scripts/pipeline/build-publish-bundle.mjs --version=v1.20
 **HARN-19 bundle-regeneration leg: MET.** The archive is named for this milestone, both canaries
 agree with the live registry, both self-tests pass, and the build exited 0 before any requirement
 flip — the whole reason this task lands before Plan 12's Task 2 close-gate commit.
+
+## Plan 12, Task 3 — post-close-gate confirmatory apex run and Class-2 drift check
+
+**Method:** the apex was run once more, after the close-gate commit landed, in its own separate
+invocation — never chained with `check-phase-54.mjs` or any other pass in the same command, per
+D-35 (a link/anchor change is a prose change and has tripped banned-phrase guards after a passed
+verifier at this project before).
+
+**Post-gate apex run:**
+
+```
+node scripts/validation/check-phase-144.mjs
+Result: 100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)
+```
+
+Exit code: **0**.
+
+**`144-VERIFICATION.md` does not yet exist at this point** — it is authored later, in this
+project's standard verification step, not by this plan. Per the plan's own governing note
+(`144-CONTEXT.md` D-10, `144-11`'s milestone-audit `apex_skip_resolved_at_close` field): the
+expected triple BEFORE `144-VERIFICATION.md` exists is `100 PASS, 0 FAIL, 1 SKIPPED`, not
+`101/0/0` — asserting a real PASS instead of a skip-pass is only correct once that file exists.
+This run's result matches that expectation exactly and is unchanged from every pre-close-gate
+measurement of the same check (Plans 07/09/10) — the close-gate commit did not disturb it.
+
+**`V-144-AUDIT`'s own line, quoted verbatim:**
+
+```
+[AUDIT/101] V-144-AUDIT: 144-VERIFICATION.md exists and contains Phase 144 verification heading SKIPPED -- 144-VERIFICATION.md not yet authored (PASS-via-skip until the Phase 144 close-gate lands; correct-token resolver-null is legitimate pre-close-gate)
+```
+
+**Class-2 archival-drift check — the live reader, run separately:**
+
+```
+node scripts/validation/check-phase-54.mjs
+Summary: 32 passed, 0 failed, 0 skipped
+```
+
+Exit code: **0**. `check-phase-54.mjs` live-reads `.planning/REQUIREMENTS.md` and `.planning/ROADMAP.md`
+with a negative assertion at its tail, and the close-gate commit rewrote both documents — this
+green result proves the rewrite did not break that live read. Class-2 drift can only manifest
+after the gate rewrites those two documents, so this is the first and only point in the phase
+where that class is actually exercised, per D-30.
+
+**Honest scope statement (D-15/D-29, restated so it is not lost in this plan's own record):** this
+post-gate run proves two things and no more — (1) the close-gate commit did not break
+`V-144-AUDIT`'s own resolver read (it still resolves and still skip-passes for the documented,
+legitimate reason), and (2) `check-phase-54.mjs`'s live REQUIREMENTS/ROADMAP negative assertion
+still exits 0 after the rewrite. It proves **NOTHING** about the archive-root token
+(`'v1.20-phases'`) being correct, because `_lib/archive-path.mjs`'s resolver checks the LIVE path
+first and only falls through to the archived `.planning/milestones/<root>/` path on a miss — a
+wrong token would still resolve successfully today, exactly as `check-phase-125.mjs:86` has done
+for two milestones running with the wrong token `['v1.15-phases']` frozen into its source. The
+token's correctness is covered by the separate literal-string assertion `V-144-SELF` exercises in
+the apex's own source (Plan 07), not by this run's AUDIT-resolver success.
+
+**Terminal state, this task:** the apex is green at the correct pre-`144-VERIFICATION.md` triple,
+the live-reading chain validator exits 0 after the gate, and the record states plainly what this
+run does and does not prove. This record lands as its own commit, separate from the close-gate
+commit — the flip is atomic (D-24), the phase is not.
