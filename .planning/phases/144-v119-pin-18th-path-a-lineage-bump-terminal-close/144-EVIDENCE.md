@@ -809,3 +809,44 @@ proxy rather than a genuinely context-independent dispatched-agent run, disclose
 `v1.19` precedent disclosed the same gap — routed to the Task 3 human checkpoint for an explicit
 call on whether it satisfies HARN-19's Axis-3 bar or whether a dispatched-agent run must be
 obtained before the close-gate.
+
+## Plan 12, Task 1 — publish bundle regenerated with an explicit version argument
+
+**Pre-run canary check:**
+
+| Canary | Expected | Observed | Match |
+|---|---|---|---|
+| `build-publish-bundle.mjs:520-523` Approved-row canary (self-test (a)) | 225 | `rows.length=225` | YES |
+| `build-filename-map.mjs:282-283` Approved-row canary (self-test (c)) | 225 | `rows.length=225` | YES |
+| Live registry `docs/_registry/RE-index.md` Approved-row count | — | 225 | matches both canaries |
+
+**Self-tests (both run before the real build, both exit 0):**
+
+```
+node scripts/pipeline/build-filename-map.mjs --self-test    -> 8 passed, 0 failed, exit 0
+node scripts/pipeline/build-publish-bundle.mjs --self-test   -> 15 passed, 0 failed, exit 0
+```
+
+**Real build command, with the explicit version argument (the option defaults to the hardcoded
+literal `'v1.17'` at `:40`, and `deriveZipName` accepts a default silently — omitting the flag
+would produce a valid, wrong-named archive at exit 0):**
+
+```
+node scripts/pipeline/build-publish-bundle.mjs --version=v1.20
+```
+
+**Result:**
+
+- `Registry parity: 225 Approved rows, 225 staged, 0 excluded, 0 missing, 0 orphan.`
+- `Wrote D:\claude\Autopilot\dist\docs-library-v1.20.zip`
+- `Batch complete: 225 docx converted+guarded+staged, 0 errors.`
+- Exit code: **0**
+- Produced archive: `dist/docs-library-v1.20.zip` (3,802,777 bytes) — the ONLY new archive this run
+  produced; no `docs-library-v1.17.zip` was written or touched (pre-existing v1.17/v1.18/v1.19
+  archives from prior milestone closes remain, unmodified, in the gitignored `dist/` directory).
+- `git status --porcelain -- docs scripts` → empty (the build is pure orchestration over
+  already-guarded conversions; it touches no `docs/` or `scripts/` source).
+
+**HARN-19 bundle-regeneration leg: MET.** The archive is named for this milestone, both canaries
+agree with the live registry, both self-tests pass, and the build exited 0 before any requirement
+flip — the whole reason this task lands before Plan 12's Task 2 close-gate commit.
