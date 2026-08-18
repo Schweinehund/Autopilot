@@ -5,15 +5,15 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 status: executing
-stopped_at: Completed 144-10-PLAN.md Tasks 1-2 (Axis-2/Axis-1/Axis-3 evidence) — halted at Task 3 human-verify checkpoint (three-axis evidence approval before close-gate)
-last_updated: "2026-08-18T03:28:54.854Z"
+stopped_at: Completed 144-11-PLAN.md (v1.20 milestone audit + absorb-and-append deferred-cleanup)
+last_updated: "2026-08-18T03:56:31.761Z"
 last_activity: 2026-08-12
 last_activity_desc: Phase 144 execution started
 progress:
   total_phases: 6
   completed_phases: 5
   total_plans: 44
-  completed_plans: 42
+  completed_plans: 43
 ---
 
 # Project State
@@ -34,11 +34,11 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 ## Current Position
 
 Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — EXECUTING
-Plan: 10 of 12
+Plan: 11 of 12
 Status: Ready to execute
 Last activity: 2026-08-12 — Phase 144 execution started
 
-Progress: [██████████] 95%
+Progress: [██████████] 98%
 
 ## v1.20 Phase Dependency Summary
 
@@ -321,6 +321,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 144 P08 | 45min | 3 tasks | 5 files |
 | Phase 144 P09 | ~30min | 2 tasks | 2 files |
 | Phase 144 P10 | ~30min | 2 tasks | 1 files |
+| Phase 144 P11 | 45min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -417,6 +418,9 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: 144-10: D-22 remediation round recorded in full (first dispatch 32aaae63 16/17 green, v1.20 failed 3 jobs one root cause check-nav-hub-links.mjs self-test case G host-dependent fixture, fix 2858c0b5, second dispatch 2858c0b5 17/17 green -- the one round D-22 authorizes, succeeded)
 - [Phase ?]: 144-10: Corrected pre-task briefing's 16 pin-helper-advisory figure to a measured 17 (one per workflow incl. base) per D-36 measure-don't-carry discipline
 - [Phase ?]: 144-10: Axis-3 obtained as a disclosed same-host independent-clone proxy (no agent-dispatch primitive in this session's toolset), following the exact v1.19 Plan 138-04 honesty precedent -- routed to the Task 3 human checkpoint for an explicit call on whether it satisfies HARN-19's Axis-3 bar
+- [Phase ?]: Split the milestone close across two plans: 144-11 authors the audit + absorb-and-append deferred-cleanup record, 144-12 lands the atomic 28-requirement flip
+- [Phase ?]: Recorded a fourth Axis-3 measurement (genuinely dispatched context-independent agent, apex leg incomplete, owner-attributed to WINDOWS-CLONE-DEEPNEST-TIMEOUT-01) directly in v1.20-MILESTONE-AUDIT.md per the plan's supplied evidence
+- [Phase ?]: Closed CARVE-1 and C17-VS-PIPELINE-FENCE-MASK-DIVERGENCE in v1.20-DEFERRED-CLEANUP.md Part C, each with its residue named as a distinct open item rather than double-booked
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -445,9 +449,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-18T03:28:35.813Z
-Stopped at: Completed 144-10-PLAN.md Tasks 1-2 (Axis-2/Axis-1/Axis-3 evidence) — halted at Task 3 human-verify checkpoint (three-axis evidence approval before close-gate)
-Resume file: None
+Last session: 2026-08-18T03:56:21.171Z
+Stopped at: Completed 144-11-PLAN.md (v1.20 milestone audit + absorb-and-append deferred-cleanup)
+Resume file: 144-12-PLAN.md
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 
 ## Operator Next Steps
