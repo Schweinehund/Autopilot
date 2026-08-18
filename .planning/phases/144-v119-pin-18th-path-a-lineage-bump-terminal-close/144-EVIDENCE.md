@@ -561,3 +561,140 @@ entries" language describes the six v1.19 source entries being represented/mirro
 of the resulting v1.20 list. Confirmed: `.planning/milestones/v1.20-*` matches all four existing
 and future v1.20 governance documents (`CARVE`, `DEFERRED-CLEANUP`, `GOV-02-LEDGER`,
 `MILESTONE-AUDIT`) by prefix, so no trigger-surface narrowing occurred despite the lower count.
+
+## Plan 10, Task 1 — Axis-2 job-level evidence, all 17 runs at the shared SHA
+
+**Owner-executed, this plan records/verifies.** The push and both dispatch rounds happened outside
+this plan's execution — recorded here per the objective's own instruction to record job-level
+evidence, not to re-derive the push/dispatch itself. Every figure below was independently
+re-measured this task via `gh run view`/`gh api`, not transcribed from the owner's briefing without
+verification.
+
+### Shared SHA and read-back assertion
+
+**Shared close SHA: `2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c`.** `git rev-parse HEAD` in the
+working tree at task start equals this value; `git rev-parse origin/master` equals this value —
+local and remote are identical (0 ahead / 0 behind), confirming the push landed and this session's
+own HEAD is already the shared SHA.
+
+**Read-back:** `gh run view <id> --json headSha` was queried for all 17 runs listed below.
+**All 17 return `headSha == 2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c`** — quoted, not assumed. All
+17 also carry `event: workflow_dispatch` and run-level `conclusion: success` (the run-level colour
+is recorded here only as a pre-filter; per D-21 it is never the evidence itself — job-level
+conclusions below are).
+
+### The remediation round (D-22) — one round, spent, succeeded
+
+**First dispatch, SHA `32aaae6346e4ca8d8fa917253516eb45a1f32183`:** 16 of 17 green;
+`Audit Harness v1.20 Integrity` run `32092878952` returned run-level `failure`. Job-level JSON for
+that run, fetched and quoted:
+
+| Job | Conclusion |
+|---|---|
+| Frozen-read probe (SWEEP-01/02 evidence, D-24 dependency-free) | success |
+| Parse v1.20 sidecar JSON | success |
+| Harness references v1.20 sidecar | success |
+| Run v1.20 milestone audit harness | success |
+| check-phase-139 validator | success |
+| check-phase-140 validator | success |
+| **Validator chain on Linux LF (Phase 69 CILINUX-01)** | **failure** |
+| check-phase-141 validator | success |
+| check-phase-142 validator | success |
+| **check-phase-143 validator** | **failure** |
+| Supervision-pin drift advisory (CI) | success |
+| **check-phase-144 validator (apex; recursively spawns 48..143)** | **failure** |
+| Quarterly c13_rotting_external link-check | skipped |
+
+Exactly 3 failed jobs, one root cause: `check-phase-143.mjs` genuinely failed
+(`check-nav-hub-links.mjs`'s self-test case G — the traversal fixture leaf `/etc/passwd` resolves
+absent on Windows but PRESENT on the Linux runner, so the not-found leg measured a property of the
+host, not of `resolveLinkTarget`). The standalone `check-phase-143 validator` job failed directly;
+the apex job (`check-phase-144`, which recursively re-runs 143 as a chain member) and the
+`Validator chain on Linux LF` job (the DUAL-APEX Linux chain leg, which also re-runs the same apex)
+both inherited the same root cause as chain children — not three independent defects.
+
+**Fix commit `2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c`** (preceded by the pre-edit census commit
+`1c49e33b`, GOV-02 ledger row, alone-and-first): retargeted the self-test fixture leaf from
+`../../../../../../etc/passwd` to `../../../../../../gsd-absent-traversal-target-8f3a1c.md` — a
+name absent on every platform, preserving the pathological traversal depth and the not-found
+assertion while removing the host-dependent leg. `git show --stat` confirms a single file changed
+(`scripts/validation/check-nav-hub-links.mjs`, 7 insertions / 4 deletions).
+
+**Second dispatch, SHA `2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c` (the shared SHA): 17 of 17 green.**
+This is the ONE remediation round D-22 authorizes; it succeeded, so HARN-19 proceeds. Per D-22's own
+cost rule, the SHA changed with the fix, which forces Axis-1 and Axis-3 to run at this new SHA — see
+Task 2 below.
+
+### The 17-row table (deterministic `ls` order, matching the live workflow-directory listing recorded at Plan 09)
+
+| # | Workflow | Run ID | `.headSha` | Event | Jobs total | Success | Skipped | Failed |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `audit-harness-integrity.yml` (base) | `32094106520` | `2858c0b5...` | workflow_dispatch | 5 | 5 | 0 | 0 |
+| 2 | `audit-harness-v1.10-integrity.yml` | `32094117048` | `2858c0b5...` | workflow_dispatch | 13 | 12 | 1 | 0 |
+| 3 | `audit-harness-v1.11-integrity.yml` | `32094118821` | `2858c0b5...` | workflow_dispatch | 12 | 11 | 1 | 0 |
+| 4 | `audit-harness-v1.12-integrity.yml` | `32094120474` | `2858c0b5...` | workflow_dispatch | 9 | 8 | 1 | 0 |
+| 5 | `audit-harness-v1.13-integrity.yml` | `32094122150` | `2858c0b5...` | workflow_dispatch | 12 | 11 | 1 | 0 |
+| 6 | `audit-harness-v1.14-integrity.yml` | `32094123918` | `2858c0b5...` | workflow_dispatch | 19 | 18 | 1 | 0 |
+| 7 | `audit-harness-v1.15-integrity.yml` | `32094125507` | `2858c0b5...` | workflow_dispatch | 14 | 13 | 1 | 0 |
+| 8 | `audit-harness-v1.16-integrity.yml` | `32094127061` | `2858c0b5...` | workflow_dispatch | 13 | 12 | 1 | 0 |
+| 9 | `audit-harness-v1.17-integrity.yml` | `32094128663` | `2858c0b5...` | workflow_dispatch | 10 | 9 | 1 | 0 |
+| 10 | `audit-harness-v1.18-integrity.yml` | `32094130203` | `2858c0b5...` | workflow_dispatch | 13 | 12 | 1 | 0 |
+| 11 | `audit-harness-v1.19-integrity.yml` | `32094131814` | `2858c0b5...` | workflow_dispatch | 11 | 10 | 1 | 0 |
+| 12 | `audit-harness-v1.20-integrity.yml` | `32094133344` | `2858c0b5...` | workflow_dispatch | 13 | 12 | 1 | 0 |
+| 13 | `audit-harness-v1.5-integrity.yml` | `32094108113` | `2858c0b5...` | workflow_dispatch | 19 | 19 | 0 | 0 |
+| 14 | `audit-harness-v1.6-integrity.yml` | `32094109885` | `2858c0b5...` | workflow_dispatch | 11 | 10 | 1 | 0 |
+| 15 | `audit-harness-v1.7-integrity.yml` | `32094111674` | `2858c0b5...` | workflow_dispatch | 11 | 10 | 1 | 0 |
+| 16 | `audit-harness-v1.8-integrity.yml` | `32094113564` | `2858c0b5...` | workflow_dispatch | 11 | 10 | 1 | 0 |
+| 17 | `audit-harness-v1.9-integrity.yml` | `32094115154` | `2858c0b5...` | workflow_dispatch | 15 | 14 | 1 | 0 |
+| | **Total** | | | | **211** | **196** | **15** | **0** |
+
+`2858c0b5...` abbreviates `2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c` — identical on all 17 rows,
+each independently queried via `gh run view <id> --json headSha`, never carried from a single read.
+17 distinct workflow files, 17 distinct run IDs. **Zero jobs conclude `failure` anywhere in the
+211-job set.**
+
+### Skip ledger — every skip classified
+
+**Observed: 15 skips, all named `Quarterly c13_rotting_external link-check`**, one each in 15 of the
+17 runs (absent from `audit-harness-integrity.yml` base and `audit-harness-v1.5-integrity.yml`).
+
+**Expected count, derived live** (not carried from a prior milestone's figure, per D-21b):
+`grep -rn "github.event_name == 'schedule'" .github/workflows/*.yml` at this HEAD returns exactly
+**15** matches — one per workflow file — spanning base+v1.5 EXCLUDED (15 of 17, matching the
+observed 15-of-17 split) and confirming the two `always() && github.event_name == 'schedule' && ...`
+wrapped forms (`audit-harness-v1.6-integrity.yml:173`, `audit-harness-v1.7-integrity.yml:162`) ARE
+counted by this substring grep (it matches the `github.event_name == 'schedule'` fragment
+regardless of the `always()` prefix, so no undercount occurs here). **Observed 15 == derived
+expected 15.** This job is guarded by `if: github.event_name == 'schedule' && ...` and therefore
+always skips under `workflow_dispatch` — a legitimate, classified skip, not a gap.
+
+**Dependency-cascade skips (D-21c — a GAP, never legitimate):** **ZERO observed.** Every job whose
+`needs:` includes `harness-run` succeeded in all 17 runs (confirmed directly in the job table above:
+0 failures anywhere means `harness-run` never failed, so the six-job cascade risk named in
+`144-CONTEXT.md` D-16 never manifested this pass). Spot-checked on the v1.20 run's own job list: all
+12 non-skip jobs report `success`, including the five leaves, the apex, and the Linux-chain job that
+depend transitively on `harness-run`.
+
+**Advisory job (D-21d — NON-EVIDENCE regardless of conclusion):** `Supervision-pin drift advisory
+(CI)` (`pin-helper-advisory`) appears **17 times, once per workflow** (correcting the pre-task
+figure of 16 supplied in this plan's own prompt context — measured directly via
+`grep -c -i "advisory"` per run's job list, not carried) — every one of the 17 workflows,
+including base, carries exactly one advisory job, all `success`. Its `continue-on-error: true`
+(`:200`) plus `|| true` (`:208`) plus `|| echo` (`:212-213`) fallback (confirmed present in the
+authored `audit-harness-v1.20-integrity.yml`) means its conclusion is structurally always
+`success` — it is recorded here in its own column, **excluded from both the pass tally (196) and
+the skip tally (15)**. Reconciliation: 196 success (of which 17 are non-evidence advisory, leaving
+179 evidence-bearing passes) + 15 classified event-gated skips + 0 dependency-cascade gaps + 0
+failures = 211, matching the job table's total column exactly.
+
+### Byte-unchanged assertion for the duration of this task
+
+`git diff 2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c..HEAD -- .github scripts` → empty (this session's
+own HEAD already equals the shared SHA — no further edit landed during Task 1's evidence-gathering).
+The one edit that DID land between the two dispatch rounds is the remediation-round commit itself
+(`2858c0b5`), explicitly recorded above with its old and new SHA, per the acceptance criterion's own
+"or a remediation round is explicitly recorded" clause.
+
+**HARN-19 Axis-2 verdict: MET.** All 17 runs green at the job level at one shared, read-back-verified
+SHA; every skip classified; zero dependency-cascade gaps; the advisory job isolated as non-evidence;
+the one remediation round taken, recorded in full, and it discharged the red job it targeted.
