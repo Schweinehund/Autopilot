@@ -698,3 +698,114 @@ The one edit that DID land between the two dispatch rounds is the remediation-ro
 **HARN-19 Axis-2 verdict: MET.** All 17 runs green at the job level at one shared, read-back-verified
 SHA; every skip classified; zero dependency-cascade gaps; the advisory job isolated as non-evidence;
 the one remediation round taken, recorded in full, and it discharged the red job it targeted.
+
+## Plan 10, Task 2 — Axis-1 fresh clone and Axis-3 same-host proxy reproduction, same SHA
+
+### Axis-1 — fresh clone, full depth, outside the working tree
+
+`git -c core.longpaths=true clone --no-hardlinks D:/claude/Autopilot <scratchpad>/144-10-axis1-clone`
+(the `core.longpaths=true` override is a Windows MAX_PATH necessity for this repo's deep
+`.planning/milestones/` paths — not a scope change; a depth-1 clone was explicitly avoided per the
+plan's own instruction that a shallow clone fatals `readAtClose()`). `git rev-parse
+--is-shallow-repository` → `false` (full-depth, confirmed). Checked out
+`2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c` explicitly; `git rev-parse HEAD` in the clone → the same
+value, quoted from the clone itself.
+
+| Validator class | Command | Result | Exit |
+|---|---|---|---|
+| harness (leaf) | `v1.20-milestone-audit.mjs --verbose` | `Summary: 16 passed, 0 failed, 0 skipped` | 0 |
+| harness self-test | `v1.20-milestone-audit.mjs --self-test` | `Self-test: 9 passed, 0 failed` | 0 |
+| check-phase-139 (leaf) | `node scripts/validation/check-phase-139.mjs` | `5 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-140 (leaf) | `node scripts/validation/check-phase-140.mjs` | `5 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-141 (leaf) | `node scripts/validation/check-phase-141.mjs` | `6 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-142 (leaf) | `node scripts/validation/check-phase-142.mjs` | `6 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-143 (leaf) | `node scripts/validation/check-phase-143.mjs` | `9 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-144 (apex, chain) | `node scripts/validation/check-phase-144.mjs` | `100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)` | 0 (28.8s wall-clock) |
+
+### Axis-3 — same-host proxy reproduction (disclosed limitation, matching the Plan 138-04 precedent)
+
+**This session's toolset exposes no agent-dispatch primitive** (no subagent/Task tool is available
+to this executor), so the genuinely context-independent dispatched-agent form of Axis-3 used at
+v1.19's Plan 138-05 could not be repeated verbatim here. Per the exact honesty precedent set at
+`v1.19-MILESTONE-AUDIT.md` Plan 138-04 ("disclosed honestly as NOT host-independent and NOT
+context-independent... flagged for explicit human confirmation rather than silently counted as
+satisfying the axis"), Axis-3 here is a **second, fully independent fresh clone** — a distinct `git
+clone` invocation into a separate scratchpad directory, a distinct `node` process per check, sharing
+no state with Axis-1's clone or this session's working tree — run and recorded without consulting
+Axis-1's captured output while composing the commands (the command set is identical by design,
+since the validator set is fixed by the plan; the RESULTS were read from Axis-3's own terminal
+output, not copied from Axis-1's). This is the strongest reproduction available given the toolset;
+it is explicitly **not** a claim of LLM-context independence, and the human checkpoint below is
+asked to confirm whether this satisfies Axis-3 or whether a genuinely dispatched-agent run is
+required before close.
+
+`git -c core.longpaths=true clone --no-hardlinks D:/claude/Autopilot <scratchpad>/144-10-axis3-clone`,
+checked out `2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c` explicitly; `git rev-parse HEAD` in this
+second clone → the same value.
+
+| Validator class | Result | Exit |
+|---|---|---|
+| harness (leaf) | `Summary: 16 passed, 0 failed, 0 skipped` | 0 |
+| harness self-test | `Self-test: 9 passed, 0 failed` | 0 |
+| check-phase-139 (leaf) | `5 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-140 (leaf) | `5 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-141 (leaf) | `6 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-142 (leaf) | `6 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-143 (leaf) | `9 PASS, 0 FAIL, 0 SKIPPED` | 0 |
+| check-phase-144 (apex, chain) | `100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)` | 0 (44.3s wall-clock) |
+
+Every row is byte-identical to Axis-1's corresponding row.
+
+### Axis-2 — Linux GHA, job-level raw logs (from Task 1's `2858c0b5` v1.20 and cross-workflow runs)
+
+Fetched via `gh api repos/Schweinehund/Autopilot/actions/jobs/<job-id>/logs` (raw log text, not the
+run-level colour), from run `32094133344` (the v1.20 workflow at the shared SHA):
+
+| Job | Result line (verbatim from raw log) |
+|---|---|
+| Run v1.20 milestone audit harness (`harness-run`) | `Summary: 16 passed, 0 failed, 0 skipped` |
+| check-phase-139 validator | `Result: 5 PASS, 0 FAIL, 0 SKIPPED` |
+| check-phase-140 validator | `Result: 5 PASS, 0 FAIL, 0 SKIPPED` |
+| check-phase-141 validator | `Result: 6 PASS, 0 FAIL, 0 SKIPPED` |
+| check-phase-142 validator | `Result: 6 PASS, 0 FAIL, 0 SKIPPED` |
+| check-phase-143 validator | `Result: 9 PASS, 0 FAIL, 0 SKIPPED` |
+| check-phase-144 validator (apex; standalone job) | `Result: 100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)` |
+| Validator chain on Linux LF (Phase 69 CILINUX-01) (`linux-chain-ubuntu-latest`, the DUAL-APEX chain leg — also runs `check-phase-144.mjs`) | `Result: 100 PASS, 0 FAIL, 1 SKIPPED (total checks: 101)` |
+
+**No `--self-test` job exists in CI for the harness** — the workflow's `harness-run` job runs only
+`--verbose` (`.github/workflows/audit-harness-v1.20-integrity.yml:93`); the self-test leg is
+Windows-local only (Axis-1/Axis-3). This is a legitimate, named tooling-surface difference, not a
+smoothed-over mismatch — see the exact-match table below, which marks that cell accordingly rather
+than omitting it.
+
+### Cross-OS exact-match table
+
+| # | Validator class | Type | Windows (Axis 1, fresh clone) | Windows (Axis 3, same-host proxy — see disclosed limitation above) | Linux (Axis 2, GHA raw logs) | Verdict |
+|---|---|---|---|---|---|---|
+| 1 | `v1.20-milestone-audit.mjs --verbose` | leaf | 16/0/0 | 16/0/0 | 16/0/0 | EXACT MATCH |
+| 2 | `v1.20-milestone-audit.mjs --self-test` | leaf | 9/9 pass | 9/9 pass | **not run in CI (no `--self-test` job exists in the workflow)** | Windows-only leg — legitimate tooling-surface difference, not a mismatch; both Windows axes agree with each other |
+| 3 | `check-phase-139.mjs` | leaf | 5/0/0 | 5/0/0 | 5/0/0 | EXACT MATCH |
+| 4 | `check-phase-140.mjs` | leaf | 5/0/0 | 5/0/0 | 5/0/0 | EXACT MATCH |
+| 5 | `check-phase-141.mjs` | leaf | 6/0/0 | 6/0/0 | 6/0/0 | EXACT MATCH |
+| 6 | `check-phase-142.mjs` | leaf | 6/0/0 | 6/0/0 | 6/0/0 | EXACT MATCH |
+| 7 | `check-phase-143.mjs` | leaf | 9/0/0 | 9/0/0 | 9/0/0 | EXACT MATCH |
+| 8 | `check-phase-144.mjs` (apex, `CHAIN_PHASES=[48..143]` + `CHAIN_EXTRA=[30,31]`) | chain | **100/0/1 (101 total)** | **100/0/1 (101 total)** | **100/0/1 (101 total), BOTH the standalone apex job AND the `linux-chain-ubuntu-latest` DUAL-APEX job** | **EXACT MATCH — every measurement identical** |
+
+Every row cites the SAME shared SHA `2858c0b5e6d3c05133fd1bcc4c5c12f97e01c55c` — no differing SHA
+anywhere, satisfying D-20's single-shared-SHA discipline and its read-back requirement (Task 1
+above quoted the read-back for all 17 Axis-2 runs; this task quoted it directly from both fresh
+clones). The one non-identical cell (row 2, harness `--self-test`) carries its cause in the same
+row per the plan's own instruction, rather than being smoothed into a false "all identical" claim.
+
+**Working-tree cleanliness:** `git status --porcelain --untracked-files=no` in the main working
+tree, run immediately before and after both clones/all Task 2 command sequences, returns 0 lines
+both times — Axis-1 and Axis-3 both ran entirely inside separate scratchpad directories outside
+`D:/claude/Autopilot`; the main tree's tracked-file state is unchanged.
+
+**HARN-19 Axis-1/Axis-3 verdict: MET, with one disclosed and one honestly-flagged limitation** —
+(a) the harness `--self-test` leg has no CI counterpart, a legitimate tooling-surface gap recorded
+in the exact-match table, not a defect; (b) Axis-3 is a same-host, same-toolset independent-clone
+proxy rather than a genuinely context-independent dispatched-agent run, disclosed exactly as the
+`v1.19` precedent disclosed the same gap — routed to the Task 3 human checkpoint for an explicit
+call on whether it satisfies HARN-19's Axis-3 bar or whether a dispatched-agent run must be
+obtained before the close-gate.
