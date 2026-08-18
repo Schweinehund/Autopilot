@@ -2,7 +2,7 @@
 
 ## Milestones
 
-- 🚧 **v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure** — Phases 139-144 (in progress)
+- ✅ **v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure** — Phases 139-144 (shipped 2026-08-18)
 - ✅ **v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)** — Phases 135-138 (shipped 2026-08-04)
 - ✅ **v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure** — Phases 129-134 (shipped 2026-07-20)
 - ✅ **v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation)** — Phases 126-128 (shipped 2026-07-11)
@@ -32,7 +32,7 @@
 - [x] **Phase 141: Standalone-RED Validator Set — Chain Members Green** - check-phase-48/60/61/62-66 exit 0 standalone; freshness, self-test classifier, and cascade root causes closed; first-ever CI fan-out dispatched at one shared SHA, all 41 jobs green (completed 2026-08-09)
 - [x] **Phase 142: Archival-Path Fix, Chain Adoption & Cold-Clone Threshold** - check-phase-30/31 fixed and adopted into the apex chain; cold-clone apex cost gets a falsifiable threshold (completed 2026-08-10)
 - [x] **Phase 143: Link Coverage & Fence-Mask Unification** - corpus-wide relative-link + anchor checker green with zero accepted-violation baseline; fence-masking unified across all 15 call sites (completed 2026-08-11)
-- [ ] **Phase 144: V119 Pin + 18th Path-A Lineage Bump + Terminal Close** - mandatory harness lineage bump + 3-axis re-audit + all 17 integrity workflows dispatched green — sole deliverable of this phase
+- [x] **Phase 144: V119 Pin + 18th Path-A Lineage Bump + Terminal Close** - mandatory harness lineage bump + 3-axis re-audit + all 17 integrity workflows dispatched green — sole deliverable of this phase (completed 2026-08-18)
 
 <details>
 <summary>✅ v1.0–v1.19 (Phases 1-138) — SHIPPED</summary>
@@ -281,7 +281,7 @@ Plans:
   3. A 3-axis terminal re-audit (fresh `git clone --no-hardlinks` + cross-OS Linux GHA authoritative for both chain validators + fresh zero-context reproduction) achieves cross-OS PASS/FAIL/SKIP EXACT MATCH, and all 17 `audit-harness-*` integrity workflows are dispatched (`gh workflow run --ref master`, since a push fires nothing) and confirmed green from job-level JSON, not the checks-UI colour (HARN-19).
   4. The publish bundle regenerates `--version=v1.20`, and a single close-gate commit flips all **28** v1.20 requirements (27 original + `SWEEP-09`, added per D-33) to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS — with `ACCEPTED-STANDALONE-CI-RED` and `ACCEPTED-SCOPED-RED` **deleted** from the backlog rather than carried a seventh milestone, discharging the milestone bar stated in REQUIREMENTS.md (HARN-19).
 
-**Plans**: 11/12 plans executed
+**Plans**: 12/12 plans executed
 
 Plans:
 **Wave 1**
@@ -324,7 +324,7 @@ Plans:
 
 **Wave 10** *(blocked on Wave 9 completion)*
 
-- [ ] 144-12-PLAN.md — publish bundle `--version=v1.20` → SINGLE close-gate commit (28 Validated) → post-gate apex run
+- [x] 144-12-PLAN.md — publish bundle `--version=v1.20` → SINGLE close-gate commit (28 Validated) → post-gate apex run
 
 **Cross-cutting constraints:**
 
@@ -359,7 +359,7 @@ Plans:
 | v1.17 Docs-Library .docx Publish-Bundle Pipeline (SharePoint / Copilot Upload Automation) | 126-128 | ✅ Shipped | 2026-07-11 |
 | v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure | 129-134 | ✅ Shipped | 2026-07-20 |
 | v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) | 135-138 | ✅ Shipped | 2026-08-04 |
-| v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure | 139-144 | 🚧 In Progress | - |
+| v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure | 139-144 | ✅ Shipped | 2026-08-18 |
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -368,8 +368,8 @@ Plans:
 | 137. Integration & Navigation-Last Close | v1.19 | 2/2 | Complete | 2026-08-03 |
 | 138. V118 Pin + 17th Path-A Lineage Bump + Terminal Close | v1.19 | 6/6 | Complete | 2026-08-04 |
 | 139. Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair | v1.20 | 6/6 | Complete | 2026-08-05 |
-| 140. Frozen-Aware Harness Conversion | v1.20 | 0/TBD | Not started | - |
+| 140. Frozen-Aware Harness Conversion | v1.20 | 5/5 | Complete | 2026-08-07 |
 | 141. Standalone-RED Validator Set — Chain Members Green | v1.20 | 6/6 | Complete | 2026-08-09 |
-| 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 0/TBD | Not started | - |
-| 143. Link Coverage & Fence-Mask Unification | v1.20 | 0/TBD | Not started | - |
-| 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 0/TBD | Not started | - |
+| 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 6/6 | Complete | 2026-08-10 |
+| 143. Link Coverage & Fence-Mask Unification | v1.20 | 9/9 | Complete | 2026-08-11 |
+| 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 12/12 | Complete | 2026-08-18 |

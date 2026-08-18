@@ -17,8 +17,8 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 - [x] **SWEEP-02**: **[SUCCESS-CRITERION AMENDMENT, D-24]** A dedicated `frozen-read-probe` job (no `needs:`), one per retrofitted workflow, executes a frozen `git show` read plus one real `readAtClose` call successfully in a dispatched CI run — replacing the original "the 11 validators that already import `frozen-at-close` execute their frozen reads in their existing `needs: harness-run` jobs" wording, which is structurally unobtainable in Phase 139 (D-23): both v1.5/v1.6 harnesses exit 1 at HEAD, so those jobs report `skipped` on any ref until Phase 141
 - [x] **SWEEP-03**: **[SUCCESS-CRITERION AMENDMENT, D-30]** FOUR silent-swallow fallbacks, not three — `check-phase-49.mjs:264`, `check-phase-49.mjs:297`, `check-phase-49.mjs:334`, and `check-phase-51.mjs:31` — fail loud instead of returning `null` / `""`, proven by a negative test
 - [x] **SWEEP-04**: `_lib/frozen-at-close.mjs` exposes a frozen enumeration API (`lsTreeAtClose()`) so a harness can derive its file scope at a close SHA instead of walking live HEAD
-- [ ] **SWEEP-05**: **[SUCCESS-CRITERION AMENDMENT, D-13/D-14]** Phase 140 converts the v1.4 through v1.18 frozen milestone-audit harnesses to read their corpus at their own close SHA rather than live HEAD; the v1.19 harness converts in Phase 144, in the same plan as HARN-17's `V119` pin, because `MILESTONE_CLOSE_SHAS` carries no `V119` entry today. Named limitation: in v1.15 through v1.18 the C17 contract-presence `existsSync` guard and the `c17-eee-contract.mjs` subprocess spawn it gates stay on live HEAD, so those four harnesses are frozen-aware for every check except C17 — `c17-eee-contract.mjs` is CARVE Category 3, owned by Phase 143 (LINK-01..06). **[SUCCESS-CRITERION AMENDMENT, D-02]** The v1.19 harness's own C17 contract-presence `existsSync` guard and the `c17-eee-contract.mjs` subprocess spawn it gates also stay on live HEAD after this plan's conversion, extending the named limitation to the 5 of the 5 C17-bearing harnesses (v1.15 through v1.19) — not 5 of 17, since only those five harnesses carry a C17 check at all.
-- [ ] **SWEEP-06**: The converted harnesses complete inside `check-phase-60.mjs`'s 60-second subprocess timeout, verified by measurement
+- [x] **SWEEP-05**: **[SUCCESS-CRITERION AMENDMENT, D-13/D-14]** Phase 140 converts the v1.4 through v1.18 frozen milestone-audit harnesses to read their corpus at their own close SHA rather than live HEAD; the v1.19 harness converts in Phase 144, in the same plan as HARN-17's `V119` pin, because `MILESTONE_CLOSE_SHAS` carries no `V119` entry today. Named limitation: in v1.15 through v1.18 the C17 contract-presence `existsSync` guard and the `c17-eee-contract.mjs` subprocess spawn it gates stay on live HEAD, so those four harnesses are frozen-aware for every check except C17 — `c17-eee-contract.mjs` is CARVE Category 3, owned by Phase 143 (LINK-01..06). **[SUCCESS-CRITERION AMENDMENT, D-02]** The v1.19 harness's own C17 contract-presence `existsSync` guard and the `c17-eee-contract.mjs` subprocess spawn it gates also stay on live HEAD after this plan's conversion, extending the named limitation to the 5 of the 5 C17-bearing harnesses (v1.15 through v1.19) — not 5 of 17, since only those five harnesses carry a C17 check at all.
+- [x] **SWEEP-06**: The converted harnesses complete inside `check-phase-60.mjs`'s 60-second subprocess timeout, verified by measurement
 - [x] **SWEEP-07**: The v1.4 `TEMPLATE-SENTINEL` assertion has a named, recorded remedy distinct from frozen-awareness
 - [x] **SWEEP-08**: A `V14` pin exists with an explicitly chosen SHA and recorded rationale, satisfying the `frozen-at-close.mjs:94-96` gate
 - [x] **SWEEP-09**: **[NEW REQUIREMENT, D-33, scoped to Phase 141]** **[SUCCESS-CRITERION AMENDMENT, D-28]** The remaining silent-swallow frozen-read sites (measured at roughly 38 `catch`-to-null/empty frozen-read sites across 20 validators, of which Phase 139's SWEEP-03 fixes 4) fail loud. Corrected census on the requirement's own reader-site unit: 19 `chicken-and-egg` return sites measured (`check-phase-67.mjs` 7, `check-phase-68.mjs` 2, `check-phase-70.mjs` 10) plus `check-phase-61.mjs:39-45`'s inline reader. Phase 141 lands 13 of them (61's 1, 68's 2, 70's 10); `check-phase-67.mjs`'s 7 defer to Phase 144, with its CARVE amendment landing in Phase 141 (D-11/D-12). Explicit note: `check-phase-61.mjs:39-45`'s `readAtV15CloseFor61` **cannot** be fixed at the library root — it carries its own inline reader, does not import `_lib/frozen-at-close.mjs` for these reads, is one of the 11 SWEEP-02 validators, and is pinned in place by `check-phase-68.mjs:202` `V-68-10`.
@@ -79,9 +79,9 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 139+).
 
 ### Harn — mandatory harness close (HARN)
 
-- [ ] **HARN-17**: `_lib/frozen-at-close.mjs` **V119** entry (`a7bda73e`) + `readAtV119Close` export
+- [x] **HARN-17**: `_lib/frozen-at-close.mjs` **V119** entry (`a7bda73e`) + `readAtV119Close` export
 - [x] **HARN-18**: 18th Path-A lineage bump — `v1.20-milestone-audit.mjs` + `v1.20-audit-allowlist.json` + BASELINE_24 + `check-phase-139..NN.mjs` with the apex extending to `[48..138]` **[SUCCESS-CRITERION AMENDMENT, D-25]** (`[48..138]` is a drafting error at this ratified site, OWNER-RATIFIED — corrected to `[48..143]`, 96 entries; see NEST-01's full derivation above) **generated by arithmetic** + 17th parallel CI coexistence workflow **born with `fetch-depth: 0`**
-- [ ] **HARN-19**: 3-axis terminal re-audit + **all 17 workflows dispatched green** + publish bundle regenerated `--version=v1.20` + SINGLE close-gate commit flipping all v1.20 requirements to Validated
+- [x] **HARN-19**: 3-axis terminal re-audit + **all 17 workflows dispatched green** + publish bundle regenerated `--version=v1.20` + SINGLE close-gate commit flipping all v1.20 requirements to Validated
 
 **V119 recovery, pre-verified.** `git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.19/ && $2 ~ /MILESTONE CLOSE/'` → `a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`, **count = 1**. Never the naive dual-token `--grep --all-match` form, which matches on the body and returns multiple candidates.
 
@@ -124,34 +124,35 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SWEEP-01 | Phase 139 | Complete |
-| SWEEP-02 | Phase 139 | Complete |
-| SWEEP-03 | Phase 139 | Complete |
-| SWEEP-04 | Phase 139 | Complete |
-| SWEEP-05 | Phase 140, Phase 144 | Pending |
-| SWEEP-06 | Phase 140 | Pending |
-| SWEEP-07 | Phase 140 | Complete |
-| SWEEP-08 | Phase 140 | Complete |
-| RED-01 | Phase 141 | Complete |
-| RED-02 | Phase 141 | Complete |
-| RED-03 | Phase 141 | Complete |
-| RED-04 | Phase 142 | Complete |
-| RED-05 | Phase 142 | Complete |
-| RED-06 | Phase 142 | Complete |
-| RED-07 | Phase 142 | Complete |
-| LINK-01 | Phase 143 | Complete |
-| LINK-02 | Phase 143 | Complete |
-| LINK-03 | Phase 143 | Complete |
-| LINK-04 | Phase 143 | Complete |
-| LINK-05 | Phase 143 | Complete |
-| LINK-06 | Phase 143 | Complete |
-| NEST-01 | Phase 142 | Complete |
-| GOV-01 | Phase 139 | Complete |
-| GOV-02 | Phase 139 | Complete |
-| HARN-17 | Phase 144 | Pending |
-| HARN-18 | Phase 144 | Complete |
-| HARN-19 | Phase 144 | Pending |
-| SWEEP-09 | Phase 141 | Complete |
+| SWEEP-01 | Phase 139 | Validated |
+| SWEEP-02 | Phase 139 | Validated |
+| SWEEP-03 | Phase 139 | Validated |
+| SWEEP-04 | Phase 139 | Validated |
+| SWEEP-05 | Phase 140, Phase 144 | Validated |
+| SWEEP-06 | Phase 140, Phase 144 | Validated |
+| SWEEP-07 | Phase 140 | Validated |
+| SWEEP-08 | Phase 140 | Validated |
+| RED-01 | Phase 141 | Validated |
+| RED-02 | Phase 141 | Validated |
+| RED-03 | Phase 141 | Validated |
+| RED-04 | Phase 142 | Validated |
+| RED-05 | Phase 142 | Validated |
+| RED-06 | Phase 142 | Validated |
+| RED-07 | Phase 142 | Validated |
+| LINK-01 | Phase 143 | Validated |
+| LINK-02 | Phase 143 | Validated |
+| LINK-03 | Phase 143 | Validated |
+| LINK-04 | Phase 143 | Validated |
+| LINK-05 | Phase 143 | Validated |
+| LINK-06 | Phase 143 | Validated |
+| NEST-01 | Phase 142 | Validated |
+| GOV-01 | Phase 139 | Validated |
+| GOV-02 | Phase 139 | Validated |
+| HARN-17 | Phase 144 | Validated |
+| HARN-18 | Phase 144 | Validated |
+| HARN-19 | Phase 144 | Validated |
+| SWEEP-09 | Phase 141, Phase 144 | Validated |
+| **Total** | **28/28 requirements Validated** | **6 phases (139-144) — MILESTONE CLOSED** |
 
 **Coverage:**
 
@@ -163,3 +164,4 @@ Which phases cover which requirements. Populated during roadmap creation.
 *Requirements defined: 2026-08-04*
 *Last updated: 2026-08-05 — Phase 139 Plan 01 amendment: SWEEP-01/02/03 re-worded to the ratified scope (D-13/D-14, D-24, D-30), new SWEEP-09 added and scoped to Phase 141 (D-33), requirement count 27 → 28 (28/28 mapped)*
 *2026-08-09 — Phase 141 Plan 06: SWEEP-09 flipped Pending → Complete after the first-ever CI fan-out dispatch (three runs, one shared SHA `275bbad1`, 41 jobs, zero content/timeout/environment reds — see `141-EVIDENCE.md`'s Dispatch Record and Triage Table). RED-01/RED-02/RED-03 were already Complete (Plan 05). No requirement in this milestone is Validated by this update — that state is reserved for Phase 144's single close-gate commit.*
+*2026-08-18 — Phase 144 Plan 12: SINGLE close-gate commit. All 28 v1.20 requirements flip to Validated. SWEEP-06's traceability cell corrected to `Phase 140, Phase 144` (the seventeenth harness's measurement landed at Phase 144 Plan 02) and SWEEP-09's corrected to `Phase 141, Phase 144` (`check-phase-67.mjs`'s remaining 7 sites landed at Phase 144 Plan 03), matching the two-phase form `SWEEP-05` already used. v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure — MILESTONE CLOSED. See `.planning/milestones/v1.20-MILESTONE-AUDIT.md` and `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`.*

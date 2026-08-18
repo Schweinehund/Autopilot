@@ -4,16 +4,16 @@ milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
-status: executing
-stopped_at: Completed 144-11-PLAN.md (v1.20 milestone audit + absorb-and-append deferred-cleanup)
-last_updated: "2026-08-18T03:56:31.761Z"
-last_activity: 2026-08-12
-last_activity_desc: Phase 144 execution started
+status: shipped
+stopped_at: "Completed 144-12-PLAN.md — v1.20 MILESTONE CLOSE, 28/28 requirements Validated"
+last_updated: "2026-08-18T04:30:00.000Z"
+last_activity: 2026-08-18
+last_activity_desc: Phase 144 close-gate landed — v1.20 SHIPPED
 progress:
   total_phases: 6
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 44
-  completed_plans: 43
+  completed_plans: 44
 ---
 
 # Project State
@@ -23,7 +23,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` + `/adversarial-review`)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.20 protects that corpus by repairing the validator chain and CI harness lineage that guards it.
-**Current focus:** Phase 144 — V119 Pin + 18th Path-A Lineage Bump + Terminal Close
+**Current focus:** v1.20 SHIPPED 2026-08-18 (Phase 144 close-gate complete, 28/28 requirements Validated) — next: `/gsd-complete-milestone` or `/gsd-new-milestone`
 
 > **v1.20 BACK-ANCHOR RECOVERY (Phase 144 / HARN-17).** The V119 pin needs the v1.19 close-gate SHA `a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`. Recover it with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
 > ```
@@ -33,12 +33,14 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — EXECUTING
-Plan: 11 of 12
-Status: Ready to execute
-Last activity: 2026-08-12 — Phase 144 execution started
+Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — COMPLETE
+Plan: 12 of 12
+Status: v1.20 SHIPPED — 28/28 requirements Validated via the Phase 144 Plan 144-12 single close-gate commit
+Last activity: 2026-08-18 — Phase 144 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
 
-Progress: [██████████] 98%
+**Next step:** `/gsd-complete-milestone` (archive v1.20, tag, close Jira story) or `/gsd-new-milestone` to scope v1.21. The close-gate commit stays local — pushing it is the owner's call, out of this phase's scope.
+
+Progress: [██████████] 100%
 
 ## v1.20 Phase Dependency Summary
 
@@ -442,8 +444,6 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 - The recipe-01 zero-edit guard applies corpus-wide and permanently — `check-phase-130.mjs:64,67` pins `docs/recipes/01-shared-windows-avd-client.md`'s Step 5a/5b headings as literal strings inside every apex chain.
 - Zero line-shifting edits to `docs/_glossary-android.md` / `docs/reference/android-capability-matrix.md` — 365 and 139 pin coordinates across 16 frozen sidecars; v1.20's SWEEP/RED work must not touch these files.
 - **CARVE-1 / `FROZEN-AWARE-ADOPTION-SWEEP-01` is IN SCOPE this milestone** for the first time since it was first carried at v1.8 — Phases 139-140 are its discharge. GOV-01's CARVE is the explicit authorization boundary.
-- The ten-member standalone-RED validator set `{30,31,48,60..66}` is IN SCOPE this milestone (Phases 141-142) — the `ACCEPTED-SCOPED-RED` disposition is being closed, not carried forward.
-- `ACCEPTED-STANDALONE-CI-RED` and `ACCEPTED-SCOPED-RED` must be DELETED from the backlog at Phase 144 close, not carried a seventh milestone — this is the milestone bar per REQUIREMENTS.md.
 - WINDOWS-CLONE-DEEPNEST-TIMEOUT-01's cold-clone leg gets a falsifiable threshold at Phase 142 (NEST-01); the within-apex curve stays healthy and is not re-collapsed with it.
 - Workflows fire on `pull_request` + schedule + `workflow_dispatch` only — a push to `master` fires nothing. Axis-2 needs an explicit `gh workflow run --ref master`, and CI must never be read while the remote is behind.
 
