@@ -5,10 +5,10 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 status: shipped
-stopped_at: "Completed 144-12-PLAN.md — v1.20 MILESTONE CLOSE, 28/28 requirements Validated"
-last_updated: "2026-08-18T04:30:00.000Z"
+stopped_at: Completed 144-12-PLAN.md — v1.20 MILESTONE CLOSE, 28/28 requirements Validated
+last_updated: "2026-08-18T04:14:30.683Z"
 last_activity: 2026-08-18
-last_activity_desc: Phase 144 close-gate landed — v1.20 SHIPPED
+last_activity_desc: Phase 144 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
 progress:
   total_phases: 6
   completed_phases: 6
@@ -324,6 +324,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 | Phase 144 P09 | ~30min | 2 tasks | 2 files |
 | Phase 144 P10 | ~30min | 2 tasks | 1 files |
 | Phase 144 P11 | 45min | 2 tasks | 2 files |
+| Phase 144 P12 | 15min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -423,6 +424,9 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - [Phase ?]: Split the milestone close across two plans: 144-11 authors the audit + absorb-and-append deferred-cleanup record, 144-12 lands the atomic 28-requirement flip
 - [Phase ?]: Recorded a fourth Axis-3 measurement (genuinely dispatched context-independent agent, apex leg incomplete, owner-attributed to WINDOWS-CLONE-DEEPNEST-TIMEOUT-01) directly in v1.20-MILESTONE-AUDIT.md per the plan's supplied evidence
 - [Phase ?]: Closed CARVE-1 and C17-VS-PIPELINE-FENCE-MASK-DIVERGENCE in v1.20-DEFERRED-CLEANUP.md Part C, each with its residue named as a distinct open item rather than double-booked
+- [Phase ?]: 144-12: Publish bundle regenerated with explicit --version=v1.20 before the close-gate flip, per D-29 ordering
+- [Phase ?]: 144-12: Single atomic close-gate commit flipped all 28 v1.20 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, corrected SWEEP-06/SWEEP-09 traceability cells to two-phase form, removed both accepted-red watch items from STATE.md
+- [Phase ?]: 144-12: Post-close-gate apex confirmed 100/0/1 (correct pre-144-VERIFICATION.md triple), check-phase-54 exits 0 after the rewrite, recorded as a separate non-gate commit
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -449,9 +453,9 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-18T03:56:21.171Z
-Stopped at: Completed 144-11-PLAN.md (v1.20 milestone audit + absorb-and-append deferred-cleanup)
-Resume file: 144-12-PLAN.md
+Last session: 2026-08-18T04:14:30.631Z
+Stopped at: Completed 144-12-PLAN.md — v1.20 MILESTONE CLOSE, 28/28 requirements Validated
+Resume file: None
 Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
 
 ## Operator Next Steps
