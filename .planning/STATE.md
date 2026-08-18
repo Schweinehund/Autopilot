@@ -5,8 +5,8 @@ milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
 current_phase: 144
 current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 status: shipped
-stopped_at: Completed 144-12-PLAN.md — v1.20 MILESTONE CLOSE, 28/28 requirements Validated
-last_updated: "2026-08-18T04:14:30.683Z"
+stopped_at: Phase 144 complete — v1.20 SHIPPED (28/28 Validated, close-gate 246fa3dd, apex 101/0/0)
+last_updated: "2026-08-18T04:26:03.698Z"
 last_activity: 2026-08-18
 last_activity_desc: Phase 144 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
 progress:
@@ -453,12 +453,13 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-18T04:14:30.631Z
-Stopped at: Completed 144-12-PLAN.md — v1.20 MILESTONE CLOSE, 28/28 requirements Validated
-Resume file: None
-Next action: Execute 143-02-PLAN.md (TRACER: D-38 record + GitHub anchor model end-to-end + `docs/_templates/` exclusion + inline-code masking)
+Last session: 2026-08-18T04:26:03.649Z
+Stopped at: Phase 144 complete — v1.20 SHIPPED (28/28 Validated, close-gate 246fa3dd, apex 101/0/0)
+Resume file: .planning/phases/144-v119-pin-18th-path-a-lineage-bump-terminal-close/144-VERIFICATION.md
+Next action: `/gsd-complete-milestone` — archive v1.20 and tag it
 
 ## Operator Next Steps
 
-- Execute 143-02-PLAN.md — Wave 2, blocked on Wave 1 (this plan) which is now complete
-- Phase 143 has 9 plans across 9 sequential waves (139-01 governance gate done; 02 TRACER; 03-09 the corpus repair + fence-mask + hand-off plans)
+- `/gsd-complete-milestone` — archives the v1.20 phase directories, collapses the ROADMAP, appends MILESTONES/RETROSPECTIVE, and tags `v1.20`. Watch for archival drift: the apex carries the correct `'v1.20-phases'` token as a literal source assertion, but the resolver checks the live path first, so a wrong token cannot be detected by a resolver-null before archiving.
+- `.planning/REQUIREMENTS.md` must NOT be deleted at archive time — `check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism.
+- Then `/gsd-new-milestone` for v1.21. Its first phase inherits the V120 pin (`V120-PIN-DEFERRAL`), the still-open `V-132-HUBSNOTWIRED-REGEX-BROKEN` and `RECIPE-OUTBOUND-LINK-COVERAGE`, the C17 live-HEAD residue across all five C17-bearing harnesses, `FENCE-AXIS-02`, and the four remote atom branches held at KEEP.
