@@ -393,18 +393,21 @@ if (SELF_TEST) {
     `set: [${[...fencedSet].join(', ')}]`
   );
 
-  // G: path traversal never throws -- a pathological ../../../../etc/passwd-style target
-  // resolves to a not-found FAIL via existsSync, not an unhandled exception.
+  // G: path traversal never throws -- a pathological deep-traversal target
+  // resolves to a not-found FAIL via existsSync, not an unhandled exception. The leaf name is
+  // deliberately one that exists on NO platform: an /etc/passwd fixture passes on Windows (it
+  // resolves to D:/etc/passwd) and FAILS on a Linux runner, where /etc/passwd genuinely exists --
+  // the existsSync leg would then assert a property of the host, not of resolveLinkTarget.
   let traversalThrew = false;
   let traversalResolved = null;
   try {
-    traversalResolved = resolveLinkTarget(toAbs('docs/quick-ref-l2.md'), '../../../../../../etc/passwd');
+    traversalResolved = resolveLinkTarget(toAbs('docs/quick-ref-l2.md'), '../../../../../../gsd-absent-traversal-target-8f3a1c.md');
   } catch {
     traversalThrew = true;
   }
   const traversalNotFound = !traversalThrew && traversalResolved !== null && !existsSync(traversalResolved.resolvedAbs);
   stAssert(
-    'path traversal: ../../../../../../etc/passwd resolves to not-found, no throw',
+    'path traversal: ../../../../../../gsd-absent-traversal-target-8f3a1c.md resolves to not-found, no throw',
     traversalNotFound,
     traversalThrew ? 'threw an exception' : `resolved: ${traversalResolved?.resolvedRel}`
   );
