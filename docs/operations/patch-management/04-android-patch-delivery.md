@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-28
-review_by: 2026-06-27
+last_verified: 2026-08-19
+review_by: 2026-10-18
 applies_to: all
 audience: admin
 platform: Android
@@ -57,14 +57,22 @@ to determine device trust. The verdicts and Intune mapping:
 |---------|------------|-------------------|
 | `MEETS_BASIC_INTEGRITY` | Device passes basic integrity checks (genuine device + non-rooted) | Compliance "Basic + Device integrity" option |
 | `MEETS_DEVICE_INTEGRITY` | Above + device boot integrity | Compliance "Basic + Device integrity" option |
-| `MEETS_STRONG_INTEGRITY` | Above + recent security patch + hardware-backed attestation | Compliance "Strong integrity" option |
+| `MEETS_STRONG_INTEGRITY` | Above + a security patch ≤12 months old across all partitions (OS + vendor) + hardware-backed attestation | Compliance "Strong integrity" option |
 
 **MEETS_STRONG_INTEGRITY** [HARD-DEADLINE — see Deadlines H2] is the verdict that gates the
 fleet-compliance hard deadline. It encodes three concurrent conditions:
 
 1. Hardware-backed key attestation (TEE/StrongBox)
 2. Android 13 or higher
-3. Security patch ≤12 months old
+3. Security patch ≤12 months old, covering **all partitions** — the OS partition and the vendor
+   partition
+
+The 12-month patch-age condition belongs to the **MEETS_STRONG_INTEGRITY verdict**, not to Android
+13+ generally — a device can run Android 13 or higher and hold `MEETS_DEVICE_INTEGRITY`
+indefinitely without a recent patch. The patch-age condition only bites for fleets whose
+compliance policy targets the Strong Integrity tier.
+
+**Source:** [Google Play Integrity: verdicts](https://developer.android.com/google/play/integrity/verdicts) (last updated 2026-05-01)
 
 Devices not returning MEETS_STRONG_INTEGRITY [HARD-DEADLINE — see Deadlines H2] post Oct 31 2026
 will fail Intune compliance and be blocked by Conditional Access policies querying the
@@ -87,9 +95,13 @@ Samsung KSP are soft cutovers (feature additions; no fleet-wide failure mode).
 | Samsung KSP (Knox Service Plugin) | Analog OEM mechanism | Samsung fleets only |
 
 > ⚠️ **Hard deadline (Oct 31 2026):** MEETS_STRONG_INTEGRITY enforcement: Google enforced
-> May 2025; Intune enforced September 30 2025; fleet compliance deadline October 31 2026. Android
-> 13+ devices must have a security patch ≤12 months old. Devices not meeting this threshold will
-> fail Intune compliance after Oct 31 2026.
+> May 2025; Intune enforced September 30 2025; fleet compliance deadline October 31 2026. The
+> security patch ≤12 months old requirement (all partitions — OS and vendor) is a condition of the
+> MEETS_STRONG_INTEGRITY verdict for Android 13+ devices, not a general Android 13+ requirement.
+> Devices not meeting this condition will fail Intune compliance after Oct 31 2026 if their
+> compliance policy targets the Strong Integrity tier.
+
+**Source:** [In development - Microsoft Intune](https://learn.microsoft.com/en-us/intune/whats-new/in-development) (ms.date 2026-07-27, updated 2026-07-31) — an **announced** enforcement date on Intune's *In development* page, not a shipped general-availability statement; the page's own note says dates and individual features might change. The same section corroborates the all-partitions scoping above.
 
 ## Enforcement Cascade Migration
 
