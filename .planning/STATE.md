@@ -2,9 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
+current_phase: 145
+current_phase_name: Corpus Correction, Validator Gate & Archival-Drift Fix
 status: planning
-last_updated: "2026-08-19T00:00:00.000Z"
+stopped_at: Phase 145 context gathered
+last_updated: "2026-08-19T15:43:49.809Z"
 last_activity: 2026-08-19
+last_activity_desc: ROADMAP.md created, 58/58 requirements mapped across 9 phases
 progress:
   total_phases: 9
   completed_phases: 0
@@ -259,27 +263,35 @@ Phase 152 (Integration, Registry & Navigation-Last Close)
 Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
           HARN-01..HARN-06
           DELIVERS:
+
             - V120 pin INSERTED BEFORE the V14 entry (proved by
                 executing the assertion — appending FAILS a check that
                 sits inside the apex chain) + both frozen-read exports,
                 proven end to end by a real frozen read
+
             - All FIVE C17-bearing harnesses converted SIMULTANEOUSLY
                 via the cwd swap; the contract validator stays
                 byte-unchanged and the existence guard stays live
+
             - 19th Path-A lineage bump + sidecar + BASELINE +
                 check-phase-145..152 + the apex, CHAIN range GENERATED
                 BY ARITHMETIC, never transcribed (CHAIN_END = 152)
+
             - The 18th CI workflow BORN with full fetch depth; publish
                 bundle regenerated at this milestone's version
+
             - 3-axis terminal re-audit at ONE shared SHA, all workflows
                 dispatched, SKIPS READ AS GAPS from job-level output
           HARD CONSTRAINTS:
+
             - Always the FINAL phase; never batches with content work.
                 Also true by dependency: the apex chains [48..N-1], which
                 cannot be authored until the last content phase is fixed
+
             - Predecessor frozen surfaces byte-unchanged; a later
                 validator can pin an earlier one's exact call-site
                 string — grep before editing any frozen line
+
             - Archival drift is a recurring close blocker: scan
                 nested-fail children before the push
           RESEARCH FLAG: none — ratified precedent commit exists and the
@@ -532,9 +544,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-19 — `gsd-roadmapper` created the v1.21 roadmap
-Stopped at: ROADMAP.md written (9 phases, 145-153), STATE.md updated, REQUIREMENTS.md traceability filled — 58/58 mapped, mechanically verified
-Resume file: .planning/ROADMAP.md (`## Phase Details`, Phase 145)
+Last session: 2026-08-19T15:43:49.680Z
+Stopped at: Phase 145 context gathered
+Resume file: .planning/phases/145-corpus-correction-validator-gate-archival-drift-fix/145-CONTEXT.md
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
 ## Operator Next Steps
