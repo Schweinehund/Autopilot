@@ -172,11 +172,26 @@ verification agent. Figures the review corrected are marked `[CORRECTED]`.
   draft recommended deleting it and claimed no assertion pinned it — false: `check-phase-54.mjs:384`
   pins `> ⚠️ **Hard deadline (Oct 31 2026):**` **verbatim** in `04-android-patch-delivery.md`, plus
   a whole-file token at `:389`. Both FIX-08 and ROADMAP's research flag require the rewrite to
-  *retain the pinned literals*. Rewrite by attribution instead: the corpus asserts the deadline, the
-  current first-party pages do not restate it, it is carried unconfirmed.
+  *retain the pinned literals*. ~~Rewrite by attribution instead: the corpus asserts the deadline,
+  the current first-party pages do not restate it, it is carried unconfirmed.~~
+  **[SUPERSEDED 2026-08-19, post-research — the date IS now first-party sourced.]** The
+  attribution/hedge path is not needed. `learn.microsoft.com/en-us/intune/whats-new/in-development`
+  carries the verbatim sentence *"Microsoft Intune will enforce this change by **October 31,
+  2026**."* under `### Plan for Change: Google Play strong integrity definition update for Android
+  13 or above`, with `ms.date: 2026-07-27` / `updated_at: 2026-07-31` — both post-dating the
+  corpus's `last_verified: 2026-04-28` per D-04. **Independently re-fetched and confirmed by the
+  orchestrator, not taken on the researcher's word.** Carry a direct `**Source:**` line per D-01.
+  Two accuracy riders: (a) attribute it as an *announced* enforcement date on Intune's **In
+  development** page, not as a shipped GA statement — that page's own note says "Dates and
+  individual features might change"; (b) the same section independently corroborates FIX-08's
+  scoping ("devices running Android 13 or above **without a security update in the past 12 months**"
+  lose the Strong Integrity verdict), so it sources FIX-08's substance as well as its date. The
+  literal is still **retained**, never deleted.
 - **D-26:** Three collateral constraints on that rewrite: `V-54-24` requires **≥4** `[HARD-DEADLINE`
   tokens in the Android file; `check-phase-57.mjs:427` **bans** the literal inside `quick-ref-l2.md`'s
-  Play Integrity H3 region, so the hedge must not propagate there; and an absence statement in
+  Play Integrity H3 region, so **neither the hedge nor the newly-sourced citation may propagate
+  there** (the ban is on the literal itself, regardless of how well sourced it now is); and an
+  absence statement in
   `00-overview.md` must not name `MEETS_STRONG_INTEGRITY` in **body prose** (`V-54-29` — the table
   cell at `:55` is stripped and safe). `[CORRECTED]` the overview's date is at `:55` (also `:19`,
   `:58`), not `:57`.
