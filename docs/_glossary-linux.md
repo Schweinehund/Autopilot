@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-This reference defines the terminology used across Linux device management in Microsoft Intune, covering Ubuntu 22.04 and 24.04 LTS enrollment via the intune-portal package, systemd-managed services such as microsoft-identity-broker and intune-agent.timer, disk-encryption concepts (dm-crypt, LUKS), APT/deb package delivery from packages.microsoft.com, and the compliance and Conditional Access model unique to Linux endpoints. Cross-platform collision terms absent from Linux management are also indexed for navigation.
+This reference defines the terminology used across Linux device management in Microsoft Intune, covering Ubuntu 24.04 and 26.04 LTS enrollment via the intune-portal package, systemd-managed services such as microsoft-identity-broker and intune-agent.timer, disk-encryption concepts (dm-crypt, LUKS), APT/deb package delivery from packages.microsoft.com, and the compliance and Conditional Access model unique to Linux endpoints. Cross-platform collision terms absent from Linux management are also indexed for navigation.
 
 > **Platform coverage:** This glossary covers Linux-specific terminology for Intune-managed Ubuntu LTS devices. For Windows Autopilot terminology, see the [Windows Autopilot Glossary](_glossary.md). For
 
@@ -56,7 +56,7 @@ The Linux kernel's subsystem for transparent disk encryption, providing block-de
 
 ### GA kernel
 
-The General Availability kernel that ships with a given Ubuntu LTS release at GA time and remains the default for the entire LTS lifetime if HWE is not installed. Ubuntu 22.04 GA kernel is 5.15; Ubuntu 24.04 GA kernel is 6.8. The GA kernel is the conservative default; HWE is the rolling-update option (see [HWE kernel](#hwe-kernel)).
+The General Availability kernel that ships with a given Ubuntu LTS release at GA time and remains the default for the entire LTS lifetime if HWE is not installed. Ubuntu 24.04 GA kernel is 6.8; Ubuntu 26.04 GA kernel is `[verify-on-current-Ubuntu]`. The GA kernel is the conservative default; HWE is the rolling-update option (see [HWE kernel](#hwe-kernel)).
 
 > **Cross-platform note:** No direct cross-platform analog. Windows / macOS / Android / iOS bundle a single OS-vendor kernel without the GA-vs-rolling distinction. The GA-vs-HWE choice is an
 
@@ -70,7 +70,7 @@ The GNOME (GNU Network Object Model Environment) graphical desktop environment, 
 
 ### HWE kernel
 
-The Hardware Enablement kernel — Ubuntu's rolling backported kernel track for an LTS release that pulls newer kernel versions from subsequent Ubuntu releases. Ubuntu 22.04 HWE kernel is 6.8 (backported from 24.04); Ubuntu 24.04 HWE kernel is 6.11+ (backported from 24.10/25.04). HWE provides newer hardware support; GA provides longer stability windows. See [GA kernel](#ga-kernel) for the disambiguation pair.
+The Hardware Enablement kernel — Ubuntu's rolling backported kernel track for an LTS release that pulls newer kernel versions from subsequent Ubuntu releases. Ubuntu 24.04 HWE kernel is 6.11+ (backported from 24.10/25.04); Ubuntu 26.04 HWE kernel is `[verify-on-current-Ubuntu]`. HWE provides newer hardware support; GA provides longer stability windows. See [GA kernel](#ga-kernel) for the disambiguation pair.
 
 ### LUKS
 
@@ -92,7 +92,7 @@ The Microsoft-operated APT repository host that distributes `intune-portal`, `mi
 
 ### Ubuntu LTS
 
-Ubuntu Long Term Support — Canonical's biennial LTS release cadence (every two years in even-year April: 20.04 / 22.04 / 24.04). Each LTS receives 5 years of standard support + optional 5 years extended via Ubuntu Pro. Microsoft Intune supports Ubuntu LTS releases per the version matrix in [01-linux-prerequisites.md](linux-lifecycle/01-linux-prerequisites.md); non-LTS interim releases (23.04, 23.10, etc.) are not supported.
+Ubuntu Long Term Support — Canonical's biennial LTS release cadence (every two years in even-year April: 20.04 / 24.04 / 26.04). Each LTS receives 5 years of standard support + optional 5 years extended via Ubuntu Pro. Microsoft Intune supports Ubuntu LTS releases per the version matrix in [01-linux-prerequisites.md](linux-lifecycle/01-linux-prerequisites.md); non-LTS interim releases (23.04, 23.10, etc.) are not supported.
 
 ## Agent & Service
 

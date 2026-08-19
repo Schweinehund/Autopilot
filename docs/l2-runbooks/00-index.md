@@ -193,7 +193,7 @@ The [Android Log Collection Guide](18-android-log-collection.md) is a **prerequi
 
 ## Linux L2 Runbooks
 
-> **Version gate:** The runbooks below cover Linux Intune client (`intune-portal`) on Ubuntu 22.04 LTS and 24.04 LTS, delivered as a deb package from `packages.microsoft.com`.
+> **Version gate:** The runbooks below cover Linux Intune client (`intune-portal`) on Ubuntu 24.04 LTS and 26.04 LTS, delivered as a deb package from `packages.microsoft.com`.
 
 > There is no GA snap distribution. For Android L2 runbooks, see above. For iOS L2 runbooks, see above. For macOS ADE runbooks, see above. For Windows Autopilot runbooks, see the tables above.
 

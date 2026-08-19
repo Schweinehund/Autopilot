@@ -207,7 +207,7 @@ This one-page cheat sheet gives Service Desk (L1) staff the top checks, escalati
 
 ## Linux Quick Reference
 
-**Platform:** Linux (Ubuntu 22.04 / 24.04 LTS) through Microsoft Intune
+**Platform:** Linux (Ubuntu 24.04 / 26.04 LTS) through Microsoft Intune
 
 ### Top Checks
 

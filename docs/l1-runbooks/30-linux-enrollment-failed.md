@@ -16,15 +16,15 @@ platform: Linux
 
 ## Summary
 
-This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of Linux endpoint enrollment failures (Ubuntu 22.04/24.04 LTS) across three independently diagnosable causes: package install failure, Microsoft Identity Broker sign-in failure, and intune-agent.timer enrollment timeout.
+This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 triage of Linux endpoint enrollment failures (Ubuntu 24.04/26.04 LTS) across three independently diagnosable causes: package install failure, Microsoft Identity Broker sign-in failure, and intune-agent.timer enrollment timeout.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 24.04/26.04 LTS).
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 > For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
-L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where Intune enrollment did not complete. Three distinct causes are diagnosed independently:
+L1 runbook for Linux endpoints (Ubuntu 24.04/26.04 LTS) where Intune enrollment did not complete. Three distinct causes are diagnosed independently:
 
 - **Cause A:** Package install failure (`intune-portal` deb did not install or is in error state)
 - **Cause B:** Sign-in failure (Microsoft Identity Broker authentication did not complete)
@@ -89,7 +89,7 @@ See [intune-portal (package)](../_glossary-linux.md#intune-portal-package) for t
 
 **Verify:**
 
-- After reinstall: `apt list --installed | grep intune-portal` returns a single line `intune-portal/jammy,now 2.0.X amd64 [installed]` (Ubuntu 22.04) or `intune-portal/noble,now 2.0.X amd64 [installed]` (Ubuntu 24.04).
+- After reinstall: `apt list --installed | grep intune-portal` returns a single line `intune-portal/noble,now 2.0.X amd64 [installed]` (Ubuntu 24.04) or the equivalent codename line for Ubuntu 26.04.
 
 **If the admin confirms none of the above applies:**
 

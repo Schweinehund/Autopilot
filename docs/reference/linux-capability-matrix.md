@@ -16,9 +16,9 @@ platform: Linux
 
 ## Summary
 
-This reference document is a capability matrix comparing Microsoft Intune management capabilities between Windows and Linux (Ubuntu 22.04 LTS and 24.04 LTS via the intune-portal deb client) across enrollment, configuration, app deployment, compliance, software updates, and conditional access domains, plus a Cross-Platform Equivalences section mapping Linux capabilities to their closest Apple and Android analogs. The primary audience is Intune administrators and L2 engineers managing Linux device fleets.
+This reference document is a capability matrix comparing Microsoft Intune management capabilities between Windows and Linux (Ubuntu 24.04 LTS and 26.04 LTS via the intune-portal deb client) across enrollment, configuration, app deployment, compliance, software updates, and conditional access domains, plus a Cross-Platform Equivalences section mapping Linux capabilities to their closest Apple and Android analogs. The primary audience is Intune administrators and L2 engineers managing Linux device fleets.
 
-This document compares Intune management capabilities between Windows (Autopilot v1, Autopilot v2, manual enrollment) and Linux (Ubuntu 22.04 LTS, Ubuntu 24.04 LTS — `intune-portal` deb client). Linux Intune management is structurally narrower than Windows; this matrix quantifies the gaps and provides a Cross-Platform Equivalences section attributing the closest Apple/Android analogs for each Linux capability.
+This document compares Intune management capabilities between Windows (Autopilot v1, Autopilot v2, manual enrollment) and Linux (Ubuntu 24.04 LTS, Ubuntu 26.04 LTS — `intune-portal` deb client). Linux Intune management is structurally narrower than Windows; this matrix quantifies the gaps and provides a Cross-Platform Equivalences section attributing the closest Apple/Android analogs for each Linux capability.
 
 For Linux admin setup guides, see [Linux Admin Setup Overview](../admin-setup-linux/00-overview.md). For the locked Linux management surface (whitelist) and out-of-scope callouts, see [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md#supported-management-surface) — this matrix EXTENDS the whitelist with bilateral comparison; it does not duplicate the whitelist.
 

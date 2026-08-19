@@ -168,11 +168,11 @@ const checks = [
     }
   },
   {
-    id: 10, name: "V-49-10: Matrix has exactly 3 distro rows (Ubuntu 20.04 / 22.04 / 24.04)",
+    id: 10, name: "V-49-10: Matrix has exactly 3 distro rows (Ubuntu 20.04 / 24.04 / 26.04) [Phase 145 FIX-09 same-commit update]",
     run() {
       const content = readFile(PREREQUISITES_PATH);
       if (content === null) return { pass: false, detail: "File missing" };
-      const distroRows = (content.match(/^\| Ubuntu (20\.04|22\.04|24\.04) LTS/gm) || []);
+      const distroRows = (content.match(/^\| Ubuntu (20\.04|24\.04|26\.04) LTS/gm) || []);
       if (distroRows.length === 3) return { pass: true, detail: "found 3 distro rows" };
       return { pass: false, detail: "Expected 3 distro rows, found " + distroRows.length };
     }

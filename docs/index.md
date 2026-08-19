@@ -34,7 +34,7 @@ Troubleshooting, investigation, and setup guides for Windows Autopilot, macOS AD
 - [macOS Provisioning](#macos-provisioning) -- macOS device provisioning via Automated Device Enrollment (ADE) through Apple Business Manager
 - [iOS/iPadOS Provisioning](#iosipados-provisioning) -- iOS/iPadOS device provisioning via Microsoft Intune (ADE, Device Enrollment, Account-Driven User Enrollment, MAM-WE)
 - [Android Enterprise Provisioning](#android-enterprise-provisioning) -- Android device provisioning via Intune (Zero-Touch, Fully Managed, Work Profile, Dedicated, AOSP stub)
-- [Linux Provisioning](#linux-provisioning) -- Linux device provisioning via Microsoft Intune Linux client (Ubuntu 22.04 / 24.04 LTS, intune-portal package, web-app conditional access)
+- [Linux Provisioning](#linux-provisioning) -- Linux device provisioning via Microsoft Intune Linux client (Ubuntu 24.04 / 26.04 LTS, intune-portal package, web-app conditional access)
 - [Device Configuration Recipes](#device-configuration-recipes) -- End-to-end provisioning recipes with embedded admin decision points (shared Windows AVD-client device, Shared iPad full provisioning, Windows 11 multi-app kiosk, Android Dedicated multi-app kiosk)
 - [Operations](#operations) -- Cross-platform operational depth (co-management, patch & update management, app lifecycle automation, drift detection + tenant migration)
 - [Cross-Platform References](#cross-platform-references) -- Glossaries, concept comparison, and shared resources
@@ -238,13 +238,13 @@ Troubleshooting, investigation, and setup guides for Android Enterprise provisio
 
 ## Linux Provisioning
 
-Troubleshooting, investigation, and setup guides for Linux (Ubuntu 22.04 / 24.04 LTS) device management through Microsoft Intune. For terminology, see the [Linux Provisioning Glossary](_glossary-linux.md). For enrollment paths, see the [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md).
+Troubleshooting, investigation, and setup guides for Linux (Ubuntu 24.04 / 26.04 LTS) device management through Microsoft Intune. For terminology, see the [Linux Provisioning Glossary](_glossary-linux.md). For enrollment paths, see the [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md).
 
 ### Service Desk (L1)
 
 | Resource | When to Use |
 |----------|-------------|
-| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Start here -- understand the Linux enrollment paths (Ubuntu 22.04 / 24.04 LTS, intune-portal package install, microsoft-identity-broker) |
+| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Start here -- understand the Linux enrollment paths (Ubuntu 24.04 / 26.04 LTS, intune-portal package install, microsoft-identity-broker) |
 | [Linux Triage Decision Tree](decision-trees/09-linux-triage.md) | Identifies the Linux failure scenario from symptoms (enrollment failed / non-compliant / web-app-CA-blocking-Edge / agent service not running) and routes to the correct runbook |
 | [Linux L1 Runbooks](l1-runbooks/00-index.md#linux-l1-runbooks) | Scripted procedures for the 4 Linux failure scenarios (runbooks 30-33) |
 | [L1 Quick-Reference Card](quick-ref-l1.md#linux-quick-reference) | One-page cheat sheet -- top checks, escalation triggers, decision tree, and runbook list |
@@ -361,7 +361,7 @@ Apple Business delegated governance for sub-org admins — Shared iPad passcode 
 | [iOS Capability Matrix](reference/ios-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, and iOS (NAV-03) |
 | [Android Provisioning Lifecycle](android-lifecycle/00-enrollment-overview.md) | Mode comparison with DPC ownership axis (BYOD / COBO / Dedicated / ZTE / AOSP) and Managed Google Play binding |
 | [Android Capability Matrix](reference/android-capability-matrix.md) | Intune feature parity comparison across Windows, macOS, iOS, and Android |
-| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Ubuntu 22.04 / 24.04 LTS enrollment pipeline summary |
+| [Linux Provisioning Lifecycle](linux-lifecycle/00-enrollment-overview.md) | Ubuntu 24.04 / 26.04 LTS enrollment pipeline summary |
 | [Linux Capability Matrix](reference/linux-capability-matrix.md) | Intune feature parity comparison across all 5 platforms |
 | [Apple Business Governance Glossary](_glossary-apple-business.md) | Apple Business terminology; Organizational Units; Managed Apple Accounts; rebrand mapping (ABM → Apple Business 2026-04-14) |
 | [Cross-Org Boundary Cheat Sheet](cross-platform/apple-business/18-cross-org-boundary-cheat-sheet.md) | Apple-Business-vs-Intune responsibility table; scope-boundary disambiguation |

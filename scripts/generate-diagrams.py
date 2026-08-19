@@ -1541,7 +1541,7 @@ def gen_dt_09():
     out = svg_open(f"0 0 {W} {H}", W, H)
     out += svg_bg(W, H)
     out += title(W // 2, 36, "Linux Triage Decision Tree",
-                 "Linux Intune client (Ubuntu 22.04 / 24.04 LTS)  ·  docs/decision-trees/09-linux-triage.md")
+                 "Linux Intune client (Ubuntu 24.04 / 26.04 LTS · RHEL 9 / 10)  ·  docs/decision-trees/09-linux-triage.md")
 
     # LIN1 — root question
     out += router((W - 360) // 2, 90, 360, 100, ["What is the user's", "Linux Intune symptom?"], sub="LIN1 · 5 paths")

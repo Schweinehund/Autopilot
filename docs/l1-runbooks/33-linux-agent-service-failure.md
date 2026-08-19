@@ -18,13 +18,13 @@ platform: Linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It covers L1 triage of Linux endpoints where the intune-portal package is present but the intune-agent.timer systemd unit is inactive, failed, or not firing, causing the device to stop checking in to Intune.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 24.04/26.04 LTS).
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 > For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
-L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where the Intune agent service (`intune-agent.timer`) is not running or not checking in. The `intune-portal` deb package may still be installed; this runbook covers the case where the package is present but the systemd timer is inactive, failed, or never firing.
+L1 runbook for Linux endpoints (Ubuntu 24.04/26.04 LTS) where the Intune agent service (`intune-agent.timer`) is not running or not checking in. The `intune-portal` deb package may still be installed; this runbook covers the case where the package is present but the systemd timer is inactive, failed, or never firing.
 
 ## Symptom
 

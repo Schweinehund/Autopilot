@@ -18,7 +18,7 @@ platform: Linux
 
 This guide is the canonical capability gate for Ubuntu LTS Linux device management in Microsoft Intune, defining the supported management surface, the explicit out-of-scope exclusions, and the enrollment constraints admins, L1 responders, and L2 engineers need before configuring or troubleshooting a Linux deployment.
 
-> **Platform gate:** This guide covers Microsoft Intune device management for Ubuntu LTS Linux endpoints (22.04 / 24.04).
+> **Platform gate:** This guide covers Microsoft Intune device management for Ubuntu LTS Linux endpoints (24.04 / 26.04).
 
 > For Windows Autopilot, see [Autopilot Lifecycle Overview](../lifecycle/00-overview.md). For macOS ADE, see [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md).
 
@@ -110,7 +110,7 @@ Cross-platform mental-model bridges below help admins onboarding from a differen
 
 ## See Also
 
-- [Linux Intune Client Prerequisites](01-linux-prerequisites.md) — Ubuntu version matrix (20.04 / 22.04 / 24.04), GA vs HWE kernel breakpoints, hardware/software prerequisites, Identity Broker non-version breakpoint
+- [Linux Intune Client Prerequisites](01-linux-prerequisites.md) — Ubuntu version matrix (20.04 / 24.04 / 26.04), GA vs HWE kernel breakpoints, hardware/software prerequisites, Identity Broker non-version breakpoint
 - [Linux Provisioning Glossary](../_glossary-linux.md) — ~20 Linux-native terms (`intune-portal`, `microsoft-identity-broker`, `journalctl`, `dm-crypt`, `LUKS`, `HWE kernel`, `GA kernel`, etc.) plus 9 absent-concept callout entries (Supervision, DPC, Work Profile, MGP, ZTE, VPP, Hardware Hash, ABM, COBO/COPE/WPCO)
 - [Autopilot Lifecycle Overview](../lifecycle/00-overview.md) — Windows analog
 - [macOS ADE Lifecycle](../macos-lifecycle/00-ade-lifecycle.md) — macOS analog

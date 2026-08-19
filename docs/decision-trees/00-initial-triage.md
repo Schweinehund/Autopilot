@@ -44,7 +44,7 @@ Use these links after this triage tree routes you to a specific scenario:
 - [APv2 Device Preparation Triage](04-apv2-triage.md) — APv2 (Device Preparation) deployment failure routing
 - [iOS Triage](07-ios-triage.md) — iOS/iPadOS failure routing
 - [Android Triage](08-android-triage.md) — Android enrollment/compliance failure routing
-- [Linux Triage](09-linux-triage.md) — Linux Intune client (Ubuntu 22.04/24.04 LTS) failure routing
+- [Linux Triage](09-linux-triage.md) — Linux Intune client (Ubuntu 24.04/26.04 LTS) failure routing
 
 ## Decision Tree
 

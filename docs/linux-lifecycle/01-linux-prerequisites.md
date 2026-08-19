@@ -18,7 +18,7 @@ platform: Linux
 
 This guide documents the supported Ubuntu LTS versions, the dropped Ubuntu 20.04 release and its upgrade path, GA-versus-HWE kernel-track breakpoints, the Identity Broker v2.0.2+ re-enrollment behavior, and the hardware, software, and networking prerequisites a device must satisfy before enrolling in Microsoft Intune.
 
-> **Platform gate:** This reference shows the supported Ubuntu LTS versions (22.04 / 24.04),
+> **Platform gate:** This reference shows the supported Ubuntu LTS versions (24.04 / 26.04),
 
 > the dropped Ubuntu version (20.04 — Intune 2508 / August 2025 end-of-support), GA vs HWE kernel-track breakpoints,
 
@@ -30,12 +30,12 @@ This guide documents the supported Ubuntu LTS versions, the dropped Ubuntu 20.04
 
 ## Supported Ubuntu Versions
 
-The following matrix locks Ubuntu LTS support scope for Microsoft Intune Linux device management. Three rows are tracked: the two currently-supported versions (22.04 LTS / 24.04 LTS) and the dropped version (20.04 LTS) retained for visibility because admins searching the matrix for "20.04" need to find an explicit dropped-status row, not silence.
+The following matrix locks Ubuntu LTS support scope for Microsoft Intune Linux device management. Three rows are tracked: the two currently-supported versions (24.04 LTS / 26.04 LTS) and the dropped version (20.04 LTS) retained for visibility because admins searching the matrix for "20.04" need to find an explicit dropped-status row, not silence.
 
 | Version | GA Kernel | HWE Kernel | Support Status | EOS Date |
 |---|---|---|---|---|
+| Ubuntu 26.04 LTS | [verify-on-current-Ubuntu] | [verify-on-current-Ubuntu] | Supported — x86_64 only | April 2031 (standard) |
 | Ubuntu 24.04 LTS (Noble) | 6.8 [verify-on-current-Ubuntu] | 6.11+ [verify-on-current-Ubuntu] | Supported — x86_64 only | April 2029 (standard) |
-| Ubuntu 22.04 LTS (Jammy) | 5.15 [verify-on-current-Ubuntu] | 6.8 [verify-on-current-Ubuntu] | Supported — x86_64 only | April 2027 (standard) |
 | Ubuntu 20.04 LTS (Focal) | 5.4 | 5.15 | Dropped — Intune 2508 [^1] | April 2025 (standard) |
 
 [^1]: Ubuntu 20.04 LTS support was removed in the Intune 2508 service release (August 2025). Devices running Ubuntu 20.04 cannot enroll or maintain Intune enrollment. See [Ubuntu 20.04 — End-of-Support](#ubuntu-2004--end-of-support) below for the upgrade path.
@@ -51,7 +51,7 @@ Ubuntu 20.04 LTS (Focal) support was dropped in the Intune 2508 service release 
 **Admin action required:**
 
 - **Audit:** Identify any Ubuntu 20.04 endpoints currently enrolled or attempting enrollment via Intune reporting.
-- **Upgrade path:** In-place upgrade is supported from 20.04 → 22.04 via `do-release-upgrade`. Direct upgrade from 20.04 to 24.04 is NOT supported by Ubuntu — go through 22.04 first.
+- **Upgrade path:** In-place upgrade from Ubuntu 20.04 to a currently-supported release requires sequential per-LTS-cycle upgrades via `do-release-upgrade` — Ubuntu does not support skipping directly to 24.04 or 26.04 in one step.
 - **Reference:** See [Ubuntu upgrade documentation](https://ubuntu.com/server/docs/upgrade-introduction) for the recommended `do-release-upgrade` procedure.
 - **Re-enrollment:** After OS upgrade, re-install `intune-portal` deb from `packages.microsoft.com` and re-enroll via the GUI sign-in flow. The Identity Broker re-enrollment behavior in [Non-version Breakpoints](#non-version-breakpoints) applies post-upgrade if the upgraded `intune-portal` includes Identity Broker v2.0.2+.
 

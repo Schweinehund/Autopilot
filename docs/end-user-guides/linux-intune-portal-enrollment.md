@@ -36,7 +36,7 @@ After enrollment you can sign into **Microsoft Edge** with your organization acc
 
 Before enrolling, make sure you have:
 
-- **Ubuntu 22.04 LTS or 24.04 LTS** — older Ubuntu (20.04 and earlier) is no longer supported by Intune.
+- **Ubuntu 24.04 LTS or 26.04 LTS** — older Ubuntu (20.04 and earlier) is no longer supported by Intune.
 - **Microsoft Edge for Linux 102.x or higher** — needed for sign-in and to access org resources after enrollment. Install from [microsoft.com/edge](https://www.microsoft.com/edge) if not already on your machine.
 - **Your organization email and password** — the same credentials you use for Outlook, Teams, and other work apps.
 - **A stable internet connection** — sign-in needs to reach Microsoft and your organization's identity service.
@@ -83,7 +83,7 @@ If you see a status other than **Compliant** in **Microsoft Intune Portal**, ret
 
 - **"Access blocked" in Microsoft Edge after enrollment:** Make sure you signed into **Microsoft Edge** with your organization account in Step 5. You can verify by clicking the profile icon in the top-right corner of Edge — it should show your work email address. If you are signed in but still blocked, confirm your Edge version is 102 or higher by running `microsoft-edge --version` in a terminal. If the version is correct and you are still blocked, contact IT.
 
-- **"sudo: apt: command not found" or package install errors:** Confirm you are running Ubuntu 22.04 LTS or 24.04 LTS. Other Linux distributions (Fedora, Arch, openSUSE) are not supported by Intune at this time. Contact IT if you are unsure which Linux version you have — run `lsb_release -a` in a terminal and share the output with your helpdesk.
+- **"sudo: apt: command not found" or package install errors:** Confirm you are running Ubuntu 24.04 LTS or 26.04 LTS. Other Linux distributions (Fedora, Arch, openSUSE) are not supported by Intune at this time. Contact IT if you are unsure which Linux version you have — run `lsb_release -a` in a terminal and share the output with your helpdesk.
 
 **For IT helpdesk agents:**
 

@@ -18,15 +18,15 @@ platform: Linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It guides L1 portal-first triage of Linux compliance failures across four independently diagnosable causes: distro version out of supported range, disk encryption absent, password policy not met, and custom-compliance Bash discovery script reporting non-compliant.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 24.04/26.04 LTS).
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 
 > For iOS/iPadOS, see [iOS L1 Runbooks](00-index.md#ios-l1-runbooks). For Android, see [Android L1 Runbooks](00-index.md#android-l1-runbooks).
 
-L1 runbook for Linux endpoints (Ubuntu 22.04/24.04 LTS) where compliance evaluation is reporting `Not compliant`. Four distinct causes are diagnosed independently:
+L1 runbook for Linux endpoints (Ubuntu 24.04/26.04 LTS) where compliance evaluation is reporting `Not compliant`. Four distinct causes are diagnosed independently:
 
-- **Cause A:** Distro version out of supported range (not Ubuntu 22.04 or 24.04 LTS)
+- **Cause A:** Distro version out of supported range (not Ubuntu 24.04 or 26.04 LTS)
 - **Cause B:** Disk not encrypted (LUKS/dm-crypt absent)
 - **Cause C:** Password policy not met (passwd not set or complexity insufficient)
 - **Cause D:** Custom-compliance Bash discovery script reporting non-compliant
@@ -68,27 +68,27 @@ Common ticket phrasings: "my device shows non-compliant," "Intune says my Linux 
 
 See [Ubuntu LTS](../_glossary-linux.md#ubuntu-lts) for the supported distribution baseline; [GA kernel](../_glossary-linux.md#ga-kernel) and [HWE kernel](../_glossary-linux.md#hwe-kernel) for the kernel-channel distinction; [Linux compliance settings](../_glossary-linux.md#linux-compliance-settings) for the per-setting catalog.
 
-**Entry condition:** P-09 shows compliance state "Not compliant" with a failing setting referencing the Linux distro version (e.g., "Minimum Linux version: Ubuntu 22.04; Device version: 20.04") or "Supported distribution" mismatch.
+**Entry condition:** P-09 shows compliance state "Not compliant" with a failing setting referencing the Linux distro version (e.g., "Minimum Linux version: Ubuntu 24.04; Device version: 20.04") or "Supported distribution" mismatch.
 
 ### Symptom
 
 - P-09 failing setting: "Minimum Linux version" or "Supported distribution"
-- Device runs an unsupported Ubuntu version (anything other than 22.04 or 24.04 LTS) OR a non-Ubuntu distro
+- Device runs an unsupported Ubuntu version (anything other than 24.04 or 26.04 LTS) OR a non-Ubuntu distro
 - User may report "I'm on the latest Ubuntu but Intune says it's not supported" — the user may be on a non-LTS interim release
 
 ### L1 Triage Steps
 
 1. > **Say to the user:** "Let me confirm which Linux version your device is running. Please open Terminal and type: `lsb_release -a`. Read me the Description and Release lines."
-2. Compare against the supported baseline (Ubuntu 22.04 LTS or Ubuntu 24.04 LTS). Interim releases (23.04, 23.10, etc.) and non-Ubuntu distros are not supported.
+2. Compare against the supported baseline (Ubuntu 24.04 LTS or Ubuntu 26.04 LTS). Interim releases (23.04, 23.10, etc.) and non-Ubuntu distros are not supported.
 3. Ask the user to also run `cat /etc/os-release` if `lsb_release` is not installed (some minimal Ubuntu cloud images omit `lsb_release`).
-4. Ask the user to read me their kernel version: `uname -r`. Note whether the kernel suffix indicates GA (e.g., `5.15.0-generic`) or HWE (e.g., `6.8.0-generic` on 22.04 = HWE channel) — this disambiguates kernel-channel-specific compliance failures.
+4. Ask the user to read me their kernel version: `uname -r`. Note whether the kernel suffix indicates GA (e.g., `6.8.0-generic`) or HWE (e.g., `6.11.0-generic` on 24.04 = HWE channel) — this disambiguates kernel-channel-specific compliance failures.
 
 ### Admin Action Required
 
 **Ask the admin to:**
 
-- Confirm the user's device is intended to run a supported Ubuntu LTS version (22.04 or 24.04). If the device is on an interim release or a non-Ubuntu distro, the only remediation is migration to a supported LTS.
-- If the user is on 22.04 GA but the policy requires the HWE kernel channel (or vice versa), advise the kernel channel switch via `apt install linux-generic-hwe-22.04` (HWE) or kernel-pinning rollback (GA) — this is admin-executed, not L1.
+- Confirm the user's device is intended to run a supported Ubuntu LTS version (24.04 or 26.04). If the device is on an interim release or a non-Ubuntu distro, the only remediation is migration to a supported LTS.
+- If the user is on GA kernel but the policy requires the HWE kernel channel (or vice versa), advise the kernel channel switch via `apt install linux-generic-hwe-24.04` (HWE, adjusted for the device's LTS release) or kernel-pinning rollback (GA) — this is admin-executed, not L1.
 - Review the assigned compliance policy (P-COMP) in Intune for the actual minimum version requirement.
 
 **Verify:**

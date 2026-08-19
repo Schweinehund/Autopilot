@@ -330,7 +330,7 @@ adb logcat wpa_supplicant:V *:S
 
 ### NetworkManager journal (primary) `[MEDIUM, last_verified 2026-07-01]`
 
-On Ubuntu 22.04 / 24.04 LTS with NetworkManager, the wpa_supplicant subprocess runs under
+On Ubuntu 24.04 / 26.04 LTS with NetworkManager, the wpa_supplicant subprocess runs under
 the NetworkManager process. The NetworkManager journal captures both NM-level connection events
 and EAP-level authentication events in a single stream.
 

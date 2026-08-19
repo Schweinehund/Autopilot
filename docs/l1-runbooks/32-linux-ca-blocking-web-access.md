@@ -18,7 +18,7 @@ platform: Linux
 
 This runbook covers read-only L1 diagnostic steps only — no registry edits, no PowerShell execution, and no destructive actions; any remediation requiring elevated access is escalated to L2. It provides portal-only L1 triage of Linux endpoints blocked by Conditional Access from Microsoft 365 web-app access in Edge for Linux, across three causes: device not enrolled, device non-compliant, or Edge browser not signed in with the user's work account.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 24.04/26.04 LTS).
 
 > For Windows Autopilot, see [Windows L1 Runbooks](00-index.md#apv1-runbooks). For macOS ADE, see [macOS ADE Runbooks](00-index.md#macos-ade-runbooks).
 

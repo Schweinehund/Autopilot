@@ -16,15 +16,19 @@ platform: Linux
 
 ## Summary
 
-Reference decision table for Linux Intune client triage (Ubuntu 22.04/24.04 LTS), gating on a flat set of symptoms — enrollment failure, non-compliance, web-app conditional access blocking behind an Edge-for-Linux disambiguation node, agent service failure, or unknown — and routing each to the matching L1 runbook or an L2 escalation, all within 2 decision steps of the root.
+Reference decision table for Linux Intune client triage (Ubuntu 24.04/26.04 LTS), gating on a flat set of symptoms — enrollment failure, non-compliance, web-app conditional access blocking behind an Edge-for-Linux disambiguation node, agent service failure, or unknown — and routing each to the matching L1 runbook or an L2 escalation, all within 2 decision steps of the root.
 
-> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 22.04/24.04 LTS). For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+> **Platform gate:** This guide covers Linux Intune client troubleshooting (Ubuntu 24.04/26.04 LTS). For Windows Autopilot, see [Initial Triage Decision Tree](00-initial-triage.md).
+
+> RHEL 9/10 are also listed as supported by Microsoft's supported-platforms reference.
+
+> Intune's custom-settings-for-Linux page still names RHEL 8 — an intra-Microsoft conflict, reproduced here rather than flattened. This tree covers only the Ubuntu triage path.
 
 > For macOS ADE, see [macOS ADE Triage](06-macos-triage.md). For iOS/iPadOS, see [iOS Triage](07-ios-triage.md). For Android, see [Android Triage](08-android-triage.md).
 
 ## How to Use This Tree
 
-Start here when a user reports an issue with a Linux device enrolled (or expected to enroll) in Intune. Identify the failure symptom, then follow the matching branch to an L1 runbook or L2 escalation. All terminal nodes are within 2 decision steps of the root (well under the SC #1 5-node budget). Per Phase 51 D-01 + PITFALL-1 mitigation, this tree uses a flat-symptom shape (no enrollment-mode pre-gate) — Linux Intune supports a single management mode (Ubuntu 22.04/24.04 LTS via packages.microsoft.com), so the mode-axis question that gates Android does not apply.
+Start here when a user reports an issue with a Linux device enrolled (or expected to enroll) in Intune. Identify the failure symptom, then follow the matching branch to an L1 runbook or L2 escalation. All terminal nodes are within 2 decision steps of the root (well under the SC #1 5-node budget). Per Phase 51 D-01 + PITFALL-1 mitigation, this tree uses a flat-symptom shape (no enrollment-mode pre-gate) — Linux Intune supports a single management mode (Ubuntu 24.04/26.04 LTS via packages.microsoft.com), so the mode-axis question that gates Android does not apply.
 
 ## Decision Tree
 

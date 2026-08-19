@@ -16,9 +16,9 @@ platform: Linux
 
 ## Summary
 
-This guide is the index for configuring Linux device management in Microsoft Intune across Ubuntu 22.04 LTS and 24.04 LTS, spanning agent installation, enrollment profile configuration, compliance policy, app delivery, and Conditional Access. It is intended for Intune administrators, including those already familiar with the Windows, macOS, or Android admin-setup surfaces, and the agent install and enrollment profile steps must be completed before any subsequent configuration.
+This guide is the index for configuring Linux device management in Microsoft Intune across Ubuntu 24.04 LTS and 26.04 LTS, spanning agent installation, enrollment profile configuration, compliance policy, app delivery, and Conditional Access. It is intended for Intune administrators, including those already familiar with the Windows, macOS, or Android admin-setup surfaces, and the agent install and enrollment profile steps must be completed before any subsequent configuration.
 
-> **Platform gate:** This guide covers Linux device management in Microsoft Intune for Ubuntu 22.04 LTS and 24.04 LTS.
+> **Platform gate:** This guide covers Linux device management in Microsoft Intune for Ubuntu 24.04 LTS and 26.04 LTS.
 
 > For macOS ADE setup, see [macOS Admin Setup](../admin-setup-macos/00-overview.md).
 > For Android Enterprise setup, see [Android Admin Setup](../admin-setup-android/00-overview.md).
@@ -62,7 +62,7 @@ Full detail for each stage:
 - [Linux Capability Matrix](../reference/linux-capability-matrix.md) — Win|Linux bilateral comparison; explicit "Not supported" cells; Cross-Platform Equivalences with 3 attributed pairs.
 - [Linux Enrollment Overview — Cross-Platform Bridge](../linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android) — What carries over and what does not from your existing Windows / macOS / Android Intune mental model. Full path: `docs/linux-lifecycle/00-enrollment-overview.md#for-admins-familiar-with-windows--macos--android`
 - [Linux Enrollment Overview](../linux-lifecycle/00-enrollment-overview.md) — Phase 49 management-surface whitelist + Out of Scope callout.
-- [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md) — Ubuntu 22.04/24.04 LTS supported; Ubuntu 20.04 dropped from Intune 2508.
+- [Linux Prerequisites](../linux-lifecycle/01-linux-prerequisites.md) — Ubuntu 24.04/26.04 LTS supported; Ubuntu 20.04 dropped from Intune 2508.
 
 ## See Also
 

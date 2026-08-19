@@ -16,9 +16,9 @@ platform: Linux
 
 ## Summary
 
-This guide covers configuring Intune compliance policies for Linux devices (Ubuntu 22.04 LTS and 24.04 LTS) across allowed distributions, custom-compliance Bash discovery scripts, device encryption, and password policy settings. It is intended for Intune administrators responsible for device compliance posture. Compliance policy on Linux is detect-only: it produces a compliance verdict for reporting purposes and does not drive Conditional Access grants, which instead use a separate web-app enforcement path.
+This guide covers configuring Intune compliance policies for Linux devices (Ubuntu 24.04 LTS and 26.04 LTS) across allowed distributions, custom-compliance Bash discovery scripts, device encryption, and password policy settings. It is intended for Intune administrators responsible for device compliance posture. Compliance policy on Linux is detect-only: it produces a compliance verdict for reporting purposes and does not drive Conditional Access grants, which instead use a separate web-app enforcement path.
 
-> **Platform gate:** This guide covers configuration of Intune compliance policies for Linux devices (Ubuntu 22.04/24.04 LTS) across the 4 supported settings-catalog categories.
+> **Platform gate:** This guide covers configuration of Intune compliance policies for Linux devices (Ubuntu 24.04/26.04 LTS) across the 4 supported settings-catalog categories.
 
 > For Linux provisioning terminology, see the [Linux Provisioning Glossary](../_glossary-linux.md).
 
@@ -63,14 +63,14 @@ This guide covers configuring Intune compliance policies for Linux devices (Ubun
 
 ### Step 2: Configure Allowed Distributions
 
-Linux compliance policy restricts which Ubuntu LTS distributions are considered compliant. This maps to the Phase 49 prerequisite whitelist for Ubuntu 22.04 LTS and 24.04 LTS.
+Linux compliance policy restricts which Ubuntu LTS distributions are considered compliant. This maps to the Phase 49 prerequisite whitelist for Ubuntu 24.04 LTS and 26.04 LTS.
 
 #### In Intune admin center
 
 1. In the policy settings, locate **Allowed Distributions**
 2. Add the supported Ubuntu LTS distributions:
-   - `Ubuntu` (operator: `Equals`) with version constraints for 22.04 LTS
    - `Ubuntu` (operator: `Equals`) with version constraints for 24.04 LTS
+   - `Ubuntu` (operator: `Equals`) with version constraints for 26.04 LTS
 3. Devices running an unlisted distribution or version will report non-compliant
 
 > **What breaks if misconfigured:** If the Allowed Distribution list excludes the Ubuntu version running on your enrolled devices, those devices will immediately report non-compliant.

@@ -16,11 +16,11 @@ platform: Linux
 
 ## Summary
 
-This guide covers admin-side configuration of Linux device enrollment in Microsoft Intune, including Intune and Entra ID license verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping for Ubuntu 22.04 LTS and 24.04 LTS devices. It is intended for Intune administrators with rights to manage device enrollment restrictions and Conditional Access policies. Linux enrollment itself is user-initiated only; there is no admin-driven push enrollment profile for this platform.
+This guide covers admin-side configuration of Linux device enrollment in Microsoft Intune, including Intune and Entra ID license verification, optional user-affinity scoping via enrollment restrictions, and optional Conditional Access scoping for Ubuntu 24.04 LTS and 26.04 LTS devices. It is intended for Intune administrators with rights to manage device enrollment restrictions and Conditional Access policies. Linux enrollment itself is user-initiated only; there is no admin-driven push enrollment profile for this platform.
 
 > **Platform gate:** This guide covers admin-side configuration of Linux device enrollment in Intune (license verification, optional CA scoping).
 
-> Linux enrollment on Ubuntu 22.04/24.04 LTS is user-initiated only; there is no admin-driven push enrollment.
+> Linux enrollment on Ubuntu 24.04/26.04 LTS is user-initiated only; there is no admin-driven push enrollment.
 
 > For end-user enrollment steps (install Edge, install intune-portal deb, sign in), see [Linux Intune Portal Enrollment](../end-user-guides/linux-intune-portal-enrollment.md).
 
@@ -36,7 +36,7 @@ This guide covers admin-side configuration required to enable Linux device enrol
 
 - Intune license assigned to user (Microsoft Intune Plan 1, EMS E3/E5, or M365 with Intune)
 - Microsoft Entra ID P1 minimum (P2 if risk-based Conditional Access policies will scope to Linux devices)
-- Ubuntu 22.04 LTS or 24.04 LTS target hosts with GNOME desktop environment
+- Ubuntu 24.04 LTS or 26.04 LTS target hosts with GNOME desktop environment
 - Microsoft Edge for Linux 102.x+ available (required for web-app CA; see [Conditional Access](05-conditional-access.md))
 - Intune Linux Agent (`intune-portal` deb) installed on device before enrollment (see [Intune Linux Agent](01-intune-linux-agent.md))
 
@@ -62,7 +62,7 @@ This guide covers admin-side configuration required to enable Linux device enrol
 2. Select or create a restriction policy for **Linux**.
 3. To restrict enrollment to specific user groups:
    - Set **Platform** to **Linux**.
-   - Set **Minimum OS version** and **Maximum OS version** as required (e.g., minimum 22.04).
+   - Set **Minimum OS version** and **Maximum OS version** as required (e.g., minimum 24.04).
    - Assign the restriction policy to the target user group.
 4. Note: Linux enrollment is user-initiated only; there is no Autopilot-style admin-driven push enrollment profile for Linux.
 

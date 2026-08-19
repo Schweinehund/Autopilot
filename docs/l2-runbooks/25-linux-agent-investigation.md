@@ -26,7 +26,7 @@ L2 investigation guide for Linux Intune client (`intune-portal`) agent failures 
 
 ## Context
 
-This runbook is the L2 trap-by-trap investigation guide for Linux Intune client (`intune-portal`) failures on Ubuntu 22.04/24.04 LTS. It is consumed AFTER log collection — start with [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md) to gather `journalctl` output, file-based log snapshots, and `dpkg`/`apt` package-state queries before opening this runbook.
+This runbook is the L2 trap-by-trap investigation guide for Linux Intune client (`intune-portal`) failures on Ubuntu 24.04/26.04 LTS. It is consumed AFTER log collection — start with [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md) to gather `journalctl` output, file-based log snapshots, and `dpkg`/`apt` package-state queries before opening this runbook.
 
 The four trap families documented below are cross-tier-distinct from Phase 51 L1 cause topology (Anti-Pattern 1 mitigation per CDI-Phase52-03). L1 causes describe user-facing symptoms (package install / sign-in / enrollment timeout / agent service failure); L2 traps describe investigation tools and techniques (kernel-track verification, snap-vs-deb delivery path detection, user-scope vs system-scope service mechanics, Identity Broker re-enrollment signals).
 
@@ -53,13 +53,13 @@ Check the trap that matches your observation. Traps are independently diagnosabl
 
 **Entry condition:** L1 escalation packet shows `uname -r` output with a kernel version that does not match the Ubuntu release's GA kernel band, AND the user reports `intune-portal` deb install failure or `intune-agent.timer` activation failure.
 
-See [HWE kernel](../_glossary-linux.md#hwe-kernel) and [GA kernel](../_glossary-linux.md#ga-kernel) for the kernel-channel distinction. Phase 49 version matrix: Ubuntu 22.04 GA = 5.15 / HWE = 6.8; Ubuntu 24.04 GA = 6.8 / HWE = 6.11+ (24.04.3 HWE may be 6.14+).
+See [HWE kernel](../_glossary-linux.md#hwe-kernel) and [GA kernel](../_glossary-linux.md#ga-kernel) for the kernel-channel distinction. Phase 49 version matrix: Ubuntu 24.04 GA = 6.8 / HWE = 6.11+ (24.04.3 HWE may be 6.14+); Ubuntu 26.04 GA/HWE kernel versions are [verify-on-current-Ubuntu].
 
 ### Symptom
 
 - `intune-portal` deb install fails at `dpkg --configure` stage with PAM-module errors
 - `intune-agent.timer` activation fails after a successful enrollment with no clear journalctl error in user-scope timer journal
-- `lsb_release -rs` shows 22.04 but `uname -r` shows a kernel starting with `6.` (HWE backport from 24.04 GA)
+- `lsb_release -rs` shows 24.04 but `uname -r` shows a kernel newer than the 24.04 GA band (HWE backport from a later release)
 
 ### Investigation Steps
 
@@ -71,10 +71,9 @@ See [HWE kernel](../_glossary-linux.md#hwe-kernel) and [GA kernel](../_glossary-
    ```
 
 2. Cross-reference against the Linux version-track matrix (Phase 49 [01-linux-prerequisites.md](../linux-lifecycle/01-linux-prerequisites.md)):
-   - Ubuntu 22.04 + GA kernel → `uname -r` returns `5.15.x-xxx-generic`
-   - Ubuntu 22.04 + HWE kernel → `uname -r` returns `6.8.x-xxx-generic`
    - Ubuntu 24.04 + GA kernel → `uname -r` returns `6.8.x-xxx-generic`
    - Ubuntu 24.04 + HWE kernel → `uname -r` returns `6.11.x-xxx-generic` (or 6.14+ for 24.04.3)
+   - Ubuntu 26.04 + GA/HWE kernel → `uname -r` band is `[verify-on-current-Ubuntu]`
 
 3. Confirm package version compatibility against installed kernel:
 
@@ -94,7 +93,7 @@ See [HWE kernel](../_glossary-linux.md#hwe-kernel) and [GA kernel](../_glossary-
 
 ### Resolution
 
-If the user is on HWE kernel for Ubuntu 22.04 and the `intune-portal` deb install is failing, pin to GA kernel via:
+If the user is on HWE kernel for a supported Ubuntu LTS release and the `intune-portal` deb install is failing, pin to GA kernel via:
 
 ```bash
 sudo apt install linux-image-generic
@@ -353,7 +352,7 @@ Expected: `dsreg --status` reports a stable device ID; broker package shows `ii`
 - [Linux Log Collection Guide (Runbook 24)](24-linux-log-collection.md) — prerequisite for this runbook; Section 1 journalctl output is consumed by all 4 traps
 - [Linux Provisioning Glossary](../_glossary-linux.md) — `microsoft-identity-broker`, `intune-agent.timer`, `systemd`, `journalctl`, `hwe-kernel`, `ga-kernel`, `deb-repository`, `snap`
 - [Linux L1 Triage Decision Tree](../decision-trees/09-linux-triage.md) — Phase 51 L1 routing surface
-- [Linux Capability Matrix — Supported Management Surface](../reference/linux-capability-matrix.md) — Ubuntu 22.04/24.04 LTS scope and version-track context for Trap A
+- [Linux Capability Matrix — Supported Management Surface](../reference/linux-capability-matrix.md) — Ubuntu 24.04/26.04 LTS scope and version-track context for Trap A
 - [L1 30: Linux Enrollment Failed](../l1-runbooks/30-linux-enrollment-failed.md) — L1 escalation source; Cause A (package install) → Trap A or Trap B; Cause B (sign-in) → Trap D; Cause C (timeout) → Trap C
 - [L1 31: Linux Compliance Non-Compliant](../l1-runbooks/31-linux-compliance-non-compliant.md) — L1 escalation source (custom-compliance Bash via Runbook 24 Section 2)
 - [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md) — L1 escalation source (primary route to Trap C)

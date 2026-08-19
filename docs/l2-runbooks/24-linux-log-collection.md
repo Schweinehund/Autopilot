@@ -16,7 +16,7 @@ platform: Linux
 
 ## Summary
 
-L2 log collection guide for Linux Intune client (`intune-portal`) on Ubuntu 22.04/24.04 LTS. All collection commands documented here require L2 authorization — do not share with end users or L1 technicians. Covers `journalctl` (primary confirmed surface), file-based log paths (`/var/log/dpkg.log`, `/var/log/intune-update.log`, `/var/log/microsoft/intune/`), and the Decision Matrix for routing by data-scope need.
+L2 log collection guide for Linux Intune client (`intune-portal`) on Ubuntu 24.04/26.04 LTS. All collection commands documented here require L2 authorization — do not share with end users or L1 technicians. Covers `journalctl` (primary confirmed surface), file-based log paths (`/var/log/dpkg.log`, `/var/log/intune-update.log`, `/var/log/microsoft/intune/`), and the Decision Matrix for routing by data-scope need.
 
 > **Platform gate:** This guide covers Linux Intune client (`intune-portal`) L2 investigation via Microsoft Intune. For Windows Autopilot, see [Windows L2 Runbooks](00-index.md).
 
@@ -33,7 +33,7 @@ This guide is the **prerequisite for all Linux L2 investigation runbooks** — c
 - [L1 32: Linux CA Blocking Web-App Access](../l1-runbooks/32-linux-ca-blocking-web-access.md) — Edge for Linux web-app CA blocking (PITFALL-2)
 - [L1 33: Linux Agent Service Failure](../l1-runbooks/33-linux-agent-service-failure.md) — `intune-agent.timer` not running
 
-Linux Intune client has **a single confirmed primary log surface** (`journalctl`) — unlike Android (3-method fragmentation by enrollment mode) or Windows (`mdmdiagnosticstool.exe` single-archive) or macOS (IntuneMacODC zip). The Decision Matrix below routes by data-scope need, not enrollment mode (Linux has one supported delivery path: deb from `packages.microsoft.com` on Ubuntu 22.04/24.04 LTS).
+Linux Intune client has **a single confirmed primary log surface** (`journalctl`) — unlike Android (3-method fragmentation by enrollment mode) or Windows (`mdmdiagnosticstool.exe` single-archive) or macOS (IntuneMacODC zip). The Decision Matrix below routes by data-scope need, not enrollment mode (Linux has one supported delivery path: deb from `packages.microsoft.com` on Ubuntu 24.04/26.04 LTS).
 
 **From L1 escalation?** L1 collected the escalation packet (serial number, user UPN, `lsb_release -a`, `uname -r`, `dpkg -l intune-portal`, journalctl snapshot). Skip to the Decision Matrix to choose your method.
 
@@ -150,7 +150,7 @@ ls -la /var/log/microsoft/intune/ 2>/dev/null
 find /var/log/microsoft/intune/ -type f -name "*.log" 2>/dev/null
 ```
 
-If this path does not exist on the affected device (likely on a clean Ubuntu 22.04/24.04 install with `intune-portal` 2.0.x deb), document the absence in the escalation packet and proceed with `journalctl` as primary surface. Re-verify path documentation at `review_by` cadence.
+If this path does not exist on the affected device (likely on a clean Ubuntu 24.04/26.04 install with `intune-portal` 2.0.x deb), document the absence in the escalation packet and proceed with `journalctl` as primary surface. Re-verify path documentation at `review_by` cadence.
 
 ## Section 3: Package-state queries
 
