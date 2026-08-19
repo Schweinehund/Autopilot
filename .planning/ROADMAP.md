@@ -75,8 +75,15 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
   4. `check-phase-59.mjs`'s ops-index read is a frozen read, so its row equality asserts "Phase 59 shipped five rows" rather than "no patch-management guide may ever be added" — and Phase 152 can take the Patch region from 5 rows to 9 without a red apex child.
   5. `Ubuntu 22.04` is gone from all 64 occurrences across 25 markdown files **and** `docs/diagrams/decision-tree-09-linux-triage.svg` is regenerated (not text-edited), with the intra-Microsoft RHEL-8-versus-9/10 conflict stated wherever a supported-version list appears — and `node scripts/validation/check-phase-54.mjs` exits 0 throughout.
 **Blast radius**: `docs/operations/patch-management/00-overview.md` — the single most constrained file in this milestone, carrying five live pins on an apex chain member, and the first of **four** phases that touch it. **The C11 keyword-substitution ordering (FIX-02) is a same-commit ordering constraint, not a preference**: substitute an allowlisted keyword into the `:76-87` window **first**, then remove the mutual-exclusivity wording. The overview's body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens — the hotpatch correction belongs in `01-windows-wufb-rings.md`, which Phase 146 owns.
-**Research flag**: **YES** — the two `[UNVERIFIED]` dated deadlines (Android 2026-10-31; Apple's Intune end-of-support date, which is not published) each need a first-party citation at plan time or a rewrite of the surrounding prose that retains the pinned literals.
-**Plans**: TBD
+**Research flag**: **YES** — the two `[UNVERIFIED]` dated deadlines (Android 2026-10-31; Apple's Intune end-of-support date, which is not published) each need a first-party citation at plan time or a rewrite of the surrounding prose that retains the pinned literals. **[DISCHARGED at plan time 2026-08-19]** The Android date was found first-party (`learn.microsoft.com/en-us/intune/whats-new/in-development`, `ms.date` 2026-07-27) and is cited directly; Apple's date is not published at all and its absence is stated rather than filled (D-24).
+**Plans**: 5 plans
+
+Plans:
+- [ ] 145-01-PLAN.md — FIX-12 frozen-read conversion (tracer, landed first and alone) + the co-management default-ring correction
+- [ ] 145-02-PLAN.md — the `00-overview.md` correction atom (FIX-01/02/03/04/06/10), one indivisible commit
+- [ ] 145-03-PLAN.md — the `01-windows-wufb-rings.md` correction atom (FIX-01/02/04/07/10), one indivisible commit
+- [ ] 145-04-PLAN.md — the three per-platform files: macOS cutover (FIX-05), the coupled iOS pair (FIX-06), Android patch-age scoping (FIX-08)
+- [ ] 145-05-PLAN.md — FIX-11 archival-drift fix (11 lines / 4 files) + FIX-09 distribution-version sweep and diagram regeneration
 
 ### Phase 146: Windows Driver & Firmware Update Depth
 

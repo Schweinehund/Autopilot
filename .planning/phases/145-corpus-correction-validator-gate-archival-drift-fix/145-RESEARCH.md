@@ -756,13 +756,19 @@ const c = readAtV15Close(OPS_INDEX_MD);
    with D-12's "flagged unconfirmed, not resolved" instruction. The planner should carry the prose
    flag forward exactly as D-12 specifies, not attempt to resolve it to yes/no.)
 2. **Does the WebFetch tool's AI-mediation layer risk altering FIX-08's source quote before it ships?**
-   (DEFERRED: trigger is landing the FIX-08 commit — this document recommends one confirmatory
-   re-fetch of `learn.microsoft.com/en-us/intune/whats-new/in-development` immediately before that
-   commit, a single check, not a new research pass.)
+   (RESOLVED at plan time 2026-08-19: the confirmatory re-fetch this document recommends is now an
+   explicit, ordered step inside the FIX-08 task in `145-04-PLAN.md` — re-fetch
+   `learn.microsoft.com/en-us/intune/whats-new/in-development` and diff the returned enforcement
+   sentence against the quote recorded above **before** the `04-android-patch-delivery.md` commit
+   lands, with a named fallback to D-25's attribution wording if the quote no longer reproduces. A
+   single confirmatory check, not a new research pass. Nothing further is open.)
 3. **Does the Validator Architecture finding (15 of 16 milestone-audit scripts read frozen, not live,
-   contra D-15) change any planning decision for this phase?** (DEFERRED: this research flags the
-   measurement for the planner/discuss-phase's attention per this agent's remit not to silently
-   contradict a locked decision. Practical impact on Phase 145's own task list appears to be none —
-   D-16's "run v1.5 plus any one of v1.6-v1.20" both currently pass and cost nothing to re-run — but
-   the planner should decide whether D-15's text needs a footnote before it propagates further.)
+   contra D-15) change any planning decision for this phase?** (RESOLVED: CONTEXT.md D-15 and D-16
+   were both amended post-research and now carry `[CORRECTED 2026-08-19, post-research]` markers
+   recording exactly this finding — "**Exactly ONE** audit enforces C11 against today's `docs/` —
+   `v1.20-milestone-audit.mjs`" — and D-16 supersedes the earlier "run v1.5 plus any one of
+   v1.6-v1.20" instruction as *unsound* for the same reason. The locked decisions now agree with the
+   measurement, so there is nothing left to reconcile. Every plan in this phase gates C11 on
+   `v1.20-milestone-audit.mjs` only. The divergent-keyword-list observation is retained in D-16 as a
+   binding note for Phase 153's new audit, not for this phase.)
 
