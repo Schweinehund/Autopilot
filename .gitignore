@@ -71,3 +71,6 @@ desktop.ini
 
 # graphify skill cache/output (generated, session-local — never committed)
 graphify-out/
+
+# Research-store scratch written by gsd-project-researcher agents
+.planning/research/.cache/
