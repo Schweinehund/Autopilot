@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-28
-review_by: 2026-06-27
+last_verified: 2026-08-19
+review_by: 2026-10-18
 applies_to: all
 audience: admin
 platform: Windows
@@ -16,11 +16,10 @@ platform: Windows
 # Windows WUfB Rings + Hotpatch + Driver/Firmware
 
 This guide is the Windows-specific patch management reference. It covers WUfB deployment ring
-topology (the Windows Update for Business policy object in Intune) with deferral periods +
-deadline enforcement, Windows Autopatch ring service-managed cohorts and disambiguation from the
-WUfB deployment ring model (PITFALL-9 mutual-exclusion is explicit), the Hotpatch servicing model
-defaulting on for Windows 11 Enterprise 24H2+ from May 2026, and the separate driver and firmware
-update policy surface.
+topology (the Windows Update client policy object in Intune) with deferral periods + deadline
+enforcement, Windows Autopatch ring service-managed cohorts and their containment relationship with
+the WUfB deployment ring model (see PITFALL-9), the Hotpatch servicing model enabled by default for
+eligible devices from May 2026, and the separate driver and firmware update policy surface.
 
 For the cross-platform comparison and Ring Terminology hub, see
 [Patch Management Overview](00-overview.md).
@@ -28,11 +27,15 @@ For the cross-platform comparison and Ring Terminology hub, see
 <a id="wufb-deployment-rings"></a>
 ## WUfB Deployment Rings
 
-A **WUfB deployment ring** is a Windows Update for Business policy in Intune (Intune > Devices >
+A **WUfB deployment ring** is a Windows Update client policy in Intune (Intune > Devices >
 Update rings) that configures deferral periods, deadlines, and restart behavior for Windows quality
 and feature updates. Tenants assign devices to a WUfB deployment ring via Azure AD group targeting,
 and devices on that WUfB deployment ring receive Microsoft updates per the configured deferral
-cadence and deadline policy attached to the WUfB deployment ring.
+cadence and deadline policy attached to the WUfB deployment ring. The product previously named
+"Windows Update for Business" is now Windows Update client policies; `WUfB` survives only in the
+reporting surface, Windows Update for Business reports.
+
+**Source:** [Manage Windows Update for client policies](https://learn.microsoft.com/en-us/windows/deployment/update/waas-manage-updates-wufb) (updated 2025-10-02)
 
 Configure WUfB deployment rings via **Intune > Devices > Windows > Update rings for Windows 10 and
 later** (the Intune blade name retains "Update rings" as the policy-object label; treat each policy
@@ -61,12 +64,14 @@ the content advances by virtue of the longer deferral on the Broad WUfB deployme
 <a id="autopatch-disambiguation"></a>
 ## Windows Autopatch Rings (Disambiguation)
 
-A **Windows Autopatch ring** is a service-managed device cohort (Test, First, Fast, and Broad
-Autopatch rings) that Windows Autopatch automatically rotates and gates on Microsoft's behalf.
-Microsoft owns the Autopatch ring rotation cadence; admins do not configure deferral periods or
-deadlines per Autopatch ring (those are service-managed). The Autopatch service places devices
-into the Test Autopatch ring first, validates telemetry, then progressively moves cohorts through
-the First Autopatch ring, the Fast Autopatch ring, and finally the Broad Autopatch ring.
+A **Windows Autopatch ring** is a service-managed device cohort — currently the Test Autopatch ring
+and the Last Autopatch ring — that Windows Autopatch automatically rotates and gates on Microsoft's
+behalf. Microsoft owns the Autopatch ring rotation cadence; admins do not configure deferral periods
+or deadlines per Autopatch ring (those are service-managed). The Autopatch service places devices
+into the Test Autopatch ring first, validates telemetry, then promotes them to the Last Autopatch
+ring.
+
+**Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2026-06-19)
 
 The Autopatch ring topology is intentionally distinct from WUfB deployment ring topology:
 
@@ -74,20 +79,24 @@ The Autopatch ring topology is intentionally distinct from WUfB deployment ring 
   and deadline.
 - An **Autopatch ring** is a service-managed cohort with Microsoft-controlled rotation cadence.
 
-> **PITFALL-9 mutual exclusion:** WUfB deployment rings and Autopatch rings are **mutually exclusive**
-> — they cannot coexist on the same device. When a tenant enables Windows Autopatch, Autopatch
-> detaches enrolled devices from any pre-existing WUfB deployment ring assignment and takes
-> ownership of the Windows Update workload for those devices. A single device is on EITHER a WUfB
-> deployment ring OR an Autopatch ring — never both simultaneously. Adopting Autopatch delegates
-> WUfB deployment ring management to Microsoft and replaces any custom WUfB deployment ring
-> assignment with a service-managed Autopatch ring assignment.
+> **PITFALL-9 containment:** An Autopatch group is a container that *includes* an Update rings
+> policy for Windows 10 and later among the policies it creates and assigns. When a tenant enables
+> Windows Autopatch, the resulting Autopatch group takes over authorship of that Update rings
+> policy: the WUfB deployment ring policy object still exists and still governs the device, but
+> admins lose direct authorship of it once the Autopatch group owns it. A WUfB deployment ring left
+> outside any Autopatch group stays admin-authored; a WUfB deployment ring pulled inside one becomes
+> Autopatch-owned from that point forward, and its cadence now follows the Autopatch ring rotation
+> instead of the admin-configured deferral.
 
-This mutual-exclusion is the load-bearing PITFALL-9 disambiguation. Mixing the two systems on the
-same device causes update flapping, deadline conflicts, and compliance-report drift because the
-Windows Update Agent receives conflicting policy verdicts: the WUfB deployment ring policy still
-attached to the device says "defer N days" while the Autopatch ring service says "install now per
-service-managed cadence." Plan one system per device fleet — never overlap WUfB deployment ring
-assignment with Autopatch ring assignment on a single device.
+This containment relationship is the load-bearing PITFALL-9 disambiguation. Losing direct
+authorship of a WUfB deployment ring inside an Autopatch group causes update flapping, deadline
+conflicts, and compliance-report drift if an admin edits the containing Update rings policy
+directly after Autopatch has taken it over: the Windows Update Agent receives conflicting policy
+verdicts from the admin-edited state and the Autopatch-managed state. Treat every WUfB deployment
+ring inside an Autopatch group as Autopatch-owned going forward: make configuration changes through
+the Autopatch group, not by editing the underlying WUfB deployment ring policy object directly.
+
+**Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2026-06-19)
 
 When migrating from WUfB deployment rings to Autopatch:
 
@@ -96,57 +105,65 @@ When migrating from WUfB deployment rings to Autopatch:
    requires the WU workload to be Intune-authoritative.
 2. Enable Windows Autopatch in Intune > Tenant administration > Windows Autopatch.
 3. Confirm Autopatch ring assignments via Intune > Devices > Windows Autopatch > Devices. Each
-   enrolled device should appear in exactly one Autopatch ring (Test, First, Fast, or Broad).
-4. Decommission obsolete WUfB deployment ring policies once all devices have moved onto a
-   service-managed Autopatch ring. Stale WUfB deployment ring policies left attached to
-   Autopatch-managed devices form the PITFALL-9 violation surface. Even though Autopatch detaches
-   each WUfB deployment ring assignment at the device level, retaining a stale policy object on
-   any WUfB deployment ring in Intune invites future re-assignment errors.
+   enrolled device should appear in exactly one Autopatch ring (Test or Last).
+4. Decommission obsolete WUfB deployment ring policies once all devices have moved onto a Test or
+   Last Autopatch ring inside an Autopatch group. A WUfB deployment ring policy left outside any
+   Autopatch group after migration forms the PITFALL-9 gap: Autopatch takes over authorship only for
+   WUfB deployment rings contained inside its group, so an un-contained WUfB deployment ring policy
+   remains admin-authored and can drift out of sync with the Autopatch-managed devices it was
+   written for. Retiring the stale WUfB deployment ring policy object once its devices are fully
+   contained in an Autopatch group closes that gap.
 
 <a id="hotpatch"></a>
 ## Hotpatch
 
-Windows 11 Enterprise 24H2+ ships with **Hotpatch as the default servicing model from May 2026**
-onwards. Hotpatch eliminates reboot-on-most-updates by patching kernel and OS-mode binaries
+Hotpatch is **enabled by default for eligible devices** — Microsoft's current documentation
+describes default-on eligibility rather than the single admin-toggle model this guide previously
+asserted. Hotpatch eliminates reboot-on-most-updates by patching kernel and OS-mode binaries
 in-memory, reducing reboots from monthly to quarterly (a baseline reboot is still required for the
 quarterly cumulative update that consolidates the in-memory hotpatches with the on-disk image).
 
+**Configuration levels.** Hotpatch is configured at two levels, and the more specific one wins:
+
+1. A **tenant-wide default** that applies to any device not targeted by a quality-update policy of
+   its own.
+2. A **per-policy setting**, attached to the Windows quality update policy, that overrides the
+   tenant default for any device it targets.
+
+This guide previously described a single **opt-out toggle** added to the Intune admin center in
+**April 2026**, ahead of a **May 2026** default-on cutover for Windows 11 Enterprise 24H2+ devices —
+that single-toggle, single-cutover framing is this guide's own prior position, not the current
+first-party description of the two-level model above. Treat the specific April 2026 / May 2026
+dates as this guide's own earlier framing rather than a confirmed Microsoft cutover schedule.
+
 **Prerequisites:**
 
-- Windows 11 Enterprise edition (24H2 or later) — Hotpatch is not available on Windows 11 Pro or
-  on prior Windows 11 feature updates
-- VBS (Virtualization-Based Security) enabled at firmware + OS level — Hotpatch requires VBS to
-  validate kernel-binary patches in memory before applying them; without VBS the device falls back
-  to the classic monthly cumulative-update + reboot path
-- Eligible processor (verify via Intune compliance report or `msinfo32` System Summary > "Hotpatch
-  available" field on supported builds)
-- Device assigned to a WUfB deployment ring with Hotpatch enabled, OR to an Autopatch ring on a
-  Hotpatch-eligible servicing tier
+- An eligible license: Windows 11 Enterprise E3 or E5, Microsoft 365 F3, Windows 11 Education A3 or
+  A5, Microsoft 365 Business Premium, or Windows 365 Enterprise — this guide's earlier
+  **Windows 11 Pro** exclusion is not restated by the current article; treat it as unconfirmed
+  rather than as a settled yes or no.
+- **VBS** (Virtualization-Based Security) enabled at firmware + OS level — VBS must be turned on for
+  a device to be offered hotpatch updates; without VBS the device falls back to the classic
+  cumulative-update + reboot path.
+- **Arm64 devices are supported.** Arm64 requires CHPE (Compiled Hybrid Portable Executable) binary
+  servicing disabled first, via the `DisableCHPE` system policy CSP or by setting the registry DWORD
+  `HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management` `HotPatchRestrictions=1`.
+- Device targeted by the tenant-wide default or by a per-policy setting that enables Hotpatch.
 
-**Default-on behavior (May 2026 onwards):** From May 2026, eligible Windows 11 Enterprise 24H2+
-devices receive Hotpatch by default without admin intervention — the prior opt-in model is
-inverted. Devices that meet all prerequisites enter the Hotpatch servicing path automatically on
-the May 2026 cumulative update train.
-
-**Opt-out toggle (April 2026 Intune admin center addition):** Tenants can opt out of default-on
-Hotpatch via **Intune > Devices > Update rings > [select WUfB deployment ring] > Hotpatch toggle**.
-Setting the toggle to off restores classic monthly cumulative-update + reboot behavior for devices
-on that WUfB deployment ring. The opt-out toggle landed in the Intune admin center in April 2026,
-one month ahead of the May 2026 default-on cutover, to give tenants a configuration surface before
-the behavior flips. Autopatch-managed devices follow the Autopatch ring servicing tier rather than
-the WUfB deployment ring opt-out toggle; opting an Autopatch-managed device out of Hotpatch
-requires moving its Autopatch ring assignment to a non-Hotpatch tier (or removing it from
-Autopatch). The Hotpatch toggle attached to a WUfB deployment ring policy only governs devices
-targeted by that WUfB deployment ring policy (and not by any Autopatch ring assignment).
+**Rollback:** Automatic rollback of a hotpatch update is not supported; an admin can uninstall an
+applied hotpatch, but doing so requires a device restart.
 
 **Compliance reporting impact:** Hotpatch reduces reboot frequency from monthly to quarterly,
 which changes the "reboot pending" compliance signal cadence. Existing reboot-based alerting that
 fires on a monthly cadence will need re-baselining — the signal is expected quarterly post-Hotpatch
-rather than monthly. Update health and pending-update compliance signals continue to fire monthly
-per Microsoft's Hotpatch + LCU servicing model, so admins should distinguish "reboot pending"
-(quarterly post-Hotpatch) from "update pending" (still monthly) in dashboards and runbooks. Failing
-to re-baseline reboot-based alerting after the May 2026 cutover causes false-quiet alarms (no
-monthly reboot signal does not mean devices are unpatched — it means Hotpatch is working).
+rather than monthly. Update health and pending-update compliance signals continue to fire monthly,
+so admins should distinguish "reboot pending" (quarterly post-Hotpatch) from "update pending"
+(still monthly) in dashboards and runbooks. Failing to re-baseline reboot-based alerting after this
+guide's May 2026 cutover framing takes effect causes false-quiet alarms (no monthly reboot signal
+does not mean devices are unpatched — it means Hotpatch is working).
+
+**Source:** [Hotpatch updates](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/manage/windows-autopatch-hotpatch-updates) (updated 2026-06-02)
+**Source:** [Configure hotpatch](https://learn.microsoft.com/en-us/intune/device-updates/windows/configure-hotpatch) (updated 2026-04-29)
 
 <a id="driver-firmware-policy"></a>
 ## Driver and Firmware Update Policy
