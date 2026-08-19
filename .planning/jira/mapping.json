@@ -980,7 +980,7 @@
       "phases": {
         "145": {
           "issueKey": "RTS-807",
-          "status": "in_progress",
+          "status": "done",
           "name": "Corpus Correction, Validator Gate & Archival-Drift Fix"
         },
         "146": {
