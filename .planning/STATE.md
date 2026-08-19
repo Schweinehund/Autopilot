@@ -4,17 +4,17 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
 current_phase: 145
 current_phase_name: Corpus Correction, Validator Gate & Archival-Drift Fix
-status: executing
-stopped_at: Completed 145-05-PLAN.md
-last_updated: "2026-08-19T17:55:26.831Z"
+status: verifying
+stopped_at: Completed 145-03-PLAN.md (final plan of phase 145)
+last_updated: "2026-08-19T18:07:38.300Z"
 last_activity: 2026-08-19
 last_activity_desc: Plan 145-01 complete (FIX-12 frozen-read conversion + FIX-01 co-management/03 correction)
 progress:
   total_phases: 9
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
-  percent: 0
+  completed_plans: 5
+  percent: 11
 ---
 
 # Project State
@@ -38,10 +38,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 Phase: 145 of 153 (Corpus Correction, Validator Gate & Archival-Drift Fix)
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-19 — Plan 145-01 complete (FIX-12 frozen-read conversion + FIX-01 co-management/03 correction)
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## v1.21 Phase Dependency Summary
 
@@ -417,6 +417,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 145 P02 | 20min | 1 tasks | 1 files |
 | Phase 145 P04 | 35min | 3 tasks | 4 files |
 | Phase 145 P05 | 25min | 2 tasks | 32 files |
+| Phase 145 P03 | 25min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -531,6 +532,8 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase ?]: 145-04: Android Oct 31 2026 date re-fetch reproduced the exact quote; used direct citation (D-25 superseded) not the attribution fallback
 - [Phase ?]: FIX-11: CI-3 had zero surviving corpus occurrences after stripping .planning/ paths; inlined its substance from archived v1.6 PITFALLS.md (commit 78be4743) into the glossary's Terminology Usage Notes
 - [Phase ?]: FIX-09: check-phase-49.mjs's V-49-10 hard-pinned the superseded Ubuntu 20.04/22.04/24.04 version list; updated the pin in the same commit per the file's own documented same-commit-validator-update convention
+- [Phase ?]: Singularised every Autopatch-cohort reference instead of inserting an allowlisted C11 keyword, so the plural anti-pattern is structurally gone rather than merely tolerated (D-13)
+- [Phase ?]: Kept the PITFALL-9 label on both the disambiguation blockquote and the migration-step paragraph while replacing the exclusivity claim with the containment position (D-55)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -560,8 +563,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-19T17:55:26.791Z
-Stopped at: Completed 145-05-PLAN.md
+Last session: 2026-08-19T18:07:38.261Z
+Stopped at: Completed 145-03-PLAN.md (final plan of phase 145)
 Resume file: None
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 

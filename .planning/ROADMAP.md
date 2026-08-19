@@ -78,13 +78,13 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 
 **Blast radius**: `docs/operations/patch-management/00-overview.md` — the single most constrained file in this milestone, carrying five live pins on an apex chain member, and the first of **four** phases that touch it. **The C11 keyword-substitution ordering (FIX-02) is a same-commit ordering constraint, not a preference**: substitute an allowlisted keyword into the `:76-87` window **first**, then remove the mutual-exclusivity wording. The overview's body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens — the hotpatch correction belongs in `01-windows-wufb-rings.md`, which Phase 146 owns.
 **Research flag**: **YES** — the two `[UNVERIFIED]` dated deadlines (Android 2026-10-31; Apple's Intune end-of-support date, which is not published) each need a first-party citation at plan time or a rewrite of the surrounding prose that retains the pinned literals. **[DISCHARGED at plan time 2026-08-19]** The Android date was found first-party (`learn.microsoft.com/en-us/intune/whats-new/in-development`, `ms.date` 2026-07-27) and is cited directly; Apple's date is not published at all and its absence is stated rather than filled (D-24).
-**Plans**: 4/5 plans executed
+**Plans**: 5/5 plans executed
 
 Plans:
 
 - [x] 145-01-PLAN.md — FIX-12 frozen-read conversion (tracer, landed first and alone) + the co-management default-ring correction
 - [x] 145-02-PLAN.md — the `00-overview.md` correction atom (FIX-01/02/03/04/06/10), one indivisible commit
-- [ ] 145-03-PLAN.md — the `01-windows-wufb-rings.md` correction atom (FIX-01/02/04/07/10), one indivisible commit
+- [x] 145-03-PLAN.md — the `01-windows-wufb-rings.md` correction atom (FIX-01/02/04/07/10), one indivisible commit
 - [x] 145-04-PLAN.md — the three per-platform files: macOS cutover (FIX-05), the coupled iOS pair (FIX-06), Android patch-age scoping (FIX-08)
 - [x] 145-05-PLAN.md — FIX-11 archival-drift fix (11 lines / 4 files) + FIX-09 distribution-version sweep and diagram regeneration
 
