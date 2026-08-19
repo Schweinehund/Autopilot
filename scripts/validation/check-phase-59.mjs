@@ -444,10 +444,10 @@ const checks = [
     }
   },
   {
-    id: 14, name: 'V-59-14: docs/operations/00-index.md row counts -- Patch=5 / App=5 / Drift=5',
+    id: 14, name: 'V-59-14: docs/operations/00-index.md carried row counts Patch=5 / App=5 / Drift=5 at v1.5 close [v1.5-frozen @ ba2cbc0]',
     run() {
-      const c = readFile(OPS_INDEX_MD);
-      if (c === null) return { pass: false, detail: 'File missing: ' + OPS_INDEX_MD };
+      const c = readAtV15Close(OPS_INDEX_MD);
+      // no null-check: readAtV15Close throws on git error; let it propagate
 
       const patchRegion = sliceH2Region(c, '## Patch & Update Management');
       const appRegion   = sliceH2Region(c, '## App Lifecycle Automation');
