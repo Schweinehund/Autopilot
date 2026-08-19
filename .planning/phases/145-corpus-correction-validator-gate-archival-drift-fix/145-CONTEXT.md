@@ -350,7 +350,16 @@ verification agent. Figures the review corrected are marked `[CORRECTED]`.
   literal `Supervised-only in iOS 17+ enforcement policies` **absent**, and the
   `03-ios-update-lifecycle.md` cross-link present. `V-54-32` atomically couples `V-54-19/20/21`, so
   `admin-setup-ios/07` and `03-ios-update-lifecycle.md` land in **one commit**.
-- **D-54:** The real C11 cliff is in `01-windows-wufb-rings.md`, not the overview. `[MEASURED]`
+- **D-54:** `[REFINED 2026-08-19, plan time]` **C11 is case-INSENSITIVE** (`new RegExp(p, 'gi')` at
+  `v1.20-milestone-audit.mjs:578`) and, unlike `V-54-11`, it does **not** strip headings. So the H2
+  `## Windows Autopatch Rings (Disambiguation)` at `01-windows-wufb-rings.md:62` is itself a **sixth
+  corpus hit**, not merely the keeper location this decision originally described. Measured:
+  case-sensitive = 5 hits, case-insensitive = **6** — `00-overview.md:78/:83/:86` plus
+  `01-windows-wufb-rings.md:62/:65/:77`. The `:62` hit is **self-kept** by the word
+  `Disambiguation` in its own line, so **removing or rewording that parenthetical reddens C11**.
+  D-42's "leave the anchor-owning H2 text untouched" already protects it — this records *why* that
+  is load-bearing rather than merely tidy. The cliff below still stands. The real C11 cliff is in
+  `01-windows-wufb-rings.md`, not the overview. `[MEASURED]`
   slack between `:62` and `:65` is **36 characters**: the L65 hit sits at offset 3988, its only
   keeper (`disambiguation`, inside the `:62` H2) at 3824, window opening at 3788. **Never insert a
   `**Source:**` line or any other text into that gap.** FIX-01's own rewrite *shortens* the
