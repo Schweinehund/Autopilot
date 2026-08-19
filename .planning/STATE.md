@@ -4,16 +4,16 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
 current_phase: 145
 current_phase_name: Corpus Correction, Validator Gate & Archival-Drift Fix
-status: planning
-stopped_at: Phase 145 context gathered
-last_updated: "2026-08-19T15:43:49.809Z"
+status: executing
+stopped_at: Completed 145-01-PLAN.md (FIX-12 + FIX-01 site 4/4)
+last_updated: "2026-08-19T17:01:25.435Z"
 last_activity: 2026-08-19
-last_activity_desc: ROADMAP.md created, 58/58 requirements mapped across 9 phases
+last_activity_desc: Plan 145-01 complete (FIX-12 frozen-read conversion + FIX-01 co-management/03 correction)
 progress:
   total_phases: 9
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 5
+  completed_plans: 1
   percent: 0
 ---
 
@@ -37,11 +37,11 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 145 of 153 (Corpus Correction, Validator Gate & Archival-Drift Fix)
-Plan: — (no plans yet)
-Status: Ready to plan
-Last activity: 2026-08-19 — ROADMAP.md created, 58/58 requirements mapped across 9 phases
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-08-19 — Plan 145-01 complete (FIX-12 frozen-read conversion + FIX-01 co-management/03 correction)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 20%
 
 ## v1.21 Phase Dependency Summary
 
@@ -413,6 +413,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 144 P10 | ~30min | 2 tasks | 1 files |
 | Phase 144 P11 | 45min | 2 tasks | 2 files |
 | Phase 144 P12 | 15min | 3 tasks | 5 files |
+| Phase 145 P01 | 12min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -515,6 +516,8 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase ?]: 144-12: Publish bundle regenerated with explicit --version=v1.20 before the close-gate flip, per D-29 ordering
 - [Phase ?]: 144-12: Single atomic close-gate commit flipped all 28 v1.20 requirements to Validated across PROJECT/ROADMAP/STATE/REQUIREMENTS, corrected SWEEP-06/SWEEP-09 traceability cells to two-phase form, removed both accepted-red watch items from STATE.md
 - [Phase ?]: 144-12: Post-close-gate apex confirmed 100/0/1 (correct pre-144-VERIFICATION.md triple), check-phase-54 exits 0 after the rewrite, recorded as a separate non-gate commit
+- [Phase ?]: V-59-14 converted to a frozen v1.5-close read (readAtV15Close); V-59-02/13/34 stay live per D-34
+- [Phase ?]: co-management/03 Autopatch ring parenthetical corrected to (Test and Last), five-word swap only per D-50
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -544,9 +547,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-19T15:43:49.680Z
-Stopped at: Phase 145 context gathered
-Resume file: .planning/phases/145-corpus-correction-validator-gate-archival-drift-fix/145-CONTEXT.md
+Last session: 2026-08-19T17:01:25.400Z
+Stopped at: Completed 145-01-PLAN.md (FIX-12 + FIX-01 site 4/4)
+Resume file: None
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
 ## Operator Next Steps

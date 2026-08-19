@@ -19,7 +19,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 
 **Pillar E is a CORRECTION pillar, not a freshness pillar.** Five load-bearing assertions in `docs/operations/patch-management/` are contradicted by current first-party documentation. A bumped `last_verified` over an unverified claim launders a guess into a verified fact, so every requirement here demands **evidence**, not a date stamp.
 
-- [ ] **FIX-01**: Autopatch's default deployment rings are documented as **`Test` and `Last`** — automatically present, unable to be removed or renamed, one Entra group each, up to 15 rings per group and 300 groups per tenant. The falsified "Test, First, Fast, Broad" naming is gone from all four sites. `[MEASURED]` the sweep must key on `First` + `Fast` + `Broad`, **not** the comma-and string, or it misses both `00-overview.md:76` and `co-management/03-cocmgmt-migration-paths.md:25`.
+- [x] **FIX-01**: Autopatch's default deployment rings are documented as **`Test` and `Last`** — automatically present, unable to be removed or renamed, one Entra group each, up to 15 rings per group and 300 groups per tenant. The falsified "Test, First, Fast, Broad" naming is gone from all four sites. `[MEASURED]` the sweep must key on `First` + `Fast` + `Broad`, **not** the comma-and string, or it misses both `00-overview.md:76` and `co-management/03-cocmgmt-migration-paths.md:25`.
 - [ ] **FIX-02**: The WUfB-ring / Autopatch **mutual-exclusivity claim is removed** from all five sites (three inside `00-overview.md`'s `## Ring Terminology`, plus `01-windows-wufb-rings.md:77` and `co-management/03:25`) and replaced with the first-party containment position: an Autopatch group is a container that *includes* `Update rings policy for Windows 10 and later` among the policies it creates and assigns. The documented consequence is **loss of direct authorship**, not exclusion.
 - [ ] **FIX-03**: The driver-surface sentence at `00-overview.md:80-84` is **split, not struck** — "not gated by rings" is false (approval mode and the 0–30 day deferral are set per deployment ring, and the Quality Update deadline and grace period **do** apply to drivers), while "independent policy surface" is verbatim-true first-party text. Deleting the independence clause replaces one wrong statement with another.
 - [ ] **FIX-04**: The product is named **Windows Update client policies** throughout, with `WUfB` retained only where the old name genuinely survives (Windows Update for Business **reports**). `[MEASURED]` 0 files in the corpus currently use the current name.
@@ -30,7 +30,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 - [ ] **FIX-09**: `Ubuntu 22.04` is corrected to **Ubuntu 24.04 and 26.04 LTS + RHEL 9 and 10** across `[MEASURED]` **64 occurrences in 25 markdown files**, **plus `docs/diagrams/decision-tree-09-linux-triage.svg`**, which is a **regeneration task, not a text edit**. The intra-Microsoft RHEL-8-vs-9/10 conflict is stated wherever a supported-version list appears, not flattened.
 - [ ] **FIX-10**: All five `docs/operations/patch-management/` documents carry a `review_by` minus `last_verified` interval of **at most 60 days** — never the corpus's usual +90 — computed by arithmetic, with per-claim evidence lines citing sources dated **after** the event each claim describes.
 - [ ] **FIX-11**: `docs/_glossary-linux.md:157`'s markdown link into `.planning/research/` is fixed **by inlining the substance**. `[MEASURED]` re-pointing at the archived copy does not work: `.planning/milestones/v1.19-research/PITFALLS.md` carries a *different* Pitfall 2/4, and `.planning/milestones/v1.6-research/` does not exist. Success criterion: `grep -rn "\.planning/research/\|\.planning/phases/" docs/` returns **0**.
-- [ ] **FIX-12**: `check-phase-59.mjs`'s ops-index read is converted to a frozen read (`readAtV15Close`), so `V-59-14`'s `patchRows === 5` equality asserts "Phase 59 shipped five rows" rather than "no patch-management guide may ever be added". **[OWNER-RULED 2026-08-19]** `[MEASURED]` the file already imports `readAtV15Close, readAtV116Close` and uses them at `:287, :315, :659, :940`; Phase 128 commit `066a9068` performed this exact conversion across 8 validators; no `check-phase-*.mjs` pins check-phase-59's content.
+- [x] **FIX-12**: `check-phase-59.mjs`'s ops-index read is converted to a frozen read (`readAtV15Close`), so `V-59-14`'s `patchRows === 5` equality asserts "Phase 59 shipped five rows" rather than "no patch-management guide may ever be added". **[OWNER-RULED 2026-08-19]** `[MEASURED]` the file already imports `readAtV15Close, readAtV116Close` and uses them at `:287, :315, :659, :940`; Phase 128 commit `066a9068` performed this exact conversion across 8 validators; no `check-phase-*.mjs` pins check-phase-59's content.
 
 **Why FIX-11 cannot be deferred.** `[MEASURED]` this link took `check-nav-hub-links.mjs` → `check-phase-143` → the **apex** red at HEAD (100 PASS / 1 FAIL) when v1.19's research was archived. Writing v1.21's own research greened it again — **a manufactured false green**. It re-breaks the moment v1.21's research is archived at close, *after* the close-gate apex has been measured. Nobody re-runs the apex after archival.
 
@@ -159,7 +159,7 @@ Explicit boundaries with reasoning, to prevent re-adding.
 
 | Requirement | Phase | Status |
 |---|---|---|
-| FIX-01 | Phase 145 | Pending |
+| FIX-01 | Phase 145 | Complete |
 | FIX-02 | Phase 145 | Pending |
 | FIX-03 | Phase 145 | Pending |
 | FIX-04 | Phase 145 | Pending |
@@ -170,7 +170,7 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | FIX-09 | Phase 145 | Pending |
 | FIX-10 | Phase 145 | Pending |
 | FIX-11 | Phase 145 | Pending |
-| FIX-12 | Phase 145 | Pending |
+| FIX-12 | Phase 145 | Complete |
 | DRV-01 | Phase 146 | Pending |
 | DRV-02 | Phase 146 | Pending |
 | DRV-03 | Phase 146 | Pending |
