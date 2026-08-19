@@ -975,12 +975,12 @@
     },
     "v1.21": {
       "epicKey": "RTS-806",
-      "status": "created",
+      "status": "in_progress",
       "created": "2026-08-18",
       "phases": {
         "145": {
           "issueKey": "RTS-807",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Corpus Correction, Validator Gate & Archival-Drift Fix"
         },
         "146": {
