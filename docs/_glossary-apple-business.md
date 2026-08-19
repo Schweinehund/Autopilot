@@ -51,7 +51,7 @@ The following terms were renamed as part of Apple's 2026-04-14 rebrand of Apple 
 
 The tenant-level Apple Business owner with irrevocable lockout-recovery authority. The Account Holder role is the sole role that can recover an Apple Business tenancy after all IT Administrators are locked out; it cannot be delegated to a sub-organization admin (see [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md) for the OP-2 / DA-2 pitfall callout). The Account Holder Managed Apple Account must use a dedicated email address that is NOT shared with any IT Administrator account to prevent single-point-of-lockout. Apple article: [axm97dd59159](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web).
 
-> **DO NOT DELEGATE:** The Account Holder role must be held by a named individual (not a shared mailbox, not a service account) per the OP-2 prevention strategy in `.planning/research/PITFALLS.md`.
+> **DO NOT DELEGATE:** The Account Holder role must be held by a named individual (not a shared mailbox, not a service account) per the OP-2 prevention strategy.
 
 > Delegating or sharing the Account Holder Managed Apple Account is the single highest-severity operational risk in Apple Business administration.
 
@@ -93,7 +93,7 @@ Device API Manager is a preset custom role in Apple Business providing programma
 
 ### Custom Role
 
-A Custom Role in Apple Business is a named permission bundle built from a combination of preset role templates plus additional individual permission grants, assigned to a specific Organizational Unit. Custom Roles are the mechanism for OU-scoped delegation — an admin assigned a Custom Role can only exercise the granted permissions within the scope of the assigned OU. Custom Roles CANNOT be based on or derived from the Account Holder role (the anti-elevation invariant per OP-2 prevention in `.planning/research/PITFALLS.md`). Custom Roles that grant Edit permissions without the corresponding View permissions will fail silently — see the Edit-without-View dependency table in [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md#edit-without-view-dependency-table-op-3-prevention) for the full dependency mapping (OP-3 prevention). Apple article: [axm97dd59159](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web).
+A Custom Role in Apple Business is a named permission bundle built from a combination of preset role templates plus additional individual permission grants, assigned to a specific Organizational Unit. Custom Roles are the mechanism for OU-scoped delegation — an admin assigned a Custom Role can only exercise the granted permissions within the scope of the assigned OU. Custom Roles CANNOT be based on or derived from the Account Holder role (the anti-elevation invariant per OP-2 prevention). Custom Roles that grant Edit permissions without the corresponding View permissions will fail silently — see the Edit-without-View dependency table in [01-role-permission-model.md](cross-platform/apple-business/01-role-permission-model.md#edit-without-view-dependency-table-op-3-prevention) for the full dependency mapping (OP-3 prevention). Apple article: [axm97dd59159](https://support.apple.com/guide/apple-business-manager/intro-to-roles-and-privileges-axm97dd59159/web).
 
 ### Sub-Org Admin
 
@@ -117,7 +117,7 @@ Organizational Unit (OU) (formerly Location in Apple Business Manager) is the pr
 
 ### Sub-OU
 
-A Sub-OU is a second-level Organizational Unit nested under a top-level OU in Apple Business. Legacy Apple Business Manager (ABM) supported one level of nesting (Location → sub-Location); Apple Business continues to support at least one nesting level. Definitive depth verification (whether Apple Business supports deeper nesting beyond 2 levels) is deferred to Phase 63 portal verification — see `.planning/phases/62-apple-business-foundation-rebrand/62-CONTEXT.md` deferred items. Sub-OUs inherit the parent OU's MDM server bindings unless explicitly overridden; Custom Role assignments and content token scoping apply independently at each level. When planning delegation hierarchies for large organizations, design Sub-OU boundaries around operational teams (e.g., geography, business unit) rather than technical criteria — Apple Business does not support more than one or two nesting levels, so deep hierarchical delegation designs must use multiple top-level OUs instead. See [02-ous-architecture.md](cross-platform/apple-business/02-ous-architecture.md) for the nesting model and practical design guidance.
+A Sub-OU is a second-level Organizational Unit nested under a top-level OU in Apple Business. Legacy Apple Business Manager (ABM) supported one level of nesting (Location → sub-Location); Apple Business continues to support at least one nesting level. Definitive depth verification (whether Apple Business supports deeper nesting beyond 2 levels) was deferred to Phase 63 portal verification and remains unconfirmed. Sub-OUs inherit the parent OU's MDM server bindings unless explicitly overridden; Custom Role assignments and content token scoping apply independently at each level. When planning delegation hierarchies for large organizations, design Sub-OU boundaries around operational teams (e.g., geography, business unit) rather than technical criteria — Apple Business does not support more than one or two nesting levels, so deep hierarchical delegation designs must use multiple top-level OUs instead. See [02-ous-architecture.md](cross-platform/apple-business/02-ous-architecture.md) for the nesting model and practical design guidance.
 
 ### OU Scope
 
@@ -133,7 +133,7 @@ Content token (formerly VPP location token in Apple Business Manager) is the OU-
 
 > **Intune-side label preserved:** Intune admin center continues to display "Apple VPP tokens" under `Tenant administration > Connectors and tokens > Apple VPP tokens`.
 
-> This is an intentional Intune-side label lag (CI-2 / CI-3 pattern per `.planning/research/PITFALLS.md`).
+> This is an intentional Intune-side label lag (CI-2 / CI-3 pattern — see Terminology Usage Notes below).
 
 > Do not rename Intune UI labels in admin documentation — annotate the discrepancy parenthetically where needed.
 
@@ -145,7 +145,7 @@ Managed Apple Account (formerly Managed Apple ID; renamed 2024, predates Apple B
 
 ### Apple Business Token
 
-The Apple Business Token is the API-level OAuth-scoped token used by the Apple Business Device API and integration surfaces (not to be confused with content tokens or ABM tokens). Apple Business Tokens carry explicit OAuth scope identifiers and are subject to revocation. Per the OP-1 DENY-by-default framing in `.planning/research/PITFALLS.md`, Apple Business Token revocation results in an immediate loss of API access across all integrations bound to that token — plan for rotation runbooks before provisioning API integrations. As of 2026-04-14, documentation of the full Apple Business Token OAuth scope list is pending Apple developer portal publication. Token management is assigned to administrators holding the Device API Manager preset custom role (see [Device API Manager](#device-api-manager) in the Roles & Permissions section). Organizations should establish a break-glass procedure for Apple Business Token rotation before deploying any Device API integration in production — an unplanned token revocation (e.g., from a security incident) with no rotation runbook in place will halt all API-dependent automation until the token is manually reprovisioned by an authorized admin.
+The Apple Business Token is the API-level OAuth-scoped token used by the Apple Business Device API and integration surfaces (not to be confused with content tokens or ABM tokens). Apple Business Tokens carry explicit OAuth scope identifiers and are subject to revocation. Per the OP-1 DENY-by-default framing, Apple Business Token revocation results in an immediate loss of API access across all integrations bound to that token — plan for rotation runbooks before provisioning API integrations. As of 2026-04-14, documentation of the full Apple Business Token OAuth scope list is pending Apple developer portal publication. Token management is assigned to administrators holding the Device API Manager preset custom role (see [Device API Manager](#device-api-manager) in the Roles & Permissions section). Organizations should establish a break-glass procedure for Apple Business Token rotation before deploying any Device API integration in production — an unplanned token revocation (e.g., from a security incident) with no rotation runbook in place will halt all API-dependent automation until the token is manually reprovisioned by an authorized admin.
 
 ---
 
@@ -161,7 +161,7 @@ OpenID Connect with Just-in-Time (JIT) provisioning is the federation pattern wh
 
 ### Federation Collision
 
-A Federation Collision is a conflict that occurs when an Apple ID (personal or organizational) that an employee previously created is claimed by the same domain being federated in Apple Business. When a tenant domain is federated, all Apple IDs ending in that domain become subject to organizational control — users who created personal Apple IDs with their corporate email address hit the collision. Apple Business surfaces a 60-day grace period for affected users to merge or migrate their personal Apple ID before the domain federation becomes irrevocable. This is the OP-7 callout in `.planning/research/PITFALLS.md` — failing to notify affected users BEFORE federation causes data loss (personal iCloud content irreversibly transferred to organizational control). Apple article: [axmb19317543](https://support.apple.com/guide/apple-business-manager/intro-to-federated-authentication-axmb19317543/web).
+A Federation Collision is a conflict that occurs when an Apple ID (personal or organizational) that an employee previously created is claimed by the same domain being federated in Apple Business. When a tenant domain is federated, all Apple IDs ending in that domain become subject to organizational control — users who created personal Apple IDs with their corporate email address hit the collision. Apple Business surfaces a 60-day grace period for affected users to merge or migrate their personal Apple ID before the domain federation becomes irrevocable. This is the OP-7 callout — failing to notify affected users BEFORE federation causes data loss (personal iCloud content irreversibly transferred to organizational control). Apple article: [axmb19317543](https://support.apple.com/guide/apple-business-manager/intro-to-federated-authentication-axmb19317543/web).
 
 > **60-day window:** The grace period is 60 days from the moment domain federation is confirmed.
 
@@ -187,7 +187,7 @@ Apple Business (2026-04-14) renamed several terms while Microsoft's Intune admin
 - Use **Intune-side verbatim labels** (Apple VPP tokens, Location, Apple Business Manager token, privilege) when describing Intune admin center navigation paths.
 - When the two surfaces are described in the same sentence, use a parenthetical: "Select the content token (shown as 'Apple VPP token' in Intune admin center) for this OU."
 
-The CI-2 / CI-3 pitfall categories in `.planning/research/PITFALLS.md` document the full set of label-lag terms that admins commonly confuse when switching between portal contexts.
+The CI-2 (VPP location token → content token) and CI-3 (Managed Apple ID → Managed Apple Account) pitfall categories are Apple's 2026-04-14 rebrand terms that Intune's admin center has not yet caught up with — together they document the full set of label-lag terms that admins commonly confuse when switching between portal contexts.
 
 ### Permission vs Privilege
 

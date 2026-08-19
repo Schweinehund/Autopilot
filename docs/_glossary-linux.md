@@ -154,7 +154,7 @@ The 4 categories of compliance settings exposed for Linux device-management comp
 
 ### Web-app CA
 
-The only Conditional Access pattern available for Linux endpoints — Microsoft Edge for Linux (102.x+) presents the Entra Conditional Access challenge at sign-in time when the user accesses an Entra-protected web application. Device-level CA grants ("Require device to be marked as compliant" applied to a CA policy targeting all client apps) are NOT available for Linux. This is the [PITFALL-2](../.planning/research/PITFALLS.md) anchor — admins designing CA flows for Linux must understand that compliance reporting exists but is not consumable by device-level CA grants.
+The only Conditional Access pattern available for Linux endpoints — Microsoft Edge for Linux (102.x+) presents the Entra Conditional Access challenge at sign-in time when the user accesses an Entra-protected web application. Device-level CA grants ("Require device to be marked as compliant" applied to a CA policy targeting all client apps) are NOT available for Linux. This is the PITFALL-2 anchor — admins designing CA flows for Linux must understand that compliance reporting exists but is not consumable by device-level CA grants.
 
 > **Cross-platform note:** Device-level CA is available on Windows, macOS, iOS, and Android via "Require device to be marked as compliant" — none of these platforms are restricted to web-app CA. Linux
 

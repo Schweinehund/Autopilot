@@ -184,7 +184,7 @@ Administrator role or purchase of separate licenses under OU-B's token.
 > **Per-OU CRD partitioning deep-dive:** A deeper treatment of per-OU Conference Room Display
 > partitioning — including scenarios with multi-OU building floors, guest network isolation,
 > and per-OU AirPlay access policies — is **deferred to v1.7+**. That deep-dive will be logged
-> to `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` at Phase 66 and is out of scope for v1.6.
+> to the v1.7+ deferred-cleanup tracking list at Phase 66 and is out of scope for v1.6.
 > This heuristic is the Phase 63 deliverable for OP-15; the per-OU deep-dive is the v1.7+
 > deliverable.
 
@@ -237,8 +237,8 @@ from CRD to single-OU managed use, or recovering from an unresolvable configurat
 - Phase 64 MDM server reassignment runbook (DELEG-05):
   [15-mdm-server-reassign-runbook.md](15-mdm-server-reassign-runbook.md) — operational runbook
   for OU-to-OU device transfer (Phase 64 deliverable; forthcoming)
-- Deferred — per-OU CRD deep-dive: v1.7+ scope; tracked in
-  `.planning/milestones/v1.6-DEFERRED-CLEANUP.md` (logged at Phase 66 per plan)
+- Deferred — per-OU CRD deep-dive: v1.7+ scope; tracked in the v1.7+ deferred-cleanup list
+  (logged at Phase 66 per plan)
 
 ## Version History
 

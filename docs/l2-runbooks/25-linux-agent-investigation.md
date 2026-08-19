@@ -90,7 +90,7 @@ See [HWE kernel](../_glossary-linux.md#hwe-kernel) and [GA kernel](../_glossary-
 
 > **Note:** Microsoft Learn does not document specific HWE-kernel-related failure signatures for `intune-portal`.
 
-> PITFALL-4 in `.planning/research/PITFALLS.md` establishes HWE divergence as a known risk; the L2-actionable signal is the `uname -r` output cross-referenced against the version-track matrix above.
+> HWE kernel divergence is a known risk; the L2-actionable signal is the `uname -r` output cross-referenced against the version-track matrix above.
 
 ### Resolution
 
