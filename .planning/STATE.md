@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.20
 milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
-current_phase: 144
-current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
-status: shipped
+status: Awaiting next milestone
 stopped_at: Phase 144 complete — v1.20 SHIPPED (28/28 Validated, close-gate 246fa3dd, apex 101/0/0)
-last_updated: "2026-08-18T04:26:03.698Z"
+last_updated: "2026-08-19T01:16:17.342Z"
 last_activity: 2026-08-18
-last_activity_desc: Phase 144 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
+last_activity_desc: Milestone v1.20 completed and archived
 progress:
   total_phases: 6
   completed_phases: 6
   total_plans: 44
   completed_plans: 44
+current_phase: 144
+current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
 ---
 
 # Project State
@@ -23,24 +23,20 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` + `/adversarial-review`)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.20 protects that corpus by repairing the validator chain and CI harness lineage that guards it.
-**Current focus:** v1.20 SHIPPED 2026-08-18 (Phase 144 close-gate complete, 28/28 requirements Validated) — next: `/gsd-complete-milestone` or `/gsd-new-milestone`
+**Current focus:** v1.20 SHIPPED 2026-08-18 and ARCHIVED 2026-08-19 (28/28 requirements Validated, close-gate 246fa3dd, tag `v1.20`) — no active milestone; next: `/gsd-new-milestone` to scope v1.21
 
-> **v1.20 BACK-ANCHOR RECOVERY (Phase 144 / HARN-17).** The V119 pin needs the v1.19 close-gate SHA `a7bda73e23efc5e3f9607c3fef37abf8ec4030aa`. Recover it with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
+> **v1.21 BACK-ANCHOR OBLIGATION (`V120-PIN-DEFERRAL`).** v1.20 discharged `V119-PIN-DEFERRAL` and left its own successor obligation open: `_lib/frozen-at-close.mjs` carries no `V120` entry, so `v1.20-milestone-audit.mjs` still reads live HEAD. v1.21 must pin it to the v1.20 close-gate SHA `246fa3dd` and convert that harness. Recover the SHA with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
 > ```
-> git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.19/ && $2 ~ /MILESTONE CLOSE/'
+> git log --all --format="%H|%s" | awk -F'|' '$2 ~ /v1\.20/ && $2 ~ /MILESTONE CLOSE/'
 > ```
-> This is the same method that resolved V118 and V117; regression-check it against both before trusting the V119 result.
+> This is the same method that resolved V117, V118 and V119; regression-check it against all three before trusting the V120 result.
 
 ## Current Position
 
-Phase: 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close) — COMPLETE
-Plan: 12 of 12
-Status: v1.20 SHIPPED — 28/28 requirements Validated via the Phase 144 Plan 144-12 single close-gate commit
-Last activity: 2026-08-18 — Phase 144 close-gate landed; post-close-gate confirmatory apex run recorded separately (Task 3)
-
-**Next step:** `/gsd-complete-milestone` (archive v1.20, tag, close Jira story) or `/gsd-new-milestone` to scope v1.21. The close-gate commit stays local — pushing it is the owner's call, out of this phase's scope.
-
-Progress: [██████████] 100%
+Phase: Milestone v1.20 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-08-18 — Milestone v1.20 completed and archived
 
 ## v1.20 Phase Dependency Summary
 
@@ -455,11 +451,12 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 Last session: 2026-08-18T04:26:03.649Z
 Stopped at: Phase 144 complete — v1.20 SHIPPED (28/28 Validated, close-gate 246fa3dd, apex 101/0/0)
-Resume file: .planning/phases/144-v119-pin-18th-path-a-lineage-bump-terminal-close/144-VERIFICATION.md
-Next action: `/gsd-complete-milestone` — archive v1.20 and tag it
+Resume file: .planning/milestones/v1.20-phases/144-v119-pin-18th-path-a-lineage-bump-terminal-close/144-VERIFICATION.md (archived)
+Next action: `/gsd-new-milestone` — scope v1.21 (v1.20 archived and tagged 2026-08-19)
 
 ## Operator Next Steps
 
-- `/gsd-complete-milestone` — archives the v1.20 phase directories, collapses the ROADMAP, appends MILESTONES/RETROSPECTIVE, and tags `v1.20`. Watch for archival drift: the apex carries the correct `'v1.20-phases'` token as a literal source assertion, but the resolver checks the live path first, so a wrong token cannot be detected by a resolver-null before archiving.
-- `.planning/REQUIREMENTS.md` must NOT be deleted at archive time — `check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism.
-- Then `/gsd-new-milestone` for v1.21. Its first phase inherits the V120 pin (`V120-PIN-DEFERRAL`), the still-open `V-132-HUBSNOTWIRED-REGEX-BROKEN` and `RECIPE-OUTBOUND-LINK-COVERAGE`, the C17 live-HEAD residue across all five C17-bearing harnesses, `FENCE-AXIS-02`, and the four remote atom branches held at KEEP.
+- `/gsd-new-milestone` — scope v1.21. Its backlog source is `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`.
+- v1.21 inherits: `V120-PIN-DEFERRAL` (the mandatory back-anchor, see above), `FENCE-AXIS-02` (fence *length* and mask *scope*, both untouched by LINK-05), the out-of-census divergent fence-handling sites (D-20), the unowned `check-phase-30/31` tooling residue (items 1-6 of the routing table), the non-nested standalone-chain wall-clock cost, the C17 live-HEAD residue across the five C17-bearing harnesses, and the still-open `V-132-HUBSNOTWIRED-REGEX-BROKEN`.
+- `.planning/REQUIREMENTS.md` was deliberately NOT deleted at this close — see Blockers/Concerns. It stays until `/gsd-new-milestone` overwrites it.
+- Workflows fire on `pull_request` + schedule + `workflow_dispatch` only. A push to `master` fires nothing; Axis-2 always needs an explicit `gh workflow run --ref master` per workflow, and CI must never be read while the remote is behind.

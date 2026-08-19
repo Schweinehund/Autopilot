@@ -1,5 +1,25 @@
 # Milestones: Windows Autopilot Troubleshooter
 
+## v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure (Shipped: 2026-08-18)
+
+**Phases completed:** 6 phases, 44 plans, 114 tasks
+
+**Delivered:** The validator chain and CI harness lineage that guard the documentation corpus now read their own frozen close-SHA content instead of live HEAD, every previously-shallow CI checkout reads deep, and the ten-member standalone-RED validator set exits 0 — closing both accepted-red dispositions the milestone was scoped to delete.
+
+**Key accomplishments:**
+
+- **Phase 139 — Governance CARVE + fetch-depth retrofit.** A category-authored file allowlist in `v1.20-CARVE.md` with a diff-based byte-unchanged gate and a read-only nudge-then-warn Stop-hook governs every frozen-surface edit across Phases 139-144; `fetch-depth: 0` landed on 97 previously-shallow checkouts across all 16 `audit-harness-*` workflows (an owner-ratified extension of the roadmapped 32); `_lib/frozen-at-close.mjs` gained `lsTreeAtClose` with 16 convenience exports, a six-pattern typed error classifier, and a `file://` shallow-clone negative self-test; four silent-swallow frozen-read sites in `check-phase-49/51` now propagate their throw.
+- **Phase 140 — Frozen-aware harness conversion.** All sixteen `vX.Y-milestone-audit.mjs` harnesses (v1.4 through v1.18) converted to derive their file scope and read their content at their own close SHA via a new batched `git cat-file --batch` corpus-reader layer, resolving the frozen-vs-evolved C5/C10 60d-vs-90d mismatch class at its root; slowest harness measured at 4,177 ms against a 60,000 ms subprocess budget; the v1.4 `TEMPLATE-SENTINEL` remedy backported as a scoped per-file `continue`, never a skip.
+- **Phase 141 — Standalone-RED validator set green.** `check-phase-48/60/61/62-66` all exit 0 standalone; the root cause proved to be a stale `BASELINE_9` (9 of 9 coordinates rebased off dead pre-`aaf0d2ff` positions), not the self-test classifier as first drafted; first-ever CI fan-out dispatched at one shared SHA came back 41 of 41 jobs green.
+- **Phase 142 — Archival-path fix and chain adoption.** `check-phase-30` and `check-phase-31` repaired (six vacuous or superseded assertions replaced with genuinely-failable successors, proven live by a mutate-and-revert probe) and adopted into the apex chain via `CHAIN_EXTRA`; the cold-clone apex cost got a falsifiable threshold; a fifteen-item deferred-cleanup routing document gave every discovered-but-out-of-scope finding a named destination.
+- **Phase 143 — Link coverage and fence-mask unification.** Corpus-wide relative-link and anchor checker landed green with a zero accepted-violation baseline over 145 repairs; all 85 remaining `{#id}` heading overrides across 29 files converted to own-line `<a id>` anchors; fence-masking unified across all 15 call sites, with the two uncovered axes (fence *length* and mask *scope*) named and carried forward as `FENCE-AXIS-02` rather than silently dropped.
+- **Phase 144 — V119 pin, 18th Path-A lineage bump, terminal close.** The `V119 = a7bda73e` back-anchor pin landed and the seventeenth and last unconverted harness (v1.19) converted through it, discharging `V119-PIN-DEFERRAL`; `v1.20-milestone-audit.mjs` + sidecar + `BASELINE_24` + five leaf validators + the `check-phase-144` apex + the 17th CI workflow all authored; three-axis terminal re-audit (Windows fresh clone / Linux GHA dual-apex / independent second clone) matched exactly at 100 PASS / 0 FAIL / 1 SKIP at one shared SHA `2858c0b5`, and all 17 integrity workflows dispatched green (211 jobs, 196 success, 15 event-gated skips, 0 failures) after one spent-and-succeeded remediation round.
+- **v1.20 SHIPPED** — publish bundle regenerated at `--version=v1.20` (225/225 registry parity, 0 errors, both approved-row canaries green), then a single atomic close-gate commit `246fa3dd` flipped all 28 requirements to Validated, and the post-close-gate confirmatory apex proved `V-144-AUDIT` a real PASS at 101 PASS / 0 FAIL / 0 SKIPPED.
+
+**Verification:** `verified_closeout` — all 6 phases `phase_complete` + `verification_status: passed`, 28/28 requirements checked off, milestone audit `passed` (28/28 requirements, 6/6 phases, integration and flows clean), 0 known gaps, 0 deferred verification overrides.
+
+---
+
 ## v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) (Shipped: 2026-08-04)
 
 **Phases completed:** 4 phases, 12 plans, 35 tasks
