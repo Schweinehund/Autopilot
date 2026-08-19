@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
 status: planning
-last_updated: "2026-08-19T04:46:34.879Z"
-last_activity: 2026-08-18
+last_updated: "2026-08-19T00:00:00.000Z"
+last_activity: 2026-08-19
 progress:
-  total_phases: 0
+  total_phases: 9
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,7 +20,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** v1.21 Enterprise Update, Driver & Firmware/BIOS Governance — STARTED 2026-08-18, defining requirements. Eight pillars: firmware/BIOS as a net-new domain (DFCI + Surface UEFI + first-class per-OEM Dell/HP/Lenovo guides), driver-update depth, application update management (full Autopatch + M365 channels + EAC/WinGet), Linux update delivery, freshness re-verification of five past-due `patch-management/` docs, Recipe #5 as the prescriptive config artifact, plus `V120-PIN-DEFERRAL` and `C17-FROZEN-AWARE-RESIDUE-V15-V19`. Phase numbering continues from the v1.20 close at Phase 144 → v1.21 spans **Phase 145+**.
+**Current focus:** v1.21 Enterprise Update, Driver & Firmware/BIOS Governance — ROADMAPPED 2026-08-19. 9 phases (145-153), 58 requirements across 8 categories, 100% mapped. Phase 145 (corpus correction + validator gate + archival-drift fix) is next to plan.
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -32,206 +32,286 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-08-18 — Milestone v1.21 started
+Phase: 145 of 153 (Corpus Correction, Validator Gate & Archival-Drift Fix)
+Plan: — (no plans yet)
+Status: Ready to plan
+Last activity: 2026-08-19 — ROADMAP.md created, 58/58 requirements mapped across 9 phases
 
-## v1.20 Phase Dependency Summary
+Progress: [░░░░░░░░░░] 0%
+
+## v1.21 Phase Dependency Summary
 
 ```
-Phase 139 (Governance CARVE + fetch-depth Retrofit + Shallow-Job Repair)
-  |       GOV-01, GOV-02, SWEEP-01, SWEEP-02, SWEEP-03, SWEEP-04
+Phase 145 (Corpus Correction, Validator Gate & Archival-Drift Fix)
+  |       FIX-01..FIX-12
   |       DELIVERS:
-  |         - One named milestone-scoped CARVE: file allowlist (frozen
-  |             harnesses + workflows + the 9 Pillar-C files) + byte-
-  |             unchanged gate on everything off-list + grep-before-edit +
-  |             regression-gate discipline (GOV-01/02)
-  |         - fetch-depth: 0 on all checkouts in the 3 depth-1 workflows
-  |             (base 4 / v1.5 18 / v1.6 10), proven by a dispatched run
-  |             where a frozen git show succeeds where it previously threw
-  |             fatal: invalid object name (SWEEP-01)
-  |         - The 11 already-frozen-aware validators sitting in previously-
-  |             shallow jobs proven to read successfully in CI (SWEEP-02)
-  |         - check-phase-49.mjs:264/:297 + check-phase-51.mjs:31 fail loud
-  |             instead of silently returning null/"" (SWEEP-03)
-  |         - _lib/frozen-at-close.mjs gains lsTreeAtClose() enumeration API
-  |             (SWEEP-04)
+  |         - The E-a..E-k content corrections across the five
+  |             patch-management docs, each with a per-claim evidence line
+  |             citing a source dated AFTER the event it describes
+  |         - review_by minus last_verified <= 60 days on all five,
+  |             computed by arithmetic (never the corpus +90 default)
+  |         - Ubuntu 22.04 -> 24.04/26.04 LTS + RHEL 9/10 across 64
+  |             occurrences in 25 md files PLUS an SVG REGENERATION
+  |         - check-phase-59's ops-index read converted to a frozen read
+  |             (the row-count equality stops barring future guides)
+  |         - docs/_glossary-linux.md:157 fixed BY INLINING THE SUBSTANCE
   |       HARD CONSTRAINTS:
-  |         - FIRST phase of v1.20; GOV-01's allowlist + byte-unchanged gate
-  |             govern every edit in Phases 139-143, not just this phase's
-  |         - Zero-margin hazard: both glossaries sit at exactly 90 days
-  |             against a >90 test — never edit either glossary's metadata
-  |             anywhere in this milestone
-  |         - Without this phase, SWEEP-05 converts 9 clean two-assertion
-  |             failures into hard crashes
-  |       DISCUSS-PHASE FLAGS: exact lsTreeAtClose() API shape (return type,
-  |         error semantics, per-milestone-reader vs. SHA-parameter form)
+  |         - C11 ORDERING IS LOAD-BEARING: substitute an allowlisted
+  |             keyword into 00-overview.md:76-87 FIRST, then remove the
+  |             mutual-exclusivity wording — same commit, that order
+  |         - The FIX-01 sweep must key on First + Fast + Broad, NOT the
+  |             comma-and string, or it misses 2 of the 4 sites
+  |         - Pinned literals are literal-presence tests, not claim
+  |             endorsements: use the attribution pattern (state what the
+  |             corpus asserted, place the correction beside it)
+  |         - Hotpatch/VBS/integrity-verdict tokens stay OUT of
+  |             00-overview.md body prose
+  |         - FIX-11 CANNOT BE DEFERRED — without it, archiving v1.21's
+  |             own research at close re-reddens the apex AFTER the
+  |             close-gate apex was measured green, and nobody re-runs it
+  |       RESEARCH FLAG: the two UNVERIFIED dated deadlines (Android
+  |         2026-10-31; Apple's unpublished Intune end-of-support date)
+  |
+  +--> soft (quality) --> Phase 146, Phase 147
+  |
+  +--> REAL (ops-index row count 5 -> 9) --> Phase 152
+  v
+Phase 146 (Windows Driver & Firmware Update Depth)
+  |       DRV-01..DRV-07
+  |       DELIVERS:
+  |         - 06-windows-driver-firmware-updates.md as a real guide
+  |         - The deferral/deadline asymmetry, verbatim-sourced
+  |         - Three absences: no rollback; no Autopilot application while
+  |             unapproved CRITICAL drivers still land; destructive
+  |             Automatic-to-Manual switch
+  |         - The ConfigMgr co-existence procedure (modern DisableDualScan
+  |             replacement) with its undefined-state warning
+  |         - Stub-and-move: 01-windows-wufb-rings.md keeps the H2, the
+  |             anchor, the NOT-a-ring disambiguation and ALL dual-scan
+  |       HARD CONSTRAINTS:
+  |         - ONLY phase in v1.21 that edits 01-windows-wufb-rings.md.
+  |             Keep the surgery isolated; landing it after 148 means the
+  |             bare-ring negative must be cleared twice
+  |         - A CLEAN promotion (delete the H2) takes the chain RED
+  |         - Prefer singular "Autopatch ring" (the regex is plural-only)
+  |         - Touches 00-overview.md (2 of 4)
+  |       RESEARCH FLAG: none — fully first-party. Re-fetch the two
+  |         search-summary rows before quoting them.
+  |
+  +--> REAL (cross-links the promoted guide + the anchor) --> Phase 148
+  v
+Phase 147 (Linux Update Delivery)
+  |       LNX-01..LNX-04
+  |       DELIVERS:
+  |         - 05-linux-update-delivery.md: no native Intune Linux update
+  |             policy; Bash platform script; compliance + CA as
+  |             ATTESTATION, not enforcement
+  |         - The root-context hazard (Root + Every 15 minutes + no
+  |             documented run-time cap) as the primary pitfall
+  |         - unattended-upgrades' FOUR enabled origins + reboot detection
+  |         - Ubuntu Pro / Livepatch as a Canonical-side entitlement
+  |       HARD CONSTRAINTS:
+  |         - The 5-minute cap belongs to compliance discovery scripts, a
+  |             DIFFERENT surface — do not attribute it here
+  |         - 00-overview.md (3 of 4): APPEND a Linux column; a 5-platform
+  |             rewrite that drops one of the four pinned literals is red
+  |         - The overview's frontmatter platform value stays
+  |             cross-platform; never add Linux to it
+  |       RESEARCH FLAG: none — small, fully documented surface
   |
   v
-Phase 140 (Frozen-Aware Harness Conversion)
-  |       SWEEP-05, SWEEP-06, SWEEP-07, SWEEP-08
+Phase 148 (Application Update Management & WinGet Routing)
+  |       APP-01..APP-06
   |       DELIVERS:
-  |         - Every vX.Y-milestone-audit.mjs (v1.4-v1.19) reads its own
-  |             corpus at its own close SHA instead of live HEAD, resolving
-  |             the frozen-vs-evolved C5/C10 60d-vs-90d mismatch (SWEEP-05)
-  |         - check-phase-60.mjs's subprocess re-run measured inside its
-  |             60s timeout across all 282 in-scope .md files (SWEEP-06)
-  |         - v1.4 TEMPLATE-SENTINEL assertion gets a named remedy distinct
-  |             from frozen-awareness (readAtV14Close returns byte-identical
-  |             content; the assertion was never green at v1.4's own close)
-  |             (SWEEP-07)
-  |         - V14 pin: explicit SHA choice + recorded rationale (SWEEP-08)
+  |         - 07-windows-autopatch.md (enrolment, Test/Last, app updates,
+  |             reporting) — CROSS-LINKS co-management/03 and the
+  |             disambiguation anchor, re-authors neither
+  |         - Autopatch entitlement documented as necessary but NOT
+  |             sufficient for Hotpatch (the two licence lists differ)
+  |         - 08-windows-app-updates.md: M365 channels + Enterprise App
+  |             Management (reachability gates as hard as the licence,
+  |             all eight limitations, and the ESP/DPP POSITIVE)
+  |         - WinGet as ROUTING AND HARDENING, not a patching guide
   |       HARD CONSTRAINTS:
-  |         - Corpus edits authorized but expected near-zero — requires
-  |             proof the document is wrong, not merely that a frozen
-  |             assertion disagrees with it
-  |         - check-phase-30/31 are v1.3-era; the V14 pin here does NOT
-  |             serve them (see Phase 142)
-  |       DISCUSS-PHASE FLAGS: SWEEP-07's TEMPLATE-SENTINEL remedy (design
-  |         fork); V14 SHA choice (b5cf529 vs 671f72a — 34s apart, NOT
-  |         equivalent, latter predates the ROADMAP/REQUIREMENTS archive
-  |         commit)
+  |         - co-management/03 carries a positive prerequisite pin AND a
+  |             negative barring an applicability blockquote, plus a
+  |             60-day cycle rule — cross-link, never trim to "see the
+  |             new guide"
+  |         - 00-overview.md (4 of 4, last content touch)
+  |       RESEARCH FLAG: the Intune-side M365 Apps update policy surface
+  |         was NEVER fetched; post-July-2026 SAEC cadence is unverified
+  |         and Microsoft's own page is internally inconsistent; is the
+  |         Win32 Store app type still in preview?
   |
   v
-Phase 141 (Standalone-RED Validator Set — Chain Members Green)
-  |       RED-01, RED-02, RED-03, SWEEP-09
+Phase 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI)
+  |       BIOS-01, BIOS-02, BIOS-03, BIOS-04, BIOS-11
   |       DELIVERS:
-  |         - v1.5-v1.13 C5/C10 freshness assertions pass with zero glossary
-  |             edits, via the Phase-140 frozen-aware conversion (RED-01 —
-  |             the TRUE prerequisite for 60/61/62-66, not the self-test)
-  |         - regenerate-supervision-pins.mjs --self-test exits 0 via a
-  |             rebase of the stale BASELINE_9 coordinate array to its live
-  |             descendants; classify() byte-unchanged, v1.7 fixture
-  |             byte-unchanged, classifier NOT relaxed (RED-02)
-  |         - check-phase-48/60/61/62/63/64/65/66 all exit 0 standalone,
-  |             cascade classes cleared as a consequence (RED-03)
+  |         - firmware-bios/00-overview.md routing by SECRET CUSTODY
+  |             (Dell = Intune holds; HP = HP cloud vault; Lenovo = you)
+  |         - BOTH native Intune BIOS surfaces, named as DISJOINT
+  |         - The NINE-OEM DFCI list + "Other OEMs are pending." + the
+  |             six/one-OEM conflict recorded, and DFCI presented as
+  |             UNAVAILABLE on Dell/HP/Lenovo, not declined
+  |         - DFCI's disqualifying prerequisites: 2 of this corpus's 3
+  |             registration paths disqualify; the 24H2 Pro known issue
+  |         - The bricking quote + retire vs reuse as DISTINCT sequences
   |       HARD CONSTRAINTS:
-  |         - check-phase-61.mjs alone carries 3 of 4 root-cause classes —
-  |             RED-01+RED-02 alone will NOT clear 62-66's CHAIN-* legs;
-  |             those clear only once 48/60/61 are each independently green
-  |         - Class (d) (30/31 pre-chain content drift) is NOT addressed
-  |             here — see Phase 142
-  |       DISCUSS-PHASE FLAGS: none dominant (RED-02 method already ruled —
-  |         classifier investigation, not allowlist edit or relaxation)
+  |         - Greenfield: zero corpus occurrences of every term, so no
+  |             reconciliation and no existing-file blast radius
+  |         - Intune-delivery-shaped and link-not-copy
+  |         - "The six" and "most business OEMs" are barred phrasings
+  |       RESEARCH FLAG: the oldest source in the whole set is the SOLE
+  |         source for three load-bearing claims here — re-fetch first
   |
   v
-Phase 142 (Archival-Path Fix, Chain Adoption & Cold-Clone Threshold)
-  |       RED-04, RED-05, RED-06, RED-07, NEST-01
+Phase 150 (Per-OEM BIOS Guides & Capability Matrix)
+  |       BIOS-05, BIOS-06, BIOS-07, BIOS-08, BIOS-09, BIOS-10, BIOS-12
   |       DELIVERS:
-  |         - check-phase-30.mjs exits 0 standalone (Mermaid-conversion
-  |             assertion + l1-template.md literal mismatch) (RED-04)
-  |         - check-phase-31.mjs exits 0 standalone incl. V-31-23 via
-  |             resolveArchivedPhasePath(..., ['v1.3-phases']) (RED-05)
-  |         - check-phase-30/31 adopted into the apex CHAIN_PHASES array,
-  |             ~+0.35s cost on a ~17s apex under CHECK_PHASE_NESTED
-  |             (RED-06) [DISCHARGED, D-15] -- figure confirmed correct,
-  |             grandfathered by 141-EVIDENCE.md:276-281.
-  |             [SUCCESS-CRITERION AMENDMENT, D-11] -- mechanism is a
-  |             hand-authored CHAIN_EXTRA = [30, 31] sidecar excluded
-  |             from CHAIN_PHASES itself, not literal array entries
-  |         - check-phase-68.mjs's V-68-04/V-68-08 regression guard still
-  |             passes after the check-phase-31 edit (RED-07)
-  |         - Cold-clone apex cost measured on Windows with a stated method
-  |             + threshold + "if over threshold then mechanism X" rule,
-  |             distinct from the healthy within-apex curve (NEST-01)
+  |         - Dell / HP / Lenovo guides at ONE identical five-section
+  |             shape (Delivery / Authentication / Scope / Prerequisites /
+  |             Recovery) so the matrix is a transposition, not a second
+  |             artefact that drifts
+  |         - The inverted-prerequisite pair (Dell wants a virgin BIOS;
+  |             Lenovo needs a provisioned one)
+  |         - HP Connect as a VENDOR CONNECTOR, not a Win32 agent, with
+  |             its cloud-vault custody quoted against Dell's no-customer-
+  |             data statement
+  |         - The ThinkCentre fork stated, not papered over
+  |         - Lose-the-plane-lose-the-secret for both vendors, fleet-first
+  |         - Password custody scope (two retrieval options, distinct
+  |             roles, readable AFTER the device leaves management)
+  |         - docs/reference/firmware-oem-matrix.md, C17-green
   |       HARD CONSTRAINTS:
-  |         - check-phase-68.mjs:97-115 (V-68-04) and :166-176 (V-68-08) are
-  |             in every apex chain — grep both before editing
-  |             check-phase-31.mjs
-  |       DISCUSS-PHASE FLAGS: whether RED-04/05 need a separate v1.3 pin
-  |         (V14 from Phase 140 does not serve v1.3-era validators); the
-  |         NEST-01 threshold value
+  |         - The matrix's REGISTRY ROW IS NOT LANDED HERE (Phase 152).
+  |             Landing it here leaves both canaries red for 3 phases
+  |         - No BIOS token tables, no vendor cmdlet syntax reference,
+  |             no per-model matrices
+  |         - Every Recovery H2 is PRESENT even where the vendor is
+  |             silent — state the silence, do not fill it with unsourced
+  |             industry expectation
+  |       RESEARCH FLAG: THREE UNVERIFIED recovery gaps (Lenovo lost
+  |         supervisor password, Lenovo lost certificate private key, HP
+  |         Endorsement Key loss). Recovery is the most-used content for
+  |         this audience; shipping it as a gap undercuts the guides.
+  |
+  +----> REAL (recipe cites all four domains) ----+
+  |                                               |
+  |     Phases 146 + 147 + 148 also feed ---------+
+  v                                               v
+Phase 151 (Recipe #5 — The Enterprise Update Plan)
+  |       RCP-01..RCP-05
+  |       DELIVERS:
+  |         - docs/recipes/05-* as the corpus's FIRST configuration
+  |             artifact of any kind
+  |         - Nine decision points with reversibility ratings (one
+  |             Destructive, one Effectively irreversible), the two most
+  |             consequential written on the CORRECTED positions
+  |         - A platform-applicability marker per decision point, >= 3
+  |             marked Windows-only
+  |         - A truthful Rollback/Recovery section: largely absences,
+  |             including the DEFAULT M365 channel having none at all
+  |         - The recipe-template divergence RESOLVED on the record
+  |       HARD CONSTRAINTS:
+  |         - The link checker has NO baseline, allowlist, ratchet or
+  |             expected-failure list — a link to a not-yet-written doc
+  |             is immediate red, which is why this phase is 6th
+  |         - FALSIFIED, do not sequence on: the capability-matrix
+  |             relabel gating this phase; the template mandating the
+  |             Rollback heading. Recipes 01/02 are NOT non-compliant.
+  |       RESEARCH FLAG: none external. One open decision for discuss-
+  |         phase: promote the section into the template, or record why
+  |         it stays a 2-of-4 divergence.
   |
   v
-Phase 143 (Link Coverage & Fence-Mask Unification)
-  |       LINK-01, LINK-02, LINK-03, LINK-04, LINK-05, LINK-06
+Phase 152 (Integration, Registry & Navigation-Last Close)
+  |       INT-01..INT-06
   |       DELIVERS:
-  |         - computeAnchorSetFromContent recognises HTML <a id> anchors;
-  |             failures drop from measured 271 to measured 70 (LINK-01)
-  |         - Corpus-wide relative-link + anchor checker across docs/
-  |             (excl. docs/_templates/, masking inline code spans), exits
-  |             0 with NO accepted-violation baseline (LINK-02, LINK-04)
-  |         - All 13 genuine broken links fixed (11 in
-  |             docs/_glossary-macos.md, 2 in docs/admin-setup-ios/)
-  |             (LINK-03)
-  |         - Fence-mask unified across all 15 call sites in 9 files incl.
-  |             both c17 sites (:158 open, :166 close), ^ {0,3} rule covers
-  |             the measured 74 indented fences (LINK-05)
-  |         - c17 identical file/violation counts before and after, sampled
-  |             proof no suppressed violation hides (LINK-06)
+  |         - ONE COMMIT: every new registry row at Status: Approved +
+  |             filename-map REGENERATED by its generator + BOTH canary
+  |             literals bumped
+  |         - Canary targets COMPUTED FROM THE REGISTRY after the rows
+  |             land, measured separately (the two count different sets)
+  |         - Operations docs get registry + filename-map rows and no
+  |             document identifier; they reach the publish bundle
+  |             without being C17-gated; the 20 legacy ops docs are NOT
+  |             retrofitted
+  |         - Navigation wired LAST on both index surfaces
+  |         - Recipe #5 hub coverage added in a SUCCESSOR validator
+  |         - Full-corpus C17 + link checker green, no accepted-violation
+  |             baseline introduced
   |       HARD CONSTRAINTS:
-  |         - LINK-01 MUST precede LINK-02/04 — running the checker first
-  |             would freeze 201 of 271 anchor failures as a false,
-  |             permanently-accepted baseline
-  |         - LINK-06 same phase as LINK-05 (before/after regression gate)
-  |         - convert.ps1's fence mask is hygiene only (governs an ephemeral
-  |             temp-copy nav-footer rewrite, not .docx code rendering)
-  |       DISCUSS-PHASE FLAGS: none dominant (ordering + no-baseline rule
-  |         already settled by requirement text)
+  |         - ALL registry work is ONE phase, ONE commit. Content phases
+  |             author documents and never touch the registry. Splitting
+  |             this leaves both self-tests red across three phases.
+  |         - NEVER hard-code the canary from a document count — that is
+  |             exactly how the Approved-row canary sat red for a whole
+  |             milestone
+  |         - The quick-nav assertion requires EXACTLY ONE matching line
+  |             — append a fragment, never split it
+  |         - The Firmware H2 must not be the barred literal heading
+  |         - Never edit the frozen hub validator; add additively
+  |       RESEARCH FLAG: none. One 30-second pre-plan verification: run
+  |         the publish bundle end to end against a scratch row pointing
+  |         at an unenrolled operations file.
   |
   v
-Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
-          HARN-17, HARN-18, HARN-19
-          SOLE DELIVERABLE CLUSTER OF THIS PHASE — never batches with other
-            work (mirrors Phase 100/112/119/125/128/134/138 exactly)
+Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
+          HARN-01..HARN-06
           DELIVERS:
-
-            - HARN-17: _lib/frozen-at-close.mjs V119 entry (a7bda73e...,
-              subject-line pair discriminator, count=1) + readAtV119Close
-              export
-
-            - HARN-18: v1.20-milestone-audit.mjs (Path-A from v1.19, C1-C17
-              inherited) + v1.20-audit-allowlist.json + BASELINE_24 +
-              check-phase-139..NN.mjs (apex CHAIN_PHASES generated by
-              arithmetic, never transcribed, accounting for RED-06's
-              addition of check-phase-30/31) + 17th CI coexistence
-              workflow born with fetch-depth: 0
-
-            - HARN-19: 3-axis terminal re-audit (fresh clone + cross-OS
-              Linux GHA + fresh zero-context reproduction, EXACT MATCH) +
-              all 17 audit-harness-* workflows dispatched (gh workflow run
-              --ref master) and confirmed green from job-level JSON + publish
-              bundle regenerated --version=v1.20 + SINGLE close-gate commit
-              flipping all 28 v1.20 requirements to Validated +
-              ACCEPTED-STANDALONE-CI-RED and ACCEPTED-SCOPED-RED DELETED
-              from the backlog (not carried a 7th milestone)
+            - V120 pin INSERTED BEFORE the V14 entry (proved by
+                executing the assertion — appending FAILS a check that
+                sits inside the apex chain) + both frozen-read exports,
+                proven end to end by a real frozen read
+            - All FIVE C17-bearing harnesses converted SIMULTANEOUSLY
+                via the cwd swap; the contract validator stays
+                byte-unchanged and the existence guard stays live
+            - 19th Path-A lineage bump + sidecar + BASELINE +
+                check-phase-145..152 + the apex, CHAIN range GENERATED
+                BY ARITHMETIC, never transcribed (CHAIN_END = 152)
+            - The 18th CI workflow BORN with full fetch depth; publish
+                bundle regenerated at this milestone's version
+            - 3-axis terminal re-audit at ONE shared SHA, all workflows
+                dispatched, SKIPS READ AS GAPS from job-level output
           HARD CONSTRAINTS:
-
-            - BLOCKED on Phases 139-143 ALL complete and green
-
-            - Workflows fire on pull_request + schedule + workflow_dispatch
-              only — a push fires nothing; evidence must be job-level JSON,
-              not the checks-UI colour (a green run is compatible with a
-              cron-skipped job or a continue-on-error advisory job)
-          DISCUSS-PHASE FLAG: none (closing cluster; consumes prior
-            decisions)
+            - Always the FINAL phase; never batches with content work.
+                Also true by dependency: the apex chains [48..N-1], which
+                cannot be authored until the last content phase is fixed
+            - Predecessor frozen surfaces byte-unchanged; a later
+                validator can pin an earlier one's exact call-site
+                string — grep before editing any frozen line
+            - Archival drift is a recurring close blocker: scan
+                nested-fail children before the push
+          RESEARCH FLAG: none — ratified precedent commit exists and the
+            pin-placement branch was proved by execution.
 ```
 
-## v1.20 Requirement Coverage (28/28 mapped — roadmap created 2026-08-04)
+## v1.21 Requirement Coverage (58/58 mapped — roadmap created 2026-08-19)
 
 | Phase | Requirements | Count |
 |-------|-------------|-------|
-| 139 | GOV-01, GOV-02, SWEEP-01, SWEEP-02, SWEEP-03, SWEEP-04 | 6 |
-| 140 | SWEEP-05, SWEEP-06, SWEEP-07, SWEEP-08 | 4 |
-| 141 | RED-01, RED-02, RED-03, SWEEP-09 | 4 |
-| 142 | RED-04, RED-05, RED-06, RED-07, NEST-01 | 5 |
-| 143 | LINK-01, LINK-02, LINK-03, LINK-04, LINK-05, LINK-06 | 6 |
-| 144 | HARN-17, HARN-18, HARN-19 | 3 |
-| **Total** | **28/28 mapped (0 orphaned)** | **28** |
+| 145 | FIX-01, FIX-02, FIX-03, FIX-04, FIX-05, FIX-06, FIX-07, FIX-08, FIX-09, FIX-10, FIX-11, FIX-12 | 12 |
+| 146 | DRV-01, DRV-02, DRV-03, DRV-04, DRV-05, DRV-06, DRV-07 | 7 |
+| 147 | LNX-01, LNX-02, LNX-03, LNX-04 | 4 |
+| 148 | APP-01, APP-02, APP-03, APP-04, APP-05, APP-06 | 6 |
+| 149 | BIOS-01, BIOS-02, BIOS-03, BIOS-04, BIOS-11 | 5 |
+| 150 | BIOS-05, BIOS-06, BIOS-07, BIOS-08, BIOS-09, BIOS-10, BIOS-12 | 7 |
+| 151 | RCP-01, RCP-02, RCP-03, RCP-04, RCP-05 | 5 |
+| 152 | INT-01, INT-02, INT-03, INT-04, INT-05, INT-06 | 6 |
+| 153 | HARN-01, HARN-02, HARN-03, HARN-04, HARN-05, HARN-06 | 6 |
+| **Total** | **58/58 mapped (0 orphaned, 0 duplicated)** | **58** |
 
-**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable per memory `project_execphase_sequential.md`). Phase numbering continues from v1.19 (closed at Phase 138) → v1.20 starts at Phase 139.
+**Sequential-on-main-tree execution** per `.planning/config.json` `use_worktrees:false` (durable user constraint). Phase numbering continues from v1.20 (closed at Phase 144) → v1.21 spans Phases 145-153.
 
-**Named decisions (LOCKED at roadmap 2026-08-04):**
+**Named decisions (LOCKED at roadmap 2026-08-19):**
 
-- PHASE-COUNT: 6 phases (139-144), sized against v1.16's shape (6 phases/38 plans) per the roadmapping brief's explicit sizing note — NOT compressed to v1.19's 4-phase shape, NOT inflated beyond what the 27 requirements + hard sequencing constraints justify.
-- PILLAR-A-SPLIT: Pillar A (SWEEP-01..08, the CARVE-1 discharge) split across Phase 139 (fetch-depth retrofit + shallow-job repair + enumeration API — the prerequisite half) and Phase 140 (the actual frozen-aware harness conversion + sentinel remedy + V14 pin — the conversion half), matching the hard sequencing constraint that SWEEP-01/04 must precede SWEEP-05.
-- GOV-FIRST: GOV-01/02 land in Phase 139 (the first phase) per the explicit hard constraint that cross-cutting governance must authorize and guard every subsequent frozen-surface edit in the milestone.
-- RED-SPLIT: RED-01..07 (Pillar B) split across Phase 141 (the 8 already-in-chain members: 48/60/61/62-66) and Phase 142 (the 2 orphaned members 30/31 + their formal chain-adoption action + the check-phase-68 regression guard), reflecting that 30/31 sit structurally outside CHAIN_PHASES today and need an explicit "adopt" action distinct from "fix a chain member already inside the chain."
-- NEST-FOLD: NEST-01 (cold-clone cost) folded into Phase 142 rather than given its own phase (single-requirement-phase anti-pattern) — it is tightly coupled to the same chain-apex machinery Phase 142 already touches (RED-06's chain-adoption changes the apex's member count).
-- LINK-AS-ONE-PILLAR: LINK-01..06 (Pillar C) kept as one phase (143) rather than split, matching PROJECT.md's own single-pillar framing and avoiding a thin fence-mask-only phase (2 requirements).
-- HARNESS-PHASE: Phase 144 is the sole deliverable of the closing cluster — the harness lineage bump NEVER batches with other work (mirrors v1.13 Phase 100 / v1.14 Phase 112 / v1.15 Phase 119 / v1.16 Phase 125 / v1.17 Phase 128 / v1.18 Phase 134 / v1.19 Phase 138).
-- DISCUSS-PHASE-FLAGS: the 5 named design forks from the roadmapping brief are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` + `/adversarial-review` per project convention: `lsTreeAtClose()` API shape (Phase 139); SWEEP-07 TEMPLATE-SENTINEL remedy + V14 SHA choice (Phase 140); v1.3 pin need for RED-04/05 + NEST-01 threshold value (Phase 142).
+- PHASE-COUNT: 9 phases (145-153), following the research-backed and adversarially-reviewed build order in `research/SUMMARY.md` section D verbatim. `config.json` sets no `granularity` key, so the default is standard (4-6); the divergence to 9 is deliberate and is justified by 58 requirements across 8 categories plus two non-negotiable sequencing constraints. Comparable shape is v1.14 (12 phases) rather than v1.19 (4).
+- BIOS-SPLIT: Pillar A split 149/150 along the research's suggested seam — 149 = the domain overview + the two native Intune surfaces + DFCI + Surface UEFI (BIOS-01/02/03/04/11); 150 = the three per-OEM guides + the reference matrix (BIOS-05..10, BIOS-12). BIOS-11 (bricking quote + retire-vs-reuse) rides 149 because both are DFCI-surface facts; BIOS-10 (password custody / RBAC) rides 150 because it is the Dell secret-custody path the per-OEM guide owns.
+- REGISTRY-ATOMICITY: every registry row, the filename-map regeneration and both canary bumps are INT-01/02/03 in Phase 152, one commit. BIOS-12's matrix is authored in 150 and its registry row lands in 152. Content phases never touch the registry.
+- HARNESS-PHASE: Phase 153 is the sole deliverable of the closing cluster (mirrors v1.13 Phase 100 / v1.14 112 / v1.15 119 / v1.16 125 / v1.17 128 / v1.18 134 / v1.19 138 / v1.20 144). Also forced by dependency: the apex chains `[48..N-1]`.
+- FIX-FIRST: FIX-01..12 land in Phase 145, the first phase, because every other content phase edits at least one of the five patch-management docs — correcting first means one dated re-stamp per file instead of five phases each re-touching frontmatter and each independently risking the 60-day trap.
+- DEPENDENCY-CORRECTIONS-HONOURED: the roadmap does NOT sequence on the three falsified edges (capability-matrix relabel gating the recipe; template mandating the rollback heading; Pillar H urgent on C17 volume). 145→147 is recorded as a soft preference; the real edge 145→152 is recorded as real.
+- DISCUSS-PHASE-FLAGS: gray areas are NOT resolved at roadmap — deferred to `/gsd-discuss-phase` + `/adversarial-review` per project convention. Named: the recipe-template promotion decision (151); firmware/BIOS domain naming and file numbering (149); which glossary receives the new terminology (149/152); whether `v1.20-milestone-audit.mjs` is a sixth convertible C17 site (153); the DCU-vs-Autopatch driver-policy conflict, which has no first-party adjudication and is a gray area rather than guidance (146).
 
 ## Performance Metrics
 
@@ -258,7 +338,8 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 - v1.17: 3 phases (126-128), 11 plans — shipped 2026-07-11
 - v1.18: 6 phases (129-134), 17 plans — shipped 2026-07-20
 - v1.19: 4 phases (135-138), 12 plans — shipped 2026-08-04
-- v1.20: 6 phases (139-144) — roadmap created 2026-08-04, not yet planned
+- v1.20: 6 phases (139-144), 44 plans — shipped 2026-08-18
+- v1.21: 9 phases (145-153) — roadmap created 2026-08-19, not yet planned
 
 **Per-Plan Metrics (v1.19, most recent shipped milestone):**
 
@@ -325,7 +406,7 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 
 ### Decisions
 
-**v1.20 roadmap decisions (LOCKED 2026-08-04):** see "Named decisions" above.
+**v1.21 roadmap decisions (LOCKED 2026-08-19):** see "Named decisions" above. *(v1.20's are archived in `.planning/milestones/v1.20-ROADMAP.md`.)*
 
 **Carried-forward durable architectural decisions (from v1.14–v1.19):**
 
@@ -425,41 +506,42 @@ Phase 144 (V119 Pin + 18th Path-A Lineage Bump + Terminal Close)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
-- Phase 139 (SWEEP-04): finalize `lsTreeAtClose()`'s exact signature and error semantics before any harness in Phase 140 depends on it — a shape change mid-milestone would ripple through 16 harness conversions
-- Phase 140 (SWEEP-08): recover/confirm the V14 SHA choice with the same subject-line-discipline used for V117/V118/V119 — `b5cf529` and `671f72a` are 34 seconds apart and NOT interchangeable
-- Phase 141 (RED-02): re-verify the classifier fix does not require touching `v1.7-audit-allowlist.json:12-15` — those four pins already match live byte-for-byte; a frozen-aware read here would create a NEW mismatch (`:80` vs. pinned `:145`)
-- Phase 142 (RED-06): after adopting check-phase-30/31 into `CHAIN_PHASES`, re-run `check-phase-68.mjs` directly (not just as part of the apex) to catch a V-68-04/V-68-08 regression before it surfaces downstream
-- Phase 144 (HARN-19): dispatch each of the 17 workflows individually via `gh workflow run --ref master` and read job-level JSON — never trust the checks-UI top-level colour, and never read CI while the remote is behind
+- **Phase 145 (FIX-05, FIX-08): the two UNVERIFIED dated deadlines.** The Android 2026-10-31 date is not on the page it is attributed to and was not found by three targeted searches including a literal-string search; Apple's Intune end-of-support date is not published at all (the article carries a banner with no date). Each needs a first-party citation before restatement, or a rewrite of the surrounding prose that retains every pinned literal.
+- **Phase 148 (APP-03, APP-05): three unfetched or unstable surfaces.** The Intune-side Microsoft 365 Apps update policy surface (settings-catalog / Cloud Policy path and exact setting names) was **never fetched**. The post-July-2026 Semi-Annual channel cadence is unverified and Microsoft's own page is internally inconsistent (announcement in future tense, comparison table still at pre-change values). Re-check whether Win32 Store apps have left preview and whether the two recommended App-Installer policies have reached the settings catalog.
+- **Phases 149-150 (BIOS-05, BIOS-09): three recovery gaps, all UNVERIFIED.** Lenovo lost-supervisor-password recovery (no first-party statement located), Lenovo lost-certificate-private-key recovery (page fetched, explicitly silent), and HP Endorsement-Key loss (premise only, no documented escape hatch). Recovery is the most-used content for a service-desk audience — ship it as an explicit "not documented by the vendor; escalate to vendor support" statement, never as an omitted heading and never as unsourced industry expectation. Also open: is HP Connect reachable from Intune's partner-portal entry point as Dell is, and does a post-2022 HP Connect user guide exist? The oldest source in the entire set is the sole source for three load-bearing Phase-149 claims — re-fetch it first.
+- **Skip a research pass on Phases 146, 147, 152 and 153** — all four are either fully first-party sourced (146, 147, including their documented silences) or ride well-worn repo precedent with a ratified precedent commit (152, 153).
+- **Phase 151** needs no external research pass — it synthesises content authored in 146-150 — but carries one open design decision (promote `## Rollback/Recovery` into the recipe template, or record why it stays a tracked 2-of-4 divergence).
 
 ### Pending Todos
 
-None yet for v1.20. Discuss-phase gray areas to resolve per phase are tracked in ROADMAP.md's per-phase "Discuss-phase flags" (5 named design forks: `lsTreeAtClose()` API shape, SWEEP-07 remedy, V14 SHA choice, v1.3 pin need for RED-04/05, NEST-01 threshold value).
+None yet for v1.21. Per-phase gray areas are tracked in ROADMAP.md's phase details and in the DISCUSS-PHASE-FLAGS decision above; resolve them via `/gsd-discuss-phase` + `/adversarial-review` per project convention.
 
 ### Blockers/Concerns
 
-No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 93/0/0, zero archival drift. v1.20 durable watch items:
+No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured four times, zero archival drift, both accepted-red dispositions deleted, tag pushed. v1.21 durable watch items:
 
-- **`.planning/REQUIREMENTS.md` must not be deleted at any milestone close** — `check-phase-54.mjs:30,349,568` live-reads it outside the frozen-at-close mechanism, so `git rm` takes the whole apex chain red.
-- The recipe-01 zero-edit guard applies corpus-wide and permanently — `check-phase-130.mjs:64,67` pins `docs/recipes/01-shared-windows-avd-client.md`'s Step 5a/5b headings as literal strings inside every apex chain.
-- Zero line-shifting edits to `docs/_glossary-android.md` / `docs/reference/android-capability-matrix.md` — 365 and 139 pin coordinates across 16 frozen sidecars; v1.20's SWEEP/RED work must not touch these files.
-- **CARVE-1 / `FROZEN-AWARE-ADOPTION-SWEEP-01` is IN SCOPE this milestone** for the first time since it was first carried at v1.8 — Phases 139-140 are its discharge. GOV-01's CARVE is the explicit authorization boundary.
-- WINDOWS-CLONE-DEEPNEST-TIMEOUT-01's cold-clone leg gets a falsifiable threshold at Phase 142 (NEST-01); the within-apex curve stays healthy and is not re-collapsed with it.
-- Workflows fire on `pull_request` + schedule + `workflow_dispatch` only — a push to `master` fires nothing. Axis-2 needs an explicit `gh workflow run --ref master`, and CI must never be read while the remote is behind.
+- **`docs/operations/patch-management/00-overview.md` is the likeliest source of a mid-execution remediation round.** It is touched by Phases 145, 146, 147 **and** 148, and carries five live pins on an apex chain member. Its 4-platform table regex survives *appending* a Linux column but not a 5-platform rewrite that drops one of the four pinned literals; its frontmatter platform value stays `cross-platform`; and its body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens.
+- **The C11 keyword-substitution ordering is a same-commit ordering constraint, not a preference.** `00-overview.md:78` is kept green **solely** by the mutual-exclusivity word pair the milestone is removing. Substitute an allowlisted keyword into the window first, then remove the wording — in that order, in the same commit.
+- **Phase 146 is the only phase that edits `01-windows-wufb-rings.md`.** If that surgery lands after Phase 148, the bare-`ring` negative has to be cleared twice. A clean driver-guide promotion (rather than a stub-and-move) takes the chain red.
+- **FIX-11 cannot be deferred.** The glossary link into `.planning/research/` re-breaks the moment v1.21's own research is archived at close — *after* the close-gate apex has been measured green, and nobody re-runs the apex after archival. Re-pointing at an archived copy does not work; inlining the substance is the only viable fix.
+- **Both publish-bundle canaries count different sets** (all registry rows versus Approved-only) and are equal today only because every row is Approved. Compute both from the registry after the rows land; never hard-code a number derived from a document count.
+- **`.planning/REQUIREMENTS.md` must not be deleted at milestone close** — `check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism, and it also live-reads `.planning/ROADMAP.md` with a negative literal assertion. Broad corpus edits return this milestone, which re-activates that exposure.
+- **Glossary zero-margin hazard is live.** Both glossaries sat at exactly 90 days against a `>90` test at the v1.20 close, and v1.21 adds terminology. Re-measure glossary metadata at plan time; do not assume the margin still holds. Note the narrowed scope: only one workflow reads glossary metadata live — the "six workflows" figure belongs to C17, which is triggered by content, not metadata.
+- **Zero line-shifting edits to the pinned capability matrices** — prefer cell-value edits over structural edits; line-shifting `android-capability-matrix.md` is the known prior pin hazard.
+- **Skips are gaps, not passes.** Every job in the C17-bearing workflows depends on the harness job, so a harness failure produces one visible red plus a fan-out of silent skips. Read job-level output, never the top-level run colour, and never read CI while the remote is behind — workflows fire on pull request, schedule and dispatch only.
 
 ## Session Continuity
 
-Last session: 2026-08-18 — `/gsd-new-milestone` scoping v1.21
-Stopped at: Milestone v1.21 started — PROJECT.md + STATE.md written; requirements and roadmap pending
-Resume file: .planning/PROJECT.md (`## Current Milestone: v1.21`, eight pillars)
-Next action: define REQUIREMENTS.md, then spawn `gsd-roadmapper` (Phase 145+)
+Last session: 2026-08-19 — `gsd-roadmapper` created the v1.21 roadmap
+Stopped at: ROADMAP.md written (9 phases, 145-153), STATE.md updated, REQUIREMENTS.md traceability filled — 58/58 mapped, mechanically verified
+Resume file: .planning/ROADMAP.md (`## Phase Details`, Phase 145)
+Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
 ## Operator Next Steps
 
-- v1.21 **picks up** from `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`: `V120-PIN-DEFERRAL` (mandatory back-anchor, see the obligation blockquote above) and `C17-FROZEN-AWARE-RESIDUE-V15-V19` (all five C17-bearing harnesses, converted simultaneously).
-- v1.21 **does NOT pick up** and still carries forward: `FENCE-AXIS-02` (fence *length* and mask *scope*, both untouched by LINK-05), the out-of-census divergent fence-handling sites (D-20), the unowned `check-phase-30/31` tooling residue (rows 1-6 of the routing table), `check-phase-66`'s 386s-vs-300s timeout margin, the non-nested standalone-chain wall-clock cost, `V-132-HUBSNOTWIRED-REGEX-BROKEN`, `RECIPE-OUTBOUND-LINK-COVERAGE`, `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, and the trigger-gated content items (`CI-3`, MTPSSO, KRBFUT, AOSP-wired 802.1X, Cloud PKI, `SHARED-TAXONOMY-DOC` — whose trigger is a third **lockdown** recipe and does NOT fire on Recipe #5).
-- Two carried items may go live rather than deferred this milestone: `ANCHOR-REVIEW-BY-PAST-DUE` (rides any phase touching `docs/admin-setup-android/05-dedicated-devices.md`) and `ROLLBACK-RECOVERY-DIVERGENCE-COUNT` (fires if Recipe #5 needs the `## Rollback/Recovery` slot).
-- **Glossary zero-margin hazard is live this milestone.** Both glossaries sat at exactly 90 days against a `>90` test at the v1.20 close; v1.21 adds terminology (DFCI, Hotpatch, Autopatch ring, `unattended-upgrades`, update channel). Re-measure glossary metadata at plan time — do not assume the margin still holds.
-- **Broad corpus edits return** (v1.20 was tooling-only), which re-activates `check-phase-54.mjs`'s live `REQUIREMENTS.md`/`ROADMAP.md` reads with a negative assertion — the one named, unremediated live-reading exposure.
-- `.planning/REQUIREMENTS.md` must continue to exist — `check-phase-54.mjs:30,349,568` and `v1.20-milestone-audit.mjs` live-read it outside the frozen-at-close mechanism. `/gsd-new-milestone` overwrites it in place; it must never be `git rm`'d.
-- `.planning/seeds/SEED-001` is stale-but-open — its macOS PSSO content shipped in v1.13 while the file still reads `status: planted`. Not folded into v1.21; close it separately.
-- Workflows fire on `pull_request` + schedule + `workflow_dispatch` only. A push to `master` fires nothing; Axis-2 always needs an explicit `gh workflow run --ref master` per workflow, and CI must never be read while the remote is behind.
+- **Phase 145 is next and it is the load-bearing one.** It carries the corpus corrections, the frozen-read conversion that unblocks Phase 152's ops-index growth, and the archival-drift fix that decides whether the close-gate apex stays green after archival.
+- v1.21 **picks up** from `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`: `V120-PIN-DEFERRAL` and `C17-FROZEN-AWARE-RESIDUE-V15-V19`, both landing in Phase 153.
+- v1.21 **does not pick up** and still carries forward: `FENCE-AXIS-02`, the out-of-census divergent fence-handling sites, the unowned `check-phase-30/31` tooling residue, `check-phase-66`'s timeout margin, the non-nested standalone-chain wall-clock cost, `V-132-HUBSNOTWIRED-REGEX-BROKEN` (Phase 152 works *around* it additively rather than fixing it), `RECIPE-OUTBOUND-LINK-COVERAGE`, `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, and the trigger-gated content items (`CI-3`, MTPSSO, KRBFUT, AOSP-wired 802.1X, Cloud PKI, `SHARED-TAXONOMY-DOC` — whose trigger is a third *lockdown* recipe and does not fire on Recipe #5).
+- `ROLLBACK-RECOVERY-DIVERGENCE-COUNT` **fires this milestone** — Recipe #5 needs the slot, which is the divergence's own recorded trigger. RCP-05 owns the resolution in Phase 151.
+- **The corpus-wide past-due population goes to backlog, not to this milestone.** 217 of the 271 files carrying both date stamps are past their `review_by`, worst 71 days, and no validator compares `review_by` to the current date — every rule constrains the interval between the two stamps. Pillar E is scoped to the five patch-management files plus whatever else v1.21 modifies.
+- `.planning/seeds/SEED-001` is still stale-but-open (its macOS PSSO content shipped in v1.13 while the file reads `status: planted`). Not folded into v1.21; close it separately.

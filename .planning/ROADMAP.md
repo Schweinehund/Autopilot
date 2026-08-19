@@ -2,6 +2,7 @@
 
 ## Milestones
 
+- 🔵 **v1.21 Enterprise Update, Driver & Firmware/BIOS Governance** — Phases 145-153 (active, roadmap created 2026-08-19)
 - ✅ **v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure** — Phases 139-144 (shipped 2026-08-18)
 - ✅ **v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated)** — Phases 135-138 (shipped 2026-08-04)
 - ✅ **v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure** — Phases 129-134 (shipped 2026-07-20)
@@ -25,9 +26,21 @@
 - ✅ **v1.1 APv2 Documentation & Admin Setup Guides** — Phases 11-19 (shipped 2026-04-13)
 - ✅ **v1.0 Autopilot Documentation & Troubleshooting Guides** — Phases 1-10 (shipped 2026-04-10)
 
-**No active milestone** — run `/gsd-new-milestone` to scope v1.21. The backlog source is `.planning/milestones/v1.20-DEFERRED-CLEANUP.md` (`V120-PIN-DEFERRAL` is v1.21's mandatory back-anchor; `FENCE-AXIS-02` and the unowned `check-phase-30/31` tooling residue are the other named carry-forwards).
+**Active milestone: v1.21 Enterprise Update, Driver & Firmware/BIOS Governance** — Phases 145-153, 58 requirements across 8 categories. Roadmap created 2026-08-19. Phase numbering continues from the v1.20 close at Phase 144.
 
 ## Phases
+
+### v1.21 Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
+
+- [ ] **Phase 145: Corpus Correction, Validator Gate & Archival-Drift Fix** - Five patch-management documents tell the current first-party truth, and two validator-level traps are disarmed before any new content lands
+- [ ] **Phase 146: Windows Driver & Firmware Update Depth** - The ~45-line disambiguation H2 becomes a real guide, with the stub-and-move surgery on the most hostile file done once and in isolation
+- [ ] **Phase 147: Linux Update Delivery** - The corpus becomes genuinely five-platform for updates, and the fleet-wide root-context hazard is named before anyone ships it
+- [ ] **Phase 148: Application Update Management & WinGet Routing** - The missing patching half of application management, plus a well-sourced negative on WinGet
+- [ ] **Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI** - A greenfield domain that routes by who holds the BIOS secret, with DFCI presented honestly including where it is unavailable
+- [ ] **Phase 150: Per-OEM BIOS Guides & Capability Matrix** - Dell, HP and Lenovo at an identical five-section shape so the matrix is a transposition, with recovery gaps stated rather than filled
+- [ ] **Phase 151: Recipe #5 — The Enterprise Update Plan** - The prescriptive configuration artifact the corpus has never had
+- [ ] **Phase 152: Integration, Registry & Navigation-Last Close** - One atomic registry commit, then navigation, then a green corpus
+- [ ] **Phase 153: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump** - Both harness debts discharged and the apex green at close
 
 <details>
 <summary>✅ v1.0–v1.20 (Phases 1-144) — SHIPPED</summary>
@@ -47,6 +60,141 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 - ✅ v1.0–v1.10 (Phases 1-88) — see milestone entries and `.planning/milestones/`
 
 </details>
+
+## Phase Details
+
+### Phase 145: Corpus Correction, Validator Gate & Archival-Drift Fix
+
+**Goal**: A reader of the patch-management domain gets the current first-party position on every falsified claim — with evidence, not a date stamp — and the two validator-level traps that would silently redden this milestone are disarmed before any new content lands.
+**Depends on**: Nothing (first phase of v1.21)
+**Requirements**: FIX-01, FIX-02, FIX-03, FIX-04, FIX-05, FIX-06, FIX-07, FIX-08, FIX-09, FIX-10, FIX-11, FIX-12
+**Success Criteria** (what must be TRUE):
+  1. All five `docs/operations/patch-management/` documents state the current first-party position on Autopatch default rings (`Test` / `Last`), WUfB-versus-Autopatch containment, the driver deferral-versus-deadline split, the `Windows Update client policies` rename, Apple's two-stage cutover, the Apple settings-catalog display names, hotpatch's two configuration levels, and the Android patch-age scoping — each carrying a per-claim evidence line citing a source dated **after** the event it describes, with a `review_by` minus `last_verified` interval of at most 60 days computed by arithmetic.
+  2. A reader finds no surviving `First` / `Fast` / `Broad` Autopatch ring naming at any site — including `00-overview.md:76` and `co-management/03-cocmgmt-migration-paths.md:25`, which a comma-and-string sweep misses — and no mutual-exclusivity claim at any of the five sites.
+  3. `grep -rn "\.planning/research/\|\.planning/phases/" docs/` returns **0**: the glossary link is fixed by inlining the substance, so archiving v1.21's own research at close cannot re-redden `check-nav-hub-links.mjs`, `check-phase-143` and the apex *after* the close-gate apex has already been measured green.
+  4. `check-phase-59.mjs`'s ops-index read is a frozen read, so its row equality asserts "Phase 59 shipped five rows" rather than "no patch-management guide may ever be added" — and Phase 152 can take the Patch region from 5 rows to 9 without a red apex child.
+  5. `Ubuntu 22.04` is gone from all 64 occurrences across 25 markdown files **and** `docs/diagrams/decision-tree-09-linux-triage.svg` is regenerated (not text-edited), with the intra-Microsoft RHEL-8-versus-9/10 conflict stated wherever a supported-version list appears — and `node scripts/validation/check-phase-54.mjs` exits 0 throughout.
+**Blast radius**: `docs/operations/patch-management/00-overview.md` — the single most constrained file in this milestone, carrying five live pins on an apex chain member, and the first of **four** phases that touch it. **The C11 keyword-substitution ordering (FIX-02) is a same-commit ordering constraint, not a preference**: substitute an allowlisted keyword into the `:76-87` window **first**, then remove the mutual-exclusivity wording. The overview's body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens — the hotpatch correction belongs in `01-windows-wufb-rings.md`, which Phase 146 owns.
+**Research flag**: **YES** — the two `[UNVERIFIED]` dated deadlines (Android 2026-10-31; Apple's Intune end-of-support date, which is not published) each need a first-party citation at plan time or a rewrite of the surrounding prose that retains the pinned literals.
+**Plans**: TBD
+
+### Phase 146: Windows Driver & Firmware Update Depth
+
+**Goal**: An admin planning driver and firmware updates finds one guide that tells them what the policy does, what it silently does not do, and what happens during Autopilot — and the disambiguation stub it was promoted from still holds every literal the chain pins.
+**Depends on**: Phase 145 (soft — a quality dependency; the corrected overview is what this guide is promoted out of, and stale claims would otherwise propagate forward)
+**Requirements**: DRV-01, DRV-02, DRV-03, DRV-04, DRV-05, DRV-06, DRV-07
+**Success Criteria** (what must be TRUE):
+  1. `docs/operations/patch-management/06-windows-driver-firmware-updates.md` exists and documents the driver/firmware update policy as its own surface — approval modes, the approval workflow, OEM-published catalog behaviour and reporting.
+  2. The reader learns the deferral/deadline asymmetry verbatim-sourced (the quality-update deferral does **not** apply to policy-approved drivers; the quality-update deadline and grace period **do**), with the automatically-approved scoping note riding alongside it.
+  3. The three highest-value absences are documented as absences: no driver rollback (with Microsoft's own named mitigations and the once-**Approved**-never-**Declined** constraint); driver policies do not apply during Autopilot **while Windows still applies critical — possibly unapproved — driver updates**; and the Automatic-to-Manual mode switch destroys all approvals, paused and declined drivers.
+  4. The ConfigMgr co-existence procedure is documented as a supported path with its first-party undefined-and-unpredictable-device-state warning, replacing the withdrawn "legacy mitigation is the only Autopatch-compatible answer" claim.
+  5. `01-windows-wufb-rings.md` still carries a driver-plus-firmware H2, the `driver-firmware-policy` anchor, the "this is NOT a ring" disambiguation and the **entire** dual-scan section — a stub-and-move, never a clean deletion — and `check-phase-54.mjs` exits 0 including the bare-`ring` negative.
+**Blast radius**: **This is the only phase in v1.21 that edits `01-windows-wufb-rings.md`** — the file carrying the two most hostile live assertions (the bare-`ring` negative and the H2-plus-`dual-scan` requirement). Keep the surgery isolated here; if it landed after Phase 148 the negative would have to be cleared twice. Prefer the singular `Autopatch ring` form (the anti-pattern regex is plural-only) and make `check-phase-54.mjs` a pre-commit gate on every plan touching this file. This phase also touches `00-overview.md` (2 of 4).
+**Research flag**: no external research pass — fully first-party sourced, including the ConfigMgr co-existence procedure. Two rows still sitting at search-summary must be re-fetched before they are quoted.
+**Plans**: TBD
+
+### Phase 147: Linux Update Delivery
+
+**Goal**: The corpus becomes genuinely five-platform for updates — a Linux admin learns exactly what Intune can and cannot enforce, and the fleet-wide root-context hazard is named before someone ships it.
+**Depends on**: Phase 145 (soft preference only — the real edge is 145 to 152; authoring this guide reddens nothing on its own)
+**Requirements**: LNX-01, LNX-02, LNX-03, LNX-04
+**Success Criteria** (what must be TRUE):
+  1. `docs/operations/patch-management/05-linux-update-delivery.md` states plainly that there is **no native Intune Linux update policy**, names the Bash platform script as the mechanism and the compliance-policy-plus-Conditional-Access lever as **attestation, not enforcement**, mapped onto the corpus's existing deferral / enforcement / attestation triad.
+  2. The root-context execution hazard is the guide's primary pitfall — `Root` execution context on the default `Every 15 minutes` frequency with **no documented run-time cap on that surface** — spelled out to its consequence: a root upgrade 96 times a day, fleet-wide, contending package locks and reporting "patched" while running the old kernel. The five-minute cap is **not** attributed to this surface.
+  3. `unattended-upgrades` is documented with its actual **four** enabled origins (not security-only), the commented-out `-updates`/`-proposed`/`-backports`, and reboot-required detection.
+  4. Ubuntu Pro / Livepatch is documented as a Canonical-side entitlement entirely outside Intune's control plane, verifiable only via a custom compliance script, with every third-party figure re-verified before shipping or omitted.
+**Blast radius**: `00-overview.md` (3 of 4) — the 4-platform table regex survives **appending** a Linux column but not a 5-platform rewrite that drops one of the four pinned literals. The overview's frontmatter platform value stays `cross-platform`; Linux is never added to it.
+**Research flag**: no external research pass — the surface is small and fully documented, including its documented silences (platform-script size, timeout and per-device count limits are simply not stated).
+**Plans**: TBD
+
+### Phase 148: Application Update Management & WinGet Routing
+
+**Goal**: The missing patching half of application management exists — an admin can choose an app-update channel, understand exactly what an Autopatch entitlement does and does not buy them, and stop treating WinGet as an enterprise patching surface.
+**Depends on**: Phase 146 (real — the Autopatch guide cross-links the promoted driver guide and the disambiguation anchor, both stable only after 146)
+**Requirements**: APP-01, APP-02, APP-03, APP-04, APP-05, APP-06
+**Success Criteria** (what must be TRUE):
+  1. `docs/operations/patch-management/07-windows-autopatch.md` documents enrolment mechanics, the `Test`/`Last` model, Autopatch app updates and reporting — **cross-linking** `co-management/03` for prerequisites and the disambiguation anchor, re-authoring neither — and `check-phase-53.mjs` exits 0 (prerequisite literals intact, no platform-applicability blockquote added to that file).
+  2. The reader cannot conclude "if you have Autopatch you have Hotpatch": both licence lists are shown differing, with the VDA inclusion on one side and Windows 365 Enterprise on the other.
+  3. `docs/operations/patch-management/08-windows-app-updates.md` documents the Microsoft 365 Apps channels — including Current as the default with rollback *"Not applicable"*, and Beta as not supported — one channel per device, device-scoped rather than user-following, and Teams and OneDrive explicitly outside; plus Enterprise App Management with its reachability gates stated as hard as its licence, all eight limitations including malicious-version revocation, and the positive that catalog apps *can* be blocking apps where auto-update ones cannot.
+  4. WinGet reads as a routing and hardening section, not a patching guide: the sourced negative that Enterprise App Management is not WinGet-based; the Store-app split (UWP kept current by the Store, Win32 Store apps kept current by Intune and therefore requiring an assignment, in preview, ARM64 unsupported) with the **absence** of any published cadence or SLO stated and contrasted against the published ones; and the `DesktopAppInstaller` CSP trap that the two policies Microsoft recommends enabling are not in the settings catalog.
+**Blast radius**: `00-overview.md` (4 of 4 — the last content phase to touch it). Hotpatch corrections stay out of the overview's body prose. `co-management/03-cocmgmt-migration-paths.md` carries a positive prerequisite pin **and** a negative barring an applicability blockquote, plus a 60-day cycle rule.
+**Research flag**: **YES** — the Intune-side Microsoft 365 Apps update policy surface (settings-catalog / Cloud Policy path and exact setting names) was never fetched; the post-July-2026 Semi-Annual channel live cadence is unverified and internally inconsistent on Microsoft's own page; whether Win32 Store apps have left preview needs re-checking at plan time.
+**Plans**: TBD
+
+### Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
+
+**Goal**: A greenfield firmware/BIOS domain exists that routes by **who holds the BIOS secret**, and DFCI is presented honestly — including to the three fleets where it is simply unavailable.
+**Depends on**: Nothing structurally (greenfield — zero corpus occurrences of every term in this domain, so no reconciliation and no conflict); scheduled here so the remaining budget is known
+**Requirements**: BIOS-01, BIOS-02, BIOS-03, BIOS-04, BIOS-11
+**Success Criteria** (what must be TRUE):
+  1. `docs/operations/firmware-bios/00-overview.md` routes a reader by secret custody rather than by tool — Dell means Intune holds the secret, HP means HP's cloud vault outside the tenant, Lenovo means the customer holds it and is the only vendor whose signing key can live under the customer's own RBAC, logging and rotation.
+  2. **Both** native Intune BIOS surfaces are named and named as **disjoint** — DFCI, and the Dell-only Templates policy with its configuration file and 2 MB limit — closing the scoping gap that named only one.
+  3. DFCI OEM support cites the **nine** OEMs followed by the source's own *"Other OEMs are pending."*, records the six-OEM and one-OEM variants as a documented conflict, and presents DFCI as **unavailable** on Dell, HP and Lenovo rather than as an option declined. "The six" and "most business OEMs" appear nowhere.
+  4. DFCI's disqualifying prerequisites are complete: manual Autopilot registration disqualifies a device, and this corpus's **three** registration paths are classified — two disqualify, OEM delivery qualifies — with the 24H2 Professional known issue and its workaround carried.
+  5. The bricking surface is quoted first-party, and DFCI's retire and reuse sequences are documented as **distinct**, including that deleting the profile or the group assignment does not remove settings.
+**Blast radius**: none in the existing corpus — this is pure new authoring, the cheapest shape available. The C17 surface added by this phase is zero (new operations documents are not C17-gated); the matrix in Phase 150 is one of the milestone's only two new C17-visible files.
+**Research flag**: **YES** (shared with Phase 150) — the oldest source in the whole set is the sole source for three load-bearing claims here and must be re-fetched first at plan time.
+**Plans**: TBD
+
+### Phase 150: Per-OEM BIOS Guides & Capability Matrix
+
+**Goal**: Dell, HP and Lenovo each get a guide shaped identically enough that the capability matrix is a genuine transposition rather than a second artefact that drifts — and a service-desk reader finds a Recovery section even where the vendor is silent.
+**Depends on**: Phase 149
+**Requirements**: BIOS-05, BIOS-06, BIOS-07, BIOS-08, BIOS-09, BIOS-10, BIOS-12
+**Success Criteria** (what must be TRUE):
+  1. Three per-OEM guides exist at an identical five-section shape — Delivery / Authentication / Scope / Prerequisites / Recovery — and every Recovery section is present, stating the vendor's documented silence explicitly rather than omitting the heading or filling it with unsourced industry expectation.
+  2. The inverted-prerequisite pair reads as a cross-vendor decision point: Dell's native template requires **no** pre-existing BIOS password, while Lenovo cannot bootstrap an initial supervisor password remotely and requires one already set at imaging or OOBE.
+  3. HP Connect is documented as a **vendor connector, not a Win32 agent** — cloud console, policies published into Intune device groups as remediations, Global-Administrator consent, certificate/key-pair auth, no per-device agent — with its cloud-vault custody quoted against Dell's own no-customer-data statement; and both lose-the-management-plane-lose-the-secret paths carry the fleet-first de-provisioning order, HP's 30-day countdown, and the orphaned remediation scripts that keep running afterwards.
+  4. The Lenovo tooling fork is stated plainly rather than papered over — the settings-configuration tool does not support ThinkCentre, so a mixed ThinkPad plus ThinkCentre fleet cannot use one tool for BIOS settings — and the model list that belongs to the certificate tool is not attached to it.
+  5. Password custody scope is accurate (two retrieval options with their distinct role requirements, passwords readable **after** a device leaves Intune management, and the minimum role to author the policy at all), and `docs/reference/firmware-oem-matrix.md` transposes the three guides and is C17-green.
+**Blast radius**: the matrix's **registry row is not landed here** — it belongs to Phase 152. Landing it here leaves both publish-bundle canaries red across three phases. These guides stay Intune-delivery-shaped and link-not-copy: no BIOS token tables, no vendor cmdlet syntax reference, no per-model matrices.
+**Research flag**: **YES** — three recovery gaps are `[UNVERIFIED]` (Lenovo lost supervisor password, Lenovo lost certificate private key, HP Endorsement Key loss). Recovery is the most-used content for a service-desk audience; shipping it as a gap undercuts the guides. Also open: whether HP Connect appears under Intune's partner-portal entry point as Dell does, and whether any post-2022 HP Connect user guide exists.
+**Plans**: TBD
+
+### Phase 151: Recipe #5 — The Enterprise Update Plan
+
+**Goal**: The question that scoped this milestone gets a prescriptive answer — one configuration artifact instead of concept prose, synthesising everything Phases 146 through 150 authored.
+**Depends on**: Phases 146, 147, 148, 149, 150 (all real — the recipe cites all four domains, and the link checker has no baseline, allowlist, ratchet or expected-failure list to hide a dangling link behind)
+**Requirements**: RCP-01, RCP-02, RCP-03, RCP-04, RCP-05
+**Success Criteria** (what must be TRUE):
+  1. `docs/recipes/05-*` ships ring topology, deadlines, driver/firmware approval cadence and app-update channels as one prescriptive artifact, C17-green — the corpus's first configuration artifact of any kind.
+  2. Nine decision points carry reversibility ratings, one rated **Destructive** and one **Effectively irreversible**, with the Autopatch-versus-standalone-rings and hotpatch decisions written on the corrected positions rather than the falsified mutual-exclusivity and opt-in framings.
+  3. Every decision point carries a platform-applicability marker, at least three of them marked Windows-only — a flat plan with implicitly-universal steps is the named failure mode.
+  4. The `## Rollback/Recovery` section reads truthfully as largely a catalogue of absences, including that the **default** Microsoft 365 Apps channel has no rollback at all and that uninstalling hotpatch requires the very restart hotpatch exists to avoid.
+  5. The recipe-template divergence is resolved on the record — the section is either promoted into the template or the reason it stays a tracked 2-of-4 divergence is written down — and every outbound link the recipe makes resolves.
+**Blast radius**: the capability-matrix row-label clash does **not** gate this phase (that dependency was falsified and downgraded to a tidy-up); neither does the recipe template mandate the rollback heading (also falsified — it is a divergence whose trigger this recipe fires). Recipes 01 and 02 are not non-compliant and are not touched.
+**Research flag**: no external research pass — this is a synthesis of content authored in 146-150. It does carry one open decision (template promotion versus recorded divergence) for discuss-phase.
+**Plans**: TBD
+
+### Phase 152: Integration, Registry & Navigation-Last Close
+
+**Goal**: Everything authored this milestone becomes reachable — publish bundle, hubs, indexes — through one atomic registry commit, with the full corpus green and no accepted-violation baseline introduced.
+**Depends on**: Phases 145, 146, 147, 148, 149, 150, 151 (all real — nav-last: wiring a hub to a document that does not exist is immediate red, and the ops-index row-count equality is only safe because Phase 145 converted it to a frozen read)
+**Requirements**: INT-01, INT-02, INT-03, INT-04, INT-05, INT-06
+**Success Criteria** (what must be TRUE):
+  1. **One commit** lands every new registry row at `Status: Approved`, a `filename-map.md` regenerated by its generator (never hand-edited), and **both** canary literals bumped — content phases having touched the registry not at all.
+  2. Both canary targets are **computed from the registry after the rows land**, measured separately because the two canaries count different sets (all rows versus Approved-only), and both `--self-test` runs pass.
+  3. New `docs/operations/**` documents carry registry and filename-map rows and no document identifier, and a reader finds them in the regenerated publish bundle — reachable through SharePoint and Copilot Studio without being C17-gated, and without the 20 legacy operations documents being retrofitted.
+  4. Navigation is wired **last**: the docs index gains a recipes row, a quick-nav fragment appended to the single existing line (never split), and an Operations entry; the operations index gains a Patch row, a Firmware H2 that is not the barred literal heading, and a Version History row.
+  5. Recipe #5's hub coverage is enforced by a **successor** validator authored additively — the frozen validator that enforces nothing for recipes 03 and later is byte-unchanged — and full-corpus C17 plus the link checker both exit 0.
+**Blast radius**: this is where the reference matrix's registry row lands, not Phase 150. The quick-nav assertion requires **exactly one** matching line — splitting it reproduces a known prior defect. Every ops-index edit lands here, which is why Phase 145's frozen-read conversion was a prerequisite rather than a nicety.
+**Research flag**: no research pass — the registry, filename-map, canary and nav-last mechanics are a well-worn repo pattern with named precedents. One pre-plan verification is worth thirty seconds: run the publish bundle end to end against a scratch row pointing at an unenrolled operations file and confirm the output lands in the bundle and its manifest.
+**Plans**: TBD
+
+### Phase 153: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump
+
+**Goal**: The milestone can close with an apex that is genuinely green **and** genuinely frozen — both carried harness debts discharged, and the close evidence read at job level rather than from a run colour.
+**Depends on**: Phase 152 (real — the apex chain end is N minus 1, so the close validator cannot be authored until the last content phase number is fixed)
+**Requirements**: HARN-01, HARN-02, HARN-03, HARN-04, HARN-05, HARN-06
+**Success Criteria** (what must be TRUE):
+  1. The `V120` close-SHA entry is **inserted before the `V14` entry**, never appended — both branches were proved by executing the assertion, and appending fails a check that sits inside the apex chain — with the reader and tree-listing exports following the established single-entry pattern and the pin proven end to end by a real frozen read.
+  2. All **five** C17-bearing harnesses are converted **simultaneously** via the working-directory swap, leaving the contract validator byte-unchanged and the existence guard live — converting a subset would leave the identical drift class on the remainder.
+  3. The 19th Path-A lineage bump exists — milestone audit script, allowlist sidecar and baseline — together with the leaf validators for Phases 145 through 152 and the apex, whose chain range is **generated by arithmetic, never transcribed**.
+  4. The 18th parallel CI workflow is **born with full fetch depth**, and the publish bundle is regenerated at this milestone's version.
+  5. A 3-axis terminal re-audit is captured at **one shared SHA** with every workflow dispatched, and skips are read as gaps rather than passes — the dependent-job fan-out is counted from job-level output, never from a top-level run colour.
+**Blast radius**: this cluster is always the final phase and never batches with content work. Predecessor frozen surfaces stay byte-unchanged; a later validator can pin an earlier validator's exact call-site string verbatim, so grep before editing any frozen line. Archival drift is a known recurring close blocker — scan nested-fail children before the push.
+**Research flag**: no research pass — the conversion has a ratified precedent commit and the pin-placement branch was proved by execution.
+**Plans**: TBD
 
 ## Progress
 
@@ -74,6 +222,7 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | v1.18 Device Configuration Recipes (AVD Shared Windows + Shared iPad) & Chain-Validator Debt Closure | 129-134 | ✅ Shipped | 2026-07-20 |
 | v1.19 Device Configuration Recipes #3 & #4 (Windows Multi-App Kiosk + Android Dedicated) | 135-138 | ✅ Shipped | 2026-08-04 |
 | v1.20 Frozen-Aware CI Remediation & Chain-Validator Debt Closure | 139-144 | ✅ Shipped | 2026-08-18 |
+| v1.21 Enterprise Update, Driver & Firmware/BIOS Governance | 145-153 | 🔵 In progress | — |
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -83,3 +232,12 @@ Full per-phase details are archived in `.planning/milestones/` (one `vX.Y-ROADMA
 | 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 6/6 | Complete | 2026-08-10 |
 | 143. Link Coverage & Fence-Mask Unification | v1.20 | 9/9 | Complete | 2026-08-11 |
 | 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 12/12 | Complete | 2026-08-18 |
+| 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 0/? | Not started | - |
+| 146. Windows Driver & Firmware Update Depth | v1.21 | 0/? | Not started | - |
+| 147. Linux Update Delivery | v1.21 | 0/? | Not started | - |
+| 148. Application Update Management & WinGet Routing | v1.21 | 0/? | Not started | - |
+| 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 0/? | Not started | - |
+| 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |
+| 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
+| 152. Integration, Registry & Navigation-Last Close | v1.21 | 0/? | Not started | - |
+| 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 0/? | Not started | - |

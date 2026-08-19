@@ -159,4 +159,82 @@ Explicit boundaries with reasoning, to prevent re-adding.
 
 | Requirement | Phase | Status |
 |---|---|---|
-| *(populated by the roadmapper)* | | |
+| FIX-01 | Phase 145 | Pending |
+| FIX-02 | Phase 145 | Pending |
+| FIX-03 | Phase 145 | Pending |
+| FIX-04 | Phase 145 | Pending |
+| FIX-05 | Phase 145 | Pending |
+| FIX-06 | Phase 145 | Pending |
+| FIX-07 | Phase 145 | Pending |
+| FIX-08 | Phase 145 | Pending |
+| FIX-09 | Phase 145 | Pending |
+| FIX-10 | Phase 145 | Pending |
+| FIX-11 | Phase 145 | Pending |
+| FIX-12 | Phase 145 | Pending |
+| DRV-01 | Phase 146 | Pending |
+| DRV-02 | Phase 146 | Pending |
+| DRV-03 | Phase 146 | Pending |
+| DRV-04 | Phase 146 | Pending |
+| DRV-05 | Phase 146 | Pending |
+| DRV-06 | Phase 146 | Pending |
+| DRV-07 | Phase 146 | Pending |
+| LNX-01 | Phase 147 | Pending |
+| LNX-02 | Phase 147 | Pending |
+| LNX-03 | Phase 147 | Pending |
+| LNX-04 | Phase 147 | Pending |
+| APP-01 | Phase 148 | Pending |
+| APP-02 | Phase 148 | Pending |
+| APP-03 | Phase 148 | Pending |
+| APP-04 | Phase 148 | Pending |
+| APP-05 | Phase 148 | Pending |
+| APP-06 | Phase 148 | Pending |
+| BIOS-01 | Phase 149 | Pending |
+| BIOS-02 | Phase 149 | Pending |
+| BIOS-03 | Phase 149 | Pending |
+| BIOS-04 | Phase 149 | Pending |
+| BIOS-05 | Phase 150 | Pending |
+| BIOS-06 | Phase 150 | Pending |
+| BIOS-07 | Phase 150 | Pending |
+| BIOS-08 | Phase 150 | Pending |
+| BIOS-09 | Phase 150 | Pending |
+| BIOS-10 | Phase 150 | Pending |
+| BIOS-11 | Phase 149 | Pending |
+| BIOS-12 | Phase 150 | Pending |
+| RCP-01 | Phase 151 | Pending |
+| RCP-02 | Phase 151 | Pending |
+| RCP-03 | Phase 151 | Pending |
+| RCP-04 | Phase 151 | Pending |
+| RCP-05 | Phase 151 | Pending |
+| INT-01 | Phase 152 | Pending |
+| INT-02 | Phase 152 | Pending |
+| INT-03 | Phase 152 | Pending |
+| INT-04 | Phase 152 | Pending |
+| INT-05 | Phase 152 | Pending |
+| INT-06 | Phase 152 | Pending |
+| HARN-01 | Phase 153 | Pending |
+| HARN-02 | Phase 153 | Pending |
+| HARN-03 | Phase 153 | Pending |
+| HARN-04 | Phase 153 | Pending |
+| HARN-05 | Phase 153 | Pending |
+| HARN-06 | Phase 153 | Pending |
+
+**Coverage:** 58 of 58 v1.21 requirements mapped to exactly one phase. Zero orphans, zero duplicates.
+
+| Phase | Requirements | Count |
+|---|---|---|
+| 145 — Corpus Correction, Validator Gate & Archival-Drift Fix | FIX-01..FIX-12 | 12 |
+| 146 — Windows Driver & Firmware Update Depth | DRV-01..DRV-07 | 7 |
+| 147 — Linux Update Delivery | LNX-01..LNX-04 | 4 |
+| 148 — Application Update Management & WinGet Routing | APP-01..APP-06 | 6 |
+| 149 — Firmware/BIOS Domain (Overview, DFCI, Surface UEFI) | BIOS-01, BIOS-02, BIOS-03, BIOS-04, BIOS-11 | 5 |
+| 150 — Per-OEM BIOS Guides & Capability Matrix | BIOS-05, BIOS-06, BIOS-07, BIOS-08, BIOS-09, BIOS-10, BIOS-12 | 7 |
+| 151 — Recipe #5, The Enterprise Update Plan | RCP-01..RCP-05 | 5 |
+| 152 — Integration, Registry & Navigation-Last Close | INT-01..INT-06 | 6 |
+| 153 — Harness Close | HARN-01..HARN-06 | 6 |
+| **Total** | | **58** |
+
+**Mapping notes.**
+
+- **BIOS-12 maps to Phase 150 only.** The reference matrix is *authored* there and is C17-green there. Its **registry row is delivered by INT-01 in Phase 152** — landing it with the document would leave both publish-bundle canaries red across three phases.
+- **FIX-12's beneficiary is Phase 152, not Phase 147.** The frozen-read conversion lands in 145 because the row-count equality it disarms counts rows in the operations index, and every operations-index edit lands in the integration phase. The 145-to-147 edge is a soft preference only.
+- **`docs/operations/patch-management/00-overview.md` is touched by Phases 145, 146, 147 and 148** and carries five live pins on an apex chain member. It is named in each of those four phases' blast-radius notes.
