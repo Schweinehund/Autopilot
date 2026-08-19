@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-28
-review_by: 2026-06-27
+last_verified: 2026-08-19
+review_by: 2026-10-18
 applies_to: all
 audience: admin
 platform: iOS
@@ -46,20 +46,33 @@ the legacy `ScheduleOSUpdate` MDM command. Both legacy mechanisms are being depr
 <a id="ddm-update-keys"></a>
 ## DDM Update Keys
 
-The DDM iOS update assertion uses four basic keys to declare the enforcement target:
+The DDM iOS update assertion exposes six fields in the Intune Settings Catalog — **Target OS
+Version**, **Target Build Version**, **Target Date Time**, **Delay in Days**, **Install Time**,
+and **Details URL** — as the display names for the underlying Apple declarative software-update
+payload keys. This guide's enforcement target is declared by three of those keys:
 
-| Key | Type | Description |
-|-----|------|-------------|
-| `TargetOSVersion` | string | Required iOS version (e.g. `18.2`). The device must reach this version by `TargetLocalDateTime`. |
-| `TargetBuildVersion` | string | Required build version (e.g. `22C152`). Used when a specific build is required (rare; typically used for security-fix tracking). Optional if `TargetOSVersion` is present. |
-| `TargetLocalDateTime` | string (ISO 8601 local) | Hard deadline for the device to be on `TargetOSVersion`. Format: `YYYY-MM-DDTHH:MM:SS` (device-local time). |
-| `OfferPrograms` | array | Optional. Lists update programs offered to the user (developer beta, public beta, etc.). Default empty (production updates only). |
+| Settings Catalog Display Name | Declarative Key | Type | Description |
+|---|---|---|---|
+| Target OS Version | `TargetOSVersion` | string | Required iOS version (e.g. `18.2`). The device must reach this version by `TargetLocalDateTime`. |
+| Target Build Version | `TargetBuildVersion` | string | Required build version (e.g. `22C152`). Used when a specific build is required (rare; typically used for security-fix tracking). Optional if `TargetOSVersion` is present. |
+| Target Date Time | `TargetLocalDateTime` | string (ISO 8601 local) | Hard deadline for the device to be on `TargetOSVersion`. Format: `YYYY-MM-DDTHH:MM:SS` (device-local time). |
 
-The Intune Apple update policy blade exposes these as form fields. The underlying DDM assertion
-JSON shows the four keys directly when inspected via Intune Configuration Audit logs.
+The Intune Apple update policy blade exposes these as form fields under their Settings Catalog
+display names. The underlying DDM assertion JSON shows the declarative keys directly when
+inspected via Intune Configuration Audit logs.
 
-**Minimum required keys:** `TargetOSVersion` + `TargetLocalDateTime`. The other two are optional
-qualifiers.
+**Minimum required keys:** `TargetOSVersion` + `TargetLocalDateTime`. `TargetBuildVersion` is an
+optional qualifier.
+
+**`OfferPrograms` is a separate key, not an enforcement key.** It lives in Apple's `Beta`
+dictionary and governs beta-programme enrolment (developer beta, public beta, etc.), not update
+enforcement — it is unrelated to the three enforcement keys above despite sitting in the same
+Settings Catalog category. This guide previously listed it as a fourth "basic" update-enforcement
+key; that categorisation is corrected here.
+
+**Source:** [Apple: Software Update Settings declarative configuration](https://support.apple.com/guide/deployment/software-update-settings-declarative-dep0578d8b8a/web) (published 2024-09-25) — the `Beta` dictionary's beta-programme key definition, cited in the paragraph above.
+
+**Source:** [Apple: Software Update Settings declarative configuration](https://support.apple.com/guide/deployment/software-update-settings-declarative-dep0578d8b8a/web) (published 2024-09-25) and [Intune: ref-apple-settings](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/ref-apple-settings) (updated 2026-07-01) — Settings Catalog display names for the three enforcement keys.
 
 ## Supervised-Only Retraction (Effective August 2025)
 
@@ -67,10 +80,12 @@ The DDM iOS update enforcement model originally constrained DDM update keys to *
 devices only (Apple Configurator, Apple Business Manager / Apple School Manager auto-enrolled
 devices). That constraint has been retracted as of August 2025.
 
-> ⚠️ **August 2025 retraction:** As of August 2025, the basic DDM update keys (TargetOSVersion,
-> TargetBuildVersion, TargetLocalDateTime, OfferPrograms) work on **unsupervised** iOS 17+
+> ⚠️ **August 2025 retraction:** As of August 2025, the DDM update-enforcement keys
+> (TargetOSVersion, TargetBuildVersion, TargetLocalDateTime) work on **unsupervised** iOS 17+
 > devices — the prior supervised-only constraint has been retracted. Both ADE-supervised and
 > Device-Enrollment-unsupervised iOS 17+ devices can now receive DDM update enforcement.
+> `OfferPrograms` is a separate `Beta`-dictionary key for beta-programme enrolment, not an
+> update-enforcement key, and is unaffected by this retraction.
 
 **Implications for BYOD fleets:** Tenants enrolling iOS devices via User Enrollment (BYOD) or
 Device Enrollment (corporate-owned non-supervised) can now apply DDM update enforcement —
