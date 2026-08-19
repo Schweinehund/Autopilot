@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-04-28
-review_by: 2026-06-27
+last_verified: 2026-08-19
+review_by: 2026-10-18
 applies_to: all
 audience: admin
 platform: cross-platform
@@ -24,7 +24,7 @@ This guide is the cross-platform overview for patch and update management across
 iOS/iPadOS, and Android. It covers concept terminology (deferral vs enforcement, ring vs Autopatch
 ring, attestation), the cross-platform comparison table, and routing to per-platform guides.
 
-For Windows WUfB rings plus per-platform Windows servicing topics, see [Windows WUfB Rings](01-windows-wufb-rings.md).
+For Windows WUfB deployment ring topology plus per-platform Windows servicing topics, see [Windows WUfB Rings](01-windows-wufb-rings.md).
 For macOS DDM enforcement, see [macOS Update Enforcement](02-macos-update-enforcement.md). For iOS
 update lifecycle, see [iOS Update Lifecycle](03-ios-update-lifecycle.md). For Android patch
 delivery, see [Android Patch Delivery](04-android-patch-delivery.md).
@@ -48,9 +48,9 @@ single row can be read horizontally to compare how each platform implements the 
 
 | Concept | Windows | macOS | iOS/iPadOS | Android |
 |---------|---------|-------|------------|---------|
-| Cadence model | WUfB rings (deferral periods) | macOS Software Update + DDM | iOS update policies (DDM iOS 17+) | Google Play monthly + OEM (LifeGuard / KSP) |
-| Deferral mechanism | WUfB Update rings (quality/feature) | MDM `forceDelayedSoftwareUpdates` (deprecated; pre-OS 26) | iOS device-restrictions "Defer software updates" (supervised-only; deprecated) | (No tenant-side deferral; Google Play handles) |
-| Enforcement primitive | Deadline + grace period in Update ring | DDM "Software Update Enforce Latest" (Settings Catalog) | DDM update keys (TargetOSVersion, TargetBuildVersion, TargetLocalDateTime, OfferPrograms) | Play Integrity MEETS_STRONG_INTEGRITY (compliance gate) |
+| Cadence model | WUfB deployment rings (deferral periods) | macOS Software Update + DDM | iOS update policies (DDM iOS 17+) | Google Play monthly + OEM (LifeGuard / KSP) |
+| Deferral mechanism | WUfB deployment rings (quality/feature) | MDM `forceDelayedSoftwareUpdates` (deprecated; pre-OS 26) | iOS device-restrictions "Defer software updates" (supervised-only; deprecated) | (No tenant-side deferral; Google Play handles) |
+| Enforcement primitive | Deadline + grace period in Update ring | DDM "Software Update Enforce Latest" (Settings Catalog) | DDM update keys — Target OS Version, Target Build Version, Target Date Time (`OfferPrograms` recategorised: `Beta`-dict beta-enrolment key, not enforcement) | Play Integrity MEETS_STRONG_INTEGRITY (compliance gate) |
 | Hotpatch / EOL surface | Hotpatch (Win 11 Ent 24H2+ default May 2026) + VBS prereq | Apple OS 26 removes legacy MDM | Aug 2025 unsupervised DDM retraction | Android 13+ ≤12-month patch age; Zebra LifeGuard Jan 2026 GA; Samsung KSP |
 | Hard deadline | (soft cutovers; no hard deadline) | **[HARD-DEADLINE]** Apple OS 26 release | (soft cutover; Aug 2025 retraction) | **[HARD-DEADLINE]** Oct 31 2026 fleet compliance |
 
@@ -64,32 +64,37 @@ per-platform guides at [macOS Update Enforcement](02-macos-update-enforcement.md
 ## Ring Terminology
 
 The word "ring" is overloaded in Microsoft Windows update tooling. **WUfB deployment ring** and
-**Autopatch ring** are mutually exclusive concepts; they cannot coexist on the same device. This
-section disambiguates them and the separate driver/firmware update policy:
+**Autopatch ring** are related but distinct concepts: an Autopatch group is a container that
+*includes* an `Update rings policy for Windows 10 and later` among the policies it creates and
+assigns. This section disambiguates them and the separate driver/firmware update policy:
 
-- **WUfB deployment ring** — A Windows Update for Business (WUfB) Update ring policy in Intune
-  configures deferral periods, deadlines, and restart behavior for quality and feature updates.
-  Tenants assign devices to WUfB deployment rings via Intune > Devices > Update rings, and devices
-  receive Microsoft updates directly per the ring's configured deferral cadence. WUfB deployment
-  rings are the manual, tenant-owned ring topology.
-- **Autopatch ring** — A Windows Autopatch ring is a service-managed device cohort (Test, First,
-  Fast, Broad rings) that Windows Autopatch automatically rotates and gates. Autopatch is mutually
-  exclusive with WUfB deployment rings; enabling Autopatch detaches devices from any pre-existing
-  WUfB deployment ring assignment. Autopatch rings are the service-managed ring topology — Microsoft
-  rotates updates through the cohorts on a fixed cadence.
+- **WUfB deployment ring** — A Windows Update client policy in Intune configures deferral periods,
+  deadlines, and restart behavior for quality and feature updates. Tenants assign devices to WUfB
+  deployment rings via Intune > Devices > Update rings, and devices receive Microsoft updates
+  directly per the ring's configured deferral cadence. WUfB deployment rings are the manual,
+  tenant-owned ring topology.
+- **Autopatch ring** — A Windows Autopatch ring is a service-managed device cohort. Windows
+  Autopatch automatically provisions the two current default rings, `Test` and `Last`, on every
+  Autopatch group; both are always present, cannot be removed or renamed, and each carries its own
+  Entra group (a group supports up to 15 rings, and a tenant up to 300 groups). Because an Autopatch
+  group contains an `Update rings policy for Windows 10 and later` among the policies it creates and
+  assigns, enabling Autopatch does not detach devices from their WUfB deployment ring — it takes
+  over direct authorship of that ring policy instead. The Autopatch ring topology is
+  service-managed — Microsoft rotates updates through the cohorts on a fixed cadence.
 - **Driver/firmware update policy** — Separately configured under Intune > Devices > Windows >
-  Driver and firmware updates; this is NOT a "ring" in either WUfB or Autopatch sense. It is a
-  discrete update policy surface and follows its own approval cadence. Driver and firmware updates
-  are NOT gated by WUfB deployment rings or Autopatch rings — they are an independent policy
-  surface that admins approve per-update.
+  Driver and firmware updates; this is NOT a "ring" in either WUfB or Autopatch sense. Driver and
+  firmware updates are an independent policy surface that admins approve per-update. Approval mode
+  and the 0–30 day deferral are set per deployment ring, and the quality-update deadline and grace
+  period do apply to drivers.
 
-The mutual-exclusion property of WUfB deployment rings and Autopatch rings is a frequent source of
-admin confusion: enabling Autopatch on a tenant whose devices are already in a WUfB deployment ring
-detaches those devices from the WUfB ring (Autopatch takes over), and the WUfB ring policy ceases
-to apply to Autopatch-managed devices. Plan tenant-wide ring topology before enabling Autopatch.
+**Source:** [Manage Windows Update for client policies](https://learn.microsoft.com/en-us/windows/deployment/update/waas-manage-updates-wufb) (updated 2025-10-02)
+
+**Source:** [Windows Autopatch groups overview](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview) (updated 2026-06-19)
+
+**Source:** [Manage driver updates](https://learn.microsoft.com/en-us/intune/device-updates/windows/manage-driver-updates) and [Driver updates FAQ](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (both updated 2026-04-09)
 
 For Windows-specific WUfB deployment ring and Autopatch ring configuration, including practical
-PITFALL-9 mutual-exclusion guidance, see [Windows WUfB Rings](01-windows-wufb-rings.md). The other
+PITFALL-9 ring-containment guidance, see [Windows WUfB Rings](01-windows-wufb-rings.md). The other
 three platforms (macOS, iOS, Android) do not use ring terminology — they use cadence/deferral
 mechanisms specific to their respective OS update pipelines (see comparison table above).
 
@@ -101,19 +106,22 @@ the prerequisite for choosing the right per-platform mechanism:
 
 - **Deferral** — A tenant-side delay applied before an update is installed. The user or device is
   told "this update exists; you may install later." The deferral expires automatically and the
-  user can usually install earlier. Examples: Windows WUfB deferral periods (0–30 days quality;
-  0–365 days feature); macOS legacy MDM `forceDelayedSoftwareUpdates`; iOS legacy device-restrictions
-  "Defer software updates" (supervised-only). Deferral is a soft control: the user retains the
-  ability to install earlier; the deferral simply expires after the configured window. In modern
-  Apple platforms, deferral is being deprecated in favor of declarative enforcement (see below).
+  user can usually install earlier. Examples: Windows Update client policy deferral periods (0–30
+  days quality; 0–365 days feature); macOS legacy MDM `forceDelayedSoftwareUpdates`; iOS legacy
+  device-restrictions "Defer software updates" (supervised-only). Deferral is a soft control: the
+  user retains the ability to install earlier; the deferral simply expires after the configured
+  window. In modern Apple platforms, deferral is being deprecated in favor of declarative
+  enforcement (see below).
 - **Enforcement** — A tenant-side hard requirement that the OS install an update by a specific
   deadline. The user does not retain "install later" optionality past the deadline. Examples:
-  Windows WUfB deadline + grace period (after the deadline elapses, force-install plus reboot
-  occurs); macOS DDM "Software Update Enforce Latest" (declarative — the OS itself enforces the
-  target version); iOS DDM update keys (TargetOSVersion, TargetBuildVersion, TargetLocalDateTime,
-  OfferPrograms — the OS enforces target version+build by the configured local date/time);
-  Android Play Integrity compliance gate (devices not patched within 12 months fail compliance).
-  Enforcement is a hard control: the OS itself ensures compliance regardless of user action.
+  Windows Update client policy deadline + grace period (after the deadline elapses, force-install
+  plus reboot occurs); macOS DDM "Software Update Enforce Latest" (declarative — the OS itself
+  enforces the target version); iOS DDM update keys — Target OS Version, Target Build Version,
+  Target Date Time (`TargetOSVersion` / `TargetBuildVersion` / `TargetLocalDateTime`) — the OS
+  enforces target version+build by the configured local date/time (`OfferPrograms` is a separate
+  Beta-dictionary key that governs beta-programme enrolment, not update enforcement); Android Play
+  Integrity compliance gate (devices not patched within 12 months fail compliance). Enforcement is
+  a hard control: the OS itself ensures compliance regardless of user action.
 - **Attestation** — A check that the device is currently patched to a recent baseline. Used for
   Conditional Access and compliance gating rather than as an install primitive. Examples:
   Android Play Integrity verdicts (basic device-integrity and strong-integrity tiers, with
@@ -121,13 +129,15 @@ the prerequisite for choosing the right per-platform mechanism:
   encryption and OS version checks. Attestation does not install updates — it verifies that
   updates have already been installed and gates access (network, app, data) accordingly.
 
+**Source:** [Apple: Software Update Settings declarative configuration](https://support.apple.com/guide/deployment/software-update-settings-declarative-dep0578d8b8a/web) and [Intune: ref-apple-settings](https://learn.microsoft.com/en-us/intune/device-configuration/settings-catalog/ref-apple-settings) (Apple published 2024-09-25; Intune updated 2026-07-01)
+
 The deferral / enforcement / attestation distinction explains why each platform's update model
 looks superficially different but maps to the same conceptual control surface. Modern Apple
 platforms (Apple OS 26 forward) are deprecating deferral primitives entirely in favor of DDM
 enforcement; Android leans heavily on attestation for compliance signals; Windows offers all three
-(WUfB deferral periods + WUfB deadlines for enforcement + Microsoft Defender + compliance signals
-for attestation-equivalent gating). See per-platform guides for migration timelines and concrete
-configuration steps.
+(Windows Update client policy deferral periods + deadlines for enforcement + Microsoft Defender +
+compliance signals for attestation-equivalent gating). See per-platform guides for migration
+timelines and concrete configuration steps.
 
 When planning a fleet patch posture, decide first which control primitive you want — deferral
 (soft control with user choice), enforcement (hard control with deadline), or attestation
@@ -174,11 +184,11 @@ re-discovered in each per-platform rollout:
   account for the fact that each platform's "compliant" verdict has different latency and
   different remediation paths.
 - **Communications cadence** — End-user communications about update windows must be platform-aware.
-  Users on Windows expect WUfB-driven notifications and a deadline experience; users on macOS
-  expect either MDM-driven prompts (legacy) or DDM-enforced silent installs (forward); users on
-  iOS expect DDM update keys to deliver invisible enforcement; users on Android expect Google
-  Play to handle most of the experience invisibly. Unified user-facing messaging that does not
-  match the actual platform UX creates support load.
+  Users on Windows expect Windows Update client policy notifications and a deadline experience;
+  users on macOS expect either MDM-driven prompts (legacy) or DDM-enforced silent installs
+  (forward); users on iOS expect DDM update keys to deliver invisible enforcement; users on Android
+  expect Google Play to handle most of the experience invisibly. Unified user-facing messaging that
+  does not match the actual platform UX creates support load.
 - **Reporting parity** — Reporting on patch posture across platforms requires accepting that the
   data models are not parity-aligned. Windows exposes ring-bound deferral state; macOS exposes
   enforcement target version; iOS exposes DDM update key state; Android exposes patch level age
@@ -198,8 +208,9 @@ flow downstream from the program-level posture.
 
 ## Related Resources
 
-- [Windows WUfB Rings](01-windows-wufb-rings.md) — WUfB ring topology, Autopatch disambiguation,
-  in-memory kernel patching servicing model, and the driver/firmware update policy surface
+- [Windows WUfB Rings](01-windows-wufb-rings.md) — WUfB deployment ring topology, Autopatch
+  disambiguation, in-memory kernel patching servicing model, and the driver/firmware update policy
+  surface
 - [macOS Update Enforcement](02-macos-update-enforcement.md) — DDM forward path; Apple OS 26
   legacy-command removal
 - [iOS Update Lifecycle](03-ios-update-lifecycle.md) — DDM-on-unsupervised-iOS-17+ retraction
@@ -209,7 +220,7 @@ flow downstream from the program-level posture.
 
 ## External References
 
-- [WUfB Documentation (Microsoft Learn)](https://learn.microsoft.com/en-us/windows/deployment/update/waas-overview)
+- [Windows Update Client Policies Documentation (Microsoft Learn)](https://learn.microsoft.com/en-us/windows/deployment/update/waas-overview)
 - [Windows Autopatch Documentation (Microsoft Learn)](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/)
 - [DDM Software Update (Apple Developer)](https://developer.apple.com/documentation/devicemanagement)
 - [Apple Platform Deployment — Software Updates](https://support.apple.com/guide/deployment/welcome/web)
