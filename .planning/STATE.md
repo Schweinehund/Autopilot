@@ -1,29 +1,28 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.20
-milestone_name: Frozen-Aware CI Remediation & Chain-Validator Debt Closure
-status: Awaiting next milestone
-stopped_at: Phase 144 complete — v1.20 SHIPPED (28/28 Validated, close-gate 246fa3dd, apex 101/0/0)
-last_updated: "2026-08-19T01:16:17.342Z"
+milestone: v1.21
+milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
+status: planning
+last_updated: "2026-08-19T04:46:34.879Z"
 last_activity: 2026-08-18
-last_activity_desc: Milestone v1.20 completed and archived
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 44
-  completed_plans: 44
-current_phase: 144
-current_phase_name: V119 Pin + 18th Path-A Lineage Bump + Terminal Close
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` + `/adversarial-review`)
+See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
 
-**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.20 protects that corpus by repairing the validator chain and CI harness lineage that guards it.
-**Current focus:** v1.20 SHIPPED 2026-08-18 and ARCHIVED 2026-08-19 (28/28 requirements Validated, close-gate 246fa3dd, tag `v1.20`) — no active milestone; next: `/gsd-new-milestone` to scope v1.21
+**Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
+**Current focus:** v1.21 Enterprise Update, Driver & Firmware/BIOS Governance — STARTED 2026-08-18, defining requirements. Eight pillars: firmware/BIOS as a net-new domain (DFCI + Surface UEFI + first-class per-OEM Dell/HP/Lenovo guides), driver-update depth, application update management (full Autopatch + M365 channels + EAC/WinGet), Linux update delivery, freshness re-verification of five past-due `patch-management/` docs, Recipe #5 as the prescriptive config artifact, plus `V120-PIN-DEFERRAL` and `C17-FROZEN-AWARE-RESIDUE-V15-V19`. Phase numbering continues from the v1.20 close at Phase 144 → v1.21 spans **Phase 145+**.
+
+**Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
 > **v1.21 BACK-ANCHOR OBLIGATION (`V120-PIN-DEFERRAL`).** v1.20 discharged `V119-PIN-DEFERRAL` and left its own successor obligation open: `_lib/frozen-at-close.mjs` carries no `V120` entry, so `v1.20-milestone-audit.mjs` still reads live HEAD. v1.21 must pin it to the v1.20 close-gate SHA `246fa3dd` and convert that harness. Recover the SHA with the subject-line pair discriminator (count=1) — **not** the dual-token `--grep --all-match` form, which returns multiple candidates because it matches on the body:
 > ```
@@ -33,10 +32,10 @@ See: .planning/PROJECT.md (updated 2026-08-04 — v1.20 scoped via `/grill-me` +
 
 ## Current Position
 
-Phase: Milestone v1.20 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-08-18 — Milestone v1.20 completed and archived
+Status: Defining requirements
+Last activity: 2026-08-18 — Milestone v1.21 started
 
 ## v1.20 Phase Dependency Summary
 
@@ -449,14 +448,18 @@ No open blockers. v1.19 closed clean: 17/17 Validated, both audits passed, apex 
 
 ## Session Continuity
 
-Last session: 2026-08-18T04:26:03.649Z
-Stopped at: Phase 144 complete — v1.20 SHIPPED (28/28 Validated, close-gate 246fa3dd, apex 101/0/0)
-Resume file: .planning/milestones/v1.20-phases/144-v119-pin-18th-path-a-lineage-bump-terminal-close/144-VERIFICATION.md (archived)
-Next action: `/gsd-new-milestone` — scope v1.21 (v1.20 archived and tagged 2026-08-19)
+Last session: 2026-08-18 — `/gsd-new-milestone` scoping v1.21
+Stopped at: Milestone v1.21 started — PROJECT.md + STATE.md written; requirements and roadmap pending
+Resume file: .planning/PROJECT.md (`## Current Milestone: v1.21`, eight pillars)
+Next action: define REQUIREMENTS.md, then spawn `gsd-roadmapper` (Phase 145+)
 
 ## Operator Next Steps
 
-- `/gsd-new-milestone` — scope v1.21. Its backlog source is `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`.
-- v1.21 inherits: `V120-PIN-DEFERRAL` (the mandatory back-anchor, see above), `FENCE-AXIS-02` (fence *length* and mask *scope*, both untouched by LINK-05), the out-of-census divergent fence-handling sites (D-20), the unowned `check-phase-30/31` tooling residue (items 1-6 of the routing table), the non-nested standalone-chain wall-clock cost, the C17 live-HEAD residue across the five C17-bearing harnesses, and the still-open `V-132-HUBSNOTWIRED-REGEX-BROKEN`.
-- `.planning/REQUIREMENTS.md` was deliberately NOT deleted at this close — see Blockers/Concerns. It stays until `/gsd-new-milestone` overwrites it.
+- v1.21 **picks up** from `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`: `V120-PIN-DEFERRAL` (mandatory back-anchor, see the obligation blockquote above) and `C17-FROZEN-AWARE-RESIDUE-V15-V19` (all five C17-bearing harnesses, converted simultaneously).
+- v1.21 **does NOT pick up** and still carries forward: `FENCE-AXIS-02` (fence *length* and mask *scope*, both untouched by LINK-05), the out-of-census divergent fence-handling sites (D-20), the unowned `check-phase-30/31` tooling residue (rows 1-6 of the routing table), `check-phase-66`'s 386s-vs-300s timeout margin, the non-nested standalone-chain wall-clock cost, `V-132-HUBSNOTWIRED-REGEX-BROKEN`, `RECIPE-OUTBOUND-LINK-COVERAGE`, `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, and the trigger-gated content items (`CI-3`, MTPSSO, KRBFUT, AOSP-wired 802.1X, Cloud PKI, `SHARED-TAXONOMY-DOC` — whose trigger is a third **lockdown** recipe and does NOT fire on Recipe #5).
+- Two carried items may go live rather than deferred this milestone: `ANCHOR-REVIEW-BY-PAST-DUE` (rides any phase touching `docs/admin-setup-android/05-dedicated-devices.md`) and `ROLLBACK-RECOVERY-DIVERGENCE-COUNT` (fires if Recipe #5 needs the `## Rollback/Recovery` slot).
+- **Glossary zero-margin hazard is live this milestone.** Both glossaries sat at exactly 90 days against a `>90` test at the v1.20 close; v1.21 adds terminology (DFCI, Hotpatch, Autopatch ring, `unattended-upgrades`, update channel). Re-measure glossary metadata at plan time — do not assume the margin still holds.
+- **Broad corpus edits return** (v1.20 was tooling-only), which re-activates `check-phase-54.mjs`'s live `REQUIREMENTS.md`/`ROADMAP.md` reads with a negative assertion — the one named, unremediated live-reading exposure.
+- `.planning/REQUIREMENTS.md` must continue to exist — `check-phase-54.mjs:30,349,568` and `v1.20-milestone-audit.mjs` live-read it outside the frozen-at-close mechanism. `/gsd-new-milestone` overwrites it in place; it must never be `git rm`'d.
+- `.planning/seeds/SEED-001` is stale-but-open — its macOS PSSO content shipped in v1.13 while the file still reads `status: planted`. Not folded into v1.21; close it separately.
 - Workflows fire on `pull_request` + schedule + `workflow_dispatch` only. A push to `master` fires nothing; Axis-2 always needs an explicit `gh workflow run --ref master` per workflow, and CI must never be read while the remote is behind.
