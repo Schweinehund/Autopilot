@@ -5,15 +5,15 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
 current_phase: 145
 current_phase_name: Corpus Correction, Validator Gate & Archival-Drift Fix
 status: executing
-stopped_at: "Completed 145-02-PLAN.md (00-overview.md correction atom: FIX-01/02/03/04/06/10)"
-last_updated: "2026-08-19T17:15:33.748Z"
+stopped_at: Completed 145-04-PLAN.md
+last_updated: "2026-08-19T17:33:13.932Z"
 last_activity: 2026-08-19
 last_activity_desc: Plan 145-01 complete (FIX-12 frozen-read conversion + FIX-01 co-management/03 correction)
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -37,11 +37,11 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 145 of 153 (Corpus Correction, Validator Gate & Archival-Drift Fix)
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-08-19 — Plan 145-01 complete (FIX-12 frozen-read conversion + FIX-01 co-management/03 correction)
 
-Progress: [████░░░░░░] 40%
+Progress: [██████░░░░] 60%
 
 ## v1.21 Phase Dependency Summary
 
@@ -415,6 +415,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 144 P12 | 15min | 3 tasks | 5 files |
 | Phase 145 P01 | 12min | 2 tasks | 2 files |
 | Phase 145 P02 | 20min | 1 tasks | 1 files |
+| Phase 145 P04 | 35min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -524,6 +525,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase ?]: 145-02: Combined FIX-01 (cohort names) and FIX-02 (containment position) into one rewritten Autopatch-ring bullet with a single shared Source citation, since both facts come from the same first-party page
 - [Phase ?]: 145-02: Retained the coined WUfB deployment ring compound verbatim; normalised bare WUfB ring(s) shorthand into that compound rather than fully renaming, and left the [Windows WUfB Rings] link label + sibling filename untouched per D-42
 - [Phase ?]: 145-02: OfferPrograms recategorised (never deleted) at both sites as a Beta-dictionary beta-enrolment key per D-52
+- [Phase ?]: 145-04: rewrote every downstream restatement of the macOS Apple-OS-26 timing (not just the primary blockquote) to avoid internal contradiction after the two-stage correction
+- [Phase ?]: 145-04: FIX-04's rename is a no-op in 02-macos/03-ios/04-android — the WUfB census's 2 tokens per file are link-label text, out of D-42 scope
+- [Phase ?]: 145-04: Android Oct 31 2026 date re-fetch reproduced the exact quote; used direct citation (D-25 superseded) not the attribution fallback
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -553,8 +557,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-19T17:15:33.714Z
-Stopped at: Completed 145-02-PLAN.md (00-overview.md correction atom: FIX-01/02/03/04/06/10)
+Last session: 2026-08-19T17:33:13.897Z
+Stopped at: Completed 145-04-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
