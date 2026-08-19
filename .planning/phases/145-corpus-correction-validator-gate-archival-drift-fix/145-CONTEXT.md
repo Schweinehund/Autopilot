@@ -180,10 +180,13 @@ verification agent. Figures the review corrected are marked `[CORRECTED]`.
   `00-overview.md` must not name `MEETS_STRONG_INTEGRITY` in **body prose** (`V-54-29` — the table
   cell at `:55` is stripped and safe). `[CORRECTED]` the overview's date is at `:55` (also `:19`,
   `:58`), not `:57`.
-- **D-27:** The researcher performs one bounded pass at plan time and **writes the negative result
-  into RESEARCH.md as a named row** (query strings, pages fetched, date, verdict). The executor
-  reads that row as the trigger for the attribution path. No second attempt during execution. The
-  `**Source:**` line has no rendering for "we looked and found nothing" and must not be faked.
+- **D-27:** `[DISCHARGED 2026-08-19]` The bounded pass ran and **succeeded** — see the named row in
+  `145-RESEARCH.md` (5-step query trail, page fetched, frontmatter dates, verbatim quote). The
+  attribution trigger it was designed to arm never fires. Retained for the record because the
+  discipline is what made the positive result trustworthy: the row is auditable, and the
+  orchestrator re-fetched the page to confirm the quote rather than accepting it. No second attempt
+  during execution. Had it failed, the `**Source:**` line has no rendering for "we looked and found
+  nothing" and must not have been faked.
 
 ### FIX-11 archival-drift fix
 
