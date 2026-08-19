@@ -102,12 +102,22 @@ verification agent. Figures the review corrected are marked `[CORRECTED]`.
 - **D-14:** Fallback only, if a site must retain the plural: **two** `disambiguation` insertions are
   required (one in `[5501,5916]`, one in `[6117,6378]`), never one. The noun `disambiguation` must
   be exact — `disambiguates` does not match the windowKeywords regex.
-- **D-15:** `[MEASURED]` **16** milestone-audit scripts carry the C11 pattern, every one reading
-  `walkMd('docs')` live, none frozen, with `c11_ops_exemptions` empty in all 18 sidecars. They are
-  **not** 16 apex children — each runs as a subprocess of one or more `check-phase-*` validators.
-  Do not quote a child count.
-- **D-16:** Minimum sufficient C11 verification is **`v1.5-milestone-audit.mjs` plus any one of
-  `v1.6`–`v1.20`**. `[MEASURED]` `v1.5-milestone-audit.mjs:517`'s keyword regex is 168 chars vs 277
+- **D-15:** `[CORRECTED 2026-08-19, post-research]` **Exactly ONE** audit enforces C11 against
+  today's `docs/` — `v1.20-milestone-audit.mjs`. Sixteen scripts carry the C11 pattern, but in
+  v1.5–v1.19 the identically-named `walkMd()`/`readFile()` helpers read a **frozen Map** built by
+  `createFrozenCorpusReader` at that milestone's own close SHA (`readFile` returns
+  `FROZEN.get(relPath)`), so a break in live `docs/` **cannot redden them**. Only v1.20's helpers
+  are genuinely live (`readFileSync(join(process.cwd(), relPath))`). The name collision with the
+  live helpers in `c17-eee-contract.mjs` is what produced the earlier "16 live" figure — it was
+  asserted by the draft **and** by an independent verification agent, and both were wrong.
+  `c11_ops_exemptions` is empty in all 18 sidecars. v1.20 **is** an apex chain member, so the C11
+  constraint is real — it is narrower, not absent.
+- **D-16:** `[CORRECTED 2026-08-19, post-research]` Minimum sufficient C11 verification is
+  **`v1.20-milestone-audit.mjs`** — the only live enforcer — plus v1.21's own audit once Phase 153
+  authors it. The earlier "run v1.5 plus any one of v1.6–v1.20" instruction was **unsound**: v1.5's
+  C11 reads frozen bytes and can never observe a Phase-145 edit. The divergent-keyword-list finding
+  below is retained because it binds Phase 153's new audit, not this phase's verification.
+  `[MEASURED]` `v1.5-milestone-audit.mjs:517`'s keyword regex is 168 chars vs 277
   in every other C11-bearing audit — six alternates short. "Identical in all 16" is false.
 
 ### Commit atoms and gates
@@ -124,7 +134,8 @@ verification agent. Figures the review corrected are marked `[CORRECTED]`.
      `check-phase-59.mjs` (FIX-12, **its own commit, landed first**, never mixed with doc edits).
 - **D-18:** Per-commit gate, run as an explicit task step (**not** the git hook):
   `check-phase-53.mjs`, `check-phase-54.mjs`, `check-phase-57.mjs`, `check-phase-59.mjs`,
-  `c17-eee-contract.mjs`, `check-nav-hub-links.mjs`, plus the two C11 audits from D-16.
+  `c17-eee-contract.mjs`, `check-nav-hub-links.mjs`, plus `v1.20-milestone-audit.mjs` for C11 (per
+  the corrected D-16 — it is the only live C11 enforcer).
   `check-phase-54.mjs` is a **hard** gate on every commit touching `01-windows-wufb-rings.md`
   (ROADMAP:93 directs this).
 - **D-19:** `[MEASURED]` `scripts/hooks/pre-commit.sh` only JSON-parses two v1.4 sidecars, but
