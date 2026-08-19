@@ -22,7 +22,7 @@ the workload migration sequence, see [Workload Slider Migration](02-windows-work
 
 Windows Autopatch is a co-management successor managed-update service that automates Windows
 quality update (WUfB) ring management for enrolled devices. Autopatch eliminates manual WUfB
-ring authoring by managing rings (Test, First, Fast, Broad) automatically based on Microsoft's
+ring authoring by managing rings (Test and Last) automatically based on Microsoft's
 quality-signal feedback loops.
 
 Autopatch is a co-management migration path: tenants moving from ConfigMgr-managed Windows Update
