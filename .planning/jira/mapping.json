@@ -972,6 +972,12 @@
         }
       },
       "completedDate": "2026-08-18"
+    },
+    "v1.21": {
+      "epicKey": "RTS-806",
+      "status": "created",
+      "created": "2026-08-18",
+      "phases": {}
     }
   },
   "lastUpdated": "2026-07-30",
