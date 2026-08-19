@@ -32,7 +32,7 @@
 
 ### v1.21 Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 
-- [ ] **Phase 145: Corpus Correction, Validator Gate & Archival-Drift Fix** - Five patch-management documents tell the current first-party truth, and two validator-level traps are disarmed before any new content lands
+- [x] **Phase 145: Corpus Correction, Validator Gate & Archival-Drift Fix** - Five patch-management documents tell the current first-party truth, and two validator-level traps are disarmed before any new content lands
 - [ ] **Phase 146: Windows Driver & Firmware Update Depth** - The ~45-line disambiguation H2 becomes a real guide, with the stub-and-move surgery on the most hostile file done once and in isolation
 - [ ] **Phase 147: Linux Update Delivery** - The corpus becomes genuinely five-platform for updates, and the fleet-wide root-context hazard is named before anyone ships it
 - [ ] **Phase 148: Application Update Management & WinGet Routing** - The missing patching half of application management, plus a well-sourced negative on WinGet
@@ -258,7 +258,7 @@ Plans:
 | 142. Archival-Path Fix, Chain Adoption & Cold-Clone Threshold | v1.20 | 6/6 | Complete | 2026-08-10 |
 | 143. Link Coverage & Fence-Mask Unification | v1.20 | 9/9 | Complete | 2026-08-11 |
 | 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 12/12 | Complete | 2026-08-18 |
-| 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 0/? | Not started | - |
+| 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 5/5 | ✅ Complete | 2026-08-19 |
 | 146. Windows Driver & Firmware Update Depth | v1.21 | 0/? | Not started | - |
 | 147. Linux Update Delivery | v1.21 | 0/? | Not started | - |
 | 148. Application Update Management & WinGet Routing | v1.21 | 0/? | Not started | - |

@@ -4,7 +4,7 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
 current_phase: 145
 current_phase_name: Corpus Correction, Validator Gate & Archival-Drift Fix
-status: verifying
+status: in_progress
 stopped_at: Completed 145-03-PLAN.md (final plan of phase 145)
 last_updated: "2026-08-19T18:07:38.300Z"
 last_activity: 2026-08-19
@@ -38,8 +38,8 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 Phase: 145 of 153 (Corpus Correction, Validator Gate & Archival-Drift Fix)
 Plan: 5 of 5
-Status: Phase complete — ready for verification
-Last activity: 2026-08-19 — Plan 145-01 complete (FIX-12 frozen-read conversion + FIX-01 co-management/03 correction)
+Status: Phase 145 VERIFIED complete — ready to plan Phase 146
+Last activity: 2026-08-19 — Phase 145 complete and VERIFIED (5/5 plans, 14 commits, 5/5 success criteria, 12/12 requirements; apex check-phase-144 101/0/0)
 
 Progress: [██████████] 100%
 
