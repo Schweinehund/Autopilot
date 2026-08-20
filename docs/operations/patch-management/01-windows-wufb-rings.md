@@ -19,7 +19,9 @@ This guide is the Windows-specific patch management reference. It covers WUfB de
 topology (the Windows Update client policy object in Intune) with deferral periods + deadline
 enforcement, Windows Autopatch ring service-managed cohorts and their containment relationship with
 the WUfB deployment ring model (see PITFALL-9), the Hotpatch servicing model enabled by default for
-eligible devices from May 2026, and the separate driver and firmware update policy surface.
+eligible devices from May 2026, and the disambiguation stub for the separate driver and firmware
+update policy, whose full treatment is in
+[Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md).
 
 For the cross-platform comparison and Ring Terminology hub, see
 [Patch Management Overview](00-overview.md).
@@ -204,10 +206,9 @@ source conflict can cause WUfB driver/firmware updates to flap. Specifically:
    (`HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\DisableDualScan = 1`) — note this
    disables ALL WUfB cloud scan, not just driver/firmware, so it should be a transitional measure
    only.
+   **Source:** [Windows Autopatch FAQ](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq) (updated 2026-05-28)
 4. Keep the Windows Update workload on Configuration Manager while approving drivers and firmware
    from Intune — see [Configuration Manager co-existence](06-windows-driver-firmware-updates.md#configmgr-coexistence).
-
-**Source:** [Windows Autopatch FAQ](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq) (updated 2026-05-28)
 
 Validate the chosen mitigation by re-running a scan cycle and confirming driver/firmware policy
 report state stabilizes across at least three consecutive scan cycles.

@@ -83,9 +83,10 @@ assigns. This section disambiguates them and the separate driver/firmware update
   service-managed — Microsoft rotates updates through the cohorts on a fixed cadence.
 - **Driver/firmware update policy** — Separately configured under Intune > Devices > Windows >
   Driver and firmware updates; this is NOT a "ring" in either WUfB or Autopatch sense. Driver and
-  firmware updates are an independent policy surface that admins approve per-update. Approval mode
-  and the 0–30 day deferral are set per deployment ring, and the quality-update deadline and grace
-  period do apply to drivers. See [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md)
+  firmware updates are an independent policy surface that admins approve per-update. Approval mode is
+  fixed when the driver policy is created and cannot be changed afterwards; the 0–30 day deferral are
+  set per deployment ring, and the quality-update deadline and grace period do apply to drivers. See
+  [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md)
   for the full approval-mode, workflow, and deferral treatment.
 
 **Source:** [Manage Windows Update for client policies](https://learn.microsoft.com/en-us/windows/deployment/update/waas-manage-updates-wufb) (updated 2025-10-02)

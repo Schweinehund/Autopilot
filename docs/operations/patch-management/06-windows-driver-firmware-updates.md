@@ -16,9 +16,9 @@ platform: Windows
 # Windows Driver and Firmware Updates
 
 This guide covers the Windows driver and firmware update policy in Microsoft Intune as a policy
-surface in its own right — what it does, how updates are approved, which update ring settings reach
-it and which do not, how firmware arrives, what the reports show, how it co-exists with an
-on-premises update source, and what it does not do at all.
+surface in its own right — what it does, how updates are approved, which WUfB deployment ring
+settings reach it and which do not, how firmware arrives, what the reports show, how it co-exists
+with an on-premises update source, and what it does not do at all.
 
 For the cross-platform comparison and the Ring Terminology hub, see
 [Patch Management Overview](00-overview.md). For WUfB deployment ring topology, Autopatch ring
@@ -90,8 +90,10 @@ misreading of the policy blade:
 
 **Source:** [Configure Windows driver update policies](https://learn.microsoft.com/en-us/intune/device-updates/windows/configure-driver-update-policy) (updated 2026-04-24)
 
-**Prerequisites and scope limits.** Confirm all of the following before creating a policy, because
-several of them fail silently rather than blocking policy creation:
+**Prerequisites and scope limits.** Confirm all of the following before creating a policy. The
+sources state the requirements themselves, not what a device does when one is unmet, so treat an
+unmet prerequisite as a probable silent no-op and verify against the reports rather than assuming
+policy creation will block:
 
 - **Editions** — "This feature supports the following Windows editions: Pro / Pro Education /
   Enterprise / Education". "Windows Enterprise LTSC (Long Term Service Channel) isn't supported. Use
@@ -163,8 +165,10 @@ updates only:
 **Source:** [Configure Windows driver update policies](https://learn.microsoft.com/en-us/intune/device-updates/windows/configure-driver-update-policy) (updated 2026-04-24)
 
 **The approval type is immutable after policy creation.** Decide the mode before creating the
-policy: changing your mind later means creating a different policy, and doing it by switching modes
-is destructive, as [Unsupported and Anti-Feature Callouts](#unsupported-callouts) records.
+policy — on an Intune driver update policy the approval type cannot be edited at all afterwards, so
+changing your mind later means creating a different policy. On the Windows Autopatch side, where a
+mode switch between automatic and manual *is* possible, it is destructive rather than merely
+awkward; see [Unsupported and Anti-Feature Callouts](#unsupported-callouts).
 
 > After a policy is created, you won't be able to edit the policy to change the approval type. If
 > the approval type is automatic, you can edit the value for *Make updates available after (days)*.
@@ -294,7 +298,8 @@ does not, and the split is not intuitive. Stated as a triad: **the quality-updat
 reach drivers; the quality-update deadline and grace period do; and the user-experience settings
 do.**
 
-**The ring deferral does not reach drivers.** The driver policy has its own deferral instead:
+**The WUfB deployment ring quality-update deferral does not reach drivers.** The driver policy has
+its own deferral instead:
 
 > The deferral period set for Quality Updates within the update ring policy does not apply to drivers that are approved using the Driver Update Policy.
 > Instead, use the deferral setting in the Driver policy to set a deferral.  In fact, using multiple
@@ -312,7 +317,8 @@ explicit start date instead of inheriting the deferral:
 **Source:** [Windows Driver Update Policies FAQs](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (updated 2026-04-09)
 
 **The deadline and grace period do reach drivers.** This is the other half of the asymmetry, and it
-is what stops the first half from being read as "the ring settings are irrelevant to drivers":
+is what stops the first half from being read as "the WUfB deployment ring settings are irrelevant to
+drivers":
 
 > The Quality Update deadline and grace period settings apply to drivers.
 
@@ -339,6 +345,20 @@ update behavior are not driver-exempt:
 > so on, are applied for driver updates as well.
 
 **Source:** [Windows Driver Update Policies FAQs](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (updated 2026-04-09)
+
+**Blocking driver delivery is a WUfB deployment ring setting, not a driver-policy setting.** There
+is no "block" control on the driver update policy itself. The lever with that effect is the WUfB
+deployment ring's *Windows drivers* setting (CSP `ExcludeWUDriversInQualityUpdate`):
+
+> **Allow** - To include Windows Update drivers during updates. **Block** - To prevent scanning for
+> drivers.
+
+Because it is a WUfB deployment ring setting, its blast radius is the whole WUfB deployment ring:
+*Block* suppresses driver scanning for every device assigned to that WUfB deployment ring, not only
+for the devices a driver update policy targets. The prerequisite stated earlier — leave the *Windows
+driver* setting at *Allow* — is this same setting seen from the other side.
+
+**Source:** [Update rings policy settings](https://learn.microsoft.com/en-us/intune/device-updates/windows/ref-update-ring-settings) (updated 2026-04-09)
 
 **The ranges, first-party.** These are the boundaries a schedule has to fit inside. They are
 deliberately generic: choose values from the branch criteria your own change-management process
@@ -498,6 +518,15 @@ You do not have to move the Windows Update workload to Intune before you can use
 management. There is a supported co-existence path that leaves the workload where it is — and it
 carries a warning severe enough that it must be read before the procedure, not after.
 
+**The step 3 warning — do not configure the same setting from two places.** Step 3 below says
+*domain-based group policy* deliberately. Configuring the same update-source setting from Intune or a CSP instead
+is not an alternative route to the same result:
+
+> Because Configuration Manager uses a local group policy to configure the update source policy,
+> using Intune or a CSP to attempt to configure these same settings result in an undefined and unpredictable device state.
+
+**Source:** [Windows Driver Update Policies FAQs](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (updated 2026-04-09)
+
 > You can continue to use Configuration Manager for updates other than Drivers, or start to move
 > other update types to cloud management in Intune one at a time. To do this, first, enable [cloud
 > attach] or co-management in your Configuration Manager hierarchy to enroll your managed devices in
@@ -544,15 +573,6 @@ The procedure is **six steps — four required, two optional**:
 
 **Source:** [Windows Driver Update Policies FAQs](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (updated 2026-04-09)
 
-**The step 3 warning — do not configure the same setting from two places.** Step 3 says *domain-based
-group policy* deliberately. Configuring the same update-source setting from Intune or a CSP instead
-is not an alternative route to the same result:
-
-> Because Configuration Manager uses a local group policy to configure the update source policy,
-> using Intune or a CSP to attempt to configure these same settings result in an undefined and unpredictable device state.
-
-**Source:** [Windows Driver Update Policies FAQs](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (updated 2026-04-09)
-
 **Steps 4 and 5 are additive, not duplicative.** Step 4's *data collection* is the driver-policy
 prerequisite at the Intune tenant layer. Step 5's *Allow Diagnostic data* is a device-layer setting.
 They are different settings at different layers, and step 5's note explains why it is worth doing:
@@ -577,14 +597,22 @@ The domain-based group policy route named in the previous quote avoids that depe
 
 **Source:** [Windows Driver Update Policies FAQs](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (updated 2026-04-09)
 
-**The co-existence path covers drivers only.** Quality and feature updates are not included:
+**The co-existence path covers drivers by default, and feature updates by extension.** What it does
+*not* cover is running WUfB deployment ring policies in Intune for quality or feature updates —
+those still require the workload move:
 
 > Using Update Ring policies in Intune for Quality or Feature Updates requires you to move the
 > **Windows Update** workload to Intune.
 
+A **Feature update** policy is a different policy type, and it can ride the same scan source group
+policy that step 3 already configures:
+
 > You can move Feature update management to the cloud in Intune by configuring a [Feature update]
 > policy in Intune and setting the **Feature Updates** setting to **Windows Update** using the
 > [Specify source for specific classes of Windows Updates policy] group policy.
+
+The FAQ names no equivalent extension for quality updates: managing those from an Intune WUfB
+deployment ring policy still requires the workload move.
 
 **Source:** [Windows Driver Update Policies FAQs](https://learn.microsoft.com/en-us/intune/device-updates/windows/driver-updates-faq) (updated 2026-04-09)
 
@@ -677,9 +705,9 @@ replaces the policies and discards their approval history:
 > those groups and/or deployment rings**.
 
 This is documented on the Windows Autopatch side and is scoped to Autopatch-managed driver profiles
-and their groups and deployment rings. On the Intune side the equivalent constraint is that the
-approval type cannot be changed at all after a policy is created, so the practical rule is the same
-in both places: choose the mode when you create the policy.
+and their groups and Autopatch deployment rings. On the Intune side the equivalent constraint is
+that the approval type cannot be changed at all after a policy is created, so the practical rule is
+the same in both places: choose the mode when you create the policy.
 
 **Source:** [Manage driver and firmware updates with Windows Autopatch](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/manage/windows-autopatch-manage-driver-and-firmware-updates) (updated 2025-06-04)
 
@@ -730,7 +758,7 @@ The remaining items are binary — the feature is either supported or it is not:
 | Feature | Why it's unsupported / what breaks | Do this instead |
 |---------|-------------------------------------|------------------|
 | Assignment filters on a driver update policy | "No. Driver Updates aren't currently supported with assignment filters." Scoping must come from group assignment instead | Scope with the assigned groups, and keep one policy per device so approval status stays unambiguous |
-| Windows Enterprise LTSC | "Windows Enterprise LTSC (Long Term Service Channel) isn't supported." The policy silently covers none of those devices | "Use update ring policies instead" — see [Windows WUfB Rings](01-windows-wufb-rings.md) |
+| Windows Enterprise LTSC | "Windows Enterprise LTSC (Long Term Service Channel) isn't supported." The policy covers none of those devices | "Use update ring policies instead" — see [Windows WUfB Rings](01-windows-wufb-rings.md) |
 | GCC High and DoD tenants | The supported cloud environments are "Public cloud / Government Community Cloud (GCC)". GCC High and DoD are absent from that list | N/A -- no alternative exists within this policy type; manage drivers through your existing on-premises update source |
 | Manual driver packaging, `.inf` sideloading and driver injection into images | These are out of band for the policy entirely. Only "driver updates that are currently published to Windows Update" appear in a driver update policy, so a sideloaded or image-injected driver is invisible to it and to its reports | Keep image-time and out-of-band driver work in its own process, and use the policy only for what the OEM publishes to Windows Update |
 
