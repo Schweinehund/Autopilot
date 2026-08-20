@@ -103,7 +103,12 @@ Plans:
 
 **Blast radius**: **This is the only phase in v1.21 that edits `01-windows-wufb-rings.md`** — the file carrying the two most hostile live assertions (the bare-`ring` negative and the H2-plus-`dual-scan` requirement). Keep the surgery isolated here; if it landed after Phase 148 the negative would have to be cleared twice. Prefer the singular `Autopatch ring` form (the anti-pattern regex is plural-only) and make `check-phase-54.mjs` a pre-commit gate on every plan touching this file. This phase also touches `00-overview.md` (2 of 4).
 **Research flag**: no external research pass — fully first-party sourced, including the ConfigMgr co-existence procedure. Two rows still sitting at search-summary must be re-fetched before they are quoted.
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 146-01-PLAN.md — author `06-windows-driver-firmware-updates.md` from the verbatim quote bank (DRV-01..DRV-06); commit 1 of D-61
+- [ ] 146-02-PLAN.md — the `01-windows-wufb-rings.md` stub-and-move plus the enumeration repair, byte-frozen (DRV-07); commit 2 of D-61
+- [ ] 146-03-PLAN.md — `00-overview.md`'s three routing edits, the `REQUIREMENTS.md` C11-row correction, and the post-phase apex; commit 3 of D-61
 
 ### Phase 147: Linux Update Delivery
 
