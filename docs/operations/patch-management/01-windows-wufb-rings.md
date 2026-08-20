@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-08-19
-review_by: 2026-10-18
+last_verified: 2026-08-20
+review_by: 2026-10-19
 applies_to: all
 audience: admin
 platform: Windows
@@ -168,14 +168,10 @@ does not mean devices are unpatched — it means Hotpatch is working).
 <a id="driver-firmware-policy"></a>
 ## Driver and Firmware Update Policy
 
-Driver and firmware updates are configured **separately** from quality and feature update policy.
-A driver/firmware policy is not part of any WUfB deployment ring or any Autopatch ring; it is a
-discrete update policy surface with its own targeting, approval workflow, and reporting. The
-configuration surface is **Intune > Devices > Windows > Driver and firmware updates** (or Intune >
-Devices > Update policies for Windows 10 and later > Driver and firmware updates, depending on
-Intune blade version at the time of access). Driver and firmware policies have their own approval
-cadence (manual driver approval; automatic firmware delivery for OEM-published catalogs) that is
-decoupled from any quality/feature update deferral on a WUfB deployment ring.
+Driver and firmware updates are configured **separately** from quality and feature update policy —
+a discrete update policy surface with its own targeting, approval workflow, and reporting. See
+[Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md) for approval modes,
+the approval workflow, deferral and deadline behavior, and Configuration Manager co-existence.
 
 **This is NOT a ring** — neither a WUfB deployment ring nor an Autopatch ring. Treating
 driver/firmware policy as if it were a WUfB deployment ring (and expecting it to inherit any WUfB
@@ -197,17 +193,21 @@ source conflict can cause WUfB driver/firmware updates to flap. Specifically:
   scan cycles; user-visible flicker in Windows Update history; driver/firmware policy reports
   show alternating Pending/Installed states for the same device
 
-**Mitigation options (pick one):**
+**Mitigation options:**
 
 1. Move the Windows Update workload to Pilot Intune or Intune via the workload slider (so SCCM no
    longer controls scan source). This is the strategic fix and aligns with Autopatch readiness.
 2. Set the WUfB driver/firmware policy to "Block automatic driver delivery" until the WU workload
    migration completes — this disables WUfB-side driver delivery so the SCCM-WSUS source is the
    sole verdict.
-3. Use Group Policy to disable dual-scan during the transition
+3. **(Deprecated)** Use Group Policy to disable dual-scan during the transition
    (`HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\DisableDualScan = 1`) — note this
    disables ALL WUfB cloud scan, not just driver/firmware, so it should be a transitional measure
    only.
+4. Keep the Windows Update workload on Configuration Manager while approving drivers and firmware
+   from Intune — see [Configuration Manager co-existence](06-windows-driver-firmware-updates.md#configmgr-coexistence).
+
+**Source:** [Windows Autopatch FAQ](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq) (updated 2026-05-28)
 
 Validate the chosen mitigation by re-running a scan cycle and confirming driver/firmware policy
 report state stabilizes across at least three consecutive scan cycles.
@@ -218,6 +218,9 @@ report state stabilizes across at least three consecutive scan cycles.
 - [macOS DDM Update Enforcement](02-macos-update-enforcement.md) — macOS forward path
 - [iOS Update Lifecycle](03-ios-update-lifecycle.md) — iOS DDM
 - [Android Patch Delivery](04-android-patch-delivery.md) — Android attestation gate
+- [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md) — Approval modes,
+  approval workflow, deferral and deadline behavior, Configuration Manager co-existence, and the
+  documented absences
 - [Workload Slider Migration](../co-management/02-windows-workload-sliders.md) — Co-management
   workload migration sequence (PATCH-03 dual-scan dependency)
 - [Migration Paths and Autopatch](../co-management/03-cocmgmt-migration-paths.md) — Windows
