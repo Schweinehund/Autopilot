@@ -985,12 +985,12 @@
         },
         "146": {
           "issueKey": "RTS-808",
-          "status": "todo",
+          "status": "done",
           "name": "Windows Driver & Firmware Update Depth"
         },
         "147": {
           "issueKey": "RTS-809",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Linux Update Delivery"
         },
         "148": {
