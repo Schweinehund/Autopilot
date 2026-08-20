@@ -478,10 +478,14 @@ Phase 145 recorded.
   `co-management/02` (D-72's out-of-scope ruling)
 - `scripts/validation/check-phase-49.mjs:288` (`PITFALL-5`), `check-phase-51.mjs:292` (`PITFALL-13`) —
   the NEGATIVE guards that make the identifier namespace unsafe to mint into (D-41)
-- `scripts/build-filename-map.mjs` — `:4` (Title is sole source of truth, D-67), `:145`/`:175`
+- `scripts/pipeline/build-filename-map.mjs` — `:4` (Title is sole source of truth, D-67), `:145`/`:175`
   (collision = hard exit 1), `:277-286` (canary parses the registry, D-64). `--self-test` **8/0**
-- `scripts/build-publish-bundle.mjs` — `:517-524` (Approved-filtered canary, D-64). `--self-test`
-  **15/0**
+- `scripts/pipeline/build-publish-bundle.mjs` — `:517-524` (Approved-filtered canary, D-64).
+  `--self-test` **15/0**
+  > `[CORRECTED at plan time 2026-08-19]` both paths carry the `pipeline/` segment. D-64 and this
+  > section originally cited them as `scripts/build-*.mjs`, transcribed from the review reports
+  > without verification — the exact drift class this phase's Claude's-Discretion rule names. The
+  > planner caught it; the line counts and `--self-test` figures are unaffected.
 
 ### Research (content sources)
 - `.planning/research/FEATURES.md` — rows **B-1..B-11** (the guide's substance), **X-7** (firmware via
