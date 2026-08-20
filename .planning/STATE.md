@@ -2,19 +2,19 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
-current_phase: 145
-current_phase_name: Corpus Correction, Validator Gate & Archival-Drift Fix
-status: in_progress
-stopped_at: Phase 146 context gathered
-last_updated: "2026-08-20T03:00:32.836Z"
-last_activity: 2026-08-19
-last_activity_desc: Phase 145 complete and VERIFIED (5/5 plans, 14 commits, 5/5 success criteria, 12/12 requirements; apex check-phase-144 101/0/0)
+current_phase: 147
+current_phase_name: Linux Update Delivery
+status: planning
+stopped_at: Phase 146 complete and verified
+last_updated: "2026-08-20T12:10:51.737Z"
+last_activity: 2026-08-20
+last_activity_desc: Phase 146 complete, transitioned to Phase 147
 progress:
   total_phases: 9
-  completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 11
+  completed_phases: 2
+  total_plans: 8
+  completed_plans: 8
+  percent: 22
 ---
 
 # Project State
@@ -36,10 +36,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 145 of 153 (Corpus Correction, Validator Gate & Archival-Drift Fix)
-Plan: 5 of 5
-Status: Phase 145 VERIFIED complete — ready to plan Phase 146
-Last activity: 2026-08-19 — Phase 145 complete and VERIFIED (5/5 plans, 14 commits, 5/5 success criteria, 12/12 requirements; apex check-phase-144 101/0/0)
+Phase: 147 of 153 (Linux Update Delivery)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-20 — Phase 146 complete, transitioned to Phase 147
 
 Progress: [██████████] 100%
 
@@ -563,9 +563,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-20T03:00:32.802Z
-Stopped at: Phase 146 context gathered
-Resume file: .planning/phases/146-windows-driver-firmware-update-depth/146-CONTEXT.md
+Last session: 2026-08-20T12:10:51.700Z
+Stopped at: Phase 146 complete and verified
+Resume file: .planning/phases/146-windows-driver-firmware-update-depth/146-VERIFICATION.md
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
 ## Operator Next Steps

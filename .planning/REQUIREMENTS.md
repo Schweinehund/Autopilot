@@ -38,13 +38,13 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 
 ### Driver — Windows driver and firmware update depth (DRV)
 
-- [ ] **DRV-01**: A dedicated guide at `docs/operations/patch-management/06-windows-driver-firmware-updates.md` documents the driver/firmware update policy as its own surface — approval modes, the approval workflow, OEM-published catalog behaviour, and reporting.
-- [ ] **DRV-02**: The **deferral/deadline asymmetry** is documented verbatim-sourced: the quality-update **deferral does not apply** to drivers approved via the Driver Update Policy, but the quality-update **deadline and grace period do**. The scoping note rides with it — the deferral applies only to **automatically approved** driver and firmware updates.
-- [ ] **DRV-03**: The absence of driver rollback is documented as an absence, with Microsoft's own named mitigations (deployment rings to limit blast radius; manual removal via PowerShell) and the once-**Approved**-never-**Declined** constraint.
-- [ ] **DRV-04**: **Driver policies do not apply during Windows Autopilot** — and the second half is documented with it: Windows still applies critical updates during Autopilot, which may include **unapproved** critical driver updates. On an Autopilot corpus this is the highest-value pitfall available and it was absent from the first research draft.
-- [ ] **DRV-05**: The **Automatic-to-Manual mode switch is documented as destructive** — new policies replace the old ones, losing all approvals, paused drivers and declined drivers. Approved-always-wins across policies is stated, along with the absence of assignment-filter support and the exclusion of Extension and Plug-and-Play drivers.
-- [ ] **DRV-06**: The **ConfigMgr co-existence procedure** is documented as a supported path (leave the Windows Update workload on ConfigMgr, configure Intune driver policies, set the domain GPO *Specify source for specific classes of Windows Updates*, enable data collection) with its first-party warning that using Intune/CSP for the same settings *"result in an undefined and unpredictable device state."* **[OWNER-RULED IN SCOPE 2026-08-19]** This is the modern replacement for `DisableDualScan`; the claim that the legacy mitigation is "the only Autopatch-compatible answer" is withdrawn.
-- [ ] **DRV-07**: The promotion is a **stub-and-move, never a clean deletion** — `01-windows-wufb-rings.md` retains a shortened driver/firmware H2, the `driver-firmware-policy` anchor, the "this is NOT a ring" disambiguation, and the **entire dual-scan section**.
+- [x] **DRV-01**: A dedicated guide at `docs/operations/patch-management/06-windows-driver-firmware-updates.md` documents the driver/firmware update policy as its own surface — approval modes, the approval workflow, OEM-published catalog behaviour, and reporting.
+- [x] **DRV-02**: The **deferral/deadline asymmetry** is documented verbatim-sourced: the quality-update **deferral does not apply** to drivers approved via the Driver Update Policy, but the quality-update **deadline and grace period do**. The scoping note rides with it — the deferral applies only to **automatically approved** driver and firmware updates.
+- [x] **DRV-03**: The absence of driver rollback is documented as an absence, with Microsoft's own named mitigations (deployment rings to limit blast radius; manual removal via PowerShell) and the once-**Approved**-never-**Declined** constraint.
+- [x] **DRV-04**: **Driver policies do not apply during Windows Autopilot** — and the second half is documented with it: Windows still applies critical updates during Autopilot, which may include **unapproved** critical driver updates. On an Autopilot corpus this is the highest-value pitfall available and it was absent from the first research draft.
+- [x] **DRV-05**: The **Automatic-to-Manual mode switch is documented as destructive** — new policies replace the old ones, losing all approvals, paused drivers and declined drivers. Approved-always-wins across policies is stated, along with the absence of assignment-filter support and the exclusion of Extension and Plug-and-Play drivers.
+- [x] **DRV-06**: The **ConfigMgr co-existence procedure** is documented as a supported path (leave the Windows Update workload on ConfigMgr, configure Intune driver policies, set the domain GPO *Specify source for specific classes of Windows Updates*, enable data collection) with its first-party warning that using Intune/CSP for the same settings *"result in an undefined and unpredictable device state."* **[OWNER-RULED IN SCOPE 2026-08-19]** This is the modern replacement for `DisableDualScan`; the claim that the legacy mitigation is "the only Autopatch-compatible answer" is withdrawn.
+- [x] **DRV-07**: The promotion is a **stub-and-move, never a clean deletion** — `01-windows-wufb-rings.md` retains a shortened driver/firmware H2, the `driver-firmware-policy` anchor, the "this is NOT a ring" disambiguation, and the **entire dual-scan section**.
 
 ### Linux — five-platform update delivery (LNX)
 
@@ -171,13 +171,13 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | FIX-10 | Phase 145 | Complete |
 | FIX-11 | Phase 145 | Complete |
 | FIX-12 | Phase 145 | Complete |
-| DRV-01 | Phase 146 | Pending |
-| DRV-02 | Phase 146 | Pending |
-| DRV-03 | Phase 146 | Pending |
-| DRV-04 | Phase 146 | Pending |
-| DRV-05 | Phase 146 | Pending |
-| DRV-06 | Phase 146 | Pending |
-| DRV-07 | Phase 146 | Pending |
+| DRV-01 | Phase 146 | Complete |
+| DRV-02 | Phase 146 | Complete |
+| DRV-03 | Phase 146 | Complete |
+| DRV-04 | Phase 146 | Complete |
+| DRV-05 | Phase 146 | Complete |
+| DRV-06 | Phase 146 | Complete |
+| DRV-07 | Phase 146 | Complete |
 | LNX-01 | Phase 147 | Pending |
 | LNX-02 | Phase 147 | Pending |
 | LNX-03 | Phase 147 | Pending |

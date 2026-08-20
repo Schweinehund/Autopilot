@@ -33,7 +33,7 @@
 ### v1.21 Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 
 - [x] **Phase 145: Corpus Correction, Validator Gate & Archival-Drift Fix** - Five patch-management documents tell the current first-party truth, and two validator-level traps are disarmed before any new content lands
-- [ ] **Phase 146: Windows Driver & Firmware Update Depth** - The ~45-line disambiguation H2 becomes a real guide, with the stub-and-move surgery on the most hostile file done once and in isolation
+- [x] **Phase 146: Windows Driver & Firmware Update Depth** - The ~45-line disambiguation H2 becomes a real guide, with the stub-and-move surgery on the most hostile file done once and in isolation (completed 2026-08-20)
 - [ ] **Phase 147: Linux Update Delivery** - The corpus becomes genuinely five-platform for updates, and the fleet-wide root-context hazard is named before anyone ships it
 - [ ] **Phase 148: Application Update Management & WinGet Routing** - The missing patching half of application management, plus a well-sourced negative on WinGet
 - [ ] **Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI** - A greenfield domain that routes by who holds the BIOS secret, with DFCI presented honestly including where it is unavailable
@@ -103,12 +103,13 @@ Plans:
 
 **Blast radius**: **This is the only phase in v1.21 that edits `01-windows-wufb-rings.md`** — the file carrying the two most hostile live assertions (the bare-`ring` negative and the H2-plus-`dual-scan` requirement). Keep the surgery isolated here; if it landed after Phase 148 the negative would have to be cleared twice. Prefer the singular `Autopatch ring` form (the anti-pattern regex is plural-only) and make `check-phase-54.mjs` a pre-commit gate on every plan touching this file. This phase also touches `00-overview.md` (2 of 4).
 **Research flag**: no external research pass — fully first-party sourced, including the ConfigMgr co-existence procedure. Two rows still sitting at search-summary must be re-fetched before they are quoted.
-**Plans**: 3 plans
+**Plans**: 3/3 plans complete
 
 Plans:
-- [ ] 146-01-PLAN.md — author `06-windows-driver-firmware-updates.md` from the verbatim quote bank (DRV-01..DRV-06); commit 1 of D-61
-- [ ] 146-02-PLAN.md — the `01-windows-wufb-rings.md` stub-and-move plus the enumeration repair, byte-frozen (DRV-07); commit 2 of D-61
-- [ ] 146-03-PLAN.md — `00-overview.md`'s three routing edits, the `REQUIREMENTS.md` C11-row correction, and the post-phase apex; commit 3 of D-61
+
+- [x] 146-01-PLAN.md — author `06-windows-driver-firmware-updates.md` from the verbatim quote bank (DRV-01..DRV-06); commit 1 of D-61
+- [x] 146-02-PLAN.md — the `01-windows-wufb-rings.md` stub-and-move plus the enumeration repair, byte-frozen (DRV-07); commit 2 of D-61
+- [x] 146-03-PLAN.md — `00-overview.md`'s three routing edits, the `REQUIREMENTS.md` C11-row correction, and the post-phase apex; commit 3 of D-61
 
 ### Phase 147: Linux Update Delivery
 
@@ -264,7 +265,7 @@ Plans:
 | 143. Link Coverage & Fence-Mask Unification | v1.20 | 9/9 | Complete | 2026-08-11 |
 | 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 12/12 | Complete | 2026-08-18 |
 | 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 5/5 | ✅ Complete | 2026-08-19 |
-| 146. Windows Driver & Firmware Update Depth | v1.21 | 0/? | Not started | - |
+| 146. Windows Driver & Firmware Update Depth | v1.21 | 3/3 | ✅ Complete | 2026-08-20 |
 | 147. Linux Update Delivery | v1.21 | 0/? | Not started | - |
 | 148. Application Update Management & WinGet Routing | v1.21 | 0/? | Not started | - |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 0/? | Not started | - |
