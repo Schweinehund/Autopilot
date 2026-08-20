@@ -13,7 +13,7 @@ findings:
   warning: 8
   info: 6
   total: 16
-status: partial
+status: clean
 ---
 
 # Phase 146: Code Review Report
@@ -726,3 +726,35 @@ first-party status) and **IN-01** through **IN-06**, all out of the fix scope.
 _Fixed: 2026-08-20_
 _Fixer: Claude (gsd-code-fixer)_
 _Iteration: 1_
+
+## CR-01 Tail — Closed 2026-08-20 (orchestrator, owner-ruled)
+
+The remaining half of CR-01 is resolved. Mitigation 2 in `01-windows-wufb-rings.md` still carries its
+original sentence byte-intact (SC#5 retention preserved), and now carries an appended **Correction:**
+clause routing the reader to `06`'s corrected mechanism at `#deferral-deadline-behavior`.
+
+**Owner ruling 2026-08-20:** append a pointer now, rather than rewriting mitigation 2 or deferring.
+Rationale recorded at decision time: the defect is **pre-existing** (authored v1.5, not introduced by
+this phase), so a rewrite would be scope expansion into retained prose; but unlike D-73's imprecision,
+this one instructs an *impossible action*, so deferring would ship a reader-breaking instruction from
+the very phase that surgically edited the file.
+
+**Safety verified, not assumed:**
+
+| Check | Result |
+|---|---|
+| Dual-scan frozen block byte-identical vs `git show HEAD` | **true** (still opens at `:184`) |
+| `../co-management/02-windows-workload-sliders.md` keeper link | intact |
+| `check-phase-54.mjs` | 32 passed, 0 failed, 0 skipped |
+| `v1.20-milestone-audit.mjs` | 16 passed, 0 failed |
+| `check-nav-hub-links.mjs` | 0 / 0 (the new `#deferral-deadline-behavior` anchor resolves) |
+| `check-phase-144.mjs` (apex) | **101 PASS, 0 FAIL, 0 SKIPPED** |
+
+**Deliberate deviation from D-16, recorded:** the appended text contains one `ring` token, in the
+qualified form `WUfB deployment ring`. D-16's strict "no `ring` token in any added byte" was a
+convenience heuristic chosen because it is impossible to get wrong; the binding constraint is
+`V-54-11`, which accepts a token qualified within the preceding 40 characters. Naming where the
+control actually lives is the substance of the correction, so the qualified form was used and
+**verified by execution** (32/0/0) rather than reasoned about.
+
+Commit: `29c3cd7d`.
