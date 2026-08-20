@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-08-19
-review_by: 2026-10-18
+last_verified: 2026-08-20
+review_by: 2026-10-19
 applies_to: all
 audience: admin
 platform: cross-platform
@@ -85,7 +85,8 @@ assigns. This section disambiguates them and the separate driver/firmware update
   Driver and firmware updates; this is NOT a "ring" in either WUfB or Autopatch sense. Driver and
   firmware updates are an independent policy surface that admins approve per-update. Approval mode
   and the 0–30 day deferral are set per deployment ring, and the quality-update deadline and grace
-  period do apply to drivers.
+  period do apply to drivers. See [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md)
+  for the full approval-mode, workflow, and deferral treatment.
 
 **Source:** [Manage Windows Update for client policies](https://learn.microsoft.com/en-us/windows/deployment/update/waas-manage-updates-wufb) (updated 2025-10-02)
 
@@ -150,8 +151,10 @@ each platform's idiomatic surface exposes different combinations.
 
 Use the following routing matrix to choose the correct per-platform guide for your task:
 
-- For Windows tenants planning WUfB deployment ring topology, Autopatch enablement, or driver and
-  firmware approval workflows, start with [Windows WUfB Rings](01-windows-wufb-rings.md).
+- For Windows tenants planning WUfB deployment ring topology or Autopatch enablement, start with
+  [Windows WUfB Rings](01-windows-wufb-rings.md).
+- For Windows tenants planning driver and firmware approval workflows, start with
+  [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md).
 - For macOS tenants planning the migration from legacy MDM software-update commands to DDM
   declarative enforcement, start with [macOS Update Enforcement](02-macos-update-enforcement.md).
 - For iOS and iPadOS tenants planning DDM update key rollouts (especially on previously
@@ -209,8 +212,11 @@ flow downstream from the program-level posture.
 ## Related Resources
 
 - [Windows WUfB Rings](01-windows-wufb-rings.md) — WUfB deployment ring topology, Autopatch
-  disambiguation, in-memory kernel patching servicing model, and the driver/firmware update policy
-  surface
+  disambiguation, in-memory kernel patching servicing model, and the driver/firmware
+  disambiguation plus dual-scan pitfall retained alongside the ring topology
+- [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md) — approval modes,
+  the approval workflow, deferral and deadline behavior, OEM catalog and firmware delivery,
+  reporting, and the Configuration Manager co-existence procedure
 - [macOS Update Enforcement](02-macos-update-enforcement.md) — DDM forward path; Apple OS 26
   legacy-command removal
 - [iOS Update Lifecycle](03-ios-update-lifecycle.md) — DDM-on-unsupervised-iOS-17+ retraction
