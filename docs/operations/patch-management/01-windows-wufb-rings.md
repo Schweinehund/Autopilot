@@ -202,6 +202,9 @@ source conflict can cause WUfB driver/firmware updates to flap. Specifically:
 2. Set the WUfB driver/firmware policy to "Block automatic driver delivery" until the WU workload
    migration completes — this disables WUfB-side driver delivery so the SCCM-WSUS source is the
    sole verdict.
+   **Correction:** a driver and firmware policy has no such setting. The control with this effect
+   lives on the WUfB deployment ring — see
+   [Deferral and Deadline Behavior](06-windows-driver-firmware-updates.md#deferral-deadline-behavior).
 3. **(Deprecated)** Use Group Policy to disable dual-scan during the transition
    (`HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\DisableDualScan = 1`) — note this
    disables ALL WUfB cloud scan, not just driver/firmware, so it should be a transitional measure
