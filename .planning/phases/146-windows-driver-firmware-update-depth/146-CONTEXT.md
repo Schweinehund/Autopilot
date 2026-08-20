@@ -583,8 +583,16 @@ Phase 145 recorded.
   claiming the move is mandatory, so the staleness is mild. **No v1.21 phase owns this file** and it
   carries six live `check-phase-53` pins (V-53-13/14/15/16/17/23). **Trigger:** the first phase that
   edits it for another reason, or a corpus-hygiene milestone.
-- **`update-enterprise-supersedence` re-fetch** — unowned. `[MEASURED]` no phase in v1.21 carries the
-  obligation (D-48). **Trigger:** whichever phase first quotes app-supersedence content.
+- **D-73 — `00-overview.md:87`'s "the 0–30 day deferral are set per deployment ring."**
+  `[OWNER-RULED 2026-08-19]` **Deferred to Phase 147**, which is touch 3-of-4 on this file and
+  carries its own research pass. Surfaced by the planner at plan time: RESEARCH Q3c sources the
+  deferral to the **driver policy**, not the ring. Phase 145 authored the line (commit `68dfc378`)
+  and neither the adversarial review nor RESEARCH flagged it despite both reading `:84-88` this
+  session. It is **imprecise rather than flatly wrong** — RESEARCH Q1 itself records that admins
+  build "driver deployment rings" *from* multiple driver policies — so it earns a sourced
+  correction, not a drive-by edit made while `01` is mid-surgery with a live C11 keeper map.
+  D-55's three-site ruling stands unamended; the planner correctly stopped at three rather than
+  widening scope on its own authority. **Trigger:** Phase 147's `00-overview.md` edit.
 - **`REQUIREMENTS.md`'s `V-54-18` row clarification** — carried from Phase 145; joined at close by
   D-20's C11-row correction.
 - **A `review_by < today` freshness gate** — carried; `[MEASURED]` the existing test is one-sided
