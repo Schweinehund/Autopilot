@@ -191,7 +191,7 @@ re-discovered in each per-platform rollout:
 - **Cadence alignment** — Each platform has its own native update cadence (Windows monthly Patch
   Tuesday plus quarterly feature updates; macOS major-version annual with security responses;
   iOS rapid security responses plus point releases; Android monthly Google Play and OEM cycles;
-  Linux distro-native `apt` updates on the distribution's own security-pocket cadence).
+  Linux distro-native `apt` updates on the distribution's own release and security-pocket cadence).
   Aligning fleet maintenance windows across platforms typically requires accepting that the
   cadences are independent — there is no single "patch day" across the fleet, and attempting to
   force one usually creates unnecessary deferral on the platform with the fastest native cadence.
