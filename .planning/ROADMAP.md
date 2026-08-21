@@ -125,12 +125,12 @@ Plans:
 
 **Blast radius**: `00-overview.md` (3 of 4) — the 4-platform table regex survives **appending** a Linux column but not a 5-platform rewrite that drops one of the four pinned literals. The overview's frontmatter platform value stays `cross-platform`; Linux is never added to it.
 **Research flag**: no external research pass — the surface is small and fully documented, including its documented silences (platform-script size, timeout and per-device count limits are simply not stated). **[SUPERSEDED by 147-CONTEXT D-03, OWNER-RULED 2026-08-20]** Phase 147 carries a full bounded research pass; `147-RESEARCH.md` records nine verified sources and discharges both of CONTEXT's reserved owner-escalation paths.
-**Plans**: 2 plans
+**Plans**: 1/2 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 147-01-PLAN.md — author `05-linux-update-delivery.md` from the verbatim quote bank, tracer-first (LNX-01..LNX-04); commit 1 of D-59
+- [x] 147-01-PLAN.md — author `05-linux-update-delivery.md` from the verbatim quote bank, tracer-first (LNX-01..LNX-04); commit 1 of D-59
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -275,7 +275,7 @@ Plans:
 | 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 12/12 | Complete | 2026-08-18 |
 | 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 5/5 | ✅ Complete | 2026-08-19 |
 | 146. Windows Driver & Firmware Update Depth | v1.21 | 3/3 | ✅ Complete | 2026-08-20 |
-| 147. Linux Update Delivery | v1.21 | 0/? | Not started | - |
+| 147. Linux Update Delivery | v1.21 | 1/2 | Not started |  |
 | 148. Application Update Management & WinGet Routing | v1.21 | 0/? | Not started | - |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 0/? | Not started | - |
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |

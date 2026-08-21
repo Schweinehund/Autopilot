@@ -48,10 +48,10 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 
 ### Linux — five-platform update delivery (LNX)
 
-- [ ] **LNX-01**: `docs/operations/patch-management/05-linux-update-delivery.md` documents Intune's actual Linux update surface: **there is no native Linux update policy**; the mechanism is a Bash platform script, and the enforceable lever is a compliance policy plus Conditional Access — **attestation, not enforcement**, mapped onto the corpus's existing deferral / enforcement / attestation triad.
-- [ ] **LNX-02**: The **root-context execution hazard** is documented as this pillar's primary pitfall: execution context `Root` *"always runs (with or without users logged in) at the device level"* on the **default `Every 15 minutes` execution frequency**, with **no documented run-time cap on that surface** — a root `apt upgrade` 96 times a day, fleet-wide, contending `dpkg` locks and reporting "patched" while running the old kernel.
-- [ ] **LNX-03**: `unattended-upgrades` configuration is documented with its **actual four enabled origins** (base release, `-security`, ESM apps-security, ESM infra-security — not security-only), the commented-out `-updates`/`-proposed`/`-backports`, and reboot-required detection via `/var/run/reboot-required`.
-- [ ] **LNX-04**: Ubuntu Pro / Livepatch is documented as a **Canonical-side entitlement entirely outside Intune's control plane**, verifiable only via a custom compliance script. All third-party figures are re-verified before shipping or omitted.
+- [x] **LNX-01**: `docs/operations/patch-management/05-linux-update-delivery.md` documents Intune's actual Linux update surface: **there is no native Linux update policy**; the mechanism is a Bash platform script, and the enforceable lever is a compliance policy plus Conditional Access — **attestation, not enforcement**, mapped onto the corpus's existing deferral / enforcement / attestation triad.
+- [x] **LNX-02**: The **root-context execution hazard** is documented as this pillar's primary pitfall: execution context `Root` *"always runs (with or without users logged in) at the device level"* on the **default `Every 15 minutes` execution frequency**, with **no documented run-time cap on that surface** — a root `apt upgrade` 96 times a day, fleet-wide, contending `dpkg` locks and reporting "patched" while running the old kernel.
+- [x] **LNX-03**: `unattended-upgrades` configuration is documented with its **actual four enabled origins** (base release, `-security`, ESM apps-security, ESM infra-security — not security-only), the commented-out `-updates`/`-proposed`/`-backports`, and reboot-required detection via `/var/run/reboot-required`.
+- [x] **LNX-04**: Ubuntu Pro / Livepatch is documented as a **Canonical-side entitlement entirely outside Intune's control plane**, verifiable only via a custom compliance script. All third-party figures are re-verified before shipping or omitted.
 
 **The 5-minute cap does not belong to this surface.** `[SOURCED]` The five-minute limit and the user-context/no-elevation constraint are scoped to **custom compliance discovery scripts**, a different page and a different feature. The Intune Linux platform-script article documents **no run-time cap at all**. An earlier research draft built a systemd hand-off mandate on the misattributed cap; that mandate is deleted, and the real hazard it displaced is LNX-02.
 
@@ -178,10 +178,10 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | DRV-05 | Phase 146 | Complete |
 | DRV-06 | Phase 146 | Complete |
 | DRV-07 | Phase 146 | Complete |
-| LNX-01 | Phase 147 | Pending |
-| LNX-02 | Phase 147 | Pending |
-| LNX-03 | Phase 147 | Pending |
-| LNX-04 | Phase 147 | Pending |
+| LNX-01 | Phase 147 | Complete |
+| LNX-02 | Phase 147 | Complete |
+| LNX-03 | Phase 147 | Complete |
+| LNX-04 | Phase 147 | Complete |
 | APP-01 | Phase 148 | Pending |
 | APP-02 | Phase 148 | Pending |
 | APP-03 | Phase 148 | Pending |

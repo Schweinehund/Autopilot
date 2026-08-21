@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 147
 current_phase_name: Linux Update Delivery
 status: executing
-stopped_at: Phase 147 context gathered
-last_updated: "2026-08-21T13:30:45.891Z"
-last_activity: 2026-08-20
-last_activity_desc: Phase 146 complete, transitioned to Phase 147
-state_head: bcbdd62d127799d7b2f076c3459d86d7c23d8b22
+stopped_at: Completed 147-01-PLAN.md
+last_updated: "2026-08-21T20:58:17.421Z"
+last_activity: 2026-08-21
+last_activity_desc: Phase 147 execution started
+state_head: 8189c560175dfa646bbfcc549f599e06bddf9e20
 progress:
   total_phases: 9
   completed_phases: 2
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 9
   percent: 22
 ---
 
@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** v1.21 Enterprise Update, Driver & Firmware/BIOS Governance — ROADMAPPED 2026-08-19. 9 phases (145-153), 58 requirements across 8 categories, 100% mapped. Phase 145 (corpus correction + validator gate + archival-drift fix) is next to plan.
+**Current focus:** Phase 147 — Linux Update Delivery
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,12 +37,12 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 147 (Linux Update Delivery) — READY TO EXECUTE
-Plan: Not started
+Phase: 147 (Linux Update Delivery) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-08-20 — Phase 146 complete, transitioned to Phase 147
+Last activity: 2026-08-21 — Phase 147 execution started
 
-Progress: [██████████] 100%
+Progress: [██░░░░░░░░] 22%
 
 ## v1.21 Phase Dependency Summary
 
@@ -419,6 +419,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 145 P04 | 35min | 3 tasks | 4 files |
 | Phase 145 P05 | 25min | 2 tasks | 32 files |
 | Phase 145 P03 | 25min | 1 tasks | 1 files |
+| Phase 147 P01 | 75 min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -535,6 +536,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase ?]: FIX-09: check-phase-49.mjs's V-49-10 hard-pinned the superseded Ubuntu 20.04/22.04/24.04 version list; updated the pin in the same commit per the file's own documented same-commit-validator-update convention
 - [Phase ?]: Singularised every Autopatch-cohort reference instead of inserting an allowlisted C11 keyword, so the plural anti-pattern is structurally gone rather than merely tolerated (D-13)
 - [Phase ?]: Kept the PITFALL-9 label on both the disambiguation blockquote and the migration-step paragraph while replacing the exclusivity claim with the containment position (D-55)
+- [Phase 147]: 147-01: LIN-DEFER-01 NOT discharged by Phase 147 — the v1.5 Bash custom-compliance deep-dive promise stays open (D-43)
+- [Phase 147]: 147-01: STACK.md:478 flagged for correction — incomplete Ubuntu Pro figures (missing 50-machine community tier and 15-year Legacy tier) and wrong verification target for the attach command (D-16, D-17)
+- [Phase 147]: 147-01: sibling routing blockquotes in 01/02/03/04 now silently omit Linux — knowingly accepted, blast radius locks edits to 00-overview.md only (D-49)
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -564,9 +568,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-21T03:41:03.886Z
-Stopped at: Phase 147 context gathered
-Resume file: .planning/phases/147-linux-update-delivery/147-CONTEXT.md
+Last session: 2026-08-21T20:58:01.766Z
+Stopped at: Completed 147-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
 ## Operator Next Steps
