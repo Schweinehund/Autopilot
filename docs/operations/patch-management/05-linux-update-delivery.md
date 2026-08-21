@@ -272,11 +272,11 @@ different path spelling:
 release-upgrade guidance writes `/run/reboot-required`; the `unattended-upgrades` log output writes
 `/var/run/reboot-required`. No first-party page consulted for this guide documents the relationship
 between the two paths, so this guide claims none. The actionable form is simply to check both: a
-discovery script or custom attribute that tests for the marker at `/run/reboot-required` and at
+custom compliance script that tests for the marker at `/run/reboot-required` and at
 `/var/run/reboot-required` returns the right answer whichever spelling a given device uses.
 
-**Read the reboot marker, not the installed package version.** This is the compliance and
-custom-attribute source for "is this device patched?". A package version tells you that a download
+**Read the reboot marker, not the installed package version.** This is the compliance
+source for "is this device patched?". A package version tells you that a download
 and an install happened; it does not tell you that the running system is the patched one. A rule
 that reads package version and never reads the reboot marker is the mechanism behind the false green
 described under [Unsupported and Anti-Feature Callouts](#unsupported-callouts).
@@ -366,8 +366,10 @@ configuration removes:
 
 **Source:** [Create discovery scripts for custom compliance policy](https://learn.microsoft.com/en-us/intune/device-security/compliance/create-custom-script) (updated 2026-07-15)
 
-A discovery script therefore cannot read a root-owned state file, and a rule built on one will
-simply fail to evaluate. A rule that quietly falls back to installed package version is worse than
+A discovery script therefore cannot read a state whose inspection requires elevation, and a rule
+built on one will simply fail to evaluate. The reboot-required marker is not such a state: it is
+root-created but world-readable, which is precisely why it remains available to a user-context
+script. A rule that quietly falls back to installed package version is worse than
 one that fails outright: it returns a confident answer that is wrong every time an update is
 installed and the machine has not yet rebooted. Read the reboot marker described under
 [Reboot Handling](#reboot-handling) instead.
@@ -380,7 +382,7 @@ is no second, privileged path to it.
 ## Unsupported and Anti-Feature Callouts
 
 **Root-context execution hazard.** This is the most consequential setting pair in Linux update
-delivery, and the failure it produces is fleet-wide rather than per-device. Four facts combine, and
+delivery, and the failure it produces is fleet-wide rather than per-device. Three facts combine, and
 none of them is safe to read on its own:
 
 - The **Root** execution context always runs the script at the device level, with or without users

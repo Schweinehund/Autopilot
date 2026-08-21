@@ -179,9 +179,8 @@ Use the following routing matrix to choose the correct per-platform guide for yo
   [Linux Update Delivery](05-linux-update-delivery.md).
 
 Each per-platform guide contains the configuration steps, prerequisites, deadlines callout (where
-applicable), and Related Resources / External References footer for that platform. The five guides
-cross-reference each other and route back to this overview via their own Platform applicability
-blockquotes.
+applicable), and Related Resources / External References footer for that platform. Each of the five
+guides routes back to this overview via its own Platform applicability blockquote.
 
 ## Cross-Platform Planning Considerations
 
