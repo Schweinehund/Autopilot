@@ -124,8 +124,13 @@ Plans:
   4. Ubuntu Pro / Livepatch is documented as a Canonical-side entitlement entirely outside Intune's control plane, verifiable only via a custom compliance script, with every third-party figure re-verified before shipping or omitted.
 
 **Blast radius**: `00-overview.md` (3 of 4) — the 4-platform table regex survives **appending** a Linux column but not a 5-platform rewrite that drops one of the four pinned literals. The overview's frontmatter platform value stays `cross-platform`; Linux is never added to it.
-**Research flag**: no external research pass — the surface is small and fully documented, including its documented silences (platform-script size, timeout and per-device count limits are simply not stated).
-**Plans**: TBD
+**Research flag**: no external research pass — the surface is small and fully documented, including its documented silences (platform-script size, timeout and per-device count limits are simply not stated). **[SUPERSEDED by 147-CONTEXT D-03, OWNER-RULED 2026-08-20]** Phase 147 carries a full bounded research pass; `147-RESEARCH.md` records nine verified sources and discharges both of CONTEXT's reserved owner-escalation paths.
+**Plans**: 2 plans
+
+Plans:
+
+- [ ] 147-01-PLAN.md — author `05-linux-update-delivery.md` from the verbatim quote bank, tracer-first (LNX-01..LNX-04); commit 1 of D-59
+- [ ] 147-02-PLAN.md — `00-overview.md`'s six routing sites plus the five-platform prose sweep, the three owner-ruled `REQUIREMENTS.md` markers, the `PITFALLS.md` citation fix, and the post-phase apex; commit 2 of D-59
 
 ### Phase 148: Application Update Management & WinGet Routing
 
