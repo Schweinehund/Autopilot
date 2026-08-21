@@ -1,14 +1,15 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.21
-milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance
+milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 147
 current_phase_name: Linux Update Delivery
 status: planning
-stopped_at: Phase 146 complete and verified
-last_updated: "2026-08-20T12:10:51.737Z"
+stopped_at: Phase 147 context gathered
+last_updated: "2026-08-21T03:41:13.605Z"
 last_activity: 2026-08-20
 last_activity_desc: Phase 146 complete, transitioned to Phase 147
+state_head: 293e9922ef3f2e24cec91c859e27f0336f8457e6
 progress:
   total_phases: 9
   completed_phases: 2
@@ -563,9 +564,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-20T12:10:51.700Z
-Stopped at: Phase 146 complete and verified
-Resume file: .planning/phases/146-windows-driver-firmware-update-depth/146-VERIFICATION.md
+Last session: 2026-08-21T03:41:03.886Z
+Stopped at: Phase 147 context gathered
+Resume file: .planning/phases/147-linux-update-delivery/147-CONTEXT.md
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
 ## Operator Next Steps
