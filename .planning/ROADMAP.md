@@ -128,8 +128,12 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
+**Wave 1**
 
 - [ ] 147-01-PLAN.md — author `05-linux-update-delivery.md` from the verbatim quote bank, tracer-first (LNX-01..LNX-04); commit 1 of D-59
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 147-02-PLAN.md — `00-overview.md`'s six routing sites plus the five-platform prose sweep, the three owner-ruled `REQUIREMENTS.md` markers, the `PITFALLS.md` citation fix, and the post-phase apex; commit 2 of D-59
 
 ### Phase 148: Application Update Management & WinGet Routing
