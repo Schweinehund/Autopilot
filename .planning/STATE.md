@@ -4,17 +4,17 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 147
 current_phase_name: Linux Update Delivery
-status: executing
-stopped_at: Completed 147-01-PLAN.md
-last_updated: "2026-08-21T20:58:17.421Z"
+status: verifying
+stopped_at: Completed 147-02-PLAN.md
+last_updated: "2026-08-21T21:10:03.877Z"
 last_activity: 2026-08-21
 last_activity_desc: Phase 147 execution started
-state_head: 8189c560175dfa646bbfcc549f599e06bddf9e20
+state_head: 9bc0015cb132c0b55b5525404785b085b0730f45
 progress:
   total_phases: 9
   completed_phases: 2
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
   percent: 22
 ---
 
@@ -39,7 +39,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 Phase: 147 (Linux Update Delivery) — EXECUTING
 Plan: 2 of 2
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-21 — Phase 147 execution started
 
 Progress: [██░░░░░░░░] 22%
@@ -420,6 +420,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 145 P05 | 25min | 2 tasks | 32 files |
 | Phase 145 P03 | 25min | 1 tasks | 1 files |
 | Phase 147 P01 | 75 min | 3 tasks | 1 files |
+| Phase 147 P02 | 35 min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -539,6 +540,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 147]: 147-01: LIN-DEFER-01 NOT discharged by Phase 147 — the v1.5 Bash custom-compliance deep-dive promise stays open (D-43)
 - [Phase 147]: 147-01: STACK.md:478 flagged for correction — incomplete Ubuntu Pro figures (missing 50-machine community tier and 15-year Legacy tier) and wrong verification target for the attach command (D-16, D-17)
 - [Phase 147]: 147-01: sibling routing blockquotes in 01/02/03/04 now silently omit Linux — knowingly accepted, blast radius locks edits to 00-overview.md only (D-49)
+- [Phase 147]: Related Resources gains the Linux entry LAST: the list's 01,06,02,03,04 order is Windows-adjacency, not file number, and Linux has no Windows adjacency to dock against
+- [Phase 147]: The 00-overview.md conditional date re-stamp FIRED — commit 1 landed 2026-08-21, so both stamps advanced together to 2026-08-21 / 2026-10-20, interval 60 by arithmetic
+- [Phase 147]: Windows Deferral mechanism table cell left stale against the corrected D-73 prose — accepted add-alongside debt, one table row deep; promote only if a phase must answer which deferral applies from the table
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -568,8 +572,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-21T20:58:01.766Z
-Stopped at: Completed 147-01-PLAN.md
+Last session: 2026-08-21T21:09:45.280Z
+Stopped at: Completed 147-02-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
 
