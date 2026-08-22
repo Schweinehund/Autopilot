@@ -990,12 +990,12 @@
         },
         "147": {
           "issueKey": "RTS-809",
-          "status": "in_progress",
+          "status": "done",
           "name": "Linux Update Delivery"
         },
         "148": {
           "issueKey": "RTS-810",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Application Update Management & WinGet Routing"
         },
         "149": {
