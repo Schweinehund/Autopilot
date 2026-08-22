@@ -2,20 +2,20 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
-current_phase: 147
-current_phase_name: Linux Update Delivery
-status: verifying
-stopped_at: Completed 147-02-PLAN.md
-last_updated: "2026-08-21T21:10:03.877Z"
-last_activity: 2026-08-21
-last_activity_desc: Phase 147 execution started
-state_head: 9bc0015cb132c0b55b5525404785b085b0730f45
+current_phase: 148
+current_phase_name: Application Update Management & WinGet Routing
+status: planning
+stopped_at: Phase 147 complete, ready to plan Phase 148
+last_updated: "2026-08-22T13:15:39.964Z"
+last_activity: 2026-08-22
+last_activity_desc: Phase 147 complete, transitioned to Phase 148
+state_head: 4b54c21250a04095c68df83a28ba8ef1950ff4d7
 progress:
   total_phases: 9
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 10
   completed_plans: 10
-  percent: 22
+  percent: 33
 ---
 
 # Project State
@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** Phase 147 — Linux Update Delivery
+**Current focus:** Phase 148 — Application Update Management & WinGet Routing
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,12 +37,12 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 147 (Linux Update Delivery) — EXECUTING
-Plan: 2 of 2
-Status: Phase complete — ready for verification
-Last activity: 2026-08-21 — Phase 147 execution started
+Phase: 148 — Application Update Management & WinGet Routing
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-22 — Phase 147 complete, transitioned to Phase 148
 
-Progress: [██░░░░░░░░] 22%
+Progress: [███░░░░░░░] 33% (3 of 9 phases; 10/10 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -560,9 +560,8 @@ None yet for v1.21. Per-phase gray areas are tracked in ROADMAP.md's phase detai
 
 No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured four times, zero archival drift, both accepted-red dispositions deleted, tag pushed. v1.21 durable watch items:
 
-- **`docs/operations/patch-management/00-overview.md` is the likeliest source of a mid-execution remediation round.** It is touched by Phases 145, 146, 147 **and** 148, and carries five live pins on an apex chain member. Its 4-platform table regex survives *appending* a Linux column but not a 5-platform rewrite that drops one of the four pinned literals; its frontmatter platform value stays `cross-platform`; and its body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens.
+- **`docs/operations/patch-management/00-overview.md` is the likeliest source of a mid-execution remediation round.** It is touched by Phases 145, 146, 147 **and** 148, and carries five live pins on an apex chain member. Phases 145-147 have landed; **Phase 148 is the final content touch**, and the 4-platform table is now a 5-platform table, so re-read the live pins before editing rather than reasoning from the 4-column shape. Its 4-platform table regex survives *appending* a Linux column but not a 5-platform rewrite that drops one of the four pinned literals; its frontmatter platform value stays `cross-platform`; and its body prose is barred from carrying the hotpatch, VBS and Android-integrity tokens.
 - **The C11 keyword-substitution ordering is a same-commit ordering constraint, not a preference.** `00-overview.md:78` is kept green **solely** by the mutual-exclusivity word pair the milestone is removing. Substitute an allowlisted keyword into the window first, then remove the wording — in that order, in the same commit.
-- **Phase 146 is the only phase that edits `01-windows-wufb-rings.md`.** If that surgery lands after Phase 148, the bare-`ring` negative has to be cleared twice. A clean driver-guide promotion (rather than a stub-and-move) takes the chain red.
 - **FIX-11 cannot be deferred.** The glossary link into `.planning/research/` re-breaks the moment v1.21's own research is archived at close — *after* the close-gate apex has been measured green, and nobody re-runs the apex after archival. Re-pointing at an archived copy does not work; inlining the substance is the only viable fix.
 - **Both publish-bundle canaries count different sets** (all registry rows versus Approved-only) and are equal today only because every row is Approved. Compute both from the registry after the rows land; never hard-code a number derived from a document count.
 - **`.planning/REQUIREMENTS.md` must not be deleted at milestone close** — `check-phase-54.mjs` live-reads it outside the frozen-at-close mechanism, and it also live-reads `.planning/ROADMAP.md` with a negative literal assertion. Broad corpus edits return this milestone, which re-activates that exposure.
@@ -572,14 +571,14 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-21T21:09:45.280Z
-Stopped at: Completed 147-02-PLAN.md
+Last session: 2026-08-22T13:15:39.964Z
+Stopped at: Phase 147 complete, ready to plan Phase 148
 Resume file: None
-Next action: `/gsd-discuss-phase 145` (or `/gsd-plan-phase 145`)
+Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 
 ## Operator Next Steps
 
-- **Phase 145 is next and it is the load-bearing one.** It carries the corpus corrections, the frozen-read conversion that unblocks Phase 152's ops-index growth, and the archival-drift fix that decides whether the close-gate apex stays green after archival.
+- **Phase 148 is next.** Phases 145-147 have shipped (corpus corrections + frozen-read conversion + archival-drift fix; driver/firmware depth; Linux update delivery). Phase 148 is the **last content touch on `docs/operations/patch-management/00-overview.md`** and carries the milestone’s largest open research flag — the Intune-side M365 Apps update policy surface was never fetched, the post-July-2026 SAEC cadence is unverified against an internally inconsistent first-party page, and the Win32 Store app type’s preview status is unconfirmed. Resolve those at plan time, not in prose.
 - v1.21 **picks up** from `.planning/milestones/v1.20-DEFERRED-CLEANUP.md`: `V120-PIN-DEFERRAL` and `C17-FROZEN-AWARE-RESIDUE-V15-V19`, both landing in Phase 153.
 - v1.21 **does not pick up** and still carries forward: `FENCE-AXIS-02`, the out-of-census divergent fence-handling sites, the unowned `check-phase-30/31` tooling residue, `check-phase-66`'s timeout margin, the non-nested standalone-chain wall-clock cost, `V-132-HUBSNOTWIRED-REGEX-BROKEN` (Phase 152 works *around* it additively rather than fixing it), `RECIPE-OUTBOUND-LINK-COVERAGE`, `WINDOWS-CLONE-DEEPNEST-TIMEOUT-01`, and the trigger-gated content items (`CI-3`, MTPSSO, KRBFUT, AOSP-wired 802.1X, Cloud PKI, `SHARED-TAXONOMY-DOC` — whose trigger is a third *lockdown* recipe and does not fire on Recipe #5).
 - `ROLLBACK-RECOVERY-DIVERGENCE-COUNT` **fires this milestone** — Recipe #5 needs the slot, which is the divergence's own recorded trigger. RCP-05 owns the resolution in Phase 151.

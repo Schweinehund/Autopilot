@@ -1,33 +1,41 @@
 ---
 phase: 147-linux-update-delivery
 verified: 2026-08-21T00:00:00Z
-status: human_needed
+status: passed
 score: 29/29 must-haves verified
 behavior_unverified: 0
 overrides_applied: 0
 flagged_prohibitions: 7
 human_verification:
+
   - test: "Judgment-tier prohibition (LNX-02, safety): confirm the guide ships no copy-pasteable root-context fleet-wide package-upgrade command or script body."
     expected: "No runnable upgrade artifact. Verifier evidence: zero code fences in the file (grep -c '```' = 0); zero matches for `apt upgrade`/`apt-get upgrade`/`apt full-upgrade`/`sudo apt`; the guide states its own abstention at line 163. The only shell string present is `sudo pro attach` (a subscription-attach command, not a package upgrade)."
     why_human: "Judgment-tier prohibition with no wired enforcement test. LLM-judge verdict is non-authoritative — unverified-prohibition, human review recommended."
+
   - test: "Judgment-tier prohibition (LNX-01, transparency): confirm no framing of Intune as orchestrating, scheduling, deferring or enforcing Linux updates."
     expected: "Only 'Intune delivers a script and the distro does the updating'. Verifier evidence: lines 56-80 state the absence four ways; the matrix-reconciliation paragraph draws the delivery-vs-orchestration line explicitly ('Intune does not orchestrate Linux updates; it delivers a script that does'). The one scheduling verb present ('runs it on a schedule Intune sets') is scoped to the script, and the Unsupported callouts restate 'A schedule on a platform script is a schedule for the script, not a deadline for the update.'"
     why_human: "Judgment-tier prohibition — reads as honored, but the verdict is a language judgment, not a gate."
+
   - test: "Judgment-tier prohibition (LNX-01, transparency): confirm Ubuntu-only apt-family mechanics are not presented as covering the full Intune-supported Linux estate."
     expected: "RHEL 9/10 gap stated explicitly, never implicit. Verifier evidence: the Scope paragraph (lines 27-34), the supported-platform blockquote, and a dedicated Unsupported callout plus a final table row all state the gap. Live-confirmed that ref-supported-platforms carries RedHat Enterprise Linux 9 and 10."
     why_human: "Judgment-tier prohibition — sufficiency of a disclosure is a human call."
+
   - test: "Judgment-tier prohibition (LNX-03, safety): confirm no advice to weaken security posture for cleaner reporting/compliance/scheduling."
     expected: "No advice to disable a security origin, disable automatic security updates, or widen Allowed-Origins beyond the first-party source. Verifier evidence: the guide affirmatively bars all three at lines 213-216 ('Do not make reporting or scheduling tidier by weakening this posture')."
     why_human: "Judgment-tier prohibition — absence of bad advice cannot be proven by grep."
+
   - test: "Judgment-tier prohibition (LNX-04, values): confirm the Phase-50 compliance-script single source of truth is not re-authored, forked or partially restated."
     expected: "Compliance section is pointer-only for script authoring and evaluation cadence. Verifier evidence: lines 334-339 state 'It does not teach discovery-script authoring and it does not state an evaluation cadence: both belong to Linux Compliance Policy, which is the single source of truth'."
     why_human: "Judgment-tier prohibition — 'partial restatement' is a boundary judgment."
+
   - test: "Judgment-tier prohibition (plan 02, LNX-01, transparency): confirm the overview's Linux cells never imply Intune orchestrates/schedules/defers/enforces, with every absent capability written as an explicit parenthetical absence."
     expected: "No blank or softened cells. Verifier evidence: Deferral cell = '(No Intune-side deferral; distro-native only)'; Enforcement cell = '(None — compliance policy + web-app CA is attestation only)'. All rows carry 6 columns; no empty Linux cell."
     why_human: "Judgment-tier prohibition — 'softened' is a wording judgment."
+
   - test: "Judgment-tier prohibition (plan 02, LNX-01, values): confirm no existing platform's cells, routing sentences or capability statements were degraded, truncated or dropped to make room for Linux."
     expected: "Five-platform rewrite is additive for every existing reader. Verifier evidence: git diff bbfe959b..HEAD on 00-overview.md shows each removed 4-column row replaced by a 6-column row preserving the Windows/macOS/iOS/Android cell text verbatim; only additive prose changes elsewhere."
     why_human: "Judgment-tier prohibition — requires reading the full diff for subtle wording loss."
+
   - test: "WR-10 (unfixed code-review warning, owner decision requested): the overview's Cadence-alignment bullet at 00-overview.md:194 reads 'Linux distro-native `apt` updates on the distribution's own security-pocket cadence'."
     expected: "Owner decides whether to fix or accept. This clause states the security-only reading that the guide it routes to exists specifically to refute (05-linux-update-delivery.md:200-206: 'Four origins are enabled by default, not one … The default is therefore not security-only'). It is new text introduced by this phase, in a file this phase modified. It does not fail any must_have truth (SC#3 is scoped to the guide, which is correct and emphatic) and the overview's own Cadence-model table cell is correct, but the hub and the guide now disagree on LNX-03's central claim. REVIEW.md supplies a one-clause fix."
     why_human: "Internal-consistency judgment across two files; no validator covers it, and the fix is a scope call for the owner."

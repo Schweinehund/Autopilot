@@ -34,7 +34,7 @@
 
 - [x] **Phase 145: Corpus Correction, Validator Gate & Archival-Drift Fix** - Five patch-management documents tell the current first-party truth, and two validator-level traps are disarmed before any new content lands
 - [x] **Phase 146: Windows Driver & Firmware Update Depth** - The ~45-line disambiguation H2 becomes a real guide, with the stub-and-move surgery on the most hostile file done once and in isolation (completed 2026-08-20)
-- [ ] **Phase 147: Linux Update Delivery** - The corpus becomes genuinely five-platform for updates, and the fleet-wide root-context hazard is named before anyone ships it
+- [x] **Phase 147: Linux Update Delivery** - The corpus becomes genuinely five-platform for updates, and the fleet-wide root-context hazard is named before anyone ships it (completed 2026-08-22)
 - [ ] **Phase 148: Application Update Management & WinGet Routing** - The missing patching half of application management, plus a well-sourced negative on WinGet
 - [ ] **Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI** - A greenfield domain that routes by who holds the BIOS secret, with DFCI presented honestly including where it is unavailable
 - [ ] **Phase 150: Per-OEM BIOS Guides & Capability Matrix** - Dell, HP and Lenovo at an identical five-section shape so the matrix is a transposition, with recovery gaps stated rather than filled
@@ -275,7 +275,7 @@ Plans:
 | 144. V119 Pin + 18th Path-A Lineage Bump + Terminal Close | v1.20 | 12/12 | Complete | 2026-08-18 |
 | 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 5/5 | ✅ Complete | 2026-08-19 |
 | 146. Windows Driver & Firmware Update Depth | v1.21 | 3/3 | ✅ Complete | 2026-08-20 |
-| 147. Linux Update Delivery | v1.21 | 2/2 | Not started |  |
+| 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
 | 148. Application Update Management & WinGet Routing | v1.21 | 0/? | Not started | - |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 0/? | Not started | - |
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |
