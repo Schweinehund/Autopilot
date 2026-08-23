@@ -57,12 +57,12 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 
 ### App — application update management (APP)
 
-- [ ] **APP-01**: `docs/operations/patch-management/07-windows-autopatch.md` documents Autopatch enrolment mechanics, the `Test`/`Last` model, Autopatch app updates and reporting — **cross-linking** `co-management/03` for prerequisites and the disambiguation anchor in `01-windows-wufb-rings.md`, re-authoring neither.
-- [ ] **APP-02**: The **Autopatch entitlement is documented as necessary but not sufficient for Hotpatch** — the two licence lists genuinely differ (Autopatch includes Windows 10/11 Enterprise E3/E5 **VDA**, which the hotpatch list omits; the hotpatch list adds **Windows 365 Enterprise**). "If you have Autopatch you have Hotpatch" is explicitly barred.
-- [ ] **APP-03**: `docs/operations/patch-management/08-windows-app-updates.md` documents Microsoft 365 Apps update channels — Current (default, **rollback "Not applicable"**), Current Preview, Monthly Enterprise, Semi-Annual Enterprise, SAEC Preview, and Beta (**not supported**) — with one channel per device, device-scoped rather than user-following, and Teams and OneDrive explicitly outside these channels.
-- [ ] **APP-04**: Enterprise App Management is documented with its **reachability gates stated as hard as its licence**: an add-on subscription (standalone or Intune Suite), Windows Win32 (exe/msi) only, Microsoft-hosted and IME-installed, **Public / GCC High / DoD clouds only**, auto-update requiring a **Required** assignment. All eight documented limitations are carried, including *"Malicious version revocation"* — the admin remains responsible for identifying impacted devices — **and the positive**: catalog apps *can* be ESP/DPP blocking apps; only the auto-update ones cannot.
-- [ ] **APP-05**: WinGet is documented as a **routing and hardening section, not a patching guide**. **[OWNER-RULED IN SCOPE 2026-08-19]** The sourced position: Enterprise App Management is explicitly **not** WinGet-based; the name attaches to three different things; only **Microsoft Store app (new)** is an Intune patching surface, and its update model **splits** (UWP kept current by the Store with or without an assignment; **Win32 Store apps kept current by Intune and therefore requiring an assignment**, currently **in preview**, ARM64 installers unsupported). **No cadence, interval, SLO or version pinning is published for the Store app type** — that absence is itself documented, and contrasted with EAM's published SLOs.
-- [ ] **APP-06**: The `DesktopAppInstaller` policy CSP is documented as the one genuinely Intune-shaped WinGet surface — **control, not patching** — including `SourceAutoUpdateInterval` (the index *"is not updated in the background"*) and the trap that the two policies Microsoft recommends enabling in its own Store-app article are **not in the settings catalog** (custom OMA-URI only), so an admin hardening Windows can silently degrade a supported Intune app type using a lever Intune never surfaces.
+- [x] **APP-01**: `docs/operations/patch-management/07-windows-autopatch.md` documents Autopatch enrolment mechanics, the `Test`/`Last` model, Autopatch app updates and reporting — **cross-linking** `co-management/03` for prerequisites and the disambiguation anchor in `01-windows-wufb-rings.md`, re-authoring neither.
+- [x] **APP-02**: The **Autopatch entitlement is documented as necessary but not sufficient for Hotpatch** — the two licence lists genuinely differ (Autopatch includes Windows 10/11 Enterprise E3/E5 **VDA**, which the hotpatch list omits; the hotpatch list adds **Windows 365 Enterprise**). "If you have Autopatch you have Hotpatch" is explicitly barred.
+- [x] **APP-03**: `docs/operations/patch-management/08-windows-app-updates.md` documents Microsoft 365 Apps update channels — Current (default, **rollback "Not applicable"**), Current Preview, Monthly Enterprise, Semi-Annual Enterprise, SAEC Preview, and Beta (**not supported**) — with one channel per device, device-scoped rather than user-following, and Teams and OneDrive explicitly outside these channels.
+- [x] **APP-04**: Enterprise App Management is documented with its **reachability gates stated as hard as its licence**: an add-on subscription (standalone or Intune Suite), Windows Win32 (exe/msi) only, Microsoft-hosted and IME-installed, **Public / GCC High / DoD clouds only**, auto-update requiring a **Required** assignment. All eight documented limitations are carried, including *"Malicious version revocation"* — the admin remains responsible for identifying impacted devices — **and the positive**: catalog apps *can* be ESP/DPP blocking apps; only the auto-update ones cannot.
+- [x] **APP-05**: WinGet is documented as a **routing and hardening section, not a patching guide**. **[OWNER-RULED IN SCOPE 2026-08-19]** The sourced position: Enterprise App Management is explicitly **not** WinGet-based; the name attaches to three different things; only **Microsoft Store app (new)** is an Intune patching surface, and its update model **splits** (UWP kept current by the Store with or without an assignment; **Win32 Store apps kept current by Intune and therefore requiring an assignment**, currently **in preview**, ARM64 installers unsupported). **No cadence, interval, SLO or version pinning is published for the Store app type** — that absence is itself documented, and contrasted with EAM's published SLOs.
+- [x] **APP-06**: The `DesktopAppInstaller` policy CSP is documented as the one genuinely Intune-shaped WinGet surface — **control, not patching** — including `SourceAutoUpdateInterval` (the index *"is not updated in the background"*) and the trap that the two policies Microsoft recommends enabling in its own Store-app article are **not in the settings catalog** (custom OMA-URI only), so an admin hardening Windows can silently degrade a supported Intune app type using a lever Intune never surfaces.
 
 ### BIOS — firmware and BIOS governance (BIOS)
 
@@ -191,12 +191,12 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | LNX-02 | Phase 147 | Complete |
 | LNX-03 | Phase 147 | Complete |
 | LNX-04 | Phase 147 | Complete |
-| APP-01 | Phase 148 | Pending |
-| APP-02 | Phase 148 | Pending |
-| APP-03 | Phase 148 | Pending |
-| APP-04 | Phase 148 | Pending |
-| APP-05 | Phase 148 | Pending |
-| APP-06 | Phase 148 | Pending |
+| APP-01 | Phase 148 | Complete |
+| APP-02 | Phase 148 | Complete |
+| APP-03 | Phase 148 | Complete |
+| APP-04 | Phase 148 | Complete |
+| APP-05 | Phase 148 | Complete |
+| APP-06 | Phase 148 | Complete |
 | BIOS-01 | Phase 149 | Pending |
 | BIOS-02 | Phase 149 | Pending |
 | BIOS-03 | Phase 149 | Pending |

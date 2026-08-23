@@ -150,7 +150,7 @@ Plans:
 
 **Blast radius**: `00-overview.md` (4 of 4 — the last content phase to touch it). Hotpatch corrections stay out of the overview's body prose. `co-management/03-cocmgmt-migration-paths.md` carries a positive prerequisite pin **and** a negative barring an applicability blockquote, plus a 60-day cycle rule.
 **Research flag**: **YES** — the Intune-side Microsoft 365 Apps update policy surface (settings-catalog / Cloud Policy path and exact setting names) was never fetched; the post-July-2026 Semi-Annual channel live cadence is unverified and internally inconsistent on Microsoft's own page; whether Win32 Store apps have left preview needs re-checking at plan time. **[DISCHARGED by `148-RESEARCH.md`, 2026-08-23]** All three resolved: the Intune surface **is** documented (settings catalog, `Update Channel` / `Target Version`), so the conditional H2 ships and the phase lands **16 anchors, not 15**; the SAEC cadence is unresolvable from Microsoft's own pages and ships as a documented conflict; Win32 Store apps are **still in preview** and ARM64 remains unsupported, so SC#4's clause is safe.
-**Plans**: 2/3 plans executed
+**Plans**: 3/3 plans executed
 
 Plans:
 **Wave 1**
@@ -163,7 +163,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 148-03-PLAN.md — `00-overview.md`'s four additive edit sites plus the conditional re-stamp, the evidence-carrying `REQUIREMENTS.md` backlog entries, the prose-accuracy pass and the post-phase apex; commit 3 of D-65
+- [x] 148-03-PLAN.md — `00-overview.md`'s four additive edit sites plus the conditional re-stamp, the evidence-carrying `REQUIREMENTS.md` backlog entries, the prose-accuracy pass and the post-phase apex; commit 3 of D-65
 
 ### Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
 
@@ -289,7 +289,7 @@ Plans:
 | 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 5/5 | ✅ Complete | 2026-08-19 |
 | 146. Windows Driver & Firmware Update Depth | v1.21 | 3/3 | ✅ Complete | 2026-08-20 |
 | 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
-| 148. Application Update Management & WinGet Routing | v1.21 | 2/3 | Not started |  |
+| 148. Application Update Management & WinGet Routing | v1.21 | 3/3 | Not started |  |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 0/? | Not started | - |
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
