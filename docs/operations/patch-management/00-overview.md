@@ -1,6 +1,6 @@
 ---
-last_verified: 2026-08-21
-review_by: 2026-10-20
+last_verified: 2026-08-23
+review_by: 2026-10-22
 applies_to: all
 audience: admin
 platform: cross-platform
@@ -165,6 +165,8 @@ Use the following routing matrix to choose the correct per-platform guide for yo
 
 - For Windows tenants planning WUfB deployment ring topology or Autopatch enablement, start with
   [Windows WUfB Rings](01-windows-wufb-rings.md).
+- For Windows tenants planning Windows Autopatch enrollment, the Autopatch group model, or the Autopatch entitlement comparison against in-memory kernel patching, start with [Windows Autopatch](07-windows-autopatch.md).
+- For Windows tenants choosing an application update mechanism, setting a Microsoft 365 Apps update channel, or scoping what the Enterprise App Catalog and the Microsoft Store app (new) type can and cannot do, start with [Windows Application Updates](08-windows-app-updates.md).
 - For Windows tenants planning driver and firmware approval workflows, start with
   [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md).
 - For macOS tenants planning the migration from legacy MDM software-update commands to DDM
@@ -236,6 +238,13 @@ flow downstream from the program-level posture.
 - [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md) — approval modes,
   the approval workflow, deferral and deadline behavior, OEM catalog and firmware delivery,
   reporting, and the Configuration Manager co-existence procedure
+- [Windows Autopatch](07-windows-autopatch.md) — enrollment and service prerequisites, the
+  Autopatch group model and Test/Last deployment rings, the corrected containment position,
+  update workloads and service objectives, and the entitlement comparison against in-memory
+  kernel patching
+- [Windows Application Updates](08-windows-app-updates.md) — application update mechanism
+  choice, the Microsoft 365 Apps update channel model, Enterprise App Management, the Microsoft
+  Store app (new) update split, and the Windows Package Manager control surface
 - [macOS Update Enforcement](02-macos-update-enforcement.md) — DDM forward path; Apple OS 26
   legacy-command removal
 - [iOS Update Lifecycle](03-ios-update-lifecycle.md) — DDM-on-unsupervised-iOS-17+ retraction
