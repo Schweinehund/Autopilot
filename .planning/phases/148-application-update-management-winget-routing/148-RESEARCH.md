@@ -1289,3 +1289,153 @@ All fetched 2026-08-23 via `curl` + tag-strip + literal grep (D-59). `ms.date` f
 **Valid until:** 2026-09-22 (30 days) — with two exceptions that should be re-checked at execution
 regardless of elapsed time: `overview-update-channels` / `unified-update-channels` (a revision would
 dissolve the SAEC conflict) and `add-microsoft-store` (a preview exit would break an SC clause).
+
+---
+
+## Plan-Time Fetch Addendum (Plan 148-01)
+
+Fetched 2026-08-23 via `curl` + a local Python tag-strip + literal `grep`, per D-59. Every URL below
+was verified by comparing its `<link rel="canonical">` against the intended target before any quote
+was taken; no page was reached by guessing a slug. All six PREMISE items from the MEASURED / PREMISE
+ledger above are resolved here, before any section of `07` quotes them (Task 1 precondition for
+Tasks 2-4).
+
+### Item 1 — Autopatch group ring-model details
+
+**URL:** `https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview`
+**ms.date:** 2025-06-17
+**Last updated on:** 2025-06-17 (the rendered footer badge matches `ms.date` exactly on this page;
+note that `01-windows-wufb-rings.md:76` cites this same URL as "updated 2026-06-19" — that figure
+comes from a different meta field, `og:updated_time`/`updated_at`, not the rendered "Last updated on"
+badge measured here. `01` is sealed and not touched by this plan; this addendum records the value
+this session's method actually produced.)
+**Canonical verified:** yes — `<link rel="canonical">` matches the URL above; H1 is "Windows Autopatch
+groups".
+
+- Heading: **Key benefits** (table row "Having a flexible number of deployments") — *"Autopatch
+  groups give you the flexibility of having the right number of deployment rings that work within
+  your organization. You can set up to 15 deployment rings per Autopatch group."*
+- Heading: **Test and Last deployment rings** — *"Both the Test and Last deployment rings are default
+  deployment rings that are automatically present in an Autopatch group. These default deployment
+  rings provide the recommended minimum number of deployment rings that an Autopatch group should
+  have."* / *"Both the Test and Last deployment rings can't be removed or renamed from Autopatch
+  groups. Autopatch groups don't support the use of one single deployment ring as part of its
+  deployment ring composition because you need at least two deployment rings for their gradual
+  rollout."* — this establishes the minimum ring count as **two** (stated as a consequence of the
+  Test/Last pair being irremovable, not as a standalone "minimum: 2" figure).
+- Heading: **Maximum number of Autopatch groups** — *"Windows Autopatch supports up to 300 Autopatch
+  groups in your tenant. Each Autopatch group supports up to 15 deployment rings."*
+- Heading: **Autopatch group deployment rings** — *"There are two types of deployment ring group
+  distribution in Autopatch groups"*: **Dynamic** — *"You can use one or more device-based Microsoft
+  Entra groups, either dynamic query-based or assigned to use in your deployment ring
+  composition."* — and **Assigned** — *"You can use one single device-based Microsoft Entra group,
+  either dynamic query-based, or assigned to use in your deployment ring composition."* Also: *"The
+  combination of Dynamic and Assigned device distribution is not supported for the Test and Last
+  deployment ring in Autopatch groups."*
+
+### Item 2 — The containment sentence
+
+**URL:** same as Item 1 (`windows-autopatch-groups-overview`), **ms.date** 2025-06-17, **Last updated
+on** 2025-06-17 (see the note under Item 1).
+
+- Heading: **What are Windows Autopatch groups?** — *"An Autopatch group is a logical container or
+  unit that groups several Microsoft Entra groups, and software update policies, such as Update rings
+  policy for Windows 10 and later, feature updates for Windows 10 and later policies, driver update
+  policies, Microsoft 365 App update policies, and Microsoft Edge update policies."* This is the
+  load-bearing citation for `07`'s corrected containment position and the quote Phase 151 SC#2
+  consumes.
+
+### Item 3 — Workload service objectives
+
+**URL:** `https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-overview`
+**ms.date:** 2026-07-13
+**Last updated on:** 2026-07-13 (rendered badge matches `ms.date`; matches the value already recorded
+in the MEASURED table above).
+**Canonical verified:** yes — H1 is "What is Windows Autopatch?".
+
+- Heading: **Windows quality updates** — *"Windows Autopatch: Aims to keep at least 95% of Up to Date
+  devices on the latest quality update. For more information, see Windows quality update Service
+  Level Objective."*
+- Heading: **Microsoft 365 Apps for enterprise updates** — *"Windows Autopatch aims to keep at least
+  90% of eligible devices on a supported version of the Monthly Enterprise Channel (MEC)."*
+- Heading: **Microsoft Edge updates** — *"Windows Autopatch configures eligible devices to benefit
+  from Microsoft Edge's progressive rollouts on the Stable channel."*
+- Heading: **Microsoft Teams updates** — *"Windows Autopatch allows eligible devices to benefit from
+  the standard automatic update channel."*
+
+### Item 4 — The Autopatch reporting surface list
+
+**URL:** same as Item 3 (`windows-autopatch-overview`), **ms.date** 2026-07-13, **Last updated on**
+2026-07-13.
+
+- Heading: **Hotpatch quality update report** (Features and capabilities table) — *"Hotpatch quality
+  update report provides a per policy level view of the current update statuses for all devices that
+  receive Hotpatch updates."*
+- Heading: **Enhanced Windows quality and feature update reports and device alerts** — *"Using
+  Windows quality and feature update reports, you can monitor and remediate managed devices that are
+  Not up to Date and resolve any device alerts to bring managed devices back into compliance."*
+- Heading: **Communications** — *"To stay informed of upcoming changes, including new and changed
+  features, planned maintenance, release and status communications, or other important announcements,
+  navigate to Microsoft 365 admin center > Message center."* — this is the communications channel.
+- Heading: **Autopatch groups membership report** — cross-referenced from `windows-autopatch-groups-overview`
+  (Item 1's page), under **Prerequisites**: *"Autopatch groups register devices on your behalf, and
+  device readiness states are determined based on the registration state and if any applicable alerts
+  are targeting the device. For more information, see the Autopatch groups membership report."* This
+  names the report but does not quote its own page; the report's own detail page was not fetched this
+  session and is not needed for the single-sentence citation `07`'s Reporting section uses.
+- **Not found:** a report or page named "Autopatch alerts and remediation" (the exact phrase carried
+  in `STACK.md` §C-1) does not appear verbatim on either page fetched this session. The closest
+  first-party surface is the "device alerts" clause quoted above, under Enhanced Windows quality and
+  feature update reports. `07` cites what was found — device alerts as part of the enhanced quality/
+  feature reports — and does not assert a separately named "Autopatch alerts and remediation" report
+  exists as its own surface.
+
+### Item 5 — The April 2025 feature-activation removal and the tiered entitlement table
+
+**URL:** `windows-autopatch-overview` (Item 3's page), **ms.date** 2026-07-13, **Last updated on**
+2026-07-13.
+
+- Heading: top-of-page **Important** note (before the first H2) — *"In April 2025, Windows Autopatch
+  removed feature activation and made Windows Autopatch features available to Business Premium and
+  A3+ licenses. These changes are rolling out over the next several weeks."* **Found on a first-party
+  page** — the April 2025 date is confirmed and may be carried forward.
+
+**URL:** `https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/prepare/windows-autopatch-prerequisites`
+(re-confirmed; same page already in the Verbatim Quote Bank), **ms.date** 2026-02-26, **Last updated
+on** 2026-02-27 (matches the value already recorded above).
+
+- Heading: **Feature entitlement** — the tiered matrix re-confirmed exactly as recorded in the
+  Verbatim Quote Bank: `Business Premium` / `A3+` / `E3+` / `F3` columns; `Releases`, `Update rings`,
+  `Quality updates`, `Feature updates`, `Driver and firmware updates` (Windows 10 and later update
+  policy management table) all ✔️ across all four columns; `Autopatch groups`, `New feature and
+  change management communications`, `Release schedule and status communications` (Tenant management
+  table) all ✔️ across all four; `Support requests` is ❌ for Business Premium and A3+, ✔️ for E3+ and
+  F3 only; `Intune Reports`, `Quality updates`, `Feature updates`, `Device readiness` (Reporting table)
+  all ✔️ across all four columns.
+
+### Item 6 — The Autopilot device-preparation quotes
+
+**URL:** `https://learn.microsoft.com/en-us/autopilot/device-preparation/tutorial/user-driven/entra-join-assign-apps-scripts`
+**ms.date:** 2026-01-30
+**Last updated on:** 2026-01-30 (rendered badge matches `ms.date`).
+**Canonical verified:** yes — H1 is "Windows Autopilot device preparation user-driven Microsoft Entra
+join: Assign applications and PowerShell scripts to device group". Reached from
+`https://learn.microsoft.com/en-us/autopilot/device-preparation/known-issues` (already cited in the
+corpus) via the public `MicrosoftDocs/memdocs` GitHub repository's directory listing
+(`autopilot/device-preparation/tutorial/user-driven/`) rather than a guessed slug — the device-
+preparation tree lives in `memdocs` (public), not the `-pr` (private) repos the rest of this phase's
+pages sit in, and the live Learn page's own canonical link confirmed the same URL and byte content.
+
+- Heading: **Assign applications and PowerShell scripts to device group** — *"Any applications
+  installed or PowerShell scripts that run during a Windows Autopilot device preparation deployment
+  should be configured to install in the **System** context since the applications are installed and
+  the PowerShell scripts ran during OOBE when no user is signed in."*
+- Heading: **Applications** (sub-heading of the same section) — *"[Microsoft Store](/intune/app-management/deployment/add-microsoft-store)
+  - only Microsoft Store apps that support WinGet are supported."*
+
+### Retrieval summary
+
+All six items were retrieved successfully; none hit a client-side-rendering retrieval failure (D-60).
+No stale-revision tell (`Build 26100.2033`, `an x64 (AMD/Intel) CPU`) appears in any page fetched this
+session. `git status --porcelain` after this task shows only this file modified — no file under
+`docs/` has changed.
