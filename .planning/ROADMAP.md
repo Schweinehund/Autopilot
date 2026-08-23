@@ -149,8 +149,21 @@ Plans:
   4. WinGet reads as a routing and hardening section, not a patching guide: the sourced negative that Enterprise App Management is not WinGet-based; the Store-app split (UWP kept current by the Store, Win32 Store apps kept current by Intune and therefore requiring an assignment, in preview, ARM64 unsupported) with the **absence** of any published cadence or SLO stated and contrasted against the published ones; and the `DesktopAppInstaller` CSP trap that the two policies Microsoft recommends enabling are not in the settings catalog.
 
 **Blast radius**: `00-overview.md` (4 of 4 — the last content phase to touch it). Hotpatch corrections stay out of the overview's body prose. `co-management/03-cocmgmt-migration-paths.md` carries a positive prerequisite pin **and** a negative barring an applicability blockquote, plus a 60-day cycle rule.
-**Research flag**: **YES** — the Intune-side Microsoft 365 Apps update policy surface (settings-catalog / Cloud Policy path and exact setting names) was never fetched; the post-July-2026 Semi-Annual channel live cadence is unverified and internally inconsistent on Microsoft's own page; whether Win32 Store apps have left preview needs re-checking at plan time.
-**Plans**: TBD
+**Research flag**: **YES** — the Intune-side Microsoft 365 Apps update policy surface (settings-catalog / Cloud Policy path and exact setting names) was never fetched; the post-July-2026 Semi-Annual channel live cadence is unverified and internally inconsistent on Microsoft's own page; whether Win32 Store apps have left preview needs re-checking at plan time. **[DISCHARGED by `148-RESEARCH.md`, 2026-08-23]** All three resolved: the Intune surface **is** documented (settings catalog, `Update Channel` / `Target Version`), so the conditional H2 ships and the phase lands **16 anchors, not 15**; the SAEC cadence is unresolvable from Microsoft's own pages and ships as a documented conflict; Win32 Store apps are **still in preview** and ARM64 remains unsupported, so SC#4's clause is safe.
+**Plans**: 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 148-01-PLAN.md — fetch the six outstanding APP-01 claims, then author `07-windows-autopatch.md` tracer-first (APP-01, APP-02); commit 1 of D-65
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 148-02-PLAN.md — author `08-windows-app-updates.md` tracer-first and close the sibling link back into `07` (APP-03..APP-06); commit 2 of D-65
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 148-03-PLAN.md — `00-overview.md`'s four additive edit sites plus the conditional re-stamp, the evidence-carrying `REQUIREMENTS.md` backlog entries, the prose-accuracy pass and the post-phase apex; commit 3 of D-65
 
 ### Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
 
