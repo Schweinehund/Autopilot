@@ -112,6 +112,8 @@ time have a dated option: Semi-Annual Enterprise Channel "Version 2508 is suppor
 September 8, 2026," after which devices must be configured to prevent receiving Version 2606 to
 remain on Version 2508.
 
+**Source:** [Microsoft 365 Apps: SAEC and MEC unification](https://learn.microsoft.com/en-us/microsoft-365-apps/updates/unified-update-channels) (updated 2026-07-15)
+
 <a id="setting-the-channel-from-intune"></a>
 ## Setting the Channel from Intune
 
