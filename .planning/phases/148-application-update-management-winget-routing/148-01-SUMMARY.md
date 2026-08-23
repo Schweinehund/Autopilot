@@ -134,9 +134,12 @@ per D-65 and its literal `git log -1 --name-only` acceptance criterion (see Deci
 4. **Task 4: Expand workload/entitlement/reporting/callouts sections** — verified via
    `check-nav-hub-links` (0/0), `v1.20-milestone-audit` (16/0), `check-phase-144` (101/0/0)
 
-**Final commit:** `31f902ad` — `docs(148): author 07-windows-autopatch.md (APP-01, APP-02)` —
+**Final commit:** `7d265323` — `docs(148): author 07-windows-autopatch.md (APP-01, APP-02)` —
 touches exactly `docs/operations/patch-management/07-windows-autopatch.md` and
-`.planning/phases/148-application-update-management-winget-routing/148-RESEARCH.md`.
+`.planning/phases/148-application-update-management-winget-routing/148-RESEARCH.md`. (A first
+squash attempt, `31f902ad`, staged an incomplete pre-Task-4 index by mistake; caught during the
+self-check pass and corrected via a clean `git reset --soft` + restage + recommit rather than an
+amend of the wrong HEAD — see Decisions Made.)
 
 ## Files Created/Modified
 
@@ -155,7 +158,14 @@ touches exactly `docs/operations/patch-management/07-windows-autopatch.md` and
   tasks' individual criteria and verify commands passed, I reconciled the two requirements by
   running `git reset --soft` back to the pre-plan commit and recommitting the accumulated changes as
   one commit — preserving the task-by-task verification discipline while satisfying the plan's
-  explicit single-commit contract.
+  explicit single-commit contract. The first squash attempt (`31f902ad`) accidentally committed a
+  stale, pre-Task-4 index (the git index at the moment of `git commit` still reflected Task 3's
+  state; Task 4's working-tree edits were unstaged and silently excluded). Caught this during the
+  self-check pass by re-diffing the working tree against HEAD, then fixed it correctly — not by
+  amending whatever commit happened to be HEAD at that moment (which would have corrupted an
+  unrelated commit, and did on the first fix attempt) but by a second clean `git reset --soft` to the
+  pre-plan commit, re-staging only the two intended files with their correct final content, and
+  recommitting as `7d265323`.
 - **Reached the Autopilot device-preparation quotes via the public `MicrosoftDocs/memdocs` GitHub
   repo** rather than guessing a Learn slug or treating the retrieval as blocked. The repo's
   `autopilot/device-preparation/` directory listing led to
@@ -215,7 +225,7 @@ None — no external service configuration required.
 
 - `docs/operations/patch-management/07-windows-autopatch.md` — FOUND
 - `.planning/phases/148-application-update-management-winget-routing/148-RESEARCH.md` — FOUND (addendum present)
-- Commit `31f902ad` (content) — FOUND in `git log --oneline --all`
-- Commit `33e9b22a` (this SUMMARY) — FOUND in `git log --oneline --all`
+- Commit `7d265323` (content, exactly two files) — FOUND in `git log --oneline --all`
+- Commit `1f5318b1` (this SUMMARY) — FOUND in `git log --oneline --all`
 - All nine plan-time gate baselines re-verified green after the content commit (32/0/0, 26/0/0,
   36/0/0, 0/0, 234/0, 16/0, 8/0, 15/0, 101/0/0)
