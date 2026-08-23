@@ -423,6 +423,7 @@ neither availability nor exclusion for those environments.
   disambiguation, and the Hotpatch servicing model
 - [Windows Driver and Firmware Updates](06-windows-driver-firmware-updates.md) — Driver and firmware
   update policy and its reporting surfaces
+- [Windows Application Updates](08-windows-app-updates.md) — Application update mechanism choice, Microsoft 365 Apps channels, Enterprise App Management, and WinGet routing and hardening
 - [Migration Paths and Autopatch](../co-management/03-cocmgmt-migration-paths.md) — Co-management
   workload-slider prerequisites for Autopatch enablement
 
