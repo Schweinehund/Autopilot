@@ -150,7 +150,7 @@ Plans:
 
 **Blast radius**: `00-overview.md` (4 of 4 — the last content phase to touch it). Hotpatch corrections stay out of the overview's body prose. `co-management/03-cocmgmt-migration-paths.md` carries a positive prerequisite pin **and** a negative barring an applicability blockquote, plus a 60-day cycle rule.
 **Research flag**: **YES** — the Intune-side Microsoft 365 Apps update policy surface (settings-catalog / Cloud Policy path and exact setting names) was never fetched; the post-July-2026 Semi-Annual channel live cadence is unverified and internally inconsistent on Microsoft's own page; whether Win32 Store apps have left preview needs re-checking at plan time. **[DISCHARGED by `148-RESEARCH.md`, 2026-08-23]** All three resolved: the Intune surface **is** documented (settings catalog, `Update Channel` / `Target Version`), so the conditional H2 ships and the phase lands **16 anchors, not 15**; the SAEC cadence is unresolvable from Microsoft's own pages and ships as a documented conflict; Win32 Store apps are **still in preview** and ARM64 remains unsupported, so SC#4's clause is safe.
-**Plans**: 1/3 plans executed
+**Plans**: 2/3 plans executed
 
 Plans:
 **Wave 1**
@@ -159,7 +159,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 148-02-PLAN.md — author `08-windows-app-updates.md` tracer-first and close the sibling link back into `07` (APP-03..APP-06); commit 2 of D-65
+- [x] 148-02-PLAN.md — author `08-windows-app-updates.md` tracer-first and close the sibling link back into `07` (APP-03..APP-06); commit 2 of D-65
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -289,7 +289,7 @@ Plans:
 | 145. Corpus Correction, Validator Gate & Archival-Drift Fix | v1.21 | 5/5 | ✅ Complete | 2026-08-19 |
 | 146. Windows Driver & Firmware Update Depth | v1.21 | 3/3 | ✅ Complete | 2026-08-20 |
 | 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
-| 148. Application Update Management & WinGet Routing | v1.21 | 1/3 | Not started |  |
+| 148. Application Update Management & WinGet Routing | v1.21 | 2/3 | Not started |  |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 0/? | Not started | - |
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
