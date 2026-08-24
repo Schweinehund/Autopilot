@@ -184,8 +184,26 @@ Plans:
   5. The bricking surface is quoted first-party, and DFCI's retire and reuse sequences are documented as **distinct**, including that deleting the profile or the group assignment does not remove settings.
 
 **Blast radius**: none in the existing corpus — this is pure new authoring, the cheapest shape available. The C17 surface added by this phase is zero (new operations documents are not C17-gated); the matrix in Phase 150 is one of the milestone's only two new C17-visible files.
-**Research flag**: **YES** (shared with Phase 150) — the oldest source in the whole set is the sole source for three load-bearing claims here and must be re-fetched first at plan time.
-**Plans**: TBD
+**Research flag**: **YES** (shared with Phase 150) — the oldest source in the whole set is the sole source for three load-bearing claims here and must be re-fetched first at plan time. **Discharged 2026-08-24** by `149-RESEARCH.md`: all seven mandated sources re-fetched as raw bytes, every load-bearing quote confirmed byte-exact, two new findings surfaced.
+**Plans**: 5 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 149-01-PLAN.md — tracer: found `docs/operations/firmware-bios/` with BOTH files in ONE commit (D-28/D-29), then author `00-overview.md` in full at 9 H2 / 7 anchors (BIOS-01, BIOS-02, BIOS-11)
+- [ ] 149-02-PLAN.md — discharge the roadmap-locked glossary flag: four firmware terms plus index and version-history rows in `docs/_glossary.md` (D-06), and file the SC#4 registration-path premise amendment in `REQUIREMENTS.md` (D-05) (BIOS-02, BIOS-04)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 149-03-PLAN.md — `01-windows-dfci.md` mechanics: prerequisites and the four classified registration channels, OEM support with the nine names and the three-list conflict, and bounded Surface eligibility (BIOS-02, BIOS-03, BIOS-04); one-way decision checkpoint on the eligibility gate
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 149-04-PLAN.md — `01-windows-dfci.md` consequences: the eight-category settings surface, all three interaction traps, the corrected virtualization chain, and the bricking surface with SC#5's third clause (BIOS-02, BIOS-11)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 149-05-PLAN.md — `01-windows-dfci.md` close: retire and reuse as distinct sequences, the recovery section with the Surface removal path and its ordering warning, the callouts and tail sections, the phase gate sweep, and the Phase 150/152/153 hand-forward contracts (BIOS-11); one-way decision checkpoint on the removal-path ordering
 
 ### Phase 150: Per-OEM BIOS Guides & Capability Matrix
 
