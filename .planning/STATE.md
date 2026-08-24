@@ -5,11 +5,11 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 149
 current_phase_name: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
 status: planning
-stopped_at: Phase 148 complete, ready to plan Phase 149
-last_updated: "2026-08-24T03:25:04.535Z"
+stopped_at: Phase 149 context gathered
+last_updated: "2026-08-24T20:58:53.809Z"
 last_activity: 2026-08-23
 last_activity_desc: Phase 148 complete, transitioned to Phase 149
-state_head: f70531fb61c498f25f15414c95ca2383c7f15502
+state_head: eacf390663f4c8ac9ae1a0b82caf5446de1b5571
 progress:
   total_phases: 9
   completed_phases: 4
@@ -584,9 +584,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-24T03:07:55.142Z
-Stopped at: Phase 148 complete, ready to plan Phase 149
-Resume file: None
+Last session: 2026-08-24T20:58:41.088Z
+Stopped at: Phase 149 context gathered
+Resume file: .planning/phases/149-firmware-bios-domain-overview-dfci-surface-uefi/149-CONTEXT.md
 Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 
 ## Operator Next Steps
