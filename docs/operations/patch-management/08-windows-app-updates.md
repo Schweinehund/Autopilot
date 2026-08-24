@@ -300,7 +300,7 @@ update-governance surface; see
 | Enable App Installer policy | `DesktopAppInstaller/EnableAppInstaller` | Whether users can use the Windows Package Manager at all. Disabled leaves `winget` and `winget -?` runnable but blocks any other command. |
 | Enable command-line interfaces policy | `DesktopAppInstaller/EnableWindowsPackageManagerCommandLineInterfaces` | Whether a user can act through the WinGet CLI or WinGet PowerShell module, independent of the App Installer policy above. |
 | Enable Windows Package Manager configuration policy | `DesktopAppInstaller/EnableWindowsPackageManagerConfiguration` | The `winget configure` kill switch — whether the configuration feature discussed above can run at all. |
-| Enable Microsoft Store source policy | `DesktopAppInstaller/EnableMicrosoftStoreSource` | Whether the Microsoft Store source is available to the package manager and can be removed. |
+| Enable App Installer Microsoft Store Source policy | `DesktopAppInstaller/EnableMicrosoftStoreSource` | Whether the Microsoft Store source is available to the package manager and can be removed. |
 | Enable default source policy | `DesktopAppInstaller/EnableDefaultSource` | Whether the default (community) source is available and can be removed. |
 | `SourceAutoUpdateInterval` | `DesktopAppInstaller/SourceAutoUpdateInterval` | The auto-update interval, in minutes, for the package index of package-based sources — expanded below. |
 
