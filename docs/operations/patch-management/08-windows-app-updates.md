@@ -129,9 +129,7 @@ The older **Administrative Templates** route also remains documented and current
 administrative templates for Windows 10 and newer to enable a distinctly named setting,
 **Update Channel (2.0)**, under `Computer Configuration\Microsoft Office 2016 (Machine)\Updates`. Do
 not collapse the two settings names into one; they are the same underlying capability exposed by two
-different Intune configuration profile types under two different names, and a companion article states
-plainly that the settings catalog profile type has more settings available than the Administrative
-Templates profile type.
+different Intune configuration profile types under two different names.
 
 **Source:** [Change the update channel with Microsoft Intune Administrative Templates](https://learn.microsoft.com/en-us/microsoft-365-apps/updates/change-update-channels) (updated 2026-07-18)
 
