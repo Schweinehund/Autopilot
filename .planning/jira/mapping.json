@@ -995,12 +995,12 @@
         },
         "148": {
           "issueKey": "RTS-810",
-          "status": "in_progress",
+          "status": "done",
           "name": "Application Update Management & WinGet Routing"
         },
         "149": {
           "issueKey": "RTS-811",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Firmware/BIOS Domain — Overview, DFCI & Surface UEFI"
         },
         "150": {
