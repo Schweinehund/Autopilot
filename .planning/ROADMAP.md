@@ -150,7 +150,7 @@ Plans:
 
 **Blast radius**: `00-overview.md` (4 of 4 — the last content phase to touch it). Hotpatch corrections stay out of the overview's body prose. `co-management/03-cocmgmt-migration-paths.md` carries a positive prerequisite pin **and** a negative barring an applicability blockquote, plus a 60-day cycle rule.
 **Research flag**: **YES** — the Intune-side Microsoft 365 Apps update policy surface (settings-catalog / Cloud Policy path and exact setting names) was never fetched; the post-July-2026 Semi-Annual channel live cadence is unverified and internally inconsistent on Microsoft's own page; whether Win32 Store apps have left preview needs re-checking at plan time. **[DISCHARGED by `148-RESEARCH.md`, 2026-08-23]** All three resolved: the Intune surface **is** documented (settings catalog, `Update Channel` / `Target Version`), so the conditional H2 ships and the phase lands **16 anchors, not 15**; the SAEC cadence is unresolvable from Microsoft's own pages and ships as a documented conflict; Win32 Store apps are **still in preview** and ARM64 remains unsupported, so SC#4's clause is safe.
-**Plans**: 4/4 plans executed + 1 gap-closure plan pending
+**Plans**: 4/5 plans executed — 148-05 gap-closure plan pending
 
 Plans:
 **Wave 1**
@@ -168,6 +168,7 @@ Plans:
 **Gap closure** *(from `148-VERIFICATION.md`, `status: gaps_found`)*
 
 - [x] 148-04-PLAN.md — add the missing unification-article `**Source:**` line under the cadence-conflict quote pair in `08-windows-app-updates.md` (APP-03; R7 / D-63 evidence-line contract)
+- [ ] 148-05-PLAN.md — remove the unsupported profile-type comparison clause from `08-windows-app-updates.md`, align the `EnableMicrosoftStoreSource` table label with its ADMX name, and file WR-01/WR-02/WR-04 to the backlog (APP-03, APP-06; CR-01 / R7 evidence-line contract)
 
 ### Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
 
