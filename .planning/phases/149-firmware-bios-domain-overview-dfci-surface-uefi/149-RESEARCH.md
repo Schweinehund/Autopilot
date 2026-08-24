@@ -249,9 +249,9 @@ Placed under `## Security` or `## Hardware` (Claude's discretion per CONTEXT.md)
 | A1 | The Lenovo custody position ("the only vendor whose signing key can live under the customer's own RBAC, logging and rotation") is a reasonable inference from Azure Key Vault's documented platform behavior, not a claim Lenovo itself makes. | Pitfall 8 / BIOS-01 wording | If shipped as a Lenovo quote it would be a fabricated attribution — the milestone has already shipped two fabricated citations (D-52) and cannot afford a third. Word as inference, or fetch Microsoft's own Key Vault RBAC/logging docs as the source for that half of the claim. |
 | A2 | The "SUMMARY" HP PDF found at a `catalogartifact.azureedge.net` URL (copyright 2023, "Second Edition: March 2023") is a marketing one-pager for an app-catalog listing, not a substitute for the canonical 57-page User Guide (Sept 27, 2022) hosted at `connect.admin.hp.com`. | Sources / oldest-source finding | If this assumption is wrong and the 2023 document is actually the maintained one, the HP citation date in the shipped file should be 2023, not 2022 — re-verify which document HP itself treats as canonical before finalizing the citation, though the load-bearing "cloud vault" sentence is confirmed present in *both* documents, so the substantive claim is unaffected either way. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Which of the two Lenovo blog posts is the canonical (g) source?**
+1. **(RESOLVED) Which of the two Lenovo blog posts is the canonical (g) source?**
    - What we know: `introducing-think-bios-config-tool-v2-and-lenovo-bios-certificate-tool-v2` is dated "November 4, 2025" — an exact match to CONTEXT D-46(g)'s cited date — and contains the Azure Key Vault signing-custody mechanism. A second, related post (`certificate-based-bios-authentication`) is dated "updated October 31, 2025" and also documents Key Vault key selection.
    - What's unclear: Nothing, actually — this is resolved. Use `introducing-think-bios-config-tool-v2-and-lenovo-bios-certificate-tool-v2` (2025-11-04) as the cited URL; it is the one CONTEXT.md's date points to.
    - Recommendation: Cite that exact URL and date in the plan's `**Source:**` line; do not cite the other post unless a second, independent fact from it is used.

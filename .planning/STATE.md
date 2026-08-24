@@ -4,16 +4,16 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 149
 current_phase_name: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
-status: planning
+status: executing
 stopped_at: Phase 149 context gathered
-last_updated: "2026-08-24T20:58:53.809Z"
+last_updated: "2026-08-24T22:56:11.438Z"
 last_activity: 2026-08-23
 last_activity_desc: Phase 148 complete, transitioned to Phase 149
-state_head: eacf390663f4c8ac9ae1a0b82caf5446de1b5571
+state_head: f201407c8f8b6ce4f8fc6938ce84160334e3adaa
 progress:
   total_phases: 9
   completed_phases: 4
-  total_plans: 15
+  total_plans: 20
   completed_plans: 15
   percent: 44
 ---
@@ -37,9 +37,9 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 149 — Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
+Phase: 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI) — READY TO EXECUTE
 Plan: Not started
-Status: Ready to plan
+Status: Ready to execute
 Last activity: 2026-08-23 — Phase 148 complete, transitioned to Phase 149
 
 Progress: [████░░░░░░] 44% (4 of 9 phases; 15/15 planned plans complete)
