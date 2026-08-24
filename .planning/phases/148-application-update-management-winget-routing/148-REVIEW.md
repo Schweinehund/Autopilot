@@ -1,6 +1,6 @@
 ---
 phase: 148-application-update-management-winget-routing
-reviewed: 2026-08-23T00:00:00Z
+reviewed: 2026-08-24T00:00:00Z
 depth: standard
 files_reviewed: 3
 files_reviewed_list:
@@ -8,139 +8,73 @@ files_reviewed_list:
   - docs/operations/patch-management/07-windows-autopatch.md
   - docs/operations/patch-management/08-windows-app-updates.md
 findings:
-  critical: 1
-  warning: 4
+  critical: 0
+  warning: 0
   info: 0
-  total: 5
-status: issues_found
+  total: 0
+status: clean
 ---
 
-# Phase 148: Code Review Report
+# Phase 148: Code Review Report (re-review after gap-closure plan 148-05)
 
-**Reviewed:** 2026-08-23T00:00:00Z
+**Reviewed:** 2026-08-24T00:00:00Z
 **Depth:** standard
 **Files Reviewed:** 3
-**Status:** issues_found
+**Status:** clean
 
 ## Summary
 
-This is a documentation corpus review, so "correctness" was checked as citation integrity (every
-quoted string attributable to the Microsoft Learn page named by its governing `**Source:**` line),
-cross-file/intra-file consistency of facts, dates and version numbers, and link/anchor validity.
+This is a re-review of the same three-file documentation corpus after gap-closure plan `148-05`
+remediated the prior review's CR-01 and WR-03. Both are verified genuinely closed by reading the
+current file bytes, not by trusting the plan's SUMMARY:
 
-I fetched all nine distinct Microsoft Learn pages cited across the three files as live source bytes
-and diffed roughly 40 quoted or paraphrased claims against the actual page text, including every
-number that carries operational weight (the SLO percentages, the 8 EAM limitations, the 15
-DesktopAppInstaller CSP settings, the 15-rings/300-groups ceiling, the two different administrative-
-template namespace strings, the build number 20131.20000, and both quotes newly governed by the
-148-04 insertion at `08:115`). The 148-04 insertion itself is correct: both quotes it now governs
-("build numbers higher than 20131.20000..." and "Version 2508 is supported through September 8,
-2026...") are verbatim on the `unified-update-channels` page and verbatim absent from the
-`overview-update-channels` page that Source-at-`08:104` governs, so the fix closes the citation gap
-without orphaning anything under the preceding Source line.
+- **CR-01 ("companion article" settings-count comparison) — CONFIRMED CLOSED.** The paragraph at
+  `08-windows-app-updates.md:128-134` now ends at "...two different names." The specific unsupported
+  clause ("a companion article states plainly that the settings catalog profile type has more
+  settings available than the Administrative Templates profile type") is fully removed —
+  `grep -c "more settings available"` returns 0 hits in the current file. The paragraph reads as a
+  clean, grammatical standalone unit after truncation, and the surviving Source line
+  (`change-update-channels`) still governs only claims it actually carries (the setting name
+  `Update Channel (2.0)` and its registry path). A different, unrelated "companion article" phrase
+  survives at line 90 (the SAEC/MEC unification announcement, governed by its own two Source lines
+  immediately below it) — this is not a re-emergence of CR-01; it is the separate claim `148-04`
+  already fixed and the prior review already verified as correct.
+- **WR-03 (`EnableMicrosoftStoreSource` label mismatch) — CONFIRMED CLOSED.** The policy table at
+  `08-windows-app-updates.md:303` and the settings-catalog-gap prose at `:328` both now read "Enable
+  App Installer Microsoft Store Source policy" — `grep -c "Enable Microsoft Store source policy"`
+  (the old, shortened label) returns 0 hits; the corrected label occurs twice (table + prose), byte-
+  identical. The other five table rows are unchanged and still in source order.
 
-Against that very high bar, I found one claim in `08-windows-app-updates.md` that is presented with
-citation confidence ("a companion article states plainly...") but does not appear on either Microsoft
-Learn page the guide cites for it — a defect in the same class as the one 148-04 fixed, just not yet
-caught. I also found four internal-consistency/quality issues: a citation date for the same source
-page that disagrees between two sibling files, an ambiguous antecedent in `00-overview.md` that (on
-its most natural reading) misstates which object type holds "15 rings," a policy name that is spelled
-two different ways within the same file, and an internal GSD phase/roadmap reference that leaked into
-a customer-facing guide's footer.
+**Dispositioned findings, not re-raised.** WR-01 (citation-date mismatch for the Autopatch groups
+overview article), WR-02 (ambiguous "15 rings" antecedent), and WR-04 (internal GSD phase/roadmap
+leak in `00-overview.md`'s footer) are pre-existing defects in `00-overview.md`, which this phase is
+additive-only toward. All three are confirmed filed in `.planning/REQUIREMENTS.md ## Future
+Requirements` (lines 153–155) as evidence-carrying bullets, each with the exact file:line coordinate,
+a `git log -S` authoring commit predating Phase 148 (`be7f59db` for WR-01 and WR-04, `68dfc378` for
+WR-02), and a `Trigger:` clause. `00-overview.md` itself is confirmed byte-unchanged at lines 79-83,
+101, and 266 relative to the prior review — the underlying defects still exist in the file but are
+correctly tracked as backlog, not silently dropped. They are not repeated here as open findings.
 
-## Critical Issues
+**New-defect sweep for this re-review.** Beyond re-adjudicating CR-01/WR-03, I independently checked:
+internal-planning leakage across all three files (only the already-dispositioned WR-04 instance
+found — no new leakage introduced by the gap-closure edits); duplicate anchor IDs within each file
+(none); and internal markdown cross-reference integrity for every `.md` link and every `#anchor` in
+all three files, resolving each relative path from its actual source-file location and confirming
+the target file exists and (where an anchor is referenced) that the anchor ID is defined exactly
+once in the target. All links and anchors resolve correctly, including the two-levels-up
+`../../admin-setup-apv1/03-esp-policy.md` and `../../reference/win32-app-packaging.md` references in
+`08-windows-app-updates.md`. Citation-date consistency was also re-checked within each file (not
+across files, since the one cross-file mismatch is WR-01, already dispositioned): every other
+repeated Source URL in `07-windows-autopatch.md` and `08-windows-app-updates.md` carries the same
+`(updated ...)` date at every occurrence.
 
-### CR-01: "Companion article" claim is not supported by either cited source page
-
-**File:** `docs/operations/patch-management/08-windows-app-updates.md:132-136`
-**Issue:** The paragraph states: "a companion article states plainly that the settings catalog
-profile type has more settings available than the Administrative Templates profile type," governed
-by the Source line immediately below it:
-`**Source:** [Change the update channel with Microsoft Intune Administrative Templates](https://learn.microsoft.com/en-us/microsoft-365-apps/updates/change-update-channels) (updated 2026-07-18)`
-
-I fetched that page's live text in full (17,520 characters, "Last updated on 2026-07-18" confirmed —
-so the date is correct). The string "settings catalog" does not occur anywhere on that page, and
-there is no comparison of settings-available counts between the two Intune profile types anywhere in
-its content. I also fetched the other candidate source in the same section — the settings-catalog
-article cited at `08:126` (`.../settings-catalog/update-office`) — and it likewise never mentions
-"Administrative Templates" and contains no "more settings" comparison. Neither of the two Microsoft
-Learn pages this guide cites in the "Setting the Channel from Intune" section supports the claim as
-written. This is the same defect class the `148-04` fix closed elsewhere in this file (a claim
-attributed to a page that does not carry it) — it was simply not the specific instance `148-04`
-targeted.
-
-**Fix:** Either locate the actual Microsoft Learn page that states the settings-catalog-vs-
-Administrative-Templates settings-count comparison and cite it directly, or remove the claim/replace
-it with wording the two currently-cited pages actually support (e.g., drop "and a companion article
-states plainly that..." and stop the sentence at "two different names.").
-
-## Warnings
-
-### WR-01: Citation date for the same source page disagrees across sibling files
-
-**File:** `docs/operations/patch-management/00-overview.md:101` vs.
-`docs/operations/patch-management/07-windows-autopatch.md:51,144,213,224,237,379`
-**Issue:** Both files cite the identical URL —
-`https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/deploy/windows-autopatch-groups-overview`
-("Windows Autopatch groups overview") — but `00-overview.md:101` annotates it "(updated 2026-06-19)"
-while all six citations of the same page in `07-windows-autopatch.md` annotate it "(updated
-2025-06-17)". Both files carry an identical `last_verified: 2026-08-23` frontmatter date, so these
-are not citations captured months apart. I fetched the live page: its `ms.date` meta tag (the value
-Microsoft Learn displays to readers as the article date) is `2025-06-17T00:00:00Z`, matching
-`07-windows-autopatch.md`'s six citations exactly. `00-overview.md`'s `2026-06-19` matches a
-different, non-displayed CMS field (`updated_at`) on the same page, not the article date a reader
-would actually see. This is the exact "corrected coordinate/census row going stale" failure mode this
-corpus has been bitten by before — one file's citation date and its sibling's disagree, and the
-one that disagrees is also not what the source page currently displays.
-**Fix:** Change `00-overview.md:101` to "(updated 2025-06-17)" to match the six citations in
-`07-windows-autopatch.md` and the source page's own displayed `ms.date`.
-
-### WR-02: Ambiguous antecedent misstates which object holds "15 rings"
-
-**File:** `docs/operations/patch-management/00-overview.md:79-83`
-**Issue:** The Ring Terminology bullet reads: "...both are always present, cannot be removed or
-renamed, and each carries its own Entra group (a group supports up to 15 rings, and a tenant up to
-300 groups)." The nearest antecedent to "a group" is the just-mentioned "Entra group," and read that
-way the sentence states that an Entra group supports up to 15 rings — which is not the fact.
-`07-windows-autopatch.md:216-224` states the real fact unambiguously, sourced from the same Microsoft
-Learn page: an **Autopatch group** supports up to 15 deployment rings, and a tenant supports up to 300
-Autopatch groups; the 15-ring ceiling has nothing to do with the Entra group used for device
-distribution within a ring. The parenthetical in `00-overview.md` is very likely intending "group" as
-shorthand back to "Autopatch group" (matching "a tenant up to 300 groups," which can only mean
-Autopatch groups), but its placement immediately after "Entra group" invites the wrong reading of a
-number this corpus has already needed to correct once.
-**Fix:** Reword to remove the ambiguity, e.g.: "...and each carries its own Entra group for device
-distribution (an Autopatch group supports up to 15 rings, and a tenant supports up to 300 Autopatch
-groups)."
-
-### WR-03: Same CSP setting given two different names within one file
-
-**File:** `docs/operations/patch-management/08-windows-app-updates.md:305` vs. `:330`
-**Issue:** The `DesktopAppInstaller/EnableMicrosoftStoreSource` CSP is named "**Enable Microsoft
-Store source policy**" in the policy table at line 305, but "**Enable App Installer Microsoft Store
-Source policy**" in prose 25 lines later at line 330 — two different names for the identical setting
-in the same file. I confirmed via the live Policy CSP page that the actual ADMX friendly name
-Microsoft assigns this setting is "Enable App Installer Microsoft Store Source" (matching the prose
-at line 330, not the table at line 305). An administrator searching the Intune settings catalog or a
-custom OMA-URI profile by the table's shortened name may not find the setting by that exact string.
-**Fix:** Rename the table row at line 305 to "Enable App Installer Microsoft Store Source policy" to
-match both the ADMX friendly name and the prose reference at line 330.
-
-### WR-04: Internal GSD phase/roadmap reference leaked into a customer-facing footer
-
-**File:** `docs/operations/patch-management/00-overview.md:266`
-**Issue:** The last line of the "Related Resources" section reads: "[Operations Documentation
-Index](../00-index.md) — Cross-reference only; Phase 54 does not amend the operations index per the
-Phase 59 ROADMAP entry." "Phase 54" and "Phase 59 ROADMAP entry" are internal project-management
-artifacts of this repo's own authoring process (GSD phase numbers), not concepts a Windows Autopilot
-admin reading this operations guide has any use for or context to interpret. This is the only place
-in any of the three reviewed files where internal authoring-process terminology appears in
-reader-facing prose.
-**Fix:** Remove the internal-process justification clause; keep only the link, e.g.: "[Operations
-Documentation Index](../00-index.md) — Cross-reference only."
+No new Critical, Warning, or Info findings were substantiated in this pass. All reviewed files meet
+quality standards on this pass. The prior review's WR-01/WR-02/WR-04 remain valid, open, correctly-
+disposed backlog items outside this phase's edit scope — they are not restated here per the review
+brief.
 
 ---
 
-_Reviewed: 2026-08-23T00:00:00Z_
+_Reviewed: 2026-08-24T00:00:00Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
