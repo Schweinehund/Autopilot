@@ -126,6 +126,61 @@ deployment profile, the Enrollment Status Page (ESP) profile and the DFCI profil
 and assigned in the usual order, and it is DFCI enrollment specifically, not device enrollment, that
 the known issue blocks.
 
+<a id="dfci-oem-support"></a>
+## OEM Support
+
+DFCI reaches a short, named list of manufacturers, and the list is the first thing to check before
+any of the rest of this guide is worth reading. The canonical enumeration lives on Microsoft's DFCI
+management page, which names nine and states plainly that the list is open rather than closed:
+
+> Acer. Asus. Dynabook. Fujitsu. Microsoft Surface. Panasonic. VAIO. Samsung. NEC.
+>
+> Other OEMs are pending.
+
+**Source:** [Manage DFCI for Windows Autopilot devices](https://learn.microsoft.com/en-us/autopilot/dfci-management) (ms.date 2025-03-25, updated 2026-04-14)
+
+That list is not the only one Microsoft publishes. Two other pages carry shorter variants of it, and
+because a reader who greps for DFCI can land on either of them first, this guide records the
+divergence as a documented conflict rather than silently preferring one page.
+
+**The six-OEM variant.** The Intune BIOS-configuration page compares the two native BIOS surfaces
+side by side, and its DFCI column names six manufacturers:
+
+> Surface, Acer, Asus, Dynabook, Fujitsu, Panasonic
+
+**Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
+
+Those six are a strict subset of the nine — the shorter list drops VAIO, Samsung and NEC, and adds
+nothing. The page carrying it has an `ms.date` of 2024-06-06, roughly two years older than the
+canonical list's 2025-03-25, and it is the oldest Microsoft Learn page cited anywhere in this guide.
+It is also a side-reference: the column exists to contrast DFCI against the Dell-only BIOS
+configuration surface, not to enumerate DFCI's own support matrix. Treat the nine-OEM list as
+current and this one as stale.
+
+**The one-OEM variant.** Microsoft's DFCI Scenarios page, published in the Project Mu documentation
+set, carries a third list. Its own OEM section names a single manufacturer — Microsoft Surface,
+rendered as a logo image linking to the Surface DFCI guide rather than as a text list — and closes
+with:
+
+> More are in the works...
+
+**Source:** [Microsoft DFCI Scenarios](https://microsoft.github.io/mu/dyn/mu_feature_dfci/DfciPkg/Docs/Scenarios/DfciScenarios/) (page carries no publication or revision date)
+
+That page is the narrowest of the three and the only one with no date at all, so it cannot be aged
+against the other two. Microsoft does not designate any of the three lists as the authoritative one.
+Instead the pages point at each other as further reading: the BIOS-configuration comparison column
+sends the reader to the DFCI Scenarios page for more information, and the DFCI management page lists
+that same DFCI Scenarios page under its related content. A reader following those pointers can
+arrive at a shorter list than the one they started from, which is precisely why the count matters.
+
+**Dell, HP and Lenovo are on none of the three lists.** DFCI is unavailable on Dell, HP and Lenovo
+hardware — it is not an option an administrator declined, not a setting left switched off, and not a
+capability that can be turned on by licensing, firmware update or configuration. There is no DFCI
+profile to assign to those devices because the manufacturer never integrated the DFCI code and the
+Microsoft Device Management Trust certificate into the firmware in the first place. Those fleets are
+governed through an entirely different mechanism, and choosing between them is what
+[Firmware and BIOS Governance](00-overview.md) exists to route.
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
