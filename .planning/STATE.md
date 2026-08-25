@@ -5,11 +5,11 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 150
 current_phase_name: Per-OEM BIOS Guides & Capability Matrix
 status: planning
-stopped_at: Phase 149 complete, ready to plan Phase 150
-last_updated: "2026-08-25T11:54:08.485Z"
+stopped_at: Phase 150 context gathered
+last_updated: "2026-08-25T22:15:11.927Z"
 last_activity: 2026-08-25
 last_activity_desc: Phase 149 complete, transitioned to Phase 150
-state_head: 87c01e321a7ae9f4f02e91dc03a25fd40cb9e2dd
+state_head: 87f7f96bdf0ca3ce5341be6b07a86ce5c00d4e83
 progress:
   total_phases: 9
   completed_phases: 5
@@ -598,9 +598,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-25T04:51:13.809Z
-Stopped at: Phase 149 complete, ready to plan Phase 150
-Resume file: None
+Last session: 2026-08-25T22:14:59.892Z
+Stopped at: Phase 150 context gathered
+Resume file: .planning/phases/150-per-oem-bios-guides-capability-matrix/150-CONTEXT.md
 Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 
 ## Operator Next Steps
