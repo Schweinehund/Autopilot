@@ -254,8 +254,14 @@ profile you are about to assign.
 
 One of those exceptions belongs here rather than in a footnote. In the Security features category,
 CPU and IO virtualization is documented with two options and no third: there is no Disabled value for
-it, so DFCI can switch platform virtualization on and structurally cannot switch it off. That
-asymmetry has consequences further down this page.
+it, so on the manufacturers where the setting applies DFCI can switch platform virtualization on and
+structurally cannot switch it off. That asymmetry has consequences further down this page.
+
+**Scope: the asymmetry does not reach Surface.** The Surface guide lists CPU and IO virtualization
+among the settings that do not currently apply to Surface devices — quoted, with its own source,
+under Surface Eligibility above. On Surface hardware DFCI neither enables nor disables it, and
+nothing in the Intune console reports the non-application as an error. Read the asymmetry below as a
+description of the interface on the manufacturers where the setting does apply.
 
 **What ships here and what routes out.** This guide names a setting when it carries a durable,
 high-consequence behavior — a bricking risk, an interaction trap, or a compliance conflict — and
@@ -325,13 +331,16 @@ radios the firmware manages — including the ones the device would otherwise us
 **One firmware setting reaches all the way into update eligibility, in one direction only.** Reading
 that chain backward is the mistake this part of the section exists to prevent:
 
-1. The DFCI setting for CPU and IO virtualization exposes only Not configured and Enabled. DFCI can
-   switch the platform's CPU and IO virtualization capabilities on — the settings reference records
-   that enabling it also turns on Windows Virtualization Based Security and Device Guard — and it
-   carries no value that switches them back off.
+1. The DFCI setting for CPU and IO virtualization exposes only Not configured and Enabled. On the
+   manufacturers where the setting applies, DFCI can switch the platform's CPU and IO virtualization
+   capabilities on — the settings reference records that enabling it also turns on Windows
+   Virtualization Based Security and Device Guard — and it carries no value that switches them back
+   off. On Surface the setting does not apply at all, so neither direction is available there.
 2. The exposure therefore does not live in a DFCI profile at all. A device whose
    virtualization-based security is off got there through firmware settings configured outside DFCI,
-   at the manufacturer's own BIOS surface, and that is the only place it can be corrected.
+   at the manufacturer's own BIOS surface, and that is the only place it can be corrected. That step
+   holds for Surface too, and more strongly: with the setting inert, the manufacturer's own BIOS
+   surface is the only place virtualization can be changed in either direction.
 3. The consequence surfaces in update servicing, months later and in a different console. A device
    without virtualization-based security enabled and running can be temporarily ineligible for the
    in-memory quality-update path:
@@ -521,6 +530,11 @@ through the manufacturer's own BIOS surface instead. This is the asymmetry the u
 chain earlier on this page depends on.
 
 **Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+That value set describes the interface on the manufacturers where the setting applies. Surface is not
+one of them: the Surface guide lists CPU and IO virtualization among the settings that do not
+currently apply to Surface devices, quoted with its own source under Surface Eligibility above, so on
+Surface hardware neither direction is available and the profile reports no error either way.
 
 **Neither TPM nor Secure Boot appears among the settings DFCI enumerates.** The settings reference
 organizes the interface into eight categories — UEFI access, Security features, Cameras, Microphones
