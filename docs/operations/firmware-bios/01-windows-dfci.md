@@ -133,7 +133,15 @@ DFCI reaches a short, named list of manufacturers, and the list is the first thi
 any of the rest of this guide is worth reading. The canonical enumeration lives on Microsoft's DFCI
 management page, which names nine and states plainly that the list is open rather than closed:
 
-> Acer. Asus. Dynabook. Fujitsu. Microsoft Surface. Panasonic. VAIO. Samsung. NEC.
+> - Acer.
+> - Asus.
+> - Dynabook.
+> - Fujitsu.
+> - Microsoft Surface.
+> - Panasonic.
+> - VAIO.
+> - Samsung.
+> - NEC.
 >
 > Other OEMs are pending.
 
