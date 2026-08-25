@@ -16,7 +16,7 @@ platform: all
 
 ## Summary
 
-This reference defines the core terminology for Windows Autopilot deployment across both APv1 (classic, hardware-hash based) and APv2 (Device Preparation, Enrollment Time Grouping) frameworks, covering enrollment concepts (OOBE, ESP, device and user phase), hardware and security terms (hardware hash, TPM, TPM attestation, Secure Boot), network components (WinHTTP proxy, NCSI), deployment modes (self-deploying, pre-provisioning, user-driven), and device lifecycle actions (Autopilot Reset, tenant migration, retirement, wipe).
+This reference defines the core terminology for Windows Autopilot deployment across both APv1 (classic, hardware-hash based) and APv2 (Device Preparation, Enrollment Time Grouping) frameworks, covering enrollment concepts (OOBE, ESP, device and user phase), hardware and security terms (hardware hash, TPM, TPM attestation, Secure Boot), network components (WinHTTP proxy, NCSI), firmware and BIOS management (DFCI, UEFI CSP, BIOS password custody), deployment modes (self-deploying, pre-provisioning, user-driven), and device lifecycle actions (Autopilot Reset, tenant migration, retirement, wipe).
 
 > **Framework coverage:** This glossary covers terminology for both Windows Autopilot (classic/APv1) and Autopilot Device Preparation (APv2). Terms specific to one framework are labeled. See
 
@@ -174,7 +174,7 @@ Device identifiers (serial number, manufacturer, model) uploaded to Intune to ma
 
 ### BIOS configuration and other settings
 
-The Intune Templates profile type that pushes a vendor BIOS configuration file to a device — for Dell, a Dell Client Configuration Tool Kit file (`.cctk`) subject to a 2 MB file size limit. Dell is the only vendor this profile type supports today, so it is disjoint from DFCI: no device is reachable by both surfaces.
+The Intune Templates profile type that pushes a vendor BIOS configuration file to a device — for Dell, a Dell Client Configuration Tool Kit file (`.cctk`) subject to a 2 MB file size limit. Dell is the only vendor this profile type supports today, and Dell appears on no DFCI manufacturer list, so the two surfaces are disjoint: no device is reachable by both.
 
 ### BIOS password
 
@@ -298,7 +298,7 @@ The second half of ESP (after user login) that applies user-targeted apps and po
 
 | Date | Change | Author |
 |------|--------|--------|
-| 2026-08-24 | Phase 149 (BIOS-02 / BIOS-04): added `### BIOS configuration and other settings`, `### BIOS password`, `### Device Firmware Configuration Interface (DFCI)` and `### UEFI CSP` terms (Hardware section) with a reciprocal `> See also:` from DFCI to Secure Boot and UEFI CSP; Alphabetical Index updated | -- |
+| 2026-08-24 | Phase 149 (BIOS-02 / BIOS-04): added `### BIOS configuration and other settings`, `### BIOS password`, `### Device Firmware Configuration Interface (DFCI)` and `### UEFI CSP` terms (Hardware section) with a one-way `> See also:` from DFCI to Secure Boot and UEFI CSP; Alphabetical Index updated | -- |
 | 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 91: added reciprocal `> See also:` to ### Tenant migration pointing to _glossary-macos.md#mdm-migration | -- |
 | 2026-06-20 | Phase 75 (SSOREF-01 / XC-1): added `### Entra ID SSO` term (Security section) and a reciprocal `> See also:` to Secure Enclave inside the existing `### TPM` body; Alphabetical Index updated | -- |
