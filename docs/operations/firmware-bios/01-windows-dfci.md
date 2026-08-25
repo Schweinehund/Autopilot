@@ -260,9 +260,10 @@ asymmetry has consequences further down this page.
 **What ships here and what routes out.** This guide names a setting when it carries a durable,
 high-consequence behavior — a bricking risk, an interaction trap, or a compliance conflict — and
 routes the reader out to the vendor or Microsoft page when the setting is high-churn enumerable data
-with no independent narrative value. Applying that rule honestly means about a dozen individual
-setting names still appear in this file, across this section, the Surface section above and the
-retire sequence below; the rule bounds which ones, not whether any do. It is also why the
+with no independent narrative value. Applying that rule honestly means twelve individual
+setting names still appear in this file, counted at this revision, across this section, the Surface
+section above, the retire sequence below and the callouts near the end; the rule bounds which ones,
+not whether any do. It is also why the
 requirements bar on per-model matrices does not reach the page cited above: that bar exists so these
 guides route to vendor documentation rather than rewrite vendor manuals, and the DFCI settings
 reference is a Microsoft Intune policy reference, not a vendor manual.
@@ -492,13 +493,60 @@ before it. And it is sourced first-party throughout, so shipping it costs nothin
 fidelity. Naming the ground here is deliberate, exactly as the Surface section above names its bound:
 a section that no criterion requires should say why it exists.
 
+<a id="unsupported-callouts"></a>
+## Unsupported and Anti-Feature Callouts
+
+These are documented absences in the interface itself, not misconfigurations an administrator can
+correct. The category conflict loop and the boot-and-port trap earlier on this page are the second
+kind and stay where they are.
+
+**DFCI can switch platform virtualization on and structurally cannot switch it off.** The CPU and IO
+virtualization setting is documented with two values, Not configured and Enabled, and no third. There
+is no Disabled value to assign, so a profile that enabled the platform's virtualization capabilities
+cannot later withdraw them, and a fleet that needs virtualization off has to reach the firmware
+through the manufacturer's own BIOS surface instead. This is the asymmetry the update-eligibility
+chain earlier on this page depends on.
+
+**Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+**Neither TPM nor Secure Boot appears among the settings DFCI enumerates.** The settings reference
+organizes the interface into eight categories — UEFI access, Security features, Cameras, Microphones
+and speakers, Radios, Boot Options, Ports, and Wake settings — and neither TPM nor Secure Boot is
+among them. State that as what it is: an enumeration fact about the published surface. Microsoft
+publishes no sentence declaring those two out of DFCI's reach, so do not write one, and do not read
+the absence as a promise about what a future version of the interface will or will not carry. For
+what this domain does not own, including where TPM and Secure Boot are governed instead, see
+[Firmware and BIOS Governance](00-overview.md).
+
+**Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+**No Microsoft list of DFCI manufacturers names Dell, HP or Lenovo.** All three lists this guide
+records — the canonical nine, the older six and the single-manufacturer variant — omit them.
+On that hardware DFCI is unavailable rather than declined: there is no profile to assign, no license
+to buy and no firmware setting to turn on, because the manufacturer never carried the DFCI code and
+the Microsoft trust anchor into the firmware. Those fleets are governed through a different
+mechanism entirely, which is the routing question
+[Firmware and BIOS Governance](00-overview.md) answers.
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
   on Dell, HP and Lenovo hardware, the two native Intune BIOS surfaces, and what this domain does
   not own
+- [Hardware Hash Collection](../../lifecycle/01-hardware-hash.md) — the four import methods, whose
+  registering party decides whether DFCI is available on a device at all
+- [Hardware Hash Upload](../../admin-setup-apv1/01-hardware-hash-upload.md) — the CSV and PowerShell
+  registration paths, both of which are manual registrations and therefore disqualify a device from
+  DFCI
+- [Windows WUfB Rings](../patch-management/01-windows-wufb-rings.md) — the Windows servicing policy
+  that consumes the virtualization-based security state this interface can set but not clear
 
 ## External References
 
+- [Manage DFCI for Windows Autopilot devices (Microsoft Learn)](https://learn.microsoft.com/en-us/autopilot/dfci-management)
+- [Use DFCI profiles on Windows devices in Microsoft Intune (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows)
 - [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows)
 - [Use BIOS configuration profiles for Windows devices in Microsoft Intune (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows)
+- [DFCI management for Surface devices (Microsoft Learn)](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide)
+- [Windows Autopatch - Frequently Asked Questions (Microsoft Learn)](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq)
+- [Microsoft DFCI Scenarios (Project Mu documentation)](https://microsoft.github.io/mu/dyn/mu_feature_dfci/DfciPkg/Docs/Scenarios/DfciScenarios/)
