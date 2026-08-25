@@ -227,10 +227,16 @@ catalog regardless of manufacturer, and a subset of it is inert on Surface hardw
 **Source:** [DFCI management for Surface devices](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide) (ms.date 2026-07-14, updated 2026-07-14)
 
 That quotation follows the Surface page's own display names, and one of them diverges from the rest
-of the product. The Intune DFCI settings reference names the same underlying setting **Boot from
-network adapters**, without the leading **Disable** the Surface page uses. The two first-party pages
-genuinely differ on the display name; this document quotes the Surface page, so the prefix is
-present here and will be absent when the same setting is reached through the settings reference.
+of the product. The Intune DFCI settings reference names a setting **Boot from network adapters**,
+without the leading **Disable** the Surface page uses. This guide reads the two as one underlying
+setting under two display names, and Microsoft publishes no mapping between them — so read that as
+this corpus's own inference, not as something either page states.
+
+The inference is worth confirming rather than assuming, because the prefix would invert what a value
+means. Read literally, Disable Boot from network adapters set to Enabled and Boot from network
+adapters set to Enabled ask for opposite things, and this is a boot path — the one place on this
+page where a wrong value has an unrecoverable failure mode. Check which of the two names your own
+Intune tenant presents before you set it, and set it from the name the settings reference uses.
 
 **Model eligibility is neither uniform nor stable.** Support is gated per model and, within a
 family, per processor — a model can be excluded outright while its siblings are supported, and one
