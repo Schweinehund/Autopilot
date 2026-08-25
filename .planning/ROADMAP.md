@@ -220,7 +220,26 @@ Plans:
 
 **Blast radius**: the matrix's **registry row is not landed here** — it belongs to Phase 152. Landing it here leaves both publish-bundle canaries red across three phases. These guides stay Intune-delivery-shaped and link-not-copy: no BIOS token tables, no vendor cmdlet syntax reference, no per-model matrices.
 **Research flag**: **YES** — three recovery gaps are `[UNVERIFIED]` (Lenovo lost supervisor password, Lenovo lost certificate private key, HP Endorsement Key loss). Recovery is the most-used content for a service-desk audience; shipping it as a gap undercuts the guides. Also open: whether HP Connect appears under Intune's partner-portal entry point as Dell does, and whether any post-2022 HP Connect user guide exists.
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+
+**Wave 1**
+
+- [ ] 150-01-PLAN.md — file the SC#1/BIOS-05 six-section amendment, then the TRACER: the complete Dell guide at the locked nine-H2 / seven-anchor shape (BIOS-06 Dell half, BIOS-09 Dell half, BIOS-10 in full); carries the phase-wide rules, the source audit and the 17 edge-probe dispositions
+
+**Wave 2** *(blocked on Wave 1; the two plans touch disjoint files and may run in parallel)*
+
+- [ ] 150-02-PLAN.md — the HP guide: HP Connect as a vendor connector in all five BIOS-07 claims, both custody quotes juxtaposed with separate evidence lines, both de-provisioning orders, the Endorsement-Key documented absence (BIOS-07, BIOS-09)
+- [ ] 150-03-PLAN.md — the Lenovo guide: the ThinkCentre tooling fork, the model list attached to the certificate tool, an Offboarding H2 stating a structural absence, and the U-1-corrected Recovery section (BIOS-08, BIOS-06 Lenovo half)
+
+**Wave 3** *(blocked on Waves 1-2)*
+
+- [ ] 150-04-PLAN.md — `docs/reference/firmware-oem-matrix.md` (RE-226, C17-enrolled) as a transposition of the three guides, plus four glossary terms, plus **the single content commit** of all five files (BIOS-12)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 150-05-PLAN.md — the `00-overview.md` edits at seven sites and the phase's second commit: the false sentence replaced, the four outbound links, the SC#2 cross-reference sentence, the two reduced quotes, and the U-6 qualifier
 
 ### Phase 151: Recipe #5 — The Enterprise Update Plan
 
