@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 149
 current_phase_name: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
 status: executing
-stopped_at: Phase 149 context gathered
-last_updated: "2026-08-24T22:56:11.438Z"
-last_activity: 2026-08-23
-last_activity_desc: Phase 148 complete, transitioned to Phase 149
-state_head: f201407c8f8b6ce4f8fc6938ce84160334e3adaa
+stopped_at: Completed 149-01-PLAN.md
+last_updated: "2026-08-25T02:43:53.838Z"
+last_activity: 2026-08-24
+last_activity_desc: Phase 149 execution started
+state_head: dcabb8d7e324ad8c0c92ba4660e486b9bb6109a6
 progress:
   total_phases: 9
   completed_phases: 4
   total_plans: 20
-  completed_plans: 15
+  completed_plans: 16
   percent: 44
 ---
 
@@ -37,10 +37,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI) — READY TO EXECUTE
-Plan: Not started
+Phase: 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-08-23 — Phase 148 complete, transitioned to Phase 149
+Last activity: 2026-08-24 — Phase 149 execution started
 
 Progress: [████░░░░░░] 44% (4 of 9 phases; 15/15 planned plans complete)
 
@@ -426,6 +426,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 148 P03 | ~55min | 3 tasks | 2 files |
 | Phase 148 P04 | 8 min | 2 tasks | 1 files |
 | Phase 148 P05 | 25min | 3 tasks | 2 files |
+| Phase 149 P01 | 33 min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -556,6 +557,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 148]: Cadence-conflict citation gap closed: copied 08:96's Source line verbatim after re-confirming both quotes and the rendered date live — 148-VERIFICATION.md found APP-03's two quotes uncited; the fix was a single additive Source line, not a re-plan
 - [Phase 148]: Removed the unsupported settings-count comparison clause rather than re-citing it — No Microsoft Learn page supports the claim; a replacement citation would add a new URL/link-check surface for a claim no reader acts on (148-05, matches 148-REVIEW.md CR-01)
 - [Phase 148]: Filed WR-01/WR-02/WR-04 to REQUIREMENTS.md backlog instead of editing 00-overview.md — 00-overview.md is prohibited from being opened by this plan; each bullet carries measured coordinates, an authoring commit and a Trigger (148-05)
+- [Phase 149]: D-22 discharged: the firmware/BIOS directory is firmware-bios/ — BIOS-01 states the path literally and requirement text is the authority over advisory architecture research; firmware-governance/ and bios-management/ declined
+- [Phase 149]: The Lenovo RBAC/logging/rotation comparison ships as labelled corpus inference, never as a Lenovo attribution — 149-RESEARCH.md Pitfall 8 confirms zero hits for only vendor, RBAC, logging and rotation on both fetched Lenovo pages; attributing it would be this milestone's third fabricated citation
+- [Phase 149]: Both firmware-bios files landed in ONE commit so the bidirectional cross-link never dangled — D-28: with reciprocal links, either commit ordering strands one direction and takes check-nav-hub-links to a corpus-link failure
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -584,9 +588,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-24T20:58:41.088Z
-Stopped at: Phase 149 context gathered
-Resume file: .planning/phases/149-firmware-bios-domain-overview-dfci-surface-uefi/149-CONTEXT.md
+Last session: 2026-08-25T02:43:18.708Z
+Stopped at: Completed 149-01-PLAN.md
+Resume file: None
 Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 
 ## Operator Next Steps

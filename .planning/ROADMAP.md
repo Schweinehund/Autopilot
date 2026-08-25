@@ -185,12 +185,12 @@ Plans:
 
 **Blast radius**: none in the existing corpus — this is pure new authoring, the cheapest shape available. The C17 surface added by this phase is zero (new operations documents are not C17-gated); the matrix in Phase 150 is one of the milestone's only two new C17-visible files.
 **Research flag**: **YES** (shared with Phase 150) — the oldest source in the whole set is the sole source for three load-bearing claims here and must be re-fetched first at plan time. **Discharged 2026-08-24** by `149-RESEARCH.md`: all seven mandated sources re-fetched as raw bytes, every load-bearing quote confirmed byte-exact, two new findings surfaced.
-**Plans**: 5 plans
+**Plans**: 1/5 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 149-01-PLAN.md — tracer: found `docs/operations/firmware-bios/` with BOTH files in ONE commit (D-28/D-29), then author `00-overview.md` in full at 9 H2 / 7 anchors (BIOS-01, BIOS-02, BIOS-11)
+- [x] 149-01-PLAN.md — tracer: found `docs/operations/firmware-bios/` with BOTH files in ONE commit (D-28/D-29), then author `00-overview.md` in full at 9 H2 / 7 anchors (BIOS-01, BIOS-02, BIOS-11)
 - [ ] 149-02-PLAN.md — discharge the roadmap-locked glossary flag: four firmware terms plus index and version-history rows in `docs/_glossary.md` (D-06), and file the SC#4 registration-path premise amendment in `REQUIREMENTS.md` (D-05) (BIOS-02, BIOS-04)
 
 **Wave 2** *(blocked on Wave 1 completion)*
@@ -313,7 +313,7 @@ Plans:
 | 146. Windows Driver & Firmware Update Depth | v1.21 | 3/3 | ✅ Complete | 2026-08-20 |
 | 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
 | 148. Application Update Management & WinGet Routing | v1.21 | 5/5 | Not started | 2026-08-23 |
-| 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 0/? | Not started | - |
+| 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 1/5 | Not started |  |
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 0/? | Not started | - |

@@ -68,7 +68,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 
 **A three-way architecture split, not a three-way tool split.** `[MEASURED]` this is greenfield — zero corpus occurrences of every term. The discriminator is **who holds the BIOS secret and where the policy object lives**.
 
-- [ ] **BIOS-01**: `docs/operations/firmware-bios/00-overview.md` establishes the domain and routes by secret custody: **Dell** means Intune holds the secret (Graph `hardwarePasswordDetails`); **HP** means HP's cloud vault, outside the tenant; **Lenovo** means the customer holds it (encrypted INI or Azure Key Vault) — the only vendor where the signing key can live under the customer's own RBAC, logging and rotation.
+- [x] **BIOS-01**: `docs/operations/firmware-bios/00-overview.md` establishes the domain and routes by secret custody: **Dell** means Intune holds the secret (Graph `hardwarePasswordDetails`); **HP** means HP's cloud vault, outside the tenant; **Lenovo** means the customer holds it (encrypted INI or Azure Key Vault) — the only vendor where the signing key can live under the customer's own RBAC, logging and rotation.
 - [ ] **BIOS-02**: **Both** native Intune BIOS surfaces are documented **as disjoint**: **DFCI** (UEFI CSP, per-setting reporting, certificate trust chain) and **BIOS configuration and other settings** (a Templates policy, `.cctk` config file, 2 MB limit, **Dell only**). The v1.21 scoping named only one of them.
 - [ ] **BIOS-03**: DFCI OEM support is documented as **nine OEMs** (Acer, Asus, Dynabook, Fujitsu, Microsoft Surface, Panasonic, VAIO, Samsung, NEC) followed by the source's own *"Other OEMs are pending."*, with the six-OEM and one-OEM variants on two staler first-party pages recorded as a documented conflict. Writing "the six" or "most business OEMs" is explicitly barred. **Dell, HP and Lenovo are on none of these lists** and DFCI is presented as *unavailable* on those fleets, not as an option declined.
 - [ ] **BIOS-04**: DFCI's disqualifying prerequisites are documented completely — manual Autopilot registration disqualifies a device, and `[MEASURED]` this corpus teaches **three** registration paths of which **two** disqualify (CSV bulk import and `Get-WindowsAutopilotInfo`, including `-Online`), while OEM delivery qualifies. The first-party 24H2 Professional known issue (requires KB5046740 or later, or an Enterprise upgrade before OOBE) is carried.
@@ -200,7 +200,7 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | APP-04 | Phase 148 | Complete |
 | APP-05 | Phase 148 | Complete |
 | APP-06 | Phase 148 | Complete |
-| BIOS-01 | Phase 149 | Pending |
+| BIOS-01 | Phase 149 | Complete |
 | BIOS-02 | Phase 149 | Pending |
 | BIOS-03 | Phase 149 | Pending |
 | BIOS-04 | Phase 149 | Pending |
