@@ -181,6 +181,65 @@ Microsoft Device Management Trust certificate into the firmware in the first pla
 governed through an entirely different mechanism, and choosing between them is what
 [Firmware and BIOS Governance](00-overview.md) exists to route.
 
+<a id="surface-eligibility"></a>
+## Surface Eligibility
+
+Microsoft Surface is one of the nine supported manufacturers, and it is the only one whose DFCI
+behavior Microsoft documents on a dedicated page. Four things on that page change what an
+administrator can plan for.
+
+**The prerequisite floor.** A Surface device must be at a supported Windows version and registered
+with Windows Autopilot:
+
+> Windows 11 or Windows 10 version 1809 or later
+
+The eligible-device list on the same page is further narrowed by product SKU:
+
+> Unless otherwise specified, listed devices are commercial SKUs only.
+
+**Source:** [DFCI management for Surface devices](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide) (ms.date 2026-07-14, updated 2026-07-14)
+
+**Self-registered Surface devices never get DFCI.** This is the Surface-specific restatement of the
+eligibility gate above, and it is worth reading as its own rule because it describes a working,
+fully managed device that simply has no firmware control:
+
+> DFCI won't be applied to self-registered devices.
+
+**Source:** [DFCI management for Surface devices](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide) (ms.date 2026-07-14, updated 2026-07-14)
+
+A self-registered Surface enrolls in Intune, receives policy and reports compliance normally. Every
+DFCI setting assigned to it is simply not applied, and nothing in the Intune console presents that
+as an error, so the absence is easy to miss.
+
+**Some settings Intune shows do not apply to Surface at all.** Intune exposes the full DFCI settings
+catalog regardless of manufacturer, and a subset of it is inert on Surface hardware:
+
+> DFCI in Intune includes settings that don't currently apply to Surface devices: CPU and IO virtualization, Disable Boot from network adapters, Windows Platform Binary Table (WPBT), NFC, and SD card.
+
+**Source:** [DFCI management for Surface devices](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide) (ms.date 2026-07-14, updated 2026-07-14)
+
+That quotation follows the Surface page's own display names, and one of them diverges from the rest
+of the product. The Intune DFCI settings reference names the same underlying setting **Boot from
+network adapters**, without the leading **Disable** the Surface page uses. The two first-party pages
+genuinely differ on the display name; this document quotes the Surface page, so the prefix is
+present here and will be absent when the same setting is reached through the settings reference.
+
+**Model eligibility is neither uniform nor stable.** Support is gated per model and, within a
+family, per processor — a model can be excluded outright while its siblings are supported, and one
+Surface Laptop generation is listed for Intel processors only. The current eligible-device list and
+its exclusions live on the vendor page cited above; check them there against the exact SKU being
+purchased or deployed rather than against a family name.
+
+**The bound this section works to, stated on the record.** This guide ships no eligible-model table
+and no table of which DFCI settings are gated to which Surface models. That is a deliberate scope
+choice, not an omission: the requirements document's Out of Scope section bars per-model matrices
+literally, on the ground that these guides route to vendor documentation rather than rewrite vendor
+manuals. The reasoning holds independently of that bar, because a model list is high-churn data with
+a short useful life — a copy of it is wrong the first time Microsoft ships a new Surface generation,
+and wrong silently. The durable facts are the ones above: the floor, the self-registration rule, the
+inert settings and the existence of per-model and per-processor gating. The current values behind
+them belong at the vendor page.
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
