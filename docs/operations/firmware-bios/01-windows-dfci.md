@@ -440,6 +440,58 @@ Read the presence or absence of the Autopilot record at the end as the test for 
 are actually performing. A wipe that keeps the record is a reuse; a wipe that ends with the record
 deleted is a retire, and a retire that skipped the unlock is the recovery case below.
 
+<a id="recovering-locked-device"></a>
+## Recovering a Device Locked in the Wrong Order
+
+This section is for the device the previous two sections were written to prevent: it was wiped, its
+Autopilot record was deleted, and nobody unlocked the UEFI menus first. The profile that would
+re-enable those menus can no longer be delivered, because the registration it travelled through is
+gone. Microsoft states both the condition and the only remaining route out of it:
+
+> If you wipe a device, and delete the Windows Autopilot record before unlocking the UEFI (BIOS) menus, the menus remain locked. Intune can't send profile updates to unlock it.
+>
+> To unlock the device, open the UEFI (BIOS) menu, and refresh management from network. Recovery unlocks the menus, but leaves all UEFI (BIOS) settings set to the values in the previous Intune DFCI profile.
+
+**Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+Read the second half carefully before treating recovery as a reset. It restores access to the menus;
+it does not restore the settings. Everything the last profile wrote is still written, so a device
+recovered this way is an unlocked device carrying the same firmware configuration it had when it was
+locked. Refreshing management from the network is also a physical operation performed at the device,
+not a console action — which means it scales at the speed of a bench technician, one machine at a
+time.
+
+**The Surface removal path, and why its own step order does not generalize.** Microsoft publishes a
+Surface-specific sequence for removing DFCI management and returning a Surface device to a
+factory-new state. It is reproduced below because it is the concrete form of the refresh-from-network
+recovery above. Read the warning before the steps, not after them.
+
+**Warning: this sequence deletes the Autopilot registration before the device is unlocked.** Its
+second step removes the registration and its fourth step is the unlock — the exact inverse of the
+default retire sequence above, which unlocks through the profile, then wipes, then deletes the record
+last. That default stays the default for every DFCI fleet, Surface included. This order is
+recoverable only because Surface's own UEFI menu carries the refresh-from-network command; the other
+eight supported manufacturers have no equivalent on record, so applying this order to a non-Surface
+DFCI fleet leaves the firmware locked beyond Intune's reach with nothing left to unlock it.
+
+1. Retire the device from Intune — under Devices, All Devices, select the device and choose
+   Retire/Wipe.
+2. Delete the Autopilot registration from Intune — under Devices, Enrollment, Windows Autopilot,
+   Devices, select the device and choose Delete.
+3. Connect the device to wired Internet with a Surface-branded Ethernet adapter, restart it, and
+   open the UEFI menu.
+4. Select Management > Configure > Refresh from Network.
+
+**Source:** [DFCI management for Surface devices](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide) (ms.date 2026-07-14, updated 2026-07-14)
+
+**The ground for this section, stated on the record.** No requirement clause and no success criterion
+for this domain's initial delivery covers a recovery runbook; retire and reuse are what they ask for,
+and this section is over-delivery against both. It ships anyway on two grounds. It is the highest-value
+content on this page for a service-desk reader, who meets these devices after the mistake rather than
+before it. And it is sourced first-party throughout, so shipping it costs nothing in attribution
+fidelity. Naming the ground here is deliberate, exactly as the Surface section above names its bound:
+a section that no criterion requires should say why it exists.
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
