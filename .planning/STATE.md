@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 149
 current_phase_name: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
 status: executing
-stopped_at: Completed 149-03-PLAN.md
-last_updated: "2026-08-25T03:30:03.536Z"
+stopped_at: Completed 149-04-PLAN.md
+last_updated: "2026-08-25T03:43:35.900Z"
 last_activity: 2026-08-24
 last_activity_desc: Phase 149 execution started
-state_head: d32aedcfb13f91600ec88040f6fcfa0cef71f72a
+state_head: e85b9f4a5be592551fee4227e0406efb772e0681
 progress:
   total_phases: 9
   completed_phases: 4
   total_plans: 20
-  completed_plans: 18
+  completed_plans: 19
   percent: 44
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-08-24 — Phase 149 execution started
 
@@ -429,6 +429,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 149 P01 | 33 min | 3 tasks | 2 files |
 | Phase 149 P02 | 4 min | 3 tasks | 2 files |
 | Phase 149 P03 | 34 min | 3 tasks | 1 files |
+| Phase 149 P04 | 32 min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -564,6 +565,10 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 149]: Both firmware-bios files landed in ONE commit so the bidirectional cross-link never dangled — D-28: with reciprocal links, either commit ordering strands one direction and takes check-nav-hub-links to a corpus-link failure
 - [Phase 149]: Checkpoint ruling four-channel: all four Autopilot registration channels classified against DFCI's eligibility gate (CSV upload and Get-WindowsAutopilotInfo -Online disqualify; OEM direct and Partner Center / CSP partner qualify), plus the explicit APv2 no-DFCI statement — Human gate 2026-08-24 confirming D-05's owner ruling; the three-path reading would tell a CSP-purchase reader DFCI is unavailable when the source says it is available, and that failure mode is unrecoverable hardware spend
 - [Phase 149]: The six-OEM staleness superlative ships scoped as the oldest Microsoft Learn page cited in this guide, not as D-13's internal Pillar-A label — Pillar has zero occurrences anywhere in docs/ and is undefined for the reader; the shipped scope is narrower than the barred milestone-wide claim and independently checkable against the guide's own five Learn citations
+- [Phase 149]: The ship-or-route rule's honest count ships as 'about a dozen' after measuring 11 distinct setting names in the file, not the plan's 'roughly ten'
+- [Phase 149]: Trap 1's evidence line cites configure-dfci-windows — the live fetch located the Conflicts section and the allow-only-Wi-Fi worked example there, not on ref-dfci-settings-windows
+- [Phase 149]: The boot-and-port generic recovery Warning is on ref-dfci-settings-windows (same page as the compliance half), so it joins that blockquote; the Surface replace-the-SSD case takes the second evidence line
+- [Phase 149]: All four page fetches returned HTTP 200, so both strings the plan allowed to ship unquoted ship quoted instead
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -592,8 +597,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-25T03:30:01.191Z
-Stopped at: Completed 149-03-PLAN.md
+Last session: 2026-08-25T03:43:12.649Z
+Stopped at: Completed 149-04-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 

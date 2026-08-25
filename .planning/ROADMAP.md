@@ -185,7 +185,7 @@ Plans:
 
 **Blast radius**: none in the existing corpus — this is pure new authoring, the cheapest shape available. The C17 surface added by this phase is zero (new operations documents are not C17-gated); the matrix in Phase 150 is one of the milestone's only two new C17-visible files.
 **Research flag**: **YES** (shared with Phase 150) — the oldest source in the whole set is the sole source for three load-bearing claims here and must be re-fetched first at plan time. **Discharged 2026-08-24** by `149-RESEARCH.md`: all seven mandated sources re-fetched as raw bytes, every load-bearing quote confirmed byte-exact, two new findings surfaced.
-**Plans**: 3/5 plans executed
+**Plans**: 4/5 plans executed
 
 Plans:
 **Wave 1**
@@ -199,7 +199,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 149-04-PLAN.md — `01-windows-dfci.md` consequences: the eight-category settings surface, all three interaction traps, the corrected virtualization chain, and the bricking surface with SC#5's third clause (BIOS-02, BIOS-11)
+- [x] 149-04-PLAN.md — `01-windows-dfci.md` consequences: the eight-category settings surface, all three interaction traps, the corrected virtualization chain, and the bricking surface with SC#5's third clause (BIOS-02, BIOS-11)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -313,7 +313,7 @@ Plans:
 | 146. Windows Driver & Firmware Update Depth | v1.21 | 3/3 | ✅ Complete | 2026-08-20 |
 | 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
 | 148. Application Update Management & WinGet Routing | v1.21 | 5/5 | Not started | 2026-08-23 |
-| 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 3/5 | Not started |  |
+| 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 4/5 | Not started |  |
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 0/? | Not started | - |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 0/? | Not started | - |
