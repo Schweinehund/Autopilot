@@ -26,9 +26,8 @@ console, connector, recovery path, what happens when a subscription lapses — f
 <a id="who-holds-the-secret"></a>
 ## Who Holds the BIOS Secret
 
-Three manufacturers dominate the commercial Windows fleet, and all three answer the custody
-question differently. Find your manufacturer, read the custody column, and the operating model
-follows.
+Dell, HP and Lenovo each answer the custody question differently. Find your manufacturer, read the
+custody column, and the operating model follows.
 
 | Manufacturer | Who holds the BIOS secret | Reached through |
 |---|---|---|
@@ -72,14 +71,159 @@ The custody answer is also the answer to what happens when the relationship ends
 Intune ends with the Intune subscription; a secret held in a vendor cloud ends on the vendor's
 terms; a secret you hold outlives both, and is yours to lose.
 
+<a id="native-bios-surfaces"></a>
+## The Two Native Intune BIOS Surfaces
+
+Intune has two native ways to reach firmware settings, and they are disjoint: no device is governed
+by both. Which one applies is decided by hardware, not by preference or licensing.
+
+**DFCI is the broad surface, and it reaches none of Dell, HP or Lenovo.** DFCI reaches the nine
+OEMs enumerated on the Autopilot DFCI management page and is covered in
+[Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md), which carries that list, its
+trailing statement about OEMs still pending, and the narrower conflicting list a second Microsoft
+page publishes.
+
+**Source:** [Manage DFCI for Windows Autopilot devices](https://learn.microsoft.com/en-us/autopilot/dfci-management) (ms.date 2025-03-25, updated 2026-04-14)
+
+**BIOS configuration and other settings is the narrow surface, and it reaches Dell alone.** It is a
+Templates policy in the Intune console, and it works the way vendor BIOS tooling works rather than
+the way DFCI works: you upload the manufacturer's own configuration file, and Intune holds the BIOS
+password.
+
+> For Dell, upload the Dell Client Configuration Tool Kit file (.cctk). The file size limit is 2 MB.
+
+**Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
+
+Disjointness follows from those two reaches. The manufacturers DFCI supports are not the
+manufacturer the Templates policy supports, so a device that qualifies for one never qualifies for
+the other. Do not plan a fleet on the assumption that one surface backstops the other.
+
+<a id="choosing-a-path"></a>
+## Choosing a Path
+
+Start from the manufacturer, not from the tool.
+
+- **Dell fleet** — Intune holds the BIOS password. Use the BIOS configuration and other settings
+  Templates policy, and upload a Dell Client Configuration Tool Kit file.
+- **HP fleet** — HP holds the BIOS password in its own cloud vault. Work through HP Connect for
+  Microsoft Endpoint Manager. The secret never enters your tenant, so offboarding runs on HP's
+  terms rather than yours.
+- **Lenovo fleet** — you hold the secret. Work through Think BIOS Config Tool V2 and Lenovo BIOS
+  Certificate Tool V2, and decide up front whether the secret is an encrypted INI file or a private
+  key in your own Azure Key Vault. That choice is the one with lasting consequences.
+- **Surface, or another OEM DFCI supports** — no BIOS password is involved at all. Go to
+  [Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md).
+
+Two questions settle almost every case: does your hardware appear on the DFCI OEM list, and if it
+does not, who is willing to hold your BIOS password. Vendor-specific procedures for Dell, HP and
+Lenovo are not yet written in this corpus — this section names the surface and the custody model so
+the choice can be made before the procedure exists.
+
+<a id="domain-boundary"></a>
+## What This Domain Does Not Own
+
+Four adjacent things are routinely mistaken for firmware configuration. Each has an owner
+elsewhere in this corpus.
+
+**TPM state and attestation failures.** Triaged in
+[TPM Attestation Failure Decision Tree](../../decision-trees/03-tpm-attestation.md). That document
+is written for L1 triage while this one is written for administrators, so expect a change of
+altitude across the link — read it as a triage path, not as a configuration reference.
+
+**Secure Boot.** Defined in [Secure Boot](../../_glossary.md#secure-boot) as a UEFI firmware
+feature in its own right. Nothing in this domain turns it on or off.
+
+**BitLocker and security baseline interactions.** Owned by
+[Security Baseline Interactions with Autopilot Provisioning](../../reference/security-baseline-conflicts.md).
+BitLocker appears in this domain only as a consequence — a BIOS change can cost you access to an
+encrypted drive — never as a setting this domain configures.
+
+**Firmware updates.** Owned by
+[Windows Driver and Firmware Updates](../patch-management/06-windows-driver-firmware-updates.md),
+and separated from firmware configuration in the next section.
+
+Neither TPM nor Secure Boot appears in the DFCI settings surface, and the ground for saying so is
+an enumeration rather than a prohibition. The DFCI settings reference enumerates eight setting
+categories — UEFI access, Security features, Cameras, Microphones and speakers, Radios,
+Boot Options, Ports, and Wake settings — and neither TPM nor Secure Boot appears among them.
+
+**Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+No Microsoft page states the exclusion as a limitation. What the enumeration shows is the strongest
+form the claim can honestly take, and it is the form used here.
+
+<a id="updates-vs-configuration"></a>
+## Where This Domain Fits
+
+Two domains in this corpus carry the word firmware, and they answer different questions.
+
+Firmware *updates* are delivery — getting a manufacturer's firmware payload onto a device, on a
+schedule, through the Intune driver and firmware update policy. That is owned by
+[Windows Driver and Firmware Updates](../patch-management/06-windows-driver-firmware-updates.md).
+
+Firmware *configuration* is policy — deciding which BIOS settings a device is allowed to have, and
+who is permitted to change them. That is this domain.
+
+A device can be fully current on firmware and still have every BIOS setting wrong, and it can be
+locked down correctly while running firmware from three years ago. If the question is when a
+payload arrives, it belongs to the update domain. If the question is what the firmware is permitted
+to do once it is there, it belongs here.
+
+<a id="before-you-start"></a>
+## Before You Start
+
+BIOS configuration is not an ordinary policy assignment. It changes hardware, and the failure modes
+are physical.
+
+> BIOS configuration changes can impact device functionality and operability, including the ability to boot or access Bitlocker encrypted drives.
+
+**Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
+
+Read that as written. A wrong BIOS setting can cost you the boot path, or the encrypted volume
+behind it, on a device nobody can reach remotely. Before assigning anything on the Dell Templates
+surface, pilot on a small group you can physically recover, and confirm your BitLocker recovery
+keys are escrowed and retrievable first.
+
+DFCI carries its own, separately worded warning about irreversible configuration, published on a
+different Microsoft page. It is quoted once, in
+[Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md), and is not restated here.
+
+<a id="unsupported-callouts"></a>
+## Unsupported and Anti-Feature Callouts
+
+**DFCI is unavailable on Dell, HP and Lenovo hardware — unavailable, not declined.** None of the
+three appears on the DFCI OEM list, so there is no DFCI profile to assign to them and no
+configuration that makes one apply. This is why custody is the routing question: for Dell, HP and
+Lenovo fleets the answer is a vendor path, not an Intune-native one.
+
+**The native Templates surface supports exactly one manufacturer.** Not one manufacturer today with
+others announced — one, stated flatly on the Microsoft page quoted above. Plan Dell BIOS
+configuration as a single-vendor capability, and do not budget for it to widen.
+
+**The TPM and Secure Boot exclusion is not a documented limitation.** No first-party sentence states
+it, so there is nothing to cite and nothing to raise a support case against. The only honest ground
+is the enumeration recorded above. Treat it as an observation about the settings surface as
+currently documented, and re-check it whenever the settings reference is revised.
+
 ## Related Resources
 
 - [Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md) — DFCI mechanics,
   prerequisites and disqualifiers, OEM support, Surface eligibility, the settings surface, and the
   retire, reuse and recover sequences
+- [Windows Driver and Firmware Updates](../patch-management/06-windows-driver-firmware-updates.md)
+  — firmware update delivery through the Intune driver and firmware update policy; the other half
+  of the updates-versus-configuration seam
+- [TPM Attestation Failure Decision Tree](../../decision-trees/03-tpm-attestation.md) — L1 triage
+  path for provisioning failures that trace to the TPM
+- [Security Baseline Interactions with Autopilot Provisioning](../../reference/security-baseline-conflicts.md)
+  — BitLocker and security baseline behavior during Autopilot provisioning
+- [Secure Boot](../../_glossary.md#secure-boot) — the glossary definition of the UEFI feature this
+  domain does not configure
 
 ## External References
 
+- [Manage DFCI for Windows Autopilot devices (Microsoft Learn)](https://learn.microsoft.com/en-us/autopilot/dfci-management)
+- [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows)
 - [Use BIOS configuration profiles for Windows devices in Microsoft Intune (Microsoft Learn)](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows)
 - [HP Connect for Microsoft Endpoint Manager — User Guide (HP)](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf)
 - [Introducing Think BIOS Config Tool V2 and Lenovo BIOS Certificate Tool V2 (Lenovo ThinkDeploy Blog)](https://blog.lenovocdrt.com/introducing-think-bios-config-tool-v2-and-lenovo-bios-certificate-tool-v2/)
