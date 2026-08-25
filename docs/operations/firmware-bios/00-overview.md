@@ -79,10 +79,11 @@ Intune has two native ways to reach firmware settings, and they are disjoint: no
 by both. Which one applies is decided by hardware, not by preference or licensing.
 
 **DFCI is the broad surface, and it reaches none of Dell, HP or Lenovo.** DFCI reaches the nine
-OEMs enumerated on the Autopilot DFCI management page and is covered in
-[Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md), which carries that list, its
-trailing statement about OEMs still pending, and the narrower conflicting list a second Microsoft
-page publishes.
+OEMs enumerated on the Autopilot DFCI management page. That count is not the only one Microsoft
+publishes: two further pages carry shorter lists, of six manufacturers and of one.
+[Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md) carries all three, together
+with the canonical list's trailing statement about OEMs still pending, and records the divergence as
+a documented conflict rather than resolving it.
 
 **Source:** [Manage DFCI for Windows Autopilot devices](https://learn.microsoft.com/en-us/autopilot/dfci-management) (ms.date 2025-03-25, updated 2026-04-14)
 
@@ -193,7 +194,7 @@ different Microsoft page. It is quoted once, in
 ## Unsupported and Anti-Feature Callouts
 
 **DFCI is unavailable on Dell, HP and Lenovo hardware — unavailable, not declined.** None of the
-three appears on the DFCI OEM list, so there is no DFCI profile to assign to them and no
+three appears on any of the three DFCI OEM lists, so there is no DFCI profile to assign to them and no
 configuration that makes one apply. This is why custody is the routing question: for Dell, HP and
 Lenovo fleets the answer is a vendor path, not an Intune-native one.
 
