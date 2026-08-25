@@ -285,6 +285,59 @@ nothing else:
 
 **Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
 
+**Trap: disabling external boot also disables network boot, and the pair cannot both be compliant.**
+Setting Boot from external media (USB, SD) to Disabled also prevents the device booting from network
+adapters, so pairing it with Boot from network adapters set to Enabled asks the firmware for two
+states it cannot hold at once. The settings reference states the compliance result and the recovery
+cost in the same place:
+
+> When set to Disabled, don't set the Boot from network adapters setting to Enabled. It causes the Boot from external media (USB, SD) setting or Boot from network adapters setting to become noncompliant.
+>
+> Disabling all external boot options or all external ports significantly complicates OS recovery. To recover a device that can no longer boot Windows, you might have to physically open the device and replace the hardware storage.
+
+**Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+On Surface hardware the recovery half has a named worst case, and it is published on the Surface
+guide rather than in the settings reference:
+
+> If you disable both Boot from external media and USB type A—and the device becomes unbootable for any reason—you won't be able to recover the device without replacing the SSD. You'll be unable to boot from external media and perform a PXE boot or DFCI refresh from the network.
+
+**Source:** [DFCI management for Surface devices](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide) (ms.date 2026-07-14, updated 2026-07-14)
+
+Read the two halves together before locking a boot path. A device with no external boot route and no
+network boot route has no remote recovery route either, so the repair becomes a hardware operation
+on a bench, one device at a time.
+
+**Trap: a disabled radios category needs a wired connection, or the device becomes unmanageable.**
+Setting the Radios (Bluetooth, Wi-Fi, NFC, etc.) category to Disabled switches off the built-in
+radios the firmware manages — including the ones the device would otherwise use to reach Intune:
+
+> When you set this option to Disabled, the device requires a wired network connection. Otherwise, the device can be unmanageable.
+
+**Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+**One firmware setting reaches all the way into update eligibility, in one direction only.** Reading
+that chain backward is the mistake this part of the section exists to prevent:
+
+1. The DFCI setting for CPU and IO virtualization exposes only Not configured and Enabled. DFCI can
+   switch the platform's CPU and IO virtualization capabilities on — the settings reference records
+   that enabling it also turns on Windows Virtualization Based Security and Device Guard — and it
+   carries no value that switches them back off.
+2. The exposure therefore does not live in a DFCI profile at all. A device whose
+   virtualization-based security is off got there through firmware settings configured outside DFCI,
+   at the manufacturer's own BIOS surface, and that is the only place it can be corrected.
+3. The consequence surfaces in update servicing, months later and in a different console. A device
+   without virtualization-based security enabled and running can be temporarily ineligible for the
+   in-memory quality-update path:
+
+> Devices might be temporarily ineligible because the devices don't have Virtualization-based Security (VBS) enabled and running.
+
+**Source:** [Windows Autopatch - Frequently Asked Questions](https://learn.microsoft.com/en-us/windows/deployment/windows-autopatch/overview/windows-autopatch-faq) (ms.date 2026-05-28, updated 2026-05-28)
+
+The eligibility half of that chain belongs to the update domain rather than this one. For the
+Windows servicing policy that consumes it, including the driver and firmware update policy, see
+[Windows WUfB Rings](../patch-management/01-windows-wufb-rings.md).
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
