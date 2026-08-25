@@ -309,6 +309,11 @@ Read the two halves together before locking a boot path. A device with no extern
 network boot route has no remote recovery route either, so the repair becomes a hardware operation
 on a bench, one device at a time.
 
+The loss reaches further than this trap. Refreshing management from the network is also the only
+route out of a device retired in the wrong order, so a profile that disables this pair removes the
+recovery path described under Recovering a Device Locked in the Wrong Order below, before that
+mistake is ever made.
+
 **Trap: a disabled radios category needs a wired connection, or the device becomes unmanageable.**
 Setting the Radios (Bluetooth, Wi-Fi, NFC, etc.) category to Disabled switches off the built-in
 radios the firmware manages — including the ones the device would otherwise use to reach Intune:
@@ -461,6 +466,14 @@ recovered this way is an unlocked device carrying the same firmware configuratio
 locked. Refreshing management from the network is also a physical operation performed at the device,
 not a console action — which means it scales at the speed of a bench technician, one machine at a
 time.
+
+**Precondition: the refresh-from-network route can itself have been configured away.** A device whose
+last DFCI profile disabled both Boot from external media (USB, SD) and USB type A cannot perform a
+DFCI refresh from the network. The Surface guide quoted under the boot-and-port trap earlier on this
+page names that pairing as unrecoverable without replacing the SSD, and the refresh from the network
+is one of the two routes it says are lost. Check the last-applied profile's boot and port values
+before planning any recovery on this path. If both were disabled there is no software route back on
+any OEM, Surface included, and the device is a hardware repair rather than a recovery.
 
 **The Surface removal path, and why its own step order does not generalize.** Microsoft publishes a
 Surface-specific sequence for removing DFCI management and returning a Surface device to a
