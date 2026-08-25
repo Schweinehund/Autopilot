@@ -382,6 +382,64 @@ by withdrawing the assignment.
 The retire sequence, the reuse sequence and the recovery path for a device already locked in the
 wrong order are documented in the sections that follow, each with its own ordering constraints.
 
+<a id="retiring-a-device"></a>
+## Retiring a Device
+
+Retiring is the sequence for a device that leaves the fleet permanently — sold, returned at the end
+of a lease, recycled, or otherwise released from management. It has three steps, and the order is
+load-bearing rather than incidental. Each step removes an instrument the previous step depended on,
+so performing them out of order does not merely delay the work; it destroys the only route back.
+
+1. **Unlock the device through the DFCI profile.** Update the existing profile — do not delete it —
+   to the UEFI (BIOS) settings you want at the exit state. Microsoft's worked example changes
+   Allow local user to change UEFI (BIOS) settings to Only not configured settings, sets all other
+   settings to Not configured, and saves. The profile is the only instrument that can re-enable the
+   UEFI menus while the device is still under management, which is why this step comes first.
+2. **Wipe or retire the device in Intune.** The device is still registered and still reachable by
+   the profile at this point, so anything left wrong in step 1 can still be corrected.
+3. **Delete the Autopilot record last.** This is the step that ends the trust chain the interface
+   depends on, and it is what stops the device returning to management on its next reboot.
+
+> These steps unlock the device's UEFI (BIOS) menus.
+>
+> You're now ready to wipe the device. Once the device is wiped, delete the Windows Autopilot record.
+
+**Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+Note what the unlock step does and does not do. It re-enables the menus; it does not roll the
+firmware back to a factory state. The values already written stay at whatever the profile last set
+them to, Enabled or Disabled, rather than reverting to an operating-system default.
+
+Reversing steps 1 and 3 is the failure this order exists to prevent. Once the Autopilot record is
+gone, Intune has no device left to address, so the profile that would unlock the firmware can no
+longer reach it and the UEFI menus stay locked at the last applied values. That mistake is
+recoverable only through the path documented in the next section, and on non-Surface hardware it
+may not be recoverable at all.
+
+<a id="reusing-a-device"></a>
+## Reusing a Device
+
+Reusing is the sequence for a device that stays in the fleet and moves to a new user, a new
+department or a new configuration. It resembles retiring because both wipe the device, and the
+difference between them is a step that is deliberately absent rather than one that is present:
+
+> If you plan to reset Windows to repurpose the device, then wipe the device. Do not remove the Windows Autopilot device record.
+>
+> After wiping the device, move the device to the group assigned the new DFCI and Windows Autopilot profiles. Reboot the device to rerun Windows setup.
+
+**Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+The discriminator, stated rather than left to inference: reuse wipes the device but does **not**
+remove the Autopilot record, so the registration survives the wipe, DFCI management survives with
+the registration, and the device applies whatever profile its new group carries when it reboots into
+setup. Retiring does the opposite on both counts — it unlocks the firmware through the profile
+first and deletes the Autopilot record last, precisely because the device is not coming back.
+Reuse needs no unlock step at all, because the device never leaves management.
+
+Read the presence or absence of the Autopilot record at the end as the test for which sequence you
+are actually performing. A wipe that keeps the record is a reuse; a wipe that ends with the record
+deleted is a retire, and a retire that skipped the unlock is the recovery case below.
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
