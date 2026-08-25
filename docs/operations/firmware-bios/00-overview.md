@@ -204,9 +204,17 @@ three appears on any of the three DFCI OEM lists, so there is no DFCI profile to
 configuration that makes one apply. This is why custody is the routing question: for Dell, HP and
 Lenovo fleets the answer is a vendor path, not an Intune-native one.
 
-**The native Templates surface supports exactly one manufacturer.** Not one manufacturer today with
-others announced — one, stated flatly on the Microsoft page quoted above. Plan Dell BIOS
-configuration as a single-vendor capability, and do not budget for it to widen.
+**The native Templates surface supports exactly one manufacturer today.** The Microsoft page quoted
+above states the current position flatly — *"Currently, only Dell is supported."* — while its own
+comparison table hedges the future in the same breath:
+
+> Possibly more in the future
+
+**Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
+
+Microsoft commits to no manufacturer beyond Dell and gives no date, so plan Dell BIOS configuration
+as a single-vendor capability today. Treat any widening as unannounced rather than ruled out, and
+re-check this page before a procurement decision that would depend on it.
 
 **The TPM and Secure Boot exclusion is not a documented limitation.** No first-party sentence states
 it, so there is nothing to cite and nothing to raise a support case against. The only honest ground

@@ -620,3 +620,21 @@ page change what an administrator can plan for, and a fifth note records this se
 _Reviewed: 2026-08-25T05:01:21Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
+
+---
+
+## Dispositions — orchestrator ruling, 2026-08-25
+
+Recorded so these are not re-discovered as open findings in a later phase.
+
+| ID | Disposition | Deciding authority | Reason |
+|----|-------------|--------------------|--------|
+| **WR-07** | REJECTED — will not fix | **D-66** | Zero inbound links to `docs/operations/firmware-bios/` is by design. D-66 hands every registry row, filename-map row, ops-index row, the `docs/index.md` Operations entry and the inbound link to **Phase 152** as one atomic commit. Plan 01's prohibitions bar touching those files. Wiring here would break Phase 152's atomicity. |
+| **WR-08** | REJECTED — will not fix | **D-63** | `docs/_glossary.md` front matter must stay `last_verified: 2026-06-29` / `review_by: 2026-09-27`. That file runs a 90-day review cycle, not the milestone's 60-day one, and plan 02's must_haves state the unchanged front matter as a truth to satisfy. Body was updated (WR-09); front matter deliberately was not. |
+| **IN-04** | SKIPPED — accepted cost | Fixer judgment, orchestrator concurred | The eight-category enumeration is load-bearing at two of its three sites: `00:145-148` and `01:512-515` both argue that the TPM/Secure Boot exclusion's only honest ground is an enumeration rather than a prohibition. Removing the redundancy would remove the evidence the argument is made of. The count of eight was verified correct. Cost accepted: three sites to update if the category list ever changes. |
+
+### Post-review finding (found by the phase verifier, not by this review)
+
+| ID | Disposition | Notes |
+|----|-------------|-------|
+| **VR-01** | FIXED | `00-overview.md` asserted the Templates surface supports one manufacturer *"Not one manufacturer today with others announced — one, stated flatly on the Microsoft page quoted above"*, arguing against a hedged reading that the cited page itself takes: its comparison table reads `Possibly more in the future` alongside `Currently, only Dell is supported.` Both strings confirmed present on a live raw-byte fetch. The callout now carries both statements, each sourced, and advises re-checking before a procurement decision. Same defect class as WR-02/WR-04/WR-06, which this review caught and this one survived. |
