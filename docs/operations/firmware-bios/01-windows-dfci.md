@@ -357,8 +357,8 @@ that chain backward is the mistake this part of the section exists to prevent:
    holds for Surface too, and more strongly: with the setting inert, the manufacturer's own BIOS
    surface is the only place virtualization can be changed in either direction.
 3. The consequence surfaces in update servicing, months later and in a different console. A device
-   without virtualization-based security enabled and running can be temporarily ineligible for the
-   in-memory quality-update path:
+   without virtualization-based security enabled and running can be temporarily ineligible for
+   Hotpatch, the in-memory quality-update path:
 
 > Devices might be temporarily ineligible because the devices don't have Virtualization-based Security (VBS) enabled and running.
 
