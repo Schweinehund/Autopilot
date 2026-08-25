@@ -338,6 +338,50 @@ The eligibility half of that chain belongs to the update domain rather than this
 Windows servicing policy that consumes it, including the driver and firmware update policy, see
 [Windows WUfB Rings](../patch-management/01-windows-wufb-rings.md).
 
+<a id="bricking-irreversible"></a>
+## Bricking and Irreversible Configuration
+
+Everything above assumes a device that can still be reached. This section is about the settings that
+take that assumption away. Microsoft states the risk on the page that describes how to build a DFCI
+profile, in its own words, without hedging:
+
+> Configuring and assigning DFCI profiles can lock the device beyond repair. So, pay attention to the values you configure.
+
+**Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+That is the DFCI surface's own warning, and it is the only one quoted in this guide. The Dell
+Templates surface carries a separate, differently worded warning on a different Microsoft page,
+about boot paths and encrypted volumes; it is quoted once, in
+[Firmware and BIOS Governance](00-overview.md), and is not repeated here.
+
+**Re-imaging does not undo any of it.** The settings reference adds a sentence the profile page does
+not, and it is the one that makes the irreversibility concrete:
+
+> The DFCI profile settings change the device hardware, and can't be fixed by re-imaging the OS.
+
+**Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+Read that against the recovery instinct it defeats. The standard answer to a misconfigured Windows
+device is to rebuild it, and rebuilding does not touch this layer. A DFCI setting survives the wipe,
+survives the reinstall, and survives the device being handed to someone else.
+
+**Deleting the profile removes nothing.** The instinct on discovering a bad DFCI profile is to
+delete the profile, or to pull the device out of the group the profile is assigned to. Both are the
+wrong move, and Microsoft says so directly:
+
+> Deleting the DFCI profile, or removing a device from the group assigned to the profile doesn't remove DFCI settings or re-enable the UEFI (BIOS) menus.
+
+**Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+Deleting the profile is worse than doing nothing, because it removes the only instrument that can
+still change the device. The settings stay, the UEFI menus stay locked, and Intune no longer has a
+profile through which to unlock them. To stop using DFCI on a device, update the settings in the
+existing profile — do not delete it — and release the device through the retire sequence rather than
+by withdrawing the assignment.
+
+The retire sequence, the reuse sequence and the recovery path for a device already locked in the
+wrong order are documented in the sections that follow, each with its own ordering constraints.
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
