@@ -1000,12 +1000,12 @@
         },
         "149": {
           "issueKey": "RTS-811",
-          "status": "in_progress",
+          "status": "done",
           "name": "Firmware/BIOS Domain — Overview, DFCI & Surface UEFI"
         },
         "150": {
           "issueKey": "RTS-812",
-          "status": "todo",
+          "status": "in_progress",
           "name": "Per-OEM BIOS Guides & Capability Matrix"
         },
         "151": {
