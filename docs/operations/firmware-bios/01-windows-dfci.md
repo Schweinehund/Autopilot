@@ -184,9 +184,9 @@ arrive at a shorter list than the one they started from, which is precisely why 
 **Dell, HP and Lenovo are on none of the three lists.** DFCI is unavailable on Dell, HP and Lenovo
 hardware — it is not an option an administrator declined, not a setting left switched off, and not a
 capability that can be turned on by licensing, firmware update or configuration. There is no DFCI
-profile to assign to those devices because the manufacturer never integrated the DFCI code and the
-Microsoft Device Management Trust certificate into the firmware in the first place. Those fleets are
-governed through an entirely different mechanism, and choosing between them is what
+profile to assign to those devices, because none of the three published manufacturer lists names
+them. Microsoft publishes the absence and not a reason for it, so no reason is recorded here. Those
+fleets are governed through an entirely different mechanism, and choosing between them is what
 [Firmware and BIOS Governance](00-overview.md) exists to route.
 
 <a id="surface-eligibility"></a>
@@ -564,8 +564,8 @@ what this domain does not own, including where TPM and Secure Boot are governed 
 **No Microsoft list of DFCI manufacturers names Dell, HP or Lenovo.** All three lists this guide
 records — the canonical nine, the older six and the single-manufacturer variant — omit them.
 On that hardware DFCI is unavailable rather than declined: there is no profile to assign, no license
-to buy and no firmware setting to turn on, because the manufacturer never carried the DFCI code and
-the Microsoft trust anchor into the firmware. Those fleets are governed through a different
+to buy and no firmware setting to turn on. What Microsoft publishes is the absence itself and not
+its cause, and this guide states no cause either. Those fleets are governed through a different
 mechanism entirely, which is the routing question
 [Firmware and BIOS Governance](00-overview.md) answers.
 
