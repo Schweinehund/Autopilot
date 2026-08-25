@@ -119,8 +119,10 @@ Start from the manufacturer, not from the tool.
 - **Lenovo fleet** — you hold the secret. Work through Think BIOS Config Tool V2 and Lenovo BIOS
   Certificate Tool V2, and decide up front whether the secret is an encrypted INI file or a private
   key in your own Azure Key Vault. That choice is the one with lasting consequences.
-- **Surface, or another OEM DFCI supports** — no BIOS password is involved at all. Go to
-  [Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md).
+- **Surface, or another OEM DFCI supports** — no BIOS password is involved at all, because DFCI's
+  trust chain rests on public key cryptography rather than on local UEFI password security. Go to
+  [Device Firmware Configuration Interface (DFCI)](01-windows-dfci.md), which carries that statement
+  under its own **Source:** line.
 
 Two questions settle almost every case: does your hardware appear on the DFCI OEM list, and if it
 does not, who is willing to hold your BIOS password. Vendor-specific procedures for Dell, HP and

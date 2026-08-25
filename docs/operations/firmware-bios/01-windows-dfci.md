@@ -36,8 +36,13 @@ documents exactly that outcome for one pair of boot settings.
 **Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
 
 Because that layer sits below the operating system, a DFCI setting is not undone by reinstalling
-Windows. Authorization does not come from a password an operator supplies; it travels a certificate
-trust chain that begins with the OEM attesting the device's commercial acquisition at Autopilot
+Windows. Authorization does not come from a password an operator supplies:
+
+> DFCI's trust chain uses public key cryptography, and doesn't depend on local UEFI password security.
+
+**Source:** [Windows Autopilot and Device Firmware Configuration Interface](https://learn.microsoft.com/en-us/autopilot/dfci-management) (ms.date 2026-06-23, updated 2026-07-14)
+
+That chain begins with the OEM attesting the device's commercial acquisition at Autopilot
 registration and ends at the Intune tenant that owns the profile. The device firmware honors the
 profile because it trusts that chain. Microsoft's own comparison of the two native BIOS surfaces
 describes the DFCI path as:

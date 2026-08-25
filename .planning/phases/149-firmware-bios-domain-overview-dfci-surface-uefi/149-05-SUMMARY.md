@@ -344,6 +344,15 @@ prerequisites section.** This phase wrote the outbound direction only. INT-04 is
 files and does not reach that file, so without this named hand-off the inbound link is nobody's job
 (D-44). This plan did not edit that file.
 
+**4b. The reciprocal link from `docs/operations/patch-management/06-windows-driver-firmware-updates.md`
+(and `01-windows-wufb-rings.md`) back into `docs/operations/firmware-bios/`.** Added by the
+orchestrator on 2026-08-25 after the phase verifier found it in no phase's inheritance. This phase
+wrote the outbound direction across the updates-versus-configuration seam (D-42); `00-overview.md`
+asserts that seam, but patch-management never links back across it. Review finding WR-07 made its own
+deferral conditional on recording **all four** touch points so the nav phase inherits a checklist
+rather than a guess — items 1-4 above recorded three of the four, and this is the fourth. Without it
+the seam stays permanently one-directional.
+
 **5. Hand forward the rule, never a number.** INT-03 requires the canary target be computed from the
 registry after the rows land; `ARCHITECTURE.md:293` bars its own estimate from becoming a literal.
 Do not carry any count from this summary into the canary.
