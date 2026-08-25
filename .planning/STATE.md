@@ -2,20 +2,20 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
-current_phase: 149
-current_phase_name: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
-status: verifying
-stopped_at: Completed 149-05-PLAN.md
-last_updated: "2026-08-25T04:51:16.069Z"
-last_activity: 2026-08-24
-last_activity_desc: Phase 149 execution started
-state_head: 16a7ed8001ef1693098b6e2d5c9833b7f2dcd08c
+current_phase: 150
+current_phase_name: Per-OEM BIOS Guides & Capability Matrix
+status: planning
+stopped_at: Phase 149 complete, ready to plan Phase 150
+last_updated: "2026-08-25T11:54:08.485Z"
+last_activity: 2026-08-25
+last_activity_desc: Phase 149 complete, transitioned to Phase 150
+state_head: 87c01e321a7ae9f4f02e91dc03a25fd40cb9e2dd
 progress:
   total_phases: 9
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 20
   completed_plans: 20
-  percent: 44
+  percent: 56
 ---
 
 # Project State
@@ -37,10 +37,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI) — EXECUTING
-Plan: 5 of 5
-Status: Phase complete — ready for verification
-Last activity: 2026-08-24 — Phase 149 execution started
+Phase: 150 — Per-OEM BIOS Guides & Capability Matrix
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-25 — Phase 149 complete, transitioned to Phase 150
 
 Progress: [████░░░░░░] 44% (4 of 9 phases; 15/15 planned plans complete)
 
@@ -599,7 +599,7 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 ## Session Continuity
 
 Last session: 2026-08-25T04:51:13.809Z
-Stopped at: Completed 149-05-PLAN.md
+Stopped at: Phase 149 complete, ready to plan Phase 150
 Resume file: None
 Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 
