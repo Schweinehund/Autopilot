@@ -240,6 +240,51 @@ and wrong silently. The durable facts are the ones above: the floor, the self-re
 inert settings and the existence of per-model and per-processor gating. The current values behind
 them belong at the vendor page.
 
+<a id="dfci-settings-surface"></a>
+## The Settings Surface
+
+The Intune DFCI settings reference organizes everything a DFCI profile can reach into eight
+categories: UEFI access, Security features, Cameras, Microphones and speakers, Radios, Boot Options,
+Ports, and Wake settings. Most individual settings take one of three values — Not configured,
+Enabled or Disabled — and the exceptions matter more than the pattern. The full per-setting option
+matrix lives on that page and is deliberately not reproduced here; read it there, against the exact
+profile you are about to assign.
+
+**Source:** [Device Firmware Configuration Interface (DFCI) profile settings in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/ref-dfci-settings-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
+One of those exceptions belongs here rather than in a footnote. In the Security features category,
+CPU and IO virtualization is documented with two options and no third: there is no Disabled value for
+it, so DFCI can switch platform virtualization on and structurally cannot switch it off. That
+asymmetry has consequences further down this page.
+
+**What ships here and what routes out.** This guide names a setting when it carries a durable,
+high-consequence behavior — a bricking risk, an interaction trap, or a compliance conflict — and
+routes the reader out to the vendor or Microsoft page when the setting is high-churn enumerable data
+with no independent narrative value. Applying that rule honestly means about a dozen individual
+setting names still appear in this file, across this section, the Surface section above and the
+retire sequence below; the rule bounds which ones, not whether any do. It is also why the
+requirements bar on per-model matrices does not reach the page cited above: that bar exists so these
+guides route to vendor documentation rather than rewrite vendor manuals, and the DFCI settings
+reference is a Microsoft Intune policy reference, not a vendor manual.
+
+**Trap: a category setting and one of its granular members never converge.** Some DFCI settings are
+categories — Microphones and speakers, or Radios (Bluetooth, Wi-Fi, NFC, etc.) — and some are
+granular members of those categories, such as Microphones or Wi-Fi. Configure both and the profile
+never settles. On the first sync the granular setting applies and the category setting is reported
+noncompliant; on every sync afterward Intune applies the category setting because it is
+noncompliant, which makes the granular setting noncompliant, then applies the granular setting,
+which makes the category setting noncompliant again. The loop does not time out and nothing on the
+device breaks it. Configure the category or the granular settings, never both.
+
+Microsoft's own worked example is the case administrators reach for most often — permit Wi-Fi and
+nothing else:
+
+1. Leave the category setting Radios (Bluetooth, Wi-Fi, NFC, etc.) at Not configured.
+2. Set the Wi-Fi radio setting to Enable.
+3. Set all the other granular radio settings to Disabled.
+
+**Source:** [Use DFCI profiles on Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-dfci-windows) (ms.date 2026-06-23, updated 2026-07-01)
+
 ## Related Resources
 
 - [Firmware and BIOS Governance](00-overview.md) — the domain overview: who holds the BIOS secret
