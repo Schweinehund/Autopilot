@@ -299,6 +299,7 @@ The second half of ESP (after user login) that applies user-targeted apps and po
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-08-24 | Phase 149 (BIOS-02 / BIOS-04): added `### BIOS configuration and other settings`, `### BIOS password`, `### Device Firmware Configuration Interface (DFCI)` and `### UEFI CSP` terms (Hardware section) with a one-way `> See also:` from DFCI to Secure Boot and UEFI CSP; Alphabetical Index updated | -- |
+| 2026-08-25 | Phase 149: `last_verified` deliberately NOT advanced for the 2026-08-24 additions. This file is on a 90-day review cycle, not the milestone's 60-day one, so `last_verified` records when this file's review cycle last completed rather than when its newest entry was written. Owner ruling, 2026-08-25; see D-63 | -- |
 | 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 91: added reciprocal `> See also:` to ### Tenant migration pointing to _glossary-macos.md#mdm-migration | -- |
 | 2026-06-20 | Phase 75 (SSOREF-01 / XC-1): added `### Entra ID SSO` term (Security section) and a reciprocal `> See also:` to Secure Enclave inside the existing `### TPM` body; Alphabetical Index updated | -- |
