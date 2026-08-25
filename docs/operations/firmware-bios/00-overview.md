@@ -36,10 +36,11 @@ custody column, and the operating model follows.
 | Lenovo | You, as an encrypted INI file or as a private key in your own Azure Key Vault | Think BIOS Config Tool V2 and Lenovo BIOS Certificate Tool V2 |
 
 **Dell — Intune holds the secret.** Dell hardware is reached through the BIOS configuration and
-other settings Templates policy, created and assigned in the Intune console. The BIOS password is
-held by Intune inside your own tenant, with no vendor cloud service between the console and the
-device. That surface reaches one manufacturer:
+other settings Templates policy, created and assigned in the Intune console. Custody and vendor
+coverage are both stated on the Microsoft page for that surface:
 
+> Intune stores the BIOS passwords for each device.
+>
 > Currently, only Dell is supported.
 
 **Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
