@@ -53,6 +53,12 @@ Intune console. The BIOS password is never held by your tenant at all:
 
 **Source:** [HP Connect for Microsoft Endpoint Manager — User Guide](https://connect.admin.hp.com/static/HPConnectUserGuide.pdf) (Version 1.2.0, published 2022-09-27)
 
+That guide is version 1.2.0 from 2022 and is the oldest source cited anywhere in this domain. The
+custody model it documents is the durable fact; the console details, and the Microsoft Endpoint
+Manager branding carried in the connector's own product name, both predate Intune's current naming.
+Confirm the connector's current name and its administration surface at `admin.hp.com` before acting
+on this section.
+
 **Lenovo — you hold the secret.** Lenovo hardware is reached through Think BIOS Config Tool V2 and
 Lenovo BIOS Certificate Tool V2. The secret is either an encrypted INI file that you store and
 protect, or a signing certificate whose private key you keep in your own Azure Key Vault:
