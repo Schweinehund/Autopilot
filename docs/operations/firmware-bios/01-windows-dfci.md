@@ -244,15 +244,12 @@ Surface Laptop generation is listed for Intel processors only. The current eligi
 its exclusions live on the vendor page cited above; check them there against the exact SKU being
 purchased or deployed rather than against a family name.
 
-**The bound this section works to, stated on the record.** This guide ships no eligible-model table
-and no table of which DFCI settings are gated to which Surface models. That is a deliberate scope
-choice, not an omission: the requirements document's Out of Scope section bars per-model matrices
-literally, on the ground that these guides route to vendor documentation rather than rewrite vendor
-manuals. The reasoning holds independently of that bar, because a model list is high-churn data with
-a short useful life — a copy of it is wrong the first time Microsoft ships a new Surface generation,
-and wrong silently. The durable facts are the ones above: the floor, the self-registration rule, the
-inert settings and the existence of per-model and per-processor gating. The current values behind
-them belong at the vendor page.
+This guide therefore ships no eligible-model table, and no table of which DFCI settings are gated to
+which Surface models. That is deliberate rather than an omission. A model list is high-churn data
+with a short useful life: a copy of it here is wrong the first time Microsoft ships a new Surface
+generation, and wrong silently. The durable facts are the ones above — the floor, the
+self-registration rule, the inert settings and the existence of per-model and per-processor gating.
+The current values behind them belong at the vendor page.
 
 <a id="dfci-settings-surface"></a>
 ## The Settings Surface
@@ -280,13 +277,17 @@ description of the interface on the manufacturers where the setting does apply.
 **What ships here and what routes out.** This guide names a setting when it carries a durable,
 high-consequence behavior — a bricking risk, an interaction trap, or a compliance conflict — and
 routes the reader out to the vendor or Microsoft page when the setting is high-churn enumerable data
-with no independent narrative value. Applying that rule honestly means twelve individual
-setting names still appear in this file, counted at this revision, across this section, the Surface
-section above, the retire sequence below and the callouts near the end; the rule bounds which ones,
-not whether any do. It is also why the
-requirements bar on per-model matrices does not reach the page cited above: that bar exists so these
-guides route to vendor documentation rather than rewrite vendor manuals, and the DFCI settings
-reference is a Microsoft Intune policy reference, not a vendor manual.
+with no independent narrative value. Applying that rule honestly means ten individual setting names
+still appear in this file, across this section, the Surface section above, the retire sequence below
+and the callouts near the end. Count them the way this file counts them: one entry per underlying
+setting, counted once however often it appears and however the two first-party pages spell its
+display name, and excluding the eight category names listed above. The rule bounds which settings
+appear, not whether any do.
+
+Routing high-churn data out to its source page is also why this guide quotes the DFCI settings
+reference directly rather than pointing past it. That reference is a Microsoft Intune policy
+reference rather than a vendor manual, and the behaviors it documents — the value sets, the
+conflicts, the recovery costs — are the durable kind this guide keeps.
 
 **Trap: a category setting and one of its granular members never converge.** Some DFCI settings are
 categories — Microphones and speakers, or Radios (Bluetooth, Wi-Fi, NFC, etc.) — and some are
@@ -521,13 +522,8 @@ DFCI fleet leaves the firmware locked beyond Intune's reach with nothing left to
 
 **Source:** [DFCI management for Surface devices](https://learn.microsoft.com/en-us/surface/surface-manage-dfci-guide) (ms.date 2026-07-14, updated 2026-07-14)
 
-**The ground for this section, stated on the record.** No requirement clause and no success criterion
-for this domain's initial delivery covers a recovery runbook; retire and reuse are what they ask for,
-and this section is over-delivery against both. It ships anyway on two grounds. It is the highest-value
-content on this page for a service-desk reader, who meets these devices after the mistake rather than
-before it. And it is sourced first-party throughout, so shipping it costs nothing in attribution
-fidelity. Naming the ground here is deliberate, exactly as the Surface section above names its bound:
-a section that no criterion requires should say why it exists.
+This section is written for the service-desk reader who meets these devices after the mistake rather
+than before it. Every step and constraint in it is sourced first-party.
 
 <a id="unsupported-callouts"></a>
 ## Unsupported and Anti-Feature Callouts
