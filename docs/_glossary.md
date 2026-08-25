@@ -30,7 +30,7 @@ This reference defines the core terminology for Windows Autopilot deployment acr
 
 ## Alphabetical Index
 
-[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [Entra ID SSO](#entra-id-sso) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Tenant migration](#tenant-migration) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
+[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BIOS configuration and other settings](#bios-configuration-and-other-settings) | [BIOS password](#bios-password) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [Device Firmware Configuration Interface (DFCI)](#device-firmware-configuration-interface-dfci) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [Entra ID SSO](#entra-id-sso) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Tenant migration](#tenant-migration) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [UEFI CSP](#uefi-csp) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
 
 ---
 
@@ -172,6 +172,24 @@ Device identifiers (serial number, manufacturer, model) uploaded to Intune to ma
 
 > [Corporate Identifiers](_glossary-android.md#corporate-identifiers) (Android).
 
+### BIOS configuration and other settings
+
+The Intune Templates profile type that pushes a vendor BIOS configuration file to a device — for Dell, a Dell Client Configuration Tool Kit file (`.cctk`) subject to a 2 MB file size limit. Dell is the only vendor this profile type supports today, so it is disjoint from DFCI: no device is reachable by both surfaces.
+
+### BIOS password
+
+The firmware setup or supervisor password that gates BIOS changes on hardware that requires one. Who holds it — the Intune tenant, an OEM cloud service, or the customer — is the discriminator the firmware and BIOS governance domain routes on, because custody decides who can change a setting and who can recover a locked device.
+
+### Device Firmware Configuration Interface (DFCI)
+
+The Windows firmware management layer Intune reaches through a configuration service provider, addressing UEFI (BIOS) settings below the operating system. Authorization travels a certificate trust chain rather than a password an operator supplies, reporting is per setting rather than per profile, and a setting applied this way is not undone by reinstalling Windows. Its central gate is Autopilot registration through an OEM or a Microsoft CSP partner; a device registered manually, such as from a CSV import, cannot use it.
+
+> See also: [Secure Boot](#secure-boot) -- a UEFI firmware feature, not one of DFCI's eight setting categories; [UEFI CSP](#uefi-csp) -- the interface DFCI settings travel through.
+
+### UEFI CSP
+
+The Windows configuration service provider that DFCI settings use to reach device firmware.
+
 ---
 
 ## Network
@@ -280,6 +298,7 @@ The second half of ESP (after user login) that applies user-targeted apps and po
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-08-24 | Phase 149 (BIOS-02 / BIOS-04): added `### BIOS configuration and other settings`, `### BIOS password`, `### Device Firmware Configuration Interface (DFCI)` and `### UEFI CSP` terms (Hardware section) with a reciprocal `> See also:` from DFCI to Secure Boot and UEFI CSP; Alphabetical Index updated | -- |
 | 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
 | 2026-06-24 | Phase 91: added reciprocal `> See also:` to ### Tenant migration pointing to _glossary-macos.md#mdm-migration | -- |
 | 2026-06-20 | Phase 75 (SSOREF-01 / XC-1): added `### Entra ID SSO` term (Security section) and a reciprocal `> See also:` to Secure Enclave inside the existing `### TPM` body; Alphabetical Index updated | -- |
