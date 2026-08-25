@@ -78,7 +78,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 - [ ] **BIOS-08**: **Think BIOS Config Tool V2 does not support ThinkCentre** (incompatible WMI BIOS interface), so a mixed ThinkPad + ThinkCentre fleet **cannot use one tool for BIOS settings**. This corrects a research draft that attached Lenovo BIOS Certificate Tool's model list to the Think BIOS Config Tool row; the guide must not paper over the fork.
 - [ ] **BIOS-09**: **Losing the management plane loses the secret** is documented for both vendors, with the correct de-provisioning order (fleet first): Dell — subscription end means no path to read or retrieve BIOS passwords, OEM only; HP — account deactivation starts a **30-day countdown** after which all policies and secrets are permanently deleted, while orphaned remediation scripts keep running in Intune and must be removed by hand.
 - [ ] **BIOS-10**: Password custody scope is documented accurately: two retrieval options — per-device via a custom RBAC **Read Bios Password** role (whose creation requires **Intune Role Administrator**), or **all devices at once** with only the Entra **Intune Administrator** role — and passwords remain readable **after** a device leaves Intune management. Minimum role to author the policy at all: **Policy and Profile manager**.
-- [ ] **BIOS-11**: The bricking surface is quoted first-party — BIOS configuration changes can impact device functionality *"including the ability to boot or access Bitlocker encrypted drives"* — and DFCI's **retire and reuse sequences are documented as distinct**, with the fact that deleting the profile or group assignment does **not** remove settings.
+- [x] **BIOS-11**: The bricking surface is quoted first-party — BIOS configuration changes can impact device functionality *"including the ability to boot or access Bitlocker encrypted drives"* — and DFCI's **retire and reuse sequences are documented as distinct**, with the fact that deleting the profile or group assignment does **not** remove settings.
 - [ ] **BIOS-12**: An **enrolled** `docs/reference/firmware-oem-matrix.md` transposes the three per-OEM guides. It is authored with the guides but its **registry row is not landed here** (see INT-01).
 
 **Recovery is the largest remaining gap and must be researched at plan time, not assumed.** `[UNVERIFIED]` Lenovo publishes nothing on lost-supervisor-password or lost-certificate-private-key recovery — the pages were fetched and are silent. `[PREMISE]` HP offers no documented Endorsement-Key-loss escape hatch. For a service-desk audience, recovery is the most-used content in these guides; shipping it as a gap would undercut their purpose.
@@ -212,7 +212,7 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | BIOS-08 | Phase 150 | Pending |
 | BIOS-09 | Phase 150 | Pending |
 | BIOS-10 | Phase 150 | Pending |
-| BIOS-11 | Phase 149 | Pending |
+| BIOS-11 | Phase 149 | Complete |
 | BIOS-12 | Phase 150 | Pending |
 | RCP-01 | Phase 151 | Pending |
 | RCP-02 | Phase 151 | Pending |

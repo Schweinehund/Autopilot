@@ -4,17 +4,17 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 149
 current_phase_name: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
-status: executing
-stopped_at: Completed 149-04-PLAN.md
-last_updated: "2026-08-25T03:43:35.900Z"
+status: verifying
+stopped_at: Completed 149-05-PLAN.md
+last_updated: "2026-08-25T04:51:16.069Z"
 last_activity: 2026-08-24
 last_activity_desc: Phase 149 execution started
-state_head: e85b9f4a5be592551fee4227e0406efb772e0681
+state_head: 16a7ed8001ef1693098b6e2d5c9833b7f2dcd08c
 progress:
   total_phases: 9
   completed_phases: 4
   total_plans: 20
-  completed_plans: 19
+  completed_plans: 20
   percent: 44
 ---
 
@@ -39,7 +39,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 Phase: 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-08-24 — Phase 149 execution started
 
 Progress: [████░░░░░░] 44% (4 of 9 phases; 15/15 planned plans complete)
@@ -430,6 +430,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 149 P02 | 4 min | 3 tasks | 2 files |
 | Phase 149 P03 | 34 min | 3 tasks | 1 files |
 | Phase 149 P04 | 32 min | 3 tasks | 1 files |
+| Phase 149 P05 | 1h 5m | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -597,8 +598,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-25T03:43:12.649Z
-Stopped at: Completed 149-04-PLAN.md
+Last session: 2026-08-25T04:51:13.809Z
+Stopped at: Completed 149-05-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 
