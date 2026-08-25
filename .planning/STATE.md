@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 149
 current_phase_name: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI
 status: executing
-stopped_at: Completed 149-02-PLAN.md
-last_updated: "2026-08-25T02:54:11.095Z"
+stopped_at: Completed 149-03-PLAN.md
+last_updated: "2026-08-25T03:30:03.536Z"
 last_activity: 2026-08-24
 last_activity_desc: Phase 149 execution started
-state_head: 5dc088f537156128c4eb3129db2e98f98b06f5e0
+state_head: d32aedcfb13f91600ec88040f6fcfa0cef71f72a
 progress:
   total_phases: 9
   completed_phases: 4
   total_plans: 20
-  completed_plans: 16
+  completed_plans: 18
   percent: 44
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 149 (Firmware/BIOS Domain — Overview, DFCI & Surface UEFI) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-08-24 — Phase 149 execution started
 
@@ -428,6 +428,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 148 P05 | 25min | 3 tasks | 2 files |
 | Phase 149 P01 | 33 min | 3 tasks | 2 files |
 | Phase 149 P02 | 4 min | 3 tasks | 2 files |
+| Phase 149 P03 | 34 min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -561,6 +562,8 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 149]: D-22 discharged: the firmware/BIOS directory is firmware-bios/ — BIOS-01 states the path literally and requirement text is the authority over advisory architecture research; firmware-governance/ and bios-management/ declined
 - [Phase 149]: The Lenovo RBAC/logging/rotation comparison ships as labelled corpus inference, never as a Lenovo attribution — 149-RESEARCH.md Pitfall 8 confirms zero hits for only vendor, RBAC, logging and rotation on both fetched Lenovo pages; attributing it would be this milestone's third fabricated citation
 - [Phase 149]: Both firmware-bios files landed in ONE commit so the bidirectional cross-link never dangled — D-28: with reciprocal links, either commit ordering strands one direction and takes check-nav-hub-links to a corpus-link failure
+- [Phase 149]: Checkpoint ruling four-channel: all four Autopilot registration channels classified against DFCI's eligibility gate (CSV upload and Get-WindowsAutopilotInfo -Online disqualify; OEM direct and Partner Center / CSP partner qualify), plus the explicit APv2 no-DFCI statement — Human gate 2026-08-24 confirming D-05's owner ruling; the three-path reading would tell a CSP-purchase reader DFCI is unavailable when the source says it is available, and that failure mode is unrecoverable hardware spend
+- [Phase 149]: The six-OEM staleness superlative ships scoped as the oldest Microsoft Learn page cited in this guide, not as D-13's internal Pillar-A label — Pillar has zero occurrences anywhere in docs/ and is undefined for the reader; the shipped scope is narrower than the barred milestone-wide claim and independently checkable against the guide's own five Learn citations
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -589,8 +592,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-25T02:54:08.976Z
-Stopped at: Completed 149-02-PLAN.md
+Last session: 2026-08-25T03:30:01.191Z
+Stopped at: Completed 149-03-PLAN.md
 Resume file: None
 Next action: `/gsd-discuss-phase 148` (or `/gsd-plan-phase 148`)
 
