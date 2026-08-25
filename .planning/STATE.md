@@ -4,16 +4,16 @@ milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
 current_phase: 150
 current_phase_name: Per-OEM BIOS Guides & Capability Matrix
-status: planning
+status: executing
 stopped_at: Phase 150 context gathered
-last_updated: "2026-08-25T22:15:11.927Z"
+last_updated: "2026-08-25T23:40:29.198Z"
 last_activity: 2026-08-25
 last_activity_desc: Phase 149 complete, transitioned to Phase 150
-state_head: 87f7f96bdf0ca3ce5341be6b07a86ce5c00d4e83
+state_head: c2d676142b85ffb4030a9902ed47de26949eaf8e
 progress:
   total_phases: 9
   completed_phases: 5
-  total_plans: 20
+  total_plans: 25
   completed_plans: 20
   percent: 56
 ---
@@ -37,9 +37,9 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 150 — Per-OEM BIOS Guides & Capability Matrix
+Phase: 150 (Per-OEM BIOS Guides & Capability Matrix) — READY TO EXECUTE
 Plan: Not started
-Status: Ready to plan
+Status: Ready to execute
 Last activity: 2026-08-25 — Phase 149 complete, transitioned to Phase 150
 
 Progress: [████░░░░░░] 44% (4 of 9 phases; 15/15 planned plans complete)
