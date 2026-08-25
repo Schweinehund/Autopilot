@@ -233,10 +233,11 @@ setting under two display names, and Microsoft publishes no mapping between them
 this corpus's own inference, not as something either page states.
 
 The inference is worth confirming rather than assuming, because the prefix would invert what a value
-means. Read literally, Disable Boot from network adapters set to Enabled and Boot from network
-adapters set to Enabled ask for opposite things, and this is a boot path — the one place on this
-page where a wrong value has an unrecoverable failure mode. Check which of the two names your own
-Intune tenant presents before you set it, and set it from the name the settings reference uses.
+means. Read literally, the value Enabled asks for opposite things under the two names:
+Disable Boot from network adapters means switch network boot off, and
+Boot from network adapters means switch it on. This is a boot path — the one place on this page where
+a wrong value has an unrecoverable failure mode. Check which of the two names your own Intune tenant
+presents before you set it, and set it from the name the settings reference uses.
 
 **Model eligibility is neither uniform nor stable.** Support is gated per model and, within a
 family, per processor — a model can be excluded outright while its siblings are supported, and one
