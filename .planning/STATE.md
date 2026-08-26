@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 151
 current_phase_name: "Recipe #5 — The Enterprise Update Plan"
 status: executing
-stopped_at: Completed 151-01-PLAN.md
-last_updated: "2026-08-26T13:24:39.964Z"
+stopped_at: Completed 151-02-PLAN.md
+last_updated: "2026-08-26T13:38:00.717Z"
 last_activity: 2026-08-26
 last_activity_desc: Phase 151 execution started
-state_head: 285a65d55f62597b0099c6b75467c226860c8b69
+state_head: 720363b0c5fe863c05feb92f578264bb46947e34
 progress:
   total_phases: 9
   completed_phases: 6
   total_plans: 30
-  completed_plans: 25
+  completed_plans: 26
   percent: 67
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 151 (Recipe #5 — The Enterprise Update Plan) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-08-26 — Phase 151 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
@@ -443,6 +443,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 150 P04 | 55min | 3 tasks | 5 files |
 | Phase 150 P05 | 35min | 2 tasks | 1 files |
 | Phase 151 P01 | 42 min | 2 tasks | 3 files |
+| Phase 151 P02 | 35 min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -593,6 +594,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 151]: Device Recipe doc class widened via EEE-SOP STD-05 D-08 to admit a fleet or tenant configuration plan, with D-06's Summary end-state rule widened to accept a fleet end-state
 - [Phase 151]: Rollback/Recovery promoted into recipe-template.md at the V-135-ROLLBACKORDER slot with a prose-only placeholder; the marker line was NOT promoted (D-50) and the TEMPLATE-SENTINEL is byte-unchanged
 - [Phase 151]: Recipe 05 Source lines use the form [first-party page](url) (updated <date>), as carried by [corpus guide](path#anchor) — the corpus carries two different dates for the Autopatch groups-overview URL, so each date is attributed to the guide it came from
+- [Phase 151]: Step 2 (hotpatch) ships on the corrected position: enabled by default for eligible devices, Arm64 supported once CHPE is disabled, VBS required, Windows 11 Enterprise edition constraint, ineligible devices silently take the LCU
+- [Phase 151]: Step 3 carries the recipe's single Destructive rating; the destroy-all-approvals consequence is stated in the recipe's own prose, not deferred to a link
+- [Phase 151]: The hotpatch tenant-level click-path names Tenant administration but tells the reader to confirm the leaf blade — the corpus records the two-level model, not that control's blade
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -621,8 +625,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T13:24:23.010Z
-Stopped at: Completed 151-01-PLAN.md
+Last session: 2026-08-26T13:37:44.541Z
+Stopped at: Completed 151-02-PLAN.md
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
