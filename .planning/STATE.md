@@ -5,11 +5,11 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 151
 current_phase_name: "Recipe #5 — The Enterprise Update Plan"
 status: executing
-stopped_at: Phase 151 planned
-last_updated: "2026-08-26T13:01:58.743Z"
+stopped_at: Completed 151-01-PLAN.md
+last_updated: "2026-08-26T13:24:39.964Z"
 last_activity: 2026-08-26
-last_activity_desc: Phase 151 planned — 5 plans, 5 waves
-state_head: 0845e227ae1857972d2c9bab7e8d32072be81dd5
+last_activity_desc: Phase 151 execution started
+state_head: 285a65d55f62597b0099c6b75467c226860c8b69
 progress:
   total_phases: 9
   completed_phases: 6
@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpus audit of update/driver/firmware/BIOS coverage)
 
 **Core value:** IT teams can independently provision, troubleshoot, and manage Windows, macOS, iOS/iPadOS, Android, and Linux devices through Microsoft Intune / Entra ID without escalating to engineering — and find those answers as clean, correctly-cited results in the Copilot Studio / SharePoint knowledge base. v1.21 extends that corpus from provisioning into **day-2 update governance** — the enterprise update plan across operating systems, applications, drivers, firmware and BIOS.
-**Current focus:** Phase 150 — Per-OEM BIOS Guides & Capability Matrix
+**Current focus:** Phase 151 — Recipe #5 — The Enterprise Update Plan
 
 **Measured scoping baseline (2026-08-18, live corpus read at HEAD):** OS updates covered across 4 platforms in `docs/operations/patch-management/` (5 files); applications covered as **deployment only**, not patching (`docs/operations/app-lifecycle/`, 5 files); drivers and firmware share a single ~45-line disambiguation H2 at `docs/operations/patch-management/01-windows-wufb-rings.md:152`; **BIOS has zero management coverage** — `DFCI` = 0 occurrences corpus-wide, `UEFI` = 2 (both incidental), all 37 `BIOS` hits are TPM/serial/hardware-hash troubleshooting; `Enterprise App Catalog` = 7 occurrences, every one an ESP supported-app-type list and never a patching surface; **no configuration artifact of any kind exists** in the repository (no Graph payloads, no settings-catalog exports); all five `patch-management/` docs sit at `last_verified: 2026-04-28` / `review_by: 2026-06-27`, 52+ days past due; `patch-management/` is 4-platform while the project has been 5-platform since v1.5.
 
@@ -37,10 +37,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 151 (Recipe #5 — The Enterprise Update Plan) — READY TO EXECUTE
-Plan: Not started
+Phase: 151 (Recipe #5 — The Enterprise Update Plan) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-08-26 — Phase 151 planned (5 plans, 5 waves); prior entry:
+Last activity: 2026-08-26 — Phase 151 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
   verified the four binding gate classes plus the apex — the only red is the enumerated
   not-yet-created set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md,
@@ -48,7 +48,7 @@ Last activity: 2026-08-26 — Phase 151 planned (5 plans, 5 waves); prior entry:
   Complete (sole declaring plan). Per D-80, the Dell guide itself stays UNCOMMITTED — Plan 04 lands
   it in the phase's single content commit.
 
-Progress: [██████░░░░] 56% (4 of 9 phases; 15/15 planned plans complete)
+Progress: [███████░░░] 67% (4 of 9 phases; 15/15 planned plans complete)
 
 ## v1.21 Phase Dependency Summary
 
@@ -442,6 +442,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 150 P03 | ~35min | 3 tasks | 1 files |
 | Phase 150 P04 | 55min | 3 tasks | 5 files |
 | Phase 150 P05 | 35min | 2 tasks | 1 files |
+| Phase 151 P01 | 42 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -589,6 +590,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 150]: Matrix Source Attribution markers switched to bare [DIRECT]/[RELAYED] tag form matching 150-RESEARCH.md, not the aosp precedent's colon-annotated bracket form
 - [Phase 150]: HP Recovery-table lost-password cell categorized Not documented by vendor, not n/a, since the capability (legacy password auth) genuinely exists for HP but its loss recovery is unaddressed by the guide
 - [Phase 150]: Overview edited at seven sites (D-32/36/37/38/40): false 'not yet written' sentence replaced with links to all three guides plus the matrix, HP admin.hp.com clause qualified with the Partner-portals-tab symmetry (U-6 closed positive), HP/Lenovo custody quotes reduced to a claim-plus-link (quotes now live only in their guides), Dell quote left byte-unchanged, canonical Dell/Lenovo prerequisite-inversion sentence added, frontmatter dates advanced +60d. Committed alone as Commit B (2fab0ac5) after the full four-gate-class + apex re-run returned to exact phase-start baseline (101/0/0).
+- [Phase 151]: Device Recipe doc class widened via EEE-SOP STD-05 D-08 to admit a fleet or tenant configuration plan, with D-06's Summary end-state rule widened to accept a fleet end-state
+- [Phase 151]: Rollback/Recovery promoted into recipe-template.md at the V-135-ROLLBACKORDER slot with a prose-only placeholder; the marker line was NOT promoted (D-50) and the TEMPLATE-SENTINEL is byte-unchanged
+- [Phase 151]: Recipe 05 Source lines use the form [first-party page](url) (updated <date>), as carried by [corpus guide](path#anchor) — the corpus carries two different dates for the Autopatch groups-overview URL, so each date is attributed to the guide it came from
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -617,9 +621,9 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T11:55:11.585Z
-Stopped at: Phase 151 context gathered
-Resume file: .planning/phases/151-recipe-5-the-enterprise-update-plan/151-CONTEXT.md
+Last session: 2026-08-26T13:24:23.010Z
+Stopped at: Completed 151-01-PLAN.md
+Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
 ## Operator Next Steps
