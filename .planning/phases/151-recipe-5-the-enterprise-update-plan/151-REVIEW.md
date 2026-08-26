@@ -706,3 +706,48 @@ follows them."
 _Reviewed: 2026-08-26_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
+
+---
+
+## Remediation (added 2026-08-26)
+
+All 4 Critical and 13 Warning findings were dispatched for fix after this report was committed.
+Info findings (IN-01..IN-05) were out of scope.
+
+**Commit:** `8ffd7faa` — `fix(151): correct four critical and thirteen warning findings from code review`
+**Files:** `docs/recipes/05-enterprise-update-plan.md` only (+91 / -47). Recipes 01 and 02 byte-unchanged.
+
+**Note on the two-commit contract.** Plan 05's SUMMARY records "exactly two content commits" for
+this phase (D-52). That statement was true when written. `8ffd7faa` is a third content commit,
+landed deliberately as post-review remediation. D-52's design intent — a green tree at every commit
+boundary — is preserved: all four gates were green before the commit and are green after it.
+
+### Disposition
+
+| ID | Status | Note |
+|---|---|---|
+| CR-01 | fixed | Fabricated "Windows 11 Enterprise" edition gate removed; replaced with the carriers' license-list framing and their explicit `unconfirmed` position on Windows 11 Pro. |
+| CR-02 | fixed | Routing gate added after Step 5's table; Step 1a widened to all four policy types an Autopatch group contains. |
+| CR-03 | fixed | macOS 14.0 / iOS 17.0 DDM floor added to Prerequisites and to Step 7. |
+| CR-04 | fixed | All six `RCP-04` occurrences removed from published prose; the nine-vs-six arithmetic re-anchored on "recorded absence" so D-42 survives. `grep -c 'RCP-0'` on the recipe returns 0. |
+| WR-01 | fixed | Both recipe citations of the Autopatch-groups URL now agree on `2025-06-17`. The corpus-wide date divergence between guides 01 and 07 is left to a successor phase — this phase may not edit operations guides. |
+| WR-02 | fixed | Global Administrator gate (with BitLocker-key read scope) added to Prerequisites; Summary amended. |
+| WR-03 | fixed | Step 1b's "promotion gate" rewritten to name the calendar expiry, the manual check and the real lever. |
+| WR-04 | fixed | False driver claim removed from the `01` entry; guide `06` added. See Also is now **7 entries**, one above D-66's measured 5-6 class range — accepted, because omitting the guide the plan cites seven times was the actual defect and D-66's stated purpose is roster reconciliation, which 7 satisfies. No validator pins the count. |
+| WR-05 | fixed | Summary narrowed to packaged *Windows* applications plus the OS-update posture of the non-Windows estates; scope-boundary sentence added under Step 6. |
+| WR-06 | fixed | Rating rule amended to promise only what it can deliver; Step 4 given its attribution line. No rating changed, so D-11 and D-12 both hold. |
+| WR-07 | fixed | `Reversible — disruptive` definition widened to cover cost borne by administrators. Vocabulary stays a closed four-value enum (D-13). |
+| WR-08 | fixed | Middle branch reframed as Win32 supersedence carrying a catalog-supplied package; the "auto-update is explicitly not supersedence" position stated and sourced. |
+| WR-09 | **not fixed — finding is wrong** | It asks that recipes 01/02 have `last_verified` reverted. D-47 is `[OWNER-RULED 2026-08-26]` and states the opposite outright: both files "need their `last_verified` and `review_by` re-stamped". Locked decision wins. |
+| WR-10 | fixed | DFCI rollback entry extended with both dropped qualifications, including the external-boot/USB-type-A precondition. |
+| WR-11 | fixed | Unsourced "blocks every Linux user" replaced with the carrier's actual claim. |
+| WR-12 | fixed | The July 2026 cadence contingency moved into the Semi-Annual "When to choose" cell. |
+| WR-13 | fixed via counts, not via a marker | Step 10 now states it carries no branch table, no rating and no marker line. Adding the marker would have produced a tenth rating, violating D-12 and D-26. |
+
+One edit beyond the findings: Step 5's Verification checkbox gained an Autopatch-branch caveat,
+because CR-02's fix tells a service-managed reader to skip creating the policy that Verification
+demanded exist.
+
+**Post-remediation gates** (each its own invocation, re-measured independently by the orchestrator):
+`check-phase-144.mjs` 101 PASS / 0 FAIL / 0 SKIPPED · `check-nav-hub-links.mjs` 0/0 ·
+`c17-eee-contract.mjs` 236 files, 0 with violations · `v1.20-milestone-audit.mjs` exit 0, 16 passed.
