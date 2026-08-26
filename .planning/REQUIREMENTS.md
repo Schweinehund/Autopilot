@@ -77,7 +77,7 @@ Requirements for this milestone. Each maps to roadmap phases (Phase 145+).
 - [ ] **BIOS-07**: **HP Connect for Microsoft Endpoint Manager** is documented as a **vendor connector, not a Win32 agent** — a cloud console publishing policies into Intune device groups as Proactive Remediations, Entra Global-Administrator consent, Sure Admin certificate/key-pair auth, no per-device agent. **[OWNER-RULED IN SCOPE 2026-08-19]** Its secret-custody position is stated plainly: *"Passwords are managed by HP Connect and stored in a cloud vault"*, with certificates uploaded as `.pfx` carrying embedded private keys — contrasted against Dell's *"Dell does not collect or retain any customer data"*.
 - [ ] **BIOS-08**: **Think BIOS Config Tool V2 does not support ThinkCentre** (incompatible WMI BIOS interface), so a mixed ThinkPad + ThinkCentre fleet **cannot use one tool for BIOS settings**. This corrects a research draft that attached Lenovo BIOS Certificate Tool's model list to the Think BIOS Config Tool row; the guide must not paper over the fork.
 - [ ] **BIOS-09**: **Losing the management plane loses the secret** is documented for both vendors, with the correct de-provisioning order (fleet first): Dell — subscription end means no path to read or retrieve BIOS passwords, OEM only; HP — account deactivation starts a **30-day countdown** after which all policies and secrets are permanently deleted, while orphaned remediation scripts keep running in Intune and must be removed by hand.
-- [ ] **BIOS-10**: Password custody scope is documented accurately: two retrieval options — per-device via a custom RBAC **Read Bios Password** role (whose creation requires **Intune Role Administrator**), or **all devices at once** with only the Entra **Intune Administrator** role — and passwords remain readable **after** a device leaves Intune management. Minimum role to author the policy at all: **Policy and Profile manager**.
+- [x] **BIOS-10**: Password custody scope is documented accurately: two retrieval options — per-device via a custom RBAC **Read Bios Password** role (whose creation requires **Intune Role Administrator**), or **all devices at once** with only the Entra **Intune Administrator** role — and passwords remain readable **after** a device leaves Intune management. Minimum role to author the policy at all: **Policy and Profile manager**.
 - [x] **BIOS-11**: The bricking surface is quoted first-party — BIOS configuration changes can impact device functionality *"including the ability to boot or access Bitlocker encrypted drives"* — and DFCI's **retire and reuse sequences are documented as distinct**, with the fact that deleting the profile or group assignment does **not** remove settings.
 - [ ] **BIOS-12**: An **enrolled** `docs/reference/firmware-oem-matrix.md` transposes the three per-OEM guides. It is authored with the guides but its **registry row is not landed here** (see INT-01).
 
@@ -211,7 +211,7 @@ Explicit boundaries with reasoning, to prevent re-adding.
 | BIOS-07 | Phase 150 | Pending |
 | BIOS-08 | Phase 150 | Pending |
 | BIOS-09 | Phase 150 | Pending |
-| BIOS-10 | Phase 150 | Pending |
+| BIOS-10 | Phase 150 | Complete |
 | BIOS-11 | Phase 149 | Complete |
 | BIOS-12 | Phase 150 | Pending |
 | RCP-01 | Phase 151 | Pending |
