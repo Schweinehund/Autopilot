@@ -167,9 +167,11 @@ canonical one-line formulation of this inversion lives in the domain overview; s
 [Firmware and BIOS Governance](00-overview.md).
 
 Lenovo's own first-party pointers are bootstrap alternatives and never recovery paths: System
-Deployment Boot Mode, and the third-party Remote SVP option Lenovo names from Absolute. Both were
-re-confirmed as directly sourced on 2026-08-25. They are for getting a password onto a device that
-has none — not for recovering one that is lost.
+Deployment Boot Mode, and the third-party Remote SVP option Lenovo names from Absolute. The System
+Deployment Boot Mode alternative was independently re-confirmed as directly sourced on 2026-08-25;
+the Remote SVP option was not separately re-verified this session and rests on its original
+citation. They are for getting a password onto a device that has none — not for recovering one
+that is lost.
 
 **Source:** [Certificate-based BIOS Authentication (ThinkDeploy Blog)](https://blog.lenovocdrt.com/certificate-based-bios-authentication/) — Lenovo CDRT, updated 2025-10-31.
 

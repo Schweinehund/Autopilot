@@ -29,8 +29,9 @@ HP Connect for Microsoft Endpoint Manager is **a vendor connector, not a Win32 a
 nothing on the device it manages.
 
 HP Connect is administered as a cloud console at `admin.hp.com`. It is also discoverable from
-inside Intune: since April 2023, HP Connect has appeared under the Intune admin center's **Partner
-portals** tab, the same discovery surface Dell's own Management Portal uses. The two vendors are
+inside Intune: HP Connect appears under the Intune admin center's **Partner portals** tab, the same
+discovery surface Dell's own Management Portal uses. Microsoft announced that arrival in April
+2023; what is sourced here is the announcement, not a verified go-live date. The two vendors are
 symmetric on UI discoverability; they differ on secret custody, which remains this guide's routing
 spine.
 

@@ -195,8 +195,9 @@ The Windows configuration service provider that DFCI settings use to reach devic
 HP's certificate-based, password-free BIOS authentication, riding on HP Secure Platform
 Management. Three keys form a hierarchy: the Endorsement Key is the root of trust, required to
 provision and de-provision the device; the Signing Key, endorsed by the Endorsement Key, signs
-every payload; and the Local Access Key secures local BIOS Setup behind a QR-code challenge. Its
-two authentication models — Sure Admin and a legacy BIOS password — cannot coexist on one device.
+every payload; and the Local Access Key secures local BIOS Setup behind a QR-code challenge. HP BIOS
+admits two authentication models — this certificate-based one and a legacy BIOS password — and
+they cannot coexist on one device.
 
 ### Think BIOS Config
 

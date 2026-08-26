@@ -46,15 +46,16 @@ coverage are both stated on the Microsoft page for that surface:
 **Source:** [Use BIOS configuration profiles for Windows devices in Microsoft Intune](https://learn.microsoft.com/en-us/intune/device-configuration/templates/configure-bios-windows) (ms.date 2024-06-06, updated 2026-07-01)
 
 **HP — HP holds the secret, outside your tenant.** HP hardware is reached through HP Connect for
-Microsoft Endpoint Manager, a vendor connector administered at `admin.hp.com`. HP Connect has also
-appeared in the Intune admin center's Partner portals tab since April 2023 — the same discovery
-surface Dell's own Management Portal uses, so the two vendors are symmetric on where you find the
-console. They differ on secret custody, which is the distinction this domain actually routes on:
+Microsoft Endpoint Manager, a vendor connector administered at `admin.hp.com`. HP Connect also
+appears in the Intune admin center's Partner portals tab — the same discovery surface Dell's own
+Management Portal uses, so the two vendors are symmetric on where you find the console. Microsoft
+announced that arrival in April 2023; this corpus sources the announcement, not a verified
+go-live date. They differ on secret custody, which is the distinction this domain actually routes on:
 the BIOS password is never held by your tenant at all — it is held in HP's own cloud vault instead.
 See [HP BIOS Configuration Through Intune](03-hp-bios-configuration.md) for HP's sourced custody
 statement.
 
-That guide is version 1.2.0 from 2022 and is the oldest source cited anywhere in this domain. The
+That guide is version 1.2.0 from 2022. The
 custody model it documents is the durable fact; the console details, and the Microsoft Endpoint
 Manager branding carried in the connector's own product name, both predate Intune's current naming.
 Confirm the connector's current name and its administration surface at `admin.hp.com` before acting

@@ -114,8 +114,8 @@ de-provisioning order for each vendor.
 | HP | Passwords and Sure Admin private keys, stored in HP Connect's cloud vault | 30-day countdown after HP Connect account deactivation | Fleet-first — de-provision the fleet, then deactivate the HP Connect account |
 | Lenovo | No vendor management plane exists to lose — the secret never leaves customer control | n/a | n/a |
 
-> **Table summary:** Dell's countdown is `n/a` because no de-provisioning order is documented;
-> Lenovo's countdown and order are `n/a` for a different reason — no vendor plane exists to lose.
+> **Table summary:** Dell has no deactivation clock — what ends is retrieval, with the
+> subscription; Lenovo's `n/a` cells have a different cause again — no vendor plane exists to lose.
 
 <a id="recovery"></a>
 ## Recovery
@@ -126,7 +126,7 @@ destination for each vendor.
 | OEM | Lost password | Lost key or certificate | Escalation |
 |-----|------------------|------------------------------|----------------|
 | Dell | Graph beta `hardwarePasswordDetails` retrieval — current password plus the previous 15, while the password is still known to Intune | n/a — Dell's model has no customer-held key | Escalate to Dell Support and stop |
-| HP | Not documented by vendor — HP's Recovery material addresses only the certificate model's Endorsement Key, not legacy-password loss | Not documented by vendor — HP's Endorsement Key loss has no documented recovery path | Escalate to HP Support and stop |
+| HP | Not covered by this corpus — the HP research scoped Recovery to the certificate model's Endorsement Key; legacy-password loss was not investigated, so no claim is made either way | Not documented by vendor — HP's Endorsement Key loss has no documented recovery path | Escalate to HP Support and stop |
 | Lenovo | A documented, destructive path — system-board replacement by a Lenovo Service Provider | Not documented by vendor — no recovery, reset or bypass for a lost private key | Escalate to Lenovo Support and stop |
 
 > **Table summary:** Dell's password history and Lenovo's destructive path are documented; HP's
