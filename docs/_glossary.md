@@ -30,7 +30,7 @@ This reference defines the core terminology for Windows Autopilot deployment acr
 
 ## Alphabetical Index
 
-[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BIOS configuration and other settings](#bios-configuration-and-other-settings) | [BIOS password](#bios-password) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [Device Firmware Configuration Interface (DFCI)](#device-firmware-configuration-interface-dfci) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [Entra ID SSO](#entra-id-sso) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Tenant migration](#tenant-migration) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [UEFI CSP](#uefi-csp) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
+[APv1](#apv1) | [APv2](#apv2) | [Autopilot Reset](#autopilot-reset) | [BIOS configuration and other settings](#bios-configuration-and-other-settings) | [BIOS password](#bios-password) | [BootstrapperAgent](#bootstrapperagent) | [Compliance grace period](#compliance-grace-period) | [Corporate identifiers](#corporate-identifiers) | [DCECMI](#dcecmi) | [Device Firmware Configuration Interface (DFCI)](#device-firmware-configuration-interface-dfci) | [Device phase](#device-phase) | [Device Preparation policy](#device-preparation-policy) | [Device retirement](#device-retirement) | [Device wipe](#device-wipe) | [Enrollment Time Grouping (ETG)](#enrollment-time-grouping-etg) | [Entra ID SSO](#entra-id-sso) | [ESP](#esp) | [Firmware TPM (fTPM)](#firmware-tpm-ftpm) | [FirstSync](#firstsync) | [Group Policy Analytics](#group-policy-analytics) | [Hardware hash](#hardware-hash) | [HP Connect](#hp-connect) | [Hybrid join](#hybrid-join) | [Intune Management Extension (IME)](#intune-management-extension-ime) | [Intune Provisioning Client](#intune-provisioning-client) | [MDM](#mdm) | [MDM enrollment](#mdm-enrollment) | [NCSI](#ncsi) | [ODJ](#odj) | [OOBE](#oobe) | [Pre-provisioning](#pre-provisioning) | [SCP](#scp) | [Secure Boot](#secure-boot) | [Selective wipe](#selective-wipe) | [Self-deploying mode](#self-deploying-mode) | [Sure Admin](#sure-admin) | [Tenant migration](#tenant-migration) | [Think BIOS Config](#think-bios-config) | [TPM](#tpm) | [TPM attestation](#tpm-attestation) | [UEFI CSP](#uefi-csp) | [User phase](#user-phase) | [User-driven mode](#user-driven-mode) | [White glove](#white-glove) | [WinHTTP proxy](#winhttp-proxy) | [ZTDID](#ztdid) | [ZTD](#ztd)
 
 ---
 
@@ -190,6 +190,36 @@ The Windows firmware management layer Intune reaches through a configuration ser
 
 The Windows configuration service provider that DFCI settings use to reach device firmware.
 
+### Sure Admin
+
+HP's certificate-based, password-free BIOS authentication, riding on HP Secure Platform
+Management. Three keys form a hierarchy: the Endorsement Key is the root of trust, required to
+provision and de-provision the device; the Signing Key, endorsed by the Endorsement Key, signs
+every payload; and the Local Access Key secures local BIOS Setup behind a QR-code challenge. Its
+two authentication models — Sure Admin and a legacy BIOS password — cannot coexist on one device.
+
+### Think BIOS Config
+
+Lenovo's BIOS settings-configuration tool, a PowerShell interface over the `Lenovo.BIOS.Config`
+module that reads and writes settings over WMI and generates Intune artifacts directly. It does
+not support ThinkCentre because of an incompatible WMI BIOS interface, and it cannot set an
+initial supervisor password, which must already exist on the device.
+
+### HP Connect
+
+HP's vendor cloud console for BIOS configuration, administered at `admin.hp.com` and also
+reachable from the Intune admin center's Partner portals tab. It publishes policies into Intune
+device groups as Remediations over the Microsoft Graph API, installs no per-device agent, and
+stores BIOS passwords and Sure Admin private keys in HP's own cloud vault — outside the customer's
+tenant. Deactivating the account starts a 30-day countdown after which those secrets are deleted.
+
+### DCECMI
+
+Dell Command | Endpoint Configure for Microsoft Intune: the per-device Win32 agent that applies a
+Dell BIOS configuration file, paired with the native `BIOS configuration and other settings`
+Templates policy. The agent must be installed before the policy is assigned. Unlike HP's model,
+the BIOS password is held by Intune, not by the vendor.
+
 ---
 
 ## Network
@@ -298,6 +328,7 @@ The second half of ESP (after user login) that applies user-targeted apps and po
 
 | Date | Change | Author |
 |------|--------|--------|
+| 2026-08-25 | Phase 150 (BIOS-05..BIOS-12): added `### Sure Admin`, `### Think BIOS Config`, `### HP Connect` and `### DCECMI` terms (Hardware section); Alphabetical Index updated with the four sorted entries. `last_verified` and `review_by` deliberately NOT advanced — see the Phase 149 2026-08-25 row below for the owner-ruled review-cycle reasoning | -- |
 | 2026-08-24 | Phase 149 (BIOS-02 / BIOS-04): added `### BIOS configuration and other settings`, `### BIOS password`, `### Device Firmware Configuration Interface (DFCI)` and `### UEFI CSP` terms (Hardware section) with a one-way `> See also:` from DFCI to Secure Boot and UEFI CSP; Alphabetical Index updated | -- |
 | 2026-08-25 | Phase 149: `last_verified` deliberately NOT advanced for the 2026-08-24 additions. This file is on a 90-day review cycle, not the milestone's 60-day one, so `last_verified` records when this file's review cycle last completed rather than when its newest entry was written. Owner ruling, 2026-08-25; see D-63 | -- |
 | 2026-07-07 | v1.16 EEE reformat — content not re-reviewed | — |
