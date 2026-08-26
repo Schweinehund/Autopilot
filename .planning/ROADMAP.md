@@ -255,8 +255,28 @@ Plans:
   5. The recipe-template divergence is resolved on the record — the section is either promoted into the template or the reason it stays a tracked 2-of-4 divergence is written down — and every outbound link the recipe makes resolves.
 
 **Blast radius**: the capability-matrix row-label clash does **not** gate this phase (that dependency was falsified and downgraded to a tidy-up); neither does the recipe template mandate the rollback heading (also falsified — it is a divergence whose trigger this recipe fires). Recipes 01 and 02 are not non-compliant and are not touched.
-**Research flag**: no external research pass — this is a synthesis of content authored in 146-150. It does carry one open decision (template promotion versus recorded divergence) for discuss-phase.
-**Plans**: TBD
+**Research flag**: no external research pass — this is a synthesis of content authored in 146-150. It does carry one open decision (template promotion versus recorded divergence) for discuss-phase. *(Resolved at discuss-phase: promote into the template AND retrofit recipes 01 and 02, per CONTEXT D-47.)*
+**Plans**: 5 plans
+
+**Wave 1**
+
+- [ ] 151-01-PLAN.md — **Commit A**: the STD-05 D-08 class widening in `EEE-SOP-standard.md` and the `## Rollback/Recovery` promotion into `recipe-template.md`; then the **tracer** — `docs/recipes/05-enterprise-update-plan.md` created at the locked eight-H2 skeleton with Decision 1 (Windows update topology, on the corrected Autopatch-containment position) authored end to end (RCP-01, RCP-02, RCP-03, RCP-05)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 151-02-PLAN.md — Step 2 hotpatch posture on all three corrected positions with the two-level precedence rule, and Step 3 driver approval mode carrying RCP-02's single **Destructive** rating with its destroy-all-approvals consequence in the recipe's own prose (RCP-01, RCP-02, RCP-03)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 151-03-PLAN.md — Step 4 the BIOS and firmware surface with all four branch bodies including the "none" branch and RCP-02's single **Effectively irreversible** rating, Step 5 the Microsoft 365 Apps channel rated at the recommended branch, and Step 6 the application patch mechanism (RCP-01, RCP-02, RCP-03)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 151-04-PLAN.md — Steps 7, 8 and 9 (the three non-Windows markers, all three platform guides added to the roster) and Step 10, the tableless Case 3 deferrals-and-deadlines Step that carries an anchor but no marker and no rating (RCP-01, RCP-03)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 151-05-PLAN.md — the four tail sections completed (eleven five-platform Verification checks; nine worst-first rollback mechanisms opening on the true count of four), the `## Rollback/Recovery` retrofit into recipes 01 and 02, the divergence entry closed at 5-of-5, and **Commit B** — the phase's single four-file content commit (RCP-01, RCP-04, RCP-05)
 
 ### Phase 152: Integration, Registry & Navigation-Last Close
 
