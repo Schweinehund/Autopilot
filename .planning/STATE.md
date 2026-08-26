@@ -5,11 +5,11 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 150
 current_phase_name: Per-OEM BIOS Guides & Capability Matrix
 status: executing
-stopped_at: Completed 150-04-PLAN.md
-last_updated: "2026-08-26T03:35:31.520Z"
+stopped_at: Completed 150-05-PLAN.md — Phase 150 complete
+last_updated: "2026-08-26T03:43:47.492Z"
 last_activity: 2026-08-25
 last_activity_desc: Phase 150 Plan 01 complete — REQUIREMENTS.md BIOS-05 amendment filed, Dell BIOS guide (tracer) authored, intermediate-red state verified
-state_head: 7097822224929c64918afd8a125af2c07de663fe
+state_head: 2fab0ac50dd7185d901daaaad84a7223b81b02e6
 progress:
   total_phases: 9
   completed_phases: 5
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 150 (Per-OEM BIOS Guides & Capability Matrix) — EXECUTING
-Plan: 4 of 5 complete — Plan 2 of 5 next
+Plan: 5 of 5 complete — Plan 2 of 5 next
 Status: Ready to execute
 Last activity: 2026-08-25 — Plan 150-01 complete: filed the BIOS-05 six-section amendment (D-01/D-02),
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
@@ -441,6 +441,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 150 P02 | ~50min | 3 tasks | 1 files |
 | Phase 150 P03 | ~35min | 3 tasks | 1 files |
 | Phase 150 P04 | 55min | 3 tasks | 5 files |
+| Phase 150 P05 | 35min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -587,6 +588,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 150]: U-1 correction shipped in Lenovo guide's Recovery section: sourced, destructive path (system-board replacement, KB ht036206) for lost supervisor password, replacing the stale two-silences assumption — 150-RESEARCH.md's re-fetch found Lenovo's own first-party statement; D-53's three-part silence shape now applies only to the certificate-private-key gap
 - [Phase 150]: Matrix Source Attribution markers switched to bare [DIRECT]/[RELAYED] tag form matching 150-RESEARCH.md, not the aosp precedent's colon-annotated bracket form
 - [Phase 150]: HP Recovery-table lost-password cell categorized Not documented by vendor, not n/a, since the capability (legacy password auth) genuinely exists for HP but its loss recovery is unaddressed by the guide
+- [Phase 150]: Overview edited at seven sites (D-32/36/37/38/40): false 'not yet written' sentence replaced with links to all three guides plus the matrix, HP admin.hp.com clause qualified with the Partner-portals-tab symmetry (U-6 closed positive), HP/Lenovo custody quotes reduced to a claim-plus-link (quotes now live only in their guides), Dell quote left byte-unchanged, canonical Dell/Lenovo prerequisite-inversion sentence added, frontmatter dates advanced +60d. Committed alone as Commit B (2fab0ac5) after the full four-gate-class + apex re-run returned to exact phase-start baseline (101/0/0).
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -615,8 +617,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T03:35:28.798Z
-Stopped at: Completed 150-04-PLAN.md
+Last session: 2026-08-26T03:43:44.753Z
+Stopped at: Completed 150-05-PLAN.md — Phase 150 complete
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
