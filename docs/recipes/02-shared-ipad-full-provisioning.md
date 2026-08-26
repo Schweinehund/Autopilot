@@ -4,8 +4,8 @@ status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: ios+shared-ipad
-last_verified: 2026-07-17
-review_by: 2026-10-15
+last_verified: 2026-08-26
+review_by: 2026-10-25
 applies_to: Shared iPad full provisioning (federated Managed Apple Account, device-licensed VPP, per-role layered config)
 audience: admin
 ---
@@ -269,6 +269,22 @@ worked example simply uses the user-group path so each role's layout can differ.
 - [ ] Starting a guest (temporary) session shows only the device-group baseline layout and app set — no per-role overlay applies.
 
 Verification is on-device (sign in as each role and observe the layout/app set directly) — user-assigned policy status does not surface in Intune reports for Shared iPad, so no Intune user-status-report check and no Company Portal check apply here (Shared iPad has no Company Portal).
+
+## Rollback/Recovery
+
+Returning a Shared iPad to its prior state is not the same as unassigning this recipe's policies. The
+enrollment posture is fixed at enrollment, and the sign-in identity is federated outside Intune.
+
+**The Shared iPad enrollment:**
+
+- Unassigning or editing the ADE enrollment policy does not change a device that is already enrolled. Changing an already-assigned enrollment policy requires a factory reset on the device before the change takes effect, so the path back is a wipe and a re-enrollment rather than a policy edit.
+- Take the same care coming out that [Step 1](#step-1-configure-the-ade-enrollment-policy) takes going in. Sending a Shared-iPad-enabled policy to an unsupported device triggers a wipe, and that is a distinct fact from the factory reset above — it is the one that destroys user data without anyone intending it.
+
+**The federated sign-in configuration:**
+
+- The Managed Apple Account a user signs in with is created just-in-time at first sign-in and is governed by the federation configured in Apple Business Manager and the identity provider, not by any policy this recipe creates. Removing this recipe's Intune policies leaves those accounts and that federation in place.
+- Undoing federation is therefore a change made where it was made — see [Managed Apple Account Provisioning](../cross-platform/apple-business/08-managed-apple-account-provisioning.md) — and it reaches every Managed Apple Account the federation covers, not only the users of this device.
+- Shared iPad supports no Company Portal and no compliance policy, so there is no self-service removal path and no compliance-driven remediation to fall back on. On-device sign-out and a wipe are the levers that remain.
 
 ## Configuration-Caused Failures
 

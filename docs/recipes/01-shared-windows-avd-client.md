@@ -4,8 +4,8 @@ status: Approved
 owner: Intune Admin Lead
 doc_type: Guide
 platform: Windows
-last_verified: 2026-07-17
-review_by: 2026-10-15
+last_verified: 2026-08-26
+review_by: 2026-10-25
 applies_to: Shared Windows AVD-client device (self-deploying, kiosk or Shared PC)
 audience: admin
 ---
@@ -221,6 +221,37 @@ Both branches — confirm first:
 
 - [ ] A second, distinct, app-group-assigned Entra user signs in and the AVD feed auto-repopulates for that user
 - [ ] Local Storage is confirmed restricted (File Explorer save/view to local disk is blocked)
+
+## Rollback/Recovery
+
+Removing this recipe's configuration is not the same as returning a device to the state it was in
+before provisioning. Four of the five mechanisms below are unassigned or deleted from Intune and stop
+governing the device; the first one cannot be undone that way at all.
+
+**The self-deploying deployment profile:**
+
+- Unassign the profile from the dynamic device group, or delete the profile, to stop it applying to devices that have not yet been provisioned. A device already provisioned is unaffected — the profile governs the deployment, not the device afterwards.
+- **This is the mechanism with no clean rollback.** A device cannot automatically re-enroll through Windows Autopilot after an initial deployment in self-deploying mode. Moving an already-provisioned device to a different posture means deleting its device record — **Intune admin center** > **Devices** > **All devices** > select the device > **Delete** — and provisioning it again, not editing a policy.
+- Deleting the device record and removing the Autopilot registration are separate actions. The second is the one that decides whether the hardware can be registered and provisioned again later, so decide it deliberately rather than as a cleanup step.
+
+**The Enrollment Status Page policy:**
+
+- Unassign or delete the ESP policy. Self-deploying mode runs the device phase only, so removing the policy changes what the next deployment shows and nothing about a device already past that phase.
+
+**Dynamic device group membership:**
+
+- Editing the membership rule is the single change with the widest reach in this recipe: the deployment profile, the ESP policy and the Windows App assignment all target that one group, so a device that leaves it stops receiving all three.
+- Expect the same latency on the way out that the Verification section warns about on the way in. Membership evaluation takes minutes to hours, so a device does not leave the group at the moment the rule is saved.
+
+**The Windows App assignment:**
+
+- Set the assignment intent to Uninstall for the device group to remove the app from devices that already carry it. Simply removing the Required assignment stops new installs and leaves the existing ones in place.
+- On the kiosk branch, remove the kiosk configuration first and the app second. An app uninstalled while the kiosk still points at it leaves the device launching to a missing app, which is the failure the table below names from the other direction.
+
+**The kiosk or Shared PC configuration:**
+
+- Unassign or delete the configuration profile carrying the branch you deployed. The device has to check in to receive that change, so a device that is offline or powered off keeps its current configuration until it does.
+- On the Shared PC branch, accounts that the account manager has already deleted are gone. Unassigning the profile stops future deletions and recreates nothing.
 
 ## Configuration-Caused Failures
 
