@@ -37,7 +37,7 @@
 - [x] **Phase 147: Linux Update Delivery** - The corpus becomes genuinely five-platform for updates, and the fleet-wide root-context hazard is named before anyone ships it (completed 2026-08-22)
 - [x] **Phase 148: Application Update Management & WinGet Routing** - The missing patching half of application management, plus a well-sourced negative on WinGet (completed 2026-08-23)
 - [x] **Phase 149: Firmware/BIOS Domain — Overview, DFCI & Surface UEFI** - A greenfield domain that routes by who holds the BIOS secret, with DFCI presented honestly including where it is unavailable (completed 2026-08-25)
-- [ ] **Phase 150: Per-OEM BIOS Guides & Capability Matrix** - Dell, HP and Lenovo at an identical five-section shape so the matrix is a transposition, with recovery gaps stated rather than filled
+- [x] **Phase 150: Per-OEM BIOS Guides & Capability Matrix** - Dell, HP and Lenovo at an identical five-section shape so the matrix is a transposition, with recovery gaps stated rather than filled (completed 2026-08-25)
 - [ ] **Phase 151: Recipe #5 — The Enterprise Update Plan** - The prescriptive configuration artifact the corpus has never had
 - [ ] **Phase 152: Integration, Registry & Navigation-Last Close** - One atomic registry commit, then navigation, then a green corpus
 - [ ] **Phase 153: Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump** - Both harness debts discharged and the apex green at close
@@ -333,7 +333,7 @@ Plans:
 | 147. Linux Update Delivery | v1.21 | 2/2 | ✅ Complete | 2026-08-22 |
 | 148. Application Update Management & WinGet Routing | v1.21 | 5/5 | Not started | 2026-08-23 |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 5/5 | Not started | 2026-08-25 |
-| 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 5/5 | In Progress |  |
+| 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 5/5 | In Progress | 2026-08-25 |
 | 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 0/? | Not started | - |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 0/? | Not started | - |
 | 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 0/? | Not started | - |

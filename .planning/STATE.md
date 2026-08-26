@@ -2,20 +2,20 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
-current_phase: 150
-current_phase_name: Per-OEM BIOS Guides & Capability Matrix
-status: executing
-stopped_at: Completed 150-05-PLAN.md — Phase 150 complete
-last_updated: "2026-08-26T03:43:47.492Z"
+current_phase: 151
+current_phase_name: "Recipe #5 — The Enterprise Update Plan"
+status: planning
+stopped_at: Phase 150 complete, ready to plan Phase 151
+last_updated: "2026-08-26T04:08:03.843Z"
 last_activity: 2026-08-25
-last_activity_desc: Phase 150 Plan 01 complete — REQUIREMENTS.md BIOS-05 amendment filed, Dell BIOS guide (tracer) authored, intermediate-red state verified
-state_head: 2fab0ac50dd7185d901daaaad84a7223b81b02e6
+last_activity_desc: Phase 150 complete, transitioned to Phase 151
+state_head: 560090c670c7b7d6248d341a3b069508f3cdc0b7
 progress:
   total_phases: 9
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 25
-  completed_plans: 24
-  percent: 56
+  completed_plans: 25
+  percent: 67
 ---
 
 # Project State
@@ -37,10 +37,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 150 (Per-OEM BIOS Guides & Capability Matrix) — EXECUTING
-Plan: 5 of 5 complete — Plan 2 of 5 next
-Status: Ready to execute
-Last activity: 2026-08-25 — Plan 150-01 complete: filed the BIOS-05 six-section amendment (D-01/D-02),
+Phase: 151 — Recipe #5 — The Enterprise Update Plan
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-25 — Phase 150 complete, transitioned to Phase 151
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
   verified the four binding gate classes plus the apex — the only red is the enumerated
   not-yet-created set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md,
@@ -618,7 +618,7 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 ## Session Continuity
 
 Last session: 2026-08-26T03:43:44.753Z
-Stopped at: Completed 150-05-PLAN.md — Phase 150 complete
+Stopped at: Phase 150 complete, ready to plan Phase 151
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
