@@ -2,20 +2,20 @@
 gsd_state_version: 1.0
 milestone: v1.21
 milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145-153) — ACTIVE
-current_phase: 151
-current_phase_name: "Recipe #5 — The Enterprise Update Plan"
-status: verifying
-stopped_at: Completed 151-05-PLAN.md — phase 151 complete, Commit B a8305b7e, all four gates green
-last_updated: "2026-08-26T14:38:55.520Z"
+current_phase: 152
+current_phase_name: Integration, Registry & Navigation-Last Close
+status: planning
+stopped_at: Phase 151 complete, ready to plan Phase 152
+last_updated: "2026-08-26T15:24:19.991Z"
 last_activity: 2026-08-26
-last_activity_desc: Phase 151 execution started
-state_head: a8305b7ef3400c92c0620ca3a1fafc419d73f912
+last_activity_desc: Phase 151 complete, transitioned to Phase 152
+state_head: 1d1c8a4bb1512f344727d496654983721cd39ccf
 progress:
   total_phases: 9
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 30
   completed_plans: 30
-  percent: 67
+  percent: 78
 ---
 
 # Project State
@@ -37,10 +37,10 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 
 ## Current Position
 
-Phase: 151 (Recipe #5 — The Enterprise Update Plan) — EXECUTING
-Plan: 5 of 5
-Status: Phase complete — ready for verification
-Last activity: 2026-08-26 — Phase 151 execution started
+Phase: 152 — Integration, Registry & Navigation-Last Close
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-08-26 — Phase 151 complete, transitioned to Phase 152
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
   verified the four binding gate classes plus the apex — the only red is the enumerated
   not-yet-created set (03-hp-bios-configuration.md, 04-lenovo-bios-configuration.md,
@@ -639,7 +639,7 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 ## Session Continuity
 
 Last session: 2026-08-26T14:38:54.276Z
-Stopped at: Completed 151-05-PLAN.md — phase 151 complete, Commit B a8305b7e, all four gates green
+Stopped at: Phase 151 complete, ready to plan Phase 152
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
