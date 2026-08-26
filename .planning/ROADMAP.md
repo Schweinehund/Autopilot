@@ -256,7 +256,7 @@ Plans:
 
 **Blast radius**: the capability-matrix row-label clash does **not** gate this phase (that dependency was falsified and downgraded to a tidy-up); neither does the recipe template mandate the rollback heading (also falsified — it is a divergence whose trigger this recipe fires). Recipes 01 and 02 are not non-compliant and are not touched.
 **Research flag**: no external research pass — this is a synthesis of content authored in 146-150. It does carry one open decision (template promotion versus recorded divergence) for discuss-phase. *(Resolved at discuss-phase: promote into the template AND retrofit recipes 01 and 02, per CONTEXT D-47.)*
-**Plans**: 2/5 plans executed
+**Plans**: 4/5 plans executed
 
 **Wave 1**
 
@@ -268,11 +268,11 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 151-03-PLAN.md — Step 4 the BIOS and firmware surface with all four branch bodies including the "none" branch and RCP-02's single **Effectively irreversible** rating, Step 5 the Microsoft 365 Apps channel rated at the recommended branch, and Step 6 the application patch mechanism (RCP-01, RCP-02, RCP-03)
+- [x] 151-03-PLAN.md — Step 4 the BIOS and firmware surface with all four branch bodies including the "none" branch and RCP-02's single **Effectively irreversible** rating, Step 5 the Microsoft 365 Apps channel rated at the recommended branch, and Step 6 the application patch mechanism (RCP-01, RCP-02, RCP-03)
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 151-04-PLAN.md — Steps 7, 8 and 9 (the three non-Windows markers, all three platform guides added to the roster) and Step 10, the tableless Case 3 deferrals-and-deadlines Step that carries an anchor but no marker and no rating (RCP-01, RCP-03)
+- [x] 151-04-PLAN.md — Steps 7, 8 and 9 (the three non-Windows markers, all three platform guides added to the roster) and Step 10, the tableless Case 3 deferrals-and-deadlines Step that carries an anchor but no marker and no rating (RCP-01, RCP-03)
 
 **Wave 5** *(blocked on Wave 4)*
 
@@ -354,6 +354,6 @@ Plans:
 | 148. Application Update Management & WinGet Routing | v1.21 | 5/5 | Not started | 2026-08-23 |
 | 149. Firmware/BIOS Domain — Overview, DFCI & Surface UEFI | v1.21 | 5/5 | Not started | 2026-08-25 |
 | 150. Per-OEM BIOS Guides & Capability Matrix | v1.21 | 5/5 | In Progress | 2026-08-25 |
-| 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 2/5 | Not started |  |
+| 151. Recipe #5 — The Enterprise Update Plan | v1.21 | 4/5 | Not started |  |
 | 152. Integration, Registry & Navigation-Last Close | v1.21 | 0/? | Not started | - |
 | 153. Harness Close — V120 Pin, C17 Frozen-Aware Residue & 19th Path-A Lineage Bump | v1.21 | 0/? | Not started | - |

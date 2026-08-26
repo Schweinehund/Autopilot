@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 151
 current_phase_name: "Recipe #5 — The Enterprise Update Plan"
 status: executing
-stopped_at: Completed 151-03-PLAN.md
-last_updated: "2026-08-26T13:51:43.079Z"
+stopped_at: Completed 151-04-PLAN.md
+last_updated: "2026-08-26T14:15:16.126Z"
 last_activity: 2026-08-26
 last_activity_desc: Phase 151 execution started
-state_head: 3ee55b443408d788dac6bd91913a7e51784869f6
+state_head: 57f6d88db7b3be43d48f85426b17d0e65830e099
 progress:
   total_phases: 9
   completed_phases: 6
   total_plans: 30
-  completed_plans: 27
+  completed_plans: 29
   percent: 67
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 151 (Recipe #5 — The Enterprise Update Plan) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-08-26 — Phase 151 execution started
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
@@ -445,6 +445,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 151 P01 | 42 min | 2 tasks | 3 files |
 | Phase 151 P02 | 35 min | 2 tasks | 1 files |
 | Phase 151 P03 | 7 min | 3 tasks | 1 files |
+| Phase 151 P04 | 10 min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -602,6 +603,9 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 151]: Step 5 rated at the recommended branch (Monthly Enterprise, three-month window) per D-11, keeping the recipe at exactly one Effectively irreversible rating while stating Current Channel's Not applicable rollback cell in full
 - [Phase 151]: The DCU-versus-Autopatch conflict is named in one clause as unadjudicated and routed to the Dell BIOS guide, never to guide 06 which carries zero Dell Command content
 - [Phase 151]: Enterprise App Management's reachability gates are stated as FIVE (the guide's own measured count), not the eight the plan's read_first prose implied
+- [Phase 151]: Step 7 links 00-overview.md#deferral-vs-enforcement, not the #ring-terminology anchor the plan named — the three-primitive taxonomy lives in the next H2; #ring-terminology is used at Step 10 where the driver deferral it carries is restated
+- [Phase 151]: No range ships tagged [SOURCED, search-summary] — all five ranges Step 10 restates verify in the corpus with first-party quotations, so D-59's tag never fired; the one unverifiable range (expedite restart) is dropped under D-60
+- [Phase 151]: The two ranges the corpus writes with a hyphen inside verbatim Microsoft quotations (2-30 deadline, 0-7 grace) are restated in the paraphrased en-dash form rather than lifted out of their quotation marks — the second branch D-61 permits
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -630,8 +634,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T13:51:24.372Z
-Stopped at: Completed 151-03-PLAN.md
+Last session: 2026-08-26T14:15:14.877Z
+Stopped at: Completed 151-04-PLAN.md
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 

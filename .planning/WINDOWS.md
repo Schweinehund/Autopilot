@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 5
+open_count: 6
 waived_count: 0
 fixed_count: 0
-total_count: 5
-last_updated: 2026-08-26T13:52:17.689Z
+total_count: 6
+last_updated: 2026-08-26T14:10:23.387Z
 ---
 
 # Broken Windows Ledger
@@ -20,6 +20,7 @@ last_updated: 2026-08-26T13:52:17.689Z
 | 3 | 147 | deviation | .planning/phases/147-linux-update-delivery/147-02-PLAN.md |  | Task 1 header-row acceptance criterion is mis-specified: the alternating pipe-gap regex double-consumes the shared table delimiters, returning 0 against both the post-edit five-platform header and the pre-edit four-platform header | open |  | 2026-08-21T21:07:36.570Z |  |
 | 4 | 149 | deviation | docs/operations/firmware-bios/01-windows-dfci.md |  | D-13's 'Pillar-A set' superlative scope replaced with 'the oldest Microsoft Learn page cited anywhere in this guide' — Pillar has zero corpus occurrences | open |  | 2026-08-25T03:30:27.055Z |  |
 | 5 | 151 | stub | docs/recipes/05-enterprise-update-plan.md |  | Steps 7-10 and their four anchors are unauthored; Verification, Rollback/Recovery, Configuration-Caused Failures and See Also remain partial (resolved by Plans 04 and 05) | open |  | 2026-08-26T13:52:17.689Z |  |
+| 6 | 151 | stub | docs/recipes/05-enterprise-update-plan.md |  | Steps spine complete at ten Steps, but Verification (1 of 10 checks), Rollback/Recovery (1 of 9 mechanisms), Configuration-Caused Failures (1 data row) and See Also (3 entries) remain partial; resolved by Plan 05 | open |  | 2026-08-26T14:10:23.387Z |  |
 
 ````json
 [
@@ -81,6 +82,18 @@ last_updated: 2026-08-26T13:52:17.689Z
     "status": "open",
     "reason": "",
     "recorded_at": "2026-08-26T13:52:17.689Z",
+    "resolved_at": null
+  },
+  {
+    "id": 6,
+    "kind": "stub",
+    "phase": "151",
+    "file": "docs/recipes/05-enterprise-update-plan.md",
+    "line": null,
+    "description": "Steps spine complete at ten Steps, but Verification (1 of 10 checks), Rollback/Recovery (1 of 9 mechanisms), Configuration-Caused Failures (1 data row) and See Also (3 entries) remain partial; resolved by Plan 05",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-08-26T14:10:23.387Z",
     "resolved_at": null
   }
 ]
