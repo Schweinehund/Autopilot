@@ -1,0 +1,12 @@
+# Dispositions for verify-meaning.py.  Format:  <id><TAB><reason>
+#
+# A disposition silences ONE finding. The id is a hash of (kind, file, evidence
+# text), so it goes stale the moment that line changes again -- a documented keep
+# must never silence a future edit to the same line. That is deliberate.
+#
+# Disposition only what you have actually adjudicated. A residual that is
+# correct-by-ruling is normal on this corpus; a residual nobody read is not.
+# If a whole class starts needing dispositions, the RULE is wrong -- fix the rule.
+#
+# Seeded with the one keep the project has already ratified in writing:
+1a5a0524bc2a	RATIFIED (RESUME.md, batch-8 rulings): admin-template-android.md carries the same example "What breaks" sentence at line 64 inside the <!-- --> authoring block and at line 86 in the body. Restyling only the visible one would propagate `admin` back into every doc generated from this template, so BOTH were edited. RESUME records this as "the one accepted HTML-comment drift in the whole pass." No validator matches it.
