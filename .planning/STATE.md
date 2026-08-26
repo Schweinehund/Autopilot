@@ -5,16 +5,16 @@ milestone_name: Enterprise Update, Driver & Firmware/BIOS Governance (Phases 145
 current_phase: 150
 current_phase_name: Per-OEM BIOS Guides & Capability Matrix
 status: executing
-stopped_at: Completed 150-02-PLAN.md (HP BIOS guide, deferred-commit, zero task commits per D-80)
-last_updated: "2026-08-26T03:13:03.131Z"
+stopped_at: Completed 150-03-PLAN.md (Lenovo BIOS guide, deferred-commit, zero task commits per D-80)
+last_updated: "2026-08-26T03:22:28.125Z"
 last_activity: 2026-08-25
 last_activity_desc: Phase 150 Plan 01 complete — REQUIREMENTS.md BIOS-05 amendment filed, Dell BIOS guide (tracer) authored, intermediate-red state verified
-state_head: 78726b909563433dae0e042a4fba7cdeb3c4b556
+state_head: 8d23cb96cdd36428fd6e6225b3fecfcd6974d517
 progress:
   total_phases: 9
   completed_phases: 5
   total_plans: 25
-  completed_plans: 22
+  completed_plans: 23
   percent: 56
 ---
 
@@ -38,7 +38,7 @@ See: .planning/PROJECT.md (updated 2026-08-18 — v1.21 scoped from a live corpu
 ## Current Position
 
 Phase: 150 (Per-OEM BIOS Guides & Capability Matrix) — EXECUTING
-Plan: 2 of 5 complete — Plan 2 of 5 next
+Plan: 3 of 5 complete — Plan 2 of 5 next
 Status: Ready to execute
 Last activity: 2026-08-25 — Plan 150-01 complete: filed the BIOS-05 six-section amendment (D-01/D-02),
   authored the Dell BIOS guide as the phase tracer at the locked nine-H2/seven-anchor shape, and
@@ -439,6 +439,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 | Phase 149 P05 | 1h 5m | 3 tasks | 1 files |
 | Phase 150 P01 | ~45min | 3 tasks | 2 files |
 | Phase 150 P02 | ~50min | 3 tasks | 1 files |
+| Phase 150 P03 | ~35min | 3 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -582,6 +583,7 @@ Phase 153 (Harness Close — V120 Pin, C17 Residue & 19th Path-A Bump)
 - [Phase 150 P01]: BIOS-10 marked Complete in REQUIREMENTS.md — it is the only requirement in this plan's set with no sibling-plan declarer (BIOS-05/06/09 are shared with Plans 02/03/04/05 and stay Pending until their last declaring plan finishes, per the shared-ID gate).
 - [Phase 150]: Fixed four grep-checked blockquotes that were soft-wrapped across multiple lines, silently breaking exact-substring acceptance criteria (rendered Markdown looked identical; the wrap broke the string, not the content).
 - [Phase 150]: Kept HP's console-path literal 'Reports, Endpoint Analytics, Proactive Remediation' verbatim per Task 1's explicit instruction, reading Task 2's 'at most 1' retired-term criterion as targeting the D-71 parenthetical convention specifically, since a blanket reading would contradict Task 1.
+- [Phase 150]: U-1 correction shipped in Lenovo guide's Recovery section: sourced, destructive path (system-board replacement, KB ht036206) for lost supervisor password, replacing the stale two-silences assumption — 150-RESEARCH.md's re-fetch found Lenovo's own first-party statement; D-53's three-part silence shape now applies only to the certificate-private-key gap
 
 ### Plan-Time Research Flags (not blockers — resolve at each phase's plan time)
 
@@ -610,8 +612,8 @@ No open blockers. v1.20 shipped clean: 28/28 Validated, apex 101/0/0 measured fo
 
 ## Session Continuity
 
-Last session: 2026-08-26T03:13:00.488Z
-Stopped at: Completed 150-02-PLAN.md (HP BIOS guide, deferred-commit, zero task commits per D-80)
+Last session: 2026-08-26T03:22:15.289Z
+Stopped at: Completed 150-03-PLAN.md (Lenovo BIOS guide, deferred-commit, zero task commits per D-80)
 Resume file: None
 Next action: `/gsd-execute-phase 150` to continue with Plan 02 (HP guide)
 
